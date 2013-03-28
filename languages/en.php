@@ -123,6 +123,7 @@ $english = array(
 	'IOException:NotDirectory' => "%s is not a directory.",
 
 	'IOException:BaseEntitySaveFailed' => "Unable to save new object's base entity information!",
+	'IOException:UnknownVersion' => "Unable to fetch newset Elgg version information! Make sure that you have curl extension loaded or alow url fopen PHP setting enabled.",
 	'InvalidParameterException:UnexpectedODDClass' => "import() passed an unexpected ODD class",
 	'InvalidParameterException:EntityTypeNotSet' => "Entity type must be set.",
 
@@ -605,9 +606,23 @@ $english = array(
 	'admin:widget:new_users:help' => 'Lists the newest users',
 	'admin:widget:content_stats' => 'Content statistics',
 	'admin:widget:content_stats:help' => 'Keep track of the content created by your users',
+	'admin:widget:version' => 'Version',
+	'admin:widget:version:help' => 'Shows results of check if current core version is up to date',
 	'widget:content_stats:type' => 'Content type',
 	'widget:content_stats:number' => 'Number',
-
+	
+	'admin:widget:version:current' => 'Installed Elgg version: <strong>%s</strong>',
+	'admin:widget:version:newer_found' => 'New Elgg version found: ',
+	'admin:widget:version:status:ok' => 'Up to date',
+	'admin:widget:version:status:bad' => 'Outdated',
+	'admin:widget:version:last_checked' => 'Last checked: %s',
+	'admin:widget:version:check' => 'Check now',
+	'admin:version:local_release' => 'Installed Elgg release',
+	'admin:version:latest_release' => 'Newest release',
+	'admin:version:last_checked' => 'Last checked',
+	'admin:version:status' => 'Status',
+	'admin:version:download' => 'Download Elgg %s',
+	
 	'admin:widget:admin_welcome' => 'Welcome',
 	'admin:widget:admin_welcome:help' => "A short introduction to Elgg's admin area",
 	'admin:widget:admin_welcome:intro' =>

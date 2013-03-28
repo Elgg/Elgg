@@ -1788,9 +1788,12 @@ function elgg_js_page_handler($page) {
 }
 
 /**
- * Serve individual views for Ajax.
+ * Serve individual views or widget elements for Ajax
  *
  * /ajax/view/<name of view>?<key/value params>
+ * /ajax/widget/?guid=<GUID>
+ * /ajax/widget/edit?guid=<GUID>
+ * /ajax/widget/content?guid=<GUID>
  *
  * @param array $page The page array
  *
@@ -1799,27 +1802,66 @@ function elgg_js_page_handler($page) {
  * @access private
  */
 function elgg_ajax_page_handler($page) {
-	if (is_array($page) && sizeof($page)) {
-		// throw away 'view' and form the view name
-		unset($page[0]);
-		$view = implode('/', $page);
-
-		$allowed_views = elgg_get_config('allowed_ajax_views');
-		if (!array_key_exists($view, $allowed_views)) {
-			header('HTTP/1.1 403 Forbidden');
-			exit;
+	if (is_array($page) && count($page)) {
+		if ($page[0]=='view') {
+			// throw away 'view' and form the view name
+			unset($page[0]);
+			$view = implode('/', $page);
+	
+			$allowed_views = elgg_get_config('allowed_ajax_views');
+			if (!array_key_exists($view, $allowed_views)) {
+				header('HTTP/1.1 403 Forbidden');
+				exit;
+			}
+			
+			// pull out GET parameters through filter
+			$vars = array();
+			foreach ($_GET as $name => $value) {
+				$vars[$name] = get_input($name);
+			}
+			
+			if (isset($vars['guid'])) {
+				$vars['entity'] = get_entity($vars['guid']);
+			}
+			
+		} else if($page[0]=='widget') {
+			$viewSuffix = elgg_extract(1, $page, '');
+			$widget = get_entity(get_input('guid'));
+			switch ($viewSuffix) {
+				case 'content':
+				case 'edit':
+				case '':
+					break;
+				default:
+					return false;
+					break;
+			}
+			
+			if (!elgg_instanceof($widget, 'object', 'widget')) {
+				header('HTTP/1.1 403 Forbidden');
+				exit;
+			}
+			elgg_set_page_owner_guid($widget->getContainerGUID());
+			
+			$context = get_input('context');
+			if ($context) {
+				elgg_push_context($context);
+			}
+			
+			if ($viewSuffix) {
+				$view = 'widgets/'.$widget->handler.'/'.$viewSuffix;
+			} else {
+				$view = 'object/widget';
+			}
+			$vars = array(
+				'entity' => $widget,
+				'show_access' => get_input('show_access', true),
+			);
+		} else {
+			// neither ajax/view nor ajax/widget
+			return false;
 		}
-
-		// pull out GET parameters through filter
-		$vars = array();
-		foreach ($_GET as $name => $value) {
-			$vars[$name] = get_input($name);
-		}
-
-		if (isset($vars['guid'])) {
-			$vars['entity'] = get_entity($vars['guid']);
-		}
-
+		
 		echo elgg_view($view, $vars);
 		return true;
 	}
