@@ -4,7 +4,7 @@
  * in Github tags or http://elgg.org
  * 
  * @package Elgg.Core
- * @see     https://elgg.org/
+ * @see     http://elgg.org/
  * @todo consider moving version.php contents to this class as constants 
  */
 class Elgg_Version {
