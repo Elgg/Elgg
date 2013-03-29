@@ -187,7 +187,7 @@ function system_log($object, $event) {
 		$object_subtype = $object->getSubtype();
 		$event = sanitise_string($event);
 		$time = time();
-		$ip_address = sanitise_string($_SERVER['REMOTE_ADDR']);
+		$ip_address = sanitise_string(isset($_SERVER['REMOTE_ADDR']) ? $_SERVER['REMOTE_ADDR'] : '0.0.0.0');
 		$performed_by = elgg_get_logged_in_user_guid();
 
 		if (isset($object->access_id)) {

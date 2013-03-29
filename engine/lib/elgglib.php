@@ -1144,7 +1144,8 @@ function current_page_url() {
 
 	$page = trim($page, "/");
 
-	$page .= $_SERVER['REQUEST_URI'];
+	// we don't have request URI when in CLI
+	$page .= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 
 	return $page;
 }
@@ -1589,8 +1590,9 @@ function _elgg_shutdown_hook() {
 		elgg_trigger_event('shutdown', 'system');
 
 		$time = (float)(microtime(TRUE) - $START_MICROTIME);
+		$uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'CLI';
 		// demoted to NOTICE from DEBUG so javascript is not corrupted
-		elgg_log("Page {$_SERVER['REQUEST_URI']} generated in $time seconds", 'NOTICE');
+		elgg_log("Page {$uri} generated in $time seconds", 'INFO');
 	} catch (Exception $e) {
 		$message = 'Error: ' . get_class($e) . ' thrown within the shutdown handler. ';
 		$message .= "Message: '{$e->getMessage()}' in file {$e->getFile()} (line {$e->getLine()})";
