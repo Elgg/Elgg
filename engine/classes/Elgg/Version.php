@@ -2,7 +2,9 @@
 /**
  * Class providing ability to check local Elgg version/releace and to get and compare newest release
  * in Github tags or http://elgg.org
- * @see https://elgg.org/
+ * 
+ * @package Elgg.Core
+ * @see     https://elgg.org/
  * @todo consider moving version.php contents to this class as constants 
  */
 class Elgg_Version {
@@ -54,6 +56,7 @@ class Elgg_Version {
 
 	/**
 	 * Compares two elgg release strings
+	 * 
 	 * @param string $a first release
 	 * @param string $b second release
 	 * @return int -1 if the first version is lower than the second, 0 if they are equal, and 1 if the second is lower
@@ -64,6 +67,7 @@ class Elgg_Version {
 	
 	/**
 	 * Tries to fetch contents of the URL.
+	 * 
 	 * @param string $url URL to fetch
 	 * @return string|boolean returns response contents on success or false on failure
 	 */
@@ -139,6 +143,8 @@ class Elgg_Version {
 	
 	/**
 	 * Tries several methods and sources of determining latest Elgg release.
+	 * 
+	 * @param bool $overrideCache forces to query external resource to determine latest release
 	 * @return string|boolean returns release string or false on failure
 	 */
 	function getLatestRelease($overrideCache = false) {
@@ -176,6 +182,7 @@ class Elgg_Version {
 	
 	/**
 	 * Checks if provided version is the same (or newer) than the latest one.
+	 * 
 	 * @param string $version version to check, gets local core version by default
 	 * @throws IOException
 	 * @return boolean
