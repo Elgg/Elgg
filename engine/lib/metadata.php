@@ -637,6 +637,8 @@ $owner_guids = NULL) {
 				// @todo allow support for non IN operands with array of values.
 				// will have to do more silly joins.
 				$operand = 'IN';
+			} else if (is_bool($pair['value'])) {
+				$value = (int) $pair['value'];
 			} else if ($trimmed_operand == 'in') {
 				$value = "({$pair['value']})";
 			} else {
