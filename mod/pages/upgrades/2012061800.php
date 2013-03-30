@@ -1,21 +1,26 @@
 <?php
 /**
- * Restore disappeared subpages, which its parent page was top_page and was deleted,
- * by setting it's subtype to page_top.
+ * Restore disappeared subpages. This is caused by its parent page being deleted
+ * when the parent page is a top level page. We take advantage of the fact that
+ * the parent_guid was deleted for the subpages.
  *
+ * This upgrade script will no longer work once we have converted all pages to
+ * have the same entity subtype.
  */
 
 
 /**
- * Condense first annotation into object
+ * Update subtype
  *
  * @param ElggObject $page
  */
-function pages_2012061800($page) {error_log($page->guid);
+function pages_2012061800($page) {
 	$dbprefix = elgg_get_config('dbprefix');
-	$subtype_id = add_subtype('object', 'page_top');
+	$subtype_id = (int)get_subtype_id('object', 'page_top');
+	$page_guid = (int)$page->guid;
 	update_data("UPDATE {$dbprefix}entities
-		set subtype='$subtype_id' WHERE guid=$page->guid");
+		SET subtype = $subtype_id WHERE guid = $page_guid");
+	error_log("called");
 	return true;
 }
 
@@ -23,8 +28,11 @@ $previous_access = elgg_set_ignore_access(true);
 
 $dbprefix = elgg_get_config('dbprefix');
 $name_metastring_id = get_metastring_id('parent_guid');
+if (!$name_metastring_id) {
+	return;
+}
 
-// Looking for pages without metadata (see #3046)
+// Looking for pages without metadata
 $options = array(
 	'type' => 'object',
 	'subtype' => 'page',
@@ -33,11 +41,9 @@ $options = array(
 		WHERE md.entity_guid = e.guid
 		AND md.name_id = $name_metastring_id)"
 );
-$batch = new ElggBatch('elgg_get_entities_from_metadata', $options, 'pages_2012061800', 100);
+$batch = new ElggBatch('elgg_get_entities_from_metadata', $options, 'pages_2012061800', 50, false);
 elgg_set_ignore_access($previous_access);
 
 if ($batch->callbackResult) {
 	error_log("Elgg Pages upgrade (2012061800) succeeded");
-} else {
-	error_log("Elgg Pages upgrade (2012061800) failed");
 }
