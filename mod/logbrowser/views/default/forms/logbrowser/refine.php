@@ -9,12 +9,12 @@
  * @uses $vars['timeupper']
  */
 
-if (isset($vars['timelower'])) {
+if (isset($vars['timelower']) && $vars['timelower']) {
 	$lowerval = date('r', $vars['timelower']);
 } else {
 	$lowerval = "";
 }
-if (isset($vars['timeupper'])) {
+if (isset($vars['timeupper']) && $vars['timeupper']) {
 	$upperval = date('r', $vars['timeupper']);
 } else {
 	$upperval = "";
