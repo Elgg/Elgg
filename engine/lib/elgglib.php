@@ -93,9 +93,16 @@ function elgg_register_library($name, $location) {
  * @return void
  * @throws InvalidParameterException
  * @since 1.8.0
+ * @todo return boolean in 1.9 to indicate whether the library has been loaded
  */
 function elgg_load_library($name) {
 	global $CONFIG;
+
+	static $loaded_libraries = array();
+
+	if (in_array($name, $loaded_libraries)) {
+		return;
+	}
 
 	if (!isset($CONFIG->libraries)) {
 		$CONFIG->libraries = array();
@@ -113,6 +120,8 @@ function elgg_load_library($name) {
 		);
 		throw new InvalidParameterException($error);
 	}
+
+	$loaded_libraries[] = $name;
 }
 
 /**
