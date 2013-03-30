@@ -62,6 +62,8 @@ class ElggInstaller {
 
 		$this->bootstrapEngine();
 
+		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
+
 		elgg_set_viewtype('installation');
 
 		set_error_handler('_elgg_php_error_handler');
