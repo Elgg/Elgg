@@ -281,25 +281,37 @@ function page_notify_message($hook, $entity_type, $returnvalue, $params) {
 /**
  * Extend permissions checking to extend can-edit for write users.
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
+ * @param string $hook
+ * @param string $entity_type
+ * @param bool   $returnvalue
+ * @param array  $params
  */
-function pages_write_permission_check($hook, $entity_type, $returnvalue, $params)
-{
+function pages_write_permission_check($hook, $entity_type, $returnvalue, $params) {
 	if ($params['entity']->getSubtype() == 'page'
 		|| $params['entity']->getSubtype() == 'page_top') {
 
 		$write_permission = $params['entity']->write_access_id;
 		$user = $params['user'];
 
-		if (($write_permission) && ($user)) {
-			// $list = get_write_access_array($user->guid);
-			$list = get_access_array($user->guid); // get_access_list($user->guid);
-
-			if (($write_permission!=0) && (in_array($write_permission,$list))) {
-				return true;
+		if ($write_permission && $user) {
+			switch ($write_permission) {
+				case ACCESS_PRIVATE:
+					// Elgg's default decision is what we want
+					return;
+					break;
+				case ACCESS_FRIENDS:
+					$owner = $params['entity']->getOwnerEntity();
+					if ($owner && $owner->isFriendsWith($user->guid)) {
+						return true;
+					}
+					break;
+				default:
+					$list = get_access_array($user->guid);
+					if (in_array($write_permission, $list)) {
+						// user in the access collection
+						return true;
+					}
+					break;
 			}
 		}
 	}
