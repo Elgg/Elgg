@@ -1414,7 +1414,7 @@ class ElggInstaller {
 		$submissionVars['wwwroot'] = sanitise_filepath($submissionVars['wwwroot']);
 
 		$site = new ElggSite();
-		$site->name = $submissionVars['sitename'];
+		$site->name = strip_tags($submissionVars['sitename']);
 		$site->url = $submissionVars['wwwroot'];
 		$site->access_id = ACCESS_PUBLIC;
 		$site->email = $submissionVars['siteemail'];
