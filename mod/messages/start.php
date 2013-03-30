@@ -437,6 +437,10 @@ function messages_user_hover_menu($hook, $type, $return, $params) {
  */
 function messages_purge($event, $type, $user) {
 
+	if (!$user->getGUID()) {
+		return;
+	}
+
 	// make sure we delete them all
 	$entity_disable_override = access_get_show_hidden_status();
 	access_show_hidden_entities(true);
