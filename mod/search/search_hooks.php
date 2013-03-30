@@ -178,11 +178,20 @@ function search_users_hook($hook, $type, $value, $params) {
 		$entity->setVolatileData('search_matched_title', $title);
 
 		$matched = '';
-		foreach ($profile_fields as $md) {
-			$text = $entity->$md;
-			if (stristr($text, $query)) {
-				$matched .= elgg_echo("profile:{$md}") . ': '  
-						. search_get_highlighted_relevant_substrings($text, $query);
+		foreach ($profile_fields as $md_name) {
+			$metadata = $entity->$md_name;
+			if (is_array($metadata)) {
+				foreach ($metadata as $text) {
+					if (stristr($text, $query)) {
+						$matched .= elgg_echo("profile:{$md_name}") . ': '
+								. search_get_highlighted_relevant_substrings($text, $query);
+					}
+				}
+			} else {
+				if (stristr($metadata, $query)) {
+					$matched .= elgg_echo("profile:{$md_name}") . ': '
+							. search_get_highlighted_relevant_substrings($metadata, $query);
+				}
 			}
 		}
 
