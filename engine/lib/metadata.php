@@ -619,6 +619,8 @@ $owner_guids = NULL) {
 			// if the operand is IN don't quote it because quoting should be done already.
 			if (is_numeric($pair['value'])) {
 				$value = sanitise_string($pair['value']);
+			} else if (is_bool($pair['value'])) {
+				$value = (int) $pair['value'];
 			} else if (is_array($pair['value'])) {
 				$values_array = array();
 
