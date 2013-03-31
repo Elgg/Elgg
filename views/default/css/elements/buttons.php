@@ -9,126 +9,74 @@
 /* **************************
 	BUTTONS
 ************************** */
-
-/* Base */
 .elgg-button {
-	font-size: 14px;
-	font-weight: bold;
-	border-radius: 5px;
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
+	color: #FFFFFF;
 	width: auto;
-	padding: 2px 4px;
+	padding: 5px 12px;
 	cursor: pointer;
-	outline: none;
-	box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
+    border: none;
+    background: #4690D6;	
+	border: 1px solid #3873AB; /* Fallback */
+	border: 1px solid rgba(0, 0, 0, 0.2);
+
+	border-radius:	3px;		
+	box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.6);
 }
 a.elgg-button {
-	padding: 3px 6px;
+	padding: 6px 12px;
 }
-
-/* Submit: This button should convey, "you're about to take some definitive action" */
-.elgg-button-submit {
-	color: white;
-	text-shadow: 1px 1px 0px black;
+.elgg-button:hover,
+.elgg-button-action:focus {
+	background: #71B9F7;
 	text-decoration: none;
-	border: 1px solid #4690d6;
-	background: #4690d6 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
+	color: #FFFFFF;
 }
-
-.elgg-button-submit:hover {
-	border-color: #0054a7;
-	text-decoration: none;
-	color: white;
-	background: #0054a7 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
-}
-
 .elgg-button-submit.elgg-state-disabled {
-	background: #999;
-	border-color: #999;
+	background: #DEDEDE;
 	cursor: default;
 }
-
-/* Cancel: This button should convey a negative but easily reversible action (e.g., turning off a plugin) */
 .elgg-button-cancel {
-	color: #333;
-	background: #ddd url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
-	border: 1px solid #999;
+	border: 1px solid #C88415; /* Fallback */
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background: #FAA51A;
 }
 .elgg-button-cancel:hover {
-	color: #444;
-	background-color: #999;
-	background-position: left 10px;
-	text-decoration: none;
+	background-color: #E38F07;
 }
-
-/* Action: This button should convey a normal, inconsequential action, such as clicking a link */
-.elgg-button-action {
-	background: #ccc url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif) repeat-x 0 0;
-	border:1px solid #999;
-	color: #333;
-	padding: 2px 15px;
-	text-align: center;
-	font-weight: bold;
-	text-decoration: none;
-	text-shadow: 0 1px 0 white;
-	cursor: pointer;
-	border-radius: 5px;
-	box-shadow: none;
-}
-
-.elgg-button-action:hover,
-.elgg-button-action:focus {
-	background: #ccc url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif) repeat-x 0 -15px;
-	color: #111;
-	text-decoration: none;
-	border: 1px solid #999;
-}
-
-/* Delete: This button should convey "be careful before you click me" */
 .elgg-button-delete {
-	color: #bbb;
-	text-decoration: none;
-	border: 1px solid #333;
-	background: #555 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
-	text-shadow: 1px 1px 0px black;
+	border: 1px solid #CC2900; /* Fallback */
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background: #FF3300;
 }
 .elgg-button-delete:hover {
-	color: #999;
-	background-color: #333;
-	background-position: left 10px;
-	text-decoration: none;
+	background-color: #D63006;
 }
 
 .elgg-button-dropdown {
-	padding:3px 6px;
-	text-decoration:none;
-	display:block;
-	font-weight:bold;
-	position:relative;
-	margin-left:0;
+	padding: 3px 6px;
+	text-decoration: none;
+	display: block;
+	font-weight: bold;
+	position: relative;
+	margin-left: 0;
 	color: white;
-	border:1px solid #71B9F7;
-	border-radius:4px;
+	border: 1px solid #71B9F7;
+	border-radius: 3px;
 	box-shadow: 0 0 0;
-	
-	/*background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
-	background-position:-150px -51px;
-	background-repeat:no-repeat;*/
 }
-
 .elgg-button-dropdown:after {
 	content: " \25BC ";
-	font-size:smaller;
+	font-size: smaller;
 }
-
 .elgg-button-dropdown:hover {
-	background-color:#71B9F7;
-	text-decoration:none;
+	background-color: #71B9F7;
+	text-decoration: none;
 }
-
 .elgg-button-dropdown.elgg-state-active {
 	background: #ccc;
 	outline: none;
 	color: #333;
-	border:1px solid #ccc;
-	border-radius:4px 4px 0 0;
+	border: 1px solid #ccc;
+	border-radius: 3px 3px 0 0;
 }
