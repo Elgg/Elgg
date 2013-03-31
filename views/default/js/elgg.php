@@ -66,6 +66,9 @@ elgg.register_hook_handler('boot', 'system', function() {
 	// Once the system has booted, the user language pref has been set,
 	// so we can load the correct translations
 	var languagesUrl = elgg.config.wwwroot + 'ajax/view/js/languages?language=' + elgg.get_language();
+	if (elgg.config.simplecache_enabled) {
+		languagesUrl += '&ts=' + elgg.config.lastcache;
+	}
 	define('elgg', ['jquery', languagesUrl], function($, translations) {
 		elgg.add_translation(elgg.get_language(), translations);
 		
