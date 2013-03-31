@@ -445,8 +445,24 @@ function admin_pagesetup() {
  * @access private
  */
 function admin_page_handler($page) {
-
+	if (!elgg_is_logged_in()){
+		if ($page[0] == "login"){
+	
+			// unset admin context
+			elgg_pop_context();
+			
+			// trigger walled garden index hook
+			elgg_walled_garden_index();
+			return true;
+		} else {
+			$_SESSION['last_forward_from'] = current_page_url();
+			register_error(elgg_echo('loggedinrequired'));
+			forward('admin/login', 'login');
+		}
+	}
+	
 	admin_gatekeeper();
+	
 	elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
