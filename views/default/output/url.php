@@ -8,6 +8,8 @@
  *
  * @uses string $vars['text']        The string between the <a></a> tags.
  * @uses string $vars['href']        The unencoded url string
+ * @uses string $vars['rel']         The relationship of the destination url relative to the page
+ * @uses string $vars['class']       The class names (if any) for the hyperlink.
  * @uses bool   $vars['encode_text'] Run $vars['text'] through htmlspecialchars() (false)
  * @uses bool   $vars['is_action']   Is this a link to an action (false)
  * @uses bool   $vars['is_trusted']  Is this link trusted (false)
@@ -42,11 +44,18 @@ if ($url) {
 	if (!elgg_extract('is_trusted', $vars, false)) {
 		if (!isset($vars['rel'])) {
 			$vars['rel'] = 'nofollow';
-			$url = strip_tags($url);
+			$url = strip_tags($url);  // should this be inside the rel isset test?
 		}
 	}
 
 	$vars['href'] = $url;
+	
+	if (!isset($vars['class'])) {
+		$vars['class'] .= ' ';
+	} else {
+		$vars['class'] = '';
+	}
+	$vars['class'] .= 'u-url url';
 }
 
 unset($vars['is_action']);
