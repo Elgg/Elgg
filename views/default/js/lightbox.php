@@ -33,15 +33,18 @@ elgg.ui.lightbox.init = function() {
 		close: elgg.echo('close'),
 		xhrError: elgg.echo('error:default'),
 		imgError: elgg.echo('error:default'),
-		opacity: 0.5
+		opacity: 0.5,
+		
+		// workaround for https://github.com/jackmoore/colorbox/issues/291
+		reposition: $(window).height() > 600
 	});
 
 	$(".elgg-lightbox").colorbox();
-}
+};
 
 elgg.ui.lightbox.close = function() {
 	$.colorbox.close();
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.ui.lightbox.init);
 
@@ -49,4 +52,4 @@ elgg.register_hook_handler('init', 'system', elgg.ui.lightbox.init);
 
 $js_path = elgg_get_config('path');
 $js_path = "{$js_path}vendors/jquery/colorbox/colorbox/jquery.colorbox-min.js";
-include $js_path;
+readfile($js_path);
