@@ -369,6 +369,10 @@ function elgg_get_loaded_external_files($type, $location) {
 		$items = array_filter($items, create_function('$v', $callback));
 		if ($items) {
 			array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
+			foreach($items as $k => $item) {
+				$item = str_replace('&amp;', '&', $item);
+				$items[$k] = elgg_http_add_url_query_elements($item, array('lastchache' => $CONFIG->lastcache));
+			}
 		}
 		return $items;
 	}
