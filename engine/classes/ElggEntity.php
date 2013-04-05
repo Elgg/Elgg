@@ -937,7 +937,12 @@ abstract class ElggEntity extends ElggData implements
 		if (is_int($num)) {
 			return $num;
 		} else {
-			return $this->getAnnotationCalculation('generic_comment', 'count');
+			return elgg_get_entities(array(
+				'type' => 'object',
+				'subtype' => 'comment',
+				'container_guid' => $this->getGUID(),
+				'count' => true,
+			));
 		}
 	}
 
@@ -1089,6 +1094,10 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	public function canComment($user_guid = 0) {
+		if (!elgg_get_config('comments_enabled')) {
+			return false;
+		}
+
 		if ($user_guid == 0) {
 			$user_guid = elgg_get_logged_in_user_guid();
 		}

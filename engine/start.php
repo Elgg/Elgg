@@ -72,6 +72,7 @@ $lib_files = array(
 	'admin.php',
 	'annotations.php',
 	'cache.php',
+	'comments.php',
 	'configuration.php',
 	'cron.php',
 	'database.php',
@@ -106,7 +107,7 @@ $lib_files = array(
 	'upgrade.php',
 	'views.php',
 	'widgets.php',
-	
+
 	// backward compatibility
 	'deprecated-1.7.php',
 	'deprecated-1.8.php',
