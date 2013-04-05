@@ -17,11 +17,12 @@
  * @param int    $access_id     The access ID of the river item (default: same as the object)
  * @param int    $posted        The UNIX epoch timestamp of the river item (default: now)
  * @param int    $annotation_id The annotation ID associated with this river entry
+ * @param int    $target_guid   The GUID of the entity associated with the object entity (eg ElggComment)
  *
  * @return int/bool River ID or false on failure
  */
 function add_to_river($view, $action_type, $subject_guid, $object_guid, $access_id = "",
-$posted = 0, $annotation_id = 0) {
+$posted = 0, $annotation_id = 0, $target_guid = 0) {
 
 	global $CONFIG;
 
@@ -51,6 +52,7 @@ $posted = 0, $annotation_id = 0) {
 	$action_type = sanitise_string($action_type);
 	$subject_guid = sanitise_int($subject_guid);
 	$object_guid = sanitise_int($object_guid);
+	$target_guid = sanitise_int($target_guid);
 	$access_id = sanitise_int($access_id);
 	$posted = sanitise_int($posted);
 	$annotation_id = sanitise_int($annotation_id);
@@ -63,6 +65,7 @@ $posted = 0, $annotation_id = 0) {
 		'view' => $view,
 		'subject_guid' => $subject_guid,
 		'object_guid' => $object_guid,
+		'target_guid' => $target_guid,
 		'annotation_id' => $annotation_id,
 		'posted' => $posted,
 	);
@@ -85,6 +88,7 @@ $posted = 0, $annotation_id = 0) {
 		" view = '$view', " .
 		" subject_guid = $subject_guid, " .
 		" object_guid = $object_guid, " .
+		" target_guid = $target_guid, " .
 		" annotation_id = $annotation_id, " .
 		" posted = $posted");
 
@@ -112,6 +116,7 @@ $posted = 0, $annotation_id = 0) {
  *   ids                  => INT|ARR River item id(s)
  *   subject_guids        => INT|ARR Subject guid(s)
  *   object_guids         => INT|ARR Object guid(s)
+ *   target_guids         => INT|ARR Target guid(s)
  *   annotation_ids       => INT|ARR The identifier of the annotation(s)
  *   action_types         => STR|ARR The river action type(s) identifier
  *   views                => STR|ARR River view(s)
@@ -135,6 +140,7 @@ function elgg_delete_river(array $options = array()) {
 
 		'subject_guids'	       => ELGG_ENTITIES_ANY_VALUE,
 		'object_guids'         => ELGG_ENTITIES_ANY_VALUE,
+		'target_guids'         => ELGG_ENTITIES_ANY_VALUE,
 		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
 
 		'views'                => ELGG_ENTITIES_ANY_VALUE,
@@ -154,7 +160,7 @@ function elgg_delete_river(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('id', 'subject_guid', 'object_guid', 'annotation_id', 'action_type', 'view', 'type', 'subtype');
+	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'view', 'type', 'subtype');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	$wheres = $options['wheres'];
@@ -162,6 +168,7 @@ function elgg_delete_river(array $options = array()) {
 	$wheres[] = elgg_get_guid_based_where_sql('rv.id', $options['ids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
 	$wheres[] = elgg_river_get_action_where_sql($options['action_types']);
 	$wheres[] = elgg_river_get_view_where_sql($options['views']);
@@ -219,6 +226,7 @@ function elgg_delete_river(array $options = array()) {
  *   ids                  => INT|ARR River item id(s)
  *   subject_guids        => INT|ARR Subject guid(s)
  *   object_guids         => INT|ARR Object guid(s)
+ *   target_guids         => INT|ARR Target guid(s)
  *   annotation_ids       => INT|ARR The identifier of the annotation(s)
  *   action_types         => STR|ARR The river action type(s) identifier
  *   posted_time_lower    => INT     The lower bound on the time posted
@@ -250,6 +258,7 @@ function elgg_get_river(array $options = array()) {
 
 		'subject_guids'	       => ELGG_ENTITIES_ANY_VALUE,
 		'object_guids'         => ELGG_ENTITIES_ANY_VALUE,
+		'target_guids'         => ELGG_ENTITIES_ANY_VALUE,
 		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
 		'action_types'         => ELGG_ENTITIES_ANY_VALUE,
 
@@ -277,7 +286,7 @@ function elgg_get_river(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('id', 'subject_guid', 'object_guid', 'annotation_id', 'action_type', 'type', 'subtype');
+	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'type', 'subtype');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	$wheres = $options['wheres'];
@@ -285,6 +294,7 @@ function elgg_get_river(array $options = array()) {
 	$wheres[] = elgg_get_guid_based_where_sql('rv.id', $options['ids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
 	$wheres[] = elgg_river_get_action_where_sql($options['action_types']);
 	$wheres[] = elgg_get_river_type_subtype_where_sql('rv', $options['types'],

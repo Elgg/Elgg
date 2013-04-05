@@ -1,20 +1,16 @@
 <?php
 /**
- * Elgg generic comment view
+ * Elgg comment view
  *
- * @uses $vars['annotation']  ElggAnnotation object
- * @uses $vars['full_view']   Display fill view or brief view
+ * @uses $vars['entity']    ElggComment
+ * @uses $vars['full_view'] Display full view or brief view
  */
-
-if (!isset($vars['annotation'])) {
-	return true;
-}
 
 $full_view = elgg_extract('full_view', $vars, true);
 
-$comment = $vars['annotation'];
+$comment = $vars['entity'];
 
-$entity = get_entity($comment->entity_guid);
+$entity = get_entity($comment->container_guid);
 $commenter = get_user($comment->owner_guid);
 if (!$entity || !$commenter) {
 	return true;
@@ -29,15 +25,19 @@ $entity_title = $entity->title ? $entity->title : elgg_echo('untitled');
 $entity_link = "<a href=\"{$entity->getURL()}\">$entity_title</a>";
 
 if ($full_view) {
-	$menu = elgg_view_menu('annotation', array(
-		'annotation' => $comment,
+	$anchor = "<a name=\"comment-{$comment->getGUID()}\"></a>";
+	
+	$menu = elgg_view_menu('entity', array(
+		'entity' => $comment,
+		'handler' => 'comments',
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz float-alt',
 	));
 
-	$comment_text = elgg_view("output/longtext", array("value" => $comment->value));
+	$comment_text = elgg_view("output/longtext", array("value" => $comment->description));
 
 	$body = <<<HTML
+$anchor
 <div class="mbn">
 	$menu
 	$commenter_link
@@ -52,16 +52,17 @@ HTML;
 
 } else {
 	// brief view
+	
+	$posted = elgg_echo('generic_comments:latest:posted');
+	$comment_string = elgg_echo('comment');
+	$comment_link = "<a href=\"{$comment->getURL()}\">$comment_string</a>";
+	$on = elgg_echo('on');
 
-	//@todo need link to actual comment!
-
-	$commented_on = elgg_echo('generic_comment:on', array($commenter_link, $entity_link));
-
-	$excerpt = elgg_get_excerpt($comment->value, 80);
+	$excerpt = elgg_get_excerpt($comment->description, 80);
 
 	$body = <<<HTML
 <span class="elgg-subtext">
-	$commented_on ($friendlytime): $excerpt
+	$commenter_link $posted $comment_link $on $entity_link ($friendlytime): $excerpt
 </span>
 HTML;
 

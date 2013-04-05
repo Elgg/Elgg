@@ -26,9 +26,6 @@ function search_init() {
 	elgg_register_plugin_hook_handler('search_types', 'get_types', 'search_custom_types_tags_hook');
 	elgg_register_plugin_hook_handler('search', 'tags', 'search_tags_hook');
 
-	elgg_register_plugin_hook_handler('search_types', 'get_types', 'search_custom_types_comments_hook');
-	elgg_register_plugin_hook_handler('search', 'comments', 'search_comments_hook');
-
 	// get server min and max allowed chars for ft searching
 	$CONFIG->search_info = array();
 

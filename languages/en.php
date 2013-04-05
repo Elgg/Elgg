@@ -1012,6 +1012,9 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:systemcache:description' => "The system cache decreases the loading time of the Elgg engine by caching data to files.",
 	'installation:systemcache:label' => "Use system cache (recommended)",
 
+	'installation:comments:description' => "Allow users to comment on other users' content. (Some content types may allow content owner to disable commenting even if this setting is enabled.)",
+	'installation:comments:label' => "Enable comments",
+
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',
@@ -1096,6 +1099,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
  */
 
 	'comments:count' => "%s comments",
+	'item:object:comment' => 'Comments',
 
 	'river:comment:object:default' => '%s commented on %s',
 
@@ -1112,6 +1116,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'generic_comment:none' => 'No comments',
 	'generic_comment:title' => 'Comment by %s',
 	'generic_comment:on' => '%s on %s',
+	'generic_comments:latest:posted' => 'posted a',
 
 	'generic_comment:email:subject' => 'You have a new comment!',
 	'generic_comment:email:body' => "You have a new comment on your item \"%s\" from %s. It reads:

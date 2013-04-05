@@ -80,6 +80,15 @@ $options = array(
 $form_body .= '<div>' . elgg_echo('installation:registration:description');
 $form_body .= '<br />' .elgg_view('input/checkboxes', $options) . '</div>';
 
+// control comments
+$options = array(
+	'options' => array(elgg_echo('installation:comments:label') => elgg_echo('installation:comments:label')),
+	'name' => 'comments_enabled',
+	'value' => elgg_get_config('comments_enabled') ? elgg_echo('installation:comments:label') : '',
+);
+$form_body .= '<div>' . elgg_echo('installation:comments:description');
+$form_body .= '<br />' .elgg_view('input/checkboxes', $options) . '</div>';
+
 // control walled garden
 $walled_garden = elgg_get_config(walled_garden);
 $options = array(

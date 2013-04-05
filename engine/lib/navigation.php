@@ -349,8 +349,9 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 		$item = $params['item'];
 		/* @var ElggRiverItem $item */
 		$object = $item->getObjectEntity();
-		// comments and non-objects cannot be commented on or liked
-		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
+		// non-objects cannot be commented on or liked
+		// comments cannot be commented
+		if (!elgg_in_context('widgets') && $item->annotation_id == 0 && $item->action_type != 'comment') {
 			// comments
 			if ($object->canComment()) {
 				$options = array(
@@ -481,33 +482,6 @@ function elgg_widget_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
- * Adds a delete link to "generic_comment" annotations
- * @access private
- */
-function elgg_annotation_menu_setup($hook, $type, $return, $params) {
-	$annotation = $params['annotation'];
-	/* @var ElggAnnotation $annotation */
-
-	if ($annotation->name == 'generic_comment' && $annotation->canEdit()) {
-		$url = elgg_http_add_url_query_elements('action/comments/delete', array(
-			'annotation_id' => $annotation->id,
-		));
-
-		$options = array(
-			'name' => 'delete',
-			'href' => $url,
-			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
-			'confirm' => elgg_echo('deleteconfirm'),
-			'encode_text' => false
-		);
-		$return[] = ElggMenuItem::factory($options);
-	}
-
-	return $return;
-}
-
-
-/**
  * Navigation initialization
  * @access private
  */
@@ -516,7 +490,6 @@ function elgg_nav_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'elgg_river_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', 'elgg_widget_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'elgg_annotation_menu_setup');
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_nav_init');
