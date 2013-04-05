@@ -72,6 +72,7 @@ $lib_files = array(
 	'admin.php',
 	'annotations.php',
 	'cache.php',
+	'comments.php',
 	'configuration.php',
 	'cron.php',
 	'database.php',
