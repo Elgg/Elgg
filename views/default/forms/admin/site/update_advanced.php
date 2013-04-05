@@ -139,6 +139,14 @@ $form_body .= elgg_view('input/select', array(
 $form_body .= '</div>';
 $form_body .= "</fieldset>";
 
+// control comments
+$options = array(
+	'options' => array(elgg_echo('installation:comments:label') => elgg_echo('installation:comments:label')),
+	'name' => 'comments_enabled',
+	'value' => elgg_get_config('comments_enabled') ? elgg_echo('installation:comments:label') : '',
+);
+$form_body .= '<div>' . elgg_echo('installation:comments:description');
+$form_body .= '<br />' .elgg_view('input/checkboxes', $options) . '</div>';
 
 $form_body .= elgg_view('input/hidden', array('name' => 'settings', 'value' => 'go'));
 

@@ -26,12 +26,13 @@ unset($vars['internalid']);
 
 echo "<div $id class=\"$class\">";
 
-$options = array(
-	'guid' => $vars['entity']->getGUID(),
-	'annotation_name' => 'generic_comment',
-	'full_view' => $full_view,
-);
-$html = elgg_list_annotations($options);
+$html = elgg_list_entities(array(
+	'type' => 'object',
+	'subtype' => 'comment',
+	'container_guid' => $vars['entity']->getGUID(),
+	'reverse_order_by' => true,
+));
+
 if ($html) {
 	echo '<h3>' . elgg_echo('comments') . '</h3>';
 	echo $html;
