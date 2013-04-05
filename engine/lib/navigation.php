@@ -506,6 +506,31 @@ function elgg_annotation_menu_setup($hook, $type, $return, $params) {
 	return $return;
 }
 
+/**
+ * Add the register and forgot password links to login menu
+ * @access private
+ */
+function elgg_login_menu_setup($hook, $type, $return, $params) {
+
+	if (elgg_get_config('allow_registration')) {
+		$return[] = ElggMenuItem::factory(array(
+			'name' => 'register',
+			'href' => 'register',
+			'text' => elgg_echo('register'),
+			'link_class' => 'registration_link',
+		));
+	}
+
+	$return[] = ElggMenuItem::factory(array(
+		'name' => 'forgotpassword',
+		'href' => 'forgotpassword',
+		'text' => elgg_echo('user:password:lost'),
+		'link_class' => 'forgot_link',
+	));
+
+	return $return;
+}
+
 
 /**
  * Navigation initialization
@@ -517,6 +542,7 @@ function elgg_nav_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_entity_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:widget', 'elgg_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'elgg_annotation_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:login', 'elgg_login_menu_setup');
 }
 
 elgg_register_event_handler('init', 'system', 'elgg_nav_init');
