@@ -86,13 +86,6 @@ $CONFIG->language_paths;
 $CONFIG->translations;
 
 /**
- * Stores input used by {@link set_input()} and {@link get_input()}.
- *
- * @global array $CONFIG->input
- */
-$CONFIG->input;
-
-/**
  * An array of metadata names to be used as tags.
  *
  * Because tags are simply names of meatdata, This is used
@@ -102,17 +95,6 @@ $CONFIG->input;
  * @global array $CONFIG->registered_tag_metadata_names
  */
 $CONFIG->registered_tag_metadata_names;
-
-/**
- * An associative array of page handlers and their function names.
- *
- * Page handlers must be registered by {@link elgg_register_page_handler()} and
- * will be dispatched by {@link engine/handlers/pagehandler.php} to the
- * proper function.
- *
- *  @global array $CONFIG->pagehandler
- */
-$CONFIG->pagehandler;
 
 /**
  * The full path where Elgg is installed.
