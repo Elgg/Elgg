@@ -22,14 +22,14 @@ class Elgg_Request {
 	/**
 	 * Constructor
 	 * 
-	 * @param ElggPluginHookService $hooks    For plugin-customizable input filtering.
-	 * @param array                 $_SERVER  An array that conforms to the $_SERVER api.
-	 * @param array                 $_REQUEST An array that conforms to the $_REQUEST api.
+	 * @param ElggPluginHookService $hooks   For plugin-customizable input filtering.
+	 * @param array                 $server  An array that conforms to the $_SERVER api.
+	 * @param array                 $request An array that conforms to the $_REQUEST api.
 	 */
-	public function __construct(ElggPluginHookService $hooks, array $_SERVER, array $_REQUEST = array()) {
+	public function __construct(ElggPluginHookService $hooks, array $server, array $request = array()) {
 		$this->hooks = $hooks;
-		$this->server = $_SERVER;
-		$this->request = $_REQUEST;
+		$this->server = $server;
+		$this->request = $request;
 	}
 
 	/**
