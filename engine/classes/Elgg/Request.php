@@ -46,6 +46,8 @@ class Elgg_Request {
 	 * 
 	 * @param string $name  The input key.
 	 * @param mixed  $value The input value.
+	 * 
+	 * @return void
 	 */
 	public function setInput($name, $value) {
 		if (is_array($value)) {
