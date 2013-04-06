@@ -3,12 +3,25 @@
 /**
  * Simplified representation of an HTTP request.
  * 
+ * Plugin devs should use these wrapper functions:
+ *  * set_input
+ *  * get_input
+ *  * filter_tags
+ * 
+ * @package    Elgg.Core
+ * @subpackage Request
+ * @since      1.9.0
  * @access private
  */
 class Elgg_Request {
 	private $input = array();
+	private $hooks;
+	private $server;
+	private $request;
 	
 	/**
+	 * Constructor
+	 * 
 	 * @param ElggPluginHookService $hooks    For plugin-customizable input filtering.
 	 * @param array                 $_SERVER  An array that conforms to the $_SERVER api.
 	 * @param array                 $_REQUEST An array that conforms to the $_REQUEST api.
@@ -20,6 +33,8 @@ class Elgg_Request {
 	}
 
 	/**
+	 * Get the currently requested URL path.
+	 * 
 	 * @return string The path relative to the site root. Includes leading slash.
 	 */
 	public function getPath() {
@@ -27,6 +42,8 @@ class Elgg_Request {
 	}
 
 	/**
+	 * Force an input parameter to be a certain value.
+	 * 
 	 * @param string $name  The input key.
 	 * @param mixed  $value The input value.
 	 */
@@ -40,6 +57,8 @@ class Elgg_Request {
 	}
 	
 	/**
+	 * Get the current value of a given input parameter.
+	 * 
 	 * @param string  $name          The input key.
 	 * @param mixed   $default       The default value of the input if not yet set.
 	 * @param boolean $filter_result Whether to send input through HTML filtering.
@@ -75,7 +94,10 @@ class Elgg_Request {
 	}
 	
 	/**
+	 * Filter some user-provided HTML for XSS, etc.
+	 * 
 	 * TODO(evan): Move to ElggPluginHookService?
+	 * 
 	 * @param string $var The HTML string to filter.
 	 * 
 	 * @return string The filtered HTML input.

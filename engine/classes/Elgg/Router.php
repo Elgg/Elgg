@@ -3,11 +3,24 @@
 /**
  * Delegates requests to controllers based on the registered configuration.
  * 
+ * Plugin devs should use these wrapper functions:
+ *  * elgg_register_page_handler
+ *  * elgg_unregister_page_handler
+ * 
+ * @package    Elgg.Core
+ * @subpackage Router
+ * @since      1.9.0
  * @access private
  */
 class Elgg_Router {
 	private $pagehandlers = array();
-		
+	private $hooks;
+	
+	/**
+	 * Constructor
+	 * 
+	 * @param ElggPluginHookService $hooks For highly customized routing.
+	 */
 	public function __construct(ElggPluginHookService $hooks) {
 		$this->hooks = $hooks;
 	}
@@ -66,6 +79,9 @@ class Elgg_Router {
 	
 
 	/**
+	 * Register a function that gets called when the first part of a URL is
+	 * equal to the handler.
+	 * 
 	 * @param string $handler  The page type to handle
 	 * @param string $function Your function name
 	 *
@@ -81,9 +97,11 @@ class Elgg_Router {
 	}
 	
 	/**
+	 * Any previously registered functions will not be called for urls beginning
+	 * with `/$handler/`
+	 * 
 	 * @param string $handler The page type identifier
 	 *
-	 * @since 1.7.2
 	 * @return void
 	 */
 	function unregisterPageHandler($handler) {
