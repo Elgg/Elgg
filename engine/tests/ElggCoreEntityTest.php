@@ -6,6 +6,12 @@
  * @subpackage Test
  */
 class ElggCoreEntityTest extends ElggCoreUnitTest {
+
+	/**
+	 * @var ElggEntityTest
+	 */
+	protected $entity;
+
 	/**
 	 * Called before each test method.
 	 */

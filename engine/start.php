@@ -95,6 +95,7 @@ $lib_files = array(
 	'pam.php',
 	'plugins.php',
 	'private_settings.php',
+	'query_modification.php',
 	'relationships.php',
 	'river.php',
 	'sessions.php',
@@ -108,7 +109,7 @@ $lib_files = array(
 	'views.php',
 	'widgets.php',
 	'xml.php',
-	
+
 	// backward compatibility
 	'deprecated-1.7.php',
 	'deprecated-1.8.php',

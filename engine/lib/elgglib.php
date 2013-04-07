@@ -1978,6 +1978,11 @@ function elgg_init() {
 	elgg_register_action('comments/add');
 	elgg_register_action('comments/delete');
 
+	elgg_register_action('collections/add_item');
+	elgg_register_action('collections/delete_item');
+	elgg_register_action('collections/delete');
+	elgg_register_action('collections/rearrange');
+
 	elgg_register_page_handler('js', 'elgg_js_page_handler');
 	elgg_register_page_handler('css', 'elgg_css_page_handler');
 	elgg_register_page_handler('ajax', 'elgg_ajax_page_handler');

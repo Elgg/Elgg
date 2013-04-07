@@ -1092,6 +1092,23 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'user:default_access:failure' => "Your new default access level could not be saved.",
 
 /**
+ * Collections
+ */
+	'collection:could_not_load_container_entity' => 'Sorry, the collection could not be accessed because its container could not be loaded.',
+	'collection:add:cannot_create_or_edit' => 'Sorry, you lack permission to edit or create the collection.',
+	'collection:add:item_nonexistant' => 'Sorry, the item does not exist and so could not be added to your collection.',
+	'collection:add:already_in_collection' => 'The item is already in your collection.',
+	'collection:add:item_added' => 'The item was successfully added to your collection.',
+	'collection:cant_see_collection' => 'Sorry, the collection does not exist or you cannot access it.',
+	'collection:cant_edit' => 'Sorry, you lack permission to edit the collection.',
+	'collection:deleted' => 'The collection was successfully deleted.',
+	'collection:del:not_in_collection' => 'Sorry, the item was not in your collection and so could not be removed.',
+	'collection:del:item_removed' => 'The item was successfully removed from your collection.',
+	'collection:rearrange:success' => 'The collection was successfully reordered.',
+	'collection:rearrange:failed' => 'Sorry, due to an unexpected error, your collection could not be reordered.',
+	'collection:rearrange:invalid_input' => 'Sorry, due to an unexpected error, your collection could not be reordered.',
+
+/**
  * Comments
  */
 
