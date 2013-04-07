@@ -337,8 +337,8 @@ return array(
 	'groups:searchtitle' => "Searching for groups: %s",
 	'advancedsearchtitle' => "%s with results matching %s",
 	'notfound' => "No results found.",
-	'next' => "Next",
-	'previous' => "Previous",
+	'next' => "Next &raquo;",
+	'previous' => "&laquo; Previous",
 
 	'viewtype:change' => "Change list type",
 	'viewtype:list' => "List view",
