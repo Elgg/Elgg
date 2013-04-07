@@ -6,23 +6,24 @@
  * We extend the container because it allows us to document properties in the PhpDoc, which assists
  * IDEs to auto-complete properties and understand the types returned. Extension allows us to keep
  * the container generic.
- *
- * @access private
  * 
+ * @property-read Elgg_ActionsService       $actions
+ * @property-read Elgg_AmdConfig            $amdConfig
+ * @property-read ElggAutoP                 $autoP
+ * @property-read Elgg_AutoloadManager      $autoloadManager
+ * @property-read ElggDatabase              $db
+ * @property-read ElggEventService          $events
+ * @property-read ElggPluginHookService     $hooks
+ * @property-read ElggLogger                $logger
  * @property-read ElggVolatileMetadataCache $metadataCache
- * @property-read Elgg_ActionsService $actions
- * @property-read ElggPluginHookService $hooks
- * @property-read ElggEventService $events
- * @property-read Elgg_WidgetsService $widgets
- * @property-read ElggViewService $views
- * @property-read ElggAutoP $autoP
- * @property-read ElggDatabase $db
- * @property-read Elgg_AutoloadManager $autoloadManager
- * @property-read ElggLogger $logger
- * @property-read Elgg_AmdConfig $amdConfig
- * @property-read ElggSession $session
+ * @property-read Elgg_Request              $request
+ * @property-read Elgg_Router               $router
+ * @property-read ElggSession               $session
+ * @property-read ElggViewService           $views
+ * @property-read Elgg_WidgetsService       $widgets
  * 
  * @package Elgg.Core
+ * @access private
  */
 class Elgg_ServiceProvider extends Elgg_DIContainer {
 
@@ -49,16 +50,18 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setValue('autoloadManager', $autoload_manager);
 
 		$this->setFactory('actions', array($this, 'getActions'));
-		$this->setFactory('hooks', array($this, 'getHooks'));
-		$this->setFactory('events', array($this, 'getEvents'));
-		$this->setFactory('widgets', array($this, 'getWidgets'));
-		$this->setFactory('views', array($this, 'getViews'));
+		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 		$this->setFactory('autoP', array($this, 'getAutoP'));
+		$this->setFactory('db', array($this, 'getDb'));
+		$this->setFactory('events', array($this, 'getEvents'));
+		$this->setFactory('hooks', array($this, 'getHooks'));
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setFactory('metadataCache', array($this, 'getMetadataCache'));
-		$this->setFactory('db', array($this, 'getDb'));
-		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
+		$this->setFactory('request', array($this, 'getRequest'));
+		$this->setFactory('router', array($this, 'getRouter'));
 		$this->setFactory('session', array($this, 'getSession'));
+		$this->setFactory('views', array($this, 'getViews'));
+		$this->setFactory('widgets', array($this, 'getWidgets'));
 	}
 
 	/**
@@ -175,5 +178,26 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$session = new ElggSession($storage);
 		$session->setName('Elgg');
 		return $session;
+	}
+	
+	/**
+	 * Request factory
+	 * 
+	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @return Elgg_Request
+	 */
+	protected function getRequest(Elgg_DIContainer $c) {
+		return new Elgg_Request($c->hooks, $_SERVER, $_REQUEST);
+	}
+	
+	/**
+	 * Router factory
+	 * 
+	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @return Elgg_Router
+	 */
+	protected function getRouter(Elgg_DIContainer $c) {
+		// TODO(evan): Init routes from plugins or cache
+		return new Elgg_Router($c->hooks);
 	}
 }

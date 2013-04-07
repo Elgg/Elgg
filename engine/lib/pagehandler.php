@@ -7,56 +7,6 @@
  */
 
 /**
- * Routes the request to a registered page handler
- *
- * This function sets the context based on the handler name (first segment of the
- * URL). It also triggers a plugin hook 'route', $handler so that plugins can
- * modify the routing or handle a request.
- *
- * @param string $handler The name of the handler type (eg 'blog')
- * @param array  $page    The parameters to the page, as an array (exploded by '/' slashes)
- *
- * @return bool
- * @access private
- */
-function page_handler($handler, $page) {
-	global $CONFIG;
-
-	elgg_set_context($handler);
-
-	$page = explode('/', $page);
-	// remove empty array element when page url ends in a / (see #1480)
-	if ($page[count($page) - 1] === '') {
-		array_pop($page);
-	}
-
-	// return false to stop processing the request (because you handled it)
-	// return a new $request array if you want to route the request differently
-	$request = array(
-		'handler' => $handler,
-		'segments' => $page,
-	);
-	$request = elgg_trigger_plugin_hook('route', $handler, null, $request);
-	if ($request === false) {
-		return true;
-	}
-
-	$handler = $request['handler'];
-	$page = $request['segments'];
-
-	$result = false;
-	if (isset($CONFIG->pagehandler)
-			&& !empty($handler)
-			&& isset($CONFIG->pagehandler[$handler])
-			&& is_callable($CONFIG->pagehandler[$handler])) {
-		$function = $CONFIG->pagehandler[$handler];
-		$result = call_user_func($function, $page, $handler);
-	}
-
-	return $result || headers_sent();
-}
-
-/**
  * Registers a page handler for a particular identifier
  *
  * For example, you can register a function called 'blog_page_handler' for handler type 'blog'
@@ -82,17 +32,7 @@ function page_handler($handler, $page) {
  * @return bool Depending on success
  */
 function elgg_register_page_handler($handler, $function) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->pagehandler)) {
-		$CONFIG->pagehandler = array();
-	}
-	if (is_callable($function, true)) {
-		$CONFIG->pagehandler[$handler] = $function;
-		return true;
-	}
-
-	return false;
+	return _elgg_services()->router->registerPageHandler($handler, $function);
 }
 
 /**
@@ -106,13 +46,7 @@ function elgg_register_page_handler($handler, $function) {
  * @return void
  */
 function elgg_unregister_page_handler($handler) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->pagehandler)) {
-		return;
-	}
-
-	unset($CONFIG->pagehandler[$handler]);
+	_elgg_services()->router->unregisterPageHandler($handler);
 }
 
 /**
