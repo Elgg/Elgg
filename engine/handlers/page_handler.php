@@ -46,9 +46,9 @@ if ($uri !== $new_uri) {
 	exit;
 }
 
-$handler = get_input('handler');
-$page = get_input('page');
+$router = _elgg_services()->router;
+$request = _elgg_services()->request;
 
-if (!page_handler($handler, $page)) {
+if (!$router->route($request)) {
 	forward('', '404');
 }
