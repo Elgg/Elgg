@@ -48,7 +48,7 @@ $release = get_version(true);
 	<?php echo elgg_view('page/elements/shortcut_icon', $vars); ?>
 
 <?php foreach ($css as $link) { ?>
-	<link rel="stylesheet" href="<?php echo $link; ?>" type="text/css" />
+	<link rel="stylesheet" href="<?php echo $link; ?>" />
 <?php } ?>
 
 <?php
@@ -57,25 +57,21 @@ $release = get_version(true);
 	$ie7_url = elgg_get_simplecache_url('css', 'ie7');
 ?>
 	<!--[if gt IE 8]>
-		<link rel="stylesheet" type="text/css" href="<?php echo $ie_url; ?>" />
+		<link rel="stylesheet" href="<?php echo $ie_url; ?>" />
 	<![endif]-->
 	<!--[if IE 8]>
-		<link rel="stylesheet" type="text/css" href="<?php echo $ie8_url; ?>" />
+		<link rel="stylesheet" href="<?php echo $ie8_url; ?>" />
 	<![endif]-->
 	<!--[if IE 7]>
-		<link rel="stylesheet" type="text/css" href="<?php echo $ie7_url; ?>" />
+		<link rel="stylesheet" href="<?php echo $ie7_url; ?>" />
 	<![endif]-->
 
 <script>var require = <?php echo json_encode($amdConfig); ?>;</script>
-<?php foreach ($js as $script) { ?>
-	<script type="text/javascript" src="<?php echo $script; ?>"></script>
-<?php } ?>
+<script><?php echo elgg_view('js/initialize_elgg'); ?></script>
 
-<script type="text/javascript">
-// <![CDATA[
-	<?php echo elgg_view('js/initialize_elgg'); ?>
-// ]]>
-</script>
+<?php foreach ($js as $script) { ?>
+	<script src="<?php echo $script; ?>"></script>
+<?php } ?>
 
 <?php
 echo $feedref;

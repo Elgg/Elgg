@@ -1,9 +1,7 @@
 /**
  * Hold security-related data here
  */
-elgg.provide('elgg.security');
-
-elgg.security.token = {};
+elgg.provide('elgg.security.token');
 
 elgg.security.tokenRefreshFailed = false;
 
