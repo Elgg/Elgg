@@ -16,7 +16,7 @@ $elgg = array(
 		),
 	),
 	'session' => array(
-		'user' => array(),
+		'user' => null,
 	),
 );
 
