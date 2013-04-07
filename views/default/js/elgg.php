@@ -50,6 +50,7 @@ foreach ($libs as $file) {
 /**
  * Set some values that are cacheable
  */
+
 ?>
 
 // <script>
@@ -57,32 +58,30 @@ foreach ($libs as $file) {
 elgg.version = '<?php echo get_version(); ?>';
 elgg.release = '<?php echo get_version(true); ?>';
 elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
-<?php // refresh token 3 times during its lifetime (in microseconds 1000 * 1/3) ?>
+
+// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
 elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTokenTimeout() * 333; ?>;
 elgg.config.language = '<?php echo isset($CONFIG->language) ? $CONFIG->language : 'en'; ?>';
 
-elgg.register_hook_handler('boot', 'system', function() {
-
-	// Once the system has booted, the user language pref has been set,
-	// so we can load the correct translations
-	var languagesUrl = elgg.config.wwwroot + 'ajax/view/js/languages?language=' + elgg.get_language();
-	define('elgg', ['jquery', languagesUrl], function($, translations) {
-		elgg.add_translation(elgg.get_language(), translations);
-		
-		$(function() {
-			elgg.trigger_hook('init', 'system');
-			elgg.trigger_hook('ready', 'system');		
-		});
-		
-		return elgg;
+var languagesUrl = elgg.config.wwwroot + 'ajax/view/js/languages?language=' + elgg.get_language();
+define('elgg', ['jquery', languagesUrl], function($, translations) {
+	elgg.add_translation(elgg.get_language(), translations);
+	
+	$(function() {
+		elgg.trigger_hook('init', 'system');
+		elgg.trigger_hook('ready', 'system');		
 	});
-	require(['elgg']); // Forces the define() function to always run
+	
+	return elgg;
 });
+require(['elgg']); // Forces the define() function to always run
 
 <?php
-
 $previous_content = elgg_view('js/initialise_elgg');
 if ($previous_content) {
 	elgg_deprecated_notice("The view 'js/initialise_elgg' has been deprecated for js/elgg", 1.8);
 	echo $previous_content;
 }
+?>
+
+elgg.trigger_hook('boot', 'system');
