@@ -450,7 +450,7 @@
 	ENTITY AND ANNOTATION
 *************************************** */
 <?php // height depends on line height/font size ?>
-.elgg-menu-entity, elgg-menu-annotation {
+.elgg-menu-entity, .elgg-menu-annotation {
 	float: right;
 	margin-left: 15px;
 	font-size: 90%;
