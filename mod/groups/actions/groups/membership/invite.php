@@ -12,11 +12,11 @@ if (!is_array($user_guid)) {
 	$user_guid = array($user_guid);
 }
 $group_guid = get_input('group_guid');
+$group = get_entity($group_guid);
 
 if (sizeof($user_guid)) {
 	foreach ($user_guid as $u_id) {
 		$user = get_entity($u_id);
-		$group = get_entity($group_guid);
 
 		if ($user && $group && ($group instanceof ElggGroup) && $group->canEdit()) {
 
