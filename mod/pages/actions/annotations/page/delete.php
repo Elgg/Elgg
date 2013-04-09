@@ -5,11 +5,6 @@
  * @package ElggPages
  */
 
-// Ensure we're logged in
-if (!elgg_is_logged_in()) {
-	forward();
-}
-
 // Make sure we can get the annotations and entity in question
 $annotation_id = (int) get_input('annotation_id');
 $annotation = elgg_get_annotation_from_id($annotation_id);
