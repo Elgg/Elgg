@@ -9,7 +9,7 @@
  * @param ElggObject $page
  * @return array
  */
-function pages_prepare_form_vars($page = null, $parent_guid = 0) {
+function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = null) {
 
 	// input names => defaults
 	$values = array(
@@ -40,6 +40,11 @@ function pages_prepare_form_vars($page = null, $parent_guid = 0) {
 	}
 
 	elgg_clear_sticky_form('page');
+
+	// load the revision annotation if requested
+	if ($revision instanceof ElggAnnotation && $revision->entity_guid == $page->getGUID()) {
+		$values['description'] = $revision->value;
+	}
 
 	return $values;
 }

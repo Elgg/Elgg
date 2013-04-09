@@ -28,9 +28,10 @@ function pages_init() {
 	elgg_register_annotation_url_handler('page', 'pages_revision_url');
 
 	// Register some actions
-	$action_base = elgg_get_plugins_path() . 'pages/actions/pages';
-	elgg_register_action("pages/edit", "$action_base/edit.php");
-	elgg_register_action("pages/delete", "$action_base/delete.php");
+	$action_base = elgg_get_plugins_path() . 'pages/actions';
+	elgg_register_action("pages/edit", "$action_base/pages/edit.php");
+	elgg_register_action("pages/delete", "$action_base/pages/delete.php");
+	elgg_register_action("annotations/page/delete", "$action_base/annotations/page/delete.php");
 
 	// Extend the main css view
 	elgg_extend_view('css/elgg', 'pages/css');
@@ -82,6 +83,9 @@ function pages_init() {
 
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
+
+	// hook into annotation menu
+	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'pages_annotation_menu_setup');
 }
 
 /**
@@ -361,4 +365,73 @@ function pages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/page_top'] = elgg_echo('item:object:page_top');
 
 	return $return_value;
+}
+
+/**
+ * Adds items to "page" annotations menu
+ *
+ * @param unknown_type $hook
+ * @param unknown_type $entity_type
+ * @param unknown_type $return_value
+ * @param unknown_type $params
+ */
+function pages_annotation_menu_setup($hook, $type, $return, $params) {
+	$annotation = $params['annotation'];
+	/* @var ElggAnnotation $annotation */
+
+	$entity = get_entity($annotation->entity_guid);
+
+	if ($annotation->name == 'page' && $entity->canEdit() && $annotation->canEdit()) {
+		// Get last revision
+		$revisions = elgg_get_annotations(array(
+			'annotation_name' => 'page', 
+			'limit' => 1, 
+			'guid' => $annotation->entity_guid,
+			'reverse_order_by' => true,
+		));
+
+		// Check if this annotation is the last revision
+		if ($revisions) {
+			$current_revision = $revisions[0];
+			if ($current_revision == $annotation) {
+				// Don't allow any actions on last revision, just display 'current revision'
+				$options = array(
+					'name' => 'current',
+					'href' => false,
+					'text' => elgg_echo('pages:current_revision'),
+					'encode_text' => false
+				);
+				$return[] = ElggMenuItem::factory($options);
+				return $return;
+			}
+		}
+
+		// Revert
+		$options = array(
+			'name' => 'revert',
+			'href' => elgg_http_add_url_query_elements("pages/edit/{$annotation->entity_guid}", array(
+				'annotation_id' => $annotation->id
+			)),
+			'text' => elgg_echo('pages:revert'),
+			'encode_text' => false
+		);
+		$return[] = ElggMenuItem::factory($options);
+
+
+		// Delete
+		$url = elgg_http_add_url_query_elements('action/annotations/page/delete', array(
+			'annotation_id' => $annotation->id,
+		));
+
+		$options = array(
+			'name' => 'delete',
+			'href' => $url,
+			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
+			'confirm' => elgg_echo('deleteconfirm'),
+			'encode_text' => false
+		);
+		$return[] = ElggMenuItem::factory($options);
+	}
+
+	return $return;
 }
