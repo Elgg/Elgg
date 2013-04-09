@@ -8,15 +8,15 @@
  * $c = new Elgg_DIContainer();
  *
  * $c->setFactory('foo', 'Foo_factory'); // $c will be passed to Foo_factory()
- * $c->get('foo'); // new Foo instance
- * $c->get('foo'); // same instance
+ * $c->foo; // new Foo instance
+ * $c->foo; // same instance
  *
  * $c->setFactory('bar', 'Bar_factory', false); // non-shared
- * $c->get('bar'); // new Bar instance
- * $c->get('bar'); // different Bar instance
+ * $c->bar; // new Bar instance
+ * $c->bar; // different Bar instance
  *
  * $c->setValue('a_string', 'foo_factory'); // don't call this
- * $c->get('a_string'); // 'foo_factory'
+ * $c->a_string; // 'foo_factory'
  * </code>
  *
  * @access private
@@ -35,6 +35,8 @@ class Elgg_DIContainer {
 	 * @var array
 	 */
 	protected $cache = array();
+	
+	const CLASS_NAME_PATTERN = '/^(\\\\?[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*)+$/i';
 
 	/**
 	 * Fetch a value.
@@ -43,7 +45,7 @@ class Elgg_DIContainer {
 	 * @return mixed
 	 * @throws Elgg_DIContainer_MissingValueException
 	 */
-	public function get($name) {
+	public function __get($name) {
 		if (array_key_exists($name, $this->cache)) {
 			return $this->cache[$name];
 		}
@@ -114,6 +116,23 @@ class Elgg_DIContainer {
 			'callable' => $factory,
 			'shared' => $shared
 		);
+		return $this;
+	}
+
+	/**
+	 * Set simple factories based on class names. 
+	 * 
+	 * @param array $map map of container names to class names
+	 * @return Elgg_DIContainer
+	 * @throws InvalidArgumentException
+	 */
+	public function setClassNames(array $map) {
+		foreach ($map as $name => $classname) {
+			if (!is_string($classname) || !preg_match(self::CLASS_NAME_PATTERN, $classname)) {
+				throw new InvalidArgumentException('Class names must be valid PHP class names');
+			}
+			$this->setFactory($name, create_function('', "return new $classname();"));
+		}
 		return $this;
 	}
 
