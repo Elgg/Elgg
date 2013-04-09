@@ -35,8 +35,9 @@ class Elgg_DIContainer {
 	 * @var array
 	 */
 	protected $cache = array();
-	
-	const CLASS_NAME_PATTERN = '/^(\\\\?[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*)+$/i';
+
+	const CLASS_NAME_PATTERN_52 = '/^[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*$/i';
+	const CLASS_NAME_PATTERN_53 = '/^(\\\\?[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*)+$/i';
 
 	/**
 	 * Fetch a value.
@@ -127,8 +128,11 @@ class Elgg_DIContainer {
 	 * @throws InvalidArgumentException
 	 */
 	public function setClassNames(array $map) {
+		$classname_pattern = version_compare(PHP_VERSION, '5.3', '<')
+			? self::CLASS_NAME_PATTERN_52
+			: self::CLASS_NAME_PATTERN_53;
 		foreach ($map as $name => $classname) {
-			if (!is_string($classname) || !preg_match(self::CLASS_NAME_PATTERN, $classname)) {
+			if (!is_string($classname) || !preg_match($classname_pattern, $classname)) {
 				throw new InvalidArgumentException('Class names must be valid PHP class names');
 			}
 			$this->setFactory($name, create_function('', "return new $classname();"));

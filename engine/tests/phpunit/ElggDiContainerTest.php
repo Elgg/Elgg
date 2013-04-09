@@ -97,11 +97,17 @@ class ElggDIContainerTest extends PHPUnit_Framework_TestCase {
 		$di = new Elgg_DIContainer();
 		
 		$euro = "\xE2\x82\xAC";
-		$di->setClassNames(array(
+		
+		$map = array(
 			'foo1' => "Foo2{$euro}3",
-			'foo2' => "\\Foo2{$euro}3",
-			'foo3' => "\\Foo2{$euro}3\\Foo2{$euro}3",
-		));
+		);
+
+		if (version_compare(PHP_VERSION, '5.3', '>=')) {
+			$map['foo2'] = "\\Foo2{$euro}3";
+			$map['foo3'] = "Foo2{$euro}3\\Foo2{$euro}3";
+		}
+
+		$di->setClassNames($map);
 		
 		$this->setExpectedException('InvalidArgumentException', 'Class names must be valid PHP class names');
 		$di->setClassNames(array('foo' => 'Not Valid'));
