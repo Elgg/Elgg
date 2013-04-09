@@ -28,20 +28,6 @@
 class Elgg_ServiceProvider extends Elgg_DIContainer {
 
 	/**
-	 * Get a value from service provider
-	 * 
-	 * @param string $name Name of the value
-	 * @return mixed
-	 * @throws RuntimeException
-	 */
-	public function __get($name) {
-		if ($this->has($name)) {
-			return $this->get($name);
-		}
-		throw new RuntimeException("Property '$name' does not exist");
-	}
-
-	/**
 	 * Constructor
 	 * 
 	 * @param Elgg_AutoloadManager $autoload_manager Class autoloader
@@ -49,118 +35,48 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	public function __construct(Elgg_AutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
 
-		$this->setFactory('actions', array($this, 'getActions'));
+		$this->setClassName('actions', 'Elgg_ActionsService');
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
-		$this->setFactory('autoP', array($this, 'getAutoP'));
-		$this->setFactory('db', array($this, 'getDb'));
-		$this->setFactory('events', array($this, 'getEvents'));
-		$this->setFactory('hooks', array($this, 'getHooks'));
+		$this->setClassName('autoP', 'ElggAutoP');
+		$this->setClassName('db', 'ElggDatabase');
+		$this->setClassName('events', 'ElggEventService');
+		$this->setClassName('hooks', 'ElggPluginHookService');
 		$this->setFactory('logger', array($this, 'getLogger'));
-		$this->setFactory('metadataCache', array($this, 'getMetadataCache'));
+		$this->setClassName('metadataCache', 'ElggVolatileMetadataCache');
 		$this->setFactory('request', array($this, 'getRequest'));
 		$this->setFactory('router', array($this, 'getRouter'));
 		$this->setFactory('session', array($this, 'getSession'));
 		$this->setFactory('views', array($this, 'getViews'));
-		$this->setFactory('widgets', array($this, 'getWidgets'));
-	}
-
-	/**
-	 * Actions service factory
-	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
-	 * @return Elgg_ActionsService
-	 */
-	protected function getActions(Elgg_DIContainer $c) {
-		return new Elgg_ActionsService();
-	}
-
-	/**
-	 * Hooks service factory
-	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
-	 * @return ElggPluginHookService
-	 */
-	protected function getHooks(Elgg_DIContainer $c) {
-		return new ElggPluginHookService();
-	}
-
-	/**
-	 * Event service factory
-	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
-	 * @return ElggEventService
-	 */
-	protected function getEvents(Elgg_DIContainer $c) {
-		return new ElggEventService();
-	}
-
-	/**
-	 * Widgets service factory
-	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
-	 * @return Elgg_WidgetsService
-	 */
-	protected function getWidgets(Elgg_DIContainer $c) {
-		return new Elgg_WidgetsService();
-	}
-
-	/**
-	 * Metadata cache factory
-	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
-	 * @return ElggVolatileMetadataCache
-	 */
-	protected function getMetadataCache(Elgg_DIContainer $c) {
-		return new ElggVolatileMetadataCache();
-	}
-
-	/**
-	 * Database factory
-	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
-	 * @return ElggDatabase
-	 */
-	protected function getDb(Elgg_DIContainer $c) {
-		return new ElggDatabase();
+		$this->setClassName('widgets', 'Elgg_WidgetsService');
 	}
 
 	/**
 	 * Logger factory
 	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @param Elgg_ServiceProvider $c Dependency injection container
 	 * @return ElggLogger
 	 */
-	protected function getLogger(Elgg_DIContainer $c) {
-		return new ElggLogger($c->get('hooks'));
+	protected function getLogger(Elgg_ServiceProvider $c) {
+		return new ElggLogger($c->hooks);
 	}
 
 	/**
 	 * Views service factory
 	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @param Elgg_ServiceProvider $c Dependency injection container
 	 * @return ElggViewService
 	 */
-	protected function getViews(Elgg_DIContainer $c) {
+	protected function getViews(Elgg_ServiceProvider $c) {
 		return new ElggViewService($c->hooks, $c->logger);
-	}
-
-	/**
-	 * Paragraph formatter factory
-	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
-	 * @return ElggAutoP
-	 */
-	protected function getAutoP(Elgg_DIContainer $c) {
-		return new ElggAutoP();
 	}
 
 	/**
 	 * AMD Config factory
 	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @param Elgg_ServiceProvider $c Dependency injection container
 	 * @return Elgg_AmdConfig
 	 */
-	protected function getAmdConfig(Elgg_DIContainer $c) {
+	protected function getAmdConfig(Elgg_ServiceProvider $c) {
 		$obj = new Elgg_AmdConfig();
 		$obj->setBaseUrl(_elgg_get_simplecache_root() . "js/");
 		return $obj;
@@ -169,10 +85,10 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	/**
 	 * Session factory
 	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @param Elgg_ServiceProvider $c Dependency injection container
 	 * @return ElggSession
 	 */
-	protected function getSession(Elgg_DIContainer $c) {
+	protected function getSession(Elgg_ServiceProvider $c) {
 		$handler = new Elgg_Http_DatabaseSessionHandler($c->db);
 		$storage = new Elgg_Http_NativeSessionStorage($handler);
 		$session = new ElggSession($storage);
@@ -183,20 +99,20 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	/**
 	 * Request factory
 	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @param Elgg_ServiceProvider $c Dependency injection container
 	 * @return Elgg_Request
 	 */
-	protected function getRequest(Elgg_DIContainer $c) {
+	protected function getRequest(Elgg_ServiceProvider $c) {
 		return new Elgg_Request($c->hooks, $_SERVER, $_REQUEST);
 	}
 	
 	/**
 	 * Router factory
 	 * 
-	 * @param Elgg_DIContainer $c Dependency injection container
+	 * @param Elgg_ServiceProvider $c Dependency injection container
 	 * @return Elgg_Router
 	 */
-	protected function getRouter(Elgg_DIContainer $c) {
+	protected function getRouter(Elgg_ServiceProvider $c) {
 		// TODO(evan): Init routes from plugins or cache
 		return new Elgg_Router($c->hooks);
 	}

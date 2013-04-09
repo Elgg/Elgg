@@ -328,7 +328,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertEqual(11, $j);
 	}
 
-	static function elgg_batch_callback_test($options, $reset = false) {
+	public static function elgg_batch_callback_test($options, $reset = false) {
 		static $count = 1;
 
 		if ($reset) {
