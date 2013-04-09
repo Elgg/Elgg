@@ -85,12 +85,12 @@ class ElggDIContainerTest extends PHPUnit_Framework_TestCase {
 	
 	public function testSetClassNames() {
 		$di = new Elgg_DIContainer();
-		$di->setClassNames(array('foo' => self::TEST_CLASS));
+		$di->setClassName('foo', self::TEST_CLASS);
 
 		$this->assertInstanceOf(self::TEST_CLASS, $di->foo);
 		
 		$this->setExpectedException('InvalidArgumentException', 'Class names must be valid PHP class names');
-		$di->setClassNames(array('foo' => array()));
+		$di->setClassName('foo', array());
 	}
 	
 	public function testSettingInvalidClassNameThrows() {
@@ -98,19 +98,15 @@ class ElggDIContainerTest extends PHPUnit_Framework_TestCase {
 		
 		$euro = "\xE2\x82\xAC";
 		
-		$map = array(
-			'foo1' => "Foo2{$euro}3",
-		);
+		$di->setClassName('foo1', "Foo2{$euro}3");
 
 		if (version_compare(PHP_VERSION, '5.3', '>=')) {
-			$map['foo2'] = "\\Foo2{$euro}3";
-			$map['foo3'] = "Foo2{$euro}3\\Foo2{$euro}3";
+			$di->setClassName('foo2', "\\Foo2{$euro}3");
+			$di->setClassName('foo3', "Foo2{$euro}3\\Foo2{$euro}3");
 		}
-
-		$di->setClassNames($map);
 		
 		$this->setExpectedException('InvalidArgumentException', 'Class names must be valid PHP class names');
-		$di->setClassNames(array('foo' => 'Not Valid'));
+		$di->setClassName('foo', 'Not Valid');
 	}
 
 	public function testAccessRemovedValue() {

@@ -35,23 +35,19 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	public function __construct(Elgg_AutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
 
-		$classNames = array();
-		
-		$classNames['actions'] = 'Elgg_ActionsService';
+		$this->setClassName('actions', 'Elgg_ActionsService');
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
-		$classNames['autoP'] = 'ElggAutoP';
-		$classNames['db'] = 'ElggDatabase';
-		$classNames['events'] = 'ElggEventService';
-		$classNames['hooks'] = 'ElggPluginHookService';
+		$this->setClassName('autoP', 'ElggAutoP');
+		$this->setClassName('db', 'ElggDatabase');
+		$this->setClassName('events', 'ElggEventService');
+		$this->setClassName('hooks', 'ElggPluginHookService');
 		$this->setFactory('logger', array($this, 'getLogger'));
-		$classNames['metadataCache'] = 'ElggVolatileMetadataCache';
+		$this->setClassName('metadataCache', 'ElggVolatileMetadataCache');
 		$this->setFactory('request', array($this, 'getRequest'));
 		$this->setFactory('router', array($this, 'getRouter'));
 		$this->setFactory('session', array($this, 'getSession'));
 		$this->setFactory('views', array($this, 'getViews'));
-		$classNames['widgets'] = 'Elgg_WidgetsService';
-		
-		$this->setClassNames($classNames);
+		$this->setClassName('widgets', 'Elgg_WidgetsService');
 	}
 
 	/**

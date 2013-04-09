@@ -20,17 +20,6 @@ function _elgg_services() {
 }
 
 /**
- * @return Elgg_DIContainer
- */
-function elgg_get_dic() {
-	static $dic;
-	if (null === $dic) {
-		$dic = new Elgg_DIContainer();
-	}
-	return $dic;
-}
-
-/**
  * Sets up autoloading and creates the service provider (DIC)
  *
  * Setup global class map and loader instances and add the core classes to the map.

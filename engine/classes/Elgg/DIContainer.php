@@ -102,42 +102,42 @@ class Elgg_DIContainer {
 	/**
 	 * Set a factory to generate a value when the container is read.
 	 *
-	 * @param string   $name    The name of the value
-	 * @param callable $factory Factory for the value
-	 * @param bool     $shared  Whether the same value should be returned for every request
+	 * @param string   $name     The name of the value
+	 * @param callable $callable Factory for the value
+	 * @param bool     $shared   Whether the same value should be returned for every request
 	 * @return Elgg_DIContainer
 	 * @throws InvalidArgumentException
 	 */
-	public function setFactory($name, $factory, $shared = true) {
-		if (!is_callable($factory, true)) {
+	public function setFactory($name, $callable, $shared = true) {
+		if (!is_callable($callable, true)) {
 			throw new InvalidArgumentException('$factory must appear callable');
 		}
 		$this->remove($name);
 		$this->factories[$name] = array(
-			'callable' => $factory,
+			'callable' => $callable,
 			'shared' => $shared
 		);
 		return $this;
 	}
 
 	/**
-	 * Set simple factories based on class names. 
-	 * 
-	 * @param array $map map of container names to class names
+	 * Set a factory based on instantiating a class with no arguments.
+	 *
+	 * @param string $name       Name of the value
+	 * @param string $class_name Class name to be instantiated
+	 * @param bool   $shared     Whether the same value should be returned for every request
 	 * @return Elgg_DIContainer
 	 * @throws InvalidArgumentException
 	 */
-	public function setClassNames(array $map) {
+	public function setClassName($name, $class_name, $shared = true) {
 		$classname_pattern = version_compare(PHP_VERSION, '5.3', '<')
 			? self::CLASS_NAME_PATTERN_52
 			: self::CLASS_NAME_PATTERN_53;
-		foreach ($map as $name => $classname) {
-			if (!is_string($classname) || !preg_match($classname_pattern, $classname)) {
-				throw new InvalidArgumentException('Class names must be valid PHP class names');
-			}
-			$this->setFactory($name, create_function('', "return new $classname();"));
+		if (!is_string($class_name) || !preg_match($classname_pattern, $class_name)) {
+			throw new InvalidArgumentException('Class names must be valid PHP class names');
 		}
-		return $this;
+		$func = create_function('', "return new $class_name();");
+		return $this->setFactory($name, $func, $shared);
 	}
 
 	/**

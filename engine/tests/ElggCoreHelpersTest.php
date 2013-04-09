@@ -327,16 +327,6 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 
 		$this->assertEqual(11, $j);
 	}
-	
-	public function testGetDic() {
-		$dic = elgg_get_dic();
-		
-		$this->assertIsA($dic, 'Elgg_DIContainer');
-		$this->assertIdentical($dic, elgg_get_dic());
-		
-		// separate
-		$this->assertNotIdentical($dic, _elgg_services());
-	}
 
 	public static function elgg_batch_callback_test($options, $reset = false) {
 		static $count = 1;
