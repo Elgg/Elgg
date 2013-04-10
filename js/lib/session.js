@@ -123,3 +123,9 @@ elgg.is_admin_logged_in = function() {
  * @deprecated Use elgg.session.cookie instead
  */
 jQuery.cookie = elgg.session.cookie;
+
+// This just has to happen after ElggUser is defined, however it's probably
+// better to have this procedural code here than in ElggUser.js
+if (elgg.session.user) {
+	elgg.session.user = new elgg.ElggUser(elgg.session.user);
+}
