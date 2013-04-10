@@ -8,15 +8,15 @@
  * $c = new Elgg_DIContainer();
  *
  * $c->setFactory('foo', 'Foo_factory'); // $c will be passed to Foo_factory()
- * $c->get('foo'); // new Foo instance
- * $c->get('foo'); // same instance
+ * $c->foo; // new Foo instance
+ * $c->foo; // same instance
  *
  * $c->setFactory('bar', 'Bar_factory', false); // non-shared
- * $c->get('bar'); // new Bar instance
- * $c->get('bar'); // different Bar instance
+ * $c->bar; // new Bar instance
+ * $c->bar; // different Bar instance
  *
  * $c->setValue('a_string', 'foo_factory'); // don't call this
- * $c->get('a_string'); // 'foo_factory'
+ * $c->a_string; // 'foo_factory'
  * </code>
  *
  * @access private
@@ -36,6 +36,9 @@ class Elgg_DIContainer {
 	 */
 	protected $cache = array();
 
+	const CLASS_NAME_PATTERN_52 = '/^[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*$/i';
+	const CLASS_NAME_PATTERN_53 = '/^(\\\\?[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*)+$/i';
+
 	/**
 	 * Fetch a value.
 	 *
@@ -43,7 +46,7 @@ class Elgg_DIContainer {
 	 * @return mixed
 	 * @throws Elgg_DIContainer_MissingValueException
 	 */
-	public function get($name) {
+	public function __get($name) {
 		if (array_key_exists($name, $this->cache)) {
 			return $this->cache[$name];
 		}
@@ -99,22 +102,42 @@ class Elgg_DIContainer {
 	/**
 	 * Set a factory to generate a value when the container is read.
 	 *
-	 * @param string   $name    The name of the value
-	 * @param callable $factory Factory for the value
-	 * @param bool     $shared  Whether the same value should be returned for every request
+	 * @param string   $name     The name of the value
+	 * @param callable $callable Factory for the value
+	 * @param bool     $shared   Whether the same value should be returned for every request
 	 * @return Elgg_DIContainer
 	 * @throws InvalidArgumentException
 	 */
-	public function setFactory($name, $factory, $shared = true) {
-		if (!is_callable($factory, true)) {
+	public function setFactory($name, $callable, $shared = true) {
+		if (!is_callable($callable, true)) {
 			throw new InvalidArgumentException('$factory must appear callable');
 		}
 		$this->remove($name);
 		$this->factories[$name] = array(
-			'callable' => $factory,
+			'callable' => $callable,
 			'shared' => $shared
 		);
 		return $this;
+	}
+
+	/**
+	 * Set a factory based on instantiating a class with no arguments.
+	 *
+	 * @param string $name       Name of the value
+	 * @param string $class_name Class name to be instantiated
+	 * @param bool   $shared     Whether the same value should be returned for every request
+	 * @return Elgg_DIContainer
+	 * @throws InvalidArgumentException
+	 */
+	public function setClassName($name, $class_name, $shared = true) {
+		$classname_pattern = version_compare(PHP_VERSION, '5.3', '<')
+			? self::CLASS_NAME_PATTERN_52
+			: self::CLASS_NAME_PATTERN_53;
+		if (!is_string($class_name) || !preg_match($classname_pattern, $class_name)) {
+			throw new InvalidArgumentException('Class names must be valid PHP class names');
+		}
+		$func = create_function('', "return new $class_name();");
+		return $this->setFactory($name, $func, $shared);
 	}
 
 	/**
