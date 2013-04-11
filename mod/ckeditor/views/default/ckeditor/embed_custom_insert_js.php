@@ -1,7 +1,7 @@
 	if ($.fn.ckeditorGet) {
 		try {
-			var editor = $(textAreaId).ckeditorGet();
-			editor.execCommand("inserthtml", content);
+			var editor = textArea.ckeditorGet();
+			editor.insertHtml(content);
 		} catch (e) {
 			// do nothing.
 		}
