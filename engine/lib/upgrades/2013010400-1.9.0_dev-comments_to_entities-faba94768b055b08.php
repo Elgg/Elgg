@@ -9,9 +9,6 @@
 // Register subtype and class for comments
 update_subtype('object', 'comment', 'ElggComment');
 
-// Before 1.9 there was no option for disabling comments so enable them by default
-set_config('comments_enabled', TRUE);
-
 $ia = elgg_set_ignore_access(true);
 $batch = new ElggBatch('elgg_get_annotations', array(
 	'annotation_names' => 'generic_comment',

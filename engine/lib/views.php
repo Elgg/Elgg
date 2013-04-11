@@ -954,10 +954,6 @@ function elgg_view_friendly_time($time) {
  * @link http://docs.elgg.org/Annotations/Comments
  */
 function elgg_view_comments($entity, $add_comment = true, array $vars = array()) {
-	if (!elgg_get_config('comments_enabled')) {
-		return false;
-	}
-	
 	if (!($entity instanceof ElggEntity)) {
 		return false;
 	}
