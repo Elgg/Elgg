@@ -1051,9 +1051,6 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:systemcache:description' => "The system cache decreases the loading time of Elgg by caching data to files.",
 	'installation:systemcache:label' => "Use system cache (recommended)",
 
-	'installation:comments:description' => "Allow users to comment on other users' content. (Some content types may allow content owner to disable commenting even if this setting is enabled.)",
-	'installation:comments:label' => "Enable comments",
-
 	'admin:legend:caching' => 'Caching',
 	'admin:legend:content_access' => 'Content Access',
 	'admin:legend:site_access' => 'Site Access',
