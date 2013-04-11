@@ -23,9 +23,14 @@ function comments_init() {
 /**
  * Setup the menu shown with a comment
  *
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ * 
  * @return array
  */
-function elgg_comment_setup_entity_menu($hook, $type, $return, $params) {
+function elgg_comment_setup_entity_menu ($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
@@ -51,13 +56,18 @@ function elgg_comment_setup_entity_menu($hook, $type, $return, $params) {
  * Object being commented is used as the container of the comment so
  * permission check must be overridden if user isn't the owner of the object.
  * 
- * @todo Is this the correct way?
+ * @param string $hook
+ * @param string $type
+ * @param array  $return
+ * @param array  $params
+ * 
+ * @return array
  */
 function comments_container_permissions_override ($hook, $type, $return, $params) {
 	if ($params['subtype'] === 'comment') {
 		return true;
 	}
-	
+
 	return $return;
 }
 
