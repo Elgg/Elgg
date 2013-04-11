@@ -67,13 +67,6 @@ if ($site = elgg_get_site_entity()) {
 	$allow_registration = (bool) get_input('allow_registration', FALSE);
 	set_config('allow_registration', $allow_registration, $site->getGUID());
 
-	// allow commenting?
-	if (get_input('comments_enabled', FALSE)) {
-		set_config('comments_enabled', TRUE, $site->getGUID());
-	} else {
-		set_config('comments_enabled', FALSE, $site->getGUID());
-	}
-
 	// setup walled garden
 	$walled_garden = (bool) get_input('walled_garden', FALSE);
 	set_config('walled_garden', $walled_garden, $site->getGUID());
