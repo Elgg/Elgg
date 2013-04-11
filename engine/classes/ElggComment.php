@@ -8,7 +8,11 @@
  */
 class ElggComment extends ElggObject {
 
-	/** @override */
+	/**
+	 * Set subtype to comment
+	 * 
+	 * @return void
+	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
