@@ -74,22 +74,18 @@ function comments_container_permissions_override ($hook, $type, $return, $params
 /**
  * Format and return the URL for comments.
  * 
- * The url consists of container's url and comment's anchor.
+ * The url is container's url because comments don't have their own page.
  *
  * @param ElggObject $entity Comment object
- * @return string URL of comment.
+ * @return string URL of comment's container.
  */
 function comments_url_handler($entity) {
 	if (!$entity->getOwnerEntity()) {
 		// default to a standard view if no owner.
 		return FALSE;
 	}
-	
-	$container_url = $entity->getContainerEntity()->getURL();
-	
-	$comment_anchor = "comment-{$entity->getGUID()}";
 
-	return "$container_url#$comment_anchor";
+	return $entity->getContainerEntity()->getURL();
 }
 
 elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'comments_container_permissions_override');
