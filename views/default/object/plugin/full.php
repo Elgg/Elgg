@@ -283,7 +283,7 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 				echo elgg_view('output/url', array(
 					'href' => "#elgg-plugin-manifest-$css_id",
 					'text' => elgg_echo("admin:plugins:label:moreinfo"),
-					'rel' => 'toggle',
+					'class' => 'elgg-toggle',
 				));
 			?>
 			</div>

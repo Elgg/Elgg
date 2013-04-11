@@ -13,8 +13,8 @@
  * @uses $vars['encode_text'] Run $vars['text'] through htmlspecialchars() (false)
  */
 
-$vars['rel'] = elgg_extract('confirm', $vars, elgg_echo('question:areyousure'));
-$vars['rel'] = addslashes($vars['rel']);
+$vars['data-confirm'] = elgg_extract('confirm', $vars, elgg_echo('question:areyousure'));
+$vars['data-confirm'] = addslashes($vars['data-confirm']);
 $encode = elgg_extract('encode_text', $vars, false);
 
 // always generate missing action tokens
@@ -26,16 +26,25 @@ if ($encode) {
 }
 
 if (!isset($vars['title']) && isset($vars['confirm'])) {
-	$vars['title'] = $vars['rel'];
+	$vars['title'] = $vars['data-confirm'];
 }
 
 if (isset($vars['class'])) {
-	if (!is_array($vars['class'])) {
-		$vars['class'] = array($vars['class']);
+	if (is_array($vars['class'])) {
+		$vars['class'] = implode(" ", $vars['class']);
 	}
-	$vars['class'][] = 'elgg-requires-confirmation';
+	$vars['class'] .= ' elgg-requires-confirmation';
 } else {
 	$vars['class'] = 'elgg-requires-confirmation';
+}
+
+// Deprecate rel="toggle" and rel="popup"
+foreach (array('toggle', 'popup') as $rel) {
+	if (preg_match("/$rel/i", $vars['rel'])) {
+		$vars['rel'] = preg_replace("/$rel/i", '', $vars['rel']);
+		$vars['class'] .= " elgg-$rel";
+		elgg_deprecated_notice("Use class=\"elgg-$rel\" instead of rel=\"$rel\"", 1.9);
+	}
 }
 
 unset($vars['encode_text']);

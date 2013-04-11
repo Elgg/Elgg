@@ -5,7 +5,7 @@ $ipsum = elgg_view('developers/ipsum');
 $link = elgg_view('output/url', array(
 	'text' => 'Popup content',
 	'href' => "#elgg-popup-test",
-	'rel' => 'popup'
+	'class' => 'elgg-popup'
 ));
 
 echo $link;

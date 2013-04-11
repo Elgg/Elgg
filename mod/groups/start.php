@@ -501,7 +501,7 @@ function groups_annotation_menu_setup($hook, $type, $return, $params) {
 			'href' => "#edit-annotation-$annotation->id",
 			'text' => elgg_echo('edit'),
 			'encode_text' => false,
-			'rel' => 'toggle',
+			'class' => 'elgg-toggle',
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}
@@ -903,7 +903,7 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 						'href' => "#groups-reply-$object->guid",
 						'text' => elgg_view_icon('speech-bubble'),
 						'title' => elgg_echo('reply:this'),
-						'rel' => 'toggle',
+						'class' => 'elgg-toggle',
 						'priority' => 50,
 					);
 					$return[] = ElggMenuItem::factory($options);

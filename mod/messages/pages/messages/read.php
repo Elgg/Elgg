@@ -46,7 +46,7 @@ if ($inbox) {
 			'href' => '#messages-reply-form',
 			'text' => elgg_echo('messages:answer'),
 			'link_class' => 'elgg-button elgg-button-action',
-			'rel' => 'toggle',
+			'class' => 'elgg-toggle',
 		));
 	}
 }

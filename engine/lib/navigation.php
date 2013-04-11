@@ -358,7 +358,7 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
 					'href' => "#comments-add-$object->guid",
 					'text' => elgg_view_icon('speech-bubble'),
 					'title' => elgg_echo('comment:this'),
-					'rel' => 'toggle',
+					'class' => 'elgg-toggle',
 					'priority' => 50,
 				);
 				$return[] = ElggMenuItem::factory($options);
@@ -444,8 +444,7 @@ function elgg_widget_menu_setup($hook, $type, $return, $params) {
 		'name' => 'collapse',
 		'text' => ' ',
 		'href' => "#elgg-widget-content-$widget->guid",
-		'class' => 'elgg-widget-collapse-button',
-		'rel' => 'toggle',
+		'class' => 'elgg-widget-collapse-button elgg-toggle',
 		'priority' => 1
 	);
 	$return[] = ElggMenuItem::factory($collapse);
@@ -469,8 +468,7 @@ function elgg_widget_menu_setup($hook, $type, $return, $params) {
 				'text' => elgg_view_icon('settings-alt'),
 				'title' => elgg_echo('widget:edit'),
 				'href' => "#widget-edit-$widget->guid",
-				'class' => "elgg-widget-edit-button",
-				'rel' => 'toggle',
+				'class' => "elgg-widget-edit-button elgg-toggle",
 				'priority' => 800,
 			);
 			$return[] = ElggMenuItem::factory($edit);

@@ -5,7 +5,7 @@ $ipsum = elgg_view('developers/ipsum');
 $link = elgg_view('output/url', array(
 	'text' => 'Toggle content',
 	'href' => "#elgg-toggle-test",
-	'rel' => 'toggle'
+	'class' => '.elgg-toggle'
 ));
 
 echo $link;
