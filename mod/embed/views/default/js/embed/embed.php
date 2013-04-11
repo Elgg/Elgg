@@ -38,7 +38,6 @@ elgg.embed.insert = function(event) {
 		content = content.replace('size=small', 'size=medium');
 	}
 
-	textArea.val(textArea.val() + content);
 	textArea.focus();
 	
 <?php
