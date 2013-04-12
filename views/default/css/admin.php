@@ -783,6 +783,23 @@ a.elgg-button {
 }
 
 /* ***************************************
+      PROGRESS BAR
+**************************************** */
+.elgg-progressbar {
+	height: 20px;
+	border: 1px solid #CCC;
+}
+.ui-progressbar-value {
+	height: 20px;
+	background: green;
+}
+.elgg-progressbar-counter {
+	float: left;
+	color: white;
+	margin: 1px;
+}
+
+/* ***************************************
 	PAGINATION
 *************************************** */
 .elgg-pagination {
