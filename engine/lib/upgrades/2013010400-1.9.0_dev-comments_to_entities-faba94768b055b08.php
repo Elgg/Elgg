@@ -12,7 +12,7 @@ update_subtype('object', 'comment', 'ElggComment');
 $ia = elgg_set_ignore_access(true);
 $batch = new ElggBatch('elgg_get_annotations', array(
 	'annotation_names' => 'generic_comment',
-	'limit' => false,
+	'limit' => 50,
 ));
 $batch->setIncrementOffset(false);
 
@@ -40,8 +40,13 @@ foreach ($batch as $annotation) {
 	 * - Remove annotation id
 	 * - Save comment guid to the target_guid column
 	 */
-	$query = "UPDATE {$db_prefix}river
+	// TODO Use the original query once target_guid has been added to river table
+	$query_original = "UPDATE {$db_prefix}river
 SET view='river/object/comment/create', annotation_id=0, target_guid=$guid
+WHERE action_type='comment' AND annotation_id={$annotation->id}";
+
+	$query = "UPDATE {$db_prefix}river
+SET view='river/object/comment/create', annotation_id=0
 WHERE action_type='comment' AND annotation_id={$annotation->id}";
 	update_data($query);
 
@@ -49,3 +54,9 @@ WHERE action_type='comment' AND annotation_id={$annotation->id}";
 	$annotation->delete();
 }
 elgg_set_ignore_access($ia);
+
+$upgrade_link = elgg_view('output/url', array(
+	'href' => 'admin/comment_upgrade',
+	'text' => elgg_echo('upgrade:comments:link')
+));
+elgg_add_admin_notice('comment_upgrade_needed', elgg_echo('upgrade:comments:upgrade_required', array($upgrade_link)));
