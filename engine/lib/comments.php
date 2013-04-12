@@ -23,10 +23,10 @@ function comments_init() {
 /**
  * Setup the menu shown with a comment
  *
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
+ * @param string $hook   'register'
+ * @param string $type   'menu:entity'
+ * @param array  $return Array of ElggMenuItem objects
+ * @param array  $params Array of view vars
  * 
  * @return array
  */
@@ -41,7 +41,7 @@ function elgg_comment_setup_entity_menu ($hook, $type, $return, $params) {
 	}
 
 	// Remove edit link and access level from the menu
-	foreach($return as $key => $item) {
+	foreach ($return as $key => $item) {
 		if (in_array($item->getName(), array('access', 'edit'))) {
 			unset($return[$key]);
 		}
@@ -56,10 +56,10 @@ function elgg_comment_setup_entity_menu ($hook, $type, $return, $params) {
  * Object being commented is used as the container of the comment so
  * permission check must be overridden if user isn't the owner of the object.
  * 
- * @param string $hook
- * @param string $type
- * @param array  $return
- * @param array  $params
+ * @param string  $hook   'container_permissions_check'
+ * @param string  $type   'object'
+ * @param boolean $return True if not already changed by an other hook handler
+ * @param array   $params Array of parameters (container, user, subtype)
  * 
  * @return array
  */
