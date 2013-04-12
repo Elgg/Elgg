@@ -24,7 +24,6 @@ $options = array(
 	'type' => 'object',
 	'subtype' => 'comment',
 	'owner_guid' => $owner_guid,
-	'reverse_order_by' => true,
 	'limit' => elgg_extract('limit', $vars, 4),
 );
 
