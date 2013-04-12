@@ -255,6 +255,7 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/site/unlock_upgrade', '', 'admin');
 	elgg_register_action('admin/site/set_robots', '', 'admin');
 	elgg_register_action('admin/site/set_maintenance_mode', '', 'admin');
+	elgg_register_action('admin/site/comment_upgrade', '', 'admin');
 
 	elgg_register_action('admin/menu/save', '', 'admin');
 

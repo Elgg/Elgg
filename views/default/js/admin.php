@@ -49,11 +49,15 @@ elgg.admin.init = function () {
 	// admin notices delete ajax
 	$('a.elgg-admin-notice').click(elgg.admin.deleteNotice);
 
+<<<<<<< HEAD
 	// disable checkboxes (readonly does not work for them)
 	$('input:checkbox.elgg-state-disabled').live('click', function() {return false;});
 
 	// disable simple cache compress settings if simple cache is off
 	$('[name=simplecache_enabled]').click(elgg.admin.simplecacheToggle);
+=======
+	$('#comment-upgrade-run').click(elgg.admin.upgradeComments);
+>>>>>>> Adds a page to migrate comments to entities via XHR requests.
 };
 
 /**
@@ -182,5 +186,79 @@ elgg.admin.simplecacheToggle = function() {
 		}
 	}
 };
+
+/**
+ * Initializes the comment upgrade feature
+ *
+ * @param {Object} e  Event object.
+ * @return void
+ */
+elgg.admin.upgradeComments = function(e) {
+	e.preventDefault();
+
+	var total = $('#comment-upgrade-total').text();
+
+	$('.elgg-progressbar').progressbar({
+		value: 0,
+		max: total,
+	})
+
+	$('#comment-upgrade-run').addClass('hidden');
+
+	elgg.admin.upgradeCommentBatch(0);
+}
+
+/**
+ * Fires the ajax action to upgrade a batch of comments.
+ *
+ * @param  int  offset  The next upgrade offset
+ * @return void
+ */
+elgg.admin.upgradeCommentBatch = function(offset) {
+	var options = {
+		data: {
+			offset: offset
+		},
+		dataType: 'json'
+	};
+
+	options.data = elgg.security.addToken(options.data);
+
+	options.success = function(json) {
+		// Append possible errors after the progressbar
+		if (json.system_messages.error.length) {
+			var msg = '<li class="elgg-message elgg-state-error">' + json.system_messages.error + '</li>';
+			$('#comment-upgrade-messages').append(msg);
+		}
+
+		var newOffset = json.output.newOffset;
+
+		// Increase percentage
+		var total = $('#comment-upgrade-total').text();
+		var percent = parseInt(newOffset * 100 / total);
+
+		// Increase success/error statistics
+		var numSuccess = $('#comment-upgrade-success-count');
+		numSuccess.text(parseInt(numSuccess.text()) + json.output.numSuccess);
+		var numErrors = $('#comment-upgrade-error-count');
+		numErrors.text(parseInt(numErrors.text()) + json.output.numErrors);
+
+		// Increase the progress bar
+		$('.elgg-progressbar').progressbar({ value: newOffset });
+
+		if (newOffset < total) {
+			// Start next upgrade call
+			elgg.admin.upgradeCommentBatch(newOffset);
+		} else {
+			// Upgrade is finished
+			elgg.system_message(elgg.echo('upgrade:comments:finished'));
+			percent = '100';
+		}
+
+		$('#comment-upgrade-counter').text(percent + '%');
+	};
+
+	return elgg.post('action/admin/site/comment_upgrade', options);
+}
 
 elgg.register_hook_handler('init', 'system', elgg.admin.init, 1000);
