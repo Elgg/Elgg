@@ -52,17 +52,13 @@ HTML;
 
 } else {
 	// brief view
-	
-	$posted = elgg_echo('generic_comments:latest:posted');
-	$comment_string = elgg_echo('comment');
-	$comment_link = "<a href=\"{$comment->getURL()}\">$comment_string</a>";
-	$on = elgg_echo('on');
 
 	$excerpt = elgg_get_excerpt($comment->description, 80);
+	$posted = elgg_echo('generic_comment:on', array($commenter_link, $entity_link));
 
 	$body = <<<HTML
 <span class="elgg-subtext">
-	$commenter_link $posted $comment_link $on $entity_link ($friendlytime): $excerpt
+	$posted ($friendlytime): $excerpt
 </span>
 HTML;
 
