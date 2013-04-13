@@ -1270,7 +1270,7 @@ abstract class ElggEntity extends ElggData implements
 	public function save() {
 		$guid = $this->getGUID();
 		if ($guid > 0) {
-			cache_entity($this);
+			_elgg_cache_entity($this);
 
 			return update_entity(
 				$guid,
@@ -1320,7 +1320,7 @@ abstract class ElggEntity extends ElggData implements
 			$this->attributes['subtype'] = get_subtype_id($this->attributes['type'],
 				$this->attributes['subtype']);
 
-			cache_entity($this);
+			_elgg_cache_entity($this);
 
 			return $this->attributes['guid'];
 		}
@@ -1362,7 +1362,7 @@ abstract class ElggEntity extends ElggData implements
 
 			// Cache object handle
 			if ($this->attributes['guid']) {
-				cache_entity($this);
+				_elgg_cache_entity($this);
 			}
 
 			return true;

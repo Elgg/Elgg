@@ -2,7 +2,7 @@
 /**
  * Make sure all users have the relationship member_of_site
  */
-global $DB_QUERY_CACHE, $DB_PROFILE, $ENTITY_CACHE, $CONFIG;
+global $ENTITY_CACHE;
 $db_prefix = get_config('dbprefix');
 
 $limit = 100;
@@ -17,7 +17,8 @@ $q = "SELECT e.* FROM {$db_prefix}entities e
 $users = get_data($q);
 
 while ($users) {
-	$DB_QUERY_CACHE = $DB_PROFILE = $ENTITY_CACHE = array();
+	$ENTITY_CACHE = array();
+	_elgg_invalidate_query_cache();
 
 	// do manually to not trigger any events because these aren't new users.
 	foreach ($users as $user) {
