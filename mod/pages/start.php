@@ -82,6 +82,8 @@ function pages_init() {
 
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
+	
+	elgg_register_event_handler('upgrade', 'system', 'pages_run_upgrades');
 }
 
 /**
@@ -361,4 +363,15 @@ function pages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/page_top'] = elgg_echo('item:object:page_top');
 
 	return $return_value;
+}
+
+/**
+ * Process upgrades for the pages plugin
+ */
+function pages_run_upgrades() {
+	$path = elgg_get_plugins_path() . 'pages/upgrades/';
+	$files = elgg_get_upgrade_files($path);
+	foreach ($files as $file) {
+		include "$path{$file}";
+	}
 }
