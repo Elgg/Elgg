@@ -96,15 +96,17 @@ function elgg_get_config($name, $site_guid = 0) {
 		// installation wide setting
 		$value = datalist_get($name);
 	} else {
+		$value = null;
 		// hit DB only if we're not sure if value exists or not
 		if (!isset($CONFIG->site_config_loaded)) {
 			// site specific setting
-			if ($site_guid == 0) {
+			// if $CONFIG->site_id isn't defined we're probably in the installer
+			if ($site_guid == 0 && isset($CONFIG->site_id)) {
 				$site_guid = (int) $CONFIG->site_id;
 			}
-			$value = get_config($name, $site_guid);
-		} else {
-			$value = null;
+			if ($site_guid) {
+				$value = get_config($name, $site_guid);
+			}
 		}
 	}
 
