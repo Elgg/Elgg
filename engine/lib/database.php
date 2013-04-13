@@ -20,6 +20,7 @@
  * @warning be array this var may be an array or ElggStaticVariableCache depending on when called :(
  *
  * @global ElggStaticVariableCache|array $DB_QUERY_CACHE
+ * @access private
  */
 global $DB_QUERY_CACHE;
 $DB_QUERY_CACHE = array();
@@ -40,6 +41,7 @@ $DB_QUERY_CACHE = array();
  * </code>
  *
  * @global array $DB_DELAYED_QUERIES
+ * @access private
  */
 global $DB_DELAYED_QUERIES;
 $DB_DELAYED_QUERIES = array();
@@ -51,6 +53,7 @@ $DB_DELAYED_QUERIES = array();
  * $dblink as $dblink[$name] => resource.  Use get_db_link($name) to retrieve it.
  *
  * @global resource[] $dblink
+ * @access private
  */
 global $dblink;
 $dblink = array();
@@ -61,6 +64,7 @@ $dblink = array();
  * Each call to the database increments this counter.
  *
  * @global integer $dbcalls
+ * @access private
  */
 global $dbcalls;
 $dbcalls = 0;
