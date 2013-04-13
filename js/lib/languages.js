@@ -30,6 +30,9 @@ elgg.reload_all_translations = function(language) {
 	var url, options;
 	url = 'ajax/view/js/languages';
 	options = {data: {language: lang}};
+    if (elgg.config.simplecache_enabled) {
+        options.data.lc = elgg.config.lastcache;
+    }
 
 	options['success'] = function(json) {
 		elgg.add_translation(lang, json);
