@@ -40,7 +40,7 @@ if (elgg_instanceof($page, 'object', 'page') || elgg_instanceof($page, 'object',
 						'metadata_name' => 'parent_guid',
 					));
 
-					invalidate_cache_for_entity($child_guid);
+					_elgg_invalidate_cache_for_entity($child_guid);
 					if ($newentity_cache) {
 						$newentity_cache->delete($child_guid);
 					}

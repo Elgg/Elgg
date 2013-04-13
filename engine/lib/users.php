@@ -237,7 +237,7 @@ function make_user_admin($user_guid) {
 			}
 
 			$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='yes' where guid=$user_guid");
-			invalidate_cache_for_entity($user_guid);
+			_elgg_invalidate_cache_for_entity($user_guid);
 			return $r;
 		}
 
@@ -273,7 +273,7 @@ function remove_user_admin($user_guid) {
 			}
 
 			$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='no' where guid=$user_guid");
-			invalidate_cache_for_entity($user_guid);
+			_elgg_invalidate_cache_for_entity($user_guid);
 			return $r;
 		}
 
@@ -558,8 +558,8 @@ function get_user_by_username($username) {
 
 	// Caching
 	if ((isset($USERNAME_TO_GUID_MAP_CACHE[$username]))
-			&& (retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]))) {
-		return retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]);
+			&& (_elgg_retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]))) {
+		return _elgg_retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]);
 	}
 
 	$query = "SELECT e.* from {$CONFIG->dbprefix}users_entity u
@@ -592,9 +592,9 @@ function get_user_by_code($code) {
 
 	// Caching
 	if ((isset($CODE_TO_GUID_MAP_CACHE[$code]))
-	&& (retrieve_cached_entity($CODE_TO_GUID_MAP_CACHE[$code]))) {
+	&& (_elgg_retrieve_cached_entity($CODE_TO_GUID_MAP_CACHE[$code]))) {
 
-		return retrieve_cached_entity($CODE_TO_GUID_MAP_CACHE[$code]);
+		return _elgg_retrieve_cached_entity($CODE_TO_GUID_MAP_CACHE[$code]);
 	}
 
 	$query = "SELECT e.* from {$CONFIG->dbprefix}users_entity u
