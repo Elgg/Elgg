@@ -74,8 +74,7 @@ function action($action, $forwarder = "") {
 	);
 
 	if (!in_array($action, $exceptions)) {
-		// All actions require a token.
-		action_gatekeeper();
+		action_gatekeeper($action);
 	}
 
 	$forwarder = str_replace(elgg_get_site_url(), "", $forwarder);
@@ -188,6 +187,26 @@ function elgg_unregister_action($action) {
 }
 
 /**
+ * Is the token timestamp within acceptable range?
+ * 
+ * @param int $ts timestamp from the CSRF token
+ * 
+ * @return bool
+ */
+function _elgg_validate_token_timestamp($ts) {
+	$action_token_timeout = elgg_get_config('action_token_timeout');
+	// default is 2 hours
+	$timeout = ($action_token_timeout !== null) ? $action_token_timeout : 2;
+
+	$hour = 60 * 60;
+	$timeout = $timeout * $hour;
+	$now = time();
+
+	// Validate time to ensure its not crazy
+	return ($timeout == 0 || ($ts > $now - $timeout) && ($ts < $now + $timeout));
+}
+
+/**
  * Validate an action token.
  *
  * Calls to actions will automatically validate tokens. If tokens are not
@@ -205,8 +224,6 @@ function elgg_unregister_action($action) {
  * @access private
  */
 function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL) {
-	global $CONFIG;
-
 	if (!$token) {
 		$token = get_input('__elgg_token');
 	}
@@ -215,29 +232,18 @@ function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL)
 		$ts = get_input('__elgg_ts');
 	}
 
-	if (!isset($CONFIG->action_token_timeout)) {
-		// default to 2 hours
-		$timeout = 2;
-	} else {
-		$timeout = $CONFIG->action_token_timeout;
-	}
-
 	$session_id = session_id();
 
 	if (($token) && ($ts) && ($session_id)) {
 		// generate token, check with input and forward if invalid
-		$generated_token = generate_action_token($ts);
+		$required_token = generate_action_token($ts);
 
 		// Validate token
-		if ($token == $generated_token) {
-			$hour = 60 * 60;
-			$timeout = $timeout * $hour;
-			$now = time();
-
-			// Validate time to ensure its not crazy
-			if ($timeout == 0 || ($ts > $now - $timeout) && ($ts < $now + $timeout)) {
+		if ($token == $required_token) {
+			
+			if (_elgg_validate_token_timestamp($ts)) {
 				// We have already got this far, so unless anything
-				// else says something to the contry we assume we're ok
+				// else says something to the contrary we assume we're ok
 				$returnval = true;
 
 				$returnval = elgg_trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', array(
@@ -293,12 +299,33 @@ function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL)
  * This function verifies form input for security features (like a generated token),
  * and forwards if they are invalid.
  *
+ * @param string $action The action being performed
+ * 
  * @return mixed True if valid or redirects.
  * @access private
  */
-function action_gatekeeper() {
-	if (validate_action_token()) {
-		return TRUE;
+function action_gatekeeper($action) {
+	if ($action === 'login') {
+		if (validate_action_token(false)) {
+			return true;
+		}
+		
+		$token = get_input('__elgg_token');
+		$ts = (int)get_input('__elgg_ts');
+		if ($token && _elgg_validate_token_timestamp($ts)) {
+			// The tokens are present and the time looks valid: this is probably a mismatch due to the 
+			// login form being on a different domain.
+			register_error(elgg_echo('actiongatekeeper:crosssitelogin'));
+			
+			
+			forward('login', 'csrf');
+		}
+		
+		// let the validator send an appropriate msg
+		validate_action_token();
+		
+	} elseif (validate_action_token()) {
+		return true;
 	}
 
 	forward(REFERER, 'csrf');

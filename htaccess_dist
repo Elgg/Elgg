@@ -112,6 +112,14 @@ RewriteEngine on
 #
 #RewriteBase /
 
+
+# If your users receive the message "Sorry, logging in from a different domain is not permitted"
+# you must make sure your login form is served from the same hostname as your site pages.
+# See http://docs.elgg.org/wiki/Login_token_mismatch_error for more info.
+#
+# If you must add RewriteRules to change hostname, add them directly below (above all the others)
+
+
 # In for backwards compatibility
 RewriteRule ^pg\/([A-Za-z0-9\_\-]+)$ engine/handlers/page_handler.php?handler=$1&%{QUERY_STRING} [L]
 RewriteRule ^pg\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/page_handler.php?handler=$1&page=$2&%{QUERY_STRING} [L]
