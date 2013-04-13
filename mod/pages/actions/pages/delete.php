@@ -21,30 +21,33 @@ if (elgg_instanceof($page, 'object', 'page') || elgg_instanceof($page, 'object',
 			'metadata_value' => $page->getGUID()
 		));
 		if ($children) {
+			$db_prefix = elgg_get_config('dbprefix');
+			$subtype_id = (int)get_subtype_id('object', 'page_top');
+			$newentity_cache = is_memcache_available() ? new ElggMemcache('new_entity_cache') : null;
+
 			foreach ($children as $child) {
 				if ($parent) {
 					$child->parent_guid = $parent;
 				} else {
 					// If no parent, we need to transform $child to a page_top
-					$db_prefix = elgg_get_config('dbprefix');
-					$subtype_id = (int)get_subtype_id('object', 'page_top');
 					$child_guid = (int)$child->guid;
+
 					update_data("UPDATE {$db_prefix}entities
 						SET subtype = $subtype_id WHERE guid = $child_guid");
+
 					elgg_delete_metadata(array(
 						'guid' => $child_guid,
 						'metadata_name' => 'parent_guid',
 					));
 
-					// If memcache is available, delete this entry from the cache
-					if (is_memcache_available()) {
-						$newentity_cache = new ElggMemcache('new_entity_cache');
+					invalidate_cache_for_entity($child_guid);
+					if ($newentity_cache) {
 						$newentity_cache->delete($child_guid);
 					}
 				}
 			}
 		}
-		
+
 		if ($page->delete()) {
 			system_message(elgg_echo('pages:delete:success'));
 			if ($parent) {
