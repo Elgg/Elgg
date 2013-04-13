@@ -30,10 +30,10 @@ $SUBTYPE_CACHE = null;
  *
  * @param int $guid The entity guid
  *
- * @return null
+ * @return void
  * @access private
  */
-function invalidate_cache_for_entity($guid) {
+function _elgg_invalidate_cache_for_entity($guid) {
 	global $ENTITY_CACHE;
 
 	$guid = (int)$guid;
@@ -50,13 +50,13 @@ function invalidate_cache_for_entity($guid) {
  *
  * @param ElggEntity $entity Entity to cache
  *
- * @return null
- * @see retrieve_cached_entity()
- * @see invalidate_cache_for_entity()
+ * @return void
+ * @see _elgg_retrieve_cached_entity()
+ * @see _elgg_invalidate_cache_for_entity()
  * @access private
- * TODO(evan): Use an ElggCache object
+ * @todo Use an ElggCache object
  */
-function cache_entity(ElggEntity $entity) {
+function _elgg_cache_entity(ElggEntity $entity) {
 	global $ENTITY_CACHE;
 
 	// Don't cache non-plugin entities while access control is off, otherwise they could be
@@ -66,7 +66,7 @@ function cache_entity(ElggEntity $entity) {
 	}
 
 	// Don't store too many or we'll have memory problems
-	// TODO(evan): Pick a less arbitrary limit
+	// @todo Pick a less arbitrary limit
 	if (count($ENTITY_CACHE) > 256) {
 		$random_guid = array_rand($ENTITY_CACHE);
 
@@ -88,42 +88,17 @@ function cache_entity(ElggEntity $entity) {
  * @param int $guid The guid
  *
  * @return ElggEntity|bool false if entity not cached, or not fully loaded
- * @see cache_entity()
- * @see invalidate_cache_for_entity()
+ * @see _elgg_cache_entity()
+ * @see _elgg_invalidate_cache_for_entity()
  * @access private
  */
-function retrieve_cached_entity($guid) {
+function _elgg_retrieve_cached_entity($guid) {
 	global $ENTITY_CACHE;
 
 	if (isset($ENTITY_CACHE[$guid])) {
 		if ($ENTITY_CACHE[$guid]->isFullyLoaded()) {
 			return $ENTITY_CACHE[$guid];
 		}
-	}
-
-	return false;
-}
-
-/**
- * As retrieve_cached_entity, but returns the result as a stdClass
- * (compatible with load functions that expect a database row.)
- *
- * @param int $guid The guid
- *
- * @return mixed
- * @todo unused
- * @access private
- */
-function retrieve_cached_entity_row($guid) {
-	$obj = retrieve_cached_entity($guid);
-	if ($obj) {
-		$tmp = new stdClass;
-
-		foreach ($obj as $k => $v) {
-			$tmp->$k = $v;
-		}
-
-		return $tmp;
 	}
 
 	return false;
@@ -745,7 +720,7 @@ function get_entity($guid) {
 	}
 	
 	// Check local cache first
-	$new_entity = retrieve_cached_entity($guid);
+	$new_entity = _elgg_retrieve_cached_entity($guid);
 	if ($new_entity) {
 		return $new_entity;
 	}
@@ -782,7 +757,7 @@ function get_entity($guid) {
 	}
 
 	if ($new_entity) {
-		cache_entity($new_entity);
+		_elgg_cache_entity($new_entity);
 	}
 	return $new_entity;
 }
@@ -1037,7 +1012,7 @@ function elgg_get_entities(array $options = array()) {
 			foreach ($dt as $item) {
 				// A custom callback could result in items that aren't ElggEntity's, so check for them
 				if ($item instanceof ElggEntity) {
-					cache_entity($item);
+					_elgg_cache_entity($item);
 					// plugins usually have only settings
 					if (!$item instanceof ElggPlugin) {
 						$guids[] = $item->guid;
@@ -1102,7 +1077,7 @@ function _elgg_fetch_entities_from_sql($sql) {
 		if (empty($row->guid) || empty($row->type)) {
 			throw new LogicException('Entity row missing guid or type');
 		}
-		if ($entity = retrieve_cached_entity($row->guid)) {
+		if ($entity = _elgg_retrieve_cached_entity($row->guid)) {
 			$rows[$i] = $entity;
 			continue;
 		}
@@ -1628,7 +1603,7 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 
 				$entity->disableMetadata();
 				$entity->disableAnnotations();
-				invalidate_cache_for_entity($guid);
+				_elgg_invalidate_cache_for_entity($guid);
 
 				$res = update_data("UPDATE {$CONFIG->dbprefix}entities
 					SET enabled = 'no'
@@ -1726,7 +1701,7 @@ function delete_entity($guid, $recursive = true) {
 
 				// delete cache
 				if (isset($ENTITY_CACHE[$guid])) {
-					invalidate_cache_for_entity($guid);
+					_elgg_invalidate_cache_for_entity($guid);
 				}
 				
 				// If memcache is available then delete this entry from the cache
