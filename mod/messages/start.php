@@ -80,6 +80,7 @@ function messages_page_handler($page) {
 		elgg_get_session()->set('last_forward_from', current_page_url());
 		forward('');
 	}
+	if (elgg_is_logged_in()) elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 	elgg_load_library('elgg:messages');
 
