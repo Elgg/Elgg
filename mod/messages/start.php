@@ -75,6 +75,7 @@ function messages_init() {
 function messages_page_handler($page) {
 
 	$current_user = elgg_get_logged_in_user_entity();
+	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());//Setsthepageownertoavoid'pageownerunavailable'error
 	if (!$current_user) {
 		register_error(elgg_echo('noaccess'));
 		elgg_get_session()->set('last_forward_from', current_page_url());
