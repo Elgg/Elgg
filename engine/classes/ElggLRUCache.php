@@ -13,7 +13,7 @@
  * @package    Elgg.Core
  * @subpackage Cache
  */
-class ElggLRUCache {
+class ElggLRUCache implements ArrayAccess {
 	/** @var int */
 	protected $maximumSize;
 
@@ -54,13 +54,13 @@ class ElggLRUCache {
 	}
 
 	/**
-	 * Put something in the cache
+	 * Add something to the cache
 	 *
 	 * @param int|string $key   The key. Strings that are ints are cast to ints.
 	 * @param mixed      $value The value to cache
 	 * @return void
 	 */
-	public function put($key, $value) {
+	public function set($key, $value) {
 		if (isset($this->data[$key])) {
 			$this->data[$key] = $value;
 			$this->recordAccess($key);
@@ -128,5 +128,54 @@ class ElggLRUCache {
 		$value = $this->data[$key];
 		unset($this->data[$key]);
 		$this->data[$key] = $value;
+	}
+
+	/**
+	 * Assigns a value for the specified key
+	 *
+	 * @see ArrayAccess::offsetSet()
+	 *
+	 * @param int|string $key   The key to assign the value to.
+	 * @param mixed      $value The value to set.
+	 * @return void
+	 */
+	function offsetSet($key, $value) {
+		$this->set($key, $value);
+	}
+
+	/**
+	 * Get the value for specified key
+	 *
+	 * @see ArrayAccess::offsetGet()
+	 *
+	 * @param int|string $key The key to retrieve.
+	 * @return mixed
+	 */
+	function offsetGet($key) {
+		return $this->get($key);
+	}
+
+	/**
+	 * Unsets a key.
+	 *
+	 * @see ArrayAccess::offsetUnset()
+	 *
+	 * @param int|string $key The key to unset.
+	 * @return void
+	 */
+	function offsetUnset($key) {
+		$this->remove($key);
+	}
+
+	/**
+	 * Does key exist?
+	 *
+	 * @see ArrayAccess::offsetExists()
+	 *
+	 * @param int|string $key A key to check for.
+	 * @return boolean
+	 */
+	function offsetExists($key) {
+		return $this->containsKey($key);
 	}
 }
