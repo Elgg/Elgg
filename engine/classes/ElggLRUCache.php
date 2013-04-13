@@ -139,7 +139,7 @@ class ElggLRUCache implements ArrayAccess {
 	 * @param mixed      $value The value to set.
 	 * @return void
 	 */
-	function offsetSet($key, $value) {
+	public function offsetSet($key, $value) {
 		$this->set($key, $value);
 	}
 
@@ -151,7 +151,7 @@ class ElggLRUCache implements ArrayAccess {
 	 * @param int|string $key The key to retrieve.
 	 * @return mixed
 	 */
-	function offsetGet($key) {
+	public function offsetGet($key) {
 		return $this->get($key);
 	}
 
@@ -163,7 +163,7 @@ class ElggLRUCache implements ArrayAccess {
 	 * @param int|string $key The key to unset.
 	 * @return void
 	 */
-	function offsetUnset($key) {
+	public function offsetUnset($key) {
 		$this->remove($key);
 	}
 
@@ -175,7 +175,7 @@ class ElggLRUCache implements ArrayAccess {
 	 * @param int|string $key A key to check for.
 	 * @return boolean
 	 */
-	function offsetExists($key) {
+	public function offsetExists($key) {
 		return $this->containsKey($key);
 	}
 }

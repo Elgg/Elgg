@@ -12,18 +12,19 @@
 /**
  * Query cache for all queries.
  *
- * Each query and its results are stored in this array as:
+ * Each query and its results are stored in this cache as:
  * <code>
- * $DB_QUERY_CACHE[$query] => array(result1, result2, ... resultN)
+ * $DB_QUERY_CACHE[query hash] => array(result1, result2, ... resultN)
  * </code>
+ * @see elgg_query_runner() for details on the hash.
  *
- * @warning be array this var may be an array or ElggStaticVariableCache depending on when called :(
+ * @warning Elgg used to set this as an empty array to turn off the cache
  *
- * @global ElggStaticVariableCache|array $DB_QUERY_CACHE
+ * @global ElggLRUCache|null $DB_QUERY_CACHE
  * @access private
  */
 global $DB_QUERY_CACHE;
-$DB_QUERY_CACHE = array();
+$DB_QUERY_CACHE = null;
 
 /**
  * Queries to be executed upon shutdown.
@@ -127,9 +128,8 @@ function establish_db_link($dblinkname = "readwrite") {
 
 	// Set up cache if global not initialized and query cache not turned off
 	if ((!$DB_QUERY_CACHE) && (!$db_cache_off)) {
-		// @todo everywhere else this is assigned to array(), making it dangerous to call
-		// object methods on this. We should consider making this an plain array
-		$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache');
+		// @todo if we keep this cache in 1.9, expose the size as a config parameter
+		$DB_QUERY_CACHE = new ElggLRUCache(200);		
 	}
 }
 
@@ -404,11 +404,9 @@ function elgg_query_runner($query, $callback = null, $single = false) {
 
 	// Is cached?
 	if ($DB_QUERY_CACHE) {
-		$cached_query = $DB_QUERY_CACHE[$hash];
-
-		if ($cached_query !== FALSE) {
+		if (isset($DB_QUERY_CACHE[$hash])) {
 			elgg_log("DB query $query results returned from cache (hash: $hash)", 'NOTICE');
-			return $cached_query;
+			return $DB_QUERY_CACHE[$hash];			
 		}
 	}
 
@@ -531,9 +529,12 @@ function delete_data($query) {
  */
 function _elgg_invalidate_query_cache() {
 	global $DB_QUERY_CACHE;
-	if ($DB_QUERY_CACHE) {
-		/* @var ElggStaticVariableCache $DB_QUERY_CACHE */
+	if ($DB_QUERY_CACHE instanceof ElggLRUCache) {
 		$DB_QUERY_CACHE->clear();
+		elgg_log("Query cache invalidated", 'NOTICE');
+	} elseif ($DB_QUERY_CACHE) {
+		// In case someone sets the cache to an array and primes it with data 
+		$DB_QUERY_CACHE = array();
 		elgg_log("Query cache invalidated", 'NOTICE');
 	}
 }
