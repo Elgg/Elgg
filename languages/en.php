@@ -1193,6 +1193,7 @@ You cannot reply to this email.",
 	'actiongatekeeper:timeerror' => 'The page you were using has expired. Please refresh and try again.',
 	'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
 	'actiongatekeeper:uploadexceeded' => 'The size of file(s) uploaded exceeded the limit set by your site administrator',
+	'actiongatekeeper:crosssitelogin' => "Sorry, logging in from a different domain is not permitted.",
 
 
 /**
