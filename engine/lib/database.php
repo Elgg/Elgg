@@ -460,19 +460,12 @@ function elgg_query_runner($query, $callback = null, $single = false) {
  * @access private
  */
 function insert_data($query) {
-	global $DB_QUERY_CACHE;
 
 	elgg_log("DB query $query", 'NOTICE');
 	
 	$dblink = get_db_link('write');
 
-	// Invalidate query cache
-	if ($DB_QUERY_CACHE) {
-		/* @var ElggStaticVariableCache $DB_QUERY_CACHE */
-		$DB_QUERY_CACHE->clear();
-	}
-
-	elgg_log("Query cache invalidated", 'NOTICE');
+	_elgg_invalidate_query_cache();
 
 	if (execute_query("$query", $dblink)) {
 		return mysql_insert_id($dblink);
@@ -492,18 +485,12 @@ function insert_data($query) {
  * @access private
  */
 function update_data($query) {
-	global $DB_QUERY_CACHE;
 
 	elgg_log("DB query $query", 'NOTICE');
 
 	$dblink = get_db_link('write');
 
-	// Invalidate query cache
-	if ($DB_QUERY_CACHE) {
-		/* @var ElggStaticVariableCache $DB_QUERY_CACHE */
-		$DB_QUERY_CACHE->clear();
-		elgg_log("Query cache invalidated", 'NOTICE');
-	}
+	_elgg_invalidate_query_cache();
 
 	if (execute_query("$query", $dblink)) {
 		return TRUE;
@@ -523,18 +510,12 @@ function update_data($query) {
  * @access private
  */
 function delete_data($query) {
-	global $DB_QUERY_CACHE;
 
 	elgg_log("DB query $query", 'NOTICE');
 
 	$dblink = get_db_link('write');
 
-	// Invalidate query cache
-	if ($DB_QUERY_CACHE) {
-		/* @var ElggStaticVariableCache $DB_QUERY_CACHE */
-		$DB_QUERY_CACHE->clear();
-		elgg_log("Query cache invalidated", 'NOTICE');
-	}
+	_elgg_invalidate_query_cache();
 
 	if (execute_query("$query", $dblink)) {
 		return mysql_affected_rows($dblink);
@@ -543,6 +524,19 @@ function delete_data($query) {
 	return FALSE;
 }
 
+/**
+ * Invalidate the query cache
+ * 
+ * @access private
+ */
+function _elgg_invalidate_query_cache() {
+	global $DB_QUERY_CACHE;
+	if ($DB_QUERY_CACHE) {
+		/* @var ElggStaticVariableCache $DB_QUERY_CACHE */
+		$DB_QUERY_CACHE->clear();
+		elgg_log("Query cache invalidated", 'NOTICE');
+	}
+}
 
 /**
  * Return tables matching the database prefix {@link $CONFIG->dbprefix}% in the currently
