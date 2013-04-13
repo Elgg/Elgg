@@ -206,21 +206,23 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	 */
 	public function test_friendly_title() {
 		$cases = array(
+			// acid test
+			"B&N > Amazon, OK? <bold> 'hey!' $34"
+			=> "b-and-n-greater-than-amazon-ok-bold-hey-34",
+
 			// hyphen, underscore and ASCII whitespace replaced by separator,
 			// other non-alphanumeric ASCII removed
-			"a-a_a a\na\ra\ta\va!a\"a#a\$a%a&a'a(a)a*a+a,a.a/a:a;a<a=a>a?a@a[a\\a]a^a`a{a|a}a~a"
-			=> "a-a-a-a-a-a-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-
+			"a-a_a a\na\ra\ta\va!a\"a#a\$a%a&a'a(a)a*a+a,a.a/a:a;a=a?a@a[a\\a]a^a`a{a|a}a~a"
+			=> "a-a-a-a-a-a-aaaaaaa-and-aaaaaaaaaaaaaaaaaaaaaaa",
+			
 			// separators trimmed
-			"-_ hello _-" => "hello",
+			"-_ hello _-" 
+			=> "hello",
 
 			// accents removed, lower case, other multibyte chars are URL encoded
 			"I\xC3\xB1t\xC3\xABrn\xC3\xA2ti\xC3\xB4n\xC3\xA0liz\xC3\xA6ti\xC3\xB8n, AND \xE6\x97\xA5\xE6\x9C\xAC\xE8\xAA\x9E"
 				// Iñtërnâtiônàlizætiøn, AND 日本語
 			=> 'internationalizaetion-and-%E6%97%A5%E6%9C%AC%E8%AA%9E',
-
-			// some HTML entity replacements
-			"Me &amp; You" => 'me-and-you',
 		);
 
 		// where available, string is converted to NFC before transliteration
