@@ -227,12 +227,6 @@ class ElggBatch
 	 * @return bool
 	 */
 	private function getNextResultsChunk() {
-		// reset memory caches after first chunk load
-		if ($this->chunkIndex > 0) {
-			global $ENTITY_CACHE;
-			$ENTITY_CACHE = array();
-			_elgg_invalidate_query_cache();
-		}
 
 		// always reset results.
 		$this->results = array();
