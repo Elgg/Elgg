@@ -20,6 +20,9 @@ function twitter_api_get_api_object($oauth_token = null, $oauth_token_secret = n
 	}
 
 	$api = new TwitterOAuth($consumer_key, $consumer_secret, $oauth_token, $oauth_token_secret);
+	if ($api) {
+		$api->host = "https://api.twitter.com/1.1/";
+	}
 	return $api;
 }
 
