@@ -57,7 +57,7 @@ class TwitterOAuth {
    * construct TwitterOAuth object
    */
   function __construct($consumer_key, $consumer_secret, $oauth_token = NULL, $oauth_token_secret = NULL) {
-    $this->sha1_method = new twitterOAuthSignatureMethod_HMAC_SHA1();
+    $this->sha1_method = new OAuthSignatureMethod_HMAC_SHA1();
     $this->consumer = new OAuthConsumer($consumer_key, $consumer_secret);
     if (!empty($oauth_token) && !empty($oauth_token_secret)) {
       $this->token = new OAuthConsumer($oauth_token, $oauth_token_secret);
@@ -72,11 +72,9 @@ class TwitterOAuth {
    *
    * @returns a key/value array containing oauth_token and oauth_token_secret
    */
-  function getRequestToken($oauth_callback = NULL) {
+  function getRequestToken($oauth_callback) {
     $parameters = array();
-    if (!empty($oauth_callback)) {
-      $parameters['oauth_callback'] = $oauth_callback;
-    } 
+    $parameters['oauth_callback'] = $oauth_callback; 
     $request = $this->oAuthRequest($this->requestTokenURL(), 'GET', $parameters);
     $token = OAuthUtil::parse_parameters($request);
     $this->token = new OAuthConsumer($token['oauth_token'], $token['oauth_token_secret']);
@@ -108,11 +106,9 @@ class TwitterOAuth {
    *                "user_id" => "9436992",
    *                "screen_name" => "abraham")
    */
-  function getAccessToken($oauth_verifier = FALSE) {
+  function getAccessToken($oauth_verifier) {
     $parameters = array();
-    if (!empty($oauth_verifier)) {
-      $parameters['oauth_verifier'] = $oauth_verifier;
-    }
+    $parameters['oauth_verifier'] = $oauth_verifier;
     $request = $this->oAuthRequest($this->accessTokenURL(), 'GET', $parameters);
     $token = OAuthUtil::parse_parameters($request);
     $this->token = new OAuthConsumer($token['oauth_token'], $token['oauth_token_secret']);
@@ -179,7 +175,7 @@ class TwitterOAuth {
     if (strrpos($url, 'https://') !== 0 && strrpos($url, 'http://') !== 0) {
       $url = "{$this->host}{$url}.{$this->format}";
     }
-    $request = twitterOAuthRequest::from_consumer_and_token($this->consumer, $this->token, $method, $url, $parameters);
+    $request = OAuthRequest::from_consumer_and_token($this->consumer, $this->token, $method, $url, $parameters);
     $request->sign_request($this->sha1_method, $this->consumer, $this->token);
     switch ($method) {
     case 'GET':
