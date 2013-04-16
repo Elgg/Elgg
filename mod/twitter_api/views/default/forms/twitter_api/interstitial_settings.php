@@ -3,6 +3,11 @@
  * Make the user set up some alternative ways to login.
  */
 
+echo '<div>';
+$site = get_config('site');
+echo elgg_echo('twitter_api:interstitial:description', array($site->name));
+echo '</div>';
+
 $user = elgg_get_logged_in_user_entity();
 
 if (elgg_is_sticky_form('twitter_api_interstitial')) {
@@ -51,7 +56,7 @@ echo elgg_view_module('info', $title, $body);
 // buttons
 
 echo elgg_view('input/submit', array(
-	'text' => elgg_echo('save')
+	'value' => elgg_echo('save')
 ));
 
 echo elgg_view('output/url', array(
