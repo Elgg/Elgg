@@ -115,13 +115,6 @@ function twitter_api_tweet($hook, $type, $returnvalue, $params) {
 
 	// @todo - allow admin to select origins?
 
-	// check admin settings
-	$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitter_api');
-	$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitter_api');
-	if (!($consumer_key && $consumer_secret)) {
-		return;
-	}
-
 	// check user settings
 	$user_id = $params['user']->getGUID();
 	$access_key = elgg_get_plugin_user_setting('access_key', $user_id, 'twitter_api');
@@ -130,8 +123,11 @@ function twitter_api_tweet($hook, $type, $returnvalue, $params) {
 		return;
 	}
 
-	// send tweet
-	$api = new TwitterOAuth($consumer_key, $consumer_secret, $access_key, $access_secret);
+	$api = twitter_api_get_api_object($access_key, $access_secret);
+	if (!$api) {
+		return;
+	}
+
 	$api->post('statuses/update', array('status' => $params['message']));
 }
 
@@ -143,12 +139,6 @@ function twitter_api_tweet($hook, $type, $returnvalue, $params) {
  * @return array
  */
 function twitter_api_fetch_tweets($user_guid, $options = array()) {
-	// check admin settings
-	$consumer_key = elgg_get_plugin_setting('consumer_key', 'twitter_api');
-	$consumer_secret = elgg_get_plugin_setting('consumer_secret', 'twitter_api');
-	if (!($consumer_key && $consumer_secret)) {
-		return FALSE;
-	}
 
 	// check user settings
 	$access_key = elgg_get_plugin_user_setting('access_key', $user_guid, 'twitter_api');
@@ -157,8 +147,11 @@ function twitter_api_fetch_tweets($user_guid, $options = array()) {
 		return FALSE;
 	}
 
-	// fetch tweets
-	$api = new TwitterOAuth($consumer_key, $consumer_secret, $access_key, $access_secret);
+	$api = twitter_api_get_api_object($access_key, $access_secret);
+	if (!$api) {
+		return FALSE;
+	}
+
 	return $api->get('statuses/user_timeline', $options);
 }
 
