@@ -14,10 +14,10 @@ if ($site = elgg_get_site_entity()) {
 		throw new InstallationException(elgg_echo('InvalidParameterException:NonElggSite'));
 	}
 
-	$site->url = get_input('wwwroot');
+	$site->url = rtrim(get_input('wwwroot', '', false), '/') . '/';
 
-	datalist_set('path', sanitise_filepath(get_input('path')));
-	$dataroot = sanitise_filepath(get_input('dataroot'));
+	datalist_set('path', sanitise_filepath(get_input('path', '', false)));
+	$dataroot = sanitise_filepath(get_input('dataroot', '', false));
 
 	// check for relative paths
 	if (stripos(PHP_OS, 'win') === 0) {
