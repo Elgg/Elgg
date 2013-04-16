@@ -308,7 +308,7 @@ function usersettings_page_handler($page) {
 		$user = get_user_by_username($page[1]);
 		elgg_set_page_owner_guid($user->guid);
 	} else {
-		$user = elgg_get_logged_in_user_guid();
+		$user = elgg_get_logged_in_user_entity();
 		elgg_set_page_owner_guid($user->guid);
 	}
 
