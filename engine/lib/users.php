@@ -710,10 +710,15 @@ function force_user_password_reset($user_guid, $password) {
 		$salt = generate_random_cleartext_password(); // Reset the salt
 		$hash = generate_user_password($user, $password);
 
+		$ia = elgg_set_ignore_access();
+		
 		$user->salt = $salt;
 		$user->password = $hash;
+		$result = (bool)$user->save();
 
-		return (bool)$user->save();
+		elgg_set_ignore_access($ia);
+
+		return $result;
 	}
 
 	return false;
