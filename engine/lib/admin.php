@@ -234,6 +234,7 @@ function admin_init() {
 	elgg_register_action('admin/site/update_advanced', '', 'admin');
 	elgg_register_action('admin/site/flush_cache', '', 'admin');
 	elgg_register_action('admin/site/unlock_upgrade', '', 'admin');
+	elgg_register_action('admin/site/comment_upgrade', '', 'admin');
 
 	elgg_register_action('admin/menu/save', '', 'admin');
 

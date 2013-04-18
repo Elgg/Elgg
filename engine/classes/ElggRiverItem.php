@@ -8,6 +8,7 @@
  * @property int    $id            The unique identifier (read-only)
  * @property int    $subject_guid  The GUID of the actor
  * @property int    $object_guid   The GUID of the object
+ * @property int    $target_guid   The GUID of the entity involved in the action
  * @property int    $annotation_id The ID of the annotation involved in the action
  * @property string $type          The type of one of the entities involved in the action
  * @property string $subtype       The subtype of one of the entities involved in the action
@@ -20,6 +21,7 @@ class ElggRiverItem {
 	public $id;
 	public $subject_guid;
 	public $object_guid;
+	public $target_guid;
 	public $annotation_id;
 	public $type;
 	public $subtype;
@@ -39,7 +41,7 @@ class ElggRiverItem {
 		}
 
 		// the casting is to support typed serialization like json
-		$int_types = array('id', 'subject_guid', 'object_guid', 'annotation_id', 'access_id', 'posted');
+		$int_types = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'access_id', 'posted');
 		foreach ($object as $key => $value) {
 			if (in_array($key, $int_types)) {
 				$this->$key = (int)$value;
@@ -65,6 +67,15 @@ class ElggRiverItem {
 	 */
 	public function getObjectEntity() {
 		return get_entity($this->object_guid);
+	}
+
+	/**
+	 * Get the target of this river item
+	 *
+	 * @return ElggEntity
+	 */
+	public function getTargetEntity() {
+		return get_entity($this->target_guid);
 	}
 
 	/**
