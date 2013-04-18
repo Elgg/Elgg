@@ -39,10 +39,12 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 	}
 
 	$url = 'embed';
-	if (elgg_get_page_owner_guid()) {
-		$url = 'embed?container_guid=' . elgg_get_page_owner_guid();
+
+	$page_owner = elgg_get_page_owner_entity();
+	if (elgg_instanceof($page_owner, 'group') && $page_owner->isMember()) {
+		$url = 'embed?container_guid=' . $page_owner->getGUID();
 	}
-	
+
 	$items[] = ElggMenuItem::factory(array(
 		'name' => 'embed',
 		'href' => $url,
@@ -95,7 +97,12 @@ function embed_page_handler($page) {
 
 	$container_guid = (int)get_input('container_guid');
 	if ($container_guid) {
-		elgg_set_page_owner_guid($container_guid);
+		$container = get_entity($container_guid);
+
+		if (elgg_instanceof($container, 'group') && $container->isMember()) {
+			// embedding inside a group so save file to group files
+			elgg_set_page_owner_guid($container_guid);
+		}
 	}
 
 	echo elgg_view('embed/layout');
