@@ -6,6 +6,9 @@
 $offset = get_input('offset', 0);
 $limit = 10;
 
+$access_status = access_get_show_hidden_status();
+access_show_hidden_entities(true);
+
 $annotations = elgg_get_annotations(array(
 	'annotation_names' => 'generic_comment',
 	'limit' => $limit
@@ -24,6 +27,7 @@ if ($annotations) {
 		$object->container_guid = $annotation->entity_guid;
 		$object->description = $annotation->value;
 		$object->access_id = $annotation->access_id;
+		$object->enabled = $annotation->enabled;
 		$object->save();
 
 		// We need to save once before being able to change time_created
@@ -63,6 +67,8 @@ if ($annotations) {
 		}
 	}
 }
+
+access_show_hidden_entities($access_status);
 
 // Give some feedback for the UI
 $output = new stdClass();
