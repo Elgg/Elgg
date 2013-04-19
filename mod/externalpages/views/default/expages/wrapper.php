@@ -7,7 +7,7 @@
 
 echo $vars['content'];
 
-echo '<div class="mtm">';
+echo '<div class="mtm clearfix">';
 echo elgg_view('output/url', array(
 	'text' => elgg_echo('back'),
 	'href' => $_SERVER['HTTP_REFERER'],
