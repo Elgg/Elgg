@@ -34,8 +34,6 @@ function get_day_end($day = null, $month = null, $year = null) {
 /**
  * Return the notable entities for a given time period.
  *
- * @todo this function also accepts an array(type => subtypes) for 3rd arg. Should we document this?
- *
  * @param int     $start_time     The start time as a unix timestamp.
  * @param int     $end_time       The end time as a unix timestamp.
  * @param string  $type           The type of entity (eg "user", "object" etc)
@@ -1543,3 +1541,33 @@ function _export_init() {
 
 // Register a startup event
 elgg_register_event_handler('init', 'system', '_export_init', 100);
+
+/**
+ * Adds an item to the river.
+ *
+ * @param string $view          The view that will handle the river item (must exist)
+ * @param string $action_type   An arbitrary string to define the action (eg 'comment', 'create')
+ * @param int    $subject_guid  The GUID of the entity doing the action
+ * @param int    $object_guid   The GUID of the entity being acted upon
+ * @param int    $access_id     The access ID of the river item (default: same as the object)
+ * @param int    $posted        The UNIX epoch timestamp of the river item (default: now)
+ * @param int    $annotation_id The annotation ID associated with this river entry
+ * @param int    $target_guid   The GUID of the the object entity's container
+ *
+ * @return int/bool River ID or false on failure
+ */
+function add_to_river($view, $action_type, $subject_guid, $object_guid, $access_id = "",
+$posted = 0, $annotation_id = 0, $target_guid = 0) {
+	elgg_deprecated_notice('add_to_river was deprecated in favor of elgg_create_river_item', '1.9');
+
+	return elgg_create_river_item(array(
+		'view' => $view,
+		'action_type' => $action_type,
+		'subject_guid' => $subject_guid,
+		'object_guid' => $object_guid,
+		'target_guid' => $target_guid,
+		'access_id' => $access_id,
+		'posted' => $posted,
+		'annotation_id' => $annotation_id,
+	));
+}
