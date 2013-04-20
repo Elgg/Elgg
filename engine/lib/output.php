@@ -39,7 +39,7 @@ function parse_urls($text) {
 				$url = rtrim($url, ".!,");
 			}
 			$urltext = str_replace("/", "/<wbr />", $url);
-			return "<a href=\"$url\">$urltext</a>$punc";
+			return "<a href=\"$url\" rel=\"nofollow\">$urltext</a>$punc";
 		'
 	), $text);
 
