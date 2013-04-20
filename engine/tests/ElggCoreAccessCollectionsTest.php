@@ -54,7 +54,6 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 	}
 
 	public function testCreateGetDeleteACL() {
-		global $DB_QUERY_CACHE;
 		
 		$acl_name = 'test access collection';
 		$acl_id = create_access_collection($acl_name);
@@ -67,8 +66,6 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 		$this->assertEqual($acl->id, $acl_id);
 
 		if ($acl) {
-			$DB_QUERY_CACHE = array();
-			
 			$this->assertEqual($acl->name, $acl_name);
 
 			$result = delete_access_collection($acl_id);

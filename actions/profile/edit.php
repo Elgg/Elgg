@@ -48,7 +48,7 @@ foreach ($profile_fields as $shortname => $valuetype) {
 		forward(REFERER);
 	}
 
-	if ($valuetype == 'url' && !preg_match('~^https?\://~i', $value)) {
+	if ($value && $valuetype == 'url' && !preg_match('~^https?\://~i', $value)) {
 		$value = "http://$value";
 	}
 

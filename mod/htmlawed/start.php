@@ -151,7 +151,7 @@ function htmlawed_tag_post_processor($element, $attributes = false) {
  * Runs unit tests for htmlawed
  *
  * @return array
- *  */
+ */
 function htmlawed_test($hook, $type, $value, $params) {
     $value[] = dirname(__FILE__) . '/tests/tags.php';
     return $value;

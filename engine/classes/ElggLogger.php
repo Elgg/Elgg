@@ -96,7 +96,12 @@ class ElggLogger {
 		if (!isset($CONFIG->pagesetupdone)) {
 			$to_screen = FALSE;
 		}
-	
+
+		// Do not want to write to JS or CSS pages
+		if (elgg_in_context('js') || elgg_in_context('css')) {
+			$to_screen = FALSE;
+		}
+
 		if ($to_screen == TRUE) {
 			echo '<pre>';
 			print_r($value);

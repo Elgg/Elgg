@@ -10,7 +10,7 @@ $vars['entity'] = $blog;
 
 $draft_warning = $vars['draft_warning'];
 if ($draft_warning) {
-	$draft_warning = '<span class="message warning">' . $draft_warning . '</span>';
+	$draft_warning = '<span class="mbm elgg-text-help">' . $draft_warning . '</span>';
 }
 
 $action_buttons = '';

@@ -1471,7 +1471,7 @@ abstract class ElggEntity extends ElggData implements
 			$this->temp_private_settings = array();
 		}
 
-		cache_entity($this);
+		_elgg_cache_entity($this);
 		
 		return $result;
 	}
@@ -1482,7 +1482,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool Whether the update was successful.
 	 */
 	protected function update() {
-		cache_entity($this);
+		_elgg_cache_entity($this);
 		
 		global $CONFIG;
 
@@ -1559,7 +1559,7 @@ abstract class ElggEntity extends ElggData implements
 
 			// Cache object handle
 			if ($this->attributes['guid']) {
-				cache_entity($this);
+				_elgg_cache_entity($this);
 			}
 
 			return true;
@@ -1600,7 +1600,7 @@ abstract class ElggEntity extends ElggData implements
 			return false;
 		}
 
-		invalidate_cache_for_entity($this->guid);
+		_elgg_invalidate_cache_for_entity($this->guid);
 		
 		if ($reason) {
 			$this->disable_reason = $reason;
@@ -1752,7 +1752,7 @@ abstract class ElggEntity extends ElggData implements
 
 		// delete cache
 		if (isset($ENTITY_CACHE[$guid])) {
-			invalidate_cache_for_entity($guid);
+			_elgg_invalidate_cache_for_entity($guid);
 		}
 		
 		// If memcache is available then delete this entry from the cache

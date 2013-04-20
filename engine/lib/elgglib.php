@@ -38,6 +38,12 @@ function elgg_register_library($name, $location) {
 function elgg_load_library($name) {
 	global $CONFIG;
 
+	static $loaded_libraries = array();
+
+	if (in_array($name, $loaded_libraries)) {
+		return;
+	}
+
 	if (!isset($CONFIG->libraries)) {
 		$CONFIG->libraries = array();
 	}
@@ -51,6 +57,8 @@ function elgg_load_library($name) {
 		$error = "Could not load the " . $name . " library from " . $CONFIG->libraries[$name];
 		throw new InvalidParameterException($error);
 	}
+
+	$loaded_libraries[] = $name;
 }
 
 /**

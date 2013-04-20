@@ -13,6 +13,7 @@ elgg_register_event_handler('init', 'system', 'embed_init');
  */
 function embed_init() {
 	elgg_extend_view('css/elgg', 'embed/css');
+	elgg_extend_view('css/admin', 'embed/css');
 	
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'embed_longtext_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:embed', 'embed_select_tab', 1000);
@@ -20,7 +21,9 @@ function embed_init() {
 	// Page handler for the modal media embed
 	elgg_register_page_handler('embed', 'embed_page_handler');
 	
-	elgg_register_js('elgg.embed', 'js/embed/embed.js', 'footer');
+	$embed_js = elgg_get_simplecache_url('js', 'embed/embed');
+	elgg_register_simplecache_view('js/embed/embed');
+	elgg_register_js('elgg.embed', $embed_js, 'footer');
 }
 
 /**

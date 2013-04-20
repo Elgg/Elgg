@@ -25,7 +25,9 @@ return array(
 
 	'twitter_api:revoke:success' => 'Twitter access has been revoked.',
 
-	'twitter_api:login' => 'Allow existing users who have connected their Twitter account to sign in with Twitter?',
+	'twitter_api:post_to_twitter' => "Send users' wire posts to Twitter?",
+
+	'twitter_api:login' => 'Allow users to sign in with Twitter?',
 	'twitter_api:new_users' => 'Allow new users to sign up using their Twitter account even if user registration is disabled?',
 	'twitter_api:login:success' => 'You have been logged in.',
 	'twitter_api:login:error' => 'Unable to login with Twitter.',

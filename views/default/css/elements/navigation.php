@@ -16,12 +16,13 @@
 	text-align: center;
 }
 .elgg-pagination li {
-	display: inline;
+	display: inline-block;
 	margin: 0 6px 0 0;
 	text-align: center;
 }
 .elgg-pagination a, .elgg-pagination span {
 	border-radius: 4px;	
+	display: block;
 	padding: 2px 6px;
 	color: #4690d6;
 	border: 1px solid #4690d6;
@@ -413,7 +414,7 @@
 	ENTITY AND ANNOTATION
 *************************************** */
 <?php // height depends on line height/font size ?>
-.elgg-menu-entity, elgg-menu-annotation {
+.elgg-menu-entity, .elgg-menu-annotation {
 	float: right;
 	margin-left: 15px;
 	font-size: 90%;

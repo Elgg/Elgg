@@ -25,6 +25,8 @@ return array(
 	'pages:history' => "History",
 	'pages:view' => "View page",
 	'pages:revision' => "Revision",
+	'pages:current_revision' => "Current Revision",
+	'pages:revert' => "Revert",
 
 	'pages:navigation' => "Navigation",
 	'pages:new' => "A new page",
@@ -75,6 +77,9 @@ View and comment on the new page:
 	'pages:error:no_title' => 'You must specify a title for this page.',
 	'pages:delete:success' => 'The page was successfully deleted.',
 	'pages:delete:failure' => 'The page could not be deleted.',
+	'pages:revision:delete:success' => 'The page revision was successfully deleted.',
+	'pages:revision:delete:failure' => 'The page revision could not be deleted.',
+	'pages:revision:not_found' => 'Cannot find this revision.',
 
 	/**
 	 * Page

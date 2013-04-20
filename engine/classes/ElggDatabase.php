@@ -130,7 +130,8 @@ class ElggDatabase {
 	
 		// Set up cache if global not initialized and query cache not turned off
 		if ((!$DB_QUERY_CACHE) && (!$db_cache_off)) {
-			$DB_QUERY_CACHE = new ElggStaticVariableCache('db_query_cache');
+			// @todo if we keep this cache in 1.9, expose the size as a config parameter
+			$DB_QUERY_CACHE = new ElggLRUCache(200);
 		}
 	}
 
@@ -185,18 +186,12 @@ class ElggDatabase {
 	 * @access private
 	 */
 	public function insertData($query) {
-		global $DB_QUERY_CACHE;
 
 		elgg_log("DB query $query", 'NOTICE');
 		
 		$dblink = get_db_link('write');
 	
-		// Invalidate query cache
-		if ($DB_QUERY_CACHE) {
-			$DB_QUERY_CACHE->clear();
-		}
-	
-		elgg_log("Query cache invalidated", 'NOTICE');
+		$this->invalidateQueryCache();
 	
 		if ($this->executeQuery("$query", $dblink)) {
 			return mysql_insert_id($dblink);
@@ -216,17 +211,12 @@ class ElggDatabase {
 	 * @access private
 	 */
 	public function updateData($query) {
-		global $DB_QUERY_CACHE;
 
 		elgg_log("DB query $query", 'NOTICE');
 	
 		$dblink = get_db_link('write');
-	
-		// Invalidate query cache
-		if ($DB_QUERY_CACHE) {
-			$DB_QUERY_CACHE->clear();
-			elgg_log("Query cache invalidated", 'NOTICE');
-		}
+
+		$this->invalidateQueryCache();
 	
 		return !!$this->executeQuery("$query", $dblink);
 	}
@@ -242,17 +232,12 @@ class ElggDatabase {
 	 * @access private
 	 */
 	function deleteData($query) {
-		global $DB_QUERY_CACHE;
 	
 		elgg_log("DB query $query", 'NOTICE');
 	
 		$dblink = get_db_link('write');
-	
-		// Invalidate query cache
-		if ($DB_QUERY_CACHE) {
-			$DB_QUERY_CACHE->clear();
-			elgg_log("Query cache invalidated", 'NOTICE');
-		}
+
+		$this->invalidateQueryCache();
 	
 		if ($this->executeQuery("$query", $dblink)) {
 			return mysql_affected_rows($dblink);
@@ -288,11 +273,9 @@ class ElggDatabase {
 	
 		// Is cached?
 		if ($DB_QUERY_CACHE) {
-			$cached_query = $DB_QUERY_CACHE[$hash];
-	
-			if ($cached_query !== FALSE) {
+			if (isset($DB_QUERY_CACHE[$hash])) {
 				elgg_log("DB query $query results returned from cache (hash: $hash)", 'NOTICE');
-				return $cached_query;
+				return $DB_QUERY_CACHE[$hash];
 			}
 		}
 	
@@ -534,6 +517,24 @@ class ElggDatabase {
 				// Suppress all errors since these can't be dealt with here
 				elgg_log($e, 'WARNING');
 			}
+		}
+	}
+
+	/**
+	 * Invalidate the query cache
+	 * 
+	 * @return void
+	 * @access private
+	 */
+	public function invalidateQueryCache() {
+		global $DB_QUERY_CACHE;
+		if ($DB_QUERY_CACHE instanceof ElggLRUCache) {
+			$DB_QUERY_CACHE->clear();
+			elgg_log("Query cache invalidated", 'NOTICE');
+		} else if ($DB_QUERY_CACHE) {
+			// In case someone sets the cache to an array and primes it with data
+			$DB_QUERY_CACHE = array();
+			elgg_log("Query cache invalidated", 'NOTICE');
 		}
 	}
 }

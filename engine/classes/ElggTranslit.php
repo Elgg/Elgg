@@ -49,10 +49,19 @@ class ElggTranslit {
 		// Internationalization, AND 日本語!
 		$string = self::transliterateAscii($string);
 
-		// more translation
+		// allow HTML tags in titles
+		$string = preg_replace('~<([a-zA-Z][^>]*)>~', ' $1 ', $string);
+
+		// more substitutions
+		// @todo put these somewhere else
 		$string = strtr($string, array(
-			// Euro/GBP
-			"\xE2\x82\xAC" /* € */ => 'E', "\xC2\xA3" /* £ */ => 'GBP',
+			// currency
+			"\xE2\x82\xAC" /* € */ => ' E ',
+			"\xC2\xA3" /* £ */ => ' GBP ',
+			
+			"&" => ' and ',
+			">" => ' greater than ',
+			"<" => ' less than ',
 		));
 
 		// remove all ASCII except 0-9a-zA-Z, hyphen, underscore, and whitespace

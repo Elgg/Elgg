@@ -143,11 +143,13 @@ function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL)
  * This function verifies form input for security features (like a generated token),
  * and forwards if they are invalid.
  *
+ * @param string $action The action being performed 
+ *
  * @return mixed True if valid or redirects.
  * @access private
  */
-function action_gatekeeper() {
-	return _elgg_services()->actions->gatekeeper();
+function action_gatekeeper($action) {
+	return _elgg_services()->actions->gatekeeper($action);
 }
 
 /**

@@ -206,6 +206,7 @@ function elgg_get_simplecache_url($type, $view) {
  */
 function _elgg_get_simplecache_root() {
 	$viewtype = elgg_get_viewtype();
+	elgg_register_simplecache_view("$type/$view");// see #5302
 	if (elgg_is_simplecache_enabled()) {
 		$lastcache = elgg_get_config('lastcache');
 	} else {

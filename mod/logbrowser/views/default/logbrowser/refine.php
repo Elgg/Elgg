@@ -19,7 +19,7 @@ $toggle_link = elgg_view('output/url', array(
 ));
 
 $form_class = 'elgg-module elgg-module-inline';
-if (!isset($vars['user_guid'])) {
+if (!isset($vars['user_guid']) && !isset($vars['username'])) {
 	$form_class .= ' hidden';
 }
 

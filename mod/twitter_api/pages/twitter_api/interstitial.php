@@ -8,9 +8,7 @@
 
 $title = elgg_echo('twitter_api:interstitial:settings');
 
-$site = get_config('site');
-$content = elgg_echo('twitter_api:interstitial:description', array($site->name));
-$content .= elgg_view_form('twitter_api/interstitial_settings');
+$content = elgg_view_form('twitter_api/interstitial_settings');
 
 $params = array(
 	'content' => $content,

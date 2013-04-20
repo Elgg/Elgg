@@ -29,7 +29,9 @@ function elgg_get_page_owner_guid($guid = 0) {
 	// return guid of page owner entity
 	$guid = elgg_trigger_plugin_hook('page_owner', 'system', NULL, 0);
 
-	$page_owner_guid = $guid;
+	if ($guid) {
+		$page_owner_guid = $guid;
+	}
 
 	return $guid;
 }

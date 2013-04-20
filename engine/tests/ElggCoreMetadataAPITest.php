@@ -123,6 +123,20 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		$e->delete();
 	}
 
+	/**
+	 * https://github.com/Elgg/Elgg/issues/4867
+	 */
+	public function testElggGetEntityMetadataWhereSqlWithFalseValue() {
+		$pair = array('name' => 'test' , 'value' => false);
+		$result = elgg_get_entity_metadata_where_sql('e', 'metadata', null, null, $pair);
+		$where = preg_replace( '/\s+/', ' ', $result['wheres'][0]);
+		$this->assertTrue(strpos($where, "msn1.string = 'test' AND BINARY msv1.string = 0") > 0);
+
+		$result = elgg_get_entity_metadata_where_sql('e', 'metadata', array('test'), array(false));
+		$where = preg_replace( '/\s+/', ' ', $result['wheres'][0]);
+		$this->assertTrue(strpos($where, "msn.string IN ('test')) AND ( BINARY msv.string IN ('0')"));
+	}
+
 	// Make sure metadata with multiple values is correctly deleted when re-written
 	// by another user
 	// http://trac.elgg.org/ticket/2776

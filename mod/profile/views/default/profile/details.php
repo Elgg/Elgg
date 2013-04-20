@@ -22,13 +22,21 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 		}
 		$value = $user->$shortname;
 
-		// validate urls
-		if ($valtype == 'url' && !preg_match('~^https?\://~i', $value)) {
-			$value = "http://$value";
-		}
-
 		if (!empty($value)) {
-			//This function controls the alternating class
+
+			// fix profile URLs populated by https://github.com/Elgg/Elgg/issues/5232
+			// @todo Replace with upgrade script, only need to alter users with last_update after 1.8.13
+			if ($valtype == 'url' && $value == 'http://') {
+				$user->$shortname = '';
+				continue;
+			}
+
+			// validate urls
+			if ($valtype == 'url' && !preg_match('~^https?\://~i', $value)) {
+				$value = "http://$value";
+			}
+
+			// this controls the alternating class
 			$even_odd = ( 'odd' != $even_odd ) ? 'odd' : 'even';
 			?>
 			<div class="<?php echo $even_odd; ?>">

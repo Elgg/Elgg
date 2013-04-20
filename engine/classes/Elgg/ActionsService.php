@@ -39,7 +39,7 @@ class Elgg_ActionsService {
 	
 		if (!in_array($action, $exceptions)) {
 			// All actions require a token.
-			action_gatekeeper();
+			action_gatekeeper($action);
 		}
 	
 		$forwarder = str_replace(elgg_get_site_url(), "", $forwarder);
@@ -107,22 +107,7 @@ class Elgg_ActionsService {
 			return false;
 		}
 	}
-	
-	/**
-	 * @see Elgg_ActionsService::validateActionToken
-	 * @access private
-	 * @since 1.9.0
-	 * @return int number of seconds that action token is valid
-	 */
-	public function getActionTokenTimeout() {
-		if (($timeout = elgg_get_config('action_token_timeout')) === null) {
-			// default to 2 hours
-			$timeout = 2;
-		}
-		$hour = 60 * 60;
-		return (int)((float)$timeout * $hour);
-	}
-	
+
 	/**
 	 * @see validate_action_token
 	 * @access private
@@ -135,30 +120,23 @@ class Elgg_ActionsService {
 		if (!$ts) {
 			$ts = get_input('__elgg_ts');
 		}
-	
-		$timeout = $this->getActionTokenTimeout();
 
 		$session_id = _elgg_services()->session->getId();
 	
 		if (($token) && ($ts) && ($session_id)) {
 			// generate token, check with input and forward if invalid
-			$generated_token = generate_action_token($ts);
+			$required_token = generate_action_token($ts);
 	
 			// Validate token
-			if ($token == $generated_token) {
-				$now = time();
-	
-				// Validate time to ensure its not crazy
-				if ($timeout == 0 || ($ts > $now - $timeout) && ($ts < $now + $timeout)) {
+			if ($token == $required_token) {
+				if ($this->validateTokenTimestamp($ts)) {
 					// We have already got this far, so unless anything
-					// else says something to the contry we assume we're ok
-					$returnval = true;
-	
+					// else says something to the contrary we assume we're ok
 					$returnval = elgg_trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', array(
 						'token' => $token,
 						'time' => $ts
-					), $returnval);
-	
+					), true);
+
 					if ($returnval) {
 						return true;
 					} else if ($visibleerrors) {
@@ -194,19 +172,64 @@ class Elgg_ActionsService {
 				register_error($error_msg);
 			}
 		}
-	
-		return FALSE;
+
+		return false;
 	}
-	
+
+	/**
+	 * Is the token timestamp within acceptable range?
+	 * 
+	 * @param int $ts timestamp from the CSRF token
+	 * 
+	 * @return bool
+	 */
+	protected function validateTokenTimestamp($ts) {	
+		$timeout = $this->getActionTokenTimeout();
+		$now = time();
+		return ($timeout == 0 || ($ts > $now - $timeout) && ($ts < $now + $timeout));
+	}
+
+	/**
+	 * @see Elgg_ActionsService::validateActionToken
+	 * @access private
+	 * @since 1.9.0
+	 * @return int number of seconds that action token is valid
+	 */
+	public function getActionTokenTimeout() {
+		if (($timeout = elgg_get_config('action_token_timeout')) === null) {
+			// default to 2 hours
+			$timeout = 2;
+		}
+		$hour = 60 * 60;
+		return (int)((float)$timeout * $hour);
+	}
+
 	/**
 	 * @see action_gatekeeper
 	 * @access private
 	 */
-	public function gatekeeper() {
-		if ($this->validateActionToken()) {
-			return TRUE;
+	public function gatekeeper($action) {
+		if ($action === 'login') {
+			if ($this->validateActionToken(false)) {
+				return true;
+			}
+
+			$token = get_input('__elgg_token');
+			$ts = (int)get_input('__elgg_ts');
+			if ($token && $this->validateTokenTimestamp($ts)) {
+				// The tokens are present and the time looks valid: this is probably a mismatch due to the 
+				// login form being on a different domain.
+				register_error(elgg_echo('actiongatekeeper:crosssitelogin'));
+
+				forward('login', 'csrf');
+			}
+
+			// let the validator send an appropriate msg
+			validate_action_token();
+		} else if ($this->validateActionToken()) {
+			return true;
 		}
-	
+
 		forward(REFERER, 'csrf');
 	}
 	
