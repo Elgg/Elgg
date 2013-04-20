@@ -321,7 +321,7 @@ function check_rate_limit_exceeded($user_guid) {
 function elgg_set_cookie(ElggCookie $cookie) {
 	if (elgg_trigger_event('init:cookie', $cookie->name, $cookie)) {
 		return setcookie($cookie->name, $cookie->value, $cookie->expire, $cookie->path,
-						$cookie->domain, $cookie->secure, $cookie->httponly);
+						$cookie->domain, $cookie->secure, $cookie->httpOnly);
 	}
 	return false;
 }
@@ -358,7 +358,7 @@ function login(ElggUser $user, $persistent = false) {
 		
 		$cookie = new ElggCookie("elggperm");
 		$cookie->value = $code;
-		$cookie->setExpire("+30 days");
+		$cookie->setExpiresTime("+30 days");
 		
 		elgg_set_cookie($cookie);
 	}
@@ -368,7 +368,7 @@ function login(ElggUser $user, $persistent = false) {
 		$session->remove('code');
 
 		$cookie = new ElggCookie("elggperm");
-		$cookie->setExpire("-30 days");
+		$cookie->setExpiresTime("-30 days");
 		elgg_set_cookie($cookie);
 
 		throw new LoginException(elgg_echo('LoginException:Unknown'));
@@ -406,7 +406,7 @@ function logout() {
 	}
 
 	$cookie = new ElggCookie("elggperm");
-	$cookie->setExpire("-30 days");
+	$cookie->setExpiresTime("-30 days");
 	$cookie->domain = "/";
 
 	elgg_set_cookie($cookie);
