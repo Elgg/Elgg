@@ -8,6 +8,32 @@
  */
 
 /**
+ * parse_urls_cb -- Callback used by parse_urls()
+ *
+ * @access private
+ * @param Array $matches results of the preg_match call
+ *
+ * @return String the original text with added link
+ */
+function parse_urls_cb($matches) {
+	static $site_host;
+	if ($site_host === NULL) {
+		$site_host = parse_url(elgg_get_site_url(), PHP_URL_HOST);
+	}
+	$host          = parse_url($matches[2], PHP_URL_HOST);
+	$scheme        = preg_quote($matches[3]);
+
+	$options = array(
+		"href"       => $matches[2],
+		"text"       => preg_replace("#^{$scheme}:[/]*#", "", $matches[2]),
+		"is_trusted" => (strcasecmp($host, $site_host) == 0),
+	);
+	$link = sprintf("%s%s%s", $matches[1], elgg_view("output/url", $options), $matches[4]);
+
+	return $link;
+}
+
+/**
  * Takes a string and turns any URLs into formatted links
  *
  * @param string $text The input string
@@ -15,30 +41,13 @@
  * @return string The output string with formatted links
  **/
 function parse_urls($text) {
-	// @todo this causes problems with <attr = "val">
-	// must be in <attr="val"> format (no space).
-	// By default htmlawed rewrites tags to this format.
-	// if PHP supported conditional negative lookbehinds we could use this:
-	// $r = preg_replace_callback('/(?<!=)(?<![ ])?(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
-	//
-	// we can put , in the list of excluded char but need to keep . because of domain names.
-	// it is removed in the callback.
-	$r = preg_replace_callback('/(?<!=)(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
-	create_function(
-		'$matches',
-		'
-			$url = $matches[1];
-			$period = \'\';
-			if (substr($url, -1, 1) == \'.\') {
-				$period = \'.\';
-				$url = trim($url, \'.\');
-			}
-			$urltext = str_replace("/", "/<wbr />", $url);
-			return "<a href=\"$url\">$urltext</a>$period";
-		'
-	), $text);
 
-	return $r;
+	// Extract all naked URLs and link them
+
+	$regex = '#(\b\S*)((https?|ftps?|ircs?|mailto|news|xmpp):\S*\b/?)([\.\s]*)#ui';
+
+	return preg_replace_callback($regex, 'parse_urls_cb', $text);
+
 }
 
 /**
@@ -235,9 +244,9 @@ function elgg_normalize_url($url) {
 		// '//example.com' (Shortcut for protocol.)
 		// '?query=test', #target
 		return $url;
-	
-	} elseif (stripos($url, 'javascript:') === 0 || stripos($url, 'mailto:') === 0) {
-		// 'javascript:' and 'mailto:'
+
+	} elseif (stripos($url, 'javascript:') === 0 || stripos($url, 'mailto:') === 0 || stripos($url, 'xmpp:') === 0) {
+		// 'javascript:', 'mailto:', and 'xmpp:'
 		// Not covered in FILTER_VALIDATE_URL
 		return $url;
 
@@ -297,7 +306,7 @@ function elgg_get_friendly_title($title) {
  * @since 1.7.2
  */
 function elgg_get_friendly_time($time, $current_time = null) {
-	
+
 	if (!$current_time) {
 		$current_time = time();
 	}
@@ -318,7 +327,7 @@ function elgg_get_friendly_time($time, $current_time = null) {
 	if ($diff < $minute) {
 		return elgg_echo("friendlytime:justnow");
 	}
-	
+
 	if ($diff < $hour) {
 		$granularity = ':minutes';
 		$diff = round($diff / $minute);
@@ -333,7 +342,7 @@ function elgg_get_friendly_time($time, $current_time = null) {
 	if ($diff == 0) {
 		$diff = 1;
 	}
-	
+
 	$future = ((int)$current_time - (int)$time < 0) ? ':future' : '';
 	$singular = ($diff == 1) ? ':singular' : '';
 

@@ -1,7 +1,7 @@
 <?php
 /**
- * Elgg Regression Tests -- Trac Bugfixes
- * Any bugfixes from Trac that require testing belong here.
+ * Elgg Regression Tests -- Github Issues Bugfixes
+ * Any bugfixes from Github that require testing belong here.
  *
  * @package Elgg
  * @subpackage Test
@@ -103,7 +103,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			'x2' => 100,
 			'y2' => 150
 		);
-		
+
 		// should get back the same x/y offset == x1, y1 and an image of 25x25 because no upscale
 		$params = get_image_resize_parameters($orig_width, $orig_height, $options);
 
@@ -128,12 +128,12 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 
 		$group = new ElggGroup();
 		$group->save();
-		
+
 		// disable access overrides because we're admin.
 		$ia = elgg_set_ignore_access(false);
 
 		$this->assertFalse(can_write_to_container($user->guid, $object->guid));
-		
+
 		global $elgg_test_user;
 		$elgg_test_user = $user;
 
@@ -145,7 +145,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 				return true;
 			}
 		}
-		
+
 		elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'can_write_to_container_test_hook');
 		$this->assertTrue(can_write_to_container($user->guid, $object->guid));
 		elgg_unregister_plugin_hook_handler('container_permissions_check', 'all', 'can_write_to_container_test_hook');
@@ -234,4 +234,81 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			$this->assertIdentical($expected, $friendly_title);
 		}
 	}
+
+	/**
+	 * Test #5244 -- parse_urls()
+	 * https://github.com/Elgg/Elgg/issues/5244
+	 */
+	public function test_parse_urls() {
+
+		// Does not autolink without a protocol scheme
+		$case = "no.link.here";
+		$this->assertEqual($case, parse_urls($case));
+
+		// Support HTTP
+		$case   = "http://example.com";
+		$expect = '<a href="http://example.com" rel="nofollow">example.com</a>';
+		$this->assertEqual($expect, parse_urls($case));
+
+		// Support HTTPS
+		$case   = "https://example.com";
+		$expect = '<a href="https://example.com" rel="nofollow">example.com</a>';
+		$this->assertEqual($expect, parse_urls($case));
+
+		// Support multiple links
+		$case   = "Both insecure http://example.com and secure https://example.com";
+		$expect = 'Both insecure <a href="http://example.com" rel="nofollow">example.com</a> and secure <a href="https://example.com" rel="nofollow">example.com</a>';
+		$this->assertEqual($expect, parse_urls($case));
+
+		// Keep trailing slash
+		$case   = "http://example.com/";
+		$expect = '<a href="http://example.com/" rel="nofollow">example.com/</a>';
+		$this->assertEqual($expect, parse_urls($case));
+
+		// Support FTP and FTPS
+		$case   = "FTP: ftp://ftp.example.com/, or ftps://ftp.example.com/.";
+		$expect = 'FTP: <a href="ftp://ftp.example.com/" rel="nofollow">ftp.example.com/</a>, or <a href="ftps://ftp.example.com/" rel="nofollow">ftp.example.com/</a>.';
+		$this->assertEqual($expect, parse_urls($case));
+
+		// Support IRC and IRCS
+		$case   = "IRC: irc://irc.example.com/, or ircs://irc.freenode.net/#elgg.";
+		$expect = 'IRC: <a href="irc://irc.example.com/" rel="nofollow">irc.example.com/</a>, or <a href="ircs://irc.freenode.net/#elgg" rel="nofollow">irc.freenode.net/#elgg</a>.';
+		$this->assertEqual($expect, parse_urls($case));
+
+		// Support XMPP links
+		$case   = "XMPP: xmpp:example.com/, or xmpp:room.example.com/welcome.";
+		$expect = 'XMPP: <a href="xmpp:example.com/" rel="nofollow">example.com/</a>, or <a href="xmpp:room.example.com/welcome" rel="nofollow">room.example.com/welcome</a>.';
+		$this->assertEqual($expect, parse_urls($case));
+
+		// Support Email links
+		$case   = "mailto:joe@example.com, or <mailto:jane@example.net>.";
+		$expect = '<a href="mailto:joe@example.com" rel="nofollow">joe@example.com</a>, or <<a href="mailto:jane@example.net" rel="nofollow">jane@example.net</a>>.';
+		$this->assertEqual($expect, parse_urls($case));
+
+		// Support query strings
+		$case   = "http://example.com/to?q=moo, works.";
+		$expect = '<a href="http://example.com/to?q=moo" rel="nofollow">example.com/to?q=moo</a>, works.';
+		$this->assertEqual($expect, parse_urls($case));
+
+		// Support prefix and suffix
+		$case   = "test,http://test.example.net test, and http://foo.example.org...";
+		$expect = 'test,<a href="http://test.example.net" rel="nofollow">test.example.net</a> test, and <a href="http://foo.example.org" rel="nofollow">foo.example.org</a>...';
+		$this->assertEqual($expect, parse_urls($case));
+
+		// Support multiline text
+		$case   = "
+Hop http://example.net,
+hop
+hop mailto:foo@example.net
+and have fun.
+";
+		$expect = "
+Hop <a href=\"http://example.net\" rel=\"nofollow\">example.net</a>,
+hop
+hop <a href=\"mailto:foo@example.net\" rel=\"nofollow\">foo@example.net</a>
+and have fun.
+";
+		$this->assertEqual($expect, parse_urls($case));
+	}
+
 }

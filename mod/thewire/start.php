@@ -1,9 +1,9 @@
 <?php
 /**
  * Elgg wire plugin
- * 
+ *
  * Forked from Curverider's version
- * 
+ *
  * JHU/APL Contributors:
  * Cash Costello
  * Clark Updike
@@ -35,7 +35,7 @@ function thewire_init() {
 
 	// remove edit and access and add thread, reply, view previous
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'thewire_setup_entity_menu_items');
-	
+
 	// Extend system CSS with our own styles, which are defined in the thewire/css view
 	elgg_extend_view('css/elgg', 'thewire/css');
 
@@ -150,7 +150,7 @@ function thewire_page_handler($page) {
 
 /**
  * Override the url for a wire post to return the thread
- * 
+ *
  * @param ElggObject $thewirepost Wire post object
  */
 function thewire_url($thewirepost) {
@@ -165,7 +165,7 @@ function thewire_url($thewirepost) {
  */
 function thewire_notify_message($hook, $entity_type, $returnvalue, $params) {
 	global $CONFIG;
-	
+
 	$entity = $params['entity'];
 	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'thewire')) {
 		$descr = $entity->description;
@@ -189,7 +189,7 @@ function thewire_notify_message($hook, $entity_type, $returnvalue, $params) {
 
 /**
  * Get an array of hashtags from a text string
- * 
+ *
  * @param string $text The text of a post
  * @return array
  */
@@ -203,22 +203,14 @@ function thewire_get_hashtags($text) {
 
 /**
  * Replace urls, hash tags, and @'s by links
- * 
+ *
  * @param string $text The text of a post
  * @return string
  */
 function thewire_filter($text) {
 	global $CONFIG;
 
-	$text = ' ' . $text;
-
-	// email addresses
-	$text = preg_replace(
-				'/(^|[^\w])([\w\-\.]+)@(([0-9a-z-]+\.)+[0-9a-z]{2,})/i',
-				'$1<a href="mailto:$2@$3">$2@$3</a>',
-				$text);
-
-	// links
+	// links and email addresses
 	$text = parse_urls($text);
 
 	// usernames
@@ -281,7 +273,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	// set thread guid
 	if ($parent_guid) {
 		$post->addRelationship($parent_guid, 'parent');
-		
+
 		// name conversation threads by guid of first post (works even if first post deleted)
 		$parent_post = get_entity($parent_guid);
 		$post->wire_thread = $parent_post->wire_thread;
@@ -303,7 +295,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 		);
 		elgg_trigger_plugin_hook('status', 'user', $params);
 	}
-	
+
 	return $guid;
 }
 
@@ -350,7 +342,7 @@ function thewire_send_response_notification($guid, $parent_guid, $user) {
 
 /**
  * Get the latest wire guid - used for ajax update
- * 
+ *
  * @return guid
  */
 function thewire_latest_guid() {
@@ -368,9 +360,9 @@ function thewire_latest_guid() {
 
 /**
  * Get the parent of a wire post
- * 
+ *
  * @param int $post_guid The guid of the reply
- * @return ElggObject or null 
+ * @return ElggObject or null
  */
 function thewire_get_parent($post_guid) {
 	$parents = elgg_get_entities_from_relationship(array(
@@ -471,7 +463,7 @@ function thewire_test($hook, $type, $value, $params) {
 function thewire_run_upgrades() {
 	$path = dirname(__FILE__) . '/upgrades/';
 	$files = elgg_get_upgrade_files($path);
-	
+
 	foreach ($files as $file) {
 		include $path . $file;
 	}
