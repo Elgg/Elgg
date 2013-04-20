@@ -31,7 +31,7 @@ class Elgg_ViewService {
 	 * Constructor
 	 *
 	 * @param Elgg_PluginHookService $hooks  The hooks service
-	 * @param Elgg_Logger             $logger Logger
+	 * @param Elgg_Logger            $logger Logger
 	 */
 	public function __construct(Elgg_PluginHookService $hooks, Elgg_Logger $logger) {
 		$this->hooks = $hooks;
