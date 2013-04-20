@@ -15,7 +15,7 @@ class Elgg_ServiceProviderTest extends PHPUnit_Framework_TestCase {
 			
 			'autoP' => 'ElggAutoP',
 			'autoloadManager' => 'Elgg_AutoloadManager',
-			'db' => 'ElggDatabase',
+			'db' => 'Elgg_Database',
 			'events' => 'Elgg_EventService',
 			'hooks' => 'Elgg_PluginHookService',
 			'logger' => 'ElggLogger',

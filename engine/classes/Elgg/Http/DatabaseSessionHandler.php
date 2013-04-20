@@ -10,15 +10,15 @@
  */
 class Elgg_Http_DatabaseSessionHandler implements Elgg_Http_SessionHandler {
 
-	/** @var ElggDatabase $db */
+	/** @var Elgg_Database $db */
 	protected $db;
 
 	/**
 	 * Constructor
 	 *
-	 * @param ElggDatabase $db The database
+	 * @param Elgg_Database $db The database
 	 */
-	public function __construct(ElggDatabase $db) {
+	public function __construct(Elgg_Database $db) {
 		$this->db = $db;
 	}
 

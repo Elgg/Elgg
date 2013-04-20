@@ -14,7 +14,7 @@
  * @package    Elgg.Core
  * @subpackage Database
  */
-class ElggDatabase {
+class Elgg_Database {
 
 	/** @var string $tablePrefix Prefix for database tables */
 	private $tablePrefix;
@@ -140,7 +140,7 @@ class ElggDatabase {
 	/**
 	 * Retrieve rows from the database.
 	 *
-	 * Queries are executed with {@link ElggDatabase::executeQuery()} and results
+	 * Queries are executed with {@link Elgg_Database::executeQuery()} and results
 	 * are retrieved with {@link mysql_fetch_object()}.  If a callback
 	 * function $callback is defined, each row will be passed as the single
 	 * argument to $callback.  If no callback function is defined, the
@@ -160,7 +160,7 @@ class ElggDatabase {
 	/**
 	 * Retrieve a single row from the database.
 	 *
-	 * Similar to {@link ElggDatabase::getData()} but returns only the first row
+	 * Similar to {@link Elgg_Database::getData()} but returns only the first row
 	 * matched.  If a callback function $callback is specified, the row will be passed
 	 * as the only argument to $callback.
 	 *

@@ -72,7 +72,7 @@ $dbcalls = 0;
 
 
 /**
- * @return ElggDatabase The singleton DB object.
+ * @return Elgg_Database The singleton DB object.
  */
 function elgg_get_database() {
 	return _elgg_services()->db;
