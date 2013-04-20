@@ -1,5 +1,114 @@
 <?php
 /**
+ * @package Elgg.Core
+ * @subpackage Notifications
+ */
+
+/**
+ * Register a notification event
+ *
+ * Elgg sends notifications for the items that have been registered with this
+ * function. For example, if you want notifications to be sent when a bookmark
+ * has been created or updated, call the function like this:
+ *
+ * 	   elgg_register_notification_event('object', 'bookmarks', array('create', 'update'));
+ *
+ * If you want notifications sent when a user friends another user:
+ *
+ * 	   elgg_register_notification_event('relationship', 'friend');
+ *
+ * @param  string $object_type    'object', 'user', 'group', 'site', 'annotation', 'relationship'
+ * @param  string $object_subtype The subtype or name of the entity, annotation or relationship
+ * @param  array  $actions        Array of actions or empty array for the action event.
+ *                                An event is usually described by the first string passed
+ *                                to elgg_trigger_event(). Examples include
+ *                                'create', 'update', and 'publish'. The default is 'create'.
+ * @return void
+ * @since 1.9
+ */
+function elgg_register_notification_event($object_type, $object_subtype, array $actions = array()) {
+	_elgg_services()->notifications->registerEvent($object_type, $object_subtype, $actions);
+}
+
+/**
+ * Unregister a notification event
+ *
+ * @param  string $object_type    'object', 'user', 'group', 'site', 'annotation', 'relationship'
+ * @param  string $object_subtype The type of the entity or the subtype of the annotation or relationship
+ * @return bool
+ * @since 1.9
+ */
+function elgg_unregister_notification_event($object_type, $object_subtype) {
+	return _elgg_services()->notifications->unregisterEvent($object_type, $object_subtype);
+}
+
+/**
+ * Register a delivery method for notifications
+ *
+ * @param string $name The notification method name
+ * @return void
+ * @see elgg_unregister_notification_method()
+ * @since 1.9
+ */
+function elgg_register_notification_method($name) {
+	_elgg_services()->notifications->registerMethod($name);
+}
+
+/**
+ * Unregister a delivery method for notifications
+ *
+ * @param string $name The notification method name
+ * @return bool
+ * @see elgg_register_notification_method()
+ * @since 1.9
+ */
+function elgg_unregister_notification_method($name) {
+	return _elgg_services()->notifications->unregisterMethod($name);
+}
+
+/**
+ * Queue a notification event for later handling
+ *
+ * Checks to see if this event has been registered for notifications.
+ * If so, it adds the event to a notification queue.
+ *
+ * This function triggers the 'enqueue', 'notification' hook.
+ *
+ * @param string   $action The name of the action
+ * @param ElggData $object The object of the event
+ * @return void
+ * @access private
+ * @since 1.9
+ */
+function _elgg_enqueue_notification_event($action, $type, $object) {
+	return _elgg_services()->notifications->enqueueEvent($action, $type, $object);
+}
+
+/**
+ * @access private
+ */
+function _elgg_notifications_cron() {
+	// calculate when we should stop
+	// @todo make configurable?
+	$stop_time = time() + 45;
+	_elgg_services()->notifications->processQueue($stop_time);
+}
+
+/**
+ * @access private
+ */
+function _elgg_notifications_init() {
+	elgg_register_plugin_hook_handler('cron', 'minute', '_elgg_notifications_cron', 100);
+	elgg_register_event_handler('all', 'all', '_elgg_enqueue_notification_event');
+}
+
+elgg_register_event_handler('init', 'system', '_elgg_notifications_init');
+
+
+
+
+
+/**
  * Notifications
  * This file contains classes and functions which allow plugins to register and send notifications.
  *
