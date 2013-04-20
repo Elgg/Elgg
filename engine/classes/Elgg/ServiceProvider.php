@@ -19,7 +19,7 @@
  * @property-read Elgg_Request              $request
  * @property-read Elgg_Router               $router
  * @property-read ElggSession               $session
- * @property-read ElggViewService           $views
+ * @property-read Elgg_ViewService          $views
  * @property-read Elgg_WidgetsService       $widgets
  * 
  * @package Elgg.Core
@@ -64,10 +64,10 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	 * Views service factory
 	 * 
 	 * @param Elgg_ServiceProvider $c Dependency injection container
-	 * @return ElggViewService
+	 * @return Elgg_ViewService
 	 */
 	protected function getViews(Elgg_ServiceProvider $c) {
-		return new ElggViewService($c->hooks, $c->logger);
+		return new Elgg_ViewService($c->hooks, $c->logger);
 	}
 
 	/**

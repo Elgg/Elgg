@@ -14,7 +14,7 @@
  * @subpackage Views
  * @since      1.9.0
  */
-class ElggViewService {
+class Elgg_ViewService {
 
 	protected $config_wrapper;
 	protected $site_url_wrapper;
@@ -22,7 +22,7 @@ class ElggViewService {
 	protected $user_wrapped;
 
 	/**
-	 * @see ElggViewService::fileExists
+	 * @see Elgg_ViewService::fileExists
 	 * @var array
 	 */
 	protected $fileExistsCache = array();

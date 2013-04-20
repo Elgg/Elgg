@@ -26,7 +26,7 @@ class ElggServiceProviderTest extends PHPUnit_Framework_TestCase {
 			// Will this start session?
 			//'session' => 'ElggSession'
 			
-			'views' => 'ElggViewService',
+			'views' => 'Elgg_ViewService',
 			'widgets' => 'Elgg_WidgetsService',
 		);
 
