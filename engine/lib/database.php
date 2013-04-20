@@ -20,7 +20,7 @@
  *
  * @warning Elgg used to set this as an empty array to turn off the cache
  *
- * @global ElggLRUCache|null $DB_QUERY_CACHE
+ * @global Elgg_Cache_LRUCache|null $DB_QUERY_CACHE
  * @access private
  */
 global $DB_QUERY_CACHE;

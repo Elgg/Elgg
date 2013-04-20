@@ -131,7 +131,7 @@ class Elgg_Database {
 		// Set up cache if global not initialized and query cache not turned off
 		if ((!$DB_QUERY_CACHE) && (!$db_cache_off)) {
 			// @todo if we keep this cache in 1.9, expose the size as a config parameter
-			$DB_QUERY_CACHE = new ElggLRUCache(200);
+			$DB_QUERY_CACHE = new Elgg_Cache_LRUCache(200);
 		}
 	}
 
@@ -528,7 +528,7 @@ class Elgg_Database {
 	 */
 	public function invalidateQueryCache() {
 		global $DB_QUERY_CACHE;
-		if ($DB_QUERY_CACHE instanceof ElggLRUCache) {
+		if ($DB_QUERY_CACHE instanceof Elgg_Cache_LRUCache) {
 			$DB_QUERY_CACHE->clear();
 			elgg_log("Query cache invalidated", 'NOTICE');
 		} else if ($DB_QUERY_CACHE) {

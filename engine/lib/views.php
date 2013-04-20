@@ -1044,7 +1044,7 @@ function elgg_view_river_item($item, array $vars = array()) {
 	// see http://trac.elgg.org/ticket/4789
 	//	else {
 	//		// hide based on object's container
-	//		$visibility = ElggGroupItemVisibility::factory($object->container_guid);
+	//		$visibility = Elgg_GroupItemVisibility::factory($object->container_guid);
 	//		if ($visibility->shouldHideItems) {
 	//			return '';
 	//		}

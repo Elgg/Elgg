@@ -13,7 +13,7 @@
  * @package    Elgg.Core
  * @subpackage Cache
  */
-class ElggLRUCache implements ArrayAccess {
+class Elgg_Cache_LRUCache implements ArrayAccess {
 	/** @var int */
 	protected $maximumSize;
 

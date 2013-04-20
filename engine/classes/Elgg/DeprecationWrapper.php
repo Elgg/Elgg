@@ -14,7 +14,7 @@
  * 
  * @package Elgg.Core
  */
-class ElggDeprecationWrapper {
+class Elgg_DeprecationWrapper {
 	/** @var object */
 	protected $object;
 

@@ -283,7 +283,7 @@ function elgg_get_friendly_title($title) {
 	// titles are often stored HTML encoded
 	$title = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
 	
-	$title = ElggTranslit::urlize($title);
+	$title = Elgg_Translit::urlize($title);
 
 	return $title;
 }

@@ -488,7 +488,7 @@ function _elgg_session_boot() {
 
 	// Initialise the magic session
 	global $SESSION;
-	$SESSION = new ElggDeprecationWrapper(_elgg_services()->session, "\$SESSION is deprecated", 1.9);
+	$SESSION = new Elgg_DeprecationWrapper(_elgg_services()->session, "\$SESSION is deprecated", 1.9);
 
 	// Finally we ensure that a user who has been banned with an open session is kicked.
 	if ($session->has('user') && $session->get('user')->isBanned()) {

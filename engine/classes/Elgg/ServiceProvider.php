@@ -14,7 +14,7 @@
  * @property-read Elgg_Database             $db
  * @property-read Elgg_EventService         $events
  * @property-read Elgg_PluginHookService    $hooks
- * @property-read ElggLogger                $logger
+ * @property-read Elgg_Logger               $logger
  * @property-read ElggVolatileMetadataCache $metadataCache
  * @property-read Elgg_Request              $request
  * @property-read Elgg_Router               $router
@@ -54,10 +54,10 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	 * Logger factory
 	 * 
 	 * @param Elgg_ServiceProvider $c Dependency injection container
-	 * @return ElggLogger
+	 * @return Elgg_Logger
 	 */
 	protected function getLogger(Elgg_ServiceProvider $c) {
-		return new ElggLogger($c->hooks);
+		return new Elgg_Logger($c->hooks);
 	}
 
 	/**

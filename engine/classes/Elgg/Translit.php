@@ -27,7 +27,7 @@
  *
  * @access private Plugin authors should not use this directly
  */
-class ElggTranslit {
+class Elgg_Translit {
 
 	/**
 	 * Create a version of a string for embedding in a URL
