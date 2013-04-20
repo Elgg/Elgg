@@ -5,7 +5,7 @@ class Elgg_ViewServiceTest extends PHPUnit_Framework_TestCase {
 	public function setUp() {
 		$this->viewsDir = dirname(dirname(__FILE__)) . "/test_files/views";
 		
-		$this->hooks = new ElggPluginHookService();
+		$this->hooks = new Elgg_PluginHookService();
 		$this->logger = $this->getMock('ElggLogger', array(), array(), '', false);
 		
 		$this->views = new Elgg_ViewService($this->hooks, $this->logger);

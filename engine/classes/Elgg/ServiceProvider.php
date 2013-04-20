@@ -12,8 +12,8 @@
  * @property-read ElggAutoP                 $autoP
  * @property-read Elgg_AutoloadManager      $autoloadManager
  * @property-read ElggDatabase              $db
- * @property-read ElggEventService          $events
- * @property-read ElggPluginHookService     $hooks
+ * @property-read Elgg_EventService         $events
+ * @property-read Elgg_PluginHookService    $hooks
  * @property-read ElggLogger                $logger
  * @property-read ElggVolatileMetadataCache $metadataCache
  * @property-read Elgg_Request              $request
@@ -39,8 +39,8 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 		$this->setClassName('autoP', 'ElggAutoP');
 		$this->setClassName('db', 'ElggDatabase');
-		$this->setClassName('events', 'ElggEventService');
-		$this->setClassName('hooks', 'ElggPluginHookService');
+		$this->setClassName('events', 'Elgg_EventService');
+		$this->setClassName('hooks', 'Elgg_PluginHookService');
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setClassName('metadataCache', 'ElggVolatileMetadataCache');
 		$this->setFactory('request', array($this, 'getRequest'));

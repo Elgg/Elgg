@@ -11,14 +11,14 @@
  * @subpackage Hooks
  * @since      1.9.0
  */
-abstract class ElggPluginAPIService {
+abstract class Elgg_HooksRegistrationService {
 	
 	private $handlers = array();
 
 	/**
 	 * Returns an ordered array of handlers registered for $name and $type.
 	 *
-	 * @see ElggPluginAPIService::getAllHandlers()
+	 * @see Elgg_HooksRegistrationService::getAllHandlers()
 	 * @access private
 	 */
 	function getOrderedHandlers($name, $type) {

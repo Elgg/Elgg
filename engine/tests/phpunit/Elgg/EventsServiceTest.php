@@ -1,32 +1,32 @@
 <?php
 
-class ElggEventsServiceTest extends PHPUnit_Framework_TestCase {
+class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 	
 	public function testTriggerCallsRegisteredHandlers() {
-		$events = new ElggEventService();
+		$events = new Elgg_EventService();
 
 		$this->setExpectedException('InvalidArgumentException');
 
-		$events->registerHandler('foo', 'bar', array('ElggEventsServiceTest', 'throwInvalidArg'));
+		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'throwInvalidArg'));
 
 		$events->trigger('foo', 'bar');
 	}
 
 	public function testBubbling() {
-		$events = new ElggEventService();
+		$events = new Elgg_EventService();
 
 		// false stops it
-		$events->registerHandler('foo', 'bar', array('ElggEventsServiceTest', 'returnFalse'));
-		$events->registerHandler('foo', 'bar', array('ElggEventsServiceTest', 'throwInvalidArg'));
+		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'returnFalse'));
+		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'throwInvalidArg'));
 
 		$events->trigger('foo', 'bar');
 
 		// null allows it
-		$events = new ElggEventService();
+		$events = new Elgg_EventService();
 
 		// false stops it
-		$events->registerHandler('foo', 'bar', array('ElggEventsServiceTest', 'returnNull'));
-		$events->registerHandler('foo', 'bar', array('ElggEventsServiceTest', 'throwInvalidArg'));
+		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'returnNull'));
+		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'throwInvalidArg'));
 
 		$this->setExpectedException('InvalidArgumentException');
 		$events->trigger('foo', 'bar');

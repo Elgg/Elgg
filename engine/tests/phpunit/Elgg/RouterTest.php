@@ -3,7 +3,7 @@
 class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 
 	function setUp() {
-		$this->hooks = new ElggPluginHookService();
+		$this->hooks = new Elgg_PluginHookService();
 		$this->router = new Elgg_Router($this->hooks);
 		$this->pages = dirname(dirname(__FILE__)) . '/test_files/pages';
 	}

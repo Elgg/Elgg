@@ -1,11 +1,11 @@
 <?php
 
-class ElggPluginAPIServiceTest extends PHPUnit_Framework_TestCase {
+class Elgg_HooksRegistrationServiceTest extends PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 		parent::setUp();
 
-		$this->mock = $this->getMockForAbstractClass('ElggPluginAPIService');
+		$this->mock = $this->getMockForAbstractClass('Elgg_HooksRegistrationService');
 	}
 	
 	public function testCanRegisterHandlers() {
