@@ -154,12 +154,13 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 	}
 
 	// If the user can edit the entity this is attached to, great! They can edit.
-	if (can_edit_entity($extender->entity_guid, $user->getGUID())) {
+	$entity = $extender->getEntity();
+	if ($entity->canEdit($user->getGUID())) {
 		return true;
 	}
 
 	// Trigger plugin hooks
-	$params = array('entity' => $extender->getEntity(), 'user' => $user);
+	$params = array('entity' => $entity, 'user' => $user);
 	return elgg_trigger_plugin_hook('permissions_check', $type, $params, false);
 }
 
