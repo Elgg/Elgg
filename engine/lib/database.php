@@ -473,7 +473,7 @@ function insert_data($query) {
 }
 
 /**
- * Update a row in the database.
+ * Update the database.
  *
  * @note Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
  *
@@ -498,7 +498,7 @@ function update_data($query) {
 }
 
 /**
- * Remove a row from the database.
+ * Remove data from the database.
  *
  * @note Altering the DB invalidates all queries in {@link $DB_QUERY_CACHE}.
  *
