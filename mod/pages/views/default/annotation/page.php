@@ -39,4 +39,22 @@ $body = <<< HTML
 <p class="elgg-subtext">$subtitle</p>
 HTML;
 
+if (!elgg_in_context('widgets')) {
+	$menu = elgg_view_menu('annotation', array(
+		'annotation' => $annotation,
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz float-alt',
+	));
+}
+
+$body = <<<HTML
+<div class="mbn">
+	$menu
+	<h3>$title_link</h3>
+	<span class="elgg-subtext">
+		$subtitle
+	</span>
+</div>
+HTML;
+
 echo elgg_view_image_block($icon, $body);

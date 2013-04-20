@@ -28,9 +28,10 @@ function pages_init() {
 	elgg_register_annotation_url_handler('page', 'pages_revision_url');
 
 	// Register some actions
-	$action_base = elgg_get_plugins_path() . 'pages/actions/pages';
-	elgg_register_action("pages/edit", "$action_base/edit.php");
-	elgg_register_action("pages/delete", "$action_base/delete.php");
+	$action_base = elgg_get_plugins_path() . 'pages/actions';
+	elgg_register_action("pages/edit", "$action_base/pages/edit.php");
+	elgg_register_action("pages/delete", "$action_base/pages/delete.php");
+	elgg_register_action("annotations/page/delete", "$action_base/annotations/page/delete.php");
 
 	// Extend the main css view
 	elgg_extend_view('css/elgg', 'pages/css');
@@ -79,6 +80,9 @@ function pages_init() {
 
 	// entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'pages_entity_menu_setup');
+
+	// hook into annotation menu
+	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'pages_annotation_menu_setup');
 
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
@@ -363,15 +367,4 @@ function pages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/page_top'] = elgg_echo('item:object:page_top');
 
 	return $return_value;
-}
-
-/**
- * Process upgrades for the pages plugin
- */
-function pages_run_upgrades() {
-	$path = elgg_get_plugins_path() . 'pages/upgrades/';
-	$files = elgg_get_upgrade_files($path);
-	foreach ($files as $file) {
-		include "$path{$file}";
-	}
 }
