@@ -10,7 +10,7 @@
  * This class only parses XML to an XmlEntity object and
  * an array.  The array should be used primarily to extract
  * information since it is quicker to parse once and store
- * values from the XmlElement object than to parse the object
+ * values from the ElggXmlElement object than to parse the object
  * each time.
  *
  * The array should be an exact representation of the manifest.xml
@@ -23,9 +23,9 @@
  */
 abstract class ElggPluginManifestParser {
 	/**
-	 * The XmlElement object
+	 * The ElggXmlElement object
 	 *
-	 * @var XmlElement
+	 * @var ElggXmlElement
 	 */
 	protected $manifestObject;
 
@@ -64,7 +64,7 @@ abstract class ElggPluginManifestParser {
 	/**
 	 * Returns the manifest XML object
 	 *
-	 * @return XmlElement
+	 * @return ElggXmlElement
 	 */
 	public function getManifestObject() {
 		return $this->manifestObject;

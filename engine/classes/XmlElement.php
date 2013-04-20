@@ -4,6 +4,7 @@
  *
  * @package    Elgg.Core
  * @subpackage XML
+ * @deprecated 1.9
  */
 class XmlElement {
 	/** The name of the element */
