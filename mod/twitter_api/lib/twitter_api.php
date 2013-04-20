@@ -115,7 +115,7 @@ function twitter_api_login() {
 		$forward = $login_metadata['forward'];
 	}
 
-	if (!isset($token['oauth_token']) or !isset($token['oauth_token_secret'])) {
+	if (!isset($token['oauth_token']) || !isset($token['oauth_token_secret'])) {
 		register_error(elgg_echo('twitter_api:login:error'));
 		forward();
 	}
