@@ -35,8 +35,10 @@ function twitter_api_init() {
 	// register Walled Garden public pages
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'twitter_api_public_pages');
 
-	// push status messages to twitter
-	elgg_register_plugin_hook_handler('status', 'user', 'twitter_api_tweet');
+	// push wire post messages to twitter
+	if (elgg_get_plugin_setting('wire_posts', 'twitter_api') == 'yes') {
+		elgg_register_plugin_hook_handler('status', 'user', 'twitter_api_tweet');
+	}
 
 	$actions = dirname(__FILE__) . '/actions/twitter_api';
 	elgg_register_action('twitter_api/interstitial_settings', "$actions/interstitial_settings.php", 'logged_in');
