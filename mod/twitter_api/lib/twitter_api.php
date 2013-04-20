@@ -274,7 +274,7 @@ function twitter_api_update_user_avatar($user, $file_location) {
  * to establish session request tokens.
  */
 function twitter_api_authorize() {
-	$token = twitter_api_get_access_token();
+	$token = twitter_api_get_access_token(get_input('oauth_verifier'));
 	if (!isset($token['oauth_token']) || !isset($token['oauth_token_secret'])) {
 		register_error(elgg_echo('twitter_api:authorize:error'));
 		forward('settings/plugins', 'twitter_api');
