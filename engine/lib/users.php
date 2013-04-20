@@ -705,18 +705,18 @@ function send_new_password_request($user_guid) {
  * @return bool
  */
 function force_user_password_reset($user_guid, $password) {
-	global $CONFIG;
-
 	$user = get_entity($user_guid);
 	if ($user instanceof ElggUser) {
-		$salt = generate_random_cleartext_password(); // Reset the salt
-		$user->salt = $salt;
+		$ia = elgg_set_ignore_access();
 
-		$hash = generate_user_password($user, $password);
+		$user->salt = generate_random_cleartext_password();
+		$hash = generate_user_password($user, $password);		
+		$user->password = $hash;
+		$result = (bool)$user->save();
 
-		$query = "UPDATE {$CONFIG->dbprefix}users_entity
-			set password='$hash', salt='$salt' where guid=$user_guid";
-		return update_data($query);
+		elgg_set_ignore_access($ia);
+
+		return $result;
 	}
 
 	return false;
