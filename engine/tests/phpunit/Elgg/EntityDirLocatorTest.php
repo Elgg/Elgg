@@ -1,6 +1,6 @@
 <?php
 
-class ElggEntityDirLocatorTest extends PHPUnit_Framework_TestCase {
+class Elgg_EntityDirLocatorTest extends PHPUnit_Framework_TestCase {
 	public $guids = array(
 		1,
 		4999,

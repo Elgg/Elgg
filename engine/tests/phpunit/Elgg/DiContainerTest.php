@@ -1,11 +1,11 @@
 <?php
 
-class ElggDIContainerTest extends PHPUnit_Framework_TestCase {
+class Elgg_DiContainerTest extends PHPUnit_Framework_TestCase {
 
-	const TEST_CLASS = 'ElggDIContainerTestObject';
+	const TEST_CLASS = 'Elgg_DiContainerTestObject';
 
 	public function getFoo(Elgg_DIContainer $di) {
-		return new ElggDIContainerTestObject($di);
+		return new Elgg_DiContainerTestObject($di);
 	}
 
 	public function testEmptyContainer() {
@@ -119,7 +119,7 @@ class ElggDIContainerTest extends PHPUnit_Framework_TestCase {
 	}
 }
 
-class ElggDIContainerTestObject {
+class Elgg_DiContainerTestObject {
 	public $di;
 	public function __construct($di = null) {
 		$this->di = $di;

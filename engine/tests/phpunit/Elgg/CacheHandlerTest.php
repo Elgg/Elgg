@@ -1,6 +1,6 @@
 <?php
 
-class ElggCacheHandlerTest extends PHPUnit_Framework_TestCase {
+class Elgg_CacheHandlerTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @var Elgg_CacheHandler

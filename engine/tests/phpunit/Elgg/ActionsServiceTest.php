@@ -1,12 +1,16 @@
 <?php
 // @codeCoverageIgnoreStart
-$engine = dirname(dirname(dirname(__FILE__)));
+$engine = dirname(dirname(dirname(dirname(__FILE__))));
 // require_once "$engine/lib/configuration.php";
 require_once "$engine/lib/actions.php";
 // @codeCoverageIgnoreEnd
 
-class ElggActionsServiceTest extends PHPUnit_Framework_TestCase {
-	
+class Elgg_ActionsServiceTest extends PHPUnit_Framework_TestCase {
+
+	public function setUp() {
+		$this->actionsDir = dirname(dirname(__FILE__)) . "/test_files/actions";
+	}
+
 	/**
 	 * Tests register, exists and unregisrer
 	 */
@@ -16,8 +20,8 @@ class ElggActionsServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($actions->exists('test/output'));
 		$this->assertFalse($actions->exists('test/not_registered'));
 
-		$this->assertTrue($actions->register('test/output', dirname(__FILE__) . '/test_files/actions/output.php', 'public'));
-		$this->assertTrue($actions->register('test/non_ex_file', dirname(__FILE__) . '/test_files/actions/non_existing_file.php', 'public'));
+		$this->assertTrue($actions->register('test/output', "$this->actionsDir/output.php", 'public'));
+		$this->assertTrue($actions->register('test/non_ex_file', "$this->actionsDir/non_existing_file.php", 'public'));
 		
 		$this->assertTrue($actions->exists('test/output'));
 		$this->assertFalse($actions->exists('test/non_ex_file'));
@@ -48,11 +52,11 @@ class ElggActionsServiceTest extends PHPUnit_Framework_TestCase {
 		
 		$this->assertFalse($actions->exists('test/output'));
 		
-		$this->assertTrue($actions->register('test/output', dirname(__FILE__) . '/test_files/actions/output.php', 'public'));
+		$this->assertTrue($actions->register('test/output', "$this->actionsDir/output.php", 'public'));
 		
 		$this->assertTrue($actions->exists('test/output'));
 		
-		$this->assertTrue($actions->register('test/output', dirname(__FILE__) . '/test_files/actions/output2.php', 'public'));
+		$this->assertTrue($actions->register('test/output', "$this->actionsDir/output2.php", 'public'));
 		
 		$this->assertTrue($actions->exists('test/output'));
 	}
@@ -63,9 +67,9 @@ class ElggActionsServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertFalse($actions->exists('test/output'));
 		$this->assertFalse($actions->exists('test/not_registered'));
 
-		$this->assertTrue($actions->register('test/output', dirname(__FILE__) . '/test_files/actions/output.php', 'public'));
-		$this->assertTrue($actions->register('test/output_logged_in', dirname(__FILE__) . '/test_files/actions/output.php', 'logged_in'));
-		$this->assertTrue($actions->register('test/output_admin', dirname(__FILE__) . '/test_files/actions/output.php', 'admin'));
+		$this->assertTrue($actions->register('test/output', "$this->actionsDir/output.php", 'public'));
+		$this->assertTrue($actions->register('test/output_logged_in', "$this->actionsDir/output.php", 'logged_in'));
+		$this->assertTrue($actions->register('test/output_admin', "$this->actionsDir/output.php", 'admin'));
 		
 		//TODO finish this test
 		$this->markTestIncomplete("Can't test execution due to missing configuration.php dependencies");

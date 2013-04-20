@@ -1,6 +1,6 @@
 <?php
 
-class ElggServiceProviderTest extends PHPUnit_Framework_TestCase {
+class Elgg_ServiceProviderTest extends PHPUnit_Framework_TestCase {
 
 	public function testPropertiesReturnCorrectClassNames() {
 		$mgr = $this->getMock('Elgg_AutoloadManager', array(), array(), '', false);
