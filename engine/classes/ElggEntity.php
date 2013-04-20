@@ -1248,7 +1248,7 @@ abstract class ElggEntity extends ElggData implements
 		}
 
 		if ($url == "") {
-			$url = "view/" . $this_guid;
+			$url = "view/" . $this->guid;
 		}
 
 		return elgg_normalize_url($url);
