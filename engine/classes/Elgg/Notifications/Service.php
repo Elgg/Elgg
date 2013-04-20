@@ -1,10 +1,13 @@
 <?php
 
 /**
- * 
- * @todo inject plugin hook service
+ * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Notifications
+ * @since      1.9.0
  */
 class Elgg_Notifications_Service {
 
@@ -13,10 +16,24 @@ class Elgg_Notifications_Service {
 	/** @var Elgg_Util_FifoQueue */
 	protected $queue;
 
+	/**
+	 * Constructor
+	 * 
+	 * @param Elgg_Util_FifoQueue $queue Queue
+	 */
 	public function __construct(Elgg_Util_FifoQueue $queue) {
 		$this->queue = $queue;
 	}
 
+	/**
+	 * Register a event to be notification worthy 
+	 *
+	 * @param string $type    Type of the object of event 
+	 * @param string $subtype Subtype of the object of the event
+	 * @param array  $actions The actions that should trigger notifications
+	 * @return void
+	 * @access private
+	 */
 	public function registerEvent($type, $subtype, array $actions = array()) {
 		global $CONFIG;
 
@@ -38,6 +55,9 @@ class Elgg_Notifications_Service {
 		}
 	}
 
+	/**
+	 * @access private
+	 */
 	public function unregisterEvent($type, $subtype) {
 		global $CONFIG;
 		if (!isset($CONFIG->notification_events) ||
@@ -51,11 +71,17 @@ class Elgg_Notifications_Service {
 		return true;
 	}
 
+	/**
+	 * @access private
+	 */
 	public function getEvents() {
 		global $CONFIG;
 		return $CONFIG->notification_events;
 	}
 
+	/**
+	 * @access private
+	 */
 	public function registerMethod($name) {
 		global $CONFIG;
 
@@ -66,6 +92,9 @@ class Elgg_Notifications_Service {
 		$CONFIG->notification_methods[$name] = $name;
 	}
 
+	/**
+	 * @access private
+	 */
 	public function unregisterMethod($name) {
 		global $CONFIG;
 
@@ -80,11 +109,17 @@ class Elgg_Notifications_Service {
 		return false;
 	}
 
+	/**
+	 * @access private
+	 */
 	public function getMethods() {
 		global $CONFIG;
 		return $CONFIG->notification_methods;
 	}
 
+	/**
+	 * @access private
+	 */
 	public function enqueueEvent($action, $type, $object) {
 		if ($object instanceof ElggData) {
 			$object_type = $object->getType();
@@ -117,6 +152,7 @@ class Elgg_Notifications_Service {
 	 *
 	 * @param int $stopTime The Unix time to stop sending notifications
 	 * @return int The number of notification events handled
+	 * @access private
 	 */
 	public function processQueue($stopTime) {
 
@@ -156,8 +192,9 @@ class Elgg_Notifications_Service {
 	 *     <user guid> => array('email', 'sms', 'ajax'),
 	 * );
 	 *
-	 * @param ElggNotificationEvent $event Notification event
+	 * @param Elgg_Notifications_Event $event Notification event
 	 * @return array
+	 * @access private
 	 */
 	protected function getSubscriptions($event) {
 		// @todo not implemented
@@ -172,9 +209,10 @@ class Elgg_Notifications_Service {
 	/**
 	 * Sends the notifications based on subscriptions
 	 *
-	 * @param ElggNotificationEvent $event         Notification event
-	 * @param array                 $subscriptions Subscriptions for this event
+	 * @param Elgg_Notifications_Event $event         Notification event
+	 * @param array                   $subscriptions Subscriptions for this event
 	 * @return int The number of notifications handled
+	 * @access private
 	 */
 	protected function sendNotifications($event, $subscriptions) {
 
@@ -199,10 +237,11 @@ class Elgg_Notifications_Service {
 	/**
 	 * Send a notification to a subscriber
 	 *
-	 * @param ElggNotificationEvent $event  The notification event
-	 * @param int                   $guid   The guid of the subscriber
-	 * @param string                $method The notification method
+	 * @param Elgg_Notifications_Event $event  The notification event
+	 * @param int                      $guid   The guid of the subscriber
+	 * @param string                   $method The notification method
 	 * @return bool
+	 * @access private
 	 */
 	protected function sendNotification($event, $guid, $method) {
 

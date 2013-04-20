@@ -17,9 +17,9 @@
  *
  * 	   elgg_register_notification_event('relationship', 'friend');
  *
- * @param  string $object_type    'object', 'user', 'group', 'site', 'annotation', 'relationship'
- * @param  string $object_subtype The subtype or name of the entity, annotation or relationship
- * @param  array  $actions        Array of actions or empty array for the action event.
+ * @param string $object_type    'object', 'user', 'group', 'site', 'annotation', 'relationship'
+ * @param string $object_subtype The subtype or name of the entity, annotation or relationship
+ * @param array  $actions        Array of actions or empty array for the action event.
  *                                An event is usually described by the first string passed
  *                                to elgg_trigger_event(). Examples include
  *                                'create', 'update', and 'publish'. The default is 'create'.
@@ -33,8 +33,8 @@ function elgg_register_notification_event($object_type, $object_subtype, array $
 /**
  * Unregister a notification event
  *
- * @param  string $object_type    'object', 'user', 'group', 'site', 'annotation', 'relationship'
- * @param  string $object_subtype The type of the entity or the subtype of the annotation or relationship
+ * @param string $object_type    'object', 'user', 'group', 'site', 'annotation', 'relationship'
+ * @param string $object_subtype The type of the entity or the subtype of the annotation or relationship
  * @return bool
  * @since 1.9
  */
