@@ -34,11 +34,13 @@ define(function(require) {
 		 * @return void
 		 */
 		wordCount: function() {
-			$('#cke_bottom_' + this.name).prepend(
-				'<div id="cke_wordcount_' + this.name + '" class="cke_wordcount">' + 
-					elgg.echo('ckeditor:word_count') + '0' +
-				'</div>'   
-			);
+			if ($('#cke_wordcount_'+this.name).length == 0) {
+				$('#cke_bottom_' + this.name).prepend(
+					'<div id="cke_wordcount_' + this.name + '" class="cke_wordcount">' + 
+						elgg.echo('ckeditor:word_count') + '0' +
+					'</div>'   
+				);
+			}
 			this.document.on('keyup', function(event) {
 				//show the number of words
 				var words = this.getBody().getText().trim().split(' ').length;
