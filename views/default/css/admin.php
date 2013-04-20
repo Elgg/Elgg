@@ -446,7 +446,8 @@ input {
 .elgg-input-text,
 .elgg-input-tags,
 .elgg-input-url,
-.elgg-input-plaintext {
+.elgg-input-plaintext,
+.elgg-input-longtext {
 	width: 98%;
 }
 textarea {
