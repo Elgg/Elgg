@@ -129,7 +129,13 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		return new Elgg_Router($c->hooks);
 	}
 
-protected function getNotifications(Elgg_ServiceProvider $c) {
+	/**
+	 * Notification service factory
+	 * 
+	 * @param Elgg_ServiceProvider $c Dependency injection container
+	 * @return Elgg_Notifications_Service
+	 */
+	protected function getNotifications(Elgg_ServiceProvider $c) {
 		// @todo move queue in service provider
 		return new Elgg_Notifications_Service(new Elgg_Util_DatabaseQueue(Elgg_Notifications_Service::QUEUE_NAME));
 	}
