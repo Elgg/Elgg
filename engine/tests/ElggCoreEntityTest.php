@@ -89,7 +89,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$obj->subtype = $test_subtype;
 		$guid = $obj->save();
 
-		invalidate_cache_for_entity($guid);
+		_elgg_invalidate_cache_for_entity($guid);
 
 		$obj = get_entity($guid);
 		$this->assertEqual($obj->subtype, $test_subtype);
