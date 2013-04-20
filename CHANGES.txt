@@ -1,5 +1,5 @@
 Version 1.8.15
-(April xx, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+(April 23, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
    * Cash Costello
    * Ismayil Khayredinov
@@ -21,13 +21,14 @@ Version 1.8.15
 
   Enhancements:
    * Added browser caching of language JS files
+   * Adding nofollow on user posted URLs for spam deterrence (thanks to Hellekin)
    * Auto-registering views for simplecache when their URL is requested
    * Display helpful message for those who have site URL configuration issues
    * Can revert to a previous revision with pages plugin
    * Site owners can turn off posting wire messages to Twitter
    * Search results are sorted by relevance
 
-  Dropped Support:
+  Dropped Plugins:
    * Twitter widget due to changes in Twitter API and terms of service
    * OAuth API plugin due to conflicts with the Twitter API plugin
 
