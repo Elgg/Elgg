@@ -236,4 +236,56 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			$this->assertIdentical($expected, $friendly_title);
 		}
 	}
+
+	/**
+	 * Test #5369 -- parse_urls()
+	 * https://github.com/Elgg/Elgg/issues/5369
+	 */
+	public function test_parse_urls() {
+
+		$cases = array(
+			'no.link.here' =>
+				'no.link.here',
+			'simple link http://example.org test' =>
+				'simple link <a href="http://example.org">http:/<wbr />/<wbr />example.org</a> test',
+			'non-ascii http://ñew.org/ test' =>
+				'non-ascii <a href="http://ñew.org/">http:/<wbr />/<wbr />ñew.org/<wbr /></a> test',
+
+			// section 2.1
+			'percent encoded http://example.org/a%20b test' =>
+				'percent encoded <a href="http://example.org/a%20b">http:/<wbr />/<wbr />example.org/<wbr />a%20b</a> test',
+			// section 2.2: skipping single quote and parenthese
+			'reserved characters http://example.org/:/?#[]@!$&*+,;= test' =>
+				'reserved characters <a href="http://example.org/:/?#[]@!$&*+,;=">http:/<wbr />/<wbr />example.org/<wbr />:/<wbr />?#[]@!$&*+,;=</a> test',
+			// section 2.3
+			'unreserved characters http://example.org/a1-._~ test' =>
+				'unreserved characters <a href="http://example.org/a1-._~">http:/<wbr />/<wbr />example.org/<wbr />a1-._~</a> test',
+
+			'parameters http://example.org/?val[]=1&val[]=2 test' =>
+				'parameters <a href="http://example.org/?val[]=1&val[]=2">http:/<wbr />/<wbr />example.org/<wbr />?val[]=1&val[]=2</a> test',
+			'port http://example.org:80/ test' =>
+				'port <a href="http://example.org:80/">http:/<wbr />/<wbr />example.org:80/<wbr /></a> test',
+
+			'parentheses (http://www.google.com) test' =>
+				'parentheses (<a href="http://www.google.com">http:/<wbr />/<wbr />www.google.com</a>) test',
+			'comma http://elgg.org, test' =>
+				'comma <a href="http://elgg.org">http:/<wbr />/<wbr />elgg.org</a>, test',
+			'period http://elgg.org. test' =>
+				'period <a href="http://elgg.org">http:/<wbr />/<wbr />elgg.org</a>. test',
+			'exclamation http://elgg.org! test' =>
+				'exclamation <a href="http://elgg.org">http:/<wbr />/<wbr />elgg.org</a>! test',
+
+			'already anchor <a href="http://twitter.com/">twitter</a> test' =>
+				'already anchor <a href="http://twitter.com/">twitter</a> test',
+
+			'ssl https://example.org/ test' =>
+				'ssl <a href="https://example.org/">https:/<wbr />/<wbr />example.org/<wbr /></a> test',
+			'ftp ftp://example.org/ test' =>
+				'ftp <a href="ftp://example.org/">ftp:/<wbr />/<wbr />example.org/<wbr /></a> test',
+
+		);
+		foreach ($cases as $input => $output) {
+			$this->assertEqual($output, parse_urls($input));
+		}
+	}
 }
