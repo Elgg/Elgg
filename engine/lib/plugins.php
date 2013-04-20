@@ -195,7 +195,7 @@ function _elgg_cache_plugin_by_id(ElggPlugin $plugin) {
  * Returns an ElggPlugin object with the path $path.
  *
  * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.
- * @return ElggPlugin|false
+ * @return ElggPlugin|null
  * @since 1.8.0
  */
 function elgg_get_plugin_from_id($plugin_id) {
@@ -213,7 +213,7 @@ function elgg_get_plugin_from_id($plugin_id) {
 		'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
 		'selects' => array("oe.title", "oe.description"),
 		'wheres' => array("oe.title = '$plugin_id'"),
-		'limit' => 1
+		'limit' => 1,
 	);
 
 	$plugins = elgg_get_entities($options);
@@ -222,7 +222,7 @@ function elgg_get_plugin_from_id($plugin_id) {
 		return $plugins[0];
 	}
 
-	return false;
+	return null;
 }
 
 /**
