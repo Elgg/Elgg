@@ -1,5 +1,13 @@
 <?php
-
+/**
+ * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ *
+ * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Notifications
+ * @since      1.9.0
+ */
 class Elgg_Notifications_Event {
 	/* @var string The name of the action/event */
 	protected $action;
@@ -21,7 +29,7 @@ class Elgg_Notifications_Event {
 	 * Create a notification event
 	 *
 	 * @param ElggData $object The object of the event (ElggEntity, ElggAnnotation, ElggRelationship)
-	 * @param string   $action  The name of the action (default: create)
+	 * @param string   $action The name of the action (default: create)
 	 * @param ElggUser $actor  The user that caused the event (default: logged in user)
 	 */
 	public function __construct($object, $action, $actor = null) {

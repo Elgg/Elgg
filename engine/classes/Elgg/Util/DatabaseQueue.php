@@ -2,6 +2,14 @@
 
 /**
  * FIFO queue that uses ElggObjects for persistence
+ *
+ * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ *
+ * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage Util
+ * @since      1.9.0
  */
 class Elgg_Util_DatabaseQueue implements Elgg_Util_FifoQueue {
 

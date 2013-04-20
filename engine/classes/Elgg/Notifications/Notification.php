@@ -1,7 +1,12 @@
 <?php
-
 /**
+ * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ *
+ * @access private
  * 
+ * @package    Elgg.Core
+ * @subpackage Notifications
+ * @since      1.9.0
  */
 class Elgg_Notifications_Notification {
 	/** @var ElggEntity The entity causing or creating the notification */
@@ -77,6 +82,14 @@ class Elgg_Notifications_Notification {
 		return $this->getEmailAddress($this->to);
 	}
 
+	/**
+	 * Get an email address string for to/from field
+	 * 
+	 * @todo this should not be here
+	 * 
+	 * @param ElggUser|ElggGroup|ElggSite $entity Entity to get the email address for 
+	 * @return string
+	 */
 	protected function getFormattedEmailAddress($entity) {
 		// need to remove special characters
 		$name = $entity->name;
