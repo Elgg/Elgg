@@ -1543,3 +1543,95 @@ function _export_init() {
 
 // Register a startup event
 elgg_register_event_handler('init', 'system', '_export_init', 100);
+
+/**
+ * Returns the name of views for in a directory.
+ *
+ * Use this to get all namespaced views under the first element.
+ *
+ * @param string $dir  The main directory that holds the views. (mod/profile/views/)
+ * @param string $base The root name of the view to use, without the viewtype. (profile)
+ *
+ * @return array
+ * @since 1.7.0
+ * @todo Why isn't this used anywhere else but in elgg_view_tree()?
+ * Seems like a useful function for autodiscovery.
+ * @access private
+ * @deprecated 1.9
+ */
+function elgg_get_views($dir, $base) {
+	$return = array();
+	if (file_exists($dir) && is_dir($dir)) {
+		if ($handle = opendir($dir)) {
+			while ($view = readdir($handle)) {
+				if (!in_array($view, array('.', '..', '.svn', 'CVS'))) {
+					if (is_dir($dir . '/' . $view)) {
+						if ($val = elgg_get_views($dir . '/' . $view, $base . '/' . $view)) {
+							$return = array_merge($return, $val);
+						}
+					} else {
+						$view = str_replace('.php', '', $view);
+						$return[] = $base . '/' . $view;
+					}
+				}
+			}
+		}
+	}
+
+	return $return;
+}
+
+/**
+ * Returns all views below a partial view.
+ *
+ * Settings $view_root = 'profile' will show all available views under
+ * the "profile" namespace.
+ *
+ * @param string $view_root The root view
+ * @param string $viewtype  Optionally specify a view type
+ *                          other than the current one.
+ *
+ * @return array A list of view names underneath that root view
+ * @todo This is used once in the deprecated get_activity_stream_data() function.
+ * @access private
+ * @deprecated 1.9
+ */
+function elgg_view_tree($view_root, $viewtype = "") {
+	global $CONFIG;
+	static $treecache = array();
+
+	// Get viewtype
+	if (!$viewtype) {
+		$viewtype = elgg_get_viewtype();
+	}
+
+	// A little light internal caching
+	if (!empty($treecache[$view_root])) {
+		return $treecache[$view_root];
+	}
+
+	// Examine $CONFIG->views->locations
+	if (isset($CONFIG->views->locations[$viewtype])) {
+		foreach ($CONFIG->views->locations[$viewtype] as $view => $path) {
+			$pos = strpos($view, $view_root);
+			if ($pos === 0) {
+				$treecache[$view_root][] = $view;
+			}
+		}
+	}
+
+	// Now examine core
+	$location = $CONFIG->viewpath;
+	$viewtype = elgg_get_viewtype();
+	$root = $location . $viewtype . '/' . $view_root;
+
+	if (file_exists($root) && is_dir($root)) {
+		$val = elgg_get_views($root, $view_root);
+		if (!is_array($treecache[$view_root])) {
+			$treecache[$view_root] = array();
+		}
+		$treecache[$view_root] = array_merge($treecache[$view_root], $val);
+	}
+
+	return $treecache[$view_root];
+}

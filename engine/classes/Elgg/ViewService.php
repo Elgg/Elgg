@@ -60,7 +60,8 @@ class Elgg_ViewService {
 	 * @access private
 	 */
 	public function autoregisterViews($view_base, $folder, $base_location_path, $viewtype) {
-		if ($handle = opendir($folder)) {
+		$handle = opendir($folder);
+		if ($handle) {
 			while ($view = readdir($handle)) {
 				if (!empty($view_base)) {
 					$view_base_new = $view_base . "/";
@@ -68,7 +69,7 @@ class Elgg_ViewService {
 					$view_base_new = "";
 				}
 
-				if (!in_array($view, array('.', '..', '.svn', 'CVS'))) {
+				if (substr($view, 0, 1) !== '.') {
 					if (is_dir($folder . "/" . $view)) {
 						$this->autoregisterViews($view_base_new . $view, $folder . "/" . $view,
 							$base_location_path, $viewtype);
