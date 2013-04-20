@@ -220,7 +220,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		unset($_SESSION['user']);
 		$ia = elgg_set_ignore_access(true);
 
-		$this->assertTrue(disable_entity($guid1, null, true));
+		$this->assertTrue($e1->disable(null, true));
 
 		// "log in" original user
 		$_SESSION['user'] = $user;
@@ -239,8 +239,8 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$this->assertEqual('no', $r->enabled);
 
 		access_show_hidden_entities(true);
-		delete_entity($guid1);
-		delete_entity($guid2);
+		$e1->delete();
+		$e2->delete();
 		access_show_hidden_entities(false);
 	}
 
