@@ -5,8 +5,13 @@ require_once "$engine/lib/entities.php";
 
 class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 
+	public function setUp() {
+		$this->hooks = new Elgg_PluginHookService();
+		$this->queue = new Elgg_Util_MemoryQueue();
+	}
+
 	public function testRegisterEvent() {
-		$service = new Elgg_Notifications_Service(new Elgg_Util_MemoryQueue());
+		$service = new Elgg_Notifications_Service($this->queue, $this->hooks);
 
 		$service->registerEvent('foo', 'bar');
 		$events = array(
@@ -25,7 +30,7 @@ class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testUnregisterEvent() {
-		$service = new Elgg_Notifications_Service(new Elgg_Util_MemoryQueue());
+		$service = new Elgg_Notifications_Service($this->queue, $this->hooks);
 
 		$service->registerEvent('foo', 'bar');
 		$this->assertTrue($service->unregisterEvent('foo', 'bar'));
@@ -38,7 +43,7 @@ class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testRegisterMethod() {
-		$service = new Elgg_Notifications_Service(new Elgg_Util_MemoryQueue());
+		$service = new Elgg_Notifications_Service($this->queue, $this->hooks);
 
 		$service->registerMethod('foo');
 		$methods = array('foo' => 'foo');
@@ -46,7 +51,7 @@ class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testUnregisterMethod() {
-		$service = new Elgg_Notifications_Service(new Elgg_Util_MemoryQueue());
+		$service = new Elgg_Notifications_Service($this->queue, $this->hooks);
 
 		$service->registerMethod('foo');
 		$this->assertTrue($service->unregisterMethod('foo'));
@@ -55,23 +60,22 @@ class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testEnqueueEvent() {
-		$queue = new Elgg_Util_MemoryQueue();
-		$service = new Elgg_Notifications_Service($queue);
+		$service = new Elgg_Notifications_Service($this->queue, $this->hooks);
 
 		$service->registerEvent('object', 'bar');
 		$object = new ElggObject();
 		$object->subtype = 'bar';
 		$service->enqueueEvent('create', '', $object);
 		$event = new Elgg_Notifications_Event($object, 'create');
-		$this->assertEquals($event, $queue->dequeue());
-		$this->assertNull($queue->dequeue());
+		$this->assertEquals($event, $this->queue->dequeue());
+		$this->assertNull($this->queue->dequeue());
 
 		// unregistered action type
 		$service->enqueueEvent('null', '', $object);
-		$this->assertNull($queue->dequeue());
+		$this->assertNull($this->queue->dequeue());
 
 		// unregistered object type
 		$service->enqueueEvent('create', '', new ElggObject());
-		$this->assertNull($queue->dequeue());
+		$this->assertNull($this->queue->dequeue());
 	}
 }

@@ -16,6 +16,9 @@ class Elgg_Notifications_Service {
 	/** @var Elgg_Util_FifoQueue */
 	protected $queue;
 
+	/** @var Elgg_PluginHookService */
+	protected $hooks;
+
 	/** @var array Registered notification events */
 	protected $events = array();
 
@@ -27,8 +30,9 @@ class Elgg_Notifications_Service {
 	 * 
 	 * @param Elgg_Util_FifoQueue $queue Queue
 	 */
-	public function __construct(Elgg_Util_FifoQueue $queue) {
+	public function __construct(Elgg_Util_FifoQueue $queue, Elgg_PluginHookService $hooks) {
 		$this->queue = $queue;
+		$this->hooks = $hooks;
 	}
 
 	/**
@@ -127,7 +131,7 @@ class Elgg_Notifications_Service {
 					'action' => $action,
 					'object' => $object,
 				);
-				$registered = elgg_trigger_plugin_hook('enqueue', 'notification', $params, $registered);
+				$registered = $this->hooks->trigger('enqueue', 'notification', $params, $registered);
 			}
 
 			if ($registered) {
@@ -160,10 +164,10 @@ class Elgg_Notifications_Service {
 
 			// return false to stop the default notification sender
 			$params = array('event' => $event, 'subscriptions' => $subscriptions);
-			if (elgg_trigger_plugin_hook('send:before', 'notifications', $params, true)) {
+			if ($this->hooks->trigger('send:before', 'notifications', $params, true)) {
 				$this->sendNotifications($event, $subscriptions);
 			}
-			elgg_trigger_plugin_hook('send:after', 'notifications', $params);
+			$this->hooks->trigger('send:after', 'notifications', $params);
 			$count++;
 		}
 
@@ -251,10 +255,10 @@ class Elgg_Notifications_Service {
 		$notification = new Elgg_Notifications_Notification($event->getActor(), $recipient, $language, $subject, $body);
 
 		$type = 'notification:' . $event->getDescription();
-		$notification = elgg_trigger_plugin_hook('prepare', $type, $params, $notification);
+		$notification = $this->hooks->trigger('prepare', $type, $params, $notification);
 
 		// return true to indicate the notification has been sent
 		$params = array('notification' => $notification);
-		return elgg_trigger_plugin_hook('send', "notification:$method", $params, false);
+		return $this->hooks->trigger('send', "notification:$method", $params, false);
 	}
 }
