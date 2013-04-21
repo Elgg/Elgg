@@ -213,7 +213,7 @@ class ElggDiskFilestore extends ElggFilestore {
 			throw new InvalidParameterException($msg);
 		}
 
-		return $this->dir_root . $this->makefileMatrix($owner_guid) . $file->getFilename();
+		return $this->dir_root . $this->makeFileMatrix($owner_guid) . $file->getFilename();
 	}
 
 	/**
@@ -248,7 +248,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 */
 	public function getSize($prefix = '', $container_guid) {
 		if ($container_guid) {
-			return get_dir_size($this->dir_root . $this->makefileMatrix($container_guid) . $prefix);
+			return get_dir_size($this->dir_root . $this->makeFileMatrix($container_guid) . $prefix);
 		} else {
 			return false;
 		}
@@ -335,7 +335,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	protected function make_file_matrix($identifier) {
 		elgg_deprecated_notice('ElggDiskFilestore::make_file_matrix() is deprecated by ::makeFileMatrix()', 1.8);
 
-		return $this->makefileMatrix($identifier);
+		return $this->makeFileMatrix($identifier);
 	}
 	// @codingStandardsIgnoreEnd
 
