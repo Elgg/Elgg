@@ -9,7 +9,7 @@
  * @subpackage Notifications
  * @since      1.9.0
  */
-class Elgg_Notifications_Service {
+class Elgg_Notifications_NotificationsService {
 
 	const QUEUE_NAME = 'notifications';
 
