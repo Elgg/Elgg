@@ -126,6 +126,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	 */
 	protected function getNotifications(Elgg_ServiceProvider $c) {
 		// @todo move queue in service provider
-		return new Elgg_Notifications_Service(new Elgg_Util_DatabaseQueue(Elgg_Notifications_Service::QUEUE_NAME));
+		$queue = new Elgg_Util_DatabaseQueue(Elgg_Notifications_Service::QUEUE_NAME);
+		return new Elgg_Notifications_Service($queue, $c->hooks);
 	}
 }
