@@ -1,41 +1,36 @@
 <?php
 /**
- * Notification Events
- * =====================
- * Elgg events registered with the function elgg_register_notification_event() 
- * trigger the notification system. See the documentation for that function for
- * more details.
- *  
+ * Adding a New Notification Event
+ * ===============================
+ * 1. Register the event with elgg_register_notification_event()
  * 
- * Notification Methods
- * ======================
+ * 2. Register for the notification message plugin hook:
+ *    'prepare', 'notification:[event name]'. The event name is of the form 
+ *    [action]:[type]:[subtype]. For example, the publish event for a blog 
+ *    would be named 'publish:object:object'. 
  * 
- *   Delivery methods
- *   -----------------
- *   Notification delivery methods are registered with the function 
- *   elgg_register_notification_method(). 
+ *    The params for the plugin hook have the keys 'event', 'method', 
+ *    'recipient', and 'language'. The event is an Elgg_Notifications_Event 
+ *    object and can provide access to the original object of the event through 
+ *    the method getObject() and the original actor through getActor().
  * 
- *   Message content
- *   ----------------
- *   The message is determined through a plugin hook that is triggered for each
- *   notification: 'prepare', 'notification:[event name]'. The event name is of 
- *   the form [action]:[type]:[subtype]. For example, the publish event for a blog
- *   would be named 'publish:object:object'. The params for the plugin hook
- *   has the keys 'event', 'method', 'recipient', and 'language'.
+ *    The plugin hook callback modifies and returns a 
+ *    Elgg_Notifications_Notification object that holds the message content.
+ *
+ *
+ * Adding a Delivery Method
+ * =========================
+ * 1. Register the delivery method name with elgg_register_notification_method()
  * 
- *   The plugin hook callback modifies a Elgg_Notifications_Notification object
- *   that holds the message content.
- * 
- *   Sending the notification
- *   ------------------------
- *   Plugins that register a delivery method should also register for the plugin
- *   hook for that method. The hook is named 'send', 'notification:[method name]'.
- *   It receives the notification object in the params array and should return 
- *   a boolean to indicate whether the message was sent.
+ * 2. Register for the plugin hook for sending notifications:
+ *    'send', 'notification:[method name]'. It receives the notification object 
+ *    of the class Elgg_Notifications_Notification in the params array with the 
+ *    key 'notification'. The callback should return a boolean to indicate whether 
+ *    the message was sent.
  * 
  * 
- * Subscriptions
- * ================
+ * Subscribing a User for Notifications
+ * ====================================
  * Users subscribe to receive notifications based on container and delivery method.
  * 
  * 

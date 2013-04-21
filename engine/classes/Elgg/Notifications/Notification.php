@@ -54,12 +54,30 @@ class Elgg_Notifications_Notification {
 	}
 
 	/**
+	 * Get the sender entity guid
+	 *
+	 * @return int
+	 */
+	public function getSenderGUID() {
+		return $this->from->guid;
+	}
+
+	/**
 	 * Get the recipient entity
 	 *
 	 * @return ElggEntity
 	 */
 	public function getRecipient() {
 		return $this->to;
+	}
+
+	/**
+	 * Get the recipient entity guid
+	 *
+	 * @return int
+	 */
+	public function getRecipientGUID() {
+		return $this->to->guid;
 	}
 
 	/**
