@@ -29,7 +29,7 @@ class ElggCookie {
 	public $secure = false;
 	
 	/** @var bool */
-	public $httponly = false;
+	public $httpOnly = false;
 	
 	/**
 	 * Constructor
@@ -47,21 +47,21 @@ class ElggCookie {
 	 * @return mixed
 	 */
 	public function __get($name) {
-		// Make the name field readonly
+		// allow reading the private name attribute
 		if ($name === 'name') {
 			return $this->name;
 		}
 	}
 
 	/**
-	 * Set the expire time for the cookie
+	 * Set the time the cookie expires
 	 *
-	 * Example: $cookie->setExpire("+30 days");
+	 * Example: $cookie->setExpiresTime("+30 days");
 	 *
 	 * @param string $time A time string appropriate for strtotime()
 	 * @return void
 	 */
-	public function setExpire($time) {
+	public function setExpiresTime($time) {
 		$this->expire = strtotime($time);
 	}
 }
