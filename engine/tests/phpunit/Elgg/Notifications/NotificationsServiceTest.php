@@ -1,17 +1,21 @@
 <?php
 
-$engine = dirname(dirname(dirname(__FILE__)));
+// the Event class has a dependency on elgg_instance_of() and get_entity()
+$engine = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
 require_once "$engine/lib/entities.php";
 
-class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
+class Elgg_Notifications_NotificationsServiceTest extends PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 		$this->hooks = new Elgg_PluginHookService();
 		$this->queue = new Elgg_Util_MemoryQueue();
+
+		// Event class has dependency on elgg_get_logged_in_user_guid()
+		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
 	}
 
 	public function testRegisterEvent() {
-		$service = new Elgg_Notifications_Service($this->queue, $this->hooks);
+		$service = new Elgg_Notifications_NotificationsService($this->queue, $this->hooks);
 
 		$service->registerEvent('foo', 'bar');
 		$events = array(
@@ -30,7 +34,7 @@ class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testUnregisterEvent() {
-		$service = new Elgg_Notifications_Service($this->queue, $this->hooks);
+		$service = new Elgg_Notifications_NotificationsService($this->queue, $this->hooks);
 
 		$service->registerEvent('foo', 'bar');
 		$this->assertTrue($service->unregisterEvent('foo', 'bar'));
@@ -43,7 +47,7 @@ class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testRegisterMethod() {
-		$service = new Elgg_Notifications_Service($this->queue, $this->hooks);
+		$service = new Elgg_Notifications_NotificationsService($this->queue, $this->hooks);
 
 		$service->registerMethod('foo');
 		$methods = array('foo' => 'foo');
@@ -51,7 +55,7 @@ class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testUnregisterMethod() {
-		$service = new Elgg_Notifications_Service($this->queue, $this->hooks);
+		$service = new Elgg_Notifications_NotificationsService($this->queue, $this->hooks);
 
 		$service->registerMethod('foo');
 		$this->assertTrue($service->unregisterMethod('foo'));
@@ -60,7 +64,7 @@ class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testEnqueueEvent() {
-		$service = new Elgg_Notifications_Service($this->queue, $this->hooks);
+		$service = new Elgg_Notifications_NotificationsService($this->queue, $this->hooks);
 
 		$service->registerEvent('object', 'bar');
 		$object = new ElggObject();
@@ -88,7 +92,7 @@ class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 		$observer->expects($this->once())
 				->method('trigger')
 				->with('enqueue', 'notification', $params, true);
-		$service = new Elgg_Notifications_Service($this->queue, $observer);
+		$service = new Elgg_Notifications_NotificationsService($this->queue, $observer);
 		$service->registerEvent('object', 'bar');
 		$service->enqueueEvent('create', 'object', $object);
 	}
@@ -98,7 +102,7 @@ class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 		$observer->expects($this->once())
 				->method('trigger')
 				->will($this->returnValue(false));
-		$service = new Elgg_Notifications_Service($this->queue, $observer);
+		$service = new Elgg_Notifications_NotificationsService($this->queue, $observer);
 
 		$service->registerEvent('object', 'bar');
 		$object = new ElggObject();
