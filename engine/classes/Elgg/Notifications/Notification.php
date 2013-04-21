@@ -1,8 +1,6 @@
 <?php
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * @access private
+ * Notification container
  * 
  * @package    Elgg.Core
  * @subpackage Notifications
