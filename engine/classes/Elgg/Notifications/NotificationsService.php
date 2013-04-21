@@ -13,6 +13,9 @@ class Elgg_Notifications_NotificationsService {
 
 	const QUEUE_NAME = 'notifications';
 
+	/** @var Elgg_Notifications_SubscriptionsService */
+	protected $subscriptions;
+
 	/** @var Elgg_Util_FifoQueue */
 	protected $queue;
 
@@ -27,10 +30,13 @@ class Elgg_Notifications_NotificationsService {
 
 	/**
 	 * Constructor
-	 * 
-	 * @param Elgg_Util_FifoQueue $queue Queue
+	 *
+	 * @param Elgg_Notifications_SubscriptionsService $subscriptions Subscription service
+	 * @param Elgg_Util_FifoQueue                     $queue         Queue
+	 * @param Elgg_PluginHookService                  $hooks         Plugin hook service
 	 */
-	public function __construct(Elgg_Util_FifoQueue $queue, Elgg_PluginHookService $hooks) {
+	public function __construct(Elgg_Notifications_SubscriptionsService $subscriptions, Elgg_Util_FifoQueue $queue, Elgg_PluginHookService $hooks) {
+		$this->subscriptions = $subscriptions;
 		$this->queue = $queue;
 		$this->hooks = $hooks;
 	}
@@ -160,7 +166,7 @@ class Elgg_Notifications_NotificationsService {
 				break;
 			}
 
-			$subscriptions = $this->getSubscriptions($event);
+			$subscriptions = $this->subscriptions->getSubscriptions($event);
 
 			// return false to stop the default notification sender
 			$params = array('event' => $event, 'subscriptions' => $subscriptions);
@@ -174,29 +180,6 @@ class Elgg_Notifications_NotificationsService {
 		// release mutex
 
 		return $count;
-	}
-
-	/**
-	 * Get the subscriptions for this notification event
-	 *
-	 * The return array is of the form:
-	 *
-	 * array(
-	 *     <user guid> => array('email', 'sms', 'ajax'),
-	 * );
-	 *
-	 * @param Elgg_Notifications_Event $event Notification event
-	 * @return array
-	 * @access private
-	 */
-	protected function getSubscriptions($event) {
-		// @todo not implemented
-		$users = elgg_get_entities(array('type' => 'user'));
-		$subscriptions = array();
-		foreach ($users as $user) {
-			$subscriptions[$user->guid] = array('site');
-		}
-		return $subscriptions;
 	}
 
 	/**
