@@ -16,6 +16,12 @@ class Elgg_Notifications_Service {
 	/** @var Elgg_Util_FifoQueue */
 	protected $queue;
 
+	/** @var array Registered notification events */
+	protected $events = array();
+
+	/** @var array Registered notification methods */
+	protected $methods = array();
+
 	/**
 	 * Constructor
 	 * 
@@ -30,19 +36,15 @@ class Elgg_Notifications_Service {
 	 * @access private
 	 */
 	public function registerEvent($type, $subtype, array $actions = array()) {
-		global $CONFIG;
 
-		if (!isset($CONFIG->notification_events)) {
-			$CONFIG->notification_events = array();
+		if (!isset($this->events[$type])) {
+			$this->events[$type] = array();
 		}
-		if (!isset($CONFIG->notification_events[$type])) {
-			$CONFIG->notification_events[$type] = array();
-		}
-		if (!isset($CONFIG->notification_events[$type][$subtype])) {
-			$CONFIG->notification_events[$type][$subtype] = array();
+		if (!isset($this->events[$type][$subtype])) {
+			$this->events[$type][$subtype] = array();
 		}
 
-		$action_list =& $CONFIG->notification_events[$type][$subtype];
+		$action_list =& $this->events[$type][$subtype];
 		if ($actions) {
 			$action_list = array_unique(array_merge($action_list, $actions));
 		} elseif (!in_array('create', $action_list)) {
@@ -55,14 +57,12 @@ class Elgg_Notifications_Service {
 	 * @access private
 	 */
 	public function unregisterEvent($type, $subtype) {
-		global $CONFIG;
-		if (!isset($CONFIG->notification_events) ||
-			!isset($CONFIG->notification_events[$type]) ||
-			!isset($CONFIG->notification_events[$type][$subtype])) {
+
+		if (!isset($this->events[$type]) || !isset($this->events[$type][$subtype])) {
 			return false;
 		}
 
-		unset($CONFIG->notification_events[$type][$subtype]);
+		unset($this->events[$type][$subtype]);
 
 		return true;
 	}
@@ -71,8 +71,7 @@ class Elgg_Notifications_Service {
 	 * @access private
 	 */
 	public function getEvents() {
-		global $CONFIG;
-		return $CONFIG->notification_events;
+		return $this->events;
 	}
 
 	/**
@@ -80,13 +79,7 @@ class Elgg_Notifications_Service {
 	 * @access private
 	 */
 	public function registerMethod($name) {
-		global $CONFIG;
-
-		if (!isset($CONFIG->notification_methods)) {
-			$CONFIG->notification_methods = array();
-		}
-
-		$CONFIG->notification_methods[$name] = $name;
+		$this->methods[$name] = $name;
 	}
 
 	/**
@@ -94,14 +87,8 @@ class Elgg_Notifications_Service {
 	 * @access private
 	 */
 	public function unregisterMethod($name) {
-		global $CONFIG;
-
-		if (!isset($CONFIG->notification_methods)) {
-			return false;
-		}
-
-		if (isset($CONFIG->notification_methods[$name])) {
-			unset($CONFIG->notification_methods[$name]);
+		if (isset($this->methods[$name])) {
+			unset($this->methods[$name]);
 			return true;
 		}
 		return false;
@@ -111,8 +98,7 @@ class Elgg_Notifications_Service {
 	 * @access private
 	 */
 	public function getMethods() {
-		global $CONFIG;
-		return $CONFIG->notification_methods;
+		return $this->methods;
 	}
 
 	/**
@@ -130,10 +116,9 @@ class Elgg_Notifications_Service {
 			$object_subtype = $object->getSubtype();
 
 			$registered = false;
-			global $CONFIG;
-			if (isset($CONFIG->notification_events[$object_type])
-				&& isset($CONFIG->notification_events[$object_type][$object_subtype])
-				&& in_array($action, $CONFIG->notification_events[$object_type][$object_subtype])) {
+			if (isset($this->events[$object_type])
+				&& isset($this->events[$object_type][$object_subtype])
+				&& in_array($action, $this->events[$object_type][$object_subtype])) {
 				$registered = true;
 			}
 
@@ -220,15 +205,14 @@ class Elgg_Notifications_Service {
 	 */
 	protected function sendNotifications($event, $subscriptions) {
 
-		$registeredMethods = elgg_get_config('notification_methods');
-		if (!$registeredMethods) {
+		if (!$this->methods) {
 			return 0;
 		}
 
 		$count = 0;
 		foreach ($subscriptions as $guid => $methods) {
 			foreach ($methods as $method) {
-				if (in_array($method, $registeredMethods)) {
+				if (in_array($method, $this->methods)) {
 					if ($this->sendNotification($event, $guid, $method)) {
 						$count++;
 					}
