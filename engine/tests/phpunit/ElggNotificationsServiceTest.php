@@ -65,17 +65,45 @@ class ElggNotificationsServiceTest extends PHPUnit_Framework_TestCase {
 		$service->registerEvent('object', 'bar');
 		$object = new ElggObject();
 		$object->subtype = 'bar';
-		$service->enqueueEvent('create', '', $object);
+		$service->enqueueEvent('create', 'object', $object);
 		$event = new Elgg_Notifications_Event($object, 'create');
 		$this->assertEquals($event, $this->queue->dequeue());
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered action type
-		$service->enqueueEvent('null', '', $object);
+		$service->enqueueEvent('null', 'object', $object);
 		$this->assertNull($this->queue->dequeue());
 
 		// unregistered object type
-		$service->enqueueEvent('create', '', new ElggObject());
+		$service->enqueueEvent('create', 'object', new ElggObject());
+		$this->assertNull($this->queue->dequeue());
+	}
+
+	public function testEnqueueEventHook() {
+		$object = new ElggObject();
+		$object->subtype = 'bar';
+		$params = array('action' => 'create', 'object' => $object);
+
+		$observer = $this->getMock('Elgg_PluginHookService', array('trigger'));
+		$observer->expects($this->once())
+				->method('trigger')
+				->with('enqueue', 'notification', $params, true);
+		$service = new Elgg_Notifications_Service($this->queue, $observer);
+		$service->registerEvent('object', 'bar');
+		$service->enqueueEvent('create', 'object', $object);
+	}
+
+	public function testStoppingEnqueueEvent() {
+		$observer = $this->getMock('Elgg_PluginHookService', array('trigger'));
+		$observer->expects($this->once())
+				->method('trigger')
+				->will($this->returnValue(false));
+		$service = new Elgg_Notifications_Service($this->queue, $observer);
+
+		$service->registerEvent('object', 'bar');
+		$object = new ElggObject();
+		$object->subtype = 'bar';
+		$service->enqueueEvent('create', 'object', $object);
 		$this->assertNull($this->queue->dequeue());
 	}
 }
