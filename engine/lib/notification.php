@@ -1,5 +1,44 @@
 <?php
 /**
+ * Notification Events
+ * =====================
+ * Elgg events registered with the function elgg_register_notification_event() 
+ * trigger the notification system. See the documentation for that function for
+ * more details.
+ *  
+ * 
+ * Notification Methods
+ * ======================
+ * 
+ *   Delivery methods
+ *   -----------------
+ *   Notification delivery methods are registered with the function 
+ *   elgg_register_notification_method(). 
+ * 
+ *   Message content
+ *   ----------------
+ *   The message is determined through a plugin hook that is triggered for each
+ *   notification: 'prepare', 'notification:[event name]'. The event name is of 
+ *   the form [action]:[type]:[subtype]. For example, the publish event for a blog
+ *   would be named 'publish:object:object'. The params for the plugin hook
+ *   has the keys 'event', 'method', 'recipient', and 'language'.
+ * 
+ *   The plugin hook callback modifies a Elgg_Notifications_Notification object
+ *   that holds the message content.
+ * 
+ *   Sending the notification
+ *   ------------------------
+ *   Plugins that register a delivery method should also register for the plugin
+ *   hook for that method. The hook is named 'send', 'notification:[method name]'.
+ *   It receives the notification object in the params array and should return 
+ *   a boolean to indicate whether the message was sent.
+ * 
+ * 
+ * Subscriptions
+ * ================
+ * Users subscribe to receive notifications based on container and delivery method.
+ * 
+ * 
  * @package Elgg.Core
  * @subpackage Notifications
  */
@@ -44,6 +83,10 @@ function elgg_unregister_notification_event($object_type, $object_subtype) {
 
 /**
  * Register a delivery method for notifications
+ * 
+ * Register for the 'send', 'notification:[method name]' plugin hook to handle
+ * sending a notification. A notification object is in the params array for the
+ * hook with the key 'notification'. See Elgg_Notifications_Notification.
  *
  * @param string $name The notification method name
  * @return void

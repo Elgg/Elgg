@@ -26,12 +26,7 @@ class Elgg_Notifications_Service {
 	}
 
 	/**
-	 * Register a event to be notification worthy 
-	 *
-	 * @param string $type    Type of the object of event 
-	 * @param string $subtype Subtype of the object of the event
-	 * @param array  $actions The actions that should trigger notifications
-	 * @return void
+	 * @see elgg_register_notification_event()
 	 * @access private
 	 */
 	public function registerEvent($type, $subtype, array $actions = array()) {
@@ -56,6 +51,7 @@ class Elgg_Notifications_Service {
 	}
 
 	/**
+	 * @see elgg_unregister_notification_event()
 	 * @access private
 	 */
 	public function unregisterEvent($type, $subtype) {
@@ -80,6 +76,7 @@ class Elgg_Notifications_Service {
 	}
 
 	/**
+	 * @see elgg_register_notification_method()
 	 * @access private
 	 */
 	public function registerMethod($name) {
@@ -93,6 +90,7 @@ class Elgg_Notifications_Service {
 	}
 
 	/**
+	 * @see elgg_unregister_notification_method()
 	 * @access private
 	 */
 	public function unregisterMethod($name) {
@@ -118,6 +116,12 @@ class Elgg_Notifications_Service {
 	}
 
 	/**
+	 * Add a notification event to the queue
+	 * 
+	 * @param string   $action Action name
+	 * @param string   $type   Type of the object of the action
+	 * @param ElggData $object The object of the action 
+	 * @return void
 	 * @access private
 	 */
 	public function enqueueEvent($action, $type, $object) {
@@ -210,7 +214,7 @@ class Elgg_Notifications_Service {
 	 * Sends the notifications based on subscriptions
 	 *
 	 * @param Elgg_Notifications_Event $event         Notification event
-	 * @param array                   $subscriptions Subscriptions for this event
+	 * @param array                    $subscriptions Subscriptions for this event
 	 * @return int The number of notifications handled
 	 * @access private
 	 */
@@ -257,6 +261,7 @@ class Elgg_Notifications_Service {
 			'language' => $language,
 		);
 
+		// @todo what should the default subject and body be?
 		$subject = elgg_echo('notification:subject', array(), $language);
 		$body = elgg_echo('notification:body', array(), $language);
 		$notification = new Elgg_Notifications_Notification($event->getActor(), $recipient, $language, $subject, $body);
