@@ -198,7 +198,9 @@ class ElggDiskFilestore extends ElggFilestore {
 	}
 
 	/**
-	 * Returns the filename as saved on disk for an ElggFile object
+	 * Get the filename as saved on disk for an ElggFile object
+	 *
+	 * Returns an empty string if no filename set
 	 *
 	 * @param ElggFile $file File object
 	 *
@@ -226,7 +228,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 *
 	 * @param ElggFile $file File object
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function grabFile(ElggFile $file) {
 		return file_get_contents($file->getFilenameOnFilestore());
@@ -240,6 +242,9 @@ class ElggDiskFilestore extends ElggFilestore {
 	 * @return bool
 	 */
 	public function exists(ElggFile $file) {
+		if (!$file->getFilename()) {
+			return false;
+		}
 		return file_exists($this->getFilenameOnFilestore($file));
 	}
 
