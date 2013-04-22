@@ -8,11 +8,14 @@
 #
 # @author Marcus Povey
 
-# Location of GET (see: http://docs.elgg.org/wiki/What_is_get)
-GET='/usr/bin/GET'
-
 # Location of your site (don't forget the trailing slash!)
 ELGG='http://www.example.com/'
+
+# Location of lwp-request
+LWPR='/usr/bin/lwp-request'
+
+# Make GET request and discard content
+GET='$LWPR -m GET -d'
 
 # The crontab
 # Don't edit below this line unless you know what you are doing
