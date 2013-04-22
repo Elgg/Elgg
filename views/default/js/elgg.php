@@ -4,45 +4,37 @@
  */
 global $CONFIG;
 
-$prereq_files = array(
-	"vendors/sprintf.js",
-	"js/lib/elgglib.js",
-);
+$lib_dir = 'js/lib';
+$classes_dir = 'js/classes';
+$files = array(
+	// these must come first
+	'vendors/sprintf',
+	"$lib_dir/elgglib",
 
-foreach ($prereq_files as $file) {
-	include("{$CONFIG->path}$file");
-}
+	// class definitions
+	"$classes_dir/ElggEntity",
+	"$classes_dir/ElggUser",
+	"$classes_dir/ElggPriorityList",
 
-//No such thing as autoloading classes in javascript
-$model_files = array(
-	'ElggEntity',
-	'ElggUser',
-	'ElggPriorityList',
-);
-
-foreach ($model_files as $file) {
-	include("{$CONFIG->path}js/classes/$file.js");
-}
-
-//Include library files
-$libs = array(
 	//libraries
-	'prototypes',
-	'hooks',
-	'security',
-	'languages',
-	'ajax',
-	'session',
-	'pageowner',
-	'configuration',
+	"$lib_dir/prototypes",
+	"$lib_dir/hooks",
+	"$lib_dir/security",
+	"$lib_dir/languages",
+	"$lib_dir/ajax",
+	"$lib_dir/session",
+	"$lib_dir/pageowner",
+	"$lib_dir/configuration",
 
 	//ui
-	'ui',
-	'ui.widgets',
+	"$lib_dir/ui",
+	"$lib_dir/ui.widgets",
 );
 
-foreach ($libs as $file) {
-	include("{$CONFIG->path}js/lib/$file.js");
+$root_path = elgg_get_root_path();
+
+foreach ($files as $file) {
+	readfile("{$root_path}$file.js");
 	// putting a new line between the files to address http://trac.elgg.org/ticket/3081
 	echo "\n";
 }
@@ -50,10 +42,8 @@ foreach ($libs as $file) {
 /**
  * Set some values that are cacheable
  */
-
 ?>
-
-// <script>
+//<script>
 
 elgg.version = '<?php echo get_version(); ?>';
 elgg.release = '<?php echo get_version(true); ?>';
@@ -61,22 +51,22 @@ elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
 
 // refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
 elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTokenTimeout() * 333; ?>;
-elgg.config.language = '<?php echo isset($CONFIG->language) ? $CONFIG->language : 'en'; ?>';
+elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->language); ?>';
 
-var languagesUrl = elgg.config.wwwroot + 'ajax/view/js/languages?language=' + elgg.get_language();
-if (elgg.config.simplecache_enabled) {
-	languagesUrl += '&lc=' + elgg.config.lastcache;
-}
-define('elgg', ['jquery', languagesUrl], function($, translations) {
-	elgg.add_translation(elgg.get_language(), translations);
-	
-	$(function() {
-		elgg.trigger_hook('init', 'system');
-		elgg.trigger_hook('ready', 'system');		
+!function () {
+	var languagesUrl = elgg.config.wwwroot + 'ajax/view/js/languages?language=' + elgg.get_language();
+	define('elgg', ['jquery', languagesUrl], function($, translations) {
+		elgg.add_translation(elgg.get_language(), translations);
+
+		$(function() {
+			elgg.trigger_hook('init', 'system');
+			elgg.trigger_hook('ready', 'system');
+		});
+
+		return elgg;
 	});
-	
-	return elgg;
-});
+}();
+
 require(['elgg']); // Forces the define() function to always run
 
 <?php
