@@ -55,6 +55,10 @@ elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->l
 
 !function () {
 	var languagesUrl = elgg.config.wwwroot + 'ajax/view/js/languages?language=' + elgg.get_language();
+	if (elgg.config.simplecache_enabled) {
+		languagesUrl += '&lc=' + elgg.config.lastcache;
+	}
+
 	define('elgg', ['jquery', languagesUrl], function($, translations) {
 		elgg.add_translation(elgg.get_language(), translations);
 
