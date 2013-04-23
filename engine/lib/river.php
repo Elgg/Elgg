@@ -415,7 +415,7 @@ function elgg_get_river(array $options = array()) {
  * @access private
  */
 function _elgg_prefetch_river_entities(array $river_items) {
-	// prefetch objects and subjects
+	// prefetch objects, subjects and targets
 	$guids = array();
 	foreach ($river_items as $item) {
 		if ($item->subject_guid && !_elgg_retrieve_cached_entity($item->subject_guid)) {
@@ -423,6 +423,9 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		}
 		if ($item->object_guid && !_elgg_retrieve_cached_entity($item->object_guid)) {
 			$guids[$item->object_guid] = true;
+		}
+		if ($item->target_guid && !retrieve_cached_entity($item->target_guid)) {
+			$guids[$item->target_guid] = true;
 		}
 	}
 	if ($guids) {
