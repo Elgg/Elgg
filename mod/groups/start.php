@@ -690,7 +690,12 @@ function groups_join_group($group, $user) {
 		remove_entity_relationship($group->guid, 'invited', $user->guid);
 		remove_entity_relationship($user->guid, 'membership_request', $group->guid);
 
-		add_to_river('river/relationship/member/create', 'join', $user->guid, $group->guid);
+		elgg_create_river_item(array(
+			'view' => 'river/relationship/member/create',
+			'action_type' => 'join',
+			'subject_guid' => $user->guid,
+			'object_guid' => $group->guid,
+		));
 
 		return true;
 	}

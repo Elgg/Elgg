@@ -182,7 +182,12 @@ if ($new_file) {
 	if ($guid) {
 		$message = elgg_echo("file:saved");
 		system_message($message);
-		add_to_river('river/object/file/create', 'create', elgg_get_logged_in_user_guid(), $file->guid);
+		elgg_create_river_item(array(
+			'view' => 'river/object/file/create',
+			'action_type' => 'create',
+			'subject_guid' => elgg_get_logged_in_user_guid(),
+			'object_guid' => $file->guid,
+		));
 	} else {
 		// failed to save file object - nothing we can do about this
 		$error = elgg_echo("file:uploadfailed");

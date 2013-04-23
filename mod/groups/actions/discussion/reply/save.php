@@ -51,7 +51,14 @@ if ($annotation_id) {
 		forward(REFERER);
 	}
 
-	add_to_river('river/annotation/group_topic_post/reply', 'reply', $user->guid, $topic->guid, "", 0, $reply_id);
+	elgg_create_river_item(array(
+		'view' => 'river/annotation/group_topic_post/reply',
+		'action_type' => 'reply',
+		'subject_guid' => $user->guid,
+		'object_guid' => $topic->guid,
+		'annotation_id' => $reply_id,
+	));
+
 	system_message(elgg_echo('groupspost:success'));
 }
 
