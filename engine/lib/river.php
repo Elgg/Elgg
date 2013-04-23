@@ -70,6 +70,11 @@ function elgg_create_river_item(array $options = array()) {
 	$posted = elgg_extract('posted', $options, time());
 
 	$annotation_id = elgg_extract('annotation_id', $options, 0);
+	if ($annotation_id) {
+		if (!elgg_get_annotation_from_id($annotation_id)) {
+			return false;
+		}
+	}
 
 	$type = $object->getType();
 	$subtype = $object->getSubtype();

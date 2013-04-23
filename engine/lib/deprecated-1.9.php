@@ -1652,6 +1652,10 @@ function add_to_river($view, $action_type, $subject_guid, $object_guid, $access_
 $posted = 0, $annotation_id = 0, $target_guid = 0) {
 	elgg_deprecated_notice('add_to_river was deprecated in favor of elgg_create_river_item', '1.9');
 
+	// Make sure old parameters are passed in correct format
+	$access_id = ($access_id == '') ? null : $access_id;
+	$posted = ($posted == 0) ? null : $posted;
+
 	return elgg_create_river_item(array(
 		'view' => $view,
 		'action_type' => $action_type,
