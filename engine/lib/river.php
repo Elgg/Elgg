@@ -429,7 +429,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		if ($item->object_guid && !_elgg_retrieve_cached_entity($item->object_guid)) {
 			$guids[$item->object_guid] = true;
 		}
-		if ($item->target_guid && !retrieve_cached_entity($item->target_guid)) {
+		if ($item->target_guid && !_elgg_retrieve_cached_entity($item->target_guid)) {
 			$guids[$item->target_guid] = true;
 		}
 	}
