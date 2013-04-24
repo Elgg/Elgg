@@ -101,19 +101,20 @@ function messageboard_page_handler($page) {
  * @return bool
  */
 function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC) {
-	$result = $owner->annotate('messageboard', $message, $access_id, $poster->guid);
+	$result_id = $owner->annotate('messageboard', $message, $access_id, $poster->guid);
 
-	if (!$result) {
+	if (!$result_id) {
 		return false;
 	}
 
-	add_to_river('river/object/messageboard/create',
-				'messageboard',
-				$poster->guid,
-				$owner->guid,
-				$access_id,
-				0,
-				$result);
+	elgg_create_river_item(array(
+		'view' => 'river/object/messageboard/create',
+		'action_type' => 'messageboard',
+		'subject_guid' => $poster->guid,
+		'object_guid' => $owner->guid,
+		'access_id' => $access_id,
+		'annotation_id' => $result_id,
+	));
 
 	// only send notification if not self
 	if ($poster->guid != $owner->guid) {
@@ -129,7 +130,7 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 		notify_user($owner->guid, $poster->guid, $subject, $body);
 	}
 
-	return $result;
+	return $result_id;
 }
 
 

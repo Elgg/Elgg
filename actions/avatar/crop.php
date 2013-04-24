@@ -67,6 +67,12 @@ $owner->y2 = $y2;
 system_message(elgg_echo('avatar:crop:success'));
 $view = 'river/user/default/profileiconupdate';
 elgg_delete_river(array('subject_guid' => $owner->guid, 'view' => $view));
-add_to_river($view, 'update', $owner->guid, $owner->guid);
+elgg_create_river_item(array(
+	'view' => $view,
+	'action_type' => 'update',
+	'subject_guid' => $owner->guid,
+	'object_guid' => $owner->guid,
+));
+
 
 forward(REFERER);

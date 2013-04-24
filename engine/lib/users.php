@@ -898,8 +898,18 @@ $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
 				$friend_user->addFriend($user->guid);
 
 				// @todo Should this be in addFriend?
-				add_to_river('river/relationship/friend/create', 'friend', $user->getGUID(), $friend_guid);
-				add_to_river('river/relationship/friend/create', 'friend', $friend_guid, $user->getGUID());
+				elgg_create_river_item(array(
+					'view' => 'river/relationship/friend/create',
+					'action_type' => 'friend',
+					'subject_guid' => $user->getGUID(),
+					'object_guid' => $friend_guid,
+				));
+				elgg_create_river_item(array(
+					'view' => 'river/relationship/friend/create',
+					'action_type' => 'friend',
+					'subject_guid' => $friend_guid,
+					'object_guid' => $user->getGUID(),
+				));
 			}
 		}
 	}

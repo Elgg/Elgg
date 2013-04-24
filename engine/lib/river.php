@@ -9,41 +9,73 @@
 
 /**
  * Adds an item to the river.
+ * 
+ * @tip Read the item like "Lisa (subject) posted (action)
+ * a comment (object) on John's blog (target)".
+ * 
+ * @param array $options Array in format:
  *
- * @param string $view          The view that will handle the river item (must exist)
- * @param string $action_type   An arbitrary string to define the action (eg 'comment', 'create')
- * @param int    $subject_guid  The GUID of the entity doing the action
- * @param int    $object_guid   The GUID of the entity being acted upon
- * @param int    $access_id     The access ID of the river item (default: same as the object)
- * @param int    $posted        The UNIX epoch timestamp of the river item (default: now)
- * @param int    $annotation_id The annotation ID associated with this river entry
+ * 	view => STR The view that will handle the river item (must exist)
  *
- * @return int/bool River ID or false on failure
+ * 	action_type => STR An arbitrary string to define the action (eg 'comment', 'create')
+ *
+ *  subject_guid => INT The GUID of the entity doing the action
+ *
+ *  object_guid => INT The GUID of the entity being acted upon
+ *
+ *  target_guid => INT The GUID of the the object entity's container
+ *
+ *  access_id => INT The access ID of the river item (default: same as the object)
+ *
+ *  posted => INT The UNIX epoch timestamp of the river item (default: now)
+ *
+ *  annotation_id INT The annotation ID associated with this river entry
+ *
+ * @return int|bool River ID or false on failure
+ * @since 1.9
  */
-function add_to_river($view, $action_type, $subject_guid, $object_guid, $access_id = "",
-$posted = 0, $annotation_id = 0) {
-
-	global $CONFIG;
-
+function elgg_create_river_item(array $options = array()) {
+	$view = elgg_extract('view', $options);
 	// use default viewtype for when called from web services api
-	if (!elgg_view_exists($view, 'default')) {
+	if (empty($view) || !(elgg_view_exists($view, 'default'))) {
 		return false;
 	}
-	if (!($subject = get_entity($subject_guid))) {
-		return false;
-	}
-	if (!($object = get_entity($object_guid))) {
-		return false;
-	}
+
+	$action_type = elgg_extract('action_type', $options);
 	if (empty($action_type)) {
 		return false;
 	}
-	if ($posted == 0) {
-		$posted = time();
+
+	$subject_guid = elgg_extract('subject_guid', $options, 0);
+	if (!($subject = get_entity($subject_guid))) {
+		return false;
 	}
-	if ($access_id === "") {
-		$access_id = $object->access_id;
+
+	$object_guid = elgg_extract('object_guid', $options, 0);
+	if (!($object = get_entity($object_guid))) {
+		return false;
 	}
+
+	$target_guid = elgg_extract('target_guid', $options, 0);
+	if ($target_guid) {
+		// target_guid is not a required parameter so check
+		// it only if it is included in the parameters
+		if (!($target = get_entity($target_guid))) {
+			return false;
+		}
+	}
+
+	$access_id = elgg_extract('access_id', $options, $object->access_id);
+
+	$posted = elgg_extract('posted', $options, time());
+
+	$annotation_id = elgg_extract('annotation_id', $options, 0);
+	if ($annotation_id) {
+		if (!elgg_get_annotation_from_id($annotation_id)) {
+			return false;
+		}
+	}
+
 	$type = $object->getType();
 	$subtype = $object->getSubtype();
 
@@ -51,6 +83,7 @@ $posted = 0, $annotation_id = 0) {
 	$action_type = sanitise_string($action_type);
 	$subject_guid = sanitise_int($subject_guid);
 	$object_guid = sanitise_int($object_guid);
+	$target_guid = sanitise_int($target_guid);
 	$access_id = sanitise_int($access_id);
 	$posted = sanitise_int($posted);
 	$annotation_id = sanitise_int($annotation_id);
@@ -63,6 +96,7 @@ $posted = 0, $annotation_id = 0) {
 		'view' => $view,
 		'subject_guid' => $subject_guid,
 		'object_guid' => $object_guid,
+		'target_guid' => $target_guid,
 		'annotation_id' => $annotation_id,
 		'posted' => $posted,
 	);
@@ -76,8 +110,10 @@ $posted = 0, $annotation_id = 0) {
 
 	extract($values);
 
+	$dbprefix = elgg_get_config('dbprefix');
+
 	// Attempt to save river item; return success status
-	$id = insert_data("insert into {$CONFIG->dbprefix}river " .
+	$id = insert_data("insert into {$dbprefix}river " .
 		" set type = '$type', " .
 		" subtype = '$subtype', " .
 		" action_type = '$action_type', " .
@@ -85,11 +121,12 @@ $posted = 0, $annotation_id = 0) {
 		" view = '$view', " .
 		" subject_guid = $subject_guid, " .
 		" object_guid = $object_guid, " .
+		" target_guid = $target_guid, " .
 		" annotation_id = $annotation_id, " .
 		" posted = $posted");
 
 	// update the entities which had the action carried out on it
-	// @todo shouldn't this be down elsewhere? Like when an annotation is saved?
+	// @todo shouldn't this be done elsewhere? Like when an annotation is saved?
 	if ($id) {
 		update_entity_last_action($object_guid, $posted);
 		
@@ -112,6 +149,7 @@ $posted = 0, $annotation_id = 0) {
  *   ids                  => INT|ARR River item id(s)
  *   subject_guids        => INT|ARR Subject guid(s)
  *   object_guids         => INT|ARR Object guid(s)
+ *   target_guids         => INT|ARR Target guid(s)
  *   annotation_ids       => INT|ARR The identifier of the annotation(s)
  *   action_types         => STR|ARR The river action type(s) identifier
  *   views                => STR|ARR River view(s)
@@ -135,6 +173,7 @@ function elgg_delete_river(array $options = array()) {
 
 		'subject_guids'	       => ELGG_ENTITIES_ANY_VALUE,
 		'object_guids'         => ELGG_ENTITIES_ANY_VALUE,
+		'target_guids'         => ELGG_ENTITIES_ANY_VALUE,
 		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
 
 		'views'                => ELGG_ENTITIES_ANY_VALUE,
@@ -154,7 +193,7 @@ function elgg_delete_river(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('id', 'subject_guid', 'object_guid', 'annotation_id', 'action_type', 'view', 'type', 'subtype');
+	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'view', 'type', 'subtype');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	$wheres = $options['wheres'];
@@ -162,6 +201,7 @@ function elgg_delete_river(array $options = array()) {
 	$wheres[] = elgg_get_guid_based_where_sql('rv.id', $options['ids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
 	$wheres[] = elgg_river_get_action_where_sql($options['action_types']);
 	$wheres[] = elgg_river_get_view_where_sql($options['views']);
@@ -219,6 +259,7 @@ function elgg_delete_river(array $options = array()) {
  *   ids                  => INT|ARR River item id(s)
  *   subject_guids        => INT|ARR Subject guid(s)
  *   object_guids         => INT|ARR Object guid(s)
+ *   target_guids         => INT|ARR Target guid(s)
  *   annotation_ids       => INT|ARR The identifier of the annotation(s)
  *   action_types         => STR|ARR The river action type(s) identifier
  *   posted_time_lower    => INT     The lower bound on the time posted
@@ -250,6 +291,7 @@ function elgg_get_river(array $options = array()) {
 
 		'subject_guids'	       => ELGG_ENTITIES_ANY_VALUE,
 		'object_guids'         => ELGG_ENTITIES_ANY_VALUE,
+		'target_guids'         => ELGG_ENTITIES_ANY_VALUE,
 		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
 		'action_types'         => ELGG_ENTITIES_ANY_VALUE,
 
@@ -277,7 +319,7 @@ function elgg_get_river(array $options = array()) {
 
 	$options = array_merge($defaults, $options);
 
-	$singulars = array('id', 'subject_guid', 'object_guid', 'annotation_id', 'action_type', 'type', 'subtype');
+	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'type', 'subtype');
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
 	$wheres = $options['wheres'];
@@ -285,6 +327,7 @@ function elgg_get_river(array $options = array()) {
 	$wheres[] = elgg_get_guid_based_where_sql('rv.id', $options['ids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
+	$wheres[] = elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
 	$wheres[] = elgg_river_get_action_where_sql($options['action_types']);
 	$wheres[] = elgg_get_river_type_subtype_where_sql('rv', $options['types'],
@@ -377,7 +420,7 @@ function elgg_get_river(array $options = array()) {
  * @access private
  */
 function _elgg_prefetch_river_entities(array $river_items) {
-	// prefetch objects and subjects
+	// prefetch objects, subjects and targets
 	$guids = array();
 	foreach ($river_items as $item) {
 		if ($item->subject_guid && !_elgg_retrieve_cached_entity($item->subject_guid)) {
@@ -385,6 +428,9 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		}
 		if ($item->object_guid && !_elgg_retrieve_cached_entity($item->object_guid)) {
 			$guids[$item->object_guid] = true;
+		}
+		if ($item->target_guid && !_elgg_retrieve_cached_entity($item->target_guid)) {
+			$guids[$item->target_guid] = true;
 		}
 	}
 	if ($guids) {
