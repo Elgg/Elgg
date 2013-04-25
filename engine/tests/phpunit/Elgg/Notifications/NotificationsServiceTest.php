@@ -9,7 +9,8 @@ class Elgg_Notifications_NotificationsServiceTest extends PHPUnit_Framework_Test
 	public function setUp() {
 		$this->hooks = new Elgg_PluginHookService();
 		$this->queue = new Elgg_Util_MemoryQueue();
-		$this->sub   = new Elgg_Notifications_SubscriptionsService();
+		$dbMock = $this->getMock('Elgg_Database');
+		$this->sub   = new Elgg_Notifications_SubscriptionsService($dbMock);
 
 		// Event class has dependency on elgg_get_logged_in_user_guid()
 		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
@@ -118,7 +119,12 @@ class Elgg_Notifications_NotificationsServiceTest extends PHPUnit_Framework_Test
 	}
 
 	public function testProcessQueueThreeEvents() {
-		$mock = $this->getMock('Elgg_Notifications_SubscriptionsService', array('getSubscriptions'));
+		$mock = $this->getMock(
+				'Elgg_Notifications_SubscriptionsService',
+				array('getSubscriptions'),
+				array(),
+				'',
+				false);
 		$mock->expects($this->exactly(3))
 			->method('getSubscriptions')
 			->will($this->returnValue(array()));
@@ -135,7 +141,12 @@ class Elgg_Notifications_NotificationsServiceTest extends PHPUnit_Framework_Test
 	}
 
 	public function testProcessQueueTimesout() {
-		$mock = $this->getMock('Elgg_Notifications_SubscriptionsService', array('getSubscriptions'));
+		$mock = $this->getMock(
+				'Elgg_Notifications_SubscriptionsService',
+				array('getSubscriptions'),
+				array(),
+				'',
+				false);
 		$mock->expects($this->exactly(0))
 			->method('getSubscriptions');
 		$service = new Elgg_Notifications_NotificationsService($mock, $this->queue, $this->hooks);
