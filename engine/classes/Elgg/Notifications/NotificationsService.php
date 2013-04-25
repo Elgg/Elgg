@@ -155,6 +155,8 @@ class Elgg_Notifications_NotificationsService {
 	 */
 	public function processQueue($stopTime) {
 
+		$this->subscriptions->setNotificationMethods($this->methods);
+
 		$count = 0;
 
 		// @todo grab mutex
