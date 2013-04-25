@@ -158,7 +158,12 @@ if ($is_new_group) {
 	elgg_set_page_owner_guid($group->guid);
 
 	$group->join($user);
-	add_to_river('river/group/create', 'create', $user->guid, $group->guid, $group->access_id);
+	elgg_create_river_item(array(
+		'view' => 'river/group/create',
+		'action_type' => 'create',
+		'subject_guid' => $user->guid,
+		'object_guid' => $group->guid,
+	));
 }
 
 $has_uploaded_icon = (!empty($_FILES['icon']['type']) && substr_count($_FILES['icon']['type'], 'image/'));

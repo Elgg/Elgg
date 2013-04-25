@@ -313,6 +313,7 @@ CREATE TABLE `prefix_river` (
   `view` text NOT NULL,
   `subject_guid` int(11) NOT NULL,
   `object_guid` int(11) NOT NULL,
+  `target_guid` int(11) NOT NULL,
   `annotation_id` int(11) NOT NULL,
   `posted` int(11) NOT NULL,
   PRIMARY KEY (`id`),
@@ -321,6 +322,7 @@ CREATE TABLE `prefix_river` (
   KEY `access_id` (`access_id`),
   KEY `subject_guid` (`subject_guid`),
   KEY `object_guid` (`object_guid`),
+  KEY `target_guid` (`target_guid`),
   KEY `annotation_id` (`annotation_id`),
   KEY `posted` (`posted`)
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;

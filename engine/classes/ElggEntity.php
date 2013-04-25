@@ -1814,6 +1814,7 @@ abstract class ElggEntity extends ElggData implements
 
 		elgg_delete_river(array('subject_guid' => $guid));
 		elgg_delete_river(array('object_guid' => $guid));
+		elgg_delete_river(array('target_guid' => $guid));
 		remove_all_private_settings($guid);
 
 		$res = $this->getDatabase()->deleteData("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
