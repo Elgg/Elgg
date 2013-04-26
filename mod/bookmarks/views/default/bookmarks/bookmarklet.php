@@ -9,11 +9,11 @@ $page_owner = elgg_get_page_owner_entity();
 
 if ($page_owner instanceof ElggGroup) {
 	$title = elgg_echo("bookmarks:this:group", array($page_owner->name));
+	$guid = $page_owner->getGUID();
 } else {
 	$title = elgg_echo("bookmarks:this");
+	$guid = "";
 }
-
-$guid = $page_owner->getGUID();
 
 if (!$name && ($user = elgg_get_logged_in_user_entity())) {
 	$name = $user->username;

@@ -39,13 +39,12 @@ function bookmarks_init() {
 	elgg_register_widget_type('bookmarks', elgg_echo('bookmarks'), elgg_echo('bookmarks:widget:description'));
 
 	if (elgg_is_logged_in()) {
-		$user_guid = elgg_get_logged_in_user_guid();
 		$address = urlencode(current_page_url());
 
 		elgg_register_menu_item('extras', array(
 			'name' => 'bookmark',
 			'text' => elgg_view_icon('push-pin-alt'),
-			'href' => "bookmarks/add/$user_guid?address=$address",
+			'href' => "bookmarks/add/?address=$address",
 			'title' => elgg_echo('bookmarks:this'),
 			'rel' => 'nofollow',
 		));

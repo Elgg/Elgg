@@ -13,7 +13,6 @@ $tags = elgg_extract('tags', $vars, '');
 $access_id = elgg_extract('access_id', $vars, ACCESS_DEFAULT);
 $container_guid = elgg_extract('container_guid', $vars);
 $guid = elgg_extract('guid', $vars, null);
-$shares = elgg_extract('shares', $vars, array());
 
 ?>
 <div>
@@ -39,6 +38,22 @@ if ($categories) {
 	echo $categories;
 }
 
+if (!$container_guid) {
+	elgg_load_library('elgg:bookmarks');
+	$container_label = elgg_echo('bookmarks:container');
+	$container_dropdown = elgg_view('input/dropdown', array(
+		'name' => 'container_guid',
+		'options_values' => bookmarks_prepare_container_options_values(),
+		'value' => elgg_get_logged_in_user_guid(),
+	));
+	echo <<<HTML
+<div>
+	<label>$container_label</label><br />
+	$container_dropdown;
+</div>
+HTML;
+
+}
 ?>
 <div>
 	<label><?php echo elgg_echo('access'); ?></label><br />
@@ -47,7 +62,9 @@ if ($categories) {
 <div class="elgg-foot">
 <?php
 
-echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
+if ($container_guid) {
+	echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
+}
 
 if ($guid) {
 	echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $guid));
