@@ -34,8 +34,15 @@ class Elgg_Notifications_Notification {
 	 * @param string     $subject  The subject of the notification
 	 * @param string     $body     The body of the notification
 	 * @param array      $params   Optional array of parameters
+	 * @throws InvalidArgumentException
 	 */
-	public function __construct($from, $to, $language, $subject, $body, array $params = array()) {
+	public function __construct(ElggEntity $from, ElggEntity $to, $language, $subject, $body, array $params = array()) {
+		if (!$from) {
+			throw new InvalidArgumentException('$from is not a valid ElggEntity');
+		}
+		if (!$to) {
+			throw new InvalidArgumentException('$to is not a valid ElggEntity');
+		}
 		$this->from = $from;
 		$this->to = $to;
 		$this->language = $language;
@@ -78,38 +85,5 @@ class Elgg_Notifications_Notification {
 	 */
 	public function getRecipientGUID() {
 		return $this->to->guid;
-	}
-
-	/**
-	 * Get the formatted address for sender: "Name <email address>"
-	 *
-	 * @return string
-	 */
-	public function getSenderFormattedEmailAddress() {
-		return $this->getEmailAddress($this->from);
-	}
-
-	/**
-	 * Get the formatted address for recipient: "Name <email address>"
-	 *
-	 * @return string
-	 */
-	public function getRecipientFormattedEmailAddress() {
-		return $this->getEmailAddress($this->to);
-	}
-
-	/**
-	 * Get an email address string for to/from field
-	 * 
-	 * @todo this should not be here
-	 * 
-	 * @param ElggUser|ElggGroup|ElggSite $entity Entity to get the email address for 
-	 * @return string
-	 */
-	protected function getFormattedEmailAddress($entity) {
-		// need to remove special characters
-		$name = $entity->name;
-		$email = $entity->email;
-		return "$name <$email>";
 	}
 }
