@@ -29,11 +29,11 @@ class Elgg_Notifications_Event {
 	 * @param ElggData $object The object of the event (ElggEntity, ElggAnnotation, ElggRelationship)
 	 * @param string   $action The name of the action (default: create)
 	 * @param ElggUser $actor  The user that caused the event (default: logged in user)
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($object, $action, $actor = null) {
 		if (!($object instanceof ElggData)) {
-			// @todo find the best message - probably create generic message
-			throw new InvalidParameterException();
+			throw new InvalidArgumentException('$object is not an instance of ElggData');
 		}
 
 		if (elgg_instanceof($object)) {

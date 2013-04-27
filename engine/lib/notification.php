@@ -7,9 +7,9 @@
  * 2. Register for the notification message plugin hook:
  *    'prepare', 'notification:[event name]'. The event name is of the form 
  *    [action]:[type]:[subtype]. For example, the publish event for a blog 
- *    would be named 'publish:object:object'. 
+ *    would be named 'publish:object:blog'.
  * 
- *    The params for the plugin hook have the keys 'event', 'method', 
+ *    The parameter array for the plugin hook has the keys 'event', 'method',
  *    'recipient', and 'language'. The event is an Elgg_Notifications_Event 
  *    object and can provide access to the original object of the event through 
  *    the method getObject() and the original actor through getActor().
