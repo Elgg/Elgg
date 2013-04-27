@@ -10,7 +10,7 @@ delete_data($query);
 
 if ($CONFIG->simplecache_enabled) {
 	datalist_set('simplecache_enabled', 1);
-	elgg_regenerate_simplecache();
+	elgg_invalidate_simplecache();
 } else {
 	datalist_set('simplecache_enabled', 0);
 }

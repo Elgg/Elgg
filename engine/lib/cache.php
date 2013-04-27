@@ -113,54 +113,15 @@ function elgg_disable_system_cache() {
 	elgg_reset_system_cache();
 }
 
-/** @todo deprecate in Elgg 1.9 **/
-
-/**
- * @access private
- */
-function elgg_get_filepath_cache() {
-	return elgg_get_system_cache();
-}
-/**
- * @access private
- */
-function elgg_filepath_cache_reset() {
-	elgg_reset_system_cache();
-}
-/**
- * @access private
- */
-function elgg_filepath_cache_save($type, $data) {
-	return elgg_save_system_cache($type, $data);
-}
-/**
- * @access private
- */
-function elgg_filepath_cache_load($type) {
-	return elgg_load_system_cache($type);
-}
-/**
- * @access private
- */
-function elgg_enable_filepath_cache() {
-	elgg_enable_system_cache();
-}
-/**
- * @access private
- */
-function elgg_disable_filepath_cache() {
-	elgg_disable_system_cache();
-}
-
 /* Simplecache */
 
 /**
  * Registers a view to simple cache.
  *
  * Simple cache is a caching mechanism that saves the output of
- * views and its extensions into a file.  If the view is called
- * by the {@link engine/handlers/cache_handler.php} file, Elgg will
- * not be loaded and the contents of the view will returned
+ * a view and its extensions into a file.  If the view is called
+ * by the {@link engine/handlers/cache_handler.php} file, the Elgg
+ * engine will not be loaded and the contents of the view will returned
  * from file.
  *
  * @warning Simple cached views must take no parameters and return
@@ -172,22 +133,20 @@ function elgg_disable_filepath_cache() {
  *		elgg_register_js('elgg.blog', $blog_js);
  *		elgg_load_js('elgg.blog');
  *
- * @param string $viewname View name
+ * @param string $view_name View name
  *
  * @return void
- * @link http://docs.elgg.org/Views/Simplecache
- * @see elgg_regenerate_simplecache()
+ * @see elgg_get_simplecache_url()
  * @since 1.8.0
  */
-function elgg_register_simplecache_view($viewname) {
-	elgg_register_external_view($viewname, true);
+function elgg_register_simplecache_view($view_name) {
+	elgg_register_external_view($view_name, true);
 }
 
 /**
  * Get the URL for the cached file
  * 
- * @warning You must register the view with elgg_register_simplecache_view()	  	
- * for caching to work. See elgg_register_simplecache_view() for a full example.
+ * This automatically registers the view with Elgg's simplecache.
  *
  * @param string $type The file type: css or js
  * @param string $view The view name after css/ or js/
@@ -206,7 +165,6 @@ function elgg_get_simplecache_url($type, $view) {
  */
 function _elgg_get_simplecache_root() {
 	$viewtype = elgg_get_viewtype();
-	elgg_register_simplecache_view("$type/$view");// see #5302
 	if (elgg_is_simplecache_enabled()) {
 		$lastcache = elgg_get_config('lastcache');
 	} else {
@@ -221,12 +179,14 @@ function _elgg_get_simplecache_root() {
  * 
  * css/* views always return "css"
  * js/* views always return "js"
+ *
+ * @todo why isn't this in the CacheHandler class? It is not used anywhere else.
  * 
- * TODO: view/name.suffix returns "suffix"
+ * @todo view/name.suffix returns "suffix"
  * 
  * Otherwise, returns "unknown"
  *
- * @param string $view
+ * @param string $view The view name
  * @return string
  * @access private
  */
@@ -236,21 +196,6 @@ function _elgg_get_view_filetype($view) {
 	} else {
 		return 'unknown';
 	}
-}
-
-/**
- * Regenerates the simple cache.
- *
- * @warning This does not invalidate the cache, but actively rebuilds it.
- *
- * @param string $viewtype Optional viewtype to regenerate. Defaults to all valid viewtypes.
- *
- * @return void
- * @see elgg_register_simplecache_view()
- * @since 1.8.0
- */
-function elgg_regenerate_simplecache($viewtype = NULL) {
-	elgg_invalidate_simplecache();
 }
 
 /**
@@ -266,7 +211,6 @@ function elgg_is_simplecache_enabled() {
 /**
  * Enables the simple cache.
  *
- * @access private
  * @see elgg_register_simplecache_view()
  * @return void
  * @since 1.8.0
@@ -282,7 +226,6 @@ function elgg_enable_simplecache() {
  *
  * @warning Simplecache is also purged when disabled.
  *
- * @access private
  * @see elgg_register_simplecache_view()
  * @return void
  * @since 1.8.0
@@ -296,7 +239,6 @@ function elgg_disable_simplecache() {
 		_elgg_rmdir(elgg_get_data_path() . "views_simplecache");
 	}
 }
-
 
 /**
  * Recursively deletes a directory, including all hidden files.
@@ -344,6 +286,8 @@ function elgg_invalidate_simplecache() {
 }
 
 /**
+ * Loads the system cache during engine boot
+ * 
  * @see elgg_reset_system_cache()
  * @access private
  */
@@ -369,6 +313,9 @@ function _elgg_load_cache() {
 }
 
 /**
+ * Initializes the simplecache lastcache variable and creates system cache files
+ * when appropriate.
+ * 
  * @access private
  */
 function _elgg_cache_init() {

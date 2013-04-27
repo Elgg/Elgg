@@ -582,6 +582,73 @@ $fullview = true, $listtypetoggle = false, $navigation = true) {
 }
 
 /**
+ * Regenerates the simple cache.
+ *
+ * Not required any longer since cached files are created on demand.
+ *
+ * @warning This does not invalidate the cache, but actively rebuilds it.
+ *
+ * @param string $viewtype Optional viewtype to regenerate. Defaults to all valid viewtypes.
+ *
+ * @return void
+ * @since 1.8.0
+ * @deprecated 1.9 Use elgg_invalidate_simplecache()
+ */
+function elgg_regenerate_simplecache($viewtype = NULL) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_invalidate_simplecache()', 1.9);
+	elgg_invalidate_simplecache();
+}
+
+/**
+ * @access private
+ * @deprecated 1.9
+ */
+function elgg_get_filepath_cache() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	return elgg_get_system_cache();
+}
+/**
+ * @access private
+ * @deprecated 1.9
+ */
+function elgg_filepath_cache_reset() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	elgg_reset_system_cache();
+}
+/**
+ * @access private
+ * @deprecated 1.9
+ */
+function elgg_filepath_cache_save($type, $data) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	return elgg_save_system_cache($type, $data);
+}
+/**
+ * @access private
+ * @deprecated 1.9
+ */
+function elgg_filepath_cache_load($type) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	return elgg_load_system_cache($type);
+}
+/**
+ * @access private
+ * @deprecated 1.9
+ */
+function elgg_enable_filepath_cache() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	elgg_enable_system_cache();
+}
+/**
+ * @access private
+ * @deprecated 1.9
+ */
+function elgg_disable_filepath_cache() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	elgg_disable_system_cache();
+}
+
+/**
  * Unregisters an entity type and subtype as a public-facing type.
  *
  * @warning With a blank subtype, it unregisters that entity type including
