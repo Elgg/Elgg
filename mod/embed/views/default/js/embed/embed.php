@@ -41,7 +41,7 @@ elgg.embed.insert = function(event) {
 	textArea.focus();
 	
 <?php
-// See the TinyMCE plugin for an example of this view
+// See the ckeditor plugin for an example of this view
 echo elgg_view('embed/custom_insert_js');
 ?>
 
