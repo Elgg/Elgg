@@ -154,6 +154,11 @@ function elgg_register_simplecache_view($view_name) {
  * @since 1.8.0
  */
 function elgg_get_simplecache_url($type, $view) {
+	// handle file type passed with view name
+	if (($type === 'js' || $type === 'css') && 0 === strpos($view, $type . '/')) {
+		$view = substr($view, strlen($type) + 1);
+	}
+
 	elgg_register_simplecache_view("$type/$view");
 	return _elgg_get_simplecache_root() . "$type/$view";
 }
