@@ -34,7 +34,7 @@ class Elgg_Notifications_SubscriptionsService {
 	}
 
 	/**
-	 * Set the delivery method names
+	 * Set the delivery methods
 	 *
 	 * @param array $methods Array of delivery method names
 	 * @return void
@@ -96,14 +96,14 @@ class Elgg_Notifications_SubscriptionsService {
 			return array();
 		}
 
-		$container_guid = sanitize_int($container_guid);
+		$container_guid = $this->db->sanitizeInt($container_guid);
 
 		// create IN clause
 		$methods = $this->methods;
-		array_walk($methods, 'sanitize_string');
+		array_walk($methods, array($this->db, 'sanitizeString'));
 		$methods_string = "'" . implode("','", $methods) . "'";
 
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = $this->db->getTablePrefix();
 		$query = "SELECT guid_one AS guid, GROUP_CONCAT(relationship SEPARATOR ',') AS methods
 			FROM {$db_prefix}entity_relationships
 			WHERE guid_two = $container_guid AND
