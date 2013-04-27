@@ -105,6 +105,32 @@ function elgg_unregister_notification_method($name) {
 }
 
 /**
+ * Subscribe a user to notifications about a target entity
+ *
+ * @param int    $user_guid   The GUID of the user to subscribe to notifications
+ * @param string $method      The delivery method of the notifications
+ * @param int    $target_guid The entity to receive notifications about
+ * @return bool
+ * @since 1.9
+ */
+function elgg_add_subscription($user_guid, $method, $target_guid) {
+	return add_entity_relationship($user_guid, "notify$method", $target_guid);
+}
+
+/**
+ * Unsubscribe a user to notifications about a target entity
+ *
+ * @param int    $user_guid   The GUID of the user to unsubscribe to notifications
+ * @param string $method      The delivery method of the notifications to stop
+ * @param int    $target_guid The entity to stop receiving notifications about
+ * @return bool
+ * @since 1.9
+ */
+function elgg_remove_subscription($user_guid, $method, $target_guid) {
+	return remove_entity_relationship($user_guid, "notify$method", $target_guid);
+}
+
+/**
  * Queue a notification event for later handling
  *
  * Checks to see if this event has been registered for notifications.
@@ -165,57 +191,6 @@ elgg_register_event_handler('init', 'system', '_elgg_notifications_init');
  * @subpackage Notifications
  */
 
-/** Notification handlers */
-global $NOTIFICATION_HANDLERS;
-$NOTIFICATION_HANDLERS = array();
-
-/**
- * This function registers a handler for a given notification type (eg "email")
- *
- * @param string $method  The method
- * @param string $handler The handler function, in the format
- *                        "handler(ElggEntity $from, ElggUser $to, $subject,
- *                        $message, array $params = NULL)". This function should
- *                        return false on failure, and true/a tracking message ID on success.
- * @param array  $params  An associated array of other parameters for this handler
- *                        defining some properties eg. supported msg length or rich text support.
- *
- * @return bool
- */
-function register_notification_handler($method, $handler, $params = NULL) {
-	global $NOTIFICATION_HANDLERS;
-
-	if (is_callable($handler, true)) {
-		$NOTIFICATION_HANDLERS[$method] = new stdClass;
-
-		$NOTIFICATION_HANDLERS[$method]->handler = $handler;
-		if ($params) {
-			foreach ($params as $k => $v) {
-				$NOTIFICATION_HANDLERS[$method]->$k = $v;
-			}
-		}
-
-		return true;
-	}
-
-	return false;
-}
-
-/**
- * This function unregisters a handler for a given notification type (eg "email")
- *
- * @param string $method The method
- *
- * @return void
- * @since 1.7.1
- */
-function unregister_notification_handler($method) {
-	global $NOTIFICATION_HANDLERS;
-
-	if (isset($NOTIFICATION_HANDLERS[$method])) {
-		unset($NOTIFICATION_HANDLERS[$method]);
-	}
-}
 
 /**
  * Notify a user via their preferences.
@@ -554,143 +529,6 @@ function notification_user_settings_save() {
 	include($CONFIG->path . "actions/notifications/settings/usersettings/save.php");
 }
 
-/**
- * Register an entity type and subtype to be eligible for notifications
- *
- * @param string $entity_type    The type of entity
- * @param string $object_subtype Its subtype
- * @param string $language_name  Its localized notification string (eg "New blog post")
- *
- * @return void
- */
-function register_notification_object($entity_type, $object_subtype, $language_name) {
-	global $CONFIG;
-
-	if ($entity_type == '') {
-		$entity_type = '__BLANK__';
-	}
-	if ($object_subtype == '') {
-		$object_subtype = '__BLANK__';
-	}
-
-	if (!isset($CONFIG->register_objects)) {
-		$CONFIG->register_objects = array();
-	}
-
-	if (!isset($CONFIG->register_objects[$entity_type])) {
-		$CONFIG->register_objects[$entity_type] = array();
-	}
-
-	$CONFIG->register_objects[$entity_type][$object_subtype] = $language_name;
-}
-
-/**
- * Establish a 'notify' relationship between the user and a content author
- *
- * @param int $user_guid   The GUID of the user who wants to follow a user's content
- * @param int $author_guid The GUID of the user whose content the user wants to follow
- *
- * @return bool Depending on success
- */
-function register_notification_interest($user_guid, $author_guid) {
-	return add_entity_relationship($user_guid, 'notify', $author_guid);
-}
-
-/**
- * Remove a 'notify' relationship between the user and a content author
- *
- * @param int $user_guid   The GUID of the user who is following a user's content
- * @param int $author_guid The GUID of the user whose content the user wants to unfollow
- *
- * @return bool Depending on success
- */
-function remove_notification_interest($user_guid, $author_guid) {
-	return remove_entity_relationship($user_guid, 'notify', $author_guid);
-}
-
-/**
- * Automatically triggered notification on 'create' events that looks at registered
- * objects and attempts to send notifications to anybody who's interested
- *
- * @see register_notification_object
- *
- * @param string $event       create
- * @param string $object_type mixed
- * @param mixed  $object      The object created
- *
- * @return bool
- * @access private
- */
-function object_notifications($event, $object_type, $object) {
-	// We only want to trigger notification events for ElggEntities
-	if ($object instanceof ElggEntity) {
-		/* @var ElggEntity $object */
-
-		// Get config data
-		global $CONFIG, $SESSION, $NOTIFICATION_HANDLERS;
-
-		$hookresult = elgg_trigger_plugin_hook('object:notifications', $object_type, array(
-			'event' => $event,
-			'object_type' => $object_type,
-			'object' => $object,
-		), false);
-		if ($hookresult === true) {
-			return true;
-		}
-
-		// Have we registered notifications for this type of entity?
-		$object_type = $object->getType();
-		if (empty($object_type)) {
-			$object_type = '__BLANK__';
-		}
-
-		$object_subtype = $object->getSubtype();
-		if (empty($object_subtype)) {
-			$object_subtype = '__BLANK__';
-		}
-
-		if (isset($CONFIG->register_objects[$object_type][$object_subtype])) {
-			$subject = $CONFIG->register_objects[$object_type][$object_subtype];
-			$string = $subject . ": " . $object->getURL();
-
-			// Get users interested in content from this person and notify them
-			// (Person defined by container_guid so we can also subscribe to groups if we want)
-			foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-				$interested_users = elgg_get_entities_from_relationship(array(
-					'site_guids' => ELGG_ENTITIES_ANY_VALUE,
-					'relationship' => 'notify' . $method,
-					'relationship_guid' => $object->container_guid,
-					'inverse_relationship' => TRUE,
-					'type' => 'user',
-					'limit' => false
-				));
-				/* @var ElggUser[] $interested_users */
-
-				if ($interested_users && is_array($interested_users)) {
-					foreach ($interested_users as $user) {
-						if ($user instanceof ElggUser && !$user->isBanned()) {
-							if (($user->guid != $SESSION['user']->guid) && has_access_to_entity($object, $user)
-							&& $object->access_id != ACCESS_PRIVATE) {
-								$body = elgg_trigger_plugin_hook('notify:entity:message', $object->getType(), array(
-									'entity' => $object,
-									'to_entity' => $user,
-									'method' => $method), $string);
-								if (empty($body) && $body !== false) {
-									$body = $string;
-								}
-								if ($body !== false) {
-									notify_user($user->guid, $object->container_guid, $subject, $body,
-										null, array($method));
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
-}
-
 // Register a startup event
 elgg_register_event_handler('init', 'system', 'notification_init', 0);
-elgg_register_event_handler('create', 'object', 'object_notifications');
+
