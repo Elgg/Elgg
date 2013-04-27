@@ -22,11 +22,20 @@ class Elgg_Notifications_NotificationsService {
 	/** @var Elgg_PluginHookService */
 	protected $hooks;
 
+	/** @var Elgg_Access */
+	protected $access;
+
 	/** @var array Registered notification events */
 	protected $events = array();
 
 	/** @var array Registered notification methods */
 	protected $methods = array();
+
+	/** @var array Deprecated notification handlers */
+	protected $deprHandlers = array();
+
+	/** @var array Deprecated message subjects */
+	protected $deprSubjects = array();
 
 	/**
 	 * Constructor
@@ -35,10 +44,11 @@ class Elgg_Notifications_NotificationsService {
 	 * @param Elgg_Util_FifoQueue                     $queue         Queue
 	 * @param Elgg_PluginHookService                  $hooks         Plugin hook service
 	 */
-	public function __construct(Elgg_Notifications_SubscriptionsService $subscriptions, Elgg_Util_FifoQueue $queue, Elgg_PluginHookService $hooks) {
+	public function __construct(Elgg_Notifications_SubscriptionsService $subscriptions, Elgg_Util_FifoQueue $queue, Elgg_PluginHookService $hooks, Elgg_Access $access) {
 		$this->subscriptions = $subscriptions;
 		$this->queue = $queue;
 		$this->hooks = $hooks;
+		$this->access = $access;
 	}
 
 	/**
@@ -155,17 +165,24 @@ class Elgg_Notifications_NotificationsService {
 	 */
 	public function processQueue($stopTime) {
 
-		$this->subscriptions->setNotificationMethods($this->methods);
+		$this->subscriptions->methods = $this->methods;
 
 		$count = 0;
 
 		// @todo grab mutex
+		
+		$ia = $this->access->setIgnoreAccess(true);
 
 		while (time() < $stopTime) {
 			// dequeue notification event
 			$event = $this->queue->dequeue();
 			if (!$event) {
 				break;
+			}
+
+			// test for usage of the deprecated override hook
+			if ($this->existsDeprecatedNotificationOverride($event)) {
+				continue;
 			}
 
 			$subscriptions = $this->subscriptions->getSubscriptions($event);
@@ -180,6 +197,8 @@ class Elgg_Notifications_NotificationsService {
 		}
 
 		// release mutex
+
+		$this->access->setIgnoreAccess($ia);
 
 		return $count;
 	}
@@ -220,12 +239,22 @@ class Elgg_Notifications_NotificationsService {
 	 * @return bool
 	 * @access private
 	 */
-	protected function sendNotification($event, $guid, $method) {
+	protected function sendNotification(Elgg_Notifications_Event $event, $guid, $method) {
 
-		$recipient = get_entity($guid);
-		if (!$recipient) {
+		$recipient = get_user($guid);
+		if (!$recipient || $recipient->isBanned()) {
 			return false;
 		}
+
+		// don't notify the creator of the content
+		if ($recipient->getGUID() == $event->getActorGUID()) {
+			return false;
+		}
+
+		if (!has_access_to_entity($event->getObject(), $recipient)) {
+			return false;
+		}
+
 		$language = $recipient->language;
 		$params = array(
 			'event' => $event,
@@ -240,10 +269,163 @@ class Elgg_Notifications_NotificationsService {
 		$notification = new Elgg_Notifications_Notification($event->getActor(), $recipient, $language, $subject, $body);
 
 		$type = 'notification:' . $event->getDescription();
-		$notification = $this->hooks->trigger('prepare', $type, $params, $notification);
+		if ($this->hooks->hasHandler('prepare', $type)) {
+			$notification = $this->hooks->trigger('prepare', $type, $params, $notification);
+		} else {
+			// pre Elgg 1.9 notification message generation
+			$notification = $this->getDeprecatedNotificationBody($notification, $event, $method);
+		}
 
-		// return true to indicate the notification has been sent
-		$params = array('notification' => $notification);
-		return $this->hooks->trigger('send', "notification:$method", $params, false);
+		if ($this->hooks->hasHandler('send', "notification:$method")) {
+			// return true to indicate the notification has been sent
+			$params = array('notification' => $notification);
+			return $this->hooks->trigger('send', "notification:$method", $params, false);
+		} else {
+			// pre Elgg 1.9 notification handler
+			$userGuid = $notification->getRecipientGUID();
+			$senderGuid = $notification->getSenderGUID();
+			$subject = $notification->subject;
+			$body = $notification->body;
+			$params = $notification->params;
+			return (bool)_elgg_notify_user($userGuid, $senderGuid, $subject, $body, $params, array($method));
+		}
+	}
+
+	/**
+	 * Register a deprecated notification handler
+	 * 
+	 * @param string $method  Method name
+	 * @param string $handler Handler callback
+	 * @return void
+	 */
+	public function registerDeprecatedHandler($method, $handler) {
+		$this->deprHandlers[$method] = $handler;
+	}
+
+	/**
+	 * Get a deprecated notification handler callback
+	 * 
+	 * @param string $method Method name
+	 * @return callback|null
+	 */
+	public function getDeprecatedHandler($method) {
+		if (isset($this->deprHandlers[$method])) {
+			return $this->deprHandlers[$method];
+		} else {
+			return null;
+		}
+	}
+
+	/**
+	 * Provides a way to incrementally wean Elgg's notifications code from the
+	 * global $NOTIFICATION_HANDLERS
+	 * 
+	 * @return array
+	 */
+	public function getMethodsAsDeprecatedGlobal() {
+		$data = array();
+		foreach ($this->methods as $method) {
+			$data[$method] = 'empty';
+		}
+		return $data;
+	}
+
+	/**
+	 * Get the notification body using a pre-Elgg 1.9 plugin hook
+	 * 
+	 * @param Elgg_Notifications_Notification $notification Notification
+	 * @param Elgg_Notifications_Event        $event        Event
+	 * @param string                          $method       Method
+	 * @return Elgg_Notifications_Notification
+	 */
+	protected function getDeprecatedNotificationBody(Elgg_Notifications_Notification $notification, Elgg_Notifications_Event $event, $method) {
+		$entity = $event->getObject();
+		$params = array(
+			'entity' => $entity,
+			'to_entity' => $notification->getRecipient(),
+			'method' => $method,
+		);
+		$subject = $this->getDeprecatedNotificationSubject($entity->getType(), $entity->getSubtype());
+		$string = $subject . ": " . $entity->getURL();
+		$body = $this->hooks->trigger('notify:entity:message', $entity->getType(), $params, $string);
+
+		$notification->subject = $subject;
+		$notification->body = $body;
+
+		return $notification;
+	}
+
+	/**
+	 * Set message subject for deprecated notification code
+	 * 
+	 * @param string $type    Entity type
+	 * @param string $subtype Entity subtype
+	 * @param string $subject Subject line
+	 * @return void
+	 */
+	public function setDeprecatedNotificationSubject($type, $subtype, $subject) {
+		if ($type == '') {
+			$type = '__BLANK__';
+		}
+		if ($subtype == '') {
+			$subtype = '__BLANK__';
+		}
+
+		if (!isset($this->deprSubjects[$type])) {
+			$this->deprSubjects[$type] = array();
+		}
+
+		$this->deprSubjects[$type][$subtype] = $subject;
+	}
+
+	/**
+	 * Get the deprecated subject
+	 * 
+	 * @param string $type    Entity type
+	 * @param string $subtype Entity subtype
+	 * @return string
+	 */
+	protected function getDeprecatedNotificationSubject($type, $subtype) {
+		if ($type == '') {
+			$type = '__BLANK__';
+		}
+		if ($subtype == '') {
+			$subtype = '__BLANK__';
+		}
+
+		if (!isset($this->deprSubjects[$type])) {
+			return '';
+		}
+
+		if (!isset($this->deprSubjects[$type][$subtype])) {
+			return '';
+		}
+
+		return $this->deprSubjects[$type][$subtype];
+	}
+
+	/**
+	 * Is someone using the deprecated override
+	 * 
+	 * @param Elgg_Notifications_Event $event Event
+	 * @return boolean
+	 */
+	protected function existsDeprecatedNotificationOverride(Elgg_Notifications_Event $event) {
+		$entity = $event->getObject();
+		if (!elgg_instanceof($entity)) {
+			return false;
+		}
+		$params = array(
+			'event' => $event->getAction(),
+			'object_type' => $entity->getType(),
+			'object' => $entity,			
+		);
+		$hookresult = $this->hooks->trigger('object:notifications', $entity->getType(), $params, false);
+		if ($hookresult === true) {
+			elgg_deprecated_notice("Using the plugin hook 'object:notifications' has been deprecated by the hook 'send:before', 'notifications'", 1.9);
+			return true;
+		} else {
+			return false;
+		}
 	}
 }

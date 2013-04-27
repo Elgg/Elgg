@@ -114,7 +114,10 @@ function elgg_unregister_notification_method($name) {
  * @since 1.9
  */
 function elgg_add_subscription($user_guid, $method, $target_guid) {
-	return add_entity_relationship($user_guid, "notify$method", $target_guid);
+	$methods = _elgg_services()->notifications->getMethods();
+	$db = _elgg_services()->db;
+	$subs = new Elgg_Notifications_SubscriptionsService($db, $methods);
+	return $subs->addSubscription($user_guid, $method, $target_guid);
 }
 
 /**
@@ -127,7 +130,10 @@ function elgg_add_subscription($user_guid, $method, $target_guid) {
  * @since 1.9
  */
 function elgg_remove_subscription($user_guid, $method, $target_guid) {
-	return remove_entity_relationship($user_guid, "notify$method", $target_guid);
+	$methods = _elgg_services()->notifications->getMethods();
+	$db = _elgg_services()->db;
+	$subs = new Elgg_Notifications_SubscriptionsService($db, $methods);
+	return $subs->removeSubscription($user_guid, $method, $target_guid);
 }
 
 /**
@@ -170,6 +176,89 @@ elgg_register_event_handler('init', 'system', '_elgg_notifications_init');
 
 
 
+/**
+ * Notify a user via their preferences.
+ *
+ * @param mixed  $to               Either a guid or an array of guid's to notify.
+ * @param int    $from             GUID of the sender, which may be a user, site or object.
+ * @param string $subject          Message subject.
+ * @param string $message          Message body.
+ * @param array  $params           Misc additional parameters specific to various methods.
+ * @param mixed  $methods_override A string, or an array of strings specifying the delivery
+ *                                 methods to use - or leave blank for delivery using the
+ *                                 user's chosen delivery methods.
+ *
+ * @return array Compound array of each delivery user/delivery method's success or failure.
+ * @access private
+ */
+function _elgg_notify_user($to, $from, $subject, $message, array $params = NULL, $methods_override = "") {
+
+	$notify_service = _elgg_services()->notifications;
+
+	// Sanitise
+	if (!is_array($to)) {
+		$to = array((int)$to);
+	}
+	$from = (int)$from;
+	//$subject = sanitise_string($subject);
+
+	// Get notification methods
+	if (($methods_override) && (!is_array($methods_override))) {
+		$methods_override = array($methods_override);
+	}
+
+	$result = array();
+
+	foreach ($to as $guid) {
+		// Results for a user are...
+		$result[$guid] = array();
+
+		if ($guid) { // Is the guid > 0?
+			// Are we overriding delivery?
+			$methods = $methods_override;
+			if (!$methods) {
+				$tmp = (array)get_user_notification_settings($guid);
+				$methods = array();
+				foreach ($tmp as $k => $v) {
+					// Add method if method is turned on for user!
+					if ($v) {
+						$methods[] = $k;
+					}
+				}
+			}
+
+			if ($methods) {
+				// Deliver
+				foreach ($methods as $method) {
+					
+					$handler = $notify_service->getDeprecatedHandler($method);
+					/* @var callable $handler */
+					if (!$handler || !is_callable($handler)) {
+						error_log("No handler registered for the method $method", 'WARNING');
+						continue;
+					}
+
+					elgg_log("Sending message to $guid using $method");
+
+					// Trigger handler and retrieve result.
+					try {
+						$result[$guid][$method] = call_user_func($handler,
+							$from ? get_entity($from) : NULL,
+							get_entity($guid),
+							$subject,
+							$message,
+							$params
+						);
+					} catch (Exception $e) {
+						error_log($e->getMessage());
+					}
+				}
+			}
+		}
+	}
+
+	return $result;
+}
 
 
 /**
@@ -208,7 +297,7 @@ elgg_register_event_handler('init', 'system', '_elgg_notifications_init');
  * @throws NotificationException
  */
 function notify_user($to, $from, $subject, $message, array $params = NULL, $methods_override = "") {
-	global $NOTIFICATION_HANDLERS;
+	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 	// Sanitise
 	if (!is_array($to)) {

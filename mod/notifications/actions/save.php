@@ -16,7 +16,7 @@ if (($user->guid != $current_user->guid) && !$current_user->isAdmin()) {
 	forward();
 }
 
-global $NOTIFICATION_HANDLERS;
+$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 $subscriptions = array();
 foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 	$personal[$method] = get_input($method.'personal');

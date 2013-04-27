@@ -984,7 +984,8 @@ function discussion_create_reply_notification($hook, $type, $message, $params) {
  * @return void
  */
 function discussion_reply_notifications($event, $type, $annotation) {
-	global $CONFIG, $NOTIFICATION_HANDLERS;
+	global $CONFIG;
+	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 	if ($annotation->name !== 'group_topic_post') {
 		return;
