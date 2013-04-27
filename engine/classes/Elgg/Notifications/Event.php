@@ -65,6 +65,15 @@ class Elgg_Notifications_Event {
 	}
 
 	/**
+	 * Get the GUID of the actor
+	 * 
+	 * @return int
+	 */
+	public function getActorGUID() {
+		return $this->actor_guid;
+	}
+
+	/**
 	 * Get the object of the event
 	 *
 	 * @return ElggData

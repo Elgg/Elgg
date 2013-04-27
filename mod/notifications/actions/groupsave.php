@@ -31,7 +31,7 @@ if ($groupmemberships = elgg_get_entities_from_relationship($options)) {
 }
 
 if (!empty($groups)) {
-	global $NOTIFICATION_HANDLERS;
+	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 	foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 		$subscriptions[$method] = get_input($method.'subscriptions', array());
 		foreach ($groups as $group) {

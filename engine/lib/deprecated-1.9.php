@@ -1968,24 +1968,9 @@ $posted = 0, $annotation_id = 0, $target_guid = 0) {
  */
 function register_notification_object($entity_type, $object_subtype, $language_name) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_register_notification_event()', 1.9);
-	global $CONFIG;
 
-	if ($entity_type == '') {
-		$entity_type = '__BLANK__';
-	}
-	if ($object_subtype == '') {
-		$object_subtype = '__BLANK__';
-	}
-
-	if (!isset($CONFIG->register_objects)) {
-		$CONFIG->register_objects = array();
-	}
-
-	if (!isset($CONFIG->register_objects[$entity_type])) {
-		$CONFIG->register_objects[$entity_type] = array();
-	}
-
-	$CONFIG->register_objects[$entity_type][$object_subtype] = $language_name;
+	elgg_register_notification_event($entity_type, $object_subtype);
+	_elgg_services()->notifications->setDeprecatedNotificationSubject($entity_type, $object_subtype, $language_name);
 }
 
 /**
@@ -2016,8 +2001,6 @@ function remove_notification_interest($user_guid, $author_guid) {
 	return remove_entity_relationship($user_guid, 'notify', $author_guid);
 }
 
-elgg_register_event_handler('create', 'object', 'object_notifications');
-
 /**
  * Automatically triggered notification on 'create' events that looks at registered
  * objects and attempts to send notifications to anybody who's interested
@@ -2033,78 +2016,8 @@ elgg_register_event_handler('create', 'object', 'object_notifications');
  * @deprecated 1.9
  */
 function object_notifications($event, $object_type, $object) {
-	// We only want to trigger notification events for ElggEntities
-	if ($object instanceof ElggEntity) {
-		/* @var ElggEntity $object */
-
-		// Get config data
-		global $CONFIG, $SESSION, $NOTIFICATION_HANDLERS;
-
-		$hookresult = elgg_trigger_plugin_hook('object:notifications', $object_type, array(
-			'event' => $event,
-			'object_type' => $object_type,
-			'object' => $object,
-		), false);
-		if ($hookresult === true) {
-			return true;
-		}
-
-		// Have we registered notifications for this type of entity?
-		$object_type = $object->getType();
-		if (empty($object_type)) {
-			$object_type = '__BLANK__';
-		}
-
-		$object_subtype = $object->getSubtype();
-		if (empty($object_subtype)) {
-			$object_subtype = '__BLANK__';
-		}
-
-		if (isset($CONFIG->register_objects[$object_type][$object_subtype])) {
-			$subject = $CONFIG->register_objects[$object_type][$object_subtype];
-			$string = $subject . ": " . $object->getURL();
-
-			// Get users interested in content from this person and notify them
-			// (Person defined by container_guid so we can also subscribe to groups if we want)
-			foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-				$interested_users = elgg_get_entities_from_relationship(array(
-					'site_guids' => ELGG_ENTITIES_ANY_VALUE,
-					'relationship' => 'notify' . $method,
-					'relationship_guid' => $object->container_guid,
-					'inverse_relationship' => TRUE,
-					'type' => 'user',
-					'limit' => false
-				));
-				/* @var ElggUser[] $interested_users */
-
-				if ($interested_users && is_array($interested_users)) {
-					foreach ($interested_users as $user) {
-						if ($user instanceof ElggUser && !$user->isBanned()) {
-							if (($user->guid != $SESSION['user']->guid) && has_access_to_entity($object, $user)
-							&& $object->access_id != ACCESS_PRIVATE) {
-								$body = elgg_trigger_plugin_hook('notify:entity:message', $object->getType(), array(
-									'entity' => $object,
-									'to_entity' => $user,
-									'method' => $method), $string);
-								if (empty($body) && $body !== false) {
-									$body = $string;
-								}
-								if ($body !== false) {
-									notify_user($user->guid, $object->container_guid, $subject, $body,
-										null, array($method));
-								}
-							}
-						}
-					}
-				}
-			}
-		}
-	}
+	throw new BadFunctionCallException("object_notifications is a private function and should not be called directly");
 }
-
-/** Notification handlers */
-global $NOTIFICATION_HANDLERS;
-$NOTIFICATION_HANDLERS = array();
 
 /**
  * This function registers a handler for a given notification type (eg "email")
@@ -2122,22 +2035,8 @@ $NOTIFICATION_HANDLERS = array();
  */
 function register_notification_handler($method, $handler, $params = NULL) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_register_notification_method()', 1.9);
-	global $NOTIFICATION_HANDLERS;
-
-	if (is_callable($handler, true)) {
-		$NOTIFICATION_HANDLERS[$method] = new stdClass;
-
-		$NOTIFICATION_HANDLERS[$method]->handler = $handler;
-		if ($params) {
-			foreach ($params as $k => $v) {
-				$NOTIFICATION_HANDLERS[$method]->$k = $v;
-			}
-		}
-
-		return true;
-	}
-
-	return false;
+	elgg_register_notification_method($method);
+	_elgg_services()->notifications->registerDeprecatedHandler($method, $handler);
 }
 
 /**
@@ -2151,10 +2050,6 @@ function register_notification_handler($method, $handler, $params = NULL) {
  */
 function unregister_notification_handler($method) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_unregister_notification_method()', 1.9);
-	global $NOTIFICATION_HANDLERS;
-
-	if (isset($NOTIFICATION_HANDLERS[$method])) {
-		unset($NOTIFICATION_HANDLERS[$method]);
-	}
+	elgg_unregister_notification_method($method);
 }
 
