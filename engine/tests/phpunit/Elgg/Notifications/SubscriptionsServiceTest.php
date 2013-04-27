@@ -55,7 +55,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 				->method('getObject')
 				->will($this->returnValue(null));
 		$service = new Elgg_Notifications_SubscriptionsService($this->db);
-		$service->setNotificationMethods(array('one', 'two'));
+		$service->methods = array('one', 'two');
 		$this->assertEquals(array(), $service->getSubscriptions($this->event));
 	}
 
@@ -71,7 +71,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 				->will($this->returnValue(array()));
 		$service = new Elgg_Notifications_SubscriptionsService($this->db);
 
-		$service->setNotificationMethods($methods);
+		$service->methods = $methods;
 		$this->assertEquals(array(), $service->getSubscriptions($this->event));
 	}
 
@@ -90,7 +90,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 				->will($this->returnValue($queryResult));
 		$service = new Elgg_Notifications_SubscriptionsService($this->db);
 
-		$service->setNotificationMethods($methods);
+		$service->methods = $methods;
 		$this->assertEquals($subscriptions, $service->getSubscriptions($this->event));
 	}
 

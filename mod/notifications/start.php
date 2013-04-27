@@ -112,7 +112,7 @@ function notifications_plugin_pagesetup() {
  * @param object $relationship
  */
 function notifications_relationship_remove($event, $object_type, $relationship) {
-	global $NOTIFICATION_HANDLERS;
+	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 	$user_guid = $relationship->guid_one;
 	$object_guid = $relationship->guid_two;
@@ -131,7 +131,7 @@ function notifications_relationship_remove($event, $object_type, $relationship) 
  * @param object $relationship
  */
 function notifications_update_friend_notify($event, $object_type, $relationship) {
-	global $NOTIFICATION_HANDLERS;
+	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 	$user_guid = $relationship->guid_one;
 	$friend_guid = $relationship->guid_two;
@@ -167,7 +167,7 @@ function notifications_update_friend_notify($event, $object_type, $relationship)
  * @param array $params
  */
 function notifications_update_collection_notify($event, $object_type, $returnvalue, $params) {
-	global $NOTIFICATION_HANDLERS;
+	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 	// only update notifications for user owned collections
 	$collection_id = $params['collection_id'];

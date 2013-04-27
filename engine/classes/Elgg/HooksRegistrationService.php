@@ -14,38 +14,6 @@
 abstract class Elgg_HooksRegistrationService {
 	
 	private $handlers = array();
-
-	/**
-	 * Returns an ordered array of handlers registered for $name and $type.
-	 *
-	 * @see Elgg_HooksRegistrationService::getAllHandlers()
-	 * @access private
-	 */
-	function getOrderedHandlers($name, $type) {
-		$handlers = array();
-		
-		if (isset($this->handlers[$name][$type])) {
-			if ($name != 'all' && $type != 'all') {
-				$handlers = array_merge($handlers, array_values($this->handlers[$name][$type]));
-			}
-		}
-		if (isset($this->handlers['all'][$type])) {
-			if ($type != 'all') {
-				$handlers = array_merge($handlers, array_values($this->handlers['all'][$type]));
-			}
-		}
-		if (isset($this->handlers[$name]['all'])) {
-			if ($name != 'all') {
-				$handlers = array_merge($handlers, array_values($this->handlers[$name]['all']));
-			}
-		}
-		if (isset($this->handlers['all']['all'])) {
-			$handlers = array_merge($handlers, array_values($this->handlers['all']['all']));
-		}
-
-		return $handlers;
-	}
-	
 	
 	/**
 	 * Registers a handler.
@@ -55,7 +23,7 @@ abstract class Elgg_HooksRegistrationService {
 	 *
 	 * @access private
 	 */
-	function registerHandler($name, $type, $callback, $priority = 500) {
+	public function registerHandler($name, $type, $callback, $priority = 500) {
 		if (empty($name) || empty($type) || !is_callable($callback, true)) {
 			return false;
 		}
@@ -80,14 +48,13 @@ abstract class Elgg_HooksRegistrationService {
 
 		return true;
 	}
-
 	
 	/**
 	 * Unregister a handler
 	 * 
 	 * @access private
 	 */
-	function unregisterHandler($name, $type, $callback) {
+	public function unregisterHandler($name, $type, $callback) {
 		if (isset($this->handlers[$name]) && isset($this->handlers[$name][$type])) {
 			foreach ($this->handlers[$name][$type] as $key => $name_callback) {
 				if ($name_callback == $callback) {
@@ -114,4 +81,48 @@ abstract class Elgg_HooksRegistrationService {
 	public function getAllHandlers() {
 		return $this->handlers;
 	}
+
+	/**
+	 * Does the hook have a handler?
+	 * 
+	 * @param string $name The name of the hook
+	 * @param string $type The type of the hook
+	 * @return boolean
+	 */
+	public function hasHandler($name, $type) {
+		return isset($this->handlers[$name][$type]);
+	}
+
+	/**
+	 * Returns an ordered array of handlers registered for $name and $type.
+	 *
+	 * @param string $name The name of the hook
+	 * @param string $type The type of the hook
+	 * @return array
+	 * @see Elgg_HooksRegistrationService::getAllHandlers()
+	 */
+	protected function getOrderedHandlers($name, $type) {
+		$handlers = array();
+		
+		if (isset($this->handlers[$name][$type])) {
+			if ($name != 'all' && $type != 'all') {
+				$handlers = array_merge($handlers, array_values($this->handlers[$name][$type]));
+			}
+		}
+		if (isset($this->handlers['all'][$type])) {
+			if ($type != 'all') {
+				$handlers = array_merge($handlers, array_values($this->handlers['all'][$type]));
+			}
+		}
+		if (isset($this->handlers[$name]['all'])) {
+			if ($name != 'all') {
+				$handlers = array_merge($handlers, array_values($this->handlers[$name]['all']));
+			}
+		}
+		if (isset($this->handlers['all']['all'])) {
+			$handlers = array_merge($handlers, array_values($this->handlers['all']['all']));
+		}
+
+		return $handlers;
+	}	
 }
