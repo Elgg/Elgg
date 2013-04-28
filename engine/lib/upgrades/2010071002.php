@@ -5,7 +5,7 @@
 
 // loop through all users checking collections and notifications
 global $ENTITY_CACHE, $CONFIG;
-global $NOTIFICATION_HANDLERS;
+$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 $users = mysql_query("SELECT guid, username FROM {$CONFIG->dbprefix}users_entity
 	WHERE username != ''");
 while ($user = mysql_fetch_object($users)) {

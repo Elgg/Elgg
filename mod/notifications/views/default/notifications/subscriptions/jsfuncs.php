@@ -1,6 +1,6 @@
 <?php
 
-global $NOTIFICATION_HANDLERS;
+$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 ?> 
 <?php //@todo JS 1.8: no ?>

@@ -328,7 +328,7 @@ function thewire_send_response_notification($guid, $parent_guid, $user) {
 	if ($parent_owner->guid != $user->guid) {
 		// check if parent owner has notification for this user
 		$send_response = true;
-		global $NOTIFICATION_HANDLERS;
+		$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 		foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 			if (check_entity_relationship($parent_owner->guid, 'notify' . $method, $user->guid)) {
 				$send_response = false;

@@ -7,20 +7,21 @@
  * IDEs to auto-complete properties and understand the types returned. Extension allows us to keep
  * the container generic.
  * 
- * @property-read Elgg_ActionsService       $actions
- * @property-read Elgg_AmdConfig            $amdConfig
- * @property-read ElggAutoP                 $autoP
- * @property-read Elgg_AutoloadManager      $autoloadManager
- * @property-read Elgg_Database             $db
- * @property-read Elgg_EventService         $events
- * @property-read Elgg_PluginHookService    $hooks
- * @property-read Elgg_Logger               $logger
- * @property-read ElggVolatileMetadataCache $metadataCache
- * @property-read Elgg_Request              $request
- * @property-read Elgg_Router               $router
- * @property-read ElggSession               $session
- * @property-read Elgg_ViewService          $views
- * @property-read Elgg_WidgetsService       $widgets
+ * @property-read Elgg_ActionsService                     $actions
+ * @property-read Elgg_AmdConfig                          $amdConfig
+ * @property-read ElggAutoP                               $autoP
+ * @property-read Elgg_AutoloadManager                    $autoloadManager
+ * @property-read Elgg_Database                           $db
+ * @property-read Elgg_EventService                       $events
+ * @property-read Elgg_PluginHookService                  $hooks
+ * @property-read Elgg_Logger                             $logger
+ * @property-read ElggVolatileMetadataCache               $metadataCache
+ * @property-read Elgg_Notifications_NotificationsService $notifications
+ * @property-read Elgg_Request                            $request
+ * @property-read Elgg_Router                             $router
+ * @property-read ElggSession                             $session
+ * @property-read Elgg_ViewService                        $views
+ * @property-read Elgg_WidgetsService                     $widgets
  * 
  * @package Elgg.Core
  * @access private
@@ -48,6 +49,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setFactory('session', array($this, 'getSession'));
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setClassName('widgets', 'Elgg_WidgetsService');
+		$this->setFactory('notifications', array($this, 'getNotifications'));
 	}
 
 	/**
@@ -115,5 +117,19 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	protected function getRouter(Elgg_ServiceProvider $c) {
 		// TODO(evan): Init routes from plugins or cache
 		return new Elgg_Router($c->hooks);
+	}
+
+	/**
+	 * Notification service factory
+	 * 
+	 * @param Elgg_ServiceProvider $c Dependency injection container
+	 * @return Elgg_Notifications_NotificationsService
+	 */
+	protected function getNotifications(Elgg_ServiceProvider $c) {
+		// @todo move queue in service provider
+		$queue = new Elgg_Util_DatabaseQueue(Elgg_Notifications_NotificationsService::QUEUE_NAME);
+		$sub = new Elgg_Notifications_SubscriptionsService($c->db);
+		$access = elgg_get_access_object();
+		return new Elgg_Notifications_NotificationsService($sub, $queue, $c->hooks, $access);
 	}
 }

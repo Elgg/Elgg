@@ -6,7 +6,7 @@
 /* @var ElggUser $user */
 $user = $vars['user'];
 
-global $NOTIFICATION_HANDLERS;
+$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 ?>
 <div class="notification_personal">
