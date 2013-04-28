@@ -3,7 +3,7 @@
  * Elgg relationships.
  * Stub containing relationship functions, making import and export easier.
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage DataModel.Relationship
  */
 
@@ -71,9 +71,15 @@ function delete_relationship($id) {
  * @param int    $guid_two     Second GUID
  *
  * @return bool
+ * @throws InvalidArgumentException
  */
 function add_entity_relationship($guid_one, $relationship, $guid_two) {
 	global $CONFIG;
+
+	if (strlen($relationship) > ElggRelationship::RELATIONSHIP_LIMIT) {
+		$msg = "relationship name cannot be longer than " . self::RELATIONSHIP_LIMIT;
+		throw InvalidArgumentException($msg);
+	}
 
 	$guid_one = (int)$guid_one;
 	$relationship = sanitise_string($relationship);
