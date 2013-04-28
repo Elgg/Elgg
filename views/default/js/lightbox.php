@@ -48,5 +48,5 @@ elgg.register_hook_handler('init', 'system', elgg.ui.lightbox.init);
 <?php
 
 $js_path = elgg_get_config('path');
-$js_path = "{$js_path}vendors/jquery/colorbox/colorbox/jquery.colorbox-min.js";
+$js_path = "{$js_path}vendors/jquery/colorbox/jquery.colorbox-min.js";
 include $js_path;
