@@ -39,12 +39,12 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
 	}
 
-	public function testGetSubscriptionsNoMethods() {
+	public function testGetSubscriptionsWithNoMethodsRegistered() {
 		$service = new Elgg_Notifications_SubscriptionsService($this->db);
 		$this->assertEquals(array(), $service->getSubscriptions($this->event));
 	}
 
-	public function testGetSubscriptionsBadObject() {
+	public function testGetSubscriptionsWithBadObject() {
 		$this->event = $this->getMock(
 				'Elgg_Notifications_Event',
 				array('getObject'),
@@ -59,7 +59,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 		$this->assertEquals(array(), $service->getSubscriptions($this->event));
 	}
 
-	public function testQueryGenerationBasedOnMethods() {
+	public function testQueryGenerationForRetrievingSubscriptionRelationships() {
 		$methods = array('apples', 'bananas');
 		$query = "SELECT guid_one AS guid, GROUP_CONCAT(relationship SEPARATOR ',') AS methods
 			FROM elgg_entity_relationships
@@ -75,7 +75,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 		$this->assertEquals(array(), $service->getSubscriptions($this->event));
 	}
 
-	public function testGetSubscriptions() {
+	public function testGetSubscriptionsWithProperInput() {
 		$methods = array('apples', 'bananas');
 		$queryResult = array(
 			$this->createObjectFromArray(array('guid' => '22', 'methods' => 'notifyapples')),
