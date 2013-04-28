@@ -40,9 +40,10 @@
  *     owner_block Links shown for a user or group in their owner block.
  *     filter      The tab filter for content (all, mine, friends)
  *     title       The buttons shown next to a content title.
- *     long-text   The links shown above the input/longtext view.
+ *     longtext    The links shown above the input/longtext view.
+ *     login       Menu of links at bottom of login box
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Navigation
  */
 
@@ -208,8 +209,6 @@ function elgg_register_title_button($handler = null, $name = 'add') {
  *
  * @return void
  * @since 1.8.0
- *
- * @link http://docs.elgg.org/Tutorials/UI/Breadcrumbs
  */
 function elgg_push_breadcrumb($title, $link = NULL) {
 	global $CONFIG;
@@ -226,7 +225,6 @@ function elgg_push_breadcrumb($title, $link = NULL) {
  *
  * @return array popped item.
  * @since 1.8.0
- * @link http://docs.elgg.org/Tutorials/UI/Breadcrumbs
  */
 function elgg_pop_breadcrumb() {
 	global $CONFIG;
@@ -243,7 +241,6 @@ function elgg_pop_breadcrumb() {
  *
  * @return array Breadcrumbs
  * @since 1.8.0
- * @link http://docs.elgg.org/Tutorials/UI/Breadcrumbs
  */
 function elgg_get_breadcrumbs() {
 	global $CONFIG;
@@ -260,14 +257,9 @@ function elgg_get_breadcrumbs() {
  *
  * Handles default, featured, and custom menu items
  *
- * @param string $hook
- * @param string $type
- * @param array $return Menu array
- * @param array $params
- * @return array
  * @access private
  */
-function elgg_site_menu_setup($hook, $type, $return, $params) {
+function _elgg_site_menu_setup($hook, $type, $return, $params) {
 
 	$featured_menu_names = elgg_get_config('site_featured_menu_names');
 	$custom_menu_items = elgg_get_config('site_custom_menu_items');
@@ -344,7 +336,7 @@ function elgg_site_menu_setup($hook, $type, $return, $params) {
  * Add the comment and like links to river actions menu
  * @access private
  */
-function elgg_river_menu_setup($hook, $type, $return, $params) {
+function _elgg_river_menu_setup($hook, $type, $return, $params) {
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
 		/* @var ElggRiverItem $item */
@@ -385,7 +377,7 @@ function elgg_river_menu_setup($hook, $type, $return, $params) {
  * Entity menu is list of links and info on any entity
  * @access private
  */
-function elgg_entity_menu_setup($hook, $type, $return, $params) {
+function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
@@ -434,7 +426,7 @@ function elgg_entity_menu_setup($hook, $type, $return, $params) {
  * Widget menu is a set of widget controls
  * @access private
  */
-function elgg_widget_menu_setup($hook, $type, $return, $params) {
+function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 
 	$widget = $params['entity'];
 	/* @var ElggWidget $widget */
@@ -484,7 +476,7 @@ function elgg_widget_menu_setup($hook, $type, $return, $params) {
  * Adds a delete link to "generic_comment" annotations
  * @access private
  */
-function elgg_annotation_menu_setup($hook, $type, $return, $params) {
+function _elgg_annotation_menu_setup($hook, $type, $return, $params) {
 	$annotation = $params['annotation'];
 	/* @var ElggAnnotation $annotation */
 
@@ -510,7 +502,7 @@ function elgg_annotation_menu_setup($hook, $type, $return, $params) {
  * Add the register and forgot password links to login menu
  * @access private
  */
-function elgg_login_menu_setup($hook, $type, $return, $params) {
+function _elgg_login_menu_setup($hook, $type, $return, $params) {
 
 	if (elgg_get_config('allow_registration')) {
 		$return[] = ElggMenuItem::factory(array(
@@ -536,13 +528,13 @@ function elgg_login_menu_setup($hook, $type, $return, $params) {
  * Navigation initialization
  * @access private
  */
-function elgg_nav_init() {
-	elgg_register_plugin_hook_handler('prepare', 'menu:site', 'elgg_site_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:river', 'elgg_river_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_entity_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:widget', 'elgg_widget_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'elgg_annotation_menu_setup');
-	elgg_register_plugin_hook_handler('register', 'menu:login', 'elgg_login_menu_setup');
+function _elgg_nav_init() {
+	elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_entity_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:annotation', '_elgg_annotation_menu_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
 }
 
-elgg_register_event_handler('init', 'system', 'elgg_nav_init');
+elgg_register_event_handler('init', 'system', '_elgg_nav_init');
