@@ -495,7 +495,7 @@ class ElggSite extends ElggEntity {
 			'upgrade\.php',
 			'css/.*',
 			'js/.*',
-			'cache/[0-9]+/js|css/.*',
+			'cache/[0-9]+/\w+/js|css/.*',
 			'cron/.*',
 			'services/.*',
 		);
