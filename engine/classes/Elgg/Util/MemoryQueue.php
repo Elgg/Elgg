@@ -1,5 +1,8 @@
 <?php
+
 /**
+ * FIFO queue that is memory based (not persistent)
+ * 
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
@@ -8,7 +11,7 @@
  * @subpackage Util
  * @since      1.9.0
  */
-class Elgg_Util_MemoryQueue implements Elgg_Util_FifoQueue {
+class Elgg_Util_MemoryQueue implements Elgg_Util_Queue {
 
 	/* @var array */
 	protected $queue = array();

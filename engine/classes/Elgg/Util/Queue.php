@@ -1,7 +1,7 @@
 <?php
 
 /**
- * FIFO Queue interface
+ * Queue interface
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -11,7 +11,7 @@
  * @subpackage Util
  * @since      1.9.0
  */
-interface Elgg_Util_FifoQueue {
+interface Elgg_Util_Queue {
 	/**
 	 * Add an item to the queue
 	 *
