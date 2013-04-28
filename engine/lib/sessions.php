@@ -363,8 +363,22 @@ function login(ElggUser $user, $persistent = false) {
 		elgg_set_cookie($cookie);
 	}
 
+	// User's privilege has been elevated, so change the session id (prevents session fixation)
+	$session->migrate();
+
+	// Note: we set these before the [login, user] event so that the event is allowed to
+	// forward() while getting a complete logged in session.
+	$session->set('guid', $user->getGUID());
+	$session->set('id', $user->getGUID());
+	$session->set('username', $user->username);
+	$session->set('name', $user->name);
+
 	if (!$user->save() || !elgg_trigger_event('login', 'user', $user)) {
 		$session->remove('user');
+		$session->remove('guid');
+		$session->remove('id');
+		$session->remove('username');
+		$session->remove('name');
 		$session->remove('code');
 
 		$cookie = new ElggCookie("elggperm");
@@ -373,14 +387,6 @@ function login(ElggUser $user, $persistent = false) {
 
 		throw new LoginException(elgg_echo('LoginException:Unknown'));
 	}
-
-	// User's privilege has been elevated, so change the session id (prevents session fixation)
-	$session->migrate();
-
-	$session->set('guid', $user->getGUID());
-	$session->set('id', $user->getGUID());
-	$session->set('username', $user->username);
-	$session->set('name', $user->name);
 
 	// Update statistics
 	set_last_login($user->guid);
