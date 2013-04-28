@@ -6,9 +6,9 @@
  * @subpackage Test
  */
 
-
 require_once(dirname( __FILE__ ) . '/../start.php');
 
+// Ensure that only logged-in users can see this page
 admin_gatekeeper();
 
 $vendor_path = "$CONFIG->path/vendors/simpletest";
@@ -46,11 +46,6 @@ if (TextReporter::inCli()) {
 	exit ($suite->Run(new TextReporter()) ? 0 : 1 );
 }
 
-// Ensure that only logged-in users can see this page
-//admin_gatekeeper();
 $old = elgg_set_ignore_access(TRUE);
 $suite->Run(new HtmlReporter('utf-8'));
 elgg_set_ignore_access($old);
-
-// Without an explicit exit call, we sometimes get the 404 page... wuddupwiddat?
-exit;
