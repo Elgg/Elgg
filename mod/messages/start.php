@@ -220,13 +220,13 @@ function messages_can_edit_container($hook_name, $entity_type, $return_value, $p
 /**
  * Send an internal message
  *
- * @param string $subject The subject line of the message
- * @param string $body The body of the mesage
- * @param int $recipient_guid The GUID of the user to send to
- * @param int $sender_guid Optionally, the GUID of the user to send from
- * @param int $original_msg_guid The GUID of the message to reply from (default: none)
- * @param bool $notify Send a notification (default: true)
- * @param bool $add_to_sent If true (default), will add a message to the sender's 'sent' tray
+ * @param string $subject           The subject line of the message
+ * @param string $body              The body of the mesage
+ * @param int    $recipient_guid    The GUID of the user to send to
+ * @param int    $sender_guid       Optionally, the GUID of the user to send from
+ * @param int    $original_msg_guid The GUID of the message to reply from (default: none)
+ * @param bool   $notify            Send a notification (default: true)
+ * @param bool   $add_to_sent       If true (default), will add a message to the sender's 'sent' tray
  * @return bool
  */
 function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $original_msg_guid = 0, $notify = true, $add_to_sent = true) {
@@ -346,12 +346,13 @@ function count_unread_messages() {
 /**
  * Returns the unread messages in a user's inbox
  *
- * @param int $user_guid GUID of user whose inbox we're counting (0 for logged in user)
- * @param int $limit Number of unread messages to return (default = 10)
- * @param int $offset Start at a defined offset (for listings)
- * @param bool $count Switch between entities array or count mode
+ * @param int  $user_guid GUID of user whose inbox we're counting (0 for logged in user)
+ * @param int  $limit     Number of unread messages to return (default = 10)
+ * @param int  $offset    Start at a defined offset (for listings)
+ * @param bool $count     Switch between entities array or count mode
  *
  * @return array, int (if $count = true)
+ * @since 1.9
  */
 function messages_get_unread($user_guid = 0, $limit = 10, $offset = 0, $count = false) {
 	if (!$user_guid) {
@@ -369,30 +370,30 @@ function messages_get_unread($user_guid = 0, $limit = 10, $offset = 0, $count = 
 	}
 
 	$options = array(
-			// 'metadata_name_value_pairs' => array(
-			// 'toId' => elgg_get_logged_in_user_guid(),
-			// 'readYet' => 0,
-			// 'msg' => 1
-			// ),
-			'joins' => array(
+		// original options before denormalizing
+		// 'metadata_name_value_pairs' => array(
+		// 'toId' => elgg_get_logged_in_user_guid(),
+		// 'readYet' => 0,
+		// 'msg' => 1
+		// ),
+		'joins' => array(
 			"JOIN {$db_prefix}metadata msg_toId on e.guid = msg_toId.entity_guid",
 			"JOIN {$db_prefix}metadata msg_readYet on e.guid = msg_readYet.entity_guid",
 			"JOIN {$db_prefix}metadata msg_msg on e.guid = msg_msg.entity_guid",
-			),
-			'wheres' => array(
+		),
+		'wheres' => array(
 			"msg_toId.name_id='{$map['toId']}' AND msg_toId.value_id='{$map[$user_guid]}'",
 			"msg_readYet.name_id='{$map['readYet']}' AND msg_readYet.value_id='{$map[0]}'",
 			"msg_msg.name_id='{$map['msg']}' AND msg_msg.value_id='{$map[1]}'",
-			),
-			'owner_guid' => $user_guid,
-			'limit' => $limit,
-			'offset' => $offset,
-			'count' => $count,
-		);
-	
+		),
+		'owner_guid' => $user_guid,
+		'limit' => $limit,
+		'offset' => $offset,
+		'count' => $count,
+	);
+
 	return elgg_get_entities_from_metadata($options);
 }
-
 
 /**
  * Count the unread messages in a user's inbox
