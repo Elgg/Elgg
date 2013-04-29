@@ -296,7 +296,7 @@ class ElggUser extends ElggEntity
 	 * @return array
 	 */
 	function getSites($subtype = "", $limit = 10, $offset = 0) {
-		return get_user_sites($this->getGUID(), $subtype, $limit, $offset);
+		return get_user_sites($this->getGUID(), $limit, $offset);
 	}
 
 	/**
