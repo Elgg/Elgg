@@ -288,4 +288,13 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			$this->assertEqual($output, parse_urls($input));
 		}
 	}
+
+	/**
+	 * Test #2057 -- parse_urls()
+	 * https://github.com/Elgg/Elgg/issues/2057
+	 */
+	public function test_archive_url() {
+		$input = '<a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>';
+		$this->assertEqual($input, parse_urls($input));
+	}
 }
