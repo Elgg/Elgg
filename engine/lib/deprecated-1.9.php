@@ -1320,6 +1320,74 @@ function ODD_factory (XmlElement $element) {
 }
 
 /**
+ * Utility function used by import_entity_plugin_hook() to
+ * process an ODDEntity into an unsaved ElggEntity.
+ *
+ * @param ODDEntity $element The OpenDD element
+ *
+ * @return ElggEntity the unsaved entity which should be populated by items.
+ * @todo Remove this.
+ * @access private
+ *
+ * @throws ClassException|InstallationException|ImportException
+ * @deprecated 1.9
+ */
+function oddentity_to_elggentity(ODDEntity $element) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	$class = $element->getAttribute('class');
+	$subclass = $element->getAttribute('subclass');
+
+	// See if we already have imported this uuid
+	$tmp = get_entity_from_uuid($element->getAttribute('uuid'));
+
+	if (!$tmp) {
+		// Construct new class with owner from session
+		$classname = get_subtype_class($class, $subclass);
+		if ($classname) {
+			if (class_exists($classname)) {
+				$tmp = new $classname();
+
+				if (!($tmp instanceof ElggEntity)) {
+					$msg = $classname . " is not a " . get_class() . ".";
+					throw new ClassException($msg);
+				}
+			} else {
+				error_log("Class '" . $classname . "' was not found, missing plugin?");
+			}
+		} else {
+			switch ($class) {
+				case 'object' :
+					$tmp = new ElggObject();
+					break;
+				case 'user' :
+					$tmp = new ElggUser();
+					break;
+				case 'group' :
+					$tmp = new ElggGroup();
+					break;
+				case 'site' :
+					$tmp = new ElggSite();
+					break;
+				default:
+					$msg = "Type " . $class . " is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.";
+					throw new InstallationException($msg);
+			}
+		}
+	}
+
+	if ($tmp) {
+		if (!$tmp->import($element)) {
+			$msg = "Could not import element " . $element->getAttribute('uuid');
+			throw new ImportException($msg);
+		}
+
+		return $tmp;
+	}
+
+	return NULL;
+}
+
+/**
  * Import an ODD document.
  *
  * @param string $xml The XML ODD.
