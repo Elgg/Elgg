@@ -458,8 +458,7 @@ function elgg_get_metastring_based_objects($options) {
 
 	// reverse order by
 	if (isset($options['reverse_order_by']) && $options['reverse_order_by']) {
-		$options['order_by'] = elgg_sql_reverse_order_by_clause($options['order_by'],
-			$defaults['order_by']);
+		$options['order_by'] = elgg_sql_reverse_order_by_clause($options['order_by']);
 	}
 
 	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE) {

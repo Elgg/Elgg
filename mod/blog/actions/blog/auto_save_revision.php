@@ -57,7 +57,7 @@ if ($title && $description) {
 		if ($auto_save_annotations = $blog->getAnnotations('blog_auto_save', 1)) {
 			$auto_save = $auto_save_annotations[0];
 		} else {
-			$auto_save == FALSE;
+			$auto_save = FALSE;
 		}
 
 		if (!$auto_save) {

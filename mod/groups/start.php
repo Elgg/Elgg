@@ -537,7 +537,7 @@ function groups_read_acl_plugin_hook($hook, $entity_type, $returnvalue, $params)
 		// So just see if they're a member of the ACL.
 		//$membership = get_users_membership($user->guid);
 
-		$members = get_members_of_access_collection($group->group_acl);
+		$members = get_members_of_access_collection($group->group_acl); // There is no $group here
 		print_r($members);
 		exit;
 
