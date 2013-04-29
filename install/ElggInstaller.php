@@ -78,6 +78,7 @@ class ElggInstaller {
 	 * @param string $step The installation step to run
 	 *
 	 * @return void
+	 * @throws InstallationException
 	 */
 	public function run($step) {
 
@@ -589,7 +590,6 @@ class ElggInstaller {
 	 * @return string
 	 */
 	protected function getNextStepUrl($currentStep) {
-		global $CONFIG;
 		$nextStep = $this->getNextStep($currentStep);
 		return elgg_get_site_url() . "install.php?step=$nextStep";
 	}
@@ -598,6 +598,7 @@ class ElggInstaller {
 	 * Check the different install steps for completion
 	 *
 	 * @return void
+	 * @throws InstallationException
 	 */
 	protected function setInstallStatus() {
 		global $CONFIG;
@@ -688,8 +689,6 @@ class ElggInstaller {
 	 * @return string
 	 */
 	protected function resumeInstall($step) {
-		global $CONFIG;
-
 		// only do a resume from the first step
 		if ($step !== 'welcome') {
 			return;
@@ -760,6 +759,7 @@ class ElggInstaller {
 	 *                     boot strapping is different until the DB is populated.
 	 *
 	 * @return void
+	 * @throws InstallationException
 	 */
 	protected function finishBootstraping($step) {
 
@@ -788,21 +788,42 @@ class ElggInstaller {
 
 			$lib_files = array(
 				// these want to be loaded first apparently?
-				'autoloader.php', 'database.php', 'actions.php',
+				'autoloader.php',
+				'database.php',
+				'actions.php',
 
-				'admin.php', 'annotations.php',
-				'cron.php', 'entities.php',
-				'extender.php', 'filestore.php', 'group.php',
-				'location.php', 'mb_wrapper.php',
-				'memcache.php', 'metadata.php', 'metastrings.php',
-				'navigation.php', 'notification.php',
-				'objects.php', 'pagehandler.php',
-				'pam.php', 'plugins.php',
-				'private_settings.php', 'relationships.php', 'river.php',
-				'sites.php', 'statistics.php', 'tags.php', 'user_settings.php',
-				'users.php', 'upgrade.php',
-				'widgets.php', 'xml.php', 'deprecated-1.7.php',
-				'deprecated-1.8.php', 'deprecated-1.9.php'
+				'admin.php',
+				'annotations.php',
+				'cron.php',
+				'entities.php',
+				'extender.php',
+				'filestore.php',
+				'group.php',
+				'location.php',
+				'mb_wrapper.php',
+				'memcache.php',
+				'metadata.php',
+				'metastrings.php',
+				'navigation.php',
+				'notification.php',
+				'objects.php',
+				'pagehandler.php',
+				'pam.php',
+				'plugins.php',
+				'private_settings.php',
+				'relationships.php',
+				'river.php',
+				'sites.php',
+				'statistics.php',
+				'tags.php',
+				'user_settings.php',
+				'users.php',
+				'upgrade.php',
+				'widgets.php',
+				'xml.php',
+				'deprecated-1.7.php',
+				'deprecated-1.8.php',
+				'deprecated-1.9.php',
 			);
 
 			foreach ($lib_files as $file) {
@@ -1539,8 +1560,6 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function createAdminAccount($submissionVars, $login = FALSE) {
-		global $CONFIG;
-
 		try {
 			$guid = register_user(
 					$submissionVars['username'],
@@ -1559,7 +1578,7 @@ class ElggInstaller {
 		}
 
 		$user = get_entity($guid);
-		if (!$user) {
+		if (!$user instanceof ElggUser) {
 			register_error(elgg_echo('install:error:loadadmin'));
 			return false;
 		}
