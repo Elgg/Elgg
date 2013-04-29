@@ -5,7 +5,6 @@
  * @since 1.8
  */
 
-// note that this assumes the button view is not using single quotes
 $cancel_button = elgg_view('input/button', array(
 	'value' => elgg_echo('cancel'),
 	'class' => 'elgg-button-cancel mlm',
@@ -45,7 +44,7 @@ elgg.walled_garden.load = function(view) {
 		elgg.get('walled_garden/' + view, {
 			'success' : function(data) {
 				$('.elgg-body-walledgarden').append(data);
-				$(id).find('input.elgg-button-submit').after('<?php echo $cancel_button; ?>');
+				$(id).find('input.elgg-button-submit').after(<?php echo json_encode($cancel_button); ?>);
 				$('#elgg-walledgarden-login').fadeToggle();
 				$(id).fadeToggle();
 			}
