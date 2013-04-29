@@ -740,6 +740,7 @@ class ElggInstaller {
 			'input.php',
 			'cache.php',
 			'output.php',
+			'upgrade.php', // needed for deprecated notice
 		);
 
 		foreach ($required_files as $file) {
