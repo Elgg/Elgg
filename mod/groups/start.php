@@ -74,7 +74,6 @@ function groups_init() {
 
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
-	//elgg_register_plugin_hook_handler('access:collections:read', 'all', 'groups_read_acl_plugin_hook');
 
 	// Register profile menu hook
 	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'forum_profile_menu');
@@ -523,30 +522,6 @@ function groups_create_event_listener($event, $object_type, $object) {
 	}
 
 	return true;
-}
-
-/**
- * Hook to listen to read access control requests and return all the groups you are a member of.
- */
-function groups_read_acl_plugin_hook($hook, $entity_type, $returnvalue, $params) {
-	//error_log("READ: " . var_export($returnvalue));
-	$user = elgg_get_logged_in_user_entity();
-	if ($user) {
-		// Not using this because of recursion.
-		// Joining a group automatically add user to ACL,
-		// So just see if they're a member of the ACL.
-		//$membership = get_users_membership($user->guid);
-
-		$members = get_members_of_access_collection($group->group_acl);
-		print_r($members);
-		exit;
-
-		if ($membership) {
-			foreach ($membership as $group)
-				$returnvalue[$user->guid][$group->group_acl] = elgg_echo('groups:group') . ": " . $group->name;
-			return $returnvalue;
-		}
-	}
 }
 
 /**
