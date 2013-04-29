@@ -282,19 +282,12 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 				'ssl <a href="https://example.org/" rel="nofollow">https:/<wbr />/<wbr />example.org/<wbr /></a> test',
 			'ftp ftp://example.org/ test' =>
 				'ftp <a href="ftp://example.org/" rel="nofollow">ftp:/<wbr />/<wbr />example.org/<wbr /></a> test',
+			'<a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>' =>
+				'<a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>'
 
 		);
 		foreach ($cases as $input => $output) {
 			$this->assertEqual($output, parse_urls($input));
 		}
-	}
-
-	/**
-	 * Test #2057 -- parse_urls()
-	 * https://github.com/Elgg/Elgg/issues/2057
-	 */
-	public function test_archive_url() {
-		$input = '<a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>';
-		$this->assertEqual($input, parse_urls($input));
 	}
 }
