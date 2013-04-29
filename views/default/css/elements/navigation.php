@@ -406,7 +406,7 @@
 	float: left;
 }
 
-a:focus > img[src*="/powered_by_elgg_badge"] {
+:focus > img[src*="/powered_by_elgg_badge"] {
 	opacity: .7;
 }
 

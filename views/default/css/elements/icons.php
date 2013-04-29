@@ -29,7 +29,7 @@
 	background-position: 0 -36px;
 }
 .elgg-icon-attention:hover,
-a:focus > .elgg-icon-attention {
+:focus > .elgg-icon-attention {
 	background-position: 0 -54px;
 }
 .elgg-icon-attention {
@@ -42,14 +42,14 @@ a:focus > .elgg-icon-attention {
 	background-position: 0 -108px;
 }
 .elgg-icon-checkmark:hover,
-a:focus > .elgg-icon-checkmark {
+:focus > .elgg-icon-checkmark {
 	background-position: 0 -126px;
 }
 .elgg-icon-checkmark {
 	background-position: 0 -144px;
 }
 .elgg-icon-clip:hover,
-a:focus > .elgg-icon-clip {
+:focus > .elgg-icon-clip {
 	background-position: 0 -162px;
 }
 .elgg-icon-clip {
@@ -59,21 +59,21 @@ a:focus > .elgg-icon-clip {
 	background-position: 0 -198px;
 }
 .elgg-icon-delete-alt:hover,
-a:focus > .elgg-icon-delete-alt {
+:focus > .elgg-icon-delete-alt {
 	background-position: 0 -216px;
 }
 .elgg-icon-delete-alt {
 	background-position: 0 -234px;
 }
 .elgg-icon-delete:hover,
-a:focus > .elgg-icon-delete {
+:focus > .elgg-icon-delete {
 	background-position: 0 -252px;
 }
 .elgg-icon-delete {
 	background-position: 0 -270px;
 }
 .elgg-icon-download:hover,
-a:focus > .elgg-icon-download {
+:focus > .elgg-icon-download {
 	background-position: 0 -288px;
 }
 .elgg-icon-download {
@@ -86,35 +86,35 @@ a:focus > .elgg-icon-download {
 	background-position: 0 -342px;
 }
 .elgg-icon-grid:hover,
-a:focus > .elgg-icon-grid {
+:focus > .elgg-icon-grid {
 	background-position: 0 -360px;
 }
 .elgg-icon-grid {
 	background-position: 0 -378px;
 }
 .elgg-icon-home:hover,
-a:focus > .elgg-icon-home {
+:focus > .elgg-icon-home {
 	background-position: 0 -396px;
 }
 .elgg-icon-home {
 	background-position: 0 -414px;
 }
 .elgg-icon-hover-menu:hover,
-a:focus > .elgg-icon-hover-menu {
+:focus > .elgg-icon-hover-menu {
 	background-position: 0 -432px;
 }
 .elgg-icon-hover-menu {
 	background-position: 0 -450px;
 }
 .elgg-icon-info:hover,
-a:focus > .elgg-icon-info {
+:focus > .elgg-icon-info {
 	background-position: 0 -468px;
 }
 .elgg-icon-info {
 	background-position: 0 -486px;
 }
 .elgg-icon-link:hover,
-a:focus > .elgg-icon-link {
+:focus > .elgg-icon-link {
 	background-position: 0 -504px;
 }
 .elgg-icon-link {
@@ -130,14 +130,14 @@ a:focus > .elgg-icon-link {
 	background-position: 0 -576px;
 }
 .elgg-icon-mail-alt:hover,
-a:focus > .elgg-icon-mail-alt {
+:focus > .elgg-icon-mail-alt {
 	background-position: 0 -594px;
 }
 .elgg-icon-mail-alt {
 	background-position: 0 -612px;
 }
 .elgg-icon-mail:hover,
-a:focus > .elgg-icon-mail {
+:focus > .elgg-icon-mail {
 	background-position: 0 -630px;
 }
 .elgg-icon-mail {
@@ -162,7 +162,7 @@ a:focus > .elgg-icon-mail {
 	background-position: 0 -756px;
 }
 .elgg-icon-refresh:hover,
-a:focus > .elgg-icon-refresh {
+:focus > .elgg-icon-refresh {
 	background-position: 0 -774px;
 }
 .elgg-icon-refresh {
@@ -193,7 +193,7 @@ a:focus > .elgg-icon-refresh {
 	background-position: 0 -936px;
 }
 .elgg-icon-settings-alt:hover,
-a:focus > .elgg-icon-settings-alt {
+:focus > .elgg-icon-settings-alt {
 	background-position: 0 -954px;
 }
 .elgg-icon-settings-alt {
@@ -203,28 +203,28 @@ a:focus > .elgg-icon-settings-alt {
 	background-position: 0 -990px;
 }
 .elgg-icon-share:hover,
-a:focus > .elgg-icon-share {
+:focus > .elgg-icon-share {
 	background-position: 0 -1008px;
 }
 .elgg-icon-share {
 	background-position: 0 -1026px;
 }
 .elgg-icon-shop-cart:hover,
-a:focus > .elgg-icon-shop-cart {
+:focus > .elgg-icon-shop-cart {
 	background-position: 0 -1044px;
 }
 .elgg-icon-shop-cart {
 	background-position: 0 -1062px;
 }
 .elgg-icon-speech-bubble-alt:hover,
-a:focus > .elgg-icon-speech-bubble-alt {
+:focus > .elgg-icon-speech-bubble-alt {
 	background-position: 0 -1080px;
 }
 .elgg-icon-speech-bubble-alt {
 	background-position: 0 -1098px;
 }
 .elgg-icon-speech-bubble:hover,
-a:focus > .elgg-icon-speech-bubble {
+:focus > .elgg-icon-speech-bubble {
 	background-position: 0 -1116px;
 }
 .elgg-icon-speech-bubble {
@@ -234,32 +234,32 @@ a:focus > .elgg-icon-speech-bubble {
 	background-position: 0 -1152px;
 }
 .elgg-icon-star-empty:hover,
-a:focus > .elgg-icon-star-empty {
+:focus > .elgg-icon-star-empty {
 	background-position: 0 -1170px;
 }
 .elgg-icon-star-empty {
 	background-position: 0 -1188px;
 }
 .elgg-icon-star:hover,
-a:focus > .elgg-icon-star {
+:focus > .elgg-icon-star {
 	background-position: 0 -1206px;
 }
 .elgg-icon-star {
 	background-position: 0 -1224px;
 }
 .elgg-icon-tag:hover,
-a:focus > .elgg-icon-tag {
+:focus > .elgg-icon-tag {
 	background-position: 0 -1242px;
 }
 .elgg-icon-tag {
 	background-position: 0 -1260px;
 }
 .elgg-icon-thumbs-down-alt:hover,
-a:focus > .elgg-icon-thumbs-down-alt {
+:focus > .elgg-icon-thumbs-down-alt {
 	background-position: 0 -1278px;
 }
 .elgg-icon-thumbs-down:hover,
-a:focus > .elgg-icon-thumbs-down,
+:focus > .elgg-icon-thumbs-down,
 .elgg-icon-thumbs-down-alt {
 	background-position: 0 -1296px;
 }
@@ -267,11 +267,11 @@ a:focus > .elgg-icon-thumbs-down,
 	background-position: 0 -1314px;
 }
 .elgg-icon-thumbs-up-alt:hover,
-a:focus > .elgg-icon-thumbs-up-alt {
+:focus > .elgg-icon-thumbs-up-alt {
 	background-position: 0 -1332px;
 }
 .elgg-icon-thumbs-up:hover,
-a:focus > .elgg-icon-thumbs-up,
+:focus > .elgg-icon-thumbs-up,
 .elgg-icon-thumbs-up-alt {
 	background-position: 0 -1350px;
 }
@@ -288,14 +288,14 @@ a:focus > .elgg-icon-thumbs-up,
 	background-position: 0 -1422px;
 }
 .elgg-icon-user:hover,
-a:focus > .elgg-icon-user {
+:focus > .elgg-icon-user {
 	background-position: 0 -1440px;
 }
 .elgg-icon-user {
 	background-position: 0 -1458px;
 }
 .elgg-icon-users:hover,
-a:focus > .elgg-icon-users {
+:focus > .elgg-icon-users {
 	background-position: 0 -1476px;
 }
 .elgg-icon-users {

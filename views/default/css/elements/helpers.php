@@ -50,7 +50,7 @@
 
 .elgg-transition:hover,
 .elgg-transition:focus,
-a:focus > .elgg-transition {
+:focus > .elgg-transition {
 	opacity: .7;
 }
 

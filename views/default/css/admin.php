@@ -306,7 +306,7 @@ p {
 .elgg-page-footer a:hover {
 	text-decoration: underline;
 }
-a:focus > img[src*="/powered_by_elgg_badge"] {
+:focus > img[src*="/powered_by_elgg_badge"] {
 	opacity: .7;
 }
 
@@ -1523,7 +1523,7 @@ table.mceLayout {
 }
 .elgg-transition:hover,
 .elgg-transition:focus,
-a:focus > .elgg-transition {
+:focus > .elgg-transition {
 	opacity: .7;
 }
 
