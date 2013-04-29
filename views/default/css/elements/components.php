@@ -8,6 +8,7 @@
  * @subpackage UI
  */
 ?>
+/* <style> /**/
 
 /* ***************************************
 	Image Block
@@ -22,6 +23,10 @@
 .elgg-image-block .elgg-image-alt {
 	float: right;
 	margin-left: 5px;
+}
+.elgg-avatar > a:focus > img,
+.elgg-image > a:focus > img {
+	opacity: .7;
 }
 
 /* ***************************************

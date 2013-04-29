@@ -8,6 +8,7 @@
  * @subpackage UI
  */
 ?>
+/* <style> /**/
 
 .clearfloat { 
 	clear: both;
@@ -47,7 +48,9 @@
 	display: block;
 }
 
-.elgg-transition:hover {
+.elgg-transition:hover,
+.elgg-transition:focus,
+a:focus > .elgg-transition {
 	opacity: .7;
 }
 
