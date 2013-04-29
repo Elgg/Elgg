@@ -110,8 +110,8 @@ class ElggInstaller {
 	 *
 	 * @return void
 	 */
-	public function setAutoLogin(bool $flag) {
-		$this->autoLogin = $value;
+	public function setAutoLogin($flag) {
+		$this->autoLogin = (bool) $flag;
 	}
 
 	/**
@@ -623,7 +623,7 @@ class ElggInstaller {
 		}
 
 		if (!include_once("{$CONFIG->path}engine/lib/database.php")) {
-			throw new InstallationException('InstallationException:MissingLibrary', array('database.php'));
+			throw new InstallationException(elgg_echo('InstallationException:MissingLibrary', array('database.php')));
 		}
 
 		// check that the config table has been created
@@ -1218,7 +1218,7 @@ class ElggInstaller {
 		$mysql_dblink = mysql_connect($host, $user, $password, true);
 		if ($mysql_dblink == FALSE) {
 			register_error(elgg_echo('install:error:databasesettings'));
-			return $FALSE;
+			return FALSE;
 		}
 
 		$result = mysql_select_db($dbname, $mysql_dblink);
