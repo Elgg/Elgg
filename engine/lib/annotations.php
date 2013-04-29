@@ -570,7 +570,8 @@ function elgg_comment_url_handler(ElggAnnotation $comment) {
  *
  * @return string
  */
-function elgg_register_annotation_url_handler($extender_name = "all", $function_name) {
+function elgg_register_annotation_url_handler($extender_name, $function_name) {
+	if (empty($extender_name)) $extender_name = 'all'
 	return elgg_register_extender_url_handler('annotation', $extender_name, $function_name);
 }
 
