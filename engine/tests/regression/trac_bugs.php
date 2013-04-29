@@ -282,8 +282,12 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 				'ssl <a href="https://example.org/" rel="nofollow">https:/<wbr />/<wbr />example.org/<wbr /></a> test',
 			'ftp ftp://example.org/ test' =>
 				'ftp <a href="ftp://example.org/" rel="nofollow">ftp:/<wbr />/<wbr />example.org/<wbr /></a> test',
-			'<a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>' =>
-				'<a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>'
+
+			'web archive anchor <a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>' =>
+				'web archive anchor <a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>',
+
+			'single quotes already anchor <a href=\'http://www.yahoo.com\'>yahoo</a>' => 
+				'single quotes already anchor <a href=\'http://www.yahoo.com\'>yahoo</a>'
 
 		);
 		foreach ($cases as $input => $output) {
