@@ -1538,16 +1538,16 @@ function oddentity_to_elggentity(ODDEntity $element) {
 		} else {
 			switch ($class) {
 				case 'object' :
-					$tmp = new ElggObject($row);
+					$tmp = new ElggObject();
 					break;
 				case 'user' :
-					$tmp = new ElggUser($row);
+					$tmp = new ElggUser();
 					break;
 				case 'group' :
-					$tmp = new ElggGroup($row);
+					$tmp = new ElggGroup();
 					break;
 				case 'site' :
-					$tmp = new ElggSite($row);
+					$tmp = new ElggSite();
 					break;
 				default:
 					$msg = "Type " . $class . " is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.";
