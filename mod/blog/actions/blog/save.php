@@ -163,8 +163,6 @@ if (!$error) {
 				'object_guid' => $blog->getGUID(),
 			));
 
-			// we only want notifications sent when post published
-			register_notification_object('object', 'blog', elgg_echo('blog:newpost'));
 			elgg_trigger_event('publish', 'object', $blog);
 
 			// reset the creation time for posts that move from draft to published
