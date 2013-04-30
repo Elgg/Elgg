@@ -27,6 +27,7 @@ $options = array(
 	'guid' => $object->getGUID(),
 	'annotation_name' => 'generic_comment',
 	'limit' => 3,
+	'distinct' => false,
 	'order_by' => 'n_table.time_created desc'
 );
 $comments = elgg_get_annotations($options);

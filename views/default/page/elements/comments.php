@@ -27,6 +27,7 @@ echo "<div $id class=\"$class\">";
 
 $options = array(
 	'guid' => $vars['entity']->getGUID(),
+	'distinct' => false,
 	'annotation_name' => 'generic_comment'
 );
 $html = elgg_list_annotations($options);

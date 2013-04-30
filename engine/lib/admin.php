@@ -120,7 +120,8 @@ function elgg_delete_admin_notice($id) {
 	$result = TRUE;
 	$notices = elgg_get_entities_from_metadata(array(
 		'metadata_name' => 'admin_notice_id',
-		'metadata_value' => $id
+		'metadata_value' => $id,
+		'distinct' => false
 	));
 
 	if ($notices) {
@@ -145,7 +146,8 @@ function elgg_get_admin_notices($limit = 10) {
 	return elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtype' => 'admin_notice',
-		'limit' => $limit
+		'limit' => $limit,
+		'distinct' => false
 	));
 }
 
@@ -161,7 +163,8 @@ function elgg_admin_notice_exists($id) {
 	$notice = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtype' => 'admin_notice',
-		'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id)
+		'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id),
+		'distinct' => false
 	));
 
 	return ($notice) ? TRUE : FALSE;
