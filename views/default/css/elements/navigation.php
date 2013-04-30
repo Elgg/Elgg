@@ -511,7 +511,7 @@
 	margin-bottom: 15px;
 }
 .elgg-menu-extras a:focus span {
-	outline: thin dotted;
+	outline: thin dotted #000;
 }
 
 /* ***************************************
