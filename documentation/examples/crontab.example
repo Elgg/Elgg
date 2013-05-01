@@ -15,7 +15,7 @@ ELGG='http://www.example.com/'
 LWPR='/usr/bin/lwp-request'
 
 # Make GET request and discard content
-GET='$LWPR -m GET -d'
+GET="$LWPR -m GET -d"
 
 # The crontab
 # Don't edit below this line unless you know what you are doing
