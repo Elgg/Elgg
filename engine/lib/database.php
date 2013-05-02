@@ -325,18 +325,6 @@ function run_sql_script($scriptlocation) {
 }
 
 /**
- * Format a query string for logging
- * 
- * @param string $query Query string
- * @return string
- * @access private
- */
-function elgg_format_query($query) {
-	// remove newlines and extra spaces so logs are easier to read
-	return preg_replace('/\s\s+/', ' ', $query);
-}
-
-/**
  * Sanitise a string for database use, but with the option of escaping extra characters.
  *
  * @param string $string           The string to sanitise
