@@ -148,7 +148,7 @@ class Elgg_Database {
 	 *               returned nothing, an empty array.
 	 */
 	public function getData($query, $callback = '') {
-		return $this->runSelect($query, $callback, false);
+		return $this->getResults($query, $callback, false);
 	}
 
 	/**
@@ -164,7 +164,7 @@ class Elgg_Database {
 	 * @return mixed A single database result object or the result of the callback function.
 	 */
 	public function getDataRow($query, $callback = '') {
-		return $this->runSelect($query, $callback, true);
+		return $this->getResults($query, $callback, true);
 	}
 
 	/**
@@ -181,7 +181,7 @@ class Elgg_Database {
 
 		elgg_log("DB query $query", 'NOTICE');
 
-		$dblink = get_db_link('write');
+		$dblink = $this->getLink('write');
 
 		$this->invalidateQueryCache();
 
@@ -197,6 +197,9 @@ class Elgg_Database {
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
+	 * @internal Not returning the number of rows updated as this depends on the
+	 * type of update query and whether values were actually changed.
+	 *
 	 * @param string $query The query to run.
 	 *
 	 * @return bool
@@ -205,11 +208,11 @@ class Elgg_Database {
 
 		elgg_log("DB query $query", 'NOTICE');
 
-		$dblink = get_db_link('write');
+		$dblink = $this->getLink('write');
 
 		$this->invalidateQueryCache();
 
-		return !!$this->executeQuery("$query", $dblink);
+		return $this->executeQuery("$query", $dblink);
 	}
 
 	/**
@@ -225,7 +228,7 @@ class Elgg_Database {
 
 		elgg_log("DB query $query", 'NOTICE');
 
-		$dblink = get_db_link('write');
+		$dblink = $this->getLink('write');
 
 		$this->invalidateQueryCache();
 
@@ -238,7 +241,7 @@ class Elgg_Database {
 
 
 	/**
-	 * Handles returning data from a select query, running it through a
+	 * Handles queries that return results, running the results through a
 	 * an optional callback function. This is for R queries (from CRUD).
 	 *
 	 * @param string $query    The select query to execute
@@ -248,7 +251,7 @@ class Elgg_Database {
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
 	 */
-	private function runSelect($query, $callback = null, $single = false) {
+	private function getResults($query, $callback = null, $single = false) {
 		global $DB_QUERY_CACHE;
 
 		// Since we want to cache results of running the callback, we need to
@@ -265,7 +268,7 @@ class Elgg_Database {
 			}
 		}
 
-		$dblink = get_db_link('read');
+		$dblink = $this->getLink('read');
 		$return = array();
 
 		if ($result = $this->executeQuery("$query", $dblink)) {
@@ -307,13 +310,10 @@ class Elgg_Database {
 	 * $query is executed via {@link mysql_query()}.  If there is an SQL error,
 	 * a {@link DatabaseException} is thrown.
 	 *
-	 * @internal
-	 * {@link $dbcalls} is incremented and the query is saved into the {@link $DB_QUERY_CACHE}.
+	 * @param string   $query  The query
+	 * @param resource $dblink The DB link
 	 *
-	 * @param string $query  The query
-	 * @param link   $dblink The DB link
-	 *
-	 * @return The result of mysql_query()
+	 * @return resource|bool The result of mysql_query()
 	 * @throws DatabaseException
 	 */
 	public function executeQuery($query, $dblink) {
