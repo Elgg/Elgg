@@ -72,13 +72,6 @@ $dbcalls = 0;
 
 
 /**
- * @return Elgg_Database The singleton DB object.
- */
-function elgg_get_database() {
-	return _elgg_services()->db;
-}
-
-/**
  * Establish a connection to the database servser
  *
  * Connect to the database server and use the Elgg database for a particular database link

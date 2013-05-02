@@ -70,7 +70,7 @@ abstract class ElggData implements
 	 * @return Elgg_Database The database where this data is (will be) stored.
 	 */
 	protected function getDatabase() {
-		return elgg_get_database();	
+		return _elgg_services()->db;
 	}
 
 	/**
