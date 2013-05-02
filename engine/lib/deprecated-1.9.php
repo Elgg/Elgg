@@ -14,6 +14,26 @@ function get_version($humanreadable = false) {
 }
 
 /**
+ * Sanitise a string for database use, but with the option of escaping extra characters.
+ *
+ * @param string $string           The string to sanitise
+ * @param string $extra_escapeable Extra characters to escape with '\\'
+ *
+ * @return string The escaped string
+ * @deprecated 1.9
+ */
+function sanitise_string_special($string, $extra_escapeable = '') {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated.', 1.9);
+	$string = sanitise_string($string);
+
+	for ($n = 0; $n < strlen($extra_escapeable); $n++) {
+		$string = str_replace($extra_escapeable[$n], "\\" . $extra_escapeable[$n], $string);
+	}
+
+	return $string;
+}
+
+/**
  * Return a timestamp for the start of a given day (defaults today).
  *
  * @param int $day   Day

@@ -325,24 +325,6 @@ function run_sql_script($scriptlocation) {
 }
 
 /**
- * Sanitise a string for database use, but with the option of escaping extra characters.
- *
- * @param string $string           The string to sanitise
- * @param string $extra_escapeable Extra characters to escape with '\\'
- *
- * @return string The escaped string
- */
-function sanitise_string_special($string, $extra_escapeable = '') {
-	$string = sanitise_string($string);
-
-	for ($n = 0; $n < strlen($extra_escapeable); $n++) {
-		$string = str_replace($extra_escapeable[$n], "\\" . $extra_escapeable[$n], $string);
-	}
-
-	return $string;
-}
-
-/**
  * Sanitise a string for database use.
  *
  * @param string $string The string to sanitise
