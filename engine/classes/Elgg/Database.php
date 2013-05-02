@@ -148,7 +148,7 @@ class Elgg_Database {
 	 *               returned nothing, an empty array.
 	 */
 	public function getData($query, $callback = '') {
-		return $this->queryRunner($query, $callback, false);
+		return $this->runSelect($query, $callback, false);
 	}
 
 	/**
@@ -164,7 +164,7 @@ class Elgg_Database {
 	 * @return mixed A single database result object or the result of the callback function.
 	 */
 	public function getDataRow($query, $callback = '') {
-		return $this->queryRunner($query, $callback, true);
+		return $this->runSelect($query, $callback, true);
 	}
 
 	/**
@@ -238,17 +238,17 @@ class Elgg_Database {
 
 
 	/**
-	 * Handles returning data from a query, running it through a callback function,
-	 * and caching the results. This is for R queries (from CRUD).
+	 * Handles returning data from a select query, running it through a
+	 * an optional callback function. This is for R queries (from CRUD).
 	 *
-	 * @param string $query    The query to execute
+	 * @param string $query    The select query to execute
 	 * @param string $callback An optional callback function to run on each row
 	 * @param bool   $single   Return only a single result?
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
 	 */
-	private function queryRunner($query, $callback = null, $single = false) {
+	private function runSelect($query, $callback = null, $single = false) {
 		global $DB_QUERY_CACHE;
 
 		// Since we want to cache results of running the callback, we need to
