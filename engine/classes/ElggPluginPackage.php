@@ -408,11 +408,11 @@ class ElggPluginPackage {
 			foreach (${$dep_type} as $dep) {
 				switch ($dep['type']) {
 					case 'elgg_version':
-						$result = $this->checkDepElgg($dep, get_version(), $inverse);
+						$result = $this->checkDepElgg($dep, elgg_get_version(), $inverse);
 						break;
 
 					case 'elgg_release':
-						$result = $this->checkDepElgg($dep, get_version(true), $inverse);
+						$result = $this->checkDepElgg($dep, elgg_get_version(true), $inverse);
 						break;
 
 					case 'plugin':

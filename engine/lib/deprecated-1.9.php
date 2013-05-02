@@ -1,4 +1,18 @@
 <?php
+
+/**
+ * Get the current Elgg version information
+ *
+ * @param bool $humanreadable Whether to return a human readable version (default: false)
+ *
+ * @return string|false Depending on success
+ * @deprecated 1.9 Use elgg_get_version()
+ */
+function get_version($humanreadable = false) {
+	elgg_deprecated_notice('get_version() has been deprecated by elgg_get_version()', 1.9);
+	return elgg_get_version($humanreadable);
+}
+
 /**
  * Return a timestamp for the start of a given day (defaults today).
  *

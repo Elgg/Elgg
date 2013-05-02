@@ -988,6 +988,31 @@ function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
 }
 
 /**
+ * Get the current Elgg version information
+ *
+ * @param bool $human_readable Whether to return a human readable version (default: false)
+ *
+ * @return string|false Depending on success
+ * @since 1.9
+ */
+function elgg_get_version($human_readable = false) {
+	global $CONFIG;
+
+	static $version, $release;
+
+	if (isset($CONFIG->path)) {
+		if (!isset($version) || !isset($release)) {
+			if (!include($CONFIG->path . "version.php")) {
+				return false;
+			}
+		}
+		return (!$human_readable) ? $version : $release;
+	}
+
+	return false;
+}
+
+/**
  * Sends a notice about deprecated use of a function, view, etc.
  *
  * This function either displays or logs the deprecation message,
@@ -1025,7 +1050,7 @@ function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
 		return false;
 	}
 
-	$elgg_version = get_version(true);
+	$elgg_version = elgg_get_version(true);
 	$elgg_version_arr = explode('.', $elgg_version);
 	$elgg_major_version = (int)$elgg_version_arr[0];
 	$elgg_minor_version = (int)$elgg_version_arr[1];

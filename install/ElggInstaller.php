@@ -739,7 +739,6 @@ class ElggInstaller {
 			'input.php',
 			'cache.php',
 			'output.php',
-			'upgrade.php', // needed for deprecated notice
 		);
 
 		foreach ($required_files as $file) {
@@ -1465,7 +1464,7 @@ class ElggInstaller {
 		datalist_set('path', $submissionVars['path']);
 		datalist_set('dataroot', $submissionVars['dataroot']);
 		datalist_set('default_site', $site->getGUID());
-		datalist_set('version', get_version());
+		datalist_set('version', elgg_get_version());
 		datalist_set('simplecache_enabled', 1);
 		datalist_set('system_cache_enabled', 1);
 		datalist_set('simplecache_lastupdate', time());

@@ -45,8 +45,8 @@ foreach ($files as $file) {
 ?>
 //<script>
 
-elgg.version = '<?php echo get_version(); ?>';
-elgg.release = '<?php echo get_version(true); ?>';
+elgg.version = '<?php echo elgg_get_version(); ?>';
+elgg.release = '<?php echo elgg_get_version(true); ?>';
 elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
 
 // refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)

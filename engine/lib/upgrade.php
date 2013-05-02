@@ -166,30 +166,6 @@ function elgg_get_upgrade_files($upgrade_path = null) {
 }
 
 /**
- * Get the current Elgg version information
- *
- * @param bool $humanreadable Whether to return a human readable version (default: false)
- *
- * @return string|false Depending on success
- */
-function get_version($humanreadable = false) {
-	global $CONFIG;
-
-	static $version, $release;
-
-	if (isset($CONFIG->path)) {
-		if (!isset($version) || !isset($release)) {
-			if (!include($CONFIG->path . "version.php")) {
-				return false;
-			}
-		}
-		return (!$humanreadable) ? $version : $release;
-	}
-
-	return false;
-}
-
-/**
  * Checks if any upgrades need to be run.
  *
  * @param null|array $upgrade_files      Optional upgrade files
@@ -222,7 +198,7 @@ function elgg_get_unprocessed_upgrades($upgrade_files = null, $processed_upgrade
  */
 function version_upgrade_check() {
 	$dbversion = (int) datalist_get('version');
-	$version = get_version();
+	$version = elgg_get_version();
 
 	if ($version > $dbversion) {
 		return TRUE;
@@ -259,7 +235,7 @@ function version_upgrade() {
 		// Now we trigger an event to give the option for plugins to do something
 		$upgrade_details = new stdClass;
 		$upgrade_details->from = $dbversion;
-		$upgrade_details->to = get_version();
+		$upgrade_details->to = elgg_get_version();
 
 		elgg_trigger_event('upgrade', 'upgrade', $upgrade_details);
 

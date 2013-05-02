@@ -1683,7 +1683,7 @@ function load_plugin_manifest($plugin) {
 function check_plugin_compatibility($manifest_elgg_version_string) {
 	elgg_deprecated_notice('check_plugin_compatibility() is deprecated by ElggPlugin->canActivate()', 1.8);
 
-	$version = get_version();
+	$version = elgg_get_version();
 
 	if (strpos($manifest_elgg_version_string, '.') === false) {
 		// Using version
