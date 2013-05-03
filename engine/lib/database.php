@@ -49,22 +49,6 @@ $DB_DELAYED_QUERIES = array();
 
 
 /**
- * Establish a connection to the database servser
- *
- * Connect to the database server and use the Elgg database for a particular database link
- *
- * @param string $dblinkname The type of database connection. Used to identify the
- * resource. eg "read", "write", or "readwrite".
- *
- * @return void
- * @throws DatabaseException
- * @access private
- */
-function establish_db_link($dblinkname = "readwrite") {
-	_elgg_services()->db->establishLink($dblinkname);
-}
-
-/**
  * Establish database connections
  *
  * If the configuration has been set up for multiple read/write databases, set those
@@ -91,19 +75,6 @@ function setup_db_connections() {
  */
 function get_db_link($dblinktype) {
 	return _elgg_services()->db->getLink($dblinktype);
-}
-
-/**
- * Execute an EXPLAIN for $query.
- *
- * @param string $query The query to explain
- * @param mixed  $link  The database link resource to user.
- *
- * @return mixed An object of the query's result, or FALSE
- * @access private
- */
-function explain_query($query, $link) {
-	return _elgg_services()->db->explainQuery($query, $link);
 }
 
 /**
@@ -355,12 +326,12 @@ function sanitize_int($int, $signed = true) {
 }
 
 /**
- * Display profiling information about db at NOTICE debug level upon shutdown.
+ * Log db profiling information at NOTICE debug level upon shutdown.
  *
  * @return void
  * @access private
  */
-function db_profiling_shutdown_hook() {
+function _elgg_db_log_profiling_data() {
 	$db_calls = _elgg_services()->db->getQueryCount();
 
 	// demoted to NOTICE as it corrupts javascript at DEBUG
@@ -373,7 +344,7 @@ function db_profiling_shutdown_hook() {
  * @return void
  * @access private
  */
-function db_delayedexecution_shutdown_hook() {
+function _elgg_db_run_delayed_queries() {
 	_elgg_services()->db->executeDelayedQueries();
 }
 
@@ -382,9 +353,9 @@ function db_delayedexecution_shutdown_hook() {
  *
  * @access private
  */
-function init_db() {
-	register_shutdown_function('db_delayedexecution_shutdown_hook');
-	register_shutdown_function('db_profiling_shutdown_hook');
+function _elgg_db_init() {
+	register_shutdown_function('_elgg_db_run_delayed_queries');
+	register_shutdown_function('_elgg_db_log_profiling_data');
 }
 
-elgg_register_event_handler('init', 'system', 'init_db');
+elgg_register_event_handler('init', 'system', '_elgg_db_init');
