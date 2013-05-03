@@ -47,29 +47,6 @@ $DB_QUERY_CACHE = array();
 global $DB_DELAYED_QUERIES;
 $DB_DELAYED_QUERIES = array();
 
-/**
- * Database connection resources.
- *
- * Each database link created with establish_db_link($name) is stored in
- * $dblink as $dblink[$name] => resource.  Use get_db_link($name) to retrieve it.
- *
- * @global resource[] $dblink
- * @access private
- */
-global $dblink;
-$dblink = array();
-
-/**
- * Database call count
- *
- * Each call to the database increments this counter.
- *
- * @global integer $dbcalls
- * @access private
- */
-global $dbcalls;
-$dbcalls = 0;
-
 
 /**
  * Establish a connection to the database servser
@@ -384,10 +361,10 @@ function sanitize_int($int, $signed = true) {
  * @access private
  */
 function db_profiling_shutdown_hook() {
-	global $dbcalls;
+	$db_calls = _elgg_services()->db->getQueryCount();
 
 	// demoted to NOTICE as it corrupts javascript at DEBUG
-	elgg_log("DB Queries for this page: $dbcalls", 'NOTICE');
+	elgg_log("DB Queries for this page: $db_calls", 'NOTICE');
 }
 
 /**

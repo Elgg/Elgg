@@ -6,8 +6,6 @@
  * WARNING: THIS API IS IN FLUX. PLUGIN AUTHORS SHOULD NOT USE. See lib/database.php instead.
  *
  * TODO: Convert query cache to a private local variable (or remove completely).
- * TODO: Convert delayed queries to private local variable.
- * TODO: Convert db link registry to private local variable.
  *
  * @access private
  *
@@ -19,21 +17,37 @@ class Elgg_Database {
 	/** @var string $tablePrefix Prefix for database tables */
 	private $tablePrefix;
 
+	/** @var resource[] $dbLinks Database connection resources */
+	private $dbLinks = array();
+
+	/** @var int $queryCount The number of queries made */
+	private $queryCount = 0;
+
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		global $CONFIG;
+		global $CONFIG, $DB_QUERY_CACHE;
 
 		$this->tablePrefix = $CONFIG->dbprefix;
+
+		$db_cache_off = false;
+		if (isset($CONFIG->db_disable_query_cache)) {
+			$db_cache_off = $CONFIG->db_disable_query_cache;
+		}
+
+		// Set up cache if global not initialized and query cache not turned off
+		if ((!$DB_QUERY_CACHE) && (!$db_cache_off)) {
+			// @todo if we keep this cache in 1.9, expose the size as a config parameter
+			$DB_QUERY_CACHE = new Elgg_Cache_LRUCache(200);
+		}
 	}
 
 	/**
-	 * Returns (if required, also creates) a database link resource.
+	 * Gets (if required, also creates) a database link resource.
 	 *
-	 * Database link resources are stored in the {@link $dblink} global.  These
-	 * resources are created by {@link Elgg_Database::setupConnections()}, which
-	 * is called if no links exist.
+	 * The database link resources are created by
+	 * {@link Elgg_Database::setupConnections()}, which is called if no links exist.
 	 *
 	 * @param string $type The type of link we want: "read", "write" or "readwrite".
 	 *
@@ -42,12 +56,10 @@ class Elgg_Database {
 	 * @todo make private or protected
 	 */
 	public function getLink($type) {
-		global $dblink;
-
-		if (isset($dblink[$type])) {
-			return $dblink[$type];
-		} else if (isset($dblink['readwrite'])) {
-			return $dblink['readwrite'];
+		if (isset($this->dbLinks[$type])) {
+			return $this->dbLinks[$type];
+		} else if (isset($this->dbLinks['readwrite'])) {
+			return $this->dbLinks['readwrite'];
 		} else {
 			$this->setupConnections();
 			return $this->getLink($type);
@@ -87,7 +99,7 @@ class Elgg_Database {
 	 * @throws DatabaseException
 	 */
 	public function establishLink($dblinkname = "readwrite") {
-		global $CONFIG, $dblink, $DB_QUERY_CACHE, $dbcalls;
+		global $CONFIG;
 
 		if ($dblinkname != "readwrite" && isset($CONFIG->db[$dblinkname])) {
 			if (is_array($CONFIG->db[$dblinkname])) {
@@ -110,29 +122,18 @@ class Elgg_Database {
 		}
 
 		// Connect to database
-		if (!$dblink[$dblinkname] = mysql_connect($dbhost, $dbuser, $dbpass, true)) {
+		if (!$this->dbLinks[$dblinkname] = mysql_connect($dbhost, $dbuser, $dbpass, true)) {
 			$msg = "Elgg couldn't connect to the database using the given credentials. Check the settings file.";
 			throw new DatabaseException($msg);
 		}
 
-		if (!mysql_select_db($dbname, $dblink[$dblinkname])) {
+		if (!mysql_select_db($dbname, $this->dbLinks[$dblinkname])) {
 			$msg = "Elgg couldn't select the database '$dbname', please check that the database is created and you have access to it.";
 			throw new DatabaseException($msg);
 		}
 
 		// Set DB for UTF8
 		mysql_query("SET NAMES utf8");
-
-		$db_cache_off = FALSE;
-		if (isset($CONFIG->db_disable_query_cache)) {
-			$db_cache_off = $CONFIG->db_disable_query_cache;
-		}
-
-		// Set up cache if global not initialized and query cache not turned off
-		if ((!$DB_QUERY_CACHE) && (!$db_cache_off)) {
-			// @todo if we keep this cache in 1.9, expose the size as a config parameter
-			$DB_QUERY_CACHE = new Elgg_Cache_LRUCache(200);
-		}
 	}
 
 	/**
@@ -320,9 +321,8 @@ class Elgg_Database {
 	 * @throws DatabaseException
 	 */
 	public function executeQuery($query, $dblink) {
-		global $dbcalls;
 
-		if ($query == NULL) {
+		if ($query == null) {
 			throw new DatabaseException("Invalid query");
 		}
 
@@ -330,12 +330,12 @@ class Elgg_Database {
 			throw new DatabaseException("Connection to database was lost.");
 		}
 
-		$dbcalls++;
+		$this->queryCount++;
 
 		$result = mysql_query($query, $dblink);
 
 		if (mysql_errno($dblink)) {
-			throw new DatabaseException(mysql_error($dblink) . "\n\n QUERY: " . $query);
+			throw new DatabaseException(mysql_error($dblink) . "\n\n QUERY: $query");
 		}
 
 		return $result;
@@ -547,5 +547,14 @@ class Elgg_Database {
 		$CONFIG->installed = true;
 
 		return true;
+	}
+
+	/**
+	 * Get the number of queries made to the database
+	 *
+	 * @return int
+	 */
+	public function getQueryCount() {
+		return $this->queryCount;
 	}
 }
