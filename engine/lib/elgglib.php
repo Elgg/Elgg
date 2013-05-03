@@ -1981,7 +1981,7 @@ function _elgg_engine_boot() {
 
 	_elgg_services()->db->setupConnections();
 
-	_elgg_services()->db->isInstalled();
+	_elgg_services()->db->assertInstalled();
 
 	_elgg_load_application_config();
 

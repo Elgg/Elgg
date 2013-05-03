@@ -523,15 +523,16 @@ class Elgg_Database {
 	}
 
 	/**
-	 * Does the Elgg database exist?
+	 * Test that the Elgg database is installed
 	 *
-	 * @return bool
+	 * @return void
+	 * @throws InstallationException
 	 */
-	public function isInstalled() {
+	public function assertInstalled() {
 		global $CONFIG;
 
 		if (isset($CONFIG->installed)) {
-			return true;
+			return;
 		}
 
 		try {
@@ -545,8 +546,6 @@ class Elgg_Database {
 		}
 
 		$CONFIG->installed = true;
-
-		return true;
 	}
 
 	/**
