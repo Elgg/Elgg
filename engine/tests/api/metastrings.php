@@ -147,7 +147,6 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 			// enable
 			$ashe = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
-			flush();
 			$this->assertTrue(elgg_set_metastring_based_object_enabled_by_id($id, 'yes', $type));
 
 			$test = get_data($q);
