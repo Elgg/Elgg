@@ -178,8 +178,8 @@
 .elgg-river-comments-tab {
 	display: block;
 	background-color: #EEE;
-	color: #4690D6;
 	margin-top: 5px;
+	color: #999;
 	width: auto;
 	float: right;
 	font-size: 85%;
