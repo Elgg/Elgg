@@ -365,8 +365,7 @@
 	display: block;
 }
 .elgg-menu-hover a {
-	padding: 2px 8px;
-	font-size: 92%;
+	padding: 4px 8px;
 }
 .elgg-menu-hover a:hover,
 .elgg-menu-hover a:focus {
