@@ -24,6 +24,7 @@ if (elgg_is_sticky_form('useradd')) {
 	echo elgg_view('input/text', array(
 		'name' => 'name',
 		'value' => $name,
+		'autocomplete' => 'off',
 	));
 	?>
 </div>
@@ -33,6 +34,7 @@ if (elgg_is_sticky_form('useradd')) {
 	echo elgg_view('input/text', array(
 		'name' => 'username',
 		'value' => $username,
+		'autocomplete' => 'off',
 	));
 	?>
 </div>
@@ -42,6 +44,7 @@ if (elgg_is_sticky_form('useradd')) {
 	echo elgg_view('input/text', array(
 		'name' => 'email',
 		'value' => $email,
+		'autocomplete' => 'off',
 	));
 	?>
 </div>
@@ -51,6 +54,7 @@ if (elgg_is_sticky_form('useradd')) {
 	echo elgg_view('input/password', array(
 		'name' => 'password',
 		'value' => $password,
+		'autocomplete' => 'off',
 	));
 	?>
 </div>
@@ -60,6 +64,7 @@ if (elgg_is_sticky_form('useradd')) {
 	echo elgg_view('input/password', array(
 		'name' => 'password2',
 		'value' => $password2,
+		'autocomplete' => 'off',
 	));
 	?>
 </div>
