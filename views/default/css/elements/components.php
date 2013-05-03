@@ -209,8 +209,8 @@
 }
 .elgg-river-more {
 	background-color: #EEE;
-	border-radius: 5px;	
-	padding: 2px 4px;
+	border-radius: 0 0 5px 5px;
+	padding: 2px 4px 3px;
 	font-size: 85%;
 	margin-bottom: 2px;
 }
