@@ -973,8 +973,7 @@ a.elgg-button {
 }
 .elgg-menu-hover a {
 	display: block;
-	padding: 2px 8px;
-	font-size: 92%;
+	padding: 5px 8px;
 }
 .elgg-menu-hover a:hover {
 	background: #ccc;
