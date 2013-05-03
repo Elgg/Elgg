@@ -5,6 +5,8 @@
  * @package Profile
  */
 ?>
+/*<style>/**/
+
 /* ***************************************
 	Profile
 *************************************** */
@@ -93,4 +95,12 @@
 	border: 2px solid red;
 	padding: 4px 8px;
 	border-radius: 6px;
+}
+.profile-admin-details {
+	margin-bottom: 1em;
+	color: #666;
+	font-size: 90%;
+}
+.profile-admin-details a {
+	color: inherit;
 }
