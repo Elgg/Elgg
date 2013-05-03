@@ -32,23 +32,25 @@ class Elgg_Database {
 	 * Returns (if required, also creates) a database link resource.
 	 *
 	 * Database link resources are stored in the {@link $dblink} global.  These
-	 * resources are created by {@link setup_db_connections()}, which is called if
-	 * no links exist.
+	 * resources are created by {@link Elgg_Database::setupConnections()}, which
+	 * is called if no links exist.
 	 *
-	 * @param string $dblinktype The type of link we want: "read", "write" or "readwrite".
+	 * @param string $type The type of link we want: "read", "write" or "readwrite".
 	 *
-	 * @return object Database link
+	 * @return resource Database link
+	 * @throws DatabaseException
+	 * @todo make private or protected
 	 */
-	function getLink($dblinktype) {
+	public function getLink($type) {
 		global $dblink;
 
-		if (isset($dblink[$dblinktype])) {
-			return $dblink[$dblinktype];
+		if (isset($dblink[$type])) {
+			return $dblink[$type];
 		} else if (isset($dblink['readwrite'])) {
 			return $dblink['readwrite'];
 		} else {
 			$this->setupConnections();
-			return $this->getLink($dblinktype);
+			return $this->getLink($type);
 		}
 	}
 
@@ -59,6 +61,7 @@ class Elgg_Database {
 	 * links up separately; otherwise just create the one database link.
 	 *
 	 * @return void
+	 * @throws DatabaseException
 	 */
 	public function setupConnections() {
 		global $CONFIG;
@@ -81,9 +84,9 @@ class Elgg_Database {
 	 * resource: "read", "write", or "readwrite".
 	 *
 	 * @return void
+	 * @throws DatabaseException
 	 */
 	public function establishLink($dblinkname = "readwrite") {
-		// Get configuration, and globalise database link
 		global $CONFIG, $dblink, $DB_QUERY_CACHE, $dbcalls;
 
 		if ($dblinkname != "readwrite" && isset($CONFIG->db[$dblinkname])) {
@@ -113,7 +116,7 @@ class Elgg_Database {
 		}
 
 		if (!mysql_select_db($dbname, $dblink[$dblinkname])) {
-			$msg = "Elgg couldn't select the database '" . $dbname . "', please check that the database is created and you have access to it.";
+			$msg = "Elgg couldn't select the database '$dbname', please check that the database is created and you have access to it.";
 			throw new DatabaseException($msg);
 		}
 
@@ -189,7 +192,7 @@ class Elgg_Database {
 			return mysql_insert_id($dblink);
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	/**
@@ -236,7 +239,7 @@ class Elgg_Database {
 			return mysql_affected_rows($dblink);
 		}
 
-		return FALSE;
+		return false;
 	}
 
 
@@ -485,7 +488,7 @@ class Elgg_Database {
 				$link = $query_details['l'];
 
 				if ($link == 'read' || $link == 'write') {
-					$link = get_db_link($link);
+					$link = $this->getLink($link);
 				} elseif (!is_resource($link)) {
 					elgg_log("Link for delayed query not valid resource or db_link type. Query: {$query_details['q']}", 'WARNING');
 				}
@@ -517,5 +520,32 @@ class Elgg_Database {
 			$DB_QUERY_CACHE = array();
 			elgg_log("Query cache invalidated", 'NOTICE');
 		}
+	}
+
+	/**
+	 * Does the Elgg database exist?
+	 *
+	 * @return bool
+	 */
+	public function isInstalled() {
+		global $CONFIG;
+
+		if (isset($CONFIG->installed)) {
+			return true;
+		}
+
+		try {
+			$dblink = $this->getLink('read');
+			mysql_query("SELECT value FROM {$this->tablePrefix}datalists WHERE name = 'installed'", $dblink);
+			if (mysql_errno($dblink) > 0) {
+				throw new DatabaseException();
+			}
+		} catch (DatabaseException $e) {
+			throw new InstallationException("Unable to handle this request. This site is not configured or the database is down.");
+		}
+
+		$CONFIG->installed = true;
+
+		return true;
 	}
 }
