@@ -55,8 +55,11 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		// do not allow SimpleTest to interpret Elgg notices as exceptions
-		$this->swallowErrors();
+		access_show_hidden_entities(true);
+		elgg_delete_annotations(array(
+			'guid' => $this->object->guid,
+		));
+		access_show_hidden_entities(false);
 	}
 
 	/**
@@ -96,6 +99,31 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 
 			$this->assertEqual($id, $test->id);
 		}
+	}
+
+	public function testGetMetastringObjectFromIDWithDisabledAnnotation() {
+		$name = 'test_annotation_name' . rand();
+		$value = 'test_annotation_value' . rand();
+		$id = create_annotation($this->object->guid, $name, $value);
+		$annotation = elgg_get_annotation_from_id($id);
+		$this->assertTrue($annotation->disable());
+
+		$test = elgg_get_metastring_based_object_from_id($id, 'annotation');
+		$this->assertEqual(false, $test);
+	}
+
+	public function testGetMetastringBasedObjectWithDisabledAnnotation() {
+		$name = 'test_annotation_name' . rand();
+		$value = 'test_annotation_value' . rand();
+		$id = create_annotation($this->object->guid, $name, $value);
+		$annotation = elgg_get_annotation_from_id($id);
+		$this->assertTrue($annotation->disable());
+
+		$test = elgg_get_metastring_based_objects(array(
+			'metastring_type' => 'annotations',
+			'guid' => $this->object->guid,
+		));
+		$this->assertEqual(array(), $test);
 	}
 
 	public function testEnableDisableByID() {
