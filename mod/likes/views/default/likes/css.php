@@ -3,6 +3,7 @@
  * Likes CSS
  */
 ?>
+/*<style>/**/
 
 /* ***************************************
 	Likes
@@ -14,4 +15,12 @@
 
 .elgg-menu .elgg-menu-item-likes-count {
 	margin-left: 3px;
+}
+
+.elgg-list-likes {
+	border-top: 0;
+}
+
+.elgg-list-likes > li:last-child {
+	border-bottom: 0;
 }
