@@ -41,8 +41,9 @@
 	border-bottom: 1px dotted #CCCCCC;
 }
 
-.elgg-item .elgg-subtext {
-	margin-bottom: 5px;
+.elgg-item .elgg-subtext,
+.elgg-menu-entity + .elgg-subtext {
+	margin: 5px 0;
 }
 .elgg-item .elgg-content {
 	margin: 10px 5px;
@@ -239,6 +240,9 @@
 .elgg-comments > form {
 	margin-top: 15px;
 }
+.elgg-comments > ul > li {
+	padding: 5px 0;
+}
 
 /* ***************************************
 	Image-related
@@ -267,4 +271,5 @@
 }
 .elgg-tagcloud {
 	text-align: justify;
+	margin-bottom: 5px;
 }
