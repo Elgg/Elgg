@@ -193,7 +193,7 @@ function register_translations($path, $load_all = false) {
 
 	// Get the current language based on site defaults and user preference
 	$current_language = get_current_language();
-	elgg_log("Translations loaded from: $path");
+	elgg_log("Translations loaded from: $path", "INFO");
 
 	// only load these files unless $load_all is true.
 	$load_language_files = array(
