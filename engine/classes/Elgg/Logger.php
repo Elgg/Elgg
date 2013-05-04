@@ -101,6 +101,46 @@ class Elgg_Logger {
 	}
 
 	/**
+	 * Log message at the ERROR level
+	 *
+	 * @param string $message The message to log
+	 * @return bool
+	 */
+	public function error($message) {
+		return $this->log($message, self::ERROR);
+	}
+
+	/**
+	 * Log message at the WARNING level
+	 *
+	 * @param string $message The message to log
+	 * @return bool
+	 */
+	public function warn($message) {
+		return $this->log($message, self::WARNING);
+	}
+
+	/**
+	 * Log message at the NOTICE level
+	 *
+	 * @param string $message The message to log
+	 * @return bool
+	 */
+	public function notice($message) {
+		return $this->log($message, self::NOTICE);
+	}
+
+	/**
+	 * Log message at the INFO level
+	 *
+	 * @param string $message The message to log
+	 * @return bool
+	 */
+	public function info($message) {
+		return $this->log($message, self::INFO);
+	}
+
+	/**
 	 * Dump data to log or screen
 	 *
 	 * @param mixed $data    The data to log
