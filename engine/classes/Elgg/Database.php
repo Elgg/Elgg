@@ -53,7 +53,7 @@ class Elgg_Database {
 	 *
 	 * @return resource Database link
 	 * @throws DatabaseException
-	 * @todo make private or protected
+	 * @todo make private or protected once we get rid of get_db_link()
 	 */
 	public function getLink($type) {
 		if (isset($this->dbLinks[$type])) {
@@ -150,6 +150,7 @@ class Elgg_Database {
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
+	 * @throws DatabaseException
 	 */
 	public function getData($query, $callback = '') {
 		return $this->getResults($query, $callback, false);
@@ -166,6 +167,7 @@ class Elgg_Database {
 	 * @param string $callback A callback function
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
+	 * @throws DatabaseException
 	 */
 	public function getDataRow($query, $callback = '') {
 		return $this->getResults($query, $callback, true);
@@ -180,6 +182,7 @@ class Elgg_Database {
 	 *
 	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
 	 *                   defined, 0 if not, and false on failure.
+	 * @throws DatabaseException
 	 */
 	public function insertData($query) {
 
@@ -207,6 +210,7 @@ class Elgg_Database {
 	 * @param string $query The query to run.
 	 *
 	 * @return bool
+	 * @throws DatabaseException
 	 */
 	public function updateData($query) {
 
@@ -227,6 +231,7 @@ class Elgg_Database {
 	 * @param string $query The SQL query to run
 	 *
 	 * @return int|false The number of affected rows or false on failure
+	 * @throws DatabaseException
 	 */
 	function deleteData($query) {
 
@@ -254,6 +259,7 @@ class Elgg_Database {
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
+	 * @throws DatabaseException
 	 */
 	private function getResults($query, $callback = null, $single = false) {
 		global $DB_QUERY_CACHE;
@@ -319,11 +325,12 @@ class Elgg_Database {
 	 *
 	 * @return resource|bool The result of mysql_query()
 	 * @throws DatabaseException
+	 * @todo should this be public?
 	 */
 	public function executeQuery($query, $dblink) {
 
 		if ($query == null) {
-			throw new DatabaseException("Invalid query");
+			throw new DatabaseException("Query cannot be null");
 		}
 
 		if (!is_resource($dblink)) {
@@ -345,8 +352,9 @@ class Elgg_Database {
 	 * Return tables matching the database prefix {@link $this->tablePrefix}% in the currently
 	 * selected database.
 	 *
-	 * @return array|false List of tables or false on failure
+	 * @return array Array of tables or empty array on failure
 	 * @static array $tables Tables found matching the database prefix
+	 * @throws DatabaseException
 	 */
 	public function getTables() {
 		static $tables;
@@ -355,15 +363,9 @@ class Elgg_Database {
 			return $tables;
 		}
 
-		try {
-			$result = $this->getData("show tables like '{$this->tablePrefix}%'");
-		} catch (DatabaseException $d) {
-			// Likely we can't handle an exception here, so just return false.
-			return FALSE;
-		}
+		$result = $this->getData("SHOW TABLES LIKE '$this->tablePrefix%'");
 
 		$tables = array();
-
 		if (is_array($result) && !empty($result)) {
 			foreach ($result as $row) {
 				$row = (array) $row;
@@ -373,12 +375,9 @@ class Elgg_Database {
 					}
 				}
 			}
-		} else {
-			return FALSE;
 		}
 
 		return $tables;
-
 	}
 
 	/**
@@ -470,7 +469,7 @@ class Elgg_Database {
 
 		$DB_DELAYED_QUERIES[] = $delayed_query;
 
-		return TRUE;
+		return true;
 	}
 
 
@@ -498,9 +497,9 @@ class Elgg_Database {
 				if ((isset($query_details['h'])) && (is_callable($query_details['h']))) {
 					$query_details['h']($result);
 				}
-			} catch (Exception $e) {
-				// Suppress all errors since these can't be dealt with here
-				elgg_log($e, 'WARNING');
+			} catch (DatabaseException $e) {
+				// Suppress all exceptions since page already sent to requestor
+				elgg_log($e, 'ERROR');
 			}
 		}
 	}
