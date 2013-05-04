@@ -211,7 +211,6 @@ $users = mysql_query("SELECT guid, username
 	FROM {$CONFIG->dbprefix}users_entity WHERE username != ''");
 while ($user = mysql_fetch_object($users)) {
 	$ENTITY_CACHE = array();
-	_elgg_invalidate_query_cache();
 
 	$to = $CONFIG->dataroot . user_file_matrix($user->guid);
 	foreach (array('1_0', '1_1', '1_6') as $version) {

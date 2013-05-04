@@ -10,84 +10,6 @@
  */
 
 /**
- * Query cache for all queries.
- *
- * Each query and its results are stored in this cache as:
- * <code>
- * $DB_QUERY_CACHE[query hash] => array(result1, result2, ... resultN)
- * </code>
- * @see elgg_query_runner() for details on the hash.
- *
- * @warning Elgg used to set this as an empty array to turn off the cache
- *
- * @global Elgg_Cache_LRUCache|null $DB_QUERY_CACHE
- * @access private
- */
-global $DB_QUERY_CACHE;
-$DB_QUERY_CACHE = array();
-
-/**
- * Queries to be executed upon shutdown.
- *
- * These queries are saved to an array and executed using
- * a function registered by register_shutdown_function().
- *
- * Queries are saved as an array in the format:
- * <code>
- * $DB_DELAYED_QUERIES[] = array(
- * 	'q' => str $query,
- * 	'l' => resource $dblink,
- * 	'h' => str $handler // a callback function
- * );
- * </code>
- *
- * @global array $DB_DELAYED_QUERIES
- * @access private
- */
-global $DB_DELAYED_QUERIES;
-$DB_DELAYED_QUERIES = array();
-
-/**
- * Database connection resources.
- *
- * Each database link created with establish_db_link($name) is stored in
- * $dblink as $dblink[$name] => resource.  Use get_db_link($name) to retrieve it.
- *
- * @global resource[] $dblink
- * @access private
- */
-global $dblink;
-$dblink = array();
-
-/**
- * Database call count
- *
- * Each call to the database increments this counter.
- *
- * @global integer $dbcalls
- * @access private
- */
-global $dbcalls;
-$dbcalls = 0;
-
-
-/**
- * Establish a connection to the database servser
- *
- * Connect to the database server and use the Elgg database for a particular database link
- *
- * @param string $dblinkname The type of database connection. Used to identify the
- * resource. eg "read", "write", or "readwrite".
- *
- * @return void
- * @throws DatabaseException
- * @access private
- */
-function establish_db_link($dblinkname = "readwrite") {
-	_elgg_services()->db->establishLink($dblinkname);
-}
-
-/**
  * Establish database connections
  *
  * If the configuration has been set up for multiple read/write databases, set those
@@ -117,63 +39,27 @@ function get_db_link($dblinktype) {
 }
 
 /**
- * Execute an EXPLAIN for $query.
- *
- * @param string $query The query to explain
- * @param mixed  $link  The database link resource to user.
- *
- * @return mixed An object of the query's result, or FALSE
- * @access private
- */
-function explain_query($query, $link) {
-	return _elgg_services()->db->explainQuery($query, $link);
-}
-
-/**
- * Queue a query for execution upon shutdown.
- *
- * You can specify a handler function if you care about the result. This function will accept
- * the raw result from {@link mysql_query()}.
- *
- * @param string   $query   The query to execute
- * @param resource $dblink  The database link to use or the link type (read | write)
- * @param string   $handler A callback function to pass the results array to
- *
- * @return boolean Whether successful.
- * @access private
- */
-function execute_delayed_query($query, $dblink, $handler = "") {
-	return _elgg_services()->db->registerDelayedQuery($query, $dblink, $handler);
-}
-
-/**
- * Write wrapper for execute_delayed_query()
+ * Queue a query for running during shutdown that writes to the database
  *
  * @param string $query   The query to execute
- * @param string $handler The handler if you care about the result.
+ * @param string $handler The optional handler for processing the result
  *
- * @return true
- * @uses execute_delayed_query()
- * @uses get_db_link()
- * @access private
+ * @return boolean
  */
 function execute_delayed_write_query($query, $handler = "") {
-	return execute_delayed_query($query, 'write', $handler);
+	return _elgg_services()->db->registerDelayedQuery($query, 'write', $handler);
 }
 
 /**
- * Read wrapper for execute_delayed_query()
+ * Queue a query for running during shutdown that reads from the database
  *
  * @param string $query   The query to execute
- * @param string $handler The handler if you care about the result.
+ * @param string $handler The optional handler for processing the result
  *
- * @return true
- * @uses execute_delayed_query()
- * @uses get_db_link()
- * @access private
+ * @return boolean
  */
 function execute_delayed_read_query($query, $handler = "") {
-	return execute_delayed_query($query, 'read', $handler);
+	return _elgg_services()->db->registerDelayedQuery($query, 'read', $handler);
 }
 
 /**
@@ -252,15 +138,6 @@ function delete_data($query) {
 }
 
 /**
- * Invalidate the query cache
- * 
- * @access private
- */
-function _elgg_invalidate_query_cache() {
-	_elgg_services()->db->invalidateQueryCache();
-}
-
-/**
  * Return tables matching the database prefix {@link $CONFIG->dbprefix}% in the currently
  * selected database.
  *
@@ -273,7 +150,7 @@ function get_db_tables() {
 }
 
 /**
- * Optimise a table.
+ * Optimize a table.
  *
  * Executes an OPTIMIZE TABLE query on $table.  Useful after large DB changes.
  *
@@ -284,7 +161,7 @@ function get_db_tables() {
  */
 function optimize_table($table) {
 	$table = sanitise_string($table);
-	return _elgg_services()->db->updateData("optimize table $table");
+	return _elgg_services()->db->updateData("OPTIMIZE TABLE $table");
 }
 
 /**
@@ -294,6 +171,7 @@ function optimize_table($table) {
  *
  * @return string Database error message
  * @access private
+ * @todo deprecate or move into db class
  */
 function get_db_error($dblink) {
 	return mysql_error($dblink);
@@ -318,40 +196,9 @@ function get_db_error($dblink) {
  *
  * @return void
  * @throws DatabaseException
- * @access private
  */
 function run_sql_script($scriptlocation) {
 	return _elgg_services()->db->runSqlScript($scriptlocation);
-}
-
-/**
- * Format a query string for logging
- * 
- * @param string $query Query string
- * @return string
- * @access private
- */
-function elgg_format_query($query) {
-	// remove newlines and extra spaces so logs are easier to read
-	return preg_replace('/\s\s+/', ' ', $query);
-}
-
-/**
- * Sanitise a string for database use, but with the option of escaping extra characters.
- *
- * @param string $string           The string to sanitise
- * @param string $extra_escapeable Extra characters to escape with '\\'
- *
- * @return string The escaped string
- */
-function sanitise_string_special($string, $extra_escapeable = '') {
-	$string = sanitise_string($string);
-
-	for ($n = 0; $n < strlen($extra_escapeable); $n++) {
-		$string = str_replace($extra_escapeable[$n], "\\" . $extra_escapeable[$n], $string);
-	}
-
-	return $string;
 }
 
 /**
@@ -362,9 +209,7 @@ function sanitise_string_special($string, $extra_escapeable = '') {
  * @return string Sanitised string
  */
 function sanitise_string($string) {
-	// @todo does this really need the trim?
-	// there are times when you might want trailing / preceeding white space.
-	return mysql_real_escape_string(trim($string));
+	return mysql_real_escape_string($string);
 }
 
 /**
@@ -410,16 +255,16 @@ function sanitize_int($int, $signed = true) {
 }
 
 /**
- * Display profiling information about db at NOTICE debug level upon shutdown.
+ * Log db profiling information at NOTICE debug level upon shutdown.
  *
  * @return void
  * @access private
  */
-function db_profiling_shutdown_hook() {
-	global $dbcalls;
+function _elgg_db_log_profiling_data() {
+	$db_calls = _elgg_services()->db->getQueryCount();
 
 	// demoted to NOTICE as it corrupts javascript at DEBUG
-	elgg_log("DB Queries for this page: $dbcalls", 'NOTICE');
+	elgg_log("DB Queries for this page: $db_calls", 'NOTICE');
 }
 
 /**
@@ -428,7 +273,7 @@ function db_profiling_shutdown_hook() {
  * @return void
  * @access private
  */
-function db_delayedexecution_shutdown_hook() {
+function _elgg_db_run_delayed_queries() {
 	_elgg_services()->db->executeDelayedQueries();
 }
 
@@ -437,9 +282,9 @@ function db_delayedexecution_shutdown_hook() {
  *
  * @access private
  */
-function init_db() {
-	register_shutdown_function('db_delayedexecution_shutdown_hook');
-	register_shutdown_function('db_profiling_shutdown_hook');
+function _elgg_db_init() {
+	register_shutdown_function('_elgg_db_run_delayed_queries');
+	register_shutdown_function('_elgg_db_log_profiling_data');
 }
 
-elgg_register_event_handler('init', 'system', 'init_db');
+elgg_register_event_handler('init', 'system', '_elgg_db_init');

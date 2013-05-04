@@ -332,10 +332,7 @@ function _elgg_upgrade_unlock() {
 function _elgg_upgrade_is_locked() {
 	global $CONFIG;
 
-	$is_locked = count(get_data("show tables like '{$CONFIG->dbprefix}upgrade_lock'"));
-
-	// @todo why?
-	_elgg_invalidate_query_cache();
+	$is_locked = count(get_data("SHOW TABLES LIKE '{$CONFIG->dbprefix}upgrade_lock'"));
 
 	return $is_locked;
 }

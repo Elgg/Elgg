@@ -18,7 +18,6 @@ $users = get_data($q);
 
 while ($users) {
 	$ENTITY_CACHE = array();
-	_elgg_invalidate_query_cache();
 
 	// do manually to not trigger any events because these aren't new users.
 	foreach ($users as $user) {
