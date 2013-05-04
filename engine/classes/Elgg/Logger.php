@@ -25,13 +25,14 @@ class Elgg_Logger {
 		400 => 'ERROR',
 	);
 
-	/**
-	 * @var int $level The trace level
-	 */
-	private $level = self::OFF;
+	/** @var int $level The logging level */
+	protected $level = self::ERROR;
 
-	/** @var ElggPluginHookService */
-	private $hooks;
+	/** @var bool $display Display to user? */
+	protected $display = false;
+
+	/** @var ElggPluginHookService $hooks */
+	protected $hooks;
 
 	/**
 	 * Constructor
@@ -42,6 +43,34 @@ class Elgg_Logger {
 		$this->hooks = $hooks;
 	}
 
+	/**
+	 * Set the logging level
+	 *
+	 * @param int $level The logging level
+	 * @return void
+	 */
+	public function setLevel($level) {
+		// @todo Elgg has used string constants for logging levels
+		if (is_string($level)) {
+			$levelStringsToInts = array_flip(self::$levels);
+			$level = $levelStringsToInts[$level];
+		}
+		$this->level = $level;
+	}
+
+	/**
+	 * Set whether the logging should be displayed to the user
+	 *
+	 * Whether data is actually displayed to the user depends on this setting
+	 * and other factors such as whether we are generating a JavaScript or CSS
+	 * file.
+	 *
+	 * @param bool $display Whether to display logging
+	 * @return void
+	 */
+	public function setDisplay($display) {
+		$this->display = $display;
+	}
 
 	/**
 	 * Add a message to the log
@@ -51,56 +80,52 @@ class Elgg_Logger {
 	 * @return bool Whether the messages was logged
 	 */
 	public function log($message, $level = self::NOTICE) {
-
-		if ($this->level != self::OFF) {
-
-			// do not send logging at notice level or below to screen
-			$to_screen = !($this->level <= self::NOTICE);
-
-			$levelString = self::$levels[$level];
-
-			switch ($level) {
-				case self::ERROR:
-					// always log errors
-					$this->dump("$levelString: $message", $to_screen, $level);
-					break;
-				case self::WARNING:
-					if ($this->level <= self::WARNING) {
-						$this->dump("$levelString: $message", $to_screen, $level);
-					}
-					break;
-				case self::NOTICE:
-					if ($this->level <= self::NOTICE) {
-						$this->dump("$levelString: $message", FALSE, $level);
-					}
-					break;
-				default:
-					return false;
-					break;
-			}
-
-			return TRUE;
+		if ($this->level == self::OFF || $level < $this->level) {
+			return false;
 		}
 
-		return FALSE;
+		if (!array_key_exists($level, self::$levels)) {
+			return false;
+		}
+
+		$levelString = self::$levels[$level];
+
+		// notices and below never displayed to user
+		$display = $this->display && $level > self::NOTICE;
+
+		$this->process("$levelString: $message", $display, $level);
+
+		return true;
 	}
 
 	/**
 	 * Dump data to log or screen
 	 *
-	 * @param mixed $value     The data to log
-	 * @param bool  $to_screen Whether to include this in the HTML page
-	 * @param int   $level     The logging level
-	 * @return bool Whether the messages was logged
+	 * @param mixed $data    The data to log
+	 * @param bool  $display Whether to include this in the HTML page
+	 * @return void
 	 */
-	public function dump($value, $to_screen = TRUE, $level = self::NOTICE) {
+	public function dump($data, $display = true) {
+		$this->process($data, $display, self::ERROR);
+	}
+
+	/**
+	 * Process logging data
+	 *
+	 * @param mixed $data    The data to process
+	 * @param bool  $display Whether to display the data to the user. Otherwise log it.
+	 * @param int   $level   The logging level for this data
+	 * @return void
+	 */
+	protected function process($data, $display, $level) {
 		global $CONFIG;
 
 		// plugin can return false to stop the default logging method
 		$params = array(
 			'level' => $level,
-			'msg' => $value,
-			'to_screen' => $to_screen,
+			'msg' => $data,
+			'display' => $display,
+			'to_screen' => $display,
 		);
 
 		if (!$this->hooks->trigger('debug', 'log', $params, true)) {
@@ -111,29 +136,20 @@ class Elgg_Logger {
 		// This is not fool-proof but probably fixes 95% of the cases when logging
 		// results in data sent to the browser before the page is begun.
 		if (!isset($CONFIG->pagesetupdone)) {
-			$to_screen = FALSE;
+			$display = false;
 		}
 
 		// Do not want to write to JS or CSS pages
 		if (elgg_in_context('js') || elgg_in_context('css')) {
-			$to_screen = FALSE;
+			$display = false;
 		}
 
-		if ($to_screen == TRUE) {
+		if ($display == true) {
 			echo '<pre>';
-			print_r($value);
+			print_r($data);
 			echo '</pre>';
 		} else {
-			error_log(print_r($value, TRUE));
+			error_log(print_r($data, true));
 		}
-	}
-
-	/**
-	 * Set the trace level of the logger
-	 *
-	 * @param int $level The trace level
-	 */
-	public function setLevel($level) {
-		$this->level = $level;
 	}
 }

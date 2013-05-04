@@ -535,6 +535,7 @@ function _elgg_load_site_config() {
 	get_all_config();
 	if (!empty($CONFIG->debug)) {
 		_elgg_services()->logger->setLevel($CONFIG->debug);
+		_elgg_services()->logger->setDisplay(true);
 	}
 }
 
