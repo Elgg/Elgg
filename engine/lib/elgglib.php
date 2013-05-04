@@ -965,6 +965,18 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * make things easier.
  */
 function elgg_log($message, $level = 'NOTICE') {
+	static $levels = array(
+		'NOTICE' => 250,
+		'WARNING' => 300,
+		'DEBUG' => 300,
+		'ERROR' => 400,
+	);
+
+	if ($level == 'DEBUG') {
+		elgg_deprecated_notice("The 'DEBUG' level for logging has been deprecated.", 1.9);
+	}
+
+	$level = $levels[$level];
 	return _elgg_services()->logger->log($message, $level);
 }
 
@@ -984,6 +996,18 @@ function elgg_log($message, $level = 'NOTICE') {
  * @since 1.7.0
  */
 function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
+	static $levels = array(
+		'NOTICE' => 250,
+		'WARNING' => 300,
+		'DEBUG' => 300,
+		'ERROR' => 400,
+	);
+
+	if ($level == 'DEBUG') {
+		elgg_deprecated_notice("The 'DEBUG' level for logging has been deprecated.", 1.9);
+	}
+
+	$level = $levels[$level];
 	_elgg_services()->logger->dump($value, $to_screen, $level);
 }
 
