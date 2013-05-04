@@ -51,6 +51,9 @@ class Elgg_Database {
 	 */
 	private $delayedQueries = array();
 
+	/** @var bool $installed Is the database installed? */
+	private $installed = false;
+
 	/** @var Elgg_Database_Config $config Database configuration */
 	private $config;
 
@@ -498,9 +501,8 @@ class Elgg_Database {
 	 * @throws InstallationException
 	 */
 	public function assertInstalled() {
-		global $CONFIG;
 
-		if (isset($CONFIG->installed)) {
+		if ($this->installed) {
 			return;
 		}
 
@@ -514,7 +516,7 @@ class Elgg_Database {
 			throw new InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 		}
 
-		$CONFIG->installed = true;
+		$this->installed = true;
 	}
 
 	/**
