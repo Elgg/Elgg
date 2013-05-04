@@ -4,6 +4,7 @@ Version 1.8.15
    * Cash Costello
    * Ismayil Khayredinov
    * Jeff Tilson
+   * Juho Jaakkola
    * Matt Beckett
    * Paweł Sroka
    * Sem
@@ -18,6 +19,7 @@ Version 1.8.15
    * Fixed out of memory error due to query cache
    * Fixed bug preventing users authorizing Twitter account access
    * Fixed friends access level for editing pages
+   * Fixed uploading files within the embed dialog
 
   Enhancements:
    * Added browser caching of language JS files

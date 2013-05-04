@@ -36,16 +36,21 @@ $query = http_build_query(
 
 $url = elgg_get_site_url() . "search?$query";
 
+$more_items = $vars['results']['count'] - ($vars['params']['offset'] + $vars['params']['limit']);
+
 // get pagination
 if (array_key_exists('pagination', $vars['params']) && $vars['params']['pagination']) {
-	$nav = elgg_view('navigation/pagination',array(
+	$nav = elgg_view('navigation/pagination', array(
 		'base_url' => $url,
 		'offset' => $vars['params']['offset'],
 		'count' => $vars['results']['count'],
 		'limit' => $vars['params']['limit'],
 	));
+	$show_more = false;
 } else {
+	// faceted search page so no pagination
 	$nav = '';
+	$show_more = $more_items > 0;
 }
 
 // figure out what we're dealing with.
@@ -75,12 +80,7 @@ if (array_key_exists('search_type', $vars['params'])
 	$type_str = $search_type_str;
 }
 
-// get any more links.
-$more_check = $vars['results']['count'] - ($vars['params']['offset'] + $vars['params']['limit']);
-$more = ($more_check > 0) ? $more_check : 0;
-
-if ($more) {
-	$title_key = ($more == 1) ? 'comment' : 'comments';
+if ($show_more) {
 	$more_str = elgg_echo('search:more', array($count, $type_str));
 	$more_url = elgg_http_remove_url_query_element($url, 'limit');
 	$more_link = "<li class='elgg-item'><a href=\"$more_url\">$more_str</a></li>";

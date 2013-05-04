@@ -4,7 +4,9 @@
  */
 
 $object = $vars['item']->getObjectEntity();
-$excerpt = strip_tags($object->excerpt);
+
+$excerpt = $object->excerpt ? $object->excerpt : $object->description;
+$excerpt = strip_tags($excerpt);
 $excerpt = elgg_get_excerpt($excerpt);
 
 echo elgg_view('river/elements/layout', array(
