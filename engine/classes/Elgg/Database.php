@@ -24,6 +24,19 @@ class Elgg_Database {
 	private $queryCount = 0;
 
 	/**
+	 * Query cache for select queries.
+	 *
+	 * Queries and their results are stored in this cache as:
+	 * <code>
+	 * $DB_QUERY_CACHE[query hash] => array(result1, result2, ... resultN)
+	 * </code>
+	 * @see Elgg_Database::getResults() for details on the hash.
+	 *
+	 * @var Elgg_Cache_LRUCache $queryCache The cache
+	 */
+	private $queryCache;
+
+	/**
 	 * Queries are saved to an array and executed using
 	 * a function registered by register_shutdown_function().
 	 *
@@ -44,19 +57,18 @@ class Elgg_Database {
 	 * Constructor
 	 */
 	public function __construct() {
-		global $CONFIG, $DB_QUERY_CACHE;
+		global $CONFIG;
 
 		$this->tablePrefix = $CONFIG->dbprefix;
 
-		$db_cache_off = false;
+		$queryCachingOn = true;
 		if (isset($CONFIG->db_disable_query_cache)) {
-			$db_cache_off = $CONFIG->db_disable_query_cache;
+			$queryCachingOn = !$CONFIG->db_disable_query_cache;
 		}
 
-		// Set up cache if global not initialized and query cache not turned off
-		if ((!$DB_QUERY_CACHE) && (!$db_cache_off)) {
+		if ($queryCachingOn) {
 			// @todo if we keep this cache in 1.9, expose the size as a config parameter
-			$DB_QUERY_CACHE = new Elgg_Cache_LRUCache(200);
+			$this->queryCache = new Elgg_Cache_LRUCache(200);
 		}
 	}
 
@@ -278,7 +290,6 @@ class Elgg_Database {
 	 * @throws DatabaseException
 	 */
 	protected function getResults($query, $callback = null, $single = false) {
-		global $DB_QUERY_CACHE;
 
 		// Since we want to cache results of running the callback, we need to
 		// need to namespace the query with the callback and single result request.
@@ -287,10 +298,10 @@ class Elgg_Database {
 		$hash = $callback_hash . (int)$single . $query;
 
 		// Is cached?
-		if ($DB_QUERY_CACHE) {
-			if (isset($DB_QUERY_CACHE[$hash])) {
+		if ($this->queryCache) {
+			if (isset($this->queryCache[$hash])) {
 				elgg_log("DB query $query results returned from cache (hash: $hash)", 'NOTICE');
-				return $DB_QUERY_CACHE[$hash];
+				return $this->queryCache[$hash];
 			}
 		}
 
@@ -322,8 +333,8 @@ class Elgg_Database {
 		}
 
 		// Cache result
-		if ($DB_QUERY_CACHE) {
-			$DB_QUERY_CACHE[$hash] = $return;
+		if ($this->queryCache) {
+			$this->queryCache[$hash] = $return;
 			elgg_log("DB query $query results cached (hash: $hash)", 'NOTICE');
 		}
 
@@ -522,16 +533,9 @@ class Elgg_Database {
 	 *
 	 * @return void
 	 */
-	public function invalidateQueryCache() {
-		global $DB_QUERY_CACHE;
-		if ($DB_QUERY_CACHE instanceof Elgg_Cache_LRUCache) {
-			$DB_QUERY_CACHE->clear();
-			elgg_log("Query cache invalidated", 'NOTICE');
-		} else if ($DB_QUERY_CACHE) {
-			// In case someone sets the cache to an array and primes it with data
-			$DB_QUERY_CACHE = array();
-			elgg_log("Query cache invalidated", 'NOTICE');
-		}
+	protected function invalidateQueryCache() {
+		$this->queryCache->clear();
+		elgg_log("Query cache invalidated", 'NOTICE');
 	}
 
 	/**

@@ -10,24 +10,6 @@
  */
 
 /**
- * Query cache for all queries.
- *
- * Each query and its results are stored in this cache as:
- * <code>
- * $DB_QUERY_CACHE[query hash] => array(result1, result2, ... resultN)
- * </code>
- * @see elgg_query_runner() for details on the hash.
- *
- * @warning Elgg used to set this as an empty array to turn off the cache
- *
- * @global Elgg_Cache_LRUCache|null $DB_QUERY_CACHE
- * @access private
- */
-global $DB_QUERY_CACHE;
-$DB_QUERY_CACHE = array();
-
-
-/**
  * Establish database connections
  *
  * If the configuration has been set up for multiple read/write databases, set those
@@ -153,15 +135,6 @@ function update_data($query) {
  */
 function delete_data($query) {
 	return _elgg_services()->db->deleteData($query);
-}
-
-/**
- * Invalidate the query cache
- * 
- * @access private
- */
-function _elgg_invalidate_query_cache() {
-	_elgg_services()->db->invalidateQueryCache();
 }
 
 /**
