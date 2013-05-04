@@ -55,6 +55,11 @@ class Elgg_Database_Config {
 	 * @return bool
 	 */
 	public function isDatabaseSplit() {
+		if (isset($this->config->db) && isset($this->config->db['split'])) {
+			return $this->config->db['split'];
+		}
+
+		// this was the recommend structure from Elgg 1.0 to 1.8
 		if (isset($this->config->db) && isset($this->config->db->split)) {
 			return $this->config->db->split;
 		}
@@ -114,7 +119,24 @@ class Elgg_Database_Config {
 	 * @return array
 	 */
 	protected function getParticularConnectionConfig($type) {
-		if (is_array($this->config->db[$type])) {
+		if (is_object($this->config->db[$type])) {
+			// old style single connection (Elgg < 1.9)
+			$config = array(
+				'host' => $this->config->db[$type]->dbhost,
+				'user' => $this->config->db[$type]->dbuser,
+				'password' => $this->config->db[$type]->dbpass,
+				'database' => $this->config->db[$type]->dbname,
+			);
+		} else if (array_key_exists('dbhost', $this->config->db[$type])) {
+			// new style single connection
+			$config = array(
+				'host' => $this->config->db[$type]['dbhost'],
+				'user' => $this->config->db[$type]['dbuser'],
+				'password' => $this->config->db[$type]['dbpass'],
+				'database' => $this->config->db[$type]['dbname'],
+			);
+		} else if (is_object(current($this->config->db[$type]))) {
+			// old style multiple connections
 			$index = array_rand($this->config->db[$type]);
 			$config = array(
 				'host' => $this->config->db[$type][$index]->dbhost,
@@ -123,11 +145,13 @@ class Elgg_Database_Config {
 				'database' => $this->config->db[$type][$index]->dbname,
 			);
 		} else {
+			// new style multiple connections
+			$index = array_rand($this->config->db[$type]);
 			$config = array(
-				'host' => $this->config->db[$type]->dbhost,
-				'user' => $this->config->db[$type]->dbuser,
-				'password' => $this->config->db[$type]->dbpass,
-				'database' => $this->config->db[$type]->dbname,
+				'host' => $this->config->db[$type][$index]['dbhost'],
+				'user' => $this->config->db[$type][$index]['dbuser'],
+				'password' => $this->config->db[$type][$index]['dbpass'],
+				'database' => $this->config->db[$type][$index]['dbname'],
 			);
 		}
 
