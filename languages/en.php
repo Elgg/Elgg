@@ -986,6 +986,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:debug:error' => 'Display only critical errors',
 	'installation:debug:warning' => 'Display errors and warnings',
 	'installation:debug:notice' => 'Log all errors, warnings and notices',
+	'installation:debug:info' => 'Log everything',
 
 	// Walled Garden support
 	'installation:registration:description' => 'User registration is enabled by default. Turn this off if you do not want new users to be able to register on their own.',
