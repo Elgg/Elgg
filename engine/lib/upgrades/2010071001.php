@@ -35,7 +35,6 @@ $users = mysql_query("SELECT guid, username FROM {$CONFIG->dbprefix}users_entity
 	WHERE username != ''");
 while ($user = mysql_fetch_object($users)) {
 	$ENTITY_CACHE = array();
-	_elgg_invalidate_query_cache();
 
 	$user_directory = user_file_matrix_2010071001($user->guid);
 	if (!$user_directory) {

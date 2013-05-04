@@ -172,38 +172,6 @@ function elgg_save_config($name, $value, $site_guid = 0) {
 }
 
 /**
- * Check that installation has completed and the database is populated.
- *
- * @throws InstallationException|DatabaseException
- * @return void
- * @access private
- */
-function verify_installation() {
-	global $CONFIG;
-
-	if (isset($CONFIG->installed)) {
-		return;
-	}
-
-	try {
-		$dblink = get_db_link('read');
-		if (!$dblink) {
-			throw new DatabaseException();
-		}
-
-		mysql_query("SELECT value FROM {$CONFIG->dbprefix}datalists WHERE name = 'installed'", $dblink);
-		if (mysql_errno($dblink) > 0) {
-			throw new DatabaseException();
-		}
-
-		$CONFIG->installed = true;
-
-	} catch (DatabaseException $e) {
-		throw new InstallationException("Unable to handle this request. This site is not configured or the database is down.");
-	}
-}
-
-/**
  * An array of key value pairs from the datalists table.
  *
  * Used as a cache in datalist functions.

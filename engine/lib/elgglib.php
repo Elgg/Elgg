@@ -1979,9 +1979,9 @@ function _elgg_engine_boot() {
 	set_error_handler('_elgg_php_error_handler');
 	set_exception_handler('_elgg_php_exception_handler');
 
-	setup_db_connections();
+	_elgg_services()->db->setupConnections();
 
-	verify_installation();
+	_elgg_services()->db->assertInstalled();
 
 	_elgg_load_application_config();
 
