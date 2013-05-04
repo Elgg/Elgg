@@ -38,7 +38,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setClassName('actions', 'Elgg_ActionsService');
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 		$this->setClassName('autoP', 'ElggAutoP');
-		$this->setClassName('db', 'Elgg_Database');
+		$this->setFactory('db', array($this, 'getDatabase'));
 		$this->setClassName('events', 'Elgg_EventService');
 		$this->setClassName('hooks', 'Elgg_PluginHookService');
 		$this->setFactory('logger', array($this, 'getLogger'));
@@ -48,6 +48,16 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setFactory('session', array($this, 'getSession'));
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setClassName('widgets', 'Elgg_WidgetsService');
+	}
+
+	/**
+	 * Database factory
+	 *
+	 * @param Elgg_ServiceProvider $c Dependency injection container
+	 * @return Elgg_Database
+	 */
+	protected function getDatabase(Elgg_ServiceProvider $c) {
+		return new Elgg_Database($c->logger);
 	}
 
 	/**

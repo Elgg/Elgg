@@ -17,9 +17,11 @@ class Elgg_Logger {
 	const ERROR = 400;
 	const WARNING = 300;
 	const NOTICE = 250;
+	const INFO = 200;
 
 	protected static $levels = array(
 		0 => 'OFF',
+		200 => 'INFO',
 		250 => 'NOTICE',
 		300 => 'WARNING',
 		400 => 'ERROR',
