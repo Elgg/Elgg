@@ -30,6 +30,7 @@ $data = array(
 			'ERROR' => elgg_echo('developers:debug:error'),
 			'WARNING' => elgg_echo('developers:debug:warning'),
 			'NOTICE' => elgg_echo('developers:debug:notice'),
+			'INFO' => elgg_echo('developers:debug:info'),
 		),
 	),
 

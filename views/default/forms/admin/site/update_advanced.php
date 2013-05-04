@@ -62,7 +62,13 @@ $form_body .= elgg_view("input/checkboxes", array(
 	'value' => (elgg_get_config('system_cache_enabled') ? 1 : 0),
 )) . "</div>";
 
-$debug_options = array('0' => elgg_echo('installation:debug:none'), 'ERROR' => elgg_echo('installation:debug:error'), 'WARNING' => elgg_echo('installation:debug:warning'), 'NOTICE' => elgg_echo('installation:debug:notice'));
+$debug_options = array(
+	'0' => elgg_echo('installation:debug:none'),
+	'ERROR' => elgg_echo('installation:debug:error'),
+	'WARNING' => elgg_echo('installation:debug:warning'),
+	'NOTICE' => elgg_echo('installation:debug:notice'),
+	'INFO' => elgg_echo('installation:debug:info'),
+);
 $form_body .= "<div>" . elgg_echo('installation:debug');
 $form_body .= elgg_view('input/select', array(
 	'options_values' => $debug_options,

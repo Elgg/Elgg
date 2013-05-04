@@ -964,6 +964,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  */
 function elgg_log($message, $level = 'NOTICE') {
 	static $levels = array(
+		'INFO' => 200,
 		'NOTICE' => 250,
 		'WARNING' => 300,
 		'DEBUG' => 300,
