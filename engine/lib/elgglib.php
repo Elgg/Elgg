@@ -952,19 +952,30 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
  * message will be sent to {@link elgg_dump()}.  Messages with lower
  * priority than {@link $CONFIG->debug} are ignored.
  *
- * {@link elgg_dump()} outputs all levels but NOTICE to screen by default.
+ * Outputs all levels but NOTICE to screen by default.
  *
  * @note No messages will be displayed unless debugging has been enabled.
  *
  * @param string $message User message
- * @param string $level   NOTICE | WARNING | ERROR | DEBUG
+ * @param string $level   NOTICE | WARNING | ERROR
  *
  * @return bool
  * @since 1.7.0
- * @todo This is complicated and confusing.  Using int constants for debug levels will
- * make things easier.
  */
 function elgg_log($message, $level = 'NOTICE') {
+	static $levels = array(
+		'INFO' => 200,
+		'NOTICE' => 250,
+		'WARNING' => 300,
+		'DEBUG' => 300,
+		'ERROR' => 400,
+	);
+
+	if ($level == 'DEBUG') {
+		elgg_deprecated_notice("The 'DEBUG' level for logging has been deprecated.", 1.9);
+	}
+
+	$level = $levels[$level];
 	return _elgg_services()->logger->log($message, $level);
 }
 
@@ -977,14 +988,13 @@ function elgg_log($message, $level = 'NOTICE') {
  * A {@elgg_plugin_hook debug log} is called.  If a handler returns
  * false, it will stop the default logging method.
  *
- * @param mixed  $value     The value
- * @param bool   $to_screen Display to screen?
- * @param string $level     The debug level
+ * @param mixed $value     The value
+ * @param bool  $to_screen Display to screen?
  * @return void
  * @since 1.7.0
  */
-function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
-	_elgg_services()->logger->dump($value, $to_screen, $level);
+function elgg_dump($value, $to_screen = true) {
+	_elgg_services()->logger->dump($value, $to_screen);
 }
 
 /**

@@ -36,7 +36,6 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 		$result = array_search($string, $METASTRINGS_CACHE, true);
 
 		if ($result !== false) {
-			elgg_log("** Returning id for string:$string from cache.");
 			return $result;
 		}
 
@@ -88,8 +87,6 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 			$metastrings_memcache->save($row->string, $row->id);
 		}
 
-		elgg_log("** Cacheing string '{$row->string}'");
-
 		return $row->id;
 	} else {
 		$METASTRINGS_DEADNAME_CACHE[$string] = $string;
@@ -111,16 +108,12 @@ function get_metastring($id) {
 	$id = (int) $id;
 
 	if (isset($METASTRINGS_CACHE[$id])) {
-		elgg_log("** Returning string for id:$id from cache.");
-
 		return $METASTRINGS_CACHE[$id];
 	}
 
 	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where id='$id' limit 1");
 	if ($row) {
-		$METASTRINGS_CACHE[$id] = $row->string; // Cache it
-		elgg_log("** Cacheing string '{$row->string}'");
-
+		$METASTRINGS_CACHE[$id] = $row->string;
 		return $row->string;
 	}
 
@@ -169,13 +162,12 @@ function delete_orphaned_metastrings() {
 	// If memcache is enabled then we need to flush it of deleted values
 	if (is_memcache_available()) {
 		$select_query = "
-		SELECT *
-		from {$CONFIG->dbprefix}metastrings where
+		SELECT * FROM {$CONFIG->dbprefix}metastrings WHERE
 		(
-			(id not in (select name_id from {$CONFIG->dbprefix}metadata)) AND
-			(id not in (select value_id from {$CONFIG->dbprefix}metadata)) AND
-			(id not in (select name_id from {$CONFIG->dbprefix}annotations)) AND
-			(id not in (select value_id from {$CONFIG->dbprefix}annotations))
+			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}metadata)) AND
+			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}metadata)) AND
+			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}annotations)) AND
+			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}annotations))
 		)";
 
 		$dead = get_data($select_query);
@@ -192,13 +184,12 @@ function delete_orphaned_metastrings() {
 	}
 
 	$query = "
-		DELETE
-		from {$CONFIG->dbprefix}metastrings where
+		DELETE FROM {$CONFIG->dbprefix}metastrings WHERE
 		(
-			(id not in (select name_id from {$CONFIG->dbprefix}metadata)) AND
-			(id not in (select value_id from {$CONFIG->dbprefix}metadata)) AND
-			(id not in (select name_id from {$CONFIG->dbprefix}annotations)) AND
-			(id not in (select value_id from {$CONFIG->dbprefix}annotations))
+			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}metadata)) AND
+			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}metadata)) AND
+			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}annotations)) AND
+			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}annotations))
 		)";
 
 	return delete_data($query);

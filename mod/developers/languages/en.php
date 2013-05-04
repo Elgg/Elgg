@@ -37,6 +37,7 @@ return array(
 	'developers:debug:error' => 'Error',
 	'developers:debug:warning' => 'Warning',
 	'developers:debug:notice' => 'Notice',
+	'developers:debug:info' => 'Info',
 	
 	// inspection
 	'developers:inspect:help' => 'Inspect configuration of the Elgg framework.',

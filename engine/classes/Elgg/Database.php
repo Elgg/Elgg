@@ -5,8 +5,6 @@
  *
  * WARNING: THIS API IS IN FLUX. PLUGIN AUTHORS SHOULD NOT USE. See lib/database.php instead.
  *
- * TODO: Convert query cache to a private local variable (or remove completely).
- *
  * @access private
  *
  * @package    Elgg.Core
@@ -53,11 +51,18 @@ class Elgg_Database {
 	 */
 	private $delayedQueries = array();
 
+	/** @var Elgg_Logger $logger The logger */
+	private $logger;
+
 	/**
 	 * Constructor
+	 *
+	 * @param Elgg_Logger $logger The logger
 	 */
-	public function __construct() {
+	public function __construct(Elgg_Logger $logger) {
 		global $CONFIG;
+
+		$this->logger = $logger;
 
 		$this->tablePrefix = $CONFIG->dbprefix;
 
@@ -215,7 +220,7 @@ class Elgg_Database {
 	 */
 	public function insertData($query) {
 
-		elgg_log("DB query $query", 'NOTICE');
+		$this->logger->log("DB query $query", Elgg_Logger::INFO);
 
 		$dblink = $this->getLink('write');
 
@@ -243,7 +248,7 @@ class Elgg_Database {
 	 */
 	public function updateData($query) {
 
-		elgg_log("DB query $query", 'NOTICE');
+		$this->logger->log("DB query $query", Elgg_Logger::INFO);
 
 		$dblink = $this->getLink('write');
 
@@ -264,7 +269,7 @@ class Elgg_Database {
 	 */
 	public function deleteData($query) {
 
-		elgg_log("DB query $query", 'NOTICE');
+		$this->logger->log("DB query $query", Elgg_Logger::INFO);
 
 		$dblink = $this->getLink('write');
 
@@ -300,7 +305,7 @@ class Elgg_Database {
 		// Is cached?
 		if ($this->queryCache) {
 			if (isset($this->queryCache[$hash])) {
-				elgg_log("DB query $query results returned from cache (hash: $hash)", 'NOTICE');
+				$this->logger->log("DB query $query results returned from cache (hash: $hash)", Elgg_Logger::INFO);
 				return $this->queryCache[$hash];
 			}
 		}
@@ -329,13 +334,13 @@ class Elgg_Database {
 		}
 
 		if (empty($return)) {
-			elgg_log("DB query $query returned no results.", 'NOTICE');
+			$this->logger->log("DB query $query returned no results.", Elgg_Logger::INFO);
 		}
 
 		// Cache result
 		if ($this->queryCache) {
 			$this->queryCache[$hash] = $return;
-			elgg_log("DB query $query results cached (hash: $hash)", 'NOTICE');
+			$this->logger->log("DB query $query results cached (hash: $hash)", Elgg_Logger::INFO);
 		}
 
 		return $return;
@@ -513,7 +518,8 @@ class Elgg_Database {
 				if ($link == 'read' || $link == 'write') {
 					$link = $this->getLink($link);
 				} elseif (!is_resource($link)) {
-					elgg_log("Link for delayed query not valid resource or db_link type. Query: {$query_details['q']}", 'WARNING');
+					$msg = "Link for delayed query not valid resource or db_link type. Query: {$query_details['q']}";
+					$this->logger->log($msg, Elgg_Logger::WARNING);
 				}
 
 				$result = $this->executeQuery($query_details['q'], $link);
@@ -523,7 +529,7 @@ class Elgg_Database {
 				}
 			} catch (DatabaseException $e) {
 				// Suppress all exceptions since page already sent to requestor
-				elgg_log($e, 'ERROR');
+				$this->logger->log($e, Elgg_Logger::ERROR);
 			}
 		}
 	}
@@ -535,7 +541,7 @@ class Elgg_Database {
 	 */
 	protected function invalidateQueryCache() {
 		$this->queryCache->clear();
-		elgg_log("Query cache invalidated", 'NOTICE');
+		$this->logger->log("Query cache invalidated", Elgg_Logger::INFO);
 	}
 
 	/**
