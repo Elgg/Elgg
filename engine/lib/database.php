@@ -10,22 +10,6 @@
  */
 
 /**
- * Returns (if required, also creates) a database link resource.
- *
- * Database link resources are stored in the {@link $dblink} global.  These
- * resources are created by {@link setup_db_connections()}, which is called if
- * no links exist.
- *
- * @param string $dblinktype The type of link we want: "read", "write" or "readwrite".
- *
- * @return resource Database link
- * @access private
- */
-function get_db_link($dblinktype) {
-	return _elgg_services()->db->getLink($dblinktype);
-}
-
-/**
  * Queue a query for running during shutdown that writes to the database
  *
  * @param string $query   The query to execute

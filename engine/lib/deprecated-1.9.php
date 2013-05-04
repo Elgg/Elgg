@@ -49,6 +49,24 @@ function setup_db_connections() {
 }
 
 /**
+ * Returns (if required, also creates) a database link resource.
+ *
+ * Database link resources are stored in the {@link $dblink} global.  These
+ * resources are created by {@link setup_db_connections()}, which is called if
+ * no links exist.
+ *
+ * @param string $dblinktype The type of link we want: "read", "write" or "readwrite".
+ *
+ * @return resource Database link
+ * @access private
+ * @deprecated 1.9
+ */
+function get_db_link($dblinktype) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
+	return _elgg_services()->db->getLink($dblinktype);
+}
+
+/**
  * Queue a query for execution upon shutdown.
  *
  * You can specify a handler function if you care about the result. This function will accept
