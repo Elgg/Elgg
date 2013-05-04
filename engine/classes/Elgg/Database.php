@@ -400,9 +400,9 @@ class Elgg_Database {
 	 * @return void
 	 * @throws DatabaseException
 	 */
-	function runSqlScript($scriptlocation) {
-		if ($script = file_get_contents($scriptlocation)) {
-			global $CONFIG;
+	public function runSqlScript($scriptlocation) {
+		$script = file_get_contents($scriptlocation);
+		if ($script) {
 
 			$errors = array();
 
