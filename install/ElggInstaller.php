@@ -832,7 +832,7 @@ class ElggInstaller {
 				}
 			}
 
-			setup_db_connections();
+			_elgg_services()->db->setupConnections();
 			register_translations(dirname(dirname(__FILE__)) . "/languages/");
 
 			if ($stepIndex > $settingsIndex) {
@@ -1290,8 +1290,8 @@ class ElggInstaller {
 		}
 
 		try  {
-			setup_db_connections();
-		} catch (Exception $e) {
+			_elgg_services()->db->setupConnections();
+		} catch (DatabaseException $e) {
 			register_error($e->getMessage());
 			return FALSE;
 		}

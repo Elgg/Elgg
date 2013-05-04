@@ -10,19 +10,6 @@
  */
 
 /**
- * Establish database connections
- *
- * If the configuration has been set up for multiple read/write databases, set those
- * links up separately; otherwise just create the one database link.
- *
- * @return void
- * @access private
- */
-function setup_db_connections() {
-	_elgg_services()->db->setupConnections();
-}
-
-/**
  * Returns (if required, also creates) a database link resource.
  *
  * Database link resources are stored in the {@link $dblink} global.  These

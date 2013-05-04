@@ -34,6 +34,21 @@ function sanitise_string_special($string, $extra_escapeable = '') {
 }
 
 /**
+ * Establish database connections
+ *
+ * If the configuration has been set up for multiple read/write databases, set those
+ * links up separately; otherwise just create the one database link.
+ *
+ * @return void
+ * @access private
+ * @deprecated 1.9
+ */
+function setup_db_connections() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
+	_elgg_services()->db->setupConnections();
+}
+
+/**
  * Queue a query for execution upon shutdown.
  *
  * You can specify a handler function if you care about the result. This function will accept
