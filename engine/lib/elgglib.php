@@ -988,8 +988,8 @@ function elgg_log($message, $level = 'NOTICE') {
  * A {@elgg_plugin_hook debug log} is called.  If a handler returns
  * false, it will stop the default logging method.
  *
- * @param mixed  $value     The value
- * @param bool   $to_screen Display to screen?
+ * @param mixed $value     The value
+ * @param bool  $to_screen Display to screen?
  * @return void
  * @since 1.7.0
  */
