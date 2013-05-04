@@ -34,6 +34,24 @@ function sanitise_string_special($string, $extra_escapeable = '') {
 }
 
 /**
+ * Queue a query for execution upon shutdown.
+ *
+ * You can specify a handler function if you care about the result. This function will accept
+ * the raw result from {@link mysql_query()}.
+ *
+ * @param string   $query   The query to execute
+ * @param resource $dblink  The database link to use or the link type (read | write)
+ * @param string   $handler A callback function to pass the results array to
+ *
+ * @return boolean Whether successful.
+ * @deprecated 1.9 Use execute_delayed_write_query() or execute_delayed_read_query()
+ */
+function execute_delayed_query($query, $dblink, $handler = "") {
+	elgg_deprecated_notice("execute_delayed_query() has been deprecated", 1.9);
+	return _elgg_services()->db->registerDelayedQuery($query, $dblink, $handler);
+}
+
+/**
  * Return a timestamp for the start of a given day (defaults today).
  *
  * @param int $day   Day

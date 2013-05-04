@@ -24,6 +24,23 @@ class Elgg_Database {
 	private $queryCount = 0;
 
 	/**
+	 * Queries are saved to an array and executed using
+	 * a function registered by register_shutdown_function().
+	 *
+	 * Queries are saved as an array in the format:
+	 * <code>
+	 * $this->delayedQueries[] = array(
+	 * 	'q' => string $query,
+	 * 	'l' => string $query_type,
+	 * 	'h' => string $handler // a callback function
+	 * );
+	 * </code>
+	 *
+	 * @var array $delayedQueries Queries to be run during shutdown
+	 */
+	private $delayedQueries = array();
+
+	/**
 	 * Constructor
 	 */
 	public function __construct() {
@@ -53,7 +70,7 @@ class Elgg_Database {
 	 *
 	 * @return resource Database link
 	 * @throws DatabaseException
-	 * @todo make private or protected once we get rid of get_db_link()
+	 * @todo make protected once we get rid of get_db_link()
 	 */
 	public function getLink($type) {
 		if (isset($this->dbLinks[$type])) {
@@ -233,7 +250,7 @@ class Elgg_Database {
 	 * @return int|false The number of affected rows or false on failure
 	 * @throws DatabaseException
 	 */
-	function deleteData($query) {
+	public function deleteData($query) {
 
 		elgg_log("DB query $query", 'NOTICE');
 
@@ -248,7 +265,6 @@ class Elgg_Database {
 		return false;
 	}
 
-
 	/**
 	 * Handles queries that return results, running the results through a
 	 * an optional callback function. This is for R queries (from CRUD).
@@ -261,7 +277,7 @@ class Elgg_Database {
 	 *               returned nothing, an empty array.
 	 * @throws DatabaseException
 	 */
-	private function getResults($query, $callback = null, $single = false) {
+	protected function getResults($query, $callback = null, $single = false) {
 		global $DB_QUERY_CACHE;
 
 		// Since we want to cache results of running the callback, we need to
@@ -444,30 +460,26 @@ class Elgg_Database {
 	 * You can specify a handler function if you care about the result. This function will accept
 	 * the raw result from {@link mysql_query()}.
 	 *
-	 * @param string   $query   The query to execute
-	 * @param resource $dblink  The database link to use or the link type (read | write)
-	 * @param string   $handler A callback function to pass the results array to
+	 * @param string $query   The query to execute
+	 * @param string $type    The query type ('read' or 'write')
+	 * @param string $handler A callback function to pass the results array to
 	 *
 	 * @return boolean Whether registering was successful.
+	 * @todo deprecate passing resource for $type as that should not be part of public API
 	 */
-	function registerDelayedQuery($query, $dblink, $handler = "") {
-		global $DB_DELAYED_QUERIES;
+	public function registerDelayedQuery($query, $type, $handler = "") {
 
-		if (!isset($DB_DELAYED_QUERIES)) {
-			$DB_DELAYED_QUERIES = array();
-		}
-
-		if (!is_resource($dblink) && $dblink != 'read' && $dblink != 'write') {
+		if (!is_resource($type) && $type != 'read' && $type != 'write') {
 			return false;
 		}
 
 		// Construct delayed query
 		$delayed_query = array();
 		$delayed_query['q'] = $query;
-		$delayed_query['l'] = $dblink;
+		$delayed_query['l'] = $type;
 		$delayed_query['h'] = $handler;
 
-		$DB_DELAYED_QUERIES[] = $delayed_query;
+		$this->delayedQueries[] = $delayed_query;
 
 		return true;
 	}
@@ -478,11 +490,12 @@ class Elgg_Database {
 	 * called by the system automatically on shutdown.
 	 *
 	 * @return void
+	 * @access private
+	 * @todo make protected once this class is part of public API
 	 */
 	public function executeDelayedQueries() {
-		global $DB_DELAYED_QUERIES;
 
-		foreach ($DB_DELAYED_QUERIES as $query_details) {
+		foreach ($this->delayedQueries as $query_details) {
 			try {
 				$link = $query_details['l'];
 

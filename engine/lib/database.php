@@ -26,27 +26,6 @@
 global $DB_QUERY_CACHE;
 $DB_QUERY_CACHE = array();
 
-/**
- * Queries to be executed upon shutdown.
- *
- * These queries are saved to an array and executed using
- * a function registered by register_shutdown_function().
- *
- * Queries are saved as an array in the format:
- * <code>
- * $DB_DELAYED_QUERIES[] = array(
- * 	'q' => str $query,
- * 	'l' => resource $dblink,
- * 	'h' => str $handler // a callback function
- * );
- * </code>
- *
- * @global array $DB_DELAYED_QUERIES
- * @access private
- */
-global $DB_DELAYED_QUERIES;
-$DB_DELAYED_QUERIES = array();
-
 
 /**
  * Establish database connections
@@ -78,50 +57,27 @@ function get_db_link($dblinktype) {
 }
 
 /**
- * Queue a query for execution upon shutdown.
- *
- * You can specify a handler function if you care about the result. This function will accept
- * the raw result from {@link mysql_query()}.
- *
- * @param string   $query   The query to execute
- * @param resource $dblink  The database link to use or the link type (read | write)
- * @param string   $handler A callback function to pass the results array to
- *
- * @return boolean Whether successful.
- * @access private
- */
-function execute_delayed_query($query, $dblink, $handler = "") {
-	return _elgg_services()->db->registerDelayedQuery($query, $dblink, $handler);
-}
-
-/**
- * Write wrapper for execute_delayed_query()
+ * Queue a query for running during shutdown that writes to the database
  *
  * @param string $query   The query to execute
- * @param string $handler The handler if you care about the result.
+ * @param string $handler The optional handler for processing the result
  *
- * @return true
- * @uses execute_delayed_query()
- * @uses get_db_link()
- * @access private
+ * @return boolean
  */
 function execute_delayed_write_query($query, $handler = "") {
-	return execute_delayed_query($query, 'write', $handler);
+	return _elgg_services()->db->registerDelayedQuery($query, 'write', $handler);
 }
 
 /**
- * Read wrapper for execute_delayed_query()
+ * Queue a query for running during shutdown that reads from the database
  *
  * @param string $query   The query to execute
- * @param string $handler The handler if you care about the result.
+ * @param string $handler The optional handler for processing the result
  *
- * @return true
- * @uses execute_delayed_query()
- * @uses get_db_link()
- * @access private
+ * @return boolean
  */
 function execute_delayed_read_query($query, $handler = "") {
-	return execute_delayed_query($query, 'read', $handler);
+	return _elgg_services()->db->registerDelayedQuery($query, 'read', $handler);
 }
 
 /**
@@ -221,7 +177,7 @@ function get_db_tables() {
 }
 
 /**
- * Optimise a table.
+ * Optimize a table.
  *
  * Executes an OPTIMIZE TABLE query on $table.  Useful after large DB changes.
  *
@@ -232,7 +188,7 @@ function get_db_tables() {
  */
 function optimize_table($table) {
 	$table = sanitise_string($table);
-	return _elgg_services()->db->updateData("optimize table $table");
+	return _elgg_services()->db->updateData("OPTIMIZE TABLE $table");
 }
 
 /**
@@ -242,6 +198,7 @@ function optimize_table($table) {
  *
  * @return string Database error message
  * @access private
+ * @todo deprecate or move into db class
  */
 function get_db_error($dblink) {
 	return mysql_error($dblink);
@@ -266,7 +223,6 @@ function get_db_error($dblink) {
  *
  * @return void
  * @throws DatabaseException
- * @access private
  */
 function run_sql_script($scriptlocation) {
 	return _elgg_services()->db->runSqlScript($scriptlocation);
