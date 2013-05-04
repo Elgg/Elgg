@@ -11,9 +11,9 @@
  */
 class Elgg_Database_Config {
 
-	const READ = 0;
-	const WRITE = 1;
-	const READ_WRITE = 2;
+	const READ = 'read';
+	const WRITE = 'write';
+	const READ_WRITE = 'readwrite';
 
 	/** @var stdClass $config Elgg's config object */
 	protected $config;
@@ -85,10 +85,8 @@ class Elgg_Database_Config {
 		$config = array();
 		switch ($type) {
 			case self::READ:
-				$config = $this->getParticularConnectionConfig('read');
-				break;
 			case self::WRITE:
-				$config = $this->getParticularConnectionConfig('write');
+				$config = $this->getParticularConnectionConfig($type);
 				break;
 			default:
 				$config = $this->getGeneralConnectionConfig();
