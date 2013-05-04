@@ -381,38 +381,6 @@ class Elgg_Database {
 	}
 
 	/**
-	 * Return tables matching the database prefix {@link $this->tablePrefix}% in the currently
-	 * selected database.
-	 *
-	 * @return array Array of tables or empty array on failure
-	 * @static array $tables Tables found matching the database prefix
-	 * @throws DatabaseException
-	 */
-	public function getTables() {
-		static $tables;
-
-		if (isset($tables)) {
-			return $tables;
-		}
-
-		$result = $this->getData("SHOW TABLES LIKE '$this->tablePrefix%'");
-
-		$tables = array();
-		if (is_array($result) && !empty($result)) {
-			foreach ($result as $row) {
-				$row = (array) $row;
-				if (is_array($row) && !empty($row)) {
-					foreach ($row as $element) {
-						$tables[] = $element;
-					}
-				}
-			}
-		}
-
-		return $tables;
-	}
-
-	/**
 	 * Runs a full database script from disk.
 	 *
 	 * The file specified should be a standard SQL file as created by

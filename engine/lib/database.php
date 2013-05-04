@@ -2,8 +2,7 @@
 /**
  * Elgg database procedural code.
  *
- * Includes functions for establishing and retrieving a database link,
- * reading data, writing data, upgrading DB schemas, and sanitizing input.
+ * Includes functions for reading data, writing data, and escaping queries.
  *
  * @package    Elgg.Core
  * @subpackage Database
@@ -106,46 +105,6 @@ function update_data($query) {
  */
 function delete_data($query) {
 	return _elgg_services()->db->deleteData($query);
-}
-
-/**
- * Return tables matching the database prefix {@link $CONFIG->dbprefix}% in the currently
- * selected database.
- *
- * @return array|false List of tables or false on failure
- * @static array $tables Tables found matching the database prefix
- * @access private
- */
-function get_db_tables() {
-	return _elgg_services()->db->getTables();
-}
-
-/**
- * Optimize a table.
- *
- * Executes an OPTIMIZE TABLE query on $table.  Useful after large DB changes.
- *
- * @param string $table The name of the table to optimise
- *
- * @return bool
- * @access private
- */
-function optimize_table($table) {
-	$table = sanitise_string($table);
-	return _elgg_services()->db->updateData("OPTIMIZE TABLE $table");
-}
-
-/**
- * Get the last database error for a particular database link
- *
- * @param resource $dblink The DB link
- *
- * @return string Database error message
- * @access private
- * @todo deprecate or move into db class
- */
-function get_db_error($dblink) {
-	return mysql_error($dblink);
 }
 
 /**

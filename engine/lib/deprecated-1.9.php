@@ -67,6 +67,72 @@ function get_db_link($dblinktype) {
 }
 
 /**
+ * Optimize a table.
+ *
+ * Executes an OPTIMIZE TABLE query on $table.  Useful after large DB changes.
+ *
+ * @param string $table The name of the table to optimise
+ *
+ * @return bool
+ * @access private
+ * @deprecated 1.9
+ */
+function optimize_table($table) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
+	$table = sanitise_string($table);
+	return _elgg_services()->db->updateData("OPTIMIZE TABLE $table");
+}
+
+/**
+ * Return tables matching the database prefix {@link $CONFIG->dbprefix}% in the currently
+ * selected database.
+ *
+ * @return array|false List of tables or false on failure
+ * @static array $tables Tables found matching the database prefix
+ * @access private
+ * @deprecated 1.9
+ */
+function get_db_tables() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
+	static $tables;
+
+	if (isset($tables)) {
+		return $tables;
+	}
+
+	$table_prefix = elgg_get_config('dbprefix');
+	$result = get_data("SHOW TABLES LIKE '$table_prefix%'");
+
+	$tables = array();
+	if (is_array($result) && !empty($result)) {
+		foreach ($result as $row) {
+			$row = (array) $row;
+			if (is_array($row) && !empty($row)) {
+				foreach ($row as $element) {
+					$tables[] = $element;
+				}
+			}
+		}
+	}
+
+	return $tables;
+}
+
+/**
+ * Get the last database error for a particular database link
+ *
+ * @param resource $dblink The DB link
+ *
+ * @return string Database error message
+ * @access private
+ * @deprecated 1.9
+ */
+function get_db_error($dblink) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
+	return mysql_error($dblink);
+}
+
+/**
  * Queue a query for execution upon shutdown.
  *
  * You can specify a handler function if you care about the result. This function will accept
