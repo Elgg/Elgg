@@ -10,6 +10,9 @@ work for developers, which means happier, more productive developers.
 	function.  If you find views that are identical except for a single value,
 	pull it out into a generic view that takes an option.
 
+* 	Embrace the SOLID and GRASP design principles for OO design:
+	http://nikic.github.io/2011/12/27/Dont-be-STUPID-GRASP-SOLID.html
+
 * 	Whitespace is free.  Don't be afraid to use it to separate blocks of code.
 	Use a single space to separate function params and string concatenation.
 
@@ -17,8 +20,8 @@ work for developers, which means happier, more productive developers.
 
 *   Use "positive" variable names. Prefer `$enable = true` to `$disable = false`.
 
-* 	Functions returning an array should return an empty array instead of FALSE
-	on no results.
+* 	Where possible, have functions/methods return a single type, using falsey
+	values such as array(), "", or 0 to indicate no results.
 
 * 	Functions not throwing an exception on error should return FALSE upon
 	failure.
@@ -26,7 +29,7 @@ work for developers, which means happier, more productive developers.
 * 	Functions returning only boolean should be prefaced with is_ or has_ (eg,
 	elgg_is_logged_in(), elgg_has_access_to_entity()).
 
-* 	Ternary syntax is acceptable for single-line, non-embedded statements.
+* 	Ternary syntax is acceptable only for single-line, non-embedded statements.
 
 * 	Use comments effectively.  Good comments describe the "why."  Good code
 	describes the "how."  Ex:
