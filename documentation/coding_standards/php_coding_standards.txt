@@ -19,7 +19,7 @@ Elgg's standards differ from and extend PSR-2 in the following ways:
 
 2.4. Indenting
 
-* 	Indent using hard tabs (tabs should appear 4 characters wide in your IDE).
+* 	Indent using one tab character, not spaces.
 
 4.1. Extends and Implements
 
@@ -72,6 +72,3 @@ Miscellaneous
 		
 		Good:
 		echo "Hello, $name!  How is your $time_of_day?"; 
-
-* 	Do not rename public API functions, classes, methods, or properties once they
-	are in a stable version branch.
