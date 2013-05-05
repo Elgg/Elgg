@@ -1,55 +1,74 @@
 *** PHP CODING STANDARDS ***
 
-These are the coding standards for Elgg.  All core development and bundled
-plugins are required to be in this format. Plugin developers are strongly
-encouraged to adopt these standards.
+These are the required coding standards for Elgg core and all bundled plugins.
+Plugin developers are strongly encouraged to adopt these standards.
 
-* 	Unix line endings.
+Developers should first read the PSR-2 Coding Standard Guide.
+https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 
-* 	Hard tabs, 4 character tab spacing.
+Elgg's standards differ from and extend PSR-2 in the following ways:
 
-* 	No PHP shortcut tags ( <? or <?= or <% ).
+2.1 Basic Coding Standard
 
-* 	PHPDoc comments on functions and classes (all methods; declared properties
-	when appropriate).
+* 	Compliance with PSR-1 is encouraged, but not required.
 
-* 	Mandatory wrapped {}s around any code blocks. 
-		Bad:
-		if (true) 
-			foreach($arr as $elem) 
-				echo $elem;
-	
-		Good:
-		if (true) {
-			foreach ($arr as $elem) {
-				echo $elem;
-			}
-		}
+2.3. Lines
 
-* 	Name standalone functions using underscore_character().
+* 	Consider refactoring code (e.g. introduce variables) if lines reach over
+	100 characters.
 
-* 	Name classes using CamelCase() and methods using lowerCamelCase().
+2.4. Indenting
+
+* 	Indent using one tab character, not spaces.
+
+4.1. Extends and Implements
+
+* 	Opening braces for classes must go on the same line.
+
+4.3. Methods
+
+* 	Opening braces for methods (and functions) must go on the same line.
+
+The following is not mentioned in PSR-2
+
+Documentation
+
+* 	Include PHPDoc comments on functions and classes (all methods; declared
+	properties when appropriate).
+
+* 	Annotate classes, methods, properties, and functions with "@access private"
+	unless they are intended for public use, are already of limited visibility,
+	or are within a class already marked as private.
+
+* 	Use // or /* */ when commenting.
+
+* 	Use only // comments inside function/method bodies.
+
+Naming
+
+* 	Use underscores to separate words in the names of functions, variables,
+	and properties.
+
+* 	Names of functions for public use must begin with "elgg_".
+
+* 	All other function names must begin with "_elgg_".
+
+* 	The names of all classes and interfaces must use underscores as namespace
+	separators and be within the Elgg namespace. (Elgg_Cache_LRUCache)
 
 * 	Name globals and constants in ALL_CAPS (ACCESS_FRIENDS, $CONFIG).
 
-* 	Use underscores / camel case to separate standard English words in
-	functions, classes, and methods. (get_default_site(), ElggUser->isLoggedIn()).
+Miscellaneous
 
-* 	Space functions like_this($required, $optional = TRUE).
+* 	Use PHP 5.2-compatible syntax in Elgg versions before 1.10.
 
-* 	Space keywords and constructs like this: if (FALSE) { ... }.
+* 	Do not use PHP shortcut tags ( <? or <?= or <% ).
 
-* 	Correctly use spaces, quotes, and {}s in strings: 
-		Bad (hard to read, misuse of quotes and {}s): 
+* 	When creating strings with variables, use double-quoted strings and wrap
+	variables with braces only when necessary.
+
+		Bad (hard to read, misuse of quotes and {}s):
 		echo 'Hello, '.$name."!  How is your {$time_of_day}?";
 		
 		Good:
 		echo "Hello, $name!  How is your $time_of_day?"; 
-
-* 	Line lengths should be reasonable.  If you are writing lines over 100 
-	characters on a line, please revise the code.
-
-* 	Use // or /* */ when commenting.
-
-* 	No closing PHP tag (?>) at EOF unless after a heredoc. (Avoids problems with 
-	trailing whitespace. Required after heredoc by PHP.)
