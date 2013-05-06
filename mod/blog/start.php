@@ -190,7 +190,7 @@ function blog_owner_block_menu($hook, $type, $return, $params) {
 		$item = new ElggMenuItem('blog', elgg_echo('blog'), $url);
 		$return[] = $item;
 	} else {
-		if ($params['entity']->blog_enable != "no") {
+		if ($params['entity']->blog_enable == "yes") {
 			$url = "blog/group/{$params['entity']->guid}/all";
 			$item = new ElggMenuItem('blog', elgg_echo('blog:group'), $url);
 			$return[] = $item;
