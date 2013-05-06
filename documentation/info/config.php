@@ -4,47 +4,9 @@
  *
  * @tip Plugins should never use the $CONFIG array directly.
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Configuration
  */
-
-/**
- * Event information for the events subsystem.
- *
- * Events are added with {@link elgg_register_event_handler()} and
- * can be removed in >= 1.8 with {@link elgg_unregister_event_handler()}.
- *
- * Events are stored as a multidimensional array in the format:
- * <code>
- * $CONFIG->events[str $event_name][str $event_type][int priority] = str callback_function
- * </code>
- *
- * @global array $CONFIG->events
- * @name $CONFIG->events
- * @see events()
- * @see elgg_register_event_handler()
- * @see elgg_unregister_event_handler()
- * @see elgg_trigger_event()
- */
-$CONFIG->events;
-
-/**
- * Plugin Hook information for the plugin hooks subsystem.
- *
- * Hooks are added with {@link elgg_register_plugin_hook_handler()} and
- * can be removed in >= 1.8 with {@link elgg_unregister_plugin_hook_handler()}.
- *
- * Hooks are stored as a multidimensional array in the format:
- * <code>
- * $CONFIG->hooks[str $hook_name][str $hook_type][int priority] = str callback_function
- * </code>
- *
- * @global array $CONFIG->hooks
- * @see elgg_register_plugin_hook_handler()
- * @see elgg_unregister_plugin_hook_handler()
- * @see elgg_trigger_plugin_hook()
- */
-$CONFIG->hooks;
 
 /**
  * Paths to scan for autoloading languages.

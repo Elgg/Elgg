@@ -10,7 +10,7 @@
  * and then rename it to settings.php.
  *
  * @todo Turn this into something we handle more automatically.
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Configuration
  */
 
@@ -33,7 +33,6 @@ if (!isset($CONFIG)) {
  * The database username
  *
  * @global string $CONFIG->dbuser
- * @name $CONFIG->dbuser
  */
 $CONFIG->dbuser = '{{dbuser}}';
 
@@ -71,6 +70,29 @@ $CONFIG->dbhost = '{{dbhost}}';
  */
 $CONFIG->dbprefix = '{{dbprefix}}';
 
+/**
+ * Multiple database connections
+ *
+ * Elgg supports master/slave MySQL configurations. The master should be set as
+ * the 'write' connection and the slave(s) as the 'read' connection(s).
+ *
+ * To use, uncomment the below configuration and update for your site.
+ */
+//$CONFIG->db['split'] = true;
+
+//$CONFIG->db['write']['dbuser'] = "";
+//$CONFIG->db['write']['dbpass'] = "";
+//$CONFIG->db['write']['dbname'] = "";
+//$CONFIG->db['write']['dbhost'] = "";
+
+//$CONFIG->db['read'][0]['dbuser'] = "";
+//$CONFIG->db['read'][0]['dbpass'] = "";
+//$CONFIG->db['read'][0]['dbname'] = "";
+//$CONFIG->db['read'][0]['dbhost'] = "";
+//$CONFIG->db['read'][1]['dbuser'] = "";
+//$CONFIG->db['read'][1]['dbpass'] = "";
+//$CONFIG->db['read'][1]['dbname'] = "";
+//$CONFIG->db['read'][1]['dbhost'] = "";
 
 /**
  * Memcache setup (optional)
@@ -78,7 +100,7 @@ $CONFIG->dbprefix = '{{dbprefix}}';
  *
  * Requirements:
  * 	1) One or more memcache servers (http://www.danga.com/memcached/)
- *  2) PHP memcache wrapper (http://uk.php.net/manual/en/memcache.setup.php)
+ *  2) PHP memcache wrapper (http://php.net/manual/en/memcache.setup.php)
  *
  * Note: Multiple server support is only available on server 1.2.1
  * or higher with PECL library > 2.0.0
