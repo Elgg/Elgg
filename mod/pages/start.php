@@ -54,7 +54,7 @@ function pages_init() {
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'page_notify_message');
 
 	// add to groups
-	add_group_tool_option('pages', elgg_echo('groups:enablepages'), true);
+	add_group_tool_option('pages', elgg_echo('groups:enablepages'), false);
 	elgg_extend_view('groups/tool_latest', 'pages/group_module');
 
 	//add a widget
