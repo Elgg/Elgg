@@ -231,7 +231,7 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 		$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks'), $url);
 		$return[] = $item;
 	} else {
-		if ($params['entity']->bookmarks_enable != 'no') {
+		if ($params['entity']->bookmarks_enable == 'yes') {
 			$url = "bookmarks/group/{$params['entity']->guid}/all";
 			$item = new ElggMenuItem('bookmarks', elgg_echo('bookmarks:group'), $url);
 			$return[] = $item;
