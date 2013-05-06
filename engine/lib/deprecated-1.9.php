@@ -34,6 +34,105 @@ function sanitise_string_special($string, $extra_escapeable = '') {
 }
 
 /**
+ * Establish database connections
+ *
+ * If the configuration has been set up for multiple read/write databases, set those
+ * links up separately; otherwise just create the one database link.
+ *
+ * @return void
+ * @access private
+ * @deprecated 1.9
+ */
+function setup_db_connections() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
+	_elgg_services()->db->setupConnections();
+}
+
+/**
+ * Returns (if required, also creates) a database link resource.
+ *
+ * Database link resources are stored in the {@link $dblink} global.  These
+ * resources are created by {@link setup_db_connections()}, which is called if
+ * no links exist.
+ *
+ * @param string $dblinktype The type of link we want: "read", "write" or "readwrite".
+ *
+ * @return resource Database link
+ * @access private
+ * @deprecated 1.9
+ */
+function get_db_link($dblinktype) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
+	return _elgg_services()->db->getLink($dblinktype);
+}
+
+/**
+ * Optimize a table.
+ *
+ * Executes an OPTIMIZE TABLE query on $table.  Useful after large DB changes.
+ *
+ * @param string $table The name of the table to optimise
+ *
+ * @return bool
+ * @access private
+ * @deprecated 1.9
+ */
+function optimize_table($table) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
+	$table = sanitise_string($table);
+	return _elgg_services()->db->updateData("OPTIMIZE TABLE $table");
+}
+
+/**
+ * Return tables matching the database prefix {@link $CONFIG->dbprefix}% in the currently
+ * selected database.
+ *
+ * @return array|false List of tables or false on failure
+ * @static array $tables Tables found matching the database prefix
+ * @access private
+ * @deprecated 1.9
+ */
+function get_db_tables() {
+	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
+	static $tables;
+
+	if (isset($tables)) {
+		return $tables;
+	}
+
+	$table_prefix = elgg_get_config('dbprefix');
+	$result = get_data("SHOW TABLES LIKE '$table_prefix%'");
+
+	$tables = array();
+	if (is_array($result) && !empty($result)) {
+		foreach ($result as $row) {
+			$row = (array) $row;
+			if (is_array($row) && !empty($row)) {
+				foreach ($row as $element) {
+					$tables[] = $element;
+				}
+			}
+		}
+	}
+
+	return $tables;
+}
+
+/**
+ * Get the last database error for a particular database link
+ *
+ * @param resource $dblink The DB link
+ *
+ * @return string Database error message
+ * @access private
+ * @deprecated 1.9
+ */
+function get_db_error($dblink) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
+	return mysql_error($dblink);
+}
+
+/**
  * Queue a query for execution upon shutdown.
  *
  * You can specify a handler function if you care about the result. This function will accept

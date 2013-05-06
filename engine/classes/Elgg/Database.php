@@ -51,27 +51,29 @@ class Elgg_Database {
 	 */
 	private $delayedQueries = array();
 
+	/** @var bool $installed Is the database installed? */
+	private $installed = false;
+
+	/** @var Elgg_Database_Config $config Database configuration */
+	private $config;
+
 	/** @var Elgg_Logger $logger The logger */
 	private $logger;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Elgg_Logger $logger The logger
+	 * @param Elgg_Database_Config $config Database configuration
+	 * @param Elgg_Logger          $logger The logger
 	 */
-	public function __construct(Elgg_Logger $logger) {
-		global $CONFIG;
+	public function __construct(Elgg_Database_Config $config, Elgg_Logger $logger) {
 
 		$this->logger = $logger;
+		$this->config = $config;
 
-		$this->tablePrefix = $CONFIG->dbprefix;
+		$this->tablePrefix = $config->getTablePrefix();
 
-		$queryCachingOn = true;
-		if (isset($CONFIG->db_disable_query_cache)) {
-			$queryCachingOn = !$CONFIG->db_disable_query_cache;
-		}
-
-		if ($queryCachingOn) {
+		if ($config->isQueryCacheEnabled()) {
 			// @todo if we keep this cache in 1.9, expose the size as a config parameter
 			$this->queryCache = new Elgg_Cache_LRUCache(200);
 		}
@@ -110,9 +112,7 @@ class Elgg_Database {
 	 * @throws DatabaseException
 	 */
 	public function setupConnections() {
-		global $CONFIG;
-
-		if (!empty($CONFIG->db->split)) {
+		if ($this->config->isDatabaseSplit()) {
 			$this->establishLink('read');
 			$this->establishLink('write');
 		} else {
@@ -135,34 +135,16 @@ class Elgg_Database {
 	public function establishLink($dblinkname = "readwrite") {
 		global $CONFIG;
 
-		if ($dblinkname != "readwrite" && isset($CONFIG->db[$dblinkname])) {
-			if (is_array($CONFIG->db[$dblinkname])) {
-				$index = rand(0, sizeof($CONFIG->db[$dblinkname]));
-				$dbhost = $CONFIG->db[$dblinkname][$index]->dbhost;
-				$dbuser = $CONFIG->db[$dblinkname][$index]->dbuser;
-				$dbpass = $CONFIG->db[$dblinkname][$index]->dbpass;
-				$dbname = $CONFIG->db[$dblinkname][$index]->dbname;
-			} else {
-				$dbhost = $CONFIG->db[$dblinkname]->dbhost;
-				$dbuser = $CONFIG->db[$dblinkname]->dbuser;
-				$dbpass = $CONFIG->db[$dblinkname]->dbpass;
-				$dbname = $CONFIG->db[$dblinkname]->dbname;
-			}
-		} else {
-			$dbhost = $CONFIG->dbhost;
-			$dbuser = $CONFIG->dbuser;
-			$dbpass = $CONFIG->dbpass;
-			$dbname = $CONFIG->dbname;
-		}
+		$conf = $this->config->getConnectionConfig($dblinkname);
 
 		// Connect to database
-		if (!$this->dbLinks[$dblinkname] = mysql_connect($dbhost, $dbuser, $dbpass, true)) {
+		if (!$this->dbLinks[$dblinkname] = mysql_connect($conf['host'], $conf['user'], $conf['password'], true)) {
 			$msg = "Elgg couldn't connect to the database using the given credentials. Check the settings file.";
 			throw new DatabaseException($msg);
 		}
 
-		if (!mysql_select_db($dbname, $this->dbLinks[$dblinkname])) {
-			$msg = "Elgg couldn't select the database '$dbname', please check that the database is created and you have access to it.";
+		if (!mysql_select_db($conf['database'], $this->dbLinks[$dblinkname])) {
+			$msg = "Elgg couldn't select the database '{$conf['database']}'. Please check that the database is created and you have access to it.";
 			throw new DatabaseException($msg);
 		}
 
@@ -381,38 +363,6 @@ class Elgg_Database {
 	}
 
 	/**
-	 * Return tables matching the database prefix {@link $this->tablePrefix}% in the currently
-	 * selected database.
-	 *
-	 * @return array Array of tables or empty array on failure
-	 * @static array $tables Tables found matching the database prefix
-	 * @throws DatabaseException
-	 */
-	public function getTables() {
-		static $tables;
-
-		if (isset($tables)) {
-			return $tables;
-		}
-
-		$result = $this->getData("SHOW TABLES LIKE '$this->tablePrefix%'");
-
-		$tables = array();
-		if (is_array($result) && !empty($result)) {
-			foreach ($result as $row) {
-				$row = (array) $row;
-				if (is_array($row) && !empty($row)) {
-					foreach ($row as $element) {
-						$tables[] = $element;
-					}
-				}
-			}
-		}
-
-		return $tables;
-	}
-
-	/**
 	 * Runs a full database script from disk.
 	 *
 	 * The file specified should be a standard SQL file as created by
@@ -432,9 +382,9 @@ class Elgg_Database {
 	 * @return void
 	 * @throws DatabaseException
 	 */
-	function runSqlScript($scriptlocation) {
-		if ($script = file_get_contents($scriptlocation)) {
-			global $CONFIG;
+	public function runSqlScript($scriptlocation) {
+		$script = file_get_contents($scriptlocation);
+		if ($script) {
 
 			$errors = array();
 
@@ -551,9 +501,8 @@ class Elgg_Database {
 	 * @throws InstallationException
 	 */
 	public function assertInstalled() {
-		global $CONFIG;
 
-		if (isset($CONFIG->installed)) {
+		if ($this->installed) {
 			return;
 		}
 
@@ -567,7 +516,7 @@ class Elgg_Database {
 			throw new InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 		}
 
-		$CONFIG->installed = true;
+		$this->installed = true;
 	}
 
 	/**

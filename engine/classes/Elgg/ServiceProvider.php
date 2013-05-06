@@ -57,7 +57,8 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	 * @return Elgg_Database
 	 */
 	protected function getDatabase(Elgg_ServiceProvider $c) {
-		return new Elgg_Database($c->logger);
+		global $CONFIG;
+		return new Elgg_Database(new Elgg_Database_Config($CONFIG), $c->logger);
 	}
 
 	/**
