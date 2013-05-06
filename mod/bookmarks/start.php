@@ -66,7 +66,7 @@ function bookmarks_init() {
 	elgg_register_entity_type('object', 'bookmarks');
 
 	// Groups
-	add_group_tool_option('bookmarks', elgg_echo('bookmarks:enablebookmarks'), true);
+	add_group_tool_option('bookmarks', elgg_echo('bookmarks:enablebookmarks'), false);
 	elgg_extend_view('groups/tool_latest', 'bookmarks/group_module');
 }
 
