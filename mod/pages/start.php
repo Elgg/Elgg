@@ -214,7 +214,7 @@ function pages_owner_block_menu($hook, $type, $return, $params) {
 		$item = new ElggMenuItem('pages', elgg_echo('pages'), $url);
 		$return[] = $item;
 	} else {
-		if ($params['entity']->pages_enable != "no") {
+		if ($params['entity']->pages_enable == "yes) {
 			$url = "pages/group/{$params['entity']->guid}/all";
 			$item = new ElggMenuItem('pages', elgg_echo('pages:group'), $url);
 			$return[] = $item;
