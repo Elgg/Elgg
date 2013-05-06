@@ -45,7 +45,7 @@ function file_init() {
 	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'file_notify_message');
 
 	// add the group files tool option
-	add_group_tool_option('file', elgg_echo('groups:enablefiles'), true);
+	add_group_tool_option('file', elgg_echo('groups:enablefiles'), false);
 
 	// Register entity type for search
 	elgg_register_entity_type('object', 'file');
