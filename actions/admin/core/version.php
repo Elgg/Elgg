@@ -1,6 +1,6 @@
 <?php
 
-$version = new Elgg_Version();
+$version = _elgg_services()->version;
 $latestRelease = $version->getLatestRelease(true);
 
 if ($latestRelease !== false) {
