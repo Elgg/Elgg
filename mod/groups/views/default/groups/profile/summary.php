@@ -59,6 +59,3 @@ if (!$owner) {
 		?>
 	</div>
 </div>
-<?php
-?>
-

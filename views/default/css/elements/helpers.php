@@ -143,4 +143,3 @@ echo <<<CSS
 .mtl, .mvl{margin-top:$large}
 .mbl, .mvl{margin-bottom:$large}
 CSS;
-?>
