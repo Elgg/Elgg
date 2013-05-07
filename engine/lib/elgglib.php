@@ -1006,20 +1006,8 @@ function elgg_dump($value, $to_screen = true) {
  * @since 1.9
  */
 function elgg_get_version($human_readable = false) {
-	global $CONFIG;
-
-	static $version, $release;
-
-	if (isset($CONFIG->path)) {
-		if (!isset($version) || !isset($release)) {
-			if (!include($CONFIG->path . "version.php")) {
-				return false;
-			}
-		}
-		return (!$human_readable) ? $version : $release;
-	}
-
-	return false;
+	$version = new Elgg_Version();
+	return $version->getVersion($human_readable); 
 }
 
 /**
