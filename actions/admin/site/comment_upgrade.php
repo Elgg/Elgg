@@ -44,12 +44,8 @@ if ($annotations) {
 			 * - Remove annotation id
 			 * - Save comment guid to the target_guid column
 			 */
-			// TODO Use the original query once target_guid is available
-			$query_original = "UPDATE {$db_prefix}river
-				SET view='river/object/comment/create', annotation_id=0, target_guid=$guid
-				WHERE action_type='comment' AND annotation_id={$annotation->id}";
 			$query = "UPDATE {$db_prefix}river
-				SET view='river/object/comment/create', annotation_id=0
+				SET view='river/object/comment/create', annotation_id=0, object_guid=$guid, target_guid={$object->container_guid}
 				WHERE action_type='comment' AND annotation_id={$annotation->id}";
 
 			if (update_data($query)) {
