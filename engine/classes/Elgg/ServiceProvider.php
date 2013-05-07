@@ -19,6 +19,7 @@
  * @property-read Elgg_Request              $request
  * @property-read Elgg_Router               $router
  * @property-read ElggSession               $session
+ * @property-read Elgg_Version              $version
  * @property-read Elgg_ViewService          $views
  * @property-read Elgg_WidgetsService       $widgets
  * 
@@ -46,6 +47,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setFactory('request', array($this, 'getRequest'));
 		$this->setFactory('router', array($this, 'getRouter'));
 		$this->setFactory('session', array($this, 'getSession'));
+		$this->setClassName('version', 'Elgg_Version');
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setClassName('widgets', 'Elgg_WidgetsService');
 	}
