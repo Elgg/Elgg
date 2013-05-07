@@ -31,15 +31,13 @@ class Elgg_Version {
 	private $cachingPeriod = 86400; // 24h
 
 	/**
-	 * Get the current Elgg version information
-	 *
-	 * @param bool $humanreadable Whether to return a human readable version (default: false)
-	 *
-	 * @return string|false Depending on success
+	 * Initializes local variables holding version and release, bu reading version.php file from the main directory.
+	 * 
+	 * @return boolean if values were successfully populated
 	 */
-	function getVersion($humanreadable = false) {
+	private function initVersionAndRelease() {
 		global $CONFIG;
-
+		
 		if (isset($CONFIG->path)) {
 			if (!isset($this->localVersion) || !isset($this->localRelease)) {
 				if (!include($CONFIG->path . "version.php")) {
@@ -48,21 +46,34 @@ class Elgg_Version {
 				$this->localVersion = $version;
 				$this->localRelease = $release;
 			}
-			return (!$humanreadable) ? $this->localVersion : $this->localRelease;
+			return true;
 		}
 
 		return false;
 	}
-
+	
 	/**
-	 * Compares two elgg release strings
-	 * 
-	 * @param string $a first release
-	 * @param string $b second release
-	 * @return int -1 if the first version is lower than the second, 0 if they are equal, and 1 if the second is lower
+	 * Get the current Elgg version information
+	 *
+	 * @return string|false Depending on success
 	 */
-	function compareReleases($a, $b) {
-		return version_compare($a, $b);
+	function getVersion() {
+		if ($this->initVersionAndRelease()) {
+			return $this->localVersion;
+		}
+		return false;
+	}
+	
+	/**
+	 * Get the current Elgg release information
+	 *
+	 * @return string|false Depending on success
+	 */
+	function getRelease() {
+		if ($this->initVersionAndRelease()) {
+			return $this->localRelease;
+		}
+		return false;
 	}
 	
 	/**
@@ -114,7 +125,7 @@ class Elgg_Version {
 				if (strpos($r, 'rc') !== false || strpos($r, 'dev') !== false) {
 					continue;
 				}
-				if (!$release || ($this->compareReleases($r, $release) > 0)) {
+				if (!$release || (version_compare($r, $release) > 0)) {
 					$release = $r;
 				}
 			}
@@ -189,13 +200,13 @@ class Elgg_Version {
 	 */
 	function isLatestRelease($version = null) {
 		if ($version === null) {
-			$version = $this->getVersion(true);
+			$version = $this->getRelease();
 		}
 		$latest = $this->getLatestRelease();
 		if ($latest === false) {
 			throw new IOException(elgg_echo('IOException:UnknownVersion'));
 		}
-		return $this->compareReleases($latest, $version) < 1;
+		return version_compare($latest, $version) < 1;
 	}
 }
 

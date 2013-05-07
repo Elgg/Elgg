@@ -1,7 +1,7 @@
 <?php
 try { 
 	$version = _elgg_services()->version;
-	$localRelease = $version->getVersion(true);
+	$localRelease = $version->getRelease();
 	$latestRelease = $version->getLatestRelease();
 	$isLatest = $version->isLatestRelease($localRelease);
 	$time = $version->getLatestReleaseLastChecked();

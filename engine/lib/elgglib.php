@@ -1006,7 +1006,11 @@ function elgg_dump($value, $to_screen = true) {
  * @since 1.9
  */
 function elgg_get_version($human_readable = false) {
-	return _elgg_services()->version->getVersion($human_readable); 
+	if ($human_readable) {
+		return _elgg_services()->version->getRelease();
+	} else {
+		return _elgg_services()->version->getVersion();
+	}
 }
 
 /**
