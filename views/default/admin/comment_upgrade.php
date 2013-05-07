@@ -14,7 +14,9 @@ unset($options['count']);
 
 $status_string = elgg_echo('upgrade:comments:status', array($count));
 
-echo "<p>$status_string</p><span id=\"comment-upgrade-total\" class=\"hidden\">$count</span>";
+echo "<p>$status_string</p>
+<span id=\"comment-upgrade-total\" class=\"hidden\">$count</span>
+<span id=\"comment-upgrade-count\" class=\"hidden\">0</span>";
 
 if ($count) {
 	$annotations = elgg_get_annotations($options);

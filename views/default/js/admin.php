@@ -231,22 +231,28 @@ elgg.admin.upgradeCommentBatch = function(offset) {
 			$('#comment-upgrade-messages').append(msg);
 		}
 
-		var newOffset = json.output.newOffset;
+		// Increase success statistics
+		var numSuccess = $('#comment-upgrade-success-count');
+		var successCount = parseInt(numSuccess.text()) + json.output.numSuccess;
+		numSuccess.text(successCount);
+
+		// Increase error statistics
+		var numErrors = $('#comment-upgrade-error-count');
+		var newOffset = parseInt(numErrors.text()) + json.output.numErrors;
+		numErrors.text(newOffset);
+
+		// Increase total amount of processed comments
+		var numProcessed = parseInt($('#comment-upgrade-count').text()) + json.output.numSuccess + json.output.numErrors;
+		$('#comment-upgrade-count').text(numProcessed);
 
 		// Increase percentage
 		var total = $('#comment-upgrade-total').text();
-		var percent = parseInt(newOffset * 100 / total);
-
-		// Increase success/error statistics
-		var numSuccess = $('#comment-upgrade-success-count');
-		numSuccess.text(parseInt(numSuccess.text()) + json.output.numSuccess);
-		var numErrors = $('#comment-upgrade-error-count');
-		numErrors.text(parseInt(numErrors.text()) + json.output.numErrors);
+		var percent = parseInt(numProcessed * 100 / total);
 
 		// Increase the progress bar
-		$('.elgg-progressbar').progressbar({ value: newOffset });
+		$('.elgg-progressbar').progressbar({ value: numProcessed });
 
-		if (newOffset < total) {
+		if (numProcessed < total) {
 			// Start next upgrade call
 			elgg.admin.upgradeCommentBatch(newOffset);
 		} else {
