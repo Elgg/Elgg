@@ -3,6 +3,8 @@
  * Convert comment annotations to entities
  */
 
+// Offset is the total amount of errors so far. We skip these
+// comments to prevent them from possibly repeating the same error.
 $offset = get_input('offset', 0);
 $limit = 10;
 
@@ -11,7 +13,8 @@ access_show_hidden_entities(true);
 
 $annotations = elgg_get_annotations(array(
 	'annotation_names' => 'generic_comment',
-	'limit' => $limit
+	'limit' => $limit,
+	'offset' => $offset,
 ));
 
 $success_count = 0;
@@ -42,7 +45,7 @@ if ($annotations) {
 			 *
 			 * - Update the view path
 			 * - Remove annotation id
-			 * - Save comment guid to the target_guid column
+			 * - Save comment guid to the object_guid column
 			 */
 			$query = "UPDATE {$db_prefix}river
 				SET view='river/object/comment/create', annotation_id=0, object_guid=$guid, target_guid={$object->container_guid}
@@ -53,8 +56,7 @@ if ($annotations) {
 				$annotation->delete();
 				$success_count++;
 			} else {
-				$msg = elgg_echo('upgrade:comments:river_update_failed', array($annotation->id));
-				register_error();
+				register_error(elgg_echo('upgrade:comments:river_update_failed', array($annotation->id)));
 				$error_count++;
 			}
 		} else {
@@ -70,5 +72,4 @@ access_show_hidden_entities($access_status);
 $output = new stdClass();
 $output->numSuccess = $success_count;
 $output->numErrors = $error_count;
-$output->newOffset = $offset + $limit;
 echo json_encode($output);
