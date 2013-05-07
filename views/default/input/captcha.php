@@ -5,4 +5,3 @@
  * @package Elgg
  * @subpackage Core
  */
-?>
