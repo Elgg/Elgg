@@ -20,4 +20,4 @@ foreach ($friends as $friend) {
 </foaf:Person>
 </foaf:knows>
 
-<?php } ?>
+<?php } 
