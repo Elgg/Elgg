@@ -28,16 +28,15 @@ $comment->description = $comment_text;
 $comment->owner_guid = $user->getGUID();
 $comment->container_guid = $entity->getGUID();
 $comment->access_id = $entity->access_id;
+$guid = $comment->save();
 
-// tell user that comment was posted
-if (!$comment->save()) {
+if (!$guid) {
 	register_error(elgg_echo("generic_comment:failure"));
 	forward(REFERER);
 }
 
-// notify if poster wasn't owner
+// Notify if poster wasn't owner
 if ($entity->owner_guid != $user->guid) {
-
 	notify_user($entity->owner_guid,
 		$user->guid,
 		elgg_echo('generic_comment:email:subject'),
@@ -52,11 +51,16 @@ if ($entity->owner_guid != $user->guid) {
 	);
 }
 
-system_message(elgg_echo("generic_comment:posted"));
+// Add to river
+elgg_create_river_item(array(
+	'view' => 'river/object/comment/create',
+	'action_type' => 'comment',
+	'subject_guid' => $user->guid,
+	'object_guid' => $guid,
+	'target_guid' => $entity_guid,
+));
 
-//add to river
-add_to_river('river/object/comment/create', 'comment', $user->guid,
-	$entity->getGUID(), '', 0, 0, $comment->getGUID());
+system_message(elgg_echo('generic_comment:posted'));
 
-// Forward to the page the action occurred on
+// Forward back to the page where the action occurred
 forward(REFERER);
