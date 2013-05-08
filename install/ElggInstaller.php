@@ -1595,6 +1595,11 @@ class ElggInstaller {
 		create_metadata($guid, 'validated_method', 'admin_user', '', 0, ACCESS_PUBLIC);
 
 		if ($login) {
+			$handler = new Elgg_Http_DatabaseSessionHandler(_elgg_services()->db);
+			$storage = new Elgg_Http_NativeSessionStorage($handler);
+			$session = new ElggSession($storage);
+			$session->setName('Elgg');
+			_elgg_services()->setValue('session', $session);
 			if (login($user) == FALSE) {
 				register_error(elgg_echo('install:error:adminlogin'));
 			}
