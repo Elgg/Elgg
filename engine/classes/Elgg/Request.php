@@ -22,11 +22,11 @@ class Elgg_Request {
 	/**
 	 * Constructor
 	 * 
-	 * @param Elgg_PluginHookService $hooks   For plugin-customizable input filtering.
-	 * @param array                  $server  An array that conforms to the $_SERVER api.
-	 * @param array                  $request An array that conforms to the $_REQUEST api.
+	 * @param Elgg_PluginHooksService $hooks   For plugin-customizable input filtering.
+	 * @param array                   $server  An array that conforms to the $_SERVER api.
+	 * @param array                   $request An array that conforms to the $_REQUEST api.
 	 */
-	public function __construct(Elgg_PluginHookService $hooks, array $server, array $request = array()) {
+	public function __construct(Elgg_PluginHooksService $hooks, array $server, array $request = array()) {
 		$this->hooks = $hooks;
 		$this->server = $server;
 		$this->request = $request;
@@ -98,7 +98,7 @@ class Elgg_Request {
 	/**
 	 * Filter some user-provided HTML for XSS, etc.
 	 * 
-	 * TODO(evan): Move to Elgg_PluginHookService?
+	 * TODO(evan): Move to Elgg_PluginHooksService?
 	 * 
 	 * @param string $var The HTML string to filter.
 	 * 

@@ -7,7 +7,7 @@ require_once "$engine/lib/entities.php";
 class Elgg_Notifications_NotificationsServiceTest extends PHPUnit_Framework_TestCase {
 
 	public function setUp() {
-		$this->hooks = new Elgg_PluginHookService();
+		$this->hooks = new Elgg_PluginHooksService();
 		$this->queue = new Elgg_Util_MemoryQueue();
 		$dbMock = $this->getMockBuilder('Elgg_Database')
 			->disableOriginalConstructor()
@@ -93,7 +93,7 @@ class Elgg_Notifications_NotificationsServiceTest extends PHPUnit_Framework_Test
 		$object->subtype = 'bar';
 		$params = array('action' => 'create', 'object' => $object);
 
-		$mock = $this->getMock('Elgg_PluginHookService', array('trigger'));
+		$mock = $this->getMock('Elgg_PluginHooksService', array('trigger'));
 		$mock->expects($this->once())
 			->method('trigger')
 			->with('enqueue', 'notification', $params, true);
@@ -103,7 +103,7 @@ class Elgg_Notifications_NotificationsServiceTest extends PHPUnit_Framework_Test
 	}
 
 	public function testStoppingEnqueueEvent() {
-		$mock = $this->getMock('Elgg_PluginHookService', array('trigger'));
+		$mock = $this->getMock('Elgg_PluginHooksService', array('trigger'));
 		$mock->expects($this->once())
 			->method('trigger')
 			->will($this->returnValue(false));

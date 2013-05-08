@@ -12,7 +12,7 @@ $CONFIG = (object) array(
 	'boot_complete' => false,
 );
 
-// TODO(ewinslow): Remove this once ViewService no longer needs it.
+// TODO(ewinslow): Remove this once ViewsService no longer needs it.
 function elgg_get_site_url() {
 	return '';
 }

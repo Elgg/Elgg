@@ -3,7 +3,7 @@
 class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 	
 	public function testTriggerCallsRegisteredHandlers() {
-		$events = new Elgg_EventService();
+		$events = new Elgg_EventsService();
 
 		$this->setExpectedException('InvalidArgumentException');
 
@@ -13,7 +13,7 @@ class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testBubbling() {
-		$events = new Elgg_EventService();
+		$events = new Elgg_EventsService();
 
 		// false stops it
 		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'returnFalse'));
@@ -22,7 +22,7 @@ class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 		$events->trigger('foo', 'bar');
 
 		// null allows it
-		$events = new Elgg_EventService();
+		$events = new Elgg_EventsService();
 
 		// false stops it
 		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'returnNull'));

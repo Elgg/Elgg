@@ -16,8 +16,8 @@ class Elgg_ServiceProviderTest extends PHPUnit_Framework_TestCase {
 			'autoP' => 'ElggAutoP',
 			'autoloadManager' => 'Elgg_AutoloadManager',
 			'db' => 'Elgg_Database',
-			'events' => 'Elgg_EventService',
-			'hooks' => 'Elgg_PluginHookService',
+			'events' => 'Elgg_EventsService',
+			'hooks' => 'Elgg_PluginHooksService',
 			'logger' => 'Elgg_Logger',
 			'metadataCache' => 'ElggVolatileMetadataCache',
 			'request' => 'Elgg_Request',
@@ -26,7 +26,7 @@ class Elgg_ServiceProviderTest extends PHPUnit_Framework_TestCase {
 			// Will this start session?
 			//'session' => 'ElggSession'
 			
-			'views' => 'Elgg_ViewService',
+			'views' => 'Elgg_ViewsService',
 			'widgets' => 'Elgg_WidgetsService',
 		);
 

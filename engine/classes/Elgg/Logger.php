@@ -39,9 +39,9 @@ class Elgg_Logger {
 	/**
 	 * Constructor
 	 *
-	 * @param Elgg_PluginHookService $hooks Hooks service
+	 * @param Elgg_PluginHooksService $hooks Hooks service
 	 */
-	public function __construct(Elgg_PluginHookService $hooks) {
+	public function __construct(Elgg_PluginHooksService $hooks) {
 		$this->hooks = $hooks;
 	}
 

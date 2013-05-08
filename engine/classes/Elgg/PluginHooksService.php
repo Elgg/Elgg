@@ -11,7 +11,7 @@
  * @subpackage Hooks
  * @since      1.9.0
  */
-class Elgg_PluginHookService extends Elgg_HooksRegistrationService {
+class Elgg_PluginHooksService extends Elgg_HooksRegistrationService {
 
 	/**
 	 * Triggers a plugin hook

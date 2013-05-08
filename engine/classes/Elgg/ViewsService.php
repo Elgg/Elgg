@@ -14,7 +14,7 @@
  * @subpackage Views
  * @since      1.9.0
  */
-class Elgg_ViewService {
+class Elgg_ViewsService {
 
 	protected $config_wrapper;
 	protected $site_url_wrapper;
@@ -22,7 +22,7 @@ class Elgg_ViewService {
 	protected $user_wrapped;
 
 	/**
-	 * @see Elgg_ViewService::fileExists
+	 * @see Elgg_ViewsService::fileExists
 	 * @var array
 	 */
 	protected $fileExistsCache = array();
@@ -30,10 +30,10 @@ class Elgg_ViewService {
 	/**
 	 * Constructor
 	 *
-	 * @param Elgg_PluginHookService $hooks  The hooks service
-	 * @param Elgg_Logger            $logger Logger
+	 * @param Elgg_PluginHooksService $hooks  The hooks service
+	 * @param Elgg_Logger             $logger Logger
 	 */
-	public function __construct(Elgg_PluginHookService $hooks, Elgg_Logger $logger) {
+	public function __construct(Elgg_PluginHooksService $hooks, Elgg_Logger $logger) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
 	}

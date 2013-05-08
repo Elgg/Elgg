@@ -9,7 +9,7 @@
  * @subpackage Hooks
  * @since      1.9.0
  */
-class Elgg_EventService extends Elgg_HooksRegistrationService {
+class Elgg_EventsService extends Elgg_HooksRegistrationService {
 
 	/**
 	 * Triggers an Elgg event.

@@ -12,15 +12,15 @@
  * @property-read ElggAutoP                               $autoP
  * @property-read Elgg_AutoloadManager                    $autoloadManager
  * @property-read Elgg_Database                           $db
- * @property-read Elgg_EventService                       $events
- * @property-read Elgg_PluginHookService                  $hooks
+ * @property-read Elgg_EventsService                      $events
+ * @property-read Elgg_PluginHooksService                 $hooks
  * @property-read Elgg_Logger                             $logger
  * @property-read ElggVolatileMetadataCache               $metadataCache
  * @property-read Elgg_Notifications_NotificationsService $notifications
  * @property-read Elgg_Request                            $request
  * @property-read Elgg_Router                             $router
  * @property-read ElggSession                             $session
- * @property-read Elgg_ViewService                        $views
+ * @property-read Elgg_ViewsService                       $views
  * @property-read Elgg_WidgetsService                     $widgets
  * 
  * @package Elgg.Core
@@ -40,8 +40,8 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 		$this->setClassName('autoP', 'ElggAutoP');
 		$this->setFactory('db', array($this, 'getDatabase'));
-		$this->setClassName('events', 'Elgg_EventService');
-		$this->setClassName('hooks', 'Elgg_PluginHookService');
+		$this->setClassName('events', 'Elgg_EventsService');
+		$this->setClassName('hooks', 'Elgg_PluginHooksService');
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setClassName('metadataCache', 'ElggVolatileMetadataCache');
 		$this->setFactory('request', array($this, 'getRequest'));
@@ -77,10 +77,10 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	 * Views service factory
 	 * 
 	 * @param Elgg_ServiceProvider $c Dependency injection container
-	 * @return Elgg_ViewService
+	 * @return Elgg_ViewsService
 	 */
 	protected function getViews(Elgg_ServiceProvider $c) {
-		return new Elgg_ViewService($c->hooks, $c->logger);
+		return new Elgg_ViewsService($c->hooks, $c->logger);
 	}
 
 	/**

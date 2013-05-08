@@ -19,9 +19,9 @@ class Elgg_Router {
 	/**
 	 * Constructor
 	 * 
-	 * @param Elgg_PluginHookService $hooks For highly customized routing.
+	 * @param Elgg_PluginHooksService $hooks For highly customized routing.
 	 */
-	public function __construct(Elgg_PluginHookService $hooks) {
+	public function __construct(Elgg_PluginHooksService $hooks) {
 		$this->hooks = $hooks;
 	}
 		
