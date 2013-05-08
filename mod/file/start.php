@@ -38,11 +38,9 @@ function file_init() {
 	elgg_register_entity_url_handler('object', 'file', 'file_url_override');
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'file_icon_url_override');
 
-	// Register granular notification for this object type
-	register_notification_object('object', 'file', elgg_echo('file:newupload'));
-
-	// Listen to notification events and supply a more useful message
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'file_notify_message');
+	// Register for notifications
+	elgg_register_notification_event('object', 'file', array('create'));
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:file', 'file_prepare_notification');
 
 	// add the group files tool option
 	add_group_tool_option('file', elgg_echo('groups:enablefiles'), true);
@@ -189,29 +187,36 @@ function file_register_toggle() {
 }
 
 /**
- * Creates the notification message body
- *
- * @param string $hook
- * @param string $entity_type
- * @param string $returnvalue
- * @param array  $params
+ * Prepare a notification message about a new file
+ * 
+ * @param string                          $hook         Hook name
+ * @param string                          $type         Hook type
+ * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param array                           $params       Hook parameters
+ * @return Elgg_Notifications_Notification
  */
-function file_notify_message($hook, $entity_type, $returnvalue, $params) {
-	$entity = $params['entity'];
-	$to_entity = $params['to_entity'];
+function file_prepare_notification($hook, $type, $notification, $params) {
+	$entity = $params['event']->getObject();
+	$owner = $params['event']->getActor();
+	$recipient = $params['recipient'];
+	$language = $params['language'];
 	$method = $params['method'];
-	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'file')) {
-		$descr = $entity->description;
-		$title = $entity->title;
-		$owner = $entity->getOwnerEntity();
-		return elgg_echo('file:notification', array(
-			$owner->name,
-			$title,
-			$descr,
-			$entity->getURL()
-		));
-	}
-	return null;
+
+	$descr = $entity->description;
+	$title = $entity->title;
+
+	$subject = elgg_echo('file:newupload', array(), $language); 
+	$body = elgg_echo('file:notification', array(
+		$owner->name,
+		$title,
+		$descr,
+		$entity->getURL()
+	), $language);
+
+	$notification->subject = $subject;
+	$notification->body = $body;
+
+	return $notification;
 }
 
 /**

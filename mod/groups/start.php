@@ -768,8 +768,8 @@ function discussion_init() {
 	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
 
 	// notifications
-	register_notification_object('object', 'groupforumtopic', elgg_echo('discussion:notification:topic:subject'));
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'groupforumtopic_notify_message');
+	elgg_register_notification_event('object', 'groupforumtopic');
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:groupforumtopic', 'discussion_prepare_notification');
 	elgg_register_event_handler('create', 'annotation', 'discussion_reply_notifications');
 	elgg_register_plugin_hook_handler('notify:annotation:message', 'group_topic_post', 'discussion_create_reply_notification');
 }
@@ -896,37 +896,38 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Create discussion notification body
- *
- * @todo namespace method with 'discussion'
- *
- * @param string $hook
- * @param string $type
- * @param string $message
- * @param array  $params
+ * Prepare a notification message about a new discussion topic
+ * 
+ * @param string                          $hook         Hook name
+ * @param string                          $type         Hook type
+ * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param array                           $params       Hook parameters
+ * @return Elgg_Notifications_Notification
  */
-function groupforumtopic_notify_message($hook, $type, $message, $params) {
-	$entity = $params['entity'];
-	$to_entity = $params['to_entity'];
+function discussion_prepare_notification($hook, $type, $notification, $params) {
+	$entity = $params['event']->getObject();
+	$owner = $params['event']->getActor();
+	$recipient = $params['recipient'];
+	$language = $params['language'];
 	$method = $params['method'];
 
-	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'groupforumtopic')) {
-		$descr = $entity->description;
-		$title = $entity->title;
-		$url = $entity->getURL();
-		$owner = $entity->getOwnerEntity();
-		$group = $entity->getContainerEntity();
+	$descr = $entity->description;
+	$title = $entity->title;
+	$group = $entity->getContainerEntity();
 
-		return elgg_echo('groups:notification', array(
-			$owner->name,
-			$group->name,
-			$entity->title,
-			$entity->description,
-			$entity->getURL()
-		));
-	}
+	$subject = elgg_echo('discussion:notification:topic:subject', array(), $language); 
+	$body = elgg_echo('groups:notification', array(
+		$owner->name,
+		$group->name,
+		$title,
+		$descr,
+		$entity->getURL()
+	), $language);
 
-	return null;
+	$notification->subject = $subject;
+	$notification->body = $body;
+
+	return $notification;
 }
 
 /**
@@ -964,7 +965,8 @@ function discussion_create_reply_notification($hook, $type, $message, $params) {
  * @return void
  */
 function discussion_reply_notifications($event, $type, $annotation) {
-	global $CONFIG, $NOTIFICATION_HANDLERS;
+	global $CONFIG;
+	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 	if ($annotation->name !== 'group_topic_post') {
 		return;

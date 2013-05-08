@@ -6,7 +6,7 @@
  * @subpackage Core
  */
 
-global $NOTIFICATION_HANDLERS;
+$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 $notification_settings = get_user_notification_settings(elgg_get_page_owner_guid());
 
 $title = elgg_echo('notifications:usersettings');

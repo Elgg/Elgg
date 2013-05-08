@@ -278,8 +278,7 @@ function groups_handle_profile_page($guid) {
 
 		$subscribed = false;
 		if (elgg_is_active_plugin('notifications')) {
-			global $NOTIFICATION_HANDLERS;
-			
+			$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 			foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 				$relationship = check_entity_relationship(elgg_get_logged_in_user_guid(),
 						'notify' . $method, $guid);
