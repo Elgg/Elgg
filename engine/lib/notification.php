@@ -165,11 +165,56 @@ function _elgg_notifications_cron() {
 }
 
 /**
+ * Send an email notification
+ * 
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param bool   $result Has anyone sent a message yet?
+ * @param array  $params Hook parameters
+ * @return bool
+ * @access private
+ */
+function _elgg_send_email_notification($hook, $type, $result, $params) {
+	/* @var Elgg_Notifications_Notification */
+	$message = $params['notification'];
+
+	$sender = $message->getSender();
+	$recipient = $message->getRecipient();
+
+	if (!$sender) {
+		return false;
+	}
+
+	if (!$recipient || !$recipient->email) {
+		return false;
+	}
+
+	$to = $recipient->email;
+
+	$site = elgg_get_site_entity();
+	// If there's an email address, use it - but only if it's not from a user.
+	if (!($sender instanceof ElggUser) && $sender->email) {
+		$from = $from->email;
+	} else if ($site->email) {
+		$from = $site->email;
+	} else {
+		// If all else fails, use the domain of the site.
+		$from = 'noreply@' . get_site_domain($site->guid);
+	}
+
+	return elgg_send_email($from, $to, $message->subject, $message->body);
+}
+
+/**
  * @access private
  */
 function _elgg_notifications_init() {
 	elgg_register_plugin_hook_handler('cron', 'minute', '_elgg_notifications_cron', 100);
 	elgg_register_event_handler('all', 'all', '_elgg_enqueue_notification_event');
+
+	// add email notifications
+	elgg_register_notification_method('email');
+	elgg_register_plugin_hook_handler('send', 'notification:email', '_elgg_send_email_notification');
 }
 
 elgg_register_event_handler('init', 'system', '_elgg_notifications_init');
@@ -424,58 +469,6 @@ function set_user_notification_setting($user_guid, $method, $value) {
 }
 
 /**
- * Send a notification via email.
- *
- * @param ElggEntity $from    The from user/site/object
- * @param ElggUser   $to      To which user?
- * @param string     $subject The subject of the message.
- * @param string     $message The message body
- * @param array      $params  Optional parameters (none taken in this instance)
- *
- * @return bool
- * @throws NotificationException
- * @access private
- */
-function email_notify_handler(ElggEntity $from, ElggUser $to, $subject, $message,
-array $params = NULL) {
-
-	global $CONFIG;
-
-	if (!$from) {
-		$msg = "Missing a required parameter, '" . 'from' . "'";
-		throw new NotificationException($msg);
-	}
-
-	if (!$to) {
-		$msg = "Missing a required parameter, '" . 'to' . "'";
-		throw new NotificationException($msg);
-	}
-
-	if ($to->email == "") {
-		$msg = "Could not get the email address for GUID:" . $to->guid;
-		throw new NotificationException($msg);
-	}
-
-	// To
-	$to = $to->email;
-
-	// From
-	$site = elgg_get_site_entity();
-	// If there's an email address, use it - but only if its not from a user.
-	if (!($from instanceof ElggUser) && $from->email) {
-		$from = $from->email;
-	} else if ($site && $site->email) {
-		// Use email address of current site if we cannot use sender's email
-		$from = $site->email;
-	} else {
-		// If all else fails, use the domain of the site.
-		$from = 'noreply@' . get_site_domain($CONFIG->site_guid);
-	}
-
-	return elgg_send_email($from, $to, $subject, $message);
-}
-
-/**
  * Send an email to any email address
  *
  * @param string $from    Email address or string: "name <email>"
@@ -580,9 +573,6 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
  * @access private
  */
 function notification_init() {
-	// Register a notification handler for the default email method
-	register_notification_handler("email", "email_notify_handler");
-
 	// Add settings view to user settings & register action
 	elgg_extend_view('forms/account/settings', 'core/settings/account/notifications');
 
