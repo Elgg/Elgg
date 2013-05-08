@@ -527,4 +527,42 @@ class Elgg_Database {
 	public function getQueryCount() {
 		return $this->queryCount;
 	}
+
+	/**
+	 * Get the prefix for Elgg's tables
+	 *
+	 * @return string
+	 */
+	public function getTablePrefix() {
+		return $this->tablePrefix;
+	}
+
+	/**
+	 * Sanitizes an integer value for use in a query
+	 *
+	 * @param int  $value  Value to sanitize
+	 * @param bool $signed Whether negative values are allowed (default: true)
+	 * @return int
+	 */
+	public function sanitizeInt($value, $signed = true) {
+		$value = (int) $value;
+
+		if ($signed === false) {
+			if ($value < 0) {
+				$value = 0;
+			}
+		}
+
+		return $value;
+	}
+
+	/**
+	 * Sanitizes a string for use in a query
+	 *
+	 * @param string $value Value to escape
+	 * @return string
+	 */
+	public function sanitizeString($value) {
+		return mysql_real_escape_string($value);
+	}
 }

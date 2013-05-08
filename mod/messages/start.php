@@ -47,9 +47,11 @@ function messages_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'messages_user_hover_menu');
 
 	// Register a notification handler for site messages
-	register_notification_handler("site", "messages_site_notify_handler");
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'messages_notification_msg');
-	register_notification_object('object', 'messages', elgg_echo('messages:new'));
+	elgg_register_notification_method('site');
+	elgg_register_plugin_hook_handler('send', 'notification:site', 'messages_send_notification');
+	//register_notification_handler("site", "messages_site_notify_handler");
+	//elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'messages_notification_msg');
+	//register_notification_object('object', 'messages', elgg_echo('messages:new'));
 
 	// delete messages sent by a user when user is deleted
 	elgg_register_event_handler('delete', 'user', 'messages_purge');
@@ -404,6 +406,29 @@ function messages_get_unread($user_guid = 0, $limit = 10, $offset = 0, $count = 
  */
 function messages_count_unread($user_guid = 0) {
 	return messages_get_unread($user_guid, 10, 0, true);
+}
+
+/**
+ * Send a notification
+ * 
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param bool   $result Has anyone sent a message yet?
+ * @param array  $params Hook parameters
+ * @return bool
+ */
+function messages_send_notification($hook, $type, $result, $params) {
+	/* @var Elgg_Notifications_Notification */
+	$message = $params['notification'];
+	return messages_send(
+			$message->subject,
+			$message->body,
+			$message->getRecipientGUID(),
+			$message->getSenderGUID(),
+			0,
+			false,
+			false
+		);
 }
 
 /**

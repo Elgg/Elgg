@@ -41,9 +41,9 @@ function blog_init() {
 	// override the default url to view a blog object
 	elgg_register_entity_url_handler('object', 'blog', 'blog_url_handler');
 
-	// notifications - need to register for unique event because of draft/published status
-	elgg_register_event_handler('publish', 'object', 'object_notifications');
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'blog_notify_message');
+	// notifications
+	elgg_register_notification_event('object', 'blog', array('publish'));
+	elgg_register_plugin_hook_handler('prepare', 'notification:publish:object:blog', 'blog_prepare_notification');
 
 	// add blog link to
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'blog_owner_block_menu');
@@ -236,30 +236,33 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
- * Set the notification message body
+ * Prepare a notification message about a published blog
  * 
- * @param string $hook    Hook name
- * @param string $type    Hook type
- * @param string $message The current message body
- * @param array  $params  Parameters about the blog posted
- * @return string
+ * @param string                          $hook         Hook name
+ * @param string                          $type         Hook type
+ * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param array                           $params       Hook parameters
+ * @return Elgg_Notifications_Notification
  */
-function blog_notify_message($hook, $type, $message, $params) {
-	$entity = $params['entity'];
-	$to_entity = $params['to_entity'];
+function blog_prepare_notification($hook, $type, $notification, $params) {
+	$entity = $params['event']->getObject();
+	$owner = $params['event']->getActor();
+	$recipient = $params['recipient'];
+	$language = $params['language'];
 	$method = $params['method'];
-	if (elgg_instanceof($entity, 'object', 'blog')) {
-		$descr = $entity->excerpt;
-		$title = $entity->title;
-		$owner = $entity->getOwnerEntity();
-		return elgg_echo('blog:notification', array(
-			$owner->name,
-			$title,
-			$descr,
-			$entity->getURL()
-		));
-	}
-	return null;
+
+	$subject = elgg_echo('blog:newpost', array(), $language); 
+	$body = elgg_echo('blog:notification', array(
+		$owner->name,
+		$entity->title,
+		$entity->getExcerpt(),
+		$entity->getURL()
+	), $language);
+
+	$notification->subject = $subject;
+	$notification->body = $body;
+
+	return $notification;
 }
 
 /**

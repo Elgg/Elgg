@@ -50,11 +50,10 @@ function bookmarks_init() {
 			'rel' => 'nofollow',
 		));
 	}
-	// Register granular notification for this type
-	register_notification_object('object', 'bookmarks', elgg_echo('bookmarks:new'));
 
-	// Listen to notification events and supply a more useful message
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'bookmarks_notify_message');
+	// Register for notifications
+	elgg_register_notification_event('object', 'bookmarks', array('create'));
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:bookmarks', 'bookmarks_prepare_notification');
 
 	// Register bookmarks view for ecml parsing
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'bookmarks_ecml_views_hook');
@@ -242,31 +241,37 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Returns the body of a notification message
- *
- * @param string $hook
- * @param string $entity_type
- * @param string $returnvalue
- * @param array  $params
+ * Prepare a notification message about a new bookmark
+ * 
+ * @param string                          $hook         Hook name
+ * @param string                          $type         Hook type
+ * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param array                           $params       Hook parameters
+ * @return Elgg_Notifications_Notification
  */
-function bookmarks_notify_message($hook, $entity_type, $returnvalue, $params) {
-	$entity = $params['entity'];
-	$to_entity = $params['to_entity'];
+function bookmarks_prepare_notification($hook, $type, $notification, $params) {
+	$entity = $params['event']->getObject();
+	$owner = $params['event']->getActor();
+	$recipient = $params['recipient'];
+	$language = $params['language'];
 	$method = $params['method'];
-	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'bookmarks')) {
-		$descr = $entity->description;
-		$title = $entity->title;
-		$owner = $entity->getOwnerEntity();
 
-		return elgg_echo('bookmarks:notification', array(
-			$owner->name,
-			$title,
-			$entity->address,
-			$descr,
-			$entity->getURL()
-		));
-	}
-	return null;
+	$descr = $entity->description;
+	$title = $entity->title;
+
+	$subject = elgg_echo('bookmarks:new', array(), $language); 
+	$body = elgg_echo('bookmarks:notification', array(
+		$owner->name,
+		$title,
+		$entity->address,
+		$descr,
+		$entity->getURL()
+	), $language);
+
+	$notification->subject = $subject;
+	$notification->body = $body;
+
+	return $notification;
 }
 
 /**
