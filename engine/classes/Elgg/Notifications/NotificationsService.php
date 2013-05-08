@@ -280,7 +280,10 @@ class Elgg_Notifications_NotificationsService {
 
 		if ($this->hooks->hasHandler('send', "notification:$method")) {
 			// return true to indicate the notification has been sent
-			$params = array('notification' => $notification);
+			$params = array(
+				'notification' => $notification,
+				'event' => $event,
+			);
 			return $this->hooks->trigger('send', "notification:$method", $params, false);
 		} else {
 			// pre Elgg 1.9 notification handler
