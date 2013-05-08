@@ -10,6 +10,7 @@
  */
 
 ?>
+/* <style> /**/
 
 /* ***************************************
 	RESET CSS
@@ -304,6 +305,9 @@ p {
 }
 .elgg-page-footer a:hover {
 	text-decoration: underline;
+}
+:focus > img[src*="/powered_by_elgg_badge"] {
+	opacity: .7;
 }
 
 /* ***************************************
@@ -1517,7 +1521,9 @@ table.mceLayout {
 .elgg-discover:hover .elgg-discoverable {
 	display: block;
 }
-.elgg-transition:hover {
+.elgg-transition:hover,
+.elgg-transition:focus,
+:focus > .elgg-transition {
 	opacity: .7;
 }
 

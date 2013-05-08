@@ -6,6 +6,7 @@
  * @subpackage UI
  */
 ?>
+/* <style> /**/
 
 /* ***************************************
 	RESET CSS
@@ -40,9 +41,10 @@ img {
 	border-width:0;
 	border-color:transparent;
 }
+/* keep focus styles for a11y
 :focus {
 	outline: 0 none;
-}
+}*/
 ol, ul {
 	list-style: none;
 }

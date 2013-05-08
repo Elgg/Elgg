@@ -6,6 +6,8 @@
  * @subpackage UI
  */
 ?>
+/* <style> /**/
+
 /* **************************
 	BUTTONS
 ************************** */
@@ -25,6 +27,10 @@ a.elgg-button {
 	padding: 3px 6px;
 }
 
+.elgg-button:focus {
+	background: #fff;
+}
+
 /* Submit: This button should convey, "you're about to take some definitive action" */
 .elgg-button-submit {
 	color: white;
@@ -34,7 +40,8 @@ a.elgg-button {
 	background: #4690d6 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 }
 
-.elgg-button-submit:hover {
+.elgg-button-submit:hover,
+.elgg-button-submit:focus {
 	border-color: #0054a7;
 	text-decoration: none;
 	color: white;
@@ -53,7 +60,8 @@ a.elgg-button {
 	background: #ddd url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 	border: 1px solid #999;
 }
-.elgg-button-cancel:hover {
+.elgg-button-cancel:hover,
+.elgg-button-cancel:focus {
 	color: #444;
 	background-color: #999;
 	background-position: left 10px;
@@ -91,7 +99,8 @@ a.elgg-button {
 	background: #555 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
 	text-shadow: 1px 1px 0px black;
 }
-.elgg-button-delete:hover {
+.elgg-button-delete:hover,
+.elgg-button-delete:focus {
 	color: #999;
 	background-color: #333;
 	background-position: left 10px;

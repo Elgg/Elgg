@@ -40,12 +40,18 @@ input, textarea {
 	box-sizing: border-box;
 }
 
-input[type=text]:focus, textarea:focus {
+input[type=email]:focus,
+input[type=password]:focus,
+input[type=text]:focus,
+input[type=url]:focus,
+textarea:focus {
 	border: solid 1px #4690d6;
 	background: #e4ecf5;
 	color:#333;
+	/* We remove outlines from specific input types so we can leave the browser
+	   defaults (like glows) for everything else */
+	outline: 0 none;
 }
-
 
 .elgg-longtext-control {
 	float: right;
