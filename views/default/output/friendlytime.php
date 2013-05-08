@@ -9,4 +9,4 @@
 $friendly_time = elgg_get_friendly_time($vars['time']);
 $timestamp = htmlspecialchars(date(elgg_echo('friendlytime:date_format'), $vars['time']));
 
-echo "<acronym title=\"$timestamp\">$friendly_time</acronym>";
+echo "<abbr title=\"$timestamp\">$friendly_time</abbr>";
