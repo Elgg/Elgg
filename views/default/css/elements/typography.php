@@ -6,6 +6,7 @@
  * @subpackage UI
  */
 ?>
+/* <style> /**/
 
 /* ***************************************
 	Typography
@@ -21,6 +22,7 @@ a {
 }
 
 a:hover,
+a:focus,
 a.selected { <?php //@todo remove .selected ?>
 	color: #555555;
 	text-decoration: underline;
@@ -84,7 +86,9 @@ h4 { font-size: 1.0em; }
 h5 { font-size: 0.9em; }
 h6 { font-size: 0.8em; }
 
-.elgg-heading-site, .elgg-heading-site:hover {
+.elgg-heading-site,
+.elgg-heading-site:hover,
+.elgg-heading-site:focus {
 	font-size: 2em;
 	line-height: 1.4em;
 	color: white;
@@ -92,6 +96,10 @@ h6 { font-size: 0.8em; }
 	font-family: Georgia, times, serif;
 	text-shadow: 1px 2px 4px #333333;
 	text-decoration: none;
+}
+
+.elgg-heading-site:focus {
+	text-decoration: underline;
 }
 
 .elgg-heading-main {

@@ -14,6 +14,7 @@
  *   * fluid gallery without using tables
  */
 ?>
+/* <style> /**/
 
 /* Clearfix */
 .clearfix:after,

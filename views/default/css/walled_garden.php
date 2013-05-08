@@ -6,6 +6,8 @@
 $url = elgg_get_site_url();
 
 ?>
+/* <style> /**/
+
 .elgg-body-walledgarden {
 	margin: 100px auto 0 auto;
 	position: relative;
