@@ -20,7 +20,7 @@ class ElggCoreAnnotationAPITest extends ElggCoreUnitTest {
 	 */
 	public function tearDown() {
 		// do not allow SimpleTest to interpret Elgg notices as exceptions
-		$this->swallowErrors();
+		// $this->swallowErrors();
 
 		unset($this->object);
 	}

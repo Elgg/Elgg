@@ -33,7 +33,7 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 	 */
 	public function tearDown() {
 		// do not allow SimpleTest to interpret Elgg notices as exceptions
-		$this->swallowErrors();
+		// $this->swallowErrors();
 	}
 
 	// generic tests

@@ -32,7 +32,7 @@ $suite = new TestSuite('Elgg Core Unit Tests');
 // emit a hook to pull in all tests
 $test_files = elgg_trigger_plugin_hook('unit_test', 'system', null, array());
 foreach ($test_files as $file) {
-	$suite->addTestFile($file);
+	$suite->addFile($file);
 }
 
 // Only run tests in debug mode.
