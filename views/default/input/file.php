@@ -22,7 +22,6 @@ if (isset($vars['class'])) {
 
 $defaults = array(
 	'disabled' => false,
-	'size' => 30,
 );
 
 $attrs = array_merge($defaults, $vars);
