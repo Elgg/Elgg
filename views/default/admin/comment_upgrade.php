@@ -1,5 +1,7 @@
 <?php
 
+elgg_load_js('elgg.upgrades');
+
 $access_status = access_get_show_hidden_status();
 access_show_hidden_entities(true);
 
