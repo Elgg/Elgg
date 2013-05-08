@@ -48,10 +48,11 @@ function pages_init() {
 	elgg_register_entity_type('object', 'page');
 	elgg_register_entity_type('object', 'page_top');
 
-	// Register granular notification for this type
-	register_notification_object('object', 'page', elgg_echo('pages:new'));
-	register_notification_object('object', 'page_top', elgg_echo('pages:new'));
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'page_notify_message');
+	// Register for notifications
+	elgg_register_notification_event('object', 'page');
+	elgg_register_notification_event('object', 'page_top');
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:page', 'pages_prepare_notification');
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:page_top', 'pages_prepare_notification');
 
 	// add to groups
 	add_group_tool_option('pages', elgg_echo('groups:enablepages'), true);
@@ -259,31 +260,36 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
-* Returns a more meaningful message
-*
-* @param unknown_type $hook
-* @param unknown_type $entity_type
-* @param unknown_type $returnvalue
-* @param unknown_type $params
-*/
-function page_notify_message($hook, $entity_type, $returnvalue, $params) {
-	$entity = $params['entity'];
-	$to_entity = $params['to_entity'];
+ * Prepare a notification message about a new page
+ * 
+ * @param string                          $hook         Hook name
+ * @param string                          $type         Hook type
+ * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param array                           $params       Hook parameters
+ * @return Elgg_Notifications_Notification
+ */
+function pages_prepare_notification($hook, $type, $notification, $params) {
+	$entity = $params['event']->getObject();
+	$owner = $params['event']->getActor();
+	$recipient = $params['recipient'];
+	$language = $params['language'];
 	$method = $params['method'];
 
-	if (elgg_instanceof($entity, 'object', 'page') || elgg_instanceof($entity, 'object', 'page_top')) {
-		$descr = $entity->description;
-		$title = $entity->title;
-		$owner = $entity->getOwnerEntity();
-		
-		return elgg_echo('pages:notification', array(
-			$owner->name,
-			$title,
-			$descr,
-			$entity->getURL()
-		));
-	}
-	return null;
+	$descr = $entity->description;
+	$title = $entity->title;
+
+	$subject = elgg_echo('pages:new', array(), $language); 
+	$body = elgg_echo('pages:notification', array(
+		$owner->name,
+		$title,
+		$descr,
+		$entity->getURL(),
+	), $language);
+
+	$notification->subject = $subject;
+	$notification->body = $body;
+
+	return $notification;
 }
 
 /**

@@ -55,11 +55,9 @@ function thewire_init() {
 	// Register for search
 	elgg_register_entity_type('object', 'thewire');
 
-	// Register granular notification for this type
-	register_notification_object('object', 'thewire', elgg_echo('thewire:notify:subject'));
-
-	// Listen to notification events and supply a more useful message
-	elgg_register_plugin_hook_handler('notify:entity:message', 'object', 'thewire_notify_message');
+	// Register for notifications
+	elgg_register_notification_event('object', 'thewire');
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:thewire', 'thewire_prepare_notification');
 
 	// Register actions
 	$action_base = elgg_get_plugins_path() . 'thewire/actions';
@@ -159,32 +157,43 @@ function thewire_url($thewirepost) {
 }
 
 /**
- * Returns the notification body
- *
- * @return $string
+ * Prepare a notification message about a new wire post
+ * 
+ * @param string                          $hook         Hook name
+ * @param string                          $type         Hook type
+ * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param array                           $params       Hook parameters
+ * @return Elgg_Notifications_Notification
  */
-function thewire_notify_message($hook, $entity_type, $returnvalue, $params) {
+function thewire_prepare_notification($hook, $type, $notification, $params) {
 	global $CONFIG;
-	
-	$entity = $params['entity'];
-	if (($entity instanceof ElggEntity) && ($entity->getSubtype() == 'thewire')) {
-		$descr = $entity->description;
-		$owner = $entity->getOwnerEntity();
-		if ($entity->reply) {
-			// have to do this because of poor design of Elgg notification system
-			$parent_post = get_entity(get_input('parent_guid'));
-			if ($parent_post) {
-				$parent_owner = $parent_post->getOwnerEntity();
-			}
-			$body = sprintf(elgg_echo('thewire:notify:reply'), $owner->name, $parent_owner->name);
-		} else {
-			$body = sprintf(elgg_echo('thewire:notify:post'), $owner->name);
+
+	$entity = $params['event']->getObject();
+	$owner = $params['event']->getActor();
+	$recipient = $params['recipient'];
+	$language = $params['language'];
+	$method = $params['method'];
+
+	$descr = $entity->description;
+	$title = $entity->title;
+
+	$subject = elgg_echo('thewire:notify:subject', array(), $language);
+	if ($entity->reply) {
+		$parent = thewire_get_parent($entity->guid);
+		if ($parent) {
+			$parent_owner = $parent->getOwnerEntity();
+			$body = elgg_echo('thewire:notify:reply', array($owner->name, $parent_owner->name), $language);
 		}
-		$body .= "\n\n" . $descr . "\n\n";
-		$body .= elgg_echo('thewire') . ": {$CONFIG->url}thewire";
-		return $body;
+	} else {
+		$body = elgg_echo('thewire:notify:post', array($owner->name), $language);
 	}
-	return $returnvalue;
+	$body .= "\n\n" . $descr . "\n\n";
+	$body .= elgg_echo('thewire', array(), $language) . ": {$CONFIG->url}thewire";
+
+	$notification->subject = $subject;
+	$notification->body = $body;
+
+	return $notification;
 }
 
 /**
