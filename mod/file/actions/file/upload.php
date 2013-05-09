@@ -95,7 +95,8 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	}
 
 	$file->setFilename($prefix . $filestorename);
-	$mime_type = ElggFile::detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
+	$file->originalfilename = $_FILES['upload']['name'];
+	$mime_type = $file->detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
 
 	// hack for Microsoft zipped formats
 	$info = pathinfo($_FILES['upload']['name']);
@@ -120,7 +121,6 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	}
 
 	$file->setMimeType($mime_type);
-	$file->originalfilename = $_FILES['upload']['name'];
 	$file->simpletype = file_get_simple_type($mime_type);
 
 	// Open the file to guarantee the directory exists

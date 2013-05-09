@@ -128,9 +128,8 @@ class ElggFile extends ElggObject {
 	 * @param mixed $default A default. Useful to pass what the browser thinks it is.
 	 * @since 1.7.12
 	 *
-	 * @note If $file is provided, this may be called statically
-	 *
 	 * @return mixed Detected type on success, false on failure.
+	 * @todo Move this out into a utility class
 	 */
 	public function detectMimeType($file = null, $default = null) {
 		if (!$file) {
@@ -141,7 +140,7 @@ class ElggFile extends ElggObject {
 			}
 		}
 
-		$mime = false;
+		$mime = $default;
 
 		// for PHP5 folks.
 		if (function_exists('finfo_file') && defined('FILEINFO_MIME_TYPE')) {
@@ -156,12 +155,12 @@ class ElggFile extends ElggObject {
 			$mime = mime_content_type($file);
 		}
 
-		// default
-		if (!$mime) {
-			return $default;
-		}
-
-		return $mime;
+		$params = array(
+			'filename' => $file,
+			'original_filename' => $file->originalfilename, // @see file upload action
+			'default' => $default,
+		);
+		return elgg_trigger_plugin_hook('mime_type', 'file', $params, $mime);
 	}
 
 	/**
