@@ -89,8 +89,8 @@ abstract class ElggEntity extends ElggData implements
 		$this->attributes['type'] = NULL;
 		$this->attributes['subtype'] = NULL;
 
-		$this->attributes['owner_guid'] = elgg_get_logged_in_user_guid();
-		$this->attributes['container_guid'] = elgg_get_logged_in_user_guid();
+		$this->attributes['owner_guid'] = (int)elgg_get_logged_in_user_guid();
+		$this->attributes['container_guid'] = (int)elgg_get_logged_in_user_guid();
 
 		$this->attributes['site_guid'] = NULL;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
@@ -225,6 +225,10 @@ abstract class ElggEntity extends ElggData implements
 				case 'time_updated':
 				case 'last_action':
 					return FALSE;
+					break;
+				case 'owner_guid':
+				case 'container_guid':
+					$this->attributes[$name] = (int)$value;
 					break;
 				default:
 					$this->attributes[$name] = $value;
@@ -1443,7 +1447,7 @@ abstract class ElggEntity extends ElggData implements
 		$this->attributes['time_updated'] = (string)$time;
 		$this->attributes['last_action'] = (string)$time;
 		$this->attributes['site_guid'] = (string)$site_guid;
-		$this->attributes['container_guid'] = (string)$container_guid;
+		$this->attributes['container_guid'] = (int)$container_guid;
 
 		// Save any unsaved metadata
 		// @todo How to capture extra information (access id etc)
