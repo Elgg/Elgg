@@ -625,7 +625,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @param string $name Name of the private setting
 	 *
-	 * @return mixed
+	 * @return mixed Null if the setting does not exist
 	 */
 	function getPrivateSetting($name) {
 		if ((int) ($this->guid) > 0) {
@@ -1153,9 +1153,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	public function setContainerGUID($container_guid) {
-		$container_guid = (int)$container_guid;
-
-		return $this->set('container_guid', $container_guid);
+		return $this->set('container_guid', (int)$container_guid);
 	}
 
 	/**
@@ -1168,9 +1166,7 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	public function setContainer($container_guid) {
 		elgg_deprecated_notice("ElggObject::setContainer deprecated for ElggEntity::setContainerGUID", 1.8);
-		$container_guid = (int)$container_guid;
-
-		return $this->set('container_guid', $container_guid);
+		return $this->setContainerGUID('container_guid', $container_guid);
 	}
 
 	/**

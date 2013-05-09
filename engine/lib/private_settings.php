@@ -266,12 +266,11 @@ $pairs = NULL, $pair_operator = 'AND', $name_prefix = '') {
  * @param int    $entity_guid The entity GUID
  * @param string $name        The name of the setting
  *
- * @return mixed The setting value, or false on failure
+ * @return mixed The setting value, or null if does not exist
  * @see set_private_setting()
  * @see get_all_private_settings()
  * @see remove_private_setting()
  * @see remove_all_private_settings()
- * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
  */
 function get_private_setting($entity_guid, $name) {
 	global $CONFIG;
@@ -280,7 +279,7 @@ function get_private_setting($entity_guid, $name) {
 
 	$entity = get_entity($entity_guid);
 	if (!$entity instanceof ElggEntity) {
-		return false;
+		return null;
 	}
 
 	$query = "SELECT value from {$CONFIG->dbprefix}private_settings
@@ -290,7 +289,7 @@ function get_private_setting($entity_guid, $name) {
 	if ($setting) {
 		return $setting->value;
 	}
-	return false;
+	return null;
 }
 
 /**
@@ -298,7 +297,7 @@ function get_private_setting($entity_guid, $name) {
  *
  * @param int $entity_guid The entity GUID
  *
- * @return array|false
+ * @return array|empty array if no settings
  * @see set_private_setting()
  * @see get_private_settings()
  * @see remove_private_setting()
@@ -325,7 +324,7 @@ function get_all_private_settings($entity_guid) {
 		return $return;
 	}
 
-	return false;
+	return array();
 }
 
 /**
