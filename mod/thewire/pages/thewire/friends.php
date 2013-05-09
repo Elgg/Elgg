@@ -20,7 +20,14 @@ if (elgg_get_logged_in_user_guid() == $owner->guid) {
 	$content .= elgg_view('input/urlshortener');
 }
 
-$content .= list_user_friends_objects($owner->guid, 'thewire', 15, false);
+$content .= elgg_list_entities_from_relationship(array(
+	'type' => 'object',
+	'subtype' => 'thewire',
+	'full_view' => false,
+	'relationship' => 'friend',
+	'relationship_guid' => $owner->guid,
+	'relationship_join' => 'container_guid',
+));
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'friends',

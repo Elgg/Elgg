@@ -245,7 +245,7 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
  * Also accepts all options available to elgg_get_entities() and
  * elgg_get_entities_from_metadata().
  *
- * To ask for entities that do not have a particulat relationship to an entity,
+ * To ask for entities that do not have a particular relationship to an entity,
  * use a custom where clause like the following:
  *
  * 	$options['wheres'][] = "NOT EXISTS (
@@ -264,6 +264,12 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
  * 	relationship_guid => NULL|INT Guid of relationship to test
  *
  * 	inverse_relationship => BOOL Inverse the relationship
+ * 
+ *  relationship_join => NULL|STR How the entities relate: guid (default), container_guid, or owner_guid
+ *                       Add in Elgg 1.9.0. Examples using the relationship 'friend':
+ *                       1. use 'guid' if you want the user's friends
+ *                       2. use 'owner_guid' if you want the entities the user's friends own (including in groups)
+ *                       3. use 'container_guid' if you want the entities in the user's personal space (non-group)
  *
  * @return ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
@@ -272,12 +278,14 @@ function elgg_get_entities_from_relationship($options) {
 	$defaults = array(
 		'relationship' => NULL,
 		'relationship_guid' => NULL,
-		'inverse_relationship' => FALSE
+		'inverse_relationship' => FALSE,
+		'relationship_join' => 'guid',
 	);
 
 	$options = array_merge($defaults, $options);
 
-	$clauses = elgg_get_entity_relationship_where_sql('e.guid', $options['relationship'],
+	$join_column = "e.{$options['relationship_join']}";
+	$clauses = elgg_get_entity_relationship_where_sql($join_column, $options['relationship'],
 		$options['relationship_guid'], $options['inverse_relationship']);
 
 	if ($clauses) {

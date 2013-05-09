@@ -146,41 +146,33 @@ function blog_get_page_content_friends($user_guid) {
 
 	elgg_register_title_button();
 
-	if (!$friends = get_user_friends($user_guid, ELGG_ENTITIES_ANY_VALUE, 0)) {
-		$return['content'] .= elgg_echo('friends:none:you');
-		return $return;
-	} else {
-		$options = array(
-			'type' => 'object',
-			'subtype' => 'blog',
-			'full_view' => FALSE,
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'blog',
+		'full_view' => false,
+		'relationship' => 'friend',
+		'relationship_guid' => $user_guid,
+		'relationship_join' => 'container_guid',
+	);
+
+	// admin / owners can see any posts
+	// everyone else can only see published posts
+	$show_only_published = true;
+	$current_user = elgg_get_logged_in_user_entity();
+	if ($current_user) {
+		if (($user_guid == $current_user->guid) || $current_user->isAdmin()) {
+			$show_only_published = false;
+		}
+	}
+	if ($show_only_published) {
+		$options['metadata_name_value_pairs'][] = array(
+			array('name' => 'status', 'value' => 'published')
 		);
+	}
 
-		foreach ($friends as $friend) {
-			$options['container_guids'][] = $friend->getGUID();
-		}
-
-		// admin / owners can see any posts
-		// everyone else can only see published posts
-		$show_only_published = true;
-		$current_user = elgg_get_logged_in_user_entity();
-		if ($current_user) {
-			if (($user_guid == $current_user->guid) || $current_user->isAdmin()) {
-				$show_only_published = false;
-			}
-		}
-		if ($show_only_published) {
-			$options['metadata_name_value_pairs'][] = array(
-				array('name' => 'status', 'value' => 'published')
-			);
-		}
-
-		$list = elgg_list_entities_from_metadata($options);
-		if (!$list) {
-			$return['content'] = elgg_echo('blog:none');
-		} else {
-			$return['content'] = $list;
-		}
+	$return['content'] = elgg_list_entities_from_relationship($options);
+	if (!$return['content']) {
+		$return['content'] = elgg_echo('blog:none');
 	}
 
 	return $return;

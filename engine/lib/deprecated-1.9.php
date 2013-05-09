@@ -1,6 +1,99 @@
 <?php
 
 /**
+ * Obtains a list of objects owned by a user's friends
+ *
+ * @param int    $user_guid The GUID of the user to get the friends of
+ * @param string $subtype   Optionally, the subtype of objects
+ * @param int    $limit     The number of results to return (default 10)
+ * @param int    $offset    Indexing offset, if any
+ * @param int    $timelower The earliest time the entity can have been created. Default: all
+ * @param int    $timeupper The latest time the entity can have been created. Default: all
+ *
+ * @return ElggObject[]|false An array of ElggObjects or false, depending on success
+ * @deprecated 1.9 Use elgg_get_entities_from_relationship()
+ */
+function get_user_friends_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
+	$offset = 0, $timelower = 0, $timeupper = 0) {
+
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_entities_from_relationship()', 1.9);
+	return elgg_get_entities_from_relationship(array(
+		'type' => 'object',
+		'subtype' => $subtype,
+		'limit' => $limit,
+		'offset' => $offset,
+		'created_time_lower' => $timelower,
+		'created_time_upper' => $timeupper,
+		'relationship' => 'friend',
+		'relationship_guid' => $user_guid,
+		'relationship_join' => 'container_guid',
+	));
+}
+
+/**
+ * Counts the number of objects owned by a user's friends
+ *
+ * @param int    $user_guid The GUID of the user to get the friends of
+ * @param string $subtype   Optionally, the subtype of objects
+ * @param int    $timelower The earliest time the entity can have been created. Default: all
+ * @param int    $timeupper The latest time the entity can have been created. Default: all
+ *
+ * @return int The number of objects
+ * @deprecated 1.9 Use elgg_get_entities_from_relationship()
+ */
+function count_user_friends_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE,
+$timelower = 0, $timeupper = 0) {
+
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_entities_from_relationship()', 1.9);
+	return elgg_get_entities_from_relationship(array(
+		'type' => 'object',
+		'subtype' => $subtype,
+		'created_time_lower' => $timelower,
+		'created_time_upper' => $timeupper,
+		'relationship' => 'friend',
+		'relationship_guid' => $user_guid,
+		'relationship_join' => 'container_guid',
+		'count' => true,
+	));
+}
+
+/**
+ * Displays a list of a user's friends' objects of a particular subtype, with navigation.
+ *
+ * @see elgg_view_entity_list
+ *
+ * @param int    $user_guid      The GUID of the user
+ * @param string $subtype        The object subtype
+ * @param int    $limit          The number of entities to display on a page
+ * @param bool   $full_view      Whether or not to display the full view (default: true)
+ * @param bool   $listtypetoggle Whether or not to allow you to flip to gallery mode (default: true)
+ * @param bool   $pagination     Whether to display pagination (default: true)
+ * @param int    $timelower      The earliest time the entity can have been created. Default: all
+ * @param int    $timeupper      The latest time the entity can have been created. Default: all
+ *
+ * @return string
+ * @deprecated 1.9 Use elgg_list_entities_from_relationship()
+ */
+function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $full_view = true,
+	$listtypetoggle = true, $pagination = true, $timelower = 0, $timeupper = 0) {
+
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_list_entities_from_relationship()', 1.9);
+	return elgg_list_entities_from_relationship(array(
+		'type' => 'object',
+		'subtype' => $subtype,
+		'limit' => $limit,
+		'created_time_lower' => $timelower,
+		'created_time_upper' => $timeupper,
+		'full_view' => $full_view,
+		'list_type_toggle' => $listtypetoggle,
+		'pagination' => $pagination,
+		'relationship' => 'friend',
+		'relationship_guid' => $user_guid,
+		'relationship_join' => 'container_guid',
+	));
+}
+
+/**
  * Get the current Elgg version information
  *
  * @param bool $humanreadable Whether to return a human readable version (default: false)

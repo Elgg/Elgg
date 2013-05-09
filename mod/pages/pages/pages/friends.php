@@ -17,7 +17,14 @@ elgg_register_title_button();
 
 $title = elgg_echo('pages:friends');
 
-$content = list_user_friends_objects($owner->guid, 'page_top', 10, false);
+$content = elgg_list_entities_from_relationship(array(
+	'type' => 'object',
+	'subtype' => 'page_top',
+	'full_view' => false,
+	'relationship' => 'friend',
+	'relationship_guid' => $owner->guid,
+	'relationship_join' => 'container_guid',
+));
 if (!$content) {
 	$content = elgg_echo('pages:none');
 }
