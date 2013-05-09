@@ -212,13 +212,21 @@ class Elgg_AttributeLoader {
 		}
 
 		// resolve subtype from int to string
-		$row['subtype'] = get_subtype_from_id($row['subtype']);
+		$subtype = get_subtype_from_id($row['subtype']);
+		if ($subtype) {
+			$row['subtype'] = $subtype;
+		} else {
+			$row['subtype'] = null;
+		}
 
 		// Note: If there are still missing attributes, we're running on a 1.7 or earlier schema. We let
 		// this pass so the upgrades can run.
 
 		// guid needs to be an int  http://trac.elgg.org/ticket/4111
 		$row['guid'] = (int) $row['guid'];
+		$row['access_id'] = (int) $row['access_id'];
+		$row['owner_guid'] = (int) $row['owner_guid'];
+		$row['container_guid'] = (int) $row['container_guid'];
 
 		return $row;
 	}
