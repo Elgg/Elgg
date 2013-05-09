@@ -226,6 +226,7 @@ abstract class ElggEntity extends ElggData implements
 				case 'last_action':
 					return FALSE;
 					break;
+				case 'access_id':
 				case 'owner_guid':
 				case 'container_guid':
 					$this->attributes[$name] = (int)$value;
