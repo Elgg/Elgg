@@ -23,7 +23,7 @@
 			}
 
 		?>
-		<h1><? echo elgg_echo("banner:title"); ?></h1>
+		
 		</div>
 
 		<div class="collapsable_box_content" <?php if ($closed) echo "style=\"display:none\"" ?>>

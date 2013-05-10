@@ -19,6 +19,5 @@
 	padding: 20px;
 	text-align: right;
 	font-weight: bold;
-	background-color: rgba(190, 190, 190, 0.5);
-	height:400px;
+	background-color: rgba(190, 190, 190, 0.5);	
 }
