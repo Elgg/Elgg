@@ -144,8 +144,10 @@ class ElggGroup extends ElggEntity
 	 * @param int $friend_guid The GUID of the user joining the group.
 	 *
 	 * @return bool
+	 * @deprecated 1.9 Use ElggGroup::join()
 	 */
 	public function addFriend($friend_guid) {
+		elgg_deprecated_notice("ElggGroup::addFriend() is deprecated. Use ElggGroup::join()", 1.9);
 		$user = get_user($friend_guid);
 		return $user ? $this->join($user) : false;
 	}
@@ -158,8 +160,10 @@ class ElggGroup extends ElggEntity
 	 * @param int $friend_guid The GUID of the user leaving.
 	 *
 	 * @return bool
+	 * @deprecated 1.9 Use ElggGroup::leave()
 	 */
 	public function removeFriend($friend_guid) {
+		elgg_deprecated_notice("ElggGroup::removeFriend() is deprecated. Use ElggGroup::leave()", 1.9);
 		$user = get_user($friend_guid);
 		return $user ? $this->leave($user) : false;
 	}
@@ -170,8 +174,10 @@ class ElggGroup extends ElggEntity
 	 * Friending a group adds you as a member
 	 *
 	 * @return bool
+	 * @deprecated 1.9 Use ElggGroup::isMember()
 	 */
 	public function isFriend() {
+		elgg_deprecated_notice("ElggGroup::isFriend() is deprecated. Use ElggGroup::isMember()", 1.9);
 		return $this->isMember();
 	}
 
@@ -181,8 +187,10 @@ class ElggGroup extends ElggEntity
 	 * @param int $user_guid The GUID of a user to check.
 	 *
 	 * @return bool
+	 * @deprecated 1.9 Use ElggGroup::isMember()
 	 */
 	public function isFriendsWith($user_guid) {
+		elgg_deprecated_notice("ElggGroup::isFriendsWith() is deprecated. Use ElggGroup::isMember()", 1.9);
 		$user = get_user($user_guid);
 		return $user ? $this->isMember($user) : false;
 	}
@@ -193,8 +201,10 @@ class ElggGroup extends ElggEntity
 	 * @param int $user_guid The GUID of a user to check.
 	 *
 	 * @return bool
+	 * @deprecated 1.9 Use ElggGroup::()
 	 */
 	public function isFriendOf($user_guid) {
+		elgg_deprecated_notice("ElggGroup::isFriendOf() is deprecated. Use ElggGroup::isMember()", 1.9);
 		$user = get_user($user_guid);
 		return $user ? $this->isMember($user) : false;
 	}
@@ -207,8 +217,10 @@ class ElggGroup extends ElggEntity
 	 * @param int    $offset  Offset
 	 *
 	 * @return bool
+	 * @deprecated 1.9 Use ElggGroup::getMembers()
 	 */
 	public function getFriends($subtype = "", $limit = 10, $offset = 0) {
+		elgg_deprecated_notice("ElggGroup::getFriends() is deprecated. Use ElggGroup::getMembers()", 1.9);
 		return get_group_members($this->getGUID(), $limit, $offset);
 	}
 
@@ -220,8 +232,10 @@ class ElggGroup extends ElggEntity
 	 * @param int    $offset  Offset
 	 *
 	 * @return bool
+	 * @deprecated 1.9 Use ElggGroup::getMembers()
 	 */
 	public function getFriendsOf($subtype = "", $limit = 10, $offset = 0) {
+		elgg_deprecated_notice("ElggGroup::getFriendsOf() is deprecated. Use ElggGroup::getMembers()", 1.9);
 		return get_group_members($this->getGUID(), $limit, $offset);
 	}
 
@@ -233,9 +247,10 @@ class ElggGroup extends ElggEntity
 	 * @param int    $offset  Offset
 	 *
 	 * @return array|false
+	 * @deprecated 1.9 Use elgg_get_entities()
 	 */
 	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
-		// @todo are we deprecating this method, too?
+		elgg_deprecated_notice("ElggGroup::getObjects() is deprecated. Use elgg_get_entities()", 1.9);
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
 	}
 
@@ -247,9 +262,10 @@ class ElggGroup extends ElggEntity
 	 * @param int    $offset  Offset
 	 *
 	 * @return array|false
+	 * @deprecated 1.9 Use elgg_get_entities()
 	 */
 	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) {
-		// @todo are we deprecating this method, too?
+		elgg_deprecated_notice("ElggGroup::getFriendsObjects() is deprecated. Use elgg_get_entities()", 1.9);
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
 	}
 
@@ -259,9 +275,10 @@ class ElggGroup extends ElggEntity
 	 * @param string $subtype Subtype of entities
 	 *
 	 * @return array|false
+	 * @deprecated 1.9 Use elgg_get_entities()
 	 */
 	public function countObjects($subtype = "") {
-		// @todo are we deprecating this method, too?
+		elgg_deprecated_notice("ElggGroup::countObjects() is deprecated. Use elgg_get_entities()", 1.9);
 		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", 10, 0, true);
 	}
 
