@@ -17,7 +17,6 @@ function banner_init() {
 
 function banner_get_cookie() {
 
-	echo var_dump($_COOKIE['banner']);
 	
 	return $_COOKIE['banner']!='closed';	
 	
