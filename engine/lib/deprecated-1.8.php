@@ -4772,3 +4772,47 @@ function default_page_handler($page, $handler) {
 
 	return FALSE;
 }
+
+/**
+ * Invalidate this class's entry in the cache.
+ *
+ * @param int $guid The entity guid
+ *
+ * @return void
+ * @access private
+ * @deprecated 1.8
+ */
+function invalidate_cache_for_entity($guid) {
+	elgg_deprecated_notice('invalidate_cache_for_entity() is a private function and should not be used.', 1.8);
+	_elgg_invalidate_cache_for_entity($guid);
+}
+
+/**
+ * Cache an entity.
+ *
+ * Stores an entity in $ENTITY_CACHE;
+ *
+ * @param ElggEntity $entity Entity to cache
+ *
+ * @return void
+ * @access private
+ * @deprecated 1.8
+ */
+function cache_entity(ElggEntity $entity) {
+	elgg_deprecated_notice('cache_entity() is a private function and should not be used.', 1.8);
+	_elgg_cache_entity($entity);
+}
+
+/**
+ * Retrieve a entity from the cache.
+ *
+ * @param int $guid The guid
+ *
+ * @return ElggEntity|bool false if entity not cached, or not fully loaded
+ * @access private
+ * @deprecated 1.8
+ */
+function retrieve_cached_entity($guid) {
+	elgg_deprecated_notice('retrieve_cached_entity() is a private function and should not be used.', 1.8);
+	return _elgg_retrieve_cached_entity($guid);
+}
