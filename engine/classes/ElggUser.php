@@ -208,6 +208,32 @@ class ElggUser extends ElggEntity
 	public function setDisplayName($displayName) {
 		$this->name = $displayName;
 	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
+	public function set($name, $value) {
+		if (array_key_exists($name, $this->attributes)) {
+			switch ($name) {
+				case 'prev_last_action':
+				case 'last_login':
+				case 'prev_last_login':
+					if ($value !== null) {
+						$this->attributes[$name] = (int)$value;
+					} else {
+						$this->attributes[$name] = null;
+					}
+					break;
+				default:
+					return parent::set($name, $value);
+					break;
+			}
+		} else {
+			return parent::set($name, $value);
+		}
+	
+		return TRUE;
+	}
 
 	/**
 	 * Ban this user.

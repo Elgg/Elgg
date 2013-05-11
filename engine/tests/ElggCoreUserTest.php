@@ -108,7 +108,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 	public function testElggUserConstructorByDbRow() {
 		$row = $this->fetchUser(elgg_get_logged_in_user_guid());
 		$user = new ElggUser($row);
-		$this->assertIdentical($user, $_SESSION['user']);
+		$this->assertIdenticalEntities($user, $_SESSION['user']);
 	}
 
 	public function testElggUserConstructorByUsername() {

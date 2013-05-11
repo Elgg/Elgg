@@ -62,6 +62,17 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 		$this->assertIdentical($entity_attributes, $attributes);
 	}
 
+	public function testElggSiteConstructorByGUID() {
+		$guid = $this->site->save();
+
+		// load a new site using guid
+		$entity = new ElggSiteTest($guid);
+		$this->assertIdenticalEntities($this->site, $entity);
+
+		// clean up
+		$this->site->delete();
+	}
+
 	public function testElggSiteSaveAndDelete() {
 		$guid = $this->site->save();
 		$this->assertIsA($guid, 'int');
