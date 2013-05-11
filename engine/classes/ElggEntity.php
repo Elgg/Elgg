@@ -1736,6 +1736,8 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	public function delete($recursive = true) {
+		global $CONFIG;
+
 		$guid = $this->guid;
 		if (!$guid) {
 			return false;
@@ -1749,13 +1751,7 @@ abstract class ElggEntity extends ElggData implements
 			return false;
 		}
 
-
-		global $CONFIG, $ENTITY_CACHE;
-
-		// delete cache
-		if (isset($ENTITY_CACHE[$guid])) {
-			_elgg_invalidate_cache_for_entity($guid);
-		}
+		_elgg_invalidate_cache_for_entity($guid);
 		
 		// If memcache is available then delete this entry from the cache
 		static $newentity_cache;
