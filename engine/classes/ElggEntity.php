@@ -1801,12 +1801,19 @@ abstract class ElggEntity extends ElggData implements
 			elgg_set_ignore_access($ia);
 		}
 
+		$entity_disable_override = access_get_show_hidden_status();
+		access_show_hidden_entities(true);
+		$ia = elgg_set_ignore_access(true);
+		
 		// Now delete the entity itself
 		$this->deleteMetadata();
 		$this->deleteOwnedMetadata();
 		$this->deleteAnnotations();
 		$this->deleteOwnedAnnotations();
 		$this->deleteRelationships();
+
+		access_show_hidden_entities($entity_disable_override);
+		elgg_set_ignore_access($ia);
 
 		elgg_delete_river(array('subject_guid' => $guid));
 		elgg_delete_river(array('object_guid' => $guid));

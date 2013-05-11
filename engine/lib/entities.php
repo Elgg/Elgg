@@ -1413,7 +1413,6 @@ $order_by = 'time_created') {
 	return false;
 }
 
-
 /**
  * Exports attributes generated on the fly (volatile) about an entity.
  *
@@ -1939,4 +1938,3 @@ elgg_register_plugin_hook_handler('volatile', 'metadata', 'volatile_data_export_
 
 /** Register init system event **/
 elgg_register_event_handler('init', 'system', 'entities_init');
-

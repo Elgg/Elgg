@@ -214,11 +214,8 @@ class Elgg_AttributeLoader {
 		// resolve subtype from int to string
 		$row['subtype'] = get_subtype_from_id($row['subtype']);
 
-		// loading complete: re-check missing and check type
-		if (($was_missing_primaries && $this->isMissingPrimaries($row))
-				|| ($was_missing_secondaries && $this->isMissingSecondaries($row))) {
-			throw new LogicException('Attribute loaders failed to return proper attributes');
-		}
+		// Note: If there are still missing attributes, we're running on a 1.7 or earlier schema. We let
+		// this pass so the upgrades can run.
 
 		// guid needs to be an int  http://trac.elgg.org/ticket/4111
 		$row['guid'] = (int) $row['guid'];
