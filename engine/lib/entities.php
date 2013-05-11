@@ -658,6 +658,31 @@ function elgg_entity_exists($guid) {
 }
 
 /**
+ * Enable an entity.
+ *
+ * @param int  $guid      GUID of entity to enable
+ * @param bool $recursive Recursively enable all entities disabled with the entity?
+ *
+ * @return bool
+ * @since 1.9.0
+ */
+function elgg_enable_entity($guid, $recursive = true) {
+
+	// Override access only visible entities
+	$old_access_status = access_get_show_hidden_status();
+	access_show_hidden_entities(true);
+
+	$result = false;
+	$entity = get_entity($guid);
+	if ($entity) {
+		$result = $entity->enable($recursive);
+	}
+
+	access_show_hidden_entities($old_access_status);
+	return $result;
+}
+
+/**
  * Returns an array of entities with optional filtering.
  *
  * Entities are the basic unit of storage in Elgg.  This function

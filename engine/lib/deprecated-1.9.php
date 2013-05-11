@@ -961,10 +961,10 @@ function delete_entity($guid, $recursive = true) {
  * @param bool $recursive Recursively enable all entities disabled with the entity?
  *
  * @return bool
- * @deprecated 1.9 Use ElggEntity::enable()
+ * @deprecated 1.9 Use elgg_enable_entity()
  */
 function enable_entity($guid, $recursive = true) {
-	elgg_deprecated_notice('enable_entity has been deprecated in favor of ElggEntity::enable', '1.9');
+	elgg_deprecated_notice('enable_entity has been deprecated in favor of elgg_enable_entity', '1.9');
 	
 	$guid = (int)$guid;
 
