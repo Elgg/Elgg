@@ -4,15 +4,12 @@ $cookie_timestamp = $_COOKIE['banner'];
 
 $timestamp = elgg_get_plugin_setting("timestamp", "banner");
 
-if (full_url() == elgg_get_site_url() + "/activity" && $timestamp != $cookie_timestamp) {
-?>
+if (full_url() == elgg_get_site_url() + "/activity" && $timestamp != $cookie_timestamp) { ?>
 	<div id="elgg-banner" class="elgg-banner">
 		<a id="elgg-banner" href="javascript:void(0);" class="elgg-banner-close" data-timestamp="<?php echo elgg_echo($timestamp); ?>"><?php echo elgg_echo('close'); ?></a>
 		<? echo elgg_get_plugin_setting("text", "banner"); ?>
 	</div>
-<?php
-	}
-?>
+<?php } ?>
 
 
 
