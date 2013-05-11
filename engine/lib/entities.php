@@ -1619,8 +1619,8 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 /**
  * Enable an entity.
  *
- * @warning In order to enable an entity using ElggEntity::enable(),
- * you must first use {@link access_show_hidden_entities()}.
+ * @warning In order to enable an entity, you must first use
+ * {@link access_show_hidden_entities()}.
  *
  * @param int  $guid      GUID of entity to enable
  * @param bool $recursive Recursively enable all entities disabled with the entity?
@@ -1748,12 +1748,19 @@ function delete_entity($guid, $recursive = true) {
 					elgg_set_ignore_access($ia);
 				}
 
+				$entity_disable_override = access_get_show_hidden_status();
+				access_show_hidden_entities(true);
+				$ia = elgg_set_ignore_access(true);
+
 				// Now delete the entity itself
 				$entity->deleteMetadata();
 				$entity->deleteOwnedMetadata();
 				$entity->deleteAnnotations();
 				$entity->deleteOwnedAnnotations();
 				$entity->deleteRelationships();
+
+				access_show_hidden_entities($entity_disable_override);
+				elgg_set_ignore_access($ia);
 
 				elgg_delete_river(array('subject_guid' => $guid));
 				elgg_delete_river(array('object_guid' => $guid));
