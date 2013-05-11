@@ -201,7 +201,7 @@ class ElggGroup extends ElggEntity
 	 * @param int $user_guid The GUID of a user to check.
 	 *
 	 * @return bool
-	 * @deprecated 1.9 Use ElggGroup::()
+	 * @deprecated 1.9 Use ElggGroup::isMember()
 	 */
 	public function isFriendOf($user_guid) {
 		elgg_deprecated_notice("ElggGroup::isFriendOf() is deprecated. Use ElggGroup::isMember()", 1.9);
