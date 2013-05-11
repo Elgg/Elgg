@@ -30,6 +30,24 @@ class Elgg_AttributeLoader {
 	);
 
 	/**
+	 * @var array names of attributes in all entities that should be stored as integer values
+	 */
+	protected static $integer_attr_names = array(
+		'guid',
+		'owner_guid',
+		'container_guid',
+		'site_guid',
+		'access_id',
+		'time_created',
+		'time_updated',
+		'last_action',
+		// ElggUser
+		'prev_last_action',
+		'last_login',
+		'prev_last_login'
+	);
+
+	/**
 	 * @var array names of secondary attributes required for the entity
 	 */
 	protected $secondary_attr_names = array();
@@ -223,10 +241,11 @@ class Elgg_AttributeLoader {
 		// this pass so the upgrades can run.
 
 		// guid needs to be an int  http://trac.elgg.org/ticket/4111
-		$row['guid'] = (int) $row['guid'];
-		$row['access_id'] = (int) $row['access_id'];
-		$row['owner_guid'] = (int) $row['owner_guid'];
-		$row['container_guid'] = (int) $row['container_guid'];
+		foreach (self::$integer_attr_names as $key) {
+			if (isset($row[$key])) {
+				$row[$key] = (int) $row[$key];
+			}
+		}
 
 		return $row;
 	}
