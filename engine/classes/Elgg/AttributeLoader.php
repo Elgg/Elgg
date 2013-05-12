@@ -247,6 +247,13 @@ class Elgg_AttributeLoader {
 			$row['subtype'] = null;
 		}
 
+		// set to null when reading empty value, to match default empty value; See #5456
+		foreach (self::$null_attr_names as $key) {
+			if (isset($row[$key]) && !$row[$key]) {
+				$row[$key] = null;
+			}
+		}
+
 		// Note: If there are still missing attributes, we're running on a 1.7 or earlier schema. We let
 		// this pass so the upgrades can run.
 
