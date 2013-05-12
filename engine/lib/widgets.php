@@ -124,6 +124,27 @@ function elgg_widget_run_once() {
 }
 
 /**
+ * Set the widget title on ajax return from save action
+ * 
+ * @param string $hook    Hook name
+ * @param string $type    Hook type
+ * @param array  $results Array to be encoded as json
+ * @param array  $params  Parameters about the request
+ * @return array|null
+ * @access private
+ */
+function _elgg_widgets_set_ajax_title($hook, $type, $results, $params) {
+	if ($params['action'] == 'widgets/save') {
+		// @todo Elgg makes ajax so difficult - no other way to add data to output
+		$widget = get_entity(get_input('guid'));
+		if ($widget && $widget->title) {
+			$results['title'] = $widget->title;
+			return $results;
+		}
+	}
+}
+
+/**
  * Function to initialize widgets functionality
  *
  * @return void
@@ -137,6 +158,8 @@ function _elgg_widgets_init() {
 	elgg_register_action('widgets/upgrade', '', 'admin');
 
 	run_function_once("elgg_widget_run_once");
+
+	elgg_register_plugin_hook_handler('output', 'ajax', '_elgg_widgets_set_ajax_title');
 }
 
 /**

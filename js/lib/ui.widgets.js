@@ -175,6 +175,10 @@ elgg.ui.widgets.saveSettings = function(event) {
 		data: $(this).serialize(),
 		success: function(json) {
 			$widgetContent.html(json.output);
+			if (typeof(json.title) != "undefined") {
+				var $widgetTitle = $widgetContent.parent().parent().find('.elgg-widget-title');
+				$widgetTitle.html(json.title);
+			}
 		}
 	});
 	event.preventDefault();
