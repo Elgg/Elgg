@@ -13,7 +13,7 @@ class ElggGroup extends ElggEntity
 	implements Friendable {
 
 	const GATEKEEPER_MODE_UNRESTRICTED = 'unrestricted';
-	const GATEKEEPER_MODE_MEMBERSONLY = 'membersonly';
+	const GATEKEEPER_MODE_MEMBERS_ONLY = 'members_only';
 
 	/**
 	 * Sets the type to group.
@@ -323,12 +323,12 @@ class ElggGroup extends ElggEntity
 			// fallback to 1.8 default behavior
 			$mode = $this->isPublicMembership()
 				? self::GATEKEEPER_MODE_UNRESTRICTED
-				: self::GATEKEEPER_MODE_MEMBERSONLY;
+				: self::GATEKEEPER_MODE_MEMBERS_ONLY;
 			$this->gatekeeper_mode = $mode;
 		}
 
 		// only support two models for now
-		if ($mode === self::GATEKEEPER_MODE_MEMBERSONLY) {
+		if ($mode === self::GATEKEEPER_MODE_MEMBERS_ONLY) {
 			return $mode;
 		}
 		return self::GATEKEEPER_MODE_UNRESTRICTED;
@@ -341,7 +341,7 @@ class ElggGroup extends ElggEntity
 	 */
 	public function setGatekeeperMode($mode) {
 		// only support two models for now
-		if ($mode !== self::GATEKEEPER_MODE_MEMBERSONLY) {
+		if ($mode !== self::GATEKEEPER_MODE_MEMBERS_ONLY) {
 			$mode = self::GATEKEEPER_MODE_UNRESTRICTED;
 		}
 

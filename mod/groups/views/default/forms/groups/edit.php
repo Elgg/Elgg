@@ -80,7 +80,7 @@ if ($group_profile_fields > 0) {
 		'value' => $gatekeeper_mode,
 		'options_values' => array(
 			ElggGroup::GATEKEEPER_MODE_UNRESTRICTED => elgg_echo('groups:gatekeeper_mode:unrestricted'),
-			ElggGroup::GATEKEEPER_MODE_MEMBERSONLY => elgg_echo('groups:gatekeeper_mode:membersonly'),
+			ElggGroup::GATEKEEPER_MODE_MEMBERS_ONLY => elgg_echo('groups:gatekeeper_mode:membersonly'),
 		),
 	));
 		?>

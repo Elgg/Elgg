@@ -74,7 +74,7 @@ class Elgg_GroupItemVisibility {
 				/* @var ElggGroup $container */
 
 				if ($is_visible) {
-					if ($container->getGatekeeperMode() === ElggGroup::GATEKEEPER_MODE_MEMBERSONLY) {
+					if ($container->getGatekeeperMode() === ElggGroup::GATEKEEPER_MODE_MEMBERS_ONLY) {
 						if ($user) {
 							if (!$container->isMember($user) && !$user->isAdmin()) {
 								$ret->shouldHideItems = true;

@@ -30,7 +30,7 @@ class ElggCoreGroupTest extends ElggCoreUnitTest {
 
 	public function testGatekeeperMode() {
 		$unrestricted = ElggGroup::GATEKEEPER_MODE_UNRESTRICTED;
-		$membersonly = ElggGroup::GATEKEEPER_MODE_MEMBERSONLY;
+		$membersonly = ElggGroup::GATEKEEPER_MODE_MEMBERS_ONLY;
 
 		// if mode not set, open groups are unrestricted
 		$this->assertEqual($this->group->getGatekeeperMode(), $unrestricted);
@@ -61,7 +61,7 @@ class ElggCoreGroupTest extends ElggCoreUnitTest {
 		$this->assertFalse($vis->shouldHideItems);
 
 		// membersonly: non-members fail
-		$this->group->setGatekeeperMode(ElggGroup::GATEKEEPER_MODE_MEMBERSONLY);
+		$this->group->setGatekeeperMode(ElggGroup::GATEKEEPER_MODE_MEMBERS_ONLY);
 		$vis = ElggGroupItemVisibility::factory($group_guid, $user_status, false);
 
 		$this->assertTrue($vis->shouldHideItems);
