@@ -21,7 +21,7 @@
  * @since 1.8.0
  */
 function elgg_get_widgets($user_guid, $context) {
-	return _elgg_services()->widgets->get($user_guid, $context);
+	return _elgg_services()->widgets->getWidgets($user_guid, $context);
 }
 
 /**
@@ -36,7 +36,7 @@ function elgg_get_widgets($user_guid, $context) {
  * @since 1.8.0
  */
 function elgg_create_widget($owner_guid, $handler, $context, $access_id = null) {
-	return _elgg_services()->widgets->create($owner_guid, $handler, $context, $access_id);
+	return _elgg_services()->widgets->createWidget($owner_guid, $handler, $context, $access_id);
 }
 
 /**
@@ -55,7 +55,7 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
 }
 
 /**
- * Regsiter a widget type
+ * Register a widget type
  *
  * This should be called by plugins in their init function.
  *

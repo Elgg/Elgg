@@ -19,21 +19,21 @@ class Elgg_WidgetsService {
 	private $widgets;
 
 	/**
-	 * @see Elgg_WidgetsService::get()
+	 * @see Elgg_WidgetsService::getWidgets()
 	 * @var array
 	 */
-	private $widget_cache = array();
+	private $widgetCache = array();
 
 	/**
 	 * @see elgg_get_widgets
 	 * @access private
 	 * @since 1.9.0
 	 */
-	public function get($user_guid, $context) {
+	public function getWidgets($user_guid, $context) {
 		$widget_cache_key = "$context-$user_guid";
 
-		if (isset($this->widget_cache[$widget_cache_key])) {
-			return $this->widget_cache[$widget_cache_key];
+		if (isset($this->widgetCache[$widget_cache_key])) {
+			return $this->widgetCache[$widget_cache_key];
 		}
 
 		$options = array(
@@ -61,7 +61,7 @@ class Elgg_WidgetsService {
 			ksort($sorted_widgets[$col]);
 		}
 
-		$this->widget_cache[$widget_cache_key] = $sorted_widgets;
+		$this->widgetCache[$widget_cache_key] = $sorted_widgets;
 
 		return $sorted_widgets;
 	}
@@ -71,7 +71,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	public function create($owner_guid, $handler, $context, $access_id = null) {
+	public function createWidget($owner_guid, $handler, $context, $access_id = null) {
 		if (empty($owner_guid) || empty($handler) || !$this->validateType($handler)) {
 			return false;
 		}
@@ -83,7 +83,7 @@ class Elgg_WidgetsService {
 
 		$widget = new ElggWidget;
 		$widget->owner_guid = $owner_guid;
-		$widget->container_guid = $owner_guid; // @todo - will this work for group widgets
+		$widget->container_guid = $owner_guid; // @todo - will this work for group widgets?
 		if (isset($access_id)) {
 			$widget->access_id = $access_id;
 		} else {
