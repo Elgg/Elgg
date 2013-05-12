@@ -48,6 +48,16 @@ class Elgg_AttributeLoader {
 	);
 
 	/**
+	 * @var array names of attributes in all entities that should be stored as null if empty
+	 */
+	protected static $null_attr_names = array(
+		'name',
+		'title',
+		'description',
+		'url',
+	);
+
+	/**
 	 * @var array names of secondary attributes required for the entity
 	 */
 	protected $secondary_attr_names = array();
@@ -246,7 +256,6 @@ class Elgg_AttributeLoader {
 				$row[$key] = (int) $row[$key];
 			}
 		}
-
 		return $row;
 	}
 }
