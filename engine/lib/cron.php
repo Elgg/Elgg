@@ -2,8 +2,8 @@
 /**
  * Elgg cron library.
  *
- * @package Elgg
- * @subpackage Core
+ * @package    Elgg.Core
+ * @subpackage Cron
  */
 
 /**
@@ -12,12 +12,26 @@
  * @return void
  * @access private
  */
-function cron_init() {
-	// Register a pagehandler for cron
-	elgg_register_page_handler('cron', 'cron_page_handler');
+function _elgg_cron_init() {
+	elgg_register_page_handler('cron', '_elgg_cron_page_handler');
 
-	// register a hook for Walled Garden public pages
-	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'cron_public_pages');
+	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_cron_public_pages');
+	elgg_register_plugin_hook_handler('cron', 'all', '_elgg_cron_monitor', 1000);
+
+	elgg_set_config('elgg_cron_periods', array(
+		'minute',
+		'fiveminute',
+		'fifteenmin',
+		'halfhour',
+		'hourly',
+		'daily',
+		'weekly',
+		'monthly',
+		'yearly',
+		'reboot',
+	));
+
+	elgg_register_admin_menu_item('administer', 'cron', 'statistics');
 }
 
 /**
@@ -29,20 +43,17 @@ function cron_init() {
  * @throws CronException
  * @access private
  */
-function cron_page_handler($page) {
+function _elgg_cron_page_handler($page) {
 	if (!isset($page[0])) {
 		forward();
 	}
 
 	$period = strtolower($page[0]);
 
-	$allowed_periods = array(
-		'minute', 'fiveminute', 'fifteenmin', 'halfhour', 'hourly',
-		'daily', 'weekly', 'monthly', 'yearly', 'reboot'
-	);
+	$allowed_periods = elgg_get_config('elgg_cron_periods');
 
 	if (!in_array($period, $allowed_periods)) {
-		throw new CronException($period . " is not a recognized period.");
+		throw new CronException("$period is not a recognized cron period.");
 	}
 
 	// Get a list of parameters
@@ -61,29 +72,44 @@ function cron_page_handler($page) {
 }
 
 /**
+ * Record cron running
+ *
+ * @param string $hook   Hook name
+ * @param string $period Cron period
+ * @param string $output Output content
+ * @param array  $params Hook parameters
+ * @return void
+ * @access private
+ */
+function _elgg_cron_monitor($hook, $period, $output, $params) {
+	$time = $params['time'];
+	$periods = elgg_get_config('elgg_cron_periods');
+
+	if (in_array($period, $periods)) {
+		$key = "cron_latest:$period:ts";
+		elgg_get_site_entity()->setPrivateSetting($key, $time);
+	}
+}
+
+/**
  * Register cron's pages as public in case we're in Walled Garden mode
  *
- * @param string $hook         public_pages
- * @param string $type         system
- * @param array  $return_value Array of pages to allow
- * @param mixed  $params       Params
+ * @param string $hook   'public_pages'
+ * @param string $type   'walled_garden'
+ * @param array  $pages  Array of pages to allow
+ * @param mixed  $params Params
  *
  * @return array
  * @access private
  */
-function cron_public_pages($hook, $type, $return_value, $params) {
-	$return_value[] = 'cron/minute';
-	$return_value[] = 'cron/fiveminute';
-	$return_value[] = 'cron/fifteenmin';
-	$return_value[] = 'cron/halfhour';
-	$return_value[] = 'cron/hourly';
-	$return_value[] = 'cron/daily';
-	$return_value[] = 'cron/weekly';
-	$return_value[] = 'cron/monthly';
-	$return_value[] = 'cron/yearly';
-	$return_value[] = 'cron/reboot';
+function _elgg_cron_public_pages($hook, $type, $pages, $params) {
 
-	return $return_value;
+	$periods = elgg_get_config('elgg_cron_periods');
+	foreach ($periods as $period) {
+		$pages[] = "cron/$period";
+	}
+
+	return $pages;
 }
 
-elgg_register_event_handler('init', 'system', 'cron_init');
+elgg_register_event_handler('init', 'system', '_elgg_cron_init');
