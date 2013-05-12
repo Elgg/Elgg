@@ -22,6 +22,7 @@ class ElggCoreGroupTest extends ElggCoreUnitTest {
 	public function setUp() {
 		$this->group = new ElggGroup();
 		$this->group->membership = ACCESS_PUBLIC;
+		$this->group->access_id = ACCESS_PUBLIC;
 		$this->group->save();
 		$this->user = new ElggUser();
 		$this->user->username = 'test_user_' . rand();
