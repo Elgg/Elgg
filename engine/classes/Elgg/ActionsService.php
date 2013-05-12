@@ -18,6 +18,12 @@ class Elgg_ActionsService {
 	 * @var array
 	 */
 	private $actions = array();
+
+	/** 
+	 * The current action being processed
+	 * @var string 
+	 */
+	private $currentAction = null;
 	
 	/**
 	 * @see action
@@ -25,6 +31,7 @@ class Elgg_ActionsService {
 	 */
 	public function execute($action, $forwarder = "") {
 		$action = rtrim($action, '/');
+		$this->currentAction = $action;
 	
 		// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
 		// Allow users to disable plugins without a token in order to
@@ -296,6 +303,9 @@ class Elgg_ActionsService {
 				$params['system_messages']['error'] = $system_messages['error'];
 				$params['status'] = -1;
 			}
+
+			$context = array('action' => $this->currentAction);
+			$params = elgg_trigger_plugin_hook('output', 'ajax', $context, $params);
 	
 			// Check the requester can accept JSON responses, if not fall back to
 			// returning JSON in a plain-text response.  Some libraries request
