@@ -19,21 +19,6 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	}
 
 	/**
-	 * Called before each test method.
-	 */
-	public function setUp() {
-
-	}
-
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
-		// do not allow SimpleTest to interpret Elgg notices as exceptions
-		// $this->swallowErrors();
-	}
-
-	/**
 	 * Called after each test object.
 	 */
 	public function __destruct() {
