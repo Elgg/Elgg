@@ -28,14 +28,6 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		$this->package17 = new ElggPluginPackage(get_config('path') . 'engine/tests/test_files/plugin_17');
 	}
 
-	/**
-	 * Called after each test method.
-	 */
-	public function tearDown() {
-		// do not allow SimpleTest to interpret Elgg notices as exceptions
-		// $this->swallowErrors();
-	}
-
 	// generic tests
 	public function testElggPluginManifestFromString() {
 		$manifest_file = file_get_contents(get_config('path') . 'engine/tests/test_files/plugin_17/manifest.xml');

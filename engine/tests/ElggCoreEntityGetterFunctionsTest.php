@@ -80,7 +80,6 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	public function __destruct() {
 		global $CONFIG;
 
-		// $this->swallowErrors();
 		foreach ($this->entities as $e) {
 			$e->delete();
 		}
