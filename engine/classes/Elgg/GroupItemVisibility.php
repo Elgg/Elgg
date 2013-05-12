@@ -11,9 +11,9 @@
  */
 class Elgg_GroupItemVisibility {
 
-	const REASON_MEMBERSHIP = 'membershiprequired';
-	const REASON_LOGGEDOUT = 'loggedinrequired';
-	const REASON_NOACCESS = 'noaccess';
+	const REASON_MEMBERSHIP = 'membership_required';
+	const REASON_LOGGEDOUT = 'login_required';
+	const REASON_NOACCESS = 'no_access';
 
 	/**
 	 * @var bool
