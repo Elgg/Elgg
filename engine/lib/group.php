@@ -161,13 +161,13 @@ function get_users_membership($user_guid) {
  * May the current user access item(s) on this page? If the page owner is a group,
  * membership, visibility, and logged in status are taken into account.
  *
- * @param boolean $forward If set to true (default), will forward the page;
- *                         if set to false, will return true or false.
+ * @param bool $forward         If set to true (default), will forward the page;
+ *                              if set to false, will return true or false.
  *
- * @param int $page_owner_guid The current page owner guid. If not set, this will be
- *                             pulled from elgg_get_page_owner_guid().
+ * @param int  $page_owner_guid The current page owner guid. If not set, this
+ *                              will be pulled from elgg_get_page_owner_guid().
  *
- * @return bool If $forward is set to false.
+ * @return bool Will return if $forward is set to false.
  */
 function group_gatekeeper($forward = true, $page_owner_guid = null) {
 	if (null === $page_owner_guid) {
@@ -256,14 +256,14 @@ function remove_group_tool_option($name) {
 /**
  * Runs unit tests for the group entities.
  *
- * @param string $hook
- * @param string $type
- * @param array $value
- * @param array $params
+ * @param string $hook  Hook name
+ * @param string $type  Hook type
+ * @param array  $value Array of unit test locations
  *
  * @return array
+ * @access private
  */
-function _elgg_groups_test($hook, $type, $value, $params) {
+function _elgg_groups_test($hook, $type, $value) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGroupTest.php';
 	return $value;

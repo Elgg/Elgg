@@ -51,31 +51,31 @@ class ElggCoreGroupTest extends ElggCoreUnitTest {
 	}
 
 	public function testGroupItemVisibility() {
-		$user_status = new Elgg_UserStatus($this->user);
+		$original_user = _elgg_services()->session->get('user');
+		_elgg_services()->session->set('user', $this->user);
 		$group_guid = $this->group->guid;
 
 		// unrestricted: pass non-members
 		$this->group->setGatekeeperMode(ElggGroup::GATEKEEPER_MODE_UNRESTRICTED);
-		$vis = ElggGroupItemVisibility::factory($group_guid, $user_status, false);
+		$vis = Elgg_GroupItemVisibility::factory($group_guid, false);
 
 		$this->assertFalse($vis->shouldHideItems);
 
 		// membersonly: non-members fail
 		$this->group->setGatekeeperMode(ElggGroup::GATEKEEPER_MODE_MEMBERS_ONLY);
-		$vis = ElggGroupItemVisibility::factory($group_guid, $user_status, false);
+		$vis = Elgg_GroupItemVisibility::factory($group_guid, false);
 
 		$this->assertTrue($vis->shouldHideItems);
 
-		// non-member admins succeed
-		$user_status = Elgg_UserStatus::fromSession();
-		$vis = ElggGroupItemVisibility::factory($group_guid, $user_status, false);
+		// members succeed
+		$this->group->join($this->user);
+		$vis = Elgg_GroupItemVisibility::factory($group_guid, false);
 
 		$this->assertFalse($vis->shouldHideItems);
 
-		// members succeed
-		$this->group->join($this->user);
-		$user_status = new Elgg_UserStatus($this->user);
-		$vis = ElggGroupItemVisibility::factory($group_guid, $user_status, false);
+		// non-member admins succeed - assumes admin logged in
+		_elgg_services()->session->set('user', $original_user);
+		$vis = Elgg_GroupItemVisibility::factory($group_guid, false);
 
 		$this->assertFalse($vis->shouldHideItems);
 	}

@@ -361,6 +361,7 @@ elgg.ui.toggleMenuItems = function($menu, nameOfItemToShow, nameOfItemToHide) {
  * then hide the note when the select value is PRIVATE or group members.
  *
  * @return void
+ * @since 1.9.0
  */
 elgg.ui.initAccessInputs = function () {
 	$('.elgg-input-access').each(function () {

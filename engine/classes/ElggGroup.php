@@ -315,6 +315,7 @@ class ElggGroup extends ElggEntity
 	 * Return the content restriction mode used by group_gatekeeper()
 	 *
 	 * @return string One of GATEKEEPER_MODE_* constants
+	 * @since 1.9.0
 	 */
 	public function getGatekeeperMode() {
 		$mode = $this->gatekeeper_mode;
@@ -338,6 +339,8 @@ class ElggGroup extends ElggEntity
 	 * Set the content restriction mode used by group_gatekeeper()
 	 *
 	 * @param string $mode One of GATEKEEPER_MODE_* constants
+	 * @return void
+	 * @since 1.9.0
 	 */
 	public function setGatekeeperMode($mode) {
 		// only support two models for now
