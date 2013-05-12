@@ -47,7 +47,7 @@ if (elgg_in_context('default_widgets')) {
 }
 
 $widget_id = "elgg-widget-$widget->guid";
-$widget_instance = "elgg-widget-instance-$handler";
+$widget_instance = preg_replace('/[^a-z0-9-]/i', '-', "elgg-widget-instance-$handler");
 if ($can_edit) {
 	$widget_class = "elgg-state-draggable $widget_instance";
 } else {

@@ -13,10 +13,12 @@ if (!$form_body) {
 	return true;
 }
 
+$additional_class = preg_replace('/[^a-z0-9-]/i', '-', "elgg-form-widgets-save-{$widget->handler}");
+
 $form = elgg_view('input/form', array(
 	'action' => 'action/widgets/save',
 	'body' => $form_body,
-	'class' => 'elgg-form-widgets-save',
+	'class' => "elgg-form-widgets-save $additional_class",
 ));
 ?>
 

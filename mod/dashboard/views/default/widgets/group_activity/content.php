@@ -9,8 +9,11 @@ $guid = $vars['entity']->group_guid;
 $content = '';
 
 if ($guid) {
-	$title = get_entity($guid)->name;
-	$content = "<h3>$title</h3>";
+	// backward compatibility when we couldn't set widget title (pre 1.9)
+	if (!$vars['entity']->title) {
+		$title = get_entity($guid)->name;
+		$content = "<h3>$title</h3>";
+	}
 
 	elgg_push_context('widgets');
 	$db_prefix = elgg_get_config('dbprefix');

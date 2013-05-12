@@ -43,3 +43,7 @@ $num_dropdown = elgg_view('input/select', $params);
 	<?php echo $num_dropdown; ?>
 </div>
 
+<?php
+
+$title_input = elgg_view('input/hidden', array('name' => 'title'));
+echo $title_input;
