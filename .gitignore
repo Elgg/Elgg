@@ -5,6 +5,7 @@
 
 # don't ignore bundled plugins
 !/mod/blog/
+!/mod/banner/
 !/mod/bookmarks/
 !/mod/categories/
 !/mod/ckeditor/
