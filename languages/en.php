@@ -442,6 +442,11 @@ return array(
 	'admin:statistics' => "Statistics",
 	'admin:statistics:overview' => 'Overview',
 	'admin:statistics:server' => 'Server Info',
+	'admin:statistics:cron' => 'Cron',
+	'admin:cron:record' => 'Latest Cron Jobs',
+	'admin:cron:period' => 'Cron period',
+	'admin:cron:friendly' => 'Last completed',
+	'admin:cron:date' => 'Date and time',
 
 	'admin:appearance' => 'Appearance',
 	'admin:administer_utilities' => 'Utilities',
@@ -797,6 +802,7 @@ return array(
 	'option:no' => "No",
 
 	'unknown' => 'Unknown',
+	'never' => 'Never',
 
 	'active' => 'Active',
 	'total' => 'Total',
@@ -965,6 +971,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'interval:halfhour' => 'Every half hour',
 	'interval:hourly' => 'Hourly',
 	'interval:daily' => 'Daily',
+	'interval:weekly' => 'Weekly',
 	'interval:monthly' => 'Monthly',
 	'interval:yearly' => 'Yearly',
 	'interval:reboot' => 'On reboot',
