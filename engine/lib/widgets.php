@@ -25,19 +25,6 @@ function elgg_get_widgets($user_guid, $context) {
 }
 
 /**
- * Output a single column of widgets.
- *
- * @param ElggUser $user        The owner user entity.
- * @param string   $context     The context (profile, dashboard, etc.)
- * @param int      $column      Which column to output.
- * @param bool     $show_access Show the access control (true by default)
- * @return string
- */
-function elgg_view_widgets($user, $context, $column, $show_access = true) {
-	return _elgg_services()->widgets->view($user, $context, $column, $show_access);
-}
-
-/**
  * Create a new widget instance
  *
  * @param int    $owner_guid GUID of entity that owns this widget

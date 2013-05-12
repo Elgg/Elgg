@@ -79,28 +79,6 @@ class Elgg_WidgetsService {
 	}
 
 	/**
-	 * @see elgg_view_widgets
-	 * @access private
-	 * @since 1.9.0
-	 */
-	public function view(ElggUser $user, $context, $column, $show_access = true) {
-		$widgets = elgg_get_widgets($user->guid, $context);
-		$column_widgets = $widgets[$column];
-
-		$column_html = "<div class=\"elgg-widgets\" id=\"elgg-widget-col-$column\">";
-		if (count($column_widgets) > 0) {
-			foreach ($column_widgets as $widget) {
-				if ($this->validateType($widget->handler)) {
-					$column_html .= elgg_view_entity($widget, array('show_access' => $show_access));
-				}
-			}
-		}
-		$column_html .= '</div>';
-
-		return $column_html;
-	}
-
-	/**
 	 * @see elgg_create_widget
 	 * @access private
 	 * @since 1.9.0

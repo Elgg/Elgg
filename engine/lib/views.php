@@ -1153,6 +1153,33 @@ function elgg_view_icon($name, $class = '') {
 }
 
 /**
+ * Output a single column of widgets.
+ *
+ * @param ElggUser $user        The owner user entity.
+ * @param string   $context     The context (profile, dashboard, etc.)
+ * @param int      $column      Which column to output.
+ * @param bool     $show_access Show the access control (true by default)
+ * @return string
+ * @since 1.9.0
+ */
+function elgg_view_widgets_column($user, $context, $column, $show_access = true) {
+	$widgets = elgg_get_widgets($user->guid, $context);
+	$column_widgets = $widgets[$column];
+
+	$column_html = "<div class=\"elgg-widgets\" id=\"elgg-widget-col-$column\">";
+	if (count($column_widgets) > 0) {
+		foreach ($column_widgets as $widget) {
+			if (elgg_is_widget_type($widget->handler)) {
+				$column_html .= elgg_view_entity($widget, array('show_access' => $show_access));
+			}
+		}
+	}
+	$column_html .= '</div>';
+
+	return $column_html;
+}
+
+/**
  * Displays a user's access collections, using the core/friends/collections view
  *
  * @param int $owner_guid The GUID of the owning user

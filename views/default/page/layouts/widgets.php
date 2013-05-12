@@ -47,7 +47,7 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	}
 
 	echo "<div class=\"$widget_class\">";
-	echo elgg_view_widgets($owner, $context, $column_index, $show_access);
+	echo elgg_view_widgets_column($owner, $context, $column_index, $show_access);
 	echo '</div>';
 }
 
