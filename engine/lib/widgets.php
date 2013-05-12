@@ -129,7 +129,7 @@ function elgg_widget_run_once() {
  * @return void
  * @access private
  */
-function elgg_widgets_init() {
+function _elgg_widgets_init() {
 	elgg_register_action('widgets/save');
 	elgg_register_action('widgets/add');
 	elgg_register_action('widgets/move');
@@ -164,8 +164,27 @@ function elgg_widgets_init() {
  * @return void
  * @access private
  */
-function elgg_default_widgets_init() {
-	_elgg_services()->widgets->defaultWidgetsInit();
+function _elgg_default_widgets_init() {
+	global $CONFIG;
+	$default_widgets = elgg_trigger_plugin_hook('get_list', 'default_widgets', null, array());
+
+	$CONFIG->default_widget_info = $default_widgets;
+
+	if ($default_widgets) {
+		elgg_register_admin_menu_item('configure', 'default_widgets', 'appearance');
+
+		// override permissions for creating widget on logged out / just created entities
+		elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_default_widgets_permissions_override');
+
+		// only register the callback once per event
+		$events = array();
+		foreach ($default_widgets as $info) {
+			$events[$info['event'] . ',' . $info['entity_type']] = $info;
+		}
+		foreach ($events as $info) {
+			elgg_register_event_handler($info['event'], $info['entity_type'], '_elgg_create_default_widgets');
+		}
+	}
 }
 
 /**
@@ -181,8 +200,61 @@ function elgg_default_widgets_init() {
  * @return void
  * @access private
  */
-function elgg_create_default_widgets($event, $type, $entity) {
-	return _elgg_services()->widgets->createDefault($event, $type, $entity);
+function _elgg_create_default_widgets($event, $type, $entity) {
+	$default_widget_info = elgg_get_config('default_widget_info');
+
+	if (!$default_widget_info || !$entity) {
+		return;
+	}
+
+	$type = $entity->getType();
+	$subtype = $entity->getSubtype();
+
+	// event is already guaranteed by the hook registration.
+	// need to check subtype and type.
+	foreach ($default_widget_info as $info) {
+		if ($info['entity_type'] == $type) {
+			if ($info['entity_subtype'] == ELGG_ENTITIES_ANY_VALUE || $info['entity_subtype'] == $subtype) {
+
+				// need to be able to access everything
+				$old_ia = elgg_set_ignore_access(true);
+				elgg_push_context('create_default_widgets');
+
+				// pull in by widget context with widget owners as the site
+				// not using elgg_get_widgets() because it sorts by columns and we don't care right now.
+				$options = array(
+					'type' => 'object',
+					'subtype' => 'widget',
+					'owner_guid' => elgg_get_site_entity()->guid,
+					'private_setting_name' => 'context',
+					'private_setting_value' => $info['widget_context'],
+					'limit' => 0
+				);
+
+				$widgets = elgg_get_entities_from_private_settings($options);
+				/* @var ElggWidget[] $widgets */
+
+				foreach ($widgets as $widget) {
+					// change the container and owner
+					$new_widget = clone $widget;
+					$new_widget->container_guid = $entity->guid;
+					$new_widget->owner_guid = $entity->guid;
+
+					// pull in settings
+					$settings = get_all_private_settings($widget->guid);
+
+					foreach ($settings as $name => $value) {
+						$new_widget->$name = $value;
+					}
+
+					$new_widget->save();
+				}
+
+				elgg_set_ignore_access($old_ia);
+				elgg_pop_context();
+			}
+		}
+	}
 }
 
 /**
@@ -195,10 +267,13 @@ function elgg_create_default_widgets($event, $type, $entity) {
  * @return true|null
  * @access private
  */
-function elgg_default_widgets_permissions_override($hook, $type, $return, $params) {
-	return _elgg_services()->widgets->defaultWidgetsPermissionsOverride($hook, $type, $return, $params);
+function _elgg_default_widgets_permissions_override($hook, $type, $return, $params) {
+	if ($type == 'object' && $params['subtype'] == 'widget') {
+		return elgg_in_context('create_default_widgets') ? true : null;
+	}
+
+	return null;
 }
 
-elgg_register_event_handler('init', 'system', 'elgg_widgets_init');
-// register default widget hooks from plugins
-elgg_register_event_handler('ready', 'system', 'elgg_default_widgets_init');
+elgg_register_event_handler('init', 'system', '_elgg_widgets_init');
+elgg_register_event_handler('ready', 'system', '_elgg_default_widgets_init');
