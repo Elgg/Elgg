@@ -2,8 +2,8 @@
 /**
  * Elgg cron library.
  *
- * @package Elgg
- * @subpackage Core
+ * @package    Elgg.Core
+ * @subpackage Cron
  */
 
 /**
@@ -50,7 +50,7 @@ function _elgg_cron_page_handler($page) {
 
 	$period = strtolower($page[0]);
 
-	$allowed_periods = 	elgg_get_config('elgg_cron_periods');
+	$allowed_periods = elgg_get_config('elgg_cron_periods');
 
 	if (!in_array($period, $allowed_periods)) {
 		throw new CronException("$period is not a recognized cron period.");
