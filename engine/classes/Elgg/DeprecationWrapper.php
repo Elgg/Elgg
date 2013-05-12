@@ -7,14 +7,20 @@
  * fail type hints, instanceof, etc.
  *
  * This was introduced for deprecating passing particular variabled to views
- * automatically in elgg_view(). It can be removed once that use is no longer
- * required.
+ * automatically in elgg_view(). It also used to wrap the deprecated global $SESSION.
+ * It can be removed once that use is no longer required.
+ *
+ * Wraps:
+ *  url string in ViewsService
+ *  config object in ViewsService
+ *  user object in ViewsService
+ *  session object in session lib
  *
  * @access private
  * 
  * @package Elgg.Core
  */
-class Elgg_DeprecationWrapper {
+class Elgg_DeprecationWrapper implements ArrayAccess {
 	/** @var object */
 	protected $object;
 
@@ -109,5 +115,74 @@ class Elgg_DeprecationWrapper {
 		// 1 for displayWarning()
 		// 1 for call_user_func()
 		call_user_func($this->reporter, $this->message, $this->version, 3);
+	}
+
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetSet()
+	 *
+	 * @param mixed $key   Name
+	 * @param mixed $value Value
+	 *
+	 * @return void
+	 */
+	public function offsetSet($key, $value) {
+		if (is_object($this->object)) {
+			$this->object->$key = $value;
+		} else {
+			$this->object[$key] = $value;
+		}
+	}
+
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetGet()
+	 *
+	 * @param mixed $key Name
+	 *
+	 * @return mixed
+	 */
+	public function offsetGet($key) {
+		if (is_object($this->object)) {
+			return $this->object->$key;
+		} else {
+			return $this->object[$key];
+		}
+	}
+
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetUnset()
+	 *
+	 * @param mixed $key Name
+	 *
+	 * @return void
+	 */
+	public function offsetUnset($key) {
+		if (is_object($this->object)) {
+			unset($this->object->$key);
+		} else {
+			unset($this->object[$key]);
+		}
+	}
+
+	/**
+	 * Array access interface
+	 *
+	 * @see ArrayAccess::offsetExists()
+	 *
+	 * @param mixed $offset Offset
+	 *
+	 * @return bool
+	 */
+	public function offsetExists($offset) {
+		if (is_object($this->object)) {
+			return isset($this->object->$offset);
+		} else {
+			return array_key_exists($offset, $this->object);
+		}
 	}
 }

@@ -52,6 +52,16 @@ class Elgg_DeprecationWrapperTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($foo, 'foo');
 		$this->assertEquals("$file:$line", $this->last_stack_line);
 	}
+
+	function testArrayAccessToObject() {
+		$obj = new stdClass();
+		$obj->foo = 'test';
+		$wrapper = new Elgg_DeprecationWrapper($obj, 'FOO', 1.9);
+		$this->assertEquals('test', $wrapper['foo']);
+
+		$wrapper[0] = 'value';
+		$this->assertEquals('value', $wrapper[0]);
+	}
 }
 
 class Elgg_DeprecationWrapperTestObj {

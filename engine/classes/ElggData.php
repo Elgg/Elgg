@@ -64,8 +64,7 @@ abstract class ElggData implements
 	}
 
 	/**
-	 * Provides a pointer to the database object. Use this instead of
-	 * elgg_get_database() in subclasses to make mocking possible for unit tests.
+	 * Provides a pointer to the database object.
 	 *
 	 * @return Elgg_Database The database where this data is (will be) stored.
 	 */
