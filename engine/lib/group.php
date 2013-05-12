@@ -247,3 +247,23 @@ function remove_group_tool_option($name) {
 		}
 	}
 }
+
+/**
+ * Runs unit tests for ElggGroup
+ *
+ * @param string $hook   unit_test
+ * @param string $type   system
+ * @param mixed  $value  Array of tests
+ * @param mixed  $params Params
+ *
+ * @return array
+ * @access private
+ */
+function groups_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = "{$CONFIG->path}engine/tests/ElggCoreGroupTest.php";
+	return $value;
+}
+
+elgg_register_plugin_hook_handler('unit_test', 'system', 'groups_test');
+
