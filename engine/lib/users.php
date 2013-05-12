@@ -493,9 +493,9 @@ function get_user_by_username($username) {
 		return _elgg_retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]);
 	}
 
-	$query = "SELECT e.* from {$CONFIG->dbprefix}users_entity u
-		join {$CONFIG->dbprefix}entities e on e.guid=u.guid
-		where u.username='$username' and $access ";
+	$query = "SELECT e.* FROM {$CONFIG->dbprefix}users_entity u
+		JOIN {$CONFIG->dbprefix}entities e ON e.guid = u.guid
+		WHERE u.username = '$username' AND $access";
 
 	$entity = get_data_row($query, 'entity_row_to_elggstar');
 	if ($entity) {
@@ -528,9 +528,9 @@ function get_user_by_code($code) {
 		return _elgg_retrieve_cached_entity($CODE_TO_GUID_MAP_CACHE[$code]);
 	}
 
-	$query = "SELECT e.* from {$CONFIG->dbprefix}users_entity u
-		join {$CONFIG->dbprefix}entities e on e.guid=u.guid
-		where u.code='$code' and $access";
+	$query = "SELECT e.* FROM {$CONFIG->dbprefix}users_entity u
+		JOIN {$CONFIG->dbprefix}entities e ON e.guid = u.guid
+		WHERE u.code = '$code' AND $access";
 
 	$entity = get_data_row($query, 'entity_row_to_elggstar');
 	if ($entity) {
@@ -554,9 +554,9 @@ function get_user_by_email($email) {
 
 	$access = get_access_sql_suffix('e');
 
-	$query = "SELECT e.* from {$CONFIG->dbprefix}entities e
-		join {$CONFIG->dbprefix}users_entity u on e.guid=u.guid
-		where email='$email' and $access";
+	$query = "SELECT e.* FROM {$CONFIG->dbprefix}entities e
+		JOIN {$CONFIG->dbprefix}users_entity u ON e.guid = u.guid
+		WHERE email = '$email' AND $access";
 
 	return get_data($query, 'entity_row_to_elggstar');
 }
