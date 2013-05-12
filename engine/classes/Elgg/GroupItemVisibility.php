@@ -12,8 +12,8 @@
 class Elgg_GroupItemVisibility {
 
 	const REASON_MEMBERSHIP = 'membership_required';
-	const REASON_LOGGEDOUT = 'login_required';
-	const REASON_NOACCESS = 'no_access';
+	const REASON_LOGGED_OUT = 'login_required';
+	const REASON_NO_ACCESS = 'no_access';
 
 	/**
 	 * @var bool
@@ -82,12 +82,12 @@ class Elgg_GroupItemVisibility {
 							}
 						} else {
 							$ret->shouldHideItems = true;
-							$ret->reasonHidden = self::REASON_LOGGEDOUT;
+							$ret->reasonHidden = self::REASON_LOGGED_OUT;
 						}
 					}
 				} else {
 					$ret->shouldHideItems = true;
-					$ret->reasonHidden = self::REASON_NOACCESS;
+					$ret->reasonHidden = self::REASON_NO_ACCESS;
 				}
 			}
 			$cache[$cache_key] = $ret;
