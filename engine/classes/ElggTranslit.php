@@ -20,11 +20,10 @@
  * and is licensed under the LGPL. For more information, see
  * <http://www.doctrine-project.org>.
  *
- * @author      Konsta Vesterinen <kvesteri@cc.hut.fi>
- * @author      Jonathan H. Wage <jonwage@gmail.com>
- *
- * @author      Steve Clay <steve@mrclay.org>
- * @package     Elgg.Core
+ * @package Elgg.Core
+ * @author  Konsta Vesterinen <kvesteri@cc.hut.fi>
+ * @author  Jonathan H. Wage <jonwage@gmail.com>
+ * @author  Steve Clay <steve@mrclay.org>
  *
  * @access private Plugin authors should not use this directly
  */
@@ -32,8 +31,9 @@ class ElggTranslit {
 
 	/**
 	 * Create a version of a string for embedding in a URL
-	 * @param string $string a UTF-8 string
-	 * @param string $separator
+	 *
+	 * @param string $string    A UTF-8 string
+	 * @param string $separator The character to separate words with
 	 * @return string
 	 */
 	static public function urlize($string, $separator = '-') {
@@ -49,24 +49,33 @@ class ElggTranslit {
 		// Internationalization, AND 日本語!
 		$string = self::transliterateAscii($string);
 
-		// more translation
+		// allow HTML tags in titles
+		$string = preg_replace('~<([a-zA-Z][^>]*)>~', ' $1 ', $string);
+
+		// more substitutions
+		// @todo put these somewhere else
 		$string = strtr($string, array(
-			// Euro/GBP
-			"\xE2\x82\xAC" /* € */ => 'E', "\xC2\xA3" /* £ */ => 'GBP',
+			// currency
+			"\xE2\x82\xAC" /* € */ => ' E ',
+			"\xC2\xA3" /* £ */ => ' GBP ',
+			
+			"&" => ' and ',
+			">" => ' greater than ',
+			"<" => ' less than ',
 		));
 
 		// remove all ASCII except 0-9a-zA-Z, hyphen, underscore, and whitespace
 		// note: "x" modifier did not work with this pattern.
 		$string = preg_replace('~['
-			. '\x00-\x08'  # control chars
-			. '\x0b\x0c'   # vert tab, form feed
-			. '\x0e-\x1f'  # control chars
-			. '\x21-\x2c'  # ! ... ,
-			. '\x2e\x2f'   # . slash
-			. '\x3a-\x40'  # : ... @
-			. '\x5b-\x5e'  # [ ... ^
-			. '\x60'       # `
-			. '\x7b-\x7f'  # { ... DEL
+			. '\x00-\x08'  // control chars
+			. '\x0b\x0c'   // vert tab, form feed
+			. '\x0e-\x1f'  // control chars
+			. '\x21-\x2c'  // ! ... ,
+			. '\x2e\x2f'   // . slash
+			. '\x3a-\x40'  // : ... @
+			. '\x5b-\x5e'  // [ ... ^
+			. '\x60'       // `
+			. '\x7b-\x7f'  // { ... DEL
 			. ']~', '', $string);
 		$string = strtr($string, '', '');
 
@@ -80,10 +89,10 @@ class ElggTranslit {
 		// note: we cannot use [^0-9a-zA-Z] because that matches multibyte chars.
 		// note: "x" modifier did not work with this pattern.
 		$pattern = '~['
-			. '\x00-\x2f'  # controls ... slash
-			. '\x3a-\x40'  # : ... @
-			. '\x5b-\x60'  # [ ... `
-			. '\x7b-\x7f'  # { ... DEL
+			. '\x00-\x2f'  // controls ... slash
+			. '\x3a-\x40'  // : ... @
+			. '\x5b-\x60'  // [ ... `
+			. '\x7b-\x7f'  // { ... DEL
 			. ']+~x';
 
 		// ['internationalization', 'and', '日本語']
@@ -98,6 +107,7 @@ class ElggTranslit {
 
 	/**
 	 * Transliterate Western multibyte chars to ASCII
+	 *
 	 * @param string $utf8 a UTF-8 string
 	 * @return string
 	 */
@@ -247,6 +257,7 @@ class ElggTranslit {
 
 	/**
 	 * Tests that "normalizer_normalize" exists and works
+	 *
 	 * @return bool
 	 */
 	static public function hasNormalizerSupport() {
@@ -255,7 +266,7 @@ class ElggTranslit {
 			$form_c = "\xC3\x85"; // 'LATIN CAPITAL LETTER A WITH RING ABOVE' (U+00C5)
 			$form_d = "A\xCC\x8A"; // A followed by 'COMBINING RING ABOVE' (U+030A)
 			$ret = (function_exists('normalizer_normalize')
-				    && $form_c === normalizer_normalize($form_d));
+				&& $form_c === normalizer_normalize($form_d));
 		}
 		return $ret;
 	}

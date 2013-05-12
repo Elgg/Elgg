@@ -312,10 +312,10 @@ function elgg_is_active_plugin($plugin_id, $site_guid = null) {
  */
 function elgg_load_plugins() {
 	$plugins_path = elgg_get_plugins_path();
-	$start_flags =	ELGG_PLUGIN_INCLUDE_START
-					| ELGG_PLUGIN_REGISTER_VIEWS
-					| ELGG_PLUGIN_REGISTER_LANGUAGES
-					| ELGG_PLUGIN_REGISTER_CLASSES;
+	$start_flags = ELGG_PLUGIN_INCLUDE_START |
+					ELGG_PLUGIN_REGISTER_VIEWS |
+					ELGG_PLUGIN_REGISTER_LANGUAGES |
+					ELGG_PLUGIN_REGISTER_CLASSES;
 
 	if (!$plugins_path) {
 		return false;
@@ -865,7 +865,7 @@ function elgg_set_plugin_user_setting($name, $value, $user_guid = null, $plugin_
  * Unsets a user-specific plugin setting
  *
  * @param string $name      Name of the setting
- * @param int $user_guid Defaults to logged in user
+ * @param int    $user_guid Defaults to logged in user
  * @param string $plugin_id Defaults to contextual plugin name
  *
  * @return bool

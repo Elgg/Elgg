@@ -4,6 +4,9 @@
  * Loads ElggEntity attributes from DB or validates those passed in via constructor
  *
  * @access private
+ * 
+ * @package    Elgg.Core
+ * @subpackage DataModel
  */
 class ElggAttributeLoader {
 
@@ -65,9 +68,11 @@ class ElggAttributeLoader {
 	public $full_loader = '';
 
 	/**
-	 * @param string $class class of object being loaded
-	 * @param string $required_type entity type this is being used to populate
-	 * @param array $initialized_attrs attributes after initializeAttributes() has been run
+	 * Constructor
+	 * 
+	 * @param string $class             class of object being loaded
+	 * @param string $required_type     entity type this is being used to populate
+	 * @param array  $initialized_attrs attributes after initializeAttributes() has been run
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct($class, $required_type, array $initialized_attrs) {
@@ -87,14 +92,33 @@ class ElggAttributeLoader {
 		$this->secondary_attr_names = array_diff($all_attr_names, self::$primary_attr_names);
 	}
 
+	/**
+	 * Get primary attributes missing that are missing
+	 * 
+	 * @param stdClass $row Database row
+	 * @return array
+	 */
 	protected function isMissingPrimaries($row) {
 		return array_diff(self::$primary_attr_names, array_keys($row)) !== array();
 	}
 
+	/**
+	 * Get secondary attributes that are missing
+	 * 
+	 * @param stdClass $row Database row
+	 * @return array
+	 */
 	protected function isMissingSecondaries($row) {
 		return array_diff($this->secondary_attr_names, array_keys($row)) !== array();
 	}
 
+	/**
+	 * Check that the type is correct
+	 * 
+	 * @param stdClass $row Database row
+	 * @return void
+	 * @throws InvalidClassException
+	 */
 	protected function checkType($row) {
 		if ($row['type'] !== $this->required_type) {
 			$msg = elgg_echo('InvalidClassException:NotValidElggStar', array($row['guid'], $this->class));

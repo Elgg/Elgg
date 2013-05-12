@@ -375,12 +375,11 @@ abstract class ElggEntity extends ElggData implements
 			}
 
 			return $result;
-		}
-
-		// unsaved entity. store in temp array
-		// returning single entries instead of an array of 1 element is decided in
-		// getMetaData(), just like pulling from the db.
-		else {
+		} else {
+			// unsaved entity. store in temp array
+			// returning single entries instead of an array of 1 element is decided in
+			// getMetaData(), just like pulling from the db.
+			// 
 			// if overwrite, delete first
 			if (!$multiple || !isset($this->temp_metadata[$name])) {
 				$this->temp_metadata[$name] = array();
@@ -1271,7 +1270,7 @@ abstract class ElggEntity extends ElggData implements
 	public function save() {
 		$guid = $this->getGUID();
 		if ($guid > 0) {
-			cache_entity($this);
+			_elgg_cache_entity($this);
 
 			return update_entity(
 				$guid,
@@ -1321,7 +1320,7 @@ abstract class ElggEntity extends ElggData implements
 			$this->attributes['subtype'] = get_subtype_id($this->attributes['type'],
 				$this->attributes['subtype']);
 
-			cache_entity($this);
+			_elgg_cache_entity($this);
 
 			return $this->attributes['guid'];
 		}
@@ -1363,7 +1362,7 @@ abstract class ElggEntity extends ElggData implements
 
 			// Cache object handle
 			if ($this->attributes['guid']) {
-				cache_entity($this);
+				_elgg_cache_entity($this);
 			}
 
 			return true;

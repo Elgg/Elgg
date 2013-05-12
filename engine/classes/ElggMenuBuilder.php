@@ -235,8 +235,8 @@ class ElggMenuBuilder {
 	/**
 	 * Compare two menu items by their display text
 	 *
-	 * @param ElggMenuItem $a
-	 * @param ElggMenuItem $b
+	 * @param ElggMenuItem $a Menu item
+	 * @param ElggMenuItem $b Menu item
 	 * @return bool
 	 */
 	public static function compareByText($a, $b) {
@@ -253,8 +253,8 @@ class ElggMenuBuilder {
 	/**
 	 * Compare two menu items by their identifiers
 	 *
-	 * @param ElggMenuItem $a
-	 * @param ElggMenuItem $b
+	 * @param ElggMenuItem $a Menu item
+	 * @param ElggMenuItem $b Menu item
 	 * @return bool
 	 */
 	public static function compareByName($a, $b) {
@@ -271,8 +271,8 @@ class ElggMenuBuilder {
 	/**
 	 * Compare two menu items by their priority
 	 *
-	 * @param ElggMenuItem $a
-	 * @param ElggMenuItem $b
+	 * @param ElggMenuItem $a Menu item
+	 * @param ElggMenuItem $b Menu item
 	 * @return bool
 	 *
 	 * @todo change name to compareByPriority

@@ -139,7 +139,7 @@ function elgg_get_entities_from_location(array $options = array()) {
 /**
  * Returns a viewable list of entities from location
  *
- * @param array $options
+ * @param array $options Options array
  *
  * @see elgg_list_entities()
  * @see elgg_get_entities_from_location()

@@ -6,7 +6,7 @@
  * @subpackage Friends.Collections
  */
 
-$collection_name = get_input('collection_name');
+$collection_name = htmlspecialchars(get_input('collection_name', '', false), ENT_QUOTES, 'UTF-8');
 $friends = get_input('friends_collection');
 
 if (!$collection_name) {

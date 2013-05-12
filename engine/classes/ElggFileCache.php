@@ -26,6 +26,7 @@ class ElggFileCache extends ElggCache {
 		}
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Create and return a handle to a file.
 	 *
@@ -41,6 +42,7 @@ class ElggFileCache extends ElggCache {
 
 		return $this->createFile($filename, $rw);
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Create and return a handle to a file.
@@ -72,6 +74,7 @@ class ElggFileCache extends ElggCache {
 		return fopen($path . $filename, $rw);
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Create a sanitised filename for the file.
 	 *
@@ -86,6 +89,7 @@ class ElggFileCache extends ElggCache {
 
 		return $filename;
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Create a sanitised filename for the file.

@@ -65,30 +65,26 @@ class ElggUser extends ElggEntity
 					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
 					throw new IOException($msg);
 				}
-
-			// See if this is a username
 			} else if (is_string($guid)) {
+				// $guid is a username
 				$user = get_user_by_username($guid);
 				if ($user) {
 					foreach ($user->attributes as $key => $value) {
 						$this->attributes[$key] = $value;
 					}
 				}
-
-			// Is $guid is an ElggUser? Use a copy constructor
 			} else if ($guid instanceof ElggUser) {
+				// $guid is an ElggUser so this is a copy constructor
 				elgg_deprecated_notice('This type of usage of the ElggUser constructor was deprecated. Please use the clone method.', 1.7);
 
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-
-			// Is this is an ElggEntity but not an ElggUser = ERROR!
 			} else if ($guid instanceof ElggEntity) {
+				// @todo why have a special case here
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggUser'));
-
-			// Is it a GUID
 			} else if (is_numeric($guid)) {
+				// $guid is a GUID so load entity
 				if (!$this->load($guid)) {
 					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
 				}
@@ -116,7 +112,7 @@ class ElggUser extends ElggEntity
 
 		$this->attributes = $attrs;
 		$this->attributes['tables_loaded'] = 2;
-		cache_entity($this);
+		_elgg_cache_entity($this);
 
 		return true;
 	}

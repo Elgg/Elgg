@@ -363,7 +363,7 @@ $relationship_guid = NULL, $inverse_relationship = FALSE) {
 /**
  * Returns a viewable list of entities by relationship
  *
- * @param array $options
+ * @param array $options Options array for retrieval of entities
  *
  * @see elgg_list_entities()
  * @see elgg_get_entities_from_relationship()

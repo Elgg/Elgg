@@ -20,6 +20,7 @@ $language = array(
 	'logrotate:week' => 'week',
 	'logrotate:month' => 'month',
 	'logrotate:year' => 'year',
+	'logrotate:never' => 'never',
 		
 	'logrotate:logdeleted' => "Log deleted\n",
 	'logrotate:lognotdeleted' => "Error deleting log\n",

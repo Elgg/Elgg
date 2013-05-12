@@ -78,6 +78,7 @@ ElggLibTest.prototype.testNormalizeUrl = function() {
 		['https://example.com', 'https://example.com'],
 		['http://example-time.com', 'http://example-time.com'],
 		['//example.com', '//example.com'],
+		['mod/my_plugin/graphics/image.jpg', elgg.config.wwwroot + 'mod/my_plugin/graphics/image.jpg'],
 
 		['ftp://example.com/file', 'ftp://example.com/file'],
 		['mailto:brett@elgg.org', 'mailto:brett@elgg.org'],

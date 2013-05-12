@@ -1,3 +1,40 @@
+Version 1.8.15
+(April 23, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Cash Costello
+   * Ismayil Khayredinov
+   * Jeff Tilson
+   * Juho Jaakkola
+   * Matt Beckett
+   * Paweł Sroka
+   * Sem
+   * Steve Clay
+   * Tom Voorneveld
+
+  Bugfixes:
+   * Not displaying http:// on profiles when website isn't set
+   * Fixed pagination display issue for small screens
+   * Not hiding subpages of top level pages that have been deleted
+   * Stop corrupting JavaScript views with elgg deprecation messages
+   * Fixed out of memory error due to query cache
+   * Fixed bug preventing users authorizing Twitter account access
+   * Fixed friends access level for editing pages
+   * Fixed uploading files within the embed dialog
+
+  Enhancements:
+   * Added browser caching of language JS files
+   * Adding nofollow on user posted URLs for spam deterrence (thanks to Hellekin)
+   * Auto-registering views for simplecache when their URL is requested
+   * Display helpful message for those who have site URL configuration issues
+   * Can revert to a previous revision with pages plugin
+   * Site owners can turn off posting wire messages to Twitter
+   * Search results are sorted by relevance
+
+  Dropped Plugins:
+   * Twitter widget due to changes in Twitter API and terms of service
+   * OAuth API plugin due to conflicts with the Twitter API plugin
+
+
 Version 1.8.14
 (March 12, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:

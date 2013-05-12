@@ -48,21 +48,18 @@ class ElggGroup extends ElggEntity
 					$msg = elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid->guid));
 					throw new IOException($msg);
 				}
-
-			// Is $guid is an ElggGroup? Use a copy constructor
 			} else if ($guid instanceof ElggGroup) {
+				// $guid is an ElggGroup so this is a copy constructor
 				elgg_deprecated_notice('This type of usage of the ElggGroup constructor was deprecated. Please use the clone method.', 1.7);
 
 				foreach ($guid->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-
-			// Is this is an ElggEntity but not an ElggGroup = ERROR!
 			} else if ($guid instanceof ElggEntity) {
+				// @todo why separate from else
 				throw new InvalidParameterException(elgg_echo('InvalidParameterException:NonElggGroup'));
-
-			// Is it a GUID
 			} else if (is_numeric($guid)) {
+				// $guid is a GUID so load entity
 				if (!$this->load($guid)) {
 					throw new IOException(elgg_echo('IOException:FailedToLoadGUID', array(get_class(), $guid)));
 				}
@@ -338,7 +335,7 @@ class ElggGroup extends ElggEntity
 
 		$this->attributes = $attrs;
 		$this->attributes['tables_loaded'] = 2;
-		cache_entity($this);
+		_elgg_cache_entity($this);
 
 		return true;
 	}

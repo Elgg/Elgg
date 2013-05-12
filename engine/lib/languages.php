@@ -139,6 +139,9 @@ function get_language() {
 	return false;
 }
 
+/**
+ * @access private
+ */
 function _elgg_load_translations() {
 	global $CONFIG;
 

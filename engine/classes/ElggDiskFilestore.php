@@ -194,7 +194,9 @@ class ElggDiskFilestore extends ElggFilestore {
 	}
 
 	/**
-	 * Returns the filename as saved on disk for an ElggFile object
+	 * Get the filename as saved on disk for an ElggFile object
+	 *
+	 * Returns an empty string if no filename set
 	 *
 	 * @param ElggFile $file File object
 	 *
@@ -213,7 +215,12 @@ class ElggDiskFilestore extends ElggFilestore {
 			throw new InvalidParameterException($msg);
 		}
 
-		return $this->dir_root . $this->makefileMatrix($owner_guid) . $file->getFilename();
+		$filename = $file->getFilename();
+		if (!$filename) {
+			return '';
+		}
+
+		return $this->dir_root . $this->makeFileMatrix($owner_guid) . $filename;
 	}
 
 	/**
@@ -221,7 +228,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	 *
 	 * @param ElggFile $file File object
 	 *
-	 * @return mixed
+	 * @return string
 	 */
 	public function grabFile(ElggFile $file) {
 		return file_get_contents($file->getFilenameOnFilestore());
@@ -235,6 +242,9 @@ class ElggDiskFilestore extends ElggFilestore {
 	 * @return bool
 	 */
 	public function exists(ElggFile $file) {
+		if (!$file->getFilename()) {
+			return false;
+		}
 		return file_exists($this->getFilenameOnFilestore($file));
 	}
 
@@ -248,12 +258,13 @@ class ElggDiskFilestore extends ElggFilestore {
 	 */
 	public function getSize($prefix = '', $container_guid) {
 		if ($container_guid) {
-			return get_dir_size($this->dir_root . $this->makefileMatrix($container_guid) . $prefix);
+			return get_dir_size($this->dir_root . $this->makeFileMatrix($container_guid) . $prefix);
 		} else {
 			return false;
 		}
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Create a directory $dirroot
 	 *
@@ -268,6 +279,7 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		return $this->makeDirectoryRoot($dirroot);
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Create a directory $dirroot
@@ -287,6 +299,7 @@ class ElggDiskFilestore extends ElggFilestore {
 		return true;
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Multibyte string tokeniser.
 	 *
@@ -318,7 +331,9 @@ class ElggDiskFilestore extends ElggFilestore {
 			return str_split($string);
 		}
 	}
+	// @codingStandardsIgnoreEnd
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Construct a file path matrix for an entity.
 	 *
@@ -330,8 +345,9 @@ class ElggDiskFilestore extends ElggFilestore {
 	protected function make_file_matrix($identifier) {
 		elgg_deprecated_notice('ElggDiskFilestore::make_file_matrix() is deprecated by ::makeFileMatrix()', 1.8);
 
-		return $this->makefileMatrix($identifier);
+		return $this->makeFileMatrix($identifier);
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Construct a file path matrix for an entity.
@@ -352,6 +368,7 @@ class ElggDiskFilestore extends ElggFilestore {
 		return "$time_created/$entity->guid/";
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Construct a filename matrix.
 	 *
@@ -370,6 +387,7 @@ class ElggDiskFilestore extends ElggFilestore {
 
 		return $this->makeFileMatrix($guid);
 	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Returns a list of attributes to save to the database when saving

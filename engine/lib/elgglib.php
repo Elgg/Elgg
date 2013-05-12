@@ -93,9 +93,16 @@ function elgg_register_library($name, $location) {
  * @return void
  * @throws InvalidParameterException
  * @since 1.8.0
+ * @todo return boolean in 1.9 to indicate whether the library has been loaded
  */
 function elgg_load_library($name) {
 	global $CONFIG;
+
+	static $loaded_libraries = array();
+
+	if (in_array($name, $loaded_libraries)) {
+		return;
+	}
 
 	if (!isset($CONFIG->libraries)) {
 		$CONFIG->libraries = array();
@@ -113,6 +120,8 @@ function elgg_load_library($name) {
 		);
 		throw new InvalidParameterException($error);
 	}
+
+	$loaded_libraries[] = $name;
 }
 
 /**
@@ -128,7 +137,7 @@ function elgg_load_library($name) {
  * @throws SecurityException
  */
 function forward($location = "", $reason = 'system') {
-	if (!headers_sent()) {
+	if (!headers_sent($file, $line)) {
 		if ($location === REFERER) {
 			$location = $_SERVER['HTTP_REFERER'];
 		}
@@ -147,7 +156,7 @@ function forward($location = "", $reason = 'system') {
 			exit;
 		}
 	} else {
-		throw new SecurityException(elgg_echo('SecurityException:ForwardFailedToRedirect'));
+		throw new SecurityException(elgg_echo('SecurityException:ForwardFailedToRedirect', array($file, $line)));
 	}
 }
 
@@ -1185,6 +1194,11 @@ function elgg_dump($value, $to_screen = TRUE, $level = 'NOTICE') {
 		$to_screen = FALSE;
 	}
 
+	// Do not want to write to JS or CSS pages
+	if (elgg_in_context('js') || elgg_in_context('css')) {
+		$to_screen = FALSE;
+	}
+
 	if ($to_screen == TRUE) {
 		echo '<pre>';
 		print_r($value);
@@ -1383,8 +1397,8 @@ function elgg_http_build_url(array $parts, $html_encode = TRUE) {
  * add tokens to the action.  The form view automatically handles
  * tokens.
  *
- * @param string  $url         Full action URL
- * @param bool $html_encode HTML encode the url? (default: false)
+ * @param string $url         Full action URL
+ * @param bool   $html_encode HTML encode the url? (default: false)
  *
  * @return string URL with action tokens
  * @since 1.7.0
@@ -1446,7 +1460,7 @@ function elgg_http_remove_url_query_element($url, $element) {
  * Adds an element or elements to a URL's query string.
  *
  * @param string $url      The URL
- * @param array $elements Key/value pairs to add to the URL
+ * @param array  $elements Key/value pairs to add to the URL
  *
  * @return string The new URL with the query strings added
  * @since 1.7.0
