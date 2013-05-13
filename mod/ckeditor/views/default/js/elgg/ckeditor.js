@@ -34,19 +34,31 @@ define(function(require) {
 		 * @return void
 		 */
 		wordCount: function() {
-			if ($('#cke_wordcount_'+this.name).length == 0) {
-				$('#cke_bottom_' + this.name).prepend(
-					'<div id="cke_wordcount_' + this.name + '" class="cke_wordcount">' + 
+			var editor = this;
+
+			if ($('#cke_wordcount_' + editor.name).length == 0) {
+				$('#cke_bottom_' + editor.name).prepend(
+					'<div id="cke_wordcount_' + editor.name + '" class="cke_wordcount">' + 
 						elgg.echo('ckeditor:word_count') + '0' +
 					'</div>'   
 				);
 			}
-			this.document.on('keyup', function(event) {
-				//show the number of words
-				var words = this.getBody().getText().trim().split(' ').length;
-				var text = elgg.echo('ckeditor:word_count') + words + ' ';
-				$('#cke_wordcount_' + CKEDITOR.currentInstance.name).html(text);
-			});
+
+			editor.document.on('keyup', function() {elggCKEditor.updateCount(editor)});
+			elggCKEditor.updateCount(editor);
+		},
+
+		/**
+		 * Show the number of words
+		 * 
+		 * @param {Object} editor
+		 * @return void
+		 */
+		updateCount: function(editor) {
+			var words = editor.document.getBody().getText().trim();
+			var count = words !== "" ? words.split(' ').length : 0;
+			var text = elgg.echo('ckeditor:word_count') + count + ' ';
+			$('#cke_wordcount_' + editor.name).html(text);
 		},
 
 
