@@ -23,7 +23,7 @@ $object = $object[0];
 
 $site = elgg_get_site_entity();
 
-$ia = elgg_set_ignore_access(true);
+$ia = elgg_set_ignore_read_access(true);
 foreach (array('profile', 'dashboard') as $context) {
 	if (isset($object->$context)) {
 		elgg_push_context($context);
@@ -58,7 +58,7 @@ foreach (array('profile', 'dashboard') as $context) {
 		elgg_pop_context();
 	}
 }
-elgg_set_ignore_access($ia);
+elgg_set_ignore_read_access($ia);
 
 $object->delete();
 system_message(elgg_echo('upgrade:core'));

@@ -67,7 +67,7 @@ function _elgg_cache_entity(ElggEntity $entity) {
 
 	// Don't cache non-plugin entities while access control is off, otherwise they could be
 	// exposed to users who shouldn't see them when control is re-enabled.
-	if (!($entity instanceof ElggPlugin) && elgg_get_ignore_access()) {
+	if (!($entity instanceof ElggPlugin) && elgg_get_ignore_read_access()) {
 		return;
 	}
 

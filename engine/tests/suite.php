@@ -42,10 +42,10 @@ if (!isset($CONFIG->debug)) {
 
 if (TextReporter::inCli()) {
 	// In CLI error codes are returned: 0 is success
-	elgg_set_ignore_access(TRUE);
+	elgg_set_ignore_read_access(TRUE);
 	exit ($suite->Run(new TextReporter()) ? 0 : 1 );
 }
 
-$old = elgg_set_ignore_access(TRUE);
+$old = elgg_set_ignore_read_access(TRUE);
 $suite->Run(new HtmlReporter('utf-8'));
-elgg_set_ignore_access($old);
+elgg_set_ignore_read_access($old);

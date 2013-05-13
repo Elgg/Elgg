@@ -60,9 +60,9 @@ class Elgg_GroupItemVisibility {
 
 			if (!$is_visible) {
 				// see if it *really* exists...
-				$prev_access = elgg_set_ignore_access();
+				$prev_access = elgg_set_ignore_read_access();
 				$container = get_entity($container_guid);
-				elgg_set_ignore_access($prev_access);
+				elgg_set_ignore_read_access($prev_access);
 			}
 
 			if ($container && $container instanceof ElggGroup) {

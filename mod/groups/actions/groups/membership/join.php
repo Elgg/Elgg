@@ -18,9 +18,9 @@ $group_guid = get_input('group_guid');
 $user = get_entity($user_guid);
 
 // access bypass for getting invisible group
-$ia = elgg_set_ignore_access(true);
+$ia = elgg_set_ignore_read_access(true);
 $group = get_entity($group_guid);
-elgg_set_ignore_access($ia);
+elgg_set_ignore_read_access($ia);
 
 if (($user instanceof ElggUser) && ($group instanceof ElggGroup)) {
 

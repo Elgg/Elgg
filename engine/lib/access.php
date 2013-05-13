@@ -523,7 +523,7 @@ function can_edit_access_collection($collection_id, $user_guid = null) {
 	if ($user_guid) {
 		return array_key_exists($collection_id, $write_access);
 	} else {
-		return elgg_get_ignore_access() || array_key_exists($collection_id, $write_access);
+		return elgg_get_ignore_read_access() || array_key_exists($collection_id, $write_access);
 	}
 }
 
@@ -906,29 +906,27 @@ function get_readable_access_level($entity_access_id) {
 }
 
 /**
- * Set if entity access system should be ignored.
+ * Set to ignore the entity read access system.
  *
- * The access system will not return entities in any getter
- * functions if the user doesn't have access.
+ * Entity getter functions will not return an entity that the user does not
+ * have read access to.
  *
  * @internal For performance reasons this is done at the database access clause level.
  *
- * @tip Use this to access entities in automated scripts
- * when no user is logged in.
+ * @tip Use this to access entities in automated scripts when no user is logged in.
  *
  * @note This clears the access cache.
  *
  * @warning This will not show disabled entities.
  * Use {@link access_show_hidden_entities()} to access disabled entities.
  *
- * @param bool $ignore If true, disables all access checks.
+ * @param bool $ignore If true, disables all read access checks.
  *
- * @return bool Previous ignore_access setting.
- * @since 1.7.0
- * @see http://docs.elgg.org/Access/IgnoreAccess
- * @see elgg_get_ignore_access()
+ * @return bool Previous read access setting.
+ * @since 1.9.0
+ * @see elgg_get_ignore_read_access()
  */
-function elgg_set_ignore_access($ignore = true) {
+function elgg_set_ignore_read_access($ignore = true) {
 	$cache = _elgg_get_access_cache();
 	$cache->clear();
 	$elgg_access = elgg_get_access_object();
@@ -936,15 +934,35 @@ function elgg_set_ignore_access($ignore = true) {
 }
 
 /**
- * Get current ignore access setting.
+ * Alias of elgg_set_ignore_read_access()
+ *
+ * @param bool $ignore If true, disables all read access checks.
+ * @return bool Previous ignore access setting.
+ * @since 1.7.0
+ */
+function elgg_set_ignore_access($ignore = true) {
+	return elgg_set_ignore_read_access($ignore);
+}
+
+/**
+ * Get current ignore read access setting.
+ *
+ * @return bool
+ * @since 1.9.0
+ * @see elgg_set_ignore_read_access()
+ */
+function elgg_get_ignore_read_access() {
+	return elgg_get_access_object()->getIgnoreAccess();
+}
+
+/**
+ * Alias of elgg_get_ignore_read_access().
  *
  * @return bool
  * @since 1.7.0
- * @see http://docs.elgg.org/Access/IgnoreAccess
- * @see elgg_set_ignore_access()
  */
 function elgg_get_ignore_access() {
-	return elgg_get_access_object()->getIgnoreAccess();
+	return elgg_get_ignore_read_access();
 }
 
 /**
@@ -954,7 +972,7 @@ function elgg_get_ignore_access() {
  *   1) an admin user guid is passed to this function.
  *   2) {@link elgg_get_ignore_access()} returns true.
  *
- * @see elgg_set_ignore_access()
+ * @see elgg_set_ignore_read_access()
  *
  * @param int $user_guid The user to check against.
  *
@@ -968,7 +986,7 @@ function elgg_check_access_overrides($user_guid = 0) {
 		$is_admin = elgg_is_admin_user($user_guid);
 	}
 
-	return ($is_admin || elgg_get_ignore_access());
+	return ($is_admin || elgg_get_ignore_read_access());
 }
 
 /**

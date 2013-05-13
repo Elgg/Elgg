@@ -224,7 +224,7 @@ class ElggVolatileMetadataCache {
 	 */
 	protected function getIgnoreAccess() {
 		if (null === $this->ignoreAccess) {
-			return elgg_get_ignore_access();
+			return elgg_get_ignore_read_access();
 		} else {
 			return $this->ignoreAccess;
 		}

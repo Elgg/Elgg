@@ -622,14 +622,14 @@ function groups_user_leave_event_listener($event, $object_type, $object) {
  * @return array ElggGroups or guids depending on $return_guids
  */
 function groups_get_invited_groups($user_guid, $return_guids = FALSE) {
-	$ia = elgg_set_ignore_access(TRUE);
+	$ia = elgg_set_ignore_read_access(TRUE);
 	$groups = elgg_get_entities_from_relationship(array(
 		'relationship' => 'invited',
 		'relationship_guid' => $user_guid,
 		'inverse_relationship' => TRUE,
 		'limit' => 0,
 	));
-	elgg_set_ignore_access($ia);
+	elgg_set_ignore_read_access($ia);
 
 	if ($return_guids) {
 		$guids = array();
@@ -653,9 +653,9 @@ function groups_get_invited_groups($user_guid, $return_guids = FALSE) {
 function groups_join_group($group, $user) {
 
 	// access ignore so user can be added to access collection of invisible group
-	$ia = elgg_set_ignore_access(TRUE);
+	$ia = elgg_set_ignore_read_access(TRUE);
 	$result = $group->join($user);
-	elgg_set_ignore_access($ia);
+	elgg_set_ignore_read_access($ia);
 	
 	if ($result) {
 		// flush user's access info so the collection is added

@@ -10,7 +10,7 @@ $limit = get_input('limit', 10);
 $offset = get_input('offset', 0);
 
 // can't use elgg_list_entities() and friends because we don't use the default view for users.
-$ia = elgg_set_ignore_access(TRUE);
+$ia = elgg_set_ignore_read_access(TRUE);
 $hidden_entities = access_get_show_hidden_status();
 access_show_hidden_entities(TRUE);
 
@@ -25,7 +25,7 @@ $count = elgg_get_entities($options);
 
 if (!$count) {
 	access_show_hidden_entities($hidden_entities);
-	elgg_set_ignore_access($ia);
+	elgg_set_ignore_read_access($ia);
 
 	echo elgg_autop(elgg_echo('uservalidationbyemail:admin:no_unvalidated_users'));
 	return TRUE;
@@ -36,7 +36,7 @@ $options['count']  = FALSE;
 $users = elgg_get_entities($options);
 
 access_show_hidden_entities($hidden_entities);
-elgg_set_ignore_access($ia);
+elgg_set_ignore_read_access($ia);
 
 // setup pagination
 $pagination = elgg_view('navigation/pagination',array(

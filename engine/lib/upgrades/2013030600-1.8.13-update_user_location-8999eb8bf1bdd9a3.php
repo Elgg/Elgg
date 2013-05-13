@@ -7,7 +7,7 @@
  * This script turns that back into a string.
  */
 
-$ia = elgg_set_ignore_access(true);
+$ia = elgg_set_ignore_read_access(true);
 $options = array(
 	'type' => 'user',
 	'limit' => 0,
@@ -20,4 +20,4 @@ foreach ($batch as $entity) {
 		$entity->location = implode(', ', $entity->location);
 	}
 }
-elgg_set_ignore_access($ia);
+elgg_set_ignore_read_access($ia);

@@ -48,9 +48,9 @@ function elgg_get_page_owner_guid($guid = 0) {
 function elgg_get_page_owner_entity() {
 	$guid = elgg_get_page_owner_guid();
 	if ($guid > 0) {
-		$ia = elgg_set_ignore_access(true);
+		$ia = elgg_set_ignore_read_access(true);
 		$owner = get_entity($guid);
-		elgg_set_ignore_access($ia);
+		elgg_set_ignore_read_access($ia);
 
 		return $owner;
 	}
@@ -100,7 +100,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 		return $returnvalue;
 	}
 
-	$ia = elgg_set_ignore_access(true);
+	$ia = elgg_set_ignore_read_access(true);
 
 	$username = get_input("username");
 	if ($username) {
@@ -109,13 +109,13 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 			preg_match('/group\:([0-9]+)/i', $username, $matches);
 			$guid = $matches[1];
 			if ($entity = get_entity($guid)) {
-				elgg_set_ignore_access($ia);
+				elgg_set_ignore_read_access($ia);
 				return $entity->getGUID();
 			}
 		}
 
 		if ($user = get_user_by_username($username)) {
-			elgg_set_ignore_access($ia);
+			elgg_set_ignore_read_access($ia);
 			return $user->getGUID();
 		}
 	}
@@ -123,7 +123,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 	$owner = get_input("owner_guid");
 	if ($owner) {
 		if ($user = get_entity($owner)) {
-			elgg_set_ignore_access($ia);
+			elgg_set_ignore_read_access($ia);
 			return $user->getGUID();
 		}
 	}
@@ -145,7 +145,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 				case 'friends':
 					$user = get_user_by_username($segments[2]);
 					if ($user) {
-						elgg_set_ignore_access($ia);
+						elgg_set_ignore_read_access($ia);
 						return $user->getGUID();
 					}
 					break;
@@ -153,7 +153,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 				case 'edit':
 					$entity = get_entity($segments[2]);
 					if ($entity) {
-						elgg_set_ignore_access($ia);
+						elgg_set_ignore_read_access($ia);
 						return $entity->getContainerGUID();
 					}
 					break;
@@ -161,7 +161,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 				case 'group':
 					$entity = get_entity($segments[2]);
 					if ($entity) {
-						elgg_set_ignore_access($ia);
+						elgg_set_ignore_read_access($ia);
 						return $entity->getGUID();
 					}
 					break;
@@ -169,7 +169,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 		}
 	}
 
-	elgg_set_ignore_access($ia);
+	elgg_set_ignore_read_access($ia);
 }
 
 /**

@@ -81,7 +81,7 @@ function elgg_add_admin_notice($id, $message) {
 		}
 
 		// need to handle when no one is logged in
-		$old_ia = elgg_set_ignore_access(true);
+		$old_ia = elgg_set_ignore_read_access(true);
 
 		$admin_notice = new ElggObject();
 		$admin_notice->subtype = 'admin_notice';
@@ -92,7 +92,7 @@ function elgg_add_admin_notice($id, $message) {
 
 		$result = $admin_notice->save();
 
-		elgg_set_ignore_access($old_ia);
+		elgg_set_ignore_read_access($old_ia);
 
 		return (bool)$result;
 	}
@@ -629,7 +629,7 @@ function admin_markdown_page_handler($pages) {
  * @access private
  */
 function elgg_add_admin_widgets($event, $type, $user) {
-	elgg_set_ignore_access(true);
+	elgg_set_ignore_read_access(true);
 
 	// check if the user already has widgets
 	if (elgg_get_widgets($user->getGUID(), 'admin')) {
@@ -652,7 +652,7 @@ function elgg_add_admin_widgets($event, $type, $user) {
 			}
 		}
 	}
-	elgg_set_ignore_access(false);
+	elgg_set_ignore_read_access(false);
 }
 
 elgg_register_event_handler('init', 'system', 'admin_init');

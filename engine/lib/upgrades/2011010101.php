@@ -3,7 +3,7 @@
  * Migrate plugins to the new system using ElggPlugin and private settings
  */
 
-$old_ia = elgg_set_ignore_access(true);
+$old_ia = elgg_set_ignore_read_access(true);
 
 $site = get_config('site');
 $old_plugin_order = unserialize($site->pluginorder);
@@ -72,7 +72,7 @@ elgg_reset_system_cache();
 remove_metadata($site->guid, 'pluginorder');
 remove_metadata($site->guid, 'enabled_plugins');
 
-elgg_set_ignore_access($old_id);
+elgg_set_ignore_read_access($old_id);
 
 /**
  * @hack

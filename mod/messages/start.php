@@ -491,7 +491,7 @@ function messages_purge($event, $type, $user) {
 	// make sure we delete them all
 	$entity_disable_override = access_get_show_hidden_status();
 	access_show_hidden_entities(true);
-	$ia = elgg_set_ignore_access(true);
+	$ia = elgg_set_ignore_read_access(true);
 
 	$options = array(
 		'type' => 'object',
@@ -505,7 +505,7 @@ function messages_purge($event, $type, $user) {
 		$e->delete();
 	}
 
-	elgg_set_ignore_access($ia);
+	elgg_set_ignore_read_access($ia);
 	access_show_hidden_entities($entity_disable_override);
 }
 

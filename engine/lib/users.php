@@ -638,14 +638,14 @@ function send_new_password_request($user_guid) {
 function force_user_password_reset($user_guid, $password) {
 	$user = get_entity($user_guid);
 	if ($user instanceof ElggUser) {
-		$ia = elgg_set_ignore_access();
+		$ia = elgg_set_ignore_read_access();
 
 		$user->salt = generate_random_cleartext_password();
 		$hash = generate_user_password($user, $password);		
 		$user->password = $hash;
 		$result = (bool)$user->save();
 
-		elgg_set_ignore_access($ia);
+		elgg_set_ignore_read_access($ia);
 
 		return $result;
 	}

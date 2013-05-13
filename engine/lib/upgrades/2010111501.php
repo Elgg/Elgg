@@ -9,7 +9,7 @@
 elgg_unregister_event_handler('all', 'all', 'system_log_listener');
 elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
 
-$ia = elgg_set_ignore_access(TRUE);
+$ia = elgg_set_ignore_read_access(TRUE);
 $hidden_entities = access_get_show_hidden_status();
 access_show_hidden_entities(TRUE);
 
@@ -30,4 +30,4 @@ while ($user_guid = mysql_fetch_object($user_guids)) {
 }
 
 access_show_hidden_entities($hidden_entities);
-elgg_set_ignore_access($ia);
+elgg_set_ignore_read_access($ia);

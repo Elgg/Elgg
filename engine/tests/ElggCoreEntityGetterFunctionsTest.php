@@ -10,7 +10,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	 * Called before each test object.
 	 */
 	public function __construct() {
-		elgg_set_ignore_access(TRUE);
+		elgg_set_ignore_read_access(TRUE);
 		$this->entities = array();
 		$this->subtypes = array(
 			'object' => array(),

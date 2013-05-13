@@ -7,7 +7,7 @@
  */
 
 
-$ia = elgg_set_ignore_access(true);
+$ia = elgg_set_ignore_read_access(true);
 
 // make sure we have updated plugins
 elgg_generate_plugin_entities();
@@ -51,4 +51,4 @@ if ($has_settings) {
 $old->delete();
 
 access_show_hidden_entities($show_hidden);
-elgg_set_ignore_access($ia);
+elgg_set_ignore_read_access($ia);

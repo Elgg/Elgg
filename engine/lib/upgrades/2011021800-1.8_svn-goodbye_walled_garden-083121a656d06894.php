@@ -8,7 +8,7 @@
 
 global $CONFIG;
 
-$access = elgg_set_ignore_access(TRUE);
+$access = elgg_set_ignore_read_access(TRUE);
 
 if (elgg_is_active_plugin('walledgarden')) {
 	disable_plugin('walledgarden');
@@ -31,4 +31,4 @@ if ($disable_registration !== null) {
 	delete_data($query);
 }
 
-elgg_set_ignore_access($access);
+elgg_set_ignore_read_access($access);

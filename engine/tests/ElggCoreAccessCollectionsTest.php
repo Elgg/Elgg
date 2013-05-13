@@ -156,16 +156,16 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 		$this->assertTrue($result);
 
 		// should be true since IA is on.
-		$ia = elgg_set_ignore_access(true);
+		$ia = elgg_set_ignore_read_access(true);
 		$result = can_edit_access_collection($acl_id);
 		$this->assertTrue($result);
-		elgg_set_ignore_access($ia);
+		elgg_set_ignore_read_access($ia);
 
 		// should be false since IA is off
-		$ia = elgg_set_ignore_access(false);
+		$ia = elgg_set_ignore_read_access(false);
 		$result = can_edit_access_collection($acl_id);
 		$this->assertFalse($result);
-		elgg_set_ignore_access($ia);
+		elgg_set_ignore_read_access($ia);
 
 		delete_access_collection($acl_id);
 	}
@@ -194,10 +194,10 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 		elgg_register_plugin_hook_handler('access:collections:write', 'all', 'test_acl_access_hook');
 
 		// enable security since we usually run as admin
-		$ia = elgg_set_ignore_access(false);
+		$ia = elgg_set_ignore_read_access(false);
 		$result = can_edit_access_collection($acl_id, $this->user->guid);
 		$this->assertTrue($result);
-		$ia = elgg_set_ignore_access($ia);
+		$ia = elgg_set_ignore_read_access($ia);
 
 		elgg_unregister_plugin_hook_handler('access:collections:write', 'all', 'test_acl_access_hook');
 
@@ -242,7 +242,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 		$this->assertTrue($result);
 
 		// disable security since we run as admin
-		$ia = elgg_set_ignore_access(false);
+		$ia = elgg_set_ignore_read_access(false);
 
 		// need to set the page owner to emulate being in a group context.
 		// this is kinda hacky.
@@ -261,7 +261,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 			$this->assertFalse($can_edit);
 		}
 
-		 elgg_set_ignore_access($ia);
+		 elgg_set_ignore_read_access($ia);
 
 		$group->delete();
 	}
@@ -277,10 +277,10 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 			$cache->clear();
 
 			// admin users run tests, so disable access
-			elgg_set_ignore_access(true);
+			elgg_set_ignore_read_access(true);
 			$access = $func($user->getGUID());
 
-			elgg_set_ignore_access(false);
+			elgg_set_ignore_read_access(false);
 			$access2 = $func($user->getGUID());
 			$this->assertNotEqual($access, $access2, "Access test for $func");
 		}
