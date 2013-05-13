@@ -556,7 +556,7 @@ function get_user_by_email($email) {
 
 	$query = "SELECT e.* FROM {$CONFIG->dbprefix}entities e
 		JOIN {$CONFIG->dbprefix}users_entity u ON e.guid = u.guid
-		WHERE email = '$email' AND $access";
+		WHERE LOWER(email) = LOWER('$email') AND $access";
 
 	return get_data($query, 'entity_row_to_elggstar');
 }
