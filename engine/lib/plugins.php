@@ -105,7 +105,7 @@ function elgg_generate_plugin_entities() {
 		'limit' => ELGG_ENTITIES_NO_VALUE
 	);
 
-	$old_ia = elgg_set_ignore_access(true);
+	$old_ia = elgg_set_ignore_read_access(true);
 	$old_access = access_get_show_hidden_status();
 	access_show_hidden_entities(true);
 	$known_plugins = elgg_get_entities_from_relationship($options);
@@ -171,7 +171,7 @@ function elgg_generate_plugin_entities() {
 	}
 
 	access_show_hidden_entities($old_access);
-	elgg_set_ignore_access($old_ia);
+	elgg_set_ignore_read_access($old_ia);
 
 	elgg_reindex_plugin_priorities();
 
@@ -410,9 +410,9 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
 			break;
 	}
 
-	$old_ia = elgg_set_ignore_access(true);
+	$old_ia = elgg_set_ignore_read_access(true);
 	$plugins = elgg_get_entities_from_relationship($options);
-	elgg_set_ignore_access($old_ia);
+	elgg_set_ignore_read_access($old_ia);
 
 	return $plugins;
 }

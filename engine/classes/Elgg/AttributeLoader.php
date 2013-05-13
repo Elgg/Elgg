@@ -177,9 +177,9 @@ class Elgg_AttributeLoader {
 				if ($this->requires_access_control) {
 					$fetched = (array) call_user_func($this->primary_loader, $row['guid']);
 				} else {
-					$ignoring_access = elgg_set_ignore_access();
+					$ignoring_access = elgg_set_ignore_read_access();
 					$fetched = (array) call_user_func($this->primary_loader, $row['guid']);
-					elgg_set_ignore_access($ignoring_access);
+					elgg_set_ignore_read_access($ignoring_access);
 				}
 				if (!$fetched) {
 					return array();

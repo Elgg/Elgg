@@ -196,7 +196,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		var_dump($entity);
 		$this->assertFalse($entity);
 
-		$old = elgg_set_ignore_access(true);
+		$old = elgg_set_ignore_read_access(true);
 	}
 
 	// see http://trac.elgg.org/ticket/1196
@@ -218,13 +218,13 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		// fake being logged out
 		$user = $_SESSION['user'];
 		unset($_SESSION['user']);
-		$ia = elgg_set_ignore_access(true);
+		$ia = elgg_set_ignore_read_access(true);
 
 		$this->assertTrue($e1->disable(null, true));
 
 		// "log in" original user
 		$_SESSION['user'] = $user;
-		elgg_set_ignore_access($ia);
+		elgg_set_ignore_read_access($ia);
 
 		$this->assertFalse(get_entity($guid1));
 		$this->assertFalse(get_entity($guid2));

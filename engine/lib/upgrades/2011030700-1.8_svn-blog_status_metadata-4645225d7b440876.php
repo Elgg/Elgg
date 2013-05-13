@@ -6,7 +6,7 @@
  * Add a "status" metadata entry to every blog entity because in 1.8 you can have status = draft or
  * status = published
  */
-$ia = elgg_set_ignore_access(true);
+$ia = elgg_set_ignore_read_access(true);
 $options = array(
 	'type' => 'object',
 	'subtype' => 'blog',
@@ -21,4 +21,4 @@ foreach ($batch as $entity) {
 			$entity->access_id);
 	}
 }
-elgg_set_ignore_access($ia);
+elgg_set_ignore_read_access($ia);

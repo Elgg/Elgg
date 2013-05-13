@@ -40,7 +40,7 @@ class ElggCoreMetadataCacheTest extends ElggCoreUnitTest {
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		$this->ignoreAccess = elgg_set_ignore_access(false);
+		$this->ignoreAccess = elgg_set_ignore_read_access(false);
 
 		$this->cache = elgg_get_metadata_cache();
 
@@ -60,7 +60,7 @@ class ElggCoreMetadataCacheTest extends ElggCoreUnitTest {
 		$this->obj1->delete();
 		$this->obj2->delete();
 
-		elgg_set_ignore_access($this->ignoreAccess);
+		elgg_set_ignore_read_access($this->ignoreAccess);
 	}
 
 	public function testBasicApi() {
@@ -119,10 +119,10 @@ class ElggCoreMetadataCacheTest extends ElggCoreUnitTest {
 		$this->assertIdentical($this->cache->load($this->guid1, $this->name), array($this->value, 1));
 
 		// writes when access is ignore should invalidate
-		$tmp_ignore = elgg_set_ignore_access(true);
+		$tmp_ignore = elgg_set_ignore_read_access(true);
 		$this->obj1->setMetaData($this->name, $this->value);
 		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name));
-		elgg_set_ignore_access($tmp_ignore);
+		elgg_set_ignore_read_access($tmp_ignore);
 	}
 
 	public function testDisableAndEnable() {

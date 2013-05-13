@@ -240,7 +240,7 @@ function _elgg_create_default_widgets($event, $type, $entity) {
 			if ($info['entity_subtype'] == ELGG_ENTITIES_ANY_VALUE || $info['entity_subtype'] == $subtype) {
 
 				// need to be able to access everything
-				$old_ia = elgg_set_ignore_access(true);
+				$old_ia = elgg_set_ignore_read_access(true);
 				elgg_push_context('create_default_widgets');
 
 				// pull in by widget context with widget owners as the site
@@ -273,7 +273,7 @@ function _elgg_create_default_widgets($event, $type, $entity) {
 					$new_widget->save();
 				}
 
-				elgg_set_ignore_access($old_ia);
+				elgg_set_ignore_read_access($old_ia);
 				elgg_pop_context();
 			}
 		}

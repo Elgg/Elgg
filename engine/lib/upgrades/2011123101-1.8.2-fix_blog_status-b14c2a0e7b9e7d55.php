@@ -7,7 +7,7 @@
  * the blog status upgrade again
  */
 
-$ia = elgg_set_ignore_access(true);
+$ia = elgg_set_ignore_read_access(true);
 $options = array(
 	'type' => 'object',
 	'subtype' => 'blog',
@@ -22,4 +22,4 @@ foreach ($batch as $entity) {
 			$entity->access_id);
 	}
 }
-elgg_set_ignore_access($ia);
+elgg_set_ignore_read_access($ia);

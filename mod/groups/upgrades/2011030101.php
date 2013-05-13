@@ -49,14 +49,14 @@ function groups_2011030101($topic) {
 	return $annotation[0]->delete();
 }
 
-$previous_access = elgg_set_ignore_access(true);
+$previous_access = elgg_set_ignore_read_access(true);
 $options = array(
 	'type' => 'object',
 	'subtype' => 'groupforumtopic',
 	'limit' => 0,
 );
 $batch = new ElggBatch('elgg_get_entities', $options, 'groups_2011030101', 100);
-elgg_set_ignore_access($previous_access);
+elgg_set_ignore_read_access($previous_access);
 
 if ($batch->callbackResult) {
 	error_log("Elgg Groups upgrade (2011030101) succeeded");

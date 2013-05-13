@@ -367,11 +367,11 @@ abstract class ElggEntity extends ElggData implements
 				// 
 				// need to remove access restrictions right now to delete
 				// because this is the expected behavior
-				$ia = elgg_set_ignore_access(true);
+				$ia = elgg_set_ignore_read_access(true);
 				if (false === elgg_delete_metadata($options)) {
 					return false;
 				}
-				elgg_set_ignore_access($ia);
+				elgg_set_ignore_read_access($ia);
 			}
 
 			// add new md
@@ -440,7 +440,7 @@ abstract class ElggEntity extends ElggData implements
 	public function deleteOwnedMetadata($name = null) {
 		// access is turned off for this because they might
 		// no longer have access to an entity they created metadata on.
-		$ia = elgg_set_ignore_access(true);
+		$ia = elgg_set_ignore_read_access(true);
 		$options = array(
 			'metadata_owner_guid' => $this->guid,
 			'limit' => 0
@@ -450,7 +450,7 @@ abstract class ElggEntity extends ElggData implements
 		}
 
 		$r = elgg_delete_metadata($options);
-		elgg_set_ignore_access($ia);
+		elgg_set_ignore_read_access($ia);
 		return $r;
 	}
 
@@ -682,7 +682,7 @@ abstract class ElggEntity extends ElggData implements
 	public function deleteOwnedAnnotations($name = null) {
 		// access is turned off for this because they might
 		// no longer have access to an entity they created annotations on.
-		$ia = elgg_set_ignore_access(true);
+		$ia = elgg_set_ignore_read_access(true);
 		$options = array(
 			'annotation_owner_guid' => $this->guid,
 			'limit' => 0
@@ -692,7 +692,7 @@ abstract class ElggEntity extends ElggData implements
 		}
 
 		$r = elgg_delete_annotations($options);
-		elgg_set_ignore_access($ia);
+		elgg_set_ignore_read_access($ia);
 		return $r;
 	}
 
@@ -1614,7 +1614,7 @@ abstract class ElggEntity extends ElggData implements
 		if ($recursive) {
 			$hidden = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
-			$ia = elgg_set_ignore_access(true);
+			$ia = elgg_set_ignore_read_access(true);
 			
 			$sub_entities = $this->getDatabase()->getData("SELECT * FROM {$CONFIG->dbprefix}entities
 				WHERE (
@@ -1631,7 +1631,7 @@ abstract class ElggEntity extends ElggData implements
 			}
 			
 			access_show_hidden_entities($hidden);
-			elgg_set_ignore_access($ia);
+			elgg_set_ignore_read_access($ia);
 		}
 
 		$this->disableMetadata();
@@ -1772,7 +1772,7 @@ abstract class ElggEntity extends ElggData implements
 
 			$entity_disable_override = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
-			$ia = elgg_set_ignore_access(true);
+			$ia = elgg_set_ignore_read_access(true);
 
 			// @todo there was logic in the original code that ignored
 			// entities with owner or container guids of themselves.
@@ -1794,12 +1794,12 @@ abstract class ElggEntity extends ElggData implements
 
 			access_show_hidden_entities($entity_disable_override);
 			$__RECURSIVE_DELETE_TOKEN = null;
-			elgg_set_ignore_access($ia);
+			elgg_set_ignore_read_access($ia);
 		}
 
 		$entity_disable_override = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
-		$ia = elgg_set_ignore_access(true);
+		$ia = elgg_set_ignore_read_access(true);
 		
 		// Now delete the entity itself
 		$this->deleteMetadata();
@@ -1809,7 +1809,7 @@ abstract class ElggEntity extends ElggData implements
 		$this->deleteRelationships();
 
 		access_show_hidden_entities($entity_disable_override);
-		elgg_set_ignore_access($ia);
+		elgg_set_ignore_read_access($ia);
 
 		elgg_delete_river(array('subject_guid' => $guid));
 		elgg_delete_river(array('object_guid' => $guid));

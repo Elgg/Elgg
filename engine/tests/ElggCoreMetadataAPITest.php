@@ -166,7 +166,7 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		$original_user = elgg_get_logged_in_user_entity();
 		$_SESSION['user'] = $u1;
 		
-		elgg_set_ignore_access(false);
+		elgg_set_ignore_read_access(false);
 
 		// add metadata as one user
 		$obj->test = $md_values;

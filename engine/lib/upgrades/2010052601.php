@@ -2,7 +2,7 @@
 
 // Upgrade to fix encoding issues on group data: #1963
 
-elgg_set_ignore_access(TRUE);
+elgg_set_ignore_read_access(TRUE);
 
 $params = array('type' => 'group',
 				'limit' => 0);
@@ -24,4 +24,4 @@ if ($groups) {
 		$group->save();
 	}
 }
-elgg_set_ignore_access(FALSE);
+elgg_set_ignore_read_access(FALSE);

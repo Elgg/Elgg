@@ -12,7 +12,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	 * Called before each test object.
 	 */
 	public function __construct() {
-		$this->ia = elgg_set_ignore_access(TRUE);
+		$this->ia = elgg_set_ignore_read_access(TRUE);
 		parent::__construct();
 
 		// all __construct() code should come after here
@@ -37,7 +37,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	 * Called after each test object.
 	 */
 	public function __destruct() {
-		elgg_set_ignore_access($this->ia);
+		elgg_set_ignore_read_access($this->ia);
 		// all __destruct() code should go above here
 		parent::__destruct();
 	}
@@ -130,7 +130,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$group->save();
 		
 		// disable access overrides because we're admin.
-		$ia = elgg_set_ignore_access(false);
+		$ia = elgg_set_ignore_read_access(false);
 
 		$this->assertFalse(can_write_to_container($user->guid, $object->guid));
 		
@@ -154,7 +154,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$group->join($user);
 		$this->assertTrue(can_write_to_container($user->guid, $group->guid));
 
-		elgg_set_ignore_access($ia);
+		elgg_set_ignore_read_access($ia);
 
 		$user->delete();
 		$object->delete();

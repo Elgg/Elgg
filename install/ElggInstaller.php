@@ -1582,13 +1582,13 @@ class ElggInstaller {
 			return false;
 		}
 
-		elgg_set_ignore_access(TRUE);
+		elgg_set_ignore_read_access(TRUE);
 		if ($user->makeAdmin() == FALSE) {
 			register_error(elgg_echo('install:error:adminaccess'));
 		} else {
 			datalist_set('admin_registered', 1);
 		}
-		elgg_set_ignore_access(false);
+		elgg_set_ignore_read_access(false);
 
 		// add validation data to satisfy user validation plugins
 		create_metadata($guid, 'validated', TRUE, '', 0, ACCESS_PUBLIC);

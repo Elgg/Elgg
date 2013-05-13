@@ -24,7 +24,7 @@ function pages_2012061800($page) {
 	return true;
 }
 
-$previous_access = elgg_set_ignore_access(true);
+$previous_access = elgg_set_ignore_read_access(true);
 
 $dbprefix = elgg_get_config('dbprefix');
 $name_metastring_id = get_metastring_id('parent_guid');
@@ -42,7 +42,7 @@ $options = array(
 		AND md.name_id = $name_metastring_id)"
 );
 $batch = new ElggBatch('elgg_get_entities_from_metadata', $options, 'pages_2012061800', 50, false);
-elgg_set_ignore_access($previous_access);
+elgg_set_ignore_read_access($previous_access);
 
 if ($batch->callbackResult) {
 	error_log("Elgg Pages upgrade (2012061800) succeeded");
