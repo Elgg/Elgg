@@ -12,12 +12,12 @@ extract($vars, EXTR_IF_EXISTS);
 /* @var ElggGroup $entity */
 
 if (isset($vars['entity'])) {
-	$entity     = $vars['entity'];
+	$entity = $vars['entity'];
 	$owner_guid = $vars['entity']->owner_guid;
-	$gatekeeper_mode = $entity->getGatekeeperMode();
+	$content_access_mode = $entity->getContentAccessMode();
 } else {
 	$entity = false;
-	$gatekeeper_mode = ElggGroup::GATEKEEPER_MODE_UNRESTRICTED;
+	$content_access_mode = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
 }
 
 // context needed for input/access view
@@ -65,8 +65,8 @@ if ($group_profile_fields > 0) {
 			'value' => $membership,
 			'options_values' => array(
 				ACCESS_PRIVATE => elgg_echo('groups:access:private'),
-				ACCESS_PUBLIC => elgg_echo('groups:access:public')
-			),
+				ACCESS_PUBLIC => elgg_echo('groups:access:public'),
+			)
 		));
 		?>
 	</label>
@@ -74,15 +74,15 @@ if ($group_profile_fields > 0) {
 
 <div>
 	<label>
-		<?php echo elgg_echo('groups:gatekeeper_mode'); ?><br />
+		<?php echo elgg_echo('groups:content_access_mode'); ?><br />
 		<?php echo elgg_view('input/select', array(
-		'name' => 'gatekeeper_mode',
-		'value' => $gatekeeper_mode,
-		'options_values' => array(
-			ElggGroup::GATEKEEPER_MODE_UNRESTRICTED => elgg_echo('groups:gatekeeper_mode:unrestricted'),
-			ElggGroup::GATEKEEPER_MODE_MEMBERS_ONLY => elgg_echo('groups:gatekeeper_mode:membersonly'),
-		),
-	));
+			'name' => 'content_access_mode',
+			'value' => $content_access_mode,
+			'options_values' => array(
+				ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo('groups:content_access_mode:unrestricted'),
+				ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo('groups:content_access_mode:membersonly'),
+			),
+		));
 		?>
 	</label>
 </div>
@@ -93,7 +93,7 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$access_options = array(
 		ACCESS_PRIVATE => elgg_echo('groups:access:group'),
 		ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
-		ACCESS_PUBLIC => elgg_echo("PUBLIC")
+		ACCESS_PUBLIC => elgg_echo("PUBLIC"),
 	);
 ?>
 

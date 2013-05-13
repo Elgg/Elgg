@@ -93,7 +93,7 @@ if ($tool_options) {
 $is_public_membership = (get_input('membership') == ACCESS_PUBLIC);
 $group->membership = $is_public_membership ? ACCESS_PUBLIC : ACCESS_PRIVATE;
 
-$group->setGatekeeperMode(get_input('gatekeeper_mode'));
+$group->setContentAccessMode(get_input('content_access_mode'));
 
 if ($is_new_group) {
 	$group->access_id = ACCESS_PUBLIC;

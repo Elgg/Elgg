@@ -29,26 +29,26 @@ class ElggCoreGroupTest extends ElggCoreUnitTest {
 		$this->user->save();
 	}
 
-	public function testGatekeeperMode() {
-		$unrestricted = ElggGroup::GATEKEEPER_MODE_UNRESTRICTED;
-		$membersonly = ElggGroup::GATEKEEPER_MODE_MEMBERS_ONLY;
+	public function testContentAccessMode() {
+		$unrestricted = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
+		$membersonly = ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
 
 		// if mode not set, open groups are unrestricted
-		$this->assertEqual($this->group->getGatekeeperMode(), $unrestricted);
+		$this->assertEqual($this->group->getContentAccessMode(), $unrestricted);
 
 		// after first check, metadata is set
-		$this->assertEqual($this->group->gatekeeper_mode, $unrestricted);
+		$this->assertEqual($this->group->content_access_mode, $unrestricted);
 
 		// if mode not set, closed groups are membersonly
-		$this->group->deleteMetadata('gatekeeper_mode');
+		$this->group->deleteMetadata('content_access_mode');
 		$this->group->membership = ACCESS_PRIVATE;
-		$this->assertEqual($this->group->getGatekeeperMode(), $membersonly);
+		$this->assertEqual($this->group->getContentAccessMode(), $membersonly);
 
 		// test set
-		$this->group->setGatekeeperMode($unrestricted);
-		$this->assertEqual($this->group->getGatekeeperMode(), $unrestricted);
-		$this->group->setGatekeeperMode($membersonly);
-		$this->assertEqual($this->group->getGatekeeperMode(), $membersonly);
+		$this->group->setContentAccessMode($unrestricted);
+		$this->assertEqual($this->group->getContentAccessMode(), $unrestricted);
+		$this->group->setContentAccessMode($membersonly);
+		$this->assertEqual($this->group->getContentAccessMode(), $membersonly);
 	}
 
 	public function testGroupItemVisibility() {
@@ -57,13 +57,13 @@ class ElggCoreGroupTest extends ElggCoreUnitTest {
 		$group_guid = $this->group->guid;
 
 		// unrestricted: pass non-members
-		$this->group->setGatekeeperMode(ElggGroup::GATEKEEPER_MODE_UNRESTRICTED);
+		$this->group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED);
 		$vis = Elgg_GroupItemVisibility::factory($group_guid, false);
 
 		$this->assertFalse($vis->shouldHideItems);
 
 		// membersonly: non-members fail
-		$this->group->setGatekeeperMode(ElggGroup::GATEKEEPER_MODE_MEMBERS_ONLY);
+		$this->group->setContentAccessMode(ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY);
 		$vis = Elgg_GroupItemVisibility::factory($group_guid, false);
 
 		$this->assertTrue($vis->shouldHideItems);

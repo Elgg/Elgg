@@ -12,8 +12,8 @@
 class ElggGroup extends ElggEntity
 	implements Friendable {
 
-	const GATEKEEPER_MODE_UNRESTRICTED = 'unrestricted';
-	const GATEKEEPER_MODE_MEMBERS_ONLY = 'members_only';
+	const CONTENT_ACCESS_MODE_UNRESTRICTED = 'unrestricted';
+	const CONTENT_ACCESS_MODE_MEMBERS_ONLY = 'members_only';
 
 	/**
 	 * Sets the type to group.
@@ -312,43 +312,47 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
-	 * Return the content restriction mode used by group_gatekeeper()
+	 * Return the content access mode used by group_gatekeeper()
 	 *
-	 * @return string One of GATEKEEPER_MODE_* constants
+	 * @return string One of CONTENT_ACCESS_MODE_* constants
+	 * @access private
 	 * @since 1.9.0
 	 */
-	public function getGatekeeperMode() {
-		$mode = $this->gatekeeper_mode;
+	public function getContentAccessMode() {
+		$mode = $this->content_access_mode;
 
 		if (!is_string($mode)) {
 			// fallback to 1.8 default behavior
-			$mode = $this->isPublicMembership()
-				? self::GATEKEEPER_MODE_UNRESTRICTED
-				: self::GATEKEEPER_MODE_MEMBERS_ONLY;
-			$this->gatekeeper_mode = $mode;
+			if ($this->isPublicMembership()) {
+				$mode = self::CONTENT_ACCESS_MODE_UNRESTRICTED;
+			} else {
+				$mode = self::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
+			}
+			$this->content_access_mode = $mode;
 		}
 
-		// only support two models for now
-		if ($mode === self::GATEKEEPER_MODE_MEMBERS_ONLY) {
+		// only support two modes for now
+		if ($mode === self::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 			return $mode;
 		}
-		return self::GATEKEEPER_MODE_UNRESTRICTED;
+		return self::CONTENT_ACCESS_MODE_UNRESTRICTED;
 	}
 
 	/**
-	 * Set the content restriction mode used by group_gatekeeper()
+	 * Set the content access mode used by group_gatekeeper()
 	 *
-	 * @param string $mode One of GATEKEEPER_MODE_* constants
+	 * @param string $mode One of CONTENT_ACCESS_MODE_* constants
 	 * @return void
+	 * @access private
 	 * @since 1.9.0
 	 */
-	public function setGatekeeperMode($mode) {
-		// only support two models for now
-		if ($mode !== self::GATEKEEPER_MODE_MEMBERS_ONLY) {
-			$mode = self::GATEKEEPER_MODE_UNRESTRICTED;
+	public function setContentAccessMode($mode) {
+		// only support two modes for now
+		if ($mode !== self::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+			$mode = self::CONTENT_ACCESS_MODE_UNRESTRICTED;
 		}
 
-		$this->gatekeeper_mode = $mode;
+		$this->content_access_mode = $mode;
 	}
 
 	/**

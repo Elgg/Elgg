@@ -29,7 +29,7 @@ unset($vars['entity']);
 // should we tell users that public/logged-in access levels will be ignored?
 $container = elgg_get_page_owner_entity();
 if (($container instanceof ElggGroup)
-		&& $container->getGatekeeperMode() === ElggGroup::GATEKEEPER_MODE_MEMBERS_ONLY
+		&& $container->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY
 		&& !elgg_in_context('group-edit')
 		&& !($entity && $entity instanceof ElggGroup)) {
 	$show_override_notice = true;

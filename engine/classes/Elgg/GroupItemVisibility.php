@@ -11,8 +11,8 @@
  */
 class Elgg_GroupItemVisibility {
 
-	const REASON_MEMBERSHIP = 'membership_required';
-	const REASON_LOGGED_OUT = 'login_required';
+	const REASON_NON_MEMBER = 'non_member';
+	const REASON_LOGGED_OUT = 'logged_out';
 	const REASON_NO_ACCESS = 'no_access';
 
 	/**
@@ -41,10 +41,8 @@ class Elgg_GroupItemVisibility {
 		// get_entity() calls
 		static $cache = array();
 
-		$ret = new Elgg_GroupItemVisibility();
-
 		if (!$container_guid) {
-			return $ret;
+			return new Elgg_GroupItemVisibility();
 		}
 
 		$user = elgg_get_logged_in_user_entity();
@@ -66,15 +64,17 @@ class Elgg_GroupItemVisibility {
 				elgg_set_ignore_access($prev_access);
 			}
 
+			$ret = new Elgg_GroupItemVisibility();
+
 			if ($container && $container instanceof ElggGroup) {
 				/* @var ElggGroup $container */
 
 				if ($is_visible) {
-					if ($container->getGatekeeperMode() === ElggGroup::GATEKEEPER_MODE_MEMBERS_ONLY) {
+					if ($container->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 						if ($user) {
 							if (!$container->isMember($user) && !$user->isAdmin()) {
 								$ret->shouldHideItems = true;
-								$ret->reasonHidden = self::REASON_MEMBERSHIP;
+								$ret->reasonHidden = self::REASON_NON_MEMBER;
 							}
 						} else {
 							$ret->shouldHideItems = true;

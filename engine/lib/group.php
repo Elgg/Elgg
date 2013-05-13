@@ -194,7 +194,12 @@ function group_gatekeeper($forward = true, $page_owner_guid = null) {
 			$forward_reason = 'member';
 		}
 
-		register_error(elgg_echo($visibility->reasonHidden));
+		$msg_keys = array(
+			'non_member' => 'membershiprequired',
+			'logged_out' => 'loggedinrequired',
+			'no_access' => 'noaccess',
+		);
+		register_error(elgg_echo($msg_keys[$visibility->reasonHidden]));
 		forward($forward_url, $forward_reason);
 	}
 
