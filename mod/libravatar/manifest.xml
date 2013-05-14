@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Libravatar</name>
+	<author>Coopfunding developers</author>
+	<version>0.1-beta</version>
+	<category>coopfunding-bundled</category>
+	<category>enhancement</category>
+	<description>Uses avatars from libravatar and gravatar.com for users that haven't uploaded one.</description>
+	<website>https://coopfunding.net/</website>
+	<copyright>See COPYRIGHT.txt</copyright>
+	<license>GNU Affero General Public License version 3 or higher</license>
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+</plugin_manifest>
