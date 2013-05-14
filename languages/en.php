@@ -450,6 +450,7 @@ return array(
 
 	'admin:appearance' => 'Appearance',
 	'admin:administer_utilities' => 'Utilities',
+	'admin:administer_utilities:mass_mailout' => 'Email Announcement',
 	'admin:develop_utilities' => 'Utilities',
 
 	'admin:users' => "Users",
@@ -462,6 +463,12 @@ return array(
 	'admin:users:opt:linktext' => "Configure users...",
 	'admin:users:opt:description' => "Configure users and account information. ",
 	'admin:users:find' => 'Find',
+
+	'admin:mass_mailout:description' => 'Use the form below to send a message to all members of your site. Note that this may take some time.',
+	'admin:mass_mailout:subject:label' => 'Subject',
+	'admin:mass_mailout:message:label' => 'Your message',
+	'admin:mass_mailout:success' => 'Successfully sent message to members',
+	'admin:mass_mailout:inputs' => 'Please make sure you include a title and message before sending to all users',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
