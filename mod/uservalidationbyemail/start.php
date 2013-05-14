@@ -50,6 +50,10 @@ function uservalidationbyemail_init() {
 	elgg_register_action('uservalidationbyemail/resend_validation', "$action_path/resend_validation.php", 'admin');
 	elgg_register_action('uservalidationbyemail/delete', "$action_path/delete.php", 'admin');
 	elgg_register_action('uservalidationbyemail/bulk_action', "$action_path/bulk_action.php", 'admin');
+
+	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'uservalidationbyemail_revalidate_user_settings_save');
+	elgg_register_page_handler('revalidate_email', 'uservalidationbyemail_revalidate_page_handler');
+
 }
 
 /**
@@ -252,4 +256,139 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 	}
 
 	access_show_hidden_entities($access_status);
+}
+
+/**
+ * Checks sent passed validation code and user guids and validates the user.
+ *
+ * @param array $page
+ * @return bool
+ */
+function uservalidationbyemail_revalidate_page_handler($page) {
+
+	if (isset($page[0]) && $page[0] == 'confirm') {
+		$code = sanitise_string(get_input('c', FALSE));
+		$user_guid = get_input('u', FALSE);
+
+		if ($code && $user_guid) {
+			if (uservalidationbyemail_revalidate_email($user_guid, $code)) {
+				system_message(elgg_echo('email:confirm:success'));
+
+				try {
+					$user = get_user($user_guid);
+					login($user);
+				} catch(LoginException $e){
+					register_error($e->getMessage());
+				}
+			} else {
+				register_error(elgg_echo('email:confirm:fail'));
+			}
+		} else {
+			register_error(elgg_echo('email:confirm:fail'));
+		}
+
+	} else {
+		register_error(elgg_echo('email:confirm:fail'));
+	}
+
+	// forward to front page
+	forward('');
+}
+
+/**
+ * Plugin hook handler for usersettings:save
+ * 
+ * @return boolean|null 
+ */
+function uservalidationbyemail_revalidate_user_settings_save() {
+	$email = get_input('email');
+	$user_id = get_input('guid');
+
+	if (!$user_id) {
+		$user = elgg_get_logged_in_user_entity();
+	} else {
+		$user = get_entity($user_id);
+	}
+
+	if (!is_email_address($email)) {
+		register_error(elgg_echo('email:save:fail'));
+		return false;
+	}
+
+	if ($user) {
+		if (strcmp($email, $user->email) != 0) {
+			if (!get_user_by_email($email)) {
+				$user->unvalidated_email = $email;
+				set_input('email', $user->email);
+				uservalidationbyemail_request_revalidation($user->guid);
+			} else {
+				register_error(elgg_echo('registration:dupeemail'));
+			}
+		} else {
+			unset($user->unvalidated_email);
+			return null;
+		}
+	} else {
+		register_error(elgg_echo('email:save:fail'));
+	}
+	return false;
+}
+
+/**
+ * Request user validation email.
+ * Send email out to the address and request a confirmation.
+ *
+ * @param int  $user_guid       The user's GUID
+ * @param bool $admin_requested Was it requested by admin
+ * @return mixed
+ */
+function uservalidationbyemail_request_revalidation($user_guid) {
+
+	$site = elgg_get_site_entity();
+
+	$user_guid = (int)$user_guid;
+	$user = get_entity($user_guid);
+
+	if (($user) && ($user instanceof ElggUser)) {
+		// Work out validate link
+		$code = uservalidationbyemail_generate_code($user_guid, $user->unvalidated_email);
+		$link = "{$site->url}revalidate_email/confirm?u=$user_guid&c=$code";
+
+		// Send validation email
+		$subject = elgg_echo('email:validate:subject', array($user->name, $site->name));
+		$body = elgg_echo('email:validate:body', array($user->name, $site->name, $link, $site->name, $site->url));
+		$result = elgg_send_email($site->email, $user->unvalidated_email, $subject, $body);
+
+		if ($result) {
+			system_message(elgg_echo('email:revalidate:ok'));
+		}
+
+		return $result;
+	}
+
+	return FALSE;
+}
+
+/**
+ * Validate a user
+ *
+ * @param int    $user_guid
+ * @param string $code
+ * @return bool
+ */
+function uservalidationbyemail_revalidate_email($user_guid, $code) {
+	$prev_access = elgg_set_ignore_access();
+
+	$result = false;
+	$user = get_entity($user_guid);
+
+	if ($code == uservalidationbyemail_generate_code($user_guid, $user->unvalidated_email)) {
+		$user->email = $user->unvalidated_email;
+		unset($user->unvalidated_email);
+		$result = $user->save();
+	}
+
+	elgg_set_ignore_access($prev_access);
+
+	return $result;
 }
