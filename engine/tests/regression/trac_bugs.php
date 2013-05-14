@@ -287,8 +287,10 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 				'web archive anchor <a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>',
 
 			'single quotes already anchor <a href=\'http://www.yahoo.com\'>yahoo</a>' => 
-				'single quotes already anchor <a href=\'http://www.yahoo.com\'>yahoo</a>'
+				'single quotes already anchor <a href=\'http://www.yahoo.com\'>yahoo</a>',
 
+			'unquoted already anchor <a href=http://www.yahoo.com>yahoo</a>' =>
+				'unquoted already anchor <a href=http://www.yahoo.com>yahoo</a>',
 		);
 		foreach ($cases as $input => $output) {
 			$this->assertEqual($output, parse_urls($input));
