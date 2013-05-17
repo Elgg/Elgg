@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Body of river item
  *
@@ -8,14 +9,14 @@
  * @uses $vars['attachments'] Optional attachments (displaying icons or other non-text data)
  * @uses $vars['responses']   Alternate respones (comments, replies, etc.)
  */
-
-$item = $vars['item'];
+$item = elgg_extract('item', $vars);
+$full = elgg_extract('full_view', $vars, true);
 
 $menu = elgg_view_menu('river', array(
 	'item' => $item,
 	'sort_by' => 'priority',
 	'class' => 'elgg-menu-hz',
-));
+		));
 
 // river item header
 $timestamp = elgg_view_friendly_time($item->getPostedTime());
@@ -28,7 +29,7 @@ if ($summary === false) {
 		'text' => $subject->name,
 		'class' => 'elgg-river-subject',
 		'is_trusted' => true,
-	));
+			));
 }
 
 $message = elgg_extract('message', $vars, false);
@@ -36,14 +37,16 @@ if ($message !== false) {
 	$message = "<div class=\"elgg-river-message\">$message</div>";
 }
 
-$attachments = elgg_extract('attachments', $vars, false);
-if ($attachments !== false) {
-	$attachments = "<div class=\"elgg-river-attachments clearfix\">$attachments</div>";
-}
+if ($full) {
+	$attachments = elgg_extract('attachments', $vars, false);
+	if ($attachments !== false) {
+		$attachments = "<div class=\"elgg-river-attachments clearfix\">$attachments</div>";
+	}
 
-$responses = elgg_view('river/elements/responses', $vars);
-if ($responses) {
-	$responses = "<div class=\"elgg-river-responses\">$responses</div>";
+	$responses = elgg_view('river/elements/responses', $vars);
+	if ($responses) {
+		$responses = "<div class=\"elgg-river-responses\">$responses</div>";
+	}
 }
 
 $group_string = '';
@@ -54,7 +57,7 @@ if ($container instanceof ElggGroup && $container->guid != elgg_get_page_owner_g
 		'href' => $container->getURL(),
 		'text' => $container->name,
 		'is_trusted' => true,
-	));
+			));
 	$group_string = elgg_echo('river:ingroup', array($group_link));
 }
 
