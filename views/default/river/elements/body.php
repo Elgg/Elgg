@@ -9,7 +9,8 @@
  * @uses $vars['responses']   Alternate respones (comments, replies, etc.)
  */
 
-$item = $vars['item'];
+$item = elgg_extract('item', $vars);
+$full = elgg_extract('full_view', $vars, true);
 
 $menu = elgg_view_menu('river', array(
 	'item' => $item,
@@ -36,14 +37,16 @@ if ($message !== false) {
 	$message = "<div class=\"elgg-river-message\">$message</div>";
 }
 
-$attachments = elgg_extract('attachments', $vars, false);
-if ($attachments !== false) {
-	$attachments = "<div class=\"elgg-river-attachments clearfix\">$attachments</div>";
-}
+if ($full) {
+	$attachments = elgg_extract('attachments', $vars, false);
+	if ($attachments !== false) {
+		$attachments = "<div class=\"elgg-river-attachments clearfix\">$attachments</div>";
+	}
 
-$responses = elgg_view('river/elements/responses', $vars);
-if ($responses) {
-	$responses = "<div class=\"elgg-river-responses\">$responses</div>";
+	$responses = elgg_view('river/elements/responses', $vars);
+	if ($responses) {
+		$responses = "<div class=\"elgg-river-responses\">$responses</div>";
+	}
 }
 
 $group_string = '';
