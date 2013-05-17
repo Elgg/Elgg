@@ -272,23 +272,20 @@ function access_get_show_hidden_status() {
  * The results will be combined into an SQL where clause in the form:
  *  ((or1 OR or2 OR orN) AND (and1 AND and2 AND andN))
  *
- * @param string $table_prefix      Optional table prefix for the access code. (. is appended)
- * @param mixed  $user_guid         Optional owner guid
- * @param string $owner_guid_column Optional name of the owner_guid column.
- * @param string $guid_column       Optional name of the guid column.
- * @param string $access_id_column  Optional name of the access_id column.
- * @param bool   $enabled_clause    Append 'enabled = "yes"' to the end.
+ * @param string $table_prefix          Optional table prefix for the access code. (. is appended)
+ * @param int    $user_guid             Optional user guid to get access information for. Defaults
+ *                                      to logged in user.
+ * @param string $owner_guid_column     Optional name of the owner_guid column.
+ * @param string $guid_column           Optional name of the guid column.
+ * @param string $access_id_column      Optional name of the access_id column.
+ * @param bool   $use_enabled_clause    Append 'enabled = "yes"' to the end.
  * @return string
  * @access private
  */
-function get_access_sql_suffix($table_prefix = '', $user_guid = null, $owner_guid_column = 'owner_guid',
-	$guid_column = 'guid', $access_id_column = 'access_id', $enabled_clause = true) {
+function get_access_sql_suffix($table_prefix = '', $user_guid = 0, $owner_guid_column = 'owner_guid',
+	$guid_column = 'guid', $access_id_column = 'access_id', $use_enabled_clause = true) {
 
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE, $CONFIG;
-
-	$sql = "";
-	$friends_bit = "";
-	$enemies_bit = "";
 
 	if ($table_prefix) {
 		$table_prefix = sanitise_string($table_prefix) . ".";
@@ -298,12 +295,8 @@ function get_access_sql_suffix($table_prefix = '', $user_guid = null, $owner_gui
 	$owner_guid_column = sanitise_string($owner_guid_column);
 	$guid_column = sanitise_string($guid_column);
 
-	if (!isset($user_guid)) {
-    	$user_guid = elgg_get_logged_in_user_guid();
-	}
-
 	if (!$user_guid) {
-		$user_guid = -1;
+		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
 	$ignore_access = elgg_check_access_overrides($user_guid);
@@ -316,20 +309,22 @@ function get_access_sql_suffix($table_prefix = '', $user_guid = null, $owner_gui
 
 	if ($ignore_access) {
 		$clauses['ors'][] = '1 = 1';
-	} else if ($user_guid != -1) {
+	} else if ($user_guid > 0) {
+		// Check friends
 		$clauses['ors'][] = "{$table_prefix}{$access_id_column} = " . ACCESS_FRIENDS . "
 			AND {$table_prefix}{$owner_guid_column} IN (
 				SELECT guid_one FROM {$CONFIG->dbprefix}entity_relationships
 				WHERE relationship='friend' AND guid_two=$user_guid
 			)";
+
+		// Check if user owns the content
+		$clauses['ors'][] = "{$table_prefix}{$owner_guid_column} = {$user_guid}";
 	}
 
-	// it's questionable if it's correct to allow owner_guid = -1 for logged out.
-	$clauses['ors'][] = "{$table_prefix}{$owner_guid_column} = {$user_guid}";
 	$clauses['ors'][] = "{$table_prefix}{$access_id_column} IN {$access}";
 
-	if (!$ENTITY_SHOW_HIDDEN_OVERRIDE && $enabled_clause) {
-    	$clauses['ands'][] = "{$table_prefix}enabled='yes'";
+	if (!$ENTITY_SHOW_HIDDEN_OVERRIDE && $use_enabled_clause) {
+		$clauses['ands'][] = "{$table_prefix}enabled='yes'";
 	}
 
 	$params = array(
@@ -337,7 +332,7 @@ function get_access_sql_suffix($table_prefix = '', $user_guid = null, $owner_gui
 		'access_id_column' => $access_id_column,
 		'owner_guid_column' => $owner_guid_column,
 		'guid_column' => $guid_column,              // @todo this isn't used..
-		'enabled_clause' => $enabled_clause,
+		'use_enabled_clause' => $use_enabled_clause,
 		'user_guid' => $user_guid,
 		'ignore_access' => $ignore_access,
 		'show_disabled_entities' => $ENTITY_SHOW_HIDDEN_OVERRIDE
@@ -357,42 +352,6 @@ function get_access_sql_suffix($table_prefix = '', $user_guid = null, $owner_gui
 	$clauses_str = "($clauses_str)";
 
 	return $clauses_str;
-}
-
-/**
- * Get the where clause for an access restriction based on annotations
- *
- * Returns an SQL fragment that is true (or optionally false) if the given user has
- * added an annotation with the given name to the given entity.
- *
- * @warning this is a private function for an untested capability and will likely
- * be removed from a future version of Elgg.
- *
- * @param string  $annotation_name Name of the annotation
- * @param string  $entity_guid     SQL GUID of entity the annotation is attached to.
- * @param string  $owner_guid      SQL string that evaluates to the GUID of the annotation owner
- * @param boolean $exists          If true, returns BOOL if the annotation exists
- *
- * @return string An SQL fragment suitable for inserting into a WHERE clause
- * @access private
- */
-function get_access_restriction_sql($annotation_name, $entity_guid, $owner_guid, $exists) {
-	global $CONFIG;
-
-	if ($exists) {
-		$not = '';
-	} else {
-		$not = 'NOT';
-	}
-
-	$sql = <<<END
-$not EXISTS (SELECT * FROM {$CONFIG->dbprefix}annotations a
-INNER JOIN {$CONFIG->dbprefix}metastrings ms ON (a.name_id = ms.id)
-WHERE ms.string = '$annotation_name'
-AND a.entity_guid = $entity_guid
-AND a.owner_guid = $owner_guid)
-END;
-	return $sql;
 }
 
 /**
@@ -1086,7 +1045,7 @@ function elgg_override_permissions($hook, $type, $value, $params) {
 }
 
 /**
- * Runs unit tests for the entities object.
+ * Runs unit tests for the access library
  *
  * @param string $hook
  * @param string $type
@@ -1099,6 +1058,7 @@ function elgg_override_permissions($hook, $type, $value, $params) {
 function access_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAccessCollectionsTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAccessSQLTest.php';
 	return $value;
 }
 
