@@ -89,8 +89,8 @@ abstract class ElggEntity extends ElggData implements
 		$this->attributes['type'] = NULL;
 		$this->attributes['subtype'] = NULL;
 
-		$this->attributes['owner_guid'] = (int)elgg_get_logged_in_user_guid();
-		$this->attributes['container_guid'] = (int)elgg_get_logged_in_user_guid();
+		$this->attributes['owner_guid'] = elgg_get_logged_in_user_guid();
+		$this->attributes['container_guid'] = elgg_get_logged_in_user_guid();
 
 		$this->attributes['site_guid'] = NULL;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
