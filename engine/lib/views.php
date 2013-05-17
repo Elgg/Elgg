@@ -1226,10 +1226,11 @@ function elgg_view_module($type, $title, $body, array $vars = array()) {
  *
  * @return string returns empty string if could not be rendered
  */
-function elgg_view_river_item($item, array $vars = array()) {
-	if (!($item instanceof ElggRiverItem)) {
-		return '';
+function elgg_view_river_item(ElggRiverItem $item, array $vars = array()) {
+	if (!$item || !($item instanceof ElggRiverItem)) {
+		return false;
 	}
+
 	// checking default viewtype since some viewtypes do not have unique views per item (rss)
 	$view = $item->getView();
 	if (!$view || !elgg_view_exists($view, 'default')) {
