@@ -41,11 +41,17 @@ $css = elgg_get_loaded_css();
 
 $version = elgg_get_version();
 $release = elgg_get_version(true);
+
+$html5shiv = elgg_normalize_url('vendors/html5shiv.js');
 ?>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<meta name="generator" content="Elgg <?php echo $release; ?>" />
 	<title><?php echo $title; ?></title>
 	<?php echo elgg_view('page/elements/shortcut_icon', $vars); ?>
+
+	<!--[if lt IE 9]>
+		<script src="<?php echo $html5shiv; ?>"></script>
+	<![endif]-->
 
 <?php foreach ($css as $link) { ?>
 	<link rel="stylesheet" href="<?php echo $link; ?>" />
