@@ -939,6 +939,11 @@ function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = arr
  * @return string/false Rendered annotation
  */
 function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(), $bypass = true, $debug = false) {
+	
+	if (!$annotation || !($annotation instanceof ElggAnnotation)) {
+		return false;
+	}
+	
 	global $autofeed;
 	$autofeed = true;
 
