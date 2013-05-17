@@ -1235,14 +1235,6 @@ function elgg_view_river_item(ElggRiverItem $item, array $vars = array()) {
 	$view = $item->getView();
 	if (!elgg_view_exists($view, 'default')) {
 		elgg_log(sprintf('Missing view "%s" for river item %s', $view, $item->id), 'WARNING');
-		return '';
-	}
-
-	$subject = $item->getSubjectEntity();
-	$object = $item->getObjectEntity();
-	if (!$subject || !$object) {
-		// subject is disabled or subject/object deleted
-		return '';
 	}
 
 	// @todo this needs to be cleaned up
