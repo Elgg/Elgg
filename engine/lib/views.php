@@ -637,10 +637,9 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = false, 
 
 	$vars['entity'] = $entity;
 
-
-	// if this entity has a view defined, use it
+	// if this entity has a view defined, try to use it
 	$view = $entity->view;
-	if (is_string($view)) {
+	if (elgg_view_exists($view)) {
 		return elgg_view($view, $vars, $bypass, $debug);
 	}
 
