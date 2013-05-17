@@ -757,7 +757,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
 	// @todo setting the view on an annotation is not advertised anywhere
 	// do we want to keep this?
 	$view = $annotation->view;
-	if (is_string($view)) {
+	if (elgg_view_exists($view)) {
 		return elgg_view($view, $vars, $bypass, $debug);
 	}
 
