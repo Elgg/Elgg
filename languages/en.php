@@ -448,6 +448,11 @@ $english = array(
 	'river:widgets:friends' => 'Friends activity',
 	'river:widgets:all' => 'All site activity',
 
+	'river:error:default' => 'The content of this item can not be displayed right now. It may be temporarily unavailable, it may have been removed or you may not have permission to view it.',
+	'river:error:subject' => 'The content of this item can not be displayed right now. The subject entity referenced in this post has been deleted or banned',
+	'river:error:object' => 'The content of this item can not be displayed right now. The object entity referenced in this post has been deleted or disabled',
+	'river:error:view' => 'The content of this item can not be displayed right now. The view defined for this item does not exist. It is likely that this item has been created by a disabled plugin',
+
 /**
  * Notifications
  */
