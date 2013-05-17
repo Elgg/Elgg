@@ -53,23 +53,22 @@ if ($position == 'before' || $position == 'both') {
 	echo $nav;
 }
 
-?>
-<ul class="<?php echo $gallery_class; ?>">
-	<?php
-		foreach ($items as $item) {
+if (is_array($items) && count($items) > 0) {
+	$html .= "<ul class=\"$gallery_class\">";
+	foreach ($items as $item) {
+		$li = elgg_view_list_item($item, $vars);
+		if (!empty($li)) {
 			if (elgg_instanceof($item)) {
-			$id = "elgg-{$item->getType()}-{$item->getGUID()}";
+				$id = "elgg-{$item->getType()}-{$item->getGUID()}";
 			} else {
 				$id = "item-{$item->getType()}-{$item->id}";
 			}
-			echo "<li id=\"$id\" class=\"$item_class\">";
-			echo elgg_view_list_item($item, $vars);
-			echo "</li>";
+			$html .= "<li id=\"$id\" class=\"$item_class\">$li</li>";
 		}
-	?>
-</ul>
+	}
+	$html .= '</ul>';
+}
 
-<?php
 if ($position == 'after' || $position == 'both') {
 	echo $nav;
 }
