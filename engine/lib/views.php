@@ -312,6 +312,11 @@ function elgg_set_view_location($view, $location, $viewtype = '') {
 function elgg_view_exists($view, $viewtype = '', $recurse = true) {
 	global $CONFIG;
 
+	// $view must be a string
+	if (empty($view) || !is_string($view)) {
+		return false;
+	}
+	
 	// Detect view type
 	if (empty($viewtype)) {
 		$viewtype = elgg_get_viewtype();
