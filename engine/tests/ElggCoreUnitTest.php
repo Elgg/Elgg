@@ -101,6 +101,7 @@ class IdenticalEntityExpectation extends EqualExpectation {
 			// See: http://www.php.net/manual/en/language.types.array.php#language.types.array.casting
 			$value["\0*\0attributes"][$key] = null;
 		}
+		ksort($value["\0*\0attributes"]);
 		
 		return $value;
 	}
