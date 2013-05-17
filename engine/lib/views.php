@@ -962,11 +962,8 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
 	}
 
 	$name = $annotation->name;
-	if (empty($name)) {
-		return false;
-	}
 
-	if (elgg_view_exists("annotation/$name")) {
+	if (!empty($name) && elgg_view_exists("annotation/$name")) {
 		return elgg_view("annotation/$name", $vars, $bypass, $debug);
 	} else {
 		return elgg_view("annotation/default", $vars, $bypass, $debug);
