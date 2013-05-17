@@ -1034,7 +1034,8 @@ function elgg_view_river_item(ElggRiverItem $item, array $vars = array()) {
 
 	// checking default viewtype since some viewtypes do not have unique views per item (rss)
 	$view = $item->getView();
-	if (!$view || !elgg_view_exists($view, 'default')) {
+	if (!elgg_view_exists($view, 'default')) {
+		elgg_log(sprintf('Missing view "%s" for river item %s', $view, $item->id), 'WARNING');
 		return '';
 	}
 
