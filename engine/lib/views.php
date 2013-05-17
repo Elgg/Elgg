@@ -1049,6 +1049,10 @@ function elgg_view_river_item(ElggRiverItem $item, array $vars = array()) {
 	//		}
 	//	}
 
+	$defaults = array(
+		'full_view' => true
+	);
+	$vars = array_merge($defaults, $vars);
 	$vars['item'] = $item;
 
 	return elgg_view('river/item', $vars);
