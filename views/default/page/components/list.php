@@ -52,8 +52,7 @@ if (is_array($items) && count($items) > 0) {
 	$html .= "<ul class=\"$list_class\">";
 	foreach ($items as $item) {
 		$li = elgg_view_list_item($item, $vars);
-		echo elgg_view_annotation($item);
-		if ($li && !empty($li)) {
+		if (!empty($li)) {
 			if (elgg_instanceof($item)) {
 				$id = "elgg-{$item->getType()}-{$item->getGUID()}";
 			} else {

@@ -312,6 +312,11 @@ function elgg_set_view_location($view, $location, $viewtype = '') {
 function elgg_view_exists($view, $viewtype = '', $recurse = true) {
 	global $CONFIG;
 
+	// Make sure the supplied view is a string
+	if (empty($view) || !is_string($view)) {
+		return false;
+	}
+	
 	// Detect view type
 	if (empty($viewtype)) {
 		$viewtype = elgg_get_viewtype();
@@ -559,7 +564,7 @@ function elgg_extend_view($view, $view_extension, $priority = 501) {
 
 	if (!isset($CONFIG->views)) {
 		$CONFIG->views = (object) array(
-			'extensions' => array(),
+					'extensions' => array(),
 		);
 		$CONFIG->views->extensions[$view][500] = (string)$view;
 	} else {
@@ -639,7 +644,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['sysmessages'] = $messages;
 
 	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
-	
+
 	// check for deprecated view
 	if ($page_shell == 'default' && elgg_view_exists('pageshells/pageshell')) {
 		elgg_deprecated_notice("pageshells/pageshell is deprecated by page/$page_shell", 1.8);
@@ -835,10 +840,9 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = true, $
 
 	$vars['entity'] = $entity;
 
-
-	// if this entity has a view defined, use it
+	// if this entity has a view defined, try to use it
 	$view = $entity->view;
-	if (is_string($view)) {
+	if (elgg_view_exists($view)) {
 		return elgg_view($view, $vars, $bypass, $debug);
 	}
 
@@ -935,6 +939,11 @@ function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = arr
  * @return string/false Rendered annotation
  */
 function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(), $bypass = true, $debug = false) {
+
+	if (!$annotation || !($annotation instanceof ElggAnnotation)) {
+		return false;
+	}
+
 	global $autofeed;
 	$autofeed = true;
 
@@ -948,16 +957,13 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
 	// @todo setting the view on an annotation is not advertised anywhere
 	// do we want to keep this?
 	$view = $annotation->view;
-	if (is_string($view)) {
+	if (elgg_view_exists($view)) {
 		return elgg_view($view, $vars, $bypass, $debug);
 	}
 
 	$name = $annotation->name;
-	if (empty($name)) {
-		return false;
-	}
 
-	if (elgg_view_exists("annotation/$name")) {
+	if (!empty($name) && elgg_view_exists("annotation/$name")) {
 		return elgg_view("annotation/$name", $vars, $bypass, $debug);
 	} else {
 		return elgg_view("annotation/default", $vars, $bypass, $debug);
@@ -1093,9 +1099,9 @@ function elgg_view_entity_annotations(ElggEntity $entity, $full_view = true) {
 
 	$annotations = elgg_trigger_plugin_hook('entity:annotate', $entity_type,
 		array(
-			'entity' => $entity,
-			'full_view' => $full_view,
-		)
+		'entity' => $entity,
+		'full_view' => $full_view,
+			)
 	);
 
 	return $annotations;
@@ -1220,22 +1226,18 @@ function elgg_view_module($type, $title, $body, array $vars = array()) {
  *
  * @return string returns empty string if could not be rendered
  */
-function elgg_view_river_item($item, array $vars = array()) {
+function elgg_view_river_item(ElggRiverItem $item, array $vars = array()) {
+
 	if (!($item instanceof ElggRiverItem)) {
-		return '';
-	}
-	// checking default viewtype since some viewtypes do not have unique views per item (rss)
-	$view = $item->getView();
-	if (!$view || !elgg_view_exists($view, 'default')) {
-		return '';
+		return false;
 	}
 
-	$subject = $item->getSubjectEntity();
-	$object = $item->getObjectEntity();
-	if (!$subject || !$object) {
-		// subject is disabled or subject/object deleted
-		return '';
-	}
+	$defaults = array(
+		'full_view' => true
+	);
+
+	$vars = array_merge($defaults, $vars);
+	$vars['item'] = $item;
 
 	// @todo this needs to be cleaned up
 	// Don't hide objects in closed groups that a user can see.
@@ -1522,8 +1524,7 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 						$view_base_new = "";
 					}
 
-					elgg_set_view_location($view_base_new . str_replace('.php', '', $view),
-						$base_location_path, $viewtype);
+					elgg_set_view_location($view_base_new . str_replace('.php', '', $view), $base_location_path, $viewtype);
 				}
 			} else if (!in_array($view, array('.', '..', '.svn', 'CVS')) && is_dir($folder . "/" . $view)) {
 				if (!empty($view_base)) {
@@ -1531,8 +1532,7 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
 				} else {
 					$view_base_new = "";
 				}
-				autoregister_views($view_base_new . $view, $folder . "/" . $view,
-					$base_location_path, $viewtype);
+				autoregister_views($view_base_new . $view, $folder . "/" . $view, $base_location_path, $viewtype);
 			}
 		}
 		return TRUE;
