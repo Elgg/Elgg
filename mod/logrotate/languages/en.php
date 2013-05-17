@@ -23,7 +23,7 @@ $english = array(
 	'logrotate:never' => 'never',
 		
 	'logrotate:logdeleted' => "Log deleted\n",
-	'logrotate:lognotdeleted' => "Error deleting log\n",
+	'logrotate:lognotdeleted' => "No logs deleted\n",
 );
 
 add_translation("en", $english);
