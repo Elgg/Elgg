@@ -226,6 +226,15 @@ abstract class ElggEntity extends ElggData implements
 				case 'last_action':
 					return FALSE;
 					break;
+				case 'access_id':
+				case 'owner_guid':
+				case 'container_guid':
+					if ($value !== null) {
+						$this->attributes[$name] = (int)$value;
+					} else {
+						$this->attributes[$name] = null;
+					}
+					break;
 				default:
 					$this->attributes[$name] = $value;
 					break;
@@ -1437,13 +1446,12 @@ abstract class ElggEntity extends ElggData implements
 			throw new IOException("Unable to save new object's base entity information!");
 		}
 	
-		$this->attributes['guid'] = $result;
-		// Q: why string casts? A: to match how they're populated after load
-		$this->attributes['time_created'] = (string)$time;
-		$this->attributes['time_updated'] = (string)$time;
-		$this->attributes['last_action'] = (string)$time;
-		$this->attributes['site_guid'] = (string)$site_guid;
-		$this->attributes['container_guid'] = (string)$container_guid;
+		$this->attributes['guid'] = (int)$result;
+		$this->attributes['time_created'] = (int)$time;
+		$this->attributes['time_updated'] = (int)$time;
+		$this->attributes['last_action'] = (int)$time;
+		$this->attributes['site_guid'] = (int)$site_guid;
+		$this->attributes['container_guid'] = (int)$container_guid;
 
 		// Save any unsaved metadata
 		// @todo How to capture extra information (access id etc)

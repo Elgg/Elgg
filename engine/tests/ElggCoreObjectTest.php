@@ -25,7 +25,6 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		$this->swallowErrors();
 		unset($this->entity);
 	}
 
@@ -99,7 +98,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 
 		// load a new object using guid
 		$entity = new ElggObjectTest($guid);
-		$this->assertIdentical($this->entity, $entity);
+		$this->assertIdenticalEntities($this->entity, $entity);
 
 		// clean up
 		$this->entity->delete();
@@ -151,7 +150,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 
 		// check container
 		$this->assertEqual($this->entity->getContainerGUID(), $guid);
-		$this->assertIdentical($group, $this->entity->getContainerEntity());
+		$this->assertIdenticalEntities($group, $this->entity->getContainerEntity());
 
 		// clean up
 		$group->delete();

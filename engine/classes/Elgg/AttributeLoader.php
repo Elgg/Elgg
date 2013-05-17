@@ -30,6 +30,34 @@ class Elgg_AttributeLoader {
 	);
 
 	/**
+	 * @var array names of attributes in all entities that should be stored as integer values
+	 */
+	protected static $integer_attr_names = array(
+		'guid',
+		'owner_guid',
+		'container_guid',
+		'site_guid',
+		'access_id',
+		'time_created',
+		'time_updated',
+		'last_action',
+		// ElggUser
+		'prev_last_action',
+		'last_login',
+		'prev_last_login'
+	);
+
+	/**
+	 * @var array names of attributes in all entities that should be stored as null if empty
+	 */
+	protected static $null_attr_names = array(
+		'name',
+		'title',
+		'description',
+		'url',
+	);
+
+	/**
 	 * @var array names of secondary attributes required for the entity
 	 */
 	protected $secondary_attr_names = array();
@@ -212,14 +240,29 @@ class Elgg_AttributeLoader {
 		}
 
 		// resolve subtype from int to string
-		$row['subtype'] = get_subtype_from_id($row['subtype']);
+		$subtype = get_subtype_from_id($row['subtype']);
+		if ($subtype) {
+			$row['subtype'] = $subtype;
+		} else {
+			$row['subtype'] = null;
+		}
+
+		// set to null when reading empty value, to match default empty value; See #5456
+		foreach (self::$null_attr_names as $key) {
+			if (isset($row[$key]) && !$row[$key]) {
+				$row[$key] = null;
+			}
+		}
 
 		// Note: If there are still missing attributes, we're running on a 1.7 or earlier schema. We let
 		// this pass so the upgrades can run.
 
 		// guid needs to be an int  http://trac.elgg.org/ticket/4111
-		$row['guid'] = (int) $row['guid'];
-
+		foreach (self::$integer_attr_names as $key) {
+			if (isset($row[$key])) {
+				$row[$key] = (int) $row[$key];
+			}
+		}
 		return $row;
 	}
 }

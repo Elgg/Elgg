@@ -46,7 +46,8 @@
         </li>
 </ul>
 <div class="content">
-        <p><a class="target" name="resume"><h2>Qu'est-ce que SimpleTest ?</h2></a></p>
+        <h2>
+<a class="target" name="resume"></a>Qu'est-ce que SimpleTest ?</h2>
             <p>
                 Le coeur de SimpleTest est un framework de test construit autour de classes de scénarios de test. Celles-ci sont écrites comme des extensions des classes premières de scénarios de test, chacune élargie avec des méthodes qui contiennent le code de test effectif. Les scripts de test de haut niveau invoque la méthode <span class="new_code">run()</span> à chaque scénario de test successivement. Chaque méthode de test est écrite pour appeler des assertions diverses que le développeur suppose être vraies, <span class="new_code">assertEqual()</span> par exemple. Si l'assertion est correcte, alors un succès est expédié au rapporteur observant le test, mais toute erreur déclenche une alerte et une description de la dissension.
             </p>
@@ -88,7 +89,8 @@ class <strong>MySiteTest</strong> extends WebTestCase {
 </pre>
             </p>
         
-        <p><a class="target" name="fonctionnalites"><h2>Liste des fonctionnalites</h2></a></p>
+        <h2>
+<a class="target" name="fonctionnalites"></a>Liste des fonctionnalites</h2>
             <p>
                 Ci-dessous vous trouverez un canevas assez brut des fonctionnalités à aujourd'hui et pour demain, sans oublier leur date approximative de publication. J'ai bien peur qu'il soit modifiable sans pré-avis étant donné que les jalons dépendent beaucoup sur le temps disponible. Les trucs en vert ont été codés, mais pas forcément déjà rendus public. Si vous avez une besoin pressant pour une fonctionnalité verte mais pas encore publique alors vous devriez retirer le code directement sur le  CVS chez SourceFourge. Une fonctionnalitée publiée est indiqué par "Fini".
                 <table>
@@ -256,7 +258,8 @@ class <strong>MySiteTest</strong> extends WebTestCase {
                 La migration vers PHP5 commencera juste après la série des 1.0, à partir de là PHP4 ne sera plus supporté. SimpleTest est actuellement compatible avec PHP5 mais n'utilisera aucune des nouvelles fonctionnalités avant la version 2.
             </p>
         
-        <p><a class="target" name="ressources"><h2>Ressources sur le web pour les tests</h2></a></p>
+        <h2>
+<a class="target" name="ressources"></a>Ressources sur le web pour les tests</h2>
             <p>
                 Le processus est au moins aussi important que les outils. Le type de procédure que fait un usage le plus intensif des outils de test pour développeur est bien sûr l'<a href="http://www.extremeprogramming.org/">Extreme Programming</a>. Il s'agit là d'une des <a href="http://www.agilealliance.com/articles/index">méthodes agiles</a> qui combinent plusieurs pratiques pour "lisser la courbe de coût" du développement logiciel. La plus extrème reste le <a href="http://www.testdriven.com/modules/news/">développement piloté par les tests</a>, où vous devez adhérer à la règle du <cite>pas de code avant d'avoir un test</cite>. Si vous êtes plutôt du genre planninficateur ou que vous estimez que l'expérience compte plus que l'évolution, vous préférerez peut-être l'approche <a href="http://www.therationaledge.com/content/dec_01/f_spiritOfTheRUP_pk.html">RUP</a>. Je ne l'ai pas testé mais je peux voir où vous aurez besoin d'outils de test (cf. illustration 9).
             </p>

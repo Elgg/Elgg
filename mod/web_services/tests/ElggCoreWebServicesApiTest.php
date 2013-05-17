@@ -12,7 +12,6 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	 */
 	public function tearDown() {
 		global $API_METHODS;
-		$this->swallowErrors();
 		$API_METHODS = array();
 	}
 	
@@ -300,7 +299,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	public function testApiAuthKeyBadKey() {
 		global $CONFIG;
 		
-		$CONFIG->input['api_key'] = 'BAD';
+		set_input('api_key', 'BAD');
 		try {
 			api_auth_key();
 			$this->assertTrue(FALSE);

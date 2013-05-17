@@ -47,7 +47,7 @@ function elgg_get_logged_in_user_entity() {
 function elgg_get_logged_in_user_guid() {
 	$user = elgg_get_logged_in_user_entity();
 	if ($user) {
-		return $user->guid;
+		return (int)$user->guid;
 	}
 
 	return 0;
