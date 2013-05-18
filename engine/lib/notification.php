@@ -194,7 +194,7 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 	$site = elgg_get_site_entity();
 	// If there's an email address, use it - but only if it's not from a user.
 	if (!($sender instanceof ElggUser) && $sender->email) {
-		$from = $from->email;
+		$from = $sender->email;
 	} else if ($site->email) {
 		$from = $site->email;
 	} else {
