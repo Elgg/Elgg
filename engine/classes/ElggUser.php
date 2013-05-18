@@ -509,7 +509,15 @@ class ElggUser extends ElggEntity
 	 * @return array|false
 	 */
 	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) {
-		return get_user_friends_objects($this->getGUID(), $subtype, $limit, $offset);
+		return elgg_get_entities_from_relationship(array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			'limit' => $limit,
+			'offset' => $offset,
+			'relationship' => 'friend',
+			'relationship_guid' => $this->getGUID(),
+			'relationship_join_on' => 'container_guid',
+		));
 	}
 
 	/**
