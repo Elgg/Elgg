@@ -152,7 +152,7 @@ function blog_get_page_content_friends($user_guid) {
 		'full_view' => false,
 		'relationship' => 'friend',
 		'relationship_guid' => $user_guid,
-		'relationship_join' => 'container_guid',
+		'relationship_join_on' => 'container_guid',
 	);
 
 	// admin / owners can see any posts

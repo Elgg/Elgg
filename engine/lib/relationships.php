@@ -265,11 +265,11 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
  *
  * 	inverse_relationship => BOOL Inverse the relationship
  * 
- *  relationship_join => NULL|STR How the entities relate: guid (default), container_guid, or owner_guid
- *                       Add in Elgg 1.9.0. Examples using the relationship 'friend':
- *                       1. use 'guid' if you want the user's friends
- *                       2. use 'owner_guid' if you want the entities the user's friends own (including in groups)
- *                       3. use 'container_guid' if you want the entities in the user's personal space (non-group)
+ *  relationship_join_on => NULL|STR How the entities relate: guid (default), container_guid, or owner_guid
+ *                          Add in Elgg 1.9.0. Examples using the relationship 'friend':
+ *                          1. use 'guid' if you want the user's friends
+ *                          2. use 'owner_guid' if you want the entities the user's friends own (including in groups)
+ *                          3. use 'container_guid' if you want the entities in the user's personal space (non-group)
  *
  * @return ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
@@ -279,12 +279,12 @@ function elgg_get_entities_from_relationship($options) {
 		'relationship' => NULL,
 		'relationship_guid' => NULL,
 		'inverse_relationship' => FALSE,
-		'relationship_join' => 'guid',
+		'relationship_join_on' => 'guid',
 	);
 
 	$options = array_merge($defaults, $options);
 
-	$join_column = "e.{$options['relationship_join']}";
+	$join_column = "e.{$options['relationship_join_on']}";
 	$clauses = elgg_get_entity_relationship_where_sql($join_column, $options['relationship'],
 		$options['relationship_guid'], $options['inverse_relationship']);
 

@@ -26,7 +26,7 @@ function get_user_friends_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE
 		'created_time_upper' => $timeupper,
 		'relationship' => 'friend',
 		'relationship_guid' => $user_guid,
-		'relationship_join' => 'container_guid',
+		'relationship_join_on' => 'container_guid',
 	));
 }
 
@@ -52,7 +52,7 @@ $timelower = 0, $timeupper = 0) {
 		'created_time_upper' => $timeupper,
 		'relationship' => 'friend',
 		'relationship_guid' => $user_guid,
-		'relationship_join' => 'container_guid',
+		'relationship_join_on' => 'container_guid',
 		'count' => true,
 	));
 }
@@ -89,7 +89,7 @@ function list_user_friends_objects($user_guid, $subtype = "", $limit = 10, $full
 		'pagination' => $pagination,
 		'relationship' => 'friend',
 		'relationship_guid' => $user_guid,
-		'relationship_join' => 'container_guid',
+		'relationship_join_on' => 'container_guid',
 	));
 }
 

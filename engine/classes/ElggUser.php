@@ -516,7 +516,7 @@ class ElggUser extends ElggEntity
 			'offset' => $offset,
 			'relationship' => 'friend',
 			'relationship_guid' => $this->getGUID(),
-			'relationship_join' => 'container_guid',
+			'relationship_join_on' => 'container_guid',
 		));
 	}
 

@@ -23,7 +23,7 @@ $content = elgg_list_entities_from_relationship(array(
 	'full_view' => false,
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->guid,
-	'relationship_join' => 'container_guid',
+	'relationship_join_on' => 'container_guid',
 ));
 if (!$content) {
 	$content = elgg_echo('pages:none');
