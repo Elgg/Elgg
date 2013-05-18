@@ -12,22 +12,43 @@ function legacy_urls_init() {
 }
 
 /**
- * Send a permanent redirect to browser
+ * Redirect the requestor to the new URL
  * 
  * @param string $url Relative or absolute URL
  */
 function legacy_urls_redirect($url) {
-	$url = elgg_normalize_url($url);
-	header("HTTP/1.1 301 Moved Permanently");
-	header("Location: $url");
-	exit;
+	$method = elgg_get_plugin_setting('redirect_method', 'legacy_urls');
+	switch ($method) {
+		case 'landing':
+			$content = elgg_view('legacy_urls/message', array('url' => $url));
+			$body = elgg_view_layout('error', array('content' => $content));
+			echo elgg_view_page('', $body, 'error');
+			return true;
+			break;
+		case 'immediate_error':
+			// drop through after setting error message
+			register_error(elgg_echo('changebookmark'));
+		case 'immediate':
+		default:
+			$url = elgg_normalize_url($url);
+			header("HTTP/1.1 301 Moved Permanently");
+			header("Location: $url");
+			exit;
+			break;
+	}
 }
 
+/**
+ * Handle requests for /tag/<tag string>
+ */
 function legacy_urls_tag_handler($segments) {
 	$tag = $segments[0];
-	legacy_urls_redirect("search?q=$tag");
+	return legacy_urls_redirect("search?q=$tag");
 }
 
+/**
+ * Handle requests for URLs that start with /pg/
+ */
 function legacy_urls_pg_handler($segments) {
 
 	$url = implode('/', $segments);
@@ -38,5 +59,5 @@ function legacy_urls_pg_handler($segments) {
 		$url .= "?$query";
 	}
 
-	legacy_urls_redirect($url);
+	return legacy_urls_redirect($url);
 }
