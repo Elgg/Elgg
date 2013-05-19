@@ -202,9 +202,9 @@ function elgg_delete_river(array $options = array()) {
 	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
-	$wheres[] = elgg_river_get_action_where_sql($options['action_types']);
-	$wheres[] = elgg_river_get_view_where_sql($options['views']);
-	$wheres[] = elgg_get_river_type_subtype_where_sql('rv', $options['types'],
+	$wheres[] = _elgg_river_get_action_where_sql($options['action_types']);
+	$wheres[] = _elgg_river_get_view_where_sql($options['views']);
+	$wheres[] = _elgg_get_river_type_subtype_where_sql('rv', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
 
 	if ($options['posted_time_lower'] && is_int($options['posted_time_lower'])) {
@@ -328,8 +328,8 @@ function elgg_get_river(array $options = array()) {
 	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
 	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
-	$wheres[] = elgg_river_get_action_where_sql($options['action_types']);
-	$wheres[] = elgg_get_river_type_subtype_where_sql('rv', $options['types'],
+	$wheres[] = _elgg_river_get_action_where_sql($options['action_types']);
+	$wheres[] = _elgg_get_river_type_subtype_where_sql('rv', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
 
 	if ($options['posted_time_lower'] && is_int($options['posted_time_lower'])) {
@@ -402,7 +402,7 @@ function elgg_get_river(array $options = array()) {
 			$query .= " LIMIT $offset, $limit";
 		}
 
-		$river_items = get_data($query, 'elgg_row_to_elgg_river_item');
+		$river_items = get_data($query, '_elgg_row_to_elgg_river_item');
 		_elgg_prefetch_river_entities($river_items);
 
 		return $river_items;
@@ -502,7 +502,7 @@ function elgg_list_river(array $options = array()) {
  * @since 1.8.0
  * @access private
  */
-function elgg_row_to_elgg_river_item($row) {
+function _elgg_row_to_elgg_river_item($row) {
 	if (!($row instanceof stdClass)) {
 		return NULL;
 	}
@@ -539,7 +539,7 @@ function elgg_river_get_access_sql() {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs) {
+function _elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs) {
 	// short circuit if nothing is requested
 	if (!$types && !$subtypes && !$pairs) {
 		return '';
@@ -617,7 +617,7 @@ function elgg_get_river_type_subtype_where_sql($table, $types, $subtypes, $pairs
  * @since 1.8.0
  * @access private
  */
-function elgg_river_get_action_where_sql($types) {
+function _elgg_river_get_action_where_sql($types) {
 	if (!$types) {
 		return '';
 	}
@@ -646,7 +646,7 @@ function elgg_river_get_action_where_sql($types) {
  * @since 1.8.0
  * @access private
  */
-function elgg_river_get_view_where_sql($views) {
+function _elgg_river_get_view_where_sql($views) {
 	if (!$views) {
 		return '';
 	}
@@ -695,7 +695,7 @@ function update_river_access_by_object($object_guid, $access_id) {
  * @return bool
  * @access private
  */
-function elgg_river_page_handler($page) {
+function _elgg_river_page_handler($page) {
 	global $CONFIG;
 
 	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
@@ -723,7 +723,7 @@ function elgg_river_page_handler($page) {
  * Register river unit tests
  * @access private
  */
-function elgg_river_test($hook, $type, $value) {
+function _elgg_river_test($hook, $type, $value) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreRiverAPITest.php';
 	return $value;
@@ -733,8 +733,8 @@ function elgg_river_test($hook, $type, $value) {
  * Initialize river library
  * @access private
  */
-function elgg_river_init() {
-	elgg_register_page_handler('activity', 'elgg_river_page_handler');
+function _elgg_river_init() {
+	elgg_register_page_handler('activity', '_elgg_river_page_handler');
 	$item = new ElggMenuItem('activity', elgg_echo('activity'), 'activity');
 	elgg_register_menu_item('site', $item);
 	
@@ -742,7 +742,7 @@ function elgg_river_init() {
 
 	elgg_register_action('river/delete', '', 'admin');
 
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'elgg_river_test');
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
 }
 
-elgg_register_event_handler('init', 'system', 'elgg_river_init');
+elgg_register_event_handler('init', 'system', '_elgg_river_init');
