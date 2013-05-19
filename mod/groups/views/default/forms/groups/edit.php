@@ -9,6 +9,20 @@
 $name = $membership = $vis = $entity = null;
 extract($vars, EXTR_IF_EXISTS);
 
+/* @var ElggGroup $entity */
+
+if (isset($vars['entity'])) {
+	$entity = $vars['entity'];
+	$owner_guid = $vars['entity']->owner_guid;
+	$content_access_mode = $entity->getContentAccessMode();
+} else {
+	$entity = false;
+	$content_access_mode = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
+}
+
+// context needed for input/access view
+elgg_push_context('group-edit');
+
 ?>
 <div>
 	<label><?php echo elgg_echo("groups:icon"); ?></label><br />
@@ -18,7 +32,7 @@ extract($vars, EXTR_IF_EXISTS);
 	<label><?php echo elgg_echo("groups:name"); ?></label><br />
 	<?php echo elgg_view("input/text", array(
 		'name' => 'name',
-		'value' => $name
+		'value' => $name,
 	));
 	?>
 </div>
@@ -36,7 +50,7 @@ if ($group_profile_fields > 0) {
 		echo "</label>$line_break";
 		echo elgg_view("input/{$valtype}", array(
 			'name' => $shortname,
-			'value' => elgg_extract($shortname, $vars)
+			'value' => elgg_extract($shortname, $vars),
 		));
 		echo '</div>';
 	}
@@ -51,8 +65,23 @@ if ($group_profile_fields > 0) {
 			'value' => $membership,
 			'options_values' => array(
 				ACCESS_PRIVATE => elgg_echo('groups:access:private'),
-				ACCESS_PUBLIC => elgg_echo('groups:access:public')
+				ACCESS_PUBLIC => elgg_echo('groups:access:public'),
 			)
+		));
+		?>
+	</label>
+</div>
+
+<div>
+	<label>
+		<?php echo elgg_echo('groups:content_access_mode'); ?><br />
+		<?php echo elgg_view('input/select', array(
+			'name' => 'content_access_mode',
+			'value' => $content_access_mode,
+			'options_values' => array(
+				ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED => elgg_echo('groups:content_access_mode:unrestricted'),
+				ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY => elgg_echo('groups:content_access_mode:membersonly'),
+			),
 		));
 		?>
 	</label>
@@ -64,7 +93,7 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 	$access_options = array(
 		ACCESS_PRIVATE => elgg_echo('groups:access:group'),
 		ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
-		ACCESS_PUBLIC => elgg_echo("PUBLIC")
+		ACCESS_PUBLIC => elgg_echo("PUBLIC"),
 	);
 ?>
 
@@ -83,13 +112,6 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 <?php 	
 }
 
-if (isset($vars['entity'])) {
-	$entity     = $vars['entity'];
-	$owner_guid = $vars['entity']->owner_guid;
-} else {
-	$entity = false;
-}
-
 if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
 	$members = array();
 
@@ -103,7 +125,8 @@ if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_l
 
 	$batch = new ElggBatch('elgg_get_entities_from_relationship', $options);
 	foreach ($batch as $member) {
-		$members[$member->guid] = "$member->name (@$member->username)";
+		$option_text = "$member->name (@$member->username)";
+		$members[$member->guid] = htmlspecialchars($option_text, ENT_QUOTES, 'UTF-8', false);
 	}
 ?>
 
@@ -134,7 +157,7 @@ if ($tools) {
 	foreach ($tools as $group_option) {
 		$group_option_toggle_name = $group_option->name . "_enable";
 		$value = elgg_extract($group_option_toggle_name, $vars);
-?>	
+?>
 <div>
 	<label>
 		<?php echo $group_option->label; ?><br />
@@ -174,5 +197,7 @@ if ($entity) {
 		'class' => 'elgg-button elgg-button-delete float-alt',
 	));
 }
+
+elgg_pop_context();
 ?>
 </div>
