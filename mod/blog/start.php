@@ -99,9 +99,6 @@ function blog_page_handler($page) {
 
 	elgg_load_library('elgg:blog');
 
-	// forward to correct URL for blog pages pre-1.8
-	blog_url_forwarder($page);
-
 	// push all blogs breadcrumb
 	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "blog/all");
 
@@ -125,10 +122,6 @@ function blog_page_handler($page) {
 			break;
 		case 'view':
 			$params = blog_get_page_content_read($page[1]);
-			break;
-		case 'read': // Elgg 1.7 compatibility
-			register_error(elgg_echo("changebookmark"));
-			forward("blog/view/{$page[1]}");
 			break;
 		case 'add':
 			gatekeeper();
