@@ -361,7 +361,7 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 				'name' => 'delete',
 				'href' => elgg_add_action_tokens_to_url("action/river/delete?id=$item->id"),
 				'text' => elgg_view_icon('delete'),
-				'title' => elgg_echo('delete'),
+				'title' => elgg_echo('river:delete'),
 				'confirm' => elgg_echo('deleteconfirm'),
 				'priority' => 200,
 			);

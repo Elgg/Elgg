@@ -304,6 +304,7 @@ return array(
 	'river:ingroup' => 'in the group %s',
 	'river:none' => 'No activity',
 	'river:update' => 'Update for %s',
+	'river:delete' => 'Remove this activity item',
 	'river:delete:success' => 'River item has been deleted',
 	'river:delete:fail' => 'River item could not be deleted',
 	'river:subject:invalid_subject' => 'Invalid user',
