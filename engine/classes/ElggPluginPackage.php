@@ -408,6 +408,7 @@ class ElggPluginPackage {
 			foreach (${$dep_type} as $dep) {
 				switch ($dep['type']) {
 					case 'elgg_version':
+						elgg_deprecated_notice("elgg_version in manifest.xml files is deprecated. Use elgg_release", 1.9);
 						$result = $this->checkDepElgg($dep, elgg_get_version(), $inverse);
 						break;
 
