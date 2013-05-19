@@ -3,8 +3,8 @@
  * Elgg river.
  * Activity stream functions.
  *
- * @package Elgg.Core
- * @subpackage SocialModel.River
+ * @package    Elgg.Core
+ * @subpackage River
  */
 
 /**
@@ -112,9 +112,8 @@ function elgg_create_river_item(array $options = array()) {
 
 	$dbprefix = elgg_get_config('dbprefix');
 
-	// Attempt to save river item; return success status
-	$id = insert_data("insert into {$dbprefix}river " .
-		" set type = '$type', " .
+	$id = insert_data("INSERT INTO {$dbprefix}river " .
+		" SET type = '$type', " .
 		" subtype = '$subtype', " .
 		" action_type = '$action_type', " .
 		" access_id = $access_id, " .
@@ -371,7 +370,7 @@ function elgg_get_river(array $options = array()) {
 	if (!$options['count']) {
 		$query = "SELECT DISTINCT rv.* FROM {$CONFIG->dbprefix}river rv ";
 	} else {
-		$query = "SELECT count(DISTINCT rv.id) as total FROM {$CONFIG->dbprefix}river rv ";
+		$query = "SELECT COUNT(DISTINCT rv.id) AS total FROM {$CONFIG->dbprefix}river rv ";
 	}
 
 	// add joins
@@ -683,10 +682,9 @@ function update_river_access_by_object($object_guid, $access_id) {
 	// Load config
 	global $CONFIG;
 
-	// Remove
-	$query = "update {$CONFIG->dbprefix}river
-		set access_id = {$access_id}
-		where object_guid = {$object_guid}";
+	$query = "UPDATE {$CONFIG->dbprefix}river
+		SET access_id = {$access_id}
+		WHERE object_guid = {$object_guid}";
 	return update_data($query);
 }
 
