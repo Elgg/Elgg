@@ -12,6 +12,9 @@
 class ElggGroup extends ElggEntity
 	implements Friendable {
 
+	const CONTENT_ACCESS_MODE_UNRESTRICTED = 'unrestricted';
+	const CONTENT_ACCESS_MODE_MEMBERS_ONLY = 'members_only';
+
 	/**
 	 * Sets the type to group.
 	 *
@@ -300,16 +303,56 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
-	 * Returns whether the current group is public membership or not.
+	 * Returns whether the current group has open membership or not.
 	 *
 	 * @return bool
 	 */
 	public function isPublicMembership() {
-		if ($this->membership == ACCESS_PUBLIC) {
-			return true;
+		return ($this->membership == ACCESS_PUBLIC);
+	}
+
+	/**
+	 * Return the content access mode used by group_gatekeeper()
+	 *
+	 * @return string One of CONTENT_ACCESS_MODE_* constants
+	 * @access private
+	 * @since 1.9.0
+	 */
+	public function getContentAccessMode() {
+		$mode = $this->content_access_mode;
+
+		if (!is_string($mode)) {
+			// fallback to 1.8 default behavior
+			if ($this->isPublicMembership()) {
+				$mode = self::CONTENT_ACCESS_MODE_UNRESTRICTED;
+			} else {
+				$mode = self::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
+			}
+			$this->content_access_mode = $mode;
 		}
 
-		return false;
+		// only support two modes for now
+		if ($mode === self::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+			return $mode;
+		}
+		return self::CONTENT_ACCESS_MODE_UNRESTRICTED;
+	}
+
+	/**
+	 * Set the content access mode used by group_gatekeeper()
+	 *
+	 * @param string $mode One of CONTENT_ACCESS_MODE_* constants
+	 * @return void
+	 * @access private
+	 * @since 1.9.0
+	 */
+	public function setContentAccessMode($mode) {
+		// only support two modes for now
+		if ($mode !== self::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+			$mode = self::CONTENT_ACCESS_MODE_UNRESTRICTED;
+		}
+
+		$this->content_access_mode = $mode;
 	}
 
 	/**
