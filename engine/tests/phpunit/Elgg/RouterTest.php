@@ -8,7 +8,7 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		$this->pages = dirname(dirname(__FILE__)) . '/test_files/pages';
 	}
 
-	function hello_page_handler($segments, $handler) {
+	function hello_page_handler($segments, $identifier) {
 		include "{$this->pages}/hello.php";
 		
 		return true;
@@ -51,6 +51,5 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		// that the output we buffered is empty.
 		// $this->assertFalse($handled);
 		$this->assertEmpty($output);
-		
 	}
 }

@@ -13,7 +13,7 @@
  * @access private
  */
 class Elgg_Router {
-	private $pagehandlers = array();
+	private $handlers = array();
 	private $hooks;
 
 	/**
@@ -28,7 +28,7 @@ class Elgg_Router {
 	/**
 	 * Routes the request to a registered page handler
 	 *
-	 * This function triggers a plugin hook `'route', $handler` so that plugins can
+	 * This function triggers a plugin hook `'route', $identifier` so that plugins can
 	 * modify the routing or handle a request.
 	 *
 	 * @param Elgg_Request $request The request to handle.
@@ -36,29 +36,30 @@ class Elgg_Router {
 	 * @access private
 	 */
 	public function route(Elgg_Request $request) {
-		$handler = (string)$request->getInput('handler');
-		elgg_set_context($handler);
+		$identifier = (string)$request->getInput('handler');
+		elgg_set_context($identifier);
 
 		$segments = $this->getUrlSegments($request);
 
 		// return false to stop processing the request (because you handled it)
 		// return a new $result array if you want to route the request differently
 		$result = array(
-			'handler' => $handler,
+			'identifier' => $identifier,
+			'handler' => $identifier, // backward compatibility
 			'segments' => $segments,
 		);
-		$result = $this->hooks->trigger('route', $handler, null, $result);
+		$result = $this->hooks->trigger('route', $identifier, null, $result);
 		if ($result === false) {
 			return true;
 		}
 
-		$handler = $result['handler'];
+		$identifier = $result['identifier'];
 		$segments = $result['segments'];
 
 		$handled = false;
-		if (isset($this->pagehandlers[$handler]) && is_callable($this->pagehandlers[$handler])) {
-			$function = $this->pagehandlers[$handler];
-			$handled = call_user_func($function, $segments, $handler);
+		if (isset($this->handlers[$identifier]) && is_callable($this->handlers[$identifier])) {
+			$function = $this->handlers[$identifier];
+			$handled = call_user_func($function, $segments, $identifier);
 		}
 
 		return $handled || headers_sent();
@@ -66,16 +67,16 @@ class Elgg_Router {
 
 	/**
 	 * Register a function that gets called when the first part of a URL is
-	 * equal to the handler.
+	 * equal to the identifier.
 	 *
-	 * @param string $handler  The page type to handle
-	 * @param string $function Your function name
+	 * @param string $identifier The page type to handle
+	 * @param string $function   Your function name
 	 *
 	 * @return bool Depending on success
 	 */
-	public function registerPageHandler($handler, $function) {
+	public function registerPageHandler($identifier, $function) {
 		if (is_callable($function, true)) {
-			$this->pagehandlers[$handler] = $function;
+			$this->handlers[$identifier] = $function;
 			return true;
 		}
 
@@ -85,12 +86,12 @@ class Elgg_Router {
 	/**
 	 * Unregister a page handler for an identifier
 	 *
-	 * @param string $handler The page type identifier
+	 * @param string $identifier The page type identifier
 	 *
 	 * @return void
 	 */
-	public function unregisterPageHandler($handler) {
-		unset($this->pagehandlers[$handler]);
+	public function unregisterPageHandler($identifier) {
+		unset($this->handlers[$identifier]);
 	}
 
 	/**
@@ -99,7 +100,7 @@ class Elgg_Router {
 	 * @return array
 	 */
 	public function getPageHandlers() {
-		return $this->pagehandlers;
+		return $this->handlers;
 	}
 
 	/**

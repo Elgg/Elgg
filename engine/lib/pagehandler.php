@@ -2,14 +2,14 @@
 /**
  * Elgg page handler functions
  *
- * @package Elgg.Core
+ * @package    Elgg.Core
  * @subpackage Routing
  */
 
 /**
  * Registers a page handler for a particular identifier
  *
- * For example, you can register a function called 'blog_page_handler' for handler type 'blog'
+ * For example, you can register a function called 'blog_page_handler' for the identifier 'blog'
  * For all URLs  http://yoururl/blog/*, the blog_page_handler() function will be called.
  * The part of the URL marked with * above will be exploded on '/' characters and passed as an
  * array to that function.
@@ -19,20 +19,20 @@
  * A request to register a page handler with the same identifier as previously registered
  * handler will replace the previous one.
  *
- * The context is set to the page handler identifier before the registered
+ * The context is set to the identifier before the registered
  * page handler function is called. For the above example, the context is set to 'blog'.
  *
  * Page handlers should return true to indicate that they handled the request.
  * Requests not handled are forwarded to the front page with a reason of 404.
  * Plugins can register for the 'forward', '404' plugin hook. @see forward()
  *
- * @param string $handler  The page type to handle
- * @param string $function Your function name
+ * @param string $identifier The page type identifier
+ * @param string $function   Your function name
  *
  * @return bool Depending on success
  */
-function elgg_register_page_handler($handler, $function) {
-	return _elgg_services()->router->registerPageHandler($handler, $function);
+function elgg_register_page_handler($identifier, $function) {
+	return _elgg_services()->router->registerPageHandler($identifier, $function);
 }
 
 /**
@@ -40,13 +40,13 @@ function elgg_register_page_handler($handler, $function) {
  *
  * Note: to replace a page handler, call elgg_register_page_handler()
  *
- * @param string $handler The page type identifier
+ * @param string $identifier The page type identifier
  *
  * @since 1.7.2
  * @return void
  */
-function elgg_unregister_page_handler($handler) {
-	_elgg_services()->router->unregisterPageHandler($handler);
+function elgg_unregister_page_handler($identifier) {
+	_elgg_services()->router->unregisterPageHandler($identifier);
 }
 
 /**
