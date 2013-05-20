@@ -4,9 +4,9 @@
  * 
  * @todo check for notifications when setting topbar icon
  * @todo display read and unread notifications differently
+ * @todo add short message short to notifications
  * @todo add button for setting the read status of a notification
  * @todo add timestamp to display of notification
- * @todo add access override for creating the notification
  * @todo add JavaScript to Ajaxify setting read status and maybe viewing
  */
 
@@ -83,7 +83,9 @@ function site_notifications_send($hook, $type, $result, $params) {
 	$recipient = $notification->getRecipient();
 	$message = $notification->subject;
 	$actor = $notification->getSender();
+	$ia = elgg_set_ignore_access(true);
 	$note = SiteNotificationFactory::create($recipient, $message, $actor);
+	elgg_set_ignore_access($ia);
 	if ($note) {
 		return true;
 	}

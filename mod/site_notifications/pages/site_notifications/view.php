@@ -21,7 +21,7 @@ $list = elgg_list_entities_from_metadata(array(
 	'owner_guid' => $page_owner->guid,
 	'full_view' => false,
 	'metadata_name' => 'read',
-	'value' => false,
+	'metadata_value' => false,
 ));
 
 $body = elgg_view_layout('content', array(
