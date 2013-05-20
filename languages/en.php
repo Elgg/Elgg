@@ -477,6 +477,8 @@ return array(
 	'admin:widget:online_users:help' => 'Lists the users currently on the site',
 	'admin:widget:new_users' => 'New users',
 	'admin:widget:new_users:help' => 'Lists the newest users',
+	'admin:widget:banned_users' => 'Banned users',
+	'admin:widget:banned_users:help' => 'Lists the banned users',
 	'admin:widget:content_stats' => 'Content statistics',
 	'admin:widget:content_stats:help' => 'Keep track of the content created by your users',
 	'widget:content_stats:type' => 'Content type',
