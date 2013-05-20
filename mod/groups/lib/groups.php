@@ -316,12 +316,12 @@ function groups_handle_activity_page($guid) {
 
 	elgg_set_page_owner_guid($guid);
 
+	group_gatekeeper();
+
 	$group = get_entity($guid);
 	if (!$group || !elgg_instanceof($group, 'group')) {
 		forward();
 	}
-
-	group_gatekeeper();
 
 	$title = elgg_echo('groups:activity');
 

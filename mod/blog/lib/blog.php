@@ -27,6 +27,10 @@ function blog_get_page_content_read($guid = NULL) {
 		forward('');
 	}
 
+	elgg_set_page_owner_guid($blog->container_guid);
+
+	group_gatekeeper();
+
 	$return['title'] = $blog->title;
 
 	$container = $blog->getContainerEntity();
