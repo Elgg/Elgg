@@ -38,6 +38,8 @@ function discussion_handle_list_page($guid) {
 
 	elgg_set_page_owner_guid($guid);
 
+	group_gatekeeper();
+
 	$group = get_entity($guid);
 	if (!$group) {
 		register_error(elgg_echo('group:notfound'));
@@ -46,8 +48,6 @@ function discussion_handle_list_page($guid) {
 	elgg_push_breadcrumb($group->name);
 
 	elgg_register_title_button();
-
-	group_gatekeeper();
 
 	$title = elgg_echo('item:object:groupforumtopic');
 	
