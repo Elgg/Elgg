@@ -10,7 +10,7 @@ $file_guid = get_input("guid");
 
 // Get the file
 $file = get_entity($file_guid);
-if (!$file) {
+if (!elgg_instanceof($file, 'object', 'file')) {
 	register_error(elgg_echo("file:downloadfailed"));
 	forward();
 }

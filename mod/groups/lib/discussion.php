@@ -39,10 +39,11 @@ function discussion_handle_list_page($guid) {
 	elgg_set_page_owner_guid($guid);
 
 	$group = get_entity($guid);
-	if (!$group) {
+	if (!elgg_instanceof($group, 'group')) {
 		register_error(elgg_echo('group:notfound'));
 		forward();
 	}
+
 	elgg_push_breadcrumb($group->name);
 
 	elgg_register_title_button();
@@ -87,7 +88,7 @@ function discussion_handle_edit_page($type, $guid) {
 
 	if ($type == 'add') {
 		$group = get_entity($guid);
-		if (!$group) {
+		if (!elgg_instanceof($group, 'group')) {
 			register_error(elgg_echo('group:notfound'));
 			forward();
 		}
@@ -107,12 +108,12 @@ function discussion_handle_edit_page($type, $guid) {
 		$content = elgg_view_form('discussion/save', array(), $body_vars);
 	} else {
 		$topic = get_entity($guid);
-		if (!$topic || !$topic->canEdit()) {
+		if (!elgg_instanceof($topic, 'object', 'groupforumtopic') || !$topic->canEdit()) {
 			register_error(elgg_echo('discussion:topic:notfound'));
 			forward();
 		}
 		$group = $topic->getContainerEntity();
-		if (!$group) {
+		if (!elgg_instanceof($group, 'group')) {
 			register_error(elgg_echo('group:notfound'));
 			forward();
 		}
@@ -148,14 +149,14 @@ function discussion_handle_view_page($guid) {
 	$autofeed = true;
 
 	$topic = get_entity($guid);
-	if (!$topic) {
+	if (!elgg_instanceof($topic, 'object', 'groupforumtopic')) {
 		register_error(elgg_echo('noaccess'));
 		elgg_get_session()->set('last_forward_from', current_page_url());
 		forward('');
 	}
 
 	$group = $topic->getContainerEntity();
-	if (!$group) {
+	if (!elgg_instanceof($group, 'group')) {
 		register_error(elgg_echo('group:notfound'));
 		forward();
 	}

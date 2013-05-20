@@ -199,7 +199,7 @@ function groups_handle_edit_page($page, $guid = 0) {
 		$title = elgg_echo("groups:edit");
 		$group = get_entity($guid);
 
-		if ($group && $group->canEdit()) {
+		if (elgg_instanceof($group, 'group') && $group->canEdit()) {
 			elgg_set_page_owner_guid($group->getGUID());
 			elgg_push_breadcrumb($group->name, $group->getURL());
 			elgg_push_breadcrumb($title);
@@ -259,7 +259,7 @@ function groups_handle_profile_page($guid) {
 	elgg_push_context('group_profile');
 
 	$group = get_entity($guid);
-	if (!$group) {
+	if (!elgg_instanceof($group, 'group')) {
 		forward('groups/all');
 	}
 
@@ -317,7 +317,7 @@ function groups_handle_activity_page($guid) {
 	elgg_set_page_owner_guid($guid);
 
 	$group = get_entity($guid);
-	if (!$group || !elgg_instanceof($group, 'group')) {
+	if (!elgg_instanceof($group, 'group')) {
 		forward();
 	}
 
@@ -358,7 +358,7 @@ function groups_handle_members_page($guid) {
 	elgg_set_page_owner_guid($guid);
 
 	$group = get_entity($guid);
-	if (!$group || !elgg_instanceof($group, 'group')) {
+	if (!elgg_instanceof($group, 'group')) {
 		forward();
 	}
 
