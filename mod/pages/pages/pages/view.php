@@ -7,7 +7,7 @@
 
 $page_guid = get_input('guid');
 $page = get_entity($page_guid);
-if (!$page) {
+if (!pages_is_page($page)) {
 	register_error(elgg_echo('noaccess'));
 	elgg_get_session()->set('last_forward_from', current_page_url());
 	forward('');

@@ -7,6 +7,9 @@
 
 $annotation = $vars['annotation'];
 $page = get_entity($annotation->entity_guid);
+if (!pages_is_page($page)) {
+	return;
+}
 
 $icon = elgg_view("pages/icon", array(
 	'annotation' => $annotation,
