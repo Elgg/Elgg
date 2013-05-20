@@ -19,9 +19,11 @@ function discussion_handle_all_page() {
 		'full_view' => false,
 	));
 
+	$title = elgg_echo('discussion:latest');
+
 	$params = array(
 		'content' => $content,
-		'title' => elgg_echo('discussion:latest'),
+		'title' => $title,
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
