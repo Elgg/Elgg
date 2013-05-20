@@ -19,7 +19,7 @@ $icon = elgg_view("pages/icon", array(
 $owner_guid = $annotation->owner_guid;
 $owner = get_entity($owner_guid);
 if (!$owner) {
-
+	return;
 }
 $owner_link = elgg_view('output/url', array(
 	'href' => $owner->getURL(),

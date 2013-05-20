@@ -8,13 +8,13 @@
 $page_guid = get_input('guid');
 
 $page = get_entity($page_guid);
-if (!$page) {
-
+if (!pages_is_page($page)) {
+	forward(REFERER);
 }
 
 $container = $page->getContainerEntity();
 if (!$container) {
-
+	forward(REFERER);
 }
 
 elgg_set_page_owner_guid($container->getGUID());

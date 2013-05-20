@@ -19,6 +19,7 @@ group_gatekeeper();
 
 $container = elgg_get_page_owner_entity();
 if (!$container) {
+	forward(REFERER);
 }
 
 $title = $page->title;
