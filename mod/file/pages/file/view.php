@@ -14,6 +14,8 @@ if (!$file) {
 
 $owner = elgg_get_page_owner_entity();
 
+group_gatekeeper();
+
 elgg_push_breadcrumb(elgg_echo('file'), 'file/all');
 
 $crumbs_title = $owner->name;
