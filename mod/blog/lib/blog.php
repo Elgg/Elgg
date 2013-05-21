@@ -67,6 +67,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 		'type' => 'object',
 		'subtype' => 'blog',
 		'full_view' => false,
+		'no_results' => elgg_echo('blog:none'),
 	);
 
 	$current_user = elgg_get_logged_in_user_entity();
@@ -116,12 +117,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 		);
 	}
 
-	$list = elgg_list_entities_from_metadata($options);
-	if (!$list) {
-		$return['content'] = elgg_echo('blog:none');
-	} else {
-		$return['content'] = $list;
-	}
+	$return['content'] = elgg_list_entities_from_metadata($options);
 
 	return $return;
 }
@@ -157,6 +153,7 @@ function blog_get_page_content_friends($user_guid) {
 		'relationship' => 'friend',
 		'relationship_guid' => $user_guid,
 		'relationship_join_on' => 'container_guid',
+		'no_results' => elgg_echo('blog:none'),
 	);
 
 	// admin / owners can see any posts
@@ -175,9 +172,6 @@ function blog_get_page_content_friends($user_guid) {
 	}
 
 	$return['content'] = elgg_list_entities_from_relationship($options);
-	if (!$return['content']) {
-		$return['content'] = elgg_echo('blog:none');
-	}
 
 	return $return;
 }
@@ -217,7 +211,8 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'blog',
-		'full_view' => FALSE,
+		'full_view' => false,
+		'no_results' => elgg_echo('blog:none'),
 	);
 
 	if ($owner_guid) {
@@ -244,12 +239,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 		$options['created_time_upper'] = $upper;
 	}
 
-	$list = elgg_list_entities_from_metadata($options);
-	if (!$list) {
-		$content = elgg_echo('blog:none');
-	} else {
-		$content = $list;
-	}
+	$content = elgg_list_entities_from_metadata($options);
 
 	$title = elgg_echo('date:month:' . date('m', $lower), array(date('Y', $lower)));
 

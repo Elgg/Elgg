@@ -13,21 +13,28 @@
  * @uses $vars['full_view']     Show the full view of the items (default: false)
  * @uses $vars['gallery_class'] Additional CSS class for the <ul> element
  * @uses $vars['item_class']    Additional CSS class for the <li> elements
+ * @uses $vars['no_results']    Message to display if no results
  */
 
 $items = $vars['items'];
-if (!is_array($items) || sizeof($items) == 0) {
-	return true;
-}
-
-elgg_push_context('gallery');
-
 $offset = $vars['offset'];
 $limit = $vars['limit'];
 $count = $vars['count'];
 $pagination = elgg_extract('pagination', $vars, true);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 $position = elgg_extract('position', $vars, 'after');
+$no_results = elgg_extract('no_results', $vars, '');
+
+if (!$items && $no_results) {
+	echo "<p>$no_results</p>";
+	return;
+}
+
+if (!is_array($items) || count($items) == 0) {
+	return;
+}
+
+elgg_push_context('gallery');
 
 $gallery_class = 'elgg-gallery';
 if (isset($vars['gallery_class'])) {

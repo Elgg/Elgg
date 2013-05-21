@@ -25,10 +25,8 @@ function groups_handle_all_page() {
 				'relationship' => 'member',
 				'inverse_relationship' => false,
 				'full_view' => false,
+				'no_results' => elgg_echo('groups:none'),
 			));
-			if (!$content) {
-				$content = elgg_echo('groups:none');
-			}
 			break;
 		case 'discussion':
 			$content = elgg_list_entities(array(
@@ -37,20 +35,16 @@ function groups_handle_all_page() {
 				'order_by' => 'e.last_action desc',
 				'limit' => 40,
 				'full_view' => false,
+				'no_results' => elgg_echo('discussion:none'),
 			));
-			if (!$content) {
-				$content = elgg_echo('discussion:none');
-			}
 			break;
 		case 'newest':
 		default:
 			$content = elgg_list_entities(array(
 				'type' => 'group',
 				'full_view' => false,
+				'no_results' => elgg_echo('groups:none'),
 			));
-			if (!$content) {
-				$content = elgg_echo('groups:none');
-			}
 			break;
 	}
 
@@ -80,12 +74,10 @@ function groups_search_page() {
 		'metadata_name' => 'interests',
 		'metadata_value' => $tag,
 		'type' => 'group',
-		'full_view' => FALSE,
+		'full_view' => false,
+		'no_results' => elgg_echo('groups:search:none'),
 	);
 	$content = elgg_list_entities_from_metadata($params);
-	if (!$content) {
-		$content = elgg_echo('groups:search:none');
-	}
 
 	$sidebar = elgg_view('groups/sidebar/find');
 	$sidebar .= elgg_view('groups/sidebar/featured');
@@ -121,10 +113,8 @@ function groups_handle_owned_page() {
 		'type' => 'group',
 		'owner_guid' => elgg_get_page_owner_guid(),
 		'full_view' => false,
+		'no_results' => elgg_echo('groups:none'),
 	));
-	if (!$content) {
-		$content = elgg_echo('groups:none');
-	}
 
 	$params = array(
 		'content' => $content,
@@ -161,11 +151,9 @@ function groups_handle_mine_page() {
 		'inverse_relationship' => false,
 		'full_view' => false,
 		'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
-		'order_by' => 'ge.name asc'
+		'order_by' => 'ge.name ASC',
+		'no_results' => elgg_echo('groups:none'),
 	));
-	if (!$content) {
-		$content = elgg_echo('groups:none');
-	}
 
 	$params = array(
 		'content' => $content,
@@ -332,11 +320,9 @@ function groups_handle_activity_page($guid) {
 
 	$content = elgg_list_river(array(
 		'joins' => array("JOIN {$db_prefix}entities e ON e.guid = rv.object_guid"),
-		'wheres' => array("e.container_guid = $guid")
+		'wheres' => array("e.container_guid = $guid"),
+		'no_results' => elgg_echo('groups:activity:none'),
 	));
-	if (!$content) {
-		$content = '<p>' . elgg_echo('groups:activity:none') . '</p>';
-	}
 	
 	$params = array(
 		'content' => $content,

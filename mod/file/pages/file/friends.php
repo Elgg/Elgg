@@ -25,10 +25,8 @@ $content = elgg_list_entities_from_relationship(array(
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->guid,
 	'relationship_join_on' => 'container_guid',
+	'no_results' => elgg_echo("file:none"),
 ));
-if (!$content) {
-	$content = elgg_echo("file:none");
-}
 
 $sidebar = file_get_type_cloud($owner->guid, true);
 
