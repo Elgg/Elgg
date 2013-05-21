@@ -33,6 +33,7 @@ foreach (elgg_get_config('project') as $shortname => $valuetype) {
 }
 
 $input['name'] = htmlspecialchars(get_input('name', '', false), ENT_QUOTES, 'UTF-8');
+$input['alias'] = htmlspecialchars(get_input('alias', '', false), ENT_QUOTES, 'UTF-8');
 
 $user = elgg_get_logged_in_user_entity();
 
@@ -46,6 +47,19 @@ if ($project_guid = (int)get_input('project_guid')) {
 	$project = new ElggGroup();
 	$project->subtype = 'project';
 	$is_new_project = true;
+}
+
+elgg_load_library('elgg:projects');
+
+if (!isset($input['alias'])) {
+	register_error(elgg_echo('projects:alias:missing'));
+	forward(REFERER);
+} elseif (!preg_match("/^[a-zA-Z0-9\-]{2,32}$/", $input['alias'])) {
+	register_error(elgg_echo('projects:alias:invalidchars'));
+	forward(REFERER);
+} elseif ($project->alias != $input['alias'] && projects_get_from_alias($input['alias'])) {
+	register_error(elgg_echo('projects:alias:already_used'));
+	forward(REFERER);
 }
 
 // Assume we can edit or this is a new project

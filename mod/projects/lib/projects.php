@@ -7,6 +7,23 @@
  */
 
 /**
+ * Get project entity from its alias
+ */
+function projects_get_from_alias($alias) {
+	$entities = elgg_get_entities_from_metadata(array(
+		'type' => 'group',
+		'subtype' => 'project',
+		'metadata_name' => 'alias',
+		'metadata_value' => $alias,
+		'limit' => 1,
+	));
+	if ($entities) {
+		return $entities[0];
+	}
+	return false;
+}
+
+/**
  * List all projects
  */
 function projects_handle_all_page() {
@@ -447,9 +464,9 @@ function projects_register_profile_buttons($project) {
 	// project owners
 	if ($project->canEdit()) {
 		// edit and invite
-		$url = elgg_get_site_url() . "projects/edit/{$project->getGUID()}";
+		$url = elgg_get_site_url() . "projects/edit/{$project->alias}";
 		$actions[$url] = 'projects:edit';
-		$url = elgg_get_site_url() . "projects/invite/{$project->getGUID()}";
+		$url = elgg_get_site_url() . "projects/invite/{$project->alias}";
 		$actions[$url] = 'projects:invite';
 	}
 
@@ -484,8 +501,8 @@ function projects_register_profile_buttons($project) {
 function projects_prepare_form_vars($project = null) {
 	$values = array(
 		'name' => '',
-		'membership' => ACCESS_PUBLIC,
-		'vis' => ACCESS_PUBLIC,
+		'alias' => '',
+		'vis' => null,
 		'guid' => null,
 		'entity' => null
 	);
