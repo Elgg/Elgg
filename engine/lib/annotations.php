@@ -97,9 +97,9 @@ $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 
 	if (elgg_trigger_event('annotate', $entity->type, $entity)) {
 		// If ok then add it
-		$result = insert_data("INSERT into {$CONFIG->dbprefix}annotations
+		$result = insert_data("INSERT INTO {$CONFIG->dbprefix}annotations
 			(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
-			($entity_guid,'$name',$value,'$value_type', $owner_guid, $time, $access_id)");
+			($entity_guid, '$name', $value, '$value_type', $owner_guid, $time, $access_id)");
 
 		if ($result !== false) {
 			$obj = elgg_get_annotation_from_id($result);
@@ -156,10 +156,10 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 		return false;
 	}
 
-	// If ok then add it
 	$result = update_data("UPDATE {$CONFIG->dbprefix}annotations
-		set name_id='$name', value_id='$value', value_type='$value_type', access_id=$access_id, owner_guid=$owner_guid
-		where id=$annotation_id and $access");
+		SET name_id = '$name', value_id = '$value', value_type = '$value_type',
+		access_id = $access_id, owner_guid = $owner_guid
+		WHERE id = $annotation_id AND $access");
 
 	if ($result !== false) {
 		// @todo add plugin hook that sends old and new annotation information before db access
@@ -350,7 +350,7 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 
 		'annotation_owner_guids'				=>	ELGG_ENTITIES_ANY_VALUE,
 
-		'order_by'								=>	'maxtime desc',
+		'order_by'								=>	'maxtime DESC',
 		'group_by'								=>	'a.entity_guid'
 	);
 
@@ -368,7 +368,7 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 
 	// special sorting for annotations
 	//@todo overrides other sorting
-	$options['selects'][] = "max(n_table.time_created) as maxtime";
+	$options['selects'][] = "MAX(n_table.time_created) AS maxtime";
 	$options['group_by'] = 'n_table.entity_guid';
 
 	$time_wheres = elgg_get_entity_time_where_sql('a', $options['annotation_created_time_upper'],
@@ -419,8 +419,8 @@ function elgg_list_entities_from_annotations($options = array()) {
 function elgg_get_entities_from_annotation_calculation($options) {
 	$db_prefix = elgg_get_config('dbprefix');
 	$defaults = array(
-		'calculation'	=>	'sum',
-		'order_by'		=>	'annotation_calculation desc'
+		'calculation' => 'sum',
+		'order_by' => 'annotation_calculation desc'
 	);
 
 	$options = array_merge($defaults, $options);
@@ -429,7 +429,7 @@ function elgg_get_entities_from_annotation_calculation($options) {
 
 	// you must cast this as an int or it sorts wrong.
 	$options['selects'][] = 'e.*';
-	$options['selects'][] = "$function(cast(a_msv.string as signed)) as annotation_calculation";
+	$options['selects'][] = "$function(CAST(a_msv.string AS signed)) AS annotation_calculation";
 
 	// need our own join to get the values because the lower level functions don't
 	// add all the joins if it's a different callback.
@@ -481,7 +481,7 @@ function export_annotation_plugin_hook($hook, $type, $returnvalue, $params) {
 	}
 
 	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+		throw new InvalidParameterException("Entity serialization function passed a non-array returnvalue parameter");
 	}
 
 	$guid = (int)$params['guid'];
