@@ -24,13 +24,10 @@ $options = array(
 	'limit' => 6,
 	'full_view' => false,
 	'pagination' => false,
+	'no_results' => elgg_echo('blog:none'),
 );
 $content = elgg_list_entities_from_metadata($options);
 elgg_pop_context();
-
-if (!$content) {
-	$content = '<p>' . elgg_echo('blog:none') . '</p>';
-}
 
 $new_link = elgg_view('output/url', array(
 	'href' => "blog/add/$group->guid",

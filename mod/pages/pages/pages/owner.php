@@ -24,10 +24,8 @@ $content = elgg_list_entities(array(
 	'subtype' => 'page_top',
 	'container_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
+	'no_results' => elgg_echo('pages:none'),
 ));
-if (!$content) {
-	$content = '<p>' . elgg_echo('pages:none') . '</p>';
-}
 
 $filter_context = '';
 if (elgg_get_page_owner_guid() == elgg_get_logged_in_user_guid()) {

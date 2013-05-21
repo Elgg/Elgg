@@ -17,6 +17,7 @@ function discussion_handle_all_page() {
 		'order_by' => 'e.last_action desc',
 		'limit' => 20,
 		'full_view' => false,
+		'no_results' => elgg_echo('discussion:none'),
 	));
 
 	$params = array(
@@ -58,12 +59,9 @@ function discussion_handle_list_page($guid) {
 		'order_by' => 'e.last_action desc',
 		'container_guid' => $guid,
 		'full_view' => false,
+		'no_results' => elgg_echo('discussion:none'),
 	);
 	$content = elgg_list_entities($options);
-	if (!$content) {
-		$content = elgg_echo('discussion:none');
-	}
-
 
 	$params = array(
 		'content' => $content,
