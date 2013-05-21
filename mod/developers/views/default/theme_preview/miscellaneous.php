@@ -20,3 +20,6 @@ echo elgg_view_module('info', 'Site Menu', $body);
 
 $body = elgg_view('theme_preview/miscellaneous/user_hover_menu');
 echo elgg_view_module('info', 'User Icon with Hover Menu', $body);
+
+$body = elgg_view('theme_preview/miscellaneous/autocomplete');
+echo elgg_view_module('info', 'Entity autocomplete (input/autocomplete)', $body);
