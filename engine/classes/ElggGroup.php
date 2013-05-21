@@ -356,9 +356,9 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
-	 * Return whether a given user is a member of this group or not.
+	 * Is the given user a member of this group?
 	 *
-	 * @param ElggUser $user The user
+	 * @param ElggUser $user The user. Default is logged in user.
 	 *
 	 * @return bool
 	 */
@@ -366,10 +366,16 @@ class ElggGroup extends ElggEntity
 		if (!($user instanceof ElggUser)) {
 			$user = elgg_get_logged_in_user_entity();
 		}
-		if (!($user instanceof ElggUser)) {
+		if (!$user) {
 			return false;
 		}
-		return is_group_member($this->getGUID(), $user->getGUID());
+		$result = is_group_member($this->getGUID(), $user->getGUID());
+
+		$params = array(
+			'user' => $user,
+			'group' => $this,
+		);
+		return elgg_trigger_plugin_hook('is_member', 'group', $params, $result);
 	}
 
 	/**
