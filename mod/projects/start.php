@@ -226,9 +226,10 @@ function projects_page_handler($page, $handler) {
 	if (!isset($page[0])) {
 		$page[0] = 'all';
 	}
-	
+
+	// project/<alias> case
 	if ($handler == 'project') {
-		$page[1] = $page[0];
+		$page[1] = $page[0]; // Alias
 		$page[0] = 'profile';
 	}
 	
