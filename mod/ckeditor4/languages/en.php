@@ -5,10 +5,10 @@
  * @package ElggCKEditor
  */
 
-$english = array(
+$language = array(
 	'ckeditor:remove' => "Remove editor",
 	'ckeditor:add' => "Add editor",
 	'ckeditor:word_count' => 'Word count: ',
 );
 
-add_translation("en", $english);
+add_translation(basename(__FILE__, '.php'), $language);
