@@ -14,6 +14,7 @@
  * @uses $vars['full_view']   Show the full view of the items (default: false)
  * @uses $vars['list_class']  Additional CSS class for the <ul> element
  * @uses $vars['item_class']  Additional CSS class for the <li> elements
+ * @uses $vars['no_results']  Message to display if no results
  */
 
 $items = $vars['items'];
@@ -24,6 +25,16 @@ $base_url = elgg_extract('base_url', $vars, '');
 $pagination = elgg_extract('pagination', $vars, true);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 $position = elgg_extract('position', $vars, 'after');
+$no_results = elgg_extract('no_results', $vars, '');
+
+if (!$items && $no_results) {
+	echo "<p>$no_results</p>";
+	return;
+}
+
+if (!is_array($items) || count($items) == 0) {
+	return;
+}
 
 $list_class = 'elgg-list';
 if (isset($vars['list_class'])) {
@@ -48,21 +59,19 @@ if ($pagination && $count) {
 	));
 }
 
-if (is_array($items) && count($items) > 0) {
-	$html .= "<ul class=\"$list_class\">";
-	foreach ($items as $item) {
-		$li = elgg_view_list_item($item, $vars);
-		if ($li) {
-			if (elgg_instanceof($item)) {
-				$id = "elgg-{$item->getType()}-{$item->getGUID()}";
-			} else {
-				$id = "item-{$item->getType()}-{$item->id}";
-			}
-			$html .= "<li id=\"$id\" class=\"$item_class\">$li</li>";
+$html .= "<ul class=\"$list_class\">";
+foreach ($items as $item) {
+	$li = elgg_view_list_item($item, $vars);
+	if ($li) {
+		if (elgg_instanceof($item)) {
+			$id = "elgg-{$item->getType()}-{$item->getGUID()}";
+		} else {
+			$id = "item-{$item->getType()}-{$item->id}";
 		}
+		$html .= "<li id=\"$id\" class=\"$item_class\">$li</li>";
 	}
-	$html .= '</ul>';
 }
+$html .= '</ul>';
 
 if ($position == 'before' || $position == 'both') {
 	$html = $nav . $html;

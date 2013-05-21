@@ -96,7 +96,6 @@ $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 	$entity = get_entity($entity_guid);
 
 	if (elgg_trigger_event('annotate', $entity->type, $entity)) {
-		// If ok then add it
 		$result = insert_data("INSERT INTO {$CONFIG->dbprefix}annotations
 			(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
 			($entity_guid, '$name', $value, '$value_type', $owner_guid, $time, $access_id)");
@@ -288,6 +287,7 @@ function elgg_list_annotations($options) {
 	$defaults = array(
 		'limit' => 25,
 		'offset' => (int) max(get_input('annoff', 0), 0),
+		'no_results' => '',
 	);
 
 	$options = array_merge($defaults, $options);

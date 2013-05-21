@@ -1278,7 +1278,7 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
 }
 
 /**
- * Returns a string of parsed entities.
+ * Returns a string of rendered entities.
  *
  * Displays list of entities with formatting specified
  * by the entity view.
@@ -1288,10 +1288,11 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
  * @internal This also provides the views for elgg_view_annotation().
  *
  * @param array    $options Any options from $getter options plus:
- *	                 full_view => BOOL Display full view entities
- *	                 list_type => STR 'list' or 'gallery'
- *	                 list_type_toggle => BOOL Display gallery / list switch
- *	                 pagination => BOOL Display pagination links
+ *                   full_view => BOOL Display full view entities
+ *                   list_type => STR 'list' or 'gallery'
+ *                   list_type_toggle => BOOL Display gallery / list switch
+ *                   pagination => BOOL Display pagination links
+ *                   no_results => STR Message to display when there are no entities
  * @param callback $getter  The entity getter function to use to fetch the entities
  * @param callback $viewer  The function to use to view the entity list.
  *
@@ -1310,9 +1311,10 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	$defaults = array(
 		'offset' => (int) max(get_input('offset', 0), 0),
 		'limit' => (int) max(get_input('limit', 10), 0),
-		'full_view' => TRUE,
-		'list_type_toggle' => FALSE,
-		'pagination' => TRUE,
+		'full_view' => true,
+		'list_type_toggle' => false,
+		'pagination' => true,
+		'no_results' => '',
 	);
 
 	$options = array_merge($defaults, $options);
@@ -1323,10 +1325,10 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 		$options['list_type_toggle'] = $options['view_type_toggle'];
 	}
 
-	$options['count'] = TRUE;
+	$options['count'] = true;
 	$count = call_user_func($getter, $options);
 
-	$options['count'] = FALSE;
+	$options['count'] = false;
 	$entities = call_user_func($getter, $options);
 
 	$options['count'] = $count;

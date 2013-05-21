@@ -24,10 +24,8 @@ $content = elgg_list_entities_from_relationship(array(
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->guid,
 	'relationship_join_on' => 'container_guid',
+	'no_results' => elgg_echo('pages:none'),
 ));
-if (!$content) {
-	$content = elgg_echo('pages:none');
-}
 
 $params = array(
 	'filter_context' => 'friends',

@@ -786,6 +786,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
  *		'pagination'       Display pagination?
  *		'list_type'        List type: 'list' (default), 'gallery'
  *		'list_type_toggle' Display the list type toggle?
+ *      'no_results'       Message to display if no results
  *
  * @return string The rendered list of entities
  * @access private
@@ -848,12 +849,13 @@ $list_type_toggle = true, $pagination = true) {
  *
  * @param array $annotations Array of annotations
  * @param array $vars        Display variables
- *		'count'      The total number of annotations across all pages
- *		'offset'     The current indexing offset
- *		'limit'      The number of annotations to display per page
- *		'full_view'  Display the full view of the annotation?
- *		'list_class' CSS Class applied to the list
- *		'offset_key' The url parameter key used for offset
+ *      'count'      The total number of annotations across all pages
+ *      'offset'     The current indexing offset
+ *      'limit'      The number of annotations to display per page
+ *      'full_view'  Display the full view of the annotation?
+ *      'list_class' CSS Class applied to the list
+ *      'offset_key' The url parameter key used for offset
+ *      'no_results' Message to display if no results
  *
  * @return string The list of annotations
  * @access private

@@ -464,7 +464,8 @@ function _elgg_prefetch_river_entities(array $river_items) {
  * List river items
  *
  * @param array $options Any options from elgg_get_river() plus:
- * 	 pagination => BOOL Display pagination links (true)
+ *   pagination => BOOL Display pagination links (true)
+ *   no_results => STR Message to display if no items
  *
  * @return string
  * @since 1.8.0
@@ -477,7 +478,8 @@ function elgg_list_river(array $options = array()) {
 		'offset'     => (int) max(get_input('offset', 0), 0),
 		'limit'      => (int) max(get_input('limit', 20), 0),
 		'pagination' => TRUE,
-		'list_class' => 'elgg-list-river elgg-river', // @todo remove elgg-river in Elgg 1.9
+		'list_class' => 'elgg-list-river',
+		'no_results' => '',
 	);
 
 	$options = array_merge($defaults, $options);
@@ -490,6 +492,7 @@ function elgg_list_river(array $options = array()) {
 
 	$options['count'] = $count;
 	$options['items'] = $items;
+
 	return elgg_view('page/components/list', $options);
 }
 
