@@ -21,7 +21,8 @@ $content = elgg_list_entities(array(
 	'no_results' => elgg_echo("file:none"),
 ));
 
-$sidebar = elgg_view('file/sidebar');
+$sidebar = file_get_type_cloud();
+$sidebar .= elgg_view('file/sidebar');
 
 $body = elgg_view_layout('content', array(
 	'filter_context' => 'all',

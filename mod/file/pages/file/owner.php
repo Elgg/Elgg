@@ -44,7 +44,8 @@ $content = elgg_list_entities(array(
 	'no_results' => elgg_echo("file:none"),
 ));
 
-$sidebar = elgg_view('file/sidebar');
+$sidebar = file_get_type_cloud(elgg_get_page_owner_guid());
+$sidebar .= elgg_view('file/sidebar');
 
 $params['content'] = $content;
 $params['title'] = $title;
