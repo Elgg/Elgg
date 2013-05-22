@@ -192,7 +192,7 @@ class ElggMenuBuilder {
 				$sort_callback = array('ElggMenuBuilder', 'compareByName');
 				break;
 			case 'priority':
-				$sort_callback = array('ElggMenuBuilder', 'compareByWeight');
+				$sort_callback = array('ElggMenuBuilder', 'compareByPriority');
 				break;
 			case 'register':
 				// use registration order - usort breaks this
@@ -274,12 +274,30 @@ class ElggMenuBuilder {
 	 * @param ElggMenuItem $a Menu item
 	 * @param ElggMenuItem $b Menu item
 	 * @return bool
+	 * @since 1.9.0
+	 */
+	public static function compareByPriority($a, $b) {
+		$aw = $a->getPriority();
+		$bw = $b->getPriority();
+
+		if ($aw == $bw) {
+			return $a->getData('original_order') - $b->getData('original_order');
+		}
+		return $aw - $bw;
+	}
+
+	/**
+	 * Compare two menu items by their priority
 	 *
-	 * @todo change name to compareByPriority
+	 * @param ElggMenuItem $a Menu item
+	 * @param ElggMenuItem $b Menu item
+	 * @return bool
+	 * @deprecated 1.9 Use compareByPriority()
 	 */
 	public static function compareByWeight($a, $b) {
-		$aw = $a->getWeight();
-		$bw = $b->getWeight();
+		elgg_deprecated_notice("ElggMenuBuilder::compareByWeight() deprecated by ElggMenuBuilder::compareByPriority", 1.9);
+		$aw = $a->getPriority();
+		$bw = $b->getPriority();
 
 		if ($aw == $bw) {
 			return $a->getData('original_order') - $b->getData('original_order');

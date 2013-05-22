@@ -583,6 +583,43 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 }
 
 /**
+ * Render a menu item (usually as a link)
+ * 
+ * @param ElggMenuItem $item The menu item
+ * @param array        $vars Options to pass to output/url if a link
+ * @return string
+ * @since 1.9.0
+ */
+function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
+	if ($item->getHref() === false) {
+		return $item->getText();
+	}
+
+	$vars = array_merge($item->getValues(), $vars);
+
+	if ($item->getLinkClass()) {
+		if (isset($vars['class'])) {
+			$vars['class'] = $vars['class'] . ' ' . $item->getLinkClass();
+		} else {
+			$vars['class'] = $item->getLinkClass();
+		}
+	}
+
+	if (!isset($vars['rel']) && !isset($vars['is_trusted'])) {
+		$vars['is_trusted'] = true;
+	}
+
+	if ($item->getConfirmText()) {
+		$vars['confirm'] = $item->getConfirmText();
+		return elgg_view('output/confirmlink', $vars);
+	} else {
+		unset($vars['confirm']);
+	}
+
+	return elgg_view('output/url', $vars);
+}
+
+/**
  * Returns a string of a rendered entity.
  *
  * Entity views are either determined by setting the view property on the entity

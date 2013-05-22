@@ -251,6 +251,8 @@ function elgg_is_xhr() {
  * }
  * </pre>
  * where "system_messages" is all message registers at the point of forwarding
+ * 
+ * @internal registered for the 'forward', 'all' plugin hook
  *
  * @param string $hook
  * @param string $type

@@ -414,9 +414,10 @@ class ElggMenuItem {
 	 *
 	 * @param int $priority The smaller numbers mean higher priority (1 before 100)
 	 * @return void
-	 * @deprecated
+	 * @deprecated 1.9 Use setPriority()
 	 */
 	public function setWeight($priority) {
+		elgg_deprecated_notice("ElggMenuItem::setWeight() deprecated by ElggMenuItem::setPriority()", 1.9);
 		$this->data['priority'] = $priority;
 	}
 
@@ -424,9 +425,10 @@ class ElggMenuItem {
 	 * Get the priority of the menu item
 	 *
 	 * @return int
-	 * @deprecated
+	 * @deprecated 1.9 Use getPriority()
 	 */
 	public function getWeight() {
+		elgg_deprecated_notice("ElggMenuItem::getWeight() deprecated by ElggMenuItem::getPriority()", 1.9);
 		return $this->data['priority'];
 	}
 
@@ -549,42 +551,26 @@ class ElggMenuItem {
 	}
 
 	/**
+	 * Get all the values for this menu item. Useful for rendering.
+	 * 
+	 * @return array
+	 */
+	public function getValues() {
+		$values = get_object_vars($this);
+		unset($values['data']);
+
+		return $values;
+	}
+
+	/**
 	 * Get the menu item content (usually a link)
 	 *
 	 * @param array $vars Options to pass to output/url if a link
 	 * @return string
-	 * @todo View code in a model.  How do we feel about that?
+	 * @deprecated 1.9 Use elgg_view_menu_item()
 	 */
 	public function getContent(array $vars = array()) {
-
-		if ($this->href === false) {
-			return $this->text;
-		}
-
-		$defaults = get_object_vars($this);
-		unset($defaults['data']);
-
-		$vars += $defaults;
-
-		if ($this->data['linkClass']) {
-			if (isset($vars['class'])) {
-				$vars['class'] = $vars['class'] . ' ' . $this->getLinkClass();
-			} else {
-				$vars['class'] = $this->getLinkClass();
-			}
-		}
-
-		if (!isset($vars['rel']) && !isset($vars['is_trusted'])) {
-			$vars['is_trusted'] = true;
-		}
-
-		if ($this->confirm) {
-			$vars['confirm'] = $this->confirm;
-			return elgg_view('output/confirmlink', $vars);
-		} else {
-			unset($vars['confirm']);
-		}
-
-		return elgg_view('output/url', $vars);
+		elgg_deprecated_notice("ElggMenuItem::getContent() deprecated by elgg_view_menu_item()", 1.9);
+		return elgg_view_menu_item($this, $vars);
 	}
 }
