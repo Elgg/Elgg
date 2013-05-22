@@ -327,7 +327,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return void
 	 */
-	function __unset($name) {
+	public function __unset($name) {
 		if (array_key_exists($name, $this->attributes)) {
 			$this->attributes[$name] = "";
 		} else {
@@ -620,7 +620,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return bool
 	 */
-	function setPrivateSetting($name, $value) {
+	public function setPrivateSetting($name, $value) {
 		if ((int) $this->guid > 0) {
 			return set_private_setting($this->getGUID(), $name, $value);
 		} else {
@@ -636,7 +636,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return mixed Null if the setting does not exist
 	 */
-	function getPrivateSetting($name) {
+	public function getPrivateSetting($name) {
 		if ((int) ($this->guid) > 0) {
 			return get_private_setting($this->getGUID(), $name);
 		} else {
@@ -654,7 +654,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return bool
 	 */
-	function removePrivateSetting($name) {
+	public function removePrivateSetting($name) {
 		return remove_private_setting($this->getGUID(), $name);
 	}
 
@@ -778,7 +778,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return bool
 	 */
-	function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_id = 0, $vartype = "") {
+	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_id = 0, $vartype = "") {
 		if ((int) $this->guid > 0) {
 			return create_annotation($this->getGUID(), $name, $value, $vartype, $owner_id, $access_id);
 		} else {
@@ -797,7 +797,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return array
 	 */
-	function getAnnotations($name, $limit = 50, $offset = 0, $order = "asc") {
+	public function getAnnotations($name, $limit = 50, $offset = 0, $order = "asc") {
 		if ((int) ($this->guid) > 0) {
 
 			$options = array(
@@ -829,7 +829,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 * @deprecated 1.8 Use ->deleteAnnotations()
 	 */
-	function clearAnnotations($name = "") {
+	public function clearAnnotations($name = "") {
 		elgg_deprecated_notice('ElggEntity->clearAnnotations() is deprecated by ->deleteAnnotations()', 1.8);
 		return $this->deleteAnnotations($name);
 	}
@@ -841,7 +841,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return int
 	 */
-	function countAnnotations($name = "") {
+	public function countAnnotations($name = "") {
 		return $this->getAnnotationCalculation($name, 'count');
 	}
 
@@ -852,7 +852,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return int
 	 */
-	function getAnnotationsAvg($name) {
+	public function getAnnotationsAvg($name) {
 		return $this->getAnnotationCalculation($name, 'avg');
 	}
 
@@ -863,7 +863,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return int
 	 */
-	function getAnnotationsSum($name) {
+	public function getAnnotationsSum($name) {
 		return $this->getAnnotationCalculation($name, 'sum');
 	}
 
@@ -874,7 +874,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return int
 	 */
-	function getAnnotationsMin($name) {
+	public function getAnnotationsMin($name) {
 		return $this->getAnnotationCalculation($name, 'min');
 	}
 
@@ -885,7 +885,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return int
 	 */
-	function getAnnotationsMax($name) {
+	public function getAnnotationsMax($name) {
 		return $this->getAnnotationCalculation($name, 'max');
 	}
 
@@ -895,7 +895,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int Number of comments
 	 * @since 1.8.0
 	 */
-	function countComments() {
+	public function countComments() {
 		$params = array('entity' => $this);
 		$num = elgg_trigger_plugin_hook('comments:count', $this->getType(), $params);
 
@@ -916,7 +916,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return array|false An array of entities or false on failure
 	 */
-	function getEntitiesFromRelationship($relationship, $inverse = false, $limit = 50, $offset = 0) {
+	public function getEntitiesFromRelationship($relationship, $inverse = false, $limit = 50, $offset = 0) {
 		return elgg_get_entities_from_relationship(array(
 			'relationship' => $relationship,
 			'relationship_guid' => $this->getGUID(),
@@ -934,7 +934,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return int|false The number of entities or false on failure
 	 */
-	function countEntitiesFromRelationship($relationship, $inverse_relationship = FALSE) {
+	public function countEntitiesFromRelationship($relationship, $inverse_relationship = FALSE) {
 		return elgg_get_entities_from_relationship(array(
 			'relationship' => $relationship,
 			'relationship_guid' => $this->getGUID(),
@@ -952,7 +952,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return bool Whether this entity is editable by the given user.
 	 */
-	function canEdit($user_guid = 0) {
+	public function canEdit($user_guid = 0) {
 		$user_guid = (int)$user_guid;
 		$user = get_entity($user_guid);
 		if (!$user) {
@@ -996,7 +996,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return bool Whether the user is allowed to edit metadata on this entity.
 	 */
-	function canEditMetadata($metadata = null, $user_guid = 0) {
+	public function canEditMetadata($metadata = null, $user_guid = 0) {
 		if (!$this->guid) {
 			return false;
 		}
