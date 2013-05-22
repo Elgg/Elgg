@@ -554,6 +554,7 @@ class ElggMenuItem {
 	 * Get all the values for this menu item. Useful for rendering.
 	 * 
 	 * @return array
+	 * @since 1.9.0
 	 */
 	public function getValues() {
 		$values = get_object_vars($this);
