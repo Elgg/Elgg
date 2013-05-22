@@ -83,6 +83,14 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 			}
 		}
 
+		// Create a dummy 'role' object
+		$superuser = new ElggObject();
+		$superuser->access_id = ACCESS_PUBLIC;
+		$superuser->owner_guid = elgg_get_logged_in_user_guid();
+		$superuser->container_guid = elgg_get_logged_in_user_guid();
+		$superuser->title = "Superuser Role";
+		$superuser->save();
+		$this->superuser_role = $superuser;
 	}
 
 	/**
@@ -162,17 +170,30 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 		$user_one = $this->users[0];		
 		$user_two = $this->users[1];
 
+		global $superuser_role;
+		$superuser_role = $this->superuser_role;
+
 		// test hook
 		function access_get_sql_suffix_test_core_hook($hook, $type, $value, $params) {
-			if (elgg_is_logged_in() && @elgg_get_logged_in_user_entity()->is_superuser) {
-				$value['ors'][] = "1 = 1";
-			}
+			global $superuser_role;
+
+			$dbprefix = elgg_get_config('dbprefix');
+
+			$table_prefix = $params['table_prefix'];
+			$owner_guid_column = $params['owner_guid_column'];
+			$user_guid = $params['user_guid'];
+			$role_guid = $superuser_role->guid;
+
+			$value['ors'][] = "{$user_guid} IN (
+				SELECT guid_one FROM {$dbprefix}entity_relationships
+				WHERE relationship='belongs_to' AND guid_two={$role_guid}
+			)";
+
 			return $value;
 		}
 
-		// Set some metadata on the user
-		$user_one->is_superuser = 1;
-		$user_one->save();
+		// Make test user a member of the superuser role
+		add_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
 
 		// Register hook handler
 		elgg_register_plugin_hook_handler('access:get_sql_suffix', 'user', 'access_get_sql_suffix_test_core_hook');
@@ -188,9 +209,8 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 
 		$_SESSION['user'] = $admin;
 
-		// Remove metadata from user
-		$user_one->is_superuser = 0;
-		$user_one->save();
+		// Remove superuser role
+		remove_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
 
 		// Unregister hook
 		elgg_unregister_plugin_hook_handler('access:get_sql_suffix', 'user', 'access_get_sql_suffix_test_core_hook');
@@ -238,15 +258,28 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 		$cache = _elgg_get_access_cache();
 		$cache->clear();
 
-		// Add metadata to super user
-		$user_one->is_superuser = 1;
-		$user_one->save();
+		// Add superuser relationship
+		add_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
+
+		global $superuser_role;
+		$superuser_role = $this->superuser_role;
 
 		// test hook
 		function access_get_sql_suffix_test_acl_hook($hook, $type, $value, $params) {
-			if (elgg_is_logged_in() && @elgg_get_logged_in_user_entity()->is_superuser) {
-				$value['ors'][] = "1 = 1";
-			}
+			global $superuser_role;
+
+			$dbprefix = elgg_get_config('dbprefix');
+
+			$table_prefix = $params['table_prefix'];
+			$owner_guid_column = $params['owner_guid_column'];
+			$user_guid = $params['user_guid'];
+			$role_guid = $superuser_role->guid;
+
+			$value['ors'][] = "{$user_guid} IN (
+				SELECT guid_one FROM {$dbprefix}entity_relationships
+				WHERE relationship='belongs_to' AND guid_two={$role_guid}
+			)";
+
 			return $value;
 		}
 
@@ -262,9 +295,8 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 
 		$_SESSION['user'] = $admin;
 
-		// Remove metadata from user
-		$user_one->is_superuser = 0;
-		$user_one->save();
+		// Remove superuser relationship
+		remove_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
 
 		// Unregister hook
 		elgg_unregister_plugin_hook_handler('access:get_sql_suffix', 'user', 'access_get_sql_suffix_test_acl_hook');
@@ -387,15 +419,28 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 	public function testGetAccessSqlSuffixHookGroups() {
 		$user_one = $this->users[0];
 
-		// Set metadata on user
-		$user_one->is_superuser = 1;
-		$user_one->save();
+		// Add superuser relationship
+		add_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
+
+		global $superuser_role;
+		$superuser_role = $this->superuser_role;
 
 		// Declare test hook
 		function access_get_sql_suffix_test_groups_hook($hook, $type, $value, $params) {
-			if (elgg_is_logged_in() && @elgg_get_logged_in_user_entity()->is_superuser) {
-				$value['ors'][] = "1 = 1";
-			}
+			global $superuser_role;
+
+			$dbprefix = elgg_get_config('dbprefix');
+
+			$table_prefix = $params['table_prefix'];
+			$owner_guid_column = $params['owner_guid_column'];
+			$user_guid = $params['user_guid'];
+			$role_guid = $superuser_role->guid;
+
+			$value['ors'][] = "{$user_guid} IN (
+				SELECT guid_one FROM {$dbprefix}entity_relationships
+				WHERE relationship='belongs_to' AND guid_two={$role_guid}
+			)";
+
 			return $value;
 		}
 
@@ -427,8 +472,7 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 			$cache->clear();
 		}
 
-		// Remove metadata
-		$user_one->is_superuser = 0;
-		$user_one->save();
+		// Remove superuser relationship
+		remove_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
 	}
 }
