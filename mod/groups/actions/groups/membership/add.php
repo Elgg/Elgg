@@ -12,12 +12,13 @@ if (!is_array($user_guid)) {
 }
 $group_guid = get_input('group_guid');
 $group = get_entity($group_guid);
+/* @var ElggGroup $group */
 
 if (sizeof($user_guid)) {
 	foreach ($user_guid as $u_id) {
 		$user = get_user($u_id);
 
-		if ($user && $group && $group->canEdit()) {
+		if ($user && elgg_instanceof($group, 'group') && $group->canEdit()) {
 			if (!$group->isMember($user)) {
 				if (groups_join_group($group, $user)) {
 

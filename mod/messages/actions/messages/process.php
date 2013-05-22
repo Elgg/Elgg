@@ -17,7 +17,7 @@ if ($delete_flag) {
 	$success_msg = elgg_echo('messages:success:delete');
 	foreach ($message_ids as $guid) {
 		$message = get_entity($guid);
-		if ($message && $message->getSubtype() == 'messages' && $message->canEdit()) {
+		if (elgg_instanceof($message, 'object', 'messages') && $message->canEdit()) {
 			$message->delete();
 		}
 	}
@@ -25,7 +25,7 @@ if ($delete_flag) {
 	$success_msg = elgg_echo('messages:success:read');
 	foreach ($message_ids as $guid) {
 		$message = get_entity($guid);
-		if ($message && $message->getSubtype() == 'messages' && $message->canEdit()) {
+		if (elgg_instanceof($message, 'object', 'messages') && $message->canEdit()) {
 			$message->readYet = 1;
 		}
 	}

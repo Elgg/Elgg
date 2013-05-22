@@ -187,7 +187,7 @@ function groups_handle_edit_page($page, $guid = 0) {
 		$title = elgg_echo("groups:edit");
 		$group = get_entity($guid);
 
-		if ($group && $group->canEdit()) {
+		if (elgg_instanceof($group, 'group') && $group->canEdit()) {
 			elgg_set_page_owner_guid($group->getGUID());
 			elgg_push_breadcrumb($group->name, $group->getURL());
 			elgg_push_breadcrumb($title);
@@ -247,7 +247,7 @@ function groups_handle_profile_page($guid) {
 	elgg_push_context('group_profile');
 
 	$group = get_entity($guid);
-	if (!$group) {
+	if (!elgg_instanceof($group, 'group')) {
 		forward('groups/all');
 	}
 
@@ -307,7 +307,7 @@ function groups_handle_activity_page($guid) {
 	group_gatekeeper();
 
 	$group = get_entity($guid);
-	if (!$group || !elgg_instanceof($group, 'group')) {
+	if (!elgg_instanceof($group, 'group')) {
 		forward();
 	}
 
@@ -344,7 +344,7 @@ function groups_handle_members_page($guid) {
 	elgg_set_page_owner_guid($guid);
 
 	$group = get_entity($guid);
-	if (!$group || !elgg_instanceof($group, 'group')) {
+	if (!elgg_instanceof($group, 'group')) {
 		forward();
 	}
 
@@ -383,23 +383,23 @@ function groups_handle_invite_page($guid) {
 
 	elgg_set_page_owner_guid($guid);
 
-	$group = get_entity($guid);
-
 	$title = elgg_echo('groups:invite:title');
+
+	$group = get_entity($guid);
+	if (!elgg_instanceof($group, 'group') || !$group->canEdit()) {
+		register_error(elgg_echo('groups:noaccess'));
+		forward(REFERER);
+	}
+
+	$content = elgg_view_form('groups/invite', array(
+		'id' => 'invite_to_group',
+		'class' => 'elgg-form-alt mtm',
+	), array(
+		'entity' => $group,
+	));
 
 	elgg_push_breadcrumb($group->name, $group->getURL());
 	elgg_push_breadcrumb(elgg_echo('groups:invite'));
-
-	if ($group && $group->canEdit()) {
-		$content = elgg_view_form('groups/invite', array(
-			'id' => 'invite_to_group',
-			'class' => 'elgg-form-alt mtm',
-		), array(
-			'entity' => $group,
-		));
-	} else {
-		$content .= elgg_echo('groups:noaccess');
-	}
 
 	$params = array(
 		'content' => $content,
@@ -423,28 +423,27 @@ function groups_handle_requests_page($guid) {
 	elgg_set_page_owner_guid($guid);
 
 	$group = get_entity($guid);
+	if (!elgg_instanceof($group, 'group') || !$group->canEdit()) {
+		register_error(elgg_echo('groups:noaccess'));
+		forward(REFERER);
+	}
 
 	$title = elgg_echo('groups:membershiprequests');
 
-	if ($group && $group->canEdit()) {
-		elgg_push_breadcrumb($group->name, $group->getURL());
-		elgg_push_breadcrumb($title);
-		
-		$requests = elgg_get_entities_from_relationship(array(
-			'type' => 'user',
-			'relationship' => 'membership_request',
-			'relationship_guid' => $guid,
-			'inverse_relationship' => true,
-			'limit' => 0,
-		));
-		$content = elgg_view('groups/membershiprequests', array(
-			'requests' => $requests,
-			'entity' => $group,
-		));
+	elgg_push_breadcrumb($group->name, $group->getURL());
+	elgg_push_breadcrumb($title);
 
-	} else {
-		$content = elgg_echo("groups:noaccess");
-	}
+	$requests = elgg_get_entities_from_relationship(array(
+		'type' => 'user',
+		'relationship' => 'membership_request',
+		'relationship_guid' => $guid,
+		'inverse_relationship' => true,
+		'limit' => 0,
+	));
+	$content = elgg_view('groups/membershiprequests', array(
+		'requests' => $requests,
+		'entity' => $group,
+	));
 
 	$params = array(
 		'content' => $content,

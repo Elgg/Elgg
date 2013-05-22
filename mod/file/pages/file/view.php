@@ -6,7 +6,7 @@
  */
 
 $file = get_entity(get_input('guid'));
-if (!$file) {
+if (!elgg_instanceof($file, 'object', 'file')) {
 	register_error(elgg_echo('noaccess'));
 	elgg_get_session()->set('last_forward_from', current_page_url());
 	forward('');

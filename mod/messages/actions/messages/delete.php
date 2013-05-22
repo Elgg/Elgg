@@ -6,7 +6,7 @@
 $guid = (int) get_input('guid');
 
 $message = get_entity($guid);
-if (!$message || !$message->canEdit()) {
+if (!elgg_instanceof($message, 'object', 'messages') || !$message->canEdit()) {
 	register_error(elgg_echo('messages:error:delete:single'));
 	forward(REFERER);
 }

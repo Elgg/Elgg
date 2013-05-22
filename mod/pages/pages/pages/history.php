@@ -8,13 +8,13 @@
 $page_guid = get_input('guid');
 
 $page = get_entity($page_guid);
-if (!$page) {
-
+if (!pages_is_page($page)) {
+	forward(REFERER);
 }
 
 $container = $page->getContainerEntity();
 if (!$container) {
-
+	forward(REFERER);
 }
 
 elgg_set_page_owner_guid($container->getGUID());
@@ -31,10 +31,10 @@ elgg_push_breadcrumb(elgg_echo('pages:history'));
 $title = $page->title . ": " . elgg_echo('pages:history');
 
 $content = elgg_list_annotations(array(
-		'guid' => $page_guid,
-		'annotation_name' => 'page',
-		'limit' => 20,
-		'order_by' => "n_table.time_created desc"
+	'guid' => $page_guid,
+	'annotation_name' => 'page',
+	'limit' => 20,
+	'order_by' => "n_table.time_created desc",
 ));
 
 $body = elgg_view_layout('content', array(

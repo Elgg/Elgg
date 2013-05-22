@@ -191,8 +191,7 @@ function pages_revision_url($annotation) {
  */
 function pages_icon_url_override($hook, $type, $returnvalue, $params) {
 	$entity = $params['entity'];
-	if (elgg_instanceof($entity, 'object', 'page_top') ||
-		elgg_instanceof($entity, 'object', 'page')) {
+	if (pages_is_page($entity)) {
 		switch ($params['size']) {
 			case 'topbar':
 			case 'tiny':
@@ -299,34 +298,38 @@ function pages_prepare_notification($hook, $type, $notification, $params) {
  * @param string $entity_type
  * @param bool   $returnvalue
  * @param array  $params
+ *
+ * @return bool
  */
 function pages_write_permission_check($hook, $entity_type, $returnvalue, $params) {
-	if ($params['entity']->getSubtype() == 'page'
-		|| $params['entity']->getSubtype() == 'page_top') {
+	if (!pages_is_page($params['entity'])) {
+		return null;
+	}
+	$entity = $params['entity'];
+	/* @var ElggObject $entity */
 
-		$write_permission = $params['entity']->write_access_id;
-		$user = $params['user'];
+	$write_permission = $entity->write_access_id;
+	$user = $params['user'];
 
-		if ($write_permission && $user) {
-			switch ($write_permission) {
-				case ACCESS_PRIVATE:
-					// Elgg's default decision is what we want
-					return;
-					break;
-				case ACCESS_FRIENDS:
-					$owner = $params['entity']->getOwnerEntity();
-					if ($owner && $owner->isFriendsWith($user->guid)) {
-						return true;
-					}
-					break;
-				default:
-					$list = get_access_array($user->guid);
-					if (in_array($write_permission, $list)) {
-						// user in the access collection
-						return true;
-					}
-					break;
-			}
+	if ($write_permission && $user) {
+		switch ($write_permission) {
+			case ACCESS_PRIVATE:
+				// Elgg's default decision is what we want
+				return null;
+				break;
+			case ACCESS_FRIENDS:
+				$owner = $entity->getOwnerEntity();
+				if (($owner instanceof ElggUser) && $owner->isFriendsWith($user->guid)) {
+					return true;
+				}
+				break;
+			default:
+				$list = get_access_array($user->guid);
+				if (in_array($write_permission, $list)) {
+					// user in the access collection
+					return true;
+				}
+				break;
 		}
 	}
 }
@@ -334,45 +337,59 @@ function pages_write_permission_check($hook, $entity_type, $returnvalue, $params
 /**
  * Extend container permissions checking to extend can_write_to_container for write users.
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $returnvalue
- * @param unknown_type $params
+ * @param string $hook
+ * @param string $entity_type
+ * @param bool   $returnvalue
+ * @param array  $params
+ *
+ * @return bool
  */
 function pages_container_permission_check($hook, $entity_type, $returnvalue, $params) {
-
-	if (elgg_get_context() == "pages") {
-		if (elgg_get_page_owner_guid()) {
-			if (can_write_to_container(elgg_get_logged_in_user_guid(), elgg_get_page_owner_guid())) return true;
-		}
-		if ($page_guid = get_input('page_guid',0)) {
-			$entity = get_entity($page_guid);
-		} else if ($parent_guid = get_input('parent_guid',0)) {
-			$entity = get_entity($parent_guid);
-		}
-		if ($entity instanceof ElggObject) {
-			if (
-					can_write_to_container(elgg_get_logged_in_user_guid(), $entity->container_guid)
-					|| in_array($entity->write_access_id,get_access_list())
-				) {
-					return true;
-			}
+	if (elgg_get_context() != "pages") {
+		return true;
+	}
+	if (elgg_get_page_owner_guid()
+			&& can_write_to_container(elgg_get_logged_in_user_guid(), elgg_get_page_owner_guid())) {
+		return true;
+	}
+	if ($page_guid = get_input('page_guid', 0)) {
+		$entity = get_entity($page_guid);
+	} elseif ($parent_guid = get_input('parent_guid', 0)) {
+		$entity = get_entity($parent_guid);
+	}
+	if (isset($entity) && pages_is_page($entity)) {
+		if (can_write_to_container(elgg_get_logged_in_user_guid(), $entity->container_guid)
+				|| in_array($entity->write_access_id, get_access_list())) {
+			return true;
 		}
 	}
-
 }
 
 /**
  * Return views to parse for pages.
  *
- * @param unknown_type $hook
- * @param unknown_type $entity_type
- * @param unknown_type $return_value
- * @param unknown_type $params
+ * @param string $hook
+ * @param string $entity_type
+ * @param array  $return_value
+ * @param array  $params
+ *
+ * @return array
  */
 function pages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['object/page'] = elgg_echo('item:object:page');
 	$return_value['object/page_top'] = elgg_echo('item:object:page_top');
 
 	return $return_value;
+}
+
+/**
+ * Is the given value a page object?
+ *
+ * @param mixed $value
+ *
+ * @return bool
+ * @access private
+ */
+function pages_is_page($value) {
+	return ($value instanceof ElggObject) && in_array($value->getSubtype(), array('page', 'page_top'));
 }

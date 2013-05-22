@@ -6,7 +6,7 @@
  */
 
 $bookmark = get_entity(get_input('guid'));
-if (!$bookmark) {
+if (!elgg_instanceof($bookmark, 'object', 'bookmarks')) {
 	register_error(elgg_echo('noaccess'));
 	elgg_get_session()->set('last_forward_from', current_page_url());
 	forward('');

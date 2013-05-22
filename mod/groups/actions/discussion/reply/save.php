@@ -16,7 +16,7 @@ if (empty($text)) {
 }
 
 $topic = get_entity($entity_guid);
-if (!$topic) {
+if (!elgg_instanceof($topic, 'object', 'groupforumtopic')) {
 	register_error(elgg_echo('grouppost:nopost'));
 	forward(REFERER);
 }
