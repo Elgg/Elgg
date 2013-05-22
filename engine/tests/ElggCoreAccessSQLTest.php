@@ -27,7 +27,7 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 		// Create a couple users and create objects
 		for ($i=0; $i<2; $i++) {
 			$user = new ElggUser();
-			$user->username = 'test_user_' . rand();
+			$user->username = 'fake_user_' . rand();
 			$user->email = 'fake_email@fake.com' . rand();
 			$user->name = 'fake user ' . rand();
 			$user->access_id = ACCESS_PUBLIC;
@@ -46,7 +46,7 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 				$object->save();
 
 				$this->objects[$user->guid][$access] = $object;
-			}	
+			}
 		}
 
 		// Placeholder for group ACL's
@@ -83,6 +83,19 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 			}
 		}
 
+		// Create access collection, owned by second test user
+		$acl_id = create_access_collection('test acl');
+		add_user_to_access_collection($this->users[1]->guid, $acl_id);
+		$this->test_acl_id = $acl_id;
+
+		// Create object with access_id set to above ACL, owned by user two
+		$object = new ElggObject();
+		$object->access_id = $acl_id;
+		$object->owner_guid = $this->users[1]->guid;
+		$object->container_guid = $this->users[1]->guid;
+		$object->save();
+		$this->test_acl_object = $object;
+
 		// Create a dummy 'role' object
 		$superuser = new ElggObject();
 		$superuser->access_id = ACCESS_PUBLIC;
@@ -96,12 +109,19 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 	/**
 	 * Called before each test method.
 	 */
-	public function setUp() {}
+	public function setUp() {
+		// Replace current hook service with new instance for each test
+		$this->original_hooks = _elgg_services()->hooks;
+		_elgg_services()->hooks = new Elgg_PluginHooksService();
+	}
 
 	/**
 	 * Called after each test method.
 	 */
-	public function tearDown() {}
+	public function tearDown() {
+		// Restore original hook service
+		_elgg_services()->hooks = $this->original_hooks;
+	}
 
 	/**
 	 * Called after each test object.
@@ -117,6 +137,13 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 			$group->delete();
 		}
 
+		// Delete test acl and test acl object
+		$this->test_acl_object->delete();
+		delete_access_collection($this->test_acl_id);
+
+		// Delete role entity
+		$this->superuser_role->delete();
+
 		// all __destruct() code should go above here
 		parent::__destruct();
 	}
@@ -125,7 +152,7 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 	 * Test core access ids
 	 */
 	public function testAccessIDs() {
-		$user_one = $this->users[0];		
+		$user_one = $this->users[0];
 		$user_two = $this->users[1];
 
 		// Log in test user
@@ -135,7 +162,7 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 		foreach ($this->access_array as $access) {
 			// User can access their own objects regardless of access level
 			$this->assertTrue(has_access_to_entity($this->objects[$user_one->guid][$access], $user_one));
-		
+
 			// Test access to other user's objects
 			switch ($access) {
 				case ACCESS_PRIVATE:
@@ -167,7 +194,7 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 	}
 
 	public function testGetAccessSqlSuffixHookCoreAccess() {
-		$user_one = $this->users[0];		
+		$user_one = $this->users[0];
 		$user_two = $this->users[1];
 
 		global $superuser_role;
@@ -220,39 +247,28 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 		$user_one = $this->users[0];		
 		$user_two = $this->users[1];
 
-		// Create access collection, add user_two
-		$acl_id = create_access_collection('test acl');
-		add_user_to_access_collection($user_two->guid, $acl_id);
-
-		// New object with access_id set to above ACL, owned by user two
-		$object = new ElggObject();
-		$object->access_id = $acl_id;
-		$object->owner_guid = $user_two->guid;
-		$object->container_guid = $user_two->guid;
-		$object->save();
-
 		// User can't access entity while not a member of the ACL
-		$this->assertFalse(has_access_to_entity($object, $user_one));
+		$this->assertFalse(has_access_to_entity($this->test_acl_object, $user_one));
 		
 		// Add user_one to ACL 
-		add_user_to_access_collection($user_one->guid, $acl_id);
+		add_user_to_access_collection($user_one->guid, $this->test_acl_id);
 
 		// Flush access cache
 		$cache = _elgg_get_access_cache();
 		$cache->clear();
 
 		// Is a member, now has access
-		$this->assertTrue(has_access_to_entity($object, $user_one));
+		$this->assertTrue(has_access_to_entity($this->test_acl_object, $user_one));
 
 		// Remove user from ACL
-		remove_user_from_access_collection($user_one->guid, $acl_id);
+		remove_user_from_access_collection($user_one->guid, $this->test_acl_id);
 
 		// Flush access cache
 		$cache = _elgg_get_access_cache();
 		$cache->clear();
 
 		// No longer a member, no access
-		$this->assertFalse(has_access_to_entity($object, $user_one));
+		$this->assertFalse(has_access_to_entity($this->test_acl_object, $user_one));
 
 		// Flush access cache
 		$cache = _elgg_get_access_cache();
@@ -291,7 +307,7 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 		$_SESSION['user'] = $user_one;
 
 		// Can access other user's entities without ACL membership
-		$this->assertTrue(has_access_to_entity($object, $user_one));
+		$this->assertTrue(has_access_to_entity($this->test_acl_object, $user_one));
 
 		$_SESSION['user'] = $admin;
 
@@ -300,10 +316,6 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 
 		// Unregister hook
 		elgg_unregister_plugin_hook_handler('access:get_sql_suffix', 'user', 'access_get_sql_suffix_test_acl_hook');
-
-		$object->delete();
-
-		delete_access_collection($acl_id);
 	}
 
 	/**
