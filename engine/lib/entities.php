@@ -386,7 +386,6 @@ function update_subtype($type, $subtype, $class = '') {
 	return $success;
 }
 
-
 /**
  * Determine if a given user can write to an entity container.
  *
@@ -427,15 +426,6 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 		if ($container->canEdit($user_guid)) {
 			$return = true;
 		}
-
-		// If still not approved, see if the user is a member of the group
-		// @todo this should be moved to the groups plugin/library
-		if (!$return && $user && $container instanceof ElggGroup) {
-			/* @var ElggGroup $container */
-			if ($container->isMember($user)) {
-				$return = true;
-			}
-		}
 	}
 
 	// See if anyone else has anything to say
@@ -449,7 +439,6 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 			),
 			$return);
 }
-
 
 /**
  * Returns a database row from the entities table.
