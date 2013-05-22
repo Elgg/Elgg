@@ -27,8 +27,6 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		// do not allow SimpleTest to interpret Elgg notices as exceptions
-		$this->swallowErrors();
 
 		unset($this->user);
 	}
@@ -94,7 +92,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 
 	public function testElggUserConstructorByGuid() {
 		$user = new ElggUser(elgg_get_logged_in_user_guid());
-		$this->assertIdentical($user, $_SESSION['user']);
+		$this->assertIdenticalEntities($user, $_SESSION['user']);
 
 		// fail with garbage
 		try {
@@ -108,13 +106,13 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 	public function testElggUserConstructorByDbRow() {
 		$row = $this->fetchUser(elgg_get_logged_in_user_guid());
 		$user = new ElggUser($row);
-		$this->assertIdentical($user, $_SESSION['user']);
+		$this->assertIdenticalEntities($user, $_SESSION['user']);
 	}
 
 	public function testElggUserConstructorByUsername() {
 		$row = $this->fetchUser(elgg_get_logged_in_user_guid());
 		$user = new ElggUser($row->username);
-		$this->assertIdentical($user, $_SESSION['user']);
+		$this->assertIdenticalEntities($user, $_SESSION['user']);
 	}
 
 	public function testElggUserSave() {

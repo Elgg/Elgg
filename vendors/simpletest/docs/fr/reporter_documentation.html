@@ -63,7 +63,8 @@
                 pour contrôler l'exécution des tests.
             </p>
         
-        <p><a class="target" name="html"><h2>Les résultats rapportés au format HTML</h2></a></p>
+        <h2>
+<a class="target" name="html"></a>Les résultats rapportés au format HTML</h2>
             <p>
                 L'affichage par défaut est minimal à l'extrême.
                 Il renvoie le succès ou l'échec avec les barres conventionnelles
@@ -89,7 +90,7 @@
                 il y a la classe <span class="new_code">HtmlReporter</span> avec la signature suivante...
 <pre>
 class HtmlReporter extends SimpleReporter {
-    public HtmlReporter($encoding) { ... }
+    public __construct($encoding) { ... }
     public makeDry(boolean $is_dry) { ... }
     public void paintHeader(string $test_name) { ... }
     public void sendNoCacheHeaders() { ... }
@@ -106,7 +107,7 @@ class HtmlReporter extends SimpleReporter {
     public void paintException(string $message) { ... }
     public void paintMessage(string $message) { ... }
     public void paintFormattedMessage(string $message) { ... }
-    protected string _getCss() { ... }
+    protected string getCss() { ... }
     public array getTestList() { ... }
     public integer getPassCount() { ... }
     public integer getFailCount() { ... }
@@ -143,7 +144,7 @@ class HtmlReporter extends SimpleReporter {
                         est souvent délivré par le groupe de tests du niveau
                         le plus haut et donc c'est de là que le
                         <span class="new_code">$test_name</span> arrive.
-                        Il peint les titres de la page, CSS, la balise "body", etc.
+                        Il peint le titre de la page, CSS, la balise "body", etc.
                         Il ne renvoie rien du tout (<span class="new_code">void</span>).
                     </li>
                     <li>
@@ -186,7 +187,7 @@ class HtmlReporter extends SimpleReporter {
                         ne fait rien, par défaut.
                     </li>
                     <li>
-                        <span class="new_code">string _getCss()</span><br>
+                        <span class="new_code">string getCss()</span><br>
                         renvoie les styles CSS sous la forme d'une chaîne
                         à l'attention de la méthode d'entêtes d'une page.
                         Des styles additionnels peuvent être ajoutés ici
@@ -205,7 +206,7 @@ class HtmlReporter extends SimpleReporter {
                         est la première méthode très commode pour les sous-classes.
                         Elle liste l'arborescence courante des tests
                         sous la forme d'une liste de noms de tests.
-                        Le premier test -- celui le plus proche du coeur --
+                        Le premier test -- celui de premier niveau --
                         sera le premier dans la liste et la méthode de test
                         en cours sera la dernière.
                     </li>
@@ -234,20 +235,20 @@ class HtmlReporter extends SimpleReporter {
                 </ul>
                 Une modification simple : demander à l'HtmlReporter d'afficher
                 aussi bien les succès que les échecs et les erreurs...
-<pre><strong>
-class ShowPasses extends HtmlReporter {
+<pre>
+<strong>class ReporterShowingPasses extends HtmlReporter {
     
     function paintPass($message) {
         parent::paintPass($message);
-        print "&amp;&lt;span class=\"pass\"&gt;Pass&lt;/span&gt;: ";
+        print "&lt;span class=\"pass\"&gt;Pass&lt;/span&gt;: ";
         $breadcrumb = $this-&gt;getTestList();
         array_shift($breadcrumb);
         print implode("-&amp;gt;", $breadcrumb);
         print "-&amp;gt;$message&lt;br /&gt;\n";
     }
     
-    function _getCss() {
-        return parent::_getCss() . ' .pass { color: green; }';
+    protected function getCss() {
+        return parent::getCss() . ' .pass { color: green; }';
     }
 }</strong>
 </pre>
@@ -275,7 +276,8 @@ class ShowPasses extends HtmlReporter {
                 facilement réalisable.
             </p>
         
-        <p><a class="target" name="autre"><h2>Etendre le rapporteur</h2></a></p>
+        <h2>
+<a class="target" name="autre"></a>Etendre le rapporteur</h2>
             <p>
                 Plutôt que de modifier l'affichage existant,
                 vous voudrez peut-être produire une présentation HTML
@@ -288,16 +290,14 @@ class ShowPasses extends HtmlReporter {
             <p>
                 Un affichage sans rien, un canevas vierge
                 pour votre propre création, serait...
-<pre><strong>
-require_once('simpletest/simple_test.php');</strong>
+<pre>
+<strong>require_once('simpletest/simpletest.php');</strong>
 
 class MyDisplay extends SimpleReporter {<strong>
     </strong>
-    function paintHeader($test_name) {
-    }
+    function paintHeader($test_name) { }
     
-    function paintFooter($test_name) {
-    }
+    function paintFooter($test_name) { }
     
     function paintStart($test_name, $size) {<strong>
         parent::paintStart($test_name, $size);</strong>
@@ -314,27 +314,71 @@ class MyDisplay extends SimpleReporter {<strong>
     function paintFail($message) {<strong>
         parent::paintFail($message);</strong>
     }
+    
+    function paintError($message) {<strong>
+        parent::paintError($message);</strong>
+    }
+    
+    function paintException($exception) {<strong>
+        parent::paintException($exception);</strong>
+    }
 }
 </pre>
                 Aucune sortie ne viendrait de cette classe jusqu'à un ajout de votre part.
             </p>
+			 <p>
+                Sauf qu'il y a un problème : en utilisant cette cette classe
+				de bas niveau, vous devez explicitement l'invoquer
+				dans les scripts de test.
+				La commande "autorun" ne sera pas capable
+				d'utiliser son contexte courant (qu'elle soit lancée
+				dans un navigateur web ou via une ligne de commande)
+				pour sélectionner le rapporteur.
+            </p>
+            <p>
+                Vous invoquez explicitement la lanceur de tests comme suit...
+<pre>
+&lt;?php
+require_once('simpletest/autorun.php');
+
+$test = new TestSuite('File test');
+$test-&gt;addFile('tests/file_test.php');
+$test-&gt;run(<strong>new MyReporter()</strong>);
+?&gt;
+</pre>
+                ...ou peut-être comme cela...
+<pre>
+&lt;?php
+require_once('simpletest/simpletest.php');
+require_once('my_reporter.php');
+
+class MyTest extends TestSuite {
+    function __construct() {
+        parent::__construct();
+        $this-&gt;addFile('tests/file_test.php');
+    }
+}
+
+$test = new MyTest();
+$test-&gt;run(<strong>new MyReporter()</strong>);
+?&gt;
+</pre>
+                Nous verrons plus comment l'intégrer avec l'"autorun".
+            </p>
         
-        <p><a class="target" name="cli"><h2>Le rapporteur en ligne de commande</h2></a></p>
+        <h2>
+<a class="target" name="cli"></a>Le rapporteur en ligne de commande</h2>
             <p>
                 SimpleTest est aussi livré avec un rapporteur
                 en ligne de commande, minime lui aussi.
-                L'interface imite celle de JUnit,
-                sauf qu'elle envoie les messages d'erreur au fur
-                et à mesure de leur arrivée.
-                Pour utiliser le rapporteur en ligne de commande,
+                Pour utiliser le rapporteur en ligne de commande explicitement,
                 il suffit de l'intervertir avec celui de la version HTML...
 <pre>
 &lt;?php
-require_once('simpletest/unit_tester.php');
-require_once('simpletest/reporter.php');
+require_once('simpletest/autorun.php');
 
-$test = &amp;new GroupTest('File test');
-$test-&gt;addTestFile('tests/file_test.php');
+$test = new TestSuite('File test');
+$test-&gt;addFile('tests/file_test.php');
 $test-&gt;run(<strong>new TextReporter()</strong>);
 ?&gt;
 </pre>
@@ -348,15 +392,15 @@ php file_test.php
 <pre class="shell">
 File test
 OK
-Test cases run: 1/1, Failures: 0, Exceptions: 0
+Test cases run: 1/1, Passes: 1, Failures: 0, Exceptions: 0
 </pre>
                 Un échec déclenche un affichage comme...
 <pre class="shell">
 File test
 1) True assertion failed.
-    in createnewfile
+    in createNewFile
 FAILURES!!!
-Test cases run: 1/1, Failures: 1, Exceptions: 0
+Test cases run: 1/1, Passes: 0, Failures: 1, Exceptions: 0
 </pre>
             </p>
             <p>
@@ -372,36 +416,53 @@ Test cases run: 1/1, Failures: 1, Exceptions: 0
                 avec la bonne valeur renvoyée...
 <pre>
 &lt;?php
-require_once('simpletest/unit_tester.php');
-require_once('simpletest/reporter.php');
+require_once('simpletest/autorun.php');
 
-$test = &amp;new GroupTest('File test');
-$test-&gt;addTestFile('tests/file_test.php');<strong>
-exit ($test-&gt;run(new TextReporter()) ? 0 : 1);</strong>
+$test = new TestSuite('File test');
+$test-&gt;addFile('tests/file_test.php');
+<strong>exit ($test-&gt;run(new TextReporter()) ? 0 : 1);</strong>
 ?&gt;
 </pre>
-                Bien sûr l'objectif n'est pas de créer deux scripts de test,
+                Bien sûr l'objectif ne serait pas de créer deux scripts de test,
                 l'un en ligne de commande et l'autre pour un navigateur web,
                 pour chaque suite de test.
                 Le rapporteur en ligne de commande inclut
                 une méthode pour déterminer l'environnement d'exécution...
 <pre>
 &lt;?php
-require_once('simpletest/unit_tester.php');
-require_once('simpletest/reporter.php');
+require_once('simpletest/autorun.php');
 
-$test = &amp;new GroupTest('File test');
-$test-&gt;addTestFile('tests/file_test.php');<strong>
-if (TextReporter::inCli()) {</strong>
-    exit ($test-&gt;run(new TextReporter()) ? 0 : 1);<strong>
-}</strong>
+$test = new TestSuite('File test');
+$test-&gt;addFile('tests/file_test.php');
+<strong>if (TextReporter::inCli()) {</strong>
+    exit ($test-&gt;run(new TextReporter()) ? 0 : 1);
+<strong>}</strong>
 $test-&gt;run(new HtmlReporter());
 ?&gt;
 </pre>
                 Il s'agit là de la forme utilisée par SimpleTest lui-même.
+                Quand vous utilisez l'"autorun.php"
+				et qu'aucun test n'a été lancé avant la fin,
+				c'est quasiment le code que SimpleTest lancera
+				pour vous implicitement.
             </p>
+            <p>
+                En d'autres termes, ceci donne le même résultat...
+<pre>
+&lt;?php
+require_once('simpletest/autorun.php');
+
+class MyTest extends TestSuite {
+    function __construct() {
+        parent::__construct();
+        $this-&gt;addFile('tests/file_test.php');
+    }
+}
+?&gt;
+</pre>            </p>
         
-        <p><a class="target" name="xml"><h2>Test distant</h2></a></p>
+        <h2>
+<a class="target" name="xml"></a>Test distant</h2>
             <p>
                 SimpleTest est livré avec une classe <span class="new_code">XmlReporter</span>
                 utilisée pour de la communication interne.
@@ -428,16 +489,26 @@ $test-&gt;run(new HtmlReporter());
   &lt;/group&gt;
 &lt;/run&gt;
 </pre>
-                Vous pouvez utiliser ce format avec le parseur
+                Pour faire en sorte ue vos scénarios de test produisent ce format,
+				dans la ligne de commande, ajoutez le flag <span class="new_code">--xml</span>.
+<pre class="shell">
+php my_test.php --xml
+</pre>
+                Vous pouvez faire la même chose dans le navigation web
+				en ajoutant le paramètre <span class="new_code">xml=1</span> dans l'URL.
+				N'importe quelle valeur "true" fera l'affaire.
+            </p>
+            <p>
+				Vous pouvez utiliser ce format avec le parseur
                 fourni dans SimpleTest lui-même.
                 Il s'agit de <span class="new_code">SimpleTestXmlParser</span>
                 et se trouve <em>xml.php</em> à l'intérieur du paquet SimpleTest...
 <pre>
 &lt;?php
 require_once('simpletest/xml.php');
-
+    
 ...
-$parser = &amp;new SimpleTestXmlParser(new HtmlReporter());
+$parser = new SimpleTestXmlParser(new HtmlReporter());
 $parser-&gt;parse($test_output);
 ?&gt;
 </pre>
@@ -448,10 +519,32 @@ $parser-&gt;parse($test_output);
                 comme tout autre exécution de test.
                 Il y a des occasions bizarres dans lesquelles c'est en fait très utile.
             </p>
+			<p>
+                Le plus courant, c'est quand vous voulez isoler
+				un test sensible au crash.
+				Vous pouvez collecter la sortie XML en utilisant
+				l'opérateur antiquote (Ndt : backtick) à partir
+				d'un autre test.
+				De la sorte, il tourne dans son propre processus...
+<pre>
+&lt;?php
+require_once('simpletest/xml.php');
+
+if (TextReporter::inCli()) {
+    $parser = new SimpleTestXmlParser(new TextReporter());
+} else {
+    $parser = new SimpleTestXmlParser(new HtmlReporter());
+}
+$parser-&gt;parse(`php flakey_test.php --xml`);
+?&gt;
+</pre>
+            </p>
             <p>
-                Un problème des très grandes suites de test,
-                c'est qu'elles peuvent venir à bout de la limite de mémoire
-                par défaut d'un process PHP - 8Mb.
+                Un autre cas est celui des très longues suites de tests.
+            </p>
+			<p>
+                Elles peuvent venir à bout de la limite de mémoire
+                par défaut d'un process PHP - 16Mb.
                 En plaçant la sortie des groupes de test dans du XML
                 et leur exécution dans des process différents,
                 le résultat peut être parsé à nouveau pour agréger
@@ -464,16 +557,19 @@ $parser-&gt;parse($test_output);
                 Un scénario de test pour le réaliser existe déjà
                 à l'intérieur du framework SimpleTest, mais il est encore expérimental...
 <pre>
-&lt;?php<strong>
-require_once('../remote.php');</strong>
-require_once('../reporter.php');
-
+&lt;?php
+<strong>require_once('../remote.php');</strong>
+require_once('simpletest/autorun.php');
+    
 $test_url = ...;
 $dry_url = ...;
 
-$test = &amp;new GroupTest('Remote tests');
-$test-&gt;addTestCase(<strong>new RemoteTestCase($test_url, $dry_url)</strong>);
-$test-&gt;run(new HtmlReporter());
+class MyTestOnAnotherServer extends RemoteTestCase {
+    function __construct() {
+        $test_url = ...
+        parent::__construct($test_url, $test_url . ' --dry');
+    }
+}
 ?&gt;
 </pre>
                 <span class="new_code">RemoteTestCase</span> prend la localisation réelle
@@ -483,7 +579,7 @@ $test-&gt;run(new HtmlReporter());
                 Cette technique est employée pour que les progrès
                 soient correctement rapportés vers le haut.
                 <span class="new_code">RemoteTestCase</span> peut être ajouté à
-                une suite de test comme n'importe quel autre groupe de tests.
+                une suite de test comme n'importe quelle autre suite de tests.
             </p>
         
     </div>

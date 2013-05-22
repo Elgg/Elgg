@@ -47,7 +47,8 @@
         </li>
 </ul>
 <div class="content">
-        <p><a class="target" name="unitaire"><h2>Scénarios de tests unitaires</h2></a></p>
+        <h2>
+<a class="target" name="unitaire"></a>Scénarios de tests unitaires</h2>
             <p>
                 Le coeur du système est un framework de tests de régression
                 construit autour des scénarios de test.
@@ -78,15 +79,15 @@ class FileTestCase extends UnitTestCase {
     function FileTestCase() {
         $this-&gt;UnitTestCase('File test');
     }<strong>
-    
+
     function setUp() {
         @unlink('../temp/test.txt');
     }
-    
+
     function tearDown() {
         @unlink('../temp/test.txt');
     }
-    
+
     function testCreation() {
         $writer = &amp;new FileWriter('../temp/test.txt');
         $writer-&gt;write('Hello');
@@ -180,20 +181,28 @@ class FileTestCase extends UnitTestCase {
 <td>Echoue si $x et $y sont la même variable</td>
 </tr>
                 <tr>
-<td><span class="new_code">assertWantedPattern($p, $x)</span></td>
+<td><span class="new_code">assertPattern($p, $x)</span></td>
 <td>Echoue sauf si l'expression rationnelle $p capture $x</td>
 </tr>
                 <tr>
-<td><span class="new_code">assertNoUnwantedPattern($p, $x)</span></td>
+<td><span class="new_code">assertNoPattern($p, $x)</span></td>
 <td>Echoue si l'expression rationnelle $p capture $x</td>
 </tr>
                 <tr>
-<td><span class="new_code">assertNoErrors()</span></td>
-<td>Echoue si une erreur PHP arrive</td>
+<td><span class="new_code">expectError($x)</span></td>
+<td>Echoue si l'erreur correspondante n'arrive pas</td>
 </tr>
                 <tr>
-<td><span class="new_code">assertError($x)</span></td>
-<td>Echoue si aucune erreur ou message incorrect de PHP n'arrive</td>
+<td><span class="new_code">expectException($x)</span></td>
+<td>Echoue si l'exception correspondante n'est pas levée</td>
+</tr>
+                <tr>
+<td><span class="new_code">ignoreException($x)</span></td>
+<td>Avale toutes les exceptions correspondantes qui surviendraient</td>
+</tr>
+                <tr>
+<td><span class="new_code">assert($e)</span></td>
+<td>Echoue sur un objet <a href="expectation_documentation.html">attente</a> $e qui échouerait</td>
 </tr>
             </tbody></table>
                 Toutes les méthodes d'assertion peuvent recevoir
@@ -233,38 +242,35 @@ $this-&gt;assertReference($a, $b);</strong>
                 Échouera étant donné que la variable <span class="new_code">$b</span>
                 est une copie de <span class="new_code">$a</span>.
 <pre>
-<strong>$this-&gt;assertWantedPattern('/hello/i', 'Hello world');</strong>
+<strong>$this-&gt;assertPattern('/hello/i', 'Hello world');</strong>
 </pre>
                 Là, ça passe puisque la recherche est insensible
                 à la casse et que donc <span class="new_code">hello</span>
                 est bien repérable dans <span class="new_code">Hello world</span>.
 <pre>
-<strong>trigger_error('Disaster');
+<strong>$this-&gt;expectError();</strong>
 trigger_error('Catastrophe');
-$this-&gt;assertError();
-$this-&gt;assertError('Catastrophe');
-$this-&gt;assertNoErrors();</strong>
 </pre>
-                Ici, il y a besoin d'une petite explication :
-                toutes passent !
+                Ici la vérification attrape le message "Catastrophe"
+				sans vérifier le texte et passe.
+				Elle enlève l'erreur de la queue au passage.
+<pre>
+<strong>$this-&gt;expectError('Catastrophe');</strong>
+trigger_error('Catastrophe');
+</pre>
+                La vérification d'erreur suivante teste non seulement
+				l'existance de l'erreur mais aussi le texte qui,
+				dans le cas présent, correspond et donc un nouveau succès.
+				Si des erreurs non vérifiées sont laissées pour compte
+				à la fin d'une méthode de test alors un exception sera levé
+				dans le test.
             </p>
             <p>
-                Les erreurs PHP dans SimpleTest sont piégées et
-                placées dans une queue. Ici la première vérification
-                d'erreur attrape le message "Disaster"
-                sans vérifier le texte et passe. Résultat :
-                l'erreur est supprimée de la queue.
-                La vérification suivante teste non seulement l'existence
-                de l'erreur mais aussi le texte qui correspond :
-                un autre succès. Désormais la queue est vide
-                et le dernier test passe aussi.
-                Si une autre erreur non vérifiée est encore
-                dans la queue à la fin de notre méthode de test
-                alors une exception sera rapportée dans le test.
-                Notez que SimpleTest ne peut pas attraper les erreurs PHP à la compilation.
+                Notez que SimpleTest ne peut pas attraper des erreurs PHP
+				au moment de la compilation.
             </p>
             <p>
-                Les scénarios de test peuvent utiliser des méthodes
+                Les scénarios de tests peuvent utiliser des méthodes
                 bien pratiques pour déboguer le code ou pour étendre la suite...
                 <table><tbody>
                     <tr>
@@ -288,10 +294,6 @@ $this-&gt;assertNoErrors();</strong>
 <td>Envoi un évènement exception</td>
 </tr>
                     <tr>
-<td><span class="new_code">sendMessage()</span></td>
-<td>Envoie un message d'état aux systèmes d'affichage qui le supporte</td>
-</tr>
-                    <tr>
 <td><span class="new_code">signal($type, $payload)</span></td>
 <td>Envoie un message défini par l'utilisateur au rapporteur du test</td>
 </tr>
@@ -299,14 +301,11 @@ $this-&gt;assertNoErrors();</strong>
 <td><span class="new_code">dump($var)</span></td>
 <td>Effectue un <span class="new_code">print_r()</span> formaté pour du déboguage rapide et grossier</td>
 </tr>
-                    <tr>
-<td><span class="new_code">swallowErrors()</span></td>
-<td>Vide les erreurs de la queue</td>
-</tr>
                 </tbody></table>
             </p>
         
-        <p><a class="target" name="extension_unitaire"><h2>Etendre les scénarios de test</h2></a></p>
+        <h2>
+<a class="target" name="extension_unitaire"></a>Etendre les scénarios de test</h2>
             <p>
                 Bien sûr des méthodes supplémentaires de test
                 peuvent être ajoutées pour créer d'autres types
@@ -318,7 +317,7 @@ class FileTester extends UnitTestCase {
     function FileTester($name = false) {
         $this-&gt;UnitTestCase($name);
     }
-    
+
     function assertFileExists($filename, $message = '%s') {
         $this-&gt;assertTrue(
                 file_exists($filename),
@@ -339,15 +338,15 @@ class FileTester extends UnitTestCase {
                 comme un scénario de test classique...
 <pre>
 class FileTestCase extends <strong>FileTester</strong> {
-    
+
     function setUp() {
         @unlink('../temp/test.txt');
     }
-    
+
     function tearDown() {
         @unlink('../temp/test.txt');
     }
-    
+
     function testCreation() {
         $writer = &amp;new FileWriter('../temp/test.txt');
         $writer-&gt;write('Hello');<strong>
@@ -369,7 +368,8 @@ class FileTestCase extends <strong>FileTester</strong> {
                 d'autres testeurs unitaires dans votre suite de test.
             </p>
         
-        <p><a class="target" name="lancement_unitaire"><h2>Lancer un unique scénario de test</h2></a></p>
+        <h2>
+<a class="target" name="lancement_unitaire"></a>Lancer un unique scénario de test</h2>
             <p>
                 Ce n'est pas souvent qu'il faille lancer des scénarios
                 avec un unique test. Sauf lorsqu'il s'agit de s'arracher

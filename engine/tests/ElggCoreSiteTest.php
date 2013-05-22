@@ -25,7 +25,6 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		$this->swallowErrors();
 		unset($this->site);
 	}
 
@@ -60,6 +59,17 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 		ksort($entity_attributes);
 
 		$this->assertIdentical($entity_attributes, $attributes);
+	}
+
+	public function testElggSiteConstructorByGUID() {
+		$guid = $this->site->save();
+
+		// load a new site using guid
+		$entity = new ElggSiteTest($guid);
+		$this->assertIdenticalEntities($this->site, $entity);
+
+		// clean up
+		$this->site->delete();
 	}
 
 	public function testElggSiteSaveAndDelete() {
