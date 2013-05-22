@@ -23,6 +23,15 @@ require_once("$test_path/ElggCoreUnitTest.php");
 elgg_unregister_event_handler('all', 'all', 'system_log_listener');
 elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
 
+// turn off notifications
+$notifications = _elgg_services()->notifications;
+$events = $notifications->getEvents();
+foreach ($events as $type => $subtypes) {
+	foreach ($subtypes as $subtype => $actions) {
+		$notifications->unregisterEvent($type, $subtype);
+	}
+}
+
 // Disable maximum execution time.
 // Tests take a while...
 set_time_limit(0);

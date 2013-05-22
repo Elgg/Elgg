@@ -8,15 +8,6 @@
 class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 
 	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
-		parent::__construct();
-		
-		// all code should come after here
-	}
-
-	/**
 	 * Called before each test method.
 	 */
 	public function setUp() {
@@ -27,16 +18,7 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		
 		unset($this->filestore);
-	}
-
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
-		// all code should go above here
-		parent::__destruct();
 	}
 	
 	public function testFilenameOnFilestore() {
