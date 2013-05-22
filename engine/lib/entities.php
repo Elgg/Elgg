@@ -396,34 +396,32 @@ function update_subtype($type, $subtype, $class = '') {
  * A plugin hook container_permissions_check:$entity_type is emitted to allow granular
  * access controls in plugins.
  *
- * @param int    $user_guid      The user guid, or 0 for logged in user
+ * @param int    $user_guid      The user guid, or 0 for logged in user.
  * @param int    $container_guid The container, or 0 for the current page owner.
- * @param string $type           The type of entity we're looking to write
- * @param string $subtype        The subtype of the entity we're looking to write
+ * @param string $type           The type of entity we're looking to create (default: 'all')
+ * @param string $subtype        The subtype of the entity we're looking to create (default: 'all')
  *
  * @return bool
- * @link http://docs.elgg.org/DataModel/Containers
  */
 function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all') {
 	$container_guid = (int)$container_guid;
 	if (!$container_guid) {
 		$container_guid = elgg_get_page_owner_guid();
 	}
-
-	$return = false;
-
-	if (!$container_guid) {
-		$return = true;
-	}
-
 	$container = get_entity($container_guid);
 
 	$user_guid = (int)$user_guid;
-	$user = get_entity($user_guid);
-	if (!$user) {
+	if ($user_guid == 0) {
 		$user = elgg_get_logged_in_user_entity();
+		$user_guid = elgg_get_logged_in_user_guid();
+	} else {
+		$user = get_user($user_guid);
+		if (!$user) {
+			return false;
+		}
 	}
 
+	$return = false;
 	if ($container) {
 		// If the user can edit the container, they can also write to it
 		if ($container->canEdit($user_guid)) {
