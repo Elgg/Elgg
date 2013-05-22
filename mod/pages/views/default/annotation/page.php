@@ -7,6 +7,9 @@
 
 $annotation = $vars['annotation'];
 $page = get_entity($annotation->entity_guid);
+if (!pages_is_page($page)) {
+	return;
+}
 
 $icon = elgg_view("pages/icon", array(
 	'annotation' => $annotation,
@@ -16,7 +19,7 @@ $icon = elgg_view("pages/icon", array(
 $owner_guid = $annotation->owner_guid;
 $owner = get_entity($owner_guid);
 if (!$owner) {
-
+	return;
 }
 $owner_link = elgg_view('output/url', array(
 	'href' => $owner->getURL(),

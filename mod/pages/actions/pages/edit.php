@@ -32,7 +32,7 @@ if (!$input['title']) {
 
 if ($page_guid) {
 	$page = get_entity($page_guid);
-	if (!$page || !$page->canEdit()) {
+	if (!pages_is_page($page) || !$page->canEdit()) {
 		register_error(elgg_echo('pages:cantedit'));
 		forward(REFERER);
 	}

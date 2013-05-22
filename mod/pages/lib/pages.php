@@ -6,7 +6,9 @@
 /**
  * Prepare the add/edit form variables
  *
- * @param ElggObject $page
+ * @param ElggObject     $page
+ * @param int            $parent_guid
+ * @param ElggAnnotation $revision
  * @return array
  */
 function pages_prepare_form_vars($page = null, $parent_guid = 0, $revision = null) {
@@ -73,6 +75,8 @@ function pages_prepare_parent_breadcrumbs($page) {
  * Produce the navigation tree
  * 
  * @param ElggEntity $container Container entity for the pages
+ *
+ * @return array
  */
 function pages_get_navigation_tree($container) {
 	if (!$container) {
@@ -89,6 +93,7 @@ function pages_get_navigation_tree($container) {
 	if (!$top_pages) {
 		return;
 	}
+	/* @var ElggObject[] $top_pages */
 	
 	$tree = array();
 	$depths = array();

@@ -531,7 +531,7 @@ function groups_create_event_listener($event, $object_type, $object) {
 function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$page_owner = elgg_get_page_owner_entity();
 	$user_guid = $params['user_id'];
-	$user = get_entity($user_guid);
+	$user = get_user($user_guid);
 	if (!$user) {
 		return $returnvalue;
 	}

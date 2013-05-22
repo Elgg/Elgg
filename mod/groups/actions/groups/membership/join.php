@@ -15,14 +15,14 @@ global $CONFIG;
 $user_guid = get_input('user_guid', elgg_get_logged_in_user_guid());
 $group_guid = get_input('group_guid');
 
-$user = get_entity($user_guid);
+$user = get_user($user_guid);
 
 // access bypass for getting invisible group
 $ia = elgg_set_ignore_access(true);
 $group = get_entity($group_guid);
 elgg_set_ignore_access($ia);
 
-if (($user instanceof ElggUser) && ($group instanceof ElggGroup)) {
+if ($user && ($group instanceof ElggGroup)) {
 
 	// join or request
 	$join = false;

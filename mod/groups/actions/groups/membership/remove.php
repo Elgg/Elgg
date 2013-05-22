@@ -8,12 +8,12 @@
 $user_guid = get_input('user_guid');
 $group_guid = get_input('group_guid');
 
-$user = get_entity($user_guid);
+$user = get_user($user_guid);
 $group = get_entity($group_guid);
 
 elgg_set_page_owner_guid($group->guid);
 
-if (($user instanceof ElggUser) && ($group instanceof ElggGroup) && $group->canEdit()) {
+if ($user && ($group instanceof ElggGroup) && $group->canEdit()) {
 	// Don't allow removing group owner
 	if ($group->getOwnerGUID() != $user->getGUID()) {
 		if ($group->leave($user)) {
