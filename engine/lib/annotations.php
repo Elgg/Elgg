@@ -131,8 +131,17 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 	global $CONFIG;
 
 	$annotation_id = (int)$annotation_id;
-	$name = (trim($name));
-	$value = (trim($value));
+
+	$annotation = elgg_get_annotation_from_id($annotation_id);
+	if (!$annotation) {
+		return false;
+	}
+	if (!$annotation->canEdit()) {
+		return false;
+	}
+
+	$name = trim($name);
+	$value = trim($value);
 	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
 
 	$owner_guid = (int)$owner_guid;
@@ -142,9 +151,6 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 
 	$access_id = (int)$access_id;
 
-	$access = get_access_sql_suffix();
-
-	// Add the metastring
 	$value = add_metastring($value);
 	if (!$value) {
 		return false;
@@ -158,7 +164,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 	$result = update_data("UPDATE {$CONFIG->dbprefix}annotations
 		SET name_id = '$name', value_id = '$value', value_type = '$value_type',
 		access_id = $access_id, owner_guid = $owner_guid
-		WHERE id = $annotation_id AND $access");
+		WHERE id = $annotation_id");
 
 	if ($result !== false) {
 		// @todo add plugin hook that sends old and new annotation information before db access
