@@ -479,6 +479,10 @@ input {
 	width: auto;
 }
 
+input[type="radio"] {
+	margin: 0 3px 0 0;
+}
+
 .elgg-button {
 	font-size: 14px;
 	font-weight: bold;

@@ -34,18 +34,6 @@
 
 require_once(dirname(dirname(__FILE__)) . "/start.php");
 
-// Permanent redirect to pg-less urls
-$uri = $_SERVER['REQUEST_URI'];
-$site_path = parse_url(elgg_get_site_url(), PHP_URL_PATH);
-$site_path_quoted = preg_quote($site_path, '#');
-$new_uri = preg_replace("#^{$site_path_quoted}pg/#", $site_path, $uri, 1);
-
-if ($uri !== $new_uri) {
-	header("HTTP/1.1 301 Moved Permanently");
-	header("Location: $new_uri");
-	exit;
-}
-
 $router = _elgg_services()->router;
 $request = _elgg_services()->request;
 

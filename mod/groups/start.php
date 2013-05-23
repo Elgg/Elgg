@@ -217,15 +217,6 @@ function groups_setup_sidebar_menus() {
  * @return bool
  */
 function groups_page_handler($page) {
-
-	// forward old profile urls
-	if (is_numeric($page[0])) {
-		$group = get_entity($page[0]);
-		if (elgg_instanceof($group, 'group', '', 'ElggGroup')) {
-			system_message(elgg_echo('changebookmark'));
-			forward($group->getURL());
-		}
-	}
 	
 	elgg_load_library('elgg:groups');
 
@@ -742,7 +733,6 @@ function discussion_init() {
 	elgg_register_library('elgg:discussion', elgg_get_plugins_path() . 'groups/lib/discussion.php');
 
 	elgg_register_page_handler('discussion', 'discussion_page_handler');
-	elgg_register_page_handler('forum', 'discussion_forum_page_handler');
 
 	elgg_register_entity_url_handler('object', 'groupforumtopic', 'discussion_override_topic_url');
 
@@ -773,20 +763,6 @@ function discussion_init() {
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:groupforumtopic', 'discussion_prepare_notification');
 	elgg_register_event_handler('create', 'annotation', 'discussion_reply_notifications');
 	elgg_register_plugin_hook_handler('notify:annotation:message', 'group_topic_post', 'discussion_create_reply_notification');
-}
-
-/**
- * Exists for backwards compatibility for Elgg 1.7
- */
-function discussion_forum_page_handler($page) {
-	switch ($page[0]) {
-		case 'topic':
-			header('Status: 301 Moved Permanently');
-			forward("/discussion/view/{$page[1]}/{$page[2]}");
-			break;
-		default:
-			return false;
-	}
 }
 
 /**
