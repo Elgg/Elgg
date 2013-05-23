@@ -9,7 +9,8 @@ elgg_register_event_handler('init', 'system', 'legacy_urls_init');
 function legacy_urls_init() {
 	elgg_register_page_handler('tag', 'legacy_urls_tag_handler');
 	elgg_register_page_handler('pg', 'legacy_urls_pg_handler');
-	elgg_register_plugin_hook_handler('route', 'blog', 'legacy_url_blog_forward');
+	elgg_register_plugin_hook_handler('route', 'blog', 'legacy_urls_blog_forward');
+	elgg_register_plugin_hook_handler('route', 'bookmarks', 'legacy_urls_bookmarks_forward');
 }
 
 /**
@@ -95,11 +96,11 @@ function legacy_urls_pg_handler($segments) {
  * Group blogs page: /blog/owner/group:<container_guid>/
  * Group blog view:  /blog/read/<guid>
  */
-function legacy_url_blog_forward($hook, $type, $result) {
+function legacy_urls_blog_forward($hook, $type, $result) {
 
 	$page = $result['segments'];
 
-	// easier to work with & no notices
+	// easier to work with and no notices
 	$page = array_pad($page, 4, "");
 
 	// group usernames
@@ -153,6 +154,75 @@ function legacy_url_blog_forward($hook, $type, $result) {
 			break;
 		case "owner":
 			$url = "blog/owner/{$page[0]}";
+			break;
+	}
+
+	if (isset($url)) {
+		legacy_urls_redirect(legacy_urls_prepare_url($url));
+		return false;
+	}
+}
+
+/**
+ * Bookmarks forwarder
+ *
+ */
+function legacy_urls_bookmarks_forward($hook, $type, $result) {
+
+	$page = $result['segments'];
+
+	// easier to work with and no notices
+	$page = array_pad($page, 4, "");
+
+	// old group usernames
+	if (substr_count($page[0], 'group:')) {
+		preg_match('/group\:([0-9]+)/i', $page[0], $matches);
+		$guid = $matches[1];
+		$entity = get_entity($guid);
+		if (elgg_instanceof($entity, 'group')) {
+			if (!empty($page[2])) {
+				$url = "bookmarks/view/$page[2]/";
+			} else {
+				$url = "bookmarks/group/$guid/all";
+			}
+			// we drop query params because the old group URLs were invalid
+			legacy_urls_redirect(legacy_urls_prepare_url($url));
+		}
+	}
+
+	if ($page[0] == "read") {
+		$url = "bookmarks/view/{$page[1]}/";
+		legacy_urls_redirect(legacy_urls_prepare_url($url));
+		return false;		
+	}
+
+	$user = get_user_by_username($page[0]);
+	if (!$user) {
+		return;
+	}
+
+	if (empty($page[1])) {
+		$page[1] = 'items';
+	}
+
+	switch ($page[1]) {
+		case "read":
+			$url = "bookmarks/view/{$page[2]}/{$page[3]}";
+			break;
+		case "inbox":
+			$url = "bookmarks/inbox/{$page[0]}";
+			break;
+		case "friends":
+			$url = "bookmarks/friends/{$page[0]}";
+			break;
+		case "add":
+			$url = "bookmarks/add/{$page[0]}";
+			break;
+		case "items":
+			$url = "bookmarks/owner/{$page[0]}";
+			break;
+		case "bookmarklet":
+			$url = "bookmarks/bookmarklet/{$page[0]}";
 			break;
 	}
 
