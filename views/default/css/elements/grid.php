@@ -15,22 +15,46 @@ if ($gutter_width_percent === null) {
 }
 
 ?>
+
 /*<style>/**/
 
-.elgg-col { float: left; }
-.elgg-col-alt { float: right; }
+.elgg-col {
+	float: left;
+}
 
-.elgg-grid-gutters > .elgg-col,
-.elgg-grid-gutters > .elgg-col-alt { margin-left: <?php echo $gutter_width_percent; ?>%; }
+.elgg-col-alt {
+	float: right;
+}
+
+.elgg-grid-gutters > .elgg-col {
+	margin-right: <?php echo $gutter_width_percent; ?>%;
+}
+
+.elgg-grid-gutters > .elgg-col-alt {
+	margin-left: <?php echo $gutter_width_percent; ?>%;
+}
 
 .elgg-grid-gutters {
 	margin-top: <?php echo $gutter_width_percent; ?>%;
 	margin-bottom: <?php echo $gutter_width_percent; ?>%;
 }
 
-.elgg-col:last-child, .elgg-col-last { float: none; overflow: hidden; margin: 0; width: auto; }
+.elgg-grid-gutters > .elgg-col:last-child,
+.elgg-grid-gutters > .elgg-col-alt:last-child,
+.elgg-grid-gutters > .elgg-col-last {
+	float: none;
+	overflow: hidden;
+	margin: 0;
+	width: auto;
+}
 
-                     .elgg-col-1of1 { float: none; margin: 0; }
+.elgg-col-1of1 {
+	float: none;
+}
+.elgg-grid-gutters > .elgg-col-1of1 {
+	margin: 0;
+}
+
 <?php
 
 // build units
@@ -42,11 +66,11 @@ $percentages = array(
 
 for ($den = 2; $den <= 6; $den++) {
 	$num_gutters = $den - 1;
-	$column_width_percent = 100/$den;
-	$column_width_percent_gutters = (100 - $num_gutters * $gutter_width_percent)/$den;
+	$column_width_percent = 100 / $den;
+	$column_width_percent_gutters = (100 - $num_gutters * $gutter_width_percent) / $den;
 	for ($num = 1; $num < $den; $num++) {
 		// avoid duplicates
-		$rounded_percentage = (string)round($num / $den, 3);
+		$rounded_percentage = (string) round($num / $den, 3);
 		if ($num > 1 && isset($percentages[$rounded_percentage])) {
 			continue;
 		}
@@ -59,8 +83,17 @@ for ($den = 2; $den <= 6; $den++) {
 		$width_percent = floor($width_percent * 10000) / 10000;
 		$width_percent_gutters = floor($width_percent_gutters * 10000) / 10000;
 
-		echo "\n";
-		echo "                     .elgg-col-{$num}of{$den} { width: $width_percent%; }\n";
-		echo ".elgg-grid-gutters > .elgg-col-{$num}of{$den} { width: $width_percent_gutters%; }\n";
+		echo <<<CSS
+.elgg-col-{$num}of{$den} {
+	width: $width_percent%;
+}
+.elgg-grid-gutters > .elgg-col-{$num}of{$den} {
+	width: $width_percent_gutters%;
+}
+
+CSS;
 	}
 }
+
+echo "\n";
+

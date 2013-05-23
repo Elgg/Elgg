@@ -53,7 +53,8 @@ for ($den = 1; $den <= count($units); $den++) {
 <style>
 h3 { text-align: center; font-weight: normal; }
 .elgg-griddemo { margin: 1em 0 0; font-size: 115%; }
-.elgg-col > .elgg-inner {
+.elgg-col > .elgg-inner,
+.elgg-col-alt > .elgg-inner {
 	border: 1px solid #cccccc;
 	border-radius: 5px;
 	padding: 5px;
@@ -94,7 +95,10 @@ h3 { text-align: center; font-weight: normal; }
 </div>
 <?php endforeach; ?>
 
-<div class="elgg-grid">
+<h2 class="elgg-griddemo">With Gutters and With Content</h2>
+<p>Each row is wrapped by <code>div.elgg-grid</code></p>
+
+<div class="elgg-grid-gutters">
 	<div class="elgg-col elgg-col-1of5">
 		<div class="elgg-inner">
 			<h3>1/5</h3>
@@ -104,7 +108,7 @@ h3 { text-align: center; font-weight: normal; }
 	<div class="elgg-col elgg-col-3of5">
 		<div class="elgg-inner clearfix">
 			<h3>3/5</h3>
-			<div class="elgg-grid">
+			<div class="elgg-grid-gutters">
 				<div class="elgg-col elgg-col-1of2">
 					<div class="elgg-inner">
 						<h3>1/2</h3>
@@ -118,7 +122,7 @@ h3 { text-align: center; font-weight: normal; }
 					</div>
 				</div>
 			</div>
-			<div class="elgg-grid">
+			<div class="elgg-grid-gutters">
 				<div class="elgg-col elgg-col-1of3">
 					<div class="elgg-inner">
 						<h3>1/3</h3>
@@ -128,7 +132,7 @@ h3 { text-align: center; font-weight: normal; }
 				<div class="elgg-col elgg-col-2of3 elgg-col-last">
 					<div class="elgg-inner">
 						<h3>2/3</h3>
-						<div class="elgg-grid">
+						<div class="elgg-grid-gutters">
 							<div class="elgg-col elgg-col-1of2">
 								<div class="elgg-inner">
 									<h3>1/2</h3>
@@ -142,7 +146,7 @@ h3 { text-align: center; font-weight: normal; }
 								</div>
 							</div>
 						</div>
-						<div class="elgg-grid">
+						<div class="elgg-grid-gutters">
 							<div class="elgg-col elgg-col-1of1">
 								<div class="elgg-inner">
 									<h3>1</h3>
