@@ -119,13 +119,6 @@ RewriteEngine on
 #
 # If you must add RewriteRules to change hostname, add them directly below (above all the others)
 
-
-# In for backwards compatibility
-RewriteRule ^pg\/([A-Za-z0-9\_\-]+)$ engine/handlers/page_handler.php?handler=$1&%{QUERY_STRING} [L]
-RewriteRule ^pg\/([A-Za-z0-9\_\-]+)\/(.*)$ engine/handlers/page_handler.php?handler=$1&page=$2&%{QUERY_STRING} [L]
-RewriteRule ^tag\/(.+)\/?$ engine/handlers/page_handler.php?handler=search&page=$1 [L]
-
-
 RewriteRule ^action\/([A-Za-z0-9\_\-\/]+)$ engine/handlers/action_handler.php?action=$1&%{QUERY_STRING} [L]
 
 RewriteRule ^cache\/(.*)$ engine/handlers/cache_handler.php?request=$1&%{QUERY_STRING} [L]

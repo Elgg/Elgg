@@ -97,21 +97,6 @@ function bookmarks_page_handler($page) {
 
 	elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
 
-	// old group usernames
-	if (substr_count($page[0], 'group:')) {
-		preg_match('/group\:([0-9]+)/i', $page[0], $matches);
-		$guid = $matches[1];
-		if ($entity = get_entity($guid)) {
-			bookmarks_url_forwarder($page);
-		}
-	}
-
-	// user usernames
-	$user = get_user_by_username($page[0]);
-	if ($user) {
-		bookmarks_url_forwarder($page);
-	}
-
 	$pages = dirname(__FILE__) . '/pages/bookmarks';
 
 	switch ($page[0]) {
@@ -130,10 +115,6 @@ function bookmarks_page_handler($page) {
 		case "view":
 			set_input('guid', $page[1]);
 			include "$pages/view.php";
-			break;
-		case 'read': // Elgg 1.7 compatibility
-			register_error(elgg_echo("changebookmark"));
-			forward("bookmarks/view/{$page[1]}");
 			break;
 
 		case "add":
@@ -163,43 +144,6 @@ function bookmarks_page_handler($page) {
 
 	elgg_pop_context();
 	return true;
-}
-
-/**
- * Forward to the new style of URLs
- *
- * @param string $page
- */
-function bookmarks_url_forwarder($page) {
-	global $CONFIG;
-
-	if (!isset($page[1])) {
-		$page[1] = 'items';
-	}
-
-	switch ($page[1]) {
-		case "read":
-			$url = "{$CONFIG->wwwroot}bookmarks/view/{$page[2]}/{$page[3]}";
-			break;
-		case "inbox":
-			$url = "{$CONFIG->wwwroot}bookmarks/inbox/{$page[0]}";
-			break;
-		case "friends":
-			$url = "{$CONFIG->wwwroot}bookmarks/friends/{$page[0]}";
-			break;
-		case "add":
-			$url = "{$CONFIG->wwwroot}bookmarks/add/{$page[0]}";
-			break;
-		case "items":
-			$url = "{$CONFIG->wwwroot}bookmarks/owner/{$page[0]}";
-			break;
-		case "bookmarklet":
-			$url = "{$CONFIG->wwwroot}bookmarks/bookmarklet/{$page[0]}";
-			break;
-	}
-
-	register_error(elgg_echo("changebookmark"));
-	forward($url);
 }
 
 /**

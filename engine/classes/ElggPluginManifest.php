@@ -384,7 +384,7 @@ class ElggPluginManifest {
 		$bundled_plugins = array('blog', 'bookmarks', 'categories', 'ckeditor',
 			'custom_index', 'dashboard', 'developers', 'diagnostics',
 			'embed', 'externalpages', 'file', 'garbagecollector',
-			'groups', 'htmlawed', 'invitefriends', 'likes',
+			'groups', 'htmlawed', 'invitefriends', 'legacy_urls', 'likes',
 			'logbrowser', 'logrotate', 'members', 'messageboard',
 			'messages', 'notifications', 'oauth_api', 'pages', 'profile',
 			'reportedcontent', 'search', 'tagcloud', 'thewire',
