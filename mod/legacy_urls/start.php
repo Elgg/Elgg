@@ -11,6 +11,10 @@ function legacy_urls_init() {
 	elgg_register_page_handler('pg', 'legacy_urls_pg_handler');
 	elgg_register_plugin_hook_handler('route', 'blog', 'legacy_urls_blog_forward');
 	elgg_register_plugin_hook_handler('route', 'bookmarks', 'legacy_urls_bookmarks_forward');
+	elgg_register_plugin_hook_handler('route', 'file', 'legacy_urls_file_forward');
+	elgg_register_plugin_hook_handler('route', 'groups', 'legacy_urls_groups_forward');
+	elgg_register_page_handler('forum', 'legacy_urls_forum_handler');
+	elgg_register_plugin_hook_handler('route', 'messageboard', 'legacy_urls_messageboard_forward');
 }
 
 /**
@@ -87,7 +91,7 @@ function legacy_urls_pg_handler($segments) {
 }
 
 /**
- * Blog forwarder
+ * blog forwarder
  * 
  * 1.0-1.7.5
  * Group blogs page: /blog/group:<container_guid>/
@@ -164,7 +168,7 @@ function legacy_urls_blog_forward($hook, $type, $result) {
 }
 
 /**
- * Bookmarks forwarder
+ * bookmarks forwarder
  *
  */
 function legacy_urls_bookmarks_forward($hook, $type, $result) {
@@ -227,6 +231,80 @@ function legacy_urls_bookmarks_forward($hook, $type, $result) {
 	}
 
 	if (isset($url)) {
+		legacy_urls_redirect(legacy_urls_prepare_url($url));
+		return false;
+	}
+}
+
+/**
+ * file forwarder
+ *
+ */
+function legacy_urls_file_forward($hook, $type, $result) {
+
+	$page = $result['segments'];
+
+	// easier to work with and no notices
+	$page = array_pad($page, 4, "");
+
+	if ($page[0] == 'read') {
+		$url = "file/view/{$page[1]}";
+		legacy_urls_redirect(legacy_urls_prepare_url($url));
+		return false;
+	}
+}
+
+/**
+ * groups forwarder
+ *
+ */
+function legacy_urls_groups_forward($hook, $type, $result) {
+
+	$page = $result['segments'];
+
+	// easier to work with and no notices
+	$page = array_pad($page, 4, "");
+
+	if (is_numeric($page[0])) {
+		$group = get_entity($page[0]);
+		if (elgg_instanceof($group, 'group', '', 'ElggGroup')) {
+			legacy_urls_redirect(legacy_urls_prepare_url($group->getURL()));
+			return false;
+		}
+	}
+}
+
+/**
+ * group forum forwarder
+ * 
+ */
+function legacy_urls_forum_handler($page) {
+	switch ($page[0]) {
+		case 'topic':
+			$url = "discussion/view/{$page[1]}/{$page[2]}";
+			legacy_urls_redirect(legacy_urls_prepare_url($url));
+			return true;
+			break;
+		default:
+			return false;
+	}
+}
+
+/**
+ * messageboard forwarder
+ *
+ */
+function legacy_urls_messageboard_forward($hook, $type, $result) {
+
+	$page = $result['segments'];
+
+	// easier to work with and no notices
+	$page = array_pad($page, 4, "");
+
+	// if the first part is a username, forward to new format
+	$new_section_one = array('owner', 'add', 'group');
+	if (isset($page[0]) && !in_array($page[0], $new_section_one) && get_user_by_username($page[0])) {
+		$url = "messageboard/owner/{$page[0]}";
 		legacy_urls_redirect(legacy_urls_prepare_url($url));
 		return false;
 	}

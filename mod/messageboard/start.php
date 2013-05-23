@@ -45,14 +45,6 @@ function messageboard_init() {
  * @return bool
  */
 function messageboard_page_handler($page) {
-	$new_section_one = array('owner', 'add', 'group');
-
-	// if the first part is a username, forward to new format
-	if (isset($page[0]) && !in_array($page[0], $new_section_one) && get_user_by_username($page[0])) {
-		register_error(elgg_echo("changebookmark"));
-		$url = "messageboard/owner/{$page[0]}";
-		forward($url);
-	}
 
 	$pages = dirname(__FILE__) . '/pages/messageboard';
 
