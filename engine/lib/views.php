@@ -1205,7 +1205,7 @@ function elgg_view_widgets_column($user, $context, $column, $show_access = true)
 	$widgets = elgg_get_widgets($user->guid, $context);
 	$column_widgets = $widgets[$column];
 
-	$column_html = "<div class=\"elgg-widgets\" id=\"elgg-widget-col-$column\">";
+	$column_html = '';
 	if (count($column_widgets) > 0) {
 		foreach ($column_widgets as $widget) {
 			if (elgg_is_widget_type($widget->handler)) {
@@ -1213,7 +1213,6 @@ function elgg_view_widgets_column($user, $context, $column, $show_access = true)
 			}
 		}
 	}
-	$column_html .= '</div>';
 
 	return $column_html;
 }

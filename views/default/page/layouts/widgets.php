@@ -23,6 +23,8 @@ elgg_push_context('widgets');
 
 $widgets = elgg_get_widgets($owner->guid, $context);
 
+echo '<div class="elgg-layout-widgets">';
+
 if (elgg_can_edit_widget_layout($context)) {
 	if ($show_add_widgets) {
 		echo elgg_view('page/layouts/widgets/add_button');
@@ -40,17 +42,22 @@ if (isset($vars['content'])) {
 	echo $vars['content'];
 }
 
-$widget_class = "elgg-col-alt elgg-col-1of{$num_columns}";
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
+	$widget_col_class = "elgg-widgets elgg-col elgg-col-1of{$num_columns}";
+	$widget_col_id = "elgg-widget-col-$column_index";
 	if ($column_index == $num_columns) {
-		$widget_class .= ' elgg-col-last';	
+		$widget_col_class .= ' elgg-col-last';	
 	}
 
-	echo "<div class=\"$widget_class\">";
+	echo "<div class=\"$widget_col_class\" id=\"$widget_col_id\">";
+	echo '<div class="elgg-inner">';
 	echo elgg_view_widgets_column($owner, $context, $column_index, $show_access);
+	echo '</div>';
 	echo '</div>';
 }
 
 elgg_pop_context();
 
 echo elgg_view('graphics/ajax_loader', array('id' => 'elgg-widget-loader'));
+
+echo '</div>';
