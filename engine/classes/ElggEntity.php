@@ -197,20 +197,18 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Sets the value of a property.
 	 *
-	 * If $name is defined in $this->attributes that value is set, otherwise it is
+	 * If $name is defined in $this->attributes, that value is set. Otherwise it is
 	 * saved as metadata.
 	 *
 	 * @warning Metadata set this way will inherit the entity's owner and access ID. If you want
 	 * to set metadata with a different owner, use create_metadata().
 	 *
-	 * @warning It is important that your class populates $this->attributes with keys
-	 * for all base attributes, anything not in their gets set as METADATA.
+	 * @warning It is important that your class populate $this->attributes with keys
+	 * for all base attributes. Anything not in there gets set as metadata.
 	 *
-	 * Q: Why are we not using __set overload here?
+	 * @internal Q: Why are we not using __set overload here?
 	 * A: Because overload operators cause problems during subclassing, so we put the code here and
-	 * create overloads in subclasses.
-	 *
-	 * @todo What problems?
+	 * create overloads in subclasses. @todo What problems?
 	 *
 	 * @param string $name  Name
 	 * @param mixed  $value Value
@@ -1824,7 +1822,7 @@ abstract class ElggEntity extends ElggData implements
 		elgg_delete_river(array('target_guid' => $guid));
 		remove_all_private_settings($guid);
 
-		$res = $this->getDatabase()->deleteData("DELETE from {$CONFIG->dbprefix}entities where guid={$guid}");
+		$res = $this->getDatabase()->deleteData("DELETE FROM {$CONFIG->dbprefix}entities WHERE guid = $guid");
 		if ($res) {
 			$sub_table = "";
 
@@ -1845,7 +1843,7 @@ abstract class ElggEntity extends ElggData implements
 			}
 
 			if ($sub_table) {
-				$this->getDatabase()->deleteData("DELETE from $sub_table where guid={$guid}");
+				$this->getDatabase()->deleteData("DELETE FROM $sub_table WHERE guid = $guid");
 			}
 		}
 
