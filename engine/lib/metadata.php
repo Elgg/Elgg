@@ -201,10 +201,11 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 		return false;
 	}
 
-	// If ok then add it
+	$access = get_access_sql_suffix();
+
 	$query = "UPDATE {$CONFIG->dbprefix}metadata"
-		. " set name_id='$name', value_id='$value', value_type='$value_type', access_id=$access_id,"
-		. " owner_guid=$owner_guid where id=$id";
+		. " SET name_id = '$name', value_id = '$value', value_type = '$value_type', access_id = $access_id,"
+		. " owner_guid = $owner_guid WHERE id = $id AND $access";
 
 	$result = update_data($query);
 	if ($result !== false) {
