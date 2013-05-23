@@ -1873,21 +1873,10 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
 /**
  * Intercepts the index page when Walled Garden mode is enabled.
  *
- * @link http://docs.elgg.org/Tutorials/WalledGarden
- * @elgg_plugin_hook index system
- *
- * @param string $hook   The name of the hook
- * @param string $type   The type of hook
- * @param bool   $value  Has a plugin already rendered an index page?
- * @param array  $params Array of parameters (should be empty)
  * @return bool
  * @access private
  */
-function elgg_walled_garden_index($hook, $type, $value, $params) {
-	if ($value) {
-		// do not create a second index page so return
-		return;
-	}
+function elgg_walled_garden_index() {
 
 	elgg_load_css('elgg.walled_garden');
 	elgg_load_js('elgg.walled_garden');
@@ -1902,7 +1891,6 @@ function elgg_walled_garden_index($hook, $type, $value, $params) {
 	$body = elgg_view_layout('walled_garden', $params);
 	echo elgg_view_page('', $body, 'walled_garden');
 
-	// return true to prevent other plugins from adding a front page
 	return true;
 }
 

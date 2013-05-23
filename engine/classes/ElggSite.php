@@ -438,8 +438,8 @@ class ElggSite extends ElggEntity {
 					'_elgg_walled_garden_remove_public_access');
 
 			if (!elgg_is_logged_in()) {
-				// hook into the index system call at the highest priority
-				elgg_register_plugin_hook_handler('index', 'system', 'elgg_walled_garden_index', 1);
+				// override the front page
+				elgg_register_page_handler('', 'elgg_walled_garden_index');
 
 				if (!$this->isPublicPage()) {
 					if (!elgg_is_xhr()) {
