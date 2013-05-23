@@ -82,7 +82,8 @@ h3 { text-align: center; font-weight: normal; }
 <?php endforeach; ?>
 
 <h2 class="elgg-griddemo">With Gutters</h2>
-<p>Each row is wrapped by <code>div.elgg-grid-gutters</code></p>
+<p>Each row is wrapped by <code>div.elgg-grid-gutters</code>
+This does not work with IE8 and before without manually adding .elgg-col-last to the last column in a row.</p>
 
 <?php foreach ($rows as $row): ?>
 <div class="elgg-grid-gutters">

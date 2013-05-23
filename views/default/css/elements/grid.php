@@ -16,6 +16,15 @@ if ($gutter_width_percent === null) {
 
 ?>
 
+/* ***************************************
+	Grid
+*************************************** */
+
+/*
+Gutters do not work with IE8 and before without manually adding .elgg-col-last 
+to the last column in each row.
+*/
+
 /*<style>/**/
 
 .elgg-col {
