@@ -1077,7 +1077,7 @@ To view their profile, click here:
 
 %s
 
-You cannot reply to this email.",
+Please do not reply to this email.",
 
 	'email:resetpassword:subject' => "Password reset!",
 	'email:resetpassword:body' => "Hi %s,
@@ -1140,7 +1140,7 @@ To view %s's profile, click here:
 
 %s
 
-You cannot reply to this email.",
+Please do not reply to this email.",
 
 /**
  * Entities
@@ -1186,8 +1186,17 @@ You cannot reply to this email.",
 	'js:lightbox:current' => "image %s of %s",
 
 /**
+ * Friendly title substitutions
+ */
+
+	'translit:&' => 'and',
+	'translit:>' => 'greater than',
+	'translit:<' => 'less than',
+
+/**
  * Languages according to ISO 639-1
  */
+
 	"aa" => "Afar",
 	"ab" => "Abkhazian",
 	"af" => "Afrikaans",
