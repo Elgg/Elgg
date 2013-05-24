@@ -1087,16 +1087,6 @@ function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
 }
 
 /**
- * Register object, plugin entities as ElggPlugin classes
- *
- * @return void
- * @access private
- */
-function plugin_run_once() {
-	add_subtype("object", "plugin", "ElggPlugin");
-}
-
-/**
  * Runs unit tests for the entity objects.
  *
  * @param string $hook   unit_test
@@ -1121,7 +1111,6 @@ function plugins_test($hook, $type, $value, $params) {
  * @access private
  */
 function plugin_init() {
-	run_function_once("plugin_run_once");
 
 	if (elgg_is_admin_logged_in()) {
 		elgg_register_ajax_view('object/plugin/full');

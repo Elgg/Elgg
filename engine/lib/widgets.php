@@ -114,16 +114,6 @@ function elgg_get_widget_types($context = "", $exact = false) {
 }
 
 /**
- * Regsiter entity of object, widget as ElggWidget objects
- *
- * @return void
- * @access private
- */
-function elgg_widget_run_once() {
-	add_subtype("object", "widget", "ElggWidget");
-}
-
-/**
  * Set the widget title on ajax return from save action
  * 
  * @param string $hook    Hook name
@@ -156,8 +146,6 @@ function _elgg_widgets_init() {
 	elgg_register_action('widgets/move');
 	elgg_register_action('widgets/delete');
 	elgg_register_action('widgets/upgrade', '', 'admin');
-
-	run_function_once("elgg_widget_run_once");
 
 	elgg_register_plugin_hook_handler('output', 'ajax', '_elgg_widgets_set_ajax_title');
 }

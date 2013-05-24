@@ -469,18 +469,6 @@ function set_default_filestore(ElggFilestore $filestore) {
 }
 
 /**
- * Register entity type objects, subtype file as
- * ElggFile.
- *
- * @return void
- * @access private
- */
-function filestore_run_once() {
-	// Register a class
-	add_subtype("object", "file", "ElggFile");
-}
-
-/**
  * Initialise the file modules.
  * Listens to system init and configures the default filestore
  *
@@ -494,9 +482,6 @@ function filestore_init() {
 	if (isset($CONFIG->dataroot)) {
 		set_default_filestore(new ElggDiskFilestore($CONFIG->dataroot));
 	}
-	
-	// Now run this stuff, but only once
-	run_function_once("filestore_run_once");
 }
 
 /**

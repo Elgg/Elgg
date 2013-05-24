@@ -1480,9 +1480,22 @@ class ElggInstaller {
 		set_config('walled_garden', FALSE, $site->getGUID());
 		set_config('allow_user_default_access', '', $site->getGUID());
 
+		$this->setSubtypeClasses();
+
 		$this->enablePlugins();
 
 		return TRUE;
+	}
+
+	/**
+	 * Register classes for core objects
+	 *
+	 * @return void
+	 */
+	protected function setSubtypeClasses() {
+		add_subtype("object", "plugin", "ElggPlugin");
+		add_subtype("object", "file", "ElggFile");
+		add_subtype("object", "widget", "ElggWidget");
 	}
 
 	/**
