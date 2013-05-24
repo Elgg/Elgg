@@ -490,8 +490,8 @@ return array(
 'Welcome to Elgg! Right now you are looking at the administration dashboard. It\'s useful for tracking what\'s happening on the site.',
 
 	'admin:widget:admin_welcome:admin_overview' =>
-"Navigation for the administration area is provided by the menu to the right. It is organized into"
-. " three sections:
+"Navigation for the administration area is provided by the menu to the right. It is organized into
+three sections:
 	<dl>
 		<dt>Administer</dt><dd>Everyday tasks like monitoring reported content, checking who is online, and viewing statistics.</dd>
 		<dt>Configure</dt><dd>Occasional tasks like setting the site name or activating a plugin.</dd>
@@ -668,8 +668,8 @@ return array(
 
 	'admin:appearance:default_widgets' => 'Default Widgets',
 	'admin:default_widgets:unknown_type' => 'Unknown widget type',
-	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.'
-		. '  These changes will only affect new users on the site.',
+	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.
+These changes will only affect new users on the site.',
 
 /**
  * User settings
