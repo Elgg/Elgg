@@ -1288,7 +1288,7 @@ $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NU
  * @internal This also provides the views for elgg_view_annotation().
  *
  * @param array    $options Any options from $getter options plus:
- *                   full_view => BOOL Display full view entities
+ *                   full_view => BOOL Display full view of entities (default: false)
  *                   list_type => STR 'list' or 'gallery'
  *                   list_type_toggle => BOOL Display gallery / list switch
  *                   pagination => BOOL Display pagination links
@@ -1311,7 +1311,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	$defaults = array(
 		'offset' => (int) max(get_input('offset', 0), 0),
 		'limit' => (int) max(get_input('limit', 10), 0),
-		'full_view' => true,
+		'full_view' => false,
 		'list_type_toggle' => false,
 		'pagination' => true,
 		'no_results' => '',
@@ -1786,7 +1786,7 @@ function elgg_list_registered_entities(array $options = array()) {
 	$autofeed = true;
 
 	$defaults = array(
-		'full_view' => TRUE,
+		'full_view' => FALSE,
 		'allowed_types' => TRUE,
 		'list_type_toggle' => FALSE,
 		'pagination' => TRUE,

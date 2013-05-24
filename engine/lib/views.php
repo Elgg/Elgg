@@ -631,7 +631,7 @@ function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
  *  - ElggEntity 'entity' The entity being viewed
  *
  * Other common view $vars paramters:
- *  - bool 'full_view' Whether to show a full or condensed view.
+ *  - bool 'full_view' Whether to show a full or condensed view. (Default: true)
  *
  * @tip This function can automatically appends annotations to entities if in full
  * view and a handler is registered for the entity:annotate.  See {@trac 964} and
@@ -660,7 +660,7 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = false, 
 	$autofeed = true;
 
 	$defaults = array(
-		'full_view' => false,
+		'full_view' => true,
 	);
 
 	if (is_array($vars)) {
