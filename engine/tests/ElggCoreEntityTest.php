@@ -42,8 +42,6 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$test_attributes['time_updated'] = null;
 		$test_attributes['last_action'] = null;
 		$test_attributes['enabled'] = 'yes';
-// 		$test_attributes['tables_split'] = 1;
-// 		$test_attributes['tables_loaded'] = 0;
 		ksort($test_attributes);
 
 		$entity_attributes = $this->entity->expose_attributes();

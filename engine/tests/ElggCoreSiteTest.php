@@ -48,8 +48,6 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 		$attributes['time_updated'] = null;
 		$attributes['last_action'] = null;
 		$attributes['enabled'] = 'yes';
-//		$attributes['tables_split'] = 2;
-//		$attributes['tables_loaded'] = 0;
 		$attributes['name'] = null;
 		$attributes['description'] = null;
 		$attributes['url'] = null;
