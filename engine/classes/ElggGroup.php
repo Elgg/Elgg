@@ -26,7 +26,7 @@ class ElggGroup extends ElggEntity
 		$this->attributes['type'] = "group";
 		$this->attributes['name'] = NULL;
 		$this->attributes['description'] = NULL;
-		$this->attributes['tables_split'] = 2;
+		$this->tables_split = 2;
 	}
 
 	/**
@@ -429,7 +429,7 @@ class ElggGroup extends ElggEntity
 		}
 
 		$this->attributes = $attrs;
-		$this->attributes['tables_loaded'] = 2;
+		$this->tables_loaded = 2;
 		_elgg_cache_entity($this);
 
 		return true;

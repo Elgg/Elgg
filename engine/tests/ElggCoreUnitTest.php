@@ -94,9 +94,10 @@ class IdenticalEntityExpectation extends EqualExpectation {
 	 */
 	protected function entityToFilteredArray($value) {
 		$skippedKeys = array(
-			'last_action', 'tables_loaded'
+			'last_action'
 		);
 		$value = (array)$value;
+		unset($value["\0*\0tables_loaded"]);
 		foreach ($skippedKeys as $key) {
 			// See: http://www.php.net/manual/en/language.types.array.php#language.types.array.casting
 			$value["\0*\0attributes"][$key] = null;
