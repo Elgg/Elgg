@@ -41,7 +41,7 @@ class ElggUser extends ElggEntity
 		$this->attributes['prev_last_action'] = null;
 		$this->attributes['last_login'] = null;
 		$this->attributes['prev_last_login'] = null;
-		$this->attributes['tables_split'] = 2;
+		$this->tables_split = 2;
 	}
 
 	/**
@@ -112,7 +112,7 @@ class ElggUser extends ElggEntity
 		}
 
 		$this->attributes = $attrs;
-		$this->attributes['tables_loaded'] = 2;
+		$this->tables_loaded = 2;
 		_elgg_cache_entity($this);
 
 		return true;

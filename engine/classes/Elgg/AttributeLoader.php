@@ -117,7 +117,6 @@ class Elgg_AttributeLoader {
 		$this->required_type = $required_type;
 
 		$this->initialized_attributes = $initialized_attrs;
-		unset($initialized_attrs['tables_split'], $initialized_attrs['tables_loaded']);
 		$all_attr_names = array_keys($initialized_attrs);
 		$this->secondary_attr_names = array_diff($all_attr_names, self::$primary_attr_names);
 	}
@@ -177,13 +176,6 @@ class Elgg_AttributeLoader {
 		$row = (array) $row;
 		if (empty($row['guid'])) {
 			throw new InvalidArgumentException('$row must be or contain a GUID');
-		}
-
-		// these must be present to support isFullyLoaded()
-		foreach (array('tables_split', 'tables_loaded') as $key) {
-			if (isset($this->initialized_attributes[$key])) {
-				$row[$key] = $this->initialized_attributes[$key];
-			}
 		}
 
 		$was_missing_primaries = $this->isMissingPrimaries($row);

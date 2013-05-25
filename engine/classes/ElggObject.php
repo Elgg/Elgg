@@ -33,7 +33,7 @@ class ElggObject extends ElggEntity {
 		$this->attributes['type'] = "object";
 		$this->attributes['title'] = null;
 		$this->attributes['description'] = null;
-		$this->attributes['tables_split'] = 2;
+		$this->tables_split = 2;
 	}
 
 	/**
@@ -102,7 +102,7 @@ class ElggObject extends ElggEntity {
 		}
 
 		$this->attributes = $attrs;
-		$this->attributes['tables_loaded'] = 2;
+		$this->tables_loaded = 2;
 		_elgg_cache_entity($this);
 
 		return true;

@@ -87,11 +87,11 @@ class IdenticalEntityExpectation extends EqualExpectation {
 	 * @return array
 	 */
 	protected function entityToFilteredArray($entity) {
-		$skippedKeys = array('last_action', 'tables_loaded');
-		$array = (array) $entity;
+		$skippedKeys = array('last_action');
+		$array = (array)$entity;
+		unset($array["\0*\0tables_loaded"]);
 		foreach ($skippedKeys as $key) {
 			// See: http://www.php.net/manual/en/language.types.array.php#language.types.array.casting
-			// protected attributes have nulls with the keys
 			$array["\0*\0attributes"][$key] = null;
 		}
 		ksort($array["\0*\0attributes"]);
