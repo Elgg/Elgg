@@ -14,6 +14,7 @@ $container_guid = elgg_extract('container_guid', $vars);
 if (!$container_guid) {
 	$container_guid = elgg_get_logged_in_user_guid();
 }
+$container = get_entity($container_guid);
 $guid = elgg_extract('guid', $vars, null);
 
 if ($guid) {
@@ -48,6 +49,29 @@ if ($categories) {
 	echo $categories;
 }
 
+// Container selector for embed context.
+if (elgg_is_logged_in() && elgg_instanceof($container, 'group') && elgg_in_context('embed')) {
+	$container_label = elgg_echo('container');
+	$container_input = elgg_view('input/dropdown', array(
+		'name' => 'container_guid',
+		'options_values' => array(
+			elgg_get_logged_in_user_guid() => elgg_echo('container:me'),
+			$container_guid => elgg_echo('group') . ": $container->name",
+		),
+		'value' => $container_guid,
+	));
+
+	echo <<<HTML
+<div>
+	<label>$container_label</label><br />
+	$container_input
+</div>
+HTML;
+
+} else {
+	echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
+}
+
 ?>
 <div>
 	<label><?php echo elgg_echo('access'); ?></label><br />
@@ -55,8 +79,6 @@ if ($categories) {
 </div>
 <div class="elgg-foot">
 <?php
-
-echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => $container_guid));
 
 if ($guid) {
 	echo elgg_view('input/hidden', array('name' => 'file_guid', 'value' => $guid));
