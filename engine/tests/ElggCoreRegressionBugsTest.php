@@ -242,7 +242,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			$this->assertEqual($output, parse_urls($input));
 		}
 	}
-	
+
 	/**
 	 * Ensure additional select columns do not end up in entity attributes.
 	 * 
