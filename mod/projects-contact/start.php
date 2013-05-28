@@ -93,17 +93,15 @@ function projects_contact_url($entity) {
 
 function projects_contact_count_unread($projectGuid) {
 
-	$messages = elgg_get_entities_from_metadata(array(
+	return elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtype' => 'projects-contact',		
 		'metadata_name_value_pair' => array(
 			array('name' => 'readed', 'value' => 0),
 			array('name' => 'toGuid', 'value' => $projectGuid),
 		),
+		'count' => true,
 	));
-
-	$cont = sizeof($messages);
-	return $cont;
 }
 
 function projects_contact_message_block_menu($hook, $type, $return, $params) {		
