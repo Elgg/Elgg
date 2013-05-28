@@ -88,7 +88,7 @@
 .elgg-layout-error {
 	margin-top: 20px;
 }
-.elgg-layout-widgets > .elgg-col {
+.elgg-layout-widgets > .elgg-widgets {
 	float: right;
 }
 .elgg-layout-widgets > .elgg-col > .elgg-inner {
