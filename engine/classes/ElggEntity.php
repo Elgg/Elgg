@@ -1709,6 +1709,19 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
+	 * Handles additional columns that were loaded from database together with attributes.
+	 * 
+	 * @param array $data list of values to handle
+	 * @return bool
+	 */
+	protected function loadAdditionalColumns($data) {
+		foreach ($data as $name => $value) {
+			$this->setVolatileData("row:$name", $value);
+		}
+		return true;
+	}
+
+	/**
 	 * Disable this entity.
 	 *
 	 * Disabled entities are not returned by getter functions.
