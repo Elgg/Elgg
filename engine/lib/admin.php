@@ -134,11 +134,11 @@ function elgg_delete_admin_notice($id) {
 }
 
 /**
- * List all admin messages.
+ * Get admin notices. An admin must be logged in since the notices are private.
  *
  * @param int $limit Limit
  *
- * @return array List of admin notices
+ * @return array Array of admin notices
  * @since 1.8.0
  */
 function elgg_get_admin_notices($limit = 10) {
@@ -158,11 +158,13 @@ function elgg_get_admin_notices($limit = 10) {
  * @since 1.8.0
  */
 function elgg_admin_notice_exists($id) {
+	$old_ia = elgg_set_ignore_access(true);
 	$notice = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtype' => 'admin_notice',
 		'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id)
 	));
+	elgg_set_ignore_access($old_ia);
 
 	return ($notice) ? TRUE : FALSE;
 }
