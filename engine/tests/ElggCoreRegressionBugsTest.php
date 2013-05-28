@@ -275,4 +275,42 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		
 		$group->delete();
 	}
+	
+	/**
+	 * Checks if additional select columns are readable as volatile data
+	 *
+	 * https://github.com/Elgg/Elgg/issues/5543
+	 */
+	public function testSqlAdditionalSelectsAsVolatileData() {
+		global $ENTITY_CACHE;
+	
+		$access = elgg_set_ignore_access(false); //remove ignore access as it disables entity cache
+	
+		//may not have groups in DB - let's create one
+		$group = new ElggGroup();
+		$group->name = 'test_group';
+		$group->access_id = ACCESS_PUBLIC;
+		$this->assertTrue($group->save() !== false);
+	
+		//entity cache interferes with our test
+		$ENTITY_CACHE = array();
+		elgg_get_metadata_cache()->flush();
+	
+		foreach (array('site', 'user', 'group', 'object') as $type) {
+			$entities = elgg_get_entities(array(
+				'type' => $type,
+				'selects' => array('42 as added_col2'),
+				'limit' => 1,
+			));
+			$entity = array_shift($entities);
+			$this->assertTrue($entity instanceof ElggEntity);
+			$this->assertEqual($entity->added_col2, null, "Additional select columns are leaking to attributes for " . get_class($entity));
+			$this->assertEqual($entity->getVolatileData('row:added_col2'), 42);
+		}
+	
+		elgg_set_ignore_access($access);
+	
+		$group->delete();
+	}
+
 }
