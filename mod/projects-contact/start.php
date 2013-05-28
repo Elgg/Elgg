@@ -108,28 +108,28 @@ function projects_contact_count_unread($projectGuid) {
 
 function projects_contact_message_block_menu($hook, $type, $return, $params) {		
 
-	$ownerguid = $params['entity']->owner_guid;
-
-	if (elgg_instanceof($params['entity'], 'group', 'project')) {
-		//Message list
-		if ($ownerguid == elgg_get_logged_in_user_guid()) {
-			$url = "projects_contact/owner/{$params['entity']->alias}/}";
-			
-			$numMsg = projects_contact_count_unread($params['entity']->guid);
-			 
-			if ($numMsg>0) {
-				$UnReadCount = ' (' . $numMsg . ')';				
-			}
-
-			$item = new ElggMenuItem('projects_contact', elgg_echo('projects_contact:projects') . $UnReadCount, $url);
-			$return[] = $item;
-		}else{
-		//New Message
-			$url = "projects_contact/add/{$params['entity']->alias}";
-			$item = new ElggMenuItem('projects_contact', elgg_echo('projects_contact:add'), $url);
-			$return[] = $item;
-		}
+	if (!elgg_instanceof($params['entity'], 'group', 'project')) {
+		return $return;
 	}
+	
+	if ($params['entity']->isMember()) {
+		$url = "projects_contact/owner/{$params['entity']->alias}/}";
+		
+		$text = elgg_echo('projects_contact:projects');
+		$num_msg = projects_contact_count_unread($params['entity']->guid);
+		if ($num_msg > 0) {
+			$text .= " ($num_msg)";
+		}
+		
+		$return[] = new ElggMenuItem('projects_contact_inbox', $text, $url); 
+	}
+	
+	if (elgg_is_logged_in()) {
+		$url = "projects_contact/add/{$params['entity']->alias}";
+		$text = elgg_echo('projects_contact:add');
+		$return[] = new ElggMenuItem('projects_contact_add', $text, $url);
+	}
+
 	return $return;		
 }
 
