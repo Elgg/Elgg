@@ -58,10 +58,6 @@ class Elgg_Translit {
 			// currency
 			"\xE2\x82\xAC" /* € */ => ' E ',
 			"\xC2\xA3" /* £ */ => ' GBP ',
-			
-			"&" => ' ' . elgg_echo('translit:&') . ' ',
-			">" => ' ' . elgg_echo('translit:>') . ' ',
-			"<" => ' ' . elgg_echo('translit:<') . ' ',
 		));
 
 		// remove all ASCII except 0-9a-zA-Z, hyphen, underscore, and whitespace

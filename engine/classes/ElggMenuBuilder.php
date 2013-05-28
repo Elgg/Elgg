@@ -128,8 +128,10 @@ class ElggMenuBuilder {
 					$parent_name = $menu_item->getParentName();
 					if (array_key_exists($parent_name, $current_gen)) {
 						$next_gen[$menu_item->getName()] = $menu_item;
-						$current_gen[$parent_name]->addChild($menu_item);
-						$menu_item->setParent($current_gen[$parent_name]);
+						if (!in_array($menu_item, $current_gen[$parent_name]->getData('children'))) {
+							$current_gen[$parent_name]->addChild($menu_item);
+							$menu_item->setParent($current_gen[$parent_name]);
+						}
 						unset($children[$index]);
 					}
 				}

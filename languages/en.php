@@ -1186,14 +1186,6 @@ Please do not reply to this email.",
 	'js:lightbox:current' => "image %s of %s",
 
 /**
- * Friendly title substitutions
- */
-
-	'translit:&' => 'and',
-	'translit:>' => 'greater than',
-	'translit:<' => 'less than',
-
-/**
  * Languages according to ISO 639-1
  */
 
