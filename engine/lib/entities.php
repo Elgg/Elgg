@@ -1003,6 +1003,7 @@ function _elgg_fetch_entities_from_sql($sql, ElggBatch $batch = null) {
 		}
 		$entity = _elgg_retrieve_cached_entity($row->guid);
 		if ($entity) {
+			$entity->refresh($row);
 			$rows[$i] = $entity;
 			continue;
 		}

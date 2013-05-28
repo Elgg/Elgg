@@ -1720,6 +1720,19 @@ abstract class ElggEntity extends ElggData implements
 		}
 		return true;
 	}
+	
+	/**
+	 * Load fresh row data into existing entity. Overwrite only given data.
+	 * 
+	 * @param stdClass $row DB row with new entity data
+	 * @return bool
+	 */
+	public function refresh($row) {
+		if ($row instanceof stdClass) {
+			return $this->load($row);
+		}
+		return false;
+	}
 
 	/**
 	 * Disable this entity.
