@@ -19,7 +19,7 @@ $contact->container_guid = $toGuid;
 
 if ($contact->save()) {
 
-	system_message(elgg_echo('projects_contacts:save:success'));
+	system_message(elgg_echo('projects_contact:save:success'));
 	
 	add_to_river(array(
 		'view' => 'river/object/projects_contacts/create',
@@ -28,7 +28,7 @@ if ($contact->save()) {
 		'object_guid' => $contact->guid,
 	));
 	
-	forward(projects_contact_project_url($contact));
+	forward($contact->getContainerEntity()->getURL());
 
 } else {
 
