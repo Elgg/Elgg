@@ -9,11 +9,12 @@
 !/mod/bookmarks/
 !/mod/categories/
 !/mod/ckeditor4/
+!/mod/coopfunding_theme/
 !/mod/custom_index/
 !/mod/dashboard/
 !/mod/developers/
 !/mod/diagnostics/
-!/mod/friendly_time/
+!/mod/elgg_theme/
 !/mod/embed/
 !/mod/externalpages/
 !/mod/file/
