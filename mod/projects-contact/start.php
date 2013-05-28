@@ -21,7 +21,7 @@ function projects_contact_init() {
 	elgg_extend_view('js/elgg', 'projects-contact/js');
 
 	// Register a URL handler for projects_contact
-	elgg_register_entity_url_handler('object', 'projects_contact', 'projects_contact_url');
+	elgg_register_entity_url_handler('object', 'projects-contact', 'projects_contact_url');
 
 	// Register entity type for search
 	elgg_register_entity_type('object', 'projects-contact');
@@ -50,8 +50,8 @@ function projects_contact_page_handler($page) {
 			if (!$project) {
 				forward();
 			}
-			
-			set_input('project_guid', $project->guid);
+
+			elgg_set_page_owner_guid($project->guid);
 			elgg_push_breadcrumb($project->name, $project->getUrl());
 			
 			include "$pages/owner.php";						
@@ -63,8 +63,7 @@ function projects_contact_page_handler($page) {
 
 			set_input('guid', $page[1]);	
 			
-			$url =  projects_contact_project_url($contact);
-			elgg_push_breadcrumb($project->name, $url);
+			elgg_push_breadcrumb($project->name, $project->getURL());
 					
 			include "$pages/view.php";
 			break;

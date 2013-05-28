@@ -11,8 +11,8 @@ $contact = new ElggObject;
 $contact->subtype = 'projects-contact';
 $contact->fromGuid = $fromGuid;
 $contact->toGuid = $toGuid;
-$contact->subject = $subject;
-$contact->message = $message;
+$contact->title = $subject;
+$contact->description = $message;
 $contact->readed = false;
 
 $contact->container_guid = $toGuid;
