@@ -3,7 +3,7 @@
 	<name>Projects Contact</name>
 	<author>Coopfunding developers</author>
 	<version>0.1-beta</version>
-	<category>bundled</category>
+	<category>coopfunding-bundled</category>
 	<category>social</category>
 	<category>content</category>
 	<description>Provides contact form for projects.</description>
@@ -13,6 +13,10 @@
 	<requires>
 		<type>elgg_release</type>
 		<version>1.8</version>
+	</requires>
+	<requires>
+		<type>plugin</type>
+		<name>projects</name>
 	</requires>
 	<activate_on_install>true</activate_on_install>
 </plugin_manifest>
