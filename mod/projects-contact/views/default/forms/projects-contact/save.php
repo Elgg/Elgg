@@ -1,21 +1,16 @@
 <?php
-$fromGuid = elgg_extract('fromGuid', $vars, '');
-$fromName = elgg_extract('fromName', $vars, '');
-
-$toGuid = elgg_extract('toGuid', $vars, '');
-$toName = elgg_extract('toName', $vars, '');
+$from_entity = elgg_extract('from_entity', $vars, '');
+$to_entity = elgg_extract('to_entity', $vars, '');
 
 $subject = elgg_extract('subject', $vars, '');
 $message = elgg_extract('message', $vars, '');
 
-$project = elgg_extract('project', $vars);
-
 ?>
 <div>
 	<?php echo elgg_echo('projects_contact:from'); ?>
-	<label><?php echo $fromName; ?></label> / 
+	<label><?php echo $from_entity->name; ?></label> / 
 	<?php echo elgg_echo('projects_contact:to'); ?>
-	<label id="toName" value="<?php echo $toName; ?>"><?php echo $toName; ?></label><br />
+	<label id="toName" value="<?php echo $to_entity->name; ?>"><?php echo $to_entity->name; ?></label><br />
 
 	<label><?php echo elgg_echo('projects_contact:subject'); ?></label><br />
 	<?php echo elgg_view('input/text', array('name' => 'subject', 'value' => $subject)); ?>
@@ -27,8 +22,8 @@ $project = elgg_extract('project', $vars);
 <div class="elgg-foot">
 <?php
 
-	echo elgg_view('input/hidden', array('name' => 'fromGuid', 'value' => $fromGuid));
-	echo elgg_view('input/hidden', array('name' => 'toGuid', 'value' => $toGuid));
+	echo elgg_view('input/hidden', array('name' => 'fromGuid', 'value' => $from_entity->guid));
+	echo elgg_view('input/hidden', array('name' => 'toGuid', 'value' => $to_entity->guid));
 
 	echo elgg_view('input/submit', array('value' => elgg_echo("Enviar")));
 ?>

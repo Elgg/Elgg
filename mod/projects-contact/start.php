@@ -32,6 +32,7 @@ function projects_contact_init() {
 function projects_contact_page_handler($page) {
 
 	elgg_load_library('elgg:projects_contact');
+	elgg_load_library('elgg:projects');
 	
 	if (!isset($page[0])) {
 		$page[0] = 'owner';
@@ -44,11 +45,14 @@ function projects_contact_page_handler($page) {
 	switch ($page[0]) {
 	
 		case "owner":			
-			set_input('projectGuid', $page[1]);
-			set_input('projectName', $page[2]);
+			$project = projects_get_from_alias($page[1]);
 
-			$url = projects_contact_project_url_($page[1], $page[2]);
-			elgg_push_breadcrumb($page[2], $url);
+			if (!$project) {
+				forward();
+			}
+			
+			set_input('project_guid', $project->guid);
+			elgg_push_breadcrumb($project->name, $project->getUrl());
 			
 			include "$pages/owner.php";						
 			break;
@@ -66,7 +70,11 @@ function projects_contact_page_handler($page) {
 			break;
 
 		case "add":
-			set_input('project', $page[1]);
+			$project_guid = projects_get_from_alias($page[1])->guid;
+			if (!$project_guid) {
+				forward();
+			}
+			elgg_set_page_owner_guid($project_guid);
 			include "$pages/add.php";
 			break;
 
@@ -80,19 +88,7 @@ function projects_contact_page_handler($page) {
 
 
 function projects_contact_url($entity) {	
-	global $CONFIG;
-	return $CONFIG->url . "projects_contact/view/" . $entity->getGUID();
-}
-
-function projects_contact_project_url($entity) {
-	$project = get_entity($entity->toGuid);
-	return projects_contact_project_url_ ($entity->toGuid, $project->name);
-}
-
-function projects_contact_project_url_($guid, $name) {
-	global $CONFIG;
-	$url = "projects/profile/{$guid}/{$name}";
-	return $CONFIG->url . $url;
+	return elgg_get_site_url() . "projects_contact/view/" . $entity->getGUID();
 }
 
 function projects_contact_count_unread($projectGuid) {
@@ -100,7 +96,10 @@ function projects_contact_count_unread($projectGuid) {
 	$messages = elgg_get_entities_from_metadata(array(
 		'type' => 'object',
 		'subtype' => 'projects-contact',		
-		'metadata_name_value_pair' => array(array('name' => 'readed', 'value' => 0), array('name' => 'toGuid', 'value' => $projectGuid))
+		'metadata_name_value_pair' => array(
+			array('name' => 'readed', 'value' => 0),
+			array('name' => 'toGuid', 'value' => $projectGuid),
+		),
 	));
 
 	$cont = sizeof($messages);
@@ -109,12 +108,12 @@ function projects_contact_count_unread($projectGuid) {
 
 function projects_contact_message_block_menu($hook, $type, $return, $params) {		
 
-	$ownerguid = (int)$params['entity']->owner_guid;
+	$ownerguid = $params['entity']->owner_guid;
 
-	if (get_subtype_from_id ($params['entity']->subtype) == 'project') {
+	if (elgg_instanceof($params['entity'], 'group', 'project')) {
 		//Message list
 		if ($ownerguid == elgg_get_logged_in_user_guid()) {
-			$url = "projects_contact/owner/{$params['entity']->guid}/{$params['entity']->name}";
+			$url = "projects_contact/owner/{$params['entity']->alias}/}";
 			
 			$numMsg = projects_contact_count_unread($params['entity']->guid);
 			 
@@ -126,7 +125,7 @@ function projects_contact_message_block_menu($hook, $type, $return, $params) {
 			$return[] = $item;
 		}else{
 		//New Message
-			$url = "projects_contact/add/{$params['entity']->guid}/{$params['entity']->name}";
+			$url = "projects_contact/add/{$params['entity']->alias}";
 			$item = new ElggMenuItem('projects_contact', elgg_echo('projects_contact:add'), $url);
 			$return[] = $item;
 		}

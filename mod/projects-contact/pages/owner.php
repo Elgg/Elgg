@@ -1,7 +1,6 @@
 <?php
 
 $projectGuid = (int)get_input('projectGuid');
-$projectName = get_input('projectName');
 
 $title = elgg_echo('projects_contact:inbox');
 
@@ -10,7 +9,8 @@ elgg_push_breadcrumb($title);
 $content = elgg_list_entities_from_metadata(array(
 	'type' => 'object',
 	'subtype' => 'projects-contact',
-	'metadata_name_value_pair' => array(array('name' => 'toGuid', 'value' => $projectGuid)),
+	'metadata_name' => 'toGuid',
+	'metadata_value' => $projectGuid,
 	'limit' => 10,
 	'typeof' => '', //established on the form, depending on whether the message is readed or not 
 	'view_toggle_type' => false,

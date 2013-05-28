@@ -1,6 +1,6 @@
 <?php
 
-function projects_contact_prepare_form_vars($contact = null) {
+function projects_contact_prepare_form_vars($project_guid, $contact = null) {
 	
 	if ($contact) {
 
@@ -17,23 +17,17 @@ function projects_contact_prepare_form_vars($contact = null) {
 		);
 
 	}else {
-		$userGuid = (int) elgg_get_logged_in_user_guid();
-		
-		$userName = get_user($userGuid)->name;
-
-		$projectGuid = get_input('project', '');
-		$projectName = get_entity($projectGuid)->name;
+		$user = elgg_get_logged_in_user_entity();
+		$project = get_entity($project_guid);
 		
 		$values = array(
-			'fromGuid' =>  $userGuid,
-			'fromName' =>  $userName,
-			'toGuid' =>  $projectGuid,
-			'toName' =>  $projectName,
+			'from_entity' =>  $user,
+			'to_entity' =>  $project,
 			'subject' => get_input('subject', ''),
 			'message' => get_input('message', ''),
 			'readed'  => get_input('readed', ''),
 			'time_created' => '', 		
-			'container_guid' => $projectGuid,
+			'container_guid' => $project->guid,
 			'entity' => $contact,
 		);
 	}
