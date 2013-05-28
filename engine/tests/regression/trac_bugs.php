@@ -208,12 +208,12 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$cases = array(
 			// acid test
 			"B&N > Amazon, OK? <bold> 'hey!' $34"
-			=> "b-and-n-greater-than-amazon-ok-bold-hey-34",
+			=> "bn-amazon-ok-bold-hey-34",
 
 			// hyphen, underscore and ASCII whitespace replaced by separator,
 			// other non-alphanumeric ASCII removed
-			"a-a_a a\na\ra\ta\va!a\"a#a\$a%a&a'a(a)a*a+a,a.a/a:a;a=a?a@a[a\\a]a^a`a{a|a}a~a"
-			=> "a-a-a-a-a-a-aaaaaaa-and-aaaaaaaaaaaaaaaaaaaaaaa",
+			"a-a_a a\na\ra\ta\va!a\"a#a\$a%aa'a(a)a*a+a,a.a/a:a;a=a?a@a[a\\a]a^a`a{a|a}a~a"
+			=> "a-a-a-a-a-a-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 			
 			// separators trimmed
 			"-_ hello _-" 
