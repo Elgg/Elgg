@@ -40,6 +40,9 @@ class ElggUser extends ElggEntity
 		$this->attributes['code'] = NULL;
 		$this->attributes['banned'] = "no";
 		$this->attributes['admin'] = 'no';
+		$this->attributes['prev_last_action'] = NULL;
+		$this->attributes['last_login'] = NULL;
+		$this->attributes['prev_last_login'] = NULL;
 		$this->attributes['tables_split'] = 2;
 	}
 
@@ -112,6 +115,7 @@ class ElggUser extends ElggEntity
 
 		$this->attributes = $attrs;
 		$this->attributes['tables_loaded'] = 2;
+		$this->loadAdditionalColumns($attr_loader->getAdditionalColumns());
 		_elgg_cache_entity($this);
 
 		return true;
