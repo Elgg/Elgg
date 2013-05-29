@@ -2470,11 +2470,18 @@ function update_entity_last_action($guid, $posted = NULL) {
 function entities_gc() {
 	global $CONFIG;
 
-	$tables = array ('sites_entity', 'objects_entity', 'groups_entity', 'users_entity');
+	$tables = array(
+		'site' => 'sites_entity',
+		'object' => 'objects_entity',
+		'group' => 'groups_entity',
+		'user' => 'users_entity'
+	);
 
-	foreach ($tables as $table) {
-		delete_data("DELETE from {$CONFIG->dbprefix}{$table}
-			where guid NOT IN (SELECT guid from {$CONFIG->dbprefix}entities)");
+	foreach ($tables as $type => $table) {
+		delete_data("DELETE FROM {$CONFIG->dbprefix}{$table}
+			WHERE guid NOT IN (SELECT guid FROM {$CONFIG->dbprefix}entities)");
+		delete_data("DELETE FROM {$CONFIG->dbprefix}entities
+			WHERE type = '$type' AND guid NOT IN (SELECT guid FROM {$CONFIG->dbprefix}{$table})");
 	}
 }
 
