@@ -359,6 +359,7 @@ $english = array(
 	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
 
 	'avatar' => 'Avatar',
+	'avatar:noaccess' => "You're not allowed to edit this user's avatar",
 	'avatar:create' => 'Create your avatar',
 	'avatar:edit' => 'Edit avatar',
 	'avatar:preview' => 'Preview',
