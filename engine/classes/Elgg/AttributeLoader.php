@@ -98,6 +98,11 @@ class Elgg_AttributeLoader {
 	public $full_loader = '';
 
 	/**
+	 * @var array list of received values that are not attributes 
+	 */
+	protected $additional_value_columns = array();
+
+	/**
 	 * Constructor
 	 * 
 	 * @param string $class             class of object being loaded
@@ -156,6 +161,14 @@ class Elgg_AttributeLoader {
 		}
 	}
 
+	/**
+	 * @return array list of values that were passed to last getRequiredAttributes call, 
+	 * but were not real attributes (ie. additional join columns or selects)
+	 */
+	public function getAdditionalColumns() {
+		return $this->additional_value_columns;
+	}
+	
 	/**
 	 * Get all required attributes for the entity, validating any that are passed in. Returns empty array
 	 * if can't be loaded (Check $failure_reason).
@@ -236,6 +249,18 @@ class Elgg_AttributeLoader {
 					throw new IncompleteEntityException("Secondary loader failed to return row for {$row['guid']}");
 				}
 				$row = array_merge($row, $fetched);
+			}
+		}
+		
+		// filter out additional columns and keep separately
+		$this->additional_value_columns = array();
+		foreach ($row as $key => $val) {
+			if (!in_array($key, self::$primary_attr_names) 
+				&& !in_array($key, $this->secondary_attr_names)
+				&& !in_array($key, array('tables_split', 'tables_loaded'))// @todo remove when #4584 is in place
+			) {
+				$this->additional_value_columns[$key] = $val;
+				unset($row[$key]);
 			}
 		}
 
