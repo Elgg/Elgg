@@ -1,4 +1,13 @@
 <?php
+/**
+ * Layout body
+ *
+ * @uses $vars['nav']  		Navigation (override)
+ * @uses $vars['header'] 	HTML for overriding the default header (override)
+ * @uses $vars['filter'] 	Boolean true if default filter should be used or custom HTML for overriding the default filter (override)
+ * @uses $vars['footer'] 	optional footer for main content area
+ */
+
 // navigation defaults to breadcrumbs
 if (isset($vars['nav'])) {
 	echo $vars['nav'];
@@ -23,9 +32,9 @@ if (!empty($vars['filter'])) {
 
 echo $vars['content'];
 
-// @deprecated 1.8
 if (isset($vars['area1'])) {
-	// @todo: add deprecated notice
+	// @deprecated 1.8
+	elgg_deprecated_notice("Use content instead of area1", 1.8);
 	echo $vars['area1'];
 }
 
