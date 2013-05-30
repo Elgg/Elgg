@@ -7,7 +7,7 @@
  *
  * @uses $vars['content'] Content string
  * @uses $vars['sidebar'] Optional sidebar content
- * @uses $vars['title']   Title string
+ * @uses $vars['title']   Optional title string
  */
 
 ?>
