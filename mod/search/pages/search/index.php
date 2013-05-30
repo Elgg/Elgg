@@ -31,9 +31,11 @@ $display_query = htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
 if (!$query) {
 	$title = sprintf(elgg_echo('search:results'), "\"$display_query\"");
 	
-	$body  = elgg_view_title(elgg_echo('search:search_error'));
-	$body .= elgg_echo('search:no_query');
-	$layout = elgg_view_layout('one_sidebar', array('content' => $body));
+	$body = elgg_echo('search:no_query');
+	$layout = elgg_view_layout('one_sidebar', array(
+		'title' => elgg_echo('search:search_error'),
+		'content' => $body
+	));
 	echo elgg_view_page($title, $layout);
 
 	return;
@@ -264,19 +266,19 @@ if ($search_type == 'tags') {
 }
 $highlighted_query = search_highlight_words($searched_words, $display_query);
 
-$body = elgg_view_title(elgg_echo('search:results', array("\"$highlighted_query\"")));
+$highlighted_title = elgg_echo('search:results', array("\"$highlighted_query\""));
 
 if (!$results_html) {
-	$body .= elgg_view('search/no_results');
+	$body = elgg_view('search/no_results');
 } else {
-	$body .= $results_html;
+	$body = $results_html;
 }
 
 // this is passed the original params because we don't care what actually
 // matched (which is out of date now anyway).
 // we want to know what search type it is.
 $layout_view = search_get_search_view($params, 'layout');
-$layout = elgg_view($layout_view, array('params' => $params, 'body' => $body));
+$layout = elgg_view($layout_view, array('params' => $params, 'body' => $body, 'title' => $highlighted_title));
 
 $title = elgg_echo('search:results', array("\"$display_query\""));
 

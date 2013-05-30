@@ -15,6 +15,13 @@ if (elgg_is_logged_in()) {
 	forward('');
 }
 
-$login_box = elgg_view('core/account/login_box');
-$content = elgg_view_layout('one_column', array('content' => $login_box));
-echo elgg_view_page(elgg_echo('login'), $content);
+$title = elgg_echo('login');
+
+$content = elgg_view('core/account/login_box', array("title" => false));
+
+$body = elgg_view_layout('one_column', array(
+	'title' => $title,
+	'content' => $content
+));
+
+echo elgg_view_page($title, $body);

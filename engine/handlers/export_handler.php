@@ -113,6 +113,8 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 	throw new InvalidParameterException("Missing parameter, you need to provide a GUID.");
 }
 
-$content = elgg_view_title($title) . $body;
-$body = elgg_view_layout('one_sidebar', array('content' => $content));
+$body = elgg_view_layout('one_sidebar', array(
+	'title' => $title,
+	'content' => $body
+));
 echo elgg_view_page($title, $body);

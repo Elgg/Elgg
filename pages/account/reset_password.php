@@ -21,15 +21,17 @@ if (!$user instanceof ElggUser) {
 	forward();
 }
 
+$title = elgg_echo('resetpassword');
+
 $params = array(
 	'guid' => $user_guid,
 	'code' => $code,
 );
-$form = elgg_view_form('user/passwordreset', array('class' => 'elgg-form-account'), $params);
+$content = elgg_view_form('user/passwordreset', array('class' => 'elgg-form-account'), $params);
 
-$title = elgg_echo('resetpassword');
-$content = elgg_view_title(elgg_echo('resetpassword')) . $form;
-
-$body = elgg_view_layout('one_column', array('content' => $content));
+$body = elgg_view_layout('one_column', array(
+	'title' => $title,
+	'content' => $content
+));
 
 echo elgg_view_page($title, $body);
