@@ -37,9 +37,8 @@ if (isset($vars['buttons']) && $vars['buttons']) {
 		'class' => 'elgg-menu-hz',
 	));
 }
-
-echo <<<HTML
-<div class="elgg-head clearfix">
-	$title$buttons
-</div>
-HTML;
+if (!empty($title) || !empty($buttons)) {
+	echo "<div class='elgg-head clearfix'>";
+	echo $title . $buttons;
+	echo "</div>";
+}
