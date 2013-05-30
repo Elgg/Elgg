@@ -17,7 +17,7 @@ if (isset($vars['header_override'])) {
 $context = elgg_extract('context', $vars, elgg_get_context());
 
 $title = elgg_extract('title', $vars, '');
-if (!$title) {
+if ($title !== false) {
 	$title = elgg_echo($context);
 }
 // @todo .elgg-heading-main supports action buttons - maybe rename class name?
@@ -28,8 +28,6 @@ $buttons = elgg_view_menu('title', array(
 	'class' => 'elgg-menu-hz',
 ));
 
-echo <<<HTML
-<div class="elgg-head clearfix">
-	$title$buttons
-</div>
-HTML;
+if ($title || $buttons) {
+	echo "<div class=\"elgg-head clearfix\">$title$buttons</div>";
+}
