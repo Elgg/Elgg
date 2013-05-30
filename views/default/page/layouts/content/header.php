@@ -9,11 +9,6 @@
  * @uses $vars['context']         Page context (override)
  */
 
-if (isset($vars['buttons'])) {
-	// it was a bad idea to implement buttons with a pass through
-	elgg_deprecated_notice("Use elgg_register_menu_item() to register for the title menu", 1.0);
-}
-
 if (isset($vars['header_override'])) {
 	echo $vars['header_override'];
 	return true;
@@ -24,18 +19,16 @@ if (!isset($vars['title'])) {
 
 	$vars["title"] = elgg_echo($context);
 }
+
 if (!empty($vars["title"])) {
 	$title = elgg_view_title($vars["title"], array('class' => 'elgg-heading-main'));
 }
 
-if (isset($vars['buttons']) && $vars['buttons']) {
-	$buttons = $vars['buttons'];
-} else {
-	$buttons = elgg_view_menu('title', array(
-		'sort_by' => 'priority',
-		'class' => 'elgg-menu-hz',
-	));
-}
+$buttons = elgg_view_menu('title', array(
+	'sort_by' => 'priority',
+	'class' => 'elgg-menu-hz',
+));
+
 if (!empty($title) || !empty($buttons)) {
 	echo "<div class='elgg-head clearfix'>";
 	echo $title . $buttons;
