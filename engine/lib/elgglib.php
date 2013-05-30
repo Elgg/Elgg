@@ -2247,6 +2247,9 @@ function elgg_api_test($hook, $type, $value, $params) {
 /**#@+
  * Controls access levels on ElggEntity entities, metadata, and annotations.
  *
+ * @warning ACCESS_DEFAULT is a place holder for the input/access view. Do not
+ * use it when saving an entity.
+ * 
  * @var int
  */
 define('ACCESS_DEFAULT', -1);
