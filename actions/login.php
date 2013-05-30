@@ -9,7 +9,6 @@
 // set forward url
 if (!empty($_SESSION['last_forward_from'])) {
 	$forward_url = $_SESSION['last_forward_from'];
-	unset($_SESSION['last_forward_from']);
 } elseif (get_input('returntoreferer')) {
 	$forward_url = REFERER;
 } else {
@@ -60,6 +59,10 @@ if ($user->language) {
 	$message = elgg_echo('loginok', array(), $user->language);
 } else {
 	$message = elgg_echo('loginok');
+}
+
+if (isset($_SESSION['last_forward_from'])) {
+	unset($_SESSION['last_forward_from']);
 }
 
 system_message($message);
