@@ -19,13 +19,15 @@ if (isset($vars['header_override'])) {
 	return true;
 }
 
-$context = elgg_extract('context', $vars, elgg_get_context());
-
 $title = elgg_extract('title', $vars, '');
-if (!$title) {
+if ($title === '') {
+	$context = elgg_extract('context', $vars, elgg_get_context());
+
 	$title = elgg_echo($context);
 }
-$title = elgg_view_title($title, array('class' => 'elgg-heading-main'));
+if (!empty($title)) {
+	$title = elgg_view_title($title, array('class' => 'elgg-heading-main'));
+}
 
 if (isset($vars['buttons']) && $vars['buttons']) {
 	$buttons = $vars['buttons'];
