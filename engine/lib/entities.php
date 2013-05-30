@@ -407,7 +407,7 @@ function update_subtype($type, $subtype, $class = '') {
  * @param int $time_created   The time creation timestamp
  *
  * @return bool
- * @link http://docs.elgg.org/DataModel/Entities
+ * @throws InvalidParameterException
  * @access private
  */
 function update_entity($guid, $owner_guid, $access_id, $container_guid = null, $time_created = null) {
@@ -428,6 +428,10 @@ function update_entity($guid, $owner_guid, $access_id, $container_guid = null, $
 		$time_created = $entity->time_created;
 	} else {
 		$time_created = (int) $time_created;
+	}
+
+	if ($access_id == ACCESS_DEFAULT) {
+		throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.h');
 	}
 
 	if ($entity && $entity->canEdit()) {
@@ -556,7 +560,6 @@ $container_guid = 0) {
 	$type = sanitise_string($type);
 	$subtype_id = add_subtype($type, $subtype);
 	$owner_guid = (int)$owner_guid;
-	$access_id = (int)$access_id;
 	$time = time();
 	if ($site_guid == 0) {
 		$site_guid = $CONFIG->site_guid;
@@ -564,6 +567,10 @@ $container_guid = 0) {
 	$site_guid = (int) $site_guid;
 	if ($container_guid == 0) {
 		$container_guid = $owner_guid;
+	}
+	$access_id = (int)$access_id;
+	if ($access_id == ACCESS_DEFAULT) {
+		throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.h');
 	}
 
 	$user_guid = elgg_get_logged_in_user_guid();
