@@ -240,6 +240,7 @@ function leave_group($group_guid, $user_guid) {
  */
 function get_users_membership($user_guid) {
 	$options = array(
+		'type' => 'group',
 		'relationship' => 'member',
 		'relationship_guid' => $user_guid,
 		'inverse_relationship' => false,
