@@ -425,7 +425,7 @@ function elgg_get_metastring_based_objects($options) {
 		$wheres[] = get_access_sql_suffix('n_table');
 	}
 
-	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE) {
+	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE && !$options['count']) {
 		$selects = array_unique($selects);
 		// evalutate selects
 		$select_str = '';
@@ -436,6 +436,9 @@ function elgg_get_metastring_based_objects($options) {
 		}
 
 		$query = "SELECT DISTINCT n_table.*{$select_str} FROM {$db_prefix}$type n_table";
+	} elseif ($options['count']) {
+		// count is over the entities
+		$query = "SELECT count(DISTINCT e.guid) as calculation FROM {$db_prefix}$type n_table";
 	} else {
 		$query = "SELECT {$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
 	}
@@ -464,7 +467,7 @@ function elgg_get_metastring_based_objects($options) {
 			$defaults['order_by']);
 	}
 
-	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE) {
+	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE && !$options['count']) {
 		if (isset($options['group_by'])) {
 			$options['group_by'] = sanitise_string($options['group_by']);
 			$query .= " GROUP BY {$options['group_by']}";

@@ -2755,7 +2755,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			'calculation' => 'count',
 			'count' => true,
 		);
-		$count = (int)elgg_get_entities_from_annotation_calculation($options);
+		$count = elgg_get_entities_from_annotation_calculation($options);
 		$this->assertEqual(1, $count);
 	}
 
