@@ -14,8 +14,10 @@ elgg_register_event_handler('init', 'system', 'embed_init');
 function embed_init() {
 	elgg_extend_view('css/elgg', 'embed/css');
 	elgg_extend_view('css/admin', 'embed/css');
-	
-	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'embed_longtext_menu');
+
+	if (elgg_is_logged_in()) {
+		elgg_register_plugin_hook_handler('register', 'menu:longtext', 'embed_longtext_menu');
+	}
 	elgg_register_plugin_hook_handler('register', 'menu:embed', 'embed_select_tab', 1000);
 
 	// Page handler for the modal media embed
