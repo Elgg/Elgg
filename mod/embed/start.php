@@ -40,28 +40,30 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 	if (elgg_get_context() == 'embed') {
 		return $items;
 	}
-
-	$url = 'embed';
-
-	$page_owner = elgg_get_page_owner_entity();
-	if (elgg_instanceof($page_owner, 'group') && $page_owner->isMember()) {
-		$url = 'embed?container_guid=' . $page_owner->getGUID();
-	}
-
-	$items[] = ElggMenuItem::factory(array(
-		'name' => 'embed',
-		'href' => $url,
-		'text' => elgg_echo('embed:media'),
-		'rel' => "embed-lightbox-{$vars['id']}",
-		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$vars['id']}",
-		'priority' => 10,
-	));
-
-	elgg_load_js('lightbox');
-	elgg_load_css('lightbox');
-	elgg_load_js('jquery.form');
-	elgg_load_js('elgg.embed');
 	
+	if (elgg_is_logged_in()) {
+		$url = 'embed';
+	
+		$page_owner = elgg_get_page_owner_entity();
+		if (elgg_instanceof($page_owner, 'group') && $page_owner->isMember()) {
+			$url = 'embed?container_guid=' . $page_owner->getGUID();
+		}
+	
+		$items[] = ElggMenuItem::factory(array(
+			'name' => 'embed',
+			'href' => $url,
+			'text' => elgg_echo('embed:media'),
+			'rel' => "embed-lightbox-{$vars['id']}",
+			'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$vars['id']}",
+			'priority' => 10,
+		));
+	
+		elgg_load_js('lightbox');
+		elgg_load_css('lightbox');
+		elgg_load_js('jquery.form');
+		elgg_load_js('elgg.embed');
+	}
+		
 	return $items;
 }
 
