@@ -21,16 +21,14 @@ if ($owner_entity && elgg_instanceof($owner_entity, 'group')) {
 }
 
 $options = array(
-	'annotation_name' => 'generic_comment',
-	'owner_guid' => $owner_guid,
-	'reverse_order_by' => true,
-	'limit' => elgg_extract('limit', $vars, 4),
 	'type' => 'object',
-	'subtypes' => elgg_extract('subtypes', $vars, ELGG_ENTITIES_ANY_VALUE),
+	'subtype' => 'comment',
+	'owner_guid' => $owner_guid,
+	'limit' => elgg_extract('limit', $vars, 4),
 );
 
 $title = elgg_echo('generic_comments:latest');
-$comments = elgg_get_annotations($options);
+$comments = elgg_get_entities($options);
 if ($comments) {
 	$body = elgg_view('page/components/list', array(
 		'items' => $comments,

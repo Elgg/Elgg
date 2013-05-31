@@ -9,6 +9,7 @@ $item = $vars['item'];
 
 $subject = $item->getSubjectEntity();
 $object = $item->getObjectEntity();
+$container = $object->getContainerEntity();
 
 $subject_link = elgg_view('output/url', array(
 	'href' => $subject->getURL(),
@@ -28,7 +29,6 @@ $action = $item->action_type;
 $type = $item->type;
 $subtype = $item->subtype ? $item->subtype : 'default';
 
-$container = $object->getContainerEntity();
 if ($container instanceof ElggGroup) {
 	$params = array(
 		'href' => $container->getURL(),

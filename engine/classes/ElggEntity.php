@@ -900,7 +900,12 @@ abstract class ElggEntity extends ElggData implements
 		if (is_int($num)) {
 			return $num;
 		} else {
-			return $this->getAnnotationCalculation('generic_comment', 'count');
+			return elgg_get_entities(array(
+				'type' => 'object',
+				'subtype' => 'comment',
+				'container_guid' => $this->getGUID(),
+				'count' => true,
+			));
 		}
 	}
 
