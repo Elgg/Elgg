@@ -16,7 +16,6 @@ elgg_push_breadcrumb($page_owner->name, $page_owner->getURL());
 $options = array(
 	'annotations_name' => 'messageboard',
 	'guid' => $page_owner_guid,
-	'limit' => 10,
 	'reverse_order_by' => true,
 );
 

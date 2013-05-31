@@ -26,7 +26,7 @@ $content .= elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'thewire',
 	'owner_guid' => $owner->guid,
-	'limit' => 15,
+	'limit' => get_input('limit', 15),
 ));
 
 $body = elgg_view_layout('content', array(

@@ -18,7 +18,6 @@ $content .= elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'bookmarks',
 	'container_guid' => $page_owner->guid,
-	'limit' => 10,
 	'full_view' => false,
 	'view_toggle_type' => false
 ));
