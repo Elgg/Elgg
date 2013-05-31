@@ -130,9 +130,9 @@ function elgg_is_admin_user($user_guid) {
 	$version = (int) datalist_get('version');
 
 	if ($version < 2010040201) {
-		$admin = get_metastring_id('admin');
-		$yes = get_metastring_id('yes');
-		$one = get_metastring_id('1');
+		$admin = add_metastring('admin');
+		$yes = add_metastring('yes');
+		$one = add_metastring('1');
 
 		$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as e,
 			{$CONFIG->dbprefix}metadata as md
