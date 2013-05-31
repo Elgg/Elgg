@@ -446,7 +446,7 @@ class ElggSite extends ElggEntity {
 						_elgg_services()->session->set('last_forward_from', current_page_url());
 					}
 					register_error(elgg_echo('loggedinrequired'));
-					forward();
+					forward('', 'walled_garden');
 				}
 			}
 		}
