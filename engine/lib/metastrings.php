@@ -122,7 +122,7 @@ function get_metastring($id) {
 
 /**
  * Add a metastring.
- * It returns the id of the tag, whether by creating it or updating it.
+ * It returns the id of the metastring. If it does not exist, it will be created.
  *
  * @param string $string         The value (whatever that is) to be stored
  * @param bool   $case_sensitive Do we want to make the query case sensitive?
