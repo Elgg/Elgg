@@ -785,6 +785,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
  *		'list_class'       CSS class applied to the list
  *		'item_class'       CSS class applied to the list items
  *		'pagination'       Display pagination?
+ *		'list_view'		   An alternative view to render the list
  *		'list_type'        List type: 'list' (default), 'gallery'
  *		'list_type_toggle' Display the list type toggle?
  *
@@ -836,11 +837,21 @@ $list_type_toggle = true, $pagination = true) {
 		);
 	}
 
-	if ($vars['list_type'] != 'list') {
-		return elgg_view('page/components/gallery', $vars);
-	} else {
-		return elgg_view('page/components/list', $vars);
+	if (isset($vars['list_view'])) {
+		$list_view = $vars['list_view'];
+		unset($vars['list_view']);
 	}
+
+	if (!$list_view || !elgg_view_exists($list_view)) {
+		if ($vars['list_type'] != 'list') {
+			$list_view = 'page/components/gallery';
+		} else {
+			$list_view = 'page/components/list';
+		}
+	}
+	
+	return elgg_view($list_view, $vars);
+
 }
 
 /**
