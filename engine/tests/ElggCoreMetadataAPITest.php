@@ -33,11 +33,11 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		}
 
 		// lookup metastring id
-		$cs_ids = get_metastring_id('metaUnitTest', TRUE);
+		$cs_ids = elgg_get_metastring_id('metaUnitTest', TRUE);
 		$this->assertEqual($cs_ids, $this->metastrings['metaUnitTest']);
 
 		// lookup all metastrings, ignoring case
-		$cs_ids = get_metastring_id('metaUnitTest', FALSE);
+		$cs_ids = elgg_get_metastring_id('metaUnitTest', FALSE);
 		$this->assertEqual(count($cs_ids), 3);
 		$this->assertEqual(count($cs_ids), count($this->metastrings));
 		foreach ($cs_ids as $string )
@@ -47,8 +47,8 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 	}
 
 	public function testElggGetEntitiesFromMetadata() {
-		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
-		$METASTRINGS_CACHE = $METASTRINGS_DEADNAME_CACHE = array();
+		global $CONFIG, $METASTRINGS_CACHE;
+		$METASTRINGS_CACHE = array();
 
 		$this->object->title = 'Meta Unit Test';
 		$this->object->save();
@@ -210,16 +210,16 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 	}
 
 	protected function delete_metastrings($string) {
-		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
-		$METASTRINGS_CACHE = $METASTRINGS_DEADNAME_CACHE = array();
+		global $CONFIG, $METASTRINGS_CACHE;
+		$METASTRINGS_CACHE = array();
 
 		$string = sanitise_string($string);
 		mysql_query("DELETE FROM {$CONFIG->dbprefix}metastrings WHERE string = BINARY '$string'");
 	}
 
 	protected function create_metastring($string) {
-		global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
-		$METASTRINGS_CACHE = $METASTRINGS_DEADNAME_CACHE = array();
+		global $CONFIG, $METASTRINGS_CACHE;
+		$METASTRINGS_CACHE = array();
 
 		$string = sanitise_string($string);
 		mysql_query("INSERT INTO {$CONFIG->dbprefix}metastrings (string) VALUES ('$string')");

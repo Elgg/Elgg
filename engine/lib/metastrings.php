@@ -11,37 +11,31 @@
 global $METASTRINGS_CACHE;
 $METASTRINGS_CACHE = array();
 
-/** Keep a record of strings we know don't exist */
-global $METASTRINGS_DEADNAME_CACHE;
-$METASTRINGS_DEADNAME_CACHE = array();
-
-
 
 /**
- * Return the meta string id for a given tag, or false.
+ * Gets the metastring identifier for a value.
  *
- * @param string $string         The value to store
- * @param bool   $case_sensitive Do we want to make the query case sensitive?
- *                               If not there may be more than one result
+ * Elgg normalizes the names and values of annotations and metadata. This function
+ * provides the identifier used as the index in the metastrings table. Plugin
+ * developers should only use this if denormalizing names/values for performance
+ * reasons (to avoid multiple joins on the metastrings table).
  *
- * @return int|array|false meta   string id, array of ids or false if none found
+ * @param string $string         The value
+ * @param bool   $case_sensitive Should the retrieval be case sensitive?
+ *                               If not, there may be more than one result
+ *
+ * @return int|array metastring id or array of ids
+ * @since 1.9.0
  */
-function get_metastring_id($string, $case_sensitive = TRUE) {
-	global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
+function elgg_get_metastring_id($string, $case_sensitive = true) {
+	global $CONFIG, $METASTRINGS_CACHE;
 
-	$string = sanitise_string($string);
-
-	// caching doesn't work for case insensitive searches
+	// caching doesn't work for case insensitive requests
 	if ($case_sensitive) {
 		$result = array_search($string, $METASTRINGS_CACHE, true);
 
 		if ($result !== false) {
 			return $result;
-		}
-
-		// See if we have previously looked for this and found nothing
-		if (in_array($string, $METASTRINGS_DEADNAME_CACHE, true)) {
-			return false;
 		}
 
 		// Experimental memcache
@@ -58,96 +52,55 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 		}
 	}
 
-	// Case sensitive
+	$escaped_string = sanitise_string($string);
 	if ($case_sensitive) {
-		$query = "SELECT * from {$CONFIG->dbprefix}metastrings where string= BINARY '$string' limit 1";
+		$query = "SELECT * FROM {$CONFIG->dbprefix}metastrings WHERE string = BINARY '$escaped_string' LIMIT 1";
 	} else {
-		$query = "SELECT * from {$CONFIG->dbprefix}metastrings where string = '$string'";
+		$query = "SELECT * FROM {$CONFIG->dbprefix}metastrings WHERE string = '$escaped_string'";
 	}
 
-	$row = FALSE;
-	$metaStrings = get_data($query);
-	if (is_array($metaStrings)) {
-		if (sizeof($metaStrings) > 1) {
+	$id = false;
+	$results = get_data($query);
+	if (is_array($results)) {
+		if (!$case_sensitive) {
 			$ids = array();
-			foreach ($metaStrings as $metaString) {
-				$ids[] = $metaString->id;
+			foreach ($results as $result) {
+				$ids[] = $result->id;
 			}
+			// return immediately because we don't want to cache case insensitive results
 			return $ids;
-		} else if (isset($metaStrings[0])) {
-			$row = $metaStrings[0];
+		} else if (isset($results[0])) {
+			$id = $results[0]->id;
 		}
 	}
 
-	if ($row) {
-		$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
-
-		// Attempt to memcache it if memcache is available
-		if ($metastrings_memcache) {
-			$metastrings_memcache->save($row->string, $row->id);
-		}
-
-		return $row->id;
-	} else {
-		$METASTRINGS_DEADNAME_CACHE[$string] = $string;
+	if (!$id) {
+		$id = _elgg_add_metastring($string);
 	}
 
-	return false;
-}
+	$METASTRINGS_CACHE[$id] = $string;
 
-/**
- * When given an ID, returns the corresponding metastring
- *
- * @param int $id Metastring ID
- *
- * @return string Metastring
- */
-function get_metastring($id) {
-	global $CONFIG, $METASTRINGS_CACHE;
-
-	$id = (int) $id;
-
-	if (isset($METASTRINGS_CACHE[$id])) {
-		return $METASTRINGS_CACHE[$id];
+	if ($metastrings_memcache) {
+		$metastrings_memcache->save($string, $id);
 	}
 
-	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where id='$id' limit 1");
-	if ($row) {
-		$METASTRINGS_CACHE[$id] = $row->string;
-		return $row->string;
-	}
-
-	return false;
+	return $id;
 }
 
 /**
  * Add a metastring.
- * It returns the id of the metastring. If it does not exist, it will be created.
  *
- * @param string $string         The value (whatever that is) to be stored
- * @param bool   $case_sensitive Do we want to make the query case sensitive?
+ * @warning You should not call this directly. Use elgg_get_metastring_id().
  *
- * @return mixed Integer tag or false.
+ * @param string $string The value to be normalized
+ * @return int The identifier for this string
  */
-function add_metastring($string, $case_sensitive = true) {
-	global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
+function _elgg_add_metastring($string) {
+	global $CONFIG;
 
-	$sanstring = sanitise_string($string);
+	$escaped_string = sanitise_string($string);
 
-	$id = get_metastring_id($string, $case_sensitive);
-	if ($id) {
-		return $id;
-	}
-
-	$result = insert_data("INSERT into {$CONFIG->dbprefix}metastrings (string) values ('$sanstring')");
-	if ($result) {
-		$METASTRINGS_CACHE[$result] = $string;
-		if (isset($METASTRINGS_DEADNAME_CACHE[$string])) {
-			unset($METASTRINGS_DEADNAME_CACHE[$string]);
-		}
-	}
-
-	return $result;
+	return insert_data("INSERT INTO {$CONFIG->dbprefix}metastrings (string) VALUES ('$escaped_string')");
 }
 
 /**
@@ -156,7 +109,7 @@ function add_metastring($string, $case_sensitive = true) {
  * @return bool
  * @access private
  */
-function delete_orphaned_metastrings() {
+function _elgg_delete_orphaned_metastrings() {
 	global $CONFIG;
 
 	// If memcache is enabled then we need to flush it of deleted values
@@ -230,8 +183,8 @@ function delete_orphaned_metastrings() {
  * @return mixed
  * @access private
  */
-function elgg_get_metastring_based_objects($options) {
-	$options = elgg_normalize_metastrings_options($options);
+function _elgg_get_metastring_based_objects($options) {
+	$options = _elgg_normalize_metastrings_options($options);
 
 	switch ($options['metastring_type']) {
 		case 'metadata':
@@ -251,47 +204,47 @@ function elgg_get_metastring_based_objects($options) {
 
 	$defaults = array(
 		// entities
-		'types'					=>	ELGG_ENTITIES_ANY_VALUE,
-		'subtypes'				=>	ELGG_ENTITIES_ANY_VALUE,
-		'type_subtype_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'types' => ELGG_ENTITIES_ANY_VALUE,
+		'subtypes' => ELGG_ENTITIES_ANY_VALUE,
+		'type_subtype_pairs' => ELGG_ENTITIES_ANY_VALUE,
 
-		'guids'					=>	ELGG_ENTITIES_ANY_VALUE,
-		'owner_guids'			=>	ELGG_ENTITIES_ANY_VALUE,
-		'container_guids'		=>	ELGG_ENTITIES_ANY_VALUE,
-		'site_guids'			=>	get_config('site_guid'),
+		'guids' => ELGG_ENTITIES_ANY_VALUE,
+		'owner_guids' => ELGG_ENTITIES_ANY_VALUE,
+		'container_guids' => ELGG_ENTITIES_ANY_VALUE,
+		'site_guids' => get_config('site_guid'),
 
-		'modified_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'modified_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'created_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'created_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'modified_time_lower' => ELGG_ENTITIES_ANY_VALUE,
+		'modified_time_upper' => ELGG_ENTITIES_ANY_VALUE,
+		'created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
+		'created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
 
 		// options are normalized to the plural in case we ever add support for them.
-		'metastring_names'							=>	ELGG_ENTITIES_ANY_VALUE,
-		'metastring_values'							=>	ELGG_ENTITIES_ANY_VALUE,
-		//'metastring_name_value_pairs'				=>	ELGG_ENTITIES_ANY_VALUE,
-		//'metastring_name_value_pairs_operator'	=>	'AND',
+		'metastring_names' => ELGG_ENTITIES_ANY_VALUE,
+		'metastring_values' => ELGG_ENTITIES_ANY_VALUE,
+		//'metastring_name_value_pairs' => ELGG_ENTITIES_ANY_VALUE,
+		//'metastring_name_value_pairs_operator' => 'AND',
 
-		'metastring_case_sensitive' 				=>	TRUE,
-		//'order_by_metastring'						=>	array(),
-		'metastring_calculation'					=>	ELGG_ENTITIES_NO_VALUE,
+		'metastring_case_sensitive' => true,
+		//'order_by_metastring' => array(),
+		'metastring_calculation' => ELGG_ENTITIES_NO_VALUE,
 
-		'metastring_created_time_lower'				=>	ELGG_ENTITIES_ANY_VALUE,
-		'metastring_created_time_upper'				=>	ELGG_ENTITIES_ANY_VALUE,
+		'metastring_created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
+		'metastring_created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
 
-		'metastring_owner_guids'					=>	ELGG_ENTITIES_ANY_VALUE,
+		'metastring_owner_guids' => ELGG_ENTITIES_ANY_VALUE,
 
-		'metastring_ids'							=>	ELGG_ENTITIES_ANY_VALUE,
+		'metastring_ids' => ELGG_ENTITIES_ANY_VALUE,
 
 		// sql
-		'order_by'	=>	'n_table.time_created asc',
-		'limit'		=>	10,
-		'offset'	=>	0,
-		'count'		=>	FALSE,
-		'selects'	=>	array(),
-		'wheres'	=>	array(),
-		'joins'		=>	array(),
+		'order_by' => 'n_table.time_created asc',
+		'limit' => 10,
+		'offset' => 0,
+		'count' => false,
+		'selects' => array(),
+		'wheres' => array(),
+		'joins' => array(),
 
-		'callback'	=> $callback
+		'callback' => $callback
 	);
 
 	// @todo Ignore site_guid right now because of #2910
@@ -405,7 +358,7 @@ function elgg_get_metastring_based_objects($options) {
 	}
 
 	// metastrings
-	$metastring_clauses = elgg_get_metastring_sql('n_table', $options['metastring_names'],
+	$metastring_clauses = _elgg_get_metastring_sql('n_table', $options['metastring_names'],
 		$options['metastring_values'], null, $options['metastring_ids'],
 		$options['metastring_case_sensitive']);
 
@@ -497,7 +450,7 @@ function elgg_get_metastring_based_objects($options) {
  * @return array
  * @access private
  */
-function elgg_get_metastring_sql($table, $names = null, $values = null,
+function _elgg_get_metastring_sql($table, $names = null, $values = null,
 	$pairs = null, $ids = null, $case_sensitive = false) {
 
 	if ((!$names && $names !== 0)
@@ -599,11 +552,10 @@ function elgg_get_metastring_sql($table, $names = null, $values = null,
  * Normalizes metadata / annotation option names to their corresponding metastrings name.
  *
  * @param array $options An options array
- * @since 1.8.0
  * @return array
  * @access private
  */
-function elgg_normalize_metastrings_options(array $options = array()) {
+function _elgg_normalize_metastrings_options(array $options = array()) {
 
 	// support either metastrings_type or metastring_type
 	// because I've made this mistake many times and hunting it down is a pain...
@@ -654,14 +606,13 @@ function elgg_normalize_metastrings_options(array $options = array()) {
  *
  * @return bool
  * @throws InvalidParameterException
- * @since 1.8.0
  * @access private
  */
-function elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
+function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 	$id = (int)$id;
 	$db_prefix = elgg_get_config('dbprefix');
 
-	$object = elgg_get_metastring_based_object_from_id($id, $type);
+	$object = _elgg_get_metastring_based_object_from_id($id, $type);
 
 	switch($type) {
 		case 'annotation':
@@ -701,25 +652,24 @@ function elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 /**
  * Runs metastrings-based objects found using $options through $callback
  *
- * @warning Unlike elgg_get_metastring_based_objects() this will not accept an
+ * @warning Unlike _elgg_get_metastring_based_objects() this will not accept an
  * empty options array!
  *
  * @warning This returns null on no ops.
  *
- * @param array  $options    An options array. {@See elgg_get_metastring_based_objects()}
+ * @param array  $options    An options array. {@see _elgg_get_metastring_based_objects()}
  * @param string $callback   The callback to pass each result through
  * @param bool   $inc_offset Increment the offset? Pass false for callbacks that delete / disable
  *
  * @return bool|null true on success, false on failure, null if no objects are found.
- * @since 1.8.0
  * @access private
  */
-function elgg_batch_metastring_based_objects(array $options, $callback, $inc_offset = true) {
+function _elgg_batch_metastring_based_objects(array $options, $callback, $inc_offset = true) {
 	if (!$options || !is_array($options)) {
 		return false;
 	}
 
-	$batch = new ElggBatch('elgg_get_metastring_based_objects', $options, $callback, 50, $inc_offset);
+	$batch = new ElggBatch('_elgg_get_metastring_based_objects', $options, $callback, 50, $inc_offset);
 	return $batch->callbackResult;
 }
 
@@ -728,12 +678,10 @@ function elgg_batch_metastring_based_objects(array $options, $callback, $inc_off
  *
  * @param int    $id   The metastring-based object's ID
  * @param string $type The type: annotation or metadata
- * @return ElggMetadata|ElggAnnotation
- *
- * @since 1.8.0
+ * @return ElggExtender
  * @access private
  */
-function elgg_get_metastring_based_object_from_id($id, $type) {
+function _elgg_get_metastring_based_object_from_id($id, $type) {
 	$id = (int)$id;
 	if (!$id) {
 		return false;
@@ -744,7 +692,7 @@ function elgg_get_metastring_based_object_from_id($id, $type) {
 		'metastring_id' => $id
 	);
 
-	$obj = elgg_get_metastring_based_objects($options);
+	$obj = _elgg_get_metastring_based_objects($options);
 
 	if ($obj && count($obj) == 1) {
 		return $obj[0];
@@ -759,11 +707,9 @@ function elgg_get_metastring_based_object_from_id($id, $type) {
  * @param int    $id   The object's ID
  * @param string $type The object's metastring type: annotation or metadata
  * @return bool
- *
- * @since 1.8.0
  * @access private
  */
-function elgg_delete_metastring_based_object_by_id($id, $type) {
+function _elgg_delete_metastring_based_object_by_id($id, $type) {
 	$id = (int)$id;
 	$db_prefix = elgg_get_config('dbprefix');
 
@@ -781,7 +727,7 @@ function elgg_delete_metastring_based_object_by_id($id, $type) {
 			return false;
 	}
 
-	$obj = elgg_get_metastring_based_object_from_id($id, $type);
+	$obj = _elgg_get_metastring_based_object_from_id($id, $type);
 	$table = $db_prefix . $type;
 
 	if ($obj) {
@@ -808,20 +754,15 @@ function elgg_delete_metastring_based_object_by_id($id, $type) {
 }
 
 /**
- * Entities interface helpers
- */
-
-/**
  * Returns options to pass to elgg_get_entities() for metastrings operations.
  *
  * @param string $type    Metastring type: annotations or metadata
  * @param array  $options Options
  *
  * @return array
- * @since 1.7.0
  * @access private
  */
-function elgg_entities_get_metastrings_options($type, $options) {
+function _elgg_entities_get_metastrings_options($type, $options) {
 	$valid_types = array('metadata', 'annotation');
 	if (!in_array($type, $valid_types)) {
 		return FALSE;
@@ -872,22 +813,20 @@ function elgg_entities_get_metastrings_options($type, $options) {
 	return $options;
 }
 
-// unit testing
-elgg_register_plugin_hook_handler('unit_test', 'system', 'metastrings_test');
-
 /**
- * Metadata unit test
+ * Metastring unit tests
  *
- * @param string $hook   unit_test
- * @param string $type   system
- * @param mixed  $value  Array of other tests
- * @param mixed  $params Params
+ * @param string $hook  unit_test
+ * @param string $type  system
+ * @param array  $value Array of other tests
  *
  * @return array
  * @access private
  */
-function metastrings_test($hook, $type, $value, $params) {
+function _elgg_metastrings_test($hook, $type, $value) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetastringsTest.php';
 	return $value;
 }
+
+elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_metastrings_test');

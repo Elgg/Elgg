@@ -33,7 +33,7 @@ function row_to_elggmetadata($row) {
  * @return ElggMetadata|false  FALSE if not found
  */
 function elgg_get_metadata_from_id($id) {
-	return elgg_get_metastring_based_object_from_id($id, 'metadata');
+	return _elgg_get_metastring_based_object_from_id($id, 'metadata');
 }
 
 /**
@@ -91,7 +91,7 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 	$access_id = (int)$access_id;
 
 	$query = "SELECT * from {$CONFIG->dbprefix}metadata"
-		. " WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1";
+		. " WHERE entity_guid = $entity_guid and name_id=" . elgg_get_metastring_id($name) . " limit 1";
 
 	$existing = get_data_row($query);
 	if ($existing && !$allow_multiple) {
@@ -108,12 +108,12 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 		}
 
 		// Add the metastrings
-		$value_id = add_metastring($value);
+		$value_id = elgg_get_metastring_id($value);
 		if (!$value_id) {
 			return false;
 		}
 
-		$name_id = add_metastring($name);
+		$name_id = elgg_get_metastring_id($name);
 		if (!$name_id) {
 			return false;
 		}
@@ -191,12 +191,12 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	}
 
 	// Add the metastring
-	$value = add_metastring($value);
+	$value = elgg_get_metastring_id($value);
 	if (!$value) {
 		return false;
 	}
 
-	$name = add_metastring($name);
+	$name = elgg_get_metastring_id($name);
 	if (!$name) {
 		return false;
 	}
@@ -290,7 +290,7 @@ function elgg_get_metadata(array $options = array()) {
 	}
 
 	$options['metastring_type'] = 'metadata';
-	return elgg_get_metastring_based_objects($options);
+	return _elgg_get_metastring_based_objects($options);
 }
 
 /**
@@ -309,7 +309,7 @@ function elgg_delete_metadata(array $options) {
 		return false;
 	}
 	$options['metastring_type'] = 'metadata';
-	$result = elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
+	$result = _elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
 
 	// This moved last in case an object's constructor sets metadata. Currently the batch
 	// delete process has to create the entity to delete its metadata. See #5214
@@ -335,7 +335,7 @@ function elgg_disable_metadata(array $options) {
 	elgg_get_metadata_cache()->invalidateByOptions('disable', $options);
 
 	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
+	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
 }
 
 /**
@@ -358,7 +358,7 @@ function elgg_enable_metadata(array $options) {
 	elgg_get_metadata_cache()->invalidateByOptions('enable', $options);
 
 	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
+	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
 }
 
 /**
@@ -443,7 +443,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
-	if (!$options = elgg_entities_get_metastrings_options('metadata', $options)) {
+	if (!$options = _elgg_entities_get_metastrings_options('metadata', $options)) {
 		return FALSE;
 	}
 

@@ -136,7 +136,7 @@ function search_users_hook($hook, $type, $value, $params) {
 	
 	// get the where clauses for the md names
 	// can't use egef_metadata() because the n_table join comes too late.
-	$clauses = elgg_entities_get_metastrings_options('metadata', array(
+	$clauses = _elgg_entities_get_metastrings_options('metadata', array(
 		'metadata_names' => $profile_fields,
 	));
 

@@ -1,5 +1,147 @@
 <?php
 
+global $METASTRINGS_DEADNAME_CACHE;
+$METASTRINGS_DEADNAME_CACHE = array();
+
+/**
+ * Return the meta string id for a given tag, or false.
+ *
+ * @param string $string         The value to store
+ * @param bool   $case_sensitive Do we want to make the query case sensitive?
+ *                               If not there may be more than one result
+ *
+ * @return int|array|false meta   string id, array of ids or false if none found
+ * @deprecated 1.9 Use elgg_get_metastring_id()
+ */
+function get_metastring_id($string, $case_sensitive = TRUE) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_metastring_id()', 1.9);
+	global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
+
+	$string = sanitise_string($string);
+
+	// caching doesn't work for case insensitive searches
+	if ($case_sensitive) {
+		$result = array_search($string, $METASTRINGS_CACHE, true);
+
+		if ($result !== false) {
+			return $result;
+		}
+
+		// See if we have previously looked for this and found nothing
+		if (in_array($string, $METASTRINGS_DEADNAME_CACHE, true)) {
+			return false;
+		}
+
+		// Experimental memcache
+		$msfc = null;
+		static $metastrings_memcache;
+		if ((!$metastrings_memcache) && (is_memcache_available())) {
+			$metastrings_memcache = new ElggMemcache('metastrings_memcache');
+		}
+		if ($metastrings_memcache) {
+			$msfc = $metastrings_memcache->load($string);
+		}
+		if ($msfc) {
+			return $msfc;
+		}
+	}
+
+	// Case sensitive
+	if ($case_sensitive) {
+		$query = "SELECT * from {$CONFIG->dbprefix}metastrings where string= BINARY '$string' limit 1";
+	} else {
+		$query = "SELECT * from {$CONFIG->dbprefix}metastrings where string = '$string'";
+	}
+
+	$row = FALSE;
+	$metaStrings = get_data($query);
+	if (is_array($metaStrings)) {
+		if (sizeof($metaStrings) > 1) {
+			$ids = array();
+			foreach ($metaStrings as $metaString) {
+				$ids[] = $metaString->id;
+			}
+			return $ids;
+		} else if (isset($metaStrings[0])) {
+			$row = $metaStrings[0];
+		}
+	}
+
+	if ($row) {
+		$METASTRINGS_CACHE[$row->id] = $row->string; // Cache it
+
+		// Attempt to memcache it if memcache is available
+		if ($metastrings_memcache) {
+			$metastrings_memcache->save($row->string, $row->id);
+		}
+
+		return $row->id;
+	} else {
+		$METASTRINGS_DEADNAME_CACHE[$string] = $string;
+	}
+
+	return false;
+}
+
+/**
+ * Add a metastring.
+ * It returns the id of the metastring. If it does not exist, it will be created.
+ *
+ * @param string $string         The value (whatever that is) to be stored
+ * @param bool   $case_sensitive Do we want to make the query case sensitive?
+ *
+ * @return mixed Integer tag or false.
+ * @deprecated 1.9 Use elgg_get_metastring_id()
+ */
+function add_metastring($string, $case_sensitive = true) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_metastring_id()', 1.9);
+	global $CONFIG, $METASTRINGS_CACHE, $METASTRINGS_DEADNAME_CACHE;
+
+	$sanstring = sanitise_string($string);
+
+	$id = get_metastring_id($string, $case_sensitive);
+	if ($id) {
+		return $id;
+	}
+
+	$result = insert_data("INSERT into {$CONFIG->dbprefix}metastrings (string) values ('$sanstring')");
+	if ($result) {
+		$METASTRINGS_CACHE[$result] = $string;
+		if (isset($METASTRINGS_DEADNAME_CACHE[$string])) {
+			unset($METASTRINGS_DEADNAME_CACHE[$string]);
+		}
+	}
+
+	return $result;
+}
+
+/**
+ * When given an ID, returns the corresponding metastring
+ *
+ * @param int $id Metastring ID
+ *
+ * @return string Metastring
+ * @deprecated 1.9
+ */
+function get_metastring($id) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated.', 1.9);
+	global $CONFIG, $METASTRINGS_CACHE;
+
+	$id = (int) $id;
+
+	if (isset($METASTRINGS_CACHE[$id])) {
+		return $METASTRINGS_CACHE[$id];
+	}
+
+	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where id='$id' limit 1");
+	if ($row) {
+		$METASTRINGS_CACHE[$id] = $row->string;
+		return $row->string;
+	}
+
+	return false;
+}
+
 /**
  * Obtains a list of objects owned by a user's friends
  *
