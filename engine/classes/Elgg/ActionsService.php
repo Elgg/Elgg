@@ -119,7 +119,7 @@ class Elgg_ActionsService {
 	 * @see validate_action_token
 	 * @access private
 	 */
-	public function validateActionToken($visibleerrors = TRUE, $token = NULL, $ts = NULL) {
+	public function validateActionToken($visible_errors = true, $token = null, $ts = null) {
 		if (!$token) {
 			$token = get_input('__elgg_token');
 		}
@@ -146,10 +146,10 @@ class Elgg_ActionsService {
 
 					if ($returnval) {
 						return true;
-					} else if ($visibleerrors) {
+					} else if ($visible_errors) {
 						register_error(elgg_echo('actiongatekeeper:pluginprevents'));
 					}
-				} else if ($visibleerrors) {
+				} else if ($visible_errors) {
 					// this is necessary because of #5133
 					if (elgg_is_xhr()) {
 						register_error(elgg_echo('js:security:token_refresh_failed', array(elgg_get_site_url())));
@@ -157,7 +157,7 @@ class Elgg_ActionsService {
 						register_error(elgg_echo('actiongatekeeper:timeerror'));
 					}
 				}
-			} else if ($visibleerrors) {
+			} else if ($visible_errors) {
 				// this is necessary because of #5133
 				if (elgg_is_xhr()) {
 					register_error(elgg_echo('js:security:token_refresh_failed', array(elgg_get_site_url())));
@@ -170,12 +170,12 @@ class Elgg_ActionsService {
 				// The size of $_POST or uploaded file has exceed the size limit
 				$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', array(
 					'post_size' => $_SERVER['CONTENT_LENGTH'],
-					'visible_errors' => $visibleerrors,
+					'visible_errors' => $visible_errors,
 				), elgg_echo('actiongatekeeper:uploadexceeded'));
 			} else {
 				$error_msg = elgg_echo('actiongatekeeper:missingfields');
 			}
-			if ($visibleerrors) {
+			if ($visible_errors) {
 				register_error($error_msg);
 			}
 		}
@@ -293,7 +293,7 @@ class Elgg_ActionsService {
 			}
 	
 			//Grab any system messages so we can inject them via ajax too
-			$system_messages = system_messages(NULL, "");
+			$system_messages = system_messages(null, "");
 	
 			if (isset($system_messages['success'])) {
 				$params['system_messages']['success'] = $system_messages['success'];
@@ -311,7 +311,7 @@ class Elgg_ActionsService {
 			// returning JSON in a plain-text response.  Some libraries request
 			// JSON in an invisible iframe which they then read from the iframe,
 			// however some browsers will not accept the JSON MIME type.
-			if (stripos($_SERVER['HTTP_ACCEPT'], 'application/json') === FALSE) {
+			if (stripos($_SERVER['HTTP_ACCEPT'], 'application/json') === false) {
 				header("Content-type: text/plain");
 			} else {
 				header("Content-type: application/json");
@@ -330,5 +330,14 @@ class Elgg_ActionsService {
 		if (elgg_is_xhr()) {
 			ob_start();
 		}
+	}
+
+	/**
+	 * Get all actions
+	 * 
+	 * @return array
+	 */
+	public function getAllActions() {
+		return $this->actions;
 	}
 }

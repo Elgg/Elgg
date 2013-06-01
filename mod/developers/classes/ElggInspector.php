@@ -92,8 +92,6 @@ class ElggInspector {
 	 * returns [widget] => array(name, contexts)
 	 */
 	public function getWidgets() {
-		global $CONFIG;
-
 		$tree = array();
 		foreach (_elgg_services()->widgets->getAllTypes() as $handler => $handler_obj) {
 			$tree[$handler] = array($handler_obj->name, implode(',', array_values($handler_obj->context)));
@@ -108,14 +106,18 @@ class ElggInspector {
 	/**
 	 * Get Elgg actions information
 	 *
-	 * returns [action] => array(file, public, admin)
+	 * returns [action] => array(file, access)
 	 */
 	public function getActions() {
-		global $CONFIG;
-
 		$tree = array();
-		foreach ($CONFIG->actions as $action => $info) {
-			$tree[$action] = array($info['file'], ($info['public']) ? 'public' : 'logged in only', ($info['admin']) ? 'admin only' : 'non-admin');
+		$access = array(
+			'public' => 'public',
+			'logged_in' => 'logged in only',
+			'admin' => 'admin only',
+		);
+		foreach (_elgg_services()->actions->getAllActions() as $action => $info) {
+			
+			$tree[$action] = array($info['file'], $access[$info['access']]);
 		}
 
 		ksort($tree);
@@ -132,7 +134,7 @@ class ElggInspector {
 		global $CONFIG;
 
 		$tree = array();
-		foreach ($CONFIG->views->simplecache as $view) {
+		foreach ($CONFIG->views->simplecache as $view => $foo) {
 			$tree[$view] = "";
 		}
 
@@ -172,7 +174,7 @@ class ElggInspector {
 	/**
 	 * Get information about registered menus
 	 *
-	 * @returns array 'Menu Name' => array('Item Name' => array('Link Text', 'Href', 'Section', 'Parent', 'Priority'))
+	 * @returns array [menu name] => array(item name => array(text, href, section, parent))
 	 *
 	 */
 	public function getMenus() {
@@ -181,7 +183,7 @@ class ElggInspector {
 		
 		// get JIT menu items
 		// note that 'river' is absent from this list - hooks attempt to get object/subject entities cause problems
-		$jit_menus = array('annotation', 'entity', 'longtext', 'owner_block', 'user_hover', 'widget');
+		$jit_menus = array('annotation', 'entity', 'login', 'longtext', 'owner_block', 'user_hover', 'widget');
 		
 		// create generic ElggEntity, ElggAnnotation, ElggUser, ElggWidget
 		$annotation = new ElggAnnotation();
@@ -205,17 +207,19 @@ class ElggInspector {
 		$widget->title = 'test widget';
 		
 		// call plugin hooks
-		foreach($jit_menus as $type){
+		foreach ($jit_menus as $type) {
 			$params = array('entity' => $entity, 'annotation' => $annotation, 'user' => $user);
-			switch($type){
+			switch ($type){
+				case 'owner_block':
 				case 'user_hover':
 					$params['entity'] = $user;
-				break;
+					break;
 				case 'widget':
+					// this does not work because you cannot set a guid on an entity
 					$params['entity'] = $widget;
-				break;
+					break;
 				default:
-				break;
+					break;
 			}
 			$menus[$type] = elgg_trigger_plugin_hook('register', 'menu:'.$type, $params, array());
 		}
@@ -223,19 +227,27 @@ class ElggInspector {
 		// put the menus in tree form for inspection
 		$tree = array();
 
-		foreach($menus as $menu_name => $attributes){
-			foreach($attributes as $item){
+		foreach ($menus as $menu_name => $attributes) {
+			foreach ($attributes as $item) {
 				$name = $item->getName();
-				$text = $item->getText();
+				$text = htmlspecialchars($item->getText(), ENT_QUOTES, 'UTF-8', false);
 				$href = $item->getHref();
+				if ($href === false) {
+					$href = 'not a link';
+				} elseif ($href === "") {
+					$href = 'not a direct link - possibly ajax';
+				}
 				$section = $item->getSection();
 				$parent = $item->getParentName();
+				if (!$parent) {
+					$parent = 'none';
+				}
     
 				$tree[$menu_name][$name] = array(
-							"Text: $text",
-							"Href: $href",
-							"Section: $section",
-							"Parent: $parent"
+					"text: $text",
+					"href: $href",
+					"section: $section",
+					"parent: $parent",
 				);
 			}
 		}
