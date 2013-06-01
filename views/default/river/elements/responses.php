@@ -8,9 +8,12 @@
 
 // allow river views to override the response content
 $responses = elgg_extract('responses', $vars, null);
-if ($responses && $responses !== false) {
+if ($responses === false) {
+	return;
+}
+if ($responses) {
 	echo $responses;
-	return true;
+	return;
 }
 
 $item = $vars['item'];
