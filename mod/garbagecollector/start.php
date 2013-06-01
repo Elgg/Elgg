@@ -32,7 +32,7 @@ function garbagecollector_cron($hook, $entity_type, $returnvalue, $params) {
 	// Garbage collect metastrings
 	echo elgg_echo('garbagecollector:gc:metastrings');
 
-	if (delete_orphaned_metastrings() !== false) {
+	if (_elgg_delete_orphaned_metastrings() !== false) {
 		echo elgg_echo('garbagecollector:ok');
 	} else {
 		echo elgg_echo('garbagecollector:error');

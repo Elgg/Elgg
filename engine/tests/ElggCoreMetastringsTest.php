@@ -76,7 +76,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 			$test = get_data($q);
 
 			$this->assertEqual($test[0]->id, $id);
-			$this->assertIdentical(true, elgg_delete_metastring_based_object_by_id($id, $type));
+			$this->assertIdentical(true, _elgg_delete_metastring_based_object_by_id($id, $type));
 			$this->assertIdentical(array(), get_data($q));
 		}
 	}
@@ -88,7 +88,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 
 		foreach ($this->metastringTypes as $type) {
 			$id = ${$type}[0];
-			$test = elgg_get_metastring_based_object_from_id($id, $type);
+			$test = _elgg_get_metastring_based_object_from_id($id, $type);
 
 			$this->assertEqual($id, $test->id);
 		}
@@ -101,7 +101,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 		$annotation = elgg_get_annotation_from_id($id);
 		$this->assertTrue($annotation->disable());
 
-		$test = elgg_get_metastring_based_object_from_id($id, 'annotation');
+		$test = _elgg_get_metastring_based_object_from_id($id, 'annotation');
 		$this->assertEqual(false, $test);
 	}
 
@@ -112,7 +112,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 		$annotation = elgg_get_annotation_from_id($id);
 		$this->assertTrue($annotation->disable());
 
-		$test = elgg_get_metastring_based_objects(array(
+		$test = _elgg_get_metastring_based_objects(array(
 			'metastring_type' => 'annotations',
 			'guid' => $this->object->guid,
 		));
@@ -132,7 +132,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 
 			// disable
 			$this->assertEqual($test[0]->enabled, 'yes');
-			$this->assertTrue(elgg_set_metastring_based_object_enabled_by_id($id, 'no', $type));
+			$this->assertTrue(_elgg_set_metastring_based_object_enabled_by_id($id, 'no', $type));
 
 			$test = get_data($q);
 			$this->assertEqual($test[0]->enabled, 'no');
@@ -140,7 +140,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 			// enable
 			$ashe = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
-			$this->assertTrue(elgg_set_metastring_based_object_enabled_by_id($id, 'yes', $type));
+			$this->assertTrue(_elgg_set_metastring_based_object_enabled_by_id($id, 'yes', $type));
 
 			$test = get_data($q);
 			$this->assertEqual($test[0]->enabled, 'yes');

@@ -96,31 +96,6 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 }
 
 /**
- * When given an ID, returns the corresponding metastring
- *
- * @param int $id Metastring ID
- *
- * @return string Metastring
- */
-function get_metastring($id) {
-	global $CONFIG, $METASTRINGS_CACHE;
-
-	$id = (int) $id;
-
-	if (isset($METASTRINGS_CACHE[$id])) {
-		return $METASTRINGS_CACHE[$id];
-	}
-
-	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where id='$id' limit 1");
-	if ($row) {
-		$METASTRINGS_CACHE[$id] = $row->string;
-		return $row->string;
-	}
-
-	return false;
-}
-
-/**
  * Add a metastring.
  * It returns the id of the metastring. If it does not exist, it will be created.
  *
@@ -156,7 +131,7 @@ function add_metastring($string, $case_sensitive = true) {
  * @return bool
  * @access private
  */
-function delete_orphaned_metastrings() {
+function _elgg_delete_orphaned_metastrings() {
 	global $CONFIG;
 
 	// If memcache is enabled then we need to flush it of deleted values
@@ -230,8 +205,8 @@ function delete_orphaned_metastrings() {
  * @return mixed
  * @access private
  */
-function elgg_get_metastring_based_objects($options) {
-	$options = elgg_normalize_metastrings_options($options);
+function _elgg_get_metastring_based_objects($options) {
+	$options = _elgg_normalize_metastrings_options($options);
 
 	switch ($options['metastring_type']) {
 		case 'metadata':
@@ -251,47 +226,47 @@ function elgg_get_metastring_based_objects($options) {
 
 	$defaults = array(
 		// entities
-		'types'					=>	ELGG_ENTITIES_ANY_VALUE,
-		'subtypes'				=>	ELGG_ENTITIES_ANY_VALUE,
-		'type_subtype_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'types' => ELGG_ENTITIES_ANY_VALUE,
+		'subtypes' => ELGG_ENTITIES_ANY_VALUE,
+		'type_subtype_pairs' => ELGG_ENTITIES_ANY_VALUE,
 
-		'guids'					=>	ELGG_ENTITIES_ANY_VALUE,
-		'owner_guids'			=>	ELGG_ENTITIES_ANY_VALUE,
-		'container_guids'		=>	ELGG_ENTITIES_ANY_VALUE,
-		'site_guids'			=>	get_config('site_guid'),
+		'guids' => ELGG_ENTITIES_ANY_VALUE,
+		'owner_guids' => ELGG_ENTITIES_ANY_VALUE,
+		'container_guids' => ELGG_ENTITIES_ANY_VALUE,
+		'site_guids' => get_config('site_guid'),
 
-		'modified_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'modified_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'created_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'created_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'modified_time_lower' => ELGG_ENTITIES_ANY_VALUE,
+		'modified_time_upper' => ELGG_ENTITIES_ANY_VALUE,
+		'created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
+		'created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
 
 		// options are normalized to the plural in case we ever add support for them.
-		'metastring_names'							=>	ELGG_ENTITIES_ANY_VALUE,
-		'metastring_values'							=>	ELGG_ENTITIES_ANY_VALUE,
-		//'metastring_name_value_pairs'				=>	ELGG_ENTITIES_ANY_VALUE,
-		//'metastring_name_value_pairs_operator'	=>	'AND',
+		'metastring_names' => ELGG_ENTITIES_ANY_VALUE,
+		'metastring_values' => ELGG_ENTITIES_ANY_VALUE,
+		//'metastring_name_value_pairs' => ELGG_ENTITIES_ANY_VALUE,
+		//'metastring_name_value_pairs_operator' => 'AND',
 
-		'metastring_case_sensitive' 				=>	TRUE,
-		//'order_by_metastring'						=>	array(),
-		'metastring_calculation'					=>	ELGG_ENTITIES_NO_VALUE,
+		'metastring_case_sensitive' => true,
+		//'order_by_metastring' => array(),
+		'metastring_calculation' => ELGG_ENTITIES_NO_VALUE,
 
-		'metastring_created_time_lower'				=>	ELGG_ENTITIES_ANY_VALUE,
-		'metastring_created_time_upper'				=>	ELGG_ENTITIES_ANY_VALUE,
+		'metastring_created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
+		'metastring_created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
 
-		'metastring_owner_guids'					=>	ELGG_ENTITIES_ANY_VALUE,
+		'metastring_owner_guids' => ELGG_ENTITIES_ANY_VALUE,
 
-		'metastring_ids'							=>	ELGG_ENTITIES_ANY_VALUE,
+		'metastring_ids' => ELGG_ENTITIES_ANY_VALUE,
 
 		// sql
-		'order_by'	=>	'n_table.time_created asc',
-		'limit'		=>	10,
-		'offset'	=>	0,
-		'count'		=>	FALSE,
-		'selects'	=>	array(),
-		'wheres'	=>	array(),
-		'joins'		=>	array(),
+		'order_by' => 'n_table.time_created asc',
+		'limit' => 10,
+		'offset' => 0,
+		'count' => false,
+		'selects' => array(),
+		'wheres' => array(),
+		'joins' => array(),
 
-		'callback'	=> $callback
+		'callback' => $callback
 	);
 
 	// @todo Ignore site_guid right now because of #2910
@@ -405,7 +380,7 @@ function elgg_get_metastring_based_objects($options) {
 	}
 
 	// metastrings
-	$metastring_clauses = elgg_get_metastring_sql('n_table', $options['metastring_names'],
+	$metastring_clauses = _elgg_get_metastring_sql('n_table', $options['metastring_names'],
 		$options['metastring_values'], null, $options['metastring_ids'],
 		$options['metastring_case_sensitive']);
 
@@ -497,7 +472,7 @@ function elgg_get_metastring_based_objects($options) {
  * @return array
  * @access private
  */
-function elgg_get_metastring_sql($table, $names = null, $values = null,
+function _elgg_get_metastring_sql($table, $names = null, $values = null,
 	$pairs = null, $ids = null, $case_sensitive = false) {
 
 	if ((!$names && $names !== 0)
@@ -603,7 +578,7 @@ function elgg_get_metastring_sql($table, $names = null, $values = null,
  * @return array
  * @access private
  */
-function elgg_normalize_metastrings_options(array $options = array()) {
+function _elgg_normalize_metastrings_options(array $options = array()) {
 
 	// support either metastrings_type or metastring_type
 	// because I've made this mistake many times and hunting it down is a pain...
@@ -657,11 +632,11 @@ function elgg_normalize_metastrings_options(array $options = array()) {
  * @since 1.8.0
  * @access private
  */
-function elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
+function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 	$id = (int)$id;
 	$db_prefix = elgg_get_config('dbprefix');
 
-	$object = elgg_get_metastring_based_object_from_id($id, $type);
+	$object = _elgg_get_metastring_based_object_from_id($id, $type);
 
 	switch($type) {
 		case 'annotation':
@@ -701,12 +676,12 @@ function elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 /**
  * Runs metastrings-based objects found using $options through $callback
  *
- * @warning Unlike elgg_get_metastring_based_objects() this will not accept an
+ * @warning Unlike _elgg_get_metastring_based_objects() this will not accept an
  * empty options array!
  *
  * @warning This returns null on no ops.
  *
- * @param array  $options    An options array. {@See elgg_get_metastring_based_objects()}
+ * @param array  $options    An options array. {@see _elgg_get_metastring_based_objects()}
  * @param string $callback   The callback to pass each result through
  * @param bool   $inc_offset Increment the offset? Pass false for callbacks that delete / disable
  *
@@ -714,12 +689,12 @@ function elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
  * @since 1.8.0
  * @access private
  */
-function elgg_batch_metastring_based_objects(array $options, $callback, $inc_offset = true) {
+function _elgg_batch_metastring_based_objects(array $options, $callback, $inc_offset = true) {
 	if (!$options || !is_array($options)) {
 		return false;
 	}
 
-	$batch = new ElggBatch('elgg_get_metastring_based_objects', $options, $callback, 50, $inc_offset);
+	$batch = new ElggBatch('_elgg_get_metastring_based_objects', $options, $callback, 50, $inc_offset);
 	return $batch->callbackResult;
 }
 
@@ -728,12 +703,12 @@ function elgg_batch_metastring_based_objects(array $options, $callback, $inc_off
  *
  * @param int    $id   The metastring-based object's ID
  * @param string $type The type: annotation or metadata
- * @return ElggMetadata|ElggAnnotation
+ * @return ElggExtender
  *
  * @since 1.8.0
  * @access private
  */
-function elgg_get_metastring_based_object_from_id($id, $type) {
+function _elgg_get_metastring_based_object_from_id($id, $type) {
 	$id = (int)$id;
 	if (!$id) {
 		return false;
@@ -744,7 +719,7 @@ function elgg_get_metastring_based_object_from_id($id, $type) {
 		'metastring_id' => $id
 	);
 
-	$obj = elgg_get_metastring_based_objects($options);
+	$obj = _elgg_get_metastring_based_objects($options);
 
 	if ($obj && count($obj) == 1) {
 		return $obj[0];
@@ -763,7 +738,7 @@ function elgg_get_metastring_based_object_from_id($id, $type) {
  * @since 1.8.0
  * @access private
  */
-function elgg_delete_metastring_based_object_by_id($id, $type) {
+function _elgg_delete_metastring_based_object_by_id($id, $type) {
 	$id = (int)$id;
 	$db_prefix = elgg_get_config('dbprefix');
 
@@ -781,7 +756,7 @@ function elgg_delete_metastring_based_object_by_id($id, $type) {
 			return false;
 	}
 
-	$obj = elgg_get_metastring_based_object_from_id($id, $type);
+	$obj = _elgg_get_metastring_based_object_from_id($id, $type);
 	$table = $db_prefix . $type;
 
 	if ($obj) {
@@ -808,10 +783,6 @@ function elgg_delete_metastring_based_object_by_id($id, $type) {
 }
 
 /**
- * Entities interface helpers
- */
-
-/**
  * Returns options to pass to elgg_get_entities() for metastrings operations.
  *
  * @param string $type    Metastring type: annotations or metadata
@@ -821,7 +792,7 @@ function elgg_delete_metastring_based_object_by_id($id, $type) {
  * @since 1.7.0
  * @access private
  */
-function elgg_entities_get_metastrings_options($type, $options) {
+function _elgg_entities_get_metastrings_options($type, $options) {
 	$valid_types = array('metadata', 'annotation');
 	if (!in_array($type, $valid_types)) {
 		return FALSE;
@@ -872,22 +843,20 @@ function elgg_entities_get_metastrings_options($type, $options) {
 	return $options;
 }
 
-// unit testing
-elgg_register_plugin_hook_handler('unit_test', 'system', 'metastrings_test');
-
 /**
- * Metadata unit test
+ * Metastring unit tests
  *
  * @param string $hook   unit_test
  * @param string $type   system
- * @param mixed  $value  Array of other tests
- * @param mixed  $params Params
+ * @param array  $value  Array of other tests
  *
  * @return array
  * @access private
  */
-function metastrings_test($hook, $type, $value, $params) {
+function _elgg_metastrings_test($hook, $type, $value) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetastringsTest.php';
 	return $value;
 }
+
+elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_metastrings_test');

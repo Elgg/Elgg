@@ -34,7 +34,7 @@ function row_to_elggannotation($row) {
  * @return ElggAnnotation|false
  */
 function elgg_get_annotation_from_id($id) {
-	return elgg_get_metastring_based_object_from_id($id, 'annotations');
+	return _elgg_get_metastring_based_object_from_id($id, 'annotations');
 }
 
 /**
@@ -218,7 +218,7 @@ function elgg_get_annotations(array $options = array()) {
 	}
 	
 	$options['metastring_type'] = 'annotations';
-	return elgg_get_metastring_based_objects($options);
+	return _elgg_get_metastring_based_objects($options);
 }
 
 /**
@@ -238,7 +238,7 @@ function elgg_delete_annotations(array $options) {
 	}
 
 	$options['metastring_type'] = 'annotations';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
+	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
 }
 
 /**
@@ -256,7 +256,7 @@ function elgg_disable_annotations(array $options) {
 	}
 
 	$options['metastring_type'] = 'annotations';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
+	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
 }
 
 /**
@@ -277,7 +277,7 @@ function elgg_enable_annotations(array $options) {
 	}
 
 	$options['metastring_type'] = 'annotations';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
+	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
 }
 
 /**
@@ -366,7 +366,7 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 	'annotation_name_value_pair', 'annotation_owner_guid');
 
 	$options = elgg_normalise_plural_options_array($options, $singulars);
-	$options = elgg_entities_get_metastrings_options('annotation', $options);
+	$options = _elgg_entities_get_metastrings_options('annotation', $options);
 
 	if (!$options) {
 		return false;

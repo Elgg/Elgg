@@ -33,7 +33,7 @@ function row_to_elggmetadata($row) {
  * @return ElggMetadata|false  FALSE if not found
  */
 function elgg_get_metadata_from_id($id) {
-	return elgg_get_metastring_based_object_from_id($id, 'metadata');
+	return _elgg_get_metastring_based_object_from_id($id, 'metadata');
 }
 
 /**
@@ -290,7 +290,7 @@ function elgg_get_metadata(array $options = array()) {
 	}
 
 	$options['metastring_type'] = 'metadata';
-	return elgg_get_metastring_based_objects($options);
+	return _elgg_get_metastring_based_objects($options);
 }
 
 /**
@@ -309,7 +309,7 @@ function elgg_delete_metadata(array $options) {
 		return false;
 	}
 	$options['metastring_type'] = 'metadata';
-	$result = elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
+	$result = _elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
 
 	// This moved last in case an object's constructor sets metadata. Currently the batch
 	// delete process has to create the entity to delete its metadata. See #5214
@@ -335,7 +335,7 @@ function elgg_disable_metadata(array $options) {
 	elgg_get_metadata_cache()->invalidateByOptions('disable', $options);
 
 	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
+	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
 }
 
 /**
@@ -358,7 +358,7 @@ function elgg_enable_metadata(array $options) {
 	elgg_get_metadata_cache()->invalidateByOptions('enable', $options);
 
 	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
+	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
 }
 
 /**
@@ -443,7 +443,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 
 	$options = elgg_normalise_plural_options_array($options, $singulars);
 
-	if (!$options = elgg_entities_get_metastrings_options('metadata', $options)) {
+	if (!$options = _elgg_entities_get_metastrings_options('metadata', $options)) {
 		return FALSE;
 	}
 

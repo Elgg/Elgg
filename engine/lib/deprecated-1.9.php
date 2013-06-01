@@ -1,6 +1,33 @@
 <?php
 
 /**
+ * When given an ID, returns the corresponding metastring
+ *
+ * @param int $id Metastring ID
+ *
+ * @return string Metastring
+ * @deprecated 1.9
+ */
+function get_metastring($id) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated.', 1.9);
+	global $CONFIG, $METASTRINGS_CACHE;
+
+	$id = (int) $id;
+
+	if (isset($METASTRINGS_CACHE[$id])) {
+		return $METASTRINGS_CACHE[$id];
+	}
+
+	$row = get_data_row("SELECT * from {$CONFIG->dbprefix}metastrings where id='$id' limit 1");
+	if ($row) {
+		$METASTRINGS_CACHE[$id] = $row->string;
+		return $row->string;
+	}
+
+	return false;
+}
+
+/**
  * Obtains a list of objects owned by a user's friends
  *
  * @param int    $user_guid The GUID of the user to get the friends of
