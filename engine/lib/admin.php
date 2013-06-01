@@ -224,7 +224,10 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = NULL, $p
  * @return void
  * @access private
  */
-function admin_init() {
+function _elgg_admin_init() {
+
+	elgg_register_event_handler('pagesetup', 'system', '_elgg_admin_pagesetup', 1000);
+
 	elgg_register_action('admin/user/ban', '', 'admin');
 	elgg_register_action('admin/user/unban', '', 'admin');
 	elgg_register_action('admin/user/delete', '', 'admin');
@@ -296,12 +299,12 @@ function admin_init() {
 	// default widgets is added via an event handler elgg_default_widgets_init() in widgets.php
 	// because it requires additional setup.
 
-	// plugin settings are added in elgg_admin_add_plugin_settings_menu() via the admin page handler
+	// plugin settings are added in _elgg_admin_add_plugin_settings_menu() via the admin page handler
 	// for performance reasons.
 
 	// we want plugin settings menu items to be sorted alphabetical
 	if (elgg_in_context('admin')) {
-		elgg_register_plugin_hook_handler('prepare', 'menu:page', 'elgg_admin_sort_page_menu');
+		elgg_register_plugin_hook_handler('prepare', 'menu:page', '_elgg_admin_sort_page_menu');
 	}
 
 	if (elgg_is_admin_logged_in()) {
@@ -326,11 +329,51 @@ function admin_init() {
 	}
 
 	// automatic adding of widgets for admin
-	elgg_register_event_handler('make_admin', 'user', 'elgg_add_admin_widgets');
+	elgg_register_event_handler('make_admin', 'user', '_elgg_add_admin_widgets');
 
 	elgg_register_page_handler('admin', 'admin_page_handler');
-	elgg_register_page_handler('admin_plugin_screenshot', 'admin_plugin_screenshot_page_handler');
-	elgg_register_page_handler('admin_plugin_text_file', 'admin_markdown_page_handler');
+	elgg_register_page_handler('admin_plugin_screenshot', '_elgg_admin_plugin_screenshot_page_handler');
+	elgg_register_page_handler('admin_plugin_text_file', '_elgg_admin_markdown_page_handler');
+}
+
+/**
+ * Handles any set up required for administration pages
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_admin_pagesetup() {
+	if (elgg_in_context('admin')) {
+		$url = elgg_get_simplecache_url('css', 'admin');
+		elgg_register_css('elgg.admin', $url);
+		elgg_load_css('elgg.admin');
+		elgg_unregister_css('elgg');
+
+		// setup footer menu
+		elgg_register_menu_item('admin_footer', array(
+			'name' => 'faq',
+			'text' => elgg_echo('admin:footer:faq'),
+			'href' => 'http://docs.elgg.org/wiki/Category:Administration_FAQ',
+		));
+
+		elgg_register_menu_item('admin_footer', array(
+			'name' => 'manual',
+			'text' => elgg_echo('admin:footer:manual'),
+			'href' => 'http://docs.elgg.org/wiki/Administration_Manual',
+		));
+
+		elgg_register_menu_item('admin_footer', array(
+			'name' => 'community_forums',
+			'text' => elgg_echo('admin:footer:community_forums'),
+			'href' => 'http://community.elgg.org/groups/all/',
+		));
+
+		elgg_register_menu_item('admin_footer', array(
+			'name' => 'blog',
+			'text' => elgg_echo('admin:footer:blog'),
+			'href' => 'http://blog.elgg.org/',
+		));
+	}
 }
 
 /**
@@ -343,7 +386,7 @@ function admin_init() {
  * @access private
  * @since 1.8.0
  */
-function elgg_admin_add_plugin_settings_menu() {
+function _elgg_admin_add_plugin_settings_menu() {
 
 	$active_plugins = elgg_get_plugins('active');
 	if (!$active_plugins) {
@@ -380,7 +423,7 @@ function elgg_admin_add_plugin_settings_menu() {
  * @since 1.8.0
  * @access private
  */
-function elgg_admin_sort_page_menu($hook, $type, $return, $params) {
+function _elgg_admin_sort_page_menu($hook, $type, $return, $params) {
 	$configure_items = $return['configure'];
 	/* @var ElggMenuItem[] $configure_items */
 	foreach ($configure_items as $menu_item) {
@@ -399,46 +442,6 @@ function elgg_admin_sort_page_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Handles any set up required for administration pages
- *
- * @return void
- * @access private
- */
-function admin_pagesetup() {
-	if (elgg_in_context('admin')) {
-		$url = elgg_get_simplecache_url('css', 'admin');
-		elgg_register_css('elgg.admin', $url);
-		elgg_load_css('elgg.admin');
-		elgg_unregister_css('elgg');
-
-		// setup footer menu
-		elgg_register_menu_item('admin_footer', array(
-			'name' => 'faq',
-			'text' => elgg_echo('admin:footer:faq'),
-			'href' => 'http://docs.elgg.org/wiki/Category:Administration_FAQ',
-		));
-
-		elgg_register_menu_item('admin_footer', array(
-			'name' => 'manual',
-			'text' => elgg_echo('admin:footer:manual'),
-			'href' => 'http://docs.elgg.org/wiki/Administration_Manual',
-		));
-
-		elgg_register_menu_item('admin_footer', array(
-			'name' => 'community_forums',
-			'text' => elgg_echo('admin:footer:community_forums'),
-			'href' => 'http://community.elgg.org/groups/all/',
-		));
-
-		elgg_register_menu_item('admin_footer', array(
-			'name' => 'blog',
-			'text' => elgg_echo('admin:footer:blog'),
-			'href' => 'http://blog.elgg.org/',
-		));
-	}
-}
-
-/**
  * Handle admin pages.  Expects corresponding views as admin/section/subsection
  *
  * @param array $page Array of pages
@@ -449,7 +452,7 @@ function admin_pagesetup() {
 function admin_page_handler($page) {
 
 	admin_gatekeeper();
-	elgg_admin_add_plugin_settings_menu();
+	_elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
 	elgg_unregister_css('elgg');
@@ -509,7 +512,7 @@ function admin_page_handler($page) {
  * @return bool
  * @access private
  */
-function admin_plugin_screenshot_page_handler($pages) {
+function _elgg_admin_plugin_screenshot_page_handler($pages) {
 	// only admins can use this for security
 	admin_gatekeeper();
 
@@ -564,7 +567,7 @@ function admin_plugin_screenshot_page_handler($pages) {
  * @return bool
  * @access private
  */
-function admin_markdown_page_handler($pages) {
+function _elgg_admin_markdown_page_handler($pages) {
 	admin_gatekeeper();
 
 	elgg_set_context('admin');
@@ -630,7 +633,7 @@ function admin_markdown_page_handler($pages) {
  * @return null|true
  * @access private
  */
-function elgg_add_admin_widgets($event, $type, $user) {
+function _elgg_add_admin_widgets($event, $type, $user) {
 	elgg_set_ignore_access(true);
 
 	// check if the user already has widgets
@@ -657,5 +660,4 @@ function elgg_add_admin_widgets($event, $type, $user) {
 	elgg_set_ignore_access(false);
 }
 
-elgg_register_event_handler('init', 'system', 'admin_init');
-elgg_register_event_handler('pagesetup', 'system', 'admin_pagesetup', 1000);
+elgg_register_event_handler('init', 'system', '_elgg_admin_init');
