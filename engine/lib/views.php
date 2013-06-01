@@ -4,15 +4,15 @@
  *
  * The view system is the primary templating engine in Elgg and renders
  * all output.  Views are short, parameterised PHP scripts for displaying
- * output that can be regsitered, overridden, or extended.  The view type
- * determines the output format and location of the files that renders the view.
+ * output that can be registered, overridden, or extended.  The view type
+ * determines the output format and location of the files that render the view.
  *
- * Elgg uses a two step process to render full output: first
- * content-specific elements are rendered, then the resulting
- * content is inserted into a layout and displayed.  This makes it
- * easy to maintain a consistent look on all pages.
+ * Elgg uses a two step process to render full output:
+ * first, content-specific elements are rendered;
+ * then, the resulting content is inserted into a layout and displayed.
+ * This makes it easy to maintain a consistent look on all pages.
  *
- * A view corresponds to a single file on the filesystem and the views
+ * A view corresponds to a single file on the filesystem and the view's
  * name is its directory structure.  A file in
  * <code>mod/plugins/views/default/myplugin/example.php</code>
  * is called by saying (with the default viewtype):
@@ -23,17 +23,17 @@
  * to their load order: views in plugins lower in the list override
  * those higher in the list.
  *
- * Plugin views belong in the views/ directory under an appropriate
+ * Plugin views belong in the <code>views/</code> directory under an appropriate
  * viewtype.  Views are automatically registered.
  *
- * Views can be embedded-you can call a view from within a view.
+ * Views can be embedded, i.e. you can call a view from within a view.
  * Views can also be prepended or extended by any other view.
  *
  * Any view can extend any other view if registered with
  * {@link elgg_extend_view()}.
  *
  * Viewtypes are set by passing $_REQUEST['view'].  The viewtype
- * 'default' is a standard HTML view.  Types can be defined on the fly
+ * 'default' is a standard HTML view.  Viewtypes can be defined on the fly
  * and you can get the current viewtype with {@link elgg_get_viewtype()}.
  *
  * @internal Plugin views are autoregistered before their init functions
