@@ -367,7 +367,7 @@ function messages_get_unread($user_guid = 0, $limit = 10, $offset = 0, $count = 
 	$strings = array('toId', $user_guid, 'readYet', 0, 'msg', 1);
 	$map = array();
 	foreach ($strings as $string) {
-		$id = get_metastring_id($string);
+		$id = add_metastring($string);
 		$map[$string] = $id;
 	}
 
