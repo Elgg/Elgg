@@ -615,7 +615,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = false, $debug = false) {
 
 	// No point continuing if entity is null
-	if (!$entity || !($entity instanceof ElggEntity)) {
+	if (!elgg_instanceof($entity)) {
 		return false;
 	}
 
