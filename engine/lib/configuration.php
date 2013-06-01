@@ -533,6 +533,9 @@ function _elgg_load_site_config() {
 	$CONFIG->url = $CONFIG->wwwroot;
 
 	get_all_config();
+	// gives hint to elgg_get_config function how to approach missing values
+	$CONFIG->site_config_loaded = true;
+
 	if (!empty($CONFIG->debug)) {
 		_elgg_services()->logger->setLevel($CONFIG->debug);
 		_elgg_services()->logger->setDisplay(true);
