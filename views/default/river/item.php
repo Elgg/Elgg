@@ -10,14 +10,13 @@
 
 $item = elgg_extract('item', $vars, false);
 
-if (!$item || !($item instanceof ElggRiverItem)) {
-	return true;
+if (!($item instanceof ElggRiverItem)) {
+	return;
 }
 
 access_show_hidden_entities(true);
 elgg_set_ignore_access();
 
-$error = false;
 $subject = $item->getSubjectEntity();
 $object = $item->getObjectEntity();
 $view = $item->getView();
@@ -39,7 +38,7 @@ if (!empty($error)) {
 		'item' => $item,
 		'error' => $error
 	));
-	return true;
+	return;
 }
 
 // @todo remove this in Elgg 1.9
@@ -51,7 +50,7 @@ if ($_elgg_special_river_catch) {
 	// we changed the views a little in 1.8.1 so this catches the plugins that
 	// were updated in 1.8.0 and redirects to the layout view
 	echo elgg_view('river/elements/layout', $vars);
-	return true;
+	return;
 }
 $_elgg_special_river_catch = true;
 
