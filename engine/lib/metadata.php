@@ -91,7 +91,7 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 	$access_id = (int)$access_id;
 
 	$query = "SELECT * from {$CONFIG->dbprefix}metadata"
-		. " WHERE entity_guid = $entity_guid and name_id=" . add_metastring($name) . " limit 1";
+		. " WHERE entity_guid = $entity_guid and name_id=" . elgg_get_metastring_id($name) . " limit 1";
 
 	$existing = get_data_row($query);
 	if ($existing && !$allow_multiple) {
@@ -108,12 +108,12 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 		}
 
 		// Add the metastrings
-		$value_id = add_metastring($value);
+		$value_id = elgg_get_metastring_id($value);
 		if (!$value_id) {
 			return false;
 		}
 
-		$name_id = add_metastring($name);
+		$name_id = elgg_get_metastring_id($name);
 		if (!$name_id) {
 			return false;
 		}
@@ -191,12 +191,12 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	}
 
 	// Add the metastring
-	$value = add_metastring($value);
+	$value = elgg_get_metastring_id($value);
 	if (!$value) {
 		return false;
 	}
 
-	$name = add_metastring($name);
+	$name = elgg_get_metastring_id($name);
 	if (!$name) {
 		return false;
 	}

@@ -86,8 +86,8 @@ function uservalidationbyemail_validate_email($user_guid, $code) {
 function uservalidationbyemail_get_unvalidated_users_sql_where() {
 	$db_prefix = elgg_get_config('dbprefix');
 
-	$validated_id = add_metastring('validated');
-	$one_id = add_metastring('1');
+	$validated_id = elgg_get_metastring_id('validated');
+	$one_id = elgg_get_metastring_id('1');
 
 	// thanks to daveb@freenode for the SQL tips!
 	$wheres = array();

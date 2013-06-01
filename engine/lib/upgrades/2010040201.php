@@ -4,10 +4,10 @@
  * Pull admin metadata setting into users_entity table column
  */
 
-$siteadmin = add_metastring('siteadmin');
-$admin = add_metastring('admin');
-$yes = add_metastring('yes');
-$one = add_metastring('1');
+$siteadmin = elgg_get_metastring_id('siteadmin');
+$admin = elgg_get_metastring_id('admin');
+$yes = elgg_get_metastring_id('yes');
+$one = elgg_get_metastring_id('1');
 
 $qs = array();
 

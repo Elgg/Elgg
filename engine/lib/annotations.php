@@ -83,12 +83,12 @@ $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 	$time = time();
 
 	// Add the metastring
-	$value = add_metastring($value);
+	$value = elgg_get_metastring_id($value);
 	if (!$value) {
 		return false;
 	}
 
-	$name = add_metastring($name);
+	$name = elgg_get_metastring_id($name);
 	if (!$name) {
 		return false;
 	}
@@ -151,12 +151,12 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 
 	$access_id = (int)$access_id;
 
-	$value = add_metastring($value);
+	$value = elgg_get_metastring_id($value);
 	if (!$value) {
 		return false;
 	}
 
-	$name = add_metastring($name);
+	$name = elgg_get_metastring_id($name);
 	if (!$name) {
 		return false;
 	}
