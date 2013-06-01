@@ -93,7 +93,7 @@ class ElggMetadata extends ElggExtender {
 	 * @return bool
 	 */
 	function delete() {
-		$success = elgg_delete_metastring_based_object_by_id($this->id, 'metadata');
+		$success = _elgg_delete_metastring_based_object_by_id($this->id, 'metadata');
 		if ($success) {
 			// we mark unknown here because this deletes only one value
 			// under this name, and there may be others remaining.
@@ -109,7 +109,7 @@ class ElggMetadata extends ElggExtender {
 	 * @since 1.8
 	 */
 	function disable() {
-		$success = elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'metadata');
+		$success = _elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'metadata');
 		if ($success) {
 			// we mark unknown here because this disables only one value
 			// under this name, and there may be others remaining.
@@ -125,7 +125,7 @@ class ElggMetadata extends ElggExtender {
 	 * @since 1.8
 	 */
 	function enable() {
-		$success = elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'metadata');
+		$success = _elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'metadata');
 		if ($success) {
 			elgg_get_metadata_cache()->markUnknown($this->entity_guid, $this->name);
 		}

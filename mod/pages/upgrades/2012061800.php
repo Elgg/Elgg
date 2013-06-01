@@ -27,7 +27,7 @@ function pages_2012061800($page) {
 $previous_access = elgg_set_ignore_access(true);
 
 $dbprefix = elgg_get_config('dbprefix');
-$name_metastring_id = get_metastring_id('parent_guid');
+$name_metastring_id = elgg_get_metastring_id('parent_guid');
 if (!$name_metastring_id) {
 	return;
 }

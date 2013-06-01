@@ -84,7 +84,7 @@ class ElggAnnotation extends ElggExtender {
 	 */
 	function delete() {
 		elgg_delete_river(array('annotation_id' => $this->id));
-		return elgg_delete_metastring_based_object_by_id($this->id, 'annotations');
+		return _elgg_delete_metastring_based_object_by_id($this->id, 'annotations');
 	}
 
 	/**
@@ -94,7 +94,7 @@ class ElggAnnotation extends ElggExtender {
 	 * @since 1.8
 	 */
 	function disable() {
-		return elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'annotations');
+		return _elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'annotations');
 	}
 
 	/**
@@ -104,7 +104,7 @@ class ElggAnnotation extends ElggExtender {
 	 * @since 1.8
 	 */
 	function enable() {
-		return elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'annotations');
+		return _elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'annotations');
 	}
 
 	/**
