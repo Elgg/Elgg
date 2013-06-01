@@ -1,61 +1,61 @@
-/**
- * Tests elgg.ajax.handleOptions() with all of the possible valid inputs
- */
-ElggAjaxOptionsTest = TestCase("ElggAjaxOptionsTest");
-
-ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsNoArgs = function() {
-	assertNotUndefined(elgg.ajax.handleOptions());
-};
-
-ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsUrl = function() {
-	var url = 'url',
-		result = elgg.ajax.handleOptions(url);
+describe("handleOptions", function() {
 	
-	assertEquals(url, result.url);
-};
-
-ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsDataOnly = function() {
-	var options = {},
+	it("accepts handleOptions()", function() {
+		expect(elgg.ajax.handleOptions()).not.toBe(undefined);
+	});
+	
+	it("accepts handleOptions(url)", function() {
+		var url = 'http://google.com',
+			result = elgg.ajax.handleOptions(url);
+		
+		expect(result.url).toBe(url);
+	});
+	
+	it("interprets a POJO as data", function() {
+		var options = {},
+			result = elgg.ajax.handleOptions(options);
+		
+		expect(result.data).toBe(options);	
+	});
+	
+	it("interprets a POJO with a data field as full options", function() {
+		var options = {data:{arg:1}},
+			result = elgg.ajax.handleOptions(options);
+		
+		expect(result).toBe(options);
+	});
+	
+	it("interprets a POJO with a function as full options", function() {
+		function func() {}
+		options = {success: func};
 		result = elgg.ajax.handleOptions(options);
+		
+		expect(result).toBe(options);		
+	});
 	
-	assertEquals(options, result.data);
-};
-
-ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsOptions = function() {
-	var options = {data:{arg:1}},
-		result = elgg.ajax.handleOptions(options);
+	it("accepts handleOptions(url, data)", function() {
+		var url = 'url',
+			data = {arg:1},
+			result = elgg.ajax.handleOptions(url, data);
+		
+		expect(result.url).toBe(url);
+		expect(result.data).toBe(data);
+	});
 	
-	assertEquals(options, result);
+	it("accepts handleOptions(url, successCallback)", function() {
+		var url = 'http://google.com',
+		result = elgg.ajax.handleOptions(url, elgg.nullFunction);
+		
+		expect(result.url).toBe(url);
+		expect(result.success).toBe(elgg.nullFunction);
+	});
 	
-	function func() {}
-	options = {success: func};
-	result = elgg.ajax.handleOptions(options);
-	
-	assertEquals(options, result);
-};
-
-ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsUrlThenDataOnly = function() {
-	var url = 'url',
-		options = {arg:1},
+	it("accepts handleOptions(url, options)", function() {
+		var url = 'url',
+		options = {data:{arg:1}},
 		result = elgg.ajax.handleOptions(url, options);
-	
-	assertEquals(url, result.url);
-	assertEquals(options, result.data);
-};
-
-ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsUrlThenSuccessOnly = function() {
-	var url = 'url',
-	result = elgg.ajax.handleOptions(url, elgg.nullFunction);
-	
-	assertEquals(url, result.url);
-	assertEquals(elgg.nullFunction, result.success);
-};
-
-ElggAjaxOptionsTest.prototype.testHandleOptionsAcceptsUrlThenOptions = function() {
-	var url = 'url',
-	options = {data:{arg:1}},
-	result = elgg.ajax.handleOptions(url, options);
-	
-	assertEquals(url, result.url);
-	assertEquals(options.data, result.data);
-};
+		
+		expect(result.url).toBe(url);
+		expect(result.data).toBe(options.data);
+	});
+});

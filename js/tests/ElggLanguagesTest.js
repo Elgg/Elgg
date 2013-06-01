@@ -1,45 +1,29 @@
-ElggLanguagesTest = TestCase("ElggLanguagesTest");
+describe("elgg.i18n", function() {
 
-ElggLanguagesTest.prototype.setUp = function() {
-	this.ajax = $.ajax;
+	afterEach(function() {
+		elgg.config.translations = {};
+	});
 	
-	//Immediately execute some dummy "returned" javascript instead of sending
-	//an actual ajax request
-	$.ajax = function(settings) {
-		var lang = settings.data.language;
-		elgg.config.translations[lang] = {'language':lang};
-	};
-};
+	describe("elgg.echo", function() {
 
-ElggLanguagesTest.prototype.tearDown = function() {
-	$.ajax = this.ajax;
-	
-	//clear translations
-	elgg.config.translations['en'] = undefined;
-	elgg.config.translations['aa'] = undefined;
-};
-
-ElggLanguagesTest.prototype.testLoadTranslations = function() {
-	assertUndefined(elgg.config.translations['en']);
-	assertUndefined(elgg.config.translations['aa']);
-	
-	elgg.reload_all_translations();
-	elgg.reload_all_translations('aa');
-	
-	assertNotUndefined(elgg.config.translations['en']['language']);
-	assertNotUndefined(elgg.config.translations['aa']['language']);
-};
-
-ElggLanguagesTest.prototype.testElggEchoTranslates = function() {
-	elgg.reload_all_translations('en');
-	elgg.reload_all_translations('aa');
-	
-	assertEquals('en', elgg.echo('language'));
-	assertEquals('aa', elgg.echo('language', 'aa'));
-};
-
-ElggLanguagesTest.prototype.testElggEchoFallsBackToDefaultLanguage = function() {
-	elgg.reload_all_translations('en');
-	assertEquals('en', elgg.echo('language', 'aa'));
-};
-
+		it("translates the given string", function() {
+			elgg.add_translation('en', {
+				'hello': 'Hello!'
+			});
+			elgg.add_translation('es', {
+				'hello': 'Hola!'
+			});
+			
+			expect(elgg.echo('hello')).toBe('Hello!');
+			expect(elgg.echo('hello', 'es')).toBe('Hola!');			
+		});
+		
+		it("falls back to the default language", function() {
+			elgg.add_translation('en', {
+				'hello': 'Hello!'
+			});
+			
+			expect(elgg.echo('hello', 'es')).toBe('Hello!');
+		});
+	});
+});
