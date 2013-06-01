@@ -1109,6 +1109,7 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
  * @param array  $vars Additional parameters for the rendering
  *
  * @return string
+ * @since 1.9.0
  */
 function elgg_view_list($items, array $vars = array()) {
 

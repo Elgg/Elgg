@@ -445,7 +445,7 @@ function elgg_list_river(array $options = array()) {
 
 	$options['count'] = $count;
 	
-	return elgg_view_list($items, $opitons);
+	return elgg_view_list($items, $options);
 }
 
 /**
