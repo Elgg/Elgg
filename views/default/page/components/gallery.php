@@ -18,7 +18,7 @@
 
 $items = $vars['items'];
 if (!is_array($items) || sizeof($items) == 0) {
-	return true;
+	return;
 }
 
 elgg_push_context('gallery');
