@@ -809,7 +809,6 @@ $list_type_toggle = true, $pagination = true) {
 	if (is_array($vars)) {
 		// new function
 		$defaults = array(
-			'items' => $entities,
 			'list_class' => 'elgg-list-entity',
 			'full_view' => true,
 			'pagination' => true,
@@ -825,7 +824,6 @@ $list_type_toggle = true, $pagination = true) {
 		elgg_deprecated_notice("Please update your use of elgg_view_entity_list()", 1.8);
 
 		$vars = array(
-			'items' => $entities,
 			'count' => (int) $vars, // the old count parameter
 			'offset' => $offset,
 			'limit' => (int) $limit,
@@ -837,21 +835,7 @@ $list_type_toggle = true, $pagination = true) {
 		);
 	}
 
-	if (isset($vars['list_view'])) {
-		$list_view = $vars['list_view'];
-		unset($vars['list_view']);
-	}
-
-	if (!$list_view || !elgg_view_exists($list_view)) {
-		if ($vars['list_type'] != 'list') {
-			$list_view = 'page/components/gallery';
-		} else {
-			$list_view = 'page/components/list';
-		}
-	}
-	
-	return elgg_view($list_view, $vars);
-
+	return elgg_view_list($entities, $vars);
 }
 
 /**
@@ -872,7 +856,6 @@ $list_type_toggle = true, $pagination = true) {
  */
 function elgg_view_annotation_list($annotations, array $vars = array()) {
 	$defaults = array(
-		'items' => $annotations,
 		'list_class' => 'elgg-list-annotation elgg-annotation-list', // @todo remove elgg-annotation-list in Elgg 1.9
 		'full_view' => true,
 		'offset_key' => 'annoff',
@@ -880,7 +863,7 @@ function elgg_view_annotation_list($annotations, array $vars = array()) {
 
 	$vars = array_merge($defaults, $vars);
 
-	return elgg_view('page/components/list', $vars);
+	return elgg_view_list($annotations, $vars);
 }
 
 /**
@@ -1117,6 +1100,43 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 	}
 
 	return elgg_view('input/form', array_merge($defaults, $form_vars));
+}
+
+/**
+ * View a list
+ *
+ * @param array $items An array of entities, annotations or river items
+ * @param array  $vars Additional parameters for the rendering
+ *
+ * @return string
+ */
+function elgg_view_list($items, array $vars = array()) {
+
+	$defaults = array(
+		'items' => $items,
+		'full_view' => false,
+		'pagination' => true,
+		'list_type' => 'list',
+		'list_type_toggle' => false,
+	);
+
+	$vars = array_merge($defaults, $vars);
+
+	if (isset($vars['list_view'])) {
+		$list_view = $vars['list_view'];
+		unset($vars['list_view']);
+	}
+
+	if (!$list_view || !elgg_view_exists($list_view)) {
+		if ($vars['list_type'] != 'list') {
+			$list_view = 'page/components/gallery';
+		} else {
+			$list_view = 'page/components/list';
+		}
+	}
+
+	return elgg_view($list_view, $vars);
+
 }
 
 /**
