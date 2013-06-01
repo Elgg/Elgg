@@ -13,8 +13,8 @@ $ia = elgg_set_ignore_access(TRUE);
 $hidden_entities = access_get_show_hidden_status();
 access_show_hidden_entities(TRUE);
 
-$validated_id = get_metastring_id('validated');
-$one_id = get_metastring_id(1);
+$validated_id = add_metastring('validated');
+$one_id = add_metastring(1);
 
 $query = "SELECT guid FROM {$CONFIG->dbprefix}entities e
 			WHERE e.type = 'user' AND e.enabled = 'no' AND
