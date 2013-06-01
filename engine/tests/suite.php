@@ -8,9 +8,6 @@
 
 require_once(dirname( __FILE__ ) . '/../start.php');
 
-// Ensure that only logged-in users can see this page
-admin_gatekeeper();
-
 $vendor_path = "$CONFIG->path/vendors/simpletest";
 $test_path = "$CONFIG->path/engine/tests";
 
@@ -18,6 +15,18 @@ require_once("$vendor_path/unit_tester.php");
 require_once("$vendor_path/mock_objects.php");
 require_once("$vendor_path/reporter.php");
 require_once("$test_path/ElggCoreUnitTest.php");
+
+//don't expect admin session for CLI
+if (!TextReporter::inCli()) {
+	admin_gatekeeper();
+} else {
+	$admin = array_shift(elgg_get_admins(array('limit' => 1)));
+	if (!login($admin)) {
+		echo "Failed to login as administrator.";
+		exit(1);
+	}
+	$CONFIG->debug = 'NOTICE';
+}
 
 // turn off system log
 elgg_unregister_event_handler('all', 'all', 'system_log_listener');
@@ -50,9 +59,12 @@ if (!isset($CONFIG->debug)) {
 }
 
 if (TextReporter::inCli()) {
+	echo "Running simpletest tests...\n";
 	// In CLI error codes are returned: 0 is success
 	elgg_set_ignore_access(TRUE);
-	exit ($suite->Run(new TextReporter()) ? 0 : 1 );
+	$reporter = new TextReporter();
+	$result = $suite->Run($reporter) ? 0 : 1 ;
+	exit($result);
 }
 
 $old = elgg_set_ignore_access(TRUE);

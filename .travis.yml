@@ -7,6 +7,9 @@ php:
 branches:
   only:
     - master
+    
+services: 
+ - mysql
 
 before_script:
  - pear install pear/PHP_CodeSniffer
@@ -14,8 +17,14 @@ before_script:
  - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
  - phpenv rehash
  - npm install -g karma
+ - mysql -e 'create database elgg_phpunit;'
+ - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
+ - mkdir "${HOME}/elgg_data/"
+ - php -f ./install/cli/travis_installer.php
 
 script:
  - phpunit
  - phpcs --standard=../elgg-coding-standards/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
  - karma start js/tests/karma.conf.js --single-run
+ - php -f ./engine/tests/suite.php
+ 
