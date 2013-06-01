@@ -8,7 +8,7 @@
  * @uses $vars['offset']        Index of the first list item in complete list
  * @uses $vars['limit']         Number of items per page
  * @uses $vars['count']         Number of items in the complete list
- * @uses $vars['base_url']    Base URL of list (optional)
+ * @uses $vars['base_url']		Base URL of list (optional)
  * @uses $vars['pagination']    Show pagination? (default: true)
  * @uses $vars['position']      Position of the pagination: before, after, or both
  * @uses $vars['full_view']     Show the full view of the items (default: false)
