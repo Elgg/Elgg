@@ -734,16 +734,12 @@ function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = arr
  *
  * @return string/false Rendered annotation
  */
-<<<<<<< HEAD
-function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(), $bypass = false, $debug = false) {
-=======
 function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(), $bypass = true, $debug = false) {
 	
-	if (!$annotation || !($annotation instanceof ElggAnnotation)) {
+	if (!($annotation instanceof ElggAnnotation)) {
 		return false;
 	}
 	
->>>>>>> beceb22... only use elgg_view_annotation() to render an annotation
 	global $autofeed;
 	$autofeed = true;
 
