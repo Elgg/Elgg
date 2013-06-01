@@ -1355,6 +1355,7 @@ abstract class ElggEntity extends ElggData implements
 	 * Save an entity.
 	 *
 	 * @return bool|int
+	 * @throws InvalidParameterException
 	 * @throws IOException
 	 */
 	public function save() {
@@ -1420,7 +1421,11 @@ abstract class ElggEntity extends ElggData implements
 			$container_guid = $owner_guid;
 		}
 		$container_guid = (int)$container_guid;
-	
+
+		if ($access_id == ACCESS_DEFAULT) {
+			throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.h');
+		}
+
 		$owner = $this->getOwnerEntity();
 		if ($owner && !$owner->canWriteToContainer(0, $type, $subtype)) {
 			return false;
@@ -1500,7 +1505,11 @@ abstract class ElggEntity extends ElggData implements
 		$container_guid = (int)$this->get('container_guid');
 		$time_created = (int)$this->get('time_created');
 		$time = time();
-	
+
+		if ($access_id == ACCESS_DEFAULT) {
+			throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.h');
+		}
+
 		if (!$this->canEdit() || !elgg_trigger_event('update', $this->type, $this)) {
 			return false;
 		}

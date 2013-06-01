@@ -463,6 +463,12 @@ function elgg_get_entities_from_annotation_calculation($options) {
  * @return string
  */
 function elgg_list_entities_from_annotation_calculation($options) {
+	$defaults = array(
+		'calculation' => 'sum',
+		'order_by' => 'annotation_calculation desc'
+	);
+	$options = array_merge($defaults, $options);
+
 	return elgg_list_entities($options, 'elgg_get_entities_from_annotation_calculation');
 }
 

@@ -11,7 +11,6 @@ $session = elgg_get_session();
 // set forward url
 if ($session->has('last_forward_from')) {
 	$forward_url = $session->get('last_forward_from');
-	$session->remove('last_forward_from');
 	$forward_source = 'last_forward_from';
 } elseif (get_input('returntoreferer')) {
 	$forward_url = REFERER;
@@ -66,6 +65,9 @@ if ($user->language) {
 } else {
 	$message = elgg_echo('loginok');
 }
+
+// clear after login in case login fails
+$session->remove('last_forward_from');
 
 $params = array('user' => $user, 'source' => $forward_source);
 $forward_url = elgg_trigger_plugin_hook('login:forward', 'user', $params, $forward_url);

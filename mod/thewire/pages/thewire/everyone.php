@@ -18,7 +18,7 @@ if (elgg_is_logged_in()) {
 $content .= elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'thewire',
-	'limit' => 15,
+	'limit' => get_input('limit', 15),
 ));
 
 $body = elgg_view_layout('content', array(

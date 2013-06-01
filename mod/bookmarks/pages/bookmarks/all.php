@@ -13,7 +13,6 @@ elgg_register_title_button();
 $content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'bookmarks',
-	'limit' => 10,
 	'full_view' => false,
 	'view_toggle_type' => false,
 	'no_results' => elgg_echo('bookmarks:none'),

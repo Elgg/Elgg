@@ -95,13 +95,17 @@ function get_number_users($show_deactivated = false) {
  * @return string
   */
 function get_online_users() {
-	$count = find_active_users(600, 10, 0, true);
-	$objects = find_active_users(600, 10);
+	$limit = max(0, (int) get_input("limit", 10));
+	$offset = max(0, (int) get_input("offset", 0));
+	
+	$count = find_active_users(600, $limit, $offset, true);
+	$objects = find_active_users(600, $limit, $offset);
 
 	if ($objects) {
 		return elgg_view_entity_list($objects, array(
 			'count' => $count,
-			'limit' => 10,
+			'limit' => $limit,
+			'offset' => $offset
 		));
 	}
 	return '';
