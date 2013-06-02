@@ -34,7 +34,8 @@ elgg.ui.lightbox.init = function() {
 		xhrError: elgg.echo('error:default'),
 		imgError: elgg.echo('error:default'),
 		opacity: 0.5,
-		
+		maxWidth: '100%',
+
 		// workaround for https://github.com/jackmoore/colorbox/issues/291
 		reposition: $(window).height() > 600
 	});
