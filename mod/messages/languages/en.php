@@ -77,7 +77,7 @@ return array(
 
 	%s
 
-	You cannot reply to this email.",
+	Please do not reply to this email.",
 
 	/**
 	* Error messages
@@ -90,6 +90,7 @@ return array(
 	'messages:nomessages' => "There are no messages.",
 	'messages:user:nonexist' => "We could not find the recipient in the user database.",
 	'messages:user:blank' => "You did not select someone to send this to.",
+	'messages:user:self' => "You cannot send a message to yourself.",
 
 	'messages:deleted_sender' => 'Deleted user',
 
