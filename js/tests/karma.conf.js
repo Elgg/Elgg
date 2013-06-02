@@ -38,11 +38,11 @@ exclude = [
 reporters = ['progress'];
 
 
-hostname = process.env.IP;
+hostname = process.env.IP || 'localhost';
 
 
 // web server port
-port = process.env.PORT;
+port = process.env.PORT || 9876;
 
 
 // cli runner port
