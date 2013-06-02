@@ -3,6 +3,4 @@
  * General error
  */
 
-$message = elgg_echo('error:default');
-
-echo "<h2>$message</h2>";
+echo elgg_echo('error:default:content');

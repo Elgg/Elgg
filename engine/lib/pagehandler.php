@@ -97,13 +97,24 @@ function elgg_front_page_handler() {
  */
 function elgg_error_page_handler($hook, $type, $result, $params) {
 	if (elgg_view_exists("errors/$type")) {
+		$title = elgg_echo("error:$type:title");
+		if ($title == "error:$type:title") {
+			// use default if there is no title for this error type
+			$title = elgg_echo("error:default:title");
+		}
+		
 		$content = elgg_view("errors/$type", $params);
 	} else {
+		$title = elgg_echo("error:default:title");
 		$content = elgg_view("errors/default", $params);
 	}
-	$body = elgg_view_layout('error', array('content' => $content));
-	echo elgg_view_page('', $body, 'error');
-	exit;
+	
+	$body = elgg_view_layout('error', array(
+		'title' => $title,
+		'content' => $content
+	));
+	echo elgg_view_page($title, $body, 'error');
+	return true;
 }
 
 /**
