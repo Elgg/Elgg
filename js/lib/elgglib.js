@@ -180,27 +180,62 @@ elgg.require = function(pkg) {
  * is equivalent to
  *
  * <pre>
- * elgg = elgg || {};
+ * var elgg = this.elgg || {};
  * elgg.package = elgg.package || {};
  * elgg.package.subpackage = elgg.package.subpackage || {};
  * </pre>
  *
  * @example elgg.provide('elgg.config.translations')
  *
- * @param {string} pkg The package name.
+ * @param {String} pkg         The package name.
+ * @param {Object} opt_context Optional global context object
  */
 elgg.provide = function(pkg, opt_context) {
-	elgg.assertTypeOf('string', pkg);
+	elgg.setIfUndefined(pkg, {}, opt_context);
+};
 
-	var parts = pkg.split('.'),
+/**
+ * Define a value if it's undefined, generating an underlying package
+ * skeleton if missing.
+ *
+ * Using this avoids clobbering a value/function already set by someone else.
+ *
+ * <pre>
+ * elgg.setIfUndefined('foo.bar.default', 25);
+ * </pre>
+ *
+ * is equivalent to
+ *
+ * <pre>
+ * var foo = this.foo || {};
+ * foo.bar = foo.bar || {};
+ * if (foo.bar.default === undefined) {
+ *     foo.bar.default = 25;
+ * }
+ * </pre>
+ *
+ * @example elgg.setIfUndefined('foo.bar.default', 25);
+ *
+ * @param {String} name        The name of the value (e.g. "foo.bar.defaults")
+ * @param {*}      value       The value to be assigned
+ * @param {Object} opt_context Optional global context object
+ */
+elgg.setIfUndefined = function (name, value, opt_context) {
+	elgg.assertTypeOf('string', name);
+
+	var parts = name.split('.'),
+		lastPart = parts.pop(),
 		context = opt_context || elgg.global,
 		part, i;
-
 
 	for (i = 0; i < parts.length; i += 1) {
 		part = parts[i];
 		context[part] = context[part] || {};
 		context = context[part];
+	}
+
+	if (context[lastPart] === undefined) {
+		context[lastPart] = value;
 	}
 };
 
@@ -250,7 +285,7 @@ elgg.normalize_url = function(url) {
 	url = url || '';
 	elgg.assertTypeOf('string', url);
 
-	validated = (function(url) {
+	var validated = (function(url) {
 		url = elgg.parse_url(url);
 		if (url.scheme){
 			url.scheme = url.scheme.toLowerCase();
@@ -387,8 +422,8 @@ elgg.forward = function(url) {
  * Parse a URL into its parts. Mimicks http://php.net/parse_url
  *
  * @param {String} url       The URL to parse
- * @param {Int}    component A component to return
- * @param {Bool}   expand    Expand the query into an object? Else it's a string.
+ * @param {Number}    component A component to return
+ * @param {Boolean}   expand    Expand the query into an object? Else it's a string.
  *
  * @return {Object} The parsed URL
  */
@@ -396,24 +431,23 @@ elgg.parse_url = function(url, component, expand) {
 	// Adapted from http://blog.stevenlevithan.com/archives/parseuri
 	// which was release under the MIT
 	// It was modified to fix mailto: and javascript: support.
-	var
-	expand = expand || false,
-	component = component || false,
+	expand = expand || false;
+	component = component || false;
 	
-	re_str =
-		// scheme (and user@ testing)
-		'^(?:(?![^:@]+:[^:@/]*@)([^:/?#.]+):)?(?://)?'
-		// possibly a user[:password]@
-		+ '((?:(([^:@]*)(?::([^:@]*))?)?@)?'
-		// host and port
-		+ '([^:/?#]*)(?::(\\d*))?)'
-		// path
-		+ '(((/(?:[^?#](?![^?#/]*\\.[^?#/.]+(?:[?#]|$)))*/?)?([^?#/]*))'
-		// query string
-		+ '(?:\\?([^#]*))?'
-		// fragment
-		+ '(?:#(.*))?)',
-	keys = {
+	var re_str =
+			// scheme (and user@ testing)
+			'^(?:(?![^:@]+:[^:@/]*@)([^:/?#.]+):)?(?://)?'
+			// possibly a user[:password]@
+			+ '((?:(([^:@]*)(?::([^:@]*))?)?@)?'
+			// host and port
+			+ '([^:/?#]*)(?::(\\d*))?)'
+			// path
+			+ '(((/(?:[^?#](?![^?#/]*\\.[^?#/.]+(?:[?#]|$)))*/?)?([^?#/]*))'
+			// query string
+			+ '(?:\\?([^#]*))?'
+			// fragment
+			+ '(?:#(.*))?)',
+		keys = {
 			1: "scheme",
 			4: "user",
 			5: "pass",
@@ -422,8 +456,8 @@ elgg.parse_url = function(url, component, expand) {
 			9: "path",
 			12: "query",
 			13: "fragment"
-	},
-	results = {};
+		},
+		results = {};
 
 	if (url.indexOf('mailto:') === 0) {
 		results['scheme'] = 'mailto';
@@ -437,8 +471,8 @@ elgg.parse_url = function(url, component, expand) {
 		return results;
 	}
 
-	var re = new RegExp(re_str);
-	var matches = re.exec(url);
+	var re = new RegExp(re_str),
+		matches = re.exec(url);
 
 	for (var i in keys) {
 		if (matches[i]) {
@@ -467,15 +501,15 @@ elgg.parse_url = function(url, component, expand) {
  * @return {Object} The parsed object string
  */
 elgg.parse_str = function(string) {
-	var params = {};
-	var result,
+	var params = {},
+		result,
 		key,
 		value,
 		re = /([^&=]+)=?([^&]*)/g;
 
 	while (result = re.exec(string)) {
-		key = decodeURIComponent(result[1])
-		value = decodeURIComponent(result[2])
+		key = decodeURIComponent(result[1]);
+		value = decodeURIComponent(result[2]);
 		params[key] = value;
 	}
 	
@@ -516,7 +550,7 @@ elgg.getSelectorFromUrlFragment = function(url) {
  *
  * @param {Object} object The object to add to
  * @param {String} parent The parent array to add to.
- * @param {Mixed}  value  The value
+ * @param {*}      value  The value
  */
 elgg.push_to_object_array = function(object, parent, value) {
 	elgg.assertTypeOf('object', object);
@@ -538,7 +572,7 @@ elgg.push_to_object_array = function(object, parent, value) {
  *
  * @param {Object} object The object to add to
  * @param {String} parent The parent array to add to.
- * @param {Mixed}  value  The value
+ * @param {*}      value  The value
  */
 elgg.is_in_object_array = function(object, parent, value) {
 	elgg.assertTypeOf('object', object);
