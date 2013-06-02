@@ -48,7 +48,7 @@ function thewire_init() {
 	elgg_register_page_handler('thewire', 'thewire_page_handler');
 
 	// Register a URL handler for thewire posts
-	elgg_register_entity_url_handler('object', 'thewire', 'thewire_url');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'thewire_set_url');
 
 	elgg_register_widget_type('thewire', elgg_echo('thewire'), elgg_echo("thewire:widget:desc"));
 
@@ -149,11 +149,17 @@ function thewire_page_handler($page) {
 /**
  * Override the url for a wire post to return the thread
  * 
- * @param ElggObject $thewirepost Wire post object
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
+ * @return string
  */
-function thewire_url($thewirepost) {
-	global $CONFIG;
-	return $CONFIG->url . "thewire/view/" . $thewirepost->guid;
+function thewire_set_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+	if (elgg_instanceof($entity, 'object', 'thewire')) {
+		return "thewire/view/" . $entity->guid;
+	}
 }
 
 /**

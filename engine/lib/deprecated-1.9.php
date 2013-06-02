@@ -1,6 +1,220 @@
 <?php
 
 /**
+ * Sets the URL handler for a particular entity type and subtype
+ *
+ * @param string $entity_type    The entity type
+ * @param string $entity_subtype The entity subtype
+ * @param string $function_name  The function to register
+ *
+ * @return bool Depending on success
+ * @see get_entity_url()
+ * @see ElggEntity::getURL()
+ * @since 1.8.0
+ * @deprecated 1.9.0 Use the plugin hook in ElggEntity::getURL()
+ */
+function elgg_register_entity_url_handler($entity_type, $entity_subtype, $function_name) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use the plugin hook in ElggEntity::getURL()', 1.9);
+	global $CONFIG;
+
+	if (!is_callable($function_name, true)) {
+		return false;
+	}
+
+	if (!isset($CONFIG->entity_url_handler)) {
+		$CONFIG->entity_url_handler = array();
+	}
+
+	if (!isset($CONFIG->entity_url_handler[$entity_type])) {
+		$CONFIG->entity_url_handler[$entity_type] = array();
+	}
+
+	$CONFIG->entity_url_handler[$entity_type][$entity_subtype] = $function_name;
+
+	return true;
+}
+
+/**
+ * Sets the URL handler for a particular relationship type
+ *
+ * @param string $relationship_type The relationship type.
+ * @param string $function_name     The function to register
+ *
+ * @return bool Depending on success
+ * @deprecated 1.9 Use the plugin hook in ElggRelationship::getURL()
+ */
+function elgg_register_relationship_url_handler($relationship_type, $function_name) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use the plugin hook in getURL()', 1.9);
+	global $CONFIG;
+
+	if (!is_callable($function_name, true)) {
+		return false;
+	}
+
+	if (!isset($CONFIG->relationship_url_handler)) {
+		$CONFIG->relationship_url_handler = array();
+	}
+
+	$CONFIG->relationship_url_handler[$relationship_type] = $function_name;
+
+	return true;
+}
+
+/**
+ * Get the url for a given relationship.
+ *
+ * @param int $id Relationship ID
+ *
+ * @return string
+ * @deprecated 1.9 Use ElggRelationship::getURL()
+ */
+function get_relationship_url($id) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggRelationship::getURL()', 1.9);
+	global $CONFIG;
+
+	$id = (int)$id;
+
+	if ($relationship = get_relationship($id)) {
+		$view = elgg_get_viewtype();
+
+		$guid = $relationship->guid_one;
+		$type = $relationship->relationship;
+
+		$url = "";
+
+		$function = "";
+		if (isset($CONFIG->relationship_url_handler[$type])) {
+			$function = $CONFIG->relationship_url_handler[$type];
+		}
+		if (isset($CONFIG->relationship_url_handler['all'])) {
+			$function = $CONFIG->relationship_url_handler['all'];
+		}
+
+		if (is_callable($function)) {
+			$url = call_user_func($function, $relationship);
+		}
+
+		if ($url == "") {
+			$nameid = $relationship->id;
+
+			$url = elgg_get_site_url()  . "export/$view/$guid/relationship/$nameid/";
+		}
+
+		return $url;
+	}
+
+	return false;
+}
+
+/**
+ * Sets the URL handler for a particular extender type and name.
+ * It is recommended that you do not call this directly, instead use
+ * one of the wrapper functions such as elgg_register_annotation_url_handler().
+ *
+ * @param string $extender_type Extender type ('annotation', 'metadata')
+ * @param string $extender_name The name of the extender
+ * @param string $function_name The function to register
+ *
+ * @return bool
+ * @deprecated 1.9 Use plugin hook in ElggExtender::getURL()
+ */
+function elgg_register_extender_url_handler($extender_type, $extender_name, $function_name) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use the plugin hook in getURL()', 1.9, 2);
+
+	global $CONFIG;
+
+	if (!is_callable($function_name, true)) {
+		return false;
+	}
+
+	if (!isset($CONFIG->extender_url_handler)) {
+		$CONFIG->extender_url_handler = array();
+	}
+	if (!isset($CONFIG->extender_url_handler[$extender_type])) {
+		$CONFIG->extender_url_handler[$extender_type] = array();
+	}
+	$CONFIG->extender_url_handler[$extender_type][$extender_name] = $function_name;
+
+	return true;
+}
+
+/**
+ * Get the URL of a given elgg extender.
+ * Used by get_annotation_url and get_metadata_url.
+ *
+ * @param ElggExtender $extender An extender object
+ *
+ * @return string
+ * @deprecated 1.9 Use method getURL()
+ */
+function get_extender_url(ElggExtender $extender) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggExtender::getURL()', 1.9);
+	global $CONFIG;
+
+	$view = elgg_get_viewtype();
+
+	$guid = $extender->entity_guid;
+	$type = $extender->type;
+
+	$url = "";
+
+	$function = "";
+	if (isset($CONFIG->extender_url_handler[$type][$extender->name])) {
+		$function = $CONFIG->extender_url_handler[$type][$extender->name];
+	}
+
+	if (isset($CONFIG->extender_url_handler[$type]['all'])) {
+		$function = $CONFIG->extender_url_handler[$type]['all'];
+	}
+
+	if (isset($CONFIG->extender_url_handler['all']['all'])) {
+		$function = $CONFIG->extender_url_handler['all']['all'];
+	}
+
+	if (is_callable($function)) {
+		$url = call_user_func($function, $extender);
+	}
+
+	if ($url == "") {
+		$nameid = $extender->id;
+		if ($type == 'volatile') {
+			$nameid = $extender->name;
+		}
+		$url = "export/$view/$guid/$type/$nameid/";
+	}
+
+	return elgg_normalize_url($url);
+}
+
+/**
+ * Register a metadata url handler.
+ *
+ * @param string $extender_name The name, default 'all'.
+ * @param string $function      The function name.
+ *
+ * @return bool
+ * @deprecated 1.9 Use the plugin hook in ElggExtender::getURL()
+ */
+function elgg_register_metadata_url_handler($extender_name, $function) {
+	// deprecation notice comes from elgg_register_extender_url_handler()
+	return elgg_register_extender_url_handler('metadata', $extender_name, $function);
+}
+
+/**
+ * Register an annotation url handler.
+ *
+ * @param string $extender_name The name, default 'all'.
+ * @param string $function_name The function.
+ *
+ * @return string
+ * @deprecated 1.9 Use the plugin hook in ElggExtender::getURL()
+ */
+function elgg_register_annotation_url_handler($extender_name = "all", $function_name) {
+	// deprecation notice comes from elgg_register_extender_url_handler()
+	return elgg_register_extender_url_handler('annotation', $extender_name, $function_name);
+}
+
+/**
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
@@ -1309,12 +1523,9 @@ function make_attachment($guid_one, $guid_two) {
 /**
  * Returns the URL for an entity.
  *
- * @tip Can be overridden with {@link register_entity_url_handler()}.
- *
  * @param int $entity_guid The GUID of the entity
  *
  * @return string The URL of the entity
- * @see register_entity_url_handler()
  * @deprecated 1.9 Use ElggEntity::getURL()
  */
 function get_entity_url($entity_guid) {

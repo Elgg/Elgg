@@ -41,7 +41,7 @@ function messages_init() {
 	elgg_register_page_handler('messages', 'messages_page_handler');
 
 	// Register a URL handler
-	elgg_register_entity_url_handler('object', 'messages', 'messages_url');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'messages_set_url');
 
 	// Extend avatar hover menu
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'messages_user_hover_menu');
@@ -332,12 +332,17 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 /**
  * Message URL override
  *
- * @param ElggObject $message
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string
  */
-function messages_url($message) {
-	$url = elgg_get_site_url() . 'messages/read/' . $message->getGUID();
-	return $url;
+function messages_set_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+	if (elgg_instanceof($entity, 'object', 'messages')) {
+		return 'messages/read/' . $message->getGUID();
+	}
 }
 
 function count_unread_messages() {

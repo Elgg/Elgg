@@ -111,15 +111,6 @@ class ElggAnnotation extends ElggExtender {
 		return _elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'annotations');
 	}
 
-	/**
-	 * Get a url for this annotation.
-	 *
-	 * @return string
-	 */
-	public function getURL() {
-		return get_annotation_url($this->id);
-	}
-
 	// SYSTEM LOG INTERFACE
 
 	/**
