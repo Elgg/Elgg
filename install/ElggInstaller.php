@@ -798,7 +798,6 @@ class ElggInstaller {
 				'extender.php',
 				'filestore.php',
 				'group.php',
-				'location.php',
 				'mb_wrapper.php',
 				'memcache.php',
 				'metadata.php',
