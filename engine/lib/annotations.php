@@ -523,30 +523,23 @@ function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NU
 }
 
 /**
- * Return the URL for a comment
+ * Set the URL for a comment when caled from a plugin hook
  *
- * @param ElggAnnotation $comment The comment object 
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param string $url    URL string
+ * @param array  $params Parameters of the hook
  * @return string
  * @access private
  */
-function elgg_comment_url_handler(ElggAnnotation $comment) {
-	$entity = $comment->getEntity();
-	if ($entity) {
-		return $entity->getURL() . '#item-annotation-' . $comment->id;
+function _elgg_set_comment_url($hook, $type, $url, $params) {
+	$annotation = $params['extender'];
+	if ($annotation->getSubtype() == 'generic_comment') {
+		$entity = $annotation->getEntity();
+		if ($entity) {
+			return $entity->getURL() . '#item-annotation-' . $annotation->id;
+		}
 	}
-	return "";
-}
-
-/**
- * Register an annotation url handler.
- *
- * @param string $extender_name The name, default 'all'.
- * @param string $function_name The function.
- *
- * @return string
- */
-function elgg_register_annotation_url_handler($extender_name = "all", $function_name) {
-	return elgg_register_extender_url_handler('annotation', $extender_name, $function_name);
 }
 
 /**
@@ -570,7 +563,7 @@ function annotations_test($hook, $type, $value, $params) {
  * @access private
  */
 function elgg_annotations_init() {
-	elgg_register_annotation_url_handler('generic_comment', 'elgg_comment_url_handler');
+	elgg_register_plugin_hook_handler('extender:url', 'annotation', '_elgg_set_comment_url');
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'annotations_test');
 }
 

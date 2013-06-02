@@ -229,13 +229,6 @@ $CONFIG->menu_items_featured_urls;
 $CONFIG->menu_items_custom_items;
 
 /**
- * A list of registered actions, their file locations, and access permissions.
- *
- * @global array $CONFIG->actions
- */
-$CONFIG->actions;
-
-/**
  * Holds information about views.
  *
  * @global object $CONFIG->views
@@ -276,25 +269,11 @@ $CONFIG->view_types;
 $CONFIG->pluginlistcache;
 
 /**
- * Holds URL handler information for ElggExtender objects.
- *
- * @global array $CONFIG->extender_url_handler
- */
-$CONFIG->extender_url_handler;
-
-/**
  * A list of registered entities and subtypes.  Used in search.
  *
  * @global array $CONFIG->registered_entities
  */
 $CONFIG->registered_entities;
-
-/**
- * A list of URL handlers for {@link ElggEntity::getURL()}
- *
- * @global array $CONFIG->entity_url_handler
- */
-$CONFIG->entity_url_handler;
 
 /**
  * A list of entity types and subtypes that have metadata whose access permission

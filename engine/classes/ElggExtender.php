@@ -224,4 +224,47 @@ abstract class ElggExtender extends ElggData {
 		return $this->name;
 	}
 
+	/**
+	 * Get a url for this extender.
+	 *
+	 * Plugins can register for the 'extender:url', <type> plugin hook to
+	 * customize the url for an annotation or metadata.
+	 *
+	 * @return string
+	 */
+	public function getURL() {
+
+		$url = "";
+		$type = $this->getType();
+		$subtype = $this->getSubtype();
+
+		// @todo remove when elgg_register_extender_url_handler() has been removed
+		if ($this->id) {
+			global $CONFIG;
+
+			$function = "";
+			if (isset($CONFIG->extender_url_handler[$type][$subtype])) {
+				$function = $CONFIG->extender_url_handler[$type][$subtype];
+			}
+			if (isset($CONFIG->extender_url_handler[$type]['all'])) {
+				$function = $CONFIG->extender_url_handler[$type]['all'];
+			}
+			if (isset($CONFIG->extender_url_handler['all']['all'])) {
+				$function = $CONFIG->extender_url_handler['all']['all'];
+			}
+			if (is_callable($function)) {
+				$url = call_user_func($function, $extender);
+			}
+
+			if ($url) {
+				$url = elgg_normalize_url($url);
+			}
+		}
+
+		$params = array('extender' => $this);
+		$url = elgg_trigger_plugin_hook('extender:url', $type, $params, $url);
+
+		return elgg_normalize_url($url);
+	}
+
 }

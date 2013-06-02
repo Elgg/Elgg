@@ -132,15 +132,6 @@ class ElggMetadata extends ElggExtender {
 		return $success;
 	}
 
-	/**
-	 * Get a url for this item of metadata.
-	 *
-	 * @return string
-	 */
-	public function getURL() {
-		return get_metadata_url($this->id);
-	}
-
 	// SYSTEM LOG INTERFACE ////////////////////////////////////////////////////////////
 
 	/**

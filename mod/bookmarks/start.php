@@ -59,7 +59,7 @@ function bookmarks_init() {
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'bookmarks_ecml_views_hook');
 
 	// Register a URL handler for bookmarks
-	elgg_register_entity_url_handler('object', 'bookmarks', 'bookmark_url');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'bookmark_set_url');
 
 	// Register entity type for search
 	elgg_register_entity_type('object', 'bookmarks');
@@ -149,15 +149,18 @@ function bookmarks_page_handler($page) {
 /**
  * Populates the ->getUrl() method for bookmarked objects
  *
- * @param ElggEntity $entity The bookmarked object
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string bookmarked item URL
  */
-function bookmark_url($entity) {
-	global $CONFIG;
-
-	$title = $entity->title;
-	$title = elgg_get_friendly_title($title);
-	return $CONFIG->url . "bookmarks/view/" . $entity->getGUID() . "/" . $title;
+function bookmark_set_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+	if (elgg_instanceof($entity, 'object', 'bookmarks')) {
+		$title = elgg_get_friendly_title($entity->title);
+		return "bookmarks/view/" . $entity->getGUID() . "/" . $title;
+	}
 }
 
 /**

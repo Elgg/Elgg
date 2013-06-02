@@ -100,10 +100,42 @@ class ElggRelationship extends ElggData implements
 	/**
 	 * Get a URL for this relationship.
 	 *
+	 * Plugins can register for the 'relationship:url', 'relationship' plugin hook to
+	 * customize the url for a relationship.
+	 *
 	 * @return string
 	 */
 	public function getURL() {
-		return get_relationship_url($this->id);
+		$url = '';
+		// @todo remove when elgg_register_relationship_url_handler() has been removed
+		if ($this->id) {
+			global $CONFIG;
+
+			$guid = $this->guid_one;
+			$subtype = $this->getSubtype();
+
+			$function = "";
+			if (isset($CONFIG->relationship_url_handler[$subtype])) {
+				$function = $CONFIG->relationship_url_handler[$subtype];
+			}
+			if (isset($CONFIG->relationship_url_handler['all'])) {
+				$function = $CONFIG->relationship_url_handler['all'];
+			}
+
+			if (is_callable($function)) {
+				$url = call_user_func($function, $this);
+			}
+
+			if ($url) {
+				$url = elgg_normalize_url($url);
+			}
+		}
+
+		$type = $this->getType();
+		$params = array('relationship' => $this);
+		$url = elgg_trigger_plugin_hook('relationship:url', $type, $params, $url);
+
+		return elgg_normalize_url($url);
 	}
 
 	/**
