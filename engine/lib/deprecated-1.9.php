@@ -1,6 +1,40 @@
 <?php
 
 /**
+ * Sets the URL handler for a particular entity type and subtype
+ *
+ * @param string $entity_type    The entity type
+ * @param string $entity_subtype The entity subtype
+ * @param string $function_name  The function to register
+ *
+ * @return bool Depending on success
+ * @see get_entity_url()
+ * @see ElggEntity::getURL()
+ * @since 1.8.0
+ * @deprecated 1.9.0 Use the plugin hook in ElggEntity::getURL()
+ */
+function elgg_register_entity_url_handler($entity_type, $entity_subtype, $function_name) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use the plugin hook in ElggEntity::getURL()', 1.9);
+	global $CONFIG;
+
+	if (!is_callable($function_name, true)) {
+		return false;
+	}
+
+	if (!isset($CONFIG->entity_url_handler)) {
+		$CONFIG->entity_url_handler = array();
+	}
+
+	if (!isset($CONFIG->entity_url_handler[$entity_type])) {
+		$CONFIG->entity_url_handler[$entity_type] = array();
+	}
+
+	$CONFIG->entity_url_handler[$entity_type][$entity_subtype] = $function_name;
+
+	return true;
+}
+
+/**
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"

@@ -1436,40 +1436,6 @@ $order_by = 'time_created') {
 	return false;
 }
 
-
-
-/**
- * Sets the URL handler for a particular entity type and subtype
- *
- * @param string $entity_type    The entity type
- * @param string $entity_subtype The entity subtype
- * @param string $function_name  The function to register
- *
- * @return bool Depending on success
- * @see get_entity_url()
- * @see ElggEntity::getURL()
- * @since 1.8.0
- */
-function elgg_register_entity_url_handler($entity_type, $entity_subtype, $function_name) {
-	global $CONFIG;
-
-	if (!is_callable($function_name, true)) {
-		return false;
-	}
-
-	if (!isset($CONFIG->entity_url_handler)) {
-		$CONFIG->entity_url_handler = array();
-	}
-
-	if (!isset($CONFIG->entity_url_handler[$entity_type])) {
-		$CONFIG->entity_url_handler[$entity_type] = array();
-	}
-
-	$CONFIG->entity_url_handler[$entity_type][$entity_subtype] = $function_name;
-
-	return true;
-}
-
 /**
  * Registers an entity type and subtype as a public-facing entity that should
  * be shown in search and by {@link elgg_list_registered_entities()}.

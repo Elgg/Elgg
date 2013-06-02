@@ -1218,19 +1218,14 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Returns the URL for this entity.
+	 * Gets the URL for this entity.
 	 *
-	 * @tip Can be overridden with {@link register_entity_url_handler()}.
+	 * Plugins can register for the 'entity:url', <type> plugin hook to
+	 * customize the url for an entity.
 	 *
 	 * @return string The URL of the entity
-	 * @see register_entity_url_handler()
-	 * @see ElggEntity::setURL()
 	 */
 	public function getURL() {
-		if (!empty($this->url_override)) {
-			return $this->url_override;
-		}
-		
 		global $CONFIG;
 		
 		$url = "";
@@ -1256,6 +1251,16 @@ abstract class ElggEntity extends ElggData implements
 			$url = "view/" . $this->guid;
 		}
 
+		$url = elgg_normalize_url($url);
+
+		$type = $this->getType();
+		$params = array('entity' => $this);
+		$url = elgg_trigger_plugin_hook('entity:url', $type, $params, $url);
+
+		if (!empty($this->url_override)) {
+			$url = $this->url_override;
+		}
+
 		return elgg_normalize_url($url);
 	}
 
@@ -1267,8 +1272,10 @@ abstract class ElggEntity extends ElggData implements
 	 * @param string $url The new item URL
 	 *
 	 * @return string The URL
+	 * @deprecated 1.9.0 See ElggEntity::getURL() for details on the plugin hook
 	 */
 	public function setURL($url) {
+		elgg_deprecated_notice('ElggEntity::setURL() has been replaced by the "entity:url" plugin hook', 1.9);
 		$this->url_override = $url;
 		return $url;
 	}
