@@ -98,6 +98,8 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 		$obj = get_entity($guid);
 		$this->assertEqual($obj->subtype, $test_subtype);
+		$this->assertTrue($obj->delete());
+		remove_subtype('object', $test_subtype);
 	}
 
 	public function testElggEntityGetAndSetMetaData() {
