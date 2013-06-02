@@ -3,17 +3,14 @@
  * Compose message form
  *
  * @package ElggMessages
- * @uses $vars['friends']
+ * @uses $vars['$recipient_username']
+ * @uses $vars['subject']
+ * @uses $vars['body']
  */
 
-$recipient_guid = elgg_extract('recipient_guid', $vars, 0);
+$recipient_username = elgg_extract('recipient_username', $vars, '');
 $subject = elgg_extract('subject', $vars, '');
 $body = elgg_extract('body', $vars, '');
-
-$recipient = get_entity($recipient_guid);
-if (elgg_instanceof($recipient, 'user')) {
-	$recipient_username = $recipient->username;
-}
 
 $recipient_autocomplete = elgg_view('input/autocomplete', array(
 	'name' => 'recipient_username',

@@ -15,7 +15,6 @@ $title = elgg_echo('messages:add');
 elgg_push_breadcrumb($title);
 
 $params = messages_prepare_form_vars((int)get_input('send_to'));
-$params['friends'] = $page_owner->getFriends('', 50);
 $content = elgg_view_form('messages/send', array(), $params);
 
 $body = elgg_view_layout('content', array(
