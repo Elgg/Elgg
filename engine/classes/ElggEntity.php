@@ -76,7 +76,21 @@ abstract class ElggEntity extends ElggData implements
 	 * in-memory that isn't sync'd back to the metadata table.
 	 */
 	protected $volatile = array();
-
+	
+	/**
+	 * Tells how many tables are going to need to be searched in order to fully populate this object
+	 * 
+	 * @var int
+	 */
+	protected $tables_split;
+	
+	/**
+	 * Tells how many tables describing object have been loaded thus far
+	 * 
+	 * @var int
+	 */
+	protected $tables_loaded;
+	
 	/**
 	 * Initialize the attributes array.
 	 *
@@ -116,8 +130,8 @@ abstract class ElggEntity extends ElggData implements
 		 *
 		 * Use: isFullyLoaded() to check
 		 */
-		$this->attributes['tables_split'] = 1;
-		$this->attributes['tables_loaded'] = 0;
+		$this->tables_split = 1;
+		$this->tables_loaded = 0;
 	}
 
 	/**
@@ -1359,7 +1373,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	public function isFullyLoaded() {
-		return ! ($this->attributes['tables_loaded'] < $this->attributes['tables_split']);
+		return ! ($this->tables_loaded < $this->tables_split);
 	}
 
 	/**
@@ -1576,7 +1590,7 @@ abstract class ElggEntity extends ElggData implements
 
 			// Increment the portion counter
 			if (!$this->isFullyLoaded()) {
-				$this->attributes['tables_loaded']++;
+				$this->tables_loaded++;
 			}
 
 			// guid needs to be an int  http://trac.elgg.org/ticket/4111
