@@ -501,6 +501,7 @@ function elgg_view_layout($layout_name, $vars = array()) {
 	} else {
 		$param_array = $vars;
 	}
+	$param_array['layout'] = $layout_name;
 
 	$params = elgg_trigger_plugin_hook('output:before', 'layout', null, $param_array);
 
