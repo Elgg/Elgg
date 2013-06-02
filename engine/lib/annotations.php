@@ -538,18 +538,6 @@ function elgg_comment_url_handler(ElggAnnotation $comment) {
 }
 
 /**
- * Register an annotation url handler.
- *
- * @param string $extender_name The name, default 'all'.
- * @param string $function_name The function.
- *
- * @return string
- */
-function elgg_register_annotation_url_handler($extender_name = "all", $function_name) {
-	return elgg_register_extender_url_handler('annotation', $extender_name, $function_name);
-}
-
-/**
  * Register annotation unit tests
  *
  * @param string $hook

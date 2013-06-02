@@ -829,18 +829,6 @@ function metadata_update($event, $object_type, $object) {
 }
 
 /**
- * Register a metadata url handler.
- *
- * @param string $extender_name The name, default 'all'.
- * @param string $function      The function name.
- *
- * @return bool
- */
-function elgg_register_metadata_url_handler($extender_name, $function) {
-	return elgg_register_extender_url_handler('metadata', $extender_name, $function);
-}
-
-/**
  * Get the global metadata cache instance
  *
  * @return ElggVolatileMetadataCache
