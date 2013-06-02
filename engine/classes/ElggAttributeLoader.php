@@ -24,7 +24,7 @@ class ElggAttributeLoader {
 		'time_created',
 		'time_updated',
 		'last_action',
-		'enabled'
+		'enabled',
 	);
 
 	/**
@@ -200,6 +200,8 @@ class ElggAttributeLoader {
 						// saved, these are stored w/ type "site", but with no sites_entity row. These
 						// are probably only created in the unit tests.
 						// @todo Don't save vanilla ElggEntities with type "site"
+
+						$row = $this->filterAddedColumns($row);
 						$row['guid'] = (int) $row['guid'];
 						return $row;
 					}
@@ -209,12 +211,38 @@ class ElggAttributeLoader {
 			}
 		}
 
+		$row = $this->filterAddedColumns($row);
+
 		// Note: If there are still missing attributes, we're running on a 1.7 or earlier schema. We let
 		// this pass so the upgrades can run.
 
 		// guid needs to be an int  http://trac.elgg.org/ticket/4111
 		$row['guid'] = (int) $row['guid'];
 
+		return $row;
+	}
+
+	/**
+	 * Filter out keys returned by the query which should not appear in the entity's attributes
+	 *
+	 * @param array $row All columns from the query
+	 * @return array Columns acceptable for the entity's attributes
+	 */
+	protected function filterAddedColumns($row) {
+		// make an array with keys as acceptable attribute names
+		$acceptable_attrs = self::$primary_attr_names;
+		array_splice($acceptable_attrs, count($acceptable_attrs), 0, $this->secondary_attr_names);
+		$acceptable_attrs = array_combine($acceptable_attrs, $acceptable_attrs);
+
+		// @todo remove these when #4584 is in place
+		$acceptable_attrs['tables_split'] = true;
+		$acceptable_attrs['tables_loaded'] = true;
+
+		foreach ($row as $key => $val) {
+			if (!isset($acceptable_attrs[$key])) {
+				unset($row[$key]);
+			}
+		}
 		return $row;
 	}
 }
