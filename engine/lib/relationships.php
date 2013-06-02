@@ -1,7 +1,6 @@
 <?php
 /**
  * Elgg relationships.
- * Stub containing relationship functions, making import and export easier.
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Relationship
@@ -488,67 +487,6 @@ function get_relationship_url($id) {
 }
 
 /**
- * Handler called by trigger_plugin_hook on the "import" event.
- *
- * @param string $hook        import
- * @param string $entity_type all
- * @param mixed  $returnvalue Value from previous hook
- * @param mixed  $params      Array of params
- *
- * @return mixed
- * @access private
- */
-function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
-	$element = $params['element'];
-
-	$tmp = NULL;
-
-	if ($element instanceof ODDRelationship) {
-		$tmp = new ElggRelationship();
-		$tmp->import($element);
-
-		return $tmp;
-	}
-	return $tmp;
-}
-
-/**
- * Handler called by trigger_plugin_hook on the "export" event.
- *
- * @param string $hook        export
- * @param string $entity_type all
- * @param mixed  $returnvalue Previous hook return value
- * @param array  $params      Parameters
- *
- * @elgg_event_handler export all
- * @return mixed
- * @throws InvalidParameterException
- * @access private
- */
-function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
-	// Sanity check values
-	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
-	}
-
-	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
-	}
-
-	$guid = (int)$params['guid'];
-
-	$result = get_entity_relationships($guid);
-
-	if ($result) {
-		foreach ($result as $r) {
-			$returnvalue[] = $r->export();
-		}
-	}
-
-	return $returnvalue;
-}
-
-/**
  * Notify user that someone has friended them
  *
  * @param string           $event  Event name
@@ -568,12 +506,6 @@ function relationship_notification_hook($event, $type, $object) {
 			elgg_echo("friend:newfriend:body", array($user_one->name, $user_one->getURL()))
 	);
 }
-
-// Register the import hook
-elgg_register_plugin_hook_handler("import", "all", "import_relationship_plugin_hook", 3);
-
-// Register the hook, ensuring entities are serialised first
-elgg_register_plugin_hook_handler("export", "all", "export_relationship_plugin_hook", 3);
 
 // Register event to listen to some events
 elgg_register_event_handler('create', 'friend', 'relationship_notification_hook');

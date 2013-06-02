@@ -730,48 +730,6 @@ function elgg_list_entities_from_metadata($options) {
 }
 
 /**
- * Other functions
- */
-
-/**
- * Handler called by trigger_plugin_hook on the "export" event.
- *
- * @param string $hook        export
- * @param string $entity_type all
- * @param mixed  $returnvalue Value returned from previous hook
- * @param mixed  $params      Params
- *
- * @return array
- * @access private
- *
- * @throws InvalidParameterException
- */
-function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params) {
-	// Sanity check values
-	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
-	}
-
-	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
-	}
-
-	$result = elgg_get_metadata(array(
-		'guid' => (int)$params['guid'],
-		'limit' => 0,
-	));
-
-	if ($result) {
-		/* @var ElggMetadata[] $result */
-		foreach ($result as $r) {
-			$returnvalue[] = $r->export();
-		}
-	}
-
-	return $returnvalue;
-}
-
-/**
  * Takes in a comma-separated string and returns an array of tags
  * which have been trimmed
  *
@@ -943,9 +901,6 @@ function elgg_invalidate_metadata_cache($action, array $options) {
 		}
 	}
 }
-
-/** Register the hook */
-elgg_register_plugin_hook_handler("export", "all", "export_metadata_plugin_hook", 2);
 
 /** Call a function whenever an entity is updated **/
 elgg_register_event_handler('update', 'all', 'metadata_update');

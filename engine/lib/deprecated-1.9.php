@@ -2444,3 +2444,372 @@ function unregister_notification_handler($method) {
 	elgg_unregister_notification_method($method);
 }
 
+/**
+ * Import an entity.
+ *
+ * This function checks the passed XML doc (as array) to see if it is
+ * a user, if so it constructs a new elgg user and returns "true"
+ * to inform the importer that it's been handled.
+ *
+ * @param string $hook        import
+ * @param string $entity_type all
+ * @param mixed  $returnvalue Value from previous hook
+ * @param mixed  $params      Array of params
+ *
+ * @return mixed
+ * @elgg_plugin_hook_handler import all
+ * @todo document
+ * @access private
+ *
+ * @throws ImportException
+ */
+function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+	$element = $params['element'];
+
+	$tmp = null;
+
+	if ($element instanceof ODDEntity) {
+		$tmp = oddentity_to_elggentity($element);
+
+		if ($tmp) {
+			// Make sure its saved
+			if (!$tmp->save()) {
+				$msg = "There was a problem saving " . $element->getAttribute('uuid');
+				throw new ImportException($msg);
+			}
+
+			// Belts and braces
+			if (!$tmp->guid) {
+				throw new ImportException("New entity created but has no GUID, this should not happen.");
+			}
+
+			// We have saved, so now tag
+			add_uuid_to_guid($tmp->guid, $element->getAttribute('uuid'));
+
+			return $tmp;
+		}
+	}
+}
+
+/**
+ * Exports all attributes of an entity.
+ *
+ * @warning Only exports fields in the entity and entity type tables.
+ *
+ * @param string $hook        export
+ * @param string $entity_type all
+ * @param mixed  $returnvalue Previous hook return value
+ * @param array  $params      Parameters
+ *
+ * @elgg_event_handler export all
+ * @return mixed
+ * @access private
+ *
+ * @throws InvalidParameterException|InvalidClassException
+ */
+function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+	// Sanity check values
+	if ((!is_array($params)) && (!isset($params['guid']))) {
+		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+	}
+
+	if (!is_array($returnvalue)) {
+		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+	}
+
+	$guid = (int)$params['guid'];
+
+	// Get the entity
+	$entity = get_entity($guid);
+	if (!($entity instanceof ElggEntity)) {
+		$msg = "GUID:" . $guid . " is not a valid " . get_class();
+		throw new InvalidClassException($msg);
+	}
+
+	$export = $entity->export();
+
+	if (is_array($export)) {
+		foreach ($export as $e) {
+			$returnvalue[] = $e;
+		}
+	} else {
+		$returnvalue[] = $export;
+	}
+
+	return $returnvalue;
+}
+
+/**
+ * Exports attributes generated on the fly (volatile) about an entity.
+ *
+ * @param string $hook        volatile
+ * @param string $entity_type metadata
+ * @param string $returnvalue Return value from previous hook
+ * @param array  $params      The parameters, passed 'guid' and 'varname'
+ *
+ * @return ElggMetadata|null
+ * @elgg_plugin_hook_handler volatile metadata
+ * @todo investigate more.
+ * @access private
+ * @todo document
+ */
+function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+	$guid = (int)$params['guid'];
+	$variable_name = sanitise_string($params['varname']);
+
+	if (($hook == 'volatile') && ($entity_type == 'metadata')) {
+		if (($guid) && ($variable_name)) {
+			switch ($variable_name) {
+				case 'renderedentity' :
+					elgg_set_viewtype('default');
+					$view = elgg_view_entity(get_entity($guid));
+					elgg_set_viewtype();
+
+					$tmp = new ElggMetadata();
+					$tmp->type = 'volatile';
+					$tmp->name = 'renderedentity';
+					$tmp->value = $view;
+					$tmp->entity_guid = $guid;
+
+					return $tmp;
+
+				break;
+			}
+		}
+	}
+}
+
+/**
+ * Export the annotations for the specified entity
+ *
+ * @param string $hook        'export'
+ * @param string $type        'all'
+ * @param mixed  $returnvalue Default return value
+ * @param mixed  $params      Parameters determining what annotations to export
+ *
+ * @elgg_plugin_hook export all
+ *
+ * @return array
+ * @throws InvalidParameterException
+ * @access private
+ */
+function export_annotation_plugin_hook($hook, $type, $returnvalue, $params) {
+	// Sanity check values
+	if ((!is_array($params)) && (!isset($params['guid']))) {
+		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+	}
+
+	if (!is_array($returnvalue)) {
+		throw new InvalidParameterException("Entity serialization function passed a non-array returnvalue parameter");
+	}
+
+	$guid = (int)$params['guid'];
+	$options = array('guid' => $guid, 'limit' => 0);
+	if (isset($params['name'])) {
+		$options['annotation_name'] = $params['name'];
+	}
+
+	$result = elgg_get_annotations($options);
+
+	if ($result) {
+		foreach ($result as $r) {
+			$returnvalue[] = $r->export();
+		}
+	}
+
+	return $returnvalue;
+}
+
+/**
+ *  Handler called by trigger_plugin_hook on the "import" event.
+ *
+ * @param string $hook        volatile
+ * @param string $entity_type metadata
+ * @param string $returnvalue Return value from previous hook
+ * @param array  $params      The parameters
+ *
+ * @return null
+ * @elgg_plugin_hook_handler volatile metadata
+ * @todo investigate more.
+ * @throws ImportException
+ * @access private
+ */
+function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+	$element = $params['element'];
+
+	$tmp = NULL;
+
+	if ($element instanceof ODDMetaData) {
+		/* @var ODDMetaData $element */
+		// Recall entity
+		$entity_uuid = $element->getAttribute('entity_uuid');
+		$entity = get_entity_from_uuid($entity_uuid);
+		if (!$entity) {
+			throw new ImportException("Entity '" . $entity_uuid . "' could not be found.");
+		}
+
+		oddmetadata_to_elggextender($entity, $element);
+
+		// Save
+		if (!$entity->save()) {
+			$attr_name = $element->getAttribute('name');
+			$msg = "There was a problem updating '" . $attr_name . "' on entity '" . $entity_uuid . "'";
+			throw new ImportException($msg);
+		}
+
+		return true;
+	}
+}
+
+/**
+ * Utility function used by import_extender_plugin_hook() to process
+ * an ODDMetaData and add it to an entity. This function does not
+ * hit ->save() on the entity (this lets you construct in memory)
+ *
+ * @param ElggEntity  $entity  The entity to add the data to.
+ * @param ODDMetaData $element The OpenDD element
+ *
+ * @return bool
+ * @access private
+ */
+function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
+	// Get the type of extender (metadata, type, attribute etc)
+	$type = $element->getAttribute('type');
+	$attr_name = $element->getAttribute('name');
+	$attr_val = $element->getBody();
+
+	switch ($type) {
+		// Ignore volatile items
+		case 'volatile' :
+			break;
+		case 'annotation' :
+			$entity->annotate($attr_name, $attr_val);
+			break;
+		case 'metadata' :
+			$entity->setMetaData($attr_name, $attr_val, "", true);
+			break;
+		default : // Anything else assume attribute
+			$entity->set($attr_name, $attr_val);
+	}
+
+	// Set time if appropriate
+	$attr_time = $element->getAttribute('published');
+	if ($attr_time) {
+		$entity->set('time_updated', $attr_time);
+	}
+
+	return true;
+}
+
+/**
+ * Handler called by trigger_plugin_hook on the "export" event.
+ *
+ * @param string $hook        export
+ * @param string $entity_type all
+ * @param mixed  $returnvalue Value returned from previous hook
+ * @param mixed  $params      Params
+ *
+ * @return array
+ * @access private
+ *
+ * @throws InvalidParameterException
+ */
+function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+	// Sanity check values
+	if ((!is_array($params)) && (!isset($params['guid']))) {
+		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+	}
+
+	if (!is_array($returnvalue)) {
+		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+	}
+
+	$result = elgg_get_metadata(array(
+		'guid' => (int)$params['guid'],
+		'limit' => 0,
+	));
+
+	if ($result) {
+		/* @var ElggMetadata[] $result */
+		foreach ($result as $r) {
+			$returnvalue[] = $r->export();
+		}
+	}
+
+	return $returnvalue;
+}
+
+/**
+ * Handler called by trigger_plugin_hook on the "export" event.
+ *
+ * @param string $hook        export
+ * @param string $entity_type all
+ * @param mixed  $returnvalue Previous hook return value
+ * @param array  $params      Parameters
+ *
+ * @elgg_event_handler export all
+ * @return mixed
+ * @throws InvalidParameterException
+ * @access private
+ */
+function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+	// Sanity check values
+	if ((!is_array($params)) && (!isset($params['guid']))) {
+		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+	}
+
+	if (!is_array($returnvalue)) {
+		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+	}
+
+	$guid = (int)$params['guid'];
+
+	$result = get_entity_relationships($guid);
+
+	if ($result) {
+		foreach ($result as $r) {
+			$returnvalue[] = $r->export();
+		}
+	}
+
+	return $returnvalue;
+}
+
+/**
+ * Handler called by trigger_plugin_hook on the "import" event.
+ *
+ * @param string $hook        import
+ * @param string $entity_type all
+ * @param mixed  $returnvalue Value from previous hook
+ * @param mixed  $params      Array of params
+ *
+ * @return mixed
+ * @access private
+ */
+function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
+	$element = $params['element'];
+
+	$tmp = NULL;
+
+	if ($element instanceof ODDRelationship) {
+		$tmp = new ElggRelationship();
+		$tmp->import($element);
+
+		return $tmp;
+	}
+	return $tmp;
+}
+
+/** Register the import hook */
+elgg_register_plugin_hook_handler("import", "all", "import_entity_plugin_hook", 0);
+elgg_register_plugin_hook_handler("import", "all", "import_extender_plugin_hook", 2);
+elgg_register_plugin_hook_handler("import", "all", "import_relationship_plugin_hook", 3);
+
+/** Register the hook, ensuring entities are serialised first */
+elgg_register_plugin_hook_handler("export", "all", "export_entity_plugin_hook", 0);
+elgg_register_plugin_hook_handler("export", "all", "export_annotation_plugin_hook", 2);
+elgg_register_plugin_hook_handler("export", "all", "export_metadata_plugin_hook", 2);
+elgg_register_plugin_hook_handler("export", "all", "export_relationship_plugin_hook", 3);
+
+/** Hook to get certain named bits of volatile data about an entity */
+elgg_register_plugin_hook_handler('volatile', 'metadata', 'volatile_data_export_plugin_hook');

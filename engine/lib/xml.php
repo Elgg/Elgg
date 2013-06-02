@@ -19,6 +19,7 @@
  * @param int    $n    Level, only used for recursion.
  *
  * @return string The serialised XML output.
+ * @todo deprecate as does not seem to be used anywhere
  */
 function serialise_object_to_xml($data, $name = "", $n = 0) {
 	$classname = ($name == "" ? get_class($data) : $name);
@@ -61,6 +62,7 @@ function serialise_object_to_xml($data, $name = "", $n = 0) {
  * @param int   $n    Used for recursion
  *
  * @return string
+ * @todo deprecate as does not seem to be used anywhere
  */
 function serialise_array_to_xml(array $data, $n = 0) {
 	$output = "";

@@ -473,47 +473,6 @@ function elgg_list_entities_from_annotation_calculation($options) {
 }
 
 /**
- * Export the annotations for the specified entity
- *
- * @param string $hook        'export'
- * @param string $type        'all'
- * @param mixed  $returnvalue Default return value
- * @param mixed  $params      Parameters determining what annotations to export
- *
- * @elgg_plugin_hook export all
- *
- * @return array
- * @throws InvalidParameterException
- * @access private
- */
-function export_annotation_plugin_hook($hook, $type, $returnvalue, $params) {
-	// Sanity check values
-	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
-	}
-
-	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException("Entity serialization function passed a non-array returnvalue parameter");
-	}
-
-	$guid = (int)$params['guid'];
-	$options = array('guid' => $guid, 'limit' => 0);
-	if (isset($params['name'])) {
-		$options['annotation_name'] = $params['name'];
-	}
-
-	$result = elgg_get_annotations($options);
-
-	if ($result) {
-		foreach ($result as $r) {
-			$returnvalue[] = $r->export();
-		}
-	}
-
-	return $returnvalue;
-}
-
-/**
  * Get the URL for this item of metadata, by default this links to the
  * export handler in the current view.
  *
@@ -612,8 +571,6 @@ function annotations_test($hook, $type, $value, $params) {
  */
 function elgg_annotations_init() {
 	elgg_register_annotation_url_handler('generic_comment', 'elgg_comment_url_handler');
-
-	elgg_register_plugin_hook_handler("export", "all", "export_annotation_plugin_hook", 2);
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'annotations_test');
 }
 
