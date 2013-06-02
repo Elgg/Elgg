@@ -65,6 +65,9 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		$attributes['code'] = NULL;
 		$attributes['banned'] = 'no';
 		$attributes['admin'] = 'no';
+		$attributes['prev_last_action'] = NULL;
+		$attributes['last_login'] = NULL;
+		$attributes['prev_last_login'] = NULL;
 		ksort($attributes);
 
 		$entity_attributes = $this->user->expose_attributes();
