@@ -746,7 +746,7 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 		}
 
 		if (($obj->canEdit()) && (elgg_trigger_event('delete', $type, $obj))) {
-			return (bool)delete_data("DELETE from $table where id=$id");
+			return (bool)delete_data("DELETE FROM $table WHERE id = $id");
 		}
 	}
 
