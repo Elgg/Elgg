@@ -1,75 +1,80 @@
-ElggSecurityTest = TestCase("ElggSecurityTest");
-
-ElggSecurityTest.prototype.setUp = function() {
-	//fill with fake, but reasonable, values for testing
-	this.ts = elgg.security.token.__elgg_ts = 12345;
-	this.token = elgg.security.token.__elgg_token = 'abcdef';
-};
-
-ElggSecurityTest.prototype.testAddTokenAcceptsUndefined = function() {
-	var input,
-		expected = {
-			__elgg_ts: this.ts,
-			__elgg_token: this.token
-		};
+define(function(require) {
 	
-	assertEquals(expected, elgg.security.addToken(input));
-};
-
-ElggSecurityTest.prototype.testAddTokenAcceptsObject = function() {
-	var input = {},
-		expected = {
-			__elgg_ts: this.ts,
-			__elgg_token: this.token
-		};
+	var elgg = require('elgg');
 	
-	assertEquals(expected, elgg.security.addToken(input));
-};
-
-ElggSecurityTest.prototype.testAddTokenAcceptsRelativeUrl = function() {
-	var input,
-		str = "__elgg_ts=" + this.ts + "&__elgg_token=" + this.token;
-
-	input = "test";
-	assertEquals(input + '?' + str, elgg.security.addToken(input));
-};
-
-ElggSecurityTest.prototype.testAddTokenAcceptsFullUrl = function() {
-	var input,
-		str = "__elgg_ts=" + this.ts + "&__elgg_token=" + this.token;
-
-	input = "http://elgg.org/";
-	assertEquals(input + '?' + str, elgg.security.addToken(input));
-};
-
-ElggSecurityTest.prototype.testAddTokenAcceptsQueryString = function() {
-	var input,
-		str = "__elgg_ts=" + this.ts + "&__elgg_token=" + this.token;
-
-	input = "?data=sofar";
-	assertEquals(input + '&' + str, elgg.security.addToken(input));
-
-	input = "test?data=sofar";
-	assertEquals(input + '&' + str, elgg.security.addToken(input));
-
-	input = "http://elgg.org/?data=sofar";
-	assertEquals(input + '&' + str, elgg.security.addToken(input));
-};
-
-ElggSecurityTest.prototype.testAddTokenAlreadyAdded = function() {
-	var input,
-		str = "__elgg_ts=" + this.ts + "&__elgg_token=" + this.token;
-
-	input = "http://elgg.org/?" + str + "&data=sofar";
-	assertEquals(input, elgg.security.addToken(input));
-};
-
-ElggSecurityTest.prototype.testSetTokenSetsElggSecurityToken = function() {
-	var json = {
-		__elgg_ts: 4567,
-		__elgg_token: 'abcdef'
-	};
+	describe('elgg.security', function() {
+		var ts, token;
+		
+		beforeEach(function() {
+			ts = elgg.security.token.__elgg_ts = 12345;
+			token = elgg.security.token.__elgg_token = 'abcdef';
+		});
 	
-	elgg.security.setToken(json);
-	assertEquals(json, elgg.security.token);
-};
+		describe("setToken", function() {
+			it("sets global security token state", function() {
+				var json = {
+					__elgg_ts: 4567,
+					__elgg_token: 'abcdef'
+				};
+				
+				elgg.security.setToken(json);
+				expect(elgg.security.token).toBe(json);
+			});
+		});
+	
+		describe("addToken", function() {
+			it("accepts undefined", function() {
+				var expected = {
+					__elgg_ts: ts,
+					__elgg_token: token
+				};
+		
+				expect(elgg.security.addToken(undefined)).toEqual(expected);
+			});
+			
+			it("accepts an object", function() {
+				var expected = {
+					__elgg_ts: ts,
+					__elgg_token: token
+				};
+		
+				expect(elgg.security.addToken({})).toEqual(expected);
+			});
+			
+			
+			it("accepts relative urls", function() {
+				var str = "__elgg_ts=" + ts + "&__elgg_token=" + token;
+			
+				expect(elgg.security.addToken("/test"), '/test?' + str);
+			});
+			
+			it("accepts full urls", function() {
+				var str = "__elgg_ts=" + ts + "&__elgg_token=" + token;
+			
+				var url = "http://elgg.org/";
+				expect(elgg.security.addToken(url)).toEqual(url + '?' + str);
+			});
+			
+			it("accepts query strings", function() {
+				var str = "__elgg_ts=" + ts + "&__elgg_token=" + token;
+				var url;
+				
+				url = "?data=sofar";
+				expect(elgg.security.addToken(url), url + '&' + str);
+			
+				url = "test?data=sofar";
+				expect(elgg.security.addToken(url), url + '&' + str);
+			
+				url = "http://elgg.org/?data=sofar";
+				expect(elgg.security.addToken(url), url + '&' + str);
+			});
+			
+			it("overwrites existing query string tokens", function() {
+				var expectedUrl = "http://elgg.org/?__elgg_ts=" + ts + "&__elgg_token=" + token + "&data=sofar";
+				var inputUrl = "http://elgg.org/?__elgg_ts=54321&__elgg_token=fedcba&data=sofar"
+				
+				expect(elgg.security.addToken(inputUrl)).toBe(expectedUrl);
+			});
+		});
+	});
+});
