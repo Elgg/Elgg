@@ -1,22 +1,22 @@
 <?php
 /**
- * Sample cli installer script
+ * Travis CI CLI installer script. It's designed for core automatic tests only.
+ *
+ * @access private
+ * @package Elgg
+ * @subpackage Test
  */
 
-$enabled = getenv('TRAVIS')!='';//are we on Travis? Need sth safer here...
-
-// Do not edit below this line. //////////////////////////////
-
+$enabled = getenv('TRAVIS')!='';//are we on Travis?
 
 if (!$enabled) {
-	echo "To enable this script, change \$enabled to true.\n";
-	echo "You *must* disable this script after a successful installation.\n";
-	exit;
+	echo "This script should be run only in Travis CI test environment.\n";
+	exit(1);
 }
 
 if (PHP_SAPI !== 'cli') {
-	echo "You must use the command line to run this script.";
-	exit;
+	echo "You must use the command line to run this script.\n";
+	exit(2);
 }
 
 require_once(dirname(dirname(__FILE__)) . "/ElggInstaller.php");
@@ -33,7 +33,7 @@ $params = array(
 	// site settings
 	'sitename' => 'Elgg Travis Site',
 	'siteemail' => 'no_reply@travis.elgg.org',
-	'wwwroot' => 'http://travis.elgg.org',
+	'wwwroot' => 'http://travis.elgg.org/',
 	'dataroot' => getenv('HOME') . '/elgg_data/',
 
 	// admin account
@@ -43,12 +43,8 @@ $params = array(
 	'password' => 'fancypassword',
 );
 
-ini_set('display_errors', 0);
-
 // install and create the .htaccess file
 $installer->batchInstall($params, TRUE);
-
-ini_set('display_errors', 1);
 
 // at this point installation has completed (otherwise an exception halted execution).
 echo "Elgg CLI install successful. wwwroot: {$CONFIG->wwwroot}\n";
