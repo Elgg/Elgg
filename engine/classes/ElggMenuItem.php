@@ -410,6 +410,21 @@ class ElggMenuItem {
 	}
 
 	/**
+	 * Add a li class
+	 *
+	 * @param mixed $class An array of class names, or a single string class name.
+	 * @return void
+	 * @since 1.9.0
+	 */
+	public function addItemClass($class) {
+		if (!is_array($class)) {
+			$this->data['itemClass'][] = $class;
+		} else {
+			$this->data['itemClass'] += $class;
+		}
+	}
+
+	/**
 	 * Set the priority of the menu item
 	 *
 	 * @param int $priority The smaller numbers mean higher priority (1 before 100)
