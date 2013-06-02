@@ -16,11 +16,10 @@ register_metadata_as_independent('user');
  */
 function profile_init() {
 
-	// Register a URL handler for users - this means that profile_url()
-	// will dictate the URL for all ElggUser objects
-	elgg_register_entity_url_handler('user', 'all', 'profile_url');
+	// Register a URL handler for users
+	elgg_register_plugin_hook_handler('entity:url', 'user', 'profile_set_url');
 
-	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'profile_override_avatar_url');
+	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'profile_set_icon_url');
 	elgg_unregister_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
 
 
@@ -87,35 +86,35 @@ function profile_page_handler($page) {
 /**
  * Profile URL generator for $user->getUrl();
  *
- * @param ElggUser $user
- * @return string User URL
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
+ * @return string
  */
-function profile_url($user) {
-	return elgg_get_site_url() . "profile/" . $user->username;
+function profile_set_url($hook, $type, $url, $params) {
+	$user = $params['entity'];
+	return "profile/" . $user->username;
 }
 
 /**
  * Use a URL for avatars that avoids loading Elgg engine for better performance
  *
  * @param string $hook
- * @param string $entity_type
- * @param string $return_value
+ * @param string $type
+ * @param string $url
  * @param array  $params
  * @return string
  */
-function profile_override_avatar_url($hook, $entity_type, $return_value, $params) {
+function profile_set_icon_url($hook, $type, $url, $params) {
 
 	// if someone already set this, quit
-	if ($return_value) {
-		return null;
+	if ($url) {
+		return;
 	}
 
 	$user = $params['entity'];
 	$size = $params['size'];
-	
-	if (!elgg_instanceof($user, 'user')) {
-		return null;
-	}
 
 	$user_guid = $user->getGUID();
 	$icon_time = $user->icontime;
@@ -125,7 +124,7 @@ function profile_override_avatar_url($hook, $entity_type, $return_value, $params
 	}
 
 	if ($user->isBanned()) {
-		return null;
+		return;
 	}
 
 	$filehandler = new ElggFile();
@@ -141,8 +140,6 @@ function profile_override_avatar_url($hook, $entity_type, $return_value, $params
 		elgg_log("Unable to get profile icon for user with GUID $user_guid", 'ERROR');
 		return "_graphics/icons/default/$size.png";
 	}
-
-	return null;
 }
 
 /**

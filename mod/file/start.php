@@ -35,8 +35,8 @@ function file_init() {
 	elgg_register_widget_type('filerepo', elgg_echo("file"), elgg_echo("file:widget:description"));
 
 	// Register URL handlers for files
-	elgg_register_entity_url_handler('object', 'file', 'file_url_override');
-	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'file_icon_url_override');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'file_set_url');
+	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'file_set_icon_url');
 
 	// Register for notifications
 	elgg_register_notification_event('object', 'file', array('create'));
@@ -333,13 +333,18 @@ function get_filetype_cloud($owner_guid = "", $friends = false) {
 /**
  * Populates the ->getUrl() method for file objects
  *
- * @param ElggEntity $entity File entity
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string File URL
  */
-function file_url_override($entity) {
-	$title = $entity->title;
-	$title = elgg_get_friendly_title($title);
-	return "file/view/" . $entity->getGUID() . "/" . $title;
+function file_set_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+	if (elgg_instanceof($entity, 'object', 'file')) {
+		$title = elgg_get_friendly_title($entity->title);
+		return "file/view/" . $entity->getGUID() . "/" . $title;
+	}
 }
 
 /**
@@ -347,9 +352,13 @@ function file_url_override($entity) {
  *
  * Plugins can override or extend the icons using the plugin hook: 'file:icon:url', 'override'
  *
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string Relative URL
  */
-function file_icon_url_override($hook, $type, $returnvalue, $params) {
+function file_set_icon_url($hook, $type, $url, $params) {
 	$file = $params['entity'];
 	$size = $params['size'];
 	if (elgg_instanceof($file, 'object', 'file')) {

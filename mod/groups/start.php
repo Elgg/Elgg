@@ -28,8 +28,8 @@ function groups_init() {
 	elgg_register_page_handler('groups', 'groups_page_handler');
 
 	// Register URL handlers for groups
-	elgg_register_entity_url_handler('group', 'all', 'groups_url');
-	elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_icon_url_override');
+	elgg_register_plugin_hook_handler('entity:url', 'group', 'groups_set_url');
+	elgg_register_plugin_hook_handler('entity:icon:url', 'group', 'groups_set_icon_url');
 
 	// Register an icon handler for groups
 	elgg_register_page_handler('groupicon', 'groups_icon_handler');
@@ -295,21 +295,28 @@ function groups_icon_handler($page) {
 /**
  * Populates the ->getUrl() method for group objects
  *
- * @param ElggEntity $entity File entity
- * @return string File URL
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
+ * @return string
  */
-function groups_url($entity) {
+function groups_set_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
 	$title = elgg_get_friendly_title($entity->name);
-
 	return "groups/profile/{$entity->guid}/$title";
 }
 
 /**
  * Override the default entity icon for groups
  *
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string Relative URL
  */
-function groups_icon_url_override($hook, $type, $returnvalue, $params) {
+function groups_set_icon_url($hook, $type, $url, $params) {
 	/* @var ElggGroup $group */
 	$group = $params['entity'];
 	$size = $params['size'];
@@ -734,7 +741,7 @@ function discussion_init() {
 
 	elgg_register_page_handler('discussion', 'discussion_page_handler');
 
-	elgg_register_entity_url_handler('object', 'groupforumtopic', 'discussion_override_topic_url');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'discussion_set_topic_url');
 
 	// commenting not allowed on discussion topics (use a different annotation)
 	elgg_register_plugin_hook_handler('permissions_check:comment', 'object', 'discussion_comment_override');
@@ -813,11 +820,17 @@ function discussion_page_handler($page) {
 /**
  * Override the discussion topic url
  *
- * @param ElggObject $entity Discussion topic
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string
  */
-function discussion_override_topic_url($entity) {
-	return 'discussion/view/' . $entity->guid . '/' . elgg_get_friendly_title($entity->title);
+function discussion_set_topic_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+	if (elgg_instanceof($entity, 'object', 'groupforumtopic')) {
+		return 'discussion/view/' . $entity->guid . '/' . elgg_get_friendly_title($entity->title);
+	}
 }
 
 /**

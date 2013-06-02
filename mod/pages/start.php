@@ -23,9 +23,9 @@ function pages_init() {
 	elgg_register_page_handler('pages', 'pages_page_handler');
 
 	// Register a url handler
-	elgg_register_entity_url_handler('object', 'page_top', 'pages_url');
-	elgg_register_entity_url_handler('object', 'page', 'pages_url');
-	elgg_register_annotation_url_handler('page', 'pages_revision_url');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'pages_set_url');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'pages_set_url');
+	elgg_register_plugin_hook_handler('extender:url', 'annotation', 'pages_set_revision_url');
 
 	// Register some actions
 	$action_base = elgg_get_plugins_path() . 'pages/actions';
@@ -166,22 +166,34 @@ function pages_page_handler($page) {
 /**
  * Override the page url
  * 
- * @param ElggObject $entity Page object
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string
  */
-function pages_url($entity) {
-	$title = elgg_get_friendly_title($entity->title);
-	return "pages/view/$entity->guid/$title";
+function pages_set_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+	if (pages_is_page($entity)) {
+		$title = elgg_get_friendly_title($entity->title);
+		return "pages/view/$entity->guid/$title";
+	}
 }
 
 /**
  * Override the page annotation url
  *
- * @param ElggAnnotation $annotation
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string
  */
-function pages_revision_url($annotation) {
-	return "pages/revision/$annotation->id";
+function pages_set_revision_url($hook, $type, $url, $params) {
+	$annotation = $params['extender'];
+	if ($annotation->getSubtype() == 'page') {
+		return "pages/revision/$annotation->id";
+	}
 }
 
 /**

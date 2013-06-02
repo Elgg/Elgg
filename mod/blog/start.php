@@ -39,7 +39,7 @@ function blog_init() {
 	elgg_register_page_handler('blog', 'blog_page_handler');
 
 	// override the default url to view a blog object
-	elgg_register_entity_url_handler('object', 'blog', 'blog_url_handler');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'blog_set_url');
 
 	// notifications
 	elgg_register_notification_event('object', 'blog', array('publish'));
@@ -160,18 +160,18 @@ function blog_page_handler($page) {
 /**
  * Format and return the URL for blogs.
  *
- * @param ElggObject $entity Blog object
+ * @param string $hook
+ * @param string $type
+ * @param string $url
+ * @param array  $params
  * @return string URL of blog.
  */
-function blog_url_handler($entity) {
-	if (!$entity->getOwnerEntity()) {
-		// default to a standard view if no owner.
-		return FALSE;
+function blog_set_url($hook, $type, $url, $params) {
+	$entity = $params['entity'];
+	if (elgg_instanceof($entity, 'object', 'blog')) {
+		$friendly_title = elgg_get_friendly_title($entity->title);
+		return "blog/view/{$entity->guid}/$friendly_title";
 	}
-
-	$friendly_title = elgg_get_friendly_title($entity->title);
-
-	return "blog/view/{$entity->guid}/$friendly_title";
 }
 
 /**
