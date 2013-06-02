@@ -1,5 +1,18 @@
 <?php
 
+/**
+ * Invalidate the metadata cache based on options passed to various *_metadata functions
+ *
+ * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
+ * @param array  $options Options passed to elgg_(delete|disable|enable)_metadata
+ * @return void
+ * @deprecated 1.9
+ */
+function elgg_invalidate_metadata_cache($action, array $options) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	_elgg_invalidate_metadata_cache($action, $options);
+}
+
 global $METASTRINGS_DEADNAME_CACHE;
 $METASTRINGS_DEADNAME_CACHE = array();
 

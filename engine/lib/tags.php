@@ -8,6 +8,25 @@
  */
 
 /**
+ * Takes in a comma-separated string and returns an array of tags
+ * which have been trimmed
+ *
+ * @param string $string Comma-separated tag string
+ *
+ * @return array|false An array of strings, or false on failure
+ */
+function string_to_tag_array($string) {
+	if (is_string($string)) {
+		$ar = explode(",", $string);
+		$ar = array_map('trim', $ar);
+		$ar = array_filter($ar, 'is_not_null');
+		$ar = array_map('strip_tags', $ar);
+		return $ar;
+	}
+	return false;
+}
+
+/**
  * The algorithm working out the size of font based on the number of tags.
  * This is quick and dirty.
  *

@@ -776,7 +776,7 @@ function _elgg_entities_get_metastrings_options($type, $options) {
 		"{$type}_name_value_pair", "{$type}_owner_guid");
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
-	$clauses = elgg_get_entity_metadata_where_sql('e', $n_table, $options["{$type}_names"],
+	$clauses = _elgg_get_entity_metadata_where_sql('e', $n_table, $options["{$type}_names"],
 		$options["{$type}_values"], $options["{$type}_name_value_pairs"],
 		$options["{$type}_name_value_pairs_operator"], $options["{$type}_case_sensitive"],
 		$options["order_by_{$type}"], $options["{$type}_owner_guids"]);

@@ -45,7 +45,7 @@ function _elgg_invalidate_cache_for_entity($guid) {
 		// have caused a bunch of unnecessary purges at every shutdown. Doing it this way we have no way
 		// to know that the expunged entity will be GCed (might be another reference living), but that's
 		// OK; the metadata will reload if necessary.
-		elgg_get_metadata_cache()->clear($guid);
+		_elgg_get_metadata_cache()->clear($guid);
 	}
 }
 
@@ -912,7 +912,7 @@ function elgg_get_entities(array $options = array()) {
 			reset($dt);
 
 			if ($guids) {
-				elgg_get_metadata_cache()->populateFromEntities($guids);
+				_elgg_get_metadata_cache()->populateFromEntities($guids);
 			}
 		}
 		return $dt;

@@ -129,7 +129,7 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 			$obj = elgg_get_metadata_from_id($id);
 			if (elgg_trigger_event('create', 'metadata', $obj)) {
 
-				elgg_get_metadata_cache()->save($entity_guid, $name, $value, $allow_multiple);
+				_elgg_get_metadata_cache()->save($entity_guid, $name, $value, $allow_multiple);
 
 				return $id;
 			} else {
@@ -209,7 +209,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	$result = update_data($query);
 	if ($result !== false) {
 
-		elgg_get_metadata_cache()->save($md->entity_guid, $name, $value);
+		_elgg_get_metadata_cache()->save($md->entity_guid, $name, $value);
 
 		// @todo this event tells you the metadata has been updated, but does not
 		// let you do anything about it. What is needed is a plugin hook before
@@ -313,7 +313,7 @@ function elgg_delete_metadata(array $options) {
 
 	// This moved last in case an object's constructor sets metadata. Currently the batch
 	// delete process has to create the entity to delete its metadata. See #5214
-	elgg_get_metadata_cache()->invalidateByOptions('delete', $options);
+	_elgg_get_metadata_cache()->invalidateByOptions('delete', $options);
 
 	return $result;
 }
@@ -332,7 +332,7 @@ function elgg_disable_metadata(array $options) {
 		return false;
 	}
 
-	elgg_get_metadata_cache()->invalidateByOptions('disable', $options);
+	_elgg_get_metadata_cache()->invalidateByOptions('disable', $options);
 
 	$options['metastring_type'] = 'metadata';
 	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
@@ -355,7 +355,7 @@ function elgg_enable_metadata(array $options) {
 		return false;
 	}
 
-	elgg_get_metadata_cache()->invalidateByOptions('enable', $options);
+	_elgg_get_metadata_cache()->invalidateByOptions('enable', $options);
 
 	$options['metastring_type'] = 'metadata';
 	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
@@ -451,6 +451,20 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 }
 
 /**
+ * Returns a list of entities filtered by provided metadata.
+ *
+ * @see elgg_get_entities_from_metadata
+ *
+ * @param array $options Options array
+ *
+ * @return array
+ * @since 1.7.0
+ */
+function elgg_list_entities_from_metadata($options) {
+	return elgg_list_entities($options, 'elgg_get_entities_from_metadata');
+}
+
+/**
  * Returns metadata name and value SQL where for entities.
  * NB: $names and $values are not paired. Use $pairs for this.
  * Pairs default to '=' operand.
@@ -473,7 +487,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
  * @since 1.7.0
  * @access private
  */
-function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $values = NULL,
+function _elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $values = NULL,
 $pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE, $order_by_metadata = NULL,
 $owner_guids = NULL) {
 
@@ -716,39 +730,6 @@ $owner_guids = NULL) {
 }
 
 /**
- * Returns a list of entities filtered by provided metadata.
- *
- * @see elgg_get_entities_from_metadata
- *
- * @param array $options Options array
- *
- * @return array
- * @since 1.7.0
- */
-function elgg_list_entities_from_metadata($options) {
-	return elgg_list_entities($options, 'elgg_get_entities_from_metadata');
-}
-
-/**
- * Takes in a comma-separated string and returns an array of tags
- * which have been trimmed
- *
- * @param string $string Comma-separated tag string
- *
- * @return array|false An array of strings, or false on failure
- */
-function string_to_tag_array($string) {
-	if (is_string($string)) {
-		$ar = explode(",", $string);
-		$ar = array_map('trim', $ar);
-		$ar = array_filter($ar, 'is_not_null');
-		$ar = array_map('strip_tags', $ar);
-		return $ar;
-	}
-	return false;
-}
-
-/**
  * Takes a metadata array (which has all kinds of properties)
  * and turns it into a simple array of strings
  *
@@ -832,6 +813,7 @@ function is_metadata_independent($type, $subtype) {
  * @param ElggEntity $object      The entity itself
  *
  * @return true
+ * @access private Set as private in 1.9.0
  */
 function metadata_update($event, $object_type, $object) {
 	if ($object instanceof ElggEntity) {
@@ -865,7 +847,7 @@ function elgg_register_metadata_url_handler($extender_name, $function) {
  *
  * @access private
  */
-function elgg_get_metadata_cache() {
+function _elgg_get_metadata_cache() {
 	global $CONFIG;
 	if (empty($CONFIG->local_metadata_cache)) {
 		$CONFIG->local_metadata_cache = new ElggVolatileMetadataCache();
@@ -879,10 +861,12 @@ function elgg_get_metadata_cache() {
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
  * @param array  $options Options passed to elgg_(delete|disable|enable)_metadata
  * @return void
+ * @access private
+ * @todo not used
  */
-function elgg_invalidate_metadata_cache($action, array $options) {
+function _elgg_invalidate_metadata_cache($action, array $options) {
 	// remove as little as possible, optimizing for common cases
-	$cache = elgg_get_metadata_cache();
+	$cache = _elgg_get_metadata_cache();
 	if (empty($options['guid'])) {
 		// safest to clear everything unless we want to make this even more complex :(
 		$cache->flush();
@@ -905,9 +889,6 @@ function elgg_invalidate_metadata_cache($action, array $options) {
 /** Call a function whenever an entity is updated **/
 elgg_register_event_handler('update', 'all', 'metadata_update');
 
-// unit testing
-elgg_register_plugin_hook_handler('unit_test', 'system', 'metadata_test');
-
 /**
  * Metadata unit test
  *
@@ -919,9 +900,11 @@ elgg_register_plugin_hook_handler('unit_test', 'system', 'metadata_test');
  * @return array
  * @access private
  */
-function metadata_test($hook, $type, $value, $params) {
+function _elgg_metadata_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetadataAPITest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreMetadataCacheTest.php';
 	return $value;
 }
+
+elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_metadata_test');

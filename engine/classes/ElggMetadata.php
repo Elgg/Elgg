@@ -97,7 +97,7 @@ class ElggMetadata extends ElggExtender {
 		if ($success) {
 			// we mark unknown here because this deletes only one value
 			// under this name, and there may be others remaining.
-			elgg_get_metadata_cache()->markUnknown($this->entity_guid, $this->name);
+			_elgg_get_metadata_cache()->markUnknown($this->entity_guid, $this->name);
 		}
 		return $success;
 	}
@@ -113,7 +113,7 @@ class ElggMetadata extends ElggExtender {
 		if ($success) {
 			// we mark unknown here because this disables only one value
 			// under this name, and there may be others remaining.
-			elgg_get_metadata_cache()->markUnknown($this->entity_guid, $this->name);
+			_elgg_get_metadata_cache()->markUnknown($this->entity_guid, $this->name);
 		}
 		return $success;
 	}
@@ -127,7 +127,7 @@ class ElggMetadata extends ElggExtender {
 	function enable() {
 		$success = _elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'metadata');
 		if ($success) {
-			elgg_get_metadata_cache()->markUnknown($this->entity_guid, $this->name);
+			_elgg_get_metadata_cache()->markUnknown($this->entity_guid, $this->name);
 		}
 		return $success;
 	}
