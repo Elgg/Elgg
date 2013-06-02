@@ -9,6 +9,7 @@
  */
 
 $show_add_form = elgg_extract('show_add_form', $vars, true);
+$full_view = elgg_extract('full_view', $vars, true);
 
 $id = '';
 if (isset($vars['id'])) {
@@ -27,7 +28,8 @@ echo "<div $id class=\"$class\">";
 
 $options = array(
 	'guid' => $vars['entity']->getGUID(),
-	'annotation_name' => 'generic_comment'
+	'annotation_name' => 'generic_comment',
+	'full_view' => $full_view,
 );
 $html = elgg_list_annotations($options);
 if ($html) {
