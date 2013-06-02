@@ -10,8 +10,8 @@ basePath = '../..';
 files = [
   JASMINE,
   JASMINE_ADAPTER,
-//  REQUIRE,
-//  REQUIRE_ADAPTER,
+  REQUIRE,
+  REQUIRE_ADAPTER,
   'vendors/jquery/jquery-1.9.1.min.js',
   'vendors/jquery/jquery-migrate-1.2.1.min.js',
   'vendors/sprintf.js',
@@ -19,11 +19,11 @@ files = [
   'js/lib/hooks.js',
   'js/classes/*.js',
   'js/lib/*.js',
-  'js/tests/*Test.js',
+
+  {pattern:'js/tests/*Test.js',included: false},
+  {pattern:'views/default/js/**/*.js',included:false},
   
-//  {pattern:'views/default/js/**/*.js',included:false},
-  
-//  'js/tests/requirejs.config.js',
+  'js/tests/requirejs.config.js',
 ];
 
 
