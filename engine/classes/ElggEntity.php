@@ -1249,10 +1249,6 @@ abstract class ElggEntity extends ElggData implements
 				}
 			}
 
-			if ($url == "") {
-				$url = "view/" . $this->guid;
-			}
-
 			if ($url) {
 				$url = elgg_normalize_url($url);
 			}
@@ -1262,6 +1258,7 @@ abstract class ElggEntity extends ElggData implements
 		$params = array('entity' => $this);
 		$url = elgg_trigger_plugin_hook('entity:url', $type, $params, $url);
 
+		// @todo remove when ElggEntity::setURL() has been removed
 		if (!empty($this->url_override)) {
 			$url = $this->url_override;
 		}

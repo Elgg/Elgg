@@ -1575,25 +1575,6 @@ function is_registered_entity_type($type, $subtype = null) {
 }
 
 /**
- * Page handler for generic entities view system
- *
- * @param array $page Page elements from pain page handler
- *
- * @return bool
- * @elgg_page_handler view
- * @access private
- */
-function entities_page_handler($page) {
-	if (isset($page[0])) {
-		global $CONFIG;
-		set_input('guid', $page[0]);
-		include($CONFIG->path . "pages/entities/index.php");
-		return true;
-	}
-	return false;
-}
-
-/**
  * Returns a viewable list of entities based on the registered types.
  *
  * @see elgg_view_entity_list
@@ -1782,10 +1763,7 @@ function _elgg_entities_test($hook, $type, $value, $params) {
  * @access private
  */
 function _elgg_entities_init() {
-	elgg_register_page_handler('view', 'entities_page_handler');
-
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_entities_test');
-
 	elgg_register_plugin_hook_handler('gc', 'system', '_elgg_entities_gc');
 }
 
