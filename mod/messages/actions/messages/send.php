@@ -8,6 +8,7 @@
 $subject = strip_tags(get_input('subject'));
 $body = get_input('body');
 $recipient_username = get_input('recipient_username');
+$original_msg_guid = (int)get_input('original_guid');
 
 elgg_make_sticky_form('messages');
 
@@ -31,7 +32,7 @@ if (!$body || !$subject) {
 }
 
 // Otherwise, 'send' the message 
-$result = messages_send($subject, $body, $user->guid, 0, $reply);
+$result = messages_send($subject, $body, $user->guid, 0, $original_msg_guid);
 
 // Save 'send' the message
 if (!$result) {
