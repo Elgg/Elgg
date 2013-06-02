@@ -53,7 +53,10 @@ function dashboard_page_handler() {
 	);
 	$widgets = elgg_view_layout('widgets', $params);
 
-	$body = elgg_view_layout('one_column', array('content' => $widgets));
+	$body = elgg_view_layout('one_column', array(
+		'title' => false,
+		'content' => $widgets
+	));
 
 	echo elgg_view_page($title, $body);
 	return true;

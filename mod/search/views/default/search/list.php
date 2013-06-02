@@ -88,9 +88,7 @@ if ($show_more) {
 	$more_link = '';
 }
 
-// @todo once elgg_view_title() supports passing a $vars array use it
-$body = elgg_view('page/elements/title', array(
-	'title' => $type_str,
+$body = elgg_view_title($type_str, array(
 	'class' => 'search-heading-category',
 ));
 

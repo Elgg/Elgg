@@ -70,12 +70,13 @@ function elgg_front_page_handler() {
 		forward('activity');
 	}
 
-	$content = elgg_view_title(elgg_echo('content:latest'));
-	$content .= elgg_list_river();
+	$title = elgg_echo('content:latest');
+	$content = elgg_list_river();
 
 	$login_box = elgg_view('core/account/login_box');
 
 	$params = array(
+			'title' => $title,
 			'content' => $content,
 			'sidebar' => $login_box
 	);
