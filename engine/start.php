@@ -81,7 +81,6 @@ $lib_files = array(
 	'group.php',
 	'input.php',
 	'languages.php',
-	'location.php',
 	'mb_wrapper.php',
 	'memcache.php',
 	'metadata.php',

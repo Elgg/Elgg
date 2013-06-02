@@ -14,17 +14,16 @@
  * declared will be assumed to be metadata and written to the database
  * as metadata on the object.  All children classes must declare which
  * properties are columns of the type table or they will be assumed
- * to be metadata.  See ElggObject::initialiseAttributes() for examples.
+ * to be metadata.  See ElggObject::initializeAttributes() for examples.
  *
  * Core supports 4 types of entities: ElggObject, ElggUser, ElggGroup, and
  * ElggSite.
  *
- * @tip Most plugin authors will want to extend the ElggObject class
- * instead of this class.
+ * @tip Plugin authors will want to extend the ElggObject class, not this class.
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Entities
- * 
+ *
  * @property string $type           object, user, group, or site (read-only after save)
  * @property string $subtype        Further clarifies the nature of the entity (read-only after save)
  * @property int    $guid           The unique identifier for this entity (read only)
@@ -34,11 +33,14 @@
  * @property int    $access_id      Specifies the visibility level of this entity
  * @property int    $time_created   A UNIX timestamp of when the entity was created
  * @property int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
+ *
+ * Metadata (the above are attributes)
+ * @property string $location       A location of the entity
  */
 abstract class ElggEntity extends ElggData implements
-	Notable,    // Calendar interface
+	Notable,    // Calendar interface (deprecated)
 	Locatable,  // Geocoding interface
-	Importable // Allow import of data
+	Importable // Allow import of data (deprecated)
 {
 
 	/**
@@ -1905,15 +1907,12 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Sets the 'location' metadata for the entity
 	 *
-	 * @todo Unimplemented
-	 *
 	 * @param string $location String representation of the location
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	public function setLocation($location) {
 		$this->location = $location;
-		return true;
 	}
 
 	/**
@@ -1922,14 +1921,12 @@ abstract class ElggEntity extends ElggData implements
 	 * @param float $lat  Latitude
 	 * @param float $long Longitude
 	 *
-	 * @return bool
+	 * @return void
 	 * @todo Unimplemented
 	 */
 	public function setLatLong($lat, $long) {
 		$this->set('geo:lat', $lat);
 		$this->set('geo:long', $long);
-
-		return true;
 	}
 
 	/**
@@ -1946,6 +1943,7 @@ abstract class ElggEntity extends ElggData implements
 	 * Return the entity's longitude
 	 *
 	 * @return float
+	 * @todo Unimplemented
 	 */
 	public function getLongitude() {
 		return (float)$this->get('geo:long');
