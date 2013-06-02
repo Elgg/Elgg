@@ -233,7 +233,7 @@ function elgg_get_annotations(array $options = array()) {
  * @since 1.8.0
  */
 function elgg_delete_annotations(array $options) {
-	if (!elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
+	if (!_elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
 		return false;
 	}
 
@@ -251,7 +251,7 @@ function elgg_delete_annotations(array $options) {
  * @since 1.8.0
  */
 function elgg_disable_annotations(array $options) {
-	if (!elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
+	if (!_elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
 		return false;
 	}
 
@@ -365,7 +365,7 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 	$singulars = array('annotation_name', 'annotation_value',
 	'annotation_name_value_pair', 'annotation_owner_guid');
 
-	$options = elgg_normalise_plural_options_array($options, $singulars);
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
 	$options = _elgg_entities_get_metastrings_options('annotation', $options);
 
 	if (!$options) {
@@ -377,7 +377,7 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 	$options['selects'][] = "MAX(n_table.time_created) AS maxtime";
 	$options['group_by'] = 'n_table.entity_guid';
 
-	$time_wheres = elgg_get_entity_time_where_sql('a', $options['annotation_created_time_upper'],
+	$time_wheres = _elgg_get_entity_time_where_sql('a', $options['annotation_created_time_upper'],
 		$options['annotation_created_time_lower']);
 
 	if ($time_wheres) {

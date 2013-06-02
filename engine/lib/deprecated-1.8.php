@@ -684,7 +684,7 @@ function callpath_gatekeeper($path, $include_subdirs = true, $strict_mode = fals
 function elgg_get_entity_owner_where_sql($table, $owner_guids) {
 	elgg_deprecated_notice('elgg_get_entity_owner_where_sql() is deprecated by elgg_get_guid_based_where_sql().', 1.8);
 
-	return elgg_get_guid_based_where_sql("{$table}.owner_guid", $owner_guids);
+	return _elgg_get_guid_based_where_sql("{$table}.owner_guid", $owner_guids);
 }
 
 /**
@@ -703,7 +703,7 @@ function elgg_get_entity_owner_where_sql($table, $owner_guids) {
 function elgg_get_entity_container_where_sql($table, $container_guids) {
 	elgg_deprecated_notice('elgg_get_entity_container_where_sql() is deprecated by elgg_get_guid_based_where_sql().', 1.8);
 
-	return elgg_get_guid_based_where_sql("{$table}.container_guid", $container_guids);
+	return _elgg_get_guid_based_where_sql("{$table}.container_guid", $container_guids);
 }
 
 /**
@@ -721,7 +721,7 @@ function elgg_get_entity_container_where_sql($table, $container_guids) {
 function elgg_get_entity_site_where_sql($table, $site_guids) {
 	elgg_deprecated_notice('elgg_get_entity_site_where_sql() is deprecated by elgg_get_guid_based_where_sql().', 1.8);
 
-	return elgg_get_guid_based_where_sql("{$table}.site_guid", $site_guids);
+	return _elgg_get_guid_based_where_sql("{$table}.site_guid", $site_guids);
 }
 
 /**

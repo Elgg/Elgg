@@ -331,7 +331,7 @@ function _elgg_admin_init() {
 	// automatic adding of widgets for admin
 	elgg_register_event_handler('make_admin', 'user', '_elgg_add_admin_widgets');
 
-	elgg_register_page_handler('admin', 'admin_page_handler');
+	elgg_register_page_handler('admin', '_elgg_admin_page_handler');
 	elgg_register_page_handler('admin_plugin_screenshot', '_elgg_admin_plugin_screenshot_page_handler');
 	elgg_register_page_handler('admin_plugin_text_file', '_elgg_admin_markdown_page_handler');
 }
@@ -449,7 +449,7 @@ function _elgg_admin_sort_page_menu($hook, $type, $return, $params) {
  * @return bool
  * @access private
  */
-function admin_page_handler($page) {
+function _elgg_admin_page_handler($page) {
 
 	admin_gatekeeper();
 	_elgg_admin_add_plugin_settings_menu();

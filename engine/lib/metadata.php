@@ -305,7 +305,7 @@ function elgg_get_metadata(array $options = array()) {
  * @since 1.8.0
  */
 function elgg_delete_metadata(array $options) {
-	if (!elgg_is_valid_options_for_batch_operation($options, 'metadata')) {
+	if (!_elgg_is_valid_options_for_batch_operation($options, 'metadata')) {
 		return false;
 	}
 	$options['metastring_type'] = 'metadata';
@@ -328,7 +328,7 @@ function elgg_delete_metadata(array $options) {
  * @since 1.8.0
  */
 function elgg_disable_metadata(array $options) {
-	if (!elgg_is_valid_options_for_batch_operation($options, 'metadata')) {
+	if (!_elgg_is_valid_options_for_batch_operation($options, 'metadata')) {
 		return false;
 	}
 
@@ -441,7 +441,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 	$singulars = array('metadata_name', 'metadata_value',
 		'metadata_name_value_pair', 'metadata_owner_guid');
 
-	$options = elgg_normalise_plural_options_array($options, $singulars);
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	if (!$options = _elgg_entities_get_metastrings_options('metadata', $options)) {
 		return FALSE;

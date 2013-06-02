@@ -271,7 +271,7 @@ function _elgg_get_metastring_based_objects($options) {
 		'select', 'where', 'join'
 	);
 
-	$options = elgg_normalise_plural_options_array($options, $singulars);
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	if (!$options) {
 		return false;
@@ -287,22 +287,22 @@ function _elgg_get_metastring_based_objects($options) {
 	$wheres = $options['wheres'];
 
 	// entities
-	$wheres[] = elgg_get_entity_type_subtype_where_sql('e', $options['types'],
+	$wheres[] = _elgg_get_entity_type_subtype_where_sql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
 
-	$wheres[] = elgg_get_guid_based_where_sql('e.guid', $options['guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('e.guid', $options['guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
 
-	$wheres[] = elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
+	$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 
 
-	$wheres[] = elgg_get_entity_time_where_sql('n_table', $options['metastring_created_time_upper'],
+	$wheres[] = _elgg_get_entity_time_where_sql('n_table', $options['metastring_created_time_upper'],
 		$options['metastring_created_time_lower'], null, null);
 
-	$wheres[] = elgg_get_guid_based_where_sql('n_table.owner_guid',
+	$wheres[] = _elgg_get_guid_based_where_sql('n_table.owner_guid',
 		$options['metastring_owner_guids']);
 
 	// see if any functions failed
@@ -407,7 +407,7 @@ function _elgg_get_metastring_based_objects($options) {
 
 	// reverse order by
 	if (isset($options['reverse_order_by']) && $options['reverse_order_by']) {
-		$options['order_by'] = elgg_sql_reverse_order_by_clause($options['order_by']);
+		$options['order_by'] = _elgg_sql_reverse_order_by_clause($options['order_by']);
 	}
 
 	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE && !$options['count']) {
@@ -581,7 +581,7 @@ function _elgg_normalize_metastrings_options(array $options = array()) {
 
 	foreach ($prefixes as $prefix) {
 		$singulars = array("{$prefix}name", "{$prefix}value", "{$prefix}owner_guid", "{$prefix}id");
-		$options = elgg_normalise_plural_options_array($options, $singulars);
+		$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 		foreach ($map as $specific => $normalized) {
 			$key = $prefix . $specific;
@@ -774,7 +774,7 @@ function _elgg_entities_get_metastrings_options($type, $options) {
 
 	$singulars = array("{$type}_name", "{$type}_value",
 		"{$type}_name_value_pair", "{$type}_owner_guid");
-	$options = elgg_normalise_plural_options_array($options, $singulars);
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	$clauses = elgg_get_entity_metadata_where_sql('e', $n_table, $options["{$type}_names"],
 		$options["{$type}_values"], $options["{$type}_name_value_pairs"],

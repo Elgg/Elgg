@@ -789,7 +789,7 @@ function elgg_get_entities(array $options = array()) {
 	}
 
 	$singulars = array('type', 'subtype', 'guid', 'owner_guid', 'container_guid', 'site_guid');
-	$options = elgg_normalise_plural_options_array($options, $singulars);
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	// evaluate where clauses
 	if (!is_array($options['wheres'])) {
@@ -798,15 +798,15 @@ function elgg_get_entities(array $options = array()) {
 
 	$wheres = $options['wheres'];
 
-	$wheres[] = elgg_get_entity_type_subtype_where_sql('e', $options['types'],
+	$wheres[] = _elgg_get_entity_type_subtype_where_sql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
 
-	$wheres[] = elgg_get_guid_based_where_sql('e.guid', $options['guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('e.guid', $options['guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
 
-	$wheres[] = elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
+	$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 
 	// see if any functions failed
@@ -871,7 +871,7 @@ function elgg_get_entities(array $options = array()) {
 
 	// reverse order by
 	if ($options['reverse_order_by']) {
-		$options['order_by'] = elgg_sql_reverse_order_by_clause($options['order_by']);
+		$options['order_by'] = _elgg_sql_reverse_order_by_clause($options['order_by']);
 	}
 
 	if (!$options['count']) {
@@ -1027,7 +1027,7 @@ function _elgg_fetch_entities_from_sql($sql) {
  * @since 1.7.0
  * @access private
  */
-function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pairs) {
+function _elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pairs) {
 	// subtype depends upon type.
 	if ($subtypes && !$types) {
 		elgg_log("Cannot set subtypes without type.", 'WARNING');
@@ -1196,7 +1196,7 @@ function elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pair
  * @since 1.8.0
  * @access private
  */
-function elgg_get_guid_based_where_sql($column, $guids) {
+function _elgg_get_guid_based_where_sql($column, $guids) {
 	// short circuit if nothing requested
 	// 0 is a valid guid
 	if (!$guids && $guids !== 0) {
@@ -1245,7 +1245,7 @@ function elgg_get_guid_based_where_sql($column, $guids) {
  * @since 1.7.0
  * @access private
  */
-function elgg_get_entity_time_where_sql($table, $time_created_upper = NULL,
+function _elgg_get_entity_time_where_sql($table, $time_created_upper = NULL,
 $time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NULL) {
 
 	$wheres = array();
@@ -1907,7 +1907,7 @@ function update_entity_last_action($guid, $posted = NULL) {
  * @elgg_plugin_hook_handler gc system
  * @access private
  */
-function entities_gc() {
+function _elgg_entities_gc() {
 	global $CONFIG;
 
 	$tables = array(
@@ -1936,7 +1936,7 @@ function entities_gc() {
  * @return array
  * @access private
  */
-function entities_test($hook, $type, $value, $params) {
+function _elgg_entities_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreEntityTest.php';
 	return $value;
@@ -1949,12 +1949,12 @@ function entities_test($hook, $type, $value, $params) {
  * @elgg_event_handler init system
  * @access private
  */
-function entities_init() {
+function _elgg_entities_init() {
 	elgg_register_page_handler('view', 'entities_page_handler');
 
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'entities_test');
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_entities_test');
 
-	elgg_register_plugin_hook_handler('gc', 'system', 'entities_gc');
+	elgg_register_plugin_hook_handler('gc', 'system', '_elgg_entities_gc');
 }
 
 /** Register the import hook */
@@ -1967,4 +1967,4 @@ elgg_register_plugin_hook_handler("export", "all", "export_entity_plugin_hook", 
 elgg_register_plugin_hook_handler('volatile', 'metadata', 'volatile_data_export_plugin_hook');
 
 /** Register init system event **/
-elgg_register_event_handler('init', 'system', 'entities_init');
+elgg_register_event_handler('init', 'system', '_elgg_entities_init');

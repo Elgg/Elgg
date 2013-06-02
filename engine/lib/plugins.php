@@ -1052,7 +1052,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
 	$singulars = array('plugin_user_setting_name', 'plugin_user_setting_value',
 		'plugin_user_setting_name_value_pair');
 
-	$options = elgg_normalise_plural_options_array($options, $singulars);
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	// rewrite plugin_user_setting_name_* to the right PS ones.
 	$map = array(

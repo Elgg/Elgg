@@ -489,7 +489,7 @@ function get_config($name, $site_guid = 0) {
  * @return bool
  * @access private
  */
-function get_all_config($site_guid = 0) {
+function _elgg_get_all_config($site_guid = 0) {
 	global $CONFIG;
 
 	$site_guid = (int) $site_guid;
@@ -532,7 +532,7 @@ function _elgg_load_site_config() {
 	$CONFIG->siteemail = $CONFIG->site->email;
 	$CONFIG->url = $CONFIG->wwwroot;
 
-	get_all_config();
+	_elgg_get_all_config();
 	if (!empty($CONFIG->debug)) {
 		_elgg_services()->logger->setLevel($CONFIG->debug);
 		_elgg_services()->logger->setDisplay(true);
@@ -550,14 +550,14 @@ function _elgg_load_application_config() {
 
 	$install_root = str_replace("\\", "/", dirname(dirname(dirname(__FILE__))));
 	$defaults = array(
-		'path'			=>	"$install_root/",
-		'view_path'		=>	"$install_root/views/",
-		'plugins_path'	=>	"$install_root/mod/",
-		'language'		=>	'en',
+		'path' => "$install_root/",
+		'view_path' => "$install_root/views/",
+		'plugins_path' => "$install_root/mod/",
+		'language' => 'en',
 
 		// compatibility with old names for plugins not using elgg_get_config()
-		'viewpath'		=>	"$install_root/views/",
-		'pluginspath'	=>	"$install_root/mod/",
+		'viewpath' => "$install_root/views/",
+		'pluginspath' => "$install_root/mod/",
 	);
 
 	foreach ($defaults as $name => $value) {

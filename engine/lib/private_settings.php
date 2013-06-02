@@ -55,7 +55,7 @@ function elgg_get_entities_from_private_settings(array $options = array()) {
 	$singulars = array('private_setting_name', 'private_setting_value',
 		'private_setting_name_value_pair');
 
-	$options = elgg_normalise_plural_options_array($options, $singulars);
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	$clauses = elgg_get_entity_private_settings_where_sql('e', $options['private_setting_names'],
 		$options['private_setting_values'], $options['private_setting_name_value_pairs'],

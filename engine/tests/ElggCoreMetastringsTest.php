@@ -178,32 +178,32 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 			}
 
 			$options = array();
-			$this->assertFalse(elgg_is_valid_options_for_batch_operation($options, $type));
+			$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type));
 
 			// limit alone isn't valid:
 			$options = array('limit' => 10);
-			$this->assertFalse(elgg_is_valid_options_for_batch_operation($options, $type));
+			$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type));
 
 			foreach ($required as $key) {
 				$options = array();
 
 				$options[$key] = ELGG_ENTITIES_ANY_VALUE;
-				$this->assertFalse(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = ELGG_ENTITIES_ANY_VALUE");
+				$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = ELGG_ENTITIES_ANY_VALUE");
 
 				$options[$key] = ELGG_ENTITIES_NO_VALUE;
-				$this->assertFalse(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = ELGG_ENTITIES_NO_VALUE");
+				$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = ELGG_ENTITIES_NO_VALUE");
 
 				$options[$key] = false;
-				$this->assertFalse(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = bool false");
+				$this->assertFalse(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = bool false");
 
 				$options[$key] = true;
-				$this->assertTrue(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = bool true");
+				$this->assertTrue(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = bool true");
 
 				$options[$key] = 'test';
-				$this->assertTrue(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = 'test'");
+				$this->assertTrue(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = 'test'");
 
 				$options[$key] = array('test');
-				$this->assertTrue(elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = array('test')");
+				$this->assertTrue(_elgg_is_valid_options_for_batch_operation($options, $type), "Sent $key = array('test')");
 			}
 		}
 	}

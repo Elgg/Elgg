@@ -147,7 +147,7 @@ function elgg_get_tags(array $options = array()) {
 	$options = array_merge($defaults, $options);
 
 	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid', 'tag_name');
-	$options = elgg_normalise_plural_options_array($options, $singulars);
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	$registered_tags = elgg_get_registered_tag_metadata_names();
 
@@ -179,12 +179,12 @@ function elgg_get_tags(array $options = array()) {
 	$tags_in = implode(',', $sanitised_tags);
 	$wheres[] = "(msn.string IN ($tags_in))";
 
-	$wheres[] = elgg_get_entity_type_subtype_where_sql('e', $options['types'],
+	$wheres[] = _elgg_get_entity_type_subtype_where_sql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
-	$wheres[] = elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
-	$wheres[] = elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
+	$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
+	$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 
 	// see if any functions failed

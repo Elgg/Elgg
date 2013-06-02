@@ -193,15 +193,15 @@ function elgg_delete_river(array $options = array()) {
 	$options = array_merge($defaults, $options);
 
 	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'view', 'type', 'subtype');
-	$options = elgg_normalise_plural_options_array($options, $singulars);
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	$wheres = $options['wheres'];
 
-	$wheres[] = elgg_get_guid_based_where_sql('rv.id', $options['ids']);
-	$wheres[] = elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.id', $options['ids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
 	$wheres[] = _elgg_river_get_action_where_sql($options['action_types']);
 	$wheres[] = _elgg_river_get_view_where_sql($options['views']);
 	$wheres[] = _elgg_get_river_type_subtype_where_sql('rv', $options['types'],
@@ -319,15 +319,15 @@ function elgg_get_river(array $options = array()) {
 	$options = array_merge($defaults, $options);
 
 	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'type', 'subtype');
-	$options = elgg_normalise_plural_options_array($options, $singulars);
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	$wheres = $options['wheres'];
 
-	$wheres[] = elgg_get_guid_based_where_sql('rv.id', $options['ids']);
-	$wheres[] = elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
-	$wheres[] = elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.id', $options['ids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.subject_guid', $options['subject_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.object_guid', $options['object_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.target_guid', $options['target_guids']);
+	$wheres[] = _elgg_get_guid_based_where_sql('rv.annotation_id', $options['annotation_ids']);
 	$wheres[] = _elgg_river_get_action_where_sql($options['action_types']);
 	$wheres[] = _elgg_get_river_type_subtype_where_sql('rv', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);

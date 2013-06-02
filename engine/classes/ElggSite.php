@@ -439,7 +439,7 @@ class ElggSite extends ElggEntity {
 
 			if (!elgg_is_logged_in()) {
 				// override the front page
-				elgg_register_page_handler('', 'elgg_walled_garden_index');
+				elgg_register_page_handler('', '_elgg_walled_garden_index');
 
 				if (!$this->isPublicPage()) {
 					if (!elgg_is_xhr()) {

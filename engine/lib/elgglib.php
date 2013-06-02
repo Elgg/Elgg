@@ -261,7 +261,7 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 	$url = elgg_format_url($url);
 	$url = elgg_normalize_url($url);
 	
-	elgg_bootstrap_externals_data_structure($type);
+	_elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
 
@@ -313,7 +313,7 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 function elgg_unregister_external_file($type, $name) {
 	global $CONFIG;
 
-	elgg_bootstrap_externals_data_structure($type);
+	_elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
 	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
@@ -338,7 +338,7 @@ function elgg_unregister_external_file($type, $name) {
 function elgg_load_external_file($type, $name) {
 	global $CONFIG;
 
-	elgg_bootstrap_externals_data_structure($type);
+	_elgg_bootstrap_externals_data_structure($type);
 
 	$name = trim(strtolower($name));
 
@@ -389,7 +389,7 @@ function elgg_get_loaded_external_files($type, $location) {
  * @param string $type The type of external, js or css.
  * @access private
  */
-function elgg_bootstrap_externals_data_structure($type) {
+function _elgg_bootstrap_externals_data_structure($type) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->externals)) {
@@ -1544,7 +1544,7 @@ function is_not_null($string) {
  * @since 1.7.0
  * @access private
  */
-function elgg_normalise_plural_options_array($options, $singulars) {
+function _elgg_normalize_plural_options_array($options, $singulars) {
 	foreach ($singulars as $singular) {
 		$plural = $singular . 's';
 
@@ -1611,8 +1611,8 @@ function _elgg_shutdown_hook() {
  * @elgg_pagehandler js
  * @access private
  */
-function elgg_js_page_handler($page) {
-	return elgg_cacheable_view_page_handler($page, 'js');
+function _elgg_js_page_handler($page) {
+	return _elgg_cacheable_view_page_handler($page, 'js');
 }
 
 /**
@@ -1627,7 +1627,7 @@ function elgg_js_page_handler($page) {
  * @elgg_pagehandler ajax
  * @access private
  */
-function elgg_ajax_page_handler($page) {
+function _elgg_ajax_page_handler($page) {
 	if (is_array($page) && sizeof($page)) {
 		// throw away 'view' and form the view name
 		unset($page[0]);
@@ -1676,13 +1676,13 @@ function elgg_ajax_page_handler($page) {
  * @elgg_pagehandler css
  * @access private
  */
-function elgg_css_page_handler($page) {
+function _elgg_css_page_handler($page) {
 	if (!isset($page[0])) {
 		// default css
 		$page[0] = 'elgg';
 	}
 	
-	return elgg_cacheable_view_page_handler($page, 'css');
+	return _elgg_cacheable_view_page_handler($page, 'css');
 }
 
 /**
@@ -1696,7 +1696,7 @@ function elgg_css_page_handler($page) {
  * @return bool
  * @access private
  */
-function elgg_cacheable_view_page_handler($page, $type) {
+function _elgg_cacheable_view_page_handler($page, $type) {
 
 	switch ($type) {
 		case 'js':
@@ -1755,7 +1755,7 @@ function elgg_cacheable_view_page_handler($page, $type) {
  * @return string
  * @access private
  */
-function elgg_sql_reverse_order_by_clause($order_by) {
+function _elgg_sql_reverse_order_by_clause($order_by) {
 	$order_by = strtolower($order_by);
 
 	if (strpos($order_by, ' asc') !== false) {
@@ -1823,7 +1823,7 @@ function elgg_batch_delete_callback($object) {
  * @return bool
  * @access private
  */
-function elgg_is_valid_options_for_batch_operation($options, $type) {
+function _elgg_is_valid_options_for_batch_operation($options, $type) {
 	if (!$options || !is_array($options)) {
 		return false;
 	}
@@ -1876,7 +1876,7 @@ function elgg_is_valid_options_for_batch_operation($options, $type) {
  * @return bool
  * @access private
  */
-function elgg_walled_garden_index() {
+function _elgg_walled_garden_index() {
 
 	elgg_load_css('elgg.walled_garden');
 	elgg_load_js('elgg.walled_garden');
@@ -1927,7 +1927,7 @@ function _elgg_walled_garden_ajax_handler($page) {
  * @return void
  * @access private
  */
-function elgg_walled_garden() {
+function _elgg_walled_garden_init() {
 	global $CONFIG;
 
 	elgg_register_simplecache_view('js/walled_garden');
@@ -2003,15 +2003,15 @@ function _elgg_engine_boot() {
  * @return void
  * @access private
  */
-function elgg_init() {
+function _elgg_init() {
 	global $CONFIG;
 
 	elgg_register_action('comments/add');
 	elgg_register_action('comments/delete');
 
-	elgg_register_page_handler('js', 'elgg_js_page_handler');
-	elgg_register_page_handler('css', 'elgg_css_page_handler');
-	elgg_register_page_handler('ajax', 'elgg_ajax_page_handler');
+	elgg_register_page_handler('js', '_elgg_js_page_handler');
+	elgg_register_page_handler('css', '_elgg_css_page_handler');
+	elgg_register_page_handler('ajax', '_elgg_ajax_page_handler');
 
 	elgg_register_js('elgg.autocomplete', 'js/lib/ui.autocomplete.js');
 	elgg_register_js('jquery.ui.autocomplete.html', 'vendors/jquery/jquery.ui.autocomplete.html.js');
@@ -2053,7 +2053,7 @@ function elgg_init() {
  * @return array
  * @access private
  */
-function elgg_api_test($hook, $type, $value, $params) {
+function _elgg_api_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreEntityGetterFunctionsTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreHelpersTest.php';
@@ -2113,9 +2113,9 @@ define('REFERRER', -1);
  */
 define('REFERER', -1);
 
-elgg_register_event_handler('init', 'system', 'elgg_init');
+elgg_register_event_handler('init', 'system', '_elgg_init');
 elgg_register_event_handler('boot', 'system', '_elgg_engine_boot', 1);
-elgg_register_plugin_hook_handler('unit_test', 'system', 'elgg_api_test');
+elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_api_test');
 
 elgg_register_event_handler('init', 'system', 'add_custom_menu_items', 1000);
-elgg_register_event_handler('init', 'system', 'elgg_walled_garden', 1000);
+elgg_register_event_handler('init', 'system', '_elgg_walled_garden_init', 1000);
