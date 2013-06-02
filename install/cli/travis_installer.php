@@ -47,5 +47,5 @@ $params = array(
 $installer->batchInstall($params, TRUE);
 
 // at this point installation has completed (otherwise an exception halted execution).
-echo "Elgg CLI install successful. wwwroot: {$CONFIG->wwwroot}\n";
+echo "Elgg CLI install successful. wwwroot: " . elgg_get_config('wwwroot') . "\n";
 

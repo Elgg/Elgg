@@ -59,11 +59,14 @@ if (!isset($CONFIG->debug)) {
 }
 
 if (TextReporter::inCli()) {
-	echo "Running simpletest tests...\n";
 	// In CLI error codes are returned: 0 is success
-	elgg_set_ignore_access(TRUE);
+	$mt = microtime(true);
 	$reporter = new TextReporter();
 	$result = $suite->Run($reporter) ? 0 : 1 ;
+	echo sprintf("Time: %.2f seconds, Memory: %.2fMb\n", 
+		microtime(true)-$mt, 
+		memory_get_peak_usage() / 1048576. // in megabytes
+	);
 	exit($result);
 }
 
