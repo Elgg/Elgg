@@ -1,59 +1,134 @@
-/**
- * Makes sure that each of the helper ajax functions ends up calling $.ajax
- * with the right options.
- */
-ElggAjaxTest = TestCase("ElggAjaxTest");
-
-ElggAjaxTest.prototype.setUp = function() {
+define(function(require) {
 	
-	this.wwwroot = elgg.config.wwwroot;
-	this.ajax = $.ajax;
+	var elgg = require('elgg');
 	
-	elgg.config.wwwroot = 'http://www.elgg.org/';
+	describe("elgg.ajax", function() {
+		var wwwroot, ajax;
+		
+		beforeEach(function() {
+			wwwroot = elgg.config.wwwroot;
+			ajax = $.ajax;
+			
+			elgg.config.wwwroot = 'http://www.elgg.org/';
+			
+			$.ajax = function(options) {
+				return options;
+			};
+		});
+		
+		afterEach(function() {
+			$.ajax = ajax;
+			elgg.config.wwwroot = wwwroot;		
+		});
+		
+		it("requests elgg.config.wwwroot by default", function() {
+			expect(elgg.ajax().url).toBe(elgg.config.wwwroot);
+		});
+		
+		it("can issue a GET using elgg.get()", function() {
+			expect(elgg.get().type).toBe('get');	
+		});
+		
+		it("can issue a POST using elgg.post()", function() {
+			expect(elgg.post().type).toBe('post');	
+		});
 	
-	$.ajax = function(options) {
-		return options;
-	};
-};
-
-ElggAjaxTest.prototype.tearDown = function() {
-	$.ajax = this.ajax;
-	elgg.config.wwwroot = this.wwwroot;
-};
-
-ElggAjaxTest.prototype.testElggAjax = function() {
-	assertEquals(elgg.config.wwwroot, elgg.ajax().url);
-};
-
-ElggAjaxTest.prototype.testElggGet = function() {
-	assertEquals('get', elgg.get().type);
-};
-
-ElggAjaxTest.prototype.testElggGetJSON = function() {
-	assertEquals('json', elgg.getJSON().dataType);
-};
-
-ElggAjaxTest.prototype.testElggPost = function() {
-	assertEquals('post', elgg.post().type);
-};
-
-ElggAjaxTest.prototype.testElggAction = function() {
-	assertException(function() { elgg.action(); });
-	assertException(function() { elgg.action({}); });
+		it("can request JSON with elgg.getJSON()", function() {
+			expect(elgg.getJSON().dataType).toBe('json');
+		});
 	
-	var result = elgg.action('action');
-	assertEquals('post', result.type);
-	assertEquals('json', result.dataType);
-	assertEquals(elgg.config.wwwroot + 'action/action', result.url);
-	assertEquals(elgg.security.token.__elgg_ts, result.data.__elgg_ts);
-};
+		describe("handleOptions", function() {
+		
+			it("accepts handleOptions()", function() {
+				expect(elgg.ajax.handleOptions()).not.toBe(undefined);
+			});
+			
+			it("accepts handleOptions(url)", function() {
+				var url = 'http://google.com',
+					result = elgg.ajax.handleOptions(url);
+				
+				expect(result.url).toBe(url);
+			});
+			
+			it("interprets a POJO as data", function() {
+				var options = {},
+					result = elgg.ajax.handleOptions(options);
+				
+				expect(result.data).toBe(options);	
+			});
+			
+			it("interprets a POJO with a data field as full options", function() {
+				var options = {data:{arg:1}},
+					result = elgg.ajax.handleOptions(options);
+				
+				expect(result).toBe(options);
+			});
+			
+			it("interprets a POJO with a function as full options", function() {
+				function func() {}
+				var options = {success: func};
+				var result = elgg.ajax.handleOptions(options);
+				
+				expect(result).toBe(options);		
+			});
+			
+			it("accepts handleOptions(url, data)", function() {
+				var url = 'url',
+					data = {arg:1},
+					result = elgg.ajax.handleOptions(url, data);
+				
+				expect(result.url).toBe(url);
+				expect(result.data).toBe(data);
+			});
+			
+			it("accepts handleOptions(url, successCallback)", function() {
+				var url = 'http://google.com',
+				result = elgg.ajax.handleOptions(url, elgg.nullFunction);
+				
+				expect(result.url).toBe(url);
+				expect(result.success).toBe(elgg.nullFunction);
+			});
+			
+			it("accepts handleOptions(url, options)", function() {
+				var url = 'url',
+				    options = {data:{arg:1}},
+				    result = elgg.ajax.handleOptions(url, options);
+				
+				expect(result.url).toBe(url);
+				expect(result.data).toBe(options.data);
+			});
+		});
 
-ElggAjaxTest.prototype.testElggAPI = function() {
-	assertException(function() { elgg.api(); });
-	assertException(function() { elgg.api({}); });
+		describe("elgg.action()", function() {
+			it("issues a POST request", function() {
+				var result = elgg.action('action');
+				expect(result.type).toBe('post');
+			});
+			
+			it("expects a JSON response", function() {
+				var result = elgg.action('action');
+				expect(result.dataType).toBe('json');			
+			});
 	
-	var result = elgg.api('method');
-	assertEquals('json', result.dataType);
-	assertEquals('method', result.data.method);
-	assertEquals(elgg.config.wwwroot + 'services/api/rest/json/', result.url);
-};
+			it("accepts action names", function() {
+				var result = elgg.action('action');
+				expect(result.url).toBe(elgg.config.wwwroot + 'action/action');
+			});
+			
+			it("accepts action URLs", function() {
+				var result = elgg.action(elgg.config.wwwroot + 'action/action');
+				expect(result.url).toBe(elgg.config.wwwroot + 'action/action');
+			});
+			
+			it("includes CSRF tokens automatically in the request", function() {
+				var result = elgg.action('action');
+				expect(result.data.__elgg_ts).toBe(elgg.security.token.__elgg_ts);
+			});
+	
+			it("throws an exception if you don't specify an action", function() {
+				expect(function() { elgg.action(); }).toThrow();
+				expect(function() { elgg.action({}); }).toThrow();
+			});
+		});
+	});
+});
