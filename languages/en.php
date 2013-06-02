@@ -105,8 +105,10 @@ return array(
 	'noaccess' => 'The content you were trying to view has been removed or you do not have permission to view it.',
 	'error:missing_data' => 'There was some data missing in your request',
 
-	'error:default' => 'Oops...something went wrong.',
-	'error:404' => 'Sorry. We could not find the page that you requested.',
+	'error:default:title' => 'Oops...',
+	'error:default:content' => 'Oops... something went wrong.',
+	'error:404:title' => 'Page not found',
+	'error:404:content' => 'Sorry. We could not find the page that you requested.',
 
 /**
  * User details
