@@ -298,30 +298,33 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	}
 	
 	/**
-	 * Checks if additional select columns does not leak to entity attributes.
+	 * Ensure additional select columns do not end up in entity attributes.
 	 * 
 	 * https://github.com/Elgg/Elgg/issues/5538
 	 */
-	public function test_sql_selects_leak_to_attributes() {
+	public function test_extra_columns_dont_appear_in_attributes() {
 		global $ENTITY_CACHE;
-		//may not have groups in DB - let's create one	
+
+		// may not have groups in DB - let's create one
 		$group = new ElggGroup();
 		$group->name = 'test_group';
 		$group->access_id = ACCESS_PUBLIC;
 		$this->assertTrue($group->save() !== false);
 		
-		//entity cache interferes with our test
+		// entity cache interferes with our test
 		$ENTITY_CACHE = array();
 		
 		foreach (array('site', 'user', 'group', 'object') as $type) {
 			$entities = elgg_get_entities(array(
 				'type' => $type,
-				'selects' => array('42 as added_col'),
+				'selects' => array('1 as _nonexistent_test_column'),
 				'limit' => 1,
 			));
-			$entity = array_shift($entities);
-			$this->assertTrue($entity instanceof ElggEntity);
-			$this->assertEqual($entity->added_col, null, "Additional select columns are leaking to attributes for " . get_class($entity));
+			if (!$this->assertTrue($entities, "Query for '$type' did not return an entity.")) {
+				continue;
+			}
+			$entity = $entities[0];
+			$this->assertNull($entity->_nonexistent_test_column, "Additional select columns are leaking to attributes for '$type'");
 		}
 		
 		$group->delete();
