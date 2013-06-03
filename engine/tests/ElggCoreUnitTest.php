@@ -6,15 +6,14 @@
  * This class is to be extended by all Elgg unit tests. As such, any method here
  * will be available to the tests.
  */
-abstract class ElggCoreUnitTest extends UnitTestCase
-{
+abstract class ElggCoreUnitTest extends UnitTestCase {
+
 	/**
 	 * Class constructor.
 	 *
 	 * A simple wrapper to call the parent constructor.
 	 */
-	public function __construct()
-	{
+	public function __construct() {
 		parent::__construct();
 	}
 
@@ -23,21 +22,20 @@ abstract class ElggCoreUnitTest extends UnitTestCase
 	 *
 	 * The parent does not provide a destructor, so including an explicit one here.
 	 */
-	public function __destruct()
-	{
+	public function __destruct() {
+
 	}
-	
+
 	/**
-	 *	Will trigger a pass if the two entity parameters have
-	 *	the same "value" and same type. Otherwise a fail.
-	 *	
-	 *	@param mixed $first		   Entity to compare.
-	 *	@param mixed $second		  Entity to compare.
-	 *	@param string $message		Message to display.
-	 *	@return boolean			   True on pass
-	 *	@access public
+	 * Will trigger a pass if the two entity parameters have
+	 * the same "value" and same type. Otherwise a fail.
+	 *
+	 * @param mixed  $first   Entity to compare.
+	 * @param mixed  $second  Entity to compare.
+	 * @param string $message Message to display.
+	 * @return boolean
 	 */
-	function assertIdenticalEntities(ElggEntity $first, ElggEntity $second, $message = '%s') {
+	public function assertIdenticalEntities(ElggEntity $first, ElggEntity $second, $message = '%s') {
 		if (!($res = $this->assertIsA($first, 'ElggEntity'))) {
 			return $res;
 		}
@@ -47,85 +45,80 @@ abstract class ElggCoreUnitTest extends UnitTestCase
 		if (!($res = $this->assertEqual(get_class($first), get_class($second)))) {
 			return $res;
 		}
-		return $this->assert(
-				new IdenticalEntityExpectation($first),
-				$second,
-				$message);
+		return $this->assert(new IdenticalEntityExpectation($first), $second, $message);
 	}
+
 }
 
 /**
- *	Test for identity.
- *	@package SimpleTest
- *	@subpackage UnitTester
+ * Test for identity.
+ * @package SimpleTest
+ * @subpackage UnitTester
  */
 class IdenticalEntityExpectation extends EqualExpectation {
 
 	/**
-	 *	Sets the value to compare against.
+	 * Sets the value to compare against.
 	 *
-	 *	@param mixed $value	   Test value to match.
-	 *	@param string $message	Customised message on failure.
-	 *	@access public
+	 * @param mixed  $value   Test value to match.
+	 * @param string $message Customised message on failure.
 	 */
-	function __construct($value, $message = '%s') {
+	public function __construct($value, $message = '%s') {
 		parent::__construct($value, $message);
 	}
 
 	/**
-	 *	Tests the expectation. True if it exactly
-	 *	matches the held value.
-	 *	@param mixed $compare		Comparison value.
-	 *	@return boolean			  True if correct.
-	 *	@access public
+	 * Tests the expectation. True if it exactly matches the held value.
+	 *
+	 * @param mixed $compare Comparison value.
+	 * @return boolean
 	 */
-	function test($compare) {
+	public function test($compare) {
 		$value = $this->entityToFilteredArray($this->getValue());
 		$compare = $this->entityToFilteredArray($compare);
-		
+
 		return SimpleTestCompatibility::isIdentical($value, $compare);
 	}
-	
+
 	/**
 	 * Converts entity to array and filters not important attributes
-	 * 
-	 * @param ElggEntity $value
+	 *
+	 * @param ElggEntity $entity An entity to convert
 	 * @return array
 	 */
-	protected function entityToFilteredArray($value) {
-		$skippedKeys = array(
-			'last_action', 'tables_loaded'
-		);
-		$value = (array)$value;
+	protected function entityToFilteredArray($entity) {
+		$skippedKeys = array('last_action', 'tables_loaded');
+		$array = (array) $entity;
 		foreach ($skippedKeys as $key) {
 			// See: http://www.php.net/manual/en/language.types.array.php#language.types.array.casting
-			$value["\0*\0attributes"][$key] = null;
+			// protected attributes have nulls with the keys
+			$array["\0*\0attributes"][$key] = null;
 		}
-		ksort($value["\0*\0attributes"]);
-		
-		return $value;
+		ksort($array["\0*\0attributes"]);
+
+		return $array;
 	}
 
 	/**
 	 * Returns a human readable test message.
-	 * 
-	 * @param mixed $compare	  Comparison value.
-	 * @return string			 Description of success or failure.
-	 * @access public
+	 *
+	 * @param mixed $compare Comparison value.
+	 * @return string
 	 */
-	function testMessage($compare) {
+	public function testMessage($compare) {
 		$dumper = $this->getDumper();
-		
+
 		$value2 = $this->entityToFilteredArray($this->getValue());
 		$compare2 = $this->entityToFilteredArray($compare);
-		
+
 		if ($this->test($compare)) {
 			return "Identical entity expectation [" . $dumper->describeValue($this->getValue()) . "]";
 		} else {
 			return "Identical entity expectation [" . $dumper->describeValue($this->getValue()) .
-			"] fails with [" .
-			$dumper->describeValue($compare) . "] " .
-			$dumper->describeDifference($value2, $compare2, TYPE_MATTERS);
+					"] fails with [" .
+					$dumper->describeValue($compare) . "] " .
+					$dumper->describeDifference($value2, $compare2, TYPE_MATTERS);
 		}
 	}
+
 }
