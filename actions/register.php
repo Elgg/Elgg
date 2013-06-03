@@ -27,7 +27,7 @@ if (elgg_get_config('allow_registration')) {
 			throw new RegistrationException(elgg_echo('RegistrationException:PasswordMismatch'));
 		}
 
-		$guid = register_user($username, $password, $name, $email, false, $friend_guid, $invitecode);
+		$guid = register_user($username, $password, $name, $email);
 
 		if ($guid) {
 			$new_user = get_entity($guid);

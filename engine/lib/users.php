@@ -725,17 +725,14 @@ function validate_email_address($address) {
  * @param string $username              The username of the new user
  * @param string $password              The password
  * @param string $name                  The user's display name
- * @param string $email                 Their email address
+ * @param string $email                 The user's email address
  * @param bool   $allow_multiple_emails Allow the same email address to be
  *                                      registered multiple times?
- * @param int    $friend_guid           GUID of a user to friend once fully registered
- * @param string $invitecode            An invite code from a friend
  *
  * @return int|false The new user's GUID; false on failure
  * @throws RegistrationException
  */
-function register_user($username, $password, $name, $email,
-$allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
+function register_user($username, $password, $name, $email, $allow_multiple_emails = false) {
 
 	// no need to trim password.
 	$username = trim($username);
@@ -788,30 +785,6 @@ $allow_multiple_emails = false, $friend_guid = 0, $invitecode = '') {
 	$user->container_guid = 0; // Users aren't contained by anyone, even if they are admin created.
 	$user->language = get_current_language();
 	$user->save();
-
-	// If $friend_guid has been set, make mutual friends
-	if ($friend_guid) {
-		if ($friend_user = get_user($friend_guid)) {
-			if ($invitecode == generate_invite_code($friend_user->username)) {
-				$user->addFriend($friend_guid);
-				$friend_user->addFriend($user->guid);
-
-				// @todo Should this be in addFriend?
-				elgg_create_river_item(array(
-					'view' => 'river/relationship/friend/create',
-					'action_type' => 'friend',
-					'subject_guid' => $user->getGUID(),
-					'object_guid' => $friend_guid,
-				));
-				elgg_create_river_item(array(
-					'view' => 'river/relationship/friend/create',
-					'action_type' => 'friend',
-					'subject_guid' => $friend_guid,
-					'object_guid' => $user->getGUID(),
-				));
-			}
-		}
-	}
 
 	// Turn on email notifications by default
 	set_user_notification_setting($user->getGUID(), 'email', true);
