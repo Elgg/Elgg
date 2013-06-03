@@ -26,7 +26,7 @@ class Elgg_AttributeLoader {
 		'time_created',
 		'time_updated',
 		'last_action',
-		'enabled'
+		'enabled',
 	);
 
 	/**
@@ -230,6 +230,8 @@ class Elgg_AttributeLoader {
 						// saved, these are stored w/ type "site", but with no sites_entity row. These
 						// are probably only created in the unit tests.
 						// @todo Don't save vanilla ElggEntities with type "site"
+
+						$row = $this->filterAddedColumns($row);
 						$row['guid'] = (int) $row['guid'];
 						return $row;
 					}
@@ -238,6 +240,8 @@ class Elgg_AttributeLoader {
 				$row = array_merge($row, $fetched);
 			}
 		}
+
+		$row = $this->filterAddedColumns($row);
 
 		// resolve subtype from int to string
 		$subtype = get_subtype_from_id($row['subtype']);
@@ -261,6 +265,30 @@ class Elgg_AttributeLoader {
 		foreach (self::$integer_attr_names as $key) {
 			if (isset($row[$key])) {
 				$row[$key] = (int) $row[$key];
+			}
+		}
+		return $row;
+	}
+
+	/**
+	 * Filter out keys returned by the query which should not appear in the entity's attributes
+	 *
+	 * @param array $row All columns from the query
+	 * @return array Columns acceptable for the entity's attributes
+	 */
+	protected function filterAddedColumns($row) {
+		// make an array with keys as acceptable attribute names
+		$acceptable_attrs = self::$primary_attr_names;
+		array_splice($acceptable_attrs, count($acceptable_attrs), 0, $this->secondary_attr_names);
+		$acceptable_attrs = array_combine($acceptable_attrs, $acceptable_attrs);
+
+		// @todo remove these when #4584 is in place
+		$acceptable_attrs['tables_split'] = true;
+		$acceptable_attrs['tables_loaded'] = true;
+
+		foreach ($row as $key => $val) {
+			if (!isset($acceptable_attrs[$key])) {
+				unset($row[$key]);
 			}
 		}
 		return $row;

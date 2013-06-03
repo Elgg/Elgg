@@ -40,6 +40,9 @@ class ElggUser extends ElggEntity
 		$this->attributes['code'] = NULL;
 		$this->attributes['banned'] = "no";
 		$this->attributes['admin'] = 'no';
+		$this->attributes['prev_last_action'] = NULL;
+		$this->attributes['last_login'] = NULL;
+		$this->attributes['prev_last_login'] = NULL;
 		$this->attributes['tables_split'] = 2;
 	}
 
