@@ -25,6 +25,9 @@ If you can't click on the link, copy and paste it to your browser manually.
 ",
 	'email:confirm:success' => "You have confirmed your email address!",
 	'email:confirm:fail' => "Your email address could not be verified...",
+	
+	'email:revalidate:label' => 'This e-mail is not validated yet! Actually the e-mail you are using is provisionally <strong>%s</strong>.',
+	'email:revalidate:ok' => "Please confirm your email address by clicking on the link we just sent you.",
 
 	'uservalidationbyemail:registerok' => "To activate your account, please confirm your email address by clicking on the link we just sent you.",
 	'uservalidationbyemail:login:fail' => "Your account is not validated so the log in attempt failed. Another validation email has been sent.",

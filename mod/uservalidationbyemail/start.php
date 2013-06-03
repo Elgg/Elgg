@@ -29,6 +29,9 @@ function uservalidationbyemail_init() {
 	// when requesting a new password
 	elgg_register_plugin_hook_handler('action', 'user/requestnewpassword', 'uservalidationbyemail_check_request_password');
 
+	// when registering a new email
+	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'uservalidationbyemail_user_settings_save');
+
 	// prevent the engine from logging in users via login()
 	elgg_register_event_handler('login', 'user', 'uservalidationbyemail_check_manual_login');
 
@@ -168,6 +171,7 @@ function uservalidationbyemail_page_handler($page) {
 	if (isset($page[0]) && $page[0] == 'confirm') {
 		$code = sanitise_string(get_input('c', FALSE));
 		$user_guid = get_input('u', FALSE);
+		$action = get_input('a', 'validate');
 
 		// new users are not enabled by default.
 		$access_status = access_get_show_hidden_status();
@@ -176,28 +180,38 @@ function uservalidationbyemail_page_handler($page) {
 		$user = get_entity($user_guid);
 
 		if ($code && $user) {
-			if (uservalidationbyemail_validate_email($user_guid, $code)) {
+			switch($action) {
+				case 'validate':
+					if (uservalidationbyemail_validate_email($user_guid, $code)) {
+						elgg_push_context('uservalidationbyemail_validate_user');
+						system_message(elgg_echo('email:confirm:success'));
+						$user = get_entity($user_guid);
+						$user->enable();
+						elgg_pop_context();
 
-				elgg_push_context('uservalidationbyemail_validate_user');
-				system_message(elgg_echo('email:confirm:success'));
-				$user = get_entity($user_guid);
-				$user->enable();
-				elgg_pop_context();
-
+						$login = true;
+						$validated = true;
+					}
+					break;
+				case 'revalidate':
+					if (uservalidationbyemail_revalidate_email($user_guid, $code)) {
+						$login = true;
+						$validated = true;
+					}
+					break;
+			}
+			if ($login) {
 				try {
 					login($user);
 				} catch(LoginException $e){
 					register_error($e->getMessage());
 				}
-			} else {
-				register_error(elgg_echo('email:confirm:fail'));
 			}
-		} else {
-			register_error(elgg_echo('email:confirm:fail'));
 		}
-
 		access_show_hidden_entities($access_status);
-	} else {
+	}
+
+	if(!$validated) {
 		register_error(elgg_echo('email:confirm:fail'));
 	}
 
@@ -253,3 +267,43 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 
 	access_show_hidden_entities($access_status);
 }
+
+/**
+ * Plugin hook handler for usersettings:save
+ * 
+ * @return boolean|null 
+ */
+function uservalidationbyemail_user_settings_save() {
+	$email = get_input('email');
+	$user_id = get_input('guid');
+
+	if (!$user_id) {
+		$user = elgg_get_logged_in_user_entity();
+	} else {
+		$user = get_entity($user_id);
+	}
+
+	if (!is_email_address($email)) {
+		register_error(elgg_echo('email:save:fail'));
+		return false;
+	}
+
+	if ($user) {
+		if (strcmp($email, $user->email) != 0) {
+			if (!get_user_by_email($email)) {
+				$user->unvalidated_email = $email;
+				set_input('email', $user->email);
+				uservalidationbyemail_request_validation($user->guid);
+			} else {
+				register_error(elgg_echo('registration:dupeemail'));
+			}
+		} else {
+			unset($user->unvalidated_email);
+			return null;
+		}
+	} else {
+		register_error(elgg_echo('email:save:fail'));
+	}
+	return false;
+}
+

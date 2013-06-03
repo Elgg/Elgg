@@ -36,19 +36,32 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 
-	if (($user) && ($user instanceof ElggUser)) {
+	if (elgg_instanceof($user, 'user')) {
+
+		$email = $user->unvalidated_email;
+		if (!$email) {
+			$email = $user->email;
+			$action = 'validate';
+		} else {
+			$action = 'revalidate';
+		}
+
 		// Work out validate link
-		$code = uservalidationbyemail_generate_code($user_guid, $user->email);
-		$link = "{$site->url}uservalidationbyemail/confirm?u=$user_guid&c=$code";
+		$code = uservalidationbyemail_generate_code($user_guid, $email);
+		$link = "{$site->url}uservalidationbyemail/confirm?u=$user_guid&c=$code&a=$action";
 
 
 		// Send validation email
 		$subject = elgg_echo('email:validate:subject', array($user->name, $site->name));
 		$body = elgg_echo('email:validate:body', array($user->name, $site->name, $link, $site->name, $site->url));
-		$result = notify_user($user->guid, $site->guid, $subject, $body, NULL, 'email');
+		$result = elgg_send_email($site->email, $email, $subject, $body);
 
 		if ($result && !$admin_requested) {
-			system_message(elgg_echo('uservalidationbyemail:registerok'));
+			if ($action == 'validate') {
+				system_message(elgg_echo('uservalidationbyemail:registerok'));
+			} else {
+				system_message(elgg_echo('email:revalidate:ok'));
+			}
 		}
 
 		return $result;
@@ -58,7 +71,7 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 }
 
 /**
- * Validate a user
+ * Validate an user email
  *
  * @param int    $user_guid
  * @param string $code
@@ -72,6 +85,31 @@ function uservalidationbyemail_validate_email($user_guid, $code) {
 	}
 
 	return false;
+}
+
+
+/**
+ * Revalidate an user email
+ *
+ * @param int    $user_guid
+ * @param string $code
+ * @return bool
+ */
+function uservalidationbyemail_revalidate_email($user_guid, $code) {
+	$prev_access = elgg_set_ignore_access();
+
+	$result = false;
+	$user = get_entity($user_guid);
+
+	if ($code == uservalidationbyemail_generate_code($user_guid, $user->unvalidated_email)) {
+		$user->email = $user->unvalidated_email;
+		unset($user->unvalidated_email);
+		$result = $user->save();
+	}
+
+	elgg_set_ignore_access($prev_access);
+
+	return $result;
 }
 
 /**
