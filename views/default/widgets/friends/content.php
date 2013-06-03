@@ -17,7 +17,8 @@ if (elgg_instanceof($owner, 'user')) {
 	$html = $owner->listFriends('', $num, array(
 		'size' => $size,
 		'list_type' => 'gallery',
-		'pagination' => false
+		'pagination' => false,
+		'no_results' => elgg_echo('friends:none'),
 	));
 	if ($html) {
 		echo $html;

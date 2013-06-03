@@ -17,14 +17,12 @@ $title = elgg_echo("friends:owned", array($owner->name));
 $options = array(
 	'relationship' => 'friend',
 	'relationship_guid' => $owner->getGUID(),
-	'inverse_relationship' => FALSE,
+	'inverse_relationship' => false,
 	'type' => 'user',
-	'full_view' => FALSE
+	'full_view' => false,
+	'no_results' => elgg_echo('friends:none'),
 );
 $content = elgg_list_entities_from_relationship($options);
-if (!$content) {
-	$content = elgg_echo('friends:none');
-}
 
 $params = array(
 	'content' => $content,
