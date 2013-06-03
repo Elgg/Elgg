@@ -578,6 +578,54 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertEqual(11, $j);
 	}
 
+	public function testElggBatchHandlesBrokenEntities() {
+		$num_test_entities = 4;
+		$guids = array();
+		$now = time();
+		for ($i = $num_test_entities; $i > 0; $i--) {
+			$entity = new ElggObject();
+			$entity->type = 'object';
+			$entity->subtype = 'test_5357_subtype';
+			$entity->access_id = ACCESS_PUBLIC;
+			$entity->time_created = ($now - $i);
+			$entity->save();
+			$guids[] = $entity->guid;
+			_elgg_invalidate_cache_for_entity($entity->guid);
+		}
+
+		// break the second entity
+		$db_prefix = elgg_get_config('dbprefix');
+		delete_data("DELETE FROM {$db_prefix}objects_entity WHERE guid = {$guids[1]}");
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'test_5357_subtype',
+			'order' => 'e.time_created ASC',
+		);
+
+		$entities_visited = array();
+
+		$batch = new ElggBatch('elgg_get_entities', $options, null, 2);
+		foreach ($batch as $entity) {
+			$entities_visited[$entity->guid] = true;
+		}
+
+		// All but the broken entity should have been visited
+		$this->assertEqual(count($entities_visited), $num_test_entities - 1);
+
+		// cleanup (including leftovers from previous tests)
+		$entity_rows = elgg_get_entities(array_merge($options, array(
+			'callback' => '',
+			'limit' => false,
+		)));
+		$guids = array();
+		foreach ($entity_rows as $row) {
+			$guids[] = $row->guid;
+		}
+		delete_data("DELETE FROM {$db_prefix}entities WHERE guid IN (" . implode(',', $guids) . ")");
+		delete_data("DELETE FROM {$db_prefix}objects_entity WHERE guid IN (" . implode(',', $guids) . ")");
+	}
+
 	static function elgg_batch_callback_test($options, $reset = false) {
 		static $count = 1;
 

@@ -150,6 +150,13 @@ class ElggBatch
 	private $incrementOffset = true;
 
 	/**
+	 * Entities that could not be instantiated during a fetch
+	 *
+	 * @var stdClass[]
+	 */
+	private $incompleteEntities = array();
+
+	/**
 	 * Batches operations on any elgg_get_*() or compatible function that supports
 	 * an options array.
 	 *
@@ -222,6 +229,17 @@ class ElggBatch
 	}
 
 	/**
+	 * Tell the process that an entity was incomplete during a fetch
+	 *
+	 * @param stdClass $row
+	 *
+	 * @access private
+	 */
+	public function reportIncompleteEntity(stdClass $row) {
+		$this->incompleteEntities[] = $row;
+	}
+
+	/**
 	 * Fetches the next chunk of results
 	 *
 	 * @return bool
@@ -265,16 +283,16 @@ class ElggBatch
 
 		$current_options = array(
 			'limit' => $limit,
-			'offset' => $offset
+			'offset' => $offset,
+			'__ElggBatch' => $this,
 		);
 
 		$options = array_merge($this->options, $current_options);
-		$getter = $this->getter;
 
-		if (is_string($getter)) {
-			$this->results = $getter($options);
-		} else {
-			$this->results = call_user_func_array($getter, array($options));
+		$this->incompleteEntities = array();
+		$this->results = call_user_func_array($this->getter, array($options));
+		if ($this->incompleteEntities) {
+			// @todo what to do here?
 		}
 
 		if ($this->results) {
