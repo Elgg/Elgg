@@ -7,7 +7,7 @@
  * @subpackage Test
  */
 
-$enabled = getenv('TRAVIS')!='';//are we on Travis?
+$enabled = getenv('TRAVIS') != '';//are we on Travis?
 
 if (!$enabled) {
 	echo "This script should be run only in Travis CI test environment.\n";
@@ -28,7 +28,7 @@ $params = array(
 	// database parameters
 	'dbuser' => 'root',
 	'dbpassword' => 'password',
-	'dbname' => 'elgg_phpunit',
+	'dbname' => 'elgg',
 
 	// site settings
 	'sitename' => 'Elgg Travis Site',

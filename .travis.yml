@@ -17,7 +17,7 @@ before_script:
  - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
  - phpenv rehash
  - npm install -g karma
- - mysql -e 'create database elgg_phpunit;'
+ - mysql -e 'create database elgg;'
  - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
  - mkdir "${HOME}/elgg_data/"
  - php -f ./install/cli/travis_installer.php
