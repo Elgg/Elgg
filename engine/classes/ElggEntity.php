@@ -1544,6 +1544,10 @@ abstract class ElggEntity extends ElggData implements
 			$newentity_cache->delete($guid);
 		}
 
+		if ($ret !== false) {
+			$this->attributes['time_updated'] = $time;
+		}
+
 		// Handle cases where there was no error BUT no rows were updated!
 		return $ret !== false;
 	}
