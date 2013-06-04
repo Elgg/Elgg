@@ -87,18 +87,18 @@ abstract class ElggEntity extends ElggData implements
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['guid'] = NULL;
-		$this->attributes['type'] = NULL;
-		$this->attributes['subtype'] = NULL;
+		$this->attributes['guid'] = null;
+		$this->attributes['type'] = null;
+		$this->attributes['subtype'] = null;
 
 		$this->attributes['owner_guid'] = elgg_get_logged_in_user_guid();
 		$this->attributes['container_guid'] = elgg_get_logged_in_user_guid();
 
-		$this->attributes['site_guid'] = NULL;
+		$this->attributes['site_guid'] = null;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
-		$this->attributes['time_created'] = NULL;
-		$this->attributes['time_updated'] = NULL;
-		$this->attributes['last_action'] = NULL;
+		$this->attributes['time_created'] = null;
+		$this->attributes['time_updated'] = null;
+		$this->attributes['last_action'] = null;
 		$this->attributes['enabled'] = "yes";
 
 		// There now follows a bit of a hack
@@ -192,7 +192,7 @@ abstract class ElggEntity extends ElggData implements
 		// No, so see if its in the meta data for this entity
 		$meta = $this->getMetaData($name);
 
-		// getMetaData returns NULL if $name is not found
+		// getMetaData returns null if $name is not found
 		return $meta;
 	}
 
@@ -224,7 +224,7 @@ abstract class ElggEntity extends ElggData implements
 				case 'guid':
 				case 'time_updated':
 				case 'last_action':
-					return FALSE;
+					return false;
 					break;
 				case 'access_id':
 				case 'owner_guid':
@@ -243,7 +243,7 @@ abstract class ElggEntity extends ElggData implements
 			return $this->setMetaData($name, $value);
 		}
 
-		return TRUE;
+		return true;
 	}
 	
 	/**
@@ -266,7 +266,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @param string $name Name
 	 *
-	 * @return mixed The value, or NULL if not found.
+	 * @return mixed The value, or null if not found.
 	 */
 	public function getMetaData($name) {
 		$guid = $this->getGUID();
@@ -522,7 +522,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @param string $name The name of the volatile data
 	 *
-	 * @return mixed The value or NULL if not found.
+	 * @return mixed The value or null if not found.
 	 */
 	public function getVolatileData($name) {
 		if (!is_array($this->volatile)) {
@@ -532,7 +532,7 @@ abstract class ElggEntity extends ElggData implements
 		if (array_key_exists($name, $this->volatile)) {
 			return $this->volatile[$name];
 		} else {
-			return NULL;
+			return null;
 		}
 	}
 
@@ -934,12 +934,12 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return int|false The number of entities or false on failure
 	 */
-	public function countEntitiesFromRelationship($relationship, $inverse_relationship = FALSE) {
+	public function countEntitiesFromRelationship($relationship, $inverse_relationship = false) {
 		return elgg_get_entities_from_relationship(array(
 			'relationship' => $relationship,
 			'relationship_guid' => $this->getGUID(),
 			'inverse_relationship' => $inverse_relationship,
-			'count' => TRUE
+			'count' => true
 		));
 	}
 
@@ -1974,8 +1974,8 @@ abstract class ElggEntity extends ElggData implements
 	 * @return true
 	 * @deprecated 1.9
 	 */
-	public function setCalendarTimeAndDuration($hour = NULL, $minute = NULL, $second = NULL,
-	$day = NULL, $month = NULL, $year = NULL, $duration = NULL) {
+	public function setCalendarTimeAndDuration($hour = null, $minute = null, $second = null,
+	$day = null, $month = null, $year = null, $duration = null) {
 		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 
 		$start = mktime($hour, $minute, $second, $month, $day, $year);
@@ -2064,7 +2064,7 @@ abstract class ElggEntity extends ElggData implements
 
 		// Now add its attributes
 		foreach ($this->attributes as $k => $v) {
-			$meta = NULL;
+			$meta = null;
 
 			if (in_array($k, $exportable_values)) {
 				switch ($k) {
@@ -2190,7 +2190,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return array
 	 */
-	public function getTags($tag_names = NULL) {
+	public function getTags($tag_names = null) {
 		if ($tag_names && !is_array($tag_names)) {
 			$tag_names = array($tag_names);
 		}

@@ -41,31 +41,31 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 
 	public function testElggUserConstructor() {
 		$attributes = array();
-		$attributes['guid'] = NULL;
+		$attributes['guid'] = null;
 		$attributes['type'] = 'user';
-		$attributes['subtype'] = NULL;
+		$attributes['subtype'] = null;
 		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
-		$attributes['site_guid'] = NULL;
+		$attributes['site_guid'] = null;
 		$attributes['access_id'] = ACCESS_PRIVATE;
-		$attributes['time_created'] = NULL;
-		$attributes['time_updated'] = NULL;
-		$attributes['last_action'] = NULL;
+		$attributes['time_created'] = null;
+		$attributes['time_updated'] = null;
+		$attributes['last_action'] = null;
 		$attributes['enabled'] = 'yes';
 		$attributes['tables_split'] = 2;
 		$attributes['tables_loaded'] = 0;
-		$attributes['name'] = NULL;
-		$attributes['username'] = NULL;
-		$attributes['password'] = NULL;
-		$attributes['salt'] = NULL;
-		$attributes['email'] = NULL;
-		$attributes['language'] = NULL;
-		$attributes['code'] = NULL;
+		$attributes['name'] = null;
+		$attributes['username'] = null;
+		$attributes['password'] = null;
+		$attributes['salt'] = null;
+		$attributes['email'] = null;
+		$attributes['language'] = null;
+		$attributes['code'] = null;
 		$attributes['banned'] = 'no';
 		$attributes['admin'] = 'no';
-		$attributes['prev_last_action'] = NULL;
-		$attributes['last_login'] = NULL;
-		$attributes['prev_last_login'] = NULL;
+		$attributes['prev_last_action'] = null;
+		$attributes['last_login'] = null;
+		$attributes['prev_last_login'] = null;
 		ksort($attributes);
 
 		$entity_attributes = $this->user->expose_attributes();
@@ -84,7 +84,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		// fail on wrong type
 		try {
 			$error = new ElggUserTest($guid);
-			$this->assertTrue(FALSE);
+			$this->assertTrue(false);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidClassException');
 		}
@@ -100,7 +100,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		// fail with garbage
 		try {
 			$error = new ElggUserTest(array('invalid'));
-			$this->assertTrue(FALSE);
+			$this->assertTrue(false);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
 		}

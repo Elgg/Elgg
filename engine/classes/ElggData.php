@@ -60,7 +60,7 @@ abstract class ElggData implements
 			$this->attributes = array();
 		}
 
-		$this->attributes['time_created'] = NULL;
+		$this->attributes['time_created'] = null;
 	}
 
 	/**
@@ -105,7 +105,7 @@ abstract class ElggData implements
 	 * @return bool
 	 */
 	function __isset($name) {
-		return $this->$name !== NULL;
+		return $this->$name !== null;
 	}
 
 	/**
@@ -196,7 +196,7 @@ abstract class ElggData implements
 	 * This lets an entity's attributes be displayed using foreach as a normal array.
 	 * Example: http://www.sitepoint.com/print/php5-standard-library
 	 */
-	protected $valid = FALSE;
+	protected $valid = false;
 
 	/**
 	 * Iterator interface
@@ -206,7 +206,7 @@ abstract class ElggData implements
 	 * @return void
 	 */
 	public function rewind() {
-		$this->valid = (FALSE !== reset($this->attributes));
+		$this->valid = (false !== reset($this->attributes));
 	}
 
 	/**
@@ -239,7 +239,7 @@ abstract class ElggData implements
 	 * @return void
 	 */
 	public function next() {
-		$this->valid = (FALSE !== next($this->attributes));
+		$this->valid = (false !== next($this->attributes));
 	}
 
 	/**

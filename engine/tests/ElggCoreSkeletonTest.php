@@ -49,6 +49,6 @@ class ElggCoreSkeletonTest extends ElggCoreUnitTest {
 	}
 
 	public function testFailure() {
-		$this->assertTrue(FALSE);
+		$this->assertTrue(false);
 	}
 }

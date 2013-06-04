@@ -107,7 +107,7 @@ $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 			} else {
 				// plugin returned false to reject annotation
 				elgg_delete_annotation_by_id($result);
-				return FALSE;
+				return false;
 			}
 		}
 	}
@@ -183,11 +183,11 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *
  * @param array $options Array in format:
  *
- * annotation_names              => NULL|ARR Annotation names
- * annotation_values             => NULL|ARR Annotation values
- * annotation_ids                => NULL|ARR annotation ids
+ * annotation_names              => null|ARR Annotation names
+ * annotation_values             => null|ARR Annotation values
+ * annotation_ids                => null|ARR annotation ids
  * annotation_case_sensitive     => BOOL Overall Case sensitive
- * annotation_owner_guids        => NULL|ARR guids for annotation owners
+ * annotation_owner_guids        => null|ARR guids for annotation owners
  * annotation_created_time_lower => INT Lower limit for created time.
  * annotation_created_time_upper => INT Upper limit for created time.
  * annotation_calculation        => STR Perform the MySQL function on the annotation values returned.
@@ -317,26 +317,26 @@ function elgg_list_annotations($options) {
  *
  * @param array $options Array in format:
  *
- * 	annotation_names => NULL|ARR annotations names
+ * 	annotation_names => null|ARR annotations names
  *
- * 	annotation_values => NULL|ARR annotations values
+ * 	annotation_values => null|ARR annotations values
  *
- * 	annotation_name_value_pairs => NULL|ARR (name = 'name', value => 'value',
- * 	'operator' => '=', 'case_sensitive' => TRUE) entries.
+ * 	annotation_name_value_pairs => null|ARR (name = 'name', value => 'value',
+ * 	'operator' => '=', 'case_sensitive' => true) entries.
  * 	Currently if multiple values are sent via an array (value => array('value1', 'value2')
  * 	the pair's operator will be forced to "IN".
  *
- * 	annotation_name_value_pairs_operator => NULL|STR The operator to use for combining
+ * 	annotation_name_value_pairs_operator => null|STR The operator to use for combining
  *  (name = value) OPERATOR (name = value); default AND
  *
  * 	annotation_case_sensitive => BOOL Overall Case sensitive
  *
- *  order_by_annotation => NULL|ARR (array('name' => 'annotation_text1', 'direction' => ASC|DESC,
+ *  order_by_annotation => null|ARR (array('name' => 'annotation_text1', 'direction' => ASC|DESC,
  *  'as' => text|integer),
  *
  *  Also supports array('name' => 'annotation_text1')
  *
- *  annotation_owner_guids => NULL|ARR guids for annotaiton owners
+ *  annotation_owner_guids => null|ARR guids for annotaiton owners
  *
  * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
@@ -348,7 +348,7 @@ function elgg_get_entities_from_annotations(array $options = array()) {
 		'annotation_name_value_pairs'			=>	ELGG_ENTITIES_ANY_VALUE,
 
 		'annotation_name_value_pairs_operator'	=>	'AND',
-		'annotation_case_sensitive' 			=>	TRUE,
+		'annotation_case_sensitive' 			=>	true,
 		'order_by_annotation'					=>	array(),
 
 		'annotation_created_time_lower'			=>	ELGG_ENTITIES_ANY_VALUE,
@@ -499,11 +499,11 @@ function get_annotation_url($id) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NULL) {
+function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = null) {
 	global $CONFIG;
 
 	if (!$owner_guid && !($owner_guid = elgg_get_logged_in_user_guid())) {
-		return FALSE;
+		return false;
 	}
 
 	$entity_guid = sanitize_int($entity_guid);
@@ -516,10 +516,10 @@ function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = NU
 			" AND m.string = '$annotation_type'";
 
 	if (get_data_row($sql)) {
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**

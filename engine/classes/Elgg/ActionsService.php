@@ -254,7 +254,7 @@ class Elgg_ActionsService {
 			return md5($site_secret . $timestamp . $session_id . $st);
 		}
 	
-		return FALSE;
+		return false;
 	}
 	
 	/**

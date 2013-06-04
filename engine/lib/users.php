@@ -97,10 +97,10 @@ function ban_user($user_guid, $reason = "") {
 			return update_data($query);
 		}
 
-		return FALSE;
+		return false;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -136,10 +136,10 @@ function unban_user($user_guid) {
 			return update_data($query);
 		}
 
-		return FALSE;
+		return false;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -172,10 +172,10 @@ function make_user_admin($user_guid) {
 			return $r;
 		}
 
-		return FALSE;
+		return false;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -208,10 +208,10 @@ function remove_user_admin($user_guid) {
 			return $r;
 		}
 
-		return FALSE;
+		return false;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -232,7 +232,7 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
 		'site_guids' => ELGG_ENTITIES_ANY_VALUE,
 		'relationship' => 'member_of_site',
 		'relationship_guid' => $user_guid,
-		'inverse_relationship' => FALSE,
+		'inverse_relationship' => false,
 		'type' => 'site',
 		'limit' => $limit,
 		'offset' => $offset,
@@ -339,7 +339,7 @@ $offset = 0) {
 	return elgg_get_entities_from_relationship(array(
 		'relationship' => 'friend',
 		'relationship_guid' => $user_guid,
-		'inverse_relationship' => TRUE,
+		'inverse_relationship' => true,
 		'type' => 'user',
 		'subtype' => $subtype,
 		'limit' => $limit,
@@ -476,7 +476,7 @@ function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = fa
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 	$params = array('seconds' => $seconds, 'limit' => $limit, 'offset' => $offset, 'count' => $count);
-	$data = elgg_trigger_plugin_hook('find_active_users', 'system', $params, NULL);
+	$data = elgg_trigger_plugin_hook('find_active_users', 'system', $params, null);
 	if (!$data) {
 		global $CONFIG;
 
@@ -585,7 +585,7 @@ function execute_new_password_request($user_guid, $conf_code) {
 		}
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -1212,7 +1212,7 @@ function elgg_profile_fields_setup() {
 		$profile_defaults = $loaded_defaults;
 	}
 
-	$CONFIG->profile_fields = elgg_trigger_plugin_hook('profile:fields', 'profile', NULL, $profile_defaults);
+	$CONFIG->profile_fields = elgg_trigger_plugin_hook('profile:fields', 'profile', null, $profile_defaults);
 
 	// register any tag metadata names
 	foreach ($CONFIG->profile_fields as $name => $type) {
@@ -1353,7 +1353,7 @@ function users_pagesetup() {
 			'name' => 'logout',
 			'href' => "action/logout",
 			'text' => elgg_echo('logout'),
-			'is_action' => TRUE,
+			'is_action' => true,
 			'priority' => 1000,
 			'section' => 'alt',
 		));

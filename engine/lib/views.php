@@ -143,7 +143,7 @@ function elgg_is_registered_viewtype($viewtype) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->view_types) || !is_array($CONFIG->view_types)) {
-		return FALSE;
+		return false;
 	}
 
 	return in_array($viewtype, $CONFIG->view_types);
@@ -426,7 +426,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$messages = null;
 	if (count_messages()) {
 		// get messages - try for errors first
-		$messages = system_messages(NULL, "error");
+		$messages = system_messages(null, "error");
 		if (count($messages["error"]) == 0) {
 			// no errors so grab rest of messages
 			$messages = system_messages(null, "");
@@ -1430,12 +1430,12 @@ function elgg_views_boot() {
 	// set default icon sizes - can be overridden in settings.php or with plugin
 	if (!isset($CONFIG->icon_sizes)) {
 		$icon_sizes = array(
-			'topbar' => array('w' => 16, 'h' => 16, 'square' => TRUE, 'upscale' => TRUE),
-			'tiny' => array('w' => 25, 'h' => 25, 'square' => TRUE, 'upscale' => TRUE),
-			'small' => array('w' => 40, 'h' => 40, 'square' => TRUE, 'upscale' => TRUE),
-			'medium' => array('w' => 100, 'h' => 100, 'square' => TRUE, 'upscale' => TRUE),
-			'large' => array('w' => 200, 'h' => 200, 'square' => FALSE, 'upscale' => FALSE),
-			'master' => array('w' => 550, 'h' => 550, 'square' => FALSE, 'upscale' => FALSE),
+			'topbar' => array('w' => 16, 'h' => 16, 'square' => true, 'upscale' => true),
+			'tiny' => array('w' => 25, 'h' => 25, 'square' => true, 'upscale' => true),
+			'small' => array('w' => 40, 'h' => 40, 'square' => true, 'upscale' => true),
+			'medium' => array('w' => 100, 'h' => 100, 'square' => true, 'upscale' => true),
+			'large' => array('w' => 200, 'h' => 200, 'square' => false, 'upscale' => false),
+			'master' => array('w' => 550, 'h' => 550, 'square' => false, 'upscale' => false),
 		);
 		elgg_set_config('icon_sizes', $icon_sizes);
 	}

@@ -31,16 +31,16 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 	 */
 	public function testElggEntityAttributes() {
 		$test_attributes = array();
-		$test_attributes['guid'] = NULL;
-		$test_attributes['type'] = NULL;
-		$test_attributes['subtype'] = NULL;
+		$test_attributes['guid'] = null;
+		$test_attributes['type'] = null;
+		$test_attributes['subtype'] = null;
 		$test_attributes['owner_guid'] = elgg_get_logged_in_user_guid();
 		$test_attributes['container_guid'] = elgg_get_logged_in_user_guid();
-		$test_attributes['site_guid'] = NULL;
+		$test_attributes['site_guid'] = null;
 		$test_attributes['access_id'] = ACCESS_PRIVATE;
-		$test_attributes['time_created'] = NULL;
-		$test_attributes['time_updated'] = NULL;
-		$test_attributes['last_action'] = NULL;
+		$test_attributes['time_created'] = null;
+		$test_attributes['time_updated'] = null;
+		$test_attributes['last_action'] = null;
 		$test_attributes['enabled'] = 'yes';
 		$test_attributes['tables_split'] = 1;
 		$test_attributes['tables_loaded'] = 0;
@@ -141,7 +141,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID())));
 		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site')));
 		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site', 'subtype' => 'testing')));
-		$this->assertIdentical(FALSE, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site', 'subtype' => 'fail')));
+		$this->assertIdentical(false, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site', 'subtype' => 'fail')));
 
 		//  clear annotation
 		$this->assertTrue($this->entity->deleteAnnotations());
@@ -170,7 +170,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		// error on save
 		try {
 			$this->entity->save();
-			$this->assertTrue(FALSE);
+			$this->assertTrue(false);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
 		}

@@ -24,7 +24,7 @@
  *
  * @return mixed
  */
-function get_input($variable, $default = NULL, $filter_result = TRUE) {
+function get_input($variable, $default = null, $filter_result = true) {
 	return _elgg_services()->request->getInput($variable, $default, $filter_result);
 }
 
@@ -141,7 +141,7 @@ function elgg_is_sticky_form($form_name) {
  * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  * @since 1.8.0
  */
-function elgg_get_sticky_value($form_name, $variable = '', $default = NULL, $filter_result = true) {
+function elgg_get_sticky_value($form_name, $variable = '', $default = null, $filter_result = true) {
 	$session = _elgg_services()->session;
 	$data = $session->get('sticky_forms', array());
 	if (isset($data[$form_name][$variable])) {

@@ -215,7 +215,7 @@ function _elgg_populate_subtype_cache() {
  *
  * Entities can be registered to always be loaded as a certain class
  * with add_subtype() or update_subtype(). This function returns the class
- * name if found and NULL if not.
+ * name if found and null if not.
  *
  * @param string $type    The type
  * @param string $subtype The subtype
@@ -576,8 +576,8 @@ function get_entity($guid) {
 	// @todo We need a single Memcache instance with a shared pool of namespace wrappers. This function would pull an instance from the pool.
 	static $shared_cache;
 
-	// We could also use: if (!(int) $guid) { return FALSE },
-	// but that evaluates to a false positive for $guid = TRUE.
+	// We could also use: if (!(int) $guid) { return false },
+	// but that evaluates to a false positive for $guid = true.
 	// This is a bit slower, but more thorough.
 	if (!is_numeric($guid) || $guid === 0 || $guid === '0') {
 		return false;
@@ -694,40 +694,40 @@ function elgg_enable_entity($guid, $recursive = true) {
  *
  * @param array $options Array in format:
  *
- * 	types => NULL|STR entity type (type IN ('type1', 'type2')
+ * 	types => null|STR entity type (type IN ('type1', 'type2')
  *           Joined with subtypes by AND. See below)
  *
- * 	subtypes => NULL|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
+ * 	subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
  *              Use ELGG_ENTITIES_NO_VALUE for no subtype.
  *
- * 	type_subtype_pairs => NULL|ARR (array('type' => 'subtype'))
+ * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
  *                        (type = '$type' AND subtype = '$subtype') pairs
  *
- *	guids => NULL|ARR Array of entity guids
+ *	guids => null|ARR Array of entity guids
  *
- * 	owner_guids => NULL|ARR Array of owner guids
+ * 	owner_guids => null|ARR Array of owner guids
  *
- * 	container_guids => NULL|ARR Array of container_guids
+ * 	container_guids => null|ARR Array of container_guids
  *
- * 	site_guids => NULL (current_site)|ARR Array of site_guid
+ * 	site_guids => null (current_site)|ARR Array of site_guid
  *
- * 	order_by => NULL (time_created desc)|STR SQL order by clause
+ * 	order_by => null (time_created desc)|STR SQL order by clause
  *
  *  reverse_order_by => BOOL Reverse the default order by clause
  *
- * 	limit => NULL (10)|INT SQL limit clause (0 means no limit)
+ * 	limit => null (10)|INT SQL limit clause (0 means no limit)
  *
- * 	offset => NULL (0)|INT SQL offset clause
+ * 	offset => null (0)|INT SQL offset clause
  *
- * 	created_time_lower => NULL|INT Created time lower boundary in epoch time
+ * 	created_time_lower => null|INT Created time lower boundary in epoch time
  *
- * 	created_time_upper => NULL|INT Created time upper boundary in epoch time
+ * 	created_time_upper => null|INT Created time upper boundary in epoch time
  *
- * 	modified_time_lower => NULL|INT Modified time lower boundary in epoch time
+ * 	modified_time_lower => null|INT Modified time lower boundary in epoch time
  *
- * 	modified_time_upper => NULL|INT Modified time upper boundary in epoch time
+ * 	modified_time_upper => null|INT Modified time upper boundary in epoch time
  *
- * 	count => TRUE|FALSE return a count instead of entities
+ * 	count => true|false return a count instead of entities
  *
  * 	wheres => array() Additional where clauses to AND together
  *
@@ -767,7 +767,7 @@ function elgg_get_entities(array $options = array()) {
 		'group_by'				=>	ELGG_ENTITIES_ANY_VALUE,
 		'limit'					=>	10,
 		'offset'				=>	0,
-		'count'					=>	FALSE,
+		'count'					=>	false,
 		'selects'				=>	array(),
 		'wheres'				=>	array(),
 		'joins'					=>	array(),
@@ -812,8 +812,8 @@ function elgg_get_entities(array $options = array()) {
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
-		if ($where === FALSE) {
-			return FALSE;
+		if ($where === false) {
+			return false;
 		} elseif (empty($where)) {
 			unset($wheres[$i]);
 		}
@@ -831,8 +831,8 @@ function elgg_get_entities(array $options = array()) {
 	$joins = array_unique($options['joins']);
 
 	foreach ($joins as $i => $join) {
-		if ($join === FALSE) {
-			return FALSE;
+		if ($join === false) {
+			return false;
 		} elseif (empty($join)) {
 			unset($joins[$i]);
 		}
@@ -1019,11 +1019,11 @@ function _elgg_fetch_entities_from_sql($sql) {
  * Returns SQL where clause for type and subtype on main entity table
  *
  * @param string     $table    Entity table prefix as defined in SELECT...FROM entities $table
- * @param NULL|array $types    Array of types or NULL if none.
- * @param NULL|array $subtypes Array of subtypes or NULL if none
- * @param NULL|array $pairs    Array of pairs of types and subtypes
+ * @param null|array $types    Array of types or null if none.
+ * @param null|array $subtypes Array of subtypes or null if none
+ * @param null|array $pairs    Array of pairs of types and subtypes
  *
- * @return FALSE|string
+ * @return false|string
  * @since 1.7.0
  * @access private
  */
@@ -1031,7 +1031,7 @@ function _elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pai
 	// subtype depends upon type.
 	if ($subtypes && !$types) {
 		elgg_log("Cannot set subtypes without type.", 'WARNING');
-		return FALSE;
+		return false;
 	}
 
 	// short circuit if nothing is requested
@@ -1053,7 +1053,7 @@ function _elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pai
 			$subtypes = array($subtypes);
 		}
 
-		// decrementer for valid types.  Return FALSE if no valid types
+		// decrementer for valid types.  Return false if no valid types
 		$valid_types_count = count($types);
 		$valid_subtypes_count = 0;
 		// remove invalid types to get an accurate count of
@@ -1075,7 +1075,7 @@ function _elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pai
 
 		// return false if nothing is valid.
 		if (!$valid_types_count) {
-			return FALSE;
+			return false;
 		}
 
 		// subtypes are based upon types, so we need to look at each
@@ -1107,7 +1107,7 @@ function _elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pai
 
 				// return false if we're all invalid subtypes in the only valid type
 				if ($valid_subtypes_count <= 0) {
-					return FALSE;
+					return false;
 				}
 			}
 
@@ -1139,7 +1139,7 @@ function _elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pai
 		}
 
 		if ($valid_pairs_count <= 0) {
-			return FALSE;
+			return false;
 		}
 		foreach ($pairs as $paired_type => $paired_subtypes) {
 			// this will always be an array because of line 2027, right?
@@ -1162,7 +1162,7 @@ function _elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pai
 
 				// return false if there are no valid subtypes.
 				if ($valid_pairs_subtypes_count <= 0) {
-					return FALSE;
+					return false;
 				}
 
 
@@ -1190,7 +1190,7 @@ function _elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pai
  *
  * @param string     $column Column name the guids should be checked against. Usually
  *                           best to provide in table.column format.
- * @param NULL|array $guids  Array of GUIDs.
+ * @param null|array $guids  Array of GUIDs.
  *
  * @return false|string
  * @since 1.8.0
@@ -1224,7 +1224,7 @@ function _elgg_get_guid_based_where_sql($column, $guids) {
 	$guid_str = implode(',', $guids_sanitized);
 
 	// implode(',', 0) returns 0.
-	if ($guid_str !== FALSE && $guid_str !== '') {
+	if ($guid_str !== false && $guid_str !== '') {
 		$where = "($column IN ($guid_str))";
 	}
 
@@ -1236,17 +1236,17 @@ function _elgg_get_guid_based_where_sql($column, $guids) {
  *
  * @param string   $table              Entity table prefix as defined in
  *                                     SELECT...FROM entities $table
- * @param NULL|int $time_created_upper Time created upper limit
- * @param NULL|int $time_created_lower Time created lower limit
- * @param NULL|int $time_updated_upper Time updated upper limit
- * @param NULL|int $time_updated_lower Time updated lower limit
+ * @param null|int $time_created_upper Time created upper limit
+ * @param null|int $time_created_lower Time created lower limit
+ * @param null|int $time_updated_upper Time updated upper limit
+ * @param null|int $time_updated_lower Time updated lower limit
  *
- * @return FALSE|string FALSE on fail, string on success.
+ * @return false|string false on fail, string on success.
  * @since 1.7.0
  * @access private
  */
-function _elgg_get_entity_time_where_sql($table, $time_created_upper = NULL,
-$time_created_lower = NULL, $time_updated_upper = NULL, $time_updated_lower = NULL) {
+function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
+$time_created_lower = null, $time_updated_upper = null, $time_updated_lower = null) {
 
 	$wheres = array();
 
@@ -1393,7 +1393,7 @@ $order_by = 'time_created') {
 	} else {
 		if ($subtype) {
 			if (!$subtype_id = get_subtype_id($type, $subtype)) {
-				return FALSE;
+				return false;
 			} else {
 				$where[] = "subtype=$subtype_id";
 			}
@@ -1457,7 +1457,7 @@ function elgg_register_entity_type($type, $subtype = null) {
 
 	$type = strtolower($type);
 	if (!in_array($type, $CONFIG->entity_types)) {
-		return FALSE;
+		return false;
 	}
 
 	if (!isset($CONFIG->registered_entities)) {
@@ -1472,7 +1472,7 @@ function elgg_register_entity_type($type, $subtype = null) {
 		$CONFIG->registered_entities[$type][] = $subtype;
 	}
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -1492,15 +1492,15 @@ function elgg_unregister_entity_type($type, $subtype = null) {
 
 	$type = strtolower($type);
 	if (!in_array($type, $CONFIG->entity_types)) {
-		return FALSE;
+		return false;
 	}
 
 	if (!isset($CONFIG->registered_entities)) {
-		return FALSE;
+		return false;
 	}
 
 	if (!isset($CONFIG->registered_entities[$type])) {
-		return FALSE;
+		return false;
 	}
 
 	if ($subtype) {
@@ -1508,13 +1508,13 @@ function elgg_unregister_entity_type($type, $subtype = null) {
 			$key = array_search($subtype, $CONFIG->registered_entities[$type]);
 			unset($CONFIG->registered_entities[$type][$key]);
 		} else {
-			return FALSE;
+			return false;
 		}
 	} else {
 		unset($CONFIG->registered_entities[$type]);
 	}
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -1585,7 +1585,7 @@ function is_registered_entity_type($type, $subtype = null) {
  *
  * 	list_type_toggle => BOOL Display gallery / list switch
  *
- * 	allowed_types => TRUE|ARRAY True to show all types or an array of valid types.
+ * 	allowed_types => true|ARRAY True to show all types or an array of valid types.
  *
  * 	pagination => BOOL Display pagination links
  *
@@ -1597,10 +1597,10 @@ function elgg_list_registered_entities(array $options = array()) {
 	$autofeed = true;
 
 	$defaults = array(
-		'full_view' => FALSE,
-		'allowed_types' => TRUE,
-		'list_type_toggle' => FALSE,
-		'pagination' => TRUE,
+		'full_view' => false,
+		'allowed_types' => true,
+		'list_type_toggle' => false,
+		'pagination' => true,
 		'offset' => 0,
 		'types' => array(),
 		'type_subtype_pairs' => array()
@@ -1617,7 +1617,7 @@ function elgg_list_registered_entities(array $options = array()) {
 	$types = get_registered_entity_types();
 
 	foreach ($types as $type => $subtype_array) {
-		if (in_array($type, $options['allowed_types']) || $options['allowed_types'] === TRUE) {
+		if (in_array($type, $options['allowed_types']) || $options['allowed_types'] === true) {
 			// you must explicitly register types to show up in here and in search for objects
 			if ($type == 'object') {
 				if (is_array($subtype_array) && count($subtype_array)) {
@@ -1634,7 +1634,7 @@ function elgg_list_registered_entities(array $options = array()) {
 	}
 
 	if (!empty($options['type_subtype_pairs'])) {
-		$count = elgg_get_entities(array_merge(array('count' => TRUE), $options));
+		$count = elgg_get_entities(array_merge(array('count' => true), $options));
 		$entities = elgg_get_entities($options);
 	} else {
 		$count = 0;
@@ -1659,7 +1659,7 @@ function elgg_list_registered_entities(array $options = array()) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) {
+function elgg_instanceof($entity, $type = null, $subtype = null, $class = null) {
 	$return = ($entity instanceof ElggEntity);
 
 	if ($type) {
@@ -1690,7 +1690,7 @@ function elgg_instanceof($entity, $type = NULL, $subtype = NULL, $class = NULL) 
  * @return bool
  * @access private
  */
-function update_entity_last_action($guid, $posted = NULL) {
+function update_entity_last_action($guid, $posted = null) {
 	global $CONFIG;
 	$guid = (int)$guid;
 	$posted = (int)$posted;
@@ -1704,12 +1704,12 @@ function update_entity_last_action($guid, $posted = NULL) {
 		$query = "UPDATE {$CONFIG->dbprefix}entities SET last_action = {$posted} WHERE guid = {$guid}";
 		$result = update_data($query);
 		if ($result) {
-			return TRUE;
+			return true;
 		} else {
-			return FALSE;
+			return false;
 		}
 	} else {
-		return FALSE;
+		return false;
 	}
 }
 

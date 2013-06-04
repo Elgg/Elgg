@@ -67,7 +67,7 @@ class Elgg_Request {
 	 * 
 	 * @return mixed The value of the input.
 	 */
-	public function getInput($name, $default = NULL, $filter_result = TRUE) {
+	public function getInput($name, $default = null, $filter_result = true) {
 		$result = $default;
 	
 		elgg_push_context('input');

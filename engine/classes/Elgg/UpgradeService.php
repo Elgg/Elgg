@@ -59,7 +59,7 @@ class Elgg_UpgradeService {
 	 *
 	 * @return bool
 	 */
-	protected function upgradeCode($version, $quiet = FALSE) {
+	protected function upgradeCode($version, $quiet = false) {
 		// do not remove - some upgrade scripts depend on this
 		global $CONFIG;
 
@@ -370,7 +370,7 @@ class Elgg_UpgradeService {
 	 * @return int The number of upgrades run.
 	 * @deprecated 1.8 Use PHP upgrades for sql changes.
 	 */
-	protected function dbUpgrade($version, $fromdir = "", $quiet = FALSE) {
+	protected function dbUpgrade($version, $fromdir = "", $quiet = false) {
 		global $CONFIG;
 
 		$version = (int) $version;

@@ -163,7 +163,7 @@ class ElggFileCache extends ElggCache {
 		if (file_exists($dir . $key)) {
 			return unlink($dir . $key);
 		}
-		return TRUE;
+		return true;
 	}
 
 	/**

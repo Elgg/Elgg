@@ -351,7 +351,7 @@ class ElggPriorityList
 	public function valid() {
 		$this->sortIfUnsorted();
 		$key = key($this->elements);
-		return ($key !== NULL && $key !== FALSE);
+		return ($key !== null && $key !== false);
 	}
 
 	/**

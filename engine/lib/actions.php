@@ -130,7 +130,7 @@ function elgg_unregister_action($action) {
  * @link http://docs.elgg.org/Actions/Tokens
  * @access private
  */
-function validate_action_token($visibleerrors = TRUE, $token = NULL, $ts = NULL) {
+function validate_action_token($visibleerrors = true, $token = null, $ts = null) {
 	return _elgg_services()->actions->validateActionToken($visibleerrors, $token, $ts);
 }
 
@@ -190,7 +190,7 @@ function init_site_secret() {
 		return $secret;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**

@@ -78,7 +78,7 @@ function elgg_load_system_cache($type) {
 		}
 	}
 
-	return NULL;
+	return null;
 }
 
 /**

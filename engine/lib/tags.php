@@ -108,26 +108,26 @@ function generate_tag_cloud(array $tags, $buckets = 6) {
  *
  * 	limit => INT number of tags to return
  *
- *  types => NULL|STR entity type (SQL: type = '$type')
+ *  types => null|STR entity type (SQL: type = '$type')
  *
- * 	subtypes => NULL|STR entity subtype (SQL: subtype = '$subtype')
+ * 	subtypes => null|STR entity subtype (SQL: subtype = '$subtype')
  *
- * 	type_subtype_pairs => NULL|ARR (array('type' => 'subtype'))
+ * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
  *  (SQL: type = '$type' AND subtype = '$subtype') pairs
  *
- * 	owner_guids => NULL|INT entity guid
+ * 	owner_guids => null|INT entity guid
  *
- * 	container_guids => NULL|INT container_guid
+ * 	container_guids => null|INT container_guid
  *
- * 	site_guids => NULL (current_site)|INT site_guid
+ * 	site_guids => null (current_site)|INT site_guid
  *
- * 	created_time_lower => NULL|INT Created time lower boundary in epoch time
+ * 	created_time_lower => null|INT Created time lower boundary in epoch time
  *
- * 	created_time_upper => NULL|INT Created time upper boundary in epoch time
+ * 	created_time_upper => null|INT Created time upper boundary in epoch time
  *
- * 	modified_time_lower => NULL|INT Modified time lower boundary in epoch time
+ * 	modified_time_lower => null|INT Modified time lower boundary in epoch time
  *
- * 	modified_time_upper => NULL|INT Modified time upper boundary in epoch time
+ * 	modified_time_upper => null|INT Modified time upper boundary in epoch time
  *
  * 	wheres => array() Additional where clauses to AND together
  *
@@ -209,8 +209,8 @@ function elgg_get_tags(array $options = array()) {
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
-		if ($where === FALSE) {
-			return FALSE;
+		if ($where === false) {
+			return false;
 		} elseif (empty($where)) {
 			unset($wheres[$i]);
 		}
@@ -229,8 +229,8 @@ function elgg_get_tags(array $options = array()) {
 	$joins = array_unique($joins);
 
 	foreach ($joins as $i => $join) {
-		if ($join === FALSE) {
-			return FALSE;
+		if ($join === false) {
+			return false;
 		} elseif (empty($join)) {
 			unset($joins[$i]);
 		}
@@ -318,7 +318,7 @@ function elgg_register_tag_metadata_name($name) {
 		$CONFIG->registered_tag_metadata_names[] = $name;
 	}
 
-	return TRUE;
+	return true;
 }
 
 /**

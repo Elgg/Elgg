@@ -40,9 +40,9 @@ class ElggSite extends ElggEntity {
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "site";
-		$this->attributes['name'] = NULL;
-		$this->attributes['description'] = NULL;
-		$this->attributes['url'] = NULL;
+		$this->attributes['name'] = null;
+		$this->attributes['description'] = null;
+		$this->attributes['url'] = null;
 		$this->attributes['tables_split'] = 2;
 	}
 
@@ -258,7 +258,7 @@ class ElggSite extends ElggEntity {
 			'site_guids' => ELGG_ENTITIES_ANY_VALUE,
 			'relationship' => 'member_of_site',
 			'relationship_guid' => $this->getGUID(),
-			'inverse_relationship' => TRUE,
+			'inverse_relationship' => true,
 			'type' => 'user',
 		);
 
@@ -282,7 +282,7 @@ class ElggSite extends ElggEntity {
 			'site_guids' => ELGG_ENTITIES_ANY_VALUE,
 			'relationship' => 'member_of_site',
 			'relationship_guid' => $this->getGUID(),
-			'inverse_relationship' => TRUE,
+			'inverse_relationship' => true,
 			'type' => 'user',
 		);
 
@@ -486,7 +486,7 @@ class ElggSite extends ElggEntity {
 		);
 
 		// include a hook for plugin authors to include public pages
-		$plugins = elgg_trigger_plugin_hook('public_pages', 'walled_garden', NULL, array());
+		$plugins = elgg_trigger_plugin_hook('public_pages', 'walled_garden', null, array());
 
 		// allow public pages
 		foreach (array_merge($defaults, $plugins) as $public) {

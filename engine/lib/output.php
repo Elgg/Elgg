@@ -82,7 +82,7 @@ function elgg_get_excerpt($text, $num_chars = 250) {
 	$space = elgg_strrpos($excerpt, ' ', 0);
 
 	// don't crop if can't find a space.
-	if ($space === FALSE) {
+	if ($space === false) {
 		$space = $num_chars;
 	}
 	$excerpt = trim(elgg_substr($excerpt, 0, $space));
@@ -132,12 +132,12 @@ function elgg_format_attributes(array $attrs) {
 	foreach ($attrs as $attr => $val) {
 		$attr = strtolower($attr);
 
-		if ($val === TRUE) {
-			$val = $attr; //e.g. checked => TRUE ==> checked="checked"
+		if ($val === true) {
+			$val = $attr; //e.g. checked => true ==> checked="checked"
 		}
 
 		// ignore $vars['entity'] => ElggEntity stuff
-		if ($val !== NULL && $val !== false && (is_array($val) || !is_object($val))) {
+		if ($val !== null && $val !== false && (is_array($val) || !is_object($val))) {
 
 			// allow $vars['class'] => array('one', 'two');
 			// @todo what about $vars['style']? Needs to be semi-colon separated...
@@ -275,7 +275,7 @@ function elgg_get_friendly_title($title) {
 
 	// return a URL friendly title to short circuit normal title formatting
 	$params = array('title' => $title);
-	$result = elgg_trigger_plugin_hook('format', 'friendly:title', $params, NULL);
+	$result = elgg_trigger_plugin_hook('format', 'friendly:title', $params, null);
 	if ($result) {
 		return $result;
 	}
@@ -307,7 +307,7 @@ function elgg_get_friendly_time($time, $current_time = null) {
 
 	// return a time string to short circuit normal time formatting
 	$params = array('time' => $time, 'current_time' => $current_time);
-	$result = elgg_trigger_plugin_hook('format', 'friendly:time', $params, NULL);
+	$result = elgg_trigger_plugin_hook('format', 'friendly:time', $params, null);
 	if ($result) {
 		return $result;
 	}
