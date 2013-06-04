@@ -151,6 +151,7 @@ class ElggSite extends ElggEntity {
 		}
 
 		// make sure the site guid is set to self
+		$this->site_guid = $guid;
 		$this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities SET site_guid = $guid WHERE guid = $guid");
 
 		return $guid;
