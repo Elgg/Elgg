@@ -65,7 +65,7 @@ function elgg_load_library($name) {
  * Forward to $location.
  *
  * Sends a 'Location: $location' header and exists.  If headers have
- * already been sent, returns FALSE.
+ * already been sent, returns false.
  *
  * @param string $location URL to forward to browser to. Can be path relative to the network's URL.
  * @param string $reason   Short explanation for why we're forwarding
@@ -417,16 +417,16 @@ function _elgg_bootstrap_externals_data_structure($type) {
  * @param string $directory  Directory to look in
  * @param array  $exceptions Array of filenames to ignore
  * @param array  $list       Array of files to append to
- * @param mixed  $extensions Array of extensions to allow, NULL for all. Use a dot: array('.php').
+ * @param mixed  $extensions Array of extensions to allow, null for all. Use a dot: array('.php').
  *
  * @return array Filenames in $directory, in the form $directory/filename.
  */
 function elgg_get_file_list($directory, $exceptions = array(), $list = array(),
-$extensions = NULL) {
+$extensions = null) {
 
 	$directory = sanitise_filepath($directory);
 	if ($handle = opendir($directory)) {
-		while (($file = readdir($handle)) !== FALSE) {
+		while (($file = readdir($handle)) !== false) {
 			if (!is_file($directory . $file) || in_array($file, $exceptions)) {
 				continue;
 			}
@@ -453,7 +453,7 @@ $extensions = NULL) {
  *
  * @return string
  */
-function sanitise_filepath($path, $append_slash = TRUE) {
+function sanitise_filepath($path, $append_slash = true) {
 	// Convert to correct UNIX paths
 	$path = str_replace('\\', '/', $path);
 	$path = str_replace('../', '/', $path);
@@ -1184,7 +1184,7 @@ function full_url() {
  * @return string Full URL
  * @since 1.7.0
  */
-function elgg_http_build_url(array $parts, $html_encode = TRUE) {
+function elgg_http_build_url(array $parts, $html_encode = true) {
 	// build only what's given to us.
 	$scheme = isset($parts['scheme']) ? "{$parts['scheme']}://" : '';
 	$host = isset($parts['host']) ? "{$parts['host']}" : '';
@@ -1219,7 +1219,7 @@ function elgg_http_build_url(array $parts, $html_encode = TRUE) {
  * @since 1.7.0
  * @link http://docs.elgg.org/Tutorials/Actions
  */
-function elgg_add_action_tokens_to_url($url, $html_encode = FALSE) {
+function elgg_add_action_tokens_to_url($url, $html_encode = false) {
 	$components = parse_url(elgg_normalize_url($url));
 
 	if (isset($components['query'])) {
@@ -1327,7 +1327,7 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	// @todo - should probably do something with relative URLs
 
 	if ($url1 == $url2) {
-		return TRUE;
+		return true;
 	}
 
 	$url1_info = parse_url($url1);
@@ -1346,18 +1346,18 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	foreach ($parts as $part) {
 		if ((isset($url1_info[$part]) && isset($url2_info[$part]))
 		&& $url1_info[$part] != $url2_info[$part]) {
-			return FALSE;
+			return false;
 		} elseif (isset($url1_info[$part]) && !isset($url2_info[$part])) {
-			return FALSE;
+			return false;
 		} elseif (!isset($url1_info[$part]) && isset($url2_info[$part])) {
-			return FALSE;
+			return false;
 		}
 	}
 
 	// quick compare of get params
 	if (isset($url1_info['query']) && isset($url2_info['query'])
 	&& $url1_info['query'] == $url2_info['query']) {
-		return TRUE;
+		return true;
 	}
 
 	// compare get params that might be out of order
@@ -1394,10 +1394,10 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	$diff_count = count(array_diff_assoc($url1_params, $url2_params));
 	$diff_count += count(array_diff_assoc($url2_params, $url1_params));
 	if ($diff_count > 0) {
-		return FALSE;
+		return false;
 	}
 
-	return TRUE;
+	return true;
 }
 
 /**
@@ -1456,7 +1456,7 @@ $sort_type = SORT_LOCALE_STRING) {
 		if (isset($v[$element])) {
 			$sort[] = strtolower($v[$element]);
 		} else {
-			$sort[] = NULL;
+			$sort[] = null;
 		}
 	};
 
@@ -1589,7 +1589,7 @@ function _elgg_shutdown_hook() {
 	try {
 		elgg_trigger_event('shutdown', 'system');
 
-		$time = (float)(microtime(TRUE) - $START_MICROTIME);
+		$time = (float)(microtime(true) - $START_MICROTIME);
 		$uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'CLI';
 		// demoted to NOTICE from DEBUG so javascript is not corrupted
 		elgg_log("Page {$uri} generated in $time seconds", 'INFO');
@@ -2083,10 +2083,10 @@ define('ACCESS_FRIENDS', -2);
  * Constant to request the value of a parameter be ignored in elgg_get_*() functions
  *
  * @see elgg_get_entities()
- * @var NULL
+ * @var null
  * @since 1.7
  */
-define('ELGG_ENTITIES_ANY_VALUE', NULL);
+define('ELGG_ENTITIES_ANY_VALUE', null);
 
 /**
  * Constant to request the value of a parameter be nothing in elgg_get_*() functions.

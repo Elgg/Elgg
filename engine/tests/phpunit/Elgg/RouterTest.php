@@ -30,7 +30,7 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		
 		$this->assertTrue($handled);
 		$this->assertEquals("Hello, World!", $output);
-	}	
+	}
 	
 	function testCanUnregisterPageHandlers() {
 		$this->router->registerPageHandler('hello', array($this, 'hello_page_handler'));

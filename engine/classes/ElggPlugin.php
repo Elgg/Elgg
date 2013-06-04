@@ -98,7 +98,7 @@ class ElggPlugin extends ElggObject {
 		if (parent::save()) {
 			// make sure we have a priority
 			$priority = $this->getPriority();
-			if ($priority === FALSE || $priority === NULL) {
+			if ($priority === false || $priority === null) {
 				return $this->setPriority('last');
 			}
 		} else {
@@ -797,7 +797,7 @@ class ElggPlugin extends ElggObject {
 			throw new PluginException($msg);
 		}
 
-		while (FALSE !== ($view_type = readdir($handle))) {
+		while (false !== ($view_type = readdir($handle))) {
 			$view_type_dir = $view_dir . $view_type;
 
 			if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
@@ -884,7 +884,7 @@ class ElggPlugin extends ElggObject {
 
 		if ($meta === false) {
 			// Can't find it, so return null
-			return NULL;
+			return null;
 		}
 
 		return $meta;

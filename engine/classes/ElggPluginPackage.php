@@ -32,7 +32,7 @@ class ElggPluginPackage {
 	 * @var array
 	 */
 	private $textFiles = array(
-		'README.txt', 'CHANGES.txt', 
+		'README.txt', 'CHANGES.txt',
 		'INSTALL.txt', 'COPYRIGHT.txt', 'LICENSE.txt',
 
 		'README', 'README.md', 'README.markdown'

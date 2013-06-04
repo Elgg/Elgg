@@ -115,9 +115,9 @@ function elgg_add_admin_notice($id, $message) {
  */
 function elgg_delete_admin_notice($id) {
 	if (!$id) {
-		return FALSE;
+		return false;
 	}
-	$result = TRUE;
+	$result = true;
 	$notices = elgg_get_entities_from_metadata(array(
 		'metadata_name' => 'admin_notice_id',
 		'metadata_value' => $id
@@ -130,7 +130,7 @@ function elgg_delete_admin_notice($id) {
 		}
 		return $result;
 	}
-	return FALSE;
+	return false;
 }
 
 /**
@@ -166,7 +166,7 @@ function elgg_admin_notice_exists($id) {
 	));
 	elgg_set_ignore_access($old_ia);
 
-	return ($notice) ? TRUE : FALSE;
+	return ($notice) ? true : false;
 }
 
 /**
@@ -189,7 +189,7 @@ function elgg_admin_notice_exists($id) {
  * @return bool
  * @since 1.8.0
  */
-function elgg_register_admin_menu_item($section, $menu_id, $parent_id = NULL, $priority = 100) {
+function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $priority = 100) {
 
 	// make sure parent is registered
 	if ($parent_id && !elgg_is_menu_item_registered('page', $parent_id)) {
@@ -200,7 +200,7 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = NULL, $p
 	if ($parent_id) {
 		$href = "admin/$parent_id/$menu_id";
 	} else {
-		$href = NULL;
+		$href = null;
 	}
 
 	$name = $menu_id;

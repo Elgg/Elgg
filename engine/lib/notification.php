@@ -236,7 +236,7 @@ elgg_register_event_handler('init', 'system', '_elgg_notifications_init');
  * @return array Compound array of each delivery user/delivery method's success or failure.
  * @access private
  */
-function _elgg_notify_user($to, $from, $subject, $message, array $params = NULL, $methods_override = "") {
+function _elgg_notify_user($to, $from, $subject, $message, array $params = null, $methods_override = "") {
 
 	$notify_service = _elgg_services()->notifications;
 
@@ -288,7 +288,7 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = NULL,
 					// Trigger handler and retrieve result.
 					try {
 						$result[$guid][$method] = call_user_func($handler,
-							$from ? get_entity($from) : NULL,
+							$from ? get_entity($from) : null,
 							get_entity($guid),
 							$subject,
 							$message,
@@ -484,7 +484,7 @@ function set_user_notification_setting($user_guid, $method, $value) {
  * @throws NotificationException
  * @since 1.7.2
  */
-function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
+function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	global $CONFIG;
 
 	if (!$from) {
@@ -503,7 +503,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 		"Content-Transfer-Encoding" => "8bit",
 	);
 
-	// return TRUE/FALSE to stop elgg_send_email() from sending
+	// return true/false to stop elgg_send_email() from sending
 	$mail_params = array(
 		'to' => $to,
 		'from' => $from,
@@ -523,7 +523,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = NULL) {
 				${$key} = $result[$key];
 			}
 		}
-	} elseif ($result !== NULL) {
+	} elseif ($result !== null) {
 		return $result;
 	}
 

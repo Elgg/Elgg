@@ -26,7 +26,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 		$this->event->expects($this->any())
 				->method('getObject')
 				->will($this->returnValue($object));
-		$this->db = $this->getMock('Elgg_Database', 
+		$this->db = $this->getMock('Elgg_Database',
 				array('getData', 'getTablePrefix', 'sanitizeString'),
 				array(),
 				'',

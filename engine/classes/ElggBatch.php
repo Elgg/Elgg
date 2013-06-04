@@ -375,6 +375,6 @@ class ElggBatch
 			return false;
 		}
 		$key = key($this->results);
-		return ($key !== NULL && $key !== FALSE);
+		return ($key !== null && $key !== false);
 	}
 }

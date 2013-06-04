@@ -209,7 +209,7 @@ function elgg_register_title_button($handler = null, $name = 'add') {
  * @return void
  * @since 1.8.0
  */
-function elgg_push_breadcrumb($title, $link = NULL) {
+function elgg_push_breadcrumb($title, $link = null) {
 	global $CONFIG;
 	if (!isset($CONFIG->breadcrumbs)) {
 		$CONFIG->breadcrumbs = array();
@@ -232,7 +232,7 @@ function elgg_pop_breadcrumb() {
 		return array_pop($CONFIG->breadcrumbs);
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**

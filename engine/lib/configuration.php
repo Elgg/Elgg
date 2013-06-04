@@ -78,7 +78,7 @@ function elgg_get_root_path() {
  * Get an Elgg configuration value
  *
  * @param string $name      Name of the configuration value
- * @param int    $site_guid NULL for installation setting, 0 for default site
+ * @param int    $site_guid null for installation setting, 0 for default site
  *
  * @return mixed Configuration value or null if it does not exist
  * @since 1.8.0
@@ -141,7 +141,7 @@ function elgg_set_config($name, $value) {
  *
  * @param string $name      Configuration name (cannot be greater than 255 characters)
  * @param mixed  $value     Configuration value. Should be string for installation setting
- * @param int    $site_guid NULL for installation setting, 0 for default site
+ * @param int    $site_guid null for installation setting, 0 for default site
  *
  * @return bool
  * @since 1.8.0
@@ -158,7 +158,7 @@ function elgg_save_config($name, $value, $site_guid = 0) {
 
 	elgg_set_config($name, $value);
 
-	if ($site_guid === NULL) {
+	if ($site_guid === null) {
 		if (is_array($value) || is_object($value)) {
 			return false;
 		}
@@ -278,7 +278,7 @@ function datalist_set($name, $value) {
 		. " set name = '{$sanitised_name}', value = '{$sanitised_value}'"
 		. " ON DUPLICATE KEY UPDATE value='{$sanitised_value}'");
 
-	if ($success !== FALSE) {
+	if ($success !== false) {
 		$DATALIST_CACHE[$name] = $value;
 		return true;
 	} else {

@@ -25,7 +25,7 @@ function elgg_get_session() {
 }
 
 /**
- * Return the current logged in user, or NULL if no user is logged in.
+ * Return the current logged in user, or null if no user is logged in.
  *
  * @warning The plugin hook described below is deprecated
  * If no user can be found in the current session, a plugin
@@ -77,10 +77,10 @@ function elgg_is_admin_logged_in() {
 	$user = elgg_get_logged_in_user_entity();
 
 	if ((elgg_is_logged_in()) && $user->isAdmin()) {
-		return TRUE;
+		return true;
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -154,10 +154,10 @@ function elgg_is_admin_user($user_guid) {
 	// normalizing the results from get_data()
 	// See #1242
 	$info = get_data($query);
-	if (!((is_array($info) && count($info) < 1) || $info === FALSE)) {
-		return TRUE;
+	if (!((is_array($info) && count($info) < 1) || $info === false)) {
+		return true;
 	}
-	return FALSE;
+	return false;
 }
 
 /**
@@ -422,7 +422,7 @@ function logout() {
 	$session->invalidate();
 	$session->set('msg', $old_msg);
 
-	return TRUE;
+	return true;
 }
 
 /**

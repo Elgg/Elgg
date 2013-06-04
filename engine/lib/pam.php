@@ -33,7 +33,7 @@ $_PAM_HANDLERS = array();
  * Note, $handler must be string callback (not an array/Closure).
  *
  * @param string $handler    Callable global handler function in the format ()
- * 		                     pam_handler($credentials = NULL);
+ * 		                     pam_handler($credentials = null);
  * @param string $importance The importance - "sufficient" (default) or "required"
  * @param string $policy     The policy type, default is "user"
  *

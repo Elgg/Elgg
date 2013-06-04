@@ -117,23 +117,23 @@ $CONFIG->dbprefix = '{{dbprefix}}';
  * Use non-standard headers for broken MTAs.
  *
  * The default header EOL for headers is \r\n.  This causes problems
- * on some broken MTAs.  Setting this to TRUE will cause Elgg to use
+ * on some broken MTAs.  Setting this to true will cause Elgg to use
  * \n, which will fix some problems sending email on broken MTAs.
  *
  * @global bool $CONFIG->broken_mta
  */
-$CONFIG->broken_mta = FALSE;
+$CONFIG->broken_mta = false;
 
 /**
  * Disable the database query cache
  *
  * Elgg stores each query and its results in a query cache.
  * On large sites or long-running scripts, this cache can grow to be
- * large.  To disable query caching, set this to TRUE.
+ * large.  To disable query caching, set this to true.
  *
  * @global bool $CONFIG->db_disable_query_cache
  */
-$CONFIG->db_disable_query_cache = FALSE;
+$CONFIG->db_disable_query_cache = false;
 
 /**
  * Minimum password length

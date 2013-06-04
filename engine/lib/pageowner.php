@@ -27,7 +27,7 @@ function elgg_get_page_owner_guid($guid = 0) {
 	}
 
 	// return guid of page owner entity
-	$guid = (int)elgg_trigger_plugin_hook('page_owner', 'system', NULL, 0);
+	$guid = (int)elgg_trigger_plugin_hook('page_owner', 'system', null, 0);
 
 	if ($guid) {
 		$page_owner_guid = $guid;
@@ -137,7 +137,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
 	}
 
 	// @todo feels hacky
-	if (get_input('page', FALSE)) {
+	if (get_input('page', false)) {
 		$segments = explode('/', $path);
 		if (isset($segments[1]) && isset($segments[2])) {
 			switch ($segments[1]) {
@@ -217,7 +217,7 @@ function elgg_set_context($context) {
  *
  * Since context is a stack, this is equivalent to a peek.
  *
- * @return string|NULL
+ * @return string|null
  * @since 1.8.0
  */
 function elgg_get_context() {
@@ -246,7 +246,7 @@ function elgg_push_context($context) {
 /**
  * Removes and returns the top context string from the stack
  *
- * @return string|NULL
+ * @return string|null
  * @since 1.8.0
  */
 function elgg_pop_context() {
@@ -288,7 +288,7 @@ function page_owner_boot() {
 	// Bootstrap the context stack by setting its first entry to the handler.
 	// This is the first segment of the URL and the handler is set by the rewrite rules.
 	// @todo this does not work for actions
-	$handler = get_input('handler', FALSE);
+	$handler = get_input('handler', false);
 	if ($handler) {
 		elgg_set_context($handler);
 	}

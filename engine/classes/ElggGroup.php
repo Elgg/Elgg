@@ -24,8 +24,8 @@ class ElggGroup extends ElggEntity
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "group";
-		$this->attributes['name'] = NULL;
-		$this->attributes['description'] = NULL;
+		$this->attributes['name'] = null;
+		$this->attributes['description'] = null;
 		$this->attributes['tables_split'] = 2;
 	}
 

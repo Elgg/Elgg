@@ -552,7 +552,7 @@ function elgg_get_calling_plugin_id($mainfilename = false) {
 		}
 	} else {
 		//@todo this is a hack -- plugins do not have to match their page handler names!
-		if ($handler = get_input('handler', FALSE)) {
+		if ($handler = get_input('handler', false)) {
 			return $handler;
 		} else {
 			$file = $_SERVER["SCRIPT_NAME"];
@@ -1023,13 +1023,13 @@ function elgg_unset_all_plugin_settings($plugin_id = null) {
  *
  * @param array $options Array in the format:
  *
- * 	plugin_id => NULL|STR The plugin id. Defaults to calling plugin
+ * 	plugin_id => null|STR The plugin id. Defaults to calling plugin
  *
- * 	plugin_user_setting_names => NULL|ARR private setting names
+ * 	plugin_user_setting_names => null|ARR private setting names
  *
- * 	plugin_user_setting_values => NULL|ARR metadata values
+ * 	plugin_user_setting_values => null|ARR metadata values
  *
- * 	plugin_user_setting_name_value_pairs => NULL|ARR (
+ * 	plugin_user_setting_name_value_pairs => null|ARR (
  *                                         name => 'name',
  *                                         value => 'value',
  *                                         'operand' => '=',
@@ -1038,7 +1038,7 @@ function elgg_unset_all_plugin_settings($plugin_id = null) {
  *                               an array (value => array('value1', 'value2')
  *                               the pair's operand will be forced to "IN".
  *
- * 	plugin_user_setting_name_value_pairs_operator => NULL|STR The operator to use for combining
+ * 	plugin_user_setting_name_value_pairs_operator => null|STR The operator to use for combining
  *                                        (name = value) OPERATOR (name = value); default AND
  *
  * @return mixed int If count, int. If not count, array. false on errors.

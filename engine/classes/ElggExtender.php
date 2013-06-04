@@ -36,7 +36,7 @@ abstract class ElggExtender extends ElggData {
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
-		$this->attributes['type'] = NULL;
+		$this->attributes['type'] = null;
 	}
 
 	/**

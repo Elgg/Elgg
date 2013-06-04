@@ -1711,7 +1711,7 @@ function leave_group($group_guid, $user_guid) {
 	$user = get_entity($user_guid);
 	
 	if ($group instanceof ElggGroup && $user instanceof ElggUser) {
-		return $group->leave($user);	
+		return $group->leave($user);
 	}
 
 	return false;

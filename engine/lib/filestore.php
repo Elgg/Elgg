@@ -95,13 +95,13 @@ $square = false, $upscale = false) {
  *
  * @return false|mixed The contents of the resized image, or false on failure
  */
-function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = FALSE,
-$x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = FALSE) {
+function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = false,
+$x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = false) {
 
 	// Get the size information from the image
 	$imgsizearray = getimagesize($input_name);
-	if ($imgsizearray == FALSE) {
-		return FALSE;
+	if ($imgsizearray == false) {
+		return false;
 	}
 
 	$width = $imgsizearray[0];
@@ -118,7 +118,7 @@ $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = FALSE) {
 	// make sure the function is available
 	$load_function = "imagecreatefrom" . $accepted_formats[$imgsizearray['mime']];
 	if (!is_callable($load_function)) {
-		return FALSE;
+		return false;
 	}
 
 	// get the parameters for resizing the image
@@ -133,20 +133,20 @@ $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = FALSE) {
 		'y2' => $y2,
 	);
 	$params = get_image_resize_parameters($width, $height, $options);
-	if ($params == FALSE) {
-		return FALSE;
+	if ($params == false) {
+		return false;
 	}
 
 	// load original image
 	$original_image = call_user_func($load_function, $input_name);
 	if (!$original_image) {
-		return FALSE;
+		return false;
 	}
 
 	// allocate the new image
 	$new_image = imagecreatetruecolor($params['newwidth'], $params['newheight']);
 	if (!$new_image) {
-		return FALSE;
+		return false;
 	}
 
 	// color transparencies white (default is black)
@@ -166,12 +166,12 @@ $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = FALSE) {
 									$params['selectionwidth'],
 									$params['selectionheight']);
 	if (!$rtn_code) {
-		return FALSE;
+		return false;
 	}
 
 	// grab a compressed jpeg version of the image
 	ob_start();
-	imagejpeg($new_image, NULL, 90);
+	imagejpeg($new_image, null, 90);
 	$jpeg = ob_get_clean();
 
 	imagedestroy($new_image);
@@ -187,7 +187,7 @@ $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = FALSE) {
  * @param int   $height  Height of the original image
  * @param array $options See $defaults for the options
  *
- * @return array or FALSE
+ * @return array or false
  * @since 1.7.2
  */
 function get_image_resize_parameters($width, $height, $options) {
@@ -196,8 +196,8 @@ function get_image_resize_parameters($width, $height, $options) {
 		'maxwidth' => 100,
 		'maxheight' => 100,
 
-		'square' => FALSE,
-		'upscale' => FALSE,
+		'square' => false,
+		'upscale' => false,
 
 		'x1' => 0,
 		'y1' => 0,
@@ -210,9 +210,9 @@ function get_image_resize_parameters($width, $height, $options) {
 	extract($options);
 
 	// crop image first?
-	$crop = TRUE;
+	$crop = true;
 	if ($x1 == 0 && $y1 == 0 && $x2 == 0 && $y2 == 0) {
-		$crop = FALSE;
+		$crop = false;
 	}
 
 	// how large a section of the image has been selected
@@ -230,8 +230,8 @@ function get_image_resize_parameters($width, $height, $options) {
 		// asking for a square image back
 
 		// detect case where someone is passing crop parameters that are not for a square
-		if ($crop == TRUE && $selection_width != $selection_height) {
-			return FALSE;
+		if ($crop == true && $selection_width != $selection_height) {
+			return false;
 		}
 
 		// size of the new square image
@@ -388,11 +388,11 @@ function file_get_general_file_type($mimetype) {
 function delete_directory($directory) {
 	// sanity check: must be a directory
 	if (!$handle = opendir($directory)) {
-		return FALSE;
+		return false;
 	}
 
 	// loop through all files
-	while (($file = readdir($handle)) !== FALSE) {
+	while (($file = readdir($handle)) !== false) {
 		if (in_array($file, array('.', '..'))) {
 			continue;
 		}
@@ -401,7 +401,7 @@ function delete_directory($directory) {
 		if (is_dir($path)) {
 			// recurse down through directory
 			if (!delete_directory($path)) {
-				return FALSE;
+				return false;
 			}
 		} else {
 			// delete file
@@ -440,7 +440,7 @@ function clear_user_files($user) {
 
 
 /// Variable holding the default datastore
-$DEFAULT_FILE_STORE = NULL;
+$DEFAULT_FILE_STORE = null;
 
 /**
  * Return the default filestore.
