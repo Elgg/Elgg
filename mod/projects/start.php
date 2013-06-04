@@ -18,6 +18,13 @@ function projects_init() {
 
 	elgg_register_library('elgg:projects', elgg_get_plugins_path() . 'projects/lib/projects.php');
 
+	elgg_set_config('projects_icon_sizes', array(
+		'tiny' => array('w' => 50, 'h' => 50),
+		'small' => array('w' => 50, 'h' => 50),
+		'medium' => array('w' => 640, 'h' => 360),
+		'large' => array('w' => 720, 'h' => 576),
+	));
+	
 	// register project entities for search
 	elgg_register_entity_type('group', 'project');
 

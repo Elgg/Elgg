@@ -25,23 +25,22 @@ if (!$owner) {
 }
 
 ?>
-<div class="projects-profile clearfix elgg-image-block">
+<div class="projects-profile">
 	<div class="elgg-image">
 		<div class="projects-profile-icon">
 			<?php
-				// we don't force icons to be square so don't set width/height
 				echo elgg_view_entity_icon($project, 'large', array(
 					'href' => '',
-					'width' => '',
+					'width' => '100%',
 					'height' => '',
 				)); 
 			?>
 		</div>
 	</div>
 
-	<div class="projects-profile-fields elgg-body">
+	<div class="projects-profile-description elgg-body">
 		<?php
-			echo elgg_view('projects/profile/fields', $vars);
+			echo elgg_view('output/longtext', array('value' => $project->description));
 		?>
 	</div>
 </div>

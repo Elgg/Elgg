@@ -8,7 +8,7 @@
 
 ?>
 .projects-profile > .elgg-image {
-	margin-right: 10px;
+	width: 100%;
 }
 .projects-stats {
 	background: #eeeeee;
@@ -19,23 +19,13 @@
 	-moz-border-radius: 5px;
 	border-radius: 5px;
 }
-
-.projects-profile-fields .odd,
-.projects-profile-fields .even {
-	background: #f4f4f4;
-	
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
-	
-	padding: 2px 4px;
-	margin-bottom: 7px;
+.projects-owner-block h3 {
+	font-size: 1.7em;
+	line-height: 1.5em;
 }
-
-.projects-profile-fields .elgg-output {
-	margin: 0;
+.projects-owner-block .elgg-description {
+	font-size: 1.2em;
 }
-
 #projects-tools > li {
 	width: 48%;
 	min-height: 200px;
