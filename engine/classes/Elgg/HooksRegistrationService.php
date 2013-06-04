@@ -124,5 +124,5 @@ abstract class Elgg_HooksRegistrationService {
 		}
 
 		return $handlers;
-	}	
+	}
 }

@@ -1377,7 +1377,7 @@ function elgg_views_boot() {
 
 	elgg_register_simplecache_view('js/text.js');
 
-	elgg_register_js('require', '/vendors/requirejs/require-2.1.4.min.js', 'head'); 
+	elgg_register_js('require', '/vendors/requirejs/require-2.1.4.min.js', 'head');
 	elgg_register_js('jquery', '/vendors/jquery/jquery-1.9.1.min.js', 'head');
 	elgg_register_js('jquery-migrate', '/vendors/jquery/jquery-migrate-1.2.1.min.js', 'head');
 	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.10.3.min.js', 'head');

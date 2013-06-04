@@ -576,7 +576,7 @@ function get_entity($guid) {
 	// @todo We need a single Memcache instance with a shared pool of namespace wrappers. This function would pull an instance from the pool.
 	static $shared_cache;
 
-	// We could also use: if (!(int) $guid) { return FALSE }, 
+	// We could also use: if (!(int) $guid) { return FALSE },
 	// but that evaluates to a false positive for $guid = TRUE.
 	// This is a bit slower, but more thorough.
 	if (!is_numeric($guid) || $guid === 0 || $guid === '0') {

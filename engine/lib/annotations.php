@@ -214,7 +214,7 @@ function elgg_get_annotations(array $options = array()) {
 		if (isset($options['count']) && $options['count']) {
 			$options['annotation_calculation'] = 'count';
 			unset($options['count']);
-		}		
+		}
 	}
 	
 	$options['metastring_type'] = 'annotations';

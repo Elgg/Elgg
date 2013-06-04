@@ -483,7 +483,7 @@ function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = fa
 		$time = time() - $seconds;
 
 		$data = elgg_get_entities(array(
-			'type' => 'user', 
+			'type' => 'user',
 			'limit' => $limit,
 			'offset' => $offset,
 			'count' => $count,
@@ -540,7 +540,7 @@ function force_user_password_reset($user_guid, $password) {
 		$ia = elgg_set_ignore_access();
 
 		$user->salt = generate_random_cleartext_password();
-		$hash = generate_user_password($user, $password);		
+		$hash = generate_user_password($user, $password);
 		$user->password = $hash;
 		$result = (bool)$user->save();
 

@@ -110,7 +110,7 @@ class ElggAutoP {
 
 		// split AUTOPs into multiples at /\n\n+/
 		$html = preg_replace('/(' . $this->_unique . 'NL){2,}/', '</autop><autop>', $html);
-		$html = str_replace(array($this->_unique . 'BR', $this->_unique . 'NL', '<br>'), 
+		$html = str_replace(array($this->_unique . 'BR', $this->_unique . 'NL', '<br>'),
 				'<br />',
 				$html);
 		$html = str_replace('<br /></autop>', '</autop>', $html);

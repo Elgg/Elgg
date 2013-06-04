@@ -1440,7 +1440,7 @@ abstract class ElggEntity extends ElggData implements
 			$container = $this->getContainerEntity();
 			if ($container && !$container->canWriteToContainer(0, $type, $subtype)) {
 				return false;
-			}				
+			}
 		}
 		
 		$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
@@ -1448,7 +1448,7 @@ abstract class ElggEntity extends ElggData implements
 				access_id, time_created, time_updated, last_action)
 			values
 			('$type',$subtype_id, $owner_guid, $site_guid, $container_guid,
-				$access_id, $time, $time, $time)");	
+				$access_id, $time, $time, $time)");
 
 		if (!$result) {
 			throw new IOException("Unable to save new object's base entity information!");

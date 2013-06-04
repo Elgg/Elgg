@@ -45,7 +45,7 @@ class Elgg_Notifications_NotificationsService {
 	 * @param Elgg_PluginHooksService                 $hooks         Plugin hook service
 	 * @param Elgg_Access                             $access        Access control service
 	 */
-	public function __construct(Elgg_Notifications_SubscriptionsService $subscriptions, 
+	public function __construct(Elgg_Notifications_SubscriptionsService $subscriptions,
 			Elgg_Util_Queue $queue, Elgg_PluginHooksService $hooks, Elgg_Access $access) {
 		$this->subscriptions = $subscriptions;
 		$this->queue = $queue;
@@ -423,7 +423,7 @@ class Elgg_Notifications_NotificationsService {
 		$params = array(
 			'event' => $event->getAction(),
 			'object_type' => $entity->getType(),
-			'object' => $entity,			
+			'object' => $entity,
 		);
 		$hookresult = $this->hooks->trigger('object:notifications', $entity->getType(), $params, false);
 		if ($hookresult === true) {

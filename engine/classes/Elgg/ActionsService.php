@@ -190,7 +190,7 @@ class Elgg_ActionsService {
 	 * 
 	 * @return bool
 	 */
-	protected function validateTokenTimestamp($ts) {	
+	protected function validateTokenTimestamp($ts) {
 		$timeout = $this->getActionTokenTimeout();
 		$now = time();
 		return ($timeout == 0 || ($ts > $now - $timeout) && ($ts < $now + $timeout));
