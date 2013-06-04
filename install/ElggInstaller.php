@@ -56,7 +56,7 @@ class ElggInstaller {
 		// load ElggRewriteTester as we depend on it
 		require_once(dirname(__FILE__) . "/ElggRewriteTester.php");
 
-		$this->isAction = $_SERVER['REQUEST_METHOD'] === 'POST';
+		$this->isAction = isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST';
 
 		$this->bootstrapConfig();
 
@@ -881,15 +881,20 @@ class ElggInstaller {
 		if (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
 			$protocol = 'https';
 		}
-		$port = ':' . $_SERVER["SERVER_PORT"];
+		if (isset($_SERVER["SERVER_PORT"])) {
+			$port = ':' . $_SERVER["SERVER_PORT"];
+		} else {
+			$port = '';
+		}
 		if ($port == ':80' || $port == ':443') {
 			$port = '';
 		}
-		$uri = $_SERVER['REQUEST_URI'];
+		$uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
 		$cutoff = strpos($uri, 'install.php');
 		$uri = substr($uri, 0, $cutoff);
+		$serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
 
-		$url = "$protocol://{$_SERVER['SERVER_NAME']}$port{$uri}";
+		$url = "$protocol://{$serverName}$port{$uri}";
 		return $url;
 	}
 
@@ -1457,6 +1462,7 @@ class ElggInstaller {
 
 		// bootstrap site info
 		$CONFIG->site_guid = $guid;
+		$CONFIG->site_id = $guid;
 		$CONFIG->site = $site;
 
 		datalist_set('installed', time());
