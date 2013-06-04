@@ -90,10 +90,10 @@ class ElggCoreMetadataCacheTest extends ElggCoreUnitTest {
 
 	public function testReadsAreCached() {
 		// test that reads fill cache
-		$this->obj1->setMetaData($this->name, $this->value);
+		$this->obj1->setMetadata($this->name, $this->value);
 		$this->cache->flush();
 
-		$this->obj1->getMetaData($this->name);
+		$this->obj1->getMetadata($this->name);
 		$this->assertIdentical($this->cache->load($this->guid1, $this->name), $this->value);
 	}
 
@@ -111,23 +111,23 @@ class ElggCoreMetadataCacheTest extends ElggCoreUnitTest {
 		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name));
 
 		// test set
-		$this->obj1->setMetaData($this->name, $this->value);
+		$this->obj1->setMetadata($this->name, $this->value);
 		$this->assertIdentical($this->cache->load($this->guid1, $this->name), $this->value);
 
 		// test set multiple
-		$this->obj1->setMetaData($this->name, 1, 'integer', true);
+		$this->obj1->setMetadata($this->name, 1, 'integer', true);
 		$this->assertIdentical($this->cache->load($this->guid1, $this->name), array($this->value, 1));
 
 		// writes when access is ignore should invalidate
 		$tmp_ignore = elgg_set_ignore_access(true);
-		$this->obj1->setMetaData($this->name, $this->value);
+		$this->obj1->setMetadata($this->name, $this->value);
 		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name));
 		elgg_set_ignore_access($tmp_ignore);
 	}
 
 	public function testDisableAndEnable() {
 		// both should mark cache unknown
-		$this->obj1->setMetaData($this->name, $this->value);
+		$this->obj1->setMetadata($this->name, $this->value);
 		$this->obj1->disableMetadata($this->name);
 		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name));
 
@@ -138,10 +138,10 @@ class ElggCoreMetadataCacheTest extends ElggCoreUnitTest {
 
 	public function testPopulateFromEntities() {
 		// test populating cache from set of entities
-		$this->obj1->setMetaData($this->name, $this->value);
-		$this->obj1->setMetaData($this->name, 4, 'integer', true);
-		$this->obj1->setMetaData("{$this->name}-2", "{$this->value}-2");
-		$this->obj2->setMetaData($this->name, $this->value);
+		$this->obj1->setMetadata($this->name, $this->value);
+		$this->obj1->setMetadata($this->name, 4, 'integer', true);
+		$this->obj1->setMetadata("{$this->name}-2", "{$this->value}-2");
+		$this->obj2->setMetadata($this->name, $this->value);
 
 		$this->cache->flush();
 		$this->cache->populateFromEntities(array($this->guid1, $this->guid2));
@@ -159,7 +159,7 @@ class ElggCoreMetadataCacheTest extends ElggCoreUnitTest {
 
 	public function testFilterHeavyEntities() {
 		$big_str = str_repeat('-', 5000);
-		$this->obj2->setMetaData($this->name, array($big_str, $big_str));
+		$this->obj2->setMetadata($this->name, array($big_str, $big_str));
 
 		$guids = array($this->guid1, $this->guid2);
 		$expected = array($this->guid1);

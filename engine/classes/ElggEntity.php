@@ -189,10 +189,10 @@ abstract class ElggEntity extends ElggData implements
 			return $this->attributes[$name];
 		}
 
-		// No, so see if its in the meta data for this entity
-		$meta = $this->getMetaData($name);
+		// No, so see if its in the metadata for this entity
+		$meta = $this->getMetadata($name);
 
-		// getMetaData returns null if $name is not found
+		// getMetadata returns null if $name is not found
 		return $meta;
 	}
 
@@ -240,7 +240,7 @@ abstract class ElggEntity extends ElggData implements
 					break;
 			}
 		} else {
-			return $this->setMetaData($name, $value);
+			return $this->setMetadata($name, $value);
 		}
 
 		return true;
@@ -268,7 +268,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return mixed The value, or null if not found.
 	 */
-	public function getMetaData($name) {
+	public function getMetadata($name) {
 		$guid = $this->getGUID();
 
 		if (! $guid) {
@@ -352,7 +352,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return bool
 	 */
-	public function setMetaData($name, $value, $value_type = null, $multiple = false) {
+	public function setMetadata($name, $value, $value_type = null, $multiple = false) {
 
 		// normalize value to an array that we will loop over
 		// remove indexes if value already an array.
@@ -398,7 +398,7 @@ abstract class ElggEntity extends ElggData implements
 		} else {
 			// unsaved entity. store in temp array
 			// returning single entries instead of an array of 1 element is decided in
-			// getMetaData(), just like pulling from the db.
+			// getMetadata(), just like pulling from the db.
 			// 
 			// if overwrite, delete first
 			if (!$multiple || !isset($this->temp_metadata[$name])) {
@@ -472,7 +472,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return mixed bool
 	 * @deprecated 1.8 Use deleteMetadata()
 	 */
-	public function clearMetaData($name = '') {
+	public function clearMetadata($name = '') {
 		elgg_deprecated_notice('ElggEntity->clearMetadata() is deprecated by ->deleteMetadata()', 1.8);
 		return $this->deleteMetadata($name);
 	}

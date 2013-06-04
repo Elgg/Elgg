@@ -439,11 +439,11 @@ class ElggFile extends ElggObject {
 		// Save datastore metadata
 		$params = $this->filestore->getParameters();
 		foreach ($params as $k => $v) {
-			$this->setMetaData("filestore::$k", $v);
+			$this->setMetadata("filestore::$k", $v);
 		}
 
 		// Now make a note of the filestore class
-		$this->setMetaData("filestore::filestore", get_class($this->filestore));
+		$this->setMetadata("filestore::filestore", get_class($this->filestore));
 
 		return true;
 	}

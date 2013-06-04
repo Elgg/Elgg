@@ -2910,7 +2910,7 @@ function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
 			$entity->annotate($attr_name, $attr_val);
 			break;
 		case 'metadata' :
-			$entity->setMetaData($attr_name, $attr_val, "", true);
+			$entity->setMetadata($attr_name, $attr_val, "", true);
 			break;
 		default : // Anything else assume attribute
 			$entity->set($attr_name, $attr_val);

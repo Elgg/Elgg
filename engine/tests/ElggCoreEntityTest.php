@@ -102,7 +102,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		remove_subtype('object', $test_subtype);
 	}
 
-	public function testElggEntityGetAndSetMetaData() {
+	public function testElggEntityGetAndSetMetadata() {
 		// ensure metadata not set
 		$this->assertNull($this->entity->get('non_existent'));
 		$this->assertFalse(isset($this->entity->non_existent));
@@ -113,7 +113,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 		// check metadata set
 		$this->assertTrue(isset($this->entity->existent));
-		$this->assertIdentical($this->entity->getMetaData('existent'), 'testing');
+		$this->assertIdentical($this->entity->getMetadata('existent'), 'testing');
 
 		// check internal metadata array
 		$metadata = $this->entity->expose_metadata();
@@ -379,7 +379,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 			$name = 'test_md_' . rand();
 
 			$this->entity->$name = $md;
-			$this->entity->setMetaData($name, 'test2', '', true);
+			$this->entity->setMetadata($name, 'test2', '', true);
 
 			$this->assertEqual(array('test', 'test2'), $this->entity->$name);
 
@@ -398,7 +398,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 			$name = 'test_md_' . rand();
 
 			$this->entity->$name = $md;
-			$this->entity->setMetaData($name, array('test2'), '', true);
+			$this->entity->setMetadata($name, array('test2'), '', true);
 
 			$this->assertEqual(array('test', 'test2'), $this->entity->$name);
 
@@ -418,7 +418,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 			$name = 'test_md_' . rand();
 
 			$this->entity->$name = $md;
-			$this->entity->setMetaData($name, $md2, '', true);
+			$this->entity->setMetadata($name, $md2, '', true);
 
 			$this->assertEqual(array_merge($md, $md2), $this->entity->$name);
 
