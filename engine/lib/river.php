@@ -218,8 +218,8 @@ function elgg_delete_river(array $options = array()) {
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
-		if ($where === FALSE) {
-			return FALSE;
+		if ($where === false) {
+			return false;
 		} elseif (empty($where)) {
 			unset($wheres[$i]);
 		}
@@ -294,9 +294,9 @@ function elgg_get_river(array $options = array()) {
 		'annotation_ids'       => ELGG_ENTITIES_ANY_VALUE,
 		'action_types'         => ELGG_ENTITIES_ANY_VALUE,
 
-		'relationship'         => NULL,
-		'relationship_guid'    => NULL,
-		'inverse_relationship' => FALSE,
+		'relationship'         => null,
+		'relationship_guid'    => null,
+		'inverse_relationship' => false,
 
 		'types'	               => ELGG_ENTITIES_ANY_VALUE,
 		'subtypes'             => ELGG_ENTITIES_ANY_VALUE,
@@ -307,7 +307,7 @@ function elgg_get_river(array $options = array()) {
 
 		'limit'                => 20,
 		'offset'               => 0,
-		'count'                => FALSE,
+		'count'                => false,
 
 		'order_by'             => 'rv.posted desc',
 		'group_by'             => ELGG_ENTITIES_ANY_VALUE,
@@ -357,8 +357,8 @@ function elgg_get_river(array $options = array()) {
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
-		if ($where === FALSE) {
-			return FALSE;
+		if ($where === false) {
+			return false;
 		} elseif (empty($where)) {
 			unset($wheres[$i]);
 		}
@@ -477,17 +477,17 @@ function elgg_list_river(array $options = array()) {
 	$defaults = array(
 		'offset'     => (int) max(get_input('offset', 0), 0),
 		'limit'      => (int) max(get_input('limit', 20), 0),
-		'pagination' => TRUE,
+		'pagination' => true,
 		'list_class' => 'elgg-list-river',
 		'no_results' => '',
 	);
 
 	$options = array_merge($defaults, $options);
 
-	$options['count'] = TRUE;
+	$options['count'] = true;
 	$count = elgg_get_river($options);
 
-	$options['count'] = FALSE;
+	$options['count'] = false;
 	$items = elgg_get_river($options);
 
 	$options['count'] = $count;
@@ -507,7 +507,7 @@ function elgg_list_river(array $options = array()) {
  */
 function _elgg_row_to_elgg_river_item($row) {
 	if (!($row instanceof stdClass)) {
-		return NULL;
+		return null;
 	}
 
 	return new ElggRiverItem($row);
@@ -534,9 +534,9 @@ function elgg_river_get_access_sql() {
  * which could be used for all queries once the subtypes have been denormalized.
  *
  * @param string     $table    'rv'
- * @param NULL|array $types    Array of types or NULL if none.
- * @param NULL|array $subtypes Array of subtypes or NULL if none
- * @param NULL|array $pairs    Array of pairs of types and subtypes
+ * @param null|array $types    Array of types or null if none.
+ * @param null|array $subtypes Array of subtypes or null if none
+ * @param null|array $pairs    Array of pairs of types and subtypes
  *
  * @return string
  * @since 1.8.0

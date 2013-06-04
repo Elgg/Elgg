@@ -31,7 +31,7 @@ class ODDDocument implements Iterator {
 	 *
 	 * @return void
 	 */
-	public function __construct(array $elements = NULL) {
+	public function __construct(array $elements = null) {
 		if ($elements) {
 			if (is_array($elements)) {
 				$this->elements = $elements;
@@ -144,7 +144,7 @@ class ODDDocument implements Iterator {
 	 * Example: http://www.sitepoint.com/print/php5-standard-library
 	 */
 
-	private $valid = FALSE;
+	private $valid = false;
 
 	/**
 	 * Iterator interface
@@ -154,7 +154,7 @@ class ODDDocument implements Iterator {
 	 * @return void
 	 */
 	function rewind() {
-		$this->valid = (FALSE !== reset($this->elements));
+		$this->valid = (false !== reset($this->elements));
 	}
 
 	/**
@@ -187,7 +187,7 @@ class ODDDocument implements Iterator {
 	 * @return void
 	 */
 	function next() {
-		$this->valid = (FALSE !== next($this->elements));
+		$this->valid = (false !== next($this->elements));
 	}
 
 	/**

@@ -87,7 +87,7 @@ class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
 			'widget_type_con_mul' => true,
 		);
 		
-		$contexts = array('all', 'dashboard', 'profile', 'settings'); 
+		$contexts = array('all', 'dashboard', 'profile', 'settings');
 		
 		foreach (array(false, true) as $exact) {
 			foreach ($contexts as $context) {
@@ -118,7 +118,7 @@ class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
 			'widget_type_con_mul' => array('Widget name5', 'Widget description5'),
 		);
 		
-		$contexts = array('all', 'dashboard', 'profile', 'settings'); 
+		$contexts = array('all', 'dashboard', 'profile', 'settings');
 		
 		foreach (array(false, true) as $exact) {
 			foreach ($contexts as $context) {

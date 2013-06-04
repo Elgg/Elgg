@@ -222,7 +222,7 @@ function register_translations($path, $load_all = false) {
 				$return = false;
 				continue;
 			} elseif (is_array($result)) {
-				add_translation(basename($language, '.php'), $result);	
+				add_translation(basename($language, '.php'), $result);
 			}
 		}
 	}

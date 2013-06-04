@@ -10,7 +10,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	 * Called before each test object.
 	 */
 	public function __construct() {
-		elgg_set_ignore_access(TRUE);
+		elgg_set_ignore_access(true);
 		$this->entities = array();
 		$this->subtypes = array(
 			'object' => array(),
@@ -64,14 +64,14 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function setUp() {
-		return TRUE;
+		return true;
 	}
 
 	/**
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -644,7 +644,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 
 	/****************************
-	 * FALSE-RETURNING TESTS
+	 * false-RETURNING TESTS
 	 ****************************
 	 * The original bug corrected returned
 	 * all entities when invalid subtypes were passed.
@@ -782,7 +782,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 		$pair = array();
 
 		foreach ($types as $type) {
-			$pair[$type] = NULL;
+			$pair[$type] = null;
 		}
 
 		$options = array(
@@ -799,7 +799,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		$pair = array();
 		foreach ($types as $type) {
-			$pair[$type] = NULL;
+			$pair[$type] = null;
 		}
 
 		$options = array(

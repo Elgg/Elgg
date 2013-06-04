@@ -12,7 +12,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	 * Called before each test object.
 	 */
 	public function __construct() {
-		$this->ia = elgg_set_ignore_access(TRUE);
+		$this->ia = elgg_set_ignore_access(true);
 		parent::__construct();
 
 		// all __construct() code should come after here
@@ -59,8 +59,8 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$options = array(
 			'maxwidth' => 50,
 			'maxheight' => 50,
-			'square' => TRUE,
-			'upscale' => FALSE,
+			'square' => true,
+			'upscale' => false,
 
 			'x1' => 25,
 			'y1' => 75,
@@ -80,8 +80,8 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$options = array(
 			'maxwidth' => 50,
 			'maxheight' => 50,
-			'square' => TRUE,
-			'upscale' => FALSE,
+			'square' => true,
+			'upscale' => false,
 
 			'x1' => 75,
 			'y1' => 125,

@@ -270,6 +270,6 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 			$this->assertNotEqual($access, $access2, "Access test for $func");
 		}
 
-		$user->delete();	
+		$user->delete();
 	}
 }

@@ -807,7 +807,7 @@ function get_user_access_collections($owner_guid, $site_guid = 0) {
  * @see add_user_to_access_collection()
  * @see http://docs.elgg.org/Access/Collections
  */
-function get_members_of_access_collection($collection, $idonly = FALSE) {
+function get_members_of_access_collection($collection, $idonly = false) {
 	global $CONFIG;
 	$collection = (int)$collection;
 
@@ -822,7 +822,7 @@ function get_members_of_access_collection($collection, $idonly = FALSE) {
 			. " WHERE m.access_collection_id = {$collection}";
 		$collection_members = get_data($query);
 		if (!$collection_members) {
-			return FALSE;
+			return false;
 		}
 		foreach ($collection_members as $key => $val) {
 			$collection_members[$key] = $val->guid;
@@ -845,7 +845,7 @@ function get_members_of_access_collection($collection, $idonly = FALSE) {
 function elgg_get_entities_from_access_id(array $options = array()) {
 	// restrict the resultset to access collection provided
 	if (!isset($options['access_id'])) {
-		return FALSE;
+		return false;
 	}
 
 	// @todo add support for an array of collection_ids
@@ -1056,7 +1056,7 @@ function elgg_override_permissions($hook, $type, $value, $params) {
 	}
 
 	// consult other hooks
-	return NULL;
+	return null;
 }
 
 /**

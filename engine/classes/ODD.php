@@ -57,7 +57,7 @@ abstract class ODD {
 			return $this->attributes[$key];
 		}
 
-		return NULL;
+		return null;
 	}
 
 	/**

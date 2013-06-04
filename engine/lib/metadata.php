@@ -30,7 +30,7 @@ function row_to_elggmetadata($row) {
  *
  * @param int $id The id of the metadata object being retrieved.
  *
- * @return ElggMetadata|false  FALSE if not found
+ * @return ElggMetadata|false  false if not found
  */
 function elgg_get_metadata_from_id($id) {
 	return _elgg_get_metastring_based_object_from_id($id, 'metadata');
@@ -53,7 +53,7 @@ function elgg_delete_metadata_by_id($id) {
 /**
  * Create a new metadata object, or update an existing one.
  *
- * Metadata can be an array by setting allow_multiple to TRUE, but it is an
+ * Metadata can be an array by setting allow_multiple to true, but it is an
  * indexed array with no control over the indexing.
  *
  * @param int    $entity_guid    The entity to attach the metadata to
@@ -62,9 +62,9 @@ function elgg_delete_metadata_by_id($id) {
  * @param string $value_type     'text', 'integer', or '' for automatic detection
  * @param int    $owner_guid     GUID of entity that owns the metadata
  * @param int    $access_id      Default is ACCESS_PRIVATE
- * @param bool   $allow_multiple Allow multiple values for one key. Default is FALSE
+ * @param bool   $allow_multiple Allow multiple values for one key. Default is false
  *
- * @return int|false id of metadata or FALSE if failure
+ * @return int|false id of metadata or false if failure
  */
 function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
 	$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
@@ -81,7 +81,7 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
 	$allow_multiple = (boolean)$allow_multiple;
 
 	if (!isset($value)) {
-		return FALSE;
+		return false;
 	}
 
 	if ($owner_guid == 0) {
@@ -225,7 +225,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
  * This function creates metadata from an associative array of "key => value" pairs.
  *
  * To achieve an array for a single key, pass in the same key multiple times with
- * allow_multiple set to TRUE. This creates an indexed array. It does not support
+ * allow_multiple set to true. This creates an indexed array. It does not support
  * associative arrays and there is no guarantee on the ordering in the array.
  *
  * @param int    $entity_guid     The entity to attach the metadata to
@@ -233,7 +233,7 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
  * @param string $value_type      'text', 'integer', or '' for automatic detection
  * @param int    $owner_guid      GUID of entity that owns the metadata
  * @param int    $access_id       Default is ACCESS_PRIVATE
- * @param bool   $allow_multiple  Allow multiple values for one key. Default is FALSE
+ * @param bool   $allow_multiple  Allow multiple values for one key. Default is false
  *
  * @return bool
  */
@@ -264,11 +264,11 @@ $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
  *
  * @param array $options Array in format:
  *
- * metadata_names               => NULL|ARR metadata names
- * metadata_values              => NULL|ARR metadata values
- * metadata_ids                 => NULL|ARR metadata ids
+ * metadata_names               => null|ARR metadata names
+ * metadata_values              => null|ARR metadata values
+ * metadata_ids                 => null|ARR metadata ids
  * metadata_case_sensitive      => BOOL Overall Case sensitive
- * metadata_owner_guids         => NULL|ARR guids for metadata owners
+ * metadata_owner_guids         => null|ARR guids for metadata owners
  * metadata_created_time_lower  => INT Lower limit for created time.
  * metadata_created_time_upper  => INT Upper limit for created time.
  * metadata_calculation         => STR Perform the MySQL function on the metadata values returned.
@@ -392,33 +392,33 @@ function elgg_enable_metadata(array $options) {
  *
  * @param array $options Array in format:
  *
- * 	metadata_names => NULL|ARR metadata names
+ * 	metadata_names => null|ARR metadata names
  *
- * 	metadata_values => NULL|ARR metadata values
+ * 	metadata_values => null|ARR metadata values
  *
- * 	metadata_name_value_pairs => NULL|ARR (
+ * 	metadata_name_value_pairs => null|ARR (
  *                                         name => 'name',
  *                                         value => 'value',
  *                                         'operand' => '=',
- *                                         'case_sensitive' => TRUE
+ *                                         'case_sensitive' => true
  *                                        )
  * 	                             Currently if multiple values are sent via
  *                               an array (value => array('value1', 'value2')
  *                               the pair's operand will be forced to "IN".
  *
- * 	metadata_name_value_pairs_operator => NULL|STR The operator to use for combining
+ * 	metadata_name_value_pairs_operator => null|STR The operator to use for combining
  *                                        (name = value) OPERATOR (name = value); default AND
  *
  * 	metadata_case_sensitive => BOOL Overall Case sensitive
  *
- *  order_by_metadata => NULL|ARR array(
+ *  order_by_metadata => null|ARR array(
  *                                      'name' => 'metadata_text1',
  *                                      'direction' => ASC|DESC,
  *                                      'as' => text|integer
  *                                     )
  *                                Also supports array('name' => 'metadata_text1')
  *
- *  metadata_owner_guids => NULL|ARR guids for metadata owners
+ *  metadata_owner_guids => null|ARR guids for metadata owners
  *
  * @return ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
@@ -430,7 +430,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 		'metadata_name_value_pairs'          => ELGG_ENTITIES_ANY_VALUE,
 
 		'metadata_name_value_pairs_operator' => 'AND',
-		'metadata_case_sensitive'            => TRUE,
+		'metadata_case_sensitive'            => true,
 		'order_by_metadata'                  => array(),
 
 		'metadata_owner_guids'               => ELGG_ENTITIES_ANY_VALUE,
@@ -444,7 +444,7 @@ function elgg_get_entities_from_metadata(array $options = array()) {
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
 
 	if (!$options = _elgg_entities_get_metastrings_options('metadata', $options)) {
-		return FALSE;
+		return false;
 	}
 
 	return elgg_get_entities($options);
@@ -487,15 +487,15 @@ function elgg_list_entities_from_metadata($options) {
  * @since 1.7.0
  * @access private
  */
-function _elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $values = NULL,
-$pairs = NULL, $pair_operator = 'AND', $case_sensitive = TRUE, $order_by_metadata = NULL,
-$owner_guids = NULL) {
+function _elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = null, $values = null,
+$pairs = null, $pair_operator = 'AND', $case_sensitive = true, $order_by_metadata = null,
+$owner_guids = null) {
 
 	global $CONFIG;
 
 	// short circuit if nothing requested
 	// 0 is a valid (if not ill-conceived) metadata name.
-	// 0 is also a valid metadata value for FALSE, NULL, or 0
+	// 0 is also a valid metadata value for false, null, or 0
 	// 0 is also a valid(ish) owner_guid
 	if ((!$names && $names !== 0)
 		&& (!$values && $values !== 0)
@@ -529,7 +529,7 @@ $owner_guids = NULL) {
 
 	// get names wheres and joins
 	$names_where = '';
-	if ($names !== NULL) {
+	if ($names !== null) {
 		if (!is_array($names)) {
 			$names = array($names);
 		}
@@ -551,7 +551,7 @@ $owner_guids = NULL) {
 
 	// get values wheres and joins
 	$values_where = '';
-	if ($values !== NULL) {
+	if ($values !== null) {
 		if (!is_array($values)) {
 			$values = array($values);
 		}

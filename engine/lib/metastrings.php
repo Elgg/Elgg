@@ -156,15 +156,15 @@ function _elgg_delete_orphaned_metastrings() {
  *
  * @param array $options Array in format:
  *
- * 	metastring_names              => NULL|ARR metastring names
+ * 	metastring_names              => null|ARR metastring names
  *
- * 	metastring_values             => NULL|ARR metastring values
+ * 	metastring_values             => null|ARR metastring values
  *
- * 	metastring_ids                => NULL|ARR metastring ids
+ * 	metastring_ids                => null|ARR metastring ids
  *
  * 	metastring_case_sensitive     => BOOL     Overall Case sensitive
  *
- *  metastring_owner_guids        => NULL|ARR Guids for metadata owners
+ *  metastring_owner_guids        => null|ARR Guids for metadata owners
  *
  *  metastring_created_time_lower => INT      Lower limit for created time.
  *
@@ -308,8 +308,8 @@ function _elgg_get_metastring_based_objects($options) {
 	// see if any functions failed
 	// remove empty strings on successful functions
 	foreach ($wheres as $i => $where) {
-		if ($where === FALSE) {
-			return FALSE;
+		if ($where === false) {
+			return false;
 		} elseif (empty($where)) {
 			unset($wheres[$i]);
 		}
@@ -350,8 +350,8 @@ function _elgg_get_metastring_based_objects($options) {
 	}
 
 	foreach ($joins as $i => $join) {
-		if ($join === FALSE) {
-			return FALSE;
+		if ($join === false) {
+			return false;
 		} elseif (empty($join)) {
 			unset($joins[$i]);
 		}
@@ -477,7 +477,7 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 
 	// get names wheres and joins
 	$names_where = '';
-	if ($names !== NULL) {
+	if ($names !== null) {
 		if (!is_array($names)) {
 			$names = array($names);
 		}
@@ -499,7 +499,7 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 
 	// get values wheres and joins
 	$values_where = '';
-	if ($values !== NULL) {
+	if ($values !== null) {
 		if (!is_array($values)) {
 			$values = array($values);
 		}
@@ -519,7 +519,7 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		}
 	}
 
-	if ($ids !== NULL) {
+	if ($ids !== null) {
 		if (!is_array($ids)) {
 			$ids = array($ids);
 		}
@@ -765,7 +765,7 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 function _elgg_entities_get_metastrings_options($type, $options) {
 	$valid_types = array('metadata', 'annotation');
 	if (!in_array($type, $valid_types)) {
-		return FALSE;
+		return false;
 	}
 
 	// the options for annotations are singular (annotation_name) but the table

@@ -15,7 +15,7 @@ class Elgg_ViewsServiceTest extends PHPUnit_Framework_TestCase {
 		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
 	}
 	
-	public function testCanExtendViews() {				
+	public function testCanExtendViews() {
 		$this->views->extendView('foo', 'bar');
 		
 		// Unextending valid extension succeeds.
@@ -60,7 +60,7 @@ class Elgg_ViewsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testCanRegisterViewsAsCacheable() {
 		$this->assertFalse($this->views->isCacheableView('js/interpreted.js'));
 		
-		$this->views->registerCacheableView('js/interpreted.js');	
+		$this->views->registerCacheableView('js/interpreted.js');
 		
 		$this->assertTrue($this->views->isCacheableView('js/interpreted.js'));
 	}

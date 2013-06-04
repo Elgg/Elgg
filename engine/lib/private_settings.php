@@ -17,11 +17,11 @@
  *
  * @param array $options Array in format:
  *
- * 	private_setting_names => NULL|ARR private setting names
+ * 	private_setting_names => null|ARR private setting names
  *
- * 	private_setting_values => NULL|ARR metadata values
+ * 	private_setting_values => null|ARR metadata values
  *
- * 	private_setting_name_value_pairs => NULL|ARR (
+ * 	private_setting_name_value_pairs => null|ARR (
  *                                         name => 'name',
  *                                         value => 'value',
  *                                         'operand' => '=',
@@ -30,7 +30,7 @@
  *                               an array (value => array('value1', 'value2')
  *                               the pair's operand will be forced to "IN".
  *
- * 	private_setting_name_value_pairs_operator => NULL|STR The operator to use for combining
+ * 	private_setting_name_value_pairs_operator => null|STR The operator to use for combining
  *                                        (name = value) OPERATOR (name = value); default AND
  *
  *  private_setting_name_prefix => STR A prefix to apply to all private settings. Used to
@@ -97,8 +97,8 @@ function elgg_get_entities_from_private_settings(array $options = array()) {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_entity_private_settings_where_sql($table, $names = NULL, $values = NULL,
-$pairs = NULL, $pair_operator = 'AND', $name_prefix = '') {
+function elgg_get_entity_private_settings_where_sql($table, $names = null, $values = null,
+$pairs = null, $pair_operator = 'AND', $name_prefix = '') {
 
 	global $CONFIG;
 
@@ -116,7 +116,7 @@ $pairs = NULL, $pair_operator = 'AND', $name_prefix = '') {
 
 	// get names wheres
 	$names_where = '';
-	if ($names !== NULL) {
+	if ($names !== null) {
 		if (!is_array($names)) {
 			$names = array($names);
 		}
@@ -135,7 +135,7 @@ $pairs = NULL, $pair_operator = 'AND', $name_prefix = '') {
 
 	// get values wheres
 	$values_where = '';
-	if ($values !== NULL) {
+	if ($values !== null) {
 		if (!is_array($values)) {
 			$values = array($values);
 		}

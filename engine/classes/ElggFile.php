@@ -259,7 +259,7 @@ class ElggFile extends ElggObject {
 		$fs = $this->getFilestore();
 
 		if ($fs->close($this->handle)) {
-			$this->handle = NULL;
+			$this->handle = null;
 
 			return true;
 		}

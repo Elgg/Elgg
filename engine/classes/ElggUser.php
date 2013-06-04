@@ -31,18 +31,18 @@ class ElggUser extends ElggEntity
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "user";
-		$this->attributes['name'] = NULL;
-		$this->attributes['username'] = NULL;
-		$this->attributes['password'] = NULL;
-		$this->attributes['salt'] = NULL;
-		$this->attributes['email'] = NULL;
-		$this->attributes['language'] = NULL;
-		$this->attributes['code'] = NULL;
+		$this->attributes['name'] = null;
+		$this->attributes['username'] = null;
+		$this->attributes['password'] = null;
+		$this->attributes['salt'] = null;
+		$this->attributes['email'] = null;
+		$this->attributes['language'] = null;
+		$this->attributes['code'] = null;
 		$this->attributes['banned'] = "no";
 		$this->attributes['admin'] = 'no';
-		$this->attributes['prev_last_action'] = NULL;
-		$this->attributes['last_login'] = NULL;
-		$this->attributes['prev_last_login'] = NULL;
+		$this->attributes['prev_last_action'] = null;
+		$this->attributes['last_login'] = null;
+		$this->attributes['prev_last_login'] = null;
 		$this->attributes['tables_split'] = 2;
 	}
 
@@ -235,7 +235,7 @@ class ElggUser extends ElggEntity
 			return parent::set($name, $value);
 		}
 	
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -289,13 +289,13 @@ class ElggUser extends ElggEntity
 	public function makeAdmin() {
 		// If already saved, use the standard function.
 		if ($this->guid && !make_user_admin($this->guid)) {
-			return FALSE;
+			return false;
 		}
 
 		// need to manually set attributes since they've already been loaded.
 		$this->attributes['admin'] = 'yes';
 
-		return TRUE;
+		return true;
 	}
 
 	/**
@@ -306,13 +306,13 @@ class ElggUser extends ElggEntity
 	public function removeAdmin() {
 		// If already saved, use the standard function.
 		if ($this->guid && !remove_user_admin($this->guid)) {
-			return FALSE;
+			return false;
 		}
 
 		// need to manually set attributes since they've already been loaded.
 		$this->attributes['admin'] = 'no';
 
-		return TRUE;
+		return true;
 	}
 
 	/**

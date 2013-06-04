@@ -79,9 +79,9 @@ class Elgg_ViewsService {
 					}
 				}
 			}
-			return TRUE;
+			return true;
 		}
-		return FALSE;
+		return false;
 	}
 
 	/**
@@ -157,7 +157,7 @@ class Elgg_ViewsService {
 			return in_array($viewtype, $CONFIG->viewtype->fallback);
 		}
 
-		return FALSE;
+		return false;
 	}
 
 	/**
@@ -413,25 +413,25 @@ class Elgg_ViewsService {
 		global $CONFIG;
 
 		if (!isset($CONFIG->views)) {
-			return FALSE;
+			return false;
 		}
 
 		if (!isset($CONFIG->views->extensions)) {
-			return FALSE;
+			return false;
 		}
 
 		if (!isset($CONFIG->views->extensions[$view])) {
-			return FALSE;
+			return false;
 		}
 
 		$priority = array_search($view_extension, $CONFIG->views->extensions[$view]);
-		if ($priority === FALSE) {
-			return FALSE;
+		if ($priority === false) {
+			return false;
 		}
 
 		unset($CONFIG->views->extensions[$view][$priority]);
 
-		return TRUE;
+		return true;
 	}
 
 	/**

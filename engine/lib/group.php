@@ -113,7 +113,7 @@ function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0
 	return elgg_get_entities_from_relationship(array(
 		'relationship' => 'member',
 		'relationship_guid' => $group_guid,
-		'inverse_relationship' => TRUE,
+		'inverse_relationship' => true,
 		'type' => 'user',
 		'limit' => $limit,
 		'offset' => $offset,

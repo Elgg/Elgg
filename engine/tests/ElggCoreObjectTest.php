@@ -37,21 +37,21 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 
 	public function testElggObjectConstructor() {
 		$attributes = array();
-		$attributes['guid'] = NULL;
+		$attributes['guid'] = null;
 		$attributes['type'] = 'object';
-		$attributes['subtype'] = NULL;
+		$attributes['subtype'] = null;
 		$attributes['owner_guid'] = elgg_get_logged_in_user_guid();
 		$attributes['container_guid'] = elgg_get_logged_in_user_guid();
-		$attributes['site_guid'] = NULL;
+		$attributes['site_guid'] = null;
 		$attributes['access_id'] = ACCESS_PRIVATE;
-		$attributes['time_created'] = NULL;
-		$attributes['time_updated'] = NULL;
-		$attributes['last_action'] = NULL;
+		$attributes['time_created'] = null;
+		$attributes['time_updated'] = null;
+		$attributes['last_action'] = null;
 		$attributes['enabled'] = 'yes';
 		$attributes['tables_split'] = 2;
 		$attributes['tables_loaded'] = 0;
-		$attributes['title'] = NULL;
-		$attributes['description'] = NULL;
+		$attributes['title'] = null;
+		$attributes['description'] = null;
 		ksort($attributes);
 
 		$entity_attributes = $this->entity->expose_attributes();
@@ -87,7 +87,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		// fail on wrong type
 		try {
 			$error = new ElggObjectTest(elgg_get_logged_in_user_guid());
-			$this->assertTrue(FALSE);
+			$this->assertTrue(false);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidClassException');
 		}

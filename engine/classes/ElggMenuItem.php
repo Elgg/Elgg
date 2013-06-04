@@ -93,11 +93,11 @@ class ElggMenuItem {
 	 *
 	 * @param array $options Option array of key value pairs
 	 *
-	 * @return ElggMenuItem or NULL on error
+	 * @return ElggMenuItem or null on error
 	 */
 	public static function factory($options) {
 		if (!isset($options['name']) || !isset($options['text'])) {
-			return NULL;
+			return null;
 		}
 		if (!isset($options['href'])) {
 			$options['href'] = '';

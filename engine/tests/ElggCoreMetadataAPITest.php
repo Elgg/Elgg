@@ -33,11 +33,11 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		}
 
 		// lookup metastring id
-		$cs_ids = elgg_get_metastring_id('metaUnitTest', TRUE);
+		$cs_ids = elgg_get_metastring_id('metaUnitTest', true);
 		$this->assertEqual($cs_ids, $this->metastrings['metaUnitTest']);
 
 		// lookup all metastrings, ignoring case
-		$cs_ids = elgg_get_metastring_id('metaUnitTest', FALSE);
+		$cs_ids = elgg_get_metastring_id('metaUnitTest', false);
 		$this->assertEqual(count($cs_ids), 3);
 		$this->assertEqual(count($cs_ids), count($this->metastrings));
 		foreach ($cs_ids as $string )
@@ -59,15 +59,15 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		$this->assertNotEqual(false, create_metadata($this->object->guid, 'metaUnitTest', 'tested'));
 
 		// check value with improper case
-		$options = array('metadata_names' => 'metaUnitTest', 'metadata_values' => 'Tested', 'limit' => 10, 'metadata_case_sensitive' => TRUE);
+		$options = array('metadata_names' => 'metaUnitTest', 'metadata_values' => 'Tested', 'limit' => 10, 'metadata_case_sensitive' => true);
 		$this->assertIdentical(array(), elgg_get_entities_from_metadata($options));
 
 		// compare forced case with ignored case
-		$options = array('metadata_names' => 'metaUnitTest', 'metadata_values' => 'tested', 'limit' => 10, 'metadata_case_sensitive' => TRUE);
+		$options = array('metadata_names' => 'metaUnitTest', 'metadata_values' => 'tested', 'limit' => 10, 'metadata_case_sensitive' => true);
 		$case_true = elgg_get_entities_from_metadata($options);
 		$this->assertIsA($case_true, 'array');
 
-		$options = array('metadata_names' => 'metaUnitTest', 'metadata_values' => 'Tested', 'limit' => 10, 'metadata_case_sensitive' => FALSE);
+		$options = array('metadata_names' => 'metaUnitTest', 'metadata_values' => 'Tested', 'limit' => 10, 'metadata_case_sensitive' => false);
 		$case_false = elgg_get_entities_from_metadata($options);
 		$this->assertIsA($case_false, 'array');
 

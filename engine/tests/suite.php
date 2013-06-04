@@ -63,13 +63,13 @@ if (TextReporter::inCli()) {
 	$mt = microtime(true);
 	$reporter = new TextReporter();
 	$result = $suite->Run($reporter) ? 0 : 1 ;
-	echo sprintf("Time: %.2f seconds, Memory: %.2fMb\n", 
-		microtime(true)-$mt, 
+	echo sprintf("Time: %.2f seconds, Memory: %.2fMb\n",
+		microtime(true)-$mt,
 		memory_get_peak_usage() / 1048576. // in megabytes
 	);
 	exit($result);
 }
 
-$old = elgg_set_ignore_access(TRUE);
+$old = elgg_set_ignore_access(true);
 $suite->Run(new HtmlReporter('utf-8'));
 elgg_set_ignore_access($old);

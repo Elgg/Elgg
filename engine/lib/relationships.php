@@ -236,7 +236,7 @@ function remove_entity_relationships($guid_one, $relationship = "", $inverse = f
  *
  * @return ElggRelationship[]
  */
-function get_entity_relationships($guid, $inverse_relationship = FALSE) {
+function get_entity_relationships($guid, $inverse_relationship = false) {
 	global $CONFIG;
 
 	$guid = (int)$guid;
@@ -267,13 +267,13 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
  *
  * @param array $options Array in format:
  *
- * 	relationship => NULL|STR relationship
+ * 	relationship => null|STR relationship
  *
- * 	relationship_guid => NULL|INT Guid of relationship to test
+ * 	relationship_guid => null|INT Guid of relationship to test
  *
  * 	inverse_relationship => BOOL Inverse the relationship
  * 
- *  relationship_join_on => NULL|STR How the entities relate: guid (default), container_guid, or owner_guid
+ *  relationship_join_on => null|STR How the entities relate: guid (default), container_guid, or owner_guid
  *                          Add in Elgg 1.9.0. Examples using the relationship 'friend':
  *                          1. use 'guid' if you want the user's friends
  *                          2. use 'owner_guid' if you want the entities the user's friends own (including in groups)
@@ -284,9 +284,9 @@ function get_entity_relationships($guid, $inverse_relationship = FALSE) {
  */
 function elgg_get_entities_from_relationship($options) {
 	$defaults = array(
-		'relationship' => NULL,
-		'relationship_guid' => NULL,
-		'inverse_relationship' => FALSE,
+		'relationship' => null,
+		'relationship_guid' => null,
+		'inverse_relationship' => false,
 		'relationship_join_on' => 'guid',
 	);
 
@@ -344,10 +344,10 @@ function elgg_get_entities_from_relationship($options) {
  * @since 1.7.0
  * @access private
  */
-function elgg_get_entity_relationship_where_sql($column, $relationship = NULL,
-$relationship_guid = NULL, $inverse_relationship = FALSE) {
+function elgg_get_entity_relationship_where_sql($column, $relationship = null,
+$relationship_guid = null, $inverse_relationship = false) {
 
-	if ($relationship == NULL && $relationship_guid == NULL) {
+	if ($relationship == null && $relationship_guid == null) {
 		return '';
 	}
 
