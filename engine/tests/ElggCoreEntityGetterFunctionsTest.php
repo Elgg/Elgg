@@ -2644,7 +2644,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		foreach ($types as $type) {
 			$subtypes = $this->getRandomValidSubtypes(array('object'), 5);
-			$name = 'test_annotation_' . rand(0, 9999);
+			$name = 'test_annotation_' . time() . '_' . rand(0, 999999);
 			$values = array();
 			$options = array(
 				'type' => 'object',
