@@ -76,7 +76,7 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
 	global $CONFIG;
 
 	if (strlen($relationship) > ElggRelationship::RELATIONSHIP_LIMIT) {
-		$msg = "relationship name cannot be longer than " . self::RELATIONSHIP_LIMIT;
+		$msg = "relationship name cannot be longer than " . ElggRelationship::RELATIONSHIP_LIMIT;
 		throw InvalidArgumentException($msg);
 	}
 
@@ -90,13 +90,18 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
 		return false;
 	}
 
-	$result = insert_data("INSERT into {$CONFIG->dbprefix}entity_relationships
+	$id = insert_data("INSERT INTO {$CONFIG->dbprefix}entity_relationships
 		(guid_one, relationship, guid_two, time_created)
-		values ($guid_one, '$relationship', $guid_two, $time)");
+		VALUES ($guid_one, '$relationship', $guid_two, $time)");
 
-	if ($result !== false) {
-		$obj = get_relationship($result);
-		if (elgg_trigger_event('create', $relationship, $obj)) {
+	if ($id !== false) {
+		$obj = get_relationship($id);
+
+		// this event has been deprecated. Use 'create', 'relationship'
+		$result_old = elgg_trigger_event('create', $relationship, $obj);
+
+		$result = elgg_trigger_event('create', 'relationship', $obj);
+		if ($result && $result_old) {
 			return true;
 		} else {
 			delete_relationship($result);
