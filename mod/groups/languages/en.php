@@ -75,6 +75,7 @@ return array(
 	'groups:search_in_group' => "Search in this group",
 	'groups:acl' => "Group: %s",
 
+	'discussion:notify:summary' => 'New discussion topic called %s',
 	'discussion:notification:topic:subject' => 'New group discussion post',
 	'groups:notification' =>
 '%s added a new discussion topic to %s:

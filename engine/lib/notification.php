@@ -386,7 +386,7 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 							continue;
 						}
 						$language = $recipient->language;
-						$notification = new Elgg_Notifications_Notification($sender, $recipient, $language, $subject, $message, $params);
+						$notification = new Elgg_Notifications_Notification($sender, $recipient, $language, $subject, $message, '', $params);
 						$params = array(
 							'notification' => $notification,
 							'event' => null, // @todo how do we create an event when this isn't triggered by event?

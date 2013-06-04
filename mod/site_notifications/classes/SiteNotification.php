@@ -39,6 +39,26 @@ class SiteNotification extends ElggObject {
 	}
 
 	/**
+	 * Get the url for this notification
+	 * 
+	 * @return string
+	 */
+	public function getURL() {
+		return (string)$this->url;
+	}
+
+	/**
+	 * Set the url for the notification
+	 * 
+	 * @param string $url The URL for the notification link
+	 */
+	public function setURL($url) {
+		if ($url) {
+			$this->url = $url;
+		}
+	}
+
+	/**
 	 * Set the read status
 	 * 
 	 * @param bool $read Has the notification been read

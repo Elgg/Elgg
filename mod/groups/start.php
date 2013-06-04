@@ -915,17 +915,15 @@ function discussion_prepare_notification($hook, $type, $notification, $params) {
 	$title = $entity->title;
 	$group = $entity->getContainerEntity();
 
-	$subject = elgg_echo('discussion:notification:topic:subject', array(), $language); 
-	$body = elgg_echo('groups:notification', array(
+	$notification->subject = elgg_echo('discussion:notification:topic:subject', array(), $language); 
+	$notification->body = elgg_echo('groups:notification', array(
 		$owner->name,
 		$group->name,
 		$title,
 		$descr,
 		$entity->getURL()
 	), $language);
-
-	$notification->subject = $subject;
-	$notification->body = $body;
+	$notification->summary = elgg_echo('discussion:notify:summary', array($entity->title), $language);
 
 	return $notification;
 }

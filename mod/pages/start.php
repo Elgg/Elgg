@@ -278,16 +278,14 @@ function pages_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$subject = elgg_echo('pages:new', array(), $language); 
-	$body = elgg_echo('pages:notification', array(
+	$notification->subject = elgg_echo('pages:new', array(), $language); 
+	$notification->body = elgg_echo('pages:notification', array(
 		$owner->name,
 		$title,
 		$descr,
 		$entity->getURL(),
 	), $language);
-
-	$notification->subject = $subject;
-	$notification->body = $body;
+	$notification->summary = elgg_echo('pages:notify:summary', array($entity->title), $language);
 
 	return $notification;
 }

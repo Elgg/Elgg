@@ -173,9 +173,7 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 	$recipient = $params['recipient'];
 	$language = $params['language'];
 	$method = $params['method'];
-
 	$descr = $entity->description;
-	$title = $entity->title;
 
 	$subject = elgg_echo('thewire:notify:subject', array(), $language);
 	if ($entity->reply) {
@@ -192,6 +190,7 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 
 	$notification->subject = $subject;
 	$notification->body = $body;
+	$notification->summary = elgg_echo('thewire:notify:summary', array($descr), $language);
 
 	return $notification;
 }
