@@ -131,7 +131,10 @@ if (!$is_new_group && $new_owner_guid && $new_owner_guid != $old_owner_guid) {
 
 $must_move_icons = ($owner_has_changed && $old_icontime);
 
-$group->save();
+if ($is_new_group) {
+	// if new group, we need to save so group acl gets set in event handler
+	$group->save();
+}
 
 // Invisible group support
 // @todo this requires save to be called to create the acl for the group. This

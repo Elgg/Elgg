@@ -1372,13 +1372,7 @@ abstract class ElggEntity extends ElggData implements
 	public function save() {
 		$guid = $this->getGUID();
 		if ($guid > 0) {
-			if ($this->update()) {
-				if (elgg_trigger_event('update', $this->type, $this)) {
-					return true;
-				} else {
-					$this->delete();
-				}
-			}
+			return $this->update();
 		} else {
 			$guid = $this->create();
 			if ($guid) {
