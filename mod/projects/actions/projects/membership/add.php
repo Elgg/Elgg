@@ -5,7 +5,7 @@
  * @package Coopfunding
  * @subpackage Projects
  */
-$user_guid = get_input('user_guid');
+$user_guid = get_input('members');
 if (!is_array($user_guid)) {
 	$user_guid = array($user_guid);
 }

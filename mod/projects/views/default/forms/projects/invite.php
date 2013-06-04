@@ -11,7 +11,7 @@ $forward_url = $project->getURL();
 $friends = elgg_get_logged_in_user_entity()->getFriends('', 0);
 
 if ($friends) {
-	echo elgg_view('input/friendspicker', array('entities' => $friends, 'name' => 'user_guid', 'highlight' => 'all'));
+	echo elgg_view('input/userpicker', array('name' => 'user_guid'));
 	echo '<div class="elgg-foot">';
 	echo elgg_view('input/hidden', array('name' => 'forward_url', 'value' => $forward_url));
 	echo elgg_view('input/hidden', array('name' => 'project_guid', 'value' => $project->guid));
