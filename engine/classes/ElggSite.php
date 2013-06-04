@@ -150,6 +150,9 @@ class ElggSite extends ElggEntity {
 			return false;
 		}
 
+		// make sure the site guid is set to self
+		$this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities SET site_guid = $guid WHERE guid = $guid");
+
 		return $guid;
 	}
 
@@ -172,27 +175,6 @@ class ElggSite extends ElggEntity {
 			set name='$name', description='$description', url='$url' where guid=$guid";
 
 		return $this->getDatabase()->updateData($query) !== false;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function save() {
-		global $CONFIG;
-
-		// Save generic stuff
-		$result = parent::save();
-		if (!$result) {
-			return false;
-		}
-
-		// make sure the site guid is set (if not, set to self)
-		if (!$this->get('site_guid')) {
-			$guid = (int)$this->get('guid');
-			$this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities SET site_guid=$guid WHERE guid=$guid");
-		}
-		
-		return $result;
 	}
 
 	/**
