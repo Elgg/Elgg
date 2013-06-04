@@ -53,10 +53,10 @@ function delete_relationship($id) {
 	$relationship = get_relationship($id);
 
 	if (elgg_trigger_event('delete', 'relationship', $relationship)) {
-		return delete_data("delete from {$CONFIG->dbprefix}entity_relationships where id=$id");
+		return delete_data("DELETE FROM {$CONFIG->dbprefix}entity_relationships WHERE id = $id");
 	}
 
-	return FALSE;
+	return false;
 }
 
 /**
@@ -97,7 +97,7 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
 	if ($id !== false) {
 		$obj = get_relationship($id);
 
-		// this event has been deprecated. Use 'create', 'relationship'
+		// this event has been deprecated in 1.9. Use 'create', 'relationship'
 		$result_old = elgg_trigger_event('create', $relationship, $obj);
 
 		$result = elgg_trigger_event('create', 'relationship', $obj);
@@ -162,11 +162,15 @@ function remove_entity_relationship($guid_one, $relationship, $guid_two) {
 		return false;
 	}
 
-	if (elgg_trigger_event('delete', $relationship, $obj)) {
-		$query = "DELETE from {$CONFIG->dbprefix}entity_relationships
-			where guid_one=$guid_one
-			and relationship='$relationship'
-			and guid_two=$guid_two";
+	// this event has been deprecated in 1.9. Use 'delete', 'relationship'
+	$result_old = elgg_trigger_event('delete', $relationship, $obj);
+
+	$result = elgg_trigger_event('delete', 'relationship', $obj);
+	if ($result && $result_old) {
+		$query = "DELETE FROM {$CONFIG->dbprefix}entity_relationships
+			WHERE guid_one = $guid_one
+			AND relationship = '$relationship'
+			AND guid_two = $guid_two";
 
 		return (bool)delete_data($query);
 	} else {
