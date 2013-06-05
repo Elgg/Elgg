@@ -16,6 +16,8 @@ if ($url) {
 		'text' => $text,
 		'href' => $url,
 		'is_trusted' => true,
+		'class' => 'site-notifications-link',
+		'id' => 'site-notifications-link-' . $entity->guid,
 	));
 }
 
@@ -29,6 +31,8 @@ elgg_register_menu_item('site_notifications', array(
 	'href' => 'action/site_notifications/delete?guid=' . $entity->guid,
 	'text' => elgg_view_icon('delete'),
 	'is_action' => true,
+	'class' => 'site-notifications-delete',
+	'id' => 'site-notifications-delete-' . $entity->guid,
 ));
 $menu = elgg_view_menu('site_notifications', array(
 	'class' => 'elgg-menu-hz elgg-menu-entity',

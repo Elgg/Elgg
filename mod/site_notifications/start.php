@@ -3,9 +3,7 @@
  * Site notifications
  * 
  * @todo check for notifications when setting topbar icon
- * @todo add JavaScript to Ajaxify setting read status
  * @todo add a remove visible and all notifications button
- * @todo remove notification when you click its link
  */
 
 elgg_register_event_handler('init', 'system', 'site_notifications_init');
@@ -18,6 +16,10 @@ function site_notifications_init() {
 	elgg_register_page_handler('site_notifications', 'site_notifications_page_handler');
 
 	elgg_extend_view('css/elgg', 'site_notifications/css');
+
+	$js = elgg_get_simplecache_url('js', 'site_notifications');
+	elgg_register_simplecache_view('js/site_notifications');
+	elgg_register_js('elgg.site_notifications', $js, 'footer');
 
 	site_notifications_set_topbar();
 
@@ -48,6 +50,7 @@ function site_notifications_page_handler($segments) {
 	}
 
 	elgg_set_page_owner_guid($user->guid);
+	elgg_load_js('elgg.site_notifications');
 
 	require "$base/view.php";
 

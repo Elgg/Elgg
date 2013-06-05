@@ -22,6 +22,7 @@ $list = elgg_list_entities_from_metadata(array(
 	'full_view' => false,
 	'metadata_name' => 'read',
 	'metadata_value' => false,
+	'no_results' => elgg_echo('site_notifications:empty'),
 ));
 
 $body = elgg_view_layout('content', array(
