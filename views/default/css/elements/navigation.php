@@ -406,10 +406,6 @@
 	float: left;
 }
 
-:focus > img[src*="/powered_by_elgg_badge"] {
-	opacity: .7;
-}
-
 /* ***************************************
 	GENERAL MENU
 *************************************** */
