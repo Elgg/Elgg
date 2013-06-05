@@ -291,14 +291,19 @@ class ElggBatch
 
 		$this->incompleteEntities = array();
 		$this->results = call_user_func_array($this->getter, array($options));
-		if ($this->incompleteEntities) {
-			// @todo what to do here?
-		}
 
-		if ($this->results) {
+		// If there were incomplete entities, we pretend they were at the beginning of the results,
+		// fool the local counter to think it's skipped by them already, and update the running
+		// total as if the results contained the incompletes.
+		if ($this->results || $this->incompleteEntities) {
 			$this->chunkIndex++;
-			$this->resultIndex = 0;
-			$this->retrievedResults += count($this->results);
+			$this->resultIndex = count($this->incompleteEntities);
+			$this->retrievedResults += (count($this->results) + count($this->incompleteEntities));
+			if (!$this->results) {
+				// This fetch was *all* incompletes! We need to fetch until we can either
+				// offer at least one row to iterate over, or give up.
+				return $this->getNextResultsChunk();
+			}
 			return true;
 		} else {
 			return false;
