@@ -55,14 +55,17 @@ if (elgg_get_config('allow_registration')) {
 			}
 
 			elgg_clear_sticky_form('register');
-			system_message(elgg_echo("registerok", array(elgg_get_site_entity()->name)));
 
-			// if exception thrown, this probably means there is a validation
-			// plugin that has disabled the user
-			try {
-				login($new_user);
-			} catch (LoginException $e) {
-				// do nothing
+			if ($new_user->enabled == "yes") {
+				system_message(elgg_echo("registerok", array(elgg_get_site_entity()->name)));
+
+				// if exception thrown, this probably means there is a validation
+				// plugin that has disabled the user
+				try {
+					login($new_user);
+				} catch (LoginException $e) {
+					// do nothing
+				}
 			}
 
 			// Forward on success, assume everything else is an error...

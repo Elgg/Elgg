@@ -33,6 +33,7 @@
  * @property int    $access_id      Specifies the visibility level of this entity
  * @property int    $time_created   A UNIX timestamp of when the entity was created
  * @property int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
+ * @property string $enabled        Is this entity enabled ('yes' or 'no')
  *
  * Metadata (the above are attributes)
  * @property string $location       A location of the entity

@@ -5,9 +5,6 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel
- *
- * @property int $owner_guid
- * @property int $time_created
  */
 abstract class ElggData implements
 	Loggable,	// Can events related to this object class be logged
