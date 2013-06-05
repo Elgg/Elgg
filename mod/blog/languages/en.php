@@ -58,6 +58,7 @@ return array(
 	'river:comment:object:blog' => '%s commented on the blog %s',
 
 	// notifications
+	'blog:notify:summary' => 'New blog post called %s',
 	'blog:newpost' => 'A new blog post',
 	'blog:notification' =>
 '

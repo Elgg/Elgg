@@ -27,14 +27,13 @@
 !/mod/messageboard/
 !/mod/messages/
 !/mod/notifications/
-!/mod/oauth_api/
 !/mod/pages/
 !/mod/profile/
 !/mod/reportedcontent/
 !/mod/search/
+!/mod/site_notifications/
 !/mod/tagcloud/
 !/mod/thewire/
-!/mod/twitter/
 !/mod/twitter_api/
 !/mod/uservalidationbyemail/
 !/mod/web_services/

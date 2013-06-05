@@ -52,6 +52,7 @@ return array(
 	/**
 	 * Notifications
 	 */
+	'thewire:notify:summary' => 'New wire post: %s',
 	'thewire:notify:subject' => "New wire post",
 	'thewire:notify:reply' => '%s responded to %s on the wire:',
 	'thewire:notify:post' => '%s posted on the wire:',
