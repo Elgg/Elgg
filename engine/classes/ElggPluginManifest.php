@@ -386,9 +386,9 @@ class ElggPluginManifest {
 			'embed', 'externalpages', 'file', 'garbagecollector',
 			'groups', 'htmlawed', 'invitefriends', 'legacy_urls', 'likes',
 			'logbrowser', 'logrotate', 'members', 'messageboard',
-			'messages', 'notifications', 'oauth_api', 'pages', 'profile',
-			'reportedcontent', 'search', 'tagcloud', 'thewire',
-			'twitter', 'twitter_api', 'uservalidationbyemail', 'web_services', 'zaudio',
+			'messages', 'notifications', 'pages', 'profile',
+			'reportedcontent', 'search', 'site_notifications','tagcloud', 'thewire',
+			'twitter_api', 'uservalidationbyemail', 'web_services', 'zaudio',
 		);
 
 		$cats = $this->parser->getAttribute('category');

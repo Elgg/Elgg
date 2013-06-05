@@ -29,6 +29,8 @@ return array(
 	'pages:revert' => "Revert",
 
 	'pages:navigation' => "Navigation",
+
+	'pages:notify:summary' => 'New page called %s',
 	'pages:new' => "A new page",
 	'pages:notification' =>
 '%s added a new page:

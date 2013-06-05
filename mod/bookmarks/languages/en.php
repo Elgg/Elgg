@@ -26,6 +26,7 @@ return array(
 	'bookmarks:address' => "Address of the bookmark",
 	'bookmarks:none' => 'No bookmarks',
 
+	'bookmarks:notify:summary' => 'New bookmark called %s',
 	'bookmarks:notification' =>
 '%s added a new bookmark:
 

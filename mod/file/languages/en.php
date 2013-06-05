@@ -77,6 +77,7 @@ return array(
 
 	'item:object:file' => 'Files',
 
+	'file:notify:summary' => 'New file called %s',
 	'file:newupload' => 'A new file has been uploaded',
 	'file:notification' =>
 '%s uploaded a new file:
