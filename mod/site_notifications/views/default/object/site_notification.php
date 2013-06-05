@@ -19,4 +19,21 @@ if ($url) {
 	));
 }
 
-echo elgg_view_image_block($icon, $text, array('class' => $class));
+elgg_register_menu_item('site_notifications', array(
+	'name' => 'time',
+	'href' => false,
+	'text' => elgg_view_friendly_time($entity->getTimeCreated()),
+));
+elgg_register_menu_item('site_notifications', array(
+	'name' => 'delete',
+	'href' => 'action/site_notifications/delete?guid=' . $entity->guid,
+	'text' => elgg_view_icon('delete'),
+	'is_action' => true,
+));
+$menu = elgg_view_menu('site_notifications', array(
+	'class' => 'elgg-menu-hz elgg-menu-entity',
+));
+
+echo elgg_view_image_block($icon, $text, array(
+	'image_alt' => $menu,
+));

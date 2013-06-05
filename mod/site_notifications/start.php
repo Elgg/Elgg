@@ -3,10 +3,9 @@
  * Site notifications
  * 
  * @todo check for notifications when setting topbar icon
- * @todo display read and unread notifications differently
- * @todo add button for setting the read status of a notification
- * @todo add timestamp to display of notification
- * @todo add JavaScript to Ajaxify setting read status and maybe viewing
+ * @todo add JavaScript to Ajaxify setting read status
+ * @todo add a remove visible and all notifications button
+ * @todo remove notification when you click its link
  */
 
 elgg_register_event_handler('init', 'system', 'site_notifications_init');
@@ -21,6 +20,9 @@ function site_notifications_init() {
 	elgg_extend_view('css/elgg', 'site_notifications/css');
 
 	site_notifications_set_topbar();
+
+	$actions_base = elgg_get_plugins_path() . 'site_notifications/actions/site_notifications';
+	elgg_register_action('site_notifications/delete', "$actions_base/delete.php");
 }
 
 /**
