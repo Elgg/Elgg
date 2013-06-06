@@ -194,7 +194,7 @@ function _elgg_db_log_profiling_data() {
 	$db_calls = _elgg_services()->db->getQueryCount();
 
 	// demoted to NOTICE as it corrupts javascript at DEBUG
-	elgg_log("DB Queries for this page: $db_calls", 'NOTICE');
+	elgg_log("DB Queries for this page: $db_calls", 'INFO');
 }
 
 /**
