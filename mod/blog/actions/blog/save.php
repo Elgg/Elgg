@@ -121,10 +121,7 @@ if ($values['status'] == 'draft') {
 // assign values to the entity, stopping on error.
 if (!$error) {
 	foreach ($values as $name => $value) {
-		if (FALSE === ($blog->$name = $value)) {
-			$error = elgg_echo('blog:error:cannot_save' . "$name=$value");
-			break;
-		}
+		$blog->$name = $value;
 	}
 }
 
