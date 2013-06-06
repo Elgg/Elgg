@@ -12,7 +12,6 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Extender
- * @link       http://docs.elgg.org/DataModel/Extenders
  * @see        ElggAnnotation
  * @see        ElggMetadata
  * 

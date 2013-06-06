@@ -44,7 +44,6 @@
  *
  * @package Elgg.Core
  * @subpackage Views
- * @link http://docs.elgg.org/Views
  */
 
 /**
@@ -67,7 +66,6 @@ $CURRENT_SYSTEM_VIEWTYPE = "";
  * @param string $viewtype The view type, e.g. 'rss', or 'default'.
  *
  * @return bool
- * @link http://docs.elgg.org/Views/Viewtype
  * @example views/viewtype.php
  */
 function elgg_set_viewtype($viewtype = "") {
@@ -90,7 +88,6 @@ function elgg_set_viewtype($viewtype = "") {
  *
  * @return string The view.
  * @see elgg_set_viewtype()
- * @link http://docs.elgg.org/Views
  */
 function elgg_get_viewtype() {
 	global $CURRENT_SYSTEM_VIEWTYPE, $CONFIG;
@@ -357,7 +354,6 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  * @return string The parsed view
  * @see set_template_handler()
  * @example views/elgg_view.php
- * @link http://docs.elgg.org/View
  */
 function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $viewtype = '') {
 	return _elgg_services()->views->renderView($view, $vars, $bypass, $viewtype);
@@ -385,7 +381,6 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
  *
  * @return void
  * @since 1.7.0
- * @link http://docs.elgg.org/Views/Extend
  * @example views/extend.php
  */
 function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '') {
@@ -646,8 +641,6 @@ function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
  * @param boolean    $debug  Complain if views are missing
  *
  * @return string HTML to display or false
- * @link http://docs.elgg.org/Views/Entity
- * @link http://docs.elgg.org/Entities
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
 function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = false, $debug = false) {
@@ -990,8 +983,6 @@ function elgg_view_friendly_time($time) {
  * @param array      $vars        Variables to pass to comment view
  *
  * @return string|false Rendered comments or false on failure
- * @link http://docs.elgg.org/Entities/Comments
- * @link http://docs.elgg.org/Annotations/Comments
  */
 function elgg_view_comments($entity, $add_comment = true, array $vars = array()) {
 	if (!($entity instanceof ElggEntity)) {
@@ -1257,7 +1248,6 @@ function elgg_view_access_collections($owner_guid) {
  *
  * @return bool
  * @see elgg_view()
- * @link http://docs.elgg.org/Views/TemplateHandlers
  */
 function set_template_handler($function_name) {
 	global $CONFIG;

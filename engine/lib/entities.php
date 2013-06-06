@@ -4,7 +4,6 @@
  *
  * @package Elgg.Core
  * @subpackage DataModel.Entities
- * @link http://docs.elgg.org/DataModel/Entities
  */
 
 /**
@@ -119,7 +118,6 @@ function _elgg_retrieve_cached_entity($guid) {
  * @param string $subtype Subtype
  *
  * @return int Subtype ID
- * @link http://docs.elgg.org/DataModel/Entities/Subtypes
  * @see get_subtype_from_id()
  * @access private
  */
@@ -148,7 +146,6 @@ function get_subtype_id($type, $subtype) {
  *
  * @param int $subtype_id Subtype ID from database
  * @return string|false Subtype name, false if subtype not found
- * @link http://docs.elgg.org/DataModel/Entities/Subtypes
  * @see get_subtype_id()
  * @access private
  */
@@ -285,8 +282,6 @@ function get_subtype_class_from_id($subtype_id) {
  * @param string $class   Optional class name for the object
  *
  * @return int
- * @link http://docs.elgg.org/Tutorials/Subclasses
- * @link http://docs.elgg.org/DataModel/Entities
  * @see update_subtype()
  * @see remove_subtype()
  * @see get_entity()
@@ -401,7 +396,6 @@ function update_subtype($type, $subtype, $class = '') {
  * @param string $subtype        The subtype of the entity we're looking to write
  *
  * @return bool
- * @link http://docs.elgg.org/DataModel/Containers
  */
 function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all') {
 	$container_guid = (int)$container_guid;
@@ -462,7 +456,6 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
  * @param int $guid The GUID of the object to extract
  *
  * @return stdClass|false
- * @link http://docs.elgg.org/DataModel/Entities
  * @see entity_row_to_elggstar()
  * @access private
  */
@@ -487,7 +480,6 @@ function get_entity_as_row($guid) {
  * @param stdClass $row The row of the entry in the entities table.
  *
  * @return ElggEntity|false
- * @link http://docs.elgg.org/DataModel/Entities
  * @see get_entity_as_row()
  * @see add_subtype()
  * @see get_entity()
@@ -568,7 +560,6 @@ function entity_row_to_elggstar($row) {
  * @param int $guid The GUID of the entity
  *
  * @return ElggEntity The correct Elgg or custom object based upon entity type and subtype
- * @link http://docs.elgg.org/DataModel/Entities
  */
 function get_entity($guid) {
 	// This should not be a static local var. Notice that cache writing occurs in a completely
@@ -742,7 +733,6 @@ function elgg_enable_entity($guid, $recursive = true) {
  * @see elgg_get_entities_from_access_id()
  * @see elgg_get_entities_from_annotations()
  * @see elgg_list_entities()
- * @link http://docs.elgg.org/DataModel/Entities/Getters
  */
 function elgg_get_entities(array $options = array()) {
 	global $CONFIG;
@@ -1298,7 +1288,6 @@ $time_created_lower = null, $time_updated_upper = null, $time_updated_lower = nu
  * @since 1.7
  * @see elgg_get_entities()
  * @see elgg_view_entity_list()
- * @link http://docs.elgg.org/Entities/Output
  */
 function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities',
 	$viewer = 'elgg_view_entity_list') {
@@ -1449,8 +1438,6 @@ $order_by = 'time_created') {
  *
  * @return bool Depending on success
  * @see get_registered_entity_types()
- * @link http://docs.elgg.org/Search
- * @link http://docs.elgg.org/Tutorials/Search
  */
 function elgg_register_entity_type($type, $subtype = null) {
 	global $CONFIG;

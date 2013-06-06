@@ -20,7 +20,6 @@
  *
  * @package    Elgg.Core
  * @subpackage DataMode.Site
- * @link       http://docs.elgg.org/DataModel/Sites
  * 
  * @property string $name        The name or title of the website
  * @property string $description A motto, mission statement, or description of the website
@@ -399,8 +398,6 @@ class ElggSite extends ElggEntity {
 	 * Halts bootup and redirects to the site front page
 	 * if site is in walled garden mode, no user is logged in,
 	 * and the URL is not a public page.
-	 *
-	 * @link http://docs.elgg.org/Tutorials/WalledGarden
 	 *
 	 * @return void
 	 * @since 1.8.0

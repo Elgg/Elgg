@@ -94,7 +94,7 @@ function forward($location = "", $reason = 'system') {
 		}
 	} else {
 		throw new SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
-			. "Output started in file " . $file . " at line " . $line . ". Search http://docs.elgg.org/ for more information.");
+			. "Output started in file $file at line $line. Search http://docs.elgg.org/ for more information.");
 	}
 }
 
@@ -631,7 +631,6 @@ function register_error($error) {
  * @param int    $priority    The priority - 0 is default, negative before, positive after
  *
  * @return bool
- * @link http://docs.elgg.org/Tutorials/Plugins/Events
  * @example events/basic.php    Basic example of registering an event handler callback.
  * @example events/advanced.php Advanced example of registering an event handler
  *                              callback and halting execution.
@@ -683,7 +682,6 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @param string $object      The object involved in the event
  *
  * @return bool The result of running all handler callbacks.
- * @link http://docs.elgg.org/Tutorials/Core/Events
  * @internal @example events/emit.php Basic emitting of an Elgg event.
  */
 function elgg_trigger_event($event, $object_type, $object = null) {
@@ -753,7 +751,6 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  *
  * @example hooks/register/basic.php Registering for a plugin hook and examining the variables.
  * @example hooks/register/advanced.php Registering for a plugin hook and changing the params.
- * @link http://docs.elgg.org/Tutorials/Plugins/Hooks
  * @since 1.8.0
  */
 function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 500) {
@@ -818,7 +815,6 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * @example hooks/trigger/advanced.php Trigger a hook with a default value and use
  *                                     the results to populate a menu.
  * @example hooks/basic.php            Trigger and respond to a basic plugin hook.
- * @link http://docs.elgg.org/Tutorials/Plugins/Hooks
  *
  * @since 1.8.0
  */
@@ -1217,7 +1213,6 @@ function elgg_http_build_url(array $parts, $html_encode = true) {
  *
  * @return string URL with action tokens
  * @since 1.7.0
- * @link http://docs.elgg.org/Tutorials/Actions
  */
 function elgg_add_action_tokens_to_url($url, $html_encode = false) {
 	$components = parse_url(elgg_normalize_url($url));
@@ -1925,7 +1920,6 @@ function _elgg_walled_garden_ajax_handler($page) {
  *
  * @since 1.8.0
  * @elgg_event_handler init system
- * @link http://docs.elgg.org/Tutorials/WalledGarden
  * @return void
  * @access private
  */

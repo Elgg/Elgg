@@ -8,7 +8,6 @@
  *
  * @package Elgg.Core
  * @subpackage Access
- * @link http://docs.elgg.org/Access
  */
 
 /**
@@ -36,7 +35,6 @@ function _elgg_get_access_cache() {
  *
  * @uses get_access_array
  *
- * @link http://docs.elgg.org/Access
  * @see get_access_array()
  *
  * @param int  $user_id User ID; defaults to currently logged in user
@@ -192,7 +190,6 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
  * @param ElggUser $user Get the user's default access. Defaults to logged in user.
  *
  * @return int default access id (see ACCESS defines in elgglib.php)
- * @link http://docs.elgg.org/Access
  */
 function get_default_access(ElggUser $user = null) {
 	global $CONFIG;
@@ -387,7 +384,6 @@ END;
  *                           logged in user (which is a useless default).
  *
  * @return bool
- * @link http://docs.elgg.org/Access
  */
 function has_access_to_entity($entity, $user = null) {
 	global $CONFIG;
@@ -432,7 +428,6 @@ function has_access_to_entity($entity, $user = null) {
  * @param bool $flush   If this is set to true, this will ignore a cached access array
  *
  * @return array List of access permissions
- * @link http://docs.elgg.org/Access
  */
 function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
 	global $CONFIG, $init_finished;
@@ -543,7 +538,6 @@ function can_edit_access_collection($collection_id, $user_guid = null) {
  * @param int    $site_guid  The GUID of the site (default: current site).
  *
  * @return int|false The collection ID if successful and false on failure.
- * @link http://docs.elgg.org/Access/Collections
  * @see update_access_collection()
  * @see delete_access_collection()
  */
@@ -596,7 +590,6 @@ function create_access_collection($name, $owner_guid = 0, $site_guid = 0) {
  * @param array $members       Array of member GUIDs
  *
  * @return bool
- * @link http://docs.elgg.org/Access/Collections
  * @see add_user_to_access_collection()
  * @see remove_user_from_access_collection()
  */
@@ -633,7 +626,6 @@ function update_access_collection($collection_id, $members) {
  * @param int $collection_id The collection ID
  *
  * @return bool
- * @link http://docs.elgg.org/Access/Collections
  * @see create_access_collection()
  * @see update_access_collection()
  */
@@ -692,7 +684,6 @@ function get_access_collection($collection_id) {
  * @return bool
  * @see update_access_collection()
  * @see remove_user_from_access_collection()
- * @link http://docs.elgg.org/Access/Collections
  */
 function add_user_to_access_collection($user_guid, $collection_id) {
 	global $CONFIG;
@@ -737,7 +728,6 @@ function add_user_to_access_collection($user_guid, $collection_id) {
  * @return bool
  * @see update_access_collection()
  * @see remove_user_from_access_collection()
- * @link http://docs.elgg.org/Access/Collections
  */
 function remove_user_from_access_collection($user_guid, $collection_id) {
 	global $CONFIG;
@@ -777,7 +767,6 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
  * @return array|false
  * @see add_access_collection()
  * @see get_members_of_access_collection()
- * @link http://docs.elgg.org/Access/Collections
  */
 function get_user_access_collections($owner_guid, $site_guid = 0) {
 	global $CONFIG;
@@ -805,7 +794,6 @@ function get_user_access_collections($owner_guid, $site_guid = 0) {
  *
  * @return array ElggUser guids or entities if successful, false if not
  * @see add_user_to_access_collection()
- * @see http://docs.elgg.org/Access/Collections
  */
 function get_members_of_access_collection($collection, $idonly = false) {
 	global $CONFIG;
@@ -925,7 +913,6 @@ function get_readable_access_level($entity_access_id) {
  *
  * @return bool Previous ignore_access setting.
  * @since 1.7.0
- * @see http://docs.elgg.org/Access/IgnoreAccess
  * @see elgg_get_ignore_access()
  */
 function elgg_set_ignore_access($ignore = true) {
@@ -940,7 +927,6 @@ function elgg_set_ignore_access($ignore = true) {
  *
  * @return bool
  * @since 1.7.0
- * @see http://docs.elgg.org/Access/IgnoreAccess
  * @see elgg_set_ignore_access()
  */
 function elgg_get_ignore_access() {

@@ -29,7 +29,6 @@
  *
  * @package Elgg.Core
  * @subpackage PageHandler
- * @link http://docs.elgg.org/Tutorials/PageHandlers
  */
 
 require_once(dirname(dirname(__FILE__)) . "/start.php");

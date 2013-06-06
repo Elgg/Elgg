@@ -28,8 +28,6 @@
  *
  * @package Elgg.Core
  * @subpackage Actions
- * @link http://docs.elgg.org/Actions
- * @link http://docs.elgg.org/Actions/Tokens
  */
 
 /**
@@ -46,12 +44,11 @@
  * to an unavailable file the user will be forwarded to the site front
  * page and an error will be emitted via {@link register_error()}.
  *
- * @warning All actions require {@link http://docs.elgg.org/Actions/Tokens Action Tokens}.
+ * @warning All actions require CSRF tokens.
  *
  * @param string $action    The requested action
  * @param string $forwarder Optionally, the location to forward to
  *
- * @link http://docs.elgg.org/Actions
  * @see elgg_register_action()
  *
  * @return void
@@ -93,9 +90,6 @@ function action($action, $forwarder = "") {
  * @param string $access   Who is allowed to execute this action: public, logged_in, admin.
  *                         (default: logged_in)
  *
- * @see action()
- * @see http://docs.elgg.org/Actions
- *
  * @return bool
  */
 function elgg_register_action($action, $filename = "", $access = 'logged_in') {
@@ -127,7 +121,6 @@ function elgg_unregister_action($action) {
  *
  * @return bool
  * @see generate_action_token()
- * @link http://docs.elgg.org/Actions/Tokens
  * @access private
  */
 function validate_action_token($visibleerrors = true, $token = null, $ts = null) {

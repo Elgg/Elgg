@@ -1637,7 +1637,6 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
  *
  * @return bool
  * @see access_show_hidden_entities()
- * @link http://docs.elgg.org/Entities
  * @access private
  * @deprecated 1.9 Use ElggEntity::disable instead.
  */
@@ -1662,7 +1661,6 @@ function disable_entity($guid, $reason = "", $recursive = true) {
  * @param int $user_guid   The GUID of the user
  *
  * @return bool
- * @link http://docs.elgg.org/Entities/AccessControl
  * @deprecated 1.9 Use ElggEntity::canEdit instead
  */
 function can_edit_entity($entity_guid, $user_guid = 0) {

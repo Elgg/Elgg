@@ -52,7 +52,6 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel
- * @link       http://docs.elgg.org/DataModel/ElggBatch
  * @since      1.8
  */
 class ElggBatch

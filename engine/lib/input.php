@@ -74,7 +74,6 @@ function is_email_address($address) {
  * @param string $form_name Name of the sticky form
  *
  * @return void
- * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  * @since 1.8.0
  */
 function elgg_make_sticky_form($form_name) {
@@ -102,7 +101,6 @@ function elgg_make_sticky_form($form_name) {
  * @param string $form_name Form namespace
  *
  * @return void
- * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  * @since 1.8.0
  */
 function elgg_clear_sticky_form($form_name) {
@@ -118,7 +116,6 @@ function elgg_clear_sticky_form($form_name) {
  * @param string $form_name Form namespace
  *
  * @return boolean
- * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  * @since 1.8.0
  */
 function elgg_is_sticky_form($form_name) {
@@ -138,7 +135,6 @@ function elgg_is_sticky_form($form_name) {
  * @return mixed
  *
  * @todo should this filter the default value?
- * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  * @since 1.8.0
  */
 function elgg_get_sticky_value($form_name, $variable = '', $default = null, $filter_result = true) {
@@ -188,7 +184,6 @@ function elgg_get_sticky_values($form_name, $filter_result = true) {
  * @param string $variable  The name of the variable to clear
  *
  * @return void
- * @link http://docs.elgg.org/Tutorials/UI/StickyForms
  * @since 1.8.0
  */
 function elgg_clear_sticky_value($form_name, $variable) {

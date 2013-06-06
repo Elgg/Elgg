@@ -10,7 +10,6 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Annotations
- * @link       http://docs.elgg.org/DataModel/Annotations
  *
  * @property string $value_type
  * @property string $enabled

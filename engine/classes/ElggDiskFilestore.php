@@ -7,7 +7,6 @@
  *
  * @package    Elgg.Core
  * @subpackage FileStore.Disk
- * @link       http://docs.elgg.org/DataModel/FileStore/Disk
  */
 class ElggDiskFilestore extends ElggFilestore {
 	/**

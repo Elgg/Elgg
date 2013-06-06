@@ -302,7 +302,6 @@ function get_private_setting($entity_guid, $name) {
  * @see get_private_settings()
  * @see remove_private_setting()
  * @see remove_all_private_settings()
- * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
  */
 function get_all_private_settings($entity_guid) {
 	global $CONFIG;
@@ -339,7 +338,6 @@ function get_all_private_settings($entity_guid) {
  * @see get_all_private_settings()
  * @see remove_private_setting()
  * @see remove_all_private_settings()
- * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
  */
 function set_private_setting($entity_guid, $name, $value) {
 	global $CONFIG;
@@ -367,7 +365,6 @@ function set_private_setting($entity_guid, $name, $value) {
  * @see get_all_private_settings()
  * @see set_private_setting()
  * @see remove_all_private_settings()
- * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
  */
 function remove_private_setting($entity_guid, $name) {
 	global $CONFIG;
@@ -396,7 +393,6 @@ function remove_private_setting($entity_guid, $name) {
  * @see get_all_private_settings()
  * @see set_private_setting()
  * @see remove_private_settings()
- * @link http://docs.elgg.org/DataModel/Entities/PrivateSettings
  */
 function remove_all_private_settings($entity_guid) {
 	global $CONFIG;
