@@ -79,11 +79,7 @@ foreach ($values as $name => $default) {
 
 	switch ($name) {
 		case 'tags':
-			if ($value) {
-				$values[$name] = string_to_tag_array($value);
-			} else {
-				unset ($values[$name]);
-			}
+			$values[$name] = string_to_tag_array($value);
 			break;
 
 		case 'excerpt':
@@ -125,10 +121,7 @@ if ($values['status'] == 'draft') {
 // assign values to the entity, stopping on error.
 if (!$error) {
 	foreach ($values as $name => $value) {
-		if (FALSE === ($blog->$name = $value)) {
-			$error = elgg_echo('blog:error:cannot_save' . "$name=$value");
-			break;
-		}
+		$blog->$name = $value;
 	}
 }
 
