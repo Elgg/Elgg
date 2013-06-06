@@ -2635,30 +2635,35 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggGetEntitiesFromAnnotationsCalculateX() {
-		$types = array(
-		'sum',
-		'avg',
-		'min',
-		'max'
+		$types = array('sum', 'avg', 'min', 'max');
+		$num_entities = 5;
+		// these are chosen to avoid the sums, means, mins, maxs being the same
+		// note that the calculation is cast to an int in SQL
+		$numbers = array(
+			array(0, 5),
+			array(2, 13),
+			array(-3, 11),
+			array(7, 9),
+			array(1.2, 22),
 		);
 
 		foreach ($types as $type) {
 			$subtypes = $this->getRandomValidSubtypes(array('object'), 5);
-			$name = 'test_annotation_' . time() . '_' . rand(0, 999999);
+			$name = "test_annotation_tegefacx_$type";
 			$values = array();
 			$options = array(
 				'type' => 'object',
 				'subtypes' => $subtypes,
-				'limit' => 5
+				'limit' => $num_entities,
 			);
 
 			$es = elgg_get_entities($options);
 
-			foreach ($es as $e) {
-				$value = rand(0,9999);
+			foreach ($es as $index => $e) {
+				$value = $numbers[$index][0];
 				$e->annotate($name, $value);
 
-				$value2 = rand(0,9999);
+				$value2 = $numbers[$index][1];
 				$e->annotate($name, $value2);
 
 				switch ($type) {
@@ -2688,7 +2693,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 			$options = array(
 				'type' => 'object',
 				'subtypes' => $subtypes,
-				'limit' => 5,
+				'limit' => $num_entities,
 				'annotation_name' => $name,
 				'calculation' => $type
 			);
