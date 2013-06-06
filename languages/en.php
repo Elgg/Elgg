@@ -322,14 +322,10 @@ return array(
  * Notifications
  */
 	'notifications:usersettings' => "Notification settings",
-	'notifications:methods' => "Select your notification methods.",
 	'notification:method:email' => 'Email',
 
-	'notifications:usersettings:save:ok' => "Your notification settings were successfully saved.",
-	'notifications:usersettings:save:fail' => "There was a problem saving your notification settings.",
-
-	'user.notification.get' => 'Return the notification settings for a given user.',
-	'user.notification.set' => 'Set the notification settings for a given user.',
+	'notifications:usersettings:save:ok' => "Botification settings were successfully saved.",
+	'notifications:usersettings:save:fail' => "There was a problem saving the notification settings.",
 
 /**
  * Search
@@ -389,14 +385,14 @@ return array(
 	'adduser:bad' => "The new user could not be created.",
 
 	'user:set:name' => "Account name settings",
-	'user:name:label' => "My display name",
-	'user:name:success' => "Successfully changed your name on the system.",
-	'user:name:fail' => "Could not change your name on the system.  Please make sure your name isn't too long and try again.",
+	'user:name:label' => "Display name",
+	'user:name:success' => "Successfully changed display name on the system.",
+	'user:name:fail' => "Could not change display name on the system.",
 
 	'user:set:password' => "Account password",
 	'user:current_password:label' => 'Current password',
-	'user:password:label' => "Your new password",
-	'user:password2:label' => "Your new password again",
+	'user:password:label' => "New password",
+	'user:password2:label' => "New password again",
 	'user:password:success' => "Password changed",
 	'user:password:fail' => "Could not change your password on the system.",
 	'user:password:fail:notsame' => "The two passwords are not the same!",
@@ -406,9 +402,9 @@ return array(
 	'user:resetpassword:reset_password_confirm' => 'Resetting your password will email a new password to your registered email address.',
 
 	'user:set:language' => "Language settings",
-	'user:language:label' => "Your language",
-	'user:language:success' => "Your language settings have been updated.",
-	'user:language:fail' => "Your language settings could not be saved.",
+	'user:language:label' => "Language",
+	'user:language:success' => "Language settings have been updated.",
+	'user:language:fail' => "Language settings could not be saved.",
 
 	'user:username:notfound' => 'Username %s not found.',
 
@@ -683,7 +679,7 @@ These changes will only affect new users on the site.',
 	'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
 	'usersettings:statistics:opt:linktext' => "Account statistics",
 
-	'usersettings:user' => "Your settings",
+	'usersettings:user' => "%s's settings",
 	'usersettings:user:opt:description' => "This allows you to control user settings.",
 	'usersettings:user:opt:linktext' => "Change your settings",
 
@@ -1067,10 +1063,10 @@ Once you have logged in, we highly recommend that you change your password.
 	'email:body' => 'Body',
 	
 	'email:settings' => "Email settings",
-	'email:address:label' => "Your email address",
+	'email:address:label' => "Email address",
 
 	'email:save:success' => "New email address saved. Verification is requested.",
-	'email:save:fail' => "Your new email address could not be saved.",
+	'email:save:fail' => "New email address could not be saved.",
 
 	'friend:newfriend:subject' => "%s has made you a friend!",
 	'friend:newfriend:body' => "%s has made you a friend!
