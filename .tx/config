@@ -1,0 +1,104 @@
+[main]
+host = https://www.transifex.com
+
+[coopfunding.engine]
+file_filter = languages/<lang>.php
+source_file = languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.install]
+file_filter = install/languages/<lang>.php
+source_file = install/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.banner]
+file_filter = mod/banner/languages/<lang>.php
+source_file = mod/banner/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.ckeditor4]
+file_filter = mod/ckeditor4/languages/<lang>.php
+source_file = mod/ckeditor4/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.developers]
+file_filter = mod/developers/languages/<lang>.php
+source_file = mod/developers/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.diagnostics]
+file_filter = mod/diagnostics/languages/<lang>.php
+source_file = mod/diagnostics/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.elgg_theme]
+file_filter = mod/elgg_theme/languages/<lang>.php
+source_file = mod/elgg_theme/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.externalpages]
+file_filter = mod/externalpages/languages/<lang>.php
+source_file = mod/externalpages/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.garbagecollector]
+file_filter = mod/garbagecollector/languages/<lang>.php
+source_file = mod/garbagecollector/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.logbrowser]
+file_filter = mod/logbrowser/languages/<lang>.php
+source_file = mod/logbrowser/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.logrotate]
+file_filter = mod/logrotate/languages/<lang>.php
+source_file = mod/logrotate/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.messages]
+file_filter = mod/messages/languages/<lang>.php
+source_file = mod/messages/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.profile]
+file_filter = mod/profile/languages/<lang>.php
+source_file = mod/profile/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.projects]
+file_filter = mod/projects/languages/<lang>.php
+source_file = mod/projects/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.projects-contact]
+file_filter = mod/projects-contact/languages/<lang>.php
+source_file = mod/projects-contact/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.search]
+file_filter = mod/search/languages/<lang>.php
+source_file = mod/search/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[coopfunding.uservalidationbyemail]
+file_filter = mod/uservalidationbyemail/languages/<lang>.php
+source_file = mod/uservalidationbyemail/languages/en.php
+source_lang = en
+type = PHP_ARRAY

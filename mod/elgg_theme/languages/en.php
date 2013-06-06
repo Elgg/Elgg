@@ -10,4 +10,4 @@ $language = array(
 
 );
 
-add_translation('en', $language);
+add_translation(basename(__FILE__, '.php'), $language);
