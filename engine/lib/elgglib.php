@@ -631,10 +631,9 @@ function register_error($error) {
  * @param int    $priority    The priority - 0 is default, negative before, positive after
  *
  * @return bool
- * @example events/basic.php    Basic example of registering an event handler callback.
- * @example events/advanced.php Advanced example of registering an event handler
- *                              callback and halting execution.
- * @example events/all.php      Example of how to use the 'all' keyword.
+ * @example documentation/events/basic.php
+ * @example documentation/events/advanced.php
+ * @example documentation/events/all.php
  */
 function elgg_register_event_handler($event, $object_type, $callback, $priority = 500) {
 	return _elgg_services()->events->registerHandler($event, $object_type, $callback, $priority);
@@ -682,7 +681,7 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @param string $object      The object involved in the event
  *
  * @return bool The result of running all handler callbacks.
- * @internal @example events/emit.php Basic emitting of an Elgg event.
+ * @example documentation/examples/events/trigger.php
  */
 function elgg_trigger_event($event, $object_type, $object = null) {
 	return _elgg_services()->events->trigger($event, $object_type, $object);

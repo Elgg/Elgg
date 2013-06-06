@@ -66,7 +66,6 @@ $CURRENT_SYSTEM_VIEWTYPE = "";
  * @param string $viewtype The view type, e.g. 'rss', or 'default'.
  *
  * @return bool
- * @example views/viewtype.php
  */
 function elgg_set_viewtype($viewtype = "") {
 	global $CURRENT_SYSTEM_VIEWTYPE;
@@ -178,7 +177,6 @@ function _elgg_is_valid_viewtype($viewtype) {
  *
  * @return void
  * @since 1.7.2
- * @example views/viewtype_fallback.php Fallback from mobile to default.
  */
 function elgg_register_viewtype_fallback($viewtype) {
 	_elgg_services()->views->registerViewtypeFallback($viewtype);
@@ -352,8 +350,6 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  *                          this value (default: standard detection)
  *
  * @return string The parsed view
- * @see set_template_handler()
- * @example views/elgg_view.php
  */
 function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $viewtype = '') {
 	return _elgg_services()->views->renderView($view, $vars, $bypass, $viewtype);
@@ -381,7 +377,6 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
  *
  * @return void
  * @since 1.7.0
- * @example views/extend.php
  */
 function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '') {
 	_elgg_services()->views->extendView($view, $view_extension, $priority, $viewtype);

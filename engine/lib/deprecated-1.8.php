@@ -1650,8 +1650,6 @@ function get_plugin_name($mainfilename = false) {
 /**
  * Load and parse a plugin manifest from a plugin XML file.
  *
- * @example plugins/manifest.xml Example 1.8-style manifest file.
- *
  * @deprecated 1.8 Use ElggPlugin->getManifest()
  *
  * @param string $plugin Plugin name.

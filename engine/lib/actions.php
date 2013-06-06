@@ -159,7 +159,6 @@ function action_gatekeeper($action) {
  *
  * @see @elgg_view input/securitytoken
  * @see @elgg_view input/form
- * @example actions/manual_tokens.php
  *
  * @return string|false
  * @access private
