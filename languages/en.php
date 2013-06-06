@@ -324,7 +324,7 @@ return array(
 	'notifications:usersettings' => "Notification settings",
 	'notification:method:email' => 'Email',
 
-	'notifications:usersettings:save:ok' => "Botification settings were successfully saved.",
+	'notifications:usersettings:save:ok' => "Notification settings were successfully saved.",
 	'notifications:usersettings:save:fail' => "There was a problem saving the notification settings.",
 
 /**
