@@ -278,6 +278,7 @@ function projects_handle_profile_page($guid) {
 		$sidebar .= elgg_view('projects/sidebar/search', array('entity' => $project));
 	}
 	$sidebar .= elgg_view('projects/sidebar/members', array('entity' => $project));
+	$sidebar .= elgg_view('projects/sidebar/profile', array('entity' => $project));
 
 	$params = array(
 		'content' => $content,
