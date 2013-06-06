@@ -120,12 +120,6 @@ function projects_contact_message_block_menu($hook, $type, $return, $params) {
 		
 		$return[] = new ElggMenuItem('projects_contact_inbox', $text, $url); 
 	}
-	
-	if (elgg_is_logged_in()) {
-		$url = "projects_contact/add/{$params['entity']->alias}";
-		$text = elgg_echo('projects_contact:add');
-		$return[] = new ElggMenuItem('projects_contact_add', $text, $url);
-	}
 
 	return $return;		
 }
