@@ -634,7 +634,7 @@ class ElggUser extends ElggEntity
 	 * @param string $name  Name
 	 * @param mixed  $value Value
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	public function __set($name, $value) {
 		if ($name == 'admin' || $name == 'siteadmin') {
@@ -646,7 +646,7 @@ class ElggUser extends ElggEntity
 				$this->removeAdmin();
 			}
 		}
-		return parent::__set($name, $value);
+		parent::__set($name, $value);
 	}
 
 	/**

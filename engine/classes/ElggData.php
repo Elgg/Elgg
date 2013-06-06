@@ -1,16 +1,16 @@
 <?php
 /**
- * A generic class that contains shared code b/w
+ * A generic class that contains shared code among
  * ElggExtender, ElggEntity, and ElggRelationship
  *
  * @package    Elgg.Core
  * @subpackage DataModel
  */
 abstract class ElggData implements
-	Loggable,	// Can events related to this object class be logged
-	Iterator,	// Override foreach behaviour
+	Loggable,    // Can events related to this object class be logged
+	Iterator,    // Override foreach behaviour
 	ArrayAccess, // Override for array access
-	Exportable
+	Exportable   // (deprecated 1.9)
 {
 
 	/**
@@ -86,10 +86,10 @@ abstract class ElggData implements
 	 * @param string $name  Name
 	 * @param mixed  $value Value
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	public function __set($name, $value) {
-		return $this->set($name, $value);
+		$this->set($name, $value);
 	}
 
 	/**
@@ -189,10 +189,6 @@ abstract class ElggData implements
 	 * ITERATOR INTERFACE
 	 */
 
-	/*
-	 * This lets an entity's attributes be displayed using foreach as a normal array.
-	 * Example: http://www.sitepoint.com/print/php5-standard-library
-	 */
 	protected $valid = false;
 
 	/**
@@ -252,11 +248,6 @@ abstract class ElggData implements
 
 	/*
 	 * ARRAY ACCESS INTERFACE
-	 */
-
-	/*
-	 * This lets an entity's attributes be accessed like an associative array.
-	 * Example: http://www.sitepoint.com/print/php5-standard-library
 	 */
 
 	/**

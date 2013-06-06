@@ -39,9 +39,9 @@
  * @property string $location       A location of the entity
  */
 abstract class ElggEntity extends ElggData implements
-	Notable,    // Calendar interface (deprecated)
-	Locatable,  // Geocoding interface
-	Importable // Allow import of data (deprecated)
+	Notable,   // Calendar interface (deprecated 1.9)
+	Locatable, // Geocoding interface
+	Importable // Allow import of data (deprecated 1.9)
 {
 
 	/**

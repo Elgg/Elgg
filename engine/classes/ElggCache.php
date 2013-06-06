@@ -102,10 +102,10 @@ abstract class ElggCache implements ArrayAccess {
 	 * @param string $key   Name
 	 * @param mixed  $value Value
 	 *
-	 * @return mixed
+	 * @return void
 	 */
 	function __set($key, $value) {
-		return $this->save($key, $value);
+		$this->save($key, $value);
 	}
 
 	/**
