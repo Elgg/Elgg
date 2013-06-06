@@ -146,15 +146,28 @@ function developers_log_events($name, $type) {
 		return;
 	}
 
+	// 0 => this function
+	// 1 => call_user_func_array
+	// 2 => hook class trigger
 	$stack = debug_backtrace();
-	if ($stack[2]['function'] == 'elgg_trigger_event') {
+	if (isset($stack[2]['class']) && $stack[2]['class'] == 'Elgg_EventsService') {
 		$event_type = 'Event';
 	} else {
 		$event_type = 'Plugin hook';
 	}
-	$function = $stack[3]['function'] . '()';
-	if ($function == 'require_once' || $function == 'include_once') {
-		$function = $stack[3]['file'];
+
+	if ($stack[3]['function'] == 'elgg_trigger_event' || $stack[3]['function'] == 'elgg_trigger_plugin_hook') {
+		$index = 4;
+	} else {
+		$index = 3;
+	}
+	if (isset($stack[$index]['class'])) {
+		$function = $stack[$index]['class'] . '::' . $stack[$index]['function'] . '()';
+	} else {
+		$function = $stack[$index]['function'] . '()';
+	}
+	if ($function == 'require_once()' || $function == 'include_once()') {
+		$function = $stack[$index]['file'];
 	}
 
 	$msg = elgg_echo('developers:event_log_msg', array(
