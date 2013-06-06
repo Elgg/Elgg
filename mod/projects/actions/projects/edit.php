@@ -173,7 +173,7 @@ $has_uploaded_icon = (!empty($_FILES['icon']['type']) && substr_count($_FILES['i
 
 if ($has_uploaded_icon) {
 
-	$icon_sizes = elgg_get_config('icon_sizes');
+	$icon_sizes = elgg_get_config('projects_icon_sizes');
 
 	$prefix = "projects/" . $project->guid;
 

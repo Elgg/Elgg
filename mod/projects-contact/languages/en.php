@@ -1,9 +1,9 @@
 <?php
 /**
-* projects_contact English language file
+* Projects contact language file
 */
 
-$english = array(
+$language = array(
 
 /**
 * Menu items and titles
@@ -15,7 +15,7 @@ $english = array(
 'projects_contact:message' => "Message:",
 'projects_contact:date' => "Date:",
 'projects_contact:projects_contact' => "Projects",
-'projects_contact:add' => "Send message",
+'projects_contact:add' => "Contact with them",
 'projects_contact:toggle' => "Toggle All",
 'projects_contact:markread' => "Mark as read",
 'projects_contact:read' => "Read message",
@@ -55,5 +55,4 @@ $english = array(
 'projects_contact:unknown_projects_contact' => 'Cannot find specified projects_contact',
 );
 
-
-add_translation("en",$english);
+add_translation(basename(__FILE__, '.php'), $language);
