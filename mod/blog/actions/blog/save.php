@@ -79,11 +79,7 @@ foreach ($values as $name => $default) {
 
 	switch ($name) {
 		case 'tags':
-			if ($value) {
-				$values[$name] = string_to_tag_array($value);
-			} else {
-				unset ($values[$name]);
-			}
+			$values[$name] = string_to_tag_array($value);
 			break;
 
 		case 'excerpt':
