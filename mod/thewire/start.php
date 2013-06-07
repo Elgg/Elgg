@@ -39,10 +39,8 @@ function thewire_init() {
 	// Extend system CSS with our own styles, which are defined in the thewire/css view
 	elgg_extend_view('css/elgg', 'thewire/css');
 
-	//extend views
-	elgg_extend_view('activity/thewire', 'thewire/activity_view');
+	// Add a user's latest wire post to profile
 	elgg_extend_view('profile/status', 'thewire/profile_status');
-	elgg_extend_view('js/initialise_elgg', 'thewire/js/textcounter');
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('thewire', 'thewire_page_handler');
