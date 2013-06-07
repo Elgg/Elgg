@@ -385,10 +385,10 @@ function notification_init() {
  * @todo why can't this call action(...)?
  * @access private
  */
-function notification_user_settings_save() {
+function notification_user_settings_save($hook, $type, $returnvalue) {
 	global $CONFIG;
 	//@todo Wha??
-	include($CONFIG->path . "actions/notifications/settings/usersettings/save.php");
+	return include($CONFIG->path . "actions/notifications/settings/usersettings/save.php") && $returnvalue;
 }
 
 /**

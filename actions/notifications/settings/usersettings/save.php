@@ -21,9 +21,11 @@ foreach ($method as $k => $v) {
 
 	if (!$result) {
 		register_error(elgg_echo('notifications:usersettings:save:fail'));
+		return false;
 	}
 }
 
 if ($result) {
 	system_message(elgg_echo('notifications:usersettings:save:ok'));
+	return true;
 }
