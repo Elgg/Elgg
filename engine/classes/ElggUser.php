@@ -132,9 +132,13 @@ class ElggUser extends ElggEntity
 		}
 
 		// Now save specific stuff
-		return create_user_entity($this->get('guid'), $this->get('name'), $this->get('username'),
+		_elgg_disable_caching_for_entity($this->guid);
+		$ret = create_user_entity($this->get('guid'), $this->get('name'), $this->get('username'),
 			$this->get('password'), $this->get('salt'), $this->get('email'), $this->get('language'),
 			$this->get('code'));
+		_elgg_enable_caching_for_entity($this->guid);
+
+		return $ret;
 	}
 
 	/**
