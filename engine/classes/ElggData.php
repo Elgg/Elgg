@@ -16,10 +16,9 @@ abstract class ElggData implements
 	/**
 	 * The main attributes of an entity.
 	 * Holds attributes to save to database
-	 * This contains the site's main properties (id, etc)
 	 * Blank entries for all database fields should be created by the constructor.
 	 * Subclasses should add to this in their constructors.
-	 * Any field not appearing in this will be viewed as a
+	 * Any field not appearing in this will be viewed as metadata
 	 */
 	protected $attributes = array();
 
@@ -169,8 +168,10 @@ abstract class ElggData implements
 	 * Return the class name of the object.
 	 *
 	 * @return string
+	 * @deprecated 1.9 Use get_class()
 	 */
 	public function getClassName() {
+		elgg_deprecated_notice("getClassName() is deprecated. Use get_class().", 1.9);
 		return get_class($this);
 	}
 
