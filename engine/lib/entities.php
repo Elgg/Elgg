@@ -17,6 +17,15 @@ global $ENTITY_CACHE;
 $ENTITY_CACHE = array();
 
 /**
+ * GUIDs of entities banned from the entity cache (during this request)
+ *
+ * @global array $ENTITY_CACHE_DISABLED_GUIDS
+ * @access private
+ */
+global $ENTITY_CACHE_DISABLED_GUIDS;
+$ENTITY_CACHE_DISABLED_GUIDS = array();
+
+/**
  * Cache subtypes and related class names.
  *
  * @global array|null $SUBTYPE_CACHE array once populated from DB, initially null
@@ -24,6 +33,34 @@ $ENTITY_CACHE = array();
  */
 global $SUBTYPE_CACHE;
 $SUBTYPE_CACHE = null;
+
+/**
+ * Remove this entity from the entity cache and make sure it is not re-added
+ *
+ * @param int $guid The entity guid
+ *
+ * @access private
+ * @todo this is a workaround until #5604 can be implemented
+ */
+function _elgg_disable_caching_for_entity($guid) {
+	global $ENTITY_CACHE_DISABLED_GUIDS;
+
+	_elgg_invalidate_cache_for_entity($guid);
+	$ENTITY_CACHE_DISABLED_GUIDS[$guid] = true;
+}
+
+/**
+ * Allow this entity to be stored in the entity cache
+ *
+ * @param int $guid The entity guid
+ *
+ * @access private
+ */
+function _elgg_enable_caching_for_entity($guid) {
+	global $ENTITY_CACHE_DISABLED_GUIDS;
+
+	unset($ENTITY_CACHE_DISABLED_GUIDS[$guid]);
+}
 
 /**
  * Invalidate this class's entry in the cache.
@@ -57,11 +94,16 @@ function _elgg_invalidate_cache_for_entity($guid) {
  * @todo Use an ElggCache object
  */
 function _elgg_cache_entity(ElggEntity $entity) {
-	global $ENTITY_CACHE;
+	global $ENTITY_CACHE, $ENTITY_CACHE_DISABLED_GUIDS;
 
 	// Don't cache non-plugin entities while access control is off, otherwise they could be
 	// exposed to users who shouldn't see them when control is re-enabled.
 	if (!($entity instanceof ElggPlugin) && elgg_get_ignore_access()) {
+		return;
+	}
+
+	$guid = $entity->getGUID();
+	if (isset($ENTITY_CACHE_DISABLED_GUIDS[$guid])) {
 		return;
 	}
 
@@ -79,7 +121,7 @@ function _elgg_cache_entity(ElggEntity $entity) {
 		elgg_get_metadata_cache()->clear($random_guid);
 	}
 
-	$ENTITY_CACHE[$entity->guid] = $entity;
+	$ENTITY_CACHE[$guid] = $entity;
 }
 
 /**

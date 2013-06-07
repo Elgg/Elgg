@@ -352,7 +352,12 @@ class ElggGroup extends ElggEntity
 		}
 
 		// Now save specific stuff
-		return create_group_entity($this->get('guid'), $this->get('name'), $this->get('description'));
+
+		_elgg_disable_caching_for_entity($this->guid);
+		$ret = create_group_entity($this->get('guid'), $this->get('name'), $this->get('description'));
+		_elgg_enable_caching_for_entity($this->guid);
+
+		return $ret;
 	}
 
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////
