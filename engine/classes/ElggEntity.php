@@ -1270,15 +1270,23 @@ abstract class ElggEntity extends ElggData implements
 	public function save() {
 		$guid = $this->getGUID();
 		if ($guid > 0) {
-			_elgg_cache_entity($this);
 
-			return update_entity(
+			// See #5600. This ensures the lower level can_edit_entity() check will use a
+			// fresh entity from the DB so it sees the persisted owner_guid
+			_elgg_disable_caching_for_entity($guid);
+
+			$ret = update_entity(
 				$guid,
 				$this->get('owner_guid'),
 				$this->get('access_id'),
 				$this->get('container_guid'),
 				$this->get('time_created')
 			);
+
+			_elgg_enable_caching_for_entity($guid);
+			_elgg_cache_entity($this);
+
+			return $ret;
 		} else {
 			// Create a new entity (nb: using attribute array directly
 			// 'cos set function does something special!)
