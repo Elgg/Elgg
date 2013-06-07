@@ -19,11 +19,11 @@ $ENTITY_CACHE = array();
 /**
  * GUIDs of entities banned from the entity cache (during this request)
  *
- * @global array $ENTITY_CACHE_BANNED_GUIDS
+ * @global array $ENTITY_CACHE_DISABLED_GUIDS
  * @access private
  */
-global $ENTITY_CACHE_BANNED_GUIDS;
-$ENTITY_CACHE_BANNED_GUIDS = array();
+global $ENTITY_CACHE_DISABLED_GUIDS;
+$ENTITY_CACHE_DISABLED_GUIDS = array();
 
 /**
  * Cache subtypes and related class names.
@@ -35,18 +35,18 @@ global $SUBTYPE_CACHE;
 $SUBTYPE_CACHE = null;
 
 /**
- * Ban this entity from the entity cache
+ * Remove this entity from the entity cache and make sure it is not re-added
  *
  * @param int $guid The entity guid
  *
  * @access private
  * @todo this is a workaround until #5604 can be implemented
  */
-function _elgg_ban_caching_for_entity($guid) {
-	global $ENTITY_CACHE_BANNED_GUIDS;
+function _elgg_disable_caching_for_entity($guid) {
+	global $ENTITY_CACHE_DISABLED_GUIDS;
 
 	_elgg_invalidate_cache_for_entity($guid);
-	$ENTITY_CACHE_BANNED_GUIDS[$guid] = true;
+	$ENTITY_CACHE_DISABLED_GUIDS[$guid] = true;
 }
 
 /**
@@ -56,10 +56,10 @@ function _elgg_ban_caching_for_entity($guid) {
  *
  * @access private
  */
-function _elgg_unban_caching_for_entity($guid) {
-	global $ENTITY_CACHE_BANNED_GUIDS;
+function _elgg_enable_caching_for_entity($guid) {
+	global $ENTITY_CACHE_DISABLED_GUIDS;
 
-	unset($ENTITY_CACHE_BANNED_GUIDS[$guid]);
+	unset($ENTITY_CACHE_DISABLED_GUIDS[$guid]);
 }
 
 /**
@@ -94,7 +94,7 @@ function _elgg_invalidate_cache_for_entity($guid) {
  * @todo Use an ElggCache object
  */
 function _elgg_cache_entity(ElggEntity $entity) {
-	global $ENTITY_CACHE, $ENTITY_CACHE_BANNED_GUIDS;
+	global $ENTITY_CACHE, $ENTITY_CACHE_DISABLED_GUIDS;
 
 	// Don't cache non-plugin entities while access control is off, otherwise they could be
 	// exposed to users who shouldn't see them when control is re-enabled.
@@ -103,7 +103,7 @@ function _elgg_cache_entity(ElggEntity $entity) {
 	}
 
 	$guid = $entity->getGUID();
-	if (isset($ENTITY_CACHE_BANNED_GUIDS[$guid])) {
+	if (isset($ENTITY_CACHE_DISABLED_GUIDS[$guid])) {
 		return;
 	}
 
