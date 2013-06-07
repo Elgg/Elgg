@@ -13,7 +13,7 @@
 </div>
 <?php
 
-$stickyValues = elgg_get_sticky_values('profile:edit');
+$sticky_values = elgg_get_sticky_values('profile:edit');
 
 $profile_fields = elgg_get_config('profile_fields');
 if (is_array($profile_fields) && count($profile_fields) > 0) {
@@ -42,12 +42,12 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 			$access_id = ACCESS_DEFAULT;
 		}
 
-		//sticky form values take precedence over saved ones
-		if (isset($stickyValues[$shortname])) {
-			$value = $stickyValues[$shortname];
+		// sticky form values take precedence over saved ones
+		if (isset($sticky_values[$shortname])) {
+			$value = $sticky_values[$shortname];
 		}
-		if (isset($stickyValues['accesslevel'][$shortname])) {
-			$access_id = $stickyValues['accesslevel'][$shortname];
+		if (isset($sticky_values['accesslevel'][$shortname])) {
+			$access_id = $sticky_values['accesslevel'][$shortname];
 		}
 
 ?>
@@ -69,6 +69,9 @@ if (is_array($profile_fields) && count($profile_fields) > 0) {
 <?php
 	}
 }
+
+elgg_clear_sticky_form('profile:edit');
+
 ?>
 <div class="elgg-foot">
 <?php

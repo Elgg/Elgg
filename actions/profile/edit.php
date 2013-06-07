@@ -82,7 +82,7 @@ if (sizeof($input) > 0) {
 		);
 		elgg_delete_metadata($options);
 		
-		if(!is_null($value) && ($value !== '')){
+		if (!is_null($value) && ($value !== '')) {
 			// only create metadata for non empty values (0 is allowed) to prevent metadata records with empty string values #4858
 			
 			if (isset($accesslevel[$shortname])) {
