@@ -4,6 +4,8 @@
  *
  */
 
+elgg_make_sticky_form('profile:edit');
+
 $guid = get_input('guid');
 $owner = get_entity($guid);
 
@@ -107,6 +109,7 @@ if (sizeof($input) > 0) {
 	// Notify of profile update
 	elgg_trigger_event('profileupdate', $owner->type, $owner);
 
+	elgg_clear_sticky_form('profile:edit');
 	system_message(elgg_echo("profile:saved"));
 }
 
