@@ -23,9 +23,8 @@ if (!$guid) {
 	forward(REFERER);
 }
 
-// Send response to original poster if not already registered to receive notification
+// if reply, forward to thread display page
 if ($parent_guid) {
-	//thewire_send_response_notification($guid, $parent_guid, $user);
 	$parent = get_entity($parent_guid);
 	forward("thewire/thread/$parent->wire_thread");
 }

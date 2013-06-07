@@ -56,6 +56,7 @@ function thewire_init() {
 	// Register for notifications
 	elgg_register_notification_event('object', 'thewire');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:thewire', 'thewire_prepare_notification');
+	elgg_register_plugin_hook_handler('get', 'subscriptions', 'thewire_add_original_poster');
 
 	// Register actions
 	$action_base = elgg_get_plugins_path() . 'thewire/actions';
@@ -325,42 +326,38 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 }
 
 /**
- * Send notification to poster of parent post if not notified already
+ * Add temporary subscription for original poster if not already registered to
+ * receive a notification of reply
  *
- * @param int      $guid        The guid of the reply wire post
- * @param int      $parent_guid The guid of the original wire post
- * @param ElggUser $user        The user who posted the reply
- * @return void
+ * @param string $hook          Hook name
+ * @param string $type          Hook type
+ * @param array  $subscriptions Subscriptions for a notification event
+ * @param array  $params        Parameters including the event
+ * @return array
  */
-function thewire_send_response_notification($guid, $parent_guid, $user) {
-	$parent_owner = get_entity($parent_guid)->getOwnerEntity();
-	$user = elgg_get_logged_in_user_entity();
-
-	// check to make sure user is not responding to self
-	if ($parent_owner->guid != $user->guid) {
-		// check if parent owner has notification for this user
-		$send_response = true;
-		$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
-		foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-			if (check_entity_relationship($parent_owner->guid, 'notify' . $method, $user->guid)) {
-				$send_response = false;
+function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
+	$event = $params['event'];
+	$entity = $event->getObject();
+	if ($entity && elgg_instanceof($entity, 'object', 'thewire')) {
+		$parent = $entity->getEntitiesFromRelationship('parent');
+		if ($parent) {
+			$parent = $parent[0];
+			// do not add a subscription if reply was to self
+			if ($parent->getOwnerGUID() !== $entity->getOwnerGUID()) {
+				if (!array_key_exists($parent->getOwnerGUID(), $subscriptions)) {
+					$personal_methods = (array)get_user_notification_settings($parent->getOwnerGUID());
+					$methods = array();
+					foreach ($personal_methods as $method => $state) {
+						if ($state) {
+							$methods[] = $method;
+						}
+					}
+					if ($methods) {
+						$subscriptions[$parent->getOwnerGUID()] = $methods;
+						return $subscriptions;
+					}
+				}
 			}
-		}
-
-		// create the notification message
-		if ($send_response) {
-			// grab same notification message that goes to everyone else
-			$params = array(
-				'entity' => get_entity($guid),
-				'method' => "email",
-			);
-			$msg = thewire_notify_message("", "", "", $params);
-
-			notify_user(
-					$parent_owner->guid,
-					$user->guid,
-					elgg_echo('thewire:notify:subject'),
-					$msg);
 		}
 	}
 }

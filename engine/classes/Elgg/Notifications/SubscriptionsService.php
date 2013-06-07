@@ -68,7 +68,8 @@ class Elgg_Notifications_SubscriptionsService {
 			$subscriptions[$record->guid] = substr_replace($deliveryMethods, '', 0, $prefixLength);
 		}
 
-		return $subscriptions;
+		$params = array('event' => $event);
+		return elgg_trigger_plugin_hook('get', 'subscriptions', $params, $subscriptions);
 	}
 
 	/**
