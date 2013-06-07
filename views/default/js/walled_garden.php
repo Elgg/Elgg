@@ -41,6 +41,7 @@ elgg.walled_garden.load = function(view) {
 	return function(event) {
 		var id = '#elgg-walledgarden-' + view;
 		id = id.replace('_', '-');
+		//@todo display some visual element that indicates that loading of content is running
 		elgg.get('walled_garden/' + view, {
 			'success' : function(data) {
 				$('.elgg-body-walledgarden').append(data);

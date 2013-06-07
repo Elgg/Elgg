@@ -29,3 +29,13 @@ echo <<<HTML
 	</div>
 </div>
 HTML;
+
+if (elgg_is_sticky_form('register')) {
+?>
+<script type="text/javascript">
+	elgg.register_hook_handler('init', 'system', function(){
+		elgg.walled_garden.load('register')($.Event("click"));
+	});
+</script>
+<?php
+}
