@@ -23,6 +23,7 @@ function users_settings_save() {
 	elgg_set_user_default_access();
 	elgg_set_user_name();
 	elgg_set_user_email();
+	//there's nothing we'd like to keep in sticky form here, so we never return false
 }
 
 /**

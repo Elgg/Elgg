@@ -6,6 +6,10 @@
  * @subpackage UserSettings
  */
 
-elgg_trigger_plugin_hook('usersettings:save', 'user');
+elgg_make_sticky_form('usersettings');
+
+if (elgg_trigger_plugin_hook('usersettings:save', 'user', null, true)) {
+	elgg_clear_sticky_form('usersettings');
+}
 
 forward(REFERER);
