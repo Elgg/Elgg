@@ -47,6 +47,7 @@ if (elgg_in_context('widgets')) {
 
 $params = array(
 	'entity' => $post,
+	'title' => false,
 	'metadata' => $metadata,
 	'subtitle' => $subtitle,
 	'content' => thewire_filter($post->description),
