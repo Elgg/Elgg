@@ -539,7 +539,7 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:annotation', '_elgg_annotation_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
-    
+
 	elgg_register_menu_item('footer', ElggMenuItem::factory(array(
 		'name' => 'powered',
 		'text' => elgg_echo("elgg:powered"),
