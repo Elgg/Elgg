@@ -789,35 +789,53 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Returns an array of annotations.
+	 * Gets an array of annotations.
 	 *
-	 * @param string $name   Annotation name
-	 * @param int    $limit  Limit
-	 * @param int    $offset Offset
-	 * @param string $order  Order by time: asc or desc
+	 * To retrieve annotations on an unsaved entity, pass array('name' => [annotation name])
+	 * as the options array.
+	 *
+	 * @param array  $options Array of options for elgg_get_annotations() except guid.
+	 * @param string $name    Annotation name (deprecated)
+	 * @param int    $limit   Limit (deprecated)
+	 * @param int    $offset  Offset (deprecated)
+	 * @param string $order   Order by time: asc or desc (deprecated)
 	 *
 	 * @return array
+	 * @see elgg_get_annotations()
 	 */
-	public function getAnnotations($name, $limit = 50, $offset = 0, $order = "asc") {
+	public function getAnnotations($options = array(), $limit = 50, $offset = 0, $order = "asc") {
+		if (!is_array($options)) {
+			elgg_deprecated_notice("ElggEntity::getAnnotations() takes an array of options.", 1.9);
+		}
+
 		if ((int) ($this->guid) > 0) {
+			if (!is_array($options)) {
+				$options = array(
+					'guid' => $this->guid,
+					'annotation_name' => $options,
+					'limit' => $limit,
+					'offset' => $offset,
+				);
 
-			$options = array(
-				'guid' => $this->guid,
-				'annotation_name' => $name,
-				'limit' => $limit,
-				'offset' => $offset,
-			);
-
-			if ($order != 'asc') {
-				$options['reverse_order_by'] = true;
+				if ($order != 'asc') {
+					$options['reverse_order_by'] = true;
+				}
 			}
 
 			return elgg_get_annotations($options);
-		} else if (isset($this->temp_annotations[$name])) {
-			return array($this->temp_annotations[$name]);
 		} else {
-			return array();
+			if (!is_array($options)) {
+				$name = $options;
+			} else {
+				$name = elgg_extract('name', $options, '');
+			}
+
+			if (isset($this->temp_annotations[$name])) {
+				return array($this->temp_annotations[$name]);
+			}
 		}
+
+		return array();
 	}
 
 	/**
