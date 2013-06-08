@@ -11,12 +11,11 @@
  *
  * Optionally, you can also call the file's save() method, this will
  * turn the file into an entity in the system and permit you to do
- * things like attach tags to the file etc. This is not done automatically
- * since there are many occasions where you may want access to file data
- * on datastores using the ElggFile interface but do not want to create
- * an Entity reference to it in the system (temporary files for example).
+ * things like attach tags to the file. If you do not save the file, no
+ * entity is created in the database. This is because there are occasions
+ * when you may want access to file data on datastores using the ElggFile
+ * interface without a need to persist information such as temporary files.
  *
- * @class      ElggFile
  * @package    Elgg.Core
  * @subpackage DataModel.File
  */
@@ -41,10 +40,10 @@ class ElggFile extends ElggObject {
 	/**
 	 * Loads an ElggFile entity.
 	 *
-	 * @param int $guid GUID of the ElggFile object
+	 * @param stdClass $row Database result or null for new ElggFile
 	 */
-	public function __construct($guid = null) {
-		parent::__construct($guid);
+	public function __construct($row = null) {
+		parent::__construct($row);
 
 		// Set default filestore
 		$this->filestore = $this->getFilestore();

@@ -2,13 +2,17 @@
 
 /**
  * ElggMetadata
- * This class describes metadata that can be attached to ElggEntities.
+ *
+ * This class describes metadata that can be attached to an ElggEntity. It is
+ * rare that a plugin developer needs to use this API for metadata. Almost all
+ * interaction with metadata occurs through the methods of ElggEntity. See its
+ * __set(), __get(), and setMetadata() methods.
  *
  * @package    Elgg.Core
  * @subpackage Metadata
  *
  * @property string $value_type
- * @property int $owner_guid
+ * @property int    $owner_guid
  * @property string $enabled
  */
 class ElggMetadata extends ElggExtender {
@@ -29,15 +33,18 @@ class ElggMetadata extends ElggExtender {
 	/**
 	 * Construct a metadata object
 	 *
-	 * @param mixed $id ID of metadata or a database row as stdClass object
+	 * Plugin developers will probably never need to use this API. See ElggEntity
+	 * for its API for setting and getting metadata.
+	 *
+	 * @param stdClass $row Database row as stdClass object
 	 */
-	function __construct($id = null) {
+	function __construct($row = null) {
 		$this->initializeAttributes();
 
-		if (!empty($id)) {
+		if (!empty($row)) {
 			// Create from db row
-			if ($id instanceof stdClass) {
-				$metadata = $id;
+			if ($row instanceof stdClass) {
+				$metadata = $row;
 				
 				$objarray = (array) $metadata;
 				foreach ($objarray as $key => $value) {
@@ -45,7 +52,8 @@ class ElggMetadata extends ElggExtender {
 				}
 			} else {
 				// get an ElggMetadata object and copy its attributes
-				$metadata = elgg_get_metadata_from_id($id);
+				elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use elgg_get_metadata_from_id()', 1.9);
+				$metadata = elgg_get_metadata_from_id($row);
 				$this->attributes = $metadata->attributes;
 			}
 		}

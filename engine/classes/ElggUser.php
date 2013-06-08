@@ -20,10 +20,8 @@ class ElggUser extends ElggEntity
 	implements Friendable {
 
 	/**
-	 * Initialise the attributes array.
-	 * This is vital to distinguish between metadata and base parameters.
-	 *
-	 * Place your base parameters here.
+	 * Initialize the attributes array.
+	 * This is vital to distinguish between metadata and base attributes.
 	 *
 	 * @return void
 	 */
@@ -47,49 +45,49 @@ class ElggUser extends ElggEntity
 	}
 
 	/**
-	 * Construct a new user entity, optionally from a given id value.
+	 * Construct a new user entity
 	 *
-	 * @param mixed $guid If an int, load that GUID.
-	 * 	If an entity table db row then will load the rest of the data.
+	 * Plugin developers should only use the constructor to create a new entity.
+	 * To retrieve entities, use get_entity() and the elgg_get_entities* functions.
 	 *
-	 * @throws Exception if there was a problem creating the user.
+	 * @param stdClass $row Database row result. Default is null to create a new user.
+	 *
+	 * @throws IOException|InvalidParameterException if there was a problem creating the user.
 	 */
-	function __construct($guid = null) {
+	function __construct($row = null) {
 		$this->initializeAttributes();
 
 		// compatibility for 1.7 api.
 		$this->initialise_attributes(false);
 
-		if (!empty($guid)) {
-			// Is $guid is a DB entity row
-			if ($guid instanceof stdClass) {
+		if (!empty($row)) {
+			// Is $row is a DB entity row
+			if ($row instanceof stdClass) {
 				// Load the rest
-				if (!$this->load($guid)) {
-					$msg = "Failed to load new " . get_class() . " from GUID:" . $guid->guid;
+				if (!$this->load($row)) {
+					$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
 					throw new IOException($msg);
 				}
-			} else if (is_string($guid)) {
-				// $guid is a username
-				$user = get_user_by_username($guid);
+			} else if (is_string($row)) {
+				// $row is a username
+				elgg_deprecated_notice('Passing a username to constructor is deprecated. Use get_user_by_username()', 1.9);
+				$user = get_user_by_username($row);
 				if ($user) {
 					foreach ($user->attributes as $key => $value) {
 						$this->attributes[$key] = $value;
 					}
 				}
-			} else if ($guid instanceof ElggUser) {
-				// $guid is an ElggUser so this is a copy constructor
+			} else if ($row instanceof ElggUser) {
+				// $row is an ElggUser so this is a copy constructor
 				elgg_deprecated_notice('This type of usage of the ElggUser constructor was deprecated. Please use the clone method.', 1.7);
-
-				foreach ($guid->attributes as $key => $value) {
+				foreach ($row->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-			} else if ($guid instanceof ElggEntity) {
-				// @todo why have a special case here
-				throw new InvalidParameterException("Passing a non-ElggUser to an ElggUser constructor!");
-			} else if (is_numeric($guid)) {
-				// $guid is a GUID so load entity
-				if (!$this->load($guid)) {
-					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $guid);
+			} else if (is_numeric($row)) {
+				// $row is a GUID so load entity
+				elgg_deprecated_notice('Passing a GUID to constructor is deprecated. Use get_entity()', 1.9);
+				if (!$this->load($row)) {
+					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $row);
 				}
 			} else {
 				throw new InvalidParameterException("Unrecognized value passed to constuctor.");

@@ -4,7 +4,7 @@
  *
  * Annotations allow you to attach bits of information to entities.
  * They are essentially the same as metadata, but with additional
- * helper functions.
+ * helper functions for performing calculations.
  *
  * @internal Annotations are stored in the annotations table.
  *
@@ -32,15 +32,21 @@ class ElggAnnotation extends ElggExtender {
 	/**
 	 * Construct a new annotation object
 	 *
-	 * @param mixed $id The annotation ID or a database row as stdClass object
+	 * Plugin developers should only use the constructor to create new annotations.
+	 * To retrieve annotations, use
+	 *  - elgg_get_annotation_from_id()
+	 *  - elgg_get_annotations()
+	 *  - ElggEntity::getAnnotations()
+	 *
+	 * @param stdClass $row Database row as stdClass object
 	 */
-	function __construct($id = null) {
+	function __construct($row = null) {
 		$this->initializeAttributes();
 
-		if (!empty($id)) {
+		if (!empty($row)) {
 			// Create from db row
-			if ($id instanceof stdClass) {
-				$annotation = $id;
+			if ($row instanceof stdClass) {
+				$annotation = $row;
 
 				$objarray = (array) $annotation;
 				foreach ($objarray as $key => $value) {
@@ -48,7 +54,8 @@ class ElggAnnotation extends ElggExtender {
 				}
 			} else {
 				// get an ElggAnnotation object and copy its attributes
-				$annotation = elgg_get_annotation_from_id($id);
+				elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use elgg_get_annotation_from_id()', 1.9);
+				$annotation = elgg_get_annotation_from_id($row);
 				$this->attributes = $annotation->attributes;
 			}
 		}

@@ -7,9 +7,6 @@
  *
  * Saving the extender data to database is handled by the child class.
  *
- * @tip Plugin authors would probably want to extend either ElggAnnotation
- * or ElggMetadata instead of this class.
- *
  * @package    Elgg.Core
  * @subpackage DataModel.Extender
  * @see        ElggAnnotation

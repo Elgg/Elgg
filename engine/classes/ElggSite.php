@@ -5,13 +5,12 @@
  * ElggSite represents a single site entity.
  *
  * An ElggSite object is an ElggEntity child class with the subtype
- * of "site."  It is created upon installation and hold all the
- * information about a site:
+ * of "site."  It is created upon installation and holds information about a site:
  *  - name
  *  - description
  *  - url
  *
- * Every ElggEntity (except ElggSite) belongs to a site.
+ * Every ElggEntity belongs to a site.
  *
  * @internal ElggSite represents a single row from the sites_entity
  * table, as well as the corresponding ElggEntity row from the entities table.
@@ -28,10 +27,8 @@
 class ElggSite extends ElggEntity {
 
 	/**
-	 * Initialise the attributes array.
-	 * This is vital to distinguish between metadata and base parameters.
-	 *
-	 * Place your base parameters here.
+	 * Initialize the attributes array.
+	 * This is vital to distinguish between metadata and base attributes.
 	 *
 	 * @return void
 	 */
@@ -46,56 +43,48 @@ class ElggSite extends ElggEntity {
 	}
 
 	/**
-	 * Load or create a new ElggSite.
+	 * Create a new ElggSite.
 	 *
-	 * If no arguments are passed, create a new entity.
+	 * Plugin developers should only use the constructor to create a new entity.
+	 * To retrieve entities, use get_entity() and the elgg_get_entities* functions.
 	 *
-	 * If an argument is passed attempt to load a full Site entity.  Arguments
-	 * can be:
-	 *  - The GUID of a site entity.
-	 *  - A URL as stored in ElggSite->url
-	 *  - A DB result object with a guid property
+	 * @param stdClass $row Database row result. Default is null to create a new site.
 	 *
-	 * @param mixed $guid If an int, load that GUID.  If a db row then will
-	 * load the rest of the data.
-	 *
-	 * @throws IOException If passed an incorrect guid
-	 * @throws InvalidParameterException If passed an Elgg* Entity that isn't an ElggSite
+	 * @throws IOException If cannot load remaining data from db
+	 * @throws InvalidParameterException If not passed a db result
 	 */
-	function __construct($guid = null) {
+	function __construct($row = null) {
 		$this->initializeAttributes();
 
 		// compatibility for 1.7 api.
 		$this->initialise_attributes(false);
 
-		if (!empty($guid)) {
-			// Is $guid is a DB entity table row
-			if ($guid instanceof stdClass) {
+		if (!empty($row)) {
+			// Is $row is a DB entity table row
+			if ($row instanceof stdClass) {
 				// Load the rest
-				if (!$this->load($guid)) {
-					$msg = "Failed to load new " . get_class() . " from GUID:" . $guid->guid;
+				if (!$this->load($row)) {
+					$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
 					throw new IOException($msg);
 				}
-			} else if ($guid instanceof ElggSite) {
-				// $guid is an ElggSite so this is a copy constructor
+			} else if ($row instanceof ElggSite) {
+				// $row is an ElggSite so this is a copy constructor
 				elgg_deprecated_notice('This type of usage of the ElggSite constructor was deprecated. Please use the clone method.', 1.7);
-
-				foreach ($guid->attributes as $key => $value) {
+				foreach ($row->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-			} else if ($guid instanceof ElggEntity) {
-				// @todo remove and just use else clause
-				throw new InvalidParameterException("Passing a non-ElggSite to an ElggSite constructor!");
-			} else if (strpos($guid, "http") !== false) {
+			} else if (strpos($row, "http") !== false) {
 				// url so retrieve by url
-				$guid = get_site_by_url($guid);
-				foreach ($guid->attributes as $key => $value) {
+				elgg_deprecated_notice("Passing URL to constructor is deprecated. Use get_site_by_url()", 1.9);
+				$row = get_site_by_url($row);
+				foreach ($row->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-			} else if (is_numeric($guid)) {
-				// $guid is a GUID so load
-				if (!$this->load($guid)) {
-					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $guid);
+			} else if (is_numeric($row)) {
+				// $row is a GUID so load
+				elgg_deprecated_notice('Passing a GUID to constructor is deprecated. Use get_entity()', 1.9);
+				if (!$this->load($row)) {
+					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $row);
 				}
 			} else {
 				throw new InvalidParameterException("Unrecognized value passed to constuctor.");
