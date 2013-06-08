@@ -334,7 +334,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 function messages_set_url($hook, $type, $url, $params) {
 	$entity = $params['entity'];
 	if (elgg_instanceof($entity, 'object', 'messages')) {
-		return 'messages/read/' . $message->getGUID();
+		return 'messages/read/' . $entity->getGUID();
 	}
 }
 
@@ -461,8 +461,10 @@ function messages_purge($event, $type, $user) {
  *
  * @param string $hook
  * @param string $entity_type
- * @param array $return_value
- * @param unknown_type $params
+ * @param string $return_value
+ * @param array  $params
+ *
+ * @return array
  */
 function messages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['messages/messages'] = elgg_echo('messages');
