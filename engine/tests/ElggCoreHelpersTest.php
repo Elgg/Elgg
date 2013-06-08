@@ -103,6 +103,38 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		}
 	}
 
+	/**
+	 * Test elgg_format_element()
+	 */
+	public function testElggFormatElement() {
+		$tests = array(
+			'<span>a&amp;b</span>' => array(
+				'tag_name' => 'span',
+				'text' => 'a&b',
+				'encode_text' => true,
+			),
+			'<img src="a&amp;b">' => array(
+				'tag_name' => 'img',
+				'src' => 'a&b',
+				'text' => 'ignored',
+			),
+			'<foo />' => array(
+				'tag_name' => 'foo',
+				'is_void' => true,
+				'is_xml' => true,
+			),
+		);
+		foreach ($tests as $expected => $vars) {
+			$this->assertEqual(elgg_format_element($vars), $expected);
+		}
+
+		try {
+			elgg_format_element(array());
+			$this->fail('Failed to throw exception');
+		} catch (InvalidArgumentException $e) {
+			$this->pass();
+		}
+	}
 
 	/**
 	 * Test elgg_register_js()
