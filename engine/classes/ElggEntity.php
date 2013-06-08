@@ -820,6 +820,8 @@ abstract class ElggEntity extends ElggData implements
 				if ($order != 'asc') {
 					$options['reverse_order_by'] = true;
 				}
+			} else {
+				$options['guid'] = $this->guid;
 			}
 
 			return elgg_get_annotations($options);
@@ -928,25 +930,34 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Gets an array of entities with a relationship to this entity.
 	 *
-	 * @param string $relationship Relationship type (eg "friends")
-	 * @param bool   $inverse      Is this an inverse relationship?
-	 * @param int    $limit        Number of elements to return
-	 * @param int    $offset       Indexing offset
+	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 *                       for a list of options. 'relationship_guid' is set to
+	 *                       this entity.
+	 * @param bool  $inverse Is this an inverse relationship? (deprecated)
+	 * @param int   $limit   Number of elements to return (deprecated)
+	 * @param int   $offset  Indexing offset (deprecated)
 	 *
 	 * @return array|false An array of entities or false on failure
+	 * @see elgg_get_entities_from_relationship()
 	 */
-	public function getEntitiesFromRelationship($relationship, $inverse = false, $limit = 50, $offset = 0) {
-		return elgg_get_entities_from_relationship(array(
-			'relationship' => $relationship,
-			'relationship_guid' => $this->getGUID(),
-			'inverse_relationship' => $inverse,
-			'limit' => $limit,
-			'offset' => $offset
-		));
+	public function getEntitiesFromRelationship($options = array(), $inverse = false, $limit = 50, $offset = 0) {
+		if (is_array($options)) {
+			$options['relationship_guid'] = $this->getGUID();
+			return elgg_get_entities_from_relationship($options);
+		} else {
+			elgg_deprecated_notice("ElggEntity::getEntitiesFromRelationship takes an options array", 1.9);
+			return elgg_get_entities_from_relationship(array(
+				'relationship' => $options,
+				'relationship_guid' => $this->getGUID(),
+				'inverse_relationship' => $inverse,
+				'limit' => $limit,
+				'offset' => $offset
+			));
+		}
 	}
 
 	/**
-	 * Gets the number of of entities from a specific relationship type
+	 * Gets the number of entities from a specific relationship type
 	 *
 	 * @param string $relationship         Relationship type (eg "friends")
 	 * @param bool   $inverse_relationship Invert relationship

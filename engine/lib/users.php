@@ -289,65 +289,6 @@ function user_remove_friend($user_guid, $friend_guid) {
 }
 
 /**
- * Determines whether or not a user is another user's friend.
- *
- * @param int $user_guid   The GUID of the user
- * @param int $friend_guid The GUID of the friend
- *
- * @return bool
- */
-function user_is_friend($user_guid, $friend_guid) {
-	return check_entity_relationship($user_guid, "friend", $friend_guid) !== false;
-}
-
-/**
- * Obtains a given user's friends
- *
- * @param int    $user_guid The user's GUID
- * @param string $subtype   The subtype of users, if any
- * @param int    $limit     Number of results to return (default 10)
- * @param int    $offset    Indexing offset, if any
- *
- * @return ElggUser[]|false Either an array of ElggUsers or false, depending on success
- */
-function get_user_friends($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
-$offset = 0) {
-
-	return elgg_get_entities_from_relationship(array(
-		'relationship' => 'friend',
-		'relationship_guid' => $user_guid,
-		'type' => 'user',
-		'subtype' => $subtype,
-		'limit' => $limit,
-		'offset' => $offset
-	));
-}
-
-/**
- * Obtains the people who have made a given user a friend
- *
- * @param int    $user_guid The user's GUID
- * @param string $subtype   The subtype of users, if any
- * @param int    $limit     Number of results to return (default 10)
- * @param int    $offset    Indexing offset, if any
- *
- * @return ElggUser[]|false Either an array of ElggUsers or false, depending on success
- */
-function get_user_friends_of($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
-$offset = 0) {
-
-	return elgg_get_entities_from_relationship(array(
-		'relationship' => 'friend',
-		'relationship_guid' => $user_guid,
-		'inverse_relationship' => true,
-		'type' => 'user',
-		'subtype' => $subtype,
-		'limit' => $limit,
-		'offset' => $offset
-	));
-}
-
-/**
  * Get a user object from a GUID.
  *
  * This function returns an ElggUser from a given GUID.

@@ -387,7 +387,7 @@ class ElggUser extends ElggEntity
 	 * @return bool
 	 */
 	function isFriendsWith($user_guid) {
-		return user_is_friend($this->getGUID(), $user_guid);
+		return (bool)check_entity_relationship($this->guid, "friend", $user_guid);
 	}
 
 	/**
@@ -398,7 +398,7 @@ class ElggUser extends ElggEntity
 	 * @return bool
 	 */
 	function isFriendOf($user_guid) {
-		return user_is_friend($user_guid, $this->getGUID());
+		return (bool)check_entity_relationship($user_guid, "friend", $this->guid);
 	}
 
 	/**
@@ -410,8 +410,15 @@ class ElggUser extends ElggEntity
 	 *
 	 * @return array|false Array of ElggUser, or false, depending on success
 	 */
-	function getFriends($subtype = "", $limit = 10, $offset = 0) {
-		return get_user_friends($this->getGUID(), $subtype, $limit, $offset);
+	function getFriends($subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10, $offset = 0) {
+		return elgg_get_entities_from_relationship(array(
+			'relationship' => 'friend',
+			'relationship_guid' => $this->guid,
+			'type' => 'user',
+			'subtype' => $subtype,
+			'limit' => $limit,
+			'offset' => $offset,
+		));
 	}
 
 	/**
@@ -423,8 +430,16 @@ class ElggUser extends ElggEntity
 	 *
 	 * @return array|false Array of ElggUser, or false, depending on success
 	 */
-	function getFriendsOf($subtype = "", $limit = 10, $offset = 0) {
-		return get_user_friends_of($this->getGUID(), $subtype, $limit, $offset);
+	function getFriendsOf($subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10, $offset = 0) {
+		return elgg_get_entities_from_relationship(array(
+			'relationship' => 'friend',
+			'relationship_guid' => $this->guid,
+			'inverse_relationship' => true,
+			'type' => 'user',
+			'subtype' => $subtype,
+			'limit' => $limit,
+			'offset' => $offset,
+		));
 	}
 
 	/**

@@ -264,8 +264,10 @@ class ElggSite extends ElggEntity {
 	 *
 	 * @return string
 	 * @since 1.8.0
+	 * @deprecated 1.9 Use elgg_list_entities_from_relationship()
 	 */
 	public function listMembers($options = array()) {
+		elgg_deprecated_notice('ElggSite::listMembers is deprecated. Use elgg_list_entities_from_relationship()', 1.9);
 		$defaults = array(
 			'site_guids' => ELGG_ENTITIES_ANY_VALUE,
 			'relationship' => 'member_of_site',
