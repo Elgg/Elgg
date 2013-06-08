@@ -1184,6 +1184,11 @@ Please do not reply to this email.",
 	'js:lightbox:current' => "image %s of %s",
 
 /**
+ * Miscellaneous
+ */
+	'elgg:powered' => "Powered by Elgg",
+
+/**
  * Languages according to ISO 639-1
  */
 
