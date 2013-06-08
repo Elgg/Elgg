@@ -154,7 +154,6 @@ class ElggObject extends ElggEntity {
 		return $this->getDatabase()->updateData($query) !== false;
 	}
 
-
 	/**
 	 * {@inheritdoc}
 	 */

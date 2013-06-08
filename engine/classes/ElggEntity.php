@@ -1499,10 +1499,10 @@ abstract class ElggEntity extends ElggData implements
 	 * Update the entity in the database.
 	 *
 	 * @return bool Whether the update was successful.
+	 *
+	 * @throws InvalidParameterException
 	 */
 	protected function update() {
-		_elgg_cache_entity($this);
-		
 		global $CONFIG;
 
 		$guid = (int)$this->get('guid');
@@ -1513,10 +1513,18 @@ abstract class ElggEntity extends ElggData implements
 		$time = time();
 
 		if ($access_id == ACCESS_DEFAULT) {
-			throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.h');
+			throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
 		}
 
-		if (!$this->canEdit() || !elgg_trigger_event('update', $this->type, $this)) {
+		// See #5600. This ensures the canEdit() check will use a fresh entity from the DB so it sees the
+		// persisted owner_guid, container_guid, etc.
+		_elgg_disable_caching_for_entity($this->guid);
+
+		$allow_edit = $this->canEdit() && elgg_trigger_event('update', $this->type, $this);
+
+		_elgg_enable_caching_for_entity($this->guid);
+
+		if (!$allow_edit) {
 			return false;
 		}
 		
@@ -1542,6 +1550,8 @@ abstract class ElggEntity extends ElggData implements
 		if ($ret !== false) {
 			$this->attributes['time_updated'] = $time;
 		}
+
+		_elgg_cache_entity($this);
 
 		// Handle cases where there was no error BUT no rows were updated!
 		return $ret !== false;
