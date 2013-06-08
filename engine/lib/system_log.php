@@ -182,7 +182,7 @@ function system_log($object, $event) {
 
 		// Has loggable interface, extract the necessary information and store
 		$object_id = (int)$object->getSystemLogID();
-		$object_class = $object->getClassName();
+		$object_class = get_class($object);
 		$object_type = $object->getType();
 		$object_subtype = $object->getSubtype();
 		$event = sanitise_string($event);
