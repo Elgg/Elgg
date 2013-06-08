@@ -794,8 +794,8 @@ abstract class ElggEntity extends ElggData implements
 	 * To retrieve annotations on an unsaved entity, pass array('name' => [annotation name])
 	 * as the options array.
 	 *
-	 * @param array  $options Array of options for elgg_get_annotations() except guid.
-	 * @param string $name    Annotation name (deprecated)
+	 * @param array  $options Array of options for elgg_get_annotations() except guid. This
+	 *               may be passed a string annotation name, but this usage is deprecated.
 	 * @param int    $limit   Limit (deprecated)
 	 * @param int    $offset  Offset (deprecated)
 	 * @param string $order   Order by time: asc or desc (deprecated)
