@@ -1190,7 +1190,7 @@ Please do not reply to this email.",
 /**
  * Miscellaneous
  */
-    'elgg:powered' => "Powered by Elgg",
+	'elgg:powered' => "Powered by Elgg",
 
 /**
  * Languages according to ISO 639-1
