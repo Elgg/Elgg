@@ -444,6 +444,7 @@
 }
 .elgg-menu-entity > li > span, .elgg-menu-annotation > li > span {
 	vertical-align: baseline;
+	font-style: italic;
 }
 
 /* ***************************************
