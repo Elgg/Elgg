@@ -35,7 +35,7 @@ class ElggRiverItem {
 	 *
 	 * @param stdClass $object Object obtained from database
 	 */
-	function __construct($object) {
+	public function __construct($object) {
 		if (!($object instanceof stdClass)) {
 			throw new InvalidParameterException("Invalid input to ElggRiverItem constructor");
 		}

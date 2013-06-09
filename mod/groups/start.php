@@ -390,7 +390,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 	$return[] = ElggMenuItem::factory($options);
 
 	// number of members
-	$num_members = get_group_members($entity->guid, 10, 0, 0, true);
+	$num_members = $entity->getMembers(array('count' => true));
 	$members_string = elgg_echo('groups:member');
 	$options = array(
 		'name' => 'members',

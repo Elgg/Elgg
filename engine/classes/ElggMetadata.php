@@ -34,7 +34,7 @@ class ElggMetadata extends ElggExtender {
 	 *
 	 * @param stdClass $row Database row as stdClass object
 	 */
-	function __construct($row = null) {
+	public function __construct($row = null) {
 		$this->initializeAttributes();
 
 		if (!empty($row)) {
@@ -62,7 +62,7 @@ class ElggMetadata extends ElggExtender {
 	 *
 	 * @return bool Depending on permissions
 	 */
-	function canEdit($user_guid = 0) {
+	public function canEdit($user_guid = 0) {
 		if ($entity = get_entity($this->get('entity_guid'))) {
 			return $entity->canEditMetadata($this, $user_guid);
 		}
@@ -76,7 +76,7 @@ class ElggMetadata extends ElggExtender {
 	 *
 	 * @throws IOException
 	 */
-	function save() {
+	public function save() {
 		if ($this->id > 0) {
 			return update_metadata($this->id, $this->name, $this->value,
 				$this->value_type, $this->owner_guid, $this->access_id);
@@ -96,7 +96,7 @@ class ElggMetadata extends ElggExtender {
 	 *
 	 * @return bool
 	 */
-	function delete() {
+	public function delete() {
 		$success = _elgg_delete_metastring_based_object_by_id($this->id, 'metadata');
 		if ($success) {
 			// we mark unknown here because this deletes only one value
@@ -112,7 +112,7 @@ class ElggMetadata extends ElggExtender {
 	 * @return bool
 	 * @since 1.8
 	 */
-	function disable() {
+	public function disable() {
 		$success = _elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'metadata');
 		if ($success) {
 			// we mark unknown here because this disables only one value
@@ -128,7 +128,7 @@ class ElggMetadata extends ElggExtender {
 	 * @return bool
 	 * @since 1.8
 	 */
-	function enable() {
+	public function enable() {
 		$success = _elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'metadata');
 		if ($success) {
 			_elgg_get_metadata_cache()->markUnknown($this->entity_guid, $this->name);

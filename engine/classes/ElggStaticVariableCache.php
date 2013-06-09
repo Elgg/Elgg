@@ -24,7 +24,7 @@ class ElggStaticVariableCache extends ElggSharedMemoryCache {
 	 * @param string $namespace The namespace for this cache to write to.
 	 * @warning namespaces of the same name are shared!
 	 */
-	function __construct($namespace = 'default') {
+	public function __construct($namespace = 'default') {
 		$this->setNamespace($namespace);
 		$this->clear();
 	}

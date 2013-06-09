@@ -100,7 +100,7 @@ abstract class ElggData implements
 	 *
 	 * @return bool
 	 */
-	function __isset($name) {
+	public function __isset($name) {
 		return $this->$name !== null;
 	}
 

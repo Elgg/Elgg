@@ -17,7 +17,7 @@ class Elgg_EventsService extends Elgg_HooksRegistrationService {
 	 * @see elgg_trigger_event
 	 * @access private
 	 */
-	function trigger($event, $type, $object = null) {
+	public function trigger($event, $type, $object = null) {
 		$events = $this->getOrderedHandlers($event, $type);
 		$args = array($event, $type, $object);
 

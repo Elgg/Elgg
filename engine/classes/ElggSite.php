@@ -19,7 +19,7 @@
  *
  * @package    Elgg.Core
  * @subpackage DataMode.Site
- * 
+ *
  * @property string $name        The name or title of the website
  * @property string $description A motto, mission statement, or description of the website
  * @property string $url         The root web address for the site, including trailing slash
@@ -53,7 +53,7 @@ class ElggSite extends ElggEntity {
 	 * @throws IOException If cannot load remaining data from db
 	 * @throws InvalidParameterException If not passed a db result
 	 */
-	function __construct($row = null) {
+	public function __construct($row = null) {
 		$this->initializeAttributes();
 
 		// compatibility for 1.7 api.
@@ -122,7 +122,7 @@ class ElggSite extends ElggEntity {
 	 */
 	protected function create() {
 		global $CONFIG;
-		
+
 		$guid = parent::create();
 
 		$name = sanitize_string($this->attributes['name']);
@@ -141,7 +141,8 @@ class ElggSite extends ElggEntity {
 		// make sure the site guid is set to self if not already set
 		if (!$this->site_guid) {
 			$this->site_guid = $guid;
-			$this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities SET site_guid = $guid WHERE guid = $guid");
+			$this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
+				SET site_guid = $guid WHERE guid = $guid");
 		}
 
 		return $guid;
@@ -152,18 +153,18 @@ class ElggSite extends ElggEntity {
 	 */
 	protected function update() {
 		global $CONFIG;
-		
+
 		if (!parent::update()) {
 			return false;
 		}
-		
+
 		$guid = (int)$this->guid;
 		$name = sanitize_string($this->name);
 		$description = sanitize_string($this->description);
 		$url = sanitize_string($this->url);
-		
+
 		$query = "UPDATE {$CONFIG->dbprefix}sites_entity
-			set name='$name', description='$description', url='$url' where guid=$guid";
+			SET name='$name', description='$description', url='$url' WHERE guid=$guid";
 
 		return $this->getDatabase()->updateData($query) !== false;
 	}
@@ -179,7 +180,7 @@ class ElggSite extends ElggEntity {
 	public function delete() {
 		global $CONFIG;
 		if ($CONFIG->site->getGUID() == $this->guid) {
-			throw new SecurityException('SecurityException:deletedisablecurrentsite');
+			throw new SecurityException('You cannot delete the current site');
 		}
 
 		return parent::delete();
@@ -200,12 +201,12 @@ class ElggSite extends ElggEntity {
 		global $CONFIG;
 
 		if ($CONFIG->site->getGUID() == $this->guid) {
-			throw new SecurityException('SecurityException:deletedisablecurrentsite');
+			throw new SecurityException('You cannot disable the current site');
 		}
 
 		return parent::disable($reason, $recursive);
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -229,11 +230,11 @@ class ElggSite extends ElggEntity {
 	 *                       Note: this was $limit before version 1.8
 	 * @param int   $offset  Offset @deprecated parameter
 	 *
-	 * @todo remove $offset in 2.0
-	 *
 	 * @return array of ElggUsers
+	 * @deprecated 1.9 Use ElggSite::getEntities()
 	 */
 	public function getMembers($options = array(), $offset = 0) {
+		elgg_deprecated_notice('ElggSite::getMembers() is deprecated. Use ElggSite::getEntities()', 1.9);
 		if (!is_array($options)) {
 			elgg_deprecated_notice("ElggSite::getMembers uses different arguments!", 1.8);
 			$options = array(
@@ -264,8 +265,10 @@ class ElggSite extends ElggEntity {
 	 *
 	 * @return string
 	 * @since 1.8.0
+	 * @deprecated 1.9 Use elgg_list_entities_from_relationship()
 	 */
 	public function listMembers($options = array()) {
+		elgg_deprecated_notice('ElggSite::listMembers() is deprecated. Use elgg_list_entities_from_relationship()', 1.9);
 		$defaults = array(
 			'site_guids' => ELGG_ENTITIES_ANY_VALUE,
 			'relationship' => 'member_of_site',
@@ -280,13 +283,68 @@ class ElggSite extends ElggEntity {
 	}
 
 	/**
+	 * Adds an entity to the site.
+	 *
+	 * This adds a 'member_of_site' relationship between between the entity and
+	 * the site. It does not change the site_guid of the entity.
+	 *
+	 * @param ElggEntity $entity User, group, or object entity
+	 *
+	 * @return bool
+	 */
+	public function addEntity(ElggEntity $entity) {
+		if (elgg_instanceof($entity, 'site')) {
+			return false;
+		}
+		return add_entity_relationship($entity->guid, "member_of_site", $this->guid);
+	}
+
+	/**
+	 * Removes an entity from this site
+	 *
+	 * @param ElggEntity $entity User, group, or object entity
+	 *
+	 * @return bool
+	 */
+	public function removeEntity($entity) {
+		if (elgg_instanceof($entity, 'site')) {
+			return false;
+		}
+		return remove_entity_relationship($entity->guid, "member_of_site", $this->guid);
+	}
+
+	/**
+	 * Get an array of entities that belong to the site.
+	 *
+	 * This only returns entities that have been explicitly added to the
+	 * site through addEntity().
+	 *
+	 * @param array $options Options array for elgg_get_entities_from_relationship()
+	 *                       Parameters set automatically by this method:
+	 *                       'relationship', 'relationship_guid', 'inverse_relationship'
+	 * @return array
+	 */
+	public function getEntities(array $options = array()) {
+		$options['relationship'] = 'member_of_site';
+		$options['relationship_guid'] = $this->guid;
+		$options['inverse_relationship'] = true;
+		if (!isset($options['site_guid']) || !isset($options['site_guids'])) {
+			$options['site_guids'] = ELGG_ENTITIES_ANY_VALUE;
+		}
+
+		return elgg_get_entities_from_relationship($options);
+	}
+
+	/**
 	 * Adds a user to the site.
 	 *
 	 * @param int $user_guid GUID
 	 *
 	 * @return bool
+	 * @deprecated 1.9 Use ElggSite::addEntity()
 	 */
 	public function addUser($user_guid) {
+		elgg_deprecated_notice('ElggSite::addUser() is deprecated. Use ElggEntity::addEntity()', 1.9);
 		return add_site_user($this->getGUID(), $user_guid);
 	}
 
@@ -296,8 +354,10 @@ class ElggSite extends ElggEntity {
 	 * @param int $user_guid GUID
 	 *
 	 * @return bool
+	 * @deprecated 1.9 Use ElggSite::removeEntity()
 	 */
 	public function removeUser($user_guid) {
+		elgg_deprecated_notice('ElggSite::removeUser() is deprecated. Use ElggEntity::removeEntity()', 1.9);
 		return remove_site_user($this->getGUID(), $user_guid);
 	}
 
@@ -312,8 +372,10 @@ class ElggSite extends ElggEntity {
 	 * @param int    $offset  Offset
 	 *
 	 * @return array
+	 * @deprecated 1.9 Use ElggSite:getEntities()
 	 */
 	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
+		elgg_deprecated_notice('ElggSite::getObjects() is deprecated. Use ElggSite::getEntities()', 1.9);
 		return get_site_objects($this->getGUID(), $subtype, $limit, $offset);
 	}
 
@@ -323,8 +385,10 @@ class ElggSite extends ElggEntity {
 	 * @param int $object_guid GUID
 	 *
 	 * @return bool
+	 * @deprecated 1.9 Use ElggSite::addEntity()
 	 */
 	public function addObject($object_guid) {
+		elgg_deprecated_notice('ElggSite::addObject() is deprecated. Use ElggEntity::addEntity()', 1.9);
 		return add_site_object($this->getGUID(), $object_guid);
 	}
 
@@ -334,8 +398,10 @@ class ElggSite extends ElggEntity {
 	 * @param int $object_guid GUID
 	 *
 	 * @return bool
+	 * @deprecated 1.9 Use ElggSite::removeEntity()
 	 */
 	public function removeObject($object_guid) {
+		elgg_deprecated_notice('ElggSite::removeObject() is deprecated. Use ElggEntity::removeEntity()', 1.9);
 		return remove_site_object($this->getGUID(), $object_guid);
 	}
 

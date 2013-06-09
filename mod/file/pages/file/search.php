@@ -56,9 +56,10 @@ if (!$owner) {
 
 $sidebar = file_get_type_cloud($page_owner_guid, $friends);
 
-if ($friends) {
+if ($friends && elgg_instanceof($owner, 'user')) {
 	// elgg_does not support getting objects that belong to an entity's friends
-	$friend_entities = get_user_friends($page_owner_guid, "", 999999, 0);
+	// @todo yes it does - with elgg_get_entities_from_relationship()
+	$friend_entities = $owner->getFriends(array('limit' => 0));
 	if ($friend_entities) {
 		$friend_guids = array();
 		foreach ($friend_entities as $friend) {

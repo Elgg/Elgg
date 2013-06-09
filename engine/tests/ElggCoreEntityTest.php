@@ -122,18 +122,18 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 	public function testElggEnityGetAndSetAnnotations() {
 		$this->assertFalse(array_key_exists('non_existent', $this->entity->expose_annotations()));
-		$this->assertIdentical($this->entity->getAnnotations('non_existent'), array());
+		$this->assertIdentical($this->entity->getAnnotations(array('annotation_name' => 'non_existent')), array());
 
 		// set and check temp annotation
 		$this->assertTrue($this->entity->annotate('non_existent', 'testing'));
-		$this->assertIdentical($this->entity->getAnnotations('non_existent'), array('testing'));
+		$this->assertIdentical($this->entity->getAnnotations(array('annotation_name' => 'non_existent')), array('testing'));
 		$this->assertTrue(array_key_exists('non_existent', $this->entity->expose_annotations()));
 
 		// save entity and check for annotation
 		$this->entity->subtype = 'testing';
 		$this->save_entity();
 		$this->assertFalse(array_key_exists('non_existent', $this->entity->expose_annotations()));
-		$annotations = $this->entity->getAnnotations('non_existent');
+		$annotations = $this->entity->getAnnotations(array('annotation_name' => 'non_existent'));
 		$this->assertIsA($annotations[0], 'ElggAnnotation');
 		$this->assertIdentical($annotations[0]->name, 'non_existent');
 		$this->assertEqual($this->entity->countAnnotations('non_existent'), 1);

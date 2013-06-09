@@ -28,7 +28,11 @@ if ($page->write_access_id == ACCESS_PUBLIC) {
 if ($revision) {
 	$annotation = $revision;
 } else {
-	$annotation = $page->getAnnotations('page', 1, 0, 'desc');
+	$annotation = $page->getAnnotations(array(
+		'annotation_name' => 'page',
+		'limit' => 1,
+		'reverse_order_by' => true,
+	));
 	if ($annotation) {
 		$annotation = $annotation[0];
 	}

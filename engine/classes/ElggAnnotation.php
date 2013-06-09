@@ -34,7 +34,7 @@ class ElggAnnotation extends ElggExtender {
 	 *
 	 * @param stdClass $row Database row as stdClass object
 	 */
-	function __construct($row = null) {
+	public function __construct($row = null) {
 		$this->initializeAttributes();
 
 		if (!empty($row)) {
@@ -62,7 +62,7 @@ class ElggAnnotation extends ElggExtender {
 	 *
 	 * @throws IOException
 	 */
-	function save() {
+	public function save() {
 		if ($this->id > 0) {
 			return update_annotation($this->id, $this->name, $this->value, $this->value_type,
 				$this->owner_guid, $this->access_id);
@@ -82,7 +82,7 @@ class ElggAnnotation extends ElggExtender {
 	 *
 	 * @return bool
 	 */
-	function delete() {
+	public function delete() {
 		$result = _elgg_delete_metastring_based_object_by_id($this->id, 'annotations');
 		if ($result) {
 			elgg_delete_river(array('annotation_id' => $this->id));
@@ -97,7 +97,7 @@ class ElggAnnotation extends ElggExtender {
 	 * @return bool
 	 * @since 1.8
 	 */
-	function disable() {
+	public function disable() {
 		return _elgg_set_metastring_based_object_enabled_by_id($this->id, 'no', 'annotations');
 	}
 
@@ -107,7 +107,7 @@ class ElggAnnotation extends ElggExtender {
 	 * @return bool
 	 * @since 1.8
 	 */
-	function enable() {
+	public function enable() {
 		return _elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'annotations');
 	}
 
