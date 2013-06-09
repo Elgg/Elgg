@@ -829,7 +829,7 @@ abstract class ElggEntity extends ElggData implements
 			if (!is_array($options)) {
 				$name = $options;
 			} else {
-				$name = elgg_extract('name', $options, '');
+				$name = elgg_extract('annotation_name', $options, '');
 			}
 
 			if (isset($this->temp_annotations[$name])) {

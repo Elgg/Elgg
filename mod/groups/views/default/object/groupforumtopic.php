@@ -35,7 +35,11 @@ $num_replies = elgg_get_annotations(array(
 	'count' => true,
 ));
 if ($num_replies != 0) {
-	$last_reply = $topic->getAnnotations('group_topic_post', 1, 0, 'desc');
+	$last_reply = $topic->getAnnotations(array(
+		'annotation_name' => 'group_topic_post',
+		'limit' => 1,
+		'reverse_order_by' => true,
+	));
 	$poster = $last_reply[0]->getOwnerEntity();
 	$reply_time = elgg_view_friendly_time($last_reply[0]->time_created);
 	$reply_text = elgg_echo('groups:updated', array($poster->name, $reply_time));

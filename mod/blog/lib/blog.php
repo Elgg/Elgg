@@ -376,7 +376,11 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 
 	// display a notice if there's an autosaved annotation
 	// and we're not editing it.
-	if ($auto_save_annotations = $post->getAnnotations('blog_auto_save', 1)) {
+	$auto_save_annotations = $post->getAnnotations(array(
+		'annotation_name' => 'blog_auto_save',
+		'limit' => 1,
+	));
+	if ($auto_save_annotations) {
 		$auto_save = $auto_save_annotations[0];
 	} else {
 		$auto_save = false;

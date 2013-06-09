@@ -37,7 +37,10 @@ function groups_2011030101($topic) {
 		return true;
 	}
 
-	$annotation = $topic->getAnnotations('group_topic_post', 1);
+	$annotation = $topic->getAnnotations(array(
+		'annotation_name' => 'group_topic_post',
+		'limit' => 1,
+	));
 	if (!$annotation) {
 		// no text for this forum post so we delete (probably caused by #2624)
 		return $topic->delete();
