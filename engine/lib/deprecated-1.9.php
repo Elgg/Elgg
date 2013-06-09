@@ -424,6 +424,59 @@ $offset = 0) {
 }
 
 /**
+ * Adds a user to another user's friends list.
+ *
+ * @param int $user_guid   The GUID of the friending user
+ * @param int $friend_guid The GUID of the user to friend
+ *
+ * @return bool Depending on success
+ * @deprecated 1.9 Use ElggUser::addFriend()
+ */
+function user_add_friend($user_guid, $friend_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::addFriend()', 1.9);
+	$user_guid = (int) $user_guid;
+	$friend_guid = (int) $friend_guid;
+	if ($user_guid == $friend_guid) {
+		return false;
+	}
+	if (!$friend = get_entity($friend_guid)) {
+		return false;
+	}
+	if (!$user = get_entity($user_guid)) {
+		return false;
+	}
+	if ((!($user instanceof ElggUser)) || (!($friend instanceof ElggUser))) {
+		return false;
+	}
+	return add_entity_relationship($user_guid, "friend", $friend_guid);
+}
+
+/**
+ * Removes a user from another user's friends list.
+ *
+ * @param int $user_guid   The GUID of the friending user
+ * @param int $friend_guid The GUID of the user on the friends list
+ *
+ * @return bool Depending on success
+ * @deprecated 1.9 Use ElggUser::removeFriend()
+ */
+function user_remove_friend($user_guid, $friend_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::removeFriend()', 1.9);
+	$user_guid = (int) $user_guid;
+	$friend_guid = (int) $friend_guid;
+
+	// perform cleanup for access lists.
+	$collections = get_user_access_collections($user_guid);
+	if ($collections) {
+		foreach ($collections as $collection) {
+			remove_user_from_access_collection($friend_guid, $collection->id);
+		}
+	}
+
+	return remove_entity_relationship($user_guid, "friend", $friend_guid);
+}
+
+/**
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"

@@ -240,55 +240,6 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
 }
 
 /**
- * Adds a user to another user's friends list.
- *
- * @param int $user_guid   The GUID of the friending user
- * @param int $friend_guid The GUID of the user to friend
- *
- * @return bool Depending on success
- */
-function user_add_friend($user_guid, $friend_guid) {
-	$user_guid = (int) $user_guid;
-	$friend_guid = (int) $friend_guid;
-	if ($user_guid == $friend_guid) {
-		return false;
-	}
-	if (!$friend = get_entity($friend_guid)) {
-		return false;
-	}
-	if (!$user = get_entity($user_guid)) {
-		return false;
-	}
-	if ((!($user instanceof ElggUser)) || (!($friend instanceof ElggUser))) {
-		return false;
-	}
-	return add_entity_relationship($user_guid, "friend", $friend_guid);
-}
-
-/**
- * Removes a user from another user's friends list.
- *
- * @param int $user_guid   The GUID of the friending user
- * @param int $friend_guid The GUID of the user on the friends list
- *
- * @return bool Depending on success
- */
-function user_remove_friend($user_guid, $friend_guid) {
-	$user_guid = (int) $user_guid;
-	$friend_guid = (int) $friend_guid;
-
-	// perform cleanup for access lists.
-	$collections = get_user_access_collections($user_guid);
-	if ($collections) {
-		foreach ($collections as $collection) {
-			remove_user_from_access_collection($friend_guid, $collection->id);
-		}
-	}
-
-	return remove_entity_relationship($user_guid, "friend", $friend_guid);
-}
-
-/**
  * Get a user object from a GUID.
  *
  * This function returns an ElggUser from a given GUID.
