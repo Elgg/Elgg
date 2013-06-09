@@ -579,7 +579,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggBatchReadHandlesBrokenEntities() {
-		$num_test_entities = 6;
+		$num_test_entities = 8;
 		$guids = array();
 		for ($i = $num_test_entities; $i > 0; $i--) {
 			$entity = new ElggObject();
@@ -592,11 +592,11 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		}
 
 		// break entities such that the first fetch has one incomplete
-		// and the second fetch has only incompletes!
+		// and the second and third fetches have only incompletes!
 		$db_prefix = elgg_get_config('dbprefix');
 		delete_data("
 			DELETE FROM {$db_prefix}objects_entity
-			WHERE guid IN ({$guids[1]}, {$guids[2]}, {$guids[3]})
+			WHERE guid IN ({$guids[1]}, {$guids[2]}, {$guids[3]}, {$guids[4]}, {$guids[5]})
 		");
 
 		$options = array(
@@ -613,7 +613,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		}
 
 		// The broken entities should not have been visited
-		$this->assertEqual($entities_visited, array($guids[0], $guids[4], $guids[5]));
+		$this->assertEqual($entities_visited, array($guids[0], $guids[6], $guids[7]));
 
 		// cleanup (including leftovers from previous tests)
 		$entity_rows = elgg_get_entities(array_merge($options, array(
@@ -629,7 +629,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggBatchDeleteHandlesBrokenEntities() {
-		$num_test_entities = 6;
+		$num_test_entities = 8;
 		$guids = array();
 		for ($i = $num_test_entities; $i > 0; $i--) {
 			$entity = new ElggObject();
@@ -642,11 +642,11 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		}
 
 		// break entities such that the first fetch has one incomplete
-		// and the second fetch has only incompletes!
+		// and the second and third fetches have only incompletes!
 		$db_prefix = elgg_get_config('dbprefix');
 		delete_data("
 			DELETE FROM {$db_prefix}objects_entity
-			WHERE guid IN ({$guids[1]}, {$guids[2]}, {$guids[3]})
+			WHERE guid IN ({$guids[1]}, {$guids[2]}, {$guids[3]}, {$guids[4]}, {$guids[5]})
 		");
 
 		$options = array(
@@ -664,7 +664,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		}
 
 		// The broken entities should not have been visited
-		$this->assertEqual($entities_visited, array($guids[0], $guids[4], $guids[5]));
+		$this->assertEqual($entities_visited, array($guids[0], $guids[6], $guids[7]));
 
 		// cleanup (including leftovers from previous tests)
 		$entity_rows = elgg_get_entities(array_merge($options, array(

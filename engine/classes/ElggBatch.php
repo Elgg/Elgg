@@ -157,6 +157,13 @@ class ElggBatch
 	private $incompleteEntities = array();
 
 	/**
+	 * Total number of incomplete entities fetched
+	 *
+	 * @var int
+	 */
+	private $totalIncompletes = 0;
+
+	/**
 	 * Batches operations on any elgg_get_*() or compatible function that supports
 	 * an options array.
 	 *
@@ -242,12 +249,9 @@ class ElggBatch
 	/**
 	 * Fetches the next chunk of results
 	 *
-	 * @param int $num_incompletes_last_fetch When called recursively, this is the number of
-	 *                                        incomplete entities returned in the last fetch.
-	 *
 	 * @return bool
 	 */
-	private function getNextResultsChunk($num_incompletes_last_fetch = 0) {
+	private function getNextResultsChunk() {
 
 		// always reset results.
 		$this->results = array();
@@ -281,7 +285,7 @@ class ElggBatch
 		if ($this->incrementOffset) {
 			$offset = $this->offset + $this->retrievedResults;
 		} else {
-			$offset = $this->offset + $num_incompletes_last_fetch;
+			$offset = $this->offset + $this->totalIncompletes;
 		}
 
 		$current_options = array(
@@ -297,6 +301,8 @@ class ElggBatch
 
 		$num_results = count($this->results);
 		$num_incomplete = count($this->incompleteEntities);
+
+		$this->totalIncompletes += $num_incomplete;
 
 		if ($this->incompleteEntities) {
 			// pad the front of the results with nulls representing the incompletes
@@ -318,7 +324,7 @@ class ElggBatch
 			if ($num_results == 0) {
 				// This fetch was *all* incompletes! We need to fetch until we can either
 				// offer at least one row to iterate over, or give up.
-				return $this->getNextResultsChunk($num_incomplete);
+				return $this->getNextResultsChunk();
 			}
 			return true;
 		} else {
