@@ -340,6 +340,7 @@ class ElggUser extends ElggEntity
 	 */
 	public function addToSite($site) {
 		if (is_numeric($site)) {
+			elgg_deprecated_notice('ElggUser::addToSite() takes a site entity', 1.9);
 			return add_site_user($site, $this->getGUID());
 		}
 

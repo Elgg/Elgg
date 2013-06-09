@@ -1215,9 +1215,16 @@ function elgg_view_widgets_column($user, $context, $column, $show_access = true)
  */
 function elgg_view_access_collections($owner_guid) {
 	if ($collections = get_user_access_collections($owner_guid)) {
+		$user = get_user($owner_guid);
+		if ($user) {
+			$entities = $user->getFriends(array('limit' => 0));
+		} else {
+			$entities = array();
+		}
+
 		foreach ($collections as $key => $collection) {
 			$collections[$key]->members = get_members_of_access_collection($collection->id, true);
-			$collections[$key]->entities = get_user_friends($owner_guid, "", 9999);
+			$collections[$key]->entities = $entities;
 		}
 	}
 

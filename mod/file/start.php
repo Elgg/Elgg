@@ -290,11 +290,12 @@ function get_general_file_type($mimetype) {
 function file_get_type_cloud($container_guid = "", $friends = false) {
 
 	$container_guids = $container_guid;
+	$container = get_entity($container_guid);
 
-	if ($friends) {
+	if ($friends && $container) {
 		// tags interface does not support pulling tags on friends' content so
 		// we need to grab all friends
-		$friend_entities = get_user_friends($container_guid, "", 999999, 0);
+		$friend_entities = $container->getFriends(array('limit' => 0));
 		if ($friend_entities) {
 			$friend_guids = array();
 			foreach ($friend_entities as $friend) {

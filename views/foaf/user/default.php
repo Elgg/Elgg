@@ -6,9 +6,8 @@
  * @subpackage Core
  */
 
-// @todo update when get_user_friends is deprecated in 1.9
-$friends = get_user_friends(elgg_get_page_owner_guid(), $subtype = "", $limit = 10000, $offset = 0);
-
+$user = $vars['entity'];
+$friends = $user->getFriends(array('limit' => 0));
 foreach ($friends as $friend) {
 ?>
 
@@ -20,4 +19,6 @@ foreach ($friends as $friend) {
 </foaf:Person>
 </foaf:knows>
 
-<?php } 
+<?php
+
+}

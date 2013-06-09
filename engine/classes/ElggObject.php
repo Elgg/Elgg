@@ -195,6 +195,7 @@ class ElggObject extends ElggEntity {
 	 */
 	public function addToSite($site) {
 		if (is_numeric($site)) {
+			elgg_deprecated_notice('ElggObject::addToSite() takes a site entity', 1.9);
 			return add_site_object($site, $this->getGUID());
 		}
 
