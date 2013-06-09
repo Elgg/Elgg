@@ -1384,6 +1384,62 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
+	 * Add this entity to a site
+	 *
+	 * This creates a 'member_of_site' relationship.
+	 *
+	 * @param ElggSite $site The site to add this entity to
+	 *
+	 * @return bool
+	 */
+	function addToSite(ElggSite $site) {
+		if (!elgg_instanceof($site, 'site')) {
+			return false;
+		}
+
+		return $site->addEntity($this);
+	}
+
+	/**
+	 * Remove this entity from a site
+	 *
+	 * This deletes the 'member_of_site' relationship.
+	 *
+	 * @param ElggSite $site The site to remove this entity from
+	 *
+	 * @return bool
+	 */
+	function removeFromSite(ElggSite $site) {
+		if (!elgg_instanceof($site, 'site')) {
+			return false;
+		}
+
+		return $site->removeEntity($this);
+	}
+
+	/**
+	 * Gets the sites this entity is a member of
+	 *
+	 * Site membership is determined by relationships and not site_guid.
+	 *
+	 * @param array $options Options array for elgg_get_entities_from_relationship()
+	 *                       Parameters set automatically by this method:
+	 *                       'relationship', 'relationship_guid', 'inverse_relationship'
+	 *
+	 * @return array
+	 */
+	function getSites(array $options = array()) {
+		$options['relationship'] = 'member_of_site';
+		$options['relationship_guid'] = $this->guid;
+		$options['inverse_relationship'] = false;
+		if (!isset($options['site_guid']) || !isset($options['site_guids'])) {
+			$options['site_guids'] = ELGG_ENTITIES_ANY_VALUE;
+		}
+
+		return elgg_get_entities_from_relationship($options);
+	}
+
+	/**
 	 * Tests to see whether the object has been fully loaded.
 	 *
 	 * @return bool

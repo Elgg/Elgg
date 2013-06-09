@@ -316,25 +316,33 @@ class ElggUser extends ElggEntity
 	/**
 	 * Get sites that this user is a member of
 	 *
-	 * @param string $subtype Optionally, the subtype of result we want to limit to
-	 * @param int    $limit   The number of results to return
-	 * @param int    $offset  Any indexing offset
+	 * @param array $options Options array. Used to be $subtype
+	 * @param int   $limit   The number of results to return (deprecated)
+	 * @param int   $offset  Any indexing offset (deprecated)
 	 *
 	 * @return array
 	 */
-	function getSites($subtype = "", $limit = 10, $offset = 0) {
-		return get_user_sites($this->getGUID(), $limit, $offset);
+	function getSites($options = "", $limit = 10, $offset = 0) {
+		if (is_string($options)) {
+			elgg_deprecated_notice('ElggUser::getSites() takes an options array', 1.9);
+			return get_user_sites($this->getGUID(), $limit, $offset);
+		}
+
+		return parent::getSites($options);
 	}
 
 	/**
 	 * Add this user to a particular site
 	 *
-	 * @param int $site_guid The guid of the site to add it to
-	 *
+	 * @param ElggSite $site The site to add this user to. This used to be the
+	 *                       the site guid (still supported by deprecated)
 	 * @return bool
 	 */
-	function addToSite($site_guid) {
-		return add_site_user($site_guid, $this->getGUID());
+	function addToSite($site) {
+		if (is_numeric($site)) {
+			return add_site_user($site, $this->getGUID());
+		}
+		return parent::addToSite($site);
 	}
 
 	/**

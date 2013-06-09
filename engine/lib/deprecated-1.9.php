@@ -573,6 +573,58 @@ function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
 }
 
 /**
+ * Get the sites this object is part of
+ *
+ * @param int $object_guid The object's GUID
+ * @param int $limit       Number of results to return
+ * @param int $offset      Any indexing offset
+ *
+ * @return array On success, an array of ElggSites
+ * @deprecated 1.9 Use ElggEntity::getSites()
+ */
+function get_object_sites($object_guid, $limit = 10, $offset = 0) {
+	elgg_deprecated_notice('get_object_sites() is deprecated. Use ElggEntity::getSites()', 1.9);
+	$object_guid = (int)$object_guid;
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member_of_site',
+		'relationship_guid' => $object_guid,
+		'type' => 'site',
+		'limit' => $limit,
+		'offset' => $offset,
+	));
+}
+
+/**
+ * Get the sites this user is part of
+ *
+ * @param int $user_guid The user's GUID
+ * @param int $limit     Number of results to return
+ * @param int $offset    Any indexing offset
+ *
+ * @return ElggSite[]|false On success, an array of ElggSites
+ * @deprecated 1.9 Use ElggEntity::getSites()
+ */
+function get_user_sites($user_guid, $limit = 10, $offset = 0) {
+	elgg_deprecated_notice('get_user_sites() is deprecated. Use ElggEntity::getSites()', 1.9);
+	$user_guid = (int)$user_guid;
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+
+	return elgg_get_entities_from_relationship(array(
+		'site_guids' => ELGG_ENTITIES_ANY_VALUE,
+		'relationship' => 'member_of_site',
+		'relationship_guid' => $user_guid,
+		'inverse_relationship' => false,
+		'type' => 'site',
+		'limit' => $limit,
+		'offset' => $offset,
+	));
+}
+
+/**
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"

@@ -169,27 +169,36 @@ class ElggObject extends ElggEntity {
 	 *
 	 * Site membership is determined by relationships and not site_guid.
 	 *
-	 * @todo This should be moved to ElggEntity
+	 * @todo Mmoved to ElggEntity so remove this in 2.0
 	 *
-	 * @param string $subtype Optionally, the subtype of result we want to limit to
-	 * @param int    $limit   The number of results to return
-	 * @param int    $offset  Any indexing offset
+	 * @param array $options Options array. Used to be $subtype
+	 * @param int   $limit   The number of results to return (deprecated)
+	 * @param int   $offset  Any indexing offset (deprecated)
 	 *
 	 * @return array
 	 */
-	function getSites($subtype = "", $limit = 10, $offset = 0) {
-		return get_site_objects($this->getGUID(), $subtype, $limit, $offset);
+	function getSites($options = "", $limit = 10, $offset = 0) {
+		if (is_string($options)) {
+			elgg_deprecated_notice('ElggObject::getSites() takes an options array', 1.9);
+			return get_site_objects($this->getGUID(), $options, $limit, $offset);
+		}
+
+		return parent::getSites();
 	}
 
 	/**
 	 * Add this object to a site
 	 *
-	 * @param int $site_guid The guid of the site to add it to
-	 *
+	 * @param ElggSite $site The site to add this object to. This used to be the
+	 *                       the site guid (still supported by deprecated)
 	 * @return bool
 	 */
-	function addToSite($site_guid) {
-		return add_site_object($this->getGUID(), $site_guid);
+	function addToSite($site) {
+		if (is_numeric($site)) {
+			return add_site_object($site, $this->getGUID());
+		}
+
+		return parent::addToSite($site);
 	}
 
 	/**

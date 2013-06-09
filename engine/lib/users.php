@@ -215,31 +215,6 @@ function remove_user_admin($user_guid) {
 }
 
 /**
- * Get the sites this user is part of
- *
- * @param int $user_guid The user's GUID
- * @param int $limit     Number of results to return
- * @param int $offset    Any indexing offset
- *
- * @return ElggSite[]|false On success, an array of ElggSites
- */
-function get_user_sites($user_guid, $limit = 10, $offset = 0) {
-	$user_guid = (int)$user_guid;
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-
-	return elgg_get_entities_from_relationship(array(
-		'site_guids' => ELGG_ENTITIES_ANY_VALUE,
-		'relationship' => 'member_of_site',
-		'relationship_guid' => $user_guid,
-		'inverse_relationship' => false,
-		'type' => 'site',
-		'limit' => $limit,
-		'offset' => $offset,
-	));
-}
-
-/**
  * Get a user object from a GUID.
  *
  * This function returns an ElggUser from a given GUID.
