@@ -12,24 +12,25 @@
  * @property int    $time_created A UNIX timestamp of when the relationship was created (read-only, set on first save)
  */
 class ElggRelationship extends ElggData implements
-	Importable
+	Importable // deprecated
 {
 	// database column limit
 	const RELATIONSHIP_LIMIT = 50;
 
 	/**
-	 * Create a relationship object, optionally from a given id value or row.
+	 * Create a relationship object
 	 *
-	 * @param mixed $id ElggRelationship id, database row, or null for new relationship
+	 * @param stdClass $row Database row or null for new relationship
 	 */
-	function __construct($id = null) {
+	function __construct($row = null) {
 		$this->initializeAttributes();
 
-		if (!empty($id)) {
-			if ($id instanceof stdClass) {
-				$relationship = $id; // Create from db row
+		if (!empty($row)) {
+			if ($row instanceof stdClass) {
+				$relationship = $row; // Create from db row
 			} else {
-				$relationship = get_relationship($id);
+				elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use get_relationship()', 1.9);
+				$relationship = get_relationship($row);
 			}
 
 			if ($relationship) {

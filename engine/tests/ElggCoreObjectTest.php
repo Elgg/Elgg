@@ -83,25 +83,13 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$this->entity->delete();
 	}
 
-	public function testElggObjectLoad() {
-		// fail on wrong type
+	public function testElggConstructorWithGarbage() {
 		try {
-			$error = new ElggObjectTest(elgg_get_logged_in_user_guid());
+			$error = new ElggObjectTest('garbage');
 			$this->assertTrue(false);
 		} catch (Exception $e) {
-			$this->assertIsA($e, 'InvalidClassException');
+			$this->assertIsA($e, 'InvalidParameterException');
 		}
-	}
-
-	public function testElggObjectConstructorByGUID() {
-		$guid = $this->entity->save();
-
-		// load a new object using guid
-		$entity = new ElggObjectTest($guid);
-		$this->assertIdenticalEntities($this->entity, $entity);
-
-		// clean up
-		$this->entity->delete();
 	}
 
 	public function testElggObjectClone() {
