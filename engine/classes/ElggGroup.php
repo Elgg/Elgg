@@ -39,7 +39,7 @@ class ElggGroup extends ElggEntity
 	 *
 	 * @throws IOException|InvalidParameterException if there was a problem creating the group.
 	 */
-	function __construct($row = null) {
+	public function __construct($row = null) {
 		$this->initializeAttributes();
 
 		// compatibility for 1.7 api.

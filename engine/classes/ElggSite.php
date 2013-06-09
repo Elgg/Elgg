@@ -53,7 +53,7 @@ class ElggSite extends ElggEntity {
 	 * @throws IOException If cannot load remaining data from db
 	 * @throws InvalidParameterException If not passed a db result
 	 */
-	function __construct($row = null) {
+	public function __construct($row = null) {
 		$this->initializeAttributes();
 
 		// compatibility for 1.7 api.

@@ -51,7 +51,7 @@ class ElggObject extends ElggEntity {
 	 * @throws IOException If cannot load remaining data from db
 	 * @throws InvalidParameterException If not passed a db row result
 	 */
-	function __construct($row = null) {
+	public function __construct($row = null) {
 		$this->initializeAttributes();
 
 		// compatibility for 1.7 api.
@@ -177,7 +177,7 @@ class ElggObject extends ElggEntity {
 	 *
 	 * @return array
 	 */
-	function getSites($options = "", $limit = 10, $offset = 0) {
+	public function getSites($options = "", $limit = 10, $offset = 0) {
 		if (is_string($options)) {
 			elgg_deprecated_notice('ElggObject::getSites() takes an options array', 1.9);
 			return get_site_objects($this->getGUID(), $options, $limit, $offset);
@@ -193,7 +193,7 @@ class ElggObject extends ElggEntity {
 	 *                       the site guid (still supported by deprecated)
 	 * @return bool
 	 */
-	function addToSite($site) {
+	public function addToSite($site) {
 		if (is_numeric($site)) {
 			return add_site_object($site, $this->getGUID());
 		}

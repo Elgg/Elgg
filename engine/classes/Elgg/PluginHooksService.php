@@ -19,7 +19,7 @@ class Elgg_PluginHooksService extends Elgg_HooksRegistrationService {
 	 * @see elgg_trigger_plugin_hook
 	 * @access private
 	 */
-	function trigger($hook, $type, $params = null, $returnvalue = null) {
+	public function trigger($hook, $type, $params = null, $returnvalue = null) {
 		$hooks = $this->getOrderedHandlers($hook, $type);
 		
 		foreach ($hooks as $callback) {

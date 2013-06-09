@@ -1392,7 +1392,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return bool
 	 */
-	function addToSite(ElggSite $site) {
+	public function addToSite(ElggSite $site) {
 		if (!elgg_instanceof($site, 'site')) {
 			return false;
 		}
@@ -1409,7 +1409,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return bool
 	 */
-	function removeFromSite(ElggSite $site) {
+	public function removeFromSite(ElggSite $site) {
 		if (!elgg_instanceof($site, 'site')) {
 			return false;
 		}
@@ -1428,7 +1428,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return array
 	 */
-	function getSites(array $options = array()) {
+	public function getSites(array $options = array()) {
 		$options['relationship'] = 'member_of_site';
 		$options['relationship_guid'] = $this->guid;
 		$options['inverse_relationship'] = false;

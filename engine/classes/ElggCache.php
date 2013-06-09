@@ -17,7 +17,7 @@ abstract class ElggCache implements ArrayAccess {
 	/**
 	 * Set the constructor.
 	 */
-	function __construct() {
+	public function __construct() {
 		$this->variables = array();
 	}
 
@@ -92,7 +92,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return mixed
 	 */
-	function __get($key) {
+	public function __get($key) {
 		return $this->load($key);
 	}
 
@@ -104,7 +104,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return void
 	 */
-	function __set($key, $value) {
+	public function __set($key, $value) {
 		$this->save($key, $value);
 	}
 
@@ -115,7 +115,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return bool
 	 */
-	function __isset($key) {
+	public function __isset($key) {
 		return (bool)$this->load($key);
 	}
 
@@ -126,7 +126,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return bool
 	 */
-	function __unset($key) {
+	public function __unset($key) {
 		return $this->delete($key);
 	}
 
@@ -200,7 +200,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return void
 	 */
-	function offsetSet($key, $value) {
+	public function offsetSet($key, $value) {
 		$this->save($key, $value);
 	}
 
@@ -213,7 +213,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return mixed
 	 */
-	function offsetGet($key) {
+	public function offsetGet($key) {
 		return $this->load($key);
 	}
 
@@ -226,7 +226,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return void
 	 */
-	function offsetUnset($key) {
+	public function offsetUnset($key) {
 		if (isset($this->$key)) {
 			unset($this->$key);
 		}
@@ -241,7 +241,7 @@ abstract class ElggCache implements ArrayAccess {
 	 *
 	 * @return bool
 	 */
-	function offsetExists($key) {
+	public function offsetExists($key) {
 		return isset($this->$key);
 	}
 }

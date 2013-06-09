@@ -35,7 +35,7 @@ class ElggMemcache extends ElggSharedMemoryCache {
 	 *
 	 * @throws ConfigurationException
 	 */
-	function __construct($namespace = 'default') {
+	public function __construct($namespace = 'default') {
 		global $CONFIG;
 
 		$this->setNamespace($namespace);
