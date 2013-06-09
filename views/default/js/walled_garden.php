@@ -10,7 +10,7 @@ $cancel_button = elgg_view('input/button', array(
 	'value' => elgg_echo('cancel'),
 	'class' => 'elgg-button-cancel mlm',
 ));
-$cancel_button = trim($cancel_button);
+$cancel_button = json_encode($cancel_button);
 
 if (0) { ?><script><?php }
 ?>
@@ -23,10 +23,11 @@ elgg.walled_garden.init = function () {
 	$('.registration_link').click(elgg.walled_garden.load('register'));
 
 	$('input.elgg-button-cancel').live('click', function(event) {
-		if ($('.elgg-walledgarden-single').is(':visible')) {
+		var $wgs = $('.elgg-walledgarden-single');
+		if ($wgs.is(':visible')) {
 			$('.elgg-walledgarden-double').fadeToggle();
-			$('.elgg-walledgarden-single').fadeToggle();
-			$('.elgg-walledgarden-single').remove();
+			$wgs.fadeToggle();
+			$wgs.remove();
 		}
 		event.preventDefault();
 	});
@@ -45,10 +46,28 @@ elgg.walled_garden.load = function(view) {
 		//@todo display some visual element that indicates that loading of content is running
 		elgg.get('walled_garden/' + view, {
 			'success' : function(data) {
-				$('.elgg-body-walledgarden').append(data);
-				$(id).find('input.elgg-button-submit').after('<?php echo $cancel_button; ?>');
-				$('#elgg-walledgarden-login').fadeToggle();
-				$(id).fadeToggle();
+				var $wg = $('.elgg-body-walledgarden');
+				$wg.append(data);
+				$(id).find('input.elgg-button-submit').after(<?php echo $cancel_button; ?>);
+
+				if (view == 'register' && $wg.hasClass('hidden')) {
+					// this was a failed register, display the register form ASAP
+					$('#elgg-walledgarden-login').toggle();
+					$(id).toggle();
+					$wg.removeClass('hidden');
+				} else {
+					$('#elgg-walledgarden-login').fadeToggle();
+					$(id).fadeToggle();
+				}
+
+				if (view == 'register') {
+					$('.elgg-form-register').submit(function () {
+						// set short cookie indicating JS support
+						var date = new Date();
+						date.setTime(date.getTime() + (60 * 1000));
+						elgg.session.cookie('elgg_js_support', '1', { expires: date });
+					});
+				}
 			}
 		});
 		event.preventDefault();
