@@ -242,9 +242,12 @@ class ElggBatch
 	/**
 	 * Fetches the next chunk of results
 	 *
+	 * @param int $num_incompletes_last_fetch When called recursively, this is the number of
+	 *                                        incomplete entities returned in the last fetch.
+	 *
 	 * @return bool
 	 */
-	private function getNextResultsChunk() {
+	private function getNextResultsChunk($num_incompletes_last_fetch = 0) {
 
 		// always reset results.
 		$this->results = array();
@@ -278,7 +281,7 @@ class ElggBatch
 		if ($this->incrementOffset) {
 			$offset = $this->offset + $this->retrievedResults;
 		} else {
-			$offset = $this->offset;
+			$offset = $this->offset + $num_incompletes_last_fetch;
 		}
 
 		$current_options = array(
@@ -292,17 +295,30 @@ class ElggBatch
 		$this->incompleteEntities = array();
 		$this->results = call_user_func_array($this->getter, array($options));
 
-		// If there were incomplete entities, we pretend they were at the beginning of the results,
-		// fool the local counter to think it's skipped by them already, and update the running
-		// total as if the results contained the incompletes.
-		if ($this->results || $this->incompleteEntities) {
+		$num_results = count($this->results);
+		$num_incomplete = count($this->incompleteEntities);
+
+		if ($this->incompleteEntities) {
+			// pad the front of the results with nulls representing the incompletes
+			array_splice($this->results, 0, 0, array_pad(array(), $num_incomplete, null));
+			// ...and skip past them
+			reset($this->results);
+			for ($i = 0; $i < $num_incomplete; $i++) {
+				next($this->results);
+			}
+		}
+
+		if ($this->results) {
 			$this->chunkIndex++;
-			$this->resultIndex = count($this->incompleteEntities);
-			$this->retrievedResults += (count($this->results) + count($this->incompleteEntities));
-			if (!$this->results) {
+
+			// let the system know we've jumped past the nulls
+			$this->resultIndex = $num_incomplete;
+
+			$this->retrievedResults += ($num_results + $num_incomplete);
+			if ($num_results == 0) {
 				// This fetch was *all* incompletes! We need to fetch until we can either
 				// offer at least one row to iterate over, or give up.
-				return $this->getNextResultsChunk();
+				return $this->getNextResultsChunk($num_incomplete);
 			}
 			return true;
 		} else {

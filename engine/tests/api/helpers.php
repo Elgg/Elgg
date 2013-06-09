@@ -578,16 +578,14 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertEqual(11, $j);
 	}
 
-	public function testElggBatchHandlesBrokenEntities() {
+	public function testElggBatchReadHandlesBrokenEntities() {
 		$num_test_entities = 6;
 		$guids = array();
-		$now = time();
 		for ($i = $num_test_entities; $i > 0; $i--) {
 			$entity = new ElggObject();
 			$entity->type = 'object';
 			$entity->subtype = 'test_5357_subtype';
 			$entity->access_id = ACCESS_PUBLIC;
-			$entity->time_created = ($now - $i);
 			$entity->save();
 			$guids[] = $entity->guid;
 			_elgg_invalidate_cache_for_entity($entity->guid);
@@ -604,13 +602,65 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$options = array(
 			'type' => 'object',
 			'subtype' => 'test_5357_subtype',
-			'order_by' => 'e.time_created ASC',
+			'order_by' => 'e.guid',
 		);
 
 		$entities_visited = array();
 		$batch = new ElggBatch('elgg_get_entities', $options, null, 2);
+		/* @var ElggEntity[] $batch */
 		foreach ($batch as $entity) {
 			$entities_visited[] = $entity->guid;
+		}
+
+		// The broken entities should not have been visited
+		$this->assertEqual($entities_visited, array($guids[0], $guids[4], $guids[5]));
+
+		// cleanup (including leftovers from previous tests)
+		$entity_rows = elgg_get_entities(array_merge($options, array(
+			'callback' => '',
+			'limit' => false,
+		)));
+		$guids = array();
+		foreach ($entity_rows as $row) {
+			$guids[] = $row->guid;
+		}
+		delete_data("DELETE FROM {$db_prefix}entities WHERE guid IN (" . implode(',', $guids) . ")");
+		delete_data("DELETE FROM {$db_prefix}objects_entity WHERE guid IN (" . implode(',', $guids) . ")");
+	}
+
+	public function testElggBatchDeleteHandlesBrokenEntities() {
+		$num_test_entities = 6;
+		$guids = array();
+		for ($i = $num_test_entities; $i > 0; $i--) {
+			$entity = new ElggObject();
+			$entity->type = 'object';
+			$entity->subtype = 'test_5357_subtype';
+			$entity->access_id = ACCESS_PUBLIC;
+			$entity->save();
+			$guids[] = $entity->guid;
+			_elgg_invalidate_cache_for_entity($entity->guid);
+		}
+
+		// break entities such that the first fetch has one incomplete
+		// and the second fetch has only incompletes!
+		$db_prefix = elgg_get_config('dbprefix');
+		delete_data("
+			DELETE FROM {$db_prefix}objects_entity
+			WHERE guid IN ({$guids[1]}, {$guids[2]}, {$guids[3]})
+		");
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => 'test_5357_subtype',
+			'order_by' => 'e.guid',
+		);
+
+		$entities_visited = array();
+		$batch = new ElggBatch('elgg_get_entities', $options, null, 2, false);
+		/* @var ElggEntity[] $batch */
+		foreach ($batch as $entity) {
+			$entities_visited[] = $entity->guid;
+			$entity->delete();
 		}
 
 		// The broken entities should not have been visited
