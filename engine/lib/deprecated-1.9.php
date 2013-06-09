@@ -477,6 +477,102 @@ function user_remove_friend($user_guid, $friend_guid) {
 }
 
 /**
+ * Add a user to a site.
+ *
+ * @param int $site_guid Site guid
+ * @param int $user_guid User guid
+ *
+ * @return bool
+ * @deprecated 1.9 Use ElggSite::addEntity()
+ */
+function add_site_user($site_guid, $user_guid) {
+	elgg_deprecated_notice('add_site_user() is deprecated. Use ElggEntity::addEntity()', 1.9);
+	$site_guid = (int)$site_guid;
+	$user_guid = (int)$user_guid;
+
+	return add_entity_relationship($user_guid, "member_of_site", $site_guid);
+}
+
+/**
+ * Remove a user from a site.
+ *
+ * @param int $site_guid Site GUID
+ * @param int $user_guid User GUID
+ *
+ * @return bool
+ * @deprecated 1.9 Use ElggSite::removeEntity()
+ */
+function remove_site_user($site_guid, $user_guid) {
+	elgg_deprecated_notice('remove_site_user() is deprecated. Use ElggEntity::removeEntity()', 1.9);
+	$site_guid = (int)$site_guid;
+	$user_guid = (int)$user_guid;
+
+	return remove_entity_relationship($user_guid, "member_of_site", $site_guid);
+}
+
+/**
+ * Add an object to a site.
+ *
+ * @param int $site_guid   Site GUID
+ * @param int $object_guid Object GUID
+ *
+ * @return mixed
+ * @deprecated 1.9 Use ElggSite::addEntity()
+ */
+function add_site_object($site_guid, $object_guid) {
+	elgg_deprecated_notice('add_site_object() is deprecated. Use ElggEntity::addEntity()', 1.9);
+	$site_guid = (int)$site_guid;
+	$object_guid = (int)$object_guid;
+
+	return add_entity_relationship($object_guid, "member_of_site", $site_guid);
+}
+
+/**
+ * Remove an object from a site.
+ *
+ * @param int $site_guid   Site GUID
+ * @param int $object_guid Object GUID
+ *
+ * @return bool
+ * @deprecated 1.9 Use ElggSite::removeEntity()
+ */
+function remove_site_object($site_guid, $object_guid) {
+	elgg_deprecated_notice('remove_site_object() is deprecated. Use ElggEntity::removeEntity()', 1.9);
+	$site_guid = (int)$site_guid;
+	$object_guid = (int)$object_guid;
+
+	return remove_entity_relationship($object_guid, "member_of_site", $site_guid);
+}
+
+/**
+ * Get the objects belonging to a site.
+ *
+ * @param int    $site_guid Site GUID
+ * @param string $subtype   Subtype
+ * @param int    $limit     Limit
+ * @param int    $offset    Offset
+ *
+ * @return mixed
+ * @deprecated 1.9 Use ElggSite::getEntities()
+ */
+function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
+	elgg_deprecated_notice('get_site_objects() is deprecated. Use ElggSite::getEntities()', 1.9);
+	$site_guid = (int)$site_guid;
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member_of_site',
+		'relationship_guid' => $site_guid,
+		'inverse_relationship' => true,
+		'type' => 'object',
+		'subtype' => $subtype,
+		'limit' => $limit,
+		'offset' => $offset
+	));
+}
+
+/**
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
