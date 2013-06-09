@@ -10,4 +10,4 @@ $friendly_time = elgg_get_friendly_time($vars['time']);
 $timestamp = htmlentities(date(elgg_echo('friendlytime:date_format'), $vars['time']));
 $datetime = htmlentities(date("c", $vars['time']));
 
-echo "<time title=\"$timestamp\" datetime=\"$datetime\" class=\"timestamp\">$friendly_time</time>";
+echo "<time title=\"$timestamp\" datetime=\"$datetime\">$friendly_time</time>";
