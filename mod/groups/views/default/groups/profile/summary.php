@@ -47,7 +47,8 @@ if (!$owner) {
 			</p>
 			<p>
 			<?php
-				echo elgg_echo('groups:members') . ": " . $group->getMembers(0, 0, TRUE);
+				$num_members = $group->getMembers(array('count' => true));
+				echo elgg_echo('groups:members') . ": " . $num_members;
 			?>
 			</p>
 		</div>
