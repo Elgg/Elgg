@@ -50,8 +50,9 @@ $user = $vars['user'];
 	</tr>
 <?php
 	$members = array();
-	if ($friends = get_user_friends($user->guid, '', 9999, 0)) {
-		foreach($friends as $friend) {
+	$friends = $user->getFriends(array('limit' => 0));
+	if ($friends) {
+		foreach ($friends as $friend) {
 			$members[] = $friend->guid;
 		}
 	}

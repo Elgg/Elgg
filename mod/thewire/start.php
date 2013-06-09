@@ -339,7 +339,7 @@ function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
 	$event = $params['event'];
 	$entity = $event->getObject();
 	if ($entity && elgg_instanceof($entity, 'object', 'thewire')) {
-		$parent = $entity->getEntitiesFromRelationship('parent');
+		$parent = $entity->getEntitiesFromRelationship(array('relationship' => 'parent'));
 		if ($parent) {
 			$parent = $parent[0];
 			// do not add a subscription if reply was to self

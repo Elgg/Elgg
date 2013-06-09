@@ -22,7 +22,7 @@ class ElggRelationship extends ElggData implements
 	 *
 	 * @param stdClass $row Database row or null for new relationship
 	 */
-	function __construct($row = null) {
+	public function __construct($row = null) {
 		$this->initializeAttributes();
 
 		if (!empty($row)) {
@@ -49,7 +49,7 @@ class ElggRelationship extends ElggData implements
 	 *
 	 * @return mixed
 	 */
-	function get($name) {
+	public function get($name) {
 		if (array_key_exists($name, $this->attributes)) {
 			return $this->attributes[$name];
 		}
@@ -65,7 +65,7 @@ class ElggRelationship extends ElggData implements
 	 *
 	 * @return mixed
 	 */
-	function set($name, $value) {
+	public function set($name, $value) {
 		$this->attributes[$name] = $value;
 		return true;
 	}

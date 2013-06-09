@@ -215,6 +215,416 @@ function elgg_register_annotation_url_handler($extender_name = "all", $function_
 }
 
 /**
+ * Return a list of this group's members.
+ *
+ * @param int  $group_guid The ID of the container/group.
+ * @param int  $limit      The limit
+ * @param int  $offset     The offset
+ * @param int  $site_guid  The site
+ * @param bool $count      Return the users (false) or the count of them (true)
+ *
+ * @return mixed
+ * @deprecated 1.9 Use ElggGroup::getMembers()
+ */
+function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0, $count = false) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggGroup::getMembers()', 1.9);
+
+	// in 1.7 0 means "not set."  rewrite to make sense.
+	if (!$site_guid) {
+		$site_guid = ELGG_ENTITIES_ANY_VALUE;
+	}
+
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member',
+		'relationship_guid' => $group_guid,
+		'inverse_relationship' => true,
+		'type' => 'user',
+		'limit' => $limit,
+		'offset' => $offset,
+		'count' => $count,
+		'site_guid' => $site_guid
+	));
+}
+
+/**
+ * Add an object to the given group.
+ *
+ * @param int $group_guid  The group to add the object to.
+ * @param int $object_guid The guid of the elgg object (must be ElggObject or a child thereof)
+ *
+ * @return bool
+ * @throws InvalidClassException
+ * @deprecated 1.9 Use ElggGroup::addObjectToGroup()
+ */
+function add_object_to_group($group_guid, $object_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggGroup::addObjectToGroup()', 1.9);
+	$group_guid = (int)$group_guid;
+	$object_guid = (int)$object_guid;
+
+	$group = get_entity($group_guid);
+	$object = get_entity($object_guid);
+
+	if ((!$group) || (!$object)) {
+		return false;
+	}
+
+	if (!($group instanceof ElggGroup)) {
+		$msg = "GUID:" . $group_guid . " is not a valid " . 'ElggGroup';
+		throw new InvalidClassException($msg);
+	}
+
+	if (!($object instanceof ElggObject)) {
+		$msg = "GUID:" . $object_guid . " is not a valid " . 'ElggObject';
+		throw new InvalidClassException($msg);
+	}
+
+	$object->container_guid = $group_guid;
+	return $object->save();
+}
+
+/**
+ * Remove an object from the given group.
+ *
+ * @param int $group_guid  The group to remove the object from
+ * @param int $object_guid The object to remove
+ *
+ * @return bool
+ * @throws InvalidClassException
+ * @deprecated 1.9 Use ElggGroup::removeObjectFromGroup()
+ */
+function remove_object_from_group($group_guid, $object_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggGroup::removeObjectFromGroup()', 1.9);
+	$group_guid = (int)$group_guid;
+	$object_guid = (int)$object_guid;
+
+	$group = get_entity($group_guid);
+	$object = get_entity($object_guid);
+
+	if ((!$group) || (!$object)) {
+		return false;
+	}
+
+	if (!($group instanceof ElggGroup)) {
+		$msg = "GUID:" . $group_guid . " is not a valid " . 'ElggGroup';
+		throw new InvalidClassException($msg);
+	}
+
+	if (!($object instanceof ElggObject)) {
+		$msg = "GUID:" . $object_guid . " is not a valid " . 'ElggObject';
+		throw new InvalidClassException($msg);
+	}
+
+	$object->container_guid = $object->owner_guid;
+	return $object->save();
+}
+
+/**
+ * Return whether a given user is a member of the group or not.
+ *
+ * @param int $group_guid The group ID
+ * @param int $user_guid  The user guid
+ *
+ * @return bool
+ * @deprecated 1.9 Use Use ElggGroup::isMember()
+ */
+function is_group_member($group_guid, $user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggGroup::isMember()', 1.9);
+	$object = check_entity_relationship($user_guid, 'member', $group_guid);
+	if ($object) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+
+/**
+ * Return all groups a user is a member of.
+ *
+ * @param int $user_guid GUID of user
+ *
+ * @return array|false
+ * @deprecated 1.9 Use ElggUser::getGroups()
+ */
+function get_users_membership($user_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::getGroups()', 1.9);
+	$options = array(
+		'type' => 'group',
+		'relationship' => 'member',
+		'relationship_guid' => $user_guid,
+		'inverse_relationship' => false,
+		'limit' => false,
+	);
+	return elgg_get_entities_from_relationship($options);
+}
+
+/**
+ * Determines whether or not a user is another user's friend.
+ *
+ * @param int $user_guid   The GUID of the user
+ * @param int $friend_guid The GUID of the friend
+ *
+ * @return bool
+ * @deprecated 1.9 Use ElggUser::isFriendsOf() or ElggUser::isFriendsWith()
+ */
+function user_is_friend($user_guid, $friend_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::isFriendsOf() or ElggUser::isFriendsWith()', 1.9);
+	return check_entity_relationship($user_guid, "friend", $friend_guid) !== false;
+}
+
+/**
+ * Obtains a given user's friends
+ *
+ * @param int    $user_guid The user's GUID
+ * @param string $subtype   The subtype of users, if any
+ * @param int    $limit     Number of results to return (default 10)
+ * @param int    $offset    Indexing offset, if any
+ *
+ * @return ElggUser[]|false Either an array of ElggUsers or false, depending on success
+ * @deprecated 1.9 Use ElggUser::getFriends()
+ */
+function get_user_friends($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
+$offset = 0) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::getFriends()', 1.9);
+
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'friend',
+		'relationship_guid' => $user_guid,
+		'type' => 'user',
+		'subtype' => $subtype,
+		'limit' => $limit,
+		'offset' => $offset
+	));
+}
+
+/**
+ * Obtains the people who have made a given user a friend
+ *
+ * @param int    $user_guid The user's GUID
+ * @param string $subtype   The subtype of users, if any
+ * @param int    $limit     Number of results to return (default 10)
+ * @param int    $offset    Indexing offset, if any
+ *
+ * @return ElggUser[]|false Either an array of ElggUsers or false, depending on success
+ * @deprecated 1.9 Use ElggUser::getFriendsOf()
+ */
+function get_user_friends_of($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
+$offset = 0) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::getFriendsOf()', 1.9);
+
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'friend',
+		'relationship_guid' => $user_guid,
+		'inverse_relationship' => true,
+		'type' => 'user',
+		'subtype' => $subtype,
+		'limit' => $limit,
+		'offset' => $offset
+	));
+}
+
+/**
+ * Adds a user to another user's friends list.
+ *
+ * @param int $user_guid   The GUID of the friending user
+ * @param int $friend_guid The GUID of the user to friend
+ *
+ * @return bool Depending on success
+ * @deprecated 1.9 Use ElggUser::addFriend()
+ */
+function user_add_friend($user_guid, $friend_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::addFriend()', 1.9);
+	$user_guid = (int) $user_guid;
+	$friend_guid = (int) $friend_guid;
+	if ($user_guid == $friend_guid) {
+		return false;
+	}
+	if (!$friend = get_entity($friend_guid)) {
+		return false;
+	}
+	if (!$user = get_entity($user_guid)) {
+		return false;
+	}
+	if ((!($user instanceof ElggUser)) || (!($friend instanceof ElggUser))) {
+		return false;
+	}
+	return add_entity_relationship($user_guid, "friend", $friend_guid);
+}
+
+/**
+ * Removes a user from another user's friends list.
+ *
+ * @param int $user_guid   The GUID of the friending user
+ * @param int $friend_guid The GUID of the user on the friends list
+ *
+ * @return bool Depending on success
+ * @deprecated 1.9 Use ElggUser::removeFriend()
+ */
+function user_remove_friend($user_guid, $friend_guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::removeFriend()', 1.9);
+	$user_guid = (int) $user_guid;
+	$friend_guid = (int) $friend_guid;
+
+	// perform cleanup for access lists.
+	$collections = get_user_access_collections($user_guid);
+	if ($collections) {
+		foreach ($collections as $collection) {
+			remove_user_from_access_collection($friend_guid, $collection->id);
+		}
+	}
+
+	return remove_entity_relationship($user_guid, "friend", $friend_guid);
+}
+
+/**
+ * Add a user to a site.
+ *
+ * @param int $site_guid Site guid
+ * @param int $user_guid User guid
+ *
+ * @return bool
+ * @deprecated 1.9 Use ElggSite::addEntity()
+ */
+function add_site_user($site_guid, $user_guid) {
+	elgg_deprecated_notice('add_site_user() is deprecated. Use ElggEntity::addEntity()', 1.9);
+	$site_guid = (int)$site_guid;
+	$user_guid = (int)$user_guid;
+
+	return add_entity_relationship($user_guid, "member_of_site", $site_guid);
+}
+
+/**
+ * Remove a user from a site.
+ *
+ * @param int $site_guid Site GUID
+ * @param int $user_guid User GUID
+ *
+ * @return bool
+ * @deprecated 1.9 Use ElggSite::removeEntity()
+ */
+function remove_site_user($site_guid, $user_guid) {
+	elgg_deprecated_notice('remove_site_user() is deprecated. Use ElggEntity::removeEntity()', 1.9);
+	$site_guid = (int)$site_guid;
+	$user_guid = (int)$user_guid;
+
+	return remove_entity_relationship($user_guid, "member_of_site", $site_guid);
+}
+
+/**
+ * Add an object to a site.
+ *
+ * @param int $site_guid   Site GUID
+ * @param int $object_guid Object GUID
+ *
+ * @return mixed
+ * @deprecated 1.9 Use ElggSite::addEntity()
+ */
+function add_site_object($site_guid, $object_guid) {
+	elgg_deprecated_notice('add_site_object() is deprecated. Use ElggEntity::addEntity()', 1.9);
+	$site_guid = (int)$site_guid;
+	$object_guid = (int)$object_guid;
+
+	return add_entity_relationship($object_guid, "member_of_site", $site_guid);
+}
+
+/**
+ * Remove an object from a site.
+ *
+ * @param int $site_guid   Site GUID
+ * @param int $object_guid Object GUID
+ *
+ * @return bool
+ * @deprecated 1.9 Use ElggSite::removeEntity()
+ */
+function remove_site_object($site_guid, $object_guid) {
+	elgg_deprecated_notice('remove_site_object() is deprecated. Use ElggEntity::removeEntity()', 1.9);
+	$site_guid = (int)$site_guid;
+	$object_guid = (int)$object_guid;
+
+	return remove_entity_relationship($object_guid, "member_of_site", $site_guid);
+}
+
+/**
+ * Get the objects belonging to a site.
+ *
+ * @param int    $site_guid Site GUID
+ * @param string $subtype   Subtype
+ * @param int    $limit     Limit
+ * @param int    $offset    Offset
+ *
+ * @return mixed
+ * @deprecated 1.9 Use ElggSite::getEntities()
+ */
+function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
+	elgg_deprecated_notice('get_site_objects() is deprecated. Use ElggSite::getEntities()', 1.9);
+	$site_guid = (int)$site_guid;
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member_of_site',
+		'relationship_guid' => $site_guid,
+		'inverse_relationship' => true,
+		'type' => 'object',
+		'subtype' => $subtype,
+		'limit' => $limit,
+		'offset' => $offset
+	));
+}
+
+/**
+ * Get the sites this object is part of
+ *
+ * @param int $object_guid The object's GUID
+ * @param int $limit       Number of results to return
+ * @param int $offset      Any indexing offset
+ *
+ * @return array On success, an array of ElggSites
+ * @deprecated 1.9 Use ElggEntity::getSites()
+ */
+function get_object_sites($object_guid, $limit = 10, $offset = 0) {
+	elgg_deprecated_notice('get_object_sites() is deprecated. Use ElggEntity::getSites()', 1.9);
+	$object_guid = (int)$object_guid;
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+
+	return elgg_get_entities_from_relationship(array(
+		'relationship' => 'member_of_site',
+		'relationship_guid' => $object_guid,
+		'type' => 'site',
+		'limit' => $limit,
+		'offset' => $offset,
+	));
+}
+
+/**
+ * Get the sites this user is part of
+ *
+ * @param int $user_guid The user's GUID
+ * @param int $limit     Number of results to return
+ * @param int $offset    Any indexing offset
+ *
+ * @return ElggSite[]|false On success, an array of ElggSites
+ * @deprecated 1.9 Use ElggEntity::getSites()
+ */
+function get_user_sites($user_guid, $limit = 10, $offset = 0) {
+	elgg_deprecated_notice('get_user_sites() is deprecated. Use ElggEntity::getSites()', 1.9);
+	$user_guid = (int)$user_guid;
+	$limit = (int)$limit;
+	$offset = (int)$offset;
+
+	return elgg_get_entities_from_relationship(array(
+		'site_guids' => ELGG_ENTITIES_ANY_VALUE,
+		'relationship' => 'member_of_site',
+		'relationship_guid' => $user_guid,
+		'inverse_relationship' => false,
+		'type' => 'site',
+		'limit' => $limit,
+		'offset' => $offset,
+	));
+}
+
+/**
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"

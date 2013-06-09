@@ -21,7 +21,7 @@ class SiteNotification extends ElggObject {
 	 * @return ElggEntity|null
 	 */
 	public function getActor() {
-		$actor = $this->getEntitiesFromRelationship(self::HAS_ACTOR);
+		$actor = $this->getEntitiesFromRelationship(array('relationship' => self::HAS_ACTOR));
 		if ($actor) {
 			$actor = $actor[0];
 		}

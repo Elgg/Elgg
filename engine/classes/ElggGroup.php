@@ -39,7 +39,7 @@ class ElggGroup extends ElggEntity
 	 *
 	 * @throws IOException|InvalidParameterException if there was a problem creating the group.
 	 */
-	function __construct($row = null) {
+	public function __construct($row = null) {
 		$this->initializeAttributes();
 
 		// compatibility for 1.7 api.
@@ -93,18 +93,29 @@ class ElggGroup extends ElggEntity
 	 * @return bool
 	 */
 	public function addObjectToGroup(ElggObject $object) {
-		return add_object_to_group($this->getGUID(), $object->getGUID());
+		$object->container_guid = $this->guid;
+		return $object->save();
 	}
 
 	/**
-	 * Remove an object from the containing group.
+	 * Remove an object from this containing group and sets the container to be
+	 * object's owner
 	 *
-	 * @param int $guid The guid of the object.
+	 * @param ElggObject $object The object.
 	 *
 	 * @return bool
 	 */
-	public function removeObjectFromGroup($guid) {
-		return remove_object_from_group($this->getGUID(), $guid);
+	public function removeObjectFromGroup($object) {
+		if (is_numeric($object)) {
+			elgg_deprecated_notice('ElggGroup::removeObjectFromGroup() takes an ElggObject not a guid.', 1.9);
+			$object = get_entity($object);
+			if (!elgg_instanceof($object, 'object')) {
+				return false;
+			}
+		}
+
+		$object->container_guid = $object->owner_guid;
+		return $object->save();
 	}
 
 	/**
@@ -289,16 +300,38 @@ class ElggGroup extends ElggEntity
 	 */
 
 	/**
-	 * Get a list of group members.
+	 * Get an array of group members.
 	 *
-	 * @param int  $limit  Limit
-	 * @param int  $offset Offset
-	 * @param bool $count  Count
+	 * @param array $options Options array. See elgg_get_entities_from_relationships
+	 *                       for a complete list. Common ones are 'limit', 'offset',
+	 *                       and 'count'. Options set automatically are 'relationship',
+	 *                       'relationship_guid', 'inverse_relationship', and 'type'. This argument
+	 *                       used to set the limit (deprecated usage)
+	 * @param int   $offset  Offset (deprecated)
+	 * @param bool  $count   Count (deprecated)
 	 *
-	 * @return mixed
+	 * @return array
 	 */
-	public function getMembers($limit = 10, $offset = 0, $count = false) {
-		return get_group_members($this->getGUID(), $limit, $offset, 0, $count);
+	public function getMembers($options = array(), $offset = 0, $count = false) {
+		if (!is_array($options)) {
+			elgg_deprecated_notice('ElggGroup::getMembers() takes an options array.', 1.9);
+			$options = array(
+				'relationship' => 'member',
+				'relationship_guid' => $this->getGUID(),
+				'inverse_relationship' => true,
+				'type' => 'user',
+				'limit' => $options,
+				'offset' => $offset,
+				'count' => $count,
+			);
+		} else {
+			$options['relationship'] = 'member';
+			$options['relationship_guid'] = $this->getGUID();
+			$options['inverse_relationship'] = true;
+			$options['type'] = 'user';
+		}
+
+		return elgg_get_entities_from_relationship($options);
 	}
 
 	/**
@@ -361,14 +394,15 @@ class ElggGroup extends ElggEntity
 	 *
 	 * @return bool
 	 */
-	public function isMember($user = null) {
-		if (!($user instanceof ElggUser)) {
+	public function isMember(ElggUser $user = null) {
+		if ($user == null) {
 			$user = elgg_get_logged_in_user_entity();
 		}
 		if (!$user) {
 			return false;
 		}
-		$result = is_group_member($this->getGUID(), $user->getGUID());
+
+		$result = (bool)check_entity_relationship($user->guid, 'member', $this->guid);
 
 		$params = array(
 			'user' => $user,

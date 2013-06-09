@@ -16,7 +16,7 @@ class ElggFileCache extends ElggCache {
 	 *
 	 * @throws ConfigurationException
 	 */
-	function __construct($cache_path, $max_age = 0, $max_size = 0) {
+	public function __construct($cache_path, $max_age = 0, $max_size = 0) {
 		$this->setVariable("cache_path", $cache_path);
 		$this->setVariable("max_age", $max_age);
 		$this->setVariable("max_size", $max_size);

@@ -789,35 +789,55 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Returns an array of annotations.
+	 * Gets an array of annotations.
 	 *
-	 * @param string $name   Annotation name
-	 * @param int    $limit  Limit
-	 * @param int    $offset Offset
-	 * @param string $order  Order by time: asc or desc
+	 * To retrieve annotations on an unsaved entity, pass array('name' => [annotation name])
+	 * as the options array.
+	 *
+	 * @param array  $options Array of options for elgg_get_annotations() except guid. This
+	 *               may be passed a string annotation name, but this usage is deprecated.
+	 * @param int    $limit   Limit (deprecated)
+	 * @param int    $offset  Offset (deprecated)
+	 * @param string $order   Order by time: asc or desc (deprecated)
 	 *
 	 * @return array
+	 * @see elgg_get_annotations()
 	 */
-	public function getAnnotations($name, $limit = 50, $offset = 0, $order = "asc") {
+	public function getAnnotations($options = array(), $limit = 50, $offset = 0, $order = "asc") {
+		if (!is_array($options)) {
+			elgg_deprecated_notice("ElggEntity::getAnnotations() takes an array of options.", 1.9);
+		}
+
 		if ((int) ($this->guid) > 0) {
+			if (!is_array($options)) {
+				$options = array(
+					'guid' => $this->guid,
+					'annotation_name' => $options,
+					'limit' => $limit,
+					'offset' => $offset,
+				);
 
-			$options = array(
-				'guid' => $this->guid,
-				'annotation_name' => $name,
-				'limit' => $limit,
-				'offset' => $offset,
-			);
-
-			if ($order != 'asc') {
-				$options['reverse_order_by'] = true;
+				if ($order != 'asc') {
+					$options['reverse_order_by'] = true;
+				}
+			} else {
+				$options['guid'] = $this->guid;
 			}
 
 			return elgg_get_annotations($options);
-		} else if (isset($this->temp_annotations[$name])) {
-			return array($this->temp_annotations[$name]);
 		} else {
-			return array();
+			if (!is_array($options)) {
+				$name = $options;
+			} else {
+				$name = elgg_extract('annotation_name', $options, '');
+			}
+
+			if (isset($this->temp_annotations[$name])) {
+				return array($this->temp_annotations[$name]);
+			}
 		}
+
+		return array();
 	}
 
 	/**
@@ -910,25 +930,34 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Gets an array of entities with a relationship to this entity.
 	 *
-	 * @param string $relationship Relationship type (eg "friends")
-	 * @param bool   $inverse      Is this an inverse relationship?
-	 * @param int    $limit        Number of elements to return
-	 * @param int    $offset       Indexing offset
+	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 *                       for a list of options. 'relationship_guid' is set to
+	 *                       this entity.
+	 * @param bool  $inverse Is this an inverse relationship? (deprecated)
+	 * @param int   $limit   Number of elements to return (deprecated)
+	 * @param int   $offset  Indexing offset (deprecated)
 	 *
 	 * @return array|false An array of entities or false on failure
+	 * @see elgg_get_entities_from_relationship()
 	 */
-	public function getEntitiesFromRelationship($relationship, $inverse = false, $limit = 50, $offset = 0) {
-		return elgg_get_entities_from_relationship(array(
-			'relationship' => $relationship,
-			'relationship_guid' => $this->getGUID(),
-			'inverse_relationship' => $inverse,
-			'limit' => $limit,
-			'offset' => $offset
-		));
+	public function getEntitiesFromRelationship($options = array(), $inverse = false, $limit = 50, $offset = 0) {
+		if (is_array($options)) {
+			$options['relationship_guid'] = $this->getGUID();
+			return elgg_get_entities_from_relationship($options);
+		} else {
+			elgg_deprecated_notice("ElggEntity::getEntitiesFromRelationship takes an options array", 1.9);
+			return elgg_get_entities_from_relationship(array(
+				'relationship' => $options,
+				'relationship_guid' => $this->getGUID(),
+				'inverse_relationship' => $inverse,
+				'limit' => $limit,
+				'offset' => $offset
+			));
+		}
 	}
 
 	/**
-	 * Gets the number of of entities from a specific relationship type
+	 * Gets the number of entities from a specific relationship type
 	 *
 	 * @param string $relationship         Relationship type (eg "friends")
 	 * @param bool   $inverse_relationship Invert relationship
@@ -1352,6 +1381,66 @@ abstract class ElggEntity extends ElggData implements
 		$this->icon_override[$size] = $url;
 
 		return true;
+	}
+
+	/**
+	 * Add this entity to a site
+	 *
+	 * This creates a 'member_of_site' relationship.
+	 *
+	 * @param ElggSite $site The site to add this entity to
+	 *
+	 * @return bool
+	 * @todo add ElggSite type hint once we have removed addToSite() from ElggUser
+	 * and ElggObject
+	 */
+	public function addToSite($site) {
+		if (!elgg_instanceof($site, 'site')) {
+			return false;
+		}
+
+		return $site->addEntity($this);
+	}
+
+	/**
+	 * Remove this entity from a site
+	 *
+	 * This deletes the 'member_of_site' relationship.
+	 *
+	 * @param ElggSite $site The site to remove this entity from
+	 *
+	 * @return bool
+	 * @todo add ElggSite type hint once we have removed addToSite() from ElggUser
+	 */
+	public function removeFromSite($site) {
+		if (!elgg_instanceof($site, 'site')) {
+			return false;
+		}
+
+		return $site->removeEntity($this);
+	}
+
+	/**
+	 * Gets the sites this entity is a member of
+	 *
+	 * Site membership is determined by relationships and not site_guid.
+	 *
+	 * @param array $options Options array for elgg_get_entities_from_relationship()
+	 *                       Parameters set automatically by this method:
+	 *                       'relationship', 'relationship_guid', 'inverse_relationship'
+	 *
+	 * @return array
+	 * @todo add type hint when ElggUser and ElggObject have been updates
+	 */
+	public function getSites($options = array()) {
+		$options['relationship'] = 'member_of_site';
+		$options['relationship_guid'] = $this->guid;
+		$options['inverse_relationship'] = false;
+		if (!isset($options['site_guid']) || !isset($options['site_guids'])) {
+			$options['site_guids'] = ELGG_ENTITIES_ANY_VALUE;
+		}
+
+		return elgg_get_entities_from_relationship($options);
 	}
 
 	/**

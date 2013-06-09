@@ -23,29 +23,6 @@ function get_object_entity_as_row($guid) {
 }
 
 /**
- * Get the sites this object is part of
- *
- * @param int $object_guid The object's GUID
- * @param int $limit       Number of results to return
- * @param int $offset      Any indexing offset
- *
- * @return array On success, an array of ElggSites
- */
-function get_object_sites($object_guid, $limit = 10, $offset = 0) {
-	$object_guid = (int)$object_guid;
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-
-	return elgg_get_entities_from_relationship(array(
-		'relationship' => 'member_of_site',
-		'relationship_guid' => $object_guid,
-		'type' => 'site',
-		'limit' => $limit,
-		'offset' => $offset,
-	));
-}
-
-/**
  * Runs unit tests for ElggObject
  *
  * @param string $hook   unit_test
@@ -56,11 +33,10 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
  * @return array
  * @access private
  */
-function objects_test($hook, $type, $value, $params) {
+function _elgg_objects_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = "{$CONFIG->path}engine/tests/ElggCoreObjectTest.php";
 	return $value;
 }
 
-elgg_register_event_handler('init', 'system', 'objects_init', 0);
-elgg_register_plugin_hook_handler('unit_test', 'system', 'objects_test');
+elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_objects_test');

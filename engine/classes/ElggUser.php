@@ -54,7 +54,7 @@ class ElggUser extends ElggEntity
 	 *
 	 * @throws IOException|InvalidParameterException if there was a problem creating the user.
 	 */
-	function __construct($row = null) {
+	public function __construct($row = null) {
 		$this->initializeAttributes();
 
 		// compatibility for 1.7 api.
@@ -316,36 +316,51 @@ class ElggUser extends ElggEntity
 	/**
 	 * Get sites that this user is a member of
 	 *
-	 * @param string $subtype Optionally, the subtype of result we want to limit to
-	 * @param int    $limit   The number of results to return
-	 * @param int    $offset  Any indexing offset
+	 * @param array $options Options array. Used to be $subtype
+	 * @param int   $limit   The number of results to return (deprecated)
+	 * @param int   $offset  Any indexing offset (deprecated)
 	 *
 	 * @return array
 	 */
-	function getSites($subtype = "", $limit = 10, $offset = 0) {
-		return get_user_sites($this->getGUID(), $limit, $offset);
+	public function getSites($options = "", $limit = 10, $offset = 0) {
+		if (is_string($options)) {
+			elgg_deprecated_notice('ElggUser::getSites() takes an options array', 1.9);
+			return get_user_sites($this->getGUID(), $limit, $offset);
+		}
+
+		return parent::getSites($options);
 	}
 
 	/**
 	 * Add this user to a particular site
 	 *
-	 * @param int $site_guid The guid of the site to add it to
-	 *
+	 * @param ElggSite $site The site to add this user to. This used to be the
+	 *                       the site guid (still supported by deprecated)
 	 * @return bool
 	 */
-	function addToSite($site_guid) {
-		return add_site_user($site_guid, $this->getGUID());
+	public function addToSite($site) {
+		if (is_numeric($site)) {
+			elgg_deprecated_notice('ElggUser::addToSite() takes a site entity', 1.9);
+			return add_site_user($site, $this->getGUID());
+		}
+
+		return parent::addToSite($site);
 	}
 
 	/**
 	 * Remove this user from a particular site
 	 *
-	 * @param int $site_guid The guid of the site to remove it from
+	 * @param ElggSite $site The site to remove the user from. Used to be site GUID
 	 *
 	 * @return bool
 	 */
-	function removeFromSite($site_guid) {
-		return remove_site_user($site_guid, $this->getGUID());
+	public function removeFromSite($site) {
+		if (is_numeric($site)) {
+			elgg_deprecated_notice('ElggUser::removeFromSite() takes a siet entity', 1.9);
+			return remove_site_user($site_guid, $this->getGUID());
+		}
+
+		return parent::removeFromSite($site);
 	}
 
 	/**
@@ -354,9 +369,14 @@ class ElggUser extends ElggEntity
 	 * @param int $friend_guid The GUID of the user to add
 	 *
 	 * @return bool
+	 * @todo change to accept ElggUser
 	 */
-	function addFriend($friend_guid) {
-		return user_add_friend($this->getGUID(), $friend_guid);
+	public function addFriend($friend_guid) {
+		if (!get_user($friend_guid)) {
+			return false;
+		}
+
+		return add_entity_relationship($this->guid, "friend", $friend_guid);
 	}
 
 	/**
@@ -365,9 +385,23 @@ class ElggUser extends ElggEntity
 	 * @param int $friend_guid The GUID of the user to remove
 	 *
 	 * @return bool
+	 * @todo change to accept ElggUser
 	 */
-	function removeFriend($friend_guid) {
-		return user_remove_friend($this->getGUID(), $friend_guid);
+	public function removeFriend($friend_guid) {
+		if (!get_user($friend_guid)) {
+			return false;
+		}
+
+		// @todo this should be done with a plugin hook handler on the delete relationship
+		// perform cleanup for access lists.
+		$collections = get_user_access_collections($this->guid);
+		if ($collections) {
+			foreach ($collections as $collection) {
+				remove_user_from_access_collection($friend_guid, $collection->id);
+			}
+		}
+
+		return remove_entity_relationship($this->guid, "friend", $friend_guid);
 	}
 
 	/**
@@ -375,7 +409,7 @@ class ElggUser extends ElggEntity
 	 *
 	 * @return bool
 	 */
-	function isFriend() {
+	public function isFriend() {
 		return $this->isFriendOf(elgg_get_logged_in_user_guid());
 	}
 
@@ -386,8 +420,8 @@ class ElggUser extends ElggEntity
 	 *
 	 * @return bool
 	 */
-	function isFriendsWith($user_guid) {
-		return user_is_friend($this->getGUID(), $user_guid);
+	public function isFriendsWith($user_guid) {
+		return (bool)check_entity_relationship($this->guid, "friend", $user_guid);
 	}
 
 	/**
@@ -397,8 +431,8 @@ class ElggUser extends ElggEntity
 	 *
 	 * @return bool
 	 */
-	function isFriendOf($user_guid) {
-		return user_is_friend($user_guid, $this->getGUID());
+	public function isFriendOf($user_guid) {
+		return (bool)check_entity_relationship($user_guid, "friend", $this->guid);
 	}
 
 	/**
@@ -410,8 +444,15 @@ class ElggUser extends ElggEntity
 	 *
 	 * @return array|false Array of ElggUser, or false, depending on success
 	 */
-	function getFriends($subtype = "", $limit = 10, $offset = 0) {
-		return get_user_friends($this->getGUID(), $subtype, $limit, $offset);
+	public function getFriends($subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10, $offset = 0) {
+		return elgg_get_entities_from_relationship(array(
+			'relationship' => 'friend',
+			'relationship_guid' => $this->guid,
+			'type' => 'user',
+			'subtype' => $subtype,
+			'limit' => $limit,
+			'offset' => $offset,
+		));
 	}
 
 	/**
@@ -423,8 +464,16 @@ class ElggUser extends ElggEntity
 	 *
 	 * @return array|false Array of ElggUser, or false, depending on success
 	 */
-	function getFriendsOf($subtype = "", $limit = 10, $offset = 0) {
-		return get_user_friends_of($this->getGUID(), $subtype, $limit, $offset);
+	public function getFriendsOf($subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10, $offset = 0) {
+		return elgg_get_entities_from_relationship(array(
+			'relationship' => 'friend',
+			'relationship_guid' => $this->guid,
+			'inverse_relationship' => true,
+			'type' => 'user',
+			'subtype' => $subtype,
+			'limit' => $limit,
+			'offset' => $offset,
+		));
 	}
 
 	/**
@@ -436,8 +485,10 @@ class ElggUser extends ElggEntity
 	 *
 	 * @return string Rendered list of friends
 	 * @since 1.8.0
+	 * @deprecated 1.9 Use elgg_list_entities_from_relationship()
 	 */
-	function listFriends($subtype = "", $limit = 10, array $vars = array()) {
+	public function listFriends($subtype = "", $limit = 10, array $vars = array()) {
+		elgg_deprecated_notice('ElggUser::listFriends() is deprecated. Use elgg_list_entities_from_relationship()', 1.9);
 		$defaults = array(
 			'type' => 'user',
 			'relationship' => 'friend',
@@ -458,23 +509,31 @@ class ElggUser extends ElggEntity
 	/**
 	 * Gets the user's groups
 	 *
-	 * @param string $subtype Optionally, the subtype of user to filter to (leave blank for all)
-	 * @param int    $limit   The number of groups to retrieve
-	 * @param int    $offset  Indexing offset, if any
+	 * @param array $options Options array. Used to be the subtype string.
+	 * @param int   $limit   The number of groups to retrieve (deprecated)
+	 * @param int   $offset  Indexing offset, if any (deprecated)
 	 *
 	 * @return array|false Array of ElggGroup, or false, depending on success
 	 */
-	function getGroups($subtype = "", $limit = 10, $offset = 0) {
-		$options = array(
-			'type' => 'group',
-			'relationship' => 'member',
-			'relationship_guid' => $this->guid,
-			'limit' => $limit,
-			'offset' => $offset,
-		);
+	public function getGroups($options = "", $limit = 10, $offset = 0) {
+		if (is_string($options)) {
+			elgg_deprecated_notice('ElggUser::getGroups() takes an options array', 1.9);
+			$subtype = $options;
+			$options = array(
+				'type' => 'group',
+				'relationship' => 'member',
+				'relationship_guid' => $this->guid,
+				'limit' => $limit,
+				'offset' => $offset,
+			);
 
-		if ($subtype) {
-			$options['subtype'] = $subtype;
+			if ($subtype) {
+				$options['subtype'] = $subtype;
+			}
+		} else {
+			$options['type'] = 'group';
+			$options['relationship'] = 'member';
+			$options['relationship_guid'] = $this->guid;
 		}
 
 		return elgg_get_entities_from_relationship($options);
@@ -488,8 +547,10 @@ class ElggUser extends ElggEntity
 	 * @param int    $offset  Indexing offset, if any
 	 *
 	 * @return string
+	 * @deprecated 1.9 Use elgg_list_entities_from_relationship()
 	 */
-	function listGroups($subtype = "", $limit = 10, $offset = 0) {
+	public function listGroups($subtype = "", $limit = 10, $offset = 0) {
+		elgg_deprecated_notice('Elgg::listGroups is deprecated. Use elgg_list_entities_from_relationship()', 1.9);
 		$options = array(
 			'type' => 'group',
 			'relationship' => 'member',
@@ -579,7 +640,7 @@ class ElggUser extends ElggEntity
 	 *
 	 * @return int
 	 */
-	function getOwnerGUID() {
+	public function getOwnerGUID() {
 		if ($this->owner_guid == 0) {
 			return $this->guid;
 		}
@@ -593,7 +654,7 @@ class ElggUser extends ElggEntity
 	 * @return int User GUID
 	 * @deprecated 1.8 Use getOwnerGUID()
 	 */
-	function getOwner() {
+	public function getOwner() {
 		elgg_deprecated_notice("ElggUser::getOwner deprecated for ElggUser::getOwnerGUID", 1.8);
 		$this->getOwnerGUID();
 	}
