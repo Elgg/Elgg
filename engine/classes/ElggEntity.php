@@ -1430,8 +1430,9 @@ abstract class ElggEntity extends ElggData implements
 	 *                       'relationship', 'relationship_guid', 'inverse_relationship'
 	 *
 	 * @return array
+	 * @todo add type hint when ElggUser and ElggObject have been updates
 	 */
-	public function getSites(array $options = array()) {
+	public function getSites($options = array()) {
 		$options['relationship'] = 'member_of_site';
 		$options['relationship_guid'] = $this->guid;
 		$options['inverse_relationship'] = false;
