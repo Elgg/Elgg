@@ -15,10 +15,13 @@
  * @property string $type         annotation or metadata (read-only after save)
  * @property int    $id           The unique identifier (read-only)
  * @property int    $entity_guid  The GUID of the entity that this extender describes
+ * @property int    $owner_guid   The GUID of the owner of this extender
  * @property int    $access_id    Specifies the visibility level of this extender
  * @property string $name         The name of this extender
  * @property mixed  $value        The value of the extender (int or string)
  * @property int    $time_created A UNIX timestamp of when the extender was created (read-only, set on first save)
+ * @property string $value_type   'integer' or 'text'
+ * @property string $enabled      Is this extender enabled ('yes' or 'no')
  */
 abstract class ElggExtender extends ElggData {
 

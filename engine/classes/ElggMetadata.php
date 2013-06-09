@@ -10,10 +10,6 @@
  *
  * @package    Elgg.Core
  * @subpackage Metadata
- *
- * @property string $value_type
- * @property int    $owner_guid
- * @property string $enabled
  */
 class ElggMetadata extends ElggExtender {
 

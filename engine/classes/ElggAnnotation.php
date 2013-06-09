@@ -2,17 +2,14 @@
 /**
  * Elgg Annotations
  *
- * Annotations allow you to attach bits of information to entities.
- * They are essentially the same as metadata, but with additional
- * helper functions for performing calculations.
+ * Annotations allow you to attach bits of information to entities. They are
+ * essentially the same as metadata, but with additional helper functions for
+ * performing calculations.
  *
  * @internal Annotations are stored in the annotations table.
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Annotations
- *
- * @property string $value_type
- * @property string $enabled
  */
 class ElggAnnotation extends ElggExtender {
 
@@ -32,11 +29,8 @@ class ElggAnnotation extends ElggExtender {
 	/**
 	 * Construct a new annotation object
 	 *
-	 * Plugin developers should only use the constructor to create new annotations.
-	 * To retrieve annotations, use
-	 *  - elgg_get_annotation_from_id()
-	 *  - elgg_get_annotations()
-	 *  - ElggEntity::getAnnotations()
+	 * Plugin developers will probably never use the constructor.
+	 * See ElggEntity for its API for adding annotations.
 	 *
 	 * @param stdClass $row Database row as stdClass object
 	 */
