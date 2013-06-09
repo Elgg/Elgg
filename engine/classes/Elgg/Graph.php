@@ -1,4 +1,10 @@
 <?php
+/**
+ * Represents graph with data associated with edges. Provides basic graph algorithms.
+ *
+ * @access private
+ * @package Elgg.Core
+ */
 class Elgg_Graph {
 
 	/**
@@ -131,7 +137,6 @@ class Elgg_Graph {
 				$this->dfsPi[$vertice] = null;
 			}
 		}
-		//@todo add entry and leave times?
 		foreach ($this->vertices as $vertice) {
 			if ($this->dfsColors[$vertice] == self::DFS_COLOR_WHITE) {
 				$this->dfsVisit($vertice, $catchTimes, $catchCycle);
@@ -163,7 +168,6 @@ class Elgg_Graph {
 				if ($this->dfsCycle === null) {
 					if ($catchCycle) {
 						//construct the cycle
-						// 						var_dump($this->vertices, $this->dfsColors, $this->dfsPi, $vertice);
 						$map = array_flip($this->vertices);
 						$curr = $vertice;
 						$this->dfsCycle = array($map[$curr]);
@@ -171,11 +175,6 @@ class Elgg_Graph {
 							$curr = $this->dfsPi[$curr];
 							$this->dfsCycle[] = $map[$curr];
 						}
-						// 						if (!isset($this->dfsPi[$curr])) {
-						// 							var_dump($vertice, $toName, $this->dfsColors, $this->vertices, $this->dfsPi);
-						// 							die('err');
-						// // 							throw new LogicException("Invalid parent tree structure in cycle processing");
-						// 						}
 					} else {
 						$this->dfsCycle = true;
 					}
@@ -183,6 +182,7 @@ class Elgg_Graph {
 			} else {
 				//black vertice can't be part of new cycle as we'd have to come from it and unchecked trees are marked gray
 				if ($catchCycle) {
+					//connect paths coming into child black subtree
 					$this->dfsPi[$toName] = $vertice;
 				}
 			}

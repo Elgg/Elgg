@@ -19,8 +19,7 @@ foreach ($guids as $guid) {
 }
 
 $scanner = new Elgg_pluginDependencyScanner();
-$result = $scanner->scanPlugins($plugins);
-$plugins = array_merge(array_flip($result), $plugins);
+$plugins = $scanner->scanPlugins($plugins);
 
 foreach ($plugins as $plugin) {
 	if (!$plugin->isActive()) {

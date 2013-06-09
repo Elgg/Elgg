@@ -1,4 +1,10 @@
 <?php
+/**
+ * Computes some dependencies between plugins and gives info aboud resolving problems when possible. 
+ *
+ * @access private
+ * @package Elgg.Core
+ */
 class Elgg_PluginDependencyScanner {
 	
 	/**
@@ -6,35 +12,40 @@ class Elgg_PluginDependencyScanner {
 	 */
 	protected $dependencyGraph;
 	
+	/**
+	 * @var string
+	 */
 	const DEP_REQUIRES = 'requires';
 	
 	public function __construct() {
 		$this->dependencyGraph = new Elgg_Graph();
 	}
 	
-	public function scanPlugins($pluginsToEnable, $pluginsEnabled = null) {
+	/**
+	 * @param ElggPlugin[]|ElggPluginPackage[] $plugins
+	 * @return false|ElggPlugin[]|ElggPluginPackage[]
+	 */
+	public function scanPlugins($plugins) {
 		
-		foreach ($pluginsToEnable as $key => $plugin) {
-			if ($plugin instanceof ElggPlugin) {
-				$pluginsToEnable[$key] = $plugin->getManifest();
+		$resultPlugins = array();
+		foreach ($plugins as $key => $plugin) {
+			if (($plugin instanceof ElggPlugin) || ($plugin instanceof ElggPluginPackage)) {
+				$plugins[$key] = $plugin->getManifest();
+				$resultPlugins[$plugin->getId()] = $plugin;
 			}
 		}
 		
-		return $this->scanManifests($pluginsToEnable, $pluginsEnabled);
-	}
-	
-	public function scanPluginPackages($packagesToEnable, $packagesEnabled = null) {
+		$result = $this->scanManifests($plugins);
 		
-		foreach ($packagesToEnable as $key => $package) {
-			if ($package instanceof ElggPluginPackage) {
-				$packagesToEnable[$key] = $package->getManifest();
-			}
+		if ($result === false) {
+			//TODO consider something else
+			return false;
 		}
 		
-		return $this->scanManifests($packagesToEnable, $packagesEnabled);
+		return array_merge(array_flip($result), $resultPlugins);
 	}
 	
-	protected function scanManifests($manifestsToEnable, $manifestsEnabled = null) {
+	protected function scanManifests($manifests) {
 
 		$mt = microtime(true);
 // 		var_dump(count($pluginsToEnable));
@@ -48,7 +59,7 @@ class Elgg_PluginDependencyScanner {
 		
 // 		shuffle($pluginsToEnable);
 		
-		foreach ($manifestsToEnable as $manifest) {
+		foreach ($manifests as $manifest) {
 			if ($manifest instanceof ElggPluginManifest) {
 				$requires = $manifest->getRequires();
 				$conflicts = $manifest->getConflicts();
@@ -70,8 +81,7 @@ class Elgg_PluginDependencyScanner {
 // 		var_dump($this->dependencyGraph->getEdges());
 // 		var_dump($this->dependencyGraph->getCycle());
 		
-		$result = $this->dependencyGraph->topologicalSort(true);
-		return $result;
+		return $this->dependencyGraph->topologicalSort(true);
 	}
 	
 	public function getPluginsEnablingOrder($plugins = null) {
