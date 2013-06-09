@@ -191,19 +191,19 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	}
 
 	// Add the metastring
-	$value = add_metastring($value);
-	if (!$value) {
+	$value_id = add_metastring($value);
+	if (!$value_id) {
 		return false;
 	}
 
-	$name = add_metastring($name);
-	if (!$name) {
+	$name_id = add_metastring($name);
+	if (!$name_id) {
 		return false;
 	}
 
 	// If ok then add it
 	$query = "UPDATE {$CONFIG->dbprefix}metadata"
-		. " set name_id='$name', value_id='$value', value_type='$value_type', access_id=$access_id,"
+		. " set name_id='$name_id', value_id='$value_id', value_type='$value_type', access_id=$access_id,"
 		. " owner_guid=$owner_guid where id=$id";
 
 	$result = update_data($query);
