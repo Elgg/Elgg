@@ -24,7 +24,7 @@ class Elgg_Graph {
 	public function addVertice($name) {
 		if (!$this->isVertice($name)) {
 			$this->vertices[$name] = count($this->vertices);
-			$this->edges[$name] = array();
+			$this->edges[$this->vertices[$name]] = array();
 			return true;
 		}
 		return false;
@@ -57,7 +57,7 @@ class Elgg_Graph {
 		if (!$this->isVertice($vToName)) {
 			$this->addVertice($vToName);
 		}
-		if (!array_key_exists($vToName, $this->edges[$vFromName])) {
+		if (!array_key_exists($vToName, $this->edges[$this->vertices[$vFromName]])) {
 			$this->edges[$this->vertices[$vFromName]][$this->vertices[$vToName]] = $data;
 			return true;
 		}

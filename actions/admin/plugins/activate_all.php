@@ -18,7 +18,7 @@ foreach ($guids as $guid) {
 	$plugins[$plugin->getId()] = $plugin;
 }
 
-$scanner = new Elgg_pluginDependencyScanner();
+$scanner = new Elgg_PluginDependencyScanner();
 $plugins = $scanner->scanPlugins($plugins);
 
 foreach ($plugins as $plugin) {

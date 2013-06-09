@@ -45,6 +45,10 @@ class Elgg_PluginDependencyScanner {
 		return array_merge(array_flip($result), $resultPlugins);
 	}
 	
+	public function getCycle() {
+		return $this->dependencyGraph->getCycle();
+	}
+	
 	protected function scanManifests($manifests) {
 
 		$mt = microtime(true);
