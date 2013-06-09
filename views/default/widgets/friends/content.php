@@ -14,7 +14,11 @@ $num = (int) $vars['entity']->num_display;
 $size = $vars['entity']->icon_size;
 
 if (elgg_instanceof($owner, 'user')) {
-	$html = $owner->listFriends('', $num, array(
+	$html = elgg_list_entities_from_relationship(array(
+		'type' => 'user',
+		'relationship' => 'friend',
+		'relationship_guid' => $owner->guid,
+		'limit' => $num,
 		'size' => $size,
 		'list_type' => 'gallery',
 		'pagination' => false,

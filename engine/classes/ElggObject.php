@@ -169,7 +169,7 @@ class ElggObject extends ElggEntity {
 	 *
 	 * Site membership is determined by relationships and not site_guid.
 	 *
-	 * @todo Mmoved to ElggEntity so remove this in 2.0
+	 * @todo Moved to ElggEntity so remove this in 2.0
 	 *
 	 * @param array $options Options array. Used to be $subtype
 	 * @param int   $limit   The number of results to return (deprecated)
