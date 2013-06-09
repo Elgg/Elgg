@@ -12,8 +12,17 @@
 $guids = get_input('guids');
 $guids = explode(',', $guids);
 
+$plugins = array();
 foreach ($guids as $guid) {
 	$plugin = get_entity($guid);
+	$plugins[$plugin->getId()] = $plugin;
+}
+
+$scanner = new Elgg_pluginDependencyScanner();
+$result = $scanner->scanPlugins($plugins);
+$plugins = array_merge(array_flip($result), $plugins);
+
+foreach ($plugins as $plugin) {
 	if (!$plugin->isActive()) {
 		if ($plugin->activate()) {
 			//system_message(elgg_echo('admin:plugins:activate:yes', array($plugin->getManifest()->getName())));
