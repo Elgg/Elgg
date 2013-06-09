@@ -1391,8 +1391,10 @@ abstract class ElggEntity extends ElggData implements
 	 * @param ElggSite $site The site to add this entity to
 	 *
 	 * @return bool
+	 * @todo add ElggSite type hint once we have removed addToSite() from ElggUser
+	 * and ElggObject
 	 */
-	public function addToSite(ElggSite $site) {
+	public function addToSite($site) {
 		if (!elgg_instanceof($site, 'site')) {
 			return false;
 		}
@@ -1408,8 +1410,9 @@ abstract class ElggEntity extends ElggData implements
 	 * @param ElggSite $site The site to remove this entity from
 	 *
 	 * @return bool
+	 * @todo add ElggSite type hint once we have removed addToSite() from ElggUser
 	 */
-	public function removeFromSite(ElggSite $site) {
+	public function removeFromSite($site) {
 		if (!elgg_instanceof($site, 'site')) {
 			return false;
 		}
