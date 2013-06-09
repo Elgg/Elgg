@@ -17,12 +17,12 @@
  * 
  * @property string $title       The title, name, or summary of this object
  * @property string $description The body, description, or content of the object
- * @property array  $tags        Array of tags that describe the object
+ * @property array  $tags        Tags that describe the object (metadata)
  */
 class ElggObject extends ElggEntity {
 
 	/**
-	 * Initialise the attributes array to include the type,
+	 * Initialize the attributes array to include the type,
 	 * title, and description.
 	 *
 	 * @return void
@@ -37,49 +37,45 @@ class ElggObject extends ElggEntity {
 	}
 
 	/**
-	 * Load or create a new ElggObject.
+	 * Create a new ElggObject.
 	 *
-	 * If no arguments are passed, create a new entity.
+	 * Plugin developers should only use the constructor to create a new entity.
+	 * To retrieve entities, use get_entity() and the elgg_get_entities* functions.
 	 *
-	 * If an argument is passed, attempt to load a full ElggObject entity.
-	 * Arguments can be:
-	 *  - The GUID of an object entity.
-	 *  - A DB result object from the entities table with a guid property
+	 * If no arguments are passed, it creates a new entity.
+	 * If a database result is passed as a stdClass instance, it instantiates
+	 * that entity.
 	 *
-	 * @param mixed $guid If an int, load that GUID.  If a db row, then will attempt to
-	 * load the rest of the data.
+	 * @param stdClass $row Database row result. Default is null to create a new object.
 	 *
-	 * @throws IOException If passed an incorrect guid
-	 * @throws InvalidParameterException If passed an Elgg* Entity that isn't an ElggObject
+	 * @throws IOException If cannot load remaining data from db
+	 * @throws InvalidParameterException If not passed a db row result
 	 */
-	function __construct($guid = null) {
+	function __construct($row = null) {
 		$this->initializeAttributes();
 
 		// compatibility for 1.7 api.
 		$this->initialise_attributes(false);
 
-		if (!empty($guid)) {
-			// Is $guid is a DB row from the entity table
-			if ($guid instanceof stdClass) {
+		if (!empty($row)) {
+			// Is $row is a DB row from the entity table
+			if ($row instanceof stdClass) {
 				// Load the rest
-				if (!$this->load($guid)) {
-					$msg = "Failed to load new " . get_class() . " from GUID:" . $guid->guid;
+				if (!$this->load($row)) {
+					$msg = "Failed to load new " . get_class() . " for GUID: " . $row->guid;
 					throw new IOException($msg);
 				}
-			} else if ($guid instanceof ElggObject) {
-				// $guid is an ElggObject so this is a copy constructor
+			} else if ($row instanceof ElggObject) {
+				// $row is an ElggObject so this is a copy constructor
 				elgg_deprecated_notice('This type of usage of the ElggObject constructor was deprecated. Please use the clone method.', 1.7);
-
-				foreach ($guid->attributes as $key => $value) {
+				foreach ($row->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-			} else if ($guid instanceof ElggEntity) {
-				// @todo remove - do not need separate exception
-				throw new InvalidParameterException("Passing a non-ElggObject to an ElggObject constructor!");
-			} else if (is_numeric($guid)) {
-				// $guid is a GUID so load
-				if (!$this->load($guid)) {
-					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $guid);
+			} else if (is_numeric($row)) {
+				// $row is a GUID so load
+				elgg_deprecated_notice('Passing a GUID to constructor is deprecated. Use get_entity()', 1.9);
+				if (!$this->load($row)) {
+					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $row);
 				}
 			} else {
 				throw new InvalidParameterException("Unrecognized value passed to constuctor.");

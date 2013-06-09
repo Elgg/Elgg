@@ -82,22 +82,13 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		$this->AssertNotEqual($guid, 0);
 
 		// fail on wrong type
-		try {
-			$error = new ElggUserTest($guid);
-			$this->assertTrue(false);
-		} catch (Exception $e) {
-			$this->assertIsA($e, 'InvalidClassException');
-		}
+		$this->assertFalse(get_user($guid));
 
 		// clean up
 		$object->delete();
 	}
 
-	public function testElggUserConstructorByGuid() {
-		$user = new ElggUser(elgg_get_logged_in_user_guid());
-		$this->assertIdenticalEntities($user, $_SESSION['user']);
-
-		// fail with garbage
+	public function testElggUserConstructorWithGarbage() {
 		try {
 			$error = new ElggUserTest(array('invalid'));
 			$this->assertTrue(false);
@@ -109,12 +100,6 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 	public function testElggUserConstructorByDbRow() {
 		$row = $this->fetchUser(elgg_get_logged_in_user_guid());
 		$user = new ElggUser($row);
-		$this->assertIdenticalEntities($user, $_SESSION['user']);
-	}
-
-	public function testElggUserConstructorByUsername() {
-		$row = $this->fetchUser(elgg_get_logged_in_user_guid());
-		$user = new ElggUser($row->username);
 		$this->assertIdenticalEntities($user, $_SESSION['user']);
 	}
 
