@@ -29,3 +29,13 @@ echo <<<HTML
 	</div>
 </div>
 HTML;
+
+if (elgg_is_sticky_form('register')) {
+?>
+<script type="text/javascript">
+	elgg.register_hook_handler('init', 'system', function(){
+		$('.registration_link').trigger('click');
+	});
+</script>
+<?php
+}
