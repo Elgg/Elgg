@@ -84,7 +84,7 @@ class Elgg_PluginDependencyScanner {
 				$requires = $manifest->getRequires();
 				$conflicts = $manifest->getConflicts();
 				$provides = $manifest->getProvides();
-				$this->dependencyGraph->addVertice($manifest->getPluginID());
+				$this->dependencyGraph->addVertex($manifest->getPluginID());
 // 				var_dump($manifest->getPluginID());
 				foreach ($requires as $rule) {
 					if ($rule['type'] == 'plugin') {

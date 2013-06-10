@@ -8,7 +8,7 @@
 class Elgg_Graph {
 
 	/**
-	 * @var array key is the vertice unique name and value is internal number identyfying it
+	 * @var array key is the vertex unique name and value is internal number identyfying it
 	 */
 	private $vertices = array();
 
@@ -18,13 +18,13 @@ class Elgg_Graph {
 	private $edges = array();
 
 	/**
-	 * Adds vertice to graph
+	 * Adds vertex to graph
 	 * 
-	 * @param string $name Name of the vertice
+	 * @param string $name Name of the vertex
 	 * @return boolean
 	 */
-	public function addVertice($name) {
-		if (!$this->isVertice($name)) {
+	public function addVertex($name) {
+		if (!$this->isVertex($name)) {
 			$this->vertices[$name] = count($this->vertices);
 			$this->edges[$this->vertices[$name]] = array();
 			return true;
@@ -33,11 +33,11 @@ class Elgg_Graph {
 	}
 
 	/**
-	 * Checks if vertice already exists in graph
+	 * Checks if vertex already exists in graph
 	 * 
-	 * @param boolean $name Name of the vertice
+	 * @param boolean $name Name of the vertex
 	 */
-	public function isVertice($name) {
+	public function isVertex($name) {
 		return array_key_exists($name, $this->vertices);
 	}
 
@@ -51,17 +51,17 @@ class Elgg_Graph {
 	/**
 	 * Adds edge to graph. Adds vertices if not added yet
 	 * 
-	 * @param string $vFromName Name of source vertice
-	 * @param string $vToName   Name of target vertice
+	 * @param string $vFromName Name of source vertex
+	 * @param string $vToName   Name of target vertex
 	 * @param mixed $data       Optional data to be stored with edge
 	 * @return boolean
 	 */
 	public function addEdge($vFromName, $vToName, $data = null) {
-		if (!$this->isVertice($vFromName)) {
-			$this->addVertice($vFromName);
+		if (!$this->isVertex($vFromName)) {
+			$this->addVertex($vFromName);
 		}
-		if (!$this->isVertice($vToName)) {
-			$this->addVertice($vToName);
+		if (!$this->isVertex($vToName)) {
+			$this->addVertex($vToName);
 		}
 		if (!array_key_exists($vToName, $this->edges[$this->vertices[$vFromName]])) {
 			$this->edges[$this->vertices[$vFromName]][$this->vertices[$vToName]] = $data;
@@ -136,8 +136,8 @@ class Elgg_Graph {
 	 */
 	public function dfs($catchTimes = false, $catchCycle = false) {
 		$this->dfsColors = array();
-		foreach ($this->vertices as $vertice) {
-			$this->dfsColors[$vertice] = self::DFS_COLOR_WHITE;
+		foreach ($this->vertices as $vertex) {
+			$this->dfsColors[$vertex] = self::DFS_COLOR_WHITE;
 		}
 		$this->dfsCycle = null;
 		$this->dfsTime = 0;
@@ -145,13 +145,13 @@ class Elgg_Graph {
 		$this->dfsExitTimes = array();
 		if ($catchCycle) {
 			$this->dfsPi = array();
-			foreach ($this->vertices as $vertice) {
-				$this->dfsPi[$vertice] = null;
+			foreach ($this->vertices as $vertex) {
+				$this->dfsPi[$vertex] = null;
 			}
 		}
-		foreach ($this->vertices as $vertice) {
-			if ($this->dfsColors[$vertice] == self::DFS_COLOR_WHITE) {
-				$this->dfsVisit($vertice, $catchTimes, $catchCycle);
+		foreach ($this->vertices as $vertex) {
+			if ($this->dfsColors[$vertex] == self::DFS_COLOR_WHITE) {
+				$this->dfsVisit($vertex, $catchTimes, $catchCycle);
 			}
 		}
 		if ($this->dfsCycle === null) {
@@ -160,23 +160,23 @@ class Elgg_Graph {
 	}
 
 	/**
-	 * Visits recursively selected vertice. It's part of implementation of DFS algorithm
+	 * Visits recursively selected vertex. It's part of implementation of DFS algorithm
 	 * 
-	 * @param int $vertice        Name of the vertice
+	 * @param int $vertex        Name of the vertex
 	 * @param boolean $catchTimes Should algorithm compute enter and exit times for vertices
 	 * @param boolean $catchCycle Should algorithm keep data to reconstruct cycle if found in the graph
 	 * @return null
 	 */
-	protected function dfsVisit($vertice, $catchTimes, $catchCycle) {
-		$this->dfsColors[$vertice] = self::DFS_COLOR_GRAY;
+	protected function dfsVisit($vertex, $catchTimes, $catchCycle) {
+		$this->dfsColors[$vertex] = self::DFS_COLOR_GRAY;
 		if ($catchTimes) {
 			$this->dfsTime++;
-			$this->dfsEntryTimes[$vertice] = $this->dfsTime;
+			$this->dfsEntryTimes[$vertex] = $this->dfsTime;
 		}
-		foreach ($this->edges[$vertice] as $toName => $data) {
+		foreach ($this->edges[$vertex] as $toName => $data) {
 			if ($this->dfsColors[$toName] == self::DFS_COLOR_WHITE) {
 				if ($catchCycle) {
-					$this->dfsPi[$toName] = $vertice;
+					$this->dfsPi[$toName] = $vertex;
 				}
 				$this->dfsVisit($toName, $catchTimes, $catchCycle);
 			} elseif ($this->dfsColors[$toName] == self::DFS_COLOR_GRAY) {
@@ -185,7 +185,7 @@ class Elgg_Graph {
 					if ($catchCycle) {
 						//reconstruct the cycle
 						$map = array_flip($this->vertices);
-						$curr = $vertice;
+						$curr = $vertex;
 						$this->dfsCycle = array($map[$curr]);
 						while(isset($this->dfsPi[$curr]) && $curr != $toName) {
 							$curr = $this->dfsPi[$curr];
@@ -196,17 +196,17 @@ class Elgg_Graph {
 					}
 				}
 			} else {
-				//black vertice can't be part of new cycle as we'd have to come from it and unchecked trees are marked gray
+				//black vertex can't be part of new cycle as we'd have to come from it and unchecked trees are marked gray
 				if ($catchCycle) {
 					//connect paths coming into child black subtree
-					$this->dfsPi[$toName] = $vertice;
+					$this->dfsPi[$toName] = $vertex;
 				}
 			}
 		}
-		$this->dfsColors[$vertice] = self::DFS_COLOR_BLACK;
+		$this->dfsColors[$vertex] = self::DFS_COLOR_BLACK;
 		if ($catchTimes) {
 			$this->dfsTime++;
-			$this->dfsExitTimes[$vertice] = $this->dfsTime;
+			$this->dfsExitTimes[$vertex] = $this->dfsTime;
 		}
 	}
 
@@ -227,8 +227,8 @@ class Elgg_Graph {
 		//resolve vertices names
 		$map = array_flip($this->vertices);
 		$result = array();
-		foreach ($list as $vertice => $time) {
-			$result[] = $map[$vertice];
+		foreach ($list as $vertex => $time) {
+			$result[] = $map[$vertex];
 		}
 		return $result;
 	}
