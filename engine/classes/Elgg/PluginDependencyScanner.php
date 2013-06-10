@@ -17,12 +17,17 @@ class Elgg_PluginDependencyScanner {
 	 */
 	const DEP_REQUIRES = 'requires';
 	
+	/**
+	 * Constructor
+	 */
 	public function __construct() {
 		$this->dependencyGraph = new Elgg_Graph();
 	}
 	
 	/**
-	 * @param ElggPlugin[]|ElggPluginPackage[] $plugins
+	 * Performs topological sotr of given plugins/packages to determine save order of enabling them in single action
+	 * 
+	 * @param ElggPlugin[]|ElggPluginPackage[] $plugins Plugins or packages to be sorted
 	 * @return false|ElggPlugin[]|ElggPluginPackage[]
 	 */
 	public function scanPlugins($plugins) {
@@ -45,10 +50,21 @@ class Elgg_PluginDependencyScanner {
 		return array_merge(array_flip($result), $resultPlugins);
 	}
 	
+	/**
+	 * Returns plugins cycle if exists
+	 * 
+	 * @return array|false returns array of names of vertices making the cycle or false if graph is acyclic
+	 */
 	public function getCycle() {
 		return $this->dependencyGraph->getCycle();
 	}
 	
+	/**
+	 * SOrts manifests topologizally by "requires plugin" dependency
+	 * 
+	 * @param ElggPluginManifest[] $manifests List of manifests to sort
+	 * @return false|string[]
+	 */
 	protected function scanManifests($manifests) {
 
 		$mt = microtime(true);
@@ -87,9 +103,4 @@ class Elgg_PluginDependencyScanner {
 		
 		return $this->dependencyGraph->topologicalSort(true);
 	}
-	
-	public function getPluginsEnablingOrder($plugins = null) {
-		throw new NotImplementedException();
-	}
-	
 }

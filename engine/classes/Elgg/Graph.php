@@ -18,7 +18,9 @@ class Elgg_Graph {
 	private $edges = array();
 
 	/**
-	 * @param string $name
+	 * Adds vertice to graph
+	 * 
+	 * @param string $name Name of the vertice
 	 * @return boolean
 	 */
 	public function addVertice($name) {
@@ -31,7 +33,9 @@ class Elgg_Graph {
 	}
 
 	/**
-	 * @param boolean $name
+	 * Checks if vertice already exists in graph
+	 * 
+	 * @param boolean $name Name of the vertice
 	 */
 	public function isVertice($name) {
 		return array_key_exists($name, $this->vertices);
@@ -45,9 +49,11 @@ class Elgg_Graph {
 	}
 
 	/**
-	 * @param string $vFromName
-	 * @param string $vToName
-	 * @param mixed $data
+	 * Adds edge to graph. Adds vertices if not added yet
+	 * 
+	 * @param string $vFromName Name of source vertice
+	 * @param string $vToName   Name of target vertice
+	 * @param mixed $data       Optional data to be stored with edge
 	 * @return boolean
 	 */
 	public function addEdge($vFromName, $vToName, $data = null) {
@@ -65,7 +71,9 @@ class Elgg_Graph {
 	}
 
 	/**
-	 * @return array of arrays containing three values: fromName, toName and data
+	 * Returns array of arrays containing three values: fromName, toName and data
+	 * 
+	 * @return array 
 	 */
 	public function getEdges() {
 		$result = array();
@@ -120,7 +128,11 @@ class Elgg_Graph {
 	const DFS_COLOR_BLACK = 2;
 
 	/**
-	 * @param boolean $catchCycle
+	 * Performs depth-first search algorithm on current graph
+	 * 
+	 * @param boolean $catchTimes Should algorithm compute enter and exit times for vertices
+	 * @param boolean $catchCycle Should algorithm keep data to reconstruct cycle if found in the graph
+	 * @return null
 	 */
 	public function dfs($catchTimes = false, $catchCycle = false) {
 		$this->dfsColors = array();
@@ -148,8 +160,12 @@ class Elgg_Graph {
 	}
 
 	/**
-	 * @param int $vertice
-	 * @param boolean $catchCycle
+	 * Visits recursively selected vertice. It's part of implementation of DFS algorithm
+	 * 
+	 * @param int $vertice        Name of the vertice
+	 * @param boolean $catchTimes Should algorithm compute enter and exit times for vertices
+	 * @param boolean $catchCycle Should algorithm keep data to reconstruct cycle if found in the graph
+	 * @return null
 	 */
 	protected function dfsVisit($vertice, $catchTimes, $catchCycle) {
 		$this->dfsColors[$vertice] = self::DFS_COLOR_GRAY;
@@ -167,7 +183,7 @@ class Elgg_Graph {
 				//mark cycle if not found yet
 				if ($this->dfsCycle === null) {
 					if ($catchCycle) {
-						//construct the cycle
+						//reconstruct the cycle
 						$map = array_flip($this->vertices);
 						$curr = $vertice;
 						$this->dfsCycle = array($map[$curr]);
@@ -195,7 +211,9 @@ class Elgg_Graph {
 	}
 
 	/**
-	 * @param boolean $catchCycle
+	 * Sorts graph topologically
+	 * 
+	 * @param boolean $catchCycle Should algorithm keep data to reconstruct cycle if found in the graph
 	 * @return boolean
 	 */
 	public function topologicalSort($catchCycle = false) {
@@ -216,6 +234,8 @@ class Elgg_Graph {
 	}
 
 	/**
+	 * Tells if current graph does not contain any cycle
+	 * 
 	 * @return boolean
 	 */
 	public function isAcyclic() {
@@ -223,6 +243,8 @@ class Elgg_Graph {
 	}
 
 	/**
+	 * Returns graph cycle if exists
+	 * 
 	 * @return array|false returns array of names of vertices making the cycle or false if graph is acyclic
 	 */
 	public function getCycle() {
