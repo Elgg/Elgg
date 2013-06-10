@@ -5,23 +5,23 @@
  * Used for the walled garden index page
  */
 
-// Set the content type
-header("Content-type: text/html; charset=UTF-8");
-?>
-<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
-<head>
-<?php echo elgg_view('page/elements/head', $vars); ?>
-</head>
-<body>
+// render content before head so that JavaScript and CSS can be loaded. See #4032
+$messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
+$content = $vars["body"];
+
+$body = <<<__BODY
 <div class="elgg-page elgg-page-walledgarden">
 	<div class="elgg-page-messages">
-		<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
+		$messages
 	</div>
 	<div class="elgg-body-walledgarden">
-		<?php echo $vars['body']; ?>
+		$content
 	</div>
 </div>
-<?php echo elgg_view('page/elements/foot'); ?>
-</body>
-</html>
+__BODY;
+
+$body .= elgg_view('page/elements/foot');
+
+$head = elgg_view('page/elements/head', $vars);
+
+echo elgg_view("page/elements/html", array("head" => $head, "body" => $body));
