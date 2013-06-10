@@ -55,6 +55,69 @@ function filter_tags($var) {
 }
 
 /**
+ * Returns the current page's complete URL.
+ *
+ * The current URL is assembled using the network's wwwroot and the request URI
+ * in $_SERVER as populated by the web server.  This function will include
+ * any schemes, usernames and passwords, and ports.
+ *
+ * @return string The current page URL.
+ */
+function current_page_url() {
+	$url = parse_url(elgg_get_site_url());
+
+	$page = $url['scheme'] . "://";
+
+	// user/pass
+	if ((isset($url['user'])) && ($url['user'])) {
+		$page .= $url['user'];
+	}
+	if ((isset($url['pass'])) && ($url['pass'])) {
+		$page .= ":" . $url['pass'];
+	}
+	if ((isset($url['user']) && $url['user']) ||
+		(isset($url['pass']) && $url['pass'])) {
+		$page .= "@";
+	}
+
+	$page .= $url['host'];
+
+	if ((isset($url['port'])) && ($url['port'])) {
+		$page .= ":" . $url['port'];
+	}
+
+	$page = trim($page, "/");
+
+	// we don't have request URI when in CLI
+	$page .= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+
+	return $page;
+}
+
+/**
+ * Return the full URL of the current page.
+ *
+ * @return string The URL
+ * @todo Combine / replace with current_page_url()
+ */
+function full_url() {
+	$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
+	$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0,
+		strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
+
+	$port = ($_SERVER["SERVER_PORT"] == "80" || $_SERVER["SERVER_PORT"] == "443") ?
+		"" : (":" . $_SERVER["SERVER_PORT"]);
+
+	// This is here to prevent XSS in poorly written browsers used by 80% of the population.
+	// {@trac [5813]}
+	$quotes = array('\'', '"');
+	$encoded = array('%27', '%22');
+
+	return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port .
+		str_replace($quotes, $encoded, $_SERVER['REQUEST_URI']);
+}
+
+/**
  * Validates an email address.
  *
  * @param string $address Email address.
