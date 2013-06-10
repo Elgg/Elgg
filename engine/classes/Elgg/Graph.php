@@ -36,6 +36,7 @@ class Elgg_Graph {
 	 * Checks if vertex already exists in graph
 	 * 
 	 * @param boolean $name Name of the vertex
+	 * @return boolean
 	 */
 	public function isVertex($name) {
 		return array_key_exists($name, $this->vertices);
@@ -53,7 +54,7 @@ class Elgg_Graph {
 	 * 
 	 * @param string $vFromName Name of source vertex
 	 * @param string $vToName   Name of target vertex
-	 * @param mixed $data       Optional data to be stored with edge
+	 * @param mixed  $data      Optional data to be stored with edge
 	 * @return boolean
 	 */
 	public function addEdge($vFromName, $vToName, $data = null) {
@@ -162,7 +163,7 @@ class Elgg_Graph {
 	/**
 	 * Visits recursively selected vertex. It's part of implementation of DFS algorithm
 	 * 
-	 * @param int $vertex        Name of the vertex
+	 * @param int     $vertex     Name of the vertex
 	 * @param boolean $catchTimes Should algorithm compute enter and exit times for vertices
 	 * @param boolean $catchCycle Should algorithm keep data to reconstruct cycle if found in the graph
 	 * @return null
@@ -187,7 +188,7 @@ class Elgg_Graph {
 						$map = array_flip($this->vertices);
 						$curr = $vertex;
 						$this->dfsCycle = array($map[$curr]);
-						while(isset($this->dfsPi[$curr]) && $curr != $toName) {
+						while (isset($this->dfsPi[$curr]) && $curr != $toName) {
 							$curr = $this->dfsPi[$curr];
 							$this->dfsCycle[] = $map[$curr];
 						}

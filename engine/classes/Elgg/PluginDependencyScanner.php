@@ -68,7 +68,6 @@ class Elgg_PluginDependencyScanner {
 	protected function scanManifests($manifests) {
 
 		$mt = microtime(true);
-// 		var_dump(count($pluginsToEnable));
 		
 		// Affects enabling order:
 		//catch dependencies on $pluginsToEnable:
@@ -77,29 +76,24 @@ class Elgg_PluginDependencyScanner {
 		//catch dependencies on $pluginsEnabled:
 		// - priority of plugin
 		
-// 		shuffle($pluginsToEnable);
-		
 		foreach ($manifests as $manifest) {
 			if ($manifest instanceof ElggPluginManifest) {
 				$requires = $manifest->getRequires();
 				$conflicts = $manifest->getConflicts();
 				$provides = $manifest->getProvides();
 				$this->dependencyGraph->addVertex($manifest->getPluginID());
-// 				var_dump($manifest->getPluginID());
 				foreach ($requires as $rule) {
 					if ($rule['type'] == 'plugin') {
 						//edge A->B in topological sort means "A is required by B"
 						$this->dependencyGraph->addEdge($rule['name'], $manifest->getPluginID(), self::DEP_REQUIRES);
-// 						$this->dependencyGraph->addEdge($manifest->getPluginID(), $rule['name'], self::DEP_REQUIRES);
-// 						var_dump($rule);
 					}
 				}
 			}
 		}
-// 		var_dump(microtime(true) - $mt);
-// 		var_dump($this->dependencyGraph->getVertices());
-// 		var_dump($this->dependencyGraph->getEdges());
-// 		var_dump($this->dependencyGraph->getCycle());
+		// var_dump(microtime(true) - $mt);
+		// var_dump($this->dependencyGraph->getVertices());
+		// var_dump($this->dependencyGraph->getEdges());
+		// var_dump($this->dependencyGraph->getCycle());
 		
 		return $this->dependencyGraph->topologicalSort(true);
 	}
