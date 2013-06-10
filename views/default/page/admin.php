@@ -40,7 +40,7 @@ $body = <<<__BODY
 			</div>
 		</div>
 		<div class="elgg-page-messages">
-			$messages;
+			$messages
 		</div>
 		<div class="elgg-page-body">
 			<div class="elgg-inner">
