@@ -625,6 +625,79 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
 }
 
 /**
+ * The algorithm working out the size of font based on the number of tags.
+ * This is quick and dirty.
+ *
+ * @param int $min            Min size
+ * @param int $max            Max size
+ * @param int $number_of_tags The number of tags
+ * @param int $buckets        The number of buckets
+ *
+ * @return int
+ * @access private
+ * @deprecated 1.9
+ */
+function calculate_tag_size($min, $max, $number_of_tags, $buckets = 6) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	$delta = (($max - $min) / $buckets);
+	$thresholds = array();
+
+	for ($n = 1; $n <= $buckets; $n++) {
+		$thresholds[$n - 1] = ($min + $n) * $delta;
+	}
+
+	// Correction
+	if ($thresholds[$buckets - 1] > $max) {
+		$thresholds[$buckets - 1] = $max;
+	}
+
+	$size = 0;
+	for ($n = 0; $n < count($thresholds); $n++) {
+		if ($number_of_tags >= $thresholds[$n]) {
+			$size = $n;
+		}
+	}
+
+	return $size;
+}
+
+/**
+ * This function generates an array of tags with a weighting.
+ *
+ * @param array $tags    The array of tags.
+ * @param int   $buckets The number of buckets
+ *
+ * @return array An associated array of tags with a weighting, this can then be mapped to a display class.
+ * @access private
+ * @deprecated 1.9
+ */
+function generate_tag_cloud(array $tags, $buckets = 6) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	$cloud = array();
+
+	$min = 65535;
+	$max = 0;
+
+	foreach ($tags as $tag) {
+		$cloud[$tag]++;
+
+		if ($cloud[$tag] > $max) {
+			$max = $cloud[$tag];
+		}
+
+		if ($cloud[$tag] < $min) {
+			$min = $cloud[$tag];
+		}
+	}
+
+	foreach ($cloud as $k => $v) {
+		$cloud[$k] = calculate_tag_size($min, $max, $v, $buckets);
+	}
+
+	return $cloud;
+}
+
+/**
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"

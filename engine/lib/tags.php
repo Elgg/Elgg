@@ -27,75 +27,6 @@ function string_to_tag_array($string) {
 }
 
 /**
- * The algorithm working out the size of font based on the number of tags.
- * This is quick and dirty.
- *
- * @param int $min            Min size
- * @param int $max            Max size
- * @param int $number_of_tags The number of tags
- * @param int $buckets        The number of buckets
- *
- * @return int
- * @access private
- */
-function calculate_tag_size($min, $max, $number_of_tags, $buckets = 6) {
-	$delta = (($max - $min) / $buckets);
-	$thresholds = array();
-
-	for ($n = 1; $n <= $buckets; $n++) {
-		$thresholds[$n - 1] = ($min + $n) * $delta;
-	}
-
-	// Correction
-	if ($thresholds[$buckets - 1] > $max) {
-		$thresholds[$buckets - 1] = $max;
-	}
-
-	$size = 0;
-	for ($n = 0; $n < count($thresholds); $n++) {
-		if ($number_of_tags >= $thresholds[$n]) {
-			$size = $n;
-		}
-	}
-
-	return $size;
-}
-
-/**
- * This function generates an array of tags with a weighting.
- *
- * @param array $tags    The array of tags.
- * @param int   $buckets The number of buckets
- *
- * @return array An associated array of tags with a weighting, this can then be mapped to a display class.
- * @access private
- */
-function generate_tag_cloud(array $tags, $buckets = 6) {
-	$cloud = array();
-
-	$min = 65535;
-	$max = 0;
-
-	foreach ($tags as $tag) {
-		$cloud[$tag]++;
-
-		if ($cloud[$tag] > $max) {
-			$max = $cloud[$tag];
-		}
-
-		if ($cloud[$tag] < $min) {
-			$min = $cloud[$tag];
-		}
-	}
-
-	foreach ($cloud as $k => $v) {
-		$cloud[$k] = calculate_tag_size($min, $max, $v, $buckets);
-	}
-
-	return $cloud;
-}
-
-/**
  * Get popular tags and their frequencies
  *
  * Supports similar arguments as elgg_get_entities()
@@ -141,25 +72,25 @@ function elgg_get_tags(array $options = array()) {
 	global $CONFIG;
 
 	$defaults = array(
-		'threshold'				=>	1,
-		'tag_names'				=>	array(),
-		'limit'					=>	10,
+		'threshold' => 1,
+		'tag_names' => array(),
+		'limit' => 10,
 
-		'types'					=>	ELGG_ENTITIES_ANY_VALUE,
-		'subtypes'				=>	ELGG_ENTITIES_ANY_VALUE,
-		'type_subtype_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'types' => ELGG_ENTITIES_ANY_VALUE,
+		'subtypes' => ELGG_ENTITIES_ANY_VALUE,
+		'type_subtype_pairs' => ELGG_ENTITIES_ANY_VALUE,
 
-		'owner_guids'			=>	ELGG_ENTITIES_ANY_VALUE,
-		'container_guids'		=>	ELGG_ENTITIES_ANY_VALUE,
-		'site_guids'			=>	$CONFIG->site_guid,
+		'owner_guids' => ELGG_ENTITIES_ANY_VALUE,
+		'container_guids' => ELGG_ENTITIES_ANY_VALUE,
+		'site_guids' => $CONFIG->site_guid,
 
-		'modified_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'modified_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'created_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'created_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'modified_time_lower' => ELGG_ENTITIES_ANY_VALUE,
+		'modified_time_upper' => ELGG_ENTITIES_ANY_VALUE,
+		'created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
+		'created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
 
-		'joins'					=>	array(),
-		'wheres'				=>	array(),
+		'joins' => array(),
+		'wheres' => array(),
 	);
 
 
@@ -305,14 +236,14 @@ function elgg_get_registered_tag_metadata_names() {
 }
 
 /**
- * Page hander for tags
+ * Page hander for sitewide tag cloud
  *
  * @param array $page Page array
  *
  * @return bool
  * @access private
  */
-function elgg_tagcloud_page_handler($page) {
+function _elgg_tagcloud_page_handler($page) {
 
 	$title = elgg_view_title(elgg_echo('tags:site_cloud'));
 	$options = array(
@@ -331,11 +262,11 @@ function elgg_tagcloud_page_handler($page) {
 /**
  * @access private
  */
-function elgg_tags_init() {
+function _elgg_tags_init() {
 	// register the standard tags metadata name
 	elgg_register_tag_metadata_name('tags');
 	
-	elgg_register_page_handler('tags', 'elgg_tagcloud_page_handler');
+	elgg_register_page_handler('tags', '_elgg_tagcloud_page_handler');
 }
 
-elgg_register_event_handler('init', 'system', 'elgg_tags_init');
+elgg_register_event_handler('init', 'system', '_elgg_tags_init');
