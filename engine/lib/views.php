@@ -1136,6 +1136,38 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 }
 
 /**
+ * Create a tagcloud for viewing
+ *
+ * @see elgg_get_tags
+ *
+ * @param array $options Any elgg_get_tags() options except:
+ *
+ * 	type => must be single entity type
+ *
+ * 	subtype => must be single entity subtype
+ *
+ * @return string
+ * @since 1.7.1
+ */
+function elgg_view_tagcloud(array $options = array()) {
+
+	$type = $subtype = '';
+	if (isset($options['type'])) {
+		$type = $options['type'];
+	}
+	if (isset($options['subtype'])) {
+		$subtype = $options['subtype'];
+	}
+
+	$tag_data = elgg_get_tags($options);
+	return elgg_view("output/tagcloud", array(
+		'value' => $tag_data,
+		'type' => $type,
+		'subtype' => $subtype,
+	));
+}
+
+/**
  * View an item in a list
  *
  * @param ElggEntity|ElggAnnotation $item
