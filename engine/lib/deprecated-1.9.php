@@ -3164,6 +3164,27 @@ function xml_to_object($xml) {
 }
 
 /**
+ * Retrieve a site and return the domain portion of its url.
+ *
+ * @param int $guid ElggSite GUID
+ *
+ * @return string
+ * @deprecated 1.9
+ */
+function get_site_domain($guid) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggSite::getDomain()', 1.9);
+	$guid = (int)$guid;
+
+	$site = get_entity($guid);
+	if ($site instanceof ElggSite) {
+		$breakdown = parse_url($site->url);
+		return $breakdown['host'];
+	}
+
+	return false;
+}
+
+/**
  * Register an entity type and subtype to be eligible for notifications
  *
  * @param string $entity_type    The type of entity

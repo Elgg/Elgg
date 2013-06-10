@@ -199,7 +199,7 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 		$from = $site->email;
 	} else {
 		// If all else fails, use the domain of the site.
-		$from = 'noreply@' . get_site_domain($site->guid);
+		$from = 'noreply@' . $site->getDomain();
 	}
 
 	return elgg_send_email($from, $to, $message->subject, $message->body);

@@ -70,25 +70,6 @@ function get_site_by_url($url) {
 }
 
 /**
- * Retrieve a site and return the domain portion of its url.
- *
- * @param int $guid ElggSite GUID
- *
- * @return string
- */
-function get_site_domain($guid) {
-	$guid = (int)$guid;
-
-	$site = get_entity($guid);
-	if ($site instanceof ElggSite) {
-		$breakdown = parse_url($site->url);
-		return $breakdown['host'];
-	}
-
-	return false;
-}
-
-/**
  * Unit tests for sites
  *
  * @param string $hook   unit_test

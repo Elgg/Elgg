@@ -63,7 +63,7 @@ foreach ($emails as $email) {
 	if ($site && $site->email) {
 		$from = $site->email;
 	} else {
-		$from = 'noreply@' . get_site_domain($site->guid);
+		$from = 'noreply@' . $site->getDomain();
 	}
 
 	elgg_send_email($from, $email, $subject, $message);

@@ -450,6 +450,17 @@ class ElggSite extends ElggEntity {
 	}
 
 	/**
+	 * Get the domain for this site
+	 *
+	 * @return string
+	 * @since 1.9
+	 */
+	public function getDomain() {
+		$breakdown = parse_url($this->url);
+		return $breakdown['host'];
+	}
+
+	/**
 	 * Halts bootup and redirects to the site front page
 	 * if site is in walled garden mode, no user is logged in,
 	 * and the URL is not a public page.
