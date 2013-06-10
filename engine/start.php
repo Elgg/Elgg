@@ -106,7 +106,6 @@ $lib_files = array(
 	'upgrade.php',
 	'views.php',
 	'widgets.php',
-	'xml.php',
 	
 	// backward compatibility
 	'deprecated-1.7.php',

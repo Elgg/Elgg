@@ -166,7 +166,7 @@ class ElggPluginManifest {
 				$raw_xml = file_get_contents($manifest);
 			}
 			if ($raw_xml) {
-				$manifest_obj = xml_to_object($raw_xml);
+				$manifest_obj = new ElggXMLElement($raw_xml);
 			} else {
 				$manifest_obj = null;
 			}
