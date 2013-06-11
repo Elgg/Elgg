@@ -116,7 +116,7 @@ function elgg_format_url($url) {
  * @return string HTML attributes to be inserted into a tag (e.g., <tag $attrs>)
  */
 function elgg_format_attributes(array $attrs) {
-	$attrs = elgg_clean_vars($attrs);
+	$attrs = _elgg_clean_vars($attrs);
 	$attributes = array();
 
 	if (isset($attrs['js'])) {
@@ -167,7 +167,7 @@ function elgg_format_attributes(array $attrs) {
  * @return array The array, ready to be used in elgg_format_attributes().
  * @access private
  */
-function elgg_clean_vars(array $vars = array()) {
+function _elgg_clean_vars(array $vars = array()) {
 	unset($vars['config']);
 	unset($vars['url']);
 	unset($vars['user']);
@@ -268,7 +268,7 @@ function elgg_normalize_url($url) {
  *
  * @param string $title The title
  *
- * @return string The optimised title
+ * @return string The optimized title
  * @since 1.7.2
  */
 function elgg_get_friendly_title($title) {
@@ -414,20 +414,20 @@ function _elgg_html_decode($string) {
  * @return array
  * @access private
  */
-function output_unit_test($hook, $type, $value, $params) {
+function _elgg_output_unit_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = "{$CONFIG->path}engine/tests/ElggCoreOutputAutoPTest.php";
 	return $value;
 }
 
 /**
- * Initialise the Output subsystem.
+ * Initialize the output subsystem.
  *
  * @return void
  * @access private
  */
-function output_init() {
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'output_unit_test');
+function _elgg_output_init() {
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_output_unit_test');
 }
 
-elgg_register_event_handler('init', 'system', 'output_init');
+elgg_register_event_handler('init', 'system', '_elgg_output_init');
