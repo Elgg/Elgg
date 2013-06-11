@@ -46,6 +46,7 @@ function admin_init() {
 	register_action('admin/user/resetpassword', false, "", true);
 	register_action('admin/user/makeadmin', false, "", true);
 	register_action('admin/user/removeadmin', false, "", true);
+	elgg_register_action('admin/site/regenerate_secret', '', 'admin');
 
 	// Register some actions
 	register_action('admin/site/update_basic', false, "", true); // Register basic site admin action

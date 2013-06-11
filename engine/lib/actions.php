@@ -226,11 +226,19 @@ function generate_action_token($timestamp) {
 }
 
 /**
- * Initialise the site secret.
+ * Initialise the site secret (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
  *
+ * Used during installation and saves as a datalist.
+ *
+ * Note: Old secrets were hex encoded.
+ *
+ * @return mixed The site secret hash or false
+ * @access private
+ * @todo Move to better file.
  */
 function init_site_secret() {
-	$secret = md5(rand().microtime());
+	$secret = 'z' . ElggCrypto::getRandomString(31);
+
 	if (datalist_set('__site_secret__', $secret)) {
 		return $secret;
 	}
@@ -251,5 +259,35 @@ function get_site_secret() {
 	return $secret;
 }
 
+/**
+ * Get the strength of the site secret
+ *
+ * @return string "strong", "moderate", or "weak"
+ * @access private
+ */
+function _elgg_get_site_secret_strength() {
+	$secret = get_site_secret();
+	if ($secret[0] !== 'z') {
+		$rand_max = getrandmax();
+		if ($rand_max < pow(2, 16)) {
+			return 'weak';
+		}
+		if ($rand_max < pow(2, 32)) {
+			return 'moderate';
+		}
+	}
+	return 'strong';
+}
+
+/**
+ * Check if an action is registered and its script exists.
+ *
+ * @param string $action Action name
+ *
+ * @return bool
+ * @since 1.8.0
+ */
+function elgg_action_exists($action) {
+	global $CONFIG;
 
 register_elgg_event_handler("init","system","actions_init");
