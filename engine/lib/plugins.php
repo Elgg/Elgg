@@ -586,7 +586,7 @@ function elgg_get_calling_plugin_id($mainfilename = false) {
  * @access private
  */
 function elgg_get_plugins_provides($type = null, $name = null) {
-	static $provides = null;
+	//static $provides = null;
 	$active_plugins = elgg_get_plugins('active');
 
 	if (!isset($provides)) {

@@ -306,4 +306,76 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		$package = new ElggPluginPackage('profile');
 		$this->assertEqual($package->getID(), 'profile');
 	}
+	
+	public function testElggPluginTopologicalSortWithoutCycle() {
+		$scanner = new Elgg_PluginDependencyScanner();
+		
+		$packages = array();
+		for ($name = ord('m'); $name <= ord('z'); $name++) {
+			$packages[] = new ElggPluginPackage(get_config('path') . 'engine/tests/test_files/plugin_requirements_order/case1/' . chr($name) . '/');
+		}
+		$result = $scanner->scanPlugins($packages);
+		$this->assertNotEqual($result, false);
+		
+		$expected = array(//pairs, first should be after next
+			array('m', 'r'),
+			array('m', 'q'),
+			array('m', 'x'),
+			array('n', 'o'),
+			array('n', 'u'),
+			array('n', 'q'),
+			array('o', 's'),
+			array('o', 'v'),
+			array('o', 'r'),
+			array('p', 'z'),
+			array('p', 's'),
+			array('p', 'o'),
+			array('q', 't'),
+			array('r', 'y'),
+			array('r', 'u'),
+			array('s', 'r'),
+			array('u', 't'),
+			array('v', 'w'),
+			array('v', 'x'),
+			array('w', 'z'),
+			array('y', 'v'),
+		);
+		
+		$keys = array_keys($result);
+		foreach ($expected as $row) {
+			list($first, $second) = $row;
+			$pos1 = array_search($first, $keys);
+			$pos2 = array_search($second, $keys);
+			$this->assertNotIdentical($pos1, false);
+			$this->assertNotIdentical($pos2, false);
+			$this->assertTrue($pos1 > $pos2);
+		}
+	}
+
+	public function testElggPluginTopologicalSortWithCycle() {
+		$scanner = new Elgg_PluginDependencyScanner();
+		
+		$packages = array();
+		for ($name = ord('m'); $name <= ord('z'); $name++) {
+			$packages[] = new ElggPluginPackage(get_config('path') . 'engine/tests/test_files/plugin_requirements_order/case2/' . chr($name) . '/');
+		}
+		$result = $scanner->scanPlugins($packages);
+		$this->assertEqual($result, false);
+		
+		$cycle = $scanner->getCycle();
+		$this->assertTrue(is_array($cycle));
+		
+		//check that z-n edge is in the cycle
+		$last = array_shift($cycle);
+		$cycle[] = $last;
+		$ok = false;
+		foreach ($cycle as $item) {
+			if (($item == 'z' && $last == 'n') || ($item == 'n' && $last == 'z')) {
+				$ok = true;
+				break;
+			}
+			$last = $item;
+		}
+		$this->assertTrue($ok);
+	}
 }
