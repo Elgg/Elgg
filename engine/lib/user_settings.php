@@ -10,19 +10,20 @@
 /**
  * Saves user settings.
  *
- * @todo this assumes settings are coming in on a GET/POST request
+ * @todo all the functions called by this function assume settings are coming
+ * in on a GET/POST request
  *
  * @note This is a handler for the 'usersettings:save', 'user' plugin hook
  *
  * @return void
  * @access private
  */
-function users_settings_save() {
-	elgg_set_user_language();
-	elgg_set_user_password();
-	elgg_set_user_default_access();
-	elgg_set_user_name();
-	elgg_set_user_email();
+function _elgg_user_settings_save() {
+	_elgg_set_user_language();
+	_elgg_set_user_password();
+	_elgg_set_user_default_access();
+	_elgg_set_user_name();
+	_elgg_set_user_email();
 }
 
 /**
@@ -32,16 +33,16 @@ function users_settings_save() {
  * @since 1.8.0
  * @access private
  */
-function elgg_set_user_password() {
+function _elgg_set_user_password() {
 	$current_password = get_input('current_password', null, false);
 	$password = get_input('password', null, false);
 	$password2 = get_input('password2', null, false);
 	$user_guid = get_input('guid');
 
-	if (!$user_guid) {
-		$user = elgg_get_logged_in_user_entity();
+	if ($user_guid) {
+		$user = get_user($user_guid);
 	} else {
-		$user = get_entity($user_guid);
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	if ($user && $password) {
@@ -87,7 +88,7 @@ function elgg_set_user_password() {
 		// no change
 		return null;
 	}
-	
+
 	return false;
 }
 
@@ -98,14 +99,14 @@ function elgg_set_user_password() {
  * @since 1.8.0
  * @access private
  */
-function elgg_set_user_name() {
+function _elgg_set_user_name() {
 	$name = strip_tags(get_input('name'));
-	$user_id = get_input('guid');
+	$user_guid = get_input('guid');
 
-	if (!$user_id) {
-		$user = elgg_get_logged_in_user_entity();
+	if ($user_guid) {
+		$user = get_user($user_guid);
 	} else {
-		$user = get_entity($user_id);
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	if (elgg_strlen($name) > 50) {
@@ -113,7 +114,7 @@ function elgg_set_user_name() {
 		return false;
 	}
 
-	if (($user) && ($user->canEdit()) && ($name)) {
+	if ($user && $user->canEdit() && $name) {
 		if ($name != $user->name) {
 			$user->name = $name;
 			if ($user->save()) {
@@ -139,17 +140,17 @@ function elgg_set_user_name() {
  * @since 1.8.0
  * @access private
  */
-function elgg_set_user_language() {
+function _elgg_set_user_language() {
 	$language = get_input('language');
-	$user_id = get_input('guid');
+	$user_guid = get_input('guid');
 
-	if (!$user_id) {
-		$user = elgg_get_logged_in_user_entity();
+	if ($user_guid) {
+		$user = get_user($user_guid);
 	} else {
-		$user = get_entity($user_id);
+		$user = elgg_get_logged_in_user_entity();
 	}
 
-	if (($user) && ($language)) {
+	if ($user && $language) {
 		if (strcmp($language, $user->language) != 0) {
 			$user->language = $language;
 			if ($user->save()) {
@@ -175,14 +176,14 @@ function elgg_set_user_language() {
  * @since 1.8.0
  * @access private
  */
-function elgg_set_user_email() {
+function _elgg_set_user_email() {
 	$email = get_input('email');
-	$user_id = get_input('guid');
+	$user_guid = get_input('guid');
 
-	if (!$user_id) {
-		$user = elgg_get_logged_in_user_entity();
+	if ($user_guid) {
+		$user = get_user($user_guid);
 	} else {
-		$user = get_entity($user_id);
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	if (!is_email_address($email)) {
@@ -223,19 +224,19 @@ function elgg_set_user_email() {
  * @since 1.8.0
  * @access private
  */
-function elgg_set_user_default_access() {
+function _elgg_set_user_default_access() {
 
 	if (!elgg_get_config('allow_user_default_access')) {
 		return false;
 	}
 
 	$default_access = get_input('default_access');
-	$user_id = get_input('guid');
+	$user_guid = get_input('guid');
 
-	if (!$user_id) {
-		$user = elgg_get_logged_in_user_entity();
+	if ($user_guid) {
+		$user = get_user($user_guid);
 	} else {
-		$user = get_entity($user_id);
+		$user = elgg_get_logged_in_user_entity();
 	}
 
 	if ($user) {
@@ -264,7 +265,7 @@ function elgg_set_user_default_access() {
  * @return void
  * @access private
  */
-function usersettings_pagesetup() {
+function _elgg_user_settings_menu_setup() {
 	$user = elgg_get_page_owner_entity();
 
 	if (!$user) {
@@ -305,7 +306,7 @@ function usersettings_pagesetup() {
  * @return bool
  * @access private
  */
-function usersettings_page_handler($page) {
+function _elgg_user_settings_page_handler($page) {
 	global $CONFIG;
 
 	if (!isset($page[0])) {
@@ -349,10 +350,12 @@ function usersettings_page_handler($page) {
  * @return void
  * @access private
  */
-function usersettings_init() {
-	elgg_register_page_handler('settings', 'usersettings_page_handler');
+function _elgg_user_settings_init() {
+	elgg_register_page_handler('settings', '_elgg_user_settings_page_handler');
 
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'users_settings_save');
+	elgg_register_event_handler('pagesetup', 'system', '_elgg_user_settings_menu_setup');
+
+	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_user_settings_save');
 
 	elgg_register_action("usersettings/save");
 
@@ -364,5 +367,4 @@ function usersettings_init() {
 	elgg_extend_view('forms/account/settings', 'core/settings/account/default_access', 100);
 }
 
-elgg_register_event_handler('init', 'system', 'usersettings_init');
-elgg_register_event_handler('pagesetup', 'system', 'usersettings_pagesetup');
+elgg_register_event_handler('init', 'system', '_elgg_user_settings_init');
