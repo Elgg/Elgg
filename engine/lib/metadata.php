@@ -15,7 +15,7 @@
  * @return stdClass|ElggMetadata
  * @access private
  */
-function row_to_elggmetadata($row) {
+function _elgg_row_to_elggmetadata($row) {
 	if (!($row instanceof stdClass)) {
 		return $row;
 	}
@@ -815,7 +815,7 @@ function is_metadata_independent($type, $subtype) {
  * @return true
  * @access private Set as private in 1.9.0
  */
-function metadata_update($event, $object_type, $object) {
+function _elgg_metadata_update($event, $object_type, $object) {
 	if ($object instanceof ElggEntity) {
 		if (!is_metadata_independent($object->getType(), $object->getSubtype())) {
 			$db_prefix = elgg_get_config('dbprefix');

@@ -54,7 +54,7 @@
  * @return void
  * @access private
  */
-function action($action, $forwarder = "") {
+function _elgg_action($action, $forwarder = "") {
 	return _elgg_services()->actions->execute($action, $forwarder);
 }
 
@@ -123,7 +123,7 @@ function elgg_unregister_action($action) {
  * @see generate_action_token()
  * @access private
  */
-function validate_action_token($visibleerrors = true, $token = null, $ts = null) {
+function _elgg_validate_action_token($visibleerrors = true, $token = null, $ts = null) {
 	return _elgg_services()->actions->validateActionToken($visibleerrors, $token, $ts);
 }
 
@@ -141,7 +141,7 @@ function validate_action_token($visibleerrors = true, $token = null, $ts = null)
  * @return mixed True if valid or redirects.
  * @access private
  */
-function action_gatekeeper($action) {
+function _elgg_action_gatekeeper($action) {
 	return _elgg_services()->actions->gatekeeper($action);
 }
 
@@ -163,7 +163,7 @@ function action_gatekeeper($action) {
  * @return string|false
  * @access private
  */
-function generate_action_token($timestamp) {
+function _elgg_generate_action_token($timestamp) {
 	return _elgg_services()->actions->generateActionToken($timestamp);
 }
 
@@ -176,7 +176,7 @@ function generate_action_token($timestamp) {
  * @access private
  * @todo Move to better file.
  */
-function init_site_secret() {
+function _elgg_init_site_secret() {
 	$secret = md5(rand() . microtime());
 	if (datalist_set('__site_secret__', $secret)) {
 		return $secret;
@@ -194,7 +194,7 @@ function init_site_secret() {
  * @access private
  * @todo Move to better file.
  */
-function get_site_secret() {
+function _elgg_get_site_secret() {
 	$secret = datalist_get('__site_secret__');
 	if (!$secret) {
 		$secret = init_site_secret();
@@ -253,7 +253,7 @@ function elgg_is_xhr() {
  * @return void
  * @access private
  */
-function ajax_forward_hook($hook, $type, $reason, $params) {
+function _elgg_ajax_forward_hook($hook, $type, $reason, $params) {
 	_elgg_services()->actions->ajaxForwardHook($hook, $type, $reason, $params);
 }
 
@@ -262,7 +262,7 @@ function ajax_forward_hook($hook, $type, $reason, $params) {
  * @return void
  * @access private
  */
-function ajax_action_hook() {
+function _elgg_ajax_action_hook() {
 	_elgg_services()->actions->ajaxActionHook();
 }
 
@@ -270,7 +270,7 @@ function ajax_action_hook() {
  * Initialize some ajaxy actions features
  * @access private
  */
-function actions_init() {
+function _elgg_actions_init() {
 	elgg_register_action('security/refreshtoken', '', 'public');
 
 	elgg_register_simplecache_view('js/languages/en');

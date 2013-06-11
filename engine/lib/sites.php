@@ -41,7 +41,7 @@ function elgg_get_site_entity($site_guid = 0) {
  * @return mixed
  * @access private
  */
-function get_site_entity_as_row($guid) {
+function _elgg_get_site_entity_as_row($guid) {
 	global $CONFIG;
 
 	$guid = (int)$guid;

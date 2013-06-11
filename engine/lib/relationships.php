@@ -14,7 +14,7 @@
  * @return ElggRelationship|stdClass
  * @access private
  */
-function row_to_elggrelationship($row) {
+function _elgg_row_to_elggrelationship($row) {
 	if (!($row instanceof stdClass)) {
 		return $row;
 	}
@@ -437,7 +437,7 @@ function elgg_list_entities_from_relationship_count($options) {
  * @return bool
  * @access private
  */
-function relationship_notification_hook($event, $type, $object) {
+function _elgg_relationship_notification_hook($event, $type, $object) {
 	$user_one = get_entity($object->guid_one);
 	/* @var ElggUser $user_one */
 

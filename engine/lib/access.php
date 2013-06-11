@@ -45,7 +45,7 @@ function _elgg_get_access_cache() {
  * @return string A list of access collections suitable for using in an SQL call
  * @access private
  */
-function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
+function _elgg_get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 	global $CONFIG, $init_finished;
 	$cache = _elgg_get_access_cache();
 	
@@ -231,7 +231,7 @@ $ENTITY_SHOW_HIDDEN_OVERRIDE = false;
  * @return bool
  * @access private
  */
-function access_show_hidden_entities($show_hidden) {
+function _elgg_access_show_hidden_entities($show_hidden) {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
 	$current_value = $ENTITY_SHOW_HIDDEN_OVERRIDE;
 	$ENTITY_SHOW_HIDDEN_OVERRIDE = $show_hidden;
@@ -244,7 +244,7 @@ function access_show_hidden_entities($show_hidden) {
  * @return bool
  * @access private
  */
-function access_get_show_hidden_status() {
+function _elgg_access_get_show_hidden_status() {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
 	return $ENTITY_SHOW_HIDDEN_OVERRIDE;
 }
@@ -262,7 +262,7 @@ function access_get_show_hidden_status() {
  * @return string The SQL for a where clause
  * @access private
  */
-function get_access_sql_suffix($table_prefix = '', $owner = null) {
+function _elgg_get_access_sql_suffix($table_prefix = '', $owner = null) {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE, $CONFIG;
 
 	$sql = "";
@@ -347,7 +347,7 @@ function get_access_sql_suffix($table_prefix = '', $owner = null) {
  * @return string An SQL fragment suitable for inserting into a WHERE clause
  * @access private
  */
-function get_access_restriction_sql($annotation_name, $entity_guid, $owner_guid, $exists) {
+function _elgg_get_access_restriction_sql($annotation_name, $entity_guid, $owner_guid, $exists) {
 	global $CONFIG;
 
 	if ($exists) {
@@ -1056,7 +1056,7 @@ function elgg_override_permissions($hook, $type, $value, $params) {
  *
  * @access private
  */
-function access_test($hook, $type, $value, $params) {
+function _elgg_access_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAccessCollectionsTest.php';
 	return $value;

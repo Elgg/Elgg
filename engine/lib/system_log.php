@@ -287,7 +287,7 @@ function system_log_default_logger($event, $object_type, $object) {
  * @return true
  * @access private
  */
-function system_log_listener($event, $object_type, $object) {
+function _elgg_system_log_listener($event, $object_type, $object) {
 	if (($object_type != 'systemlog') && ($event != 'log')) {
 		elgg_trigger_event('log', 'systemlog', array('object' => $object, 'event' => $event));
 	}

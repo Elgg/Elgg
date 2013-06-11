@@ -117,7 +117,7 @@ function get_online_users() {
  * @return void
  * @access private
  */
-function statistics_init() {
+function _elgg_statistics_init() {
 	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/online');
 	elgg_extend_view('core/settings/statistics', 'core/settings/statistics/numentities');
 }

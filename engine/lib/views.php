@@ -1310,7 +1310,7 @@ function set_template_handler($function_name) {
  * @see elgg_set_view_location()
  * @access private
  */
-function autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
+function _elgg_autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
 	return _elgg_services()->views->autoregisterViews($view_base, $folder, $base_location_path, $viewtype);
 }
 

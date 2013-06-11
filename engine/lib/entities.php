@@ -163,7 +163,7 @@ function _elgg_retrieve_cached_entity($guid) {
  * @see get_subtype_from_id()
  * @access private
  */
-function get_subtype_id($type, $subtype) {
+function _elgg_get_subtype_id($type, $subtype) {
 	global $SUBTYPE_CACHE;
 
 	if (!$subtype) {
@@ -191,7 +191,7 @@ function get_subtype_id($type, $subtype) {
  * @see get_subtype_id()
  * @access private
  */
-function get_subtype_from_id($subtype_id) {
+function _elgg_get_subtype_from_id($subtype_id) {
 	global $SUBTYPE_CACHE;
 
 	if (!$subtype_id) {
@@ -264,7 +264,7 @@ function _elgg_populate_subtype_cache() {
  * @see get_subtype_class_from_id()
  * @access private
  */
-function get_subtype_class($type, $subtype) {
+function _elgg_get_subtype_class($type, $subtype) {
 	global $SUBTYPE_CACHE;
 
 	if ($SUBTYPE_CACHE === null) {
@@ -290,7 +290,7 @@ function get_subtype_class($type, $subtype) {
  * @see get_subtype_from_id()
  * @access private
  */
-function get_subtype_class_from_id($subtype_id) {
+function _elgg_get_subtype_class_from_id($subtype_id) {
 	global $SUBTYPE_CACHE;
 
 	if (!$subtype_id) {
@@ -501,7 +501,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
  * @see entity_row_to_elggstar()
  * @access private
  */
-function get_entity_as_row($guid) {
+function _elgg_get_entity_as_row($guid) {
 	global $CONFIG;
 
 	if (!$guid) {
@@ -529,7 +529,7 @@ function get_entity_as_row($guid) {
  *
  * @throws ClassException|InstallationException
  */
-function entity_row_to_elggstar($row) {
+function _elgg_entity_row_to_elggstar($row) {
 	if (!($row instanceof stdClass)) {
 		return $row;
 	}
@@ -1719,7 +1719,7 @@ function elgg_instanceof($entity, $type = null, $subtype = null, $class = null) 
  * @return bool
  * @access private
  */
-function update_entity_last_action($guid, $posted = null) {
+function _elgg_update_entity_last_action($guid, $posted = null) {
 	global $CONFIG;
 	$guid = (int)$guid;
 	$posted = (int)$posted;

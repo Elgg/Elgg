@@ -575,7 +575,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
  * @return void
  * @access private
  */
-function notification_init() {
+function _elgg_notification_init() {
 	// Add settings view to user settings & register action
 	elgg_extend_view('forms/account/settings', 'core/settings/account/notifications');
 
@@ -589,7 +589,7 @@ function notification_init() {
  * @todo why can't this call action(...)?
  * @access private
  */
-function notification_user_settings_save() {
+function _elgg_notification_user_settings_save() {
 	global $CONFIG;
 	//@todo Wha??
 	include($CONFIG->path . "actions/notifications/settings/usersettings/save.php");

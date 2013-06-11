@@ -23,7 +23,7 @@ $CODE_TO_GUID_MAP_CACHE = array();
  * @return mixed
  * @access private
  */
-function get_user_entity_as_row($guid) {
+function _elgg_get_user_entity_as_row($guid) {
 	global $CONFIG;
 
 	$guid = (int)$guid;
@@ -719,7 +719,7 @@ function elgg_get_user_validation_status($user_guid) {
  * @return void
  * @access private
  */
-function collections_submenu_items() {
+function _elgg_collections_submenu_items() {
 
 	$user = elgg_get_logged_in_user_entity();
 
@@ -739,7 +739,7 @@ function collections_submenu_items() {
  * @return bool
  * @access private
  */
-function friends_page_handler($segments, $handler) {
+function _elgg_friends_page_handler($segments, $handler) {
 	elgg_set_context('friends');
 	
 	if (isset($segments[0]) && $user = get_user_by_username($segments[0])) {
@@ -770,7 +770,7 @@ function friends_page_handler($segments, $handler) {
  * @return bool
  * @access private
  */
-function collections_page_handler($page_elements) {
+function _elgg_collections_page_handler($page_elements) {
 	elgg_set_context('friends');
 	$base = elgg_get_config('path');
 	if (isset($page_elements[0])) {
@@ -872,7 +872,7 @@ function set_last_login($user_guid) {
  * @return void
  * @access private
  */
-function user_create_hook_add_site_relationship($event, $object_type, $object) {
+function _elgg_user_create_hook_add_site_relationship($event, $object_type, $object) {
 	add_entity_relationship($object->getGUID(), 'member_of_site', elgg_get_site_entity()->guid);
 }
 
@@ -886,7 +886,7 @@ function user_create_hook_add_site_relationship($event, $object_type, $object) {
  * @return string
  * @access private
  */
-function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
+function _elgg_user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 	$user = $params['entity'];
 	$size = $params['size'];
 
@@ -1146,7 +1146,7 @@ function elgg_profile_page_handler($page) {
  * @return void
  * @access private
  */
-function users_pagesetup() {
+function _elgg_users_pagesetup() {
 
 	$owner = elgg_get_page_owner_entity();
 	$viewer = elgg_get_logged_in_user_entity();
@@ -1233,7 +1233,7 @@ function users_pagesetup() {
  * @return void
  * @access private
  */
-function users_init() {
+function _elgg_users_init() {
 
 	elgg_register_page_handler('friends', 'friends_page_handler');
 	elgg_register_page_handler('friendsof', 'friends_page_handler');
@@ -1286,7 +1286,7 @@ function users_init() {
  * @return array
  * @access private
  */
-function users_test($hook, $type, $value, $params) {
+function _elgg_users_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = "{$CONFIG->path}engine/tests/ElggCoreUserTest.php";
 	return $value;

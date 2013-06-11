@@ -15,7 +15,7 @@
  * @return bool
  * @access private
  */
-function get_object_entity_as_row($guid) {
+function _elgg_get_object_entity_as_row($guid) {
 	global $CONFIG;
 
 	$guid = (int)$guid;

@@ -273,7 +273,7 @@ function elgg_clear_sticky_value($form_name, $variable) {
  * @return string JSON string is returned and then exit
  * @access private
  */
-function input_livesearch_page_handler($page) {
+function _elgg_input_livesearch_page_handler($page) {
 	global $CONFIG;
 
 	// only return results to logged in users.
@@ -483,7 +483,7 @@ function input_livesearch_page_handler($page) {
  * @return void
  * @access private
  */
-function input_init() {
+function _elgg_input_init() {
 	// register an endpoint for live search / autocomplete.
 	elgg_register_page_handler('livesearch', 'input_livesearch_page_handler');
 

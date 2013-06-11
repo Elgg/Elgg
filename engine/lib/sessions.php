@@ -197,7 +197,7 @@ function elgg_authenticate($username, $password) {
  * @throws LoginException
  * @access private
  */
-function pam_auth_userpass(array $credentials = array()) {
+function _elgg_pam_auth_userpass(array $credentials = array()) {
 
 	if (!isset($credentials['username']) || !isset($credentials['password'])) {
 		return false;

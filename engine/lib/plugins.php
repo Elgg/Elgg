@@ -1097,7 +1097,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
  * @return array
  * @access private
  */
-function plugins_test($hook, $type, $value, $params) {
+function _elgg_plugins_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCorePluginsAPITest.php';
 	return $value;
@@ -1110,7 +1110,7 @@ function plugins_test($hook, $type, $value, $params) {
  * @return void
  * @access private
  */
-function plugin_init() {
+function _elgg_plugin_init() {
 
 	if (elgg_is_admin_logged_in()) {
 		elgg_register_ajax_view('object/plugin/full');

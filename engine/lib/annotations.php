@@ -15,7 +15,7 @@
  * @return ElggAnnotation
  * @access private
  */
-function row_to_elggannotation($row) {
+function _elgg_row_to_elggannotation($row) {
 	if (!($row instanceof stdClass)) {
 		// @todo should throw in this case?
 		return $row;
@@ -552,7 +552,7 @@ function _elgg_set_comment_url($hook, $type, $url, $params) {
  * @return array
  * @access private
  */
-function annotations_test($hook, $type, $value, $params) {
+function _elgg_annotations_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAnnotationAPITest.php';
 	return $value;

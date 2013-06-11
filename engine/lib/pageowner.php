@@ -94,7 +94,7 @@ function elgg_set_page_owner_guid($guid) {
  * @return int GUID
  * @access private
  */
-function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) {
+function _elgg_default_page_owner_handler($hook, $entity_type, $returnvalue, $params) {
 
 	if ($returnvalue) {
 		return $returnvalue;
@@ -281,7 +281,7 @@ function elgg_in_context($context) {
  * @return void
  * @access private
  */
-function page_owner_boot() {
+function _elgg_page_owner_boot() {
 	
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
 

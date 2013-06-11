@@ -191,7 +191,7 @@ $DATALIST_CACHE = array();
  * @return string|null|false String if value exists, null if doesn't, false on error
  * @access private
  */
-function datalist_get($name) {
+function _elgg_datalist_get($name) {
 	global $CONFIG, $DATALIST_CACHE;
 
 	$name = trim($name);
@@ -252,7 +252,7 @@ function datalist_get($name) {
  * @return bool
  * @access private
  */
-function datalist_set($name, $value) {
+function _elgg_datalist_set($name, $value) {
 	global $CONFIG, $DATALIST_CACHE;
 
 	// cannot store anything longer than 255 characters in db, so catch before we set
@@ -383,7 +383,7 @@ function unset_config($name, $site_guid = 0) {
  * @see get_config()
  * @access private
  */
-function set_config($name, $value, $site_guid = 0) {
+function _elgg_set_config($name, $value, $site_guid = 0) {
 	global $CONFIG;
 
 	$name = trim($name);
@@ -425,7 +425,7 @@ function set_config($name, $value, $site_guid = 0) {
  * @see unset_config()
  * @access private
  */
-function get_config($name, $site_guid = 0) {
+function _elgg_get_config($name, $site_guid = 0) {
 	global $CONFIG;
 
 	$name = sanitise_string($name);

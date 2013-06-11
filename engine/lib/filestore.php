@@ -475,7 +475,7 @@ function set_default_filestore(ElggFilestore $filestore) {
  * @return void
  * @access private
  */
-function filestore_init() {
+function _elgg_filestore_init() {
 	global $CONFIG;
 
 	// Now register a default filestore
@@ -495,7 +495,7 @@ function filestore_init() {
  * @return array
  * @access private
  */
-function filestore_test($hook, $type, $value, $params) {
+function _elgg_filestore_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = "{$CONFIG->path}engine/tests/ElggCoreFilestoreTest.php";
 	return $value;
