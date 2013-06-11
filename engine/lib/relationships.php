@@ -344,7 +344,7 @@ function elgg_get_entities_from_relationship($options) {
  * @since 1.7.0
  * @access private
  */
-function elgg_get_entity_relationship_where_sql($column, $relationship = null,
+function _elgg_get_entity_relationship_where_sql($column, $relationship = null,
 $relationship_guid = null, $inverse_relationship = false) {
 
 	if ($relationship == null && $relationship_guid == null) {

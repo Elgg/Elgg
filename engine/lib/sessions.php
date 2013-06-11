@@ -175,7 +175,7 @@ function elgg_is_admin_user($user_guid) {
  * @return true|string True or an error message on failure
  * @access private
  */
-function elgg_authenticate($username, $password) {
+function _elgg_authenticate($username, $password) {
 	$pam = new ElggPAM('user');
 	$credentials = array('username' => $username, 'password' => $password);
 	$result = $pam->authenticate($credentials);

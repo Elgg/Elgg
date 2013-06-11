@@ -562,7 +562,7 @@ function _elgg_annotations_test($hook, $type, $value, $params) {
  * Initialize the annotation library
  * @access private
  */
-function elgg_annotations_init() {
+function _elgg_annotations_init() {
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', '_elgg_set_comment_url');
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'annotations_test');
 }

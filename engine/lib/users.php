@@ -803,7 +803,7 @@ function _elgg_collections_page_handler($page_elements) {
  * @return bool
  * @access private
  */
-function elgg_user_account_page_handler($page_elements, $handler) {
+function _elgg_user_account_page_handler($page_elements, $handler) {
 
 	$base_dir = elgg_get_root_path() . 'pages/account';
 	switch ($handler) {
@@ -901,7 +901,7 @@ function _elgg_user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
  * Setup the default user hover menu
  * @access private
  */
-function elgg_user_hover_menu($hook, $type, $return, $params) {
+function _elgg_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
 	/* @var ElggUser $user */
 
@@ -999,7 +999,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
  *
  * @access private
  */
-function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
+function _elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
@@ -1044,7 +1044,7 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
  * other plugins have initialised.
  * @access private
  */
-function elgg_profile_fields_setup() {
+function _elgg_profile_fields_setup() {
 	global $CONFIG;
 
 	$profile_defaults = array (
@@ -1101,7 +1101,7 @@ function elgg_profile_fields_setup() {
  * @return bool
  * @access private
  */
-function elgg_avatar_page_handler($page) {
+function _elgg_avatar_page_handler($page) {
 	global $CONFIG;
 
 	$user = get_user_by_username($page[1]);
@@ -1127,7 +1127,7 @@ function elgg_avatar_page_handler($page) {
  * @return bool
  * @access private
  */
-function elgg_profile_page_handler($page) {
+function _elgg_profile_page_handler($page) {
 	global $CONFIG;
 
 	$user = get_user_by_username($page[0]);

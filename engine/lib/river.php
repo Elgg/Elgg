@@ -520,7 +520,7 @@ function _elgg_row_to_elgg_river_item($row) {
  * @since 1.8.0
  * @access private
  */
-function elgg_river_get_access_sql() {
+function _elgg_river_get_access_sql() {
 	// rewrite default access where clause to work with river table
 	return str_replace("and enabled='yes'", '',
 		str_replace('owner_guid', 'rv.subject_guid',

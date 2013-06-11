@@ -57,7 +57,7 @@ define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
  * @since 1.8.0
  * @access private
  */
-function elgg_get_plugin_ids_in_dir($dir = null) {
+function _elgg_get_plugin_ids_in_dir($dir = null) {
 	if (!$dir) {
 		$dir = elgg_get_plugins_path();
 	}
@@ -90,7 +90,7 @@ function elgg_get_plugin_ids_in_dir($dir = null) {
  * @since 1.8.0
  * @access private
  */
-function elgg_generate_plugin_entities() {
+function _elgg_generate_plugin_entities() {
 	// @todo $site unused, can remove?
 	$site = get_config('site');
 
@@ -249,7 +249,7 @@ function elgg_plugin_exists($id) {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_max_plugin_priority() {
+function _elgg_get_max_plugin_priority() {
 	$db_prefix = get_config('dbprefix');
 	$priority = elgg_namespace_plugin_private_setting('internal', 'priority');
 	$plugin_subtype = get_subtype_id('object', 'plugin');
@@ -310,7 +310,7 @@ function elgg_is_active_plugin($plugin_id, $site_guid = null) {
  * @since 1.8.0
  * @access private
  */
-function elgg_load_plugins() {
+function _elgg_load_plugins() {
 	$plugins_path = elgg_get_plugins_path();
 	$start_flags = ELGG_PLUGIN_INCLUDE_START |
 					ELGG_PLUGIN_REGISTER_VIEWS |
@@ -367,7 +367,7 @@ function elgg_load_plugins() {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_plugins($status = 'active', $site_guid = null) {
+function _elgg_get_plugins($status = 'active', $site_guid = null) {
 	$db_prefix = get_config('dbprefix');
 	$priority = elgg_namespace_plugin_private_setting('internal', 'priority');
 
@@ -430,7 +430,7 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
  * @since 1.8.0
  * @access private
  */
-function elgg_set_plugin_priorities(array $order) {
+function _elgg_set_plugin_priorities(array $order) {
 	$name = elgg_namespace_plugin_private_setting('internal', 'priority');
 
 	$plugins = elgg_get_plugins('any');
@@ -486,7 +486,7 @@ function elgg_set_plugin_priorities(array $order) {
  * @since 1.8.0
  * @access private
  */
-function elgg_reindex_plugin_priorities() {
+function _elgg_reindex_plugin_priorities() {
 	return elgg_set_plugin_priorities(array());
 }
 
@@ -500,7 +500,7 @@ function elgg_reindex_plugin_priorities() {
  * @since 1.8.0
  * @access private
  */
-function elgg_namespace_plugin_private_setting($type, $name, $id = null) {
+function _elgg_namespace_plugin_private_setting($type, $name, $id = null) {
 	switch ($type) {
 		// commented out because it breaks $plugin->$name access to variables
 		//case 'setting':
@@ -538,7 +538,7 @@ function elgg_namespace_plugin_private_setting($type, $name, $id = null) {
  *
  * @todo get rid of this
  */
-function elgg_get_calling_plugin_id($mainfilename = false) {
+function _elgg_get_calling_plugin_id($mainfilename = false) {
 	if (!$mainfilename) {
 		if ($backtrace = debug_backtrace()) {
 			foreach ($backtrace as $step) {
@@ -585,7 +585,7 @@ function elgg_get_calling_plugin_id($mainfilename = false) {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_plugins_provides($type = null, $name = null) {
+function _elgg_get_plugins_provides($type = null, $name = null) {
 	static $provides = null;
 	$active_plugins = elgg_get_plugins('active');
 
@@ -642,7 +642,7 @@ function elgg_get_plugins_provides($type = null, $name = null) {
  * @since 1.8.0
  * @access private
  */
-function elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
+function _elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
 	$provided = elgg_get_plugins_provides($type, $name);
 	if (!$provided) {
 		return array(
@@ -678,7 +678,7 @@ function elgg_check_plugins_provides($type, $name, $version = null, $comparison 
  * @since 1.8.0
  * @access private
  */
-function elgg_get_plugin_dependency_strings($dep) {
+function _elgg_get_plugin_dependency_strings($dep) {
 	$dep_system = elgg_extract('type', $dep);
 	$info = elgg_extract('dep', $dep);
 	$type = elgg_extract('type', $info);
@@ -798,7 +798,7 @@ function elgg_get_plugin_dependency_strings($dep) {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_calling_plugin_entity() {
+function _elgg_get_calling_plugin_entity() {
 	$plugin_id = elgg_get_calling_plugin_id();
 
 	if ($plugin_id) {

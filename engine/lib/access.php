@@ -967,7 +967,7 @@ function elgg_check_access_overrides($user_guid = 0) {
  * @since 1.7.0
  * @access private
  */
-function elgg_get_access_object() {
+function _elgg_get_access_object() {
 	static $elgg_access;
 
 	if (!$elgg_access) {
@@ -1018,7 +1018,7 @@ function access_init() {
  * @return true|null
  * @access private
  */
-function elgg_override_permissions($hook, $type, $value, $params) {
+function _elgg_override_permissions($hook, $type, $value, $params) {
 	$user = elgg_extract('user', $params);
 	if ($user) {
 		$user_guid = $user->getGUID();

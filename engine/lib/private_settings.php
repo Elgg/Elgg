@@ -97,7 +97,7 @@ function elgg_get_entities_from_private_settings(array $options = array()) {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_entity_private_settings_where_sql($table, $names = null, $values = null,
+function _elgg_get_entity_private_settings_where_sql($table, $names = null, $values = null,
 $pairs = null, $pair_operator = 'AND', $name_prefix = '') {
 
 	global $CONFIG;

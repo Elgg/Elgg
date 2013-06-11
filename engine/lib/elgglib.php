@@ -1714,7 +1714,7 @@ function _elgg_sql_reverse_order_by_clause($order_by) {
  * @return bool
  * @access private
  */
-function elgg_batch_enable_callback($object) {
+function _elgg_batch_enable_callback($object) {
 	// our db functions return the number of rows affected...
 	return $object->enable() ? true : false;
 }
@@ -1728,7 +1728,7 @@ function elgg_batch_enable_callback($object) {
  * @return bool
  * @access private
  */
-function elgg_batch_disable_callback($object) {
+function _elgg_batch_disable_callback($object) {
 	// our db functions return the number of rows affected...
 	return $object->disable() ? true : false;
 }
@@ -1742,7 +1742,7 @@ function elgg_batch_disable_callback($object) {
  * @return bool
  * @access private
  */
-function elgg_batch_delete_callback($object) {
+function _elgg_batch_delete_callback($object) {
 	// our db functions return the number of rows affected...
 	return $object->delete() ? true : false;
 }

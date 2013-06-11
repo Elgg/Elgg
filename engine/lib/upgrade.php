@@ -17,7 +17,7 @@
  *
  * @todo this is still required because of the hack in the 2011010101 upgrade
  */
-function elgg_set_processed_upgrades(array $processed_upgrades) {
+function _elgg_set_processed_upgrades(array $processed_upgrades) {
 	$processed_upgrades = array_unique($processed_upgrades);
 	return datalist_set('processed_upgrades', serialize($processed_upgrades));
 }
@@ -31,7 +31,7 @@ function elgg_set_processed_upgrades(array $processed_upgrades) {
  * @access private
  * @todo used by elgg_get_upgrade_files
  */
-function elgg_get_upgrade_file_version($filename) {
+function _elgg_get_upgrade_file_version($filename) {
 	preg_match('/^([0-9]{10})([\.a-z0-9-_]+)?\.(php)$/i', $filename, $matches);
 
 	if (isset($matches[1])) {
@@ -50,7 +50,7 @@ function elgg_get_upgrade_file_version($filename) {
  *
  * @todo the wire and groups plugins and the installer are using this
  */
-function elgg_get_upgrade_files($upgrade_path = null) {
+function _elgg_get_upgrade_files($upgrade_path = null) {
 	if (!$upgrade_path) {
 		$upgrade_path = elgg_get_config('path') . 'engine/lib/upgrades/';
 	}
