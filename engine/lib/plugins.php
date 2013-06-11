@@ -567,6 +567,12 @@ function elgg_get_calling_plugin_id($mainfilename = false) {
 }
 
 /**
+ * @var array cache used by elgg_get_plugins_provides function
+ * @todo move it with all other functions to Elgg_PluginsService
+ */
+global $ELGG_PLUGINS_PROVIDES_CACHE;
+
+/**
  * Returns an array of all provides from all active plugins.
  *
  * Array in the form array(
@@ -586,10 +592,10 @@ function elgg_get_calling_plugin_id($mainfilename = false) {
  * @access private
  */
 function elgg_get_plugins_provides($type = null, $name = null) {
-	static $provides = null;
-	$active_plugins = elgg_get_plugins('active');
-
-	if (!isset($provides)) {
+	global $ELGG_PLUGINS_PROVIDES_CACHE;
+	if (!isset($ELGG_PLUGINS_PROVIDES_CACHE)) {
+		$active_plugins = elgg_get_plugins('active');
+	
 		$provides = array();
 
 		foreach ($active_plugins as $plugin) {
@@ -607,23 +613,38 @@ function elgg_get_plugins_provides($type = null, $name = null) {
 				}
 			}
 		}
+		
+		$ELGG_PLUGINS_PROVIDES_CACHE = $provides;
 	}
-
+	
 	if ($type && $name) {
-		if (isset($provides[$type][$name])) {
-			return $provides[$type][$name];
+		if (isset($ELGG_PLUGINS_PROVIDES_CACHE[$type][$name])) {
+			return $ELGG_PLUGINS_PROVIDES_CACHE[$type][$name];
 		} else {
 			return false;
 		}
 	} elseif ($type) {
-		if (isset($provides[$type])) {
-			return $provides[$type];
+		if (isset($ELGG_PLUGINS_PROVIDES_CACHE[$type])) {
+			return $ELGG_PLUGINS_PROVIDES_CACHE[$type];
 		} else {
 			return false;
 		}
 	}
 
-	return $provides;
+	return $ELGG_PLUGINS_PROVIDES_CACHE;
+}
+
+/**
+ * Deletes all cached data on plugins being provided.
+ * 
+ * @return boolean
+ * @since 1.9.0
+ * @access private
+ */
+function _elgg_invalidate_plugins_provides_cache() {
+	global $ELGG_PLUGINS_PROVIDES_CACHE;
+	$ELGG_PLUGINS_PROVIDES_CACHE = null;
+	return true;
 }
 
 /**

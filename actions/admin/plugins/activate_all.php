@@ -12,17 +12,33 @@
 $guids = get_input('guids');
 $guids = explode(',', $guids);
 
+$plugins = array();
 foreach ($guids as $guid) {
 	$plugin = get_entity($guid);
-	if (!$plugin->isActive()) {
-		if ($plugin->activate()) {
-			//system_message(elgg_echo('admin:plugins:activate:yes', array($plugin->getManifest()->getName())));
+	$plugins[$plugin->getId()] = $plugin;
+}
+
+do {
+	$success = false;
+	foreach ($plugins as $key => $plugin) {
+		if ($plugin->isActive()) {
+			unset($plugins[$key]);
 		} else {
-			$msg = $plugin->getError();
-			$string = ($msg) ? 'admin:plugins:activate:no_with_msg' : 'admin:plugins:activate:no';
-			register_error(elgg_echo($string, array($plugin->getFriendlyName(), $plugin->getError())));
+			if ($plugin->activate()) {
+				$success = true;
+				unset($plugins[$key]);
+			}
 		}
 	}
+	if (!$success) {
+		//no updates in this pass, break the loop
+		break;
+	}
+} while (count($plugins) > 0);
+
+if (count($plugins) > 0) {
+	$names = implode(', ', array_keys($plugins));
+	register_error(elgg_echo('admin:plugins:activate_all:no_with_msg', array($names)));
 }
 
 // don't regenerate the simplecache because the plugin won't be
