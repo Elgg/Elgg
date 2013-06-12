@@ -12,11 +12,11 @@ $access = elgg_set_ignore_access(TRUE);
 
 if (elgg_is_active_plugin('walledgarden')) {
 	disable_plugin('walledgarden');
-	set_config('allow_registration', FALSE);
-	set_config('walled_garden', TRUE);
+	_elgg_set_config('allow_registration', FALSE);
+	_elgg_set_config('walled_garden', TRUE);
 } else {
-	set_config('allow_registration', TRUE);
-	set_config('walled_garden', FALSE);
+	_elgg_set_config('allow_registration', TRUE);
+	_elgg_set_config('walled_garden', FALSE);
 }
 
 // this was for people who manually set the config option

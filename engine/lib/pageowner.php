@@ -283,7 +283,7 @@ function elgg_in_context($context) {
  */
 function _elgg_page_owner_boot() {
 	
-	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
+	elgg_register_plugin_hook_handler('page_owner', 'system', '_elgg_default_page_owner_handler');
 
 	// Bootstrap the context stack by setting its first entry to the handler.
 	// This is the first segment of the URL and the handler is set by the rewrite rules.
@@ -294,4 +294,4 @@ function _elgg_page_owner_boot() {
 	}
 }
 
-elgg_register_event_handler('boot', 'system', 'page_owner_boot');
+elgg_register_event_handler('boot', 'system', '_elgg_page_owner_boot');

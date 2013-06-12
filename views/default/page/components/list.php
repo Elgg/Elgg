@@ -61,7 +61,7 @@ if ($pagination && $count) {
 
 $html .= "<ul class=\"$list_class\">";
 foreach ($items as $item) {
-	$li = elgg_view_list_item($item, $vars);
+	$li = _elgg_view_list_item($item, $vars);
 	if ($li) {
 		if (elgg_instanceof($item)) {
 			$id = "elgg-{$item->getType()}-{$item->getGUID()}";

@@ -796,7 +796,7 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * prevent a plugin hook being registered with an 'all' being called more than
  * once if the trigger occurs with an 'all'. An example in core of this is in
  * actions.php:
- * elgg_trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', ...)
+ * elgg_trigger_plugin_hook('_elgg_action_gatekeeper:permissions:check', 'all', ...)
  *
  * @see elgg_register_plugin_hook_handler()
  *
@@ -1165,7 +1165,7 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false) {
 
 	// append action tokens to the existing query
 	$query['__elgg_ts'] = time();
-	$query['__elgg_token'] = generate_action_token($query['__elgg_ts']);
+	$query['__elgg_token'] = _elgg_generate_action_token($query['__elgg_ts']);
 	$components['query'] = http_build_query($query);
 
 	// rebuild the full url

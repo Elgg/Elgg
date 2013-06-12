@@ -369,7 +369,7 @@ function pages_container_permission_check($hook, $entity_type, $returnvalue, $pa
 	}
 	if (isset($entity) && pages_is_page($entity)) {
 		if (can_write_to_container(elgg_get_logged_in_user_guid(), $entity->container_guid)
-				|| in_array($entity->write_access_id, get_access_list())) {
+				|| in_array($entity->write_access_id, _elgg_get_access_list())) {
 			return true;
 		}
 	}

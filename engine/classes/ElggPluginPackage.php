@@ -361,7 +361,7 @@ class ElggPluginPackage {
 		$requires = $this->getManifest()->getRequires();
 		$conflicts = $this->getManifest()->getConflicts();
 
-		$enabled_plugins = elgg_get_plugins('active');
+		$enabled_plugins = _elgg_get_plugins('active');
 		$this_id = $this->getID();
 		$report = array();
 
@@ -482,12 +482,12 @@ class ElggPluginPackage {
 	 * Checks if $plugins meets the requirement by $dep.
 	 *
 	 * @param array $dep     An Elgg manifest.xml deps array
-	 * @param array $plugins A list of plugins as returned by elgg_get_plugins();
+	 * @param array $plugins A list of plugins as returned by _elgg_get_plugins();
 	 * @param bool  $inverse Inverse the results to use as a conflicts.
 	 * @return bool
 	 */
 	private function checkDepPlugin(array $dep, array $plugins, $inverse = false) {
-		$r = elgg_check_plugins_provides('plugin', $dep['name'], $dep['version'], $dep['comparison']);
+		$r = _elgg_check_plugins_provides('plugin', $dep['name'], $dep['version'], $dep['comparison']);
 
 		if ($inverse) {
 			$r['status'] = !$r['status'];
@@ -500,7 +500,7 @@ class ElggPluginPackage {
 	 * Checks if $plugins meets the requirement by $dep.
 	 *
 	 * @param array $dep     An Elgg manifest.xml deps array
-	 * @param array $plugins A list of plugins as returned by elgg_get_plugins();
+	 * @param array $plugins A list of plugins as returned by _elgg_get_plugins();
 	 * @param bool  $inverse Inverse the results to use as a conflicts.
 	 * @return bool
 	 */
@@ -630,7 +630,7 @@ class ElggPluginPackage {
 
 		// some php extensions can be emulated, so check provides.
 		if ($status == false) {
-			$provides = elgg_check_plugins_provides('php_extension', $name, $version, $comparison);
+			$provides = _elgg_check_plugins_provides('php_extension', $name, $version, $comparison);
 			$status = $provides['status'];
 			$ext_version = $provides['value'];
 		}

@@ -16,7 +16,7 @@
  */
 function pages_2012061800($page) {
 	$dbprefix = elgg_get_config('dbprefix');
-	$subtype_id = (int)get_subtype_id('object', 'page_top');
+	$subtype_id = (int)_elgg_get_subtype_id('object', 'page_top');
 	$page_guid = (int)$page->guid;
 	update_data("UPDATE {$dbprefix}entities
 		SET subtype = $subtype_id WHERE guid = $page_guid");

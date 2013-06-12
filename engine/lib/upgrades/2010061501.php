@@ -7,7 +7,7 @@
 
 // check that we need to do the utf8 conversion
 // C&P logic from 2010033101
-$dbversion = (int) datalist_get('version');
+$dbversion = (int) _elgg_datalist_get('version');
 
 if ($dbversion < 2009100701) {
 	// start a new link to the DB to see what its defaults are.

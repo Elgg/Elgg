@@ -6,7 +6,7 @@
 
 // get_version() returns the code version.
 // we want the DB version.
-$dbversion = (int) datalist_get('version');
+$dbversion = (int) _elgg_datalist_get('version');
 
 // 2009100701 was the utf8 upgrade for 1.7.
 // if we've already upgraded, don't try again.

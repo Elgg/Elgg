@@ -104,7 +104,7 @@ class ElggUser extends ElggEntity
 	 */
 	protected function load($guid) {
 		$attr_loader = new Elgg_AttributeLoader(get_class(), 'user', $this->attributes);
-		$attr_loader->secondary_loader = 'get_user_entity_as_row';
+		$attr_loader->secondary_loader = '_elgg_get_user_entity_as_row';
 
 		$attrs = $attr_loader->getRequiredAttributes($guid);
 		if (!$attrs) {

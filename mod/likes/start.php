@@ -169,7 +169,7 @@ function likes_notify_user(ElggUser $user, ElggUser $liker, ElggEntity $entity) 
 		$title_str = elgg_get_excerpt($entity->description);
 	}
 
-	$site = get_config('site');
+	$site = _elgg_get_config('site');
 
 	$subject = elgg_echo('likes:notifications:subject', array(
 					$liker->name,

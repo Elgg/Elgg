@@ -338,7 +338,7 @@ function _elgg_input_livesearch_page_handler($page) {
 							$value = $entity->username;
 						}
 
-						$output = elgg_view_list_item($entity, array(
+						$output = _elgg_view_list_item($entity, array(
 							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',
 						));
@@ -387,7 +387,7 @@ function _elgg_input_livesearch_page_handler($page) {
 							continue;
 						}
 
-						$output = elgg_view_list_item($entity, array(
+						$output = _elgg_view_list_item($entity, array(
 							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',
 						));
@@ -435,7 +435,7 @@ function _elgg_input_livesearch_page_handler($page) {
 							continue;
 						}
 
-						$output = elgg_view_list_item($entity, array(
+						$output = _elgg_view_list_item($entity, array(
 							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',
 						));
@@ -485,7 +485,7 @@ function _elgg_input_livesearch_page_handler($page) {
  */
 function _elgg_input_init() {
 	// register an endpoint for live search / autocomplete.
-	elgg_register_page_handler('livesearch', 'input_livesearch_page_handler');
+	elgg_register_page_handler('livesearch', '_elgg_input_livesearch_page_handler');
 
 	if (ini_get_bool('magic_quotes_gpc')) {
 
@@ -559,4 +559,4 @@ function _elgg_input_init() {
 	}
 }
 
-elgg_register_event_handler('init', 'system', 'input_init');
+elgg_register_event_handler('init', 'system', '_elgg_input_init');

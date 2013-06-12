@@ -503,7 +503,7 @@ function _elgg_filestore_test($hook, $type, $value, $params) {
 
 
 // Register a startup event
-elgg_register_event_handler('init', 'system', 'filestore_init', 100);
+elgg_register_event_handler('init', 'system', '_elgg_filestore_init', 100);
 
 // Unit testing
-elgg_register_plugin_hook_handler('unit_test', 'system', 'filestore_test');
+elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');

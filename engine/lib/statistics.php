@@ -74,7 +74,7 @@ function get_number_users($show_deactivated = false) {
 	$access = "";
 
 	if (!$show_deactivated) {
-		$access = "and " . get_access_sql_suffix();
+		$access = "and " . _elgg_get_access_sql_suffix();
 	}
 
 	$query = "SELECT count(*) as count
@@ -102,7 +102,7 @@ function get_online_users() {
 	$objects = find_active_users(600, $limit, $offset);
 
 	if ($objects) {
-		return elgg_view_entity_list($objects, array(
+		return _elgg_view_entity_list($objects, array(
 			'count' => $count,
 			'limit' => $limit,
 			'offset' => $offset
@@ -123,4 +123,4 @@ function _elgg_statistics_init() {
 }
 
 /// Register init function
-elgg_register_event_handler('init', 'system', 'statistics_init');
+elgg_register_event_handler('init', 'system', '_elgg_statistics_init');

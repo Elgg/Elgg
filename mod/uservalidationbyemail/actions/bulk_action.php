@@ -15,4 +15,4 @@ if (!in_array($action_type, $valid_actions)) {
 
 $action_name = "uservalidationbyemail/$action_type";
 
-action($action_name);
+_elgg_action($action_name);

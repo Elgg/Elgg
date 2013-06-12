@@ -42,7 +42,7 @@ if ($comments) {
 
 <?php
 
-	echo elgg_view_annotation_list($comments, array('list_class' => 'elgg-river-comments'));
+	echo _elgg_view_annotation_list($comments, array('list_class' => 'elgg-river-comments'));
 
 	if ($comment_count > count($comments)) {
 		$num_more_comments = $comment_count - count($comments);

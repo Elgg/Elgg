@@ -500,7 +500,7 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Enables metadata for this entity, optionally based on name.
 	 *
-	 * @warning Before calling this, you must use {@link access_show_hidden_entities()}
+	 * @warning Before calling this, you must use {@link _elgg_access_show_hidden_entities()}
 	 *
 	 * @param string $name An options name of metadata to enable.
 	 * @return bool
@@ -728,7 +728,7 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Enables annotations for this entity, optionally based on name.
 	 *
-	 * @warning Before calling this, you must use {@link access_show_hidden_entities()}
+	 * @warning Before calling this, you must use {@link _elgg_access_show_hidden_entities()}
 	 *
 	 * @param string $name An options name of annotations to enable.
 	 * @return bool
@@ -1657,7 +1657,7 @@ abstract class ElggEntity extends ElggData implements
 		if ($guid instanceof stdClass) {
 			$row = $guid;
 		} else {
-			$row = get_entity_as_row($guid);
+			$row = _elgg_get_entity_as_row($guid);
 		}
 
 		if ($row) {
@@ -1681,7 +1681,7 @@ abstract class ElggEntity extends ElggData implements
 			$this->attributes['guid'] = (int)$this->attributes['guid'];
 
 			// subtype needs to be denormalized
-			$this->attributes['subtype'] = get_subtype_from_id($this->attributes['subtype']);
+			$this->attributes['subtype'] = _elgg_get_subtype_from_id($this->attributes['subtype']);
 
 			// Cache object handle
 			if ($this->attributes['guid']) {
@@ -1703,7 +1703,7 @@ abstract class ElggEntity extends ElggData implements
 	 * Recursively disabling an entity will disable all entities
 	 * owned or contained by the parent entity.
 	 *
-	 * You can ignore the disabled field by using {@link access_show_hidden_entities()}.
+	 * You can ignore the disabled field by using {@link _elgg_access_show_hidden_entities()}.
 	 *
 	 * @internal Disabling an entity sets the 'enabled' column to 'no'.
 	 *
@@ -1736,8 +1736,8 @@ abstract class ElggEntity extends ElggData implements
 		$guid = (int)$this->guid;
 		
 		if ($recursive) {
-			$hidden = access_get_show_hidden_status();
-			access_show_hidden_entities(true);
+			$hidden = _elgg_access_get_show_hidden_status();
+			_elgg_access_show_hidden_entities(true);
 			$ia = elgg_set_ignore_access(true);
 			
 			$sub_entities = $this->getDatabase()->getData("SELECT * FROM {$CONFIG->dbprefix}entities
@@ -1745,7 +1745,7 @@ abstract class ElggEntity extends ElggData implements
 				container_guid = $guid
 				OR owner_guid = $guid
 				OR site_guid = $guid
-				) AND enabled='yes'", 'entity_row_to_elggstar');
+				) AND enabled='yes'", '_elgg_entity_row_to_elggstar');
 
 			if ($sub_entities) {
 				foreach ($sub_entities as $e) {
@@ -1754,7 +1754,7 @@ abstract class ElggEntity extends ElggData implements
 				}
 			}
 			
-			access_show_hidden_entities($hidden);
+			_elgg_access_show_hidden_entities($hidden);
 			elgg_set_ignore_access($ia);
 		}
 
@@ -1776,7 +1776,7 @@ abstract class ElggEntity extends ElggData implements
 	 * Enable the entity
 	 *
 	 * @warning Disabled entities can't be loaded unless
-	 * {@link access_show_hidden_entities(true)} has been called.
+	 * {@link _elgg_access_show_hidden_entities(true)} has been called.
 	 *
 	 * @param bool $recursive Recursively enable all entities disabled with the entity?
 	 * @see access_show_hiden_entities()
@@ -1799,8 +1799,8 @@ abstract class ElggEntity extends ElggData implements
 		global $CONFIG;
 	
 		// Override access only visible entities
-		$old_access_status = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$old_access_status = _elgg_access_get_show_hidden_status();
+		_elgg_access_show_hidden_entities(true);
 	
 		$result = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
 			SET enabled = 'yes'
@@ -1824,7 +1824,7 @@ abstract class ElggEntity extends ElggData implements
 			}
 		}
 	
-		access_show_hidden_entities($old_access_status);
+		_elgg_access_show_hidden_entities($old_access_status);
 	
 		if ($result) {
 			$this->attributes['enabled'] = 'yes';
@@ -1894,8 +1894,8 @@ abstract class ElggEntity extends ElggData implements
 			// Make it slightly harder to guess
 			$__RECURSIVE_DELETE_TOKEN = md5(elgg_get_logged_in_user_guid());
 
-			$entity_disable_override = access_get_show_hidden_status();
-			access_show_hidden_entities(true);
+			$entity_disable_override = _elgg_access_get_show_hidden_status();
+			_elgg_access_show_hidden_entities(true);
 			$ia = elgg_set_ignore_access(true);
 
 			// @todo there was logic in the original code that ignored
@@ -1916,13 +1916,13 @@ abstract class ElggEntity extends ElggData implements
 				$e->delete(true);
 			}
 
-			access_show_hidden_entities($entity_disable_override);
+			_elgg_access_show_hidden_entities($entity_disable_override);
 			$__RECURSIVE_DELETE_TOKEN = null;
 			elgg_set_ignore_access($ia);
 		}
 
-		$entity_disable_override = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$entity_disable_override = _elgg_access_get_show_hidden_status();
+		_elgg_access_show_hidden_entities(true);
 		$ia = elgg_set_ignore_access(true);
 		
 		// Now delete the entity itself
@@ -1932,7 +1932,7 @@ abstract class ElggEntity extends ElggData implements
 		$this->deleteOwnedAnnotations();
 		$this->deleteRelationships();
 
-		access_show_hidden_entities($entity_disable_override);
+		_elgg_access_show_hidden_entities($entity_disable_override);
 		elgg_set_ignore_access($ia);
 
 		elgg_delete_river(array('subject_guid' => $guid));
@@ -2155,7 +2155,7 @@ abstract class ElggEntity extends ElggData implements
 		$odd = new ODDEntity(
 			$uuid,
 			$this->attributes['type'],
-			get_subtype_from_id($this->attributes['subtype'])
+			_elgg_get_subtype_from_id($this->attributes['subtype'])
 		);
 
 		$tmp[] = $odd;

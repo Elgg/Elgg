@@ -4,7 +4,7 @@
  */
 
 echo '<div>';
-$site = get_config('site');
+$site = _elgg_get_config('site');
 echo elgg_echo('twitter_api:interstitial:description', array($site->name));
 echo '</div>';
 

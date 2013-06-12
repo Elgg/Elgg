@@ -311,7 +311,7 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
  * This file contains classes and functions which allow plugins to register and send notifications.
  *
  * There are notification methods which are provided out of the box
- * (see notification_init() ). Each method is identified by a string, e.g. "email".
+ * (see _elgg_notification_init() ). Each method is identified by a string, e.g. "email".
  *
  * To register an event use register_notification_handler() and pass the method name and a
  * handler function.
@@ -579,14 +579,14 @@ function _elgg_notification_init() {
 	// Add settings view to user settings & register action
 	elgg_extend_view('forms/account/settings', 'core/settings/account/notifications');
 
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'notification_user_settings_save');
+	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_notification_user_settings_save');
 }
 
 /**
  * Includes the action to save user notifications
  *
  * @return void
- * @todo why can't this call action(...)?
+ * @todo why can't this call _elgg_action(...)?
  * @access private
  */
 function _elgg_notification_user_settings_save() {
@@ -596,5 +596,5 @@ function _elgg_notification_user_settings_save() {
 }
 
 // Register a startup event
-elgg_register_event_handler('init', 'system', 'notification_init', 0);
+elgg_register_event_handler('init', 'system', '_elgg_notification_init', 0);
 

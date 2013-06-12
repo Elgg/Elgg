@@ -10,8 +10,8 @@
 global $CONFIG;
 
 $ia = elgg_set_ignore_access(true);
-$access_status = access_get_show_hidden_status();
-access_show_hidden_entities(true);
+$access_status = _elgg_access_get_show_hidden_status();
+_elgg_access_show_hidden_entities(true);
 
 $options = array(
 	'type' => 'site',
@@ -27,5 +27,5 @@ foreach ($batch as $entity) {
 	}
 }
 
-access_show_hidden_entities($access_status);
+_elgg_access_show_hidden_entities($access_status);
 elgg_set_ignore_access($ia);

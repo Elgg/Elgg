@@ -20,7 +20,7 @@ if ($site = elgg_get_site_entity()) {
 	$site->email = get_input('siteemail');
 	$site->save();
 
-	set_config('language', get_input('language'), $site->getGUID());
+	_elgg_set_config('language', get_input('language'), $site->getGUID());
 }
 
 system_message(elgg_echo('admin:configuration:success'));

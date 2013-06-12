@@ -169,7 +169,7 @@ function system_log($object, $event) {
 	if ($object instanceof Loggable) {
 
 		/* @var ElggEntity|ElggExtender $object */
-		if (datalist_get('version') < 2012012000) {
+		if (_elgg_datalist_get('version') < 2012012000) {
 			// this is a site that doesn't have the ip_address column yet
 			return;
 		}
@@ -296,7 +296,7 @@ function _elgg_system_log_listener($event, $object_type, $object) {
 }
 
 /** Register event to listen to all events **/
-elgg_register_event_handler('all', 'all', 'system_log_listener', 400);
+elgg_register_event_handler('all', 'all', '_elgg_system_log_listener', 400);
 
 /** Register a default system log handler */
 elgg_register_event_handler('log', 'systemlog', 'system_log_default_logger', 999);

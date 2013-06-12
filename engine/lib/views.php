@@ -847,7 +847,7 @@ $list_type_toggle = true, $pagination = true) {
 
 	} else {
 		// old function parameters
-		elgg_deprecated_notice("Please update your use of elgg_view_entity_list()", 1.8);
+		elgg_deprecated_notice("Please update your use of _elgg_view_entity_list()", 1.8);
 
 		$vars = array(
 			'items' => $entities,
@@ -1439,7 +1439,7 @@ function _elgg_views_boot() {
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 
-	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
+	elgg_register_plugin_hook_handler('output:before', 'layout', '_elgg_views_add_rss_link');
 
 	// discover the core viewtypes
 	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
@@ -1465,5 +1465,5 @@ function _elgg_views_boot() {
 	}
 }
 
-elgg_register_event_handler('boot', 'system', 'elgg_views_boot');
-elgg_register_event_handler('init', 'system', 'elgg_views_handle_deprecated_views');
+elgg_register_event_handler('boot', 'system', '_elgg_views_boot');
+elgg_register_event_handler('init', 'system', '_elgg_views_handle_deprecated_views');

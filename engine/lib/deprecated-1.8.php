@@ -771,7 +771,7 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 	$where[] = "e.type='object'";
 
 	if (!empty($subtype)) {
-		if (!$subtype = get_subtype_id('object', $subtype)) {
+		if (!$subtype = _elgg_get_subtype_id('object', $subtype)) {
 			return FALSE;
 		}
 		$where[] = "e.subtype=$subtype";
@@ -805,7 +805,7 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix('e');
+	$query .= _elgg_get_access_sql_suffix('e');
 	if (!$count) {
 		$query .= " order by $order_by";
 
@@ -814,7 +814,7 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 			$query .= " limit $offset, $limit";
 		}
 
-		$dt = get_data($query, "entity_row_to_elggstar");
+		$dt = get_data($query, "_elgg_entity_row_to_elggstar");
 		return $dt;
 	} else {
 		$total = get_data_row($query);
@@ -844,7 +844,7 @@ function list_entities_groups($subtype = "", $owner_guid = 0, $container_guid = 
 	$count = get_objects_in_group($container_guid, $subtype, $owner_guid, 0, "", $limit, $offset, true);
 	$entities = get_objects_in_group($container_guid, $subtype, $owner_guid, 0, "", $limit, $offset);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
+	return _elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
 }
 
 /**
@@ -873,7 +873,7 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 	$meta_v = get_metastring_id($meta_value);
 
 	$entity_type = sanitise_string($entity_type);
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+	$entity_subtype = _elgg_get_subtype_id($entity_type, $entity_subtype);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 	if ($order_by == "") {
@@ -937,11 +937,11 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix("e");
+	$query .= _elgg_get_access_sql_suffix("e");
 
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
+		return get_data($query, "_elgg_entity_row_to_elggstar");
 	} else {
 		if ($row = get_data_row($query)) {
 			return $row->total;
@@ -997,7 +997,7 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 	}
 
 	$entity_type = sanitise_string($entity_type);
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+	$entity_subtype = _elgg_get_subtype_id($entity_type, $entity_subtype);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 	if ($order_by == "") {
@@ -1011,7 +1011,7 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 		$site_guid = $CONFIG->site_guid;
 	}
 
-	//$access = get_access_list();
+	//$access = _elgg_get_access_list();
 
 	if ($entity_type != "") {
 		$where[] = "e.type = '{$entity_type}'";
@@ -1043,11 +1043,11 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 	foreach ($where as $w) {
 		$query .= " $w and ";
 	}
-	$query .= get_access_sql_suffix("e"); // Add access controls
+	$query .= _elgg_get_access_sql_suffix("e"); // Add access controls
 
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
+		return get_data($query, "_elgg_entity_row_to_elggstar");
 	} else {
 		if ($count = get_data_row($query)) {
 			return $count->total;
@@ -1211,7 +1211,7 @@ function get_entities_in_area($lat, $long, $radius, $type = "", $subtype = "", $
 /**
  * Return a list of entities suitable for display based on the given search criteria.
  *
- * @see elgg_view_entity_list
+ * @see _elgg_view_entity_list
  *
  * @deprecated 1.8 Use elgg_list_entities_from_metadata
  *
@@ -1257,13 +1257,13 @@ function list_entities_from_metadata($meta_name, $meta_value = "", $entity_type 
 	$options['count'] = FALSE;
 	$entities = elgg_get_entities_from_metadata($options);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
+	return _elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
 }
 
 /**
  * Returns a viewable list of entities based on the given search criteria.
  *
- * @see elgg_view_entity_list
+ * @see _elgg_view_entity_list
  *
  * @param array  $meta_array     Array of 'name' => 'value' pairs
  * @param string $entity_type    The type of entity to look for, eg 'site' or 'object'
@@ -1287,7 +1287,7 @@ function list_entities_from_metadata_multi($meta_array, $entity_type = "", $enti
 	$count = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", $site_guid, true);
 	$entities = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", $site_guid, false);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
+	return _elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
 }
 
 /**
@@ -1570,14 +1570,14 @@ function get_context() {
 /**
  * Returns a list of plugins to load, in the order that they should be loaded.
  *
- * @deprecated 1.8 Use elgg_get_plugin_ids_in_dir() or elgg_get_plugins()
+ * @deprecated 1.8 Use _elgg_get_plugin_ids_in_dir() or _elgg_get_plugins()
  *
  * @return array List of plugins
  */
 function get_plugin_list() {
-	elgg_deprecated_notice('get_plugin_list() is deprecated by elgg_get_plugin_ids_in_dir() or elgg_get_plugins()', 1.8);
+	elgg_deprecated_notice('get_plugin_list() is deprecated by _elgg_get_plugin_ids_in_dir() or _elgg_get_plugins()', 1.8);
 
-	$plugins = elgg_get_plugins('any');
+	$plugins = _elgg_get_plugins('any');
 
 	$list = array();
 	if ($plugins) {
@@ -1601,29 +1601,29 @@ function get_plugin_list() {
  * 		elgg_regenerate_simplecache();
  *		elgg_reset_system_cache();
  *
- * @deprecated 1.8 Use elgg_generate_plugin_entities() and elgg_set_plugin_priorities()
+ * @deprecated 1.8 Use _elgg_generate_plugin_entities() and _elgg_set_plugin_priorities()
  *
  * @param array $pluginorder Optionally, a list of existing plugins and their orders
  *
  * @return array The new list of plugins and their orders
  */
 function regenerate_plugin_list($pluginorder = FALSE) {
-	$msg = 'regenerate_plugin_list() is (sorta) deprecated by elgg_generate_plugin_entities() and'
-			. ' elgg_set_plugin_priorities().';
+	$msg = 'regenerate_plugin_list() is (sorta) deprecated by _elgg_generate_plugin_entities() and'
+			. ' _elgg_set_plugin_priorities().';
 	elgg_deprecated_notice($msg, 1.8);
 
 	// they're probably trying to set it?
 	if ($pluginorder) {
-		if (elgg_generate_plugin_entities()) {
+		if (_elgg_generate_plugin_entities()) {
 			// sort the plugins by the index numerically since we used
 			// weird indexes in the old system.
 			ksort($pluginorder, SORT_NUMERIC);
-			return elgg_set_plugin_priorities($pluginorder);
+			return _elgg_set_plugin_priorities($pluginorder);
 		}
 		return false;
 	} else {
 		// they're probably trying to regenerate from disk?
-		return elgg_generate_plugin_entities();
+		return _elgg_generate_plugin_entities();
 	}
 }
 
@@ -1633,7 +1633,7 @@ function regenerate_plugin_list($pluginorder = FALSE) {
  *
  * i.e., if the last plugin was in /mod/foobar/, get_plugin_name would return foo_bar.
  *
- * @deprecated 1.8 Use elgg_get_calling_plugin_id()
+ * @deprecated 1.8 Use _elgg_get_calling_plugin_id()
  *
  * @param boolean $mainfilename If set to true, this will instead determine the
  *                              context from the main script filename called by
@@ -1642,9 +1642,9 @@ function regenerate_plugin_list($pluginorder = FALSE) {
  * @return string|false Plugin name, or false if no plugin name was called
  */
 function get_plugin_name($mainfilename = false) {
-	elgg_deprecated_notice('get_plugin_name() is deprecated by elgg_get_calling_plugin_id()', 1.8);
+	elgg_deprecated_notice('get_plugin_name() is deprecated by _elgg_get_calling_plugin_id()', 1.8);
 
-	return elgg_get_calling_plugin_id($mainfilename);
+	return _elgg_get_calling_plugin_id($mainfilename);
 }
 
 /**
@@ -1696,7 +1696,7 @@ function check_plugin_compatibility($manifest_elgg_version_string) {
 /**
  * Shorthand function for finding the plugin settings.
  *
- * @deprecated 1.8 Use elgg_get_calling_plugin_entity() or elgg_get_plugin_from_id()
+ * @deprecated 1.8 Use _elgg_get_calling_plugin_entity() or elgg_get_plugin_from_id()
  *
  * @param string $plugin_id Optional plugin id, if not specified
  *                          then it is detected from where you are calling.
@@ -1704,18 +1704,18 @@ function check_plugin_compatibility($manifest_elgg_version_string) {
  * @return mixed
  */
 function find_plugin_settings($plugin_id = null) {
-	elgg_deprecated_notice('find_plugin_setting() is deprecated by elgg_get_calling_plugin_entity() or elgg_get_plugin_from_id()', 1.8);
+	elgg_deprecated_notice('find_plugin_setting() is deprecated by _elgg_get_calling_plugin_entity() or elgg_get_plugin_from_id()', 1.8);
 	if ($plugin_id) {
 		return elgg_get_plugin_from_id($plugin_id);
 	} else {
-		return elgg_get_calling_plugin_entity();
+		return _elgg_get_calling_plugin_entity();
 	}
 }
 
 /**
  * Return an array of installed plugins.
  *
- * @deprecated 1.8 use elgg_get_plugins()
+ * @deprecated 1.8 use _elgg_get_plugins()
  *
  * @param string $status any|enabled|disabled
  * @return array
@@ -1723,9 +1723,9 @@ function find_plugin_settings($plugin_id = null) {
 function get_installed_plugins($status = 'all') {
 	global $CONFIG;
 
-	elgg_deprecated_notice('get_installed_plugins() was deprecated by elgg_get_plugins()', 1.8);
+	elgg_deprecated_notice('get_installed_plugins() was deprecated by _elgg_get_plugins()', 1.8);
 
-	$plugins = elgg_get_plugins($status);
+	$plugins = _elgg_get_plugins($status);
 
 	if (!$plugins) {
 		return array();
@@ -1781,7 +1781,7 @@ function enable_plugin($plugin, $site_guid = null) {
 
 	$site_guid = (int) $site_guid;
 	if (!$site_guid) {
-		$site = get_config('site');
+		$site = _elgg_get_config('site');
 		$site_guid = $site->guid;
 	}
 
@@ -1822,7 +1822,7 @@ function disable_plugin($plugin, $site_guid = 0) {
 
 	$site_guid = (int) $site_guid;
 	if (!$site_guid) {
-		$site = get_config('site');
+		$site = _elgg_get_config('site');
 		$site_guid = $site->guid;
 	}
 
@@ -2016,7 +2016,7 @@ $site_guid = 0, $container_guid = null) {
 /**
  * Returns a viewable list of entities by relationship
  *
- * @see elgg_view_entity_list
+ * @see _elgg_view_entity_list
  *
  * @deprecated 1.8 Use elgg_list_entities_from_relationship()
  *
@@ -2468,7 +2468,7 @@ $owner_guid = "", $owner_relationship = "") {
 
 			$access = "";
 			if ($details['type'] != 'relationship') {
-				$access = " and " . get_access_sql_suffix('sl');
+				$access = " and " . _elgg_get_access_sql_suffix('sl');
 			}
 
 			$obj_query .= "( sl.object_type='{$details['type']}'
@@ -2521,10 +2521,10 @@ $owner_guid = "", $owner_relationship = "") {
  *
  * @return ElggUser|false The authenticated user object, or false on failure.
  *
- * @deprecated 1.8 Use elgg_authenticate
+ * @deprecated 1.8 Use _elgg_authenticate
  */
 function authenticate($username, $password) {
-	elgg_deprecated_notice('authenticate() has been deprecated for elgg_authenticate()', 1.8);
+	elgg_deprecated_notice('authenticate() has been deprecated for _elgg_authenticate()', 1.8);
 	$pam = new ElggPAM('user');
 	$credentials = array('username' => $username, 'password' => $password);
 	$result = $pam->authenticate($credentials);
@@ -2815,7 +2815,7 @@ $timeupper = 0) {
 /**
  * Displays a list of user objects of a particular subtype, with navigation.
  *
- * @see elgg_view_entity_list
+ * @see _elgg_view_entity_list
  *
  * @param int    $user_guid      The GUID of the user
  * @param string $subtype        The object subtype
@@ -2838,7 +2838,7 @@ $fullview = true, $listtypetoggle = true, $pagination = true, $timelower = 0, $t
 	$count = (int) count_user_objects($user_guid, $subtype, $timelower, $timeupper);
 	$entities = get_user_objects($user_guid, $subtype, $limit, $offset, $timelower, $timeupper);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle,
+	return _elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle,
 		$pagination);
 }
 
@@ -3088,13 +3088,13 @@ function isadminloggedin() {
 /**
  * Loads plugins
  *
- * @deprecated 1.8 Use elgg_load_plugins()
+ * @deprecated 1.8 Use _elgg_load_plugins()
  *
  * @return bool
  */
 function load_plugins() {
-	elgg_deprecated_notice('load_plugins() is deprecated by elgg_load_plugins()', 1.8);
-	return elgg_load_plugins();
+	elgg_deprecated_notice('load_plugins() is deprecated by _elgg_load_plugins()', 1.8);
+	return _elgg_load_plugins();
 }
 
 /**

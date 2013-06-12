@@ -11,8 +11,8 @@
 elgg_load_js('lightbox');
 elgg_load_css('lightbox');
 
-elgg_generate_plugin_entities();
-$installed_plugins = elgg_get_plugins('any');
+_elgg_generate_plugin_entities();
+$installed_plugins = _elgg_get_plugins('any');
 $show_category = get_input('category', 'all');
 $sort = get_input('sort', 'priority');
 
@@ -191,7 +191,7 @@ $options = array(
 if ($show_category == 'all' && $sort == 'priority') {
 	$options['display_reordering'] = true;
 }
-echo elgg_view_entity_list($plugin_list, $options);
+echo _elgg_view_entity_list($plugin_list, $options);
 
 ?>
 </div>

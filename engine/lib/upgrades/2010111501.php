@@ -6,12 +6,12 @@
  */
 
 // turn off system log because of all the metadata this can create
-elgg_unregister_event_handler('all', 'all', 'system_log_listener');
+elgg_unregister_event_handler('all', 'all', '_elgg_system_log_listener');
 elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
 
 $ia = elgg_set_ignore_access(TRUE);
-$hidden_entities = access_get_show_hidden_status();
-access_show_hidden_entities(TRUE);
+$hidden_entities = _elgg_access_get_show_hidden_status();
+_elgg_access_show_hidden_entities(TRUE);
 
 $validated_id = elgg_get_metastring_id('validated');
 $one_id = elgg_get_metastring_id(1);
@@ -29,5 +29,5 @@ while ($user_guid = mysql_fetch_object($user_guids)) {
 	create_metadata($user_guid->guid, 'validated', false, '', 0, ACCESS_PUBLIC, false);
 }
 
-access_show_hidden_entities($hidden_entities);
+_elgg_access_show_hidden_entities($hidden_entities);
 elgg_set_ignore_access($ia);

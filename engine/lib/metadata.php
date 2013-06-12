@@ -309,7 +309,7 @@ function elgg_delete_metadata(array $options) {
 		return false;
 	}
 	$options['metastring_type'] = 'metadata';
-	$result = _elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
+	$result = _elgg_batch_metastring_based_objects($options, '_elgg_batch_delete_callback', false);
 
 	// This moved last in case an object's constructor sets metadata. Currently the batch
 	// delete process has to create the entity to delete its metadata. See #5214
@@ -335,7 +335,7 @@ function elgg_disable_metadata(array $options) {
 	_elgg_get_metadata_cache()->invalidateByOptions('disable', $options);
 
 	$options['metastring_type'] = 'metadata';
-	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
+	return _elgg_batch_metastring_based_objects($options, '_elgg_batch_disable_callback', false);
 }
 
 /**
@@ -344,7 +344,7 @@ function elgg_disable_metadata(array $options) {
  * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
  *
  * @warning In order to enable metadata, you must first use
- * {@link access_show_hidden_entities()}.
+ * {@link _elgg_access_show_hidden_entities()}.
  *
  * @param array $options An options array. {@See elgg_get_metadata()}
  * @return bool|null true on success, false on failure, null if no metadata enabled.
@@ -358,7 +358,7 @@ function elgg_enable_metadata(array $options) {
 	_elgg_get_metadata_cache()->invalidateByOptions('enable', $options);
 
 	$options['metastring_type'] = 'metadata';
-	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
+	return _elgg_batch_metastring_based_objects($options, '_elgg_batch_enable_callback');
 }
 
 /**
@@ -513,7 +513,7 @@ $owner_guids = null) {
 	// only supported on values.
 	$binary = ($case_sensitive) ? ' BINARY ' : '';
 
-	$access = get_access_sql_suffix('n_table');
+	$access = _elgg_get_access_sql_suffix('n_table');
 
 	$return = array (
 		'joins' => array (),
@@ -625,7 +625,7 @@ $owner_guids = null) {
 			// for comparing
 			$trimmed_operand = trim(strtolower($operand));
 
-			$access = get_access_sql_suffix("n_table{$i}");
+			$access = _elgg_get_access_sql_suffix("n_table{$i}");
 			// if the value is an int, don't quote it because str '15' < str '5'
 			// if the operand is IN don't quote it because quoting should be done already.
 			if (is_numeric($pair['value'])) {
@@ -713,7 +713,7 @@ $owner_guids = null) {
 				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i}
 					on n_table{$i}.value_id = msv{$i}.id";
 
-				$access = get_access_sql_suffix("n_table{$i}");
+				$access = _elgg_get_access_sql_suffix("n_table{$i}");
 
 				$return['wheres'][] = "(msn{$i}.string = '$name' AND $access)";
 				if (isset($order_by['as']) && $order_by['as'] == 'integer') {
@@ -875,7 +875,7 @@ function _elgg_invalidate_metadata_cache($action, array $options) {
 }
 
 /** Call a function whenever an entity is updated **/
-elgg_register_event_handler('update', 'all', 'metadata_update');
+elgg_register_event_handler('update', 'all', '_elgg_metadata_update');
 
 /**
  * Metadata unit test

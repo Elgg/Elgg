@@ -484,7 +484,7 @@ function thewire_test($hook, $type, $value, $params) {
 
 function thewire_run_upgrades() {
 	$path = dirname(__FILE__) . '/upgrades/';
-	$files = elgg_get_upgrade_files($path);
+	$files = _elgg_get_upgrade_files($path);
 	
 	foreach ($files as $file) {
 		include $path . $file;
