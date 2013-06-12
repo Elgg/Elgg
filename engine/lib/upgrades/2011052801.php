@@ -3,7 +3,7 @@
  * Make sure all users have the relationship member_of_site
  */
 global $ENTITY_CACHE;
-$db_prefix = get_config('dbprefix');
+$db_prefix = _elgg_get_config('dbprefix');
 
 $limit = 100;
 

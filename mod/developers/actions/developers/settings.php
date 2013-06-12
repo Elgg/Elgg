@@ -19,7 +19,7 @@ if (get_input('system_cache')) {
 
 $debug = get_input('debug_level');
 if ($debug) {
-	set_config('debug', $debug, $site->getGUID());
+	_elgg_set_config('debug', $debug, $site->getGUID());
 } else {
 	unset_config('debug', $site->getGUID());
 }

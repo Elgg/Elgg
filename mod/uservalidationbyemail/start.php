@@ -83,8 +83,8 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	// disable user to prevent showing up on the site
 	// set context so our canEdit() override works
 	elgg_push_context('uservalidationbyemail_new_user');
-	$hidden_entities = access_get_show_hidden_status();
-	access_show_hidden_entities(TRUE);
+	$hidden_entities = _elgg_access_get_show_hidden_status();
+	_elgg_access_show_hidden_entities(TRUE);
 
 	// Don't do a recursive disable.  Any entities owned by the user at this point
 	// are products of plugins that hook into create user and might need
@@ -97,7 +97,7 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 	uservalidationbyemail_request_validation($user->guid);
 
 	elgg_pop_context();
-	access_show_hidden_entities($hidden_entities);
+	_elgg_access_show_hidden_entities($hidden_entities);
 
 	return $value;
 }
@@ -143,18 +143,18 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
 	$username = $credentials['username'];
 
 	// See if the user exists and isn't validated
-	$access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(TRUE);
+	$access_status = _elgg_access_get_show_hidden_status();
+	_elgg_access_show_hidden_entities(TRUE);
 
 	$user = get_user_by_username($username);
 	if ($user && isset($user->validated) && !$user->validated) {
 		// show an error and resend validation email
 		uservalidationbyemail_request_validation($user->guid);
-		access_show_hidden_entities($access_status);
+		_elgg_access_show_hidden_entities($access_status);
 		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
 	}
 
-	access_show_hidden_entities($access_status);
+	_elgg_access_show_hidden_entities($access_status);
 }
 
 /**
@@ -170,8 +170,8 @@ function uservalidationbyemail_page_handler($page) {
 		$user_guid = get_input('u', FALSE);
 
 		// new users are not enabled by default.
-		$access_status = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
+		$access_status = _elgg_access_get_show_hidden_status();
+		_elgg_access_show_hidden_entities(true);
 
 		$user = get_entity($user_guid);
 
@@ -196,7 +196,7 @@ function uservalidationbyemail_page_handler($page) {
 			register_error(elgg_echo('email:confirm:fail'));
 		}
 
-		access_show_hidden_entities($access_status);
+		_elgg_access_show_hidden_entities($access_status);
 	} else {
 		register_error(elgg_echo('email:confirm:fail'));
 	}
@@ -237,19 +237,19 @@ function uservalidationbyemail_public_pages($hook, $type, $return_value, $params
  * @throws LoginException
  */
 function uservalidationbyemail_check_manual_login($event, $type, $user) {
-	$access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(TRUE);
+	$access_status = _elgg_access_get_show_hidden_status();
+	_elgg_access_show_hidden_entities(TRUE);
 
 	if (($user instanceof ElggUser) && !$user->isEnabled() && !$user->validated) {
 		// send new validation email
 		uservalidationbyemail_request_validation($user->getGUID());
 		
 		// restore hidden entities settings
-		access_show_hidden_entities($access_status);
+		_elgg_access_show_hidden_entities($access_status);
 		
 		// throw error so we get a nice error message
 		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
 	}
 
-	access_show_hidden_entities($access_status);
+	_elgg_access_show_hidden_entities($access_status);
 }

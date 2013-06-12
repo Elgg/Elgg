@@ -147,7 +147,7 @@ function remove_expired_user_tokens() {
  * @access private
  */
 function auth_gettoken($username, $password) {
-	if (true === elgg_authenticate($username, $password)) {
+	if (true === _elgg_authenticate($username, $password)) {
 		$token = create_user_token($username);
 		if ($token) {
 			return $token;

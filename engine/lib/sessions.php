@@ -127,7 +127,7 @@ function elgg_is_admin_user($user_guid) {
 
 	// must support the old way of getting admin from metadata
 	// in order to run the upgrade to move it into the users table.
-	$version = (int) datalist_get('version');
+	$version = (int) _elgg_datalist_get('version');
 
 	if ($version < 2010040201) {
 		$admin = elgg_get_metastring_id('admin');
@@ -164,7 +164,7 @@ function elgg_is_admin_user($user_guid) {
  * Perform user authentication with a given username and password.
  *
  * @warning This returns an error message on failure. Use the identical operator to check
- * for access: if (true === elgg_authenticate()) { ... }.
+ * for access: if (true === _elgg_authenticate()) { ... }.
  *
  *
  * @see login
@@ -175,7 +175,7 @@ function elgg_is_admin_user($user_guid) {
  * @return true|string True or an error message on failure
  * @access private
  */
-function elgg_authenticate($username, $password) {
+function _elgg_authenticate($username, $password) {
 	$pam = new ElggPAM('user');
 	$credentials = array('username' => $username, 'password' => $password);
 	$result = $pam->authenticate($credentials);
@@ -197,7 +197,7 @@ function elgg_authenticate($username, $password) {
  * @throws LoginException
  * @access private
  */
-function pam_auth_userpass(array $credentials = array()) {
+function _elgg_pam_auth_userpass(array $credentials = array()) {
 
 	if (!isset($credentials['username']) || !isset($credentials['password'])) {
 		return false;
@@ -328,9 +328,9 @@ function elgg_set_cookie(ElggCookie $cookie) {
 
 /**
  * Logs in a specified ElggUser. For standard registration, use in conjunction
- * with elgg_authenticate.
+ * with _elgg_authenticate.
  *
- * @see elgg_authenticate
+ * @see _elgg_authenticate
  *
  * @param ElggUser $user       A valid Elgg user object
  * @param boolean  $persistent Should this be a persistent login?
@@ -490,7 +490,7 @@ function _elgg_session_boot() {
 	elgg_register_action('logout');
 
 	// Register a default PAM handler
-	register_pam_handler('pam_auth_userpass');
+	register_pam_handler('_elgg_pam_auth_userpass');
 
 	// Initialise the magic session
 	global $SESSION;

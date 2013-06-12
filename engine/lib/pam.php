@@ -8,7 +8,7 @@
  * or required. The entire chain for a policy is processed (or until a
  * required module fails). A module fails by returning false or throwing an
  * exception. The order that modules are processed is determined by the order
- * they are registered. For an example of a PAM, see pam_auth_userpass() in
+ * they are registered. For an example of a PAM, see _elgg_pam_auth_userpass() in
  * sessions.php.
  *
  * For more information on PAMs see:

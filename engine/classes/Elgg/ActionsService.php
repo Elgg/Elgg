@@ -46,7 +46,7 @@ class Elgg_ActionsService {
 	
 		if (!in_array($action, $exceptions)) {
 			// All actions require a token.
-			action_gatekeeper($action);
+			_elgg_action_gatekeeper($action);
 		}
 	
 		$forwarder = str_replace(elgg_get_site_url(), "", $forwarder);
@@ -116,7 +116,7 @@ class Elgg_ActionsService {
 	}
 
 	/**
-	 * @see validate_action_token
+	 * @see _elgg_validate_action_token
 	 * @access private
 	 */
 	public function validateActionToken($visible_errors = true, $token = null, $ts = null) {
@@ -132,14 +132,14 @@ class Elgg_ActionsService {
 	
 		if (($token) && ($ts) && ($session_id)) {
 			// generate token, check with input and forward if invalid
-			$required_token = generate_action_token($ts);
+			$required_token = _elgg_generate_action_token($ts);
 	
 			// Validate token
 			if ($token == $required_token) {
 				if ($this->validateTokenTimestamp($ts)) {
 					// We have already got this far, so unless anything
 					// else says something to the contrary we assume we're ok
-					$returnval = elgg_trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', array(
+					$returnval = elgg_trigger_plugin_hook('_elgg_action_gatekeeper:permissions:check', 'all', array(
 						'token' => $token,
 						'time' => $ts
 					), true);
@@ -168,7 +168,7 @@ class Elgg_ActionsService {
 		} else {
 			if (! empty($_SERVER['CONTENT_LENGTH']) && empty($_POST)) {
 				// The size of $_POST or uploaded file has exceed the size limit
-				$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', array(
+				$error_msg = elgg_trigger_plugin_hook('_elgg_action_gatekeeper:upload_exceeded_msg', 'all', array(
 					'post_size' => $_SERVER['CONTENT_LENGTH'],
 					'visible_errors' => $visible_errors,
 				), elgg_echo('actiongatekeeper:uploadexceeded'));
@@ -212,7 +212,7 @@ class Elgg_ActionsService {
 	}
 
 	/**
-	 * @see action_gatekeeper
+	 * @see _elgg_action_gatekeeper
 	 * @access private
 	 */
 	public function gatekeeper($action) {
@@ -232,7 +232,7 @@ class Elgg_ActionsService {
 			}
 
 			// let the validator send an appropriate msg
-			validate_action_token();
+			_elgg_validate_action_token();
 		} else if ($this->validateActionToken()) {
 			return true;
 		}
@@ -241,11 +241,11 @@ class Elgg_ActionsService {
 	}
 	
 	/**
-	 * @see generate_action_token
+	 * @see _elgg_generate_action_token
 	 * @access private
 	 */
 	public function generateActionToken($timestamp) {
-		$site_secret = get_site_secret();
+		$site_secret = _elgg_get_site_secret();
 		$session_id = _elgg_services()->session->getId();
 		// Session token
 		$st = _elgg_services()->session->get('__elgg_session');
@@ -266,7 +266,7 @@ class Elgg_ActionsService {
 	}
 	
 	/**
-	 * @see ajax_forward_hook
+	 * @see _elgg_ajax_forward_hook
 	 * @access private
 	 */
 	public function ajaxForwardHook($hook, $reason, $return, $params) {
@@ -323,7 +323,7 @@ class Elgg_ActionsService {
 	}
 	
 	/**
-	 * @see ajax_action_hook
+	 * @see _elgg_ajax_action_hook
 	 * @access private
 	 */
 	public function ajaxActionHook() {

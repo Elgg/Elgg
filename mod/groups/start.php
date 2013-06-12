@@ -658,7 +658,7 @@ function groups_join_group($group, $user) {
 	
 	if ($result) {
 		// flush user's access info so the collection is added
-		get_access_list($user->guid, 0, true);
+		_elgg_get_access_list($user->guid, 0, true);
 
 		// Remove any invite or join request flags
 		remove_entity_relationship($group->guid, 'invited', $user->guid);
@@ -1034,7 +1034,7 @@ function groups_can_edit_discussion($entity, $group_owner) {
  */
 function groups_run_upgrades() {
 	$path = elgg_get_plugins_path() . 'groups/upgrades/';
-	$files = elgg_get_upgrade_files($path);
+	$files = _elgg_get_upgrade_files($path);
 	foreach ($files as $file) {
 		include "$path{$file}";
 	}

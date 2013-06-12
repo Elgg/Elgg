@@ -14,7 +14,7 @@
  * @return ElggRelationship|stdClass
  * @access private
  */
-function row_to_elggrelationship($row) {
+function _elgg_row_to_elggrelationship($row) {
 	if (!($row instanceof stdClass)) {
 		return $row;
 	}
@@ -35,7 +35,7 @@ function get_relationship($id) {
 	$id = (int)$id;
 
 	$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where id=$id";
-	return row_to_elggrelationship(get_data_row($query));
+	return _elgg_row_to_elggrelationship(get_data_row($query));
 }
 
 /**
@@ -133,7 +133,7 @@ function check_entity_relationship($guid_one, $relationship, $guid_two) {
 			AND relationship='$relationship'
 			AND guid_two=$guid_two limit 1";
 
-	$row = row_to_elggrelationship(get_data_row($query));
+	$row = _elgg_row_to_elggrelationship(get_data_row($query));
 	if ($row) {
 		return $row;
 	}
@@ -245,7 +245,7 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
 
 	$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where {$where}";
 
-	return get_data($query, "row_to_elggrelationship");
+	return get_data($query, "_elgg_row_to_elggrelationship");
 }
 
 /**
@@ -293,7 +293,7 @@ function elgg_get_entities_from_relationship($options) {
 	$options = array_merge($defaults, $options);
 
 	$join_column = "e.{$options['relationship_join_on']}";
-	$clauses = elgg_get_entity_relationship_where_sql($join_column, $options['relationship'],
+	$clauses = _elgg_get_entity_relationship_where_sql($join_column, $options['relationship'],
 		$options['relationship_guid'], $options['inverse_relationship']);
 
 	if ($clauses) {
@@ -344,7 +344,7 @@ function elgg_get_entities_from_relationship($options) {
  * @since 1.7.0
  * @access private
  */
-function elgg_get_entity_relationship_where_sql($column, $relationship = null,
+function _elgg_get_entity_relationship_where_sql($column, $relationship = null,
 $relationship_guid = null, $inverse_relationship = false) {
 
 	if ($relationship == null && $relationship_guid == null) {
@@ -437,7 +437,7 @@ function elgg_list_entities_from_relationship_count($options) {
  * @return bool
  * @access private
  */
-function relationship_notification_hook($event, $type, $object) {
+function _elgg_relationship_notification_hook($event, $type, $object) {
 	$user_one = get_entity($object->guid_one);
 	/* @var ElggUser $user_one */
 
@@ -449,4 +449,4 @@ function relationship_notification_hook($event, $type, $object) {
 }
 
 // Register event to listen to some events
-elgg_register_event_handler('create', 'friend', 'relationship_notification_hook');
+elgg_register_event_handler('create', 'friend', '_elgg_relationship_notification_hook');

@@ -10,10 +10,10 @@
 $ia = elgg_set_ignore_access(true);
 
 // make sure we have updated plugins
-elgg_generate_plugin_entities();
+_elgg_generate_plugin_entities();
 
-$show_hidden = access_get_show_hidden_status();
-access_show_hidden_entities(true);
+$show_hidden = _elgg_access_get_show_hidden_status();
+_elgg_access_show_hidden_entities(true);
 
 $db_prefix = elgg_get_config('dbprefix');
 $site_guid = elgg_get_site_entity()->getGUID();
@@ -50,5 +50,5 @@ if ($has_settings) {
 
 $old->delete();
 
-access_show_hidden_entities($show_hidden);
+_elgg_access_show_hidden_entities($show_hidden);
 elgg_set_ignore_access($ia);

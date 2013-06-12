@@ -43,7 +43,7 @@ function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params) {
  */
 function diagnostics_plugins_hook($hook, $entity_type, $returnvalue, $params) {
 	// @todo this is a really bad idea because of the new plugin system
-	//$returnvalue .= elgg_echo('diagnostics:report:plugins', array(print_r(elgg_get_plugins(), true)));
+	//$returnvalue .= elgg_echo('diagnostics:report:plugins', array(print_r(_elgg_get_plugins(), true)));
 
 	return $returnvalue;
 }

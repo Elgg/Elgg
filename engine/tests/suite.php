@@ -29,7 +29,7 @@ if (!TextReporter::inCli()) {
 }
 
 // turn off system log
-elgg_unregister_event_handler('all', 'all', 'system_log_listener');
+elgg_unregister_event_handler('all', 'all', '_elgg_system_log_listener');
 elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
 
 // turn off notifications

@@ -140,7 +140,7 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 		// @todo move queue in service provider
 		$queue = new Elgg_Util_DatabaseQueue(Elgg_Notifications_NotificationsService::QUEUE_NAME);
 		$sub = new Elgg_Notifications_SubscriptionsService($c->db);
-		$access = elgg_get_access_object();
+		$access = _elgg_get_access_object();
 		return new Elgg_Notifications_NotificationsService($sub, $queue, $c->hooks, $access);
 	}
 }

@@ -54,7 +54,7 @@ function _elgg_set_user_password() {
 			);
 
 			try {
-				pam_auth_userpass($credentials);
+				_elgg_pam_auth_userpass($credentials);
 			} catch (LoginException $e) {
 				register_error(elgg_echo('LoginException:ChangePasswordFailure'));
 				return false;

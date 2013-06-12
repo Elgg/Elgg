@@ -23,7 +23,7 @@ $CODE_TO_GUID_MAP_CACHE = array();
  * @return mixed
  * @access private
  */
-function get_user_entity_as_row($guid) {
+function _elgg_get_user_entity_as_row($guid) {
 	global $CONFIG;
 
 	$guid = (int)$guid;
@@ -251,7 +251,7 @@ function get_user_by_username($username) {
 	global $CONFIG, $USERNAME_TO_GUID_MAP_CACHE;
 
 	$username = sanitise_string($username);
-	$access = get_access_sql_suffix('e');
+	$access = _elgg_get_access_sql_suffix('e');
 
 	// Caching
 	if ((isset($USERNAME_TO_GUID_MAP_CACHE[$username]))
@@ -263,7 +263,7 @@ function get_user_by_username($username) {
 		JOIN {$CONFIG->dbprefix}entities e ON e.guid = u.guid
 		WHERE u.username = '$username' AND $access";
 
-	$entity = get_data_row($query, 'entity_row_to_elggstar');
+	$entity = get_data_row($query, '_elgg_entity_row_to_elggstar');
 	if ($entity) {
 		$USERNAME_TO_GUID_MAP_CACHE[$username] = $entity->guid;
 	} else {
@@ -285,7 +285,7 @@ function get_user_by_code($code) {
 
 	$code = sanitise_string($code);
 
-	$access = get_access_sql_suffix('e');
+	$access = _elgg_get_access_sql_suffix('e');
 
 	// Caching
 	if ((isset($CODE_TO_GUID_MAP_CACHE[$code]))
@@ -298,7 +298,7 @@ function get_user_by_code($code) {
 		JOIN {$CONFIG->dbprefix}entities e ON e.guid = u.guid
 		WHERE u.code = '$code' AND $access";
 
-	$entity = get_data_row($query, 'entity_row_to_elggstar');
+	$entity = get_data_row($query, '_elgg_entity_row_to_elggstar');
 	if ($entity) {
 		$CODE_TO_GUID_MAP_CACHE[$code] = $entity->guid;
 	}
@@ -318,13 +318,13 @@ function get_user_by_email($email) {
 
 	$email = sanitise_string($email);
 
-	$access = get_access_sql_suffix('e');
+	$access = _elgg_get_access_sql_suffix('e');
 
 	$query = "SELECT e.* FROM {$CONFIG->dbprefix}entities e
 		JOIN {$CONFIG->dbprefix}users_entity u ON e.guid = u.guid
 		WHERE email = '$email' AND $access";
 
-	return get_data($query, 'entity_row_to_elggstar');
+	return get_data($query, '_elgg_entity_row_to_elggstar');
 }
 
 /**
@@ -615,8 +615,8 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	}
 
 	// Make sure a user with conflicting details hasn't registered and been disabled
-	$access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(true);
+	$access_status = _elgg_access_get_show_hidden_status();
+	_elgg_access_show_hidden_entities(true);
 
 	if (!validate_email_address($email)) {
 		throw new RegistrationException(elgg_echo('registration:emailnotvalid'));
@@ -638,7 +638,7 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 		throw new RegistrationException(elgg_echo('registration:dupeemail'));
 	}
 
-	access_show_hidden_entities($access_status);
+	_elgg_access_show_hidden_entities($access_status);
 
 	// Create user
 	$user = new ElggUser();
@@ -667,7 +667,7 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
  * @return string Invite code
  */
 function generate_invite_code($username) {
-	$secret = datalist_get('__site_secret__');
+	$secret = _elgg_datalist_get('__site_secret__');
 	return md5($username . $secret);
 }
 
@@ -719,7 +719,7 @@ function elgg_get_user_validation_status($user_guid) {
  * @return void
  * @access private
  */
-function collections_submenu_items() {
+function _elgg_collections_submenu_items() {
 
 	$user = elgg_get_logged_in_user_entity();
 
@@ -739,14 +739,14 @@ function collections_submenu_items() {
  * @return bool
  * @access private
  */
-function friends_page_handler($segments, $handler) {
+function _elgg_friends_page_handler($segments, $handler) {
 	elgg_set_context('friends');
 	
 	if (isset($segments[0]) && $user = get_user_by_username($segments[0])) {
 		elgg_set_page_owner_guid($user->getGUID());
 	}
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
-		collections_submenu_items();
+		_elgg_collections_submenu_items();
 	}
 
 	switch ($handler) {
@@ -770,13 +770,13 @@ function friends_page_handler($segments, $handler) {
  * @return bool
  * @access private
  */
-function collections_page_handler($page_elements) {
+function _elgg_collections_page_handler($page_elements) {
 	elgg_set_context('friends');
 	$base = elgg_get_config('path');
 	if (isset($page_elements[0])) {
 		if ($page_elements[0] == "add") {
 			elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
-			collections_submenu_items();
+			_elgg_collections_submenu_items();
 			require_once "{$base}pages/friends/collections/add.php";
 			return true;
 		} else {
@@ -784,7 +784,7 @@ function collections_page_handler($page_elements) {
 			if ($user) {
 				elgg_set_page_owner_guid($user->getGUID());
 				if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
-					collections_submenu_items();
+					_elgg_collections_submenu_items();
 				}
 				require_once "{$base}pages/friends/collections/view.php";
 				return true;
@@ -803,7 +803,7 @@ function collections_page_handler($page_elements) {
  * @return bool
  * @access private
  */
-function elgg_user_account_page_handler($page_elements, $handler) {
+function _elgg_user_account_page_handler($page_elements, $handler) {
 
 	$base_dir = elgg_get_root_path() . 'pages/account';
 	switch ($handler) {
@@ -872,7 +872,7 @@ function set_last_login($user_guid) {
  * @return void
  * @access private
  */
-function user_create_hook_add_site_relationship($event, $object_type, $object) {
+function _elgg_user_create_hook_add_site_relationship($event, $object_type, $object) {
 	add_entity_relationship($object->getGUID(), 'member_of_site', elgg_get_site_entity()->guid);
 }
 
@@ -886,7 +886,7 @@ function user_create_hook_add_site_relationship($event, $object_type, $object) {
  * @return string
  * @access private
  */
-function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
+function _elgg_user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 	$user = $params['entity'];
 	$size = $params['size'];
 
@@ -901,7 +901,7 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
  * Setup the default user hover menu
  * @access private
  */
-function elgg_user_hover_menu($hook, $type, $return, $params) {
+function _elgg_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
 	/* @var ElggUser $user */
 
@@ -999,7 +999,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
  *
  * @access private
  */
-function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
+function _elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
@@ -1044,7 +1044,7 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
  * other plugins have initialised.
  * @access private
  */
-function elgg_profile_fields_setup() {
+function _elgg_profile_fields_setup() {
 	global $CONFIG;
 
 	$profile_defaults = array (
@@ -1101,7 +1101,7 @@ function elgg_profile_fields_setup() {
  * @return bool
  * @access private
  */
-function elgg_avatar_page_handler($page) {
+function _elgg_avatar_page_handler($page) {
 	global $CONFIG;
 
 	$user = get_user_by_username($page[1]);
@@ -1127,7 +1127,7 @@ function elgg_avatar_page_handler($page) {
  * @return bool
  * @access private
  */
-function elgg_profile_page_handler($page) {
+function _elgg_profile_page_handler($page) {
 	global $CONFIG;
 
 	$user = get_user_by_username($page[0]);
@@ -1146,7 +1146,7 @@ function elgg_profile_page_handler($page) {
  * @return void
  * @access private
  */
-function users_pagesetup() {
+function _elgg_users_pagesetup() {
 
 	$owner = elgg_get_page_owner_entity();
 	$viewer = elgg_get_logged_in_user_entity();
@@ -1233,19 +1233,19 @@ function users_pagesetup() {
  * @return void
  * @access private
  */
-function users_init() {
+function _elgg_users_init() {
 
-	elgg_register_page_handler('friends', 'friends_page_handler');
-	elgg_register_page_handler('friendsof', 'friends_page_handler');
-	elgg_register_page_handler('register', 'elgg_user_account_page_handler');
-	elgg_register_page_handler('forgotpassword', 'elgg_user_account_page_handler');
-	elgg_register_page_handler('resetpassword', 'elgg_user_account_page_handler');
-	elgg_register_page_handler('login', 'elgg_user_account_page_handler');
-	elgg_register_page_handler('avatar', 'elgg_avatar_page_handler');
-	elgg_register_page_handler('profile', 'elgg_profile_page_handler');
-	elgg_register_page_handler('collections', 'collections_page_handler');
+	elgg_register_page_handler('friends', '_elgg_friends_page_handler');
+	elgg_register_page_handler('friendsof', '_elgg_friends_page_handler');
+	elgg_register_page_handler('register', '_elgg_user_account_page_handler');
+	elgg_register_page_handler('forgotpassword', '_elgg_user_account_page_handler');
+	elgg_register_page_handler('resetpassword', '_elgg_user_account_page_handler');
+	elgg_register_page_handler('login', '_elgg_user_account_page_handler');
+	elgg_register_page_handler('avatar', '_elgg_avatar_page_handler');
+	elgg_register_page_handler('profile', '_elgg_profile_page_handler');
+	elgg_register_page_handler('collections', '_elgg_collections_page_handler');
 
-	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'elgg_user_hover_menu');
+	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_user_hover_menu');
 
 	elgg_register_action('register', '', 'public');
 	elgg_register_action('useradd', '', 'admin');
@@ -1260,7 +1260,7 @@ function users_init() {
 	elgg_register_action('friends/collections/delete');
 	elgg_register_action('friends/collections/edit');
 
-	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
+	elgg_register_plugin_hook_handler('entity:icon:url', 'user', '_elgg_user_avatar_hook');
 
 	elgg_register_action('user/passwordreset', '', 'public');
 	elgg_register_action('user/requestnewpassword', '', 'public');
@@ -1270,9 +1270,9 @@ function users_init() {
 	// Register the user type
 	elgg_register_entity_type('user', '');
 
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_users_setup_entity_menu', 501);
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_users_setup_entity_menu', 501);
 
-	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
+	elgg_register_event_handler('create', 'user', '_elgg_user_create_hook_add_site_relationship');
 }
 
 /**
@@ -1286,13 +1286,13 @@ function users_init() {
  * @return array
  * @access private
  */
-function users_test($hook, $type, $value, $params) {
+function _elgg_users_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = "{$CONFIG->path}engine/tests/ElggCoreUserTest.php";
 	return $value;
 }
 
-elgg_register_event_handler('init', 'system', 'users_init', 0);
-elgg_register_event_handler('init', 'system', 'elgg_profile_fields_setup', 10000); // Ensure this runs after other plugins
-elgg_register_event_handler('pagesetup', 'system', 'users_pagesetup', 0);
-elgg_register_plugin_hook_handler('unit_test', 'system', 'users_test');
+elgg_register_event_handler('init', 'system', '_elgg_users_init', 0);
+elgg_register_event_handler('init', 'system', '_elgg_profile_fields_setup', 10000); // Ensure this runs after other plugins
+elgg_register_event_handler('pagesetup', 'system', '_elgg_users_pagesetup', 0);
+elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_users_test');

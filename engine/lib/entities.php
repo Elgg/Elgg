@@ -160,10 +160,10 @@ function _elgg_retrieve_cached_entity($guid) {
  * @param string $subtype Subtype
  *
  * @return int Subtype ID
- * @see get_subtype_from_id()
+ * @see _elgg_get_subtype_from_id()
  * @access private
  */
-function get_subtype_id($type, $subtype) {
+function _elgg_get_subtype_id($type, $subtype) {
 	global $SUBTYPE_CACHE;
 
 	if (!$subtype) {
@@ -188,10 +188,10 @@ function get_subtype_id($type, $subtype) {
  *
  * @param int $subtype_id Subtype ID from database
  * @return string|false Subtype name, false if subtype not found
- * @see get_subtype_id()
+ * @see _elgg_get_subtype_id()
  * @access private
  */
-function get_subtype_from_id($subtype_id) {
+function _elgg_get_subtype_from_id($subtype_id) {
 	global $SUBTYPE_CACHE;
 
 	if (!$subtype_id) {
@@ -260,11 +260,11 @@ function _elgg_populate_subtype_cache() {
  * @param string $subtype The subtype
  *
  * @return string|null a class name or null
- * @see get_subtype_from_id()
- * @see get_subtype_class_from_id()
+ * @see _elgg_get_subtype_from_id()
+ * @see _elgg_get_subtype_class_from_id()
  * @access private
  */
-function get_subtype_class($type, $subtype) {
+function _elgg_get_subtype_class($type, $subtype) {
 	global $SUBTYPE_CACHE;
 
 	if ($SUBTYPE_CACHE === null) {
@@ -286,11 +286,11 @@ function get_subtype_class($type, $subtype) {
  * @param int $subtype_id The subtype id
  *
  * @return string|null
- * @see get_subtype_class()
- * @see get_subtype_from_id()
+ * @see _elgg_get_subtype_class()
+ * @see _elgg_get_subtype_from_id()
  * @access private
  */
-function get_subtype_class_from_id($subtype_id) {
+function _elgg_get_subtype_class_from_id($subtype_id) {
 	global $SUBTYPE_CACHE;
 
 	if (!$subtype_id) {
@@ -335,7 +335,7 @@ function add_subtype($type, $subtype, $class = "") {
 		return 0;
 	}
 
-	$id = get_subtype_id($type, $subtype);
+	$id = _elgg_get_subtype_id($type, $subtype);
 
 	if (!$id) {
 		// In cache we store non-SQL-escaped strings because that's what's returned by query
@@ -396,7 +396,7 @@ function remove_subtype($type, $subtype) {
 function update_subtype($type, $subtype, $class = '') {
 	global $CONFIG, $SUBTYPE_CACHE;
 
-	$id = get_subtype_id($type, $subtype);
+	$id = _elgg_get_subtype_id($type, $subtype);
 	if (!$id) {
 		return false;
 	}
@@ -493,15 +493,15 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
  * @tip Use get_entity() to return the fully loaded entity.
  *
  * @warning This will only return results if a) it exists, b) you have access to it.
- * see {@link get_access_sql_suffix()}.
+ * see {@link _elgg_get_access_sql_suffix()}.
  *
  * @param int $guid The GUID of the object to extract
  *
  * @return stdClass|false
- * @see entity_row_to_elggstar()
+ * @see _elgg_entity_row_to_elggstar()
  * @access private
  */
-function get_entity_as_row($guid) {
+function _elgg_get_entity_as_row($guid) {
 	global $CONFIG;
 
 	if (!$guid) {
@@ -509,7 +509,7 @@ function get_entity_as_row($guid) {
 	}
 
 	$guid = (int) $guid;
-	$access = get_access_sql_suffix();
+	$access = _elgg_get_access_sql_suffix();
 
 	return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and $access");
 }
@@ -522,14 +522,14 @@ function get_entity_as_row($guid) {
  * @param stdClass $row The row of the entry in the entities table.
  *
  * @return ElggEntity|false
- * @see get_entity_as_row()
+ * @see _elgg_get_entity_as_row()
  * @see add_subtype()
  * @see get_entity()
  * @access private
  *
  * @throws ClassException|InstallationException
  */
-function entity_row_to_elggstar($row) {
+function _elgg_entity_row_to_elggstar($row) {
 	if (!($row instanceof stdClass)) {
 		return $row;
 	}
@@ -553,7 +553,7 @@ function entity_row_to_elggstar($row) {
 	}
 
 	// load class for entity if one is registered
-	$classname = get_subtype_class_from_id($row->subtype);
+	$classname = _elgg_get_subtype_class_from_id($row->subtype);
 	if ($classname != "") {
 		if (class_exists($classname)) {
 			$new_entity = new $classname($row);
@@ -632,7 +632,7 @@ function get_entity($guid) {
 	}
 
 	// until ACLs in memcache, DB query is required to determine access
-	$entity_row = get_entity_as_row($guid);
+	$entity_row = _elgg_get_entity_as_row($guid);
 	if (!$entity_row) {
 		return false;
 	}
@@ -648,7 +648,7 @@ function get_entity($guid) {
 
 	// don't let incomplete entities cause fatal exceptions
 	try {
-		$new_entity = entity_row_to_elggstar($entity_row);
+		$new_entity = _elgg_entity_row_to_elggstar($entity_row);
 	} catch (IncompleteEntityException $e) {
 		return false;
 	}
@@ -698,8 +698,8 @@ function elgg_entity_exists($guid) {
 function elgg_enable_entity($guid, $recursive = true) {
 
 	// Override access only visible entities
-	$old_access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(true);
+	$old_access_status = _elgg_access_get_show_hidden_status();
+	_elgg_access_show_hidden_entities(true);
 
 	$result = false;
 	$entity = get_entity($guid);
@@ -707,7 +707,7 @@ function elgg_enable_entity($guid, $recursive = true) {
 		$result = $entity->enable($recursive);
 	}
 
-	access_show_hidden_entities($old_access_status);
+	_elgg_access_show_hidden_entities($old_access_status);
 	return $result;
 }
 
@@ -804,7 +804,7 @@ function elgg_get_entities(array $options = array()) {
 		'wheres'				=>	array(),
 		'joins'					=>	array(),
 
-		'callback'				=> 'entity_row_to_elggstar',
+		'callback'				=> '_elgg_entity_row_to_elggstar',
 	);
 
 	$options = array_merge($defaults, $options);
@@ -899,7 +899,7 @@ function elgg_get_entities(array $options = array()) {
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix('e');
+	$query .= _elgg_get_access_sql_suffix('e');
 
 	// reverse order by
 	if ($options['reverse_order_by']) {
@@ -921,7 +921,7 @@ function elgg_get_entities(array $options = array()) {
 			$query .= " LIMIT $offset, $limit";
 		}
 
-		if ($options['callback'] === 'entity_row_to_elggstar') {
+		if ($options['callback'] === '_elgg_entity_row_to_elggstar') {
 			$dt = _elgg_fetch_entities_from_sql($query);
 		} else {
 			$dt = get_data($query, $options['callback']);
@@ -966,7 +966,7 @@ function elgg_get_entities(array $options = array()) {
 function _elgg_fetch_entities_from_sql($sql) {
 	static $plugin_subtype;
 	if (null === $plugin_subtype) {
-		$plugin_subtype = get_subtype_id('object', 'plugin');
+		$plugin_subtype = _elgg_get_subtype_id('object', 'plugin');
 	}
 
 	// Keys are types, values are columns that, if present, suggest that the secondary
@@ -1037,7 +1037,7 @@ function _elgg_fetch_entities_from_sql($sql) {
 			continue;
 		} else {
 			try {
-				$rows[$i] = entity_row_to_elggstar($row);
+				$rows[$i] = _elgg_entity_row_to_elggstar($row);
 			} catch (IncompleteEntityException $e) {
 				// don't let incomplete entities throw fatal errors
 				unset($rows[$i]);
@@ -1125,7 +1125,7 @@ function _elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pai
 						// this handles ELGG_ENTITIES_ANY_VALUE, '', and anything falsy that isn't 0
 						continue;
 					} else {
-						$subtype_id = get_subtype_id($type, $subtype);
+						$subtype_id = _elgg_get_subtype_id($type, $subtype);
 						
 						if ($subtype_id) {
 							$subtype_ids[] = $subtype_id;
@@ -1180,7 +1180,7 @@ function _elgg_get_entity_type_subtype_where_sql($table, $types, $subtypes, $pai
 				$paired_subtype_ids = array();
 				foreach ($paired_subtypes as $paired_subtype) {
 					if (ELGG_ENTITIES_NO_VALUE === $paired_subtype
-					|| ($paired_subtype_id = get_subtype_id($paired_type, $paired_subtype))) {
+					|| ($paired_subtype_id = _elgg_get_subtype_id($paired_type, $paired_subtype))) {
 
 						$paired_subtype_ids[] = (ELGG_ENTITIES_NO_VALUE === $paired_subtype) ?
 							ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
@@ -1329,10 +1329,10 @@ $time_created_lower = null, $time_updated_upper = null, $time_updated_lower = nu
  * @return string
  * @since 1.7
  * @see elgg_get_entities()
- * @see elgg_view_entity_list()
+ * @see _elgg_view_entity_list()
  */
 function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entities',
-	$viewer = 'elgg_view_entity_list') {
+	$viewer = '_elgg_view_entity_list') {
 
 	global $autofeed;
 	$autofeed = true;
@@ -1405,7 +1405,7 @@ $order_by = 'time_created') {
 				foreach ($subtypearray as $subtypeval) {
 					$typekey = sanitise_string($typekey);
 					if (!empty($subtypeval)) {
-						if (!$subtypeval = (int) get_subtype_id($typekey, $subtypeval)) {
+						if (!$subtypeval = (int) _elgg_get_subtype_id($typekey, $subtypeval)) {
 							return false;
 						}
 					} else {
@@ -1423,7 +1423,7 @@ $order_by = 'time_created') {
 		}
 	} else {
 		if ($subtype) {
-			if (!$subtype_id = get_subtype_id($type, $subtype)) {
+			if (!$subtype_id = _elgg_get_subtype_id($type, $subtype)) {
 				return false;
 			} else {
 				$where[] = "subtype=$subtype_id";
@@ -1447,7 +1447,7 @@ $order_by = 'time_created') {
 		$where[] = "site_guid = {$site_guid}";
 	}
 
-	$where[] = get_access_sql_suffix();
+	$where[] = _elgg_get_access_sql_suffix();
 
 	$sql = "SELECT DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(time_created)) AS yearmonth
 		FROM {$CONFIG->dbprefix}entities where ";
@@ -1606,7 +1606,7 @@ function is_registered_entity_type($type, $subtype = null) {
 /**
  * Returns a viewable list of entities based on the registered types.
  *
- * @see elgg_view_entity_list
+ * @see _elgg_view_entity_list
  *
  * @param array $options Any elgg_get_entity() options plus:
  *
@@ -1671,7 +1671,7 @@ function elgg_list_registered_entities(array $options = array()) {
 	}
 
 	$options['count'] = $count;
-	return elgg_view_entity_list($entities, $options);
+	return _elgg_view_entity_list($entities, $options);
 }
 
 /**
@@ -1719,7 +1719,7 @@ function elgg_instanceof($entity, $type = null, $subtype = null, $class = null) 
  * @return bool
  * @access private
  */
-function update_entity_last_action($guid, $posted = null) {
+function _elgg_update_entity_last_action($guid, $posted = null) {
 	global $CONFIG;
 	$guid = (int)$guid;
 	$posted = (int)$posted;

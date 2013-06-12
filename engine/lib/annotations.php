@@ -15,7 +15,7 @@
  * @return ElggAnnotation
  * @access private
  */
-function row_to_elggannotation($row) {
+function _elgg_row_to_elggannotation($row) {
 	if (!($row instanceof stdClass)) {
 		// @todo should throw in this case?
 		return $row;
@@ -238,7 +238,7 @@ function elgg_delete_annotations(array $options) {
 	}
 
 	$options['metastring_type'] = 'annotations';
-	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_delete_callback', false);
+	return _elgg_batch_metastring_based_objects($options, '_elgg_batch_delete_callback', false);
 }
 
 /**
@@ -256,7 +256,7 @@ function elgg_disable_annotations(array $options) {
 	}
 
 	$options['metastring_type'] = 'annotations';
-	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
+	return _elgg_batch_metastring_based_objects($options, '_elgg_batch_disable_callback', false);
 }
 
 /**
@@ -265,7 +265,7 @@ function elgg_disable_annotations(array $options) {
  * @warning Unlike elgg_get_annotations() this will not accept an empty options array!
  *
  * @warning In order to enable annotations, you must first use
- * {@link access_show_hidden_entities()}.
+ * {@link _elgg_access_show_hidden_entities()}.
  *
  * @param array $options An options array. {@See elgg_get_annotations()}
  * @return bool|null true on success, false on failure, null if no metadata enabled.
@@ -277,7 +277,7 @@ function elgg_enable_annotations(array $options) {
 	}
 
 	$options['metastring_type'] = 'annotations';
-	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
+	return _elgg_batch_metastring_based_objects($options, '_elgg_batch_enable_callback');
 }
 
 /**
@@ -298,7 +298,7 @@ function elgg_list_annotations($options) {
 
 	$options = array_merge($defaults, $options);
 
-	return elgg_list_entities($options, 'elgg_get_annotations', 'elgg_view_annotation_list');
+	return elgg_list_entities($options, 'elgg_get_annotations', '_elgg_view_annotation_list');
 }
 
 /**
@@ -444,7 +444,7 @@ function elgg_get_entities_from_annotation_calculation($options) {
 	// don't need access control because it's taken care of by elgg_get_annotations.
 	$options['group_by'] = 'n_table.entity_guid';
 
-	$options['callback'] = 'entity_row_to_elggstar';
+	$options['callback'] = '_elgg_entity_row_to_elggstar';
 
 	// see #4393
 	// @todo remove after the 'count' shortcut is removed from elgg_get_annotations()
@@ -552,7 +552,7 @@ function _elgg_set_comment_url($hook, $type, $url, $params) {
  * @return array
  * @access private
  */
-function annotations_test($hook, $type, $value, $params) {
+function _elgg_annotations_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAnnotationAPITest.php';
 	return $value;
@@ -562,9 +562,9 @@ function annotations_test($hook, $type, $value, $params) {
  * Initialize the annotation library
  * @access private
  */
-function elgg_annotations_init() {
+function _elgg_annotations_init() {
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', '_elgg_set_comment_url');
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'annotations_test');
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_annotations_test');
 }
 
-elgg_register_event_handler('init', 'system', 'elgg_annotations_init');
+elgg_register_event_handler('init', 'system', '_elgg_annotations_init');

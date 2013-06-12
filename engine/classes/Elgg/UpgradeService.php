@@ -33,7 +33,7 @@ class Elgg_UpgradeService {
 
 		// disable the system log for upgrades to avoid exceptions when the schema changes.
 		elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
-		elgg_unregister_event_handler('all', 'all', 'system_log_listener');
+		elgg_unregister_event_handler('all', 'all', '_elgg_system_log_listener');
 
 		// turn off time limit
 		set_time_limit(0);
@@ -116,7 +116,7 @@ class Elgg_UpgradeService {
 				// don't set the version to a lower number in instances where an upgrade
 				// has been merged from a lower version of Elgg
 				if ($upgrade_version > $version) {
-					datalist_set('version', $upgrade_version);
+					_elgg_datalist_set('version', $upgrade_version);
 				}
 
 				$this->setProcessedUpgrades($processed_upgrades);
@@ -137,7 +137,7 @@ class Elgg_UpgradeService {
 	 */
 	protected function setProcessedUpgrades(array $processed_upgrades) {
 		$processed_upgrades = array_unique($processed_upgrades);
-		return datalist_set('processed_upgrades', serialize($processed_upgrades));
+		return _elgg_datalist_set('processed_upgrades', serialize($processed_upgrades));
 	}
 
 	/**
@@ -146,7 +146,7 @@ class Elgg_UpgradeService {
 	 * @return mixed Array of processed upgrade filenames or false
 	 */
 	protected function getProcessedUpgrades() {
-		$upgrades = datalist_get('processed_upgrades');
+		$upgrades = _elgg_datalist_get('processed_upgrades');
 		$unserialized = unserialize($upgrades);
 		return $unserialized;
 	}
@@ -218,7 +218,7 @@ class Elgg_UpgradeService {
 		}
 
 		if ($processed_upgrades === null) {
-			$processed_upgrades = unserialize(datalist_get('processed_upgrades'));
+			$processed_upgrades = unserialize(_elgg_datalist_get('processed_upgrades'));
 			if (!is_array($processed_upgrades)) {
 				$processed_upgrades = array();
 			}
@@ -235,7 +235,7 @@ class Elgg_UpgradeService {
 	 */
 	protected function processUpgrades() {
 
-		$dbversion = (int) datalist_get('version');
+		$dbversion = (int) _elgg_datalist_get('version');
 
 		// No version number? Oh snap...this is an upgrade from a clean installation < 1.7.
 		// Run all upgrades without error reporting and hope for the best.
@@ -273,7 +273,7 @@ class Elgg_UpgradeService {
 	 * @return bool
 	 */
 	protected function bootstrap17to18() {
-		$db_version = (int) datalist_get('version');
+		$db_version = (int) _elgg_datalist_get('version');
 
 		// the 1.8 upgrades before the upgrade system change that are interspersed with 1.7 upgrades.
 		$upgrades_18 = array(

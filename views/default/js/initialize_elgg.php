@@ -12,7 +12,7 @@ $elgg = array(
 	'security' => array(
 		'token' => array(
 			'__elgg_ts' => $ts = time(),
-			'__elgg_token' => generate_action_token($ts),
+			'__elgg_token' => _elgg_generate_action_token($ts),
 		),
 	),
 	'session' => array(

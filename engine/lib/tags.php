@@ -184,7 +184,7 @@ function elgg_get_tags(array $options = array()) {
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix('e');
+	$query .= _elgg_get_access_sql_suffix('e');
 
 	$threshold = sanitise_int($options['threshold']);
 	$query .= " GROUP BY msv.string HAVING total >= {$threshold} ";

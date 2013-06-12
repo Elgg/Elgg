@@ -20,7 +20,7 @@ $priority = $plugin->getPriority();
 $active = $plugin->isActive();
 
 $can_activate = $plugin->canActivate();
-$max_priority = elgg_get_max_plugin_priority();
+$max_priority = _elgg_get_max_plugin_priority();
 $actions_base = '/action/admin/plugins/';
 $css_id = preg_replace('/[^a-z0-9-]/i', '-', $plugin->getID());
 

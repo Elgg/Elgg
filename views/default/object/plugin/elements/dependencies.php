@@ -24,7 +24,7 @@ echo '</tr>';
 
 $row = 'odd';
 foreach ($deps as $dep) {
-	$fields = elgg_get_plugin_dependency_strings($dep);
+	$fields = _elgg_get_plugin_dependency_strings($dep);
 	$type = $dep['type'];
 
 	if ($dep['status']) {

@@ -834,10 +834,10 @@ class ElggInstaller {
 			register_translations(dirname(dirname(__FILE__)) . "/languages/");
 
 			if ($stepIndex > $settingsIndex) {
-				$CONFIG->site_guid = (int) datalist_get('default_site');
+				$CONFIG->site_guid = (int) _elgg_datalist_get('default_site');
 				$CONFIG->site_id = $CONFIG->site_guid;
 				$CONFIG->site = get_entity($CONFIG->site_guid);
-				$CONFIG->dataroot = datalist_get('dataroot');
+				$CONFIG->dataroot = _elgg_datalist_get('dataroot');
 				_elgg_session_boot(NULL, NULL, NULL);
 			}
 
@@ -1464,25 +1464,25 @@ class ElggInstaller {
 		$CONFIG->site_id = $guid;
 		$CONFIG->site = $site;
 
-		datalist_set('installed', time());
-		datalist_set('path', $submissionVars['path']);
-		datalist_set('dataroot', $submissionVars['dataroot']);
-		datalist_set('default_site', $site->getGUID());
-		datalist_set('version', elgg_get_version());
-		datalist_set('simplecache_enabled', 1);
-		datalist_set('system_cache_enabled', 1);
-		datalist_set('simplecache_lastupdate', time());
+		_elgg_datalist_set('installed', time());
+		_elgg_datalist_set('path', $submissionVars['path']);
+		_elgg_datalist_set('dataroot', $submissionVars['dataroot']);
+		_elgg_datalist_set('default_site', $site->getGUID());
+		_elgg_datalist_set('version', elgg_get_version());
+		_elgg_datalist_set('simplecache_enabled', 1);
+		_elgg_datalist_set('system_cache_enabled', 1);
+		_elgg_datalist_set('simplecache_lastupdate', time());
 
 		// new installations have run all the upgrades
-		$upgrades = elgg_get_upgrade_files($submissionVars['path'] . 'engine/lib/upgrades/');
-		datalist_set('processed_upgrades', serialize($upgrades));
+		$upgrades = _elgg_get_upgrade_files($submissionVars['path'] . 'engine/lib/upgrades/');
+		_elgg_datalist_set('processed_upgrades', serialize($upgrades));
 
-		set_config('view', 'default', $site->getGUID());
-		set_config('language', 'en', $site->getGUID());
-		set_config('default_access', $submissionVars['siteaccess'], $site->getGUID());
-		set_config('allow_registration', TRUE, $site->getGUID());
-		set_config('walled_garden', FALSE, $site->getGUID());
-		set_config('allow_user_default_access', '', $site->getGUID());
+		_elgg_set_config('view', 'default', $site->getGUID());
+		_elgg_set_config('language', 'en', $site->getGUID());
+		_elgg_set_config('default_access', $submissionVars['siteaccess'], $site->getGUID());
+		_elgg_set_config('allow_registration', TRUE, $site->getGUID());
+		_elgg_set_config('walled_garden', FALSE, $site->getGUID());
+		_elgg_set_config('allow_user_default_access', '', $site->getGUID());
 
 		$this->setSubtypeClasses();
 
@@ -1508,8 +1508,8 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function enablePlugins() {
-		elgg_generate_plugin_entities();
-		$plugins = elgg_get_plugins('any');
+		_elgg_generate_plugin_entities();
+		$plugins = _elgg_get_plugins('any');
 		foreach ($plugins as $plugin) {
 			if ($plugin->getManifest()) {
 				if ($plugin->getManifest()->getActivateOnInstall()) {
@@ -1551,7 +1551,7 @@ class ElggInstaller {
 			return FALSE;
 		}
 
-		$minLength = get_config('min_password_length');
+		$minLength = _elgg_get_config('min_password_length');
 		if (strlen($submissionVars['password1']) < $minLength) {
 			register_error(elgg_echo('install:admin:password:tooshort'));
 			return FALSE;
@@ -1603,7 +1603,7 @@ class ElggInstaller {
 		if ($user->makeAdmin() == FALSE) {
 			register_error(elgg_echo('install:error:adminaccess'));
 		} else {
-			datalist_set('admin_registered', 1);
+			_elgg_datalist_set('admin_registered', 1);
 		}
 		elgg_set_ignore_access(false);
 

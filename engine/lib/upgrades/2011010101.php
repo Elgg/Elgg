@@ -5,12 +5,12 @@
 
 $old_ia = elgg_set_ignore_access(true);
 
-$site = get_config('site');
+$site = _elgg_get_config('site');
 $old_plugin_order = unserialize($site->pluginorder);
 $old_enabled_plugins = $site->enabled_plugins;
 
-$db_prefix = get_config('dbprefix');
-$plugin_subtype_id = get_subtype_id('object', 'plugin');
+$db_prefix = _elgg_get_config('dbprefix');
+$plugin_subtype_id = _elgg_get_subtype_id('object', 'plugin');
 
 // easy one first: make sure the the site owns all plugin entities.
 $q = "UPDATE {$db_prefix}entities e
@@ -34,16 +34,16 @@ $q = "SELECT * FROM {$db_prefix}entities e
 $plugins = get_data($q);
 
 foreach ($plugins as $plugin) {
-	$priority = elgg_namespace_plugin_private_setting('internal', 'priority');
+	$priority = _elgg_namespace_plugin_private_setting('internal', 'priority');
 	set_private_setting($plugin->guid, $priority, 0);
 }
 
 // force regenerating plugin entities
-elgg_generate_plugin_entities();
+_elgg_generate_plugin_entities();
 
 // set the priorities for all plugins
 // this function rewrites it to a normal index so use the current one.
-elgg_set_plugin_priorities($old_plugin_order);
+_elgg_set_plugin_priorities($old_plugin_order);
 
 // add relationships for enabled plugins
 if ($old_enabled_plugins) {
@@ -84,14 +84,14 @@ elgg_set_ignore_access($old_id);
  * The variables from upgrade_code() are available because this script was included
  */
 if ($upgrade_version > $version) {
-	datalist_set('version', $upgrade_version);
+	_elgg_datalist_set('version', $upgrade_version);
 }
 
 // add ourselves to the processed_upgrades.
 $processed_upgrades[] = '2011010101.php';
 
 $processed_upgrades = array_unique($processed_upgrades);
-elgg_set_processed_upgrades($processed_upgrades);
+_elgg_set_processed_upgrades($processed_upgrades);
 
 _elgg_upgrade_unlock();
 

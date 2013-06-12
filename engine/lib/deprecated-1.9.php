@@ -912,7 +912,7 @@ $timelower = 0, $timeupper = 0) {
 /**
  * Displays a list of a user's friends' objects of a particular subtype, with navigation.
  *
- * @see elgg_view_entity_list
+ * @see _elgg_view_entity_list
  *
  * @param int    $user_guid      The GUID of the user
  * @param string $subtype        The object subtype
@@ -1333,7 +1333,7 @@ $container_guid = null) {
 				foreach ($subtypearray as $subtypeval) {
 					$typekey = sanitise_string($typekey);
 					if (!empty($subtypeval)) {
-						$subtypeval = (int) get_subtype_id($typekey, $subtypeval);
+						$subtypeval = (int) _elgg_get_subtype_id($typekey, $subtypeval);
 					} else {
 						$subtypeval = 0;
 					}
@@ -1349,7 +1349,7 @@ $container_guid = null) {
 		}
 	} else {
 		$type = sanitise_string($type);
-		$subtype = get_subtype_id($type, $subtype);
+		$subtype = _elgg_get_subtype_id($type, $subtype);
 
 		if ($type != "") {
 			$where[] = "e.type='$type'";
@@ -1417,7 +1417,7 @@ $container_guid = null) {
 		$query .= " $w and ";
 	}
 
-	$query .= get_access_sql_suffix('e'); // Add access controls
+	$query .= _elgg_get_access_sql_suffix('e'); // Add access controls
 
 	if (!$count) {
 		$query .= " order by n.calendar_start $order_by";
@@ -1425,7 +1425,7 @@ $container_guid = null) {
 		if ($limit) {
 			$query .= " limit $offset, $limit";
 		}
-		$dt = get_data($query, "entity_row_to_elggstar");
+		$dt = get_data($query, "_elgg_entity_row_to_elggstar");
 
 		return $dt;
 	} else {
@@ -1467,7 +1467,7 @@ $site_guid = 0, $count = false) {
 	$start_time = (int)$start_time;
 	$end_time = (int)$end_time;
 	$entity_type = sanitise_string($entity_type);
-	$entity_subtype = get_subtype_id($entity_type, $entity_subtype);
+	$entity_subtype = _elgg_get_subtype_id($entity_type, $entity_subtype);
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 	if ($order_by == "") {
@@ -1487,7 +1487,7 @@ $site_guid = 0, $count = false) {
 		$site_guid = $CONFIG->site_guid;
 	}
 
-	//$access = get_access_list();
+	//$access = _elgg_get_access_list();
 
 	$where = array();
 
@@ -1547,13 +1547,13 @@ $site_guid = 0, $count = false) {
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix("e");
-	$query .= ' and ' . get_access_sql_suffix("m");
+	$query .= _elgg_get_access_sql_suffix("e");
+	$query .= ' and ' . _elgg_get_access_sql_suffix("m");
 
 	if (!$count) {
 		// Add order and limit
 		$query .= " order by $order_by limit $offset, $limit";
-		return get_data($query, "entity_row_to_elggstar");
+		return get_data($query, "_elgg_entity_row_to_elggstar");
 	} else {
 		if ($row = get_data_row($query)) {
 			return $row->total;
@@ -1599,7 +1599,7 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
 	$relationship_guid = (int)$relationship_guid;
 	$inverse_relationship = (bool)$inverse_relationship;
 	$type = sanitise_string($type);
-	$subtype = get_subtype_id($type, $subtype);
+	$subtype = _elgg_get_subtype_id($type, $subtype);
 	$owner_guid = (int)$owner_guid;
 	if ($order_by == "") {
 		$order_by = "time_created desc";
@@ -1612,7 +1612,7 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
 		$site_guid = $CONFIG->site_guid;
 	}
 
-	//$access = get_access_list();
+	//$access = _elgg_get_access_list();
 
 	$where = array();
 
@@ -1669,10 +1669,10 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
 		$query .= " $w and ";
 	}
 	// Add access controls
-	$query .= get_access_sql_suffix("e");
+	$query .= _elgg_get_access_sql_suffix("e");
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
-		return get_data($query, "entity_row_to_elggstar");
+		return get_data($query, "_elgg_entity_row_to_elggstar");
 	} else {
 		if ($count = get_data_row($query)) {
 			return $count->total;
@@ -1776,7 +1776,7 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
 /**
  * Returns a viewable list of entities for a given time period.
  *
- * @see elgg_view_entity_list
+ * @see _elgg_view_entity_list
  *
  * @param int     $start_time     The start time as a unix timestamp.
  * @param int     $end_time       The end time as a unix timestamp.
@@ -1803,7 +1803,7 @@ $limit = 10, $fullview = true, $listtypetoggle = false, $navigation = true) {
 	$entities = get_notable_entities($start_time, $end_time, $type, $subtype,
 		$owner_guid, "", $limit, $offset);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit,
+	return _elgg_view_entity_list($entities, $count, $offset, $limit,
 		$fullview, $listtypetoggle, $navigation);
 }
 
@@ -2053,7 +2053,7 @@ function delete_entity($guid, $recursive = true) {
  * Enable an entity.
  *
  * @warning In order to enable an entity using ElggEntity::enable(),
- * you must first use {@link access_show_hidden_entities()}.
+ * you must first use {@link _elgg_access_show_hidden_entities()}.
  *
  * @param int  $guid      GUID of entity to enable
  * @param bool $recursive Recursively enable all entities disabled with the entity?
@@ -2067,15 +2067,15 @@ function enable_entity($guid, $recursive = true) {
 	$guid = (int)$guid;
 
 	// Override access only visible entities
-	$old_access_status = access_get_show_hidden_status();
-	access_show_hidden_entities(true);
+	$old_access_status = _elgg_access_get_show_hidden_status();
+	_elgg_access_show_hidden_entities(true);
 
 	$result = false;
 	if ($entity = get_entity($guid)) {
 		$result = $entity->enable($recursive);
 	}
 
-	access_show_hidden_entities($old_access_status);
+	_elgg_access_show_hidden_entities($old_access_status);
 	return $result;
 }
 
@@ -2112,14 +2112,14 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
  * Entities are disabled by setting disabled = yes in the
  * entities table.
  *
- * You can ignore the disabled field by using {@link access_show_hidden_entities()}.
+ * You can ignore the disabled field by using {@link _elgg_access_show_hidden_entities()}.
  *
  * @param int    $guid      The guid
  * @param string $reason    Optional reason
  * @param bool   $recursive Recursively disable all entities owned or contained by $guid?
  *
  * @return bool
- * @see access_show_hidden_entities()
+ * @see _elgg_access_show_hidden_entities()
  * @access private
  * @deprecated 1.9 Use ElggEntity::disable instead.
  */
@@ -2295,7 +2295,7 @@ function create_site_entity($guid, $name, $description, $url) {
 	$description = sanitise_string($description);
 	$url = sanitise_string($url);
 
-	$row = get_entity_as_row($guid);
+	$row = _elgg_get_entity_as_row($guid);
 
 	if ($row) {
 		// Exists and you have access to it
@@ -2356,7 +2356,7 @@ function create_group_entity($guid, $name, $description) {
 	$name = sanitise_string($name);
 	$description = sanitise_string($description);
 
-	$row = get_entity_as_row($guid);
+	$row = _elgg_get_entity_as_row($guid);
 
 	if ($row) {
 		// Exists and you have access to it
@@ -2424,7 +2424,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 	$language = sanitise_string($language);
 	$code = sanitise_string($code);
 
-	$row = get_entity_as_row($guid);
+	$row = _elgg_get_entity_as_row($guid);
 	if ($row) {
 		// Exists and you have access to it
 		$query = "SELECT guid from {$CONFIG->dbprefix}users_entity where guid = {$guid}";
@@ -2485,7 +2485,7 @@ function create_object_entity($guid, $title, $description) {
 	$title = sanitise_string($title);
 	$description = sanitise_string($description);
 
-	$row = get_entity_as_row($guid);
+	$row = _elgg_get_entity_as_row($guid);
 
 	if ($row) {
 		// Core entities row exists and we have access to it
@@ -2591,7 +2591,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 
 	if (!$tmp) {
 		// Construct new class with owner from session
-		$classname = get_subtype_class($class, $subclass);
+		$classname = _elgg_get_subtype_class($class, $subclass);
 		if ($classname) {
 			if (class_exists($classname)) {
 				$tmp = new $classname();

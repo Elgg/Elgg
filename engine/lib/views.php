@@ -817,7 +817,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
  * @return string The rendered list of entities
  * @access private
  */
-function elgg_view_entity_list($entities, $vars = array(), $offset = 0, $limit = 10, $full_view = true,
+function _elgg_view_entity_list($entities, $vars = array(), $offset = 0, $limit = 10, $full_view = true,
 $list_type_toggle = true, $pagination = true) {
 
 	if (!is_int($offset)) {
@@ -847,7 +847,7 @@ $list_type_toggle = true, $pagination = true) {
 
 	} else {
 		// old function parameters
-		elgg_deprecated_notice("Please update your use of elgg_view_entity_list()", 1.8);
+		elgg_deprecated_notice("Please update your use of _elgg_view_entity_list()", 1.8);
 
 		$vars = array(
 			'items' => $entities,
@@ -886,7 +886,7 @@ $list_type_toggle = true, $pagination = true) {
  * @return string The list of annotations
  * @access private
  */
-function elgg_view_annotation_list($annotations, array $vars = array()) {
+function _elgg_view_annotation_list($annotations, array $vars = array()) {
 	$defaults = array(
 		'items' => $annotations,
 		'list_class' => 'elgg-list-annotation elgg-annotation-list', // @todo remove elgg-annotation-list in Elgg 1.9
@@ -1177,7 +1177,7 @@ function elgg_view_tagcloud(array $options = array()) {
  * @since 1.8.0
  * @access private
  */
-function elgg_view_list_item($item, array $vars = array()) {
+function _elgg_view_list_item($item, array $vars = array()) {
 	global $CONFIG;
 
 	$type = $item->getType();
@@ -1245,7 +1245,7 @@ function elgg_view_widgets_column($user, $context, $column, $show_access = true)
  * @todo Move to the friends/collection.php page.
  * @access private
  */
-function elgg_view_access_collections($owner_guid) {
+function _elgg_view_access_collections($owner_guid) {
 	if ($collections = get_user_access_collections($owner_guid)) {
 		$user = get_user($owner_guid);
 		if ($user) {
@@ -1310,7 +1310,7 @@ function set_template_handler($function_name) {
  * @see elgg_set_view_location()
  * @access private
  */
-function autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
+function _elgg_autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
 	return _elgg_services()->views->autoregisterViews($view_base, $folder, $base_location_path, $viewtype);
 }
 
@@ -1351,7 +1351,7 @@ function _elgg_views_minify($hook, $type, $content, $params) {
  * @return void
  * @access private
  */
-function elgg_views_add_rss_link() {
+function _elgg_views_add_rss_link() {
 	global $autofeed;
 	if (isset($autofeed) && $autofeed == true) {
 		$url = full_url();
@@ -1377,7 +1377,7 @@ function elgg_views_add_rss_link() {
  *
  * @access private
  */
-function elgg_views_handle_deprecated_views() {
+function _elgg_views_handle_deprecated_views() {
 	$location = elgg_get_view_location('page_elements/contentwrapper');
 	if ($location === "/var/www/views/") {
 		elgg_extend_view('page_elements/contentwrapper', 'page/elements/wrapper');
@@ -1392,7 +1392,7 @@ function elgg_views_handle_deprecated_views() {
  * @access private
  * @elgg_event_handler boot system
  */
-function elgg_views_boot() {
+function _elgg_views_boot() {
 	global $CONFIG;
 
 	elgg_register_simplecache_view('css/ie');
@@ -1439,7 +1439,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 
-	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
+	elgg_register_plugin_hook_handler('output:before', 'layout', '_elgg_views_add_rss_link');
 
 	// discover the core viewtypes
 	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
@@ -1465,5 +1465,5 @@ function elgg_views_boot() {
 	}
 }
 
-elgg_register_event_handler('boot', 'system', 'elgg_views_boot');
-elgg_register_event_handler('init', 'system', 'elgg_views_handle_deprecated_views');
+elgg_register_event_handler('boot', 'system', '_elgg_views_boot');
+elgg_register_event_handler('init', 'system', '_elgg_views_handle_deprecated_views');

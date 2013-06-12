@@ -216,7 +216,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$this->assertFalse(get_entity($guid1));
 		$this->assertFalse(get_entity($guid2));
 
-		$db_prefix = get_config('dbprefix');
+		$db_prefix = _elgg_get_config('dbprefix');
 		$q = "SELECT * FROM {$db_prefix}entities WHERE guid = $guid1";
 		$r = get_data_row($q);
 		$this->assertEqual('no', $r->enabled);
@@ -225,10 +225,10 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$r = get_data_row($q);
 		$this->assertEqual('no', $r->enabled);
 
-		access_show_hidden_entities(true);
+		_elgg_access_show_hidden_entities(true);
 		$e1->delete();
 		$e2->delete();
-		access_show_hidden_entities(false);
+		_elgg_access_show_hidden_entities(false);
 	}
 
 	public function testElggRecursiveDelete() {

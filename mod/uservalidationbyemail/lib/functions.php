@@ -18,7 +18,7 @@ function uservalidationbyemail_generate_code($user_guid, $email_address) {
 	$site_url = elgg_get_site_url();
 
 	// Note I bind to site URL, this is important on multisite!
-	return md5($user_guid . $email_address . $site_url . get_site_secret());
+	return md5($user_guid . $email_address . $site_url . _elgg_get_site_secret());
 }
 
 /**

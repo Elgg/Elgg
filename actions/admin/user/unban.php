@@ -6,8 +6,8 @@
  * @subpackage Administration.User
  */
 
-$access_status = access_get_show_hidden_status();
-access_show_hidden_entities(true);
+$access_status = _elgg_access_get_show_hidden_status();
+_elgg_access_show_hidden_entities(true);
 
 $guid = get_input('guid');
 $user = get_entity($guid);
@@ -22,6 +22,6 @@ if (($user instanceof ElggUser) && ($user->canEdit())) {
 	register_error(elgg_echo('admin:user:unban:no'));
 }
 
-access_show_hidden_entities($access_status);
+_elgg_access_show_hidden_entities($access_status);
 
 forward(REFERER);

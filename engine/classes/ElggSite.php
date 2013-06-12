@@ -103,7 +103,7 @@ class ElggSite extends ElggEntity {
 	protected function load($guid) {
 		$attr_loader = new Elgg_AttributeLoader(get_class(), 'site', $this->attributes);
 		$attr_loader->requires_access_control = !($this instanceof ElggPlugin);
-		$attr_loader->secondary_loader = 'get_site_entity_as_row';
+		$attr_loader->secondary_loader = '_elgg_get_site_entity_as_row';
 
 		$attrs = $attr_loader->getRequiredAttributes($guid);
 		if (!$attrs) {

@@ -92,7 +92,7 @@ function elgg_load_system_cache($type) {
 function elgg_enable_system_cache() {
 	global $CONFIG;
 
-	datalist_set('system_cache_enabled', 1);
+	_elgg_datalist_set('system_cache_enabled', 1);
 	$CONFIG->system_cache_enabled = 1;
 	elgg_reset_system_cache();
 }
@@ -108,7 +108,7 @@ function elgg_enable_system_cache() {
 function elgg_disable_system_cache() {
 	global $CONFIG;
 
-	datalist_set('system_cache_enabled', 0);
+	_elgg_datalist_set('system_cache_enabled', 0);
 	$CONFIG->system_cache_enabled = 0;
 	elgg_reset_system_cache();
 }
@@ -221,7 +221,7 @@ function elgg_is_simplecache_enabled() {
  * @since 1.8.0
  */
 function elgg_enable_simplecache() {
-	datalist_set('simplecache_enabled', 1);
+	_elgg_datalist_set('simplecache_enabled', 1);
 	elgg_set_config('simplecache_enabled', 1);
 	elgg_invalidate_simplecache();
 }
@@ -237,7 +237,7 @@ function elgg_enable_simplecache() {
  */
 function elgg_disable_simplecache() {
 	if (elgg_get_config('simplecache_enabled')) {
-		datalist_set('simplecache_enabled', 0);
+		_elgg_datalist_set('simplecache_enabled', 0);
 		elgg_set_config('simplecache_enabled', 0);
 
 		// purge simple cache
@@ -284,7 +284,7 @@ function elgg_invalidate_simplecache() {
 	mkdir("{$CONFIG->dataroot}views_simplecache");
 
 	$time = time();
-	datalist_set("simplecache_lastupdate", $time);
+	_elgg_datalist_set("simplecache_lastupdate", $time);
 	$CONFIG->lastcache = $time;
 
 	return true;
@@ -327,7 +327,7 @@ function _elgg_cache_init() {
 	global $CONFIG;
 
 	if (!defined('UPGRADING') && empty($CONFIG->lastcache)) {
-		$CONFIG->lastcache = datalist_get('simplecache_lastupdate');
+		$CONFIG->lastcache = _elgg_datalist_get('simplecache_lastupdate');
 	}
 
 	// cache system data if enabled and not loaded

@@ -45,7 +45,7 @@ function _elgg_get_access_cache() {
  * @return string A list of access collections suitable for using in an SQL call
  * @access private
  */
-function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
+function _elgg_get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 	global $CONFIG, $init_finished;
 	$cache = _elgg_get_access_cache();
 	
@@ -63,7 +63,7 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 	$user_id = (int) $user_id;
 	$site_id = (int) $site_id;
 
-	$hash = $user_id . $site_id . 'get_access_list';
+	$hash = $user_id . $site_id . '_elgg_get_access_list';
 
 	if ($cache[$hash]) {
 		return $cache[$hash];
@@ -90,7 +90,7 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
  *
  * @internal this is only used in core for creating the SQL where clause when
  * retrieving content from the database. The friends access level is handled by
- * get_access_sql_suffix().
+ * _elgg_get_access_sql_suffix().
  *
  * @see get_write_access_array() for the access levels that a user can write to.
  *
@@ -231,7 +231,7 @@ $ENTITY_SHOW_HIDDEN_OVERRIDE = false;
  * @return bool
  * @access private
  */
-function access_show_hidden_entities($show_hidden) {
+function _elgg_access_show_hidden_entities($show_hidden) {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
 	$current_value = $ENTITY_SHOW_HIDDEN_OVERRIDE;
 	$ENTITY_SHOW_HIDDEN_OVERRIDE = $show_hidden;
@@ -244,7 +244,7 @@ function access_show_hidden_entities($show_hidden) {
  * @return bool
  * @access private
  */
-function access_get_show_hidden_status() {
+function _elgg_access_get_show_hidden_status() {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE;
 	return $ENTITY_SHOW_HIDDEN_OVERRIDE;
 }
@@ -253,7 +253,7 @@ function access_get_show_hidden_status() {
  * Returns the SQL where clause for a table with a access_id and enabled columns.
  *
  * This handles returning where clauses for ACCESS_FRIENDS and the currently
- * unused block and filter lists in addition to using get_access_list() for
+ * unused block and filter lists in addition to using _elgg_get_access_list() for
  * access collections and the standard access levels.
  *
  * @param string $table_prefix Optional table. prefix for the access code.
@@ -262,7 +262,7 @@ function access_get_show_hidden_status() {
  * @return string The SQL for a where clause
  * @access private
  */
-function get_access_sql_suffix($table_prefix = '', $owner = null) {
+function _elgg_get_access_sql_suffix($table_prefix = '', $owner = null) {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE, $CONFIG;
 
 	$sql = "";
@@ -282,7 +282,7 @@ function get_access_sql_suffix($table_prefix = '', $owner = null) {
 	}
 
 	$ignore_access = elgg_check_access_overrides($owner);
-	$access = get_access_list($owner);
+	$access = _elgg_get_access_list($owner);
 
 	if ($ignore_access) {
 		$sql = " (1 = 1) ";
@@ -301,10 +301,10 @@ function get_access_sql_suffix($table_prefix = '', $owner = null) {
 			// check to see if the user is in the entity owner's block list
 			// or if the entity owner is in the user's filter list
 			// if so, disallow access
-			$enemies_bit = get_access_restriction_sql('elgg_block_list', "{$table_prefix}owner_guid", $owner, false);
+			$enemies_bit = _elgg_get_access_restriction_sql('elgg_block_list', "{$table_prefix}owner_guid", $owner, false);
 			$enemies_bit = '('
 				. $enemies_bit
-				. '	AND ' . get_access_restriction_sql('elgg_filter_list', $owner, "{$table_prefix}owner_guid", false)
+				. '	AND ' . _elgg_get_access_restriction_sql('elgg_filter_list', $owner, "{$table_prefix}owner_guid", false)
 			. ')';
 		}
 	}
@@ -347,7 +347,7 @@ function get_access_sql_suffix($table_prefix = '', $owner = null) {
  * @return string An SQL fragment suitable for inserting into a WHERE clause
  * @access private
  */
-function get_access_restriction_sql($annotation_name, $entity_guid, $owner_guid, $exists) {
+function _elgg_get_access_restriction_sql($annotation_name, $entity_guid, $owner_guid, $exists) {
 	global $CONFIG;
 
 	if ($exists) {
@@ -389,9 +389,9 @@ function has_access_to_entity($entity, $user = null) {
 	global $CONFIG;
 
 	if (!isset($user)) {
-		$access_bit = get_access_sql_suffix("e");
+		$access_bit = _elgg_get_access_sql_suffix("e");
 	} else {
-		$access_bit = get_access_sql_suffix("e", $user->getGUID());
+		$access_bit = _elgg_get_access_sql_suffix("e", $user->getGUID());
 	}
 
 	$query = "SELECT guid from {$CONFIG->dbprefix}entities e WHERE e.guid = " . $entity->getGUID();
@@ -803,7 +803,7 @@ function get_members_of_access_collection($collection, $idonly = false) {
 		$query = "SELECT e.* FROM {$CONFIG->dbprefix}access_collection_membership m"
 			. " JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.user_guid"
 			. " WHERE m.access_collection_id = {$collection}";
-		$collection_members = get_data($query, "entity_row_to_elggstar");
+		$collection_members = get_data($query, "_elgg_entity_row_to_elggstar");
 	} else {
 		$query = "SELECT e.guid FROM {$CONFIG->dbprefix}access_collection_membership m"
 			. " JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.user_guid"
@@ -907,7 +907,7 @@ function get_readable_access_level($entity_access_id) {
  * @note This clears the access cache.
  *
  * @warning This will not show disabled entities.
- * Use {@link access_show_hidden_entities()} to access disabled entities.
+ * Use {@link _elgg_access_show_hidden_entities()} to access disabled entities.
  *
  * @param bool $ignore If true, disables all access checks.
  *
@@ -918,7 +918,7 @@ function get_readable_access_level($entity_access_id) {
 function elgg_set_ignore_access($ignore = true) {
 	$cache = _elgg_get_access_cache();
 	$cache->clear();
-	$elgg_access = elgg_get_access_object();
+	$elgg_access = _elgg_get_access_object();
 	return $elgg_access->setIgnoreAccess($ignore);
 }
 
@@ -930,7 +930,7 @@ function elgg_set_ignore_access($ignore = true) {
  * @see elgg_set_ignore_access()
  */
 function elgg_get_ignore_access() {
-	return elgg_get_access_object()->getIgnoreAccess();
+	return _elgg_get_access_object()->getIgnoreAccess();
 }
 
 /**
@@ -967,7 +967,7 @@ function elgg_check_access_overrides($user_guid = 0) {
  * @since 1.7.0
  * @access private
  */
-function elgg_get_access_object() {
+function _elgg_get_access_object() {
 	static $elgg_access;
 
 	if (!$elgg_access) {
@@ -1018,7 +1018,7 @@ function access_init() {
  * @return true|null
  * @access private
  */
-function elgg_override_permissions($hook, $type, $value, $params) {
+function _elgg_override_permissions($hook, $type, $value, $params) {
 	$user = elgg_extract('user', $params);
 	if ($user) {
 		$user_guid = $user->getGUID();
@@ -1056,7 +1056,7 @@ function elgg_override_permissions($hook, $type, $value, $params) {
  *
  * @access private
  */
-function access_test($hook, $type, $value, $params) {
+function _elgg_access_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAccessCollectionsTest.php';
 	return $value;
@@ -1067,7 +1067,7 @@ function access_test($hook, $type, $value, $params) {
 elgg_register_event_handler('ready', 'system', 'access_init');
 
 // For overrided permissions
-elgg_register_plugin_hook_handler('permissions_check', 'all', 'elgg_override_permissions');
-elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_override_permissions');
+elgg_register_plugin_hook_handler('permissions_check', 'all', '_elgg_override_permissions');
+elgg_register_plugin_hook_handler('container_permissions_check', 'all', '_elgg_override_permissions');
 
-elgg_register_plugin_hook_handler('unit_test', 'system', 'access_test');
+elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_access_test');

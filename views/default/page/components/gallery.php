@@ -70,7 +70,7 @@ if ($position == 'before' || $position == 'both') {
 				$id = "item-{$item->getType()}-{$item->id}";
 			}
 			echo "<li id=\"$id\" class=\"$item_class\">";
-			echo elgg_view_list_item($item, $vars);
+			echo _elgg_view_list_item($item, $vars);
 			echo "</li>";
 		}
 	?>

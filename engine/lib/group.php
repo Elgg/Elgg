@@ -16,7 +16,7 @@
  * @return array|false
  * @access private
  */
-function get_group_entity_as_row($guid) {
+function _elgg_get_group_entity_as_row($guid) {
 	global $CONFIG;
 
 	$guid = (int)$guid;

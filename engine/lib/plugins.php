@@ -57,7 +57,7 @@ define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
  * @since 1.8.0
  * @access private
  */
-function elgg_get_plugin_ids_in_dir($dir = null) {
+function _elgg_get_plugin_ids_in_dir($dir = null) {
 	if (!$dir) {
 		$dir = elgg_get_plugins_path();
 	}
@@ -90,9 +90,9 @@ function elgg_get_plugin_ids_in_dir($dir = null) {
  * @since 1.8.0
  * @access private
  */
-function elgg_generate_plugin_entities() {
+function _elgg_generate_plugin_entities() {
 	// @todo $site unused, can remove?
-	$site = get_config('site');
+	$site = _elgg_get_config('site');
 
 	$dir = elgg_get_plugins_path();
 	$db_prefix = elgg_get_config('dbprefix');
@@ -106,8 +106,8 @@ function elgg_generate_plugin_entities() {
 	);
 
 	$old_ia = elgg_set_ignore_access(true);
-	$old_access = access_get_show_hidden_status();
-	access_show_hidden_entities(true);
+	$old_access = _elgg_access_get_show_hidden_status();
+	_elgg_access_show_hidden_entities(true);
 	$known_plugins = elgg_get_entities_from_relationship($options);
 	/* @var ElggPlugin[] $known_plugins */
 
@@ -128,7 +128,7 @@ function elgg_generate_plugin_entities() {
 		$id_map[$plugin->getID()] = $i;
 	}
 
-	$physical_plugins = elgg_get_plugin_ids_in_dir($dir);
+	$physical_plugins = _elgg_get_plugin_ids_in_dir($dir);
 
 	if (!$physical_plugins) {
 		return false;
@@ -165,15 +165,15 @@ function elgg_generate_plugin_entities() {
 			$plugin->deactivate();
 		}
 		// remove the priority.
-		$name = elgg_namespace_plugin_private_setting('internal', 'priority');
+		$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
 		remove_private_setting($plugin->guid, $name);
 		$plugin->disable();
 	}
 
-	access_show_hidden_entities($old_access);
+	_elgg_access_show_hidden_entities($old_access);
 	elgg_set_ignore_access($old_ia);
 
-	elgg_reindex_plugin_priorities();
+	_elgg_reindex_plugin_priorities();
 
 	return true;
 }
@@ -205,7 +205,7 @@ function elgg_get_plugin_from_id($plugin_id) {
 	}
 
 	$plugin_id = sanitize_string($plugin_id);
-	$db_prefix = get_config('dbprefix');
+	$db_prefix = _elgg_get_config('dbprefix');
 
 	$options = array(
 		'type' => 'object',
@@ -249,10 +249,10 @@ function elgg_plugin_exists($id) {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_max_plugin_priority() {
-	$db_prefix = get_config('dbprefix');
-	$priority = elgg_namespace_plugin_private_setting('internal', 'priority');
-	$plugin_subtype = get_subtype_id('object', 'plugin');
+function _elgg_get_max_plugin_priority() {
+	$db_prefix = _elgg_get_config('dbprefix');
+	$priority = _elgg_namespace_plugin_private_setting('internal', 'priority');
+	$plugin_subtype = _elgg_get_subtype_id('object', 'plugin');
 
 	$q = "SELECT MAX(CAST(ps.value AS unsigned)) as max
 		FROM {$db_prefix}entities e, {$db_prefix}private_settings ps
@@ -310,7 +310,7 @@ function elgg_is_active_plugin($plugin_id, $site_guid = null) {
  * @since 1.8.0
  * @access private
  */
-function elgg_load_plugins() {
+function _elgg_load_plugins() {
 	$plugins_path = elgg_get_plugins_path();
 	$start_flags = ELGG_PLUGIN_INCLUDE_START |
 					ELGG_PLUGIN_REGISTER_VIEWS |
@@ -338,7 +338,7 @@ function elgg_load_plugins() {
 	}
 
 	$return = true;
-	$plugins = elgg_get_plugins('active');
+	$plugins = _elgg_get_plugins('active');
 	if ($plugins) {
 		foreach ($plugins as $plugin) {
 			try {
@@ -367,12 +367,12 @@ function elgg_load_plugins() {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_plugins($status = 'active', $site_guid = null) {
-	$db_prefix = get_config('dbprefix');
-	$priority = elgg_namespace_plugin_private_setting('internal', 'priority');
+function _elgg_get_plugins($status = 'active', $site_guid = null) {
+	$db_prefix = _elgg_get_config('dbprefix');
+	$priority = _elgg_namespace_plugin_private_setting('internal', 'priority');
 
 	if (!$site_guid) {
-		$site = get_config('site');
+		$site = _elgg_get_config('site');
 		$site_guid = $site->guid;
 	}
 
@@ -430,10 +430,10 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
  * @since 1.8.0
  * @access private
  */
-function elgg_set_plugin_priorities(array $order) {
-	$name = elgg_namespace_plugin_private_setting('internal', 'priority');
+function _elgg_set_plugin_priorities(array $order) {
+	$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
 
-	$plugins = elgg_get_plugins('any');
+	$plugins = _elgg_get_plugins('any');
 	if (!$plugins) {
 		return false;
 	}
@@ -486,8 +486,8 @@ function elgg_set_plugin_priorities(array $order) {
  * @since 1.8.0
  * @access private
  */
-function elgg_reindex_plugin_priorities() {
-	return elgg_set_plugin_priorities(array());
+function _elgg_reindex_plugin_priorities() {
+	return _elgg_set_plugin_priorities(array());
 }
 
 /**
@@ -500,7 +500,7 @@ function elgg_reindex_plugin_priorities() {
  * @since 1.8.0
  * @access private
  */
-function elgg_namespace_plugin_private_setting($type, $name, $id = null) {
+function _elgg_namespace_plugin_private_setting($type, $name, $id = null) {
 	switch ($type) {
 		// commented out because it breaks $plugin->$name access to variables
 		//case 'setting':
@@ -509,7 +509,7 @@ function elgg_namespace_plugin_private_setting($type, $name, $id = null) {
 
 		case 'user_setting':
 			if (!$id) {
-				$id = elgg_get_calling_plugin_id();
+				$id = _elgg_get_calling_plugin_id();
 			}
 			$name = ELGG_PLUGIN_USER_SETTING_PREFIX . "$id:$name";
 			break;
@@ -538,7 +538,7 @@ function elgg_namespace_plugin_private_setting($type, $name, $id = null) {
  *
  * @todo get rid of this
  */
-function elgg_get_calling_plugin_id($mainfilename = false) {
+function _elgg_get_calling_plugin_id($mainfilename = false) {
 	if (!$mainfilename) {
 		if ($backtrace = debug_backtrace()) {
 			foreach ($backtrace as $step) {
@@ -585,9 +585,9 @@ function elgg_get_calling_plugin_id($mainfilename = false) {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_plugins_provides($type = null, $name = null) {
+function _elgg_get_plugins_provides($type = null, $name = null) {
 	static $provides = null;
-	$active_plugins = elgg_get_plugins('active');
+	$active_plugins = _elgg_get_plugins('active');
 
 	if (!isset($provides)) {
 		$provides = array();
@@ -642,8 +642,8 @@ function elgg_get_plugins_provides($type = null, $name = null) {
  * @since 1.8.0
  * @access private
  */
-function elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
-	$provided = elgg_get_plugins_provides($type, $name);
+function _elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
+	$provided = _elgg_get_plugins_provides($type, $name);
 	if (!$provided) {
 		return array(
 			'status' => false,
@@ -678,7 +678,7 @@ function elgg_check_plugins_provides($type, $name, $version = null, $comparison 
  * @since 1.8.0
  * @access private
  */
-function elgg_get_plugin_dependency_strings($dep) {
+function _elgg_get_plugin_dependency_strings($dep) {
 	$dep_system = elgg_extract('type', $dep);
 	$info = elgg_extract('dep', $dep);
 	$type = elgg_extract('type', $info);
@@ -798,8 +798,8 @@ function elgg_get_plugin_dependency_strings($dep) {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_calling_plugin_entity() {
-	$plugin_id = elgg_get_calling_plugin_id();
+function _elgg_get_calling_plugin_entity() {
+	$plugin_id = _elgg_get_calling_plugin_id();
 
 	if ($plugin_id) {
 		return elgg_get_plugin_from_id($plugin_id);
@@ -822,7 +822,7 @@ function elgg_get_all_plugin_user_settings($user_guid = null, $plugin_id = null,
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
-		$plugin = elgg_get_calling_plugin_entity();
+		$plugin = _elgg_get_calling_plugin_entity();
 	}
 
 	if (!$plugin instanceof ElggPlugin) {
@@ -860,7 +860,7 @@ function elgg_set_plugin_user_setting($name, $value, $user_guid = null, $plugin_
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
-		$plugin = elgg_get_calling_plugin_entity();
+		$plugin = _elgg_get_calling_plugin_entity();
 	}
 
 	if (!$plugin) {
@@ -884,7 +884,7 @@ function elgg_unset_plugin_user_setting($name, $user_guid = null, $plugin_id = n
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
-		$plugin = elgg_get_calling_plugin_entity();
+		$plugin = _elgg_get_calling_plugin_entity();
 	}
 
 	if (!$plugin) {
@@ -909,7 +909,7 @@ function elgg_get_plugin_user_setting($name, $user_guid = null, $plugin_id = nul
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
-		$plugin = elgg_get_calling_plugin_entity();
+		$plugin = _elgg_get_calling_plugin_entity();
 	}
 
 	if (!$plugin) {
@@ -934,7 +934,7 @@ function elgg_set_plugin_setting($name, $value, $plugin_id = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
-		$plugin = elgg_get_calling_plugin_entity();
+		$plugin = _elgg_get_calling_plugin_entity();
 	}
 
 	if (!$plugin) {
@@ -959,7 +959,7 @@ function elgg_get_plugin_setting($name, $plugin_id = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
-		$plugin = elgg_get_calling_plugin_entity();
+		$plugin = _elgg_get_calling_plugin_entity();
 	}
 
 	if (!$plugin) {
@@ -983,7 +983,7 @@ function elgg_unset_plugin_setting($name, $plugin_id = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
-		$plugin = elgg_get_calling_plugin_entity();
+		$plugin = _elgg_get_calling_plugin_entity();
 	}
 
 	if (!$plugin) {
@@ -1006,7 +1006,7 @@ function elgg_unset_all_plugin_settings($plugin_id = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
-		$plugin = elgg_get_calling_plugin_entity();
+		$plugin = _elgg_get_calling_plugin_entity();
 	}
 
 	if (!$plugin) {
@@ -1046,7 +1046,7 @@ function elgg_unset_all_plugin_settings($plugin_id = null) {
 function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
 	// if they're passing it don't bother
 	if (!isset($options['plugin_id'])) {
-		$options['plugin_id'] = elgg_get_calling_plugin_id();
+		$options['plugin_id'] = _elgg_get_calling_plugin_id();
 	}
 
 	$singulars = array('plugin_user_setting_name', 'plugin_user_setting_value',
@@ -1080,7 +1080,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
 
 
 	$plugin_id = $options['plugin_id'];
-	$prefix = elgg_namespace_plugin_private_setting('user_setting', '', $plugin_id);
+	$prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $plugin_id);
 	$options['private_setting_name_prefix'] = $prefix;
 
 	return elgg_get_entities_from_private_settings($options);
@@ -1097,7 +1097,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
  * @return array
  * @access private
  */
-function plugins_test($hook, $type, $value, $params) {
+function _elgg_plugins_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCorePluginsAPITest.php';
 	return $value;
@@ -1110,13 +1110,13 @@ function plugins_test($hook, $type, $value, $params) {
  * @return void
  * @access private
  */
-function plugin_init() {
+function _elgg_plugin_init() {
 
 	if (elgg_is_admin_logged_in()) {
 		elgg_register_ajax_view('object/plugin/full');
 	}
 
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'plugins_test');
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_plugins_test');
 
 	elgg_register_action("plugins/settings/save", '', 'admin');
 	elgg_register_action("plugins/usersettings/save");
@@ -1131,4 +1131,4 @@ function plugin_init() {
 	elgg_register_library('elgg:markdown', elgg_get_root_path() . 'vendors/markdown/markdown.php');
 }
 
-elgg_register_event_handler('init', 'system', 'plugin_init');
+elgg_register_event_handler('init', 'system', '_elgg_plugin_init');

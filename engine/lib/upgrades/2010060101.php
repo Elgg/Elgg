@@ -9,8 +9,8 @@ $query = "DELETE FROM {$CONFIG->dbprefix}datalists WHERE name LIKE 'simplecache%
 delete_data($query);
 
 if ($CONFIG->simplecache_enabled) {
-	datalist_set('simplecache_enabled', 1);
+	_elgg_datalist_set('simplecache_enabled', 1);
 	elgg_invalidate_simplecache();
 } else {
-	datalist_set('simplecache_enabled', 0);
+	_elgg_datalist_set('simplecache_enabled', 0);
 }

@@ -189,13 +189,13 @@ function _elgg_get_metastring_based_objects($options) {
 	switch ($options['metastring_type']) {
 		case 'metadata':
 			$type = 'metadata';
-			$callback = 'row_to_elggmetadata';
+			$callback = '_elgg_row_to_elggmetadata';
 			break;
 
 		case 'annotations':
 		case 'annotation':
 			$type = 'annotations';
-			$callback = 'row_to_elggannotation';
+			$callback = '_elgg_row_to_elggannotation';
 			break;
 
 		default:
@@ -211,7 +211,7 @@ function _elgg_get_metastring_based_objects($options) {
 		'guids' => ELGG_ENTITIES_ANY_VALUE,
 		'owner_guids' => ELGG_ENTITIES_ANY_VALUE,
 		'container_guids' => ELGG_ENTITIES_ANY_VALUE,
-		'site_guids' => get_config('site_guid'),
+		'site_guids' => _elgg_get_config('site_guid'),
 
 		'modified_time_lower' => ELGG_ENTITIES_ANY_VALUE,
 		'modified_time_upper' => ELGG_ENTITIES_ANY_VALUE,
@@ -337,8 +337,8 @@ function _elgg_get_metastring_based_objects($options) {
 	// unless we're going through one of their callbacks.
 	// this means we expect the functions passing different callbacks to pass their required joins.
 	// If we're doing a calculation
-	$custom_callback = ($options['callback'] == 'row_to_elggmetadata'
-						|| $options['callback'] == 'row_to_elggannotation');
+	$custom_callback = ($options['callback'] == '_elgg_row_to_elggmetadata'
+						|| $options['callback'] == '_elgg_row_to_elggannotation');
 	$is_calculation = $options['metastring_calculation'] ? true : false;
 	
 	if ($custom_callback || $is_calculation) {
@@ -366,7 +366,7 @@ function _elgg_get_metastring_based_objects($options) {
 		$wheres = array_merge($wheres, $metastring_clauses['wheres']);
 		$joins = array_merge($joins, $metastring_clauses['joins']);
 	} else {
-		$wheres[] = get_access_sql_suffix('n_table');
+		$wheres[] = _elgg_get_access_sql_suffix('n_table');
 	}
 
 	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE && !$options['count']) {
@@ -403,7 +403,7 @@ function _elgg_get_metastring_based_objects($options) {
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix('e');
+	$query .= _elgg_get_access_sql_suffix('e');
 
 	// reverse order by
 	if (isset($options['reverse_order_by']) && $options['reverse_order_by']) {
@@ -539,7 +539,7 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		$wheres[] = $values_where;
 	}
 
-	$wheres[] = get_access_sql_suffix($table);
+	$wheres[] = _elgg_get_access_sql_suffix($table);
 
 	if ($where = implode(' AND ', $wheres)) {
 		$return['wheres'][] = "($where)";
@@ -598,7 +598,7 @@ function _elgg_normalize_metastrings_options(array $options = array()) {
  * Enables or disables a metastrings-based object by its id.
  *
  * @warning To enable disabled metastrings you must first use
- * {@link access_show_hidden_entities()}.
+ * {@link _elgg_access_show_hidden_entities()}.
  *
  * @param int    $id      The object's ID
  * @param string $enabled Value to set to: yes or no

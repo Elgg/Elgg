@@ -13,7 +13,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 	public function __construct() {
 		parent::__construct();
 
-		$this->dbPrefix = get_config("dbprefix");
+		$this->dbPrefix = _elgg_get_config("dbprefix");
 
 		$user = new ElggUser();
 		$user->username = 'test_user_' . rand();
@@ -257,7 +257,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 		$user->username = 'access_test_user';
 		$user->save();
 
-		foreach (array('get_access_list', 'get_access_array') as $func) {
+		foreach (array('_elgg_get_access_list', 'get_access_array') as $func) {
 			$cache = _elgg_get_access_cache();
 			$cache->clear();
 

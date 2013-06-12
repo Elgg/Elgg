@@ -127,7 +127,7 @@ function elgg_create_river_item(array $options = array()) {
 	// update the entities which had the action carried out on it
 	// @todo shouldn't this be done elsewhere? Like when an annotation is saved?
 	if ($id) {
-		update_entity_last_action($object_guid, $posted);
+		_elgg_update_entity_last_action($object_guid, $posted);
 		
 		$river_items = elgg_get_river(array('id' => $id));
 		if ($river_items) {
@@ -343,7 +343,7 @@ function elgg_get_river(array $options = array()) {
 	$joins = $options['joins'];
 
 	if ($options['relationship_guid']) {
-		$clauses = elgg_get_entity_relationship_where_sql(
+		$clauses = _elgg_get_entity_relationship_where_sql(
 				'rv.subject_guid',
 				$options['relationship'],
 				$options['relationship_guid'],
@@ -385,7 +385,7 @@ function elgg_get_river(array $options = array()) {
 		$query .= " $w AND ";
 	}
 
-	$query .= elgg_river_get_access_sql();
+	$query .= _elgg_river_get_access_sql();
 
 	if (!$options['count']) {
 		$options['group_by'] = sanitise_string($options['group_by']);
@@ -520,11 +520,11 @@ function _elgg_row_to_elgg_river_item($row) {
  * @since 1.8.0
  * @access private
  */
-function elgg_river_get_access_sql() {
+function _elgg_river_get_access_sql() {
 	// rewrite default access where clause to work with river table
 	return str_replace("and enabled='yes'", '',
 		str_replace('owner_guid', 'rv.subject_guid',
-		str_replace('access_id', 'rv.access_id', get_access_sql_suffix())));
+		str_replace('access_id', 'rv.access_id', _elgg_get_access_sql_suffix())));
 }
 
 /**

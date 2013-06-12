@@ -48,11 +48,11 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		access_show_hidden_entities(true);
+		_elgg_access_show_hidden_entities(true);
 		elgg_delete_annotations(array(
 			'guid' => $this->object->guid,
 		));
-		access_show_hidden_entities(false);
+		_elgg_access_show_hidden_entities(false);
 	}
 
 	/**
@@ -138,14 +138,14 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 			$this->assertEqual($test[0]->enabled, 'no');
 
 			// enable
-			$ashe = access_get_show_hidden_status();
-			access_show_hidden_entities(true);
+			$ashe = _elgg_access_get_show_hidden_status();
+			_elgg_access_show_hidden_entities(true);
 			$this->assertTrue(_elgg_set_metastring_based_object_enabled_by_id($id, 'yes', $type));
 
 			$test = get_data($q);
 			$this->assertEqual($test[0]->enabled, 'yes');
 
-			access_show_hidden_entities($ashe);
+			_elgg_access_show_hidden_entities($ashe);
 		}
 	}
 

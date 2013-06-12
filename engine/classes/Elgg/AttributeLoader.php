@@ -85,7 +85,7 @@ class Elgg_AttributeLoader {
 	/**
 	 * @var callable function used to load attributes from {prefix}entities table
 	 */
-	public $primary_loader = 'get_entity_as_row';
+	public $primary_loader = '_elgg_get_entity_as_row';
 
 	/**
 	 * @var callable function used to load attributes from secondary table
@@ -244,7 +244,7 @@ class Elgg_AttributeLoader {
 		$row = $this->filterAddedColumns($row);
 
 		// resolve subtype from int to string
-		$subtype = get_subtype_from_id($row['subtype']);
+		$subtype = _elgg_get_subtype_from_id($row['subtype']);
 		if ($subtype) {
 			$row['subtype'] = $subtype;
 		} else {

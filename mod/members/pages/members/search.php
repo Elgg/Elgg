@@ -17,7 +17,7 @@ if ($vars['search_type'] == 'tag') {
 	$results = elgg_trigger_plugin_hook('search', 'tags', $options, array());
 	$count = $results['count'];
 	$users = $results['entities'];
-	$content = elgg_view_entity_list($users, array(
+	$content = _elgg_view_entity_list($users, array(
 		'count' => $count,
 		'offset' => $offset,
 		'limit' => $limit,

@@ -94,7 +94,7 @@ function elgg_get_config($name, $site_guid = 0) {
 
 	if ($site_guid === null) {
 		// installation wide setting
-		$value = datalist_get($name);
+		$value = _elgg_datalist_get($name);
 	} else {
 		// hit DB only if we're not sure if value exists or not
 		if (!isset($CONFIG->site_config_loaded)) {
@@ -102,7 +102,7 @@ function elgg_get_config($name, $site_guid = 0) {
 			if ($site_guid == 0) {
 				$site_guid = (int) $CONFIG->site_id;
 			}
-			$value = get_config($name, $site_guid);
+			$value = _elgg_get_config($name, $site_guid);
 		} else {
 			$value = null;
 		}
@@ -162,12 +162,12 @@ function elgg_save_config($name, $value, $site_guid = 0) {
 		if (is_array($value) || is_object($value)) {
 			return false;
 		}
-		return datalist_set($name, $value);
+		return _elgg_datalist_set($name, $value);
 	} else {
 		if ($site_guid == 0) {
 			$site_guid = (int) $CONFIG->site_id;
 		}
-		return set_config($name, $value, $site_guid);
+		return _elgg_set_config($name, $value, $site_guid);
 	}
 }
 
@@ -191,7 +191,7 @@ $DATALIST_CACHE = array();
  * @return string|null|false String if value exists, null if doesn't, false on error
  * @access private
  */
-function datalist_get($name) {
+function _elgg_datalist_get($name) {
 	global $CONFIG, $DATALIST_CACHE;
 
 	$name = trim($name);
@@ -252,7 +252,7 @@ function datalist_get($name) {
  * @return bool
  * @access private
  */
-function datalist_set($name, $value) {
+function _elgg_datalist_set($name, $value) {
 	global $CONFIG, $DATALIST_CACHE;
 
 	// cannot store anything longer than 255 characters in db, so catch before we set
@@ -313,7 +313,7 @@ function datalist_set($name, $value) {
  * @return bool
  */
 function run_function_once($functionname, $timelastupdatedcheck = 0) {
-	$lastupdated = datalist_get($functionname);
+	$lastupdated = _elgg_datalist_get($functionname);
 	if ($lastupdated) {
 		$lastupdated = (int) $lastupdated;
 	} elseif ($lastupdated !== false) {
@@ -324,7 +324,7 @@ function run_function_once($functionname, $timelastupdatedcheck = 0) {
 	}
 	if (is_callable($functionname) && $lastupdated <= $timelastupdatedcheck) {
 		$functionname();
-		datalist_set($functionname, time());
+		_elgg_datalist_set($functionname, time());
 		return true;
 	} else {
 		return false;
@@ -343,8 +343,8 @@ function run_function_once($functionname, $timelastupdatedcheck = 0) {
  *
  * @return int|false The number of affected rows or false on error.
  *
- * @see get_config()
- * @see set_config()
+ * @see _elgg_get_config()
+ * @see _elgg_set_config()
  */
 function unset_config($name, $site_guid = 0) {
 	global $CONFIG;
@@ -380,10 +380,10 @@ function unset_config($name, $site_guid = 0) {
  * @todo The config table doens't have numeric primary keys so insert_data returns 0.
  * @todo Use "INSERT ... ON DUPLICATE KEY UPDATE" instead of trying to delete then add.
  * @see unset_config()
- * @see get_config()
+ * @see _elgg_get_config()
  * @access private
  */
-function set_config($name, $value, $site_guid = 0) {
+function _elgg_set_config($name, $value, $site_guid = 0) {
 	global $CONFIG;
 
 	$name = trim($name);
@@ -421,11 +421,11 @@ function set_config($name, $value, $site_guid = 0) {
  * @param int    $site_guid Optionally, the GUID of the site (current site is assumed by default)
  *
  * @return mixed|null
- * @see set_config()
+ * @see _elgg_set_config()
  * @see unset_config()
  * @access private
  */
-function get_config($name, $site_guid = 0) {
+function _elgg_get_config($name, $site_guid = 0) {
 	global $CONFIG;
 
 	$name = sanitise_string($name);
@@ -519,7 +519,7 @@ function _elgg_get_all_config($site_guid = 0) {
 function _elgg_load_site_config() {
 	global $CONFIG;
 
-	$CONFIG->site_guid = (int) datalist_get('default_site');
+	$CONFIG->site_guid = (int) _elgg_datalist_get('default_site');
 	$CONFIG->site_id = $CONFIG->site_guid;
 	$CONFIG->site = get_entity($CONFIG->site_guid);
 	if (!$CONFIG->site) {
@@ -569,21 +569,21 @@ function _elgg_load_application_config() {
 		}
 	}
 
-	$path = datalist_get('path');
+	$path = _elgg_datalist_get('path');
 	if (!empty($path)) {
 		$CONFIG->path = $path;
 	}
-	$dataroot = datalist_get('dataroot');
+	$dataroot = _elgg_datalist_get('dataroot');
 	if (!empty($dataroot)) {
 		$CONFIG->dataroot = $dataroot;
 	}
-	$simplecache_enabled = datalist_get('simplecache_enabled');
+	$simplecache_enabled = _elgg_datalist_get('simplecache_enabled');
 	if ($simplecache_enabled !== false) {
 		$CONFIG->simplecache_enabled = $simplecache_enabled;
 	} else {
 		$CONFIG->simplecache_enabled = 1;
 	}
-	$system_cache_enabled = datalist_get('system_cache_enabled');
+	$system_cache_enabled = _elgg_datalist_get('system_cache_enabled');
 	if ($system_cache_enabled !== false) {
 		$CONFIG->system_cache_enabled = $system_cache_enabled;
 	} else {
@@ -594,7 +594,7 @@ function _elgg_load_application_config() {
 	$CONFIG->context = array();
 
 	// needs to be set before system, init for links in html head
-	$CONFIG->lastcache = datalist_get("simplecache_lastupdate");
+	$CONFIG->lastcache = _elgg_datalist_get("simplecache_lastupdate");
 
 	$CONFIG->i18n_loaded_from_cache = false;
 

@@ -14,8 +14,8 @@ if (!$user_guids) {
 	forward(REFERRER);
 }
 
-$access = access_get_show_hidden_status();
-access_show_hidden_entities(TRUE);
+$access = _elgg_access_get_show_hidden_status();
+_elgg_access_show_hidden_entities(TRUE);
 
 foreach ($user_guids as $guid) {
 	$user = get_entity($guid);
@@ -32,7 +32,7 @@ foreach ($user_guids as $guid) {
 	}
 }
 
-access_show_hidden_entities($access);
+_elgg_access_show_hidden_entities($access);
 
 if (count($user_guids) == 1) {
 	$message_txt = elgg_echo('uservalidationbyemail:messages:deleted_user');

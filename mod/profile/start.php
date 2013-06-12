@@ -20,7 +20,7 @@ function profile_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'user', 'profile_set_url');
 
 	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'profile_set_icon_url');
-	elgg_unregister_plugin_hook_handler('entity:icon:url', 'user', 'user_avatar_hook');
+	elgg_unregister_plugin_hook_handler('entity:icon:url', 'user', '_elgg_user_avatar_hook');
 
 
 	elgg_register_simplecache_view('icon/user/default/tiny');

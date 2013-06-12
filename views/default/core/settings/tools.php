@@ -2,7 +2,7 @@
 /**
  * Elgg plugin specific user settings.
  *
- * @uses array $vars['installed_plugins'] An array of plugins as returned by elgg_get_plugins()
+ * @uses array $vars['installed_plugins'] An array of plugins as returned by _elgg_get_plugins()
  *
  * @package Elgg.Core
  * @subpackage Plugins.Settings
