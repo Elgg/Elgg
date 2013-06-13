@@ -1,3 +1,26 @@
+Version 1.8.16
+(June xx, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Brett Profitt
+   * Cash Costello
+   * Jeff Tilson
+   * Jerome Bakker
+   * Paweł Sroka
+   * Steve Clay
+
+  Security Fixes:
+   * 
+
+  Bugfixes:
+   * Fixed infinite loop when deleting/disabling an entity with > 50 annotations
+   * Fixed deleting log tables in log rotate plugin
+   * Added full text index for groups if missing
+   * Added workaround for IE8 and jumping user avatar
+   * Fixed pagination for members pages
+   * Fixed several internal cache issues
+   * Plus many more bug fixes
+
+
 Version 1.8.15
 (April 23, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
