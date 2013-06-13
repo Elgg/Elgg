@@ -5,7 +5,6 @@
  * @since 1.8
  */
 
-// note that this assumes the button view is not using single quotes
 $cancel_button = elgg_view('input/button', array(
 	'value' => elgg_echo('cancel'),
 	'class' => 'elgg-button-cancel mlm',
@@ -52,21 +51,12 @@ elgg.walled_garden.load = function(view) {
 
 				if (view == 'register' && $wg.hasClass('hidden')) {
 					// this was a failed register, display the register form ASAP
-					$('#elgg-walledgarden-login').toggle();
+					$('#elgg-walledgarden-login').toggle(false);
 					$(id).toggle();
 					$wg.removeClass('hidden');
 				} else {
 					$('#elgg-walledgarden-login').fadeToggle();
 					$(id).fadeToggle();
-				}
-
-				if (view == 'register') {
-					$('.elgg-form-register').submit(function () {
-						// set short cookie indicating JS support
-						var date = new Date();
-						date.setTime(date.getTime() + (60 * 1000));
-						elgg.session.cookie('elgg_js_support', '1', { expires: date });
-					});
 				}
 			}
 		});

@@ -7,7 +7,7 @@
 
 $is_sticky_register = elgg_is_sticky_form('register');
 $wg_body_class = 'elgg-body-walledgarden';
-if ($is_sticky_register && !empty($_COOKIE['elgg_js_support'])) {
+if ($is_sticky_register) {
 	$wg_body_class .= ' hidden';
 }
 
