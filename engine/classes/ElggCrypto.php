@@ -175,8 +175,7 @@ class ElggCrypto {
 	 *
 	 * @see https://github.com/zendframework/zf2/blob/master/library/Zend/Math/Rand.php#L179
 	 */
-	public static function getRandomString($length, $chars = null)
-	{
+	public static function getRandomString($length, $chars = null) {
 		if ($length < 1) {
 			throw new InvalidArgumentException('Length should be >= 1');
 		}
