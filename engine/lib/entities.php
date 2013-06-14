@@ -1357,8 +1357,12 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	$options['count'] = true;
 	$count = call_user_func($getter, $options);
 
-	$options['count'] = false;
-	$entities = call_user_func($getter, $options);
+	if ($count > 0) {
+		$options['count'] = false;
+		$entities = call_user_func($getter, $options);
+	} else {
+		$entities = array();
+	}
 
 	$options['count'] = $count;
 
@@ -1664,7 +1668,11 @@ function elgg_list_registered_entities(array $options = array()) {
 
 	if (!empty($options['type_subtype_pairs'])) {
 		$count = elgg_get_entities(array_merge(array('count' => true), $options));
-		$entities = elgg_get_entities($options);
+		if ($count > 0) {
+			$entities = elgg_get_entities($options);
+		} else {
+			$entities = array();
+		}
 	} else {
 		$count = 0;
 		$entities = array();

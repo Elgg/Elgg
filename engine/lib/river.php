@@ -487,8 +487,12 @@ function elgg_list_river(array $options = array()) {
 	$options['count'] = true;
 	$count = elgg_get_river($options);
 
-	$options['count'] = false;
-	$items = elgg_get_river($options);
+	if ($count > 0) {
+		$options['count'] = false;
+		$items = elgg_get_river($options);
+	} else {
+		$items = array();
+	}
 
 	$options['count'] = $count;
 	$options['items'] = $items;
