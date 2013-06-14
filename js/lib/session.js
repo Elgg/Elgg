@@ -14,9 +14,9 @@ elgg.provide('elgg.session');
  * 	{string} options[domain]
  * 	{boolean} options[secure]
  * 
- * @return {string} The value of the cookie, if only name is specified
+ * @return {string|undefined} The value of the cookie, if only name is specified. Undefined if no value set
  */
-elgg.session.cookie = function (name, value, options) {
+elgg.session.cookie = function(name, value, options) {
 	var cookies = [], cookie = [], i = 0, date, valid = true;
 	
 	//elgg.session.cookie()
@@ -48,17 +48,18 @@ elgg.session.cookie = function (name, value, options) {
 	
 	cookies.push(name + '=' + value);
 
-    if (elgg.isNumber(options.expires)) {
-        date = new Date();
-        date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
-    } else if (options.expires.toUTCString) {
-        date = options.expires;
-    }
+    if (options.expires) {
+        if (elgg.isNumber(options.expires)) {
+            date = new Date();
+            date.setTime(date.getTime() + (options.expires * 24 * 60 * 60 * 1000));
+        } else if (options.expires.toUTCString) {
+            date = options.expires;
+        }
 
-    if (date) {
-        cookies.push('expires=' + date.toUTCString());
+        if (date) {
+            cookies.push('expires=' + date.toUTCString());
+        }
     }
-
 	
 	// CAUTION: Needed to parenthesize options.path and options.domain
 	// in the following expressions, otherwise they evaluate to undefined
