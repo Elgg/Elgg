@@ -166,4 +166,11 @@ class ElggCoreMetadataCacheTest extends ElggCoreUnitTest {
 		$actual = $this->cache->filterMetadataHeavyEntities($guids, 6000);
 		$this->assertIdentical($actual, $expected);
 	}
+
+	public function testCreateMetadataInvalidates() {
+		$this->obj1->foo = 1;
+		create_metadata($this->guid1, 'foo', 2, '', elgg_get_logged_in_user_guid(), ACCESS_FRIENDS);
+
+		$this->assertEqual($this->obj1->foo, 2);
+	}
 }
