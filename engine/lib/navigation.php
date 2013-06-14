@@ -218,7 +218,7 @@ function elgg_push_breadcrumb($title, $link = NULL) {
 	}
 
 	// avoid key collisions.
-	$CONFIG->breadcrumbs[] = array('title' => $title, 'link' => $link);
+	$CONFIG->breadcrumbs[] = array('title' => elgg_get_excerpt($title, 100), 'link' => $link);
 }
 
 /**

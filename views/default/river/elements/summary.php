@@ -18,9 +18,10 @@ $subject_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
+$object_text = $object->title ? $object->title : $object->name;
 $object_link = elgg_view('output/url', array(
 	'href' => $object->getURL(),
-	'text' => $object->title ? $object->title : $object->name,
+	'text' => elgg_get_excerpt($object_text, 100),
 	'class' => 'elgg-river-object',
 	'is_trusted' => true,
 ));
