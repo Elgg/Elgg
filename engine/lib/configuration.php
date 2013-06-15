@@ -99,7 +99,7 @@ function elgg_get_config($name, $site_guid = 0) {
 		// hit DB only if we're not sure if value exists or not
 		if (!isset($CONFIG->site_config_loaded)) {
 			// site specific setting
-			if ($site_guid == 0) {
+			if ($site_guid == 0 && isset($CONFIG->site_id)) {
 				$site_guid = (int) $CONFIG->site_id;
 			}
 			$value = get_config($name, $site_guid);
@@ -464,7 +464,7 @@ function get_config($name, $site_guid = 0) {
 		return $CONFIG->$name;
 	}
 
-	if ($site_guid == 0) {
+	if ($site_guid == 0 && isset($CONFIG->site_id)) {
 		$site_guid = (int) $CONFIG->site_id;
 	}
 

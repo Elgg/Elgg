@@ -40,7 +40,7 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 	}
 
 	if (!$CURRENT_LANGUAGE) {
-		$CURRENT_LANGUAGE = get_language();
+		$CURRENT_LANGUAGE = get_current_language();
 	}
 	if (!$language) {
 		$language = $CURRENT_LANGUAGE;
