@@ -87,10 +87,12 @@ function elgg_front_page_handler() {
 /**
  * Serve an error page
  *
- * @todo not sending status codes yet
+ * This is registered by Elgg for the 'forward', '404' plugin hook. It can
+ * registered for other hooks by plugins or called directly to display an
+ * error page.
  *
  * @param string $hook   The name of the hook
- * @param string $type   The type of the hook
+ * @param string $type   Http error code
  * @param bool   $result The current value of the hook
  * @param array  $params Parameters related to the hook
  * @return void
