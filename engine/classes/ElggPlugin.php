@@ -947,10 +947,14 @@ class ElggPlugin extends ElggObject {
 		}
 
 		if ($active) {
-			return add_entity_relationship($this->guid, 'active_plugin', $site->guid);
+			$result = add_entity_relationship($this->guid, 'active_plugin', $site->guid);
 		} else {
-			return remove_entity_relationship($this->guid, 'active_plugin', $site->guid);
+			$result = remove_entity_relationship($this->guid, 'active_plugin', $site->guid);
 		}
+
+		_elgg_invalidate_plugins_provides_cache();
+
+		return $result;
 	}
 
 	/**
