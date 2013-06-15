@@ -594,7 +594,6 @@ three sections:
 	'admin:plugins:activate:yes' => "Activated %s.",
 	'admin:plugins:activate:no' => "Could not activate %s.",
 	'admin:plugins:activate:no_with_msg' => "Could not activate %s. Error: %s",
-	'admin:plugins:activate_all:no_with_msg' => 'Could not activate some plugins. Unresolvable dependencies between plugins: %s',
 	'admin:plugins:categories:all' => 'All categories',
 	'admin:plugins:plugin_website' => 'Plugin website',
 	'admin:plugins:author' => '%s',
