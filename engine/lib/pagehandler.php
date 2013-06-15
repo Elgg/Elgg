@@ -109,12 +109,26 @@ function elgg_error_page_handler($hook, $type, $result, $params) {
 		$content = elgg_view("errors/default", $params);
 	}
 	
+	$httpCodes = array(
+		'400' => 'Bad Request',
+		'401' => 'Unauthorized',
+		'403' => 'Forbidden',
+		'404' => 'Not Found',
+		'407' => 'Proxy Authentication Required',
+		'500' => 'Internal Server Error',
+		'503' => 'Service Unavailable',
+	);
+	
+	if (isset($httpCodes[$type])) {
+		header("HTTP/1.1 $type {$httpCodes[$type]}");
+	}
+
 	$body = elgg_view_layout('error', array(
 		'title' => $title,
 		'content' => $content
 	));
 	echo elgg_view_page($title, $body, 'error');
-	return true;
+	return false;
 }
 
 /**
