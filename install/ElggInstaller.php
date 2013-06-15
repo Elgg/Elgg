@@ -832,6 +832,7 @@ class ElggInstaller {
 
 			_elgg_services()->db->setupConnections();
 			register_translations(dirname(dirname(__FILE__)) . "/languages/");
+			$CONFIG->language = 'en';
 
 			if ($stepIndex > $settingsIndex) {
 				$CONFIG->site_guid = (int) datalist_get('default_site');
