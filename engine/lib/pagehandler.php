@@ -128,7 +128,7 @@ function elgg_error_page_handler($hook, $type, $result, $params) {
 		'content' => $content
 	));
 	echo elgg_view_page($title, $body, 'error');
-	exit;
+	return false;
 }
 
 /**
