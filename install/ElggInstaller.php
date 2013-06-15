@@ -56,7 +56,11 @@ class ElggInstaller {
 		// load ElggRewriteTester as we depend on it
 		require_once(dirname(__FILE__) . "/ElggRewriteTester.php");
 
-		$this->isAction = $_SERVER['REQUEST_METHOD'] === 'POST';
+		if (empty($_SERVER)) {
+			$this->isAction = false;
+		} else {
+			$this->isAction = $_SERVER['REQUEST_METHOD'] === 'POST';
+		}
 
 		$this->bootstrapConfig();
 
@@ -845,6 +849,9 @@ class ElggInstaller {
 	 * @return string
 	 */
 	protected function getBaseUrl() {
+		if (empty($_SERVER)) {
+			return "";
+		}
 		$protocol = 'http';
 		if (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
 			$protocol = 'https';

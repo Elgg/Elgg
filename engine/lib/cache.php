@@ -206,7 +206,7 @@ function elgg_register_simplecache_view($viewname) {
  */
 function elgg_get_simplecache_url($type, $view) {
 	global $CONFIG;
-	$lastcache = (int)$CONFIG->lastcache;
+	$lastcache = isset($CONFIG->lastcache) ? (int)$CONFIG->lastcache : 0;
 	$viewtype = elgg_get_viewtype();
 	elgg_register_simplecache_view("$type/$view");// see #5302
 	if (elgg_is_simplecache_enabled()) {
