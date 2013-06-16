@@ -4,6 +4,9 @@
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * Represents an HTTP request.
+ *
+ * This will likely be replaced by Symfony's Request class from HttpFoundation
+ * in the future.
  * 
  * @package    Elgg.Core
  * @subpackage Http
@@ -67,5 +70,36 @@ class Elgg_Request {
 			$this->cookies = _elgg_stripslashes_deep($this->cookies);
 			$this->server = _elgg_stripslashes_deep($this->server);
 		}
+	}
+
+	/**
+	 * Get a parameter from this request
+	 *
+	 * It is better to get parameters from the appropriate public property
+	 * (query, request).
+	 *
+	 * @param string $key     The key
+	 * @param mixed  $default The default value
+	 * @return mixed
+	 */
+	public function get($key, $default = null) {
+		if (isset($this->query[$key])) {
+			return $this->query[$key];
+		} else if (isset($this->request[$key])) {
+			return $this->request[$key];
+		} else {
+			return $default;
+		}
+	}
+
+	/**
+	 * Is this an ajax request
+	 *
+	 * @return bool
+	 */
+	public function isXmlHttpRequest() {
+		return isset($_SERVER['HTTP_X_REQUESTED_WITH'])
+			&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' ||
+			$this->get('X-Requested-With') === 'XMLHttpRequest';
 	}
 }

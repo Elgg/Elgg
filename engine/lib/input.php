@@ -40,19 +40,11 @@ function get_input($variable, $default = null, $filter_result = true) {
 		}
 	} else {
 		$request = _elgg_services()->request;
-
-		// look at POST variables first
-		if (isset($request->request[$variable])) {
-			if (is_array($request->request[$variable])) {
-				$result = $request->request[$variable];
-			} else {
-				$result = trim($request->request[$variable]);
-			}
-		} else if (isset($request->query[$variable])) {
-			if (is_array($request->query[$variable])) {
-				$result = $request->query[$variable];
-			} else {
-				$result = trim($request->query[$variable]);
+		$result = $request->get($variable);
+		if ($result !== null) {
+			if (is_string($result)) {
+				// @todo why trim
+				$result = trim($result);
 			}
 		}
 
