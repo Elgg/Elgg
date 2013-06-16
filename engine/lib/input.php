@@ -33,16 +33,27 @@ function get_input($variable, $default = null, $filter_result = true) {
 	elgg_push_context('input');
 
 	if (isset($CONFIG->input[$variable])) {
+		// a plugin has already set this variable
 		$result = $CONFIG->input[$variable];
-
 		if ($filter_result) {
 			$result = filter_tags($result);
 		}
-	} elseif (isset($_REQUEST[$variable])) {
-		if (is_array($_REQUEST[$variable])) {
-			$result = $_REQUEST[$variable];
-		} else {
-			$result = trim($_REQUEST[$variable]);
+	} else {
+		$request = _elgg_services()->request;
+
+		// look at POST variables first
+		if (isset($request->request[$variable])) {
+			if (is_array($request->request[$variable])) {
+				$result = $request->request[$variable];
+			} else {
+				$result = trim($request->request[$variable]);
+			}
+		} else if (isset($request->query[$variable])) {
+			if (is_array($request->query[$variable])) {
+				$result = $request->query[$variable];
+			} else {
+				$result = trim($request->query[$variable]);
+			}
 		}
 
 		if ($filter_result) {
@@ -515,66 +526,63 @@ function input_livesearch_page_handler($page) {
 }
 
 /**
- * Register input functions and sanitize input
+ * Strip slashes from array keys
+ *
+ * @param array $array Array of values
+ *
+ * @return array Sanitized array
+ * @access private
+ */
+function _elgg_stripslashes_arraykeys($array) {
+	if (is_array($array)) {
+		$array2 = array();
+		foreach ($array as $key => $data) {
+			if ($key != stripslashes($key)) {
+				$array2[stripslashes($key)] = $data;
+			} else {
+				$array2[$key] = $data;
+			}
+		}
+		return $array2;
+	} else {
+		return $array;
+	}
+}
+
+/**
+ * Strip slashes
+ *
+ * @param mixed $value The value to remove slashes from
+ *
+ * @return mixed
+ * @access private
+ */
+function _elgg_stripslashes_deep($value) {
+	if (is_array($value)) {
+		$value = _elgg_stripslashes_arraykeys($value);
+		$value = array_map('_elgg_stripslashes_deep', $value);
+	} else {
+		$value = stripslashes($value);
+	}
+	return $value;
+}
+
+/**
+ * Initialize the input library
  *
  * @return void
  * @access private
  */
-function input_init() {
+function _elgg_input_init() {
 	// register an endpoint for live search / autocomplete.
 	elgg_register_page_handler('livesearch', 'input_livesearch_page_handler');
 
-	if (ini_get_bool('magic_quotes_gpc')) {
-
-		/**
-		 * do keys as well, cos array_map ignores them
-		 *
-		 * @param array $array Array of values
-		 *
-		 * @return array Sanitized array
-		 */
-		function stripslashes_arraykeys($array) {
-			if (is_array($array)) {
-				$array2 = array();
-				foreach ($array as $key => $data) {
-					if ($key != stripslashes($key)) {
-						$array2[stripslashes($key)] = $data;
-					} else {
-						$array2[$key] = $data;
-					}
-				}
-				return $array2;
-			} else {
-				return $array;
-			}
-		}
-
-		/**
-		 * Strip slashes on everything
-		 *
-		 * @param mixed $value The value to remove slashes from
-		 *
-		 * @return mixed
-		 */
-		function stripslashes_deep($value) {
-			if (is_array($value)) {
-				$value = stripslashes_arraykeys($value);
-				$value = array_map('stripslashes_deep', $value);
-			} else {
-				$value = stripslashes($value);
-			}
-			return $value;
-		}
-
-		$_POST = stripslashes_arraykeys($_POST);
-		$_GET = stripslashes_arraykeys($_GET);
-		$_COOKIE = stripslashes_arraykeys($_COOKIE);
-		$_REQUEST = stripslashes_arraykeys($_REQUEST);
-
-		$_POST = array_map('stripslashes_deep', $_POST);
-		$_GET = array_map('stripslashes_deep', $_GET);
-		$_COOKIE = array_map('stripslashes_deep', $_COOKIE);
-		$_REQUEST = array_map('stripslashes_deep', $_REQUEST);
+	// backward compatible for plugins directly accessing globals
+	if (get_magic_quotes_gpc()) {
+		$_POST = array_map('_elgg_stripslashes_deep', $_POST);
+		$_GET = array_map('_elgg_stripslashes_deep', $_GET);
+		$_COOKIE = array_map('_elgg_stripslashes_deep', $_COOKIE);
+		$_REQUEST = array_map('_elgg_stripslashes_deep', $_REQUEST);
 		if (!empty($_SERVER['REQUEST_URI'])) {
 			$_SERVER['REQUEST_URI'] = stripslashes($_SERVER['REQUEST_URI']);
 		}
@@ -596,4 +604,4 @@ function input_init() {
 	}
 }
 
-elgg_register_event_handler('init', 'system', 'input_init');
+elgg_register_event_handler('init', 'system', '_elgg_input_init');

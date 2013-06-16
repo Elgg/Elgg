@@ -33,6 +33,8 @@ class Elgg_Request {
 		$this->cookies = $cookies;
 		$this->files = $files;
 		$this->server = $server;
+
+		$this->initialize();
 	}
 
 	/**
@@ -42,5 +44,28 @@ class Elgg_Request {
 	 */
 	public static function createFromGlobals() {
 		return new Elgg_Request($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
+	}
+
+	/**
+	 * Initialize the request
+	 * 
+	 * @return void
+	 */
+	protected function initialize() {
+		$this->stripSlashesIfMagicQuotes();
+	}
+
+	/**
+	 * Strip slashes if magic quotes is on
+	 *
+	 * @return void
+	 */
+	protected function stripSlashesIfMagicQuotes() {
+		if (get_magic_quotes_gpc()) {
+			$this->query = _elgg_stripslashes_deep($this->query);
+			$this->request = _elgg_stripslashes_deep($this->request);
+			$this->cookies = _elgg_stripslashes_deep($this->cookies);
+			$this->server = _elgg_stripslashes_deep($this->server);
+		}
 	}
 }
