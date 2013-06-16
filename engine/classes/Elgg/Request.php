@@ -156,8 +156,10 @@ class Elgg_Request {
 
 			$keyValuePair = explode('=', $param, 2);
 
-			// GET parameters, that are submitted from a HTML form, encode spaces as "+" by default (as defined in enctype application/x-www-form-urlencoded).
-			// PHP also converts "+" to spaces when filling the global _GET or when using the function parse_str. This is why we use urldecode and then normalize to
+			// GET parameters, that are submitted from a HTML form,
+			// encode spaces as "+" by default (as defined in enctype application/x-www-form-urlencoded).
+			// PHP also converts "+" to spaces when filling the global _GET or
+			// when using the function parse_str. This is why we use urldecode and then normalize to
 			// RFC 3986 with rawurlencode.
 			$parts[] = isset($keyValuePair[1]) ?
 					rawurlencode(urldecode($keyValuePair[0])) . '=' . rawurlencode(urldecode($keyValuePair[1])) :
@@ -287,7 +289,7 @@ class Elgg_Request {
 	 *
 	 * @return bool
 	 */
-    public function isSecure() {
+	public function isSecure() {
 		return 'on' == strtolower($this->server->get('HTTPS')) || 1 == $this->server->get('HTTPS');
 	}
 
@@ -516,7 +518,7 @@ class Elgg_Request {
 		return (string) $pathInfo;
 	}
 
-	/*
+	/**
 	 * Returns the prefix as encoded in the string when the string starts with
 	 * the given prefix, false otherwise.
 	 *
