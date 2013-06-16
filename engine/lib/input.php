@@ -109,6 +109,8 @@ function current_page_url() {
 
 	$page = $url['scheme'] . "://";
 
+	// @todo this makes no sense. The site url is not going to be configured
+	// with a hard coded http auth user and password
 	// user/pass
 	if ((isset($url['user'])) && ($url['user'])) {
 		$page .= $url['user'];
@@ -129,8 +131,7 @@ function current_page_url() {
 
 	$page = trim($page, "/");
 
-	// we don't have request URI when in CLI
-	$page .= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+	$page .= _elgg_services()->request->getRequestUri();
 
 	return $page;
 }
@@ -139,23 +140,19 @@ function current_page_url() {
  * Return the full URL of the current page.
  *
  * @return string The URL
- * @todo Combine / replace with current_page_url()
+ * @todo Combine / replace with current_page_url(). full_url() is based on the
+ * request only while current_page_url() uses the configured site url.
  */
 function full_url() {
-	$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
-	$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0,
-		strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
-
-	$port = ($_SERVER["SERVER_PORT"] == "80" || $_SERVER["SERVER_PORT"] == "443") ?
-		"" : (":" . $_SERVER["SERVER_PORT"]);
+	$request = _elgg_services()->request;
+	$url = $request->getSchemeAndHttpHost();
 
 	// This is here to prevent XSS in poorly written browsers used by 80% of the population.
-	// {@trac [5813]}
+	// svn commit [5813]: https://github.com/Elgg/Elgg/commit/0c947e80f512cb0a482b1864fd0a6965c8a0cd4a
+	// @todo encoding like this should occur when inserting into web page, not here
 	$quotes = array('\'', '"');
 	$encoded = array('%27', '%22');
-
-	return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port .
-		str_replace($quotes, $encoded, $_SERVER['REQUEST_URI']);
+	return $url . str_replace($quotes, $encoded, $request->getRequestUri());
 }
 
 /**

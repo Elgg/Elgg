@@ -219,6 +219,8 @@ class Elgg_Request {
 	/**
 	 * Gets the scheme and HTTP host.
 	 *
+	 * Includes port if non-standard.
+	 *
 	 * @return string The scheme and HTTP host
 	 */
 	public function getSchemeAndHttpHost() {
