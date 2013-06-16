@@ -93,6 +93,19 @@ class Elgg_Request {
 	}
 
 	/**
+	 * Get the IP address of the client
+	 *
+	 * @return string
+	 */
+	public function getClientIp() {
+		if (isset($this->server['REMOTE_ADDR'])) {
+			return $this->server['REMOTE_ADDR'];
+		} else {
+			return '';
+		}
+	}
+
+	/**
 	 * Is this an ajax request
 	 *
 	 * @return bool
