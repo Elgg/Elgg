@@ -40,8 +40,9 @@ function get_input($variable, $default = null, $filter_result = true) {
 		}
 	} else {
 		$request = _elgg_services()->request;
-		$result = $request->get($variable);
-		if ($result !== null) {
+		$value = $request->get($variable);
+		if ($value !== null) {
+			$result = $value;
 			if (is_string($result)) {
 				// @todo why trim
 				$result = trim($result);
