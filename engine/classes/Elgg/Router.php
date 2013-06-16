@@ -36,7 +36,7 @@ class Elgg_Router {
 	 * @access private
 	 */
 	public function route(Elgg_Request $request) {
-		$identifier = (string)$request->getInput('handler');
+		$identifier = (string)$request->query['handler'];
 		elgg_set_context($identifier);
 
 		$segments = $this->getUrlSegments($request);
@@ -110,7 +110,7 @@ class Elgg_Router {
 	 * @return array
 	 */
 	protected function getUrlSegments(Elgg_Request $request) {
-		$page = $request->getInput('page');
+		$page = $request->query['page'];
 		if (!$page) {
 			return array();
 		}

@@ -25,7 +25,34 @@
  * @return mixed
  */
 function get_input($variable, $default = null, $filter_result = true) {
-	return _elgg_services()->request->getInput($variable, $default, $filter_result);
+
+	global $CONFIG;
+
+	$result = $default;
+
+	elgg_push_context('input');
+
+	if (isset($CONFIG->input[$variable])) {
+		$result = $CONFIG->input[$variable];
+
+		if ($filter_result) {
+			$result = filter_tags($result);
+		}
+	} elseif (isset($_REQUEST[$variable])) {
+		if (is_array($_REQUEST[$variable])) {
+			$result = $_REQUEST[$variable];
+		} else {
+			$result = trim($_REQUEST[$variable]);
+		}
+
+		if ($filter_result) {
+			$result = filter_tags($result);
+		}
+	}
+
+	elgg_pop_context();
+
+	return $result;
 }
 
 /**
@@ -39,7 +66,17 @@ function get_input($variable, $default = null, $filter_result = true) {
  * @return void
  */
 function set_input($variable, $value) {
-	_elgg_services()->request->setInput($variable, $value);
+	global $CONFIG;
+	if (!isset($CONFIG->input)) {
+		$CONFIG->input = array();
+	}
+
+	if (is_array($value)) {
+		array_walk_recursive($value, create_function('&$v, $k', '$v = trim($v);'));
+		$CONFIG->input[trim($variable)] = $value;
+	} else {
+		$CONFIG->input[trim($variable)] = trim($value);
+	}
 }
 
 /**
@@ -51,7 +88,7 @@ function set_input($variable, $value) {
  * @return mixed The filtered result - everything will be strings
  */
 function filter_tags($var) {
-	return _elgg_services()->request->filterTags($var);
+	return elgg_trigger_plugin_hook('validate', 'input', null, $var);
 }
 
 /**

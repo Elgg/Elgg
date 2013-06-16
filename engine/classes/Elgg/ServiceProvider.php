@@ -116,9 +116,9 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	 * @return Elgg_Request
 	 */
 	protected function getRequest(Elgg_ServiceProvider $c) {
-		return new Elgg_Request($c->hooks, $_SERVER, $_REQUEST);
+		return Elgg_Request::createFromGlobals();
 	}
-	
+
 	/**
 	 * Router factory
 	 * 

@@ -1,110 +1,46 @@
 <?php
 
 /**
- * Simplified representation of an HTTP request.
- * 
- * Plugin devs should use these wrapper functions:
- *  * set_input
- *  * get_input
- *  * filter_tags
+ * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ *
+ * Represents an HTTP request.
  * 
  * @package    Elgg.Core
- * @subpackage Request
+ * @subpackage Http
  * @since      1.9.0
  * @access private
  */
 class Elgg_Request {
-	private $input = array();
-	private $hooks;
-	private $server;
-	private $request;
-	
+	public $query;
+	public $request;
+	public $cookies;
+	public $files;
+	public $server;
+
 	/**
-	 * Constructor
-	 * 
-	 * @param Elgg_PluginHooksService $hooks   For plugin-customizable input filtering.
-	 * @param array                   $server  An array that conforms to the $_SERVER api.
-	 * @param array                   $request An array that conforms to the $_REQUEST api.
+	 * Create a request
+	 *
+	 * @param array $query   GET parameters
+	 * @param array $request POST parameters
+	 * @param array $cookies COOKIE parameters
+	 * @param array $files   FILES parameters
+	 * @param array $server  SERVER parameters
 	 */
-	public function __construct(Elgg_PluginHooksService $hooks, array $server, array $request = array()) {
-		$this->hooks = $hooks;
-		$this->server = $server;
+	public function __construct(array $query = array(), array $request = array(),
+			array $cookies = array(), array $files = array(), array $server = array()) {
+		$this->query = $query;
 		$this->request = $request;
+		$this->cookies = $cookies;
+		$this->files = $files;
+		$this->server = $server;
 	}
 
 	/**
-	 * Get the currently requested URL path.
-	 * 
-	 * @return string The path relative to the site root. Includes leading slash.
+	 * Creates a request from PHP's globals
+	 *
+	 * @return Elgg_Request
 	 */
-	public function getPath() {
-		return $this->server['REQUEST_URI'];
-	}
-
-	/**
-	 * Force an input parameter to be a certain value.
-	 * 
-	 * @param string $name  The input key.
-	 * @param mixed  $value The input value.
-	 * 
-	 * @return void
-	 */
-	public function setInput($name, $value) {
-		if (is_array($value)) {
-			array_walk_recursive($value, create_function('&$v, $k', '$v = trim($v);'));
-			$this->input[trim($name)] = $value;
-		} else {
-			$this->input[trim($name)] = trim($value);
-		}
-	}
-	
-	/**
-	 * Get the current value of a given input parameter.
-	 * 
-	 * @param string  $name          The input key.
-	 * @param mixed   $default       The default value of the input if not yet set.
-	 * @param boolean $filter_result Whether to send input through HTML filtering.
-	 * 
-	 * @return mixed The value of the input.
-	 */
-	public function getInput($name, $default = null, $filter_result = true) {
-		$result = $default;
-	
-		elgg_push_context('input');
-	
-		if (isset($this->input[$name])) {
-			$result = $this->input[$name];
-	
-			if ($filter_result) {
-				$result = $this->filterTags($result);
-			}
-		} elseif (isset($this->request[$name])) {
-			if (is_array($this->request[$name])) {
-				$result = $this->request[$name];
-			} else {
-				$result = trim($this->request[$name]);
-			}
-	
-			if ($filter_result) {
-				$result = $this->filterTags($result);
-			}
-		}
-	
-		elgg_pop_context();
-	
-		return $result;
-	}
-	
-	/**
-	 * Filter some user-provided HTML for XSS, etc.
-	 * 
-	 * TODO(evan): Move to Elgg_PluginHooksService?
-	 * 
-	 * @param string $var The HTML string to filter.
-	 * 
-	 * @return string The filtered HTML input.
-	 */
-	public function filterTags($var) {
-		return $this->hooks->trigger('validate', 'input', null, $var);
+	public static function createFromGlobals() {
+		return new Elgg_Request($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
 	}
 }
