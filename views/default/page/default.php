@@ -24,53 +24,52 @@ if (elgg_get_context() == 'admin') {
 }
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
-$topbar = elgg_view('page/elements/topbar', $vars);
+
 $messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
+
 $header = elgg_view('page/elements/header', $vars);
-$body = elgg_view('page/elements/body', $vars);
+$content = elgg_view('page/elements/body', $vars);
 $footer = elgg_view('page/elements/footer', $vars);
 
-// Set the content type
-header("Content-type: text/html; charset=UTF-8");
-
-$lang = get_current_language();
-
-?>
-<!DOCTYPE html>
-<html lang="<?php echo $lang; ?>">
-<head>
-<?php echo elgg_view('page/elements/head', $vars); ?>
-</head>
-<body>
+$body = <<<__BODY
 <div class="elgg-page elgg-page-default">
 	<div class="elgg-page-messages">
-		<?php echo $messages; ?>
+		$messages
 	</div>
-	
-	<?php if (elgg_is_logged_in()){ ?>
+__BODY;
+
+if (elgg_is_logged_in()) {
+	$topbar = elgg_view('page/elements/topbar', $vars);
+
+	$body .= <<<__BODY
 	<div class="elgg-page-topbar">
 		<div class="elgg-inner">
-			<?php echo $topbar; ?>
+			$topbar
 		</div>
 	</div>
-	<?php } ?>
-	
+__BODY;
+}	
+$body .= <<<__BODY
 	<div class="elgg-page-header">
 		<div class="elgg-inner">
-			<?php echo $header; ?>
+			$header
 		</div>
 	</div>
 	<div class="elgg-page-body">
 		<div class="elgg-inner">
-			<?php echo $body; ?>
+			$content
 		</div>
 	</div>
 	<div class="elgg-page-footer">
 		<div class="elgg-inner">
-			<?php echo $footer; ?>
+			$footer
 		</div>
 	</div>
 </div>
-<?php echo elgg_view('page/elements/foot'); ?>
-</body>
-</html>
+__BODY;
+
+$body .= elgg_view('page/elements/foot');
+
+$head = elgg_view('page/elements/head', $vars);
+
+echo elgg_view("page/elements/html", array("head" => $head, "body" => $body));
