@@ -15,6 +15,7 @@
 .profile .elgg-inner {
 	border: 2px solid #eee;
 	border-radius: 8px;
+	margin: 0 5px;
 }
 #profile-details {
 	padding: 15px;

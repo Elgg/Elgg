@@ -119,7 +119,7 @@
 .elgg-module-widget {
 	background-color: #dedede;
 	padding: 2px;
-	margin-bottom: 15px;
+	margin: 0 5px 15px;
 	position: relative;
 }
 .elgg-module-widget:hover {

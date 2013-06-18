@@ -1081,12 +1081,6 @@ a.elgg-button {
 .elgg-layout-widgets > .elgg-widgets {
 	float: right;
 }
-.elgg-layout-widgets > .elgg-col > .elgg-inner {
-	padding-left: 15px;
-}
-.elgg-layout-widgets > .elgg-col-last > .elgg-inner {
-	padding-left: 0;
-}
 .elgg-widgets {
 	min-height: 30px;
 }
@@ -1131,7 +1125,7 @@ a.elgg-button {
 .elgg-module-widget {
 	background-color: #dedede;
 	padding: 1px;
-	margin: 0 0 15px;
+	margin: 0 5px 15px;
 	position: relative;
 }
 .elgg-module-widget:hover {

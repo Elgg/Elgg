@@ -34,6 +34,8 @@ $column2 = array($w[2], $w[3]);
 $column3 = array($w[4], $w[5]);
 $widgets = array(1 => $column1, 2 => $column2, 3 => $column3);
 $num_columns = 3;
+
+echo '<div class="elgg-layout-widgets">';
 $widget_class = "elgg-col-1of{$num_columns}";
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	$column_widgets = $widgets[$column_index];
@@ -46,6 +48,8 @@ for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
 	}
 	echo '</div>';
 }
+echo '</div>';
+
 ?>
 </div>
 <script type="text/javascript">
