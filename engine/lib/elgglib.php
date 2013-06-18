@@ -76,7 +76,7 @@ function elgg_load_library($name) {
 function forward($location = "", $reason = 'system') {
 	if (!headers_sent($file, $line)) {
 		if ($location === REFERER) {
-			$location = $_SERVER['HTTP_REFERER'];
+			$location = _elgg_services()->request->headers->get('Referer');
 		}
 
 		$location = elgg_normalize_url($location);

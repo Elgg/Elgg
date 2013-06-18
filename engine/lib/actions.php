@@ -222,9 +222,7 @@ function elgg_action_exists($action) {
  * @since 1.8.0
  */
 function elgg_is_xhr() {
-	return isset($_SERVER['HTTP_X_REQUESTED_WITH'])
-		&& strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest' ||
-		get_input('X-Requested-With') === 'XMLHttpRequest';
+	return _elgg_services()->request->isXmlHttpRequest();
 }
 
 /**

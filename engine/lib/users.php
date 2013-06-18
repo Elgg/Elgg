@@ -382,7 +382,8 @@ function send_new_password_request($user_guid) {
 		$link = elgg_get_site_url() . "resetpassword?u=$user_guid&c=$code";
 
 		// generate email
-		$email = elgg_echo('email:resetreq:body', array($user->name, $_SERVER['REMOTE_ADDR'], $link));
+		$ip_address = _elgg_services()->request->getClientIp();
+		$email = elgg_echo('email:resetreq:body', array($user->name, $ip_address, $link));
 
 		return notify_user($user->guid, elgg_get_site_entity()->guid,
 			elgg_echo('email:resetreq:subject'), $email, array(), 'email');
