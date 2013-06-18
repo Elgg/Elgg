@@ -2,11 +2,12 @@
 /**
  * Friendly time
  * Translates an epoch time into a human-readable time.
- * 
+ *
  * @uses string $vars['time'] Unix-style epoch timestamp
  */
 
 $friendly_time = elgg_get_friendly_time($vars['time']);
-$timestamp = htmlspecialchars(date(elgg_echo('friendlytime:date_format'), $vars['time']));
+$timestamp = htmlentities(date(elgg_echo('friendlytime:date_format'), $vars['time']));
+$datetime = htmlentities(date("c", $vars['time']));
 
-echo "<abbr title=\"$timestamp\">$friendly_time</abbr>";
+echo "<time title=\"$timestamp\" datetime=\"$datetime\">$friendly_time</time>";
