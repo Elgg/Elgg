@@ -27,12 +27,12 @@ if (function_exists('mb_convert_encoding')) {
 	$display_query = preg_replace("/[^\x01-\x7F]/", "", $value);
 }
 $display_query = htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
-
+$placeholder = htmlspecialchars(elgg_echo('search'), ENT_QUOTES, 'UTF-8');
 ?>
 
 <form class="<?php echo $class; ?>" action="<?php echo elgg_get_site_url(); ?>search" method="get">
 	<fieldset>
-		<input type="text" class="search-input" size="21" name="q" value="<?php echo $display_query; ?>" placeholder="<?php echo elgg_echo('search'); ?>" />
+		<input type="text" class="search-input" size="21" name="q" value="<?php echo $display_query; ?>" placeholder="<?php echo $placeholder; ?>" />
 		<input type="hidden" name="search_type" value="all" />
 		<input type="submit" value="<?php echo elgg_echo('search:go'); ?>" class="search-submit-button" />
 	</fieldset>
