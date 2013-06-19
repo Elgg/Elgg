@@ -131,7 +131,7 @@ ElggLibTest.prototype.testParseUrl = function() {
 ElggLibTest.prototype.testParseStr = function() {
 
 	[
-		["A+%2B+B", "A + B"]
+		["A+%2B+B=A+%2B+B", {"A + B": "A + B"}]
 
 	].forEach(function(args) {
 		assertEquals(args[1], elgg.parse_str(args[0]));
