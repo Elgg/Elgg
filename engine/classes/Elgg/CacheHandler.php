@@ -39,6 +39,8 @@ class Elgg_CacheHandler {
 		$view = $request['view'];
 		$viewtype = $request['viewtype'];
 
+		$type = array_shift(explode("/", $view));
+		
 		$this->sendContentType($view);
 
 		// this may/may not have to connect to the DB
@@ -49,6 +51,7 @@ class Elgg_CacheHandler {
 			if (!_elgg_is_view_cacheable($view)) {
 				$this->send403();
 			} else {
+				
 				echo $this->renderView($view, $viewtype);
 			}
 			exit;
@@ -61,7 +64,7 @@ class Elgg_CacheHandler {
 			exit;
 		}
 
-		$filename = $this->config->dataroot . 'views_simplecache/' . md5("$viewtype|$view");
+		$filename = $this->config->dataroot . "views_simplecache/$ts/$viewtype/$view";
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag);
 			readfile($filename);
@@ -82,11 +85,7 @@ class Elgg_CacheHandler {
 
 			$content = $this->getProcessedView($view, $viewtype);
 
-			$dir_name = $this->config->dataroot . 'views_simplecache/';
-			if (!is_dir($dir_name)) {
-				mkdir($dir_name, 0700);
-			}
-
+			mkdir(dirname($filename), 0700, true);
 			file_put_contents($filename, $content);
 		} else {
 			// if wrong timestamp, don't send HTTP cache
@@ -225,7 +224,11 @@ class Elgg_CacheHandler {
 		elgg_set_viewtype($viewtype);
 
 		if (!elgg_view_exists($view)) {
-			$this->send403();
+			$info = pathinfo($view);
+			$view = "{$info['dirname']}/{$info['filename']}";
+			if (!elgg_view_exists($view)) {
+				$this->send403();
+			}
 		}
 
 		// disable error reporting so we don't cache problems

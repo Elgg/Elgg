@@ -185,8 +185,111 @@ function elgg_require_js($name) {
  * @since 1.8.0
  */
 function elgg_get_loaded_js($location = 'head') {
-	return elgg_get_loaded_external_files('js', $location);
+	$scripts = elgg_get_loaded_external_files('js', $location);
+	
+	$srcs = array();
+	foreach ($scripts as $script) {
+		$srcs[] = $script->url;
+	}
+	
+	/**/
+	if (elgg_is_simplecache_enabled() && count($scripts) > 1) {
+		$md5 = md5(implode("\n", $srcs));
+		
+		$viewtype = elgg_get_viewtype();
+		$ts = (int)elgg_get_config('lastcache');
+		$file = elgg_get_config('dataroot') . "views_simplecache/$ts/$viewtype/js/bin/$md5.js";
+
+		if (!file_exists($file)) {
+			mkdir(dirname($file), 0700, true);
+			file_put_contents($file, _elgg_concat_scripts($scripts));
+		}
+		
+		return array(
+			elgg_get_simplecache_url('js', "bin/$md5.js"),
+		);
+	}
+	
+	/**/
+	return $srcs;
 }
+
+// TODO Security review. Make sure nothing tricky is going on...
+function _elgg_concat_scripts(array $scripts) {
+	
+	$content = "";
+	
+	foreach ($scripts as $script) {
+		$src = $script->url;
+		if (strpos($src, "//") === 0) {
+			$src = "https:$src"; // Always use https just to be safe
+		}
+		
+		$content .= "// $src\n";
+
+		// This may be local file, so we don't want to just issue an http request.
+		// We can access these files locally which is must faster and less error prone.
+		// Some servers will not even allow requests for files from itself over http.
+		$path = substr($src, strlen(elgg_get_site_url()));		
+		if (strpos($src, elgg_get_site_url()) !== 0) {
+			$realpath = $src; // Easily fetch remote URLs!
+		} elseif (file_exists(elgg_get_root_path() . $path)) {
+			$realpath = realpath(elgg_get_root_path() . $path);
+		} elseif (strpos($path, "cache/") === 0) {
+			// It's a simplecache file. Look for it in the simplecache directory
+			$path = substr($path, strlen("cache/"));
+			
+			$realpath = elgg_get_config('dataroot') . "views_simplecache/$path";
+			
+			$content .= "// Writing contents of $realpath\n";
+			
+			// Create and cache the file if it doesn't exist already
+			if (!file_exists($realpath)) {
+				// e.g. $path == '1234567890/default/js/some/view.js'
+				$segments = explode("/", $path);
+				$ts = array_shift($segments); // '1234567890'
+				$viewtype = array_shift($segments); // 'default'
+				$view = implode("/", $segments); // 'js/some/view.js'
+				
+				$filetype = _elgg_get_view_filetype($view); // 'js'
+				// TODO(ewinslow): This is duplicate code. Pull into common fn
+				if (!elgg_view_exists($view)) {
+					$info = pathinfo($view);
+					$view = "{$info['dirname']}/{$info['filename']}"; // 'js/some/view'
+				}
+				
+				$content .= "// View: $view\n";
+				$viewContent = elgg_view($view, array(), false, false, $viewtype);
+				$params = array(
+					'view' => $view,
+					'viewtype' => $viewtype,
+					'view_content' => $viewContent,
+				);
+				$viewContent = elgg_trigger_plugin_hook('simplecache:generate', $filetype, $params, $viewContent);
+
+				mkdir(dirname($realpath), 0700, true);
+				file_put_contents($realpath, $viewContent);
+			}
+		}
+		
+		if (!$realpath) {
+			continue;
+		}
+		
+		$content .= file_get_contents($realpath);
+		
+		// AMD shim support
+		if (isset($script->deps) || isset($script->exports)) {
+			$exports = isset($script->exports) ? $script->exports : 'null';
+			$content .= "define('$script->name', function() { return $exports; });";	
+		}
+		
+		$content .= "\n";
+	}
+	
+	return $content;
+}
+
 
 /**
  * Register a CSS file for inclusion in the HTML head
@@ -236,7 +339,11 @@ function elgg_load_css($name) {
  * @since 1.8.0
  */
 function elgg_get_loaded_css() {
-	return elgg_get_loaded_external_files('css', 'head');
+	$links = elgg_get_loaded_external_files('css', 'head');
+	
+	array_walk($links, create_function('&$v,$k', '$v = $v->url;'));
+
+	return $links;
 }
 
 /**
@@ -374,11 +481,7 @@ function elgg_get_loaded_external_files($type, $location) {
 		$items = $CONFIG->externals[$type]->getElements();
 
 		$callback = "return \$v->loaded == true && \$v->location == '$location';";
-		$items = array_filter($items, create_function('$v', $callback));
-		if ($items) {
-			array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
-		}
-		return $items;
+		return array_filter($items, create_function('$v', $callback));
 	}
 	return array();
 }
