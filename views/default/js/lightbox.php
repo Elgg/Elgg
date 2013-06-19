@@ -40,6 +40,14 @@ elgg.ui.lightbox.init = function() {
 		reposition: $(window).height() > 600
 	});
 
+	if (typeof $.fancybox === 'undefined') {
+		$.fancybox = {
+			__noSuchMethod__ : function() {
+				elgg.register_error("fancybox lightbox has been replaced by colorbox", 9999999999999);
+			}
+		};
+	}
+
 	$(".elgg-lightbox").colorbox();
 };
 
