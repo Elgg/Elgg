@@ -88,12 +88,6 @@
 .elgg-layout-widgets > .elgg-widgets {
 	float: right;
 }
-.elgg-layout-widgets > .elgg-col > .elgg-inner {
-	padding-left: 15px;
-}
-.elgg-layout-widgets > .elgg-col-last > .elgg-inner {
-	padding-left: 0;
-}
 .elgg-sidebar {
 	position: relative;
 	padding: 20px 10px;

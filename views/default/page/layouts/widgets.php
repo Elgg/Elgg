@@ -42,17 +42,22 @@ if (isset($vars['content'])) {
 	echo $vars['content'];
 }
 
+$widget_class = "elgg-col-1of{$num_columns}";
 for ($column_index = 1; $column_index <= $num_columns; $column_index++) {
-	$widget_col_class = "elgg-widgets elgg-col elgg-col-1of{$num_columns}";
-	$widget_col_id = "elgg-widget-col-$column_index";
-	if ($column_index == $num_columns) {
-		$widget_col_class .= ' elgg-col-last';	
+	if (isset($widgets[$column_index])) {
+		$column_widgets = $widgets[$column_index];
+	} else {
+		$column_widgets = array();
 	}
 
-	echo "<div class=\"$widget_col_class\" id=\"$widget_col_id\">";
-	echo '<div class="elgg-inner">';
-	echo elgg_view_widgets_column($owner, $context, $column_index, $show_access);
-	echo '</div>';
+	echo "<div class=\"$widget_class elgg-widgets\" id=\"elgg-widget-col-$column_index\">";
+	if (sizeof($column_widgets) > 0) {
+		foreach ($column_widgets as $widget) {
+			if (array_key_exists($widget->handler, $widget_types)) {
+				echo elgg_view_entity($widget, array('show_access' => $show_access));
+			}
+		}
+	}
 	echo '</div>';
 }
 
