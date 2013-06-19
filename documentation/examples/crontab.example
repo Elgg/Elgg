@@ -6,7 +6,6 @@
 #
 # See http://docs.elgg.org/wiki/Cron for more information
 #
-# @author Marcus Povey
 
 # Location of your site (don't forget the trailing slash!)
 ELGG='http://www.example.com/'
@@ -19,7 +18,6 @@ GET="$LWPR -m GET -d"
 
 # The crontab
 # Don't edit below this line unless you know what you are doing
-@reboot $GET ${ELGG}cron/reboot/
 * * * * * $GET ${ELGG}cron/minute/
 */5 * * * * $GET ${ELGG}cron/fiveminute/
 15,30,45,59 * * * * $GET ${ELGG}cron/fifteenmin/
@@ -29,3 +27,5 @@ GET="$LWPR -m GET -d"
 @weekly $GET ${ELGG}cron/weekly/
 @monthly $GET ${ELGG}cron/monthly/
 @yearly $GET ${ELGG}cron/yearly/
+# reboot is deprecated and probably doesn't work
+@reboot $GET ${ELGG}cron/reboot/

@@ -28,6 +28,7 @@ function _elgg_cron_init() {
 		'weekly',
 		'monthly',
 		'yearly',
+		// reboot is deprecated and probably does not work
 		'reboot',
 	));
 
