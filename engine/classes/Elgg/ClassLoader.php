@@ -18,7 +18,7 @@
  *
  * Contains code from Symfony2's UniversalClassLoader.
  *
- * Copyright (c) 2004-2012 Fabien Potencier
+ * Copyright (c) 2004-2013 Fabien Potencier
  *
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal

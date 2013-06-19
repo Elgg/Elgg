@@ -25,7 +25,38 @@
  * @return mixed
  */
 function get_input($variable, $default = null, $filter_result = true) {
-	return _elgg_services()->request->getInput($variable, $default, $filter_result);
+
+	global $CONFIG;
+
+	$result = $default;
+
+	elgg_push_context('input');
+
+	if (isset($CONFIG->input[$variable])) {
+		// a plugin has already set this variable
+		$result = $CONFIG->input[$variable];
+		if ($filter_result) {
+			$result = filter_tags($result);
+		}
+	} else {
+		$request = _elgg_services()->request;
+		$value = $request->get($variable);
+		if ($value !== null) {
+			$result = $value;
+			if (is_string($result)) {
+				// @todo why trim
+				$result = trim($result);
+			}
+		}
+
+		if ($filter_result) {
+			$result = filter_tags($result);
+		}
+	}
+
+	elgg_pop_context();
+
+	return $result;
 }
 
 /**
@@ -39,7 +70,17 @@ function get_input($variable, $default = null, $filter_result = true) {
  * @return void
  */
 function set_input($variable, $value) {
-	_elgg_services()->request->setInput($variable, $value);
+	global $CONFIG;
+	if (!isset($CONFIG->input)) {
+		$CONFIG->input = array();
+	}
+
+	if (is_array($value)) {
+		array_walk_recursive($value, create_function('&$v, $k', '$v = trim($v);'));
+		$CONFIG->input[trim($variable)] = $value;
+	} else {
+		$CONFIG->input[trim($variable)] = trim($value);
+	}
 }
 
 /**
@@ -51,7 +92,7 @@ function set_input($variable, $value) {
  * @return mixed The filtered result - everything will be strings
  */
 function filter_tags($var) {
-	return _elgg_services()->request->filterTags($var);
+	return elgg_trigger_plugin_hook('validate', 'input', null, $var);
 }
 
 /**
@@ -68,6 +109,8 @@ function current_page_url() {
 
 	$page = $url['scheme'] . "://";
 
+	// @todo this makes no sense. The site url is not going to be configured
+	// with a hard coded http auth user and password
 	// user/pass
 	if ((isset($url['user'])) && ($url['user'])) {
 		$page .= $url['user'];
@@ -88,8 +131,7 @@ function current_page_url() {
 
 	$page = trim($page, "/");
 
-	// we don't have request URI when in CLI
-	$page .= isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : '';
+	$page .= _elgg_services()->request->getRequestUri();
 
 	return $page;
 }
@@ -98,23 +140,19 @@ function current_page_url() {
  * Return the full URL of the current page.
  *
  * @return string The URL
- * @todo Combine / replace with current_page_url()
+ * @todo Combine / replace with current_page_url(). full_url() is based on the
+ * request only while current_page_url() uses the configured site url.
  */
 function full_url() {
-	$s = empty($_SERVER["HTTPS"]) ? '' : ($_SERVER["HTTPS"] == "on") ? "s" : "";
-	$protocol = substr(strtolower($_SERVER["SERVER_PROTOCOL"]), 0,
-		strpos(strtolower($_SERVER["SERVER_PROTOCOL"]), "/")) . $s;
-
-	$port = ($_SERVER["SERVER_PORT"] == "80" || $_SERVER["SERVER_PORT"] == "443") ?
-		"" : (":" . $_SERVER["SERVER_PORT"]);
+	$request = _elgg_services()->request;
+	$url = $request->getSchemeAndHttpHost();
 
 	// This is here to prevent XSS in poorly written browsers used by 80% of the population.
-	// {@trac [5813]}
+	// svn commit [5813]: https://github.com/Elgg/Elgg/commit/0c947e80f512cb0a482b1864fd0a6965c8a0cd4a
+	// @todo encoding like this should occur when inserting into web page, not here
 	$quotes = array('\'', '"');
 	$encoded = array('%27', '%22');
-
-	return $protocol . "://" . $_SERVER['SERVER_NAME'] . $port .
-		str_replace($quotes, $encoded, $_SERVER['REQUEST_URI']);
+	return $url . str_replace($quotes, $encoded, $request->getRequestUri());
 }
 
 /**
@@ -478,66 +516,63 @@ function input_livesearch_page_handler($page) {
 }
 
 /**
- * Register input functions and sanitize input
+ * Strip slashes from array keys
+ *
+ * @param array $array Array of values
+ *
+ * @return array Sanitized array
+ * @access private
+ */
+function _elgg_stripslashes_arraykeys($array) {
+	if (is_array($array)) {
+		$array2 = array();
+		foreach ($array as $key => $data) {
+			if ($key != stripslashes($key)) {
+				$array2[stripslashes($key)] = $data;
+			} else {
+				$array2[$key] = $data;
+			}
+		}
+		return $array2;
+	} else {
+		return $array;
+	}
+}
+
+/**
+ * Strip slashes
+ *
+ * @param mixed $value The value to remove slashes from
+ *
+ * @return mixed
+ * @access private
+ */
+function _elgg_stripslashes_deep($value) {
+	if (is_array($value)) {
+		$value = _elgg_stripslashes_arraykeys($value);
+		$value = array_map('_elgg_stripslashes_deep', $value);
+	} else {
+		$value = stripslashes($value);
+	}
+	return $value;
+}
+
+/**
+ * Initialize the input library
  *
  * @return void
  * @access private
  */
-function input_init() {
+function _elgg_input_init() {
 	// register an endpoint for live search / autocomplete.
 	elgg_register_page_handler('livesearch', 'input_livesearch_page_handler');
 
-	if (ini_get_bool('magic_quotes_gpc')) {
-
-		/**
-		 * do keys as well, cos array_map ignores them
-		 *
-		 * @param array $array Array of values
-		 *
-		 * @return array Sanitized array
-		 */
-		function stripslashes_arraykeys($array) {
-			if (is_array($array)) {
-				$array2 = array();
-				foreach ($array as $key => $data) {
-					if ($key != stripslashes($key)) {
-						$array2[stripslashes($key)] = $data;
-					} else {
-						$array2[$key] = $data;
-					}
-				}
-				return $array2;
-			} else {
-				return $array;
-			}
-		}
-
-		/**
-		 * Strip slashes on everything
-		 *
-		 * @param mixed $value The value to remove slashes from
-		 *
-		 * @return mixed
-		 */
-		function stripslashes_deep($value) {
-			if (is_array($value)) {
-				$value = stripslashes_arraykeys($value);
-				$value = array_map('stripslashes_deep', $value);
-			} else {
-				$value = stripslashes($value);
-			}
-			return $value;
-		}
-
-		$_POST = stripslashes_arraykeys($_POST);
-		$_GET = stripslashes_arraykeys($_GET);
-		$_COOKIE = stripslashes_arraykeys($_COOKIE);
-		$_REQUEST = stripslashes_arraykeys($_REQUEST);
-
-		$_POST = array_map('stripslashes_deep', $_POST);
-		$_GET = array_map('stripslashes_deep', $_GET);
-		$_COOKIE = array_map('stripslashes_deep', $_COOKIE);
-		$_REQUEST = array_map('stripslashes_deep', $_REQUEST);
+	// backward compatible for plugins directly accessing globals
+	if (get_magic_quotes_gpc()) {
+		$_POST = array_map('_elgg_stripslashes_deep', $_POST);
+		$_GET = array_map('_elgg_stripslashes_deep', $_GET);
+		$_COOKIE = array_map('_elgg_stripslashes_deep', $_COOKIE);
+		$_REQUEST = array_map('_elgg_stripslashes_deep', $_REQUEST);
 		if (!empty($_SERVER['REQUEST_URI'])) {
 			$_SERVER['REQUEST_URI'] = stripslashes($_SERVER['REQUEST_URI']);
 		}
@@ -559,4 +594,4 @@ function input_init() {
 	}
 }
 
-elgg_register_event_handler('init', 'system', 'input_init');
+elgg_register_event_handler('init', 'system', '_elgg_input_init');
