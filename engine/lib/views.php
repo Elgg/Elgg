@@ -582,17 +582,28 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  * @since 1.9.0
  */
 function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
-	if ($item->getHref() === false) {
-		return $item->getText();
+	if (!isset($vars['class'])) {
+		$vars['class'] = 'elgg-menu-content';
 	}
 
 	$vars = array_merge($item->getValues(), $vars);
 
 	if ($item->getLinkClass()) {
-		if (isset($vars['class'])) {
-			$vars['class'] = $vars['class'] . ' ' . $item->getLinkClass();
+		$vars['class'] .= ' ' . $item->getLinkClass();
+	}
+
+	if ($item->getHref() === false) {
+		$text = $item->getText();
+
+		// if contains elements, don't wrap
+		if (preg_match('~<[a-z]~', $text)) {
+			return $text;
 		} else {
-			$vars['class'] = $item->getLinkClass();
+			return elgg_format_element(array(
+				'tag_name' => 'span',
+				'text' => $text,
+				'class' => 'elgg-menu-content',
+			));
 		}
 	}
 

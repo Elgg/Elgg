@@ -154,6 +154,67 @@ function elgg_format_attributes(array $attrs) {
 }
 
 /**
+ * Format an HTML element
+ *
+ * @param array $vars Array in format:
+ *
+ *   tag_name    => (string, required) The tagName of the element. e.g. "div"
+ *
+ *   text        => (string) The content of the element. Assumed to be HTML unless encode_text is true
+ *
+ *   encode_text => (bool, default false) If true, the content will be HTML-escaped. Already-escaped entities
+ *                  will not be double-escaped.
+ *
+ *   is_void     => (bool) If given, this determines whether the function will return just the open tag.
+ *                  Otherwise this will be determined by the tag name according to this list:
+ *                  http://www.w3.org/html/wg/drafts/html/master/single-page.html#void-elements
+ *
+ *   is_xml      => (bool, default false) If true, void elements will be formatted like "<tag />"
+ *
+ *   All other keys will be formatted as attributes using elgg_format_attributes().
+ *
+ * @return string
+ * @throws InvalidArgumentException
+ * @since 1.9.0
+ */
+function elgg_format_element(array $vars) {
+	if (empty($vars['tag_name'])) {
+		throw new InvalidArgumentException('$spec["tag_name"] is required');
+	}
+	$tag_name = strtolower($vars['tag_name']);
+
+	if (isset($vars['is_void'])) {
+		$is_void = (bool)$vars['is_void'];
+	} else {
+		$is_void = in_array($tag_name, array(
+			'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem',
+			'meta', 'param', 'source', 'track', 'wbr'
+		));
+	}
+
+	$is_xml = empty($vars['is_xml']) ? false : true;
+
+	$content = isset($vars['text']) ? (string)$vars['text'] : '';
+
+	if (!empty($vars['encode_text'])) {
+		$content = htmlspecialchars($content, ENT_QUOTES, 'UTF-8', false);
+	}
+
+	unset($vars['tag_name'], $vars['is_void'], $vars['is_xml'], $vars['text'], $vars['encode_text']);
+
+	$attrs = elgg_format_attributes($vars);
+	if ($attrs !== '') {
+		$attrs = " $attrs";
+	}
+
+	if ($is_void) {
+		return $is_xml ? "<{$tag_name}{$attrs} />" : "<{$tag_name}{$attrs}>";
+	} else {
+		return "<{$tag_name}{$attrs}>$content</$tag_name>";
+	}
+}
+
+/**
  * Preps an associative array for use in {@link elgg_format_attributes()}.
  *
  * Removes all the junk that {@link elgg_view()} puts into $vars.
