@@ -602,7 +602,7 @@ function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
 			return elgg_format_element(array(
 				'tag_name' => 'span',
 				'text' => $text,
-				'class' => 'elgg-menu-content',
+				'class' => 'elgg-non-link',
 			));
 		}
 	}

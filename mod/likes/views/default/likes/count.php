@@ -22,7 +22,7 @@ if ($num_of_likes) {
 		'title' => elgg_echo('likes:see'),
 		'rel' => 'popup',
 		'href' => "#likes-$guid",
-		'class' => 'elgg-menu-content',
+		'class' => 'elgg-non-link',
 	);
 	$list = elgg_view('output/url', $params);
 	$list .= "<div class='elgg-module elgg-module-popup elgg-likes hidden clearfix' id='likes-$guid'>";
