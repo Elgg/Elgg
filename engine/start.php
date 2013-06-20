@@ -78,6 +78,7 @@ $lib_files = array(
 	'entities.php',
 	'extender.php',
 	'filestore.php',
+	'friends.php',
 	'group.php',
 	'input.php',
 	'languages.php',
@@ -106,7 +107,7 @@ $lib_files = array(
 	'upgrade.php',
 	'views.php',
 	'widgets.php',
-	
+
 	// backward compatibility
 	'deprecated-1.7.php',
 	'deprecated-1.8.php',
