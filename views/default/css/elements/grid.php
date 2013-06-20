@@ -6,103 +6,57 @@
  * @subpackage UI
  * 
  * To work around subpixel rounding discrepancies, apply .elgg-col-last to
- * the last column (@todo we need broswer-specific test cases for this).
+ * the last column
+ * @todo we need broswer-specific test cases for this
+ * @todo this should go away as soon as Opera switches to Webkit
  */
-
-$gutter_width_percent = elgg_get_config('elgg_grid_gutter_percentage');
-if ($gutter_width_percent === null) {
-	$gutter_width_percent = 1.6; /* 16px on a 1000px grid */
-}
-
 ?>
 
 /* ***************************************
 	Grid
 *************************************** */
 
-/*
-Gutters do not work with IE8 and before without manually adding .elgg-col-last 
-to the last column in each row.
-*/
-
 /*<style>/**/
 
 .elgg-col {
 	float: left;
 }
-
 .elgg-col-alt {
 	float: right;
 }
-
-.elgg-grid-gutters > .elgg-col {
-	margin-right: <?php echo $gutter_width_percent; ?>%;
-}
-
-.elgg-grid-gutters > .elgg-col-alt {
-	margin-left: <?php echo $gutter_width_percent; ?>%;
-}
-
-.elgg-grid-gutters {
-	margin-top: <?php echo $gutter_width_percent; ?>%;
-	margin-bottom: <?php echo $gutter_width_percent; ?>%;
-}
-
-.elgg-grid-gutters > .elgg-col:last-child,
-.elgg-grid-gutters > .elgg-col-alt:last-child,
-.elgg-grid-gutters > .elgg-col-last {
-	float: none;
-	overflow: hidden;
-	margin: 0;
-	width: auto;
-}
-
 .elgg-col-1of1 {
 	float: none;
 }
-.elgg-grid-gutters > .elgg-col-1of1 {
-	margin: 0;
+.elgg-col-1of2 {
+	width: 50%;
 }
-
-<?php
-
-// build units
-
-// keep map to eliminate duplicates. keys are rounded to thousands (avoid float issues)
-$percentages = array(
-	'100' => array(1, 1),
-);
-
-for ($den = 2; $den <= 6; $den++) {
-	$num_gutters = $den - 1;
-	$column_width_percent = 100 / $den;
-	$column_width_percent_gutters = (100 - $num_gutters * $gutter_width_percent) / $den;
-	for ($num = 1; $num < $den; $num++) {
-		// avoid duplicates
-		$rounded_percentage = (string) round($num / $den, 3);
-		if ($num > 1 && isset($percentages[$rounded_percentage])) {
-			continue;
-		}
-		$percentages[$rounded_percentage] = array($num, $den);
-
-		$width_percent = $num * $column_width_percent;
-		$width_percent_gutters = $num * $column_width_percent_gutters + ($num - 1) * $gutter_width_percent;
-
-		// round to 3 digits, but round last digit down (.666 instead of .667)
-		$width_percent = floor($width_percent * 10000) / 10000;
-		$width_percent_gutters = floor($width_percent_gutters * 10000) / 10000;
-
-		echo <<<CSS
-.elgg-col-{$num}of{$den} {
-	width: $width_percent%;
+.elgg-col-1of3 {
+	width: 33.33%;
 }
-.elgg-grid-gutters > .elgg-col-{$num}of{$den} {
-	width: $width_percent_gutters%;
+.elgg-col-2of3 {
+	width: 66.66%;
 }
-
-CSS;
-	}
+.elgg-col-1of4 {
+	width: 25%;
 }
-
-echo "\n";
-
+.elgg-col-3of4 {
+	width: 75%;
+}
+.elgg-col-1of5 {
+	width: 20%;
+}
+.elgg-col-2of5 {
+	width: 40%;
+}
+.elgg-col-3of5 {
+	width: 60%;
+}
+.elgg-col-4of5 {
+	width: 80%;
+}
+.elgg-col-1of6 {
+	width: 16.66%;
+}
+.elgg-col-5of6 {
+	width: 83.33%;
+}
