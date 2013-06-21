@@ -10,8 +10,8 @@ if (count($_FILES) == 0 || !isset($_FILES['upload'])) {
 } else {
 	// max size set to 700 pixels (pull out as plugin setting);
 	$resizer = new CKEditorImageResizer(700);
-	$service = new CKEditorUploadService($resizer);
-	$image_url = $service->store(elgg_get_logged_in_user_entity(), $_FILES['upload']);
+	$service = new CKEditorUploadService(elgg_get_data_path(), elgg_get_logged_in_user_guid(), $resizer);
+	$image_url = $service->store($_FILES['upload']);
 	if (!$image_url) {
 		$msg = $service->getErrorMessage();
 	}
