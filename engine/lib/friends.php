@@ -1,0 +1,210 @@
+<?php
+/**
+ * Elgg friends library.
+ * Provides the UI for friends. Includes access collections since they are based
+ * on friends relationships.
+ *
+ * @package Elgg.Core
+ * @subpackage Friends
+ */
+
+elgg_register_event_handler('init', 'system', '_elgg_friends_init');
+
+/**
+ * Init friends library
+ *
+ * @access private
+ */
+function _elgg_friends_init() {
+	elgg_register_action('friends/add');
+	elgg_register_action('friends/remove');
+
+	elgg_register_action('friends/collections/add');
+	elgg_register_action('friends/collections/delete');
+	elgg_register_action('friends/collections/edit');
+
+	elgg_register_page_handler('friends', '_elgg_friends_page_handler');
+	elgg_register_page_handler('friendsof', '_elgg_friends_page_handler');
+	elgg_register_page_handler('collections', '_elgg_collections_page_handler');
+
+	elgg_register_widget_type('friends', elgg_echo('friends'), elgg_echo('friends:widget:description'));
+
+	elgg_register_event_handler('pagesetup', 'system', '_elgg_friends_page_setup');
+	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_friends_setup_user_hover_menu');
+	elgg_register_event_handler('create', 'friend', '_elgg_send_friend_notification');
+}
+
+/**
+ * Register some menu items for friends UI
+ * @access private
+ */
+function _elgg_friends_page_setup() {
+	$owner = elgg_get_page_owner_entity();
+	$viewer = elgg_get_logged_in_user_entity();
+
+	if ($owner) {
+		$params = array(
+			'name' => 'friends',
+			'text' => elgg_echo('friends'),
+			'href' => 'friends/' . $owner->username,
+			'contexts' => array('friends')
+		);
+		elgg_register_menu_item('page', $params);
+
+		$params = array(
+			'name' => 'friends:of',
+			'text' => elgg_echo('friends:of'),
+			'href' => 'friendsof/' . $owner->username,
+			'contexts' => array('friends')
+		);
+		elgg_register_menu_item('page', $params);
+	}
+
+	// topbar
+	if ($viewer) {
+		elgg_register_menu_item('topbar', array(
+			'name' => 'friends',
+			'href' => "friends/{$viewer->username}",
+			'text' => elgg_view_icon('users'),
+			'title' => elgg_echo('friends'),
+			'priority' => 300,
+		));
+	}
+}
+
+/**
+ * Adds friending to user hover menu
+ *
+ * @access private
+ */
+function _elgg_friends_setup_user_hover_menu($hook, $type, $return, $params) {
+	$user = $params['entity'];
+	/* @var ElggUser $user */
+
+	if (elgg_is_logged_in()) {
+		if (elgg_get_logged_in_user_guid() != $user->guid) {
+			$isFriend = $user->isFriend();
+
+			// Always emit both to make it super easy to toggle with ajax
+			$return[] = ElggMenuItem::factory(array(
+				'name' => 'remove_friend',
+				'href' => elgg_add_action_tokens_to_url("action/friends/remove?friend={$user->guid}"),
+				'text' => elgg_echo('friend:remove'),
+				'section' => 'action',
+				'item_class' => $isFriend ? '' : 'hidden',
+			));
+
+			$return[] = ElggMenuItem::factory(array(
+				'name' => 'add_friend',
+				'href' => elgg_add_action_tokens_to_url("action/friends/add?friend={$user->guid}"),
+				'text' => elgg_echo('friend:add'),
+				'section' => 'action',
+				'item_class' => $isFriend ? 'hidden' : '',
+			));
+		}
+	}
+
+	return $return;
+}
+
+/**
+ * Page handler for friends-related pages
+ *
+ * @param array  $segments URL segments
+ * @param string $handler  The first segment in URL used for routing
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_friends_page_handler($segments, $handler) {
+	elgg_set_context('friends');
+
+	if (isset($segments[0]) && $user = get_user_by_username($segments[0])) {
+		elgg_set_page_owner_guid($user->getGUID());
+	}
+	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
+		_elgg_setup_collections_menu();
+	}
+
+	switch ($handler) {
+		case 'friends':
+			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/index.php");
+			break;
+		case 'friendsof':
+			require_once(dirname(dirname(dirname(__FILE__))) . "/pages/friends/of.php");
+			break;
+		default:
+			return false;
+	}
+	return true;
+}
+
+/**
+ * Page handler for friends collections
+ *
+ * @param array $page_elements Page elements
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_collections_page_handler($page_elements) {
+	elgg_set_context('friends');
+	$base = elgg_get_config('path');
+	if (isset($page_elements[0])) {
+		if ($page_elements[0] == "add") {
+			elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
+			_elgg_setup_collections_menu();
+			require_once "{$base}pages/friends/collections/add.php";
+			return true;
+		} else {
+			$user = get_user_by_username($page_elements[0]);
+			if ($user) {
+				elgg_set_page_owner_guid($user->getGUID());
+				if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
+					_elgg_setup_collections_menu();
+				}
+				require_once "{$base}pages/friends/collections/view.php";
+				return true;
+			}
+		}
+	}
+	return false;
+}
+
+/**
+ * Adds collection sidebar menu items
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_setup_collections_menu() {
+
+	$user = elgg_get_logged_in_user_entity();
+
+	elgg_register_menu_item('page', array(
+		'name' => 'friends:view:collections',
+		'text' => elgg_echo('friends:collections'),
+		'href' => "collections/$user->username",
+	));
+}
+
+/**
+ * Notify user that someone has friended them
+ *
+ * @param string           $event  Event name
+ * @param string           $type   Object type
+ * @param ElggRelationship $object Object
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_send_friend_notification($event, $type, $object) {
+	$user_one = get_entity($object->guid_one);
+	/* @var ElggUser $user_one */
+
+	return notify_user($object->guid_two,
+			$object->guid_one,
+			elgg_echo('friend:newfriend:subject', array($user_one->name)),
+			elgg_echo("friend:newfriend:body", array($user_one->name, $user_one->getURL()))
+	);
+}
