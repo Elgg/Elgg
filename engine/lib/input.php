@@ -47,10 +47,10 @@ function get_input($variable, $default = null, $filter_result = true) {
 				// @todo why trim
 				$result = trim($result);
 			}
-		}
 
-		if ($filter_result) {
-			$result = filter_tags($result);
+			if ($filter_result) {
+				$result = filter_tags($result);
+			}
 		}
 	}
 
