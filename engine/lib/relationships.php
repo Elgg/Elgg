@@ -426,27 +426,3 @@ function elgg_get_entities_from_relationship_count(array $options = array()) {
 function elgg_list_entities_from_relationship_count($options) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_relationship_count');
 }
-
-/**
- * Notify user that someone has friended them
- *
- * @param string           $event  Event name
- * @param string           $type   Object type
- * @param ElggRelationship $object Object
- *
- * @return bool
- * @access private
- */
-function relationship_notification_hook($event, $type, $object) {
-	$user_one = get_entity($object->guid_one);
-	/* @var ElggUser $user_one */
-
-	return notify_user($object->guid_two,
-			$object->guid_one,
-			elgg_echo('friend:newfriend:subject', array($user_one->name)),
-			elgg_echo("friend:newfriend:body", array($user_one->name, $user_one->getURL()))
-	);
-}
-
-// Register event to listen to some events
-elgg_register_event_handler('create', 'friend', 'relationship_notification_hook');
