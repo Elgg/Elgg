@@ -544,6 +544,7 @@ function _elgg_nav_init() {
 		'name' => 'powered',
 		'text' => elgg_echo("elgg:powered"),
 		'href' => 'http://elgg.org',
+		'title' => 'Elgg ' . elgg_get_version(true),
 	)));
 }
 
