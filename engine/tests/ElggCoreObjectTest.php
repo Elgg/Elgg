@@ -48,8 +48,6 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$attributes['time_updated'] = null;
 		$attributes['last_action'] = null;
 		$attributes['enabled'] = 'yes';
-		$attributes['tables_split'] = 2;
-		$attributes['tables_loaded'] = 0;
 		$attributes['title'] = null;
 		$attributes['description'] = null;
 		ksort($attributes);
