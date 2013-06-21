@@ -1,7 +1,7 @@
 define(function(require) {
 	var elgg = require('elgg');
 	var imageUploadUrl = elgg.normalize_url('action/ckeditor/upload');
-	imageUploadUrl = elgg.security.addToken(elgg.ckeditor.imageUploadUrl);
+	imageUploadUrl = elgg.security.addToken(imageUploadUrl);
 
 	return {
 		toolbar: [['Bold', 'Italic', 'Underline', '-', 'Strike', 'NumberedList', 'BulletedList', 'Undo', 'Redo', 'Link', 'Unlink', 'Image', 'Blockquote', 'Paste', 'PasteFromWord', 'Maximize']],
