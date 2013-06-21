@@ -31,6 +31,7 @@ $html = elgg_list_entities(array(
 	'subtype' => 'comment',
 	'container_guid' => $vars['entity']->getGUID(),
 	'reverse_order_by' => true,
+	'full_view' => true,
 ));
 
 if ($html) {
