@@ -132,56 +132,46 @@ function run_sql_script($scriptlocation) {
 }
 
 /**
- * Sanitise a string for database use.
+ * Sanitize a string for database use.
  *
- * @param string $string The string to sanitise
- *
- * @return string Sanitised string
- */
-function sanitise_string($string) {
-	return mysql_real_escape_string($string);
-}
-
-/**
- * Wrapper function for alternate English spelling
- *
- * @param string $string The string to sanitise
- *
- * @return string Sanitised string
+ * @param string $string The string to sanitize
+ * @return string
  */
 function sanitize_string($string) {
-	return sanitise_string($string);
+	return _elgg_services()->db->sanitizeString($string);
 }
 
 /**
- * Sanitises an integer for database use.
+ * Wrapper function for alternate English spelling (@see sanitize_string)
  *
- * @param int  $int    Value to be sanitized
- * @param bool $signed Whether negative values should be allowed (true)
- * @return int
+ * @param string $string The string to sanitize
+ * @return string
  */
-function sanitise_int($int, $signed = true) {
-	$int = (int) $int;
-
-	if ($signed === false) {
-		if ($int < 0) {
-			$int = 0;
-		}
-	}
-
-	return (int) $int;
+function sanitise_string($string) {
+	return sanitize_string($string);
 }
 
 /**
  * Sanitizes an integer for database use.
- * Wrapper function for alternate English spelling (@see sanitise_int)
  *
  * @param int  $int    Value to be sanitized
  * @param bool $signed Whether negative values should be allowed (true)
  * @return int
  */
 function sanitize_int($int, $signed = true) {
-	return sanitise_int($int, $signed);
+	return _elgg_services()->db->sanitizeInt($int, $signed);
+}
+
+/**
+ * Sanitizes an integer for database use.
+ * Wrapper function for alternate English spelling (@see sanitize_int)
+ *
+ * @param int  $int    Value to be sanitized
+ * @param bool $signed Whether negative values should be allowed (true)
+ * @return int
+ */
+function sanitise_int($int, $signed = true) {
+	return sanitize_int($int, $signed);
 }
 
 /**
