@@ -33,7 +33,7 @@ if ($count) {
 
 	echo <<<HTML
 		<div class="elgg-progressbar mvl"><span class="elgg-progressbar-counter" id="comment-upgrade-counter">0%</span></div>
-		<ul class="mvl" >
+		<ul class="mvl">
 			<li>$success_count_string <span id="comment-upgrade-success-count">0</span></li>
 			<li>$error_count_string <span id="comment-upgrade-error-count">0</span></li>
 		</ul>

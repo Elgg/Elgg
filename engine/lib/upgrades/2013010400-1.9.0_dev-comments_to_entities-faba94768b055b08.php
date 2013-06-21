@@ -23,6 +23,8 @@ $db_prefix = elgg_get_config('dbprefix');
 
 // Create a new object for each annotation
 foreach ($batch as $annotation) {
+	/* @var ElggAnnotation $annotation */
+
 	$object = new ElggComment();
 	$object->owner_guid = $annotation->owner_guid;
 	$object->container_guid = $annotation->entity_guid;
@@ -43,13 +45,15 @@ foreach ($batch as $annotation) {
 	 * - Remove annotation id
 	 * - Save comment guid to the target_guid column
 	 */
-	$query = "UPDATE {$db_prefix}river
-SET view='river/object/comment/create',
-annotation_id=0,
-object_guid=$guid,
-target_guid={$object->container_guid}
-WHERE action_type='comment'
-AND annotation_id={$annotation->id}";
+	$query = "
+		UPDATE {$db_prefix}river
+		SET view = 'river/object/comment/create',
+			annotation_id = 0,
+			object_guid = $guid,
+			target_guid = {$object->container_guid}
+		WHERE action_type = 'comment'
+		  AND annotation_id = {$annotation->id}
+	";
 
 	update_data($query);
 
@@ -63,6 +67,8 @@ reload_all_translations();
 
 $upgrade_link = elgg_view('output/url', array(
 	'href' => 'admin/comment_upgrade',
-	'text' => elgg_echo('upgrade:comments:link')
+	'text' => elgg_echo('upgrade:comments:link'),
+	'is_trusted' => true,
 ));
+
 elgg_add_admin_notice('comment_upgrade_needed', elgg_echo('upgrade:comments:upgrade_required', array($upgrade_link)));
