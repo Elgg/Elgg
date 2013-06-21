@@ -530,14 +530,11 @@ class ElggSite extends ElggEntity {
 		// default public pages
 		$defaults = array(
 			'walled_garden/.*',
+			'action/.*',
 			'login',
-			'action/login',
 			'register',
-			'action/register',
 			'forgotpassword',
 			'resetpassword',
-			'action/user/requestnewpassword',
-			'action/user/passwordreset',
 			'action/security/refreshtoken',
 			'ajax/view/js/languages',
 			'upgrade\.php',
