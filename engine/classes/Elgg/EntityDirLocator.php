@@ -42,7 +42,7 @@ class Elgg_EntityDirLocator {
 	 * As of 1.8.5 matrixes are based on GUIDs and separated into dirs of 5000 entries
 	 * with the dir name being the lower bound for the GUID.
 	 *
-	 * @return string The path where the entity's data will be stored relative to the data dir.
+	 * @return string The path with trailing '/' where the entity's data will be stored relative to the data dir.
 	 */
 	public function getPath() {
 		$bound = $this->getLowerBucketBound($this->guid);

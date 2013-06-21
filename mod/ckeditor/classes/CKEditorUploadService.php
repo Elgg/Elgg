@@ -12,16 +12,29 @@ class CKEditorUploadService {
 	protected $assetDirectory = '';
 	protected $assetFilename = '';
 	protected $assetFormat = '';
-	protected $resizer = null;
+	protected $resizer;
+	protected $rootDir;
+	protected $dirLocator;
+	protected $guid;
 
 	const ASSET_DIR = 'assets/images';
 
 	/**
 	 * Create the upload service
 	 *
-	 * @param CKEditorImageResizer $resizer Required for storing an image
+	 * @param string               $rootDir Root directory for files. Usually the data directory.
+	 * @param int                  $guid    GUID of the owner of the upload
+	 * @param CKEditorImageResizer $resizer Required for storing an image, but not retrieving
+	 * @throws InvalidArgumentException
 	 */
-	public function __construct($resizer = null) {
+	public function __construct($rootDir, $guid, $resizer = null) {
+		if ((int)$guid <= 0) {
+			throw new InvalidArgumentException("A GUID of $guid is invalid");
+		}
+
+		$this->rootDir = rtrim($rootDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		$this->guid = $guid;
+		$this->dirLocator = new Elgg_EntityDirLocator($guid);
 		$this->resizer = $resizer;
 	}
 
@@ -29,13 +42,11 @@ class CKEditorUploadService {
 	 * Store the uploaded file as an asset for the user. Returns the URL for
 	 * the asset
 	 *
-	 * @param ElggUser $user     The user who uploaded the photo
-	 * @param array    $fileInfo A slice of the $_FILES array for an uploaded file
+	 * @param array $fileInfo A slice of the $_FILES array for an uploaded file
 	 * @return string
 	 */
-	public function store(ElggUser $user, array $fileInfo) {
+	public function store(array $fileInfo) {
 		$this->fileInfo = $fileInfo;
-		$this->user = $user;
 
 		if (!$this->validateUpload()) {
 			return '';
@@ -62,13 +73,11 @@ class CKEditorUploadService {
 	/**
 	 * Retrieve the file path of an asset
 	 *
-	 * @param ElggUser $user
 	 * @param type $filename
 	 * @return string
 	 */
-	public function retrieve(ElggUser $user, $filename) {
+	public function retrieve($filename) {
 		$this->fileInfo = array();
-		$this->user = $user;
 		$this->setAssetFilename($filename);
 		$this->setAssetDirectory();
 		$filepath = $this->getAssetFilepath();
@@ -145,12 +154,7 @@ class CKEditorUploadService {
 	 * Set the user's asset directory location
 	 */
 	protected function setAssetDirectory() {
-		// @todo - another way to get user's data dir?
-		$file = new ElggFile();
-		$file->owner_guid = $this->user->guid;
-		$file->setFilename(self::ASSET_DIR);
-		$directory = $file->getFilenameOnFilestore();
-		$this->assetDirectory = $directory;
+		$this->assetDirectory = $this->rootDir . $this->dirLocator->getPath() . self::ASSET_DIR;
 	}
 
 	/**
@@ -226,8 +230,7 @@ class CKEditorUploadService {
 	 * @return string
 	 */
 	protected function getAssetURL() {
-		$user_guid = $this->user->guid;
-		$url = "uploads/images/$user_guid/$this->assetFilename";
+		$url = "uploads/images/$this->guid/$this->assetFilename";
 		return elgg_normalize_url($url);
 	}
 
@@ -246,9 +249,12 @@ class CKEditorUploadService {
 		return $result;
 	}
 
+	/**
+	 * Create the upload object to have reference to the file
+	 */
 	protected function createUploadObject() {
 		$upload = new CKEditorUpload();
-		$upload->owner_guid = $this->user->guid;
+		$upload->owner_guid = $this->guid;
 		$upload->filePath = self::ASSET_DIR . '/' . $this->assetFilename;
 		$upload->save();
 	}

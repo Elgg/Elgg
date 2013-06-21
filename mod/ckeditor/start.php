@@ -65,8 +65,8 @@ function ckeditor_uploads_page_handler($segments) {
 	}
 
 	$filename = preg_replace('/[^\w\.]+/', '', $filename);
-	$service = new CKEditorUploadService();
-	$filepath = $service->retrieve($user, $filename);
+	$service = new CKEditorUploadService(elgg_get_data_path(), $user->guid);
+	$filepath = $service->retrieve($filename);
 	if (!$filepath) {
 		header("HTTP/1.1 404 Not Found");
 		return true;
