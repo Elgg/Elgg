@@ -48,9 +48,15 @@ if ($annotations) {
 			 * - Remove annotation id
 			 * - Save comment guid to the object_guid column
 			 */
-			$query = "UPDATE {$db_prefix}river
-				SET view='river/object/comment/create', annotation_id=0, object_guid=$guid, target_guid={$object->container_guid}
-				WHERE action_type='comment' AND annotation_id={$annotation->id}";
+			$query = "
+				UPDATE {$db_prefix}river
+				SET view = 'river/object/comment/create',
+					annotation_id = 0,
+					object_guid = $guid,
+					target_guid = {$object->container_guid}
+				WHERE action_type = 'comment'
+				  AND annotation_id = {$annotation->id}
+			";
 
 			if (update_data($query)) {
 				// It's now safe to delete the annotation
@@ -70,7 +76,7 @@ if ($annotations) {
 access_show_hidden_entities($access_status);
 
 // Give some feedback for the UI
-$output = new stdClass();
-$output->numSuccess = $success_count;
-$output->numErrors = $error_count;
-echo json_encode($output);
+echo json_encode(array(
+	'numSuccess' => $success_count,
+	'numErrors' => $error_count,
+));
