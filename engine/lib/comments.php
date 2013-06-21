@@ -17,7 +17,7 @@ function comments_init() {
 	// Register entity type
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_comment_setup_entity_menu', 900);
 	
-	elgg_register_entity_url_handler('object', 'comment', 'comments_url_handler');
+	elgg_register_plugin_hook_handler('entity:url', 'object', 'elgg_comment_url_handler');
 
 	elgg_register_entity_type('object', 'comment');
 }
@@ -53,6 +53,32 @@ function elgg_comment_setup_entity_menu ($hook, $type, $return, $params) {
 }
 
 /**
+ * Format and return the URL for a comment.
+ *
+ * This is the container's URL because comments don't have their own page.
+ *
+ * @param string $hook   'entity:url'
+ * @param string $type   'object'
+ * @param string $return URL for entity
+ * @param array  $params Array with the elgg entity passed in as 'entity'
+ *
+ * @return string
+ */
+function elgg_comment_url_handler($hook, $type, $return, $params) {
+	$entity = $params['entity'];
+	/* @var ElggObject $entity */
+
+	if (!elgg_instanceof($entity, 'object', 'comment') || !$entity->getOwnerEntity()) {
+		// not a comment or has no owner
+
+		// @todo handle anonymous comments
+		return $return;
+	}
+
+	return $entity->getContainerEntity()->getURL();
+}
+
+/**
  * Allow users to comment entities not owned by them.
  * 
  * Object being commented is used as the container of the comment so
@@ -71,23 +97,6 @@ function comments_container_permissions_override ($hook, $type, $return, $params
 	}
 
 	return $return;
-}
-
-/**
- * Format and return the URL for comments.
- * 
- * The url is container's url because comments don't have their own page.
- *
- * @param ElggObject $entity Comment object
- * @return string URL of comment's container.
- */
-function comments_url_handler($entity) {
-	if (!$entity->getOwnerEntity()) {
-		// default to a standard view if no owner.
-		return FALSE;
-	}
-
-	return $entity->getContainerEntity()->getURL();
 }
 
 elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'comments_container_permissions_override');
