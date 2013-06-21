@@ -32,7 +32,6 @@ function profile_init() {
 
 	elgg_register_page_handler('profile', 'profile_page_handler');
 
-	elgg_extend_view('page/elements/head', 'profile/metatags');
 	elgg_extend_view('css/elgg', 'profile/css');
 	elgg_extend_view('js/elgg', 'profile/js');
 
