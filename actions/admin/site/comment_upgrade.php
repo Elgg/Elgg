@@ -15,6 +15,7 @@ $annotations = elgg_get_annotations(array(
 	'annotation_names' => 'generic_comment',
 	'limit' => $limit,
 	'offset' => $offset,
+	'order_by' => 'n_table.id DESC',
 ));
 
 $success_count = 0;

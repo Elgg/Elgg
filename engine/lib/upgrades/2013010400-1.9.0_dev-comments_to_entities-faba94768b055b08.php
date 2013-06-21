@@ -10,8 +10,11 @@
 update_subtype('object', 'comment', 'ElggComment');
 
 $ia = elgg_set_ignore_access(true);
+
+// upgrade latest 50 comments from annotations.
 $batch = new ElggBatch('elgg_get_annotations', array(
 	'annotation_names' => 'generic_comment',
+	'order_by' => 'n_table.id DESC',
 	'limit' => 50,
 ));
 $batch->setIncrementOffset(false);
