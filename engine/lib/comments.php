@@ -13,7 +13,7 @@
  * @return void
  * @access private
  */
-function comments_init() {
+function elgg_comments_init() {
 	// Register entity type
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_comment_setup_entity_menu', 900);
 	
@@ -25,14 +25,14 @@ function comments_init() {
 /**
  * Setup the menu shown with a comment
  *
- * @param string $hook   'register'
- * @param string $type   'menu:entity'
- * @param array  $return Array of ElggMenuItem objects
- * @param array  $params Array of view vars
+ * @param string         $hook   'register'
+ * @param string         $type   'menu:entity'
+ * @param ElggMenuItem[] $return Array of ElggMenuItem objects
+ * @param array          $params Array of view vars
  * 
  * @return array
  */
-function elgg_comment_setup_entity_menu ($hook, $type, $return, $params) {
+function elgg_comment_setup_entity_menu($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
@@ -91,7 +91,7 @@ function elgg_comment_url_handler($hook, $type, $return, $params) {
  * 
  * @return array
  */
-function comments_container_permissions_override ($hook, $type, $return, $params) {
+function elgg_comments_container_permissions_override($hook, $type, $return, $params) {
 	if ($params['subtype'] === 'comment') {
 		return true;
 	}
@@ -99,6 +99,6 @@ function comments_container_permissions_override ($hook, $type, $return, $params
 	return $return;
 }
 
-elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'comments_container_permissions_override');
+elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'elgg_comments_container_permissions_override');
 
-elgg_register_event_handler('init', 'system', 'comments_init', 0);
+elgg_register_event_handler('init', 'system', 'elgg_comments_init', 0);
