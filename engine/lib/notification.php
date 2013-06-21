@@ -215,6 +215,10 @@ function _elgg_notifications_init() {
 	// add email notifications
 	elgg_register_notification_method('email');
 	elgg_register_plugin_hook_handler('send', 'notification:email', '_elgg_send_email_notification');
+
+	// add ability to set personal notification method
+	elgg_extend_view('forms/account/settings', 'core/settings/account/notifications');
+	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_save_notification_user_settings');
 }
 
 elgg_register_event_handler('init', 'system', '_elgg_notifications_init');
@@ -570,31 +574,31 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 }
 
 /**
- * Correctly initialise notifications and register the email handler.
+ * Save personal notification settings - input comes from request
  *
  * @return void
  * @access private
  */
-function notification_init() {
-	// Add settings view to user settings & register action
-	elgg_extend_view('forms/account/settings', 'core/settings/account/notifications');
+function _elgg_save_notification_user_settings() {
+	$method = get_input('method');
 
-	elgg_register_plugin_hook_handler('usersettings:save', 'user', 'notification_user_settings_save');
+	$current_settings = get_user_notification_settings();
+
+	$result = false;
+	foreach ($method as $k => $v) {
+		// check if setting has changed and skip if not
+		if ($current_settings->$k == ($v == 'yes')) {
+			continue;
+		}
+
+		$result = set_user_notification_setting(elgg_get_logged_in_user_guid(), $k, ($v == 'yes') ? true : false);
+
+		if (!$result) {
+			register_error(elgg_echo('notifications:usersettings:save:fail'));
+		}
+	}
+
+	if ($result) {
+		system_message(elgg_echo('notifications:usersettings:save:ok'));
+	}
 }
-
-/**
- * Includes the action to save user notifications
- *
- * @return void
- * @todo why can't this call action(...)?
- * @access private
- */
-function notification_user_settings_save() {
-	global $CONFIG;
-	//@todo Wha??
-	include($CONFIG->path . "actions/notifications/settings/usersettings/save.php");
-}
-
-// Register a startup event
-elgg_register_event_handler('init', 'system', 'notification_init', 0);
-
