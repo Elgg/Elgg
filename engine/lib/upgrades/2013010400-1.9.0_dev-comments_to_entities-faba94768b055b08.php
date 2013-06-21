@@ -58,6 +58,9 @@ AND annotation_id={$annotation->id}";
 }
 elgg_set_ignore_access($ia);
 
+// make sure new translations below are loaded
+reload_all_translations();
+
 $upgrade_link = elgg_view('output/url', array(
 	'href' => 'admin/comment_upgrade',
 	'text' => elgg_echo('upgrade:comments:link')
