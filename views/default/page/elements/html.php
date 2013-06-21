@@ -12,9 +12,9 @@ $lang = get_current_language();
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<?php echo $lang; ?>" lang="<?php echo $lang; ?>">
 	<head>
-		<?php echo $vars["head"]; ?>
+<?php echo $vars["head"]; ?>
 	</head>
 	<body>
-		<?php echo $vars["body"]; ?>
+<?php echo $vars["body"]; ?>
 	</body>
 </html>
