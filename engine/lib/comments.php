@@ -18,6 +18,8 @@ function comments_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_comment_setup_entity_menu', 900);
 	
 	elgg_register_entity_url_handler('object', 'comment', 'comments_url_handler');
+
+	elgg_register_entity_type('object', 'comment');
 }
 
 /**
