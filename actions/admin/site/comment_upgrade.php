@@ -1,0 +1,82 @@
+<?php
+/**
+ * Convert comment annotations to entities
+ */
+
+// Offset is the total amount of errors so far. We skip these
+// comments to prevent them from possibly repeating the same error.
+$offset = get_input('offset', 0);
+$limit = 10;
+
+$access_status = access_get_show_hidden_status();
+access_show_hidden_entities(true);
+
+$annotations = elgg_get_annotations(array(
+	'annotation_names' => 'generic_comment',
+	'limit' => $limit,
+	'offset' => $offset,
+	'order_by' => 'n_table.id DESC',
+));
+
+$success_count = 0;
+$error_count = 0;
+
+if ($annotations) {
+	$db_prefix = elgg_get_config('dbprefix');
+
+	// Create a new object for each annotation
+	foreach ($annotations as $annotation) {
+		$object = new ElggComment();
+		$object->owner_guid = $annotation->owner_guid;
+		$object->container_guid = $annotation->entity_guid;
+		$object->description = $annotation->value;
+		$object->access_id = $annotation->access_id;
+		$object->enabled = $annotation->enabled;
+		$object->save();
+
+		// We need to save once before being able to change time_created
+		$object->time_created = $annotation->time_created;
+		$object->save();
+
+		$guid = $object->getGUID();
+
+		if ($guid) {
+			/**
+			 * Update the entry in river table for this comment
+			 *
+			 * - Update the view path
+			 * - Remove annotation id
+			 * - Save comment guid to the object_guid column
+			 */
+			$query = "
+				UPDATE {$db_prefix}river
+				SET view = 'river/object/comment/create',
+					annotation_id = 0,
+					object_guid = $guid,
+					target_guid = {$object->container_guid}
+				WHERE action_type = 'comment'
+				  AND annotation_id = {$annotation->id}
+			";
+
+			if (update_data($query)) {
+				// It's now safe to delete the annotation
+				$annotation->delete();
+				$success_count++;
+			} else {
+				register_error(elgg_echo('upgrade:comments:river_update_failed', array($annotation->id)));
+				$error_count++;
+			}
+		} else {
+			register_error(elgg_echo('upgrade:comments:create_failed', array($annotation->id)));
+			$error_count++;
+		}
+	}
+}
+
+access_show_hidden_entities($access_status);
+
+// Give some feedback for the UI
+echo json_encode(array(
+	'numSuccess' => $success_count,
+	'numErrors' => $error_count,
+));

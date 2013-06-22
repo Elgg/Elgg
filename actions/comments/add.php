@@ -23,40 +23,44 @@ if (!$entity) {
 
 $user = elgg_get_logged_in_user_entity();
 
-$annotation = create_annotation($entity->guid,
-								'generic_comment',
-								$comment_text,
-								"",
-								$user->guid,
-								$entity->access_id);
+$comment = new ElggComment();
+$comment->description = $comment_text;
+$comment->owner_guid = $user->getGUID();
+$comment->container_guid = $entity->getGUID();
+$comment->access_id = $entity->access_id;
+$guid = $comment->save();
 
-// tell user annotation posted
-if (!$annotation) {
+if (!$guid) {
 	register_error(elgg_echo("generic_comment:failure"));
 	forward(REFERER);
 }
 
-// notify if poster wasn't owner
+// Notify if poster wasn't owner
 if ($entity->owner_guid != $user->guid) {
-
 	notify_user($entity->owner_guid,
-				$user->guid,
-				elgg_echo('generic_comment:email:subject'),
-				elgg_echo('generic_comment:email:body', array(
-					$entity->title,
-					$user->name,
-					$comment_text,
-					$entity->getURL(),
-					$user->name,
-					$user->getURL()
-				))
-			);
+		$user->guid,
+		elgg_echo('generic_comment:email:subject'),
+		elgg_echo('generic_comment:email:body', array(
+			$entity->title,
+			$user->name,
+			$comment_text,
+			$entity->getURL(),
+			$user->name,
+			$user->getURL()
+		))
+	);
 }
 
-system_message(elgg_echo("generic_comment:posted"));
+// Add to river
+elgg_create_river_item(array(
+	'view' => 'river/object/comment/create',
+	'action_type' => 'comment',
+	'subject_guid' => $user->guid,
+	'object_guid' => $guid,
+	'target_guid' => $entity_guid,
+));
 
-//add to river
-add_to_river('river/annotation/generic_comment/create', 'comment', $user->guid, $entity->guid, "", 0, $annotation);
+system_message(elgg_echo('generic_comment:posted'));
 
-// Forward to the page the action occurred on
+// Forward back to the page where the action occurred
 forward(REFERER);
