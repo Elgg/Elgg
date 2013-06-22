@@ -1618,7 +1618,7 @@ function regenerate_plugin_list($pluginorder = FALSE) {
 			// sort the plugins by the index numerically since we used
 			// weird indexes in the old system.
 			ksort($pluginorder, SORT_NUMERIC);
-			return elgg_set_plugin_priorities($pluginorder);
+			return _elgg_set_plugin_priorities($pluginorder);
 		}
 		return false;
 	} else {
@@ -3094,7 +3094,7 @@ function isadminloggedin() {
  */
 function load_plugins() {
 	elgg_deprecated_notice('load_plugins() is deprecated by elgg_load_plugins()', 1.8);
-	return elgg_load_plugins();
+	return _elgg_load_plugins();
 }
 
 /**

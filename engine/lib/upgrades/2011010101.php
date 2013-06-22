@@ -34,7 +34,7 @@ $q = "SELECT * FROM {$db_prefix}entities e
 $plugins = get_data($q);
 
 foreach ($plugins as $plugin) {
-	$priority = elgg_namespace_plugin_private_setting('internal', 'priority');
+	$priority = _elgg_namespace_plugin_private_setting('internal', 'priority');
 	set_private_setting($plugin->guid, $priority, 0);
 }
 
@@ -43,7 +43,7 @@ _elgg_generate_plugin_entities();
 
 // set the priorities for all plugins
 // this function rewrites it to a normal index so use the current one.
-elgg_set_plugin_priorities($old_plugin_order);
+_elgg_set_plugin_priorities($old_plugin_order);
 
 // add relationships for enabled plugins
 if ($old_enabled_plugins) {

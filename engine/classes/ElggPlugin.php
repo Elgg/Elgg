@@ -185,7 +185,7 @@ class ElggPlugin extends ElggObject {
 	 * @return int
 	 */
 	public function getPriority() {
-		$name = elgg_namespace_plugin_private_setting('internal', 'priority');
+		$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
 		return $this->$name;
 	}
 
@@ -204,11 +204,11 @@ class ElggPlugin extends ElggObject {
 		}
 
 		$db_prefix = get_config('dbprefix');
-		$name = elgg_namespace_plugin_private_setting('internal', 'priority');
+		$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
 		// if no priority assume a priority of 1
 		$old_priority = (int) $this->getPriority();
 		$old_priority = (!$old_priority) ? 1 : $old_priority;
-		$max_priority = elgg_get_max_plugin_priority();
+		$max_priority = _elgg_get_max_plugin_priority();
 
 		// can't use switch here because it's not strict and
 		// php evaluates +1 == 1
@@ -295,8 +295,8 @@ class ElggPlugin extends ElggObject {
 
 		$db_prefix = elgg_get_config('dbprefix');
 		// need to remove all namespaced private settings.
-		$us_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
-		$is_prefix = elgg_namespace_plugin_private_setting('internal', '', $this->getID());
+		$us_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
+		$is_prefix = _elgg_namespace_plugin_private_setting('internal', '', $this->getID());
 
 		// Get private settings for user
 		$q = "SELECT * FROM {$db_prefix}private_settings
@@ -358,7 +358,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function unsetAllSettings() {
 		$db_prefix = get_config('dbprefix');
-		$ps_prefix = elgg_namespace_plugin_private_setting('setting', '');
+		$ps_prefix = _elgg_namespace_plugin_private_setting('setting', '');
 
 		$q = "DELETE FROM {$db_prefix}private_settings
 			WHERE entity_guid = $this->guid
@@ -378,7 +378,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return mixed The setting string value or false
 	 */
-	public function getUserSetting($name, $user_guid = null) {
+	public function getUserSetting($name, $user_guid = 0) {
 		$user_guid = (int)$user_guid;
 
 		if ($user_guid) {
@@ -391,7 +391,7 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 
-		$name = elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
+		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 		return get_private_setting($user->guid, $name);
 	}
 
@@ -403,7 +403,7 @@ class ElggPlugin extends ElggObject {
 	 * @param int $user_guid The user GUID. Defaults to logged in.
 	 * @return array An array of key/value pairs.
 	 */
-	public function getAllUserSettings($user_guid = null) {
+	public function getAllUserSettings($user_guid = 0) {
 		$user_guid = (int)$user_guid;
 
 		if ($user_guid) {
@@ -418,7 +418,7 @@ class ElggPlugin extends ElggObject {
 
 		$db_prefix = elgg_get_config('dbprefix');
 		// send an empty name so we just get the first part of the namespace
-		$ps_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
+		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 		$ps_prefix_len = strlen($ps_prefix);
 
 		// Get private settings for user
@@ -453,7 +453,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @return mixed The new setting ID or false
 	 */
-	public function setUserSetting($name, $value, $user_guid = null) {
+	public function setUserSetting($name, $value, $user_guid = 0) {
 		$user_guid = (int)$user_guid;
 
 		if ($user_guid) {
@@ -477,11 +477,10 @@ class ElggPlugin extends ElggObject {
 		), $value);
 
 		// set the namespaced name.
-		$name = elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
+		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 
 		return set_private_setting($user->guid, $name, $value);
 	}
-
 
 	/**
 	 * Removes a user setting name and value.
@@ -490,7 +489,7 @@ class ElggPlugin extends ElggObject {
 	 * @param int    $user_guid The user GUID
 	 * @return bool
 	 */
-	public function unsetUserSetting($name, $user_guid = null) {
+	public function unsetUserSetting($name, $user_guid = 0) {
 		$user_guid = (int)$user_guid;
 
 		if ($user_guid) {
@@ -504,23 +503,26 @@ class ElggPlugin extends ElggObject {
 		}
 
 		// set the namespaced name.
-		$name = elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
+		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 
 		return remove_private_setting($user->guid, $name);
 	}
 
 	/**
-	 * Removes all User Settings for this plugin
+	 * Removes all User Settings for this plugin for a particular user
 	 *
 	 * Use {@link removeAllUsersSettings()} to remove all user
 	 * settings for all users.  (Note the plural 'Users'.)
+	 *
+	 * @warning 0 does not equal logged in user for this method!
+	 * @todo fix that
 	 *
 	 * @param int $user_guid The user GUID to remove user settings.
 	 * @return bool
 	 */
 	public function unsetAllUserSettings($user_guid) {
 		$db_prefix = get_config('dbprefix');
-		$ps_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
+		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
 		$q = "DELETE FROM {$db_prefix}private_settings
 			WHERE entity_guid = $user_guid
@@ -539,7 +541,7 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function unsetAllUsersSettings() {
 		$db_prefix = get_config('dbprefix');
-		$ps_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
+		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
 		$q = "DELETE FROM {$db_prefix}private_settings
 			WHERE name LIKE '$ps_prefix%'";
@@ -878,7 +880,7 @@ class ElggPlugin extends ElggObject {
 			$msg = 'Direct access of user settings is deprecated. Use ElggPlugin->getUserSetting()';
 			elgg_deprecated_notice($msg, 1.8);
 			$name = str_replace('plugin:setting:', '', $name);
-			$name = elgg_namespace_plugin_private_setting('user_setting', $name);
+			$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 		}
 
 		// See if its in our base attribute
