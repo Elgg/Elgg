@@ -39,7 +39,7 @@ foreach ($plugins as $plugin) {
 }
 
 // force regenerating plugin entities
-elgg_generate_plugin_entities();
+_elgg_generate_plugin_entities();
 
 // set the priorities for all plugins
 // this function rewrites it to a normal index so use the current one.

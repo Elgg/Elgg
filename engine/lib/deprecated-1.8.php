@@ -1614,7 +1614,7 @@ function regenerate_plugin_list($pluginorder = FALSE) {
 
 	// they're probably trying to set it?
 	if ($pluginorder) {
-		if (elgg_generate_plugin_entities()) {
+		if (_elgg_generate_plugin_entities()) {
 			// sort the plugins by the index numerically since we used
 			// weird indexes in the old system.
 			ksort($pluginorder, SORT_NUMERIC);
@@ -1623,7 +1623,7 @@ function regenerate_plugin_list($pluginorder = FALSE) {
 		return false;
 	} else {
 		// they're probably trying to regenerate from disk?
-		return elgg_generate_plugin_entities();
+		return _elgg_generate_plugin_entities();
 	}
 }
 

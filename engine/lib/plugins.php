@@ -49,34 +49,35 @@ define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
 
 
 /**
- * Returns a list of plugin IDs (dir names) from a dir.
+ * Returns a list of plugin directory names from a base directory.
  *
  * @param string $dir A dir to scan for plugins. Defaults to config's plugins_path.
+ *                    Must have a trailing slash.
  *
- * @return array
+ * @return array Array of directory names (not full paths)
  * @since 1.8.0
  * @access private
  */
-function elgg_get_plugin_ids_in_dir($dir = null) {
+function _elgg_get_plugin_dirs_in_dir($dir = null) {
 	if (!$dir) {
 		$dir = elgg_get_plugins_path();
 	}
 
-	$plugin_ids = array();
+	$plugin_dirs = array();
 	$handle = opendir($dir);
 
 	if ($handle) {
-		while ($plugin_id = readdir($handle)) {
+		while ($plugin_dir = readdir($handle)) {
 			// must be directory and not begin with a .
-			if (substr($plugin_id, 0, 1) !== '.' && is_dir($dir . $plugin_id)) {
-				$plugin_ids[] = $plugin_id;
+			if (substr($plugin_dir, 0, 1) !== '.' && is_dir($dir . $plugin_dir)) {
+				$plugin_dirs[] = $plugin_dir;
 			}
 		}
 	}
 
-	sort($plugin_ids);
+	sort($plugin_dirs);
 
-	return $plugin_ids;
+	return $plugin_dirs;
 }
 
 /**
@@ -85,29 +86,29 @@ function elgg_get_plugin_ids_in_dir($dir = null) {
  * but not actual files, will disable the ElggPlugin entities and mark as inactive.
  * The ElggPlugin object holds config data, so don't delete.
  *
- * @todo Crappy name?
  * @return bool
  * @since 1.8.0
  * @access private
  */
-function elgg_generate_plugin_entities() {
-	// @todo $site unused, can remove?
-	$site = get_config('site');
+function _elgg_generate_plugin_entities() {
 
-	$dir = elgg_get_plugins_path();
+	$mod_dir = elgg_get_plugins_path();
 	$db_prefix = elgg_get_config('dbprefix');
+
+	// ignore access in case this is called with no admin logged in - needed for creating plugins perhaps?
+	$old_ia = elgg_set_ignore_access(true);
+
+	// show hidden entities so that we can enable them if appropriate
+	$old_access = access_get_show_hidden_status();
+	access_show_hidden_entities(true);
 
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'plugin',
 		'selects' => array('plugin_oe.*'),
 		'joins' => array("JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"),
-		'limit' => ELGG_ENTITIES_NO_VALUE
+		'limit' => ELGG_ENTITIES_NO_VALUE,
 	);
-
-	$old_ia = elgg_set_ignore_access(true);
-	$old_access = access_get_show_hidden_status();
-	access_show_hidden_entities(true);
 	$known_plugins = elgg_get_entities_from_relationship($options);
 	/* @var ElggPlugin[] $known_plugins */
 
@@ -128,7 +129,7 @@ function elgg_generate_plugin_entities() {
 		$id_map[$plugin->getID()] = $i;
 	}
 
-	$physical_plugins = elgg_get_plugin_ids_in_dir($dir);
+	$physical_plugins = _elgg_get_plugin_dirs_in_dir($mod_dir);
 
 	if (!$physical_plugins) {
 		return false;
@@ -150,9 +151,9 @@ function elgg_generate_plugin_entities() {
 			// remove from the list of plugins to disable
 			unset($known_plugins[$index]);
 		} else {
-			// add new plugins
-			// priority is force to last in save() if not set.
-			$plugin = new ElggPlugin($plugin_id);
+			// create new plugin
+			// priority is forced to last in save() if not set.
+			$plugin = new ElggPlugin($mod_dir . $plugin_id);
 			$plugin->save();
 		}
 	}
@@ -361,11 +362,10 @@ function elgg_load_plugins() {
 /**
  * Returns an ordered list of plugins
  *
- * @param string $status      The status of the plugins. active, inactive, or all.
- * @param mixed  $site_guid   Optional site guid
+ * @param string $status    The status of the plugins. active, inactive, or all.
+ * @param mixed  $site_guid Optional site guid
  * @return ElggPlugin[]
  * @since 1.8.0
- * @access private
  */
 function elgg_get_plugins($status = 'active', $site_guid = null) {
 	$db_prefix = get_config('dbprefix');
