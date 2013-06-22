@@ -602,3 +602,14 @@ function _elgg_save_notification_user_settings() {
 		system_message(elgg_echo('notifications:usersettings:save:ok'));
 	}
 }
+
+/**
+ * @access private
+ */
+function _elgg_notifications_test($hook, $type, $tests) {
+	global $CONFIG;
+	$tests[] = "{$CONFIG->path}engine/tests/ElggCoreDatabaseQueueTest.php";
+	return $tests;
+}
+
+elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_notifications_test');

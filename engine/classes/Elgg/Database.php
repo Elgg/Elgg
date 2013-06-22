@@ -220,15 +220,13 @@ class Elgg_Database {
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
-	 * @internal Not returning the number of rows updated as this depends on the
-	 * type of update query and whether values were actually changed.
+	 * @param string $query      The query to run.
+	 * @param bool   $getNumRows Return the number of rows affected (default: false)
 	 *
-	 * @param string $query The query to run.
-	 *
-	 * @return bool
+	 * @return bool|int
 	 * @throws DatabaseException
 	 */
-	public function updateData($query) {
+	public function updateData($query, $getNumRows = false) {
 
 		$this->logger->log("DB query $query", Elgg_Logger::INFO);
 
@@ -236,7 +234,15 @@ class Elgg_Database {
 
 		$this->invalidateQueryCache();
 
-		return $this->executeQuery("$query", $dblink);
+		if ($this->executeQuery("$query", $dblink)) {
+			if ($getNumRows) {
+				return mysql_affected_rows($dblink);
+			} else {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	/**

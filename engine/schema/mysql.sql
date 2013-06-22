@@ -189,6 +189,16 @@ CREATE TABLE `prefix_private_settings` (
   KEY `value` (`value`(50))
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
+-- queue for asynchronous operations
+CREATE TABLE `prefix_queue` (
+  `queue` varchar(255) NOT NULL,
+  `data` mediumblob NOT NULL,
+  `timestamp` int(11) NOT NULL,
+  `worker` varchar(32) NULL,
+  KEY `queue` (`queue`),
+  KEY `retrieve` (`timestamp`,`worker`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
 -- activity stream
 CREATE TABLE `prefix_river` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
