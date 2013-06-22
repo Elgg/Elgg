@@ -104,6 +104,8 @@ return array(
 	'changebookmark' => 'Please change your bookmark for this page',
 	'noaccess' => 'The content you were trying to view has been removed or you do not have permission to view it.',
 	'error:missing_data' => 'There was some data missing in your request',
+	'save:fail' => 'There was a failure saving your data',
+	'save:success' => 'Your data was saved',
 
 	'error:default:title' => 'Oops...',
 	'error:default:content' => 'Oops... something went wrong.',
@@ -451,6 +453,8 @@ return array(
 	'admin:appearance' => 'Appearance',
 	'admin:administer_utilities' => 'Utilities',
 	'admin:develop_utilities' => 'Utilities',
+	'admin:configure_utilities' => 'Utilities',
+	'admin:configure_utilities:robots' => 'Robots.txt',
 
 	'admin:users' => "Users",
 	'admin:users:online' => 'Currently Online',
@@ -668,6 +672,10 @@ three sections:
 	'admin:default_widgets:unknown_type' => 'Unknown widget type',
 	'admin:default_widgets:instructions' => 'Add, remove, position, and configure default widgets for the selected widget page.
 These changes will only affect new users on the site.',
+
+	'admin:robots.txt:instructions' => "Edit this site's robots.txt file below",
+	'admin:robots.txt:plugins' => "Plugins are adding the following to the robots.txt file",
+	'admin:robots.txt:subdir' => "The robots.txt tool will not work because Elgg is installed in a sub-directory",
 
 /**
  * User settings

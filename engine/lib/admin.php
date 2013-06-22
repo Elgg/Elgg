@@ -239,6 +239,7 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/site/update_advanced', '', 'admin');
 	elgg_register_action('admin/site/flush_cache', '', 'admin');
 	elgg_register_action('admin/site/unlock_upgrade', '', 'admin');
+	elgg_register_action('admin/site/set_robots', '', 'admin');
 
 	elgg_register_action('admin/menu/save', '', 'admin');
 
@@ -294,13 +295,17 @@ function _elgg_admin_init() {
 	elgg_register_admin_menu_item('configure', 'settings', null, 100);
 	elgg_register_admin_menu_item('configure', 'basic', 'settings', 10);
 	elgg_register_admin_menu_item('configure', 'advanced', 'settings', 20);
+	// plugin settings are added in _elgg_admin_add_plugin_settings_menu() via the admin page handler
+	// for performance reasons.
+
+	// appearance
 	elgg_register_admin_menu_item('configure', 'menu_items', 'appearance', 30);
 	elgg_register_admin_menu_item('configure', 'profile_fields', 'appearance', 40);
 	// default widgets is added via an event handler elgg_default_widgets_init() in widgets.php
 	// because it requires additional setup.
 
-	// plugin settings are added in _elgg_admin_add_plugin_settings_menu() via the admin page handler
-	// for performance reasons.
+	// configure utilities
+	elgg_register_admin_menu_item('configure', 'robots', 'configure_utilities');
 
 	// we want plugin settings menu items to be sorted alphabetical
 	if (elgg_in_context('admin')) {
@@ -334,6 +339,7 @@ function _elgg_admin_init() {
 	elgg_register_page_handler('admin', '_elgg_admin_page_handler');
 	elgg_register_page_handler('admin_plugin_screenshot', '_elgg_admin_plugin_screenshot_page_handler');
 	elgg_register_page_handler('admin_plugin_text_file', '_elgg_admin_markdown_page_handler');
+	elgg_register_page_handler('robots.txt', '_elgg_robots_page_handler');
 }
 
 /**
@@ -620,6 +626,24 @@ function _elgg_admin_markdown_page_handler($pages) {
 	));
 	
 	echo elgg_view_page($title, $body, 'admin');
+	return true;
+}
+
+/**
+ * Handle request for robots.txt
+ *
+ * @access private
+ */
+function _elgg_robots_page_handler() {
+	$site = elgg_get_site_entity();
+	header("Content-type: text/plain");
+	$content = $site->getPrivateSetting('robots.txt');
+	$plugin_content = elgg_trigger_plugin_hook('robots.txt', 'site', array('site' => $site), '');
+	if ($plugin_content) {
+		$content = $content . "\n\n" . $plugin_content;
+	}
+	echo $content;
+
 	return true;
 }
 
