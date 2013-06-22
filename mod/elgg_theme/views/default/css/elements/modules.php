@@ -124,7 +124,7 @@
 
 .elgg-module-widget {
 	border: 1px solid #DCDCDC;
-	margin-bottom: 15px;
+	margin: 0 10px 15px;
 	position: relative;
 }
 .elgg-module-widget:hover {

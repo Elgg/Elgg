@@ -13,7 +13,7 @@
 *****************************************/
 #dashboard-info {
 	border: 1px solid #DCDCDC;
-	margin: 0 0 15px 0
+	margin: 0 10px 15px;
 }
 .elgg-sidebar input[type=text],
 .elgg-sidebar input[type=password] {

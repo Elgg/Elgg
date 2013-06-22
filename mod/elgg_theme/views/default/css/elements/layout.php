@@ -93,6 +93,9 @@
 .elgg-layout {
 	min-height: 360px;
 }
+.elgg-layout-widgets > .elgg-widgets {
+	float: right;
+}
 .elgg-layout-error {
 	padding-top: 20px;
 }
