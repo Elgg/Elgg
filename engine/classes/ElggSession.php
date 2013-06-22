@@ -4,6 +4,7 @@
  * Elgg Session Management
  *
  * Reserved keys: last_forward_from, msg, sticky_forms, user, guid, id, code, name, username
+ * Deprecated keys: user, id, code, name, username
  * 
  * ArrayAccess was deprecated in Elgg 1.9. This means you should use 
  * $session->get('foo') rather than $session['foo'].
@@ -19,6 +20,9 @@ class ElggSession implements ArrayAccess {
 	/** @var Elgg_Http_SessionStorage */
 	protected $storage;
 
+	/** @var ElggUser */
+	protected $loggedInUser;
+
 	/**
 	 * Constructor
 	 *
@@ -27,6 +31,7 @@ class ElggSession implements ArrayAccess {
 	 */
 	public function __construct(Elgg_Http_SessionStorage $storage) {
 		$this->storage = $storage;
+		$this->loggedInUser = null;
 	}
 
 	/**
@@ -38,6 +43,9 @@ class ElggSession implements ArrayAccess {
 	 */
 	public function start() {
 		$result = $this->storage->start();
+		if ($this->has('guid')) {
+			$this->loggedInUser = get_user($this->get('guid'));
+		}
 		$this->generateSessionToken();
 		return $result;
 	}
@@ -63,6 +71,7 @@ class ElggSession implements ArrayAccess {
 	 */
 	public function invalidate() {
 		$this->storage->clear();
+		$this->loggedInUser = null;
 		$result = $this->migrate(true);
 		$this->generateSessionToken();
 		return $result;
@@ -177,6 +186,39 @@ class ElggSession implements ArrayAccess {
 	}
 
 	/**
+	 * Sets the logged in user
+	 * 
+	 * @param ElggUser $user The user who is logged in
+	 * @return void
+	 * @since 1.9
+	 */
+	public function setLoggedInUser(ElggUser $user) {
+		$this->set('guid', $user->guid);
+		$this->loggedInUser = $user;
+	}
+
+	/**
+	 * Gets the logged in user
+	 * 
+	 * @return ElggUser
+	 * @since 1.9
+	 */
+	public function getLoggedInUser() {
+		return $this->loggedInUser;
+	}
+
+	/**
+	 * Remove the logged in user
+	 * 
+	 * @return void
+	 * @since 1.9
+	 */
+	public function removeLoggedInUser() {
+		$this->loggedInUser = null;
+		$this->remove('guid');
+	}
+
+	/**
 	 * Adds a token to the session
 	 * 
 	 * This is used in creation of CSRF token
@@ -231,6 +273,27 @@ class ElggSession implements ArrayAccess {
 	public function offsetGet($key) {
 		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
 
+		if (in_array($key, array('user', 'id', 'code', 'name', 'username'))) {
+			elgg_deprecated_notice("Only 'guid' is stored in session for user now", 1.9);
+			if ($this->loggedInUser) {
+				switch ($key) {
+					case 'user':
+						return $this->loggedInUser;
+						break;
+					case 'id':
+						return $this->loggedInUser->guid;
+						break;
+					case 'code':
+					case 'name':
+					case 'username':
+						return $this->loggedInUser->$key;
+						break;
+				}
+			} else {
+				return null;
+			}
+		}
+
 		if (isset($_SESSION[$key])) {
 			return $_SESSION[$key];
 		}
@@ -272,6 +335,15 @@ class ElggSession implements ArrayAccess {
 	 */
 	public function offsetExists($offset) {
 		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
+
+		if (in_array($offset, array('user', 'id', 'code', 'name', 'username'))) {
+			elgg_deprecated_notice("Only 'guid' is stored in session for user now", 1.9);
+			if ($this->loggedInUser) {
+				return true;
+			} else {
+				return false;
+			}
+		}
 
 		if (isset($_SESSION[$offset])) {
 			return true;
