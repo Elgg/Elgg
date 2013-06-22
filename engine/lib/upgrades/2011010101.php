@@ -34,7 +34,7 @@ $q = "SELECT * FROM {$db_prefix}entities e
 $plugins = get_data($q);
 
 foreach ($plugins as $plugin) {
-	$priority = elgg_namespace_plugin_private_setting('internal', 'priority');
+	$priority = _elgg_namespace_plugin_private_setting('internal', 'priority');
 	set_private_setting($plugin->guid, $priority, 0);
 }
 

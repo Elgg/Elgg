@@ -124,6 +124,7 @@ function twitter_api_login() {
 	// else, create a new user.
 	$options = array(
 		'type' => 'user',
+		'plugin_id' => 'twitter_api',
 		'plugin_user_setting_name_value_pairs' => array(
 			'access_key' => $token['oauth_token'],
 			'access_secret' => $token['oauth_token_secret'],
@@ -283,6 +284,7 @@ function twitter_api_authorize() {
 	// make sure no other users are registered to this twitter account.
 	$options = array(
 		'type' => 'user',
+		'plugin_id' => 'twitter_api',
 		'plugin_user_setting_name_value_pairs' => array(
 			'access_key' => $token['oauth_token'],
 			'access_secret' => $token['oauth_token_secret'],
