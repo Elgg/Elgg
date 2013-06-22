@@ -674,6 +674,7 @@ three sections:
 These changes will only affect new users on the site.',
 
 	'admin:robots.txt:instructions' => "Edit this site's robots.txt file below",
+	'admin:robots.txt:plugins' => "Plugins are adding the following to the robots.txt file",
 
 /**
  * User settings
