@@ -165,9 +165,9 @@ function twitter_api_login() {
 		}
 
 		// set twitter services tokens
-		elgg_set_plugin_user_setting('twitter_name', $token['screen_name'], $user->guid);
-		elgg_set_plugin_user_setting('access_key', $token['oauth_token'], $user->guid);
-		elgg_set_plugin_user_setting('access_secret', $token['oauth_token_secret'], $user->guid);
+		elgg_set_plugin_user_setting('twitter_name', $token['screen_name'], $user->guid, 'twitter_api');
+		elgg_set_plugin_user_setting('access_key', $token['oauth_token'], $user->guid, 'twitter_api');
+		elgg_set_plugin_user_setting('access_secret', $token['oauth_token_secret'], $user->guid, 'twitter_api');
 
 		// pull in Twitter icon
 		twitter_api_update_user_avatar($user, $twitter->profile_image_url);
@@ -296,16 +296,16 @@ function twitter_api_authorize() {
 	if ($users) {
 		foreach ($users as $user) {
 			// revoke access
-			elgg_unset_plugin_user_setting('twitter_name', $user->getGUID());
-			elgg_unset_plugin_user_setting('access_key', $user->getGUID());
-			elgg_unset_plugin_user_setting('access_secret', $user->getGUID());
+			elgg_unset_plugin_user_setting('twitter_name', $user->getGUID(), 'twitter_api');
+			elgg_unset_plugin_user_setting('access_key', $user->getGUID(), 'twitter_api');
+			elgg_unset_plugin_user_setting('access_secret', $user->getGUID(), 'twitter_api');
 		}
 	}
 
 	// register user's access tokens
-	elgg_set_plugin_user_setting('twitter_name', $token['screen_name']);
-	elgg_set_plugin_user_setting('access_key', $token['oauth_token']);
-	elgg_set_plugin_user_setting('access_secret', $token['oauth_token_secret']);
+	elgg_set_plugin_user_setting('twitter_name', $token['screen_name'], 0, 'twitter_api');
+	elgg_set_plugin_user_setting('access_key', $token['oauth_token'], 0, 'twitter_api');
+	elgg_set_plugin_user_setting('access_secret', $token['oauth_token_secret'], 0, 'twitter_api');
 	
 	// trigger authorization hook
 	elgg_trigger_plugin_hook('authorize', 'twitter_api', array('token' => $token));
@@ -319,9 +319,9 @@ function twitter_api_authorize() {
  */
 function twitter_api_revoke() {
 	// unregister user's access tokens
-	elgg_unset_plugin_user_setting('twitter_name');
-	elgg_unset_plugin_user_setting('access_key');
-	elgg_unset_plugin_user_setting('access_secret');
+	elgg_unset_plugin_user_setting('twitter_name', 0, 'twitter_api');
+	elgg_unset_plugin_user_setting('access_key', 0, 'twitter_api');
+	elgg_unset_plugin_user_setting('access_secret', 0, 'twitter_api');
 
 	system_message(elgg_echo('twitter_api:revoke:success'));
 	forward('settings/plugins', 'twitter_api');
@@ -375,7 +375,7 @@ function twitter_api_get_access_token($oauth_verifier = FALSE) {
  */
 function twitter_api_allow_new_users_with_twitter() {
 	$site_reg = elgg_get_config('allow_registration');
-	$twitter_reg = elgg_get_plugin_setting('new_users');
+	$twitter_reg = elgg_get_plugin_setting('new_users', 'twitter_api');
 
 	if ($site_reg || (!$site_reg && $twitter_reg == 'yes')) {
 		return true;

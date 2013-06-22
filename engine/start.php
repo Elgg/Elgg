@@ -123,7 +123,7 @@ foreach ($lib_files as $file) {
 elgg_trigger_event('boot', 'system');
 
 // Load the plugins that are active
-elgg_load_plugins();
+_elgg_load_plugins();
 
 // @todo move loading plugins into a single boot function that replaces 'boot', 'system' event
 // and then move this code in there.

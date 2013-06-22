@@ -208,7 +208,7 @@ class ElggPlugin extends ElggObject {
 		// if no priority assume a priority of 1
 		$old_priority = (int) $this->getPriority();
 		$old_priority = (!$old_priority) ? 1 : $old_priority;
-		$max_priority = elgg_get_max_plugin_priority();
+		$max_priority = _elgg_get_max_plugin_priority();
 
 		// can't use switch here because it's not strict and
 		// php evaluates +1 == 1
@@ -880,7 +880,7 @@ class ElggPlugin extends ElggObject {
 			$msg = 'Direct access of user settings is deprecated. Use ElggPlugin->getUserSetting()';
 			elgg_deprecated_notice($msg, 1.8);
 			$name = str_replace('plugin:setting:', '', $name);
-			$name = _elgg_namespace_plugin_private_setting('user_setting', $name);
+			$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
 		}
 
 		// See if its in our base attribute

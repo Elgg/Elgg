@@ -174,7 +174,7 @@ function _elgg_generate_plugin_entities() {
 	access_show_hidden_entities($old_access);
 	elgg_set_ignore_access($old_ia);
 
-	elgg_reindex_plugin_priorities();
+	_elgg_reindex_plugin_priorities();
 
 	return true;
 }
@@ -231,7 +231,7 @@ function elgg_get_plugin_from_id($plugin_id) {
  *
  * @warning This checks only plugins that are registered in the system!
  * If the plugin cache is outdated, be sure to regenerate it with
- * {@link elgg_generate_plugin_objects()} first.
+ * {@link _elgg_generate_plugin_objects()} first.
  *
  * @param string $id The plugin ID.
  * @since 1.8.0
@@ -250,7 +250,7 @@ function elgg_plugin_exists($id) {
  * @since 1.8.0
  * @access private
  */
-function elgg_get_max_plugin_priority() {
+function _elgg_get_max_plugin_priority() {
 	$db_prefix = get_config('dbprefix');
 	$priority = _elgg_namespace_plugin_private_setting('internal', 'priority');
 	$plugin_subtype = get_subtype_id('object', 'plugin');
@@ -311,7 +311,7 @@ function elgg_is_active_plugin($plugin_id, $site_guid = null) {
  * @since 1.8.0
  * @access private
  */
-function elgg_load_plugins() {
+function _elgg_load_plugins() {
 	$plugins_path = elgg_get_plugins_path();
 	$start_flags = ELGG_PLUGIN_INCLUDE_START |
 					ELGG_PLUGIN_REGISTER_VIEWS |
@@ -430,7 +430,7 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
  * @since 1.8.0
  * @access private
  */
-function elgg_set_plugin_priorities(array $order) {
+function _elgg_set_plugin_priorities(array $order) {
 	$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
 
 	$plugins = elgg_get_plugins('any');
@@ -486,8 +486,8 @@ function elgg_set_plugin_priorities(array $order) {
  * @since 1.8.0
  * @access private
  */
-function elgg_reindex_plugin_priorities() {
-	return elgg_set_plugin_priorities(array());
+function _elgg_reindex_plugin_priorities() {
+	return _elgg_set_plugin_priorities(array());
 }
 
 /**
@@ -597,7 +597,7 @@ global $ELGG_PLUGINS_PROVIDES_CACHE;
  * @since 1.8.0
  * @access private
  */
-function elgg_get_plugins_provides($type = null, $name = null) {
+function _elgg_get_plugins_provides($type = null, $name = null) {
 	global $ELGG_PLUGINS_PROVIDES_CACHE;
 	if (!isset($ELGG_PLUGINS_PROVIDES_CACHE)) {
 		$active_plugins = elgg_get_plugins('active');
@@ -669,8 +669,8 @@ function _elgg_invalidate_plugins_provides_cache() {
  * @since 1.8.0
  * @access private
  */
-function elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
-	$provided = elgg_get_plugins_provides($type, $name);
+function _elgg_check_plugins_provides($type, $name, $version = null, $comparison = 'ge') {
+	$provided = _elgg_get_plugins_provides($type, $name);
 	if (!$provided) {
 		return array(
 			'status' => false,
@@ -705,7 +705,7 @@ function elgg_check_plugins_provides($type, $name, $version = null, $comparison 
  * @since 1.8.0
  * @access private
  */
-function elgg_get_plugin_dependency_strings($dep) {
+function _elgg_get_plugin_dependency_strings($dep) {
 	$dep_system = elgg_extract('type', $dep);
 	$info = elgg_extract('dep', $dep);
 	$type = elgg_extract('type', $info);

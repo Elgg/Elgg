@@ -43,7 +43,7 @@ _elgg_generate_plugin_entities();
 
 // set the priorities for all plugins
 // this function rewrites it to a normal index so use the current one.
-elgg_set_plugin_priorities($old_plugin_order);
+_elgg_set_plugin_priorities($old_plugin_order);
 
 // add relationships for enabled plugins
 if ($old_enabled_plugins) {
