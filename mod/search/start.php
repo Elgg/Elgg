@@ -53,6 +53,8 @@ function search_init() {
 
 	// extend view for elgg topbar search box
 	elgg_extend_view('page/elements/header', 'search/header');
+
+	elgg_register_plugin_hook_handler('robots.txt', 'site', 'search_exclude_robots');
 }
 
 /**
@@ -502,4 +504,25 @@ function search_get_order_by_sql($entities_table, $type_table, $sort, $order) {
 	}
 
 	return $order_by;
+}
+
+/**
+ * Exclude robots from indexing search pages
+ *
+ * This is good for performance since search is slow and there are many pages all
+ * with the same content.
+ *
+ * @param string $hook Hook name
+ * @param string $type Hook type
+ * @param string $text robots.txt content for plugins
+ * @return string
+ */
+function search_exclude_robots($hook, $type, $text) {
+	$text .= <<<TEXT
+User-agent: *
+Disallow: /search/
+
+TEXT;
+
+	return $text;
 }
