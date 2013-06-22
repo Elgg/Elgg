@@ -11,7 +11,9 @@
 elgg_load_js('lightbox');
 elgg_load_css('lightbox');
 
-elgg_generate_plugin_entities();
+// @todo this should occur in the controller code
+_elgg_generate_plugin_entities();
+
 $installed_plugins = elgg_get_plugins('any');
 $show_category = get_input('category', 'all');
 $sort = get_input('sort', 'priority');

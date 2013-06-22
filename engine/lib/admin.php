@@ -525,7 +525,7 @@ function _elgg_admin_plugin_screenshot_page_handler($pages) {
 	$filename = implode('/', $filename_parts);
 	$filename = sanitise_filepath($filename, false);
 
-	$plugin = new ElggPlugin($plugin_id);
+	$plugin = elgg_get_plugin_from_id($plugin_id);
 	if (!$plugin) {
 		$file = elgg_get_root_path() . '_graphics/icons/default/medium.png';
 	} else {

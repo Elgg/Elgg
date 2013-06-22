@@ -1509,7 +1509,7 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function enablePlugins() {
-		elgg_generate_plugin_entities();
+		_elgg_generate_plugin_entities();
 		$plugins = elgg_get_plugins('any');
 		foreach ($plugins as $plugin) {
 			if ($plugin->getManifest()) {
