@@ -2063,7 +2063,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 		foreach ($entities as $entity) {
 			$this->assertTrue(in_array($entity->getGUID(), $guids));
-			$annotations = $entity->getAnnotations($annotation_name);
+			$annotations = $entity->getAnnotations(array('annotation_name' => $annotation_name));
 			$this->assertEqual(count($annotations), 1);
 
 			$this->assertEqual($annotations[0]->name, $annotation_name);
@@ -2638,7 +2638,7 @@ class ElggCoreEntityGetterFunctionsTest extends ElggCoreUnitTest {
 
 			foreach ($es as $i => $e) {
 				$value = 0;
-				$as = $e->getAnnotations($name);
+				$as = $e->getAnnotations(array('annotation_name' => $name));
 				// should only ever be 2
 				$this->assertEqual(2, count($as));
 
