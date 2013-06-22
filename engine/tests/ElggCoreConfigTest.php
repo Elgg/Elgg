@@ -116,6 +116,10 @@ class ElggCoreConfigTest extends ElggCoreUnitTest {
 		delete_data("DELETE FROM {$CONFIG->dbprefix}datalists WHERE name = '$name'");
 	}
 
+	public function testDatalistGetNonExistentName() {
+		$this->assertIdentical(null, datalist_get('imaginary value'));
+	}
+
 	public function testElggSaveConfigWithArrayForDatalist() {
 		$this->assertFalse(elgg_save_config('testing', array('1'), null));
 	}

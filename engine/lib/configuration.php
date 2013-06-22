@@ -234,7 +234,7 @@ function datalist_get($name) {
 
 	// not in cache and not in memcache so check database
 	$escaped_name = sanitize_string($name);
-	$result = get_data_row("SELECT * WHERE {$CONFIG->dbprefix}datalists WHERE name = '$escaped_name'");
+	$result = get_data_row("SELECT * FROM {$CONFIG->dbprefix}datalists WHERE name = '$escaped_name'");
 	if ($result) {
 		$DATALIST_CACHE[$result->name] = $result->value;
 
