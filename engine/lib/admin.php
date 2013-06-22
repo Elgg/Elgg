@@ -235,6 +235,8 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/user/makeadmin', '', 'admin');
 	elgg_register_action('admin/user/removeadmin', '', 'admin');
 
+	elgg_register_action('admin/mass_mailout/send', '', 'admin');
+
 	elgg_register_action('admin/site/update_basic', '', 'admin');
 	elgg_register_action('admin/site/update_advanced', '', 'admin');
 	elgg_register_action('admin/site/flush_cache', '', 'admin');
@@ -270,6 +272,9 @@ function _elgg_admin_init() {
 	elgg_register_admin_menu_item('administer', 'statistics', null, 20);
 	elgg_register_admin_menu_item('administer', 'overview', 'statistics');
 	elgg_register_admin_menu_item('administer', 'server', 'statistics');
+	
+	// utilities
+	elgg_register_admin_menu_item('administer', 'mass_mailout', 'administer_utilities');
 
 	// users
 	elgg_register_admin_menu_item('administer', 'users', null, 20);

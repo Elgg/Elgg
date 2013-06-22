@@ -8,6 +8,7 @@
 if (0) { ?><script><?php }
 ?>
 elgg.provide('elgg.admin');
+elgg.provide('elgg.admin.massMailout');
 
 elgg.admin.init = function () {
 
@@ -48,6 +49,9 @@ elgg.admin.init = function () {
 
 	// admin notices delete ajax
 	$('a.elgg-admin-notice').click(elgg.admin.deleteNotice);
+
+	// ajax mass mailout submit
+	$('.elgg-form-admin-mass-mailout-send').submit(elgg.admin.massMailout.submit); 
 };
 
 /**
@@ -157,6 +161,70 @@ elgg.admin.deleteNotice = function(e) {
 			$container.slideUp('medium');
 		}
 	});
+};
+
+
+/**
+ * Fires the ajax actions to send emails.
+ * 
+ * @param {Object} request
+ * @return void
+ */
+elgg.admin.massMailout.send = function(request) {
+	elgg.action('admin/mass_mailout/send', {
+		data: request,
+		success: function(response) {
+			$('#progressbar').progressbar('value', response.output.sent * 100 / response.output.total);
+			if (response.output.sent < response.output.total) {
+				request.offset += request.limit; 
+				elgg.admin.massMailout.send(request);
+			}
+		}
+	});
+};
+
+/**
+ * Display the mass mailout progress bar
+ * 
+ * @return void
+ */
+elgg.admin.massMailout.progressBar = function() {
+	$('#progressbar').progressbar({
+		value: false,
+		change: function() {
+			$('.progress-label', this).text( parseInt($(this).progressbar( "value" )) + "%" );
+		},
+		complete: function() {
+			$('.progress-label', this).text( elgg.echo('admin:mass_mailout:success') );
+		}
+	}).fadeIn();
+}
+
+/**
+ * Event handler for mass mailout form submit.
+ * 
+ * @param {Object} e  Event object.
+ * @return void
+ */
+elgg.admin.massMailout.submit = function(e) {
+	var subject = $(this).find('[name="subject"]').val();
+	var message = $(this).find('[name="message"]').val();
+
+	if (!subject || !message) {
+		elgg.register_error(elgg.echo('admin:mass_mailout:inputs'));
+		e.preventDefault();
+		return;
+	}
+
+	elgg.admin.massMailout.send({
+		subject: subject,
+		message: message,
+		offset: 0,
+		limit: 10
+	});
+	$(this).fadeOut();
+	elgg.admin.massMailout.progressBar();
+	e.preventDefault();
 };
 
 elgg.register_hook_handler('init', 'system', elgg.admin.init, 1000);

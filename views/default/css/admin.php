@@ -1630,3 +1630,39 @@ table.mceLayout {
 .mvs{margin-top:5px;margin-bottom:5px}
 .mvm{margin-top:10px;margin-bottom:10px}
 .mvl{margin-top:20px;margin-bottom:20px}
+
+
+/* ***************************************
+	MASS MAILOUT
+*************************************** */
+.mass-mailout-progressbar {
+	height: 2em;
+	text-align: left;
+	overflow: hidden;
+	font-family: Verdana,Arial,sans-serif;
+	font-size: 1.1em;
+	border-radius: 4px;
+}
+.mass-mailout-progressbar .ui-progressbar-value {
+	margin: -1px;
+	height: 100%;
+}
+.mass-mailout-progressbar.ui-widget-content {
+	border: 1px solid #aaaaaa;
+	background: #ffffff;
+	color: #222222;
+}
+.mass-mailout-progressbar .ui-widget-header {
+	border: 1px solid #aaaaaa;
+	background: #cccccc;
+	color: #222222;
+	font-weight: bold;
+}
+.mass-mailout-progressbar .progress-label {
+	position: absolute;
+	width: 100%;
+	text-align: center;
+	margin-top: 5px;
+	font-weight: bold;
+	text-shadow: 1px 1px 0 #fff;
+}
