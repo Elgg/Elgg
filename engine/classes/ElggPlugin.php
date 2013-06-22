@@ -31,38 +31,45 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Loads the plugin by GUID or path.
+	 * Creates a new plugin from path
+	 *
+	 * @internal also supports database objects
 	 *
 	 * @warning Unlike other ElggEntity objects, you cannot null instantiate
-	 *          ElggPlugin. You must point it to an actual plugin GUID or location.
+	 *          ElggPlugin. You must provide the path to the plugin directory.
 	 *
-	 * @param mixed $plugin The GUID of the ElggPlugin object or the path of the plugin to load.
+	 * @param string $path The absolute path of the plugin
 	 *
 	 * @throws PluginException
 	 */
-	public function __construct($plugin) {
-		if (!$plugin) {
-			throw new PluginException("ElggPlugin cannot be null instantiated. You must pass a GUID, a plugin ID, or a full path.");
+	public function __construct($path) {
+		if (!$path) {
+			throw new PluginException("ElggPlugin cannot be null instantiated. You must pass a full path.");
 		}
 
-		// ElggEntity can be instantiated with a guid or an object.
-		// @todo plugins w/id 12345
-		if (is_numeric($plugin) || is_object($plugin)) {
-			parent::__construct($plugin);
+		if (is_object($path)) {
+			// database object
+			parent::__construct($path);
+			$this->path = elgg_get_plugins_path() . $this->getID();
+		} else if (is_numeric($path)) {
+			// guid
+			// @todo plugins with directory names of '12345'
+			elgg_deprecated_notice("Use elgg_get_plugin_from_id() to load a plugin.", 1.9);
+			parent::__construct($path);
 			$this->path = elgg_get_plugins_path() . $this->getID();
 		} else {
-			$plugin_path = elgg_get_plugins_path();
+			$mod_dir = elgg_get_plugins_path();
 
-			// not a full path, so assume an id
-			// use the default path
-			if (strpos($plugin, $plugin_path) !== 0) {
-				$plugin = $plugin_path . $plugin;
+			// not a full path, so assume a directory name and use the default path
+			if (strpos($path, $mod_dir) !== 0) {
+				elgg_deprecated_notice("You should pass a full path to ElggPlugin.", 1.9);
+				$path = $mod_dir . $path;
 			}
 
 			// path checking is done in the package
-			$plugin = sanitise_filepath($plugin);
-			$this->path = $plugin;
-			$path_parts = explode('/', rtrim($plugin, '/'));
+			$path = sanitise_filepath($path);
+			$this->path = $path;
+			$path_parts = explode('/', rtrim($path, '/'));
 			$plugin_id = array_pop($path_parts);
 			$this->pluginID = $plugin_id;
 
@@ -346,6 +353,7 @@ class ElggPlugin extends ElggObject {
 	 *
 	 * @todo Should be a better way to do this without dropping to raw SQL.
 	 * @todo If we could namespace the plugin settings this would be cleaner.
+	 * @todo this shouldn't work because ps_prefix will be empty string
 	 * @return bool
 	 */
 	public function unsetAllSettings() {

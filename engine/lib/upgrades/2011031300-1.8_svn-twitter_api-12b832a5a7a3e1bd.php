@@ -10,7 +10,7 @@
 $ia = elgg_set_ignore_access(true);
 
 // make sure we have updated plugins
-elgg_generate_plugin_entities();
+_elgg_generate_plugin_entities();
 
 $show_hidden = access_get_show_hidden_status();
 access_show_hidden_entities(true);
