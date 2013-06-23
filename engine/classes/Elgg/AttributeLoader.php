@@ -98,6 +98,11 @@ class Elgg_AttributeLoader {
 	public $full_loader = '';
 
 	/**
+	 * @var array retrieved values that are not attributes
+	 */
+	protected $additional_select_values = array();
+
+	/**
 	 * Constructor
 	 * 
 	 * @param string $class             class of object being loaded
@@ -155,6 +160,15 @@ class Elgg_AttributeLoader {
 		}
 	}
 
+	/**
+	 * Get values selected from the database that are not attributes
+	 *
+	 * @return array
+	 */
+	public function getAdditionalSelectValues() {
+		return $this->additional_select_values;
+	}
+	
 	/**
 	 * Get all required attributes for the entity, validating any that are passed in. Returns empty array
 	 * if can't be loaded (Check $failure_reason).
@@ -232,6 +246,15 @@ class Elgg_AttributeLoader {
 				$row = array_merge($row, $fetched);
 			}
 		}
+		
+		// filter out additional columns and keep separately
+		$this->additional_select_values = array();
+		foreach ($row as $key => $val) {
+			if (!in_array($key, self::$primary_attr_names) && !in_array($key, $this->secondary_attr_names)) {
+				$this->additional_select_values[$key] = $val;
+				unset($row[$key]);
+			}
+		}
 
 		$row = $this->filterAddedColumns($row);
 
@@ -273,10 +296,6 @@ class Elgg_AttributeLoader {
 		$acceptable_attrs = self::$primary_attr_names;
 		array_splice($acceptable_attrs, count($acceptable_attrs), 0, $this->secondary_attr_names);
 		$acceptable_attrs = array_combine($acceptable_attrs, $acceptable_attrs);
-
-		// @todo remove these when #4584 is in place
-		$acceptable_attrs['tables_split'] = true;
-		$acceptable_attrs['tables_loaded'] = true;
 
 		foreach ($row as $key => $val) {
 			if (!isset($acceptable_attrs[$key])) {

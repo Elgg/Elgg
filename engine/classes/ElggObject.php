@@ -103,6 +103,7 @@ class ElggObject extends ElggEntity {
 
 		$this->attributes = $attrs;
 		$this->tables_loaded = 2;
+		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
 		_elgg_cache_entity($this);
 
 		return true;
