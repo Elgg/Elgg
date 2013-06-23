@@ -1003,6 +1003,7 @@ function _elgg_fetch_entities_from_sql($sql, ElggBatch $batch = null) {
 		}
 		$entity = _elgg_retrieve_cached_entity($row->guid);
 		if ($entity) {
+			$entity->refresh($row);
 			$rows[$i] = $entity;
 			continue;
 		}
@@ -1780,15 +1781,15 @@ function _elgg_entities_gc() {
  *
  * @param string $hook   unit_test
  * @param string $type   system
- * @param mixed  $value  Array of tests
- * @param mixed  $params Params
+ * @param array  $value  Array of tests
  *
  * @return array
  * @access private
  */
-function _elgg_entities_test($hook, $type, $value, $params) {
+function _elgg_entities_test($hook, $type, $value) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreEntityTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAttributeLoaderTest.php';
 	return $value;
 }
 

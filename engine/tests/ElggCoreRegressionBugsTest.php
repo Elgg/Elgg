@@ -88,7 +88,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			'x2' => 100,
 			'y2' => 150
 		);
-		
+
 		// should get back the same x/y offset == x1, y1 and an image of 25x25 because no upscale
 		$params = get_image_resize_parameters($orig_width, $orig_height, $options);
 
@@ -113,12 +113,12 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 
 		$group = new ElggGroup();
 		$group->save();
-		
+
 		// disable access overrides because we're admin.
 		$ia = elgg_set_ignore_access(false);
 
 		$this->assertFalse(can_write_to_container($user->guid, $object->guid));
-		
+
 		global $elgg_test_user;
 		$elgg_test_user = $user;
 
@@ -130,7 +130,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 				return true;
 			}
 		}
-		
+
 		elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'can_write_to_container_test_hook');
 		$this->assertTrue(can_write_to_container($user->guid, $object->guid));
 		elgg_unregister_plugin_hook_handler('container_permissions_check', 'all', 'can_write_to_container_test_hook');
@@ -160,9 +160,9 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			// other non-alphanumeric ASCII removed
 			"a-a_a a\na\ra\ta\va!a\"a#a\$a%aa'a(a)a*a+a,a.a/a:a;a=a?a@a[a\\a]a^a`a{a|a}a~a"
 			=> "a-a-a-a-a-a-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-			
+
 			// separators trimmed
-			"-_ hello _-" 
+			"-_ hello _-"
 			=> "hello",
 
 			// accents removed, lower case, other multibyte chars are URL encoded
@@ -232,7 +232,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			'web archive anchor <a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>' =>
 				'web archive anchor <a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>',
 
-			'single quotes already anchor <a href=\'http://www.yahoo.com\'>yahoo</a>' => 
+			'single quotes already anchor <a href=\'http://www.yahoo.com\'>yahoo</a>' =>
 				'single quotes already anchor <a href=\'http://www.yahoo.com\'>yahoo</a>',
 
 			'unquoted already anchor <a href=http://www.yahoo.com>yahoo</a>' =>
@@ -242,10 +242,10 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			$this->assertEqual($output, parse_urls($input));
 		}
 	}
-	
+
 	/**
 	 * Ensure additional select columns do not end up in entity attributes.
-	 * 
+	 *
 	 * https://github.com/Elgg/Elgg/issues/5538
 	 */
 	public function test_extra_columns_dont_appear_in_attributes() {
@@ -256,10 +256,10 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$group->name = 'test_group';
 		$group->access_id = ACCESS_PUBLIC;
 		$this->assertTrue($group->save() !== false);
-		
+
 		// entity cache interferes with our test
 		$ENTITY_CACHE = array();
-		
+
 		foreach (array('site', 'user', 'group', 'object') as $type) {
 			$entities = elgg_get_entities(array(
 				'type' => $type,
@@ -272,7 +272,8 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			$entity = $entities[0];
 			$this->assertNull($entity->_nonexistent_test_column, "Additional select columns are leaking to attributes for '$type'");
 		}
-		
+
 		$group->delete();
 	}
+
 }
