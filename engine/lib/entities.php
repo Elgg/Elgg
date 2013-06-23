@@ -1790,6 +1790,7 @@ function _elgg_entities_test($hook, $type, $value) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreEntityTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAttributeLoaderTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreEntityGetterFunctionsTest.php';
 	return $value;
 }
 
