@@ -338,11 +338,7 @@ class ElggSession implements ArrayAccess {
 
 		if (in_array($offset, array('user', 'id', 'code', 'name', 'username'))) {
 			elgg_deprecated_notice("Only 'guid' is stored in session for user now", 1.9);
-			if ($this->loggedInUser) {
-				return true;
-			} else {
-				return false;
-			}
+			return (bool)$this->loggedInUser;
 		}
 
 		if (isset($_SESSION[$offset])) {
