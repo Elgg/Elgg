@@ -273,13 +273,26 @@ function get_user_by_username($username) {
  * @return ElggUser
  */
 function get_user_by_code($code) {
+	if (!$code) {
+		return null;
+	}
+
 	$db = _elgg_services()->db;	
 	$prefix = $db->getTablePrefix();
 	$code = $db->sanitizeString($code);
 
 	$query = "SELECT guid FROM {$prefix}users_remember_me_cookies
 		WHERE code = '$code'";
-	$result = $db->getDataRow($query);
+	try {
+		$result = $db->getDataRow($query);
+	} catch (DatabaseException $e) {
+		if (false !== strpos($e->getMessage(), "users_remember_me_cookies' doesn't exist")) {
+			// schema has not been updated so we swallow this exception
+			return null;
+		} else {
+			throw $e;
+		}
+	}
 
 	if ($result) {
 		return get_user($result->guid);

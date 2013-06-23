@@ -331,7 +331,16 @@ function _elgg_add_remember_me_cookie(ElggUser $user, $code) {
 
 	$query = "INSERT INTO {$prefix}users_remember_me_cookies
 		(code, guid, timestamp) VALUES ('$code', $user->guid, $time)";
-	$db->insertData($query);
+	try {
+		$db->insertData($query);
+	} catch (DatabaseException $e) {
+		if (false !== strpos($e->getMessage(), "users_remember_me_cookies' doesn't exist")) {
+			// schema has not been updated so we swallow this exception
+			return null;
+		} else {
+			throw $e;
+		}
+	}
 }
 
 /**
@@ -348,7 +357,16 @@ function _elgg_delete_remember_me_cookie($code) {
 
 	$query = "DELETE FROM {$prefix}users_remember_me_cookies
 		WHERE code = '$code'";
-	$db->deleteData($query);
+	try {
+		$db->deleteData($query);
+	} catch (DatabaseException $e) {
+		if (false !== strpos($e->getMessage(), "users_remember_me_cookies' doesn't exist")) {
+			// schema has not been updated so we swallow this exception
+			return null;
+		} else {
+			throw $e;
+		}
+	}
 }
 
 /**
