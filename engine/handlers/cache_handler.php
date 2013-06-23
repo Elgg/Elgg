@@ -88,20 +88,18 @@ header("ETag: \"$etag\"");
 $filename = $dataroot . 'views_simplecache/' . md5($viewtype . $view);
 
 if (file_exists($filename)) {
-	$contents = file_get_contents($filename);
+	readfile($filename);
 } else {
 	// someone trying to access a non-cached file or a race condition with cache flushing
 	mysql_close($mysql_dblink);
 	require_once(dirname(dirname(__FILE__)) . "/start.php");
 
 	global $CONFIG;
-	if (!isset($CONFIG->views->simplecache[$view])) {
+	if (!in_array($view, $CONFIG->views->simplecache)) {
 		header("HTTP/1.1 404 Not Found");
 		exit;
 	}
 
 	elgg_set_viewtype($viewtype);
-	$contents = elgg_view($view);
+	echo elgg_view($view);
 }
-
-echo $contents;
