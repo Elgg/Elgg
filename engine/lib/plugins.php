@@ -455,7 +455,7 @@ function _elgg_set_plugin_priorities(array $order) {
 
 		$priority = array_search($plugin_id, $order) + 1;
 
-		if (!$plugin->set($name, $priority)) {
+		if (!$plugin->setPrivateSetting($name, $priority)) {
 			$return = false;
 			break;
 		}
@@ -468,7 +468,7 @@ function _elgg_set_plugin_priorities(array $order) {
 		}
 		foreach ($missing_plugins as $plugin) {
 			$priority++;
-			if (!$plugin->set($name, $priority)) {
+			if (!$plugin->setPrivateSetting($name, $priority)) {
 				$return = false;
 				break;
 			}

@@ -111,7 +111,6 @@ abstract class ElggEntity extends ElggData implements
 
 		$this->attributes['site_guid'] = null;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
-		$this->attributes['time_created'] = null;
 		$this->attributes['time_updated'] = null;
 		$this->attributes['last_action'] = null;
 		$this->attributes['enabled'] = "yes";
@@ -183,63 +182,26 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Return the value of a property.
-	 *
-	 * If $name is defined in $this->attributes that value is returned, otherwise it will
-	 * pull from the entity's metadata.
-	 *
-	 * Q: Why are we not using __get overload here?
-	 * A: Because overload operators cause problems during subclassing, so we put the code here and
-	 * create overloads in subclasses.
-	 *
-	 * @todo What problems are these?
-	 *
-	 * @param string $name Name
-	 *
-	 * @return mixed Returns the value of a given value, or null.
+	 * Set an attribute or metadata value for this entity
+	 * 
+	 * Anything that is not an attribute is saved as metadata.
+	 * 
+	 * @warning Metadata set this way will inherit the entity's owner and 
+	 * access ID. If you want more control over metadata, use ElggEntity::setMetadata()
+	 * 
+	 * @param string $name Name of the attribute or metadata
+	 * @param mixed $value The value to be set
+	 * @return void
+	 * @see ElggEntity::setMetadata()
 	 */
-	public function get($name) {
-		// See if its in our base attributes
-		if (array_key_exists($name, $this->attributes)) {
-			return $this->attributes[$name];
-		}
-
-		// No, so see if its in the metadata for this entity
-		$meta = $this->getMetadata($name);
-
-		// getMetadata returns null if $name is not found
-		return $meta;
-	}
-
-	/**
-	 * Sets the value of a property.
-	 *
-	 * If $name is defined in $this->attributes, that value is set. Otherwise it is
-	 * saved as metadata.
-	 *
-	 * @warning Metadata set this way will inherit the entity's owner and access ID. If you want
-	 * to set metadata with a different owner, use create_metadata().
-	 *
-	 * @warning It is important that your class populate $this->attributes with keys
-	 * for all base attributes. Anything not in there gets set as metadata.
-	 *
-	 * @internal Q: Why are we not using __set overload here?
-	 * A: Because overload operators cause problems during subclassing, so we put the code here and
-	 * create overloads in subclasses. @todo What problems?
-	 *
-	 * @param string $name  Name
-	 * @param mixed  $value Value
-	 *
-	 * @return bool
-	 */
-	public function set($name, $value) {
+	public function __set($name, $value) {
 		if (array_key_exists($name, $this->attributes)) {
 			// Certain properties should not be manually changed!
 			switch ($name) {
 				case 'guid':
 				case 'time_updated':
 				case 'last_action':
-					return false;
+					return;
 					break;
 				case 'access_id':
 				case 'owner_guid':
@@ -255,12 +217,55 @@ abstract class ElggEntity extends ElggData implements
 					break;
 			}
 		} else {
-			return $this->setMetadata($name, $value);
+			$this->setMetadata($name, $value);
 		}
+	}
+
+	/**
+	 * Sets the value of an attribute or metadata
+	 *
+	 * @param string $name  Name
+	 * @param mixed  $value Value
+	 *
+	 * @return bool
+	 * @deprecated 1.9
+	 */
+	public function set($name, $value) {
+		elgg_deprecated_notice("Use -> instead of set()", 1.9);
+		$this->__set($name, $value);
 
 		return true;
 	}
-	
+
+	/**
+	 * Get an attribute or metadata value
+	 * 
+	 * If the name matches an attribute, the attribute is returned. If metadata
+	 * does not exist with that name, a null is returned.
+	 * 
+	 * @param string $name Name of the attribute or metadata
+	 * @return mixed
+	 */
+	public function __get($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			return $this->attributes[$name];
+		}
+
+		return $this->getMetadata($name);
+	}
+
+	/**
+	 * Return the value of an attribute or metadata
+	 *
+	 * @param string $name Name
+	 * @return mixed Returns the value of a given value, or null.
+	 * @deprecated 1.9
+	 */
+	public function get($name) {
+		elgg_deprecated_notice("Use -> instead of get()", 1.9);
+		return $this->__get($name);
+	}
+
 	/**
 	 * Get the entity's display name
 	 * 
@@ -286,7 +291,7 @@ abstract class ElggEntity extends ElggData implements
 	public function getMetadata($name) {
 		$guid = $this->getGUID();
 
-		if (! $guid) {
+		if (!$guid) {
 			if (isset($this->temp_metadata[$name])) {
 				// md is returned as an array only if more than 1 entry
 				if (count($this->temp_metadata[$name]) == 1) {
@@ -1139,7 +1144,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int The access ID
 	 */
 	public function getAccessID() {
-		return $this->get('access_id');
+		return $this->access_id;
 	}
 
 	/**
@@ -1148,7 +1153,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int|null GUID
 	 */
 	public function getGUID() {
-		return $this->get('guid');
+		return $this->guid;
 	}
 
 	/**
@@ -1157,7 +1162,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return string The entity type
 	 */
 	public function getType() {
-		return $this->get('type');
+		return $this->type;
 	}
 
 	/**
@@ -1166,7 +1171,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return string The entity subtype
 	 */
 	public function getSubtype() {
-		return $this->get('subtype');
+		return $this->subtype;
 	}
 
 	/**
@@ -1228,7 +1233,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int
 	 */
 	public function getContainerGUID() {
-		return (int)$this->get('container_guid');
+		return (int)$this->container_guid;
 	}
 
 	/**
@@ -1239,7 +1244,7 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	public function getContainer() {
 		elgg_deprecated_notice("ElggObject::getContainer deprecated for ElggEntity::getContainerGUID", 1.8);
-		return $this->get('container_guid');
+		return $this->getContainerGUID();
 	}
 
 	/**
@@ -1258,7 +1263,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return int UNIX epoch time
 	 */
 	public function getTimeUpdated() {
-		return $this->get('time_updated');
+		return $this->time_updated;
 	}
 
 	/**

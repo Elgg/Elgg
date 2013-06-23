@@ -68,14 +68,6 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		unset($this->entity->access_id);
 		$this->assertIdentical($this->entity->access_id, '');
 
-		// unable to directly set guid
-		$this->assertFalse($this->entity->set('guid', 'error'));
-		$this->entity->guid = 'error';
-		$this->assertNotEqual($this->entity->guid, 'error');
-
-		// non-attribute not set as metadata returns null
-		$this->assertNull($this->entity->get('non_existent'));
-
 		// consider helper methods
 		$this->assertIdentical($this->entity->getGUID(), $this->entity->guid );
 		$this->assertIdentical($this->entity->getType(), $this->entity->type );

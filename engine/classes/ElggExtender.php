@@ -36,35 +36,38 @@ abstract class ElggExtender extends ElggData {
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = null;
+		$this->attributes['id'] = null;
+		$this->attributes['entity_guid'] = null;
+		$this->attributes['owner_guid'] = null;
+		$this->attributes['access_id'] = ACCESS_PRIVATE;
+		$this->attributes['enabled'] = 'yes';
 	}
 
 	/**
-	 * Returns an attribute
+	 * Set an attribute
 	 *
-	 * @param string $name Name
-	 *
-	 * @return mixed
+	 * @param string $name  Name
+	 * @param mixed  $value Value
+	 * @return void
 	 */
-	protected function get($name) {
-		if (array_key_exists($name, $this->attributes)) {
-			if ($name == 'value') {
-				switch ($this->attributes['value_type']) {
-					case 'integer' :
-						return (int)$this->attributes['value'];
-						break;
-					case 'text' :
-						return $this->attributes['value'];
-						break;
-					default :
-						$msg = "Type " . $this->attributes['value_type'] . " is not a supported ElggExtender type.";
-						throw new InstallationException($msg);
-						break;
-				}
-			}
-
-			return $this->attributes[$name];
+	public function __set($name, $value) {
+		$this->attributes[$name] = $value;
+		if ($name == 'value') {
+			$this->attributes['value_type'] = detect_extender_valuetype($value);
 		}
-		return null;
+	}
+
+	/**
+	 * Set the value of the extender
+	 * 
+	 * @param mixed  $value      The value being set
+	 * @param string $value_type The type of the : 'integer' or 'text'
+	 * @return void
+	 * @since 1.9
+	 */
+	public function setValue($value, $value_type = '') {
+		$this->attributes['value'] = $value;
+		$this->attributes['value_type'] = detect_extender_valuetype($value, $value_type);
 	}
 
 	/**
@@ -75,14 +78,58 @@ abstract class ElggExtender extends ElggData {
 	 * @param string $value_type Value type
 	 *
 	 * @return boolean
+	 * @deprecated 1.9
 	 */
-	protected function set($name, $value, $value_type = "") {
-		$this->attributes[$name] = $value;
+	protected function set($name, $value, $value_type = '') {
+		elgg_deprecated_notice("Use -> instead of set()", 1.9);
 		if ($name == 'value') {
-			$this->attributes['value_type'] = detect_extender_valuetype($value, $value_type);
+			$this->setValue($value, $value_type);
+		} else {
+			$this->__set($name, $value);
 		}
 
 		return true;
+	}
+
+	/**
+	 * Gets an attribute
+	 *
+	 * @param string $name Name
+	 * @return mixed
+	 */
+	public function __get($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			if ($name == 'value') {
+				switch ($this->attributes['value_type']) {
+					case 'integer' :
+						return (int)$this->attributes['value'];
+						break;
+					case 'text' :
+						return $this->attributes['value'];
+						break;
+					default :
+						$msg = "{$this->attributes['value_type']} is not a supported ElggExtender value type.";
+						throw new UnexpectedValueException($msg);
+						break;
+				}
+			}
+
+			return $this->attributes[$name];
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns an attribute
+	 *
+	 * @param string $name Name
+	 * @return mixed
+	 * @deprecated 1.9
+	 */
+	protected function get($name) {
+		elgg_deprecated_notice("Use -> instead of get()", 1.9);
+		return $this->__get($name);
 	}
 
 	/**

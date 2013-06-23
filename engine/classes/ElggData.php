@@ -69,29 +69,6 @@ abstract class ElggData implements
 	}
 
 	/**
-	 * Return an attribute or a piece of metadata.
-	 *
-	 * @param string $name Name
-	 *
-	 * @return mixed
-	 */
-	public function __get($name) {
-		return $this->get($name);
-	}
-
-	/**
-	 * Set an attribute or a piece of metadata.
-	 *
-	 * @param string $name  Name
-	 * @param mixed  $value Value
-	 *
-	 * @return void
-	 */
-	public function __set($name, $value) {
-		$this->set($name, $value);
-	}
-
-	/**
 	 * Test if property is set either as an attribute or metadata.
 	 *
 	 * @tip Use isset($entity->property)
@@ -110,6 +87,7 @@ abstract class ElggData implements
 	 * @param string $name The attribute to fetch
 	 *
 	 * @return mixed The attribute, if it exists.  Otherwise, null.
+	 * @deprecated 1.9
 	 */
 	abstract protected function get($name);
 
@@ -120,6 +98,7 @@ abstract class ElggData implements
 	 * @param mixed  $value The value to set it to
 	 *
 	 * @return bool The success of your set function?
+	 * @deprecated 1.9
 	 */
 	abstract protected function set($name, $value);
 
