@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg page navbar
+ * Aalborg theme navbar
  * 
  */
 

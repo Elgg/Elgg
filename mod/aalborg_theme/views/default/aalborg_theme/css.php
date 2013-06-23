@@ -1,8 +1,8 @@
 <?php
 /**
- * CSS Elgg theme specific
+ * CSS Aalborg theme
  *
- * @package elgg_theme
+ * @package AalborgTheme
  * @subpackage UI
  */
 ?>

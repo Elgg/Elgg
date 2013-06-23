@@ -1,24 +1,24 @@
 <?php
 /**
- * Elgg theme plugin
+ * Aalborg theme plugin
  *
- * @package ElggTheme
+ * @package AalborgTheme
  */
  
-elgg_register_event_handler('init','system','elgg_theme_init');
+elgg_register_event_handler('init','system','aalborg_theme_init');
  
-function elgg_theme_init() {
+function aalborg_theme_init() {
 
-	elgg_register_event_handler('pagesetup', 'system', 'elgg_theme_pagesetup', 1000);
+	elgg_register_event_handler('pagesetup', 'system', 'aalborg_theme_pagesetup', 1000);
 
 	// theme specific CSS
-	elgg_extend_view('css/elgg', 'elgg_theme/css');
+	elgg_extend_view('css/elgg', 'aalborg_theme/css');
 
-	elgg_extend_view('page/elements/head', 'elgg_theme/meta', 1);
+	elgg_extend_view('page/elements/head', 'aalborg_theme/meta', 1);
 
-	elgg_register_js('respond', 'mod/elgg_theme/vendors/js/respond.min.js');
+	elgg_register_js('respond', 'mod/aalborg_theme/vendors/js/respond.min.js');
 	elgg_load_js('respond');	
-	elgg_register_js('elgg.theme', 'mod/elgg_theme/vendors/js/elgg_theme.js', 'footer');
+	elgg_register_js('elgg.theme', 'mod/aalborg_theme/vendors/js/aalborg_theme.js', 'footer');
 	elgg_load_js('elgg.theme');
 	
 	if (!elgg_is_logged_in()) {	
@@ -27,7 +27,7 @@ function elgg_theme_init() {
 
 }
 
-function elgg_theme_pagesetup() {
+function aalborg_theme_pagesetup() {
 
 	elgg_unextend_view('page/elements/header', 'search/header');	
 	if (elgg_is_logged_in()) {
