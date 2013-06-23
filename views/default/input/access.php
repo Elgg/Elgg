@@ -50,7 +50,9 @@ if ($vars['value'] == ACCESS_DEFAULT) {
 if (is_array($vars['options_values']) && sizeof($vars['options_values']) > 0) {
 	if ($show_override_notice) {
 		$vars['data-group-acl'] = $container->group_acl;
-		echo "<p class='elgg-input-access-membersonly'>" . elgg_echo('access:overridenotice')  .  "</p>";
 	}
 	echo elgg_view('input/select', $vars);
+	if ($show_override_notice) {
+		echo "<p class='elgg-text-help'>" . elgg_echo('access:overridenotice')  .  "</p>";
+	}
 }
