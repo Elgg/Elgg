@@ -80,7 +80,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 	public function testElggEntityGetAndSetMetadata() {
 		// ensure metadata not set
-		$this->assertNull($this->entity->get('non_existent'));
+		$this->assertNull($this->entity->non_existent);
 		$this->assertFalse(isset($this->entity->non_existent));
 
 		// create metadata

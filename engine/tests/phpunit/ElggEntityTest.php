@@ -9,15 +9,23 @@ class ElggEntityTest extends PHPUnit_Framework_TestCase {
 		$this->obj = $this->getMockForAbstractClass('ElggEntity');
 		$reflection = new ReflectionClass('ElggEntity');
 		$method = $reflection->getMethod('initializeAttributes');
-		$method->setAccessible(true);
-		$method->invokeArgs($this->obj, array());
+		if (method_exists($method, 'setAccessible')) {
+			$method->setAccessible(true);
+			$method->invokeArgs($this->obj, array());
+		}
 	}
 
+	/**
+	 * @requires PHP 5.3.2
+	 */
 	public function testSettingAndGettingAttribute() {
 		$this->obj->subtype = 'foo';
 		$this->assertEquals('foo', $this->obj->subtype);
 	}
 
+	/**
+	 * @requires PHP 5.3.2
+	 */
 	public function testSettingIntegerAttributes() {
 		foreach (array('access_id', 'owner_guid', 'container_guid') as $name) {
 			$this->obj->$name = '77';
@@ -25,6 +33,9 @@ class ElggEntityTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
+	/**
+	 * @requires PHP 5.3.2
+	 */
 	public function testSettingUnsettableAttributes() {
 		foreach (array('guid', 'time_updated', 'last_action') as $name) {
 			$this->obj->$name = 'foo';
@@ -32,6 +43,9 @@ class ElggEntityTest extends PHPUnit_Framework_TestCase {
 		}		
 	}
 
+	/**
+	 * @requires PHP 5.3.2
+	 */
 	public function testSettingMetadataNoDatabase() {
 		$this->obj->foo = 'test';
 		$this->assertEquals('test', $this->obj->foo);
@@ -39,6 +53,9 @@ class ElggEntityTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('overwrite', $this->obj->foo);
 	}
 
+	/**
+	 * @requires PHP 5.3.2
+	 */
 	public function testGettingNonexistentMetadataNoDatabase() {
 		$this->assertNull($this->obj->foo);
 	}
