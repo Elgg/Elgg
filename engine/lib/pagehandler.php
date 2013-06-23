@@ -55,16 +55,6 @@ function elgg_unregister_page_handler($identifier) {
  * @return bool
  */
 function elgg_front_page_handler() {
-	elgg_set_context('main');
-
-	// this plugin hook is deprecated. Use elgg_register_page_handler() to 
-	// register for the '' (empty string) handler
-	// allow plugins to override the front page (return true to stop this front page code)
-	$result = elgg_trigger_plugin_hook('index', 'system', null, false);
-	if ($result === true) {
-		elgg_deprecated_notice("The 'index', 'system' plugin has been deprecated. See elgg_front_page_handler()", 1.9);
-		exit;
-	}
 
 	if (elgg_is_logged_in()) {
 		forward('activity');

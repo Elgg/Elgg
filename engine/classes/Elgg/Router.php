@@ -37,7 +37,22 @@ class Elgg_Router {
 	 */
 	public function route(Elgg_Request $request) {
 		$identifier = (string)$request->query->get('handler');
-		elgg_set_context($identifier);
+
+		if ($identifier) {
+			elgg_set_context($identifier);
+		} else {
+			elgg_set_context('main');
+
+			// this plugin hook is deprecated. Use elgg_register_page_handler()
+			// to register for the '' (empty string) handler.
+			// allow plugins to override the front page (return true to indicate
+			// that the front page has been served)
+			$result = elgg_trigger_plugin_hook('index', 'system', null, false);
+			if ($result === true) {
+				elgg_deprecated_notice("The 'index', 'system' plugin has been deprecated. See elgg_front_page_handler()", 1.9);
+				exit;
+			}
+		}
 
 		$segments = $this->getUrlSegments($request);
 
