@@ -74,6 +74,7 @@ function groups_init() {
 
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
+	elgg_register_plugin_hook_handler('default', 'access', 'groups_access_default_override');
 
 	// Register profile menu hook
 	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'forum_profile_menu');
@@ -609,6 +610,28 @@ function groups_user_leave_event_listener($event, $object_type, $object) {
 	remove_user_from_access_collection($user->guid, $acl);
 
 	return true;
+}
+
+/**
+ * The default access for members only content is this group only. This makes
+ * for better display of access (can tell it is group only), but does not change
+ * access to the content.
+ * 
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param int    $access Current default access
+ * @return int
+ */
+function groups_access_default_override($hook, $type, $access) {
+	$page_owner = elgg_get_page_owner_entity();
+
+	if (elgg_instanceof($page_owner, 'group')) {
+		if ($page_owner->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+			$access = $page_owner->group_acl;
+		}
+	}
+
+	return $access;
 }
 
 /**
