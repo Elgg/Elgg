@@ -113,7 +113,7 @@ class ElggUser extends ElggEntity
 
 		$this->attributes = $attrs;
 		$this->tables_loaded = 2;
-		$this->loadAdditionalColumns($attr_loader->getAdditionalColumns());
+		$this->loadAdditionalSelectValues($attr_loader->getAdditionalSelectValues());
 		_elgg_cache_entity($this);
 
 		return true;

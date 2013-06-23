@@ -98,9 +98,9 @@ class Elgg_AttributeLoader {
 	public $full_loader = '';
 
 	/**
-	 * @var array list of received values that are not attributes 
+	 * @var array retrieved values that are not attributes
 	 */
-	protected $additional_value_columns = array();
+	protected $additional_select_values = array();
 
 	/**
 	 * Constructor
@@ -161,11 +161,12 @@ class Elgg_AttributeLoader {
 	}
 
 	/**
-	 * @return array list of values that were passed to last getRequiredAttributes call, 
-	 * but were not real attributes (ie. additional join columns or selects)
+	 * Get values selected from the database that are not attributes
+	 *
+	 * @return array
 	 */
-	public function getAdditionalColumns() {
-		return $this->additional_value_columns;
+	public function getAdditionalSelectValues() {
+		return $this->additional_select_values;
 	}
 	
 	/**
@@ -247,13 +248,10 @@ class Elgg_AttributeLoader {
 		}
 		
 		// filter out additional columns and keep separately
-		$this->additional_value_columns = array();
+		$this->additional_select_values = array();
 		foreach ($row as $key => $val) {
-			if (!in_array($key, self::$primary_attr_names) 
-				&& !in_array($key, $this->secondary_attr_names)
-				&& !in_array($key, array('tables_split', 'tables_loaded'))// @todo remove when #4584 is in place
-			) {
-				$this->additional_value_columns[$key] = $val;
+			if (!in_array($key, self::$primary_attr_names) && !in_array($key, $this->secondary_attr_names)) {
+				$this->additional_select_values[$key] = $val;
 				unset($row[$key]);
 			}
 		}
@@ -298,10 +296,6 @@ class Elgg_AttributeLoader {
 		$acceptable_attrs = self::$primary_attr_names;
 		array_splice($acceptable_attrs, count($acceptable_attrs), 0, $this->secondary_attr_names);
 		$acceptable_attrs = array_combine($acceptable_attrs, $acceptable_attrs);
-
-		// @todo remove these when #4584 is in place
-		$acceptable_attrs['tables_split'] = true;
-		$acceptable_attrs['tables_loaded'] = true;
 
 		foreach ($row as $key => $val) {
 			if (!isset($acceptable_attrs[$key])) {

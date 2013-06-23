@@ -1709,25 +1709,30 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Handles additional columns that were loaded from database together with attributes.
+	 * Stores non-attributes from the loading of the entity as volatile data
 	 * 
-	 * @param array $data list of values to handle
-	 * @return bool
+	 * @param array $data Key value array
+	 * @return void
 	 */
-	protected function loadAdditionalColumns($data) {
+	protected function loadAdditionalSelectValues(array $data) {
 		foreach ($data as $name => $value) {
-			$this->setVolatileData("row:$name", $value);
+			$this->setVolatileData("select:$name", $value);
 		}
-		return true;
 	}
 	
 	/**
-	 * Load fresh row data into existing entity. Overwrite only given data.
+	 * Load new data from database into existing entity. Overwrites data but
+	 * does not change values not included in the latest data.
+	 *
+	 * @internal This is used when the same entity is selected twice during a
+	 * request in case different select clauses were used to load different data
+	 * into volatile data.
 	 * 
 	 * @param stdClass $row DB row with new entity data
 	 * @return bool
+	 * @access private
 	 */
-	public function refresh($row) {
+	public function refresh(stdClass $row) {
 		if ($row instanceof stdClass) {
 			return $this->load($row);
 		}
