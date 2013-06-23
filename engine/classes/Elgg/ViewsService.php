@@ -466,7 +466,7 @@ class Elgg_ViewsService {
 		}
 
 		if (isset($CONFIG->views->simplecache[$view])) {
-			return $CONFIG->views->simplecache[$view];
+			return true;
 		} else {
 			$currentViewtype = elgg_get_viewtype();
 			$viewtypes = array($currentViewtype);

@@ -1047,7 +1047,7 @@ abstract class ElggEntity extends ElggData implements
 		
 		$return = null;
 
-		if ($metadata->owner_guid == 0) {
+		if ($metadata && ($metadata->owner_guid == 0)) {
 			$return = true;
 		}
 		

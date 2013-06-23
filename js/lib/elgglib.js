@@ -474,8 +474,8 @@ elgg.parse_str = function(string) {
 		re = /([^&=]+)=?([^&]*)/g;
 
 	while (result = re.exec(string)) {
-		key = decodeURIComponent(result[1])
-		value = decodeURIComponent(result[2])
+		key = decodeURIComponent(result[1].replace(/\+/g, ' '));
+		value = decodeURIComponent(result[2].replace(/\+/g, ' '));
 		params[key] = value;
 	}
 	
