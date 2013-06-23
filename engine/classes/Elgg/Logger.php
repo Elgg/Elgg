@@ -61,6 +61,15 @@ class Elgg_Logger {
 	}
 
 	/**
+	 * Get the current logging level
+	 * 
+	 * @return int
+	 */
+	public function getLevel() {
+		return $this->level;
+	}
+
+	/**
 	 * Set whether the logging should be displayed to the user
 	 *
 	 * Whether data is actually displayed to the user depends on this setting

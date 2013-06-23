@@ -73,7 +73,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->entity->guid = 'error';
 		$this->assertNotEqual($this->entity->guid, 'error');
 
-		// fail on non-attribute
+		// non-attribute not set as metadata returns null
 		$this->assertNull($this->entity->get('non_existent'));
 
 		// consider helper methods
@@ -84,20 +84,6 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertIdentical($this->entity->getAccessID(), $this->entity->access_id );
 		$this->assertIdentical($this->entity->getTimeCreated(), $this->entity->time_created );
 		$this->assertIdentical($this->entity->getTimeUpdated(), $this->entity->time_updated );
-	}
-
-	public function testElggEntitySubtypePropertyReturnsString() {
-		$test_subtype = 'test_subtype';
-		$obj = new ElggObject();
-		$obj->subtype = $test_subtype;
-		$guid = $obj->save();
-
-		_elgg_invalidate_cache_for_entity($guid);
-
-		$obj = get_entity($guid);
-		$this->assertEqual($obj->subtype, $test_subtype);
-		$this->assertTrue($obj->delete());
-		remove_subtype('object', $test_subtype);
 	}
 
 	public function testElggEntityGetAndSetMetadata() {
@@ -118,199 +104,35 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertIdentical($metadata['existent'], array('testing'));
 	}
 
-	public function testElggEnityGetAndSetAnnotations() {
-		$this->assertFalse(array_key_exists('non_existent', $this->entity->expose_annotations()));
-		$this->assertIdentical($this->entity->getAnnotations(array('annotation_name' => 'non_existent')), array());
-
-		// set and check temp annotation
-		$this->assertTrue($this->entity->annotate('non_existent', 'testing'));
-		$this->assertIdentical($this->entity->getAnnotations(array('annotation_name' => 'non_existent')), array('testing'));
-		$this->assertTrue(array_key_exists('non_existent', $this->entity->expose_annotations()));
-
-		// save entity and check for annotation
-		$this->entity->subtype = 'testing';
-		$this->save_entity();
-		$this->assertFalse(array_key_exists('non_existent', $this->entity->expose_annotations()));
-		$annotations = $this->entity->getAnnotations(array('annotation_name' => 'non_existent'));
-		$this->assertIsA($annotations[0], 'ElggAnnotation');
-		$this->assertIdentical($annotations[0]->name, 'non_existent');
-		$this->assertEqual($this->entity->countAnnotations('non_existent'), 1);
-
-		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID())));
-		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site')));
-		$this->assertIdentical($annotations, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site', 'subtype' => 'testing')));
-		$this->assertIdentical(false, elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site', 'subtype' => 'fail')));
-
-		//  clear annotation
-		$this->assertTrue($this->entity->deleteAnnotations());
-		$this->assertEqual($this->entity->countAnnotations('non_existent'), 0);
-
-		$this->assertIdentical(array(), elgg_get_annotations(array('guid' => $this->entity->getGUID())));
-		$this->assertIdentical(array(), elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site')));
-		$this->assertIdentical(array(), elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'site', 'subtype' => 'testing')));
-
-		// clean up
-		$this->assertTrue($this->entity->delete());
-		remove_subtype('site', 'testing');
-	}
-
 	public function testElggEntityCache() {
 		global $ENTITY_CACHE;
 		$this->assertIsA($ENTITY_CACHE, 'array');
 	}
 
 	public function testElggEntitySaveAndDelete() {
-		global $ENTITY_CACHE;
 
 		// unable to delete with no guid
 		$this->assertFalse($this->entity->delete());
 
-		// error on save
+		// error on save because no type
 		try {
 			$this->entity->save();
 			$this->assertTrue(false);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
 		}
-
-		// set elements
-		$this->entity->type = 'site';
-		$this->entity->non_existent = 'testing';
-
-		// save
-		$this->assertEqual($this->entity->getGUID(), 0);
-		$guid = $this->entity->save();
-		$this->assertNotEqual($guid, 0);
-
-		// check guid
-		$this->assertEqual($this->entity->getGUID(), $guid);
-		$attributes = $this->entity->expose_attributes();
-		$this->assertEqual($attributes['guid'], $guid);
-		$this->assertIdentical($ENTITY_CACHE[$guid], $this->entity);
-
-		// check attributes populated during create()
-		$time_minimum = time() - 5;
-		$this->assertTrue($this->entity->time_created > $time_minimum);
-		$this->assertTrue($this->entity->time_updated > $time_minimum);
-		$this->assertEqual($this->entity->site_guid, elgg_get_site_entity()->guid);
-		$this->assertEqual($this->entity->container_guid, elgg_get_logged_in_user_guid());
-
-		// check metadata
-		$metadata = $this->entity->expose_metadata();
-		$this->assertFalse(in_array('non_existent', $metadata));
-		$this->assertEqual($this->entity->get('non_existent'), 'testing');
-
-		// clean up with delete
-		$this->assertIdentical(true, $this->entity->delete());
 	}
 
 	public function testElggEntityDisableAndEnable() {
-		global $CONFIG;
 
 		// ensure enabled
 		$this->assertTrue($this->entity->isEnabled());
 
 		// false on disable because it's not saved yet.
 		$this->assertFalse($this->entity->disable());
-
-		// save and disable
-		$this->save_entity();
-
-		// add annotations and metadata to check if they're disabled.
-		$annotation_id = create_annotation($this->entity->guid, 'test_annotation_' . rand(), 'test_value_' . rand());
-		$metadata_id = create_metadata($this->entity->guid, 'test_metadata_' . rand(), 'test_value_' . rand());
-
-		$this->assertTrue($this->entity->disable());
-
-		// ensure disabled by comparing directly with database
-		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$this->entity->guid}'");
-		$this->assertIdentical($entity->enabled, 'no');
-
-		$annotation = get_data_row("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
-		$this->assertIdentical($annotation->enabled, 'no');
-
-		$metadata = get_data_row("SELECT * FROM {$CONFIG->dbprefix}metadata WHERE id = '$metadata_id'");
-		$this->assertIdentical($metadata->enabled, 'no');
-
-		// re-enable for deletion to work
-		$this->assertTrue($this->entity->enable());
-
-		// check enabled
-		// check annotations and metadata enabled.
-		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$this->entity->guid}'");
-		$this->assertIdentical($entity->enabled, 'yes');
-
-		$annotation = get_data_row("SELECT * FROM {$CONFIG->dbprefix}annotations WHERE id = '$annotation_id'");
-		$this->assertIdentical($annotation->enabled, 'yes');
-
-		$metadata = get_data_row("SELECT * FROM {$CONFIG->dbprefix}metadata WHERE id = '$metadata_id'");
-		$this->assertIdentical($metadata->enabled, 'yes');
-
-		$this->assertTrue($this->entity->delete());
 	}
 
-	public function testElggEntityRecursiveDisableAndEnable() {
-		global $CONFIG;
-
-		$this->save_entity();
-		$obj1 = new ElggObject();
-		$obj1->container_guid = $this->entity->getGUID();
-		$obj1->save();
-		$obj2 = new ElggObject();
-		$obj2->container_guid = $this->entity->getGUID();
-		$obj2->save();
-
-		// disable $obj2 before disabling the container
-		$this->assertTrue($obj2->disable());
-
-		// disable entities container by $this->entity
-		$this->assertTrue($this->entity->disable());
-		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj1->guid}'");
-		$this->assertIdentical($entity->enabled, 'no');
-
-		// enable entities that were disabled with the container (but not $obj2)
-		$this->assertTrue($this->entity->enable());
-		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj1->guid}'");
-		$this->assertIdentical($entity->enabled, 'yes');
-		$entity = get_data_row("SELECT * FROM {$CONFIG->dbprefix}entities WHERE guid = '{$obj2->guid}'");
-		$this->assertIdentical($entity->enabled, 'no');
-
-		// cleanup
-		$this->assertTrue($obj2->enable());
-		$this->assertTrue($obj2->delete());
-		$this->assertTrue($obj1->delete());
-		$this->assertTrue($this->entity->delete());
-	}
-
-	public function testElggEntityMetadata() {
-		// let's delete a non-existent metadata
-		$this->assertFalse($this->entity->deleteMetadata('important'));
-
-		// let's add the metadata
-		$this->entity->important = 'indeed!';
-		$this->assertIdentical('indeed!', $this->entity->important);
-		$this->entity->less_important = 'true, too!';
-		$this->assertIdentical('true, too!', $this->entity->less_important);
-		$this->save_entity();
-
-		// test deleting incorrectly
-		// @link http://trac.elgg.org/ticket/2273
-		$this->assertNull($this->entity->deleteMetadata('impotent'));
-		$this->assertEqual($this->entity->important, 'indeed!');
-
-		// get rid of one metadata
-		$this->assertEqual($this->entity->important, 'indeed!');
-		$this->assertTrue($this->entity->deleteMetadata('important'));
-		$this->assertNull($this->entity->important);
-
-		// get rid of all metadata
-		$this->assertTrue($this->entity->deleteMetadata());
-		$this->assertNull($this->entity->less_important);
-
-		// clean up database
-		$this->assertTrue($this->entity->delete());
-	}
-
+	// @todo toObject() triggers a plugin hook - we need to remove any callbacks
 	public function testElggEntityToObject() {
 		$keys = array(
 			'guid',
@@ -331,108 +153,9 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		sort($object_keys);
 		$this->assertIdentical($keys, $object_keys);
 	}
-
-	public function testElggEntityMultipleMetadata() {
-		foreach (array(false, true) as $save) {
-			if ($save) {
-				$this->save_entity();
-			}
-			$md = array('brett', 'bryan', 'brad');
-			$name = 'test_md_' . rand();
-
-			$this->entity->$name = $md;
-
-			$this->assertEqual($md, $this->entity->$name);
-
-			if ($save) {
-				$this->assertTrue($this->entity->delete());
-			}
-		}
-	}
-
-	public function testElggEntitySingleElementArrayMetadata() {
-		foreach (array(false, true) as $save) {
-			if ($save) {
-				$this->save_entity();
-			}
-			$md = array('test');
-			$name = 'test_md_' . rand();
-
-			$this->entity->$name = $md;
-
-			$this->assertEqual($md[0], $this->entity->$name);
-
-			if ($save) {
-				$this->assertTrue($this->entity->delete());
-			}
-		}
-	}
-
-	public function testElggEntityAppendMetadata() {
-		foreach (array(false, true) as $save) {
-			if ($save) {
-				$this->save_entity();
-			}
-			$md = 'test';
-			$name = 'test_md_' . rand();
-
-			$this->entity->$name = $md;
-			$this->entity->setMetadata($name, 'test2', '', true);
-
-			$this->assertEqual(array('test', 'test2'), $this->entity->$name);
-
-			if ($save) {
-				$this->assertTrue($this->entity->delete());
-			}
-		}
-	}
-
-	public function testElggEntitySingleElementArrayAppendMetadata() {
-		foreach (array(false, true) as $save) {
-			if ($save) {
-				$this->save_entity();
-			}
-			$md = 'test';
-			$name = 'test_md_' . rand();
-
-			$this->entity->$name = $md;
-			$this->entity->setMetadata($name, array('test2'), '', true);
-
-			$this->assertEqual(array('test', 'test2'), $this->entity->$name);
-
-			if ($save) {
-				$this->assertTrue($this->entity->delete());
-			}
-		}
-	}
-
-	public function testElggEntityArrayAppendMetadata() {
-		foreach (array(false, true) as $save) {
-			if ($save) {
-				$this->save_entity();
-			}
-			$md = array('brett', 'bryan', 'brad');
-			$md2 = array('test1', 'test2', 'test3');
-			$name = 'test_md_' . rand();
-
-			$this->entity->$name = $md;
-			$this->entity->setMetadata($name, $md2, '', true);
-
-			$this->assertEqual(array_merge($md, $md2), $this->entity->$name);
-
-			if ($save) {
-				$this->assertTrue($this->entity->delete());
-			}
-		}
-	}
-
-	protected function save_entity($type='site') {
-		$this->entity->type = $type;
-		$this->assertNotEqual($this->entity->save(), 0);
-	}
 }
 
-// ElggEntity is an abstract class with no abstact methods.
+// ElggEntity is an abstract class
 class ElggEntityTest extends ElggEntity {
 	public function __construct() {
 		$this->initializeAttributes();
