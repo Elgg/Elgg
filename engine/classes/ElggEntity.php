@@ -189,8 +189,8 @@ abstract class ElggEntity extends ElggData implements
 	 * @warning Metadata set this way will inherit the entity's owner and 
 	 * access ID. If you want more control over metadata, use ElggEntity::setMetadata()
 	 * 
-	 * @param string $name Name of the attribute or metadata
-	 * @param mixed $value The value to be set
+	 * @param string $name  Name of the attribute or metadata
+	 * @param mixed  $value The value to be set
 	 * @return void
 	 * @see ElggEntity::setMetadata()
 	 */
