@@ -246,15 +246,6 @@ class Elgg_AttributeLoader {
 				$row = array_merge($row, $fetched);
 			}
 		}
-		
-		// filter out additional columns and keep separately
-		$this->additional_select_values = array();
-		foreach ($row as $key => $val) {
-			if (!in_array($key, self::$primary_attr_names) && !in_array($key, $this->secondary_attr_names)) {
-				$this->additional_select_values[$key] = $val;
-				unset($row[$key]);
-			}
-		}
 
 		$row = $this->filterAddedColumns($row);
 
@@ -286,7 +277,7 @@ class Elgg_AttributeLoader {
 	}
 
 	/**
-	 * Filter out keys returned by the query which should not appear in the entity's attributes
+	 * Filter non-attribute keys into $this->additional_select_values
 	 *
 	 * @param array $row All columns from the query
 	 * @return array Columns acceptable for the entity's attributes
@@ -299,6 +290,7 @@ class Elgg_AttributeLoader {
 
 		foreach ($row as $key => $val) {
 			if (!isset($acceptable_attrs[$key])) {
+				$this->additional_select_values[$key] = $val;
 				unset($row[$key]);
 			}
 		}
