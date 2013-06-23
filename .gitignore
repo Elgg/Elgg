@@ -39,7 +39,7 @@
 !/mod/web_services/
 !/mod/zaudio/
 
-# ignore IDE/hidden/OS cache files
+# ignore IDE/hidden/testing/OS cache files
 .*
 *~
 /nbproject
