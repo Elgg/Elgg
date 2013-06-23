@@ -271,7 +271,6 @@ CREATE TABLE `prefix_users_entity` (
   `salt` varchar(8) NOT NULL DEFAULT '',
   `email` text NOT NULL,
   `language` varchar(6) NOT NULL DEFAULT '',
-  `code` varchar(32) NOT NULL DEFAULT '',
   `banned` enum('yes','no') NOT NULL DEFAULT 'no',
   `admin` enum('yes','no') NOT NULL DEFAULT 'no',
   `last_action` int(11) NOT NULL DEFAULT '0',
@@ -282,12 +281,20 @@ CREATE TABLE `prefix_users_entity` (
   UNIQUE KEY `username` (`username`),
   KEY `password` (`password`),
   KEY `email` (`email`(50)),
-  KEY `code` (`code`),
   KEY `last_action` (`last_action`),
   KEY `last_login` (`last_login`),
   KEY `admin` (`admin`),
   FULLTEXT KEY `name` (`name`),
   FULLTEXT KEY `name_2` (`name`,`username`)
+) ENGINE=MyISAM DEFAULT CHARSET=utf8;
+
+-- user remember me cookies
+CREATE TABLE `prefix_users_remember_me_cookies` (
+  `code` varchar(32) NOT NULL,
+  `guid` bigint(20) unsigned NOT NULL,
+  `timestamp` int(11) unsigned NOT NULL,
+  PRIMARY KEY (`code`),
+  KEY `timestamp` (`timestamp`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
 
 -- user sessions

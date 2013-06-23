@@ -316,6 +316,42 @@ function elgg_set_cookie(ElggCookie $cookie) {
 }
 
 /**
+ * Add a remember me cookie to storage
+ * 
+ * @param ElggUser $user The user being remembered
+ * @param string   $code 32 letter code
+ * @return void
+ * @access private
+ */
+function _elgg_add_remember_me_cookie(ElggUser $user, $code) {
+	$db = _elgg_services()->db;
+	$prefix = $db->getTablePrefix();
+	$time = time();
+	$code = $db->sanitizeString($code);
+
+	$query = "INSERT INTO {$prefix}users_remember_me_cookies
+		(code, guid, timestamp) VALUES ('$code', $user->guid, $time)";
+	$db->insertData($query);
+}
+
+/**
+ * Remove a remember me cookie from storage
+ * 
+ * @param string $code 32 letter code
+ * @return void
+ * @access private
+ */
+function _elgg_delete_remember_me_cookie($code) {
+	$db = _elgg_services()->db;	
+	$prefix = $db->getTablePrefix();
+	$code = $db->sanitizeString($code);
+
+	$query = "DELETE FROM {$prefix}users_remember_me_cookies
+		WHERE code = '$code'";
+	$db->deleteData($query);
+}
+
+/**
  * Logs in a specified ElggUser. For standard registration, use in conjunction
  * with elgg_authenticate.
  *
@@ -328,41 +364,34 @@ function elgg_set_cookie(ElggCookie $cookie) {
  * @throws LoginException
  */
 function login(ElggUser $user, $persistent = false) {
-	// User is banned, return false.
 	if ($user->isBanned()) {
 		throw new LoginException(elgg_echo('LoginException:BannedUser'));
 	}
 
-	$session = _elgg_services()->session;
+	// give plugins a chance to reject the login of this user (no user in session!)
+	if (!elgg_trigger_event('login', 'user', $user)) {
+		throw new LoginException(elgg_echo('LoginException:Unknown'));
+	}
 
-	// we need the user in the session to have permission to save the entity
-	// @todo this should go away when we move remember me cookies out of user table
-	$session->setLoggedInUser($user);
+	$session = _elgg_services()->session;
 
 	// if remember me checked, set cookie with token and store token on user
 	if ($persistent) {
 		$code = md5($user->name . $user->username . time() . rand());
-		$user->code = md5($code);
-		
+		// @todo oooh, hashing a hash adds magical powers
+		_elgg_add_remember_me_cookie($user, md5($code));
+		$session->set('code', $code);
+
 		$cookie = new ElggCookie("elggperm");
 		$cookie->value = $code;
 		$cookie->setExpiresTime("+30 days");
-		
 		elgg_set_cookie($cookie);
 	}
 
 	// User's privilege has been elevated, so change the session id (prevents session fixation)
 	$session->migrate();
-
-	// the only reason we save here is to set the remember me cookie code
-	if (!$user->save() || !elgg_trigger_event('login', 'user', $user)) {
-		$session->removeLoggedInUser();
-		$cookie = new ElggCookie("elggperm");
-		$cookie->setExpiresTime("-30 days");
-		elgg_set_cookie($cookie);
-
-		throw new LoginException(elgg_echo('LoginException:Unknown'));
-	}
+	
+	$session->setLoggedInUser($user);
 
 	set_last_login($user->guid);
 	reset_login_failure_count($user->guid);
@@ -378,19 +407,25 @@ function login(ElggUser $user, $persistent = false) {
 function logout() {
 	$session = _elgg_services()->session;
 	$user = $session->getLoggedInUser();
-	if ($user) {
-		if (!elgg_trigger_event('logout', 'user', $user)) {
-			return false;
-		}
-		$user->code = "";
-		$user->save();
+	if (!$user) {
+		return false;
 	}
 
-	$cookie = new ElggCookie("elggperm");
-	$cookie->setExpiresTime("-30 days");
-	$cookie->domain = "/";
+	// plugins can prevent a logout
+	if (!elgg_trigger_event('logout', 'user', $user)) {
+		return false;
+	}
 
-	elgg_set_cookie($cookie);
+	// remove remember cookie
+	if (isset($_COOKIE['elggperm'])) {
+		_elgg_delete_remember_me_cookie(md5($_COOKIE['elggperm']));
+
+		// tell browser to delete cookie
+		$cookie = new ElggCookie("elggperm");
+		$cookie->setExpiresTime("-30 days");
+		$cookie->domain = "/";
+		elgg_set_cookie($cookie);
+	}
 
 	// pass along any messages into new session
 	$old_msg = $session->get('msg');
@@ -416,14 +451,16 @@ function _elgg_session_boot() {
 	$session->start();
 
 	// test whether we have a user session
-	if (!$session->has('guid')) {
+	if ($session->has('guid')) {
+		$session->setLoggedInUser(get_user($session->get('guid')));
+	} else {
 		// is there a remember me cookie
 		if (isset($_COOKIE['elggperm'])) {
 			// we have a cookie, so try to log the user in
 			$user = get_user_by_code(md5($_COOKIE['elggperm']));
 			if ($user) {
-				// we have a user, log him in
 				$session->setLoggedInUser($user);
+				$session->set('code', md5($_COOKIE['elggperm']));
 			}
 		}
 	}
@@ -439,7 +476,7 @@ function _elgg_session_boot() {
 	// logout a user with open session who has been banned
 	$user = $session->getLoggedInUser();
 	if ($user && $user->isBanned()) {
-		$session->invalidate();
+		logout();
 		return false;
 	}
 
