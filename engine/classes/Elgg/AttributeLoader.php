@@ -231,16 +231,6 @@ class Elgg_AttributeLoader {
 				}
 				$fetched = (array) call_user_func($this->secondary_loader, $row['guid']);
 				if (!$fetched) {
-					if ($row['type'] === 'site') {
-						// A special case is needed for sites: When vanilla ElggEntities are created and
-						// saved, these are stored w/ type "site", but with no sites_entity row. These
-						// are probably only created in the unit tests.
-						// @todo Don't save vanilla ElggEntities with type "site"
-
-						$row = $this->filterAddedColumns($row);
-						$row['guid'] = (int) $row['guid'];
-						return $row;
-					}
 					throw new IncompleteEntityException("Secondary loader failed to return row for {$row['guid']}");
 				}
 				$row = array_merge($row, $fetched);

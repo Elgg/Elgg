@@ -1988,7 +1988,6 @@ function _elgg_init() {
 function _elgg_api_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->path . 'engine/tests/ElggTravisInstallTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreEntityGetterFunctionsTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreHelpersTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreRegressionBugsTest.php';
 	return $value;

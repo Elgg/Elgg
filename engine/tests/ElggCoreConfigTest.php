@@ -6,11 +6,17 @@
 class ElggCoreConfigTest extends ElggCoreUnitTest {
 
 	public function testSetConfigWithTooLongName() {
+		// prevent the error message from being logged
+		$old_log_level = _elgg_services()->logger->getLevel();
+		_elgg_services()->logger->setLevel(Elgg_Logger::OFF);
+
 		$name = '';
 		for ($i = 1; $i <= 256; $i++) {
 			$name .= 'a';
 		}
 		$this->assertFalse(set_config($name, 'foo'));
+
+		_elgg_services()->logger->setLevel($old_log_level);
 	}
 
 	public function testSetConfigWithNewName() {
@@ -90,11 +96,17 @@ class ElggCoreConfigTest extends ElggCoreUnitTest {
 	}
 
 	public function testDatalistSetWithTooLongName() {
+		// prevent the error message from being logged
+		$old_log_level = _elgg_services()->logger->getLevel();
+		_elgg_services()->logger->setLevel(Elgg_Logger::OFF);
+
 		$name = '';
 		for ($i = 1; $i <= 256; $i++) {
 			$name .= 'a';
 		}
 		$this->assertFalse(datalist_set($name, 'foo'));
+
+		_elgg_services()->logger->setLevel($old_log_level);
 	}
 
 	public function testDatalistSetNewName() {
