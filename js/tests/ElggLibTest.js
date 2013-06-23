@@ -166,5 +166,15 @@ define(function(require) {
 				});
 			});
 		});
+
+		describe("elgg.parse_str()", function () {
+			it("parses values like PHP's urldecode()", function () {
+				[
+					["A+%2B+B=A+%2B+B", {"A + B": "A + B"}]
+				].forEach(function(args) {
+					expect(elgg.parse_str(args[0])).toEqual(args[1]);
+				});
+			});
+		});
 	});
 });
