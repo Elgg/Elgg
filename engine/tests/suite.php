@@ -16,7 +16,7 @@ require_once("$vendor_path/mock_objects.php");
 require_once("$vendor_path/reporter.php");
 require_once("$test_path/ElggCoreUnitTest.php");
 
-//don't expect admin session for CLI
+// don't expect admin session for CLI
 if (!TextReporter::inCli()) {
 	admin_gatekeeper();
 } else {
@@ -53,19 +53,14 @@ foreach ($test_files as $file) {
 	$suite->addFile($file);
 }
 
-// Only run tests in debug mode.
-if (!isset($CONFIG->debug)) {
-	exit ('The site must be in debug mode to run unit tests.');
-}
-
 if (TextReporter::inCli()) {
 	// In CLI error codes are returned: 0 is success
-	$mt = microtime(true);
+	$start_time = microtime(true);
 	$reporter = new TextReporter();
 	$result = $suite->Run($reporter) ? 0 : 1 ;
 	echo sprintf("Time: %.2f seconds, Memory: %.2fMb\n",
-		microtime(true)-$mt,
-		memory_get_peak_usage() / 1048576. // in megabytes
+		microtime(true) - $start_time,
+		memory_get_peak_usage() / 1048576.0 // in megabytes
 	);
 	exit($result);
 }
