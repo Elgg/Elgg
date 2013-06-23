@@ -50,7 +50,6 @@ Session.vim
 tmtags
 Thumbs.db
 Desktop.ini
-/JsTestDriver-*.jar
 
 # don't ignore travis config
 !/.travis.yml
