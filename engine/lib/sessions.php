@@ -27,27 +27,22 @@ function elgg_get_session() {
 /**
  * Return the current logged in user, or null if no user is logged in.
  *
- * @warning The plugin hook described below is deprecated
- * If no user can be found in the current session, a plugin
- * hook - 'session:get' 'user' to give plugin authors another
- * way to provide user details to the ACL system without touching the session.
- *
  * @return ElggUser
  */
 function elgg_get_logged_in_user_entity() {
-	return _elgg_services()->session->get('user');
+	return _elgg_services()->session->getLoggedInUser();
 }
 
 /**
- * Return the current logged in user by id.
+ * Return the current logged in user by guid.
  *
  * @see elgg_get_logged_in_user_entity()
  * @return int
  */
 function elgg_get_logged_in_user_guid() {
-	$user = elgg_get_logged_in_user_entity();
+	$user = _elgg_services()->session->getLoggedInUser();
 	if ($user) {
-		return (int)$user->guid;
+		return $user->guid;
 	}
 
 	return 0;
@@ -59,24 +54,18 @@ function elgg_get_logged_in_user_guid() {
  * @return bool
  */
 function elgg_is_logged_in() {
-	$user = elgg_get_logged_in_user_entity();
-
-	if ((isset($user)) && ($user instanceof ElggUser) && ($user->guid > 0)) {
-		return true;
-	}
-
-	return false;
+	return (bool)_elgg_services()->session->getLoggedInUser();
 }
 
 /**
- * Returns whether or not the user is currently logged in and that they are an admin user.
+ * Returns whether or not the viewer is currently logged in and an admin user.
  *
  * @return bool
  */
 function elgg_is_admin_logged_in() {
 	$user = elgg_get_logged_in_user_entity();
 
-	if ((elgg_is_logged_in()) && $user->isAdmin()) {
+	if ($user && $user->isAdmin()) {
 		return true;
 	}
 
@@ -348,12 +337,11 @@ function login(ElggUser $user, $persistent = false) {
 
 	// we need the user in the session to have permission to save the entity
 	// @todo this should go away when we move remember me cookies out of user table
-	$session->set('user', $user);
+	$session->setLoggedInUser($user);
 
 	// if remember me checked, set cookie with token and store token on user
 	if ($persistent) {
 		$code = md5($user->name . $user->username . time() . rand());
-		$session->set('code', $code);
 		$user->code = md5($code);
 		
 		$cookie = new ElggCookie("elggperm");
@@ -366,21 +354,9 @@ function login(ElggUser $user, $persistent = false) {
 	// User's privilege has been elevated, so change the session id (prevents session fixation)
 	$session->migrate();
 
-	// Note: we set these before the [login, user] event so that the event is allowed to
-	// forward() while getting a complete logged in session.
-	$session->set('guid', $user->getGUID());
-	$session->set('id', $user->getGUID());
-	$session->set('username', $user->username);
-	$session->set('name', $user->name);
-
+	// the only reason we save here is to set the remember me cookie code
 	if (!$user->save() || !elgg_trigger_event('login', 'user', $user)) {
-		$session->remove('user');
-		$session->remove('guid');
-		$session->remove('id');
-		$session->remove('username');
-		$session->remove('name');
-		$session->remove('code');
-
+		$session->removeLoggedInUser();
 		$cookie = new ElggCookie("elggperm");
 		$cookie->setExpiresTime("-30 days");
 		elgg_set_cookie($cookie);
@@ -388,9 +364,8 @@ function login(ElggUser $user, $persistent = false) {
 		throw new LoginException(elgg_echo('LoginException:Unknown'));
 	}
 
-	// Update statistics
 	set_last_login($user->guid);
-	reset_login_failure_count($user->guid); // Reset any previous failed login attempts
+	reset_login_failure_count($user->guid);
 
 	return true;
 }
@@ -402,7 +377,7 @@ function login(ElggUser $user, $persistent = false) {
  */
 function logout() {
 	$session = _elgg_services()->session;
-	$user = $session->get('user');
+	$user = $session->getLoggedInUser();
 	if ($user) {
 		if (!elgg_trigger_event('logout', 'user', $user)) {
 			return false;
@@ -426,59 +401,30 @@ function logout() {
 }
 
 /**
- * Initialises the session and potentially loads the user object
- *
- * This function looks for:
- *
- * 1. 'guid' set in ElggSession - if not present, we're logged out
- * 2. The cookie 'elggperm' - if present, checks it for an authentication
- * token, validates it, and potentially logs the user in
+ * Initializes the session and checks for the remember me cookie
  *
  * @return bool
  * @access private
  */
 function _elgg_session_boot() {
 
+	elgg_register_action('login', '', 'public');
+	elgg_register_action('logout');
+	register_pam_handler('pam_auth_userpass');
+	
 	$session = _elgg_services()->session;
 	$session->start();
 
 	// test whether we have a user session
 	if (!$session->has('guid')) {
-
-		// clear session variables before checking cookie
-		$session->remove('username');
-		$session->remove('name');
-		$session->remove('code');
-		$session->remove('guid');
-		$session->remove('id');
-		$session->remove('user');
-
 		// is there a remember me cookie
 		if (isset($_COOKIE['elggperm'])) {
 			// we have a cookie, so try to log the user in
-			$code = $_COOKIE['elggperm'];
-			$code = md5($code);
-			if ($user = get_user_by_code($code)) {
+			$user = get_user_by_code(md5($_COOKIE['elggperm']));
+			if ($user) {
 				// we have a user, log him in
-				$session->set('user', $user);
-				$session->set('id', $user->getGUID());
-				$session->set('guid', $user->getGUID());
-				$session->set('code', $_COOKIE['elggperm']);
+				$session->setLoggedInUser($user);
 			}
-		}
-	} else {
-		// we have a session and we have already checked the fingerprint
-		// reload the user object from database in case it has changed during the session
-		if ($user = get_user($session->get('guid'))) {
-			$session->set('user', $user);
-			$session->set('id', $user->getGUID());
-			$session->set('guid', $user->getGUID());
-		} else {
-			// user must have been deleted with a session active
-			$session->remove('code');
-			$session->remove('guid');
-			$session->remove('id');
-			$session->remove('user');
 		}
 	}
 
@@ -486,18 +432,13 @@ function _elgg_session_boot() {
 		set_last_action($session->get('guid'));
 	}
 
-	elgg_register_action('login', '', 'public');
-	elgg_register_action('logout');
-
-	// Register a default PAM handler
-	register_pam_handler('pam_auth_userpass');
-
-	// Initialise the magic session
+	// initialize the deprecated global session wrapper
 	global $SESSION;
 	$SESSION = new Elgg_DeprecationWrapper(_elgg_services()->session, "\$SESSION is deprecated", 1.9);
 
-	// Finally we ensure that a user who has been banned with an open session is kicked.
-	if ($session->has('user') && $session->get('user')->isBanned()) {
+	// logout a user with open session who has been banned
+	$user = $session->getLoggedInUser();
+	if ($user && $user->isBanned()) {
 		$session->invalidate();
 		return false;
 	}
