@@ -119,19 +119,32 @@ class ElggGroup extends ElggEntity
 	}
 
 	/**
-	 * Returns an attribute or metadata.
+	 * Wrapper around ElggEntity::__get()
 	 *
-	 * @see ElggEntity::get()
+	 * @see ElggEntity::__get()
 	 *
 	 * @param string $name Name
-	 *
 	 * @return mixed
+	 * @todo deprecate appending group to username. Was a hack used for creating
+	 * URLs for group content. We stopped using the hack in 1.8.
 	 */
-	public function get($name) {
+	public function __get($name) {
 		if ($name == 'username') {
 			return 'group:' . $this->getGUID();
 		}
-		return parent::get($name);
+		return parent::__get($name);
+	}
+
+	/**
+	 * Wrapper around ElggEntity::get()
+	 *
+	 * @param string $name Name
+	 * @return mixed
+	 * @deprecated 1.9
+	 */
+	public function get($name) {
+		elgg_deprecated_notice("Use -> instead of get()", 1.9);
+		return $this->__get($name);
 	}
 
 	/**
