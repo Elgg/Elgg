@@ -26,11 +26,14 @@ $ia = elgg_set_ignore_access(true);
 $options = array(
 	'type' => 'user',
 	'limit' => 0,
+	'selects' => array("u.code as code"),
+	'joins' => array("JOIN {$db_prefix}users_entity u ON e.guid = u.guid"),
 );
 $batch = new ElggBatch('elgg_get_entities', $options);
 foreach ($batch as $entity) {
-	if (isset($entity->code)) {
-		_elgg_add_remember_me_cookie($entity, $entity->code);
+	$code = $entity->getVolatileData('select:code');
+	if ($code) {
+		_elgg_add_remember_me_cookie($entity, $code);
 	}
 }
 elgg_set_ignore_access($ia);
