@@ -2,7 +2,7 @@
 /**
  * Redirect message
  * 
- * @uses $vars['url']
+ * @uses $vars['url'] URL we're redirecting the user to (note: not relying on legacy site URL injection)
  */
 
 $link = elgg_view('output/url', array(
