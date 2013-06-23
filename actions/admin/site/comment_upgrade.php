@@ -51,6 +51,8 @@ if ($annotations) {
 			$query = "
 				UPDATE {$db_prefix}river
 				SET view = 'river/object/comment/create',
+					type = 'object',
+					subtype = 'comment',
 					annotation_id = 0,
 					object_guid = $guid,
 					target_guid = {$object->container_guid}
