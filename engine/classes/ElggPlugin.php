@@ -258,7 +258,7 @@ class ElggPlugin extends ElggObject {
 			}
 
 			// set this priority
-			if ($this->set($name, $priority)) {
+			if ($this->setPrivateSetting($name, $priority)) {
 				return true;
 			} else {
 				return false;
@@ -334,7 +334,7 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 
-		return $this->set($name, $value);
+		return $this->setPrivateSetting($name, $value);
 	}
 
 	/**
@@ -864,17 +864,13 @@ class ElggPlugin extends ElggObject {
 		return true;
 	}
 
-
-	// generic helpers and overrides
-
 	/**
-	 * Get a value from private settings.
+	 * Get an attribute or private setting value
 	 *
-	 * @param string $name Name
-	 *
+	 * @param string $name Name of the attribute or private setting
 	 * @return mixed
 	 */
-	public function get($name) {
+	public function __get($name) {
 		// rewrite for old and inaccurate plugin:setting
 		if (strstr($name, 'plugin:setting:')) {
 			$msg = 'Direct access of user settings is deprecated. Use ElggPlugin->getUserSetting()';
@@ -888,6 +884,7 @@ class ElggPlugin extends ElggObject {
 			return $this->attributes[$name];
 		}
 
+		// @todo clean below - getPrivateSetting() should return null now
 		// No, so see if its in the private data store.
 		// get_private_setting() returns false if it doesn't exist
 		$meta = $this->getPrivateSetting($name);
@@ -901,25 +898,34 @@ class ElggPlugin extends ElggObject {
 	}
 
 	/**
-	 * Save a value as private setting or attribute.
+	 * Get a value from private settings.
+	 *
+	 * @param string $name Name
+	 * @return mixed
+	 * @deprecated 1.9
+	 */
+	public function get($name) {
+		elgg_deprecated_notice("Use -> instead of get()", 1.9);
+		return $this->__get($name);
+	}
+
+	/**
+	 * Set a value as private setting or attribute.
 	 *
 	 * Attributes include title and description.
 	 *
-	 * @param string $name  Name
-	 * @param mixed  $value Value
-	 *
-	 * @return bool
+	 * @param string $name  Name of the attribute or private_setting
+	 * @param mixed  $value Value to be set
+	 * @return void
 	 */
-	public function set($name, $value) {
+	public function __set($name, $value) {
 		if (array_key_exists($name, $this->attributes)) {
 			// Check that we're not trying to change the guid!
 			if ((array_key_exists('guid', $this->attributes)) && ($name == 'guid')) {
-				return false;
+				return;
 			}
 
 			$this->attributes[$name] = $value;
-
-			return true;
 		} else {
 			// Hook to validate setting
 			$value = elgg_trigger_plugin_hook('setting', 'plugin', array(
@@ -929,8 +935,24 @@ class ElggPlugin extends ElggObject {
 				'value' => $value
 			), $value);
 
-			return $this->setPrivateSetting($name, $value);
+			$this->setPrivateSetting($name, $value);
 		}
+	}
+
+	/**
+	 * Save a value as private setting or attribute.
+	 *
+	 * Attributes include title and description.
+	 *
+	 * @param string $name  Name
+	 * @param mixed  $value Value
+	 * @return bool
+	 */
+	public function set($name, $value) {
+		elgg_deprecated_notice("Use -> instead of set()", 1.9);
+		$this->__set($name, $value);
+
+		return true;
 	}
 
 	/**

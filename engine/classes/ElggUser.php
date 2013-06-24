@@ -210,11 +210,11 @@ class ElggUser extends ElggEntity
 	public function setDisplayName($displayName) {
 		$this->name = $displayName;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
-	public function set($name, $value) {
+	public function __set($name, $value) {
 		if (array_key_exists($name, $this->attributes)) {
 			switch ($name) {
 				case 'prev_last_action':
@@ -227,13 +227,21 @@ class ElggUser extends ElggEntity
 					}
 					break;
 				default:
-					return parent::set($name, $value);
+					parent::__set($name, $value);
 					break;
 			}
 		} else {
-			return parent::set($name, $value);
+			parent::__set($name, $value);
 		}
-	
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function set($name, $value) {
+		elgg_deprecated_notice("Use -> instead of set()", 1.9);
+		$this->__set($name, $value);
+
 		return true;
 	}
 
@@ -686,43 +694,6 @@ class ElggUser extends ElggEntity
 			'username',
 			'language',
 		));
-	}
-
-	/**
-	 * Need to catch attempts to make a user an admin.  Remove for 1.9
-	 *
-	 * @param string $name  Name
-	 * @param mixed  $value Value
-	 *
-	 * @return void
-	 */
-	public function __set($name, $value) {
-		if ($name == 'admin' || $name == 'siteadmin') {
-			elgg_deprecated_notice('The admin/siteadmin metadata are not longer used.  Use ElggUser->makeAdmin() and ElggUser->removeAdmin().', 1.7);
-
-			if ($value == 'yes' || $value == '1') {
-				$this->makeAdmin();
-			} else {
-				$this->removeAdmin();
-			}
-		}
-		parent::__set($name, $value);
-	}
-
-	/**
-	 * Need to catch attempts to test user for admin.  Remove for 1.9
-	 *
-	 * @param string $name Name
-	 *
-	 * @return bool
-	 */
-	public function __get($name) {
-		if ($name == 'admin' || $name == 'siteadmin') {
-			elgg_deprecated_notice('The admin/siteadmin metadata are not longer used.  Use ElggUser->isAdmin().', 1.7);
-			return $this->isAdmin();
-		}
-
-		return parent::__get($name);
 	}
 
 	/**

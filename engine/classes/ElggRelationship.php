@@ -43,18 +43,30 @@ class ElggRelationship extends ElggData implements
 	}
 
 	/**
-	 * Class member get overloading
+	 * (non-PHPdoc)
 	 *
-	 * @param string $name Name
+	 * @see ElggData::initializeAttributes()
 	 *
-	 * @return mixed
+	 * @return void
 	 */
-	public function get($name) {
-		if (array_key_exists($name, $this->attributes)) {
-			return $this->attributes[$name];
-		}
+	protected function initializeAttributes() {
+		parent::initializeAttributes();
 
-		return null;
+		$this->attributes['id'] = null;
+		$this->attributes['guid_one'] = null;
+		$this->attributes['relationship'] = null;
+		$this->attributes['guid_two'] = null;
+	}
+
+	/**
+	 * Set an attribute of the relationship
+	 *
+	 * @param string $name  Name
+	 * @param mixed  $value Value
+	 * @return void
+	 */
+	public function __set($name, $value) {
+		$this->attributes[$name] = $value;
 	}
 
 	/**
@@ -62,12 +74,39 @@ class ElggRelationship extends ElggData implements
 	 *
 	 * @param string $name  Name
 	 * @param mixed  $value Value
-	 *
 	 * @return mixed
+	 * @deprecated 1.9
 	 */
 	public function set($name, $value) {
-		$this->attributes[$name] = $value;
+		elgg_deprecated_notice("Use -> instead of set()", 1.9);
+		$this->__set($name, $value);
 		return true;
+	}
+
+	/**
+	 * Get an attribute of the relationship
+	 *
+	 * @param string $name Name
+	 * @return mixed
+	 */
+	public function __get($name) {
+		if (array_key_exists($name, $this->attributes)) {
+			return $this->attributes[$name];
+		}
+
+		return null;
+	}
+	
+	/**
+	 * Class member get overloading
+	 *
+	 * @param string $name Name
+	 * @return mixed
+	 * @deprecated 1.9
+	 */
+	public function get($name) {
+		elgg_deprecated_notice("Use -> instead of get()", 1.9);
+		return $this->__get($name);
 	}
 
 	/**
