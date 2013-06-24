@@ -6,12 +6,14 @@
  * @subpackage Widgets.Management
  */
 
-$owner_guid = get_input('owner_guid');
+$page_owner_guid = get_input('page_owner_guid');
 $handler = get_input('handler');
 $context = get_input('context');
 $show_access = (bool)get_input('show_access', true);
 $column = get_input('column', 1);
 $default_widgets = get_input('default_widgets', 0);
+
+elgg_set_page_owner_guid($page_owner_guid);
 
 elgg_push_context($context);
 if ($default_widgets) {
@@ -19,23 +21,21 @@ if ($default_widgets) {
 }
 elgg_push_context('widgets');
 
-if (!empty($owner_guid)) {
-	$owner = get_entity($owner_guid);
-	if ($owner && $owner->canEdit()) {
-		$guid = elgg_create_widget($owner->getGUID(), $handler, $context);
-		if ($guid) {
-			$widget = get_entity($guid);
+// logged in user must be able to edit the layout to add a widget
+$page_owner = elgg_get_page_owner_entity();
+if ($page_owner && elgg_can_edit_widget_layout($context)) {
+	$guid = elgg_create_widget($page_owner->getGUID(), $handler, $context);
+	if ($guid) {
+		$widget = get_entity($guid);
 
-			// position the widget
-			$widget->move($column, 0);
+		// position the widget
+		$widget->move($column, 0);
 
-			// send widget html for insertion
-			echo elgg_view_entity($widget, array('show_access' => $show_access));
+		// send widget html for insertion
+		echo elgg_view_entity($widget, array('show_access' => $show_access));
 
-			//system_message(elgg_echo('widgets:add:success'));
-			forward(REFERER);
-		}
-	}
+		forward(REFERER);
+	}	
 }
 
 register_error(elgg_echo('widgets:add:failure'));
