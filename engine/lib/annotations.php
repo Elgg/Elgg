@@ -54,7 +54,7 @@ function elgg_delete_annotation_by_id($id) {
 /**
  * Create a new annotation.
  *
- * @param int    $entity_guid Entity Guid
+ * @param int    $entity_guid GUID of entity to be annotated
  * @param string $name        Name of annotation
  * @param string $value       Value of annotation
  * @param string $value_type  Type of value (default is auto detection)
@@ -70,9 +70,8 @@ $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 	$result = false;
 
 	$entity_guid = (int)$entity_guid;
-	//$name = sanitise_string(trim($name));
-	//$value = sanitise_string(trim($value));
-	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
+	$name = trim($name);
+	$value_type = detect_extender_valuetype($value, $value_type);
 
 	$owner_guid = (int)$owner_guid;
 	if ($owner_guid == 0) {
@@ -82,23 +81,24 @@ $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
 	$access_id = (int)$access_id;
 	$time = time();
 
-	// Add the metastring
-	$value = elgg_get_metastring_id($value);
-	if (!$value) {
+	$value_id = elgg_get_metastring_id($value);
+	if (!$value_id) {
 		return false;
 	}
 
-	$name = elgg_get_metastring_id($name);
-	if (!$name) {
+	$name_id = elgg_get_metastring_id($name);
+	if (!$name_id) {
 		return false;
 	}
 
+	// @todo we don't check that the entity is loaded which means the user may
+	// not have access to the entity
 	$entity = get_entity($entity_guid);
 
 	if (elgg_trigger_event('annotate', $entity->type, $entity)) {
 		$result = insert_data("INSERT INTO {$CONFIG->dbprefix}annotations
 			(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
-			($entity_guid, '$name', $value, '$value_type', $owner_guid, $time, $access_id)");
+			($entity_guid, $name_id, $value_id, '$value_type', $owner_guid, $time, $access_id)");
 
 		if ($result !== false) {
 			$obj = elgg_get_annotation_from_id($result);
@@ -141,8 +141,7 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 	}
 
 	$name = trim($name);
-	$value = trim($value);
-	$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
+	$value_type = detect_extender_valuetype($value, $value_type);
 
 	$owner_guid = (int)$owner_guid;
 	if ($owner_guid == 0) {
@@ -151,18 +150,18 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
 
 	$access_id = (int)$access_id;
 
-	$value = elgg_get_metastring_id($value);
-	if (!$value) {
+	$value_id = elgg_get_metastring_id($value);
+	if (!$value_id) {
 		return false;
 	}
 
-	$name = elgg_get_metastring_id($name);
-	if (!$name) {
+	$name_id = elgg_get_metastring_id($name);
+	if (!$name_id) {
 		return false;
 	}
 
 	$result = update_data("UPDATE {$CONFIG->dbprefix}annotations
-		SET name_id = '$name', value_id = '$value', value_type = '$value_type',
+		SET name_id = $name_id, value_id = $value_id, value_type = '$value_type',
 		access_id = $access_id, owner_guid = $owner_guid
 		WHERE id = $annotation_id");
 
@@ -219,6 +218,27 @@ function elgg_get_annotations(array $options = array()) {
 	
 	$options['metastring_type'] = 'annotations';
 	return _elgg_get_metastring_based_objects($options);
+}
+
+/**
+ * Returns a rendered list of annotations with pagination.
+ *
+ * @param array $options Annotation getter and display options.
+ * {@see elgg_get_annotations()} and {@see elgg_list_entities()}.
+ *
+ * @return string The list of entities
+ * @since 1.8.0
+ */
+function elgg_list_annotations($options) {
+	$defaults = array(
+		'limit' => 25,
+		'offset' => (int) max(get_input('annoff', 0), 0),
+		'no_results' => '',
+	);
+
+	$options = array_merge($defaults, $options);
+
+	return elgg_list_entities($options, 'elgg_get_annotations', 'elgg_view_annotation_list');
 }
 
 /**
@@ -279,31 +299,6 @@ function elgg_enable_annotations(array $options) {
 	$options['metastring_type'] = 'annotations';
 	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
 }
-
-/**
- * Returns a rendered list of annotations with pagination.
- *
- * @param array $options Annotation getter and display options.
- * {@see elgg_get_annotations()} and {@see elgg_list_entities()}.
- *
- * @return string The list of entities
- * @since 1.8.0
- */
-function elgg_list_annotations($options) {
-	$defaults = array(
-		'limit' => 25,
-		'offset' => (int) max(get_input('annoff', 0), 0),
-		'no_results' => '',
-	);
-
-	$options = array_merge($defaults, $options);
-
-	return elgg_list_entities($options, 'elgg_get_annotations', 'elgg_view_annotation_list');
-}
-
-/**
- * Entities interfaces
- */
 
 /**
  * Returns entities based upon annotations.  Also accepts all options available
@@ -473,12 +468,11 @@ function elgg_list_entities_from_annotation_calculation($options) {
 }
 
 /**
- * Get the URL for this item of metadata, by default this links to the
- * export handler in the current view.
+ * Get the URL for this annotation.
  *
  * @param int $id Annotation id
  *
- * @return mixed
+ * @return string|bool False on failure
  */
 function get_annotation_url($id) {
 	$id = (int)$id;
@@ -547,24 +541,23 @@ function _elgg_set_comment_url($hook, $type, $url, $params) {
  *
  * @param string $hook
  * @param string $type
- * @param array $value
- * @param array $params
+ * @param array  $tests
  * @return array
  * @access private
  */
-function annotations_test($hook, $type, $value, $params) {
+function _elgg_annotations_test($hook, $type, $tests) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAnnotationAPITest.php';
-	return $value;
+	$tests[] = $CONFIG->path . 'engine/tests/ElggCoreAnnotationAPITest.php';
+	return $tests;
 }
 
 /**
  * Initialize the annotation library
  * @access private
  */
-function elgg_annotations_init() {
+function _elgg_annotations_init() {
 	elgg_register_plugin_hook_handler('extender:url', 'annotation', '_elgg_set_comment_url');
-	elgg_register_plugin_hook_handler('unit_test', 'system', 'annotations_test');
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_annotations_test');
 }
 
-elgg_register_event_handler('init', 'system', 'elgg_annotations_init');
+elgg_register_event_handler('init', 'system', '_elgg_annotations_init');
