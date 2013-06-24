@@ -138,7 +138,7 @@ html {
     }
 	.elgg-sidebar {
 		border-left: none;
-        border-bottom: 1px solid #DCDCDC;
+        border-top: 1px solid #DCDCDC;
         width: 100%;
         float: left;
 		padding: 27px 0 20px 0;
@@ -187,6 +187,9 @@ html {
 	}
 }
 @media (max-width: 766px) {
+	.elgg-heading-site, .elgg-heading-site:hover {
+		font-size: 1.6em;
+	}
     .elgg-button-nav {
         cursor: pointer;
         display: block;

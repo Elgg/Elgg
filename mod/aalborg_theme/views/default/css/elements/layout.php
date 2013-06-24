@@ -23,7 +23,7 @@
 .elgg-page-default .elgg-page-header > .elgg-inner {
 	max-width: 990px;
 	margin: 0 auto;
-	height: 80px;
+	min-height: 65px;
 }
 .elgg-page-default .elgg-page-navbar > .elgg-inner {
 	max-width: 990px;
@@ -68,7 +68,7 @@
 
 /***** PAGE HEADER ******/
 .elgg-page-header {
-	padding: 0 20px;
+	padding: 5px 20px 10px;
 	position: relative;
 	background: #60B8F7;
 }

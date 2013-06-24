@@ -19,11 +19,11 @@
 .elgg-pagination li {
 	display: inline;
 	text-align: center;
+	margin-left: -1px;
 }
 .elgg-pagination li:first-child a,
 .elgg-pagination li:first-child span {
 	border-radius: 3px 0 0 3px;
-    border-left-width: 1px;
 }
 .elgg-pagination li:last-child a,
 .elgg-pagination li:last-child span {
@@ -33,10 +33,8 @@
 .elgg-pagination span {
 	display: inline-block;	
 	padding: 6px 15px;
-	color: #444;		
-    border-color: #DCDCDC;
-    border-style: solid;
-    border-width: 1px 1px 1px 0;
+	color: #444;
+	border: 1px solid #DCDCDC;
 }
 .elgg-pagination a:hover {
 	color: #999;
