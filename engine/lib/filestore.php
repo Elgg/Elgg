@@ -1,8 +1,7 @@
 <?php
 /**
  * Elgg filestore.
- * This file contains classes, interfaces and functions for
- * saving and retrieving data to various file stores.
+ * This file contains functions for saving and retrieving data from files.
  *
  * @package Elgg.Core
  * @subpackage DataModel.FileStorage
@@ -469,19 +468,22 @@ function set_default_filestore(ElggFilestore $filestore) {
 }
 
 /**
- * Initialise the file modules.
+ * Initialize the file library.
  * Listens to system init and configures the default filestore
  *
  * @return void
  * @access private
  */
-function filestore_init() {
+function _elgg_filestore_init() {
 	global $CONFIG;
 
 	// Now register a default filestore
 	if (isset($CONFIG->dataroot)) {
 		set_default_filestore(new ElggDiskFilestore($CONFIG->dataroot));
 	}
+
+	// Unit testing
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
 }
 
 /**
@@ -490,20 +492,14 @@ function filestore_init() {
  * @param string $hook   unit_test
  * @param string $type   system
  * @param mixed  $value  Array of tests
- * @param mixed  $params Params
  *
  * @return array
  * @access private
  */
-function filestore_test($hook, $type, $value, $params) {
+function _elgg_filestore_test($hook, $type, $value) {
 	global $CONFIG;
 	$value[] = "{$CONFIG->path}engine/tests/ElggCoreFilestoreTest.php";
 	return $value;
 }
 
-
-// Register a startup event
-elgg_register_event_handler('init', 'system', 'filestore_init', 100);
-
-// Unit testing
-elgg_register_plugin_hook_handler('unit_test', 'system', 'filestore_test');
+elgg_register_event_handler('init', 'system', '_elgg_filestore_init', 100);
