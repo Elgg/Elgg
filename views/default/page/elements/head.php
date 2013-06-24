@@ -68,7 +68,11 @@ $html5shiv = elgg_normalize_url('vendors/html5shiv.js');
 		<link rel="stylesheet" href="<?php echo $ie7_url; ?>" />
 	<![endif]-->
 
-<script>var require = <?php echo json_encode($amdConfig); ?>;</script>
+<script>
+if (typeof require == "undefined") {
+	var require = <?php echo json_encode($amdConfig); ?>;
+}
+</script>
 <script><?php echo elgg_view('js/initialize_elgg'); ?></script>
 
 <?php foreach ($js as $script) { ?>
