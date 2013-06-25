@@ -48,7 +48,11 @@ elgg.ui.lightbox.init = function() {
 		};
 	}
 
-	$(".elgg-lightbox").colorbox();
+	$('.elgg-lightbox').colorbox();
+
+	// automatically detect hidden div targets for lightbox (fancybox handled this automatically)
+	$('.elgg-lightbox[href^="#"]').colorbox({inline: true});
+
 };
 
 elgg.ui.lightbox.close = function() {
