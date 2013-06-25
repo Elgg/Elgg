@@ -1519,7 +1519,8 @@ table.mceLayout {
 /* ***************************************
 	HELPERS
 *************************************** */
-.hidden {
+.hidden,
+.elgg-page .hidden {
 	display: none;
 }
 .centered {
