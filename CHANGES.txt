@@ -1,5 +1,5 @@
 Version 1.8.16
-(June xx, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
+(June 25, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
    * Brett Profitt
    * Cash Costello
@@ -9,7 +9,7 @@ Version 1.8.16
    * Steve Clay
 
   Security Fixes:
-   * 
+   * Fixed avatar removal bug (thanks to Jerome Bakker for the first report of this)
 
   Bugfixes:
    * Fixed infinite loop when deleting/disabling an entity with > 50 annotations
