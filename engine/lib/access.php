@@ -83,6 +83,9 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
  * Returns an array of access IDs a user is permitted to see.
  *
  * Can be overridden with the 'access:collections:read', 'user' plugin hook.
+ * @warning A callback for that plugin hook needs to either not retrieve data
+ * from the database that would use the access system (triggering the plugin again)
+ * or ignore the second call. Otherwise, an infinite loop will be created.
  *
  * This returns a list of all the collection ids a user owns or belongs
  * to plus public and logged in access levels. If the user is an admin, it includes
@@ -176,7 +179,8 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 		'user_id' => $user_id,
 		'site_id' => $site_id
 	);
-	
+
+	// see the warning in the docs for this function about infinite loop potential
 	return elgg_trigger_plugin_hook('access:collections:read', 'user', $options, $access_array);
 }
 
