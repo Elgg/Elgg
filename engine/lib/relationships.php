@@ -194,38 +194,35 @@ function remove_entity_relationships($guid_one, $relationship = "", $inverse = f
 	$guid_one = (int) $guid_one;
 
 	if (!empty($relationship)) {
-		$relationship = sanitise_string($relationship);
-		$where = "and er.relationship='$relationship'";
+		$relationship = sanitize_string($relationship);
+		$where = "AND er.relationship = '$relationship'";
 	} else {
 		$where = "";
 	}
 
 	if (!empty($type)) {
-		$type = sanitise_string($type);
+		$type = sanitize_string($type);
 		if (!$inverse) {
-			$join = " join {$CONFIG->dbprefix}entities e on e.guid = er.guid_two ";
+			$join = "JOIN {$CONFIG->dbprefix}entities e ON e.guid = er.guid_two";
 		} else {
-			$join = " join {$CONFIG->dbprefix}entities e on e.guid = er.guid_one ";
+			$join = "JOIN {$CONFIG->dbprefix}entities e ON e.guid = er.guid_one";
 			$where .= " and ";
 		}
-		$where .= " and e.type = '{$type}' ";
+		$where .= " AND e.type = '$type'";
 	} else {
 		$join = "";
 	}
 
 	if (!$inverse) {
-		$sql = "DELETE er from {$CONFIG->dbprefix}entity_relationships as er
-			{$join}
-			where guid_one={$guid_one} {$where}";
-
-		return delete_data($sql);
+		$sql = "DELETE er FROM {$CONFIG->dbprefix}entity_relationships AS er
+			$join WHERE guid_one = $guid_one $where";
 	} else {
-		$sql = "DELETE er from {$CONFIG->dbprefix}entity_relationships as er
-			{$join} where
-			guid_two={$guid_one} {$where}";
-
-		return delete_data($sql);
+		$sql = "DELETE er FROM {$CONFIG->dbprefix}entity_relationships AS er
+			$join WHERE
+			guid_two = $guid_one $where";
 	}
+
+	return delete_data($sql) !== false;
 }
 
 /**

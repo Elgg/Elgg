@@ -574,16 +574,21 @@ abstract class ElggEntity extends ElggData implements
 
 	/**
 	 * Remove all relationships to and from this entity.
+	 * If you pass a relationship name, only relationships matching that name
+	 * will be deleted.
 	 *
-	 * @return true
-	 * @todo This should actually return if it worked.
+	 * @warning Calling this with no $relationship will clear all relationships
+	 * for this entity.
+	 *
+	 * @param null|string $relationship The name of the relationship to remove.
+	 * @return bool
 	 * @see ElggEntity::addRelationship()
 	 * @see ElggEntity::removeRelationship()
 	 */
-	public function deleteRelationships() {
-		remove_entity_relationships($this->getGUID());
-		remove_entity_relationships($this->getGUID(), "", true);
-		return true;
+	public function deleteRelationships($relationship = null) {
+		$relationship = (string)$relationship;
+		$result = remove_entity_relationships($this->getGUID(), $relationship);
+		return $result && remove_entity_relationships($this->getGUID(), $relationship, true);
 	}
 
 	/**
