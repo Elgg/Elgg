@@ -4,6 +4,7 @@ elgg.provide('elgg.ui.widgets');
  * Widgets initialization
  *
  * @return void
+ * @requires jqueryui.sortable
  */
 elgg.ui.widgets.init = function() {
 

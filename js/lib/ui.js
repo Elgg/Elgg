@@ -257,6 +257,7 @@ elgg.ui.loginHandler = function(hook, type, params, options) {
  * stored in a hidden element indicated by the id on the input field.
  *
  * @return void
+ * @requires jqueryui.datepicker
  */
 elgg.ui.initDatePicker = function() {
 	var loadDatePicker = function() {
@@ -355,7 +356,7 @@ elgg.ui.toggleMenuItems = function($menu, nameOfItemToShow, nameOfItemToHide) {
 };
 
 /**
- * Initialize input/access for dynamic display of members only notifications
+ * Initialize input/access for dynamic display of members only warning
  *
  * If a select.elgg-input-access is accompanied by a note (.elgg-input-access-membersonly),
  * then hide the note when the select value is PRIVATE or group members.
