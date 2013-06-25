@@ -59,15 +59,14 @@ return array(
 
 	// notifications
 	'blog:notify:summary' => 'New blog post called %s',
-	'blog:newpost' => 'A new blog post',
-	'blog:notification' =>
+	'blog:notify:subject' => 'New blog post: %s',
+	'blog:notify:body' =>
 '
-%s made a new blog post.
+%s published a new blog post: %s
 
 %s
-%s
 
-View and comment on the new blog post:
+View and comment on the blog post:
 %s
 ',
 

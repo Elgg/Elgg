@@ -27,13 +27,15 @@ return array(
 	'bookmarks:none' => 'No bookmarks',
 
 	'bookmarks:notify:summary' => 'New bookmark called %s',
-	'bookmarks:notification' =>
-'%s added a new bookmark:
+	'bookmarks:notify:subject' => 'New bookmark: %s',
+	'bookmarks:notify:body' =>
+'%s added a new bookmark: %s
 
-%s - %s
+Address: %s
+
 %s
 
-View and comment on the new bookmark:
+View and comment on the bookmark:
 %s
 ',
 

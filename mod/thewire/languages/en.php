@@ -53,9 +53,10 @@ return array(
 	 * Notifications
 	 */
 	'thewire:notify:summary' => 'New wire post: %s',
-	'thewire:notify:subject' => "New wire post",
+	'thewire:notify:subject' => "New wire post from %s",
 	'thewire:notify:reply' => '%s responded to %s on the wire:',
 	'thewire:notify:post' => '%s posted on the wire:',
+	'thewire:notify:footer' => "View and reply:\n%s",
 
 	/**
 	 * Settings

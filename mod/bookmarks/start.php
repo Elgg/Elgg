@@ -206,8 +206,8 @@ function bookmarks_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('bookmarks:new', array(), $language); 
-	$notification->body = elgg_echo('bookmarks:notification', array(
+	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language); 
+	$notification->body = elgg_echo('bookmarks:notify:body', array(
 		$owner->name,
 		$title,
 		$entity->address,

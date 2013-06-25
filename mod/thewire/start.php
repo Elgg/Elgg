@@ -171,7 +171,6 @@ function thewire_set_url($hook, $type, $url, $params) {
  * @return Elgg_Notifications_Notification
  */
 function thewire_prepare_notification($hook, $type, $notification, $params) {
-	global $CONFIG;
 
 	$entity = $params['event']->getObject();
 	$owner = $params['event']->getActor();
@@ -180,7 +179,7 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 	$method = $params['method'];
 	$descr = $entity->description;
 
-	$subject = elgg_echo('thewire:notify:subject', array(), $language);
+	$subject = elgg_echo('thewire:notify:subject', array($owner->name), $language);
 	if ($entity->reply) {
 		$parent = thewire_get_parent($entity->guid);
 		if ($parent) {
@@ -191,7 +190,7 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 		$body = elgg_echo('thewire:notify:post', array($owner->name), $language);
 	}
 	$body .= "\n\n" . $descr . "\n\n";
-	$body .= elgg_echo('thewire', array(), $language) . ": {$CONFIG->url}thewire";
+	$body .= elgg_echo('thewire:notify:footer', array($entity->getURL()), $language);
 
 	$notification->subject = $subject;
 	$notification->body = $body;

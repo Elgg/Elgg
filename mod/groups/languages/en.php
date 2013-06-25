@@ -78,15 +78,16 @@ return array(
 	'groups:search_in_group' => "Search in this group",
 	'groups:acl' => "Group: %s",
 
-	'discussion:notify:summary' => 'New discussion topic called %s',
-	'discussion:notification:topic:subject' => 'New group discussion post',
-	'groups:notification' =>
-'%s added a new discussion topic to %s:
+	'discussion:topic:notify:summary' => 'New discussion topic called %s',
+	'discussion:topic:notify:subject' => 'New discussion topic: %s',
+	'discussion:topic:notify:body' =>
+'%s added a new discussion topic to the group %s:
+
+Title: %s
 
 %s
-%s
 
-View and reply to the discussion:
+View and reply to the discussion topic:
 %s
 ',
 

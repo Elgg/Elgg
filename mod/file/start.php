@@ -201,8 +201,8 @@ function file_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('file:newupload', array(), $language); 
-	$notification->body = elgg_echo('file:notification', array(
+	$notification->subject = elgg_echo('file:notify:subject', array($entity->title), $language); 
+	$notification->body = elgg_echo('file:notify:body', array(
 		$owner->name,
 		$title,
 		$descr,

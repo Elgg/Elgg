@@ -244,8 +244,8 @@ function blog_prepare_notification($hook, $type, $notification, $params) {
 	$language = $params['language'];
 	$method = $params['method'];
 
-	$notification->subject = elgg_echo('blog:newpost', array(), $language); 
-	$notification->body = elgg_echo('blog:notification', array(
+	$notification->subject = elgg_echo('blog:notify:subject', array($entity->title), $language); 
+	$notification->body = elgg_echo('blog:notify:body', array(
 		$owner->name,
 		$entity->title,
 		$entity->getExcerpt(),
