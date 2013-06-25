@@ -34,7 +34,7 @@ function row_to_elggannotation($row) {
  * @return ElggAnnotation|false
  */
 function elgg_get_annotation_from_id($id) {
-	return _elgg_get_metastring_based_object_from_id($id, 'annotations');
+	return _elgg_get_metastring_based_object_from_id($id, 'annotation');
 }
 
 /**
@@ -253,7 +253,7 @@ function elgg_list_annotations($options) {
  * @since 1.8.0
  */
 function elgg_delete_annotations(array $options) {
-	if (!_elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
+	if (!_elgg_is_valid_options_for_batch_operation($options, 'annotation')) {
 		return false;
 	}
 
@@ -271,7 +271,7 @@ function elgg_delete_annotations(array $options) {
  * @since 1.8.0
  */
 function elgg_disable_annotations(array $options) {
-	if (!_elgg_is_valid_options_for_batch_operation($options, 'annotations')) {
+	if (!_elgg_is_valid_options_for_batch_operation($options, 'annotation')) {
 		return false;
 	}
 

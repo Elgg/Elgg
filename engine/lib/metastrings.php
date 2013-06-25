@@ -602,7 +602,7 @@ function _elgg_normalize_metastrings_options(array $options = array()) {
  *
  * @param int    $id      The object's ID
  * @param string $enabled Value to set to: yes or no
- * @param string $type    The type of table to use: metadata or annotations
+ * @param string $type    Metastring type: metadata or annotation
  *
  * @return bool
  * @throws InvalidParameterException
@@ -614,9 +614,10 @@ function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
 
 	$object = _elgg_get_metastring_based_object_from_id($id, $type);
 
-	switch($type) {
+	switch ($type) {
 		case 'annotation':
 		case 'annotations':
+			$type = 'annotation';
 			$table = "{$db_prefix}annotations";
 			break;
 
@@ -714,12 +715,14 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 	$db_prefix = elgg_get_config('dbprefix');
 
 	switch ($type) {
-		case 'annotation':
 		case 'annotations':
-			$type = 'annotations';
+		case 'annotation':
+			$table = $db_prefix . 'annotations';
+			$type = 'annotation';
 			break;
 
 		case 'metadata':
+			$table = $db_prefix . 'metadata';
 			$type = 'metadata';
 			break;
 
@@ -728,7 +731,6 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 	}
 
 	$obj = _elgg_get_metastring_based_object_from_id($id, $type);
-	$table = $db_prefix . $type;
 
 	if ($obj) {
 		// Tidy up if memcache is enabled.
@@ -745,8 +747,19 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 			}
 		}
 
-		if (($obj->canEdit()) && (elgg_trigger_event('delete', $type, $obj))) {
-			return (bool)delete_data("DELETE FROM $table WHERE id = $id");
+		if ($obj->canEdit()) {
+			// bc code for when we triggered 'delete', 'annotations' #4770
+			$result = true;
+			if ($type == "annotation") {
+				$result = elgg_trigger_event('delete', 'annotations', $obj);
+				if ($result === false) {
+					elgg_deprecated_notice("Use the event 'delete', 'annotation'", 1.9);
+				}
+			}
+
+			if (elgg_trigger_event('delete', $type, $obj) && $result) {
+				return (bool)delete_data("DELETE FROM $table WHERE id = $id");
+			}
 		}
 	}
 
@@ -756,7 +769,7 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 /**
  * Returns options to pass to elgg_get_entities() for metastrings operations.
  *
- * @param string $type    Metastring type: annotations or metadata
+ * @param string $type    Metastring type: annotation or metadata
  * @param array  $options Options
  *
  * @return array

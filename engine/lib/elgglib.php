@@ -1752,7 +1752,7 @@ function elgg_batch_delete_callback($object) {
  * potentially dangerous operations.
  *
  * @param array  $options Options array
- * @param string $type    Options type: metadata or annotations
+ * @param string $type    Options type: metadata or annotation
  * @return bool
  * @access private
  */

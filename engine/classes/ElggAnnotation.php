@@ -83,7 +83,7 @@ class ElggAnnotation extends ElggExtender {
 	 * @return bool
 	 */
 	public function delete() {
-		$result = _elgg_delete_metastring_based_object_by_id($this->id, 'annotations');
+		$result = _elgg_delete_metastring_based_object_by_id($this->id, 'annotation');
 		if ($result) {
 			elgg_delete_river(array('annotation_id' => $this->id));
 		}
