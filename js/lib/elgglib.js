@@ -471,12 +471,22 @@ elgg.parse_str = function(string) {
 	var result,
 		key,
 		value,
-		re = /([^&=]+)=?([^&]*)/g;
+		re = /([^&=]+)=?([^&]*)/g,
+		re2 = /\[\]$/;
 
 	while (result = re.exec(string)) {
 		key = decodeURIComponent(result[1].replace(/\+/g, ' '));
 		value = decodeURIComponent(result[2].replace(/\+/g, ' '));
-		params[key] = value;
+
+		if (re2.test(key)) {
+			key = key.replace(re2, '');
+			if (!params[key]) {
+				params[key] = [];
+			}
+			params[key].push(value);
+		} else {
+			params[key] = value;
+		}
 	}
 	
 	return params;
