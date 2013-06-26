@@ -250,7 +250,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 	$params['joins'][] = "JOIN {$db_prefix}metastrings msn on md.name_id = msn.id";
 	$params['joins'][] = "JOIN {$db_prefix}metastrings msv on md.value_id = msv.id";
 
-	$access = get_access_sql_suffix('md');
+	$access = _elgg_get_access_where_sql(array('table_alias' => 'md'));
 	$sanitised_tags = array();
 
 	foreach ($search_tag_names as $tag) {
@@ -383,8 +383,8 @@ function search_comments_hook($hook, $type, $value, $params) {
 		$container_and = 'AND e.container_guid = ' . sanitise_int($params['container_guid']);
 	}
 
-	$e_access = get_access_sql_suffix('e');
-	$a_access = get_access_sql_suffix('a');
+	$e_access = _elgg_get_access_where_sql(array('table_alias' => 'e'));
+	$a_access = _elgg_get_access_where_sql(array('table_alias' => 'a'));
 	// @todo this can probably be done through the api..
 	$q = "SELECT count(DISTINCT a.id) as total FROM {$db_prefix}annotations a
 		JOIN {$db_prefix}metastrings msn ON a.name_id = msn.id

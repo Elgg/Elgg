@@ -510,7 +510,7 @@ function search_for_group($criteria, $limit = 10, $offset = 0, $order_by = "", $
 	$offset = (int)$offset;
 	$order_by = sanitise_string($order_by);
 
-	$access = get_access_sql_suffix("e");
+	$access = _elgg_get_access_where_sql();
 
 	if ($order_by == "") {
 		$order_by = "e.time_created desc";
@@ -784,7 +784,7 @@ function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", 
 	$order_by = sanitise_string($order_by);
 	$container_guid = (int)$container_guid;
 
-	$access = get_access_sql_suffix("e");
+	$access = _elgg_get_access_where_sql();
 
 	if ($order_by == "") {
 		$order_by = "e.time_created desc";
@@ -937,7 +937,7 @@ function search_for_site($criteria, $limit = 10, $offset = 0, $order_by = "", $c
 	$offset = (int)$offset;
 	$order_by = sanitise_string($order_by);
 
-	$access = get_access_sql_suffix("e");
+	$access = _elgg_get_access_where_sql();
 
 	if ($order_by == "") {
 		$order_by = "e.time_created desc";
@@ -984,7 +984,7 @@ function search_for_user($criteria, $limit = 10, $offset = 0, $order_by = "", $c
 	$offset = (int)$offset;
 	$order_by = sanitise_string($order_by);
 
-	$access = get_access_sql_suffix("e");
+	$access = _elgg_get_access_where_sql();
 
 	if ($order_by == "") {
 		$order_by = "e.time_created desc";

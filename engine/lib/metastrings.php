@@ -366,7 +366,7 @@ function _elgg_get_metastring_based_objects($options) {
 		$wheres = array_merge($wheres, $metastring_clauses['wheres']);
 		$joins = array_merge($joins, $metastring_clauses['joins']);
 	} else {
-		$wheres[] = get_access_sql_suffix('n_table');
+		$wheres[] = _elgg_get_access_where_sql(array('table_alias' => 'n_table'));
 	}
 
 	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE && !$options['count']) {
@@ -403,7 +403,7 @@ function _elgg_get_metastring_based_objects($options) {
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix('e');
+	$query .= _elgg_get_access_where_sql(array('table_alias' => 'e'));
 
 	// reverse order by
 	if (isset($options['reverse_order_by']) && $options['reverse_order_by']) {
@@ -539,7 +539,7 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		$wheres[] = $values_where;
 	}
 
-	$wheres[] = get_access_sql_suffix($table);
+	$wheres[] = _elgg_get_access_where_sql(array('table_alias' => $table));
 
 	if ($where = implode(' AND ', $wheres)) {
 		$return['wheres'][] = "($where)";

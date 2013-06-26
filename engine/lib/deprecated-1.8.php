@@ -805,7 +805,7 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix('e');
+	$query .= _elgg_get_access_where_sql();
 	if (!$count) {
 		$query .= " order by $order_by";
 
@@ -937,7 +937,7 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix("e");
+	$query .= _elgg_get_access_where_sql();
 
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
@@ -1043,7 +1043,7 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 	foreach ($where as $w) {
 		$query .= " $w and ";
 	}
-	$query .= get_access_sql_suffix("e"); // Add access controls
+	$query .= _elgg_get_access_where_sql();
 
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
@@ -2468,7 +2468,7 @@ $owner_guid = "", $owner_relationship = "") {
 
 			$access = "";
 			if ($details['type'] != 'relationship') {
-				$access = " and " . get_access_sql_suffix('sl');
+				$access = " and " . _elgg_get_access_where_sql(array('table_alias' => 'sl'));
 			}
 
 			$obj_query .= "( sl.object_type='{$details['type']}'

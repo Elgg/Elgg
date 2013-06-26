@@ -74,7 +74,7 @@ function get_number_users($show_deactivated = false) {
 	$access = "";
 
 	if (!$show_deactivated) {
-		$access = "and " . get_access_sql_suffix();
+		$access = "and " . _elgg_get_access_where_sql(array('table_alias' => ''));
 	}
 
 	$query = "SELECT count(*) as count

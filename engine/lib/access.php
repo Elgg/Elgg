@@ -93,7 +93,7 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
  *
  * @internal this is only used in core for creating the SQL where clause when
  * retrieving content from the database. The friends access level is handled by
- * get_access_sql_suffix().
+ * _elgg_get_access_where_sql().
  *
  * @see get_write_access_array() for the access levels that a user can write to.
  *
@@ -254,15 +254,14 @@ function access_get_show_hidden_status() {
 }
 
 /**
- * Returns the SQL where clause for a table with a access_id and enabled columns.
- *
- * This handles returning where clauses for ACCESS_FRIENDS and the currently
- * unused block and filter lists in addition to using get_access_list() for
- * access collections and the standard access levels.
+ * Returns the SQL where clause for enforcing read access to data.
  *
  * Note that if this code is executed in privileged mode it will return (1=1).
+ * 
+ * Otherwise it returns a where clause to retrieve the data that a user has
+ * permission to read.
  *
- * Plugin authors can hook into the access:get_sql_suffix, user plugin hook to modify,
+ * Plugin authors can hook into the 'get_sql', 'access' plugin hook to modify,
  * remove, or add to the where clauses. The plugin hook will pass an array with the current
  * ors and ands to the function in the form:
  *  array(
@@ -272,74 +271,84 @@ function access_get_show_hidden_status() {
  *
  * The results will be combined into an SQL where clause in the form:
  *  ((or1 OR or2 OR orN) AND (and1 AND and2 AND andN))
+ * 
+ * @param array $options Array in format:
  *
- * @param string $table_prefix          Optional table prefix for the access code. (. is appended)
- * @param int    $user_guid             Optional user guid to get access information for. Defaults
- *                                      to logged in user.
- * @param string $owner_guid_column     Optional name of the owner_guid column.
- * @param string $guid_column           Optional name of the guid column.
- * @param string $access_id_column      Optional name of the access_id column.
- * @param bool   $use_enabled_clause    Append 'enabled = "yes"' to the end.
+ * 	table_alias => STR Optional table alias. This is based on the select and join clauses.
+ *                     Default is 'e'. 
+ *
+ *  user_guid => INT Optional GUID for the user that we are retrieving data for.
+ *                   Defaults to the logged in user.
+ * 
+ *  use_enabled_clause => BOOL Optional. Should we append the enabled clause? The default 
+ *                             is set by access_show_hidden_entities().
+ * 
+ *  access_column => STR Optional access column name. Default is 'access_id'.
+ * 
+ *  owner_guid_column => STR Optional owner_guid column. Default is 'owner_guid'.
+ * 
+ *  guid_column => STR Optional guid_column. Default is 'guid'.
+ * 
  * @return string
  * @access private
  */
-function get_access_sql_suffix($table_prefix = '', $user_guid = 0, $owner_guid_column = 'owner_guid',
-	$guid_column = 'guid', $access_id_column = 'access_id', $use_enabled_clause = true) {
-
+function _elgg_get_access_where_sql(array $options = array()) {
 	global $ENTITY_SHOW_HIDDEN_OVERRIDE, $CONFIG;
 
-	if ($table_prefix) {
-		$table_prefix = sanitise_string($table_prefix) . ".";
+	$defaults = array(
+		'table_alias' => 'e',
+		'user_guid' => elgg_get_logged_in_user_guid(),
+		'use_enabled_clause' => !$ENTITY_SHOW_HIDDEN_OVERRIDE,
+		'access_column' => 'access_id',
+		'owner_guid_column' => 'owner_guid',
+		'guid_column' => 'guid',
+	);
+
+	$options = array_merge($defaults, $options);
+
+	// just in case someone passes a . at the end
+	$options['table_alias'] = rtrim($options['table_alias'], '.');
+
+	foreach (array('table_alias', 'access_column', 'owner_guid_column', 'guid_column') as $key) {
+		$options[$key] = sanitize_string($options[$key]);
 	}
+	$options['user_guid'] = sanitize_int($options['user_guid'], false);
 
-	$access_id_column = sanitise_string($access_id_column);
-	$owner_guid_column = sanitise_string($owner_guid_column);
-	$guid_column = sanitise_string($guid_column);
+	// only add dot if we have an alias or table name
+	$table_alias = $options['table_alias'] ? $options['table_alias'] . '.' : '';
 
-	if (!$user_guid) {
-		$user_guid = elgg_get_logged_in_user_guid();
-	}
-
-	$ignore_access = elgg_check_access_overrides($user_guid);
-	$access = get_access_list($user_guid);
+	$options['ignore_access'] = elgg_check_access_overrides($options['user_guid']);
 
 	$clauses = array(
 		'ors' => array(),
 		'ands' => array()
 	);
 
-	if ($ignore_access) {
+	if ($options['ignore_access']) {
 		$clauses['ors'][] = '1 = 1';
-	} else if ($user_guid > 0) {
-		// Check friends
-		$clauses['ors'][] = "{$table_prefix}{$access_id_column} = " . ACCESS_FRIENDS . "
-			AND {$table_prefix}{$owner_guid_column} IN (
+	} else if ($options['user_guid']) {
+		// include content of user's friends
+		$clauses['ors'][] = "$table_alias{$options['access_column']} = " . ACCESS_FRIENDS . "
+			AND $table_alias{$options['owner_guid_column']} IN (
 				SELECT guid_one FROM {$CONFIG->dbprefix}entity_relationships
-				WHERE relationship='friend' AND guid_two=$user_guid
+				WHERE relationship = 'friend' AND guid_two = {$options['user_guid']}
 			)";
 
-		// Check if user owns the content
-		$clauses['ors'][] = "{$table_prefix}{$owner_guid_column} = {$user_guid}";
+		// include user's content
+		$clauses['ors'][] = "$table_alias{$options['owner_guid_column']} = {$options['user_guid']}";
 	}
 
-	$clauses['ors'][] = "{$table_prefix}{$access_id_column} IN {$access}";
-
-	if (!$ENTITY_SHOW_HIDDEN_OVERRIDE && $use_enabled_clause) {
-		$clauses['ands'][] = "{$table_prefix}enabled='yes'";
+	// include standard accesses (public, logged in, access collections)
+	if (!$options['ignore_access']) {
+		$access_list = get_access_list($options['user_guid']);
+		$clauses['ors'][] = "$table_alias{$options['access_column']} IN {$access_list}";
 	}
 
-	$params = array(
-		'table_prefix' => $table_prefix,
-		'access_id_column' => $access_id_column,
-		'owner_guid_column' => $owner_guid_column,
-		'guid_column' => $guid_column,              // @todo this isn't used..
-		'use_enabled_clause' => $use_enabled_clause,
-		'user_guid' => $user_guid,
-		'ignore_access' => $ignore_access,
-		'show_disabled_entities' => $ENTITY_SHOW_HIDDEN_OVERRIDE
-	);
+	if ($options['use_enabled_clause']) {
+		$clauses['ands'][] = "{$table_alias}enabled = 'yes'";
+	}
 
-	$clauses = elgg_trigger_plugin_hook('access:get_sql_suffix', 'user', $params, $clauses);
+	$clauses = elgg_trigger_plugin_hook('get_sql', 'access', $options, $clauses);
 
 	$clauses_str = '';
 	if (is_array($clauses['ors']) && $clauses['ors']) {
@@ -347,12 +356,13 @@ function get_access_sql_suffix($table_prefix = '', $user_guid = 0, $owner_guid_c
 	}
 
 	if (is_array($clauses['ands']) && $clauses['ands']) {
-		$clauses_str .= 'AND (' . implode(' AND ', $clauses['ands']) . ')';
+		if ($clauses_str) {
+			$clauses_str .= ' AND ';
+		}
+		$clauses_str .= '(' . implode(' AND ', $clauses['ands']) . ')';
 	}
 
-	$clauses_str = "($clauses_str)";
-
-	return $clauses_str;
+	return "($clauses_str)";
 }
 
 /**
@@ -378,9 +388,9 @@ function has_access_to_entity($entity, $user = null) {
 	global $CONFIG;
 
 	if (!isset($user)) {
-		$access_bit = get_access_sql_suffix("e");	
+		$access_bit = _elgg_get_access_where_sql();	
 	} else {
-		$access_bit = get_access_sql_suffix("e", $user->getGUID());
+		$access_bit = _elgg_get_access_where_sql(array('user_guid' => $user->getGUID()));
 	}
 
 	$query = "SELECT guid from {$CONFIG->dbprefix}entities e WHERE e.guid = " . $entity->getGUID();

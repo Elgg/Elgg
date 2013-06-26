@@ -6,104 +6,26 @@
  * @subpackage Test
  */
 class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
+
+	/** @var ElggUser */
+	protected $user;
+	
 	/**
 	 * Called before each test object.
 	 */
 	public function __construct() {
 		parent::__construct();
 
-		$this->objects = array();
-		$this->users = array();
-		$this->groups = array();
-
-		// Core access
-		$this->access_array = array(
-			ACCESS_PRIVATE,
-			ACCESS_FRIENDS,
-			ACCESS_LOGGED_IN,
-			ACCESS_PUBLIC
-		);
-
-		// Create a couple users and create objects
-		for ($i=0; $i<2; $i++) {
-			$user = new ElggUser();
-			$user->username = 'fake_user_' . rand();
-			$user->email = 'fake_email@fake.com' . rand();
-			$user->name = 'fake user ' . rand();
-			$user->access_id = ACCESS_PUBLIC;
-			$user->salt = generate_random_cleartext_password();
-			$user->password = generate_user_password($user, rand());
-			$user->owner_guid = 0;
-			$user->container_guid = 0;
-			$user->save();
-			$this->users[] = $user;
-
-			foreach($this->access_array as $access) {
-				$object = new ElggObject();
-				$object->access_id = $access;
-				$object->owner_guid = $user->guid;
-				$object->container_guid = $user->guid;
-				$object->save();
-
-				$this->objects[$user->guid][$access] = $object;
-			}
-		}
-
-		// Placeholder for group ACL's
-		define('ACCESS_GROUP_ACL', -1234567);
-
-		// Available group access ids
-		$this->group_access_array = array(
-			ACCESS_PUBLIC,
-			ACCESS_LOGGED_IN,
-			ACCESS_GROUP_ACL,
-		);
-
-		// Open/closed group membership
-		$this->group_membership_array = array(
-			ACCESS_PRIVATE,
-			ACCESS_PUBLIC
-		);
-
-		// Create groups, one for each group access id, and membership
-		foreach ($this->group_access_array as $group_access) {
-			foreach ($this->group_membership_array as $group_membership) {
-				$group = new ElggGroup();
-				$group->membership = $group_membership;
-
-				if ($group_access == ACCESS_GROUP_ACL) {
-					$group->save();
-					$group->access_id = $group->group_acl;
-				} else {
-					$group->access_id = $group_access;
-				}
-				$group->save();
-
-				$this->groups[] = $group;
-			}
-		}
-
-		// Create access collection, owned by second test user
-		$acl_id = create_access_collection('test acl');
-		add_user_to_access_collection($this->users[1]->guid, $acl_id);
-		$this->test_acl_id = $acl_id;
-
-		// Create object with access_id set to above ACL, owned by user two
-		$object = new ElggObject();
-		$object->access_id = $acl_id;
-		$object->owner_guid = $this->users[1]->guid;
-		$object->container_guid = $this->users[1]->guid;
-		$object->save();
-		$this->test_acl_object = $object;
-
-		// Create a dummy 'role' object
-		$superuser = new ElggObject();
-		$superuser->access_id = ACCESS_PUBLIC;
-		$superuser->owner_guid = elgg_get_logged_in_user_guid();
-		$superuser->container_guid = elgg_get_logged_in_user_guid();
-		$superuser->title = "Superuser Role";
-		$superuser->save();
-		$this->superuser_role = $superuser;
+		$this->user = new ElggUser();
+		$this->user->username = 'fake_user_' . rand();
+		$this->user->email = 'fake_email@fake.com' . rand();
+		$this->user->name = 'fake user ' . rand();
+		$this->user->access_id = ACCESS_PUBLIC;
+		$this->user->salt = generate_random_cleartext_password();
+		$this->user->password = generate_user_password($this->user, rand());
+		$this->user->owner_guid = 0;
+		$this->user->container_guid = 0;
+		$this->user->save();
 	}
 
 	/**
@@ -127,364 +49,167 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 	 * Called after each test object.
 	 */
 	public function __destruct() {
-		// Delete users/objects
-		foreach ($this->users as $user) {
-			$user->delete();
-		}
-
-		// Delete groups
-		foreach ($this->groups as $group) {
-			$group->delete();
-		}
-
-		// Delete test acl and test acl object
-		$this->test_acl_object->delete();
-		delete_access_collection($this->test_acl_id);
-
-		// Delete role entity
-		$this->superuser_role->delete();
+		$this->user->delete();
 
 		// all __destruct() code should go above here
 		parent::__destruct();
 	}
 
-	/**
-	 * Test core access ids
-	 */
-	public function testAccessIDs() {
-		$user_one = $this->users[0];
-		$user_two = $this->users[1];
-
-		// Log in test user
-		$admin = elgg_get_logged_in_user_entity();
-		$_SESSION['user'] = $user_one;
-
-		foreach ($this->access_array as $access) {
-			// User can access their own objects regardless of access level
-			$this->assertTrue(has_access_to_entity($this->objects[$user_one->guid][$access], $user_one));
-
-			// Test access to other user's objects
-			switch ($access) {
-				case ACCESS_PRIVATE:
-					// Can't access other user's private object
-					$this->assertFalse(has_access_to_entity($this->objects[$user_two->guid][$access], $user_one));
-					break;
-				case ACCESS_FRIENDS:
-					// Not friend's, can't access
-					$this->assertFalse(has_access_to_entity($this->objects[$user_two->guid][$access], $user_one));
-					
-					// Make friends
-					add_entity_relationship($user_two->guid, "friend", $user_one->guid);
-
-					// Friends relationship exists, user now has access
-					$this->assertTrue(has_access_to_entity($this->objects[$user_two->guid][$access], $user_one));
-
-					// Clean up
-					remove_entity_relationship($user_two->guid, "friend", $user_one->guid);
-					break;
-				case ACCESS_LOGGED_IN:
-				case ACCESS_PUBLIC:
-					// Check access to logged in/public
-					$this->assertTrue(has_access_to_entity($this->objects[$user_two->guid][$access], $user_one));
-					break;
-			}
-		}
-
-		$_SESSION['user'] = $admin;
+	public function testAdminAccess() {
+		// we know an admin is logged in when running the tests
+		$sql = _elgg_get_access_where_sql();
+		$ans = "((1 = 1) AND (e.enabled = 'yes'))";
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 	}
 
-	public function testGetAccessSqlSuffixHookCoreAccess() {
-		$user_one = $this->users[0];
-		$user_two = $this->users[1];
+	public function testTurningEnabledOff() {
+		$sql = _elgg_get_access_where_sql(array('use_enabled_clause' => false));
+		$ans = "((1 = 1))";
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");		
+	}
 
-		global $superuser_role;
-		$superuser_role = $this->superuser_role;
+	public function testNonAdminUser() {
+		$sql = _elgg_get_access_where_sql(array('user_guid' => $this->user->guid));
 
-		// test hook
-		function access_get_sql_suffix_test_core_hook($hook, $type, $value, $params) {
-			global $superuser_role;
+		$friends_clause = $this->getFriendsClause($this->user->guid, 'e');
+		$owner_clause = $this->getOwnerClause($this->user->guid, 'e');
+		$access_clause = $this->getLoggedInAccessListClause('e');
+		$ans = "(($friends_clause OR $owner_clause OR $access_clause) AND (e.enabled = 'yes'))";
 
-			$dbprefix = elgg_get_config('dbprefix');
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
+	}
 
-			$table_prefix = $params['table_prefix'];
-			$owner_guid_column = $params['owner_guid_column'];
-			$user_guid = $params['user_guid'];
-			$role_guid = $superuser_role->guid;
+	public function testCustomTableAlias() {
+		$sql = _elgg_get_access_where_sql(array(
+			'user_guid' => $this->user->guid,
+			'table_alias' => 'foo',
+		));
 
-			$value['ors'][] = "{$user_guid} IN (
-				SELECT guid_one FROM {$dbprefix}entity_relationships
-				WHERE relationship='belongs_to' AND guid_two={$role_guid}
+		$friends_clause = $this->getFriendsClause($this->user->guid, 'foo');
+		$owner_clause = $this->getOwnerClause($this->user->guid, 'foo');
+		$access_clause = $this->getLoggedInAccessListClause('foo');
+		$ans = "(($friends_clause OR $owner_clause OR $access_clause) AND (foo.enabled = 'yes'))";
+
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
+
+		// test with no alias
+		$sql = _elgg_get_access_where_sql(array(
+			'user_guid' => $this->user->guid,
+			'table_alias' => '',
+		));
+
+		$friends_clause = $this->getFriendsClause($this->user->guid, '');
+		$owner_clause = $this->getOwnerClause($this->user->guid, '');
+		$access_clause = $this->getLoggedInAccessListClause('');
+		$ans = "(($friends_clause OR $owner_clause OR $access_clause) AND (enabled = 'yes'))";
+
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
+	}
+
+	public function testCustomOwnerGuidColumn() {
+		$sql = _elgg_get_access_where_sql(array(
+			'user_guid' => $this->user->guid,
+			'owner_guid_column' => 'unit_test',
+		));
+
+		$friends_clause = $this->getFriendsClause($this->user->guid, 'e', 'unit_test');
+		$owner_clause = $this->getOwnerClause($this->user->guid, 'e', 'unit_test');
+		$access_clause = $this->getLoggedInAccessListClause('e');
+		$ans = "(($friends_clause OR $owner_clause OR $access_clause) AND (e.enabled = 'yes'))";
+
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
+	}
+
+	public function testLoggedOutUser() {
+		$originalSession = _elgg_services()->session;
+		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
+
+		$sql = _elgg_get_access_where_sql();
+		$access_clause = $this->getLoggedOutAccessListClause('e');
+		$ans = "(($access_clause) AND (e.enabled = 'yes'))";
+
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
+
+		_elgg_services()->setValue('session', $originalSession);
+	}
+
+	public function testAccessPluginHookRemoveEnabled() {
+		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'removeEnabledCallback'));
+		$sql = _elgg_get_access_where_sql();
+		$ans = "((1 = 1))";
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
+	}
+
+	public function removeEnabledCallback($hook, $type, $clauses, $params) {
+		$clauses['ands'] = array();
+		return $clauses;
+	}
+
+	public function testAccessPluginHookRemoveOrs() {
+		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'removeOrsCallback'));
+		$sql = _elgg_get_access_where_sql();
+		$ans = "((e.enabled = 'yes'))";
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
+	}
+
+	public function removeOrsCallback($hook, $type, $clauses, $params) {
+		$clauses['ors'] = array();
+		return $clauses;
+	}
+	
+	public function testAccessPluginHookAddOr() {
+		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'addOrCallback'));
+		$sql = _elgg_get_access_where_sql();
+		$ans = "((1 = 1 OR 57 > 32) AND (e.enabled = 'yes'))";
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
+	}
+
+	public function addOrCallback($hook, $type, $clauses, $params) {
+		$clauses['ors'][] = '57 > 32';
+		return $clauses;
+	}
+
+	public function testAccessPluginHookAddAnd() {
+		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'addAndCallback'));
+		$sql = _elgg_get_access_where_sql();
+		$ans = "((1 = 1) AND (e.enabled = 'yes' AND 57 > 32))";
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
+	}
+
+	public function addAndCallback($hook, $type, $clauses, $params) {
+		$clauses['ands'][] = '57 > 32';
+		return $clauses;
+	}
+
+	protected function assertSqlEqual($sql1, $sql2) {
+		$sql1 = preg_replace('/\s+/', '', $sql1);
+		$sql2 = preg_replace('/\s+/', '', $sql2);
+		return $sql1 === $sql2;
+	}
+
+	protected function getFriendsClause($user_guid, $table_alias, $owner_guid = 'owner_guid') {
+		global $CONFIG;
+		$table_alias = $table_alias ? $table_alias . '.' : '';
+	
+		return "{$table_alias}access_id = " . ACCESS_FRIENDS . "
+			AND {$table_alias}{$owner_guid} IN (
+				SELECT guid_one FROM {$CONFIG->dbprefix}entity_relationships
+				WHERE relationship = 'friend' AND guid_two = $user_guid
 			)";
-
-			return $value;
-		}
-
-		// Make test user a member of the superuser role
-		add_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
-
-		// Register hook handler
-		elgg_register_plugin_hook_handler('access:get_sql_suffix', 'user', 'access_get_sql_suffix_test_core_hook');
-
-		// Log in test user
-		$admin = elgg_get_logged_in_user_entity();
-		$_SESSION['user'] = $user_one;
-
-		foreach ($this->access_array as $access) {
-			// Can access other user's entities regardless of access_id
-			$this->assertTrue(has_access_to_entity($this->objects[$user_two->guid][$access], $user_one));
-		}
-
-		$_SESSION['user'] = $admin;
-
-		// Remove superuser role
-		remove_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
-
-		// Unregister hook
-		elgg_unregister_plugin_hook_handler('access:get_sql_suffix', 'user', 'access_get_sql_suffix_test_core_hook');
 	}
 
-	public function testGetAccessSqlSuffixHookAccessCollections() {
-		$user_one = $this->users[0];		
-		$user_two = $this->users[1];
-
-		// User can't access entity while not a member of the ACL
-		$this->assertFalse(has_access_to_entity($this->test_acl_object, $user_one));
-		
-		// Add user_one to ACL 
-		add_user_to_access_collection($user_one->guid, $this->test_acl_id);
-
-		// Flush access cache
-		$cache = _elgg_get_access_cache();
-		$cache->clear();
-
-		// Is a member, now has access
-		$this->assertTrue(has_access_to_entity($this->test_acl_object, $user_one));
-
-		// Remove user from ACL
-		remove_user_from_access_collection($user_one->guid, $this->test_acl_id);
-
-		// Flush access cache
-		$cache = _elgg_get_access_cache();
-		$cache->clear();
-
-		// No longer a member, no access
-		$this->assertFalse(has_access_to_entity($this->test_acl_object, $user_one));
-
-		// Flush access cache
-		$cache = _elgg_get_access_cache();
-		$cache->clear();
-
-		// Add superuser relationship
-		add_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
-
-		global $superuser_role;
-		$superuser_role = $this->superuser_role;
-
-		// test hook
-		function access_get_sql_suffix_test_acl_hook($hook, $type, $value, $params) {
-			global $superuser_role;
-
-			$dbprefix = elgg_get_config('dbprefix');
-
-			$table_prefix = $params['table_prefix'];
-			$owner_guid_column = $params['owner_guid_column'];
-			$user_guid = $params['user_guid'];
-			$role_guid = $superuser_role->guid;
-
-			$value['ors'][] = "{$user_guid} IN (
-				SELECT guid_one FROM {$dbprefix}entity_relationships
-				WHERE relationship='belongs_to' AND guid_two={$role_guid}
-			)";
-
-			return $value;
-		}
-
-		// Register hook handler
-		elgg_register_plugin_hook_handler('access:get_sql_suffix', 'user', 'access_get_sql_suffix_test_acl_hook');
-
-		// Log in test user
-		$admin = elgg_get_logged_in_user_entity();
-		$_SESSION['user'] = $user_one;
-
-		// Can access other user's entities without ACL membership
-		$this->assertTrue(has_access_to_entity($this->test_acl_object, $user_one));
-
-		$_SESSION['user'] = $admin;
-
-		// Remove superuser relationship
-		remove_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
-
-		// Unregister hook
-		elgg_unregister_plugin_hook_handler('access:get_sql_suffix', 'user', 'access_get_sql_suffix_test_acl_hook');
+	protected function getOwnerClause($user_guid, $table_alias, $owner_guid = 'owner_guid') {
+		$table_alias = $table_alias ? $table_alias . '.' : '';
+		return "{$table_alias}{$owner_guid} = $user_guid";
 	}
 
-	/**
-	 * Check group access based on each combination of membership/access_id
-	 */
-	public function assertGroupAccess($group, $register_hook = false) {
-		// Get admin user to switch out sessions
-		$admin = elgg_get_logged_in_user_entity();
-
-		$membership = $group->membership;
-		$access = $group->access_id;
-
-		if (!in_array($access, $this->group_access_array)) {
-			$access = ACCESS_GROUP_ACL;
-		}
-
-		// Log in test user
-		$_SESSION['user'] = $this->users[0];
-
-		$logged_in_user = elgg_get_logged_in_user_entity();
-
-		// If register_hook is set, register the test hook
-		if ($register_hook) {
-			// Register hook
-			elgg_register_plugin_hook_handler('access:get_sql_suffix', 'user', 'access_get_sql_suffix_test_groups_hook');
-
-			// User will have access the group regardless of it's access_id
-			$this->assertTrue(has_access_to_entity($group, $logged_in_user));
-
-			// canWriteToContainer will still return false if the user isn't a member.
-			// To modify that behaviour you'd want to use the permissions_check hook
-			if ($group->isMember()) {
-				$this->assertTrue($group->canWriteToContainer($logged_in_user->guid));
-			} else {
-				$this->assertFalse($group->canWriteToContainer($logged_in_user->guid));
-			}
-
-			// Unregister
-			elgg_unregister_plugin_hook_handler('access:get_sql_suffix', 'user', 'access_get_sql_suffix_test_groups_hook');
-
-		} else if ($membership == ACCESS_PUBLIC && $access == ACCESS_PUBLIC) {
-
-			// Public membership & public access
-			$this->assertTrue(has_access_to_entity($group, $logged_in_user));
-
-			if ($group->isMember($logged_in_user))  {
-				$this->assertTrue($group->canWriteToContainer($logged_in_user->guid));
-			} else {
-				$this->assertFalse($group->canWriteToContainer($logged_in_user->guid));
-			}
-
-		} else if ($membership == ACCESS_PRIVATE && $access == ACCESS_PUBLIC) {
-
-			// Private membership & public access
-			$this->assertTrue(has_access_to_entity($group, $logged_in_user));
-
-			if ($group->isMember($logged_in_user))  {
-				$this->assertTrue($group->canWriteToContainer($logged_in_user->guid));
-			} else {
-				$this->assertFalse($group->canWriteToContainer($logged_in_user->guid));
-			}
-
-		} else if ($membership == ACCESS_PUBLIC && $access == ACCESS_LOGGED_IN) {
-
-			// Public membership & logged in access
-			$this->assertTrue(has_access_to_entity($group, $logged_in_user));
-
-			if ($group->isMember($logged_in_user))  {
-				$this->assertTrue($group->canWriteToContainer($logged_in_user->guid));
-			} else {
-				$this->assertFalse($group->canWriteToContainer($logged_in_user->guid));
-			}
-
-		} else if ($membership == ACCESS_PRIVATE && $access == ACCESS_LOGGED_IN) {
-
-			// Private membership & logged in access
-			$this->assertTrue(has_access_to_entity($group, $logged_in_user));
-
-			if ($group->isMember($logged_in_user))  {
-				$this->assertTrue($group->canWriteToContainer($logged_in_user->guid));
-			} else {
-				$this->assertFalse($group->canWriteToContainer($logged_in_user->guid));
-			}
-
-		} else if ($membership == ACCESS_PUBLIC && $access == ACCESS_GROUP_ACL) {
-
-			// Public membership & group acl access
-			if ($group->isMember($logged_in_user))  {
-				$this->assertTrue(has_access_to_entity($group, $logged_in_user));
-				$this->assertTrue($group->canWriteToContainer($logged_in_user->guid));
-			} else {
-				$this->assertFalse(has_access_to_entity($group, $logged_in_user));
-				$this->assertFalse($group->canWriteToContainer($logged_in_user->guid));
-			}
-
-		} else if ($membership == ACCESS_PRIVATE && $access == ACCESS_GROUP_ACL) {
-
-			// Private membership & group acl access
-			if ($group->isMember($logged_in_user))  {
-				$this->assertTrue(has_access_to_entity($group, $logged_in_user));
-				$this->assertTrue($group->canWriteToContainer($logged_in_user->guid));
-			} else {
-				$this->assertFalse(has_access_to_entity($group, $logged_in_user));
-				$this->assertFalse($group->canWriteToContainer($logged_in_user->guid));
-			}
-
-		}
-
-		// Log in admin
-		$_SESSION['user'] = $admin;
+	protected function getLoggedInAccessListClause($table_alias) {
+		$table_alias = $table_alias ? $table_alias . '.' : '';
+		return "{$table_alias}access_id IN (2,1)";
 	}
 
-	public function testGetAccessSqlSuffixHookGroups() {
-		$user_one = $this->users[0];
-
-		// Add superuser relationship
-		add_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
-
-		global $superuser_role;
-		$superuser_role = $this->superuser_role;
-
-		// Declare test hook
-		function access_get_sql_suffix_test_groups_hook($hook, $type, $value, $params) {
-			global $superuser_role;
-
-			$dbprefix = elgg_get_config('dbprefix');
-
-			$table_prefix = $params['table_prefix'];
-			$owner_guid_column = $params['owner_guid_column'];
-			$user_guid = $params['user_guid'];
-			$role_guid = $superuser_role->guid;
-
-			$value['ors'][] = "{$user_guid} IN (
-				SELECT guid_one FROM {$dbprefix}entity_relationships
-				WHERE relationship='belongs_to' AND guid_two={$role_guid}
-			)";
-
-			return $value;
-		}
-
-		foreach ($this->groups as $group) {
-			// Test without hook
-			$this->assertGroupAccess($group);
-
-			// Test with hook
-			$this->assertGroupAccess($group, true);
-
-			// Join group
-			$group->join($user_one);
-
-			// Flush access cache
-			$cache = _elgg_get_access_cache();
-			$cache->clear();
-
-			// Test without hook
-			$this->assertGroupAccess($group);
-
-			// Test with hook
-			$this->assertGroupAccess($group, true);
-
-			// Remove user from group for good measure
-			$group->leave($user_one);
-
-			// Flush access cache
-			$cache = _elgg_get_access_cache();
-			$cache->clear();
-		}
-
-		// Remove superuser relationship
-		remove_entity_relationship($user_one->guid, "belongs_to", $this->superuser_role->guid);
+	protected function getLoggedOutAccessListClause($table_alias) {
+		$table_alias = $table_alias ? $table_alias . '.' : '';
+		return "{$table_alias}access_id IN (2)";
 	}
 }

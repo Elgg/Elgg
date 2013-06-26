@@ -521,9 +521,14 @@ function _elgg_row_to_elgg_river_item($row) {
  * @access private
  */
 function elgg_river_get_access_sql() {
-	// get access sql for river table
 	// @todo deprecate? this is only used once in elgg_get_river
-	return get_access_sql_suffix('', null, 'rv.subject_guid', 'object_guid', 'rv.access_id', false); 
+	return _elgg_get_access_where_sql(array(
+		'table_alias' => '',
+		'owner_guid_column' => 'rv.subject_guid',
+		'guid_column' => 'object_guid',
+		'access_id_column' => 'rv.access_id', 
+		'use_enabled_clause' => false,
+	));
 }
 
 /**
