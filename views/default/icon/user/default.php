@@ -21,19 +21,24 @@ if (!in_array($size, array('topbar', 'tiny', 'small', 'medium', 'large', 'master
 	$size = 'medium';
 }
 
-$class = "elgg-avatar elgg-avatar-$size";
-if (isset($vars['class'])) {
-	$class = "$class {$vars['class']}";
-}
-
-$use_link = elgg_extract('use_link', $vars, true);
-
 if (!($user instanceof ElggUser)) {
-	return true;
+	return;
 }
 
 $name = htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8', false);
 $username = $user->username;
+
+$class = "elgg-avatar elgg-avatar-$size";
+if (isset($vars['class'])) {
+	$class = "$class {$vars['class']}";
+}
+if ($user->isBanned()) {
+	$class .= ' elgg-state-banned';
+	$banned_text = elgg_echo('banned');
+	$name .= " ($banned_text)";
+}
+
+$use_link = elgg_extract('use_link', $vars, true);
 
 $icontime = $user->icontime;
 if (!$icontime) {
@@ -49,6 +54,7 @@ $img_class = '';
 if (isset($vars['img_class'])) {
 	$img_class = $vars['img_class'];
 }
+
 
 $use_hover = elgg_extract('use_hover', $vars, true);
 if (isset($vars['override'])) {

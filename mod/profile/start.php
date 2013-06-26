@@ -122,10 +122,6 @@ function profile_set_icon_url($hook, $type, $url, $params) {
 		return "_graphics/icons/user/default{$size}.gif";
 	}
 
-	if ($user->isBanned()) {
-		return;
-	}
-
 	$filehandler = new ElggFile();
 	$filehandler->owner_guid = $user_guid;
 	$filehandler->setFilename("profile/{$user_guid}{$size}.jpg");

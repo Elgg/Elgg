@@ -359,3 +359,6 @@
 	width: 200px;
 	height: 200px;
 }
+.elgg-state-banned {
+	opacity: 0.5;
+}
