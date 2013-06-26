@@ -7,17 +7,27 @@ php:
 
 branches:
   only:
-    - master
-    
+    - ticket_5695
+
+matrix:
+  include:
+    - php: 5.3
+      env: VARIA=true
+      before_script:
+       - node -v
+       - pear install pear/PHP_CodeSniffer
+       - mkdir ../elgg-coding-standards
+       - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
+       - phpenv rehash
+       - npm install -g karma
+      script:
+       - phpcs --standard=../elgg-coding-standards/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
+       - karma start js/tests/karma.conf.js --single-run
+
 services: 
  - mysql
 
 before_script:
- - pear install pear/PHP_CodeSniffer
- - mkdir ../elgg-coding-standards
- - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
- - phpenv rehash
- - npm install -g karma
  - mysql -e 'create database elgg;'
  - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
  - mkdir "${HOME}/elgg_data/"
@@ -25,7 +35,5 @@ before_script:
 
 script:
  - phpunit
- - phpcs --standard=../elgg-coding-standards/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
- - karma start js/tests/karma.conf.js --single-run
  - php -f ./engine/tests/suite.php
  
