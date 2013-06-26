@@ -7,7 +7,7 @@ php:
 
 branches:
   only:
-    - ticket_5695
+    - master
 
 matrix:
   include:
