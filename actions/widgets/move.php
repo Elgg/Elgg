@@ -15,7 +15,7 @@ $widget = get_entity($widget_guid);
 $owner = get_entity($owner_guid);
 
 
-if ($widget && $owner->canEdit()) {
+if ($widget && $widget->canEdit() && $owner->canEdit()) {
 	$widget->move($column, $position);
 	forward(REFERER);
 }
