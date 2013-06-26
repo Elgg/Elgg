@@ -80,11 +80,12 @@ if (count($vars['options']) > 0) {
 		}
 
 		$input_vars['checked'] = in_array(elgg_strtolower($value), $values);
-		$input_vars['value']   = $value;
+		$input_vars['value'] = $value;
+		$input_vars['label'] = $label;
 		
 		$input = elgg_view('input/checkbox', $input_vars);
 
-		echo "<li><label>$input$label</label></li>";
+		echo "<li>$input</li>";
 	}
 	echo '</ul>';
 }
