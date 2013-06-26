@@ -330,6 +330,9 @@ return array(
 	'notifications:usersettings:save:ok' => "Notification settings were successfully saved.",
 	'notifications:usersettings:save:fail' => "There was a problem saving the notification settings.",
 
+	'notification:subject' => 'Notification about %s',
+	'notification:body' => 'View the new activity at %s',
+
 /**
  * Search
  */

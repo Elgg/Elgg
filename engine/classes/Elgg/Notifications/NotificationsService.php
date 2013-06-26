@@ -265,9 +265,14 @@ class Elgg_Notifications_NotificationsService {
 			'language' => $language,
 		);
 
-		// @todo what should the default subject and body be?
-		$subject = elgg_echo('notification:subject', array(), $language);
-		$body = elgg_echo('notification:body', array(), $language);
+		$actor = $event->getActor();
+		$object = $event->getObject();
+		if (!$actor || !$object) {
+			return false;
+		}
+
+		$subject = elgg_echo('notification:subject', array($actor->name), $language);
+		$body = elgg_echo('notification:body', array($object->getURL()), $language);
 		$notification = new Elgg_Notifications_Notification($event->getActor(), $recipient, $language, $subject, $body);
 
 		$type = 'notification:' . $event->getDescription();
@@ -354,8 +359,10 @@ class Elgg_Notifications_NotificationsService {
 		$string = $subject . ": " . $entity->getURL();
 		$body = $this->hooks->trigger('notify:entity:message', $entity->getType(), $params, $string);
 
-		$notification->subject = $subject;
-		$notification->body = $body;
+		if ($subject) {
+			$notification->subject = $subject;
+			$notification->body = $body;
+		}
 
 		return $notification;
 	}
