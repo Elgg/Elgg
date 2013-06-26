@@ -521,10 +521,9 @@ function _elgg_row_to_elgg_river_item($row) {
  * @access private
  */
 function elgg_river_get_access_sql() {
-	// rewrite default access where clause to work with river table
-	return str_replace("and enabled='yes'", '',
-		str_replace('owner_guid', 'rv.subject_guid',
-		str_replace('access_id', 'rv.access_id', get_access_sql_suffix())));
+	// get access sql for river table
+	// @todo deprecate? this is only used once in elgg_get_river
+	return get_access_sql_suffix('', null, 'rv.subject_guid', 'object_guid', 'rv.access_id', false); 
 }
 
 /**
