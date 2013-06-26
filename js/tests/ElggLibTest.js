@@ -170,7 +170,10 @@ define(function(require) {
 		describe("elgg.parse_str()", function () {
 			it("parses values like PHP's urldecode()", function () {
 				[
-					["A+%2B+B=A+%2B+B", {"A + B": "A + B"}]
+					["A+%2B+B=A+%2B+B", {"A + B": "A + B"}],
+					["key1=val1", {'key1': 'val1'}],
+					["key1=val1&key2=val2", {'key1': 'val1', 'key2': 'val2'}],
+					["key1[]=value1&key1[]=value2&key2=value3", {'key1': ['value1', 'value2'], 'key2': 'value3'}]
 				].forEach(function(args) {
 					expect(elgg.parse_str(args[0])).toEqual(args[1]);
 				});
