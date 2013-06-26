@@ -24,7 +24,9 @@ $nav = elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 		echo $nav;
 
 		if (isset($vars['title'])) {
+			echo '<div class="elgg-head clearfix">';
 			echo elgg_view_title($vars['title']);
+			echo '</div>';
 		}
 
 		echo $vars['content'];

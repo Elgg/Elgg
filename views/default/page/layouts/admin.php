@@ -27,7 +27,9 @@
 			));
 
 			if (isset($vars['title'])) {
+				echo '<div class="elgg-head clearfix">';
 				echo elgg_view_title($vars['title']);
+				echo '</div>';
 			}
 		?>
 		</div>

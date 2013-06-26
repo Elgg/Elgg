@@ -25,6 +25,7 @@ $title = elgg_extract('title', $vars, '');
 if (!$title) {
 	$title = elgg_echo($context);
 }
+// @todo .elgg-heading-main supports action buttons - maybe rename class name?
 $title = elgg_view_title($title, array('class' => 'elgg-heading-main'));
 
 if (isset($vars['buttons']) && $vars['buttons']) {
