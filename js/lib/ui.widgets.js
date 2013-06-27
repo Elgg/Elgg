@@ -119,6 +119,7 @@ elgg.ui.widgets.remove = function(event) {
 	var type = $widget.attr('class');
 	// elgg-widget-instance-<type>
 	type = type.substr(type.indexOf('elgg-widget-instance-') + "elgg-widget-instance-".length);
+	type = type.split(' ')[0];
 	$button = $('#elgg-widget-type-' + type);
 	var multiple = $button.attr('class').indexOf('elgg-widget-multiple') != -1;
 	if (multiple == false) {

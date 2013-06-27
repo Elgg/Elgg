@@ -440,7 +440,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 		'name' => 'collapse',
 		'text' => ' ',
 		'href' => "#elgg-widget-content-$widget->guid",
-		'class' => 'elgg-widget-collapse-button',
+		'link_class' => 'elgg-widget-collapse-button',
 		'rel' => 'toggle',
 		'priority' => 1
 	);
@@ -453,7 +453,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 			'title' => elgg_echo('widget:delete', array($widget->getTitle())),
 			'href' => "action/widgets/delete?widget_guid=$widget->guid",
 			'is_action' => true,
-			'class' => 'elgg-widget-delete-button',
+			'link_class' => 'elgg-widget-delete-button',
 			'id' => "elgg-widget-delete-button-$widget->guid",
 			'priority' => 900
 		);
@@ -465,7 +465,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 				'text' => elgg_view_icon('settings-alt'),
 				'title' => elgg_echo('widget:edit'),
 				'href' => "#widget-edit-$widget->guid",
-				'class' => "elgg-widget-edit-button",
+				'link_class' => "elgg-widget-edit-button",
 				'rel' => 'toggle',
 				'priority' => 800,
 			);
