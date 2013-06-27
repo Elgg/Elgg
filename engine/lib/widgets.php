@@ -14,14 +14,14 @@
  * $widgets = elgg_get_widgets(elgg_get_logged_in_user_guid(), 'dashboard');
  * $first_column_widgets = $widgets[1];
  *
- * @param int    $user_guid The owner user GUID
- * @param string $context   The context (profile, dashboard, etc)
+ * @param int    $owner_guid The owner GUID of the layout
+ * @param string $context    The context (profile, dashboard, etc)
  *
  * @return array An 2D array of ElggWidget objects
  * @since 1.8.0
  */
-function elgg_get_widgets($user_guid, $context) {
-	return _elgg_services()->widgets->getWidgets($user_guid, $context);
+function elgg_get_widgets($owner_guid, $context) {
+	return _elgg_services()->widgets->getWidgets($owner_guid, $context);
 }
 
 /**

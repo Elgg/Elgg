@@ -29,8 +29,8 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	public function getWidgets($user_guid, $context) {
-		$widget_cache_key = "$context-$user_guid";
+	public function getWidgets($owner_guid, $context) {
+		$widget_cache_key = "$context-$owner_guid";
 
 		if (isset($this->widgetCache[$widget_cache_key])) {
 			return $this->widgetCache[$widget_cache_key];
@@ -39,7 +39,7 @@ class Elgg_WidgetsService {
 		$options = array(
 			'type' => 'object',
 			'subtype' => 'widget',
-			'owner_guid' => $user_guid,
+			'owner_guid' => $owner_guid,
 			'private_setting_name' => 'context',
 			'private_setting_value' => $context,
 			'limit' => 0,
