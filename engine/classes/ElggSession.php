@@ -4,7 +4,7 @@
  * Elgg Session Management
  *
  * Reserved keys: last_forward_from, msg, sticky_forms, user, guid, id, code, name, username
- * Deprecated keys: user, id, code, name, username
+ * Deprecated keys: user, id, name, username
  * 
  * ArrayAccess was deprecated in Elgg 1.9. This means you should use 
  * $session->get('foo') rather than $session['foo'].
@@ -43,9 +43,6 @@ class ElggSession implements ArrayAccess {
 	 */
 	public function start() {
 		$result = $this->storage->start();
-		if ($this->has('guid')) {
-			$this->loggedInUser = get_user($this->get('guid'));
-		}
 		$this->generateSessionToken();
 		return $result;
 	}
@@ -273,7 +270,7 @@ class ElggSession implements ArrayAccess {
 	public function offsetGet($key) {
 		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
 
-		if (in_array($key, array('user', 'id', 'code', 'name', 'username'))) {
+		if (in_array($key, array('user', 'id', 'name', 'username'))) {
 			elgg_deprecated_notice("Only 'guid' is stored in session for user now", 1.9);
 			if ($this->loggedInUser) {
 				switch ($key) {
@@ -283,7 +280,6 @@ class ElggSession implements ArrayAccess {
 					case 'id':
 						return $this->loggedInUser->guid;
 						break;
-					case 'code':
 					case 'name':
 					case 'username':
 						return $this->loggedInUser->$key;
@@ -336,7 +332,7 @@ class ElggSession implements ArrayAccess {
 	public function offsetExists($offset) {
 		elgg_deprecated_notice(__METHOD__ . " has been deprecated.", 1.9);
 
-		if (in_array($offset, array('user', 'id', 'code', 'name', 'username'))) {
+		if (in_array($offset, array('user', 'id', 'name', 'username'))) {
 			elgg_deprecated_notice("Only 'guid' is stored in session for user now", 1.9);
 			return (bool)$this->loggedInUser;
 		}

@@ -58,7 +58,6 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		$attributes['salt'] = null;
 		$attributes['email'] = null;
 		$attributes['language'] = null;
-		$attributes['code'] = null;
 		$attributes['banned'] = 'no';
 		$attributes['admin'] = 'no';
 		$attributes['prev_last_action'] = null;

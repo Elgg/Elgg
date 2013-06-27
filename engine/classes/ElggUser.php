@@ -35,7 +35,6 @@ class ElggUser extends ElggEntity
 		$this->attributes['salt'] = null;
 		$this->attributes['email'] = null;
 		$this->attributes['language'] = null;
-		$this->attributes['code'] = null;
 		$this->attributes['banned'] = "no";
 		$this->attributes['admin'] = 'no';
 		$this->attributes['prev_last_action'] = null;
@@ -133,11 +132,10 @@ class ElggUser extends ElggEntity
 		$salt = sanitize_string($this->salt);
 		$email = sanitize_string($this->email);
 		$language = sanitize_string($this->language);
-		$code = sanitize_string($this->code);
 
 		$query = "INSERT into {$CONFIG->dbprefix}users_entity
-			(guid, name, username, password, salt, email, language, code)
-			values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language', '$code')";
+			(guid, name, username, password, salt, email, language)
+			values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language')";
 
 		$result = $this->getDatabase()->insertData($query);
 		if ($result === false) {
@@ -165,11 +163,10 @@ class ElggUser extends ElggEntity
 		$salt = sanitize_string($this->salt);
 		$email = sanitize_string($this->email);
 		$language = sanitize_string($this->language);
-		$code = sanitize_string($this->code);
 
 		$query = "UPDATE {$CONFIG->dbprefix}users_entity
 			SET name='$name', username='$username', password='$password', salt='$salt',
-			email='$email', language='$language', code='$code'
+			email='$email', language='$language'
 			WHERE guid = $guid";
 
 		return $this->getDatabase()->updateData($query) !== false;
@@ -181,14 +178,11 @@ class ElggUser extends ElggEntity
 	 * @return bool
 	 */
 	public function delete() {
-		global $USERNAME_TO_GUID_MAP_CACHE, $CODE_TO_GUID_MAP_CACHE;
+		global $USERNAME_TO_GUID_MAP_CACHE;
 
 		// clear cache
 		if (isset($USERNAME_TO_GUID_MAP_CACHE[$this->username])) {
 			unset($USERNAME_TO_GUID_MAP_CACHE[$this->username]);
-		}
-		if (isset($CODE_TO_GUID_MAP_CACHE[$this->code])) {
-			unset($CODE_TO_GUID_MAP_CACHE[$this->code]);
 		}
 
 		clear_user_files($this);
