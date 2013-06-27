@@ -81,6 +81,11 @@ class Elgg_Request {
 	protected $requestUri = null;
 
 	/**
+	 * @var string
+	 */
+	protected $pathInfo = null;
+
+	/**
 	 * Create a request
 	 *
 	 * @param array $query   GET parameters

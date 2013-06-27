@@ -36,9 +36,9 @@ class Elgg_Router {
 	 * @access private
 	 */
 	public function route(Elgg_Request $request) {
-		$identifier = (string)$request->query->get('handler');
-
-		if ($identifier) {
+		$segments = $this->getUrlSegments($request);
+		if ($segments) {
+			$identifier = array_shift($segments);
 			elgg_set_context($identifier);
 		} else {
 			elgg_set_context('main');
@@ -53,8 +53,6 @@ class Elgg_Router {
 				exit;
 			}
 		}
-
-		$segments = $this->getUrlSegments($request);
 
 		// return false to stop processing the request (because you handled it)
 		// return a new $result array if you want to route the request differently
@@ -125,16 +123,11 @@ class Elgg_Router {
 	 * @return array
 	 */
 	protected function getUrlSegments(Elgg_Request $request) {
-		$page = $request->query->get('page');
-		if (!$page) {
+		$path = trim($request->getPathInfo(), '/');
+		if (!$path) {
 			return array();
 		}
-		$segments = explode('/', $page);
-		// remove empty array element when page url ends in a / (see #1480)
-		if ($segments[count($segments) - 1] === '') {
-			array_pop($segments);
-		}
 
-		return $segments;
+		return explode('/', $path);
 	}
 }
