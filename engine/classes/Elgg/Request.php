@@ -148,7 +148,7 @@ class Elgg_Request {
 	 * @return Elgg_Request
 	 */
 	public static function create($uri, $method = 'GET', $parameters = array(), $cookies = array(), $files = array(), $server = array()) {
-		$server = array_replace(array(
+		$server = array_merge(array(
 			'SERVER_NAME' => 'localhost',
 			'SERVER_PORT' => 80,
 			'HTTP_HOST' => 'localhost',
