@@ -2422,7 +2422,6 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 	$salt = sanitise_string($salt);
 	$email = sanitise_string($email);
 	$language = sanitise_string($language);
-	$code = sanitise_string($code);
 
 	$row = get_entity_as_row($guid);
 	if ($row) {
@@ -2431,7 +2430,7 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 		if ($exists = get_data_row($query)) {
 			$query = "UPDATE {$CONFIG->dbprefix}users_entity
 				SET name='$name', username='$username', password='$password', salt='$salt',
-				email='$email', language='$language', code='$code'
+				email='$email', language='$language'
 				WHERE guid = $guid";
 
 			$result = update_data($query);
@@ -2447,8 +2446,8 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
 		} else {
 			// Exists query failed, attempt an insert.
 			$query = "INSERT into {$CONFIG->dbprefix}users_entity
-				(guid, name, username, password, salt, email, language, code)
-				values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language', '$code')";
+				(guid, name, username, password, salt, email, language)
+				values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language')";
 
 			$result = insert_data($query);
 			if ($result !== false) {

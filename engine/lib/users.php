@@ -11,10 +11,6 @@
 global $USERNAME_TO_GUID_MAP_CACHE;
 $USERNAME_TO_GUID_MAP_CACHE = array();
 
-/// Map a user code to a cached GUID
-global $CODE_TO_GUID_MAP_CACHE;
-$CODE_TO_GUID_MAP_CACHE = array();
-
 /**
  * Return the user specific details of a user by a row.
  *
@@ -77,10 +73,6 @@ function ban_user($user_guid, $reason = "") {
 			if ($reason) {
 				create_metadata($user_guid, 'ban_reason', $reason, '', 0, ACCESS_PUBLIC);
 			}
-
-			// clear "remember me" cookie code so user cannot login in using it
-			$user->code = "";
-			$user->save();
 
 			// invalidate memcache for this user
 			static $newentity_cache;
@@ -274,36 +266,39 @@ function get_user_by_username($username) {
 }
 
 /**
- * Get user by session code
+ * Get user by remember me code
  *
- * @param string $code The session code
+ * @param string $code The remember me code
  *
- * @return ElggUser|false Depending on success
+ * @return ElggUser
  */
 function get_user_by_code($code) {
-	global $CONFIG, $CODE_TO_GUID_MAP_CACHE;
-
-	$code = sanitise_string($code);
-
-	$access = get_access_sql_suffix('e');
-
-	// Caching
-	if ((isset($CODE_TO_GUID_MAP_CACHE[$code]))
-	&& (_elgg_retrieve_cached_entity($CODE_TO_GUID_MAP_CACHE[$code]))) {
-
-		return _elgg_retrieve_cached_entity($CODE_TO_GUID_MAP_CACHE[$code]);
+	if (!$code) {
+		return null;
 	}
 
-	$query = "SELECT e.* FROM {$CONFIG->dbprefix}users_entity u
-		JOIN {$CONFIG->dbprefix}entities e ON e.guid = u.guid
-		WHERE u.code = '$code' AND $access";
+	$db = _elgg_services()->db;	
+	$prefix = $db->getTablePrefix();
+	$code = $db->sanitizeString($code);
 
-	$entity = get_data_row($query, 'entity_row_to_elggstar');
-	if ($entity) {
-		$CODE_TO_GUID_MAP_CACHE[$code] = $entity->guid;
+	$query = "SELECT guid FROM {$prefix}users_remember_me_cookies
+		WHERE code = '$code'";
+	try {
+		$result = $db->getDataRow($query);
+	} catch (DatabaseException $e) {
+		if (false !== strpos($e->getMessage(), "users_remember_me_cookies' doesn't exist")) {
+			// schema has not been updated so we swallow this exception
+			return null;
+		} else {
+			throw $e;
+		}
 	}
 
-	return $entity;
+	if ($result) {
+		return get_user($result->guid);
+	}
+
+	return null;
 }
 
 /**
