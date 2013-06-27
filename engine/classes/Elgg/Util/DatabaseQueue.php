@@ -42,7 +42,7 @@ class Elgg_Util_DatabaseQueue implements Elgg_Util_Queue {
 		$blob = $this->db->sanitizeString(serialize($item));
 		$time = time();
 		$query = "INSERT INTO {$prefix}queue
-			SET queue = '$this->name', data = '$blob', timestamp = $time";
+			SET name = '$this->name', data = '$blob', timestamp = $time";
 		return $this->db->insertData($query) !== false;
 	}
 
@@ -53,7 +53,7 @@ class Elgg_Util_DatabaseQueue implements Elgg_Util_Queue {
 		$prefix = $this->db->getTablePrefix();
 		$update = "UPDATE {$prefix}queue 
 			SET worker = '$this->workerId'
-			WHERE queue = '$this->name' AND worker IS NULL
+			WHERE name = '$this->name' AND worker IS NULL
 			ORDER BY timestamp ASC LIMIT 1";
 		$num = $this->db->updateData($update, true);
 		if ($num === 1) {
@@ -63,7 +63,7 @@ class Elgg_Util_DatabaseQueue implements Elgg_Util_Queue {
 			if ($obj) {
 				$data = unserialize($obj->data);
 				$delete = "DELETE FROM {$prefix}queue
-					WHERE queue = '$this->name' AND worker = '$this->workerId'";
+					WHERE name = '$this->name' AND worker = '$this->workerId'";
 				$this->db->deleteData($delete);
 				return $data;
 			}
@@ -77,6 +77,6 @@ class Elgg_Util_DatabaseQueue implements Elgg_Util_Queue {
 	 */
 	public function clear() {
 		$prefix = $this->db->getTablePrefix();
-		$this->db->deleteData("DELETE FROM {$prefix}queue WHERE queue = '$this->name'");
+		$this->db->deleteData("DELETE FROM {$prefix}queue WHERE name = '$this->name'");
 	}
 }
