@@ -19,10 +19,7 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		
 		$this->assertTrue($registered);
 		
-		$request = new Elgg_Request(array(
-			'handler' => 'hello',
-			'page' => '',
-		));
+		$request = Elgg_Request::create('http://localhost/hello/');
 		
 		ob_start();
 		$handled = $this->router->route($request);
@@ -36,10 +33,7 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		$this->router->registerPageHandler('hello', array($this, 'hello_page_handler'));
 		$this->router->unregisterPageHandler('hello');
 		
-		$request = new Elgg_Request(array(
-			'handler' => 'hello',
-			'page' => '',
-		));
+		$request = Elgg_Request::create('http://localhost/hello/');
 		
 		ob_start();
 		$handled = $this->router->route($request);

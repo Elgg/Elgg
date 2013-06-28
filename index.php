@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg index page for web-based applications
+ * Elgg front controller entry point
  *
  * @package Elgg
  * @subpackage Core

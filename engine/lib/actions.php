@@ -31,6 +31,16 @@
  */
 
 /**
+ * Handle a request for an action
+ * 
+ * @param array $segments URL segments that make up action name
+ * @return bool
+ */
+function _elgg_action_handler(array $segments) {
+	return _elgg_services()->actions->execute(implode('/', $segments));
+}
+
+/**
  * Perform an action.
  *
  * This function executes the action with name $action as registered
@@ -269,6 +279,8 @@ function ajax_action_hook() {
  * @access private
  */
 function actions_init() {
+	elgg_register_page_handler('action', '_elgg_action_handler');
+
 	elgg_register_action('security/refreshtoken', '', 'public');
 
 	elgg_register_simplecache_view('js/languages/en');

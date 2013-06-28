@@ -15,5 +15,7 @@
 
 require_once(dirname(dirname(__FILE__)) . "/start.php");
 
+register_error("Update your .htaccess file to remove the action handler");
+
 $action = get_input("action");
 action($action);
