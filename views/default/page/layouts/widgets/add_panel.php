@@ -29,7 +29,6 @@ foreach ($widgets as $column_widgets) {
 	<ul>
 <?php
 		foreach ($widget_types as $handler => $widget_type) {
-			$id = "elgg-widget-type-$handler";
 			// check if widget added and only one instance allowed
 			if ($widget_type->multiple == false && in_array($handler, $current_handlers)) {
 				$class = 'elgg-state-unavailable';
@@ -45,7 +44,7 @@ foreach ($widgets as $column_widgets) {
 				$class .= ' elgg-widget-single';
 			}
 
-			echo "<li title=\"$tooltip\" id=\"$id\" class=\"$class\">$widget_type->name</li>";
+			echo "<li title=\"$tooltip\" class=\"$class\" data-elgg-widget-type=\"$handler\">$widget_type->name</li>";
 		}
 ?>
 	</ul>
