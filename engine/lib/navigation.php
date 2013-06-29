@@ -455,7 +455,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 			'is_action' => true,
 			'link_class' => 'elgg-widget-delete-button',
 			'id' => "elgg-widget-delete-button-$widget->guid",
-			'data-type' => $widget->handler,
+			'data-elgg-widget-type' => $widget->handler,
 			'priority' => 900
 		);
 		$return[] = ElggMenuItem::factory($delete);

@@ -41,7 +41,7 @@ elgg.ui.widgets.init = function() {
  * @return void
  */
 elgg.ui.widgets.add = function(event) {
-	var type = $(this).data('type');
+	var type = $(this).data('elgg-widget-type');
 
 	// if multiple instances not allow, disable this widget type add button
 	var multiple = $(this).attr('class').indexOf('elgg-widget-multiple') != -1;
@@ -114,9 +114,9 @@ elgg.ui.widgets.remove = function(event) {
 	var $widget = $(this).closest('.elgg-module-widget');
 
 	// if widget type is single instance type, enable the add buton
-	var type = $(this).data('type')
+	var type = $(this).data('elgg-widget-type')
 	$container = $(this).parents('.elgg-layout-widgets').first();
-	$button = $('.elgg-widget-type[data-type="' + type + '"]', $container);
+	$button = $('[data-elgg-widget-type="' + type + '"]', $container);
 	var multiple = $button.attr('class').indexOf('elgg-widget-multiple') != -1;
 	if (multiple == false) {
 		$button.addClass('elgg-state-available');
