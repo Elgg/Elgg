@@ -6,10 +6,10 @@
  * @access private
  *
  * @package    Elgg.Core
- * @subpackage Translation
+ * @subpackage I18n
  * @since      1.9.0
  */
-class Elgg_Translation_Translator {
+class Elgg_I18n_Translator {
 
 	/** @var array Array of key to translation mapping arrays */
 	protected $mappings = array();
