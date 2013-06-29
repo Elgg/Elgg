@@ -62,15 +62,15 @@ foreach ($batch as $annotation) {
 	// Delete the annotation
 	$annotation->delete();
 }
+
 elgg_set_ignore_access($ia);
 
-// make sure new translations below are loaded
-reload_all_translations();
 
-$upgrade_link = elgg_view('output/url', array(
+$migrate_link = elgg_view('output/url', array(
 	'href' => 'admin/comment_upgrade',
-	'text' => elgg_echo('upgrade:comments:link'),
+	'text' => "migrate the rest of the comments",
 	'is_trusted' => true,
 ));
 
-elgg_add_admin_notice('comment_upgrade_needed', elgg_echo('upgrade:comments:upgrade_required', array($upgrade_link)));
+// not using translation because new keys won't be in the cache
+elgg_add_admin_notice('comment_upgrade_needed', "The data structure of site comments has changed in Elgg 1.9. The most recent 50 comments were migrated but you must $migrate_link.");
