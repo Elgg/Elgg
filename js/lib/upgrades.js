@@ -11,8 +11,7 @@ elgg.upgrades.init = function () {
 /**
  * Initializes the comment upgrade feature
  *
- * @param  {Object} e Event object.
- * @return void
+ * @param {Object} e Event object
  */
 elgg.upgrades.upgradeComments = function(e) {
 	e.preventDefault();
@@ -23,29 +22,30 @@ elgg.upgrades.upgradeComments = function(e) {
 	// Initialize progressbar
 	$('.elgg-progressbar').progressbar({
 		value: 0,
-		max: total,
-	})
+		max: total
+	});
 
-	// Hide button when upgrade starts
+	// Replace button with spinner when upgrade starts
 	$('#comment-upgrade-run').addClass('hidden');
+	$('#comment-upgrade-spinner').removeClass('hidden');
 
 	// Start comment upgrade from offset 0
 	elgg.upgrades.upgradeCommentBatch(0);
-}
+};
 
 /**
  * Fires the ajax action to upgrade a batch of comments.
  *
- * @param  int  offset  The next upgrade offset
- * @return void
+ * @param {Number} offset  The next upgrade offset
  */
 elgg.upgrades.upgradeCommentBatch = function(offset) {
 	var options = {
-		data: {
-			offset: offset
+			data: {
+				offset: offset
+			},
+			dataType: 'json'
 		},
-		dataType: 'json'
-	};
+		$upgradeCount = $('#comment-upgrade-count');
 
 	options.data = elgg.security.addToken(options.data);
 
@@ -67,8 +67,8 @@ elgg.upgrades.upgradeCommentBatch = function(offset) {
 		numErrors.text(newOffset);
 
 		// Increase total amount of processed comments
-		var numProcessed = parseInt($('#comment-upgrade-count').text()) + json.output.numSuccess + json.output.numErrors;
-		$('#comment-upgrade-count').text(numProcessed);
+		var numProcessed = parseInt($upgradeCount.text()) + json.output.numSuccess + json.output.numErrors;
+		$upgradeCount.text(numProcessed);
 
 		// Increase percentage
 		var total = $('#comment-upgrade-total').text();
@@ -86,6 +86,9 @@ elgg.upgrades.upgradeCommentBatch = function(offset) {
 		} else {
 			// Upgrade is finished
 			elgg.system_message(elgg.echo('upgrade:comments:finished'));
+
+			$('#comment-upgrade-spinner').addClass('hidden');
+
 			percent = '100';
 		}
 
@@ -94,6 +97,6 @@ elgg.upgrades.upgradeCommentBatch = function(offset) {
 
 	// We use post() instead of action() to get better control over error messages
 	return elgg.post('action/admin/site/comment_upgrade', options);
-}
+};
 
 elgg.register_hook_handler('init', 'system', elgg.upgrades.init);

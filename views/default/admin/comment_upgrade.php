@@ -47,6 +47,7 @@ HTML;
 		'is_action' => true,
 		'id' => 'comment-upgrade-run',
 	));
+	echo '<div id="comment-upgrade-spinner" class="elgg-ajax-loader hidden"></div>';
 }
 
 access_show_hidden_entities($access_status);
