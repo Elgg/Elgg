@@ -288,9 +288,17 @@ function page_owner_boot() {
 	// Bootstrap the context stack by setting its first entry to the handler.
 	// This is the first segment of the URL and the handler is set by the rewrite rules.
 	// @todo this does not work for actions
-	$handler = get_input('handler', false);
-	if ($handler) {
-		elgg_set_context($handler);
+
+	$request = _elgg_services()->request;
+
+	// don't do this for *_handler.php, etc.
+	if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
+		$segments = $request->getUrlSegments();
+		if ($segments) {
+			elgg_set_context($segments[0]);
+		} else {
+			elgg_set_context('main');
+		}
 	}
 }
 
