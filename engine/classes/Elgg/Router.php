@@ -41,6 +41,7 @@ class Elgg_Router {
 			$identifier = array_shift($segments);
 			elgg_set_context($identifier);
 		} else {
+			$identifier = '';
 			elgg_set_context('main');
 
 			// this plugin hook is deprecated. Use elgg_register_page_handler()
