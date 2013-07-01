@@ -8,6 +8,6 @@
 ?>
 <script>
 require(['elgg/ckeditor', 'jquery', 'jquery.ckeditor'], function(elggCKEditor, $) {
-	$('.elgg-input-longtext').ckeditor(elggCKEditor.wordCount, elggCKEditor.config);
+	$('.elgg-input-longtext').ckeditor(elggCKEditor.init, elggCKEditor.config);
 });
 </script>
