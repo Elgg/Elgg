@@ -23,43 +23,44 @@ $form_body .= elgg_view('input/access', array(
 		ACCESS_PRIVATE => elgg_echo("PRIVATE"),
 		ACCESS_FRIENDS => elgg_echo("access:friends:label"),
 		ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
-		ACCESS_PUBLIC => elgg_echo("PUBLIC")
+		ACCESS_PUBLIC => elgg_echo("PUBLIC"),
 	),
 	'name' => 'default_access',
 	'value' => elgg_get_config('default_access'),
 )) . "</div>";
 
 $form_body .= "<div>" . elgg_echo('installation:allow_user_default_access:description') . "<br />";
-$form_body .= elgg_view("input/checkboxes", array(
-	'options' => array(elgg_echo('installation:allow_user_default_access:label') => 1),
+
+$form_body .= elgg_view('input/checkbox', array(
+	'label' => elgg_echo('installation:allow_user_default_access:label'),
 	'name' => 'allow_user_default_access',
-	'value' => (elgg_get_config('allow_user_default_access') ? 1 : 0),
+	'checked' => (bool)elgg_get_config('allow_user_default_access'),
 )) . "</div>";
 
 $form_body .= "<div>" . elgg_echo('installation:simplecache:description') . "<br />";
-$form_body .= elgg_view("input/checkboxes", array(
-	'options' => array(elgg_echo('installation:simplecache:label') => 1),
+$form_body .= elgg_view("input/checkbox", array(
+	'label' => elgg_echo('installation:simplecache:label'),
 	'name' => 'simplecache_enabled',
-	'value' => (elgg_get_config('simplecache_enabled') ? 1 : 0),
-)) . "</div>";
-
-$form_body .= "<div style=\"margin-left:2em\">" . elgg_echo('installation:minify:description') . "<br />";
-$form_body .= elgg_view("input/checkboxes", array(
-	'options' => array(elgg_echo('installation:minify_js:label') => "1"),
-	'name' => 'simplecache_minify_js',
-	'value' => (int) elgg_get_config('simplecache_minify_js'),
+	'checked' => (bool)elgg_get_config('simplecache_enabled'),
 ));
-$form_body .= elgg_view("input/checkboxes", array(
-	'options' => array(elgg_echo('installation:minify_css:label') => "1"),
+
+$form_body .= "<div class=\"mll mtm\">" . elgg_echo('installation:minify:description') . "<br />";
+$form_body .= elgg_view("input/checkbox", array(
+	'label' => elgg_echo('installation:minify_js:label'),
+	'name' => 'simplecache_minify_js',
+	'checked' => (bool)elgg_get_config('simplecache_minify_js'),
+)) . '<br />';
+$form_body .= elgg_view("input/checkbox", array(
+	'label' => elgg_echo('installation:minify_css:label'),
 	'name' => 'simplecache_minify_css',
-	'value' => (int) elgg_get_config('simplecache_minify_css'),
-)) . "</div>";
+	'checked' => (bool)elgg_get_config('simplecache_minify_css'),
+)) . "</div></div>";
 
 $form_body .= "<div>" . elgg_echo('installation:systemcache:description') . "<br />";
-$form_body .= elgg_view("input/checkboxes", array(
-	'options' => array(elgg_echo('installation:systemcache:label') => 1),
+$form_body .= elgg_view("input/checkbox", array(
+	'label' => elgg_echo('installation:systemcache:label'),
 	'name' => 'system_cache_enabled',
-	'value' => (elgg_get_config('system_cache_enabled') ? 1 : 0),
+	'checked' => (bool)elgg_get_config('system_cache_enabled'),
 )) . "</div>";
 
 $debug_options = array(
@@ -78,29 +79,26 @@ $form_body .= elgg_view('input/select', array(
 $form_body .= '</div>';
 
 // control new user registration
-$options = array(
-	'options' => array(elgg_echo('installation:registration:label') => 1),
+$form_body .= '<div>' . elgg_echo('installation:registration:description') . '<br />';
+$form_body .= elgg_view('input/checkbox', array(
+	'label' => elgg_echo('installation:registration:label'),
 	'name' => 'allow_registration',
-	'value' => elgg_get_config('allow_registration') ? 1 : 0,
-);
-$form_body .= '<div>' . elgg_echo('installation:registration:description');
-$form_body .= '<br />' .elgg_view('input/checkboxes', $options) . '</div>';
+	'checked' => (bool)elgg_get_config('allow_registration'),
+)) . '</div>';
 
 // control walled garden
-$walled_garden = elgg_get_config(walled_garden);
-$options = array(
-	'options' => array(elgg_echo('installation:walled_garden:label') => 1),
+$form_body .= '<div>' . elgg_echo('installation:walled_garden:description') . '<br />';
+$form_body .= elgg_view('input/checkbox', array(
+	'label' => elgg_echo('installation:walled_garden:label'),
 	'name' => 'walled_garden',
-	'value' => $walled_garden ? 1 : 0,
-);
-$form_body .= '<div>' . elgg_echo('installation:walled_garden:description');
-$form_body .= '<br />' . elgg_view('input/checkboxes', $options) . '</div>';
+	'checked' => (bool)elgg_get_config('walled_garden'),
+)) . '</div>';
 
 $form_body .= "<div>" . elgg_echo('installation:httpslogin') . "<br />";
-$form_body .= elgg_view("input/checkboxes", array(
-	'options' => array(elgg_echo('installation:httpslogin:label') => 1),
+$form_body .= elgg_view("input/checkbox", array(
+	'label' => elgg_echo('installation:httpslogin:label'),
 	'name' => 'https_login',
-	'value' => (elgg_get_config('https_login') ? 1 : 0)
+	'checked' => (bool)elgg_get_config('https_login'),
 )) . "</div>";
 
 $form_body .= elgg_view('input/hidden', array('name' => 'settings', 'value' => 'go'));
