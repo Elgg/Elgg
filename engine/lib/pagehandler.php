@@ -62,6 +62,9 @@ function elgg_front_page_handler() {
 
 	$title = elgg_echo('content:latest');
 	$content = elgg_list_river();
+	if (!$content) {
+		$content = elgg_echo('river:none');
+	}
 
 	$login_box = elgg_view('core/account/login_box');
 
