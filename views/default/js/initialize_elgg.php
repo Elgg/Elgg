@@ -35,7 +35,6 @@ if ($user instanceof ElggUser) {
 ?>
 
 var elgg = <?php echo json_encode($elgg); ?>;
-
 <?php
 // note: elgg.session.user needs to be wrapped with elgg.ElggUser, but this class isn't
 // defined yet. So this is delayed until after the classes are defined, in js/lib/session.js
