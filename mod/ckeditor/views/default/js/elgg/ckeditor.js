@@ -19,7 +19,7 @@ define(function(require) {
 			var target = $(this).attr('href');
 	
 			if (!$(target).data('ckeditorInstance')) {
-				$(target).ckeditor(elggCKEditor.wordCount, elggCKEditor.config);
+				$(target).ckeditor(elggCKEditor.init, elggCKEditor.config);
 				$(this).html(elgg.echo('ckeditor:remove'));
 			} else {
 				$(target).ckeditorGet().destroy();
@@ -28,13 +28,18 @@ define(function(require) {
 		},
 
 		/**
-		 * Provides a live-updating word counter.
+		 * Configures the live-updating word counter and HTML writer
 		 *
 		 * @param {Object} event
 		 * @return void
 		 */
-		wordCount: function() {
+		init: function() {
 			var editor = this;
+
+			// #5689
+			editor.dataProcessor.writer.setRules('p', {
+				breakAfterOpen : false
+			});
 
 			if ($('#cke_wordcount_' + editor.name).length == 0) {
 				$('#cke_bottom_' + editor.name).prepend(
@@ -44,7 +49,9 @@ define(function(require) {
 				);
 			}
 
-			editor.document.on('keyup', function() {elggCKEditor.updateCount(editor)});
+			editor.document.on('input', function() {
+				elggCKEditor.updateCount(editor);
+			});
 			elggCKEditor.updateCount(editor);
 		},
 
@@ -56,7 +63,7 @@ define(function(require) {
 		 */
 		updateCount: function(editor) {
 			var words = editor.document.getBody().getText().trim();
-			var count = words !== "" ? words.split(' ').length : 0;
+			var count = words !== "" ? words.split(/\s+/).length : 0;
 			var text = elgg.echo('ckeditor:word_count') + count + ' ';
 			$('#cke_wordcount_' + editor.name).html(text);
 		},
