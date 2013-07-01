@@ -51,9 +51,8 @@ $html5shiv = elgg_normalize_url('vendors/html5shiv.js');
 
 <?php foreach ($css as $link) { ?>
 	<link rel="stylesheet" href="<?php echo $link; ?>" />
-<?php } ?>
+<?php }
 
-<?php
 	$ie_url = elgg_get_simplecache_url('css', 'ie');
 	$ie8_url = elgg_get_simplecache_url('css', 'ie8');
 	$ie7_url = elgg_get_simplecache_url('css', 'ie7');
@@ -68,18 +67,15 @@ $html5shiv = elgg_normalize_url('vendors/html5shiv.js');
 		<link rel="stylesheet" href="<?php echo $ie7_url; ?>" />
 	<![endif]-->
 
-<script>
-if (typeof require == "undefined") {
-	var require = <?php echo json_encode($amdConfig); ?>;
-}
-</script>
-<script><?php echo elgg_view('js/initialize_elgg'); ?></script>
-
+<?php
+	$script = elgg_get_simplecache_url('js', 'elgg/require_config');
+?>
+	<script src="<?php echo $script ?>"></script>
+	<script><?php echo elgg_view('js/initialize_elgg'); ?>	</script>
 <?php foreach ($js as $script) { ?>
 	<script src="<?php echo $script; ?>"></script>
-<?php } ?>
+<?php }
 
-<?php
 echo $feedref;
 
 $metatags = elgg_view('metatags', $vars);
