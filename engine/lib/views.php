@@ -1407,6 +1407,8 @@ function elgg_views_boot() {
 	elgg_load_js('jquery-ui');
 	elgg_load_js('elgg');
 
+	elgg_register_simplecache_view('js/elgg/require_config');
+
 	elgg_register_simplecache_view('js/lightbox');
 	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
 	elgg_register_js('lightbox', $lightbox_js_url);
