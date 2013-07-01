@@ -36,16 +36,16 @@ if ($site = elgg_get_site_entity()) {
 
 	datalist_set('dataroot', $dataroot);
 
-	if (get_input('simplecache_enabled')) {
+	if ('on' === get_input('simplecache_enabled')) {
 		elgg_enable_simplecache();
 	} else {
 		elgg_disable_simplecache();
 	}
 
-	set_config('simplecache_minify_js', (int) get_input('simplecache_minify_js'), $site->getGUID());
-	set_config('simplecache_minify_css', (int) get_input('simplecache_minify_css'), $site->getGUID());
+	set_config('simplecache_minify_js', 'on' === get_input('simplecache_minify_js'), $site->getGUID());
+	set_config('simplecache_minify_css', 'on' === get_input('simplecache_minify_css'), $site->getGUID());
 
-	if (get_input('system_cache_enabled')) {
+	if ('on' === get_input('system_cache_enabled')) {
 		elgg_enable_system_cache();
 	} else {
 		elgg_disable_system_cache();
@@ -53,7 +53,7 @@ if ($site = elgg_get_site_entity()) {
 
 	set_config('default_access', get_input('default_access', ACCESS_PRIVATE), $site->getGUID());
 
-	$user_default_access = (int) get_input('allow_user_default_access');
+	$user_default_access = ('on' === get_input('allow_user_default_access'));
 	set_config('allow_user_default_access', $user_default_access, $site->getGUID());
 
 	$debug = get_input('debug');
@@ -64,14 +64,14 @@ if ($site = elgg_get_site_entity()) {
 	}
 
 	// allow new user registration?
-	$allow_registration = (bool) get_input('allow_registration', FALSE);
+	$allow_registration = ('on' === get_input('allow_registration', false));
 	set_config('allow_registration', $allow_registration, $site->getGUID());
 
 	// setup walled garden
-	$walled_garden = (bool) get_input('walled_garden', FALSE);
+	$walled_garden = ('on' === get_input('walled_garden', false));
 	set_config('walled_garden', $walled_garden, $site->getGUID());
 
-	if (get_input('https_login')) {
+	if ('on' === get_input('https_login')) {
 		set_config('https_login', 1, $site->getGUID());
 	} else {
 		unset_config('https_login', $site->getGUID());
