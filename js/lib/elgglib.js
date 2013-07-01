@@ -250,7 +250,7 @@ elgg.normalize_url = function(url) {
 	url = url || '';
 	elgg.assertTypeOf('string', url);
 
-	validated = (function(url) {
+	var validated = (function(url) {
 		url = elgg.parse_url(url);
 		if (url.scheme){
 			url.scheme = url.scheme.toLowerCase();
@@ -396,24 +396,23 @@ elgg.parse_url = function(url, component, expand) {
 	// Adapted from http://blog.stevenlevithan.com/archives/parseuri
 	// which was release under the MIT
 	// It was modified to fix mailto: and javascript: support.
-	var
-	expand = expand || false,
-	component = component || false,
+	expand = expand || false;
+	component = component || false;
 	
-	re_str =
-		// scheme (and user@ testing)
-		'^(?:(?![^:@]+:[^:@/]*@)([^:/?#.]+):)?(?://)?'
-		// possibly a user[:password]@
-		+ '((?:(([^:@]*)(?::([^:@]*))?)?@)?'
-		// host and port
-		+ '([^:/?#]*)(?::(\\d*))?)'
-		// path
-		+ '(((/(?:[^?#](?![^?#/]*\\.[^?#/.]+(?:[?#]|$)))*/?)?([^?#/]*))'
-		// query string
-		+ '(?:\\?([^#]*))?'
-		// fragment
-		+ '(?:#(.*))?)',
-	keys = {
+	var re_str =
+			// scheme (and user@ testing)
+			'^(?:(?![^:@]+:[^:@/]*@)([^:/?#.]+):)?(?://)?'
+			// possibly a user[:password]@
+			+ '((?:(([^:@]*)(?::([^:@]*))?)?@)?'
+			// host and port
+			+ '([^:/?#]*)(?::(\\d*))?)'
+			// path
+			+ '(((/(?:[^?#](?![^?#/]*\\.[^?#/.]+(?:[?#]|$)))*/?)?([^?#/]*))'
+			// query string
+			+ '(?:\\?([^#]*))?'
+			// fragment
+			+ '(?:#(.*))?)',
+		keys = {
 			1: "scheme",
 			4: "user",
 			5: "pass",
@@ -422,8 +421,8 @@ elgg.parse_url = function(url, component, expand) {
 			9: "path",
 			12: "query",
 			13: "fragment"
-	},
-	results = {};
+		},
+		results = {};
 
 	if (url.indexOf('mailto:') === 0) {
 		results['scheme'] = 'mailto';
@@ -467,8 +466,8 @@ elgg.parse_url = function(url, component, expand) {
  * @return {Object} The parsed object string
  */
 elgg.parse_str = function(string) {
-	var params = {};
-	var result,
+	var params = {},
+		result,
 		key,
 		value,
 		re = /([^&=]+)=?([^&]*)/g,
