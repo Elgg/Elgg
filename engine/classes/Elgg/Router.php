@@ -36,13 +36,11 @@ class Elgg_Router {
 	 * @access private
 	 */
 	public function route(Elgg_Request $request) {
-		$segments = $this->getUrlSegments($request);
+		$segments = $request->getUrlSegments();
 		if ($segments) {
 			$identifier = array_shift($segments);
-			elgg_set_context($identifier);
 		} else {
 			$identifier = '';
-			elgg_set_context('main');
 
 			// this plugin hook is deprecated. Use elgg_register_page_handler()
 			// to register for the '' (empty string) handler.
@@ -115,20 +113,5 @@ class Elgg_Router {
 	 */
 	public function getPageHandlers() {
 		return $this->handlers;
-	}
-
-	/**
-	 * Get URL segments in an array
-	 *
-	 * @param Elgg_Request $request The request being routed
-	 * @return array
-	 */
-	protected function getUrlSegments(Elgg_Request $request) {
-		$path = trim($request->getPathInfo(), '/');
-		if (!$path) {
-			return array();
-		}
-
-		return explode('/', $path);
 	}
 }

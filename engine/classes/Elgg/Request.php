@@ -450,6 +450,20 @@ class Elgg_Request {
 	}
 
 	/**
+	 * Get URL segments in an array
+	 *
+	 * @return array
+	 */
+	public function getUrlSegments() {
+		$path = trim($this->getPathInfo(), '/');
+		if (!$path) {
+			return array();
+		}
+
+		return explode('/', $path);
+	}
+
+	/**
 	 * Get the IP address of the client
 	 *
 	 * @return string
