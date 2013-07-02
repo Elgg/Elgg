@@ -25,12 +25,6 @@
 .elgg-module .elgg-list {
 	margin-top: 0;
 }
-.tidypics-photo-item + .tidypics-photo-item {
-	margin-left: 0;
-}
-.tidypics-photo-item {
-	margin-right: 7px;
-}
 /* ***************************************
 	TOPBAR MENU
 *****************************************/
@@ -100,10 +94,6 @@ html {
     margin-top: 3px;
 }
 .file-photo .elgg-photo {
-	max-width: 100%;
-	height: auto;
-}
-.tidypics-photo {
 	max-width: 100%;
 	height: auto;
 }
@@ -187,6 +177,9 @@ html {
 	}
 }
 @media (max-width: 766px) {
+	.elgg-page-header > .elgg-inner h1 {
+		padding-top: 10px;
+	}
 	.elgg-heading-site, .elgg-heading-site:hover {
 		font-size: 1.6em;
 	}
