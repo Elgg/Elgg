@@ -93,15 +93,15 @@
 }
 .elgg-icon-hover-menu:hover {
 	background: transparent url(<?php echo elgg_get_site_url();?>mod/aalborg_theme/graphics/avatar_menu_arrows.png) no-repeat;
-    background-position: right bottom;
-    width: 100%;
-    height: 100%;
+	background-position: right bottom;
+	width: 100%;
+	height: 100%;
 }
 .elgg-icon-hover-menu {
-	background: transparent url(<?php echo elgg_get_site_url();?>mod/elgg_mobile/graphics/avatar_menu_arrows.png) no-repeat;
-    background-position: right bottom;
-    width: 100%;
-    height: 100%;
+	background: transparent url(<?php echo elgg_get_site_url();?>mod/aalborg_theme/graphics/avatar_menu_arrows.png) no-repeat;
+	background-position: right bottom;
+	width: 100%;
+	height: 100%;
 }
 .elgg-icon-info:hover {
 	background-position: 0 -468px;
