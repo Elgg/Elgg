@@ -88,8 +88,8 @@ function elgg_get_config($name, $site_guid = 0) {
 
 	$name = trim($name);
 
-	// no not return $CONFIG value if asking for non-current site
-	if ($site_guid === 0 || $site_guid === null || $site_guid == $CONFIG->site_guid && isset($CONFIG->$name)) {
+	// do not return $CONFIG value if asking for non-current site
+	if (($site_guid === 0 || $site_guid === null || $site_guid == $CONFIG->site_guid) && isset($CONFIG->$name)) {
 		return $CONFIG->$name;
 	}
 
