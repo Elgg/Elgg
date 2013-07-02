@@ -647,7 +647,9 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	$user->owner_guid = 0; // Users aren't owned by anyone, even if they are admin created.
 	$user->container_guid = 0; // Users aren't contained by anyone, even if they are admin created.
 	$user->language = get_current_language();
-	$user->save();
+	if ($user->save() === false) {
+		return false;
+	}
 
 	// Turn on email notifications by default
 	set_user_notification_setting($user->getGUID(), 'email', true);

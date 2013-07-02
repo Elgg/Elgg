@@ -1493,7 +1493,10 @@ abstract class ElggEntity extends ElggData implements
 				if (elgg_trigger_event('create', $this->type, $this)) {
 					return $guid;
 				} else {
+					// plugins that return false to event don't need to override the access system
+					$ia = elgg_set_ignore_access(true);
 					$this->delete();
+					elgg_set_ignore_access($ia);
 				}
 			}
 		}
