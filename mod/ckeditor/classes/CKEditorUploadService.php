@@ -100,6 +100,7 @@ class CKEditorUploadService {
 	/**
 	 * Set the error message
 	 * @param string $message
+	 * @return void
 	 */
 	protected function setErrorMessage($message) {
 		$this->errorMessage = $message;
@@ -107,7 +108,7 @@ class CKEditorUploadService {
 
 	/**
 	 * Validate the upload for size and errors
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function validateUpload() {
 		// some general upload error
@@ -141,7 +142,7 @@ class CKEditorUploadService {
 
 	/**
 	 * Prepare for saving the asset
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function prepareForAssetStorage() {
 		$this->setAssetDirectory();
@@ -152,6 +153,7 @@ class CKEditorUploadService {
 
 	/**
 	 * Set the user's asset directory location
+	 * @return void
 	 */
 	protected function setAssetDirectory() {
 		$this->assetDirectory = $this->rootDir . $this->dirLocator->getPath() . self::ASSET_DIR;
@@ -160,6 +162,7 @@ class CKEditorUploadService {
 	/**
 	 * Set the filename for the asset
 	 * @param string $filename If not set, determines filename from original file
+	 * @return void
 	 */
 	protected function setAssetFilename($filename = '') {
 		if ($filename) {
@@ -174,7 +177,10 @@ class CKEditorUploadService {
 
 	/**
 	 * Determine the format of the asset based on upload image
-	 * @warning Use 'jpeg' and 'png' because it matches content type and GD functions.
+	 * 
+	 * @warning Used 'jpeg' and 'png' because it matches content type and GD functions.
+	 * 
+	 * @return void
 	 */
 	protected function setAssetFormat() {
 		$filename = $this->getOriginalFilename();
@@ -236,7 +242,7 @@ class CKEditorUploadService {
 
 	/**
 	 * Create the user's asset directoryu
-	 * @return boolean
+	 * @return bool
 	 */
 	protected function createAssetDirectory() {
 		$result = true;
@@ -251,6 +257,7 @@ class CKEditorUploadService {
 
 	/**
 	 * Create the upload object to have reference to the file
+	 * @return void
 	 */
 	protected function createUploadObject() {
 		$upload = new CKEditorUpload();
