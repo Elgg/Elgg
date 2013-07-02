@@ -18,6 +18,17 @@ $owner_link = elgg_view('output/url', array(
 	'text' => elgg_echo('ckeditor:upload:owner', array($owner_name)),
 	'href' => $owner->getURL(),
 ));
+$delete_button = elgg_view('output/url', array(
+	'text' => elgg_view_icon('delete'),
+	'href' => "action/ckeditor/delete?guid=$entity->guid",
+	'title' => elgg_echo('delete:this'),
+	'confirm' => elgg_echo('deleteconfirm'),
+	'is_action' => true,
+	'is_trusted' => true,
+	'class' => 'float-alt',
+));
 
-echo elgg_view_module('ckeditor', $owner_link, $img);
+$header = "$owner_link $delete_button";
+
+echo elgg_view_module('ckeditor', $header, $img);
 

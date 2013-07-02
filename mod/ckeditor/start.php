@@ -35,6 +35,7 @@ function ckeditor_init() {
 
 	$actions_base = elgg_get_plugins_path() . 'ckeditor/actions/ckeditor';
 	elgg_register_action("ckeditor/upload", "$actions_base/upload.php");
+	elgg_register_action("ckeditor/delete", "$actions_base/delete.php");
 }
 
 function ckeditor_longtext_menu($hook, $type, $items, $vars) {

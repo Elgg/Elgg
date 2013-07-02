@@ -26,4 +26,16 @@ class CKEditorUpload extends ElggObject {
 		$url = "uploads/images/$user_guid/$basename";
 		return elgg_normalize_url($url);
 	}
+
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function delete() {
+		$userDir = new Elgg_EntityDirLocator($this->getOwnerGUID());
+		$userDir = rtrim($userDir, DIRECTORY_SEPARATOR);
+		$filePath = elgg_get_data_path() . $userDir . DIRECTORY_SEPARATOR . $this->filePath;
+		unlink($filePath);
+		return parent::delete();
+	}
 }

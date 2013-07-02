@@ -10,7 +10,9 @@
 /* CKEditor */
 
 .elgg-module-ckeditor {
-	width: 200px;
+	width: 220px;
+	border: 1px solid #ccc;
+	padding: 5px;
 }
 
 .elgg-page .cke_skin_BootstrapCK-Skin {
