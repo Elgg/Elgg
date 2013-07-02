@@ -7,12 +7,19 @@
  * @access private
  */
 class CKEditorUpload extends ElggObject {
+
+	/**
+	 * {@inheritdoc}
+	 */
 	protected function initializeAttributes() {
 		parent::initializeAttributes();
 		$this->attributes['subtype'] = "ckeditor_upload";
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
 	}
 
+	/**
+	 * {@inheritdoc}
+	 */
 	public function getURL() {
 		$user_guid = $this->getOwnerGUID();
 		$basename = pathinfo($this->filePath, PATHINFO_BASENAME);
