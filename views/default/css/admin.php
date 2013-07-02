@@ -438,6 +438,11 @@ p {
 	border-bottom: 1px dotted #CCCCCC;
 }
 
+.elgg-gallery > li {
+	position: relative;
+	display: inline-block;
+}
+
 /* ***************************************
 	FORMS AND INPUT
 *************************************** */
