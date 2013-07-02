@@ -7,6 +7,9 @@
 
 $english = array(
 	'admin:administer_utilities:uploads' => 'CKEditor Uploads',
+	'ckeditor:uploads:none' => 'No uploads',
+	'item:object:ckeditor_upload' => 'CKEditor uploads',
+	'ckeditor:upload:owner' => 'User: %s',
 
 	'ckeditor:remove' => "Remove editor",
 	'ckeditor:add' => "Add editor",
