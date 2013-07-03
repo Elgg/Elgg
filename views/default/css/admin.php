@@ -446,6 +446,10 @@ label {
 	color: #333333;
 	font-size: 110%;
 }
+label.elgg-state-disabled {
+	opacity: 0.6;
+}
+
 fieldset > div {
 	margin-bottom: 15px;
 }
@@ -487,7 +491,6 @@ input[type="radio"] {
 	padding-bottom: 10px;
 	margin-bottom: 15px;
 }
-
 .elgg-fieldset > legend {
 	color: #333333;
 	font-size: 110%;

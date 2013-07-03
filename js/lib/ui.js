@@ -158,10 +158,26 @@ elgg.ui.popupClose = function(event) {
  * @return void
  */
 elgg.ui.toggleInput = function(event) {
+	var disabled = !this.checked;
 	var names = $(this).data('toggleInput');
 	if ($.isArray(names)) {
 		for (var i = 0; i < names.length; i++) {
-			$("[name=" + names[i] + "]").attr('disabled', !this.checked);
+			var $input = $('input[type!=hidden][name="' + names[i] + '"]');
+			if ($input.length) {
+				$input.attr('disabled', disabled);
+
+				// find label for this input
+				var $label = $('label[for="' + names[i] + '"]');
+				if ($label.length == 0) {
+					if ($input.parent().prop('tagName') === 'LABEL') {
+						$label = $input.parent();
+					}
+				}
+
+				if ($label.length) {
+					$label.toggleClass('elgg-state-disabled');
+				}
+			}
 		}
 	}
 };
