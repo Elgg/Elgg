@@ -1064,6 +1064,15 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'deprecated:function' => '%s() was deprecated by %s()',
 
+	'upgrade:comments:status' => 'There are <b>%s</b> comments that need to be upgraded.',
+	'upgrade:comments:warning' => '<b>Warning:</b> on a large site this upgrade may take a significantly long time!',
+	'upgrade:comments:success_count' => 'Comments upgraded:',
+	'upgrade:comments:error_count' => 'Errors:',
+	'admin:comment_upgrade' => 'Comment upgrade',
+	'upgrade:comments:river_update_failed' => 'Failed to update the river entry for comment id %s',
+	'upgrade:comments:create_failed' => 'Failed to convert comment id %s to an entity.',
+	'upgrade:comments:finished' => 'Upgrade finished',
+
 /**
  * Welcome
  */
@@ -1124,6 +1133,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
  */
 
 	'comments:count' => "%s comments",
+	'item:object:comment' => 'Comments',
 
 	'river:comment:object:default' => '%s commented on %s',
 
@@ -1140,6 +1150,7 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'generic_comment:none' => 'No comments',
 	'generic_comment:title' => 'Comment by %s',
 	'generic_comment:on' => '%s on %s',
+	'generic_comments:latest:posted' => 'posted a',
 
 	'generic_comment:email:subject' => 'You have a new comment!',
 	'generic_comment:email:body' => "You have a new comment on your item \"%s\" from %s. It reads:
