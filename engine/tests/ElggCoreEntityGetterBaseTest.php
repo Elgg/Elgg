@@ -2,8 +2,6 @@
 
 /**
  * Setup entities for getter tests
- * @package Elgg
- * @subpackage Test
  */
 abstract class ElggCoreEntityGetterBaseTest extends ElggCoreUnitTest {
 
@@ -103,7 +101,7 @@ abstract class ElggCoreEntityGetterBaseTest extends ElggCoreUnitTest {
 	 * @param int $num
 	 * @return array
 	 */
-	public function getRandomValidTypes($num = 1) {
+	protected function getRandomValidTypes($num = 1) {
 		$r = array();
 
 		for ($i=1; $i<=$num; $i++) {
@@ -126,7 +124,7 @@ abstract class ElggCoreEntityGetterBaseTest extends ElggCoreUnitTest {
 	 *
 	 * @return array
 	 */
-	public function getRandomValidSubtypes(array $types, $num = 1) {
+	protected function getRandomValidSubtypes(array $types, $num = 1) {
 		$r = array();
 
 		for ($i=1; $i<=$num; $i++) {
@@ -155,7 +153,7 @@ abstract class ElggCoreEntityGetterBaseTest extends ElggCoreUnitTest {
 	 * @param int $num
 	 * @return arr
 	 */
-	public function getRandomInvalids($num = 1) {
+	protected function getRandomInvalids($num = 1) {
 		$r = array();
 
 		for ($i=1; $i<=$num; $i++) {
@@ -171,7 +169,7 @@ abstract class ElggCoreEntityGetterBaseTest extends ElggCoreUnitTest {
 	 * @param int $num
 	 * @return array
 	 */
-	public function getRandomMixedTypes($num = 2) {
+	protected function getRandomMixedTypes($num = 2) {
 		$have_valid = $have_invalid = false;
 		$r = array();
 
@@ -191,7 +189,7 @@ abstract class ElggCoreEntityGetterBaseTest extends ElggCoreUnitTest {
 	 * @param int   $num
 	 * @return array
 	 */
-	public function getRandomMixedSubtypes(array $types, $num = 2) {
+	protected function getRandomMixedSubtypes(array $types, $num = 2) {
 		$types_c = count($types);
 		$r = array();
 
@@ -219,21 +217,4 @@ abstract class ElggCoreEntityGetterBaseTest extends ElggCoreUnitTest {
 		return $r;
 	}
 
-	/**
-	 * Creates random annotations on $entity
-	 *
-	 * @param ElggEntity $entity
-	 * @param int        $max
-	 */
-	public function createRandomAnnotations($entity, $max = 1) {
-		$annotations = array();
-		for ($i=0; $i<$max; $i++) {
-			$name = 'test_annotation_name_' . rand();
-			$value = rand();
-			$id = create_annotation($entity->getGUID(), $name, $value, 'integer', $entity->getGUID());
-			$annotations[] = elgg_get_annotation_from_id($id);
-		}
-
-		return $annotations;
-	}
 }

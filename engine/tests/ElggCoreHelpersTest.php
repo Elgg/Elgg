@@ -406,6 +406,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		}
 		delete_data("DELETE FROM {$db_prefix}entities WHERE guid IN (" . implode(',', $guids) . ")");
 		delete_data("DELETE FROM {$db_prefix}objects_entity WHERE guid IN (" . implode(',', $guids) . ")");
+		remove_subtype('object', 'test_5357_subtype');
 	}
 
 	public function testElggBatchDeleteHandlesBrokenEntities() {
