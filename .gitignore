@@ -38,6 +38,7 @@
 !/mod/uservalidationbyemail/
 !/mod/web_services/
 !/mod/zaudio/
+!/mod/aalborg_theme/
 
 # ignore IDE/hidden/testing/OS cache files
 .*
