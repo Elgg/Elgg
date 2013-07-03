@@ -16,8 +16,39 @@ foreach (array('wwwroot', 'path', 'dataroot') as $field) {
 	$form_body .= "</div>";
 }
 
+$form_body .= '<fieldset class="elgg-fieldset">';
+$form_body .= '<legend>' . elgg_echo('admin:legend:caching') . '</legend>';
+$form_body .= "<div>" . elgg_echo('installation:simplecache:description') . "<br />";
+$form_body .= elgg_view("input/checkbox", array(
+	'label' => elgg_echo('installation:simplecache:label'),
+	'name' => 'simplecache_enabled',
+	'checked' => (bool)elgg_get_config('simplecache_enabled'),
+)) . "</div>";
+
+$form_body .= "<div>" . elgg_echo('installation:minify:description') . "<br />";
+$form_body .= elgg_view("input/checkbox", array(
+	'label' => elgg_echo('installation:minify_js:label'),
+	'name' => 'simplecache_minify_js',
+	'checked' => (bool)elgg_get_config('simplecache_minify_js'),
+)) . '<br />';
+$form_body .= elgg_view("input/checkbox", array(
+	'label' => elgg_echo('installation:minify_css:label'),
+	'name' => 'simplecache_minify_css',
+	'checked' => (bool)elgg_get_config('simplecache_minify_css'),
+)) . "</div>";
+
+$form_body .= "<div>" . elgg_echo('installation:systemcache:description') . "<br />";
+$form_body .= elgg_view("input/checkbox", array(
+	'label' => elgg_echo('installation:systemcache:label'),
+	'name' => 'system_cache_enabled',
+	'checked' => (bool)elgg_get_config('system_cache_enabled'),
+)) . "</div>";
+$form_body .= "</fieldset>";
+
+$form_body .= '<fieldset class="elgg-fieldset">';
+$form_body .= '<legend>' . elgg_echo('admin:legend:content_access') . '</legend>';
 $form_body .= "<div>" . elgg_echo('admin:site:access:warning') . "<br />";
-$form_body .= "<label>" . elgg_echo('installation:sitepermissions') . "</label>";
+$form_body .= "<label>" . elgg_echo('installation:sitepermissions') . " </label>";
 $form_body .= elgg_view('input/access', array(
 	'options_values' => array(
 		ACCESS_PRIVATE => elgg_echo("PRIVATE"),
@@ -36,48 +67,10 @@ $form_body .= elgg_view('input/checkbox', array(
 	'name' => 'allow_user_default_access',
 	'checked' => (bool)elgg_get_config('allow_user_default_access'),
 )) . "</div>";
+$form_body .= "</fieldset>";
 
-$form_body .= "<div>" . elgg_echo('installation:simplecache:description') . "<br />";
-$form_body .= elgg_view("input/checkbox", array(
-	'label' => elgg_echo('installation:simplecache:label'),
-	'name' => 'simplecache_enabled',
-	'checked' => (bool)elgg_get_config('simplecache_enabled'),
-));
-
-$form_body .= "<div class=\"mll mtm\">" . elgg_echo('installation:minify:description') . "<br />";
-$form_body .= elgg_view("input/checkbox", array(
-	'label' => elgg_echo('installation:minify_js:label'),
-	'name' => 'simplecache_minify_js',
-	'checked' => (bool)elgg_get_config('simplecache_minify_js'),
-)) . '<br />';
-$form_body .= elgg_view("input/checkbox", array(
-	'label' => elgg_echo('installation:minify_css:label'),
-	'name' => 'simplecache_minify_css',
-	'checked' => (bool)elgg_get_config('simplecache_minify_css'),
-)) . "</div></div>";
-
-$form_body .= "<div>" . elgg_echo('installation:systemcache:description') . "<br />";
-$form_body .= elgg_view("input/checkbox", array(
-	'label' => elgg_echo('installation:systemcache:label'),
-	'name' => 'system_cache_enabled',
-	'checked' => (bool)elgg_get_config('system_cache_enabled'),
-)) . "</div>";
-
-$debug_options = array(
-	'0' => elgg_echo('installation:debug:none'),
-	'ERROR' => elgg_echo('installation:debug:error'),
-	'WARNING' => elgg_echo('installation:debug:warning'),
-	'NOTICE' => elgg_echo('installation:debug:notice'),
-	'INFO' => elgg_echo('installation:debug:info'),
-);
-$form_body .= "<div>" . elgg_echo('installation:debug');
-$form_body .= elgg_view('input/select', array(
-	'options_values' => $debug_options,
-	'name' => 'debug',
-	'value' => elgg_get_config('debug'),
-));
-$form_body .= '</div>';
-
+$form_body .= '<fieldset class="elgg-fieldset">';
+$form_body .= '<legend>' . elgg_echo('admin:legend:site_access') . '</legend>';
 // control new user registration
 $form_body .= '<div>' . elgg_echo('installation:registration:description') . '<br />';
 $form_body .= elgg_view('input/checkbox', array(
@@ -100,6 +93,27 @@ $form_body .= elgg_view("input/checkbox", array(
 	'name' => 'https_login',
 	'checked' => (bool)elgg_get_config('https_login'),
 )) . "</div>";
+$form_body .= "</fieldset>";
+
+$debug_options = array(
+	'0' => elgg_echo('installation:debug:none'),
+	'ERROR' => elgg_echo('installation:debug:error'),
+	'WARNING' => elgg_echo('installation:debug:warning'),
+	'NOTICE' => elgg_echo('installation:debug:notice'),
+	'INFO' => elgg_echo('installation:debug:info'),
+);
+$form_body .= '<fieldset class="elgg-fieldset">';
+$form_body .= '<legend>' . elgg_echo('admin:legend:debug') . '</legend>';
+$form_body .= "<div>" . elgg_echo('installation:debug') . "<br />";
+$form_body .= "<label>" . elgg_echo('installation:debug:label') . " </label>";
+$form_body .= elgg_view('input/select', array(
+	'options_values' => $debug_options,
+	'name' => 'debug',
+	'value' => elgg_get_config('debug'),
+));
+$form_body .= '</div>';
+$form_body .= "</fieldset>";
+
 
 $form_body .= elgg_view('input/hidden', array('name' => 'settings', 'value' => 'go'));
 
