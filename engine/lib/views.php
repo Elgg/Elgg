@@ -1045,7 +1045,7 @@ function elgg_view_image_block($image, $body, $vars = array()) {
  */
 function elgg_view_module($type, $title, $body, array $vars = array()) {
 	$vars['type'] = $type;
-	$vars['class'] = elgg_extract('class', $vars, '') . " elgg-module-$type";
+	$vars['class'] = elgg_extract('class', $vars, '');
 	$vars['title'] = $title;
 	$vars['body'] = $body;
 	return elgg_view('page/components/module', $vars);
