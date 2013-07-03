@@ -206,7 +206,7 @@ function get_default_access(ElggUser $user = null) {
 		$user = $user ? $user : elgg_get_logged_in_user_entity();
 		if ($user) {
 			$user_access = $user->getPrivateSetting('elgg_default_access');
-			if ($user_access !== false) {
+			if ($user_access !== null) {
 				$default_access = $user_access;
 			}
 		}

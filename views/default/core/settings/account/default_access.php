@@ -9,7 +9,8 @@ if (elgg_get_config('allow_user_default_access')) {
 	$user = elgg_get_page_owner_entity();
 
 	if ($user) {
-		if (false === ($default_access = $user->getPrivateSetting('elgg_default_access'))) {
+		$default_access = $user->getPrivateSetting('elgg_default_access');
+		if ($default_access === null) {
 			$default_access = elgg_get_config('default_access');
 		}
 
