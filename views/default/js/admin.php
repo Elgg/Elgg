@@ -5,8 +5,8 @@
  * @since 1.8
  */
 
-if (0) { ?><script><?php }
 ?>
+//<script>
 elgg.provide('elgg.admin');
 
 elgg.admin.init = function () {
@@ -48,6 +48,9 @@ elgg.admin.init = function () {
 
 	// admin notices delete ajax
 	$('a.elgg-admin-notice').click(elgg.admin.deleteNotice);
+
+	// disable simple cache compress settings if simple cache is off
+	$('[name=simplecache_enabled]').click(elgg.admin.simplecacheToggle);
 };
 
 /**
@@ -157,6 +160,21 @@ elgg.admin.deleteNotice = function(e) {
 			$container.slideUp('medium');
 		}
 	});
+};
+
+/**
+ * Toggles the display of the compression settings for simplecache
+ *
+ * @return void
+ */
+elgg.admin.simplecacheToggle = function() {
+	var names = ['simplecache_minify_js', 'simplecache_minify_css'];
+	for (var i = 0; i < names.length; i++) {
+		var $input = $('input[type!=hidden][name="' + names[i] + '"]');
+		if ($input.length) {
+			$input.parent().toggleClass('elgg-state-disabled');
+		}
+	}
 };
 
 elgg.register_hook_handler('init', 'system', elgg.admin.init, 1000);
