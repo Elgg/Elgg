@@ -16,13 +16,16 @@ foreach (array('wwwroot', 'path', 'dataroot') as $field) {
 	$form_body .= "</div>";
 }
 
+$is_simple_cache_on = (bool)elgg_get_config('simplecache_enabled');
 $form_body .= '<fieldset class="elgg-fieldset">';
 $form_body .= '<legend>' . elgg_echo('admin:legend:caching') . '</legend>';
 $form_body .= "<div>" . elgg_echo('installation:simplecache:description') . "<br />";
 $form_body .= elgg_view("input/checkbox", array(
 	'label' => elgg_echo('installation:simplecache:label'),
 	'name' => 'simplecache_enabled',
-	'checked' => (bool)elgg_get_config('simplecache_enabled'),
+	'checked' => $is_simple_cache_on,
+	'class' => 'elgg-toggle-input',
+	'data-toggle-input' => json_encode(array('simplecache_minify_js', 'simplecache_minify_css')),
 )) . "</div>";
 
 $form_body .= "<div>" . elgg_echo('installation:minify:description') . "<br />";
@@ -30,11 +33,13 @@ $form_body .= elgg_view("input/checkbox", array(
 	'label' => elgg_echo('installation:minify_js:label'),
 	'name' => 'simplecache_minify_js',
 	'checked' => (bool)elgg_get_config('simplecache_minify_js'),
+	'disabled' => !$is_simple_cache_on,
 )) . '<br />';
 $form_body .= elgg_view("input/checkbox", array(
 	'label' => elgg_echo('installation:minify_css:label'),
 	'name' => 'simplecache_minify_css',
 	'checked' => (bool)elgg_get_config('simplecache_minify_css'),
+	'disabled' => !$is_simple_cache_on,
 )) . "</div>";
 
 $form_body .= "<div>" . elgg_echo('installation:systemcache:description') . "<br />";
