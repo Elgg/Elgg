@@ -26,6 +26,9 @@ label {
 	color: #333;
 	font-size: 110%;
 }
+label.elgg-state-disabled {
+	opacity: 0.6;
+}
 input, textarea {
 	border: 1px solid #DCDCDC;
 	color: #666;
