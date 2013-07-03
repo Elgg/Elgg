@@ -476,7 +476,6 @@ return array(
 	'admin:settings:advanced' => 'Advanced Settings',
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
 	'admin:site:opt:linktext' => "Configure site...",
-	'admin:site:access:warning' => "Changing the access setting only affects the permissions on content created in the future.",
 
 	'admin:dashboard' => 'Dashboard',
 	'admin:widget:online_users' => 'Online users',
@@ -1002,37 +1001,44 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:dataroot:warning' => "You must create this directory manually. It should be in a different directory to your Elgg installation.",
 	'installation:sitepermissions' => "The default access permissions:",
 	'installation:language' => "The default language for your site:",
-	'installation:debug' => "Debug mode provides extra information which can be used to diagnose faults. However, it can slow your system down so should only be used if you are having problems:",
-	'installation:debug:none' => 'Turn off debug mode (recommended)',
-	'installation:debug:error' => 'Display only critical errors',
-	'installation:debug:warning' => 'Display errors and warnings',
+	'installation:debug' => "Control the amount of information written to the server's log.",
+	'installation:debug:label' => "Log level:",
+	'installation:debug:none' => 'Turn off logging (recommended)',
+	'installation:debug:error' => 'Log only critical errors',
+	'installation:debug:warning' => 'Log errors and warnings',
 	'installation:debug:notice' => 'Log all errors, warnings and notices',
 	'installation:debug:info' => 'Log everything',
 
 	// Walled Garden support
-	'installation:registration:description' => 'User registration is enabled by default. Turn this off if you do not want new users to be able to register on their own.',
+	'installation:registration:description' => 'User registration is enabled by default. Turn this off if you do not want people to register on their own.',
 	'installation:registration:label' => 'Allow new users to register',
-	'installation:walled_garden:description' => 'Enable the site to run as a private network. This will not allow non logged-in users to view any site pages other than those specifically marked as public.',
+	'installation:walled_garden:description' => 'Enable this to prevent non-members from viewing the site except for web pages marked as public (such as login and registration).',
 	'installation:walled_garden:label' => 'Restrict pages to logged-in users',
 
-	'installation:httpslogin' => "Enable this to have user logins performed over HTTPS. You will need to have https enabled on your server for this to work.",
+	'installation:httpslogin' => "Enable this to have user logins performed over HTTPS. This requires an HTTPS enabled web server!",
 	'installation:httpslogin:label' => "Enable HTTPS logins",
 	'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
 
-	'installation:allow_user_default_access:description' => "If checked, individual users will be allowed to set their own default access level that can over-ride the system default access level.",
+	'admin:site:access:warning' => "This is the privacy setting suggested to users when they create new content. Changing it does not change access to content.",
+	'installation:allow_user_default_access:description' => "Enable this to allow users to set their own suggested privacy setting that overrides the system suggestion.",
 	'installation:allow_user_default_access:label' => "Allow user default access",
 
-	'installation:simplecache:description' => "The simple cache increases performance by caching static content including some CSS and JavaScript files. Normally you will want this on.",
+	'installation:simplecache:description' => "The simple cache increases performance by caching static content including some CSS and JavaScript files.",
 	'installation:simplecache:label' => "Use simple cache (recommended)",
 
-	'installation:minify:description' => "The simple cache can also improve front-end performance by compressing JavaScript and/or CSS content. Normally you will want these on.",
+	'installation:minify:description' => "The simple cache can also improve performance by compressing JavaScript and CSS files. (Requires that simple cache is enabled.)",
 	'installation:minify_js:label' => "Compress JavaScript (recommended)",
 	'installation:minify_css:label' => "Compress CSS (recommended)",
 
-	'installation:systemcache:description' => "The system cache decreases the loading time of the Elgg engine by caching data to files.",
+	'installation:systemcache:description' => "The system cache decreases the loading time of Elgg by caching data to files.",
 	'installation:systemcache:label' => "Use system cache (recommended)",
+
+	'admin:legend:caching' => 'Caching',
+	'admin:legend:content_access' => 'Content Access',
+	'admin:legend:site_access' => 'Site Access',
+	'admin:legend:debug' => 'Debugging and Logging',
 
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
