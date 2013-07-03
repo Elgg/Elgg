@@ -16,8 +16,6 @@ elgg.ui.init = function () {
 
 	$('[rel=popup]').live('click', elgg.ui.popupOpen);
 
-	$('.elgg-toggle-input').live('click', elgg.ui.toggleInput);
-
 	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
 
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
@@ -142,43 +140,6 @@ elgg.ui.popupClose = function(event) {
 		});
 
 		$('body').die('click', elgg.ui.popClose);
-	}
-};
-
-/**
- * Toggles the disable attribute of one or more input attributes based on a checkbox
- *
- * This supports sections of a form that are dependent on some setting.
- *
- * Use class=".elgg-toggle-input" on the toggler element
- * Set the data attribute data-toggle-input on the toggler as a JSON encoded
- * array of input names.
- *
- * @param {Object} event
- * @return void
- */
-elgg.ui.toggleInput = function(event) {
-	var disabled = !this.checked;
-	var names = $(this).data('toggleInput');
-	if ($.isArray(names)) {
-		for (var i = 0; i < names.length; i++) {
-			var $input = $('input[type!=hidden][name="' + names[i] + '"]');
-			if ($input.length) {
-				$input.attr('disabled', disabled);
-
-				// find label for this input
-				var $label = $('label[for="' + names[i] + '"]');
-				if ($label.length == 0) {
-					if ($input.parent().prop('tagName') === 'LABEL') {
-						$label = $input.parent();
-					}
-				}
-
-				if ($label.length) {
-					$label.toggleClass('elgg-state-disabled');
-				}
-			}
-		}
 	}
 };
 
