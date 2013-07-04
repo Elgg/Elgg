@@ -63,7 +63,7 @@ class ElggMetadata extends ElggExtender {
 	 * @return bool Depending on permissions
 	 */
 	public function canEdit($user_guid = 0) {
-		if ($entity = get_entity($this->get('entity_guid'))) {
+		if ($entity = get_entity($this->entity_guid)) {
 			return $entity->canEditMetadata($this, $user_guid);
 		}
 		return false;
