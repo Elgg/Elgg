@@ -2,7 +2,7 @@
 /**
  * Test elgg_get_entities_from_private_settings()
  */
-class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreEntityGetterBaseTest {
+class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBaseTest {
 
 	public function testElggApiGettersEntitiesFromPrivateSettings() {
 

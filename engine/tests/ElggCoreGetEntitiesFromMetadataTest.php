@@ -2,7 +2,7 @@
 /**
  * Test elgg_get_entities_from_metadata()
  */
-class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreEntityGetterBaseTest {
+class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 	//names
 	function testElggApiGettersEntityMetadataNameValidSingle() {

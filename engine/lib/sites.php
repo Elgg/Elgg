@@ -82,7 +82,7 @@ function get_site_by_url($url) {
  */
 function _elgg_sites_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/ElggCoreSiteTest.php";
+	$value[] = "{$CONFIG->path}engine/tests/ElggSiteTest.php";
 	return $value;
 }
 

@@ -3,7 +3,7 @@
  * Test elgg_get_entities_from_relationship() and
  * elgg_get_entities_from_relationship_count()
  */
-class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreEntityGetterBaseTest {
+class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTest {
 
 	// Make sure metadata doesn't affect getting entities by relationship.  See #2274
 	public function testElggApiGettersEntityRelationshipWithMetadata() {

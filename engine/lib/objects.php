@@ -35,7 +35,7 @@ function get_object_entity_as_row($guid) {
  */
 function _elgg_objects_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/ElggCoreObjectTest.php";
+	$value[] = "{$CONFIG->path}engine/tests/ElggObjectTest.php";
 	return $value;
 }
 

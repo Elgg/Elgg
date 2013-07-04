@@ -3,10 +3,10 @@
  * test ElggEntity
  *
  */
-class ElggCoreEntityTest extends ElggCoreUnitTest {
+class ElggEntityTest extends ElggCoreUnitTest {
 
 	/**
-	 * @var ElggEntityTest
+	 * @var ElggEntity
 	 */
 	protected $entity;
 
