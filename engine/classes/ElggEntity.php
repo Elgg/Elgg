@@ -346,6 +346,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @param string $name The name of the attribute or metadata.
 	 *
 	 * @return void
+	 * @todo some attributes should be set to null or other default values
 	 */
 	public function __unset($name) {
 		if (array_key_exists($name, $this->attributes)) {
@@ -1531,7 +1532,7 @@ abstract class ElggEntity extends ElggData implements
 		global $CONFIG;
 
 		// Using attribute array directly; get function does something special!
-		$type = sanitize_string($this->attributes['type']);
+		$type = $this->getDatabase()->sanitizeString($this->attributes['type']);
 		if ($type == "") {
 			throw new InvalidParameterException("Entity type must be set.");
 		}
