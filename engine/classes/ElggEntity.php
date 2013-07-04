@@ -597,7 +597,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 * @see ElggEntity::addRelationship()
 	 * @see ElggEntity::removeRelationship()
-	 * @deprecated 1.8 Use ->deleteRelationship()
+	 * @deprecated 1.8 Use ElggEntity::deleteRelationships()
 	 */
 	public function clearRelationships() {
 		elgg_deprecated_notice('ElggEntity->clearRelationships() is deprecated by ->deleteRelationships()', 1.8);
@@ -614,7 +614,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return bool
 	 * @see ElggEntity::removeRelationship()
-	 * @see ElggEntity::clearRelationships()
+	 * @see ElggEntity::deleteRelationships()
 	 */
 	public function addRelationship($guid, $relationship) {
 		return add_entity_relationship($this->getGUID(), $relationship, $guid);
@@ -628,7 +628,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @return bool
 	 * @see ElggEntity::addRelationship()
-	 * @see ElggEntity::clearRelationships()
+	 * @see ElggEntity::deleteRelationships()
 	 */
 	public function removeRelationship($guid, $relationship) {
 		return remove_entity_relationship($this->getGUID(), $relationship, $guid);
