@@ -15,7 +15,7 @@ require_once("$vendor_path/unit_tester.php");
 require_once("$vendor_path/mock_objects.php");
 require_once("$vendor_path/reporter.php");
 require_once("$test_path/ElggCoreUnitTest.php");
-require_once("$test_path/ElggCoreEntityGetterBaseTest.php");
+require_once("$test_path/ElggCoreGetEntitiesBaseTest.php");
 
 // don't expect admin session for CLI
 if (!TextReporter::inCli()) {

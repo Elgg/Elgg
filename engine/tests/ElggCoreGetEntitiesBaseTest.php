@@ -3,7 +3,7 @@
 /**
  * Setup entities for getter tests
  */
-abstract class ElggCoreEntityGetterBaseTest extends ElggCoreUnitTest {
+abstract class ElggCoreGetEntitiesBaseTest extends ElggCoreUnitTest {
 
 	/** @var array */
 	protected $entities;

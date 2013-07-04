@@ -176,7 +176,7 @@ abstract class ElggEntity extends ElggData implements
 
 			// move the metadata over
 			foreach ($metadata_names as $name) {
-				$this->set($name, $orig_entity->$name);
+				$this->__set($name, $orig_entity->$name);
 			}
 		}
 	}
@@ -346,6 +346,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @param string $name The name of the attribute or metadata.
 	 *
 	 * @return void
+	 * @todo some attributes should be set to null or other default values
 	 */
 	public function __unset($name) {
 		if (array_key_exists($name, $this->attributes)) {
@@ -1226,7 +1227,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @return bool
 	 */
 	public function setContainerGUID($container_guid) {
-		return $this->set('container_guid', (int)$container_guid);
+		return $this->container_guid = (int)$container_guid;
 	}
 
 	/**
@@ -1531,7 +1532,7 @@ abstract class ElggEntity extends ElggData implements
 		global $CONFIG;
 
 		// Using attribute array directly; get function does something special!
-		$type = sanitize_string($this->attributes['type']);
+		$type = $this->getDatabase()->sanitizeString($this->attributes['type']);
 		if ($type == "") {
 			throw new InvalidParameterException("Entity type must be set.");
 		}
@@ -1631,11 +1632,11 @@ abstract class ElggEntity extends ElggData implements
 	protected function update() {
 		global $CONFIG;
 
-		$guid = (int)$this->get('guid');
-		$owner_guid = (int)$this->get('owner_guid');
-		$access_id = (int)$this->get('access_id');
-		$container_guid = (int)$this->get('container_guid');
-		$time_created = (int)$this->get('time_created');
+		$guid = (int)$this->guid;
+		$owner_guid = (int)$this->owner_guid;
+		$access_id = (int)$this->access_id;
+		$container_guid = (int)$this->container_guid;
+		$time_created = (int)$this->time_created;
 		$time = time();
 
 		if ($access_id == ACCESS_DEFAULT) {

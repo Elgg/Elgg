@@ -3,7 +3,7 @@
 /**
  * Test elgg_get_entities()
  */
-class ElggCoreGetEntitiesTest extends ElggCoreEntityGetterBaseTest {
+class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 	/***********************************
 	 * TYPE TESTS
