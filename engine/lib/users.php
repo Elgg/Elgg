@@ -1150,7 +1150,7 @@ function users_init() {
  */
 function users_test($hook, $type, $value, $params) {
 	global $CONFIG;
-	$value[] = "{$CONFIG->path}engine/tests/ElggCoreUserTest.php";
+	$value[] = "{$CONFIG->path}engine/tests/ElggUserTest.php";
 	return $value;
 }
 

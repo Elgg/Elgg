@@ -1993,6 +1993,7 @@ function _elgg_api_test($hook, $type, $value, $params) {
 	$value[] = $CONFIG->path . 'engine/tests/ElggTravisInstallTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreHelpersTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreRegressionBugsTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggBatchTest.php';
 	return $value;
 }
 

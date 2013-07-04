@@ -160,7 +160,7 @@ function _elgg_groups_container_override($hook, $type, $result, $params) {
  */
 function _elgg_groups_test($hook, $type, $value) {
 	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGroupTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggGroupTest.php';
 	return $value;
 }
 
