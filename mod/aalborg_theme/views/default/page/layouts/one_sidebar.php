@@ -28,8 +28,11 @@ $nav = elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
 			echo $nav;
 			
 			if (isset($vars['title'])) {
+				echo '<div class="elgg-head clearfix">';
 				echo elgg_view_title($vars['title']);
+				echo '</div>';
 			}
+			
 			// @todo deprecated so remove in Elgg 2.0
 			if (isset($vars['area1'])) {
 				echo $vars['area1'];
