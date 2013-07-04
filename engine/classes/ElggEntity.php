@@ -1042,35 +1042,45 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Can a user edit metadata on this entity?
 	 *
+	 * If no specific metadata is passed, it returns whether the user can
+	 * edit any metadata on the entity.
+	 *
 	 * @tip Can be overridden by by registering for the permissions_check:metadata
 	 * plugin hook.
 	 *
-	 * @param ElggMetadata $metadata  The piece of metadata to specifically check
+	 * @param ElggMetadata $metadata  The piece of metadata to specifically check or null for any metadata
 	 * @param int          $user_guid The user GUID, optionally (default: logged in user)
 	 *
-	 * @return bool Whether the user is allowed to edit metadata on this entity.
+	 * @return bool
 	 */
 	public function canEditMetadata($metadata = null, $user_guid = 0) {
 		if (!$this->guid) {
+			// @todo cannot edit metadata on unsaved entity?
 			return false;
 		}
-		
+
+		if ($user_guid) {
+			$user = get_user($user_guid);
+			if (!$user) {
+				return false;
+			}
+		} else {
+			$user = elgg_get_logged_in_user_entity();
+			$user_guid = $user->guid;
+		}
+
 		$return = null;
 
-		if ($metadata && ($metadata->owner_guid == 0)) {
+		// if metadata is not owned or owned by the user, then can edit
+		if ($metadata && ($metadata->owner_guid == 0 || $metadata->owner_guid == $user_guid)) {
 			$return = true;
 		}
-		
+
 		if (is_null($return)) {
 			$return = $this->canEdit($user_guid);
 		}
 
-		if ($user_guid) {
-			$user = get_entity($user_guid);
-		} else {
-			$user = elgg_get_logged_in_user_entity();
-		}
-
+		// metadata and user may be null
 		$params = array('entity' => $this, 'user' => $user, 'metadata' => $metadata);
 		return elgg_trigger_plugin_hook('permissions_check:metadata', $this->type, $params, $return);
 	}
