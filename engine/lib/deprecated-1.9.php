@@ -672,7 +672,7 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 
 	// If the user can edit the entity this is attached to, great! They can edit.
 	$entity = $extender->getEntity();
-	if ($entity->canEdit($user->getGUID())) {
+	if ($entity->canEdit($user_guid)) {
 		return true;
 	}
 
