@@ -11,6 +11,54 @@
  */
 
 /**
+ * Set if Elgg's access system should be ignored.
+ *
+ * The access system will not return entities in any getter functions if the 
+ * user doesn't have access. This removes this restriction.
+ * 
+ * When the access system is being ignored, all checks for create, retrieve,
+ * update, and delete should pass. This affects all the canEdit() and related
+ * methods.
+ *
+ * @tip Use this to access entities in automated scripts
+ * when no user is logged in.
+ *
+ * @warning This will not show disabled entities.
+ * Use {@link access_show_hidden_entities()} to access disabled entities.
+ * 
+ * @internal The access override is checked in elgg_override_permissions(). It is
+ * registered for the 'permissions_check' hooks to override the access system for
+ * the canEdit() and canWriteToContainer() methods.
+ * 
+ * @internal This clears the access cache.
+ *
+ * @internal For performance reasons this is done at the database access clause level.
+ *
+ * @param bool $ignore If true, disables all access checks.
+ *
+ * @return bool Previous ignore_access setting.
+ * @since 1.7.0
+ * @see elgg_get_ignore_access()
+ */
+function elgg_set_ignore_access($ignore = true) {
+	$cache = _elgg_get_access_cache();
+	$cache->clear();
+	$elgg_access = elgg_get_access_object();
+	return $elgg_access->setIgnoreAccess($ignore);
+}
+
+/**
+ * Get current ignore access setting.
+ *
+ * @return bool
+ * @since 1.7.0
+ * @see elgg_set_ignore_access()
+ */
+function elgg_get_ignore_access() {
+	return elgg_get_access_object()->getIgnoreAccess();
+}
+
+/**
  * Return an ElggCache static variable cache for the access caches
  *
  * @staticvar ElggStaticVariableCache $access_cache
@@ -898,46 +946,6 @@ function get_readable_access_level($entity_access_id) {
 }
 
 /**
- * Set if entity access system should be ignored.
- *
- * The access system will not return entities in any getter
- * functions if the user doesn't have access.
- *
- * @internal For performance reasons this is done at the database access clause level.
- *
- * @tip Use this to access entities in automated scripts
- * when no user is logged in.
- *
- * @note This clears the access cache.
- *
- * @warning This will not show disabled entities.
- * Use {@link access_show_hidden_entities()} to access disabled entities.
- *
- * @param bool $ignore If true, disables all access checks.
- *
- * @return bool Previous ignore_access setting.
- * @since 1.7.0
- * @see elgg_get_ignore_access()
- */
-function elgg_set_ignore_access($ignore = true) {
-	$cache = _elgg_get_access_cache();
-	$cache->clear();
-	$elgg_access = elgg_get_access_object();
-	return $elgg_access->setIgnoreAccess($ignore);
-}
-
-/**
- * Get current ignore access setting.
- *
- * @return bool
- * @since 1.7.0
- * @see elgg_set_ignore_access()
- */
-function elgg_get_ignore_access() {
-	return elgg_get_access_object()->getIgnoreAccess();
-}
-
-/**
  * Decides if the access system should be ignored for a user.
  *
  * Returns true (meaning ignore access) if either of these 2 conditions are true:
@@ -950,6 +958,7 @@ function elgg_get_ignore_access() {
  *
  * @return bool
  * @since 1.7.0
+ * @todo should this be a private function?
  */
 function elgg_check_access_overrides($user_guid = 0) {
 	if (!$user_guid || $user_guid <= 0) {

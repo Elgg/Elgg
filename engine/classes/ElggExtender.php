@@ -177,6 +177,7 @@ abstract class ElggExtender extends ElggData {
 	 *                      (defaults to currently logged in user)
 	 *
 	 * @return bool
+	 * @see elgg_set_ignore_access()
 	 */
 	abstract public function canEdit($user_guid = 0);
 

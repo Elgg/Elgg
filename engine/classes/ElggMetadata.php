@@ -61,6 +61,7 @@ class ElggMetadata extends ElggExtender {
 	 * @param int $user_guid The GUID of the user (defaults to currently logged in user)
 	 *
 	 * @return bool
+	 * @see elgg_set_ignore_access()
 	 */
 	public function canEdit($user_guid = 0) {
 		if ($entity = get_entity($this->entity_guid)) {

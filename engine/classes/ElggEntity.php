@@ -1006,6 +1006,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @param int $user_guid The user GUID, optionally (default: logged in user)
 	 *
 	 * @return bool Whether this entity is editable by the given user.
+	 * @see elgg_set_ignore_access()
 	 */
 	public function canEdit($user_guid = 0) {
 		$user_guid = (int)$user_guid;
@@ -1053,6 +1054,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @param int          $user_guid The user GUID, optionally (default: logged in user)
 	 *
 	 * @return bool
+	 * @see elgg_set_ignore_access()
 	 */
 	public function canEditMetadata($metadata = null, $user_guid = 0) {
 		if (!$this->guid) {
@@ -1094,6 +1096,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @param string $subtype   The subtype of the entity we're looking to write
 	 *
 	 * @return bool
+	 * @see elgg_set_ignore_access()
 	 */
 	public function canWriteToContainer($user_guid = 0, $type = 'all', $subtype = 'all') {
 		return can_write_to_container($user_guid, $this->guid, $type, $subtype);
