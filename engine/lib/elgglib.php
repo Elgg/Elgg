@@ -65,12 +65,15 @@ function elgg_load_library($name) {
  * Forward to $location.
  *
  * Sends a 'Location: $location' header and exists.  If headers have
- * already been sent, returns false.
+ * already been sent, throws an exception.
  *
- * @param string $location URL to forward to browser to. Can be path relative to the network's URL.
- * @param string $reason   Short explanation for why we're forwarding
+ * @param string $location URL to forward to browser to. This can be a path
+ *                         relative to the network's URL.
+ * @param string $reason   Short explanation for why we're forwarding. Set to
+ *                         '404' to forward to error page. Default message is
+ *                         'system'.
  *
- * @return false False if headers have been sent. Terminates execution if forwarding.
+ * @return void
  * @throws SecurityException
  */
 function forward($location = "", $reason = 'system') {
