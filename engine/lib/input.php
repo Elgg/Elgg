@@ -97,35 +97,18 @@ function filter_tags($var) {
 
 /**
  * Returns the current page's complete URL.
- *
- * The current URL is assembled using the network's wwwroot and the request URI
- * in $_SERVER as populated by the web server.  This function will include
- * any schemes, usernames and passwords, and ports.
+ * 
+ * It uses the configured site URL for the hostname rather than depending on
+ * what the server uses to populate $_SERVER.
  *
  * @return string The current page URL.
  */
 function current_page_url() {
 	$url = parse_url(elgg_get_site_url());
 
-	$page = $url['scheme'] . "://";
+	$page = $url['scheme'] . "://" . $url['host'];
 
-	// @todo this makes no sense. The site url is not going to be configured
-	// with a hard coded http auth user and password
-	// user/pass
-	if ((isset($url['user'])) && ($url['user'])) {
-		$page .= $url['user'];
-	}
-	if ((isset($url['pass'])) && ($url['pass'])) {
-		$page .= ":" . $url['pass'];
-	}
-	if ((isset($url['user']) && $url['user']) ||
-		(isset($url['pass']) && $url['pass'])) {
-		$page .= "@";
-	}
-
-	$page .= $url['host'];
-
-	if ((isset($url['port'])) && ($url['port'])) {
+	if (isset($url['port']) && $url['port']) {
 		$page .= ":" . $url['port'];
 	}
 
@@ -134,25 +117,6 @@ function current_page_url() {
 	$page .= _elgg_services()->request->getRequestUri();
 
 	return $page;
-}
-
-/**
- * Return the full URL of the current page.
- *
- * @return string The URL
- * @todo Combine / replace with current_page_url(). full_url() is based on the
- * request only while current_page_url() uses the configured site url.
- */
-function full_url() {
-	$request = _elgg_services()->request;
-	$url = $request->getSchemeAndHttpHost();
-
-	// This is here to prevent XSS in poorly written browsers used by 80% of the population.
-	// svn commit [5813]: https://github.com/Elgg/Elgg/commit/0c947e80f512cb0a482b1864fd0a6965c8a0cd4a
-	// @todo encoding like this should occur when inserting into web page, not here
-	$quotes = array('\'', '"');
-	$encoded = array('%27', '%22');
-	return $url . str_replace($quotes, $encoded, $request->getRequestUri());
 }
 
 /**

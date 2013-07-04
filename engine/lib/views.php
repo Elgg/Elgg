@@ -1339,7 +1339,7 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 function elgg_views_add_rss_link() {
 	global $autofeed;
 	if (isset($autofeed) && $autofeed == true) {
-		$url = full_url();
+		$url = current_page_url();
 		if (substr_count($url, '?')) {
 			$url .= "&view=rss";
 		} else {

@@ -165,7 +165,7 @@ class ElggMenuBuilder {
 		// scan looking for a selected item
 		foreach ($this->menu as $menu_item) {
 			if ($menu_item->getHref()) {
-				if (elgg_http_url_is_identical(full_url(), $menu_item->getHref())) {
+				if (elgg_http_url_is_identical(current_page_url(), $menu_item->getHref())) {
 					$menu_item->setSelected(true);
 					return $menu_item;
 				}
