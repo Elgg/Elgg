@@ -1375,6 +1375,182 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 }
 
 /**
+ * Gets entities based upon attributes in secondary tables.
+ * Also accepts all options available to elgg_get_entities(),
+ * elgg_get_entities_from_metadata(), and elgg_get_entities_from_relationship().
+ *
+ * @warning requires that the entity type be specified and there can only be one
+ * type.
+ *
+ * @see elgg_get_entities
+ * @see elgg_get_entities_from_metadata
+ * @see elgg_get_entities_from_relationship
+ *
+ * @param array $options Array in format:
+ *
+ * 	attribute_name_value_pairs => ARR (
+ *                                   'name' => 'name',
+ *                                   'value' => 'value',
+ *                                   'operand' => '=', (optional)
+ *                                   'case_sensitive' => false (optional)
+ *                                  )
+ * 	                             If multiple values are sent via
+ *                               an array ('value' => array('value1', 'value2')
+ *                               the pair's operand will be forced to "IN".
+ *
+ * 	attribute_name_value_pairs_operator => null|STR The operator to use for combining
+ *                                        (name = value) OPERATOR (name = value); default is AND
+ *
+ * @return ElggEntity[]|mixed If count, int. If not count, array. false on errors.
+ * @since 1.9.0
+ * @throws InvalidArgumentException
+ * @todo Does not support ordering by attributes or using an attribute pair shortcut like this ('title' => 'foo')
+ */
+function elgg_get_entities_from_attributes(array $options = array()) {
+	$defaults = array(
+		'attribute_name_value_pairs' => ELGG_ENTITIES_ANY_VALUE,
+		'attribute_name_value_pairs_operator' => 'AND',
+	);
+
+	$options = array_merge($defaults, $options);
+
+	$singulars = array('type', 'attribute_name_value_pair');
+	$options = _elgg_normalize_plural_options_array($options, $singulars);
+
+	$clauses = _elgg_get_entity_attribute_where_sql($options);
+
+	if ($clauses) {
+		// merge wheres to pass to elgg_get_entities()
+		if (isset($options['wheres']) && !is_array($options['wheres'])) {
+			$options['wheres'] = array($options['wheres']);
+		} elseif (!isset($options['wheres'])) {
+			$options['wheres'] = array();
+		}
+
+		$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
+
+		// merge joins to pass to elgg_get_entities()
+		if (isset($options['joins']) && !is_array($options['joins'])) {
+			$options['joins'] = array($options['joins']);
+		} elseif (!isset($options['joins'])) {
+			$options['joins'] = array();
+		}
+
+		$options['joins'] = array_merge($options['joins'], $clauses['joins']);
+	}
+
+	return elgg_get_entities_from_relationship($options);
+}
+
+/**
+ * Get the join and where clauses for working with entity attributes
+ *
+ * @return false|array False on fail, array('joins', 'wheres')
+ * @since 1.9.0
+ * @access private
+ * @throws InvalidArgumentException
+ */
+function _elgg_get_entity_attribute_where_sql(array $options = array()) {
+
+	if (!isset($options['types'])) {
+		throw new InvalidArgumentException("The entity type must be defined for elgg_get_entities_from_attributes()");
+	}
+
+	if (is_array($options['types']) && count($options['types']) !== 1) {
+		throw new InvalidArgumentException("Only one type can be passed to elgg_get_entities_from_attributes()");
+	}
+
+	// type can be passed as string or array
+	$type = $options['types'];
+	if (is_array($type)) {
+		$type = $type[0];
+	}
+
+	// @todo the types should be defined somewhere (as constant on ElggEntity?)
+	if (!in_array($type, array('group', 'object', 'site', 'user'))) {
+		throw new InvalidArgumentException("Invalid type '$type' passed to elgg_get_entities_from_attributes()");
+	}
+
+	global $CONFIG;
+	$type_table = "{$CONFIG->dbprefix}{$type}s_entity";
+
+	$return = array(
+		'joins' => array(),
+		'wheres' => array(),
+	);
+
+	// short circuit if nothing requested
+	if ($options['attribute_name_value_pairs'] == ELGG_ENTITIES_ANY_VALUE) {
+		return $return;
+	}
+
+	if (!is_array($options['attribute_name_value_pairs'])) {
+		throw new InvalidArgumentException("attribute_name_value_pairs must be an array for elgg_get_entities_from_attributes()");
+	}
+
+	$wheres = array();
+
+	// check if this is an array of pairs or just a single pair.
+	$pairs = $options['attribute_name_value_pairs'];
+	if (isset($pairs['name']) || isset($pairs['value'])) {
+		$pairs = array($pairs);
+	}
+
+	$pair_wheres = array();
+	foreach ($pairs as $index => $pair) {
+		// must have at least a name and value
+		if (!isset($pair['name']) || !isset($pair['value'])) {
+			continue;
+		}
+
+		if (isset($pair['operand'])) {
+			$operand = sanitize_string($pair['operand']);
+		} else {
+			$operand = '=';
+		}
+
+		if (is_numeric($pair['value'])) {
+			$value = sanitize_string($pair['value']);
+		} else if (is_array($pair['value'])) {
+			$values_array = array();
+			foreach ($pair['value'] as $pair_value) {
+				if (is_numeric($pair_value)) {
+					$values_array[] = sanitize_string($pair_value);
+				} else {
+					$values_array[] = "'" . sanitize_string($pair_value) . "'";
+				}
+			}
+
+			$operand = 'IN';
+			if ($values_array) {
+				$value = '(' . implode(', ', $values_array) . ')';
+			}
+
+		} else {
+			$value = "'" . sanitize_string($pair['value']) . "'";
+		}
+
+		$name = sanitize_string($pair['name']);
+
+		// case sensitivity can be specified per pair
+		$pair_binary = '';
+		if (isset($pair['case_sensitive'])) {
+			$pair_binary = ($pair['case_sensitive']) ? 'BINARY ' : '';
+		}
+
+		$pair_wheres[] = "({$pair_binary}type_table.$name $operand $value)";
+	}
+
+	if ($where = implode(" {$options['attribute_name_value_pairs_operator']} ", $pair_wheres)) {
+		$return['wheres'][] = "($where)";
+
+		$return['joins'][] = "JOIN $type_table type_table ON e.guid = type_table.guid";
+	}
+
+	return $return;
+}
+
+/**
  * Returns a list of months in which entities were updated or created.
  *
  * @tip Use this to generate a list of archives by month for when entities were added or updated.
@@ -1795,6 +1971,7 @@ function _elgg_entities_test($hook, $type, $value) {
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromMetadataTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
 	return $value;
 }
 
