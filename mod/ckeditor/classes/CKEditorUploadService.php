@@ -17,6 +17,9 @@ class CKEditorUploadService {
 	protected $dirLocator;
 	protected $guid;
 
+	protected $bytesPerPixel = 4;
+	protected $fudgeFactor = 1.4;
+
 	const ASSET_DIR = 'assets/images';
 
 	/**
@@ -130,8 +133,7 @@ class CKEditorUploadService {
 		$memAvail = rtrim($memAvail, 'M');
 		$memAvail = $memAvail * 1024 * 1024;
 		$memUsed = memory_get_usage();
-		$memRequired = ceil(5.35 * $numPixels); // estimate based on experimentation
-		$memRequired += 2097152; // 2 MB buffer
+		$memRequired = ceil($this->fudgeFactor * $this->bytesPerPixel * $numPixels);
 		if (($memRequired + $memUsed) > $memAvail) {
 			$this->setErrorMessage(elgg_echo('ckeditor:failure:too_big'));
 			return false;
