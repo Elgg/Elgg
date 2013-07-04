@@ -119,14 +119,6 @@ class ElggAnnotation extends ElggExtender {
 	 * @return bool
 	 */
 	public function canEdit($user_guid = 0) {
-		// @todo Since Elgg 1.0, Elgg has returned false from canEdit()
-		// if no user was logged in. This breaks the access override. This is a
-		// temporary work around. This function needs to be rewritten in Elgg 1.9
-		if (!elgg_check_access_overrides($user_guid)) {
-			if (!elgg_is_logged_in()) {
-				return false;
-			}
-		}
 
 		if ($user_guid) {
 			$user = get_user($user_guid);
