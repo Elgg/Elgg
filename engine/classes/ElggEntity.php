@@ -801,7 +801,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @param int    $owner_id  GUID of the annotation owner
 	 * @param string $vartype   The type of annotation value
 	 *
-	 * @return bool
+	 * @return bool|int Returns int if an annotation is saved
 	 */
 	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_id = 0, $vartype = "") {
 		if ((int) $this->guid > 0) {
