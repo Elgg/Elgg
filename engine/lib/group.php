@@ -126,6 +126,29 @@ function remove_group_tool_option($name) {
 }
 
 /**
+ * Allow group members to write to the group container
+ *
+ * @param string $hook   Hook name
+ * @param string $type   Hook type
+ * @param bool   $result The value of the hook
+ * @param array  $params Parameters related to the hook
+ * @return bool
+ * @access private
+ */
+function _elgg_groups_container_override($hook, $type, $result, $params) {
+	$container = $params['container'];
+	$user = $params['user'];
+	if (elgg_instanceof($container, 'group') && $user) {
+		/* @var ElggGroup $container */
+		if ($container->isMember($user)) {
+			return true;
+		}
+	}
+
+	return $result;
+}
+
+/**
  * Runs unit tests for the group entities.
  *
  * @param string $hook  Hook name
@@ -141,4 +164,13 @@ function _elgg_groups_test($hook, $type, $value) {
 	return $value;
 }
 
-elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_groups_test');
+/**
+ * init the groups library
+ * @access private
+ */
+function _elgg_groups_init() {
+	elgg_register_plugin_hook_handler('container_permissions_check', 'all', '_elgg_groups_container_override');
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_groups_test');
+}
+
+elgg_register_event_handler('init', 'system', '_elgg_groups_init');
