@@ -694,7 +694,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  * Register a callback as a plugin hook handler.
  *
  * Plugin hooks allow developers to losely couple plugins and features by
- * repsonding to and emitting {@link elgg_trigger_plugin_hook()} customizable hooks.
+ * responding to and emitting {@link elgg_trigger_plugin_hook()} customizable hooks.
  * Handler callbacks can respond to the hook, change the details of the hook, or
  * ignore it.
  *
