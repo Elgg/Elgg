@@ -625,6 +625,63 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
 }
 
 /**
+ * Determines whether or not the specified user can edit the specified piece of extender
+ *
+ * @param int    $extender_id The ID of the piece of extender
+ * @param string $type        'metadata' or 'annotation'
+ * @param int    $user_guid   The GUID of the user
+ *
+ * @return bool
+ * @deprecated Use the appropriate canEdit() method on metadata or annotations
+ */
+function can_edit_extender($extender_id, $type, $user_guid = 0) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggExtender::canEdit()', 1.9);
+
+	// Since Elgg 1.0, Elgg has returned false from can_edit_extender()
+	// if no user was logged in. This breaks the access override so we add this
+	// special check here.
+	if (!elgg_check_access_overrides($user_guid)) {
+		if (!elgg_is_logged_in()) {
+			return false;
+		}
+	}
+
+	$user_guid = (int)$user_guid;
+	$user = get_user($user_guid);
+	if (!$user) {
+		$user = elgg_get_logged_in_user_entity();
+		$user_guid = elgg_get_logged_in_user_guid();
+	}
+
+	$functionname = "elgg_get_{$type}_from_id";
+	if (is_callable($functionname)) {
+		$extender = call_user_func($functionname, $extender_id);
+	} else {
+		return false;
+	}
+
+	if (!($extender instanceof ElggExtender)) {
+		return false;
+	}
+	/* @var ElggExtender $extender */
+
+	// If the owner is the specified user, great! They can edit.
+	if ($extender->getOwnerGUID() == $user_guid) {
+		return true;
+	}
+
+	// If the user can edit the entity this is attached to, great! They can edit.
+	$entity = $extender->getEntity();
+	if ($entity->canEdit($user_guid)) {
+		return true;
+	}
+
+	// Trigger plugin hook - note that $user may be null
+	$params = array('entity' => $entity, 'user' => $user);
+	return elgg_trigger_plugin_hook('permissions_check', $type, $params, false);
+}
+
+/**
  * The algorithm working out the size of font based on the number of tags.
  * This is quick and dirty.
  *

@@ -111,6 +111,44 @@ class ElggAnnotation extends ElggExtender {
 		return _elgg_set_metastring_based_object_enabled_by_id($this->id, 'yes', 'annotations');
 	}
 
+	/**
+	 * Determines whether or not the user can edit this annotation
+	 *
+	 * @param int $user_guid The GUID of the user (defaults to currently logged in user)
+	 *
+	 * @return bool
+	 */
+	public function canEdit($user_guid = 0) {
+
+		if ($user_guid) {
+			$user = get_user($user_guid);
+			if (!$user) {
+				return false;
+			}
+		} else {
+			$user = elgg_get_logged_in_user_entity();
+			$user_guid = elgg_get_logged_in_user_guid();
+		}
+
+		$result = false;
+		if ($user) {
+			// If the owner of annotation is the specified user, they can edit.
+			if ($this->getOwnerGUID() == $user_guid) {
+				$result = true;
+			}
+
+			// If the user can edit the entity this is attached to, they can edit.
+			$entity = $this->getEntity();
+			if ($result == false && $entity->canEdit($user->getGUID())) {
+				$result = true;
+			}
+		}
+
+		// Trigger plugin hook - note that $user may be null
+		$params = array('entity' => $entity, 'user' => $user, 'annotation' => $this);
+		return elgg_trigger_plugin_hook('permissions_check', 'annotation', $params, $result);
+	}
+
 	// SYSTEM LOG INTERFACE
 
 	/**
