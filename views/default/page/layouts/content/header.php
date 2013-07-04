@@ -11,13 +11,13 @@
 
 if (isset($vars['header_override'])) {
 	echo $vars['header_override'];
-	return true;
+	return;
 }
 
 $context = elgg_extract('context', $vars, elgg_get_context());
 
 $title = elgg_extract('title', $vars, '');
-if ($title !== false) {
+if (!$title && $title !== false) {
 	$title = elgg_echo($context);
 }
 // @todo .elgg-heading-main supports action buttons - maybe rename class name?
