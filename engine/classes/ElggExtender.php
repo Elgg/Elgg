@@ -171,15 +171,14 @@ abstract class ElggExtender extends ElggData {
 	}
 
 	/**
-	 * Returns if a user can edit this extended data.
+	 * Returns if a user can edit this entity extender.
 	 *
-	 * @param int $user_guid The GUID of the user (defaults to currently logged in user)
+	 * @param int $user_guid The GUID of the user doing the editing
+	 *                      (defaults to currently logged in user)
 	 *
 	 * @return bool
 	 */
-	public function canEdit($user_guid = 0) {
-		return can_edit_extender($this->id, $this->type, $user_guid);
-	}
+	abstract public function canEdit($user_guid = 0);
 
 	/**
 	 * {@inheritdoc}
