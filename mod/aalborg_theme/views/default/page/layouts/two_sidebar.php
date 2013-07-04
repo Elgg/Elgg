@@ -23,8 +23,15 @@ if (isset($vars['class'])) {
 			echo elgg_view('page/elements/sidebar_alt', $vars);
 		?>
 	</div>
+	
 	<div class="elgg-main elgg-body">
 		<?php
+			if (isset($vars['title'])) {
+				echo '<div class="elgg-head clearfix">';
+				echo elgg_view_title($vars['title']);
+				echo '</div>';
+			}
+			
 			// @todo deprecated so remove in Elgg 2.0
 			if (isset($vars['area1'])) {
 				echo $vars['area1'];
