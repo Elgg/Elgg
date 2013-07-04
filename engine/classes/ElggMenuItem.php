@@ -74,7 +74,6 @@ class ElggMenuItem {
 	 * @param string $href URL of the menu item (false if not a link)
 	 */
 	public function __construct($name, $text, $href) {
-		//$this->name = $name;
 		$this->text = $text;
 		if ($href) {
 			$this->href = elgg_normalize_url($href);
@@ -158,7 +157,7 @@ class ElggMenuItem {
 	 */
 	public function setData($key, $value = null) {
 		if (is_array($key)) {
-			$this->data += $key;
+			$this->data = array_merge($this->data, $key);
 		} else {
 			$this->data[$key] = $value;
 		}
@@ -221,6 +220,7 @@ class ElggMenuItem {
 	 *
 	 * @param string $href URL or false if not a link
 	 * @return void
+	 * @todo this should probably normalize
 	 */
 	public function setHref($href) {
 		$this->href = $href;
@@ -238,7 +238,7 @@ class ElggMenuItem {
 	/**
 	 * Set the contexts that this menu item is available for
 	 *
-	 * @param array $contexts An array of context strings
+	 * @param array $contexts An array of context strings. Use 'all' to match all contexts.
 	 * @return void
 	 */
 	public function setContext($contexts) {
@@ -265,12 +265,12 @@ class ElggMenuItem {
 	 * @return bool
 	 */
 	public function inContext($context = '') {
-		if ($context) {
-			return in_array($context, $this->data['contexts']);
-		}
-
 		if (in_array('all', $this->data['contexts'])) {
 			return true;
+		}
+
+		if ($context) {
+			return in_array($context, $this->data['contexts']);
 		}
 
 		foreach ($this->data['contexts'] as $context) {
@@ -368,11 +368,7 @@ class ElggMenuItem {
 	 * @return void
 	 */
 	public function addLinkClass($class) {
-		if (!is_array($class)) {
-			$this->data['linkClass'][] = $class;
-		} else {
-			$this->data['linkClass'] += $class;
-		}
+		$this->addClass($this->data['linkClass'], $class);
 	}
 
 	/**
@@ -417,10 +413,21 @@ class ElggMenuItem {
 	 * @since 1.9.0
 	 */
 	public function addItemClass($class) {
-		if (!is_array($class)) {
-			$this->data['itemClass'][] = $class;
+		$this->addClass($this->data['itemClass'], $class);
+	}
+
+	/**
+	 * Add additional classes
+	 * 
+	 * @param array $current    The current array of classes
+	 * @param mixed $additional Additional classes (either array of string)
+	 * @return void
+	 */
+	protected function addClass(array &$current, $additional) {
+		if (!is_array($additional)) {
+			$current[] = $additional;
 		} else {
-			$this->data['itemClass'] += $class;
+			$current = array_merge($current, $additional);
 		}
 	}
 
@@ -506,9 +513,12 @@ class ElggMenuItem {
 
 	/**
 	 * Set the parent menu item
+	 * 
+	 * This is reserved for the ElggMenuBuilder.
 	 *
 	 * @param ElggMenuItem $parent The parent of this menu item
 	 * @return void
+	 * @access private
 	 */
 	public function setParent($parent) {
 		$this->data['parent'] = $parent;
@@ -516,8 +526,11 @@ class ElggMenuItem {
 
 	/**
 	 * Get the parent menu item
+	 * 
+	 * This is reserved for the ElggMenuBuilder.
 	 *
 	 * @return ElggMenuItem or null
+	 * @access private
 	 */
 	public function getParent() {
 		return $this->data['parent'];
@@ -525,9 +538,12 @@ class ElggMenuItem {
 
 	/**
 	 * Add a child menu item
+	 * 
+	 * This is reserved for the ElggMenuBuilder.
 	 *
 	 * @param ElggMenuItem $item A child menu item
 	 * @return void
+	 * @access private
 	 */
 	public function addChild($item) {
 		$this->data['children'][] = $item;
@@ -535,9 +551,12 @@ class ElggMenuItem {
 
 	/**
 	 * Set the menu item's children
+	 * 
+	 * This is reserved for the ElggMenuBuilder.
 	 *
 	 * @param array $children Array of ElggMenuItems
 	 * @return void
+	 * @access private
 	 */
 	public function setChildren($children) {
 		$this->data['children'] = $children;
@@ -545,8 +564,11 @@ class ElggMenuItem {
 
 	/**
 	 * Get the children menu items
+	 * 
+	 * This is reserved for the ElggMenuBuilder.
 	 *
 	 * @return array
+	 * @access private
 	 */
 	public function getChildren() {
 		return $this->data['children'];
@@ -554,9 +576,12 @@ class ElggMenuItem {
 
 	/**
 	 * Sort the children
+	 * 
+	 * This is reserved for the ElggMenuBuilder.
 	 *
 	 * @param string $sortFunction A function that is passed to usort()
 	 * @return void
+	 * @access private
 	 */
 	public function sortChildren($sortFunction) {
 		foreach ($this->data['children'] as $key => $node) {

@@ -12,9 +12,9 @@ $CONFIG = (object) array(
 	'boot_complete' => false,
 );
 
-// TODO(ewinslow): Remove this once ViewsService no longer needs it.
+// @todo remove once views service and menu tests no longer need it
 function elgg_get_site_url() {
-	return '';
+	return 'http://localhost/';
 }
 
 // Set up class auto-loading
