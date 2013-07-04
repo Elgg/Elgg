@@ -146,6 +146,9 @@
 	River
 *************************************** */
 .elgg-list-river {
+	margin-top: -10px;
+}
+.elgg-river-layout .elgg-list-river {
 	border-top: 1px solid #DCDCDC;
 }
 .elgg-list-river > li {
