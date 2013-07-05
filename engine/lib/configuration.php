@@ -623,16 +623,30 @@ function _elgg_load_application_config() {
 	if (!empty($path)) {
 		$CONFIG->path = $path;
 	}
-	$dataroot = datalist_get('dataroot');
-	if (!empty($dataroot)) {
-		$CONFIG->dataroot = $dataroot;
-	}
-	$simplecache_enabled = datalist_get('simplecache_enabled');
-	if ($simplecache_enabled !== false) {
-		$CONFIG->simplecache_enabled = $simplecache_enabled;
+
+	// allow sites to set dataroot and simplecache_enabled in settings.php
+	if (isset($CONFIG->dataroot)) {
+		$CONFIG->dataroot = sanitise_filepath($CONFIG->dataroot);
+		$CONFIG->dataroot_in_settings = true;
 	} else {
-		$CONFIG->simplecache_enabled = 1;
+		$dataroot = datalist_get('dataroot');
+		if (!empty($dataroot)) {
+			$CONFIG->dataroot = $dataroot;
+		}
+		$CONFIG->dataroot_in_settings = false;
 	}
+	if (isset($CONFIG->simplecache_enabled)) {
+		$CONFIG->simplecache_enabled_in_settings = true;
+	} else {
+		$simplecache_enabled = datalist_get('simplecache_enabled');
+		if ($simplecache_enabled !== false) {
+			$CONFIG->simplecache_enabled = $simplecache_enabled;
+		} else {
+			$CONFIG->simplecache_enabled = 1;
+		}
+		$CONFIG->simplecache_enabled_in_settings = false;
+	}
+
 	$system_cache_enabled = datalist_get('system_cache_enabled');
 	if ($system_cache_enabled !== false) {
 		$CONFIG->system_cache_enabled = $system_cache_enabled;

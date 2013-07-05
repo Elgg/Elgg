@@ -158,7 +158,7 @@ class Elgg_CacheHandler {
 		}
 		mysql_close($dblink);
 
-		if (!$result || !isset($this->config->dataroot, $this->config->simplecache_enabled)) {
+		if (!$result || !isset($this->config->dataroot)) {
 			$this->send403('Cache error: unable to get the data root');
 		}
 	}
