@@ -49,6 +49,9 @@ elgg.admin.init = function () {
 	// admin notices delete ajax
 	$('a.elgg-admin-notice').click(elgg.admin.deleteNotice);
 
+	// disable checkboxes (readonly does not work for them)
+	$('input:checkbox.elgg-state-disabled').live('click', function() {return false;});
+
 	// disable simple cache compress settings if simple cache is off
 	$('[name=simplecache_enabled]').click(elgg.admin.simplecacheToggle);
 };
@@ -168,11 +171,14 @@ elgg.admin.deleteNotice = function(e) {
  * @return void
  */
 elgg.admin.simplecacheToggle = function() {
-	var names = ['simplecache_minify_js', 'simplecache_minify_css'];
-	for (var i = 0; i < names.length; i++) {
-		var $input = $('input[type!=hidden][name="' + names[i] + '"]');
-		if ($input.length) {
-			$input.parent().toggleClass('elgg-state-disabled');
+	// when the checkbox is disabled, do not toggle the compression checkboxes
+	if (!$this.hasClass('elgg-state-disabled')) {
+		var names = ['simplecache_minify_js', 'simplecache_minify_css'];
+		for (var i = 0; i < names.length; i++) {
+			var $input = $('input[type!=hidden][name="' + names[i] + '"]');
+			if ($input.length) {
+				$input.parent().toggleClass('elgg-state-disabled');
+			}
 		}
 	}
 };
