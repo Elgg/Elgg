@@ -114,6 +114,19 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 
 
 /**
+ * Better caching performance
+ *
+ * Configuring the location of your data directory and enabling simplecache in
+ * the settings.php file improves caching performance. It allows Elgg to skip
+ * connecting to the database when serving cached JavaScript and CSS files. If
+ * you uncomment and configure these settings, you will not be able to change
+ * them from the Elgg advanced settings page.
+ */
+//$CONFIG->dataroot = "";
+//$CONFIG->simplecache_enabled = true;
+
+
+/**
  * Use non-standard headers for broken MTAs.
  *
  * The default header EOL for headers is \r\n.  This causes problems
