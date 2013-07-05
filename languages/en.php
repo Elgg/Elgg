@@ -476,6 +476,7 @@ return array(
 	'admin:settings:advanced' => 'Advanced Settings',
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
 	'admin:site:opt:linktext' => "Configure site...",
+	'admin:settings:in_settings_file' => 'This setting is configured in settings.php',
 
 	'admin:dashboard' => 'Dashboard',
 	'admin:widget:online_users' => 'Online users',

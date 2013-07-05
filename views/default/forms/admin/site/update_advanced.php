@@ -5,14 +5,25 @@
 $form_body = "";
 
 foreach (array('wwwroot', 'path', 'dataroot') as $field) {
+	$warning = false;
+
 	$form_body .= "<div>";
 	$form_body .= elgg_echo('installation:' . $field) . "<br />";
-	$warning = elgg_echo('installation:warning:' . $field);
-	if ($warning != 'installation:warning:' . $field) {
-		echo "<b>" . $warning . "</b><br />";
+
+	$params = array(
+		'name' => $field,
+		'value' => elgg_get_config($field)
+	);
+	if ($field == 'dataroot' && elgg_get_config('dataroot_in_settings')) {
+		$params['readonly'] = true;
+		$params['class'] = 'elgg-state-disabled';
+		$warning = elgg_echo('admin:settings:in_settings_file');
 	}
-	$value = elgg_get_config($field);
-	$form_body .= elgg_view("input/text",array('name' => $field, 'value' => $value));
+
+	$form_body .= elgg_view("input/text", $params);
+	if ($warning) {
+		$form_body .= "<span class=\"elgg-text-help\">$warning</span>";
+	}
 	$form_body .= "</div>";
 }
 
@@ -21,11 +32,21 @@ $simple_cache_disabled_class = $is_simple_cache_on ? '' : 'elgg-state-disabled';
 $form_body .= '<fieldset class="elgg-fieldset">';
 $form_body .= '<legend>' . elgg_echo('admin:legend:caching') . '</legend>';
 $form_body .= "<div>" . elgg_echo('installation:simplecache:description') . "<br />";
-$form_body .= elgg_view("input/checkbox", array(
+$params = array(
 	'label' => elgg_echo('installation:simplecache:label'),
 	'name' => 'simplecache_enabled',
 	'checked' => $is_simple_cache_on,
-)) . "</div>";
+);
+if (elgg_get_config('simplecache_enabled_in_settings')) {
+	$params['class'] = 'elgg-state-disabled';
+	$params['label_class'] = 'elgg-state-disabled';
+}
+$form_body .= elgg_view("input/checkbox", $params);
+if (elgg_get_config('simplecache_enabled_in_settings')) {
+	$warning = elgg_echo('admin:settings:in_settings_file');
+	$form_body .= "<span class=\"elgg-text-help\">$warning</span>";
+}
+$form_body .= "</div>";
 
 $form_body .= "<div>" . elgg_echo('installation:minify:description') . "<br />";
 $form_body .= elgg_view("input/checkbox", array(

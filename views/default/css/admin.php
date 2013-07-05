@@ -446,7 +446,8 @@ label {
 	color: #333333;
 	font-size: 110%;
 }
-label.elgg-state-disabled {
+label.elgg-state-disabled,
+input.elgg-state-disabled {
 	opacity: 0.6;
 }
 
