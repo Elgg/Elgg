@@ -21,6 +21,9 @@ elgg.ui.init = function () {
 	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
 
 	$('.elgg-autofocus').focus();
+	if ($('.elgg-autofocus').length > 0) {
+		elgg.deprecated_notice('Use of .elgg-autofocus is deprecated by html5 autofocus', 1.9);
+	}
 
 	elgg.ui.initAccessInputs();
 };
