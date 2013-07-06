@@ -73,6 +73,7 @@ class Elgg_I18n_Translator {
 	 *
 	 * @param array $translation The translation array
 	 * @param bool  $replace     Whether to replace or add to the translation
+	 * @return void
 	 */
 	public function setTranslation(array $translation, $replace = false) {
 		if ($replace) {

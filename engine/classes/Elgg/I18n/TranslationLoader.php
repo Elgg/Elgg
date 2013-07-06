@@ -152,6 +152,7 @@ class Elgg_I18n_TranslationLoader {
 	 *
 	 * @param string $file  Translation file
 	 * @param array  $value Value to cache
+	 * @return void
 	 */
 	protected function setCache($file, $value) {
 		$this->localTranslationCache[$file] = $value;
