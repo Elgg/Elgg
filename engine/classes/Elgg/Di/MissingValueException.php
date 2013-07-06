@@ -7,4 +7,4 @@
  * 
  * @package Elgg.Core
  */
-class Elgg_DIContainer_MissingValueException extends Exception {}
+class Elgg_Di_MissingValueException extends Exception {}
