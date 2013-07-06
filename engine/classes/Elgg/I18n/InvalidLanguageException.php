@@ -9,4 +9,4 @@
  * @subpackage I18n
  * @since      1.9.0
  */
-class Elgg_I18n_InvalidLanguageException extends Exception {}
+class Elgg_I18n_InvalidLanguageException extends InvalidArgumentException {}
