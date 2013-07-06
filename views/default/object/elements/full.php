@@ -22,9 +22,9 @@ $summary = elgg_extract('summary', $vars);
 $body = elgg_extract('body', $vars);
 $class = elgg_extract('class', $vars);
 if ($class) {
-	$class = "elgg-content $class";
+	$class = "elgg-content clearfix $class";
 } else {
-	$class = "elgg-content";
+	$class = "elgg-content clearfix";
 }
 
 $header = elgg_view_image_block($icon, $summary);
