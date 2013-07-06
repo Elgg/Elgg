@@ -8,7 +8,7 @@
  */
 
 /**
- * @return Elgg_ServiceProvider
+ * @return Elgg_Di_ServiceProvider
  * @access private
  */
 function _elgg_services() {
@@ -49,7 +49,7 @@ function _elgg_create_service_provider() {
 	$loader->register();
 	$manager = new Elgg_AutoloadManager($loader);
 
-	return new Elgg_ServiceProvider($manager);
+	return new Elgg_Di_ServiceProvider($manager);
 }
 
 /**

@@ -26,7 +26,7 @@
  * @package Elgg.Core
  * @access private
  */
-class Elgg_ServiceProvider extends Elgg_DIContainer {
+class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 
 	/**
 	 * Constructor
@@ -55,10 +55,10 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	/**
 	 * Database factory
 	 *
-	 * @param Elgg_ServiceProvider $c Dependency injection container
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
 	 * @return Elgg_Database
 	 */
-	protected function getDatabase(Elgg_ServiceProvider $c) {
+	protected function getDatabase(Elgg_Di_ServiceProvider $c) {
 		global $CONFIG;
 		return new Elgg_Database(new Elgg_Database_Config($CONFIG), $c->logger);
 	}
@@ -66,30 +66,30 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	/**
 	 * Logger factory
 	 * 
-	 * @param Elgg_ServiceProvider $c Dependency injection container
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
 	 * @return Elgg_Logger
 	 */
-	protected function getLogger(Elgg_ServiceProvider $c) {
+	protected function getLogger(Elgg_Di_ServiceProvider $c) {
 		return new Elgg_Logger($c->hooks);
 	}
 
 	/**
 	 * Views service factory
 	 * 
-	 * @param Elgg_ServiceProvider $c Dependency injection container
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
 	 * @return Elgg_ViewsService
 	 */
-	protected function getViews(Elgg_ServiceProvider $c) {
+	protected function getViews(Elgg_Di_ServiceProvider $c) {
 		return new Elgg_ViewsService($c->hooks, $c->logger);
 	}
 
 	/**
 	 * AMD Config factory
 	 * 
-	 * @param Elgg_ServiceProvider $c Dependency injection container
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
 	 * @return Elgg_AmdConfig
 	 */
-	protected function getAmdConfig(Elgg_ServiceProvider $c) {
+	protected function getAmdConfig(Elgg_Di_ServiceProvider $c) {
 		$obj = new Elgg_AmdConfig();
 		$obj->setBaseUrl(_elgg_get_simplecache_root() . "js/");
 		return $obj;
@@ -98,10 +98,10 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	/**
 	 * Session factory
 	 * 
-	 * @param Elgg_ServiceProvider $c Dependency injection container
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
 	 * @return ElggSession
 	 */
-	protected function getSession(Elgg_ServiceProvider $c) {
+	protected function getSession(Elgg_Di_ServiceProvider $c) {
 		$handler = new Elgg_Http_DatabaseSessionHandler($c->db);
 		$storage = new Elgg_Http_NativeSessionStorage($handler);
 		$session = new ElggSession($storage);
@@ -112,20 +112,20 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	/**
 	 * Request factory
 	 * 
-	 * @param Elgg_ServiceProvider $c Dependency injection container
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
 	 * @return Elgg_Request
 	 */
-	protected function getRequest(Elgg_ServiceProvider $c) {
+	protected function getRequest(Elgg_Di_ServiceProvider $c) {
 		return Elgg_Request::createFromGlobals();
 	}
 
 	/**
 	 * Router factory
 	 * 
-	 * @param Elgg_ServiceProvider $c Dependency injection container
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
 	 * @return Elgg_Router
 	 */
-	protected function getRouter(Elgg_ServiceProvider $c) {
+	protected function getRouter(Elgg_Di_ServiceProvider $c) {
 		// TODO(evan): Init routes from plugins or cache
 		return new Elgg_Router($c->hooks);
 	}
@@ -133,10 +133,10 @@ class Elgg_ServiceProvider extends Elgg_DIContainer {
 	/**
 	 * Notification service factory
 	 * 
-	 * @param Elgg_ServiceProvider $c Dependency injection container
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
 	 * @return Elgg_Notifications_NotificationsService
 	 */
-	protected function getNotifications(Elgg_ServiceProvider $c) {
+	protected function getNotifications(Elgg_Di_ServiceProvider $c) {
 		// @todo move queue in service provider
 		$queue = new Elgg_Util_DatabaseQueue(Elgg_Notifications_NotificationsService::QUEUE_NAME, $c->db);
 		$sub = new Elgg_Notifications_SubscriptionsService($c->db);

@@ -5,7 +5,7 @@
  * across reads.
  *
  * <code>
- * $c = new Elgg_DIContainer();
+ * $c = new Elgg_Di_DiContainer();
  *
  * $c->setFactory('foo', 'Foo_factory'); // $c will be passed to Foo_factory()
  * $c->foo; // new Foo instance
@@ -24,7 +24,7 @@
  * @package Elgg.Core
  * @since   1.9
  */
-class Elgg_DIContainer {
+class Elgg_Di_DiContainer {
 
 	/**
 	 * @var array each element is an array: ['callable' => mixed $factory, 'shared' => bool $isShared]
@@ -44,14 +44,14 @@ class Elgg_DIContainer {
 	 *
 	 * @param string $name The name of the value to fetch
 	 * @return mixed
-	 * @throws Elgg_DIContainer_MissingValueException
+	 * @throws Elgg_Di_MissingValueException
 	 */
 	public function __get($name) {
 		if (array_key_exists($name, $this->cache)) {
 			return $this->cache[$name];
 		}
 		if (!isset($this->factories[$name])) {
-			throw new Elgg_DIContainer_MissingValueException("Value or factory was not set for: $name");
+			throw new Elgg_Di_MissingValueException("Value or factory was not set for: $name");
 		}
 		$value = $this->build($this->factories[$name]['callable'], $name);
 		if ($this->factories[$name]['shared']) {
@@ -66,7 +66,7 @@ class Elgg_DIContainer {
 	 * @param mixed  $factory The factory for the value
 	 * @param string $name    The name of the value
 	 * @return mixed
-	 * @throws Elgg_DIContainer_FactoryUncallableException
+	 * @throws Elgg_Di_FactoryUncallableException
 	 */
 	protected function build($factory, $name) {
 		if (is_callable($factory)) {
@@ -82,7 +82,7 @@ class Elgg_DIContainer {
 				$msg .= ": " . get_class($factory[0]) . "->{$factory[1]}";
 			}
 		}
-		throw new Elgg_DIContainer_FactoryUncallableException($msg);
+		throw new Elgg_Di_FactoryUncallableException($msg);
 	}
 
 	/**
@@ -90,7 +90,7 @@ class Elgg_DIContainer {
 	 *
 	 * @param string $name  The name of the value
 	 * @param mixed  $value The value
-	 * @return Elgg_DIContainer
+	 * @return Elgg_DiContainer
 	 * @throws InvalidArgumentException
 	 */
 	public function setValue($name, $value) {
@@ -105,7 +105,7 @@ class Elgg_DIContainer {
 	 * @param string   $name     The name of the value
 	 * @param callable $callable Factory for the value
 	 * @param bool     $shared   Whether the same value should be returned for every request
-	 * @return Elgg_DIContainer
+	 * @return Elgg_DiContainer
 	 * @throws InvalidArgumentException
 	 */
 	public function setFactory($name, $callable, $shared = true) {
@@ -126,7 +126,7 @@ class Elgg_DIContainer {
 	 * @param string $name       Name of the value
 	 * @param string $class_name Class name to be instantiated
 	 * @param bool   $shared     Whether the same value should be returned for every request
-	 * @return Elgg_DIContainer
+	 * @return Elgg_DiContainer
 	 * @throws InvalidArgumentException
 	 */
 	public function setClassName($name, $class_name, $shared = true) {
@@ -144,7 +144,7 @@ class Elgg_DIContainer {
 	 * Remove a value from the container
 	 * 
 	 * @param string $name The name of the value
-	 * @return Elgg_DIContainer
+	 * @return Elgg_DiContainer
 	 */
 	public function remove($name) {
 		unset($this->cache[$name]);

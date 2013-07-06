@@ -7,4 +7,4 @@
  * 
  * @package Elgg.Core
  */
-class Elgg_DIContainer_FactoryUncallableException extends Exception {}
+class Elgg_Di_FactoryUncallableException extends Exception {}
