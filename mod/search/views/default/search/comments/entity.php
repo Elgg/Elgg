@@ -6,8 +6,11 @@
  */
 
 $entity = $vars['entity'];
+$comments_data = $entity->getVolatileData('search_comments_data');
+$comment_data = array_shift($comments_data);
+$entity->setVolatileData('search_comments_data', $comments_data);
 
-$owner = get_entity($entity->getVolatileData('search_matched_comment_owner_guid'));
+$owner = get_entity($comment_data['owner_guid']);
 
 if ($owner instanceof ElggUser) {
 	$icon = elgg_view_entity_icon($owner, 'tiny');
@@ -38,12 +41,12 @@ if ($entity->getVolatileData('search_unavailable_entity')) {
 	$title = elgg_echo('search:comment_on', array($title));
 
 	// @todo this should use something like $comment->getURL()
-	$url = $entity->getURL() . '#comment_' . $entity->getVolatileData('search_match_annotation_id');
+	$url = $entity->getURL() . '#comment_' . $comment_data['annotation_id'];
 	$title = "<a href=\"$url\">$title</a>";
 }
 
-$description = $entity->getVolatileData('search_matched_comment');
-$tc = $entity->getVolatileData('search_matched_comment_time_created');;
+$description = $comment_data['text'];
+$tc = $comment_data['time_created'];
 $time = elgg_view_friendly_time($tc);
 
 $body = "<p class=\"mbn\">$title</p>$description";

@@ -6,9 +6,12 @@
  */
 
 $entity = $vars['entity'];
+$comments_data = $entity->getVolatileData('search_comments_data');
+$comment_data = array_shift($comments_data);
+$entity->setVolatileData('search_comments_data', $comments_data);
 
 $author_name = '';
-$comment_author_guid = $entity->getVolatileData('search_matched_comment_owner_guid');
+$comment_author_guid = $comment_data['owner_guid'];
 $author = get_user($comment_author_guid);
 if ($author) {
 	$author_name = $author->name;
@@ -34,11 +37,11 @@ if ($entity->getVolatileData('search_unavailable_entity')) {
 
 	$title = elgg_echo('search:comment_on', array($title));
 	$title .= ' ' . elgg_echo('search:comment_by') . ' ' . $author_name;
-	$url = $entity->getURL() . '#annotation-' . $entity->getVolatileData('search_match_annotation_id');
+	$url = $entity->getURL() . '#annotation-' . $comment_data['annotation_id'];
 }
 
-$description = $entity->getVolatileData('search_matched_comment');
-$tc = $entity->getVolatileData('search_matched_comment_time_created');;
+$description = $comment_data['text'];
+$tc = $comment_data['time_created'];
 
 ?>
 
