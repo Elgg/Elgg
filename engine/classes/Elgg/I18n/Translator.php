@@ -61,10 +61,25 @@ class Elgg_I18n_Translator {
 
 	/**
 	 * Gets the current translation as an array of key => translation
+	 * 
 	 * @return array
 	 */
-	public function getTranslationAsArray() {
+	public function getTranslation() {
 		return $this->translation;
+	}
+
+	/**
+	 * Set or update the translation array
+	 *
+	 * @param array $translation The translation array
+	 * @param bool  $replace     Whether to replace or add to the translation
+	 */
+	public function setTranslation(array $translation, $replace = false) {
+		if ($replace) {
+			$this->translation = $translation;
+		} else {
+			$this->translation = array_merge($this->translation, $translation);
+		}
 	}
 
 	/**

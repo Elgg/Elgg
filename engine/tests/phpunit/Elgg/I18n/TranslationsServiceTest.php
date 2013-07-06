@@ -160,7 +160,7 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$translator = $service->getTranslator('ru');
-		$this->assertEquals(array(), $translator->getTranslationAsArray());
+		$this->assertEquals(array(), $translator->getTranslation());
 	}
 
 	public function testGetTranslatorForDefinedLanguage() {
@@ -174,7 +174,7 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 			'greeting' => 'Hello, %s',
 			'unique' => 'not in Spanish',
 		);
-		$this->assertEquals($expected, $translator->getTranslationAsArray());
+		$this->assertEquals($expected, $translator->getTranslation());
 	}
 
 	public function testGetAllTranslators() {
