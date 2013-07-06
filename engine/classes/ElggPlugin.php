@@ -549,7 +549,7 @@ class ElggPlugin extends ElggObject {
 	 * Returns if the plugin is complete, meaning has all required files
 	 * and Elgg can read them and they make sense.
 	 *
-	 * @todo bad name? This could be confused with isValid() from ElggPackage.
+	 * @todo bad name? This could be confused with isValid() from ElggPluginPackage.
 	 *
 	 * @return bool
 	 */

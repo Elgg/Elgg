@@ -903,6 +903,7 @@ $english = array(
 	'total' => 'Total',
 
 	'learnmore' => "Click here to learn more.",
+	'unknown_error' => 'Unknown error',
 
 	'content' => "content",
 	'content:latest' => 'Latest activity',
