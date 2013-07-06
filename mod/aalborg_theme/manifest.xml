@@ -14,5 +14,15 @@
 		<type>elgg_release</type>
 		<version>1.9</version>
 	</requires>
+	<requires>
+		<type>priority</type>
+		<priority>after</priority>
+		<plugin>search</plugin>
+	</requires>
+	<requires>
+		<type>priority</type>
+		<priority>after</priority>
+		<plugin>profile</plugin>
+	</requires>
 	<activate_on_install>false</activate_on_install>
 </plugin_manifest>
