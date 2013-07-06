@@ -16,15 +16,15 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @return Elgg_I18n_TranslationLoader
 	 */
-	protected function getLoaderWithoutCache() {
+	protected function getLoader() {
 		return new Elgg_I18n_TranslationLoader();
 	}
 
 	/**
 	 * @return Elgg_I18n_TranslationsService
 	 */
-	protected function getServiceWithoutCache() {
-		$loader = $this->getLoaderWithoutCache();
+	protected function getService() {
+		$loader = $this->getLoader();
 		return new Elgg_I18n_TranslationsService($loader);
 	}
 
@@ -32,7 +32,7 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException Elgg_I18n_InvalidLanguageException
 	 */
 	public function testConstructorWithInvalidSiteLanguage() {
-		$loader = $this->getLoaderWithoutCache();
+		$loader = $this->getLoader();
 		new Elgg_I18n_TranslationsService($loader, 'english');
 	}
 
@@ -40,19 +40,19 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException Elgg_I18n_InvalidLanguageException
 	 */
 	public function testConstructorWithInvalidUserLanguage() {
-		$loader = $this->getLoaderWithoutCache();
+		$loader = $this->getLoader();
 		new Elgg_I18n_TranslationsService($loader, 'es', 'spanish');
 	}
 
 	public function testConstructorWithValidArguments() {
-		$loader = $this->getLoaderWithoutCache();
+		$loader = $this->getLoader();
 		$service = new Elgg_I18n_TranslationsService($loader, 'en', 'es');
 		$this->assertEquals('en', $service->getSiteLanguage());
 		$this->assertEquals('es', $service->getUserLanguage());
 	}
 
 	public function testSetUserLanguageWithValidLanguage() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->setUserLanguage('fr');
 		$this->assertEquals('fr', $service->getUserLanguage());
 	}
@@ -61,12 +61,12 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException Elgg_I18n_InvalidLanguageException
 	 */
 	public function testSetUserLanguageWithInvalidLanguage() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->setUserLanguage('french');
 	}
 
 	public function testSetSiteLanguageWithValidLanguage() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->setSiteLanguage('fr');
 		$this->assertEquals('fr', $service->getSiteLanguage());
 	}
@@ -75,19 +75,19 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException Elgg_I18n_InvalidLanguageException
 	 */
 	public function testSetSiteLanguageWithInvalidLanguage() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->setSiteLanguage('french');
 	}
 
 	public function testRegisterTranslationDirectory() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory('/tmp/');
 		$service->registerTranslationDirectory('C:\\elgg');
 		$this->assertEquals(array('/tmp', 'C:\\elgg'), $service->getTranslationDirectories());
 	}
 
 	public function testTranslateWithCacheOffAndUserLanguage() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$service->setUserLanguage('es');
 		$this->assertEquals('uno', $service->translate('n1'));
@@ -95,21 +95,21 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testTranslateWithCacheOffAndSiteLanguage() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$service->setUserLanguage('es');
 		$this->assertEquals('not in Spanish', $service->translate('unique'));
 	}
 
 	public function testTranslateWithCacheOffAndMissingKey() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$service->setUserLanguage('es');
 		$this->assertEquals('empty', $service->translate('empty'));
 	}
 
 	public function testTranslateWithCacheOffAndLanguageOverride() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$service->setUserLanguage('es');
 		$this->assertEquals('un', $service->translate('n1', array(), 'fr'));
@@ -117,7 +117,7 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testTranslateWithCacheOffAndPluginsLoaded() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$service->registerTranslationDirectory($this->pluginDir);
 		$service->setUserLanguage('en');
@@ -127,7 +127,7 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testTranslateWithCacheOffAndPluginsLoadedAfterUse() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$service->setUserLanguage('en');
 		$this->assertEquals('Hello, Tom', $service->translate('greeting', array('Tom')));
@@ -136,7 +136,7 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testTranslateOffAndOn() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$service->turnOff();
 		$this->assertEquals('n1', $service->translate('n1'));
@@ -147,7 +147,7 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testSetTranslator() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$this->assertEquals('one', $service->translate('n1'));
 
@@ -157,14 +157,14 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetTranslatorForUndefinedLanguage() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$translator = $service->getTranslator('ru');
 		$this->assertEquals(array(), $translator->getTranslationAsArray());
 	}
 
 	public function testGetTranslatorForDefinedLanguage() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$translator = $service->getTranslator('en');
 		$expected = array(
@@ -178,7 +178,7 @@ class Elgg_I18n_TranslationsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetAllTranslators() {
-		$service = $this->getServiceWithoutCache();
+		$service = $this->getService();
 		$service->registerTranslationDirectory($this->coreDir);
 		$translators = $service->getAllTranslators();
 		$this->assertEquals(3, count($translators));
