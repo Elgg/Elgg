@@ -255,8 +255,8 @@ function groups_handle_profile_page($guid) {
 	elgg_push_context('group_profile');
 
 	$group = get_entity($guid);
-	if (!$group) {
-		forward('groups/all');
+	if (!elgg_instanceof($group, 'group')) {
+		forward('', '404');
 	}
 
 	elgg_push_breadcrumb($group->name);
