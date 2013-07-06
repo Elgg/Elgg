@@ -8,7 +8,7 @@
 class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 
 	public function testEnqueueAndDequeue() {
-		$queue = new Elgg_Util_DatabaseQueue('unit:test');
+		$queue = new Elgg_Util_DatabaseQueue('unit:test', _elgg_services()->db);
 		$first = array(1, 2, 3);
 		$second = array(4, 5, 6);
 
@@ -27,8 +27,8 @@ class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 	}
 
 	public function testMultipleQueues() {
-		$queue1 = new Elgg_Util_DatabaseQueue('unit:test1');
-		$queue2 = new Elgg_Util_DatabaseQueue('unit:test2');
+		$queue1 = new Elgg_Util_DatabaseQueue('unit:test1', _elgg_services()->db);
+		$queue2 = new Elgg_Util_DatabaseQueue('unit:test2', _elgg_services()->db);
 		$first = array(1, 2, 3);
 		$second = array(4, 5, 6);
 
@@ -44,7 +44,7 @@ class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 	}
 
 	public function testClear() {
-		$queue = new Elgg_Util_DatabaseQueue('unit:test');
+		$queue = new Elgg_Util_DatabaseQueue('unit:test',  _elgg_services()->db);
 		$first = array(1, 2, 3);
 		$second = array(4, 5, 6);
 

@@ -21,7 +21,7 @@ interface Elgg_Util_Queue {
 	public function enqueue($item);
 
 	/**
-	 * Remove the oldest item from the queue
+	 * Remove an item from the queue
 	 *
 	 * @return mixed
 	 */
