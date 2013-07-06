@@ -416,6 +416,7 @@ class ElggMenuItem {
 		$this->addClass($this->data['itemClass'], $class);
 	}
 
+	// @codingStandardsIgnoreStart
 	/**
 	 * Add additional classes
 	 * 
@@ -430,6 +431,8 @@ class ElggMenuItem {
 			$current = array_merge($current, $additional);
 		}
 	}
+	// @codingStandardsIgnoreEnd
+
 
 	/**
 	 * Set the priority of the menu item
