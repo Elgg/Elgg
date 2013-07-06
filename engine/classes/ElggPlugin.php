@@ -350,11 +350,14 @@ class ElggPlugin extends ElggObject {
 	 */
 	public function unsetAllSettings() {
 		$db_prefix = get_config('dbprefix');
-		$ps_prefix = elgg_namespace_plugin_private_setting('setting', '');
+
+		$us_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
+		$is_prefix = elgg_namespace_plugin_private_setting('internal', '', $this->getID());
 
 		$q = "DELETE FROM {$db_prefix}private_settings
 			WHERE entity_guid = $this->guid
-			AND name NOT LIKE '$ps_prefix%'";
+			AND name NOT LIKE '$us_prefix%'
+			AND name NOT LIKE '$is_prefix%'";
 
 		return delete_data($q);
 	}
