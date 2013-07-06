@@ -45,8 +45,7 @@ function discussion_handle_list_page($guid) {
 
 	$group = get_entity($guid);
 	if (!elgg_instanceof($group, 'group')) {
-		register_error(elgg_echo('group:notfound'));
-		forward();
+		forward('', '404');
 	}
 
 	elgg_push_breadcrumb($group->name);

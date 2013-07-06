@@ -7,7 +7,7 @@
 
 $owner = elgg_get_page_owner_entity();
 if (!$owner) {
-	forward('pages/all');
+	forward('', '404');
 }
 
 elgg_push_breadcrumb($owner->name, "pages/owner/$owner->username");

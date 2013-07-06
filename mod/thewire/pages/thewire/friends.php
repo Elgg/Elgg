@@ -5,7 +5,7 @@
 
 $owner = elgg_get_page_owner_entity();
 if (!$owner) {
-	forward('thewire/all');
+	forward('', '404');
 }
 
 $title = elgg_echo('thewire:friends');

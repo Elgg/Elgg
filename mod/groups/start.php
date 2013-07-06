@@ -142,6 +142,10 @@ function groups_setup_sidebar_menus() {
 	$page_owner = elgg_get_page_owner_entity();
 
 	if (elgg_in_context('group_profile')) {
+		if (!elgg_instanceof($page_owner, 'group')) {
+			forward('', '404');
+		}
+
 		if (elgg_is_logged_in() && $page_owner->canEdit() && !$page_owner->isPublicMembership()) {
 			$url = elgg_get_site_url() . "groups/requests/{$page_owner->getGUID()}";
 

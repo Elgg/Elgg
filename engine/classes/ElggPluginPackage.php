@@ -321,6 +321,7 @@ class ElggPluginPackage {
 			return true;
 		}
 
+		$this->errorMsg = elgg_echo('unknown_error');
 		return false;
 	}
 

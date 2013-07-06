@@ -7,7 +7,7 @@
 
 $owner = elgg_get_page_owner_entity();
 if (!$owner) {
-	forward('pages/all');
+	forward('', '404');
 }
 
 // access check for closed groups

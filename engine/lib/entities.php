@@ -1337,8 +1337,10 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	global $autofeed;
 	$autofeed = true;
 
+	$offset_key = isset($options['offset_key']) ? $options['offset_key'] : 'offset';
+
 	$defaults = array(
-		'offset' => (int) max(get_input('offset', 0), 0),
+		'offset' => (int) max(get_input($offset_key, 0), 0),
 		'limit' => (int) max(get_input('limit', 10), 0),
 		'full_view' => false,
 		'list_type_toggle' => false,

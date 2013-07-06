@@ -830,6 +830,7 @@ These changes will only affect new users on the site.',
 	'advanced' => 'Advanced',
 
 	'learnmore' => "Click here to learn more.",
+	'unknown_error' => 'Unknown error',
 
 	'content' => "content",
 	'content:latest' => 'Latest activity',
