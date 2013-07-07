@@ -90,7 +90,7 @@ class Elgg_Di_DiContainer {
 	 *
 	 * @param string $name  The name of the value
 	 * @param mixed  $value The value
-	 * @return Elgg_DiContainer
+	 * @return Elgg_Di_DiContainer
 	 * @throws InvalidArgumentException
 	 */
 	public function setValue($name, $value) {
@@ -105,7 +105,7 @@ class Elgg_Di_DiContainer {
 	 * @param string   $name     The name of the value
 	 * @param callable $callable Factory for the value
 	 * @param bool     $shared   Whether the same value should be returned for every request
-	 * @return Elgg_DiContainer
+	 * @return Elgg_Di_DiContainer
 	 * @throws InvalidArgumentException
 	 */
 	public function setFactory($name, $callable, $shared = true) {
@@ -126,7 +126,7 @@ class Elgg_Di_DiContainer {
 	 * @param string $name       Name of the value
 	 * @param string $class_name Class name to be instantiated
 	 * @param bool   $shared     Whether the same value should be returned for every request
-	 * @return Elgg_DiContainer
+	 * @return Elgg_Di_DiContainer
 	 * @throws InvalidArgumentException
 	 */
 	public function setClassName($name, $class_name, $shared = true) {
@@ -144,7 +144,7 @@ class Elgg_Di_DiContainer {
 	 * Remove a value from the container
 	 * 
 	 * @param string $name The name of the value
-	 * @return Elgg_DiContainer
+	 * @return Elgg_Di_DiContainer
 	 */
 	public function remove($name) {
 		unset($this->cache[$name]);
