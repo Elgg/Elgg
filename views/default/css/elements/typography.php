@@ -94,12 +94,12 @@ h6 { font-size: 0.8em; }
 	color: white;
 	font-style: italic;
 	font-family: Georgia, times, serif;
-	text-shadow: 1px 2px 4px #333333;
+	text-shadow: 1px 2px 4px #333;
 	text-decoration: none;
 }
-
+.elgg-heading-site:hover,
 .elgg-heading-site:focus {
-	text-decoration: underline;
+	text-shadow: 1px 2px 8px #000;
 }
 
 .elgg-heading-main {
