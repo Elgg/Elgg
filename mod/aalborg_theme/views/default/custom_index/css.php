@@ -9,7 +9,13 @@
 	Custom Index
 ********************************/
 .custom-index {
-	padding: 22px 10px 10px;
+	padding: 22px 0 10px;
+}
+.custom-index-col1 > .elgg-inner {
+	padding-right: 10px;
+}
+.custom-index-col2 > .elgg-inner {
+	padding-left: 10px;
 }
 .elgg-module-highlight {
 	border: 1px solid #DCDCDC;
