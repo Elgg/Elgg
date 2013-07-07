@@ -58,7 +58,7 @@ $body .= <<<__BODY
 	</div>
 	<div class="elgg-page-navbar">
 		<div class="elgg-inner">
-			$navbar;
+			$navbar
 		</div>
 	</div>
 	<div class="elgg-page-body">
