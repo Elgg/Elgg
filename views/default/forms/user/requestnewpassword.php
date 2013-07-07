@@ -14,7 +14,7 @@
 	<label><?php echo elgg_echo('loginusername'); ?></label><br />
 	<?php echo elgg_view('input/text', array(
 		'name' => 'username',
-		'class' => 'elgg-autofocus',
+		'autofocus' => true,
 		));
 	?>
 </div>

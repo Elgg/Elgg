@@ -23,7 +23,7 @@ if (elgg_is_sticky_form('register')) {
 	echo elgg_view('input/text', array(
 		'name' => 'name',
 		'value' => $name,
-		'class' => 'elgg-autofocus',
+		'autofocus' => true,
 	));
 	?>
 </div>
