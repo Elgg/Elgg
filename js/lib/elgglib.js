@@ -389,8 +389,7 @@ elgg.deprecated_notice = function(msg, dep_version) {
 
 		msg = "Deprecated in Elgg " + dep_version + ": " + msg;
 
-		if ((dep_major_version < elgg_major_version) ||
-			(dep_minor_version < elgg_minor_version)) {
+		if ((dep_major_version < elgg_major_version) || (dep_minor_version < elgg_minor_version)) {
 			elgg.register_error(msg);
 		} else {
 			if (typeof console !== "undefined") {
