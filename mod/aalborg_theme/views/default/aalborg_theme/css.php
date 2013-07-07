@@ -170,6 +170,10 @@ html {
     .elgg-module-widget {
         margin: 0 0 15px;
     }
+	.custom-index-col1 > .elgg-inner,
+	.custom-index-col2 > .elgg-inner {
+		padding: 0;
+	}
 }
 @media (min-width: 767px) {
     .elgg-nav-collapse {
