@@ -14,6 +14,8 @@ class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 
 		$result = $queue->enqueue($first);
 		$this->assertTrue($result);
+		// @todo fix this
+		sleep(1);
 		$result = $queue->enqueue($second);
 		$this->assertTrue($result);
 

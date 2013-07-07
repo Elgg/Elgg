@@ -1544,7 +1544,8 @@ abstract class ElggEntity extends ElggData implements
 		$subtype_id = add_subtype($type, $subtype);
 		$owner_guid = (int)$this->attributes['owner_guid'];
 		$access_id = (int)$this->attributes['access_id'];
-		$time = (string)time();
+		$now = (string)time();
+		$time_created = isset($this->attributes['time_created']) ? (int)$this->attributes['time_created'] : $now;
 
 		$site_guid = $this->attributes['site_guid'];
 		if ($site_guid == 0) {
@@ -1579,21 +1580,20 @@ abstract class ElggEntity extends ElggData implements
 				access_id, time_created, time_updated, last_action)
 			values
 			('$type',$subtype_id, $owner_guid, $site_guid, $container_guid,
-				$access_id, $time, $time, $time)");
+				$access_id, $time_created, $now, $now)");
 
 		if (!$result) {
 			throw new IOException("Unable to save new object's base entity information!");
 		}
 	
 		$this->attributes['guid'] = (int)$result;
-		$this->attributes['time_created'] = (int)$time;
-		$this->attributes['time_updated'] = (int)$time;
-		$this->attributes['last_action'] = (int)$time;
+		$this->attributes['time_created'] = (int)$time_created;
+		$this->attributes['time_updated'] = (int)$now;
+		$this->attributes['last_action'] = (int)$now;
 		$this->attributes['site_guid'] = (int)$site_guid;
 		$this->attributes['container_guid'] = (int)$container_guid;
 
 		// Save any unsaved metadata
-		// @todo How to capture extra information (access id etc)
 		if (sizeof($this->temp_metadata) > 0) {
 			foreach ($this->temp_metadata as $name => $value) {
 				$this->$name = $value;
@@ -1624,7 +1624,7 @@ abstract class ElggEntity extends ElggData implements
 		
 		return $result;
 	}
-	
+
 	/**
 	 * Update the entity in the database.
 	 *
