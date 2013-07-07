@@ -242,6 +242,9 @@ abstract class ElggEntity extends ElggData implements
 	 * 
 	 * If the name matches an attribute, the attribute is returned. If metadata
 	 * does not exist with that name, a null is returned.
+	 *
+	 * This only returns an array if there are multiple values for a particular
+	 * $name key.
 	 * 
 	 * @param string $name Name of the attribute or metadata
 	 * @return mixed
@@ -357,23 +360,26 @@ abstract class ElggEntity extends ElggData implements
 	}
 
 	/**
-	 * Set a piece of metadata.
+	 * Set metadata on this entity.
 	 *
-	 * Plugin authors should use the magic methods or create_metadata().
-	 *
-	 * @warning The metadata will inherit the parent entity's owner and access ID.
-	 * If you want to write metadata with a different owner, use create_metadata().
-	 *
-	 * @access private
+	 * Plugin developers usually want to use the magic set method ($entity->name = 'value').
+	 * Use this method if you want to explicitly set the owner or access of the metadata.
+	 * You cannot set the owner/access before the entity has been saved.
 	 *
 	 * @param string $name       Name of the metadata
 	 * @param mixed  $value      Value of the metadata (doesn't support assoc arrays)
-	 * @param string $value_type Types supported: integer and string. Will auto-identify if not set
-	 * @param bool   $multiple   Allow multiple values for a single name (doesn't support assoc arrays)
+	 * @param string $value_type 'text', 'integer', or '' for automatic detection
+	 * @param bool   $multiple   Allow multiple values for a single name.
+	 *                           Does not support associative arrays.
+	 * @param int    $owner_guid GUID of entity that owns the metadata.
+	 *                           Default is owner of entity.
+	 * @param int    $access_id  Who can read the metadata relative to the owner.
+	 *                           Default is the access level of the entity.
 	 *
 	 * @return bool
+	 * @throws InvalidArgumentException
 	 */
-	public function setMetadata($name, $value, $value_type = null, $multiple = false) {
+	public function setMetadata($name, $value, $value_type = '', $multiple = false, $owner_guid = 0, $access_id = null) {
 
 		// normalize value to an array that we will loop over
 		// remove indexes if value already an array.
@@ -404,12 +410,16 @@ abstract class ElggEntity extends ElggData implements
 				elgg_set_ignore_access($ia);
 			}
 
+			$owner_guid = (int)$owner_guid;
+			$access_id = ($access_id === null) ? $this->getAccessId() : (int)$access_id;
+			$owner_guid = $owner_guid ? $owner_guid : $this->getOwnerGUID();
+
 			// add new md
 			$result = true;
 			foreach ($value as $value_tmp) {
-				// at this point $value should be appended because it was cleared above if needed.
+				// at this point $value is appended because it was cleared above if needed.
 				$md_id = create_metadata($this->getGUID(), $name, $value_tmp, $value_type,
-						$this->getOwnerGUID(), $this->getAccessId(), true);
+						$owner_guid, $access_id, true);
 				if (!$md_id) {
 					return false;
 				}
@@ -418,9 +428,12 @@ abstract class ElggEntity extends ElggData implements
 			return $result;
 		} else {
 			// unsaved entity. store in temp array
-			// returning single entries instead of an array of 1 element is decided in
-			// getMetadata(), just like pulling from the db.
-			// 
+
+			if ($owner_guid != 0 || $access_id !== null) {
+				$msg = "owner guid and access id cannot be used in ElggEntity::setMetadata() until entity is saved.";
+				throw new InvalidArgumentException($msg);
+			}
+
 			// if overwrite, delete first
 			if (!$multiple || !isset($this->temp_metadata[$name])) {
 				$this->temp_metadata[$name] = array();

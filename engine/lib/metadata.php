@@ -60,7 +60,7 @@ function elgg_delete_metadata_by_id($id) {
  * @param string $name           Name of the metadata
  * @param string $value          Value of the metadata
  * @param string $value_type     'text', 'integer', or '' for automatic detection
- * @param int    $owner_guid     GUID of entity that owns the metadata
+ * @param int    $owner_guid     GUID of entity that owns the metadata. Default is logged in user.
  * @param int    $access_id      Default is ACCESS_PRIVATE
  * @param bool   $allow_multiple Allow multiple values for one key. Default is false
  *
