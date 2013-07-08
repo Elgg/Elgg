@@ -11,11 +11,11 @@ $data_root = elgg_get_config('dataroot');
 $failed = array();
 $existing_bucket_dirs = array();
 $cleanup_years = array();
-$users = new ElggBatch('elgg_get_entities', array('type' => 'user', 'limit' => 0), 50);
+$users = new ElggBatch('elgg_get_entities', array('type' => 'user', 'limit' => 0, 'callback' => ''), 50);
 foreach ($users as $user) {
-	$from = $data_root . make_matrix_2013022000($user->getGUID());
+	$from = $data_root . make_matrix_2013022000($user->guid);
 	$bucket_dir = $data_root . getLowerBucketBound_2013022000($user->guid);
-	$to =  "$bucket_dir/" . $user->getGUID();
+	$to =  "$bucket_dir/" . $user->guid;
 
 	if (!is_dir($from)) {
 		continue;
@@ -29,7 +29,7 @@ foreach ($users as $user) {
 		} else {
 			// same perms as ElggDiskFilestore.
 			if (!mkdir($bucket_dir, 0700, true)) {
-				$failed[] = "[$user->guid ($user->username)] Failed creating `$bucket_dir`";
+				$failed[] = "[$user->guid] Failed creating `$bucket_dir`";
 				continue;
 			}
 			$existing_bucket_dirs[] = $bucket_dir;
@@ -37,7 +37,7 @@ foreach ($users as $user) {
 	}
 	
 	if (!rename($from, $to)) {
-		$failed[] = "[$user->guid ($user->username)] Failed moving `$from` to `$to`";
+		$failed[] = "[$user->guid] Failed moving `$from` to `$to`";
 	}
 
 	// store the year for cleanup
@@ -63,16 +63,10 @@ if ($failed) {
 }
 
 
-function make_matrix_2013022000($guid) {
-		$entity = get_entity($guid);
+function make_matrix_2013022000($user) {
+		$time_created = date('Y/m/d', $user->time_created);
 
-		if (!($entity instanceof ElggEntity) || !$entity->time_created) {
-			return false;
-		}
-
-		$time_created = date('Y/m/d', $entity->time_created);
-
-		return "$time_created/$entity->guid/";
+		return "$time_created/$user->guid/";
 }
 
 
@@ -100,11 +94,12 @@ function remove_dir_if_empty_2013022000($dir) {
 }
 
 function getLowerBucketBound_2013022000($guid, $bucket_size = null) {
-		if (!$bucket_size || $bucket_size < 1) {
-			$bucket_size = Elgg_EntityDirLocator::BUCKET_SIZE;
-		}
-		if ($guid < 1) {
-			return false;
-		}
-		return (int) max(floor($guid / $bucket_size) * $bucket_size, 1);
+	if (!$bucket_size || $bucket_size < 1) {
+		$bucket_size = Elgg_EntityDirLocator::BUCKET_SIZE;
 	}
+	if ($guid < 1) {
+		return false;
+	}
+	return (int) max(floor($guid / $bucket_size) * $bucket_size, 1);
+}
+
