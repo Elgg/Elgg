@@ -141,11 +141,9 @@ function get_object_from_log_entry($entry_id) {
 		// surround with try/catch because object could be disabled
 		try {
 			$object = new $class($entry->object_id);
+			return $object;
 		} catch (Exception $e) {
 			
-		}
-		if ($object) {
-			return $object;
 		}
 	}
 

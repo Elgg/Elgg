@@ -761,7 +761,7 @@ function get_metadata_url($id) {
 	$id = (int)$id;
 
 	if ($extender = elgg_get_metadata_from_id($id)) {
-		return get_extender_url($extender);
+		return $extender->getURL();
 	}
 	return false;
 }
