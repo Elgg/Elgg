@@ -1,0 +1,73 @@
+
+.theme-sandbox-page {
+	background-color: white;
+}
+
+.theme-sandbox-header {
+	margin: 30px auto 15px;
+	text-align: center;
+}
+
+.theme-sandbox-main {
+	padding: 20px 20px;
+	min-height: 360px;
+	position: relative;
+}
+
+.theme-sandbox-sidebar {
+	float: left;
+	padding: 20px 20px;
+	margin-right: 10px;
+	position: relative;
+	width: 200px;
+}
+
+.theme-sandbox-site-heading a,
+.theme-sandbox-site-heading a:hover,
+.theme-sandbox-site-heading a:focus {
+	font-size: 44px;
+	color: #333;
+	text-decoration: none;
+}
+.theme-sandbox-site-heading a:hover,
+.theme-sandbox-site-heading a:focus {
+	color: #888;
+}
+
+.theme-sandbox-page-heading {
+	font-size: 24px;
+	color: #666;
+}
+
+.elgg-module-theme-sandbox-nav {
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	color: #333333;
+	text-shadow: 0 1px 0 #fff;
+	position: fixed;
+	width: 200px;
+}
+.elgg-module-theme-sandbox-nav > .elgg-head {
+	background-color: #eee;
+	padding: 5px 10px;
+}
+.elgg-module-theme-sandbox-nav > .elgg-head > h3 {
+	color: #666;
+	text-shadow: 1px 1px 0 #fff;
+}
+
+.elgg-menu-theme-sandbox > li {
+	border-top: 1px solid #ccc;
+	padding: 4px 20px;
+}
+.elgg-menu-theme-sandbox a,
+.elgg-menu-theme-sandbox a:hover,
+.elgg-menu-theme-sandbox a:focus,
+.theme-sandbox-nav li.elgg-state-selected > a {
+	color: #777;
+	text-decoration: none;
+}
+.elgg-menu-theme-sandbox a:hover,
+.elgg-menu-theme-sandbox a:focus {
+	text-decoration: underline;
+}

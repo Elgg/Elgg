@@ -7,7 +7,7 @@
 return array(
 	// menu
 	'admin:develop_tools' => 'Tools',
-	'admin:develop_tools:preview' => 'Theming Sandbox',
+	'admin:develop_tools:preview' => 'Theme Sandbox',
 	'admin:develop_tools:inspect' => 'Inspect',
 	'admin:develop_tools:unit_tests' => 'Unit Tests',
 	'admin:developers' => 'Developers',
@@ -46,17 +46,17 @@ return array(
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
 
 	// theme preview
-	'theme_preview:general' => 'Introduction',
+	'theme_preview:intro' => 'Introduction',
 	'theme_preview:breakout' => 'Break out of iframe',
 	'theme_preview:buttons' => 'Buttons',
 	'theme_preview:components' => 'Components',
 	'theme_preview:forms' => 'Forms',
 	'theme_preview:grid' => 'Grid',
 	'theme_preview:icons' => 'Icons',
+	'theme_preview:miscellaneous' => 'Miscellaneous',
 	'theme_preview:modules' => 'Modules',
 	'theme_preview:navigation' => 'Navigation',
 	'theme_preview:typography' => 'Typography',
-	'theme_preview:miscellaneous' => 'Miscellaneous',
 
 	// unit tests
 	'developers:unit_tests:description' => 'Elgg has unit and integration tests for detecting bugs in its core classes and functions.',
