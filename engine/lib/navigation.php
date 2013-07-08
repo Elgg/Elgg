@@ -445,7 +445,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 		'href' => "#elgg-widget-content-$widget->guid",
 		'link_class' => 'elgg-widget-collapse-button',
 		'rel' => 'toggle',
-		'priority' => 1
+		'priority' => 1,
 	);
 	$return[] = ElggMenuItem::factory($collapse);
 
@@ -459,7 +459,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 			'link_class' => 'elgg-widget-delete-button',
 			'id' => "elgg-widget-delete-button-$widget->guid",
 			'data-elgg-widget-type' => $widget->handler,
-			'priority' => 900
+			'priority' => 900,
 		);
 		$return[] = ElggMenuItem::factory($delete);
 
@@ -498,7 +498,7 @@ function _elgg_annotation_menu_setup($hook, $type, $return, $params) {
 			'href' => $url,
 			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
 			'confirm' => elgg_echo('deleteconfirm'),
-			'encode_text' => false
+			'encode_text' => false,
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}

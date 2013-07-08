@@ -355,7 +355,7 @@ function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = fa
 			'count' => $count,
 			'joins' => array("join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid"),
 			'wheres' => array("u.last_action >= {$time}"),
-			'order_by' => "u.last_action desc"
+			'order_by' => "u.last_action desc",
 		));
 	}
 	return $data;
@@ -958,7 +958,7 @@ function elgg_profile_fields_setup() {
 		'phone' => 'text',
 		'mobile' => 'text',
 		'website' => 'url',
-		'twitter' => 'text'
+		'twitter' => 'text',
 	);
 
 	$loaded_defaults = array();

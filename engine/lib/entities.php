@@ -1634,7 +1634,7 @@ function elgg_list_registered_entities(array $options = array()) {
 		'pagination' => true,
 		'offset' => 0,
 		'types' => array(),
-		'type_subtype_pairs' => array()
+		'type_subtype_pairs' => array(),
 	);
 
 	$options = array_merge($defaults, $options);
@@ -1758,7 +1758,7 @@ function _elgg_entities_gc() {
 		'site' => 'sites_entity',
 		'object' => 'objects_entity',
 		'group' => 'groups_entity',
-		'user' => 'users_entity'
+		'user' => 'users_entity',
 	);
 
 	foreach ($tables as $type => $table) {

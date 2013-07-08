@@ -248,7 +248,7 @@ function _elgg_get_metastring_based_objects($options) {
 		'wheres' => array(),
 		'joins' => array(),
 
-		'callback' => $callback
+		'callback' => $callback,
 	);
 
 	// @todo Ignore site_guid right now because of #2910
@@ -580,7 +580,7 @@ function _elgg_normalize_metastrings_options(array $options = array()) {
 		'created_time_lower'	=>	'metastring_created_time_lower',
 		'created_time_upper'	=>	'metastring_created_time_upper',
 		'calculation'			=>	'metastring_calculation',
-		'ids'					=>	'metastring_ids'
+		'ids'					=>	'metastring_ids',
 	);
 
 	foreach ($prefixes as $prefix) {
@@ -694,7 +694,7 @@ function _elgg_get_metastring_based_object_from_id($id, $type) {
 
 	$options = array(
 		'metastring_type' => $type,
-		'metastring_id' => $id
+		'metastring_id' => $id,
 	);
 
 	$obj = _elgg_get_metastring_based_objects($options);

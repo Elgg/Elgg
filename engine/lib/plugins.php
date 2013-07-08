@@ -1100,7 +1100,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
 		'plugin_user_setting_names' => 'private_setting_names',
 		'plugin_user_setting_values' => 'private_setting_values',
 		'plugin_user_setting_name_value_pairs' => 'private_setting_name_value_pairs',
-		'plugin_user_setting_name_value_pairs_operator' => 'private_setting_name_value_pairs_operator'
+		'plugin_user_setting_name_value_pairs_operator' => 'private_setting_name_value_pairs_operator',
 	);
 
 	foreach ($map as $plugin => $private) {

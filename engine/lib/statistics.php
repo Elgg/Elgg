@@ -105,7 +105,7 @@ function get_online_users() {
 		return elgg_view_entity_list($objects, array(
 			'count' => $count,
 			'limit' => $limit,
-			'offset' => $offset
+			'offset' => $offset,
 		));
 	}
 	return '';
