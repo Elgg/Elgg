@@ -11,7 +11,7 @@ $data_root = elgg_get_config('dataroot');
 $failed = array();
 $existing_bucket_dirs = array();
 $cleanup_years = array();
-$users = new ElggBatch('elgg_get_entities', array('type' => 'user', 'limit' => 0, 'callback' => ''), 50);
+$users = new ElggBatch('elgg_get_entities', array('type' => 'user', 'limit' => 0, 'callback' => ''), null, 100);
 foreach ($users as $user) {
 	$from = $data_root . make_matrix_2013022000($user->guid);
 	$bucket_dir = $data_root . getLowerBucketBound_2013022000($user->guid);
