@@ -463,17 +463,14 @@ function get_config($name, $site_guid = 0) {
 	switch($name) {
 		case 'viewpath':
 			$new_name = 'view_path';
-			$dep_version = 1.8;
 			break;
 
 		case 'pluginspath':
 			$new_name = 'plugins_path';
-			$dep_version = 1.8;
 			break;
 
 		case 'sitename':
 			$new_name = 'site_name';
-			$dep_version = 1.8;
 			break;
 	}
 

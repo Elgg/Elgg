@@ -518,9 +518,7 @@ function validate_username($username) {
 		'\x{e000}-\x{f8ff}' . // private use
 		']/u';
 
-	if (
-		preg_match($blacklist, $username)
-	) {
+	if (preg_match($blacklist, $username)) {
 		// @todo error message needs work
 		throw new RegistrationException(elgg_echo('registration:invalidchars'));
 	}
@@ -608,9 +606,9 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 
 	// A little sanity checking
 	if (empty($username)
-	|| empty($password)
-	|| empty($name)
-	|| empty($email)) {
+			|| empty($password)
+			|| empty($name)
+			|| empty($email)) {
 		return false;
 	}
 
