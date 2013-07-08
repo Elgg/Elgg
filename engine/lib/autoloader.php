@@ -127,3 +127,6 @@ function elgg_register_class($class, $location) {
 
 // set up autoloading and DIC
 _elgg_services();
+
+_elgg_services()->events->registerHandler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);
+_elgg_services()->events->registerHandler('upgrade', 'all', '_elgg_delete_autoload_cache');

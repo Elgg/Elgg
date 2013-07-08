@@ -58,11 +58,6 @@ $lib_dir = "$engine_dir/lib";
 require_once("$lib_dir/autoloader.php");
 require_once("$lib_dir/elgglib.php");
 
-// These have to be registered here instead of in autoloader.php since the
-// functions are defined in elgglib.php.
-elgg_register_event_handler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);
-elgg_register_event_handler('ugprade', 'all', '_elgg_delete_autoload_cache');
-
 // load the rest of the library files from engine/lib/
 // All on separate lines to make diffs easy to read + make it apparent how much
 // we're actually loading on every page (Hint: it's too much).
