@@ -206,7 +206,15 @@ function get_image_resize_parameters($width, $height, $options) {
 
 	$options = array_merge($defaults, $options);
 
-	extract($options);
+	// Avoiding extract() because it hurts static analysis
+	$maxwidth = $options['maxwidth'];
+	$maxheight = $options['maxheight'];
+	$square = $options['square'];
+	$upscale = $options['upscale'];
+	$x1 = $options['x1'];
+	$y1 = $options['y1'];
+	$x2 = $options['x2'];
+	$y2 = $options['y2'];
 
 	// crop image first?
 	$crop = true;

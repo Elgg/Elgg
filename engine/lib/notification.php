@@ -145,13 +145,14 @@ function elgg_remove_subscription($user_guid, $method, $target_guid) {
  * This function triggers the 'enqueue', 'notification' hook.
  *
  * @param string   $action The name of the action
+ * @param string   $type   The type of the object
  * @param ElggData $object The object of the event
  * @return void
  * @access private
  * @since 1.9
  */
 function _elgg_enqueue_notification_event($action, $type, $object) {
-	return _elgg_services()->notifications->enqueueEvent($action, $type, $object);
+	_elgg_services()->notifications->enqueueEvent($action, $type, $object);
 }
 
 /**
@@ -175,7 +176,7 @@ function _elgg_notifications_cron() {
  * @access private
  */
 function _elgg_send_email_notification($hook, $type, $result, $params) {
-	/* @var Elgg_Notifications_Notification */
+	/* @var Elgg_Notifications_Notification $message */
 	$message = $params['notification'];
 
 	$sender = $message->getSender();

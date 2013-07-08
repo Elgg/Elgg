@@ -255,7 +255,7 @@ function _elgg_tagcloud_page_handler($page) {
 	$content = $tags;
 	$body = elgg_view_layout('one_sidebar', array(
 		'title' => $title,
-		'content' => $content
+		'content' => $content,
 	));
 
 	echo elgg_view_page($title, $body);

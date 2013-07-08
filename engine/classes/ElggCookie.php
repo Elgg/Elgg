@@ -8,6 +8,8 @@
  * @see        http://php.net/manual/en/function.setcookie.php
  * @see        http://php.net/manual/en/function.session-set-cookie-params.php
  * @since      1.9.0
+ *
+ * @property-read string $name Name of the cookie
  */
 class ElggCookie {
 	/** @var string */
