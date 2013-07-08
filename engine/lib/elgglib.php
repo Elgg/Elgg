@@ -649,7 +649,7 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
  * @param string $object_type The object type
  * @param string $callback    The callback
  *
- * @return void
+ * @return bool true if a handler was found and removed
  * @since 1.7
  */
 function elgg_unregister_event_handler($event, $object_type, $callback) {
