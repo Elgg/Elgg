@@ -5,9 +5,12 @@
  *
  * @access private
  * 
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * http://framework.zend.com/license/new-bsd New BSD License
+ *
+ * @package    Elgg.Core
+ * @subpackage Database
+ * @since      1.9.0
  */
 class Elgg_Database_MySqlResult implements Elgg_Database_Result {
 
@@ -41,8 +44,8 @@ class Elgg_Database_MySqlResult implements Elgg_Database_Result {
 	/**
 	 * Initialize
 	 *
-	 * @param resource $resource
-	 * @param int      $generatedValue
+	 * @param resource $resource       results or link resource depending on query type
+	 * @param int      $generatedValue The last insert id or 0
 	 * @return Elgg_Database_MySqlResult
 	 * @throws InvalidArgumentException
 	 */
@@ -175,7 +178,7 @@ class Elgg_Database_MySqlResult implements Elgg_Database_Result {
 	/**
 	 * Get generated value
 	 *
-	 * @return int|null
+	 * @return int
 	 */
 	public function getGeneratedValue() {
 		return $this->generatedValue;

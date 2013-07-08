@@ -5,9 +5,12 @@
  *
  * @access private
  *
- * @link      http://github.com/zendframework/zf2 for the canonical source repository
- * @copyright Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
- * @license   http://framework.zend.com/license/new-bsd New BSD License
+ * Copyright (c) 2005-2013 Zend Technologies USA Inc. (http://www.zend.com)
+ * http://framework.zend.com/license/new-bsd New BSD License
+ *
+ * @package    Elgg.Core
+ * @subpackage Database
+ * @since      1.9.0
  */
 class Elgg_Database_MySqlConnection implements Elgg_Database_Connection {
 
@@ -31,7 +34,7 @@ class Elgg_Database_MySqlConnection implements Elgg_Database_Connection {
 	/**
 	 * Constructor
 	 *
-	 * @param array $connectionInfo
+	 * @param array $connectionInfo Connection parameters
 	 */
 	public function __construct(array $connectionInfo) {
 		$this->setConnectionParameters($connectionInfo);
@@ -40,7 +43,7 @@ class Elgg_Database_MySqlConnection implements Elgg_Database_Connection {
 	/**
 	 * Set driver
 	 * 
-	 * @param Elgg_Database_MySqlDriver $driver
+	 * @param Elgg_Database_MySqlDriver $driver MySQL driver
 	 * @return Elgg_Database_MySqlConnection
 	 */
 	public function setDriver(Elgg_Database_MySqlDriver $driver) {
@@ -51,7 +54,7 @@ class Elgg_Database_MySqlConnection implements Elgg_Database_Connection {
 	/**
 	 * Set connection parameters
 	 *
-	 * @param array $connectionParameters
+	 * @param array $connectionParameters Connection parameters
 	 * @return Elgg_Database_MySqlConnection
 	 */
 	public function setConnectionParameters(array $connectionParameters) {
@@ -127,7 +130,7 @@ class Elgg_Database_MySqlConnection implements Elgg_Database_Connection {
 	/**
 	 * Execute
 	 *
-	 * @param string $sql
+	 * @param string $sql The query string
 	 * @return Elgg_Database_MySqlResult
 	 */
 	public function execute($sql) {
