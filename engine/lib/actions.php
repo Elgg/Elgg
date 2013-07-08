@@ -34,10 +34,12 @@
  * Handle a request for an action
  * 
  * @param array $segments URL segments that make up action name
- * @return bool
+ *
+ * @return void
+ * @access private
  */
 function _elgg_action_handler(array $segments) {
-	return _elgg_services()->actions->execute(implode('/', $segments));
+	_elgg_services()->actions->execute(implode('/', $segments));
 }
 
 /**
@@ -65,7 +67,7 @@ function _elgg_action_handler(array $segments) {
  * @access private
  */
 function action($action, $forwarder = "") {
-	return _elgg_services()->actions->execute($action, $forwarder);
+	_elgg_services()->actions->execute($action, $forwarder);
 }
 
 /**
@@ -125,16 +127,16 @@ function elgg_unregister_action($action) {
  *
  * Plugin authors should never have to manually validate action tokens.
  *
- * @param bool  $visibleerrors Emit {@link register_error()} errors on failure?
- * @param mixed $token         The token to test against. Default: $_REQUEST['__elgg_token']
- * @param mixed $ts            The time stamp to test against. Default: $_REQUEST['__elgg_ts']
+ * @param bool  $visible_errors Emit {@link register_error()} errors on failure?
+ * @param mixed $token          The token to test against. Default: $_REQUEST['__elgg_token']
+ * @param mixed $ts             The time stamp to test against. Default: $_REQUEST['__elgg_ts']
  *
  * @return bool
  * @see generate_action_token()
  * @access private
  */
-function validate_action_token($visibleerrors = true, $token = null, $ts = null) {
-	return _elgg_services()->actions->validateActionToken($visibleerrors, $token, $ts);
+function validate_action_token($visible_errors = true, $token = null, $ts = null) {
+	return _elgg_services()->actions->validateActionToken($visible_errors, $token, $ts);
 }
 
 /**

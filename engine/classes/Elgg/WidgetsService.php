@@ -163,6 +163,8 @@ class Elgg_WidgetsService {
 	}
 
 	/**
+	 * @param string $handler
+	 * @return bool
 	 * @see elgg_unregister_widget_type
 	 * @access private
 	 * @since 1.9.0

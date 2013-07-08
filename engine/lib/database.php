@@ -128,7 +128,7 @@ function delete_data($query) {
  * @throws DatabaseException
  */
 function run_sql_script($scriptlocation) {
-	return _elgg_services()->db->runSqlScript($scriptlocation);
+	_elgg_services()->db->runSqlScript($scriptlocation);
 }
 
 /**

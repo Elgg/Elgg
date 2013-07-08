@@ -8,6 +8,10 @@
  */
 
 /// Map a username to a cached GUID
+/**
+ * @var int[] $USERNAME_TO_GUID_MAP_CACHE
+ * @access private
+ */
 global $USERNAME_TO_GUID_MAP_CACHE;
 $USERNAME_TO_GUID_MAP_CACHE = array();
 
@@ -351,7 +355,7 @@ function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = fa
 			'count' => $count,
 			'joins' => array("join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid"),
 			'wheres' => array("u.last_action >= {$time}"),
-			'order_by' => "u.last_action desc"
+			'order_by' => "u.last_action desc",
 		));
 	}
 	return $data;
@@ -514,9 +518,7 @@ function validate_username($username) {
 		'\x{e000}-\x{f8ff}' . // private use
 		']/u';
 
-	if (
-		preg_match($blacklist, $username)
-	) {
+	if (preg_match($blacklist, $username)) {
 		// @todo error message needs work
 		throw new RegistrationException(elgg_echo('registration:invalidchars'));
 	}
@@ -604,9 +606,9 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 
 	// A little sanity checking
 	if (empty($username)
-	|| empty($password)
-	|| empty($name)
-	|| empty($email)) {
+			|| empty($password)
+			|| empty($name)
+			|| empty($email)) {
 		return false;
 	}
 
@@ -954,7 +956,7 @@ function elgg_profile_fields_setup() {
 		'phone' => 'text',
 		'mobile' => 'text',
 		'website' => 'url',
-		'twitter' => 'text'
+		'twitter' => 'text',
 	);
 
 	$loaded_defaults = array();

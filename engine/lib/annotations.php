@@ -517,7 +517,7 @@ function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = nu
 }
 
 /**
- * Set the URL for a comment when caled from a plugin hook
+ * Set the URL for a comment when called from a plugin hook
  *
  * @param string $hook   Hook name
  * @param string $type   Hook type
@@ -528,6 +528,7 @@ function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = nu
  */
 function _elgg_set_comment_url($hook, $type, $url, $params) {
 	$annotation = $params['extender'];
+	/* @var ElggExtender $annotation */
 	if ($annotation->getSubtype() == 'generic_comment') {
 		$entity = $annotation->getEntity();
 		if ($entity) {

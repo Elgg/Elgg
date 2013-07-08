@@ -445,6 +445,8 @@ function _elgg_set_plugin_priorities(array $order) {
 	$order = array_values($order);
 
 	$missing_plugins = array();
+	/* @var ElggPlugin[] $missing_plugins */
+
 	foreach ($plugins as $plugin) {
 		$plugin_id = $plugin->getID();
 
@@ -1098,7 +1100,7 @@ function elgg_get_entities_from_plugin_user_settings(array $options = array()) {
 		'plugin_user_setting_names' => 'private_setting_names',
 		'plugin_user_setting_values' => 'private_setting_values',
 		'plugin_user_setting_name_value_pairs' => 'private_setting_name_value_pairs',
-		'plugin_user_setting_name_value_pairs_operator' => 'private_setting_name_value_pairs_operator'
+		'plugin_user_setting_name_value_pairs_operator' => 'private_setting_name_value_pairs_operator',
 	);
 
 	foreach ($map as $plugin => $private) {
