@@ -9,7 +9,7 @@
 /**
  * Cache entities in memory once loaded.
  *
- * @global array $ENTITY_CACHE
+ * @global ElggEntity[] $ENTITY_CACHE
  * @access private
  */
 global $ENTITY_CACHE;

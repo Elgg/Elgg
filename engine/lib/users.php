@@ -8,6 +8,10 @@
  */
 
 /// Map a username to a cached GUID
+/**
+ * @var int[] $USERNAME_TO_GUID_MAP_CACHE
+ * @access private
+ */
 global $USERNAME_TO_GUID_MAP_CACHE;
 $USERNAME_TO_GUID_MAP_CACHE = array();
 

@@ -445,6 +445,8 @@ function _elgg_set_plugin_priorities(array $order) {
 	$order = array_values($order);
 
 	$missing_plugins = array();
+	/* @var ElggPlugin[] $missing_plugins */
+
 	foreach ($plugins as $plugin) {
 		$plugin_id = $plugin->getID();
 

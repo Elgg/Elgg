@@ -79,7 +79,7 @@ function elgg_register_widget_type($handler, $name, $description, $context = arr
  *
  * @param string $handler The identifier for the widget
  *
- * @return void
+ * @return bool true if handler was found as unregistered
  * @since 1.8.0
  */
 function elgg_unregister_widget_type($handler) {

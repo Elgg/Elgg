@@ -8,6 +8,10 @@
  */
 
 /** Cache metastrings for a page */
+/**
+ * @var string[] $METASTRINGS_CACHE
+ * @access private
+ */
 global $METASTRINGS_CACHE;
 $METASTRINGS_CACHE = array();
 

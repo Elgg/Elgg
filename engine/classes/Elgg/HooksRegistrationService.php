@@ -51,7 +51,12 @@ abstract class Elgg_HooksRegistrationService {
 	
 	/**
 	 * Unregister a handler
-	 * 
+	 *
+	 * @param string   $name
+	 * @param string   $type
+	 * @param callable $callback
+	 *
+	 * @return bool
 	 * @access private
 	 */
 	public function unregisterHandler($name, $type, $callback) {

@@ -266,6 +266,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 		// we have featured or custom menu items
 
 		$registered = $return['default'];
+		/* @var ElggMenuItem[] $registered */
 
 		// set up featured menu items
 		$featured = array();
@@ -305,6 +306,8 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 	// check if we have anything selected
 	$selected = false;
 	foreach ($return as $section) {
+		/* @var ElggMenuItem[] $section */
+
 		foreach ($section as $item) {
 			if ($item->getSelected()) {
 				$selected = true;

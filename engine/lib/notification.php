@@ -175,7 +175,7 @@ function _elgg_notifications_cron() {
  * @access private
  */
 function _elgg_send_email_notification($hook, $type, $result, $params) {
-	/* @var Elgg_Notifications_Notification */
+	/* @var Elgg_Notifications_Notification $message */
 	$message = $params['notification'];
 
 	$sender = $message->getSender();
