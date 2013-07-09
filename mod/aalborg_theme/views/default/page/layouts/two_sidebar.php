@@ -26,7 +26,7 @@ if (isset($vars['class'])) {
 	
 	<div class="elgg-main elgg-body">
 		<?php
-			if (isset($vars['title'])) {
+			if (isset($vars['title']) && $vars['title']) {
 				echo '<div class="elgg-head clearfix">';
 				echo elgg_view_title($vars['title']);
 				echo '</div>';
