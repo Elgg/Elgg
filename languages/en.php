@@ -688,6 +688,7 @@ These changes will only affect new users on the site.',
 		You can configure the message shown to your users below.',
 	'admin:maintenance_mode:on' => 'Maintenance mode is on',
 	'admin:maintenance_mode:off' => 'Maintenance mode is off',
+	'admin:login' => 'Admin Login',
 
 /**
  * User settings
