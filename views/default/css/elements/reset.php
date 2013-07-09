@@ -79,3 +79,8 @@ blockquote, q {
 a {
 	text-decoration: none;
 }
+button::-moz-focus-inner,
+input::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+}
