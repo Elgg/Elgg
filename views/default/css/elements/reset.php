@@ -81,6 +81,6 @@ a {
 }
 button::-moz-focus-inner,
 input::-moz-focus-inner {
-    border: 0;
-    padding: 0;
+	border: 0;
+	padding: 0;
 }
