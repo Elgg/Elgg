@@ -291,6 +291,9 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 
 			'unquoted already anchor <a href=http://www.yahoo.com>yahoo</a>' =>
 				'unquoted already anchor <a href=http://www.yahoo.com>yahoo</a>',
+
+			'parens in uri http://thedailywtf.com/Articles/A-(Long-Overdue)-BuildMaster-Introduction.aspx' =>
+				'parens in uri <a href="http://thedailywtf.com/Articles/A-(Long-Overdue)-BuildMaster-Introduction.aspx" rel="nofollow">http:/<wbr />/<wbr />thedailywtf.com/<wbr />Articles/<wbr />A-(Long-Overdue)-BuildMaster-Introduction.aspx</a>'
 		);
 		foreach ($cases as $input => $output) {
 			$this->assertEqual($output, parse_urls($input));
