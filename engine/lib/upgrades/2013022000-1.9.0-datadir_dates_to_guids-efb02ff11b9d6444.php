@@ -13,7 +13,7 @@ $existing_bucket_dirs = array();
 $cleanup_years = array();
 $users = new ElggBatch('elgg_get_entities', array('type' => 'user', 'limit' => 0, 'callback' => ''), null, 100);
 foreach ($users as $user_row) {
-	$from = $data_root . make_matrix_2013022000($user_row->guid);
+	$from = $data_root . make_matrix_2013022000($user_row);
 	$bucket_dir = $data_root . getLowerBucketBound_2013022000($user_row->guid);
 	$to =  "$bucket_dir/" . $user_row->guid;
 
@@ -41,7 +41,7 @@ foreach ($users as $user_row) {
 	}
 
 	// store the year for cleanup
-	$year = date('Y', $user->time_created);
+	$year = date('Y', $user_row->time_created);
 	if (!in_array($year, $cleanup_years)) {
 		$cleanup_years[] = $year;
 	}
