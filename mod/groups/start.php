@@ -1028,7 +1028,7 @@ function discussion_reply_notifications($event, $type, $annotation) {
 								$body = $string;
 							}
 							if ($body !== false) {
-								notify_user($user->guid, $topic->getContainerGUID(), $subject, $body, null, array($method));
+								notify_user($user->guid, $topic->getContainerGUID(), $subject, $body, array(), array($method));
 							}
 						}
 					}

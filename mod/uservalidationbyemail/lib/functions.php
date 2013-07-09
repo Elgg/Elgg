@@ -45,7 +45,7 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 		// Send validation email
 		$subject = elgg_echo('email:validate:subject', array($user->name, $site->name));
 		$body = elgg_echo('email:validate:body', array($user->name, $site->name, $link, $site->name, $site->url));
-		$result = notify_user($user->guid, $site->guid, $subject, $body, NULL, 'email');
+		$result = notify_user($user->guid, $site->guid, $subject, $body, array(), 'email');
 
 		if ($result && !$admin_requested) {
 			system_message(elgg_echo('uservalidationbyemail:registerok'));
