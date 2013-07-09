@@ -471,6 +471,8 @@ return array(
 	'admin:users:opt:description' => "Configure users and account information. ",
 	'admin:users:find' => 'Find',
 
+	'admin:administer_utilities:maintenance' => 'Maintenance mode',
+
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
 	'admin:settings:advanced' => 'Advanced Settings',
@@ -680,6 +682,12 @@ These changes will only affect new users on the site.',
 	'admin:robots.txt:instructions' => "Edit this site's robots.txt file below",
 	'admin:robots.txt:plugins' => "Plugins are adding the following to the robots.txt file",
 	'admin:robots.txt:subdir' => "The robots.txt tool will not work because Elgg is installed in a sub-directory",
+
+	'admin:maintenance_mode:message' => 'This site is down for maintenance',
+	'admin:maintenance_mode:instructions' => 'Maintenance mode should be used for upgrades and other large changes to the site.
+		You can configure the message shown to your users below.',
+	'admin:maintenance_mode:on' => 'Maintenance mode is on',
+	'admin:maintenance_mode:off' => 'Maintenance mode is off',
 
 /**
  * User settings

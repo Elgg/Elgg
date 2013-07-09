@@ -228,6 +228,8 @@ function _elgg_admin_init() {
 
 	elgg_register_event_handler('pagesetup', 'system', '_elgg_admin_pagesetup', 1000);
 
+	// maintenance mode
+
 	elgg_register_action('admin/user/ban', '', 'admin');
 	elgg_register_action('admin/user/unban', '', 'admin');
 	elgg_register_action('admin/user/delete', '', 'admin');
@@ -240,6 +242,7 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/site/flush_cache', '', 'admin');
 	elgg_register_action('admin/site/unlock_upgrade', '', 'admin');
 	elgg_register_action('admin/site/set_robots', '', 'admin');
+	elgg_register_action('admin/site/set_maintenance_mode', '', 'admin');
 
 	elgg_register_action('admin/menu/save', '', 'admin');
 
@@ -271,6 +274,8 @@ function _elgg_admin_init() {
 	elgg_register_admin_menu_item('administer', 'statistics', null, 20);
 	elgg_register_admin_menu_item('administer', 'overview', 'statistics');
 	elgg_register_admin_menu_item('administer', 'server', 'statistics');
+	//utilities
+	elgg_register_admin_menu_item('administer', 'maintenance', 'administer_utilities');
 
 	// users
 	elgg_register_admin_menu_item('administer', 'users', null, 20);
