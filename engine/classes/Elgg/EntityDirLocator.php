@@ -39,7 +39,7 @@ class Elgg_EntityDirLocator {
 	
 	/**
 	 * Construct a file path matrix for an entity.
-	 * As of 1.8.5 matrixes are based on GUIDs and separated into dirs of 5000 entries
+	 * As of 1.9.0 matrixes are based on GUIDs and separated into dirs of 5000 entries
 	 * with the dir name being the lower bound for the GUID.
 	 *
 	 * @return string The path where the entity's data will be stored relative to the data dir.
@@ -62,8 +62,8 @@ class Elgg_EntityDirLocator {
 	 * Return the lower bound for a guid with a bucket size
 	 *
 	 * @param int $guid        The guid to get a bound for. Must be > 0.
-	 * @param int $bucket_size The size of the bucket. (The number of entries per dir.)
-	 * @return float
+	 * @param int $bucket_size The size of the bucket. (The number of entities per dir.)
+	 * @return int
 	 */
 	private static function getLowerBucketBound($guid, $bucket_size = null) {
 		if (!$bucket_size || $bucket_size < 1) {

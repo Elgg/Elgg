@@ -3,7 +3,7 @@
  * Elgg 1.9.0 upgrade 2013022000
  * datadir_dates_to_guids
  *
- * Rewrites data directory to use owner guids instead of creation dates
+ * Rewrites user directories in data directory to use guids instead of creation dates
  */
 
 $data_root = elgg_get_config('dataroot');
@@ -11,11 +11,11 @@ $data_root = elgg_get_config('dataroot');
 $failed = array();
 $existing_bucket_dirs = array();
 $cleanup_years = array();
-$users = new ElggBatch('elgg_get_entities', array('type' => 'user', 'limit' => 0), 50);
-foreach ($users as $user) {
-	$from = $data_root . make_matrix_2013022000($user->getGUID());
-	$bucket_dir = $data_root . getLowerBucketBound_2013022000($user->guid);
-	$to =  "$bucket_dir/" . $user->getGUID();
+$users = new ElggBatch('elgg_get_entities', array('type' => 'user', 'limit' => 0, 'callback' => ''), null, 100);
+foreach ($users as $user_row) {
+	$from = $data_root . make_matrix_2013022000($user_row);
+	$bucket_dir = $data_root . getLowerBucketBound_2013022000($user_row->guid);
+	$to =  "$bucket_dir/" . $user_row->guid;
 
 	if (!is_dir($from)) {
 		continue;
@@ -29,7 +29,7 @@ foreach ($users as $user) {
 		} else {
 			// same perms as ElggDiskFilestore.
 			if (!mkdir($bucket_dir, 0700, true)) {
-				$failed[] = "[$user->guid ($user->username)] Failed creating `$bucket_dir`";
+				$failed[] = "[$user_row->guid] Failed creating `$bucket_dir`";
 				continue;
 			}
 			$existing_bucket_dirs[] = $bucket_dir;
@@ -37,11 +37,11 @@ foreach ($users as $user) {
 	}
 	
 	if (!rename($from, $to)) {
-		$failed[] = "[$user->guid ($user->username)] Failed moving `$from` to `$to`";
+		$failed[] = "[$user_row->guid] Failed moving `$from` to `$to`";
 	}
 
 	// store the year for cleanup
-	$year = date('Y', $user->time_created);
+	$year = date('Y', $user_row->time_created);
 	if (!in_array($year, $cleanup_years)) {
 		$cleanup_years[] = $year;
 	}
@@ -63,19 +63,24 @@ if ($failed) {
 }
 
 
-function make_matrix_2013022000($guid) {
-		$entity = get_entity($guid);
+/**
+ * Get the old directory location
+ *
+ * @param stdClass $user_row
+ * @return string
+ */
+function make_matrix_2013022000($user_row) {
+	$time_created = date('Y/m/d', $user_row->time_created);
 
-		if (!($entity instanceof ElggEntity) || !$entity->time_created) {
-			return false;
-		}
-
-		$time_created = date('Y/m/d', $entity->time_created);
-
-		return "$time_created/$entity->guid/";
+	return "$time_created/$user_row->guid/";
 }
 
-
+/**
+ * Remove directory if all users moved out of it
+ *
+ * @param string $dir
+ * @return bool
+ */
 function remove_dir_if_empty_2013022000($dir) {
 	$files = scandir($dir);
 
@@ -99,12 +104,16 @@ function remove_dir_if_empty_2013022000($dir) {
 	return rmdir($dir);
 }
 
-function getLowerBucketBound_2013022000($guid, $bucket_size = null) {
-		if (!$bucket_size || $bucket_size < 1) {
-			$bucket_size = Elgg_EntityDirLocator::BUCKET_SIZE;
-		}
-		if ($guid < 1) {
-			return false;
-		}
-		return (int) max(floor($guid / $bucket_size) * $bucket_size, 1);
+/**
+ * Get the base directory name as int
+ *
+ * @param int $guid GUID of the user
+ * @return int
+ */
+function getLowerBucketBound_2013022000($guid) {
+	$bucket_size = Elgg_EntityDirLocator::BUCKET_SIZE;
+	if ($guid < 1) {
+		return false;
 	}
+	return (int) max(floor($guid / $bucket_size) * $bucket_size, 1);
+}
