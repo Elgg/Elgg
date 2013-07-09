@@ -797,6 +797,7 @@ These changes will only affect new users on the site.',
 	'site' => 'Site',
 	'activity' => 'Activity',
 	'members' => 'Members',
+	'menu' => 'Menu',
 
 	'up' => 'Up',
 	'down' => 'Down',
