@@ -680,6 +680,8 @@ function _elgg_admin_maintenance_handler($hook, $type, $info) {
 
 	elgg_load_css('elgg.maintenance');
 
+	header("HTTP/1.1 503 Service Unavailable");
+
 	$body = elgg_view_layout('maintenance', array(
 		'message' => $message,
 		'site' => $site,
