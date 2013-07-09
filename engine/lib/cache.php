@@ -165,13 +165,16 @@ function elgg_get_simplecache_url($type, $view) {
 
 
 /**
+ * Get the base url for simple cache requests
+ * 
  * @return string The simplecache root url for the current viewtype.
  * @access private
  */
 function _elgg_get_simplecache_root() {
 	$viewtype = elgg_get_viewtype();
 	if (elgg_is_simplecache_enabled()) {
-		$lastcache = elgg_get_config('lastcache');
+		// stored in datalist as 'simplecache_lastupdate'
+		$lastcache = (int)elgg_get_config('lastcache');
 	} else {
 		$lastcache = 0;
 	}
@@ -327,7 +330,7 @@ function _elgg_cache_init() {
 	global $CONFIG;
 
 	if (!defined('UPGRADING') && empty($CONFIG->lastcache)) {
-		$CONFIG->lastcache = datalist_get('simplecache_lastupdate');
+		$CONFIG->lastcache = (int)datalist_get('simplecache_lastupdate');
 	}
 
 	// cache system data if enabled and not loaded
