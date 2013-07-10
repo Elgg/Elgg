@@ -163,7 +163,33 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
 }
 
 /**
- * Convenience function for registering a button to title menu
+ * Get a menu item registered for a menu
+ *
+ * @param string $menu_name The name of the menu
+ * @param string $item_name The unique identifier for this menu item
+ *
+ * @return ElggMenuItem
+ * @since 1.9.0
+ */
+function elgg_get_menu_item($menu_name, $item_name) {
+	global $CONFIG;
+
+	if (!isset($CONFIG->menus[$menu_name])) {
+		return null;
+	}
+
+	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
+		/* @var ElggMenuItem $menu_object */
+		if ($menu_object->getName() == $item_name) {
+			return $CONFIG->menus[$menu_name][$index];
+		}
+	}
+
+	return null;
+}
+
+/**
+ * Convenience function for registering a button to the title menu
  *
  * The URL must be $handler/$name/$guid where $guid is the guid of the page owner.
  * The label of the button is "$handler:$name" so that must be defined in a
