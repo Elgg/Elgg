@@ -12,22 +12,23 @@
 	BUTTONS
 ************************** */
 .elgg-button {
-	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;	
+	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	color: #FFF;
 	width: auto;
 	padding: 5px 12px;
 	cursor: pointer;
-    background: #4787B8;	
+	background: #4787B8;
 	border: 1px solid #3873AB; /* Fallback */
 	border: 1px solid rgba(0, 0, 0, 0.2);
-	
-	border-radius:	3px;
+
+	border-radius: 3px;
 	box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.6);
 }
 a.elgg-button {
 	padding: 6px 12px;
 }
-.elgg-button:hover {
+.elgg-button:hover,
+.elgg-button:focus {
 	background: #60B6F7;
 	text-decoration: none;
 	color: #FFF;
@@ -41,7 +42,8 @@ a.elgg-button {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #FAA51A;
 }
-.elgg-button-cancel:hover {
+.elgg-button-cancel:hover,
+.elgg-button-cancel:focus {
 	background: #E38F07;
 }
 .elgg-button-delete {
@@ -49,7 +51,8 @@ a.elgg-button {
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #FF3300;
 }
-.elgg-button-delete:hover {
+.elgg-button-delete:hover,
+.elgg-button-delete:focus {
 	background: #D63006;
 }
 .elgg-button-dropdown {
@@ -57,19 +60,16 @@ a.elgg-button {
 	text-decoration: none;
 	display: block;
 	position: relative;
-	margin-left: 0;	
+	margin-left: 0;
 	color: #FFF;
 	border: none;
 	box-shadow: none;
-	border-radius:	0;
+	border-radius: 0;
 }
-.elgg-button-dropdown:hover {
+.elgg-button-dropdown:hover,
+.elgg-button-dropdown:focus,
+.elgg-button-dropdown.elgg-state-active {
 	color: #FFF;
 	background: #60B8F7;
 	text-decoration: none;
-}
-.elgg-button-dropdown.elgg-state-active {
-	background: #60B8F7;
-	outline: none;
-	color: #FFF;
 }
