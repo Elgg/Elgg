@@ -127,11 +127,11 @@
 }
 .elgg-layout-one-sidebar .elgg-main {
 	float: left;
-    width: 72.525252%;
+	width: 72.525252%;
 }
 .elgg-layout-two-sidebar .elgg-main {
 	float: left;
-    width: 50.101010%;
+	width: 50.101010%;
 }
 
 /***** PAGE FOOTER ******/

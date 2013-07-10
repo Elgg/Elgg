@@ -15,7 +15,7 @@
 	position: absolute;
 	top: 0;
 	left: 0;
-    
+
     background-color: #FFF;
     border: 1px solid #DEDEDE;
     padding: 10px;

@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg Search css
- * 
+ *
  */
 ?>
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg Profile CSS
- * 
+ *
  * @package Profile
  */
 ?>

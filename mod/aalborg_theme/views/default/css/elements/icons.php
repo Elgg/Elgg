@@ -312,20 +312,20 @@
 .elgg-avatar-tiny > a > img {
 	width: 25px;
 	height: 25px;
-	
+
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 3px;
-	
+
 	background-clip:  border;
 	background-size: 25px;
 }
 .elgg-avatar-small > a > img {
 	width: 40px;
 	height: 40px;
-	
+
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 3px;
-	
+
 	background-clip:  border;
 	background-size: 40px;
 }

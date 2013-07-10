@@ -42,7 +42,7 @@
 	color: #666;
 }
 #friends_collections_accordian li h2 {
-	border-radius: 3px;	
+	border-radius: 3px;
 	background: none repeat scroll 0 0 #F0F0F0;
 	color: #444;
 	cursor: pointer;

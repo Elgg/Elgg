@@ -34,12 +34,12 @@ input, textarea {
 	color: #666;
 	font: 100% Arial, Helvetica, sans-serif;
 	padding: 7px 6px;
-	width: 100%;	
+	width: 100%;
 	border-radius: 3px;
-	
+
 	-webkit-box-sizing: border-box;
-	-moz-box-sizing: 	border-box;
-	box-sizing: 		border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 input[type=email]:focus,
 input[type=password]:focus,
@@ -59,15 +59,15 @@ textarea:focus {
 	cursor: pointer;
 }
 .elgg-input-access {
-	margin:5px 0 0 0;
+	margin: 5px 0 0 0;
 }
 
 input[type="checkbox"],
 input[type="radio"] {
-	margin:0 3px 0 0;
-	padding:0;
-	border:none;
-	width:auto;
+	margin: 0 3px 0 0;
+	padding: 0;
+	border: none;
+	width: auto;
 }
 .elgg-input-checkboxes.elgg-horizontal li,
 .elgg-input-radios.elgg-horizontal li {
@@ -88,9 +88,9 @@ input[type="radio"] {
 	margin-bottom: 15px;
 }
 .friends-picker-container h3 {
-	font-size:4em !important;
+	font-size: 4em !important;
 	text-align: left;
-	margin:10px 0 20px !important;
+	margin: 10px 0 20px !important;
 	color: #999 !important;
 	background: none !important;
 	padding:0 !important;
@@ -98,11 +98,11 @@ input[type="radio"] {
 .friends-picker .friends-picker-container .panel ul {
 	text-align: left;
 	margin: 0;
-	padding:0;
+	padding: 0;
 }
 .friends-picker-wrapper {
 	margin: 0;
-	padding:0;
+	padding: 0;
 	position: relative;
 	width: 720px;
 }
@@ -110,7 +110,7 @@ input[type="radio"] {
 	position: relative;
 	overflow: hidden;
 	margin: 0;
-	padding:0;
+	padding: 0;
 	width: 720px;
 	height: auto;
 	background-color: #DEDEDE;
@@ -118,7 +118,7 @@ input[type="radio"] {
 }
 .friendspicker-savebuttons {
 	background: #FFF;
-	border-radius: 3px;	
+	border-radius: 3px;
 	margin:0 10px 10px;
 }
 .friends-picker .friends-picker-container { /* long container used to house end-to-end panels. Width is calculated in JS  */
@@ -129,22 +129,22 @@ input[type="radio"] {
 	list-style-type: none;
 }
 .friends-picker .friends-picker-container .panel {
-	float:left;
+	float: left;
 	height: 100%;
 	position: relative;
 	width: 730px;
 	margin: 0;
-	padding:0;
+	padding: 0;
 }
 .friends-picker .friends-picker-container .panel .wrapper {
 	margin: 0;
-	padding:4px 10px 10px 10px;
+	padding: 4px 10px 10px 10px;
 	min-height: 230px;
 }
 .friends-picker-navigation {
 	margin: 10px 0;
 	padding: 0 0 10px;
-	border-bottom:1px solid #DCDCDC;
+	border-bottom: 1px solid #DCDCDC;
 }
 .friends-picker-navigation ul {
 	list-style: none;
@@ -152,7 +152,7 @@ input[type="radio"] {
 }
 .friends-picker-navigation ul li {
 	float: left;
-	margin:0;
+	margin: 0;
 	background: #FFF;
 }
 .friends-picker-navigation a {
@@ -163,7 +163,7 @@ input[type="radio"] {
 	text-decoration: none;
 	display: block;
 	padding: 0;
-	width:20px;
+	width: 20px;
 	border-radius: 3px;
 }
 .tabHasContent {
@@ -190,11 +190,11 @@ input[type="radio"] {
 }
 .friends-picker-navigation-l {
 	right: 48px;
-	z-index:1;
+	z-index: 1;
 }
 .friends-picker-navigation-r {
 	right: 0;
-	z-index:1;
+	z-index: 1;
 }
 .friends-picker-navigation-l {
 	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat left top;
@@ -210,7 +210,7 @@ input[type="radio"] {
 }
 .friendspicker-savebuttons .elgg-button-submit,
 .friendspicker-savebuttons .elgg-button-cancel {
-	margin:5px 20px 5px 5px;
+	margin: 5px 20px 5px 5px;
 }
 #friendspicker-members-table {
 	margin: 10px 0 0;
@@ -269,7 +269,7 @@ input[type="radio"] {
 }
 
 /* ***************************************
-      DATE PICKER
+	DATE PICKER
 **************************************** */
 .ui-datepicker {
 	display: none;
@@ -350,3 +350,4 @@ input[type="radio"] {
 	color: #0054A7;
 	background: #E4ECF5;
 }
+

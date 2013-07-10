@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg Groups css
- * 
+ *
  * @package groups
  */
 
