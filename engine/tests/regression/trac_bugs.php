@@ -373,4 +373,14 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		//delete group and annotations
 		$group->delete();
 	}
+
+	public function test_ElggXMLElement_does_not_load_external_entities() {
+		$payload = file_get_contents(dirname(dirname(__FILE__)) . '/test_files/xxe/request.xml');
+		$payload = sprintf($payload, 'file://' . realpath(dirname(dirname(__FILE__)) . '/test_files/xxe/external_entity.txt'));
+
+		$el = new ElggXMLElement($payload);
+		$chidren = $el->getChildren();
+		$content = $chidren[0]->getContent();
+		$this->assertNoPattern('/secret/', $content);
+	}
 }
