@@ -413,6 +413,15 @@ function elgg_unextend_view($view, $view_extension) {
  */
 function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
 
+	$params = array();
+	$params['segments'] = _elgg_services()->request->getUrlSegments();
+	if ($params['segments']) {
+		$params['identifier'] = array_shift($params['segments']);
+	} else {
+		$params['identifier'] = '';
+	}
+	$page_shell = elgg_trigger_plugin_hook('shell', 'page', $params, $page_shell);
+
 	$messages = null;
 	if (count_messages()) {
 		// get messages - try for errors first
@@ -479,6 +488,15 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
  * @return string The layout
  */
 function elgg_view_layout($layout_name, $vars = array()) {
+
+	$params = array();
+	$params['segments'] = _elgg_services()->request->getUrlSegments();
+	if ($params['segments']) {
+		$params['identifier'] = array_shift($params['segments']);
+	} else {
+		$params['identifier'] = '';
+	}
+	$layout_name = elgg_trigger_plugin_hook('layout', 'page', $params, $layout_name);
 
 	if (is_string($vars) || $vars === null) {
 		elgg_deprecated_notice("The use of unlimited optional string arguments in elgg_view_layout() was deprecated in favor of an options array", 1.8);
