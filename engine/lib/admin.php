@@ -666,7 +666,7 @@ function _elgg_admin_maintenance_handler($hook, $type, $info) {
 		return;
 	}
 
-	if ($info['identifier'] == 'ajax' || $info['identifier'] == 'action') {
+	if ($info['identifier'] == 'action' && $info['segments'][0] == 'login') {
 		return;
 	}
 
@@ -686,7 +686,7 @@ function _elgg_admin_maintenance_handler($hook, $type, $info) {
 		'message' => $message,
 		'site' => $site,
 	));
-	echo elgg_view_page('', $body, 'maintenance');
+	echo elgg_view_page($site->name, $body, 'maintenance');
 
 	return false;
 }
