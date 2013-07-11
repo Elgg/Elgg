@@ -414,12 +414,9 @@ function elgg_unextend_view($view, $view_extension) {
 function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
 
 	$params = array();
+	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
 	$params['segments'] = _elgg_services()->request->getUrlSegments();
-	if ($params['segments']) {
-		$params['identifier'] = array_shift($params['segments']);
-	} else {
-		$params['identifier'] = '';
-	}
+	array_shift($params['segments']);
 	$page_shell = elgg_trigger_plugin_hook('shell', 'page', $params, $page_shell);
 
 	$messages = null;
@@ -490,12 +487,9 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 function elgg_view_layout($layout_name, $vars = array()) {
 
 	$params = array();
+	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
 	$params['segments'] = _elgg_services()->request->getUrlSegments();
-	if ($params['segments']) {
-		$params['identifier'] = array_shift($params['segments']);
-	} else {
-		$params['identifier'] = '';
-	}
+	array_shift($params['segments']);
 	$layout_name = elgg_trigger_plugin_hook('layout', 'page', $params, $layout_name);
 
 	if (is_string($vars) || $vars === null) {
