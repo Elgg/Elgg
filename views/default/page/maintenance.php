@@ -25,7 +25,12 @@ $head = <<<__HEAD
 __HEAD;
 
 $body = <<<__BODY
+<!--[if !(IE 7)]>
 <div class="elgg-page elgg-page-maintenance">
+<![endif]-->
+<!--[if IE 7]>
+<div class="elgg-page elgg-page-maintenance ie7">
+<![endif]-->
 	<div class="elgg-page-messages">
 		$messages
 	</div>
