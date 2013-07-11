@@ -35,6 +35,5 @@ $body = <<<__BODY
 </div>
 __BODY;
 
-$body .= elgg_view('page/elements/foot');
-
 echo elgg_view("page/elements/html", array('head' => $head, 'body' => $body));
+
