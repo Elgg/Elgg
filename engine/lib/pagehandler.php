@@ -184,12 +184,7 @@ function group_gatekeeper($forward = true, $page_owner_guid = null) {
  */
 function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
 	$entity = get_entity($guid);
-	if ($entity && $type) {
-		if (!elgg_instanceof($entity, $type, $subtype)) {
-			// entity is of wrong type/subtype
-			forward('', '404');
-		}
-	} elseif (!$entity) {
+	if (!$entity) {
 		if (!elgg_entity_exists($guid)) {
 			// entity doesn't exist
 			forward('', '404');
@@ -200,6 +195,13 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
 			// user is logged in but still does not have access to it
 			register_error(elgg_echo('limited_access'));
 			forward();
+		}		
+	}
+
+	if ($type) {
+		if (!elgg_instanceof($entity, $type, $subtype)) {
+			// entity is of wrong type/subtype
+			forward('', '404');
 		}
 	}
 }

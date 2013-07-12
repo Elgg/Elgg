@@ -31,7 +31,7 @@ return array(
 	'loggedinrequired' => "You must be logged in to view the requested page.",
 	'adminrequired' => "You must be an administrator to view the requested page.",
 	'membershiprequired' => "You must be a member of this group to view the requested page.",
-	'limited_access' => "You do not have permissions to view the requested page.",
+	'limited_access' => "You do not have permission to view the requested page.",
 
 
 /**
