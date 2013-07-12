@@ -117,13 +117,10 @@ a.elgg-button {
 	position:relative;
 	margin-left:0;
 	color: white;
+	background-color: transparent;
 	border:1px solid #71B9F7;
 	border-radius:4px;
 	box-shadow: 0 0 0;
-	
-	/*background-image:url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png);
-	background-position:-150px -51px;
-	background-repeat:no-repeat;*/
 }
 
 .elgg-button-dropdown:after {
