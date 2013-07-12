@@ -18,7 +18,7 @@ if (!pages_is_page($page)) {
 
 elgg_set_page_owner_guid($page->getContainerGUID());
 
-group_gatekeeper();
+elgg_group_gatekeeper();
 
 $container = elgg_get_page_owner_entity();
 if (!$container) {

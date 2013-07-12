@@ -38,7 +38,7 @@ function site_notifications_init() {
 function site_notifications_page_handler($segments) {
 	$base = elgg_get_plugins_path() . 'site_notifications/pages/site_notifications';
 
-	gatekeeper();
+	elgg_gatekeeper();
 
 	if (!isset($segments[1])) {
 		$segments[1] = elgg_get_logged_in_user_entity()->username;

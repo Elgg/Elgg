@@ -4,7 +4,7 @@
  */
 
 // Only logged in users
-gatekeeper();
+elgg_gatekeeper();
 
 elgg_push_context('settings');
 elgg_push_context('profile_edit');

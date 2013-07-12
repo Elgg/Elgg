@@ -5,16 +5,15 @@
  * @package ElggFile
  */
 
-$file = get_entity(get_input('guid'));
-if (!elgg_instanceof($file, 'object', 'file')) {
-	register_error(elgg_echo('noaccess'));
-	elgg_get_session()->set('last_forward_from', current_page_url());
-	forward('');
-}
+$guid = get_input('guid');
+
+elgg_entity_gatekeeper($guid, 'object', 'file');
+
+$file = get_entity($guid);
 
 $owner = elgg_get_page_owner_entity();
 
-group_gatekeeper();
+elgg_group_gatekeeper();
 
 elgg_push_breadcrumb(elgg_echo('file'), 'file/all');
 

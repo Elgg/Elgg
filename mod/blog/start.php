@@ -133,11 +133,11 @@ function blog_page_handler($page) {
 			$params = blog_get_page_content_read($page[1]);
 			break;
 		case 'add':
-			gatekeeper();
+			elgg_gatekeeper();
 			$params = blog_get_page_content_edit($page_type, $page[1]);
 			break;
 		case 'edit':
-			gatekeeper();
+			elgg_gatekeeper();
 			$params = blog_get_page_content_edit($page_type, $page[1], $page[2]);
 			break;
 		case 'group':

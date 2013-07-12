@@ -84,7 +84,7 @@ function twitter_api_pagehandler($page) {
 			twitter_api_login();
 			break;
 		case 'interstitial':
-			gatekeeper();
+			elgg_gatekeeper();
 			// only let twitter users do this.
 			$guid = elgg_get_logged_in_user_guid();
 			$twitter_name = elgg_get_plugin_user_setting('twitter_name', $guid, 'twitter_api');

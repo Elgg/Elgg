@@ -50,6 +50,163 @@ function elgg_unregister_page_handler($identifier) {
 }
 
 /**
+ * Used at the top of a page to mark it as logged in users only.
+ *
+ * @return void
+ * @since 1.9.0
+ */
+function elgg_gatekeeper() {
+	if (!elgg_is_logged_in()) {
+		_elgg_services()->session->set('last_forward_from', current_page_url());
+		register_error(elgg_echo('loggedinrequired'));
+		forward('', 'login');
+	}
+}
+
+/**
+ * Alias of elgg_gatekeeper()
+ * 
+ * Used at the top of a page to mark it as logged in users only.
+ *
+ * @return void
+ */
+function gatekeeper() {
+	elgg_gatekeeper();
+}
+
+/**
+ * Used at the top of a page to mark it as admin only.
+ *
+ * @return void
+ * @since 1.9.0
+ */
+function elgg_admin_gatekeeper() {
+	elgg_gatekeeper();
+
+	if (!elgg_is_admin_logged_in()) {
+		_elgg_services()->session->set('last_forward_from', current_page_url());
+		register_error(elgg_echo('adminrequired'));
+		forward('', 'admin');
+	}
+}
+
+/**
+ * Alias of elgg_admin_gatekeeper()
+ *
+ * Used at the top of a page to mark it as logged in admin or siteadmin only.
+ *
+ * @return void
+ */
+function admin_gatekeeper() {
+	elgg_admin_gatekeeper();
+}
+
+/**
+ * May the current user access item(s) on this page? If the page owner is a group,
+ * membership, visibility, and logged in status are taken into account.
+ *
+ * @param bool $forward    If set to true (default), will forward the page;
+ *                         if set to false, will return true or false.
+ *
+ * @param int  $group_guid The group that owns the page. If not set, this
+ *                         will be pulled from elgg_get_page_owner_guid().
+ *
+ * @return bool Will return if $forward is set to false.
+ * @since 1.9.0
+ */
+function elgg_group_gatekeeper($forward = true, $group_guid = null) {
+	if (null === $group_guid) {
+		$group_guid = elgg_get_page_owner_guid();
+	}
+
+	if (!$group_guid) {
+		return true;
+	}
+
+	// this handles non-groups and invisible groups
+	$visibility = Elgg_GroupItemVisibility::factory($group_guid);
+
+	if (!$visibility->shouldHideItems) {
+		return true;
+	}
+	if ($forward) {
+		// only forward to group if user can see it
+		$group = get_entity($group_guid);
+		$forward_url = $group ? $group->getURL() : '';
+
+		if (!elgg_is_logged_in()) {
+			_elgg_services()->session->set('last_forward_from', current_page_url());
+			$forward_reason = 'login';
+		} else {
+			$forward_reason = 'member';
+		}
+
+		$msg_keys = array(
+			'non_member' => 'membershiprequired',
+			'logged_out' => 'loggedinrequired',
+			'no_access' => 'noaccess',
+		);
+		register_error(elgg_echo($msg_keys[$visibility->reasonHidden]));
+		forward($forward_url, $forward_reason);
+	}
+
+	return false;
+}
+
+/**
+ * May the current user access item(s) on this page? If the page owner is a group,
+ * membership, visibility, and logged in status are taken into account.
+ *
+ * @param bool $forward         If set to true (default), will forward the page;
+ *                              if set to false, will return true or false.
+ *
+ * @param int  $page_owner_guid The current page owner guid. If not set, this
+ *                              will be pulled from elgg_get_page_owner_guid().
+ *
+ * @return bool Will return if $forward is set to false.
+ */
+function group_gatekeeper($forward = true, $page_owner_guid = null) {
+	return elgg_group_gatekeeper($forward, $page_owner_guid);
+}
+
+/**
+ * Can the viewer see this entity?
+ *
+ * Tests if the entity exists and whether the viewer has access to the entity
+ * if it does. If the viewer cannot view this entity, it forwards to an
+ * appropriate page.
+ *
+ * @param int    $guid    Entity GUID
+ * @param string $type    Optional required entity type
+ * @param string $subtype Optional required entity subtype
+ * @return void
+ * @since 1.9.0
+ */
+function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
+	$entity = get_entity($guid);
+	if (!$entity) {
+		if (!elgg_entity_exists($guid)) {
+			// entity doesn't exist
+			forward('', '404');
+		} elseif (!elgg_is_logged_in()) {
+			// entity requires at least a logged in user
+			elgg_gatekeeper();
+		} else {
+			// user is logged in but still does not have access to it
+			register_error(elgg_echo('limited_access'));
+			forward();
+		}		
+	}
+
+	if ($type) {
+		if (!elgg_instanceof($entity, $type, $subtype)) {
+			// entity is of wrong type/subtype
+			forward('', '404');
+		}
+	}
+}
+
+/**
  * Front page handler
  * 
  * @return bool

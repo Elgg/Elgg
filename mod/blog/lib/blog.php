@@ -16,20 +16,16 @@ function blog_get_page_content_read($guid = NULL) {
 
 	$return = array();
 
+	elgg_entity_gatekeeper($guid, 'object', 'blog');
+
 	$blog = get_entity($guid);
 
 	// no header or tabs for viewing an individual blog
 	$return['filter'] = '';
 
-	if (!elgg_instanceof($blog, 'object', 'blog')) {
-		register_error(elgg_echo('noaccess'));
-		elgg_get_session()->set('last_forward_from', current_page_url());
-		forward('');
-	}
-
 	elgg_set_page_owner_guid($blog->container_guid);
 
-	group_gatekeeper();
+	elgg_group_gatekeeper();
 
 	$return['title'] = $blog->title;
 
@@ -74,7 +70,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 	if ($container_guid) {
 		// access check for closed groups
-		group_gatekeeper();
+		elgg_group_gatekeeper();
 
 		$options['container_guid'] = $container_guid;
 		$container = get_entity($container_guid);

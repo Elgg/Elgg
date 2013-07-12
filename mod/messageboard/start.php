@@ -71,7 +71,7 @@ function messageboard_page_handler($page) {
 			break;
 
 		case 'group':
-			group_gatekeeper();
+			elgg_group_gatekeeper();
 			$owner_guid = elgg_extract(1, $page);
 			set_input('page_owner_guid', $owner_guid);
 			include "$pages/owner.php";

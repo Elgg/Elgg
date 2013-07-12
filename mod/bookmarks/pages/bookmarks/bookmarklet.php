@@ -5,7 +5,7 @@
 * @package Bookmarks
 */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $container_guid = get_input('container_guid');
 $container = get_entity($container_guid);

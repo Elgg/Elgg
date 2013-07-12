@@ -19,7 +19,7 @@ require_once("$test_path/ElggCoreGetEntitiesBaseTest.php");
 
 // don't expect admin session for CLI
 if (!TextReporter::inCli()) {
-	admin_gatekeeper();
+	elgg_admin_gatekeeper();
 } else {
 	$admin = array_shift(elgg_get_admins(array('limit' => 1)));
 	if (!login($admin)) {

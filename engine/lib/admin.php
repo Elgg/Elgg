@@ -457,7 +457,7 @@ function _elgg_admin_sort_page_menu($hook, $type, $return, $params) {
  */
 function _elgg_admin_page_handler($page) {
 
-	admin_gatekeeper();
+	elgg_admin_gatekeeper();
 	_elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
@@ -520,7 +520,7 @@ function _elgg_admin_page_handler($page) {
  */
 function _elgg_admin_plugin_screenshot_page_handler($pages) {
 	// only admins can use this for security
-	admin_gatekeeper();
+	elgg_admin_gatekeeper();
 
 	$plugin_id = elgg_extract(0, $pages);
 	// only thumbnail or full.
@@ -574,7 +574,7 @@ function _elgg_admin_plugin_screenshot_page_handler($pages) {
  * @access private
  */
 function _elgg_admin_markdown_page_handler($pages) {
-	admin_gatekeeper();
+	elgg_admin_gatekeeper();
 
 	elgg_set_context('admin');
 

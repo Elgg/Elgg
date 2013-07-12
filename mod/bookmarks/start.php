@@ -118,18 +118,18 @@ function bookmarks_page_handler($page) {
 			break;
 
 		case "add":
-			gatekeeper();
+			elgg_gatekeeper();
 			include "$pages/add.php";
 			break;
 
 		case "edit":
-			gatekeeper();
+			elgg_gatekeeper();
 			set_input('guid', $page[1]);
 			include "$pages/edit.php";
 			break;
 
 		case 'group':
-			group_gatekeeper();
+			elgg_group_gatekeeper();
 			include "$pages/owner.php";
 			break;
 

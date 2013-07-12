@@ -41,7 +41,7 @@ function discussion_handle_list_page($guid) {
 
 	elgg_set_page_owner_guid($guid);
 
-	group_gatekeeper();
+	elgg_group_gatekeeper();
 
 	$group = get_entity($guid);
 	if (!elgg_instanceof($group, 'group')) {
@@ -83,7 +83,7 @@ function discussion_handle_list_page($guid) {
  * @param int    $guid GUID of group or topic
  */
 function discussion_handle_edit_page($type, $guid) {
-	gatekeeper();
+	elgg_gatekeeper();
 
 	if ($type == 'add') {
 		$group = get_entity($guid);
@@ -147,12 +147,9 @@ function discussion_handle_view_page($guid) {
 	global $autofeed;
 	$autofeed = true;
 
+	elgg_entity_gatekeeper($guid, 'object', 'groupforumtopic');
+
 	$topic = get_entity($guid);
-	if (!elgg_instanceof($topic, 'object', 'groupforumtopic')) {
-		register_error(elgg_echo('noaccess'));
-		elgg_get_session()->set('last_forward_from', current_page_url());
-		forward('');
-	}
 
 	$group = $topic->getContainerEntity();
 	if (!elgg_instanceof($group, 'group')) {
@@ -162,7 +159,7 @@ function discussion_handle_view_page($guid) {
 
 	elgg_set_page_owner_guid($group->getGUID());
 
-	group_gatekeeper();
+	elgg_group_gatekeeper();
 
 	elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
 	elgg_push_breadcrumb($topic->title);
