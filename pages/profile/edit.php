@@ -3,7 +3,7 @@
  * Edit profile page
  */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $user = elgg_get_page_owner_entity();
 if (!$user) {

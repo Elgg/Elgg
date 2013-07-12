@@ -16,7 +16,7 @@ if ($page_owner_guid) {
 }
 $owner = elgg_get_page_owner_entity();
 
-group_gatekeeper();
+elgg_group_gatekeeper();
 
 // Get input
 $md_type = 'simpletype';

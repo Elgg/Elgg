@@ -73,34 +73,6 @@ function elgg_is_admin_logged_in() {
 }
 
 /**
- * Used at the top of a page to mark it as logged in users only.
- *
- * @return void
- */
-function gatekeeper() {
-	if (!elgg_is_logged_in()) {
-		_elgg_services()->session->set('last_forward_from', current_page_url());
-		register_error(elgg_echo('loggedinrequired'));
-		forward('', 'login');
-	}
-}
-
-/**
- * Used at the top of a page to mark it as logged in admin or siteadmin only.
- *
- * @return void
- */
-function admin_gatekeeper() {
-	gatekeeper();
-
-	if (!elgg_is_admin_logged_in()) {
-		_elgg_services()->session->set('last_forward_from', current_page_url());
-		register_error(elgg_echo('adminrequired'));
-		forward('', 'admin');
-	}
-}
-
-/**
  * Check if the given user has full access.
  *
  * @todo: Will always return full access if the user is an admin.

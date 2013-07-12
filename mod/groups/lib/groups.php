@@ -172,7 +172,7 @@ function groups_handle_mine_page() {
  * @param int $guid
  */
 function groups_handle_edit_page($page, $guid = 0) {
-	gatekeeper();
+	elgg_gatekeeper();
 	
 	if ($page == 'add') {
 		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
@@ -211,7 +211,7 @@ function groups_handle_edit_page($page, $guid = 0) {
  * Group invitations for a user
  */
 function groups_handle_invitations_page() {
-	gatekeeper();
+	elgg_gatekeeper();
 
 	$user = elgg_get_page_owner_entity();
 
@@ -246,10 +246,9 @@ function groups_handle_profile_page($guid) {
 
 	elgg_push_context('group_profile');
 
+	elgg_entity_gatekeeper($guid, 'group');
+
 	$group = get_entity($guid);
-	if (!elgg_instanceof($group, 'group')) {
-		forward('', '404');
-	}
 
 	elgg_push_breadcrumb($group->name);
 
@@ -258,7 +257,7 @@ function groups_handle_profile_page($guid) {
 	$content = elgg_view('groups/profile/layout', array('entity' => $group));
 	$sidebar = '';
 
-	if (group_gatekeeper(false)) {	
+	if (elgg_group_gatekeeper(false)) {
 		if (elgg_is_active_plugin('search')) {
 			$sidebar .= elgg_view('groups/sidebar/search', array('entity' => $group));
 		}
@@ -302,14 +301,13 @@ function groups_handle_profile_page($guid) {
  */
 function groups_handle_activity_page($guid) {
 
+	elgg_entity_gatekeeper($guid, 'group');
+
 	elgg_set_page_owner_guid($guid);
 
-	group_gatekeeper();
+	elgg_group_gatekeeper();
 
 	$group = get_entity($guid);
-	if (!elgg_instanceof($group, 'group')) {
-		forward();
-	}
 
 	$title = elgg_echo('groups:activity');
 
@@ -341,14 +339,13 @@ function groups_handle_activity_page($guid) {
  */
 function groups_handle_members_page($guid) {
 
-	elgg_set_page_owner_guid($guid);
+	elgg_entity_gatekeeper($guid, 'group');
 
 	$group = get_entity($guid);
-	if (!elgg_instanceof($group, 'group')) {
-		forward();
-	}
 
-	group_gatekeeper();
+	elgg_set_page_owner_guid($guid);
+
+	elgg_group_gatekeeper();
 
 	$title = elgg_echo('groups:members:title', array($group->name));
 
@@ -382,7 +379,7 @@ function groups_handle_members_page($guid) {
  * @param int $guid Group entity GUID
  */
 function groups_handle_invite_page($guid) {
-	gatekeeper();
+	elgg_gatekeeper();
 
 	elgg_set_page_owner_guid($guid);
 
@@ -421,7 +418,7 @@ function groups_handle_invite_page($guid) {
  */
 function groups_handle_requests_page($guid) {
 
-	gatekeeper();
+	elgg_gatekeeper();
 
 	elgg_set_page_owner_guid($guid);
 

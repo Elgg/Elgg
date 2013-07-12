@@ -4,7 +4,7 @@
  * 
  */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $post = get_entity(get_input('guid'));
 

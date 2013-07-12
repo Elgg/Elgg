@@ -5,7 +5,7 @@
  * @package ElggPages
  */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $page_guid = (int)get_input('guid');
 $revision = (int)get_input('annotation_id');

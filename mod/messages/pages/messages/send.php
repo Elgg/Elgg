@@ -5,7 +5,7 @@
 * @package ElggMessages
 */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $page_owner = elgg_get_logged_in_user_entity();
 elgg_set_page_owner_guid($page_owner->getGUID());

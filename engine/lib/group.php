@@ -25,55 +25,6 @@ function get_group_entity_as_row($guid) {
 }
 
 /**
- * May the current user access item(s) on this page? If the page owner is a group,
- * membership, visibility, and logged in status are taken into account.
- *
- * @param bool $forward         If set to true (default), will forward the page;
- *                              if set to false, will return true or false.
- *
- * @param int  $page_owner_guid The current page owner guid. If not set, this
- *                              will be pulled from elgg_get_page_owner_guid().
- *
- * @return bool Will return if $forward is set to false.
- */
-function group_gatekeeper($forward = true, $page_owner_guid = null) {
-	if (null === $page_owner_guid) {
-		$page_owner_guid = elgg_get_page_owner_guid();
-	}
-
-	if (!$page_owner_guid) {
-		return true;
-	}
-	$visibility = Elgg_GroupItemVisibility::factory($page_owner_guid);
-
-	if (!$visibility->shouldHideItems) {
-		return true;
-	}
-	if ($forward) {
-		// only forward to group if user can see it
-		$group = get_entity($page_owner_guid);
-		$forward_url = $group ? $group->getURL() : '';
-
-		if (!elgg_is_logged_in()) {
-			_elgg_services()->session->set('last_forward_from', current_page_url());
-			$forward_reason = 'login';
-		} else {
-			$forward_reason = 'member';
-		}
-
-		$msg_keys = array(
-			'non_member' => 'membershiprequired',
-			'logged_out' => 'loggedinrequired',
-			'no_access' => 'noaccess',
-		);
-		register_error(elgg_echo($msg_keys[$visibility->reasonHidden]));
-		forward($forward_url, $forward_reason);
-	}
-
-	return false;
-}
-
-/**
  * Adds a group tool option
  *
  * @see remove_group_tool_option().

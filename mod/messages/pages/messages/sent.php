@@ -5,7 +5,7 @@
 * @package ElggMessages
 */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $page_owner = elgg_get_page_owner_entity();
 
