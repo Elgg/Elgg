@@ -5,12 +5,11 @@
  * @package ElggBookmarks
  */
 
-$bookmark = get_entity(get_input('guid'));
-if (!elgg_instanceof($bookmark, 'object', 'bookmarks')) {
-	register_error(elgg_echo('noaccess'));
-	elgg_get_session()->set('last_forward_from', current_page_url());
-	forward('');
-}
+$guid = get_input('guid');
+
+elgg_entity_gatekeeper($guid, 'object', 'bookmarks');
+
+$bookmark = get_entity($guid);
 
 $page_owner = elgg_get_page_owner_entity();
 

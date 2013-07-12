@@ -170,6 +170,41 @@ function group_gatekeeper($forward = true, $page_owner_guid = null) {
 }
 
 /**
+ * Can the viewer see this entity?
+ *
+ * Tests if the entity exists and whether the viewer has access to the entity
+ * if it does. If the viewer cannot view this entity, it forwards to an
+ * appropriate page.
+ *
+ * @param int    $guid    Entity GUID
+ * @param string $type    Optional required entity type
+ * @param string $subtype Optional required entity subtype
+ * @return void
+ * @since 1.9.0
+ */
+function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
+	$entity = get_entity($guid);
+	if ($entity && $type) {
+		if (!elgg_instanceof($entity, $type, $subtype)) {
+			// entity is of wrong type/subtype
+			forward('', '404');
+		}
+	} elseif (!$entity) {
+		if (!elgg_entity_exists($guid)) {
+			// entity doesn't exist
+			forward('', '404');
+		} elseif (!elgg_is_logged_in()) {
+			// entity requires at least a logged in user
+			elgg_gatekeeper();
+		} else {
+			// user is logged in but still does not have access to it
+			register_error(elgg_echo('limited_access'));
+			forward();
+		}
+	}
+}
+
+/**
  * Front page handler
  * 
  * @return bool

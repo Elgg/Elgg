@@ -147,12 +147,9 @@ function discussion_handle_view_page($guid) {
 	global $autofeed;
 	$autofeed = true;
 
+	elgg_entity_gatekeeper($guid, 'object', 'groupforumtopic');
+
 	$topic = get_entity($guid);
-	if (!elgg_instanceof($topic, 'object', 'groupforumtopic')) {
-		register_error(elgg_echo('noaccess'));
-		elgg_get_session()->set('last_forward_from', current_page_url());
-		forward('');
-	}
 
 	$group = $topic->getContainerEntity();
 	if (!elgg_instanceof($group, 'group')) {

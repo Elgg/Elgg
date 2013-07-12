@@ -7,10 +7,11 @@
 
 elgg_gatekeeper();
 
-$message = get_entity(get_input('guid'));
-if (!elgg_instanceof($message, "object", "messages")) {
-	forward('messages/inbox/' . elgg_get_logged_in_user_entity()->username);
-}
+$guid = get_input('guid');
+
+elgg_entity_gatekeeper($guid, 'object', 'messages');
+
+$message = get_entity($guid);
 
 // mark the message as read
 $message->readYet = true;

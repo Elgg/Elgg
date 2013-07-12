@@ -2,13 +2,12 @@
 /**
  * View individual wire post
  */
+$guid = get_input('guid');
 
-$post = get_entity(get_input('guid'));
-if (!$post) {
-	register_error(elgg_echo('noaccess'));
-	elgg_get_session()->set('last_forward_from', current_page_url());
-	forward('');
-}
+elgg_entity_gatekeeper($guid, 'object', 'thewire');
+
+$post = get_entity($guid);
+
 $owner = $post->getOwnerEntity();
 if (!$owner) {
 	forward();

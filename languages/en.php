@@ -28,9 +28,10 @@ return array(
 	'logoutok' => "You have been logged out.",
 	'logouterror' => "We couldn't log you out. Please try again.",
 
-	'loggedinrequired' => "You must be logged in to view that page.",
-	'adminrequired' => "You must be an administrator to view that page.",
-	'membershiprequired' => "You must be a member of this group to view that page.",
+	'loggedinrequired' => "You must be logged in to view the requested page.",
+	'adminrequired' => "You must be an administrator to view the requested page.",
+	'membershiprequired' => "You must be a member of this group to view the requested page.",
+	'limited_access' => "You do not have permissions to view the requested page.",
 
 
 /**

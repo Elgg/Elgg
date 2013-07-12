@@ -246,10 +246,9 @@ function groups_handle_profile_page($guid) {
 
 	elgg_push_context('group_profile');
 
+	elgg_entity_gatekeeper($guid, 'group');
+
 	$group = get_entity($guid);
-	if (!elgg_instanceof($group, 'group')) {
-		forward('', '404');
-	}
 
 	elgg_push_breadcrumb($group->name);
 
@@ -302,14 +301,13 @@ function groups_handle_profile_page($guid) {
  */
 function groups_handle_activity_page($guid) {
 
+	elgg_entity_gatekeeper($guid, 'group');
+
 	elgg_set_page_owner_guid($guid);
 
 	elgg_group_gatekeeper();
 
 	$group = get_entity($guid);
-	if (!elgg_instanceof($group, 'group')) {
-		forward();
-	}
 
 	$title = elgg_echo('groups:activity');
 
@@ -341,12 +339,11 @@ function groups_handle_activity_page($guid) {
  */
 function groups_handle_members_page($guid) {
 
-	elgg_set_page_owner_guid($guid);
+	elgg_entity_gatekeeper($guid, 'group');
 
 	$group = get_entity($guid);
-	if (!elgg_instanceof($group, 'group')) {
-		forward();
-	}
+
+	elgg_set_page_owner_guid($guid);
 
 	elgg_group_gatekeeper();
 

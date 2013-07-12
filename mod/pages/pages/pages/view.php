@@ -5,12 +5,13 @@
  * @package ElggPages
  */
 
-$page_guid = get_input('guid');
-$page = get_entity($page_guid);
+$guid = get_input('guid');
+
+elgg_entity_gatekeeper($guid, 'object');
+
+$page = get_entity($guid);
 if (!pages_is_page($page)) {
-	register_error(elgg_echo('noaccess'));
-	elgg_get_session()->set('last_forward_from', current_page_url());
-	forward('');
+	forward('', '404');
 }
 
 elgg_set_page_owner_guid($page->getContainerGUID());
