@@ -53,8 +53,9 @@ function elgg_unregister_page_handler($identifier) {
  * Used at the top of a page to mark it as logged in users only.
  *
  * @return void
+ * @since 1.9.0
  */
-function gatekeeper() {
+function elgg_gatekeeper() {
 	if (!elgg_is_logged_in()) {
 		_elgg_services()->session->set('last_forward_from', current_page_url());
 		register_error(elgg_echo('loggedinrequired'));
@@ -63,33 +64,74 @@ function gatekeeper() {
 }
 
 /**
+ * Alias of elgg_gatekeeper()
+ * 
+ * Used at the top of a page to mark it as logged in users only.
+ *
+ * @return void
+ */
+function gatekeeper() {
+	elgg_gatekeeper();
+}
+
+/**
+ * Used at the top of a page to mark it as admin only.
+ *
+ * @return void
+ * @since 1.9.0
+ */
+function elgg_admin_gatekeeper() {
+	elgg_gatekeeper();
+
+	if (!elgg_is_admin_logged_in()) {
+		_elgg_services()->session->set('last_forward_from', current_page_url());
+		register_error(elgg_echo('adminrequired'));
+		forward('', 'admin');
+	}
+}
+
+/**
+ * Alias of elgg_admin_gatekeeper()
+ *
+ * Used at the top of a page to mark it as logged in admin or siteadmin only.
+ *
+ * @return void
+ */
+function admin_gatekeeper() {
+	elgg_admin_gatekeeper();
+}
+
+/**
  * May the current user access item(s) on this page? If the page owner is a group,
  * membership, visibility, and logged in status are taken into account.
  *
- * @param bool $forward         If set to true (default), will forward the page;
- *                              if set to false, will return true or false.
+ * @param bool $forward    If set to true (default), will forward the page;
+ *                         if set to false, will return true or false.
  *
- * @param int  $page_owner_guid The current page owner guid. If not set, this
- *                              will be pulled from elgg_get_page_owner_guid().
+ * @param int  $group_guid The group that owns the page. If not set, this
+ *                         will be pulled from elgg_get_page_owner_guid().
  *
  * @return bool Will return if $forward is set to false.
+ * @since 1.9.0
  */
-function group_gatekeeper($forward = true, $page_owner_guid = null) {
-	if (null === $page_owner_guid) {
-		$page_owner_guid = elgg_get_page_owner_guid();
+function elgg_group_gatekeeper($forward = true, $group_guid = null) {
+	if (null === $group_guid) {
+		$group_guid = elgg_get_page_owner_guid();
 	}
 
-	if (!$page_owner_guid) {
+	if (!$group_guid) {
 		return true;
 	}
-	$visibility = Elgg_GroupItemVisibility::factory($page_owner_guid);
+
+	// this handles non-groups and invisible groups
+	$visibility = Elgg_GroupItemVisibility::factory($group_guid);
 
 	if (!$visibility->shouldHideItems) {
 		return true;
 	}
 	if ($forward) {
 		// only forward to group if user can see it
-		$group = get_entity($page_owner_guid);
+		$group = get_entity($group_guid);
 		$forward_url = $group ? $group->getURL() : '';
 
 		if (!elgg_is_logged_in()) {
@@ -112,18 +154,19 @@ function group_gatekeeper($forward = true, $page_owner_guid = null) {
 }
 
 /**
- * Used at the top of a page to mark it as logged in admin or siteadmin only.
+ * May the current user access item(s) on this page? If the page owner is a group,
+ * membership, visibility, and logged in status are taken into account.
  *
- * @return void
+ * @param bool $forward         If set to true (default), will forward the page;
+ *                              if set to false, will return true or false.
+ *
+ * @param int  $page_owner_guid The current page owner guid. If not set, this
+ *                              will be pulled from elgg_get_page_owner_guid().
+ *
+ * @return bool Will return if $forward is set to false.
  */
-function admin_gatekeeper() {
-	gatekeeper();
-
-	if (!elgg_is_admin_logged_in()) {
-		_elgg_services()->session->set('last_forward_from', current_page_url());
-		register_error(elgg_echo('adminrequired'));
-		forward('', 'admin');
-	}
+function group_gatekeeper($forward = true, $page_owner_guid = null) {
+	return elgg_group_gatekeeper($forward, $page_owner_guid);
 }
 
 /**

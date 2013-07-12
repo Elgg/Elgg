@@ -10,7 +10,7 @@ $group = elgg_extract('entity', $vars);
 
 echo elgg_view('groups/profile/summary', $vars);
 
-if (group_gatekeeper(false)) {
+if (elgg_group_gatekeeper(false)) {
 	if (!$group->isPublicMembership() && !$group->isMember()) {
 		echo elgg_view('groups/profile/closed_membership');
 	}

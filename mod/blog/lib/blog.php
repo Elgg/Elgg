@@ -29,7 +29,7 @@ function blog_get_page_content_read($guid = NULL) {
 
 	elgg_set_page_owner_guid($blog->container_guid);
 
-	group_gatekeeper();
+	elgg_group_gatekeeper();
 
 	$return['title'] = $blog->title;
 
@@ -74,7 +74,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 	if ($container_guid) {
 		// access check for closed groups
-		group_gatekeeper();
+		elgg_group_gatekeeper();
 
 		$options['container_guid'] = $container_guid;
 		$container = get_entity($container_guid);

@@ -5,7 +5,7 @@
  * @package ElggPages
  */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $container_guid = (int) get_input('guid');
 $container = get_entity($container_guid);

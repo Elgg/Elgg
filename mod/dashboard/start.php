@@ -36,7 +36,7 @@ function dashboard_init() {
  */
 function dashboard_page_handler() {
 	// Ensure that only logged-in users can see this page
-	gatekeeper();
+	elgg_gatekeeper();
 
 	// Set context and title
 	elgg_set_context('dashboard');

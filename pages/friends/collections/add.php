@@ -7,7 +7,7 @@
  */
 
 // You need to be logged in for this one
-gatekeeper();
+elgg_gatekeeper();
 
 $title = elgg_echo('friends:collections:add');
 

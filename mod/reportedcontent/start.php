@@ -64,7 +64,7 @@ function reportedcontent_init() {
  */
 function reportedcontent_page_handler($page) {
 	// only logged in users can report things
-	gatekeeper();
+	elgg_gatekeeper();
 
 	$title = elgg_echo('reportedcontent:this');
 	

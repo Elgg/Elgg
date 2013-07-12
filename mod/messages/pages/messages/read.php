@@ -5,7 +5,7 @@
 * @package ElggMessages
 */
 
-gatekeeper();
+elgg_gatekeeper();
 
 $message = get_entity(get_input('guid'));
 if (!elgg_instanceof($message, "object", "messages")) {

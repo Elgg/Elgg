@@ -14,7 +14,7 @@ if (!elgg_instanceof($file, 'object', 'file')) {
 
 $owner = elgg_get_page_owner_entity();
 
-group_gatekeeper();
+elgg_group_gatekeeper();
 
 elgg_push_breadcrumb(elgg_echo('file'), 'file/all');
 
