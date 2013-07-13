@@ -53,6 +53,7 @@ function aalborg_theme_pagesetup() {
 			'href' => "#",
 			'priority' => 100,
 			'section' => 'alt',
+			'link_class' => 'elgg-topbar-dropdown',
 		));
 		
 		elgg_unregister_menu_item('topbar', 'usersettings');

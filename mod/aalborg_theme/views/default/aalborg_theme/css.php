@@ -26,11 +26,14 @@
 	margin-top: 0;
 }
 /* ***************************************
-	TOPBAR MENU
+	TOPBAR MENU DROPDOWN
 *****************************************/
-.elgg-menu-topbar-alt > li > a {
-	padding: 5px 15px 6px;
-	margin: 1px 0 0;
+.elgg-topbar-dropdown {
+	padding-bottom: 8px; /* forces button to reach bottom of topbar */
+}
+.elgg-menu-topbar > li > .elgg-topbar-dropdown:hover {
+	color: #EEE;
+	cursor: default;
 }
 .elgg-menu-topbar-alt ul {
 	position: absolute;
