@@ -464,6 +464,20 @@ class Elgg_Request {
 	}
 
 	/**
+	 * Get first URL segment
+	 *
+	 * @return string
+	 */
+	public function getFirstUrlSegment() {
+		$segments = $this->getUrlSegments();
+		if ($segments) {
+			return array_shift($segments);
+		} else {
+			return '';
+		}
+	}
+
+	/**
 	 * Get the IP address of the client
 	 *
 	 * @return string
