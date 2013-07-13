@@ -799,7 +799,7 @@ function _elgg_entities_get_metastrings_options($type, $options) {
 		$options["order_by_{$type}"], $options["{$type}_owner_guids"]);
 
 	if ($clauses) {
-		// merge wheres to pass to get_entities()
+		// merge wheres to pass to elgg_get_entities()
 		if (isset($options['wheres']) && !is_array($options['wheres'])) {
 			$options['wheres'] = array($options['wheres']);
 		} elseif (!isset($options['wheres'])) {
@@ -808,7 +808,7 @@ function _elgg_entities_get_metastrings_options($type, $options) {
 
 		$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
 
-		// merge joins to pass to get_entities()
+		// merge joins to pass to elgg_get_entities()
 		if (isset($options['joins']) && !is_array($options['joins'])) {
 			$options['joins'] = array($options['joins']);
 		} elseif (!isset($options['joins'])) {
