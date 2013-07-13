@@ -831,7 +831,7 @@ function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $
 				// will have to do more silly joins.
 				$operand = 'IN';
 			} else if ($trimmed_operand == 'in') {
-				$value = "({$pair['value']})";
+				$value = "'" . sanitise_string(trim($pair['value'], "'\"")) . "'";
 			} else {
 				$value = "'" . sanitise_string($pair['value']) . "'";
 			}
