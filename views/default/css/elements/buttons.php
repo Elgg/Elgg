@@ -132,7 +132,9 @@ a.elgg-button {
 	background-color:#71B9F7;
 	text-decoration:none;
 }
-
+.elgg-button-dropdown:focus {
+	text-decoration: none;
+}
 .elgg-button-dropdown.elgg-state-active {
 	background: #ccc;
 	outline: none;
