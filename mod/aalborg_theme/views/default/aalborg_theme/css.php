@@ -104,8 +104,8 @@ html {
 	.elgg-menu-topbar-default > li:first-child a {
 		margin-left: 0;
 	}
-	.elgg-menu-topbar-alt > li > a {
-		padding-right: 0;
+	.elgg-menu-topbar-alt > li > a.elgg-topbar-dropdown {
+		margin-right: 0;
 	}
 	.elgg-page-footer {
 		padding: 0 20px;
