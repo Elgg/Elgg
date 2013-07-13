@@ -29,7 +29,7 @@
 	TOPBAR MENU DROPDOWN
 *****************************************/
 .elgg-topbar-dropdown {
-	padding-bottom: 8px;
+	padding-bottom: 8px; /* forces button to reach bottom of topbar */
 }
 .elgg-menu-topbar-alt ul {
 	position: absolute;
