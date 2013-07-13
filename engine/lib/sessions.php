@@ -87,6 +87,9 @@ function elgg_is_admin_logged_in() {
  */
 function elgg_is_admin_user($user_guid) {
 	global $CONFIG;
+
+	$user_guid = (int)$user_guid;
+
 	// cannot use magic metadata here because of recursion
 
 	// must support the old way of getting admin from metadata
