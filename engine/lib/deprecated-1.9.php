@@ -1495,7 +1495,7 @@ $container_guid = null) {
 		$query .= " $w and ";
 	}
 
-	$query .= get_access_sql_suffix('e'); // Add access controls
+	$query .= _elgg_get_access_where_sql();
 
 	if (!$count) {
 		$query .= " order by n.calendar_start $order_by";
@@ -1625,8 +1625,8 @@ $site_guid = 0, $count = false) {
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix("e");
-	$query .= ' and ' . get_access_sql_suffix("m");
+	$query .= _elgg_get_access_where_sql(array('table_alias' => 'e'));
+	$query .= ' and ' . _elgg_get_access_where_sql(array('table_alias' => "m"));
 
 	if (!$count) {
 		// Add order and limit
@@ -1747,7 +1747,7 @@ $order_by = "", $limit = 10, $offset = 0, $count = false, $site_guid = 0) {
 		$query .= " $w and ";
 	}
 	// Add access controls
-	$query .= get_access_sql_suffix("e");
+	$query .= _elgg_get_access_where_sql();
 	if (!$count) {
 		$query .= " order by $order_by limit $offset, $limit"; // Add order and limit
 		return get_data($query, "entity_row_to_elggstar");
@@ -3727,3 +3727,26 @@ elgg_register_plugin_hook_handler("export", "all", "export_relationship_plugin_h
 
 /** Hook to get certain named bits of volatile data about an entity */
 elgg_register_plugin_hook_handler('volatile', 'metadata', 'volatile_data_export_plugin_hook');
+
+/**
+ * Returns the SQL where clause for a table with access_id and enabled columns.
+ *
+ * This handles returning where clauses for ACCESS_FRIENDS in addition to using 
+ * get_access_list() for access collections and the standard access levels.
+ *
+ * Note that if this code is executed in privileged mode it will return (1=1).
+ *
+ * @param string $table_prefix Optional table prefix for the access code.
+ * @param int    $owner        Optional user guid to get access information for. Defaults
+ *                             to logged in user.
+ * @return string
+ * @access private
+ * @deprecated 1.9
+ */
+function get_access_sql_suffix($table_prefix = '', $owner = null) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by _elgg_get_access_where_sql()', 1.9);
+	return _elgg_get_access_where_sql(array(
+		'table_alias' => $table_prefix,
+		'user_guid' => (int)$owner,
+	));
+}

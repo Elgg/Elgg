@@ -484,7 +484,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
  * @tip Use get_entity() to return the fully loaded entity.
  *
  * @warning This will only return results if a) it exists, b) you have access to it.
- * see {@link get_access_sql_suffix()}.
+ * see {@link _elgg_get_access_where_sql()}.
  *
  * @param int $guid The GUID of the object to extract
  *
@@ -500,7 +500,7 @@ function get_entity_as_row($guid) {
 	}
 
 	$guid = (int) $guid;
-	$access = get_access_sql_suffix();
+	$access = _elgg_get_access_where_sql(array('table_alias' => ''));
 
 	return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and $access");
 }
@@ -892,7 +892,7 @@ function elgg_get_entities(array $options = array()) {
 	}
 
 	// Add access controls
-	$query .= get_access_sql_suffix('e');
+	$query .= _elgg_get_access_where_sql();
 
 	// reverse order by
 	if ($options['reverse_order_by']) {
@@ -1625,7 +1625,7 @@ $order_by = 'time_created') {
 		$where[] = "site_guid = {$site_guid}";
 	}
 
-	$where[] = get_access_sql_suffix();
+	$where[] = _elgg_get_access_where_sql(array('table_alias' => ''));
 
 	$sql = "SELECT DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(time_created)) AS yearmonth
 		FROM {$CONFIG->dbprefix}entities where ";
