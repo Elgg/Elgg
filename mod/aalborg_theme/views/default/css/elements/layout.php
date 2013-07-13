@@ -44,6 +44,7 @@
 /***** TOPBAR ******/
 .elgg-page-topbar {
 	background: #424242;
+	border-top: 1px solid #424242;
 	border-bottom: 1px solid #000000;
 	padding: 0 20px;
 	position: relative;

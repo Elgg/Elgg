@@ -128,12 +128,13 @@
 
 .elgg-menu-topbar > li {
 	float: left;
+	height: 33px;
 }
 
 .elgg-menu-topbar > li > a {
 	padding-top: 5px;
 	color: #EEE;
-	margin: 1px 15px 0;
+	margin: 0 15px;
 }
 
 .elgg-menu-topbar > li > a:hover {
