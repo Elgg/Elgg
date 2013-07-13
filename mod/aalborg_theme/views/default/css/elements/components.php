@@ -125,7 +125,7 @@
 	border-radius: 3px;
 }
 .elgg-state-success {
-	background-color: #000;
+	background-color: #0a0;
 }
 .elgg-state-error {
 	background-color: #FF0000;
