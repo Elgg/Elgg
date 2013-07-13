@@ -29,8 +29,12 @@
 	TOPBAR MENU
 *****************************************/
 .elgg-menu-topbar-alt > li > a {
-	padding: 5px 15px 6px;
+	padding: 0 15px;
 	margin: 1px 0 0;
+	line-height: 33px;
+}
+.elgg-menu-topbar-alt > li > a:hover {
+	color: #eee;
 }
 .elgg-menu-topbar-alt ul {
 	position: absolute;
