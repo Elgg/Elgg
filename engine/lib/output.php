@@ -27,16 +27,16 @@ function parse_urls($text) {
 	// By default htmlawed rewrites tags to this format.
 	// if PHP supported conditional negative lookbehinds we could use this:
 	// $r = preg_replace_callback('/(?<!=)(?<![ ])?(?<!["\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\!\(\),]+)/i',
-	$r = preg_replace_callback('/(?<![=\/"\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\'\(\)]+)/i',
+	$r = preg_replace_callback('/(?<![=\/"\'])((ht|f)tps?:\/\/[^\s\r\n\t<>"\']+)/i',
 	create_function(
 		'$matches',
 		'
 			$url = $matches[1];
-			$punc = \'\';
+			$punc = "";
 			$last = substr($url, -1, 1);
-			if (in_array($last, array(".", "!", ","))) {
+			if (in_array($last, array(".", "!", ",", "(", ")"))) {
 				$punc = $last;
-				$url = rtrim($url, ".!,");
+				$url = rtrim($url, ".!,()");
 			}
 			$urltext = str_replace("/", "/<wbr />", $url);
 			return "<a href=\"$url\" rel=\"nofollow\">$urltext</a>$punc";
