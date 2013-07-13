@@ -291,7 +291,7 @@ class ElggVolatileMetadataCache {
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC',
 
 			// @todo don't know why this is necessary
-			'wheres' => array(get_access_sql_suffix('n_table')),
+			'wheres' => array(_elgg_get_access_where_sql(array('table_alias' => 'n_table'))),
 		);
 		$data = elgg_get_metadata($options);
 
