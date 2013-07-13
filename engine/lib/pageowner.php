@@ -291,12 +291,12 @@ function page_owner_boot() {
 
 	// don't do this for *_handler.php, etc.
 	if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
-		$segments = $request->getUrlSegments();
-		if ($segments) {
-			elgg_set_context($segments[0]);
-		} else {
-			elgg_set_context('main');
+		$context = $request->getFirstUrlSegment();
+		if (!$context) {
+			$content = 'main';
 		}
+
+		elgg_set_context($context);
 	}
 }
 
