@@ -31,6 +31,10 @@
 .elgg-topbar-dropdown {
 	padding-bottom: 8px; /* forces button to reach bottom of topbar */
 }
+.elgg-menu-topbar > li > .elgg-topbar-dropdown:hover {
+	color: #EEE;
+	cursor: default;
+}
 .elgg-menu-topbar-alt ul {
 	position: absolute;
 	display: none;
