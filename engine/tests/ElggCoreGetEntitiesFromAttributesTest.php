@@ -2,7 +2,7 @@
 /**
  * Test elgg_get_entities_from_attributes()
  */
-class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreEntityGetterBaseTest {
+class ElggCoreGetEntitiesFromAttributesTest extends ElggCoreGetEntitiesBaseTest {
 
 	public function testWithoutType() {
 		$this->expectException(new InvalidArgumentException('The entity type must be defined for elgg_get_entities_from_attributes()'));
