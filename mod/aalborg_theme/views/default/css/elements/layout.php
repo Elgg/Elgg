@@ -96,9 +96,6 @@
 .elgg-layout-widgets > .elgg-widgets {
 	float: right;
 }
-.elgg-layout-error {
-	padding-top: 20px;
-}
 .elgg-sidebar {
 	position: relative;
 	padding: 32px 0 20px 30px;
