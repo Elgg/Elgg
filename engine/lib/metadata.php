@@ -561,6 +561,7 @@ function find_metadata($meta_name = "", $meta_value = "", $entity_type = "", $en
  *
  * 	metadata_name_value_pairs => NULL|ARR (name => 'name', value => 'value', 'operand' => '=', 'case_sensitive' => TRUE) entries.
  * 	Currently if multiple values are sent via an array (value => array('value1', 'value2') the pair's operand will be forced to "IN".
+ * 	If passing "IN" as the operand and a string as the value, the value must be a properly quoted and escaped string.
  *
  * 	metadata_name_value_pairs_operator => NULL|STR The operator to use for combining (name = value) OPERATOR (name = value); default AND
  *
@@ -831,7 +832,7 @@ function elgg_get_entity_metadata_where_sql($e_table, $n_table, $names = NULL, $
 				// will have to do more silly joins.
 				$operand = 'IN';
 			} else if ($trimmed_operand == 'in') {
-				$value = "'" . sanitise_string(trim($pair['value'], "'\"")) . "'";
+				$value = "({$pair['value']})";
 			} else {
 				$value = "'" . sanitise_string($pair['value']) . "'";
 			}
