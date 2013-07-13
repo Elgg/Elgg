@@ -398,10 +398,13 @@ class Elgg_Request {
 	/**
 	 * Returns the root url from which this request is executed.
 	 *
-	 * The base URL never ends with a /.
+	 * The base URL never ends with a /. If the URL directly calls the
+	 * executed script (e.g. index.php), this is included.
 	 *
-	 * This is similar to getBasePath(), except that it also includes the
-	 * script filename (e.g. index.php) if one exists.
+	 * Suppose Elgg is installed at http://localhost/mysite/ :
+	 *
+	 * * http://localhost/mysite/foo returns '/mysite'
+	 * * http://localhost/mysite/index.php/foo returns '/mysite/index.php'
 	 *
 	 * @return string The raw url (i.e. not urldecoded)
 	 */
@@ -416,11 +419,12 @@ class Elgg_Request {
 	/**
 	 * Returns the path being requested relative to the executed script.
 	 *
-	 * The path info always starts with a /.
+	 * The path info always starts with a /, does not contain the query string,
+	 * and does not include the path to the Elgg installation.
 	 *
-	 * Suppose this request is instantiated from /mysite on localhost:
+	 * Suppose Elgg is installed at http://localhost/mysite/ :
 	 *
-	 * * http://localhost/mysite returns an empty string
+	 * * http://localhost/mysite/ returns an empty string
 	 * * http://localhost/mysite/about returns '/about'
 	 * * http://localhost/mysite/enco%20ded returns '/enco%20ded'
 	 * * http://localhost/mysite/about?var=1 returns '/about'
@@ -450,7 +454,9 @@ class Elgg_Request {
 	}
 
 	/**
-	 * Get URL segments in an array
+	 * Get URL segments from the path info
+	 *
+	 * @see Elgg_Request::getPathInfo()
 	 *
 	 * @return array
 	 */
@@ -464,7 +470,9 @@ class Elgg_Request {
 	}
 
 	/**
-	 * Get first URL segment
+	 * Get first URL segment from the path info
+	 *
+	 * @see Elgg_Request::getUrlSegments()
 	 *
 	 * @return string
 	 */
