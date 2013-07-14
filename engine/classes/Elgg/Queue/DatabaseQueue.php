@@ -8,10 +8,10 @@
  * @access private
  * 
  * @package    Elgg.Core
- * @subpackage Util
+ * @subpackage Queue
  * @since      1.9.0
  */
-class Elgg_Util_DatabaseQueue implements Elgg_Util_Queue {
+class Elgg_Queue_DatabaseQueue implements Elgg_Queue_Queue {
 
 	/** @var string Name of the queue */
 	protected $name;
