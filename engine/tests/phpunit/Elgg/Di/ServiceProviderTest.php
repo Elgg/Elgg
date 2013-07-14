@@ -20,7 +20,7 @@ class Elgg_Di_ServiceProviderTest extends PHPUnit_Framework_TestCase {
 			'hooks' => 'Elgg_PluginHooksService',
 			'logger' => 'Elgg_Logger',
 			'metadataCache' => 'ElggVolatileMetadataCache',
-			'request' => 'Elgg_Request',
+			'request' => 'Elgg_Http_Request',
 			'router' => 'Elgg_Router',
 			
 			// Will this start session?

@@ -31,11 +31,11 @@ class Elgg_Router {
 	 * This function triggers a plugin hook `'route', $identifier` so that plugins can
 	 * modify the routing or handle a request.
 	 *
-	 * @param Elgg_Request $request The request to handle.
+	 * @param Elgg_Http_Request $request The request to handle.
 	 * @return boolean Whether the request was routed successfully.
 	 * @access private
 	 */
-	public function route(Elgg_Request $request) {
+	public function route(Elgg_Http_Request $request) {
 		$segments = $request->getUrlSegments();
 		if ($segments) {
 			$identifier = array_shift($segments);
