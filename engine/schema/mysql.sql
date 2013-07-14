@@ -191,10 +191,12 @@ CREATE TABLE `prefix_private_settings` (
 
 -- queue for asynchronous operations
 CREATE TABLE `prefix_queue` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) NOT NULL,
   `data` mediumblob NOT NULL,
   `timestamp` int(11) NOT NULL,
   `worker` varchar(32) NULL,
+  PRIMARY KEY (`id`),
   KEY `name` (`name`),
   KEY `retrieve` (`timestamp`,`worker`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;

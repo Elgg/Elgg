@@ -41,7 +41,7 @@ class Elgg_Notifications_NotificationsService {
 	 * Constructor
 	 *
 	 * @param Elgg_Notifications_SubscriptionsService $subscriptions Subscription service
-	 * @param Elgg_Queue_Queue                         $queue         Queue
+	 * @param Elgg_Queue_Queue                        $queue         Queue
 	 * @param Elgg_PluginHooksService                 $hooks         Plugin hook service
 	 * @param Elgg_Access                             $access        Access control service
 	 */

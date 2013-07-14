@@ -54,7 +54,7 @@ class Elgg_Queue_DatabaseQueue implements Elgg_Queue_Queue {
 		$update = "UPDATE {$prefix}queue 
 			SET worker = '$this->workerId'
 			WHERE name = '$this->name' AND worker IS NULL
-			ORDER BY timestamp ASC LIMIT 1";
+			ORDER BY id ASC LIMIT 1";
 		$num = $this->db->updateData($update, true);
 		if ($num === 1) {
 			$select = "SELECT data FROM {$prefix}queue
