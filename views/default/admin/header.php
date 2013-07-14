@@ -15,7 +15,7 @@ if (elgg_get_config('elgg_maintenance_mode', null)) {
 		. elgg_view('output/url', array(
 			'href' => 'admin/administer_utilities/maintenance',
 			'text' => elgg_echo('admin:administer_utilities:maintenance'),
-			'class' => 'elgg-maintenance-mode',
+			'class' => 'elgg-maintenance-mode-warning',
 		))
 		. ')';
 }

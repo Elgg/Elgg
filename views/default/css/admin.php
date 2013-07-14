@@ -213,7 +213,7 @@ p {
 .elgg-menu-user li:last-child:after {
 	content: "";
 }
-.elgg-menu-user .elgg-maintenance-mode {
+a.elgg-maintenance-mode-warning {
 	color: #d00;
 }
 
