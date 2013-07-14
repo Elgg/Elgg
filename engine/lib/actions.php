@@ -277,13 +277,32 @@ function ajax_action_hook() {
 }
 
 /**
+ * Send an updated CSRF token
+ *
+ * @access private
+ */
+function _elgg_csrf_token_refresh() {
+
+	if (!elgg_is_xhr()) {
+		return false;
+	}
+
+	$ts = time();
+	$token = generate_action_token($ts);
+
+	header("Content-Type: application/json");
+	echo json_encode(array('__elgg_ts' => $ts, '__elgg_token' => $token));
+
+	return true;
+}
+
+/**
  * Initialize some ajaxy actions features
  * @access private
  */
 function actions_init() {
 	elgg_register_page_handler('action', '_elgg_action_handler');
-
-	elgg_register_action('security/refreshtoken', '', 'public');
+	elgg_register_page_handler('refresh_token', '_elgg_csrf_token_refresh');
 
 	elgg_register_simplecache_view('js/languages/en');
 
