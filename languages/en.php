@@ -683,11 +683,13 @@ These changes will only affect new users on the site.',
 	'admin:robots.txt:plugins' => "Plugins are adding the following to the robots.txt file",
 	'admin:robots.txt:subdir' => "The robots.txt tool will not work because Elgg is installed in a sub-directory",
 
-	'admin:maintenance_mode:message' => 'This site is down for maintenance',
-	'admin:maintenance_mode:instructions' => 'Maintenance mode should be used for upgrades and other large changes to the site.
-		You can configure the message shown to your users below.',
-	'admin:maintenance_mode:on' => 'Maintenance mode is on',
-	'admin:maintenance_mode:off' => 'Maintenance mode is off',
+	'admin:maintenance_mode:default_message' => 'This site is down for maintenance',
+	'admin:maintenance_mode:instructions' => 'Maintenance mode should be used for upgrades and other large changes to the site.',
+	'admin:maintenance_mode:mode_label' => 'Maintenance mode',
+	'admin:maintenance_mode:message_label' => 'Message displayed to users when maintenance mode is on',
+	'admin:maintenance_mode:on' => 'On. Only admins can log in and browse the site',
+	'admin:maintenance_mode:saved' => 'The maintenance mode settings were saved.',
+	'admin:maintenance_mode:indicator_menu_item' => 'The site is in maintenance mode.',
 	'admin:login' => 'Admin Login',
 
 /**

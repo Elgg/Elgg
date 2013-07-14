@@ -9,6 +9,17 @@ $view_site = elgg_view('output/url', array(
 	'text' => elgg_echo('admin:view_site'),
 	'is_trusted' => true,
 ));
+
+if (elgg_get_config('elgg_maintenance_mode', null)) {
+	$view_site .= ' ('
+		. elgg_view('output/url', array(
+			'href' => 'admin/administer_utilities/maintenance',
+			'text' => elgg_echo('admin:administer_utilities:maintenance'),
+			'class' => 'elgg-maintenance-mode',
+		))
+		. ')';
+}
+
 $logout = elgg_view('output/url', array(
 	'href' => 'action/logout',
 	'text' => elgg_echo('logout'),
