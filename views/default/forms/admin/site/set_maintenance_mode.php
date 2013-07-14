@@ -5,31 +5,33 @@
 
 $site = elgg_get_site_entity();
 $mode = (int)elgg_get_config('elgg_maintenance_mode', null);
-if ($mode) {
-	$button_text = elgg_echo('disable');
-	$status = elgg_echo('admin:maintenance_mode:on');
-} else {
-	$button_text = elgg_echo('enable');
-	$status = elgg_echo('admin:maintenance_mode:off');
-}
 
 $message = $site->getPrivateSetting('elgg_maintenance_message');
 if (!$message) {
-	$message = elgg_echo('admin:maintenance_mode:message');
+	$message = elgg_echo('admin:maintenance_mode:default_message');
 }
 
-echo '<p><em>' . $status . '</em><p>';
-
-echo '<div>';
 echo '<p>' . elgg_echo('admin:maintenance_mode:instructions') . '</p>';
+
+echo '<div><label>' . elgg_echo('admin:maintenance_mode:mode_label') . ': ';
+echo elgg_view('input/select', array(
+	'name' => 'mode',
+	'options_values' => array(
+		'0' => elgg_echo('off'),
+		'1' => elgg_echo('admin:maintenance_mode:on'),
+	),
+	'value' => $mode,
+));
+echo '</label></div>';
+
+echo '<div><label for="message">' . elgg_echo('admin:maintenance_mode:message_label') . ':</label><br>';
 echo elgg_view('input/longtext', array(
 	'name' => 'message',
+	'id' => 'message',
 	'value' => $message,
 ));
 echo '</div>';
 
-echo '<div>';
-// mode is 1 for on and 0 for off - this sets it to opposite of current
-echo elgg_view('input/hidden', array('name' => 'mode', 'value' => 1 - $mode));
-echo elgg_view('input/submit', array('value' => $button_text));
+echo '<div class="elgg-foot">';
+echo elgg_view('input/submit', array('value' => elgg_echo('save')));
 echo '</div>';
