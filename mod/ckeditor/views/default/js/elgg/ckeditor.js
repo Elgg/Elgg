@@ -68,6 +68,36 @@ define(function(require) {
 			$('#cke_wordcount_' + editor.name).html(text);
 		},
 
+		/**
+		 * CKEditor has decided using width and height as attributes on images isn't
+		 * kosher and puts that in the style. This adds those back as attributes.
+		 * This is from this patch: http://dev.ckeditor.com/attachment/ticket/5024/5024_5.patch
+		 * 
+		 * @param {Object} event
+		 * @return void
+		 */
+		fixImageAttributes: function(event) {
+			event.editor.dataProcessor.htmlFilter.addRules({
+				elements: {
+					img: function(element) {
+						var style = element.attributes.style;
+						if (style) {
+							var match = /(?:^|\s)width\s*:\s*(\d+)px/i.exec(style);
+							var width = match && match[1];
+							if (width) {
+								element.attributes.width = width;
+							}
+							match = /(?:^|\s)height\s*:\s*(\d+)px/i.exec(style);
+							var height = match && match[1];
+							if (height) {
+								element.attributes.height = height;
+							}
+						}
+					}
+				}
+			});
+		},
+
 
 		/**
 		 * CKEditor configuration
@@ -78,6 +108,8 @@ define(function(require) {
 		config: require('elgg/ckeditor/config')
 
 	};
+
+	CKEDITOR.on('instanceReady', elggCKEditor.fixImageAttributes);
 
 	// Live handlers don't need to wait for domReady and only need to be registered once.
 	$('.ckeditor-toggle-editor').live('click', elggCKEditor.toggleEditor);
