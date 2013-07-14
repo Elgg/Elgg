@@ -715,7 +715,7 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
 
 	if ($type == 'login') {
 		$user = get_user_by_username(get_input('username'));
-		if ($user->isAdmin()) {
+		if ($user && $user->isAdmin()) {
 			return true;
 		}
 	}

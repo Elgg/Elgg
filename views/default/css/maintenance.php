@@ -13,7 +13,7 @@ echo elgg_view('css/elements/helpers', $vars);
 /* <style> /**/
 
 body {
-	font-size: 24px;
+	font-size: 80%;
 	font-family: "Lucida Grande", Arial, Tahoma, Verdana, sans-serif;
 	line-height: 1.4em;
 }
@@ -32,6 +32,13 @@ h3 {
 a {
 	color: #999;
 }
+p {
+	margin-bottom: 15px;
+}
+p:last-child {
+	margin-bottom: 0;
+}
+
 
 /* ***************************************
 	LAYOUT
@@ -204,11 +211,7 @@ input[type="radio"] {
 	opacity: 0.9;
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
 	border-radius: 8px;
-}
-.elgg-message p {
-	font-size: 14px;
 	font-weight: bold;
-	line-height: 1.4em;
 }
 .elgg-state-success {
 	background-color: black;
