@@ -213,6 +213,9 @@ p {
 .elgg-menu-user li:last-child:after {
 	content: "";
 }
+.elgg-menu-user .elgg-maintenance-mode {
+	color: #d00;
+}
 
 /* ***************************************
 	MESSAGES

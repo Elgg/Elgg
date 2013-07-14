@@ -689,6 +689,7 @@ These changes will only affect new users on the site.',
 	'admin:maintenance_mode:message_label' => 'Message displayed to users when maintenance mode is on',
 	'admin:maintenance_mode:on' => 'On. Only admins can log in and browse the site',
 	'admin:maintenance_mode:saved' => 'The maintenance mode settings were saved.',
+	'admin:maintenance_mode:indicator_menu_item' => 'The site is in maintenance mode.',
 	'admin:login' => 'Admin Login',
 
 /**

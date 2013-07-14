@@ -232,6 +232,13 @@ function _elgg_admin_init() {
 	if (elgg_get_config('elgg_maintenance_mode', null)) {
 		elgg_register_plugin_hook_handler('route', 'all', '_elgg_admin_maintenance_handler');
 		elgg_register_css('elgg.maintenance', elgg_get_simplecache_url('css', 'maintenance'));
+
+		elgg_register_menu_item('topbar', array(
+			'name' => 'maintenance_mode',
+			'href' => 'admin/administer_utilities/maintenance',
+			'text' => elgg_echo('admin:maintenance_mode:indicator_menu_item'),
+			'priority' => 900,
+		));
 	}
 
 	elgg_register_action('admin/user/ban', '', 'admin');
