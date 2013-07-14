@@ -33,4 +33,11 @@ interface Elgg_Queue_Queue {
 	 * @return void
 	 */
 	public function clear();
+
+	/**
+	 * Get the size of the queue
+	 *
+	 * @return int
+	 */
+	public function size();
 }

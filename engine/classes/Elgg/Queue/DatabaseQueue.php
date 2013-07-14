@@ -79,4 +79,13 @@ class Elgg_Queue_DatabaseQueue implements Elgg_Queue_Queue {
 		$prefix = $this->db->getTablePrefix();
 		$this->db->deleteData("DELETE FROM {$prefix}queue WHERE name = '$this->name'");
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function size() {
+		$prefix = $this->db->getTablePrefix();
+		$result = $this->db->getDataRow("SELECT COUNT(id) AS total FROM {$prefix}queue WHERE name = '$this->name'");
+		return (int)$result->total;
+	}
 }

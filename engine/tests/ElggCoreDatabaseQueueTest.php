@@ -17,6 +17,8 @@ class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 		$result = $queue->enqueue($second);
 		$this->assertTrue($result);
 
+		$this->assertIdentical(2, $queue->size());
+
 		$data = $queue->dequeue();
 		$this->assertIdentical($first, $data);
 		$data = $queue->dequeue();
@@ -37,6 +39,9 @@ class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 		$result = $queue2->enqueue($second);
 		$this->assertTrue($result);
 
+		$this->assertIdentical(1, $queue1->size());
+		$this->assertIdentical(1, $queue2->size());
+
 		$data = $queue2->dequeue();
 		$this->assertIdentical($second, $data);
 		$data = $queue1->dequeue();
@@ -56,5 +61,6 @@ class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 		$queue->clear();
 		$data = $queue->dequeue();
 		$this->assertIdentical(null, $data);
+		$this->assertIdentical(0, $queue->size());
 	}
 }

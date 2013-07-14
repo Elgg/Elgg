@@ -43,4 +43,11 @@ class Elgg_Queue_MemoryQueue implements Elgg_Queue_Queue {
 	public function clear() {
 		$this->queue = array();
 	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function size() {
+		return count($this->queue);
+	}
 }
