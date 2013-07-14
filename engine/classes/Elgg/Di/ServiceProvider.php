@@ -17,7 +17,7 @@
  * @property-read Elgg_Logger                             $logger
  * @property-read ElggVolatileMetadataCache               $metadataCache
  * @property-read Elgg_Notifications_NotificationsService $notifications
- * @property-read Elgg_Request                            $request
+ * @property-read Elgg_Http_Request                       $request
  * @property-read Elgg_Router                             $router
  * @property-read ElggSession                             $session
  * @property-read Elgg_ViewsService                       $views
@@ -113,10 +113,10 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 	 * Request factory
 	 * 
 	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
-	 * @return Elgg_Request
+	 * @return Elgg_Http_Request
 	 */
 	protected function getRequest(Elgg_Di_ServiceProvider $c) {
-		return Elgg_Request::createFromGlobals();
+		return Elgg_Http_Request::createFromGlobals();
 	}
 
 	/**

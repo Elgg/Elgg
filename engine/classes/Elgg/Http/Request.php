@@ -34,7 +34,7 @@
  * @since      1.9.0
  * @access private
  */
-class Elgg_Request {
+class Elgg_Http_Request {
 	/**
 	 * @var Elgg_Http_ParameterBag GET parameters
 	 */
@@ -126,10 +126,10 @@ class Elgg_Request {
 	/**
 	 * Creates a request from PHP's globals
 	 *
-	 * @return Elgg_Request
+	 * @return Elgg_Http_Request
 	 */
 	public static function createFromGlobals() {
-		return new Elgg_Request($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
+		return new Elgg_Http_Request($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
 	}
 
 	/**
@@ -145,7 +145,7 @@ class Elgg_Request {
 	 * @param array  $files      The request files ($_FILES)
 	 * @param array  $server     The server parameters ($_SERVER)
 	 *
-	 * @return Elgg_Request
+	 * @return Elgg_Http_Request
 	 */
 	public static function create($uri, $method = 'GET', $parameters = array(), $cookies = array(), $files = array(), $server = array()) {
 		$server = array_merge(array(
@@ -217,7 +217,7 @@ class Elgg_Request {
 		$server['REQUEST_URI'] = $components['path'] . ('' !== $queryString ? '?' . $queryString : '');
 		$server['QUERY_STRING'] = $queryString;
 
-		return new Elgg_Request($query, $request, $cookies, $files, $server);
+		return new Elgg_Http_Request($query, $request, $cookies, $files, $server);
 	}
 
 	/**
@@ -448,7 +448,7 @@ class Elgg_Request {
 	 * @return string|null A normalized query string for the Request
 	 */
 	public function getQueryString() {
-		$qs = Elgg_Request::normalizeQueryString($this->server->get('QUERY_STRING'));
+		$qs = Elgg_Http_Request::normalizeQueryString($this->server->get('QUERY_STRING'));
 
 		return '' === $qs ? null : $qs;
 	}
@@ -456,7 +456,7 @@ class Elgg_Request {
 	/**
 	 * Get URL segments from the path info
 	 *
-	 * @see Elgg_Request::getPathInfo()
+	 * @see Elgg_Http_Request::getPathInfo()
 	 *
 	 * @return array
 	 */
@@ -472,7 +472,7 @@ class Elgg_Request {
 	/**
 	 * Get first URL segment from the path info
 	 *
-	 * @see Elgg_Request::getUrlSegments()
+	 * @see Elgg_Http_Request::getUrlSegments()
 	 *
 	 * @return string
 	 */
