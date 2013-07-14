@@ -15,7 +15,8 @@ class CKEditorUploadService {
 	protected $resizer;
 	protected $rootDir;
 	protected $dirLocator;
-	protected $guid;
+	protected $userGuid;
+	protected $uploadObject = null;
 
 	protected $bytesPerPixel = 4;
 	protected $fudgeFactor = 1.4;
@@ -36,7 +37,7 @@ class CKEditorUploadService {
 		}
 
 		$this->rootDir = rtrim($rootDir, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		$this->guid = $guid;
+		$this->userGuid = $guid;
 		$this->dirLocator = new Elgg_EntityDirLocator($guid);
 		$this->resizer = $resizer;
 	}
@@ -238,7 +239,13 @@ class CKEditorUploadService {
 	 * @return string
 	 */
 	protected function getAssetURL() {
-		$url = "uploads/images/$this->guid/$this->assetFilename";
+		if (!$this->uploadObject) {
+			return '';
+		}
+
+		$objectGuid = $this->uploadObject->guid;
+		$url = "uploads/images/$this->userGuid/$objectGuid/$this->assetFilename";
+
 		return elgg_normalize_url($url);
 	}
 
@@ -262,9 +269,9 @@ class CKEditorUploadService {
 	 * @return void
 	 */
 	protected function createUploadObject() {
-		$upload = new CKEditorUpload();
-		$upload->owner_guid = $this->guid;
-		$upload->filePath = self::ASSET_DIR . '/' . $this->assetFilename;
-		$upload->save();
+		$this->uploadObject = new CKEditorUpload();
+		$this->uploadObject->owner_guid = $this->userGuid;
+		$this->uploadObject->filePath = self::ASSET_DIR . '/' . $this->assetFilename;
+		$this->uploadObject->save();
 	}
 }

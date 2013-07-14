@@ -23,7 +23,7 @@ class CKEditorUpload extends ElggObject {
 	public function getURL() {
 		$user_guid = $this->getOwnerGUID();
 		$basename = pathinfo($this->filePath, PATHINFO_BASENAME);
-		$url = "uploads/images/$user_guid/$basename";
+		$url = "uploads/images/$user_guid/$this->guid/$basename";
 		return elgg_normalize_url($url);
 	}
 

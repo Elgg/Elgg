@@ -56,9 +56,9 @@ function ckeditor_longtext_menu($hook, $type, $items, $vars) {
  * @param array $segments URL segments
  */
 function ckeditor_uploads_page_handler($segments) {
-	// uploads/images/$user_guid/$filename
+	// uploads/images/$user_guid/$object_guid/$filename
 	$guid = elgg_extract(1, $segments, 0);
-	$filename = elgg_extract(2, $segments);
+	$filename = elgg_extract(3, $segments);
 	$user = get_user($guid);
 	if (!$user || !$filename) {
 		header("HTTP/1.1 404 Not Found");
