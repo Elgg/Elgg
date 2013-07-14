@@ -231,6 +231,7 @@ function _elgg_admin_init() {
 	// maintenance mode
 	if (elgg_get_config('elgg_maintenance_mode', null)) {
 		elgg_register_plugin_hook_handler('route', 'all', '_elgg_admin_maintenance_handler');
+		elgg_register_plugin_hook_handler('action', 'all', '_elgg_admin_maintenance_action_check');
 		elgg_register_css('elgg.maintenance', elgg_get_simplecache_url('css', 'maintenance'));
 
 		elgg_register_menu_item('topbar', array(
@@ -682,7 +683,7 @@ function _elgg_admin_maintenance_handler($hook, $type, $info) {
 	$site = elgg_get_site_entity();
 	$message = $site->getPrivateSetting('elgg_maintenance_message');
 	if (!$message) {
-		$message = elgg_echo('admin:maintenance_mode:message');
+		$message = elgg_echo('admin:maintenance_mode:default_message');
 	}
 
 	elgg_load_css('elgg.maintenance');
@@ -694,6 +695,32 @@ function _elgg_admin_maintenance_handler($hook, $type, $info) {
 		'site' => $site,
 	));
 	echo elgg_view_page($site->name, $body, 'maintenance');
+
+	return false;
+}
+
+/**
+ * Prevent non-admins from using actions
+ *
+ * @access private
+ *
+ * @param string $hook Hook name
+ * @param string $type Action name
+ * @return bool
+ */
+function _elgg_admin_maintenance_action_check($hook, $type) {
+	if (elgg_is_admin_logged_in()) {
+		return true;
+	}
+
+	if ($type == 'login') {
+		$user = get_user_by_username(get_input('username'));
+		if ($user->isAdmin()) {
+			return true;
+		}
+	}
+
+	register_error(elgg_echo('actionunauthorized'));
 
 	return false;
 }
