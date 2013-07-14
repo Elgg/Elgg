@@ -17,8 +17,8 @@ echo '<div><label>' . elgg_echo('admin:maintenance_mode:mode_label') . ': ';
 echo elgg_view('input/select', array(
 	'name' => 'mode',
 	'options_values' => array(
+		'1' => elgg_echo('on'),
 		'0' => elgg_echo('off'),
-		'1' => elgg_echo('admin:maintenance_mode:on'),
 	),
 	'value' => $mode,
 ));
