@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg_Util_DatabaseQueue tests
+ * Elgg_Queue_DatabaseQueue tests
  *
  * @package Elgg
  * @subpackage Test
@@ -8,16 +8,16 @@
 class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 
 	public function testEnqueueAndDequeue() {
-		$queue = new Elgg_Util_DatabaseQueue('unit:test', _elgg_services()->db);
+		$queue = new Elgg_Queue_DatabaseQueue('unit:test', _elgg_services()->db);
 		$first = array(1, 2, 3);
 		$second = array(4, 5, 6);
 
 		$result = $queue->enqueue($first);
 		$this->assertTrue($result);
-		// @todo fix this
-		sleep(1);
 		$result = $queue->enqueue($second);
 		$this->assertTrue($result);
+
+		$this->assertIdentical(2, $queue->size());
 
 		$data = $queue->dequeue();
 		$this->assertIdentical($first, $data);
@@ -29,8 +29,8 @@ class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 	}
 
 	public function testMultipleQueues() {
-		$queue1 = new Elgg_Util_DatabaseQueue('unit:test1', _elgg_services()->db);
-		$queue2 = new Elgg_Util_DatabaseQueue('unit:test2', _elgg_services()->db);
+		$queue1 = new Elgg_Queue_DatabaseQueue('unit:test1', _elgg_services()->db);
+		$queue2 = new Elgg_Queue_DatabaseQueue('unit:test2', _elgg_services()->db);
 		$first = array(1, 2, 3);
 		$second = array(4, 5, 6);
 
@@ -39,6 +39,9 @@ class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 		$result = $queue2->enqueue($second);
 		$this->assertTrue($result);
 
+		$this->assertIdentical(1, $queue1->size());
+		$this->assertIdentical(1, $queue2->size());
+
 		$data = $queue2->dequeue();
 		$this->assertIdentical($second, $data);
 		$data = $queue1->dequeue();
@@ -46,7 +49,7 @@ class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 	}
 
 	public function testClear() {
-		$queue = new Elgg_Util_DatabaseQueue('unit:test',  _elgg_services()->db);
+		$queue = new Elgg_Queue_DatabaseQueue('unit:test',  _elgg_services()->db);
 		$first = array(1, 2, 3);
 		$second = array(4, 5, 6);
 
@@ -58,5 +61,6 @@ class ElggCoreDatabaseQueueTest extends ElggCoreUnitTest {
 		$queue->clear();
 		$data = $queue->dequeue();
 		$this->assertIdentical(null, $data);
+		$this->assertIdentical(0, $queue->size());
 	}
 }

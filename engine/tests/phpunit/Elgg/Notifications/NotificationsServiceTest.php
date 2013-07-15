@@ -8,7 +8,7 @@ class Elgg_Notifications_NotificationsServiceTest extends PHPUnit_Framework_Test
 
 	public function setUp() {
 		$this->hooks = new Elgg_PluginHooksService();
-		$this->queue = new Elgg_Util_MemoryQueue();
+		$this->queue = new Elgg_Queue_MemoryQueue();
 		$dbMock = $this->getMockBuilder('Elgg_Database')
 			->disableOriginalConstructor()
 			->getMock();

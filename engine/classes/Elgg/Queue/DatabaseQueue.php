@@ -8,10 +8,10 @@
  * @access private
  * 
  * @package    Elgg.Core
- * @subpackage Util
+ * @subpackage Queue
  * @since      1.9.0
  */
-class Elgg_Util_DatabaseQueue implements Elgg_Util_Queue {
+class Elgg_Queue_DatabaseQueue implements Elgg_Queue_Queue {
 
 	/** @var string Name of the queue */
 	protected $name;
@@ -54,7 +54,7 @@ class Elgg_Util_DatabaseQueue implements Elgg_Util_Queue {
 		$update = "UPDATE {$prefix}queue 
 			SET worker = '$this->workerId'
 			WHERE name = '$this->name' AND worker IS NULL
-			ORDER BY timestamp ASC LIMIT 1";
+			ORDER BY id ASC LIMIT 1";
 		$num = $this->db->updateData($update, true);
 		if ($num === 1) {
 			$select = "SELECT data FROM {$prefix}queue
@@ -78,5 +78,14 @@ class Elgg_Util_DatabaseQueue implements Elgg_Util_Queue {
 	public function clear() {
 		$prefix = $this->db->getTablePrefix();
 		$this->db->deleteData("DELETE FROM {$prefix}queue WHERE name = '$this->name'");
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function size() {
+		$prefix = $this->db->getTablePrefix();
+		$result = $this->db->getDataRow("SELECT COUNT(id) AS total FROM {$prefix}queue WHERE name = '$this->name'");
+		return (int)$result->total;
 	}
 }

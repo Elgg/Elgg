@@ -16,7 +16,7 @@ class Elgg_Notifications_NotificationsService {
 	/** @var Elgg_Notifications_SubscriptionsService */
 	protected $subscriptions;
 
-	/** @var Elgg_Util_Queue */
+	/** @var Elgg_Queue_Queue */
 	protected $queue;
 
 	/** @var Elgg_PluginHooksService */
@@ -41,12 +41,12 @@ class Elgg_Notifications_NotificationsService {
 	 * Constructor
 	 *
 	 * @param Elgg_Notifications_SubscriptionsService $subscriptions Subscription service
-	 * @param Elgg_Util_Queue                         $queue         Queue
+	 * @param Elgg_Queue_Queue                        $queue         Queue
 	 * @param Elgg_PluginHooksService                 $hooks         Plugin hook service
 	 * @param Elgg_Access                             $access        Access control service
 	 */
 	public function __construct(Elgg_Notifications_SubscriptionsService $subscriptions,
-			Elgg_Util_Queue $queue, Elgg_PluginHooksService $hooks, Elgg_Access $access) {
+			Elgg_Queue_Queue $queue, Elgg_PluginHooksService $hooks, Elgg_Access $access) {
 		$this->subscriptions = $subscriptions;
 		$this->queue = $queue;
 		$this->hooks = $hooks;
