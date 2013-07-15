@@ -156,9 +156,13 @@ function elgg_format_attributes(array $attrs) {
 /**
  * Format an HTML element
  *
- * @param string $tag_name   The tagName of the element. e.g. "div". This will not be validated.
+ * @param string $tag_name   The element tagName. e.g. "div". This will not be validated.
  *
- * @param array  $attributes Array in format:
+ * @param array  $attributes The element attributes. This is passed to elgg_format_attributes().
+ *
+ * @param string $text       The contents of the element. Assumed to be HTML unless encode_text is true.
+ *
+ * @param array  $options    Options array with keys:
  *
  *   encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities
  *                    will not be double-escaped.
@@ -172,21 +176,17 @@ function elgg_format_attributes(array $attrs) {
  *
  *   is_xml        => (bool, default false) If true, void elements will be formatted like "<tag />"
  *
- *   All other keys will be formatted as attributes using elgg_format_attributes().
- *
- * @param string $text       The content of the element. Assumed to be HTML unless encode_text is true
- *
  * @return string
  * @throws InvalidArgumentException
  * @since 1.9.0
  */
-function elgg_format_element($tag_name, array $attributes = array(), $text = '') {
+function elgg_format_element($tag_name, array $attributes = array(), $text = '', array $options = array()) {
 	if (!is_string($tag_name)) {
 		throw new InvalidArgumentException('$tag_name is required');
 	}
 
-	if (isset($attributes['is_void'])) {
-		$is_void = (bool)$attributes['is_void'];
+	if (isset($options['is_void'])) {
+		$is_void = $options['is_void'];
 	} else {
 		// from http://www.w3.org/TR/html-markup/syntax.html#syntax-elements
 		$is_void = in_array(strtolower($tag_name), array(
@@ -195,29 +195,22 @@ function elgg_format_element($tag_name, array $attributes = array(), $text = '')
 		));
 	}
 
-	$is_xml = empty($attributes['is_xml']) ? false : true;
-
-	if (!empty($attributes['encode_text'])) {
-		$double_encode = empty($attributes['double_encode']) ? false : true;
+	if (!empty($options['encode_text'])) {
+		$double_encode = empty($options['double_encode']) ? false : true;
 		$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8', $double_encode);
 	}
 
-	unset(
-		$attributes['tag_name'],
-		$attributes['is_void'],
-		$attributes['is_xml'],
-		$attributes['text'],
-		$attributes['encode_text'],
-		$attributes['double_encode']
-	);
-
-	$attrs = elgg_format_attributes($attributes);
-	if ($attrs !== '') {
-		$attrs = " $attrs";
+	if ($attributes) {
+		$attrs = elgg_format_attributes($attributes);
+		if ($attrs !== '') {
+			$attrs = " $attrs";
+		}
+	} else {
+		$attrs = '';
 	}
 
 	if ($is_void) {
-		return $is_xml ? "<{$tag_name}{$attrs} />" : "<{$tag_name}{$attrs}>";
+		return empty($options['is_xml']) ? "<{$tag_name}{$attrs}>" : "<{$tag_name}{$attrs} />";
 	} else {
 		return "<{$tag_name}{$attrs}>$text</$tag_name>";
 	}

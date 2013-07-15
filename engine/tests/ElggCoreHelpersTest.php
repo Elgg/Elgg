@@ -116,35 +116,35 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 			'<span>a &amp; &amp; b</span>' => array(
 				'tag_name' => 'span',
 				'text' => 'a & &amp; b',
-				'encode_text' => true,
+				'opts' => array('encode_text' => true),
 				'_msg' => 'HTML escaping, does not double encode',
 			),
 			'<span>a &amp;times; b</span>' => array(
 				'tag_name' => 'span',
 				'text' => 'a &times; b',
-				'encode_text' => true,
-				'double_encode' => true,
+				'opts' => array('encode_text' => true, 'double_encode' => true),
 				'_msg' => 'HTML escaping double encodes',
 			),
 			'<IMG src="a &amp; b">' => array(
 				'tag_name' => 'IMG',
-				'src' => 'a & b',
+				'attrs' => array('src' => 'a & b'),
 				'text' => 'should not appear',
 				'_msg' => 'IMG recognized as void element, text ignored',
 			),
 			'<foo />' => array(
 				'tag_name' => 'foo',
-				'is_void' => true,
-				'is_xml' => true,
+				'opts' => array('is_void' => true, 'is_xml' => true),
 				'_msg' => 'XML syntax for self-closing elements',
 			),
 		);
 		foreach ($tests as $expected => $vars) {
 			$tag_name = $vars['tag_name'];
 			$text = isset($vars['text']) ? $vars['text'] : null;
+			$opts = isset($vars['opts']) ? $vars['opts'] : array();
+			$attrs = isset($vars['attrs']) ? $vars['attrs'] : array();
 			$message = isset($vars['_msg']) ? $vars['_msg'] : null;
 			unset($vars['tag_name'], $vars['text'], $vars['_msg']);
-			$this->assertEqual(elgg_format_element($tag_name, $vars, $text), $expected, $message);
+			$this->assertEqual(elgg_format_element($tag_name, $attrs, $text, $opts), $expected, $message);
 		}
 
 		try {
