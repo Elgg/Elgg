@@ -46,7 +46,7 @@ class ElggMenuItem {
 	);
 
 	/**
-	 * @var string The menu display string
+	 * @var string The menu display string (HTML)
 	 */
 	protected $text;
 
@@ -70,7 +70,7 @@ class ElggMenuItem {
 	 * ElggMenuItem constructor
 	 *
 	 * @param string $name Identifier of the menu item
-	 * @param string $text Display text of the menu item
+	 * @param string $text Display text of the menu item (HTML)
 	 * @param string $href URL of the menu item (false if not a link)
 	 */
 	public function __construct($name, $text, $href) {
@@ -199,7 +199,7 @@ class ElggMenuItem {
 	/**
 	 * Set the display text of the menu item
 	 * 
-	 * @param string $text The display text
+	 * @param string $text The display text as HTML
 	 * @return void
 	 */
 	public function setText($text) {
@@ -209,7 +209,7 @@ class ElggMenuItem {
 	/**
 	 * Get the display text of the menu item
 	 *
-	 * @return string
+	 * @return string The display text as HTML
 	 */
 	public function getText() {
 		return $this->text;
