@@ -9,6 +9,12 @@
  */
 /* CKEditor */
 
+.elgg-module-ckeditor {
+	width: 220px;
+	border: 1px solid #ccc;
+	padding: 5px;
+}
+
 .elgg-page .cke_skin_BootstrapCK-Skin {
 	border: 1px solid #CCC;
 	padding: 0px;
@@ -46,4 +52,23 @@
 }
 .mceLast .mceStatusbar {
 	padding-left: 5px;
+}
+
+.elgg-ckeditor-uploaded {
+    position: relative;
+}
+
+.elgg-ckeditor-uploaded a {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    font-size: .8em;
+    background: #fff;
+    padding: 2px 0 0 4px;
+}
+
+.elgg-ckeditor-uploaded:hover a,
+.elgg-ckeditor-uploaded.touched a {
+    display: block;
 }
