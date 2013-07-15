@@ -156,9 +156,9 @@ function elgg_format_attributes(array $attrs) {
 /**
  * Format an HTML element
  *
- * @param string $tag_name The tagName of the element. e.g. "div". This will not be validated.
+ * @param string $tag_name   The tagName of the element. e.g. "div". This will not be validated.
  *
- * @param array $attributes Array in format:
+ * @param array  $attributes Array in format:
  *
  *   encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities
  *                    will not be double-escaped.
@@ -174,7 +174,7 @@ function elgg_format_attributes(array $attrs) {
  *
  *   All other keys will be formatted as attributes using elgg_format_attributes().
  *
- * @param string $text The content of the element. Assumed to be HTML unless encode_text is true
+ * @param string $text       The content of the element. Assumed to be HTML unless encode_text is true
  *
  * @return string
  * @throws InvalidArgumentException
