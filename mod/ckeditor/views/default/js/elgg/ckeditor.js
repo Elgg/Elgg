@@ -119,7 +119,7 @@ define(function(require) {
 					$(this).after('<a href="' + adminUrl
 						+ '"> ' + elgg.echo('ckeditor:upload:admin') + '</a>');
 			});
-			$('span.elgg-ckeditor-uploaded').on('touch', function () {
+			$('span.elgg-ckeditor-uploaded').on('touchstart', function () {
 				$(this).toggleClass('touched');
 			});
 		},
