@@ -1342,6 +1342,24 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 	}
 }
 
+
+/**
+ * Inserts module names into anonymous modules by handling the "simplecache:generate" hook.
+ * 
+ * @param string $hook    The name of the hook
+ * @param string $type    View type (css, js, or unknown)
+ * @param string $content Content of the view
+ * @param array  $params  Array of parameters
+ *
+ * @return string|null View content minified (if css/js type)
+ * @access private
+ * 
+ */
+function _elgg_views_amd($hook, $type, $content, $params) {
+	$filter = new Elgg_Amd_ViewFilter();	
+	return $filter->filter($params['view'], $content);
+}
+
 /**
  * Add the rss link to the extras when if needed
  *
@@ -1435,6 +1453,7 @@ function elgg_views_boot() {
 
 	elgg_register_ajax_view('js/languages');
 
+	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_amd');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 

@@ -8,7 +8,7 @@
  * the container generic.
  * 
  * @property-read Elgg_ActionsService                     $actions
- * @property-read Elgg_AmdConfig                          $amdConfig
+ * @property-read Elgg_Amd_Config                         $amdConfig
  * @property-read ElggAutoP                               $autoP
  * @property-read Elgg_AutoloadManager                    $autoloadManager
  * @property-read Elgg_Database                           $db
@@ -87,10 +87,10 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 	 * AMD Config factory
 	 * 
 	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
-	 * @return Elgg_AmdConfig
+	 * @return Elgg_Amd_Config
 	 */
 	protected function getAmdConfig(Elgg_Di_ServiceProvider $c) {
-		$obj = new Elgg_AmdConfig();
+		$obj = new Elgg_Amd_Config();
 		$obj->setBaseUrl(_elgg_get_simplecache_root() . "js/");
 		return $obj;
 	}

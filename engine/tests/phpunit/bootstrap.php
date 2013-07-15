@@ -1,6 +1,8 @@
 <?php
 $engine = dirname(dirname(dirname(__FILE__)));
 
+date_default_timezone_set('America/Los_Angeles');
+
 /**
  * This is here as a temporary solution only. Instead of adding more global
  * state to this file as we migrate tests, try to refactor the code to be
