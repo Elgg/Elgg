@@ -436,6 +436,9 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['body'] = $body;
 	$vars['sysmessages'] = $messages;
 
+	$head_params = _elgg_views_prepare_head($title);
+	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, $head_params);
+
 	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
 	
 	// check for deprecated view
@@ -450,6 +453,56 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	// Allow plugins to mod output
 	return elgg_trigger_plugin_hook('output', 'page', $vars, $output);
+}
+
+/**
+ * Prepare the variables for the html head
+ *
+ * @param string $title Page title for <head>
+ * @return array
+ * @access private
+ */
+function _elgg_views_prepare_head($title) {
+	$params = array(
+		'link' => array(),
+		'meta' => array(),
+	);
+
+	if (empty($title)) {
+		$params['title'] = elgg_get_config('sitename');
+	} else {
+		$params['title'] = $title . ' : ' . elgg_get_config('sitename');
+	}
+
+	$params['meta'][] = array(
+		'http-equiv' => 'Content-Type',
+		'content' => 'text/html; charset=utf-8',
+	);
+
+	// favicon
+	$params['link'][] = array(
+		'rel' => 'icon',
+		'href' => elgg_normalize_url('_graphics/favicon.ico'),
+	);
+
+	// RSS feed link
+	global $autofeed;
+	if (isset($autofeed) && $autofeed == true) {
+		$url = current_page_url();
+		if (substr_count($url,'?')) {
+			$url .= "&view=rss";
+		} else {
+			$url .= "?view=rss";
+		}
+		$params['link'][] = array(
+			'rel' => 'alternative',
+			'type' => 'application/rss+xml',
+			'title' => 'RSS',
+			'href' => elgg_format_url($url),
+		);
+	}
+
+	return $params;
 }
 
 /**
@@ -1254,6 +1307,25 @@ function elgg_view_access_collections($owner_guid) {
 	}
 
 	return elgg_view('core/friends/collections', array('collections' => $collections));
+}
+
+/**
+ * Render an html element
+ *
+ * @param string $name       Name of the element
+ * @param array  $attributes Array of attributes
+ * @param string $content    Content between the tags (will be escaped)
+ * @return string
+ * @since 1.9.0
+ */
+function elgg_view_html_element($name, $attributes = array(), $content = null) {
+	$attributes['tag_name'] = $name;
+	if ($content) {
+		$attributes['text'] = $content;
+		$attributes['encode_text'] = true;
+	}
+
+	return elgg_format_element($attributes);
 }
 
 /**
