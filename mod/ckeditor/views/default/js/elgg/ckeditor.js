@@ -111,11 +111,16 @@ define(function(require) {
 		 */
 		addUploadAdminLinks: function() {
 			var baseUrl = elgg.normalize_url('uploads/images/');
-			$("img[src ^= '" + baseUrl + "']").each(function() {
-				var url = $(this).attr('src');    
-				var guid = url.match(/uploads\/images\/([0-9]+)\/([0-9]+)/)[2];
-				var adminUrl = elgg.normalize_url('admin/administer_utilities/uploads?guid=' + guid);
-				$(this).after(' <a href="' + adminUrl + '">(' + elgg.echo('ckeditor:upload:admin') + ')</a> ');
+			$("img[src^='" + baseUrl + "']")
+				.wrap('<span class="elgg-ckeditor-uploaded" />')
+				.each(function() {
+					var guid = this.src.match(/uploads\/images\/[0-9]+\/([0-9]+)/)[1],
+						adminUrl = elgg.normalize_url('admin/administer_utilities/uploads?guid=' + guid);
+					$(this).after('<a href="' + adminUrl
+						+ '"> ' + elgg.echo('ckeditor:upload:admin') + '</a>');
+			});
+			$('span.elgg-ckeditor-uploaded').on('touch', function () {
+				$(this).toggleClass('touched');
 			});
 		},
 

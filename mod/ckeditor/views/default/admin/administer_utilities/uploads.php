@@ -16,6 +16,8 @@ $options = array(
 $guid = get_input('guid');
 if ($guid) {
 	$options['guid'] = $guid;
+
+	echo "<p><a href=\"uploads\">" . elgg_echo('link:view:all') . "</a></p>";
 }
 
 echo elgg_list_entities($options);
