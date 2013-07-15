@@ -156,53 +156,62 @@ function elgg_format_attributes(array $attrs) {
 /**
  * Format an HTML element
  *
- * @param array $vars Array in format:
+ * @param string $tag_name The tagName of the element. e.g. "div". This will not be validated.
  *
- *   tag_name    => (string, required) The tagName of the element. e.g. "div"
+ * @param array $attributes Array in format:
  *
- *   text        => (string) The content of the element. Assumed to be HTML unless encode_text is true
+ *   encode_text   => (bool, default false) If true, $text will be HTML-escaped. Already-escaped entities
+ *                    will not be double-escaped.
  *
- *   encode_text => (bool, default false) If true, the content will be HTML-escaped. Already-escaped entities
- *                  will not be double-escaped.
+ *   double_encode => (bool, default false) If true, the $text HTML escaping will be allowed to double
+ *                    encode HTML entities: '&times;' will become '&amp;times;'
  *
- *   is_void     => (bool) If given, this determines whether the function will return just the open tag.
- *                  Otherwise this will be determined by the tag name according to this list:
- *                  http://www.w3.org/html/wg/drafts/html/master/single-page.html#void-elements
+ *   is_void       => (bool) If given, this determines whether the function will return just the open tag.
+ *                    Otherwise this will be determined by the tag name according to this list:
+ *                    http://www.w3.org/html/wg/drafts/html/master/single-page.html#void-elements
  *
- *   is_xml      => (bool, default false) If true, void elements will be formatted like "<tag />"
+ *   is_xml        => (bool, default false) If true, void elements will be formatted like "<tag />"
  *
  *   All other keys will be formatted as attributes using elgg_format_attributes().
+ *
+ * @param string $text The content of the element. Assumed to be HTML unless encode_text is true
  *
  * @return string
  * @throws InvalidArgumentException
  * @since 1.9.0
  */
-function elgg_format_element(array $vars) {
-	if (empty($vars['tag_name'])) {
-		throw new InvalidArgumentException('$spec["tag_name"] is required');
+function elgg_format_element($tag_name, array $attributes = array(), $text = '') {
+	if (!is_string($tag_name)) {
+		throw new InvalidArgumentException('$tag_name is required');
 	}
-	$tag_name = strtolower($vars['tag_name']);
 
-	if (isset($vars['is_void'])) {
-		$is_void = (bool)$vars['is_void'];
+	if (isset($attributes['is_void'])) {
+		$is_void = (bool)$attributes['is_void'];
 	} else {
-		$is_void = in_array($tag_name, array(
+		// from http://www.w3.org/TR/html-markup/syntax.html#syntax-elements
+		$is_void = in_array(strtolower($tag_name), array(
 			'area', 'base', 'br', 'col', 'embed', 'hr', 'img', 'input', 'keygen', 'link', 'menuitem',
 			'meta', 'param', 'source', 'track', 'wbr'
 		));
 	}
 
-	$is_xml = empty($vars['is_xml']) ? false : true;
+	$is_xml = empty($attributes['is_xml']) ? false : true;
 
-	$content = isset($vars['text']) ? (string)$vars['text'] : '';
-
-	if (!empty($vars['encode_text'])) {
-		$content = htmlspecialchars($content, ENT_QUOTES, 'UTF-8', false);
+	if (!empty($attributes['encode_text'])) {
+		$double_encode = empty($attributes['double_encode']) ? false : true;
+		$text = htmlspecialchars($text, ENT_QUOTES, 'UTF-8', $double_encode);
 	}
 
-	unset($vars['tag_name'], $vars['is_void'], $vars['is_xml'], $vars['text'], $vars['encode_text']);
+	unset(
+		$attributes['tag_name'],
+		$attributes['is_void'],
+		$attributes['is_xml'],
+		$attributes['text'],
+		$attributes['encode_text'],
+		$attributes['double_encode']
+	);
 
-	$attrs = elgg_format_attributes($vars);
+	$attrs = elgg_format_attributes($attributes);
 	if ($attrs !== '') {
 		$attrs = " $attrs";
 	}
@@ -210,7 +219,7 @@ function elgg_format_element(array $vars) {
 	if ($is_void) {
 		return $is_xml ? "<{$tag_name}{$attrs} />" : "<{$tag_name}{$attrs}>";
 	} else {
-		return "<{$tag_name}{$attrs}>$content</$tag_name>";
+		return "<{$tag_name}{$attrs}>$text</$tag_name>";
 	}
 }
 
