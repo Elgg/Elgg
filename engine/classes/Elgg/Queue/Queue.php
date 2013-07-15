@@ -8,10 +8,10 @@
  * @access private
  * 
  * @package    Elgg.Core
- * @subpackage Util
+ * @subpackage Queue
  * @since      1.9.0
  */
-interface Elgg_Util_Queue {
+interface Elgg_Queue_Queue {
 	/**
 	 * Add an item to the queue
 	 *
@@ -33,4 +33,11 @@ interface Elgg_Util_Queue {
 	 * @return void
 	 */
 	public function clear();
+
+	/**
+	 * Get the size of the queue
+	 *
+	 * @return int
+	 */
+	public function size();
 }
