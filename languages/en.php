@@ -27,6 +27,7 @@ return array(
 	'logout' => "Log out",
 	'logoutok' => "You have been logged out.",
 	'logouterror' => "We couldn't log you out. Please try again.",
+	'session_expired' => "Your session has expired. Please reload the page to log in.",
 
 	'loggedinrequired' => "You must be logged in to view the requested page.",
 	'adminrequired' => "You must be an administrator to view the requested page.",
