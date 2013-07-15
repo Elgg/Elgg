@@ -1,8 +1,18 @@
 <?php
 
+/**
+ * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * 
+ * This filter adds AMD names to anonymous AMD modules defined in views.
+ * 
+ * @since 1.9
+ * @access private
+ */
 class Elgg_Amd_ViewFilter {
 	/**
-	 * @param string $name The name of the view (e.g., js/elgg/module.js)
+	 * Given the view name, returns the AMD name.
+	 * 
+	 * @param string $name The name of the view (e.g., 'js/elgg/module.js')
 	 * 
 	 * @return string The AMD name (e.g., 'elgg/module'), or blank for no AMD name.
 	 */
@@ -19,6 +29,14 @@ class Elgg_Amd_ViewFilter {
 		return implode("/", $pieces); // elgg/module
 	}
 	
+	/**
+	 * Inserts the AMD name into `$content` and returns the new value.
+	 * 
+	 * @param string $viewName The name of the view.
+	 * @param string $content  The output of the view to be filtered.
+	 * 
+	 * @return string The new content with the AMD name inserted, if applicable.
+	 */
 	public function filter($viewName, $content) {
 		$amdName = $this->getAmdName($viewName);
 		
