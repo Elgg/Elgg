@@ -3,15 +3,15 @@
  * The HTML head
  *
  * @uses $vars['title'] The page title
- * @uses $vars['meta']  Array of meta elements
- * @uses $vars['link']  Array of links
+ * @uses $vars['metas'] Array of meta elements
+ * @uses $vars['links'] Array of links
  */
 
 echo elgg_format_element('title', array(), $vars['title'], array('encode_text' => true));
-foreach ($vars['meta'] as $attributes) {
+foreach ($vars['metas'] as $attributes) {
 	echo elgg_format_element('meta', $attributes);
 }
-foreach ($vars['link'] as $attributes) {
+foreach ($vars['links'] as $attributes) {
 	echo elgg_format_element('link', $attributes);
 }
 

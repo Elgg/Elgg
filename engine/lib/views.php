@@ -439,6 +439,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['body'] = $body;
 	$vars['sysmessages'] = $messages;
 
+	// head as keys 'title', 'metas', 'links'
 	$head_params = _elgg_views_prepare_head($title);
 	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, $head_params);
 
@@ -467,8 +468,8 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
  */
 function _elgg_views_prepare_head($title) {
 	$params = array(
-		'link' => array(),
-		'meta' => array(),
+		'links' => array(),
+		'metas' => array(),
 	);
 
 	if (empty($title)) {
@@ -477,13 +478,13 @@ function _elgg_views_prepare_head($title) {
 		$params['title'] = $title . ' : ' . elgg_get_config('sitename');
 	}
 
-	$params['meta'][] = array(
+	$params['metas'][] = array(
 		'http-equiv' => 'Content-Type',
 		'content' => 'text/html; charset=utf-8',
 	);
 
 	// favicon
-	$params['link'][] = array(
+	$params['links'][] = array(
 		'rel' => 'icon',
 		'href' => elgg_normalize_url('_graphics/favicon.ico'),
 	);
@@ -497,7 +498,7 @@ function _elgg_views_prepare_head($title) {
 		} else {
 			$url .= "?view=rss";
 		}
-		$params['link'][] = array(
+		$params['links'][] = array(
 			'rel' => 'alternative',
 			'type' => 'application/rss+xml',
 			'title' => 'RSS',
