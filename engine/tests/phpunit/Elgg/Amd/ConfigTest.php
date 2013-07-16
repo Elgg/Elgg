@@ -1,9 +1,9 @@
 <?php
 
-class Elgg_AmdConfigTest extends PHPUnit_Framework_TestCase {
+class Elgg_Amd_ConfigTest extends PHPUnit_Framework_TestCase {
 	
 	public function testCanConfigureModulePaths() {
-		$amdConfig = new Elgg_AmdConfig();
+		$amdConfig = new Elgg_Amd_Config();
 		$amdConfig->setPath('jquery', '/some/path.js');
 		
 		$configArray = $amdConfig->getConfig();
@@ -12,7 +12,7 @@ class Elgg_AmdConfigTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanConfigureModuleShims() {
-		$amdConfig = new Elgg_AmdConfig();
+		$amdConfig = new Elgg_Amd_Config();
 		$amdConfig->setShim('jquery', array(
 			'deps' => array(),
 			'exports' => 'jQuery',
@@ -26,7 +26,7 @@ class Elgg_AmdConfigTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanRequireUnregisteredAmdModules() {
-		$amdConfig = new Elgg_AmdConfig();
+		$amdConfig = new Elgg_Amd_Config();
 		$amdConfig->addDependency('jquery');
 		
 		$configArray = $amdConfig->getConfig();

@@ -8,7 +8,7 @@
  * @package    Elgg.Core
  * @subpackage JavaScript
  */
-class Elgg_AmdConfig {
+class Elgg_Amd_Config {
 	private $baseUrl = '';
 	private $paths = array();
 	private $shim = array();
