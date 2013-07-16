@@ -611,11 +611,7 @@ function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
 		if (preg_match('~<[a-z]~', $text)) {
 			return $text;
 		} else {
-			return elgg_format_element(array(
-				'tag_name' => 'span',
-				'text' => $text,
-				'class' => 'elgg-non-link',
-			));
+			return elgg_format_element('span', array('class' => 'elgg-non-link'), $text);
 		}
 	}
 
