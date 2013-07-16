@@ -1,23 +1,18 @@
 <?php
 /**
- * The standard HTML head
+ * The HTML head
  *
  * @uses $vars['title'] The page title
  * @uses $vars['meta']  Array of meta elements
  * @uses $vars['link']  Array of links
  */
 
-// @todo why are we doing this?
-// Deps are loaded in page/elements/foot with require([...])
-$amdConfig = _elgg_services()->amdConfig->getConfig();
-unset($amdConfig['deps']);
-
-echo elgg_view_html_element('title', array(), $vars['title']);
+echo elgg_format_element('title', array(), $vars['title'], array('encode_text' => true));
 foreach ($vars['meta'] as $attributes) {
-	echo elgg_view_html_element('meta', $attributes);
+	echo elgg_format_element('meta', $attributes);
 }
 foreach ($vars['link'] as $attributes) {
-	echo elgg_view_html_element('link', $attributes);
+	echo elgg_format_element('link', $attributes);
 }
 
 $js = elgg_get_loaded_js('head');
@@ -39,7 +34,7 @@ $ie7_url = elgg_get_simplecache_url('css', 'ie7');
 <?php
 
 foreach ($css as $url) {
-	echo elgg_view_html_element('link', array('rel' => 'stylesheet', 'href' => $url));
+	echo elgg_format_element('link', array('rel' => 'stylesheet', 'href' => $url));
 }
 
 ?>
@@ -57,11 +52,17 @@ foreach ($css as $url) {
 	<script><?php echo $elgg_init; ?></script>
 <?php
 foreach ($js as $url) {
-	echo elgg_view_html_element('script', array('src' => $url));
+	echo elgg_format_element('script', array('src' => $url));
+}
+
+$icon = elgg_view('page/elements/shortcut_icon', $vars);
+if ($icon) {
+	elgg_deprecated_notice("The page/elements/shortcut_icon view has been deprecated. Use the 'head', 'page' plugin hook.", 1.9);
+	echo $icon;
 }
 
 $metatags = elgg_view('metatags', $vars);
 if ($metatags) {
-	elgg_deprecated_notice("The metatags view has been deprecated. Extend page/elements/head instead", 1.8);
+	elgg_deprecated_notice("The metatags view has been deprecated. Use the 'head', 'page' plugin hook.", 1.8);
 	echo $metatags;
 }

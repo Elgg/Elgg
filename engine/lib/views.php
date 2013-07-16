@@ -402,11 +402,14 @@ function elgg_unextend_view($view, $view_extension) {
  * can be HTML for a browser, RSS for a feed reader, or
  * Javascript, PHP and a number of other formats.
  *
+ * For HTML pages, use the 'head', 'page' plugin hook for setting meta elements
+ * and links.
+ *
  * @param string $title      Title
  * @param string $body       Body
  * @param string $page_shell Optional page shell to use. See page/shells view directory
  * @param array  $vars       Optional vars array to pass to the page
- *                           shell. Automatically adds title, body, and sysmessages
+ *                           shell. Automatically adds title, body, head, and sysmessages
  *
  * @return string The contents of the page
  * @since  1.8
@@ -451,7 +454,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	$vars['page_shell'] = $page_shell;
 
-	// Allow plugins to mod output
+	// Allow plugins to modify the output
 	return elgg_trigger_plugin_hook('output', 'page', $vars, $output);
 }
 
@@ -1307,25 +1310,6 @@ function elgg_view_access_collections($owner_guid) {
 	}
 
 	return elgg_view('core/friends/collections', array('collections' => $collections));
-}
-
-/**
- * Render an html element
- *
- * @param string $name       Name of the element
- * @param array  $attributes Array of attributes
- * @param string $content    Content between the tags (will be escaped)
- * @return string
- * @since 1.9.0
- */
-function elgg_view_html_element($name, $attributes = array(), $content = null) {
-	$attributes['tag_name'] = $name;
-	if ($content) {
-		$attributes['text'] = $content;
-		$attributes['encode_text'] = true;
-	}
-
-	return elgg_format_element($attributes);
 }
 
 /**
