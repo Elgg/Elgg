@@ -11,7 +11,7 @@ class Elgg_Di_ServiceProviderTest extends PHPUnit_Framework_TestCase {
 			'actions' => 'Elgg_ActionsService',
 			
 			// requires _elgg_get_simplecache_root() to be defined
-			//'amdConfig' => 'Elgg_AmdConfig',
+			//'amdConfig' => 'Elgg_Amd_Config',
 			
 			'autoP' => 'ElggAutoP',
 			'autoloadManager' => 'Elgg_AutoloadManager',
