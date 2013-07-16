@@ -402,11 +402,14 @@ function elgg_unextend_view($view, $view_extension) {
  * can be HTML for a browser, RSS for a feed reader, or
  * Javascript, PHP and a number of other formats.
  *
+ * For HTML pages, use the 'head', 'page' plugin hook for setting meta elements
+ * and links.
+ *
  * @param string $title      Title
  * @param string $body       Body
  * @param string $page_shell Optional page shell to use. See page/shells view directory
  * @param array  $vars       Optional vars array to pass to the page
- *                           shell. Automatically adds title, body, and sysmessages
+ *                           shell. Automatically adds title, body, head, and sysmessages
  *
  * @return string The contents of the page
  * @since  1.8
@@ -436,6 +439,10 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['body'] = $body;
 	$vars['sysmessages'] = $messages;
 
+	// head as keys 'title', 'metas', 'links'
+	$head_params = _elgg_views_prepare_head($title);
+	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, $head_params);
+
 	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
 	
 	// check for deprecated view
@@ -448,8 +455,58 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	$vars['page_shell'] = $page_shell;
 
-	// Allow plugins to mod output
+	// Allow plugins to modify the output
 	return elgg_trigger_plugin_hook('output', 'page', $vars, $output);
+}
+
+/**
+ * Prepare the variables for the html head
+ *
+ * @param string $title Page title for <head>
+ * @return array
+ * @access private
+ */
+function _elgg_views_prepare_head($title) {
+	$params = array(
+		'links' => array(),
+		'metas' => array(),
+	);
+
+	if (empty($title)) {
+		$params['title'] = elgg_get_config('sitename');
+	} else {
+		$params['title'] = $title . ' : ' . elgg_get_config('sitename');
+	}
+
+	$params['metas'][] = array(
+		'http-equiv' => 'Content-Type',
+		'content' => 'text/html; charset=utf-8',
+	);
+
+	// favicon
+	$params['links'][] = array(
+		'rel' => 'icon',
+		'href' => elgg_normalize_url('_graphics/favicon.ico'),
+	);
+
+	// RSS feed link
+	global $autofeed;
+	if (isset($autofeed) && $autofeed == true) {
+		$url = current_page_url();
+		if (substr_count($url,'?')) {
+			$url .= "&view=rss";
+		} else {
+			$url .= "?view=rss";
+		}
+		$params['links'][] = array(
+			'rel' => 'alternative',
+			'type' => 'application/rss+xml',
+			'title' => 'RSS',
+			'href' => elgg_format_url($url),
+		);
+	}
+
+	return $params;
 }
 
 /**
