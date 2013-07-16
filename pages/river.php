@@ -49,6 +49,7 @@ $content = elgg_view('core/river/filter', array('selector' => $selector));
 $sidebar = elgg_view('core/river/sidebar');
 
 $params = array(
+	'title' => $title,
 	'content' =>  $content . $activity,
 	'sidebar' => $sidebar,
 	'filter_context' => $page_filter,
