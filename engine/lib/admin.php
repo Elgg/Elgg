@@ -232,7 +232,7 @@ function _elgg_admin_init() {
 	if (elgg_get_config('elgg_maintenance_mode', null)) {
 		elgg_register_plugin_hook_handler('route', 'all', '_elgg_admin_maintenance_handler');
 		elgg_register_plugin_hook_handler('action', 'all', '_elgg_admin_maintenance_action_check');
-		elgg_register_css('elgg.maintenance', elgg_get_simplecache_url('css', 'maintenance'));
+		elgg_register_css('maintenance', elgg_get_simplecache_url('css', 'maintenance'));
 
 		elgg_register_menu_item('topbar', array(
 			'name' => 'maintenance_mode',
@@ -686,7 +686,7 @@ function _elgg_admin_maintenance_handler($hook, $type, $info) {
 		$message = elgg_echo('admin:maintenance_mode:default_message');
 	}
 
-	elgg_load_css('elgg.maintenance');
+	elgg_load_css('maintenance');
 
 	header("HTTP/1.1 503 Service Unavailable");
 
