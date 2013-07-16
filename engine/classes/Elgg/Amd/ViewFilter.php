@@ -5,6 +5,9 @@
  * 
  * This filter adds AMD names to anonymous AMD modules defined in views.
  * 
+ * @package    Elgg.Core
+ * @subpackage JavaScript
+ * 
  * @since 1.9
  * @access private
  */
