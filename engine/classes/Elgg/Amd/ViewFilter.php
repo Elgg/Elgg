@@ -7,8 +7,8 @@
  * 
  * @package    Elgg.Core
  * @subpackage JavaScript
+ * @since      1.9
  * 
- * @since 1.9
  * @access private
  */
 class Elgg_Amd_ViewFilter {
