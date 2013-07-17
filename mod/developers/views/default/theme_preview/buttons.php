@@ -1,4 +1,4 @@
-<table class="elgg-table">
+<table class="theme-sandbox-table">
 	<thead>
 		<tr>
 			<th>Anchor links</th>
