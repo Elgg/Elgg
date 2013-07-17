@@ -15,8 +15,5 @@ echo elgg_view_module('theme-sandbox-demo', 'Toggle (rel=toggle)', $body);
 $body = elgg_view('theme_sandbox/miscellaneous/system_messages');
 echo elgg_view_module('theme-sandbox-demo', 'System Messages and Errors', $body);
 
-$body = elgg_view('theme_sandbox/miscellaneous/site_menu');
-echo elgg_view_module('theme-sandbox-demo', 'Site Menu', $body);
-
 $body = elgg_view('theme_sandbox/miscellaneous/user_hover_menu');
 echo elgg_view_module('theme-sandbox-demo', 'User Icon with Hover Menu', $body);
