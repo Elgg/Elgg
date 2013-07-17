@@ -40,7 +40,7 @@
 	</tbody>
 </table>
 
-<table class="elgg-table mtl">
+<table class="theme-sandbox-table mtl">
 	<thead>
 		<tr>
 			<th>Input type="submit"</th>

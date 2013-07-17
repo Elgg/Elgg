@@ -50,28 +50,11 @@ for ($den = 1; $den <= count($units); $den++) {
 }
 
 ?>
-<style>
-h3 { text-align: center; font-weight: normal; }
-.elgg-griddemo { margin: 1em 0 0; font-size: 115%; }
-.elgg-col > .elgg-inner,
-.elgg-col-alt > .elgg-inner {
-	border: 1px solid #cccccc;
-	border-radius: 5px;
-	padding: 5px;
-	text-align: center;
-	font-size: .65rem;
-}
-.elgg-col p {
-	text-align: left;
-	font-size: .80rem;
-}
-</style>
 
-<h2 class="elgg-griddemo">Without Gutters</h2>
-<p>Each row is wrapped by <code>div.elgg-grid</code></p>
-
+<div class="theme-sandbox-grid-demo">
+	<h3 class="theme-sandbox-section-heading">6 Column Grid</h3>
 <?php foreach ($rows as $row): ?>
-<div class="elgg-grid">
+<div class="elgg-grid theme-sandbox-grid-demo-solid">
 	<?php foreach ($row as $col):
 		$class = "elgg-col elgg-col-" . str_replace('/', 'of', $col);
 		$text = str_replace(' ', '<br/>', $class);
@@ -80,28 +63,11 @@ h3 { text-align: center; font-weight: normal; }
 	<?php endforeach; ?>
 </div>
 <?php endforeach; ?>
-
-<!--
-<h2 class="elgg-griddemo">With Gutters</h2>
-<p>Each row is wrapped by <code>div.elgg-grid-gutters</code>
-This does not work with IE8 and before without manually adding .elgg-col-last to the last column in a row.</p>
-
-<?php foreach ($rows as $row): ?>
-<div class="elgg-grid-gutters">
-	<?php foreach ($row as $col):
-		$class = "elgg-col elgg-col-" . str_replace('/', 'of', $col);
-		$text = str_replace(' ', '<br/>', $class);
-	?>
-	<div class="<?php echo $class ?>"><div class="elgg-inner"><?php echo $text ?></div></div>
-	<?php endforeach; ?>
 </div>
-<?php endforeach; ?>
--->
 
-<h2 class="elgg-griddemo">Without Gutters and With Content</h2>
-<p>Each row is wrapped by <code>div.elgg-grid</code></p>
-
-<div class="elgg-grid">
+<div class="theme-sandbox-grid-demo">
+	<h3 class="theme-sandbox-section-heading">Nested Grids</h3>
+<div class="elgg-grid theme-sandbox-grid-demo-outline">
 	<div class="elgg-col elgg-col-1of5">
 		<div class="elgg-inner">
 			<h3>1/5</h3>
@@ -111,7 +77,7 @@ This does not work with IE8 and before without manually adding .elgg-col-last to
 	<div class="elgg-col elgg-col-3of5">
 		<div class="elgg-inner clearfix">
 			<h3>3/5</h3>
-			<div class="elgg-grid">
+			<div class="elgg-grid theme-sandbox-grid-demo-outline">
 				<div class="elgg-col elgg-col-1of2">
 					<div class="elgg-inner">
 						<h3>1/2</h3>
@@ -125,7 +91,7 @@ This does not work with IE8 and before without manually adding .elgg-col-last to
 					</div>
 				</div>
 			</div>
-			<div class="elgg-grid">
+			<div class="elgg-grid theme-sandbox-grid-demo-outline">
 				<div class="elgg-col elgg-col-1of3">
 					<div class="elgg-inner">
 						<h3>1/3</h3>
@@ -135,7 +101,7 @@ This does not work with IE8 and before without manually adding .elgg-col-last to
 				<div class="elgg-col elgg-col-2of3 elgg-col-last">
 					<div class="elgg-inner">
 						<h3>2/3</h3>
-						<div class="elgg-grid">
+						<div class="elgg-grid theme-sandbox-grid-demo-outline">
 							<div class="elgg-col elgg-col-1of2">
 								<div class="elgg-inner">
 									<h3>1/2</h3>
@@ -149,7 +115,7 @@ This does not work with IE8 and before without manually adding .elgg-col-last to
 								</div>
 							</div>
 						</div>
-						<div class="elgg-grid">
+						<div class="elgg-grid theme-sandbox-grid-demo-outline">
 							<div class="elgg-col elgg-col-1of1">
 								<div class="elgg-inner">
 									<h3>1</h3>
@@ -168,4 +134,5 @@ This does not work with IE8 and before without manually adding .elgg-col-last to
 			<?php echo str_repeat($filler, 3) ?>
 		</div>
 	</div>
+</div>
 </div>

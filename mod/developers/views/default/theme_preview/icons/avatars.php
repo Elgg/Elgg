@@ -4,7 +4,7 @@
 	
 	$sizes = array('large', 'medium', 'small', 'tiny');
 ?>
-<table class="elgg-table">
+<table class="theme-sandbox-table">
 	<tr>
 		<th></th>
 		<?php

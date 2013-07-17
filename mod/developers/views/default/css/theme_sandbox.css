@@ -39,6 +39,11 @@
 	color: #666;
 	margin-bottom: 10px;
 }
+.theme-sandbox-section-heading {
+	font-size: 18px;
+	color: #666;
+	margin-bottom: 10px;
+}
 
 .elgg-module-theme-sandbox-nav {
 	color: #333333;
@@ -94,4 +99,33 @@
 }
 .theme-sandbox-table tr:nth-child(even), .theme-sandbox-table tr.even {
 	background-color: #f0f0f0;
+}
+
+.theme-sandbox-grid-demo {
+	margin-bottom: 30px;
+}
+.theme-sandbox-grid-demo-solid > .elgg-col > .elgg-inner {
+	background-color: #999;
+	color: #fff;
+	border-radius: 5px;
+	margin: 5px;
+	padding: 8px;
+	text-align: center;
+}
+.theme-sandbox-grid-demo-solid > .elgg-col:first-child > .elgg-inner {
+	margin-left: 0;
+}
+.theme-sandbox-grid-demo-solid > .elgg-col:last-child > .elgg-inner {
+	margin-right: 0;
+}
+.theme-sandbox-grid-demo-outline > .elgg-col > .elgg-inner {
+	border: 1px solid #cccccc;
+	border-radius: 5px;
+	padding: 5px;
+	text-align: center;
+	font-size: .65rem;
+}
+.elgg-col p {
+	text-align: left;
+	font-size: .80rem;
 }
