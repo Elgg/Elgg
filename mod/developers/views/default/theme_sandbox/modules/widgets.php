@@ -20,7 +20,7 @@ function css_permissions_override() {
 
 ?>
 <div class="elgg-body mal">
-	<?php echo elgg_view('theme_preview/header', $vars); ?>
+	<?php echo elgg_view('theme_sandbox/header', $vars); ?>
 <?php
 $w = array();
 for ($i=1; $i<=6; $i++) {

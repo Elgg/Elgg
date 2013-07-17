@@ -8,8 +8,7 @@
 
 <p>This theme sandbox provides a visual catalog for many of the theming elements
 	that Elgg uses. The primary css selector is listed with each theme element.
-	The preview is divided into sections that are listed in the page menu
-	(usually in the sidebar but depends on your current theme).
+	The sandbox is divided into sections that are listed in the sidebar.
 </p>
 <?php
 $simple_cache = elgg_get_config('simplecache_enabled');
@@ -37,7 +36,7 @@ if ($simple_cache || $system_cache) {
 <p>
 <?php
 	echo elgg_view('output/url', array(
-		'text' => elgg_echo('theme_preview:breakout'),
+		'text' => elgg_echo('theme_sandbox:breakout'),
 		'href' => current_page_url(),
 		'target' => '_parent',
 		'is_trusted' => true,
