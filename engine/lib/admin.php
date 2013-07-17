@@ -228,6 +228,20 @@ function _elgg_admin_init() {
 
 	elgg_register_event_handler('pagesetup', 'system', '_elgg_admin_pagesetup', 1000);
 
+	// maintenance mode
+	if (elgg_get_config('elgg_maintenance_mode', null)) {
+		elgg_register_plugin_hook_handler('route', 'all', '_elgg_admin_maintenance_handler');
+		elgg_register_plugin_hook_handler('action', 'all', '_elgg_admin_maintenance_action_check');
+		elgg_register_css('maintenance', elgg_get_simplecache_url('css', 'maintenance'));
+
+		elgg_register_menu_item('topbar', array(
+			'name' => 'maintenance_mode',
+			'href' => 'admin/administer_utilities/maintenance',
+			'text' => elgg_echo('admin:maintenance_mode:indicator_menu_item'),
+			'priority' => 900,
+		));
+	}
+
 	elgg_register_action('admin/user/ban', '', 'admin');
 	elgg_register_action('admin/user/unban', '', 'admin');
 	elgg_register_action('admin/user/delete', '', 'admin');
@@ -240,6 +254,7 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/site/flush_cache', '', 'admin');
 	elgg_register_action('admin/site/unlock_upgrade', '', 'admin');
 	elgg_register_action('admin/site/set_robots', '', 'admin');
+	elgg_register_action('admin/site/set_maintenance_mode', '', 'admin');
 
 	elgg_register_action('admin/menu/save', '', 'admin');
 
@@ -271,6 +286,8 @@ function _elgg_admin_init() {
 	elgg_register_admin_menu_item('administer', 'statistics', null, 20);
 	elgg_register_admin_menu_item('administer', 'overview', 'statistics');
 	elgg_register_admin_menu_item('administer', 'server', 'statistics');
+	//utilities
+	elgg_register_admin_menu_item('administer', 'maintenance', 'administer_utilities');
 
 	// users
 	elgg_register_admin_menu_item('administer', 'users', null, 20);
@@ -645,6 +662,67 @@ function _elgg_robots_page_handler() {
 	echo $content;
 
 	return true;
+}
+
+/**
+ * Handle requests when in maintenance mode
+ * 
+ * @access private
+ */
+function _elgg_admin_maintenance_handler($hook, $type, $info) {
+	if (elgg_is_admin_logged_in()) {
+		return;
+	}
+
+	if ($info['identifier'] == 'action' && $info['segments'][0] == 'login') {
+		return;
+	}
+
+	elgg_unregister_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
+
+	$site = elgg_get_site_entity();
+	$message = $site->getPrivateSetting('elgg_maintenance_message');
+	if (!$message) {
+		$message = elgg_echo('admin:maintenance_mode:default_message');
+	}
+
+	elgg_load_css('maintenance');
+
+	header("HTTP/1.1 503 Service Unavailable");
+
+	$body = elgg_view_layout('maintenance', array(
+		'message' => $message,
+		'site' => $site,
+	));
+	echo elgg_view_page($site->name, $body, 'maintenance');
+
+	return false;
+}
+
+/**
+ * Prevent non-admins from using actions
+ *
+ * @access private
+ *
+ * @param string $hook Hook name
+ * @param string $type Action name
+ * @return bool
+ */
+function _elgg_admin_maintenance_action_check($hook, $type) {
+	if (elgg_is_admin_logged_in()) {
+		return true;
+	}
+
+	if ($type == 'login') {
+		$user = get_user_by_username(get_input('username'));
+		if ($user && $user->isAdmin()) {
+			return true;
+		}
+	}
+
+	register_error(elgg_echo('actionunauthorized'));
+
+	return false;
 }
 
 /**
