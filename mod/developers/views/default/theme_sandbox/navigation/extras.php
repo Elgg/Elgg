@@ -11,7 +11,7 @@ $params['class'] = 'elgg-menu-hz';
 
 ?>
 
-<div class="elgg-sidebar">
+<div class="theme-sandbox-demo-sidebar">
 <?php 
 	echo elgg_view('navigation/menu/default', $params);
 ?>

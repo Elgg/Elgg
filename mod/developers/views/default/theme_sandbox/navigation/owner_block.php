@@ -8,6 +8,6 @@ for ($i=1; $i<=5; $i++) {
 $params['menu']['default'][2]->setSelected(true);
 $params['name'] = 'owner-block';
 
-echo '<div class="elgg-sidebar">';
+echo '<div class="theme-sandbox-demo-sidebar">';
 echo elgg_view('navigation/menu/default', $params);
 echo '</div>';

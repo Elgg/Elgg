@@ -129,3 +129,7 @@
 	text-align: left;
 	font-size: .80rem;
 }
+
+.theme-sandbox-demo-sidebar {
+	width: 200px;
+}

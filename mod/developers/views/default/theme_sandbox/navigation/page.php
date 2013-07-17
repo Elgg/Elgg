@@ -13,7 +13,7 @@ $m->setParent($params['menu']['default'][1]);
 $params['menu']['default'][1]->addChild($m);
 ?>
 
-<div class="elgg-sidebar">
+<div class="theme-sandbox-demo-sidebar">
 <?php 
 	echo elgg_view('navigation/menu/page', $params);
 ?>
