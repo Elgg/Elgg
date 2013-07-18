@@ -140,3 +140,7 @@
 	max-width: 600px;
 }
 
+/* specific to core theme for site navigation menu */
+.elgg-body > .elgg-menu-site-default {
+	position: static;
+}
