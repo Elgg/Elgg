@@ -32,9 +32,6 @@ if ($annotations) {
 		$object->description = $annotation->value;
 		$object->access_id = $annotation->access_id;
 		$object->enabled = $annotation->enabled;
-		$object->save();
-
-		// We need to save once before being able to change time_created
 		$object->time_created = $annotation->time_created;
 		$object->save();
 
