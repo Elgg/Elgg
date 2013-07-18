@@ -526,7 +526,7 @@ function elgg_river_get_access_sql() {
 		'table_alias' => '',
 		'owner_guid_column' => 'rv.subject_guid',
 		'guid_column' => 'object_guid',
-		'access_id_column' => 'rv.access_id', 
+		'access_column' => 'rv.access_id', 
 		'use_enabled_clause' => false,
 	));
 }
