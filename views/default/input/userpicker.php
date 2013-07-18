@@ -63,8 +63,10 @@ foreach ($vars['value'] as $user_id) {
 ?>
 <div class="elgg-user-picker">
 	<input type="text" class="elgg-input-user-picker" size="30"/>
-	<input type="checkbox" name="match_on" value="true" />
-	<label><?php echo elgg_echo('userpicker:only_friends'); ?></label>
+	<label>
+		<input type="checkbox" name="match_on" value="true" />
+		<?php echo elgg_echo('userpicker:only_friends'); ?>
+	</label>
 	<ul class="elgg-user-picker-list"><?php echo $user_list; ?></ul>
 </div>
 <script type="text/javascript">
