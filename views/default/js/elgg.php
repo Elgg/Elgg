@@ -1,3 +1,6 @@
+if (typeof elgg != 'object') {
+	throw new Error('elgg configuration object is not defined! You should include js/initialize_elgg view before JS library files!');
+}
 <?php
 /**
  * Core Elgg javascript loader
