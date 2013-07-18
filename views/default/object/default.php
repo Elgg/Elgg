@@ -32,7 +32,7 @@ if ($owner) {
 	));
 }
 
-$date = elgg_view_friendly_time($vars['entity']->time_created);
+$date = elgg_view_friendly_time($vars['entity']->getTimeCreated());
 
 $subtitle = "$owner_link $date";
 
