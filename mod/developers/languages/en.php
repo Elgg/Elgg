@@ -54,6 +54,7 @@ return array(
 	'theme_sandbox:grid' => 'Grid',
 	'theme_sandbox:icons' => 'Icons',
 	'theme_sandbox:javascript' => 'JavaScript',
+	'theme_sandbox:layouts' => 'Layouts',
 	'theme_sandbox:modules' => 'Modules',
 	'theme_sandbox:navigation' => 'Navigation',
 	'theme_sandbox:typography' => 'Typography',

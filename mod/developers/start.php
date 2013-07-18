@@ -203,6 +203,7 @@ function developers_theme_sandbox_controller($page) {
 		'grid',
 		'icons',
 		'javascript',
+		'layouts',
 		'modules',
 		'navigation',
 		'typography',
