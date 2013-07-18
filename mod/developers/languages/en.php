@@ -53,7 +53,7 @@ return array(
 	'theme_sandbox:forms' => 'Forms',
 	'theme_sandbox:grid' => 'Grid',
 	'theme_sandbox:icons' => 'Icons',
-	'theme_sandbox:miscellaneous' => 'Miscellaneous',
+	'theme_sandbox:javascript' => 'JavaScript',
 	'theme_sandbox:modules' => 'Modules',
 	'theme_sandbox:navigation' => 'Navigation',
 	'theme_sandbox:typography' => 'Typography',

@@ -81,6 +81,9 @@
 .elgg-module-theme-sandbox-demo > .elgg-head * {
 	color: #333;
 }
+.elgg-module-theme-sandbox-demo > .elgg-body {
+	position: relative;
+}
 
 .theme-sandbox-table {
 	width: 100%;
@@ -133,3 +136,7 @@
 .theme-sandbox-demo-sidebar {
 	width: 200px;
 }
+.theme-sandbox-content-thin {
+	max-width: 600px;
+}
+

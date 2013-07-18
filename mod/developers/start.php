@@ -202,7 +202,7 @@ function developers_theme_sandbox_controller($page) {
 		'forms',
 		'grid',
 		'icons',
-		'miscellaneous',
+		'javascript',
 		'modules',
 		'navigation',
 		'typography',
