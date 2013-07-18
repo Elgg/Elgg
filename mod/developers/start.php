@@ -14,8 +14,10 @@ function developers_init() {
 	elgg_extend_view('css/admin', 'developers/css');
 	elgg_extend_view('css/elgg', 'developers/css');
 
-	elgg_register_page_handler('theme_preview', 'developers_theme_preview_controller');
+	elgg_register_page_handler('theme_sandbox', 'developers_theme_sandbox_controller');
 	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
+	$sandbox_css = elgg_get_simplecache_url('css', 'theme_sandbox.css');
+	elgg_register_css('dev.theme_sandbox', $sandbox_css);
 
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
@@ -65,7 +67,7 @@ function developers_process_settings() {
 function developers_setup_menu() {
 	if (elgg_in_context('admin')) {
 		elgg_register_admin_menu_item('develop', 'inspect', 'develop_tools');
-		elgg_register_admin_menu_item('develop', 'preview', 'develop_tools');
+		elgg_register_admin_menu_item('develop', 'sandbox', 'develop_tools');
 		elgg_register_admin_menu_item('develop', 'unit_tests', 'develop_tools');
 
 		elgg_register_menu_item('page', array(
@@ -182,15 +184,17 @@ function developers_log_events($name, $type) {
 }
 
 /**
- * Serve the theme preview pages
+ * Serve the theme sandbox pages
  *
  * @param array $page
  * @return bool
  */
-function developers_theme_preview_controller($page) {
+function developers_theme_sandbox_controller($page) {
 	if (!isset($page[0])) {
-		forward('theme_preview/general');
+		forward('theme_sandbox/intro');
 	}
+
+	elgg_load_css('dev.theme_sandbox');
 
 	$pages = array(
 		'buttons',
@@ -198,28 +202,29 @@ function developers_theme_preview_controller($page) {
 		'forms',
 		'grid',
 		'icons',
+		'javascript',
+		'layouts',
 		'modules',
 		'navigation',
 		'typography',
-		'miscellaneous'
 	);
 	
 	foreach ($pages as $page_name) {
-		elgg_register_menu_item('page', array(
+		elgg_register_menu_item('theme_sandbox', array(
 			'name' => $page_name,
-			'text' => elgg_echo("theme_preview:$page_name"),
-			'href' => "theme_preview/$page_name",
+			'text' => elgg_echo("theme_sandbox:$page_name"),
+			'href' => "theme_sandbox/$page_name",
 		));
 	}
 
-	$title = elgg_echo("theme_preview:{$page[0]}");
-	$body =  elgg_view("theme_preview/{$page[0]}");
+	$title = elgg_echo("theme_sandbox:{$page[0]}");
+	$body =  elgg_view("theme_sandbox/{$page[0]}");
 
-	$layout = elgg_view_layout('one_sidebar', array(
+	$layout = elgg_view_layout('theme_sandbox', array(
 		'title' => $title,
 		'content' => $body,
 	));
-	
-	echo elgg_view_page($title, $layout, 'theme_preview');
+
+	echo elgg_view_page("Theme Sandbox : $title", $layout, 'theme_sandbox');
 	return true;
 }
