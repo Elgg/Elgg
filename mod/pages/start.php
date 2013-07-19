@@ -295,7 +295,10 @@ function page_notify_message($hook, $entity_type, $returnvalue, $params) {
 function pages_write_permission_check($hook, $entity_type, $returnvalue, $params) {
 	if ($params['entity']->getSubtype() == 'page'
 		|| $params['entity']->getSubtype() == 'page_top') {
-
+		
+		// Don't display "edit" link if not loggedin
+		if (!elgg_is_logged_in()) return false;
+		
 		$write_permission = $params['entity']->write_access_id;
 		$user = $params['user'];
 
