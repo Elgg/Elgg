@@ -1,11 +1,17 @@
-if (typeof elgg != 'object') {
-	throw new Error('elgg configuration object is not defined! You should include js/initialize_elgg view before JS library files!');
-}
 <?php
 /**
- * Core Elgg javascript loader
+ * Core Elgg JavaScript file
  */
 global $CONFIG;
+
+// this warning is due to the change in JS boot order in Elgg 1.9
+echo <<<JS
+if (typeof elgg != 'object') {
+	throw new Error('elgg configuration object is not defined! You must include the js/initialize_elgg view in html head before JS library files!');
+}
+
+JS;
+
 
 $lib_dir = 'js/lib';
 $classes_dir = 'js/classes';
