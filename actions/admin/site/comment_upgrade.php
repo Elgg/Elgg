@@ -1,7 +1,14 @@
 <?php
 /**
  * Convert comment annotations to entities
+ * 
+ * Run for 2 seconds per request as set by $batch_run_time_in_secs. This includes
+ * the engine loading time.
  */
+
+// from engine/start.php
+global $START_MICROTIME;
+$batch_run_time_in_secs = 2;
 
 // Offset is the total amount of errors so far. We skip these
 // comments to prevent them from possibly repeating the same error.
@@ -11,18 +18,23 @@ $limit = 50;
 $access_status = access_get_show_hidden_status();
 access_show_hidden_entities(true);
 
-$annotations = elgg_get_annotations(array(
-	'annotation_names' => 'generic_comment',
-	'limit' => $limit,
-	'offset' => $offset,
-	'order_by' => 'n_table.id DESC',
-));
-
 $success_count = 0;
 $error_count = 0;
-$annotations_to_delete = array();
 
-if ($annotations) {
+do {
+	$annotations_to_delete = array();
+	$annotations = elgg_get_annotations(array(
+		'annotation_names' => 'generic_comment',
+		'limit' => $limit,
+		'offset' => $offset,
+		'order_by' => 'n_table.id DESC',
+	));
+
+	if (!$annotations) {
+		// no annotations left
+		break;
+	}
+
 	$db_prefix = elgg_get_config('dbprefix');
 
 	// Create a new object for each annotation
@@ -77,7 +89,8 @@ if ($annotations) {
 		$delete_query = "DELETE FROM {$db_prefix}annotations WHERE id IN ($annotation_ids)";
 		delete_data($delete_query);
 	}
-}
+
+} while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs);
 
 access_show_hidden_entities($access_status);
 
