@@ -1406,7 +1406,6 @@ function _elgg_views_minify($hook, $type, $content, $params) {
  *
  * @return string|null View content minified (if css/js type)
  * @access private
- * 
  */
 function _elgg_views_amd($hook, $type, $content, $params) {
 	$filter = new Elgg_Amd_ViewFilter();	
@@ -1467,8 +1466,10 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('css/ie7');
 	elgg_register_simplecache_view('css/ie8');
 
+	elgg_register_simplecache_view('js/elgg/require_config');
 	elgg_register_simplecache_view('js/text.js');
 
+	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('js', 'elgg/require_config'), 'head');
 	elgg_register_js('require', '/vendors/requirejs/require-2.1.4.min.js', 'head');
 	elgg_register_js('jquery', '/vendors/jquery/jquery-1.9.1.min.js', 'head');
 	elgg_register_js('jquery-migrate', '/vendors/jquery/jquery-migrate-1.2.1.min.js', 'head');
@@ -1484,13 +1485,12 @@ function elgg_views_boot() {
 	$elgg_js_url = elgg_get_simplecache_url('js', 'elgg');
 	elgg_register_js('elgg', $elgg_js_url, 'head');
 
+	elgg_load_js('elgg.require_config');
 	elgg_load_js('require');
 	elgg_load_js('jquery');
 	elgg_load_js('jquery-migrate');
 	elgg_load_js('jquery-ui');
 	elgg_load_js('elgg');
-
-	elgg_register_simplecache_view('js/elgg/require_config');
 
 	elgg_register_simplecache_view('js/lightbox');
 	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
