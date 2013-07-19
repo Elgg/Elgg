@@ -20,6 +20,7 @@ $annotations = elgg_get_annotations(array(
 
 $success_count = 0;
 $error_count = 0;
+$annotations_to_delete = array();
 
 if ($annotations) {
 	$db_prefix = elgg_get_config('dbprefix');
@@ -52,14 +53,14 @@ if ($annotations) {
 					subtype = 'comment',
 					annotation_id = 0,
 					object_guid = $guid,
-					target_guid = {$object->container_guid}
+					target_guid = $object->container_guid
 				WHERE action_type = 'comment'
-				  AND annotation_id = {$annotation->id}
+				  AND annotation_id = $annotation->id
 			";
 
 			if (update_data($query)) {
 				// It's now safe to delete the annotation
-				$annotation->delete();
+				$annotations_to_delete[] = $annotation->id;
 				$success_count++;
 			} else {
 				register_error(elgg_echo('upgrade:comments:river_update_failed', array($annotation->id)));
@@ -69,6 +70,12 @@ if ($annotations) {
 			register_error(elgg_echo('upgrade:comments:create_failed', array($annotation->id)));
 			$error_count++;
 		}
+	}
+
+	if ($annotations_to_delete) {
+		$annotation_ids = implode(",", $annotations_to_delete);
+		$delete_query = "DELETE FROM {$db_prefix}annotations WHERE id IN ($annotation_ids)";
+		delete_data($delete_query);
 	}
 }
 
