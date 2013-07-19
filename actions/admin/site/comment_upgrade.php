@@ -18,6 +18,12 @@ $limit = 50;
 $access_status = access_get_show_hidden_status();
 access_show_hidden_entities(true);
 
+// don't want any event or plugin hook handlers to run
+$original_events = _elgg_services()->events;
+$original_hooks = _elgg_services()->hooks;
+_elgg_services()->events = new Elgg_EventsService();
+_elgg_services()->hooks = new Elgg_PluginHooksService();
+
 $success_count = 0;
 $error_count = 0;
 
@@ -93,6 +99,10 @@ do {
 } while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs);
 
 access_show_hidden_entities($access_status);
+
+// replace events and hooks
+_elgg_services()->events = $original_events;
+_elgg_services()->hooks = $original_hooks;
 
 // Give some feedback for the UI
 echo json_encode(array(
