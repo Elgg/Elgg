@@ -6,7 +6,7 @@
 // Offset is the total amount of errors so far. We skip these
 // comments to prevent them from possibly repeating the same error.
 $offset = get_input('offset', 0);
-$limit = 10;
+$limit = 50;
 
 $access_status = access_get_show_hidden_status();
 access_show_hidden_entities(true);
