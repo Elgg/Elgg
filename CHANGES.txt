@@ -1,3 +1,108 @@
+Version 1.9.0-rc1
+(July xx, 2013 from https://github.com/Elgg/Elgg/tree/master)
+  Contributing Developers:
+   * Aday Talavera
+   * Andras Szepeshazi
+   * Ben Werdmuller
+   * Brett Profitt
+   * Cash Costello
+   * Evan Winslow
+   * Facyla
+   * Hayden Shaw
+   * Hellekin Wolf
+   * Ismayil Khayredinov
+   * Janek Lasocki-Biczysko
+   * Jeff Tilson
+   * Jeroen Dalsem
+   * Jerome Bakker
+   * Juho Jaakkola
+   * Marcus Povey
+   * Matt Beckett
+   * Paweł Sroka
+   * Per Jensen
+   * Rasmus Lerdorf
+   * RiverVanRain
+   * Sem
+   * Steve Clay
+   * Tantek Çelik
+   * Team Webgalli
+
+  UI changes
+   * New responsive theme - aalborg_theme
+   * Drops support for IE6
+   * Adds image uploading from editor
+   * Replaces fancybox lightbox with colorbox
+   * Replaces Tinymce editor with CKEditor
+   * Liking and friending use ajax
+   * Removes topbar Elgg logo and made "powered by" themable
+   * Adds group content visibility control
+   * Site notifications moved into separate plugin from messages
+
+  Admin changes
+   * Adds new notification system
+   * Changes simplecache caching so that it is performed on demand
+   * Adds support for simplecache minification of CSS and JavaScript
+   * Makes the wire message length configurable
+   * Changes user directories use GUIDs rather than join date
+   * Adds banned user widget
+   * Adds legacy_url plugin for supporting legacy URLs
+   * Adds robots.txt configuration
+   * Adds maintenance mode
+
+  New developer features
+   * HTML5
+   * AMD modules using require.js
+   * New notification system
+   * New class loader that is PSR-0 compliant
+   * Improves control over cookies
+   * Adds plugin manifest fields (id, php_version, contributors)
+   * Static files recognized as views
+   * Adds support for multi-select
+   * JSON rendered through views system rather than using global
+   * Links in login box use menu system
+   * Upgrades jQuery and includes the jquery migrate plugin
+   * Widgets can set their titles
+   * New JavaScript unit test library
+   * Front page and actions go through page handling system
+
+  API changes:
+   * New notification system
+   * Changes elgg_register_widget_type() to expect contexts to be an array
+   * Moves many functions into methods on ElggEntity and related classes
+   * Adds support for returning translations as arrays from language files
+   * Adds getDisplayName() to ElggEntity
+   * Adds toObject() to ElggEntity
+   * Replaces add_to_river() with elgg_create_river_item() 
+   * Adds target_guid to the river
+   * Adds elgg_get_entities_from_attributes()
+   * Adds ElggMenuItem::addItemClass()
+   * Defaults to full_view = false in elgg_list_entities* functions
+
+  New hooks/events
+   * simple_type, file plugin hook
+   * default, access plugin hook
+   * login:forward, user plugin hook
+   * init:cookie, name plugin hook
+   * layout, page plugin hook
+   * shell, page plugin hook
+   * meta, page plugin hook
+   * notifications plugin hooks
+   * get_sql, access plugin hook
+
+  Deprecated functionality:
+   * calendar library (was not maintained)
+   * web services library (now plugin distributed with Elgg)
+   * export, import, and opendd libraries (see ElggEntity:toObject())
+   * location library
+   * xml library
+
+  Removed functionality
+   * xml-rpc library (now plugin: https://github.com/Elgg/xml-rpc)
+   * xml, php, and ical views (now plugin: https://github.com/Elgg/data_views)
+   * foaf views (now plugin: https://github.com/Elgg/semantic_web)
+   * Default entity page handler
+
+
 Version 1.8.16
 (June 25, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
