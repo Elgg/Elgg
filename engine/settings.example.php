@@ -136,6 +136,7 @@ $CONFIG->dbprefix = '{{dbprefix}}';
  *  - Set the session name to share the session across applications.
  *  - Set the path because Elgg is not installed in the root of the web directory.
  *  - Set the secure option to true if you only serve the site over HTTPS.
+ *  - Set the expire option on the remember me cookie to change its lifetime
  *
  * To use, uncomment the appropriate sections below and update for your site.
  * 
@@ -149,6 +150,16 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 //$CONFIG->cookies['session']['domain'] = "";
 //$CONFIG->cookies['session']['secure'] = false;
 //$CONFIG->cookies['session']['httponly'] = false;
+
+// extended session cookie
+//$CONFIG->cookies['remember_me'] = session_get_cookie_params();
+//$CONFIG->cookies['remember_me']['name'] = "elggperm";
+//$CONFIG->cookies['remember_me']['expire'] = strtotime("+30 days");
+// optionally overwrite the defaults from php.ini below
+//$CONFIG->cookies['remember_me']['path'] = "/";
+//$CONFIG->cookies['remember_me']['domain'] = "";
+//$CONFIG->cookies['remember_me']['secure'] = false;
+//$CONFIG->cookies['remember_me']['httponly'] = false;
 
 
 /**

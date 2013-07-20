@@ -604,7 +604,7 @@ function _elgg_load_application_config() {
 		}
 	}
 
-	// set cookie values for session
+	// set cookie values for session and remember me
 	if (!isset($CONFIG->cookies)) {
 		$CONFIG->cookies = array();
 	}
@@ -614,6 +614,12 @@ function _elgg_load_application_config() {
 	$session_defaults = session_get_cookie_params();
 	$session_defaults['name'] = 'Elgg';
 	$CONFIG->cookies['session'] = array_merge($session_defaults, $CONFIG->cookies['session']);
+	if (!isset($CONFIG->cookies['remember_me'])) {
+		$CONFIG->cookies['remember_me'] = array();
+	}
+	$session_defaults['name'] = 'elggperm';
+	$session_defaults['expire'] = strtotime("+30 days");
+	$CONFIG->cookies['remember_me'] = array_merge($session_defaults, $CONFIG->cookies['remember_me']);
 
 	// load entire datalist
 	// This can cause OOM problems when the datalists table is large

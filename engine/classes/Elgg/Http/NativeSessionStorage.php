@@ -75,7 +75,7 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 	 * upload_progress.freq, "1%"
 	 * upload_progress.min-freq, "1"
 	 * 
-	 * @params array                   $options Session config options
+	 * @param array                    $options Session config options
 	 * @param Elgg_Http_SessionHandler $handler Session handler
 	 */
 	public function __construct(array $options = array(), Elgg_Http_SessionHandler $handler = null) {
