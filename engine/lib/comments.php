@@ -1,25 +1,25 @@
 <?php
 /**
- * Elgg comments
+ * Elgg comments library
  *
  * @package    Elgg.Core
  * @subpackage Comments
  * @since 1.9
  */
 
+elgg_register_event_handler('init', 'system', '_elgg_comments_init');
+
 /**
- * Comments initialisation function
+ * Comments initialization function
  *
  * @return void
  * @access private
  */
-function elgg_comments_init() {
-	// Register entity type
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_comment_setup_entity_menu', 900);
-	
-	elgg_register_plugin_hook_handler('entity:url', 'object', 'elgg_comment_url_handler');
-
+function _elgg_comments_init() {
 	elgg_register_entity_type('object', 'comment');
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_comment_setup_entity_menu', 900);
+	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
+	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 }
 
 /**
@@ -29,10 +29,11 @@ function elgg_comments_init() {
  * @param string         $type   'menu:entity'
  * @param ElggMenuItem[] $return Array of ElggMenuItem objects
  * @param array          $params Array of view vars
- * 
+ *
  * @return array
+ * @access private
  */
-function elgg_comment_setup_entity_menu($hook, $type, $return, $params) {
+function _elgg_comment_setup_entity_menu($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
@@ -63,8 +64,9 @@ function elgg_comment_setup_entity_menu($hook, $type, $return, $params) {
  * @param array  $params Array with the elgg entity passed in as 'entity'
  *
  * @return string
+ * @access private
  */
-function elgg_comment_url_handler($hook, $type, $return, $params) {
+function _elgg_comment_url_handler($hook, $type, $return, $params) {
 	$entity = $params['entity'];
 	/* @var ElggObject $entity */
 
@@ -79,26 +81,26 @@ function elgg_comment_url_handler($hook, $type, $return, $params) {
 }
 
 /**
- * Allow users to comment entities not owned by them.
- * 
- * Object being commented is used as the container of the comment so
+ * Allow users to comment on entities not owned by them.
+ *
+ * Object being commented on is used as the container of the comment so
  * permission check must be overridden if user isn't the owner of the object.
- * 
+ *
  * @param string  $hook   'container_permissions_check'
  * @param string  $type   'object'
- * @param boolean $return True if not already changed by an other hook handler
+ * @param boolean $return Can the current user write to this container?
  * @param array   $params Array of parameters (container, user, subtype)
- * 
+ *
  * @return array
+ * @access private
+ * @todo this doesn't seem to make a difference if a user can comment or not
  */
-function elgg_comments_container_permissions_override($hook, $type, $return, $params) {
+function _elgg_comments_container_permissions_override($hook, $type, $return, $params) {
+
+	// is someone trying to comment, if so override permissions check
 	if ($params['subtype'] === 'comment') {
 		return true;
 	}
 
 	return $return;
 }
-
-elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'elgg_comments_container_permissions_override');
-
-elgg_register_event_handler('init', 'system', 'elgg_comments_init', 0);
