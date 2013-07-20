@@ -43,9 +43,43 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 	/**
 	 * Constructor
 	 * 
+	 * List of options for $options array with their defaults.
+	 * @see http://php.net/session.configuration for options
+	 * but we omit 'session.' from the beginning of the keys for convenience.
+	 *
+	 * ("auto_start", is not supported as it tells PHP to start a session before
+	 * PHP starts to execute user-land code. Setting during runtime has no effect).
+	 *
+	 * cache_limiter, "nocache" (use "0" to prevent headers from being sent entirely).
+	 * cookie_domain, ""
+	 * cookie_httponly, ""
+	 * cookie_lifetime, "0"
+	 * cookie_path, "/"
+	 * cookie_secure, ""
+	 * entropy_file, ""
+	 * entropy_length, "0"
+	 * gc_divisor, "100"
+	 * gc_maxlifetime, "1440"
+	 * gc_probability, "1"
+	 * hash_bits_per_character, "4"
+	 * hash_function, "0"
+	 * referer_check, ""
+	 * serialize_handler, "php"
+	 * use_cookies, "1"
+	 * use_only_cookies, "1"
+	 * use_trans_sid, "0"
+	 * upload_progress.enabled, "1"
+	 * upload_progress.cleanup, "1"
+	 * upload_progress.prefix, "upload_progress_"
+	 * upload_progress.name, "PHP_SESSION_UPLOAD_PROGRESS"
+	 * upload_progress.freq, "1%"
+	 * upload_progress.min-freq, "1"
+	 * 
+	 * @params array                   $options Session config options
 	 * @param Elgg_Http_SessionHandler $handler Session handler
 	 */
-	public function __construct(Elgg_Http_SessionHandler $handler) {
+	public function __construct(array $options = array(), Elgg_Http_SessionHandler $handler = null) {
+		$this->setOptions($options);
 		$this->setHandler($handler);
 	}
 
@@ -207,6 +241,36 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 			$this->start();
 		}
 		$_SESSION = array();
+	}
+
+	/**
+	 * Sets session.* ini variables.
+	 *
+	 * For convenience we omit 'session.' from the beginning of the keys.
+	 * Explicitly ignores other ini keys.
+	 *
+	 * @param array $options Session ini directives array(key => value).
+	 * @return void
+	 * @see http://php.net/session.configuration
+	 */
+	protected function setOptions(array $options) {
+		$validOptions = array_flip(array(
+			'cache_limiter', 'cookie_domain', 'cookie_httponly',
+			'cookie_lifetime', 'cookie_path', 'cookie_secure',
+			'entropy_file', 'entropy_length', 'gc_divisor',
+			'gc_maxlifetime', 'gc_probability', 'hash_bits_per_character',
+			'hash_function', 'name', 'referer_check',
+			'serialize_handler', 'use_cookies',
+			'use_only_cookies', 'use_trans_sid', 'upload_progress.enabled',
+			'upload_progress.cleanup', 'upload_progress.prefix', 'upload_progress.name',
+			'upload_progress.freq', 'upload_progress.min-freq', 'url_rewriter.tags',
+		));
+
+		foreach ($options as $key => $value) {
+			if (isset($validOptions[$key])) {
+				ini_set('session.' . $key, $value);
+			}
+		}
 	}
 
 	/**

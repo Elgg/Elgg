@@ -604,6 +604,17 @@ function _elgg_load_application_config() {
 		}
 	}
 
+	// set cookie values for session
+	if (!isset($CONFIG->cookies)) {
+		$CONFIG->cookies = array();
+	}
+	if (!isset($CONFIG->cookies['session'])) {
+		$CONFIG->cookies['session'] = array();
+	}
+	$session_defaults = session_get_cookie_params();
+	$session_defaults['name'] = 'Elgg';
+	$CONFIG->cookies['session'] = array_merge($session_defaults, $CONFIG->cookies['session']);
+
 	// load entire datalist
 	// This can cause OOM problems when the datalists table is large
 	// @todo make a list of datalists that we want to get in one grab

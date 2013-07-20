@@ -127,6 +127,31 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 
 
 /**
+ * Cookie configuration
+ *
+ * Elgg uses 2 cookies: a PHP session cookie and an extended login cookie 
+ * (also called the remember me cookie). See the PHP manual for documentation on
+ * each of these parameters. Possible options:
+ * 
+ *  - Set the session name to share the session across applications.
+ *  - Set the path because Elgg is not installed in the root of the web directory.
+ *  - Set the secure option to true if you only serve the site over HTTPS.
+ *
+ * To use, uncomment the appropriate sections below and update for your site.
+ * 
+ * @global array $CONFIG->cookies
+ */
+// get the default parameters from php.ini
+//$CONFIG->cookies['session'] = session_get_cookie_params();
+//$CONFIG->cookies['session']['name'] = "Elgg";
+// optionally overwrite the defaults from php.ini below
+//$CONFIG->cookies['session']['path'] = "/";
+//$CONFIG->cookies['session']['domain'] = "";
+//$CONFIG->cookies['session']['secure'] = false;
+//$CONFIG->cookies['session']['httponly'] = false;
+
+
+/**
  * Use non-standard headers for broken MTAs.
  *
  * The default header EOL for headers is \r\n.  This causes problems
@@ -156,16 +181,3 @@ $CONFIG->db_disable_query_cache = false;
  * @global int $CONFIG->min_password_length
  */
 $CONFIG->min_password_length = 6;
-
-/**
- * Optional session cookie configuration.
- * 
- * This is especially useful if you are running your site on HTTPS and you want all 
- * cookies to have their secure bit set.
- * 
- * Defaults can be set in your php.ini file.
- * 
- * @link http://php.net/manual/en/function.session-set-cookie-params.php
- */
-// session_set_cookie_params(0, '/elgg', '', false, false); // Good if Elgg's root is at /elgg
-// session_set_cookie_params(0, '/', '', true, false); // Good for HTTPS-only sites

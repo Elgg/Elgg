@@ -102,13 +102,24 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 	 * @return ElggSession
 	 */
 	protected function getSession(Elgg_Di_ServiceProvider $c) {
+		global $CONFIG;
+
+		// account for difference of session_get_cookie_params() and ini key names
+		$params = $CONFIG->cookies['session'];
+		foreach ($params as $key => $value) {
+			if (in_array($key, array('path', 'domain', 'secure', 'httponly'))) {
+				$params["cookie_$key"] = $value;
+				unset($params[$key]);
+			}
+		}
+
 		$handler = new Elgg_Http_DatabaseSessionHandler($c->db);
-		$storage = new Elgg_Http_NativeSessionStorage($handler);
+		$storage = new Elgg_Http_NativeSessionStorage($params, $handler);
 		$session = new ElggSession($storage);
-		$session->setName('Elgg');
+
 		return $session;
 	}
-	
+
 	/**
 	 * Request factory
 	 * 
