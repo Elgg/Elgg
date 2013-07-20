@@ -2,8 +2,9 @@
 /**
  * Maintenance mode page shell
  *
- * @uses $vars['title']
- * @uses $vars['body']
+ * @uses $vars['head']        Parameters for the <head> element
+ * @uses $vars['body']        The main content of the page
+ * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
  */
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032

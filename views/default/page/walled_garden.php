@@ -4,7 +4,9 @@
  *
  * Used for the walled garden index page
  *
- * @uses $vars['body']
+ * @uses $vars['head']        Parameters for the <head> element
+ * @uses $vars['body']        The main content of the page
+ * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
  */
 
 $is_sticky_register = elgg_is_sticky_form('register');
@@ -40,6 +42,6 @@ $body .= elgg_view('page/elements/foot');
 
 $body .= $inline_js;
 
-$head = elgg_view('page/elements/head', $vars);
+$head = elgg_view('page/elements/head', $vars['head']);
 
 echo elgg_view("page/elements/html", array("head" => $head, "body" => $body));
