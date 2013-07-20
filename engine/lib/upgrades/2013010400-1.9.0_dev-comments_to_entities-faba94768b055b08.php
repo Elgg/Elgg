@@ -7,7 +7,11 @@
  */
 
 // Register subtype and class for comments
-update_subtype('object', 'comment', 'ElggComment');
+if (get_subtype_id('object', 'comment')) {
+	update_subtype('object', 'comment', 'ElggComment');
+} else {
+	add_subtype('object', 'comment', 'ElggComment');
+}
 
 $ia = elgg_set_ignore_access(true);
 

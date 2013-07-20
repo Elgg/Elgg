@@ -18,4 +18,13 @@ class ElggComment extends ElggObject {
 
 		$this->attributes['subtype'] = "comment";
 	}
+
+	/**
+	 * Not supporting threaded comments yet
+	 * 
+	 * @return bool
+	 */
+	public function canComment() {
+		return false;
+	}
 }
