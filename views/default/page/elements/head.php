@@ -1,6 +1,16 @@
 <?php
 /**
  * The HTML head
+ * 
+ * JavaScript load sequence (set in views library and this view)
+ * ------------------------
+ * 1. Elgg's initialization which is inline because it can change on every page load.
+ * 2. RequireJS config. Must be loaded before RequireJS is loaded.
+ * 3. RequireJS
+ * 4. jQuery
+ * 5. jQuery migrate
+ * 6. jQueryUI
+ * 7. elgg.js
  *
  * @uses $vars['title'] The page title
  * @uses $vars['metas'] Array of meta elements
