@@ -67,7 +67,7 @@ define(function(require) {
 		 * @return void
 		 */
 		updateCount: function(editor) {
-			var words = editor.document.getBody().getText().trim();
+			var words = $.trim(editor.document.getBody().getText());
 			var count = words !== "" ? words.split(/\s+/).length : 0;
 			var text = elgg.echo('ckeditor:word_count') + count + ' ';
 			$('#cke_wordcount_' + editor.name).html(text);
