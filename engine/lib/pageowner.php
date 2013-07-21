@@ -293,7 +293,7 @@ function page_owner_boot() {
 	if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
 		$context = $request->getFirstUrlSegment();
 		if (!$context) {
-			$content = 'main';
+			$context = 'main';
 		}
 
 		elgg_set_context($context);
