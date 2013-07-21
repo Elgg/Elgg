@@ -28,7 +28,7 @@ $params = array(
 	'content' => $content,
 	'sidebar' => elgg_view('members/sidebar'),
 	'title' => $title . " ($num_members)",
-	'filter_override' => elgg_view('members/nav', array('selected' => $vars['page'])),
+	'filter' => elgg_view('members/nav', array('selected' => $vars['page'])),
 );
 
 $body = elgg_view_layout('content', $params);
