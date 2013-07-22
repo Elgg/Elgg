@@ -1,4 +1,7 @@
 <?php
+/**
+ * Comment upgrade page
+ */
 
 elgg_load_js('elgg.upgrades');
 
@@ -21,8 +24,6 @@ echo "<p>$status_string</p>
 <span id=\"comment-upgrade-count\" class=\"hidden\">0</span>";
 
 if ($count) {
-	$annotations = elgg_get_annotations($options);
-
 	if ($count > 1000) {
 		$warning_string = elgg_echo('upgrade:comments:warning');
 		echo "<p>$warning_string</p>";
