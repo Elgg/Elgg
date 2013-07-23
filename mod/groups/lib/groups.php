@@ -287,9 +287,8 @@ function groups_handle_profile_page($guid) {
 		'content' => $content,
 		'sidebar' => $sidebar,
 		'title' => $group->name,
-		'filter' => '',
 	);
-	$body = elgg_view_layout('content', $params);
+	$body = elgg_view_layout('one_sidebar', $params);
 
 	echo elgg_view_page($group->name, $body);
 }

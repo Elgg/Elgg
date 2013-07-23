@@ -78,7 +78,6 @@ function profile_page_handler($page) {
 
 	$content = elgg_view('profile/layout', array('entity' => $user));
 	$body = elgg_view_layout('one_column', array(
-		'title' => false,
 		'content' => $content
 	));
 	echo elgg_view_page($user->name, $body);
