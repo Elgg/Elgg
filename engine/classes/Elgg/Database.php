@@ -35,6 +35,11 @@ class Elgg_Database {
 	private $queryCache = null;
 
 	/**
+	 * @var int $queryCacheSize The number of queries to cache
+	 */
+	private $queryCacheSize = 50;
+
+	/**
 	 * Queries are saved to an array and executed using
 	 * a function registered by register_shutdown_function().
 	 *
@@ -75,7 +80,7 @@ class Elgg_Database {
 
 		if ($config->isQueryCacheEnabled()) {
 			// @todo if we keep this cache in 1.9, expose the size as a config parameter
-			$this->queryCache = new Elgg_Cache_LRUCache(200);
+			$this->queryCache = new Elgg_Cache_LRUCache($this->queryCacheSize);
 		}
 	}
 
@@ -133,7 +138,6 @@ class Elgg_Database {
 	 * @throws DatabaseException
 	 */
 	public function establishLink($dblinkname = "readwrite") {
-		global $CONFIG;
 
 		$conf = $this->config->getConnectionConfig($dblinkname);
 
@@ -488,6 +492,18 @@ class Elgg_Database {
 				$this->logger->log($e, Elgg_Logger::ERROR);
 			}
 		}
+	}
+
+	/**
+	 * Disable the query cache
+	 * 
+	 * This is useful for special scripts that pull large amounts of data back
+	 * in single queries.
+	 * 
+	 * @return void
+	 */
+	public function disableQueryCache() {
+		$this->queryCache = null;
 	}
 
 	/**

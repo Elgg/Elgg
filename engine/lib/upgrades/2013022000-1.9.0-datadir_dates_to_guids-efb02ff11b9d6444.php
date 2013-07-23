@@ -6,6 +6,8 @@
  * Rewrites user directories in data directory to use guids instead of creation dates
  */
 
+_elgg_services()->db->disableQueryCache();
+
 $data_root = elgg_get_config('dataroot');
 
 $failed = array();
