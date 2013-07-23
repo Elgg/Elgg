@@ -96,7 +96,7 @@ elgg.upgrades.upgradeCommentBatch = function(offset) {
 	};
 
 	// We use post() instead of action() to get better control over error messages
-	return elgg.post('action/admin/site/comment_upgrade', options);
+	return elgg.post('action/admin/upgrades/upgrade_comments', options);
 };
 
 elgg.register_hook_handler('init', 'system', elgg.upgrades.init);

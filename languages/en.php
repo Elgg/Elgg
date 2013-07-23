@@ -1080,11 +1080,13 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'deprecated:function' => '%s() was deprecated by %s()',
 
+	'admin:upgrades' => 'Upgrades',
+
 	'upgrade:comments:status' => 'There are <b>%s</b> comments that need to be upgraded.',
 	'upgrade:comments:warning' => '<b>Warning:</b> on a large site this upgrade may take a significantly long time!',
 	'upgrade:comments:success_count' => 'Comments upgraded:',
 	'upgrade:comments:error_count' => 'Errors:',
-	'admin:comment_upgrade' => 'Comment upgrade',
+	'admin:upgrades:comments' => 'Comment upgrade',
 	'upgrade:comments:river_update_failed' => 'Failed to update the river entry for comment id %s',
 	'upgrade:comments:create_failed' => 'Failed to convert comment id %s to an entity.',
 	'upgrade:comments:finished' => 'Upgrade finished',

@@ -43,7 +43,7 @@ HTML;
 
 	echo elgg_view('output/url', array(
 		'text' => elgg_echo('upgrade'),
-		'href' => 'action/admin/site/comment_upgrade',
+		'href' => 'admin/upgrades/upgrade_comments',
 		'class' => 'elgg-button elgg-button-action mtl',
 		'is_action' => true,
 		'id' => 'comment-upgrade-run',

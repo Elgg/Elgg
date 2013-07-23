@@ -83,7 +83,7 @@ elgg_set_ignore_access($ia);
 
 
 $migrate_link = elgg_view('output/url', array(
-	'href' => 'admin/comment_upgrade',
+	'href' => 'admin/upgrades/comments',
 	'text' => "migrate the rest of the comments",
 	'is_trusted' => true,
 ));
