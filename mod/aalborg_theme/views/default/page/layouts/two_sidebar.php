@@ -8,6 +8,10 @@
  * @uses $vars['content']     The content string for the main column
  * @uses $vars['sidebar']     Optional content that is displayed in the sidebar
  * @uses $vars['sidebar_alt'] Optional content that is displayed in the alternate sidebar
+ * @uses $vars['nav']         Optional override of the page nav (default: breadcrumbs)
+ * @uses $vars['title']       Optional title for main content area
+ * @uses $vars['header']      Optional override for the header
+ * @uses $vars['footer']      Optional footer
  * @uses $vars['class']       Additional class to apply to layout
  */
 
@@ -26,19 +30,18 @@ if (isset($vars['class'])) {
 	
 	<div class="elgg-main elgg-body">
 		<?php
-			if (isset($vars['title']) && $vars['title']) {
-				echo '<div class="elgg-head clearfix">';
-				echo elgg_view_title($vars['title']);
-				echo '</div>';
-			}
+			echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
+
+			echo elgg_view('page/layouts/elements/header', $vars);
+
+			echo $vars['content'];
 			
-			// @todo deprecated so remove in Elgg 2.0
+			// @deprecated 1.8
 			if (isset($vars['area1'])) {
 				echo $vars['area1'];
 			}
-			if (isset($vars['content'])) {
-				echo $vars['content'];
-			}
+
+			echo elgg_view('page/layouts/elements/footer', $vars);
 		?>
 	</div>
 	<div class="elgg-sidebar">
