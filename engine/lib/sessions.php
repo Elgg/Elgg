@@ -375,9 +375,12 @@ function login(ElggUser $user, $persistent = false) {
 		_elgg_add_remember_me_cookie($user, md5($code));
 		$session->set('code', $code);
 
-		$cookie = new ElggCookie("elggperm");
+		$cookies = elgg_get_config('cookies');
+		$cookie = new ElggCookie($cookies['remember_me']['name']);
 		$cookie->value = $code;
-		$cookie->setExpiresTime("+30 days");
+		foreach (array('expire', 'path', 'domain', 'secure', 'httponly') as $key) {
+			$cookie->$key = $cookies['remember_me'][$key];
+		}
 		elgg_set_cookie($cookie);
 	}
 
@@ -409,14 +412,19 @@ function logout() {
 		return false;
 	}
 
+	$cookies = elgg_get_config('cookies');
+	$cookie_name = $cookies['remember_me']['name'];
+
 	// remove remember cookie
-	if (isset($_COOKIE['elggperm'])) {
-		_elgg_delete_remember_me_cookie(md5($_COOKIE['elggperm']));
+	if (isset($_COOKIE[$cookie_name])) {
+		_elgg_delete_remember_me_cookie(md5($_COOKIE[$cookie_name]));
 
 		// tell browser to delete cookie
-		$cookie = new ElggCookie("elggperm");
+		$cookie = new ElggCookie($cookie_name);
+		foreach (array('expire', 'path', 'domain', 'secure', 'httponly') as $key) {
+			$cookie->$key = $cookies['remember_me'][$key];
+		}
 		$cookie->setExpiresTime("-30 days");
-		$cookie->domain = "/";
 		elgg_set_cookie($cookie);
 	}
 
@@ -448,12 +456,14 @@ function _elgg_session_boot() {
 		$session->setLoggedInUser(get_user($session->get('guid')));
 	} else {
 		// is there a remember me cookie
-		if (isset($_COOKIE['elggperm'])) {
+		$cookies = elgg_get_config('cookies');
+		$cookie_name = $cookies['remember_me']['name'];
+		if (isset($_COOKIE[$cookie_name])) {
 			// we have a cookie, so try to log the user in
-			$user = get_user_by_code(md5($_COOKIE['elggperm']));
+			$user = get_user_by_code(md5($_COOKIE[$cookie_name]));
 			if ($user) {
 				$session->setLoggedInUser($user);
-				$session->set('code', md5($_COOKIE['elggperm']));
+				$session->set('code', md5($_COOKIE[$cookie_name]));
 			}
 		}
 	}
