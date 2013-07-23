@@ -4,6 +4,9 @@
  * comments_to_entities
  *
  * Convert comment annotations to entities
+ * 
+ * @warning we do not migrate disabled comments in this upgrade. See the comment
+ * upgrade action for that.
  */
 
 // Register subtype and class for comments
@@ -22,6 +25,14 @@ $batch = new ElggBatch('elgg_get_annotations', array(
 	'limit' => 50,
 ));
 $batch->setIncrementOffset(false);
+
+// don't want any event or plugin hook handlers from plugins to run
+$original_events = _elgg_services()->events;
+$original_hooks = _elgg_services()->hooks;
+_elgg_services()->events = new Elgg_EventsService();
+_elgg_services()->hooks = new Elgg_PluginHooksService();
+elgg_register_plugin_hook_handler('permissions_check', 'all', 'elgg_override_permissions');
+elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_override_permissions');
 
 $db_prefix = elgg_get_config('dbprefix');
 
@@ -63,6 +74,10 @@ foreach ($batch as $annotation) {
 	// Delete the annotation
 	$annotation->delete();
 }
+
+// replace events and hooks
+_elgg_services()->events = $original_events;
+_elgg_services()->hooks = $original_hooks;
 
 elgg_set_ignore_access($ia);
 

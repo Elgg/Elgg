@@ -18,11 +18,13 @@ $limit = 50;
 $access_status = access_get_show_hidden_status();
 access_show_hidden_entities(true);
 
-// don't want any event or plugin hook handlers to run
+// don't want any event or plugin hook handlers from plugins to run
 $original_events = _elgg_services()->events;
 $original_hooks = _elgg_services()->hooks;
 _elgg_services()->events = new Elgg_EventsService();
 _elgg_services()->hooks = new Elgg_PluginHooksService();
+elgg_register_plugin_hook_handler('permissions_check', 'all', 'elgg_override_permissions');
+elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_override_permissions');
 
 $success_count = 0;
 $error_count = 0;

@@ -1109,7 +1109,7 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Can a user add an entity to this container
 	 *
-	 * @param int    $user_guid The user.
+	 * @param int    $user_guid The GUID of the user creating the entity (0 for logged in user).
 	 * @param string $type      The type of entity we're looking to write
 	 * @param string $subtype   The subtype of the entity we're looking to write
 	 *
