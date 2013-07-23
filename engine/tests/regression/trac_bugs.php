@@ -375,12 +375,26 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	}
 
 	public function test_ElggXMLElement_does_not_load_external_entities() {
+		$elLast = libxml_disable_entity_loader(false);
+
 		$payload = file_get_contents(dirname(dirname(__FILE__)) . '/test_files/xxe/request.xml');
-		$payload = sprintf($payload, 'file://' . realpath(dirname(dirname(__FILE__)) . '/test_files/xxe/external_entity.txt'));
+		$path = realpath(dirname(dirname(__FILE__)) . '/test_files/xxe/external_entity.txt');
+		$path = str_replace('\\', '/', $path);
+		if ($path[0] != '/') {
+			$path = '/' . $path;
+		}
+		$path = 'file://' . $path;
+		$payload = sprintf($payload, $path);
 
 		$el = new ElggXMLElement($payload);
 		$chidren = $el->getChildren();
 		$content = $chidren[0]->getContent();
 		$this->assertNoPattern('/secret/', $content);
+
+		//make sure the test is valid
+		$element = new SimpleXMLElement($payload);
+		$this->assertPattern('/secret/', (string)$element->methodName);
+
+		libxml_disable_entity_loader($elLast);
 	}
 }
