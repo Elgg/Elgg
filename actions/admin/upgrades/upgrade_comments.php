@@ -52,6 +52,7 @@ do {
 		$object->container_guid = $annotation->entity_guid;
 		$object->description = $annotation->value;
 		$object->access_id = $annotation->access_id;
+		// make sure disabled comments stay disabled
 		$object->enabled = $annotation->enabled;
 		$object->time_created = $annotation->time_created;
 		$object->save();
