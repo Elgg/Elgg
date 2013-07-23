@@ -32,7 +32,7 @@ class Elgg_Database {
 	 *
 	 * @var Elgg_Cache_LRUCache $queryCache The cache
 	 */
-	private $queryCache;
+	private $queryCache = null;
 
 	/**
 	 * Queries are saved to an array and executed using
@@ -496,8 +496,10 @@ class Elgg_Database {
 	 * @return void
 	 */
 	protected function invalidateQueryCache() {
-		$this->queryCache->clear();
-		$this->logger->log("Query cache invalidated", Elgg_Logger::INFO);
+		if ($this->queryCache) {
+			$this->queryCache->clear();
+			$this->logger->log("Query cache invalidated", Elgg_Logger::INFO);
+		}
 	}
 
 	/**
