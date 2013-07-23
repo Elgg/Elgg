@@ -12,7 +12,7 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 	protected $storage;
 
 	protected function setUp() {
-		$this->storage = new Elgg_Http_NativeSessionStorage(new Elgg_Http_MockSessionHandler());
+		$this->storage = new Elgg_Http_NativeSessionStorage(array(), new Elgg_Http_MockSessionHandler());
 	}
 
 	protected function tearDown() {
