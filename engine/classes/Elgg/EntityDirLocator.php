@@ -15,7 +15,7 @@
 class Elgg_EntityDirLocator {
 
 	/**
-	 * Number of entries per matrix dir.
+	 * Number of entries per matrix dir. DO NOT CHANGE!
 	 */
 	const BUCKET_SIZE = 5000;
 

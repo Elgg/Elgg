@@ -64,6 +64,13 @@ if ($failed) {
 		{$data_root}2013022000_data_migration.log for a list of users who were affected.");
 }
 
+_elgg_services()->db->enableQueryCache();
+
+
+/**
+ * End of script. Utility functions below
+ */
+
 
 /**
  * Get the old directory location

@@ -78,10 +78,7 @@ class Elgg_Database {
 
 		$this->tablePrefix = $config->getTablePrefix();
 
-		if ($config->isQueryCacheEnabled()) {
-			// @todo if we keep this cache in 1.9, expose the size as a config parameter
-			$this->queryCache = new Elgg_Cache_LRUCache($this->queryCacheSize);
-		}
+		$this->enableQueryCache();
 	}
 
 	/**
@@ -491,6 +488,20 @@ class Elgg_Database {
 				// Suppress all exceptions since page already sent to requestor
 				$this->logger->log($e, Elgg_Logger::ERROR);
 			}
+		}
+	}
+
+	/**
+	 * Enable the query cache
+	 * 
+	 * This does not take precedence over the Elgg_Database_Config setting.
+	 * 
+	 * @return void
+	 */
+	public function enableQueryCache() {
+		if ($this->config->isQueryCacheEnabled() && $this->queryCache === null) {
+			// @todo if we keep this cache, expose the size as a config parameter
+			$this->queryCache = new Elgg_Cache_LRUCache($this->queryCacheSize);
 		}
 	}
 
