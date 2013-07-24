@@ -10,12 +10,13 @@
 $ia = elgg_set_ignore_access(true);
 $options = array(
 	'type' => 'user',
+	// only grab users that have set their location
+	'metadata_name' => 'location',
 	'limit' => 0,
 );
-$batch = new ElggBatch('elgg_get_entities', $options);
+$batch = new ElggBatch('elgg_get_entities_from_metadata', $options);
 
 foreach ($batch as $entity) {
-	
 	if (is_array($entity->location)) {
 		$entity->location = implode(', ', $entity->location);
 	}
