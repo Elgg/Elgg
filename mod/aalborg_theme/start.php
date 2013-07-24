@@ -47,8 +47,6 @@ function aalborg_theme_pagesetup() {
 
 	if (elgg_is_logged_in()) {
 
-		$user = elgg_get_logged_in_user_entity();
-
 		elgg_register_menu_item('topbar', array(
 			'name' => 'account',
 			'text' => elgg_echo('account'),
@@ -58,37 +56,25 @@ function aalborg_theme_pagesetup() {
 			'link_class' => 'elgg-topbar-dropdown',
 		));
 
-		elgg_unregister_menu_item('topbar', 'usersettings');
-		elgg_register_menu_item('topbar', array(
-			'name' => 'usersettings',
-			'parent_name' => 'account',
-			'href' => "/settings/user/$user->username",
-			'text' => elgg_echo('settings'),
-			'priority' => 103,
-			'section' => 'alt',
-		));
+		$item = elgg_get_menu_item('topbar', 'usersettings');
+		if ($item) {
+			$item->setParentName('account');
+			$item->setText(elgg_echo('settings'));
+			$item->setPriority(103);
+		}
 
-		elgg_unregister_menu_item('topbar', 'logout');
-		elgg_register_menu_item('topbar', array(
-			'name' => 'logout',
-			'parent_name' => 'account',
-			'href' => '/action/logout',
-			'is_action' => TRUE,
-			'text' => elgg_echo('logout'),
-			'priority' => 104,
-			'section' => 'alt',
-		));
+		$item = elgg_get_menu_item('topbar', 'logout');
+		if ($item) {
+			$item->setParentName('account');
+			$item->setText(elgg_echo('logout'));
+			$item->setPriority(104);
+		}
 
-		elgg_unregister_menu_item('topbar', 'administration');
-		if (elgg_is_admin_logged_in()) {
-			elgg_register_menu_item('topbar', array(
-				'name' => 'administration',
-				'parent_name' => 'account',
-				'href' => 'admin',
-				'text' => elgg_echo('admin'),
-				'priority' => 101,
-				'section' => 'alt',
-			));
+		$item = elgg_get_menu_item('topbar', 'administration');
+		if ($item) {
+			$item->setParentName('account');
+			$item->setText(elgg_echo('admin'));
+			$item->setPriority(101);
 		}
 
 		if (elgg_is_active_plugin('site_notifications')) {
@@ -100,19 +86,14 @@ function aalborg_theme_pagesetup() {
 			}
 		}
 
-		elgg_unregister_menu_item('footer', 'report_this');
 		if (elgg_is_active_plugin('reportedcontent')) {
-			$href = "javascript:elgg.forward('reportedcontent/add'";
-			$href .= "+'?address='+encodeURIComponent(location.href)";
-			$href .= "+'&title='+encodeURIComponent(document.title));";
-
-			elgg_register_menu_item('extras', array(
-				'name' => 'report_this',
-				'href' => $href,
-				'title' => elgg_echo('reportedcontent:this:tooltip'),
-				'text' => elgg_view_icon('report-this'),
-				'priority' => 500,
-			));
+			$item = elgg_unregister_menu_item('footer', 'report_this');
+			if ($item) {
+				$item->setText(elgg_view_icon('report-this'));
+				$item->setPriority(500);
+				$item->setSection('default');
+				elgg_register_menu_item('extras', $item);
+			}
 		}
 	}
 }

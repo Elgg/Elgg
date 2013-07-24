@@ -115,25 +115,26 @@ function elgg_register_menu_item($menu_name, $menu_item) {
  * @param string $menu_name The name of the menu
  * @param string $item_name The unique identifier for this menu item
  *
- * @return bool
+ * @return ElggMenuItem|null
  * @since 1.8.0
  */
 function elgg_unregister_menu_item($menu_name, $item_name) {
 	global $CONFIG;
 
 	if (!isset($CONFIG->menus[$menu_name])) {
-		return false;
+		return null;
 	}
 
 	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
 		/* @var ElggMenuItem $menu_object */
 		if ($menu_object->getName() == $item_name) {
+			$item = $CONFIG->menus[$menu_name][$index];
 			unset($CONFIG->menus[$menu_name][$index]);
-			return true;
+			return $item;
 		}
 	}
 
-	return false;
+	return null;
 }
 
 /**
