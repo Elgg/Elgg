@@ -18,8 +18,6 @@ function aalborg_theme_init() {
 
 	elgg_register_js('respond', 'mod/aalborg_theme/vendors/js/respond.min.js');
 	elgg_load_js('respond');
-	elgg_register_js('elgg.theme', 'mod/aalborg_theme/vendors/js/aalborg_theme.js', 'footer');
-	elgg_load_js('elgg.theme');
 
 	if (!elgg_is_logged_in()) {
 		elgg_unregister_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
