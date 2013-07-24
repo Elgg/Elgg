@@ -6,7 +6,7 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['title']       The page title
+ * @uses $vars['head']        Parameters for the <head> element
  * @uses $vars['body']        The main content of the page
  * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()
  */
@@ -76,6 +76,6 @@ __BODY;
 
 $body .= elgg_view('page/elements/foot');
 
-$head = elgg_view('page/elements/head', $vars);
+$head = elgg_view('page/elements/head', $vars['head']);
 
 echo elgg_view("page/elements/html", array("head" => $head, "body" => $body));
