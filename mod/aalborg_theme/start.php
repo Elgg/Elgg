@@ -91,6 +91,15 @@ function aalborg_theme_pagesetup() {
 			));
 		}
 
+		if (elgg_is_active_plugin('site_notifications')) {
+			$item = elgg_get_menu_item('topbar', 'site_notifications');
+			if ($item) {
+				$item->setParentName('account');
+				$item->setText(elgg_echo('site_notifications:topbar'));
+				$item->setPriority(102);
+			}
+		}
+
 		elgg_unregister_menu_item('footer', 'report_this');
 		if (elgg_is_active_plugin('reportedcontent')) {
 			$href = "javascript:elgg.forward('reportedcontent/add'";
