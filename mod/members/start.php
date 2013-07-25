@@ -32,7 +32,6 @@ function members_page_handler($page) {
 	$vars['page'] = $page[0];
 
 	if ($page[0] == 'search') {
-		$vars['search_type'] = $page[1];
 		require_once "$base/search.php";
 	} else {
 		require_once "$base/index.php";
