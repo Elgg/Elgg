@@ -18,14 +18,18 @@ $results = elgg_trigger_plugin_hook('search', 'user', $options, array());
 $count = $results['count'];
 $users = $results['entities'];
 
-$content = elgg_view_entity_list($users, array(
-	'count' => $count,
-	'offset' => $offset,
-	'limit' => $limit,
-	'full_view' => false,
-	'list_type_toggle' => false,
-	'pagination' => true,
-));
+if (!empty($users)) {
+	$content = elgg_view_entity_list($users, array(
+		'count' => $count,
+		'offset' => $offset,
+		'limit' => $limit,
+		'full_view' => false,
+		'list_type_toggle' => false,
+		'pagination' => true,
+	));
+} else {
+	$content = elgg_echo("notfound");
+}
 
 $params = array(
 	'title' => $title,
