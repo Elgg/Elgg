@@ -77,9 +77,7 @@ class Elgg_Translit {
 
 		// internationalization, and 日本語!
 		// note: not using elgg_strtolower to keep this class portable
-		$string = is_callable('mb_strtolower')
-			? mb_strtolower($string, 'UTF-8')
-			: strtolower($string);
+		$string = is_callable('mb_strtolower') ? mb_strtolower($string, 'UTF-8') : strtolower($string);
 
 		// split by ASCII chars not in 0-9a-zA-Z
 		// note: we cannot use [^0-9a-zA-Z] because that matches multibyte chars.

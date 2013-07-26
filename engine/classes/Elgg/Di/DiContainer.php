@@ -130,9 +130,7 @@ class Elgg_Di_DiContainer {
 	 * @throws InvalidArgumentException
 	 */
 	public function setClassName($name, $class_name, $shared = true) {
-		$classname_pattern = version_compare(PHP_VERSION, '5.3', '<')
-			? self::CLASS_NAME_PATTERN_52
-			: self::CLASS_NAME_PATTERN_53;
+		$classname_pattern = version_compare(PHP_VERSION, '5.3', '<') ? self::CLASS_NAME_PATTERN_52 : self::CLASS_NAME_PATTERN_53;
 		if (!is_string($class_name) || !preg_match($classname_pattern, $class_name)) {
 			throw new InvalidArgumentException('Class names must be valid PHP class names');
 		}
