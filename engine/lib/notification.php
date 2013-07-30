@@ -501,8 +501,8 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 		$msg = "Missing a required parameter, '" . 'to' . "'";
 		throw new NotificationException($msg);
 	}
-	
-	$header_fields = array(
+
+	$headers = array(
 		"Content-Type" => "text/plain; charset=UTF-8; format=flowed",
 		"MIME-Version" => "1.0",
 		"Content-Transfer-Encoding" => "8bit",
@@ -514,7 +514,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 		'from' => $from,
 		'subject' => $subject,
 		'body' => $body,
-		'headers' => $header_fields,
+		'headers' => $headers,
 		'params' => $params,
 	);
 
@@ -551,9 +551,15 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 		}
 	}
 
-	$headers = "From: $from{$header_eol}";
-	foreach ($header_fields as $header_field => $header_value) {
-		$headers .= "$header_field: $header_value{$header_eol}";
+	// make sure From is set
+	if (empty($headers['From'])) {
+		$headers['From'] = $from;
+	}
+
+	// stringify headers
+	$headers_string = '';
+	foreach ($headers as $key => $value) {
+		$headers_string .= "$key: $value{$header_eol}";
 	}
 
 	// Sanitise subject by stripping line endings
@@ -571,7 +577,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	$body = preg_replace("/^From/", ">From", $body); // Change lines starting with From to >From
 	$body = wordwrap($body);
 
-	return mail($to, $subject, $body, $headers);
+	return mail($to, $subject, $body, $headers_string);
 }
 
 /**
