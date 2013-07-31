@@ -123,11 +123,13 @@
 	 */
 	function xml_to_object($xml)
 	{
-		$parser = xml_parser_create();
+		$parser = xml_parser_create('UTF-8');
 		
 		// Parse $xml into a structure
 		xml_parser_set_option($parser, XML_OPTION_SKIP_WHITE, 1);
-		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);	
+		xml_parser_set_option($parser, XML_OPTION_CASE_FOLDING, 0);
+		xml_set_external_entity_ref_handler($parser, "_xml_to_object_handle_external");
+
 		xml_parse_into_struct($parser, $xml, $tags);
 		
 		xml_parser_free($parser);
@@ -158,4 +160,9 @@
 		}
 		
 		return $elements[0];
+	}
+
+	function _xml_to_object_handle_external($parser, $openEntityNames, $base, $systemId, $publicId) {
+		// don't load externals
+		return false;
 	}

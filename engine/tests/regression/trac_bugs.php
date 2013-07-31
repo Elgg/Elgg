@@ -199,4 +199,42 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$this->assertFalse($result);
 		$this->assertEqual(array(), $DB_DELAYED_QUERIES);
 	}
+
+	function test_xml_to_object_does_not_load_external_entities() {
+		// build payload that should trigger loading of external entity
+		$payload = file_get_contents(dirname(dirname(__FILE__)) . '/test_files/xxe/request.xml');
+		$path = realpath(dirname(dirname(__FILE__)) . '/test_files/xxe/external_entity.txt');
+		$path = str_replace('\\', '/', $path);
+		if ($path[0] != '/') {
+			$path = '/' . $path;
+		}
+		$path = 'file://' . $path;
+		$payload = sprintf($payload, $path);
+
+		// make sure we can actually this in this environment
+		$text = $this->parse_text_from_xml($payload);
+		$can_load_entity = preg_match('/secret/', $text);
+
+		$this->skipUnless($can_load_entity, "XXE vulnerability cannot be tested on this system");
+
+		if ($can_load_entity) {
+			$serialized = serialise_object_to_xml(xml_to_object($payload));
+			$this->assertNoPattern('/secret/', $serialized);
+		}
+	}
+
+	function parse_text_from_xml($xml)
+	{
+		$parser = xml_parser_create();
+		xml_parse_into_struct($parser, $xml, $tags);
+		xml_parser_free($parser);
+
+		$text = '';
+		foreach ($tags as $tag) {
+			if (!empty($tag['value'])) {
+				$text .= $tag['value'];
+			}
+		}
+		return $text;
+	}
 }
