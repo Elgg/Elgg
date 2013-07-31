@@ -377,6 +377,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	public function test_ElggXMLElement_does_not_load_external_entities() {
 		$elLast = libxml_disable_entity_loader(false);
 
+		// build payload that should trigger loading of external entity
 		$payload = file_get_contents(dirname(dirname(__FILE__)) . '/test_files/xxe/request.xml');
 		$path = realpath(dirname(dirname(__FILE__)) . '/test_files/xxe/external_entity.txt');
 		$path = str_replace('\\', '/', $path);
@@ -386,14 +387,18 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$path = 'file://' . $path;
 		$payload = sprintf($payload, $path);
 
-		$el = new ElggXMLElement($payload);
-		$chidren = $el->getChildren();
-		$content = $chidren[0]->getContent();
-		$this->assertNoPattern('/secret/', $content);
-
-		//make sure the test is valid
+		// make sure we can actually this in this environment
 		$element = new SimpleXMLElement($payload);
-		$this->assertPattern('/secret/', (string)$element->methodName);
+		$can_load_entity = preg_match('/secret/', (string)$element->methodName);
+
+		$this->skipUnless($can_load_entity, "XXE vulnerability cannot be tested on this system");
+
+		if ($can_load_entity) {
+			$el = new ElggXMLElement($payload);
+			$chidren = $el->getChildren();
+			$content = $chidren[0]->getContent();
+			$this->assertNoPattern('/secret/', $content);
+		}
 
 		libxml_disable_entity_loader($elLast);
 	}
