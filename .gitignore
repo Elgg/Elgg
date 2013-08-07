@@ -52,5 +52,6 @@ tmtags
 Thumbs.db
 Desktop.ini
 
-# don't ignore travis config
+# don't ignore special configs
 !/.travis.yml
+!.gitignore
