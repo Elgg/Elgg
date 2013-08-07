@@ -19,7 +19,7 @@ matrix:
        - mkdir ../elgg-coding-standards
        - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
        - phpenv rehash
-       - npm install -g karma
+       - npm install -g karma@0.8
       script:
        - phpcs --standard=../elgg-coding-standards/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
        - karma start js/tests/karma.conf.js --single-run
