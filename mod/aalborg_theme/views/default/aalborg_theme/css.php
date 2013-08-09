@@ -96,10 +96,6 @@ html {
 .elgg-button-nav .icon-bar + .icon-bar {
 	margin-top: 3px;
 }
-.file-photo .elgg-photo {
-	max-width: 100%;
-	height: auto;
-}
 @media (max-width: 1030px) {
 	.elgg-menu-topbar-default > li:first-child a {
 		margin-left: 0;
