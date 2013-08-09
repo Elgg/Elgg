@@ -42,3 +42,6 @@ script:
  - phpunit
  - php -f ./engine/tests/suite.php
  
+notifications:
+  email:
+    - elgg-development@googlegroups.com
