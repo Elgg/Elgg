@@ -109,7 +109,7 @@ function developers_wrap_views($hook, $type, $result, $params) {
 		return;
 	}
 
-	$excluded_bases = array('css', 'js', 'input', 'output', 'embed', 'icon',);
+	$excluded_bases = array('css', 'js', 'input', 'output', 'embed', 'icon', 'json', 'xml');
 
 	$excluded_views = array(
 		'page/default',
