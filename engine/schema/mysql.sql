@@ -361,7 +361,7 @@ CREATE TABLE `prefix_system_log` (
   `access_id` int(11) NOT NULL,
   `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
   `time_created` int(11) NOT NULL,
-  `ip_address` varchar(15) NOT NULL,
+  `ip_address` varchar(46) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `object_id` (`object_id`),
   KEY `object_class` (`object_class`),
