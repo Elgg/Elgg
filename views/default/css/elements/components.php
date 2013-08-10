@@ -41,8 +41,9 @@
 	border-bottom: 1px dotted #CCCCCC;
 }
 
-.elgg-item .elgg-subtext {
-	margin-bottom: 5px;
+.elgg-item .elgg-subtext,
+.elgg-menu-entity + .elgg-subtext {
+	margin: 5px 0;
 }
 .elgg-item .elgg-content {
 	margin: 10px 5px;
@@ -178,8 +179,7 @@
 .elgg-river-comments-tab {
 	display: block;
 	background-color: #EEE;
-	color: #4690D6;
-	margin-top: 5px;
+	color: #999;
 	width: auto;
 	float: right;
 	font-size: 85%;
@@ -209,8 +209,8 @@
 }
 .elgg-river-more {
 	background-color: #EEE;
-	border-radius: 5px;	
-	padding: 2px 4px;
+	border-radius: 0 0 5px 5px;
+	padding: 2px 4px 3px;
 	font-size: 85%;
 	margin-bottom: 2px;
 }
@@ -238,6 +238,9 @@
 }
 .elgg-comments > form {
 	margin-top: 15px;
+}
+.elgg-comments > ul > li {
+	padding: 5px 0;
 }
 
 /* ***************************************
@@ -267,4 +270,5 @@
 }
 .elgg-tagcloud {
 	text-align: justify;
+	margin-bottom: 5px;
 }

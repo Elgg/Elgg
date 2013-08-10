@@ -6,6 +6,8 @@
  */
 
 ?>
+/*<style>/**/
+
 .groups-profile > .elgg-image {
 	margin-right: 10px;
 }
@@ -62,4 +64,8 @@
 .elgg-menu-groups-my-status li.elgg-state-selected > a {
 	background-color: #4690D6;
 	color: white;
+}
+
+li[id^="elgg-group-"] > .elgg-image-block {
+	padding: 5px 0;
 }

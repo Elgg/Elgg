@@ -4,6 +4,8 @@
  */
 
 ?>
+/*<style>/**/
+
 /********************************
 The Wire
 *********************************/
@@ -15,6 +17,10 @@ The Wire
 	float: right;
 	font-weight: bold;
 	color: #333333;
+}
+#thewire-submit-button {
+	position: relative;
+	top: -6px;
 }
 .thewire-characters-remaining {
 	color:#333333;
