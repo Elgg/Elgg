@@ -21,16 +21,42 @@ if ($owner_entity && elgg_instanceof($owner_entity, 'group')) {
 }
 
 $options = array(
-	'annotation_name' => 'generic_comment',
-	'owner_guid' => $owner_guid,
-	'reverse_order_by' => true,
-	'limit' => elgg_extract('limit', $vars, 4),
 	'type' => 'object',
-	'subtypes' => elgg_extract('subtypes', $vars, ELGG_ENTITIES_ANY_VALUE),
+	'subtype' => 'comment',
+	'owner_guid' => $owner_guid,
+	'limit' => elgg_extract('limit', $vars, 4),
 );
 
+// @todo where should this go
+// join on the entities table for container subtype
+$subtypes = elgg_extract('subtypes', $vars, ELGG_ENTITIES_ANY_VALUE);
+if ($subtypes != ELGG_ENTITIES_ANY_VALUE) {
+	$db_prefix = elgg_get_config('dbprefix');
+	$options['joins'] = array("JOIN {$db_prefix}entities ce ON e.container_guid = ce.guid");
+	if (is_array($subtypes)) {
+		$subtype_ids = array();
+		foreach ($subtypes as $subtype) {
+			$id = (int)get_subtype_id('object', $subtype);
+			if ($id) {
+				$subtype_ids[] = $id;
+			}
+		}
+		if ($subtype_ids) {
+			$subtype_string = implode(',', $subtype_ids);
+			$options['wheres'] = array("ce.subtype IN ($subtype_string)");
+		} else {
+			// subtype ids do not exist so not comments
+			$options['wheres'] = array("1 = -1");
+		}
+	} else {
+		$subtype_id = (int)get_subtype_id('object', $subtypes);
+		$options['wheres'] = array("ce.subtype = $subtype_id");
+	}
+}
+
+
 $title = elgg_echo('generic_comments:latest');
-$comments = elgg_get_annotations($options);
+$comments = elgg_get_entities($options);
 if ($comments) {
 	$body = elgg_view('page/components/list', array(
 		'items' => $comments,
