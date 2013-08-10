@@ -9,5 +9,5 @@
  *
  */
 ?>
-<iframe src="<?php echo $vars['value']; ?>">
+<iframe sandbox src="<?php echo $vars['value']; ?>">
 </iframe>
