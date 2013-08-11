@@ -11,7 +11,7 @@ function tinymce_init() {
 	elgg_extend_view('css/elgg', 'tinymce/css');
 	elgg_extend_view('css/admin', 'tinymce/css');
 
-	elgg_register_js('tinymce', 'mod/tinymce/vendor/tinymce/jscripts/tiny_mce/tiny_mce.js');
+	elgg_register_js('tinymce', 'mod/tinymce/vendor/tinymce/js/tinymce/tinymce.min.js');
 	elgg_register_js('elgg.tinymce', elgg_get_simplecache_url('js', 'tinymce'));
 	elgg_register_simplecache_view('js/tinymce');
 	
@@ -37,7 +37,7 @@ function tinymce_longtext_menu($hook, $type, $items, $vars) {
 function tinymce_get_site_language() {
 
 	if ($site_language = elgg_get_config('language')) {
-		$path = elgg_get_plugins_path() . "tinymce/vendor/tinymce/jscripts/tiny_mce/langs";
+		$path = elgg_get_plugins_path() . "tinymce/vendor/tinymce/js/tinymce/langs";
 		if (file_exists("$path/$site_language.js")) {
 			return $site_language;
 		}
