@@ -1,10 +1,7 @@
 <?php
-/**
- * Simple members search by tag form
- */
 
 $params = array(
-	'name' => 'tag',
+	'name' => 'member_query',
 	'class' => 'mbm',
 );
 echo elgg_view('input/text', $params);
