@@ -116,6 +116,11 @@ class ElggObject extends ElggEntity {
 		global $CONFIG;
 
 		$guid = parent::create();
+		if (!$guid) {
+			// @todo this probably means permission to create entity was denied
+			// Is returning false the correct thing to do
+			return false;
+		}
 		$title = sanitize_string($this->title);
 		$description = sanitize_string($this->description);
 		

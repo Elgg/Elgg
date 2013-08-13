@@ -256,6 +256,8 @@ function _elgg_admin_init() {
 	elgg_register_action('admin/site/set_robots', '', 'admin');
 	elgg_register_action('admin/site/set_maintenance_mode', '', 'admin');
 
+	elgg_register_action('admin/upgrades/upgrade_comments', '', 'admin');
+
 	elgg_register_action('admin/menu/save', '', 'admin');
 
 	elgg_register_action('admin/delete_admin_notice', '', 'admin');
@@ -270,6 +272,7 @@ function _elgg_admin_init() {
 	elgg_register_simplecache_view('js/admin');
 	$url = elgg_get_simplecache_url('js', 'admin');
 	elgg_register_js('elgg.admin', $url);
+	elgg_register_js('elgg.upgrades', 'js/lib/upgrades.js');
 	elgg_register_js('jquery.jeditable', 'vendors/jquery/jquery.jeditable.mini.js');
 
 	// administer

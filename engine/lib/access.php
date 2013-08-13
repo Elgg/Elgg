@@ -1018,6 +1018,8 @@ function access_init() {
  * 'container_permissions_check', 'all' plugin hooks.
  *
  * Returns true to override the access system or null if no change is needed.
+ * 
+ * @internal comment upgrade depends on this
  *
  * @param string $hook
  * @param string $type

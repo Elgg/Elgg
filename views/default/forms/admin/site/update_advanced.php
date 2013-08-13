@@ -139,7 +139,6 @@ $form_body .= elgg_view('input/select', array(
 $form_body .= '</div>';
 $form_body .= "</fieldset>";
 
-
 $form_body .= elgg_view('input/hidden', array('name' => 'settings', 'value' => 'go'));
 
 $form_body .= '<div class="elgg-foot">';

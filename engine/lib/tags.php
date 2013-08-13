@@ -229,8 +229,7 @@ function elgg_register_tag_metadata_name($name) {
 function elgg_get_registered_tag_metadata_names() {
 	global $CONFIG;
 
-	$names = (isset($CONFIG->registered_tag_metadata_names))
-		? $CONFIG->registered_tag_metadata_names : array();
+	$names = (isset($CONFIG->registered_tag_metadata_names)) ? $CONFIG->registered_tag_metadata_names : array();
 
 	return $names;
 }
