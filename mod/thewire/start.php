@@ -1,9 +1,9 @@
 <?php
 /**
  * Elgg wire plugin
- * 
+ *
  * Forked from Curverider's version
- * 
+ *
  * JHU/APL Contributors:
  * Cash Costello
  * Clark Updike
@@ -147,7 +147,7 @@ function thewire_page_handler($page) {
 
 /**
  * Override the url for a wire post to return the thread
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param string $url
@@ -163,7 +163,7 @@ function thewire_set_url($hook, $type, $url, $params) {
 
 /**
  * Prepare a notification message about a new wire post
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg_Notifications_Notification $notification The notification to prepare
@@ -201,7 +201,7 @@ function thewire_prepare_notification($hook, $type, $notification, $params) {
 
 /**
  * Get an array of hashtags from a text string
- * 
+ *
  * @param string $text The text of a post
  * @return array
  */
@@ -215,7 +215,7 @@ function thewire_get_hashtags($text) {
 
 /**
  * Replace urls, hash tags, and @'s by links
- * 
+ *
  * @param string $text The text of a post
  * @return string
  */
@@ -363,7 +363,7 @@ function thewire_add_original_poster($hook, $type, $subscriptions, $params) {
 
 /**
  * Get the latest wire guid - used for ajax update
- * 
+ *
  * @return guid
  */
 function thewire_latest_guid() {
@@ -381,9 +381,9 @@ function thewire_latest_guid() {
 
 /**
  * Get the parent of a wire post
- * 
+ *
  * @param int $post_guid The guid of the reply
- * @return ElggObject or null 
+ * @return ElggObject or null
  */
 function thewire_get_parent($post_guid) {
 	$parents = elgg_get_entities_from_relationship(array(
@@ -425,7 +425,7 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 	if (elgg_is_logged_in()) {
 		$options = array(
 			'name' => 'reply',
-			'text' => elgg_echo('thewire:reply'),
+			'text' => elgg_echo('reply'),
 			'href' => "thewire/reply/$entity->guid",
 			'priority' => 150,
 		);
@@ -435,7 +435,7 @@ function thewire_setup_entity_menu_items($hook, $type, $value, $params) {
 	if ($entity->reply) {
 		$options = array(
 			'name' => 'previous',
-			'text' => elgg_echo('thewire:previous'),
+			'text' => elgg_echo('previous'),
 			'href' => "thewire/previous/$entity->guid",
 			'priority' => 160,
 			'link_class' => 'thewire-previous',

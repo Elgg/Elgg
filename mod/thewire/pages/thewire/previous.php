@@ -4,7 +4,7 @@
  */
 
 $guid = (int) get_input('guid');
-$title = elgg_echo('thewire:previous');
+$title = elgg_echo('previous');
 
 $parent = thewire_get_parent($guid);
 if ($parent) {
