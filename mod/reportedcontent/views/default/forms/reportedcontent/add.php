@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg report content plugin form
- * 
+ *
  * @package ElggReportContent
  */
 
@@ -17,7 +17,7 @@ $owner = elgg_get_logged_in_user_entity();
 <div>
 	<label>
 		<?php
-			echo elgg_echo('reportedcontent:title');
+			echo elgg_echo('title');
 			echo elgg_view('input/text', array(
 				'name' => 'title',
 				'value' => $title,
@@ -32,7 +32,7 @@ $owner = elgg_get_logged_in_user_entity();
 			echo elgg_view('input/url', array(
 					'name' => 'address',
 							'value' => $address,
-					)); 
+					));
 			
 			?>
 	</label>
@@ -45,7 +45,7 @@ $owner = elgg_get_logged_in_user_entity();
 		echo elgg_view('input/longtext',array(
 			'name' => 'description',
 			'value' => $description,
-		)); 
+		));
 	?>
 </div>
 <div class="elgg-foot">
