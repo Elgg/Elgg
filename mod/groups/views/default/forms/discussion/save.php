@@ -1,7 +1,7 @@
 <?php
 /**
  * Discussion topic add/edit form body
- * 
+ *
  */
 
 $title = elgg_extract('title', $vars, '');
@@ -32,8 +32,8 @@ $guid = elgg_extract('guid', $vars, null);
 			'name' => 'status',
 			'value' => $status,
 			'options_values' => array(
-				'open' => elgg_echo('groups:topicopen'),
-				'closed' => elgg_echo('groups:topicclosed'),
+				'open' => elgg_echo('status:open'),
+				'closed' => elgg_echo('status:closed'),
 			),
 		));
 	?>

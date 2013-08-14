@@ -142,8 +142,6 @@ View and reply to the discussion:
 	Group tools
 	*/
 	'groups:enableforum' => 'Enable group discussion',
-	'groups:yes' => 'yes',
-	'groups:no' => 'no',
 	'groups:lastupdated' => 'Last updated %s by %s',
 	'groups:lastcomment' => 'Last comment %s by %s',
 
@@ -179,8 +177,6 @@ View and reply to the discussion:
 	'groups:addtopic' => 'Add a topic',
 	'groups:forumlatest' => 'Latest discussion',
 	'groups:latestdiscussion' => 'Latest discussion',
-	'groups:newest' => 'Newest',
-	'groups:popular' => 'Popular',
 	'groupspost:success' => 'Your reply was succesfully posted',
 	'groupspost:failure' => 'There was problem while posting your reply',
 	'groups:alldiscussion' => 'Latest discussion',
@@ -193,9 +189,7 @@ View and reply to the discussion:
 	'groups:lastperson' => 'Last person',
 	'groups:when' => 'When',
 	'grouptopic:notcreated' => 'No topics have been created.',
-	'groups:topicopen' => 'Open',
 	'groups:topicclosed' => 'Closed',
-	'groups:topicresolved' => 'Resolved',
 	'grouptopic:created' => 'Your topic was created.',
 	'groups:topicsticky' => 'Sticky',
 	'groups:topicisclosed' => 'This discussion is closed.',
