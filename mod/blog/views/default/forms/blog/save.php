@@ -68,17 +68,17 @@ if ($vars['guid']) {
 	$entity = get_entity($vars['guid']);
 	$saved = date('F j, Y @ H:i', $entity->time_created);
 } else {
-	$saved = elgg_echo('blog:never');
+	$saved = elgg_echo('never');
 }
 
-$status_label = elgg_echo('blog:status');
+$status_label = elgg_echo('status');
 $status_input = elgg_view('input/select', array(
 	'name' => 'status',
 	'id' => 'blog_status',
 	'value' => $vars['status'],
 	'options_values' => array(
-		'draft' => elgg_echo('blog:status:draft'),
-		'published' => elgg_echo('blog:status:published')
+		'draft' => elgg_echo('status:draft'),
+		'published' => elgg_echo('status:published')
 	)
 ));
 

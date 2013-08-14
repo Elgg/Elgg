@@ -26,14 +26,7 @@ return array(
 	'blog:excerpt' => 'Excerpt',
 	'blog:body' => 'Body',
 	'blog:save_status' => 'Last saved: ',
-	'blog:never' => 'Never',
-
-	// Statuses
-	'blog:status' => 'Status',
-	'blog:status:draft' => 'Draft',
-	'blog:status:published' => 'Published',
-	'blog:status:unsaved_draft' => 'Unsaved Draft',
-
+	
 	'blog:revision' => 'Revision',
 	'blog:auto_saved_revision' => 'Auto Saved Revision',
 
