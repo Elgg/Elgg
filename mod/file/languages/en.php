@@ -84,13 +84,6 @@ View and comment on the file:
 ',
 
 	/**
-	 * Embed media
-	 */
-
-	'file:embed' => "Embed media",
-	'file:embedall' => "All",
-
-	/**
 	 * Status messages
 	 */
 
