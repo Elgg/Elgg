@@ -6,7 +6,7 @@
 $diagnostics_title = elgg_echo('diagnostics:report');
 $diagnostics = '<p>' . elgg_echo('diagnostics:description') .'</p>';
 $params = array(
-	'text' => elgg_echo('diagnostics:download'),
+	'text' => elgg_echo('download'),
 	'href' => 'action/diagnostics/download',
 	'class' => 'elgg-button elgg-button-submit',
 	'is_action' => true,
