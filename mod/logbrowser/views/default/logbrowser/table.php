@@ -85,6 +85,6 @@ $log_entries = $vars['log_entries'];
 </table>
 <?php
 if (!$log_entries) {
-	echo elgg_echo('logbrowser:no_result');
+	echo elgg_echo('notfound');
 	return true;
 }
