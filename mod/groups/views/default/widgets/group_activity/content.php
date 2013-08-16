@@ -4,7 +4,7 @@
  */
 
 $num = (int) $vars['entity']->num_display;
-$guid = $vars['entity']->group_guid;
+$guid = (int) $vars['entity']->group_guid;
 
 $content = '';
 
