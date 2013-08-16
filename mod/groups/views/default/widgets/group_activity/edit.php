@@ -20,7 +20,7 @@ $params = array(
 $group_dropdown = elgg_view('input/select', $params);
 ?>
 <div>
-	<?php echo elgg_echo('dashboard:widget:group:select'); ?>:
+	<?php echo elgg_echo('groups:widget:group_activity:edit:select'); ?>:
 	<?php echo $group_dropdown; ?>
 </div>
 <?php

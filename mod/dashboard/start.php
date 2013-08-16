@@ -19,14 +19,6 @@ function dashboard_init() {
 		'section' => 'alt',
 	));
 
-	elgg_register_widget_type(
-			'group_activity',
-			elgg_echo('dashboard:widget:group:title'),
-			elgg_echo('dashboard:widget:group:desc'),
-			array('dashboard'),
-			true
-	);
-
 	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'dashboard_default_widgets');
 }
 
