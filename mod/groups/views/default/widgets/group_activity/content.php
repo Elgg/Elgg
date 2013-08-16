@@ -15,7 +15,6 @@ if ($guid) {
 		$content = "<h3>$title</h3>";
 	}
 
-	elgg_push_context('widgets');
 	$db_prefix = elgg_get_config('dbprefix');
 	$activity = elgg_list_river(array(
 		'limit' => $num,
@@ -26,8 +25,7 @@ if ($guid) {
 	if (!$activity) {
 		$activity = '<p>' . elgg_echo('groups:widget:group_activity:content:noactivity') . '</p>';
 	}
-	elgg_pop_context();
-
+	
 	$content .= $activity;
 } else {
 	// no group selected yet
