@@ -29,9 +29,7 @@ if ($guid) {
 	$content .= $activity;
 } else {
 	// no group selected yet
-	if ($vars['entity']->canEdit()) {
-		$content = '<p>' . elgg_echo('groups:widget:group_activity:content:noselect') . '</p>';
-	}
+	$content = '<p>' . elgg_echo('groups:widget:group_activity:content:noselect') . '</p>';
 }
 
 echo $content;
