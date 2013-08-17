@@ -10,8 +10,6 @@ $params = array(
 	'class' => 'elgg-input-search mbm',
 	'value' => $tag_string,
 	'onclick' => "if (this.value=='$tag_string') { this.value='' }",
-	'autocapitalize' => 'off',
-	'autocorrect' => 'off',
 );
 echo elgg_view('input/text', $params);
 
