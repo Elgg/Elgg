@@ -27,4 +27,4 @@ $defaults = array(
 $attrs = array_merge($defaults, $vars);
 
 ?>
-<input type="file" autocapitalize="off" autocorrect="off" <?php echo elgg_format_attributes($attrs); ?> />
+<input type="file" <?php echo elgg_format_attributes($attrs); ?> />
