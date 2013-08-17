@@ -25,4 +25,4 @@ $defaults = array(
 $attrs = array_merge($defaults, $vars);
 ?>
 
-<input type="password" <?php echo elgg_format_attributes($attrs); ?> />
+<input type="password" autocapitalize="off" autocorrect="off" <?php echo elgg_format_attributes($attrs); ?> />
