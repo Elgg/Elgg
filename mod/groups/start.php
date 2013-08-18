@@ -52,6 +52,14 @@ function groups_init() {
 	// Add some widgets
 	elgg_register_widget_type('a_users_groups', elgg_echo('groups:widget:membership'), elgg_echo('groups:widgets:description'));
 
+	elgg_register_widget_type(
+			'group_activity',
+			elgg_echo('groups:widget:group_activity:title'),
+			elgg_echo('groups:widget:group_activity:description'),
+			array('dashboard'),
+			true
+	);
+	
 	// add group activity tool option
 	add_group_tool_option('activity', elgg_echo('groups:enableactivity'), true);
 	elgg_extend_view('groups/tool_latest', 'groups/profile/activity_module');
@@ -62,7 +70,7 @@ function groups_init() {
 	// group entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'groups_entity_menu_setup');
 	
-	// group user hover menu	
+	// group user hover menu
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'groups_user_entity_menu_setup');
 
 	// delete and edit annotations for topic replies
@@ -461,7 +469,7 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 				'priority' => 999,
 			);
 			$return[] = ElggMenuItem::factory($options);
-		} 
+		}
 	}
 
 	return $return;
@@ -620,7 +628,7 @@ function groups_user_leave_event_listener($event, $object_type, $object) {
  * The default access for members only content is this group only. This makes
  * for better display of access (can tell it is group only), but does not change
  * access to the content.
- * 
+ *
  * @param string $hook   Hook name
  * @param string $type   Hook type
  * @param int    $access Current default access
@@ -914,7 +922,7 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 
 /**
  * Prepare a notification message about a new discussion topic
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg_Notifications_Notification $notification The notification to prepare
@@ -932,7 +940,7 @@ function discussion_prepare_notification($hook, $type, $notification, $params) {
 	$title = $entity->title;
 	$group = $entity->getContainerEntity();
 
-	$notification->subject = elgg_echo('discussion:topic:notify:subject', array($title), $language); 
+	$notification->subject = elgg_echo('discussion:topic:notify:subject', array($title), $language);
 	$notification->body = elgg_echo('discussion:topic:notify:body', array(
 		$owner->name,
 		$group->name,

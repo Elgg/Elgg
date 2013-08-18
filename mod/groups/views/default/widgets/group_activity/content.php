@@ -4,7 +4,7 @@
  */
 
 $num = (int) $vars['entity']->num_display;
-$guid = $vars['entity']->group_guid;
+$guid = (int) $vars['entity']->group_guid;
 
 $content = '';
 
@@ -15,7 +15,6 @@ if ($guid) {
 		$content = "<h3>$title</h3>";
 	}
 
-	elgg_push_context('widgets');
 	$db_prefix = elgg_get_config('dbprefix');
 	$activity = elgg_list_river(array(
 		'limit' => $num,
@@ -24,16 +23,13 @@ if ($guid) {
 		'wheres' => array("(e1.container_guid = $guid)"),
 	));
 	if (!$activity) {
-		$activity = '<p>' . elgg_echo('dashboard:widget:group:noactivity') . '</p>';
+		$activity = '<p>' . elgg_echo('groups:widget:group_activity:content:noactivity') . '</p>';
 	}
-	elgg_pop_context();
-
+	
 	$content .= $activity;
 } else {
 	// no group selected yet
-	if ($vars['entity']->canEdit()) {
-		$content = '<p>' . elgg_echo('dashboard:widget:group:noselect') . '</p>';
-	}
+	$content = '<p>' . elgg_echo('groups:widget:group_activity:content:noselect') . '</p>';
 }
 
 echo $content;
