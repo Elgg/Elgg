@@ -38,7 +38,7 @@
 	margin-right: 4%;
 }
 
-.groups-widget-viewall {
+.groups-widget-more {
 	float: right;
 	font-size: 85%;
 }
