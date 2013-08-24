@@ -24,6 +24,7 @@ class Elgg_Database_QueryCounter {
 	protected $db;
 
 	/**
+	 * Constructor
 	 *
 	 * @param Elgg_Database $db Elgg's database
 	 */
