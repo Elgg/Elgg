@@ -797,7 +797,9 @@ function elgg_get_entities(array $options = array()) {
 
 		'callback'				=> 'entity_row_to_elggstar',
 
+		// private API
 		'__ElggBatch'			=> null,
+		'__preload'				=> ELGG_ENTITIES_ANY_VALUE,
 	);
 
 	$options = array_merge($defaults, $options);
@@ -921,7 +923,7 @@ function elgg_get_entities(array $options = array()) {
 		}
 
 		if ($dt) {
-			// populate entity and metadata caches
+			// populate entity and metadata caches, and prepare $entities for preloader
 			$guids = array();
 			foreach ($dt as $item) {
 				// A custom callback could result in items that aren't ElggEntity's, so check for them
@@ -938,6 +940,11 @@ function elgg_get_entities(array $options = array()) {
 
 			if ($guids) {
 				_elgg_get_metadata_cache()->populateFromEntities($guids);
+			}
+
+			if ($options['__preload']) {
+				$preloader = new Elgg_EntityPreloader((array)$options['__preload']);
+				$preloader->preload($dt);
 			}
 		}
 		return $dt;

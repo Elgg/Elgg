@@ -249,6 +249,9 @@ function _elgg_get_metastring_based_objects($options) {
 		'joins' => array(),
 
 		'callback' => $callback,
+
+		// private API
+		'__preload' => ELGG_ENTITIES_ANY_VALUE,
 	);
 
 	// @todo Ignore site_guid right now because of #2910
@@ -432,6 +435,12 @@ function _elgg_get_metastring_based_objects($options) {
 		}
 
 		$dt = get_data($query, $options['callback']);
+
+		if ($dt && $options['__preload']) {
+			$preloader = new Elgg_EntityPreloader((array)$options['__preload']);
+			$preloader->preload($dt);
+		}
+
 		return $dt;
 	} else {
 		$result = get_data_row($query);
