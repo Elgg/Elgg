@@ -26,6 +26,7 @@ $content = elgg_list_entities_from_relationship(array(
 	'relationship_guid' => $owner->guid,
 	'relationship_join_on' => 'container_guid',
 	'no_results' => elgg_echo("file:none"),
+	'preload_owners' => true,
 ));
 
 $sidebar = file_get_type_cloud($owner->guid, true);

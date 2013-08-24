@@ -19,6 +19,7 @@
  * @property-read ElggVolatileMetadataCache               $metadataCache
  * @property-read Elgg_Notifications_NotificationsService $notifications
  * @property-read Elgg_PersistentLoginService             $persistentLogin
+ * @property-read Elgg_EntityPreloader                    $ownerPreloader
  * @property-read Elgg_Database_QueryCounter              $queryCounter
  * @property-read Elgg_Http_Request                       $request
  * @property-read Elgg_Router                             $router
@@ -49,6 +50,7 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setClassName('metadataCache', 'ElggVolatileMetadataCache');
 		$this->setFactory('persistentLogin', array($this, 'getPersistentLogin'));
+		$this->setFactory('ownerPreloader', array($this, 'getOwnerPreloader'));
 		$this->setFactory('queryCounter', array($this, 'getQueryCounter'), false);
 		$this->setFactory('request', array($this, 'getRequest'));
 		$this->setFactory('router', array($this, 'getRouter'));
@@ -213,6 +215,16 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 		$cookie_name = $remember_me_cookies_config['name'];
 		$cookie_token = $c->request->cookies->get($cookie_name, '');
 		return new Elgg_PersistentLoginService($c->db, $c->session, $c->crypto, $remember_me_cookies_config, $cookie_token);
+	}
+
+	/**
+	 * Owner preloader factory
+	 *
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
+	 * @return Elgg_EntityPreloader
+	 */
+	protected function getOwnerPreloader(Elgg_Di_ServiceProvider $c) {
+		return new Elgg_EntityPreloader(array('owner_guid'));
 	}
 
 	/**
