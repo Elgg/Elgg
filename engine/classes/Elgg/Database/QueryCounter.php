@@ -3,9 +3,7 @@
 /**
  * Count queries performed
  *
- * Do not use directly.
- *
- * @see _elgg_db_get_query_counter()
+ * Do not use directly. Use _elgg_db_get_query_counter().
  *
  * @access private
  *
@@ -26,7 +24,8 @@ class Elgg_Database_QueryCounter {
 	protected $db;
 
 	/**
-	 * @param Elgg_Database $db
+	 *
+	 * @param Elgg_Database $db Elgg's database
 	 */
 	public function __construct(Elgg_Database $db) {
 		$this->db = $db;
@@ -36,7 +35,7 @@ class Elgg_Database_QueryCounter {
 	/**
 	 * Get the number of queries performed since the object was constructed
 	 *
-	 * @return int
+	 * @return int # of queries
 	 */
 	public function getDelta() {
 		return $this->db->getQueryCount() - $this->initial;
@@ -47,7 +46,9 @@ class Elgg_Database_QueryCounter {
 	 *
 	 * @see getDelta()
 	 *
-	 * @param string $key
+	 * @param string $key Key to add to HTTP header name
+	 *
+	 * @return void
 	 */
 	public function setDeltaHeader($key = 'Default') {
 		$delta = $this->getDelta();
@@ -60,7 +61,7 @@ class Elgg_Database_QueryCounter {
 	 *
 	 * @see getDelta()
 	 *
-	 * @param string $key
+	 * @param string $key Key to display in console log
 	 *
 	 * @return string markup of SCRIPT element
 	 */

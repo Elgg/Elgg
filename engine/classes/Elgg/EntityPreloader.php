@@ -5,8 +5,8 @@
  *
  * @access private
  *
- * @package    Elgg.Core
- * @since      1.9.0
+ * @package Elgg.Core
+ * @since   1.9.0
  */
 class Elgg_EntityPreloader {
 
@@ -27,12 +27,16 @@ class Elgg_EntityPreloader {
 	/**
 	 * Preload entities based on the given objects
 	 *
-	 * @param object[] $objects
+	 * @param object[] $objects objects loaded from an Elgg query
+	 *
+	 * @return void
 	 * @throws RuntimeException
 	 */
 	public function preload($objects) {
 		$guids = $this->getGuidsToLoad($objects);
-		if ($guids) {
+		// If only 1 to load, not worth the overhead of elgg_get_entities(),
+		// get_entity() will handle it later.
+		if (count($guids) > 1) {
 			elgg_get_entities(array(
 				'guids' => $guids,
 			));
@@ -44,7 +48,7 @@ class Elgg_EntityPreloader {
 	 *
 	 * To simplify the user API, this function accepts non-arrays and arrays containing non-objects
 	 *
-	 * @param mixed $objects
+	 * @param mixed $objects objects loaded from an Elgg query
 	 * @return int[]
 	 */
 	public function getGuidsToLoad($objects) {
