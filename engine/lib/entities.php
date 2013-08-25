@@ -1650,14 +1650,15 @@ function disable_entity($guid, $reason = "", $recursive = true) {
 						OR site_guid = $guid
 						) AND enabled='yes'", 'entity_row_to_elggstar');
 
+					access_show_hidden_entities($hidden);
+					elgg_set_ignore_access($ia);
+
 					if ($sub_entities) {
 						foreach ($sub_entities as $e) {
 							add_entity_relationship($e->guid, 'disabled_with', $entity->guid);
 							$e->disable($reason);
 						}
 					}
-					access_show_hidden_entities($hidden);
-					elgg_set_ignore_access($ia);
 				}
 
 				$entity->disableMetadata();
