@@ -50,6 +50,13 @@ return array(
 	'groups:widget:num_display' => 'Number of groups to display',
 	'groups:widget:membership' => 'Group membership',
 	'groups:widgets:description' => 'Display the groups you are a member of on your profile',
+	
+	'groups:widget:group_activity:title' => 'Group activity',
+	'groups:widget:group_activity:description' => 'View the activity in one of your groups',
+	'groups:widget:group_activity:edit:select' => 'Select a group',
+	'groups:widget:group_activity:content:noactivity' => 'There is no activity in this group',
+	'groups:widget:group_activity:content:noselect' => 'Edit this widget to select a group',
+	
 	'groups:noaccess' => 'No access to group',
 	'groups:permissions:error' => 'You do not have the permissions for this',
 	'groups:ingroup' => 'in the group',
