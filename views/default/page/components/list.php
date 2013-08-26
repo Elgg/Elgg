@@ -63,12 +63,22 @@ $html .= "<ul class=\"$list_class\">";
 foreach ($items as $item) {
 	$li = elgg_view_list_item($item, $vars);
 	if ($li) {
+		$item_classes = array($item_class);
+		
 		if (elgg_instanceof($item)) {
 			$id = "elgg-{$item->getType()}-{$item->getGUID()}";
+			
+			$item_classes[] = "elgg-item-" . $item->getType();
+			if ($subtype = $item->getSubType()) {
+				$item_classes[] = "elgg-item-" . $item->getType() . "-" . $subtype;
+			}
 		} else {
 			$id = "item-{$item->getType()}-{$item->id}";
 		}
-		$html .= "<li id=\"$id\" class=\"$item_class\">$li</li>";
+		
+		$item_classes = implode(" ", $item_classes);
+		
+		$html .= "<li id=\"$id\" class=\"$item_classes\">$li</li>";
 	}
 }
 $html .= '</ul>';
