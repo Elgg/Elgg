@@ -39,6 +39,7 @@ Good bug report checklist:
  * Clear steps to reproduce the problem
  * The version of Elgg you're running
  * Browsers affected by this problem
+ * Post bug report using [Github issues](https://github.com/Elgg/Elgg/issues)
 
 ## Feature requests
 
