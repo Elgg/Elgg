@@ -69,7 +69,8 @@ foreach ($items as $item) {
 			$id = "elgg-{$item->getType()}-{$item->getGUID()}";
 			
 			$item_classes[] = "elgg-item-" . $item->getType();
-			if ($subtype = $item->getSubType()) {
+			$subtype = $item->getSubType();
+			if ($subtype) {
 				$item_classes[] = "elgg-item-" . $item->getType() . "-" . $subtype;
 			}
 		} else {
