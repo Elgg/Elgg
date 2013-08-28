@@ -1310,12 +1310,13 @@ $time_created_lower = null, $time_updated_upper = null, $time_updated_lower = nu
 /**
  * Returns a string of rendered entities.
  *
- * Displays list of entities with formatting specified
- * by the entity view.
+ * Displays list of entities with formatting specified by the entity view.
  *
  * @tip Pagination is handled automatically.
  *
  * @internal This also provides the views for elgg_view_annotation().
+ *
+ * @internal If the initial COUNT query returns 0, the $getter will not be called again.
  *
  * @param array    $options Any options from $getter options plus:
  *                   full_view => BOOL Display full view of entities (default: false)
@@ -1323,7 +1324,8 @@ $time_created_lower = null, $time_updated_upper = null, $time_updated_lower = nu
  *                   list_type_toggle => BOOL Display gallery / list switch
  *                   pagination => BOOL Display pagination links
  *                   no_results => STR Message to display when there are no entities
- * @param callback $getter  The entity getter function to use to fetch the entities
+ *
+ * @param callback $getter  The entity getter function to use to fetch the entities.
  * @param callback $viewer  The function to use to view the entity list.
  *
  * @return string
@@ -1359,8 +1361,12 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 	$options['count'] = true;
 	$count = call_user_func($getter, $options);
 
-	$options['count'] = false;
-	$entities = call_user_func($getter, $options);
+	if ($count > 0) {
+		$options['count'] = false;
+		$entities = call_user_func($getter, $options);
+	} else {
+		$entities = array();
+	}
 
 	$options['count'] = $count;
 
@@ -1842,7 +1848,11 @@ function elgg_list_registered_entities(array $options = array()) {
 
 	if (!empty($options['type_subtype_pairs'])) {
 		$count = elgg_get_entities(array_merge(array('count' => true), $options));
-		$entities = elgg_get_entities($options);
+		if ($count > 0) {
+			$entities = elgg_get_entities($options);
+		} else {
+			$entities = array();
+		}
 	} else {
 		$count = 0;
 		$entities = array();
