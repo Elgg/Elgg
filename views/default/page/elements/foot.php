@@ -2,7 +2,7 @@
 
 $analytics = elgg_view('footer/analytics');
 if ($analytics) {
-	elgg_deprecated_notice("The analytics view has been deprecated. Extend page/elements/footer instead", 1.8);
+	elgg_deprecated_notice("The analytics view has been deprecated. Extend page/elements/foot instead", 1.8);
 	echo $analytics;
 }
 
