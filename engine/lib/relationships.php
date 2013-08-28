@@ -29,7 +29,7 @@ function row_to_elggrelationship($row) {
  *
  * @return ElggRelationship|false
  */
-function get_relationship($id, $callback = "") {
+function get_relationship($id, $callback = "row_to_elggrelationship") {
 	global $CONFIG;
 
 	$id = (int)$id;
