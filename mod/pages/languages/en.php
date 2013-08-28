@@ -15,7 +15,7 @@ return array(
 	'pages:owner' => "%s's pages",
 	'pages:friends' => "Friends' pages",
 	'pages:all' => "All site pages",
-	'pages:add' => "Add page",
+	'pages:add' => "Add a page",
 
 	'pages:group' => "Group pages",
 	'groups:enablepages' => 'Enable group pages',
