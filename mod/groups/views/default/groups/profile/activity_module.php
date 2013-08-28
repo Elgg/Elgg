@@ -18,7 +18,7 @@ if (!$group) {
 
 $all_link = elgg_view('output/url', array(
 	'href' => "groups/activity/$group->guid",
-	'text' => elgg_echo('link:view:all'),
+	'text' => elgg_echo('groups:activity'),
 	'is_trusted' => true,
 ));
 
