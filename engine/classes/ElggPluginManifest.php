@@ -381,7 +381,7 @@ class ElggPluginManifest {
 	 * @return array
 	 */
 	public function getCategories() {
-		$bundled_plugins = array('blog', 'bookmarks', 'categories', 'ckeditor',
+		$bundled_plugins = array('aalborg_theme', 'blog', 'bookmarks', 'categories', 'ckeditor',
 			'custom_index', 'dashboard', 'developers', 'diagnostics',
 			'embed', 'externalpages', 'file', 'garbagecollector',
 			'groups', 'htmlawed', 'invitefriends', 'legacy_urls', 'likes',
