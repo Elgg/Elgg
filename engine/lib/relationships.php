@@ -26,6 +26,7 @@ function row_to_elggrelationship($row) {
  * Return a relationship.
  *
  * @param int $id The ID of a relationship
+ * @param callback $callback Optionally, the function to call back to on data row. Defaults to: row_to_elggrelationship
  *
  * @return ElggRelationship|false
  */
