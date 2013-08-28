@@ -25,7 +25,7 @@ class Elgg_ViewsService {
 	 * @see Elgg_ViewsService::fileExists
 	 * @var array
 	 */
-	protected $fileExistsCache = array();
+	protected $file_exists_cache = array();
 
 	/**
 	 * Constructor
@@ -304,10 +304,10 @@ class Elgg_ViewsService {
 	 * @return bool
 	 */
 	protected function fileExists($path) {
-		if (!isset($this->fileExistsCache[$path])) {
-			$this->fileExistsCache[$path] = file_exists($path);
+		if (!isset($this->file_exists_cache[$path])) {
+			$this->file_exists_cache[$path] = file_exists($path);
 		}
-		return $this->fileExistsCache[$path];
+		return $this->file_exists_cache[$path];
 	}
 
 	/**
