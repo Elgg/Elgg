@@ -29,13 +29,17 @@ function row_to_elggrelationship($row) {
  *
  * @return ElggRelationship|false
  */
-function get_relationship($id) {
+function get_relationship($id, $callback = "") {
 	global $CONFIG;
 
 	$id = (int)$id;
 
 	$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where id=$id";
-	return row_to_elggrelationship(get_data_row($query));
+	if (is_callable($callback)) {
+		return call_user_func($callback, get_data_row($query));
+	} else {
+		return get_data_row($query);
+	}
 }
 
 /**

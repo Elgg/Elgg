@@ -30,7 +30,7 @@ class ElggRelationship extends ElggData implements
 				$relationship = $row; // Create from db row
 			} else {
 				elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use get_relationship()', 1.9);
-				$relationship = get_relationship($row);
+				$relationship = get_relationship($row, '');
 			}
 
 			if ($relationship) {
