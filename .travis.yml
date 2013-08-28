@@ -44,4 +44,4 @@ script:
  
 notifications:
   email:
-    - elgg-development@googlegroups.com
+    - team@elgg.org
