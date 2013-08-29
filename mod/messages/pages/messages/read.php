@@ -45,7 +45,7 @@ if ($inbox) {
 		elgg_register_menu_item('title', array(
 			'name' => 'reply',
 			'href' => '#messages-reply-form',
-			'text' => elgg_echo('messages:answer'),
+			'text' => elgg_echo('reply'),
 			'link_class' => 'elgg-button elgg-button-action',
 			'rel' => 'toggle',
 		));

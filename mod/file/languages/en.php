@@ -30,9 +30,6 @@ return array(
 	'file:add' => 'Upload a file',
 
 	'file:file' => "File",
-	'file:title' => "Title",
-	'file:desc' => "Description",
-	'file:tags' => "Tags",
 
 	'file:list:list' => 'Switch to the list view',
 	'file:list:gallery' => 'Switch to the gallery view',
@@ -64,8 +61,6 @@ return array(
 
 	'groups:enablefiles' => 'Enable group files',
 
-	'file:download' => "Download this",
-
 	'file:delete:confirm' => "Are you sure you want to delete this file?",
 
 	'file:tagcloud' => "Tag cloud",
@@ -87,13 +82,6 @@ return array(
 View and comment on the file:
 %s
 ',
-
-	/**
-	 * Embed media
-	 */
-
-	'file:embed' => "Embed media",
-	'file:embedall' => "All",
 
 	/**
 	 * Status messages

@@ -137,9 +137,9 @@ $category_form = elgg_view_form('admin/plugins/filter', array(
 
 
 $sort_options = array(
-	'priority' => elgg_echo('admin:plugins:sort:priority'),
-	'alpha' => elgg_echo('admin:plugins:sort:alpha'),
-	'date' => elgg_echo('admin:plugins:sort:date'),
+	'priority' => elgg_echo('sort:priority'),
+	'alpha' => elgg_echo('sort:alpha'),
+	'date' => elgg_echo('sort:newest'),
 );
 // security - only want a defined option
 if (!array_key_exists($sort, $sort_options)) {

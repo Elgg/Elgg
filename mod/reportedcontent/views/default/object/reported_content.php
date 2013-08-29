@@ -55,7 +55,7 @@ if ($report->state == 'archived') {
 			<?php echo elgg_view_friendly_time($report->time_created); ?>
 		</p>
 		<p>
-			<b><?php echo elgg_echo('reportedcontent:objecttitle'); ?>:</b>
+			<b><?php echo elgg_echo('title'); ?>:</b>
 			<?php echo $report->title; ?>
 		<p>
 			<b><?php echo elgg_echo('reportedcontent:objecturl'); ?>:</b>
@@ -69,7 +69,7 @@ if ($report->state == 'archived') {
 		<p>
 			<?php echo elgg_view('output/url', array(
 				'href' => "#report-$report->guid",
-				'text' => elgg_echo('reportedcontent:moreinfo'),
+				'text' => elgg_echo('more_info'),
 				'rel' => "toggle",
 			));
 			?>

@@ -19,8 +19,6 @@ return array(
 	'bookmarks:bookmarklet' => "Get bookmarklet",
 	'bookmarks:bookmarklet:group' => "Get group bookmarklet",
 	'bookmarks:inbox' => "Bookmarks inbox",
-	'bookmarks:morebookmarks' => "More bookmarks",
-	'bookmarks:more' => "More",
 	'bookmarks:with' => "Share with",
 	'bookmarks:new' => "A new bookmark",
 	'bookmarks:address' => "Address of the bookmark",
@@ -57,10 +55,7 @@ View and comment on the bookmark:
 	'bookmarks:group' => 'Group bookmarks',
 	'bookmarks:enablebookmarks' => 'Enable group bookmarks',
 	'bookmarks:nogroup' => 'This group does not have any bookmarks yet',
-	'bookmarks:more' => 'More bookmarks',
-
-	'bookmarks:no_title' => 'No title',
-
+	
 	/**
 	 * Widget and bookmarklet
 	 */

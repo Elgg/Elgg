@@ -23,7 +23,7 @@ if ($content) {
 	$url = "bookmarks/owner/" . elgg_get_page_owner_entity()->username;
 	$more_link = elgg_view('output/url', array(
 		'href' => $url,
-		'text' => elgg_echo('bookmarks:more'),
+		'text' => elgg_echo('more'),
 		'is_trusted' => true,
 	));
 	echo "<span class=\"elgg-widget-more\">$more_link</span>";

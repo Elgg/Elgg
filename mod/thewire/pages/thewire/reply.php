@@ -1,14 +1,14 @@
 <?php
 /**
  * Reply page
- * 
+ *
  */
 
 elgg_gatekeeper();
 
 $post = get_entity(get_input('guid'));
 
-$title = elgg_echo('thewire:reply');
+$title = elgg_echo('reply');
 
 elgg_push_breadcrumb(elgg_echo('thewire'), 'thewire/all');
 elgg_push_breadcrumb($title);
