@@ -116,7 +116,7 @@ class Elgg_CacheHandler {
 		// testing showed regex to be marginally faster than array / string functions over 100000 reps
 		// it won't make a difference in real life and regex is easier to read.
 		// <ts>/<viewtype>/<name/of/view.and.dots>.<type>
-		if (!preg_match('#^([0-9]+)/([^/]+)/(.+)$#', $request_var, $matches)) {
+		if (!preg_match('#^/?([0-9]+)/([^/]+)/(.+)$#', $request_var, $matches)) {
 			return array();
 		}
 

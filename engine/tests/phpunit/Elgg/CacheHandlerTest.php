@@ -39,4 +39,12 @@ class Elgg_CacheHandlerTest extends PHPUnit_Framework_TestCase {
 	public function testParserHasCharWhitelist() {
 		$this->_testParseFail('a1234/default/he~l/8lo-wo_rl.d.js');
 	}
+
+	public function testParseSupportsLeadingSlash() {
+		$this->assertEquals(array(
+			'ts' => '1234',
+			'viewtype' => 'default',
+			'view' => 'hel/8lo-wo_rl.d.js',
+		), $this->handler->parseRequestVar('/1234/default/hel/8lo-wo_rl.d.js'));
+	}
 }
