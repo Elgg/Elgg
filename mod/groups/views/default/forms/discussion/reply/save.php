@@ -2,56 +2,69 @@
 /**
  * Discussion topic reply form body
  *
- * @uses $vars['entity'] A discussion topic object
+ * @uses $vars['topic']  A discussion topic object
+ * @uses $vars['entity'] A discussion reply object
  * @uses $vars['inline'] Display a shortened form?
  */
 
-if (isset($vars['entity']) && elgg_is_logged_in()) {
-	echo elgg_view('input/hidden', array(
-		'name' => 'entity_guid',
-		'value' => $vars['entity']->getGUID(),
+$topic = elgg_extract('topic', $vars);
+
+$topic_guid_input = '';
+if (isset($vars['topic'])) {
+	$topic_guid_input = elgg_view('input/hidden', array(
+		'name' => 'topic_guid',
+		'value' => $vars['topic']->getGUID(),
+	));
+}
+
+$inline = elgg_extract('inline', $vars, false);
+
+$reply = elgg_extract('entity', $vars);
+
+$value = '';
+
+$reply_guid_input = '';
+if ($reply && $reply->canEdit()) {
+	$value = $reply->description;
+	$reply_guid_input = elgg_view('input/hidden', array(
+		'name' => 'guid',
+		'value' => $reply->guid
 	));
 
-	$inline = elgg_extract('inline', $vars, false);
-
-	$annotation = elgg_extract('annotation', $vars);
-	
-	$value = '';
-
-	if ($annotation) {
-		$value = $annotation->value;
-		echo elgg_view('input/hidden', array(
-			'name' => 'annotation_id',
-			'value' => $annotation->id
-		));
-	}
-
-	if ($inline) {
-		echo elgg_view('input/text', array('name' => 'group_topic_post', 'value' => $value));
-		echo elgg_view('input/submit', array('value' => elgg_echo('reply')));
-	} else {
-?>
-	<div>
-		<label>
-		<?php
-			if ($annotation) {
-				echo elgg_echo('edit');
-			} else {
-				echo elgg_echo("reply");
-			}
-		?>
-		</label>
-		<?php echo elgg_view('input/longtext', array('name' => 'group_topic_post', 'value' => $value)); ?>
-	</div>
-	<div class="elgg-foot">
-<?php
-	if ($annotation) {
-		echo elgg_view('input/submit', array('value' => elgg_echo('save')));
-	} else {
-		echo elgg_view('input/submit', array('value' => elgg_echo('reply')));
-	}
-?>
-	</div>
-<?php
-	}
+	$submit_text = elgg_echo('save');
+} else {
+	$submit_text = elgg_echo('reply');
 }
+
+$submit_input = elgg_view('input/submit', array('value' => $submit_text));
+
+if ($inline) {
+	$description_input = elgg_view('input/text', array(
+		'name' => 'description',
+		'value' => $value
+	));
+
+echo <<<FORM
+	$description_input
+	$topic_guid_input
+	$reply_guid_input
+	$submit_input
+FORM;
+} else {
+	$description_input = elgg_view('input/longtext', array(
+		'name' => 'description',
+		'value' => $value
+	));
+
+echo <<<FORM
+	<div>
+		$description_input
+	</div>
+	<div class="foot">
+		$reply_guid_input
+		$topic_guid_input
+		$submit_input
+	</div>
+FORM;
+}
+

@@ -50,13 +50,13 @@ return array(
 	'groups:widget:num_display' => 'Number of groups to display',
 	'groups:widget:membership' => 'Group membership',
 	'groups:widgets:description' => 'Display the groups you are a member of on your profile',
-	
+
 	'groups:widget:group_activity:title' => 'Group activity',
 	'groups:widget:group_activity:description' => 'View the activity in one of your groups',
 	'groups:widget:group_activity:edit:select' => 'Select a group',
 	'groups:widget:group_activity:content:noactivity' => 'There is no activity in this group',
 	'groups:widget:group_activity:content:noselect' => 'Edit this widget to select a group',
-	
+
 	'groups:noaccess' => 'No access to group',
 	'groups:permissions:error' => 'You do not have the permissions for this',
 	'groups:ingroup' => 'in the group',
@@ -131,8 +131,7 @@ View and reply to the discussion:
 	'groups:more' => 'More groups',
 	'groups:none' => 'No groups',
 
-
-	/*
+	/**
 	 * Access
 	 */
 	'groups:access:private' => 'Closed - Users must be invited',
@@ -145,16 +144,16 @@ View and reply to the discussion:
 	'groups:opengroup:membersonly:join' => 'To be a member, click the "Join group" menu link.',
 	'groups:visibility' => 'Who can see this group?',
 
-	/*
-	Group tools
-	*/
+	/**
+	 * Group tools
+	 */
 	'groups:enableforum' => 'Enable group discussion',
 	'groups:lastupdated' => 'Last updated %s by %s',
 	'groups:lastcomment' => 'Last comment %s by %s',
 
-	/*
-	Group discussion
-	*/
+	/**
+	 * Group discussion
+	 */
 	'discussion' => 'Discussion',
 	'discussion:add' => 'Add discussion topic',
 	'discussion:latest' => 'Latest discussion',
@@ -173,6 +172,7 @@ View and reply to the discussion:
 	'discussion:error:notdeleted' => 'Could not delete the discussion topic',
 
 	'discussion:reply:deleted' => 'Discussion reply has been deleted.',
+	'discussion:reply:error:notfound' => 'The discussion reply was not found',
 	'discussion:reply:error:notdeleted' => 'Could not delete the discussion reply',
 
 	'reply:this' => 'Reply to this',
@@ -204,7 +204,6 @@ View and reply to the discussion:
 	'grouptopic:error' => 'Your group topic could not be created. Please try again or contact a system administrator.',
 	'groups:forumpost:edited' => "You have successfully edited the forum post.",
 	'groups:forumpost:error' => "There was a problem editing the forum post.",
-
 
 	'groups:privategroup' => 'This group is closed. Requesting membership.',
 	'groups:notitle' => 'Groups must have a title',
@@ -253,15 +252,15 @@ or click below to view the group's join requests:
 
 %s",
 
-	/*
-		Forum river items
-	*/
+	/**
+	 * Forum river items
+	 */
 
 	'river:create:group:default' => '%s created the group %s',
 	'river:join:group:default' => '%s joined the group %s',
 	'river:create:object:groupforumtopic' => '%s added a new discussion topic %s',
 	'river:reply:object:groupforumtopic' => '%s replied on the discussion topic %s',
-	
+
 	'groups:nowidgets' => 'No widgets have been defined for this group.',
 
 
@@ -299,9 +298,9 @@ or click below to view the group's join requests:
 	'groups:invitekilled' => 'The invite has been deleted.',
 	'groups:joinrequestkilled' => 'The join request has been deleted.',
 
-	// ecml
+	/**
+	 * ecml
+	 */
 	'groups:ecml:discussion' => 'Group Discussions',
 	'groups:ecml:groupprofile' => 'Group profiles',
 );
-
-add_translation("en", $english);
