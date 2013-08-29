@@ -375,8 +375,9 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 		$item = $params['item'];
 		/* @var ElggRiverItem $item */
 		$object = $item->getObjectEntity();
-		// add comment link but annotations cannot be commented on
-		if ($item->annotation_id == 0) {
+
+		// Annotations and comments cannot be commented
+		if ($item->annotation_id == 0 && $object->getSubtype() !== 'comment') {
 			if ($object->canComment()) {
 				$options = array(
 					'name' => 'comment',
