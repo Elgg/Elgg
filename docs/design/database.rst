@@ -543,27 +543,113 @@ You can instead store the information like so:
 Storing GUIDs in metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Though this is not technically incorrect, it is inadvisable to use
-metadata to store GUIDs. `Relationships`_ are a much better construct for
-this purpose. Yes, there are core plugins that break this principle --
-we are working on fixing them!
-
-For example, instead of:
-
-.. code:: php
-
-    $object->example_guid = $guid;
-
-do:
-
-.. code:: php
-
-    $object->addRelationship('example', $guid);
+Though there are some cases to store entity GUIDs in metadata,
+`Relationships`_ are a much better construct for relating entities
+to each other.
 
 Relationships
 =============
 
-TODO
+Relationships allow you to bind entities together. Examples: an
+artist has fans, a user is a member of an organization, etc.
+
+The class ``ElggRelationship`` models a directed relationship between
+two entities, making the statement:
+
+    "**{subject}** is a **{noun}** of **{target}**."
+
+================  ===========     =========================================
+API name          Models          Represents
+================  ===========     =========================================
+``guid_one``      The subject     Which entity is being bound
+``relationship``  The noun        The type of relationship
+``guid_two``      The target      The entity to which the subject is bound
+================  ===========     =========================================
+
+**Each relationship has direction.** Imagine an archer shoots
+an arrow at a target; The arrow moves in one direction, binding
+the subject (the archer) to the target.
+
+**A relationship does not imply reciprocity**. **A** being a
+follower of **B** does not imply that **B** follows **A**.
+
+**Relationships_ do not have access control.** They're never
+hidden from view and can be edited with code at any privilege
+level, with the caveat that *the entities* in a relationship
+may be invisible due to access control!
+
+Working with relationships
+--------------------------
+
+Creating a relationship
+~~~~~~~~~~~~~~~~~~~~~~~
+
+E.g. to establish that "**$user** is a **fan** of **$artist**"
+(user is the subject, artist is the target):
+
+.. code:: php
+
+    // option 1
+    $success = add_entity_relationship($user->guid, 'fan', $artist->guid);
+
+    // option 2
+    $success = $user->addRelationship($artist->guid, 'fan');
+
+This triggers the event [create, relationship], passing in
+the created ``ElggRelationship`` object. If a handler returns
+``false``, the relationship will not be created and ``$success``
+will be ``false``.
+
+Verifying a relationship
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+E.g. to verify that "**$user** is a **fan** of **$artist**":
+
+.. code:: php
+
+    if (check_entity_relationship($user->guid, 'fan', $artist->guid)) {
+        // relationship exists
+    }
+
+Note that, if the relationship exists, ``check_entity_relationship()``
+returns an ``ElggRelationship`` object:
+
+.. code:: php
+
+    $relationship = check_entity_relationship($user->guid, 'fan', $artist->guid);
+    if ($relationship) {
+        // use $relationship->id or $relationship->time_created
+    }
+
+Deleting a relationship
+~~~~~~~~~~~~~~~~~~~~~~~
+
+E.g. to be able to assert that "**$user** is no longer a **fan** of **$artist**":
+
+.. code:: php
+
+    $was_removed = remove_entity_relationship($user->guid, 'fan', $artist->guid);
+
+This triggers the event [delete, relationship], passing in
+the associated ``ElggRelationship`` object. If a handler returns
+``false``, the relationship will remain, and ``$was_removed`` will
+be ``false``.
+
+Other useful functions:
+
+- ``delete_relationship()`` : delete by ID
+- ``remove_entity_relationships()`` : delete those relating to an entity (*note:* in versions before Elgg 1.9, this did not trigger delete events)
+
+Finding relationships and related entities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Below are a few functions to fetch relationship objects
+and/or related entities. A few are listed below:
+
+- ``get_entity_relationships()`` : fetch relationships by subject or target entity
+- ``get_relationship()`` : get a relationship object by ID
+- ``elgg_get_entities_from_relationship()`` : fetch entities in relationships in a
+  variety of ways
 
 Access Control
 ==============
