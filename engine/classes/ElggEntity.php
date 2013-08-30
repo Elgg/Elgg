@@ -623,29 +623,29 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @tip Read the relationship like "$guid is a $relationship of this entity."
 	 *
-	 * @param int    $guid         Entity to link to.
+	 * @param int    $guid_two     GUID of the target entity of the relationship.
 	 * @param string $relationship The type of relationship.
 	 *
 	 * @return bool
 	 * @see ElggEntity::removeRelationship()
 	 * @see ElggEntity::deleteRelationships()
 	 */
-	public function addRelationship($guid, $relationship) {
-		return add_entity_relationship($this->getGUID(), $relationship, $guid);
+	public function addRelationship($guid_two, $relationship) {
+		return add_entity_relationship($this->getGUID(), $relationship, $guid_two);
 	}
 
 	/**
 	 * Remove a relationship
 	 *
-	 * @param int $guid         GUID of the entity to make a relationship with
-	 * @param str $relationship Name of relationship
+	 * @param int    $guid_two     GUID of the target entity of the relationship.
+	 * @param string $relationship The type of relationship.
 	 *
 	 * @return bool
 	 * @see ElggEntity::addRelationship()
 	 * @see ElggEntity::deleteRelationships()
 	 */
-	public function removeRelationship($guid, $relationship) {
-		return remove_entity_relationship($this->getGUID(), $relationship, $guid);
+	public function removeRelationship($guid_two, $relationship) {
+		return remove_entity_relationship($this->getGUID(), $relationship, $guid_two);
 	}
 
 	/**
