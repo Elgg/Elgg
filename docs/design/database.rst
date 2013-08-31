@@ -852,4 +852,3 @@ lookups more efficient.
 
 Core developers will place schema upgrades in
 ``/engine/schema/upgrades/*``.
-
