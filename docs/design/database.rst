@@ -809,9 +809,9 @@ Table: relationships
 
 This table defines `Relationships`_, these link one entity with another.
 
--  **guid\_one** entity number one.
--  **relationship** Relationship string.
--  **guid\_two** entity number two.
+-  **guid\_one** The GUID of the subject entity.
+-  **relationship** The type of the relationship.
+-  **guid\_two** The GUID of the target entity.
 
 Table: objects\_entity
 ~~~~~~~~~~~~~~~~~~~~~~
