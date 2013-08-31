@@ -1014,7 +1014,7 @@ function elgg_get_version($human_readable = false) {
 				return false;
 			}
 		}
-		return (!$human_readable) ? $version : $release;
+		return $human_readable ? $release : $version;
 	}
 
 	return false;
