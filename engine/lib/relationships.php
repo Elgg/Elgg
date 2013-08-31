@@ -11,31 +11,47 @@
  *
  * @param stdClass $row Database row from the relationship table
  *
- * @return ElggRelationship|stdClass
+ * @return ElggRelationship|false
  * @access private
  */
 function row_to_elggrelationship($row) {
-	if (!($row instanceof stdClass)) {
-		return $row;
+	if ($row instanceof stdClass) {
+		return new ElggRelationship($row);
+	}
+
+	return false;
+}
+
+/**
+ * Get a relationship by its ID
+ *
+ * @param int $id The relationship ID
+ *
+ * @return ElggRelationship|false False if not found
+ */
+function get_relationship($id) {
+	$row = _elgg_get_relationship_row($id);
+	if (!$row) {
+		return false;
 	}
 
 	return new ElggRelationship($row);
 }
 
 /**
- * Return a relationship.
+ * Get a database row from the relationship table
  *
- * @param int $id The ID of a relationship
+ * @param int $id The relationship ID
  *
- * @return ElggRelationship|false
+ * @return stdClass|false False if no row found
+ * @access private
  */
-function get_relationship($id) {
+function _elgg_get_relationship_row($id) {
 	global $CONFIG;
 
 	$id = (int)$id;
 
-	$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where id=$id";
-	return row_to_elggrelationship(get_data_row($query));
+	return get_data_row("SELECT * FROM {$CONFIG->dbprefix}entity_relationships WHERE id = $id");
 }
 
 /**
