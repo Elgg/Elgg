@@ -737,7 +737,7 @@ Elgg installation, the tables will have a prefix (typically "elgg\_").
 Table: entities
 ~~~~~~~~~~~~~~~
 
-This is the main Elgg table containing Elgg users, sites,
+This is the main `Entities`_ table containing Elgg users, sites,
 objects and groups. When you first install Elgg this is automatically
 populated with your first site.
 
@@ -771,7 +771,7 @@ This table contains entity subtype information:
 Table: metadata
 ~~~~~~~~~~~~~~~
 
-This table contains extra information attached to an entity.
+This table contains `Metadata`_, extra information attached to an entity.
 
 -  **id** A counter.
 -  **entity\_guid** The entity this is attached to.
@@ -789,7 +789,7 @@ This table contains extra information attached to an entity.
 Table: annotations
 ~~~~~~~~~~~~~~~~~~
 
-This table contains annotations, this is distinct from metadata.
+This table contains `Annotations`_, this is distinct from `Metadata`_.
 
 -  **id** A counter.
 -  **entity\_guid** The entity this is attached to.
@@ -807,7 +807,7 @@ This table contains annotations, this is distinct from metadata.
 Table: relationships
 ~~~~~~~~~~~~~~~~~~~~
 
-This table defines relationships, these link one entity with another.
+This table defines `Relationships`_, these link one entity with another.
 
 -  **guid\_one** entity number one.
 -  **relationship** Relationship string.
