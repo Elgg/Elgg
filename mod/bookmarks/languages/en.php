@@ -9,7 +9,7 @@ $english = array(
 	 * Menu items and titles
 	 */
 	'bookmarks' => "Bookmarks",
-	'bookmarks:add' => "Add bookmark",
+	'bookmarks:add' => "Add a bookmark",
 	'bookmarks:edit' => "Edit bookmark",
 	'bookmarks:owner' => "%s's bookmarks",
 	'bookmarks:friends' => "Friends' bookmarks",
