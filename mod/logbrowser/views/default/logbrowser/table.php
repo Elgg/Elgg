@@ -35,7 +35,7 @@ $log_entries = $vars['log_entries'];
 				'is_trusted' => true,
 			));
 			$user_guid_link = elgg_view('output/url', array(
-				'href' => "admin/overview/logbrowser?user_guid=$user->guid",
+				'href' => "admin/administer_utilities/logbrowser?user_guid={$user->guid}",
 				'text' => $user->getGUID(),
 				'is_trusted' => true,
 			));
