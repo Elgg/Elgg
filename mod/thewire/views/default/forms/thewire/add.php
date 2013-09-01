@@ -12,7 +12,7 @@ $char_limit = (int)elgg_get_plugin_setting('limit', 'thewire');
 
 $text = elgg_echo('post');
 if ($post) {
-	$text = elgg_echo('thewire:reply');
+	$text = elgg_echo('reply');
 }
 $chars_left = elgg_echo('thewire:charleft');
 

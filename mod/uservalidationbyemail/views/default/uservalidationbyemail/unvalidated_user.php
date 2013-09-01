@@ -31,7 +31,7 @@ $resend_email = elgg_view('output/confirmlink', array(
 $delete = elgg_view('output/confirmlink', array(
 	'confirm' => elgg_echo('uservalidationbyemail:confirm_delete', array($user->username)),
 	'href' => "action/uservalidationbyemail/delete/?user_guids[]=$user->guid",
-	'text' => elgg_echo('uservalidationbyemail:admin:delete')
+	'text' => elgg_echo('delete')
 ));
 $menu = 'test';
 $block = <<<___END

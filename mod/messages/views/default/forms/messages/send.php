@@ -20,7 +20,7 @@ $recipient_autocomplete = elgg_view('input/autocomplete', array(
 
 ?>
 <div>
-	<label><?php echo elgg_echo("messages:to"); ?>: </label>
+	<label><?php echo elgg_echo("email:to"); ?>: </label>
 	<?php echo $recipient_autocomplete; ?>
 	<span class="elgg-text-help"><?php echo elgg_echo("messages:to:help"); ?></span>
 	
@@ -42,5 +42,5 @@ $recipient_autocomplete = elgg_view('input/autocomplete', array(
 	?>
 </div>
 <div class="elgg-foot">
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('messages:send'))); ?>
+	<?php echo elgg_view('input/submit', array('value' => elgg_echo('send'))); ?>
 </div>

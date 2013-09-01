@@ -59,12 +59,12 @@ elgg.thewire.viewPrevious = function(event) {
 	var postGuid = $link.attr("href").split("/").pop();
 	var $previousDiv = $("#thewire-previous-" + postGuid);
 
-	if ($link.html() == elgg.echo('thewire:hide')) {
-		$link.html(elgg.echo('thewire:previous'));
+	if ($link.html() == elgg.echo('hide')) {
+		$link.html(elgg.echo('previous'));
 		$link.attr("title", elgg.echo('thewire:previous:help'));
 		$previousDiv.slideUp(400);
 	} else {
-		$link.html(elgg.echo('thewire:hide'));
+		$link.html(elgg.echo('hide'));
 		$link.attr("title", elgg.echo('thewire:hide:help'));
 		
 		$.ajax({type: "GET",

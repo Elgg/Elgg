@@ -46,7 +46,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 		if ($blog->status == 'published') {
 			$load = elgg_view('output/url', array(
 				'href' => $load_base_url,
-				'text' => elgg_echo('blog:status:published'),
+				'text' => elgg_echo('status:published'),
 				'is_trusted' => true,
 			));
 

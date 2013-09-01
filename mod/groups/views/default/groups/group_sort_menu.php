@@ -7,12 +7,12 @@
 
 $tabs = array(
 	'newest' => array(
-		'text' => elgg_echo('groups:newest'),
+		'text' => elgg_echo('sort:newest'),
 		'href' => 'groups/all?filter=newest',
 		'priority' => 200,
 	),
 	'popular' => array(
-		'text' => elgg_echo('groups:popular'),
+		'text' => elgg_echo('sort:popular'),
 		'href' => 'groups/all?filter=popular',
 		'priority' => 300,
 	),

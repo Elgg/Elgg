@@ -8,10 +8,6 @@
 return array(
 	'logrotate:period' => 'How often should the system log be archived?',
 
-	'logrotate:weekly' => 'Once a week',
-	'logrotate:monthly' => 'Once a month',
-	'logrotate:yearly' => 'Once a year',
-
 	'logrotate:logrotated' => "Log rotated\n",
 	'logrotate:lognotrotated' => "Error rotating log\n",
 	

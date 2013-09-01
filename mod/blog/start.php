@@ -228,7 +228,7 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 			}
 		}
 
-		$status_text = elgg_echo("blog:status:{$entity->status}");
+		$status_text = elgg_echo("status:{$entity->status}");
 		$options = array(
 			'name' => 'published_status',
 			'text' => "<span>$status_text</span>",
@@ -243,7 +243,7 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Prepare a notification message about a published blog
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg_Notifications_Notification $notification The notification to prepare
@@ -257,7 +257,7 @@ function blog_prepare_notification($hook, $type, $notification, $params) {
 	$language = $params['language'];
 	$method = $params['method'];
 
-	$notification->subject = elgg_echo('blog:notify:subject', array($entity->title), $language); 
+	$notification->subject = elgg_echo('blog:notify:subject', array($entity->title), $language);
 	$notification->body = elgg_echo('blog:notify:body', array(
 		$owner->name,
 		$entity->title,
