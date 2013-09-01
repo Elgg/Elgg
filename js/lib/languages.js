@@ -34,32 +34,43 @@ elgg.get_language = function() {
 /**
  * Translates a string
  *
- * @param {String} key      The string to translate
- * @param {Array}  argv     vsprintf support
- * @param {String} language The language to display it in
+ * @param {String|String[]} keys     The translation key. If an array of keys is given, the first key with an
+ *                                   available translation will be used.
+ * @param {Array}           argv     Arguments to pass through vsprintf().
+ * @param {String}          language The desired language code (defaults to site/user default, then English).
  *
- * @return {String} The translation
+ * @return {String} Either the translated string, the English string, or the original translation key.
  */
-elgg.echo = function(key, argv, language) {
+elgg.echo = function(keys, argv, language) {
 	//elgg.echo('str', 'en')
 	if (elgg.isString(argv)) {
 		language = argv;
 		argv = [];
 	}
 
+	if (elgg.isString(keys)) {
+		keys = [keys];
+	}
+
 	//elgg.echo('str', [...], 'en')
 	var translations = elgg.config.translations,
 		dlang = elgg.get_language(),
-		map;
+		map,
+		i;
 
 	language = language || dlang;
 	argv = argv || [];
 
 	map = translations[language] || translations[dlang];
-	if (map && map[key]) {
-		return vsprintf(map[key], argv);
+	if (!map) {
+		return keys.pop();
 	}
 
-	return key;
-};
+	for (i = 0; i < keys.length; i++) {
+		if (map[keys[i]]) {
+			return vsprintf(map[keys[i]], argv);
+		}
+	}
 
+	return keys.pop();
+};

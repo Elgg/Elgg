@@ -257,8 +257,6 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	 * Test elgg_load_js()
 	 */
 	public function testElggLoadJS() {
-		global $CONFIG;
-
 		// load before register
 		elgg_load_js('key');
 		$result = elgg_register_js('key', 'http://test1.com', 'footer');
@@ -272,8 +270,6 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	 * Test elgg_get_loaded_js()
 	 */
 	public function testElggGetJS() {
-		global $CONFIG;
-
 		$base = trim(elgg_get_site_url(), "/");
 
 		$urls = array(
@@ -316,5 +312,21 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		foreach ($offsets as $num_seconds => $friendlytime) {
 			$this->assertIdentical(elgg_get_friendly_time($current_time + $num_seconds, $current_time), $friendlytime);
 		}
+	}
+
+	public function testElggEchoFallsBack() {
+		$lang = get_language();
+
+		add_translation($lang, array(
+			'test:fallback' => 'Fallback',
+		));
+
+		$this->assertEqual(elgg_echo(array('test:first_choice', 'test:fallback')), 'Fallback');
+
+		add_translation($lang, array(
+			'test:first_choice' => 'First Choice',
+		));
+
+		$this->assertEqual(elgg_echo(array('test:first_choice', 'test:fallback')), 'First Choice');
 	}
 }
