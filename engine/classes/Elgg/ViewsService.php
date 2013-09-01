@@ -161,6 +161,27 @@ class Elgg_ViewsService {
 	}
 
 	/**
+	 * Display a view with a deprecation notice. No missing view NOTICE is logged
+	 *
+	 * @see elgg_view()
+	 *
+	 * @param string  $view       The name and location of the view to use
+	 * @param array   $vars       Variables to pass to the view
+	 * @param string  $suggestion Suggestion with the deprecation message
+	 * @param string  $version    Human-readable *release* version: 1.7, 1.8, ...
+	 *
+	 * @return string The parsed view
+	 * @access private
+	 */
+	public function renderDeprecatedView($view, $vars = array(), $suggestion, $version) {
+		$rendered = $this->renderView($view, $vars, false, '', false);
+		if ($rendered) {
+			elgg_deprecated_notice("The $view view has been deprecated. $suggestion", $version, 3);
+		}
+		return $rendered;
+	}
+
+	/**
 	 * @access private
 	 */
 	public function renderView($view, array $vars = array(), $bypass = false, $viewtype = '', $issue_missing_notice = true) {

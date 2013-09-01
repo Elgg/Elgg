@@ -361,19 +361,15 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
  * @see elgg_view()
  *
  * @param string  $view       The name and location of the view to use
- * @param array   $vars       Variables to pass to the view.
- * @param string  $suggestion Message to display after "the view has been deprecated"
+ * @param array   $vars       Variables to pass to the view
+ * @param string  $suggestion Suggestion with the deprecation message
  * @param string  $version    Human-readable *release* version: 1.7, 1.8, ...
  *
  * @return string The parsed view
  * @access private
  */
 function elgg_view_deprecated($view, $vars = array(), $suggestion, $version) {
-	$rendered = _elgg_services()->views->renderView($view, $vars, false, '', false);
-	if ($rendered) {
-		elgg_deprecated_notice("The $view view has been deprecated. $suggestion", $version, 2);
-	}
-	return $rendered;
+	return _elgg_services()->views->renderDeprecatedView($view, $vars, $suggestion, $version);
 }
 
 /**
