@@ -69,12 +69,9 @@ function groups_init() {
 
 	// group entity menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'groups_entity_menu_setup');
-	
+
 	// group user hover menu
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'groups_user_entity_menu_setup');
-
-	// delete and edit annotations for topic replies
-	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'groups_annotation_menu_setup');
 
 	//extend some views
 	elgg_extend_view('css/elgg', 'groups/css');
@@ -97,7 +94,7 @@ function groups_init() {
 
 	// Register a handler for delete groups
 	elgg_register_event_handler('delete', 'group', 'groups_delete_event_listener');
-	
+
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
 	elgg_register_event_handler('pagesetup', 'system', 'groups_setup_sidebar_menus');
@@ -476,51 +473,6 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 }
 
 /**
- * Add edit and delete links for forum replies
- */
-function groups_annotation_menu_setup($hook, $type, $return, $params) {
-	if (elgg_in_context('widgets')) {
-		return $return;
-	}
-	
-	$annotation = $params['annotation'];
-
-	if ($annotation->name != 'group_topic_post') {
-		return $return;
-	}
-
-	if ($annotation->canEdit()) {
-		$url = elgg_http_add_url_query_elements('action/discussion/reply/delete', array(
-			'annotation_id' => $annotation->id,
-		));
-
-		$options = array(
-			'name' => 'delete',
-			'href' => $url,
-			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
-			'confirm' => elgg_echo('deleteconfirm'),
-			'encode_text' => false
-		);
-		$return[] = ElggMenuItem::factory($options);
-
-		$url = elgg_http_add_url_query_elements('discussion', array(
-			'annotation_id' => $annotation->id,
-		));
-
-		$options = array(
-			'name' => 'edit',
-			'href' => "#edit-annotation-$annotation->id",
-			'text' => elgg_echo('edit'),
-			'encode_text' => false,
-			'rel' => 'toggle',
-		);
-		$return[] = ElggMenuItem::factory($options);
-	}
-
-	return $return;
-}
-
-/**
  * Groups created so create an access list for it
  */
 function groups_create_event_listener($event, $object_type, $object) {
@@ -778,31 +730,18 @@ function discussion_init() {
 
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'discussion_set_topic_url');
 
-	// commenting not allowed on discussion topics (use a different annotation)
-	elgg_register_plugin_hook_handler('permissions_check:comment', 'object', 'discussion_comment_override');
-
-	// discussion reply menu
-	elgg_register_plugin_hook_handler('register', 'menu:entity', 'discussion_reply_menu_setup');
-
-	// allow non-owners to add replies to group discussion
-	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'discussion_reply_container_permissions_override');
-
-	elgg_register_event_handler('update', 'object', 'discussion_update_reply_access_ids');
+	// Discussion reply menu needs to be called after comment menu setup
+	elgg_register_plugin_hook_handler('register', 'menu:entity', 'discussion_reply_menu_setup', 1000);
 
 	$action_base = elgg_get_plugins_path() . 'groups/actions/discussion';
 	elgg_register_action('discussion/save', "$action_base/save.php");
 	elgg_register_action('discussion/delete', "$action_base/delete.php");
-	elgg_register_action('discussion/reply/save', "$action_base/reply/save.php");
-	elgg_register_action('discussion/reply/delete', "$action_base/reply/delete.php");
 
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');
 
 	// Register for search.
 	elgg_register_entity_type('object', 'groupforumtopic');
-
-	// because replies are not comments, need of our menu item
-	elgg_register_plugin_hook_handler('register', 'menu:river', 'discussion_add_to_river_menu');
 
 	// add the forum tool option
 	add_group_tool_option('forum', elgg_echo('groups:enableforum'), true);
@@ -877,15 +816,6 @@ function discussion_set_topic_url($hook, $type, $url, $params) {
 }
 
 /**
- * We don't want people commenting on topics in the river
- */
-function discussion_comment_override($hook, $type, $return, $params) {
-	if (elgg_instanceof($params['entity'], 'object', 'groupforumtopic')) {
-		return false;
-	}
-}
-
-/**
  * Add owner block link
  */
 function discussion_owner_block_menu($hook, $type, $return, $params) {
@@ -894,52 +824,6 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
 			$url = "discussion/owner/{$params['entity']->guid}";
 			$item = new ElggMenuItem('discussion', elgg_echo('discussion:group'), $url);
 			$return[] = $item;
-		}
-	}
-
-	return $return;
-}
-
-/**
- * Set up menu items for river items
- * 
- * Add reply button for discussion topic. Remove the possibility
- * to comment on a discussion reply.
- * 
- * @param string         $hook   'register'
- * @param string         $type   'menu:river'
- * @param ElggMenuItem[] $return
- * @param array          $params
- * @return ElggMenuItem[] $return
- */
-function discussion_add_to_river_menu($hook, $type, $return, $params) {
-	if (elgg_is_logged_in() && !elgg_in_context('widgets')) {
-		$item = $params['item'];
-		$object = $item->getObjectEntity();
-
-		if (elgg_instanceof($object, 'object', 'groupforumtopic')) {
-			$group = $object->getContainerEntity();
-
-			if ($group && ($group->canWriteToContainer() || elgg_is_admin_logged_in())) {
-					$options = array(
-					'name' => 'reply',
-					'href' => "#groups-reply-$object->guid",
-					'text' => elgg_view_icon('speech-bubble'),
-					'title' => elgg_echo('reply:this'),
-					'rel' => 'toggle',
-					'priority' => 50,
-				);
-				$return[] = ElggMenuItem::factory($options);
-			}
-		} else {
-			if (elgg_instanceof($object, 'object', 'groupforumreply')) {
-				// Group discussion replies cannot be commented
-				foreach ($return as $key => $item) {
-					if ($item->getName() === 'comment') {
-						unset($return[$key]);
-					}
-				}
-			}
 		}
 	}
 
@@ -1102,60 +986,7 @@ function groups_run_upgrades() {
 }
 
 /**
- * Allow group members to post to a group discussion
- * 
- * @param string $hook   'container_permissions_check'
- * @param string $type   'object'
- * @param array  $return
- * @param array  $params Array with container, user and subtype
- * @return boolean $return
- */
-function discussion_reply_container_permissions_override($hook, $type, $return, $params) {
-	$container = $params['container'];
-	$user = $params['user'];
-
-	if (elgg_instanceof($container, 'object', 'groupforumtopic')) {
-		$group = $container->getContainerEntity();
-
-		if ($group->canWriteToContainer($user->guid) && $params['subtype'] === 'groupforumreply') {
-			return true;
-		}
-	}
-
-	return $return;
-}
-
-/**
- * Update access_id of discussion replies when topic access_id is updated.
- * 
- * @param string $event   'update'
- * @param string $type    'object'
- * @param string $objects ElggObject
- */
-function discussion_update_reply_access_ids($event, $type, $object) {
-	if (elgg_instanceof($object, 'object', 'groupforumtopic')) {
-		$options = array(
-			'type' => 'object',
-			'subtype' => 'groupforumreply',
-			'container_guid' => $object->getGUID(),
-			'limit' => 0,
-		);
-		$batch = new ElggBatch('elgg_get_entities', $options);
-		foreach ($batch as $reply) {
-			if ($reply->access_id == $object->access_id) {
-				// Assume access_id of the replies is up-to-date
-				break;
-			}
-
-			// Update reply access_id
-			$reply->access_id = $object->access_id;
-			$reply->save();
-		}
-	}
-}
-
-/**
- * Set up discussion reply entity menu
+ * Allow discussion topic owner, group owner and admins to edit replies
  * 
  * @param string          $hook   'register'
  * @param string          $type   'menu:entity'
@@ -1164,7 +995,7 @@ function discussion_update_reply_access_ids($event, $type, $object) {
  * @return ElggMenuItem[] $return
  */
 function discussion_reply_menu_setup($hook, $type, $return, $params) {
-	if ($params['handler'] !== 'discussion_reply') {
+	if ($params['handler'] !== 'comments') {
 		return $return;
 	}
 
@@ -1172,45 +1003,17 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	// Reply has the same access as the topic so no need to view it
-	$remove = array('access');
-
 	$reply = $params['entity'];
 	$topic = $reply->getContainerEntity();
-	$group = $topic->getContainerEntity();
 
-	$user = elgg_get_logged_in_user_entity();
-
-	// Allow discussion topic owner, group owner and admins to edit and delete
 	if ($topic->canEdit()) {
-
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
-			'href' => "#edit-reply-{$reply->guid}",
+			'href' => "#edit-comment-{$reply->guid}",
 			'priority' => 150,
 			'rel' => 'toggle',
 		));
-
-		$return[] = ElggMenuItem::factory(array(
-			'name' => 'delete',
-			'text' => elgg_view_icon('delete'),
-			'href' => "action/discussion/reply/delete?guid={$reply->guid}",
-			'priority' => 150,
-			'is_action' => true,
-			'confirm' => elgg_echo('deleteconfirm'),
-		));
-	} else {
-		// Edit and delete links can be removed from all other users
-		$remove[] = 'edit';
-		$remove[] = 'delete';
-	}
-
-	// Remove unneeded menu items
-	foreach ($return as $key => $item) {
-		if (in_array($item->getName(), $remove)) {
-			unset($return[$key]);
-		}
 	}
 
 	return $return;

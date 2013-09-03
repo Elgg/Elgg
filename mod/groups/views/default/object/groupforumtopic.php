@@ -32,7 +32,7 @@ $reply_text = '';
 
 $num_replies = elgg_get_entities(array(
 	'type' => 'object',
-	'subtype' => 'groupforumreply',
+	'subtype' => 'comment',
 	'container_guid' => $topic->getGUID(),
 	'count' => true,
 ));
@@ -40,7 +40,7 @@ $num_replies = elgg_get_entities(array(
 if ($num_replies != 0) {
 	$last_reply = elgg_get_entities(array(
 		'type' => 'object',
-		'subtype' => 'groupforumreply',
+		'subtype' => 'comment',
 		'container_guid' => $topic->getGUID(),
 		'limit' => 1,
 	));

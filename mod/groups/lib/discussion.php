@@ -166,21 +166,12 @@ function discussion_handle_view_page($guid) {
 
 	$content = elgg_view_entity($topic, array('full_view' => true));
 	if ($topic->status == 'closed') {
-		$content .= elgg_view('discussion/replies', array(
-			'topic' => $topic,
-			'show_add_form' => false,
-		));
+		$content .= elgg_view_comments($topic, false);
 		$content .= elgg_view('discussion/closed');
 	} elseif ($group->canWriteToContainer(0, 'object', 'groupforumtopic') || elgg_is_admin_logged_in()) {
-		$content .= elgg_view('discussion/replies', array(
-			'topic' => $topic,
-			'show_add_form' => true,
-		));
+		$content .= elgg_view_comments($topic);
 	} else {
-		$content .= elgg_view('discussion/replies', array(
-			'topic' => $topic,
-			'show_add_form' => false,
-		));
+		$content .= elgg_view_comments($topic, false);
 	}
 
 	$params = array(
