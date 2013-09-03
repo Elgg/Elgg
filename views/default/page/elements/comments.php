@@ -41,7 +41,7 @@ $html = elgg_list_entities(array(
 ));
 
 if ($html) {
-	echo '<h3>' . elgg_echo('comments') . '</h3>';
+	echo '<h3 id="comments">' . elgg_echo('comments') . '</h3>';
 	echo $html;
 }
 

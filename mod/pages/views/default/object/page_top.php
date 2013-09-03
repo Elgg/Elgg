@@ -56,7 +56,7 @@ $comments_count = $page->countComments();
 if ($comments_count != 0 && !$revision) {
 	$text = elgg_echo("comments") . " ($comments_count)";
 	$comments_link = elgg_view('output/url', array(
-		'href' => $page->getURL() . '#page-comments',
+		'href' => $page->getURL() . '#comments',
 		'text' => $text,
 		'is_trusted' => true,
 	));
