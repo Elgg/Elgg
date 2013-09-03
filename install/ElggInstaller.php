@@ -171,7 +171,7 @@ class ElggInstaller {
 
 		if ($createHtaccess) {
 			$rewriteTester = new ElggRewriteTester();
-			if (!$rewriteTester->createHtaccess($CONFIG->path)) {
+			if (!$rewriteTester->createHtaccess($params['wwwroot'], $CONFIG->path)) {
 				throw new InstallationException(elgg_echo('install:error:htaccess'));
 			}
 		}
