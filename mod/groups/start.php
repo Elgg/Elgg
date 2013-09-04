@@ -1006,7 +1006,7 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 	$reply = $params['entity'];
 	$topic = $reply->getContainerEntity();
 
-	if ($topic->canEdit()) {
+	if (elgg_instanceof($topic, 'object', 'groupforumtopic') && $topic->canEdit()) {
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
