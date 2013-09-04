@@ -26,7 +26,7 @@ $entity_link = "<a href=\"{$entity->getURL()}\">$entity_title</a>";
 
 if ($full_view) {
 	$anchor = "<a name=\"comment-{$comment->getGUID()}\"></a>";
-	
+
 	$menu = elgg_view_menu('entity', array(
 		'entity' => $comment,
 		'handler' => 'comments',
@@ -34,7 +34,18 @@ if ($full_view) {
 		'class' => 'elgg-menu-hz float-alt',
 	));
 
-	$comment_text = elgg_view("output/longtext", array("value" => $comment->description));
+	$comment_text = elgg_view("output/longtext", array(
+		'value' => $comment->description,
+	));
+
+	if ($comment->canEdit()) {
+		// Add support for editing comments (not enabled by default)
+		$form_vars = array(
+			'class' => 'hidden mvl',
+			'id' => "edit-comment-{$comment->guid}",
+		);
+		$form = elgg_view_form('comments/save', $form_vars, array('comment' => $comment));
+	}
 
 	$body = <<<HTML
 $anchor
@@ -45,6 +56,7 @@ $anchor
 		$friendlytime
 	</span>
 	$comment_text
+	$form
 </div>
 HTML;
 

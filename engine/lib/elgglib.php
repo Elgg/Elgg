@@ -1953,7 +1953,7 @@ function _elgg_engine_boot() {
 function _elgg_init() {
 	global $CONFIG;
 
-	elgg_register_action('comments/add');
+	elgg_register_action('comments/save');
 	elgg_register_action('comments/delete');
 
 	elgg_register_page_handler('js', '_elgg_js_page_handler');

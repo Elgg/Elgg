@@ -61,4 +61,4 @@ if ($comments) {
 // inline comment form
 $form_vars = array('id' => "comments-add-{$object->getGUID()}", 'class' => 'hidden');
 $body_vars = array('entity' => $object, 'inline' => true);
-echo elgg_view_form('comments/add', $form_vars, $body_vars);
+echo elgg_view_form('comments/save', $form_vars, $body_vars);
