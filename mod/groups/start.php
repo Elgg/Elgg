@@ -995,10 +995,17 @@ function groups_run_upgrades() {
  * @return ElggMenuItem[] $return
  */
 function discussion_reply_menu_setup($hook, $type, $return, $params) {
-	if ($params['handler'] !== 'comments') {
+	// Make sure that we are modifying a comment menu
+	if ($params['handler'] !== 'comment') {
 		return $return;
 	}
 
+	// Do not show the menu item in widgets and site activity page
+	if (elgg_in_context('widgets') || elgg_in_context('activity')) {
+		return $return;
+	}
+
+	// Only logged in users are allowed to interact with comments
 	if (!elgg_is_logged_in()) {
 		return $return;
 	}
@@ -1007,6 +1014,7 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 	$topic = $reply->getContainerEntity();
 
 	if (elgg_instanceof($topic, 'object', 'groupforumtopic') && $topic->canEdit()) {
+		// This menu item toggles the visibility of the comment form
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
