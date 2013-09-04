@@ -46,7 +46,7 @@ if ($html) {
 }
 
 if ($show_add_form) {
-	echo elgg_view_form('comments/save', array(), $vars);
+	echo elgg_view_form('comment/save', array(), $vars);
 }
 
 echo '</div>';

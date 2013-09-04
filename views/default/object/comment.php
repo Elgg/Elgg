@@ -29,7 +29,7 @@ if ($full_view) {
 
 	$menu = elgg_view_menu('entity', array(
 		'entity' => $comment,
-		'handler' => 'comments',
+		'handler' => 'comment',
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz float-alt',
 	));
@@ -44,7 +44,7 @@ if ($full_view) {
 			'class' => 'hidden mvl',
 			'id' => "edit-comment-{$comment->guid}",
 		);
-		$form = elgg_view_form('comments/save', $form_vars, array('comment' => $comment));
+		$form = elgg_view_form('comment/save', $form_vars, array('comment' => $comment));
 	}
 
 	$body = <<<HTML
