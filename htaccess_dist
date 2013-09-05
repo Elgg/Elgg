@@ -18,6 +18,11 @@ DirectoryIndex index.php
 ############################
 # BROWSER CACHING
 
+# Make sure .ico has proper MIME type, allowing mod_expires to handle them.
+<IfModule mod_mime.c>
+    AddType image/vnd.microsoft.icon .ico
+</IfModule>
+
 # The expires module controls the Expires and Cache-Control headers. Elgg sets
 # these for dynamically generated files so this is just for static files.
 <IfModule mod_expires.c>
