@@ -38,15 +38,6 @@ if ($full_view) {
 		'value' => $comment->description,
 	));
 
-	if ($comment->canEdit()) {
-		// Add support for editing comments (not enabled by default)
-		$form_vars = array(
-			'class' => 'hidden mvl',
-			'id' => "edit-comment-{$comment->guid}",
-		);
-		$form = elgg_view_form('comment/save', $form_vars, array('comment' => $comment));
-	}
-
 	$body = <<<HTML
 $anchor
 <div class="mbn">
@@ -56,7 +47,6 @@ $anchor
 		$friendlytime
 	</span>
 	$comment_text
-	$form
 </div>
 HTML;
 

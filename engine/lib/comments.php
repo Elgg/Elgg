@@ -20,6 +20,7 @@ function _elgg_comments_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_comment_setup_entity_menu', 900);
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
+	elgg_register_page_handler('comments', '_elgg_comments_page_handler');
 }
 
 /**
@@ -103,4 +104,26 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 	}
 
 	return $return;
+}
+
+/**
+ * Handle requests for URLs that start with /comments/
+ * 
+ * @param array $page Array of URL segements
+ * @return boolean
+ */
+function _elgg_comments_page_handler ($page) {
+	$guid = get_input('comment_guid');
+
+	$comment = get_entity($guid);
+	if (elgg_instanceof($comment, 'object', 'comment') && $comment->canEdit()) {
+		$form_vars = array(
+			'class' => 'hidden mvl',
+			'id' => "edit-comment-{$guid}",
+		);
+		$body_vars = array('comment' => $comment);
+		echo elgg_view_form('comment/save', $form_vars, $body_vars);
+	}
+
+	return true;
 }
