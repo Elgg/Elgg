@@ -1020,6 +1020,7 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 			'text' => elgg_echo('edit'),
 			'href' => "#edit-comment-{$reply->guid}",
 			'priority' => 150,
+			'link_class' => 'elgg-edit-comment',
 			'rel' => 'toggle',
 		));
 	}
