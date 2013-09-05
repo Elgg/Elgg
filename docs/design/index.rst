@@ -8,3 +8,4 @@ and why it's built the way it is.
    :maxdepth: 2
    
    database
+   events
