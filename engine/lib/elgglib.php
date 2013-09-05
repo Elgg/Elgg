@@ -587,8 +587,10 @@ function register_error($error) {
  * Events are emitted by Elgg when certain actions occur.  Plugins
  * can respond to these events or halt them completely by registering a handler
  * as a callback to an event.  Multiple handlers can be registered for
- * the same event and will be executed in order of $priority.  Any handler
- * returning false will halt the execution chain.
+ * the same event and will be executed in order of $priority.
+ *
+ * Any handler returning false will halt the execution chain and cause the event
+ * to be "cancelled".
  *
  * This function is called with the event name, event type, and handler callback name.
  * Setting the optional $priority allows plugin authors to specify when the
@@ -657,16 +659,19 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
 }
 
 /**
- * Trigger an Elgg Event and run all handler callbacks registered to that event, type.
+ * Trigger an Elgg Event and attempt to run all handler callbacks registered to that
+ * event, type.
  *
- * This function runs all handlers registered to $event, $object_type or
- * the special keyword 'all' for either or both.
+ * This function attempts to run all handlers registered to $event, $object_type or
+ * the special keyword 'all' for either or both. If a handler returns false, the
+ * event will be cancelled (no further handlers will be called, and this function
+ * will return false).
  *
  * $event is usually a verb: create, update, delete, annotation.
  *
  * $object_type is usually a noun: object, group, user, annotation, relationship, metadata.
  *
- * $object is usually an Elgg* object assciated with the event.
+ * $object is usually an Elgg* object associated with the event.
  *
  * @warning Elgg events should only be triggered by core.  Plugin authors should use
  * {@link trigger_elgg_plugin_hook()} instead.
@@ -683,7 +688,7 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @param string $object_type The object type
  * @param string $object      The object involved in the event
  *
- * @return bool The result of running all handler callbacks.
+ * @return bool False if any handler returned false, otherwise true.
  * @example documentation/examples/events/trigger.php
  */
 function elgg_trigger_event($event, $object_type, $object = null) {
@@ -776,14 +781,18 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
 /**
  * Trigger a Plugin Hook and run all handler callbacks registered to that hook:type.
  *
- * This function runs all handlers regsitered to $hook, $type or
+ * This function runs all handlers registered to $hook, $type or
  * the special keyword 'all' for either or both.
  *
  * Use $params to send additional information to the handler callbacks.
  *
- * $returnvalue Is the initial value to pass to the handlers, which can
- * then change it.  It is useful to use $returnvalue to set defaults.
- * If no handlers are registered, $returnvalue is immediately returned.
+ * $returnvalue is the initial value to pass to the handlers, which can
+ * change it by returning non-null values. It is useful to use $returnvalue
+ * to set defaults. If no handlers are registered, $returnvalue is immediately
+ * returned.
+ *
+ * Handlers that return null (or with no explicit return or return value) will
+ * not change the value of $returnvalue.
  *
  * $hook is usually a verb: import, get_views, output.
  *
@@ -794,6 +803,9 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * of type $type.  Similarly, handlers registered with $type = all will be
  * called for all hooks of type $event, regardless of $object_type.  If $hook
  * and $type both are 'all', the handler will be called for all hooks.
+ *
+ * @tip It's not possible for a plugin hook to change a non-null $returnvalue
+ * to null.
  *
  * @internal The checks for $hook and/or $type not being equal to 'all' is to
  * prevent a plugin hook being registered with an 'all' being called more than
@@ -812,7 +824,7 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  *
  * @return mixed|null The return value of the last handler callback called
  *
- * @example hooks/trigger/basic.php    Trigger a hook that determins if execution
+ * @example hooks/trigger/basic.php    Trigger a hook that determines if execution
  *                                     should continue.
  * @example hooks/trigger/advanced.php Trigger a hook with a default value and use
  *                                     the results to populate a menu.
