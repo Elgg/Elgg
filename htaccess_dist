@@ -74,7 +74,7 @@ DirectoryIndex index.php
 ## Important note: mod_headers is required for correct functioning across proxies.
 ##
 <IfModule mod_deflate.c>
-	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript
+	AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/x-javascript image/svg+xml
 	BrowserMatch ^Mozilla/4 gzip-only-text/html
 	BrowserMatch ^Mozilla/4\.[0678] no-gzip
 	BrowserMatch \bMSIE !no-gzip
