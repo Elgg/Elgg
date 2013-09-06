@@ -697,18 +697,18 @@ function elgg_trigger_event($event, $object_type, $object = null) {
 }
 
 /**
- * Trigger an event indicating a process is about to begin.
+ * Trigger a "Before event" indicating a process is about to begin.
  *
  * Like regular events, a handler returning false will cancel the process and false
  * will be returned.
  *
  * To register for a before event, append ":before" to the event name when registering.
  *
- * @param string $event       The event type. The event fired will be appended with ":after"
+ * @param string $event       The event type. The fired event type will be appended with ":before".
  * @param string $object_type The object type
  * @param string $object      The object involved in the event
  *
- * @return true
+ * @return bool False if any handler returned false, otherwise true
  *
  * @see elgg_trigger_event
  * @see elgg_trigger_after_event
@@ -718,13 +718,13 @@ function elgg_trigger_before_event($event, $object_type, $object = null) {
 }
 
 /**
- * Trigger an event indicating a process has finished.
+ * Trigger an "After event" indicating a process has finished.
  *
  * Unlike regular events, all the handlers will be called, their return values ignored.
  *
  * To register for an after event, append ":after" to the event name when registering.
  *
- * @param string $event       The event type. The event fired will be appended with ":after"
+ * @param string $event       The event type. The fired event type will be appended with ":after".
  * @param string $object_type The object type
  * @param string $object      The object involved in the event
  *
