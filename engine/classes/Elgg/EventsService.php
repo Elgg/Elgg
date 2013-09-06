@@ -19,10 +19,11 @@ class Elgg_EventsService extends Elgg_HooksRegistrationService {
 	 * Triggers an Elgg event.
 	 * 
 	 * @see elgg_trigger_event
+	 * @see elgg_trigger_before_event
 	 * @see elgg_trigger_after_event
 	 * @access private
 	 */
-	public function trigger($event, $type, $object = null, array $options = array()) {
+	public function trigger($event, $type, $object = null, $params = null, array $options = array()) {
 		$options = array_merge(array(
 			self::OPTION_STOPPABLE => true,
 			self::OPTION_DEPRECATION_MESSAGE => '',
@@ -38,7 +39,7 @@ class Elgg_EventsService extends Elgg_HooksRegistrationService {
 			);
 		}
 
-		$args = array($event, $type, $object);
+		$args = array($event, $type, $object, $params);
 
 		foreach ($events as $callback) {
 			if (!is_callable($callback)) {

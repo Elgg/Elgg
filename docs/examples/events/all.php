@@ -9,7 +9,7 @@
 elgg_register_event_handler('all', 'object', 'example_event_handler');
 
 // This function will be called for any event of type 'object'
-function example_event_handler($event, $type, $object) {
+function example_event_handler($event, $type, $object, $params) {
 	// check what sort of object is passed
 	if ($object instanceof ElggObject) {
 		$subtype = $object->getSubtype();

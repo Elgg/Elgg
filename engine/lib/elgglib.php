@@ -600,9 +600,11 @@ function register_error($error) {
  * The callback is passed 3 arguments when called: $event, $type, and optional $params.
  *
  * $event is the name of event being emitted.
+ *
  * $type is the type of event or object concerned.
- * $params is an optional parameter passed that can include a related object.  See
- * specific event documentation for details on which events pass what parameteres.
+ *
+ * $params is an optional parameter passed that can include a related object. See
+ * specific event documentation for details on which events pass what parameters.
  *
  * @tip If a priority isn't specified it is determined by the order the handler was
  * registered relative to the event and type.  For plugins, this generally means
@@ -688,12 +690,13 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @param string $event       The event type
  * @param string $object_type The object type
  * @param string $object      The object involved in the event
+ * @param mixed  $params      Additional parameters to pass to the handlers
  *
  * @return bool False if any handler returned false, otherwise true.
  * @example documentation/examples/events/trigger.php
  */
-function elgg_trigger_event($event, $object_type, $object = null) {
-	return _elgg_services()->events->trigger($event, $object_type, $object);
+function elgg_trigger_event($event, $object_type, $object = null, $params = null) {
+	return _elgg_services()->events->trigger($event, $object_type, $object, $params);
 }
 
 /**
@@ -707,14 +710,15 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  * @param string $event       The event type. The fired event type will be appended with ":before".
  * @param string $object_type The object type
  * @param string $object      The object involved in the event
+ * @param mixed  $params      Additional parameters to pass to the handlers
  *
  * @return bool False if any handler returned false, otherwise true
  *
  * @see elgg_trigger_event
  * @see elgg_trigger_after_event
  */
-function elgg_trigger_before_event($event, $object_type, $object = null) {
-	return _elgg_services()->events->trigger("$event:before", $object_type, $object);
+function elgg_trigger_before_event($event, $object_type, $object = null, $params = null) {
+	return _elgg_services()->events->trigger("$event:before", $object_type, $object, $params);
 }
 
 /**
@@ -727,16 +731,17 @@ function elgg_trigger_before_event($event, $object_type, $object = null) {
  * @param string $event       The event type. The fired event type will be appended with ":after".
  * @param string $object_type The object type
  * @param string $object      The object involved in the event
+ * @param mixed  $params      Additional parameters to pass to the handlers
  *
  * @return true
  *
  * @see elgg_trigger_before_event
  */
-function elgg_trigger_after_event($event, $object_type, $object = null) {
+function elgg_trigger_after_event($event, $object_type, $object = null, $params = null) {
 	$options = array(
 		Elgg_EventsService::OPTION_STOPPABLE => false,
 	);
-	return _elgg_services()->events->trigger("$event:after", $object_type, $object, $options);
+	return _elgg_services()->events->trigger("$event:after", $object_type, $object, $params, $options);
 }
 
 /**
@@ -757,7 +762,7 @@ function elgg_trigger_deprecated_event($event, $object_type, $object = null, $me
 		Elgg_EventsService::OPTION_DEPRECATION_MESSAGE => $message,
 		Elgg_EventsService::OPTION_DEPRECATION_VERSION => $version,
 	);
-	return _elgg_services()->events->trigger($event, $object_type, $object, $options);
+	return _elgg_services()->events->trigger($event, $object_type, $object, null, $options);
 }
 
 /**

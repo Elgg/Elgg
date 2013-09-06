@@ -2,9 +2,11 @@
 
 class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 
+	public $capturedArguments;
 	public $counter = 0;
 
 	public function setUp() {
+		$this->capturedArguments = null;
 		$this->counter = 0;
 	}
 
@@ -21,7 +23,7 @@ class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testFalseStopsPropagationAndReturnsFalse() {
 		$events = new Elgg_EventsService();
 
-		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'returnFalse'));
+		$events->registerHandler('foo', 'bar', __CLASS__ . '::returnFalse');
 		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
 		$this->assertFalse($events->trigger('foo', 'bar'));
@@ -31,7 +33,7 @@ class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testNullDoesNotStopPropagation() {
 		$events = new Elgg_EventsService();
 
-		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'returnNull'));
+		$events->registerHandler('foo', 'bar', __CLASS__ . '::returnNull');
 		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
 		$this->assertTrue($events->trigger('foo', 'bar'));
@@ -41,10 +43,10 @@ class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 	public function testUnstoppableEventsCantBeStoppedAndReturnTrue() {
 		$events = new Elgg_EventsService();
 
-		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'returnFalse'));
+		$events->registerHandler('foo', 'bar', __CLASS__ . '::returnFalse');
 		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
-		$this->assertTrue($events->trigger('foo', 'bar', null, array(
+		$this->assertTrue($events->trigger('foo', 'bar', null, null, array(
 			Elgg_EventsService::OPTION_STOPPABLE => false
 		)));
 		$this->assertEquals($this->counter, 1);
@@ -66,6 +68,24 @@ class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 	public function incrementCounter() {
 		$this->counter++;
 		return true;
+	}
+
+	public function testHandlersReceiveCorrectArguments() {
+		$events = new Elgg_EventsService();
+
+		$events->registerHandler('foo', 'bar', array($this, 'captureArguments'));
+
+		$object = (object) array();
+		$params = (object) array('prop' => 'val');
+
+		$events->trigger('foo', 'bar', $object, $params);
+
+		$expected = array('foo', 'bar', $object, $params);
+		$this->assertEquals($expected, $this->capturedArguments);
+	}
+
+	public function captureArguments() {
+		$this->capturedArguments = func_get_args();
 	}
 
 	public static function returnTrue() {

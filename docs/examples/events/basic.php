@@ -8,10 +8,11 @@
 
 elgg_register_event_handler('init', 'system', 'example_event_handler');
 
-function example_event_handler($event, $type, $object) {
+function example_event_handler($event, $type, $object, $params) {
 	var_dump($event);
 	var_dump($type);
 	var_dump($object);
+	var_dump($params);
 
 	return true;
 }
