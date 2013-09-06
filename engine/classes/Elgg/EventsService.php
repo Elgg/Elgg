@@ -17,9 +17,9 @@ class Elgg_EventsService extends Elgg_HooksRegistrationService {
 	 * @see elgg_trigger_event
 	 * @access private
 	 */
-	public function trigger($event, $type, $object = null) {
+	public function trigger($event, $type, $object = null, $params = null) {
 		$events = $this->getOrderedHandlers($event, $type);
-		$args = array($event, $type, $object);
+		$args = array($event, $type, $object, $params);
 
 		foreach ($events as $callback) {
 			if (is_callable($callback) && (call_user_func_array($callback, $args) === false)) {
