@@ -23,11 +23,14 @@ class Elgg_EventsService extends Elgg_HooksRegistrationService {
 		$args = array($event, $type, $object);
 
 		foreach ($events as $callback) {
-			if (is_callable($callback)) {
-				$return = call_user_func_array($callback, $args);
-				if ($stoppable && ($return === false)) {
-					return false;
-				}
+			if (!is_callable($callback)) {
+				// @todo should this produce a warning?
+				continue;
+			}
+
+			$return = call_user_func_array($callback, $args);
+			if ($stoppable && ($return === false)) {
+				return false;
 			}
 		}
 
