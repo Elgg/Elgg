@@ -5,15 +5,15 @@
  * @package ElggCKEditor
  */
 
-$english = array(
+return array(
 	'admin:administer_utilities:uploads' => 'CKEditor Uploads',
 	'ckeditor:uploads:none' => 'No uploads',
 	'item:object:ckeditor_upload' => 'CKEditor uploads',
 	'ckeditor:upload:owner' => 'User: %s',
 	'ckeditor:upload:admin' => 'Upload admin',
 
-	'ckeditor:remove' => "Remove editor",
-	'ckeditor:add' => "Add editor",
+	'ckeditor:remove' => "Deactivate editor",
+	'ckeditor:add' => "Activate editor",
 	'ckeditor:word_count' => 'Word count: ',
 
 	'ckeditor:success:delete' => 'Delete succeeded',
@@ -24,5 +24,3 @@ $english = array(
 	'ckeditor:failure:missing' => 'Cannot find the file',
 	'ckeditor:failure:delete' => 'Delete failed',
 );
-
-add_translation("en", $english);
