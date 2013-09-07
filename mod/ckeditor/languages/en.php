@@ -12,8 +12,8 @@ return array(
 	'ckeditor:upload:owner' => 'User: %s',
 	'ckeditor:upload:admin' => 'Upload admin',
 
-	'ckeditor:remove' => "Deactivate editor",
-	'ckeditor:add' => "Activate editor",
+	'ckeditor:html' => "Edit HTML",
+	'ckeditor:visual' => "Visual editor",
 	'ckeditor:word_count' => 'Word count: ',
 
 	'ckeditor:success:delete' => 'Delete succeeded',
