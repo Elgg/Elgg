@@ -11,7 +11,7 @@
 $group = elgg_get_page_owner_entity();
 
 if ($group->canWriteToContainer() && isset($vars['add_link'])) {
-    $header = "<span class='groups-widget-more'>{$vars['add_link']}</span>";
+    $header = "<span class='groups-widget-add'>{$vars['add_link']}</span>";
 }
 $header .= '<h3>' . $vars['all_link'] . '</h3>';
 
