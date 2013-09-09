@@ -2,20 +2,9 @@
 /**
  * Members plugin intialization
  *
+ * To adding a list page, handle the hook (route, members) to render your list page and return true.
  *
- * Adding a list type:
- *
- * Handle the hook (members:list, your_type) and return the list (e.g. members_list_popular()), and
- * use the hook (members:config, tabs) to add your nav item (e.g. members_nav_popular()). Add a language
- * key for the page title: "members:title:your_type".
- *
- * Removing a list type tab:
- *
- * Handle the plugin hook (members:config, tabs) and unset the appropriate type key from the array.
- *
- * Reordering tabs:
- *
- * Handle the plugin hook (members:config, tabs) and re-order the appearance of the keys in the array.
+ * To alter the navigation tabs, use the hook (members:config, tabs) which receives the array used to build them.
  */
 
 elgg_register_event_handler('init', 'system', 'members_init');
