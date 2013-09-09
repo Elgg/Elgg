@@ -48,7 +48,12 @@ function elgg_delete_annotation_by_id($id) {
 	if (!$annotation) {
 		return false;
 	}
-	return $annotation->delete();
+
+	if (elgg_trigger_event('delete', 'annotation', $annotation)) {
+		return $annotation->delete();
+	}
+
+	return FALSE;
 }
 
 /**
