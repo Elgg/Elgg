@@ -140,7 +140,7 @@ function members_nav_online($hook, $type, $returnvalue, $params) {
 function members_page_handler($page) {
 	$base = elgg_get_plugins_path() . 'members/pages/members';
 
-	if (!isset($page[0])) {
+	if (empty($page[0])) {
 		$page[0] = 'newest';
 	}
 
