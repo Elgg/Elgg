@@ -37,7 +37,15 @@ function members_init() {
 	}
 }
 
-// handle hook (members:list, popular)
+/**
+ * Returns content for the "popular" page
+ *
+ * @param string      $hook        "members:list"
+ * @param string      $type        "popular"
+ * @param string|null $returnvalue list content (null if not set)
+ * @param array       $params      array with key "options"
+ * @return string
+ */
 function members_list_popular($hook, $type, $returnvalue, $params) {
 	if ($returnvalue) {
 		return;
@@ -49,7 +57,15 @@ function members_list_popular($hook, $type, $returnvalue, $params) {
 	return elgg_list_entities_from_relationship_count($options);
 }
 
-// handle hook (members:list, newest)
+/**
+ * Returns content for the "newest" page
+ *
+ * @param string      $hook        "members:list"
+ * @param string      $type        "newest"
+ * @param string|null $returnvalue list content (null if not set)
+ * @param array       $params      array with key "options"
+ * @return string
+ */
 function members_list_newest($hook, $type, $returnvalue, $params) {
 	if ($returnvalue) {
 		return;
@@ -57,7 +73,15 @@ function members_list_newest($hook, $type, $returnvalue, $params) {
 	return elgg_list_entities($params['options']);
 }
 
-// handle hook (members:list, online)
+/**
+ * Returns content for the "online" page
+ *
+ * @param string      $hook        "members:list"
+ * @param string      $type        "online"
+ * @param string|null $returnvalue list content (null if not set)
+ * @param array       $params      array with key "options"
+ * @return string
+ */
 function members_list_online($hook, $type, $returnvalue, $params) {
 	if ($returnvalue) {
 		return;
@@ -65,7 +89,15 @@ function members_list_online($hook, $type, $returnvalue, $params) {
 	return get_online_users();
 }
 
-// handle hook (members:config, tabs) add tab for popular
+/**
+ * Appends "popular" tab to the navigation
+ *
+ * @param string $hook        "members:config"
+ * @param string $type        "tabs"
+ * @param array  $returnvalue array that build navigation tabs
+ * @param array  $params      unused
+ * @return array
+ */
 function members_nav_popular($hook, $type, $returnvalue, $params) {
 	$returnvalue['popular'] = array(
 		'title' => elgg_echo('sort:popular'),
@@ -74,7 +106,15 @@ function members_nav_popular($hook, $type, $returnvalue, $params) {
 	return $returnvalue;
 }
 
-// handle hook (members:config, tabs) add tab for newest
+/**
+ * Appends "newest" tab to the navigation
+ *
+ * @param string $hook        "members:config"
+ * @param string $type        "tabs"
+ * @param array  $returnvalue array that build navigation tabs
+ * @param array  $params      unused
+ * @return array
+ */
 function members_nav_newest($hook, $type, $returnvalue, $params) {
 	$returnvalue['newest'] = array(
 		'title' => elgg_echo('sort:newest'),
@@ -83,7 +123,15 @@ function members_nav_newest($hook, $type, $returnvalue, $params) {
 	return $returnvalue;
 }
 
-// handle hook (members:config, tabs) add tab for online
+/**
+ * Appends "online" tab to the navigation
+ *
+ * @param string $hook        "members:config"
+ * @param string $type        "tabs"
+ * @param array  $returnvalue array that build navigation tabs
+ * @param array  $params      unused
+ * @return array
+ */
 function members_nav_online($hook, $type, $returnvalue, $params) {
 	$returnvalue['online'] = array(
 		'title' => elgg_echo('members:label:online'),
