@@ -47,7 +47,7 @@ function members_init() {
  * @return string
  */
 function members_list_popular($hook, $type, $returnvalue, $params) {
-	if ($returnvalue) {
+	if ($returnvalue !== null) {
 		return;
 	}
 
@@ -67,7 +67,7 @@ function members_list_popular($hook, $type, $returnvalue, $params) {
  * @return string
  */
 function members_list_newest($hook, $type, $returnvalue, $params) {
-	if ($returnvalue) {
+	if ($returnvalue !== null) {
 		return;
 	}
 	return elgg_list_entities($params['options']);
@@ -83,7 +83,7 @@ function members_list_newest($hook, $type, $returnvalue, $params) {
  * @return string
  */
 function members_list_online($hook, $type, $returnvalue, $params) {
-	if ($returnvalue) {
+	if ($returnvalue !== null) {
 		return;
 	}
 	return get_online_users();
