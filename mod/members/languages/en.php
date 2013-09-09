@@ -11,4 +11,5 @@ return array(
 	'members:title:newest' => 'Newest members',
 	'members:title:popular' => 'Most popular members',
 	'members:title:online' => 'Online members',
+	'members:list:popular:none' => 'No members have any friends.',
 );

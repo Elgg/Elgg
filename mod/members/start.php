@@ -54,6 +54,7 @@ function members_list_popular($hook, $type, $returnvalue, $params) {
 	$options = $params['options'];
 	$options['relationship'] = 'friend';
 	$options['inverse_relationship'] = false;
+	$options['no_results'] = '<p>' . elgg_echo('members:list:popular:none') . '</p>';
 	return elgg_list_entities_from_relationship_count($options);
 }
 
