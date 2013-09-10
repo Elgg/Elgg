@@ -22,11 +22,9 @@ if ($page_owner_guid) {
 	elgg_set_page_owner_guid($page_owner_guid);
 }
 
-if (!empty($contexts)) {
-	// set correct contexts
-	foreach ($contexts as $context) {
-		elgg_push_context($context);
-	}
+// set correct contexts
+foreach ($contexts as $context) {
+	elgg_push_context($context);
 }
 
 $params = array(
@@ -37,10 +35,7 @@ $params = array(
 
 echo elgg_view_menu('user_hover', $params);
 
-if (!empty($contexts)) {
-	// revert extra contexts
-	$contexts = array_reverse($contexts);
-	foreach ($contexts as $context) {
-		elgg_pop_context($context);
-	}
+// revert extra contexts
+foreach ($contexts as $context) {
+	elgg_pop_context();
 }
