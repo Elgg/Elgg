@@ -90,25 +90,22 @@ function get_number_users($show_deactivated = false) {
 }
 
 /**
- * Return a list of how many users are currently online, rendered as a view.
+ * Render a list of currently online users
+ *
+ * @tip This also support options from elgg_list_entities().
+ *
+ * @param array $options Options array with keys:
+ *
+ *    seconds (int) => Number of seconds (default 600 = 10min)
  *
  * @return string
-  */
-function get_online_users() {
-	$limit = max(0, (int) get_input("limit", 10));
-	$offset = max(0, (int) get_input("offset", 0));
-	
-	$count = find_active_users(600, $limit, $offset, true);
-	$objects = find_active_users(600, $limit, $offset);
+ */
+function get_online_users(array $options = array()) {
+	$options = array_merge(array(
+		'seconds' => 600,
+	), $options);
 
-	if ($objects) {
-		return elgg_view_entity_list($objects, array(
-			'count' => $count,
-			'limit' => $limit,
-			'offset' => $offset,
-		));
-	}
-	return '';
+	return elgg_list_entities($options, 'find_active_users');
 }
 
 /**
