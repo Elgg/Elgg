@@ -63,6 +63,39 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 
+	public function testPriorityOrder() {
+		$pl = new ElggPriorityList();
+
+		$elements = array(
+			array(10, 'Test Element C'),
+			array(10, 'Test Element D'),
+			array(9, 'Test Element A'),
+			array(9, 'Test Element B'),
+		);
+
+		foreach ($elements as $row) {
+			list($priority, $element) = $row;
+			$pl->add($element, $priority);
+		}
+
+		$test_elements = $pl->getElements();
+
+		// should be sorted by priority
+		$elements_sorted = array(
+			'Test Element A',
+			'Test Element B',
+			'Test Element C',
+			'Test Element D',
+		);
+
+		$this->assertSame($elements_sorted, $test_elements);
+
+		foreach ($test_elements as $key => $row) {
+			list($priority, $element) = $row;
+			$this->assertSame($elements[$key], $element);
+		}
+	}
+
 	public function testGetNextPriority() {
 		$pl = new ElggPriorityList();
 
