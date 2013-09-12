@@ -279,7 +279,8 @@ class ElggPlugin extends ElggObject {
 	 * @return mixed
 	 */
 	public function getSetting($name, $default = null) {
-		return isset($this->$name) ? $this->$name : $default;
+		$val = $this->$name;
+		return $val !== null ? $val : $default;
 	}
 
 	/**
