@@ -987,12 +987,13 @@ function elgg_set_plugin_setting($name, $value, $plugin_id = null) {
  *
  * @param string $name      The name of the setting.
  * @param string $plugin_id The plugin ID (Required)
+ * @param mixed  $default   The default value to return if none is set
  *
  * @return mixed
  * @since 1.8.0
  * @see ElggPlugin::getSetting()
  */
-function elgg_get_plugin_setting($name, $plugin_id = null) {
+function elgg_get_plugin_setting($name, $plugin_id = null, $default = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
@@ -1004,7 +1005,7 @@ function elgg_get_plugin_setting($name, $plugin_id = null) {
 		return false;
 	}
 
-	return $plugin->getSetting($name);
+	return $plugin->getSetting($name, $default);
 }
 
 /**
