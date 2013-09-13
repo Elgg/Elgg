@@ -274,11 +274,13 @@ class ElggPlugin extends ElggObject {
 	/**
 	 * Returns a plugin setting
 	 *
-	 * @param string $name The setting name
+	 * @param string $name    The setting name
+	 * @param mixed  $default The default value to return if none is set
 	 * @return mixed
 	 */
-	public function getSetting($name) {
-		return $this->$name;
+	public function getSetting($name, $default = null) {
+		$val = $this->$name;
+		return $val !== null ? $val : $default;
 	}
 
 	/**
