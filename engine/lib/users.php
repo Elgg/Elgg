@@ -1091,6 +1091,7 @@ function friends_page_handler($segments, $handler) {
  * @access private
  */
 function collections_page_handler($page_elements) {
+    gatekeeper();
 	elgg_set_context('friends');
 	$base = elgg_get_config('path');
 	if (isset($page_elements[0])) {
