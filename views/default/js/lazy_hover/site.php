@@ -6,9 +6,10 @@ elgg.provide("elgg.lazy_hover");
 elgg.lazy_hover.init = function() {
 	$(".elgg-avatar > .elgg-icon-hover-menu").live('click', function(event) {
 		var $button = $(this),
-		    $placeholder = $(this).parent().find(".lazy-hover-placeholder"),
+			$placeholder = $(this).parent().find(".lazy-hover-placeholder"),
 			$all_placeholders,
-			$span;
+			$span,
+			action;
 
 		if ($placeholder.length) {
 			// select all similar placeholders
@@ -16,8 +17,9 @@ elgg.lazy_hover.init = function() {
 
 			// find first form for this menu
 			$span = $all_placeholders.find("span:first");
+			action = elgg.get_site_url() + 'ajax/view/lazy_hover/user_hover';
 			if ($span.length) {
-				elgg.get("lazy_hover", {
+				elgg.get(action, {
 					data: $span.data('json'),
 					success: function(data) {
 						if (data) {
