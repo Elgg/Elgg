@@ -7,7 +7,7 @@ elgg_register_event_handler("init", "system", "lazy_hover_init");
  * Initialize the lazy hover plugin.
  */
 function lazy_hover_init() {
-	elgg_extend_view("js/elgg", "js/lazy_hover/site");
+	elgg_extend_view("js/elgg", "js/lazy_hover");
 
 	elgg_register_ajax_view('lazy_hover/user_hover');
 
