@@ -1,0 +1,9 @@
+= Version history =
+
+0.1.1 (2013-08-30):
+
+- fixed: lazy_hover menu not working if logged out in walled garden mode
+
+0.1 (2013-08-29):
+
+- initial version
