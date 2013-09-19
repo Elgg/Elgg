@@ -112,7 +112,7 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
  * @param array $page Array of URL segements
  * @return boolean
  */
-function _elgg_comments_page_handler ($page) {
+function _elgg_comments_page_handler($page) {
 	$guid = get_input('comment_guid');
 
 	$comment = get_entity($guid);
