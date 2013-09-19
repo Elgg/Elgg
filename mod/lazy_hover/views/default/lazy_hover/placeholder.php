@@ -1,6 +1,6 @@
 <?php
 
-$spans_present = (array)elgg_get_config('lazy_hover:spans');
+$menus_present = (array)elgg_get_config('lazy_hover:menus');
 
 $user = elgg_extract("entity", $vars);
 if (!elgg_instanceof($user, 'user')) {
@@ -15,21 +15,22 @@ $contexts = (array)elgg_get_config("context");
 $data = serialize(array($guid, $page_owner_guid, $contexts));
 $mac = hash_hmac('sha256', $data, get_site_secret());
 
-echo "<div rel='$mac' class='hidden lazy-hover-placeholder'>";
+$attrs = array(
+	'rel' => $mac,
+	'class' => "elgg-menu elgg-menu-hover elgg-ajax-loader pvl",
+);
 
-if (empty($spans_present[$mac])) {
-	$attrs = array(
-		'data-json' => json_encode(array(
-			'g' => $guid,
-			'pog' => $page_owner_guid,
-			'c' => $contexts,
-			'm' => $mac,
-		)),
-	);
-	echo "<span " . elgg_format_attributes($attrs) . '></span>';
+if (empty($menus_present[$mac])) {
+	$attrs['data-json'] = json_encode(array(
+		'g' => $guid,
+		'pog' => $page_owner_guid,
+		'c' => $contexts,
+		'm' => $mac,
+	));
 
-	$spans_present[$mac] = true;
-	elgg_set_config('lazy_hover:spans', $spans_present);
+	$menus_present[$mac] = true;
+	elgg_set_config('lazy_hover:menus', $menus_present);
 }
-	
-echo "</div>";
+
+echo "<ul " . elgg_format_attributes($attrs) . '></ul>';
+

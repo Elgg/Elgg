@@ -1,22 +1,19 @@
 <?php
 
-function lazy_hover_init() {
-	elgg_extend_view("js/elgg", "js/lazy_hover/site");
+// register default elgg events
+elgg_register_event_handler("init", "system", "lazy_hover_init");
 
-	elgg_register_page_handler("lazy_hover", "lazy_hover_page_handler");
+/**
+ * Initialize the lazy hover plugin.
+ */
+function lazy_hover_init() {
+	elgg_extend_view("js/elgg", "js/lazy_hover");
+
+	elgg_register_ajax_view('lazy_hover/user_hover');
 
 	// extend public pages
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'lazy_hover_public_pages');
 
-}
-
-/**
- * @param string[] $page URL segments
- * @return bool
- */
-function lazy_hover_page_handler($page) {
-	require dirname(__FILE__) . "/pages/lazy_hover.php";
-	return true;
 }
 
 /**
@@ -36,6 +33,3 @@ function lazy_hover_public_pages($hook_name, $entity_type, $return_value, $param
 	}
 	return $return;
 }
-
-// register default elgg events
-elgg_register_event_handler("init", "system", "lazy_hover_init");
