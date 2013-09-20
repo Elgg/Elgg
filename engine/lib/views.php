@@ -1280,7 +1280,7 @@ function elgg_view_list_item($item, array $vars = array()) {
  */
 function elgg_view_icon($name, $class = '') {
 	if ($class === true) {
-		elgg_deprecated_notice("Using a boolean to float the icon is deprecated. Use the class float.", 1.8);
+		elgg_deprecated_notice("Using a boolean to float the icon is deprecated. Use the class float.", 1.9);
 		$class = 'float';
 	}
 	
