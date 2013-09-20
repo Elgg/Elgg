@@ -211,7 +211,7 @@ function elgg_register_ajax_view($view) {
 
 /**
  * Unregister a view for ajax calls
- * 
+ *
  * @param string $view The view name
  * @return void
  * @since 1.8.3
@@ -244,7 +244,7 @@ function elgg_register_external_view($view, $cacheable = false) {
 
 /**
  * Check whether a view is registered as cacheable.
- * 
+ *
  * @param string $view The name of the view.
  * @return boolean
  * @access private
@@ -256,7 +256,7 @@ function _elgg_is_view_cacheable($view) {
 
 /**
  * Unregister a view for accessibility via URLs.
- * 
+ *
  * @param string $view The view name
  * @return void
  * @since 1.9.0
@@ -644,7 +644,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 
 /**
  * Render a menu item (usually as a link)
- * 
+ *
  * @param ElggMenuItem $item The menu item
  * @param array        $vars Options to pass to output/url if a link
  * @return string
@@ -1270,12 +1270,12 @@ function elgg_view_list_item($item, array $vars = array()) {
 
 /**
  * View one of the elgg sprite icons
- * 
+ *
  * Shorthand for <span class="elgg-icon elgg-icon-$name"></span>
- * 
+ *
  * @param string $name  The specific icon to display
  * @param string $class Additional class: float, float-alt, or custom class
- * 
+ *
  * @return string The html for displaying an icon
  */
 function elgg_view_icon($name, $class = '') {
@@ -1283,7 +1283,10 @@ function elgg_view_icon($name, $class = '') {
 	if ($class === true) {
 		$class = 'float';
 	}
-	return "<span class=\"elgg-icon elgg-icon-$name $class\"></span>";
+	
+	$icon_class = array("elgg-icon-$name" , $class);
+	
+	return elgg_view("output/icon", array("class" => $icon_class));
 }
 
 /**
@@ -1398,7 +1401,7 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 
 /**
  * Inserts module names into anonymous modules by handling the "simplecache:generate" hook.
- * 
+ *
  * @param string $hook    The name of the hook
  * @param string $type    View type (css, js, or unknown)
  * @param string $content Content of the view
@@ -1408,7 +1411,7 @@ function _elgg_views_minify($hook, $type, $content, $params) {
  * @access private
  */
 function _elgg_views_amd($hook, $type, $content, $params) {
-	$filter = new Elgg_Amd_ViewFilter();	
+	$filter = new Elgg_Amd_ViewFilter();
 	return $filter->filter($params['view'], $content);
 }
 
