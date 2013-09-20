@@ -120,7 +120,7 @@ $posted = 0, $annotation_id = 0) {
  *   subtypes             => STR|ARR Entity subtype string(s)
  *   type_subtype_pairs   => ARR     Array of type => subtype pairs where subtype
  *                                   can be an array of subtype strings
- * 
+ *
  *   posted_time_lower    => INT     The lower bound on the time posted
  *   posted_time_upper    => INT     The upper bound on the time posted
  *
@@ -434,8 +434,13 @@ function elgg_list_river(array $options = array()) {
 		'pagination' => TRUE,
 		'list_class' => 'elgg-list-river elgg-river', // @todo remove elgg-river in Elgg 1.9
 	);
-
+	
 	$options = array_merge($defaults, $options);
+	
+	if (!$options["limit"] && !$options["offset"]) {
+		// no need for pagination if listing is unlimited
+		$options["pagination"] = false;
+	}
 
 	$options['count'] = TRUE;
 	$count = elgg_get_river($options);
@@ -445,6 +450,7 @@ function elgg_list_river(array $options = array()) {
 
 	$options['count'] = $count;
 	$options['items'] = $items;
+	
 	return elgg_view('page/components/list', $options);
 }
 
