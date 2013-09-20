@@ -1279,8 +1279,8 @@ function elgg_view_list_item($item, array $vars = array()) {
  * @return string The html for displaying an icon
  */
 function elgg_view_icon($name, $class = '') {
-	// @todo deprecate boolean in Elgg 1.9
 	if ($class === true) {
+		elgg_deprecated_notice("Using a boolean to float the icon is deprecated. Use the class float.", 1.8);
 		$class = 'float';
 	}
 	
