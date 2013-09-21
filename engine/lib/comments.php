@@ -111,25 +111,3 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 
 	return $return;
 }
-
-/**
- * Handle requests for URLs that start with /comments/
- * 
- * @param array $page Array of URL segements
- * @return boolean
- */
-function _elgg_comments_page_handler($page) {
-	$guid = get_input('comment_guid');
-
-	$comment = get_entity($guid);
-	if (elgg_instanceof($comment, 'object', 'comment') && $comment->canEdit()) {
-		$form_vars = array(
-			'class' => 'hidden mvl',
-			'id' => "edit-comment-{$guid}",
-		);
-		$body_vars = array('comment' => $comment);
-		echo elgg_view_form('comment/save', $form_vars, $body_vars);
-	}
-
-	return true;
-}
