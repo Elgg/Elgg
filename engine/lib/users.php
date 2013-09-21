@@ -553,7 +553,12 @@ function get_user($guid) {
 function get_user_by_username($username) {
 	global $CONFIG, $USERNAME_TO_GUID_MAP_CACHE;
 
-	$username = sanitise_string(rawurldecode($username));
+	// Fixes #6052. Username is frequently sniffed from the path info, which,
+	// unlike $_GET, is not URL decoded. If the username was not URL encoded,
+	// this is harmless.
+	$username = rawurldecode($username);
+
+	$username = sanitise_string($username);
 	$access = get_access_sql_suffix('e');
 
 	// Caching
