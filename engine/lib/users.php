@@ -338,9 +338,9 @@ function get_user_by_email($email) {
  *
  *   Formerly this was the seconds parameter.
  *
- * @param int  $limit  Limit (deprecated usage, use $options)
- * @param int  $offset Offset (deprecated usage, use $options)
- * @param bool $count  Count (deprecated usage, use $options)
+ * @param int   $limit   Limit (deprecated usage, use $options)
+ * @param int   $offset  Offset (deprecated usage, use $options)
+ * @param bool  $count   Count (deprecated usage, use $options)
  *
  * @return ElggUser[]|int
  */
