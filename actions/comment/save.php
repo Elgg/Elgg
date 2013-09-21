@@ -18,17 +18,21 @@ if (empty($comment_text)) {
 if ($comment_guid) {
 	// Edit an existing comment
 	$comment = get_entity($comment_guid);
-	if (elgg_instanceof($comment, 'object', 'comment') && $comment->canEdit()) {
-		$comment->description = $comment_text;
 
-		if ($comment->save()) {
-			system_message(elgg_echo('generic_comment:updated'));
-		} else {
-			register_error(elgg_echo('generic_comment:failure'));
-		}
-	} else {
+	if (!elgg_instanceof($comment, 'object', 'comment')) {
 		register_error(elgg_echo("generic_comment:notfound"));
 		forward(REFERER);
+	}
+	if (!$comment->canEdit()) {
+		register_error(elgg_echo("actionunauthorized"));
+		forward(REFERER);
+	}
+
+	$comment->description = $comment_text;
+	if ($comment->save()) {
+		system_message(elgg_echo('generic_comment:updated'));
+	} else {
+		register_error(elgg_echo('generic_comment:failure'));
 	}
 } else {
 	// Create a new comment on the target entity
