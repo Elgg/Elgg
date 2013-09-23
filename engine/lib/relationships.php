@@ -25,17 +25,22 @@ function row_to_elggrelationship($row) {
 /**
  * Return a relationship.
  *
- * @param int $id The ID of a relationship
+ * @param int      $id       The ID of a relationship
+ * @param callback $callback Optionally, the function to call back to on data row. Defaults to: row_to_elggrelationship
  *
  * @return ElggRelationship|false
  */
-function get_relationship($id) {
+function get_relationship($id, $callback = "row_to_elggrelationship") {
 	global $CONFIG;
 
 	$id = (int)$id;
 
 	$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where id=$id";
-	return row_to_elggrelationship(get_data_row($query));
+	if (is_callable($callback)) {
+		return call_user_func($callback, get_data_row($query));
+	} else {
+		return get_data_row($query);
+	}
 }
 
 /**
