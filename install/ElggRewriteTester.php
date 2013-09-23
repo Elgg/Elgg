@@ -36,7 +36,7 @@ class ElggRewriteTester {
 
 		if ($this->rewriteTestPassed == FALSE) {
 			if ($this->webserver == 'apache' || $this->webserver == 'unknown') {
-				if ($this->createHtaccess($path)) {
+				if ($this->createHtaccess($url, $path)) {
 					$this->rewriteTestPassed = $this->runRewriteTest($url);
 				}
 			}
@@ -59,6 +59,27 @@ class ElggRewriteTester {
 			}
 		}
 		return 'unknown';
+	}
+
+	/**
+	 * Guess if url contains subdirectory or not.
+	 *
+	 * @param string $url Rewrite test URL
+	 *
+	 * @return string|bool Subdirectory string with beginning and trailing slash or false if were unable to determine subdirectory 
+	 * or pointing at root of domain already
+	 */
+	public function guessSubdirectory($url) {
+		$elements = parse_url($url);
+		if (!$elements || !isset($elements['path'])) {
+			return false;
+		}
+		$subdir = trim(dirname($elements['path']), '/');
+		if (!$subdir) {
+			return false;
+		} else {
+			return "/$subdir/";
+		}
 	}
 
 	/**
@@ -95,11 +116,12 @@ class ElggRewriteTester {
 	/**
 	 * Create Elgg's .htaccess file or confirm that it exists
 	 *
+	 * @param string $url  URL of rewrite test
 	 * @param string $path Elgg's root directory with trailing slash
 	 *
 	 * @return bool
 	 */
-	public function createHtaccess($path) {
+	public function createHtaccess($url, $path) {
 		$filename = "{$path}.htaccess";
 		if (file_exists($filename)) {
 			// check that this is the Elgg .htaccess
@@ -132,6 +154,18 @@ class ElggRewriteTester {
 		if (!$result) {
 			$this->htaccessIssue = 'cannot_copy';
 			return FALSE;
+		}
+		
+		// does default RewriteBase work already?
+		if (!$this->runRewriteTest($url)) {
+			//try to rewrite to guessed subdirectory
+			if ($subdir = $this->guessSubdirectory($url)) {
+				$contents = file_get_contents($filename);
+				$contents = preg_replace("/#RewriteBase \/(\r?\n)/", "RewriteBase $subdir\$1", $contents);
+				if ($contents) {
+					file_put_contents($filename, $contents);
+				}
+			}
 		}
 
 		return TRUE;
