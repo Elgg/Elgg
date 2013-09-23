@@ -750,19 +750,19 @@ populated with your first site.
 It contains the following fields:
 
 -  **guid** An auto-incrementing counter producing a GUID that uniquely
-identifies this entity in the system.
+   identifies this entity in the system.
 -  **type** The type of entity - object, user, group or site
 -  **subtype** A link to the `entity_subtypes` table.
 -  **owner\_guid** The GUID of the owner's entity.
 -  **site\_guid** The site the entity belongs to.
 -  **container\_guid** The GUID this entity is contained by - either a user or
-a group.
+   a group.
 -  **access\_id** Access controls on this entity.
 -  **time\_created** Unix timestamp of when the entity is created.
 -  **time\_updated** Unix timestamp of when the entity was updated.
 -  **enabled** If this is 'yes' an entity is accessible, if 'no' the entity
-has been disabled (Elgg treats it as if it were deleted without actually
-removing it from the database).
+   has been disabled (Elgg treats it as if it were deleted without actually
+   removing it from the database).
 
 Table: entity\_subtypes
 ~~~~~~~~~~~~~~~~~~~~~~~
