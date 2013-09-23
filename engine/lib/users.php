@@ -327,38 +327,67 @@ function get_user_by_email($email) {
 }
 
 /**
- * A function that returns a maximum of $limit users who have done something within the last
- * $seconds seconds or the total count of active users.
+ * Return users (or the number of them) who have been active within a recent period.
  *
- * @param int  $seconds Number of seconds (default 600 = 10min)
- * @param int  $limit   Limit, default 10.
- * @param int  $offset  Offset, default 0.
- * @param bool $count   Count, default false.
+ * @param array $options Array of options with keys:
  *
- * @return mixed
+ *   seconds (int)  => Length of period (default 600 = 10min)
+ *   limit   (int)  => Limit (default 10)
+ *   offset  (int)  => Offset (default 0)
+ *   count   (bool) => Return a count instead of users? (default false)
+ *
+ *   Formerly this was the seconds parameter.
+ *
+ * @param int   $limit   Limit (deprecated usage, use $options)
+ * @param int   $offset  Offset (deprecated usage, use $options)
+ * @param bool  $count   Count (deprecated usage, use $options)
+ *
+ * @return ElggUser[]|int
  */
-function find_active_users($seconds = 600, $limit = 10, $offset = 0, $count = false) {
-	$seconds = (int)$seconds;
-	$limit = (int)$limit;
-	$offset = (int)$offset;
-	$params = array('seconds' => $seconds, 'limit' => $limit, 'offset' => $offset, 'count' => $count);
-	$data = elgg_trigger_plugin_hook('find_active_users', 'system', $params, null);
-	if (!$data) {
-		global $CONFIG;
+function find_active_users($options = array(), $limit = 10, $offset = 0, $count = false) {
 
-		$time = time() - $seconds;
-
-		$data = elgg_get_entities(array(
-			'type' => 'user',
-			'limit' => $limit,
-			'offset' => $offset,
-			'count' => $count,
-			'joins' => array("join {$CONFIG->dbprefix}users_entity u on e.guid = u.guid"),
-			'wheres' => array("u.last_action >= {$time}"),
-			'order_by' => "u.last_action desc",
-		));
+	if (!is_array($options)) {
+		elgg_deprecated_notice("find_active_users() now accepts an \$options array", 1.9);
+		$options = array('seconds' => $options);
 	}
-	return $data;
+
+	$options = array_merge(array(
+		'limit' => $limit,
+		'offset' => $offset,
+		'count' => $count,
+	), $options);
+
+	// cast options we're sending to hook
+	foreach (array('seconds', 'limit', 'offset') as $key) {
+		$options[$key] = (int)$options[$key];
+	}
+	$options['count'] = (bool)$options['count'];
+
+	// allow plugins to override
+	$params = array(
+		'seconds' => $options['seconds'],
+		'limit' => $options['limit'],
+		'offset' => $options['offset'],
+		'count' => $options['count'],
+		'options' => $options,
+	);
+	$data = elgg_trigger_plugin_hook('find_active_users', 'system', $params, null);
+	// check null because the handler could legitimately return falsey values.
+	if ($data !== null) {
+		return $data;
+	}
+
+	$dbprefix = elgg_get_config('dbprefix');
+	$time = time() - $options['seconds'];
+	return elgg_get_entities(array(
+		'type' => 'user',
+		'limit' => $options['limit'],
+		'offset' => $options['offset'],
+		'count' => $options['count'],
+		'joins' => array("join {$dbprefix}users_entity u on e.guid = u.guid"),
+		'wheres' => array("u.last_action >= {$time}"),
+		'order_by' => "u.last_action desc",
+	));
 }
 
 /**
