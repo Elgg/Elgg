@@ -47,6 +47,7 @@ $anchor
 		$friendlytime
 	</span>
 	$comment_text
+	$form
 </div>
 HTML;
 
