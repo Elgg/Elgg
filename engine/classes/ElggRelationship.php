@@ -7,8 +7,8 @@
  * 
  * @property int    $id           The unique identifier (read-only)
  * @property int    $guid_one     The GUID of the subject of the relationship
- * @property string $relationship The name of the relationship (limit of 50 characters long)
- * @property int    $guid_two     The GUID of the object of the relationship
+ * @property string $relationship The type of the relationship (limit of 50 characters long)
+ * @property int    $guid_two     The GUID of the target of the relationship
  * @property int    $time_created A UNIX timestamp of when the relationship was created (read-only, set on first save)
  */
 class ElggRelationship extends ElggData implements
@@ -112,7 +112,7 @@ class ElggRelationship extends ElggData implements
 	/**
 	 * Save the relationship
 	 *
-	 * @return int the relationship id
+	 * @return int the relationship ID
 	 * @throws IOException
 	 */
 	public function save() {
@@ -129,7 +129,7 @@ class ElggRelationship extends ElggData implements
 	}
 
 	/**
-	 * Delete a given relationship.
+	 * Delete this relationship from the database.
 	 *
 	 * @return bool
 	 */
