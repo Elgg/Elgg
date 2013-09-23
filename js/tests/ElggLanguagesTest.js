@@ -21,6 +21,20 @@ define(function(require) {
 				expect(elgg.echo('hello')).toBe('Hello!');
 				expect(elgg.echo('hello', 'es')).toBe('Hola!');			
 			});
+
+			it("uses the first available translation key", function () {
+				elgg.add_translation('en', {
+					'fallback': 'Fallback',
+				});
+
+				expect(elgg.echo(['first_choice', 'fallback'])).toBe('Fallback');
+
+				elgg.add_translation('en', {
+					'first_choice': 'First Choice'
+				});
+
+				expect(elgg.echo(['first_choice', 'fallback'])).toBe('First Choice');
+			});
 			
 			it("falls back to the default language", function() {
 				elgg.add_translation('en', {

@@ -10,13 +10,12 @@
 /**
  * Given a message key, returns an appropriately translated full-text string
  *
- * @param string $message_key The short message code
- * @param array  $args        An array of arguments to pass through vsprintf().
- * @param string $language    Optionally, the standard language code
- *                            (defaults to site/user default, then English)
+ * @param string[]|string $message_key The translation key. If an array of keys is given, the first key with an
+ *                                     available translation will be used.
+ * @param array           $args        Arguments to pass through vsprintf().
+ * @param string          $language    The desired language code (defaults to site/user default, then English).
  *
- * @return string Either the translated string, the English string,
- * or the original language string.
+ * @return string Either the translated string, the English string, or the original translation key.
  */
 function elgg_echo($message_key, $args = array(), $language = "") {
 	global $CONFIG;
@@ -46,15 +45,8 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 		$language = $CURRENT_LANGUAGE;
 	}
 
-	if (isset($CONFIG->translations[$language][$message_key])) {
-		$string = $CONFIG->translations[$language][$message_key];
-	} else if (isset($CONFIG->translations["en"][$message_key])) {
-		$string = $CONFIG->translations["en"][$message_key];
-		elgg_log(sprintf('Missing %s translation for "%s" language key', $language, $message_key), 'NOTICE');
-	} else {
-		$string = $message_key;
-		elgg_log(sprintf('Missing English translation for "%s" language key', $message_key), 'NOTICE');
-	}
+	$message_key = (array)$message_key;
+	$string = _elgg_find_translation_string($message_key, $language, $CONFIG->translations);
 
 	// only pass through if we have arguments to allow backward compatibility
 	// with manual sprintf() calls.
@@ -63,6 +55,36 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 	}
 
 	return $string;
+}
+
+/**
+ * Find the first translation available from a set of keys
+ *
+ * @param string[] $keys         Language keys to try
+ * @param string   $language     Active language
+ * @param array    $translations Configured translation tables
+ *
+ * @return string The translation string (may contain sprintf arguments)
+ * @access private
+ */
+function _elgg_find_translation_string($keys, $language, $translations) {
+	foreach ($keys as $key) {
+		if (isset($translations[$language][$key])) {
+			return $translations[$language][$key];
+		}
+	}
+	$last_key = end($keys);
+	if ($language !== 'en') {
+		foreach ($keys as $key) {
+			if (isset($translations['en'][$key])) {
+				$string = $translations['en'][$key];
+				elgg_log(sprintf('Missing %s translation for "%s" language key', $language, $last_key), 'NOTICE');
+				return $string;
+			}
+		}
+	}
+	elgg_log(sprintf('Missing English translation for "%s" language key', $last_key), 'NOTICE');
+	return $last_key;
 }
 
 /**
