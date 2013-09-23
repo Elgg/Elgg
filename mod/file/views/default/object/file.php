@@ -33,7 +33,7 @@ $comments_count = $file->countComments();
 if ($comments_count != 0) {
 	$text = elgg_echo("comments") . " ($comments_count)";
 	$comments_link = elgg_view('output/url', array(
-		'href' => $file->getURL() . '#file-comments',
+		'href' => $file->getURL() . '#comments',
 		'text' => $text,
 		'is_trusted' => true,
 	));
