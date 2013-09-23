@@ -543,27 +543,119 @@ You can instead store the information like so:
 Storing GUIDs in metadata
 ~~~~~~~~~~~~~~~~~~~~~~~~~
 
-Though this is not technically incorrect, it is inadvisable to use
-metadata to store GUIDs. `Relationships`_ are a much better construct for
-this purpose. Yes, there are core plugins that break this principle --
-we are working on fixing them!
-
-For example, instead of:
-
-.. code:: php
-
-    $object->example_guid = $guid;
-
-do:
-
-.. code:: php
-
-    $object->addRelationship('example', $guid);
+Though there are some cases to store entity GUIDs in metadata,
+`Relationships`_ are a much better construct for relating entities
+to each other.
 
 Relationships
 =============
 
-TODO
+Relationships allow you to bind entities together. Examples: an
+artist has fans, a user is a member of an organization, etc.
+
+The class ``ElggRelationship`` models a directed relationship between
+two entities, making the statement:
+
+    "**{subject}** is a **{noun}** of **{target}**."
+
+================  ===========     =========================================
+API name          Models          Represents
+================  ===========     =========================================
+``guid_one``      The subject     Which entity is being bound
+``relationship``  The noun        The type of relationship
+``guid_two``      The target      The entity to which the subject is bound
+================  ===========     =========================================
+
+The type of relationship may alternately be a verb, making the statement:
+
+    "**{subject}** **{verb}** **{target}**."
+
+    E.g. User A "likes" blog post B
+
+**Each relationship has direction.** Imagine an archer shoots
+an arrow at a target; The arrow moves in one direction, binding
+the subject (the archer) to the target.
+
+**A relationship does not imply reciprocity**. **A** follows **B** does
+not imply that **B** follows **A**.
+
+**Relationships_ do not have access control.** They're never
+hidden from view and can be edited with code at any privilege
+level, with the caveat that *the entities* in a relationship
+may be invisible due to access control!
+
+Working with relationships
+--------------------------
+
+Creating a relationship
+~~~~~~~~~~~~~~~~~~~~~~~
+
+E.g. to establish that "**$user** is a **fan** of **$artist**"
+(user is the subject, artist is the target):
+
+.. code:: php
+
+    // option 1
+    $success = add_entity_relationship($user->guid, 'fan', $artist->guid);
+
+    // option 2
+    $success = $user->addRelationship($artist->guid, 'fan');
+
+This triggers the event [create, relationship], passing in
+the created ``ElggRelationship`` object. If a handler returns
+``false``, the relationship will not be created and ``$success``
+will be ``false``.
+
+Verifying a relationship
+~~~~~~~~~~~~~~~~~~~~~~~~
+
+E.g. to verify that "**$user** is a **fan** of **$artist**":
+
+.. code:: php
+
+    if (check_entity_relationship($user->guid, 'fan', $artist->guid)) {
+        // relationship exists
+    }
+
+Note that, if the relationship exists, ``check_entity_relationship()``
+returns an ``ElggRelationship`` object:
+
+.. code:: php
+
+    $relationship = check_entity_relationship($user->guid, 'fan', $artist->guid);
+    if ($relationship) {
+        // use $relationship->id or $relationship->time_created
+    }
+
+Deleting a relationship
+~~~~~~~~~~~~~~~~~~~~~~~
+
+E.g. to be able to assert that "**$user** is no longer a **fan** of **$artist**":
+
+.. code:: php
+
+    $was_removed = remove_entity_relationship($user->guid, 'fan', $artist->guid);
+
+This triggers the event [delete, relationship], passing in
+the associated ``ElggRelationship`` object. If a handler returns
+``false``, the relationship will remain, and ``$was_removed`` will
+be ``false``.
+
+Other useful functions:
+
+- ``delete_relationship()`` : delete by ID
+- ``remove_entity_relationships()`` : delete those relating to an entity (*note:* in versions before Elgg 1.9, this did not trigger delete events)
+
+Finding relationships and related entities
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Below are a few functions to fetch relationship objects
+and/or related entities. A few are listed below:
+
+- ``get_entity_relationships()`` : fetch relationships by subject or target entity
+- ``get_relationship()`` : get a relationship object by ID
+- ``elgg_get_entities_from_relationship()`` : fetch entities in relationships in a
+  variety of ways
 
 Access Control
 ==============
@@ -651,24 +743,24 @@ Elgg installation, the tables will have a prefix (typically "elgg\_").
 Table: entities
 ~~~~~~~~~~~~~~~
 
-This is the main Elgg table containing Elgg users, sites,
+This is the main `Entities`_ table containing Elgg users, sites,
 objects and groups. When you first install Elgg this is automatically
 populated with your first site.
 
 It contains the following fields:
 
-guid: An auto-incrementing counter producing a GUID that uniquely
+-  **guid** An auto-incrementing counter producing a GUID that uniquely
 identifies this entity in the system.
-type: The type of entity - object, user, group or site
-subtype: A link to the `entity_subtypes` table.
-owner\_guid: The GUID of the owner's entity.
-site\_guid: The site the entity belongs to.
-container\_guid: The GUID this entity is contained by - either a user or
+-  **type** The type of entity - object, user, group or site
+-  **subtype** A link to the `entity_subtypes` table.
+-  **owner\_guid** The GUID of the owner's entity.
+-  **site\_guid** The site the entity belongs to.
+-  **container\_guid** The GUID this entity is contained by - either a user or
 a group.
-access\_id: Access controls on this entity.
-time\_created: Unix timestamp of when the entity is created.
-time\_updated: Unix timestamp of when the entity was updated.
-enabled: If this is 'yes' an entity is accessible, if 'no' the entity
+-  **access\_id** Access controls on this entity.
+-  **time\_created** Unix timestamp of when the entity is created.
+-  **time\_updated** Unix timestamp of when the entity was updated.
+-  **enabled** If this is 'yes' an entity is accessible, if 'no' the entity
 has been disabled (Elgg treats it as if it were deleted without actually
 removing it from the database).
 
@@ -685,7 +777,7 @@ This table contains entity subtype information:
 Table: metadata
 ~~~~~~~~~~~~~~~
 
-This table contains extra information attached to an entity.
+This table contains `Metadata`_, extra information attached to an entity.
 
 -  **id** A counter.
 -  **entity\_guid** The entity this is attached to.
@@ -703,7 +795,7 @@ This table contains extra information attached to an entity.
 Table: annotations
 ~~~~~~~~~~~~~~~~~~
 
-This table contains annotations, this is distinct from metadata.
+This table contains `Annotations`_, this is distinct from `Metadata`_.
 
 -  **id** A counter.
 -  **entity\_guid** The entity this is attached to.
@@ -721,11 +813,11 @@ This table contains annotations, this is distinct from metadata.
 Table: relationships
 ~~~~~~~~~~~~~~~~~~~~
 
-This table defines relationships, these link one entity with another.
+This table defines `Relationships`_, these link one entity with another.
 
--  **guid\_one** entity number one.
--  **relationship** Relationship string.
--  **guid\_two** entity number two.
+-  **guid\_one** The GUID of the subject entity.
+-  **relationship** The type of the relationship.
+-  **guid\_two** The GUID of the target entity.
 
 Table: objects\_entity
 ~~~~~~~~~~~~~~~~~~~~~~
@@ -766,4 +858,3 @@ lookups more efficient.
 
 Core developers will place schema upgrades in
 ``/engine/schema/upgrades/*``.
-
