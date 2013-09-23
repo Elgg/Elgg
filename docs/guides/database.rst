@@ -12,8 +12,8 @@ To create an object in your code, you need to instantiate an
 variables or properties. The built-in properties are:
 
 -  **``guid``** The entity's GUID; set automatically
--  **``owner_guid``** The owning user's guid
--  **``site_guid``** The owning site's guid. This is set automatically
+-  **``owner_guid``** The owning user's GUID
+-  **``site_guid``** The owning site's GUID. This is set automatically
    when an instance of ``ElggObject`` gets created)
 -  **``subtype``** A single-word arbitrary string that defines what kind
    of object it is, for example ``blog``
@@ -38,23 +38,30 @@ building a simple forum. Therefore, the subtype will be *forum*:
     
 ``access_id`` is another important property. If you don't set this, your
 object will be private, and only the creator user will be able to see
-it. The special values for ``access_id`` are: 0 (private), 1 (logged in
-users only), 2 (public).
+it. Elgg defines constants for the special values of ``access_id``:
 
-Saving the object will automatically populate the ``$object->id``
+-  **ACCESS_PRIVATE** Only the owner can see it
+-  **ACCESS_FRIENDS** Only the owner and his/her friends can see it
+-  **ACCESS_LOGGED_IN** Any logged in user can see it
+-  **ACCESS_PUBLIC** Even visitors not logged in can see it
+
+Saving the object will automatically populate the ``$object->guid``
 property if successful. If you change any more base properties, you can
 call ``$object->save()`` again, and it will update the database for you.
-Once you've saved your object to the database – and only then – you can
-set metadata on it. Metadata has an arbitrary name and a value, and can
-be set just like a standard property. Let's say we want to set the
-parent GUID of our forum post to be 0.
+
+You can set metadata on an object just like a standard property. Let's
+say we want to set the SKU of a product:
 
 .. code:: php
 
-    $object->parent_guid = 0;
+    $object->SKU = 62784;
 
 If you assign an array, all the values will be set for that metadata.
 This is how, for example, you set tags.
+
+Metadata cannot be persisted to the database until the entity has been
+saved, but for convenience, ElggEntity can cache it internally and save
+it when saving the entity.
 
 Loading an object
 -----------------
@@ -62,11 +69,12 @@ Loading an object
 By GUID
 ~~~~~~~
 
-If you know the GUID of your object, you can simply load it with
-``get_entity($guid)``, where ``$guid`` is the object GUID. The object it
-returns will be autopopulated with the object's properties, which can be
-read with ``$object->parent_guid`` to retrieve the parent GUID we had
-set in the previous example.
+.. code:: php
+
+    $entity = get_entity($guid);
+    if (!$entity) {
+        // The entity does not exist or you're not allowed to access it.
+    }
 
 But what if you don't know the GUID? There are several options.
 
@@ -75,39 +83,38 @@ By user, subtype or site
 
 If you know the user ID you want to get objects for, or the subtype, or
 the site, you have several options. The easiest is probably to call the
-procedural function
-``get_entities($entity_type, $subtype, $owner_guid)`` where entity type
-is ``user``, ``object`` or ``site``. You can leave ``user_id`` to 0 to
-get all objects and leave subtype or type blank to get objects of all
-types/subtypes. Limit defaults to 10; offset to 0. This will return an
-array of ``ElggEntity`` objects that you can iterate through.
+procedural function ``elgg_get_entities``:
 
-If you already have an ``ElggUser`` – eg ``$_SESSION['user']``, which
-always has the current user's object when you're logged in – you can
+.. code:: php
+
+    $entities = elgg_get_entities(array(
+        'type' => $entity_type,
+        'subtype' => $subtype,
+        'owner_guid' => $owner_guid,
+    ));
+
+This will return an array of ``ElggEntity`` objects that you can iterate
+through. ``elgg_get_entities`` paginates by default, with a limit of 10;
+and offset 0.
+
+You can leave out ``owner_guid`` to get all objects and leave out subtype
+or type to get objects of all types/subtypes.
+
+If you already have an ``ElggUser`` – e.g. ``elgg_get_logged_in_user_entity``,
+which always has the current user's object when you're logged in – you can
 simply use:
 
 .. code:: php
 
-    $object_array = $user->getObjects($subtype, $limit, $offset)
+    $objects = $user->getObjects($subtype, $limit, $offset)
 
 But what about getting objects with a particular piece of metadata?
-Let's say we want everything with a ``parent_guid`` of 0.
 
 By metadata
 ~~~~~~~~~~~
 
-Currently two functions are available to retrieve entities by metadata,
-``get_entities_from_metadata()`` and
-``get_entities_from_metadata_multi()``. The former can be used to get
-entities based on a single piece of metadata, the latter can handle
-multiple metedata values. Following our example, to retrieve all
-entities with ``parent_guid`` of 0, you would use the following call:
-
-.. code:: php
-
-    get_entities_from_metadata('parent_guid', 0, 'object');
-
-This will return an array of entities you can iterate through.
+The function ``elgg_get_entities_from_metadata`` allows fetching entities
+with metadata in a variety of ways.
 
 Displaying entities
 -------------------
