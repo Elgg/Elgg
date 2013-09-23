@@ -143,7 +143,7 @@ class Elgg_Database {
 		$conf = $this->config->getConnectionConfig($dblinkname);
 
 		// Connect to database
-		if ( !($this->dbLinks[$dblinkname] = mysql_connect($conf['host'], $conf['user'], $conf['password'], true)) ) {
+		if (!($this->dbLinks[$dblinkname] = mysql_connect($conf['host'], $conf['user'], $conf['password'], true))) {
 			$msg = "Elgg couldn't connect to the database using the given credentials. Check the settings file.";
 			throw new DatabaseException($msg);
 		}
