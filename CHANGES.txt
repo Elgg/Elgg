@@ -85,7 +85,7 @@ Version 1.9.0-rc1
    * init:cookie, name plugin hook
    * layout, page plugin hook
    * shell, page plugin hook
-   * meta, page plugin hook
+   * head, page plugin hook
    * notifications plugin hooks
    * get_sql, access plugin hook
 
