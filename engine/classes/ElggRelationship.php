@@ -21,24 +21,31 @@ class ElggRelationship extends ElggData implements
 	 * Create a relationship object
 	 *
 	 * @param stdClass $row Database row or null for new relationship
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($row = null) {
 		$this->initializeAttributes();
 
-		if (!empty($row)) {
-			if ($row instanceof stdClass) {
-				$relationship = $row; // Create from db row
-			} else {
-				elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use get_relationship()', 1.9);
-				$relationship = get_relationship($row);
+		if ($row === null) {
+			elgg_deprecated_notice('Passing null to constructor is deprecated. Use add_entity_relationship()', 1.9);
+			return;
+		}
+
+		if (!($row instanceof stdClass)) {
+			if (!is_numeric($row)) {
+				throw new InvalidArgumentException("Constructor accepts only a stdClass or null.");
 			}
 
-			if ($relationship) {
-				$objarray = (array) $relationship;
-				foreach ($objarray as $key => $value) {
-					$this->attributes[$key] = $value;
-				}
+			$id = (int)$row;
+			elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use get_relationship()', 1.9);
+			$row = _elgg_get_relationship_row($id);
+			if (!$row) {
+				throw new InvalidArgumentException("Relationship not found with ID $id");
 			}
+		}
+
+		foreach ((array)$row as $key => $value) {
+			$this->attributes[$key] = $value;
 		}
 	}
 
@@ -321,5 +328,4 @@ class ElggRelationship extends ElggData implements
 	public function getSubtype() {
 		return $this->relationship;
 	}
-
 }
