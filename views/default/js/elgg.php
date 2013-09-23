@@ -83,11 +83,7 @@ elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->l
 require(['elgg']); // Forces the define() function to always run
 
 <?php
-$previous_content = elgg_view('js/initialise_elgg');
-if ($previous_content) {
-	elgg_deprecated_notice("The view 'js/initialise_elgg' has been deprecated for js/elgg", 1.8);
-	echo $previous_content;
-}
+echo elgg_view_deprecated('js/initialise_elgg', array(), "Use the view js/elgg.", 1.8);
 ?>
 
 elgg.trigger_hook('boot', 'system');

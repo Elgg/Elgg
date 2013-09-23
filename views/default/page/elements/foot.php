@@ -1,10 +1,6 @@
 <?php
 
-$analytics = elgg_view('footer/analytics');
-if ($analytics) {
-	elgg_deprecated_notice("The footer/analytics view has been deprecated. Extend page/elements/foot instead", 1.8);
-	echo $analytics;
-}
+echo elgg_view_deprecated('footer/analytics', array(), "Extend page/elements/foot instead", 1.8);
 
 $js = elgg_get_loaded_js('footer');
 foreach ($js as $script) { ?>
