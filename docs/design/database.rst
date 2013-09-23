@@ -566,12 +566,18 @@ API name          Models          Represents
 ``guid_two``      The target      The entity to which the subject is bound
 ================  ===========     =========================================
 
+The type of relationship may alternately be a verb, making the statement:
+
+    "**{subject}** **{verb}** **{target}**."
+
+    E.g. User A "likes" blog post B
+
 **Each relationship has direction.** Imagine an archer shoots
 an arrow at a target; The arrow moves in one direction, binding
 the subject (the archer) to the target.
 
-**A relationship does not imply reciprocity**. **A** being a
-follower of **B** does not imply that **B** follows **A**.
+**A relationship does not imply reciprocity**. **A** follows **B** does
+not imply that **B** follows **A**.
 
 **Relationships_ do not have access control.** They're never
 hidden from view and can be edited with code at any privilege
