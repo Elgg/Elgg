@@ -3269,7 +3269,10 @@ function get_site_domain($guid) {
  * @param string $language_name  Its localized notification string (eg "New blog post")
  *
  * @return void
- * @deprecated 1.9 Use elgg_register_notification_event()
+ * @deprecated 1.9 Use elgg_register_notification_event(). The 3rd argument was used 
+ * as the subject line in a notification. As of Elgg 1.9, it is now set by a callback
+ * for a plugin hook. See the documentation at the top of the notifications library
+ * titled "Adding a New Notification Event" for more details.
  */
 function register_notification_object($entity_type, $object_subtype, $language_name) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_register_notification_event()', 1.9);
