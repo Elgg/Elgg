@@ -63,14 +63,6 @@ foreach ($js as $url) {
 	echo elgg_format_element('script', array('src' => $url));
 }
 
-$icon = elgg_view('page/elements/shortcut_icon', $vars);
-if ($icon) {
-	elgg_deprecated_notice("The page/elements/shortcut_icon view has been deprecated. Use the 'head', 'page' plugin hook.", 1.9);
-	echo $icon;
-}
+echo elgg_view_deprecated('page/elements/shortcut_icon', array(), "Use the 'head', 'page' plugin hook.", 1.9);
 
-$metatags = elgg_view('metatags', $vars);
-if ($metatags) {
-	elgg_deprecated_notice("The metatags view has been deprecated. Use the 'head', 'page' plugin hook.", 1.8);
-	echo $metatags;
-}
+echo elgg_view_deprecated('metatags', array(), "Use the 'head', 'page' plugin hook.", 1.8);

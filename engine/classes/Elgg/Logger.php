@@ -33,7 +33,7 @@ class Elgg_Logger {
 	/** @var bool $display Display to user? */
 	protected $display = false;
 
-	/** @var ElggPluginHookService $hooks */
+	/** @var Elgg_PluginHooksService $hooks */
 	protected $hooks;
 
 	/**
