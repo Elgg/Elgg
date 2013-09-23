@@ -361,12 +361,17 @@ function login(ElggUser $user, $persistent = false) {
 		throw new LoginException(elgg_echo('LoginException:BannedUser'));
 	}
 
+	$session = _elgg_services()->session;
+
+	// #5933: set logged in user early so code in login event will be able to
+	// use elgg_get_logged_in_user_entity().
+	$session->setLoggedInUser($user);
+
 	// give plugins a chance to reject the login of this user (no user in session!)
 	if (!elgg_trigger_event('login', 'user', $user)) {
+		$session->removeLoggedInUser();
 		throw new LoginException(elgg_echo('LoginException:Unknown'));
 	}
-
-	$session = _elgg_services()->session;
 
 	// if remember me checked, set cookie with token and store token on user
 	if ($persistent) {
@@ -386,8 +391,6 @@ function login(ElggUser $user, $persistent = false) {
 
 	// User's privilege has been elevated, so change the session id (prevents session fixation)
 	$session->migrate();
-	
-	$session->setLoggedInUser($user);
 
 	set_last_login($user->guid);
 	reset_login_failure_count($user->guid);
