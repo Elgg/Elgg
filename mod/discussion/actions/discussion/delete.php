@@ -7,7 +7,7 @@
 $topic_guid = (int) get_input('guid');
 
 $topic = get_entity($topic_guid);
-if (!elgg_instanceof($topic, 'object', 'groupforumtopic')) {
+if (!elgg_instanceof($topic, 'object', 'discussion')) {
 	register_error(elgg_echo('discussion:error:notdeleted'));
 	forward(REFERER);
 }

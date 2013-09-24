@@ -21,7 +21,7 @@ if (!$title || !$desc) {
 }
 
 $container = get_entity($container_guid);
-if (!$container || !$container->canWriteToContainer(0, 'object', 'groupforumtopic')) {
+if (!$container || !$container->canWriteToContainer(0, 'object', 'discussion')) {
 	register_error(elgg_echo('discussion:error:permissions'));
 	forward(REFERER);
 }
@@ -34,7 +34,7 @@ if ($guid > 0) {
 
 if ($new_topic) {
 	$topic = new ElggObject();
-	$topic->subtype = 'groupforumtopic';
+	$topic->subtype = 'discussion';
 } else {
 	// load original file object
 	$topic = new ElggObject($guid);
@@ -68,7 +68,7 @@ elgg_clear_sticky_form('topic');
 if ($new_topic) {
 	system_message(elgg_echo('discussion:topic:created'));
 	elgg_create_river_item(array(
-		'view' => 'river/object/groupforumtopic/create',
+		'view' => 'river/object/discussion/create',
 		'action_type' => 'create',
 		'subject_guid' => elgg_get_logged_in_user_guid(),
 		'object_guid' => $topic->guid,

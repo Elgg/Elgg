@@ -28,16 +28,6 @@ function groups_handle_all_page() {
 				'no_results' => elgg_echo('groups:none'),
 			));
 			break;
-		case 'discussion':
-			$content = elgg_list_entities(array(
-				'type' => 'object',
-				'subtype' => 'groupforumtopic',
-				'order_by' => 'e.last_action desc',
-				'limit' => 40,
-				'full_view' => false,
-				'no_results' => elgg_echo('discussion:none'),
-			));
-			break;
 		case 'newest':
 		default:
 			$content = elgg_list_entities(array(
@@ -49,7 +39,7 @@ function groups_handle_all_page() {
 	}
 
 	$filter = elgg_view('groups/group_sort_menu', array('selected' => $selected_tab));
-	
+
 	$sidebar = elgg_view('groups/sidebar/find');
 	$sidebar .= elgg_view('groups/sidebar/featured');
 

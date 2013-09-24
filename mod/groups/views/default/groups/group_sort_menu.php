@@ -16,11 +16,6 @@ $tabs = array(
 		'href' => 'groups/all?filter=popular',
 		'priority' => 300,
 	),
-	'discussion' => array(
-		'text' => elgg_echo('groups:latestdiscussion'),
-		'href' => 'groups/all?filter=discussion',
-		'priority' => 400,
-	),
 );
 
 foreach ($tabs as $name => $tab) {

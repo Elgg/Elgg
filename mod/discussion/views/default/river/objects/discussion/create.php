@@ -1,6 +1,6 @@
 <?php
 /**
- * Group forum topic create river view.
+ * Discussion river view.
  */
 
 $object = $vars['item']->getObjectEntity();

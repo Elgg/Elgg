@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg groupforumtopic RSS view
+ * Elgg discussion RSS view
  *
  * @package ElggGroups
  */

@@ -1,9 +1,7 @@
 <?php
 /**
- * Forum topic entity view
- *
- * @package ElggGroups
-*/
+ * Discussion topic entity view
+ */
 
 $full = elgg_extract('full_view', $vars, FALSE);
 $topic = elgg_extract('entity', $vars, FALSE);
@@ -22,7 +20,7 @@ $poster_link = elgg_view('output/url', array(
 	'text' => $poster->name,
 	'is_trusted' => true,
 ));
-$poster_text = elgg_echo('groups:started', array($poster->name));
+$poster_text = elgg_echo('discussion:updated', array($poster->name));
 
 $tags = elgg_view('output/tags', array('tags' => $topic->tags));
 $date = elgg_view_friendly_time($topic->time_created);
@@ -50,11 +48,11 @@ if ($num_replies != 0) {
 
 	$poster = $last_reply->getOwnerEntity();
 	$reply_time = elgg_view_friendly_time($last_reply->time_created);
-	$reply_text = elgg_echo('groups:updated', array($poster->name, $reply_time));
+	$reply_text = elgg_echo('discussion:updated', array($poster->name, $reply_time));
 
 	$replies_link = elgg_view('output/url', array(
 		'href' => $topic->getURL() . '#group-replies',
-		'text' => elgg_echo('group:replies') . " ($num_replies)",
+		'text' => elgg_echo('discussion:replies') . " ($num_replies)",
 		'is_trusted' => true,
 	));
 }

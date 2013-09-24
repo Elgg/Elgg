@@ -20,7 +20,7 @@ $all_link = elgg_view('output/url', array(
 elgg_push_context('widgets');
 $options = array(
 	'type' => 'object',
-	'subtype' => 'groupforumtopic',
+	'subtype' => 'discussion',
 	'container_guid' => $group->getGUID(),
 	'limit' => 6,
 	'full_view' => false,
@@ -32,7 +32,7 @@ elgg_pop_context();
 
 $new_link = elgg_view('output/url', array(
 	'href' => "discussion/add/" . $group->getGUID(),
-	'text' => elgg_echo('groups:addtopic'),
+	'text' => elgg_echo('discussion:add'),
 	'is_trusted' => true,
 ));
 
