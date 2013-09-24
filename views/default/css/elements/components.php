@@ -239,6 +239,9 @@
 .elgg-comments > form {
 	margin-top: 15px;
 }
+.elgg-river-item .elgg-form-comment-save {
+	height: auto;
+}
 
 /* ***************************************
 	Image-related

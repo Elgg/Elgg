@@ -26,15 +26,17 @@ $entity_link = "<a href=\"{$entity->getURL()}\">$entity_title</a>";
 
 if ($full_view) {
 	$anchor = "<a name=\"comment-{$comment->getGUID()}\"></a>";
-	
+
 	$menu = elgg_view_menu('entity', array(
 		'entity' => $comment,
-		'handler' => 'comments',
+		'handler' => 'comment',
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz float-alt',
 	));
 
-	$comment_text = elgg_view("output/longtext", array("value" => $comment->description));
+	$comment_text = elgg_view("output/longtext", array(
+		'value' => $comment->description,
+	));
 
 	$body = <<<HTML
 $anchor
