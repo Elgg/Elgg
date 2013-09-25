@@ -209,7 +209,7 @@ function system_log($object, $event) {
 
 		// Create log if we haven't already created it
 		if (!isset($log_cache[$time][$object_id][$event])) {
-			$query = "INSERT DELAYED into {$CONFIG->dbprefix}system_log
+			$query = "INSERT into {$CONFIG->dbprefix}system_log
 				(object_id, object_class, object_type, object_subtype, event,
 				performed_by_guid, owner_guid, access_id, enabled, time_created, ip_address)
 			VALUES
