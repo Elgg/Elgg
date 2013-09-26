@@ -55,13 +55,13 @@ if ($mysql_dblink) {
 			$user_path = date('Y/m/d/', $join_date) . $guid;
 
 			$filename = "$data_root$user_path/profile/{$guid}{$size}.jpg";
-			$size = @filesize($filename);
-			if ($size) {
+			$filesize = @filesize($filename);
+			if ($filesize) {
 				header("Content-type: image/jpeg");
 				header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
 				header("Pragma: public");
 				header("Cache-Control: public");
-				header("Content-Length: $size");
+				header("Content-Length: $filesize");
 				header("ETag: \"$etag\"");
 				readfile($filename);
 				exit;
