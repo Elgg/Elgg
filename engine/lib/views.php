@@ -255,7 +255,7 @@ function _elgg_is_view_cacheable($view) {
 }
 
 /**
- * Unregister a view for accessibility via URLs.
+ * Unregister a view for ajax calls
  *
  * @param string $view The view name
  * @return void
@@ -913,6 +913,11 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
 function elgg_view_entity_list($entities, $vars = array(), $offset = 0, $limit = 10, $full_view = true,
 $list_type_toggle = true, $pagination = true) {
 
+	if (!$vars["limit"] && !$vars["offset"]) {
+		// no need for pagination if listing is unlimited
+		$vars["pagination"] = false;
+	}
+		
 	if (!is_int($offset)) {
 		$offset = (int)get_input('offset', 0);
 	}
@@ -986,8 +991,13 @@ function elgg_view_annotation_list($annotations, array $vars = array()) {
 		'full_view' => true,
 		'offset_key' => 'annoff',
 	);
-
+	
 	$vars = array_merge($defaults, $vars);
+	
+	if (!$vars["limit"] && !$vars["offset"]) {
+		// no need for pagination if listing is unlimited
+		$vars["pagination"] = false;
+	}
 
 	return elgg_view('page/components/list', $vars);
 }

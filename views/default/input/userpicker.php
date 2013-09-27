@@ -19,7 +19,10 @@
 
 elgg_load_js('jquery.ui.autocomplete.html');
 
-$name = elgg_extract('name', $vars, 'members');
+if (empty($vars['name'])) {
+	$vars['name'] = 'members';
+}
+$name = $vars['name'];
 $name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
 
 $guids = (array)$vars['values'];

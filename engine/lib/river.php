@@ -157,7 +157,7 @@ function elgg_create_river_item(array $options = array()) {
  *   subtypes             => STR|ARR Entity subtype string(s)
  *   type_subtype_pairs   => ARR     Array of type => subtype pairs where subtype
  *                                   can be an array of subtype strings
- * 
+ *
  *   posted_time_lower    => INT     The lower bound on the time posted
  *   posted_time_upper    => INT     The upper bound on the time posted
  *
@@ -481,8 +481,13 @@ function elgg_list_river(array $options = array()) {
 		'list_class' => 'elgg-list-river',
 		'no_results' => '',
 	);
-
+	
 	$options = array_merge($defaults, $options);
+	
+	if (!$options["limit"] && !$options["offset"]) {
+		// no need for pagination if listing is unlimited
+		$options["pagination"] = false;
+	}
 
 	$options['count'] = true;
 	$count = elgg_get_river($options);

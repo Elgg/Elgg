@@ -69,14 +69,13 @@ if ($mysql_dblink) {
 				header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
 				header("Pragma: public");
 				header("Cache-Control: public");
-				header("Content-Length: $size");
+				header("Content-Length: $filesize");
 				header("ETag: \"$etag\"");
 				readfile($filename);
 				exit;
 			}
 		}
 	}
-
 }
 
 // something went wrong so load engine and try to forward to default icon
