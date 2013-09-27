@@ -28,8 +28,8 @@ function diagnostics_init() {
 function diagnostics_basic_hook($hook, $entity_type, $returnvalue, $params) {
 
 	// Get version information
-	$version = get_version();
-	$release = get_version(true);
+	$version = elgg_get_version();
+	$release = elgg_get_version(true);
 
 	$returnvalue .= elgg_echo('diagnostics:report:basic', array($release, $version));
 
