@@ -468,22 +468,6 @@ function elgg_list_entities_from_annotation_calculation($options) {
 }
 
 /**
- * Get the URL for this annotation.
- *
- * @param int $id Annotation id
- *
- * @return string|bool False on failure
- */
-function get_annotation_url($id) {
-	$id = (int)$id;
-
-	if ($extender = elgg_get_annotation_from_id($id)) {
-		return get_extender_url($extender);
-	}
-	return false;
-}
-
-/**
  * Check to see if a user has already created an annotation on an object
  *
  * @param int    $entity_guid     Entity guid
