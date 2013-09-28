@@ -1,7 +1,0 @@
-<phpunit bootstrap="./tests/bootstrap.php">
-    <testsuites>
-		<testsuite name="CKEditor">
-    			<directory>./tests/</directory>
-		</testsuite>
-	</testsuites>
-</phpunit>
