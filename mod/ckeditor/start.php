@@ -29,13 +29,6 @@ function ckeditor_init() {
 	elgg_extend_view('embed/custom_insert_js', 'ckeditor/embed_custom_insert_js');
 
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'ckeditor_longtext_menu');
-
-	elgg_register_page_handler('uploads', 'ckeditor_uploads_page_handler');
-	elgg_register_admin_menu_item('administer', 'uploads', 'administer_utilities');
-
-	$actions_base = elgg_get_plugins_path() . 'ckeditor/actions/ckeditor';
-	elgg_register_action("ckeditor/upload", "$actions_base/upload.php");
-	elgg_register_action("ckeditor/delete", "$actions_base/delete.php");
 }
 
 function ckeditor_longtext_menu($hook, $type, $items, $vars) {
@@ -48,38 +41,4 @@ function ckeditor_longtext_menu($hook, $type, $items, $vars) {
 	));
 
 	return $items;
-}
-
-/**
- * Serve assets that have been uploaded by users
- *
- * @param array $segments URL segments
- */
-function ckeditor_uploads_page_handler($segments) {
-	// uploads/images/$user_guid/$object_guid/$filename
-	$guid = elgg_extract(1, $segments, 0);
-	$filename = elgg_extract(3, $segments);
-	$user = get_user($guid);
-	if (!$user || !$filename) {
-		header("HTTP/1.1 404 Not Found");
-		return true;
-	}
-
-	$filename = preg_replace('/[^\w\.]+/', '', $filename);
-	$service = new CKEditorUploadService(elgg_get_data_path(), $user->guid);
-	$filepath = $service->retrieve($filename);
-	if (!$filepath) {
-		header("HTTP/1.1 404 Not Found");
-		return true;
-	}
-
-	$mime = pathinfo($filepath, PATHINFO_EXTENSION);
-
-	header("Content-type: image/$mime");
-	header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
-	header("Pragma: public");
-	header("Cache-Control: public");
-	readfile($filepath);
-
-	return true;
 }

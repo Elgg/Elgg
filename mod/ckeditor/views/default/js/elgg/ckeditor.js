@@ -54,10 +54,6 @@ define(function(require) {
 				elggCKEditor.updateCount(editor);
 			});
 			elggCKEditor.updateCount(editor);
-
-			if (elgg.is_admin_logged_in()) {
-				elggCKEditor.addUploadAdminLinks();
-			}
 		},
 
 		/**
@@ -102,28 +98,6 @@ define(function(require) {
 				}
 			});
 		},
-
-		/**
-		 * This adds a link to the upload object admin page for each image uploaded through
-		 * CKEditor.
-		 *
-		 * @return void
-		 */
-		addUploadAdminLinks: function() {
-			var baseUrl = elgg.normalize_url('uploads/images/');
-			$("img[src^='" + baseUrl + "']")
-				.wrap('<span class="elgg-ckeditor-uploaded" />')
-				.each(function() {
-					var guid = this.src.match(/uploads\/images\/[0-9]+\/([0-9]+)/)[1],
-						adminUrl = elgg.normalize_url('admin/administer_utilities/uploads?guid=' + guid);
-					$(this).after('<a href="' + adminUrl
-						+ '"> ' + elgg.echo('ckeditor:upload:admin') + '</a>');
-			});
-			$('span.elgg-ckeditor-uploaded').on('touchstart', function () {
-				$(this).toggleClass('touched');
-			});
-		},
-
 
 		/**
 		 * CKEditor configuration
