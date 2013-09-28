@@ -62,4 +62,4 @@ Good feature request checklist:
  [6]: https://github.com/Elgg/Elgg/issues/new
  [7]: http://docs.elgg.org/wiki/Development/Contributing/Patches
  [8]: http://docs.elgg.org/wiki/Plugin_development  
- [9]: https://github.com/Elgg/Elgg/tree/master/documentation/coding_standards
+ [9]: https://github.com/Elgg/Elgg/tree/master/docs/coding_standards

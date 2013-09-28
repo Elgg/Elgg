@@ -1,1 +1,1 @@
-See documentation/coding_standards/
+See docs/coding_standards/
