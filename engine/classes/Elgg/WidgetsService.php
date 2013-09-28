@@ -133,7 +133,7 @@ class Elgg_WidgetsService {
 	 * @access private
 	 * @since 1.9.0
 	 */
-	public function registerType($handler, $name, $description, $context = array('all'), $multiple = false) {
+	public function registerType($handler, $name, $description, array $context = array('all'), $multiple = false) {
 		if (!$handler || !$name) {
 			return false;
 		}
@@ -148,12 +148,6 @@ class Elgg_WidgetsService {
 		$handlerobj = new stdClass;
 		$handlerobj->name = $name;
 		$handlerobj->description = $description;
-		if (is_string($context)) {
-			elgg_deprecated_notice('context parameters for elgg_register_widget_type() should be passed as an array())', 1.9);
-			$context = explode(",", $context);
-		} elseif (empty($context)) {
-			$context = array('all');
-		}
 		$handlerobj->context = $context;
 		$handlerobj->multiple = $multiple;
 
