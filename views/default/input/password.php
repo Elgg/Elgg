@@ -20,9 +20,11 @@ if (isset($vars['class'])) {
 $defaults = array(
 	'disabled' => false,
 	'value' => '',
+	'autocapitalize' => 'off',
+	'autocorrect' => 'off',
 );
 
 $attrs = array_merge($defaults, $vars);
 ?>
 
-<input type="password" autocapitalize="off" autocorrect="off" <?php echo elgg_format_attributes($attrs); ?> />
+<input type="password" <?php echo elgg_format_attributes($attrs); ?> />

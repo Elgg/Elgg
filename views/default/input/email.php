@@ -17,10 +17,12 @@ if (isset($vars['class'])) {
 
 $defaults = array(
 	'disabled' => false,
+	'autocapitalize' => 'off',
+	'autocorrect' => 'off',
 );
 
 $vars = array_merge($defaults, $vars);
 
 ?>
 
-<input type="email" autocapitalize="off" autocorrect="off" <?php echo elgg_format_attributes($vars); ?> />
+<input type="email" <?php echo elgg_format_attributes($vars); ?> />

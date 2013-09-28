@@ -18,6 +18,7 @@ if (isset($vars['class'])) {
 $defaults = array(
 	'value' => '',
 	'disabled' => false,
+	'autocapitalize' => 'off',
 );
 
 if (isset($vars['entity'])) {

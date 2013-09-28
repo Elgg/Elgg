@@ -18,10 +18,12 @@ if (isset($vars['class'])) {
 $defaults = array(
 	'value' => '',
 	'disabled' => false,
+	'autocapitalize' => 'off',
+	'autocorrect' => 'off',
 );
 
 $vars = array_merge($defaults, $vars);
 
 ?>
 
-<input type="url" autocapitalize="off" autocorrect="off" <?php echo elgg_format_attributes($vars); ?> />
+<input type="url" <?php echo elgg_format_attributes($vars); ?> />
