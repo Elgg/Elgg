@@ -6,7 +6,7 @@
  */
 
 return array(
-	'ckeditor:html' => "Edit HTML",
-	'ckeditor:visual' => "Visual editor",
+	'ckeditor:remove' => "Remove editor",
+	'ckeditor:add' => "Add editor",
 	'ckeditor:word_count' => 'Word count: ',
 );
