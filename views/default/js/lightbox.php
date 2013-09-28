@@ -42,14 +42,28 @@ elgg.provide('elgg.ui.lightbox');
  * Lightbox initialization
  */
 elgg.ui.lightbox.init = function() {
+	function registerDeprecationError() {
+		elgg.register_error("fancybox lightbox has been replaced by colorbox", 9999999999999);
+	}
+
 	$.extend($.colorbox.settings, elgg.ui.lightbox.getSettings());
 	elgg.ui.lightbox.bind($(".elgg-lightbox"));
 
 	if (typeof $.fancybox === 'undefined') {
 		$.fancybox = {
 			// error message for firefox users
-			__noSuchMethod__ : function() {
-				elgg.register_error("fancybox lightbox has been replaced by colorbox", 9999999999999);
+			__noSuchMethod__ : registerDeprecationError,
+			close: function () {
+				registerDeprecationError();
+				$.colorbox.close();
+			}
+		};
+		// support $().fancybox({type:'image'})
+		$.fn.fancybox = function (arg) {
+			registerDeprecationError();
+			if (arg.type === 'image') {
+				arg.photo = true;
+				this.colorbox(arg);
 			}
 		};
 	}
