@@ -20,6 +20,8 @@ if (isset($vars['class'])) {
 $defaults = array(
 	'disabled' => false,
 	'value' => '',
+	'autocapitalize' => 'off',
+	'autocorrect' => 'off',
 );
 
 $attrs = array_merge($defaults, $vars);
