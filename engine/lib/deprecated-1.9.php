@@ -208,6 +208,24 @@ function get_extender_url(ElggExtender $extender) {
 }
 
 /**
+ * Get the URL for this annotation.
+ *
+ * @param int $id Annotation id
+ *
+ * @return string|bool False on failure
+ * @deprecated 1.9 Use method getURL() on annotation object
+ */
+function get_annotation_url($id) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggAnnotation::getURL()', 1.9);
+	$id = (int)$id;
+
+	if ($extender = elgg_get_annotation_from_id($id)) {
+		return get_extender_url($extender);
+	}
+	return false;
+}
+
+/**
  * Register a metadata url handler.
  *
  * @param string $extender_name The name, default 'all'.
