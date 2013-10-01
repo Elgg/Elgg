@@ -668,6 +668,31 @@ function _elgg_robots_page_handler() {
 }
 
 /**
+ * When in maintenance mode, should the given URL be handled normally?
+ *
+ * @param string $current_url Current page URL
+ * @return bool
+ *
+ * @access private
+ */
+function _elgg_admin_maintenance_allow_url($current_url) {
+	$site_path = preg_replace('~^https?~', '', elgg_get_site_url());
+	$current_path = preg_replace('~^https?~', '', $current_url);
+	if (0 === strpos($current_path, $site_path)) {
+		$current_path = ($current_path === $site_path) ? '' : substr($current_path, strlen($site_path));
+	} else {
+		$current_path = false;
+	}
+
+	// allow plugins to control access for specific URLs/paths
+	$params = array(
+		'current_path' => $current_path,
+		'current_url' => $current_url,
+	);
+	return (bool)elgg_trigger_plugin_hook('maintenance:allow', 'url', $params, false);
+}
+
+/**
  * Handle requests when in maintenance mode
  * 
  * @access private
@@ -678,6 +703,10 @@ function _elgg_admin_maintenance_handler($hook, $type, $info) {
 	}
 
 	if ($info['identifier'] == 'action' && $info['segments'][0] == 'login') {
+		return;
+	}
+
+	if (_elgg_admin_maintenance_allow_url(current_page_url())) {
 		return;
 	}
 
@@ -721,6 +750,10 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
 		if ($user && $user->isAdmin()) {
 			return true;
 		}
+	}
+
+	if (_elgg_admin_maintenance_allow_url(current_page_url())) {
+		return true;
 	}
 
 	register_error(elgg_echo('actionunauthorized'));

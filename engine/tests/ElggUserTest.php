@@ -135,6 +135,22 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 		$this->assertFalse($user);
 	}
 
+	public function testGetUserByUsernameAcceptsUrlEncoded() {
+		$username = (string)time();
+		$this->user->username = $username;
+		$guid = $this->user->save();
+
+		// percent encode first letter
+		$first_letter = $username[0];
+		$first_letter = str_pad('%' . dechex(ord($first_letter)), 2, '0', STR_PAD_LEFT);
+		$username =   $first_letter . substr($username, 1);
+
+		$user = get_user_by_username($username);
+		$this->assertTrue((bool) $user);
+		$this->assertEqual($guid, $user->guid);
+
+		$this->user->delete();
+	}
 
 	public function testElggUserMakeAdmin() {
 		global $CONFIG;

@@ -20,6 +20,8 @@ function _elgg_comments_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_comment_setup_entity_menu', 900);
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
+
+	elgg_register_ajax_view('core/ajax/edit_comment');
 }
 
 /**
@@ -45,7 +47,7 @@ function _elgg_comment_setup_entity_menu($hook, $type, $return, $params) {
 
 	// Remove edit link and access level from the menu
 	foreach ($return as $key => $item) {
-		if (in_array($item->getName(), array('access', 'edit'))) {
+		if ($item->getName() === 'access') {
 			unset($return[$key]);
 		}
 	}
@@ -77,7 +79,12 @@ function _elgg_comment_url_handler($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	return $entity->getContainerEntity()->getURL();
+	$container = $entity->getContainerEntity();
+	if (!$container) {
+		return $return;
+	}
+
+	return $container->getURL();
 }
 
 /**

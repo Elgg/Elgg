@@ -15,10 +15,10 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 		$API_METHODS = array();
 	}
 	
-// expose_function
+// elgg_ws_expose_function
 	public function testExposeFunctionNoMethod() {
 		try {
-			@expose_function();
+			@elgg_ws_expose_function();
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -28,7 +28,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testExposeFunctionNoFunction() {
 		try {
-			@expose_function('test');
+			@elgg_ws_expose_function('test');
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -38,7 +38,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testExposeFunctionBadParameters() {
 		try {
-			@expose_function('test', 'test', 'BAD');
+			@elgg_ws_expose_function('test', 'test', 'BAD');
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -48,7 +48,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testExposeFunctionParametersBadArray() {
 		try {
-			expose_function('test', 'test', array('param1' => 'string'));
+			elgg_ws_expose_function('test', 'test', array('param1' => 'string'));
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -58,7 +58,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testExposeFunctionBadHttpMethod() {
 		try {
-			@expose_function('test', 'test', null, '', 'BAD');
+			@elgg_ws_expose_function('test', 'test', null, '', 'BAD');
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -73,7 +73,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 							'param2' => array('type' => 'bool'),
 							'param3' => array('type' => 'string', 'required' => false), );
 		
-		$this->assertTrue(expose_function('test', 'foo', $parameters));
+		$this->assertTrue(elgg_ws_expose_function('test', 'foo', $parameters));
 		
 		$parameters = array('param1' => array('type' => 'int', 'required' => true), 
 							'param2' => array('type' => 'bool', 'required' => true),
@@ -88,13 +88,13 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 		$this->assertIdentical($method, $API_METHODS['test']);
 	}
 
-// unexpose_function
+// elgg_ws_unexpose_function
 	public function testUnexposeFunction() {
 		global $API_METHODS;
 		
 		$this->registerFunction();
 		
-		unexpose_function('test');
+		elgg_ws_unexpose_function('test');
 		$this->assertIdentical(array(), $API_METHODS);
 	} 
 
@@ -148,7 +148,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	}
 
 	public function testExecuteMethodNonCallable() {
-		expose_function('test', 'foo');
+		elgg_ws_expose_function('test', 'foo');
 		
 		try {
 			execute_method('test');
@@ -175,7 +175,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 // verify parameters
 	public function testVerifyParametersTypeNotSet() {
 		$params = array('param1' => array('required' => true));
-		expose_function('test', 'elgg_echo', $params);
+		elgg_ws_expose_function('test', 'elgg_echo', $params);
 		
 		try {
 			verify_parameters('test', array());
@@ -188,7 +188,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testVerifyParametersMissing() {
 		$params = array('param1' => array('type' => 'int', 'required' => true));
-		expose_function('test', 'elgg_echo', $params);
+		elgg_ws_expose_function('test', 'elgg_echo', $params);
 		
 		try {
 			verify_parameters('test', array());
@@ -317,7 +317,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 			$params = $parameters;
 		}
 
-		expose_function('test', 'elgg_echo', $params, '', 'POST', $api_auth, $user_auth);
+		elgg_ws_expose_function('test', 'elgg_echo', $params, '', 'POST', $api_auth, $user_auth);
 	}
 	
 }

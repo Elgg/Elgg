@@ -208,6 +208,24 @@ function get_extender_url(ElggExtender $extender) {
 }
 
 /**
+ * Get the URL for this annotation.
+ *
+ * @param int $id Annotation id
+ *
+ * @return string|bool False on failure
+ * @deprecated 1.9 Use method getURL() on annotation object
+ */
+function get_annotation_url($id) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggAnnotation::getURL()', 1.9);
+	$id = (int)$id;
+
+	if ($extender = elgg_get_annotation_from_id($id)) {
+		return get_extender_url($extender);
+	}
+	return false;
+}
+
+/**
  * Register a metadata url handler.
  *
  * @param string $extender_name The name, default 'all'.
@@ -3269,7 +3287,10 @@ function get_site_domain($guid) {
  * @param string $language_name  Its localized notification string (eg "New blog post")
  *
  * @return void
- * @deprecated 1.9 Use elgg_register_notification_event()
+ * @deprecated 1.9 Use elgg_register_notification_event(). The 3rd argument was used 
+ * as the subject line in a notification. As of Elgg 1.9, it is now set by a callback
+ * for a plugin hook. See the documentation at the top of the notifications library
+ * titled "Adding a New Notification Event" for more details.
  */
 function register_notification_object($entity_type, $object_subtype, $language_name) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_register_notification_event()', 1.9);

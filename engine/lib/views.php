@@ -255,7 +255,7 @@ function _elgg_is_view_cacheable($view) {
 }
 
 /**
- * Unregister a view for accessibility via URLs.
+ * Unregister a view for ajax calls
  *
  * @param string $view The view name
  * @return void
@@ -353,6 +353,23 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  */
 function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $viewtype = '') {
 	return _elgg_services()->views->renderView($view, $vars, $bypass, $viewtype);
+}
+
+/**
+ * Display a view with a deprecation notice. No missing view NOTICE is logged
+ *
+ * @see elgg_view()
+ *
+ * @param string  $view       The name and location of the view to use
+ * @param array   $vars       Variables to pass to the view
+ * @param string  $suggestion Suggestion with the deprecation message
+ * @param string  $version    Human-readable *release* version: 1.7, 1.8, ...
+ *
+ * @return string The parsed view
+ * @access private
+ */
+function elgg_view_deprecated($view, $vars = array(), $suggestion, $version) {
+	return _elgg_services()->views->renderDeprecatedView($view, $vars, $suggestion, $version);
 }
 
 /**
@@ -896,6 +913,11 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
 function elgg_view_entity_list($entities, $vars = array(), $offset = 0, $limit = 10, $full_view = true,
 $list_type_toggle = true, $pagination = true) {
 
+	if (!$vars["limit"] && !$vars["offset"]) {
+		// no need for pagination if listing is unlimited
+		$vars["pagination"] = false;
+	}
+		
 	if (!is_int($offset)) {
 		$offset = (int)get_input('offset', 0);
 	}
@@ -969,8 +991,13 @@ function elgg_view_annotation_list($annotations, array $vars = array()) {
 		'full_view' => true,
 		'offset_key' => 'annoff',
 	);
-
+	
 	$vars = array_merge($defaults, $vars);
+	
+	if (!$vars["limit"] && !$vars["offset"]) {
+		// no need for pagination if listing is unlimited
+		$vars["pagination"] = false;
+	}
 
 	return elgg_view('page/components/list', $vars);
 }

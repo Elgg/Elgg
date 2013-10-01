@@ -71,6 +71,13 @@ function elgg_can_edit_widget_layout($context, $user_guid = 0) {
  * @since 1.8.0
  */
 function elgg_register_widget_type($handler, $name, $description, $context = array('all'), $multiple = false) {
+	if (is_string($context)) {
+		elgg_deprecated_notice('context parameters for elgg_register_widget_type() should be passed as an array())', 1.9);
+		$context = explode(",", $context);
+	} elseif (empty($context)) {
+		$context = array('all');
+	}
+
 	return _elgg_services()->widgets->registerType($handler, $name, $description, $context, $multiple);
 }
 

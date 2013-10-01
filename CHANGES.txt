@@ -85,7 +85,7 @@ Version 1.9.0-rc1
    * init:cookie, name plugin hook
    * layout, page plugin hook
    * shell, page plugin hook
-   * meta, page plugin hook
+   * head, page plugin hook
    * notifications plugin hooks
    * get_sql, access plugin hook
 
@@ -95,6 +95,7 @@ Version 1.9.0-rc1
    * export, import, and opendd libraries (see ElggEntity:toObject())
    * location library
    * xml library
+   * passing null to ElggRelationship constructor
 
   Removed functionality
    * xml-rpc library (now plugin: https://github.com/Elgg/xml-rpc)

@@ -41,12 +41,12 @@ $html = elgg_list_entities(array(
 ));
 
 if ($html) {
-	echo '<h3>' . elgg_echo('comments') . '</h3>';
+	echo '<h3 id="comments">' . elgg_echo('comments') . '</h3>';
 	echo $html;
 }
 
 if ($show_add_form) {
-	echo elgg_view_form('comments/add', array(), $vars);
+	echo elgg_view_form('comment/save', array(), $vars);
 }
 
 echo '</div>';

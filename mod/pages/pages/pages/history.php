@@ -9,12 +9,12 @@ $page_guid = get_input('guid');
 
 $page = get_entity($page_guid);
 if (!pages_is_page($page)) {
-	forward(REFERER);
+	forward('', '404');
 }
 
 $container = $page->getContainerEntity();
 if (!$container) {
-	forward(REFERER);
+	forward('', '404');
 }
 
 elgg_set_page_owner_guid($container->getGUID());

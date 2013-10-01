@@ -115,8 +115,12 @@ class ElggRiverItem {
 	public function getTimePosted() {
 		return (int)$this->posted;
 	}
+
 	/**
 	 * Get the type of the object
+	 * 
+	 * This is required for elgg_view_list_item(). All the other data types
+	 * (entities, extenders, relationships) have a type/subtype.
 	 *
 	 * @return string 'river'
 	 */
@@ -126,6 +130,8 @@ class ElggRiverItem {
 
 	/**
 	 * Get the subtype of the object
+	 * 
+	 * This is required for elgg_view_list_item().
 	 *
 	 * @return string 'item'
 	 */

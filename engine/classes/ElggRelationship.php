@@ -7,8 +7,8 @@
  * 
  * @property int    $id           The unique identifier (read-only)
  * @property int    $guid_one     The GUID of the subject of the relationship
- * @property string $relationship The name of the relationship (limit of 50 characters long)
- * @property int    $guid_two     The GUID of the object of the relationship
+ * @property string $relationship The type of the relationship (limit of 50 characters long)
+ * @property int    $guid_two     The GUID of the target of the relationship
  * @property int    $time_created A UNIX timestamp of when the relationship was created (read-only, set on first save)
  */
 class ElggRelationship extends ElggData implements
@@ -21,24 +21,31 @@ class ElggRelationship extends ElggData implements
 	 * Create a relationship object
 	 *
 	 * @param stdClass $row Database row or null for new relationship
+	 * @throws InvalidArgumentException
 	 */
 	public function __construct($row = null) {
 		$this->initializeAttributes();
 
-		if (!empty($row)) {
-			if ($row instanceof stdClass) {
-				$relationship = $row; // Create from db row
-			} else {
-				elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use get_relationship()', 1.9);
-				$relationship = get_relationship($row);
+		if ($row === null) {
+			elgg_deprecated_notice('Passing null to constructor is deprecated. Use add_entity_relationship()', 1.9);
+			return;
+		}
+
+		if (!($row instanceof stdClass)) {
+			if (!is_numeric($row)) {
+				throw new InvalidArgumentException("Constructor accepts only a stdClass or null.");
 			}
 
-			if ($relationship) {
-				$objarray = (array) $relationship;
-				foreach ($objarray as $key => $value) {
-					$this->attributes[$key] = $value;
-				}
+			$id = (int)$row;
+			elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use get_relationship()', 1.9);
+			$row = _elgg_get_relationship_row($id);
+			if (!$row) {
+				throw new InvalidArgumentException("Relationship not found with ID $id");
 			}
+		}
+
+		foreach ((array)$row as $key => $value) {
+			$this->attributes[$key] = $value;
 		}
 	}
 
@@ -112,7 +119,7 @@ class ElggRelationship extends ElggData implements
 	/**
 	 * Save the relationship
 	 *
-	 * @return int the relationship id
+	 * @return int the relationship ID
 	 * @throws IOException
 	 */
 	public function save() {
@@ -129,7 +136,7 @@ class ElggRelationship extends ElggData implements
 	}
 
 	/**
-	 * Delete a given relationship.
+	 * Delete this relationship from the database.
 	 *
 	 * @return bool
 	 */
@@ -321,5 +328,4 @@ class ElggRelationship extends ElggData implements
 	public function getSubtype() {
 		return $this->relationship;
 	}
-
 }

@@ -11,35 +11,51 @@
  *
  * @param stdClass $row Database row from the relationship table
  *
- * @return ElggRelationship|stdClass
+ * @return ElggRelationship|false
  * @access private
  */
 function row_to_elggrelationship($row) {
-	if (!($row instanceof stdClass)) {
-		return $row;
+	if ($row instanceof stdClass) {
+		return new ElggRelationship($row);
+	}
+
+	return false;
+}
+
+/**
+ * Get a relationship by its ID
+ *
+ * @param int $id The relationship ID
+ *
+ * @return ElggRelationship|false False if not found
+ */
+function get_relationship($id) {
+	$row = _elgg_get_relationship_row($id);
+	if (!$row) {
+		return false;
 	}
 
 	return new ElggRelationship($row);
 }
 
 /**
- * Return a relationship.
+ * Get a database row from the relationship table
  *
- * @param int $id The ID of a relationship
+ * @param int $id The relationship ID
  *
- * @return ElggRelationship|false
+ * @return stdClass|false False if no row found
+ * @access private
  */
-function get_relationship($id) {
+function _elgg_get_relationship_row($id) {
 	global $CONFIG;
 
 	$id = (int)$id;
 
-	$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where id=$id";
-	return row_to_elggrelationship(get_data_row($query));
+	return get_data_row("SELECT * FROM {$CONFIG->dbprefix}entity_relationships WHERE id = $id");
 }
 
 /**
- * Delete a specific relationship.
+ * Delete a relationship by its ID
  *
  * @param int $id The relationship ID
  *
@@ -60,14 +76,14 @@ function delete_relationship($id) {
 }
 
 /**
- * Define an arbitrary relationship between two entities.
- * This relationship could be a friendship, a group membership or a site membership.
+ * Create a relationship between two entities. E.g. friendship, group membership, site membership.
  *
- * This function lets you make the statement "$guid_one is a $relationship of $guid_two".
+ * This function lets you make the statement "$guid_one is a $relationship of $guid_two". In the statement,
+ * $guid_one is the subject of the relationship, $guid_two is the target, and $relationship is the type.
  *
- * @param int    $guid_one     First GUID
- * @param string $relationship Relationship name
- * @param int    $guid_two     Second GUID
+ * @param int    $guid_one     GUID of the subject entity of the relationship
+ * @param string $relationship Type of the relationship
+ * @param int    $guid_two     GUID of the target entity of the relationship
  *
  * @return bool
  * @throws InvalidArgumentException
@@ -112,12 +128,13 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
 }
 
 /**
- * Determine if a relationship between two entities exists
- * and returns the relationship object if it does
+ * Check if a relationship exists between two entities. If so, the relationship object is returned.
  *
- * @param int    $guid_one     The GUID of the entity "owning" the relationship
- * @param string $relationship The type of relationship
- * @param int    $guid_two     The GUID of the entity the relationship is with
+ * This function lets you ask "Is $guid_one a $relationship of $guid_two?"
+ *
+ * @param int    $guid_one     GUID of the subject entity of the relationship
+ * @param string $relationship Type of the relationship
+ * @param int    $guid_two     GUID of the target entity of the relationship
  *
  * @return ElggRelationship|false Depending on success
  */
@@ -142,11 +159,13 @@ function check_entity_relationship($guid_one, $relationship, $guid_two) {
 }
 
 /**
- * Remove an arbitrary relationship between two entities.
+ * Delete a relationship between two entities.
  *
- * @param int    $guid_one     First GUID
- * @param string $relationship Relationship name
- * @param int    $guid_two     Second GUID
+ * This function lets you say "$guid_one is no longer a $relationship of $guid_two."
+ *
+ * @param int    $guid_one     GUID of the subject entity of the relationship
+ * @param string $relationship Type of the relationship
+ * @param int    $guid_two     GUID of the target entity of the relationship
  *
  * @return bool
  */
@@ -179,19 +198,20 @@ function remove_entity_relationship($guid_one, $relationship, $guid_two) {
 }
 
 /**
- * Removes all arbitrary relationships originating from a particular entity
+ * Removes all relationships originating from a particular entity
  *
- * @param int    $guid_one     The GUID of the entity
- * @param string $relationship The name of the relationship (optional)
- * @param bool   $inverse      Whether we're deleting inverse relationships (default false)
- * @param string $type         The type of entity to the delete to (defaults to all)
+ * @param int    $guid                 GUID of the subject or target entity (see $inverse)
+ * @param string $relationship         Type of the relationship (optional, default is all relationships)
+ * @param bool   $inverse_relationship Is $guid the target of the deleted relationships? By default, $guid is the
+ *                                     subject of the relationships.
+ * @param string $type                 The type of entity related to $guid (defaults to all)
  *
- * @return bool Depending on success
+ * @return true
  */
-function remove_entity_relationships($guid_one, $relationship = "", $inverse = false, $type = '') {
+function remove_entity_relationships($guid, $relationship = "", $inverse_relationship = false, $type = '') {
 	global $CONFIG;
 
-	$guid_one = (int) $guid_one;
+	$guid = (int) $guid;
 
 	if (!empty($relationship)) {
 		$relationship = sanitize_string($relationship);
@@ -202,34 +222,35 @@ function remove_entity_relationships($guid_one, $relationship = "", $inverse = f
 
 	if (!empty($type)) {
 		$type = sanitize_string($type);
-		if (!$inverse) {
+		if (!$inverse_relationship) {
 			$join = "JOIN {$CONFIG->dbprefix}entities e ON e.guid = er.guid_two";
 		} else {
 			$join = "JOIN {$CONFIG->dbprefix}entities e ON e.guid = er.guid_one";
-			$where .= " and ";
+			$where .= " AND ";
 		}
 		$where .= " AND e.type = '$type'";
 	} else {
 		$join = "";
 	}
 
-	if (!$inverse) {
-		$sql = "DELETE er FROM {$CONFIG->dbprefix}entity_relationships AS er
-			$join WHERE guid_one = $guid_one $where";
-	} else {
-		$sql = "DELETE er FROM {$CONFIG->dbprefix}entity_relationships AS er
-			$join WHERE
-			guid_two = $guid_one $where";
-	}
+	$guid_col = $inverse_relationship ? "guid_two" : "guid_one";
 
-	return delete_data($sql) !== false;
+	delete_data("
+		DELETE er FROM {$CONFIG->dbprefix}entity_relationships AS er
+		$join
+		WHERE $guid_col = $guid
+		$where
+	");
+
+	return true;
 }
 
 /**
- * Get all the relationships for a given guid.
+ * Get all the relationships for a given GUID.
  *
- * @param int  $guid                 The GUID of the relationship owner
- * @param bool $inverse_relationship Inverse relationship owners?
+ * @param int  $guid                 GUID of the subject or target entity (see $inverse)
+ * @param bool $inverse_relationship Is $guid the target of the deleted relationships? By default $guid is
+ *                                   the subject of the relationships.
  *
  * @return ElggRelationship[]
  */
@@ -264,11 +285,12 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
  *
  * @param array $options Array in format:
  *
- * 	relationship => null|STR relationship
+ *  relationship         => null|STR Type of the relationship
  *
- * 	relationship_guid => null|INT Guid of relationship to test
+ *  relationship_guid    => null|INT GUID of the subject or target entity
  *
- * 	inverse_relationship => BOOL Inverse the relationship
+ *  inverse_relationship => false|BOOL Is relationship_guid is the target entity of the relationship? By default,
+ * 	                        relationship_guid is the subject.
  * 
  *  relationship_join_on => null|STR How the entities relate: guid (default), container_guid, or owner_guid
  *                          Add in Elgg 1.9.0. Examples using the relationship 'friend':
@@ -327,15 +349,15 @@ function elgg_get_entities_from_relationship($options) {
 }
 
 /**
- * Returns sql appropriate for relationship joins and wheres
+ * Returns SQL appropriate for relationship joins and wheres
  *
  * @todo add support for multiple relationships and guids.
  *
- * @param string $column               Column name the guid should be checked against.
+ * @param string $column               Column name the GUID should be checked against.
  *                                     Provide in table.column format.
- * @param string $relationship         Relationship string
- * @param int    $relationship_guid    Entity guid to check
- * @param bool $inverse_relationship Inverse relationship check?
+ * @param string $relationship         Type of the relationship
+ * @param int    $relationship_guid    Entity GUID to check
+ * @param bool   $inverse_relationship Is $relationship_guid the target of the relationship?
  *
  * @return mixed
  * @since 1.7.0
@@ -398,8 +420,8 @@ function elgg_list_entities_from_relationship(array $options = array()) {
  * This is a good way to get out the users with the most friends, or the groups with the
  * most members.
  *
- * @param array $options An options array compatible with
- *                       elgg_get_entities_from_relationship()
+ * @param array $options An options array compatible with elgg_get_entities_from_relationship()
+ *
  * @return ElggEntity[]|int|boolean If count, int. If not count, array. false on errors.
  * @since 1.8.0
  */

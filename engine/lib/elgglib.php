@@ -1026,7 +1026,7 @@ function elgg_get_version($human_readable = false) {
 				return false;
 			}
 		}
-		return (!$human_readable) ? $version : $release;
+		return $human_readable ? $release : $version;
 	}
 
 	return false;
@@ -1953,8 +1953,8 @@ function _elgg_engine_boot() {
 function _elgg_init() {
 	global $CONFIG;
 
-	elgg_register_action('comments/add');
-	elgg_register_action('comments/delete');
+	elgg_register_action('comment/save');
+	elgg_register_action('comment/delete');
 
 	elgg_register_page_handler('js', '_elgg_js_page_handler');
 	elgg_register_page_handler('css', '_elgg_css_page_handler');
