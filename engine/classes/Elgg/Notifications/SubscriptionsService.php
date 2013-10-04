@@ -73,6 +73,36 @@ class Elgg_Notifications_SubscriptionsService {
 	}
 
 	/**
+	 * Get the subscriptions for the container of the entity
+	 *
+	 * The return array is of the form:
+	 *
+	 * array(
+	 *     <user guid> => array('email', 'sms', 'ajax'),
+	 * );
+	 *
+	 * @param ElggEntity $entity Entity being notified about
+	 * @return array
+	 */
+	public function getSubscriptionsForContainer(ElggEntity $entity) {
+
+		$subscriptions = array();
+
+		if (!$this->methods) {
+			return $subscriptions;
+		}
+
+		$prefixLength = strlen(self::RELATIONSHIP_PREFIX);
+		$records = $this->getSubscriptionRecords($entity->getContainerGUID());
+		foreach ($records as $record) {
+			$deliveryMethods = explode(',', $record->methods);
+			$subscriptions[$record->guid] = substr_replace($deliveryMethods, '', 0, $prefixLength);
+		}
+
+		return $subscriptions;
+	}
+
+	/**
 	 * Subscribe a user to notifications about a target entity
 	 * 
 	 * This method will return false if the subscription already exists.
