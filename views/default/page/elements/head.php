@@ -18,11 +18,15 @@
  */
 
 echo elgg_format_element('title', array(), $vars['title'], array('encode_text' => true));
-foreach ($vars['metas'] as $attributes) {
-	echo elgg_format_element('meta', $attributes);
+if ($vars['metas']) {
+	foreach ($vars['metas'] as $attributes) {
+		echo elgg_format_element('meta', $attributes);
+	}
 }
-foreach ($vars['links'] as $attributes) {
-	echo elgg_format_element('link', $attributes);
+if ($vars['links']) {
+	foreach ($vars['links'] as $attributes) {
+		echo elgg_format_element('link', $attributes);
+	}
 }
 
 $js = elgg_get_loaded_js('head');
