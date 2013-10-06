@@ -45,14 +45,21 @@ if ($group_profile_fields > 0) {
 		if ($valtype == 'longtext') {
 			$line_break = '';
 		}
-		echo '<div><label>';
-		echo elgg_echo("groups:{$shortname}");
-		echo "</label>$line_break";
-		echo elgg_view("input/{$valtype}", array(
-			'name' => $shortname,
-			'value' => elgg_extract($shortname, $vars),
-		));
-		echo '</div>';
+		if ($valtype == 'hidden') {
+			echo elgg_view("input/{$valtype}", array(
+				'name' => $shortname,
+				'value' => elgg_extract($shortname, $vars),
+			));			
+		} else {
+			echo '<div><label>';
+			echo elgg_echo("groups:{$shortname}");
+			echo "</label>$line_break";
+			echo elgg_view("input/{$valtype}", array(
+				'name' => $shortname,
+				'value' => elgg_extract($shortname, $vars),
+			));
+			echo '</div>';
+	}
 	}
 }
 ?>
