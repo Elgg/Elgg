@@ -794,6 +794,7 @@ function discussion_init() {
 	elgg_register_action('discussion/delete', "$action_base/delete.php");
 	elgg_register_action('discussion/reply/save', "$action_base/reply/save.php");
 	elgg_register_action('discussion/reply/delete', "$action_base/reply/delete.php");
+	elgg_register_action('discussion/upgrade/2013100401', "$action_base/upgrades/2013100401.php", 'admin');
 
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');
@@ -807,6 +808,9 @@ function discussion_init() {
 	// add the forum tool option
 	add_group_tool_option('forum', elgg_echo('groups:enableforum'), true);
 	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
+
+	$discussion_js_path = elgg_get_site_url() . 'mod/groups/views/default/js/discussion/';
+	elgg_register_js('elgg.discussion_upgrade', $discussion_js_path . 'upgrade2013100401.js');
 
 	// notifications
 	elgg_register_notification_event('object', 'groupforumtopic');

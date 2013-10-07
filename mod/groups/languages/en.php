@@ -175,6 +175,16 @@ View and reply to the discussion:
 	'discussion:reply:error:notfound' => 'The discussion reply was not found',
 	'discussion:reply:error:notdeleted' => 'Could not delete the discussion reply',
 
+	'admin:groups' => 'Groups',
+	'admin:groups:upgrades:2013100401' => 'Discussion reply upgrade',
+	'discussion:upgrade:replies:status' => 'There are <b>%s</b> discussion replies that need to be upgraded.',
+	'discussion:upgrade:replies:warning' => '<b>Warning:</b> on a large site this upgrade may take a significantly long time!',
+	'discussion:upgrade:replies:success_count' => 'Discussion replies upgraded:',
+	'discussion:upgrade:replies:error_count' => 'Errors:',
+	'discussion:upgrade:replies:river_update_failed' => 'Failed to update the river entry for discussion reply id %s',
+	'discussion:upgrade:replies:create_failed' => 'Failed to convert discussion reply id %s to an entity.',
+	'discussion:upgrade:replies:finished' => 'Upgrade finished',
+
 	'reply:this' => 'Reply to this',
 
 	'group:replies' => 'Replies',
