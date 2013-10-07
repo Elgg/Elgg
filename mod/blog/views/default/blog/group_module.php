@@ -11,7 +11,7 @@ if ($group->blog_enable == "no") {
 
 $all_link = elgg_view('output/url', array(
 	'href' => "blog/group/$group->guid/all",
-	'text' => elgg_echo('blog:group'),
+	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ));
 

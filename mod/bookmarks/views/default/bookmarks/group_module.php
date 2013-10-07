@@ -13,7 +13,7 @@ if ($group->bookmarks_enable == "no") {
 
 $all_link = elgg_view('output/url', array(
 	'href' => "bookmarks/group/$group->guid/all",
-	'text' => elgg_echo('bookmarks:group'),
+	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ));
 
