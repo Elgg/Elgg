@@ -39,21 +39,23 @@ elgg_push_context('group-edit');
 <?php
 
 $group_profile_fields = elgg_get_config('group');
-if ($group_profile_fields > 0) {
-	foreach ($group_profile_fields as $shortname => $valtype) {
-		$line_break = '<br />';
-		if ($valtype == 'longtext') {
-			$line_break = '';
-		}
-		echo '<div><label>';
-		echo elgg_echo("groups:{$shortname}");
-		echo "</label>$line_break";
+foreach ((array)$group_profile_fields as $shortname => $valtype) {
+	if ($valtype == 'hidden') {
 		echo elgg_view("input/{$valtype}", array(
 			'name' => $shortname,
 			'value' => elgg_extract($shortname, $vars),
 		));
-		echo '</div>';
+		continue;
 	}
+
+	$line_break = ($valtype == 'longtext') ? '' : '<br />';
+	$label = elgg_echo("groups:{$shortname}");
+	$input = elgg_view("input/{$valtype}", array(
+		'name' => $shortname,
+		'value' => elgg_extract($shortname, $vars),
+	));
+
+	echo "<div><label>{$label}</label>{$line_break}{$input}</div>";
 }
 ?>
 
