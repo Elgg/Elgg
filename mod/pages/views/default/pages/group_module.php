@@ -14,7 +14,7 @@ if ($group->pages_enable == "no") {
 
 $all_link = elgg_view('output/url', array(
 	'href' => "pages/group/$group->guid/all",
-	'text' => elgg_echo('pages:group'),
+	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ));
 
