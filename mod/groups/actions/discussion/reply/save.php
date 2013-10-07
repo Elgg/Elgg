@@ -14,20 +14,21 @@ if (empty($text)) {
 	forward(REFERER);
 }
 
-$topic = get_entity($topic_guid);
-if (!elgg_instanceof($topic, 'object', 'groupforumtopic')) {
-	register_error(elgg_echo('grouppost:nopost'));
-	forward(REFERER);
+if ($topic_guid) {
+	$topic = get_entity($topic_guid);
+	if (!elgg_instanceof($topic, 'object', 'groupforumtopic')) {
+		register_error(elgg_echo('grouppost:nopost'));
+		forward(REFERER);
+	}
+
+	$group = $topic->getContainerEntity();
+	if (!$group->canWriteToContainer()) {
+		register_error(elgg_echo('groups:notmember'));
+		forward(REFERER);
+	}
 }
 
 $user = elgg_get_logged_in_user_entity();
-
-$group = $topic->getContainerEntity();
-if (!$group->canWriteToContainer()) {
-	register_error(elgg_echo('groups:notmember'));
-	forward(REFERER);
-}
-
 if ($reply_guid) {
 	$reply = get_entity($reply_guid);
 

@@ -780,6 +780,7 @@ function discussion_init() {
 
 	// commenting not allowed on discussion topics (use a different annotation)
 	elgg_register_plugin_hook_handler('permissions_check:comment', 'object', 'discussion_comment_override');
+	elgg_register_plugin_hook_handler('permissions_check', 'object', 'discussion_can_edit_reply');
 
 	// discussion reply menu
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'discussion_reply_menu_setup');
@@ -811,6 +812,9 @@ function discussion_init() {
 
 	$discussion_js_path = elgg_get_site_url() . 'mod/groups/views/default/js/discussion/';
 	elgg_register_js('elgg.discussion_upgrade', $discussion_js_path . 'upgrade2013100401.js');
+	elgg_register_js('elgg.discussion', $discussion_js_path . 'discussion.js');
+
+	elgg_register_ajax_view('ajax/discussion/reply/edit');
 
 	// notifications
 	elgg_register_notification_event('object', 'groupforumtopic');
@@ -1052,6 +1056,36 @@ function groups_run_upgrades() {
 }
 
 /**
+ * Allow group owner and discussion owner to edit discussion replies.
+ * 
+ * @param string  $hook   'permissions_check'
+ * @param string  $type   'object'
+ * @param boolean $return
+ * @param array   $params Array('entity' => ElggEntity, 'user' => ElggUser)
+ * @return boolean True if user is discussion or group owner
+ */
+function discussion_can_edit_reply($hook, $type, $return, $params) {
+	$reply = $params['entity'];
+	$user = $params['user'];
+
+	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
+		return $return;
+	}
+
+	$discussion = $reply->getContainerEntity();
+	if ($discussion->owner_guid == $user->guid) {
+		return true;
+	}
+
+	$group = $discussion->getContainerEntity();
+	if (elgg_instanceof($group, 'group') && $group->owner_guid == $user->guid) {
+		return true;
+	}
+
+	return false;
+}
+
+/**
  * Allow group members to post to a group discussion
  * 
  * @param string $hook   'container_permissions_check'
@@ -1130,19 +1164,16 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 	$remove = array('access');
 
 	$reply = $params['entity'];
-	$topic = $reply->getContainerEntity();
-	$group = $topic->getContainerEntity();
 
 	$user = elgg_get_logged_in_user_entity();
 
 	// Allow discussion topic owner, group owner and admins to edit and delete
-	if ($topic->canEdit() && !elgg_in_context('activity')) {
+	if ($reply->canEdit() && !elgg_in_context('activity')) {
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'edit',
 			'text' => elgg_echo('edit'),
-			'href' => "#edit-reply-{$reply->guid}",
+			'href' => "discussion/reply/edit/{$reply->guid}",
 			'priority' => 150,
-			'rel' => 'toggle',
 		));
 
 		$return[] = ElggMenuItem::factory(array(

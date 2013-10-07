@@ -40,18 +40,6 @@ $subtitle = "$poster_text $date";
 
 $content = $reply->description;
 
-if ($topic->canEdit()) {
-	$form_vars = array(
-		'topic' => $topic,
-		'entity' => $reply,
-	);
-	$body_vars = array(
-		'class' => 'mvl hidden',
-		'id' => "edit-reply-{$reply->guid}",
-	);
-	$content .= elgg_view_form('discussion/reply/save', $body_vars, $form_vars);
-}
-
 $params = array(
 	'entity' => $reply,
 	'metadata' => $metadata,
