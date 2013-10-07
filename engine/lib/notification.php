@@ -137,11 +137,7 @@ function elgg_remove_subscription($user_guid, $method, $target_guid) {
 }
 
 /**
- * Get the subscriptions for the container of the entity.
- *
- * When given e.g. a personal blog this returns the subscriptions for
- * the person who wrote the blog. When given a group blog this returns
- * the subscriptions for the group notifications.
+ * Get the subscriptions for the content created inside this container.
  *
  * The return array is of the form:
  *
@@ -149,7 +145,7 @@ function elgg_remove_subscription($user_guid, $method, $target_guid) {
  *     <user guid> => array('email', 'sms', 'ajax'),
  * );
  *
- * @param ElggEntity $entity Entity
+ * @param ElggEntity $entity Entity acting as a container
  * @return array User GUIDs (keys) and their subscription types (values).
  * @since 1.9
  * @todo deprecate once new subscriptions system has been added
