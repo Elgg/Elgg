@@ -40,7 +40,7 @@
 	margin-right: 4%;
 }
 
-.groups-widget-add {
+.groups-widget-viewall {
 	float: right;
 	font-size: 85%;
 }
