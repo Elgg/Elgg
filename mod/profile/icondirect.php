@@ -62,9 +62,9 @@ if ($mysql_dblink) {
 			$user_path = $data_root . $locator->getPath();
 
 			$filename = $user_path . "profile/{$guid}{$size}.jpg";
-			$size = @filesize($filename);
+			$filesize = @filesize($filename);
 			
-			if ($size) {
+			if ($filesize) {
 				header("Content-type: image/jpeg");
 				header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
 				header("Pragma: public");
