@@ -15,8 +15,8 @@ if (!$post) {
 }
 
 // make compatible with posts created with original Curverider plugin
-$thread_id = $post->wire_thread;
-if (!$thread_id) {
+$thread_guid = $post->wire_thread;
+if (!$thread_guid) {
 	$post->wire_thread = $post->guid;
 }
 
