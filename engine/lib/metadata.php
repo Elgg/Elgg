@@ -333,9 +333,13 @@ function elgg_disable_metadata(array $options) {
 	}
 
 	elgg_get_metadata_cache()->invalidateByOptions('disable', $options);
+	
+	// if we can see hidden (disabled) we need to use the offset
+	// otherwise we risk an infinite loop if there are more than 50
+	$inc_offset = access_get_show_hidden_status();
 
 	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', false);
+	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', $inc_offset);
 }
 
 /**
