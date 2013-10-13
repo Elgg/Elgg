@@ -1105,13 +1105,13 @@ function plugins_test($hook, $type, $value, $params) {
 }
 
 function plugins_deactivate_dependency_check($event, $type, $params) {
-    $plugin_id = $params['plugin_entity']->getManifest()->getPluginID();
-    $plugin_name = $params['plugin_entity']->getManifest()->getName();
-  
-    $active_plugins = elgg_get_plugins();
+	$plugin_id = $params['plugin_entity']->getManifest()->getPluginID();
+	$plugin_name = $params['plugin_entity']->getManifest()->getName();
+
+	$active_plugins = elgg_get_plugins();
 
 	$dependents = array();
-    foreach ($active_plugins as $plugin) {
+	foreach ($active_plugins as $plugin) {
 		$manifest = $plugin->getManifest();
 		$requires = $manifest->getRequires();
     
@@ -1121,9 +1121,9 @@ function plugins_deactivate_dependency_check($event, $type, $params) {
 				$dependents[$manifest->getPluginID()] = $plugin;
 			}
 		}
-    }
-    
-    if ($dependents) {
+	}
+
+	if ($dependents) {
 		$list = '<ul>';
 		// construct error message and prevent disabling
 		foreach ($dependents as $dependent) {
