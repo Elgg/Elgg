@@ -81,10 +81,10 @@ class Elgg_Notifications_SubscriptionsService {
 	 *     <user guid> => array('email', 'sms', 'ajax'),
 	 * );
 	 *
-	 * @param ElggEntity $entity Entity acting as a container
+	 * @param int $container_guid GUID of the entity acting as a container
 	 * @return array User GUIDs (keys) and their subscription types (values).
 	 */
-	public function getSubscriptionsForContainer(ElggEntity $entity) {
+	public function getSubscriptionsForContainer($container_guid) {
 
 		$subscriptions = array();
 
@@ -93,7 +93,7 @@ class Elgg_Notifications_SubscriptionsService {
 		}
 
 		$prefixLength = strlen(self::RELATIONSHIP_PREFIX);
-		$records = $this->getSubscriptionRecords($entity->guid);
+		$records = $this->getSubscriptionRecords($container_guid);
 		foreach ($records as $record) {
 			$deliveryMethods = explode(',', $record->methods);
 			$subscriptions[$record->guid] = substr_replace($deliveryMethods, '', 0, $prefixLength);

@@ -99,7 +99,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 	}
 
 	public function testGetSubscriptionsForContainerWithProperInput() {
-		$container = $this->getMock('ElggEntity');
+		$container_guid = 132;
 
 		$methods = array('apples', 'bananas');
 		$queryResult = array(
@@ -116,7 +116,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 		$service = new Elgg_Notifications_SubscriptionsService($this->db);
 
 		$service->methods = $methods;
-		$this->assertEquals($subscriptions, $service->getSubscriptionsForContainer($container));
+		$this->assertEquals($subscriptions, $service->getSubscriptionsForContainer($container_guid));
 	}
 
 	protected function createObjectFromArray(array $data) {
