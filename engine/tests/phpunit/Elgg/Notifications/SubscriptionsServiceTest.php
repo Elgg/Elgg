@@ -98,6 +98,12 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 		$this->assertEquals($subscriptions, $service->getSubscriptions($this->event));
 	}
 
+	public function testGetSubscriptionsForContainerWithNoMethodsRegistered() {
+		$container_guid = 132;
+		$service = new Elgg_Notifications_SubscriptionsService($this->db);
+		$this->assertEquals(array(), $service->getSubscriptionsForContainer($container_guid));
+	}
+
 	public function testGetSubscriptionsForContainerWithProperInput() {
 		$container_guid = 132;
 
