@@ -98,6 +98,33 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 		$this->assertEquals($subscriptions, $service->getSubscriptions($this->event));
 	}
 
+	public function testGetSubscriptionsForContainerWithNoMethodsRegistered() {
+		$container_guid = 132;
+		$service = new Elgg_Notifications_SubscriptionsService($this->db);
+		$this->assertEquals(array(), $service->getSubscriptionsForContainer($container_guid));
+	}
+
+	public function testGetSubscriptionsForContainerWithProperInput() {
+		$container_guid = 132;
+
+		$methods = array('apples', 'bananas');
+		$queryResult = array(
+			$this->createObjectFromArray(array('guid' => '22', 'methods' => 'notifyapples')),
+			$this->createObjectFromArray(array('guid' => '567', 'methods' => 'notifybananas,notifyapples')),
+		);
+		$subscriptions = array(
+			22 => array('apples'),
+			567 => array('bananas', 'apples'),
+		);
+		$this->db->expects($this->once())
+				->method('getData')
+				->will($this->returnValue($queryResult));
+		$service = new Elgg_Notifications_SubscriptionsService($this->db);
+
+		$service->methods = $methods;
+		$this->assertEquals($subscriptions, $service->getSubscriptionsForContainer($container_guid));
+	}
+
 	protected function createObjectFromArray(array $data) {
 		$obj = new stdClass();
 		foreach ($data as $key => $value) {
