@@ -1617,7 +1617,7 @@ class ElggInstaller {
 
 		if ($login) {
 			$handler = new Elgg_Http_DatabaseSessionHandler(_elgg_services()->db);
-			$storage = new Elgg_Http_NativeSessionStorage($handler);
+			$storage = new Elgg_Http_NativeSessionStorage(array(), $handler);
 			$session = new ElggSession($storage);
 			$session->setName('Elgg');
 			_elgg_services()->setValue('session', $session);
