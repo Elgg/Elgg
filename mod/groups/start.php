@@ -525,9 +525,9 @@ function groups_annotation_menu_setup($hook, $type, $return, $params) {
  */
 function groups_create_event_listener($event, $object_type, $object) {
 	$ac_name = elgg_echo('groups:group') . ": " . $object->name;
-	$group_guid = create_access_collection($ac_name, $object->guid);
-	if ($group_guid) {
-		$object->group_acl = $group_guid;
+	$ac_id = create_access_collection($ac_name, $object->guid);
+	if ($ac_id) {
+		$object->group_acl = $ac_id;
 	} else {
 		// delete group if access creation fails
 		return false;
