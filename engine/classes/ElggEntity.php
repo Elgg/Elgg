@@ -809,17 +809,17 @@ abstract class ElggEntity extends ElggData implements
 	 * @warning Annotating an unsaved entity more than once with the same name
 	 *          will only save the last annotation.
 	 *
-	 * @param string $name      Annotation name
-	 * @param mixed  $value     Annotation value
-	 * @param int    $access_id Access ID
-	 * @param int    $owner_id  GUID of the annotation owner
-	 * @param string $vartype   The type of annotation value
+	 * @param string $name       Annotation name
+	 * @param mixed  $value      Annotation value
+	 * @param int    $access_id  Access ID
+	 * @param int    $owner_guid GUID of the annotation owner
+	 * @param string $vartype    The type of annotation value
 	 *
 	 * @return bool|int Returns int if an annotation is saved
 	 */
-	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_id = 0, $vartype = "") {
+	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_guid = 0, $vartype = "") {
 		if ((int) $this->guid > 0) {
-			return create_annotation($this->getGUID(), $name, $value, $vartype, $owner_id, $access_id);
+			return create_annotation($this->getGUID(), $name, $value, $vartype, $owner_guid, $access_id);
 		} else {
 			$this->temp_annotations[$name] = $value;
 		}

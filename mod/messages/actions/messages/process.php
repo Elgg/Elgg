@@ -3,9 +3,9 @@
  * Process a set of messages
  */
 
-$message_ids = get_input('message_id', array());
+$message_guids = get_input('message_id', array());
 
-if (!$message_ids) {
+if (!$message_guids) {
 	register_error(elgg_echo('messages:error:messages_not_selected'));
 	forward(REFERER);
 }
@@ -15,7 +15,7 @@ $read_flag = get_input('read', false);
 
 if ($delete_flag) {
 	$success_msg = elgg_echo('messages:success:delete');
-	foreach ($message_ids as $guid) {
+	foreach ($message_guids as $guid) {
 		$message = get_entity($guid);
 		if (elgg_instanceof($message, 'object', 'messages') && $message->canEdit()) {
 			$message->delete();
@@ -23,7 +23,7 @@ if ($delete_flag) {
 	}
 } else {
 	$success_msg = elgg_echo('messages:success:read');
-	foreach ($message_ids as $guid) {
+	foreach ($message_guids as $guid) {
 		$message = get_entity($guid);
 		if (elgg_instanceof($message, 'object', 'messages') && $message->canEdit()) {
 			$message->readYet = 1;
