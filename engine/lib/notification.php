@@ -137,6 +137,27 @@ function elgg_remove_subscription($user_guid, $method, $target_guid) {
 }
 
 /**
+ * Get the subscriptions for the content created inside this container.
+ *
+ * The return array is of the form:
+ *
+ * array(
+ *     <user guid> => array('email', 'sms', 'ajax'),
+ * );
+ *
+ * @param int $container_guid GUID of the entity acting as a container
+ * @return array User GUIDs (keys) and their subscription types (values).
+ * @since 1.9
+ * @todo deprecate once new subscriptions system has been added
+ */
+function elgg_get_subscriptions_for_container($container_guid) {
+	$methods = _elgg_services()->notifications->getMethods();
+	$db = _elgg_services()->db;
+	$subs = new Elgg_Notifications_SubscriptionsService($db, $methods);
+	return $subs->getSubscriptionsForContainer($container_guid);
+}
+
+/**
  * Queue a notification event for later handling
  *
  * Checks to see if this event has been registered for notifications.
