@@ -23,7 +23,7 @@ $buttons = elgg_view_menu('title', array(
 if ($title || $buttons) {
 	echo '<div class="elgg-head clearfix">';
 	// @todo .elgg-heading-main supports action buttons - maybe rename class name?
-	echo elgg_view_title($vars['title'], array('class' => 'elgg-heading-main'));
 	echo $buttons;
+	echo elgg_view_title($vars['title'], array('class' => 'elgg-heading-main'));
 	echo '</div>';
 }
