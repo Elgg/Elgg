@@ -91,11 +91,8 @@ $types = get_registered_entity_types();
 $custom_types = elgg_trigger_plugin_hook('search_types', 'get_types', $params, array());
 
 // add sidebar items for all and native types
-// @todo should these maintain any existing type / subtype filters or reset?
 $data = htmlspecialchars(http_build_query(array(
 	'q' => $query,
-	'entity_subtype' => $entity_subtype,
-	'entity_type' => $entity_type,
 	'owner_guid' => $owner_guid,
 	'search_type' => 'all',
 	//'friends' => $friends
