@@ -23,6 +23,8 @@ function categories_init() {
 	// To keep the category plugins in the settings area and because we have to do special stuff,
 	// handle saving ourself.
 	elgg_register_plugin_hook_handler('action', 'plugins/settings/save', 'categories_save_site_categories');
+	
+	elgg_register_tag_metadata_name("universal_categories");
 }
 
 

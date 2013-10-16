@@ -10,4 +10,5 @@ return array(
 	'categories:save:success' => 'Site categories were successfully saved.',
 	'categories:results' => "Results for the site category: %s",
 	'categories:on_activate_reminder' => "Site-wide Categories won't work until you add categories. <a href=\"%s\">Add categories now.</a>",
+	'tag_names:universal_categories' => "Categories",
 );
