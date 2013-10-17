@@ -97,15 +97,9 @@ h6 { font-size: 0.8em; }
 	text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.4);
 	text-decoration: none;
 }
-/* Push down headings without the class elgg-heading-main (e.g. logged out activity, friends, register) */
-.elgg-main .elgg-head > h2 {
-	display: inline-block;
-	padding-top: 15px;
-}
-
 .elgg-heading-main {
 	display: inline-block;
-	max-width: 530px;
+	padding-top: 15px;
 	margin-right: 10px;
 }
 .elgg-heading-basic {
