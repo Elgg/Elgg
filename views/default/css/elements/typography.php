@@ -103,8 +103,6 @@ h6 { font-size: 0.8em; }
 }
 
 .elgg-heading-main {
-	float: left;
-	max-width: 530px;
 	margin-right: 10px;
 }
 .elgg-heading-basic {
