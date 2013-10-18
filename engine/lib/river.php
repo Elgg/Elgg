@@ -108,26 +108,24 @@ function elgg_create_river_item(array $options = array()) {
 		return true;
 	}
 
-	extract($values);
-
 	$dbprefix = elgg_get_config('dbprefix');
 
 	$id = insert_data("INSERT INTO {$dbprefix}river " .
-		" SET type = '$type', " .
-		" subtype = '$subtype', " .
-		" action_type = '$action_type', " .
-		" access_id = $access_id, " .
-		" view = '$view', " .
-		" subject_guid = $subject_guid, " .
-		" object_guid = $object_guid, " .
-		" target_guid = $target_guid, " .
-		" annotation_id = $annotation_id, " .
-		" posted = $posted");
+		" SET type = '{$values['type']}', " .
+		" subtype = '{$values['subtype']}', " .
+		" action_type = '{$values['action_type']}', " .
+		" access_id = {$values['access_id']}, " .
+		" view = '{$values['view']}', " .
+		" subject_guid = {$values['subject_guid']}, " .
+		" object_guid = {$values['object_guid']}, " .
+		" target_guid = {$values['target_guid']}, " .
+		" annotation_id = {$values['annotation_id']}, " .
+		" posted = {$values['posted']}");
 
 	// update the entities which had the action carried out on it
 	// @todo shouldn't this be done elsewhere? Like when an annotation is saved?
 	if ($id) {
-		update_entity_last_action($object_guid, $posted);
+		update_entity_last_action($values['object_guid'], $values['posted']);
 
 		$river_items = elgg_get_river(array('id' => $id));
 		if ($river_items) {
