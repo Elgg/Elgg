@@ -14,6 +14,7 @@ if (!$user) {
 $icon = elgg_view_entity_icon($user, 'large', array(
 	'use_hover' => false,
 	'use_link' => false,
+	'img_class' => 'photo u-photo',
 ));
 
 // grab the actions and admin menu items from user hover
