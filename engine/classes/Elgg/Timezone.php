@@ -1,5 +1,5 @@
 <?php
-class ElggTimezone {
+class Elgg_Timezone {
 
 	/**
 	 * Configurations of particular timezones. Key of main array is the string - id of timezone.
@@ -40,7 +40,7 @@ class ElggTimezone {
 	
 	static function format($format, $ts, $user=null) {
 		$date = new DateTime('@'.$ts);
-		$date->setTimezone(new DateTimeZone(ElggTimezone::getCurrentId($user)));
+		$date->setTimezone(new DateTimeZone(Elgg_Timezone::getCurrentId($user)));
 		return $date->format($format);
 	}
 	

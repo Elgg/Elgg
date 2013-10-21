@@ -13,8 +13,8 @@ if ($user) {
 	$content = elgg_echo('user:timezone:label') . ': ';
 	$content .= elgg_view("input/dropdown", array(
 		'name' => 'timezone',
-		'value' => ElggTimezone::getCurrentId($user),
-		'options_values' => ElggTimezone::getOptionsValues()
+		'value' => Elgg_Timezone::getCurrentId($user),
+		'options_values' => Elgg_Timezone::getOptionsValues()
 	));
 	echo elgg_view_module('info', $title, $content);
 }

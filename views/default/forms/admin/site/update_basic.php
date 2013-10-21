@@ -29,8 +29,8 @@ $form_body .= elgg_view("input/select", array(
 $form_body .= "<div>" . elgg_echo('installation:timezone');
 $form_body .= elgg_view("input/dropdown", array(
 	'name' => 'timezone',
-	'value' => ElggTimezone::getCurrentId(),
-	'options_values' => ElggTimezone::getOptionsValues(),
+	'value' => Elgg_Timezone::getCurrentId(),
+	'options_values' => Elgg_Timezone::getOptionsValues(),
 )) . "</div>";
 
 $form_body .= '<div class="elgg-foot">';
