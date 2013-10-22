@@ -399,7 +399,7 @@ function remove_subtype($type, $subtype) {
 		$SUBTYPE_CACHE = null;
 	}
 	
-	return $success;
+	return (bool) $success;
 }
 
 /**
