@@ -21,7 +21,7 @@
  * @package    Elgg.Core
  * @subpackage DataMode.Site
  * @link       http://docs.elgg.org/DataModel/Sites
- * 
+ *
  * @property string $name        The name or title of the website
  * @property string $description A motto, mission statement, or description of the website
  * @property string $url         The root web address for the site, including trailing slash
@@ -192,6 +192,15 @@ class ElggSite extends ElggEntity {
 		}
 
 		return parent::disable($reason, $recursive);
+	}
+	
+	/**
+	 * Returns the URL for this site
+	 *
+	 * @return string The URL
+	 */
+	public function getURL() {
+		return $this->url;
 	}
 
 	/**
