@@ -369,7 +369,7 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  * view, $view_name plugin hook.
  *
  * @warning Any variables in $_SESSION will override passed vars
- * upon name collision.  See {@trac #2124}.
+ * upon name collision.  See https://github.com/Elgg/Elgg/issues/2124
  *
  * @param string  $view     The name and location of the view to use
  * @param array   $vars     Variables to pass to the view.
@@ -795,7 +795,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
  *  - bool 'full_view' Whether to show a full or condensed view.
  *
  * @tip This function can automatically appends annotations to entities if in full
- * view and a handler is registered for the entity:annotate.  See {@trac 964} and
+ * view and a handler is registered for the entity:annotate.  See https://github.com/Elgg/Elgg/issues/964 and
  * {@link elgg_view_entity_annotations()}.
  *
  * @param ElggEntity $entity The entity to display

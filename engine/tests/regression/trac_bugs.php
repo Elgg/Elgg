@@ -1,7 +1,7 @@
 <?php
 /**
- * Elgg Regression Tests -- Trac Bugfixes
- * Any bugfixes from Trac that require testing belong here.
+ * Elgg Regression Tests -- GitHub Bugfixes
+ * Any bugfixes from GitHub that require testing belong here.
  *
  * @package Elgg
  * @subpackage Test
