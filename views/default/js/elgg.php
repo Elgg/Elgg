@@ -45,7 +45,7 @@ $root_path = elgg_get_root_path();
 
 foreach ($files as $file) {
 	readfile("{$root_path}$file.js");
-	// putting a new line between the files to address http://trac.elgg.org/ticket/3081
+	// putting a new line between the files to address https://github.com/Elgg/Elgg/issues/3081
 	echo "\n";
 }
 

@@ -399,7 +399,7 @@ abstract class ElggEntity extends ElggData implements
 					'limit' => 0
 				);
 				// @todo in 1.9 make this return false if can't add metadata
-				// http://trac.elgg.org/ticket/4520
+				// https://github.com/Elgg/Elgg/issues/4520
 				// 
 				// need to remove access restrictions right now to delete
 				// because this is the expected behavior
@@ -1736,7 +1736,7 @@ abstract class ElggEntity extends ElggData implements
 				$this->tables_loaded++;
 			}
 
-			// guid needs to be an int  http://trac.elgg.org/ticket/4111
+			// guid needs to be an int  https://github.com/Elgg/Elgg/issues/4111
 			$this->attributes['guid'] = (int)$this->attributes['guid'];
 
 			// subtype needs to be denormalized

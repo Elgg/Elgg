@@ -679,7 +679,7 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @tip When referring to events, the preferred syntax is "event, type".
  *
  * @internal Only rarely should events be changed, added, or removed in core.
- * When making changes to events, be sure to first create a ticket in trac.
+ * When making changes to events, be sure to first create a ticket on gihub.
  *
  * @internal @tip Think of $object_type as the primary namespace element, and
  * $event as the secondary namespace.

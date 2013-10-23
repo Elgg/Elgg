@@ -257,7 +257,7 @@ class Elgg_AttributeLoader {
 		// Note: If there are still missing attributes, we're running on a 1.7 or earlier schema. We let
 		// this pass so the upgrades can run.
 
-		// guid needs to be an int  http://trac.elgg.org/ticket/4111
+		// guid needs to be an int  https://github.com/Elgg/Elgg/issues/4111
 		foreach (self::$integer_attr_names as $key) {
 			if (isset($row[$key])) {
 				$row[$key] = (int) $row[$key];
