@@ -3,7 +3,7 @@
  * Elgg 1.8.3 upgrade 2012041801
  * multiple_user_tokens
  *
- * Fixes http://trac.elgg.org/ticket/4291
+ * Fixes https://github.com/elgg/elgg/issues/4291
  * Removes the unique index on users_apisessions for user_guid and site_guid
  */
 

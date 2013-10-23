@@ -1249,7 +1249,7 @@ function elgg_view_river_item($item, array $vars = array()) {
 
 	// @todo this needs to be cleaned up
 	// Don't hide objects in closed groups that a user can see.
-	// see http://trac.elgg.org/ticket/4789
+	// see https://github.com/elgg/elgg/issues/4789
 	//	else {
 	//		// hide based on object's container
 	//		$visibility = ElggGroupItemVisibility::factory($object->container_guid);

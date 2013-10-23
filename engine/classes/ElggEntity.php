@@ -24,7 +24,7 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Entities
- * 
+ *
  * @property string $type           object, user, group, or site (read-only after save)
  * @property string $subtype        Further clarifies the nature of the entity (read-only after save)
  * @property int    $guid           The unique identifier for this entity (read only)
@@ -352,8 +352,8 @@ abstract class ElggEntity extends ElggData implements
 					'limit' => 0
 				);
 				// @todo in 1.9 make this return false if can't add metadata
-				// http://trac.elgg.org/ticket/4520
-				// 
+				// https://github.com/elgg/elgg/issues/4520
+				//
 				// need to remove access restrictions right now to delete
 				// because this is the expected behavior
 				$ia = elgg_set_ignore_access(true);
@@ -379,7 +379,7 @@ abstract class ElggEntity extends ElggData implements
 			// unsaved entity. store in temp array
 			// returning single entries instead of an array of 1 element is decided in
 			// getMetaData(), just like pulling from the db.
-			// 
+			//
 			// if overwrite, delete first
 			if (!$multiple || !isset($this->temp_metadata[$name])) {
 				$this->temp_metadata[$name] = array();
@@ -964,7 +964,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @tip Can be overridden by registering for the permissions_check:comment,
 	 * <entity type> plugin hook.
-	 * 
+	 *
 	 * @param int $user_guid User guid (default is logged in user)
 	 *
 	 * @return bool
@@ -1365,7 +1365,7 @@ abstract class ElggEntity extends ElggData implements
 				$this->attributes['tables_loaded']++;
 			}
 
-			// guid needs to be an int  http://trac.elgg.org/ticket/4111
+			// guid needs to be an int  https://github.com/elgg/elgg/issues/4111
 			$this->attributes['guid'] = (int)$this->attributes['guid'];
 
 			// Cache object handle

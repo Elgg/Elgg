@@ -519,7 +519,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		$this->assertIdentical($elements_sorted_string, $test_elements);
 	}
 
-	// see http://trac.elgg.org/ticket/4288
+	// see https://github.com/elgg/elgg/issues/4288
 	public function testElggBatchIncOffset() {
 		// normal increment
 		$options = array(

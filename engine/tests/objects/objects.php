@@ -194,7 +194,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$old = elgg_set_ignore_access(true);
 	}
 
-	// see http://trac.elgg.org/ticket/1196
+	// see https://github.com/elgg/elgg/issues/1196
 	public function testElggEntityRecursiveDisableWhenLoggedOut() {
 		$e1 = new ElggObject();
 		$e1->access_id = ACCESS_PUBLIC;

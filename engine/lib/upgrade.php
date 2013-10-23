@@ -245,7 +245,7 @@ function version_upgrade() {
 
 	// No version number? Oh snap...this is an upgrade from a clean installation < 1.7.
 	// Run all upgrades without error reporting and hope for the best.
-	// See http://trac.elgg.org/elgg/ticket/1432 for more.
+	// See https://github.com/elgg/elgg/issues/1432 for more.
 	$quiet = !$dbversion;
 
 	// Note: Database upgrades are deprecated as of 1.8.  Use code upgrades.  See #1433

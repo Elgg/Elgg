@@ -139,7 +139,7 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 
 	// Make sure metadata with multiple values is correctly deleted when re-written
 	// by another user
-	// http://trac.elgg.org/ticket/2776
+	// https://github.com/elgg/elgg/issues/2776
 	public function test_elgg_metadata_multiple_values() {
 		$u1 = new ElggUser();
 		$u1->username = rand();
