@@ -7,7 +7,7 @@
 	<description>This is a longer, more interesting description of my plugin, its features, and other important information.</description>
 	<website>http://www.elgg.org/</website>
 	<repository>https://github.com/Elgg/Elgg</repository>
-	<bugtracker>http://trac.elgg.org</bugtracker>
+	<bugtracker>https://github.com/Elgg/Elgg/issues</bugtracker>
 	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>(C) Elgg 2011</copyright>
 	<license>GNU General Public License version 2</license>

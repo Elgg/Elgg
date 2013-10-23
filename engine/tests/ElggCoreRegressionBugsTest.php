@@ -1,7 +1,7 @@
 <?php
 /**
- * Elgg Regression Tests -- Trac Bugfixes
- * Any bugfixes from Trac that require testing belong here.
+ * Elgg Regression Tests -- Bugfixes
+ * Any bugfixes from Github that require testing belong here.
  *
  * @package Elgg
  * @subpackage Test
@@ -147,8 +147,8 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	}
 
 	/**
-	 * http://trac.elgg.org/ticket/3210 - Don't remove -s in friendly titles
-	 * http://trac.elgg.org/ticket/2276 - improve char encoding
+	 * https://github.com/Elgg/Elgg/issues/3210 - Don't remove -s in friendly titles
+	 * https://github.com/Elgg/Elgg/issues/2276 - improve char encoding
 	 */
 	public function test_friendly_title() {
 		$cases = array(
