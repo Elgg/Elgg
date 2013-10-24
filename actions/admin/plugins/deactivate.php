@@ -10,9 +10,6 @@
  * @package Elgg.Core
  * @subpackage Administration.Plugins
  */
- 
- // prevent disabling plugins with active dependents
- elgg_register_event_handler('deactivate', 'plugin', 'plugins_deactivate_dependency_check');
 
 $plugin_guids = get_input('plugin_guids');
 
