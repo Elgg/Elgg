@@ -817,10 +817,11 @@ function discussion_init() {
 	elgg_register_ajax_view('ajax/discussion/reply/edit');
 
 	// notifications
+	elgg_register_plugin_hook_handler('get', 'subscriptions', 'discussion_get_subscriptions');
 	elgg_register_notification_event('object', 'groupforumtopic');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:groupforumtopic', 'discussion_prepare_notification');
-	elgg_register_event_handler('create', 'annotation', 'discussion_reply_notifications');
-	elgg_register_plugin_hook_handler('notify:annotation:message', 'group_topic_post', 'discussion_create_reply_notification');
+	elgg_register_notification_event('object', 'discussion_reply');
+	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:discussion_reply', 'discussion_prepare_reply_notification');
 }
 
 /**
@@ -869,7 +870,10 @@ function discussion_page_handler($page) {
 }
 
 /**
- * Override the discussion topic url
+ * Override the url for discussion topics and replies
+ *
+ * Discussion replies do not have their own page so their url is
+ * the same as the topic url.
  *
  * @param string $hook
  * @param string $type
@@ -879,9 +883,19 @@ function discussion_page_handler($page) {
  */
 function discussion_set_topic_url($hook, $type, $url, $params) {
 	$entity = $params['entity'];
-	if (elgg_instanceof($entity, 'object', 'groupforumtopic')) {
-		return 'discussion/view/' . $entity->guid . '/' . elgg_get_friendly_title($entity->title);
+
+	if (elgg_instanceof($entity, 'object', 'discussion_reply')) {
+		$topic = $entity->getContainerEntity();
+		$title = elgg_get_friendly_title($topic->title);
+		return "discussion/view/{$topic->guid}/{$title}";
 	}
+
+	if (elgg_instanceof($entity, 'object', 'groupforumtopic')) {
+		$title = elgg_get_friendly_title($entity->title);
+		return "discussion/view/{$entity->guid}/{$title}";
+	}
+
+	return $url;
 }
 
 /**
@@ -1002,27 +1016,52 @@ function discussion_prepare_notification($hook, $type, $notification, $params) {
 }
 
 /**
- * Create discussion reply notification body
+ * Prepare a notification message about a new discussion reply
  *
- * @param string $hook
- * @param string $type
- * @param string $message
- * @param array  $params
+ * @param string                          $hook         Hook name
+ * @param string                          $type         Hook type
+ * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param array                           $params       Hook parameters
+ * @return Elgg_Notifications_Notification
  */
-function discussion_create_reply_notification($hook, $type, $message, $params) {
-	$reply = $params['annotation'];
-	$method = $params['method'];
-	$topic = $reply->getEntity();
+function discussion_prepare_reply_notification($hook, $type, $notification, $params) {
+	$reply = $params['event']->getObject();
+	$topic = $reply->getContainerEntity();
 	$poster = $reply->getOwnerEntity();
 	$group = $topic->getContainerEntity();
 
-	return elgg_echo('discussion:notification:reply:body', array(
+	$notification->subject = elgg_echo('discussion:reply:notify:subject', array($topic->title), $language);
+	$notification->body = elgg_echo('discussion:reply:notify:body', array(
 		$poster->name,
 		$topic->title,
 		$group->name,
-		$reply->value,
+		$reply->description,
 		$topic->getURL(),
-	));
+	), $language);
+	$notification->summary = elgg_echo('discussion:reply:notify:summary', array($topic->title), $language);
+
+	return $notification;
+}
+
+/**
+ * Get subscriptions for group notifications
+ *
+ * @param string $hook   'get'
+ * @param string $type   'subscriptions'
+ * @param array  $return Array containing subscriptions in the form
+ *                       <user guid> => array('email', 'site', etc.)
+ * @param array  $params Hook parameters
+ * @return array
+ */
+function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
+	$reply = $params['event']->getObject();
+
+	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
+		return $return;
+	}
+
+	$group_guid = $reply->getContainerEntity()->container_guid;
+	return elgg_get_subscriptions_for_container($group_guid);
 }
 
 /**

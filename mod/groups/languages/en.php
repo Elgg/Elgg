@@ -98,7 +98,9 @@ View and reply to the discussion topic:
 %s
 ',
 
-	'discussion:notification:reply:body' =>
+	'discussion:reply:notify:summary' => 'New reply in topic: %s',
+	'discussion:reply:notify:subject' => 'New reply in topic: %s',
+	'discussion:reply:notify:body' =>
 '%s replied to the discussion topic %s in the group %s:
 
 %s
