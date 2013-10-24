@@ -271,7 +271,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->save_entity();
 
 		// test deleting incorrectly
-		// @link http://trac.elgg.org/ticket/2273
+		// @link https://github.com/elgg/elgg/issues/2273
 		$this->assertNull($this->entity->deleteMetadata('impotent'));
 		$this->assertEqual($this->entity->important, 'indeed!');
 

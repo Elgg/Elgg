@@ -129,7 +129,7 @@ function establish_db_link($dblinkname = "readwrite") {
 	// Set up cache if global not initialized and query cache not turned off
 	if ((!$DB_QUERY_CACHE) && (!$db_cache_off)) {
 		// @todo if we keep this cache in 1.9, expose the size as a config parameter
-		$DB_QUERY_CACHE = new ElggLRUCache(200);		
+		$DB_QUERY_CACHE = new ElggLRUCache(200);
 	}
 }
 
@@ -399,14 +399,14 @@ function elgg_query_runner($query, $callback = null, $single = false) {
 
 	// Since we want to cache results of running the callback, we need to
 	// need to namespace the query with the callback and single result request.
-	// http://trac.elgg.org/ticket/4049
+	// https://github.com/elgg/elgg/issues/4049
 	$hash = (string)$callback . (int)$single . $query;
 
 	// Is cached?
 	if ($DB_QUERY_CACHE) {
 		if (isset($DB_QUERY_CACHE[$hash])) {
 			elgg_log("DB query $query results returned from cache (hash: $hash)", 'NOTICE');
-			return $DB_QUERY_CACHE[$hash];			
+			return $DB_QUERY_CACHE[$hash];
 		}
 	}
 
@@ -524,7 +524,7 @@ function delete_data($query) {
 
 /**
  * Invalidate the query cache
- * 
+ *
  * @access private
  */
 function _elgg_invalidate_query_cache() {
@@ -533,7 +533,7 @@ function _elgg_invalidate_query_cache() {
 		$DB_QUERY_CACHE->clear();
 		elgg_log("Query cache invalidated", 'NOTICE');
 	} elseif ($DB_QUERY_CACHE) {
-		// In case someone sets the cache to an array and primes it with data 
+		// In case someone sets the cache to an array and primes it with data
 		$DB_QUERY_CACHE = array();
 		elgg_log("Query cache invalidated", 'NOTICE');
 	}
@@ -668,7 +668,7 @@ function run_sql_script($scriptlocation) {
 
 /**
  * Format a query string for logging
- * 
+ *
  * @param string $query Query string
  * @return string
  * @access private

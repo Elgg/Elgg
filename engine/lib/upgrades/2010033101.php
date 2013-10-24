@@ -1,7 +1,7 @@
 <?php
 
 /**
- * Conditional upgrade for UTF8 as described in http://trac.elgg.org/ticket/1928
+ * Conditional upgrade for UTF8 as described in https://github.com/elgg/elgg/issues/1928
  */
 
 // get_version() returns the code version.

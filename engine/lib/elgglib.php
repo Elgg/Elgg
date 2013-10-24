@@ -1350,7 +1350,7 @@ function full_url() {
 		"" : (":" . $_SERVER["SERVER_PORT"]);
 
 	// This is here to prevent XSS in poorly written browsers used by 80% of the population.
-	// {@trac [5813]}
+	// https://github.com/Elgg/Elgg/commit/0c947e80f512cb0a482b1864fd0a6965c8a0cd4a
 	$quotes = array('\'', '"');
 	$encoded = array('%27', '%22');
 
@@ -2249,7 +2249,7 @@ function elgg_api_test($hook, $type, $value, $params) {
  *
  * @warning ACCESS_DEFAULT is a place holder for the input/access view. Do not
  * use it when saving an entity.
- * 
+ *
  * @var int
  */
 define('ACCESS_DEFAULT', -1);

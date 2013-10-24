@@ -1,7 +1,7 @@
 <?php
 /**
- * Elgg Regression Tests -- Trac Bugfixes
- * Any bugfixes from Trac that require testing belong here.
+ * Elgg Regression Tests -- GitHub Bugfixes
+ * Any bugfixes from GitHub that require testing belong here.
  *
  * @package Elgg
  * @subpackage Test
@@ -201,8 +201,8 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	}
 
 	/**
-	 * http://trac.elgg.org/ticket/3210 - Don't remove -s in friendly titles
-	 * http://trac.elgg.org/ticket/2276 - improve char encoding
+	 * https://github.com/elgg/elgg/issues/3210 - Don't remove -s in friendly titles
+	 * https://github.com/elgg/elgg/issues/2276 - improve char encoding
 	 */
 	public function test_friendly_title() {
 		$cases = array(
@@ -216,7 +216,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			=> "a-a-a-a-a-a-aaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
 			
 			// separators trimmed
-			"-_ hello _-" 
+			"-_ hello _-"
 			=> "hello",
 
 			// accents removed, lower case, other multibyte chars are URL encoded
@@ -286,7 +286,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 			'web archive anchor <a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>' =>
 				'web archive anchor <a href="http://web.archive.org/web/20000229040250/http://www.google.com/">google</a>',
 
-			'single quotes already anchor <a href=\'http://www.yahoo.com\'>yahoo</a>' => 
+			'single quotes already anchor <a href=\'http://www.yahoo.com\'>yahoo</a>' =>
 				'single quotes already anchor <a href=\'http://www.yahoo.com\'>yahoo</a>',
 
 			'unquoted already anchor <a href=http://www.yahoo.com>yahoo</a>' =>
@@ -302,7 +302,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	
 	/**
 	 * Ensure additional select columns do not end up in entity attributes.
-	 * 
+	 *
 	 * https://github.com/Elgg/Elgg/issues/5538
 	 */
 	public function test_extra_columns_dont_appear_in_attributes() {

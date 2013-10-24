@@ -4,7 +4,7 @@
  * Loads ElggEntity attributes from DB or validates those passed in via constructor
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage DataModel
  */
@@ -69,7 +69,7 @@ class ElggAttributeLoader {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param string $class             class of object being loaded
 	 * @param string $required_type     entity type this is being used to populate
 	 * @param array  $initialized_attrs attributes after initializeAttributes() has been run
@@ -94,7 +94,7 @@ class ElggAttributeLoader {
 
 	/**
 	 * Get primary attributes missing that are missing
-	 * 
+	 *
 	 * @param stdClass $row Database row
 	 * @return array
 	 */
@@ -104,7 +104,7 @@ class ElggAttributeLoader {
 
 	/**
 	 * Get secondary attributes that are missing
-	 * 
+	 *
 	 * @param stdClass $row Database row
 	 * @return array
 	 */
@@ -114,7 +114,7 @@ class ElggAttributeLoader {
 
 	/**
 	 * Check that the type is correct
-	 * 
+	 *
 	 * @param stdClass $row Database row
 	 * @return void
 	 * @throws InvalidClassException
@@ -216,7 +216,7 @@ class ElggAttributeLoader {
 		// Note: If there are still missing attributes, we're running on a 1.7 or earlier schema. We let
 		// this pass so the upgrades can run.
 
-		// guid needs to be an int  http://trac.elgg.org/ticket/4111
+		// guid needs to be an int  https://github.com/elgg/elgg/issues/4111
 		$row['guid'] = (int) $row['guid'];
 
 		return $row;

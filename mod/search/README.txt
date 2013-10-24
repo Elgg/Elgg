@@ -273,4 +273,4 @@ MySQL's fulltext engine returns *ZERO* rows if more than 50% of
 the rows searched match.
 
 The default search hooks for users and groups ignore subtypes.
-See [trac ticket 1499](http://trac.elgg.org/elgg/ticket/1499)
+See [GitHub issue 1499](https://github.com/elgg/elgg/issues/1499)
