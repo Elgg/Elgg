@@ -1149,6 +1149,8 @@ function plugin_init() {
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'plugins_test');
 	
+	// note - plugins are booted by the time this handler is registered
+	// deactivation due to error may have already occurred
 	elgg_register_event_handler('deactivate', 'plugin', 'plugins_deactivate_dependency_check');
 
 	elgg_register_action("plugins/settings/save", '', 'admin');
