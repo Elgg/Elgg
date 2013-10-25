@@ -15,9 +15,16 @@
  *
  */
 
+// bail if set to a unusable value
+if (isset($vars['options_values'])) {
+	if (!is_array($vars['options_values']) || empty($vars['options_values'])) {
+		return;
+	}
+}
+
 $vars['class'] = trim("elgg-input-access " . elgg_extract('class', $vars, ''));
 
-// will be passed to plugin hooks ['access:collections:write', 'user'] and ['default', 'access']
+// this will be passed to plugin hooks ['access:collections:write', 'user'] and ['default', 'access']
 $params = array();
 
 $keys = array(
@@ -36,6 +43,7 @@ foreach ($keys as $key => $default_value) {
 $entity = $params['entity'];
 
 if ($entity) {
+	$params['value'] = $entity->access_id;
 	$params['entity_type'] = $entity->type;
 	$params['entity_subtype'] = $entity->getSubtype();
 	$params['container_guid'] = $entity->container_guid;
@@ -46,34 +54,41 @@ if (!$params['container_guid'] && $container) {
 	$params['container_guid'] = $container->guid;
 }
 
-$defaults = array(
-	'disabled' => false,
-	'value' => get_default_access(null, $params),
-	'options_values' => get_write_access_array(0, 0, false, $params),
-);
+// don't call get_default_access() unless we need it
+if (!isset($vars['value']) || $vars['value'] == ACCESS_DEFAULT) {
+	if ($entity) {
+		$vars['value'] = $entity->access_id;
+	} else {
+		$vars['value'] = get_default_access(null, $params);
+	}
+}
+
+$params['value'] = $vars['value'];
+
+// don't call get_write_access_array() unless we need it
+if (!isset($vars['options_values'])) {
+	$vars['options_values'] = get_write_access_array(0, 0, false, $params);
+}
+
+if (!isset($vars['disabled'])) {
+	$vars['disabled'] = false;
+}
+
+// if access is set to a value not present in the available options, add the option
+if (!isset($vars['options_values'][$vars['value']])) {
+	$acl = get_access_collection($vars['value']);
+	$display = $acl ? $acl->name : elgg_echo('access:missing_name');
+	$vars['options_values'][$defaults['value']] = $display;
+}
 
 // should we tell users that public/logged-in access levels will be ignored?
 if (($container instanceof ElggGroup)
-		&& $container->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY
-		&& !elgg_in_context('group-edit')
-		&& !($entity instanceof ElggGroup)) {
+	&& $container->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY
+	&& !elgg_in_context('group-edit')
+	&& !($entity instanceof ElggGroup)) {
 	$show_override_notice = true;
 } else {
 	$show_override_notice = false;
-}
-
-if ($entity) {
-	$defaults['value'] = $entity->access_id;
-}
-
-$vars = array_merge($defaults, $vars);
-
-if ($vars['value'] == ACCESS_DEFAULT) {
-	$vars['value'] = get_default_access(null, $params);
-}
-
-if (empty($vars['options_values'])) {
-	return;
 }
 
 if ($show_override_notice) {
