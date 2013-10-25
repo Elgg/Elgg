@@ -411,21 +411,19 @@ function pages_is_page($value) {
  *
  * @param string $hook
  * @param string $type
- * @param array  $value
+ * @param array  $return_value
  * @param array  $params
  *
  * @return array
  */
-function pages_write_access_options_hook($hook, $type, $value, $params) {
-	if (empty($params['input_params']['entity_subtype'])) {
-		return;
-	}
-	if (!in_array($params['input_params']['entity_subtype'], array('page', 'page_top'))) {
-		return;
+function pages_write_access_options_hook($hook, $type, $return_value, $params) {
+	if (empty($params['input_params']['entity_subtype'])
+			|| !in_array($params['input_params']['entity_subtype'], array('page', 'page_top'))) {
+		return null;
 	}
 
 	if ($params['input_params']['purpose'] === 'write') {
-		unset($value[ACCESS_PUBLIC]);
-		return $value;
+		unset($return_value[ACCESS_PUBLIC]);
+		return $return_value;
 	}
 }
