@@ -40,7 +40,13 @@ $guid = elgg_extract('guid', $vars, null);
 </div>
 <div>
 	<label><?php echo elgg_echo('access'); ?></label><br />
-	<?php echo elgg_view('input/access', array('name' => 'access_id', 'value' => $access_id)); ?>
+	<?php echo elgg_view('input/access', array(
+		'name' => 'access_id',
+		'value' => $access_id,
+		'entity' => get_entity($guid),
+		'entity_type' => 'object',
+		'entity_subtype' => 'groupforumtopic',
+	)); ?>
 </div>
 <div class="elgg-foot">
 <?php

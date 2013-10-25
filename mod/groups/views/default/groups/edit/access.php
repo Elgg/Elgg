@@ -47,7 +47,10 @@ $content_access_mode = elgg_extract("content_access_mode", $vars);
 			"name" => "vis",
 			"id" => "groups-vis",
 			"value" => $visibility,
-			"options_values" => $visibility_options
+			"options_values" => $visibility_options,
+			'entity' => $entity,
+			'entity_type' => 'group',
+			'entity_subtype' => '',
 		));
 		?>
 	</div>
