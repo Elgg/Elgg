@@ -1104,7 +1104,17 @@ function plugins_test($hook, $type, $value, $params) {
 	return $value;
 }
 
-function plugins_deactivate_dependency_check($event, $type, $params) {
+/**
+ * Checks on deactivate plugin event if disabling it won't create unmet dependencies and blocks disable in such case.
+ *
+ * @param string $event  deactivate
+ * @param string $type   plugin
+ * @param array  $params Parameters array containing entry with ELggPlugin instance under 'plugin_entity' key
+ * @return bool  false to block plugin deactivation action
+ *
+ * @access private
+ */
+function _plugins_deactivate_dependency_check($event, $type, $params) {
 	$plugin_id = $params['plugin_entity']->getManifest()->getPluginID();
 	$plugin_name = $params['plugin_entity']->getManifest()->getName();
 
@@ -1114,7 +1124,7 @@ function plugins_deactivate_dependency_check($event, $type, $params) {
 	foreach ($active_plugins as $plugin) {
 		$manifest = $plugin->getManifest();
 		$requires = $manifest->getRequires();
-    
+
 		foreach ($requires as $required) {
 			if ($required['type'] == 'plugin' && $required['name'] == $plugin_id) {
 				// there are active dependents
@@ -1130,11 +1140,11 @@ function plugins_deactivate_dependency_check($event, $type, $params) {
 			$list .= '<li>' . $dependent->getManifest()->getName() . '</li>';
 		}
 		$list .= '</ul>';
-		
+
 		register_error(elgg_echo('ElggPlugin:Dependencies:ActiveDependent', array($plugin_name, $list)));
-		
+
 		return false;
-    }
+	}
 }
 
 /**
@@ -1151,7 +1161,7 @@ function plugin_init() {
 	
 	// note - plugins are booted by the time this handler is registered
 	// deactivation due to error may have already occurred
-	elgg_register_event_handler('deactivate', 'plugin', 'plugins_deactivate_dependency_check');
+	elgg_register_event_handler('deactivate', 'plugin', '_plugins_deactivate_dependency_check');
 
 	elgg_register_action("plugins/settings/save", '', 'admin');
 	elgg_register_action("plugins/usersettings/save");
