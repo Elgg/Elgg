@@ -1407,7 +1407,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @param string $size Either 'large', 'medium', 'small' or 'tiny'
 	 *
 	 * @return string The url or false if no url could be worked out.
-	 * @deprecated Use getIconURL()
+	 * @deprecated 1.8 Use getIconURL()
 	 */
 	public function getIcon($size = 'medium') {
 		elgg_deprecated_notice("getIcon() deprecated by getIconURL()", 1.8);
