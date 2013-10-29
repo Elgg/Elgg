@@ -80,17 +80,20 @@ elgg.ui.lightbox.bind = function ($elements, opts) {
 		opts = {};
 	}
 
+	// merge opts into defaults
+	opts = $.extend({}, elgg.ui.lightbox.getSettings(), opts);
+
 	$elements.each(function () {
 		var $this = $(this),
-			optsCopy = $.extend({}, opts);
-
+			dataOpts = $this.data('colorboxOpts');
 		// Q: why not use "colorbox"? A: https://github.com/jackmoore/colorbox/issues/435
-		var dataOpts = $this.data('colorboxOpts');
 
-		if ($.isPlainObject(dataOpts)) {
-			optsCopy = $.extend(optsCopy, dataOpts);
+		if (!$.isPlainObject(dataOpts)) {
+			dataOpts = {};
 		}
-		$this.colorbox(optsCopy);
+
+		// merge data- options into opts
+		$this.colorbox($.extend({}, opts, dataOpts));
 	});
 };
 
