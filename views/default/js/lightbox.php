@@ -46,7 +46,6 @@ elgg.ui.lightbox.init = function() {
 		elgg.register_error("fancybox lightbox has been replaced by colorbox", 9999999999999);
 	}
 
-	$.extend($.colorbox.settings, elgg.ui.lightbox.getSettings());
 	elgg.ui.lightbox.bind($(".elgg-lightbox"));
 
 	if (typeof $.fancybox === 'undefined') {
@@ -73,19 +72,26 @@ elgg.ui.lightbox.init = function() {
 /**
  * Bind colorbox lightbox to HTML
  *
- * @param {Object} $element jQuery object containing colorbox openers
- * @param {Object} opts     Colorbox options. These are overridden by data-colorbox-opts options
+ * @param {Object} $elements jQuery object containing colorbox openers
+ * @param {Object} opts      Colorbox options. These are overridden by data-colorbox-opts options
  */
-elgg.ui.lightbox.bind = function ($element, opts) {
+elgg.ui.lightbox.bind = function ($elements, opts) {
 	if (!$.isPlainObject(opts)) {
 		opts = {};
 	}
-	// Q: why not use "colorbox"? A: https://github.com/jackmoore/colorbox/issues/435
-	var dataOpts = $element.data('colorboxOpts');
-	if ($.isPlainObject(dataOpts)) {
-		opts = $.extend(opts, dataOpts);
-	}
-	$element.colorbox(opts);
+
+	$elements.each(function () {
+		var $this = $(this),
+			optsCopy = $.extend({}, opts);
+
+		// Q: why not use "colorbox"? A: https://github.com/jackmoore/colorbox/issues/435
+		var dataOpts = $this.data('colorboxOpts');
+
+		if ($.isPlainObject(dataOpts)) {
+			optsCopy = $.extend(optsCopy, dataOpts);
+		}
+		$this.colorbox(optsCopy);
+	});
 };
 
 /**
