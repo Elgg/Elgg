@@ -374,11 +374,19 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 	}
 	$from = (int)$from;
 	$from = get_entity($from) ? $from : elgg_get_site_entity()->guid;
+	$sender = get_entity($from);
 
 	// Get notification methods
 	if (($methods_override) && (!is_array($methods_override))) {
 		$methods_override = array($methods_override);
 	}
+
+	// temporary backward compatibility for 1.8 and earlier notifications
+	$event = null;
+	if (isset($params['object']) && isset($params['action'])) {
+		$event = new Elgg_Notifications_Event($params['object'], $params['action'], $sender);
+	}
+	$params['event'] = $event;
 
 	$result = array();
 
@@ -406,17 +414,13 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 
 					if (_elgg_services()->hooks->hasHandler('send', "notification:$method")) {
 						// 1.9 style notification handler
-						$sender = get_entity($from);
 						$recipient = get_entity($guid);
 						if (!$recipient) {
 							continue;
 						}
 						$language = $recipient->language;
 						$notification = new Elgg_Notifications_Notification($sender, $recipient, $language, $subject, $message, '', $params);
-						$params = array(
-							'notification' => $notification,
-							'event' => null, // @todo how do we create an event when this isn't triggered by event?
-						);
+						$params['notification'] = $notification;
 						$result[$guid][$method] = _elgg_services()->hooks->trigger('send', "notification:$method", $params, false);
 					} else {
 						$result[$guid][$method] = _elgg_notify_user($guid, $from, $subject, $message, $params, array($method));

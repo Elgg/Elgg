@@ -85,11 +85,14 @@ function site_notifications_send($hook, $type, $result, $params) {
 	$notification = $params['notification'];
 	if ($notification->summary) {
 		$message = $notification->summary;
+	} else {
+		$message = $notification->subject;
+	}
+
+	if (isset($params['event'])) {
 		$event = $params['event'];
 		$object = $event->getObject();
 	} else {
-		$message = $notification->subject;
-		$event = null;
 		$object = null;
 	}
 
