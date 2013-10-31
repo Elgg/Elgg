@@ -61,8 +61,25 @@ class Elgg_Notifications_SubscriptionsService {
 			return $subscriptions;
 		}
 
+		switch ($object->getType()) {
+			case 'annotation':
+				$entity = $object->getEntity();
+				// Records for people who have subscribed to the annotated entity
+				$records = $this->getSubscriptionRecords($entity->guid);
+				// Record for the owner of the annotated entity
+				$records[] = $this->getPersonalNotificationRecord($entity->getOwnerGUID());
+				break;
+			case 'relationship':
+				// Record for the user who was added into a new relationship
+				$records = array($this->getPersonalNotificationRecord($object->guid_two));
+				break;
+			default:
+				// This covers all the entities
+				$records = $this->getSubscriptionRecords($object->getContainerGUID());
+				break;
+		}
+
 		$prefixLength = strlen(self::RELATIONSHIP_PREFIX);
-		$records = $this->getSubscriptionRecords($object->getContainerGUID());
 		foreach ($records as $record) {
 			$deliveryMethods = explode(',', $record->methods);
 			$subscriptions[$record->guid] = substr_replace($deliveryMethods, '', 0, $prefixLength);
@@ -174,5 +191,33 @@ class Elgg_Notifications_SubscriptionsService {
 			$names[] = "$prefix$method";
 		}
 		return $names;
+	}
+
+	/**
+	 * Get personal notification record for a user.
+	 *
+	 * @param integer $guid Guid of the user
+	 * @return object
+	 */
+	protected function getPersonalNotificationRecord($guid) {
+		$settings = (array)get_user_notification_settings($guid);
+
+		$prefix = self::RELATIONSHIP_PREFIX;
+
+		$methods = array();
+		foreach ($settings as $method => $enabled) {
+			// Add method if user has turned it on
+			if ($enabled) {
+				$methods[] = "$prefix$method";
+			}
+		}
+
+		$methods = implode(',', $methods);
+
+		$record = new stdClass;
+		$record->guid = $guid;
+		$record->methods = $methods;
+
+		return $record;
 	}
 }
