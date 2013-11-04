@@ -285,8 +285,11 @@ function bookmarks_page_menu($hook, $type, $return, $params) {
 			if (!$page_owner) {
 				$page_owner = elgg_get_logged_in_user_entity();
 			}
-			
+
 			if ($page_owner instanceof ElggGroup) {
+				if (!$page_owner->isMember()) {
+					return $return;
+				}
 				$title = elgg_echo('bookmarks:bookmarklet:group');
 			} else {
 				$title = elgg_echo('bookmarks:bookmarklet');

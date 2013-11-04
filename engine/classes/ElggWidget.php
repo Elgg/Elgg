@@ -146,10 +146,15 @@ class ElggWidget extends ElggObject {
 			}
 		}
 
+		$bottom_rank = count($widgets);
+		if ($column == $this->column) {
+			$bottom_rank--;
+		}
+		
 		if ($rank == 0) {
 			// top of the column
 			$this->order = reset($widgets)->order - 10;
-		} elseif ($rank == (count($widgets) - 1)) {
+		} elseif ($rank == $bottom_rank) {
 			// bottom of the column of active widgets
 			$this->order = end($widgets)->order + 10;
 		} else {

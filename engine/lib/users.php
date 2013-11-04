@@ -553,6 +553,11 @@ function get_user($guid) {
 function get_user_by_username($username) {
 	global $CONFIG, $USERNAME_TO_GUID_MAP_CACHE;
 
+	// Fixes #6052. Username is frequently sniffed from the path info, which,
+	// unlike $_GET, is not URL decoded. If the username was not URL encoded,
+	// this is harmless.
+	$username = rawurldecode($username);
+
 	$username = sanitise_string($username);
 	$access = get_access_sql_suffix('e');
 
@@ -1091,6 +1096,7 @@ function friends_page_handler($segments, $handler) {
  * @access private
  */
 function collections_page_handler($page_elements) {
+	gatekeeper();
 	elgg_set_context('friends');
 	$base = elgg_get_config('path');
 	if (isset($page_elements[0])) {

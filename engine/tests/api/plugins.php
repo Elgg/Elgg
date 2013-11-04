@@ -69,7 +69,7 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 			'description' => 'A longer, more interesting description.',
 			'website' => 'http://www.elgg.org/',
 			'repository' => 'https://github.com/Elgg/Elgg',
-			'bugtracker' => 'http://trac.elgg.org',
+			'bugtracker' => 'https://github.com/elgg/elgg/issues',
 			'donations' => 'http://elgg.org/supporter.php',
 			'copyright' => '(C) Elgg Foundation 2011',
 			'license' => 'GNU General Public License version 2',
@@ -174,7 +174,7 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 	}
 	
 		public function testElggPluginManifestGetBugtracker() {
-		$this->assertEqual($this->manifest18->getBugTrackerURL(), 'http://trac.elgg.org');
+		$this->assertEqual($this->manifest18->getBugTrackerURL(), 'https://github.com/elgg/elgg/issues');
 		$this->assertEqual($this->manifest17->getBugTrackerURL(), '');
 	}
 	

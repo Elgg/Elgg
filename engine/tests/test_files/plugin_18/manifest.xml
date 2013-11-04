@@ -7,7 +7,7 @@
 	<description>A longer, more interesting description.</description>
 	<website>http://www.elgg.org/</website>
 	<repository>https://github.com/Elgg/Elgg</repository>
-	<bugtracker>http://trac.elgg.org</bugtracker>
+	<bugtracker>https://github.com/elgg/elgg/issues</bugtracker>
 	<donations>http://elgg.org/supporter.php</donations>
 	<copyright>(C) Elgg Foundation 2011</copyright>
 	<license>GNU General Public License version 2</license>

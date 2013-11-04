@@ -46,7 +46,7 @@ if (get_input('upgrade') == 'upgrade') {
 	
 } else {
 	// if upgrading from < 1.8.0, check for the core view 'welcome' and bail if it's found.
-	// see http://trac.elgg.org/ticket/3064
+	// see https://github.com/elgg/elgg/issues/3064
 	// we're not checking the view itself because it's likely themes will override this view.
 	// we're only concerned with core files.
 	$welcome = dirname(__FILE__) . '/views/default/welcome.php';
