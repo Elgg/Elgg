@@ -21,6 +21,8 @@ function _elgg_comments_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 
+	elgg_register_event_handler('update', 'object', '_elgg_comments_update_access_id');
+
 	elgg_register_ajax_view('core/ajax/edit_comment');
 }
 
@@ -110,4 +112,33 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 	}
 
 	return $return;
+}
+
+/**
+ * Update access_id of comments to match access_id of the container
+ *
+ * This is needed to prevent river from displaying items where user
+ * has access only to the comment but not the commented object.
+ *
+ * @param string     $event  'update'
+ * @param string     $type   'object'
+ * @param ElggObject $object The object being updated
+ * @return boolean
+ */
+function _elgg_comments_update_access_id($event, $type, $object) {
+	$batch = new ElggBatch('elgg_get_entities', array(
+		'type' => 'object',
+		'subtype' => 'comment',
+		'container_guid' => $object->guid,
+		'limit' => 0,
+	));
+
+	$ia = elgg_set_ignore_access(true);
+	foreach ($batch as $comment) {
+		$comment->access_id = $object->access_id;
+		$comment->save();
+	}
+	elgg_set_ignore_access($ia);
+
+	return true;
 }
