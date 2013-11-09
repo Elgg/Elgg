@@ -15,7 +15,7 @@ access_show_hidden_entities($access_status);
 // Notify administrator only if there are existing discussions
 if ($discussions) {
 	$migrate_link = elgg_view('output/url', array(
-		'href' => 'admin/upgrades/2013100401',
+		'href' => 'admin/groups/upgrades/2013100401',
 		'text' => "run a migration script",
 		'is_trusted' => true,
 	));
