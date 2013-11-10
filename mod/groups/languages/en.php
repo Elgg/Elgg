@@ -121,6 +121,7 @@ View and reply to the discussion:
 	'groups:invitations:none' => 'There are no current invitations.',
 
 	'item:object:groupforumtopic' => "Discussion topics",
+	'item:object:discussion_reply' => "Discussion replies",
 
 	'groupforumtopic:new' => "Add discussion post",
 
