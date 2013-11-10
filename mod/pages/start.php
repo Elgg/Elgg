@@ -356,7 +356,7 @@ function pages_write_permission_check($hook, $entity_type, $returnvalue, $params
  */
 function pages_container_permission_check($hook, $entity_type, $returnvalue, $params) {
 	if (elgg_get_context() != "pages") {
-		return true;
+		return null;
 	}
 	if (elgg_get_page_owner_guid()
 			&& can_write_to_container(elgg_get_logged_in_user_guid(), elgg_get_page_owner_guid())) {
