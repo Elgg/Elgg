@@ -1,4 +1,12 @@
 <?php
+
+// Register subtype and class for comments
+if (get_subtype_id('object', 'discussion_reply')) {
+	update_subtype('object', 'discussion_reply', 'ElggDiscussionReply');
+} else {
+	add_subtype('object', 'discussion_reply', 'ElggDiscussionReply');
+}
+
 /**
  * The actual upgrade will be run from the view /mod/groups/admin/groups/upgrades/2013100401.php
  */
