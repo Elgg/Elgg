@@ -32,7 +32,7 @@ $user = elgg_get_logged_in_user_entity();
 if ($reply_guid) {
 	$reply = get_entity($reply_guid);
 
-	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
+	if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
 		register_error(elgg_echo('discussion:reply:error:notfound'));
 		forward(REFERER);
 	}

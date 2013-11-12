@@ -174,6 +174,7 @@ View and reply to the discussion:
 	'discussion:error:permissions' => 'You do not have permissions to perform this action',
 	'discussion:error:notdeleted' => 'Could not delete the discussion topic',
 
+	'discussion:reply:edit' => 'Edit reply',
 	'discussion:reply:deleted' => 'Discussion reply has been deleted.',
 	'discussion:reply:error:notfound' => 'The discussion reply was not found',
 	'discussion:reply:error:notdeleted' => 'Could not delete the discussion reply',

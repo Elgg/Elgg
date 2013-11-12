@@ -857,6 +857,15 @@ function discussion_page_handler($page) {
 		case 'add':
 			discussion_handle_edit_page('add', $page[1]);
 			break;
+		case 'reply':
+			switch ($page[1]) {
+				case 'edit':
+					discussion_handle_reply_edit_page('edit', $page[2]);
+					break;
+				default:
+					return false;
+			}
+			break;
 		case 'edit':
 			discussion_handle_edit_page('edit', $page[1]);
 			break;
@@ -884,7 +893,7 @@ function discussion_page_handler($page) {
 function discussion_set_topic_url($hook, $type, $url, $params) {
 	$entity = $params['entity'];
 
-	if (elgg_instanceof($entity, 'object', 'discussion_reply')) {
+	if (elgg_instanceof($entity, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
 		$topic = $entity->getContainerEntity();
 		$title = elgg_get_friendly_title($topic->title);
 		return "discussion/view/{$topic->guid}/{$title}";
@@ -969,7 +978,7 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
 			$return[] = ElggMenuItem::factory($options);
 		}
 	} else {
-		if (elgg_instanceof($object, 'object', 'discussion_reply')) {
+		if (elgg_instanceof($object, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
 			// Group discussion replies cannot be commented
 			foreach ($return as $key => $item) {
 				if ($item->getName() === 'comment') {
@@ -1056,7 +1065,7 @@ function discussion_prepare_reply_notification($hook, $type, $notification, $par
 function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 	$reply = $params['event']->getObject();
 
-	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
+	if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
 		return $return;
 	}
 
@@ -1107,7 +1116,7 @@ function discussion_can_edit_reply($hook, $type, $return, $params) {
 	$reply = $params['entity'];
 	$user = $params['user'];
 
-	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
+	if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
 		return $return;
 	}
 

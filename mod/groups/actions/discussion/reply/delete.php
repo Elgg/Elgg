@@ -7,7 +7,7 @@ $guid = (int) get_input('guid');
 
 $reply = get_entity($guid);
 
-if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
+if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
 	register_error(elgg_echo('discussion:reply:error:notdeleted'));
 	forward(REFERER);
 }
