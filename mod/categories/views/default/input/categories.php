@@ -20,6 +20,11 @@ $categories = elgg_get_site_entity()->categories;
 if (empty($categories)) {
 	$categories = array();
 }
+
+if (!is_array($categories)) {
+	$categories = array($categories);
+}
+
 if (empty($selected_categories)) {
 	$selected_categories = array();
 }
