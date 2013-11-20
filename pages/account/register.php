@@ -42,9 +42,9 @@ $body_params = array(
 	'friend_guid' => $friend_guid,
 	'invitecode' => $invitecode
 );
-$content = elgg_view_form('register', $form_params, $body_params);
 
-$content .= elgg_view('help/register');
+$content = elgg_view('help/register');
+$content .= elgg_view_form('register', $form_params, $body_params);
 
 if (elgg_get_config('walled_garden')) {
 	elgg_load_css('elgg.walled_garden');
