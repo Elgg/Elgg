@@ -184,7 +184,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$options = array(
 			'types' => $types,
-			'subtype' => $subtype
+			'subtypes' => $subtype
 		);
 
 		$es = elgg_get_entities($options);

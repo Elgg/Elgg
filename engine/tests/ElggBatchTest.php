@@ -6,7 +6,7 @@
  */
 class ElggBatchTest extends ElggCoreUnitTest {
 
-	// see http://trac.elgg.org/ticket/4288
+	// see https://github.com/elgg/elgg/issues/4288
 	public function testElggBatchIncOffset() {
 		// normal increment
 		$options = array(

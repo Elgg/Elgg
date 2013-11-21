@@ -630,7 +630,7 @@ function get_entity($guid) {
 
 	if ($shared_cache) {
 		$cached_entity = $shared_cache->load($guid);
-		// @todo store ACLs in memcache http://trac.elgg.org/ticket/3018#comment:3
+		// @todo store ACLs in memcache https://github.com/elgg/elgg/issues/3018#issuecomment-13662617
 		if ($cached_entity) {
 			// @todo use ACL and cached entity access_id to determine if user can see it
 			return $cached_entity;

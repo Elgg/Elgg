@@ -649,7 +649,7 @@ function pam_auth_session() {
  *
  * @return void
  * @access private
- * 
+ *
  * @throws Exception
  */
 function _php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
