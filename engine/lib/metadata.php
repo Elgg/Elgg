@@ -338,7 +338,7 @@ function elgg_disable_metadata(array $options) {
 	$inc_offset = access_get_show_hidden_status();
 
 	$options['metastring_type'] = 'metadata';
-	return elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', $inc_offset);
+	return _elgg_batch_metastring_based_objects($options, 'elgg_batch_disable_callback', $inc_offset);
 }
 
 /**
