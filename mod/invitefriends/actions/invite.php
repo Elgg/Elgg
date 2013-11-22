@@ -61,7 +61,8 @@ foreach ($emails as $email) {
 	// create the from address
 	$site = get_entity($site->guid);
 	if ($site && $site->email) {
-		$from = $site->email;
+		//$from = $site->email;
+		$from = $current_user->name.' <'.$current_user->email.'>';
 	} else {
 		$from = 'noreply@' . $site->getDomain();
 	}
