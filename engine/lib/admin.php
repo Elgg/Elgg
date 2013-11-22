@@ -46,10 +46,10 @@ function admin_init() {
 	register_action('admin/user/resetpassword', false, "", true);
 	register_action('admin/user/makeadmin', false, "", true);
 	register_action('admin/user/removeadmin', false, "", true);
-	elgg_register_action('admin/site/regenerate_secret', '', 'admin');
 
 	// Register some actions
 	register_action('admin/site/update_basic', false, "", true); // Register basic site admin action
+	register_action('admin/site/regenerate_secret', false, "", true);
 
 	// Page handler
 	register_page_handler('admin','admin_settings_page_handler');
@@ -99,6 +99,9 @@ function admin_settings_page_handler($page) {
 				break;
 			case 'site':
 				$path = $CONFIG->path . "admin/site.php";
+				break;
+			case 'site_secret':
+				$path = $CONFIG->path . "admin/site_secret.php";
 				break;
 		}
 	}

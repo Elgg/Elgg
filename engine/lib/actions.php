@@ -237,6 +237,9 @@ function generate_action_token($timestamp) {
  * @todo Move to better file.
  */
 function init_site_secret() {
+	//ok, that require is ugly, but this way we keep directory structure the same as in 1.8+ versions
+	require_once(dirname(dirname(__FILE__)) . '/classes/ElggCrypto.php');
+
 	$secret = 'z' . ElggCrypto::getRandomString(31);
 
 	if (datalist_set('__site_secret__', $secret)) {
@@ -278,16 +281,5 @@ function _elgg_get_site_secret_strength() {
 	}
 	return 'strong';
 }
-
-/**
- * Check if an action is registered and its script exists.
- *
- * @param string $action Action name
- *
- * @return bool
- * @since 1.8.0
- */
-function elgg_action_exists($action) {
-	global $CONFIG;
 
 register_elgg_event_handler("init","system","actions_init");

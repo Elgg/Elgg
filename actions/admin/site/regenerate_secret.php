@@ -4,7 +4,8 @@
  */
 
 init_site_secret();
-elgg_reset_system_cache();
+elgg_view_regenerate_simplecache();
+elgg_filepath_cache_reset();
 
 system_message(elgg_echo('admin:site:secret_regenerated'));
 
