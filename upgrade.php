@@ -21,6 +21,10 @@ ini_set('display_errors', 1);
 define('UPGRADING', 'upgrading');
 require_once(dirname(__FILE__) . "/engine/start.php");
 
+// Only admin is allowed to run upgrades
+admin_gatekeeper();
+
+
 if (get_input('upgrade') == 'upgrade') {
 
 	$upgrader = new Elgg_UpgradeService();
