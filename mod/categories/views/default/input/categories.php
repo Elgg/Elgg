@@ -20,9 +20,21 @@ $categories = elgg_get_site_entity()->categories;
 if (empty($categories)) {
 	$categories = array();
 }
+
+if (!is_array($categories)) {
+	$categories = array($categories);
+}
+
 if (empty($selected_categories)) {
 	$selected_categories = array();
 }
+
+if (!is_array($selected_categories)) {
+	$selected_categories = array($selected_categories);
+}
+
+$categories = array_merge($categories, $selected_categories);
+$categories = array_unique($categories);
 
 if (!empty($categories)) {
 	if (!is_array($categories)) {
