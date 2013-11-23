@@ -36,7 +36,7 @@ input, textarea {
 	color: #666;
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;
-	width: 100%;	
+	width: 100%;
 	border-radius: 5px;
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
@@ -73,6 +73,7 @@ input[type="radio"] {
 	margin:0 3px 0 0;
 	padding:0;
 	border:none;
+	border-radius: 0px;
 	width:auto;
 }
 .elgg-input-checkboxes.elgg-horizontal li,
@@ -122,7 +123,7 @@ input[type="radio"] {
 }
 .friendspicker-savebuttons {
 	background: white;
-	border-radius: 8px;	
+	border-radius: 8px;
 	margin:0 10px 10px;
 }
 .friends-picker .friends-picker-container { /* long container used to house end-to-end panels. Width is calculated in JS  */
@@ -218,7 +219,7 @@ input[type="radio"] {
 }
 .friendspicker-members-table {
 	background: #dedede;
-	border-radius: 8px;	
+	border-radius: 8px;
 	margin:10px 0 0;
 	padding:10px 10px 0;
 }
