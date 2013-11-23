@@ -69,6 +69,7 @@ input[type="radio"] {
 	margin:0 3px 0 0;
 	padding:0;
 	border:none;
+	border-radius:0;
 	width:auto;
 }
 .elgg-input-checkboxes.elgg-horizontal li,
