@@ -41,6 +41,7 @@ $content = elgg_list_entities(array(
 	'container_guid' => $owner->guid,
 	'full_view' => false,
 	'no_results' => elgg_echo("file:none"),
+	'__preload' => 'owner_guid',
 ));
 
 $sidebar = file_get_type_cloud(elgg_get_page_owner_guid());

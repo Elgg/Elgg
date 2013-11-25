@@ -80,6 +80,7 @@ $params = array(
 	'container_guid' => $page_owner_guid,
 	'limit' => $limit,
 	'full_view' => false,
+	'__preload' => 'owner_guid',
 );
 
 if ($file_type) {

@@ -38,6 +38,7 @@ $html = elgg_list_entities(array(
 	'reverse_order_by' => true,
 	'full_view' => true,
 	'limit' => $limit,
+	'__preload' => 'owner_guid',
 ));
 
 if ($html) {

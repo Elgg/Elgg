@@ -188,6 +188,23 @@ function _elgg_db_log_profiling_data() {
 }
 
 /**
+ * Get a new query counter that will begin counting from 0. For profiling isolated
+ * sections of code.
+ *
+ * <code>
+ * $counter = _elgg_db_get_query_counter();
+ * ...
+ * $counter->setDeltaHeader();
+ * </code>
+ *
+ * @return Elgg_Database_QueryCounter
+ * @access private
+ */
+function _elgg_db_get_query_counter() {
+	return _elgg_services()->queryCounter;
+}
+
+/**
  * Execute any delayed queries upon shutdown.
  *
  * @return void
