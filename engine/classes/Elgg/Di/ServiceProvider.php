@@ -17,6 +17,7 @@
  * @property-read Elgg_Logger                             $logger
  * @property-read ElggVolatileMetadataCache               $metadataCache
  * @property-read Elgg_Notifications_NotificationsService $notifications
+ * @property-read Elgg_Database_QueryCounter              $queryCounter
  * @property-read Elgg_Http_Request                       $request
  * @property-read Elgg_Router                             $router
  * @property-read ElggSession                             $session
@@ -44,6 +45,7 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 		$this->setClassName('hooks', 'Elgg_PluginHooksService');
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setClassName('metadataCache', 'ElggVolatileMetadataCache');
+		$this->setFactory('queryCounter', array($this, 'getQueryCounter'), false);
 		$this->setFactory('request', array($this, 'getRequest'));
 		$this->setFactory('router', array($this, 'getRouter'));
 		$this->setFactory('session', array($this, 'getSession'));
@@ -153,5 +155,15 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 		$sub = new Elgg_Notifications_SubscriptionsService($c->db);
 		$access = elgg_get_access_object();
 		return new Elgg_Notifications_NotificationsService($sub, $queue, $c->hooks, $access);
+	}
+
+	/**
+	 * Query counter factory
+	 *
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
+	 * @return Elgg_Database_QueryCounter
+	 */
+	protected function getQueryCounter(Elgg_Di_ServiceProvider $c) {
+		return new Elgg_Database_QueryCounter($c->db);
 	}
 }
