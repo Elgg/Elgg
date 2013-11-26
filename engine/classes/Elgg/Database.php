@@ -383,8 +383,11 @@ class Elgg_Database {
 	 * The special string 'prefix_' is replaced with the database prefix
 	 * as defined in {@link $this->tablePrefix}.
 	 *
-	 * The special string 'utf8' is replaced with the database character set
-	 * as defined in {@link $this->dbEncoding}.
+	 * The special string '=utf8' is replaced with the database character set
+	 * as defined in {@link $this->dbEncoding}. The equal sign (=) guarantees
+	 * that field level override of the encoding is still possible.
+	 * (Some fields need to remain utf8 or their length would have to be
+	 * adjusted to remain within the maximum size of a MySQL index)
 	 *
 	 * @warning Errors do not halt execution of the script.  If a line
 	 * generates an error, the error message is saved and the
@@ -411,11 +414,11 @@ class Elgg_Database {
 			foreach ($sql_statements as $statement) {
 				$statement = trim($statement);
 				// replace utf8 first, in case the chosen prefix contains 'utf8'
-				$statement = str_replace('utf8', $this->dbEncoding, $statement);
-				$statement = str_replace("prefix_", $this->tablePrefix, $statement);
+				$statement = str_replace('=utf8', "=$this->dbEncoding", $statement);
+				$statement = str_replace('prefix_', $this->tablePrefix, $statement);
 				if (!empty($statement)) {
 					try {
-						$result = $this->updateData($statement);
+						$this->updateData($statement);
 					} catch (DatabaseException $e) {
 						$errors[] = $e->getMessage();
 					}
