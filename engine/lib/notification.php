@@ -137,6 +137,27 @@ function elgg_remove_subscription($user_guid, $method, $target_guid) {
 }
 
 /**
+ * Get the subscriptions for the content created inside this container.
+ *
+ * The return array is of the form:
+ *
+ * array(
+ *     <user guid> => array('email', 'sms', 'ajax'),
+ * );
+ *
+ * @param int $container_guid GUID of the entity acting as a container
+ * @return array User GUIDs (keys) and their subscription types (values).
+ * @since 1.9
+ * @todo deprecate once new subscriptions system has been added
+ */
+function elgg_get_subscriptions_for_container($container_guid) {
+	$methods = _elgg_services()->notifications->getMethods();
+	$db = _elgg_services()->db;
+	$subs = new Elgg_Notifications_SubscriptionsService($db, $methods);
+	return $subs->getSubscriptionsForContainer($container_guid);
+}
+
+/**
  * Queue a notification event for later handling
  *
  * Checks to see if this event has been registered for notifications.
@@ -353,11 +374,19 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 	}
 	$from = (int)$from;
 	$from = get_entity($from) ? $from : elgg_get_site_entity()->guid;
+	$sender = get_entity($from);
 
 	// Get notification methods
 	if (($methods_override) && (!is_array($methods_override))) {
 		$methods_override = array($methods_override);
 	}
+
+	// temporary backward compatibility for 1.8 and earlier notifications
+	$event = null;
+	if (isset($params['object']) && isset($params['action'])) {
+		$event = new Elgg_Notifications_Event($params['object'], $params['action'], $sender);
+	}
+	$params['event'] = $event;
 
 	$result = array();
 
@@ -385,17 +414,13 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 
 					if (_elgg_services()->hooks->hasHandler('send', "notification:$method")) {
 						// 1.9 style notification handler
-						$sender = get_entity($from);
 						$recipient = get_entity($guid);
 						if (!$recipient) {
 							continue;
 						}
 						$language = $recipient->language;
 						$notification = new Elgg_Notifications_Notification($sender, $recipient, $language, $subject, $message, '', $params);
-						$params = array(
-							'notification' => $notification,
-							'event' => null, // @todo how do we create an event when this isn't triggered by event?
-						);
+						$params['notification'] = $notification;
 						$result[$guid][$method] = _elgg_services()->hooks->trigger('send', "notification:$method", $params, false);
 					} else {
 						$result[$guid][$method] = _elgg_notify_user($guid, $from, $subject, $message, $params, array($method));

@@ -68,7 +68,11 @@ if ($comment_guid) {
 				$entity->getURL(),
 				$user->name,
 				$user->getURL()
-			))
+			)),
+			array(
+				'object' => $comment,
+				'action' => 'create',
+			)
 		);
 	}
 

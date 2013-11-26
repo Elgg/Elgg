@@ -679,7 +679,7 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @tip When referring to events, the preferred syntax is "event, type".
  *
  * @internal Only rarely should events be changed, added, or removed in core.
- * When making changes to events, be sure to first create a ticket in trac.
+ * When making changes to events, be sure to first create a ticket on Github.
  *
  * @internal @tip Think of $object_type as the primary namespace element, and
  * $event as the secondary namespace.
@@ -2014,7 +2014,7 @@ function _elgg_api_test($hook, $type, $value, $params) {
  *
  * @warning ACCESS_DEFAULT is a place holder for the input/access view. Do not
  * use it when saving an entity.
- * 
+ *
  * @var int
  */
 define('ACCESS_DEFAULT', -1);

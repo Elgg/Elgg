@@ -156,7 +156,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertIdentical('true, too!', $this->entity->less_important);
 
 		// test deleting incorrectly
-		// @link http://trac.elgg.org/ticket/2273
+		// @link https://github.com/elgg/elgg/issues/2273
 		$this->assertNull($this->entity->deleteMetadata('impotent'));
 		$this->assertEqual($this->entity->important, 'indeed!');
 

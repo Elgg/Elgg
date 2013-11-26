@@ -351,12 +351,18 @@ function get_user_by_email($email) {
  */
 function find_active_users($options = array(), $limit = 10, $offset = 0, $count = false) {
 
+	$seconds = 600; //default value
+
 	if (!is_array($options)) {
 		elgg_deprecated_notice("find_active_users() now accepts an \$options array", 1.9);
+		if (!$options) {
+			$options = $seconds; //assign default value
+		}
 		$options = array('seconds' => $options);
 	}
 
 	$options = array_merge(array(
+		'seconds' => $seconds,
 		'limit' => $limit,
 		'offset' => $offset,
 		'count' => $count,

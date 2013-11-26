@@ -88,6 +88,8 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => 'Before %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is not installed',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Missing',
+	
+	'ElggPlugin:Dependencies:ActiveDependent' => 'There are other plugins that list %s as a dependency.  You must disable the following plugins before disabling this one: %s',
 
 
 	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',

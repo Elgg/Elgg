@@ -15,8 +15,8 @@ $group = get_entity($group_guid);
 /* @var ElggGroup $group */
 
 if (sizeof($user_guid)) {
-	foreach ($user_guid as $u_id) {
-		$user = get_user($u_id);
+	foreach ($user_guid as $u_guid) {
+		$user = get_user($u_guid);
 
 		if ($user && elgg_instanceof($group, 'group') && $group->canEdit()) {
 			if (!$group->isMember($user)) {

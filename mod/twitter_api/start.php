@@ -118,9 +118,9 @@ function twitter_api_tweet($hook, $type, $returnvalue, $params) {
 	// @todo - allow admin to select origins?
 
 	// check user settings
-	$user_id = $params['user']->getGUID();
-	$access_key = elgg_get_plugin_user_setting('access_key', $user_id, 'twitter_api');
-	$access_secret = elgg_get_plugin_user_setting('access_secret', $user_id, 'twitter_api');
+	$user_guid = $params['user']->getGUID();
+	$access_key = elgg_get_plugin_user_setting('access_key', $user_guid, 'twitter_api');
+	$access_secret = elgg_get_plugin_user_setting('access_secret', $user_guid, 'twitter_api');
 	if (!($access_key && $access_secret)) {
 		return;
 	}

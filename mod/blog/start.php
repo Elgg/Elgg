@@ -145,7 +145,7 @@ function blog_page_handler($page) {
 			if (!elgg_instanceof($group, 'group')) {
 				forward('', '404');
 			}
-			if ($page[2] == 'all') {
+			if (!isset($page[2]) || $page[2] == 'all') {
 				$params = blog_get_page_content_list($page[1]);
 			} else {
 				$params = blog_get_page_content_archive($page[1], $page[3], $page[4]);
