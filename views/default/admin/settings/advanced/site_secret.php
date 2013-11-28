@@ -6,6 +6,8 @@
  * @subpackage Core
  */
 
+global $CONFIG;
+
 $action = $CONFIG->wwwroot . 'action/admin/site/regenerate_secret';
 $form_body = "<div class=\"contentWrapper\">";
 $form_body .= elgg_view('forms/admin/site/regenerate_secret', array(

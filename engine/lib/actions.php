@@ -237,8 +237,10 @@ function generate_action_token($timestamp) {
  * @todo Move to better file.
  */
 function init_site_secret() {
-	//ok, that require is ugly, but this way we keep directory structure the same as in 1.8+ versions
-	require_once(dirname(dirname(__FILE__)) . '/classes/ElggCrypto.php');
+	if (!class_exists('ElggCrypto')) {
+		// using require to keep same directory structure as in 1.8+
+		require_once dirname(dirname(__FILE__)) . '/classes/ElggCrypto.php';
+	}
 
 	$secret = 'z' . ElggCrypto::getRandomString(31);
 

@@ -7,7 +7,7 @@ $strength = $vars['strength'];
 
 <table class="elgg-table">
 	<tr>
-		<th><?php echo elgg_echo('site_secret:current_strength'); ?></th>
+		<th><?php echo elgg_echo('site_secret:current_strength'); ?> &nbsp;</th>
 		<td class="elgg-strength-<?php echo $strength; ?>">
 			<h4><?php echo elgg_echo("site_secret:strength:$strength"); ?></h4>
 			<div><?php echo elgg_echo("site_secret:strength_msg:$strength"); ?></div>

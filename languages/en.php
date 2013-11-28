@@ -780,6 +780,8 @@ Alternatively, you can enter your database settings below and we will try and do
 	'upgrading' => 'Upgrading...',
 	'upgrade:db' => 'Your database was upgraded.',
 	'upgrade:core' => 'Your elgg installation was upgraded.',
+	'upgrade:site_secret_warning:moderate' => "You are encouraged to regenerate your site key to improve system security. See \"Site Secret\".",
+	'upgrade:site_secret_warning:weak' => "You are strongly encouraged to regenerate your site key to improve system security. See \"Site Secret\".",
 
 /**
  * Welcome

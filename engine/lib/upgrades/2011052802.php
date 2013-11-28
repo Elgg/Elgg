@@ -1,9 +1,6 @@
 <?php
 /**
- * Elgg 1.8.15 upgrade 2013060900
- * site_secret
- *
- * Description
+ * Make sure site secret created with sufficient entropy.
  */
 
 $strength = _elgg_get_site_secret_strength();
