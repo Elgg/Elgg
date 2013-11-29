@@ -165,6 +165,23 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 			$file->largethumb = $prefix."largethumb".$filestorename;
 			unset($thumblarge);
 		}
+	} elseif ($file->icontime) {
+		// if it is not an image, we do not need thumbnails
+		unset($file->icontime);
+		
+		$thumb = new ElggFile();
+		
+		$thumb->setFilename($prefix . "thumb" . $filestorename);
+		$thumb->delete();
+		unset($file->thumbnail);
+		
+		$thumb->setFilename($prefix . "smallthumb" . $filestorename);
+		$thumb->delete();
+		unset($file->smallthumb);
+		
+		$thumb->setFilename($prefix . "largethumb" . $filestorename);
+		$thumb->delete();
+		unset($file->largethumb);
 	}
 } else {
 	// not saving a file but still need to save the entity to push attributes to database
@@ -202,4 +219,4 @@ if ($new_file) {
 	}
 
 	forward($file->getURL());
-}	
+}
