@@ -122,6 +122,10 @@ class ElggMenuItem {
 		if (isset($options['link_class'])) {
 			$item->setLinkClass($options['link_class']);
 			unset($options['link_class']);
+		} elseif (isset($options['class'])) {
+			elgg_deprecated_notice("ElggMenuItem::factory() does not accept 'class' key anymore, use 'link_class' instead", 1.9);
+			$item->setLinkClass($options['class']);
+			unset($options['class']);
 		}
 
 		if (isset($options['item_class'])) {
