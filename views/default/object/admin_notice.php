@@ -14,8 +14,12 @@ $message = $notice->description;
 
 global $CONFIG;
 
-$delete_url = "{$CONFIG->wwwroot}action/admin/delete_admin_notice?guid=$notice->guid";
-$delete_url = elgg_add_action_tokens_to_url($delete_url);
-$delete = "<a href='$delete_url' class='elgg-admin-notice'>x</a>";
+$delete = elgg_view('output/url', array(
+	'href' => "{$CONFIG->wwwroot}action/admin/delete_admin_notice?guid=$notice->guid",
+	'text' => "\xE2\xA8\x89", // &times;
+	'is_action' => true,
+	'class' => 'elgg-admin-notice',
+	'title' => elgg_echo('delete'),
+));
 
 echo "<p>$delete$message</p>";

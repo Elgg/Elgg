@@ -719,23 +719,19 @@ SYSTEM MESSSAGES
 	background-color: #BDE5F8;
 	color: black;
 	border: 1px solid blue;
+	border-radius: 4px;
 	font-weight: bold;
 	padding: 3px 0 3px 10px;
 
 	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
-	-moz-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
 	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
-
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
-	border-radius: 4px;
 }
 .elgg-admin-notices a.elgg-admin-notice {
 	float: right;
 	text-decoration: none;
 	border: 1px solid blue;
 	border-radius: 10px;
-	padding: 0 4px 2px;
+	padding: 0 3px 2px;
 	line-height: 14px;
 	margin-right: 3px;
 	color: black;
