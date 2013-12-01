@@ -226,11 +226,24 @@ function generate_action_token($timestamp) {
 }
 
 /**
- * Initialise the site secret.
+ * Initialise the site secret (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
  *
+ * Used during installation and saves as a datalist.
+ *
+ * Note: Old secrets were hex encoded.
+ *
+ * @return mixed The site secret hash or false
+ * @access private
+ * @todo Move to better file.
  */
 function init_site_secret() {
-	$secret = md5(rand().microtime());
+	if (!class_exists('ElggCrypto')) {
+		// using require to keep same directory structure as in 1.8+
+		require_once dirname(dirname(__FILE__)) . '/classes/ElggCrypto.php';
+	}
+
+	$secret = 'z' . ElggCrypto::getRandomString(31);
+
 	if (datalist_set('__site_secret__', $secret)) {
 		return $secret;
 	}
@@ -251,5 +264,24 @@ function get_site_secret() {
 	return $secret;
 }
 
+/**
+ * Get the strength of the site secret
+ *
+ * @return string "strong", "moderate", or "weak"
+ * @access private
+ */
+function _elgg_get_site_secret_strength() {
+	$secret = get_site_secret();
+	if ($secret[0] !== 'z') {
+		$rand_max = getrandmax();
+		if ($rand_max < pow(2, 16)) {
+			return 'weak';
+		}
+		if ($rand_max < pow(2, 32)) {
+			return 'moderate';
+		}
+	}
+	return 'strong';
+}
 
 register_elgg_event_handler("init","system","actions_init");

@@ -10,7 +10,7 @@
  *
  * @uses $vars['wwwroot'] The site URL
  */
-?>
+?>/*<style>*/
 
 /* ***************************************
 	RESET BASE STYLES
@@ -712,6 +712,34 @@ SYSTEM MESSSAGES
 	color:black;
 }
 
+.elgg-admin-notices {
+	padding-bottom: 15px;
+}
+.elgg-admin-notices p {
+	background-color: #BDE5F8;
+	color: black;
+	border: 1px solid blue;
+	border-radius: 4px;
+	font-weight: bold;
+	padding: 3px 0 3px 10px;
+
+	-webkit-box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+	box-shadow: 0 2px 5px rgba(0, 0, 0, 0.45);
+}
+.elgg-admin-notices a.elgg-admin-notice {
+	float: right;
+	text-decoration: none;
+	border: 1px solid blue;
+	border-radius: 10px;
+	padding: 0 3px 2px;
+	line-height: 14px;
+	margin-right: 3px;
+	color: black;
+}
+
+.elgg-admin-notices a {
+	text-decoration: underline;
+}
 
 /* ***************************************
 COLLAPSABLE BOXES
@@ -2272,6 +2300,25 @@ a.collapsibleboxlink {
 	height: 100px;
 }
 
+/* ***************************************
+	SITE SECRET
+*************************************** */
+.elgg-form-admin-site-regenerate-secret table {
+	width: 60%;
+	margin: 1em auto;
+}
+td.elgg-strength-strong,
+td.elgg-strength-strong h4 {
+	background: #DFF0D8; color: #468847;
+}
+td.elgg-strength-moderate,
+td.elgg-strength-moderate h4 {
+	background: #FCF8E3; color: #C09853;
+}
+td.elgg-strength-weak,
+td.elgg-strength-weak h4 {
+	background: #F2DEDE; color: #B94A48;
+}
 
 /* ***************************************
 	SETTINGS & ADMIN
