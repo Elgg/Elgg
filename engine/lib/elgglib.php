@@ -601,7 +601,7 @@ function register_error($error) {
  * $event is the name of event being emitted.
  * $type is the type of event or object concerned.
  * $params is an optional parameter passed that can include a related object.  See
- * specific event documentation for details on which events pass what parameteres.
+ * specific event documentation for details on which events pass what parameters.
  *
  * @tip If a priority isn't specified it is determined by the order the handler was
  * registered relative to the event and type.  For plugins, this generally means
@@ -687,12 +687,13 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @param string $event       The event type
  * @param string $object_type The object type
  * @param string $object      The object involved in the event
+ * @param mixed  $params      Additional parameters to pass to the handlers
  *
  * @return bool False if any handler returned false, otherwise true.
  * @example documentation/examples/events/trigger.php
  */
-function elgg_trigger_event($event, $object_type, $object = null) {
-	return _elgg_services()->events->trigger($event, $object_type, $object);
+function elgg_trigger_event($event, $object_type, $object = null, $params = null) {
+	return _elgg_services()->events->trigger($event, $object_type, $object, $params);
 }
 
 /**

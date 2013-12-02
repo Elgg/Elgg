@@ -1,7 +1,13 @@
 <?php
 
 class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
-	
+
+	public $capturedArguments;
+
+	public function setUp() {
+		$this->capturedArguments = null;
+	}
+
 	public function testTriggerCallsRegisteredHandlers() {
 		$events = new Elgg_EventsService();
 
@@ -30,7 +36,29 @@ class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 
 		$this->setExpectedException('InvalidArgumentException');
 		$events->trigger('foo', 'bar');
-		
+	}
+
+	public function testHandlersReceiveCorrectArguments() {
+		$events = new Elgg_EventsService();
+
+		$events->registerHandler('foo', 'bar', array($this, 'captureArguments'));
+
+		$object = (object) array();
+		$params = (object) array();
+
+		$events->trigger('foo', 'bar', $object);
+
+		$expected = array('foo', 'bar', $object, null);
+		$this->assertEquals($expected, $this->capturedArguments);
+
+		$events->trigger('foo', 'bar', $object, $params);
+
+		$expected = array('foo', 'bar', $object, $params);
+		$this->assertEquals($expected, $this->capturedArguments);
+	}
+
+	public function captureArguments() {
+		$this->capturedArguments = func_get_args();
 	}
 
 	public static function throwInvalidArg() {
