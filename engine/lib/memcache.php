@@ -35,3 +35,23 @@ function is_memcache_available() {
 
 	return $memcache_available;
 }
+
+/**
+ * Invalidate an entity in memcache
+ *
+ * @param int $entity_guid The GUID of the entity to invalidate
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_invalidate_memcache_for_entity($entity_guid) {
+	static $newentity_cache;
+	
+	if ((!$newentity_cache) && (is_memcache_available())) {
+		$newentity_cache = new ElggMemcache('new_entity_cache');
+	}
+	
+	if ($newentity_cache) {
+		$newentity_cache->delete($entity_guid);
+	}
+}
