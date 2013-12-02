@@ -29,21 +29,29 @@ $date = elgg_view_friendly_time($topic->time_created);
 
 $replies_link = '';
 $reply_text = '';
-$num_replies = elgg_get_annotations(array(
-	'annotation_name' => 'group_topic_post',
-	'guid' => $topic->getGUID(),
+
+$num_replies = elgg_get_entities(array(
+	'type' => 'object',
+	'subtype' => 'discussion_reply',
+	'container_guid' => $topic->getGUID(),
 	'count' => true,
 ));
+
 if ($num_replies != 0) {
-	$last_reply = $topic->getAnnotations(array(
-		'annotation_name' => 'group_topic_post',
+	$last_reply = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => 'discussion_reply',
+		'container_guid' => $topic->getGUID(),
 		'limit' => 1,
-		'reverse_order_by' => true,
 	));
-	$poster = $last_reply[0]->getOwnerEntity();
-	$reply_time = elgg_view_friendly_time($last_reply[0]->time_created);
+	if (isset($last_reply[0])) {
+		$last_reply = $last_reply[0];
+	}
+
+	$poster = $last_reply->getOwnerEntity();
+	$reply_time = elgg_view_friendly_time($last_reply->time_created);
 	$reply_text = elgg_echo('groups:updated', array($poster->name, $reply_time));
-	
+
 	$replies_link = elgg_view('output/url', array(
 		'href' => $topic->getURL() . '#group-replies',
 		'text' => elgg_echo('group:replies') . " ($num_replies)",
@@ -51,16 +59,16 @@ if ($num_replies != 0) {
 	));
 }
 
-$metadata = elgg_view_menu('entity', array(
-	'entity' => $vars['entity'],
-	'handler' => 'discussion',
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-));
-
 // do not show the metadata and controls in widget view
 if (elgg_in_context('widgets')) {
 	$metadata = '';
+} else {
+	$metadata = elgg_view_menu('entity', array(
+		'entity' => $vars['entity'],
+		'handler' => 'discussion',
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz',
+	));
 }
 
 if ($full) {
