@@ -1544,6 +1544,26 @@ table.mceLayout {
 }
 
 /* ***************************************
+    SITE SECRET
+*************************************** */
+.elgg-form-admin-site-regenerate-secret table {
+	width: 60%;
+	margin: 1em auto;
+}
+td.elgg-strength-strong,
+td.elgg-strength-strong h4 {
+	background: #DFF0D8; color: #468847;
+}
+td.elgg-strength-moderate,
+td.elgg-strength-moderate h4 {
+	background: #FCF8E3; color: #C09853;
+}
+td.elgg-strength-weak,
+td.elgg-strength-weak h4 {
+	background: #F2DEDE; color: #B94A48;
+}
+
+/* ***************************************
 	HELPERS
 *************************************** */
 .hidden {
