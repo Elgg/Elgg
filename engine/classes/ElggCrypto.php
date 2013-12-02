@@ -96,12 +96,12 @@ class ElggCrypto {
 		}
 
 		do {
-			$bytes = ($total > $hash_len)? $hash_len : $total;
+			$bytes = ($total > $hash_len) ? $hash_len : $total;
 			$total -= $bytes;
 
 			//collect any entropy available from the PHP system and filesystem
 			$entropy = rand() . uniqid(mt_rand(), true) . $SSLstr;
-			$entropy .= implode('', @fstat(@fopen( __FILE__, 'r')));
+			$entropy .= implode('', @fstat(@fopen(__FILE__, 'r')));
 			$entropy .= memory_get_usage() . getmypid();
 			$entropy .= serialize($_ENV) . serialize($_SERVER);
 			if (function_exists('posix_times')) {
@@ -113,7 +113,7 @@ class ElggCrypto {
 
 			if ($handle) {
 				$entropy .= @fread($handle, $bytes);
-			} else  {
+			} else {
 				// Measure the time that the operations will take on average
 				for ($i = 0; $i < 3; $i++) {
 					$c1 = microtime(true);
@@ -162,9 +162,9 @@ class ElggCrypto {
 	 * Uses supplied character list for generating the new string.
 	 * If no character list provided - uses Base64 URL character set.
 	 *
-	 * @param  int         $length Desired length of the string
-	 * @param  string|null $chars  Characters to be chosen from randomly. If not given, the Base64 URL
-	 *                             charset will be used.
+	 * @param int         $length Desired length of the string
+	 * @param string|null $chars  Characters to be chosen from randomly. If not given, the Base64 URL
+	 *                            charset will be used.
 	 *
 	 * @return string The random string
 	 *
