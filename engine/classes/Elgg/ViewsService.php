@@ -284,7 +284,7 @@ class Elgg_ViewsService {
 		}
 
 		$content = '';
-		foreach ($viewlist as $priority => $view) {
+		foreach ($viewlist as $view) {
 
 			$rendering = $this->renderViewFile($view, $vars, $viewtype, $issue_missing_notice);
 			if ($rendering !== false) {

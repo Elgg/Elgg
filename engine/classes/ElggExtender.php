@@ -299,7 +299,7 @@ abstract class ElggExtender extends ElggData {
 				$function = $CONFIG->extender_url_handler['all']['all'];
 			}
 			if (is_callable($function)) {
-				$url = call_user_func($function, $extender);
+				$url = call_user_func($function, null);
 			}
 
 			if ($url) {
