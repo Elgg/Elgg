@@ -35,6 +35,7 @@ $content = elgg_list_annotations(array(
 	'annotation_name' => 'page',
 	'limit' => 20,
 	'order_by' => "n_table.time_created desc",
+	'query_name' => 'pages/history',
 ));
 
 $body = elgg_view_layout('content', array(

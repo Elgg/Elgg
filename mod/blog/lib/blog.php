@@ -84,15 +84,19 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 		if ($current_user && ($container_guid == $current_user->guid)) {
 			$return['filter_context'] = 'mine';
+			$options['query_name'] = 'blog/owner';
 		} else if (elgg_instanceof($container, 'group')) {
 			$return['filter'] = false;
+			$options['query_name'] = 'blog/group';
 		} else {
 			// do not show button or select a tab when viewing someone else's posts
 			$return['filter_context'] = 'none';
+			$options['query_name'] = 'blog/owner';
 		}
 	} else {
 		$return['filter_context'] = 'all';
 		$return['title'] = elgg_echo('blog:title:all_blogs');
+		$options['query_name'] = 'blog/all';
 		elgg_pop_breadcrumb();
 		elgg_push_breadcrumb(elgg_echo('blog:blogs'));
 	}
@@ -136,6 +140,7 @@ function blog_get_page_content_friends($user_guid) {
 		'relationship_guid' => $user_guid,
 		'relationship_join_on' => 'container_guid',
 		'no_results' => elgg_echo('blog:none'),
+		'query_name' => 'blog/friends',
 	);
 
 	$return['content'] = elgg_list_entities_from_relationship($options);
@@ -178,6 +183,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 		'subtype' => 'blog',
 		'full_view' => false,
 		'no_results' => elgg_echo('blog:none'),
+		'query_name' => 'blog/archive',
 	);
 
 	if ($owner_guid) {

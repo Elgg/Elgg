@@ -16,6 +16,7 @@ $content = elgg_list_entities(array(
 	'full_view' => false,
 	'view_toggle_type' => false,
 	'no_results' => elgg_echo('bookmarks:none'),
+	'query_name' => 'bookmarks/all',
 ));
 
 $title = elgg_echo('bookmarks:everyone');

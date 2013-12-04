@@ -18,14 +18,17 @@ $list_params = array(
 
 //grab the latest 4 blog posts
 $list_params['subtype'] = 'blog';
+$list_params['query_name'] = 'custom_index/blog';
 $blogs = elgg_list_entities($list_params);
 
 //grab the latest bookmarks
 $list_params['subtype'] = 'bookmarks';
+$list_params['query_name'] = 'custom_index/bookmark';
 $bookmarks = elgg_list_entities($list_params);
 
 //grab the latest files
 $list_params['subtype'] = 'file';
+$list_params['query_name'] = 'custom_index/file';
 $files = elgg_list_entities($list_params);
 
 //get the newest members who have an avatar
@@ -38,11 +41,13 @@ $newest_members = elgg_list_entities_from_metadata(array(
 	'list_type' => 'gallery',
 	'gallery_class' => 'elgg-gallery-users',
 	'size' => 'small',
+	'query_name' => 'custom_index/member',
 ));
 
 //newest groups
 $list_params['type'] = 'group';
 unset($list_params['subtype']);
+$list_params['query_name'] = 'custom_index/group';
 $groups = elgg_list_entities($list_params);
 
 //grab the login form

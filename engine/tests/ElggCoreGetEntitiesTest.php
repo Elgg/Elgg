@@ -979,4 +979,21 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		$entities = elgg_get_entities($options);
 		$this->assertTrue(is_array($entities));
 	}
+
+	public function testNamedQueriesFilterOptions() {
+		$query_name = __FUNCTION__;
+		elgg_register_plugin_hook_handler('entities:options', $query_name, __CLASS__ . '::namedQueryHandler');
+
+		$entities = elgg_get_entities(array(
+			'query_name' => $query_name,
+			'limit' => 1,
+		));
+		$this->assertIsA($entities[0], 'stdClass');
+	}
+
+	public static function namedQueryHandler($hook, $type, $options, $param) {
+		return array_merge($options, array(
+			'callback' => '',
+		));
+	}
 }

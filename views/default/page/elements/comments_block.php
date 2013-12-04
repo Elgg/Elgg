@@ -62,6 +62,8 @@ if ($subtypes) {
 	}
 }
 
+$options['query_name'] = 'sidebar/comments_block';
+
 $title = elgg_echo('generic_comments:latest');
 $comments = elgg_get_entities($options);
 if ($comments) {

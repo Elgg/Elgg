@@ -20,6 +20,7 @@ $options = array(
 	'order_by' => 'ue.name ASC',
 	'full_view' => false,
 	'no_results' => elgg_echo('friends:none'),
+	'query_name' => 'friends',
 );
 $content = elgg_list_entities_from_relationship($options);
 

@@ -764,6 +764,9 @@ function elgg_enable_entity($guid, $recursive = true) {
  *
  * 	joins => array() Additional joins
  *
+ *  query_name => string If provided, $options will be filtered by the plugin
+ *                hook ["entities:options", <query_name>]
+ *
  * 	callback => string A callback function to pass each row through
  *
  * @return mixed If count, int. If not count, array. false on errors.
@@ -777,34 +780,42 @@ function elgg_enable_entity($guid, $recursive = true) {
 function elgg_get_entities(array $options = array()) {
 	global $CONFIG;
 
+	// allow modification of options before the defaults are merged in
+	if (!empty($options['query_name']) && is_string($options['query_name'])) {
+		$params = array(
+			'options' => $options,
+		);
+		$options = elgg_trigger_plugin_hook("entities:options", $options['query_name'], $params, $options);
+	}
+
 	$defaults = array(
-		'types'					=>	ELGG_ENTITIES_ANY_VALUE,
-		'subtypes'				=>	ELGG_ENTITIES_ANY_VALUE,
-		'type_subtype_pairs'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'types'                 => ELGG_ENTITIES_ANY_VALUE,
+		'subtypes'              => ELGG_ENTITIES_ANY_VALUE,
+		'type_subtype_pairs'    => ELGG_ENTITIES_ANY_VALUE,
 
-		'guids'					=>	ELGG_ENTITIES_ANY_VALUE,
-		'owner_guids'			=>	ELGG_ENTITIES_ANY_VALUE,
-		'container_guids'		=>	ELGG_ENTITIES_ANY_VALUE,
-		'site_guids'			=>	$CONFIG->site_guid,
+		'guids'                 => ELGG_ENTITIES_ANY_VALUE,
+		'owner_guids'           => ELGG_ENTITIES_ANY_VALUE,
+		'container_guids'       => ELGG_ENTITIES_ANY_VALUE,
+		'site_guids'            => $CONFIG->site_guid,
 
-		'modified_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'modified_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'created_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
-		'created_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
+		'modified_time_lower'   => ELGG_ENTITIES_ANY_VALUE,
+		'modified_time_upper'   => ELGG_ENTITIES_ANY_VALUE,
+		'created_time_lower'    => ELGG_ENTITIES_ANY_VALUE,
+		'created_time_upper'    => ELGG_ENTITIES_ANY_VALUE,
 
-		'reverse_order_by'		=>	false,
-		'order_by' 				=>	'e.time_created desc',
-		'group_by'				=>	ELGG_ENTITIES_ANY_VALUE,
-		'limit'					=>	10,
-		'offset'				=>	0,
-		'count'					=>	false,
-		'selects'				=>	array(),
-		'wheres'				=>	array(),
-		'joins'					=>	array(),
+		'reverse_order_by'      => false,
+		'order_by'              => 'e.time_created desc',
+		'group_by'              => ELGG_ENTITIES_ANY_VALUE,
+		'limit'                 => 10,
+		'offset'                => 0,
+		'count'                 => false,
+		'selects'               => array(),
+		'wheres'                => array(),
+		'joins'                 => array(),
 
-		'callback'				=> 'entity_row_to_elggstar',
+		'callback'              => 'entity_row_to_elggstar',
 
-		'__ElggBatch'			=> null,
+		'__ElggBatch'           => null,
 	);
 
 	$options = array_merge($defaults, $options);

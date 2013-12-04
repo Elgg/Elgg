@@ -26,6 +26,7 @@ function groups_handle_all_page() {
 				'inverse_relationship' => false,
 				'full_view' => false,
 				'no_results' => elgg_echo('groups:none'),
+				'query_name' => 'groups/all',
 			));
 			break;
 		case 'discussion':
@@ -36,6 +37,7 @@ function groups_handle_all_page() {
 				'limit' => 40,
 				'full_view' => false,
 				'no_results' => elgg_echo('discussion:none'),
+				'query_name' => 'discussion/latest',
 			));
 			break;
 		case 'newest':
@@ -44,6 +46,7 @@ function groups_handle_all_page() {
 				'type' => 'group',
 				'full_view' => false,
 				'no_results' => elgg_echo('groups:none'),
+				'query_name' => 'groups/all',
 			));
 			break;
 	}
@@ -120,6 +123,7 @@ function groups_handle_owned_page() {
 		'order_by' => 'ge.name ASC',
 		'full_view' => false,
 		'no_results' => elgg_echo('groups:none'),
+		'query_name' => 'groups/owner',
 	));
 
 	$params = array(
@@ -161,6 +165,7 @@ function groups_handle_mine_page() {
 		'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
 		'order_by' => 'ge.name ASC',
 		'no_results' => elgg_echo('groups:none'),
+		'query_name' => 'groups/member',
 	));
 
 	$params = array(
@@ -334,6 +339,10 @@ function groups_handle_activity_page($guid) {
 			"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
 		),
 		'no_results' => elgg_echo('groups:activity:none'),
+
+		// Q: Why not "group/activity"? This is for consistency with the other "activity"
+		// query names, and the query does not return groups, but is a river
+		'query_name' => 'activity/group',
 	));
 
 	$params = array(

@@ -10,6 +10,7 @@ $featured_groups = elgg_get_entities_from_metadata(array(
 	'metadata_value' => 'yes',
 	'type' => 'group',
 	'limit' => 10,
+	'query_name' => 'sidebar/featured_groups',
 ));
 
 if ($featured_groups) {

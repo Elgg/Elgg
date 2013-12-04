@@ -18,6 +18,7 @@ function discussion_handle_all_page() {
 		'limit' => 20,
 		'full_view' => false,
 		'no_results' => elgg_echo('discussion:none'),
+		'query_name' => 'discussion/all',
 	));
 
 	$title = elgg_echo('discussion:latest');
@@ -62,6 +63,7 @@ function discussion_handle_list_page($guid) {
 		'container_guid' => $guid,
 		'full_view' => false,
 		'no_results' => elgg_echo('discussion:none'),
+		'query_name' => 'discussion/owner',
 	);
 	$content = elgg_list_entities($options);
 
