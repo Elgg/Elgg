@@ -1166,7 +1166,8 @@ function elgg_http_build_url(array $parts, $html_encode = true) {
  * @since 1.7.0
  */
 function elgg_add_action_tokens_to_url($url, $html_encode = false) {
-	$components = parse_url(elgg_normalize_url($url));
+	$url = elgg_normalize_url($url);
+	$components = parse_url($url);
 
 	if (isset($components['query'])) {
 		$query = elgg_parse_str($components['query']);
@@ -1199,29 +1200,15 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false) {
  * @since 1.7.0
  */
 function elgg_http_remove_url_query_element($url, $element) {
-	$url_array = parse_url($url);
-
-	if (isset($url_array['query'])) {
-		$query = elgg_parse_str($url_array['query']);
-	} else {
-		// nothing to remove. Return original URL.
-		return $url;
-	}
-
-	if (array_key_exists($element, $query)) {
-		unset($query[$element]);
-	}
-
-	$url_array['query'] = http_build_query($query);
-	$string = elgg_http_build_url($url_array, false);
-	return $string;
+	return elgg_http_add_url_query_elements($url, array($element => null));
 }
 
 /**
- * Adds an element or elements to a URL's query string.
+ * Sets elements in a URL's query string.
  *
  * @param string $url      The URL
- * @param array  $elements Key/value pairs to add to the URL
+ * @param array  $elements Key/value pairs to set in the URL. If the value is null, the
+ *                         element is removed from the URL.
  *
  * @return string The new URL with the query strings added
  * @since 1.7.0
@@ -1236,10 +1223,21 @@ function elgg_http_add_url_query_elements($url, array $elements) {
 	}
 
 	foreach ($elements as $k => $v) {
-		$query[$k] = $v;
+		if ($v === null) {
+			unset($query[$k]);
+		} else {
+			$query[$k] = $v;
+		}
 	}
 
-	$url_array['query'] = http_build_query($query);
+	// why check path? A: if no path, this may be a relative URL like "?foo=1". In this case,
+	// the output "" would be interpreted the current URL, so in this case we *must* set
+	// a query to make sure elements are removed.
+	if ($query || empty($url_array['path'])) {
+		$url_array['query'] = http_build_query($query);
+	} else {
+		unset($url_array['query']);
+	}
 	$string = elgg_http_build_url($url_array, false);
 
 	return $string;
