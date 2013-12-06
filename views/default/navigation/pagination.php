@@ -62,8 +62,9 @@ $pages->items = array();
 // Add pages before the current page
 if ($current_page > 1) {
 	$prev_offset = $offset - $limit;
-	if ($prev_offset < 0) {
-		$prev_offset = 0;
+	if ($prev_offset < 1) {
+		// don't include offset=0
+		$prev_offset = null;
 	}
 
 	$pages->prev['href'] = elgg_http_add_url_query_elements($base_url, array($offset_key => $prev_offset));
@@ -112,6 +113,10 @@ foreach ($pages->items as $page) {
 		echo "<li class=\"elgg-state-selected\"><span>$page</span></li>";
 	} else {
 		$page_offset = (($page - 1) * $limit);
+		if ($page_offset == 0) {
+			// don't include offset=0
+			$page_offset = null;
+		}
 		$url = elgg_http_add_url_query_elements($base_url, array($offset_key => $page_offset));
 		$link = elgg_view('output/url', array(
 			'href' => $url,
