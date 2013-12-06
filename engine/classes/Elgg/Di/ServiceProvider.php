@@ -41,8 +41,8 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 		$this->setClassName('autoP', 'ElggAutoP');
 		$this->setFactory('db', array($this, 'getDatabase'));
-		$this->setClassName('events', 'Elgg_EventsService');
-		$this->setClassName('hooks', 'Elgg_PluginHooksService');
+		$this->setFactory('events', array($this, 'getEvents'));
+		$this->setFactory('hooks', array($this, 'getHooks'));
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setClassName('metadataCache', 'ElggVolatileMetadataCache');
 		$this->setFactory('queryCounter', array($this, 'getQueryCounter'), false);
@@ -66,13 +66,53 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 	}
 
 	/**
+	 * Events service factory
+	 *
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
+	 * @return Elgg_EventsService
+	 */
+	protected function getEvents(Elgg_Di_ServiceProvider $c) {
+		return $this->resolveLoggerDependencies('events');
+	}
+
+	/**
 	 * Logger factory
 	 * 
 	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
 	 * @return Elgg_Logger
 	 */
 	protected function getLogger(Elgg_Di_ServiceProvider $c) {
-		return new Elgg_Logger($c->hooks);
+		return $this->resolveLoggerDependencies('logger');
+	}
+
+	/**
+	 * Plugin hooks service factory
+	 *
+	 * @param Elgg_Di_ServiceProvider $c Dependency injection container
+	 * @return Elgg_PluginHooksService
+	 */
+	protected function getHooks(Elgg_Di_ServiceProvider $c) {
+		return $this->resolveLoggerDependencies('hooks');
+	}
+
+	/**
+	 * Returns the first requested service of the logger, events, and hooks. It sets the
+	 * hooks and events up in the right order to prevent circular dependency.
+	 *
+	 * @param string $service_needed The service requested first
+	 * @return mixed
+	 */
+	protected function resolveLoggerDependencies($service_needed) {
+		$svcs['hooks'] = new Elgg_PluginHooksService();
+		$svcs['logger'] = new Elgg_Logger($svcs['hooks']);
+		$svcs['hooks']->setLogger($svcs['logger']);
+		$svcs['events'] = new Elgg_EventsService();
+		$svcs['events']->setLogger($svcs['logger']);
+
+		foreach ($svcs as $key => $service) {
+			$this->setValue($key, $service);
+		}
+		return $svcs[$service_needed];
 	}
 
 	/**

@@ -42,7 +42,10 @@ class Elgg_EventsService extends Elgg_HooksRegistrationService {
 
 		foreach ($events as $callback) {
 			if (!is_callable($callback)) {
-				// @todo should this produce a warning?
+				if ($this->logger) {
+					$this->logger->warn("handler for event [$event, $type] is not callable: "
+										. $this->describeCallable($callback));
+				}
 				continue;
 			}
 
