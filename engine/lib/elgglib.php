@@ -733,7 +733,31 @@ function elgg_trigger_before_event($event, $object_type, $object = null) {
  * @see elgg_trigger_before_event
  */
 function elgg_trigger_after_event($event, $object_type, $object = null) {
-	return _elgg_services()->events->trigger("$event:after", $object_type, $object, false);
+	$options = array(
+		Elgg_EventsService::OPTION_STOPPABLE => false,
+	);
+	return _elgg_services()->events->trigger("$event:after", $object_type, $object, $options);
+}
+
+/**
+ * Trigger an event normally, but send a notice about deprecated use if any handlers are registered.
+ *
+ * @param string $event       The event type
+ * @param string $object_type The object type
+ * @param string $object      The object involved in the event
+ * @param string $message     The deprecation message
+ * @param string $version     Human-readable *release* version: 1.9, 1.10, ...
+ *
+ * @return bool
+ *
+ * @see elgg_trigger_event
+ */
+function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message, $version) {
+	$options = array(
+		Elgg_EventsService::OPTION_DEPRECATION_MESSAGE => $message,
+		Elgg_EventsService::OPTION_DEPRECATION_VERSION => $version,
+	);
+	return _elgg_services()->events->trigger("$event:after", $object_type, $object, $options);
 }
 
 /**

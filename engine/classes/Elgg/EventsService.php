@@ -11,6 +11,10 @@
  */
 class Elgg_EventsService extends Elgg_HooksRegistrationService {
 
+	const OPTION_STOPPABLE = 'stoppable';
+	const OPTION_DEPRECATION_MESSAGE = 'deprecation_message';
+	const OPTION_DEPRECATION_VERSION = 'deprecation_version';
+
 	/**
 	 * Triggers an Elgg event.
 	 * 
@@ -18,8 +22,22 @@ class Elgg_EventsService extends Elgg_HooksRegistrationService {
 	 * @see elgg_trigger_after_event
 	 * @access private
 	 */
-	public function trigger($event, $type, $object = null, $stoppable = true) {
+	public function trigger($event, $type, $object = null, array $options = array()) {
+		$options = array_merge(array(
+			self::OPTION_STOPPABLE => true,
+			self::OPTION_DEPRECATION_MESSAGE => '',
+			self::OPTION_DEPRECATION_VERSION => '',
+		), $options);
+
 		$events = $this->getOrderedHandlers($event, $type);
+		if ($events && $options[self::OPTION_DEPRECATION_MESSAGE]) {
+			elgg_deprecated_notice(
+				$options[self::OPTION_DEPRECATION_MESSAGE],
+				$options[self::OPTION_DEPRECATION_VERSION],
+				2
+			);
+		}
+
 		$args = array($event, $type, $object);
 
 		foreach ($events as $callback) {
@@ -29,7 +47,7 @@ class Elgg_EventsService extends Elgg_HooksRegistrationService {
 			}
 
 			$return = call_user_func_array($callback, $args);
-			if ($stoppable && ($return === false)) {
+			if (!empty($options[self::OPTION_STOPPABLE]) && ($return === false)) {
 				return false;
 			}
 		}
