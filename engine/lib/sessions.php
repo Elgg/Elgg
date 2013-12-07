@@ -363,12 +363,19 @@ function login(ElggUser $user, $persistent = false) {
 
 	$session = _elgg_services()->session;
 
+	// give plugins a chance to reject the login of this user (no user in session!)
+	if (!elgg_trigger_before_event('login', 'user', $user)) {
+		throw new LoginException(elgg_echo('LoginException:Unknown'));
+	}
+
 	// #5933: set logged in user early so code in login event will be able to
 	// use elgg_get_logged_in_user_entity().
 	$session->setLoggedInUser($user);
 
-	// give plugins a chance to reject the login of this user (no user in session!)
-	if (!elgg_trigger_event('login', 'user', $user)) {
+	// deprecate event
+	$message = "The 'login' event was deprecated. Register for 'login:before' or 'login:after'";
+	$version = "1.9";
+	if (!elgg_trigger_deprecated_event('login', 'user', $user, $message, $version)) {
 		$session->removeLoggedInUser();
 		throw new LoginException(elgg_echo('LoginException:Unknown'));
 	}
@@ -394,6 +401,8 @@ function login(ElggUser $user, $persistent = false) {
 
 	set_last_login($user->guid);
 	reset_login_failure_count($user->guid);
+
+	elgg_trigger_after_event('login', 'user', $user);
 
 	return true;
 }
