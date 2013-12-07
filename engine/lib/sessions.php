@@ -419,8 +419,14 @@ function logout() {
 		return false;
 	}
 
-	// plugins can prevent a logout
-	if (!elgg_trigger_event('logout', 'user', $user)) {
+	if (!elgg_trigger_before_event('logout', 'user', $user)) {
+		return false;
+	}
+
+	// deprecate event
+	$message = "The 'logout' event was deprecated. Register for 'logout:before' or 'logout:after'";
+	$version = "1.9";
+	if (!elgg_trigger_deprecated_event('logout', 'user', $user, $message, $version)) {
 		return false;
 	}
 
@@ -444,6 +450,8 @@ function logout() {
 	$old_msg = $session->get('msg');
 	$session->invalidate();
 	$session->set('msg', $old_msg);
+
+	elgg_trigger_after_event('logout', 'user', $user);
 
 	return true;
 }
