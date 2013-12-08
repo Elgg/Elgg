@@ -187,11 +187,16 @@ function system_log($object, $event) {
 		$object_subtype = $object->getSubtype();
 		$event = sanitise_string($event);
 		$time = time();
+
 		if (!empty($_SERVER['HTTP_X_FORWARDED_FOR'])) {
 			$ip_address = array_pop(explode(',', $_SERVER['HTTP_X_FORWARDED_FOR']));
+		} elseif (!empty($_SERVER['HTTP_X_REAL_IP'])) {
+			$ip_address = array_pop(explode(',', $_SERVER['HTTP_X_REAL_IP']));
 		} else {
-			$ip_address = sanitise_string($_SERVER['REMOTE_ADDR']);
+			$ip_address = $_SERVER['REMOTE_ADDR'];
 		}
+		$ip_address = sanitise_string($ip_address);
+
 		$performed_by = elgg_get_logged_in_user_guid();
 
 		if (isset($object->access_id)) {
