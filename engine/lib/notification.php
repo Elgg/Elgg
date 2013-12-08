@@ -110,12 +110,15 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
 			// Are we overriding delivery?
 			$methods = $methods_override;
 			if (!$methods) {
-				$tmp = (array)get_user_notification_settings($guid);
+				$tmp = get_user_notification_settings($guid);
 				$methods = array();
-				foreach ($tmp as $k => $v) {
-					// Add method if method is turned on for user!
-					if ($v) {
-						$methods[] = $k;
+				// $tmp may be false. don't cast
+				if (is_array($tmp)) {
+					foreach ($tmp as $k => $v) {
+						// Add method if method is turned on for user!
+						if ($v) {
+							$methods[] = $k;
+						}
 					}
 				}
 			}
