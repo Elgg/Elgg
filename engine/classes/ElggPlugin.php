@@ -299,17 +299,16 @@ class ElggPlugin extends ElggObject {
 
 		$private_settings = get_data($q);
 
+		$return = array();
+                
 		if ($private_settings) {
-			$return = array();
-
+		
 			foreach ($private_settings as $setting) {
 				$return[$setting->name] = $setting->value;
 			}
+                }
 
-			return $return;
-		}
-
-		return false;
+		return $return;
 	}
 
 	/**
@@ -423,9 +422,10 @@ class ElggPlugin extends ElggObject {
 
 		$private_settings = get_data($q);
 
-		if ($private_settings) {
-			$return = array();
-
+		$return = array();
+		
+                if ($private_settings) {
+		
 			foreach ($private_settings as $setting) {
 				$name = substr($setting->name, $ps_prefix_len);
 				$value = $setting->value;
@@ -433,10 +433,9 @@ class ElggPlugin extends ElggObject {
 				$return[$name] = $value;
 			}
 
-			return $return;
 		}
 
-		return false;
+		return $return;
 	}
 
 	/**
