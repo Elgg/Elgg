@@ -173,7 +173,7 @@ class Elgg_ViewsService {
 	 * @return string The parsed view
 	 * @access private
 	 */
-	public function renderDeprecatedView($view, $vars = array(), $suggestion, $version) {
+	public function renderDeprecatedView($view, $vars = array(), $suggestion = '', $version = '') {
 		$rendered = $this->renderView($view, $vars, false, '', false);
 		if ($rendered) {
 			elgg_deprecated_notice("The $view view has been deprecated. $suggestion", $version, 3);
