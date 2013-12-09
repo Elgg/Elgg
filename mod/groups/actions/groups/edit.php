@@ -93,6 +93,14 @@ if ($tool_options) {
 $is_public_membership = (get_input('membership') == ACCESS_PUBLIC);
 $group->membership = $is_public_membership ? ACCESS_PUBLIC : ACCESS_PRIVATE;
 
+// Check if we need to update existing group content visibility to a more restrictive access (group only)
+$new_access_mode = get_input('content_access_mode');
+if (($new_access_mode === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) && 
+	($group->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED) && 
+	(get_input('content_access_update_all', null) == 1)) {
+	elgg_load_library('elgg:groups');
+	groups_update_content_access($group);
+}
 $group->setContentAccessMode(get_input('content_access_mode'));
 
 if ($is_new_group) {
