@@ -26,16 +26,6 @@ $defaults = array(
 $entity = elgg_extract('entity', $vars);
 unset($vars['entity']);
 
-// should we tell users that public/logged-in access levels will be ignored?
-$container = elgg_get_page_owner_entity();
-if (($container instanceof ElggGroup)
-		&& $container->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY
-		&& !elgg_in_context('group-edit')
-		&& !($entity && $entity instanceof ElggGroup)) {
-	$show_override_notice = true;
-} else {
-	$show_override_notice = false;
-}
 
 if ($entity) {
 	$defaults['value'] = $entity->access_id;
@@ -48,11 +38,5 @@ if ($vars['value'] == ACCESS_DEFAULT) {
 }
 
 if (is_array($vars['options_values']) && sizeof($vars['options_values']) > 0) {
-	if ($show_override_notice) {
-		$vars['data-group-acl'] = $container->group_acl;
-	}
 	echo elgg_view('input/select', $vars);
-	if ($show_override_notice) {
-		echo "<p class='elgg-text-help'>" . elgg_echo('access:overridenotice')  .  "</p>";
-	}
 }
