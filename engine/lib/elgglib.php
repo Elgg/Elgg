@@ -1138,8 +1138,9 @@ function elgg_http_build_url(array $parts, $html_encode = true) {
 	$port = isset($parts['port']) ? ":{$parts['port']}" : '';
 	$path = isset($parts['path']) ? "{$parts['path']}" : '';
 	$query = isset($parts['query']) ? "?{$parts['query']}" : '';
+	$fragment = isset($parts['fragment']) ? "#{$parts['fragment']}" : '';
 
-	$string = $scheme . $host . $port . $path . $query;
+	$string = $scheme . $host . $port . $path . $query . $fragment;
 
 	if ($html_encode) {
 		return elgg_format_url($string);
