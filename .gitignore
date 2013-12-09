@@ -54,4 +54,5 @@ Desktop.ini
 
 # don't ignore special configs
 !/.travis.yml
+!/.scrutinizer.yml
 !.gitignore
