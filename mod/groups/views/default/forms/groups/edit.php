@@ -106,6 +106,9 @@ if (elgg_get_plugin_setting('hidden_groups', 'groups') == 'yes') {
 				'name' => 'vis',
 				'value' =>  $vis,
 				'options_values' => $access_options,
+				'entity' => $entity,
+				'entity_type' => 'group',
+				'entity_subtype' => '',
 			));
 			?>
 	</label>
