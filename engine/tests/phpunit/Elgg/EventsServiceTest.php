@@ -44,7 +44,9 @@ class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'returnFalse'));
 		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
-		$this->assertTrue($events->trigger('foo', 'bar', null, false));
+		$this->assertTrue($events->trigger('foo', 'bar', null, array(
+			Elgg_EventsService::OPTION_STOPPABLE => false
+		)));
 		$this->assertEquals($this->counter, 1);
 	}
 
