@@ -757,7 +757,7 @@ function elgg_trigger_deprecated_event($event, $object_type, $object = null, $me
 		Elgg_EventsService::OPTION_DEPRECATION_MESSAGE => $message,
 		Elgg_EventsService::OPTION_DEPRECATION_VERSION => $version,
 	);
-	return _elgg_services()->events->trigger("$event:after", $object_type, $object, $options);
+	return _elgg_services()->events->trigger($event, $object_type, $object, $options);
 }
 
 /**
