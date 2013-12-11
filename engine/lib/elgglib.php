@@ -589,8 +589,9 @@ function register_error($error) {
  * as a callback to an event.  Multiple handlers can be registered for
  * the same event and will be executed in order of $priority.
  *
- * Any handler returning false will halt the execution chain and cause the event
- * to be "cancelled".
+ * For most events, any handler returning false will halt the execution chain and
+ * cause the event to be "cancelled". For After Events, the return values of the
+ * handlers will be ignored and all handlers will be called.
  *
  * This function is called with the event name, event type, and handler callback name.
  * Setting the optional $priority allows plugin authors to specify when the
@@ -693,6 +694,70 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  */
 function elgg_trigger_event($event, $object_type, $object = null) {
 	return _elgg_services()->events->trigger($event, $object_type, $object);
+}
+
+/**
+ * Trigger a "Before event" indicating a process is about to begin.
+ *
+ * Like regular events, a handler returning false will cancel the process and false
+ * will be returned.
+ *
+ * To register for a before event, append ":before" to the event name when registering.
+ *
+ * @param string $event       The event type. The fired event type will be appended with ":before".
+ * @param string $object_type The object type
+ * @param string $object      The object involved in the event
+ *
+ * @return bool False if any handler returned false, otherwise true
+ *
+ * @see elgg_trigger_event
+ * @see elgg_trigger_after_event
+ */
+function elgg_trigger_before_event($event, $object_type, $object = null) {
+	return _elgg_services()->events->trigger("$event:before", $object_type, $object);
+}
+
+/**
+ * Trigger an "After event" indicating a process has finished.
+ *
+ * Unlike regular events, all the handlers will be called, their return values ignored.
+ *
+ * To register for an after event, append ":after" to the event name when registering.
+ *
+ * @param string $event       The event type. The fired event type will be appended with ":after".
+ * @param string $object_type The object type
+ * @param string $object      The object involved in the event
+ *
+ * @return true
+ *
+ * @see elgg_trigger_before_event
+ */
+function elgg_trigger_after_event($event, $object_type, $object = null) {
+	$options = array(
+		Elgg_EventsService::OPTION_STOPPABLE => false,
+	);
+	return _elgg_services()->events->trigger("$event:after", $object_type, $object, $options);
+}
+
+/**
+ * Trigger an event normally, but send a notice about deprecated use if any handlers are registered.
+ *
+ * @param string $event       The event type
+ * @param string $object_type The object type
+ * @param string $object      The object involved in the event
+ * @param string $message     The deprecation message
+ * @param string $version     Human-readable *release* version: 1.9, 1.10, ...
+ *
+ * @return bool
+ *
+ * @see elgg_trigger_event
+ */
+function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message, $version) {
+	$options = array(
+		Elgg_EventsService::OPTION_DEPRECATION_MESSAGE => $message,
+		Elgg_EventsService::OPTION_DEPRECATION_VERSION => $version,
+	);
+	return _elgg_services()->events->trigger($event, $object_type, $object, $options);
 }
 
 /**

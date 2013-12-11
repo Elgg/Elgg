@@ -1,36 +1,58 @@
 <?php
 
 class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
-	
-	public function testTriggerCallsRegisteredHandlers() {
-		$events = new Elgg_EventsService();
 
-		$this->setExpectedException('InvalidArgumentException');
+	public $counter = 0;
 
-		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'throwInvalidArg'));
-
-		$events->trigger('foo', 'bar');
+	public function setUp() {
+		$this->counter = 0;
 	}
 
-	public function testBubbling() {
+	public function testTriggerCallsRegisteredHandlersAndReturnsTrue() {
 		$events = new Elgg_EventsService();
 
-		// false stops it
+		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
+		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
+
+		$this->assertTrue($events->trigger('foo', 'bar'));
+		$this->assertEquals($this->counter, 2);
+	}
+
+	public function testFalseStopsPropagationAndReturnsFalse() {
+		$events = new Elgg_EventsService();
+
 		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'returnFalse'));
-		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'throwInvalidArg'));
+		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
-		$events->trigger('foo', 'bar');
+		$this->assertFalse($events->trigger('foo', 'bar'));
+		$this->assertEquals($this->counter, 0);
+	}
 
-		// null allows it
+	public function testNullDoesNotStopPropagation() {
 		$events = new Elgg_EventsService();
 
-		// false stops it
 		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'returnNull'));
-		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'throwInvalidArg'));
+		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
-		$this->setExpectedException('InvalidArgumentException');
-		$events->trigger('foo', 'bar');
-		
+		$this->assertTrue($events->trigger('foo', 'bar'));
+		$this->assertEquals($this->counter, 1);
+	}
+
+	public function testUnstoppableEventsCantBeStoppedAndReturnTrue() {
+		$events = new Elgg_EventsService();
+
+		$events->registerHandler('foo', 'bar', array('Elgg_EventsServiceTest', 'returnFalse'));
+		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
+
+		$this->assertTrue($events->trigger('foo', 'bar', null, array(
+			Elgg_EventsService::OPTION_STOPPABLE => false
+		)));
+		$this->assertEquals($this->counter, 1);
+	}
+
+	public function incrementCounter() {
+		$this->counter++;
+		return true;
 	}
 
 	public static function throwInvalidArg() {
