@@ -9,30 +9,38 @@
  * @uses $vars['limit']      The number of comments to display
  */
 
-$owner_guid = elgg_extract('owner_guid', $vars, ELGG_ENTITIES_ANY_VALUE);
-if (!$owner_guid) {
-	$owner_guid = ELGG_ENTITIES_ANY_VALUE;
-}
-
-$owner_entity = get_entity($owner_guid);
-if ($owner_entity && elgg_instanceof($owner_entity, 'group')) {
-	// not supporting groups so return
-	return true;
-}
-
 $options = array(
 	'type' => 'object',
 	'subtype' => 'comment',
-	'owner_guid' => $owner_guid,
 	'limit' => elgg_extract('limit', $vars, 4),
+	'wheres' => array()
 );
 
-// @todo where should this go
-// join on the entities table for container subtype
-$subtypes = elgg_extract('subtypes', $vars, ELGG_ENTITIES_ANY_VALUE);
-if ($subtypes != ELGG_ENTITIES_ANY_VALUE) {
+$owner_guid = elgg_extract('owner_guid', $vars);
+$subtypes = elgg_extract('subtypes', $vars);
+
+if ($owner_guid || $subtypes) {
 	$db_prefix = elgg_get_config('dbprefix');
+
+	// Join on the entities table to check container subtype and/or owner
 	$options['joins'] = array("JOIN {$db_prefix}entities ce ON e.container_guid = ce.guid");
+}
+
+// If owner is defined, view only the comments that have
+// been posted on objects owned by that user
+if ($owner_guid) {
+	$owner_entity = get_entity($owner_guid);
+	if (!$owner_entity instanceof ElggUser) {
+		// Only supporting users so no need to continue
+		return true;
+	}
+
+	$options['wheres'][] = "ce.owner_guid = $owner_guid";
+}
+
+// If subtypes are defined, view only the comments that have been
+// posted on objects that belong to any of those subtypes
+if ($subtypes) {
 	if (is_array($subtypes)) {
 		$subtype_ids = array();
 		foreach ($subtypes as $subtype) {
@@ -43,17 +51,16 @@ if ($subtypes != ELGG_ENTITIES_ANY_VALUE) {
 		}
 		if ($subtype_ids) {
 			$subtype_string = implode(',', $subtype_ids);
-			$options['wheres'] = array("ce.subtype IN ($subtype_string)");
+			$options['wheres'][] = "ce.subtype IN ($subtype_string)";
 		} else {
-			// subtype ids do not exist so not comments
-			$options['wheres'] = array("1 = -1");
+			// subtype ids do not exist so cannot display comments
+			$options['wheres'][] = "1 = -1";
 		}
 	} else {
 		$subtype_id = (int)get_subtype_id('object', $subtypes);
-		$options['wheres'] = array("ce.subtype = $subtype_id");
+		$options['wheres'][] = "ce.subtype = $subtype_id";
 	}
 }
-
 
 $title = elgg_echo('generic_comments:latest');
 $comments = elgg_get_entities($options);
