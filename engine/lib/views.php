@@ -305,6 +305,44 @@ function elgg_set_view_location($view, $location, $viewtype = '') {
 }
 
 /**
+ * Returns a string of attributes for the <body> tag
+ *
+ * @note this function triggers the body:attributes,page plugin hook
+ *       to allow extension of autorized attributes list.
+ *
+ * @param array $body_attrs	An associative array of attribute names and values
+ * 							Accepted names are: about, class, and id
+ *
+ * @return string
+ * @since 1.9.0
+ */
+function elgg_set_body_attrs($body_attrs) {
+
+	// Only operate on an array, and if we are asked to
+	if (empty($body_attrs) || !is_array($body_attrs)) {
+		return '';
+	}
+
+	// Always return a string
+	$attributes = '';
+
+	// Authorized attributes of the body tag
+	$safe_attrs = array('about', 'class', 'id');
+	// Allow plugins to extend this
+	$safe_attrs = elgg_trigger_plugin_hook('body:attributes', 'page', null, $safe_attrs);
+
+	// Filter the passed attributes to sane values
+	foreach ($body_attrs AS $key => $value) {
+		$key = strtolower($key);
+		if (in_array($key, $safe_attrs)) {
+			$attributes.= sprintf(' %s="%s"', $key, preg_replace('/[^\w\. -]+/', '', $value));
+		}
+	}
+	return $attributes;
+
+}
+
+/**
  * Returns whether the specified view exists
  *
  * @note If $recurse is true, also checks if a view exists only as an extension.

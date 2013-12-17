@@ -14,7 +14,7 @@ $lang = get_current_language();
 	<head>
 <?php echo $vars["head"]; ?>
 	</head>
-	<body>
+	<body<?php echo $vars["body_attrs"]; ?>>
 <?php echo $vars["body"]; ?>
 	</body>
 </html>

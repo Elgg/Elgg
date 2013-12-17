@@ -317,4 +317,21 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 			$this->assertIdentical(elgg_get_friendly_time($current_time + $num_seconds, $current_time), $friendlytime);
 		}
 	}
+
+	/**
+     * Test elgg_set_body_attrs() from lib/views.php
+     */
+	public function testElggSetBodyAttrs() {
+		$body_attrs = array(
+			'unauthorized' => 'attribute',
+			'class'        => 'may be multiple',
+			'id'           => 'i#s^-&&%\\/fr@ien!dl(y',
+			'about'        => 'a-zA-Z0-9 \._-',
+			'title'        => 'not part of default set');
+
+		$expected = ' class="may be multiple" id="is-friendly" about="a-zA-Z0-9 ._-"';
+
+		$this->assertIdentical($expected, elgg_set_body_attrs($body_attrs));
+		$this->assertIdentical('', elgg_set_body_attrs(""));
+	}
 }
