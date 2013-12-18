@@ -1038,6 +1038,7 @@ function discussion_prepare_reply_notification($hook, $type, $notification, $par
 	$topic = $reply->getContainerEntity();
 	$poster = $reply->getOwnerEntity();
 	$group = $topic->getContainerEntity();
+	$language = elgg_extract('language', $params);
 
 	$notification->subject = elgg_echo('discussion:reply:notify:subject', array($topic->title), $language);
 	$notification->body = elgg_echo('discussion:reply:notify:body', array(
@@ -1055,18 +1056,18 @@ function discussion_prepare_reply_notification($hook, $type, $notification, $par
 /**
  * Get subscriptions for group notifications
  *
- * @param string $hook   'get'
- * @param string $type   'subscriptions'
- * @param array  $return Array containing subscriptions in the form
+ * @param string $hook          'get'
+ * @param string $type          'subscriptions'
+ * @param array  $subscriptions Array containing subscriptions in the form
  *                       <user guid> => array('email', 'site', etc.)
- * @param array  $params Hook parameters
+ * @param array  $params        Hook parameters
  * @return array
  */
 function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 	$reply = $params['event']->getObject();
 
 	if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
-		return $return;
+		return $subscriptions;
 	}
 
 	$group_guid = $reply->getContainerEntity()->container_guid;
