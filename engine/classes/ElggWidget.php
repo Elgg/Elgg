@@ -126,7 +126,6 @@ class ElggWidget extends ElggObject {
 	public function getTitle() {
 		$title = $this->title;
 		if (!$title) {
-			global $CONFIG;
 			$title = _elgg_services()->widgets->getNameByType($this->handler);
 		}
 		return $title;

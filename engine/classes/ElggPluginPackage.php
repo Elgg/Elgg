@@ -62,11 +62,6 @@ class ElggPluginPackage {
 	private $errorMsg = '';
 
 	/**
-	 * Any dependencies messages
-	 */
-	private $depsMsgs = array();
-
-	/**
 	 * The plugin's manifest object
 	 *
 	 * @var ElggPluginManifest
