@@ -178,7 +178,7 @@ function developers_log_events($name, $type) {
 		$type,
 		$function,
 	));
-	elgg_dump($msg, false, 'WARNING');
+	elgg_dump($msg, false);
 
 	unset($stack);
 }

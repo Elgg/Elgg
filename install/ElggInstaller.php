@@ -839,7 +839,7 @@ class ElggInstaller {
 				$CONFIG->site_id = $CONFIG->site_guid;
 				$CONFIG->site = get_entity($CONFIG->site_guid);
 				$CONFIG->dataroot = datalist_get('dataroot');
-				_elgg_session_boot(NULL, NULL, NULL);
+				_elgg_session_boot();
 			}
 
 			elgg_trigger_event('init', 'system');

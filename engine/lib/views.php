@@ -368,7 +368,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
  * @return string The parsed view
  * @access private
  */
-function elgg_view_deprecated($view, $vars = array(), $suggestion, $version) {
+function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
 	return _elgg_services()->views->renderDeprecatedView($view, $vars, $suggestion, $version);
 }
 
