@@ -109,9 +109,12 @@ function groups_handle_owned_page() {
 
 	elgg_register_title_button();
 
+	$dbprefix = elgg_get_config('dbprefix');
 	$content = elgg_list_entities(array(
 		'type' => 'group',
 		'owner_guid' => elgg_get_page_owner_guid(),
+		'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
+		'order_by' => 'ge.name ASC',
 		'full_view' => false,
 		'no_results' => elgg_echo('groups:none'),
 	));
