@@ -903,7 +903,7 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 
 /**
  * Intercepts, logs, and displays uncaught exceptions.
- * 
+ *
  * To use a viewtype other than failsafe, create the views:
  *  <viewtype>/messages/exceptions/admin_exception
  *  <viewtype>/messages/exceptions/exception
@@ -1324,15 +1324,8 @@ function elgg_http_add_url_query_elements($url, array $elements) {
  * @since 1.8.0
  */
 function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset', 'limit')) {
-	// if the server portion is missing but it starts with / then add the url in.
-	// @todo use elgg_normalize_url()
-	if (elgg_substr($url1, 0, 1) == '/') {
-		$url1 = elgg_get_site_url() . ltrim($url1, '/');
-	}
-
-	if (elgg_substr($url1, 0, 1) == '/') {
-		$url2 = elgg_get_site_url() . ltrim($url2, '/');
-	}
+	$url1 = elgg_normalize_url($url1);
+	$url2 = elgg_normalize_url($url2);
 
 	// @todo - should probably do something with relative URLs
 

@@ -104,6 +104,67 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	}
 
 	/**
+	 * Test elgg_http_url_is_identical()
+	 */
+	public function testHttpUrlIsIdentical() {
+		$tests = array(
+			'http://example.com' => 'http://example.com',
+			'https://example.com' => 'https://example.com',
+			'http://example-time.com' => 'http://example-time.com',
+
+			'//example.com' => '//example.com',
+			'ftp://example.com/file' => 'ftp://example.com/file',
+			'mailto:brett@elgg.org' => 'mailto:brett@elgg.org',
+			'javascript:alert("test")' => 'javascript:alert("test")',
+			'app://endpoint' => 'app://endpoint',
+
+			'example.com' => 'http://example.com',
+			'example.com/subpage' => 'http://example.com/subpage',
+
+			'page/handler' =>                	elgg_get_site_url() . 'page/handler',
+			'page/handler?p=v&p2=v2' =>      	elgg_get_site_url() . 'page/handler?p=v&p2=v2',
+			'mod/plugin/file.php' =>            elgg_get_site_url() . 'mod/plugin/file.php',
+			'mod/plugin/file.php?p=v&p2=v2' =>  elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
+			'rootfile.php' =>                   elgg_get_site_url() . 'rootfile.php',
+			'rootfile.php?p=v&p2=v2' =>         elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
+
+			'/page/handler' =>               	elgg_get_site_url() . 'page/handler',
+			'/page/handler?p=v&p2=v2' =>     	elgg_get_site_url() . 'page/handler?p=v&p2=v2',
+			'/mod/plugin/file.php' =>           elgg_get_site_url() . 'mod/plugin/file.php',
+			'/mod/plugin/file.php?p=v&p2=v2' => elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
+			'/rootfile.php' =>                  elgg_get_site_url() . 'rootfile.php',
+			'/rootfile.php?p=v&p2=v2' =>        elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
+		);
+
+		foreach ($tests as $input => $output) {
+			$this->assertTrue(elgg_http_url_is_identical($output, $input), "Failed to determine URLs as identical for: '$output' and '$input'");
+			$this->assertTrue(elgg_http_url_is_identical($input, $output), "Failed to determine URLs as identical for: '$input' and '$output'");
+		}
+	}
+
+	/**
+	 * Test elgg_http_url_is_identical() for $ignore_params parameter handling
+	 */
+	public function testHttpUrlIsIdenticalIgnoreParamsHandling() {
+		$tests = array(
+			array('page/handler', elgg_get_site_url() . 'page/handler', array('p', 'p2'), true),
+			array('page/handler?p=v&p2=q2', elgg_get_site_url() . 'page/handler?p=q&p2=v2', array('p', 'p2'), true),
+			array('/rootfile.php', elgg_get_site_url() . 'rootfile.php?param=23', array('param'), true),
+			array('/rootfile.php?p=v&p2=v2', elgg_get_site_url() . 'rootfile.php?p=v&p2=q', array('p', 'p2'), true),
+			array('mod/plugin/file.php?other_param=123', elgg_get_site_url() . 'mod/plugin/file.php', array('q', 'p2'), false),
+			array('/rootfile.php', elgg_get_site_url() . 'rootfile.php?param=23', array(), false),
+		);
+
+		foreach ($tests as $test) {
+			list($url1, $url2, $ignore_params, $result) = $test;
+			$this->assertIdentical(elgg_http_url_is_identical($url1, $url2, $ignore_params), $result, "Failed to determine URLs as "
+				. ($result ? 'identical' : 'different') . " for: '$url1', '$url2' and ignore params set to " . print_r($ignore_params, true));
+			$this->assertIdentical(elgg_http_url_is_identical($url2, $url1, $ignore_params), $result, "Failed to determine URLs as "
+				. ($result ? 'identical' : 'different') . " for: '$url2', '$url1' and ignore params set to " . print_r($ignore_params, true));
+		}
+	}
+
+	/**
 	 * Test elgg_format_element()
 	 */
 	public function testElggFormatElement() {
