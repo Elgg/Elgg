@@ -3414,6 +3414,7 @@ function list_annotations($entity_guid, $name = "", $limit = 25, $asc = true) {
  * @param unknown_type $timeupper
  * @param unknown_type $calculation
  * @internal Don't use this at all.
+ * @deprecated 1.8 Use elgg_get_annotations()
  */
 function elgg_deprecated_annotation_calculation($entity_guid = 0, $entity_type = "", $entity_subtype = "",
 $name = "", $value = "", $value_type = "", $owner_guid = 0, $timelower = 0,
@@ -4667,6 +4668,7 @@ function display_widget(ElggObject $widget) {
  *
  * @param ElggEntity $entity
  * @return int Number of comments
+ * @deprecated 1.8 Use ElggEntity->countComments()
  */
 function elgg_count_comments($entity) {
 	elgg_deprecated_notice('elgg_count_comments() is deprecated by ElggEntity->countComments()', 1.8);
