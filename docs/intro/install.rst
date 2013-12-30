@@ -185,9 +185,10 @@ installation on your local computer running Windows.
 -  Once the installation is completed, it will prompt you to start the
    XAMPP controller panel. Leave it for now.
 -  Open ``C:\xampp\apache\conf\httpd.conf`` file with notepad and uncomment
-   this line::
+   these lines::
 
      #LoadModule rewrite_module modules/mod_rewrite.so
+     #LoadModule filter_module modules/mod_filter.so
 
 -  Edit the php.ini file and change
    ``arg_separator.output = &amp;amp;`` to ``arg_separator.output = &``
@@ -441,6 +442,32 @@ you are on this point and tried everything that is written above:
 
 -  if it is not the elgg provided htaccess file, use the htaccess\_dist
    (rename it to .htaccess)
+
+I get an error message that the rewrite test failed after the requirements check page
+-------------------------------------------------------------------------------------
+
+I get the following messages after the requirements check step (step 2) of the install:
+
+    We think your server is running the Apache web server.
+
+    The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents
+    Apache from processing the .htaccess file which contains the rewrite rules.
+
+    A less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in
+    your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.
+    
+After this error, everinteraction with the web interface results in a error 500 (Internal Server Error)
+
+This is likely caused by not loading the "filter module by un-commenting the
+
+     #LoadModule filter_module modules/mod_filter.so
+     
+line in the "httpd.conf" file.
+
+the Apache "error.log" file will contain an entry similar to:
+
+     ... .htaccess: Invalid command 'AddOutputFilterByType', perhaps misspelled or defined by a module not included in the server configuration
+
 
 There is a white page after I submit my database settings
 ---------------------------------------------------------
