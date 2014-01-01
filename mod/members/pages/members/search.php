@@ -7,7 +7,9 @@
 if ($vars['search_type'] == 'tag') {
 	$tag = get_input('tag');
 
-	$title = elgg_echo('members:title:searchtag', array($tag));
+	$display_query = _elgg_get_display_query($tag);
+
+	$title = elgg_echo('members:title:searchtag', array($display_query));
 
 	$options = array();
 	$options['query'] = $tag;
@@ -28,7 +30,9 @@ if ($vars['search_type'] == 'tag') {
 } else {
 	$name = sanitize_string(get_input('name'));
 
-	$title = elgg_echo('members:title:searchname', array($name));
+	$display_query = _elgg_get_display_query($name);
+
+	$title = elgg_echo('members:title:searchname', array($display_query));
 
 	$db_prefix = elgg_get_config('dbprefix');
 	$params = array(
