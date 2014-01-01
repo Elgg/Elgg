@@ -1,3 +1,46 @@
+Version 1.8.17
+(January 1, 2014 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Brett Profitt
+   * Cash Costello
+   * Ed Lyons
+   * Evan Winslow
+   * Jeroen Dalsem
+   * Jerome Bakker
+   * Juho Jaakkola
+   * Matt Beckett
+   * Paweł Sroka
+   * Sem
+   * Steve Clay
+
+  Security Fixes:
+   * Specially-crafted request could return the contents of sensitive files.
+   * Reflected XSS attack was possible against 1.8 systems.
+   * The cryptographic key used for various purposes may have been generated with weak entropy, particularly on Windows.
+
+  Bugfixes:
+   * URLs with non-ASCII usernames again work
+   * Floated images are now properly cleared in content areas
+   * The activity page title now matches the document title
+   * Search again supports multiple comments on the same entity
+   * Blog archive sidebar now reverse chronological
+   * URLs with matching parens can now be auto-linked
+   * Log browser links for users now work
+   * Disabling over 50 objects should no longer result in an infinite loop
+   * Radio/checkbox inputs no longer have border radius (for IE10)
+   * User picker: the Only Friends checkbox again works
+   * Group bookmarklet no longer shown to non-members
+   * Widget reordering fixed when moving across columns
+   * Refuse to deactivate plugins needed as dependencies
+
+  Enhancements:
+   * Group member listings are ordered by name
+   * The system_log table can now store IPv6 addresses
+   * Web services auth_gettoken() now accepts email address
+   * List functions: no need to specify pagination for unlimited queries
+   * Htmlawed was upgraded to 1.1.16
+
+
 Version 1.8.16
 (June 25, 2013 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
