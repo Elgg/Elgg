@@ -67,7 +67,8 @@ function groups_search_page() {
 	elgg_push_breadcrumb(elgg_echo('search'));
 
 	$tag = get_input("tag");
-	$title = elgg_echo('groups:search:title', array($tag));
+	$display_query = _elgg_get_display_query($tag);
+	$title = elgg_echo('groups:search:title', array($display_query));
 
 	// groups plugin saves tags as "interests" - see groups_fields_setup() in start.php
 	$params = array(
