@@ -1,3 +1,21 @@
+Version 1.7.20
+(January 1, 2014 from https://github.com/Elgg/Elgg/tree/1.7)
+
+ Contributing Developers:
+  * Cash Costello
+  * Juho Jaakkola
+  * Paweł Sroka
+  * Steve Clay
+
+ Security Enhancements:
+  * Specially-crafted request could return the contents of sensitive files.
+  * The cryptographic key used for various purposes may have been generated with weak entropy, particularly on Windows.
+  * Sanitizing now parameter of elgg_is_admin_user() before quering the database
+
+ Enhancements:
+  * Upgraded Htmlawed to version 1.1.16
+
+
 Version 1.7.19
 (March 14, 2013 from https://github.com/Elgg/Elgg/tree/1.7)
 
