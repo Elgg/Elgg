@@ -1,3 +1,13 @@
+Version 1.7.21
+(January 3, 2014 from https://github.com/Elgg/Elgg/tree/1.7)
+
+ Contributing Developers:
+  * Juho Jaakkola
+
+ Bug fix:
+  * Fixed duplicate tags caused by htmLawed plugin
+
+
 Version 1.7.20
 (January 1, 2014 from https://github.com/Elgg/Elgg/tree/1.7)
 
