@@ -34,7 +34,13 @@ function htmlawed_init() {
  * @param $attribute_array
  * @return unknown_type
  */
-function htmlawed_hook($element, $attribute_array) {
+function htmlawed_hook($element, $attribute_array = false) {
+	if ($attribute_array === false) {
+		// This is a closing tag. Prevent further processing to avoid inserting a duplicate tag
+
+		return "</${element}>";
+	}
+
 	// these are the default styles used by tinymce.
 	$allowed_styles = array(
 		'color', 'cursor', 'text-align', 'vertical-align', 'font-size',
