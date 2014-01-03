@@ -552,6 +552,10 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 		if ($page_owner->canWriteToContainer($user_guid)) {
 			$returnvalue[$page_owner->group_acl] = elgg_echo('groups:group') . ': ' . $page_owner->name;
 
+			if ($page_owner->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+				unset($returnvalue[ACCESS_PUBLIC]);
+				unset($returnvalue[ACCESS_LOGGED_IN]);
+			}
 			unset($returnvalue[ACCESS_FRIENDS]);
 		}
 	} else {

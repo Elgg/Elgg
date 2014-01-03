@@ -88,6 +88,22 @@ foreach ((array)$group_profile_fields as $shortname => $valtype) {
 		?>
 	</label>
 </div>
+
+<?php if ($entity && ($entity->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED)) : ?>
+<fieldset class="hidden group_access_mode_change">
+	<legend><?php echo elgg_echo('groups:content_access_mode:change:legend'); ?></legend>
+	<label>
+		<?php echo elgg_view('input/checkbox', array(
+			'name' => 'content_access_update_all',
+			'value' => 1,
+			'checked' => 'checked'
+		));
+		?>
+		<?php echo elgg_echo('groups:content_access_mode:change:checkbox'); ?>
+	</label>
+	<p class="elgg-text-help"><?php echo elgg_echo('groups:content_access_mode:change:info'); ?></p>
+</div>
+<?php endif; ?>
 	
 <?php
 

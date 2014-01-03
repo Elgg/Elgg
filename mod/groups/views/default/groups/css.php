@@ -63,3 +63,17 @@
 	background-color: #4690D6;
 	color: white;
 }
+
+fieldset.group_access_mode_change {
+	padding: 5px 5px 10px;
+    margin: 0px 0px 15px 10px;
+    border: 1px solid;
+    border-radius 5px;
+}
+
+fieldset.group_access_mode_change > legend {
+	color: #333333;
+	font-size: 110%;
+	font-weight: bold;
+	padding: 0 3px;
+}

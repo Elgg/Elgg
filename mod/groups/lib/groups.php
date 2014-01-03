@@ -580,3 +580,114 @@ function groups_prepare_form_vars($group = null) {
 
 	return $values;
 }
+
+/**
+ * Updates group content access ids when changing a group's content accessibility from "unrestricted to "group only".
+ * The function will descend into container hierarchy and update access ids for all nested content as well.
+ * Access updates will be performed on entities, metadata, annotations and river entries.
+ *
+ * @param ElggGroup $group The group entity to change all contained entities' access
+ * @param string $user The user entity to perform the update operation
+ * @return boolean true upon successful operation, false otherwise
+ */
+function groups_update_content_access($group, $user = null) {
+	// Perform some basic sanity checks
+	if (!elgg_instanceof($group, 'group')) {
+		return false;
+	}
+
+	if (!elgg_instanceof($user, 'user')) {
+		$user = elgg_get_logged_in_user_entity();
+	}
+
+	if (!($group->canWriteToContainer($user->guid))) {
+		return false;
+	}
+
+	// Prevent timeouts due to long update operations
+	ini_set('max_execution_time', 0);
+
+	// Grant privileges for changing access_id of any group contained entity
+	$access = elgg_set_ignore_access(true);
+
+	// Start with the target groups as container
+	$container_guids = array($group->guid);
+	$target_access_id = $group->group_acl;
+	$change_access_ids = array(ACCESS_PUBLIC, ACCESS_LOGGED_IN);
+	$change_access_ids_str = implode(', ', $change_access_ids);
+	$dbprefix = elgg_get_config('dbprefix');
+	$entity_chunk_size = 100; // Number of entity guids to process at a single SQL statement
+
+	while (!empty($container_guids)) {
+
+		// Get all entities' guids contained by the current container
+		$container_guids_str = implode(',', $container_guids);
+		$guid_query = "SELECT guid FROM {$dbprefix}entities WHERE container_guid IN ({$container_guids_str})";
+		$guid_results = get_data($guid_query);
+
+		if (is_array($guid_results) && !empty($guid_results)) {
+
+			// Get all contained entity guids and use them as a comma separated string for update statements
+			$entity_guids = array();
+			foreach ($guid_results as $guid_obj) {
+				$entity_guids[] = $guid_obj->guid;
+			}
+			$entity_guids_str = implode(',', $entity_guids);
+
+			// Update entity access ids
+			// Allow 3rd party plugins to modify the list of guids before executing the actual update statement
+			elgg_trigger_plugin_hook('group_access_update', 'entity', array(), $entity_guids);
+			// Use chunks to prevent errors raised by too long SQL commands
+			$entity_guids_chunks = array_chunk($entity_guids, $entity_chunk_size);
+			foreach ($entity_guids_chunks as $entity_guids_chunk) {
+				$entity_guids_str = implode(',', $entity_guids_chunk);
+				$update_statement = "UPDATE {$dbprefix}entities SET access_id = {$target_access_id} WHERE
+				(access_id IN ({$change_access_ids_str}) AND guid IN ({$entity_guids_str}))";
+				
+				update_data($update_statement);
+			}
+
+			// Update metadata access ids
+			elgg_trigger_plugin_hook('group_access_update', 'metadata', array(), $entity_guids);
+			$entity_guids_chunks = array_chunk($entity_guids, $entity_chunk_size);
+			foreach ($entity_guids_chunks as $entity_guids_chunk) {
+				$entity_guids_str = implode(',', $entity_guids_chunk);
+				$update_statement = "UPDATE {$dbprefix}metadata SET access_id = {$target_access_id} WHERE
+				(access_id IN ({$change_access_ids_str}) AND entity_guid IN ({$entity_guids_str}))";
+				
+				update_data($update_statement);
+			}
+
+			// Update annotation access ids
+			elgg_trigger_plugin_hook('group_access_update', 'annotation', array(), $entity_guids);
+			$entity_guids_chunks = array_chunk($entity_guids, $entity_chunk_size);
+			foreach ($entity_guids_chunks as $entity_guids_chunk) {
+				$entity_guids_str = implode(',', $entity_guids_chunk);
+				$update_statement = "UPDATE {$dbprefix}annotations SET access_id = {$target_access_id} WHERE
+				(access_id IN ({$change_access_ids_str}) AND entity_guid IN ({$entity_guids_str}))";
+				
+				update_data($update_statement);
+			}
+
+			// Update river access ids
+			elgg_trigger_plugin_hook('group_access_update', 'river', array(), $entity_guids);
+			$entity_guids_chunks = array_chunk($entity_guids, $entity_chunk_size);
+			foreach ($entity_guids_chunks as $entity_guids_chunk) {
+				$entity_guids_str = implode(',', $entity_guids_chunk);
+				$update_statement = "UPDATE {$dbprefix}river SET access_id = {$target_access_id} WHERE
+				(access_id IN ({$change_access_ids_str}) AND object_guid IN ({$entity_guids_str}))";
+				
+				update_data($update_statement);
+			}
+
+		} else {
+			$entity_guids = array();
+		}
+
+			// Descend one level in container hierarchy - use the previously updated entities as containers for the next round
+		$container_guids = $entity_guids;
+	}
+
+	elgg_set_ignore_access($access);
+	return true;
+}

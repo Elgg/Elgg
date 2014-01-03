@@ -44,6 +44,12 @@ return array(
 	'groups:content_access_mode' => "Accessibility of group content",
 	'groups:content_access_mode:unrestricted' => "Unrestricted - Access depends on content-level settings",
 	'groups:content_access_mode:membersonly' => "Members Only - Non-members can never access group content",
+	'groups:content_access_mode:change:legend' => 'Additional settings for group content',
+	'groups:content_access_mode:change:checkbox' => 'Update existing content access to new policy',
+	'groups:content_access_mode:change:info' => 'Checking this option will modify all previously created "public" or "logged in" group content\'s visibility to members of this group only. Previous group content declared as "private" will not be modified.<br/>
+Unchecking this box will leave all existing content within this group as they are, subsequently created content visibility however will be restricted to "private" or "group only".<br />
+NOTICE: If you leave the box checked, the update operation may take longer than usual. Please do not navigate away or close your browser tab until the page reloads.			
+			',
 	'groups:access' => "Access permissions",
 	'groups:owner' => "Owner",
 	'groups:owner:warning' => "Warning: if you change this value, you will no longer be the owner of this group.",
