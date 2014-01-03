@@ -44,6 +44,7 @@ return array(
 	'groups:content_access_mode' => "Accessibility of group content",
 	'groups:content_access_mode:unrestricted' => "Unrestricted - Access depends on content-level settings",
 	'groups:content_access_mode:membersonly' => "Members Only - Non-members can never access group content",
+	'groups:content_access_mode:info' => "Please consider carefully the group content accessibility type. You won't be able to modify this setting later.",
 	'groups:access' => "Access permissions",
 	'groups:owner' => "Owner",
 	'groups:owner:warning' => "Warning: if you change this value, you will no longer be the owner of this group.",

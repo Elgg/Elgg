@@ -74,6 +74,7 @@ foreach ((array)$group_profile_fields as $shortname => $valtype) {
 	</label>
 </div>
 
+<?php if (!$entity) : ?>
 <div>
 	<label>
 		<?php echo elgg_echo('groups:content_access_mode'); ?><br />
@@ -86,8 +87,10 @@ foreach ((array)$group_profile_fields as $shortname => $valtype) {
 			),
 		));
 		?>
+		<p class="elgg-text-help"><?php echo elgg_echo('groups:content_access_mode:info'); ?></p>
 	</label>
 </div>
+<?php endif; ?>
 	
 <?php
 
