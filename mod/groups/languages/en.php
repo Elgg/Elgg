@@ -64,6 +64,7 @@ return array(
 	'groups:cantedit' => 'You can not edit this group',
 	'groups:saved' => 'Group saved',
 	'groups:featured' => 'Featured groups',
+	'groups:nofeatured' => 'No featured groups',
 	'groups:makeunfeatured' => 'Unfeature',
 	'groups:makefeatured' => 'Make featured',
 	'groups:featuredon' => '%s is now a featured group.',
