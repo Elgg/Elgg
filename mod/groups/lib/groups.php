@@ -38,6 +38,18 @@ function groups_handle_all_page() {
 				'no_results' => elgg_echo('discussion:none'),
 			));
 			break;
+		case 'featured':
+			$content = elgg_list_entities_from_metadata(array(
+				'metadata_name' => 'featured_group',
+				'metadata_value' => 'yes',
+				'type' => 'group',
+				'full_view' => false,
+				'limit' => 10,
+			));
+			if (!$content) {
+				$content = elgg_echo('groups:nofeatured');
+			}
+			break;
 		case 'newest':
 		default:
 			$content = elgg_list_entities(array(
