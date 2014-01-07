@@ -113,7 +113,7 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
 				$tmp = get_user_notification_settings($guid);
 				$methods = array();
 				// $tmp may be false. don't cast
-				if (is_array($tmp)) {
+				if (is_object($tmp)) {
 					foreach ($tmp as $k => $v) {
 						// Add method if method is turned on for user!
 						if ($v) {
@@ -168,7 +168,7 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
  *
  * @param int $user_guid The user id
  *
- * @return stdClass
+ * @return stdClass|false
  */
 function get_user_notification_settings($user_guid = 0) {
 	$user_guid = (int)$user_guid;
