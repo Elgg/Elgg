@@ -102,6 +102,10 @@ function groups_init() {
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
 	elgg_register_event_handler('pagesetup', 'system', 'groups_setup_sidebar_menus');
 
+	// Handler that makes sure the content of restricted groups stays restricted
+	elgg_register_event_handler('create', 'object', 'groups_restrict_content_accessibility');
+	elgg_register_event_handler('update', 'object', 'groups_restrict_content_accessibility');
+
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'groups_access_collection_override');
 
 	elgg_register_event_handler('upgrade', 'system', 'groups_run_upgrades');
@@ -553,6 +557,13 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 			$returnvalue[$page_owner->group_acl] = elgg_echo('groups:group') . ': ' . $page_owner->name;
 
 			unset($returnvalue[ACCESS_FRIENDS]);
+
+			if ($page_owner->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+				// Group policy states that content can be accessible only by
+				// group members so remove the non-member access options
+				unset($returnvalue[ACCESS_PUBLIC]);
+				unset($returnvalue[ACCESS_LOGGED_IN]);
+			}
 		}
 	} else {
 		// if the user owns the group, remove all access collections manually
@@ -727,6 +738,43 @@ function group_access_options($group) {
 		$group->group_acl => elgg_echo('groups:acl', array($group->name)),
 	);
 	return $access_array;
+}
+
+/**
+ * Disallow creating unrestricted content inside a restricted group
+ *
+ * Check that the access_id is acceptable when creating content inside a
+ * group that is using the members_only policy for group content.
+ *
+ * @param string     $event       'create' or 'update'
+ * @param string     $object_type 'object'
+ * @param ElggObject $object
+ * @return boolean False if trying to use an unacceptable access_id
+ */
+function groups_restrict_content_accessibility($event, $object_type, $object) {
+	$group = $object->getContainerEntity();
+
+	if (!$group instanceof ElggGroup) {
+		// No need to check the policy because not creating content inside a group
+		return true;
+	}
+
+	if ($group->getContentAccessMode() != ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+		// The content of this group doesn't have to be restricted
+		return true;
+	}
+
+	// Content is allowed to be visible only to the content owner or all group members
+	$allowed_values = array(ACCESS_PRIVATE, $group->group_acl);
+
+	if (!in_array($object->access_id, $allowed_values)) {
+		$access_list = get_readable_access_level($object->access_id);
+		register_error(elgg_echo('groups:content_access_mode:error', array($access_list)));
+
+		return false;
+	}
+
+	return true;
 }
 
 function activity_profile_menu($hook, $entity_type, $return_value, $params) {
