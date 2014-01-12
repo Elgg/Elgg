@@ -9,10 +9,10 @@
 
 /**
  * Adds an item to the river.
- * 
+ *
  * @tip Read the item like "Lisa (subject) posted (action)
  * a comment (object) on John's blog (target)".
- * 
+ *
  * @param array $options Array in format:
  *
  * 	view => STR The view that will handle the river item (must exist)
@@ -128,7 +128,7 @@ function elgg_create_river_item(array $options = array()) {
 	// @todo shouldn't this be done elsewhere? Like when an annotation is saved?
 	if ($id) {
 		update_entity_last_action($object_guid, $posted);
-		
+
 		$river_items = elgg_get_river(array('id' => $id));
 		if ($river_items) {
 			elgg_trigger_event('created', 'river', $river_items[0]);
@@ -232,7 +232,7 @@ function elgg_delete_river(array $options = array()) {
 
 	// remove identical join clauses
 	$joins = array_unique($options['joins']);
-	
+
 	// add joins
 	foreach ($joins as $j) {
 		$query .= " $j ";
@@ -342,6 +342,11 @@ function elgg_get_river(array $options = array()) {
 
 	$joins = $options['joins'];
 
+	$dbprefix = elgg_get_config('dbprefix');
+	$joins[] = "JOIN {$dbprefix}entities oe ON rv.object_guid = oe.guid";
+	// LEFT JOIN is used because all river items do not necessarily have target
+	$joins[] = "LEFT JOIN {$dbprefix}entities te ON rv.target_guid = te.guid";
+
 	if ($options['relationship_guid']) {
 		$clauses = elgg_get_entity_relationship_where_sql(
 				'rv.subject_guid',
@@ -385,7 +390,14 @@ function elgg_get_river(array $options = array()) {
 		$query .= " $w AND ";
 	}
 
-	$query .= elgg_river_get_access_sql();
+	// Make sure that user has access to all the entities referenced by each river item
+	$object_access_where = _elgg_get_access_where_sql(array('table_alias' => 'oe'));
+	$target_access_where = _elgg_get_access_where_sql(array('table_alias' => 'te'));
+
+	// We use LEFT JOIN with entities table but the WHERE clauses are used
+	// regardless if a JOIN is successfully made. The "te.guid IS NULL" is
+	// needed because of this.
+	$query .= "$object_access_where AND ($target_access_where OR te.guid IS NULL) ";
 
 	if (!$options['count']) {
 		$options['group_by'] = sanitise_string($options['group_by']);
@@ -481,9 +493,9 @@ function elgg_list_river(array $options = array()) {
 		'list_class' => 'elgg-list-river',
 		'no_results' => '',
 	);
-	
+
 	$options = array_merge($defaults, $options);
-	
+
 	if (!$options["limit"] && !$options["offset"]) {
 		// no need for pagination if listing is unlimited
 		$options["pagination"] = false;
@@ -520,24 +532,6 @@ function _elgg_row_to_elgg_river_item($row) {
 	}
 
 	return new ElggRiverItem($row);
-}
-
-/**
- * Get the river's access where clause
- *
- * @return string
- * @since 1.8.0
- * @access private
- */
-function elgg_river_get_access_sql() {
-	// @todo deprecate? this is only used once in elgg_get_river
-	return _elgg_get_access_where_sql(array(
-		'table_alias' => '',
-		'owner_guid_column' => 'rv.subject_guid',
-		'guid_column' => 'object_guid',
-		'access_column' => 'rv.access_id', 
-		'use_enabled_clause' => false,
-	));
 }
 
 /**
@@ -753,7 +747,7 @@ function _elgg_river_init() {
 	elgg_register_page_handler('activity', '_elgg_river_page_handler');
 	$item = new ElggMenuItem('activity', elgg_echo('activity'), 'activity');
 	elgg_register_menu_item('site', $item);
-	
+
 	elgg_register_widget_type('river_widget', elgg_echo('river:widget:title'), elgg_echo('river:widget:description'));
 
 	elgg_register_action('river/delete', '', 'admin');
