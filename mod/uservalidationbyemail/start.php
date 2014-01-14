@@ -142,14 +142,16 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
 
 	$username = $credentials['username'];
 	
-	// check if logging in with email address
-	if (strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
-		$username = $users[0]->username;
-	}
-
 	// See if the user exists and isn't validated
 	$access_status = access_get_show_hidden_status();
 	access_show_hidden_entities(TRUE);
+	
+	//Get user
+	if (strpos($username, '@') !== false && ($users = get_user_by_email($username))) {
+		$user = $users[0];
+	}else{
+		$user = get_user_by_username($username);
+	}
 
 	$user = get_user_by_username($username);
 	if ($user && isset($user->validated) && !$user->validated) {
