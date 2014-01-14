@@ -8,10 +8,18 @@ $user = elgg_get_page_owner_entity();
 
 $profile_fields = elgg_get_config('profile_fields');
 
-echo '<div id="profile-details" class="elgg-body pll h-card vcard">';
+echo '<div id="profile-details" class="elgg-body pll">';
+echo "<span class=\"hidden nickname p-nickname\">{$user->username}</span>";
 echo "<h2 class=\"p-name fn\">{$user->name}</h2>";
 
 echo elgg_view("profile/status", array("entity" => $user));
+
+$microformats = array(
+	'mobile' => 'tel p-tel',
+	'phone' => 'tel p-tel',
+	'website' => 'url u-url',
+	'contactemail' => 'email u-email',
+);
 
 $even_odd = null;
 if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
@@ -42,7 +50,17 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 			<div class="<?php echo $even_odd; ?>">
 				<b><?php echo elgg_echo("profile:{$shortname}"); ?>: </b>
 				<?php
-					echo elgg_view("output/{$valtype}", array('value' => $value));
+					$params = array(
+						'value' => $value
+					);
+					if (isset($microformats[$shortname])) {
+						$class = $microformats[$shortname];
+					} else {
+						$class = '';
+					}
+					echo "<span class=\"$class\">";
+					echo elgg_view("output/{$valtype}", $params);
+					echo "</span>";
 				?>
 			</div>
 			<?php
