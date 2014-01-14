@@ -8,7 +8,7 @@ if (get_subtype_id('object', 'discussion_reply')) {
 }
 
 /**
- * The actual upgrade will be run from the view /mod/groups/admin/groups/upgrades/2013100401.php
+ * The actual upgrade will be run from the view admin/groups/upgrades/2013100401.php
  */
 
 $access_status = access_get_show_hidden_status();
