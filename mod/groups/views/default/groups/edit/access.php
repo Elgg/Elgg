@@ -12,13 +12,8 @@
 $entity = elgg_extract("entity", $vars, false);
 $membership = elgg_extract("membership", $vars);
 $visibility = elgg_extract("vis", $vars);
-
-if ($entity) {
-	$owner_guid = $entity->getOwnerGUID();
-	$content_access_mode = $entity->getContentAccessMode();
-} else {
-	$content_access_mode = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
-}
+$owner_guid = elgg_extract("owner_guid", $vars);
+$content_access_mode = elgg_extract("content_access_mode", $vars);
 
 ?>
 <div>
@@ -50,7 +45,7 @@ if ($entity) {
 		?>
 	</label>
 </div>
-	
+
 <?php
 
 if (elgg_get_plugin_setting("hidden_groups", "groups") == "yes") {
