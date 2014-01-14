@@ -360,7 +360,7 @@ class ElggUser extends ElggEntity
 	public function removeFromSite($site) {
 		if (is_numeric($site)) {
 			elgg_deprecated_notice('ElggUser::removeFromSite() takes a site entity', 1.9);
-			return remove_site_user($site, $this->getGUID());
+			return remove_site_user($site, $this->guid);
 		}
 
 		return parent::removeFromSite($site);

@@ -85,7 +85,6 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('default', 'access', 'groups_access_default_override');
 
 	// Register profile menu hook
-	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'forum_profile_menu');
 	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'activity_profile_menu');
 
 	// allow ecml in discussion and profiles
@@ -288,7 +287,7 @@ function groups_page_handler($page) {
  * Handle group icons.
  *
  * @param array $page
- * @return void
+ * @return bool
  */
 function groups_icon_handler($page) {
 
@@ -381,6 +380,7 @@ function groups_entity_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
+	/* @var ElggMenuItem $item */
 	foreach ($return as $index => $item) {
 		if (in_array($item->getName(), array('access', 'likes', 'edit', 'delete'))) {
 			unset($return[$index]);
@@ -912,9 +912,9 @@ function discussion_set_topic_url($hook, $type, $url, $params) {
  * 
  * @param string $hook
  * @param string $type
- * @param string $url
+ * @param string $return
  * @param array  $params
- * @return string
+ * @return bool
  */
 function discussion_comment_override($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'object', 'groupforumtopic')) {
@@ -1077,8 +1077,8 @@ function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 /**
  * A simple function to see who can edit a group discussion post
  * 
- * @param the comment $entity
- * @param user who owns the group $group_owner
+ * @param ElggComment $entity      the  comment $entity
+ * @param ELggUser    $group_owner user who owns the group $group_owner
  * @return boolean
  */
 function groups_can_edit_discussion($entity, $group_owner) {
@@ -1114,6 +1114,7 @@ function groups_run_upgrades() {
  * @return boolean True if user is discussion or group owner
  */
 function discussion_can_edit_reply($hook, $type, $return, $params) {
+	/** @var $reply ElggEntity */
 	$reply = $params['entity'];
 	$user = $params['user'];
 
@@ -1144,6 +1145,7 @@ function discussion_can_edit_reply($hook, $type, $return, $params) {
  * @return boolean $return
  */
 function discussion_reply_container_permissions_override($hook, $type, $return, $params) {
+	/** @var $container ElggEntity */
 	$container = $params['container'];
 	$user = $params['user'];
 
@@ -1161,9 +1163,9 @@ function discussion_reply_container_permissions_override($hook, $type, $return, 
 /**
  * Update access_id of discussion replies when topic access_id is updated.
  * 
- * @param string $event   'update'
- * @param string $type    'object'
- * @param string $objects ElggObject
+ * @param string     $event  'update'
+ * @param string     $type   'object'
+ * @param ElggObject $object ElggObject
  */
 function discussion_update_reply_access_ids($event, $type, $object) {
 	if (elgg_instanceof($object, 'object', 'groupforumtopic')) {
@@ -1212,6 +1214,7 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 	// Reply has the same access as the topic so no need to view it
 	$remove = array('access');
 
+	/** @var $reply ElggEntity */
 	$reply = $params['entity'];
 
 	$user = elgg_get_logged_in_user_entity();
