@@ -8,20 +8,19 @@ if (get_subtype_id('object', 'discussion_reply')) {
 }
 
 /**
- * The actual upgrade will be run from the view /mod/groups/admin/groups/upgrades/2013100401.php
+ * The actual upgrade will be run from the view admin/groups/upgrades/2013100401.php
  */
- 
+
 $access_status = access_get_show_hidden_status();
 $ia = elgg_set_ignore_access(true);
-$discussions = elgg_get_entities(array(
-	'type' => 'object',
-	'subtype' => 'groupforumtopic',
+$discussion_replies = elgg_get_annotations(array(
+	'annotation_names' => 'group_topic_post',
 ));
 elgg_set_ignore_access($ia);
 access_show_hidden_entities($access_status);
 
-// Notify administrator only if there are existing discussions
-if ($discussions) {
+// Notify administrator only if there are existing discussion replies
+if ($discussion_replies) {
 	$migrate_link = elgg_view('output/url', array(
 		'href' => 'admin/groups/upgrades/2013100401',
 		'text' => "run a migration script",
