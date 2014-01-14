@@ -63,8 +63,9 @@ elgg.ui.lightbox.init = function() {
 			registerDeprecationError();
 			if (arg.type === 'image') {
 				arg.photo = true;
-				this.colorbox(arg);
 			}
+			this.colorbox(arg);
+			return this;
 		};
 	}
 };
