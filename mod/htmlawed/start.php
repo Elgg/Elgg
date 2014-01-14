@@ -45,7 +45,11 @@ function htmlawed_filter_tags($hook, $type, $result, $params) {
 	$htmlawed_config = array(
 		// seems to handle about everything we need.
 		'safe' => true,
-		'comment'=> 1,
+
+		// remove comments/CDATA instead of converting to text
+		'comment' => 1,
+		'cdata' => 1,
+
 		'deny_attribute' => 'class, on*',
 		'hook_tag' => 'htmlawed_tag_post_processor',
 
