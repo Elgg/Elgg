@@ -453,10 +453,32 @@ class UsersTable {
 	 * @param string $username The username of the user sending the invitation
 	 *
 	 * @return string Invite code
+	 * @see validateInviteCode
 	 */
 	function generateInviteCode($username) {
-		$secret = _elgg_services()->datalist->get('__site_secret__');
-		return md5($username . $secret);
+		$time = time();
+		return "{$time}." . _elgg_services()->crypto->getHmac($time . $username);
+	}
+
+	/**
+	 * Validate a user's invite code
+	 *
+	 * @param string $username The username
+	 * @param string $code     The invite code
+	 *
+	 * @return bool
+	 * @see generateInviteCode
+	 */
+	function validateInviteCode($username, $code) {
+		// validate the format of the token created by ->generateInviteCode()
+		if (!preg_match('~^(\d+)\.(\w+)$~', $code, $m)) {
+			return false;
+		}
+		$time = $m[1];
+		$mac = $m[2];
+
+		$crypto = _elgg_services()->crypto;
+		return $crypto->areEqual($mac, $crypto->getHmac($time . $username));
 	}
 	
 	/**

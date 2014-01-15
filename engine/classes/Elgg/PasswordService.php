@@ -153,8 +153,9 @@ final class PasswordService {
 
 		$saved_code = $user->getPrivateSetting('passwd_conf_code');
 		$code_time = (int) $user->getPrivateSetting('passwd_conf_time');
+		$codes_match = _elgg_services()->crypto->areEqual($saved_code, $conf_code);
 
-		if (!$saved_code || $saved_code != $conf_code) {
+		if (!$saved_code || !$codes_match) {
 			return false;
 		}
 
