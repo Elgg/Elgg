@@ -180,6 +180,25 @@ function generate_action_token($timestamp) {
 }
 
 /**
+ * Generate a MAC with output in Base64URL encoding
+ *
+ * @param string $data Data we're creating a MAC for
+ * @param string $key  HMAC key. uses elgg site secret if none given
+ * @param string $algo HMAC hash algorithm
+ * @return string
+ *
+ * @access private
+ * @since 1.9
+ */
+function _elgg_hmac($data, $key = '', $algo = 'sha256') {
+	if (!$key) {
+		$key = get_site_secret();
+	}
+	$bytes = hash_hmac($algo, $data, $key, true);
+	return strtr(rtrim(base64_encode($bytes), '='), '+/', '-_');
+}
+
+/**
  * Initialise the site secret (32 bytes: "z" to indicate format + 186-bit key in Base64 URL).
  *
  * Used during installation and saves as a datalist.
