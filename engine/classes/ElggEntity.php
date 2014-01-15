@@ -24,19 +24,19 @@
  * @package    Elgg.Core
  * @subpackage DataModel.Entities
  *
- * @property string $type           object, user, group, or site (read-only after save)
- * @property string $subtype        Further clarifies the nature of the entity (read-only after save)
- * @property int    $guid           The unique identifier for this entity (read only)
- * @property int    $owner_guid     The GUID of the owner of this entity (usually the creator)
- * @property int    $container_guid The GUID of the entity containing this entity
- * @property int    $site_guid      The GUID of the website this entity is associated with
- * @property int    $access_id      Specifies the visibility level of this entity
- * @property int    $time_created   A UNIX timestamp of when the entity was created
- * @property int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
- * @property string $enabled        Is this entity enabled ('yes' or 'no')
+ * @property       string $type           object, user, group, or site (read-only after save)
+ * @property-write string $subtype        Further clarifies the nature of the entity (this should not be read)
+ * @property       int    $guid           The unique identifier for this entity (read only)
+ * @property       int    $owner_guid     The GUID of the owner of this entity (usually the creator)
+ * @property       int    $container_guid The GUID of the entity containing this entity
+ * @property       int    $site_guid      The GUID of the website this entity is associated with
+ * @property       int    $access_id      Specifies the visibility level of this entity
+ * @property       int    $time_created   A UNIX timestamp of when the entity was created
+ * @property       int    $time_updated   A UNIX timestamp of when the entity was last updated (automatically updated on save)
+ * @property       string $enabled        Is this entity enabled ('yes' or 'no')
  *
  * Metadata (the above are attributes)
- * @property string $location       A location of the entity
+ * @property       string $location       A location of the entity
  */
 abstract class ElggEntity extends ElggData implements
 	Notable,   // Calendar interface (deprecated 1.9)
@@ -251,6 +251,10 @@ abstract class ElggEntity extends ElggData implements
 	 */
 	public function __get($name) {
 		if (array_key_exists($name, $this->attributes)) {
+			if ($name === 'subtype' && $this->attributes['guid']) {
+				// note: only show deprecation notice if user reads ->subtype after save/load
+				elgg_deprecated_notice("Use getSubtype()", 1.9);
+			}
 			return $this->attributes[$name];
 		}
 
@@ -1211,7 +1215,11 @@ abstract class ElggEntity extends ElggData implements
 	 * @return string The entity subtype
 	 */
 	public function getSubtype() {
-		return $this->subtype;
+		// If this object hasn't been saved, then return the subtype string.
+		if ($this->attributes['guid']) {
+			return get_subtype_from_id($this->attributes['subtype']);
+		}
+		return $this->attributes['subtype'];
 	}
 
 	/**
@@ -1600,13 +1608,15 @@ abstract class ElggEntity extends ElggData implements
 			(type, subtype, owner_guid, site_guid, container_guid,
 				access_id, time_created, time_updated, last_action)
 			values
-			('$type',$subtype_id, $owner_guid, $site_guid, $container_guid,
+			('$type', $subtype_id, $owner_guid, $site_guid, $container_guid,
 				$access_id, $time_created, $now, $now)");
 
 		if (!$result) {
 			throw new IOException("Unable to save new object's base entity information!");
 		}
 	
+		// for BC with 1.8, ->subtype always returns ID, ->getSubtype() the string
+		$this->attributes['subtype'] = (int)$subtype_id;
 		$this->attributes['guid'] = (int)$result;
 		$this->attributes['time_created'] = (int)$time_created;
 		$this->attributes['time_updated'] = (int)$now;
@@ -1754,8 +1764,8 @@ abstract class ElggEntity extends ElggData implements
 			// guid needs to be an int  https://github.com/elgg/elgg/issues/4111
 			$this->attributes['guid'] = (int)$this->attributes['guid'];
 
-			// subtype needs to be denormalized
-			$this->attributes['subtype'] = get_subtype_from_id($this->attributes['subtype']);
+			// for BC with 1.8, ->subtype always returns ID, ->getSubtype() the string
+			$this->attributes['subtype'] = (int)$this->attributes['subtype'];
 
 			// Cache object handle
 			if ($this->attributes['guid']) {

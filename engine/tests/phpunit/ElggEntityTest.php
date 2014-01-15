@@ -44,6 +44,8 @@ class ElggEntityTest extends PHPUnit_Framework_TestCase {
 	 * @requires PHP 5.3.2
 	 */
 	public function testSettingAndGettingAttribute() {
+		// Note: before save() subtype returns string, int after
+		// see https://github.com/Elgg/Elgg/issues/5920#issuecomment-25246298
 		$this->obj->subtype = 'foo';
 		$this->assertEquals('foo', $this->obj->subtype);
 	}
@@ -97,7 +99,11 @@ class ElggEntityTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($this->obj->getGUID(), $this->obj->guid );
 		$this->assertEquals($this->obj->getType(), $this->obj->type );
+
+		// Note: before save() subtype returns string, int after
+		// see https://github.com/Elgg/Elgg/issues/5920#issuecomment-25246298
 		$this->assertEquals($this->obj->getSubtype(), $this->obj->subtype );
+
 		$this->assertEquals($this->obj->getOwnerGUID(), $this->obj->owner_guid );
 		$this->assertEquals($this->obj->getAccessID(), $this->obj->access_id );
 		$this->assertEquals($this->obj->getTimeCreated(), $this->obj->time_created );

@@ -34,13 +34,33 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		remove_subtype('object', 'elgg_entity_test_subtype');
 	}
 
-	public function testSubtypeIsString() {
+	public function testSubtypePropertyReads() {
 		$this->assertTrue($this->entity->save());
 		$guid = $this->entity->guid;
+
+		$subtype_prop = $this->entity->subtype;
+		$this->assertIsA($subtype_prop, 'int');
+		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
+
 		_elgg_invalidate_cache_for_entity($guid);
 		$this->entity = null;
 		$this->entity = get_entity($guid);
-		$this->assertEqual('elgg_entity_test_subtype', $this->entity->subtype);
+
+		$subtype_prop = $this->entity->subtype;
+		$this->assertIsA($subtype_prop, 'int');
+		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
+	}
+
+	public function testGetSubtype() {
+		$guid = $this->entity->guid;
+
+		$this->assertEqual($this->entity->getSubtype(), 'elgg_entity_test_subtype');
+
+		_elgg_invalidate_cache_for_entity($guid);
+		$this->entity = null;
+		$this->entity = get_entity($guid);
+
+		$this->assertEqual($this->entity->getSubtype(), 'elgg_entity_test_subtype');
 	}
 
 	public function testSubtypeAddRemove() {
