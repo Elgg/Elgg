@@ -1,6 +1,8 @@
 <?php
 /**
  * Members index
+ *
+ * @uses $vars['page'] The URL segment after members/
  */
 
 if (elgg_view_exists('members/nav')) {
