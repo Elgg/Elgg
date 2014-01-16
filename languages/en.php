@@ -1125,6 +1125,9 @@ Once you have logged in, we highly recommend that you change your password.
 	'admin:upgrades:comments' => 'Comments upgrade',
 	'upgrade:comment:create_failed' => 'Failed to convert comment id %s to an entity.',
 
+	// Strings specific for the datadir upgrade
+	'admin:upgrades:datadirs' => 'Data directory upgrade',
+
 /**
  * Welcome
  */
