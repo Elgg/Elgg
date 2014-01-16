@@ -1413,6 +1413,11 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 		$autoload_registered = true;
 	}
 
+	if (preg_match('~[\.-]min\.~', $params['view'])) {
+		// bypass minification
+		return;
+	}
+
 	if ($type == 'js') {
 		if (elgg_get_config('simplecache_minify_js')) {
 			return JSMin::minify($content);
