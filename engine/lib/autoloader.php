@@ -95,12 +95,11 @@ function elgg_get_class_loader() {
 }
 
 /**
- * Recursively scan $dir and register the classes/interfaces/traits found
- * within for autoloading.
+ * Register a directory tree for autoloading classes/interfaces/traits.
  *
- * The autoload manager is used, so the files do not need to follow any particular
- * naming/structure conventions, and the scan is only performed on the first
- * request.
+ * For BC with 1.8, all .php files in the top-level directory are scanned
+ * and added to the class map (only on the first request), then lower-level
+ * directories are registered for standard PSR-0 autoloading.
  *
  * @param string $dir The dir to look in
  *

@@ -43,7 +43,8 @@ class Elgg_AutoloadManager {
 	}
 
 	/**
-	 * Add classes found in this directory to the class map
+	 * Add classes found in this directory to the class map and allow classes in
+	 * subdirectories to be found by PSR-0 rules.
 	 *
 	 * We keep track of which dirs were scanned on previous requests so we don't need to
 	 * rescan unless the cache is emptied.
@@ -63,7 +64,7 @@ class Elgg_AutoloadManager {
 	}
 
 	/**
-	 * Scan a /classes directory for PHP files to map directly to classes.
+	 * Scan (non-recursively) a /classes directory for PHP files to map directly to classes.
 	 *
 	 * For BC with Elgg 1.8's autoloader we map these files directly, but besides this
 	 * the autoloader is PSR-0 compatible.
