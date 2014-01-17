@@ -142,11 +142,6 @@ The function will return ``false`` if any of the selected handlers returned
 ``false``, otherwise it will return ``true``.
 
 
-Special Events
---------------
-
-TODO
-
 Plugin Hooks
 ============
 

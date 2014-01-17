@@ -7,3 +7,5 @@ These docs will help you get stuff done with Elgg.
    :maxdepth: 2
    
    database
+   events-list
+   hooks-list
