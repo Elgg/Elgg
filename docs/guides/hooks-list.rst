@@ -178,6 +178,16 @@ HTMLawed
 
 **config, htmlawed**
 
+Members
+-------
+
+**members:list, <page_segment>**
+    To handle the page /members/$page_segment, handle this hook and return the HTML of the list.
+
+**members:config, tabs**
+    This hook is used to assemble an array of tabs to be passed to the navigation/tabs view
+    for the members pages.
+
 Twitter API
 -----------
 
