@@ -1,8 +1,8 @@
 <?php
 /**
- * Members plugin intialization
+ * Members plugin initialization
  *
- * To adding a list page, handle the hook (route, members), render your list page, and return false.
+ * To adding a list page, handle the hook (members:list, <page_name>) and return the HTML for the list.
  *
  * To alter the navigation tabs, use the hook (members:config, tabs) which receives the array used to build them.
  */
