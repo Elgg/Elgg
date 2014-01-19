@@ -104,6 +104,16 @@ Version 1.9.0-rc1
    * Default entity page handler
 
 
+Version 1.8.18
+(January 11, 2014 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Juho Jaakkola
+   * Steve Clay
+
+  Bugfixes:
+   * Fixes notify_user() broken in 1.8.17
+
+
 Version 1.8.17
 (January 1, 2014 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:

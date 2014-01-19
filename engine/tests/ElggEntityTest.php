@@ -43,6 +43,20 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertEqual('elgg_entity_test_subtype', $this->entity->subtype);
 	}
 
+	public function testSubtypeAddRemove() {
+		$test_subtype = 'test_1389988642';
+		$object = new ElggObject();
+		$object->subtype = $test_subtype;
+		$object->save();
+
+		$this->assertTrue(is_numeric(get_subtype_id('object', $test_subtype)));
+
+		$object->delete();
+		remove_subtype('object', $test_subtype);
+
+		$this->assertFalse(get_subtype_id('object', $test_subtype));
+	}
+
 	public function testElggEnityGetAndSetAnnotations() {
 		$this->assertIdentical($this->entity->getAnnotations(array('annotation_name' => 'non_existent')), array());
 

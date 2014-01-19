@@ -47,7 +47,7 @@ class ElggCrypto {
 	 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 	 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 */
-	public function getRandomBytes($length) {
+	public static function getRandomBytes($length) {
 		/**
 		 * Our primary choice for a cryptographic strong randomness function is
 		 * openssl_random_pseudo_bytes.

@@ -11,7 +11,7 @@
 
 // YYYYMMDD = Elgg Date
 // XX = Interim incrementer
-$version = 2014010100;
+$version = 2014110100;
 
 // Human-friendly version name
 $release = '1.9.0-dev';
