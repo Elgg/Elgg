@@ -39,6 +39,9 @@ System events
 **deactivate, plugin**
     return false to prevent deactivation of the plugin.
 
+**init:cookie, <name>**
+    return false to override setting a cookie.
+
 User events
 ===========
 

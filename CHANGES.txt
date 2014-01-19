@@ -35,8 +35,12 @@ Version 1.9.0-rc1
    * Replaces Tinymce editor with CKEditor
    * Liking and friending use ajax
    * Removes topbar Elgg logo and made "powered by" themable
-   * Adds group content visibility control
+   * Allows keeping group content limited to the group
    * Site notifications moved into separate plugin from messages
+   * Shows owner block when viewing own content
+   * Focus styles for accessible keyboard navigation
+   * Improved theme sandbox
+   * Session expired message
 
   Admin changes
    * Adds new notification system
@@ -64,30 +68,50 @@ Version 1.9.0-rc1
    * Widgets can set their titles
    * New JavaScript unit test library
    * Front page and actions go through page handling system
+   * Group edit form easier to extend
+   * More specific list item classes
+   * Page layouts more standardized with same elements
+   * Allows customizing colorbox instances
 
   API changes:
+   * Comments and discussion replies are entities
    * New notification system
    * Changes elgg_register_widget_type() to expect contexts to be an array
+   * Deprecates default availability of $vars keys (url, config) and $CONFIG
+   * New session API accessible via elgg_get_session()
+   * Renames many functions to begin with "elgg_" (with deprecated versions)
    * Moves many functions into methods on ElggEntity and related classes
    * Adds support for returning translations as arrays from language files
-   * Adds getDisplayName() to ElggEntity
-   * Adds toObject() to ElggEntity
-   * Replaces add_to_river() with elgg_create_river_item() 
+   * Adds ElggEntity::getDisplayName()
+   * Adds ElggEntity::toObject()
+   * Adds elgg_require_js() to auto-load AMD module with page
+   * Replaces add_to_river() with elgg_create_river_item()
    * Adds target_guid to the river
    * Adds elgg_get_entities_from_attributes()
    * Adds ElggMenuItem::addItemClass()
+   * Adds elgg_get_menu_item()
+   * Adds elgg_format_element() for creating HTML elements
+   * ElggFile::getSize() replaces ElggFile::size()
    * Defaults to full_view = false in elgg_list_entities* functions
+   * Allows passing $params to event handlers
+   * Allows views to be accessed via URL and cacheable
+   * Columns added to entity query functions are available in returned entities
+   * Separates some events into :before/:after
+   * Deprecates passing null to ElggRelationship::__construct
+   * Deprecates ElggEntity::get()/set() in favor of property access
+   * Deprecates cron, reboot event
 
   New hooks/events
-   * simple_type, file plugin hook
-   * default, access plugin hook
-   * login:forward, user plugin hook
-   * init:cookie, name plugin hook
-   * layout, page plugin hook
-   * shell, page plugin hook
-   * head, page plugin hook
+   * plugin hook: simple_type, file
+   * plugin hook: default, access
+   * plugin hook: login:forward, user
+   * plugin hook: layout, page
+   * plugin hook: shell, page
+   * plugin hook: head, page
+   * plugin hook: get_sql, access
+   * plugin hook: maintenance:allow, url
    * notifications plugin hooks
-   * get_sql, access plugin hook
+   * event: init:cookie, name
 
   Deprecated functionality:
    * calendar library (was not maintained)
