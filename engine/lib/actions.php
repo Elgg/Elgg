@@ -9,6 +9,11 @@
 
 // Action setting and run *************************************************
 
+if (!class_exists('ElggCrypto')) {
+	// using require to keep same directory structure as in 1.8+
+	require_once dirname(dirname(__FILE__)) . '/classes/ElggCrypto.php';
+}
+
 /**
 * Loads an action script, if it exists, then forwards elsewhere
 *
@@ -237,11 +242,6 @@ function generate_action_token($timestamp) {
  * @todo Move to better file.
  */
 function init_site_secret() {
-	if (!class_exists('ElggCrypto')) {
-		// using require to keep same directory structure as in 1.8+
-		require_once dirname(dirname(__FILE__)) . '/classes/ElggCrypto.php';
-	}
-
 	$secret = 'z' . ElggCrypto::getRandomString(31);
 
 	if (datalist_set('__site_secret__', $secret)) {

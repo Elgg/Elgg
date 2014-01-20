@@ -18,7 +18,7 @@ $obj = get_entity($guid);
 if (($obj instanceof ElggUser) && ($obj->canEdit())) {
 	$password = generate_random_cleartext_password();
 
-	$obj->salt = generate_random_cleartext_password(); // Reset the salt
+	$obj->salt = _elgg_generate_password_salt();
 	$obj->password = generate_user_password($obj, $password);
 
 	if ($obj->save()) {
