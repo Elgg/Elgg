@@ -25,11 +25,6 @@ System hooks
 
 **cron, <period>**
 
-**display, view**
-    deprecated in 1.8! Use view, (view) instead
-
-**view, <view_name>**
-
 **validate, input**
 
 **geocode, location**
@@ -72,6 +67,9 @@ User hooks
 **session:get, <key>**
 
 **register, user**
+
+**login:forward, user**
+    Allow changing the URL to which the user will be forwarded after login
 
 Object hooks
 ============
@@ -124,8 +122,32 @@ Permission hooks
 
 **access:collections:remove_user, collection**
 
+**get_sql, access**
+    Allows altering the SQL clauses used in _elgg_get_access_where_sql()
+
+Views
+=====
+
+**view, <view_name>**
+    Allows altering the returned content of the view
+
+**layout, page**
+    Allows altering the layout name in elgg_view_layout()
+
+**display, view**
+    deprecated in 1.8! Use view, (view) instead
+
+**shell, view**
+    Allows altering the page shell name in elgg_view_page()
+
+**head, page**
+    Allows altering $vars['head'] in elgg_view_page()
+
 Other
 =====
+
+**default, access**
+    Allows altering the return value of get_default_access()
 
 **entity:icon:url, <entity_type>**
 
@@ -159,8 +181,17 @@ Other
 
 **volatile, metadata**
 
+**maintenance:allow, url**
+    Allows whitelisting URLs to non-admins during maintenance mode
+
 Plugins
 =======
+
+File
+----
+
+**simple_type, file**
+    Allows you to change the return value of file_get_simple_type()
 
 Embed
 -----
