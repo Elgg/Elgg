@@ -21,7 +21,7 @@ if (($user instanceof ElggUser) && ($user->canEdit())) {
 	$password = generate_random_cleartext_password();
 
 	// Always reset the salt before generating the user password.
-	$user->salt = generate_random_cleartext_password();
+	$user->salt = _elgg_generate_password_salt();
 	$user->password = generate_user_password($user, $password);
 
 	if ($user->save()) {
