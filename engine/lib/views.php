@@ -1235,7 +1235,10 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 		$form_vars['class'] = $form_class;
 	}
 
-	return elgg_view('input/form', array_merge($defaults, $form_vars));
+	$form_vars = array_merge($defaults, $form_vars);
+	$form_vars['action_name'] = $action;
+
+	return elgg_view('input/form', $form_vars);
 }
 
 /**
