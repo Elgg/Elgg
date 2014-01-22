@@ -255,3 +255,10 @@ Search
 **search, tags**
 
 **search, <type>**
+
+**search_types, get_types**
+
+**search_types, get_queries**
+    Before a search this filters the types queried. This can be used to reorder
+    the display of search results.
+
