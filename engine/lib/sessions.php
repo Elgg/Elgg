@@ -305,7 +305,7 @@ function login(ElggUser $user, $persistent = false) {
 		$code = (md5($user->name . $user->username . time() . rand()));
 		$_SESSION['code'] = $code;
 		$user->code = md5($code);
-		setcookie("elggperm", $code, (time() + (86400 * 30)), "/");
+		setcookie("elggperm", $code, (time() + (86400 * 30)), "/", NULL, $_SERVER['HTTPS'], true);
 	}
 
 	if (!$user->save() || !elgg_trigger_event('login', 'user', $user)) {
@@ -315,7 +315,7 @@ function login(ElggUser $user, $persistent = false) {
 		unset($_SESSION['guid']);
 		unset($_SESSION['id']);
 		unset($_SESSION['user']);
-		setcookie("elggperm", "", (time() - (86400 * 30)), "/");
+		setcookie("elggperm", "", (time() - (86400 * 30)), "/", NULL, $_SERVER['HTTPS'], true);
 		throw new LoginException(elgg_echo('LoginException:Unknown'));
 	}
 
@@ -356,7 +356,7 @@ function logout() {
 	unset($_SESSION['id']);
 	unset($_SESSION['user']);
 
-	setcookie("elggperm", "", (time() - (86400 * 30)), "/");
+	setcookie("elggperm", "", (time() - (86400 * 30)), "/", NULL, $_SERVER['HTTPS'], true);
 
 	// pass along any messages
 	$old_msg = $_SESSION['msg'];
