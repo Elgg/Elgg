@@ -222,14 +222,14 @@ class Elgg_ViewsService {
 		}
 		if (!isset($vars['config'])) {
 			if (!$this->config_wrapper) {
-				$warning = 'Use elgg_get_config() rather than assuming elgg_view() populates $vars["config"]';
+				$warning = 'Do not rely on $vars["config"] or $CONFIG being available in views';
 				$this->config_wrapper = new Elgg_DeprecationWrapper($CONFIG, $warning, 1.8);
 			}
 			$vars['config'] = $this->config_wrapper;
 		}
 		if (!isset($vars['url'])) {
 			if (!$this->site_url_wrapper) {
-				$warning = 'Use elgg_get_site_url() rather than assuming elgg_view() populates $vars["url"]';
+				$warning = 'Do not rely on $vars["url"] being available in views';
 				$this->site_url_wrapper = new Elgg_DeprecationWrapper(elgg_get_site_url(), $warning, 1.8);
 			}
 			$vars['url'] = $this->site_url_wrapper;
@@ -343,6 +343,11 @@ class Elgg_ViewsService {
 	 */
 	private function renderViewFile($view, array $vars, $viewtype, $issue_missing_notice) {
 		$view_location = $this->getViewLocation($view, $viewtype);
+
+		// @warning - plugin authors: do not expect $CONFIG to be available in views
+		// in the future. Instead, use elgg_get_config() in your views.
+		// Note: this is intentionally a local var.
+		$CONFIG = $this->config_wrapper;
 
 		if ($this->fileExists("{$view_location}$viewtype/$view.php")) {
 			ob_start();
