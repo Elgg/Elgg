@@ -411,14 +411,16 @@ function elgg_get_friendly_time($time, $current_time = null) {
  * Plugins register for output:strip_tags plugin hook.
  * Original string included in $params['original_string']
  *
- * @param string $string Formatted string
+ * @param string $string         Formatted string
+ * @param string $allowable_tags Optional parameter to specify tags which should not be stripped
  *
  * @return string String run through strip_tags() and any plugin hooks.
  */
-function elgg_strip_tags($string) {
+function elgg_strip_tags($string, $allowable_tags = null) {
 	$params['original_string'] = $string;
+	$params['allowable_tags'] = $allowable_tags;
 
-	$string = strip_tags($string);
+	$string = strip_tags($string, $allowable_tags);
 	$string = elgg_trigger_plugin_hook('format', 'strip_tags', $params, $string);
 
 	return $string;
