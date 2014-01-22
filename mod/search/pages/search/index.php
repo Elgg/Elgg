@@ -80,6 +80,8 @@ $params = array(
 );
 
 $types = get_registered_entity_types();
+$types = elgg_trigger_plugin_hook('search_types', 'get_queries', $params, $types);
+
 $custom_types = elgg_trigger_plugin_hook('search_types', 'get_types', $params, array());
 
 // add sidebar items for all and native types
