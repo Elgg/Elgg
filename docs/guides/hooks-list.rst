@@ -69,7 +69,7 @@ User hooks
 **register, user**
 
 **login:forward, user**
-    Allow changing the URL to which the user will be forwarded after login
+    Filters the URL to which the user will be forwarded after login
 
 Object hooks
 ============
@@ -123,31 +123,31 @@ Permission hooks
 **access:collections:remove_user, collection**
 
 **get_sql, access**
-    Allows altering the SQL clauses used in _elgg_get_access_where_sql()
+    Filters the SQL clauses used in _elgg_get_access_where_sql()
 
 Views
 =====
 
 **view, <view_name>**
-    Allows altering the returned content of the view
+    Filters the returned content of views
 
 **layout, page**
-    Allows altering the layout name in elgg_view_layout()
+    In elgg_view_layout(), filters the layout name
 
 **display, view**
-    deprecated in 1.8! Use view, (view) instead
+    Deprecated in 1.8! Use view, (view) instead
 
 **shell, view**
-    Allows altering the page shell name in elgg_view_page()
+    In elgg_view_page(), filters the page shell name
 
 **head, page**
-    Allows altering $vars['head'] in elgg_view_page()
+    In elgg_view_page(), filters $vars['head']
 
 Other
 =====
 
 **default, access**
-    Allows altering the return value of get_default_access()
+    In get_default_access(), filters the return value
 
 **entity:icon:url, <entity_type>**
 
@@ -191,7 +191,7 @@ File
 ----
 
 **simple_type, file**
-    Allows you to change the return value of file_get_simple_type()
+    In file_get_simple_type(), filters the return value
 
 Embed
 -----
