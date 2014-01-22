@@ -168,7 +168,9 @@ function _elgg_generate_plugin_entities() {
 		// remove the priority.
 		$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
 		remove_private_setting($plugin->guid, $name);
-		$plugin->disable();
+		if ($plugin->isEnabled()) {
+			$plugin->disable();
+		}
 	}
 
 	access_show_hidden_entities($old_access);
