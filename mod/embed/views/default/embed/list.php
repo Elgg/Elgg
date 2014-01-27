@@ -39,6 +39,7 @@ if ($count) {
 		'count' => $count,
 		'limit' => $limit,
 		'offset_key' => $offset_key,
+		'base_url' => elgg_get_site_url() . "embed/",
 	));
 }
 
