@@ -110,6 +110,8 @@ function embed_page_handler($page) {
 		}
 	}
 
+	set_input('page', $page[1]); 
+
 	echo elgg_view('embed/layout');
 
 	// exit because this is in a modal display.
