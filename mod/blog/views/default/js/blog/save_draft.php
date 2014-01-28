@@ -5,63 +5,45 @@
  * @package Blog
  */
 ?>
-elgg.provide('elgg.blog');
+//<script>
+	elgg.provide('elgg.blog');
 
-/*
- * Attempt to save and update the input with the guid.
- */
-elgg.blog.saveDraftCallback = function(data, textStatus, XHR) {
-	if (textStatus == 'success' && data.success == true) {
-		var form = $('form[id=blog-post-edit]');
+	elgg.blog.saveDraft = function() {
 
-		// update the guid input element for new posts that now have a guid
-		form.find('input[name=guid]').val(data.guid);
+		var description = $('#blog-post-edit').find('[name=description]').val();
+		var title = $('#blog-post-edit').find('[name=title]').val();
 
-		oldDescription = form.find('textarea[name=description]').val();
-
-		var d = new Date();
-		var mins = d.getMinutes() + '';
-		if (mins.length == 1) {
-			mins = '0' + mins;
+		if (!(description && title) || (description == elgg.blog.oldDescription)) {
+			return;
 		}
-		$(".blog-save-status-time").html(d.toLocaleDateString() + " @ " + d.getHours() + ":" + mins);
-	} else {
-		$(".blog-save-status-time").html(elgg.echo('error'));
-	}
-};
 
-elgg.blog.saveDraft = function() {
-	if (typeof(tinyMCE) != 'undefined') {
-		tinyMCE.triggerSave();
-	}
+		elgg.action('action/blog/auto_save_revision', {
+			data: $('#blog-post-edit').serialize(),
+			beforeSend: function() {
+				elgg.blog.oldDescription = $('#blog-post-edit').find('[name="description"]').val();
+			},
+			success: function(response) {
+				if (response.status >= 0) {
+					$('#blog-post-edit').find('[name=guid]').val(response.output.guid);
+					$('#blog-post-edit').find('.blog-save-status-time').html(response.output.msg);
+				} else {
+					$('#blog-post-edit').find('.blog-save-status-time').html(elgg.echo('error'));
+				}
+			}
+		});
 
-	// only save on changed content
-	var form = $('form[id=blog-post-edit]');
-	var description = form.find('textarea[name=description]').val();
-	var title = form.find('input[name=title]').val();
-
-	if (!(description && title) || (description == oldDescription)) {
-		return false;
 	}
 
-	var draftURL = elgg.config.wwwroot + "action/blog/auto_save_revision";
-	var postData = form.serializeArray();
+	elgg.blog.init = function() {
 
-	// force draft status
-	$(postData).each(function(i, e) {
-		if (e.name == 'status') {
-			e.value = 'draft';
+		if (!$('#blog-post-edit').length) {
+			return;
 		}
-	});
 
-	$.post(draftURL, postData, elgg.blog.saveDraftCallback, 'json');
-};
+		// Store a copy of the blog body to compare before auto save
+		elgg.blog.oldDescription = $('#blog-post-edit').find('[name="description"]').val();
 
-elgg.blog.init = function() {
-	// get a copy of the body to compare for auto save
-	oldDescription = $('form[id=blog-post-edit]').find('textarea[name=description]').val();
-	
-	setInterval(elgg.blog.saveDraft, 60000);
-};
+		setInterval(elgg.blog.saveDraft, 60000);
+	};
 
-elgg.register_hook_handler('init', 'system', elgg.blog.init);
+	elgg.register_hook_handler('init', 'system', elgg.blog.init);
