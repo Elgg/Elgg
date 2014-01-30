@@ -26,7 +26,7 @@ if ($encode) {
 }
 
 if (!isset($vars['title']) && isset($vars['confirm'])) {
-	$vars['title'] = $vars['rel'];
+	$vars['title'] = $vars['confirm'];
 }
 
 if (isset($vars['class'])) {
