@@ -80,12 +80,19 @@ elgg.ui.lightbox.bind = function ($element, opts) {
 	if (!$.isPlainObject(opts)) {
 		opts = {};
 	}
-	// Q: why not use "colorbox"? A: https://github.com/jackmoore/colorbox/issues/435
-	var dataOpts = $element.data('colorboxOpts');
-	if ($.isPlainObject(dataOpts)) {
-		opts = $.extend(opts, dataOpts);
-	}
-	$element.colorbox(opts);
+
+	$element.live('click', function(e) {
+		// Q: why not use "colorbox"? A: https://github.com/jackmoore/colorbox/issues/435
+		var options = {};
+		var dataOpts = $element.data('colorboxOpts');
+		if ($.isPlainObject(dataOpts)) {
+			options = $.extend(opts, dataOpts);
+		}
+
+		options.href = this.href;
+		$.colorbox(options);
+		e.preventDefault();
+	});
 };
 
 /**
