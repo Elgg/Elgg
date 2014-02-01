@@ -44,6 +44,7 @@ function get_dir_size($dir, $totalsize = 0) {
 function get_uploaded_file($input_name) {
 	// If the file exists ...
 	if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
+		normalize_image_rotation($_FILES[$input_name]['tmp_name'], $_FILES[$input_name]['tmp_name']);
 		return file_get_contents($_FILES[$input_name]['tmp_name']);
 	}
 	return false;
@@ -68,6 +69,8 @@ $square = false, $upscale = false) {
 
 	// If our file exists ...
 	if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
+		// normalize image orientation
+		normalize_image_rotation($_FILES[$input_name]['tmp_name'], $_FILES[$input_name]['tmp_name']);
 		return get_resized_image_from_existing_file($_FILES[$input_name]['tmp_name'], $maxwidth,
 			$maxheight, $square, 0, 0, 0, 0, $upscale);
 	}
@@ -296,6 +299,42 @@ function get_image_resize_parameters($width, $height, $options) {
 	);
 
 	return $params;
+}
+
+/**
+ * Rotates an image to the correct orientation based on EXIF data supplied
+ * by digital cameras/mobile devices
+ * 
+ * @param $source	Path to the source image
+ * @param $dest		Path to output the result (may be the same as source)
+ * 
+ * @warning: if $dest already exists it will be overwritten
+ * @note: if no rotation occurs the file will still be copied to $dest
+ * 
+ * @return boolean	(true) rotation occurred, (false) no rotation
+ */
+function normalize_image_rotation($source, $dest) {
+	$exif = exif_read_data($source, 'IFDO', true);
+	$orientation = $exif['IFD0']['Orientation'];
+	if ($orientation) {
+		$image = imagecreatefromstring(file_get_contents($source));
+		switch($orientation) {
+			case 8:
+				$image = imagerotate($image,90,0);
+				break;
+			case 3:
+				$image = imagerotate($image,180,0);
+				break;
+			case 6:
+				$image = imagerotate($image,-90,0);
+				break;
+		}
+		imagejpeg($image, $dest, 100);
+		return true;
+	}
+	
+	copy($source, $dest);
+	return false;
 }
 
 /**
