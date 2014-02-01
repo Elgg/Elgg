@@ -31,9 +31,9 @@ function blog_init() {
 	elgg_extend_view('css/elgg', 'blog/css');
 
 	// register the blog's JavaScript
-	$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
-	elgg_register_simplecache_view('js/blog/save_draft');
-	elgg_register_js('elgg.blog', $blog_js);
+	$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft.js');
+	elgg_register_simplecache_view('js/blog/save_draft.js');
+	elgg_register_js('elgg.blog', $blog_js, 'footer');
 
 	// routing of urls
 	elgg_register_page_handler('blog', 'blog_page_handler');
