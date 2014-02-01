@@ -453,20 +453,24 @@ function _elgg_admin_add_plugin_settings_menu() {
  */
 function _elgg_admin_sort_page_menu($hook, $type, $return, $params) {
 	$configure_items = $return['configure'];
-	/* @var ElggMenuItem[] $configure_items */
-	foreach ($configure_items as $menu_item) {
-		if ($menu_item->getName() == 'settings') {
-			$settings = $menu_item;
+	if (is_array($configure_items)) {
+		/* @var ElggMenuItem[] $configure_items */
+		foreach ($configure_items as $menu_item) {
+			if ($menu_item->getName() == 'settings') {
+				$settings = $menu_item;
+			}
+		}
+
+		if (!empty($settings) && $settings instanceof ElggMenuItem) {
+			// keep the basic and advanced settings at the top
+			/* @var ElggMenuItem $settings */
+			$children = $settings->getChildren();
+			$site_settings = array_splice($children, 0, 2);
+			usort($children, array('ElggMenuBuilder', 'compareByText'));
+			array_splice($children, 0, 0, $site_settings);
+			$settings->setChildren($children);
 		}
 	}
-
-	// keep the basic and advanced settings at the top
-	/* @var ElggMenuItem $settings */
-	$children = $settings->getChildren();
-	$site_settings = array_splice($children, 0, 2);
-	usort($children, array('ElggMenuBuilder', 'compareByText'));
-	array_splice($children, 0, 0, $site_settings);
-	$settings->setChildren($children);
 }
 
 /**
