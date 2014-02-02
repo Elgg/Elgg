@@ -305,8 +305,8 @@ function get_image_resize_parameters($width, $height, $options) {
  * Rotates an image to the correct orientation based on EXIF data supplied
  * by digital cameras/mobile devices
  * 
- * @param $source	Path to the source image
- * @param $dest		Path to output the result (may be the same as source)
+ * @param $source Path to the source image
+ * @param $dest Path to output the result (may be the same as source)
  * 
  * @warning: if $dest already exists it will be overwritten
  * @note: if no rotation occurs the file will still be copied to $dest
