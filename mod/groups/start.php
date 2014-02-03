@@ -550,9 +550,21 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 	// only insert group access for current group
 	if ($page_owner instanceof ElggGroup) {
 		if ($page_owner->canWriteToContainer($user_guid)) {
-			$returnvalue[$page_owner->group_acl] = elgg_echo('groups:group') . ': ' . $page_owner->name;
-
-			unset($returnvalue[ACCESS_FRIENDS]);
+			if ($page_owner->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+				// Due to group policy allow only the owner or all group members
+				$returnvalue = array(
+					ACCESS_PRIVATE => elgg_echo('PRIVATE'),
+					$page_owner->group_acl => elgg_echo('groups:group') . ': ' . $page_owner->name,
+				);
+			} else {
+				// Leave out other groups, friends and friend collections
+				$returnvalue = array(
+					ACCESS_PRIVATE => elgg_echo('PRIVATE'),
+					ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
+					ACCESS_PUBLIC => elgg_echo('PUBLIC'),
+					$group->group_acl => elgg_echo('groups:acl', array($page_owner->name)),
+				);
+			}
 		}
 	} else {
 		// if the user owns the group, remove all access collections manually
