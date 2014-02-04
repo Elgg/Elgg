@@ -21,6 +21,10 @@
 	border-radius: 5px;
 }
 
+.elgg-page .cke_skin_BootstrapCK-Skin:focus {
+	padding: 0px;
+}
+
 .elgg-page .cke_skin_BootstrapCK-Skin .cke_toolbar {
 	border-radius: 5px;
 }

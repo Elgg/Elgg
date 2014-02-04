@@ -491,12 +491,19 @@ class Elgg_Http_Request {
 	 * @return string
 	 */
 	public function getClientIp() {
-		$ip_address = $this->server->get('REMOTE_ADDR');
-		if ($this->server->get('HTTP_X_FORWARDED_FOR')) {
-			// Get the client ip address
-			$ip_address = array_pop(explode(',', $this->server->get('HTTP_X_FORWARDED_FOR')));
+		$server = $this->server;
+
+		$ip_address = $server->get('HTTP_X_FORWARDED_FOR');
+		if (!empty($ip_address)) {
+			return array_pop(explode(',', $ip_address));
 		}
-		return $ip_address;
+
+		$ip_address = $server->get('HTTP_X_REAL_IP');
+		if (!empty($ip_address)) {
+			return array_pop(explode(',', $ip_address));
+		}
+
+		return $server->get('REMOTE_ADDR');
 	}
 
 	/**

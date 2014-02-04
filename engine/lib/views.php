@@ -338,7 +338,7 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  * view, $view_name plugin hook.
  *
  * @warning Any variables in $_SESSION will override passed vars
- * upon name collision.  See {@trac #2124}.
+ * upon name collision.  See https://github.com/Elgg/Elgg/issues/2124
  *
  * @param string  $view     The name and location of the view to use
  * @param array   $vars     Variables to pass to the view.
@@ -368,7 +368,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
  * @return string The parsed view
  * @access private
  */
-function elgg_view_deprecated($view, $vars = array(), $suggestion, $version) {
+function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
 	return _elgg_services()->views->renderDeprecatedView($view, $vars, $suggestion, $version);
 }
 
@@ -718,7 +718,7 @@ function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
  *  - bool 'full_view' Whether to show a full or condensed view. (Default: true)
  *
  * @tip This function can automatically appends annotations to entities if in full
- * view and a handler is registered for the entity:annotate.  See {@trac 964} and
+ * view and a handler is registered for the entity:annotate.  See https://github.com/Elgg/Elgg/issues/964 and
  * {@link elgg_view_entity_annotations()}.
  *
  * @param ElggEntity $entity The entity to display
@@ -1170,7 +1170,7 @@ function elgg_view_river_item($item, array $vars = array()) {
 
 	// @todo this needs to be cleaned up
 	// Don't hide objects in closed groups that a user can see.
-	// see http://trac.elgg.org/ticket/4789
+	// see https://github.com/elgg/elgg/issues/4789
 	//	else {
 	//		// hide based on object's container
 	//		$visibility = Elgg_GroupItemVisibility::factory($object->container_guid);
@@ -1235,7 +1235,10 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 		$form_vars['class'] = $form_class;
 	}
 
-	return elgg_view('input/form', array_merge($defaults, $form_vars));
+	$form_vars = array_merge($defaults, $form_vars);
+	$form_vars['action_name'] = $action;
+
+	return elgg_view('input/form', $form_vars);
 }
 
 /**
@@ -1469,6 +1472,15 @@ function elgg_views_add_rss_link() {
 }
 
 /**
+ * Sends headers on page requests
+ *
+ * @access private
+ */
+function _elgg_views_send_page_headers() {
+	header('X-Frame-Options: SAMEORIGIN');
+}
+
+/**
  * Registers deprecated views to avoid making some pages from older plugins
  * completely empty.
  *
@@ -1541,6 +1553,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
+	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_page_headers');
 
 	// discover the core viewtypes
 	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier

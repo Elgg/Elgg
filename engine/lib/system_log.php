@@ -129,15 +129,37 @@ function get_log_entry($entry_id) {
 /**
  * Return the object referred to by a given log entry
  *
- * @param int $entry_id The log entry
+ * @param stdClass|int $entry The log entry row or its ID
  *
  * @return mixed
  */
-function get_object_from_log_entry($entry_id) {
-	$entry = get_log_entry($entry_id);
+function get_object_from_log_entry($entry) {
+	if (is_numeric($entry)) {
+		$entry = get_log_entry($entry);
+		if (!$entry) {
+			return false;
+		}
+	}
 
-	if ($entry) {
-		$class = $entry->object_class;
+	$class = $entry->object_class;
+	$id = $entry->object_id;
+
+	if (!class_exists($class)) {
+		// failed autoload
+		return false;
+	}
+
+	$getters = array(
+		'ElggAnnotation' => 'elgg_get_annotation_from_id',
+		'ElggMetadata' => 'elgg_get_metadata_from_id',
+		'ElggRelationship' => 'get_relationship',
+	);
+
+	if (isset($getters[$class]) && is_callable($getters[$class])) {
+		$object = call_user_func($getters[$class], $id);
+	} elseif (preg_match('~^Elgg[A-Z]~', $class)) {
+		$object = get_entity($id);
+	} else {
 		// surround with try/catch because object could be disabled
 		try {
 			$object = new $class($entry->object_id);
@@ -147,7 +169,11 @@ function get_object_from_log_entry($entry_id) {
 		}
 	}
 
-	return false;
+	if (!is_object($object) || get_class($object) !== $class) {
+		return false;
+	}
+
+	return $object;
 }
 
 /**

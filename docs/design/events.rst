@@ -25,13 +25,12 @@ Elgg Events vs. Plugin Hooks
 
 There are a few big differences between `Elgg Events`_ and `Plugin Hooks`_:
 
-#. Elgg events can be cancelled; if a handler returns `false`, no more
-   handlers are called.
-#. Elgg events return a boolean value. If any handler returned `false`, the
-   event is `false`, otherwise `true`.
+#. Most Elgg events can be cancelled; unless the event is an "after" event,
+   a handler that returns `false` can cancel the event, and no more handlers
+   are called.
+#. Plugin hooks cannot be cancelled; all handlers are always called.
 #. Plugin hooks pass an arbitrary value through the handlers, giving each
    a chance to alter along the way.
-#. Plugin hooks cannot be cancelled; all handlers are always called.
 
 Note: Plugin hooks also allow passing a parameters array to the handlers,
 though this will eventually come to Elgg events as well.
@@ -43,13 +42,32 @@ Elgg Events are triggered when an Elgg object is created, updated, or
 deleted; and at important milestones while the Elgg framework is
 loading. Examples: a blog post being created or a user logging in.
 
-Unlike `Plugin Hooks`_, *Elgg events can be cancelled*, halting the
+Unlike `Plugin Hooks`_, *most Elgg events can be cancelled*, halting the
 execution of the handlers, and possibly cancelling or reverting some
 action in the Elgg core.
 
 Each Elgg event has a name and an object type (system, user, object,
 relationship name, annotation, group) describing the type of object
 passed to the handlers.
+
+Before and After Events
+-----------------------
+
+Some events are split into "before" and "after". This avoids confusion
+around the state of the system while in flux. E.g. Should the user be
+logged in during the [login, user] event?
+
+Before Events have names ending in ":before" and are triggered before
+something happens. Like traditional events, handlers can cancel the
+event by returning `false`.
+
+After Events, with names ending in ":after", are triggered after
+something happens. Unlike traditional events, handlers *cannot* cancel
+these events; all handlers will always be called.
+
+Where before and after events are available, developers are encouraged
+to transition to them, though older events will be supported for
+backwards compatibility.
 
 Elgg Event Handlers
 -------------------
@@ -123,11 +141,6 @@ Parameters:
 The function will return ``false`` if any of the selected handlers returned
 ``false``, otherwise it will return ``true``.
 
-
-Special Events
---------------
-
-TODO
 
 Plugin Hooks
 ============

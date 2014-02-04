@@ -17,11 +17,14 @@
  * @uses $vars['links'] Array of links
  */
 
+$metas = elgg_extract('metas', $vars, array());
+$links = elgg_extract('links', $vars, array());
+
 echo elgg_format_element('title', array(), $vars['title'], array('encode_text' => true));
-foreach ($vars['metas'] as $attributes) {
+foreach ($metas as $attributes) {
 	echo elgg_format_element('meta', $attributes);
 }
-foreach ($vars['links'] as $attributes) {
+foreach ($links as $attributes) {
 	echo elgg_format_element('link', $attributes);
 }
 

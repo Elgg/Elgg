@@ -17,15 +17,7 @@ $search_type = get_input('search_type', 'all');
 // XSS protection is more important that searching for HTML.
 $query = stripslashes(get_input('q', get_input('tag', '')));
 
-// @todo - create function for sanitization of strings for display in 1.8
-// encode <,>,&, quotes and characters above 127
-if (function_exists('mb_convert_encoding')) {
-	$display_query = mb_convert_encoding($query, 'HTML-ENTITIES', 'UTF-8');
-} else {
-	// if no mbstring extension, we just strip characters
-	$display_query = preg_replace("/[^\x01-\x7F]/", "", $query);
-}
-$display_query = htmlspecialchars($display_query, ENT_QUOTES, 'UTF-8', false);
+$display_query = _elgg_get_display_query($query);
 
 // check that we have an actual query
 if (!$query) {
@@ -88,14 +80,13 @@ $params = array(
 );
 
 $types = get_registered_entity_types();
+$types = elgg_trigger_plugin_hook('search_types', 'get_queries', $params, $types);
+
 $custom_types = elgg_trigger_plugin_hook('search_types', 'get_types', $params, array());
 
 // add sidebar items for all and native types
-// @todo should these maintain any existing type / subtype filters or reset?
 $data = htmlspecialchars(http_build_query(array(
 	'q' => $query,
-	'entity_subtype' => $entity_subtype,
-	'entity_type' => $entity_type,
 	'owner_guid' => $owner_guid,
 	'search_type' => 'all',
 	//'friends' => $friends

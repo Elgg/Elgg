@@ -11,7 +11,7 @@ if ($group->blog_enable == "no") {
 
 $all_link = elgg_view('output/url', array(
 	'href' => "blog/group/$group->guid/all",
-	'text' => elgg_echo('blog:group'),
+	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ));
 
@@ -20,13 +20,12 @@ $options = array(
 	'type' => 'object',
 	'subtype' => 'blog',
 	'container_guid' => elgg_get_page_owner_guid(),
-	'metadata_name_value_pairs' => array('name' => 'status', 'value' => 'published'),
 	'limit' => 6,
 	'full_view' => false,
 	'pagination' => false,
-	'no_results' => elgg_echo('blog:none'),
+	'no_results' => elgg_echo('blog:none')
 );
-$content = elgg_list_entities_from_metadata($options);
+$content = elgg_list_entities($options);
 elgg_pop_context();
 
 $new_link = elgg_view('output/url', array(

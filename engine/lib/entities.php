@@ -375,13 +375,20 @@ function add_subtype($type, $subtype, $class = "") {
  * @see update_subtype()
  */
 function remove_subtype($type, $subtype) {
-	global $CONFIG;
+	global $CONFIG, $SUBTYPE_CACHE;
 
 	$type = sanitise_string($type);
 	$subtype = sanitise_string($subtype);
 
-	return delete_data("DELETE FROM {$CONFIG->dbprefix}entity_subtypes"
+	$success = delete_data("DELETE FROM {$CONFIG->dbprefix}entity_subtypes"
 		. " WHERE type = '$type' AND subtype = '$subtype'");
+	
+	if ($success) {
+		// invalidate the cache
+		$SUBTYPE_CACHE = null;
+	}
+	
+	return (bool) $success;
 }
 
 /**
@@ -630,7 +637,7 @@ function get_entity($guid) {
 
 	if ($shared_cache) {
 		$cached_entity = $shared_cache->load($guid);
-		// @todo store ACLs in memcache http://trac.elgg.org/ticket/3018#comment:3
+		// @todo store ACLs in memcache https://github.com/elgg/elgg/issues/3018#issuecomment-13662617
 		if ($cached_entity) {
 			// @todo use ACL and cached entity access_id to determine if user can see it
 			return $cached_entity;

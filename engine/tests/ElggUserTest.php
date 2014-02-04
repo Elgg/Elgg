@@ -121,7 +121,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggUserNameCache() {
-		// Trac #1305
+		// issue https://github.com/elgg/elgg/issues/1305
 
 		// very unlikely a user would have this username
 		$name = (string)time();

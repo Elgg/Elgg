@@ -11,10 +11,9 @@ if ($vars['entity']->forum_enable == 'no') {
 
 $group = $vars['entity'];
 
-
 $all_link = elgg_view('output/url', array(
 	'href' => "discussion/owner/$group->guid",
-	'text' => elgg_echo('discussion:group'),
+	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ));
 

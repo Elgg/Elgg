@@ -589,8 +589,9 @@ function register_error($error) {
  * as a callback to an event.  Multiple handlers can be registered for
  * the same event and will be executed in order of $priority.
  *
- * Any handler returning false will halt the execution chain and cause the event
- * to be "cancelled".
+ * For most events, any handler returning false will halt the execution chain and
+ * cause the event to be "cancelled". For After Events, the return values of the
+ * handlers will be ignored and all handlers will be called.
  *
  * This function is called with the event name, event type, and handler callback name.
  * Setting the optional $priority allows plugin authors to specify when the
@@ -679,7 +680,7 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  * @tip When referring to events, the preferred syntax is "event, type".
  *
  * @internal Only rarely should events be changed, added, or removed in core.
- * When making changes to events, be sure to first create a ticket in trac.
+ * When making changes to events, be sure to first create a ticket on Github.
  *
  * @internal @tip Think of $object_type as the primary namespace element, and
  * $event as the secondary namespace.
@@ -693,6 +694,70 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  */
 function elgg_trigger_event($event, $object_type, $object = null) {
 	return _elgg_services()->events->trigger($event, $object_type, $object);
+}
+
+/**
+ * Trigger a "Before event" indicating a process is about to begin.
+ *
+ * Like regular events, a handler returning false will cancel the process and false
+ * will be returned.
+ *
+ * To register for a before event, append ":before" to the event name when registering.
+ *
+ * @param string $event       The event type. The fired event type will be appended with ":before".
+ * @param string $object_type The object type
+ * @param string $object      The object involved in the event
+ *
+ * @return bool False if any handler returned false, otherwise true
+ *
+ * @see elgg_trigger_event
+ * @see elgg_trigger_after_event
+ */
+function elgg_trigger_before_event($event, $object_type, $object = null) {
+	return _elgg_services()->events->trigger("$event:before", $object_type, $object);
+}
+
+/**
+ * Trigger an "After event" indicating a process has finished.
+ *
+ * Unlike regular events, all the handlers will be called, their return values ignored.
+ *
+ * To register for an after event, append ":after" to the event name when registering.
+ *
+ * @param string $event       The event type. The fired event type will be appended with ":after".
+ * @param string $object_type The object type
+ * @param string $object      The object involved in the event
+ *
+ * @return true
+ *
+ * @see elgg_trigger_before_event
+ */
+function elgg_trigger_after_event($event, $object_type, $object = null) {
+	$options = array(
+		Elgg_EventsService::OPTION_STOPPABLE => false,
+	);
+	return _elgg_services()->events->trigger("$event:after", $object_type, $object, $options);
+}
+
+/**
+ * Trigger an event normally, but send a notice about deprecated use if any handlers are registered.
+ *
+ * @param string $event       The event type
+ * @param string $object_type The object type
+ * @param string $object      The object involved in the event
+ * @param string $message     The deprecation message
+ * @param string $version     Human-readable *release* version: 1.9, 1.10, ...
+ *
+ * @return bool
+ *
+ * @see elgg_trigger_event
+ */
+function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message, $version) {
+	$options = array(
+		Elgg_EventsService::OPTION_DEPRECATION_MESSAGE => $message,
+		Elgg_EventsService::OPTION_DEPRECATION_VERSION => $version,
+	);
+	return _elgg_services()->events->trigger($event, $object_type, $object, $options);
 }
 
 /**
@@ -838,7 +903,7 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 
 /**
  * Intercepts, logs, and displays uncaught exceptions.
- * 
+ *
  * To use a viewtype other than failsafe, create the views:
  *  <viewtype>/messages/exceptions/admin_exception
  *  <viewtype>/messages/exceptions/exception
@@ -1138,8 +1203,9 @@ function elgg_http_build_url(array $parts, $html_encode = true) {
 	$port = isset($parts['port']) ? ":{$parts['port']}" : '';
 	$path = isset($parts['path']) ? "{$parts['path']}" : '';
 	$query = isset($parts['query']) ? "?{$parts['query']}" : '';
+	$fragment = isset($parts['fragment']) ? "#{$parts['fragment']}" : '';
 
-	$string = $scheme . $host . $port . $path . $query;
+	$string = $scheme . $host . $port . $path . $query . $fragment;
 
 	if ($html_encode) {
 		return elgg_format_url($string);
@@ -1166,7 +1232,8 @@ function elgg_http_build_url(array $parts, $html_encode = true) {
  * @since 1.7.0
  */
 function elgg_add_action_tokens_to_url($url, $html_encode = false) {
-	$components = parse_url(elgg_normalize_url($url));
+	$url = elgg_normalize_url($url);
+	$components = parse_url($url);
 
 	if (isset($components['query'])) {
 		$query = elgg_parse_str($components['query']);
@@ -1199,29 +1266,15 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false) {
  * @since 1.7.0
  */
 function elgg_http_remove_url_query_element($url, $element) {
-	$url_array = parse_url($url);
-
-	if (isset($url_array['query'])) {
-		$query = elgg_parse_str($url_array['query']);
-	} else {
-		// nothing to remove. Return original URL.
-		return $url;
-	}
-
-	if (array_key_exists($element, $query)) {
-		unset($query[$element]);
-	}
-
-	$url_array['query'] = http_build_query($query);
-	$string = elgg_http_build_url($url_array, false);
-	return $string;
+	return elgg_http_add_url_query_elements($url, array($element => null));
 }
 
 /**
- * Adds an element or elements to a URL's query string.
+ * Sets elements in a URL's query string.
  *
  * @param string $url      The URL
- * @param array  $elements Key/value pairs to add to the URL
+ * @param array  $elements Key/value pairs to set in the URL. If the value is null, the
+ *                         element is removed from the URL.
  *
  * @return string The new URL with the query strings added
  * @since 1.7.0
@@ -1236,10 +1289,21 @@ function elgg_http_add_url_query_elements($url, array $elements) {
 	}
 
 	foreach ($elements as $k => $v) {
-		$query[$k] = $v;
+		if ($v === null) {
+			unset($query[$k]);
+		} else {
+			$query[$k] = $v;
+		}
 	}
 
-	$url_array['query'] = http_build_query($query);
+	// why check path? A: if no path, this may be a relative URL like "?foo=1". In this case,
+	// the output "" would be interpreted the current URL, so in this case we *must* set
+	// a query to make sure elements are removed.
+	if ($query || empty($url_array['path'])) {
+		$url_array['query'] = http_build_query($query);
+	} else {
+		unset($url_array['query']);
+	}
 	$string = elgg_http_build_url($url_array, false);
 
 	return $string;
@@ -1260,15 +1324,8 @@ function elgg_http_add_url_query_elements($url, array $elements) {
  * @since 1.8.0
  */
 function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset', 'limit')) {
-	// if the server portion is missing but it starts with / then add the url in.
-	// @todo use elgg_normalize_url()
-	if (elgg_substr($url1, 0, 1) == '/') {
-		$url1 = elgg_get_site_url() . ltrim($url1, '/');
-	}
-
-	if (elgg_substr($url1, 0, 1) == '/') {
-		$url2 = elgg_get_site_url() . ltrim($url2, '/');
-	}
+	$url1 = elgg_normalize_url($url1);
+	$url2 = elgg_normalize_url($url2);
 
 	// @todo - should probably do something with relative URLs
 
@@ -2014,7 +2071,7 @@ function _elgg_api_test($hook, $type, $value, $params) {
  *
  * @warning ACCESS_DEFAULT is a place holder for the input/access view. Do not
  * use it when saving an entity.
- * 
+ *
  * @var int
  */
 define('ACCESS_DEFAULT', -1);

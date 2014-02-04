@@ -64,8 +64,8 @@ function get_input($variable, $default = null, $filter_result = true) {
  *
  * Note: this function does not handle nested arrays (ex: form input of param[m][n])
  *
- * @param string $variable The name of the variable
- * @param string $value    The value of the variable
+ * @param string          $variable The name of the variable
+ * @param string|string[] $value    The value of the variable
  *
  * @return void
  */

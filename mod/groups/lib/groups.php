@@ -49,7 +49,7 @@ function groups_handle_all_page() {
 	}
 
 	$filter = elgg_view('groups/group_sort_menu', array('selected' => $selected_tab));
-	
+
 	$sidebar = elgg_view('groups/sidebar/find');
 	$sidebar .= elgg_view('groups/sidebar/featured');
 
@@ -67,7 +67,8 @@ function groups_search_page() {
 	elgg_push_breadcrumb(elgg_echo('search'));
 
 	$tag = get_input("tag");
-	$title = elgg_echo('groups:search:title', array($tag));
+	$display_query = _elgg_get_display_query($tag);
+	$title = elgg_echo('groups:search:title', array($display_query));
 
 	// groups plugin saves tags as "interests" - see groups_fields_setup() in start.php
 	$params = array(
@@ -107,11 +108,16 @@ function groups_handle_owned_page() {
 	}
 	elgg_push_breadcrumb($title);
 
-	elgg_register_title_button();
+	if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {
+		elgg_register_title_button();
+	}
 
+	$dbprefix = elgg_get_config('dbprefix');
 	$content = elgg_list_entities(array(
 		'type' => 'group',
 		'owner_guid' => elgg_get_page_owner_guid(),
+		'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
+		'order_by' => 'ge.name ASC',
 		'full_view' => false,
 		'no_results' => elgg_echo('groups:none'),
 	));
@@ -140,8 +146,10 @@ function groups_handle_mine_page() {
 	}
 	elgg_push_breadcrumb($title);
 
-	elgg_register_title_button();
-	
+	if (elgg_get_plugin_setting('limited_groups', 'groups') != 'yes' || elgg_is_admin_logged_in()) {
+		elgg_register_title_button();
+	}
+
 	$dbprefix = elgg_get_config('dbprefix');
 
 	$content = elgg_list_entities_from_relationship(array(
@@ -173,7 +181,7 @@ function groups_handle_mine_page() {
  */
 function groups_handle_edit_page($page, $guid = 0) {
 	elgg_gatekeeper();
-	
+
 	if ($page == 'add') {
 		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 		$title = elgg_echo('groups:add');
@@ -196,7 +204,7 @@ function groups_handle_edit_page($page, $guid = 0) {
 			$content = elgg_echo('groups:noaccess');
 		}
 	}
-	
+
 	$params = array(
 		'content' => $content,
 		'title' => $title,
@@ -269,14 +277,14 @@ function groups_handle_profile_page($guid) {
 			foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 				$relationship = check_entity_relationship(elgg_get_logged_in_user_guid(),
 						'notify' . $method, $guid);
-				
+
 				if ($relationship) {
 					$subscribed = true;
 					break;
 				}
 			}
 		}
-		
+
 		$sidebar .= elgg_view('groups/sidebar/my_status', array(
 			'entity' => $group,
 			'subscribed' => $subscribed
@@ -316,11 +324,16 @@ function groups_handle_activity_page($guid) {
 	$db_prefix = elgg_get_config('dbprefix');
 
 	$content = elgg_list_river(array(
-		'joins' => array("JOIN {$db_prefix}entities e ON e.guid = rv.object_guid"),
-		'wheres' => array("e.container_guid = $guid"),
+		'joins' => array(
+			"JOIN {$db_prefix}entities e1 ON e1.guid = rv.object_guid",
+			"LEFT JOIN {$db_prefix}entities e2 ON e2.guid = rv.target_guid",
+		),
+		'wheres' => array(
+			"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
+		),
 		'no_results' => elgg_echo('groups:activity:none'),
 	));
-	
+
 	$params = array(
 		'content' => $content,
 		'title' => $title,
@@ -357,7 +370,7 @@ function groups_handle_members_page($guid) {
 		'relationship_guid' => $group->guid,
 		'inverse_relationship' => true,
 		'type' => 'user',
-		'limit' => 20,
+		'limit' => (int)get_input('limit', 20, false),
 		'joins' => array("JOIN {$db_prefix}users_entity u ON e.guid=u.guid"),
 		'order_by' => 'u.name ASC',
 	));
@@ -412,7 +425,7 @@ function groups_handle_invite_page($guid) {
 
 /**
  * Manage requests to join a group
- * 
+ *
  * @param int $guid Group entity GUID
  */
 function groups_handle_requests_page($guid) {
@@ -516,7 +529,9 @@ function groups_prepare_form_vars($group = null) {
 		'membership' => ACCESS_PUBLIC,
 		'vis' => ACCESS_PUBLIC,
 		'guid' => null,
-		'entity' => null
+		'entity' => null,
+		'owner_guid' => elgg_get_logged_in_user_guid(),
+		'content_access_mode' => ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED
 	);
 
 	// handle customizable profile fields
@@ -551,6 +566,10 @@ function groups_prepare_form_vars($group = null) {
 		} else {
 			$values['vis'] = $group->access_id;
 		}
+
+		// The content_access_mode was introduced in 1.9. This method must be
+		// used for backwards compatibility with groups created before 1.9.
+		$values['content_access_mode'] = $group->getContentAccessMode();
 
 		$values['entity'] = $group;
 	}

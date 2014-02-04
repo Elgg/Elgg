@@ -143,7 +143,8 @@ class Elgg_Database {
 		$conf = $this->config->getConnectionConfig($dblinkname);
 
 		// Connect to database
-		if (!($this->dbLinks[$dblinkname] = mysql_connect($conf['host'], $conf['user'], $conf['password'], true))) {
+		$this->dbLinks[$dblinkname] = mysql_connect($conf['host'], $conf['user'], $conf['password'], true);
+		if (!$this->dbLinks[$dblinkname]) {
 			$msg = "Elgg couldn't connect to the database using the given credentials. Check the settings file.";
 			throw new DatabaseException($msg);
 		}
@@ -291,7 +292,7 @@ class Elgg_Database {
 
 		// Since we want to cache results of running the callback, we need to
 		// need to namespace the query with the callback and single result request.
-		// http://trac.elgg.org/ticket/4049
+		// https://github.com/elgg/elgg/issues/4049
 		$callback_hash = is_object($callback) ? spl_object_hash($callback) : (string)$callback;
 		$hash = $callback_hash . (int)$single . $query;
 

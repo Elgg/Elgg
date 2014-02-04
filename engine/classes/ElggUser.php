@@ -359,8 +359,8 @@ class ElggUser extends ElggEntity
 	 */
 	public function removeFromSite($site) {
 		if (is_numeric($site)) {
-			elgg_deprecated_notice('ElggUser::removeFromSite() takes a siet entity', 1.9);
-			return remove_site_user($site_guid, $this->getGUID());
+			elgg_deprecated_notice('ElggUser::removeFromSite() takes a site entity', 1.9);
+			return remove_site_user($site, $this->guid);
 		}
 
 		return parent::removeFromSite($site);
@@ -617,8 +617,10 @@ class ElggUser extends ElggEntity
 	 * @param string $subtype The subtypes of the objects, if any
 	 *
 	 * @return int The number of ElggObjects
+	 * @deprecated 1.9 Use elgg_get_entities()
 	 */
 	public function countObjects($subtype = "") {
+		elgg_deprecated_notice("ElggUser::countObjects() is deprecated. Use elgg_get_entities()", 1.9);
 		return count_user_objects($this->getGUID(), $subtype);
 	}
 

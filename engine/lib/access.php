@@ -79,21 +79,21 @@ function _elgg_get_access_cache() {
 }
 
 /**
- * Return a string of access_ids for $user_id appropriate for inserting into an SQL IN clause.
+ * Return a string of access_ids for $user_guid appropriate for inserting into an SQL IN clause.
  *
  * @uses get_access_array
  *
  * @see get_access_array()
  *
- * @param int  $user_id User ID; defaults to currently logged in user
- * @param int  $site_id Site ID; defaults to current site
- * @param bool $flush   If set to true, will refresh the access list from the
- *                      database rather than using this function's cache.
+ * @param int  $user_guid User ID; defaults to currently logged in user
+ * @param int  $site_guid Site ID; defaults to current site
+ * @param bool $flush     If set to true, will refresh the access list from the
+ *                        database rather than using this function's cache.
  *
  * @return string A list of access collections suitable for using in an SQL call
  * @access private
  */
-function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
+function get_access_list($user_guid = 0, $site_guid = 0, $flush = false) {
 	global $CONFIG, $init_finished;
 	$cache = _elgg_get_access_cache();
 	
@@ -101,23 +101,23 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
 		$cache->clear();
 	}
 
-	if ($user_id == 0) {
-		$user_id = elgg_get_logged_in_user_guid();
+	if ($user_guid == 0) {
+		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
-	if (($site_id == 0) && (isset($CONFIG->site_id))) {
-		$site_id = $CONFIG->site_id;
+	if (($site_guid == 0) && (isset($CONFIG->site_id))) {
+		$site_guid = $CONFIG->site_id;
 	}
-	$user_id = (int) $user_id;
-	$site_id = (int) $site_id;
+	$user_guid = (int) $user_guid;
+	$site_guid = (int) $site_guid;
 
-	$hash = $user_id . $site_id . 'get_access_list';
+	$hash = $user_guid . $site_guid . 'get_access_list';
 
 	if ($cache[$hash]) {
 		return $cache[$hash];
 	}
 	
-	$access_array = get_access_array($user_id, $site_id, $flush);
+	$access_array = get_access_array($user_guid, $site_guid, $flush);
 	$access = "(" . implode(",", $access_array) . ")";
 
 	if ($init_finished) {
@@ -145,14 +145,14 @@ function get_access_list($user_id = 0, $site_id = 0, $flush = false) {
  *
  * @see get_write_access_array() for the access levels that a user can write to.
  *
- * @param int  $user_id User ID; defaults to currently logged in user
- * @param int  $site_id Site ID; defaults to current site
- * @param bool $flush   If set to true, will refresh the access ids from the
- *                      database rather than using this function's cache.
+ * @param int  $user_guid User ID; defaults to currently logged in user
+ * @param int  $site_guid Site ID; defaults to current site
+ * @param bool $flush     If set to true, will refresh the access ids from the
+ *                        database rather than using this function's cache.
  *
  * @return array An array of access collections ids
  */
-function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
+function get_access_array($user_guid = 0, $site_guid = 0, $flush = false) {
 	global $CONFIG, $init_finished;
 
 	$cache = _elgg_get_access_cache();
@@ -161,18 +161,18 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 		$cache->clear();
 	}
 
-	if ($user_id == 0) {
-		$user_id = elgg_get_logged_in_user_guid();
+	if ($user_guid == 0) {
+		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
-	if (($site_id == 0) && (isset($CONFIG->site_guid))) {
-		$site_id = $CONFIG->site_guid;
+	if (($site_guid == 0) && (isset($CONFIG->site_guid))) {
+		$site_guid = $CONFIG->site_guid;
 	}
 
-	$user_id = (int) $user_id;
-	$site_id = (int) $site_id;
+	$user_guid = (int) $user_guid;
+	$site_guid = (int) $site_guid;
 
-	$hash = $user_id . $site_id . 'get_access_array';
+	$hash = $user_guid . $site_guid . 'get_access_array';
 
 	if ($cache[$hash]) {
 		$access_array = $cache[$hash];
@@ -187,7 +187,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 			$query = "SELECT am.access_collection_id"
 				. " FROM {$CONFIG->dbprefix}access_collection_membership am"
 				. " LEFT JOIN {$CONFIG->dbprefix}access_collections ag ON ag.id = am.access_collection_id"
-				. " WHERE am.user_guid = $user_id AND (ag.site_guid = $site_id OR ag.site_guid = 0)";
+				. " WHERE am.user_guid = $user_guid AND (ag.site_guid = $site_guid OR ag.site_guid = 0)";
 
 			$collections = get_data($query);
 			if ($collections) {
@@ -200,7 +200,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 
 			// Get ACLs owned.
 			$query = "SELECT ag.id FROM {$CONFIG->dbprefix}access_collections ag ";
-			$query .= "WHERE ag.owner_guid = $user_id AND (ag.site_guid = $site_id OR ag.site_guid = 0)";
+			$query .= "WHERE ag.owner_guid = $user_guid AND (ag.site_guid = $site_guid OR ag.site_guid = 0)";
 
 			$collections = get_data($query);
 			if ($collections) {
@@ -211,7 +211,7 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 				}
 			}
 
-			$ignore_access = elgg_check_access_overrides($user_id);
+			$ignore_access = elgg_check_access_overrides($user_guid);
 
 			if ($ignore_access == true) {
 				$access_array[] = ACCESS_PRIVATE;
@@ -224,8 +224,8 @@ function get_access_array($user_id = 0, $site_id = 0, $flush = false) {
 	}
 
 	$options = array(
-		'user_id' => $user_id,
-		'site_id' => $site_id
+		'user_id' => $user_guid,
+		'site_id' => $site_guid
 	);
 
 	// see the warning in the docs for this function about infinite loop potential
@@ -470,13 +470,13 @@ function has_access_to_entity($entity, $user = null) {
  * standard access levels. It does not return access collections that the user
  * belongs to such as the access collection for a group.
  *
- * @param int  $user_id The user's GUID.
- * @param int  $site_id The current site.
- * @param bool $flush   If this is set to true, this will ignore a cached access array
+ * @param int  $user_guid The user's GUID.
+ * @param int  $site_guid The current site.
+ * @param bool $flush     If this is set to true, this will ignore a cached access array
  *
  * @return array List of access permissions
  */
-function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
+function get_write_access_array($user_guid = 0, $site_guid = 0, $flush = false) {
 	global $CONFIG, $init_finished;
 	$cache = _elgg_get_access_cache();
 
@@ -484,18 +484,18 @@ function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
 		$cache->clear();
 	}
 
-	if ($user_id == 0) {
-		$user_id = elgg_get_logged_in_user_guid();
+	if ($user_guid == 0) {
+		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
-	if (($site_id == 0) && (isset($CONFIG->site_id))) {
-		$site_id = $CONFIG->site_id;
+	if (($site_guid == 0) && (isset($CONFIG->site_id))) {
+		$site_guid = $CONFIG->site_id;
 	}
 
-	$user_id = (int) $user_id;
-	$site_id = (int) $site_id;
+	$user_guid = (int) $user_guid;
+	$site_guid = (int) $site_guid;
 
-	$hash = $user_id . $site_id . 'get_write_access_array';
+	$hash = $user_guid . $site_guid . 'get_write_access_array';
 
 	if ($cache[$hash]) {
 		$access_array = $cache[$hash];
@@ -509,8 +509,8 @@ function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
 		);
 		
 		$query = "SELECT ag.* FROM {$CONFIG->dbprefix}access_collections ag ";
-		$query .= " WHERE (ag.site_guid = $site_id OR ag.site_guid = 0)";
-		$query .= " AND (ag.owner_guid = $user_id)";
+		$query .= " WHERE (ag.site_guid = $site_guid OR ag.site_guid = 0)";
+		$query .= " AND (ag.owner_guid = $user_guid)";
 
 		$collections = get_data($query);
 		if ($collections) {
@@ -525,8 +525,8 @@ function get_write_access_array($user_id = 0, $site_id = 0, $flush = false) {
 	}
 
 	$options = array(
-		'user_id' => $user_id,
-		'site_id' => $site_id
+		'user_id' => $user_guid,
+		'site_id' => $site_guid
 	);
 	return elgg_trigger_plugin_hook('access:collections:write', 'user',
 		$options, $access_array);
@@ -826,7 +826,8 @@ function get_user_access_collections($owner_guid, $site_guid = 0) {
 
 	$query = "SELECT * FROM {$CONFIG->dbprefix}access_collections
 			WHERE owner_guid = {$owner_guid}
-			AND site_guid = {$site_guid}";
+			AND site_guid = {$site_guid}
+			ORDER BY name ASC";
 
 	$collections = get_data($query);
 

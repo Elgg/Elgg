@@ -84,17 +84,25 @@ function site_notifications_send($hook, $type, $result, $params) {
 	/* @var Elgg_Notifications_Notification */
 	$notification = $params['notification'];
 	if ($notification->summary) {
-		$recipient = $notification->getRecipient();
 		$message = $notification->summary;
-		$actor = $notification->getSender();
+	} else {
+		$message = $notification->subject;
+	}
+
+	if (isset($params['event'])) {
 		$event = $params['event'];
 		$object = $event->getObject();
+	} else {
+		$object = null;
+	}
 
-		$ia = elgg_set_ignore_access(true);
-		$note = SiteNotificationFactory::create($recipient, $message, $actor, $object);
-		elgg_set_ignore_access($ia);
-		if ($note) {
-			return true;
-		}
+	$actor = $notification->getSender();
+	$recipient = $notification->getRecipient();
+
+	$ia = elgg_set_ignore_access(true);
+	$note = SiteNotificationFactory::create($recipient, $message, $actor, $object);
+	elgg_set_ignore_access($ia);
+	if ($note) {
+		return true;
 	}
 }

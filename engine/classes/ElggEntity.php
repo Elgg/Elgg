@@ -399,8 +399,8 @@ abstract class ElggEntity extends ElggData implements
 					'limit' => 0
 				);
 				// @todo in 1.9 make this return false if can't add metadata
-				// http://trac.elgg.org/ticket/4520
-				// 
+				// https://github.com/elgg/elgg/issues/4520
+				//
 				// need to remove access restrictions right now to delete
 				// because this is the expected behavior
 				$ia = elgg_set_ignore_access(true);
@@ -428,6 +428,9 @@ abstract class ElggEntity extends ElggData implements
 			return $result;
 		} else {
 			// unsaved entity. store in temp array
+
+			// returning single entries instead of an array of 1 element is decided in
+			// getMetaData(), just like pulling from the db.
 
 			if ($owner_guid != 0 || $access_id !== null) {
 				$msg = "owner guid and access id cannot be used in ElggEntity::setMetadata() until entity is saved.";
@@ -809,17 +812,17 @@ abstract class ElggEntity extends ElggData implements
 	 * @warning Annotating an unsaved entity more than once with the same name
 	 *          will only save the last annotation.
 	 *
-	 * @param string $name      Annotation name
-	 * @param mixed  $value     Annotation value
-	 * @param int    $access_id Access ID
-	 * @param int    $owner_id  GUID of the annotation owner
-	 * @param string $vartype   The type of annotation value
+	 * @param string $name       Annotation name
+	 * @param mixed  $value      Annotation value
+	 * @param int    $access_id  Access ID
+	 * @param int    $owner_guid GUID of the annotation owner
+	 * @param string $vartype    The type of annotation value
 	 *
 	 * @return bool|int Returns int if an annotation is saved
 	 */
-	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_id = 0, $vartype = "") {
+	public function annotate($name, $value, $access_id = ACCESS_PRIVATE, $owner_guid = 0, $vartype = "") {
 		if ((int) $this->guid > 0) {
-			return create_annotation($this->getGUID(), $name, $value, $vartype, $owner_id, $access_id);
+			return create_annotation($this->getGUID(), $name, $value, $vartype, $owner_guid, $access_id);
 		} else {
 			$this->temp_annotations[$name] = $value;
 		}
@@ -1125,7 +1128,7 @@ abstract class ElggEntity extends ElggData implements
 	 *
 	 * @tip Can be overridden by registering for the permissions_check:comment,
 	 * <entity type> plugin hook.
-	 * 
+	 *
 	 * @param int $user_guid User guid (default is logged in user)
 	 *
 	 * @return bool
@@ -1407,7 +1410,7 @@ abstract class ElggEntity extends ElggData implements
 	 * @param string $size Either 'large', 'medium', 'small' or 'tiny'
 	 *
 	 * @return string The url or false if no url could be worked out.
-	 * @deprecated Use getIconURL()
+	 * @deprecated 1.8 Use getIconURL()
 	 */
 	public function getIcon($size = 'medium') {
 		elgg_deprecated_notice("getIcon() deprecated by getIconURL()", 1.8);
@@ -1653,6 +1656,30 @@ abstract class ElggEntity extends ElggData implements
 	protected function update() {
 		global $CONFIG;
 
+		// See #5600. This ensures canEdit() checks the BD persisted entity so it sees the
+		// persisted owner_guid, container_guid, etc.
+		_elgg_disable_caching_for_entity($this->guid);
+		$persisted_entity = get_entity($this->guid);
+		if (!$persisted_entity) {
+			// Why worry about this case? If access control was off when the user fetched this object but
+			// was turned back on again. Better to just bail than to turn access control off again.
+			return false;
+		}
+
+		$allow_edit = $persisted_entity->canEdit();
+		unset($persisted_entity);
+
+		if ($allow_edit) {
+			$allow_edit = elgg_trigger_event('update', $this->type, $this);
+		}
+
+		_elgg_enable_caching_for_entity($this->guid);
+
+		if (!$allow_edit) {
+			return false;
+		}
+
+		// See #6225. We copy these after the update event in case a handler changed one of them.
 		$guid = (int)$this->guid;
 		$owner_guid = (int)$this->owner_guid;
 		$access_id = (int)$this->access_id;
@@ -1662,18 +1689,6 @@ abstract class ElggEntity extends ElggData implements
 
 		if ($access_id == ACCESS_DEFAULT) {
 			throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
-		}
-
-		// See #5600. This ensures the canEdit() check will use a fresh entity from the DB so it sees the
-		// persisted owner_guid, container_guid, etc.
-		_elgg_disable_caching_for_entity($this->guid);
-
-		$allow_edit = $this->canEdit() && elgg_trigger_event('update', $this->type, $this);
-
-		_elgg_enable_caching_for_entity($this->guid);
-
-		if (!$allow_edit) {
-			return false;
 		}
 		
 		$ret = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
@@ -1736,7 +1751,7 @@ abstract class ElggEntity extends ElggData implements
 				$this->tables_loaded++;
 			}
 
-			// guid needs to be an int  http://trac.elgg.org/ticket/4111
+			// guid needs to be an int  https://github.com/elgg/elgg/issues/4111
 			$this->attributes['guid'] = (int)$this->attributes['guid'];
 
 			// subtype needs to be denormalized

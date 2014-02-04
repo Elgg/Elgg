@@ -99,21 +99,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 	elgg_register_title_button();
 
-	// show all posts for admin or users looking at their own blogs
-	// show only published posts for other users.
-	$show_only_published = true;
-	if ($current_user) {
-		if (($current_user->guid == $container_guid) || $current_user->isAdmin()) {
-			$show_only_published = false;
-		}
-	}
-	if ($show_only_published) {
-		$options['metadata_name_value_pairs'] = array(
-			array('name' => 'status', 'value' => 'published'),
-		);
-	}
-
-	$return['content'] = elgg_list_entities_from_metadata($options);
+	$return['content'] = elgg_list_entities($options);
 
 	return $return;
 }
@@ -152,21 +138,6 @@ function blog_get_page_content_friends($user_guid) {
 		'no_results' => elgg_echo('blog:none'),
 	);
 
-	// admin / owners can see any posts
-	// everyone else can only see published posts
-	$show_only_published = true;
-	$current_user = elgg_get_logged_in_user_entity();
-	if ($current_user) {
-		if (($user_guid == $current_user->guid) || $current_user->isAdmin()) {
-			$show_only_published = false;
-		}
-	}
-	if ($show_only_published) {
-		$options['metadata_name_value_pairs'][] = array(
-			array('name' => 'status', 'value' => 'published')
-		);
-	}
-
 	$return['content'] = elgg_list_entities_from_relationship($options);
 
 	return $return;
@@ -181,8 +152,6 @@ function blog_get_page_content_friends($user_guid) {
  * @return array
  */
 function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
-
-	$now = time();
 
 	$owner = get_entity($owner_guid);
 	elgg_set_page_owner_guid($owner_guid);
@@ -215,18 +184,6 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 		$options['container_guid'] = $owner_guid;
 	}
 
-	// admin / owners can see any posts
-	// everyone else can only see published posts
-	if (!(elgg_is_admin_logged_in() || (elgg_is_logged_in() && $owner_guid == elgg_get_logged_in_user_guid()))) {
-		if ($upper > $now) {
-			$upper = $now;
-		}
-
-		$options['metadata_name_value_pairs'] = array(
-			array('name' => 'status', 'value' => 'published')
-		);
-	}
-
 	if ($lower) {
 		$options['created_time_lower'] = $lower;
 	}
@@ -235,7 +192,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 		$options['created_time_upper'] = $upper;
 	}
 
-	$content = elgg_list_entities_from_metadata($options);
+	$content = elgg_list_entities($options);
 
 	$title = elgg_echo('date:month:' . date('m', $lower), array(date('Y', $lower)));
 
@@ -313,7 +270,7 @@ function blog_get_page_content_edit($page, $guid = 0, $revision = NULL) {
 	$return['title'] = $title;
 	$return['content'] = $content;
 	$return['sidebar'] = $sidebar;
-	return $return;	
+	return $return;
 }
 
 /**

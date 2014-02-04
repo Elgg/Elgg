@@ -7,6 +7,7 @@
 header("Content-type: text/html; charset=UTF-8");
 
 $lang = get_current_language();
+$attrs = elgg_format_attributes($vars['body_attrs']);
 
 ?>
 <!DOCTYPE html>
@@ -14,7 +15,7 @@ $lang = get_current_language();
 	<head>
 <?php echo $vars["head"]; ?>
 	</head>
-	<body>
+	<body<?php if (!empty($attrs)) { echo " $attrs"; } ?>>
 <?php echo $vars["body"]; ?>
 	</body>
 </html>

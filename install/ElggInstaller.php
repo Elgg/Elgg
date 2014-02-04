@@ -865,7 +865,7 @@ class ElggInstaller {
 				$CONFIG->site_id = $CONFIG->site_guid;
 				$CONFIG->site = get_entity($CONFIG->site_guid);
 				$CONFIG->dataroot = datalist_get('dataroot');
-				_elgg_session_boot(NULL, NULL, NULL);
+				_elgg_session_boot();
 			}
 
 			elgg_trigger_event('init', 'system');
@@ -1697,7 +1697,7 @@ class ElggInstaller {
 
 		if ($login) {
 			$handler = new Elgg_Http_DatabaseSessionHandler(_elgg_services()->db);
-			$storage = new Elgg_Http_NativeSessionStorage($handler);
+			$storage = new Elgg_Http_NativeSessionStorage(array(), $handler);
 			$session = new ElggSession($storage);
 			$session->setName('Elgg');
 			_elgg_services()->setValue('session', $session);
