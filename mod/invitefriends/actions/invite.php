@@ -6,6 +6,11 @@
  * @package ElggInviteFriends
  */
 
+if (!elgg_get_config('allow_registration')) {
+	register_error(elgg_echo('invitefriends:registration_disabled'));
+	forward(REFERER);
+}
+
 $site = elgg_get_site_entity();
 
 $emails = get_input('emails');
