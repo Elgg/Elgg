@@ -402,4 +402,21 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 
 		libxml_disable_entity_loader($elLast);
 	}
+
+	/**
+	 * elgg_admin_sort_page_menu() should not expect that the supplied menu has a certain hierarchy
+	 *
+	 * https://github.com/Elgg/Elgg/issues/6379
+	 */
+	function test_admin_sort_page_menu() {
+
+		elgg_push_context('admin');
+
+		elgg_register_plugin_hook_handler('prepare', 'menu:page', 'elgg_admin_sort_page_menu');
+		$result = elgg_trigger_plugin_hook('prepare', 'menu:page', array(), array());
+		$this->assertTrue(is_array($result), "Admin page menu fails to prepare for viewing");
+
+		elgg_pop_context();
+	}
+
 }
