@@ -59,8 +59,6 @@ class ElggDiskFilestore extends ElggFilestore {
 		}
 
 		$path = substr($fullname, 0, $ls);
-		$name = substr($fullname, $ls);
-		// @todo $name is unused, remove it or do we need to fix something?
 
 		if (($mode != 'write') && (!file_exists($fullname))) {
 			return false;

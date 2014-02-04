@@ -1137,6 +1137,7 @@ function make_register_object($register_name, $register_value, $children_array =
  * @param int $guid GUID
  *
  * @return 1
+ * @deprecated 1.7
  */
 function delete_object_entity($guid) {
 	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));
@@ -1154,6 +1155,7 @@ function delete_object_entity($guid) {
  * @param int $guid User GUID
  *
  * @return 1
+ * @deprecated 1.7
  */
 function delete_user_entity($guid) {
 	system_message(elgg_echo('deprecatedfunction', array('delete_user_entity')));

@@ -416,7 +416,7 @@ class Elgg_Database {
 				$statement = str_replace("prefix_", $this->tablePrefix, $statement);
 				if (!empty($statement)) {
 					try {
-						$result = $this->updateData($statement);
+						$this->updateData($statement);
 					} catch (DatabaseException $e) {
 						$errors[] = $e->getMessage();
 					}

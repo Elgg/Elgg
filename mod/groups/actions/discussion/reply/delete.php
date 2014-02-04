@@ -3,10 +3,11 @@
  * Delete discussion reply
  */
 
-$id = (int) get_input('annotation_id');
+$guid = (int) get_input('guid');
 
-$reply = elgg_get_annotation_from_id($id);
-if (!$reply || $reply->name != 'group_topic_post') {
+$reply = get_entity($guid);
+
+if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
 	register_error(elgg_echo('discussion:reply:error:notdeleted'));
 	forward(REFERER);
 }
@@ -16,8 +17,7 @@ if (!$reply->canEdit()) {
 	forward(REFERER);
 }
 
-$result = $reply->delete();
-if ($result) {
+if ($reply->delete()) {
 	system_message(elgg_echo('discussion:reply:deleted'));
 } else {
 	register_error(elgg_echo('discussion:reply:error:notdeleted'));

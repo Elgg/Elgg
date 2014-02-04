@@ -671,7 +671,7 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
  * @param int    $user_guid   The GUID of the user
  *
  * @return bool
- * @deprecated Use the appropriate canEdit() method on metadata or annotations
+ * @deprecated 1.9 Use the appropriate canEdit() method on metadata or annotations
  */
 function can_edit_extender($extender_id, $type, $user_guid = 0) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggExtender::canEdit()', 1.9);
@@ -3126,6 +3126,7 @@ function elgg_view_tree($view_root, $viewtype = "") {
  * @param int    $target_guid   The GUID of the the object entity's container
  *
  * @return int/bool River ID or false on failure
+ * @deprecated 1.9 Use elgg_create_river_item()
  */
 function add_to_river($view, $action_type, $subject_guid, $object_guid, $access_id = "",
 $posted = 0, $annotation_id = 0, $target_guid = 0) {
@@ -3397,6 +3398,7 @@ function unregister_notification_handler($method) {
  * @access private
  *
  * @throws ImportException
+ * @deprecated 1.9
  */
 function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$element = $params['element'];
@@ -3441,6 +3443,7 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
  * @access private
  *
  * @throws InvalidParameterException|InvalidClassException
+ * @deprecated 1.9
  */
 function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -3487,6 +3490,7 @@ function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
  * @todo investigate more.
  * @access private
  * @todo document
+ * @deprecated 1.9
  */
 function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$guid = (int)$params['guid'];
@@ -3527,6 +3531,7 @@ function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $pa
  * @return array
  * @throws InvalidParameterException
  * @access private
+ * @deprecated 1.9
  */
 function export_annotation_plugin_hook($hook, $type, $returnvalue, $params) {
 	// Sanity check values
@@ -3568,6 +3573,7 @@ function export_annotation_plugin_hook($hook, $type, $returnvalue, $params) {
  * @todo investigate more.
  * @throws ImportException
  * @access private
+ * @deprecated 1.9
  */
 function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$element = $params['element'];
@@ -3606,6 +3612,7 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
  *
  * @return bool
  * @access private
+ * @deprecated 1.9
  */
 function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
 	// Get the type of extender (metadata, type, attribute etc)
@@ -3648,6 +3655,7 @@ function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
  * @access private
  *
  * @throws InvalidParameterException
+ * @deprecated 1.9
  */
 function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -3686,6 +3694,7 @@ function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params)
  * @return mixed
  * @throws InvalidParameterException
  * @access private
+ * @deprecated 1.9
  */
 function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
@@ -3720,6 +3729,7 @@ function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $par
  *
  * @return mixed
  * @access private
+ * @deprecated 1.9
  */
 function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	$element = $params['element'];

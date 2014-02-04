@@ -319,4 +319,58 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		//delete group and annotations
 		$group->delete();
 	}
+
+	public function test_ElggXMLElement_does_not_load_external_entities() {
+		$elLast = libxml_disable_entity_loader(false);
+
+		// build payload that should trigger loading of external entity
+		$payload = file_get_contents(dirname(__FILE__) . '/test_files/xxe/request.xml');
+		$path = realpath(dirname(__FILE__) . '/test_files/xxe/external_entity.txt');
+		$path = str_replace('\\', '/', $path);
+		if ($path[0] != '/') {
+			$path = '/' . $path;
+		}
+		$path = 'file://' . $path;
+		$payload = sprintf($payload, $path);
+
+		// make sure we can actually this in this environment
+		$element = new SimpleXMLElement($payload);
+		$can_load_entity = preg_match('/secret/', (string)$element->methodName);
+
+		$this->skipUnless($can_load_entity, "XXE vulnerability cannot be tested on this system");
+
+		if ($can_load_entity) {
+			$this->expectError("SimpleXMLElement::__construct(): I/O warning : failed to load external entity &quot;" . $path . "&quot;");
+			$el = new ElggXMLElement($payload);
+			$chidren = $el->getChildren();
+			$content = $chidren[0]->getContent();
+			$this->assertNoPattern('/secret/', $content);
+		}
+
+		libxml_disable_entity_loader($elLast);
+	}
+
+	public function test_update_handlers_can_change_attributes() {
+		$object = new ElggObject();
+		$object->subtype = 'issue6225';
+		$object->access_id = ACCESS_PUBLIC;
+		$object->save();
+		$guid = $object->guid;
+
+		elgg_register_event_handler('update', 'object', array('ElggCoreRegressionBugsTest', 'handleUpdateForIssue6225test'));
+
+		$object->save();
+
+		elgg_unregister_event_handler('update', 'object', array('ElggCoreRegressionBugsTest', 'handleUpdateForIssue6225test'));
+
+		_elgg_invalidate_cache_for_entity($guid);
+		$object = get_entity($guid);
+		$this->assertEqual($object->access_id, ACCESS_PRIVATE);
+
+		$object->delete();
+	}
+
+	public static function handleUpdateForIssue6225test($event, $type, ElggObject $object) {
+		$object->access_id = ACCESS_PRIVATE;
+	}
 }

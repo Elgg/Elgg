@@ -8,6 +8,11 @@
 class ElggCoreSiteTest extends ElggCoreUnitTest {
 
 	/**
+	 * @var ElggSite
+	 */
+	public $site;
+
+	/**
 	 * Called before each test object.
 	 */
 	public function __construct() {
@@ -64,6 +69,11 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 		$this->assertIsA($guid, 'int');
 		$this->assertTrue($guid > 0);
 		$this->assertIdentical(true, $this->site->delete());
+	}
+
+	public function testElggSiteGetUrl() {
+		$this->site->url = 'http://example.com/';
+		$this->assertIdentical($this->site->getURL(), 'http://example.com/');
 	}
 }
 

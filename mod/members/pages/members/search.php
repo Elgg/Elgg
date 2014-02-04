@@ -9,7 +9,8 @@ $query = get_input("member_query");
 $limit = get_input("limit");
 $offset = get_input("offset");
 
-$title = elgg_echo('members:title:search', array($query));
+$display_query = _elgg_get_display_query($query);
+$title = elgg_echo('members:title:search', array($display_query));
 
 $options = array();
 $options['query'] = $query;

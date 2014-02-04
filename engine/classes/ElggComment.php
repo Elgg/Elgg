@@ -51,4 +51,17 @@ class ElggComment extends ElggObject {
 		$params = array('entity' => $this, 'user' => $user);
 		return elgg_trigger_plugin_hook('permissions_check', $this->type, $params, $return);
 	}
+
+	/**
+	 * Update container entity last action on successful save.
+	 *
+	 * @return bool|int
+	 */
+	public function save() {
+		$result = parent::save();
+		if ($result) {
+			update_entity_last_action($this->container_guid, $this->time_updated);
+		}
+		return $result;
+	}
 }

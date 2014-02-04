@@ -1656,6 +1656,30 @@ abstract class ElggEntity extends ElggData implements
 	protected function update() {
 		global $CONFIG;
 
+		// See #5600. This ensures canEdit() checks the BD persisted entity so it sees the
+		// persisted owner_guid, container_guid, etc.
+		_elgg_disable_caching_for_entity($this->guid);
+		$persisted_entity = get_entity($this->guid);
+		if (!$persisted_entity) {
+			// Why worry about this case? If access control was off when the user fetched this object but
+			// was turned back on again. Better to just bail than to turn access control off again.
+			return false;
+		}
+
+		$allow_edit = $persisted_entity->canEdit();
+		unset($persisted_entity);
+
+		if ($allow_edit) {
+			$allow_edit = elgg_trigger_event('update', $this->type, $this);
+		}
+
+		_elgg_enable_caching_for_entity($this->guid);
+
+		if (!$allow_edit) {
+			return false;
+		}
+
+		// See #6225. We copy these after the update event in case a handler changed one of them.
 		$guid = (int)$this->guid;
 		$owner_guid = (int)$this->owner_guid;
 		$access_id = (int)$this->access_id;
@@ -1665,18 +1689,6 @@ abstract class ElggEntity extends ElggData implements
 
 		if ($access_id == ACCESS_DEFAULT) {
 			throw new InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
-		}
-
-		// See #5600. This ensures the canEdit() check will use a fresh entity from the DB so it sees the
-		// persisted owner_guid, container_guid, etc.
-		_elgg_disable_caching_for_entity($this->guid);
-
-		$allow_edit = $this->canEdit() && elgg_trigger_event('update', $this->type, $this);
-
-		_elgg_enable_caching_for_entity($this->guid);
-
-		if (!$allow_edit) {
-			return false;
 		}
 		
 		$ret = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities

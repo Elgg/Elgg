@@ -826,7 +826,8 @@ function get_user_access_collections($owner_guid, $site_guid = 0) {
 
 	$query = "SELECT * FROM {$CONFIG->dbprefix}access_collections
 			WHERE owner_guid = {$owner_guid}
-			AND site_guid = {$site_guid}";
+			AND site_guid = {$site_guid}
+			ORDER BY name ASC";
 
 	$collections = get_data($query);
 

@@ -1,0 +1,21 @@
+filter:
+    excluded_paths:
+        - 'vendors/*'
+        - '*/vendors/*'
+        - '*/tests/*'
+tools:
+    external_code_coverage: true
+    js_hint:
+        filter:
+            excluded_paths: ['vendors/*','*/vendors/*','*/tests/*']
+    php_mess_detector:
+        filter:
+            excluded_paths: ['vendors/*','*/vendors/*','*/tests/*']
+    sensiolabs_security_checker: true
+    php_cpd: true
+    php_pdepend:
+        excluded_dirs:
+            - vendors
+    external_code_coverage:
+        timeout: '600'
+    php_hhvm: true

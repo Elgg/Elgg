@@ -391,7 +391,7 @@ class ElggFile extends ElggObject {
 
 			$parameters = array();
 			foreach ($mds as $md) {
-				list($foo, $name) = explode("::", $md->name);
+				list( , $name) = explode("::", $md->name);
 				if ($name == 'filestore') {
 					$filestore = $md->value;
 				}
