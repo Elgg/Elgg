@@ -50,13 +50,22 @@ class Elgg_EventsServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($this->counter, 1);
 	}
 
+	public function testUncallableHandlersAreLogged() {
+		$events = new Elgg_EventsService();
+
+		$loggerMock = $this->getMock('Elgg_Logger', array(), array(), '', false);
+		$events->setLogger($loggerMock);
+		$events->registerHandler('foo', 'bar', array(new stdClass(), 'uncallableMethod'));
+
+		$expectedMsg = 'handler for event [foo, bar] is not callable: (stdClass)->uncallableMethod';
+		$loggerMock->expects($this->once())->method('warn')->with($expectedMsg);
+
+		$events->trigger('foo', 'bar');
+	}
+
 	public function incrementCounter() {
 		$this->counter++;
 		return true;
-	}
-
-	public static function throwInvalidArg() {
-		throw new InvalidArgumentException();
 	}
 
 	public static function returnTrue() {

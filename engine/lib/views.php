@@ -1235,7 +1235,10 @@ function elgg_view_form($action, $form_vars = array(), $body_vars = array()) {
 		$form_vars['class'] = $form_class;
 	}
 
-	return elgg_view('input/form', array_merge($defaults, $form_vars));
+	$form_vars = array_merge($defaults, $form_vars);
+	$form_vars['action_name'] = $action;
+
+	return elgg_view('input/form', $form_vars);
 }
 
 /**
@@ -1469,6 +1472,15 @@ function elgg_views_add_rss_link() {
 }
 
 /**
+ * Sends headers on page requests
+ *
+ * @access private
+ */
+function _elgg_views_send_page_headers() {
+	header('X-Frame-Options: SAMEORIGIN');
+}
+
+/**
  * Registers deprecated views to avoid making some pages from older plugins
  * completely empty.
  *
@@ -1541,6 +1553,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
+	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_page_headers');
 
 	// discover the core viewtypes
 	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier

@@ -22,6 +22,19 @@ class Elgg_PluginHooksServiceTest extends PHPUnit_Framework_TestCase {
 		
 		$this->assertEquals(2, $returnval);
 	}
+
+	public function testUncallableHandlersAreLogged() {
+		$hooks = new Elgg_PluginHooksService();
+
+		$loggerMock = $this->getMock('Elgg_Logger', array(), array(), '', false);
+		$hooks->setLogger($loggerMock);
+		$hooks->registerHandler('foo', 'bar', array(new stdClass(), 'uncallableMethod'));
+
+		$expectedMsg = 'handler for plugin hook [foo, bar] is not callable: (stdClass)->uncallableMethod';
+		$loggerMock->expects($this->once())->method('warn')->with($expectedMsg);
+
+		$hooks->trigger('foo', 'bar');
+	}
 	
 	public static function returnTwo() {
 		return 2;

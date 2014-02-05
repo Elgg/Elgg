@@ -9,6 +9,9 @@
 $guid = get_input('guid');
 
 $comment = get_entity($guid);
+$entity = $comment->getContainerEntity();
+elgg_set_page_owner_guid($entity->getContainerGUID());
+
 if (!elgg_instanceof($comment, 'object', 'comment') || !$comment->canEdit()) {
 	return false;
 }

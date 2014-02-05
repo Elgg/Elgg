@@ -33,12 +33,20 @@ if (isset($vars['item_class'])) {
 $html = "";
 $nav = "";
 
+$page_owner = elgg_get_page_owner_entity();
+if ($page_owner instanceof ElggGroup && $page_owner->isMember()) {
+	$base_url = 'embed?container_guid=' . $page_owner->guid;
+} else {
+	$base_url = 'embed';
+}
+
 if ($count) {
 	$nav .= elgg_view('navigation/pagination', array(
 		'offset' => $offset,
 		'count' => $count,
 		'limit' => $limit,
 		'offset_key' => $offset_key,
+		'base_url' => $base_url,
 	));
 }
 
