@@ -11,6 +11,6 @@ if (elgg_instanceof($vars['entity'], 'object', 'file')) {
 	$mime_type = $vars['entity']->getMimeType();
 	echo <<<END
 
-	<enclosure url="$download_url" length="$size" type="$mime_type" />";
+	<enclosure url="$download_url" length="$size" type="$mime_type" />
 END;
 }
