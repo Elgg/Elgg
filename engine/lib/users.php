@@ -416,6 +416,7 @@ function send_new_password_request($user_guid) {
 		// generate code
 		$code = generate_random_cleartext_password();
 		$user->setPrivateSetting('passwd_conf_code', $code);
+		$user->setPrivateSetting('passwd_conf_time', time());
 
 		// generate link
 		$link = elgg_get_site_url() . "changepassword?u=$user_guid&c=$code";
@@ -460,7 +461,7 @@ function force_user_password_reset($user_guid, $password) {
 }
 
 /**
- * Validate and execute a password reset for a user.
+ * Validate and change password for a user.
  *
  * @param int    $user_guid The user id
  * @param string $conf_code Confirmation code as sent in the request email.
@@ -478,22 +479,32 @@ function execute_new_password_request($user_guid, $conf_code, $password = null) 
 		$password = generate_random_cleartext_password();
 	}
 
-	if ($user instanceof ElggUser) {
-		$saved_code = $user->getPrivateSetting('passwd_conf_code');
+	if (!elgg_instanceof($user, 'user')) {
+		return false;
+	}
 
-		if ($saved_code && $saved_code == $conf_code) {
+	$saved_code = $user->getPrivateSetting('passwd_conf_code');
+	$code_time = (int) $user->getPrivateSetting('passwd_conf_time');
 
-			if (force_user_password_reset($user_guid, $password)) {
-				remove_private_setting($user_guid, 'passwd_conf_code');
-				// clean the logins failures
-				reset_login_failure_count($user_guid);
-				
-				$email = elgg_echo('email:changepassword:body', array($user->name, $password));
+	if (!$saved_code || $saved_code != $conf_code) {
+		return false;
+	}
 
-				return notify_user($user->guid, $CONFIG->site->guid,
-					elgg_echo('email:changepassword:subject'), $email, array(), 'email');
-			}
-		}
+	// Discard for security if it is 24h old
+	if (!$code_time || $code_time < time() - 24 * 60 * 60) {
+		return false;
+	}
+
+	if (force_user_password_reset($user_guid, $password)) {
+		remove_private_setting($user_guid, 'passwd_conf_code');
+		remove_private_setting($user_guid, 'passwd_conf_time');
+		// clean the logins failures
+		reset_login_failure_count($user_guid);
+
+		$email = elgg_echo('email:changepassword:body', array($user->name, $password));
+
+		return notify_user($user->guid, $CONFIG->site->guid,
+			elgg_echo('email:changepassword:subject'), $email, array(), 'email');
 	}
 
 	return false;
