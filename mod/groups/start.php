@@ -104,6 +104,9 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'groups_access_collection_override');
 
 	elgg_register_event_handler('upgrade', 'system', 'groups_run_upgrades');
+
+	// Add tests
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'groups_test');
 }
 
 /**
@@ -1262,4 +1265,16 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 	}
 
 	return $return;
+}
+
+
+/**
+ * Runs unit tests for groups
+ *
+ * @return array
+ */
+function groups_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = $CONFIG->pluginspath . 'groups/tests/write_access.php';
+	return $value;
 }
