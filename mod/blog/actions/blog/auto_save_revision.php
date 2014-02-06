@@ -51,6 +51,18 @@ if ($guid) {
 	// force draft and private for autosaves.
 	$blog->status = 'unsaved_draft';
 	$blog->access_id = ACCESS_PRIVATE;
+
+	// mark this as a brand new post so we can work out the
+	// river / revision logic in the real save action.
+	$blog->new_post = TRUE;
+}
+
+if ($blog->status == 'unsaved_draft') {
+	// update unsaved draft
+	$future_access_id = get_input('access_id');
+	$tags = get_input('tags');
+	$comments_on = get_input('comments_on');
+
 	$blog->title = $title;
 	$blog->description = $description;
 
@@ -58,44 +70,42 @@ if ($guid) {
 		$excerpt = $description;
 	}
 	$blog->excerpt = elgg_get_excerpt($excerpt);
-
-	// mark this as a brand new post so we can work out the
-	// river / revision logic in the real save action.
-	$blog->new_post = TRUE;
+	$blog->future_access = $access_id;
+	$blog->tags = $tags;
 
 	if (!$blog->save()) {
 		register_error(elgg_echo('blog:error:cannot_save'));
 		forward(REFERER);
 	}
-}
+} else {
+	// create auto save annotation
+	// annotations don't have a "time_updated" so
+	// we have to delete everything or the times are wrong.
+	// don't save if nothing changed
+	$auto_save_annotations = $blog->getAnnotations(array(
+		'annotation_name' => 'blog_auto_save',
+		'limit' => 1,
+	));
 
-// create auto save annotation
-// annotations don't have a "time_updated" so
-// we have to delete everything or the times are wrong.
-// don't save if nothing changed
-$auto_save_annotations = $blog->getAnnotations(array(
-	'annotation_name' => 'blog_auto_save',
-	'limit' => 1,
-		));
-
-$old_description = '';
-$annotation_id = false;
-if ($auto_save_annotations) {
-	$last_auto_save_annotation = $auto_save_annotations[0];
-	$annotation_id = $last_auto_save_annotation->id;
-	$old_description = $last_auto_save_annotation->value;
-}
-
-if ($old_description != $description) {
-	if ($annotation_id) {
-		$blog->deleteAnnotations('blog_auto_save');
+	$old_description = '';
+	$annotation_id = false;
+	if ($auto_save_annotations) {
+		$last_auto_save_annotation = $auto_save_annotations[0];
+		$annotation_id = $last_auto_save_annotation->id;
+		$old_description = $last_auto_save_annotation->value;
 	}
-	$annotation_id = $blog->annotate('blog_auto_save', $description);
-}
 
-if (!$annotation_id) {
-	register_error(elgg_echo('blog:error:cannot_auto_save'));
-	forward(REFERER);
+	if ($old_description != $description) {
+		if ($annotation_id) {
+			$blog->deleteAnnotations('blog_auto_save');
+		}
+		$annotation_id = $blog->annotate('blog_auto_save', $description);
+	}
+
+	if (!$annotation_id) {
+		register_error(elgg_echo('blog:error:cannot_auto_save'));
+		forward(REFERER);
+	}
 }
 
 $json = array(
