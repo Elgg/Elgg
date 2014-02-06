@@ -464,20 +464,24 @@ function force_user_password_reset($user_guid, $password) {
  *
  * @param int    $user_guid The user id
  * @param string $conf_code Confirmation code as sent in the request email.
+ * @param string $password  Optional new password, if not randomly generated.
  *
  * @return mixed
  */
-function execute_new_password_request($user_guid, $conf_code) {
+function execute_new_password_request($user_guid, $conf_code, $password = null) {
 	global $CONFIG;
 
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 
+	if ($password === null) {
+		$password = generate_random_cleartext_password();
+	}
+
 	if ($user instanceof ElggUser) {
 		$saved_code = $user->getPrivateSetting('passwd_conf_code');
 
 		if ($saved_code && $saved_code == $conf_code) {
-			$password = generate_random_cleartext_password();
 
 			if (force_user_password_reset($user_guid, $password)) {
 				remove_private_setting($user_guid, 'passwd_conf_code');
