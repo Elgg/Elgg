@@ -66,7 +66,7 @@ $body_input = elgg_view('input/longtext', array(
 $save_status = elgg_echo('blog:save_status');
 if ($vars['guid']) {
 	$entity = get_entity($vars['guid']);
-	$saved = date(elgg_echo('blog:date_format'), $entity->time_created);
+	$saved = date(elgg_echo('blog:date_format'), $entity->time_updated);
 } else {
 	$saved = elgg_echo('never');
 }
