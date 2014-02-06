@@ -3,7 +3,7 @@
  * Reset user password form
  */
 
-$text = elgg_autop(elgg_echo('user:resetpassword:reset_password_confirm'));
+$text = elgg_autop(elgg_echo('user:changepassword:change_password_confirm'));
 
 $password1_label = elgg_echo('user:password:label');
 $password1 = elgg_view('input/password', array(
@@ -26,7 +26,7 @@ $c = elgg_view('input/hidden', array(
 ));
 
 $submit = elgg_view('input/submit', array(
-	'value' => elgg_echo('resetpassword')
+	'value' => elgg_echo('changepassword')
 ));
 
 echo <<<HTML
@@ -38,3 +38,4 @@ $u $c
 $submit
 </div>
 HTML;
+

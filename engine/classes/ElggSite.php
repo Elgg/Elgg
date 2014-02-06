@@ -545,7 +545,7 @@ class ElggSite extends ElggEntity {
 			'login',
 			'register',
 			'forgotpassword',
-			'resetpassword',
+			'changepassword',
 			'refresh_token',
 			'ajax/view/js/languages',
 			'upgrade\.php',

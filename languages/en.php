@@ -408,8 +408,8 @@ return array(
 	'user:password:fail:notsame' => "The two passwords are not the same!",
 	'user:password:fail:tooshort' => "Password is too short!",
 	'user:password:fail:incorrect_current_password' => 'The current password entered is incorrect.',
-	'user:resetpassword:unknown_user' => 'Invalid user.',
-	'user:resetpassword:reset_password_confirm' => 'Resetting your password will email a new password to your registered email address.',
+	'user:changepassword:unknown_user' => 'Invalid user.',
+	'user:changepassword:change_password_confirm' => 'This will change your password.',
 
 	'user:set:language' => "Language settings",
 	'user:language:label' => "Language",
@@ -419,8 +419,8 @@ return array(
 	'user:username:notfound' => 'Username %s not found.',
 
 	'user:password:lost' => 'Lost password',
-	'user:password:resetreq:success' => 'Successfully requested a new password, email sent',
-	'user:password:resetreq:fail' => 'Could not request a new password.',
+	'user:password:changereq:success' => 'Successfully requested a new password, email sent',
+	'user:password:changereq:fail' => 'Could not request a new password.',
 
 	'user:password:text' => 'To request a new password, enter your username or email address below and click the Request button.',
 
@@ -835,6 +835,7 @@ These changes will only affect new users on the site.',
 	'invite' => "Invite",
 
 	'resetpassword' => "Reset password",
+	'changepassword' => "Change password",
 	'makeadmin' => "Make admin",
 	'removeadmin' => "Remove admin",
 
@@ -1136,15 +1137,20 @@ To view their profile, click here:
 
 Please do not reply to this email.",
 
+	'email:changepassword:subject' => "Password changed!",
+	'email:changepassword:body' => "Hi %s,
+
+Your password has been changed.",
+
 	'email:resetpassword:subject' => "Password reset!",
 	'email:resetpassword:body' => "Hi %s,
 
 Your password has been reset to: %s",
 
-	'email:resetreq:subject' => "Request for new password.",
-	'email:resetreq:body' => "Hi %s,
+	'email:changereq:subject' => "Request for change password.",
+	'email:changereq:body' => "Hi %s,
 
-Somebody (from the IP address %s) has requested a new password for their account.
+Somebody (from the IP address %s) has requested change password for their account.
 
 If you requested this, click on the link below. Otherwise ignore this email.
 
