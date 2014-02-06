@@ -5,20 +5,28 @@
  *
  * @package ElggInviteFriends
  */
+
 $site = elgg_get_site_entity();
+$default_message = elgg_echo('invitefriends:message:default', array($site->name));
+
 $introduction = elgg_echo('invitefriends:introduction');
-$emails = elgg_echo('invitefriends:emails');
-$message = elgg_echo('invitefriends:message');
-$default = elgg_echo('invitefriends:message:default', array($site->name));
+
+$emails_label = elgg_echo('invitefriends:emails');
+$message_label = elgg_echo('invitefriends:message');
+
+$emails = elgg_get_sticky_value('invitefriends', 'emails');
+$message = elgg_get_sticky_value('invitefriends', 'emailmessage', $default_message);
+
 $emails_textarea = elgg_view('input/plaintext', array(
 	'id' => 'invitefriends-emails',
 	'name' => 'emails',
+	'value' => $emails,
 	'rows' => 4,
 		));
 $message_textarea = elgg_view('input/plaintext', array(
 	'id' => 'invitefriends-emailmessage',
 	'name' => 'emailmessage',
-	'value' => $default,
+	'value' => $message,
 		));
 
 $action_button = elgg_view('input/submit', array('value' => elgg_echo('send')));
@@ -26,11 +34,11 @@ $action_button = elgg_view('input/submit', array('value' => elgg_echo('send')));
 echo <<< HTML
 <div class="mbm elgg-text-help">$introduction</div>
 <div>
-	<label for="invitefriends-emails">$emails</label>
+	<label for="invitefriends-emails">$emails_label</label>
 	$emails_textarea
 </div>
 <div>
-	<label for="invitefriends-emailmessage">$message</label>
+	<label for="invitefriends-emailmessage">$message_label</label>
 	$message_textarea
 </div>
 <div class="elgg-foot">

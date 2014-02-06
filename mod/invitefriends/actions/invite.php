@@ -6,6 +6,8 @@
  * @package ElggInviteFriends
  */
 
+elgg_make_sticky_form('invitefriends');
+
 if (!elgg_get_config('allow_registration')) {
 	register_error(elgg_echo('invitefriends:registration_disabled'));
 	forward(REFERER);
@@ -87,6 +89,7 @@ if ($error) {
 	}
 
 } else {
+	elgg_clear_sticky_form('invitefriends');
 	system_message(elgg_echo('invitefriends:success'));
 }
 
