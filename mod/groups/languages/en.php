@@ -42,6 +42,7 @@ return array(
 	'groups:members:more' => "View all members",
 	'groups:membership' => "Group membership permissions",
 	'groups:content_access_mode' => "Accessibility of group content",
+	'groups:content_access_mode:warning' => "Warning: Changing this setting won't change the access permission of existing group content.",
 	'groups:content_access_mode:unrestricted' => "Unrestricted - Access depends on content-level settings",
 	'groups:content_access_mode:membersonly' => "Members Only - Non-members can never access group content",
 	'groups:access' => "Access permissions",
