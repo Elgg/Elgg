@@ -32,7 +32,7 @@ $message_textarea = elgg_view('input/plaintext', array(
 $action_button = elgg_view('input/submit', array('value' => elgg_echo('send')));
 
 echo <<< HTML
-<div class="mbm elgg-text-help">$introduction</div>
+<p class="mbm elgg-text-help">$introduction</p>
 <div>
 	<label for="invitefriends-emails">$emails_label</label>
 	$emails_textarea
