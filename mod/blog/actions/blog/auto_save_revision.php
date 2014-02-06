@@ -110,7 +110,7 @@ if ($blog->status == 'unsaved_draft') {
 
 $json = array(
 	'guid' => $blog->getGUID(),
-	'msg' => date('F j, Y @ H:i:s', time())
+	'msg' => date(elgg_echo('blog:date_format'), time())
 );
 echo json_encode($json);
 forward($blog->getURL());

@@ -67,5 +67,9 @@ View and comment on the blog post:
 	'blog:widget:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'More blog posts',
 	'blog:numbertodisplay' => 'Number of blog posts to display',
-	'blog:noblogs' => 'No blog posts'
+	'blog:noblogs' => 'No blog posts',
+
+	// date format
+	'blog:date_format' => 'F j, Y @ H:i:s',
+	
 );
