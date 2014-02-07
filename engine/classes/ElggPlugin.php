@@ -82,6 +82,10 @@ class ElggPlugin extends ElggObject {
 
 			// load the rest of the plugin
 			parent::__construct($existing_guid);
+
+			if (!$this->title && $plugin_id) {
+				$this->title = $plugin_id;
+			}
 		}
 
 		_elgg_cache_plugin_by_id($this);
