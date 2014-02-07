@@ -27,6 +27,11 @@ class GroupsWriteAccessTest extends ElggCoreUnitTest {
 		$this->user->save();
 	}
 
+	/**
+	 * https://github.com/Elgg/Elgg/pull/6393
+	 * Hook handlers for 'access:collections:write','all' hook should respect
+	 * group's content access mode and container write permissions
+	 */
 	public function testWriteAccessArray() {
 		$membersonly = ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY;
 		$unrestricted = ElggGroup::CONTENT_ACCESS_MODE_UNRESTRICTED;
@@ -35,15 +40,29 @@ class GroupsWriteAccessTest extends ElggCoreUnitTest {
 		$original_page_owner = elgg_get_page_owner_entity();
 		elgg_set_page_owner_guid($group_guid);
 
+		// User is not a member of the group
+		// Member-only group
 		$this->group->setContentAccessMode($membersonly);
-
 		$write_access = get_write_access_array($this->user->guid, $this->group->site_guid, true);
-		$this->assertTrue(array_key_exists($this->group->group_acl, $write_access));
-
+		$this->assertFalse(array_key_exists($this->group->group_acl, $write_access));
+		// Unrestricted group
 		$this->group->setContentAccessMode($unrestricted);
+		$write_access = get_write_access_array($this->user->guid, $this->group->site_guid, true);
+		$this->assertFalse(array_key_exists($this->group->group_acl, $write_access));
 
+		// User is a member (can write to container)
+		$this->group->join($this->user);
+
+		// Member-only group
+		$this->group->setContentAccessMode($membersonly);
 		$write_access = get_write_access_array($this->user->guid, $this->group->site_guid, true);
 		$this->assertTrue(array_key_exists($this->group->group_acl, $write_access));
+		// Unrestricted group
+		$this->group->setContentAccessMode($unrestricted);
+		$write_access = get_write_access_array($this->user->guid, $this->group->site_guid, true);
+		$this->assertTrue(array_key_exists($this->group->group_acl, $write_access));
+
+		$this->group->leave($this->user);
 
 		elgg_set_page_owner_guid($original_page_owner);
 
