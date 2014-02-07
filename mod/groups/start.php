@@ -557,7 +557,7 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 				// Due to group policy allow only the owner or all group members
 				$returnvalue = array(
 					ACCESS_PRIVATE => elgg_echo('PRIVATE'),
-					$page_owner->group_acl => elgg_echo('groups:group') . ': ' . $page_owner->name,
+					$page_owner->group_acl => elgg_echo('groups:acl', array($page_owner->name)),
 				);
 			} else {
 				// Leave out other groups, friends and friend collections
