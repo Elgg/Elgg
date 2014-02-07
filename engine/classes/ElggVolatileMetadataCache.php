@@ -181,7 +181,7 @@ class ElggVolatileMetadataCache {
 	 * @return void
 	 */
 	public function clear($entity_guid) {
-		$this->values[$entity_guid] = array();
+		unset($this->values[$entity_guid]);
 		$this->markOutOfSync($entity_guid);
 	}
 
