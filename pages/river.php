@@ -35,7 +35,7 @@ switch ($page_type) {
 			forward('');
 		}
 		$title = elgg_echo('river:owner', array(htmlspecialchars($subject->name, ENT_QUOTES, 'UTF-8', false)));
-		$page_filter = 'subject';
+		$page_filter = 'owner';
 		$options['subject_guid'] = $subject->guid;
 		break;
 	case 'friends':
