@@ -461,7 +461,7 @@ class Elgg_Http_Request {
 	 * @return array
 	 */
 	public function getUrlSegments() {
-		$path = trim($this->getPathInfo(), '/');
+		$path = trim($this->query->get('__elgg_uri'), '/');
 		if (!$path) {
 			return array();
 		}

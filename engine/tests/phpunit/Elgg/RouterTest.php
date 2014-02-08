@@ -2,6 +2,11 @@
 
 class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 
+	/**
+	 * @var Elgg_Router
+	 */
+	protected $router;
+
 	function setUp() {
 		$this->hooks = new Elgg_PluginHooksService();
 		$this->router = new Elgg_Router($this->hooks);
@@ -19,7 +24,7 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		
 		$this->assertTrue($registered);
 		
-		$request = Elgg_Http_Request::create('http://localhost/hello/');
+		$request = Elgg_Http_Request::create('http://localhost/?__elgg_uri=hello%2F');
 		
 		ob_start();
 		$handled = $this->router->route($request);

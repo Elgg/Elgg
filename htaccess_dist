@@ -141,6 +141,6 @@ RewriteRule ^rewrite.php$ install.php [L]
 RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.php?elgg_uri=$1 [L,QSA]
+RewriteRule ^(.*)$ index.php?__elgg_uri=$1 [QSA,L]
 
 </IfModule>
