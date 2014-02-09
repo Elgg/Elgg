@@ -20,11 +20,7 @@ $user = get_entity($guid);
 if (($user instanceof ElggUser) && ($user->canEdit())) {
 	$password = generate_random_cleartext_password();
 
-	// Always reset the salt before generating the user password.
-	$user->salt = generate_random_cleartext_password();
-	$user->password = generate_user_password($user, $password);
-
-	if ($user->save()) {
+	if (force_user_password_reset($user->guid, $password)) {
 		system_message(elgg_echo('admin:user:resetpassword:yes'));
 
 		notify_user($user->guid,

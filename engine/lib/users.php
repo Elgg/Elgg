@@ -470,13 +470,13 @@ function force_user_password_reset($user_guid, $password) {
  * @return mixed
  */
 function execute_new_password_request($user_guid, $conf_code, $password = null) {
-	global $CONFIG;
 
 	$user_guid = (int)$user_guid;
 	$user = get_entity($user_guid);
 
 	if ($password === null) {
 		$password = generate_random_cleartext_password();
+		$reset = true;
 	}
 
 	if (!elgg_instanceof($user, 'user')) {
@@ -501,10 +501,14 @@ function execute_new_password_request($user_guid, $conf_code, $password = null) 
 		// clean the logins failures
 		reset_login_failure_count($user_guid);
 
-		$email = elgg_echo('email:changepassword:body', array($user->name, $password));
+		$ns = $reset ? 'resetpassword' : 'changepassword';
 
-		return notify_user($user->guid, $CONFIG->site->guid,
-			elgg_echo('email:changepassword:subject'), $email, array(), 'email');
+		return notify_user($user->guid,
+			elgg_get_site_entity()->guid,
+			elgg_echo("email:$ns:subject"),
+			elgg_echo("email:$ns:body", array($user->username, $password)),
+			array(),
+			'email');
 	}
 
 	return false;
