@@ -23,15 +23,17 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		$registered = $this->router->registerPageHandler('hello', array($this, 'hello_page_handler'));
 		
 		$this->assertTrue($registered);
-		
-		$request = Elgg_Http_Request::create('http://localhost/?__elgg_uri=hello%2F');
+
+		$path = "hello/1/\xE2\x82\xAC"; // euro sign
+		$qs = http_build_query(array('__elgg_uri' => $path));
+		$request = Elgg_Http_Request::create("http://localhost/?$qs");
 		
 		ob_start();
 		$handled = $this->router->route($request);
 		$output = ob_get_clean();
 		
 		$this->assertTrue($handled);
-		$this->assertEquals("Hello, World!", $output);
+		$this->assertEquals($path, $output);
 	}
 	
 	function testCanUnregisterPageHandlers() {
