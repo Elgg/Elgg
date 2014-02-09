@@ -60,10 +60,16 @@
 .elgg-menu-theme-sandbox > li {
 	padding: 4px 20px;
 }
+.elgg-menu-theme-sandbox > li.elgg-state-selected {
+	background-color: #E4E4E4;
+	border-radius: 3px;
+}
+.elgg-menu-theme-sandbox > li.elgg-state-selected > a {
+	color: #333
+}
 .elgg-menu-theme-sandbox a,
 .elgg-menu-theme-sandbox a:hover,
-.elgg-menu-theme-sandbox a:focus,
-.theme-sandbox-nav li.elgg-state-selected > a {
+.elgg-menu-theme-sandbox a:focus {
 	color: #777;
 	text-decoration: none;
 }
