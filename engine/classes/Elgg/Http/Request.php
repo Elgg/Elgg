@@ -210,7 +210,8 @@ class Elgg_Http_Request {
 
 		if (isset($components['query'])) {
 			parse_str(html_entity_decode($components['query']), $qs);
-			$query = array_replace($qs, $query);
+			// original uses array_replace. using array_merge for 5.2 BC
+			$query = array_merge($qs, $query);
 		}
 		$queryString = http_build_query($query, '', '&');
 
