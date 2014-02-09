@@ -40,6 +40,8 @@ class GroupsWriteAccessTest extends ElggCoreUnitTest {
 		$original_page_owner = elgg_get_page_owner_entity();
 		elgg_set_page_owner_guid($group_guid);
 
+		$ia = elgg_set_ignore_access(false);
+
 		// User is not a member of the group
 		// Member-only group
 		$this->group->setContentAccessMode($membersonly);
@@ -61,6 +63,8 @@ class GroupsWriteAccessTest extends ElggCoreUnitTest {
 		$this->group->setContentAccessMode($unrestricted);
 		$write_access = get_write_access_array($this->user->guid, $this->group->site_guid, true);
 		$this->assertTrue(array_key_exists($this->group->group_acl, $write_access));
+
+		elgg_set_ignore_access($ia);
 
 		$this->group->leave($this->user);
 
