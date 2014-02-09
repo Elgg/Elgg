@@ -8,4 +8,9 @@ for ($i=1; $i<=5; $i++) {
 }
 $params['menu']['default'][2]->setSelected(true);
 
-echo elgg_view('navigation/menu/site', $params); 
+?>
+<div class="elgg-page-header">
+	<div class="elgg-inner ptm">
+<?php echo elgg_view('navigation/menu/site', $params); ?>
+	</div>
+</div>

@@ -147,6 +147,6 @@
 }
 
 /* specific to core theme for site navigation menu */
-.elgg-body > .elgg-menu-site-default {
+.elgg-body > .elgg-page-header > .elgg-inner > .elgg-menu-site-default {
 	position: static;
 }
