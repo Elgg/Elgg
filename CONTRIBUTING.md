@@ -11,11 +11,12 @@ We love pull requests! Here's how to get your patch accepted as quickly as possi
 Before submitting a pull request:
 
  * **By submitting a pull request you are agreeing to license the code under a [GPLv2 license][3] and [MIT license][4].**
- * For new features, submit a feature request or talk to us (elgg-development@googlegroups.com) and make sure the core team approves of your direction.
+ * For new features, submit a feature request or [talk to us][http://community.elgg.org/groups/profile/211069/feedback-and-planning] and make sure the core team approves of your direction.
 
 Good PR checklist:
 
  * Clear, meaningful title
+ * Correctly formatted [commit message][https://github.com/Elgg/Elgg/issues/5976]
  * Detailed description
  * Includes relevant tests (unit, e2e, etc.)
  * Includes documentation update
@@ -29,7 +30,7 @@ Good PR checklist:
 Before submitting a bug report:
 
  * Search for an existing ticket on the issue you're having. Add any extra info there.
- * Verify the problem is reproduceable
+ * Verify the problem is reproducible
    * On the latest version of Elgg
    * With all third-party plugins disabled
 
