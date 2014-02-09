@@ -104,6 +104,9 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'groups_access_collection_override');
 
 	elgg_register_event_handler('upgrade', 'system', 'groups_run_upgrades');
+
+	// Add tests
+	elgg_register_plugin_hook_handler('unit_test', 'system', 'groups_test');
 }
 
 /**
@@ -554,7 +557,7 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 				// Due to group policy allow only the owner or all group members
 				$returnvalue = array(
 					ACCESS_PRIVATE => elgg_echo('PRIVATE'),
-					$page_owner->group_acl => elgg_echo('groups:group') . ': ' . $page_owner->name,
+					$page_owner->group_acl => elgg_echo('groups:acl', array($page_owner->name)),
 				);
 			} else {
 				// Leave out other groups, friends and friend collections
@@ -562,7 +565,7 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 					ACCESS_PRIVATE => elgg_echo('PRIVATE'),
 					ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
 					ACCESS_PUBLIC => elgg_echo('PUBLIC'),
-					$group->group_acl => elgg_echo('groups:acl', array($page_owner->name)),
+					$page_owner->group_acl => elgg_echo('groups:acl', array($page_owner->name)),
 				);
 			}
 		}
@@ -1262,4 +1265,16 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 	}
 
 	return $return;
+}
+
+
+/**
+ * Runs unit tests for groups
+ *
+ * @return array
+ */
+function groups_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = $CONFIG->pluginspath . 'groups/tests/write_access.php';
+	return $value;
 }
