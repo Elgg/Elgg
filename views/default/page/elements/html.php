@@ -12,7 +12,7 @@ header("Content-type: text/html; charset=UTF-8");
 $lang = get_current_language();
 
 $attrs = "";
-if (isset($vars['body_attrs'])) {
+if (isset($vars['body_attrs']) && is_array($vars['body_attrs'])) {
 	$attrs = elgg_format_attributes($vars['body_attrs']);
 	if ($attrs) {
 		$attr = " $attrs";
