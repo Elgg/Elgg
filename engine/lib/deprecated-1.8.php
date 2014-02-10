@@ -3977,7 +3977,7 @@ function clear_annotations_by_owner($owner_guid) {
 	}
 
 	$options = array(
-		'annotation_owner_guid' => $guid,
+		'annotation_owner_guid' => $owner_guid,
 		'limit' => 0
 	);
 
