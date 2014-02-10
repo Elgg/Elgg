@@ -443,7 +443,7 @@ function normalize_image_rotation($source, $dest) {
 	}
 	
 	copy($source, $dest);
-	return true;
+	return false;
 }
 
 /**
