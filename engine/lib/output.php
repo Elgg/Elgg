@@ -129,24 +129,26 @@ function elgg_format_attributes(array $attrs) {
 		unset($attrs['js']);
 	}
 
-	foreach ($attrs as $attr => $val) {
-		$attr = strtolower($attr);
+	if (is_array($attrs) && count($attrs)) {
+		foreach ($attrs as $attr => $val) {
+			$attr = strtolower($attr);
 
-		if ($val === true) {
-			$val = $attr; //e.g. checked => true ==> checked="checked"
-		}
-
-		// ignore $vars['entity'] => ElggEntity stuff
-		if ($val !== null && $val !== false && (is_array($val) || !is_object($val))) {
-
-			// allow $vars['class'] => array('one', 'two');
-			// @todo what about $vars['style']? Needs to be semi-colon separated...
-			if (is_array($val)) {
-				$val = implode(' ', $val);
+			if ($val === true) {
+				$val = $attr; //e.g. checked => true ==> checked="checked"
 			}
 
-			$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
-			$attributes[] = "$attr=\"$val\"";
+			// ignore $vars['entity'] => ElggEntity stuff
+			if ($val !== null && $val !== false && (is_array($val) || !is_object($val))) {
+
+				// allow $vars['class'] => array('one', 'two');
+				// @todo what about $vars['style']? Needs to be semi-colon separated...
+				if (is_array($val)) {
+					$val = implode(' ', $val);
+				}
+
+				$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
+				$attributes[] = "$attr=\"$val\"";
+			}
 		}
 	}
 
