@@ -3930,7 +3930,7 @@ function delete_annotation($id) {
 	if (!$id) {
 		return false;
 	}
-	return elgg_delete_annotations(array('annotation_id' => $annotation_id));
+	return elgg_delete_annotations(array('annotation_id' => $id));
 }
 
 /**
