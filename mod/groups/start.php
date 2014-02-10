@@ -569,21 +569,6 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 
 			unset($returnvalue[ACCESS_FRIENDS]);
 		}
-	} else {
-		// if the user owns the group, remove all access collections manually
-		// this won't be a problem once the group itself owns the acl.
-		$groups = elgg_get_entities_from_relationship(array(
-					'relationship' => 'member',
-					'relationship_guid' => $user_guid,
-					'inverse_relationship' => FALSE,
-					'limit' => false
-				));
-
-		if ($groups) {
-			foreach ($groups as $group) {
-				unset($returnvalue[$group->group_acl]);
-			}
-		}
 	}
 
 	return $returnvalue;
