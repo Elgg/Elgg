@@ -9,6 +9,19 @@
  */
 
 /**
+ * Constants corresponding to EXIF orientation data for image files
+ *
+ * @var int
+ */
+define('ELGG_IMG_ROTATION_FLIP', 2);
+define('ELGG_IMG_ROTATION_180', 3);
+define('ELGG_IMG_ROTATION_180_FLIP', 4);
+define('ELGG_IMG_ROTATION_270_FLIP', 5);
+define('ELGG_IMG_ROTATION_270', 6);
+define('ELGG_IMG_ROTATION_90_FLIP', 7);
+define('ELGG_IMG_ROTATION_90', 8);
+
+/**
  * Get the size of the specified directory.
  *
  * @param string $dir       The full path of the directory
@@ -314,27 +327,123 @@ function get_image_resize_parameters($width, $height, $options) {
  * @return boolean	(true) rotation occurred, (false) no rotation
  */
 function normalize_image_rotation($source, $dest) {
+	
+	// supported types for rotation
+	$supported = array(
+		IMAGETYPE_GIF,
+		IMAGETYPE_JPEG,
+		IMAGETYPE_PNG,
+		IMAGETYPE_BMP
+	);
+	
+	$type = exif_imagetype($source);
+	
+	if (!in_array($type, $supported)) {
+		// it's not an image, or not an image type we want to process
+		copy($source, $dest);
+		return false;
+	}
+	
 	$exif = exif_read_data($source, 'IFDO', true);
 	$orientation = $exif['IFD0']['Orientation'];
-	if ($orientation) {
-		$image = imagecreatefromstring(file_get_contents($source));
-		switch($orientation) {
-			case 8:
-				$image = imagerotate($image,90,0);
-				break;
-			case 3:
-				$image = imagerotate($image,180,0);
-				break;
-			case 6:
-				$image = imagerotate($image,-90,0);
-				break;
+	
+	// make sure the in memory image size does not exceed memory available
+	$imginfo = getimagesize($source);
+	$requiredMemory1 = ceil($imginfo[0] * $imginfo[1] * 5.35);
+	$requiredMemory2 = ceil($imginfo[0] * $imginfo[1] * ($imginfo['bits'] / 8) * $imginfo['channels'] * 2.5);
+	$requiredMemory = (int)max($requiredMemory1, $requiredMemory2);
+
+	$mem_avail = ini_get('memory_limit');
+	$mem_avail = rtrim($mem_avail, 'M');
+	$mem_avail = $mem_avail * 1024 * 1024;
+	$mem_used = memory_get_usage();
+	
+	$mem_avail = $mem_avail - $mem_used - 2097152; // 2 MB buffer
+	
+	if ($requiredMemory > $mem_avail) {
+		// we don't have enough memory for any manipulation
+		copy($source, $dest);
+		return false;
+	}
+
+	$image = imagecreatefromstring(file_get_contents($source));
+	switch($orientation) {
+		case ELGG_IMG_ROTATION_FLIP:
+			$rotate = false;
+			$flip = true;
+			break;
+		case ELGG_IMG_ROTATION_180:
+			$rotate = true;
+			$flip = false;
+			$angle = 180;
+			break;
+		case ELGG_IMG_ROTATION_180_FLIP:
+			$rotate = true;
+			$flip = true;
+			$angle = 180;
+			break;
+		case ELGG_IMG_ROTATION_270_FLIP:
+			$rotate = true;
+			$flip = true;
+			$angle = 270;
+			break;
+		case ELGG_IMG_ROTATION_270:
+			$rotate = true;
+			$flip = false;
+			$angle = 270;
+			break;
+		case ELGG_IMG_ROTATION_90_FLIP:
+			$rotate = true;
+			$flip = true;
+			$angle = 90;
+			break;
+		case ELGG_IMG_ROTATION_90:
+			$rotate = true;
+			$flip = false;
+			$angle = 90;
+			break;
+		default:
+			$rotate = false;
+			$flip = false;
+			break;
+	}
+	
+	if ($rotate) {
+		$image = imagerotate($image, $angle, 0);
+	}
+	
+	$flipped = false;
+	if ($flip) {
+		$mem_avail = ini_get('memory_limit');
+		$mem_avail = rtrim($mem_avail, 'M');
+		$mem_avail = $mem_avail * 1024 * 1024;
+		$mem_used = memory_get_usage();
+
+		$mem_avail = $mem_avail - $mem_used - 2097152; // 2 MB buffer
+		if ($requiredMemory < $mem_avail) {
+			$width = imagesx($image);
+			$height = imagesy($image);
+			$src_y = 0;
+			$src_x = $width -1;
+			$src_height = $height;
+			$src_width = -$width;
+			
+			$imgdest = imagecreatetruecolor($width, $height);
+			imagecopyresampled($imgdest, $image, 0, 0, $src_x, $src_y, $width, $height, $src_width, $src_height);
+			$flipped = true;
+			
+			imagedestroy($image);
+			$image = $imgdest;
 		}
+	}
+	
+	if ($rotate || $flipped) {
 		imagejpeg($image, $dest, 100);
 		return true;
 	}
 	
 	copy($source, $dest);
-	return false;
+	return true;
 }
 
 /**
