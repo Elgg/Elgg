@@ -1104,8 +1104,8 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 		$where[] = "e.owner_guid = {$owner_guid}";
 	}
 
-	if ($container_guid > 0) {
-		$where[] = "e.container_guid = {$container_guid}";
+	if ($group_guid > 0) {
+		$where[] = "e.container_guid = {$group_guid}";
 	}
 
 	if ($count) {
