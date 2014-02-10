@@ -1214,7 +1214,7 @@ function discussion_update_reply_access_ids($event, $type, $object) {
  * @return ElggMenuItem[] $return
  */
 function discussion_reply_menu_setup($hook, $type, $return, $params) {
-	if ($params['handler'] !== 'discussion_reply') {
+	if (isset($params['handler']) && $params['handler'] !== 'discussion_reply') {
 		return $return;
 	}
 
