@@ -531,9 +531,9 @@ function _elgg_views_prepare_head($title) {
 	);
 	$params['links'][] = array(
 		'rel' => 'icon',
-		'sizes' => '128x32',
+		'sizes' => '128x128',
 		'type' => 'image/png',
-		'href' => elgg_normalize_url('_graphics/favicon-32.png'),
+		'href' => elgg_normalize_url('_graphics/favicon-128.png'),
 	);
 
 	// RSS feed link
