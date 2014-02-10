@@ -500,10 +500,40 @@ function _elgg_views_prepare_head($title) {
 		'content' => 'text/html; charset=utf-8',
 	);
 
-	// favicon
+	// favicons
 	$params['links'][] = array(
 		'rel' => 'icon',
 		'href' => elgg_normalize_url('_graphics/favicon.ico'),
+	);
+	$params['links'][] = array(
+		'rel' => 'icon',
+		'sizes' => '16x16 32x32 48x48 64x64 128x128',
+		'type' => 'image/svg+xml',
+		'href' => elgg_normalize_url('_graphics/favicon.svg'),
+	);
+	$params['links'][] = array(
+		'rel' => 'icon',
+		'sizes' => '16x16',
+		'type' => 'image/png',
+		'href' => elgg_normalize_url('_graphics/favicon-16.png'),
+	);
+	$params['links'][] = array(
+		'rel' => 'icon',
+		'sizes' => '32x32',
+		'type' => 'image/png',
+		'href' => elgg_normalize_url('_graphics/favicon-32.png'),
+	);
+	$params['links'][] = array(
+		'rel' => 'icon',
+		'sizes' => '64x64',
+		'type' => 'image/png',
+		'href' => elgg_normalize_url('_graphics/favicon-64.png'),
+	);
+	$params['links'][] = array(
+		'rel' => 'icon',
+		'sizes' => '128x128',
+		'type' => 'image/png',
+		'href' => elgg_normalize_url('_graphics/favicon-128.png'),
 	);
 
 	// RSS feed link
