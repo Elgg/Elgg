@@ -35,6 +35,7 @@ elgg_register_plugin_hook_handler('permissions_check', 'all', 'elgg_override_per
 elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_override_permissions');
 
 $db_prefix = elgg_get_config('dbprefix');
+$new_comment_guids = array();
 
 // Create a new object for each annotation
 foreach ($batch as $annotation) {
@@ -49,6 +50,7 @@ foreach ($batch as $annotation) {
 	$object->save();
 
 	$guid = $object->getGUID();
+	$new_comment_guids[] = $guid;
 
 	/**
 	 * Update the entry in river table for this comment
@@ -69,8 +71,6 @@ foreach ($batch as $annotation) {
 		  AND annotation_id = {$annotation->id}
 	";
 
-	update_data($query);
-
 	// Delete the annotation
 	$annotation->delete();
 }
@@ -82,11 +82,34 @@ _elgg_services()->hooks = $original_hooks;
 elgg_set_ignore_access($ia);
 
 
-$migrate_link = elgg_view('output/url', array(
-	'href' => 'admin/upgrades/comments',
-	'text' => "migrate the rest of the comments",
-	'is_trusted' => true,
-));
+// set new comment entities' time_updated and last_action to time_created
+$guid_str = implode(',', $new_comment_guids);
 
-// not using translation because new keys won't be in the cache
-elgg_add_admin_notice('comment_upgrade_needed', "The data structure of site comments has changed in Elgg 1.9. The most recent 50 comments were migrated but you must $migrate_link.");
+$query = "
+UPDATE {$db_prefix}entities
+	SET time_updated = time_created,
+		last_action = time_created
+	WHERE guid IN ($guid_str)
+";
+
+update_data($query);
+
+
+// display notice to run ajax upgrade if there are annotations left
+$options = array(
+	'annotation_names' => 'generic_comment',
+	'order_by' => 'n_table.id DESC',
+	'limit' => 50,
+	'count' => true
+);
+
+if (elgg_get_annotations($options)) {
+	$migrate_link = elgg_view('output/url', array(
+		'href' => 'admin/upgrades/comments',
+		'text' => "migrate the rest of the comments",
+		'is_trusted' => true,
+	));
+	
+	// not using translation because new keys won't be in the cache
+	elgg_add_admin_notice('comment_upgrade_needed', "The data structure of site comments has changed in Elgg 1.9. The most recent 50 comments were migrated but you must $migrate_link.");
+}

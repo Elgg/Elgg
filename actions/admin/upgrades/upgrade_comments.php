@@ -79,12 +79,27 @@ do {
 				  AND annotation_id = $annotation->id
 			";
 
-			if (update_data($query)) {
+			if (!update_data($query)) {
+				register_error(elgg_echo('upgrade:comments:river_update_failed', array($annotation->id)));
+				$error_count++;
+				continue;
+			}
+
+			// set the time_updated and last_action for this comment
+			// to the original time_created
+			$fix_ts_query = "
+				UPDATE {$db_prefix}entities
+				SET time_updated = time_created,
+					last_action = time_created
+				WHERE guid = $guid
+			";
+
+			if (update_data($fix_ts_query)) {
 				// It's now safe to delete the annotation
 				$annotations_to_delete[] = $annotation->id;
 				$success_count++;
 			} else {
-				register_error(elgg_echo('upgrade:comments:river_update_failed', array($annotation->id)));
+				register_error(elgg_echo('upgrade:comments:timestamp_update_fail', array($annotation->id)));
 				$error_count++;
 			}
 		} else {

@@ -186,6 +186,7 @@ View and reply to the discussion:
 	'discussion:upgrade:replies:success_count' => 'Discussion replies upgraded:',
 	'discussion:upgrade:replies:error_count' => 'Errors:',
 	'discussion:upgrade:replies:river_update_failed' => 'Failed to update the river entry for discussion reply id %s',
+	'discussion:upgrade:replies:timestamp_update_failed' => 'Failed to update the timestamp for discussion reply id %s',
 	'discussion:upgrade:replies:create_failed' => 'Failed to convert discussion reply id %s to an entity.',
 	'discussion:upgrade:replies:finished' => 'Upgrade finished',
 
