@@ -239,13 +239,7 @@ class Elgg_AttributeLoader {
 
 		$row = $this->filterAddedColumns($row);
 
-		// resolve subtype from int to string
-		$subtype = get_subtype_from_id($row['subtype']);
-		if ($subtype) {
-			$row['subtype'] = $subtype;
-		} else {
-			$row['subtype'] = null;
-		}
+		$row['subtype'] = (int)$row['subtype'];
 
 		// set to null when reading empty value, to match default empty value; See #5456
 		foreach (self::$null_attr_names as $key) {

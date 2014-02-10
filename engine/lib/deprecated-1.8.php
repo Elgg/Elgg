@@ -4168,7 +4168,7 @@ function pam_authenticate($credentials = NULL, $policy = "user") {
 function save_widget_location(ElggObject $widget, $order, $column) {
 	elgg_deprecated_notice('save_widget_location() is deprecated', 1.8);
 	if ($widget instanceof ElggObject) {
-		if ($widget->subtype == "widget") {
+		if ($widget->getSubtype() == "widget") {
 			// If you can't move the widget, don't save a new location
 			if (!$widget->draggable) {
 				return false;
@@ -4210,7 +4210,7 @@ function save_widget_location(ElggObject $widget, $order, $column) {
 
 			return true;
 		} else {
-			register_error($widget->subtype);
+			register_error($widget->getSubtype());
 		}
 
 	}
