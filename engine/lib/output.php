@@ -115,7 +115,12 @@ function elgg_format_url($url) {
  *
  * @return string HTML attributes to be inserted into a tag (e.g., <tag $attrs>)
  */
-function elgg_format_attributes(array $attrs) {
+function elgg_format_attributes(array $attrs = array()) {
+
+	if (!is_array($attrs) || !count($attrs)) {
+		return '';
+	}
+
 	$attrs = _elgg_clean_vars($attrs);
 	$attributes = array();
 
@@ -129,26 +134,24 @@ function elgg_format_attributes(array $attrs) {
 		unset($attrs['js']);
 	}
 
-	if (is_array($attrs) && count($attrs)) {
-		foreach ($attrs as $attr => $val) {
-			$attr = strtolower($attr);
+	foreach ($attrs as $attr => $val) {
+		$attr = strtolower($attr);
 
-			if ($val === true) {
-				$val = $attr; //e.g. checked => true ==> checked="checked"
+		if ($val === true) {
+			$val = $attr; //e.g. checked => true ==> checked="checked"
+		}
+
+		// ignore $vars['entity'] => ElggEntity stuff
+		if ($val !== null && $val !== false && (is_array($val) || !is_object($val))) {
+
+			// allow $vars['class'] => array('one', 'two');
+			// @todo what about $vars['style']? Needs to be semi-colon separated...
+			if (is_array($val)) {
+				$val = implode(' ', $val);
 			}
 
-			// ignore $vars['entity'] => ElggEntity stuff
-			if ($val !== null && $val !== false && (is_array($val) || !is_object($val))) {
-
-				// allow $vars['class'] => array('one', 'two');
-				// @todo what about $vars['style']? Needs to be semi-colon separated...
-				if (is_array($val)) {
-					$val = implode(' ', $val);
-				}
-
-				$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
-				$attributes[] = "$attr=\"$val\"";
-			}
+			$val = htmlspecialchars($val, ENT_QUOTES, 'UTF-8', false);
+			$attributes[] = "$attr=\"$val\"";
 		}
 	}
 
