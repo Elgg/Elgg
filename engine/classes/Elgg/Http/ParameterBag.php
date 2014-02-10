@@ -85,7 +85,8 @@ class Elgg_Http_ParameterBag implements IteratorAggregate, Countable {
 	 * @return void
 	 */
 	public function add(array $parameters = array()) {
-		$this->parameters = array_replace($this->parameters, $parameters);
+		// original uses array_replace. using array_merge for 5.2 BC
+		$this->parameters = array_merge($this->parameters, $parameters);
 	}
 
 	/**
