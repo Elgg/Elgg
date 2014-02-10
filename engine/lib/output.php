@@ -133,7 +133,7 @@ function elgg_format_attributes(array $attrs) {
 	$attributes = array();
 
 	if (isset($attrs['js'])) {
-		//@todo deprecated notice?
+		elgg_deprecated_notice('Use associative array of attr => val pairs instead of $vars[\'js\']', 1.8);
 
 		if (!empty($attrs['js'])) {
 			$attributes[] = $attrs['js'];
@@ -149,11 +149,18 @@ function elgg_format_attributes(array $attrs) {
 			$val = $attr; //e.g. checked => TRUE ==> checked="checked"
 		}
 
-		// ignore $vars['entity'] => ElggEntity stuff
+		/**
+		 * Ignore non-array values and allow attribute values to be an array
+		 *  <code>
+		 *  $attrs = array(
+		 *		'entity' => <ElggObject>, // will be ignored
+		 * 		'class' => array('elgg-input', 'elgg-input-text'), // will be imploded with spaces
+		 * 		'style' => array('margin-left:10px;', 'color: #666;'), // will be imploded with spaces
+		 *		'alt' => 'Alt text', // will be left as is
+		 *  );
+		 *  </code>
+		 */
 		if ($val !== NULL && $val !== false && (is_array($val) || !is_object($val))) {
-
-			// allow $vars['class'] => array('one', 'two');
-			// @todo what about $vars['style']? Needs to be semi-colon separated...
 			if (is_array($val)) {
 				$val = implode(' ', $val);
 			}
