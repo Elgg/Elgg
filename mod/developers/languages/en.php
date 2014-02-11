@@ -59,6 +59,8 @@ return array(
 	'theme_sandbox:navigation' => 'Navigation',
 	'theme_sandbox:typography' => 'Typography',
 
+	'theme_sandbox:icons:blurb' => 'Use <em>elgg_view_icon($name)</em> or the class elgg-icon-$name to display icons.',
+
 	// unit tests
 	'developers:unit_tests:description' => 'Elgg has unit and integration tests for detecting bugs in its core classes and functions.',
 	'developers:unit_tests:warning' => 'Warning: Do Not Run These Tests on a Production Site. They can corrupt your database.',
