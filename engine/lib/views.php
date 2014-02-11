@@ -500,6 +500,11 @@ function _elgg_views_prepare_head($title) {
 		'content' => 'text/html; charset=utf-8',
 	);
 
+	$params['metas'][] = array(
+		'name' => 'description',
+		'content' => elgg_get_config('sitedescription')
+	);
+
 	// favicons
 	$params['links'][] = array(
 		'rel' => 'icon',
