@@ -12,7 +12,7 @@ files = [
   JASMINE_ADAPTER,
   REQUIRE,
   REQUIRE_ADAPTER,
-  'vendors/jquery/jquery-1.9.1.min.js',
+  'vendors/jquery/jquery-1.11.0.min.js',
   'vendors/jquery/jquery-migrate-1.2.1.min.js',
   'vendors/sprintf.js',
   'js/lib/elgglib.js',

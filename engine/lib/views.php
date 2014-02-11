@@ -1547,7 +1547,7 @@ function elgg_views_boot() {
 
 	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('js', 'elgg/require_config'), 'head');
 	elgg_register_js('require', '/vendors/requirejs/require-1.2.10.min.js', 'head');
-	elgg_register_js('jquery', '/vendors/jquery/jquery-1.9.1.min.js', 'head');
+	elgg_register_js('jquery', '/vendors/jquery/jquery-1.11.0.min.js', 'head');
 	elgg_register_js('jquery-migrate', '/vendors/jquery/jquery-migrate-1.2.1.min.js', 'head');
 	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.10.3.min.js', 'head');
 	elgg_register_js('jquery.form', array(
