@@ -3,19 +3,21 @@ filter:
         - 'vendors/*'
         - '*/vendors/*'
         - '*/tests/*'
+        - '*/vendor/*'
 tools:
     external_code_coverage: true
     js_hint:
         filter:
-            excluded_paths: ['vendors/*','*/vendors/*','*/tests/*']
+            excluded_paths: ['vendors/*','*/vendors/*','*/tests/*','*/vendor/*']
     php_mess_detector:
         filter:
-            excluded_paths: ['vendors/*','*/vendors/*','*/tests/*']
+            excluded_paths: ['vendors/*','*/vendors/*','*/tests/*','*/vendor/*']
     sensiolabs_security_checker: true
     php_cpd: true
     php_pdepend:
         excluded_dirs:
             - vendors
+            - vendor
     external_code_coverage:
         timeout: '600'
     php_hhvm: true
