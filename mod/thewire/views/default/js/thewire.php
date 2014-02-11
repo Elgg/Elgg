@@ -3,17 +3,12 @@
  * The wire's JavaScript
  */
 
-$site_url = elgg_get_site_url();
-
 ?>
 
 elgg.provide('elgg.thewire');
 
 elgg.thewire.init = function() {
-	$("#thewire-textarea").live('keydown', function() {
-		elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), 140);
-	});
-	$("#thewire-textarea").live('keyup', function() {
+	$("#thewire-textarea").live(['keydown', 'keyup'], function() {
 		elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), 140);
 	});
 
@@ -64,8 +59,8 @@ elgg.thewire.viewPrevious = function(event) {
 	} else {
 		$link.html(elgg.echo('thewire:hide'));
 		$link.attr("title", elgg.echo('thewire:hide:help'));
-		
-		$.ajax({type: "GET",
+
+		elgg.get({
 			url: elgg.config.wwwroot + "ajax/view/thewire/previous",
 			dataType: "html",
 			cache: false,
