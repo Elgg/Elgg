@@ -15,7 +15,7 @@ $attrs = "";
 if (isset($vars['body_attrs'])) {
 	$attrs = elgg_format_attributes($vars['body_attrs']);
 	if ($attrs) {
-		$attr = " $attrs";
+		$attrs = " $attrs";
 	}
 }
 ?>
