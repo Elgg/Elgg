@@ -27,6 +27,7 @@ foreach (array('wwwroot', 'path', 'dataroot') as $field) {
 	$form_body .= "</div>";
 }
 
+// caching
 $is_simple_cache_on = (bool)elgg_get_config('simplecache_enabled');
 $simple_cache_disabled_class = $is_simple_cache_on ? '' : 'elgg-state-disabled';
 $form_body .= '<fieldset class="elgg-fieldset">';
@@ -70,6 +71,8 @@ $form_body .= elgg_view("input/checkbox", array(
 )) . "</div>";
 $form_body .= "</fieldset>";
 
+
+// content access
 $form_body .= '<fieldset class="elgg-fieldset">';
 $form_body .= '<legend>' . elgg_echo('admin:legend:content_access') . '</legend>';
 $form_body .= "<div>" . elgg_echo('admin:site:access:warning') . "<br />";
@@ -94,6 +97,8 @@ $form_body .= elgg_view('input/checkbox', array(
 )) . "</div>";
 $form_body .= "</fieldset>";
 
+
+// site access
 $form_body .= '<fieldset class="elgg-fieldset">';
 $form_body .= '<legend>' . elgg_echo('admin:legend:site_access') . '</legend>';
 // control new user registration
@@ -120,6 +125,41 @@ $form_body .= elgg_view("input/checkbox", array(
 )) . "</div>";
 $form_body .= "</fieldset>";
 
+
+// site secret
+$strength = _elgg_get_site_secret_strength();
+$current_strength = elgg_echo('site_secret:current_strength');
+$strength_text = elgg_echo("site_secret:strength:$strength");
+$strength_msg = elgg_echo("site_secret:strength_msg:$strength");
+
+$form_body .= '<fieldset class="elgg-fieldset">';
+$form_body .= '<legend>' . elgg_echo('admin:legend:site_secret') . '</legend>';
+$form_body .= "<div>" . elgg_echo('admin:site:secret:intro') . "<br />";
+
+$title = "$current_strength: $strength_text";
+
+if ($strength != 'strong') {
+	$form_body .= elgg_view_module('main', $title, $strength_msg, array(
+		'class' => 'elgg-message elgg-state-error'
+	));
+} else {
+	$form_body .= "<br /><h3>$title</h3>";
+	$form_body .= "<p>$strength_msg</p>";
+}
+
+$form_body .= '</div>';
+$form_body .= '<div class="elgg-foot">';
+$form_body .= elgg_view('output/confirmlink', array(
+	'href' => 'action/admin/site/regenerate_secret',
+	'class' => 'elgg-button elgg-button-action',
+	'text' => elgg_echo('admin:site:secret:regenerate')
+));
+$form_body .= '<p class="elgg-text-help mts">' . elgg_echo('admin:site:secret:regenerate:help') . '</p>';
+$form_body .- '</div>';
+$form_body .= "</fieldset>";
+
+
+// debug
 $debug_options = array(
 	'0' => elgg_echo('installation:debug:none'),
 	'ERROR' => elgg_echo('installation:debug:error'),
@@ -138,6 +178,7 @@ $form_body .= elgg_view('input/select', array(
 ));
 $form_body .= '</div>';
 $form_body .= "</fieldset>";
+
 
 $form_body .= elgg_view('input/hidden', array('name' => 'settings', 'value' => 'go'));
 
