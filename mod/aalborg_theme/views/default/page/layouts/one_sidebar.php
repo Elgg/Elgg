@@ -41,6 +41,9 @@ if (isset($vars['class'])) {
 	</div>
 	<div class="elgg-sidebar">
 		<?php
+			// With the mobile experience in mind, the content order is changed in aalborg theme,
+			// by moving sidebar below main content.
+			// On smaller screens, blocks are stacked in left to right order: content, sidebar.
 			echo elgg_view('page/elements/sidebar', $vars);
 		?>
 	</div>
