@@ -868,6 +868,7 @@ class ElggInstaller {
 		$CONFIG->entity_types = array('group', 'object', 'site', 'user');
 		// required by elgg_view_page()
 		$CONFIG->sitename = '';
+		$CONFIG->sitedescription = '';
 	}
 
 	/**
