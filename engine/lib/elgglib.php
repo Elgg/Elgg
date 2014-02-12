@@ -2122,5 +2122,4 @@ elgg_register_event_handler('init', 'system', '_elgg_init');
 elgg_register_event_handler('boot', 'system', '_elgg_engine_boot', 1);
 elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_api_test');
 
-elgg_register_event_handler('init', 'system', 'add_custom_menu_items', 1000);
 elgg_register_event_handler('init', 'system', '_elgg_walled_garden_init', 1000);
