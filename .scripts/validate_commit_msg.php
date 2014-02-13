@@ -16,21 +16,32 @@
  *
  */
 
+$is_file = false;
+
 if ($argc === 2) {
 	// check file or msg itself
 	$arg = $argv[1];
 	
 	if (file_exists($arg)) {
-		$msg = file_get_contents($arg);
+		$is_file = true;
+		$msg_tmp = file_get_contents($arg);
 	} else {
-		$msg = $arg;
+		$msg_tmp = $arg;
 	}
 } else {
 	// check for std in
-	$msg = file_get_contents("php://stdin");
+	$msg_tmp = file_get_contents("php://stdin");
 }
 
-$msg = rtrim($msg);
+// remove lines that will be ignored
+$msg_arr = array();
+foreach (explode("\n", rtrim($msg_tmp)) as $line) {
+	if (substr($line, 0, 1) !== '#') {
+		$msg_arr[] = $line;
+	}
+}
+
+$msg = implode("\n", $msg_arr);
 
 if (!$msg) {
 	usage();
@@ -91,6 +102,9 @@ if (!preg_match($test, $msg, $matches)) {
 	output("Fail.", 'error');
 	output("Not in the format `type(component): summary`", 'error');
 	output($msg, 'error');
+	if ($is_file) {
+		output("\nCommit message saved in " . $argv[1]);
+	}
 	exit(1);
 }
 
@@ -109,7 +123,7 @@ $errors = array();
 // max line length
 $lines = explode("\n", $msg);
 
-array_walk($lines, function($line, $i) use ($max_line_length, $msg, &$errors) {
+array_walk($lines, function($line, $i) use ($max_line_length, &$errors) {
 	if (strlen($line) > $max_line_length) {
 		$line_num = ++$i;
 		$errors[] = "Longer than $max_line_length characters at line $line_num";
@@ -128,6 +142,9 @@ if (!in_array($msg_info['type'], $types)) {
 //	$errors[] = "Invalid component: `{$msg_info['component']}`";
 //}
 
+// @todo check for fixes, refs, etc only in body and not in summary?
+// @todo check for correct syntax for breaks and deprecates?
+
 if ($errors) {
 	output('Fail', 'error');
 	foreach ($errors as $error) {
@@ -138,9 +155,15 @@ if ($errors) {
 	$cmd = "printf '%s' $arg | nl -ba";
 	$output = shell_exec($cmd);
 	output($output, 'error', false);
+	if ($is_file) {
+		output("\nCommit message saved in " . $argv[1]);
+	}
 	exit(1);
 } else {
-	output('Ok', 'success');
+	// only if we're not in a git commit
+	if (!$is_file) {
+		output('Ok', 'success');
+	}
 	exit(0);
 }
 

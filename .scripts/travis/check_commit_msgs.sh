@@ -12,7 +12,7 @@ elif [ "$TRAVIS_COMMIT" != "" ]; then
 	RANGE=$TRAVIS_COMMIT
 fi
 
-# Travis sends the ranges with 3 dots. Git only wants one.
+# Travis sends the ranges with 3 dots. Git only wants 2.
 if [[ "$RANGE" == *...* ]]; then
 	RANGE=`echo $TRAVIS_COMMIT_RANGE | sed 's/\.\.\./../'`
 elif [[ "$RANGE" != *..* ]]; then
@@ -22,7 +22,7 @@ fi
 EXIT=0
 for sha in `git log --format=oneline "$RANGE" | cut '-d ' -f1`
 do
-    echo -n "Checking commit message for $sha ..."
+    echo -n "Checking commit message for $sha ... "
 	git log --format=%B -n 1 $sha | php ./.scripts/validate_commit_msg.php
 
 	VALUE=$?
