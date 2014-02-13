@@ -23,6 +23,7 @@ matrix:
        - sudo easy_install "Sphinx==1.1.3"
        - wget https://scrutinizer-ci.com/ocular.phar
       script:
+       - bash .scripts/travis/check_commit_msgs.sh
        - phpcs --standard=../elgg-coding-standards/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
        - karma start js/tests/karma.conf.js --single-run
        - sphinx-build -b html -nW docs docs/_build/html

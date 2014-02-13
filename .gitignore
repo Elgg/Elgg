@@ -56,3 +56,4 @@ Desktop.ini
 !/.travis.yml
 !/.scrutinizer.yml
 !.gitignore
+!.scripts
