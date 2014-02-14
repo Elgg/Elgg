@@ -8,7 +8,6 @@
 .embed-wrapper {
 	width: 730px;
 	min-height: 400px;
-	margin: 20px 15px;
 }
 .embed-wrapper h2 {
 	color: #333333;
