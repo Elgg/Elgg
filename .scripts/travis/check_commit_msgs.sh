@@ -6,10 +6,17 @@
 
 # Travis's docs are misleading.
 # Check for either a commit or a range (which apparently isn't always a range) and fix as needed.
-if [ "$TRAVIS_COMMIT_RANGE" != "" ]; then
+if [ "$#" -gt 0 ]; then
+	RANGE=$1
+elif [ "$TRAVIS_COMMIT_RANGE" != "" ]; then
 	RANGE=$TRAVIS_COMMIT_RANGE
 elif [ "$TRAVIS_COMMIT" != "" ]; then
 	RANGE=$TRAVIS_COMMIT
+fi
+
+
+if [ "$RANGE" == "" ]; then
+	exit 1
 fi
 
 # Travis sends the ranges with 3 dots. Git only wants 2.

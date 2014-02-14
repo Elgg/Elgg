@@ -33,72 +33,22 @@ if ($argc === 2) {
 	$msg_tmp = file_get_contents("php://stdin");
 }
 
-// remove lines that will be ignored
-$msg_arr = array();
-foreach (explode("\n", rtrim($msg_tmp)) as $line) {
-	if (substr($line, 0, 1) !== '#') {
-		$msg_arr[] = $line;
-	}
-}
+require_once 'ElggCommitMessage.php';
 
-$msg = implode("\n", $msg_arr);
+$msg = new ElggCommitMessage($msg_tmp);
 
-if (!$msg) {
+if (!$msg->getMsg()) {
 	usage();
 }
 
-$max_line_length = 100;
-
-/**
- * Validate types
- */
-$types = array(
-	'feature',
-	'fix',
-	'docs',
-	'chore',
-	'perf',
-	'security'
-);
-
-// these aren't tested for value yet, only for existence.
-$components = array(
-	'i18n',
-	'seo',
-	'a11y',
-	'cache',
-	'db',
-	'views',
-	'session',
-	'router'
-);
-
-// regex to ignore commits
-$ignore_test = '/^(Merge pull request)|(Merge [0-9a-f]{5,40} into [0-9a-f]{5,40})/i';
-
-if (preg_match($ignore_test, $msg)) {
+if ($msg->shouldIgnore()) {
 	output("Ignoring commit.", 'notice');
 	exit(0);
 }
 
-/**
- * Checks for: type(component): message
- * with an optional body following
- *
- * $matches = array(
- *     0 => everything
- *     1 => type
- *     2 => component
- *     3 => summary
- *     4 => body (with leading \ns)
- *     5 => body (without leading \ns)
- * )
- */
-$test = "/^(\w*)\(([\w]+)\)\: ([^\n]*)(\n\n?(.*))?$/is";
-
 // basic format
-// can't continue if not at least close
-if (!preg_match($test, $msg, $matches)) {
+// don't continue if not correct
+if (!$msg->isValidFormat()) {
 	output("Fail.", 'error');
 	output("Not in the format `type(component): summary`", 'error');
 	output($msg, 'error');
@@ -108,39 +58,24 @@ if (!preg_match($test, $msg, $matches)) {
 	exit(1);
 }
 
-$msg_info = array(
-	'type' => $matches[1],
-	'component' => $matches[2],
-	'summary' => $matches[3]
-);
-
-if (isset($matches[5])) {
-	$msg_info['body'] = $matches[5];
-}
-
 $errors = array();
 
-// max line length
-$lines = explode("\n", $msg);
-
-array_walk($lines, function($line, $i) use ($max_line_length, &$errors) {
-	if (strlen($line) > $max_line_length) {
-		$line_num = ++$i;
-		$errors[] = "Longer than $max_line_length characters at line $line_num";
+// line lengths
+if (!$msg->isValidLineLength()) {
+	$max = $msg->getMaxLineLength();
+	foreach ($msg->getLengthyLines() as $line_num) {
+		$errors[] = "Longer than $max characters at line $line_num";
 	}
-});
+}
 
 // type
-if (!in_array($msg_info['type'], $types)) {
-	$errors[] = "Invalid type at line 1: `{$msg_info['type']}`. Not one of "
-		. implode(', ', $types) . '.';
+if (!$msg->isValidType()) {
+	$errors[] = "Invalid type at line 1: `{$msg->getPart('type')}`. Not one of "
+		. implode(', ', $msg->getValidTypes()) . '.';
 }
 
 // component
 // @todo only checking for existence right now via regex
-//if (!in_array($msg_info['component'], $components)) {
-//	$errors[] = "Invalid component: `{$msg_info['component']}`";
-//}
 
 // @todo check for fixes, refs, etc only in body and not in summary?
 // @todo check for correct syntax for breaks and deprecates?
