@@ -57,6 +57,8 @@ class ElggPlugin extends ElggObject {
 			parent::__construct($path);
 			$this->path = elgg_get_plugins_path() . $this->getID();
 		} else {
+			$this->initializeAttributes();
+			
 			$mod_dir = elgg_get_plugins_path();
 
 			// not a full path, so assume a directory name and use the default path
@@ -74,14 +76,10 @@ class ElggPlugin extends ElggObject {
 
 			// check if we're loading an existing plugin
 			$existing_plugin = elgg_get_plugin_from_id($plugin_id);
-			$existing_guid = null;
-
+			
 			if ($existing_plugin) {
-				$existing_guid = $existing_plugin->guid;
+				$this->load($existing_plugin->guid);
 			}
-
-			// load the rest of the plugin
-			parent::__construct($existing_guid);
 		}
 
 		_elgg_cache_plugin_by_id($this);

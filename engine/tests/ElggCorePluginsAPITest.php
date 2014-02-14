@@ -17,7 +17,7 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 
 	// 1.7 package at test_files/plugin_17/
 	var $package17;
-
+	
 	public function __construct() {
 		parent::__construct();
 
@@ -305,5 +305,20 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 	public function testElggPluginPackageDetectIDFromPluginID() {
 		$package = new ElggPluginPackage('profile');
 		$this->assertEqual($package->getID(), 'profile');
+	}
+	
+	// ElggPlugin
+	public function testElggPluginIsValid() {
+		
+		$test_plugin = new ElggPlugin('profile');
+		
+		$this->assertIdentical(true, $test_plugin->isValid());
+	}
+	
+	public function testElggPluginGetID() {
+		
+		$test_plugin = new ElggPlugin('profile');
+		
+		$this->assertIdentical('profile', $test_plugin->getID());
 	}
 }
