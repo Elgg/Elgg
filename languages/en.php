@@ -480,9 +480,7 @@ return array(
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
 	'admin:settings:advanced' => 'Advanced Settings',
-	'admin:settings:advanced/site_secret' => 'Site Secret',
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
-	'admin:settings:advanced:site_secret' => 'Site Secret',
 	'admin:site:opt:linktext' => "Configure site...",
 	'admin:settings:in_settings_file' => 'This setting is configured in settings.php',
 
@@ -496,7 +494,7 @@ return array(
 	'site_secret:strength:moderate' => "Moderate",
 	'site_secret:strength_msg:moderate' => "We recommend you regenerate your site secret for the best site security.",
 	'site_secret:strength:strong' => "Strong",
-	'site_secret:strength_msg:strong' => "&#x2713; Your site secret is sufficiently strong.",
+	'site_secret:strength_msg:strong' => "Your site secret is sufficiently strong.",
 
 	'admin:dashboard' => 'Dashboard',
 	'admin:widget:online_users' => 'Online users',
@@ -1066,6 +1064,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'admin:legend:caching' => 'Caching',
 	'admin:legend:content_access' => 'Content Access',
 	'admin:legend:site_access' => 'Site Access',
+	'admin:legend:site_secret' => 'Site Secret',
 	'admin:legend:debug' => 'Debugging and Logging',
 
 	'upgrading' => 'Upgrading...',
