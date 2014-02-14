@@ -43,6 +43,11 @@ if ($guid) {
 	$new_post = TRUE;
 }
 
+// change the status of an unsaved draft to draft
+if ($blog->status == 'unsaved_draft') {
+	$blog->status = 'draft';
+}
+
 // set the previous status for the hooks to update the time_created and river entries
 $old_status = $blog->status;
 
