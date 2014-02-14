@@ -51,13 +51,53 @@ work for developers, which means happier, more productive developers.
 			}
 		}
 
-* 	Use commit messages effectively.  Be concise and meaningful. Ex:
-		Not meaningful:
-		Small fix to groups.
-
-		Meaningful:
-		Fixes #1234: Added missing ) that caused a WSOD on group profile page
-		when logged out.
-
 * 	Commit effectively: Err on the side of atomic commits.  One revision with
 	many changes is scary.
+
+* 	Follow this format for commit messages:
+
+	```
+	type(component): summary
+
+	Optional body
+	Details about the solution.
+	Opportunity to call out as breaking change.
+
+	Closes/Fixes/Refs #123, #456, #789
+	```
+
+	Where `type` is one of:
+	 * feature
+	 * fix
+	 * docs (when *only* docs are being updated)
+	 * chore (refactoring, style changes, add missing tests, Travis stuff, etc.)
+	 * perf (any change expected to improve performance)
+	 * security (any change to affecting a security issue)
+
+	And `component` is one of:
+	 * i18n
+	 * seo
+	 * a11y
+	 * cache
+	 * db
+	 * views
+	 * session
+	 * router
+	 * etc...
+
+	All lines of the commit message must be less than 100 characters long.
+
+	Here is an example of a good commit message:
+
+	```
+	perf(upgrade): speeds up migrating remember me codes
+
+	The Remember me cookie implementation has been improved by moving codes
+	to a separate table. This performs that migration in one query.
+
+	Fixes #6204
+	```
+
+	A git commit-msg hook can be installed to test for commit messages locally.
+	To enable this, copy or symlink the .scripts/validate_commit_msg.php to
+	.git/hooks/commit-msg and make sure it's executable.
