@@ -47,6 +47,7 @@ elgg.ui.lightbox.init = function() {
 	}
 
 	elgg.ui.lightbox.bind(".elgg-lightbox");
+	elgg.ui.lightbox.bind(".elgg-lightbox-photo", {photo: true});
 
 	if (typeof $.fancybox === 'undefined') {
 		$.fancybox = {
@@ -85,6 +86,7 @@ elgg.ui.lightbox.bind = function (selector, opts) {
 
 	$(document).on('click', selector, function (e) {
 		var $this = $(this),
+			href = $this.prop('href') || $this.prop('src'),
 			dataOpts = $this.data('colorboxOpts');
 		// Q: why not use "colorbox"? A: https://github.com/jackmoore/colorbox/issues/435
 
@@ -93,7 +95,7 @@ elgg.ui.lightbox.bind = function (selector, opts) {
 		}
 
 		// merge data- options into opts
-		$.colorbox($.extend({href: $this.prop('href')}, opts, dataOpts));
+		$.colorbox($.extend({href: href}, opts, dataOpts));
 		e.preventDefault();
 	});
 };
