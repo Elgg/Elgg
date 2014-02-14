@@ -15,33 +15,33 @@
 	padding: 5px;
 }
 
-.elgg-page .cke_skin_BootstrapCK-Skin {
+body span.cke_skin_BootstrapCK-Skin {
 	border: 1px solid #CCC;
 	padding: 0px;
 	border-radius: 5px;
 }
 
-.elgg-page .cke_skin_BootstrapCK-Skin:focus {
+body span.cke_skin_BootstrapCK-Skin:focus {
 	padding: 0px;
 }
 
-.elgg-page .cke_skin_BootstrapCK-Skin .cke_toolbar {
+body span.cke_skin_BootstrapCK-Skin .cke_toolbar {
 	border-radius: 5px;
 }
 
-.elgg-page .cke_skin_BootstrapCK-Skin .cke_toolbar .cke_toolgroup {
+body span.cke_skin_BootstrapCK-Skin .cke_toolbar .cke_toolgroup {
 	margin: 0;
 }
 
-.elgg-page .cke_skin_BootstrapCK-Skin .cke_contents {
+body span.cke_skin_BootstrapCK-Skin .cke_contents {
 	background-color: white;
 }
 
-.elgg-page .cke_skin_BootstrapCK-Skin .cke_contents iframe {
+body span.cke_skin_BootstrapCK-Skin .cke_contents iframe {
 	border: 0px;
 }
 
-.elgg-page .cke_skin_BootstrapCK-Skin .cke_bottom .cke_wordcount {
+body span.cke_skin_BootstrapCK-Skin .cke_bottom .cke_wordcount {
 	float: left;
 	margin-top: 5px;
 	margin-right: 10px;
@@ -51,7 +51,7 @@
 	font-size: 12px;
 }
 
-.elgg-page .cke_skin_BootstrapCK-Skin .cke_bottom .cke_path {
+body span.cke_skin_BootstrapCK-Skin .cke_bottom .cke_path {
 	float: right;
 }
 .mceLast .mceStatusbar {
