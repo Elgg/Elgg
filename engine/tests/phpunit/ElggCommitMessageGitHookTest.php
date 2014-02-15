@@ -35,51 +35,71 @@ class ElggCommitMessageGitHookTest extends PHPUnit_Framework_TestCase {
 	public function testInvalidInputs() {
 		// have to pass an empty arg because it looks for stdin
 		$cmd = "$this->validateScript ''";
-		$this->assertFalse($this->runCmd($cmd));
+		$result = $this->runCmd($cmd, $output);
+		$this->assertFalse($result, $output);
 
 		$cmd = "$this->validateScript /dev/null";
-		$this->assertFalse($this->runCmd($cmd));
+		$result = $this->runCmd($cmd, $output);
+		$this->assertFalse($result, $output);
 
 		$cmd = "echo '' | $this->validateScript";
-		$this->assertFalse($this->runCmd($cmd));
+		$result = $this->runCmd($cmd, $output);
+		$this->assertFalse($result, $output);
 	}
 
 	public function testInvalidMessage() {
 		$cmd = "$this->validateScript {$this->filesDir}invalid_format.txt";
-		$this->assertFalse($this->runCmd($cmd));
+		$result = $this->runCmd($cmd, $output);
+		$this->assertFalse($result, $output);
 	}
 
 	public function testFile() {
 		$cmd = "$this->validateScript {$this->filesDir}valid.txt";
-		$this->assertTrue($this->runCmd($cmd));
+		$result = $this->runCmd($cmd, $output);
+		$this->assertTrue($result, $output);
 	}
 	
 	public function testPipe() {
 		$msg = escapeshellarg(file_get_contents("{$this->filesDir}valid.txt"));
 		$cmd = "echo $msg | $this->validateScript";
-		$this->assertTrue($this->runCmd($cmd));
+		$result = $this->runCmd($cmd, $output);
+		$this->assertTrue($result, $output);
 	}
 
 	public function testArg() {
 		$msg = escapeshellarg(file_get_contents("{$this->filesDir}valid.txt"));
 		$cmd = "$this->validateScript $msg";
-		$this->assertTrue($this->runCmd($cmd));
+		$result = $this->runCmd($cmd, $output);
+		$this->assertTrue($result, $output);
 	}
 
 	/**
 	 * Executes a command and returns true if the cmd
 	 * exited with 0.
-	 * 
-	 * @param string $cmd
+	 *
+	 * @param string $cmd    Shell command to execute
+	 * @param string $output Output from stdout and stderr will be written to this variable
+	 * @param array  $env    Array of environment variables to be passed to sub-process
+	 * @return bool Result depending on process exit code.
 	 */
-	protected function runCmd($cmd, $return_output = false) {
-		$output = array();
-		$exit = 0;
-		exec($cmd, $output, $exit);
+	protected function runCmd($cmd, &$output, array $env = array()) {
+		$descriptorspec = array(
+			0 => array("pipe", "r"),// stdin
+			1 => array("pipe", "w"),// stdout
+			2 => array("pipe", "w"),// stderr
+		);
+		$defaultEnv = array(
+			'PATH' => getenv('PATH'),// we need to copy PATH variable to run php without specifying absolute path
+		);
+		$env = array_merge($defaultEnv, $env);
 
-		if ($return_output) {
-			return implode("\n", $output);
-		}
+		$process = proc_open($cmd, $descriptorspec, $pipes, null, $env);
+		$this->assertTrue(is_resource($process));
+
+		// unfortunately we separate errors from output, but it should be good enough for current usage
+		$output = stream_get_contents($pipes[1]) . stream_get_contents($pipes[2]);
+
+		$exit = proc_close($process);
 
 		return $exit > 0 ? false : true;
 	}
