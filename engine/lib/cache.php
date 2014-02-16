@@ -127,12 +127,6 @@ function elgg_disable_system_cache() {
  * @warning Simple cached views must take no parameters and return
  * the same content no matter who is logged in.
  *
- * @example
- * 		$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
- *		elgg_register_simplecache_view('js/blog/save_draft');
- *		elgg_register_js('elgg.blog', $blog_js);
- *		elgg_load_js('elgg.blog');
- *
  * @param string $view_name View name
  *
  * @return void
@@ -147,6 +141,11 @@ function elgg_register_simplecache_view($view_name) {
  * Get the URL for the cached file
  * 
  * This automatically registers the view with Elgg's simplecache.
+ * 
+ * @example
+ * 		$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
+ *		elgg_register_js('elgg.blog', $blog_js);
+ *		elgg_load_js('elgg.blog');
  *
  * @param string $type The file type: css or js
  * @param string $view The view name after css/ or js/
