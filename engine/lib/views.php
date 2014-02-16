@@ -1568,9 +1568,12 @@ function elgg_views_boot() {
 	elgg_load_js('elgg');
 
 	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
-	elgg_register_js('lightbox', $lightbox_js_url);
-
-	elgg_register_css('lightbox', 'vendors/jquery/colorbox/theme/colorbox.css');
+	$lightbox_css_url = 'vendors/jquery/colorbox/theme/colorbox.css';
+	elgg_register_js('lightbox', array(
+		'src' => $lightbox_js_url,
+		'exports' => 'elgg.ui.lightbox',
+		'deps' => array('jquery', 'css!' . elgg_normalize_url($lightbox_css_url)),
+	));
 
 	$elgg_css_url = elgg_get_simplecache_url('css', 'elgg');
 	elgg_register_css('elgg', $elgg_css_url);
