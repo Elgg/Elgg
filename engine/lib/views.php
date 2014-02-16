@@ -1507,11 +1507,11 @@ function elgg_views_add_rss_link() {
 }
 
 /**
- * Sends headers on page requests
+ * Sends X-Frame-Options header on page requests
  *
  * @access private
  */
-function _elgg_views_send_page_headers() {
+function _elgg_views_send_header_x_frame_options() {
 	header('X-Frame-Options: SAMEORIGIN');
 }
 
@@ -1588,7 +1588,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_minify');
 
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
-	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_page_headers');
+	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_header_x_frame_options');
 
 	// discover the core viewtypes
 	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
