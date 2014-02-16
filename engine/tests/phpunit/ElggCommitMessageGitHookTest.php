@@ -27,7 +27,7 @@ class ElggCommitMessageGitHookTest extends PHPUnit_Framework_TestCase {
 		$this->validateScript = "php {$this->scriptsDir}validate_commit_msg.php";
 
 		parent::setUp();
-	}
+	}//whatever
 	
 	/**
 	 * Test failures for missing input
