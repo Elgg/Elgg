@@ -24,7 +24,11 @@ function embed_init() {
 	elgg_register_page_handler('embed', 'embed_page_handler');
 	
 	$embed_js = elgg_get_simplecache_url('js', 'embed/embed');
-	elgg_register_js('elgg.embed', $embed_js, 'footer');
+	elgg_register_js('elgg.embed', array(
+		'src' => $embed_js,
+		'exports' => 'elgg.embed',
+		'deps' => ['jquery', 'lightbox', 'jquery.form']
+	));
 }
 
 /**
