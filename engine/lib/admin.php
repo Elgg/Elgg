@@ -270,7 +270,6 @@ function _elgg_admin_init() {
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
 	elgg_register_simplecache_view('css/admin');
-	elgg_register_simplecache_view('js/admin');
 	$url = elgg_get_simplecache_url('js', 'admin');
 	elgg_register_js('elgg.admin', $url);
 	elgg_register_js('elgg.upgrades', 'js/lib/upgrades.js');

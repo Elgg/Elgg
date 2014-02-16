@@ -1543,7 +1543,6 @@ function elgg_views_boot() {
 	elgg_register_simplecache_view('css/ie7');
 	elgg_register_simplecache_view('css/ie8');
 
-	elgg_register_simplecache_view('js/elgg/require_config');
 	elgg_register_simplecache_view('js/text.js');
 
 	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('js', 'elgg/require_config'), 'head');
@@ -1558,7 +1557,6 @@ function elgg_views_boot() {
 		'exports' => 'jQuery.fn.ajaxForm',
 	));
 
-	elgg_register_simplecache_view('js/elgg');
 	$elgg_js_url = elgg_get_simplecache_url('js', 'elgg');
 	elgg_register_js('elgg', $elgg_js_url, 'head');
 
@@ -1569,13 +1567,11 @@ function elgg_views_boot() {
 	elgg_load_js('jquery-ui');
 	elgg_load_js('elgg');
 
-	elgg_register_simplecache_view('js/lightbox');
 	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
 	elgg_register_js('lightbox', $lightbox_js_url);
 
 	elgg_register_css('lightbox', 'vendors/jquery/colorbox/theme/colorbox.css');
 
-	elgg_register_simplecache_view('css/elgg');
 	$elgg_css_url = elgg_get_simplecache_url('css', 'elgg');
 	elgg_register_css('elgg', $elgg_css_url);
 
