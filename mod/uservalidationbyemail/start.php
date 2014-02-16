@@ -20,6 +20,9 @@ function uservalidationbyemail_init() {
 	// mark users as unvalidated and disable when they register
 	elgg_register_plugin_hook_handler('register', 'user', 'uservalidationbyemail_disable_new_user');
 
+	// forward to uservalidationbyemail/emailsent page after register
+	elgg_register_plugin_hook_handler('forward', 'system', 'uservalidationbyemail_after_registration_url');
+
 	// canEdit override to allow not logged in code to disable a user
 	elgg_register_plugin_hook_handler('permissions_check', 'user', 'uservalidationbyemail_allow_new_user_can_edit');
 
@@ -103,6 +106,22 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 }
 
 /**
+ * Override the URL to be forwarded after registration
+ *
+ * @param string $hook
+ * @param string $type
+ * @param bool   $value
+ * @param array  $params
+ * @return string
+ */
+function uservalidationbyemail_after_registration_url($hook, $type, $value, $params) {
+	$url = elgg_extract('current_url', $params);
+	if ($url == elgg_get_site_url() . 'action/register') {
+		return elgg_get_site_url() . 'uservalidationbyemail/emailsent';
+	}
+}
+
+/**
  * Override the canEdit() call for if we're in the context of registering a new user.
  *
  * @param string $hook
@@ -173,7 +192,16 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
  */
 function uservalidationbyemail_page_handler($page) {
 
-	if (isset($page[0]) && $page[0] == 'confirm') {
+	if (isset($page[0]) && $page[0] == 'emailsent') {
+		$email = $_SESSION['emailsent'];
+		$title = elgg_echo('uservalidationbyemail:emailsent', array($email));
+		$body = elgg_view_layout('one_column', array(
+			'title' => $title,
+			'content' => elgg_echo('uservalidationbyemail:registerok'),
+		));
+		echo elgg_view_page(strip_tags($title), $body);
+		return true;
+	} elseif (isset($page[0]) && $page[0] == 'confirm') {
 		$code = sanitise_string(get_input('c', FALSE));
 		$user_guid = get_input('u', FALSE);
 
