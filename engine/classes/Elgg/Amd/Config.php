@@ -13,6 +13,7 @@ class Elgg_Amd_Config {
 	private $paths = array();
 	private $shim = array();
 	private $dependencies = array();
+	private $map = array();
 
 	/**
 	 * Set the base URL for the site
@@ -22,6 +23,29 @@ class Elgg_Amd_Config {
 	 */
 	public function setBaseUrl($url) {
 		$this->baseUrl = $url;
+	}
+
+	/**
+	 * Set a path for the map section
+	 *
+	 * @example
+	 *     array("*", "css", "require/css")
+	 * becomes
+	 *     {"*": {"css": "require/css"}}
+	 *
+	 * @param array $map Array containing a path of the map
+	 * @return void
+	 */
+	public function setMap($map) {
+		$cursor = &$this->map;
+		$leaf = &array_pop($map);
+		foreach ($map as $key) {
+			if (!isset($cursor[$key])) {
+				$cursor[$key] = array();
+			}
+			$cursor = &$cursor[$key];
+		}
+		$cursor = $leaf;
 	}
 
 	/**
@@ -89,6 +113,7 @@ class Elgg_Amd_Config {
 	public function getConfig() {
 		return array(
 			'baseUrl' => $this->baseUrl,
+			'map' => $this->map,
 			'paths' => $this->paths,
 			'shim' => $this->shim,
 			'deps' => $this->getDependencies(),
