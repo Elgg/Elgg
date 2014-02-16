@@ -42,7 +42,7 @@ System hooks
 **output:before, page**
     In elgg_view_page(), this filters $vars before it's passed to the page shell
     view (page/\*). To stop sending the X-Frame-Options header, unregister the
-    handler _elgg_views_send_page_headers() from this hook.
+    handler _elgg_views_send_header_x_frame_options() from this hook.
 
 **output, page**
     In elgg_view_page(), this filters the output return value
