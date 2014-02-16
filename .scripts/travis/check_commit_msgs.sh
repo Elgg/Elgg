@@ -16,6 +16,7 @@ fi
 
 
 if [ "$RANGE" == "" ]; then
+	echo -n "RANGE is empty!"
 	exit 1
 fi
 
@@ -35,6 +36,7 @@ do
 	VALUE=$?
 
 	if [ "$VALUE" -gt 0 ]; then
+		echo -n "./.scripts/validate_commit_msg.php exited with error!"
 		EXIT=$VALUE
 	fi
 done

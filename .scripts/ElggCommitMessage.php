@@ -99,7 +99,7 @@ class ElggCommitMessage {
 	 *
 	 * @var string
 	 */
-	private $ignoreRegex = '/^(Merge pull request)|(Merge [0-9a-f]{5,40} into [0-9a-f]{5,40})/i';
+	private $ignoreRegex = '/^(Merge pull request)|(Merge [0-9a-f]{5,40} into [0-9a-f]{5,40})|(Merge branch)|(Merge remote-tracking branch)|(Merge commit)/i';
 
 	/**
 	 * Regex to extract the message parts
