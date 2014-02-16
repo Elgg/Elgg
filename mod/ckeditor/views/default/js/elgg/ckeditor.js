@@ -18,10 +18,10 @@ define(function(require) {
 	
 			if (!$(target).data('ckeditorInstance')) {
 				$(target).ckeditor(elggCKEditor.init, elggCKEditor.config);
-				$(this).html(elgg.echo('ckeditor:remove'));
+				$(this).html(elgg.echo('ckeditor:html'));
 			} else {
 				$(target).ckeditorGet().destroy();
-				$(this).html(elgg.echo('ckeditor:add'));
+				$(this).html(elgg.echo('ckeditor:visual'));
 			}
 		},
 
