@@ -8,7 +8,7 @@ class Elgg_Amd_ConfigTest extends PHPUnit_Framework_TestCase {
 		
 		$configArray = $amdConfig->getConfig();
 		
-		$this->assertEquals('/some/path', $configArray['paths']['jquery']);
+		$this->assertEquals('/some/path?', $configArray['paths']['jquery']);
 	}
 	
 	public function testCanConfigureModuleShims() {
