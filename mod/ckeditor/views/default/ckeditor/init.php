@@ -7,6 +7,9 @@
 
 ?>
 <script>
+// This global variable must be set before the editor script loading.
+CKEDITOR_BASEPATH = elgg.config.wwwroot + 'mod/ckeditor/vendors/ckeditor/';
+
 require(['elgg/ckeditor', 'jquery', 'jquery.ckeditor'], function(elggCKEditor, $) {
 	$('.elgg-input-longtext').ckeditor(elggCKEditor.init, elggCKEditor.config);
 });
