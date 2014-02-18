@@ -228,8 +228,8 @@ CREATE TABLE `prefix_river` (
 -- secondary table for site entities
 CREATE TABLE `prefix_sites_entity` (
   `guid` bigint(20) unsigned NOT NULL,
-  `name` text NOT NULL,
-  `description` text NOT NULL,
+  `name` text CHARSET utf8 NOT NULL,
+  `description` text CHARSET utf8 NOT NULL,
   `url` varchar(255) CHARSET utf8 NOT NULL,
   PRIMARY KEY (`guid`),
   UNIQUE KEY `url` (`url`),

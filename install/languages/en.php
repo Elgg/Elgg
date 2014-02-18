@@ -135,6 +135,7 @@ If you are ready to proceed, click the Next button.",
 	'install:error:settings' => 'Unable to create the settings file',
 	'install:error:databasesettings' => 'Unable to connect to the database with these settings.',
 	'install:error:createdb' => 'Error while trying to create the database (%s)',
+	'install:error:dbuserexists' => 'Database user creation failed. If the user already exists, the password will be updated with the one you provided.',
 	'install:error:database_prefix' => 'Invalid characters in database prefix',
 	'install:error:oldmysql' => 'MySQL must be version 5.0 or above. Your server is using %s.',
 	'install:error:dbencoding' => 'Unsupported encoding "%s". Valid values are "utf8" or "utf8mb4".',
@@ -171,6 +172,7 @@ If you are ready to proceed, click the Next button.",
 	'install:warning:rewrite:unknown' => 'Your server does not support automatic testing of the rewrite rules and your browser does not support checking via JavaScript. You can continue the installation, but you may experience problems with your site. You can manually test the rewrite rules by clicking this link: <a href="%s" target="_blank">test</a>. You will see the word success if the rules are working.',
     
 	// Bring over some error messages you might see in setup
+	'exception:title' => 'Elgg Error',
 	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. If you are the site administrator check your settings file, otherwise contact the site administrator with the following information:',
 	'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials. Check the settings file.",
 );

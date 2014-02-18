@@ -1341,12 +1341,11 @@ class ElggInstaller {
 			$dbuser = mysql_real_escape_string($params['dbuser'], $temporaryLink);
 			$dbpassword = mysql_real_escape_string($params['dbpassword'], $temporaryLink);
 			mysql_query("CREATE USER '$dbuser'@'localhost' IDENTIFIED BY '$dbpassword';", $temporaryLink);
-			if ( mysql_errno($temporaryLink) ) {
-				register_error(elgg_echo('install:error:createdb', array(mysql_error($temporaryLink))));
-				mysql_close($temporaryLink);
-				return FALSE;
-			}
-			mysql_query("GRANT ALL ON `$dbname`.* TO '$dbuser'@'localhost';", $temporaryLink);
+			// commented out as message won't show if database creation succeeds
+//			if ( mysql_errno($temporaryLink) ) {
+//				register_error(elgg_echo('install:error:dbuserexists'));
+//			}
+			mysql_query("GRANT ALL ON `$dbname`.* TO '$dbuser'@'localhost' IDENTIFIED BY '$dbpassword';", $temporaryLink);
 			if ( mysql_errno($temporaryLink) ) {
 				register_error(elgg_echo('install:error:createdb', array(mysql_error($temporaryLink))));
 				mysql_close($temporaryLink);
