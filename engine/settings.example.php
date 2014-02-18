@@ -71,6 +71,18 @@ $CONFIG->dbhost = '{{dbhost}}';
 $CONFIG->dbprefix = '{{dbprefix}}';
 
 /**
+ * The database character set
+ *
+ * This is the character set used for your data. It can be either 'utf8' for
+ * servers < 5.5.3 or (if you are using a newer engine) you can set it to
+ * 'utf8mb4' to get support for four-byte characters like emoji and other
+ * icons used in chats.
+ *
+ * @global string $CONFIG->dbencoding
+ */
+$CONFIG->dbencoding = '{{dbencoding}}';
+
+/**
  * Multiple database connections
  *
  * Elgg supports master/slave MySQL configurations. The master should be set as

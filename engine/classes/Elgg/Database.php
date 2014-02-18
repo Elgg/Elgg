@@ -15,6 +15,9 @@ class Elgg_Database {
 	/** @var string $tablePrefix Prefix for database tables */
 	private $tablePrefix;
 
+	/** @var string $dbEncoding Database encoding (utf8 or utf8mb4) */
+	private $dbEncoding;
+
 	/** @var resource[] $dbLinks Database connection resources */
 	private $dbLinks = array();
 
@@ -77,6 +80,7 @@ class Elgg_Database {
 		$this->config = $config;
 
 		$this->tablePrefix = $config->getTablePrefix();
+		$this->dbEncoding = $config->getDbEncoding();
 
 		$this->enableQueryCache();
 	}
@@ -150,8 +154,8 @@ class Elgg_Database {
 			throw new DatabaseException($msg);
 		}
 
-		// Set DB for UTF8
-		mysql_query("SET NAMES utf8");
+		// Set DB for UTF-8 (3-byte or full depending on configuration)
+		mysql_query("SET NAMES $this->dbEncoding");
 	}
 
 	/**
@@ -380,6 +384,12 @@ class Elgg_Database {
 	 * The special string 'prefix_' is replaced with the database prefix
 	 * as defined in {@link $this->tablePrefix}.
 	 *
+	 * The special string '=utf8' is replaced with the database character set
+	 * as defined in {@link $this->dbEncoding}. The equal sign (=) guarantees
+	 * that field level override of the encoding is still possible.
+	 * (Some fields need to remain utf8 or their length would have to be
+	 * adjusted to remain within the maximum size of a MySQL index)
+	 *
 	 * @warning Errors do not halt execution of the script.  If a line
 	 * generates an error, the error message is saved and the
 	 * next line is executed.  After the file is run, any errors
@@ -404,7 +414,9 @@ class Elgg_Database {
 
 			foreach ($sql_statements as $statement) {
 				$statement = trim($statement);
-				$statement = str_replace("prefix_", $this->tablePrefix, $statement);
+				// replace '=utf8' first, in case the chosen prefix contains 'utf8'
+				$statement = str_replace('=utf8', "=$this->dbEncoding", $statement);
+				$statement = str_replace('prefix_', $this->tablePrefix, $statement);
 				if (!empty($statement)) {
 					try {
 						$this->updateData($statement);
