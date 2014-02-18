@@ -124,7 +124,7 @@ class ElggCommitMessage {
 	 * Max length of any line
 	 * @var int
 	 */
-	private $maxLineLength = 100;
+	private $maxLineLength = 160;
 
 	/**
 	 * Checks if a commit message is in the correct format
@@ -262,7 +262,7 @@ class ElggCommitMessage {
 
 	/**
 	 * Sets the max line length allowed.
-	 * Defaults to 100.
+	 * Defaults to 160.
 	 *
 	 * @param int $len
 	 */
