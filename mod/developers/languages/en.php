@@ -68,4 +68,8 @@ return array(
 
 	// status messages
 	'developers:settings:success' => 'Settings saved',
+
+	// notice example page
+	'notice:title:theme_sandbox' => 'Something has happened!',
+	'notice:message:theme_sandbox' => 'This is an example notice.',
 );
