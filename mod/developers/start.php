@@ -22,6 +22,7 @@ function developers_init() {
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
 	elgg_register_action('developers/inspect', "$action_base/inspect.php", 'admin');
+	elgg_register_action('developers/show_notice', "$action_base/show_notice.php", 'admin');
 
 	elgg_register_js('jquery.jstree', array(
 		'src' => '/mod/developers/vendors/jsTree/jquery.jstree.js',
