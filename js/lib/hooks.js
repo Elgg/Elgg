@@ -84,7 +84,10 @@ elgg.trigger_hook = function(name, type, params, value) {
 		tempReturnValue = null,
 		returnValue = value,
 		callHookHandler = function(handler) {
-			tempReturnValue = handler(name, type, params, value);
+			tempReturnValue = handler(name, type, params, returnValue);
+			if (!elgg.isNullOrUndefined(tempReturnValue)) {
+				returnValue = tempReturnValue;
+			}
 		};
 
 	elgg.provide(name + '.' + type, hooks);
@@ -115,7 +118,7 @@ elgg.trigger_hook = function(name, type, params, value) {
 		return true;
 	});
 
-	return (tempReturnValue != null) ? tempReturnValue : returnValue;
+	return returnValue;
 };
 
 /**
