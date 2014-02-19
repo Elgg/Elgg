@@ -80,7 +80,7 @@ function expages_page_handler($page, $handler) {
 	$content = elgg_view('expages/wrapper', array('content' => $content));
 
 	if (elgg_is_logged_in() || !elgg_get_config('walled_garden')) {
-		$body = elgg_view_layout('one_sidebar', array('title' => $title, 'content' => $content));
+		$body = elgg_view_layout('one_column', array('title' => $title, 'content' => $content));
 		echo elgg_view_page($title, $body);
 	} else {
 		elgg_load_css('elgg.walled_garden');
