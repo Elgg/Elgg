@@ -6,6 +6,8 @@ elgg.embed.init = function() {
 	// inserts the embed content into the textarea
 	$(".embed-item").live('click', elgg.embed.insert);
 
+	elgg.register_hook_handler('embed', 'editor', elgg.embed._deprecated_custom_insert_js);
+
 	// caches the current textarea id
 	$(".embed-control").live('click', function() {
 		var textAreaId = /embed-control-(\S)+/.exec($(this).attr('class'))[0];
@@ -21,6 +23,28 @@ elgg.embed.init = function() {
 };
 
 /**
+ * Adds support for plugins that extends embed/custom_insert_js deprecated views
+ *
+ * @param {String} hook
+ * @param {String} type
+ * @param {Object} params
+ * @param {String|Boolean} value
+ * @returns {String|Boolean}
+ * @private
+ */
+elgg.embed._deprecated_custom_insert_js = function(hook, type, params, value) {
+	var textAreaId = params.textAreaId;
+	var content = params.content;
+	var event = params.event;
+<?php
+	if (elgg_view_exists('embed/custom_insert_js')) {
+		elgg_deprecated_notice("The view embed/custom_insert_js has been replaced by the js hook 'embed', 'editor'.", 1.9);
+		echo elgg_view('embed/custom_insert_js');
+	}
+?>
+};
+
+/**
  * Inserts data attached to an embed list item in textarea
  *
  * @param {Object} event
@@ -32,6 +56,8 @@ elgg.embed.insert = function(event) {
 
 	// generalize this based on a css class attached to what should be inserted
 	var content = ' ' + $(this).find(".embed-insert").parent().html() + ' ';
+	var value = textArea.val();
+	var result = textArea.val();
 
 	// this is a temporary work-around for #3971
 	if (content.indexOf('thumbnail.php') != -1) {
@@ -39,11 +65,31 @@ elgg.embed.insert = function(event) {
 	}
 
 	textArea.focus();
-	
-<?php
-// See the ckeditor plugin for an example of this view
-echo elgg_view('embed/custom_insert_js');
-?>
+
+	if (!elgg.isNullOrUndefined(textArea.prop('selectionStart'))) {
+		var cursorPos  = textArea.prop('selectionStart');
+		var textBefore = value.substring(0, cursorPos);
+		var textAfter  = value.substring(cursorPos, value.length);
+		result = textBefore + content + textAfter;
+
+	} else if (document.selection) {
+		// IE compatibility
+		var sel = document.selection.createRange();
+		sel.text = content;
+		result = textArea.val();
+	}
+
+	// See the ckeditor plugin for an example of this hook
+	result = elgg.trigger_hook('embed', 'editor', {
+		textAreaId: textAreaId,
+		content: content,
+		value: value,
+		event: event
+	}, result);
+
+	if (result || result === '') {
+		textArea.val(result);
+	}
 
 	elgg.ui.lightbox.close();
 
