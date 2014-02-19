@@ -10,11 +10,14 @@ define(function(require) {
 		});
 	
 		describe("elgg.trigger_hook()", function() {
-			it("returns true by default", function() {
-				expect(elgg.trigger_hook("fee", "fum")).toBe(true);
+			it("return value defaults to null", function() {
+				expect(elgg.trigger_hook("fee", "fum")).toBe(null);
 				
 				elgg.register_hook_handler('fee', 'fum', elgg.nullFunction);
-				expect(elgg.trigger_hook("fee", "fum")).toBe(true);
+				expect(elgg.trigger_hook("fee", "fum")).toBe(null);
+
+				expect(elgg.trigger_hook('x', 'y', {}, null)).toBe(null);
+				expect(elgg.trigger_hook('x', 'z', {}, false)).toBe(false);
 			});
 			
 			it("triggers handlers registered with 'all'", function() {
@@ -28,7 +31,7 @@ define(function(require) {
 				expect(function() { elgg.trigger_hook('pinky', 'winky'); }).toThrow();
 			});
 		});
-		
+
 		describe("elgg.register_hook_handler()", function() {
 			it("only accepts functions as handlers", function() {
 				expect(function() { elgg.register_hook_handler('str', 'str', 'oops'); }).toThrow();

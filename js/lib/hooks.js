@@ -77,8 +77,8 @@ elgg.trigger_hook = function(name, type, params, value) {
 	// mark as triggered
 	elgg.set_triggered_hook(name, type);
 
-	// default to true if unpassed
-	value = value || true;
+	// default to null if unpassed
+	value = !elgg.isNullOrUndefined(value) ? value : null;
 
 	var hooks = elgg.config.hooks,
 		tempReturnValue = null,
