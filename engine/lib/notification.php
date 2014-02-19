@@ -166,7 +166,7 @@ function notify_user($to, $from, $subject, $message, array $params = NULL, $meth
 /**
  * Get the notification settings for a given user.
  *
- * @param int $user_guid The user id
+ * @param int $user_guid The user's GUID
  *
  * @return stdClass|false
  */
@@ -177,22 +177,26 @@ function get_user_notification_settings($user_guid = 0) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
-	// @todo: there should be a better way now that metadata is cached. E.g. just query for MD names, then
-	// query user object directly
-	$all_metadata = elgg_get_metadata(array(
+	if (!$user_guid) {
+		return false;
+	}
+	
+	$prefix = 'notification:method:';
+	$notifications_md = elgg_get_metadata(array(
 		'guid' => $user_guid,
-		'limit' => 0
+		'limit' => 0,
+		'wheres' => array("n.string LIKE '{$prefix}%'")
 	));
-	if ($all_metadata) {
-		$prefix = "notification:method:";
+
+	if ($notifications_md) {
 		$return = new stdClass;
 
-		foreach ($all_metadata as $meta) {
+		foreach ($notifications_md as $meta) {
 			$name = substr($meta->name, strlen($prefix));
 			$value = $meta->value;
 
 			if (strpos($meta->name, $prefix) === 0) {
-				$return->$name = $value;
+				$return->$name = (bool)$value;
 			}
 		}
 
@@ -203,29 +207,32 @@ function get_user_notification_settings($user_guid = 0) {
 }
 
 /**
- * Set a user notification pref.
+ * Enable or disable delivery of notifications to the user by a given method
  *
- * @param int    $user_guid The user id.
- * @param string $method    The delivery method (eg. email)
- * @param bool   $value     On(true) or off(false).
+ * @param int    $user_guid The user's GUID
+ * @param string $method    The delivery method (e.g. 'site', 'email')
+ * @param bool   $enabled   Notification preference
  *
  * @return bool
  */
-function set_user_notification_setting($user_guid, $method, $value) {
+function set_user_notification_setting($user_guid = 0, $method, $enabled) {
 	$user_guid = (int)$user_guid;
 	$method = sanitise_string($method);
-
-	$user = get_entity($user_guid);
-	if (!$user) {
-		$user = elgg_get_logged_in_user_entity();
+	if (!is_bool($enabled)) {
+		$vartype = gettype($enabled);
+		elgg_log("Enabled in set_user_notification_setting() must be a boolean, $vartype is given", 'WARNING');
+		$enabled = (bool)$enabled;
+	}
+	
+	if ($user_guid == 0) {
+		$user_guid = elgg_get_logged_in_user_guid();
 	}
 
-	if (($user) && ($user instanceof ElggUser)) {
-		$prefix = "notification:method:$method";
-		$user->$prefix = $value;
-		$user->save();
-
-		return true;
+	if ($user_guid) {
+		$name = "notification:method:$method";
+		if (create_metadata($user_guid, $name, $enabled, '', $user_guid, ACCESS_PUBLIC)) {
+			return true;
+		}
 	}
 
 	return false;
