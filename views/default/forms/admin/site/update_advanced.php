@@ -100,27 +100,22 @@ $strength_msg = elgg_echo("site_secret:strength_msg:$strength");
 
 $form_body .= "<div>" . elgg_echo('admin:site:secret:intro') . "<br />";
 
-$title = "$current_strength: $strength_text";
-
 if ($strength != 'strong') {
-	$class = 'elgg-message elgg-state-error';
+	$title = "$current_strength: $strength_text";
+	
+	$form_body .= elgg_view_module('main', $title, $strength_msg, array(
+		'class' => 'elgg-message elgg-state-error'
+	));
+} else {
+	$form_body .= $strength_msg;
 }
 
-$form_body .= elgg_view_module('main', $title, $strength_msg, array(
-	'class' => $class
-));
+$form_body .= elgg_view("input/checkboxes", array(
+	'options' => array(elgg_echo('admin:site:secret:regenerate') => 1),
+	'name' => 'regenerate_site_secret'
+)) . "</div>";
 
-$form_body .= '</div>';
-$form_body .= '<div class="elgg-foot">';
-$form_body .= elgg_view('output/url', array(
-	'href' => 'action/admin/site/regenerate_secret',
-	'class' => 'elgg-button elgg-button-action elgg-regenerate-site-secret',
-	'text' => elgg_echo('admin:site:secret:regenerate'),
-	'is_trusted' => true
-));
 $form_body .= '<p class="elgg-text-help mts">' . elgg_echo('admin:site:secret:regenerate:help') . '</p>';
-$form_body .- '</div>';
-
 
 $form_body .= elgg_view('input/hidden', array('name' => 'settings', 'value' => 'go'));
 

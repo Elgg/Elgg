@@ -48,26 +48,6 @@ elgg.admin.init = function () {
 
 	// admin notices delete ajax
 	$('a.elgg-admin-notice').click(elgg.admin.deleteNotice);
-
-	// site secret regeneration
-	$('a.elgg-regenerate-site-secret').live('click', function(e) {
-		var confirmText = $(this).attr('rel') || elgg.echo('question:areyousure');
-		e.preventDefault();
-
-		if (confirm(confirmText)) {
-			elgg.action($(this).attr('href'), {
-				success: function(r) {
-					// Update the tokens on the page since they were just invalidated.
-					elgg.system_message(r.success);
-					elgg.register_error(r.error);
-					elgg.security.setToken(r.output);
-
-					// so we can see the message
-					window.location = '#';
-				}
-			});
-		}
-	});
 };
 
 /**
