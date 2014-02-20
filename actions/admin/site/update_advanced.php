@@ -88,6 +88,14 @@ if ($site = elgg_get_site_entity()) {
 		set_config('disable_api', 'disabled', $site->getGUID());
 	}
 
+	$regenerate_site_secret = get_input('regenerate_site_secret', false);
+	if ($regenerate_site_secret) {
+		init_site_secret();
+		elgg_reset_system_cache();
+
+		system_message(elgg_echo('admin:site:secret_regenerated'));
+	}
+
 	if ($site->save()) {
 		system_message(elgg_echo("admin:configuration:success"));
 	} else {

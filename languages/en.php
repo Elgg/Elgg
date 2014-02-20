@@ -597,23 +597,21 @@ $english = array(
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
 	'admin:settings:advanced' => 'Advanced Settings',
-	'admin:settings:advanced/site_secret' => 'Site Secret',
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
-	'admin:settings:advanced:site_secret' => 'Site Secret',
 	'admin:site:opt:linktext' => "Configure site...",
 	'admin:site:access:warning' => "Changing the access setting only affects the permissions on content created in the future.",
 
 	'admin:site:secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
 	'admin:site:secret_regenerated' => "Your site secret has been regenerated.",
 	'admin:site:secret:regenerate' => "Regenerate site secret",
-	'admin:site:secret:regenerate:help' => "Note: This may inconvenience some users by invalidating tokens used in \"remember me\" cookies, e-mail validation requests, invitation codes, etc.",
+	'admin:site:secret:regenerate:help' => "Note: Regenerating your site secret may inconvenience some users by invalidating tokens used in \"remember me\" cookies, e-mail validation requests, invitation codes, etc.",
 	'site_secret:current_strength' => 'Key Strength',
 	'site_secret:strength:weak' => "Weak",
 	'site_secret:strength_msg:weak' => "We strongly recommend that you regenerate your site secret.",
 	'site_secret:strength:moderate' => "Moderate",
 	'site_secret:strength_msg:moderate' => "We recommend you regenerate your site secret for the best site security.",
 	'site_secret:strength:strong' => "Strong",
-	'site_secret:strength_msg:strong' => "&#x2713; Your site secret is sufficiently strong.",
+	'site_secret:strength_msg:strong' => "Your site secret is sufficiently strong. There is no need to regenerate it.",
 
 	'admin:dashboard' => 'Dashboard',
 	'admin:widget:online_users' => 'Online users',
@@ -1093,8 +1091,8 @@ Once you have logged in, we highly recommend that you change your password.
 
 	'update:twitter_api:deactivated' => 'Twitter API (previously Twitter Service) was deactivated during the upgrade. Please activate it manually if required.',
 	'update:oauth_api:deactivated' => 'OAuth API (previously OAuth Lib) was deactivated during the upgrade.  Please activate it manually if required.',
-	'upgrade:site_secret_warning:moderate' => "You are encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Site Secret",
-	'upgrade:site_secret_warning:weak' => "You are strongly encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Site Secret",
+	'upgrade:site_secret_warning:moderate' => "You are encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
+	'upgrade:site_secret_warning:weak' => "You are strongly encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 
 	'deprecated:function' => '%s() was deprecated by %s()',
 

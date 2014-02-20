@@ -292,7 +292,6 @@ function admin_init() {
 	elgg_register_admin_menu_item('configure', 'settings', null, 100);
 	elgg_register_admin_menu_item('configure', 'basic', 'settings', 10);
 	elgg_register_admin_menu_item('configure', 'advanced', 'settings', 20);
-	elgg_register_admin_menu_item('configure', 'advanced/site_secret', 'settings', 25);
 	elgg_register_admin_menu_item('configure', 'menu_items', 'appearance', 30);
 	elgg_register_admin_menu_item('configure', 'profile_fields', 'appearance', 40);
 	// default widgets is added via an event handler elgg_default_widgets_init() in widgets.php
