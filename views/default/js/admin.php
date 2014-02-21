@@ -172,7 +172,7 @@ elgg.admin.deleteNotice = function(e) {
  */
 elgg.admin.simplecacheToggle = function() {
 	// when the checkbox is disabled, do not toggle the compression checkboxes
-	if (!$this.hasClass('elgg-state-disabled')) {
+	if (!$(this).hasClass('elgg-state-disabled')) {
 		var names = ['simplecache_minify_js', 'simplecache_minify_css'];
 		for (var i = 0; i < names.length; i++) {
 			var $input = $('input[type!=hidden][name="' + names[i] + '"]');
