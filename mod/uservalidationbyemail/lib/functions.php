@@ -29,7 +29,11 @@ function uservalidationbyemail_generate_code($user_guid, $email_address) {
  * @param bool $admin_requested Was it requested by admin
  * @return mixed
  */
-function uservalidationbyemail_request_validation($user_guid, $admin_requested = FALSE) {
+function uservalidationbyemail_request_validation($user_guid, $admin_requested = 'deprecated') {
+
+	if ($admin_requested != 'deprecated') {
+		elgg_deprecatednotice('Second param $admin_requested no more used in uservalidationbyemail_request_validation function', 1.9);
+	}
 
 	$site = elgg_get_site_entity();
 
@@ -41,15 +45,13 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 		$code = uservalidationbyemail_generate_code($user_guid, $user->email);
 		$link = "{$site->url}uservalidationbyemail/confirm?u=$user_guid&c=$code";
 
+		// Get email to show in the next page
+		$_SESSION['emailsent'] = $user->email;
 
 		// Send validation email
 		$subject = elgg_echo('email:validate:subject', array($user->name, $site->name));
 		$body = elgg_echo('email:validate:body', array($user->name, $site->name, $link, $site->name, $site->url));
 		$result = notify_user($user->guid, $site->guid, $subject, $body, array(), 'email');
-
-		if ($result && !$admin_requested) {
-			system_message(elgg_echo('uservalidationbyemail:registerok'));
-		}
 
 		return $result;
 	}
