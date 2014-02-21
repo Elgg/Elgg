@@ -46,7 +46,7 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 		$link = "{$site->url}uservalidationbyemail/confirm?u=$user_guid&c=$code";
 
 		// Get email to show in the next page
-		$_SESSION['emailsent'] = $user->email;
+		elgg_get_session()->set('emailsent', $user->email);
 
 		// Send validation email
 		$subject = elgg_echo('email:validate:subject', array($user->name, $site->name));
