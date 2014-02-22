@@ -25,13 +25,13 @@ function reportedcontent_init() {
 		$href .= "+'?address='+encodeURIComponent(location.href)";
 		$href .= "+'&title='+encodeURIComponent(document.title));";
 		
-		elgg_register_menu_item('footer', array(
+		elgg_register_menu_item('extras', array(
 			'name' => 'report_this',
 			'href' => $href,
 			'title' => elgg_echo('reportedcontent:this:tooltip'),
-			'text' => elgg_view_icon('report-this') . elgg_echo('reportedcontent:this'),
+			'text' => elgg_view_icon('report-this'),
 			'priority' => 500,
-			'section' => 'alt',
+			'section' => 'default',
 		));
 	}
 
