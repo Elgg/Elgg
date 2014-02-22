@@ -191,54 +191,15 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
  * @return bool
  */
 function uservalidationbyemail_page_handler($page) {
+	$valid_pages = array('emailsent', 'confirm');
 
-	if (isset($page[0]) && $page[0] == 'emailsent') {
-		$email = $_SESSION['emailsent'];
-		$title = elgg_echo('uservalidationbyemail:emailsent', array($email));
-		$body = elgg_view_layout('one_column', array(
-			'title' => $title,
-			'content' => elgg_echo('uservalidationbyemail:registerok'),
-		));
-		echo elgg_view_page(strip_tags($title), $body);
-		return true;
-	} elseif (isset($page[0]) && $page[0] == 'confirm') {
-		$code = sanitise_string(get_input('c', FALSE));
-		$user_guid = get_input('u', FALSE);
-
-		// new users are not enabled by default.
-		$access_status = access_get_show_hidden_status();
-		access_show_hidden_entities(true);
-
-		$user = get_entity($user_guid);
-
-		if ($code && $user) {
-			if (uservalidationbyemail_validate_email($user_guid, $code)) {
-
-				elgg_push_context('uservalidationbyemail_validate_user');
-				system_message(elgg_echo('email:confirm:success'));
-				$user = get_entity($user_guid);
-				$user->enable();
-				elgg_pop_context();
-
-				try {
-					login($user);
-				} catch(LoginException $e){
-					register_error($e->getMessage());
-				}
-			} else {
-				register_error(elgg_echo('email:confirm:fail'));
-			}
-		} else {
-			register_error(elgg_echo('email:confirm:fail'));
-		}
-
-		access_show_hidden_entities($access_status);
-	} else {
-		register_error(elgg_echo('email:confirm:fail'));
+	if (empty($page[0]) || !in_array($page[0], $valid_pages)) {
+		forward('', '404');
 	}
 
-	// forward to front page
-	forward('');
+	// note, safe to include based on input because we validated above.
+	require dirname(__FILE__) . "/pages/{$page[0]}.php";
+	return true;
 }
 
 /**
