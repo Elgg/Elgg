@@ -407,9 +407,7 @@
 }
 
 .elgg-menu-footer-meta {
-	float: right;
-	clear: both;
-	margin-top: 10px;
+	float: left;
 }
 
 /* ***************************************
