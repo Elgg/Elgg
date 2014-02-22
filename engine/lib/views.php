@@ -948,7 +948,7 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
 function elgg_view_entity_list($entities, $vars = array(), $offset = 0, $limit = 10, $full_view = true,
 $list_type_toggle = true, $pagination = true) {
 
-	if (!$vars["limit"] && !$vars["offset"]) {
+	if (!$vars["limit"] && (array_key_exists('offset',$vars) && !is_null($vars["offset"]))) {
 		// no need for pagination if listing is unlimited
 		$vars["pagination"] = false;
 	}

@@ -556,6 +556,8 @@ three sections:
 	'admin:plugins:category:theme' => 'Themes',
 	'admin:plugins:category:widget' => 'Widgets',
 	'admin:plugins:category:utility' => 'Utilities',
+        'admin:plugins:category:template' => 'Template',
+        'admin:plugins:category:web_services' => 'Web Services',
 
 	'admin:plugins:markdown:unknown_plugin' => 'Unknown plugin.',
 	'admin:plugins:markdown:unknown_file' => 'Unknown file.',
