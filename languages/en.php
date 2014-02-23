@@ -484,6 +484,7 @@ return array(
 	'admin:site:opt:linktext' => "Configure site...",
 	'admin:settings:in_settings_file' => 'This setting is configured in settings.php',
 
+	'admin:legend:security' => 'Security',
 	'admin:site:secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',
 	'admin:site:secret_regenerated' => "Your site secret has been regenerated.",
 	'admin:site:secret:regenerate' => "Regenerate site secret",
