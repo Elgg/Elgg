@@ -992,11 +992,6 @@ function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(),
 function elgg_view_entity_list($entities, $vars = array(), $offset = 0, $limit = 10, $full_view = true,
 $list_type_toggle = true, $pagination = true) {
 
-	if (!$vars["limit"] && !$vars["offset"]) {
-		// no need for pagination if listing is unlimited
-		$vars["pagination"] = false;
-	}
-		
 	if (!is_int($offset)) {
 		$offset = (int)get_input('offset', 0);
 	}
@@ -1018,6 +1013,7 @@ $list_type_toggle = true, $pagination = true) {
 			'list_type' => $list_type,
 			'list_type_toggle' => false,
 			'offset' => $offset,
+			'limit' => null,
 		);
 
 		$vars = array_merge($defaults, $vars);
@@ -1037,6 +1033,11 @@ $list_type_toggle = true, $pagination = true) {
 			'list_type_toggle' => $list_type_toggle,
 			'list_class' => 'elgg-list-entity',
 		);
+	}
+
+	if (!$vars["limit"] && !$vars["offset"]) {
+		// no need for pagination if listing is unlimited
+		$vars["pagination"] = false;
 	}
 
 	if ($vars['list_type'] != 'list') {
@@ -1065,6 +1066,8 @@ $list_type_toggle = true, $pagination = true) {
 function elgg_view_annotation_list($annotations, array $vars = array()) {
 	$defaults = array(
 		'items' => $annotations,
+		'offset' => null,
+		'limit' => null,
 		'list_class' => 'elgg-list-annotation elgg-annotation-list', // @todo remove elgg-annotation-list in Elgg 1.9
 		'full_view' => true,
 		'offset_key' => 'annoff',
