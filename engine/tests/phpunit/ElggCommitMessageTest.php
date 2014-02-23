@@ -28,12 +28,13 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 		$ignored = array(
 			'Merge pull request',
 			'Merge abc123 into def456',
-			"Merge pull request abc123\nBut has other stuff, too"
+			"Merge pull request abc123\nBut has other stuff, too",
+			'Merge release 1.8.18 into master.'
 		);
 
 		foreach ($ignored as $msg) {
 			$msg = new ElggCommitMessage($msg);
-			$this->assertTrue($msg->shouldIgnore());
+			$this->assertTrue($msg->shouldIgnore(), $msg);
 		}
 	}
 
