@@ -294,6 +294,9 @@ class ElggBatch
 		$this->incompleteEntities = array();
 		$this->results = call_user_func($this->getter, $options);
 
+		// batch result sets tend to be large; we don't want to cache these.
+		_elgg_services()->db->disableQueryCache();
+
 		$num_results = count($this->results);
 		$num_incomplete = count($this->incompleteEntities);
 
@@ -321,8 +324,10 @@ class ElggBatch
 				// offer at least one row to iterate over, or give up.
 				return $this->getNextResultsChunk();
 			}
+			_elgg_services()->db->enableQueryCache();
 			return true;
 		} else {
+			_elgg_services()->db->disableQueryCache();
 			return false;
 		}
 	}
