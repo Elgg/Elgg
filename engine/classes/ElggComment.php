@@ -55,11 +55,12 @@ class ElggComment extends ElggObject {
 	/**
 	 * Update container entity last action on successful save.
 	 *
+	 * @param bool $update_last_action Update the container entity's last_action field
 	 * @return bool|int
 	 */
-	public function save() {
+	public function save($update_last_action = true) {
 		$result = parent::save();
-		if ($result) {
+		if ($result && $update_last_action) {
 			update_entity_last_action($this->container_guid, $this->time_updated);
 		}
 		return $result;
