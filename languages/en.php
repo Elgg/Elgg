@@ -286,6 +286,7 @@ return array(
 	'profile:editdefault:fail' => 'Default profile could not be saved',
 	'profile:field_too_long' => 'Cannot save your profile information because the "%s" section is too long.',
 	'profile:noaccess' => "You do not have permission to edit this profile.",
+	'profile:invalid_email' => '%s must be a valid email address.',
 
 
 /**
