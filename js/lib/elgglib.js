@@ -12,6 +12,13 @@ var elgg = elgg || {};
 elgg.global = this;
 
 /**
+ * Duplicate of the server side ACCESS_PRIVATE access level.
+ *
+ * This is a temporary hack to prevent having to mix up js and PHP in js views.
+ */
+elgg.ACCESS_PRIVATE = 0;
+
+/**
  * Convenience reference to an empty function.
  *
  * Save memory by not generating multiple empty functions.
