@@ -44,6 +44,7 @@ foreach ($profile_fields as $shortname => $valuetype) {
 
 	// limit to reasonable sizes
 	// @todo - throwing away changes due to this is dumb!
+	// ^^ This is a sticky form so changes aren't lost...?
 	if (!is_array($value) && $valuetype != 'longtext' && elgg_strlen($value) > 250) {
 		$error = elgg_echo('profile:field_too_long', array(elgg_echo("profile:{$shortname}")));
 		register_error($error);
@@ -56,6 +57,13 @@ foreach ($profile_fields as $shortname => $valuetype) {
 
 	if ($valuetype == 'tags') {
 		$value = string_to_tag_array($value);
+	}
+
+	if ($valuetype == 'email' && !empty($value) && !is_email_address($value)) {
+		register_error(elgg_echo('profile:invalid_email', array(
+			elgg_echo("profile:{$shortname}")
+		)));
+		forward(REFERER);
 	}
 	
 	$input[$shortname] = $value;
