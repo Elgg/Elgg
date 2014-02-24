@@ -55,7 +55,10 @@ if (!$request || !$simplecache_enabled) {
 // it won't make a difference in real life and regex is easier to read.
 // <type>/<viewtype>/<name/of/view.and.dots>.<ts>.<type>
 $regex = '|([^/]+)/([^/]+)/(.+)\.([^\.]+)\.([^.]+)$|';
-preg_match($regex, $request, $matches);
+if (!preg_match($regex, $request, $matches)) {
+	echo 'Cache error: bad request';
+	exit;
+}
 
 $type = $matches[1];
 $viewtype = $matches[2];
