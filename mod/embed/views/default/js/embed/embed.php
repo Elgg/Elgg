@@ -111,7 +111,6 @@ elgg.embed.insert = function(event) {
 elgg.embed.submit = function(event) {
 	$('.embed-wrapper .elgg-form-file-upload').hide();
 	$('.embed-throbber').show();
-	var error = elgg.echo('actiongatekeeper:uploadexceeded');
 	
 	$(this).ajaxSubmit({
 		dataType : 'json',
@@ -129,8 +128,8 @@ elgg.embed.submit = function(event) {
 					$('.embed-wrapper').parent().load(url);
 				} else {
 					// incorrect response, presumably an error has been displayed
-					error = [];
-					return xhr.abort();
+					$('.embed-throbber').hide();
+					$('.embed-wrapper .elgg-form-file-upload').show();
 				}
 			}
 
@@ -147,7 +146,7 @@ elgg.embed.submit = function(event) {
 			}
 		},
 		error    : function(xhr, status) {
-			elgg.register_error(error);
+			elgg.register_error(elgg.echo('actiongatekeeper:uploadexceeded'));
 			$('.embed-throbber').hide();
 			$('.embed-wrapper .elgg-form-file-upload').show();
 		}
