@@ -38,7 +38,10 @@ if (elgg_in_context('widgets')) {
 
 $subtitle = "$poster_text $date";
 
-$content = $reply->description;
+$content = elgg_view('output/longtext', array(
+	'value' => $reply->description,
+	'class' => 'elgg-inner',
+));
 
 $params = array(
 	'entity' => $reply,
