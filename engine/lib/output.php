@@ -227,14 +227,14 @@ function elgg_format_element($tag_name, array $attributes = array(), $text = '',
  * @since 1.9.0
  */
 function elgg_format_bytes($size, $precision = 2) {
-    if (!$size || $size < 0) {
-        return false;
-    }
+	if (!$size || $size < 0) {
+		return false;
+	}
 
-    $base = log($size) / log(1024);
-    $suffixes = array('B', 'kB', 'MB', 'GB', 'TB');   
+	$base = log($size) / log(1024);
+	$suffixes = array('B', 'kB', 'MB', 'GB', 'TB');   
 
-    return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
+	return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
 }
 
 /**
