@@ -63,6 +63,8 @@ return array(
 
 	'file:delete:confirm' => "Are you sure you want to delete this file?",
 
+	'file:upload_limit' => 'Maximum allowed file size is %s',
+
 	'file:tagcloud' => "Tag cloud",
 
 	'file:display:number' => "Number of files to display",
