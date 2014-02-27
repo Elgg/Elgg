@@ -49,7 +49,7 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 		if ($size < 100) {
 			$size = 100;
 		}
-		$url = "search?q=". urlencode($tag->tag) . "&search_type=tags$type$subtype";
+		$url = elgg_get_site_url() . 'search?q=' . rawurlencode($tag->tag) . "&search_type=tags$type$subtype";
 
 		$cloud .= elgg_view('output/url', array(
 			'text' => $tag->tag,
