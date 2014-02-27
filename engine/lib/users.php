@@ -467,7 +467,7 @@ function force_user_password_reset($user_guid, $password) {
  * @param string $conf_code Confirmation code as sent in the request email.
  * @param string $password  Optional new password, if not randomly generated.
  *
- * @return mixed
+ * @return bool True on success
  */
 function execute_new_password_request($user_guid, $conf_code, $password = null) {
 
@@ -503,12 +503,15 @@ function execute_new_password_request($user_guid, $conf_code, $password = null) 
 
 		$ns = $reset ? 'resetpassword' : 'changepassword';
 
-		return notify_user($user->guid,
+		notify_user($user->guid,
 			elgg_get_site_entity()->guid,
 			elgg_echo("email:$ns:subject"),
 			elgg_echo("email:$ns:body", array($user->username, $password)),
 			array(),
-			'email');
+			'email'
+		);
+
+		return true;
 	}
 
 	return false;

@@ -1,6 +1,6 @@
 <?php
 /**
- * Action to reset a password and send success email.
+ * Action to reset a password, send success email, and log the user in.
  *
  * @package Elgg
  * @subpackage Core
@@ -25,6 +25,7 @@ if ($password != $password_repeat) {
 
 if (execute_new_password_request($user_guid, $code, $password)) {
 	system_message(elgg_echo('user:password:success'));
+	login(get_entity($user_guid));
 } else {
 	register_error(elgg_echo('user:password:fail'));
 }
