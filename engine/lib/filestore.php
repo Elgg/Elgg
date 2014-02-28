@@ -354,9 +354,7 @@ function _elgg_normalize_image_rotation($source, $dest) {
 	$requiredMemory2 = ceil($imginfo[0] * $imginfo[1] * ($imginfo['bits'] / 8) * $imginfo['channels'] * 2.5);
 	$requiredMemory = (int)max($requiredMemory1, $requiredMemory2);
 
-	$mem_avail = ini_get('memory_limit');
-	$mem_avail = rtrim($mem_avail, 'M');
-	$mem_avail = $mem_avail * 1024 * 1024;
+	$mem_avail = elgg_get_ini_setting_in_bytes('memory_limit');
 	$mem_used = memory_get_usage();
 	
 	$mem_avail = $mem_avail - $mem_used - 2097152; // 2 MB buffer
@@ -415,9 +413,7 @@ function _elgg_normalize_image_rotation($source, $dest) {
 	
 	$flipped = false;
 	if ($flip) {
-		$mem_avail = ini_get('memory_limit');
-		$mem_avail = rtrim($mem_avail, 'M');
-		$mem_avail = $mem_avail * 1024 * 1024;
+		$mem_avail = elgg_get_ini_setting_in_bytes('memory_limit');
 		$mem_used = memory_get_usage();
 
 		$mem_avail = $mem_avail - $mem_used - 2097152; // 2 MB buffer
