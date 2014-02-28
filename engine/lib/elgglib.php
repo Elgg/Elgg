@@ -126,16 +126,36 @@ function forward($location = "", $reason = 'system') {
  * @since 1.8.0
  */
 function elgg_register_js($name, $url, $location = 'head', $priority = null) {
+	if (empty($name) || empty($url)) {
+		return false;
+	}
+
+	$config = array();
 	if (is_array($url)) {
 		$config = $url;
 		$url = elgg_extract('src', $config);
-		$location = elgg_extract('location', $config, 'footer');
+		$location = elgg_extract('location', $config, 'async');
 		$priority = elgg_extract('priority', $config);
-		
-		_elgg_services()->amdConfig->setShim($name, $config);
-		_elgg_services()->amdConfig->setPath($name, elgg_normalize_url($url));
 	}
 
+	$is_dep = in_array($name, _elgg_services()->amdConfig->getDependencies());
+	$is_file_loaded = _elgg_get_external_file_from_map('js', $name)->loaded;
+	$loaded = $is_dep || $is_file_loaded;
+
+	elgg_unregister_js($name);
+
+	if ($location == 'async') {
+		if ($loaded) {
+			_elgg_services()->amdConfig->addDependency($name);
+		}
+		_elgg_services()->amdConfig->setShim($name, $config);
+		_elgg_services()->amdConfig->setPath($name, elgg_normalize_url($url));
+		return true;
+	}
+
+	if ($loaded) {
+		elgg_load_external_file('js', $name);
+	}
 	return elgg_register_external_file('js', $name, $url, $location, $priority);
 }
 
@@ -148,7 +168,10 @@ function elgg_register_js($name, $url, $location = 'head', $priority = null) {
  * @since 1.8.0
  */
 function elgg_unregister_js($name) {
-	return elgg_unregister_external_file('js', $name);
+	_elgg_services()->amdConfig->removeDependency($name);
+	_elgg_services()->amdConfig->unsetShim($name);
+	$result = _elgg_services()->amdConfig->unsetPath($name);
+	return elgg_unregister_external_file('js', $name) || $result;
 }
 
 /**
@@ -163,21 +186,12 @@ function elgg_unregister_js($name) {
  * @since 1.8.0
  */
 function elgg_load_js($name) {
-	elgg_load_external_file('js', $name);
+	if (_elgg_get_external_file_from_map('js', $name)->registered) {
+		elgg_load_external_file('js', $name);
+	} else {
+		_elgg_services()->amdConfig->addDependency($name);
+	}
 }
-
-
-/**
- * Request that Elgg load an AMD module onto the page.
- *
- * @param string $name The AMD module name.
- * @return void
- * @since 1.9.0
- */
-function elgg_require_js($name) {
-	_elgg_services()->amdConfig->addDependency($name);
-}
-
 
 /**
  * Get the JavaScript URLs that are loaded
@@ -281,6 +295,7 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 	if ($item) {
 		// updating a registered item
 		// don't update loaded because it could already be set
+		$item->registered = true;
 		$item->url = $url;
 		$item->location = $location;
 
@@ -292,6 +307,7 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 		}
 	} else {
 		$item = new stdClass();
+		$item->registered = true;
 		$item->loaded = false;
 		$item->url = $url;
 		$item->location = $location;
@@ -352,6 +368,7 @@ function elgg_load_external_file($type, $name) {
 		$item->loaded = true;
 	} else {
 		$item = new stdClass();
+		$item->registered = false;
 		$item->loaded = true;
 		$item->url = '';
 		$item->location = '';
@@ -359,6 +376,32 @@ function elgg_load_external_file($type, $name) {
 		$CONFIG->externals[$type]->add($item);
 		$CONFIG->externals_map[$type][$name] = $item;
 	}
+}
+
+/**
+ * Get the resource that has been registered by {@link elgg_register_external_file}
+ * and/or loaded by {@link elgg_load_external_file}.
+ *
+ * @param string $type Type of file: js or css
+ * @param string $name The identifier for the file
+ *
+ * @return object
+ * @access private
+ */
+function _elgg_get_external_file_from_map($type, $name) {
+	global $CONFIG;
+
+	_elgg_bootstrap_externals_data_structure($type);
+
+	$name = trim(strtolower($name));
+
+	$default = new stdClass;
+	$default->registered = false;
+	$default->loaded = false;
+
+	$item = elgg_extract($name, $CONFIG->externals_map[$type], $default);
+
+	return $item;
 }
 
 /**

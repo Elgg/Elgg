@@ -42,7 +42,17 @@ class Elgg_Amd_Config {
 	}
 
 	/**
-	 * Method that does something
+	 * Unset the path for a module
+	 *
+	 * @param string $module Module name
+	 * @return void
+	 */
+	public function unsetPath($module) {
+		unset($this->paths[$module]);
+	}
+
+	/**
+	 * Sets the shim for a module
 	 *
 	 * @todo update documentation
 	 * 
@@ -53,10 +63,28 @@ class Elgg_Amd_Config {
 	 * @return void
 	 */
 	public function setShim($module, array $shimConfig) {
-		$this->shim[$module] = array(
-			'deps' => elgg_extract('deps', $shimConfig, array()),
-			'exports' => elgg_extract('exports', $shimConfig),
-		);
+		$deps = elgg_extract('deps', $shimConfig, array());
+		$exports = elgg_extract('exports', $shimConfig);
+
+		if (!empty($deps) || !empty($exports)) {
+			$this->shim[$module] = array();
+		}
+		if (!empty($deps)) {
+			$this->shim[$module]['deps'] = $deps;
+		}
+		if (!empty($exports)) {
+			$this->shim[$module]['exports'] = $exports;
+		}
+	}
+
+	/**
+	 * Unset the shim of a module
+	 *
+	 * @param string $module Module name
+	 * @return void
+	 */
+	public function unsetShim($module) {
+		unset($this->shim[$module]);
 	}
 
 	/**
@@ -67,6 +95,16 @@ class Elgg_Amd_Config {
 	 */
 	public function addDependency($name) {
 		$this->dependencies[$name] = true;
+	}
+
+	/**
+	 * Removes a dependency
+	 *
+	 * @param string $name Name of the dependency
+	 * @return void
+	 */
+	public function removeDependency($name) {
+		unset($this->dependencies[$name]);
 	}
 
 	/**
