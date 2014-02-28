@@ -127,7 +127,7 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	
 	if (is_uploaded_file($_FILES['upload']['tmp_name'])) {
 		// moves the file and normalizes rotation if it's an image
-		normalize_image_rotation($_FILES['upload']['tmp_name'], $file->getFilenameOnFilestore());
+		_elgg_normalize_image_rotation($_FILES['upload']['tmp_name'], $file->getFilenameOnFilestore());
 	}
 
 	$guid = $file->save();
