@@ -11,6 +11,8 @@
 CKEDITOR_BASEPATH = elgg.config.wwwroot + 'mod/ckeditor/vendors/ckeditor/';
 
 require(['elgg/ckeditor', 'jquery', 'jquery.ckeditor'], function(elggCKEditor, $) {
-	$('.elgg-input-longtext').ckeditor(elggCKEditor.init, elggCKEditor.config);
+	$('.elgg-input-longtext:not([data-cke-init])')
+		.attr('data-cke-init', true)
+		.ckeditor(elggCKEditor.init, elggCKEditor.config);
 });
 </script>

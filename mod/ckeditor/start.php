@@ -24,6 +24,9 @@ function ckeditor_init() {
 		'exports' => 'jQuery.fn.ckeditor',
 	));
 
+	// need to set basepath early
+	elgg_extend_view('js/elgg', 'js/elgg/ckeditor/set-basepath.js');
+
 	elgg_extend_view('input/longtext', 'ckeditor/init');
 
 	elgg_extend_view('js/embed/embed', 'js/elgg/ckeditor/insert.js');
