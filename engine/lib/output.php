@@ -259,7 +259,7 @@ function elgg_normalize_url($url) {
 		// 'install.php', 'install.php?step=step'
 		return elgg_get_site_url() . $url;
 
-	} elseif (preg_match("#^[^/]*\.#i", $url)) {
+	} elseif (preg_match("#^[^/?]*\.#i", $url)) {
 		// 'example.com', 'example.com/subpage'
 		return "http://$url";
 
