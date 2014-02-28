@@ -346,6 +346,11 @@ function _elgg_normalize_image_rotation($source, $dest) {
 	}
 	
 	$exif = exif_read_data($source, 'IFDO', true);
+	if (empty($exif['IFD0']['Orientation'])) {
+		// no orientation data
+		copy($source, $dest);
+		return false;
+	}
 	$orientation = $exif['IFD0']['Orientation'];
 	
 	// make sure the in memory image size does not exceed memory available
