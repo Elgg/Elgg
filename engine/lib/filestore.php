@@ -11,15 +11,17 @@
 /**
  * Constants corresponding to EXIF orientation data for image files
  *
+ * @link http://sylvana.net/jpegcrop/exif_orientation.html
+ *
  * @var int
  */
-define('ELGG_IMG_ROTATION_FLIP', 2);
-define('ELGG_IMG_ROTATION_180', 3);
-define('ELGG_IMG_ROTATION_180_FLIP', 4);
-define('ELGG_IMG_ROTATION_270_FLIP', 5);
-define('ELGG_IMG_ROTATION_270', 6);
-define('ELGG_IMG_ROTATION_90_FLIP', 7);
-define('ELGG_IMG_ROTATION_90', 8);
+define('ELGG_EXIF_ORIENTATION_FLIP', 2);
+define('ELGG_EXIF_ORIENTATION_180', 3);
+define('ELGG_EXIF_ORIENTATION_180_FLIP', 4);
+define('ELGG_EXIF_ORIENTATION_270_FLIP', 5);
+define('ELGG_EXIF_ORIENTATION_270', 6);
+define('ELGG_EXIF_ORIENTATION_90_FLIP', 7);
+define('ELGG_EXIF_ORIENTATION_90', 8);
 
 /**
  * Get the size of the specified directory.
@@ -32,7 +34,7 @@ define('ELGG_IMG_ROTATION_90', 8);
 function get_dir_size($dir, $totalsize = 0) {
 	$handle = @opendir($dir);
 	while ($file = @readdir($handle)) {
-		if (eregi("^\.{1,2}$", $file)) {
+		if ($file === '.' || $file === '..') {
 			continue;
 		}
 		if (is_dir($dir . $file)) {
@@ -371,37 +373,38 @@ function _elgg_normalize_image_rotation($source, $dest) {
 	}
 
 	$image = imagecreatefromstring(file_get_contents($source));
+	$angle = 0;
 	switch($orientation) {
-		case ELGG_IMG_ROTATION_FLIP:
+		case ELGG_EXIF_ORIENTATION_FLIP:
 			$rotate = false;
 			$flip = true;
 			break;
-		case ELGG_IMG_ROTATION_180:
+		case ELGG_EXIF_ORIENTATION_180:
 			$rotate = true;
 			$flip = false;
 			$angle = 180;
 			break;
-		case ELGG_IMG_ROTATION_180_FLIP:
+		case ELGG_EXIF_ORIENTATION_180_FLIP:
 			$rotate = true;
 			$flip = true;
 			$angle = 180;
 			break;
-		case ELGG_IMG_ROTATION_270_FLIP:
+		case ELGG_EXIF_ORIENTATION_270_FLIP:
 			$rotate = true;
 			$flip = true;
 			$angle = 270;
 			break;
-		case ELGG_IMG_ROTATION_270:
+		case ELGG_EXIF_ORIENTATION_270:
 			$rotate = true;
 			$flip = false;
 			$angle = 270;
 			break;
-		case ELGG_IMG_ROTATION_90_FLIP:
+		case ELGG_EXIF_ORIENTATION_90_FLIP:
 			$rotate = true;
 			$flip = true;
 			$angle = 90;
 			break;
-		case ELGG_IMG_ROTATION_90:
+		case ELGG_EXIF_ORIENTATION_90:
 			$rotate = true;
 			$flip = false;
 			$angle = 90;
@@ -438,14 +441,15 @@ function _elgg_normalize_image_rotation($source, $dest) {
 			$image = $imgdest;
 		}
 	}
-	
-	if ($rotate || $flipped) {
-		imagejpeg($image, $dest, 100);
-		return true;
+
+	if (!$rotate && !$flipped) {
+		// no change needed
+		copy($source, $dest);
+		return false;
 	}
 	
-	copy($source, $dest);
-	return false;
+	imagejpeg($image, $dest, 100);
+	return true;
 }
 
 /**
