@@ -6,12 +6,5 @@
  * @subpackage Core
  */
 
-// sites information (including plugin settings) shouldn't be shown.
-// this view is required for pinging home during install.
-if (!defined('INSTALLING')) {
-	if ($site = $vars['entity']->url) {
-		forward($site);
-	} else {
-		forward();
-	}
-}
+// provide limited information
+echo elgg_view('object/default', $vars);
