@@ -23,6 +23,12 @@
 	outline: none;
 	box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	background-color: #ccc;
+	box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+}
+button.elgg-button {
+	border: 0;
 }
 
 .elgg-button:hover,
@@ -80,6 +86,9 @@
 	cursor: pointer;
 	border-radius: 5px;
 	box-shadow: none;
+}
+button.elgg-button-action {
+	border:1px solid #999;
 }
 
 .elgg-button-action:hover,
