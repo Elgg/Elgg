@@ -44,6 +44,7 @@ do {
 	}
 
 	$db_prefix = elgg_get_config('dbprefix');
+	$container_guids = array();
 
 	// Create a new object for each annotation
 	foreach ($annotations as $annotation) {
@@ -55,7 +56,9 @@ do {
 		// make sure disabled replies stay disabled
 		$object->enabled = $annotation->enabled;
 		$object->time_created = $annotation->time_created;
-		$object->save();
+		$object->save(false);
+
+		$container_guids[] = $object->container_guid;
 
 		$guid = $object->getGUID();
 
@@ -113,6 +116,27 @@ do {
 		$annotation_ids = implode(",", $annotations_to_delete);
 		$delete_query = "DELETE FROM {$db_prefix}annotations WHERE id IN ($annotation_ids)";
 		delete_data($delete_query);
+	}
+	
+	// update the last action on containers to be the max of all its comments
+	// or its own last action
+	$comment_subtype_id = get_subtype_id('object', 'discussion_reply');
+
+	foreach (array_unique($container_guids) as $guid) {
+		// can't use a subquery in an update clause without hard to read tricks.
+		$max = get_data_row("SELECT MAX(time_updated) as max_time_updated
+					FROM {$db_prefix}entities e
+					WHERE e.container_guid = $guid
+					AND e.subtype = $comment_subtype_id");
+
+		$query = "
+		UPDATE {$db_prefix}entities
+			SET last_action = '$max->max_time_updated'
+			WHERE guid = $guid
+			AND last_action < '$max->max_time_updated'
+		";
+
+		update_data($query);
 	}
 
 } while ((microtime(true) - $START_MICROTIME) < $batch_run_time_in_secs);

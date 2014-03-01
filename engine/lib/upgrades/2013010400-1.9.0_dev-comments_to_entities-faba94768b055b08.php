@@ -6,7 +6,7 @@
  * Convert comment annotations to entities
  * 
  * @warning we do not migrate disabled comments in this upgrade. See the comment
- * upgrade action for that.
+ * upgrade action in actions/admin/upgrades/upgrade_comments.php for that.
  */
 
 // Register subtype and class for comments
@@ -36,6 +36,7 @@ elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_ov
 
 $db_prefix = elgg_get_config('dbprefix');
 $new_comment_guids = array();
+$container_guids = array();
 
 // Create a new object for each annotation
 foreach ($batch as $annotation) {
@@ -47,10 +48,11 @@ foreach ($batch as $annotation) {
 	$object->description = $annotation->value;
 	$object->access_id = $annotation->access_id;
 	$object->time_created = $annotation->time_created;
-	$object->save();
+	$object->save(false);
 
 	$guid = $object->getGUID();
 	$new_comment_guids[] = $guid;
+	$container_guids[] = $object->container_guid;
 
 	/**
 	 * Update the entry in river table for this comment
@@ -83,6 +85,7 @@ elgg_set_ignore_access($ia);
 
 
 // set new comment entities' time_updated and last_action to time_created
+// this is not exposed through the API.
 $guid_str = implode(',', $new_comment_guids);
 
 $query = "
@@ -94,6 +97,27 @@ UPDATE {$db_prefix}entities
 
 update_data($query);
 
+
+// update the last action on containers to be the max of all its comments
+// or its own last action
+$comment_subtype_id = get_subtype_id('object', 'comment');
+
+foreach (array_unique($container_guids) as $guid) {
+	// can't use a subquery in an update clause without hard to read tricks.
+	$max = get_data_row("SELECT MAX(time_updated) as max_time_updated
+				FROM {$db_prefix}entities e
+				WHERE e.container_guid = $guid
+				AND e.subtype = $comment_subtype_id");
+
+	$query = "
+	UPDATE {$db_prefix}entities
+		SET last_action = '$max->max_time_updated'
+		WHERE guid = $guid
+		AND last_action < '$max->max_time_updated'
+	";
+
+	update_data($query);
+}
 
 // display notice to run ajax upgrade if there are annotations left
 $options = array(
