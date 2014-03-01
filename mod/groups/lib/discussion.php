@@ -42,7 +42,8 @@ function discussion_handle_list_page($guid) {
 	if (!elgg_instanceof($group, 'group')) {
 		forward('', '404');
 	}
-	elgg_push_breadcrumb($group->name);
+	elgg_push_breadcrumb($group->name, $group->getURL());
+	elgg_push_breadcrumb(elgg_echo('item:object:groupforumtopic'));
 
 	elgg_register_title_button();
 
