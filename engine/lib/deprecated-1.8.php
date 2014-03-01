@@ -1104,8 +1104,8 @@ function get_entities_from_metadata_groups_multi($group_guid, $meta_array, $enti
 		$where[] = "e.owner_guid = {$owner_guid}";
 	}
 
-	if ($container_guid > 0) {
-		$where[] = "e.container_guid = {$container_guid}";
+	if ($group_guid > 0) {
+		$where[] = "e.container_guid = {$group_guid}";
 	}
 
 	if ($count) {
@@ -1177,7 +1177,7 @@ function list_entities_in_area($lat, $long, $radius, $type = "", $subtype = "", 
 
 	$options['full_view'] = $fullview;
 	$options['list_type_toggle'] = $listtypetoggle;
-	$options['pagination'] = $pagination;
+	$options['pagination'] = true;
 
 	return elgg_list_entities_from_location($options);
 }
@@ -1359,8 +1359,8 @@ function list_entities_from_metadata_multi($meta_array, $entity_type = "", $enti
 
 	$offset = (int)get_input('offset');
 	$limit = (int)$limit;
-	$count = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", $site_guid, true);
-	$entities = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", $site_guid, false);
+	$count = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, true);
+	$entities = get_entities_from_metadata_multi($meta_array, $entity_type, $entity_subtype, $owner_guid, $limit, $offset, "", 0, false);
 
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle, $pagination);
 }
@@ -1435,6 +1435,7 @@ function remove_submenu_item($label, $group = 'a') {
  */
 function get_submenu() {
 	elgg_deprecated_notice("get_submenu() has been deprecated by elgg_view_menu()", 1.8);
+	$owner = elgg_get_page_owner_entity();
 	return elgg_view_menu('owner_block', array('entity' => $owner,
 		'class' => 'elgg-menu-owner-block',));
 }
@@ -2278,10 +2279,6 @@ $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_
 		$options['values'] = $meta_value;
 	}
 
-	if ($entity_type) {
-		$options['types'] = $entity_type;
-	}
-
 	if ($type) {
 		$options['types'] = $type;
 	}
@@ -2302,12 +2299,8 @@ $subtype = "", $owner_guid = 0, $limit = 10, $offset = 0, $count = false, $site_
 		$options['offset'] = $offset;
 	}
 
-	if ($order_by) {
-		$options['order_by'];
-	}
-
 	if ($site_guid) {
-		$options['site_guid'];
+		$options['site_guid'] = $site_guid;
 	}
 
 	if ($count) {
@@ -2516,11 +2509,6 @@ $owner_guid = "", $owner_relationship = "") {
 						$add = false;
 					}
 				}
-				if (($add) && ($event)) {
-					if (!in_array($f['event'], $event)) {
-						$add = false;
-					}
-				}
 
 				if ($add) {
 					$activity_events[] = $f;
@@ -2650,7 +2638,7 @@ function list_site_members($site_guid, $limit = 10, $fullview = true) {
 
 	$options = array(
 		'limit' => $limit,
-		'full_view' => $full_view,
+		'full_view' => $fullview,
 	);
 
 	$site = get_entity($site_guid);
@@ -3446,10 +3434,6 @@ $timeupper = 0, $calculation = '') {
 		$options['annotation_owner_guid'] = $owner_guid;
 	}
 
-	if ($order_by == 'desc') {
-		$options['order_by'] = 'n_table.time_created desc';
-	}
-
 	if ($timelower) {
 		$options['annotation_time_lower'] = $timelower;
 	}
@@ -3504,7 +3488,7 @@ $value = "", $value_type = "", $owner_guid = 0) {
 	elgg_deprecated_notice('get_annotations_sum() is deprecated by elgg_get_annotations() and passing "annotation_calculation" => "sum"', 1.8);
 
 	return elgg_deprecated_annotation_calculation($entity_guid, $entity_type, $entity_subtype,
-			$name, $value, $value_type, $owner_guid, $timelower, $timeupper, 'sum');
+			$name, $value, $value_type, $owner_guid, 0, 0, 'sum');
 }
 
 /**
@@ -3526,7 +3510,7 @@ $value = "", $value_type = "", $owner_guid = 0) {
 	elgg_deprecated_notice('get_annotations_max() is deprecated by elgg_get_annotations() and passing "annotation_calculation" => "max"', 1.8);
 
 	return elgg_deprecated_annotation_calculation($entity_guid, $entity_type, $entity_subtype,
-			$name, $value, $value_type, $owner_guid, $timelower, $timeupper, 'max');
+			$name, $value, $value_type, $owner_guid, 0, 0, 'max');
 }
 
 
@@ -3549,7 +3533,7 @@ $value = "", $value_type = "", $owner_guid = 0) {
 	elgg_deprecated_notice('get_annotations_min() is deprecated by elgg_get_annotations() and passing "annotation_calculation" => "min"', 1.8);
 
 	return elgg_deprecated_annotation_calculation($entity_guid, $entity_type, $entity_subtype,
-			$name, $value, $value_type, $owner_guid, $timelower, $timeupper, 'min');
+			$name, $value, $value_type, $owner_guid, 0, 0, 'min');
 }
 
 
@@ -3573,7 +3557,7 @@ $value = "", $value_type = "", $owner_guid = 0) {
 	elgg_deprecated_notice('get_annotations_avg() is deprecated by elgg_get_annotations() and passing "annotation_calculation" => "avg"', 1.8);
 
 	return elgg_deprecated_annotation_calculation($entity_guid, $entity_type, $entity_subtype,
-			$name, $value, $value_type, $owner_guid, $timelower, $timeupper, 'avg');
+			$name, $value, $value_type, $owner_guid, 0, 0, 'avg');
 }
 
 
@@ -3930,7 +3914,7 @@ function delete_annotation($id) {
 	if (!$id) {
 		return false;
 	}
-	return elgg_delete_annotations(array('annotation_id' => $annotation_id));
+	return elgg_delete_annotations(array('annotation_id' => $id));
 }
 
 /**
@@ -3977,7 +3961,7 @@ function clear_annotations_by_owner($owner_guid) {
 	}
 
 	$options = array(
-		'annotation_owner_guid' => $guid,
+		'annotation_owner_guid' => $owner_guid,
 		'limit' => 0
 	);
 

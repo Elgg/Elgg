@@ -10,8 +10,10 @@
  * @uses $vars['hidden'] Begin hidden? (true)
  */
 
+$attributes = array();
+
 if (isset($vars['id'])) {
-	$id = "id=\"{$vars['id']}\"";
+	$attributes['id'] = "id=\"{$vars['id']}\"";
 }
 
 $class = 'elgg-ajax-loader';
@@ -23,9 +25,13 @@ if (elgg_extract('hidden', $vars, true)) {
 	$class = "$class hidden";
 }
 
+$attributes['class'] = $class;
+
+$attrs = elgg_format_attributes($attributes);
+
 $loader = <<< END
 
-<div class="$class" $id></div>
+<div $attrs></div>
 
 END;
 
