@@ -1520,6 +1520,9 @@ class ElggInstaller {
 				if ($plugin->getManifest()->getActivateOnInstall()) {
 					$plugin->activate();
 				}
+				if (in_array('theme', $plugin->getManifest()->getCategories())) {
+					$plugin->setPriority('last');
+				}
 			}
 		}
 	}
