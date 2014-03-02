@@ -20,6 +20,7 @@
  */
 function _elgg_user_settings_save() {
 	_elgg_set_user_language();
+	_elgg_set_user_timezone();
 	_elgg_set_user_password();
 	_elgg_set_user_default_access();
 	_elgg_set_user_name();
@@ -168,6 +169,43 @@ function _elgg_set_user_language() {
 	}
 	return false;
 }
+
+/**
+ * Set a user's time zone
+ *
+ * @return bool
+ * @since 1.9.0
+ * @access private
+ */
+function _elgg_set_user_timezone() {
+	$timezone = get_input('timezone');
+	$user_id = get_input('guid');
+
+	if (!$user_id) {
+		$user = elgg_get_logged_in_user_entity();
+	} else {
+		$user = get_entity($user_id);
+	}
+
+	if (($user) && ($timezone)) {
+		if (strcmp($timezone, $user->timezone) != 0) {
+			$user->timezone = $timezone;
+			if ($user->save()) {
+				system_message(elgg_echo('user:timezone:success'));
+				return true;
+			} else {
+				register_error(elgg_echo('user:timezone:fail'));
+			}
+		} else {
+			// no change
+			return null;
+		}
+	} else {
+		register_error(elgg_echo('user:timezone:fail'));
+	}
+	return false;
+}
+
 
 /**
  * Set a user's email address
@@ -364,6 +402,7 @@ function _elgg_user_settings_init() {
 	elgg_extend_view('forms/account/settings', 'core/settings/account/password', 100);
 	elgg_extend_view('forms/account/settings', 'core/settings/account/email', 100);
 	elgg_extend_view('forms/account/settings', 'core/settings/account/language', 100);
+	elgg_extend_view('forms/account/settings', 'core/settings/account/timezone', 100);
 	elgg_extend_view('forms/account/settings', 'core/settings/account/default_access', 100);
 }
 
