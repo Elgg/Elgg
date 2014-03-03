@@ -107,6 +107,27 @@ function elgg_format_url($url) {
 }
 
 /**
+ * Format bytes to a human readable format
+ *
+ * @param int $size      File size in bytes to format
+ *
+ * @param int $precision Precision to round formatting bytes to
+ *
+ * @return string
+ * @since 1.9.0
+ */
+function elgg_format_bytes($size, $precision = 2) {
+	if (!$size || $size < 0) {
+		return false;
+	}
+
+	$base = log($size) / log(1024);
+	$suffixes = array('B', 'kB', 'MB', 'GB', 'TB');   
+
+	return round(pow(1024, $base - floor($base)), $precision) . ' ' . $suffixes[floor($base)];
+}
+
+/**
  * Converts an associative array into a string of well-formed attributes
  *
  * @note usually for HTML, but could be useful for XML too...
