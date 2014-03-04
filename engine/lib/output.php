@@ -122,7 +122,7 @@ function elgg_format_attributes(array $attrs) {
  		return '';
  	}
 
-	$attrs = elgg_clean_vars($attrs);
+	$attrs = _elgg_clean_vars($attrs);
 	$attributes = array();
 
 	if (isset($attrs['js'])) {
