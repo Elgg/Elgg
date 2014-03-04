@@ -145,6 +145,9 @@ access_show_hidden_entities($access_status);
 _elgg_services()->events = $original_events;
 _elgg_services()->hooks = $original_hooks;
 
+// remove the admin notice 
+elgg_delete_admin_notice('comment_upgrade_needed');
+
 // Give some feedback for the UI
 echo json_encode(array(
 	'numSuccess' => $success_count,

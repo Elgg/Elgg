@@ -147,6 +147,8 @@ access_show_hidden_entities($access_status);
 _elgg_services()->events = $original_events;
 _elgg_services()->hooks = $original_hooks;
 
+elgg_delete_admin_notice('discussion_migration_notice');
+
 // Give some feedback for the UI
 echo json_encode(array(
 	'numSuccess' => $success_count,
