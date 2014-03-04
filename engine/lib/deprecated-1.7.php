@@ -225,7 +225,7 @@ $listtypetoggle = false) {
 
 	$options['full_view'] = $fullview;
 	$options['list_type_toggle'] = $listtypetoggle;
-	$options['pagination'] = $pagination;
+	$options['pagination'] = true;
 
 	return elgg_list_entities_from_annotations($options);
 }
@@ -590,7 +590,7 @@ function list_group_search($tag, $limit = 10) {
 	$count = (int) search_for_group($tag, 10, 0, '', true);
 	$entities = search_for_group($tag, $limit, $offset);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, false);
+	return elgg_view_entity_list($entities, $count, $offset, $limit, true, false);
 
 }
 
@@ -782,7 +782,6 @@ function search_for_object($criteria, $limit = 10, $offset = 0, $order_by = "", 
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 	$order_by = sanitise_string($order_by);
-	$container_guid = (int)$container_guid;
 
 	$access = _elgg_get_access_where_sql();
 
@@ -1031,7 +1030,7 @@ function list_user_search($tag, $limit = 10) {
 	$count = (int) search_for_user($tag, 10, 0, '', true);
 	$entities = search_for_user($tag, $limit, $offset);
 
-	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, false);
+	return elgg_view_entity_list($entities, $count, $offset, $limit, true, false);
 }
 
 /**

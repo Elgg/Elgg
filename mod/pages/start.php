@@ -85,7 +85,7 @@ function pages_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'pages_entity_menu_setup');
 
 	// hook into annotation menu
-	elgg_register_plugin_hook_handler('register', 'menu:annotation', 'pages_annotation_menu_setup');
+	//elgg_register_plugin_hook_handler('register', 'menu:annotation', 'pages_annotation_menu_setup');
 
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
