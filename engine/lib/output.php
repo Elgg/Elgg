@@ -116,9 +116,9 @@ function elgg_format_url($url) {
  * @return string HTML attributes to be inserted into a tag (e.g., <tag $attrs>)
  */
 function elgg_format_attributes(array $attrs = array()) {
- 	if (!is_array($attrs) || !count($attrs)) {
- 		return '';
- 	}
+	if (!is_array($attrs) || !count($attrs)) {
+		return '';
+	}
 
 	$attrs = _elgg_clean_vars($attrs);
 	$attributes = array();
