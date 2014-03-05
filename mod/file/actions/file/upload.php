@@ -19,9 +19,11 @@ if ($container_guid == 0) {
 
 elgg_make_sticky_form('file');
 
-// check if upload failed
+// check if upload attempted and failed
 if (!empty($_FILES['upload']['name']) && $_FILES['upload']['error'] != 0) {
-	register_error(elgg_echo('file:cannotload'));
+	$error = elgg_get_friendly_upload_error($_FILES['upload']['error']);
+
+	register_error($error);
 	forward(REFERER);
 }
 
