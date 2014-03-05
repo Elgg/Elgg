@@ -15,7 +15,10 @@ elgg.avatarCropper.init = function() {
 		selectionOpacity: 0,
 		aspectRatio: '1:1',
 		onSelectEnd: elgg.avatarCropper.selectChange,
-		onSelectChange: elgg.avatarCropper.preview
+		onSelectChange: elgg.avatarCropper.preview,
+		parent: '.elgg-form-avatar-crop div div.clearfix',
+		movable: 'true',
+		zIndex: 20
 	};
 
 	if ($('input[name=x2]').val()) {
