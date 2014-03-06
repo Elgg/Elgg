@@ -37,7 +37,7 @@ function htmlawed_init() {
  * @param array  $params Not used
  * @return mixed
  */
-function htmlawed_filter_tags($hook, $type, $result, $params) {
+function htmlawed_filter_tags($hook, $type, $result, $params = null) {
 	$var = $result;
 
 	elgg_load_library('htmlawed');
