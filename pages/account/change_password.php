@@ -21,13 +21,13 @@ if (!$user instanceof ElggUser) {
 	forward();
 }
 
-$title = elgg_echo('resetpassword');
+$title = elgg_echo('changepassword');
 
 $params = array(
 	'guid' => $user_guid,
 	'code' => $code,
 );
-$content = elgg_view_form('user/passwordreset', array('class' => 'elgg-form-account'), $params);
+$content = elgg_view_form('user/changepassword', array('class' => 'elgg-form-account'), $params);
 
 if (elgg_get_config('walled_garden')) {
 	elgg_load_css('elgg.walled_garden');
@@ -40,3 +40,4 @@ if (elgg_get_config('walled_garden')) {
 	));
 	echo elgg_view_page($title, $body);
 }
+
