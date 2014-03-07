@@ -38,7 +38,7 @@ elgg.security.refreshToken = function() {
 	elgg.getJSON('refresh_token', function(data) {
 		if (data && data.__elgg_ts && data.__elgg_token) {
 			elgg.security.setToken(data);
-			if (elgg.is_logged_in() && data.logged_in == false) {
+			if (elgg.is_logged_in() && data.logged_in === false) {
 				elgg.session.user = null;
 				elgg.register_error(elgg.echo('session_expired'));
 			}
@@ -63,7 +63,7 @@ elgg.security.addToken = function(data) {
 			args = {},
 			base = '';
 		
-		if (parts['host'] == undefined) {
+		if (parts['host'] === undefined) {
 			if (data.indexOf('?') === 0) {
 				// query string
 				base = '?';
@@ -72,7 +72,7 @@ elgg.security.addToken = function(data) {
 		} else {
 			// full or relative URL
 
-			if (parts['query'] != undefined) {
+			if (parts['query'] !== undefined) {
 				// with query string
 				args = elgg.parse_str(parts['query']);
 			}
