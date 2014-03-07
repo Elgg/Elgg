@@ -1636,7 +1636,7 @@ function _elgg_shutdown_hook() {
 		elgg_trigger_event('shutdown', 'system');
 
 		$time = (float)(microtime(true) - $START_MICROTIME);
-		$uri = isset($_SERVER['REQUEST_URI']) ? $_SERVER['REQUEST_URI'] : 'CLI';
+		$uri = _elgg_services()->request->server->get('REQUEST_URI', 'CLI');
 		// demoted to NOTICE from DEBUG so javascript is not corrupted
 		elgg_log("Page {$uri} generated in $time seconds", 'INFO');
 	} catch (Exception $e) {
@@ -1689,7 +1689,7 @@ function _elgg_ajax_page_handler($page) {
 
 		// pull out GET parameters through filter
 		$vars = array();
-		foreach ($_GET as $name => $value) {
+		foreach (_elgg_services()->request->query->keys() as $name) {
 			$vars[$name] = get_input($name);
 		}
 

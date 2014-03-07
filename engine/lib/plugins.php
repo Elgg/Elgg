@@ -533,50 +533,6 @@ function _elgg_namespace_plugin_private_setting($type, $name, $id = null) {
 }
 
 /**
- * Get the name of the most recent plugin to be called in the
- * call stack (or the plugin that owns the current page, if any).
- *
- * i.e., if the last plugin was in /mod/foobar/, this would return foo_bar.
- *
- * @param boolean $mainfilename If set to true, this will instead determine the
- *                              context from the main script filename called by
- *                              the browser. Default = false.
- *
- * @return string|false Plugin name, or false if no plugin name was called
- * @since 1.8.0
- * @access private
- * @deprecated 1.9
- */
-function elgg_get_calling_plugin_id($mainfilename = false) {
-	elgg_deprecated_notice('elgg_get_calling_plugin_id() is deprecated', 1.9);
-	if (!$mainfilename) {
-		if ($backtrace = debug_backtrace()) {
-			foreach ($backtrace as $step) {
-				$file = $step['file'];
-				$file = str_replace("\\", "/", $file);
-				$file = str_replace("//", "/", $file);
-				if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\/start\.php$/", $file, $matches)) {
-					return $matches[1];
-				}
-			}
-		}
-	} else {
-		//@todo this is a hack -- plugins do not have to match their page handler names!
-		if ($handler = get_input('handler', false)) {
-			return $handler;
-		} else {
-			$file = $_SERVER["SCRIPT_NAME"];
-			$file = str_replace("\\", "/", $file);
-			$file = str_replace("//", "/", $file);
-			if (preg_match("/mod\/([a-zA-Z0-9\-\_]*)\//", $file, $matches)) {
-				return $matches[1];
-			}
-		}
-	}
-	return false;
-}
-
-/**
  * @var array cache used by elgg_get_plugins_provides function
  * @todo move it with all other functions to Elgg_PluginsService
  */

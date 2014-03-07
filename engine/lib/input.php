@@ -131,7 +131,7 @@ function is_email_address($address) {
 }
 
 /**
- * Load all the REQUEST variables into the sticky form cache
+ * Load all the GET and POST variables into the sticky form cache
  *
  * Call this from an action when you want all your submitted variables
  * available if the submission fails validation and is sent back to the form
@@ -147,12 +147,12 @@ function elgg_make_sticky_form($form_name) {
 
 	$session = _elgg_services()->session;
 	$data = $session->get('sticky_forms', array());
-	$data[$form_name] = array();
+	$req = _elgg_services()->request;
 
-	foreach ($_REQUEST as $key => $var) {
-		// will go through XSS filtering on the get function
-		$data[$form_name][$key] = $var;
-	}
+	// will go through XSS filtering in elgg_get_sticky_value()
+	$vars = array_merge($req->query->all(), $req->request->all());
+	$data[$form_name] = $vars;
+
 	$session->set('sticky_forms', $data);
 }
 
