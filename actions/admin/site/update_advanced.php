@@ -83,6 +83,8 @@ if ($site = elgg_get_site_entity()) {
 		elgg_reset_system_cache();
 
 		system_message(elgg_echo('admin:site:secret_regenerated'));
+
+		elgg_delete_admin_notice('weak_site_key');
 	}
 
 	if ($site->save()) {

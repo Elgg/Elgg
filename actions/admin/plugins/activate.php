@@ -28,6 +28,15 @@ foreach ($plugin_guids as $guid) {
 
 	if ($plugin->activate()) {
 		$activated_guids[] = $guid;
+		$ids = array(
+			'cannot_start' . $plugin->getID(),
+			'invalid_and_deactivated_' . $plugin->getID()
+		);
+
+		foreach ($ids as $id) {
+			elgg_delete_admin_notice($id);
+		}
+
 	} else {
 		$msg = $plugin->getError();
 		$string = ($msg) ? 'admin:plugins:activate:no_with_msg' : 'admin:plugins:activate:no';
