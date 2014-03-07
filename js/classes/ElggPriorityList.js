@@ -17,7 +17,7 @@ elgg.ElggPriorityList = function() {
  */
 elgg.ElggPriorityList.prototype.insert = function(obj, opt_priority) {
 	var priority = 500;
-	if (arguments.length == 2 && opt_priority != undefined) {
+	if (arguments.length == 2 && opt_priority !== undefined) {
 		priority = parseInt(opt_priority, 10);
 	}
 
