@@ -67,7 +67,7 @@ elgg.discussion.Reply.prototype = {
 		elgg.action('discussion/reply/save', {
 			data: $form.serialize(),
 			success: function(json) {
-				if (json.status == 0) {
+				if (json.status === 0) {
 					// Update list item content
 					that.$item.find('.elgg-content').html(value);
 				}
