@@ -32,9 +32,6 @@ There are a few big differences between `Elgg Events`_ and `Plugin Hooks`_:
 #. Plugin hooks pass an arbitrary value through the handlers, giving each
    a chance to alter along the way.
 
-Note: Plugin hooks also allow passing a parameters array to the handlers,
-though this will eventually come to Elgg events as well.
-
 Elgg Events
 ===========
 
@@ -80,10 +77,11 @@ Elgg event handlers should have the following prototype:
      * @param string $event       The name of the event
      * @param string $object_type The type of $object (e.g. "user", "group")
      * @param mixed  $object      The object of the event
+     * @param mixed  $params      Data passed from the trigger
      *
      * @return bool if false, the handler is requesting to cancel the event
      */
-    function event_handler($event, $object_type, $object) {
+    function event_handler($event, $object_type, $object, $params) {
         ...
     }
 
@@ -126,7 +124,7 @@ You can trigger a custom Elgg event using ``elgg_trigger_event``:
 
 .. code:: php
 
-    if (elgg_trigger_event($event, $object_type, $object)) {
+    if (elgg_trigger_event($event, $object_type, $object, $params)) {
         // Proceed with doing something.
     } else {
         // Event was cancelled. Roll back any progress made before the event.
@@ -137,6 +135,7 @@ Parameters:
 -  **$event** The event name.
 -  **$object_type** The object type (e.g. "user" or "object").
 -  **$object** The object (e.g. an instance of ``ElggUser`` or ``ElggGroup``)
+-  **$params** Arbitrary data passed from the trigger to the handlers.
 
 The function will return ``false`` if any of the selected handlers returned
 ``false``, otherwise it will return ``true``.
