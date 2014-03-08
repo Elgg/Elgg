@@ -8,6 +8,21 @@
  */
 
 /**
+ * Constants corresponding to EXIF orientation data for image files
+ *
+ * @link http://sylvana.net/jpegcrop/exif_orientation.html
+ *
+ * @var int
+ */
+define('ELGG_EXIF_ORIENTATION_FLIP', 2);
+define('ELGG_EXIF_ORIENTATION_180', 3);
+define('ELGG_EXIF_ORIENTATION_180_FLIP', 4);
+define('ELGG_EXIF_ORIENTATION_270_FLIP', 5);
+define('ELGG_EXIF_ORIENTATION_270', 6);
+define('ELGG_EXIF_ORIENTATION_90_FLIP', 7);
+define('ELGG_EXIF_ORIENTATION_90', 8);
+
+/**
  * Get the size of the specified directory.
  *
  * @param string $dir       The full path of the directory
@@ -18,7 +33,7 @@
 function get_dir_size($dir, $totalsize = 0) {
 	$handle = @opendir($dir);
 	while ($file = @readdir($handle)) {
-		if (eregi("^\.{1,2}$", $file)) {
+		if ($file === '.' || $file === '..') {
 			continue;
 		}
 		if (is_dir($dir . $file)) {
@@ -43,6 +58,7 @@ function get_dir_size($dir, $totalsize = 0) {
 function get_uploaded_file($input_name) {
 	// If the file exists ...
 	if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
+		_elgg_normalize_image_rotation($_FILES[$input_name]['tmp_name'], $_FILES[$input_name]['tmp_name']);
 		return file_get_contents($_FILES[$input_name]['tmp_name']);
 	}
 	return false;
@@ -67,6 +83,8 @@ $square = false, $upscale = false) {
 
 	// If our file exists ...
 	if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
+		// normalize image orientation
+		_elgg_normalize_image_rotation($_FILES[$input_name]['tmp_name'], $_FILES[$input_name]['tmp_name']);
 		return get_resized_image_from_existing_file($_FILES[$input_name]['tmp_name'], $maxwidth,
 			$maxheight, $square, 0, 0, 0, 0, $upscale);
 	}
@@ -303,6 +321,142 @@ function get_image_resize_parameters($width, $height, $options) {
 	);
 
 	return $params;
+}
+
+/**
+ * Rotates an image to the correct orientation based on EXIF data supplied
+ * by digital cameras/mobile devices
+ * 
+ * @param string $source Path to the source image
+ * @param string $dest   Path to the destination image (may be the same as source)
+ * 
+ * @warning: if $dest already exists it will be overwritten
+ * @note: if no rotation occurs the source file will still be copied to $dest
+ * 
+ * @return boolean	(true) rotation occurred, (false) no rotation
+ *
+ * @access private
+ */
+function _elgg_normalize_image_rotation($source, $dest) {
+	// supported types for rotation
+	$supported = array(
+		IMAGETYPE_GIF,
+		IMAGETYPE_JPEG,
+		IMAGETYPE_PNG,
+		IMAGETYPE_BMP
+	);
+	
+	$type = exif_imagetype($source);
+	
+	if (!in_array($type, $supported)) {
+		// it's not an image, or not an image type we want to process
+		copy($source, $dest);
+		return false;
+	}
+	
+	$exif = exif_read_data($source, 'IFDO', true);
+	if (empty($exif['IFD0']['Orientation'])) {
+		// no orientation data
+		copy($source, $dest);
+		return false;
+	}
+	$orientation = $exif['IFD0']['Orientation'];
+	
+	// make sure the in memory image size does not exceed memory available
+	$imginfo = getimagesize($source);
+	$requiredMemory1 = ceil($imginfo[0] * $imginfo[1] * 5.35);
+	$requiredMemory2 = ceil($imginfo[0] * $imginfo[1] * ($imginfo['bits'] / 8) * $imginfo['channels'] * 2.5);
+	$requiredMemory = (int)max($requiredMemory1, $requiredMemory2);
+
+	$mem_avail = elgg_get_ini_setting_in_bytes('memory_limit');
+	$mem_used = memory_get_usage();
+	
+	$mem_avail = $mem_avail - $mem_used - 2097152; // 2 MB buffer
+	
+	if ($requiredMemory > $mem_avail) {
+		// we don't have enough memory for any manipulation
+		copy($source, $dest);
+		return false;
+	}
+
+	$image = imagecreatefromstring(file_get_contents($source));
+	$angle = 0;
+	switch($orientation) {
+		case ELGG_EXIF_ORIENTATION_FLIP:
+			$rotate = false;
+			$flip = true;
+			break;
+		case ELGG_EXIF_ORIENTATION_180:
+			$rotate = true;
+			$flip = false;
+			$angle = 180;
+			break;
+		case ELGG_EXIF_ORIENTATION_180_FLIP:
+			$rotate = true;
+			$flip = true;
+			$angle = 180;
+			break;
+		case ELGG_EXIF_ORIENTATION_270_FLIP:
+			$rotate = true;
+			$flip = true;
+			$angle = 270;
+			break;
+		case ELGG_EXIF_ORIENTATION_270:
+			$rotate = true;
+			$flip = false;
+			$angle = 270;
+			break;
+		case ELGG_EXIF_ORIENTATION_90_FLIP:
+			$rotate = true;
+			$flip = true;
+			$angle = 90;
+			break;
+		case ELGG_EXIF_ORIENTATION_90:
+			$rotate = true;
+			$flip = false;
+			$angle = 90;
+			break;
+		default:
+			$rotate = false;
+			$flip = false;
+			break;
+	}
+	
+	if ($rotate) {
+		$image = imagerotate($image, $angle, 0);
+	}
+	
+	$flipped = false;
+	if ($flip) {
+		$mem_avail = elgg_get_ini_setting_in_bytes('memory_limit');
+		$mem_used = memory_get_usage();
+
+		$mem_avail = $mem_avail - $mem_used - 2097152; // 2 MB buffer
+		if ($requiredMemory < $mem_avail) {
+			$width = imagesx($image);
+			$height = imagesy($image);
+			$src_y = 0;
+			$src_x = $width -1;
+			$src_height = $height;
+			$src_width = -$width;
+			
+			$imgdest = imagecreatetruecolor($width, $height);
+			imagecopyresampled($imgdest, $image, 0, 0, $src_x, $src_y, $width, $height, $src_width, $src_height);
+			$flipped = true;
+			
+			imagedestroy($image);
+			$image = $imgdest;
+		}
+	}
+
+	if (!$rotate && !$flipped) {
+		// no change needed
+		copy($source, $dest);
+		return false;
+	}
+	
+	imagejpeg($image, $dest, 100);
+	return true;
 }
 
 /**
