@@ -12,6 +12,18 @@ echo '<div id="profile-details" class="elgg-body pll">';
 echo "<span class=\"hidden nickname p-nickname\">{$user->username}</span>";
 echo "<h2 class=\"p-name fn\">{$user->name}</h2>";
 
+// the controller doesn't allow non-admins to view banned users' profiles
+if ($user->isBanned()) {
+	if (elgg_is_admin_logged_in()) {
+		$title = elgg_echo('banned');
+		$body = $user->ban_reason;
+
+		echo elgg_view_module('info', $title, $body, array(
+			'class' => 'profile-banned-user'
+		));
+	}
+}
+
 echo elgg_view("profile/status", array("entity" => $user));
 
 $microformats = array(
