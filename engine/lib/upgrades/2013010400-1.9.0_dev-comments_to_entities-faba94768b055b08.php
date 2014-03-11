@@ -86,16 +86,19 @@ elgg_set_ignore_access($ia);
 
 // set new comment entities' time_updated and last_action to time_created
 // this is not exposed through the API.
-$guid_str = implode(',', $new_comment_guids);
 
-$query = "
-UPDATE {$db_prefix}entities
-	SET time_updated = time_created,
-		last_action = time_created
-	WHERE guid IN ($guid_str)
-";
+if ($new_comment_guids) {
+	$guid_str = implode(',', $new_comment_guids);
 
-update_data($query);
+	$query = "
+	UPDATE {$db_prefix}entities
+		SET time_updated = time_created,
+			last_action = time_created
+		WHERE guid IN ($guid_str)
+	";
+
+	update_data($query);
+}
 
 
 // update the last action on containers to be the max of all its comments
