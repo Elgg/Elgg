@@ -13,7 +13,7 @@
 $attributes = array();
 
 if (isset($vars['id'])) {
-	$attributes['id'] = "id=\"{$vars['id']}\"";
+	$attributes['id'] = $vars['id'];
 }
 
 $class = 'elgg-ajax-loader';
