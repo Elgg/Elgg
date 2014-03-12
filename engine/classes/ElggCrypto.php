@@ -15,6 +15,11 @@ class ElggCrypto {
 	const CHARS_PASSWORD = 'bcdfghjklmnpqrstvwxyz2346789';
 
 	/**
+	 * Character set for hexadecimal
+	 */
+	const CHARS_HEX = '0123456789abcdef';
+
+	/**
 	 * Generate a string of highly randomized bytes (over the full 8-bit range).
 	 *
 	 * @param int $length Number of bytes needed
@@ -47,7 +52,7 @@ class ElggCrypto {
 	 * (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
 	 * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 	 */
-	public function getRandomBytes($length) {
+	public static function getRandomBytes($length) {
 		/**
 		 * Our primary choice for a cryptographic strong randomness function is
 		 * openssl_random_pseudo_bytes.
@@ -187,6 +192,12 @@ class ElggCrypto {
 
 			// Base64 URL
 			return strtr($string, '+/', '-_');
+		}
+
+		if ($chars == self::CHARS_HEX) {
+			// hex is easy
+			$bytes = self::getRandomBytes(ceil($length / 2));
+			return substr(bin2hex($bytes), 0, $length);
 		}
 
 		$listLen = strlen($chars);

@@ -368,6 +368,28 @@ function check_rate_limit_exceeded($user_guid) {
 }
 
 /**
+ * Generate a random cookie token used for the remember me feature.
+ *
+ * The first char is always "z" to indicate the value is more secure than the
+ * previously generated ones.
+ *
+ * @return string
+ */
+function _elgg_generate_remember_me_token() {
+	return 'z' . ElggCrypto::getRandomString(31);
+}
+
+/**
+ * Determine if a remember me cookie is a legacy MD5 hash
+ *
+ * @param string $cookie_value
+ * @return bool
+ */
+function _elgg_is_legacy_remember_me_token($cookie_value) {
+	return (isset($cookie_value[0]) && $cookie_value[0] !== 'z');
+}
+
+/**
  * Logs in a specified ElggUser. For standard registration, use in conjunction
  * with authenticate.
  *
@@ -396,11 +418,11 @@ function login(ElggUser $user, $persistent = false) {
 	$_SESSION['name'] = $user->name;
 
 	// if remember me checked, set cookie with token and store token on user
-	if (($persistent)) {
-		$code = (md5($user->name . $user->username . time() . rand()));
+	if ($persistent) {
+		$code = _elgg_generate_remember_me_token();
 		$_SESSION['code'] = $code;
 		$user->code = md5($code);
-		setcookie("elggperm", $code, (time()+(86400 * 30)),"/");
+		setcookie("elggperm", $code, (time() + (86400 * 30)), "/");
 	}
 
 	if (!$user->save() || !trigger_elgg_event('login','user',$user)) {
@@ -505,7 +527,7 @@ function session_init($event, $object_type, $object) {
 
 	// Generate a simple token (private from potentially public session id)
 	if (!isset($_SESSION['__elgg_session'])) {
-		$_SESSION['__elgg_session'] = md5(microtime().rand());
+		$_SESSION['__elgg_session'] = ElggCrypto::getRandomString(32, ElggCrypto::CHARS_HEX);
 	}
 
 	// test whether we have a user session
@@ -518,7 +540,7 @@ function session_init($event, $object_type, $object) {
 		unset($_SESSION['code']);
 
 		// is there a remember me cookie
-		if (isset($_COOKIE['elggperm'])) {
+		if (!empty($_COOKIE['elggperm'])) {
 			// we have a cookie, so try to log the user in
 			$code = $_COOKIE['elggperm'];
 			$code = md5($code);
@@ -528,6 +550,12 @@ function session_init($event, $object_type, $object) {
 				$_SESSION['id'] = $user->getGUID();
 				$_SESSION['guid'] = $_SESSION['id'];
 				$_SESSION['code'] = $_COOKIE['elggperm'];
+			} else {
+				if (_elgg_is_legacy_remember_me_token($_COOKIE['elggperm'])) {
+					// may be attempt to brute force legacy low-entropy codes
+					sleep(1);
+				}
+				setcookie("elggperm", "", (time() - (86400 * 30)), "/");
 			}
 		}
 	} else {
@@ -537,6 +565,15 @@ function session_init($event, $object_type, $object) {
 			$_SESSION['user'] = $user;
 			$_SESSION['id'] = $user->getGUID();
 			$_SESSION['guid'] = $_SESSION['id'];
+
+			if (!empty($_COOKIE['elggperm']) && _elgg_is_legacy_remember_me_token($_COOKIE['elggperm'])) {
+				// user has an old weaker-entropy code
+				$code = _elgg_generate_remember_me_token();
+				$_SESSION['code'] = $code;
+				$user->code = md5($code);
+				$user->save();
+				setcookie("elggperm", $code, (time() + (86400 * 30)), "/");
+			}
 		} else {
 			// user must have been deleted with a session active
 			unset($_SESSION['user']);

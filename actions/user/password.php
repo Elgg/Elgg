@@ -35,8 +35,17 @@ if (($user) && ($password != "")) {
 
 	if (strlen($password) >= 4) {
 		if ($password == $password2) {
-			$user->salt = generate_random_cleartext_password(); // Reset the salt
+			$user->salt = _elgg_generate_password_salt();
 			$user->password = generate_user_password($user, $password);
+			$user->code = '';
+			if ($user->guid == get_loggedin_userid() && !empty($_COOKIE['elggperm'])) {
+				// regenerate remember me code so no other user could
+				// use it to authenticate later
+				$code = _elgg_generate_remember_me_token();
+				$_SESSION['code'] = $code;
+				$user->code = md5($code);
+				setcookie("elggperm", $code, (time() + (86400 * 30)), "/");
+			}
 			if ($user->save()) {
 				system_message(elgg_echo('user:password:success'));
 			} else {

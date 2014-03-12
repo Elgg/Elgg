@@ -1201,7 +1201,7 @@ function force_user_password_reset($user_guid, $password) {
 		$user = get_entity($user_guid);
 
 		if ($user) {
-			$salt = generate_random_cleartext_password(); // Reset the salt
+			$salt = _elgg_generate_password_salt();
 			$user->salt = $salt;
 
 			$hash = generate_user_password($user, $password);
@@ -1364,22 +1364,30 @@ function is_email_address($address) {
 }
 
 /**
- * Simple function that will generate a random clear text password suitable for feeding into generate_user_password().
+ * Generate a random 12 character clear text password.
  *
- * @see generate_user_password
  * @return string
  */
 function generate_random_cleartext_password() {
-	return substr(md5(microtime() . rand()), 0, 8);
+	return ElggCrypto::getRandomString(12, ElggCrypto::CHARS_PASSWORD);
 }
 
 /**
- * Generate a password for a user, currently uses MD5.
+ * Generate an 8 character Base64 URL salt for the password
  *
- * Later may introduce salting etc.
+ * @return string
+ * @access private
+ */
+function _elgg_generate_password_salt() {
+	return ElggCrypto::getRandomString(8);
+}
+
+/**
+ * Hash a password for storage. Currently salted MD5.
  *
- * @param ElggUser $user The user this is being generated for.
- * @param string $password Password in clear text
+ * @param ElggUser $user     The user this is being generated for.
+ * @param string   $password Password in clear text
+ * @return string
  */
 function generate_user_password(ElggUser $user, $password) {
 	return md5($password . $user->salt);
@@ -1534,7 +1542,7 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	$user->email = $email;
 	$user->name = $name;
 	$user->access_id = ACCESS_PUBLIC;
-	$user->salt = generate_random_cleartext_password(); // Note salt generated before password!
+	$user->salt = _elgg_generate_password_salt();
 	$user->password = generate_user_password($user, $password);
 	$user->owner_guid = 0; // Users aren't owned by anyone, even if they are admin created.
 	$user->container_guid = 0; // Users aren't contained by anyone, even if they are admin created.
