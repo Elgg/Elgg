@@ -69,8 +69,17 @@ function elgg_set_user_password() {
 
 		if ($result) {
 			if ($password == $password2) {
-				$user->salt = generate_random_cleartext_password(); // Reset the salt
+				$user->salt = _elgg_generate_password_salt();
 				$user->password = generate_user_password($user, $password);
+				$user->code = '';
+				if ($user->guid == elgg_get_logged_in_user_guid() && !empty($_COOKIE['elggperm'])) {
+					// regenerate remember me code so no other user could
+					// use it to authenticate later
+					$code = _elgg_generate_remember_me_token();
+					$_SESSION['code'] = $code;
+					$user->code = md5($code);
+					setcookie("elggperm", $code, (time() + (86400 * 30)), "/");
+				}
 				if ($user->save()) {
 					system_message(elgg_echo('user:password:success'));
 					return true;
