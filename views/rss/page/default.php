@@ -17,8 +17,10 @@ if (empty($vars['title'])) {
 }
 
 // Remove RSS from URL
-$url = str_replace('?view=rss', '', full_url());
-$url = str_replace('&view=rss', '', $url);
+$rssurl = current_page_url();
+$url = elgg_http_remove_url_query_element($rssurl, 'view');
+
+$rssurl = htmlspecialchars($url, ENT_NOQUOTES, 'UTF-8');
 $url = htmlspecialchars($url, ENT_NOQUOTES, 'UTF-8');
 
 $body = elgg_extract('body', $vars, '');
@@ -34,10 +36,11 @@ header("Content-Type: text/xml");
 
 echo "<?xml version='1.0'?>";
 echo <<<END
-<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:georss="http://www.georss.org/georss" $namespaces>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:georss="http://www.georss.org/georss" xmlns:atom="http://www.w3.org/2005/Atom" $namespaces>
 <channel>
 	<title><![CDATA[$title]]></title>
 	<link>$url</link>
+	<atom:link href="$rssurl" rel="self" type="application/rss+xml" />
 	<description><![CDATA[$description]]></description>
 	$extensions
 	$body
