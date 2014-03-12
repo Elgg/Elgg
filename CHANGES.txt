@@ -1,3 +1,34 @@
+Version 1.8.19
+(March 12, 2014 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Brett Profitt
+   * Centillien
+   * Evan Winslow
+   * Ismayil Khayredinov
+   * Jerome Bakker
+   * Juho Jaakkola
+   * Matt Beckett
+   * RiverVanRain
+   * Sem
+   * Steve Clay
+   * pattyland
+
+  Security enhancements:
+   * Implements stronger remember me cookie strategy to prevent brute force attacks.
+
+  Bugfixes:
+   * Fixed numerous PHP warnings. 
+   * Groups: Corrected breadcrumb for group discussion pages.
+   * Fixed RSS validation for the River RSS feed.
+
+  Improvements:
+   * Moved Site Secret update to configure -> advanced.
+   * Added more comprehensive tests for HTMLAwed.
+
+  Documentation:
+   * Added better deprecation warnings for use of certain attributes in views.
+
+
 Version 1.8.18
 (January 11, 2014 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
