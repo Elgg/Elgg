@@ -38,7 +38,7 @@ if ($email) {
 }
 
 if ($password_1) {
-	$user->salt = generate_random_cleartext_password();
+	$user->salt = _elgg_generate_password_salt();
 	$user->password = generate_user_password($user, $password_1);
 }
 
