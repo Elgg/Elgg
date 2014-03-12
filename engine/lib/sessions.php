@@ -345,6 +345,28 @@ function _elgg_delete_remember_me_cookie($code) {
 }
 
 /**
+ * Generate a random cookie token used for the remember me feature.
+ *
+ * The first char is always "z" to indicate the value is more secure than the
+ * previously generated ones.
+ *
+ * @return string
+ */
+function _elgg_generate_remember_me_token() {
+	return 'z' . ElggCrypto::getRandomString(31);
+}
+
+/**
+ * Determine if a remember me cookie is a legacy MD5 hash
+ *
+ * @param string $cookie_value
+ * @return bool
+ */
+function _elgg_is_legacy_remember_me_token($cookie_value) {
+	return (isset($cookie_value[0]) && $cookie_value[0] !== 'z');
+}
+
+/**
  * Logs in a specified ElggUser. For standard registration, use in conjunction
  * with elgg_authenticate.
  *
@@ -382,11 +404,10 @@ function login(ElggUser $user, $persistent = false) {
 
 	// if remember me checked, set cookie with token and store token on user
 	if ($persistent) {
-		$code = md5($user->name . $user->username . time() . rand());
-		// @todo oooh, hashing a hash adds magical powers
-		_elgg_add_remember_me_cookie($user, md5($code));
+		$code = _elgg_generate_remember_me_token();
 		$session->set('code', $code);
-
+		_elgg_add_remember_me_cookie($user, md5($code));
+		
 		$cookies = elgg_get_config('cookies');
 		$cookie = new ElggCookie($cookies['remember_me']['name']);
 		$cookie->value = $code;
@@ -395,7 +416,7 @@ function login(ElggUser $user, $persistent = false) {
 		}
 		elgg_set_cookie($cookie);
 	}
-
+	
 	// User's privilege has been elevated, so change the session id (prevents session fixation)
 	$session->migrate();
 
@@ -480,6 +501,19 @@ function _elgg_session_boot() {
 	// test whether we have a user session
 	if ($session->has('guid')) {
 		$session->setLoggedInUser(get_user($session->get('guid')));
+
+		$cookies = elgg_get_config('cookies');
+		$cookie_name = $cookies['remember_me']['name'];
+		
+		// replace user's old weaker-entropy code with new one
+		if (!empty($_COOKIE[$cookie_name]) && _elgg_is_legacy_remember_me_token($_COOKIE[$cookie_name])) {
+			// replace user's old weaker-entropy code with new one
+			$code = _elgg_generate_remember_me_token();
+			$session->set('code', $code);
+			$user->code = md5($code);
+			$user->save();
+			setcookie($cookie_name, $code, (time() + (86400 * 30)), "/");
+		}
 	} else {
 		// is there a remember me cookie
 		$cookies = elgg_get_config('cookies');
@@ -490,6 +524,12 @@ function _elgg_session_boot() {
 			if ($user) {
 				$session->setLoggedInUser($user);
 				$session->set('code', md5($_COOKIE[$cookie_name]));
+			} else {
+				if (_elgg_is_legacy_remember_me_token($_COOKIE[$cookie_name])) {
+					// may be attempt to brute force legacy low-entropy codes
+					sleep(1);
+				}
+				setcookie($cookie_name, "", (time() - (86400 * 30)), "/");
 			}
 		}
 	}

@@ -127,6 +127,37 @@ Version 1.9.0-rc1
    * Default entity page handler
 
 
+Version 1.8.19
+(March 12, 2014 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Brett Profitt
+   * Centillien
+   * Evan Winslow
+   * Ismayil Khayredinov
+   * Jerome Bakker
+   * Juho Jaakkola
+   * Matt Beckett
+   * RiverVanRain
+   * Sem
+   * Steve Clay
+   * pattyland
+
+  Security enhancements:
+   * Implements stronger remember me cookie strategy to prevent brute force attacks.
+
+  Bugfixes:
+   * Fixed numerous PHP warnings.
+   * Groups: Corrected breadcrumb for group discussion pages.
+   * Fixed RSS validation for the River RSS feed.
+
+  Improvements:
+   * Moved Site Secret update to configure -> advanced.
+   * Added more comprehensive tests for HTMLAwed.
+
+  Documentation:
+   * Added better deprecation warnings for use of certain attributes in views.
+
+
 Version 1.8.18
 (January 11, 2014 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
@@ -482,7 +513,7 @@ Version 1.8.6
 
 Version 1.8.5
 (May 17, 2012 from https://github.com/Elgg/Elgg/tree/1.8)
- 
+
  Contributing Developers:
   * Brett Profitt
   * Evan Winslow
@@ -498,7 +529,7 @@ Version 1.8.5
     to show private entities to non-admin and non-owning users. (Non-exploitable)
 
  Bugfixes:
-  * Twitter API: New users are forwarded to the correct page after creating 
+  * Twitter API: New users are forwarded to the correct page after creating
                  an account with Twitter.
   * Files: PDF files are downloaded as "inline" to display in the browser.
   * Fixed possible duplication errors when writing metadata with multiple values.
@@ -506,7 +537,7 @@ Version 1.8.5
   * Fixed problems when enabling more than 50 metadata or annotations.
 
  API:
-  * River entries' timestamps use elgg_view_friendly_time() and can be 
+  * River entries' timestamps use elgg_view_friendly_time() and can be
      overridden with the friendly time output view.
 
 
@@ -733,7 +764,7 @@ Version 1.8.0 (Jackie)
 (September 5th, 2011 from git://github.com/Elgg/Elgg.git)
 
  Notes:
-  Elgg 1.8 contains the most changes in Elgg since the transition from Elgg 
+  Elgg 1.8 contains the most changes in Elgg since the transition from Elgg
   0.9 to Elgg 1.0. The core team tried to make the transition as smooth as
   possible, but in the interest of following standards and simplifying the
   development process for core and third party developers, we have made
@@ -752,7 +783,7 @@ Version 1.8.0 (Jackie)
   --The Elgg Core Development Team
 
  A tip about updating plugins:
-  It's not difficult to update 1.7 plugins for 1.8. There is a detailed 
+  It's not difficult to update 1.7 plugins for 1.8. There is a detailed
   document outlining this process on the wiki:
   http://docs.elgg.org/wiki/Updating_plugins_for_Elgg_1.8
 
