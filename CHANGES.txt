@@ -1,3 +1,13 @@
+Version 1.7.22
+(March 12, 2014 from https://github.com/Elgg/Elgg/tree/1.7)
+
+ Contributing Developers:
+  * Steve Clay
+
+ Security Enhancements:
+  * Implements stronger remember me cookie strategy to prevent brute force attacks.
+
+
 Version 1.7.21
 (January 3, 2014 from https://github.com/Elgg/Elgg/tree/1.7)
 
