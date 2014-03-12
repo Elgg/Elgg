@@ -486,6 +486,7 @@ return array(
 	'admin:users:find' => 'Find',
 
 	'admin:administer_utilities:maintenance' => 'Maintenance mode',
+	'admin:upgrades' => 'Upgrades',
 
 	'admin:settings' => 'Settings',
 	'admin:settings:basic' => 'Basic Settings',
@@ -1104,9 +1105,17 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:site_secret_warning:moderate' => "You are encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 	'upgrade:site_secret_warning:weak' => "You are strongly encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 
+	'ElggUpgrade:error:url_invalid' => 'Invalid value for URL.',
+	'ElggUpgrade:error:url_not_unique' => 'Upgrade URLs must be unique.',
+	'ElggUpgrade:error:title_required' => 'ElggUpgrade objects must have a title.',
+	'ElggUpgrade:error:description_required' => 'ElggUpgrade objects must have a description.',
+	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade objects must have an upgrade URL.',
+
 	'deprecated:function' => '%s() was deprecated by %s()',
 
 	'admin:upgrades' => 'Upgrades',
+	'item:object:elgg_upgrade' => 'Site upgrades',
+	'admin:upgrades:none' => 'Your installation is up to date!',
 
 	'upgrade:comments:status' => 'There are <b>%s</b> comments that need to be upgraded.',
 	'upgrade:comments:warning' => '<b>Warning:</b> on a large site this upgrade may take a significantly long time!',

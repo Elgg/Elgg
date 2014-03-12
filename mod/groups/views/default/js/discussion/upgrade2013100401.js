@@ -90,6 +90,7 @@ elgg.discussion_upgrade.upgradeReplyBatch = function(offset) {
 			$('#reply-upgrade-spinner').addClass('hidden');
 
 			percent = '100';
+			elgg.action('action/discussion/upgrade/2013100401', {'upgrade_completed': 1});
 		}
 
 		$('#reply-upgrade-counter').text(percent + '%');
