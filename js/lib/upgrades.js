@@ -90,6 +90,7 @@ elgg.upgrades.upgradeCommentBatch = function(offset) {
 			$('#comment-upgrade-spinner').addClass('hidden');
 
 			percent = '100';
+			elgg.action('admin/upgrades/upgrade_comments', {'upgrade_completed': 1});
 		}
 
 		$('#comment-upgrade-counter').text(percent + '%');

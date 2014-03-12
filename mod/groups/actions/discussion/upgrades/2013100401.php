@@ -10,6 +10,17 @@
 global $START_MICROTIME;
 $batch_run_time_in_secs = 2;
 
+if (get_input('upgrade_completed')) {
+	// set the upgrade as completed
+	$factory = new ElggUpgrade();
+	$upgrade = $factory->getUpgradeFromURL('/admin/groups/upgrades/2013100401');
+	if ($upgrade instanceof ElggUpgrade) {
+		$upgrade->setCompleted();
+	}
+
+	return true;
+}
+
 // Offset is the total amount of errors so far. We skip these
 // annotations to prevent them from possibly repeating the same error.
 $offset = get_input('offset', 0);
@@ -40,6 +51,13 @@ do {
 
 	if (!$annotations) {
 		// no annotations left
+
+		// set the upgrade as completed
+		$upgrade = ElggUpgrade::getUpgradeFromURL('/admin/upgrades/comments');
+		if ($upgrade instanceof ElggUpgrade) {
+			$upgrade->setCompleted();
+		}
+
 		break;
 	}
 
