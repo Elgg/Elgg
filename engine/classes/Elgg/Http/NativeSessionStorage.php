@@ -171,6 +171,7 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 		if (!$this->started) {
 			$this->start();
 		}
+
 		return array_key_exists($name, $_SESSION);
 	}
 

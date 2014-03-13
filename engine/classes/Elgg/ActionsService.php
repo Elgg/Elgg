@@ -166,10 +166,13 @@ class Elgg_ActionsService {
 				}
 			}
 		} else {
-			if (! empty($_SERVER['CONTENT_LENGTH']) && empty($_POST)) {
+			$req = _elgg_services()->request;
+			$length = $req->server->get('CONTENT_LENGTH');
+			$post_count = count($req->request);
+			if ($length && $post_count < 1) {
 				// The size of $_POST or uploaded file has exceed the size limit
 				$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', array(
-					'post_size' => $_SERVER['CONTENT_LENGTH'],
+					'post_size' => $length,
 					'visible_errors' => $visible_errors,
 				), elgg_echo('actiongatekeeper:uploadexceeded'));
 			} else {
@@ -311,7 +314,8 @@ class Elgg_ActionsService {
 			// returning JSON in a plain-text response.  Some libraries request
 			// JSON in an invisible iframe which they then read from the iframe,
 			// however some browsers will not accept the JSON MIME type.
-			if (stripos($_SERVER['HTTP_ACCEPT'], 'application/json') === false) {
+			$http_accept = _elgg_services()->request->server->get('HTTP_ACCEPT');
+			if (stripos($http_accept, 'application/json') === false) {
 				header("Content-type: text/plain");
 			} else {
 				header("Content-type: application/json");

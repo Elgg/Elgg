@@ -87,7 +87,7 @@ elgg.ui.popupOpen = function(event) {
 		at: 'center bottom',
 		of: $(this),
 		collision: 'fit fit'
-	}
+	};
 
 	options = elgg.trigger_hook('getOptions', 'ui.popup', params, options);
 
@@ -216,7 +216,7 @@ elgg.ui.initHoverMenu = function(parent) {
 
 	// hide avatar menu when user clicks elsewhere
 	$(document).click(function(event) {
-		if ($(event.target).parents(".elgg-avatar").length == 0) {
+		if ($(event.target).parents(".elgg-avatar").length === 0) {
 			$(".elgg-menu-hover").fadeOut();
 		}
 	});
@@ -375,7 +375,7 @@ elgg.ui.initAccessInputs = function () {
 	$('.elgg-input-access').each(function () {
 		function updateMembersonlyNote() {
 			var val = $select.val();
-			if (val != acl && val != 0) {
+			if (val != acl && val !== 0) {
 				// .show() failed in Chrome. Maybe a float/jQuery bug
 				$note.css('visibility', 'visible');
 			} else {

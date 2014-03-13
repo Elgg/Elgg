@@ -50,8 +50,6 @@ function twitter_api_allow_sign_on_with_twitter() {
  * This includes the login URL as the callback
  */
 function twitter_api_forward() {
-	global $SESSION;
-
 	// sanity check
 	if (!twitter_api_allow_sign_on_with_twitter()) {
 		forward();
@@ -65,14 +63,18 @@ function twitter_api_forward() {
 		'persistent' => (bool) get_input("persistent"),
 	);
 	// capture referrer if in site, but not the twitter_api
-	if (!empty($SESSION['last_forward_from'])) {
-		$login_metadata['forward'] = $SESSION['last_forward_from'];
-	} elseif (!empty($_SERVER['HTTP_REFERER'])
-			&& 0 === strpos($_SERVER['HTTP_REFERER'], elgg_get_site_url())
-			&& 0 !== strpos($_SERVER['HTTP_REFERER'], elgg_get_site_url() . 'twitter_api/')) {
-		$login_metadata['forward'] = $_SERVER['HTTP_REFERER'];
+
+	$session = _elgg_services()->session;
+	$server = _elgg_services()->request->server;
+	$ref = $server->get('HTTP_REFERER', '');
+
+	if ($session->has('last_forward_from')) {
+		$login_metadata['forward'] = $session->get('last_forward_from');
+	} elseif (0 === strpos($ref, elgg_get_site_url())
+			&& 0 !== strpos($ref, elgg_get_site_url() . 'twitter_api/')) {
+		$login_metadata['forward'] = $ref;
 	}
-	$SESSION['twitter_api_login_metadata'] = $login_metadata;
+	$session->set('twitter_api_login_metadata', $login_metadata);
 
 	forward($request_link, 'twitter_api');
 }

@@ -67,7 +67,7 @@ elgg.comments.Comment.prototype = {
 		elgg.action('comment/save', {
 			data: $form.serialize(),
 			success: function(json) {
-				if (json.status == 0) {
+				if (json.status === 0) {
 					// Update list item content
 					that.$item.find('.elgg-output').html(value);
 				}

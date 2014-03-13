@@ -61,7 +61,7 @@ function legacy_urls_redirect($url) {
 function legacy_urls_prepare_url($url, array $query_vars = array()) {
 	$params = array();
 	// Elgg munges the request in htaccess rules so cannot use $_GET
-	$query = parse_url($_SERVER['REQUEST_URI'], PHP_URL_QUERY);
+	$query = parse_url(_elgg_services()->request->server->get('REQUEST_URI'), PHP_URL_QUERY);
 	if ($query) {
 		parse_str($query, $params);
 	}

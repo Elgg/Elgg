@@ -17,7 +17,7 @@ elgg.autocomplete.init = function() {
 			noResults: '',
 			results: function() {}
 		}
-	})
+	});
 };
 
 elgg.register_hook_handler('init', 'system', elgg.autocomplete.init);

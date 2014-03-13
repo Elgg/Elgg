@@ -43,7 +43,7 @@ elgg.avatarCropper.init = function() {
  */
 elgg.avatarCropper.preview = function(img, selection) {
 	// catch for the first click on the image
-	if (selection.width == 0 || selection.height == 0) {
+	if (selection.width === 0 || selection.height === 0) {
 		return;
 	}
 

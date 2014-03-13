@@ -9,10 +9,10 @@ elgg.provide('elgg.session');
  * @param {string} value
  * @param {Object} options
  * 
- *  {number|Date} options[expires]
- * 	{string} options[path]
- * 	{string} options[domain]
- * 	{boolean} options[secure]
+ * {number|Date} options[expires]
+ * {string} options[path]
+ * {string} options[domain]
+ * {boolean} options[secure]
  * 
  * @return {string|undefined} The value of the cookie, if only name is specified. Undefined if no value set
  */
