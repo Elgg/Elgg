@@ -9,7 +9,7 @@ $prefix = elgg_get_config('dbprefix');
 $query = "
 	UPDATE {$prefix}users_remember_me_cookies rmc
 	JOIN {$prefix}users_entity ue on ue.guid = rmc.guid
-	SET code = ''
+	SET rmc.code = ''
 	WHERE ue.admin = 'yes'
 ";
 update_data($query);

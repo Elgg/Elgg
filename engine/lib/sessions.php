@@ -422,7 +422,7 @@ function _elgg_generate_remember_me_token() {
 /**
  * Determine if a remember me cookie is a legacy MD5 hash
  *
- * @param string $cookie_value
+ * @param string $cookie_value The value of the remember me cookie
  * @return bool
  */
 function _elgg_is_legacy_remember_me_token($cookie_value) {
