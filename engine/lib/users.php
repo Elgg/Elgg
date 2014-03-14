@@ -275,39 +275,14 @@ function get_user_by_username($username) {
 }
 
 /**
- * Get user by remember me code
+ * Get user by persistent login password
  *
- * @param string $code The remember me code
+ * @param string $hash Hash of the persistent login password
  *
  * @return ElggUser
  */
-function get_user_by_code($code) {
-	if (!$code) {
-		return null;
-	}
-
-	$db = _elgg_services()->db;	
-	$prefix = $db->getTablePrefix();
-	$code = $db->sanitizeString($code);
-
-	$query = "SELECT guid FROM {$prefix}users_remember_me_cookies
-		WHERE code = '$code'";
-	try {
-		$result = $db->getDataRow($query);
-	} catch (DatabaseException $e) {
-		if (false !== strpos($e->getMessage(), "users_remember_me_cookies' doesn't exist")) {
-			// schema has not been updated so we swallow this exception
-			return null;
-		} else {
-			throw $e;
-		}
-	}
-
-	if ($result) {
-		return get_user($result->guid);
-	}
-
-	return null;
+function get_user_by_code($hash) {
+	_elgg_services()->persistentLogin->getUserFromHash($hash);
 }
 
 /**
