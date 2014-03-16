@@ -191,7 +191,7 @@ function generate_action_token($timestamp) {
  * @todo Move to better file.
  */
 function init_site_secret() {
-	$secret = 'z' . ElggCrypto::getRandomString(31);
+	$secret = 'z' . _elgg_services()->crypto->getRandomString(31);
 
 	if (datalist_set('__site_secret__', $secret)) {
 		return $secret;

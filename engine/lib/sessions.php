@@ -416,7 +416,7 @@ function _elgg_get_remember_me_token_from_cookie() {
  * @return string
  */
 function _elgg_generate_remember_me_token() {
-	return 'z' . ElggCrypto::getRandomString(31);
+	return 'z' . _elgg_services()->crypto->getRandomString(31);
 }
 
 /**
