@@ -11,6 +11,7 @@
  * @property-read Elgg_Amd_Config                         $amdConfig
  * @property-read ElggAutoP                               $autoP
  * @property-read Elgg_AutoloadManager                    $autoloadManager
+ * @property-read ElggCrypto                              $crypto
  * @property-read Elgg_Database                           $db
  * @property-read Elgg_EventsService                      $events
  * @property-read Elgg_PluginHooksService                 $hooks
@@ -40,6 +41,7 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 		$this->setClassName('actions', 'Elgg_ActionsService');
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 		$this->setClassName('autoP', 'ElggAutoP');
+		$this->setClassName('crypto', 'ElggCrypto');
 		$this->setFactory('db', array($this, 'getDatabase'));
 		$this->setFactory('events', array($this, 'getEvents'));
 		$this->setFactory('hooks', array($this, 'getHooks'));

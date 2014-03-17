@@ -523,7 +523,7 @@ function execute_new_password_request($user_guid, $conf_code, $password = null) 
  * @return string
  */
 function generate_random_cleartext_password() {
-	return ElggCrypto::getRandomString(12, ElggCrypto::CHARS_PASSWORD);
+	return _elgg_services()->crypto->getRandomString(12, ElggCrypto::CHARS_PASSWORD);
 }
 
 /**
@@ -533,7 +533,7 @@ function generate_random_cleartext_password() {
  * @access private
  */
 function _elgg_generate_password_salt() {
-	return ElggCrypto::getRandomString(8);
+	return _elgg_services()->crypto->getRandomString(8);
 }
 
 /**
