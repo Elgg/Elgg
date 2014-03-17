@@ -99,6 +99,5 @@ View and comment on the file:
 	'file:downloadfailed' => "Sorry; this file is not available at this time.",
 	'file:deletefailed' => "Your file could not be deleted at this time.",
 	'file:noaccess' => "You do not have permissions to change this file",
-	'file:cannotload' => "There was an error uploading the file",
 	'file:nofile' => "You must select a file",
 );

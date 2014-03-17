@@ -116,6 +116,16 @@ return array(
 	'error:404:title' => 'Page not found',
 	'error:404:content' => 'Sorry. We could not find the page that you requested.',
 
+	'upload:error:ini_size' => 'The file you tried to upload is too large.',
+	'upload:error:form_size' => 'The file you tried to upload is too large.',
+	'upload:error:partial' => 'The file upload did not complete.',
+	'upload:error:no_file' => 'No file was selected.',
+	'upload:error:no_tmp_dir' => 'Cannot save the uploaded file.',
+	'upload:error:cant_write' => 'Cannot save the uploaded file.',
+	'upload:error:extension' => 'Cannot save the uploaded file.',
+	'upload:error:unknown' => 'The file upload failed.',
+
+
 /**
  * User details
  */

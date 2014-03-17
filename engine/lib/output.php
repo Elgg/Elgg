@@ -418,6 +418,54 @@ function elgg_get_friendly_time($time, $current_time = null) {
 }
 
 /**
+ * Returns a human-readable message for PHP's upload error codes
+ *
+ * @param int $error_code The code as stored in $_FILES['name']['error']
+ * @return string
+ */
+function elgg_get_friendly_upload_error($error_code) {
+	switch ($error_code) {
+		case UPLOAD_ERR_OK:
+			return '';
+			
+		case UPLOAD_ERR_INI_SIZE:
+			$key = 'ini_size';
+			break;
+		
+		case UPLOAD_ERR_FORM_SIZE:
+			$key = 'form_size';
+			break;
+
+		case UPLOAD_ERR_PARTIAL:
+			$key = 'partial';
+			break;
+
+		case UPLOAD_ERR_NO_FILE:
+			$key = 'no_file';
+			break;
+
+		case UPLOAD_ERR_NO_TMP_DIR:
+			$key = 'no_tmp_dir';
+			break;
+
+		case UPLOAD_ERR_CANT_WRITE:
+			$key = 'cant_write';
+			break;
+
+		case UPLOAD_ERR_EXTENSION:
+			$key = 'extension';
+			break;
+		
+		default:
+			$key = 'unknown';
+			break;
+	}
+
+	return elgg_echo("upload:error:$key");
+}
+
+
+/**
  * Strip tags and offer plugins the chance.
  * Plugins register for output:strip_tags plugin hook.
  * Original string included in $params['original_string']

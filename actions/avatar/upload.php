@@ -11,8 +11,9 @@ if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
 	forward(REFERER);
 }
 
-if ($_FILES['avatar']['error'] != 0) {
-	register_error(elgg_echo('avatar:upload:fail'));
+$error = elgg_get_friendly_upload_error($_FILES['avatar']['error']);
+if ($error) {
+	register_error($error);
 	forward(REFERER);
 }
 
