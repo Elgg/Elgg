@@ -352,21 +352,19 @@ function messages_count_unread() {
 	$user_guid = elgg_get_logged_in_user_guid();
 	$db_prefix = elgg_get_config('dbprefix');
 
-	// denormalize the md to speed things up.
+	// denormalize the md in one query to speed things up.
 	// seriously, 10 joins if you don't.
-	$strings = array('toId', $user_guid, 'readYet', 0, 'msg', 1);
+	$q = "SELECT * from {$db_prefix}metastrings WHERE string"
+		. " IN ('toId', '$user_guid', 'readYet', '0', 'msg', '1')";
+
+	$data = get_data($q);
 	$map = array();
-	foreach ($strings as $string) {
-		$id = get_metastring_id($string);
-		$map[$string] = $id;
+
+	foreach ($data as $row) {
+		$map[$row->string] = $row->id;
 	}
 
 	$options = array(
-//		'metadata_name_value_pairs' => array(
-//			'toId' => elgg_get_logged_in_user_guid(),
-//			'readYet' => 0,
-//			'msg' => 1
-//		),
 		'joins' => array(
 			"JOIN {$db_prefix}metadata msg_toId on e.guid = msg_toId.entity_guid",
 			"JOIN {$db_prefix}metadata msg_readYet on e.guid = msg_readYet.entity_guid",
