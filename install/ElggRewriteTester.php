@@ -89,7 +89,7 @@ class ElggRewriteTester {
 	 *
 	 * @return bool
 	 */
-	protected function runRewriteTest($url) {
+	public function runRewriteTest($url) {
 
 		$this->serverSupportsRemoteRead = TRUE;
 

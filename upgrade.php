@@ -44,6 +44,23 @@ if (get_input('upgrade') == 'upgrade') {
 		forward($forward_url);
 	}
 } else {
+	// test the URL rewrite rules
+	if (!class_exists('ElggRewriteTester')) {
+		require dirname(__FILE__) . '/install/ElggRewriteTester.php';
+	}
+	$rewriteTester = new ElggRewriteTester();
+	$url = elgg_get_site_url() . "__testing_rewrite?__testing_rewrite=1";
+	if (!$rewriteTester->runRewriteTest($url)) {
+		// note: translation may not be available until after upgrade
+		$msg = elgg_echo("installation:htaccess:needs_upgrade");
+		if ($msg === "installation:htaccess:needs_upgrade") {
+			$msg = "You must update your .htaccess file so that the path is injected "
+				. "into the GET parameter __elgg_uri (you can use htaccess_dist as a guide).";
+		}
+		echo $msg;
+		exit;
+	}
+
 	// if upgrading from < 1.8.0, check for the core view 'welcome' and bail if it's found.
 	// see https://github.com/elgg/elgg/issues/3064
 	// we're not checking the view itself because it's likely themes will override this view.

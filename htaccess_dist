@@ -138,7 +138,6 @@ RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ eng
 RewriteRule ^rewrite.php$ install.php [L]
 
 # Everything else that isn't a file gets routed through Elgg
-RewriteEngine on
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
 RewriteRule ^(.*)$ index.php?__elgg_uri=$1 [QSA,L]
