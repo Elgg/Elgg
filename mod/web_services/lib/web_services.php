@@ -363,6 +363,7 @@ function api_auth_hmac() {
 
 	// get the query string
 	$query = _elgg_services()->request->server->get('REQUEST_URI');
+	$query = substr($query, strpos($query, '?') + 1);
 
 	// calculate expected HMAC
 	$hmac = calculate_hmac(	$api_header->hmac_algo,
