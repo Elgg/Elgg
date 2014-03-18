@@ -41,11 +41,17 @@ function get_dir_size($dir, $totalsize = 0) {
  * @return mixed|false The contents of the file, or false on failure.
  */
 function get_uploaded_file($input_name) {
-	// If the file exists ...
-	if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
-		return file_get_contents($_FILES[$input_name]['tmp_name']);
+	$files = _elgg_services()->request->files;
+	if (!$files->has($input_name)) {
+		return false;
 	}
-	return false;
+	
+	$file = $files->get($input_name);
+	if (elgg_extract('error', $file) !== 0) {
+		return false;
+	}
+
+	return file_get_contents(elgg_extract('tmp_name', $file));
 }
 
 /**
@@ -64,14 +70,18 @@ function get_uploaded_file($input_name) {
  */
 function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight,
 $square = false, $upscale = false) {
-
-	// If our file exists ...
-	if (isset($_FILES[$input_name]) && $_FILES[$input_name]['error'] == 0) {
-		return get_resized_image_from_existing_file($_FILES[$input_name]['tmp_name'], $maxwidth,
-			$maxheight, $square, 0, 0, 0, 0, $upscale);
+	$files = _elgg_services()->request->files;
+	if (!$files->has($input_name)) {
+		return false;
 	}
 
-	return false;
+	$file = $files->get($input_name);
+	if (elgg_extract('error', $file) !== 0) {
+		return false;
+	}
+
+	return get_resized_image_from_existing_file(elgg_extract('tmp_name', $file), $maxwidth,
+		$maxheight, $square, 0, 0, 0, 0, $upscale);
 }
 
 /**

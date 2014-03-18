@@ -9,7 +9,7 @@ elgg.provide('elgg.ui.widgets');
 elgg.ui.widgets.init = function() {
 
 	// widget layout?
-	if ($(".elgg-widgets").length == 0) {
+	if ($(".elgg-widgets").length === 0) {
 		return;
 	}
 
@@ -46,7 +46,7 @@ elgg.ui.widgets.add = function(event) {
 
 	// if multiple instances not allow, disable this widget type add button
 	var multiple = $(this).attr('class').indexOf('elgg-widget-multiple') != -1;
-	if (multiple == false) {
+	if (multiple === false) {
 		$(this).addClass('elgg-state-unavailable');
 		$(this).removeClass('elgg-state-available');
 		$(this).unbind('click', elgg.ui.widgets.add);
@@ -107,7 +107,7 @@ elgg.ui.widgets.move = function(event, ui) {
  * @return void
  */
 elgg.ui.widgets.remove = function(event) {
-	if (confirm(elgg.echo('deleteconfirm')) == false) {
+	if (confirm(elgg.echo('deleteconfirm')) === false) {
 		event.preventDefault();
 		return;
 	}
@@ -115,11 +115,11 @@ elgg.ui.widgets.remove = function(event) {
 	var $widget = $(this).closest('.elgg-module-widget');
 
 	// if widget type is single instance type, enable the add buton
-	var type = $(this).data('elgg-widget-type')
+	var type = $(this).data('elgg-widget-type');
 	$container = $(this).parents('.elgg-layout-widgets').first();
 	$button = $('[data-elgg-widget-type="' + type + '"]', $container);
 	var multiple = $button.attr('class').indexOf('elgg-widget-multiple') != -1;
-	if (multiple == false) {
+	if (multiple === false) {
 		$button.addClass('elgg-state-available');
 		$button.removeClass('elgg-state-unavailable');
 		$button.unbind('click', elgg.ui.widgets.add); // make sure we don't bind twice
@@ -198,14 +198,14 @@ elgg.ui.widgets.setMinHeight = function(selector) {
 		if (bottom > maxBottom) {
 			maxBottom = bottom;
 		}
-	})
+	});
 	$(selector).each(function() {
 		var bottom = parseInt($(this).offset().top + $(this).height());
 		if (bottom < maxBottom) {
 			var newMinHeight = parseInt($(this).height() + (maxBottom - bottom));
 			$(this).css('min-height', newMinHeight + 'px');
 		}
-	})
+	});
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.widgets.init);

@@ -8,7 +8,7 @@
  * @subpackage Session
  */
 
-/** 
+/**
  * Elgg magic session
  * @deprecated 1.9
  */
@@ -16,7 +16,7 @@ global $SESSION;
 
 /**
  * Gets Elgg's session object
- * 
+ *
  * @return ElggSession
  * @since 1.9
  */
@@ -292,7 +292,7 @@ function elgg_set_cookie(ElggCookie $cookie) {
 
 /**
  * Add a remember me cookie to storage
- * 
+ *
  * @param ElggUser $user The user being remembered
  * @param string   $code 32 letter code
  * @return void
@@ -320,13 +320,13 @@ function _elgg_add_remember_me_cookie(ElggUser $user, $code) {
 
 /**
  * Remove a remember me cookie from storage
- * 
+ *
  * @param string $code 32 letter code
  * @return void
  * @access private
  */
 function _elgg_delete_remember_me_cookie($code) {
-	$db = _elgg_services()->db;	
+	$db = _elgg_services()->db;
 	$prefix = $db->getTablePrefix();
 	$code = $db->sanitizeString($code);
 
@@ -473,7 +473,7 @@ function login(ElggUser $user, $persistent = false) {
 		_elgg_add_remember_me_cookie($user, $hash);
 		_elgg_set_remember_me_cookie($token);
 	}
-	
+
 	// User's privilege has been elevated, so change the session id (prevents session fixation)
 	$session->migrate();
 
@@ -484,10 +484,11 @@ function login(ElggUser $user, $persistent = false) {
 
 	// if memcache is enabled, invalidate the user in memcache @see https://github.com/Elgg/Elgg/issues/3143
 	if (is_memcache_available()) {
+		$guid = $user->getGUID();
 		// this needs to happen with a shutdown function because of the timing with set_last_login()
-		register_shutdown_function("_elgg_invalidate_memcache_for_entity", $_SESSION['guid']);
+		register_shutdown_function("_elgg_invalidate_memcache_for_entity", $guid);
 	}
-	
+
 	return true;
 }
 
@@ -543,7 +544,7 @@ function _elgg_session_boot() {
 	elgg_register_action('login', '', 'public');
 	elgg_register_action('logout');
 	register_pam_handler('pam_auth_userpass');
-	
+
 	$session = _elgg_services()->session;
 	$session->start();
 
@@ -560,7 +561,7 @@ function _elgg_session_boot() {
 		}
 
 		$session->setLoggedInUser($user);
-		
+
 		// replace user's old weaker-entropy code with new one
 		if ($cookie_token && _elgg_is_legacy_remember_me_token($cookie_token)) {
 			// replace user's old weaker-entropy code with new one
