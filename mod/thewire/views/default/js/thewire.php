@@ -7,8 +7,13 @@
 elgg.provide('elgg.thewire');
 
 elgg.thewire.init = function() {
-	$("#thewire-textarea").live(['keydown', 'keyup'], function() {
-		elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), elgg.thewire.charLimit);
+	var callback = function() {
+		elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), 140);
+	};
+
+	$("#thewire-textarea").live({
+		keydown: callback,
+		keyup: callback
 	});
 
 	$(".thewire-previous").live('click', elgg.thewire.viewPrevious);
