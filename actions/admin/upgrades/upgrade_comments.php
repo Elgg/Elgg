@@ -122,7 +122,7 @@ do {
 
 	foreach (array_unique($container_guids) as $guid) {
 		// can't use a subquery in an update clause without hard to read tricks.
-		$max = get_data_row("SELECT MAX(time_update) as max_time_updated
+		$max = get_data_row("SELECT MAX(time_updated) as max_time_updated
 					FROM {$db_prefix}entities e
 					WHERE e.container_guid = $guid
 					AND e.subtype = $comment_subtype_id");
