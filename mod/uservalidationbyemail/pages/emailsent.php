@@ -1,5 +1,9 @@
 <?php
 
+if (elgg_is_logged_in()) {
+	forward('');
+}
+
 $session = elgg_get_session();
 $email = $session->get('emailsent', '');
 if (!$email) {
