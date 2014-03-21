@@ -8,7 +8,10 @@ elgg.provide('elgg.thewire');
 
 elgg.thewire.init = function() {
 	var callback = function() {
-		elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), 140);
+		var maxLength = $(this).data('max-length');
+		if (maxLength) {
+			elgg.thewire.textCounter(this, $("#thewire-characters-remaining span"), maxLength);
+		}
 	};
 
 	$("#thewire-textarea").live({
