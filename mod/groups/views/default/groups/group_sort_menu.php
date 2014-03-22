@@ -16,10 +16,15 @@ $tabs = array(
 		'href' => 'groups/all?filter=popular',
 		'priority' => 300,
 	),
+	'featured' => array(
+		'text' => elgg_echo('groups:featured'),
+		'href' => 'groups/all?filter=featured',
+		'priority' => 400,
+	),
 	'discussion' => array(
 		'text' => elgg_echo('groups:latestdiscussion'),
 		'href' => 'groups/all?filter=discussion',
-		'priority' => 400,
+		'priority' => 500,
 	),
 );
 
