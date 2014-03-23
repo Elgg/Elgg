@@ -538,6 +538,9 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
  * The default action is to append a view.  If the priority is less than 500,
  * the output of the extended view will be appended to the original view.
  *
+ * Views can be extended multiple times, and extensions are not checked for
+ * uniqueness. Use {@see elgg_unextend_view()} to help manage duplicates.
+ *
  * Priority can be specified and affects the order in which extensions
  * are appended or prepended.
  *
