@@ -20,11 +20,16 @@ class ElggComment extends ElggObject {
 	}
 
 	/**
-	 * Not supporting threaded comments yet
-	 * 
-	 * @return bool
+	 * Can a user comment on this object? Always returns false (threaded comments
+	 * not yet supported)
+	 *
+	 * @see ElggEntity::canComment()
+	 *
+	 * @param int $user_guid User guid (default is logged in user)
+	 * @return bool False
+	 * @since 1.9.0
 	 */
-	public function canComment() {
+	public function canComment($user_guid = 0) {
 		return false;
 	}
 
