@@ -15,17 +15,17 @@
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	color: #FFF;
 	width: auto;
-	padding: 5px 12px;
+	padding: 6px 12px;
 	cursor: pointer;
 	background: #4787B8;
 	border: 1px solid #3873AB; /* Fallback */
 	border: 1px solid rgba(0, 0, 0, 0.2);
-
 	border-radius: 3px;
 	box-shadow: inset 0 0 1px rgba(255, 255, 255, 0.6);
-}
-a.elgg-button {
-	padding: 6px 12px;
+
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	box-sizing: border-box;
 }
 .elgg-button:hover,
 .elgg-button:focus {
