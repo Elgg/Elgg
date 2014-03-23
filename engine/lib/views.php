@@ -383,6 +383,8 @@ function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
  * Priority can be specified and affects the order in which extensions
  * are appended or prepended.
  *
+ * Views can be extended multiple times and are not checked for uniqueness.
+ *
  * @internal View extensions are stored in
  * $CONFIG->views->extensions[$view][$priority] = $view_extension
  *
