@@ -1,4 +1,8 @@
-<form action="#">
+<?php
+
+$ipsum = elgg_view('developers/ipsum');
+
+?><form action="#">
 	<fieldset>
 		<legend>Fieldset Legend</legend>
 		<div>

@@ -3,11 +3,7 @@
  * List of objects
  */
 
-class ThemeSandboxObject extends ElggObject {
-	public function getTimeCreated() {
-		return time();
-	}
-}
+$ipsum = elgg_view('developers/ipsum');
 
 $obj1 = new ThemeSandboxObject();
 $obj1->title = "Object 1";
