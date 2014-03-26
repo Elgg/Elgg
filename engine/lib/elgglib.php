@@ -149,7 +149,7 @@ function elgg_register_js($name, $url, $location = 'head', $priority = null) {
 			_elgg_services()->amdConfig->addDependency($name);
 		}
 		_elgg_services()->amdConfig->setShim($name, $config);
-		_elgg_services()->amdConfig->setPath($name, elgg_normalize_url($url));
+		_elgg_services()->amdConfig->setPath($name, $url);
 		return true;
 	}
 

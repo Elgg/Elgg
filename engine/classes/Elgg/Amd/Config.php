@@ -34,8 +34,14 @@ class Elgg_Amd_Config {
 	 * @return void
 	 */
 	public function setPath($module, $path) {
-		if (preg_match("/\.js$/", $path)) {
-			$path = preg_replace("/\.js$/", '', $path);
+		if (!is_array($path)) {
+			$path = array($path);
+		}
+
+		foreach ($path as $key => $url) {
+			if (preg_match("/\.js$/", $url)) {
+				$path[$key] = preg_replace("/\.js$/", '', elgg_normalize_url($url));
+			}
 		}
 
 		$this->paths[$module] = $path;
