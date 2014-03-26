@@ -1554,7 +1554,7 @@ function elgg_views_boot() {
 	elgg_register_js('jquery-migrate', '/vendors/jquery/jquery-migrate-1.2.1.min.js', 'head');
 	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.10.4.min.js', 'head');
 	elgg_register_js('jquery.form', array(
-		'src' => '/vendors/jquery/jquery.form.js',
+		'src' => '/vendors/jquery/jquery.form.min.js',
 		'deps' => array('jquery'),
 		'exports' => 'jQuery.fn.ajaxForm',
 	));
