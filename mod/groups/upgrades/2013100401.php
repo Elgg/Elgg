@@ -21,13 +21,12 @@ access_show_hidden_entities($access_status);
 
 // Notify administrator only if there are existing discussion replies
 if ($discussion_replies) {
-	$migrate_link = elgg_view('output/url', array(
-		'href' => 'admin/groups/upgrades/2013100401',
-		'text' => "run a migration script",
-		'is_trusted' => true,
-	));
+	$ia = elgg_set_ignore_access(true);
 
-	// Not using translation because new keys won't be in the cache
-	elgg_add_admin_notice('discussion_migration_notice', "The data structure of discussion replies has changed in Elgg 1.9. You must $migrate_link before you can use the discussions tool.");
+	$upgrade = new ElggUpgrade();
+	$upgrade->setURL("admin/groups/upgrades/2013100401");
+	$upgrade->title = 'Group Discussions Upgrade';
+	$upgrade->description = 'Group discussions have been improved in Elgg 1.9 and require a migration. Run this upgrade to complete the migration.';
+	$upgrade->save();
 }
 

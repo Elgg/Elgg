@@ -300,6 +300,16 @@ function _elgg_admin_init() {
 	elgg_register_admin_menu_item('administer', 'add', 'users', 40);
 
 	// configure
+	// upgrades
+	elgg_register_menu_item('page', array(
+		'name' => 'upgrades',
+		'href' => 'admin/upgrades',
+		'text' => elgg_echo('admin:upgrades'),
+		'context' => 'admin',
+		'priority' => 10,
+		'section' => 'configure'
+	));
+	
 	// plugins
 	elgg_register_menu_item('page', array(
 		'name' => 'plugins',
