@@ -3,7 +3,7 @@
  * If you register an 'all' string for the event name, the handler function will
  * be called for all events with that name, regardless of event type. The same
  * can be done for the event type argument. Registering 'all' for both
- * argyuments results in a handler being called for every event.
+ * arguments results in a handler being called for every event.
  */
 
 elgg_register_event_handler('all', 'object', 'example_event_handler');
