@@ -47,6 +47,22 @@ elgg.register_hook_handler = function(name, type, handler, priority) {
 };
 
 /**
+ * Unregister a hook handler.
+ *
+ * @param {String}   name     Name of the plugin hook
+ * @param {String}   type     Type of the event
+ * @param {Function} handler  Handle to remove
+ * @return {bool}
+ */
+elgg.unregister_hook_handler = function(name, type, handler) {
+	var priorities =  elgg.config.hooks;
+
+	if (priorities[name][type] instanceof elgg.ElggPriorityList) {
+		priorities[name][type].remove(handler);
+	}
+};
+
+/**
  * Emits a hook.
  *
  * Loops through all registered hooks and calls the handler functions in order.
