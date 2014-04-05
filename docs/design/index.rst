@@ -10,3 +10,4 @@ and why it's built the way it is.
    database
    events
    amd
+   security
