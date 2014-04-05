@@ -16,6 +16,7 @@ which is out-of-date in many areas, but may still be of use to you.
    guides/index
    design/index
    tutorials/index
+   about/index
 
 Indices and tables:
 
