@@ -165,7 +165,7 @@ By passing along the group as ``container_guid`` via a hidden input field,
 you can use a single form and action to add both user and group content.
 
 Use
-``[http://reference.elgg.org/entities_8php.html#16a972909c7cb75f646cb707be001a6f can_write_to_container]``
+`can_write_to_container <http://reference.elgg.org/entities_8php.html#16a972909c7cb75f646cb707be001a6f>`_
 to determine whether or not the current user has the right to
 add content to a group.
 

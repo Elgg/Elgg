@@ -3,12 +3,6 @@ Contributing
 
 This document contains information on how to contribute to the Elgg project.
 
-Translations
-============
-We use `Transifex <https://www.transifex.com/organization/elgg>`_ to manage official translations of Elgg core, docs, and plugins. Register for an account there to start contributing.
-
-https://www.transifex.com/projects/p/elgg-core/
-
 
 Documentation
 =============

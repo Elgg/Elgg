@@ -10,8 +10,7 @@ Overview
 Elgg has an event system that can be used to replace or extend core
 functionality.
 
-Plugins influence the system by creating handlers (
-[http://php.net/manual/en/language.types.callable.php callables]
+Plugins influence the system by creating handlers (`callables <http://php.net/manual/en/language.types.callable.php>`_
 such as functions and methods) and registering them to handle
 two types of events: `Elgg Events`_ and `Plugin Hooks`_.
 
