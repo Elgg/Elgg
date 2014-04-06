@@ -30,11 +30,14 @@ A basic module will look like this:
 
 .. code-block:: javascript
 
- define(function(require) {
-     var elgg = require("elgg");
-     var $ = require("jquery");
-     return function() { /** Some logic in here */ };
- });
+    define(function(require) {
+      var elgg = require("elgg");
+      var $ = require("jquery");
+      
+      return function() {
+        // Some logic in here
+      };
+    });
 
 Define your module via an URL
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^

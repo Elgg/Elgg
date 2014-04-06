@@ -1,0 +1,80 @@
+Internationalization
+####################
+
+Internationalization (I18n) is the process of making your UI translatable into many different languages.
+
+If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide <contributing>`.
+
+Overview
+========
+
+Translations are stored in PHP files in the ``/languages`` directory of your plugin. Each file corresponds to a language. The format is ``/languages/{language-code}.php`` where ``{language-code}`` is the ISO 639-1 short code for the language. For example:
+
+.. code:: php
+
+   <?php
+   
+   // mod/example/languages/en.php
+   return array(
+     ‘example:text’ => ‘Some example text’,
+   );
+
+The default language is “en” for English.
+
+To change the wording of any phrase, provide a new mapping in your plugin’s ``{language}.php`` file for the associated key:
+
+.. code:: php
+
+   <?php
+
+   return array(
+     ‘example:text’ => ‘This is an example’,
+   );
+
+.. note::
+
+   Unless you are overriding core’s or another plugin’s language strings, it is good practice for the language keys to start with your plugin name. For example: “yourplugin:success,” “yourplugin:title,” etc. This helps avoid conflicts with other language keys.
+
+
+Server-side API
+===============
+
+``elgg_echo($key, $args, $language)``
+
+Output the translation of the key in the current language.
+
+Example:
+
+.. code:: php
+
+   echo elgg_echo(‘example:text’);
+
+It also supports variable replacement using sprintf syntax:
+
+.. code:: php
+
+   // ‘welcome’ => ‘Welcome to %s, %s!’
+   echo elgg_echo(‘welcome’, array(
+     elgg_get_config(‘sitename’),
+     elgg_get_logged_in_user_entity()->name,
+   ));
+
+To force which language should be used for translation, set the third parameter:
+
+.. code:: php
+
+   echo elgg_echo(‘welcome’, array(), ‘es’);
+
+
+
+Javascript API
+==============
+
+``elgg.echo(key, args, language)``
+
+This function is the exact counterpart to ``elgg_echo`` in PHP.
+
+Client-side translations are loaded asynchronously. This means ``elgg.echo`` will not be ready until after the system is done initializing. 
+
+
+
