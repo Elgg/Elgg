@@ -16,5 +16,6 @@ These docs will help you get stuff done with Elgg.
    routing
    widgets
    views
+   themes
    javascript
    contributing
