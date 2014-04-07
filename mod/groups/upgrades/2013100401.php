@@ -12,7 +12,9 @@ if (get_subtype_id('object', 'discussion_reply')) {
  */
 
 $access_status = access_get_show_hidden_status();
+access_show_hidden_entities(true);
 $ia = elgg_set_ignore_access(true);
+
 $discussion_replies = elgg_get_annotations(array(
 	'annotation_names' => 'group_topic_post',
 ));

@@ -18,6 +18,10 @@ if (get_subtype_id('object', 'comment')) {
 	add_subtype('object', 'comment', 'ElggComment');
 }
 
+$access_status = access_get_show_hidden_status();
+access_show_hidden_entities(true);
+$ia = elgg_set_ignore_access(true);
+
 // add ElggUpgrade object if need to migrate comments
 $options = array(
 	'annotation_names' => 'generic_comment',
@@ -26,13 +30,12 @@ $options = array(
 );
 
 if (elgg_get_annotations($options)) {
-	$ia = elgg_set_ignore_access(true);
-
 	$upgrade = new ElggUpgrade();
 	$upgrade->setURL("admin/upgrades/comments");
 	$upgrade->title = 'Comments Upgrade';
 	$upgrade->description = 'Comments have been improved in Elgg 1.9 and require a migration. Run this upgrade to complete the migration.';
 	$upgrade->save();
-
-	elgg_set_ignore_access($ia);
 }
+
+elgg_set_ignore_access($ia);
+access_show_hidden_entities($access_status);
