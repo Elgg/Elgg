@@ -1505,6 +1505,7 @@ class ElggInstaller {
 		add_subtype("object", "file", "ElggFile");
 		add_subtype("object", "widget", "ElggWidget");
 		add_subtype("object", "comment", "ElggComment");
+		add_subtype("object", "elgg_upgrade", 'ElggUpgrade');
 	}
 
 	/**
