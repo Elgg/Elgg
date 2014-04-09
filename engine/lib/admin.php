@@ -220,6 +220,28 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $p
 }
 
 /**
+ * Add an admin notice when a new ElggUpgrade object is created.
+ *
+ * @param string     $event
+ * @param string     $type
+ * @param ElggObject $object
+ * @access private
+ */
+function _elgg_create_notice_of_pending_upgrade($event, $type, $object) {
+	if ($object instanceof ElggUpgrade) {
+		// Link to the Upgrades section
+		$link = elgg_view('output/url', array(
+			'href' => 'admin/upgrades',
+			'text' => elgg_echo('admin:view_upgrades'),
+		));
+
+		$message = elgg_echo('admin:pending_upgrades');
+
+		elgg_add_admin_notice('pending_upgrades', "$message $link");
+	}
+}
+
+/**
  * Initialize the admin backend.
  * @return void
  * @access private
@@ -365,6 +387,9 @@ function _elgg_admin_init() {
 
 	// automatic adding of widgets for admin
 	elgg_register_event_handler('make_admin', 'user', '_elgg_add_admin_widgets');
+
+	// Add notice about pending upgrades
+	elgg_register_event_handler('create', 'object', '_elgg_create_notice_of_pending_upgrade');
 
 	elgg_register_page_handler('admin', '_elgg_admin_page_handler');
 	elgg_register_page_handler('admin_plugin_screenshot', '_elgg_admin_plugin_screenshot_page_handler');
