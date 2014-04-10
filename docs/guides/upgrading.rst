@@ -1,23 +1,8 @@
-Upgrading
-#########
+Upgrading Plugins
+#################
 
-Basic instructions:
-
-* **Back up your Elgg database** and code.
-* Download the new version of Elgg from elgg.org.
-* Overwrite your existing Elgg files.
-
-  Any modifications should have been written within plugins, so that they are not lost on overwriting. If this is not the case, take care to maintain your modifications. 
-
-* Visit http://your-elgg-site-URL/upgrade.php
-* Copy htaccess_dist over .htaccess.
-
-  If you modified the default .htaccess, be sure to port your modifications over to the new one.
-
-* Try out the new version on a test site before doing an upgrade
-* Report any problems in plugins to the plugin authors.
-* If you are a plugin author you can report any backwards-compatibility issues to `github <https://github.com/Elgg/Elgg/issues>`_.
-
+This document is all about preparing your plugin for the next Elgg version.
+See the administator guides for :doc:`how to upgrade a live site </admin/upgrading>`.
 
 From 1.8 to 1.9
 ===============
@@ -101,17 +86,22 @@ Update action structure
 ~~~~~~~~~~~~~~~~~~~~~~~
 * Namespace action files and action names (example: ``mod/blog/actions/blog/save.php`` => ``action/blog/save``)
 * Use the following action URLs:
+  
   * Add: ``action/:plugin/save``
   * Edit: ``action/:plugin/save``
   * Delete: ``action/:plugin/delete``
+
 * Make the delete action accept ``action/:handler/delete?guid=:guid`` so the metadata entity menu has the correct URL by default.
 
 
 Update deprecated functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Functions deprecated in 1.7 will produce visible errors in 1.8.
+  
   * See ``/engine/lib/deprecated-1.7.php`` for the full list.
+
 * You can also update functions deprecated in 1.8.
+  
   * Many registration functions simply added an ``elgg_`` prefix for consistency, and should be easy to update.
   * See ``/engine/lib/deprecated-1.8.php`` for the full list.
   * You can set the debug level to “warning” to get visual reminders of deprecated functions.
@@ -161,12 +151,3 @@ Update settings and user settings views
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * The view for settings is now ``plugins/:plugin/settings`` (previously ``settings/:plugin/edit``).
 * The view for user settings is now ``plugins/:plugin/usersettings`` (previously ``usersettings/:plugin/edit``).
-
-
-
-From 1.6 to 1.7
-===============
-
-
-
- a User authentication and administration

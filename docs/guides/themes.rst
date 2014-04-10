@@ -1,49 +1,21 @@
 Themes
 ######
 
-The look and feel of Elgg can be easily changed through the use of themes. A theme is a type of :doc:`plugin <plugins>` that overrides display aspects of Elgg.
+Customizing the look and feel of Elgg
 
-Installation
-============
+A theme is a type of :doc:`plugin </admin/plugins>` that overrides display aspects of Elgg.
 
-Free themes can be obtained from `the Elgg community`_.
-
-.. _the Elgg community: http://community.elgg.org/mod/community_plugins/search.php?category=themes
-
-A theme is installed just as all plugins are installed. Simply copy the
-theme's folder to the “mod” directory in your Elgg install and then
-activate it from the Elgg admin panel.
-
-To activate the theme:
-
--  Log in to your Elgg site with your administrator account
--  Go to Administration -> Tool Administration
--  Find your theme in the list of installed plugins and click on the
-   'enable' button.
-
-Often you will want the theme to be the last plugin to run. The order of
-the plugins in the Tool Administration page determines their loading
-order; to make the theme run last, click the *bottom* link.
 
 Building your own theme
 =======================
 
-Themes for Elgg are both extremely easy to develop and incredibly
-powerful. Using themes you can completely change how an Elgg install
-looks and feels (and even behaves).
-
-By far the easiest and most flexible way to make a theme for Elgg is to
-build it as a plugin. This makes it easy to distribute (since they are
-self contained) and lets you turn the theme on and off from the admin
-panel (making the theming process far less invasive!).
-
-Before you jump right in, it is advisable to familiarise yourself with
-:doc:`plugins` and :doc:`the views system <views>`.
+Before you jump in, it is advisable to familiarise yourself with
+:doc:`/admin/plugins` and :doc:`the views system <views>`.
 
 Create your plugin
 ------------------
 
-Step one is to create your plugin as described in the :doc:`plugin development guide <plugins>`.
+Step one is to create your plugin as described in the :doc:`developer guide </guides/index>`.
 
 -  Create a new directory under mod/
 -  Create a new start.php

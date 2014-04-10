@@ -1,9 +1,9 @@
 Internationalization
 ####################
 
-Internationalization (I18n) is the process of making your UI translatable into many different languages.
+Making your UI translatable into many different languages.
 
-If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide <contributing>`.
+If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`.
 
 Overview
 ========
