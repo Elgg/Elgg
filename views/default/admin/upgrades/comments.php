@@ -38,6 +38,7 @@ if ($count) {
 			<li>$success_count_string <span id="comment-upgrade-success-count">0</span></li>
 			<li>$error_count_string <span id="comment-upgrade-error-count">0</span></li>
 		</ul>
+		<div id="comment-upgrade-spinner" class="elgg-ajax-loader hidden"></div>
 		<ul class="mvl" id="comment-upgrade-messages"></ul>
 HTML;
 
@@ -48,7 +49,6 @@ HTML;
 		'is_action' => true,
 		'id' => 'comment-upgrade-run',
 	));
-	echo '<div id="comment-upgrade-spinner" class="elgg-ajax-loader hidden"></div>';
 }
 
 access_show_hidden_entities($access_status);
