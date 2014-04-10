@@ -4,6 +4,7 @@ About
 .. toctree::
    :maxdepth: 2
 
+   roadmap
    releases
-   values
+   contributing
    history

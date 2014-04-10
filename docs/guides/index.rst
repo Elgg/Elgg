@@ -1,13 +1,12 @@
 Developer Guides
 ################
 
-These docs will help you get stuff done with Elgg.
+These docs will help you learn how to get stuff done with an Elgg plugin.
 
 .. toctree::
    :maxdepth: 2
    
    upgrading
-   plugins
    actions
    database
    i18n
@@ -18,4 +17,3 @@ These docs will help you get stuff done with Elgg.
    views
    themes
    javascript
-   contributing
