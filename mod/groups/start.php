@@ -811,7 +811,6 @@ function discussion_init() {
 	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
 
 	$discussion_js_path = elgg_get_site_url() . 'mod/groups/views/default/js/discussion/';
-	elgg_register_js('elgg.discussion_upgrade', $discussion_js_path . 'upgrade2013100401.js');
 	elgg_register_js('elgg.discussion', $discussion_js_path . 'discussion.js');
 
 	elgg_register_ajax_view('ajax/discussion/reply/edit');

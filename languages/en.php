@@ -1112,15 +1112,18 @@ Once you have logged in, we highly recommend that you change your password.
 	'item:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => 'Your installation is up to date!',
 
-	'upgrade:comments:status' => 'There are <b>%s</b> comments that need to be upgraded.',
-	'upgrade:comments:warning' => '<b>Warning:</b> on a large site this upgrade may take a significantly long time!',
-	'upgrade:comments:success_count' => 'Comments upgraded:',
-	'upgrade:comments:error_count' => 'Errors:',
-	'admin:upgrades:comments' => 'Comment upgrade',
-	'upgrade:comments:river_update_failed' => 'Failed to update the river entry for comment id %s',
-	'upgrade:comments:timestamp_update_failed' => 'Failed to update the timestamps for comment id %s',
-	'upgrade:comments:create_failed' => 'Failed to convert comment id %s to an entity.',
-	'upgrade:comments:finished' => 'Upgrade finished',
+	'upgrade:item_count' => 'There are <b>%s</b> items that need to be upgraded.',
+	'upgrade:warning' => '<b>Warning:</b> on a large site this upgrade may take a significantly long time!',
+	'upgrade:success_count' => 'Upgraded:',
+	'upgrade:error_count' => 'Errors:',
+	'upgrade:river_update_failed' => 'Failed to update the river entry for item id %s',
+	'upgrade:timestamp_update_failed' => 'Failed to update the timestamps for item id %s',
+	'upgrade:finished' => 'Upgrade finished',
+	'upgrade:finished_with_errors' => '<p>Upgrade finished with errors. Refresh the page and try running the upgrade again.</p></p><br />If the error recurs, check the server error log for possible cause. You can seek help for fixing the error from the <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> in the Elgg community.</p>',
+
+	// Strings specific for the comments upgrade
+	'admin:upgrades:comments' => 'Comments upgrade',
+	'upgrade:comment:create_failed' => 'Failed to convert comment id %s to an entity.',
 
 /**
  * Welcome
