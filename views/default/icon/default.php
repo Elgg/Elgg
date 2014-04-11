@@ -12,12 +12,17 @@
  * @uses $vars['link_class'] Optional CSS class for the link
  */
 
-$entity = $vars['entity'];
+$entity = elgg_extract('entity', $vars);
 
-$sizes = array('small', 'medium', 'large', 'tiny', 'master', 'topbar');
-// Get size
-if (!in_array($vars['size'], $sizes)) {
-	$vars['size'] = "medium";
+if (!elgg_instanceof($entity)) {
+	return;
+}
+
+// Determine the size to display
+$icon_sizes = elgg_get_config('icon_sizes');
+$size = elgg_extract('size', $vars, 'medium');
+if (!array_key_exists($size, $icon_sizes)) {
+	$size = "medium";
 }
 
 $class = elgg_extract('img_class', $vars, '');
@@ -34,9 +39,6 @@ if (isset($vars['href'])) {
 	$url = $vars['href'];
 }
 
-$icon_sizes = elgg_get_config('icon_sizes');
-$size = $vars['size'];
-
 if (!isset($vars['width'])) {
 	$vars['width'] = $size != 'master' ? $icon_sizes[$size]['w'] : null;
 }
@@ -45,7 +47,7 @@ if (!isset($vars['height'])) {
 }
 
 $img_params = array(
-	'src' => $entity->getIconURL($vars['size']),
+	'src' => $entity->getIconURL($size),
 	'alt' => $title,	
 );
 
