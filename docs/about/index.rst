@@ -1,10 +1,6 @@
 About
 #####
 
-.. toctree::
-   :maxdepth: 2
+This page has moved.
 
-   roadmap
-   releases
-   contributing
-   history
+:doc:`/appendix/index`
