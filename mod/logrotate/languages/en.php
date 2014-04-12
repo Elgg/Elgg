@@ -1,10 +1,4 @@
 <?php
-/**
- * Elgg log rotator language pack.
- *
- * @package ElggLogRotate
- */
-
 return array(
 	'logrotate:period' => 'How often should the system log be archived?',
 

@@ -1,9 +1,4 @@
 <?php
-/**
- * Embed English language strings
- *
- */
-
 return array(
 	'embed:embed' => 'Embed',
 	'embed:media' => 'Embed content',

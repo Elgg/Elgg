@@ -1,10 +1,4 @@
 <?php
-/**
- * Elgg log browser plugin language pack
- *
- * @package ElggLogBrowser
- */
-
 return array(
 	'admin:administer_utilities:logbrowser' => 'Log browser',
 	'logbrowser' => 'Log browser',

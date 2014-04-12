@@ -1,8 +1,4 @@
 <?php
-/**
- * Web services English language file
- */
-
 return array(
 	'APIException:ApiResultUnknown' => "API Result is of an unknown type, this should never happen.",
 	'APIException:MissingParameterInMethod' => "Missing parameter %s in method %s",

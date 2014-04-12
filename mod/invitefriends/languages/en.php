@@ -1,11 +1,4 @@
 <?php
-
-/**
- * Elgg invite language file
- * 
- * @package ElggInviteFriends
- */
-
 return array(
 
 	'friends:invite' => 'Invite friends',

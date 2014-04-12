@@ -1,12 +1,5 @@
 <?php
-/**
- * Installer English Language
- *
- * @package ElggLanguage
- * @subpackage Installer
- */
-
-$english = array(
+return array(
 	'install:title' => 'Elgg Install',
 	'install:welcome' => 'Welcome',
 	'install:requirements' => 'Requirements check',
@@ -163,5 +156,3 @@ If you are ready to proceed, click the Next button.",
 	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. If you are the site administrator check your settings file, otherwise contact the site administrator with the following information:',
 	'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials. Check the settings file.",
 );
-
-add_translation("en", $english);

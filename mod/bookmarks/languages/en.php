@@ -1,8 +1,4 @@
 <?php
-/**
- * Bookmarks English language file
- */
-
 return array(
 
 	/**

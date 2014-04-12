@@ -1,9 +1,4 @@
 <?php
-/**
- * Elgg developer tools English language file.
- *
- */
-
 return array(
 	// menu
 	'admin:develop_tools' => 'Tools',

@@ -1,9 +1,4 @@
 <?php
-/**
- * Blog English language file.
- *
- */
-
 return array(
 	'blog' => 'Blogs',
 	'blog:blogs' => 'Blogs',

@@ -1,10 +1,4 @@
 <?php
-/**
- * Elgg garbage collector language pack.
- *
- * @package ElggGarbageCollector
- */
-
 return array(
 	'garbagecollector:period' => 'How often should the Elgg garbage collector run?',
 

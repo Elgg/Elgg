@@ -1,8 +1,4 @@
 <?php
-/**
- * Site notifications English language file
- */
-
 return array(
 	'site_notifications' => 'Site Notifications',
 	'notification:method:site' => 'Site',

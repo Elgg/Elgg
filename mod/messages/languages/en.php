@@ -1,10 +1,4 @@
 <?php
-/**
-* Elgg send a message action page
-*
-* @package ElggMessages
-*/
-
 return array(
 	/**
 	* Menu items and titles
