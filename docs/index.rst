@@ -38,4 +38,5 @@ This aims to replace the wiki_, which is out-of-date in many areas.
    guides/index
    tutorials/index
    design/index
-   about/index
+   contribute/index
+   appendix/index
