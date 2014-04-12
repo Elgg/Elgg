@@ -1027,6 +1027,22 @@ function _elgg_php_exception_handler($exception) {
 		global $CONFIG;
 		$CONFIG->pagesetupdone = true;
 
+		// allow custom scripts to trigger on exception
+		// $CONFIG->exception_include can be set locally in settings.php
+		// value should be a system path to a file to include
+		if (!empty($CONFIG->exception_include) && is_file($CONFIG->exception_include)) {
+			ob_start();
+			include $CONFIG->exception_include;
+			$exception_output = ob_get_clean();
+			
+			// if content is returned from the custom handler we will output
+			// that instead of our default failsafe view
+			if (!empty($exception_output)) {
+				echo $exception_output;
+				exit;
+			}
+		}
+
 		elgg_set_viewtype('failsafe');
 		if (elgg_is_admin_logged_in()) {
 			$body = elgg_view("messages/exceptions/admin_exception", array(
