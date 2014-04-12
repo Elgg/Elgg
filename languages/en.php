@@ -1129,6 +1129,13 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:comments:create_failed' => 'Failed to convert comment id %s to an entity.',
 	'upgrade:comments:finished' => 'Upgrade finished',
 
+	'upgrade:datadirs:status' => 'There are <b>%s</b> data directories that need to be moved.',
+	'upgrade:datadirs:warning' => '<b>Warning:</b> on a large site this upgrade may take a significantly long time!',
+	'upgrade:datadirs:success_count' => 'Data directories moved:',
+	'upgrade:datadirs:error_count' => 'Errors:',
+	'admin:upgrades:datadirs' => 'Data directory upgrade',
+	'upgrade:datadirs:finished' => 'Upgrade finished',
+
 /**
  * Welcome
  */

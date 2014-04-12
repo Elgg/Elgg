@@ -6,6 +6,7 @@ elgg.provide('elgg.upgrades');
 
 elgg.upgrades.init = function () {
 	$('#comment-upgrade-run').click(elgg.upgrades.upgradeComments);
+	$('#datadirs-upgrade-run').click(elgg.upgrades.upgradeDataDirs);
 };
 
 /**
@@ -34,6 +35,29 @@ elgg.upgrades.upgradeComments = function(e) {
 };
 
 /**
+ * Initializes the data dirs upgrade feature
+ *
+ * @param {Object} e Event object
+ */
+elgg.upgrades.upgradeDataDirs = function (e) {
+	e.preventDefault();
+
+	var total = $('#datadirs-upgrade-total').text();
+
+	// Initialize progressbar
+	$('.elgg-progressbar').progressbar({
+		value: 0,
+		max: total
+	});
+
+	// Replace button with spinner when upgrade starts
+	$('#datadirs-upgrade-run').addClass('hidden');
+	$('#datadirs-upgrade-spinner').removeClass('hidden');
+
+	elgg.upgrades.upgradeDataDirsBatch();
+};
+
+/**
  * Fires the ajax action to upgrade a batch of comments.
  *
  * @param {Number} offset  The next upgrade offset
@@ -50,9 +74,15 @@ elgg.upgrades.upgradeCommentBatch = function(offset) {
 	options.data = elgg.security.addToken(options.data);
 
 	options.success = function(json) {
+		var msg = '', i;
+
 		// Append possible errors after the progressbar
-		if (json.system_messages.error.length) {
-			var msg = '<li class="elgg-message elgg-state-error">' + json.system_messages.error + '</li>';
+		if (json.system_messages && json.system_messages.error.length) {
+			for (i = 0; i < json.system_messages.error.length; i++) {
+				msg += '<li class="elgg-message elgg-state-error">' + json.system_messages.error[i] + '</li>';
+			}
+		}
+		if (msg) {
 			$('#comment-upgrade-messages').append(msg);
 		}
 
@@ -98,6 +128,77 @@ elgg.upgrades.upgradeCommentBatch = function(offset) {
 
 	// We use post() instead of action() to get better control over error messages
 	return elgg.post('action/admin/upgrades/upgrade_comments', options);
+};
+
+/**
+ * Fires the ajax action to upgrade the data dirs
+ */
+elgg.upgrades.upgradeDataDirsBatch = function() {
+	var options = {
+			dataType: 'json'
+		},
+		$upgradeCount = $('#datadirs-upgrade-count');
+
+	options.data = elgg.security.addToken(options.data);
+
+	options.success = function(json) {
+		var msg = '', i;
+
+		// Append possible errors after the progressbar
+		if (json.system_messages && json.system_messages.error.length) {
+			for (i = 0; i < json.system_messages.error.length; i++) {
+				msg += '<li class="elgg-message elgg-state-error">' + json.system_messages.error[i] + '</li>';
+			}
+		}
+		if (json.output.failures.length) {
+			for (i = 0; i < json.output.failures.length; i++) {
+				msg += '<li class="elgg-message elgg-state-error">' + json.output.failures[i] + '</li>';
+			}
+		}
+		if (msg) {
+			$('#datadirs-upgrade-messages').append(msg);
+		}
+
+		// Increase success statistics
+		var numSuccesses = $('#datadirs-upgrade-success-count');
+		var successCount = parseInt(numSuccesses.text()) + json.output.numSuccesses;
+		numSuccesses.text(successCount);
+
+		// Increase error statistics
+		var numErrors = $('#datadirs-upgrade-error-count');
+		var newOffset = parseInt(numErrors.text()) + json.output.numErrors;
+		numErrors.text(newOffset);
+
+		// Increase total amount of processed
+		var numProcessed = parseInt($upgradeCount.text()) + json.output.numSuccesses + json.output.numErrors;
+		$upgradeCount.text(numProcessed);
+
+		// Increase percentage
+		var total = $('#datadirs-upgrade-total').text();
+		var percent = parseInt(numProcessed * 100 / total);
+
+		// Increase the progress bar
+		$('.elgg-progressbar').progressbar({ value: numProcessed });
+
+		if (!json.output.isComplete) {
+			/**
+			 * Start next upgrade call.
+			 */
+			elgg.upgrades.upgradeDataDirsBatch();
+		} else {
+			// Upgrade is finished
+			elgg.system_message(elgg.echo('upgrade:datadirs:finished'));
+
+			$('#datadirs-upgrade-spinner').addClass('hidden');
+
+			percent = '100';
+		}
+
+		$('#datadirs-upgrade-counter').text(percent + '%');
+	};
+
+	// We use post() instead of action() to get better control over error messages
+	return elgg.post('action/admin/upgrades/upgrade_datadirs', options);
 };
 
 elgg.register_hook_handler('init', 'system', elgg.upgrades.init);
