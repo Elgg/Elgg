@@ -7,4 +7,3 @@ Appendix
    roadmap
    releases
    history
-   moved
