@@ -17,3 +17,4 @@ These docs will help you learn how to get stuff done with an Elgg plugin.
    views
    themes
    javascript
+   web-services
