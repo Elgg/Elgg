@@ -136,6 +136,8 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 	protected function getAmdConfig(Elgg_Di_ServiceProvider $c) {
 		$obj = new Elgg_Amd_Config();
 		$obj->setBaseUrl(_elgg_get_simplecache_root() . "js/");
+		$obj->setMap(array('*', 'css', 'require/css'));
+		$obj->setMap(array('*', 'text', 'require/text'));
 		return $obj;
 	}
 
