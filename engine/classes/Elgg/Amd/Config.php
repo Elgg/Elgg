@@ -38,6 +38,9 @@ class Elgg_Amd_Config {
 			$path = preg_replace("/\.js$/", '', $path);
 		}
 
+		// Avoid .js suffixing: http://stackoverflow.com/a/15392880
+		$path = "$path?";
+
 		$this->paths[$module] = $path;
 	}
 

@@ -14,6 +14,7 @@ elgg_register_event_handler('init', 'system', 'embed_init');
 function embed_init() {
 	elgg_extend_view('css/elgg', 'embed/css');
 	elgg_extend_view('css/admin', 'embed/css');
+	elgg_extend_view('input/longtext', 'embed/js_deps');
 
 	if (elgg_is_logged_in()) {
 		elgg_register_plugin_hook_handler('register', 'menu:longtext', 'embed_longtext_menu');
@@ -24,7 +25,11 @@ function embed_init() {
 	elgg_register_page_handler('embed', 'embed_page_handler');
 	
 	$embed_js = elgg_get_simplecache_url('js', 'embed/embed');
-	elgg_register_js('elgg.embed', $embed_js, 'footer');
+	elgg_register_js('elgg.embed', array(
+		'src' => $embed_js,
+		'exports' => 'elgg.embed',
+		'deps' => ['jquery', 'lightbox', 'jquery.form']
+	));
 }
 
 /**
@@ -58,11 +63,6 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		'priority' => 10,
 	));
 
-	elgg_load_js('lightbox');
-	elgg_load_css('lightbox');
-	elgg_load_js('jquery.form');
-	elgg_load_js('elgg.embed');
-	
 	return $items;
 }
 
