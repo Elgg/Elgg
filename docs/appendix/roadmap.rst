@@ -1,12 +1,24 @@
 Roadmap
 #######
 
-We do not publish detailed roadmaps, but it’s possible to get a sense for our general direction by utilizing the following resources:
+What direction is the project going? What exciting new features are coming soon?
 
-* Our `feedback and planning group <http://community.elgg.org/groups/profile/211069/feedback-and-planning>`_ is used to host early discussion about what will be worked on next.
-* Our `Github milestones <https://github.com/Elgg/Elgg/issues/milestones>`_ represent a general direction for the future releases of Elgg. This is the closest thing to a traditional roadmap that we have.
-* `Github pull requests <https://github.com/elgg/elgg/pulls>`_ will give you a good idea of what’s currently being developed, but nothing is sure until the PR is actually checked in.
-* We use the `developer blog <http://blog.elgg.org>`_ to post announcements of features that have recently been checked in to our development branch, which gives the surest indication of what features will be available in the next release.
+We do not publish detailed roadmaps, but it’s possible to get a sense for our general direction
+by utilizing the following resources:
+
+* Our `feedback and planning group`_ is used to host early discussion about what will be worked on next.
+* Our `Github milestones`_ represent a general direction for the future releases of Elgg.
+  This is the closest thing to a traditional roadmap that we have.
+* `Github pull requests`_ will give you a good idea of what’s currently being developed,
+  but nothing is sure until the PR is actually checked in.
+* We use the `developer blog`_ to post announcements of features that have recently been checked in to our development branch,
+  which gives the surest indication of what features will be available in the next release.
+
+
+.. _feedback and planning group: http://community.elgg.org/groups/profile/211069/feedback-and-planning
+.. _Github milestones: https://github.com/Elgg/Elgg/issues/milestones
+.. _Github pull requests: https://github.com/elgg/elgg/pulls
+.. _developer blog: http://blog.elgg.org
 
 Values
 ======
@@ -59,3 +71,4 @@ Upcoming features will almost certainly not materialize within your timeline.
 When is version X.Y.Z going to be released?
 -------------------------------------------
 The next version will be released when the core team feels it's ready and has time to cut the release.
+http://github.com/Elgg/Elgg/issues/milestones will give you some rough ideas of timeline.

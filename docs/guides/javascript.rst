@@ -5,13 +5,13 @@ This guide assumes basic familiarity with:
 
  * AMD (http://requirejs.org/docs/whyamd.html)
 
-To use a third-party library, register it with ``elgg_register_js``:
+Register third-party libraries with with ``elgg_register_js``:
 
 .. code:: php
 
    elgg_register_js(‘jquery’, $cdnjs_url);
 
-This will override any previous URLs registered under this name.
+This will override any URLs previously registered under this name.
 
 If the library does not natively support AMD, use the ‘exports’ and ‘deps’ arguments to add support:
 
@@ -23,13 +23,13 @@ If the library does not natively support AMD, use the ‘exports’ and ‘deps�
      ‘deps’ => array(‘jquery’, ‘underscore’),
    ));
 
-To load a library on a given page, use ``elgg_require_js``:
+Load a library on the current page with ``elgg_require_js``:
 
    elgg_require_js(‘jquery’);
 
 This will asynchronously include and execute the linked code.
 
-To use an inline script, use the async ``require`` function:
+For inline script, use the async ``require`` function:
 
 .. code:: html
 
@@ -46,7 +46,7 @@ To use an inline script, use the async ``require`` function:
     * They are not cacheable (performance)
     * Doing so forces some scripts to be loaded in ``<head>`` (performance)
 
-   Inline scripts in core or bundled plugins are considered bugs and pull requests that remove them are appreciated.
+   Inline scripts in core or bundled plugins are considered legacy bugs.
 
 
 Defining modules

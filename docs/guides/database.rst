@@ -1,6 +1,8 @@
 Database
 ########
 
+Persist user-generated content and settings with Elgg's generic storage API.
+
 Entities
 ========
 

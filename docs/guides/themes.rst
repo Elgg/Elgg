@@ -1,25 +1,23 @@
 Themes
 ######
 
-Customizing the look and feel of Elgg
+Customize the look and feel of Elgg.
 
 A theme is a type of :doc:`plugin </admin/plugins>` that overrides display aspects of Elgg.
 
+This guide assumes you are familiar with:
+ * :doc:`/admin/plugins`
+ * :doc:`views`
 
-Building your own theme
-=======================
-
-Before you jump in, it is advisable to familiarise yourself with
-:doc:`/admin/plugins` and :doc:`the views system <views>`.
 
 Create your plugin
 ------------------
 
-Step one is to create your plugin as described in the :doc:`developer guide </guides/index>`.
+Create your plugin as described in the :doc:`developer guide </guides/index>`.
 
 -  Create a new directory under mod/
 -  Create a new start.php
--  Create a manifest file describing your theme.
+-  Create a manifest.xml file describing your theme.
 
 Customize the CSS
 -----------------

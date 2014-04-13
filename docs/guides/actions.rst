@@ -1,13 +1,15 @@
 Forms + Actions
 ###############
 
-Forms allow users to create, update, or delete content. Each form submits to an action. Actions define the behavior for form submission.
+Create, update, or delete content.
+
+Elgg forms submit to actions. Actions define the behavior for form submission.
 
 This guide assumes basic familiarity with:
 
- * Plugins
- * Views
- * I18n
+ * :doc:`/admin/plugins`
+ * :doc:`views`
+ * :doc:`i18n`
 
 Registering actions
 ===================
@@ -23,7 +25,9 @@ The ``mod/example/actions/example.php`` script will now be run whenever a form i
 
 Permissions
 -----------
-By default, actions are only available to logged in users. To make them available to logged out users, pass ``“public”`` as the third parameter:
+By default, actions are only available to logged in users.
+
+To make an action available to logged out users, pass ``“public”`` as the third parameter:
 
 .. code:: php
 
@@ -60,21 +64,22 @@ For example, to forward to the user's profile:
    $user = elgg_get_logged_in_user_entity();
    forward($user->getURL());
 
-URLs can also be relative to the Elgg root:
+URLs can be relative to the Elgg root:
 
 .. code:: php
 
    $user = elgg_get_logged_in_user_entity();
    forward(“/example/$user->username”);
 
-You can also redirect to the referring page by using the ``REFERRER`` constant:
+Redirect to the referring page by using the ``REFERRER`` constant:
 
 .. code:: php
 
    forward(REFERRER);
    forward(REFERER); // equivalent
 
-To give feedback to the user about the status of the action, use ``system_message`` for positive feedback or ``register_error`` for warnings and errors:
+Give feedback to the user about the status of the action by using
+``system_message`` for positive feedback or ``register_error`` for warnings and errors:
 
 .. code:: php
 
