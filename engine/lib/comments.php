@@ -21,7 +21,62 @@ function _elgg_comments_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 
+	elgg_register_page_handler('comment', '_elgg_comments_page_handler');
+
 	elgg_register_ajax_view('core/ajax/edit_comment');
+}
+
+/**
+ * Page handler for generic comments manipulation.
+ *
+ * @param array $page
+ * @return bool
+ * @access private
+ */
+function _elgg_comments_page_handler($page) {
+
+	switch ($page[0]) {
+
+		case 'edit':
+			elgg_gatekeeper();
+
+			$comment = get_entity($page[1]);
+			if (!($comment instanceof ElggComment) || !$comment->canEdit()) {
+				register_error(elgg_echo('generic_comment:notfound'));
+				forward(REFERER);
+			}
+
+			$target = $comment->getContainerEntity();
+			if (!($target instanceof ElggEntity)) {
+				register_error(elgg_echo('generic_comment:notfound'));
+				forward(REFERER);
+			}
+
+			$title = elgg_echo('generic_comments:edit');
+			elgg_push_breadcrumb($target->getDisplayName(), $target->getURL());
+			elgg_push_breadcrumb($title);
+
+			$params = array(
+				'entity' => $target,
+				'comment' => $comment,
+			);
+			$content = elgg_view_form('comment/save', null, $params);
+
+			$params = array(
+				'content' => $content,
+				'title' => $title,
+				'filter' => '',
+			);
+			$body = elgg_view_layout('content', $params);
+			echo elgg_view_page($title, $body);
+
+			return true;
+			break;
+
+		default:
+			return false;
+			break;
+	}
 }
 
 /**
