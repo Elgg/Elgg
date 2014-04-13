@@ -1,18 +1,22 @@
 License
 #######
 
-A full Elgg package that includes the framework and a core set of plugins is available under version 2 of the `GNU General Public  <http://www.gnu.org/licenses/gpl-2.0.html>`_ (GPLv2). We also make the framework (without the plugins) available under the MIT license.
+A full Elgg package that includes the framework and a core set of plugins is available under version 2 of the `GNU General Public  <http://www.gnu.org/licenses/gpl-2.0.html>`_ (GPLv2).
+We also make the framework (without the plugins) available under the MIT license.
 
 For questions not answered here, please refer to the `official FAQ for the GPLv2 <http://www.gnu.org/licenses/gpl-faq.html>`_.
 
 FAQ
 ===
-The following answers are provided as a convenience to you; they are not legal counsel. Consult with a lawyer to be sure about the answers to these questions. The Elgg Foundation cannot be held responsible for decisions you make based on what you read on this page.
+The following answers are provided as a convenience to you; they are not legal counsel.
+\Consult with a lawyer to be sure about the answers to these questions.
+The Elgg Foundation cannot be held responsible for decisions you make based on what you read on this page.
 
 
 How much does Elgg cost?
 ------------------------
-Elgg is free to download, install, and use. If you’d like to donate, we do appreciate our `financial supporters <http://elgg.org/supporter.php>`_!
+Elgg is free to download, install, and use. 
+If you’d like to donate, we do appreciate our `financial supporters <http://elgg.org/supporter.php>`_!
 
 
 Can I remove the Elgg branding/links?

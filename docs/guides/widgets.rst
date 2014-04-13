@@ -1,7 +1,9 @@
 Widgets
 #######
 
-Widgets are content areas that users can drag around their page to customize the layout. They can typically be customized by their owner to show more/less content and determine who sees the widget. By default Elgg provides plugins for customizing the profile page and dashboard via widgets.
+Widgets are content areas that users can drag around their page to customize the layout.
+They can typically be customized by their owner to show more/less content and determine who sees the widget.
+By default Elgg provides plugins for customizing the profile page and dashboard via widgets.
 
 TODO: Screenshot
 
@@ -13,14 +15,20 @@ To create a widget, create two views:
 * ``widgets/:widget/edit``
 * ``widgets/:widget/content``
 
-``content.php`` is responsible for all the content that will output within the widget. The edit.php file contains any extra edit functions you wish to present to the user. You do not need to add access level as this comes as part of the widget framework.
+``content.php`` is responsible for all the content that will output within the widget.
+The edit.php file contains any extra edit functions you wish to present to the user.
+You do not need to add access level as this comes as part of the widget framework.
 
-NOTE: using HTML checkboxes to set widget flags is problematic because if unchecked, the checkbox input is omitted from form submission.  The effect is that you can only set and not clear flags.  The "input/checkboxes" view will not work properly in a widget's edit panel.
+NOTE: using HTML checkboxes to set widget flags is problematic because if unchecked,
+the checkbox input is omitted from form submission. 
+The effect is that you can only set and not clear flags.
+The "input/checkboxes" view will not work properly in a widget's edit panel.
 
 Initialise the widget
 ~~~~~~~~~~~~~~~~~~~~~
 
-Once you have created your edit and view pages, you need to initialize the plugin widget. This is done within the plugins init() function.
+Once you have created your edit and view pages, you need to initialize the plugin widget.
+This is done within the plugins init() function.
 
 .. code:: php
 

@@ -1,6 +1,8 @@
 Requirements + Installation
 ###########################
 
+Get your own instance of Elgg running in no time.
+
 Requirements
 ============
 

@@ -1,7 +1,7 @@
 Security
 ########
 
-This document describes Elgg’s approach to the various security issues common to all web applications.
+Elgg’s approach to the various security issues common to all web applications.
 
 To report a potential vulnerability in Elgg, email security@elgg.org.
 

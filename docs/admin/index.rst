@@ -1,7 +1,7 @@
 Administrator Guides
 ####################
 
-These guides teach best practices on effectively managing an Elgg-based network.
+Best practices for effectively managing an Elgg-based site.
 
 .. toctree::
    :maxdepth: 2

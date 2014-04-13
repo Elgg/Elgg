@@ -1,6 +1,8 @@
 Writing Code
 ############
 
+Code that conforms to Elgg's standards is more likely to get quickly accepted.
+
 Pull requests
 -------------
 

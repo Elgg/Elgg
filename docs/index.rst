@@ -1,7 +1,8 @@
 Elgg |version| Documentation
 ############################
 
-Elgg_ (`/ˈɛlɡ/`__) helps communities get connected while retaining control of their data and brand. It is a great fit for building any app where users log in and share information.
+Elgg_ (`/ˈɛlɡ/`__) helps communities get connected while retaining control of their data and brand.
+It is a great fit for building any app where users log in and share information.
 
 __ http://docs.elgg.org/w/images/4/42/How_to_say_Elgg.mp3
 
@@ -18,10 +19,6 @@ __ http://community.elgg.org/showcase
  * etc.
 
 There is also a `demo site`_ running a standard installation of Elgg.
-
-The name comes from `a town in Switzerland`__. It also means "elk" or "moose" in Danish.
-
-__ http://www.elgg.ch/de/
 
 This is the canonical documentation for the Elgg_ project.
 This aims to replace the wiki_, which is out-of-date in many areas.

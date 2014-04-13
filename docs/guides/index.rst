@@ -1,7 +1,7 @@
 Developer Guides
 ################
 
-These docs will help you learn how to get stuff done with an Elgg plugin.
+Customize Elgg's behavior with plugins.
 
 .. toctree::
    :maxdepth: 2

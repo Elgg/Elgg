@@ -1,7 +1,7 @@
 Internationalization
 ####################
 
-Making your UI translatable into many different languages.
+Make your UI translatable into many different languages.
 
 If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`.
 

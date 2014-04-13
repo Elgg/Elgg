@@ -1,7 +1,8 @@
 Upgrading Plugins
 #################
 
-This document is all about preparing your plugin for the next Elgg version.
+Prepare your plugin for the next version of Elgg.
+
 See the administator guides for :doc:`how to upgrade a live site </admin/upgrading>`.
 
 From 1.8 to 1.9
@@ -11,7 +12,11 @@ TODO
 
 From 1.7 to 1.8
 ===============
-Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0. As such, there is more work to update core and plugins than with previous upgrades. There were a small number of API changes and following our standard practice, the methods we deprecated have been updated to work with the new API. The biggest changes are in the standardization of plugins and in the views system.
+Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0.
+As such, there is more work to update core and plugins than with previous upgrades.
+There were a small number of API changes and following our standard practice,
+the methods we deprecated have been updated to work with the new API.
+The biggest changes are in the standardization of plugins and in the views system.
 
 
 Updating core
@@ -50,7 +55,8 @@ Use standardized routing with page handlers
 
 Include page handler scripts from the page handler
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-Almost every page handler should have a page handler script. (Example: ``bookmarks/all => mod/bookmarks/pages/bookmarks/all.php``)
+Almost every page handler should have a page handler script.
+(Example: ``bookmarks/all => mod/bookmarks/pages/bookmarks/all.php``)
 
 * Call ``set_input()`` for entity guids in the page handler and use ``get_input()`` in the page handler scripts.
 * Call ``gatekeeper()`` and ``admin_gatekeeper()`` in the page handler function if required.
