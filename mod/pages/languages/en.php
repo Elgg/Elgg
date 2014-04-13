@@ -1,10 +1,4 @@
 <?php
-/**
- * Pages languages
- *
- * @package ElggPages
- */
-
 return array(
 
 	/**

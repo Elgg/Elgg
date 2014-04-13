@@ -1,8 +1,4 @@
 <?php
-/**
- * Legacy URL language file
- */
-
 return array(
 	'legacy_urls:message' => 'This page has moved to %s. Please update your bookmark or report the link that led here.',
 

@@ -1,8 +1,4 @@
 <?php
-/**
- * Likes English language file
- */
-
 return array(
 	'likes:this' => 'liked this',
 	'likes:deleted' => 'Your like has been removed',

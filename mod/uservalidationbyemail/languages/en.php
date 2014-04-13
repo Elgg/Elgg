@@ -1,11 +1,4 @@
 <?php
-/**
- * Email user validation plugin language pack.
- *
- * @package Elgg.Core.Plugin
- * @subpackage ElggUserValidationByEmail
- */
-
 return array(
 	'admin:users:unvalidated' => 'Unvalidated',
 	

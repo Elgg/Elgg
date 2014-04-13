@@ -1,8 +1,4 @@
 <?php
-/**
- * An english language definition file
- */
-
 return array(
 	'twitter_api' => 'Twitter Services',
 

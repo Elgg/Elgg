@@ -1,0 +1,201 @@
+[main]
+host = https://www.transifex.com
+
+[elgg-core.engine]
+file_filter = languages/<lang>.php
+source_file = languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.install]
+file_filter = install/languages/<lang>.php
+source_file = install/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.blog]
+file_filter = mod/blog/languages/<lang>.php
+source_file = mod/blog/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.bookmarks]
+file_filter = mod/bookmarks/languages/<lang>.php
+source_file = mod/bookmarks/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.categories]
+file_filter = mod/categories/languages/<lang>.php
+source_file = mod/categories/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.ckeditor]
+file_filter = mod/ckeditor/languages/<lang>.php
+source_file = mod/ckeditor/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.custom_index]
+file_filter = mod/custom_index/languages/<lang>.php
+source_file = mod/custom_index/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.developers]
+file_filter = mod/developers/languages/<lang>.php
+source_file = mod/developers/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.diagnostics]
+file_filter = mod/diagnostics/languages/<lang>.php
+source_file = mod/diagnostics/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.embed]
+file_filter = mod/embed/languages/<lang>.php
+source_file = mod/embed/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.externalpages]
+file_filter = mod/externalpages/languages/<lang>.php
+source_file = mod/externalpages/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.file]
+file_filter = mod/file/languages/<lang>.php
+source_file = mod/file/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.garbagecollector]
+file_filter = mod/garbagecollector/languages/<lang>.php
+source_file = mod/garbagecollector/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.groups]
+file_filter = mod/groups/languages/<lang>.php
+source_file = mod/groups/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.invitefriends]
+file_filter = mod/invitefriends/languages/<lang>.php
+source_file = mod/invitefriends/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.legacy_urls]
+file_filter = mod/legacy_urls/languages/<lang>.php
+source_file = mod/legacy_urls/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.likes]
+file_filter = mod/likes/languages/<lang>.php
+source_file = mod/likes/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.logbrowser]
+file_filter = mod/logbrowser/languages/<lang>.php
+source_file = mod/logbrowser/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.logrotate]
+file_filter = mod/logrotate/languages/<lang>.php
+source_file = mod/logrotate/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.members]
+file_filter = mod/members/languages/<lang>.php
+source_file = mod/members/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.messageboard]
+file_filter = mod/messageboard/languages/<lang>.php
+source_file = mod/messageboard/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.messages]
+file_filter = mod/messages/languages/<lang>.php
+source_file = mod/messages/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.notifications]
+file_filter = mod/notifications/languages/<lang>.php
+source_file = mod/notifications/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.pages]
+file_filter = mod/pages/languages/<lang>.php
+source_file = mod/pages/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.profile]
+file_filter = mod/profile/languages/<lang>.php
+source_file = mod/profile/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.reportedcontent]
+file_filter = mod/reportedcontent/languages/<lang>.php
+source_file = mod/reportedcontent/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.search]
+file_filter = mod/search/languages/<lang>.php
+source_file = mod/search/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.site_notifications]
+file_filter = mod/site_notifications/languages/<lang>.php
+source_file = mod/web_services/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.tagcloud]
+file_filter = mod/tagcloud/languages/<lang>.php
+source_file = mod/tagcloud/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.thewire]
+file_filter = mod/thewire/languages/<lang>.php
+source_file = mod/thewire/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.twitter_api]
+file_filter = mod/twitter_api/languages/<lang>.php
+source_file = mod/twitter_api/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.uservalidationbyemail]
+file_filter = mod/uservalidationbyemail/languages/<lang>.php
+source_file = mod/uservalidationbyemail/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+
+[elgg-core.web_services]
+file_filter = mod/web_services/languages/<lang>.php
+source_file = mod/web_services/languages/en.php
+source_lang = en
+type = PHP_ARRAY
+

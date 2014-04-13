@@ -1,10 +1,4 @@
 <?php
-/**
- * Elgg file plugin language pack
- *
- * @package ElggFile
- */
-
 return array(
 
 	/**

@@ -1,11 +1,4 @@
 <?php
-/**
- * Core English Language
- *
- * @package Elgg.Core
- * @subpackage Languages.English
- */
-
 return array(
 /**
  * Sites

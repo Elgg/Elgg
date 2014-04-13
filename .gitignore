@@ -57,3 +57,4 @@ Desktop.ini
 !/.scrutinizer.yml
 !.gitignore
 !.scripts
+!.tx

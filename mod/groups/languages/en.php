@@ -1,10 +1,4 @@
 <?php
-/**
- * Elgg groups plugin language pack
- *
- * @package ElggGroups
- */
-
 return array(
 
 	/**

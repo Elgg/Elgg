@@ -1,8 +1,4 @@
 <?php
-/**
- * Custom Index English language file
- */
-
 return array(	
 	'custom:bookmarks' => "Latest bookmarks",
 	'custom:groups' => "Latest groups",

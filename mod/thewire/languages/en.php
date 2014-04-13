@@ -1,8 +1,4 @@
 <?php
-/**
- * The Wire English language file
- */
-
 return array(
 
 	/**

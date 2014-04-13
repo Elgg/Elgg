@@ -1,10 +1,4 @@
 <?php
-/**
- * Elgg reported content plugin language pack
- *
- * @package ElggReportedContent
- */
-
 return array(
 
 	'item:object:reported_content' => 'Reported items',

@@ -1,10 +1,4 @@
 <?php
-/**
- * Elgg diagnostics language pack.
- *
- * @package ElggDiagnostics
- */
-
 return array(
 	'admin:administer_utilities:diagnostics' => 'System Diagnostics',
 	'diagnostics' => 'System diagnostics',

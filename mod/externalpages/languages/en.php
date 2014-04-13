@@ -1,8 +1,4 @@
 <?php
-/**
- * External pages English language file
- */
-
 return array(
 
 	/**

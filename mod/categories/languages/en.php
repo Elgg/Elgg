@@ -1,8 +1,4 @@
 <?php
-/**
- * Categories English language file
- */
-
 return array(
 	'categories' => 'Categories',
 	'categories:settings' => 'Set site categories',
