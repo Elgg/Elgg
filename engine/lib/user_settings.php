@@ -72,19 +72,7 @@ function _elgg_set_user_password() {
 			if ($password == $password2) {
 				$user->salt = _elgg_generate_password_salt();
 				$user->password = generate_user_password($user, $password);
-
-				// don't allow others to authenticate via tokens
-				_elgg_delete_users_remember_me_hashes($user);
-
-				$cookie_token = _elgg_get_remember_me_token_from_cookie();
-				if ($user->guid == elgg_get_logged_in_user_guid() && $cookie_token) {
-					// user has a persistent cookie. set this back up
-					$token = _elgg_generate_remember_me_token();
-					$hash = md5($token);
-					elgg_get_session()->set('code', $token);
-					_elgg_add_remember_me_cookie($user, $hash);
-					_elgg_set_remember_me_cookie($token);
-				}
+				_elgg_services()->persistentLogin->handlePasswordChange($user, elgg_get_logged_in_user_entity());
 				if ($user->save()) {
 					system_message(elgg_echo('user:password:success'));
 					return true;
