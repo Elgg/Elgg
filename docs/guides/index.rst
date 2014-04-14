@@ -17,3 +17,4 @@ Customize Elgg's behavior with plugins.
    views
    themes
    javascript
+   web-services
