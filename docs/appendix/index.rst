@@ -9,4 +9,3 @@ Miscellaneous information about the project.
    roadmap
    releases
    history
-   moved
