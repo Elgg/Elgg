@@ -115,11 +115,11 @@ If you find a block of code that you want to use multiple times, make a
 function.  If you find views that are identical except for a single value,
 pull it out into a generic view that takes an option.
 
-
 Embrace SOLID and GRASP
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-These are `principles for OO design`__.
+Use these `principles for OO design`__ to solve problems using loosely coupled
+components, and try to make all components and integration code testable.
 
 __ http://nikic.github.io/2011/12/27/Dont-be-STUPID-GRASP-SOLID.html
 
@@ -138,10 +138,11 @@ Avoid double-negatives. Prefer ``$enable = true`` to ``$disable = false``.
 
 Functions
 ^^^^^^^^^
+
 Where possible, have functions/methods return a single type.
 Use empty values such as array(), "", or 0 to indicate no results.
 
-Functions not throwing an exception on error should return FALSE upon failure.
+Functions not throwing an exception on error should return ``false`` upon failure.
 
 Functions returning only boolean should be prefaced with ``is_`` or ``has_``
 (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``).
@@ -150,6 +151,14 @@ Ternary syntax
 ^^^^^^^^^^^^^^
 
 Acceptable only for single-line, non-embedded statements.
+
+Minimize complexity
+~~~~~~~~~~~~~~~~~~~
+
+Minimize nested blocks and distinct execution paths through code. Use
+`Return Early`__ to reduce cognitive load when reading code.
+
+__ http://www.mrclay.org/2013/09/18/when-reasonable-return-early/
 
 Use comments effectively
 ^^^^^^^^^^^^^^^^^^^^^^^^
@@ -161,8 +170,8 @@ Bad:
 .. code:: php
 
 	// increment $i only when the entity is marked as active.
-	foreach($entities as $entity) {
-		if ($entity->active == TRUE) {
+	foreach ($entities as $entity) {
+		if ($entity->active) {
 			$i++;
 		}
 	}
@@ -172,8 +181,8 @@ Good:
 .. code:: php
 
 	// find the next index for inserting a new active entity.
-	foreach($entities as $entity) {
-		if ($entity->active == TRUE) {
+	foreach ($entities as $entity) {
+		if ($entity->active) {
 			$i++;
 		}
 	}
@@ -181,9 +190,36 @@ Good:
 Commit effectively
 ^^^^^^^^^^^^^^^^^^
 
-Err on the side of atomic commits.
+Err on the side of atomic commits and avoid mixing in extensive whitespace changes.
 One revision with many changes is scary and difficult to review.
 
+Include tests
+~~~~~~~~~~~~~
+
+When at all possible include unit tests for code you add or alter. We use:
+
+*   PHPUnit for PHP unit tests.
+
+*   SimpleTest for PHP tests that require use of the database. Our long-term goal
+    is to move all tests to PHPUnit.
+
+*   Karma for JavaScript unit tests
+
+Naming tests
+~~~~~~~~~~~~
+
+Break tests up by the behaviors you want to test and use names that describe the
+behavior. E.g.:
+
+*   Not so good: One big method `testAdd()`.
+
+*   Better: Methods `testAddingZeroChangesNothing` and `testAddingNegativeNumberSubtracts`
+
+Keep bugfixes simple
+~~~~~~~~~~~~~~~~~~~~
+
+Avoid the temptation to refactor code for a bugfix release. Doing so tends to
+introduce regressions, breaking functionality in what should be a stable release.
 
 PHP guidelines
 --------------
@@ -195,36 +231,27 @@ Developers should first read the `PSR-2 Coding Standard Guide`__.
 
 __ https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-style-guide.md
 
-Elgg's standards differ from and extend PSR-2 in the following ways:
-
-2.1 Basic Coding Standard
-
-* 	Compliance with PSR-1 is encouraged, but not required.
-
-2.3. Lines
-
-* 	Consider refactoring code (e.g. introduce variables) if lines reach over
-	100 characters.
-
-2.4. Indenting
+Elgg's standards extend PSR-2, but differ in the following ways:
 
 * 	Indent using one tab character, not spaces.
 
-4.1. Extends and Implements
+* 	Opening braces for classes, methods, and functions must go on the same line.
 
-* 	Opening braces for classes must go on the same line.
+* 	If a line reaches over 100 characters, consider refactoring (e.g. introduce variables).
 
-4.3. Methods
+* 	Compliance with `PSR-1`__ is encouraged, but not strictly required.
 
-* 	Opening braces for methods (and functions) must go on the same line.
-
-The following is not mentioned in PSR-2
+__ https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
 
 Documentation
 ^^^^^^^^^^^^^
 
 * 	Include PHPDoc comments on functions and classes (all methods; declared
-	properties when appropriate).
+	properties when appropriate), including types and descriptions of all
+	parameters.
+
+* 	In lists of ``@param`` declarations, the beginnings of variable names and
+    descriptions must line up.
 
 * 	Annotate classes, methods, properties, and functions with ``@access private``
 	unless they are intended for public use, are already of limited visibility,
@@ -238,7 +265,7 @@ Naming
 ^^^^^^
 
 * 	Use underscores to separate words in the names of functions, variables,
-	and properties.
+	and properties. Method names are camelCase.
 
 * 	Names of functions for public use must begin with ``elgg_``.
 
