@@ -1,5 +1,5 @@
 Javascript
-==========
+##########
 
 This guide assumes basic familiarity with:
 
