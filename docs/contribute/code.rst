@@ -246,20 +246,20 @@ __ https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-cod
 Documentation
 ^^^^^^^^^^^^^
 
-* 	Include PHPDoc comments on functions and classes (all methods; declared
-	properties when appropriate), including types and descriptions of all
-	parameters.
+*   Include PHPDoc comments on functions and classes (all methods; declared
+    properties when appropriate), including types and descriptions of all
+    parameters.
 
-* 	In lists of ``@param`` declarations, the beginnings of variable names and
+*   In lists of ``@param`` declarations, the beginnings of variable names and
     descriptions must line up.
 
-* 	Annotate classes, methods, properties, and functions with ``@access private``
-	unless they are intended for public use, are already of limited visibility,
-	or are within a class already marked as private.
+*   Annotate classes, methods, properties, and functions with ``@access private``
+    unless they are intended for public use, are already of limited visibility,
+    or are within a class already marked as private.
 
-* 	Use ``//`` or ``/* */`` when commenting.
+*   Use ``//`` or ``/* */`` when commenting.
 
-* 	Use only ``//`` comments inside function/method bodies.
+*   Use only ``//`` comments inside function/method bodies.
 
 Naming
 ^^^^^^
