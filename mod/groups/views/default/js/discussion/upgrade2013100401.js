@@ -8,6 +8,9 @@ elgg.discussion_upgrade.init = function () {
 	$('#reply-upgrade-run').click(elgg.discussion_upgrade.upgradeReplies);
 };
 
+// We cache error messages here to prevent displaying the same message multiple times
+elgg.discussion_upgrade.errorMessages = [];
+
 /**
  * Initializes the discussion reply upgrade feature
  *
@@ -52,8 +55,15 @@ elgg.discussion_upgrade.upgradeReplyBatch = function(offset) {
 	options.success = function(json) {
 		// Append possible errors after the progressbar
 		if (json.system_messages.error.length) {
-			var msg = '<li class="elgg-message elgg-state-error">' + json.system_messages.error + '</li>';
-			$('#reply-upgrade-messages').append(msg);
+			// Display only the errors that haven't already been shown
+			$(json.system_messages.error).each(function(key, message) {
+				if (jQuery.inArray(message, elgg.discussion_upgrade.errorMessages) === -1) {
+					var msg = '<li class="elgg-message elgg-state-error">' + message + '</li>';
+					$('#reply-upgrade-messages').append(msg);
+					// Add this error to the displayed errors
+					elgg.discussion_upgrade.errorMessages.push(message);
+				}
+			});
 		}
 
 		// Increase success statistics
