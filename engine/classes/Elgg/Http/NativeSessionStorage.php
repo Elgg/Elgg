@@ -281,7 +281,6 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 	 * @return void
 	 */
 	protected function setHandler($handler) {
-		register_shutdown_function('session_write_close');
 		session_set_save_handler(
 			array($handler, 'open'),
 			array($handler, 'close'),
