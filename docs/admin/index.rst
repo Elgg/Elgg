@@ -8,3 +8,4 @@ Best practices for effectively managing an Elgg-based site.
    
    upgrading
    plugins
+   performance
