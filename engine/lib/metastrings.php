@@ -184,6 +184,10 @@ function _elgg_delete_orphaned_metastrings() {
  *
  *  metastring_type               => STR      metadata or annotation(s)
  *
+ *  preload_owners                => BOOL     If true, Elgg will preload the owners of all the fetched
+ *                                            objects. In many situations this will be faster than loading
+ *                                            them on-demand during view rendering.
+ *
  * @return mixed
  * @access private
  */
@@ -249,6 +253,7 @@ function _elgg_get_metastring_based_objects($options) {
 		'joins' => array(),
 
 		'callback' => $callback,
+		'preload_owners' => false,
 	);
 
 	// @todo Ignore site_guid right now because of #2910
@@ -432,6 +437,12 @@ function _elgg_get_metastring_based_objects($options) {
 		}
 
 		$dt = get_data($query, $options['callback']);
+
+		if ($dt && $options['preload_owners']) {
+			$preloader = new Elgg_EntityPreloader(array('owner_guid'));
+			$preloader->preload($dt);
+		}
+
 		return $dt;
 	} else {
 		$result = get_data_row($query);

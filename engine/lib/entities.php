@@ -766,6 +766,10 @@ function elgg_enable_entity($guid, $recursive = true) {
  *
  * 	callback => string A callback function to pass each row through
  *
+ *  preload_owners => bool If true, Elgg will preload the owners of all the fetched
+ *                    entities. In many situations this will be faster than loading
+ *                    them on-demand during view rendering.
+ *
  * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  * @see elgg_get_entities_from_metadata()
@@ -803,7 +807,9 @@ function elgg_get_entities(array $options = array()) {
 		'joins'					=>	array(),
 
 		'callback'				=> 'entity_row_to_elggstar',
+		'preload_owners'		=> false,
 
+		// private API
 		'__ElggBatch'			=> null,
 	);
 
@@ -928,7 +934,7 @@ function elgg_get_entities(array $options = array()) {
 		}
 
 		if ($dt) {
-			// populate entity and metadata caches
+			// populate entity and metadata caches, and prepare $entities for preloader
 			$guids = array();
 			foreach ($dt as $item) {
 				// A custom callback could result in items that aren't ElggEntity's, so check for them
@@ -945,6 +951,11 @@ function elgg_get_entities(array $options = array()) {
 
 			if ($guids) {
 				_elgg_get_metadata_cache()->populateFromEntities($guids);
+			}
+
+			if ($options['preload_owners']) {
+				$preloader = new Elgg_EntityPreloader(array('owner_guid'));
+				$preloader->preload($dt);
 			}
 		}
 		return $dt;
