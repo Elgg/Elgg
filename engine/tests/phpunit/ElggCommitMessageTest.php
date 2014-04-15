@@ -29,7 +29,13 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 			'Merge pull request',
 			'Merge abc123 into def456',
 			"Merge pull request abc123\nBut has other stuff, too",
-			'Merge release 1.8.18 into master.'
+			'Merge release 1.8.18 into master.',
+			'Revert "fix(amd): removed elgg_require_js for backwards compatibility"
+
+			This reverts commit 76584089bee2b3246c736edb6b250e149acf906f.
+
+			Conflicts:
+				engine/lib/views.php'
 		);
 
 		foreach ($ignored as $msg) {

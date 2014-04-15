@@ -99,7 +99,7 @@ class ElggCommitMessage {
 	 *
 	 * @var string
 	 */
-	private $ignoreRegex = '/^Merge /i';
+	private $ignoreRegex = '/^Merge |^Revert /i';
 
 	/**
 	 * Regex to extract the message parts
