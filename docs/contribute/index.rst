@@ -1,5 +1,5 @@
-Contributor Guide
-#################
+Contributor Guides
+##################
 
 Participate in making Elgg even better.
 

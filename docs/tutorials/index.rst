@@ -1,4 +1,4 @@
-Plugin tutorials
+Plugin Tutorials
 ################
 
 Walk through all the required steps in order to create your own plugins.
