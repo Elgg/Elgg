@@ -16,9 +16,16 @@
  */
 
 $user = elgg_extract('entity', $vars, elgg_get_logged_in_user_entity());
+
+if (!elgg_instanceof($user, 'user')) {
+	return;
+}
+
+// Determine the size to display
+$icon_sizes = elgg_get_config('icon_sizes');
 $size = elgg_extract('size', $vars, 'medium');
-if (!in_array($size, array('topbar', 'tiny', 'small', 'medium', 'large', 'master'))) {
-	$size = 'medium';
+if (!array_key_exists($size, $icon_sizes)) {
+	$size = "medium";
 }
 
 $class = "elgg-avatar elgg-avatar-$size";
@@ -27,10 +34,6 @@ if (isset($vars['class'])) {
 }
 
 $use_link = elgg_extract('use_link', $vars, true);
-
-if (!($user instanceof ElggUser)) {
-	return true;
-}
 
 $name = htmlspecialchars($user->name, ENT_QUOTES, 'UTF-8', false);
 $username = $user->username;
