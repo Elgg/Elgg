@@ -31,6 +31,7 @@ foreach ($links as $attributes) {
 $js = elgg_get_loaded_js('head');
 $css = elgg_get_loaded_css();
 $elgg_init = elgg_view('js/initialize_elgg');
+$require_config = elgg_view('js/elgg/require_config');
 
 $html5shiv_url = elgg_normalize_url('vendors/html5shiv.js');
 $ie_url = elgg_get_simplecache_url('css', 'ie');
@@ -60,7 +61,12 @@ foreach ($css as $url) {
 		<link rel="stylesheet" href="<?php echo $ie7_url; ?>" />
 	<![endif]-->
 
-	<script><?php echo $elgg_init; ?></script>
+	<script>
+	<?php
+		echo $elgg_init;
+		echo $require_config;
+	?>
+	</script>
 <?php
 foreach ($js as $url) {
 	echo elgg_format_element('script', array('src' => $url));
