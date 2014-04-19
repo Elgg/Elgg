@@ -25,12 +25,13 @@ function developers_init() {
 
 	elgg_register_js('jquery.jstree', array(
 		'src' => '/mod/developers/vendors/jsTree/jquery.jstree.js',
+		'location' => 'footer',
 		'exports' => 'jQuery.fn.jstree',
 		'deps' => array('jquery'),
 	));
 	elgg_register_css('jquery.jstree', '/mod/developers/vendors/jsTree/themes/default/style.css');
 
-	elgg_load_js('elgg/dev');
+	elgg_require_js('elgg/dev');
 }
 
 function developers_process_settings() {
