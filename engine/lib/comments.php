@@ -40,6 +40,10 @@ function _elgg_comments_page_handler($page) {
 		case 'edit':
 			elgg_gatekeeper();
 
+			if (empty($page[1])) {
+				register_error(elgg_echo('generic_comment:notfound'));
+				forward(REFERER);
+			}
 			$comment = get_entity($page[1]);
 			if (!($comment instanceof ElggComment) || !$comment->canEdit()) {
 				register_error(elgg_echo('generic_comment:notfound'));
@@ -59,6 +63,7 @@ function _elgg_comments_page_handler($page) {
 			$params = array(
 				'entity' => $target,
 				'comment' => $comment,
+				'is_edit_page' => true,
 			);
 			$content = elgg_view_form('comment/save', null, $params);
 
