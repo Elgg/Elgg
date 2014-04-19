@@ -47,7 +47,6 @@
 	height:24px;
 	cursor: pointer;
 	display: block;
-	outline: none;
 }
 #notificationstable td.sitetogglefield {
 	width:50px;
@@ -63,7 +62,6 @@
 	height:24px;
 	cursor: pointer;
 	display: block;
-	outline: none;
 }
 #notificationstable td.emailtogglefield a.emailtoggleOff {
 	background: url(<?php echo elgg_get_site_url(); ?>mod/notifications/graphics/icon_notifications_email.gif) no-repeat right 2px;

@@ -20,7 +20,6 @@
 	width: auto;
 	padding: 2px 4px;
 	cursor: pointer;
-	outline: none;
 	box-shadow: 0px 1px 0px rgba(0, 0, 0, 0.40);
 	background-color: #ccc;
 }
