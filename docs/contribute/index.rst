@@ -8,10 +8,11 @@ It relies on the support of volunteers to succeed.
 Here are some ways you can help:
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    
    issues
    code
    docs
    money
+   releases
    
