@@ -1215,7 +1215,11 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 
 	/** @var $reply ElggEntity */
 	$reply = $params['entity'];
-
+	
+	if (!elgg_instanceof($reply, 'object', 'discussion_reply')) {
+		return $return;
+	}
+	
 	$user = elgg_get_logged_in_user_entity();
 
 	// Allow discussion topic owner, group owner and admins to edit and delete
