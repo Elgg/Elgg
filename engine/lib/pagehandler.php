@@ -58,8 +58,8 @@ function elgg_unregister_page_handler($identifier) {
 function elgg_gatekeeper() {
 	if (!elgg_is_logged_in()) {
 		_elgg_services()->session->set('last_forward_from', current_page_url());
-		register_error(elgg_echo('loggedinrequired'));
-		forward('', 'login');
+		system_message(elgg_echo('loggedinrequired'));
+		forward('/login', 'login');
 	}
 }
 
