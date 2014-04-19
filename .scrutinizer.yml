@@ -13,7 +13,6 @@ tools:
         filter:
             excluded_paths: ['vendors/*','*/vendors/*','*/tests/*','*/vendor/*']
     sensiolabs_security_checker: true
-    php_cpd: true
     php_pdepend:
         excluded_dirs:
             - vendors
@@ -21,3 +20,8 @@ tools:
     external_code_coverage:
         timeout: '600'
     php_hhvm: true
+    php_sim: true
+
+    # PHP Similarity Analyzer and Copy/paste Detector cannot be used at
+    # the same time right now. Make sure to either remove, or disable one.
+    php_cpd: false
