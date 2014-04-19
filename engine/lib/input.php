@@ -392,6 +392,7 @@ function input_livesearch_page_handler($page) {
 						$output = elgg_view_list_item($entity, array(
 							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',
+							'full_view' => false,
 						));
 
 						$icon = elgg_view_entity_icon($entity, 'tiny', array(
