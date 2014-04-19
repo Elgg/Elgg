@@ -8,8 +8,10 @@ We have published this information in the spirit of openness,
 and to streamline onboarding of new team members.
 
 Requirements
+============
 
  * SSH access to elgg.osuosl.org
+ * Commit access to http://github.com/Elgg/Elgg
  * Author access to http://blog.elgg.org
  * Access to `Twitter account`_
  * Access to `G+ page`_
