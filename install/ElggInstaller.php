@@ -870,6 +870,14 @@ class ElggInstaller {
 		$CONFIG->sitename = '';
 		$CONFIG->sitedescription = '';
 	}
+	
+	/**
+	 * @return bool Whether the install process is encrypted.
+	 */
+	private function isHttps() {
+	    return (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") ||
+	        $_SERVER['SERVER_PORT'] == 443;
+	}
 
 	/**
 	 * Get the best guess at the base URL
@@ -880,10 +888,8 @@ class ElggInstaller {
 	 * @return string
 	 */
 	protected function getBaseUrl() {
-		$protocol = 'http';
-		if (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") {
-			$protocol = 'https';
-		}
+		$protocol = $this->isHttps() ? 'https' : 'http';
+		
 		if (isset($_SERVER["SERVER_PORT"])) {
 			$port = ':' . $_SERVER["SERVER_PORT"];
 		} else {
@@ -897,8 +903,7 @@ class ElggInstaller {
 		$uri = substr($uri, 0, $cutoff);
 		$serverName = isset($_SERVER['SERVER_NAME']) ? $_SERVER['SERVER_NAME'] : '';
 
-		$url = "$protocol://{$serverName}$port{$uri}";
-		return $url;
+		return "$protocol://{$serverName}$port{$uri}";
 	}
 
 	/**
