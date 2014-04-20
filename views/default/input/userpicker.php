@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['value'] Array of user guids for already selected users or null
+ * @uses $vars['values'] Array of user guids for already selected users or null
  * @uses $vars['limit'] Limit number of users (default 0 = no limit)
  * @uses $vars['name'] Name of the returned data array (default "members")
  * @uses $vars['handler'] Name of page handler used to power search (default "livesearch")
@@ -25,7 +25,7 @@ if (empty($vars['name'])) {
 $name = $vars['name'];
 $name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
 
-$guids = (array)$vars['values'];
+$guids = (array)elgg_extract('values', $vars, array());
 
 $handler = elgg_extract('handler', $vars, 'livesearch');
 $handler = htmlspecialchars($handler, ENT_QUOTES, 'UTF-8');

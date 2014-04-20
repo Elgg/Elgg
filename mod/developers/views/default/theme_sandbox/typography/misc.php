@@ -9,7 +9,7 @@
 	<li>I am <i>the i tag</i> example</li>
 	<li>I am <strong>the strong tag</strong> example</li>
 </ul>
-<blockquote><p>Paragraph inside Blockquote: <?php echo $ipsum; ?></p></blockquote>
+<blockquote><p>Paragraph inside Blockquote: <?php echo elgg_view('developers/ipsum'); ?></p></blockquote>
 <pre>
 	<strong>Preformated:</strong>Testing one row
 	and another
