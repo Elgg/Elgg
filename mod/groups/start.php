@@ -1120,6 +1120,10 @@ function discussion_can_edit_reply($hook, $type, $return, $params) {
 	if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
 		return $return;
 	}
+	
+	if ($reply->owner_guid == $user->guid) {
+	    return true;
+	}
 
 	$discussion = $reply->getContainerEntity();
 	if ($discussion->owner_guid == $user->guid) {
