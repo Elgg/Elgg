@@ -24,6 +24,8 @@ function _elgg_comments_init() {
 
 	elgg_register_page_handler('comment', '_elgg_comments_page_handler');
 
+	elgg_register_page_handler('comment', '_elgg_comments_page_handler');
+
 	elgg_register_ajax_view('core/ajax/edit_comment');
 }
 
