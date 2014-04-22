@@ -13,5 +13,7 @@
 // XX = Interim incrementer
 $version = 2014032200;
 
+$composer = json_decode(dirname(__FILE__) . "/composer.json");
+
 // Human-friendly version name
-$release = '1.9.0-dev';
+$release = $composer->version;
