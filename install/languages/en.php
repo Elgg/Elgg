@@ -142,7 +142,8 @@ If you are ready to proceed, click the Next button.",
 	'install:error:rewrite:lighttpd' => 'We think your server is running the Lighttpd web server.',
 	'install:error:rewrite:iis' => 'We think your server is running the IIS web server.',
 	'install:error:rewrite:allowoverride' => "The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents Apache from processing the .htaccess file which contains the rewrite rules.
-				\n\nA less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.",
+				\n\nA less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory.
+				\n\nAlso, be sure to enable mod_rewrite by issuing the command \'sudo a2enmod rewrite\' followed by an Apache restart.",
 	'install:error:rewrite:htaccess:write_permission' => 'Your web server does not have permission to create the .htaccess file in Elgg\'s directory. You need to manually copy htaccess_dist to .htaccess or change the permissions on the directory.',
 	'install:error:rewrite:htaccess:read_permission' => 'There is an .htaccess file in Elgg\'s directory, but your web server does not have permission to read it.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'There is an .htaccess file in Elgg\'s directory that was not not created by Elgg. Please remove it.',
