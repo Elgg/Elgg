@@ -7,9 +7,11 @@
 
 $prefix = elgg_get_config('dbprefix');
 $query = "
-	UPDATE {$prefix}users_remember_me_cookies rmc
-	JOIN {$prefix}users_entity ue on ue.guid = rmc.guid
-	SET rmc.code = ''
-	WHERE ue.admin = 'yes'
+	DELETE FROM {$prefix}users_remember_me_cookies
+	WHERE guid IN (
+		SELECT guid
+		FROM {$prefix}users_entity
+		WHERE admin = 'yes'
+	)
 ";
 update_data($query);
