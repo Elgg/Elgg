@@ -182,7 +182,7 @@ function groups_handle_mine_page() {
 function groups_handle_edit_page($page, $guid = 0) {
 	elgg_gatekeeper();
 
-	elgg_load_js('elgg/groups/edit');
+	elgg_require_js('elgg/groups/edit');
 
 	if ($page == 'add') {
 		elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
