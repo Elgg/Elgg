@@ -126,16 +126,6 @@ function forward($location = "", $reason = 'system') {
  * @since 1.8.0
  */
 function elgg_register_js($name, $url, $location = 'head', $priority = null) {
-	if (is_array($url)) {
-		$config = $url;
-		$url = elgg_extract('src', $config);
-		$location = elgg_extract('location', $config, 'footer');
-		$priority = elgg_extract('priority', $config);
-		
-		_elgg_services()->amdConfig->setShim($name, $config);
-		_elgg_services()->amdConfig->setPath($name, elgg_normalize_url($url));
-	}
-
 	return elgg_register_external_file('js', $name, $url, $location, $priority);
 }
 
