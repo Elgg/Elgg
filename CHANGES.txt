@@ -84,6 +84,7 @@ Version 1.9.0-rc1
    * Adds support for returning translations as arrays from language files
    * Adds ElggEntity::getDisplayName()
    * Adds ElggEntity::toObject()
+   * Adds elgg_require_js() to auto-load AMD module with page
    * Replaces add_to_river() with elgg_create_river_item()
    * Adds target_guid to the river
    * Adds elgg_get_entities_from_attributes()
