@@ -116,6 +116,21 @@ and make sure it's executable.
 Enforcing a particular format allows us to automatically build a changelog when it comes time to release.
 This saves a lot of time and makes it possible to release more often.
 
+Rewriting commit messages
+-------------------------
+If your PR does not conform to the standard commit message format,
+we'll ask you to rewrite it:
+
+1. Rebase last commit (Git will open the git-rebase-todo file for editing)
+   
+   ``git rebase -i HEAD~`` 
+2. Change ``pick`` to ``r`` (for reword) and save/exit the editor.
+   (Git will present a file to alter the commit message)
+3. Change the commit message, save/exit the editor.
+4. Force push the branch to update your PR:
+
+   ``git push -f your_remote your_branch``
+
 Coding best practices
 =====================
 
