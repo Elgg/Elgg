@@ -60,7 +60,7 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 
 	elgg_load_js('lightbox');
 	elgg_load_css('lightbox');
-	elgg_load_js('jquery.form');
+	elgg_require_js('jquery.form');
 	elgg_load_js('elgg.embed');
 	
 	return $items;

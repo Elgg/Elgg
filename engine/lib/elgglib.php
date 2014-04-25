@@ -130,6 +130,41 @@ function elgg_register_js($name, $url, $location = 'head', $priority = null) {
 }
 
 /**
+ * Defines a JS lib as an AMD module. This is useful for shimming
+ * traditional JS or for setting the paths of AMD modules.
+ *
+ * Calling multiple times for the same name will:
+ *     * set the preferred path to the last call setting a path
+ *     * overwrite the shimmed AMD modules with the last call setting a shimmed module
+ *
+ * Use elgg_require_js($name) to load on the current page.
+ *
+ * Calling this function is not needed if your JS are in views named like `js/module/name.js`
+ * Instead, simply call elgg_require_js("module/name").
+ *
+ * @param string $name   The module name
+ * @param array  $config An array like the following:
+ *                       array  'deps'    An array of AMD module dependencies
+ *                       string 'exports' The name of the exported module
+ *                       string 'path'    The URL to the JS. Can be relative.
+ *
+ * @return void
+ */
+function elgg_define_js($name, $config) {
+	$src = elgg_extract('src', $config);
+
+	if ($src) {
+		$url = elgg_normalize_url($src);
+		_elgg_services()->amdConfig->addPath($name, $url);
+	}
+
+	// shimmed module
+	if (isset($config['deps']) || isset($config['exports'])) {
+		_elgg_services()->amdConfig->addShim($name, $config);
+	}
+}
+
+/**
  * Unregister a JavaScript file
  *
  * @param string $name The identifier for the JavaScript library
