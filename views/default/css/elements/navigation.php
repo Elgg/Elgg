@@ -329,6 +329,9 @@
 	display: none;
 	margin-left: 15px;
 }
+.elgg-menu-page .elgg-state-selected > .elgg-child-menu {
+	display: block;
+}
 .elgg-menu-page .elgg-menu-closed:before, .elgg-menu-opened:before {
 	display: inline-block;
 	padding-right: 4px;
