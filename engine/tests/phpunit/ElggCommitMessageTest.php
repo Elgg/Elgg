@@ -133,6 +133,7 @@ ___MSG;
 			'chore',
 			'perf',
 			'security',
+			'deprecate',
 		);
 
 		// make sure we have all the types
