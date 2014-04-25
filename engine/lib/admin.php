@@ -635,7 +635,7 @@ function _elgg_admin_plugin_screenshot_page_handler($pages) {
  */
 function _elgg_admin_markdown_page_handler($pages) {
 	elgg_admin_gatekeeper();
-
+	_elgg_admin_add_plugin_settings_menu();
 	elgg_set_context('admin');
 
 	elgg_unregister_css('elgg');
