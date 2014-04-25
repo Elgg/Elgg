@@ -115,8 +115,8 @@ class Elgg_Http_Request {
 		$this->request = new Elgg_Http_ParameterBag($this->stripSlashesIfMagicQuotes($request));
 		$this->cookies = new Elgg_Http_ParameterBag($this->stripSlashesIfMagicQuotes($cookies));
 		// Symfony uses FileBag so this will change in next Elgg version
-		$this->files = new Elgg_Http_ParameterBag($this->stripSlashesIfMagicQuotes($files));
-		$this->server = new Elgg_Http_ParameterBag($this->stripSlashesIfMagicQuotes($server));
+		$this->files = new Elgg_Http_ParameterBag($files);
+		$this->server = new Elgg_Http_ParameterBag($server);
 	
 		$headers = $this->prepareHeaders();
 		// Symfony uses HeaderBag so this will change in next Elgg version
