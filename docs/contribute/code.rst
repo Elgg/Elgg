@@ -15,70 +15,52 @@ under a `GPLv2 license`_ and `MIT license`_.
 Pull requests
 =============
 
-Pull requests are the best way to get code contributed to Elgg core.
+Pull requests (PRs) are the best way to get code contributed to Elgg core.
 The core development team uses them even for the most trivial changes.
 
 For new features, `submit a feature request`_ or `talk to us`_ first and make
 sure the core team approves of your direction before spending lots of time on code.
 
-Good PR checklist:
-
--  Clear, meaningful title
--  Commit messages are in the standard commit message format
--  Detailed description
--  Includes relevant tests (unit, e2e, etc.)
--  Includes :doc:`documentation update <docs>`
--  Passes the continuous build
--  Is submitted against the correct branch:
-   
-   -  New features should be submitted against master. We do not introduce
-      new features in bugfix branches.
-   -  Bugfixes should be submitted against the latest non-master branch
-      (unless the bug only appears in master).
-
 .. _talk to us: http://community.elgg.org/groups/profile/211069/feedback-and-planning
 .. _submit a feature request: :doc:`/contribute/issues`
 
 
-Commit message format
-=====================
+Checklists
+----------
 
-Enforcing a particular format allows us to automatically build a changelog when it comes time to release.
-This saves a lot of time and makes it possible to release more often.
+Use these markdown checklists for new PRs on github to ensure high-quality contributions
+and help everyone understand the status of open PRs.
 
-All commit messages are required to adhere to the format below. Travis will complain if not.
+Bugfix PRs:
 
 .. code::
-   
-    type(component): summary
-    
-    Optional body
-    Details about the solution.
-    Opportunity to call out as breaking change.
-    
-    Closes/Fixes/Refs #123, #456, #789
+
+ - [ ] Commit messages are in the standard format
+ - [ ] Includes regression test
+ - [ ] Includes documentation update (if applicable)
+ - [ ] Is submitted against the correct branch
+ - [ ] Has LGTM from at least one core developer
+
+Feature PRs:
+
+.. code::
+
+ - [ ] Commit messages are in the standard format
+ - [ ] Includes tests
+ - [ ] Includes documentation
+ - [ ] Is submitted against the correct branch
+ - [ ] Has LGTM from at least two core developers
 
 
-Where ``type`` is one of:
- * feature
- * fix
- * docs (when *only* docs are being updated)
- * chore (refactoring, style changes, add missing tests, Travis stuff, etc.)
- * perf (any change expected to improve performance)
- * security (any change to affecting a security issue)
+Choosing a branch to submit to
+------------------------------
 
-And ``component`` is one of:
- * i18n
- * seo
- * a11y
- * cache
- * db
- * views
- * session
- * router
- * etc...
+-  New features: master (we do not introduce new features in bugfix branches).
+-  Bug fixes: latest branch (or master if the bug only appears in master).
+-  Security fixes: lowest supported branch (If master is 1.9, then submit against 1.7).
 
-All lines of the commit message must not be longer than 100 characters.
+Commit message format
+---------------------
 
 Here is an example of a good commit message:
 
@@ -91,10 +73,48 @@ Here is an example of a good commit message:
     
     Fixes #6204
 
+All commit messages are required to adhere to this format:
+
+.. code::
+   
+	type(component): summary
+	
+	Optional body
+	Details about the solution.
+	Opportunity to call out as breaking change.
+	
+	Closes/Fixes/Refs #123, #456, #789
+
+
+Where ``type`` is one of:
+
+* feature
+* fix
+* docs (when *only* docs are being updated)
+* chore (refactoring, style changes, add missing tests, Travis stuff, etc.)
+* perf (when primary purpose of change is to improve performance)
+* security (any change affecting a security issue)
+
+And ``component`` is one of:
+
+* i18n
+* seo
+* a11y
+* cache
+* db
+* views
+* session
+* router
+* etc...
+
+All lines of the commit message must not be longer than 100 characters.
+
 To validate commit messages locally, copy or symlink the
 ``.scripts/validate_commit_msg.php`` to ``.git/hooks/commit-msg``
 and make sure it's executable.
 
+Enforcing a particular format allows us to automatically build a changelog when it comes time to release.
+This saves a lot of time and makes it possible to release more often.
 
 Coding best practices
 =====================
@@ -198,12 +218,12 @@ Include tests
 
 When at all possible include unit tests for code you add or alter. We use:
 
-*   PHPUnit for PHP unit tests.
+* PHPUnit for PHP unit tests.
 
-*   SimpleTest for PHP tests that require use of the database. Our long-term goal
-    is to move all tests to PHPUnit.
+* SimpleTest for PHP tests that require use of the database. Our long-term goal
+  is to move all tests to PHPUnit.
 
-*   Karma for JavaScript unit tests
+* Karma for JavaScript unit tests
 
 Naming tests
 ~~~~~~~~~~~~
@@ -211,9 +231,9 @@ Naming tests
 Break tests up by the behaviors you want to test and use names that describe the
 behavior. E.g.:
 
-*   Not so good: One big method `testAdd()`.
+* Not so good: One big method `testAdd()`.
 
-*   Better: Methods `testAddingZeroChangesNothing` and `testAddingNegativeNumberSubtracts`
+* Better: Methods `testAddingZeroChangesNothing` and `testAddingNegativeNumberSubtracts`
 
 Keep bugfixes simple
 ~~~~~~~~~~~~~~~~~~~~
@@ -233,70 +253,69 @@ __ https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-2-coding-st
 
 Elgg's standards extend PSR-2, but differ in the following ways:
 
-* 	Indent using one tab character, not spaces.
-
-* 	Opening braces for classes, methods, and functions must go on the same line.
-
-* 	If a line reaches over 100 characters, consider refactoring (e.g. introduce variables).
-
-* 	Compliance with `PSR-1`__ is encouraged, but not strictly required.
+* Indent using one tab character, not spaces.
+* Opening braces for classes, methods, and functions must go on the same line.
+* If a line reaches over 100 characters, consider refactoring (e.g. introduce variables).
+* Compliance with `PSR-1`__ is encouraged, but not strictly required.
 
 __ https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-1-basic-coding-standard.md
 
 Documentation
 ^^^^^^^^^^^^^
 
-*   Include PHPDoc comments on functions and classes (all methods; declared
-    properties when appropriate), including types and descriptions of all
-    parameters.
+* Include PHPDoc comments on functions and classes (all methods; declared
+  properties when appropriate), including types and descriptions of all
+  parameters.
 
-*   In lists of ``@param`` declarations, the beginnings of variable names and
-    descriptions must line up.
+* In lists of ``@param`` declarations, the beginnings of variable names and
+  descriptions must line up.
 
-*   Annotate classes, methods, properties, and functions with ``@access private``
-    unless they are intended for public use, are already of limited visibility,
-    or are within a class already marked as private.
+* Annotate classes, methods, properties, and functions with ``@access private``
+  unless they are intended for public use, are already of limited visibility,
+  or are within a class already marked as private.
 
-*   Use ``//`` or ``/* */`` when commenting.
+* Use ``//`` or ``/* */`` when commenting.
 
-*   Use only ``//`` comments inside function/method bodies.
+* Use only ``//`` comments inside function/method bodies.
 
 Naming
 ^^^^^^
 
-* 	Use underscores to separate words in the names of functions, variables,
-	and properties. Method names are camelCase.
+* Use underscores to separate words in the names of functions, variables,
+  and properties. Method names are camelCase.
 
-* 	Names of functions for public use must begin with ``elgg_``.
+* Names of functions for public use must begin with ``elgg_``.
+  
+* All other function names must begin with ``_elgg_``.
 
-* 	All other function names must begin with ``_elgg_``.
+* The names of all classes and interfaces must use underscores as namespace
+  separators and be within the Elgg namespace. (``Elgg_Cache_LRUCache``)
 
-* 	The names of all classes and interfaces must use underscores as namespace
-	separators and be within the Elgg namespace. (``Elgg_Cache_LRUCache``)
-
-* 	Name globals and constants in ``ALL_CAPS`` (``ACCESS_FRIENDS``, ``$CONFIG``).
+* Name globals and constants in ``ALL_CAPS`` (``ACCESS_FRIENDS``, ``$CONFIG``).
 
 Miscellaneous
 ^^^^^^^^^^^^^
 
-* 	Use PHP 5.2-compatible syntax in Elgg versions before 1.10.
+Use PHP 5.2-compatible syntax in Elgg versions before 1.10.
 
-* 	Do not use PHP shortcut tags (``<?`` or ``<?=`` or ``<%``).
+Do not use PHP shortcut tags (``<?`` or ``<?=`` or ``<%``).
 
-* 	When creating strings with variables, use double-quoted strings and wrap
-	variables with braces only when necessary.
+When creating strings with variables:
 
-	Bad (hard to read, misuse of quotes and {}s):
+* use double-quoted strings
+* wrap variables with braces only when necessary.
+
+Bad (hard to read, misuse of quotes and {}s):
+
+.. code:: php
 	
-	.. code:: php
-	
-		echo 'Hello, '.$name."!  How is your {$time_of_day}?";
+	echo 'Hello, '.$name."!  How is your {$time_of_day}?";
 		
-	Good:
+Good:
+  
+.. code:: php
 	
-	.. code:: php
-	
-		echo "Hello, $name!  How is your $time_of_day?"; 
+	echo "Hello, $name!  How is your $time_of_day?"; 
 
 
 CSS guidelines
@@ -362,9 +381,9 @@ Bad:
 
 .. code:: css
 
-		color:value;
-		color :value;
-		color : value;
+	color:value;
+	color :value;
+	color : value;
 
 Good:
 
@@ -420,7 +439,6 @@ Good:
 	background-position: 2px -257px;
 	color: #0054A7;
 
-
 Javascript guidelines
 ---------------------
 
@@ -441,37 +459,22 @@ Function expressions should end with a semi-colon.
 Deprecating APIs
 ================
 
-Occasionally, functions and classes must be deprecated in favor of newer
-replacements.  Since 3rd party plugin authors rely on a consistent API,
-backward compatibility must be maintained, but will not be maintained
-indefinitely as plugin authors are expected to properly update their
-plugins.  In order to maintain backward compatibility, deprecated APIs will
-follow these guidelines:
+Occasionally, functions and classes must be deprecated in favor of newer replacements. 
+Since 3rd party plugin authors rely on a consistent API,
+backward compatibility must be maintained,
+but will not be maintained indefinitely as
+plugin authors are expected to properly update their plugins.
+In order to maintain backward compatibility,
+deprecated APIs will follow these guidelines:
 
-* 	Incompatible API changes cannot occur between bugfix versions
-	(1.6.0 - 1.6.1).
+* The first minor version (1.7) with a deprecated API must include a wrapper
+  function/class (or otherwise appropriate means) to maintain backward compatibility,
+  including any bugs in the original function/class.
+  This compatibility layer uses ``elgg_deprecated_notice('...', '1.7')``
+  to log that the function is deprecated.
 
-* 	API changes between minor versions (1.6 - 1.7) must maintain backward
-	compatibility for at least 2 minor versions.  (1.7 and 1.8. See
-	procedures, below.)
+* The following minor versions (1.8+) maintain the backward compatibility layer, 
+  but ``elgg_deprecated_notice()`` will produce a visible warning.
 
-* 	Bugfixes that change the API cannot be included in bugfix versions.
-
-* 	API changes between major versions (1.0 - 2.0) can occur without regard to
-	backward compatibility.
-
-The procedure for deprecating an API is as follows:
-
-* 	The first minor version (1.7) with a deprecated API must include a wrapper
-	function/class (or otherwise appropriate means) to maintain backward
-	compatibility, including any bugs in the original function/class.
-	This compatibility layer uses elgg_deprecated_notice('...', 1.7) to log
-	that the function is deprecated.
-
-* 	The second minor version (1.8) maintains the backward compatibility
-	layer, but elgg_deprecated_notice() will produce a visible warning.
-
-* 	The third minor version (1.9) removes the compatibility layer.  Any use of
-	the deprecated API should be corrected before this.
-
-The general timeline for two minor releases is 8 to 12 months.
+* The next major revision (2.0) removes the compatibility layer.
+  Any use of the deprecated API should be corrected before this.
