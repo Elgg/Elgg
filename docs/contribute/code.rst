@@ -94,6 +94,7 @@ Where ``type`` is one of:
 * chore (refactoring, style changes, add missing tests, Travis stuff, etc.)
 * perf (when primary purpose of change is to improve performance)
 * security (any change affecting a security issue)
+* deprecate (any change that deprecates any part of the API)
 
 And ``component`` is one of:
 

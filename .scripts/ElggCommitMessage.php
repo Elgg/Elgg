@@ -73,7 +73,8 @@ class ElggCommitMessage {
 		'docs',
 		'chore',
 		'perf',
-		'security'
+		'security',
+		'deprecate',
 	);
 
 	/**
