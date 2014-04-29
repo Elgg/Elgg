@@ -419,4 +419,56 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		elgg_pop_context();
 	}
 
+	/**
+	 * register_user() should set user notification setting for delivery method by 'email' to 'on' (true)
+	 */
+	function testDefaultUserNotificationSettings() {
+		$user_guid = register_user('test_user_' . rand(), generate_random_cleartext_password(), 'test_user_name_' . rand(), 'test@user.net');
+		$notification_settings = get_user_notification_settings($user_guid);
+		$this->assertIdentical($notification_settings->email, true);
+		delete_entity($user_guid);
+	}
+
+	/**
+	 * 'on' and 'off' flags for notifications methods are stored on user entities
+	 * as metadata with values of '1' and '0' accordingly
+	 * This methods adds regression testing for https://github.com/Elgg/Elgg/pull/6533,
+	 * which introduces casting of notification setting values as boolean
+	 * before saving and after getting metadata
+	 */
+	function testUserNotificationSettingsToggle() {
+		$user = new ElggUser();
+		$user->username = 'test_user_' . rand();
+		$user->name = 'test_user_name_' . rand();
+		$user->email = 'test@user.net';
+		$user->container_guid = 0;
+		$user->owner_guid = 0;
+		$user->save();
+
+		// the following values should be interpreted as 'on' (true)
+		set_user_notification_setting($user->guid, 'test1', true);
+		set_user_notification_setting($user->guid, 'test2', 'foo'); // logs a warning
+		set_user_notification_setting($user->guid, 'test3', '1'); // logs a warning
+
+		// the following values should be interpreted as 'off' (false)
+		set_user_notification_setting($user->guid, 'test4', false);
+		set_user_notification_setting($user->guid, 'test5', null); // logs a warning
+		set_user_notification_setting($user->guid, 'test6', ''); // logs a warning
+		set_user_notification_setting($user->guid, 'test7', '0'); // logs a warning
+
+
+		$notification_settings = get_user_notification_settings($user->guid);
+
+		$this->assertIdentical($notification_settings->test1, true);
+		$this->assertIdentical($notification_settings->test2, true);
+		$this->assertIdentical($notification_settings->test3, true);
+
+		$this->assertIdentical($notification_settings->test4, false);
+		$this->assertIdentical($notification_settings->test5, false);
+		$this->assertIdentical($notification_settings->test6, false);
+		$this->assertIdentical($notification_settings->test7, false);
+
+		$user->delete();
+	}
+
 }
