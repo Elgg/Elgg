@@ -1,4 +1,4 @@
-# v1.9.0-rc1 (2014-01-20)
+# v1.9.0-dev (2014-01-20)
 
 ## Contributing Developers
 * Aday Talavera
@@ -27,7 +27,20 @@
 * Tantek Çelik
 * Team Webgalli
 
+## Performance
+* Using dataroot and simplecache_enabled if set in settings.php
+* Changes simplecache caching so that it is performed on demand
+* Adds support for simplecache minification of CSS and JavaScript
+* Adds ability to enable the query cache after being disabled
+* Don't call getter after a previous count call returned 0 items
+* Make sure Apache2 is configured so .ico can be cached
+* Adds deflate Apache filter to SVG images
+* Log display no longer emit deprecation warnings and uses fewer queries
+* speeds up user location upgrade
+* Progress toward HHVM compatibility
+
 ## UI changes
+* Lots of spit and polish
 * New responsive theme - aalborg_theme
 * Drops support for IE6
 * Adds image uploading from editor
@@ -41,20 +54,27 @@
 * Focus styles for accessible keyboard navigation
 * Improved theme sandbox
 * Session expired message
+* Ajaxified the discussion reply edit form.
+* Alphabetize friends/friends-of, group notifications, group owned/member lists
+* Added support for greying out the label of disabled input
+* Added more microformats to the profile page
+* Automatically configure autocorrect and autocapitalize for input views
+* Using unified language strings for several plugins
+* Adds focus outlines to all focusable elements
 
 ## Admin changes
 * Adds new notification system
-* Changes simplecache caching so that it is performed on demand
-* Adds support for simplecache minification of CSS and JavaScript
 * Makes the wire message length configurable
 * Changes user directories use GUIDs rather than join date
 * Adds banned user widget
 * Adds legacy_url plugin for supporting legacy URLs
 * Adds robots.txt configuration
 * Adds maintenance mode
+* Added automatic configuration of RewriteBase during fresh install.
 
 ## New developer features
 * HTML5
+* New mysql-based async queue
 * AMD modules using require.js
 * New notification system
 * New class loader that is PSR-0 compliant
@@ -72,19 +92,29 @@
 * More specific list item classes
 * Page layouts more standardized with same elements
 * Allows customizing colorbox instances
+* Views system recognizes static files as views in addition to PHP files
+* Adds ability to turn off query cache
+* Can change time_created if set explicitly
+* Allows update event to alter attributes and checks canEdit() on DB copy
+* add more specific list item classes
+* moved elgg_view_icon html to own view for more flexibility
+* Allow body attributes
+* Eases extending the input/view view
+* Split group edit form into seperate parts
+* Moved group_activity widget from dashboard to groups plugin
+* Adds warnings for uncallable handlers in hooks/events.
+* Members list pages (tabs/content/titles) can now be extended via plugins
+* Adds configuration support for remember me cookie
 
 ## API changes
 * Comments and discussion replies are entities
 * New notification system
 * Changes elgg_register_widget_type() to expect contexts to be an array
-* Deprecates default availability of $vars keys (url, config) and $CONFIG
 * New session API accessible via elgg_get_session()
-* Renames many functions to begin with "elgg_" (with deprecated versions)
 * Moves many functions into methods on ElggEntity and related classes
 * Adds support for returning translations as arrays from language files
 * Adds ElggEntity::getDisplayName()
 * Adds ElggEntity::toObject()
-* Replaces add_to_river() with elgg_create_river_item()
 * Adds target_guid to the river
 * Adds elgg_get_entities_from_attributes()
 * Adds ElggMenuItem::addItemClass()
@@ -96,9 +126,12 @@
 * Allows views to be accessed via URL and cacheable
 * Columns added to entity query functions are available in returned entities
 * Separates some events into :before/:after
-* Deprecates passing null to ElggRelationship::__construct
-* Deprecates ElggEntity::get()/set() in favor of property access
-* Deprecates cron, reboot event
+* Adds elgg_entity_gatekeeper()
+* get_online_users() and find_active_users() now use $options arrays
+* Adds default option to elgg_get_plugin_setting
+* namespaced the gatekeeper functions (but made it optional)
+* Added URL fragment (#anchors) support to elgg_http_build_url
+* made elgg_unregister_menu_item() more useful
 
 ## New hooks/events
 * plugin hook: simple_type, file
@@ -118,13 +151,72 @@
 * export, import, and opendd libraries (see ElggEntity:toObject())
 * location library
 * xml library
-* passing null to ElggRelationship constructor
+* Split logout event to before/after events
+* Split login event to before/after events
+* Added a deprecate notice to the elgg_view_icon use of a boolean
+* Deprecated get_annotation_url() in favor of ElggAnnotation::getURL()
+* Deprecated full_url() in favor of current_page_url()
+* Deprecated "class" in ElggMenuItem::factory in favor of "link_class"
+* Deprecated passing null to ElggRelationship constructor
+* Deprecated .elgg-autofocus in favor of HTML5 autofocus
+* Deprecated ElggUser::countObjects (part of Friendable interface)
+* Deprecated favicon view in favor of head, page plugin hook
+* Deprecated analytics view in favor of page/elements/foot
+* Deprecated availability of $vars keys (url, config) and $CONFIG
+* Deprecated ElggEntity::get()/set() in favor of property access
+* Deprecated cron, reboot event
+* Deprecated add_to_river() in favor of elgg_create_river_item()
+* Renames many functions to begin with "elgg_" (with deprecated versions)
 
 ## Removed functionality
 * xml-rpc library (now plugin: https://github.com/Elgg/xml-rpc)
 * xml, php, and ical views (now plugin: https://github.com/Elgg/data_views)
 * foaf views (now plugin: https://github.com/Elgg/semantic_web)
 * Default entity page handler
+
+## Documentation
+* Shiny new rST docs (hosted at http://learn.elgg.org)
+* Various improvements to source code comments
+
+## Security Enhancements
+* Using SSL for setting password when https login enabled
+* Make several views files non-executable
+
+## Bugfixes
+* HTMLawed Strips html comments and CDATA from input
+* Hundreds of miscellaneous fixes
+* users can edit metadata that they created by default
+* removes special check to allow access override
+* if no container, default to false for writing to container
+* fixes default user access
+* returning false to create events forces delete regardless of access
+* Fix json and xml views broken by wrap view of developer tools
+* Do not use link with file icon when using full_view.
+* made page shells consistent for $vars parameters
+* show owner block also if looking at owned pages
+* Pagination uses HTTP referrer as default base_url for Ajax requests
+* Added several missing translation strings
+* standardizes layouts so that they all have title buttons and the same basic sections
+* entity list limit respects passed limits and just provides defaults
+* fixes setting page owner due to routing change
+* Fixed batch install usage of createHtaccess
+* fixed typo that prevented context for front page from being set
+* Make sure empty string return is interpreted as "handling" the list hook
+* replaced double search box with a single box and a single searchhook
+* Login, user event code can use elgg_get_logged_in_user_*()
+* Make sure user has access to both river object and target
+* Uses correct default value for find_active_users 'seconds' parameter
+* Added jquery map file and unminified version to make Chrome dev tools happy and not throw 404 error
+* Corrects container write permissions bug
+* Sends correct Content-Length with profile icon
+* Getting correct client IP behind proxy.
+* Fixed old function name for batch metastring operations
+* allow full access to the metadata API through setMetadata() rather than requiring use of create_metadata()
+* catching when the base entity is not created due to permissions override
+* message if no results found
+* all link should reset entity type/subtype
+* forces lastcache to be an int
+* Many more miscellaneous improvements...
 
 
 # v1.8.19 (March 12, 2014)
