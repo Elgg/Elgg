@@ -15,39 +15,38 @@ Requirements
  * Author access to http://blog.elgg.org
  * Access to `Twitter account`_
  * Access to `G+ page`_
+ * NPM installed
  
 1. Prepare and tag the release
 ==============================
 
-Merge latest commits up from lowest supported branch
+Make sure your local git clone is up to date!
+
+Merge latest commits up from lowest supported branch.
+Visit https://github.com/Elgg/Elgg/compare/new...old and submit the PR
+if there is anything that needs to be merged up.
+
+Update `version` in composer.json.
+
+Update CHANGELOG.md:
 
 .. code:: sh
 
-	git checkout <branch>
-	git merge <lower-branch>
-
-Update CHANGES.txt + version.php
- * List of contributors
- * List of enhancements
- * List of bugfixes
-
-To figure out the commit hash of the last release:
- 
-.. code:: sh
-
-    git tag -v <version>
-
+   .scripts/write-changelog.js
+   
 Get list of contributors since last release:
 
 .. code:: sh
 
-    git log <commit>..HEAD | grep ^Author: | sed 's/ <.*//; s/^Author: //' | sort | uniq -c | sort -nr
+    git shortlog <tag>..HEAD -summary --numbered --no-merges
 
-To get a list of commit messages since the last release:
+Add these people to the release in CHANGELOG.md
+
+Commit your changes:
 
 .. code:: sh
 
-	git log --format=oneline <commit>..HEAD | grep \ .* -o | sed 's/^ /  * /' | sort
+   git commit -am "chore(release): vX.Y.Z"
 
 Tag the branch with next release
 

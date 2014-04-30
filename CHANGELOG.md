@@ -918,3 +918,4 @@ core. The original dashboard can be restored by the new Dashboard plugin.
 
 Elgg 1.8.0.1 was released immediately after 1.8.0 to correct a problem in
 installation.
+
