@@ -6,7 +6,7 @@
  * @package ElggInviteFriends
  */
 
-$site = elgg_get_site_entity();
+$site = elggite_entity();
 
 $emails = get_input('emails');
 $emailmessage = get_input('emailmessage');
