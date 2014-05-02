@@ -1,5 +1,5 @@
-Requirements + Installation
-###########################
+Installation
+############
 
 Get your own instance of Elgg running in no time.
 
@@ -27,8 +27,8 @@ By "official support", we mean that:
 -  Priority on bug reports is given to Apache users if the bug is web server specific
    (but those are rare).
 
-Installation
-============
+Overview
+========
 
 Upload Elgg
 -----------
@@ -95,7 +95,7 @@ installation process will be an administrator account.
 A note on settings.php and .htaccess
 ------------------------------------
 
-The Elgg installer will try and create two files for you:
+The Elgg installer will try to create two files for you:
 
 -  engine/settings.php, which contains the database settings for your
    installation

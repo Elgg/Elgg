@@ -4,10 +4,9 @@ Developer Guides
 Customize Elgg's behavior with plugins.
 
 .. toctree::
-   :maxdepth: 2
+   :maxdepth: 1
    
    plugins
-   upgrading
    actions
    database
    i18n
@@ -19,3 +18,4 @@ Customize Elgg's behavior with plugins.
    themes
    javascript
    web-services
+   upgrading

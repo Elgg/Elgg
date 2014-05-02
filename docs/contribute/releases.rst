@@ -10,12 +10,12 @@ and to streamline onboarding of new team members.
 Requirements
 ============
 
- * SSH access to elgg.osuosl.org
- * Commit access to http://github.com/Elgg/Elgg
- * Author access to http://blog.elgg.org
- * Access to `Twitter account`_
- * Access to `G+ page`_
- * NPM installed
+* SSH access to elgg.osuosl.org
+* Commit access to http://github.com/Elgg/Elgg
+* Author access to http://blog.elgg.org
+* Access to `Twitter account`_
+* Access to `G+ page`_
+* NPM installed
  
 1. Prepare and tag the release
 ==============================
@@ -38,17 +38,19 @@ Get list of contributors since last release:
 
 .. code:: sh
 
-    git shortlog <tag>..HEAD -summary --numbered --no-merges
+    git shortlog <tag>..HEAD --summary --numbered --no-merges
 
 Add these people to the release in CHANGELOG.md
 
-Commit your changes:
+TODO: Pull down translations from Transifex.
+
+Commit your changes and submit a PR:
 
 .. code:: sh
 
    git commit -am "chore(release): vX.Y.Z"
 
-Tag the branch with next release
+Tag the branch with next release:
 
 .. code:: sh
 
