@@ -1,7 +1,7 @@
 Elgg |version| Documentation
 ############################
 
-Elgg_ (`/ˈɛlɡ/`__) helps communities get connected while retaining control of their data and brand.
+Elgg_ (`pronunciation`__) is a rapid development framework with built-in social features.
 It is a great fit for building any app where users log in and share information.
 
 __ http://docs.elgg.org/w/images/4/42/How_to_say_Elgg.mp3
@@ -10,7 +10,7 @@ It has been used to build `all kinds of social apps`__:
 
 __ http://community.elgg.org/showcase
 
- * open networks (like Facebook)
+ * open networks (similar to Facebook)
  * topical (like the Elgg Community)
  * private intranets
  * dating

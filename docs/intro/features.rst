@@ -1,7 +1,10 @@
 Features
 ########
 
-For developers:
+Demo: http://demo.elgg.org/
+
+For developers
+==============
 
  * Permissive license
  * Theme framework
@@ -13,8 +16,10 @@ For developers:
  * Web services API
  * jQuery-based JS framework
  * Session management
+ * Custom URL routing
 
-For users:
+For admins
+==========
 
  * User profiles and avatars
  * Fine-grained access control lists
