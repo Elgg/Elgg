@@ -3,6 +3,9 @@
 /.htaccess
 /mod/*
 
+# Ignore third party code
+node_modules
+
 # don't ignore bundled plugins
 !/mod/aalborg_theme/
 !/mod/blog/
