@@ -16,6 +16,8 @@ Requirements
 * Access to `Twitter account`_
 * Access to `G+ page`_
 * NPM installed
+* Transifex client installed (`easy_install transifex-client`)
+* Transifex account with access to Elgg project
  
 1. Prepare and tag the release
 ==============================
@@ -26,37 +28,34 @@ Merge latest commits up from lowest supported branch.
 Visit https://github.com/Elgg/Elgg/compare/new...old and submit the PR
 if there is anything that needs to be merged up.
 
-Update `version` in composer.json.
+Overview:
 
-Update CHANGELOG.md:
+* Start a clean branch from which to release
+* Update `version` in composer.json.
+* Update the changelog with commits + contributors
+* Pull down latest translations from Transifex
+* Commit as a release commit
+* Push branch to github and submit a PR
+* Once the PR is approved, merge it
+* Tag
 
 .. code:: sh
 
+   git checkout -b release-${version}
+   # Manually set version in composer.json to ${version}
    .scripts/write-changelog.js
-   
-Get list of contributors since last release:
+   tx pull -a --pseudo --minimum-perc=100
+   git add .
+   git commit -am "chore(release): ${version}"
+   git push origin release-${version}
+
+Submit a PR via Github. Once approved and merged, tag the release:
 
 .. code:: sh
 
-    git shortlog <tag>..HEAD --summary --numbered --no-merges
-
-Add these people to the release in CHANGELOG.md
-
-TODO: Pull down translations from Transifex.
-
-Commit your changes and submit a PR:
-
-.. code:: sh
-
-   git commit -am "chore(release): vX.Y.Z"
-
-Tag the branch with next release:
-
-.. code:: sh
-
-	git checkout <branch>
-	git tag -a <release>
-	git push origin <release>
+   git checkout release-${version}
+   git tag -a ${version}
+   git push origin ${release}
 
 Update Milestones on Github
  * Mark release milestones as completed
