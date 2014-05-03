@@ -15,7 +15,9 @@ Requirements
 * Author access to http://blog.elgg.org
 * Access to `Twitter account`_
 * Access to `G+ page`_
-* NPM installed
+* Node.js and NPM installed
+* Transifex client installed (`easy_install transifex-client`)
+* Transifex account with access to Elgg project
  
 1. Prepare and tag the release
 ==============================
@@ -26,37 +28,35 @@ Merge latest commits up from lowest supported branch.
 Visit https://github.com/Elgg/Elgg/compare/new...old and submit the PR
 if there is anything that needs to be merged up.
 
-Update `version` in composer.json.
-
-Update CHANGELOG.md:
+Install the prerequisites:
 
 .. code:: sh
 
-   .scripts/write-changelog.js
-   
-Get list of contributors since last release:
+   npm install elgg-conventional-changelog
+   easy_install transifex-client
+
+Run the ``release.php`` script. For example, to release 1.9.1:
 
 .. code:: sh
 
-    git shortlog <tag>..HEAD --summary --numbered --no-merges
+   git checkout 1.9
+   php .scripts/release.php 1.9.1
 
-Add these people to the release in CHANGELOG.md
+This creates a ``release-1.9.1`` branch in your local repo.
 
-TODO: Pull down translations from Transifex.
-
-Commit your changes and submit a PR:
-
-.. code:: sh
-
-   git commit -am "chore(release): vX.Y.Z"
-
-Tag the branch with next release:
+Next, submit a PR via Github:
 
 .. code:: sh
 
-	git checkout <branch>
-	git tag -a <release>
-	git push origin <release>
+   git push your-remote-fork release-1.9.1
+
+Once approved and merged, tag the release:
+
+.. code:: sh
+
+   git checkout release-${version}
+   git tag -a ${version}
+   git push origin ${release}
 
 Update Milestones on Github
  * Mark release milestones as completed
@@ -107,18 +107,10 @@ Update homepage, download, and previous download pages
 
 This should be the very last thing you do.
 
-Compose a blog on blog.elgg.org with:
-
- * Notable changes (non-technical summary of updates to CHANGES.txt).
-   Only security fixes, and major bugs or enhancements.
- * Link to CHANGES.txt.
- * Mention all contributors (commit authors)
- * Add tags “release” and “elgg1.x” where x is whatever branch is being released.
-
-Also:
-
- * Tweet from the elgg `Twitter account`_
- * Post from the `G+ page`_
+* Compose a blog on http://blog.elgg.org with HTML version of CHANGELOG.md.
+* Add tags “release” and “elgg1.x” where x is whatever branch is being released.
+* Tweet from the elgg `Twitter account`_
+* Post from the `G+ page`_
 
 .. _G+ page: https://plus.google.com/+ElggOrg
 .. _Twitter account: https://twitter.com/elgg
