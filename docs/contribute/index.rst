@@ -10,6 +10,7 @@ Here are some ways you can help:
 .. toctree::
    :maxdepth: 1
    
+   i18n
    issues
    code
    docs

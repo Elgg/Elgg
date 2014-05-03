@@ -1,0 +1,19 @@
+Translations
+############
+
+Translations multiply the impact that Elgg can have
+by making it accessible to a larger percentage of the world.
+
+The community will always be indebted to those of you who work hard
+to provide high quality translations for Elgg's UI and docs.
+
+Transifex
+=========
+
+All translation for the Elgg project is organized through Transifex.
+
+https://www.transifex.com/organization/elgg
+
+Plugin authors are encouraged to coordinate translations via Transifex as well
+so the whole community can be unified and make it really easy for translators
+to contribute to any plugin in the Elgg ecosystem.
