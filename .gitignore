@@ -56,6 +56,7 @@ Thumbs.db
 Desktop.ini
 
 # don't ignore special configs
+!/.mailmap
 !/.travis.yml
 !/.scrutinizer.yml
 !.gitignore
