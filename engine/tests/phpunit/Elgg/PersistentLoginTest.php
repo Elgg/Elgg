@@ -47,7 +47,14 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected $timeSlept;
 
+	/**
+	 * @var int
+	 */
+	protected $thirtyDaysAgo;
+
 	function setUp() {
+		$this->thirtyDaysAgo = strtotime("-30 days");
+
 		$this->mockToken = 'z' . str_repeat('a', 31);
 
 		$this->mockHash = md5($this->mockToken);
@@ -94,7 +101,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->svc->removePersistentLogin();
 
 		$this->assertSame('', $this->lastCookieSet->value);
-		$this->assertSame(strtotime("-30 days"), $this->lastCookieSet->expire);
+		$this->assertSame($this->thirtyDaysAgo, $this->lastCookieSet->expire);
 		$this->assertNull($this->session->get('code'));
 	}
 
@@ -105,7 +112,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->svc->removePersistentLogin();
 
 		$this->assertSame('', $this->lastCookieSet->value);
-		$this->assertSame(strtotime("-30 days"), $this->lastCookieSet->expire);
+		$this->assertSame($this->thirtyDaysAgo, $this->lastCookieSet->expire);
 		$this->assertNull($this->session->get('code'));
 	}
 
@@ -212,7 +219,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertNull($this->timeSlept);
 		$this->assertSame('', $this->lastCookieSet->value);
-		$this->assertSame(strtotime("-30 days"), $this->lastCookieSet->expire);
+		$this->assertSame($this->thirtyDaysAgo, $this->lastCookieSet->expire);
 		$this->assertNull($user);
 	}
 
@@ -227,7 +234,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 
 		$this->assertSame(1, $this->timeSlept);
 		$this->assertSame('', $this->lastCookieSet->value);
-		$this->assertSame(strtotime("-30 days"), $this->lastCookieSet->expire);
+		$this->assertSame($this->thirtyDaysAgo, $this->lastCookieSet->expire);
 		$this->assertNull($user);
 	}
 
@@ -313,7 +320,10 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 			'name' => 'elggperm',
 			'expire' => time() + (30 * 86400),
 		);
-		$svc = new Elgg_PersistentLoginService($this->dbMock, $this->session, $this->cryptoMock, $cookie_config, $cookie_token);
+		$time = $this->thirtyDaysAgo + (30 * 86400);
+		$svc = new Elgg_PersistentLoginService(
+			$this->dbMock, $this->session, $this->cryptoMock,
+			$cookie_config, $cookie_token, $time);
 
 		$svc->_callable_get_user = array($this, 'mock_get_user');
 		$svc->_callable_generateToken = array($this, 'mock_generateToken');
