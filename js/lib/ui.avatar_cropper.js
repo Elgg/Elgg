@@ -15,8 +15,15 @@ elgg.avatarCropper.init = function() {
 		selectionOpacity: 0,
 		aspectRatio: '1:1',
 		onSelectEnd: elgg.avatarCropper.selectChange,
-		onSelectChange: elgg.avatarCropper.preview
+		onSelectChange: elgg.avatarCropper.preview,
+		// Note : parent defaults to body, which has to be set as position:static to work on Chrome
+		parent: '.elgg-form-avatar-crop',
+		movable: 'true',
+		zIndex: 20,
+		handles:'corners',
+		//keys: true, // Allow keys bindings (control selection position and reisez with Arrows + Shift/Alt/Ctrl)
 	};
+	$('.elgg-form-avatar-crop').css({position:'relative'});
 
 	if ($('input[name=x2]').val()) {
 		params.x1 = $('input[name=x1]').val();
