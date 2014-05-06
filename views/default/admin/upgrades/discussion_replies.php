@@ -15,7 +15,7 @@ $count = elgg_get_annotations(array(
 
 echo elgg_view('admin/upgrades/view', array(
 	'count' => $count,
-	'action' => 'action/discussion/upgrade/2013100401',
+	'action' => 'action/admin/upgrades/upgrade_discussion_replies',
 ));
 
 access_show_hidden_entities($access_status);
