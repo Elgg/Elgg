@@ -32,13 +32,15 @@ class Elgg_PersistentLoginService {
 	 * @param ElggCrypto    $crypto        The cryptography service
 	 * @param array         $cookie_config The persistent login cookie settings
 	 * @param string        $cookie_token  The token from the request cookie
+	 * @param int           $time          The current time
 	 */
 	public function __construct(
 			Elgg_Database $db,
 			ElggSession $session,
 			ElggCrypto $crypto,
 			array $cookie_config,
-			$cookie_token) {
+			$cookie_token,
+			$time = null) {
 		$this->db = $db;
 		$this->session = $session;
 		$this->crypto = $crypto;
@@ -47,6 +49,7 @@ class Elgg_PersistentLoginService {
 
 		$prefix = $this->db->getTablePrefix();
 		$this->table = "{$prefix}users_remember_me_cookies";
+		$this->time = is_numeric($time) ? (int)$time : time();
 	}
 
 	/**
@@ -261,7 +264,7 @@ class Elgg_PersistentLoginService {
 		}
 		$cookie->value = $token;
 		if (!$token) {
-			$cookie->setExpiresTime("-30 days");
+			$cookie->expire = $this->time - (86400 * 30);
 		}
 		call_user_func($this->_callable_elgg_set_cookie, $cookie);
 	}
@@ -331,6 +334,11 @@ class Elgg_PersistentLoginService {
 	 * @var ElggCrypto
 	 */
 	protected $crypto;
+
+	/**
+	 * @var int
+	 */
+	protected $time;
 
 	/**
 	 * DO NOT USE. For unit test mocking
