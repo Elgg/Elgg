@@ -1,7 +1,7 @@
 <?php
 /**
  * Convert discussion replies from annotations to entities
- * 
+ *
  * Run for 2 seconds per request as set by $batch_run_time_in_secs. This includes
  * the engine loading time.
  */
@@ -13,7 +13,7 @@ $batch_run_time_in_secs = 2;
 if (get_input('upgrade_completed')) {
 	// set the upgrade as completed
 	$factory = new ElggUpgrade();
-	$upgrade = $factory->getUpgradeFromURL('/admin/groups/upgrades/2013100401');
+	$upgrade = $factory->getUpgradeFromURL('/admin/upgrades/discussion_replies');
 	if ($upgrade instanceof ElggUpgrade) {
 		$upgrade->setCompleted();
 	}
@@ -102,7 +102,7 @@ do {
 			";
 
 			if (!update_data($query)) {
-				register_error(elgg_echo('discussion:upgrade:replies:river_update_failed', array($annotation->id)));
+				register_error(elgg_echo('upgrade:river_update_failed', array($annotation->id)));
 				$error_count++;
 			}
 
@@ -120,7 +120,7 @@ do {
 				$annotations_to_delete[] = $annotation->id;
 				$success_count++;
 			} else {
-				register_error(elgg_echo('discussion:upgrade:replies:timestamp_update_failed', array($annotation->id)));
+				register_error(elgg_echo('upgrade:timestamp_update_failed', array($annotation->id)));
 				$error_count++;
 			}
 
@@ -135,7 +135,7 @@ do {
 		$delete_query = "DELETE FROM {$db_prefix}annotations WHERE id IN ($annotation_ids)";
 		delete_data($delete_query);
 	}
-	
+
 	// update the last action on containers to be the max of all its comments
 	// or its own last action
 	$comment_subtype_id = get_subtype_id('object', 'discussion_reply');
@@ -164,8 +164,6 @@ access_show_hidden_entities($access_status);
 // replace events and hooks
 _elgg_services()->events = $original_events;
 _elgg_services()->hooks = $original_hooks;
-
-elgg_delete_admin_notice('discussion_migration_notice');
 
 // Give some feedback for the UI
 echo json_encode(array(

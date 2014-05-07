@@ -1130,6 +1130,10 @@ Once you have logged in, we highly recommend that you change your password.
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'Data directory upgrade',
 
+	// Strings specific for the discussion reply upgrade
+	'admin:upgrades:discussion_replies' => 'Discussion reply upgrade',
+	'discussion:upgrade:replies:create_failed' => 'Failed to convert discussion reply id %s to an entity.',
+
 /**
  * Welcome
  */
