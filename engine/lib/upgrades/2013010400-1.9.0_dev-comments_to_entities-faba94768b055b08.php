@@ -30,11 +30,16 @@ $options = array(
 );
 
 if (elgg_get_annotations($options)) {
+	$url = "admin/upgrades/comments";
 	$upgrade = new ElggUpgrade();
-	$upgrade->setURL("admin/upgrades/comments");
-	$upgrade->title = 'Comments Upgrade';
-	$upgrade->description = 'Comments have been improved in Elgg 1.9 and require a migration. Run this upgrade to complete the migration.';
-	$upgrade->save();
+
+	// Create the upgrade if one with the same URL doesn't already exist
+	if (!$upgrade->getUpgradeFromURL($url)) {
+		$upgrade->setURL($url);
+		$upgrade->title = 'Comments Upgrade';
+		$upgrade->description = 'Comments have been improved in Elgg 1.9 and require a migration. Run this upgrade to complete the migration.';
+		$upgrade->save();
+	}
 }
 
 elgg_set_ignore_access($ia);

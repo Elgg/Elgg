@@ -32,11 +32,16 @@ $discussion_replies = elgg_get_annotations(array(
 
 // Notify administrator only if there are existing discussion replies
 if ($discussion_replies) {
+	$url = "admin/upgrades/discussion_replies";
 	$upgrade = new ElggUpgrade();
-	$upgrade->setURL("admin/upgrades/discussion_replies");
-	$upgrade->title = 'Group Discussions Upgrade';
-	$upgrade->description = 'Group discussions have been improved in Elgg 1.9 and require a migration. Run this upgrade to complete the migration.';
-	$upgrade->save();
+
+	// Create the upgrade if one with the same URL doesn't already exist
+	if (!$upgrade->getUpgradeFromURL($url)) {
+		$upgrade->setURL($url);
+		$upgrade->title = 'Group Discussions Upgrade';
+		$upgrade->description = 'Group discussions have been improved in Elgg 1.9 and require a migration. Run this upgrade to complete the migration.';
+		$upgrade->save();
+	}
 }
 
 elgg_set_ignore_access($ia);
