@@ -1,45 +1,128 @@
-Javascript
+JavaScript
 ##########
 
-This guide assumes basic familiarity with:
+.. toctree::
+   :maxdepth: 2
 
- * AMD (http://requirejs.org/docs/whyamd.html)
+As of Elgg 1.9, we encourage all developers to adopt the `AMD (Asynchronous Module
+Definition) <http://requirejs.org/docs/whyamd.html>`_ standard for writing JavaScript code in Elgg.
+The 1.8 version is still functional and is :ref:`described below<1.8-js>`.
 
-Register third-party libraries with with ``elgg_register_js``:
+AMD
+===
+
+Defining and loading a module in Elgg 1.9 takes two steps:
+
+1. Define your module as asynchronous JavaScript.
+2. Tell Elgg to asynchronously execute your module in the current page.
+
+1. Define your module as asynchronous JavaScript
+------------------------------------------------
+
+You can define a module by creating a view or registering a URL.
+
+Defining modules as a view
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Modules defined by creating views are immediately available for use and require no registration.
+To register a module named ``my/module``, create the view ``views/default/js/my/module.js``.
+
+.. warning: The extension must be ``.js``.
+
+A basic module could look like this:
+
+.. code-block:: javascript
+
+	define(function(require) {
+		var elgg = require("elgg");
+		var $ = require("jquery");
+
+		return function() {
+			// Some logic in here
+		};
+	});
+
+Define your module via a URL
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can define an existing AMD module using ``elgg_define_js()``. Traditional (browser-globals)
+JavaScript files can also be defined as AMD modules if you shim them by setting ``exports`` and
+optionally ``deps``.
+
+.. warning:: Calls to ``elgg_define_js()`` must be in an ``init, system`` event handler.
+
+.. code-block:: php
+
+    <?php
+
+	elgg_register_event_handler('init', 'system', 'amd_init');
+
+	function amd_init() {
+		// AMD module as the view js/backbone
+		elgg_define_js('backbone');
+
+		// AMD module with a different path
+		elgg_define_js('backbone', array(
+			'src' => '/vendors/backbone/backbone.js',
+		));
+
+		// Shimmed AMD module
+		elgg_register_js('jquery.form', array(
+			'src' => '/vendors/jquery/jquery.form.js',
+			'deps' => array('jquery'),
+			'exports' => 'jQuery.fn.ajaxForm',
+		));
+	}
+
+Some things to note
+^^^^^^^^^^^^^^^^^^^
+
+1. Do not use ``elgg.provide()`` or ``elgg.require()`` anymore. They are fully replaced by
+``define()`` and ``require()`` respectively.
+2. Return the value of the module instead of adding to a global variable.
+3. Static views (.css, .js) are automatically minified and cached by Elgg's simplecache system.
+
+
+2. Tell Elgg to asynchronously execute your module in the current page
+----------------------------------------------------------------------
+Once an AMD module is defined, you can use ``require(["my/module"])`` from JavaScript to
+access its "exported" value.
+
+Also, calling ``elgg_require_js("my/module")`` from PHP tells Elgg to execute the module code
+on the current page.
+
+
+Migrating JS from Elgg 1.8 to AMD / 1.9
+=======================================
+**Current 1.8 JavaScript modules will continue to work with Elgg**.
+
+We do not anticipate any backwards compatibility issues with this new direction and will fix any
+issues that do come up. The old system will still be functional in Elgg 1.9, but developers are
+encouraged to begin looking to AMD as the future of JS in Elgg.
+
+.. _1.8-js:
+
+Traditional JavaScript (1.8)
+============================
+
+
+Register third-party libraries with ``elgg_register_js``:
 
 .. code:: php
 
-   elgg_register_js(‘jquery’, $cdnjs_url);
+   elgg_register_js('jquery', $cdnjs_url);
 
 This will override any URLs previously registered under this name.
 
-If the library does not natively support AMD, use the ‘exports’ and ‘deps’ arguments to add support:
+Load a library on the current page with ``elgg_load_js``:
 
 .. code:: php
 
-   elgg_register_js(‘backbone’, array(
-     ‘src’ => $cdnjs_url,
-     ‘exports’ => ‘Backbone’,
-     ‘deps’ => array(‘jquery’, ‘underscore’),
-   ));
+   elgg_load_js('jquery');
 
-Load a library on the current page with ``elgg_require_js``:
+This will include and execute the linked code.
 
-   elgg_require_js(‘jquery’);
-
-This will asynchronously include and execute the linked code.
-
-For inline script, use the async ``require`` function:
-
-.. code:: html
-
-   <script>
-     require([‘jquery’], function(jquery) {
-       $(‘#example’).fadeIn();
-     });
-   </script>
-
-.. warning::
+.. tip::
 
    Using inline scripts is strongly discouraged because:
     * They are not testable (maintainability)
@@ -48,39 +131,8 @@ For inline script, use the async ``require`` function:
 
    Inline scripts in core or bundled plugins are considered legacy bugs.
 
-
-Defining modules
-================
-
-To define your own reusable AMD module, place the code in the ``js/{module/name}.js`` view. For example:
-
-.. code:: js
-
-   // mod/example/views/default/js/example/module.js
-   define(function(require) {
-     var elgg = require("elgg");
-     var $ = require("jquery");
-
-     return {
-       doSomething: function() {
-         // Some logic in here
-       }
-     };
-   });
-
-You can then depend on the module like so:
-
-.. code:: js
-
-   define(function(require) {
-     var exampleModule = require(‘example/module’);
-
-     exampleModule.doSomething();
-   });
-
-
-Core functions
-==============
+Core functions available in JS
+==============================
 
 ``elgg.echo``
 
@@ -88,7 +140,7 @@ Translate interface text
 
 .. code:: js
 
-   elgg.echo(‘example:text’, [‘arg1’]);
+   elgg.echo('example:text', ['arg1']);
 
 
 ``elgg.system_message(message)``
@@ -97,7 +149,7 @@ Display a status message to the user.
 
 .. code:: js
 
-   elgg.system_message(elgg.echo(‘success’));
+   elgg.system_message(elgg.echo('success'));
    
 
 ``elgg.register_error(message)``
@@ -106,7 +158,7 @@ Display an error message to the user.
 
 .. code:: js
 
-   elgg.register_error(elgg.echo(‘error’));
+   elgg.register_error(elgg.echo('error'));
 
 
 ``elgg.forward()``
@@ -117,14 +169,14 @@ Normalize a URL relative to the elgg root:
 
 .. code:: js
 
-   elgg.normalize_url(‘/blog’); // “http://localhost/elgg/blog”
+   elgg.normalize_url('/blog'); // “http://localhost/elgg/blog”
 
 
 Redirect to a new page.
 
 .. code:: js
 
-   elgg.forward(‘/blog’);
+   elgg.forward('/blog');
 
 This function automatically normalizes the URL.
 
@@ -146,7 +198,7 @@ Parse a URL into its component parts:
 
 ``elgg.get_page_owner_guid()``
 
-Get the GUID of the current page’s owner.
+Get the GUID of the current page's owner.
 
 
 ``elgg.security.refreshToken()``
@@ -201,7 +253,7 @@ True if the user is logged in and is an admin.
 
 ``elgg.config.get_language()``
 
-Get the current page’s language.
+Get the current page's language.
 
 
 There are a number of configuration values set in the elgg object:
@@ -210,8 +262,6 @@ There are a number of configuration values set in the elgg object:
 
    elgg.config.wwwroot; // The root of the website.
    elgg.config.language; // The default site language.
-   elgg.config.viewtype; // The current page’s viewtype
+   elgg.config.viewtype; // The current page's viewtype
    elgg.config.version; // The Elgg version (YYYYMMDDXX).
    elgg.config.release; // The Elgg release (X.Y.Z).
-
-
