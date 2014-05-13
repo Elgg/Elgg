@@ -11,6 +11,18 @@ $profile_fields = elgg_get_config('profile_fields');
 echo '<div id="profile-details" class="elgg-body pll">';
 echo "<h2>{$user->name}</h2>";
 
+// the controller doesn't allow non-admins to view banned users' profiles
+if ($user->isBanned()) {
+	if (elgg_is_admin_logged_in()) {
+		$title = elgg_echo('banned');
+		$body = $user->ban_reason;
+
+		echo elgg_view_module('info', $title, $body, array(
+			'class' => 'profile-banned-user'
+		));
+	}
+}
+
 echo elgg_view("profile/status", array("entity" => $user));
 
 $even_odd = null;
@@ -50,19 +62,11 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 	}
 }
 
-if (!elgg_get_config('profile_custom_fields')) {
-	if ($user->isBanned()) {
-		echo "<p class='profile-banned-user'>";
-		echo elgg_echo('banned');
-		echo "</p>";
-	} else {
-		if ($user->description) {
-			echo "<p class='profile-aboutme-title'><b>" . elgg_echo("profile:aboutme") . "</b></p>";
-			echo "<div class='profile-aboutme-contents'>";
-			echo elgg_view('output/longtext', array('value' => $user->description, 'class' => 'mtn'));
-			echo "</div>";
-		}
-	}
+if (!elgg_get_config('profile_custom_fields') && $user->description) {
+	echo "<p class='profile-aboutme-title'><b>" . elgg_echo("profile:aboutme") . "</b></p>";
+	echo "<div class='profile-aboutme-contents'>";
+	echo elgg_view('output/longtext', array('value' => $user->description, 'class' => 'mtn'));
+	echo "</div>";
 }
 
 echo '</div>';
