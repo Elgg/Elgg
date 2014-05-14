@@ -36,7 +36,7 @@ function pages_init() {
 	// Extend the main css view
 	elgg_extend_view('css/elgg', 'pages/css');
 
-	elgg_register_js('jquery.treeview', array(
+	elgg_define_js('jquery.treeview', array(
 		'src' => '/mod/pages/vendors/jquery-treeview/jquery.treeview.min.js',
 		'exports' => 'jQuery.fn.treeview',
 		'deps' => array('jquery'),

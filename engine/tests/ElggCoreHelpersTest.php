@@ -242,29 +242,6 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	}
 
 	/**
-	 * Test elgg_register_js() async mode
-	 */
-	public function testElggRegisterAMD() {
-		elgg_register_js('key', 'http://test1.com', 'async');
-
-		$amd = _elgg_services()->amdConfig->getConfig();
-		$this->assertIdentical($amd['paths']['key'], 'http://test1.com');
-
-		elgg_register_js('key', array(
-			'src' => 'http://test1.com',
-			'deps' => array('jquery'),
-			'exports' => 'jQuery.fn.keyTest',
-		));
-
-		$amd = _elgg_services()->amdConfig->getConfig();
-		$this->assertIdentical($amd['paths']['key'], 'http://test1.com');
-		$this->assertIdentical($amd['shim']['key'], array(
-			'deps' => array('jquery'),
-			'exports' => 'jQuery.fn.keyTest',
-		));
-	}
-
-	/**
 	 * Test elgg_register_css()
 	 */
 	public function testElggRegisterCSS() {
@@ -345,26 +322,11 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 
 		// load before register
 		elgg_load_js('key');
-		elgg_load_js('key2');
 		$result = elgg_register_js('key', 'http://test1.com', 'footer');
 		$this->assertTrue($result);
-
+		
 		$js_urls = elgg_get_loaded_js('footer');
-		$js_deps = _elgg_services()->amdConfig->getDependencies();
 		$this->assertIdentical(array(500 => 'http://test1.com'), $js_urls);
-		$this->assertFalse(in_array('key', $js_deps));
-
-		// register again with AMD
-		$result = elgg_register_js('key', 'http://test2.com', 'async');
-		$this->assertTrue($result);
-		$result = elgg_register_js('key2', 'http://test2.com', 'async');
-		$this->assertTrue($result);
-
-		$js_urls = elgg_get_loaded_js('footer');
-		$js_deps = _elgg_services()->amdConfig->getDependencies();
-		$this->assertIdentical(array(), $js_urls);
-		$this->assertTrue(in_array('key', $js_deps));
-		$this->assertTrue(in_array('key2', $js_deps));
 	}
 
 	/**

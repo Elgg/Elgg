@@ -16,6 +16,6 @@ define(function(require) {
 		disableNativeSpellChecker: false,
 		disableNativeTableHandles: false,
 		removeDialogTabs: 'image:advanced;image:Link;link:advanced;link:target',
-		autoGrow_maxHeight: $(window).height() - 100,
+		autoGrow_maxHeight: $(window).height() - 100
 	};
 });
