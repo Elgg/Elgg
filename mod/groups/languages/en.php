@@ -64,6 +64,7 @@ return array(
 	'groups:featuredon' => '%s is now a featured group.',
 	'groups:unfeatured' => '%s has been removed from the featured groups.',
 	'groups:featured_error' => 'Invalid group.',
+	'groups:nofeatured' => 'No featured groups',
 	'groups:joinrequest' => 'Request membership',
 	'groups:join' => 'Join group',
 	'groups:leave' => 'Leave group',
