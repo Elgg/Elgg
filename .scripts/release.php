@@ -7,7 +7,15 @@ if (!isset($argv[1]) || $argv[1] == '--help') {
 
 $version = $argv[1];
 
-// TODO: Verify that $version is a valid semver string
+// Verify that $version is a valid semver string
+// Performing check according to: https://getcomposer.org/doc/04-schema.md#version
+$regexp = '/^[0-9]+\.[0-9]+\.[0-9]+(?:-(?:dev|rc\.[0-9]+))?$/';
+
+if (!preg_match($regexp, $version, $matches)) {
+	echo "Bad version format. You must follow the format of X.Y.Z with an optional suffix of -dev,"
+		. " or -rc.N (where N is a number).";
+	exit(1);
+}
 
 $elggPath = dirname(__DIR__);
 
@@ -15,24 +23,28 @@ $elggPath = dirname(__DIR__);
 $composerPath = "$elggPath/composer.json";
 $composerJson = json_decode(file_get_contents($composerPath));
 $composerJson->version = $version;
-file_put_contents($composerPath, json_encode($composerJson));
+file_put_contents($composerPath, json_encode($composerJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
 
 
 $branch = "release-$version";
 $commands = array(
-    "pushd $elggPath",
-    // must be separate from git checkout in case branch already exists
-    "git branch $branch",
-    "git checkout $branch",
-    ".scripts/write-changelog.js",
-    "tx pull -a --pseudo --minimum-perc=100",
-    "git add .",
-    "git commit -am 'chore(release): v$version'",
-    // "git push origin $branch",
-    "popd"
+	"pushd $elggPath",
+	// must be separate from git checkout in case branch already exists
+	"git branch $branch",
+	"git checkout $branch",
+	"node .scripts/write-changelog.js",
+	"tx pull -a --minimum-perc=100",
+	"git add .",
+	"git commit -am \"chore(release): v$version\"",
+	// "git push origin $branch",
+	"popd"
 );
 
 foreach ($commands as $command) {
-    echo "$command\n";
-    exec($command);
+	echo "$command\n";
+	passthru($command, $returnVal);
+	if ($returnVal !== 0) {
+		echo "Error ececuting command! Interrupting!";
+		exit(2);
+	}
 }
