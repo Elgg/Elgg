@@ -56,7 +56,7 @@ It also supports variable replacement using sprintf syntax:
    // ‘welcome’ => ‘Welcome to %s, %s!’
    echo elgg_echo(‘welcome’, array(
      elgg_get_config(‘sitename’),
-     elgg_get_logged_in_user_entity()->name,
+     elgg_get_logged_in_user_entity()->name
    ));
 
 To force which language should be used for translation, set the third parameter:
