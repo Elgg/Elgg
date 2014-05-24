@@ -14,8 +14,33 @@ if ($site = elgg_get_site_entity()) {
 		throw new InstallationException(elgg_echo('InvalidParameterException:NonElggSite'));
 	}
 
-	$site->url = rtrim(get_input('wwwroot', '', false), '/') . '/';
+	$wwwroot = get_input('wwwroot', '', false);
+	// validate the url, code copied from @see elgg_normalize_url
+	// see https://bugs.php.net/bug.php?id=51192
+	// from the bookmarks save action.
+	$php_5_2_13_and_below = version_compare(PHP_VERSION, '5.2.14', '<');
+	$php_5_3_0_to_5_3_2 = version_compare(PHP_VERSION, '5.3.0', '>=') && version_compare(PHP_VERSION, '5.3.3', '<');
+	
+	if ($php_5_2_13_and_below || $php_5_3_0_to_5_3_2) {
+		$tmp_address = str_replace("-", "", $wwwroot);
+		$validated = filter_var($tmp_address, FILTER_VALIDATE_URL);
+	} else {
+		$validated = filter_var($wwwroot, FILTER_VALIDATE_URL);
+	}
+	
+	// work around for handling absoluate IRIs (RFC 3987) - see #4190
+	if (!$validated && (strpos($wwwroot, 'http:') === 0) || (strpos($wwwroot, 'https:') === 0)) {
+		$validated = true;
+	}
+	
+	if (!$validated) {
+		register_error(elgg_echo('admin:configuration:site_url'));
+		forward(REFERER);
+	}
+	
+	$site->url = rtrim($wwwroot, '/') . '/';
 
+	// set path and dataroot
 	datalist_set('path', sanitise_filepath(get_input('path', '', false)));
 	$dataroot = sanitise_filepath(get_input('dataroot', '', false));
 
@@ -102,5 +127,5 @@ if ($site = elgg_get_site_entity()) {
 		register_error(elgg_echo("admin:configuration:fail"));
 	}
 
-	forward(REFERER);
+	forward("admin/settings/advanced");
 }

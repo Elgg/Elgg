@@ -726,7 +726,7 @@ class ElggInstaller {
 
 		// bootstrapping with required files in a required order
 		$required_files = array(
-			'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php', 
+			'elgglib.php', 'views.php', 'access.php', 'system_log.php', 'export.php',
 			'configuration.php', 'sessions.php', 'languages.php', 'pageowner.php',
 			'input.php', 'cache.php', 'output.php',
 		);
@@ -1392,9 +1392,30 @@ class ElggInstaller {
 			return FALSE;
 		}
 
-		// @todo check that url is a url
-		// @note filter_var cannot be used because it doesn't work on international urls
-
+		// validate the url, code copied from @see elgg_normalize_url
+		// see https://bugs.php.net/bug.php?id=51192
+		// from the bookmarks save action.
+		$php_5_2_13_and_below = version_compare(PHP_VERSION, '5.2.14', '<');
+		$php_5_3_0_to_5_3_2 = version_compare(PHP_VERSION, '5.3.0', '>=') && version_compare(PHP_VERSION, '5.3.3', '<');
+		
+		if ($php_5_2_13_and_below || $php_5_3_0_to_5_3_2) {
+			$tmp_address = str_replace("-", "", $submissionVars['wwwroot']);
+			$validated = filter_var($tmp_address, FILTER_VALIDATE_URL);
+		} else {
+			$validated = filter_var($submissionVars['wwwroot'], FILTER_VALIDATE_URL);
+		}
+		
+		// work around for handling absoluate IRIs (RFC 3987) - see #4190
+		if (!$validated && (strpos($submissionVars['wwwroot'], 'http:') === 0) || (strpos($submissionVars['wwwroot'], 'https:') === 0)) {
+			$validated = true;
+		}
+		
+		if (!$validated) {
+			$msg = elgg_echo('install:error:wwwroot', array($submissionVars['wwwroot']));
+			register_error($msg);
+			return FALSE;
+		}
+		
 		return TRUE;
 	}
 
