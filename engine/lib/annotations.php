@@ -224,7 +224,7 @@ function elgg_get_annotations(array $options = array()) {
  * Returns a rendered list of annotations with pagination.
  *
  * @param array $options Annotation getter and display options.
- * {@see elgg_get_annotations()} and {@see elgg_list_entities()}.
+ * {@link elgg_get_annotations()} and {@link elgg_list_entities()}.
  *
  * @return string The list of entities
  * @since 1.8.0

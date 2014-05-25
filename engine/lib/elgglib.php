@@ -1487,9 +1487,9 @@ function elgg_extract($key, array $array, $default = null, $strict = true) {
  * @param array  &$array     Array to sort
  * @param string $element    Element to sort by
  * @param int    $sort_order PHP sort order
- *                           {@see http://us2.php.net/array_multisort}
+ *                           {@link http://us2.php.net/array_multisort}
  * @param int    $sort_type  PHP sort type
- *                           {@see http://us2.php.net/sort}
+ *                           {@link http://us2.php.net/sort}
  *
  * @return bool
  */

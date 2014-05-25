@@ -182,7 +182,7 @@ class ElggBatch
 	 *                           and hitting the db server too often.
 	 * @param bool   $inc_offset Increment the offset on each fetch. This must be false for
 	 *                           callbacks that delete rows. You can set this after the
-	 *                           object is created with {@see ElggBatch::setIncrementOffset()}.
+	 *                           object is created with {@link ElggBatch::setIncrementOffset()}.
 	 */
 	public function __construct($getter, $options, $callback = null, $chunk_size = 25,
 			$inc_offset = true) {
