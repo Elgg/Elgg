@@ -48,6 +48,11 @@ define(['jquery', 'elgg'], function ($, elgg) {
 			html: "html",
 			select: function(event, ui) {
 				self.addUser(event, ui.item.guid, ui.item.html);
+			},
+			// turn off experimental live help - no i18n support and a little buggy
+			messages: {
+				noResults: '',
+				results: function() {}
 			}
 		});
 
