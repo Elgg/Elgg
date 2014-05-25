@@ -6,10 +6,10 @@
  * @return string The URL
  * @todo Combine / replace with current_page_url(). full_url() is based on the
  * request only while current_page_url() uses the configured site url.
- * @deprecated 1.9 get_current_url()
+ * @deprecated 1.9 Use current_page_url()
  */
 function full_url() {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use get_current_url()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use current_page_url()', 1.9);
 	$request = _elgg_services()->request;
 	$url = $request->getSchemeAndHttpHost();
 
@@ -1951,50 +1951,50 @@ function elgg_regenerate_simplecache($viewtype = NULL) {
 
 /**
  * @access private
- * @deprecated 1.9
+ * @deprecated 1.9 Use elgg_get_system_cache()
  */
 function elgg_get_filepath_cache() {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_get_system_cache()', 1.9);
 	return elgg_get_system_cache();
 }
 /**
  * @access private
- * @deprecated 1.9
+ * @deprecated 1.9 Use elgg_reset_system_cache()
  */
 function elgg_filepath_cache_reset() {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_reset_system_cache()', 1.9);
 	elgg_reset_system_cache();
 }
 /**
  * @access private
- * @deprecated 1.9
+ * @deprecated 1.9 Use elgg_save_system_cache()
  */
 function elgg_filepath_cache_save($type, $data) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_save_system_cache()', 1.9);
 	return elgg_save_system_cache($type, $data);
 }
 /**
  * @access private
- * @deprecated 1.9
+ * @deprecated 1.9 Use elgg_load_system_cache()
  */
 function elgg_filepath_cache_load($type) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_load_system_cache()', 1.9);
 	return elgg_load_system_cache($type);
 }
 /**
  * @access private
- * @deprecated 1.9
+ * @deprecated 1.9 Use elgg_enable_system_cache()
  */
 function elgg_enable_filepath_cache() {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_enable_system_cache()', 1.9);
 	elgg_enable_system_cache();
 }
 /**
  * @access private
- * @deprecated 1.9
+ * @deprecated 1.9 Use elgg_disable_system_cache()
  */
 function elgg_disable_filepath_cache() {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by elgg_disable_system_cache()', 1.9);
 	elgg_disable_system_cache();
 }
 
@@ -2023,7 +2023,7 @@ function unregister_entity_type($type, $subtype) {
  *
  * @return bool
  * @access private
- * @deprecated 1.9
+ * @deprecated 1.9 Use check_entity_relationship()
  */
 function already_attached($guid_one, $guid_two) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
@@ -2042,7 +2042,7 @@ function already_attached($guid_one, $guid_two) {
  *
  * @return an array of objects
  * @access private
- * @deprecated 1.9
+ * @deprecated 1.9 Use elgg_get_entities_from_relationship()
  */
 function get_attachments($guid, $type = "") {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
@@ -2071,7 +2071,7 @@ function get_attachments($guid, $type = "") {
  *
  * @return void
  * @access private
- * @deprecated 1.9
+ * @deprecated 1.9 Use remove_entity_relationship()
  */
 function remove_attachment($guid_one, $guid_two) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
@@ -2088,7 +2088,7 @@ function remove_attachment($guid_one, $guid_two) {
  *
  * @return true|void
  * @access private
- * @deprecated 1.9
+ * @deprecated 1.9 Use add_entity_relationship()
  */
 function make_attachment($guid_one, $guid_two) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
@@ -3265,7 +3265,7 @@ function xml_to_object($xml) {
  * @param int $guid ElggSite GUID
  *
  * @return string
- * @deprecated 1.9
+ * @deprecated 1.9 Use ElggSite::getDomain()
  */
 function get_site_domain($guid) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggSite::getDomain()', 1.9);
@@ -3772,7 +3772,7 @@ elgg_register_plugin_hook_handler('volatile', 'metadata', 'volatile_data_export_
  *                             to logged in user.
  * @return string
  * @access private
- * @deprecated 1.9
+ * @deprecated 1.9 Use _elgg_get_access_where_sql()
  */
 function get_access_sql_suffix($table_prefix = '', $owner = null) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by _elgg_get_access_where_sql()', 1.9);
