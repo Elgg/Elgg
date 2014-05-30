@@ -1766,7 +1766,7 @@ function get_registered_entity_types($type = null) {
 }
 
 /**
- * Returns if the entity type and subtype have been registered with {@see elgg_register_entity_type()}.
+ * Returns if the entity type and subtype have been registered with {@link elgg_register_entity_type()}.
  *
  * @param string $type    The type of entity (object, site, user, group)
  * @param string $subtype The subtype (may be blank)
