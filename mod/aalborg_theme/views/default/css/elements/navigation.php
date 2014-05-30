@@ -293,7 +293,7 @@
 .elgg-menu-page a {
 	color: #444;
 	display: block;
-	margin: 0 0 3px;
+	margin: 3px 0 5px 0;
 	padding: 2px 4px 2px 0;
 }
 .elgg-menu-page a:hover {
