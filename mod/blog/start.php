@@ -126,6 +126,11 @@ function blog_page_handler($page) {
 			break;
 		case 'view':
 			$params = blog_get_page_content_read($page[1]);
+		        $blog = get_entity($page[1]);
+			$friendly_title = elgg_get_friendly_title($blog->title);
+                        if($page[2] !== $friendly_title){
+				forward('', '404');	 
+			}
 			break;
 		case 'add':
 			elgg_gatekeeper();
