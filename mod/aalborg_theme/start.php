@@ -36,15 +36,6 @@ function aalborg_theme_pagesetup() {
 		elgg_extend_view('page/elements/sidebar', 'search/header', 0);
 	}
 
-	elgg_unregister_menu_item('topbar', 'dashboard');
-	if (elgg_is_active_plugin('dashboard')) {
-		elgg_register_menu_item('site', array(
-			'name' => 'dashboard',
-			'href' => 'dashboard',
-			'text' => elgg_echo('dashboard'),
-		));
-	}
-
 	if (elgg_is_logged_in()) {
 
 		elgg_register_menu_item('topbar', array(
@@ -56,6 +47,15 @@ function aalborg_theme_pagesetup() {
 			'link_class' => 'elgg-topbar-dropdown',
 		));
 
+		if (elgg_is_active_plugin('dashboard')) {
+			$item = elgg_unregister_menu_item('topbar', 'dashboard');
+			if ($item) {
+				$item->setText(elgg_echo('dashboard'));
+				$item->setSection('default');
+				elgg_register_menu_item('site', $item);
+			}
+		}
+		
 		$item = elgg_get_menu_item('topbar', 'usersettings');
 		if ($item) {
 			$item->setParentName('account');
