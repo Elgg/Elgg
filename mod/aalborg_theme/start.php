@@ -111,6 +111,17 @@ function aalborg_theme_setup_head($hook, $type, $data) {
 		'name' => 'viewport',
 		'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
 	);
+    
+    // https://developer.chrome.com/multidevice/android/installtohomescreen
+    $data['metas'][] = array(
+        'name' => 'mobile-web-app-capable',
+        'content' => 'yes',
+    );
+
+    $data['metas'][] = array(
+        'name' => 'apple-mobile-web-app-capable',
+        'content' => 'yes',
+    );
 
 	$data['links'][] = array(
 		'rel' => 'apple-touch-icon',
