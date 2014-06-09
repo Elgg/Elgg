@@ -13,7 +13,7 @@ $regexp = '/^[0-9]+\.[0-9]+\.[0-9]+(?:-(?:dev|rc\.[0-9]+))?$/';
 
 if (!preg_match($regexp, $version, $matches)) {
 	echo "Bad version format. You must follow the format of X.Y.Z with an optional suffix of -dev,"
-		. " or -rc.N (where N is a number).";
+		. " or -rc.N (where N is a number).\n";
 	exit(1);
 }
 
@@ -28,6 +28,12 @@ file_put_contents($composerPath, json_encode($composerJson, JSON_PRETTY_PRINT | 
 
 $branch = "release-$version";
 $commands = array(
+	// Version checks are here so we fail early if any deps are missing
+	"tx --version",
+	"git --version",
+	"npm --version",
+	"node --version",
+	
 	"cd $elggPath",
 	"git checkout -B $branch",
 	"npm install && npm update",
@@ -42,7 +48,7 @@ foreach ($commands as $command) {
 	echo "$command\n";
 	passthru($command, $returnVal);
 	if ($returnVal !== 0) {
-		echo "Error executing command! Interrupting!";
+		echo "Error executing command! Interrupting!\n";
 		exit(2);
 	}
 }
