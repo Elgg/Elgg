@@ -159,5 +159,6 @@ function htmlawed_tag_post_processor($element, $attributes = false) {
  */
 function htmlawed_test($hook, $type, $value, $params) {
     $value[] = dirname(__FILE__) . '/tests/tags.php';
+
     return $value;
 }
