@@ -28,7 +28,7 @@ file_put_contents($composerPath, json_encode($composerJson, JSON_PRETTY_PRINT | 
 
 $branch = "release-$version";
 $commands = array(
-	"pushd $elggPath",
+	"cd $elggPath",
 	// must be separate from git checkout in case branch already exists
 	"git branch $branch",
 	"git checkout $branch",
@@ -37,7 +37,6 @@ $commands = array(
 	"git add .",
 	"git commit -am \"chore(release): v$version\"",
 	// "git push origin $branch",
-	"popd"
 );
 
 foreach ($commands as $command) {
