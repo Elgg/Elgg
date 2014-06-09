@@ -32,6 +32,7 @@ $commands = array(
 	// must be separate from git checkout in case branch already exists
 	"git branch $branch",
 	"git checkout $branch",
+	"npm install && npm update",
 	"node .scripts/write-changelog.js",
 	"tx pull -a --minimum-perc=100",
 	"git add .",
