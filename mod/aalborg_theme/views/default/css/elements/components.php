@@ -285,4 +285,3 @@
 	text-align: justify;
 	margin-bottom: 5px;
 }
-

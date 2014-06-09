@@ -81,6 +81,3 @@
 .notifications_per_user {
 	margin-bottom: 25px;
 }
-
-
-

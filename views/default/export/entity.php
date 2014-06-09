@@ -78,4 +78,4 @@ $exportable_values = $entity->getExportableValues();
 		}
 	?>
 </div>
-<?php } 
+<?php }

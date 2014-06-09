@@ -7,4 +7,3 @@ $query = "UPDATE {$CONFIG->dbprefix}river
 			SET view='river/annotation/generic_comment/create'
 			WHERE view='annotation/annotate' AND action_type='comment'";
 update_data($query);
-

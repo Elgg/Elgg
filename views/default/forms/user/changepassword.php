@@ -38,4 +38,3 @@ $u $c
 $submit
 </div>
 HTML;
-

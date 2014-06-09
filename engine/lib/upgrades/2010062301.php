@@ -30,4 +30,3 @@ if ($groups) {
 	}
 }
 elgg_set_ignore_access(FALSE);
-

@@ -233,4 +233,3 @@ input[type="radio"] {
 .ie7 input[type=password] {
 	width: 94%;
 }
-

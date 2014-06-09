@@ -40,4 +40,3 @@ if (elgg_get_config('walled_garden')) {
 	));
 	echo elgg_view_page($title, $body);
 }
-

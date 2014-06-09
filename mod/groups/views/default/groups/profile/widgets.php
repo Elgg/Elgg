@@ -21,4 +21,3 @@ if ($right || $left) {
 }
 
 echo "</ul>";
-

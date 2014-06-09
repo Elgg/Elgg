@@ -75,4 +75,3 @@ echo <<<FORM
 	</div>
 FORM;
 }
-
