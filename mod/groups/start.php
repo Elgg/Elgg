@@ -78,8 +78,9 @@ function groups_init() {
 
 	//extend some views
 	elgg_extend_view('css/elgg', 'groups/css');
-	elgg_extend_view('js/elgg', 'groups/js');
-
+	
+	elgg_require_js('elgg/groups');
+	
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
 	elgg_register_plugin_hook_handler('default', 'access', 'groups_access_default_override');
@@ -807,9 +808,6 @@ function discussion_init() {
 	// add the forum tool option
 	add_group_tool_option('forum', elgg_echo('groups:enableforum'), true);
 	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
-
-	$discussion_js_path = elgg_get_site_url() . 'mod/groups/views/default/js/discussion/';
-	elgg_register_js('elgg.discussion', $discussion_js_path . 'discussion.js');
 
 	elgg_register_ajax_view('ajax/discussion/reply/edit');
 

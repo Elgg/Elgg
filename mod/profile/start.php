@@ -32,8 +32,9 @@ function profile_init() {
 	elgg_register_page_handler('profile', 'profile_page_handler');
 
 	elgg_extend_view('css/elgg', 'profile/css');
-	elgg_extend_view('js/elgg', 'profile/js');
-
+	
+	elgg_require_js('elgg/profile');
+	
 	// allow ECML in parts of the profile
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'profile_ecml_views_hook');
 

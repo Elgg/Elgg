@@ -34,7 +34,7 @@ function bookmarks_init() {
 	elgg_register_page_handler('bookmarks', 'bookmarks_page_handler');
 
 	elgg_extend_view('css/elgg', 'bookmarks/css');
-	elgg_extend_view('js/elgg', 'bookmarks/js');
+	elgg_require_js('elgg/bookmarks');
 
 	elgg_register_widget_type('bookmarks', elgg_echo('bookmarks'), elgg_echo('bookmarks:widget:description'));
 

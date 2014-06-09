@@ -12,8 +12,8 @@
  */
 function messageboard_init() {
 	// js
-	elgg_extend_view('js/elgg', 'messageboard/js');
-
+	elgg_require_js('elgg/messageboard');
+	
 	// css
 	elgg_extend_view('css/elgg', 'messageboard/css');
 
