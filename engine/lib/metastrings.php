@@ -73,7 +73,7 @@ function elgg_get_metastring_id($string, $case_sensitive = true) {
 			}
 			// return immediately because we don't want to cache case insensitive results
 			return $ids;
-		} else if (isset($results[0])) {
+		} elseif (isset($results[0])) {
 			$id = $results[0]->id;
 		}
 	}

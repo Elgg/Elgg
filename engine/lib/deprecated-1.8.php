@@ -780,7 +780,7 @@ function get_objects_in_group($group_guid, $subtype = "", $owner_guid = 0, $site
 		if (!is_array($owner_guid)) {
 			$owner_guid = (int)$owner_guid;
 			$where[] = "e.container_guid = '$owner_guid'";
-		} else if (sizeof($owner_guid) > 0) {
+		} elseif (sizeof($owner_guid) > 0) {
 			// Cast every element to the owner_guid array to int
 			$owner_guid = array_map("sanitise_int", $owner_guid);
 			$owner_guid = implode(",", $owner_guid);
@@ -920,7 +920,7 @@ function get_entities_from_metadata_groups($group_guid, $meta_name, $meta_value 
 
 	if (is_array($owner_guid)) {
 		$where[] = "e.container_guid in (" . implode(",", $owner_guid) . ")";
-	} else if ($owner_guid > 0) {
+	} elseif ($owner_guid > 0) {
 		$where[] = "e.container_guid = {$owner_guid}";
 	}
 
@@ -4473,7 +4473,7 @@ function reorder_widgets_from_panel($panelstring1, $panelstring2, $panelstring3,
 					if (in_array($dbwidget->getGUID(), $guids[1])) {
 						$pos = array_search($dbwidget->getGUID(), $guids[1]);
 						$col = 1;
-					} else if (in_array($dbwidget->getGUID(), $guids[2])) {
+					} elseif (in_array($dbwidget->getGUID(), $guids[2])) {
 						$pos = array_search($dbwidget->getGUID(), $guids[2]);
 						$col = 2;
 					} else {
@@ -4676,7 +4676,7 @@ function default_page_handler($page, $handler) {
 				return TRUE;
 			}
 		}
-	} else if (file_exists($callpath)) {
+	} elseif (file_exists($callpath)) {
 		include($callpath);
 		return TRUE;
 	}

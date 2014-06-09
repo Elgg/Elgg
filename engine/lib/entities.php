@@ -1517,7 +1517,7 @@ function _elgg_get_entity_attribute_where_sql(array $options = array()) {
 
 		if (is_numeric($pair['value'])) {
 			$value = sanitize_string($pair['value']);
-		} else if (is_array($pair['value'])) {
+		} elseif (is_array($pair['value'])) {
 			$values_array = array();
 			foreach ($pair['value'] as $pair_value) {
 				if (is_numeric($pair_value)) {

@@ -256,7 +256,7 @@ function serialise_parameters($method, $parameters) {
 				// change word false to boolean false
 				if (strcasecmp(trim($parameters[$key]), "false") == 0) {
 					$serialised_parameters .= ',false';
-				} else if ($parameters[$key] == 0) {
+				} elseif ($parameters[$key] == 0) {
 					$serialised_parameters .= ',false';
 				} else {
 					$serialised_parameters .= ',true';
@@ -735,7 +735,7 @@ function service_handler($handler, $request) {
 		// no handlers set or bad url
 		header("HTTP/1.0 404 Not Found");
 		exit;
-	} else if (isset($CONFIG->servicehandler[$handler]) && is_callable($CONFIG->servicehandler[$handler])) {
+	} elseif (isset($CONFIG->servicehandler[$handler]) && is_callable($CONFIG->servicehandler[$handler])) {
 		$function = $CONFIG->servicehandler[$handler];
 		call_user_func($function, $request, $handler);
 	} else {

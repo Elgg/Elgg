@@ -270,7 +270,7 @@ class ElggInspector {
 		while ($file = readdir($handle)) {
 			if ($file[0] == '.') {
 
-			} else if (is_dir($dir . $file)) {
+			} elseif (is_dir($dir . $file)) {
 				$view_list = array_merge($view_list, $this->recurseFileTree($dir . $file. "/"));
 			} else {
 				$extension = strrchr(trim($file, "/"), '.');

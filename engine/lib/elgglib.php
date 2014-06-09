@@ -92,7 +92,7 @@ function forward($location = "", $reason = 'system') {
 		if ($location) {
 			header("Location: {$location}");
 			exit;
-		} else if ($location === '') {
+		} elseif ($location === '') {
 			exit;
 		}
 	} else {
@@ -539,11 +539,11 @@ function system_messages($message = null, $register = "success", $count = false)
 		if (!empty($message) && is_array($message)) {
 			$messages[$register] = array_merge($messages[$register], $message);
 			return true;
-		} else if (!empty($message) && is_string($message)) {
+		} elseif (!empty($message) && is_string($message)) {
 			$messages[$register][] = $message;
 			$session->set('msg', $messages);
 			return true;
-		} else if (is_null($message)) {
+		} elseif (is_null($message)) {
 			if ($register != "") {
 				$returnarray = array();
 				$returnarray[$register] = $messages[$register];

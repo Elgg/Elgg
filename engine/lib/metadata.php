@@ -635,9 +635,9 @@ $owner_guids = null) {
 			// if the operand is IN don't quote it because quoting should be done already.
 			if (is_numeric($pair['value'])) {
 				$value = sanitise_string($pair['value']);
-			} else if (is_bool($pair['value'])) {
+			} elseif (is_bool($pair['value'])) {
 				$value = (int) $pair['value'];
-			} else if (is_array($pair['value'])) {
+			} elseif (is_array($pair['value'])) {
 				$values_array = array();
 
 				foreach ($pair['value'] as $pair_value) {
@@ -655,7 +655,7 @@ $owner_guids = null) {
 				// @todo allow support for non IN operands with array of values.
 				// will have to do more silly joins.
 				$operand = 'IN';
-			} else if ($trimmed_operand == 'in') {
+			} elseif ($trimmed_operand == 'in') {
 				$value = "({$pair['value']})";
 			} else {
 				$value = "'" . sanitise_string($pair['value']) . "'";

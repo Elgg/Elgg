@@ -146,10 +146,10 @@ class Elgg_ActionsService {
 
 					if ($returnval) {
 						return true;
-					} else if ($visible_errors) {
+					} elseif ($visible_errors) {
 						register_error(elgg_echo('actiongatekeeper:pluginprevents'));
 					}
-				} else if ($visible_errors) {
+				} elseif ($visible_errors) {
 					// this is necessary because of #5133
 					if (elgg_is_xhr()) {
 						register_error(elgg_echo('js:security:token_refresh_failed', array(elgg_get_site_url())));
@@ -157,7 +157,7 @@ class Elgg_ActionsService {
 						register_error(elgg_echo('actiongatekeeper:timeerror'));
 					}
 				}
-			} else if ($visible_errors) {
+			} elseif ($visible_errors) {
 				// this is necessary because of #5133
 				if (elgg_is_xhr()) {
 					register_error(elgg_echo('js:security:token_refresh_failed', array(elgg_get_site_url())));
@@ -236,7 +236,7 @@ class Elgg_ActionsService {
 
 			// let the validator send an appropriate msg
 			validate_action_token();
-		} else if ($this->validateActionToken()) {
+		} elseif ($this->validateActionToken()) {
 			return true;
 		}
 

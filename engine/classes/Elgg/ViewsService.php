@@ -122,7 +122,7 @@ class Elgg_ViewsService {
 		if (!isset($CONFIG->views->locations)) {
 			$CONFIG->views->locations = array($viewtype => array($view => $location));
 
-		} else if (!isset($CONFIG->views->locations[$viewtype])) {
+		} elseif (!isset($CONFIG->views->locations[$viewtype])) {
 			$CONFIG->views->locations[$viewtype] = array($view => $location);
 
 		} else {
@@ -353,7 +353,7 @@ class Elgg_ViewsService {
 			ob_start();
 			include("{$view_location}$viewtype/$view.php");
 			return ob_get_clean();
-		} else if ($this->fileExists("{$view_location}$viewtype/$view")) {
+		} elseif ($this->fileExists("{$view_location}$viewtype/$view")) {
 			return file_get_contents("{$view_location}$viewtype/$view");
 		} else {
 			if ($issue_missing_notice) {

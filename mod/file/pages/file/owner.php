@@ -23,7 +23,7 @@ $params = array();
 if ($owner->guid == elgg_get_logged_in_user_guid()) {
 	// user looking at own files
 	$params['filter_context'] = 'mine';
-} else if (elgg_instanceof($owner, 'user')) {
+} elseif (elgg_instanceof($owner, 'user')) {
 	// someone else's files
 	// do not show select a tab when viewing someone else's posts
 	$params['filter_context'] = 'none';

@@ -1330,9 +1330,9 @@ function elgg_view_list_item($item, array $vars = array()) {
 	$type = $item->getType();
 	if (in_array($type, $CONFIG->entity_types)) {
 		return elgg_view_entity($item, $vars);
-	} else if ($type == 'annotation') {
+	} elseif ($type == 'annotation') {
 		return elgg_view_annotation($item, $vars);
-	} else if ($type == 'river') {
+	} elseif ($type == 'river') {
 		return elgg_view_river_item($item, $vars);
 	}
 

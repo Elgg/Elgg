@@ -53,13 +53,13 @@ class ElggGroup extends ElggEntity
 					$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
 					throw new IOException($msg);
 				}
-			} else if ($row instanceof ElggGroup) {
+			} elseif ($row instanceof ElggGroup) {
 				// $row is an ElggGroup so this is a copy constructor
 				elgg_deprecated_notice('This type of usage of the ElggGroup constructor was deprecated. Please use the clone method.', 1.7);
 				foreach ($row->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
-			} else if (is_numeric($row)) {
+			} elseif (is_numeric($row)) {
 				// $row is a GUID so load entity
 				elgg_deprecated_notice('Passing a GUID to constructor is deprecated. Use get_entity()', 1.9);
 				if (!$this->load($row)) {

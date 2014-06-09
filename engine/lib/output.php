@@ -399,7 +399,7 @@ function elgg_get_friendly_time($time, $current_time = null) {
 	if ($diff < $hour) {
 		$granularity = ':minutes';
 		$diff = round($diff / $minute);
-	} else if ($diff < $day) {
+	} elseif ($diff < $day) {
 		$granularity = ':hours';
 		$diff = round($diff / $hour);
 	} else {

@@ -33,7 +33,7 @@ if (($guid != "") && ($type == "") && ($id_or_name == "")) {
 	$body = elgg_view("export/entity", array("entity" => $entity, "uuid" => guid_to_uuid($guid)));
 
 	// Export an individual attribute
-} else if (($guid != "") && ($type != "") && ($id_or_name != "")) {
+} elseif (($guid != "") && ($type != "") && ($id_or_name != "")) {
 	// Get a uuid
 	$entity = get_entity($guid);
 	if (!$entity) {

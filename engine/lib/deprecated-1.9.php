@@ -868,7 +868,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 				$ids[] = $metaString->id;
 			}
 			return $ids;
-		} else if (isset($metaStrings[0])) {
+		} elseif (isset($metaStrings[0])) {
 			$row = $metaStrings[0];
 		}
 	}
@@ -1461,7 +1461,7 @@ $container_guid = null) {
 			$owner_array = array($owner_guid);
 			$owner_guid = (int) $owner_guid;
 			$where[] = "e.owner_guid = '$owner_guid'";
-		} else if (sizeof($owner_guid) > 0) {
+		} elseif (sizeof($owner_guid) > 0) {
 			$owner_array = array_map('sanitise_int', $owner_guid);
 			// Cast every element to the owner_guid array to int
 			$owner_guid = implode(",", $owner_guid);
@@ -1609,7 +1609,7 @@ $site_guid = 0, $count = false) {
 
 	if (is_array($owner_guid)) {
 		$where[] = "e.container_guid in (" . implode(",", $owner_guid) . ")";
-	} else if ($owner_guid > 0) {
+	} elseif ($owner_guid > 0) {
 		$where[] = "e.container_guid = {$owner_guid}";
 	}
 
@@ -2799,7 +2799,7 @@ function get_uuid_from_object($object) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
 	if ($object instanceof ElggEntity) {
 		return guid_to_uuid($object->guid);
-	} else if ($object instanceof ElggExtender) {
+	} elseif ($object instanceof ElggExtender) {
 		$type = $object->type;
 		if ($type == 'volatile') {
 			$uuid = guid_to_uuid($object->entity_guid) . $type . "/{$object->name}/";
@@ -2808,7 +2808,7 @@ function get_uuid_from_object($object) {
 		}
 
 		return $uuid;
-	} else if ($object instanceof ElggRelationship) {
+	} elseif ($object instanceof ElggRelationship) {
 		return guid_to_uuid($object->guid_one) . "relationship/{$object->id}/";
 	}
 
@@ -3180,9 +3180,9 @@ function serialise_object_to_xml($data, $name = "", $n = 0) {
 
 		if (is_object($value)) {
 			$output .= serialise_object_to_xml($value, $key, $n + 1);
-		} else if (is_array($value)) {
+		} elseif (is_array($value)) {
 			$output .= serialise_array_to_xml($value, $n + 1);
-		} else if (gettype($value) == "boolean") {
+		} elseif (gettype($value) == "boolean") {
 			$output .= $value ? "true" : "false";
 		} else {
 			$output .= htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8');
@@ -3228,9 +3228,9 @@ function serialise_array_to_xml(array $data, $n = 0) {
 
 		if (is_object($value)) {
 			$output .= serialise_object_to_xml($value, "", $n + 1);
-		} else if (is_array($value)) {
+		} elseif (is_array($value)) {
 			$output .= serialise_array_to_xml($value, $n + 1);
-		} else if (gettype($value) == "boolean") {
+		} elseif (gettype($value) == "boolean") {
 			$output .= $value ? "true" : "false";
 		} else {
 			$output .= htmlspecialchars($value, ENT_NOQUOTES, 'UTF-8');

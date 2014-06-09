@@ -96,7 +96,7 @@ class Elgg_Database {
 	public function getLink($type) {
 		if (isset($this->dbLinks[$type])) {
 			return $this->dbLinks[$type];
-		} else if (isset($this->dbLinks['readwrite'])) {
+		} elseif (isset($this->dbLinks['readwrite'])) {
 			return $this->dbLinks['readwrite'];
 		} else {
 			$this->setupConnections();

@@ -125,7 +125,7 @@ class Elgg_Database_Config {
 				'password' => $this->config->db[$type]->dbpass,
 				'database' => $this->config->db[$type]->dbname,
 			);
-		} else if (array_key_exists('dbhost', $this->config->db[$type])) {
+		} elseif (array_key_exists('dbhost', $this->config->db[$type])) {
 			// new style single connection
 			$config = array(
 				'host' => $this->config->db[$type]['dbhost'],
@@ -133,7 +133,7 @@ class Elgg_Database_Config {
 				'password' => $this->config->db[$type]['dbpass'],
 				'database' => $this->config->db[$type]['dbname'],
 			);
-		} else if (is_object(current($this->config->db[$type]))) {
+		} elseif (is_object(current($this->config->db[$type]))) {
 			// old style multiple connections
 			$index = array_rand($this->config->db[$type]);
 			$config = array(
