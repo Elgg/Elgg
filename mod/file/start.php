@@ -172,7 +172,6 @@ function file_register_toggle() {
 		$url .= "?list_type=" . $list_type;
 	}
 
-
 	elgg_register_menu_item('extras', array(
 		'name' => 'file_list',
 		'text' => $icon,

@@ -112,7 +112,6 @@ END;
 				$members = '';
 			}
 
-
 ?>
 	<tr>
 		<td class="namefield">

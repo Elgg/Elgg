@@ -58,7 +58,6 @@ function twitter_api_pagehandler_deprecated($page) {
 	return twitter_api_pagehandler($page);
 }
 
-
 /**
  * Serves pages for twitter.
  *

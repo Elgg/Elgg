@@ -18,7 +18,6 @@
 elgg_load_js('elgg.friendspicker');
 elgg_load_js('jquery.easing');
 
-
 $chararray = elgg_echo('friendspicker:chararray');
 
 // Initialise name
@@ -190,7 +189,6 @@ if (!isset($vars['replacement'])) {
 					$activeletters[] = $letter;
 				}
 
-
 				if (in_array($friend->getGUID(),$vars['value'])) {
 					$checked = "checked = \"checked\"";
 					if (!in_array($letter,$activeletters) && $vars['highlight'] == 'default') {
@@ -284,7 +282,6 @@ if (!$callback) {
 
 </div>
 </div>
-
 
 <?php
 

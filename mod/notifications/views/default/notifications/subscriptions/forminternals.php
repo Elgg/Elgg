@@ -257,7 +257,6 @@ END;
 <td>&nbsp;</td>
 </tr>
 
-
 <?php
 					}
 				}
@@ -296,7 +295,6 @@ if (!$callback) {
 			
 	</div>
 </div>
-
 
 <?php
 

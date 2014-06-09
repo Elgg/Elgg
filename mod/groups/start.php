@@ -758,8 +758,6 @@ function groupprofile_ecml_views_hook($hook, $entity_type, $return_value, $param
 	return $return_value;
 }
 
-
-
 /**
  * Discussion
  *

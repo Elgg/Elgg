@@ -272,7 +272,6 @@ class ElggPluginManifest {
 		return trim((string) $this->parser->getAttribute('id'));
 	}
 
-
 	/**
 	 * Return the description
 	 *

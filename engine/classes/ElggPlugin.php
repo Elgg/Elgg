@@ -109,7 +109,6 @@ class ElggPlugin extends ElggObject {
 		}
 	}
 
-
 	// Plugin ID and path
 
 	/**
@@ -263,7 +262,6 @@ class ElggPlugin extends ElggObject {
 
 		return false;
 	}
-
 
 	// Plugin settings
 
@@ -545,7 +543,6 @@ class ElggPlugin extends ElggObject {
 		return $this->getDatabase()->deleteData($q);
 	}
 
-
 	// validation
 
 	/**
@@ -620,7 +617,6 @@ class ElggPlugin extends ElggObject {
 
 		return false;
 	}
-
 
 	// activating and deactivating
 

@@ -464,7 +464,6 @@ function elgg_get_friendly_upload_error($error_code) {
 	return elgg_echo("upload:error:$key");
 }
 
-
 /**
  * Strip tags and offer plugins the chance.
  * Plugins register for output:strip_tags plugin hook.

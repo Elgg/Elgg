@@ -702,7 +702,6 @@ function _php_api_exception_handler($exception) {
 	echo elgg_view_page($exception->getMessage(), elgg_view("api/output", array("result" => $result)));
 }
 
-
 /**
  * Services handler - turns request over to the registered handler
  * If no handler is found, this returns a 404 error

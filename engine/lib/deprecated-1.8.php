@@ -2744,7 +2744,6 @@ $entity_subtype = "", $owner_guid = "", $site_guid = -1, $start_ts = "", $end_ts
 	));
 }
 
-
 /**
  * Obtains a list of objects owned by a user
  *
@@ -2829,7 +2828,6 @@ $fullview = true, $listtypetoggle = true, $pagination = true, $timelower = 0, $t
 	return elgg_view_entity_list($entities, $count, $offset, $limit, $fullview, $listtypetoggle,
 		$pagination);
 }
-
 
 /**
  * Get user objects by an array of metadata
@@ -3049,7 +3047,6 @@ function get_loggedin_userid() {
 	return elgg_get_logged_in_user_guid();
 }
 
-
 /**
  * Returns whether or not the user is currently logged in
  *
@@ -3071,7 +3068,6 @@ function isadminloggedin() {
 	elgg_deprecated_notice('isadminloggedin() is deprecated by elgg_is_admin_logged_in()', 1.8);
 	return elgg_is_admin_logged_in();
 }
-
 
 /**
  * Loads plugins

@@ -1,6 +1,5 @@
 <?php
 
-
 echo elgg_view_layout('two_sidebar', array(
 	'sidebar' => 'Primary Sidebar',
 	'sidebar_alt' => 'Alternate Sidebar',

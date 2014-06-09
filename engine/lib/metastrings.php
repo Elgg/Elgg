@@ -15,7 +15,6 @@
 global $METASTRINGS_CACHE;
 $METASTRINGS_CACHE = array();
 
-
 /**
  * Gets the metastring identifier for a value.
  *
@@ -301,7 +300,6 @@ function _elgg_get_metastring_based_objects($options) {
 
 	$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
-
 
 	$wheres[] = _elgg_get_entity_time_where_sql('n_table', $options['metastring_created_time_upper'],
 		$options['metastring_created_time_lower'], null, null);

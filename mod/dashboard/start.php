@@ -54,7 +54,6 @@ function dashboard_page_handler() {
 	return true;
 }
 
-
 /**
  * Register user dashboard with default widgets
  *

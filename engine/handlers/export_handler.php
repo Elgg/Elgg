@@ -8,7 +8,6 @@
 
 require_once(dirname(dirname(__FILE__)) . "/start.php");
 
-
 // Get input values, these will be mapped via modrewrite
 $guid = get_input("guid"); // guid of the entity
 

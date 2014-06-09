@@ -29,7 +29,6 @@ foreach ($emails as $email) {
 	mail($email, $subject, $message);
 }
 
-
 // output a custom error page to match the theme or give a custom message
 $html = <<<HTML
 	<html>

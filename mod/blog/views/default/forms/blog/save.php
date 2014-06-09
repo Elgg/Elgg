@@ -110,7 +110,6 @@ $categories_input = elgg_view('input/categories', $vars);
 $container_guid_input = elgg_view('input/hidden', array('name' => 'container_guid', 'value' => elgg_get_page_owner_guid()));
 $guid_input = elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['guid']));
 
-
 echo <<<___HTML
 
 $draft_warning

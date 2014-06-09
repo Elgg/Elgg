@@ -245,8 +245,6 @@ function _elgg_notifications_init() {
 
 elgg_register_event_handler('init', 'system', '_elgg_notifications_init');
 
-
-
 /**
  * Notify a user via their preferences.
  *
@@ -334,7 +332,6 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 	return $result;
 }
 
-
 /**
  * Notifications
  * This file contains classes and functions which allow plugins to register and send notifications.
@@ -353,7 +350,6 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
  * @package Elgg.Core
  * @subpackage Notifications
  */
-
 
 /**
  * Notify a user via their preferences.

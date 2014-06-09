@@ -2885,7 +2885,6 @@ function add_uuid_to_guid($guid, $uuid) {
 	return (bool)$result;
 }
 
-
 $IMPORTED_DATA = array();
 $IMPORTED_OBJECT_COUNTER = 0;
 

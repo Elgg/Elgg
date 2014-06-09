@@ -191,7 +191,6 @@ function elgg_load_js($name) {
 	elgg_load_external_file('js', $name);
 }
 
-
 /**
  * Request that Elgg load an AMD module onto the page.
  *
@@ -202,7 +201,6 @@ function elgg_load_js($name) {
 function elgg_require_js($name) {
 	_elgg_services()->amdConfig->addDependency($name);
 }
-
 
 /**
  * Get the JavaScript URLs that are loaded

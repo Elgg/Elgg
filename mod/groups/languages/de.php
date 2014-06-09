@@ -264,7 +264,6 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 
 	'groups:nowidgets' => 'Für diese Gruppe wurden keine Widgets aktiviert.',
 
-
 	'groups:widgets:members:title' => 'Mitglieder der Gruppen',
 	'groups:widgets:members:description' => 'Zeige die Mitglieder einer Gruppe an.',
 	'groups:widgets:members:label:displaynum' => 'Zeige die Mitglieder einer Gruppe an.',

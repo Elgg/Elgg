@@ -122,7 +122,6 @@ class Elgg_Database {
 		}
 	}
 
-
 	/**
 	 * Establish a connection to the database server
 	 *
@@ -457,7 +456,6 @@ class Elgg_Database {
 
 		return true;
 	}
-
 
 	/**
 	 * Trigger all queries that were registered as "delayed" queries. This is

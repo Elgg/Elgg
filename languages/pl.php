@@ -27,7 +27,6 @@ return array(
 	'membershiprequired' => "Strona dostępna tylko dla członków grupy.",
 	'limited_access' => "Nie masz uprawnień do wyświetlania wskazanej strony.",
 
-
 /**
  * Errors
  */
@@ -84,7 +83,6 @@ return array(
 	
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Inne pluginy korzystają z %s jako zależności. Aby go wyłączyć, musisz najpierw wyłączyć następujące pluginy: %s',
 
-
 	'RegistrationException:EmptyPassword' => 'Hasło nie może być puste',
 	'RegistrationException:PasswordMismatch' => 'Hasła muszą być jednakowe',
 	'LoginException:BannedUser' => 'Zostałeś zbanowany na tej stronie i nie możesz się logować',
@@ -118,7 +116,6 @@ return array(
 	'upload:error:cant_write' => 'Nie można było zapisać wgranego pliku.',
 	'upload:error:extension' => 'Nie można było zapisać wgranego pliku.',
 	'upload:error:unknown' => 'Wgrywanie pliku nie powiodło się.',
-
 
 /**
  * User details
@@ -292,7 +289,6 @@ return array(
 	'profile:noaccess' => "Nie masz uprawnień do edycji tego profilu.",
 	'profile:invalid_email' => '%s musi być poprawnym adresem e-mail.',
 
-
 /**
  * Feeds
  */
@@ -302,7 +298,6 @@ return array(
  */
 	'link:view' => 'pokaż link',
 	'link:view:all' => 'Wyświetl wszystkie',
-
 
 /**
  * River
@@ -960,7 +955,6 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
  */
 
 	'systemmessages:dismiss' => "kliknij aby odrzucić",
-
 
 /**
  * Import / export

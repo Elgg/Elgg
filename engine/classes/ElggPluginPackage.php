@@ -276,7 +276,6 @@ class ElggPluginPackage {
 		return true;
 	}
 
-
 	/************
 	 * Manifest *
 	 ************/

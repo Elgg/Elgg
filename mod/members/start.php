@@ -129,7 +129,6 @@ function members_nav_online($hook, $type, $returnvalue, $params) {
 	return $returnvalue;
 }
 
-
 /**
  * Members page handler
  *

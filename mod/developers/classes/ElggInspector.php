@@ -102,7 +102,6 @@ class ElggInspector {
 		return $tree;
 	}
 
-
 	/**
 	 * Get Elgg actions information
 	 *

@@ -5,7 +5,6 @@
  *  @uses $vars['entity']
  */
 
-
 $list = '';
 $num_of_likes = likes_count($vars['entity']);
 $guid = $vars['entity']->getGUID();

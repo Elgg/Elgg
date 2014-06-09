@@ -5,7 +5,6 @@
  * @package ElggPages
  */
 
-
 $group = elgg_get_page_owner_entity();
 
 if ($group->pages_enable == "no") {
@@ -17,7 +16,6 @@ $all_link = elgg_view('output/url', array(
 	'text' => elgg_echo('link:view:all'),
 	'is_trusted' => true,
 ));
-
 
 elgg_push_context('widgets');
 $options = array(

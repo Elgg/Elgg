@@ -6,7 +6,6 @@
  * Updates the database for twitterservice to twitter_api changes.
  */
 
-
 $ia = elgg_set_ignore_access(true);
 
 // make sure we have updated plugins

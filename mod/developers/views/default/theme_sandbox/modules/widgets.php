@@ -17,7 +17,6 @@ function css_permissions_override() {
 	return true;
 }
 
-
 ?>
 <div class="elgg-body mal">
 	<?php echo elgg_view('theme_sandbox/header', $vars); ?>

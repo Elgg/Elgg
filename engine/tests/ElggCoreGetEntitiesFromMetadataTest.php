@@ -134,7 +134,6 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->delete();
 	}
 
-
 	public function testElggApiGettersEntityMetadataNameMixedMultiple() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
@@ -184,7 +183,6 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 			}
 		}
 	}
-
 
 	// values
 	public function testElggApiGettersEntityMetadataValueValidSingle() {
@@ -316,7 +314,6 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$e->delete();
 	}
 
-
 	public function testElggApiGettersEntityMetadataValueMixedMultiple() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
 		$subtype = $subtypes[0];
@@ -367,9 +364,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		}
 	}
 
-
 	// name_value_pairs
-
 
 	public function testElggApiGettersEntityMetadataNVPValidNValidVEquals() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
@@ -782,7 +777,6 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 			}
 		}
 	}
-
 
 	public function testElggApiGettersEntityMetadataNVPValidNValidVOperandIn() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);

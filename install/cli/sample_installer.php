@@ -27,9 +27,7 @@ $params = array(
 	'password' => '',
 );
 
-
 // Do not edit below this line. //////////////////////////////
-
 
 if (!$enabled) {
 	echo "To enable this script, change \$enabled to true.\n";

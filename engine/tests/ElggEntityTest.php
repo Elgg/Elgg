@@ -101,7 +101,6 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		$this->assertIdentical(array(), elgg_get_annotations(array('guid' => $this->entity->getGUID(), 'type' => 'object')));
 	}
 
-
 	public function testElggEntitySaveAndDelete() {
 		// check attributes populated during create()
 		$time_minimum = time() - 5;

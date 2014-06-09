@@ -5,7 +5,6 @@
  * @package Blog
  */
 
-
 /**
  * Get page components to view a blog post.
  *

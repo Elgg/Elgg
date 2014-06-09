@@ -92,7 +92,6 @@ if ($reordering) {
 	$classes[] = 'elgg-state-undraggable';
 }
 
-
 // activate / deactivate links
 
 // always let them deactivate

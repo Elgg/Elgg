@@ -21,10 +21,8 @@ if ($_elgg_special_river_catch) {
 }
 $_elgg_special_river_catch = true;
 
-
 $item = $vars['item'];
 
 echo elgg_view($item->getView(), $vars);
-
 
 $_elgg_special_river_catch = false;

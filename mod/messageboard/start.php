@@ -125,7 +125,6 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 	return $result_id;
 }
 
-
 /**
  * Add edit and delete links for forum replies
  */

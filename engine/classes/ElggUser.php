@@ -118,7 +118,6 @@ class ElggUser extends ElggEntity
 		return true;
 	}
 
-
 	/**
 	 * {@inheritdoc}
 	 */

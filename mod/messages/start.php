@@ -6,7 +6,6 @@
 * @package ElggMessages
 */
 
-
 elgg_register_event_handler('init', 'system', 'messages_init');
 
 function messages_init() {

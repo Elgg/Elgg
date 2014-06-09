@@ -168,8 +168,6 @@ function _elgg_load_translations() {
 	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
 }
 
-
-
 /**
  * When given a full path, finds translation files and loads them
  *

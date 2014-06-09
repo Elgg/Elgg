@@ -53,7 +53,6 @@ if (!$owner) {
 	$title = elgg_echo('file:list:title', array($owner->name, $friend_string, $type_string));
 }
 
-
 $sidebar = file_get_type_cloud($page_owner_guid, $friends);
 
 if ($friends && elgg_instanceof($owner, 'user')) {

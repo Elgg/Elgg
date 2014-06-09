@@ -5,7 +5,6 @@
  * @package ElggFile
  */
 
-
 $num = $vars['entity']->num_display;
 
 $options = array(

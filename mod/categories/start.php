@@ -25,7 +25,6 @@ function categories_init() {
 	elgg_register_plugin_hook_handler('action', 'plugins/settings/save', 'categories_save_site_categories');
 }
 
-
 /**
  * Category page handler
  * @return bool

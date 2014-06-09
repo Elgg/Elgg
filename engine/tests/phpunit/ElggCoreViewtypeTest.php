@@ -8,7 +8,6 @@ require_once "$engine/lib/pageowner.php";
 global $CONFIG;
 $CONFIG->context = array();
 
-
 class ElggCoreViewtypeTest extends PHPUnit_Framework_TestCase {
 
 	protected function setUp() {

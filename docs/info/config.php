@@ -253,7 +253,6 @@ $CONFIG->views->simplecache;
  */
 $CONFIG->views->locations;
 
-
 /**
  * A list of valid view types as discovered.
  *

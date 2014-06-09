@@ -4,7 +4,6 @@
  *
  */
 
-
 // check that we need to do the utf8 conversion
 // C&P logic from 2010033101
 $dbversion = (int) datalist_get('version');

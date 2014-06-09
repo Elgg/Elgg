@@ -120,7 +120,6 @@ $form_body .= elgg_view("input/checkbox", array(
 )) . "</div>";
 $form_body .= "</fieldset>";
 
-
 $form_body .= '<fieldset class="elgg-fieldset">';
 $form_body .= '<legend>' . elgg_echo("admin:legend:security") . '</legend>';
 

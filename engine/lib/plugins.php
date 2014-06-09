@@ -47,7 +47,6 @@ define('ELGG_PLUGIN_USER_SETTING_PREFIX', 'plugin:user_setting:');
  */
 define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
 
-
 /**
  * Returns a list of plugin directory names from a base directory.
  *

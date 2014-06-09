@@ -145,7 +145,6 @@ function elgg_is_registered_viewtype($viewtype) {
 	return in_array($viewtype, $CONFIG->view_types);
 }
 
-
 /**
  * Checks if $viewtype is a string suitable for use as a viewtype name
  *

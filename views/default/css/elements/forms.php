@@ -63,7 +63,6 @@ textarea:focus {
 	cursor: pointer;
 }
 
-
 .elgg-input-access {
 	margin:5px 0 0 0;
 }

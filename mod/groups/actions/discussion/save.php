@@ -63,7 +63,6 @@ if (!$result) {
 // topic saved so clear sticky form
 elgg_clear_sticky_form('topic');
 
-
 // handle results differently for new topics and topic edits
 if ($new_topic) {
 	system_message(elgg_echo('discussion:topic:created'));

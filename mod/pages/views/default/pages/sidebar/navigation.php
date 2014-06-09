@@ -8,7 +8,6 @@
 // add the jquery treeview files for navigation
 elgg_load_css('jquery.treeview');
 
-
 $selected_page = elgg_extract('page', $vars, false);
 if ($selected_page) {
 	$url = $selected_page->getURL();

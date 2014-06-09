@@ -193,7 +193,6 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 // file saved so clear sticky form
 elgg_clear_sticky_form('file');
 
-
 // handle results differently for new files and file updates
 if ($new_file) {
 	if ($guid) {
