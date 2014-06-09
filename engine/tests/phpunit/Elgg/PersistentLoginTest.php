@@ -52,7 +52,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected $thirtyDaysAgo;
 
-	function setUp() {
+	public function setUp() {
 		$this->thirtyDaysAgo = strtotime("-30 days");
 
 		$this->mockToken = 'z' . str_repeat('a', 31);
@@ -80,7 +80,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->svc = $this->getSvcWithCookie("");
 	}
 
-	function testLoginSavesHashAndPutsTokenInCookieAndSession() {
+	public function testLoginSavesHashAndPutsTokenInCookieAndSession() {
 		$this->dbMock->expects($this->once())
 			->method('insertData')
 			->will($this->returnCallback(array($this, 'mock_insertData')));
@@ -91,7 +91,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame($this->mockToken, $this->session->get('code'));
 	}
 
-	function testRemoveDeletesHashAndDeletesTokenFromCookieAndSession() {
+	public function testRemoveDeletesHashAndDeletesTokenFromCookieAndSession() {
 		$this->svc = $this->getSvcWithCookie($this->mockToken);
 
 		$this->dbMock->expects($this->once())
@@ -105,7 +105,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($this->session->get('code'));
 	}
 
-	function testRemoveWithoutCookieCantDeleteHash() {
+	public function testRemoveWithoutCookieCantDeleteHash() {
 		$this->dbMock->expects($this->never())
 			->method('deleteData');
 
@@ -116,7 +116,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($this->session->get('code'));
 	}
 
-	function testGettingUserFromKnownHashReturnsUser() {
+	public function testGettingUserFromKnownHashReturnsUser() {
 		$this->dbMock->expects($this->once())
 			->method('getDataRow')
 			->will($this->returnCallback(array($this, 'mock_getDataRow')));
@@ -126,7 +126,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame($this->user123, $user);
 	}
 
-	function testGettingUserFromMissingHashReturnsNull() {
+	public function testGettingUserFromMissingHashReturnsNull() {
 		$this->dbMock->expects($this->once())
 			->method('getDataRow')
 			->will($this->returnValue(array()));
@@ -136,7 +136,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($user);
 	}
 
-	function testGettingMissingUserFromKnownHashReturnsNull() {
+	public function testGettingMissingUserFromKnownHashReturnsNull() {
 		$this->dbMock->expects($this->once())
 			->method('getDataRow')
 			->will($this->returnValue((object)array('guid' => 234)));
@@ -146,7 +146,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($user);
 	}
 
-	function testChangingOwnPasswordDeletesAllHashesAndMakesPersistent() {
+	public function testChangingOwnPasswordDeletesAllHashesAndMakesPersistent() {
 		$subject = $this->user123;
 		$modifier = $this->user123;
 
@@ -164,7 +164,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame($this->mockToken, $this->session->get('code'));
 	}
 
-	function testChangingOwnPasswordWithNoCookieDoesntMakePersistent() {
+	public function testChangingOwnPasswordWithNoCookieDoesntMakePersistent() {
 		$subject = $this->user123;
 		$modifier = $this->user123;
 
@@ -180,7 +180,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($this->session->get('code'));
 	}
 
-	function testChangingSomeoneElsesPasswordDoesntMakePersistent() {
+	public function testChangingSomeoneElsesPasswordDoesntMakePersistent() {
 		$subject = $this->user123;
 		$modifier = $this->getMockElggUser(234);
 
@@ -196,7 +196,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($this->session->get('code'));
 	}
 
-	function testGettingUserFromValidClientReturnsUser() {
+	public function testGettingUserFromValidClientReturnsUser() {
 		$this->dbMock->expects($this->once())
 			->method('getDataRow')
 			->will($this->returnValue((object)array('guid' => 123)));
@@ -208,7 +208,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame($this->user123, $user);
 	}
 
-	function testGetPersistedUser_invalidModernToken() {
+	public function testGetPersistedUser_invalidModernToken() {
 		$this->dbMock->expects($this->once())
 			->method('getDataRow')
 			->will($this->returnValue(array()));
@@ -223,7 +223,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($user);
 	}
 
-	function testBootSessionWithInvalidLegacyTokenCausesDelayAndFailure() {
+	public function testBootSessionWithInvalidLegacyTokenCausesDelayAndFailure() {
 		$this->dbMock->expects($this->once())
 			->method('getDataRow')
 			->will($this->returnValue(array()));
@@ -238,7 +238,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($user);
 	}
 
-	function testReplaceLegacyTokenWithNoCookieDoesNothing() {
+	public function testReplaceLegacyTokenWithNoCookieDoesNothing() {
 		$this->svc = $this->getSvcWithCookie('');
 
 		$this->dbMock->expects($this->never())
@@ -250,7 +250,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($this->session->get('code'));
 	}
 
-	function testModernTokenCookiesAreNotReplaced() {
+	public function testModernTokenCookiesAreNotReplaced() {
 		$this->dbMock->expects($this->never())
 			->method('deleteData');
 
@@ -260,7 +260,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertNull($this->session->get('code'));
 	}
 
-	function testLegacyCookiesAreReplacedInDbCookieAndSession() {
+	public function testLegacyCookiesAreReplacedInDbCookieAndSession() {
 		$this->svc = $this->getSvcWithCookie(str_repeat('a', 32));
 
 		$this->dbMock->expects($this->once())
@@ -275,7 +275,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 	}
 
 	// mock ElggUser which will return the GUID on ->guid reads
-	function getMockElggUser($guid) {
+	public function getMockElggUser($guid) {
 		$user = $this->getMockBuilder('ElggUser')
 			->disableOriginalConstructor()
 			->getMock();
@@ -286,22 +286,22 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		return $user;
 	}
 
-	function mock_get_user($guid) {
+	public function mock_get_user($guid) {
 		if ((int)$guid === 123) {
 			return $this->user123;
 		}
 		return null;
 	}
 
-	function mock_elgg_set_cookie(ElggCookie $cookie) {
+	public function mock_elgg_set_cookie(ElggCookie $cookie) {
 		$this->lastCookieSet = $cookie;
 	}
 
-	function mock_sleep($seconds) {
+	public function mock_sleep($seconds) {
 		$this->timeSlept = $seconds;
 	}
 
-	function mock_sanitizeString($string) {
+	public function mock_sanitizeString($string) {
 		// no need for dependence on MySQL here
 		return addslashes($string);
 	}
@@ -332,24 +332,24 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		return $svc;
 	}
 
-	function mock_insertData($sql) {
+	public function mock_insertData($sql) {
 		$this->assertContains("INSERT INTO users_remember_me_cookies", $sql);
 		$this->assertContains("VALUES ('{$this->mockHash}', 123,", $sql);
 	}
 
-	function mock_deleteData($sql) {
+	public function mock_deleteData($sql) {
 		$pattern = "~DELETE FROM users_remember_me_cookies\\s+WHERE code = '{$this->mockHash}'~";
 		$this->assertSame(1, preg_match($pattern, $sql));
 	}
 
-	function mock_getDataRow($sql) {
+	public function mock_getDataRow($sql) {
 		$pattern = "~SELECT guid FROM users_remember_me_cookies\\s+WHERE code = '{$this->mockHash}'~";
 		$this->assertSame(1, preg_match($pattern, $sql));
 
 		return (object)array('guid' => 123);
 	}
 
-	function mock_deleteAll($sql) {
+	public function mock_deleteAll($sql) {
 		$pattern = "~DELETE FROM users_remember_me_cookies\\s+WHERE guid = '123'+~";
 		$this->assertSame(1, preg_match($pattern, $sql));
 	}

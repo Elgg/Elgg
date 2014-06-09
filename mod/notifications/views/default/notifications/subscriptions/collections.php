@@ -9,7 +9,7 @@ $user = $vars['user'];
 //@todo JS 1.8: no ?>
 <script type="text/javascript">
 	
-	function setCollection(members, method, id) {
+	public function setCollection(members, method, id) {
 		for ( var i in members ) {
 			var checked = $('#' + method + 'collections' + id).children("INPUT[type='checkbox']").attr('checked');
 			if ($("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked') != checked) {  

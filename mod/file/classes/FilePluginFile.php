@@ -4,7 +4,7 @@
  * Override the ElggFile
  */
 class FilePluginFile extends ElggFile {
-	protected function  initializeAttributes() {
+	protected function initializeAttributes() {
 		parent::initializeAttributes();
 
 		$this->attributes['subtype'] = "file";

@@ -16,7 +16,7 @@ class ODDEntity extends ODD {
 	 * @param string $class    Class
 	 * @param string $subclass Subclass
 	 */
-	function __construct($uuid, $class, $subclass = "") {
+	public function __construct($uuid, $class, $subclass = "") {
 		parent::__construct();
 
 		$this->setAttribute('uuid', $uuid);

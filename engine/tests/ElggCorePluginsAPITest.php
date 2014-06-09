@@ -7,16 +7,16 @@
  */
 class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 	// 1.8 manifest object
-	var $manifest18;
+	public $manifest18;
 
 	// 1.8 package at test_files/plugin_18/
-	var $package18;
+	public $package18;
 
 	// 1.7 manifest object
-	var $manifest17;
+	public $manifest17;
 
 	// 1.7 package at test_files/plugin_17/
-	var $package17;
+	public $package17;
 	
 	public function __construct() {
 		parent::__construct();

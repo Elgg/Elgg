@@ -48,7 +48,7 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		$this->assertFalse(file_exists($filepath));
 	}
 
-	function testElggFileDelete() {
+	public function testElggFileDelete() {
 		global $CONFIG;
 		
 		$user = $this->createTestUser();

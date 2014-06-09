@@ -99,7 +99,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	}
 
 	// #3722 Check canEdit() works for contains regardless of groups
-	function test_can_write_to_container() {
+	public function test_can_write_to_container() {
 		$user = new ElggUser();
 		$user->username = 'test_user_' . rand();
 		$user->name = 'test_user_name_' . rand();
@@ -379,7 +379,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	 *
 	 * https://github.com/Elgg/Elgg/issues/6379
 	 */
-	function test_admin_sort_page_menu() {
+	public function test_admin_sort_page_menu() {
 
 		elgg_push_context('admin');
 

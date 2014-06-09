@@ -35,7 +35,7 @@ class Elgg_GroupItemVisibility {
 	 *
 	 * @todo Make this faster, considering it must run for every river item.
 	 */
-	static public function factory($container_guid, $use_cache = true) {
+	public static function factory($container_guid, $use_cache = true) {
 		// cache because this may be called repeatedly during river display, and
 		// due to need to check group visibility, cache will be disabled for some
 		// get_entity() calls

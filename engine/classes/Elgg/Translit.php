@@ -36,7 +36,7 @@ class Elgg_Translit {
 	 * @param string $separator The character to separate words with
 	 * @return string
 	 */
-	static public function urlize($string, $separator = '-') {
+	public static function urlize($string, $separator = '-') {
 		// Iñtërnâtiônàlizætiøn, AND 日本語!
 
 		// try to force combined chars because the translit map and others expect it
@@ -105,7 +105,7 @@ class Elgg_Translit {
 	 * @param string $utf8 a UTF-8 string
 	 * @return string
 	 */
-	static public function transliterateAscii($utf8) {
+	public static function transliterateAscii($utf8) {
 		static $map = null;
 		if (!preg_match('/[\x80-\xff]/', $utf8)) {
 			return $utf8;
@@ -121,7 +121,7 @@ class Elgg_Translit {
 	 *
 	 * @return array
 	 */
-	static public function getAsciiTranslitMap() {
+	public static function getAsciiTranslitMap() {
 		return array(
 			// Decompositions for Latin-1 Supplement
 			"\xC2\xAA" /* ª */ => 'a', "\xC2\xBA" /* º */ => 'o', "\xC3\x80" /* À */ => 'A',
@@ -254,7 +254,7 @@ class Elgg_Translit {
 	 *
 	 * @return bool
 	 */
-	static public function hasNormalizerSupport() {
+	public static function hasNormalizerSupport() {
 		static $ret = null;
 		if (null === $ret) {
 			$form_c = "\xC3\x85"; // 'LATIN CAPITAL LETTER A WITH RING ABOVE' (U+00C5)
