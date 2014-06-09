@@ -209,6 +209,9 @@ html {
 	.custom-index-col2 > .elgg-inner {
 		padding: 0;
 	}
+	#dashboard-info {
+		margin: 0 0 15px;
+	}
 }
 @media (min-width: 767px) {
 	.elgg-nav-collapse {
