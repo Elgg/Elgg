@@ -29,9 +29,7 @@ file_put_contents($composerPath, json_encode($composerJson, JSON_PRETTY_PRINT | 
 $branch = "release-$version";
 $commands = array(
 	"cd $elggPath",
-	// must be separate from git checkout in case branch already exists
-	"git branch $branch",
-	"git checkout $branch",
+	"git checkout -B $branch",
 	"npm install && npm update",
 	"node .scripts/write-changelog.js",
 	"tx pull -a --minimum-perc=100",
@@ -44,7 +42,7 @@ foreach ($commands as $command) {
 	echo "$command\n";
 	passthru($command, $returnVal);
 	if ($returnVal !== 0) {
-		echo "Error ececuting command! Interrupting!";
+		echo "Error executing command! Interrupting!";
 		exit(2);
 	}
 }
