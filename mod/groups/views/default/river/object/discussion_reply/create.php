@@ -23,10 +23,17 @@ $target_link = elgg_view('output/url', array(
 	'is_trusted' => true,
 ));
 
+$reply_link = elgg_view('output/url', array(
+	'href' => $target->getURL().'#elgg-object-'.$reply->getGUID(),
+	'text' => elgg_echo('river:reply:view'),
+	'class' => 'elgg-river-target',
+	'is_trusted' => true,
+));
+
 $summary = elgg_echo('river:reply:object:groupforumtopic', array($subject_link, $target_link));
 
 echo elgg_view('river/elements/layout', array(
 	'item' => $vars['item'],
-	'message' => elgg_get_excerpt($reply->description),
+	'message' => elgg_get_excerpt($reply->description). ' ' .$reply_link,
 	'summary' => $summary,
 ));
