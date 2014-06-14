@@ -13,7 +13,7 @@ elgg.provide('elgg.ajax');
  * You would most likely use elgg.get or elgg.post, rather than this function
  *
  * @param {string} url Optionally specify the url as the first argument
- * @param {Object} options Optional. {@see jQuery#ajax}
+ * @param {Object} options Optional. {@link jQuery#ajax}
  * @return {XmlHttpRequest}
  */
 elgg.ajax = function(url, options) {
@@ -90,7 +90,7 @@ elgg.ajax.handleOptions = function(url, options) {
  * Wrapper function for elgg.ajax which forces the request type to 'get.'
  *
  * @param {string} url Optionally specify the url as the first argument
- * @param {Object} options {@see jQuery#ajax}
+ * @param {Object} options {@link jQuery#ajax}
  * @return {XmlHttpRequest}
  */
 elgg.get = function(url, options) {
@@ -104,7 +104,7 @@ elgg.get = function(url, options) {
  * Wrapper function for elgg.get which forces the dataType to 'json.'
  *
  * @param {string} url Optionally specify the url as the first argument
- * @param {Object} options {@see jQuery#ajax}
+ * @param {Object} options {@link jQuery#ajax}
  * @return {XmlHttpRequest}
  */
 elgg.getJSON = function(url, options) {
@@ -118,7 +118,7 @@ elgg.getJSON = function(url, options) {
  * Wrapper function for elgg.ajax which forces the request type to 'post.'
  *
  * @param {string} url Optionally specify the url as the first argument
- * @param {Object} options {@see jQuery#ajax}
+ * @param {Object} options {@link jQuery#ajax}
  * @return {XmlHttpRequest}
  */
 elgg.post = function(url, options) {
@@ -221,7 +221,7 @@ elgg.action = function(action, options) {
  * </pre>
  *
  * @param {String} method The API method to be called
- * @param {Object} options {@see jQuery#ajax}
+ * @param {Object} options {@link jQuery#ajax}
  * @return {XmlHttpRequest}
  */
 elgg.api = function (method, options) {
