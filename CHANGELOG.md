@@ -268,7 +268,6 @@
 * Lots of spit and polish
 * New responsive theme - aalborg_theme
 * Drops support for IE6
-* Adds image uploading from editor
 * Replaces fancybox lightbox with colorbox
 * Replaces Tinymce editor with CKEditor
 * Liking and friending use ajax
@@ -347,7 +346,6 @@
 * Adds elgg_format_element() for creating HTML elements
 * ElggFile::getSize() replaces ElggFile::size()
 * Defaults to full_view = false in elgg_list_entities* functions
-* Allows passing $params to event handlers
 * Allows views to be accessed via URL and cacheable
 * Columns added to entity query functions are available in returned entities
 * Separates some events into :before/:after
