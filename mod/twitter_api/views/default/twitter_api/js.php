@@ -1,4 +1,5 @@
 <?php if (0): ?><script><?php endif; ?>
+elgg.deprecated_notice('Use of elgg.twitter_api is deprecated in favor of the elgg/twitter_api AMD module', '1.9');
 
 // add ?persistent to login link
 elgg.register_hook_handler('init', 'system', function() {

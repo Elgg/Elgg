@@ -1,3 +1,4 @@
+elgg.deprecated_notice('Use of elgg.profile is deprecated in favor of the elgg/profile AMD module', '1.9');
 
 // force the first column to at least be as large as the profile box in cols 2 and 3
 // we also want to run before the widget init happens so priority is < 500

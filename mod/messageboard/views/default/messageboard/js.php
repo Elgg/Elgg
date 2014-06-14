@@ -1,6 +1,6 @@
 //<script>
 elgg.provide('elgg.messageboard');
-
+elgg.deprecated_notice('Use of elgg.messageboard is deprecated in favor of the elgg/messageboard AMD module', '1.9');
 elgg.messageboard.init = function() {
 	var form = $('form[name=elgg-messageboard]');
 	form.find('input[type=submit]').live('click', elgg.messageboard.submit);

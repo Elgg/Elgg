@@ -1,6 +1,7 @@
 
 //<script>
 elgg.provide('elgg.dashboard');
+elgg.deprecated_notice('Use of elgg.dashboard is deprecated in favor of the elgg/dashboard AMD module', '1.9');
 
 elgg.dashboard.init = function() {
 	// for group activity widget, set the widget title to the group name
