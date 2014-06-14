@@ -149,17 +149,25 @@ h3 {
 	margin: 15px 0 5px;
 }
 
-form > div {
-	margin-bottom: 15px;
+.elgg-form-field {
+	display: block;
 }
-label {
-	font-weight: bold;
+
+* + .elgg-form-field {
+	margin-top: 15px;
+}
+
+.elgg-form-field-label {
 	color: #333333;
+	display: block;
 	font-size: 140%;
+	font-weight: bold;
 }
-.elgg-combo-label {
-	font-size: 120%;
+
+.elgg-form-field-help {
+	display: block;
 }
+
 input[type="text"],
 input[type="password"]  {
 	font: 120% Arial, Helvetica, sans-serif;

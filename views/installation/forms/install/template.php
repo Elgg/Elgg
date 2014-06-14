@@ -9,22 +9,26 @@
 $variables = $vars['variables'];
 $type = $vars['type'];
 
-$form_body = '';
-foreach ($variables as $field => $params) {
-	$label = elgg_echo("install:$type:label:$field");
-	$help = elgg_echo("install:$type:help:$field");
-	$params['name'] = $field;
+foreach ($variables as $name => $params) {
+	$label = elgg_echo("install:$type:label:$name");
+	$help = elgg_echo("install:$type:help:$name");
+	$params['name'] = $name;
+	
+	$input = elgg_view("input/{$params['type']}", $params);
 
-	$form_body .= '<div>';
-	$form_body .= "<label>$label</label>";
-	$form_body .= elgg_view("input/{$params['type']}", $params);
-	$form_body .= "<span class=\"install-help\">$help</span>";
-	$form_body .= '</div>';
+	$field = <<<FIELD
+<label class="elgg-form-field">
+	<span class="elgg-form-field-label">$label</span>
+	<span class="elgg-form-field-help">$help</span>
+	$input
+</label>
+FIELD;
+
+	$form_body .= $field;
 }
 
-$submit_params = array(
+$form_body .= elgg_view('input/submit', array(
 	'value' => elgg_echo('install:next'),
-);
-$form_body .= elgg_view('input/submit', $submit_params);
+));
 
 echo $form_body;
