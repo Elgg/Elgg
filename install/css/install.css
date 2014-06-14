@@ -169,7 +169,9 @@ h3 {
 }
 
 input[type="text"],
-input[type="password"]  {
+input[type="password"],
+input[type="email"],
+input[type="url"] {
 	font: 120% Arial, Helvetica, sans-serif;
 	padding: 5px;
 	border: 1px solid #cccccc;
