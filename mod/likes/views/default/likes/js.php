@@ -3,7 +3,7 @@
  * Likes JavaScript extension for elgg.js
  */
 ?>
-
+elgg.deprecated_notice('Use of elgg.likes is deprecated in favor of the elgg/likes AMD module', '1.9');
 /**
  * Repositions the likes popup
  *

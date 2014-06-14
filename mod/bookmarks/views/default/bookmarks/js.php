@@ -1,6 +1,5 @@
-
 elgg.provide('elgg.bookmarks');
-
+elgg.deprecated_notice('Use of elgg.bookmarks is deprecated in favor of the elgg/bookmarks AMD module', '1.9');
 elgg.bookmarks.init = function() {
 	// append the title to the url
 	var title = document.title;
