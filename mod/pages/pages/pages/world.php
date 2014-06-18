@@ -17,6 +17,7 @@ $content = elgg_list_entities(array(
 	'subtype' => 'page_top',
 	'full_view' => false,
 	'no_results' => elgg_echo('pages:none'),
+	'preload_owners' => true,
 ));
 
 $body = elgg_view_layout('content', array(
