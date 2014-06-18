@@ -18,9 +18,9 @@ if (!$period) {
 		echo elgg_view('input/select', array(
 			'name' => 'params[period]',
 			'options_values' => array(
-				'weekly' => elgg_echo('garbagecollector:weekly'),
-				'monthly' => elgg_echo('garbagecollector:monthly'),
-				'yearly' => elgg_echo('garbagecollector:yearly'),
+				'weekly' => elgg_echo('interval:weekly'),
+				'monthly' => elgg_echo('interval:monthly'),
+				'yearly' => elgg_echo('interval:yearly'),
 			),
 			'value' => $period
 		));
