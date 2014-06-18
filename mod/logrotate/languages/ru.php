@@ -7,7 +7,7 @@ return array(
 	
 	'logrotate:delete' => 'Удалять архив логов старше чем',
 
-	'logrotate:week' => 'неделю',
+	'logrotate:week' => 'неделя',
 	'logrotate:month' => 'месяц',
 	'logrotate:year' => 'год',
 	'logrotate:never' => 'никогда',
