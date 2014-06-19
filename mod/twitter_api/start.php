@@ -20,7 +20,8 @@ function twitter_api_init() {
 	//elgg_extend_view('metatags', 'twitter_api/metatags');
 	elgg_extend_view('css/elgg', 'twitter_api/css');
 	elgg_extend_view('css/admin', 'twitter_api/css');
-	elgg_extend_view('js/elgg', 'twitter_api/js');
+
+	elgg_require_js('elgg/twitter_api');
 
 	// sign on with twitter
 	if (twitter_api_allow_sign_on_with_twitter()) {
@@ -57,7 +58,6 @@ function twitter_api_pagehandler_deprecated($page) {
 
 	return twitter_api_pagehandler($page);
 }
-
 
 /**
  * Serves pages for twitter.

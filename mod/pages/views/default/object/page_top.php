@@ -9,7 +9,6 @@
  * @uses $vars['revision']  This parameter not supported by elgg_view_entity()
  */
 
-
 $full = elgg_extract('full_view', $vars, FALSE);
 $page = elgg_extract('entity', $vars, FALSE);
 $revision = elgg_extract('revision', $vars, FALSE);
@@ -23,7 +22,6 @@ if ($page->write_access_id == ACCESS_PUBLIC) {
 	// this works because this metadata is public
 	$page->write_access_id = ACCESS_LOGGED_IN;
 }
-
 
 if ($revision) {
 	$annotation = $revision;

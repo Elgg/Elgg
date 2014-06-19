@@ -206,7 +206,7 @@ function discussion_handle_view_page($guid) {
 		forward();
 	}
 
-	elgg_load_js('elgg.discussion');
+	elgg_require_js('elgg/discussion');
 
 	elgg_set_page_owner_guid($group->getGUID());
 

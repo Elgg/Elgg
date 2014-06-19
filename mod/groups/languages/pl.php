@@ -263,7 +263,6 @@ lub kliknij poniżej aby potwierdzić prośbę:
 
 	'groups:nowidgets' => 'Żaden gadżet nie został zdefiniowany dla tej grupy.',
 
-
 	'groups:widgets:members:title' => 'Użytkownicy grupy',
 	'groups:widgets:members:description' => 'Lista użytkowników grupy.',
 	'groups:widgets:members:label:displaynum' => 'Lista użytkowników grupy.',

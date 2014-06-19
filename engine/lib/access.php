@@ -374,7 +374,7 @@ function _elgg_get_access_where_sql(array $options = array()) {
 
 	if ($options['ignore_access']) {
 		$clauses['ors'][] = '1 = 1';
-	} else if ($options['user_guid']) {
+	} elseif ($options['user_guid']) {
 		// include content of user's friends
 		$clauses['ors'][] = "$table_alias{$options['access_column']} = " . ACCESS_FRIENDS . "
 			AND $table_alias{$options['owner_guid_column']} IN (

@@ -8,7 +8,6 @@
  * @uses $vars['class']
  */
 
-
 if (isset($vars['class'])) {
 	$id = "class=\"{$vars['class']}\"";
 } else {

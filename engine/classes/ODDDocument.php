@@ -153,7 +153,7 @@ class ODDDocument implements Iterator {
 	 *
 	 * @return void
 	 */
-	function rewind() {
+	public function rewind() {
 		$this->valid = (false !== reset($this->elements));
 	}
 
@@ -164,7 +164,7 @@ class ODDDocument implements Iterator {
 	 *
 	 * @return void
 	 */
-	function current() {
+	public function current() {
 		return current($this->elements);
 	}
 
@@ -175,7 +175,7 @@ class ODDDocument implements Iterator {
 	 *
 	 * @return void
 	 */
-	function key() {
+	public function key() {
 		return key($this->elements);
 	}
 
@@ -186,7 +186,7 @@ class ODDDocument implements Iterator {
 	 *
 	 * @return void
 	 */
-	function next() {
+	public function next() {
 		$this->valid = (false !== next($this->elements));
 	}
 
@@ -197,7 +197,7 @@ class ODDDocument implements Iterator {
 	 *
 	 * @return void
 	 */
-	function valid() {
+	public function valid() {
 		return $this->valid;
 	}
 }

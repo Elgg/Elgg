@@ -55,7 +55,7 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
 	if ($by_user_orig !== "" && $by_user_orig !== false && $by_user_orig !== null) {
 		if (is_int($by_user)) {
 			$where[] = "performed_by_guid=$by_user";
-		} else if (is_array($by_user)) {
+		} elseif (is_array($by_user)) {
 			$where [] = "performed_by_guid in (" . implode(",", $by_user) . ")";
 		}
 	}

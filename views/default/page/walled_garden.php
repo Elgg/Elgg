@@ -11,16 +11,9 @@
 
 $is_sticky_register = elgg_is_sticky_form('register');
 $wg_body_class = 'elgg-body-walledgarden';
-$inline_js = '';
 if ($is_sticky_register) {
+	elgg_require_js('elgg/walled_garden');
 	$wg_body_class .= ' hidden';
-	$inline_js = <<<__JS
-<script type="text/javascript">
-elgg.register_hook_handler('init', 'system', function() {
-	$('.registration_link').trigger('click');
-});
-</script>
-__JS;
 }
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
@@ -39,8 +32,6 @@ $body = <<<__BODY
 __BODY;
 
 $body .= elgg_view('page/elements/foot');
-
-$body .= $inline_js;
 
 $head = elgg_view('page/elements/head', $vars['head']);
 

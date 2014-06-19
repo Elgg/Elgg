@@ -264,7 +264,6 @@ or click below to view the group's join requests:
 
 	'groups:nowidgets' => 'No widgets have been defined for this group.',
 
-
 	'groups:widgets:members:title' => 'Group members',
 	'groups:widgets:members:description' => 'List the members of a group.',
 	'groups:widgets:members:label:displaynum' => 'List the members of a group.',

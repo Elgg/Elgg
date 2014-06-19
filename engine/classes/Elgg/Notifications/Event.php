@@ -22,7 +22,6 @@ class Elgg_Notifications_Event {
 	/* @var int The GUID of the user who triggered the event */
 	protected $actor_guid;
 
-
 	/**
 	 * Create a notification event
 	 *

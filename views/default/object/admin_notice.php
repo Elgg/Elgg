@@ -17,4 +17,3 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'], 'object', 'admin_
 
 	echo "<p>$delete$message</p>";
 }
-

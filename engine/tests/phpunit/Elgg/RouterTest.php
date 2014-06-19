@@ -7,19 +7,19 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 	 */
 	protected $router;
 
-	function setUp() {
+	public function setUp() {
 		$this->hooks = new Elgg_PluginHooksService();
 		$this->router = new Elgg_Router($this->hooks);
 		$this->pages = dirname(dirname(__FILE__)) . '/test_files/pages';
 	}
 
-	function hello_page_handler($segments, $identifier) {
+	public function hello_page_handler($segments, $identifier) {
 		include "{$this->pages}/hello.php";
 		
 		return true;
 	}
 
-	function testCanRegisterFunctionsAsPageHandlers() {
+	public function testCanRegisterFunctionsAsPageHandlers() {
 		$registered = $this->router->registerPageHandler('hello', array($this, 'hello_page_handler'));
 		
 		$this->assertTrue($registered);
@@ -36,7 +36,7 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($path, $output);
 	}
 	
-	function testCanUnregisterPageHandlers() {
+	public function testCanUnregisterPageHandlers() {
 		$this->router->registerPageHandler('hello', array($this, 'hello_page_handler'));
 		$this->router->unregisterPageHandler('hello');
 		

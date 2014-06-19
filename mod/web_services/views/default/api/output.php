@@ -30,7 +30,6 @@ $export = $result->export();
 		<tr><td width="100" valign="top"><b>Result:</b></td> <td><pre><?php print_r($export->result); ?></pre></td></tr>
 		<?php } ?>
 
-
 		<?php if ($export->pam) { ?>
 		<tr><td width="100" valign="top"><b>PAM:</b></td> <td><pre><?php print_r($export->pam); ?></pre></td></tr>
 		<?php } ?>

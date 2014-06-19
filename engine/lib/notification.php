@@ -217,7 +217,7 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 	// If there's an email address, use it - but only if it's not from a user.
 	if (!($sender instanceof ElggUser) && $sender->email) {
 		$from = $sender->email;
-	} else if ($site->email) {
+	} elseif ($site->email) {
 		$from = $site->email;
 	} else {
 		// If all else fails, use the domain of the site.
@@ -244,8 +244,6 @@ function _elgg_notifications_init() {
 }
 
 elgg_register_event_handler('init', 'system', '_elgg_notifications_init');
-
-
 
 /**
  * Notify a user via their preferences.
@@ -334,7 +332,6 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 	return $result;
 }
 
-
 /**
  * Notifications
  * This file contains classes and functions which allow plugins to register and send notifications.
@@ -353,7 +350,6 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
  * @package Elgg.Core
  * @subpackage Notifications
  */
-
 
 /**
  * Notify a user via their preferences.

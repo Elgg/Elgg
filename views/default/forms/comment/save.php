@@ -54,7 +54,6 @@ if ($comment) {
 	), elgg_echo('cancel'));
 }
 
-
 if ($inline) {
 	$comment_input = elgg_view('input/text', array(
 		'name' => 'generic_comment',

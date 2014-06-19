@@ -238,7 +238,6 @@
 	margin: 0 0 0 10px;
 }
 
-
 /* **************************************
 	Comments (from elgg_view_comments)
 ************************************** */
@@ -285,4 +284,3 @@
 	text-align: justify;
 	margin-bottom: 5px;
 }
-

@@ -3,7 +3,6 @@
  * Banned users widget edit view
  */
 
-
 // set default value
 if (!isset($vars['entity']->num_display)) {
 	$vars['entity']->num_display = 5;

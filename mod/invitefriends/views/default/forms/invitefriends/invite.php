@@ -45,4 +45,3 @@ echo <<< HTML
 	$action_button
 </div>
 HTML;
-

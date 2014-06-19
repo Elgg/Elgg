@@ -27,7 +27,6 @@ return array(
 	'membershiprequired' => "Du mußt Mitglied dieser Gruppe sein, um diese Seite aufrufen zu können.",
 	'limited_access' => "Du hast nicht die erforderliche Berechtigung, um auf die angeforderte Seite zuzugreifen.",
 
-
 /**
  * Errors
  */
@@ -84,7 +83,6 @@ return array(
 	
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Es sind aktive Plugins vorhanden, die die Verfügbarkeit von %s voraussetzen. Bevor Du es deaktivieren kannst, mußt Du erst folgende Plugins deaktivieren: %s',
 
-
 	'RegistrationException:EmptyPassword' => 'Die Passwort-Felder dürfen nicht leer sein',
 	'RegistrationException:PasswordMismatch' => 'Die Passwörter müssen übereinstimmen',
 	'LoginException:BannedUser' => 'Dein Benutzeraccount auf dieser Seite wurde gesperrt. Du kannst Dich daher nicht anmelden.',
@@ -118,7 +116,6 @@ return array(
 	'upload:error:cant_write' => 'Das Speichern der hochgeladenen Datei ist fehlgeschlagen.',
 	'upload:error:extension' => 'Das Speichern der hochgeladenen Datei ist fehlgeschlagen.',
 	'upload:error:unknown' => 'Das Hochladen der Datei ist fehlgeschlagen.',
-
 
 /**
  * User details
@@ -292,7 +289,6 @@ return array(
 	'profile:noaccess' => "Du hast keine ausreichende Berechtigung, um dieses Profil zu editieren.",
 	'profile:invalid_email' => '%s muss eine gültige Email-Adresse sein.',
 
-
 /**
  * Feeds
  */
@@ -302,7 +298,6 @@ return array(
  */
 	'link:view' => 'Link aufrufen',
 	'link:view:all' => 'Alle ansehen',
-
 
 /**
  * River
@@ -962,7 +957,6 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
  */
 
 	'systemmessages:dismiss' => "Hier klicken, um die Statusmeldung auszublenden.",
-
 
 /**
  * Import / export

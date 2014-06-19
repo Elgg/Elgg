@@ -333,7 +333,6 @@
 	background-position: 0 -1512px;
 }
 
-
 .elgg-avatar > .elgg-icon-hover-menu {
 	display: none;
 	position: absolute;

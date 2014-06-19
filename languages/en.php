@@ -27,7 +27,6 @@ return array(
 	'membershiprequired' => "You must be a member of this group to view the requested page.",
 	'limited_access' => "You do not have permission to view the requested page.",
 
-
 /**
  * Errors
  */
@@ -84,7 +83,6 @@ return array(
 	
 	'ElggPlugin:Dependencies:ActiveDependent' => 'There are other plugins that list %s as a dependency.  You must disable the following plugins before disabling this one: %s',
 
-
 	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
 	'RegistrationException:PasswordMismatch' => 'Passwords must match',
 	'LoginException:BannedUser' => 'You have been banned from this site and cannot log in',
@@ -118,7 +116,6 @@ return array(
 	'upload:error:cant_write' => 'Cannot save the uploaded file.',
 	'upload:error:extension' => 'Cannot save the uploaded file.',
 	'upload:error:unknown' => 'The file upload failed.',
-
 
 /**
  * User details
@@ -292,7 +289,6 @@ return array(
 	'profile:noaccess' => "You do not have permission to edit this profile.",
 	'profile:invalid_email' => '%s must be a valid email address.',
 
-
 /**
  * Feeds
  */
@@ -302,7 +298,6 @@ return array(
  */
 	'link:view' => 'view link',
 	'link:view:all' => 'View all',
-
 
 /**
  * River
@@ -962,7 +957,6 @@ Once you have logged in, we highly recommend that you change your password.
  */
 
 	'systemmessages:dismiss' => "click to dismiss",
-
 
 /**
  * Import / export

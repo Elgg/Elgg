@@ -8,7 +8,6 @@
  * @uses $vars['advance'] should the next button be active?
  */
 
-
 // has a refresh button been requested
 $refresh = '';
 if (isset($vars['refresh']) && $vars['refresh']) {
@@ -24,7 +23,6 @@ if (isset($vars['advance']) && !$vars['advance']) {
 	// disable the next button
 	$next = "<a class=\"elgg-state-disabled\">$next_text</a>";
 }
-
 
 echo <<<___END
 <div class="elgg-install-nav">

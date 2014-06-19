@@ -13,4 +13,3 @@ $users = elgg_get_entities(array(
 if (is_array($users) && count($users) > 0) {
 	echo elgg_view_entity_icon($users[0]);
 }
-

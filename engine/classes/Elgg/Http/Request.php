@@ -279,7 +279,7 @@ class Elgg_Http_Request {
 	public function get($key, $default = null) {
 		if ($this->query->has($key)) {
 			return $this->query->get($key);
-		} else if ($this->request->has($key)) {
+		} elseif ($this->request->has($key)) {
 			return $this->request->get($key);
 		} else {
 			return $default;

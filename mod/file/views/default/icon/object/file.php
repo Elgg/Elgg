@@ -31,7 +31,7 @@ if (isset($vars['img_class'])) {
 }
 if ($entity->thumbnail) {
 	$class = "class=\"elgg-photo $class\"";
-} else if ($class) {
+} elseif ($class) {
 	$class = "class=\"$class\"";
 }
 

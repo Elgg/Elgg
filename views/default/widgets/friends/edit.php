@@ -16,7 +16,6 @@ $params = array(
 );
 $display_dropdown = elgg_view('input/select', $params);
 
-
 // handle upgrade to 1.7.2 from previous versions
 if ($vars['entity']->icon_size == 1) {
 	$vars['entity']->icon_size = 'small';
@@ -38,7 +37,6 @@ $params = array(
 	),
 );
 $size_dropdown = elgg_view('input/select', $params);
-
 
 ?>
 <p>

@@ -7,16 +7,16 @@
  */
 class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 	// 1.8 manifest object
-	var $manifest18;
+	public $manifest18;
 
 	// 1.8 package at test_files/plugin_18/
-	var $package18;
+	public $package18;
 
 	// 1.7 manifest object
-	var $manifest17;
+	public $manifest17;
 
 	// 1.7 package at test_files/plugin_17/
-	var $package17;
+	public $package17;
 	
 	public function __construct() {
 		parent::__construct();
@@ -129,7 +129,6 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		$this->assertIdentical($this->manifest17->getManifest(), $manifest_array);
 	}
 
-
 	public function testElggPluginManifestGetApiVersion() {
 		$this->assertEqual($this->manifest18->getApiVersion(), 1.8);
 		$this->assertEqual($this->manifest17->getApiVersion(), 1.7);
@@ -139,7 +138,6 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		$this->assertEqual($this->manifest18->getPluginID(), 'plugin_test_18');
 		$this->assertEqual($this->manifest17->getPluginID(), 'plugin_test_17');
 	}
-
 
 	// normalized attributes
 	public function testElggPluginManifestGetName() {
@@ -191,7 +189,6 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		$this->assertEqual($this->manifest18->getLicense(), 'GNU General Public License version 2');
 		$this->assertEqual($this->manifest17->getLicense(), 'GNU General Public License version 2');
 	}
-
 
 	public function testElggPluginManifestGetRequires() {
 		$requires = array(
@@ -270,7 +267,6 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		);
 
 		$this->assertIdentical($this->package18->getManifest()->getProvides(), $provides);
-
 
 		$provides = array(
 			array('type' => 'plugin', 'name' => 'plugin_17', 'version' => '1.0')

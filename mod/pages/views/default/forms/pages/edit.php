@@ -53,7 +53,6 @@ if (!empty($cats)) {
 	echo $cats;
 }
 
-
 echo '<div class="elgg-foot">';
 if ($vars['guid']) {
 	echo elgg_view('input/hidden', array(

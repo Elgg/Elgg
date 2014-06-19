@@ -323,7 +323,6 @@ class ElggDiskFilestore extends ElggFilestore {
 		return false;
 	}
 
-
 	
 	/**
 	 * Deprecated methods

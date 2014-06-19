@@ -39,7 +39,6 @@ p:last-child {
 	margin-bottom: 0;
 }
 
-
 /* ***************************************
 	LAYOUT
 *************************************** */
@@ -233,4 +232,3 @@ input[type="radio"] {
 .ie7 input[type=password] {
 	width: 94%;
 }
-

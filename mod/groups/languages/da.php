@@ -264,7 +264,6 @@ eller klik nedenfor for at se gruppens anmodningsliste:
 
 	'groups:nowidgets' => 'Ingen widgets defineret for denne gruppe.',
 
-
 	'groups:widgets:members:title' => 'Gruppens medlemmer',
 	'groups:widgets:members:description' => 'Vis en gruppes medlemmer.',
 	'groups:widgets:members:label:displaynum' => 'Vis en gruppes medlemmer.',

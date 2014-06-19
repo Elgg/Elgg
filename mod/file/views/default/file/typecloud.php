@@ -25,7 +25,6 @@ function file_type_cloud_get_url($type, $friends) {
 	return $url;
 }
 
-
 $types = elgg_extract('types', $vars, array());
 if (!$types) {
 	return true;

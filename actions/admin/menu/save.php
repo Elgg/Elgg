@@ -28,7 +28,6 @@ for ($i = 0; $i < $num_menu_items; $i++) {
 }
 elgg_save_config('site_custom_menu_items', $custom_menu_items);
 
-
 system_message(elgg_echo('admin:menu_items:saved'));
 
 forward(REFERER);

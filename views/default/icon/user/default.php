@@ -55,7 +55,6 @@ if (isset($vars['img_class'])) {
 	$img_class = $vars['img_class'];
 }
 
-
 $use_hover = elgg_extract('use_hover', $vars, true);
 if (isset($vars['override'])) {
 	elgg_deprecated_notice("Use 'use_hover' rather than 'override' with user avatars", 1.8, 5);

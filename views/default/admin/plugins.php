@@ -103,8 +103,6 @@ switch ($sort) {
 		break;
 }
 
-
-
 asort($categories);
 
 // we want bundled/nonbundled pulled to be at the top of the list
@@ -134,7 +132,6 @@ $category_form = elgg_view_form('admin/plugins/filter', array(
 	'category_options' => $categories,
 	'sort' => $sort,
 ));
-
 
 $sort_options = array(
 	'priority' => elgg_echo('sort:priority'),

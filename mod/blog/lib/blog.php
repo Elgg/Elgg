@@ -5,7 +5,6 @@
  * @package Blog
  */
 
-
 /**
  * Get page components to view a blog post.
  *
@@ -84,7 +83,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 
 		if ($current_user && ($container_guid == $current_user->guid)) {
 			$return['filter_context'] = 'mine';
-		} else if (elgg_instanceof($container, 'group')) {
+		} elseif (elgg_instanceof($container, 'group')) {
 			$return['filter'] = false;
 		} else {
 			// do not show button or select a tab when viewing someone else's posts

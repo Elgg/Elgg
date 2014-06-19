@@ -452,7 +452,6 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 	return $where;
 }
 
-
 /**
  * Returns ORDER BY sql for insertion into elgg_get_entities().
  *

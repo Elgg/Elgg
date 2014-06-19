@@ -24,7 +24,6 @@ foreach ($topics as $topic) {
 	}
 }
 
-
 /**
  * Condense first annotation into object
  *

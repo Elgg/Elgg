@@ -50,7 +50,7 @@ class ElggPlugin extends ElggObject {
 			// database object
 			parent::__construct($path);
 			$this->path = elgg_get_plugins_path() . $this->getID();
-		} else if (is_numeric($path)) {
+		} elseif (is_numeric($path)) {
 			// guid
 			// @todo plugins with directory names of '12345'
 			elgg_deprecated_notice("Use elgg_get_plugin_from_id() to load a plugin.", 1.9);
@@ -108,7 +108,6 @@ class ElggPlugin extends ElggObject {
 			return false;
 		}
 	}
-
 
 	// Plugin ID and path
 
@@ -263,7 +262,6 @@ class ElggPlugin extends ElggObject {
 
 		return false;
 	}
-
 
 	// Plugin settings
 
@@ -545,7 +543,6 @@ class ElggPlugin extends ElggObject {
 		return $this->getDatabase()->deleteData($q);
 	}
 
-
 	// validation
 
 	/**
@@ -620,7 +617,6 @@ class ElggPlugin extends ElggObject {
 
 		return false;
 	}
-
 
 	// activating and deactivating
 

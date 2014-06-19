@@ -17,7 +17,7 @@ class ElggCryptoTest extends PHPUnit_Framework_TestCase {
 			->will($this->returnCallback(array($this, 'mock_getRandomBytes')));
 	}
 
-	function mock_getRandomBytes($length) {
+	public function mock_getRandomBytes($length) {
 		mt_srand(1);
 		$bytes = '';
 		for ($i = 0; $i < $length; $i++) {
@@ -26,7 +26,7 @@ class ElggCryptoTest extends PHPUnit_Framework_TestCase {
 		return $bytes;
 	}
 
-	function provider() {
+	public function provider() {
 		return array(
 			array(32, null, 'kwG37f3ds_7awuiaL52mVWXud9dqT1GF'),
 			array(32, ElggCrypto::CHARS_HEX, '9301b7edfdddb3fedac2e89a2f9da655'),
@@ -38,7 +38,7 @@ class ElggCryptoTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @dataProvider provider
 	 */
-	function testGetRandomString($length, $chars, $expected) {
+	public function testGetRandomString($length, $chars, $expected) {
 		$this->assertSame($expected, $this->stub->getRandomString($length, $chars));
 	}
 }

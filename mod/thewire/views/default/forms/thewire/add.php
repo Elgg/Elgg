@@ -29,7 +29,7 @@ $num_lines = 2;
 if ($char_limit == 0) {
 	$num_lines = 3;
 	$count_down = '';
-} else if ($char_limit > 140) {
+} elseif ($char_limit > 140) {
 	$num_lines = 3;
 }
 

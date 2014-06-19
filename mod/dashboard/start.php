@@ -9,7 +9,7 @@ function dashboard_init() {
 	elgg_register_page_handler('dashboard', 'dashboard_page_handler');
 
 	elgg_extend_view('css/elgg', 'dashboard/css');
-	elgg_extend_view('js/elgg', 'dashboard/js');
+	elgg_require_js('elgg/dashboard');
 
 	elgg_register_menu_item('topbar', array(
 		'name' => 'dashboard',
@@ -53,7 +53,6 @@ function dashboard_page_handler() {
 	echo elgg_view_page($title, $body);
 	return true;
 }
-
 
 /**
  * Register user dashboard with default widgets

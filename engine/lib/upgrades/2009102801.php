@@ -123,7 +123,6 @@ function file_matrix_1_6($filename) {
 	return $matrix . $name . "/";
 }
 
-
 /**
  * Scans a directory and moves any files from $from to $to
  * preserving structure and handling existing paths.

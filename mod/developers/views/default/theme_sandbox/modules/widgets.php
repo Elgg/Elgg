@@ -17,7 +17,6 @@ function css_permissions_override() {
 	return true;
 }
 
-
 ?>
 <div class="elgg-body mal">
 	<?php echo elgg_view('theme_sandbox/header', $vars); ?>
@@ -52,17 +51,4 @@ echo '</div>';
 
 ?>
 </div>
-<script type="text/javascript">
-	// widgets do not have guids so we override the edit toggle and delete button
-	$(function() {
-		$('.elgg-widget-edit-button').unbind('click');
-		$('.elgg-widget-edit-button').click(function() {
-			$(this).closest('.elgg-module-widget').find('.elgg-widget-edit').slideToggle('medium');
-			return false;
-		});
-		$('.elgg-widget-delete-button').click(function() {
-			$(this).closest('.elgg-module-widget').remove();
-			return false;
-		});
-	});
-</script>
+<script>require(['elgg/theme_sandbox']);</script>

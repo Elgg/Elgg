@@ -63,7 +63,6 @@ class Elgg_Http_MockSessionStorageTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(11, $this->storage->get('legs'));
 	}
 
-
 	protected function setUpAttributes() {
 		$this->data = array(
 			'user' => new stdClass(),

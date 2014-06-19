@@ -62,7 +62,7 @@ function diagnostics_md5_dir($dir) {
 	if (in_array(strrchr(trim($dir, "/"), '.'), $extensions_allowed)) {
 		$dir = rtrim($dir, "/");
 		$buffer .= md5_file($dir). "  " . $dir . "\n";
-	} else if (is_dir($dir)) {
+	} elseif (is_dir($dir)) {
 		$handle = opendir($dir);
 		while ($file = readdir($handle)) {
 			if (($file != '.') && ($file != '..')) {

@@ -88,12 +88,9 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		}
 	}
 
-
-
 	/*
 	 * Test mixed valid and invalid types.
 	 */
-
 
 	public function testElggAPIGettersValidAndInvalidTypes() {
 		//@todo replace this with $this->getRandomMixedTypes().
@@ -145,8 +142,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			$this->assertTrue(in_array($e->getType(), $valid));
 		}
 	}
-
-
 
 	/**************************************
 	 * SUBTYPE TESTS
@@ -235,7 +230,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			$this->assertTrue(in_array($e->getSubtype(), $subtypes));
 		}
 	}
-
 
 	/*
 	Because we're looking for type OR subtype (sorta)
@@ -414,7 +408,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 	 * I'm leaving the above in case anyone is inspired to
 	 * write out the rest of the possible combinations
 	 */
-
 
 	/**
 	 * Test invalid types with singular 'type'.
@@ -935,7 +928,6 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 			$this->assertTrue(in_array($e->guid, $guids));
 		}
 	}
-
 
 	public function testElggGetEntitiesBadWheres() {
 		$options = array(

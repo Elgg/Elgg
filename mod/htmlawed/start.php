@@ -7,7 +7,6 @@
  * @package ElgghtmLawed
  */
 
-
 elgg_register_event_handler('init', 'system', 'htmlawed_init');
 
 /**
@@ -159,5 +158,6 @@ function htmlawed_tag_post_processor($element, $attributes = false) {
  */
 function htmlawed_test($hook, $type, $value, $params) {
     $value[] = dirname(__FILE__) . '/tests/tags.php';
+
     return $value;
 }

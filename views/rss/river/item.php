@@ -13,7 +13,6 @@ $title = elgg_echo('river:update', array($name));
 $timestamp = date('r', $item->getTimePosted());
 $body = elgg_view('river/elements/summary', $vars, false, false, 'default');
 
-
 $object = $item->getObjectEntity();
 if ($object) {
 	$url = htmlspecialchars($object->getURL());

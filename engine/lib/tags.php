@@ -93,7 +93,6 @@ function elgg_get_tags(array $options = array()) {
 		'wheres' => array(),
 	);
 
-
 	$options = array_merge($defaults, $options);
 
 	$singulars = array('type', 'subtype', 'owner_guid', 'container_guid', 'site_guid', 'tag_name');
@@ -115,7 +114,6 @@ function elgg_get_tags(array $options = array()) {
 		elgg_deprecated_notice('Tag metadata names must be registered by elgg_register_tag_metadata_name()', 1.7);
 		// return false;
 	}
-
 
 	$wheres = $options['wheres'];
 
@@ -166,7 +164,6 @@ function elgg_get_tags(array $options = array()) {
 			unset($joins[$i]);
 		}
 	}
-
 
 	$query  = "SELECT msv.string as tag, count(msv.id) as total ";
 	$query .= "FROM {$CONFIG->dbprefix}entities e ";

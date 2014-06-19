@@ -310,7 +310,6 @@ function ws_rest_handler() {
 
 	$result = execute_method($method);
 
-
 	if (!($result instanceof GenericResult)) {
 		throw new APIException(elgg_echo('APIException:ApiResultUnknown'));
 	}

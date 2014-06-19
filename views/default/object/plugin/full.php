@@ -92,7 +92,6 @@ if ($reordering) {
 	$classes[] = 'elgg-state-undraggable';
 }
 
-
 // activate / deactivate links
 
 // always let them deactivate
@@ -110,7 +109,7 @@ if ($active) {
 		$classes[] = 'elgg-state-active';
 		$options['class'] = 'elgg-button elgg-state-warning';
 	}
-} else if ($can_activate) {
+} elseif ($can_activate) {
 	$classes[] = 'elgg-state-inactive';
 	$action = 'activate';
 	$options['text'] = elgg_echo('admin:plugins:activate');

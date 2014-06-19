@@ -15,7 +15,6 @@
 global $METASTRINGS_CACHE;
 $METASTRINGS_CACHE = array();
 
-
 /**
  * Gets the metastring identifier for a value.
  *
@@ -73,7 +72,7 @@ function elgg_get_metastring_id($string, $case_sensitive = true) {
 			}
 			// return immediately because we don't want to cache case insensitive results
 			return $ids;
-		} else if (isset($results[0])) {
+		} elseif (isset($results[0])) {
 			$id = $results[0]->id;
 		}
 	}
@@ -301,7 +300,6 @@ function _elgg_get_metastring_based_objects($options) {
 
 	$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
 		$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
-
 
 	$wheres[] = _elgg_get_entity_time_where_sql('n_table', $options['metastring_created_time_upper'],
 		$options['metastring_created_time_lower'], null, null);

@@ -29,7 +29,6 @@ $description = elgg_extract('description', $vars, '');
 $namespaces = elgg_view('extensions/xmlns');
 $extensions = elgg_view('extensions/channel');
 
-
 // allow caching as required by stupid MS products for https feeds.
 header('Pragma: public', true);
 header("Content-Type: text/xml");

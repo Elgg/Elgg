@@ -25,7 +25,6 @@ if (elgg_in_context('dashboard')) {
 	<?php
 }
 
-
 // set default value for number to display
 if (!isset($vars['entity']->num_display)) {
 	$vars['entity']->num_display = 8;

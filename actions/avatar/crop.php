@@ -74,5 +74,4 @@ elgg_create_river_item(array(
 	'object_guid' => $owner->guid,
 ));
 
-
 forward(REFERER);

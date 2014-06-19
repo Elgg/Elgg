@@ -96,7 +96,7 @@ class Elgg_Database {
 	public function getLink($type) {
 		if (isset($this->dbLinks[$type])) {
 			return $this->dbLinks[$type];
-		} else if (isset($this->dbLinks['readwrite'])) {
+		} elseif (isset($this->dbLinks['readwrite'])) {
 			return $this->dbLinks['readwrite'];
 		} else {
 			$this->setupConnections();
@@ -121,7 +121,6 @@ class Elgg_Database {
 			$this->establishLink('readwrite');
 		}
 	}
-
 
 	/**
 	 * Establish a connection to the database server
@@ -457,7 +456,6 @@ class Elgg_Database {
 
 		return true;
 	}
-
 
 	/**
 	 * Trigger all queries that were registered as "delayed" queries. This is

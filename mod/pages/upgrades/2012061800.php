@@ -8,7 +8,6 @@
  * have the same entity subtype.
  */
 
-
 /**
  * Update subtype
  *

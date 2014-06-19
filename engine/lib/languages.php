@@ -48,7 +48,7 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 
 	if (isset($CONFIG->translations[$language][$message_key])) {
 		$string = $CONFIG->translations[$language][$message_key];
-	} else if (isset($CONFIG->translations["en"][$message_key])) {
+	} elseif (isset($CONFIG->translations["en"][$message_key])) {
 		$string = $CONFIG->translations["en"][$message_key];
 		elgg_log(sprintf('Missing %s translation for "%s" language key', $language, $message_key), 'NOTICE');
 	} else {
@@ -167,8 +167,6 @@ function _elgg_load_translations() {
 	// load core translations from languages directory
 	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
 }
-
-
 
 /**
  * When given a full path, finds translation files and loads them

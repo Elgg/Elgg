@@ -336,7 +336,7 @@ abstract class ElggEntity extends ElggData implements
 			$value = $md->value;
 		} elseif (count($md) == 1) {
 			$value = $md[0]->value;
-		} else if ($md && is_array($md)) {
+		} elseif ($md && is_array($md)) {
 			$value = metadata_array_to_values($md);
 		}
 

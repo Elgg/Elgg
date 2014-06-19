@@ -55,4 +55,3 @@ $hidden_type
 $submit_input
 </div>
 EOT;
-

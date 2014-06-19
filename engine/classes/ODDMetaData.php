@@ -18,7 +18,7 @@ class ODDMetaData extends ODD {
 	 * @param string $type        Type
 	 * @param string $owner_uuid  Owner ID
 	 */
-	function __construct($uuid, $entity_uuid, $name, $value, $type = "", $owner_uuid = "") {
+	public function __construct($uuid, $entity_uuid, $name, $value, $type = "", $owner_uuid = "") {
 		parent::__construct();
 
 		$this->setAttribute('uuid', $uuid);

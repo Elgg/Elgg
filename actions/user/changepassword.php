@@ -31,4 +31,3 @@ if (execute_new_password_request($user_guid, $code, $password)) {
 }
 
 forward();
-

@@ -34,7 +34,6 @@ if (isset($vars['id'])) {
 	$id = "id=\"{$vars['id']}\"";
 }
 
-
 $body = "<div class=\"elgg-body\">$body</div>";
 
 if ($image) {

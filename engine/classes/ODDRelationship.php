@@ -15,7 +15,7 @@ class ODDRelationship extends ODD {
 	 * @param string $type  Type of telationship
 	 * @param string $uuid2 Second UUId
 	 */
-	function __construct($uuid1, $type, $uuid2) {
+	public function __construct($uuid1, $type, $uuid2) {
 		parent::__construct();
 
 		$this->setAttribute('uuid1', $uuid1);
