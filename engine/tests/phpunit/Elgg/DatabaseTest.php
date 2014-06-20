@@ -71,6 +71,30 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 		);
 	}
 
+	public function testFingerprintingOfCallbacks() {
+		$db = $this->getDbMock();
+		$prints = array();
+		$uniques = 0;
+
+		$prints[$db->fingerprintCallback('foo')] = true;
+		$uniques++;
+
+		$prints[$db->fingerprintCallback('foo::bar')] = true;
+		$prints[$db->fingerprintCallback(array('foo', 'bar'))] = true;
+		$uniques++;
+
+		$obj1 = new Elgg_DatabaseTestObj();
+		$prints[$db->fingerprintCallback(array($obj1, '__invoke'))] = true;
+		$prints[$db->fingerprintCallback($obj1)] = true;
+		$uniques++;
+
+		$obj2 = new Elgg_DatabaseTestObj();
+		$prints[$db->fingerprintCallback(array($obj2, '__invoke'))] = true;
+		$uniques++;
+
+		$this->assertEquals($uniques, count($prints));
+	}
+
 	private function getFixture($filename) {
 		return dirname(__FILE__) .
 			DIRECTORY_SEPARATOR . '..' .
@@ -103,4 +127,8 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 	{
 		$db->expects($this->at($index))->method('updateData')->with($matcher);
 	}
+}
+
+class Elgg_DatabaseTestObj {
+    public function __invoke() {}
 }
