@@ -290,6 +290,8 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 	$message_to->access_id = ACCESS_PRIVATE;
 	$message_to->save();
 
+	messages_invalidate_unread_cache($message_to);
+
 	if ($add_to_sent) {
 		$message_sent->access_id = ACCESS_PRIVATE;
 		$message_sent->save();
@@ -338,6 +340,10 @@ function messages_set_url($hook, $type, $url, $params) {
 	}
 }
 
+/**
+ * @return int
+ * @deprecated use messages_count_unread()
+ */
 function count_unread_messages() {
 	elgg_deprecated_notice('Your theme is using count_unread_messages which has been deprecated for messages_count_unread()', 1.8);
 	return messages_count_unread();
@@ -403,7 +409,19 @@ function messages_get_unread($user_guid = 0, $limit = 10, $offset = 0, $count = 
  * @return int
  */
 function messages_count_unread($user_guid = 0) {
-	return messages_get_unread($user_guid, 10, 0, true);
+	$user = $user_guid ? get_user($user_guid) : elgg_get_logged_in_user_entity();
+	if (!$user) {
+		return 0;
+	}
+
+	$unread = $user->messages_count_unread;
+	if ($unread !== null) {
+		return $unread;
+	}
+
+	$unread = messages_get_unread($user->guid, 10, 0, true);
+	$user->messages_count_unread = $unread;
+	return $unread;
 }
 
 /**
@@ -470,4 +488,20 @@ function messages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['messages/messages'] = elgg_echo('messages');
 
 	return $return_value;
+}
+
+/**
+ * @param ElggObject $message A message
+ *
+ * @access private
+ */
+function messages_invalidate_unread_cache(ElggObject $message) {
+	$recipient = get_user($message->toId);
+	if (!$recipient) {
+		return;
+	}
+
+	$ia = elgg_set_ignore_access();
+	$recipient->deleteMetadata('messages_count_unread');
+	elgg_set_ignore_access($ia);
 }
