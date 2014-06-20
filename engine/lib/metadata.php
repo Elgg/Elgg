@@ -299,7 +299,7 @@ function elgg_get_metadata(array $options = array()) {
  *          This requires at least one constraint: metadata_owner_guid(s),
  *          metadata_name(s), metadata_value(s), or guid(s) must be set.
  *
- * @param array $options An options array. {@see elgg_get_metadata()}
+ * @param array $options An options array. {@link elgg_get_metadata()}
  * @return bool|null true on success, false on failure, null if no metadata to delete.
  * @since 1.8.0
  */
@@ -322,7 +322,7 @@ function elgg_delete_metadata(array $options) {
  *
  * @warning Unlike elgg_get_metadata() this will not accept an empty options array!
  *
- * @param array $options An options array. {@See elgg_get_metadata()}
+ * @param array $options An options array. {@link elgg_get_metadata()}
  * @return bool|null true on success, false on failure, null if no metadata disabled.
  * @since 1.8.0
  */
@@ -349,7 +349,7 @@ function elgg_disable_metadata(array $options) {
  * @warning In order to enable metadata, you must first use
  * {@link access_show_hidden_entities()}.
  *
- * @param array $options An options array. {@See elgg_get_metadata()}
+ * @param array $options An options array. {@link elgg_get_metadata()}
  * @return bool|null true on success, false on failure, null if no metadata enabled.
  * @since 1.8.0
  */

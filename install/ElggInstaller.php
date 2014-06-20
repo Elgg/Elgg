@@ -1020,11 +1020,11 @@ class ElggInstaller {
 	protected function checkPHP(&$report) {
 		$phpReport = array();
 
-		$elgg_php_version = '5.2.0';
-		if (version_compare(PHP_VERSION, $elgg_php_version, '<')) {
+		$min_php_version = '5.3.3';
+		if (version_compare(PHP_VERSION, $min_php_version, '<')) {
 			$phpReport[] = array(
 				'severity' => 'failure',
-				'message' => elgg_echo('install:check:php:version', array($elgg_php_version, PHP_VERSION))
+				'message' => elgg_echo('install:check:php:version', array($min_php_version, PHP_VERSION))
 			);
 		}
 

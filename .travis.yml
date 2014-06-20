@@ -1,6 +1,5 @@
 language: php
 php:
- - 5.2
  - 5.3
  - 5.4
  - 5.5
@@ -55,4 +54,4 @@ script:
  
 notifications:
   email:
-    - team@elgg.org
+    secure: exC/ws07lLOj3Y43C89jiaKpyB8Yt7DPGSCShV4R3Wkw/hVVzjxt1BinPxzsyL5DC7APUMcTHGOhDB2oCE4ynDE6o6L9bH79fc+V8IYAiNaEIGL0AOuHdnRdGN9GMrr2jv78cZ5MctuUTkeYLaoOEyDGHmkMhqa6SufIDAY8b58=
