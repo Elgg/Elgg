@@ -39,6 +39,7 @@ run_commands(array(
 	"git --version",
 	"npm --version",
 	"node --version",
+	"which sphinx-build",
 
 	"cd $elggPath",
 	"git checkout -B $branch",
@@ -48,6 +49,7 @@ run_commands(array(
 // Update translations
 run_commands(array(
 	"tx pull -a --minimum-perc=100",
+	"make -C docs gettext",
 	"git add .",
 	"git commit -am \"chore(i18n): update translations\"",
 ));

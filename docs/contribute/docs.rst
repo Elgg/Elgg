@@ -110,3 +110,18 @@ Do not remind the reader to contribute
 Focus on addressing only the topic at hand.
 Constant solicitation for free work is annoying and makes the project look needy.
 If people want to contribute to the project, they can visit the contributor guide.
+
+
+Internationalizing documentation
+================================
+
+When you change documentation, remember to update the documentation translation
+templates before you commit:
+
+.. code:: sh
+
+   cd docs/
+   make gettext
+
+For more information, see
+http://sphinx-doc.org/latest/intl.html#translating-with-sphinx-intl
