@@ -289,8 +289,27 @@ class Elgg_Database {
 		// Since we want to cache results of running the callback, we need to
 		// need to namespace the query with the callback and single result request.
 		// https://github.com/elgg/elgg/issues/4049
-		$callback_hash = is_object($callback) ? spl_object_hash($callback) : (string)$callback;
-		$hash = $callback_hash . (int)$single . $query;
+		if (is_string($callback)) {
+			// function/static method
+			$callback_hash = $callback;
+		} elseif (is_object($callback)) {
+			// closure/invokable
+			$callback_hash = spl_object_hash($callback);
+		} elseif (is_array($callback)) {
+			if (is_string($callback[0])) {
+				// static method
+				$callback_hash = "{$callback[0]}::{$callback[1]}";
+			} else {
+				// method
+				$callback_hash = spl_object_hash($callback[0]) . "-{$callback[1]}";
+			}
+		} else {
+			// this should not happen
+			$callback_hash = (string)$callback;
+		}
+
+		// md5 => smaller mem usage, cleaner logs
+		$hash = md5($callback_hash . "|" . (int)$single . $query);
 
 		// Is cached?
 		if ($this->queryCache) {
