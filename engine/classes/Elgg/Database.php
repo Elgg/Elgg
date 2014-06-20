@@ -289,13 +289,32 @@ class Elgg_Database {
 		// Since we want to cache results of running the callback, we need to
 		// need to namespace the query with the callback and single result request.
 		// https://github.com/elgg/elgg/issues/4049
-		$callback_hash = is_object($callback) ? spl_object_hash($callback) : (string)$callback;
-		$hash = $callback_hash . (int)$single . $query;
+		if (is_string($callback)) {
+			// function/static method
+			$callback_hash = $callback;
+		} elseif (is_object($callback)) {
+			// closure/invokable
+			$callback_hash = spl_object_hash($callback);
+		} elseif (is_array($callback)) {
+			if (is_string($callback[0])) {
+				// static method
+				$callback_hash = "{$callback[0]}::{$callback[1]}";
+			} else {
+				// method
+				$callback_hash = spl_object_hash($callback[0]) . "-{$callback[1]}";
+			}
+		} else {
+			// this should not happen
+			$callback_hash = (string)$callback;
+		}
+
+		// md5 => smaller mem usage, cleaner logs
+		$hash = md5($callback_hash . "|" . (int)$single . $query);
 
 		// Is cached?
 		if ($this->queryCache) {
 			if (isset($this->queryCache[$hash])) {
-				$this->logger->log("DB query $query results returned from cache (hash: $hash)", Elgg_Logger::INFO);
+				$this->logger->log("DB cache hit as $hash. $query", Elgg_Logger::INFO);
 				return $this->queryCache[$hash];
 			}
 		}
@@ -305,10 +324,8 @@ class Elgg_Database {
 
 		if ($result = $this->executeQuery("$query", $dblink)) {
 
-			// test for callback once instead of on each iteration.
-			// @todo check profiling to see if this needs to be broken out into
-			// explicit cases instead of checking in the interation.
 			$is_callable = is_callable($callback);
+
 			while ($row = mysql_fetch_object($result)) {
 				if ($is_callable) {
 					$row = call_user_func($callback, $row);
@@ -323,14 +340,10 @@ class Elgg_Database {
 			}
 		}
 
-		if (empty($return)) {
-			$this->logger->log("DB query $query returned no results.", Elgg_Logger::INFO);
-		}
-
 		// Cache result
 		if ($this->queryCache) {
 			$this->queryCache[$hash] = $return;
-			$this->logger->log("DB query $query results cached (hash: $hash)", Elgg_Logger::INFO);
+			$this->logger->log("DB query. cached as $hash. $query", Elgg_Logger::INFO);
 		}
 
 		return $return;
