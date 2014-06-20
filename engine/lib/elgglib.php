@@ -1551,7 +1551,11 @@ function _elgg_ajax_page_handler($page) {
 				break;
 		}
 
-		echo elgg_view($view, $vars);
+		$output = elgg_view($view, $vars);
+
+		$output = _elgg_services()->deferredViews->resolveAll($output);
+
+		echo $output;
 		return true;
 	}
 	return false;

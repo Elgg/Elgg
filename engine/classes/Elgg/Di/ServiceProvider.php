@@ -22,6 +22,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Database\ConfigTable               $configTable
  * @property-read \Elgg\Context                            $context
  * @property-read \Elgg\Database\Datalist                  $datalist
+ * @property-read \Elgg\DeferredViewService                $deferredViews
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\DeprecationService                 $deprecation
  * @property-read \Elgg\Database\EntityTable               $entityTable
@@ -41,6 +42,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\Http\Request                       $request
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
+ * @property-read \Elgg\DeferredViews\RiverComments        $riverComments
  * @property-read \Elgg\Router                             $router
  * @property-read \ElggSession                             $session
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
@@ -114,6 +116,13 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('deprecation', function(ServiceProvider $c) {
 			return new \Elgg\DeprecationService($c->session, $c->logger);
+		});
+
+		$this->setClassName('riverComments', '\Elgg\DeferredViews\RiverComments');
+
+		$this->setFactory('deferredViews', function(ServiceProvider $c) {
+			$token = $c->crypto->getHmac(__FILE__ . time());
+			return new \Elgg\DeferredViewService($token);
 		});
 
 		$this->setClassName('entityTable', '\Elgg\Database\EntityTable');

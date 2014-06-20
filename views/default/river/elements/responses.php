@@ -23,37 +23,20 @@ if ($item->annotation_id != 0 || !$object || elgg_instanceof($target, 'object', 
 	return true;
 }
 
-$comment_count = $object->countComments();
+/* @var \Elgg\ViewsService $this */
 
-if ($comment_count) {
-	$comments = elgg_get_entities(array(
-		'type' => 'object',
-		'subtype' => 'comment',
-		'container_guid' => $object->getGUID(),
-		'limit' => 3,
-		'order_by' => 'e.time_created desc',
-		'distinct' => false,
-	));
+// To save queries we don't want to render comments until we know all the object(s) we'll
+// be fetching them for. Here we tell our model to look out for these.
+$model = _elgg_services()->riverComments;
+$model->prepareLatestComments($object->guid);
+$model->prepareNumComments($object->guid);
 
-	// why is this reversing it? because we're asking for the 3 latest
-	// comments by sorting desc and limiting by 3, but we want to display
-	// these comments with the latest at the bottom.
-	$comments = array_reverse($comments);
-
-	echo elgg_view_entity_list($comments, array('list_class' => 'elgg-river-comments'));
-
-	if ($comment_count > count($comments)) {
-		$num_more_comments = $comment_count - count($comments);
-		$url = $object->getURL();
-		$params = array(
-			'href' => $url,
-			'text' => elgg_echo('river:comments:more', array($num_more_comments)),
-			'is_trusted' => true,
-		);
-		$link = elgg_view('output/url', $params);
-		echo "<div class=\"elgg-river-more\">$link</div>";
-	}
-}
+// Output a unique token that will later be replaced by the rendered view. At that time, our
+// model will fetch our comments and counts in fewer queries.
+echo $this->deferView('river/elements/responses/content', array(
+	'model' => $model,
+	'entity' => $object,
+));
 
 // inline comment form
 $form_vars = array('id' => "comments-add-{$object->getGUID()}", 'class' => 'hidden');

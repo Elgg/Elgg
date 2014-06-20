@@ -476,7 +476,12 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['page_shell'] = $page_shell;
 
 	// Allow plugins to modify the output
-	return elgg_trigger_plugin_hook('output', 'page', $vars, $output);
+	$output = elgg_trigger_plugin_hook('output', 'page', $vars, $output);
+
+	// Resolve any deferred views
+	$output = _elgg_services()->deferredViews->resolveAll($output);
+
+	return $output;
 }
 
 /**

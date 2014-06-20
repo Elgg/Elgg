@@ -98,4 +98,25 @@ final class Context {
 	public function contains($context) {
 		return in_array($context, $this->stack);
 	}
+
+	/**
+	 * Get the entire context stack (e.g. for backing it up)
+	 *
+	 * @return string[]
+	 * @access private
+	 */
+	public function getAll() {
+		return $this->stack;
+	}
+
+	/**
+	 * Set the entire context stack
+	 *
+	 * @param string[] $stack All contexts to be placed on the stack
+	 * @access private
+	 * @return void
+	 */
+	public function setAll(array $stack) {
+		$this->stack = $stack;
+	}
 }

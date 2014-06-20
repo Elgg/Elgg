@@ -599,4 +599,16 @@ class ViewsService {
 	public function setOverriddenLocations(array $locations) {
 		$this->overriden_locations = $locations;
 	}
+
+	/**
+	 * Get a placeholder to be replaced later by the deferred view
+	 *
+	 * @param string $view The view name
+	 * @param array  $args Args passed to the view
+	 *
+	 * @return string The placeholder
+	 */
+	public function deferView($view, array $args = array()) {
+		return _elgg_services()->deferredViews->defer($view, $args);
+	}
 }
