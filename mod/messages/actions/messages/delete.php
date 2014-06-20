@@ -11,6 +11,8 @@ if (!elgg_instanceof($message, 'object', 'messages') || !$message->canEdit()) {
 	forward(REFERER);
 }
 
+messages_invalidate_unread_cache($message);
+
 if (!$message->delete()) {
 	register_error(elgg_echo('messages:error:delete:single'));
 } else {

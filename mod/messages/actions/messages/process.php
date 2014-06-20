@@ -19,6 +19,7 @@ if ($delete_flag) {
 		$message = get_entity($guid);
 		if (elgg_instanceof($message, 'object', 'messages') && $message->canEdit()) {
 			$message->delete();
+			messages_invalidate_unread_cache($message);
 		}
 	}
 } else {
@@ -27,6 +28,7 @@ if ($delete_flag) {
 		$message = get_entity($guid);
 		if (elgg_instanceof($message, 'object', 'messages') && $message->canEdit()) {
 			$message->readYet = 1;
+			messages_invalidate_unread_cache($message);
 		}
 	}
 }

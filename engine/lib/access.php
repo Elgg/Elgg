@@ -538,7 +538,7 @@ function get_write_access_array($user_guid = 0, $site_guid = 0, $flush = false) 
  * Use the plugin hook of 'access:collections:write', 'user' to change this.
  * @see get_write_access_array() for details on the hook.
  *
- * Respects access control disabling for admin users and {@see elgg_set_ignore_access()}
+ * Respects access control disabling for admin users and {@link elgg_set_ignore_access()}
  *
  * @see get_write_access_array()
  *
