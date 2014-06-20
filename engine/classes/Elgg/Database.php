@@ -314,7 +314,7 @@ class Elgg_Database {
 		// Is cached?
 		if ($this->queryCache) {
 			if (isset($this->queryCache[$hash])) {
-				$this->logger->log("DB query $query results returned from cache (hash: $hash)", Elgg_Logger::INFO);
+				$this->logger->log("DB cache hit as $hash. $query", Elgg_Logger::INFO);
 				return $this->queryCache[$hash];
 			}
 		}
@@ -324,10 +324,8 @@ class Elgg_Database {
 
 		if ($result = $this->executeQuery("$query", $dblink)) {
 
-			// test for callback once instead of on each iteration.
-			// @todo check profiling to see if this needs to be broken out into
-			// explicit cases instead of checking in the interation.
 			$is_callable = is_callable($callback);
+
 			while ($row = mysql_fetch_object($result)) {
 				if ($is_callable) {
 					$row = call_user_func($callback, $row);
@@ -342,14 +340,10 @@ class Elgg_Database {
 			}
 		}
 
-		if (empty($return)) {
-			$this->logger->log("DB query $query returned no results.", Elgg_Logger::INFO);
-		}
-
 		// Cache result
 		if ($this->queryCache) {
 			$this->queryCache[$hash] = $return;
-			$this->logger->log("DB query $query results cached (hash: $hash)", Elgg_Logger::INFO);
+			$this->logger->log("DB query. cached as $hash. $query", Elgg_Logger::INFO);
 		}
 
 		return $return;
