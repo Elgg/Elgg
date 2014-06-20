@@ -1,0 +1,1348 @@
+# 
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg 1.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-20 23:09\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../contribute/code.rst:2
+msgid "Writing Code"
+msgstr ""
+
+#: ../../contribute/code.rst:4
+msgid ""
+"Understand Elgg's standards and processes to get your changes accepted as "
+"quickly as possible."
+msgstr ""
+
+#: ../../contribute/code.rst:7
+msgid "License agreement"
+msgstr ""
+
+#: ../../contribute/code.rst:9
+msgid ""
+"By submitting a patch you are agreeing to license the code under a `GPLv2 "
+"license`_ and `MIT license`_."
+msgstr ""
+
+#: ../../contribute/code.rst:16
+msgid "Pull requests"
+msgstr ""
+
+#: ../../contribute/code.rst:18
+msgid ""
+"Pull requests (PRs) are the best way to get code contributed to Elgg core. "
+"The core development team uses them even for the most trivial changes."
+msgstr ""
+
+#: ../../contribute/code.rst:21
+msgid ""
+"For new features, `submit a feature request`_ or `talk to us`_ first and "
+"make sure the core team approves of your direction before spending lots of "
+"time on code."
+msgstr ""
+
+#: ../../contribute/code.rst:29
+msgid "Checklists"
+msgstr ""
+
+#: ../../contribute/code.rst:31
+msgid ""
+"Use these markdown checklists for new PRs on github to ensure high-quality "
+"contributions and help everyone understand the status of open PRs."
+msgstr ""
+
+#: ../../contribute/code.rst:34
+msgid "Bugfix PRs:"
+msgstr ""
+
+#: ../../contribute/code.rst:44
+msgid "Feature PRs:"
+msgstr ""
+
+#: ../../contribute/code.rst:56
+msgid "Choosing a branch to submit to"
+msgstr ""
+
+#: ../../contribute/code.rst:58
+msgid ""
+"New features: master (we do not introduce new features in bugfix branches)."
+msgstr ""
+
+#: ../../contribute/code.rst:59
+msgid ""
+"Bug fixes: latest branch (or master if the bug only appears in master)."
+msgstr ""
+
+#: ../../contribute/code.rst:60
+msgid ""
+"Security fixes: lowest supported branch (If master is 1.9, then submit "
+"against 1.7)."
+msgstr ""
+
+#: ../../contribute/code.rst:63
+msgid "Commit message format"
+msgstr ""
+
+#: ../../contribute/code.rst:65
+msgid "Here is an example of a good commit message:"
+msgstr ""
+
+#: ../../contribute/code.rst:76
+msgid "All commit messages are required to adhere to this format:"
+msgstr ""
+
+#: ../../contribute/code.rst:89
+msgid "Where ``type`` is one of:"
+msgstr ""
+
+#: ../../contribute/code.rst:91
+msgid "feature"
+msgstr ""
+
+#: ../../contribute/code.rst:92
+msgid "fix"
+msgstr ""
+
+#: ../../contribute/code.rst:93
+msgid "docs (when *only* docs are being updated)"
+msgstr ""
+
+#: ../../contribute/code.rst:94
+msgid ""
+"chore (refactoring, style changes, add missing tests, Travis stuff, etc.)"
+msgstr ""
+
+#: ../../contribute/code.rst:95
+msgid "perf (when primary purpose of change is to improve performance)"
+msgstr ""
+
+#: ../../contribute/code.rst:96
+msgid "security (any change affecting a security issue)"
+msgstr ""
+
+#: ../../contribute/code.rst:97
+msgid "deprecate (any change that deprecates any part of the API)"
+msgstr ""
+
+#: ../../contribute/code.rst:99
+msgid "And ``component`` is one of:"
+msgstr ""
+
+#: ../../contribute/code.rst:101
+msgid "i18n"
+msgstr ""
+
+#: ../../contribute/code.rst:102
+msgid "seo"
+msgstr ""
+
+#: ../../contribute/code.rst:103
+msgid "a11y"
+msgstr ""
+
+#: ../../contribute/code.rst:104
+msgid "cache"
+msgstr ""
+
+#: ../../contribute/code.rst:105
+msgid "db"
+msgstr ""
+
+#: ../../contribute/code.rst:106
+msgid "views"
+msgstr ""
+
+#: ../../contribute/code.rst:107
+msgid "session"
+msgstr ""
+
+#: ../../contribute/code.rst:108
+msgid "router"
+msgstr ""
+
+#: ../../contribute/code.rst:109
+msgid "etc..."
+msgstr ""
+
+#: ../../contribute/code.rst:111
+msgid ""
+"All lines of the commit message must not be longer than 100 characters."
+msgstr ""
+
+#: ../../contribute/code.rst:113
+msgid ""
+"To validate commit messages locally, copy or symlink the "
+"``.scripts/validate_commit_msg.php`` to ``.git/hooks/commit-msg`` and make "
+"sure it's executable."
+msgstr ""
+
+#: ../../contribute/code.rst:117
+msgid ""
+"Enforcing a particular format allows us to automatically build a changelog "
+"when it comes time to release. This saves a lot of time and makes it "
+"possible to release more often."
+msgstr ""
+
+#: ../../contribute/code.rst:121
+msgid "Rewriting commit messages"
+msgstr ""
+
+#: ../../contribute/code.rst:122
+msgid ""
+"If your PR does not conform to the standard commit message format, we'll ask"
+" you to rewrite it:"
+msgstr ""
+
+#: ../../contribute/code.rst:125
+msgid ""
+"Rebase last commit (Git will open the git-rebase-todo file for editing)"
+msgstr ""
+
+#: ../../contribute/code.rst:127
+msgid "``git rebase -i HEAD~``"
+msgstr ""
+
+#: ../../contribute/code.rst:128
+msgid ""
+"Change ``pick`` to ``r`` (for reword) and save/exit the editor. (Git will "
+"present a file to alter the commit message)"
+msgstr ""
+
+#: ../../contribute/code.rst:130
+msgid "Change the commit message, save/exit the editor."
+msgstr ""
+
+#: ../../contribute/code.rst:131
+msgid "Force push the branch to update your PR:"
+msgstr ""
+
+#: ../../contribute/code.rst:133
+msgid "``git push -f your_remote your_branch``"
+msgstr ""
+
+#: ../../contribute/code.rst:136
+msgid "Coding best practices"
+msgstr ""
+
+#: ../../contribute/code.rst:138
+msgid ""
+"Make your code easier to read, easier to maintain, and easier to debug. "
+"Consistent use of these guidelines means less guess work for developers, "
+"which means happier, more productive developers."
+msgstr ""
+
+#: ../../contribute/code.rst:144
+msgid "General coding"
+msgstr ""
+
+#: ../../contribute/code.rst:147
+msgid "Don't Repeat Yourself"
+msgstr ""
+
+#: ../../contribute/code.rst:149
+msgid ""
+"If you are copy-pasting code, you are doing something wrong. If you find a "
+"block of code that you want to use multiple times, make a function.  If you "
+"find views that are identical except for a single value, pull it out into a "
+"generic view that takes an option."
+msgstr ""
+
+#: ../../contribute/code.rst:155
+msgid "Embrace SOLID and GRASP"
+msgstr ""
+
+#: ../../contribute/code.rst:157
+msgid ""
+"Use these `principles for OO design`__ to solve problems using loosely "
+"coupled components, and try to make all components and integration code "
+"testable."
+msgstr ""
+
+#: ../../contribute/code.rst:163
+msgid "Whitespace is free"
+msgstr ""
+
+#: ../../contribute/code.rst:165
+msgid ""
+"Don't be afraid to use it to separate blocks of code. Use a single space to "
+"separate function params and string concatenation."
+msgstr ""
+
+#: ../../contribute/code.rst:169
+msgid "Variable names"
+msgstr ""
+
+#: ../../contribute/code.rst:171
+msgid ""
+"Use self-documenting variable names.  ``$group_guids`` is better than "
+"``$array``."
+msgstr ""
+
+#: ../../contribute/code.rst:173
+msgid ""
+"Avoid double-negatives. Prefer ``$enable = true`` to ``$disable = false``."
+msgstr ""
+
+#: ../../contribute/code.rst:176
+msgid "Functions"
+msgstr ""
+
+#: ../../contribute/code.rst:178
+msgid ""
+"Where possible, have functions/methods return a single type. Use empty "
+"values such as array(), \"\", or 0 to indicate no results."
+msgstr ""
+
+#: ../../contribute/code.rst:181
+msgid ""
+"Functions not throwing an exception on error should return ``false`` upon "
+"failure."
+msgstr ""
+
+#: ../../contribute/code.rst:183
+msgid ""
+"Functions returning only boolean should be prefaced with ``is_`` or ``has_``"
+" (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``)."
+msgstr ""
+
+#: ../../contribute/code.rst:187
+msgid "Ternary syntax"
+msgstr ""
+
+#: ../../contribute/code.rst:189
+msgid "Acceptable only for single-line, non-embedded statements."
+msgstr ""
+
+#: ../../contribute/code.rst:192
+msgid "Minimize complexity"
+msgstr ""
+
+#: ../../contribute/code.rst:194
+msgid ""
+"Minimize nested blocks and distinct execution paths through code. Use "
+"`Return Early`__ to reduce cognitive load when reading code."
+msgstr ""
+
+#: ../../contribute/code.rst:200
+msgid "Use comments effectively"
+msgstr ""
+
+#: ../../contribute/code.rst:202
+msgid "Good comments describe the \"why.\"  Good code describes the \"how.\"  Ex:"
+msgstr ""
+
+#: ../../contribute/code.rst:204 ../../contribute/code.rst:343
+#: ../../contribute/code.rst:363 ../../contribute/code.rst:378
+#: ../../contribute/code.rst:396 ../../contribute/code.rst:418
+#: ../../contribute/code.rst:442
+msgid "Bad:"
+msgstr ""
+
+#: ../../contribute/code.rst:215 ../../contribute/code.rst:330
+#: ../../contribute/code.rst:353 ../../contribute/code.rst:369
+#: ../../contribute/code.rst:384 ../../contribute/code.rst:404
+#: ../../contribute/code.rst:427 ../../contribute/code.rst:450
+msgid "Good:"
+msgstr ""
+
+#: ../../contribute/code.rst:227
+msgid "Commit effectively"
+msgstr ""
+
+#: ../../contribute/code.rst:229
+msgid ""
+"Err on the side of atomic commits and avoid mixing in extensive whitespace "
+"changes. One revision with many changes is scary and difficult to review."
+msgstr ""
+
+#: ../../contribute/code.rst:233
+msgid "Include tests"
+msgstr ""
+
+#: ../../contribute/code.rst:235
+msgid ""
+"When at all possible include unit tests for code you add or alter. We use:"
+msgstr ""
+
+#: ../../contribute/code.rst:237
+msgid "PHPUnit for PHP unit tests."
+msgstr ""
+
+#: ../../contribute/code.rst:239
+msgid ""
+"SimpleTest for PHP tests that require use of the database. Our long-term "
+"goal is to move all tests to PHPUnit."
+msgstr ""
+
+#: ../../contribute/code.rst:242
+msgid "Karma for JavaScript unit tests"
+msgstr ""
+
+#: ../../contribute/code.rst:245
+msgid "Naming tests"
+msgstr ""
+
+#: ../../contribute/code.rst:247
+msgid ""
+"Break tests up by the behaviors you want to test and use names that describe"
+" the behavior. E.g.:"
+msgstr ""
+
+#: ../../contribute/code.rst:250
+msgid "Not so good: One big method `testAdd()`."
+msgstr ""
+
+#: ../../contribute/code.rst:252
+msgid ""
+"Better: Methods `testAddingZeroChangesNothing` and "
+"`testAddingNegativeNumberSubtracts`"
+msgstr ""
+
+#: ../../contribute/code.rst:255
+msgid "Keep bugfixes simple"
+msgstr ""
+
+#: ../../contribute/code.rst:257
+msgid ""
+"Avoid the temptation to refactor code for a bugfix release. Doing so tends "
+"to introduce regressions, breaking functionality in what should be a stable "
+"release."
+msgstr ""
+
+#: ../../contribute/code.rst:261
+msgid "PHP guidelines"
+msgstr ""
+
+#: ../../contribute/code.rst:263
+msgid ""
+"These are the required coding standards for Elgg core and all bundled "
+"plugins. Plugin developers are strongly encouraged to adopt these standards."
+msgstr ""
+
+#: ../../contribute/code.rst:266
+msgid "Developers should first read the `PSR-2 Coding Standard Guide`__."
+msgstr ""
+
+#: ../../contribute/code.rst:270
+msgid "Elgg's standards extend PSR-2, but differ in the following ways:"
+msgstr ""
+
+#: ../../contribute/code.rst:272
+msgid "Indent using one tab character, not spaces."
+msgstr ""
+
+#: ../../contribute/code.rst:273
+msgid ""
+"Opening braces for classes, methods, and functions must go on the same line."
+msgstr ""
+
+#: ../../contribute/code.rst:274
+msgid ""
+"If a line reaches over 100 characters, consider refactoring (e.g. introduce "
+"variables)."
+msgstr ""
+
+#: ../../contribute/code.rst:275
+msgid "Compliance with `PSR-1`__ is encouraged, but not strictly required."
+msgstr ""
+
+#: ../../contribute/code.rst:280
+msgid "Documentation"
+msgstr ""
+
+#: ../../contribute/code.rst:282
+msgid ""
+"Include PHPDoc comments on functions and classes (all methods; declared "
+"properties when appropriate), including types and descriptions of all "
+"parameters."
+msgstr ""
+
+#: ../../contribute/code.rst:286
+msgid ""
+"In lists of ``@param`` declarations, the beginnings of variable names and "
+"descriptions must line up."
+msgstr ""
+
+#: ../../contribute/code.rst:289
+msgid ""
+"Annotate classes, methods, properties, and functions with ``@access "
+"private`` unless they are intended for public use, are already of limited "
+"visibility, or are within a class already marked as private."
+msgstr ""
+
+#: ../../contribute/code.rst:293
+msgid "Use ``//`` or ``/* */`` when commenting."
+msgstr ""
+
+#: ../../contribute/code.rst:295
+msgid "Use only ``//`` comments inside function/method bodies."
+msgstr ""
+
+#: ../../contribute/code.rst:298
+msgid "Naming"
+msgstr ""
+
+#: ../../contribute/code.rst:300
+msgid ""
+"Use underscores to separate words in the names of functions, variables, and "
+"properties. Method names are camelCase."
+msgstr ""
+
+#: ../../contribute/code.rst:303
+msgid "Names of functions for public use must begin with ``elgg_``."
+msgstr ""
+
+#: ../../contribute/code.rst:305
+msgid "All other function names must begin with ``_elgg_``."
+msgstr ""
+
+#: ../../contribute/code.rst:307
+msgid ""
+"The names of all classes and interfaces must use underscores as namespace "
+"separators and be within the Elgg namespace. (``Elgg_Cache_LRUCache``)"
+msgstr ""
+
+#: ../../contribute/code.rst:310
+msgid ""
+"Name globals and constants in ``ALL_CAPS`` (``ACCESS_FRIENDS``, "
+"``$CONFIG``)."
+msgstr ""
+
+#: ../../contribute/code.rst:313
+msgid "Miscellaneous"
+msgstr ""
+
+#: ../../contribute/code.rst:315
+msgid "Use PHP 5.2-compatible syntax in Elgg versions before 1.10."
+msgstr ""
+
+#: ../../contribute/code.rst:317
+msgid "Do not use PHP shortcut tags (``<?`` or ``<?=`` or ``<%``)."
+msgstr ""
+
+#: ../../contribute/code.rst:319
+msgid "When creating strings with variables:"
+msgstr ""
+
+#: ../../contribute/code.rst:321
+msgid "use double-quoted strings"
+msgstr ""
+
+#: ../../contribute/code.rst:322
+msgid "wrap variables with braces only when necessary."
+msgstr ""
+
+#: ../../contribute/code.rst:324
+msgid "Bad (hard to read, misuse of quotes and {}s):"
+msgstr ""
+
+#: ../../contribute/code.rst:338
+msgid "CSS guidelines"
+msgstr ""
+
+#: ../../contribute/code.rst:341
+msgid "Use shorthand where possible"
+msgstr ""
+
+#: ../../contribute/code.rst:361
+msgid "Use hyphens, not underscores"
+msgstr ""
+
+#: ../../contribute/code.rst:376
+msgid "One property per line"
+msgstr ""
+
+#: ../../contribute/code.rst:392
+msgid "Property declarations"
+msgstr ""
+
+#: ../../contribute/code.rst:394
+msgid "These should be spaced like so: `property: value;`"
+msgstr ""
+
+#: ../../contribute/code.rst:411
+msgid "Vendor prefixes"
+msgstr ""
+
+#: ../../contribute/code.rst:413
+msgid "Group vendor-prefixes for the same property together"
+msgstr ""
+
+#: ../../contribute/code.rst:414
+msgid "Longest vendor-prefixed version first"
+msgstr ""
+
+#: ../../contribute/code.rst:415
+msgid "Always include non-vendor-prefixed version"
+msgstr ""
+
+#: ../../contribute/code.rst:416
+msgid ""
+"Put an extra newline between vendor-prefixed groups and other properties"
+msgstr ""
+
+#: ../../contribute/code.rst:440
+msgid "Group subproperties"
+msgstr ""
+
+#: ../../contribute/code.rst:459
+msgid "Javascript guidelines"
+msgstr ""
+
+#: ../../contribute/code.rst:461
+msgid "Same formatting standards as PHP apply."
+msgstr ""
+
+#: ../../contribute/code.rst:463
+msgid "All functions should be in the elgg namespace."
+msgstr ""
+
+#: ../../contribute/code.rst:465
+msgid "Function expressions should end with a semi-colon."
+msgstr ""
+
+#: ../../contribute/code.rst:476
+msgid "Deprecating APIs"
+msgstr ""
+
+#: ../../contribute/code.rst:478
+msgid ""
+"Occasionally, functions and classes must be deprecated in favor of newer "
+"replacements. Since 3rd party plugin authors rely on a consistent API, "
+"backward compatibility must be maintained, but will not be maintained "
+"indefinitely as plugin authors are expected to properly update their "
+"plugins. In order to maintain backward compatibility, deprecated APIs will "
+"follow these guidelines:"
+msgstr ""
+
+#: ../../contribute/code.rst:486
+msgid ""
+"The first minor version (1.7) with a deprecated API must include a wrapper "
+"function/class (or otherwise appropriate means) to maintain backward "
+"compatibility, including any bugs in the original function/class. This "
+"compatibility layer uses ``elgg_deprecated_notice('...', '1.7')`` to log "
+"that the function is deprecated."
+msgstr ""
+
+#: ../../contribute/code.rst:492
+msgid ""
+"The following minor versions (1.8+) maintain the backward compatibility "
+"layer, but ``elgg_deprecated_notice()`` will produce a visible warning."
+msgstr ""
+
+#: ../../contribute/code.rst:495
+msgid ""
+"The next major revision (2.0) removes the compatibility layer. Any use of "
+"the deprecated API should be corrected before this."
+msgstr ""
+
+#: ../../contribute/docs.rst:2
+msgid "Writing Documentation"
+msgstr ""
+
+#: ../../contribute/docs.rst:4
+msgid "New documentation should fit well with the rest of Elgg's docs."
+msgstr ""
+
+#: ../../contribute/docs.rst:8
+msgid "Follow the existing document organization"
+msgstr ""
+
+#: ../../contribute/docs.rst:9
+msgid ""
+"The current breakdown is not necessarily the One True Way to organize docs, "
+"but consistency is better than randomness."
+msgstr ""
+
+#: ../../contribute/docs.rst:14
+msgid "intro/*"
+msgstr ""
+
+#: ../../contribute/docs.rst:15
+msgid ""
+"This is everything that brand new users need to know (installation, "
+"features, license, etc.)"
+msgstr ""
+
+#: ../../contribute/docs.rst:18
+msgid "admin/*"
+msgstr ""
+
+#: ../../contribute/docs.rst:19
+msgid "Guides for administrators. Task-oriented."
+msgstr ""
+
+#: ../../contribute/docs.rst:22
+msgid "guides/*"
+msgstr ""
+
+#: ../../contribute/docs.rst:23
+msgid ""
+"API guides for plugin developers. Cookbook-style. Example heavy. Code "
+"snippet heavy. Broken down by services (actions, i18n, routing, db, etc.). "
+"This should only discuss the public API and its behavior, not implementation"
+" details or reasoning."
+msgstr ""
+
+#: ../../contribute/docs.rst:28
+msgid "design/*"
+msgstr ""
+
+#: ../../contribute/docs.rst:29
+msgid ""
+"Design docs for people who want to get a better understanding of how/why "
+"core is built the way it is. This should discuss internal implementation "
+"details of the various services, what tradeoffs were made, and the reasoning"
+" behind the final decision. Should be useful for people who want to "
+"contribute and for communication b/w core devs."
+msgstr ""
+
+#: ../../contribute/docs.rst:35
+msgid "contribute/*"
+msgstr ""
+
+#: ../../contribute/docs.rst:36
+msgid ""
+"Contributors guides for the various ways people can participate in the "
+"project."
+msgstr ""
+
+#: ../../contribute/docs.rst:39
+msgid "appendix/*"
+msgstr ""
+
+#: ../../contribute/docs.rst:40
+msgid ""
+"More detailed/meta/background information about the project (history, "
+"roadmap, etc.)"
+msgstr ""
+
+#: ../../contribute/docs.rst:44
+msgid "Use \"Elgg\" in a grammatically correct way"
+msgstr ""
+
+#: ../../contribute/docs.rst:45
+msgid ""
+"Elgg is not an acronym, so writing it in all caps (ELGG or E-LGG) is "
+"incorrect. Please don’t do this."
+msgstr ""
+
+#: ../../contribute/docs.rst:49
+msgid ""
+"In English, Elgg does not take an article when used as a noun. Here are some"
+" examples to emulate:"
+msgstr ""
+
+#: ../../contribute/docs.rst:48
+msgid "“I’m using Elgg to run my website”"
+msgstr ""
+
+#: ../../contribute/docs.rst:49
+msgid "“Install Elgg to get your community online”"
+msgstr ""
+
+#: ../../contribute/docs.rst:53
+msgid ""
+"When used as an adjective, the article applies to the main noun, so you "
+"should use one. For example:"
+msgstr ""
+
+#: ../../contribute/docs.rst:52
+msgid "\"Go to the Elgg community website to get help.\""
+msgstr ""
+
+#: ../../contribute/docs.rst:53
+msgid "\"I built an Elgg-based network yesterday\""
+msgstr ""
+
+#: ../../contribute/docs.rst:55
+msgid "This advice may not apply in languages other than English."
+msgstr ""
+
+#: ../../contribute/docs.rst:59
+msgid "Avoid first person pronouns"
+msgstr ""
+
+#: ../../contribute/docs.rst:60
+msgid ""
+"Refer to the reader as “you.” Do not include yourself in the normal "
+"narrative."
+msgstr ""
+
+#: ../../contribute/docs.rst:62 ../../contribute/docs.rst:73
+#: ../../contribute/docs.rst:85 ../../contribute/docs.rst:99
+msgid "Before:"
+msgstr ""
+
+#: ../../contribute/docs.rst:64
+msgid "When we’re done installing Elgg, we’ll look for some plugins!"
+msgstr ""
+
+#: ../../contribute/docs.rst:66 ../../contribute/docs.rst:77
+#: ../../contribute/docs.rst:89 ../../contribute/docs.rst:103
+msgid "After:"
+msgstr ""
+
+#: ../../contribute/docs.rst:68
+msgid "When you’re done installing Elgg, look for some plugins!"
+msgstr ""
+
+#: ../../contribute/docs.rst:70
+msgid ""
+"To refer to yourself (avoid this if possible), use your name and write in "
+"the third person. This clarifies to future readers/editors whose opinions "
+"are being expressed."
+msgstr ""
+
+#: ../../contribute/docs.rst:75
+msgid "I think the best way to do X is to use Y."
+msgstr ""
+
+#: ../../contribute/docs.rst:79
+msgid "Evan thinks the best way to do X is to use Y."
+msgstr ""
+
+#: ../../contribute/docs.rst:83
+msgid "Eliminate fluff"
+msgstr ""
+
+#: ../../contribute/docs.rst:87
+msgid ""
+"If you want to use a third-party javascript library within the Elgg "
+"framework, you should take care to call the ``elgg_register_js`` function to"
+" register it."
+msgstr ""
+
+#: ../../contribute/docs.rst:91
+msgid ""
+"To use a third-party javascript library, call ``elgg_register_js`` to "
+"register it."
+msgstr ""
+
+#: ../../contribute/docs.rst:95
+msgid "Prefer absolute dates over relative ones"
+msgstr ""
+
+#: ../../contribute/docs.rst:96
+msgid ""
+"It is not easy to tell when a particular sentence or paragraph was written, "
+"so relative dates quickly become meaningless. Absolute dates also give the "
+"reader a good indication of whether a project has been abandoned, or whether"
+" some advice might be out of date."
+msgstr ""
+
+#: ../../contribute/docs.rst:101
+msgid "Recently the foo was barred. Soon, the baz will be barred too."
+msgstr ""
+
+#: ../../contribute/docs.rst:105
+msgid ""
+"Recently (as of September 2013), the foo was barred. The baz is expected to "
+"be barred by October 2013."
+msgstr ""
+
+#: ../../contribute/docs.rst:109
+msgid "Do not remind the reader to contribute"
+msgstr ""
+
+#: ../../contribute/docs.rst:110
+msgid ""
+"Focus on addressing only the topic at hand. Constant solicitation for free "
+"work is annoying and makes the project look needy. If people want to "
+"contribute to the project, they can visit the contributor guide."
+msgstr ""
+
+#: ../../contribute/i18n.rst:2
+msgid "Translations"
+msgstr ""
+
+#: ../../contribute/i18n.rst:4
+msgid ""
+"Translations multiply the impact that Elgg can have by making it accessible "
+"to a larger percentage of the world."
+msgstr ""
+
+#: ../../contribute/i18n.rst:7
+msgid ""
+"The community will always be indebted to those of you who work hard to "
+"provide high quality translations for Elgg's UI and docs."
+msgstr ""
+
+#: ../../contribute/i18n.rst:11
+msgid "Transifex"
+msgstr ""
+
+#: ../../contribute/i18n.rst:13
+msgid "All translation for the Elgg project is organized through Transifex."
+msgstr ""
+
+#: ../../contribute/i18n.rst:15
+msgid "https://www.transifex.com/organization/elgg"
+msgstr ""
+
+#: ../../contribute/i18n.rst:17
+msgid ""
+"Plugin authors are encouraged to coordinate translations via Transifex as "
+"well so the whole community can be unified and make it really easy for "
+"translators to contribute to any plugin in the Elgg ecosystem."
+msgstr ""
+
+#: ../../contribute/index.rst:2
+msgid "Contributor Guides"
+msgstr ""
+
+#: ../../contribute/index.rst:4
+msgid "Participate in making Elgg even better."
+msgstr ""
+
+#: ../../contribute/index.rst:6
+msgid ""
+"Elgg is a community-driven project. It relies on the support of volunteers "
+"to succeed. Here are some ways you can help:"
+msgstr ""
+
+#: ../../contribute/issues.rst:2
+msgid "Reporting Issues"
+msgstr ""
+
+#: ../../contribute/issues.rst:4
+msgid ""
+"Report bugs and features requests to https://github.com/Elgg/Elgg/issues. "
+"See below for guidelines."
+msgstr ""
+
+#: ../../contribute/issues.rst:8
+msgid "DISCLAIMERS"
+msgstr ""
+
+#: ../../contribute/issues.rst:10
+msgid ""
+"**SECURITY ISSUES SHOULD BE REPORTED TO security @ elgg . org!** Please do "
+"not post any security issues on github!!"
+msgstr ""
+
+#: ../../contribute/issues.rst:12
+msgid ""
+"Support requests belong on the `community site`_. Tickets with support "
+"requests will be closed."
+msgstr ""
+
+#: ../../contribute/issues.rst:14
+msgid "We cannot make any guarantees as to when your ticket will be resolved."
+msgstr ""
+
+#: ../../contribute/issues.rst:17
+msgid "Bug reports"
+msgstr ""
+
+#: ../../contribute/issues.rst:19
+msgid "Before submitting a bug report:"
+msgstr ""
+
+#: ../../contribute/issues.rst:21
+msgid ""
+"Search for an existing ticket on the issue you’re having. Add any extra info"
+" there."
+msgstr ""
+
+#: ../../contribute/issues.rst:23
+msgid "Verify the problem is reproducible"
+msgstr ""
+
+#: ../../contribute/issues.rst:25
+msgid "On the latest version of Elgg"
+msgstr ""
+
+#: ../../contribute/issues.rst:26
+msgid "With all third-party plugins disabled"
+msgstr ""
+
+#: ../../contribute/issues.rst:28
+msgid "Good bug report checklist:"
+msgstr ""
+
+#: ../../contribute/issues.rst:30
+msgid "Expected behavior and actual behavior"
+msgstr ""
+
+#: ../../contribute/issues.rst:31
+msgid "Clear steps to reproduce the problem"
+msgstr ""
+
+#: ../../contribute/issues.rst:32
+msgid "The version of Elgg you’re running"
+msgstr ""
+
+#: ../../contribute/issues.rst:33
+msgid "Browsers affected by this problem"
+msgstr ""
+
+#: ../../contribute/issues.rst:36
+msgid "Feature requests"
+msgstr ""
+
+#: ../../contribute/issues.rst:38
+msgid "Before submitting a feature request:"
+msgstr ""
+
+#: ../../contribute/issues.rst:40
+msgid ""
+"Check the `community site`_ for a plugin that has the features you need."
+msgstr ""
+
+#: ../../contribute/issues.rst:42
+msgid "Consider if you can `develop a plugin`_ that does what you need."
+msgstr ""
+
+#: ../../contribute/issues.rst:43
+msgid ""
+"Search through the closed tickets to see if someone else suggested the same "
+"feature, but got turned down. You’ll need to be able to explain why your "
+"suggestion should be considered this time."
+msgstr ""
+
+#: ../../contribute/issues.rst:47
+msgid "Good feature request checklist:"
+msgstr ""
+
+#: ../../contribute/issues.rst:49
+msgid "Detailed explanation of the feature"
+msgstr ""
+
+#: ../../contribute/issues.rst:50
+msgid "Real-life use-cases"
+msgstr ""
+
+#: ../../contribute/issues.rst:51
+msgid "Proposed API"
+msgstr ""
+
+#: ../../contribute/money.rst:2
+msgid "Becoming a Financial Supporter"
+msgstr ""
+
+#: ../../contribute/money.rst:6
+msgid "All funds raised via the Elgg supporters network go directly into:"
+msgstr ""
+
+#: ../../contribute/money.rst:5
+msgid "Elgg core development"
+msgstr ""
+
+#: ../../contribute/money.rst:6
+msgid "Infrastructure provision (elgg.org, github, etc.)"
+msgstr ""
+
+#: ../../contribute/money.rst:8
+msgid "It is a great way to help with Elgg development!"
+msgstr ""
+
+#: ../../contribute/money.rst:11
+msgid "Benefits"
+msgstr ""
+
+#: ../../contribute/money.rst:12
+msgid ""
+"For only $50 per year for individuals or $150 per year for organizations, "
+"you can get listed as a supporter on `our supporters page`_. Elgg supporters"
+" are listed there unless they request not to be."
+msgstr ""
+
+#: ../../contribute/money.rst:18
+msgid ""
+"Supporters are able to put this official logo on their site if they wish:"
+msgstr ""
+
+#: ../../contribute/money.rst:25
+msgid "Disclaimer"
+msgstr ""
+
+#: ../../contribute/money.rst:26
+msgid ""
+"We operate a no refund policy on supporter subscriptions. If you would like "
+"to withdraw your support, go to PayPal and cancel your subscription. You "
+"will not be billed the following year."
+msgstr ""
+
+#: ../../contribute/money.rst:30
+msgid ""
+"Being an Elgg Supporter does not give an individual or organization the "
+"right to impersonate, trade as or imply they are connected to the Elgg "
+"project. They can, however, mention that they support the Elgg project."
+msgstr ""
+
+#: ../../contribute/money.rst:34
+msgid "If you have any questions about this disclaimer, email info@elgg.org."
+msgstr ""
+
+#: ../../contribute/money.rst:36
+msgid ""
+"We reserve the right to remove or refuse a listing without any prior warning"
+" at our complete discretion. There is no refund policy."
+msgstr ""
+
+#: ../../contribute/money.rst:39
+msgid ""
+"If there is no obvious use of Elgg, your site will be linked to with "
+"\"nofollow\" set."
+msgstr ""
+
+#: ../../contribute/money.rst:42
+msgid "Sign up"
+msgstr ""
+
+#: ../../contribute/money.rst:43
+msgid "If you would like to become an Elgg supporter:"
+msgstr ""
+
+#: ../../contribute/money.rst:45
+msgid "read the disclaimer_ above"
+msgstr ""
+
+#: ../../contribute/money.rst:46
+msgid "on the supporters page, `subscribe via PayPal`__"
+msgstr ""
+
+#: ../../contribute/money.rst:47
+msgid "send an email to info@elgg.org with:"
+msgstr ""
+
+#: ../../contribute/money.rst:49
+msgid "the date you subscribed"
+msgstr ""
+
+#: ../../contribute/money.rst:50
+msgid "your name (and organization name, if applicable)"
+msgstr ""
+
+#: ../../contribute/money.rst:51
+msgid "your website"
+msgstr ""
+
+#: ../../contribute/money.rst:52
+msgid "your Elgg community profile"
+msgstr ""
+
+#: ../../contribute/money.rst:57
+msgid ""
+"Once all the details have been received, we will add you to the appropriate "
+"list. Thanks for your support!"
+msgstr ""
+
+#: ../../contribute/releases.rst:2
+msgid "Release Process Workflow"
+msgstr ""
+
+#: ../../contribute/releases.rst:4
+msgid "Release a new version of Elgg."
+msgstr ""
+
+#: ../../contribute/releases.rst:6
+msgid ""
+"This is the process the core team follows for making a new Elgg release. We "
+"have published this information in the spirit of openness, and to streamline"
+" onboarding of new team members."
+msgstr ""
+
+#: ../../contribute/releases.rst:11
+msgid "Requirements"
+msgstr ""
+
+#: ../../contribute/releases.rst:13
+msgid "SSH access to elgg.osuosl.org"
+msgstr ""
+
+#: ../../contribute/releases.rst:14
+msgid "Commit access to http://github.com/Elgg/Elgg"
+msgstr ""
+
+#: ../../contribute/releases.rst:15
+msgid "Author access to http://blog.elgg.org"
+msgstr ""
+
+#: ../../contribute/releases.rst:16
+msgid "Access to `Twitter account`_"
+msgstr ""
+
+#: ../../contribute/releases.rst:17
+msgid "Access to `G+ page`_"
+msgstr ""
+
+#: ../../contribute/releases.rst:18
+msgid "Node.js and NPM installed"
+msgstr ""
+
+#: ../../contribute/releases.rst:19
+msgid "Transifex client installed (``easy_install transifex-client``)"
+msgstr ""
+
+#: ../../contribute/releases.rst:20
+msgid "Transifex account with access to Elgg project"
+msgstr ""
+
+#: ../../contribute/releases.rst:23
+msgid "1. Prepare and tag the release"
+msgstr ""
+
+#: ../../contribute/releases.rst:25
+msgid "Make sure your local git clone is up to date!"
+msgstr ""
+
+#: ../../contribute/releases.rst:27
+msgid ""
+"Merge latest commits up from lowest supported branch. Visit "
+"https://github.com/Elgg/Elgg/compare/new...old and submit the PR if there is"
+" anything that needs to be merged up."
+msgstr ""
+
+#: ../../contribute/releases.rst:31
+msgid "Install the prerequisites:"
+msgstr ""
+
+#: ../../contribute/releases.rst:38
+msgid "Run the ``release.php`` script. For example, to release 1.9.1:"
+msgstr ""
+
+#: ../../contribute/releases.rst:45
+msgid "This creates a ``release-1.9.1`` branch in your local repo."
+msgstr ""
+
+#: ../../contribute/releases.rst:47
+msgid "Next, submit a PR via Github:"
+msgstr ""
+
+#: ../../contribute/releases.rst:53
+msgid "Once approved and merged, tag the release:"
+msgstr ""
+
+#: ../../contribute/releases.rst:63
+msgid "Update Milestones on Github"
+msgstr ""
+
+#: ../../contribute/releases.rst:62
+msgid "Mark release milestones as completed"
+msgstr ""
+
+#: ../../contribute/releases.rst:63
+msgid "Move unresolved tickets in released milestones to later milestones"
+msgstr ""
+
+#: ../../contribute/releases.rst:66
+msgid "2. Update the website"
+msgstr ""
+
+#: ../../contribute/releases.rst:68
+msgid "The downloads need to point to the new releases."
+msgstr ""
+
+#: ../../contribute/releases.rst:71
+msgid "Build Package"
+msgstr ""
+
+#: ../../contribute/releases.rst:73
+msgid "ssh to elgg.osuosl.org"
+msgstr ""
+
+#: ../../contribute/releases.rst:74
+msgid "Clone https://github.com/Elgg/elgg-scripts"
+msgstr ""
+
+#: ../../contribute/releases.rst:75
+msgid "Use elgg-scripts/build/build.sh to generate the .zip file."
+msgstr ""
+
+#: ../../contribute/releases.rst:77
+msgid ""
+"Run without arguments to see usage. This also generates the ChangeLog.txt "
+"file."
+msgstr ""
+
+#: ../../contribute/releases.rst:79
+msgid "Example::"
+msgstr ""
+
+#: ../../contribute/releases.rst:83
+msgid "MIT::"
+msgstr ""
+
+#: ../../contribute/releases.rst:88
+msgid "Update homepage, download, and previous download pages"
+msgstr ""
+
+#: ../../contribute/releases.rst:90
+msgid "Clone https://github.com/Elgg/old-elgg-website"
+msgstr ""
+
+#: ../../contribute/releases.rst:91
+msgid "Make changes, commit, push."
+msgstr ""
+
+#: ../../contribute/releases.rst:93
+msgid "index.php"
+msgstr ""
+
+#: ../../contribute/releases.rst:94
+msgid "download.php"
+msgstr ""
+
+#: ../../contribute/releases.rst:95
+msgid "previous.php"
+msgstr ""
+
+#: ../../contribute/releases.rst:97
+msgid "Pull to live site"
+msgstr ""
+
+#: ../../contribute/releases.rst:103
+msgid "flush apc cache (via community admin panel)"
+msgstr ""
+
+#: ../../contribute/releases.rst:106
+msgid "3. Make the announcement"
+msgstr ""
+
+#: ../../contribute/releases.rst:108
+msgid "This should be the very last thing you do."
+msgstr ""
+
+#: ../../contribute/releases.rst:110
+msgid ""
+"Compose a blog on http://blog.elgg.org with HTML version of CHANGELOG.md."
+msgstr ""
+
+#: ../../contribute/releases.rst:111
+msgid ""
+"Add tags “release” and “elgg1.x” where x is whatever branch is being "
+"released."
+msgstr ""
+
+#: ../../contribute/releases.rst:112
+msgid "Tweet from the elgg `Twitter account`_"
+msgstr ""
+
+#: ../../contribute/releases.rst:113
+msgid "Post from the `G+ page`_"
+msgstr ""
+
+#: ../../contribute/docs.rst:116
+msgid "Internationalizing documentation"
+msgstr ""
+
+#: ../../contribute/docs.rst:118
+msgid ""
+"When you change documentation, remember to update the documentation "
+"translation templates before you commit:"
+msgstr ""
+
+#: ../../contribute/docs.rst:127
+msgid ""
+"For more information, see http://sphinx-doc.org/latest/intl.html"
+"#translating-with-sphinx-intl"
+msgstr ""

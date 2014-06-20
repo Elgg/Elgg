@@ -246,3 +246,10 @@ texinfo_documents = [
 
 # If true, do not generate a @detailmenu in the "Top" node's menu.
 #texinfo_no_detailmenu = False
+
+
+# -- Options for internationalization and localization -------------------------
+
+# See http://sphinx-doc.org/latest/intl.html for more information.
+locale_dirs = ['locale/']
+gettext_compact = True      # Less translation templates, easier to handle.

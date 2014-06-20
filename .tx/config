@@ -199,3 +199,56 @@ source_file = mod/web_services/languages/en.php
 source_lang = en
 type = PHP_ARRAY
 
+[elgg-docs.design]
+file_filter = docs/locale/<lang>/LC_MESSAGES/design.po
+source_file = docs/locale/pot/design.pot
+source_lang = en
+type = PO
+
+[elgg-docs.tutorials]
+file_filter = docs/locale/<lang>/LC_MESSAGES/tutorials.po
+source_file = docs/locale/pot/tutorials.pot
+source_lang = en
+type = PO
+
+[elgg-docs.about]
+file_filter = docs/locale/<lang>/LC_MESSAGES/about.po
+source_file = docs/locale/pot/about.pot
+source_lang = en
+type = PO
+
+[elgg-docs.index]
+file_filter = docs/locale/<lang>/LC_MESSAGES/index.po
+source_file = docs/locale/pot/index.pot
+source_lang = en
+type = PO
+
+[elgg-docs.admin]
+file_filter = docs/locale/<lang>/LC_MESSAGES/admin.po
+source_file = docs/locale/pot/admin.pot
+source_lang = en
+type = PO
+
+[elgg-docs.contribute]
+file_filter = docs/locale/<lang>/LC_MESSAGES/contribute.po
+source_file = docs/locale/pot/contribute.pot
+source_lang = en
+type = PO
+
+[elgg-docs.appendix]
+file_filter = docs/locale/<lang>/LC_MESSAGES/appendix.po
+source_file = docs/locale/pot/appendix.pot
+source_lang = en
+type = PO
+
+[elgg-docs.intro]
+file_filter = docs/locale/<lang>/LC_MESSAGES/intro.po
+source_file = docs/locale/pot/intro.pot
+source_lang = en
+type = PO
+
+[elgg-docs.guides]
+file_filter = docs/locale/<lang>/LC_MESSAGES/guides.po
+source_file = docs/locale/pot/guides.pot
+source_lang = en
+type = PO
