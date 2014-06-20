@@ -87,6 +87,11 @@ function elgg_is_admin_user($user_guid) {
 
 	$user_guid = (int)$user_guid;
 
+	$current_user = elgg_get_logged_in_user_entity();
+	if ($current_user && $current_user->guid == $user_guid) {
+		return $current_user->isAdmin();
+	}
+
 	// cannot use magic metadata here because of recursion
 
 	// must support the old way of getting admin from metadata
@@ -98,7 +103,7 @@ function elgg_is_admin_user($user_guid) {
 		$yes = elgg_get_metastring_id('yes');
 		$one = elgg_get_metastring_id('1');
 
-		$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as e,
+		$query = "SELECT 1 FROM {$CONFIG->dbprefix}users_entity as e,
 			{$CONFIG->dbprefix}metadata as md
 			WHERE (
 				md.name_id = '$admin'
@@ -108,7 +113,7 @@ function elgg_is_admin_user($user_guid) {
 				AND e.banned = 'no'
 			)";
 	} else {
-		$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as e
+		$query = "SELECT 1 FROM {$CONFIG->dbprefix}users_entity as e
 			WHERE (
 				e.guid = {$user_guid}
 				AND e.admin = 'yes'
