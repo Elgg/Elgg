@@ -14,7 +14,8 @@ elgg_entity_gatekeeper($guid, 'object', 'messages');
 $message = get_entity($guid);
 
 // mark the message as read
-$message->readYet = true;
+$message->readYet = 1;
+messages_invalidate_unread_cache($message);
 
 elgg_set_page_owner_guid($message->getOwnerGUID());
 $page_owner = elgg_get_page_owner_entity();
