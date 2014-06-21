@@ -311,6 +311,14 @@ function elgg_get_river(array $options = array()) {
 			$joins = array_merge($joins, $clauses['joins']);
 		}
 	}
+	
+	if (!access_get_show_hidden_status()) {
+		$dbprefix = elgg_get_config('dbprefix');
+		$joins[] = "JOIN {$dbprefix}entities es ON es.guid = rv.subject_guid";
+		$joins[] = "JOIN {$dbprefix}entities eo ON eo.guid = rv.object_guid";
+		$wheres[] = "es.enabled = 'yes'";
+		$wheres[] = "eo.enabled = 'yes'";
+	}
 
 	// see if any functions failed
 	// remove empty strings on successful functions
