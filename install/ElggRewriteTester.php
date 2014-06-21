@@ -121,6 +121,29 @@ class ElggRewriteTester {
 
 		return true;
 	}
+	
+	public function runLocalhostAccessTest() {
+		$url = elgg_get_site_url();
+		if (ini_get('allow_url_fopen')) {
+			$ctx = stream_context_create(array(
+				'http' => array(
+					'follow_location' => 0,
+					'timeout' => 5,
+				),
+			));
+			$response = file_get_contents($url, null, $ctx);
+		} elseif (function_exists('curl_init')) {
+			// try curl if installed
+			$ch = curl_init();
+			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
+			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+			$response = curl_exec($ch);
+			curl_close($ch);
+		}
+		
+		return $response !== false;
+	}
 
 	/**
 	 * Create Elgg's .htaccess file or confirm that it exists
