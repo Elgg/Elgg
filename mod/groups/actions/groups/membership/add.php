@@ -32,8 +32,13 @@ if (sizeof($user_guid)) {
 
 					system_message(elgg_echo('groups:addedtogroup'));
 				} else {
-					// huh
+					register_error(elgg_echo('groups:error:addedtogroup'));
 				}
+			} else {
+				system_message(elgg_echo('groups:add:alreadymember'));
+				
+				// if an invitation is still pending clear it up, we don't need it
+				remove_entity_relationship($group->guid, 'invited', $user->guid);
 			}
 		}
 	}
