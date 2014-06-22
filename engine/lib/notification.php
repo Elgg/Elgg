@@ -593,13 +593,13 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	// Sanitise subject by stripping line endings
 	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
 	// this is because Elgg encodes everything and matches what is done with body
-	$subject = html_entity_decode($subject, ENT_COMPAT, 'UTF-8'); // Decode any html entities
+	$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8'); // Decode any html entities
 	if (is_callable('mb_encode_mimeheader')) {
 		$subject = mb_encode_mimeheader($subject, "UTF-8", "B");
 	}
 
 	// Format message
-	$body = html_entity_decode($body, ENT_COMPAT, 'UTF-8'); // Decode any html entities
+	$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8'); // Decode any html entities
 	$body = elgg_strip_tags($body); // Strip tags from message
 	$body = preg_replace("/(\r\n|\r)/", "\n", $body); // Convert to unix line endings in body
 	$body = preg_replace("/^From/", ">From", $body); // Change lines starting with From to >From
