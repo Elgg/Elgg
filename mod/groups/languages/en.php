@@ -205,6 +205,8 @@ View and reply to the discussion:
 	'groups:cantremove' => 'Cannot remove user from group',
 	'groups:removed' => 'Successfully removed %s from group',
 	'groups:addedtogroup' => 'Successfully added the user to the group',
+	'groups:error:addedtogroup' => "Could not add the user to the group",
+	'groups:add:alreadymember' => "The user is already a member of this group",
 	'groups:joinrequestnotmade' => 'Could not request to join group',
 	'groups:joinrequestmade' => 'Requested to join group',
 	'groups:joined' => 'Successfully joined group!',
