@@ -10,6 +10,7 @@ if (!isset($vars['annotation'])) {
 }
 
 $like = $vars['annotation'];
+/* @var ElggAnnotation $like */
 
 $user = $like->getOwnerEntity();
 if (!$user) {
