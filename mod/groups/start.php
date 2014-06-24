@@ -1202,7 +1202,10 @@ function discussion_update_reply_access_ids($event, $type, $object) {
  * @return ElggMenuItem[] $return
  */
 function discussion_reply_menu_setup($hook, $type, $return, $params) {
-	if (isset($params['handler']) && $params['handler'] !== 'discussion_reply') {
+	/** @var $reply ElggEntity */
+	$reply = elgg_extract('entity', $params);
+	
+	if (empty($reply) || !elgg_instanceof($reply, 'object', 'discussion_reply')) {
 		return $return;
 	}
 
@@ -1216,9 +1219,6 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 
 	// Reply has the same access as the topic so no need to view it
 	$remove = array('access');
-
-	/** @var $reply ElggEntity */
-	$reply = $params['entity'];
 
 	$user = elgg_get_logged_in_user_entity();
 
