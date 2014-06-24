@@ -398,12 +398,12 @@ class ElggInstaller {
 				'required' => TRUE,
 				),
 			'siteemail' => array(
-				'type' => 'text',
+				'type' => 'email',
 				'value' => '',
 				'required' => FALSE,
 				),
 			'wwwroot' => array(
-				'type' => 'text',
+				'type' => 'url',
 				'value' => elgg_get_site_url(),
 				'required' => TRUE,
 				),
@@ -474,7 +474,7 @@ class ElggInstaller {
 				'required' => TRUE,
 				),
 			'email' => array(
-				'type' => 'text',
+				'type' => 'email',
 				'value' => '',
 				'required' => TRUE,
 				),

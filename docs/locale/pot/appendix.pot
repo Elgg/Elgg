@@ -1,0 +1,248 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg 1.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-21 18:39\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../appendix/history.rst:2
+# 3b33ac1cfacc42d28eb456bb858a2573
+msgid "History"
+msgstr ""
+
+#: ../../appendix/history.rst:4
+# 69cda39555dc444e9e6cb3c2a92501f8
+msgid "The name comes from `a town in Switzerland`__. It also means \"elk\" or \"moose\" in Danish."
+msgstr ""
+
+#: ../../appendix/history.rst:8
+# 05c3b554d73f47c699e5b8b92a5caea0
+msgid "Elgg's initial funding was by a company called Curverider Ltd, which was started by David Tosh and Ben Werdmuller. In 2010, Curverider was acquired by Thematic Networks and control of the open-source project was turned over to `The Elgg Foundation`_. Today, Elgg is a community-driven open source project and has a variety of contributors and sponsors."
+msgstr ""
+
+#: ../../appendix/index.rst:2
+# 4c9996040e114663b583b62d33154bba
+msgid "Appendix"
+msgstr ""
+
+#: ../../appendix/index.rst:4
+# e866fc9e812143b0b8aab89cb2b43169
+msgid "Miscellaneous information about the project."
+msgstr ""
+
+#: ../../appendix/releases.rst:2
+# b866b1973e1f41518e36fbb1255f6d2e
+msgid "Release Policy"
+msgstr ""
+
+#: ../../appendix/releases.rst:4
+# f154575dd4d4409092a697d8d482297a
+msgid "What to expect when upgrading Elgg."
+msgstr ""
+
+#: ../../appendix/releases.rst:6
+# 74684c0d5a6c453c9b9901d061e2c556
+msgid "In general, we adhere to `semantic versioning`_."
+msgstr ""
+
+#: ../../appendix/releases.rst:10
+# a9ea9533759c42a8b5015590ec331391
+msgid "Follow the blog to `stay up to date on the latest releases`__."
+msgstr ""
+
+#: ../../appendix/releases.rst:15
+# 02d0911f50a746ffb8e8efa3953201ad
+msgid "Bugfix Releases (1.9.x)"
+msgstr ""
+
+#: ../../appendix/releases.rst:16
+# 61c1181a14fc49918bad8694a3d66f91
+msgid "Every few weeks."
+msgstr ""
+
+#: ../../appendix/releases.rst:18
+# d0eebb2f95134aeda3885af2a70f55d4
+msgid "Bugfix releases are made regularly to make sure Elgg stays stable, secure, and bug-free. The higher the third digit, the more tested and stable the release is. Since bugfix release focus on fixing bugs and not making major changes, themes and plugins should work from bugfix release to bugfix release."
+msgstr ""
+
+#: ../../appendix/releases.rst:25
+# 953ca44c05ce474c98be36b58d70e22f
+msgid "Feature Releases (1.x.0)"
+msgstr ""
+
+#: ../../appendix/releases.rst:26
+# 0089570e486e42158d333fb19a56a473
+msgid "Every few months."
+msgstr ""
+
+#: ../../appendix/releases.rst:28
+# 692cd2c31a264c79949d4b8419bd8843
+msgid "New features are introduced in Elgg every few months in minor new feature releases. These versions are identified by the second digit (1.**8**.0). These releases aren't as mature as bugfix release, but are considered stable and useable. Though these releases try to be backward compatible, features are added, unused code removed, and overall improvements are made, so plugins and themes might need to be updated to make use of the new and improved features."
+msgstr ""
+
+#: ../../appendix/releases.rst:37
+# 7a79be8915d04f55b1d592d36d4640ec
+msgid "Major Releases (x.0.0)"
+msgstr ""
+
+#: ../../appendix/releases.rst:38
+# 4fc8bb2378f441e595a29c24a4cf2383
+msgid "Every few years."
+msgstr ""
+
+#: ../../appendix/releases.rst:40
+# a9fad3ae9843496289e799a2a5382989
+msgid "Elgg, as all software, inevitably undergoes serious changes and a major new feature release is made. These releases are opportunities for the core team to make dramatic improvements to the underlying platform. Themes and plugins from older versions are not expected to work without modification on different major releases."
+msgstr ""
+
+#: ../../appendix/releases.rst:46
+# 9840be16487c4967ba36fad6eb06a1a0
+msgid "Release Candidates/Betas"
+msgstr ""
+
+#: ../../appendix/releases.rst:47
+# 8118e3b878e94be9958f6b4dac92d0ec
+msgid "Before feature releases and major releases, the core team will typically offer a release candidate or beta. These are meant for testing only and should not be considered production quality. The core team makes these releases available to get some real-world testing and feedback on the release. That said, the API in release candidates is considered stable, so once a release candidate is made available, you should feel comfortable writing plugins against any new APIs."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:2
+# c24c6ec3d46a4c98b9fc0651b3764d58
+msgid "Roadmap"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:4
+# acc2b5d6cfea4343b9f5e9ad5f83efc2
+msgid "What direction is the project going? What exciting new features are coming soon?"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:6
+# 1324b5cce73a44dc90af1f78d49598da
+msgid "We do not publish detailed roadmaps, but it’s possible to get a sense for our general direction by utilizing the following resources:"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:9
+# 483627be9d6343e2b2fdc3129fa6bd0d
+msgid "Our `feedback and planning group`_ is used to host early discussion about what will be worked on next."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:10
+# 300b68a55d8744569477ef055dc05f75
+msgid "Our `Github milestones`_ represent a general direction for the future releases of Elgg. This is the closest thing to a traditional roadmap that we have."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:12
+# 26cbe64b61c54ddea70a7de56a8a0622
+msgid "`Github pull requests`_ will give you a good idea of what’s currently being developed, but nothing is sure until the PR is actually checked in."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:14
+# 0aa35caed7124565b1e44afb4b059e34
+msgid "We use the `developer blog`_ to post announcements of features that have recently been checked in to our development branch, which gives the surest indication of what features will be available in the next release."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:24
+# 1360237448ee4669b384d1c28d7e7537
+msgid "Values"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:26
+# 1a90d5f7a32d414cbf70fd1e4e009a0b
+msgid "We have several overarching goals/values that affect the direction of Elgg. Enhancements generally must promote these values in order to be accepted."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:30
+# 0e895f62814f42178669479657269e24
+msgid "Accessibility"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:32
+# 6d22e6341e9141a1ae43b2ec02d780fd
+msgid "Elgg-based sites should be usable by anyone anywhere. That means we'll always strive to make Elgg:"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:34
+# efb2d14f4c2e47fe9036478e61120e1a
+msgid "Device-agnostic -- mobile, tablet, desktop, etc. friendly"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:35
+# 11beac61279b4f31a461766dd3e60b42
+msgid "Language-agnostic -- i18n, RTL, etc."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:36
+# e29edd05bbc1412cb3774d5749ff7cc9
+msgid "Capability-agnostic -- touch, keyboard, screen-reader friendly"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:39
+# 1579db86ae6b4bac8fa559faa151450e
+msgid "Testability"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:41
+# f890e65b25794a3899d7ae3c07a3fd99
+msgid "We want to **make manual testing unnecessary** for core developers, plugin authors, and site administrators by promoting and enabling fast, automated testing at every level of the Elgg stack."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:44
+# c860dfd042de4e4392492fdc514d34c8
+msgid "We think APIs are broken if they require plugin authors to write untestable code. We know there are a lot of violations of this principle in core currently and are working to fix it."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:47
+# 5765c2ed557c4ab783d6be63d510d25a
+msgid "We look forward to a world where the core developers do not need to do any manual testing to verify the correctness of code contributed to Elgg. Similarly, we envision a world where site administrators can upgrade and install new plugins with confidence that everything works well together."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:51
+# a4e3c61d57474d2c8b127a566b995b49
+msgid "TODO: other goals/values?"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:54
+# c896da8a226d4f8db0900c4af1167440
+msgid "FAQ"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:57
+# d5fece717cb24abf85e392e302cbf424
+msgid "When will feature X be implemented?"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:58
+# d93a3904136b4e82919b584ea55ad928
+msgid "We cannot promise when features will get implemented because new features are checked into Elgg only when someone is motivated enough to implement the feature and submit a pull request. The best we can do is tell you to look out for what features existing developers have expressed interest in working on."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:64
+# c2cbb10373414c34aaad866c19ec3c17
+msgid "The best way to ensure a feature gets implemented is to discuss it with the core team and implement it yourself. See our :doc:`/about/contributing` guide if you're interested. We love new contributors!"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:67
+# 91bee0c8855e4bb6843fcd0f62bac862
+msgid "Do not rely on future enhancements if you're on the fence as to whether to use Elgg. Evaluate it given the current feature set. Upcoming features will almost certainly not materialize within your timeline."
+msgstr ""
+
+#: ../../appendix/roadmap.rst:72
+# 1260aa6dbc4e4a37b28274c0a52418fd
+msgid "When is version X.Y.Z going to be released?"
+msgstr ""
+
+#: ../../appendix/roadmap.rst:73
+# 39aac0101df74566a4bb47b8fa5f8149
+msgid "The next version will be released when the core team feels it's ready and has time to cut the release. http://github.com/Elgg/Elgg/issues/milestones will give you some rough ideas of timeline."
+msgstr ""
+

@@ -6,45 +6,65 @@
 require dirname(dirname(dirname(dirname(__FILE__)))) . '/.scripts/ElggCommitMessage.php';
 
 class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
-	public function testBadFormats() {
-		$msgs = array(
-			'A bad commit message',
-			'chore: Summary',
-			'chore(): Summary',
-			'chore(test):Summary',
-			'chore(test):',
-			'chore(test): ',
-			"chore(test):\n",
-		);
+	public function assertInvalidCommitMessages(array $msgs) {
 		$msg = new ElggCommitMessage();
 
 		foreach ($msgs as $text) {
 			$msg->setMsg($text);
 			$this->assertFalse($msg->isValidFormat(), $text);
-		}
+		}		
 	}
-
-	public function testShouldIgnore() {
-		$ignored = array(
-			'Merge pull request',
-			'Merge abc123 into def456',
-			"Merge pull request abc123\nBut has other stuff, too",
-			'Merge release 1.8.18 into master.',
-			'Revert "fix(amd): removed elgg_require_js for backwards compatibility"
-
-			This reverts commit 76584089bee2b3246c736edb6b250e149acf906f.
-
-			Conflicts:
-				engine/lib/views.php'
-		);
-
+	
+	public function testRejectsMessagesWithoutSummary() {
+		$this->assertInvalidCommitMessages(array(
+			'chore(test):',
+			'chore(test): ',
+			"chore(test):\n",
+		));
+	}
+	
+	public function testRejectsMessagesWithoutType() {
+		$this->assertInvalidCommitMessages(array(
+			'A bad commit message',
+		));
+	}
+	
+	public function testRejectsMessagesWithoutComponent() {
+		$this->assertInvalidCommitMessages(array(
+			'chore: Summary',
+			'chore(): Summary',
+			'chore(test):Summary',
+		));
+	}
+	
+	public function assertIgnoreCommitMessages(array $ignored) {
 		foreach ($ignored as $msg) {
 			$msg = new ElggCommitMessage($msg);
 			$this->assertTrue($msg->shouldIgnore(), $msg);
 		}
 	}
+	
+	public function testShouldIgnoreMerges() {
+		$this->assertIgnoreCommitMessages(array(
+			'Merge pull request',
+			'Merge abc123 into def456',
+			"Merge pull request abc123\nBut has other stuff, too",
+			'Merge release 1.8.18 into master.',
+		));
+	}
+	
+	public function testShouldIgnoreReverts() {
+		$this->assertIgnoreCommitMessages(array(
+			'Revert "fix(amd): removed elgg_require_js for backwards compatibility"
 
-	public function testPartsNoBody() {
+			This reverts commit 76584089bee2b3246c736edb6b250e149acf906f.
+
+			Conflicts:
+				engine/lib/views.php'		
+		));
+	}
+
+	public function testCanParseMessagesWithoutBody() {
 		$text = "chore(test): Summary";
 		
 		$msg = new ElggCommitMessage($text);
@@ -56,7 +76,7 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame('', $msg->getPart('body'));
 	}
 
-	public function testPartsWithBody() {
+	public function testCanParseMessagesWithOneLineBody() {
 		$text = "chore(test): Summary\nOptional body";
 		$msg = new ElggCommitMessage($text);
 
@@ -67,7 +87,7 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame('Optional body', $msg->getPart('body'));
 	}
 
-	public function testPartsExtendedBody() {
+	public function testCanParseMessagesWithAnExtendedBody() {
 		$title = "chore(test): Summary";
 
 		$body = <<<___MSG
@@ -87,7 +107,7 @@ ___MSG;
 		$this->assertSame($body, $msg->getPart('body'));
 	}
 
-	public function testLineLength() {
+	public function testIsValidLineLengthRejectsLinesOverTheMaxLineLength() {
 		$text = "chore(test): But with long line";
 		$msg = new ElggCommitMessage();
 		$msg->setMaxLineLength(15);
@@ -95,7 +115,7 @@ ___MSG;
 		$this->assertFalse($msg->isValidLineLength());
 	}
 
-	public function testFindLengthyLines() {
+	public function testFindLengthyLinesFindsLinesOverTheMaxLineLength() {
 		$text = "This text is 33 characters long.";
 		$this->assertSame(array(1), ElggCommitMessage::findLengthyLines($text, 30));
 
@@ -111,7 +131,7 @@ ___TEXT;
 		$this->assertSame(array(2), ElggCommitMessage::findLengthyLines($text3, 30));
 	}
 
-	public function testLengthyLines() {
+	public function testGetLengthyLinesFindsLinesOverTheMaxLineLength() {
 		$text =<<<___MSG
 chore(test): But with long line
 
@@ -125,20 +145,8 @@ ___MSG;
 		$this->assertSame(array(3, 5), $msg->getLengthyLines());
 	}
 
-	public function testType() {
-		$types = array(
-			'feature',
-			'fix',
-			'docs',
-			'chore',
-			'perf',
-			'security',
-			'deprecate',
-		);
-
-		// make sure we have all the types
-		$this->assertSame($types, ElggCommitMessage::getValidTypes(),
-				"Mismatched valid types between test and class");
+	public function testIsValidTypeReturnsTrueForValidTypes() {
+		$types = ElggCommitMessage::getValidTypes();
 
 		foreach ($types as $type) {
 			$msg = new ElggCommitMessage("{$type}(component): Summary");
@@ -146,7 +154,7 @@ ___MSG;
 		}
 	}
 
-	public function testRemoveComments() {
+	public function testRemovesComments() {
 		$text = <<<___TEXT
 These are lines of text
 # this is a comment

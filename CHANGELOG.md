@@ -1,3 +1,23 @@
+<a name="1.9.0-rc.3"></a>
+### 1.9.0-rc.3  (2014-06-23)
+
+#### Contributors
+
+* Evan Winslow (4)
+* Paweł Sroka (1)
+* Per Jensen (1)
+* RiverVanRain (1)
+
+#### Bug Fixes
+
+* **a11y:**
+  * Add semantic structure to installer page layout ([f446e6f1](https://github.com/Elgg/Elgg/commit/f446e6f1ad328fb8573b947fd7a2f0d52cb31955))
+  * Use HTML5 form features on install forms ([434efa22](https://github.com/Elgg/Elgg/commit/434efa22228fa1217553951b68ccdff0959ed3a7))
+  * Label form fields in installer correctly ([dff254a9](https://github.com/Elgg/Elgg/commit/dff254a9417525660234b7aab5f165cbf11b7bde))
+* **aalborg_theme:** removes unwanted  margins ([b972402d](https://github.com/Elgg/Elgg/commit/b972402da3822abf59fdee5f6126a53f52c1fe48))
+* **replies:** Show reply's link on river ([5fc031a5](https://github.com/Elgg/Elgg/commit/5fc031a574543f914ff0694b447a7ab399f0a2e5))
+
+
 <a name="1.9.0-rc.2"></a>
 ### 1.9.0-rc.2  (2014-06-09)
 
