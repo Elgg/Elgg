@@ -154,9 +154,9 @@ function thewire_page_handler($page) {
  * @return string
  */
 function thewire_set_url($hook, $type, $url, $params) {
-	$entity = $params['entity'];
+	$entity = elgg_extract('entity', $params);
 	if (elgg_instanceof($entity, 'object', 'thewire')) {
-		return "thewire/view/" . $entity->guid;
+		return "thewire/thread/" . $entity->wire_thread;
 	}
 }
 
