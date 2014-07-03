@@ -9,7 +9,7 @@
  * @subpackage Administration.User
  */
 
-// deleting users who own a lot of content takes a while; getting rid of the timeout
+// deleting users who own a lot of content takes a while; eliminating the timeout
 set_time_limit(0);
 
 // get the user
