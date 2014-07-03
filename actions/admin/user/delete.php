@@ -9,7 +9,10 @@
  * @subpackage Administration.User
  */
 
-// Get the user
+// deleting users who own a lot of content takes a while; getting rid of the timeout
+set_time_limit(0);
+
+// get the user
 $guid = get_input('guid');
 $user = get_entity($guid);
 
