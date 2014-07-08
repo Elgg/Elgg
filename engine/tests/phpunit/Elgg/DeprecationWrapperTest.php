@@ -37,7 +37,7 @@ class Elgg_DeprecationWrapperTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testWrapObject() {
-		$obj = new Elgg_DeprecationWrapperTestObj();
+		$obj = new Elgg_DeprecationWrapperTestObj1();
 		$obj = new Elgg_DeprecationWrapper($obj, 'BAD!', 1.8, array($this, 'report'));
 		$file = __FILE__;
 		$foo = $obj->foo; $line = __LINE__;
@@ -53,19 +53,69 @@ class Elgg_DeprecationWrapperTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals("$file:$line", $this->last_stack_line);
 	}
 
-	function testArrayAccessToObject() {
+	function testArrayAccessProxiesObjectArrayAccessMethods() {
+		$file = __FILE__;
+		$obj = new Elgg_DeprecationWrapperTestObj2();
+		$obj->data['foo'] = 'test';
+		$wrapper = new Elgg_DeprecationWrapper($obj, 'FOO', 1.9, array($this, 'report'));
+
+		$foo = $wrapper['foo']; $line = __LINE__;
+		$this->assertEquals('test', $foo);
+		$this->assertEquals("$file:$line", $this->last_stack_line);
+
+		$wrapper[0] = 'value'; $line = __LINE__;
+		$this->assertEquals('value', $obj->data[0]);
+		$this->assertEquals("$file:$line", $this->last_stack_line);
+
+		unset($wrapper[0]); $line = __LINE__;
+		$this->assertFalse(isset($obj->data[0]));
+		$this->assertEquals("$file:$line", $this->last_stack_line);
+
+		$wrapper[] = 'hello'; $line = __LINE__;
+		$key_created = array_search('hello', $obj->data);
+		$this->assertFalse($key_created === false);
+		$this->assertTrue($key_created !== '');
+		$this->assertEquals("$file:$line", $this->last_stack_line);
+	}
+
+	function testArrayAccessProxiesProperties() {
+		$file = __FILE__;
 		$obj = new stdClass();
 		$obj->foo = 'test';
-		$wrapper = new Elgg_DeprecationWrapper($obj, 'FOO', 1.9);
-		$this->assertEquals('test', $wrapper['foo']);
+		$wrapper = new Elgg_DeprecationWrapper($obj, 'FOO', 1.9, array($this, 'report'));
 
-		$wrapper[0] = 'value';
-		$this->assertEquals('value', $wrapper[0]);
+		$foo = $wrapper['foo']; $line = __LINE__;
+		$this->assertEquals('test', $foo);
+		$this->assertEquals("$file:$line", $this->last_stack_line);
+
+		$wrapper[0] = 'value'; $line = __LINE__;
+		$this->assertEquals('value', $obj->{'0'});
+		$this->assertEquals("$file:$line", $this->last_stack_line);
 	}
 }
 
-class Elgg_DeprecationWrapperTestObj {
+class Elgg_DeprecationWrapperTestObj1 {
 	public $foo = 'foo';
 	public function foo() { return 'foo'; }
 	public function __toString() { return 'foo'; }
+}
+
+class Elgg_DeprecationWrapperTestObj2 extends ArrayObject {
+	public $data = array();
+	public function offsetSet($offset, $value) {
+		if (is_null($offset)) {
+			$this->data[] = $value;
+		} else {
+			$this->data[$offset] = $value;
+		}
+	}
+	public function offsetExists($offset) {
+		return array_key_exists($offset, $this->data);
+	}
+	public function offsetUnset($offset) {
+		unset($this->data[$offset]);
+	}
+	public function offsetGet($offset) {
+		return isset($this->data[$offset]) ? $this->data[$offset] : null;
+	}
 }
