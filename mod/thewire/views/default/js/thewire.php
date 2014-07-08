@@ -15,8 +15,8 @@ elgg.thewire.init = function() {
 	};
 
 	$("#thewire-textarea").live({
-		keydown: callback,
-		keyup: callback
+		input: callback,
+		onpropertychange: callback
 	});
 
 	$(".thewire-previous").live('click', elgg.thewire.viewPrevious);
