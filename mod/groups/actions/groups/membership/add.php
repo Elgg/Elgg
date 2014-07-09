@@ -14,6 +14,7 @@ $group_guid = get_input('group_guid');
 $group = get_entity($group_guid);
 /* @var ElggGroup $group */
 
+$errors = array();
 if (sizeof($user_guid)) {
 	foreach ($user_guid as $u_guid) {
 		$user = get_user($u_guid);
@@ -32,11 +33,24 @@ if (sizeof($user_guid)) {
 							));
 
 					system_message(elgg_echo('groups:addedtogroup'));
-				} else {
-					// huh
+				}
+				else {
+					$errors[] = elgg_echo('groups:error:addedtogroup', array($user->name));
 				}
 			}
+			else {
+				$errors[] = elgg_echo('groups:add:alreadymember', array($user->name));
+				
+				// if an invitation is still pending clear it up, we don't need it
+				remove_entity_relationship($group->guid, 'invited', $user->guid);
+			}
 		}
+	}
+}
+
+if ($errors) {
+	foreach ($errors as $error) {
+		register_error($error);
 	}
 }
 
