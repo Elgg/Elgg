@@ -14,9 +14,9 @@ update_data($q1);
 // update any river entries that need to be disabled
 $q2 = <<<Q2
 	UPDATE {$dbprefix}river AS rv
-	LEFT JOIN elgg_entities AS se ON se.guid = rv.subject_guid
-	LEFT JOIN elgg_entities AS te ON te.guid = rv.target_guid
-	LEFT JOIN elgg_entities AS oe ON oe.guid = rv.object_guid
+	LEFT JOIN {$dbprefix}entities AS se ON se.guid = rv.subject_guid
+	LEFT JOIN {$dbprefix}entities AS te ON te.guid = rv.target_guid
+	LEFT JOIN {$dbprefix}entities AS oe ON oe.guid = rv.object_guid
 	SET rv.enabled = 'no'
 	WHERE (se.enabled = 'no' OR te.enabled = 'no' OR oe.enabled = 'no');
 Q2;
