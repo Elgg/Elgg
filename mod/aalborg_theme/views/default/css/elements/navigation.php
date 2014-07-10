@@ -307,15 +307,18 @@
 	display: none;
 	margin-left: 15px;
 }
+.elgg-menu-page .elgg-state-selected > .elgg-child-menu {
+	display: block;
+}
 .elgg-menu-page .elgg-menu-closed:before, .elgg-menu-opened:before {
 	display: inline-block;
 	padding-right: 4px;
 }
 .elgg-menu-page .elgg-menu-closed:before {
-	content: "\002B";
+	content: "\25B8";
 }
 .elgg-menu-page .elgg-menu-opened:before {
-	content: "\002D";
+	content: "\25BE";
 }
 
 /* ***************************************

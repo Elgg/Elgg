@@ -39,7 +39,7 @@ run_commands(array(
 	"git --version",
 	"npm --version",
 	"node --version",
-	"which sphinx-build",
+	"sphinx-build --version",
 
 	"cd $elggPath",
 	"git checkout -B $branch",

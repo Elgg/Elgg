@@ -4,35 +4,19 @@
  *
  * @uses $vars['item']
  */
+
 $item = $vars['item'];
 
-$name = $item->getSubjectEntity()->name;
-$name = htmlspecialchars($name, ENT_NOQUOTES, 'UTF-8');
-$title = elgg_echo('river:update', array($name));
+$output = elgg_view($item->getView(), $vars);
 
-$timestamp = date('r', $item->getTimePosted());
-$body = elgg_view('river/elements/summary', $vars, false, false, 'default');
-
-
-$object = $item->getObjectEntity();
-if ($object) {
-	$url = htmlspecialchars($object->getURL());
-} else {
-	$url = elgg_normalize_url('activity');
+if (empty($output)) {
+	$output = elgg_view($item->getView(), $vars, false, false, 'default');
 }
 
-$site_url = parse_url(elgg_get_site_url());
-$domain = htmlspecialchars($site_url['host'], ENT_NOQUOTES, 'UTF-8');
-
-$html = <<<__HTML
+$rss_item = <<<__ITEM
 <item>
-	<guid isPermaLink="false">$domain::river::$item->id</guid>
-	<pubDate>$timestamp</pubDate>
-	<link>$url</link>
-	<title><![CDATA[$title]]></title>
-	<description><![CDATA[$body]]></description>
+	$output
 </item>
+__ITEM;
 
-__HTML;
-
-echo $html;
+echo $rss_item;

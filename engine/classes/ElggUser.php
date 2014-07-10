@@ -441,42 +441,63 @@ class ElggUser extends ElggEntity
 	/**
 	 * Gets this user's friends
 	 *
-	 * @param string $subtype Optionally, the user subtype (leave blank for all)
-	 * @param int    $limit   The number of users to retrieve
-	 * @param int    $offset  Indexing offset, if any
+	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 *                       for a list of options. 'relationship_guid' is set to
+	 *                       this entity, relationship name to 'friend' and type to 'user'.
+	 * @param int   $limit   The number of users to retrieve (deprecated)
+	 * @param int   $offset  Indexing offset, if any (deprecated)
 	 *
 	 * @return array|false Array of ElggUser, or false, depending on success
 	 */
-	public function getFriends($subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10, $offset = 0) {
-		return elgg_get_entities_from_relationship(array(
-			'relationship' => 'friend',
-			'relationship_guid' => $this->guid,
-			'type' => 'user',
-			'subtype' => $subtype,
-			'limit' => $limit,
-			'offset' => $offset,
-		));
+	public function getFriends($options = array(), $limit = 10, $offset = 0) {
+		if (is_array($options)) {
+			$options['relationship'] = 'friend';
+			$options['relationship_guid'] = $this->getGUID();
+			$options['type'] = 'user';
+			return elgg_get_entities_from_relationship($options);
+		} else {
+			elgg_deprecated_notice("ElggUser::getFriends takes an options array", 1.9);
+			return elgg_get_entities_from_relationship(array(
+				'relationship' => 'friend',
+				'relationship_guid' => $this->guid,
+				'type' => 'user',
+				'subtype' => $options,
+				'limit' => $limit,
+				'offset' => $offset,
+			));
+		}
 	}
 
 	/**
 	 * Gets users who have made this user a friend
 	 *
-	 * @param string $subtype Optionally, the user subtype (leave blank for all)
-	 * @param int    $limit   The number of users to retrieve
-	 * @param int    $offset  Indexing offset, if any
+	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 *                       for a list of options. 'relationship_guid' is set to
+	 *                       this entity, relationship name to 'friend', type to 'user'
+	 *                       and inverse_relationship to true.
+	 * @param int   $limit   The number of users to retrieve (deprecated)
+	 * @param int   $offset  Indexing offset, if any (deprecated)
 	 *
 	 * @return array|false Array of ElggUser, or false, depending on success
 	 */
-	public function getFriendsOf($subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10, $offset = 0) {
-		return elgg_get_entities_from_relationship(array(
-			'relationship' => 'friend',
-			'relationship_guid' => $this->guid,
-			'inverse_relationship' => true,
-			'type' => 'user',
-			'subtype' => $subtype,
-			'limit' => $limit,
-			'offset' => $offset,
-		));
+	public function getFriendsOf($options = array(), $limit = 10, $offset = 0) {
+		if (is_array($options)) {
+			$options['relationship'] = 'friend';
+			$options['relationship_guid'] = $this->getGUID();
+			$options['inverse_relationship'] = true;
+			$options['type'] = 'user';
+			return elgg_get_entities_from_relationship($options);
+		} else {
+			elgg_deprecated_notice("ElggUser::getFriendsOf takes an options array", 1.9);
+			return elgg_get_entities_from_relationship(array(
+				'relationship' => 'friend',
+				'relationship_guid' => $this->guid,
+				'type' => 'user',
+				'subtype' => $options,
+				'limit' => $limit,
+				'offset' => $offset,
+			));
+		}
 	}
 
 	/**
@@ -573,42 +594,61 @@ class ElggUser extends ElggEntity
 	/**
 	 * Get an array of ElggObject owned by this user.
 	 *
-	 * @param string $subtype The subtype of the objects, if any
-	 * @param int    $limit   Number of results to return
-	 * @param int    $offset  Any indexing offset
+	 * @param array $options Options array. See elgg_get_entities() for a list of options.
+	 *                       'type' is set to object and owner_guid to this entity.
+	 * @param int   $limit   Number of results to return (deprecated)
+	 * @param int   $offset  Any indexing offset (deprecated)
 	 *
 	 * @return array|false
 	 */
-	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
-		$params = array(
-			'type' => 'object',
-			'subtype' => $subtype,
-			'owner_guid' => $this->getGUID(),
-			'limit' => $limit,
-			'offset' => $offset
-		);
-		return elgg_get_entities($params);
+	public function getObjects($options = array(), $limit = 10, $offset = 0) {
+		if (is_array($options)) {
+			$options['type'] = 'object';
+			$options['owner_guid'] = $this->getGUID();
+			return elgg_get_entities($options);
+		} else {
+			elgg_deprecated_notice("ElggUser::getObjects takes an options array", 1.9);
+			return elgg_get_entities(array(
+				'type' => 'object',
+				'subtype' => $options,
+				'owner_guid' => $this->getGUID(),
+				'limit' => $limit,
+				'offset' => $offset
+			));
+		}
 	}
 
 	/**
 	 * Get an array of ElggObjects owned by this user's friends.
 	 *
-	 * @param string $subtype The subtype of the objects, if any
-	 * @param int    $limit   Number of results to return
-	 * @param int    $offset  Any indexing offset
+	 * @param array $options Options array. See elgg_get_entities_from_relationship()
+	 *                       for a list of options. 'relationship_guid' is set to
+	 *                       this entity, type to 'object', relationship name to 'friend'
+	 *                       and relationship_join_on to 'container_guid'.
+	 * @param int   $limit   Number of results to return (deprecated)
+	 * @param int   $offset  Any indexing offset (deprecated)
 	 *
 	 * @return array|false
 	 */
-	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) {
-		return elgg_get_entities_from_relationship(array(
-			'type' => 'object',
-			'subtype' => $subtype,
-			'limit' => $limit,
-			'offset' => $offset,
-			'relationship' => 'friend',
-			'relationship_guid' => $this->getGUID(),
-			'relationship_join_on' => 'container_guid',
-		));
+	public function getFriendsObjects($options = array(), $limit = 10, $offset = 0) {
+		if (is_array($options)) {
+			$options['type'] = 'object';
+			$options['relationship'] = 'friend';
+			$options['relationship_guid'] = $this->getGUID();
+			$options['relationship_join_on'] = 'container_guid';
+			return elgg_get_entities_from_relationship($options);
+		} else {
+			elgg_deprecated_notice("ElggUser::getFriendsObjects takes an options array", 1.9);
+			return elgg_get_entities_from_relationship(array(
+				'type' => 'object',
+				'subtype' => $options,
+				'limit' => $limit,
+				'offset' => $offset,
+				'relationship' => 'friend',
+				'relationship_guid' => $this->getGUID(),
+				'relationship_join_on' => 'container_guid',
+			));
+		}
 	}
 
 	/**

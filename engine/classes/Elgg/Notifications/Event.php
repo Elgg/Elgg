@@ -16,7 +16,7 @@ class Elgg_Notifications_Event {
 	/* @var string the subtype of the action's object */
 	protected $object_subtype;
 
-	/* @var int The identifier of the object (GUID for entity, id for relationship or annotation) */
+	/* @var int The identifier of the object (GUID for entity) */
 	protected $object_id;
 
 	/* @var int The GUID of the user who triggered the event */
@@ -26,16 +26,12 @@ class Elgg_Notifications_Event {
 	/**
 	 * Create a notification event
 	 *
-	 * @param ElggData $object The object of the event (ElggEntity, ElggAnnotation, ElggRelationship)
+	 * @param ElggData $object The object of the event (ElggEntity)
 	 * @param string   $action The name of the action (default: create)
 	 * @param ElggUser $actor  The user that caused the event (default: logged in user)
 	 * @throws InvalidArgumentException
 	 */
-	public function __construct($object, $action, $actor = null) {
-		if (!($object instanceof ElggData)) {
-			throw new InvalidArgumentException('$object is not an instance of ElggData');
-		}
-
+	public function __construct(ElggData $object, $action, ElggUser $actor = null) {
 		if (elgg_instanceof($object)) {
 			$this->object_type = $object->getType();
 			$this->object_subtype = $object->getSubtype();

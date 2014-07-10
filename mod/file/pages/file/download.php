@@ -31,8 +31,11 @@ if (strpos($mime, "image/") !== false || $mime == "application/pdf") {
 } else {
 	header("Content-Disposition: attachment; filename=\"$filename\"");
 }
+header("Content-Length: {$file->getSize()}");
 
-ob_clean();
+while (ob_get_level()) {
+    ob_end_clean();
+}
 flush();
 readfile($file->getFilenameOnFilestore());
 exit;
