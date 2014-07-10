@@ -5,17 +5,18 @@
  * @package    Elgg.Core
  * @subpackage Core
  * 
- * @property int    $id            The unique identifier (read-only)
- * @property int    $subject_guid  The GUID of the actor
- * @property int    $object_guid   The GUID of the object
- * @property int    $target_guid   The GUID of the object's container
- * @property int    $annotation_id The ID of the annotation involved in the action
- * @property string $type          The type of one of the entities involved in the action
- * @property string $subtype       The subtype of one of the entities involved in the action
- * @property string $action_type   The name of the action
- * @property string $view          The view for displaying this river item
- * @property int    $access_id     The visibility of the river item
- * @property int    $posted        UNIX timestamp when the action occurred
+ * @property-read int    $id            The unique identifier (read-only)
+ * @property-read int    $subject_guid  The GUID of the actor
+ * @property-read int    $object_guid   The GUID of the object
+ * @property-read int    $target_guid   The GUID of the object's container
+ * @property-read int    $annotation_id The ID of the annotation involved in the action
+ * @property-read string $type          The type of one of the entities involved in the action
+ * @property-read string $subtype       The subtype of one of the entities involved in the action
+ * @property-read string $action_type   The name of the action
+ * @property-read string $view          The view for displaying this river item
+ * @property-read int    $access_id     The visibility of the river item
+ * @property-read int    $posted        UNIX timestamp when the action occurred
+ * @property-read string $enabled       Is the river item enabled yes|no
  */
 class ElggRiverItem {
 	public $id;
@@ -29,6 +30,7 @@ class ElggRiverItem {
 	public $access_id;
 	public $view;
 	public $posted;
+	public $enabled;
 
 	/**
 	 * Construct a river item object given a database row.
@@ -153,6 +155,7 @@ class ElggRiverItem {
 		$object->read_access = $this->access_id;
 		$object->action = $this->action_type;
 		$object->time_posted = date('c', $this->getTimePosted());
+		$object->enabled = $this->enabled;
 		$params = array('item' => $this);
 		return elgg_trigger_plugin_hook('to:object', 'river_item', $params, $object);
 	}

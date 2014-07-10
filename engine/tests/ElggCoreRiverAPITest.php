@@ -98,4 +98,44 @@ class ElggCoreRiverAPITest extends ElggCoreUnitTest {
 		$result = _elgg_get_river_type_subtype_where_sql('rv', $types, $subtypes, null);
 		$this->assertIdentical($result, "((rv.type = 'object') AND ((rv.subtype = 'blog') OR (rv.subtype = 'file')))");
 	}
+	
+	public function testElggRiverDisableEnable() {
+		$user = new ElggUser();
+		$user->save();
+		
+		$entity = new ElggObject();
+		$entity->save();
+		
+		$params = array(
+			'view' => 'river/relationship/friend/create',
+			'action_type' => 'create',
+			'subject_guid' => $user->guid,
+			'object_guid' => $entity->guid,
+		);
+
+		$id = elgg_create_river_item($params);
+
+		$river = elgg_get_river(array('ids' => array($id)));
+
+		$this->assertIdentical($river[0]->enabled, 'yes');
+		
+		$user->disable();
+		
+		// should no longer be able to get the river
+		$river = elgg_get_river(array('ids' => array($id)));
+		
+		$this->assertIdentical($river, array());
+		
+		// renabling the user should re-enable the river
+		access_show_hidden_entities(true);
+		$user->enable();
+		access_show_hidden_entities(false);
+		
+		$river = elgg_get_river(array('ids' => array($id)));
+		
+		$this->assertIdentical($river[0]->enabled, 'yes');
+		
+		$user->delete();
+		$entity->delete();
+	}
 }
