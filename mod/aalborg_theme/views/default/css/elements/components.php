@@ -42,7 +42,7 @@
 	margin-bottom: 4px;
 }
 .elgg-item .elgg-content {
-	margin: 10px 5px 10px 0;
+	margin: 10px 0;
 }
 .elgg-content {
 	clear: both;

@@ -27,6 +27,7 @@ header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', TRUE);
 	<head>
 		<title><?php echo $title; ?></title>
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<link rel="SHORTCUT ICON" href="<?php echo elgg_get_site_url(); ?>_graphics/favicon.ico" />
 		<link rel="stylesheet" href="<?php echo elgg_get_site_url(); ?>install/css/install.css" type="text/css" />
 		<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery-1.11.0.min.js"></script>
@@ -34,24 +35,24 @@ header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', TRUE);
 	</head>
 	<body>
 		<div class="elgg-page">
-			<div class="elgg-page-header">
+			<header class="elgg-page-header" role="banner">
 				<?php echo elgg_view('page/elements/header', $vars); ?>
-			</div>
+			</header>
 			<div class="elgg-page-body">
 				<div class="elgg-layout">
-					<div class="elgg-sidebar">
+					<aside class="elgg-sidebar" role="complementary">
 						<?php echo elgg_view('page/elements/sidebar', $vars); ?>
-					</div>
-					<div class="elgg-body">
-						<h2><?php echo $vars['title']; ?></h2>
+					</aside>
+					<main class="elgg-body" role="main">
+						<h1><?php echo $vars['title']; ?></h1>
 						<?php echo elgg_view('page/elements/messages', array('object' => $vars['sysmessages'])); ?>
 						<?php echo $vars['body']; ?>
-					</div>
+					</main>
 				</div>
 			</div>
-			<div class="elgg-page-footer">
+			<footer class="elgg-page-footer" role="contentinfo">
 				<?php echo elgg_view('page/elements/footer'); ?>
-			</div>
+			</footer>
 		</div>
 	</body>
 </html>

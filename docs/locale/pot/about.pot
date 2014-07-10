@@ -1,0 +1,81 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg 1.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-10 06:02+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ..\..\about\contributing.rst:4
+# 7cd4bd198bbd4efb94a972eef04bfdac
+msgid "Contributor Guide"
+msgstr ""
+
+#: ..\..\about\contributing.rst:6
+#: ..\..\about\history.rst:6
+#: ..\..\about\index.rst:6
+#: ..\..\about\releases.rst:6
+#: ..\..\about\roadmap.rst:6
+# 3fddd8ccab194ba896e6569066661646
+# 5631494eb0a9408a93089b3670fbf783
+# f351e8e0dbc645b18ff59ab6c387d52c
+# cd04552db3cd493abc2a51f833538827
+# 89815bfa059f4ff1b4402df5b9309ef7
+msgid "This page has moved."
+msgstr ""
+
+#: ..\..\about\contributing.rst:8
+# 44eef58c7a894669b130b40ecdbae89a
+msgid ":doc:`/contribute/index`"
+msgstr ""
+
+#: ..\..\about\history.rst:4
+# 90cd5fb70b704c18b8968e20223b5ca6
+msgid "History"
+msgstr ""
+
+#: ..\..\about\history.rst:8
+# 8104cad4f368454c9e80758a678df7fe
+msgid ":doc:`/appendix/history`"
+msgstr ""
+
+#: ..\..\about\index.rst:4
+# ed83800da02d4a6bb9be736b121327ef
+msgid "About"
+msgstr ""
+
+#: ..\..\about\index.rst:8
+# e4bc4b11210344c6b37b8eb160e0e8e1
+msgid ":doc:`/appendix/index`"
+msgstr ""
+
+#: ..\..\about\releases.rst:4
+# 5e3c63ff4f9a43c59663713ce8464594
+msgid "Release Policy"
+msgstr ""
+
+#: ..\..\about\releases.rst:8
+# cd14bead6dfe4ee2974802feb2d2ec4f
+msgid ":doc:`/appendix/releases`"
+msgstr ""
+
+#: ..\..\about\roadmap.rst:4
+# 5e1fcca634c14ba3912d46e5148c9634
+msgid "Roadmap"
+msgstr ""
+
+#: ..\..\about\roadmap.rst:8
+# c72fe9b26b24446182add47dda72e6a7
+msgid ":doc:`/appendix/roadmap`"
+msgstr ""
+

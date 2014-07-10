@@ -1,0 +1,78 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg 1.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-10 06:02+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ..\..\index.rst:2
+# 3b2585b47b284e1db7e73e43de3ba217
+msgid "Elgg |version| Documentation"
+msgstr ""
+
+#: ..\..\index.rst:4
+# 684aa7110aa243e690c37b4f96f95e64
+msgid "Elgg_ (`pronunciation`__) is a rapid development framework with built-in social features. It is a great fit for building any app where users log in and share information."
+msgstr ""
+
+#: ..\..\index.rst:9
+# 03fa54119c724a39ba8bbfd27ab09bed
+msgid "It has been used to build `all kinds of social apps`__:"
+msgstr ""
+
+#: ..\..\index.rst:13
+# dbe423ef66ca485fa10a6b86abed9b68
+msgid "open networks (similar to Facebook)"
+msgstr ""
+
+#: ..\..\index.rst:14
+# efd125cf7c304e14b6e8ae127cd624e7
+msgid "topical (like the Elgg Community)"
+msgstr ""
+
+#: ..\..\index.rst:15
+# 703bacd4ce054eafb232f3ebb76c5f0e
+msgid "private intranets"
+msgstr ""
+
+#: ..\..\index.rst:16
+# 2bb9f3af39d5401882c3ceb59a94655b
+msgid "dating"
+msgstr ""
+
+#: ..\..\index.rst:17
+# 92751a8f8faa43fb8ab511fbdfece406
+msgid "educational"
+msgstr ""
+
+#: ..\..\index.rst:18
+# 6ff56d0124fc46988a825cb26cd7f9ba
+msgid "company blog"
+msgstr ""
+
+#: ..\..\index.rst:19
+# e9f121d7b5074042bb3d6a0e955f8157
+msgid "etc."
+msgstr ""
+
+#: ..\..\index.rst:21
+# 125edca5dbf24e078217a4c95893b58c
+msgid "There is also a `demo site`_ running a standard installation of Elgg."
+msgstr ""
+
+#: ..\..\index.rst:23
+# 41d182cf972a4e3896dceb0e37fc77cc
+msgid "This is the canonical documentation for the Elgg_ project. This aims to replace the wiki_, which is out-of-date in many areas."
+msgstr ""
+

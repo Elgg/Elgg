@@ -110,6 +110,42 @@ function groups_init() {
 }
 
 /**
+ * Set notifications about discussions and their replies to have just thread title as a subject.
+ * This is to make more picky email clients happy while groupping messages in threads, as well as to
+ * save space in subject line.
+ *
+ * @param $hook string
+ * @param $type string
+ * @param $returnvalue array
+ * @param $params array
+ * @return array
+ */
+function discussion_notification_email_subject($hook, $type, $returnvalue, $params){
+
+	/** @var Elgg_Notifications_Notification */
+	$notification = elgg_extract('notification', $returnvalue['params']);
+
+	if ($notification instanceof Elgg_Notifications_Notification) {
+
+		$object = elgg_extract('object', $notification->params);
+		/** @var Elgg_Notifications_Event $event */
+		$event = elgg_extract('event', $notification->params);
+
+		if ($object instanceof ElggEntity) {
+			if ($object->getSubtype() === 'groupforumtopic') {
+				$returnvalue['subject'] = $object->getDisplayName();
+			}
+			$container = $object->getContainerEntity();
+
+			if (($container instanceof ElggEntity) && ($object instanceof ElggComment)) {
+				$returnvalue['subject'] = 'Re: ' . $container->getDisplayName();
+			}
+		}
+	}
+	return $returnvalue;
+}
+
+/**
  * This function loads a set of default fields into the profile, then triggers
  * a hook letting other plugins to edit add and delete fields.
  *
@@ -821,6 +857,7 @@ function discussion_init() {
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:groupforumtopic', 'discussion_prepare_notification');
 	elgg_register_notification_event('object', 'discussion_reply');
 	elgg_register_plugin_hook_handler('prepare', 'notification:create:object:discussion_reply', 'discussion_prepare_reply_notification');
+	elgg_register_plugin_hook_handler('email', 'system', 'discussion_notification_email_subject');
 }
 
 /**
@@ -1202,7 +1239,10 @@ function discussion_update_reply_access_ids($event, $type, $object) {
  * @return ElggMenuItem[] $return
  */
 function discussion_reply_menu_setup($hook, $type, $return, $params) {
-	if (isset($params['handler']) && $params['handler'] !== 'discussion_reply') {
+	/** @var $reply ElggEntity */
+	$reply = elgg_extract('entity', $params);
+	
+	if (empty($reply) || !elgg_instanceof($reply, 'object', 'discussion_reply')) {
 		return $return;
 	}
 
@@ -1216,9 +1256,6 @@ function discussion_reply_menu_setup($hook, $type, $return, $params) {
 
 	// Reply has the same access as the topic so no need to view it
 	$remove = array('access');
-
-	/** @var $reply ElggEntity */
-	$reply = $params['entity'];
 
 	$user = elgg_get_logged_in_user_entity();
 

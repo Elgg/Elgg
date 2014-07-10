@@ -1,0 +1,652 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg 1.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-10 06:02+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ..\..\tutorials\blog.rst:2
+# bd3557d039624288927ef6a75d9cf023
+msgid "Building a Blog Plugin"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:4
+# ee33144db9004fe78985b05e476791ec
+msgid "Build a simple blogging plugin using Elgg."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:6
+# 7271ff3d59214c549c0d0a823df0f532
+msgid "This duplicates features in the bundled blog plugin, so be sure to disable that while working on your own version."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:10
+# ccf503090e2b40a4ab43c16bf45d505d
+msgid "Create the plugin skeleton"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:12
+# 44c413465c814a5983da7b4ef3522681
+msgid "The name of the directory under \"mod\" becomes the id of your plugin::"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:18
+# 7b796a1d29274d09b4b548749ac0360f
+msgid "You'll need to add a manifest file in ``/mod/my_blog/manifest.xml``. This file stores basic information about the plugin. See :doc:`/guides/plugins` for the template. You can also just copy the manifest file from another plugin and then change the values to fit your new plugin. Be sure to change the author and website, and remove the “bundled” category!"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:24
+# d4f66ba0fe774b14a925e26f40e093d9
+msgid "Create a page for composing the blogs"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:26
+# 691395593ff646bcab1b801d19d714ff
+msgid "Create the file ``add.php`` in ``/mod/my_blog/pages/my_blog/``."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:57
+# 0148a3c93a874b91acccbffc0d446932
+msgid "Create the form for creating a new my\\_blog post"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:59
+# 752655fd86294911b42660ef8856f489
+msgid "Create a file at ``/mod/my_blog/views/default/forms/my_blog/save.php`` that contains the form body. This corresponds to view that is called above: ``elgg_view_form(\"my_blog/save\")``."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:63
+# e13a720f53d44392a8e9eba2666ef95d
+msgid "The form should have input fields for the title, body and tags. Because you used ``elgg_view_form()``, you do not need to include form tag markup. The view will be automatically wrapped with:"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:67
+# 25a651345cc24a8c8913b8d6df135811
+msgid "a ``<form>`` tag and the necessary attributes"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:68
+# 5e1b63fa4ddf4e858c30a8057fb67c53
+msgid "anti-csrf tokens"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:70
+# 24d6dcd3f348481686b3032849ba3a89
+msgid "The form's action will be ``\"<?php echo elgg_get_site_url() ?>action/my_blog/save\"``, which we will create in a moment. Here is the content of ``/mod/my_blog/views/default/forms/my_blog/save.php``:"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:96
+# 36e4dedb38e04b85a40f1059bc4ed80d
+msgid "Notice how the form is calling input views like ``input/longtext``. These are built into elgg and make it easy to add form components. You can see a complete list of input views in the ``/views/default/input/`` directory."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:102
+# 673e806ffc8d44c19e03ae707522e111
+msgid "The above code is not accessibility-friendly."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:105
+# ca6a09e4d0034884bdd80ef48aa5a70e
+msgid "The action file"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:107
+# 9ab238c5b1784e1cb7265579ee130830
+msgid "Create the file ``/mod/my_blog/actions/my_blog/save.php``. This will save the blog post to the database."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:146
+# ad3fb255753e4931b4c1e6363880d2c8
+msgid "A few fields are built into Elgg objects. Title and description are two of these. It makes sense to use description to contain the my\\_blog text. Every entity can have a subtype and in this we are using ``\"my_blog\"``. The tags are stored as metadata."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:151
+# d6d7cb4a12ec481e9e5645690aaeb772
+msgid "Every object in Elgg has a built-in URL automatically, although you can override this if you wish. The ``getURL()`` method is called to get that unique URL."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:156
+# 4be6d95e674547768bf59f7ee68fe44f
+msgid "The object view"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:158
+# b616ea8423d14328927c62a0b436261c
+msgid "Elgg will automatically call the ``object/my_blog`` view to view the my\\_blog post so we need to create the object view."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:161
+# e00af3467e5a4636b22d0a1469991e99
+msgid "Objects in Elgg are a subclass of something called an “entity”. Users, sites, and groups are also subclasses of entity. All entities can (and should) have a subtype, which allows granular control for listing and displaying. Here, we have used the subtype \"``my_blog``\\ \" to identify a my\\_blog post, but any alphanumeric string can be a valid subtype. When picking subtypes, be sure to pick ones that make sense for your plugin."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:169
+# 0847ad1eb2bf4266b7c14dbccd535923
+msgid "In ``/mod/my_blog/views/default/``, create a folder ``/object/`` and then create a file ``my_blog.php`` in it."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:172
+# cca0c01417ba44ad89ec3c8a12d7fdca
+msgid "Each my\\_blog post will be passed to this PHP file as ``$vars['entity']``. (``$vars`` is an array used in the views system to pass variables to a view.) The content of ``object/my_blog.php`` can just be something like:"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:185
+# 6d90fdbc11d84959a534cf151496df5f
+msgid "The last line takes the tags on the my\\_blog post and automatically displays them as a series of clickable links. Search is handled automatically."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:189
+# 63cc4a47a67440d58812b06840b6445b
+msgid "(If you're wondering about the '``default``\\ ' in ``/views/default/``, you can create alternative views. RSS, OpenDD, FOAF, mobile and others are all valid view types.)"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:194
+# d0ebcf83654f4c978e8b081dea71d9af
+msgid "Plugin start.php"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:196
+# c22216e9f6ff4b1eb6dcffa80c06ce3c
+msgid "Every plugin has a ``start.php`` that initializes it. For this example, we just need to register the action file we created earlier: Also see a related guide about :doc:`/guides/actions`."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:206
+# f2c696eee9d643c2844cf90d10d95a60
+msgid "The action will now be available as ``/action/my_blog/save``. By default, all actions are available only to logged in users. If you want to make an action available to only admins or open it up to unauthenticated users, you can pass 'admin' or 'public' as the third parameter of ``elgg_register_action()``, respectively."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:212
+#: ..\..\tutorials\hello_world.rst:72
+# a809dbbe475b4b88a05e1e65f6dd14e3
+# c160d1638a0f40e0bd7c4ca844568887
+msgid "Registering a page handler"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:214
+# 97c71f4a3fc2469c9c3a6077536a655f
+msgid "In order to be able to serve the page that generates the form, you'll need to register a page handler. Add the following to your start.php:"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:229
+# 5dce62db55d14a51b96154f91bb062d8
+msgid "Page handling functions need to return ``true`` or ``false``. ``true`` means the page exists and has been handled by the page handler. ``false`` means that the page does not exist and the user will be forwarded to the site's 404 page (requested page does not exist or not found). In this particular example, the URL must contain ``/my_blog/add`` for the user to view a page with a form, otherwise the user will see a 404 page."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:238
+# f46f962dc1e7499c97016279ac36c4a3
+msgid "Trying it out"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:240
+# 55325cf3e1754fc0b6aae152fdc8285b
+msgid "If you have not enabled the plugin yet, you will need to go to Administration => Configure => Plugins => Advanced. Scroll to the bottom until you see your plugin. Click the Enable button."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:244
+# 83d96cb010634920aec628311099c2fa
+msgid "The page to create a new my\\_blog post is accessible at http://yoursite/my_blog/add. Try it out."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:248
+# f5b9108d60404a3c8e2af2c01f44c9df
+msgid "Displaying list of my\\_blogs"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:250
+# de97ae7f13af481b9de48860ea243743
+msgid "Let's also create a page that lists my\\_blog entries that have been created."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:252
+# f6661b988fe44c26bce9109bd7335424
+msgid "Create ``/mod/my_blog/pages/my_blog/all.php``."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:254
+# 631dfbab536a4bcd843d54e93aed388d
+msgid "To grab the latest my\\_blog posts, we'll use ``elgg_list_entities``. Note that this function returns only the posts that the user can see, so access restrictions are handled transparently:"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:265
+# d4b0f2384d4e47808816b1d729d51ab6
+msgid "The function \\`elgg\\_list\\_entities\\` (and its cousins) also transparently handle pagination, and even create an RSS feeds for your my\\_blogs if you have defined these views."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:269
+# b897b55f5bc24a8093c7b0a8a9ce1f80
+msgid "Finally, we'll draw the page:"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:277
+# fa2149f1bf3f487bb27c721e0ecb2c8b
+msgid "We will then need to modify our my\\_blog page handler to grab the new page when the URL is set to ``/my_blog/all``. So, your new ``my_blog_page_handler()`` function in start.php should look like:"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:298
+# 8fa237cc3d2547dfafee11f31d598f87
+msgid "Now, if the URL contains just ``/my_blog`` or ``/my_blog/all``, the user will see an \"All Site Blogs\" page."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:302
+# 18184b97e75b413e9cb638d3db3fb873
+msgid "A user's blog page"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:304
+# 2f90cda50ddc44baacde6e4ee77b91ed
+msgid "If we grab the Global Unique IDentifier (GUID) of the logged in user, we can limit the my\\_blog posts to those posted by specifying the owner\\_guid argument in the list function above."
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:318
+# 903670ccc74c49e2b6501ebd9021046c
+msgid "The end"
+msgstr ""
+
+#: ..\..\tutorials\blog.rst:320
+# 913ea623168642e6a2a37af8d351a7b6
+msgid "There's much more that could be done for this plugin, but hopefully this gives you a good idea of how to get started with your own."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:2
+# eda009d34685491cab34b52590924f22
+msgid "Hello world"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:4
+# d32cf73e61524bf39e90dbdc641df838
+msgid "This tutorial shows you how to build a simple plugin that adds a new page and prints the text \"Hello world\" on it."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:7
+# 32587b22e6414806a32caa30ddcad340
+msgid "In this tutorial we will use the address ``http://www.mysite.com/`` as an example. While developing the plugin you should use the address of your own site instead of the example address."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:12
+# 5c561a44fabf408e853ba3bda7cc9e6b
+msgid "Required files"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:13
+# ebe8cbe576f943e98f1086b14457132c
+msgid "First of all you need a directory that will hold all the files required by the plugin. Go to the ``mod`` directory of your Elgg site and create there a directory with the name ``hello_world``."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:19
+# 6b4b8fed895349dd8794b035b2689b55
+msgid "Go to the ``hello_world`` directory and create these two files inside it:"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:18
+#: ..\..\tutorials\indexpage.rst:7
+# c1d6c59c7c0445258d27f46159bd3cb8
+# 0b8517a56890433b963f5bd8fde2c6b5
+msgid "start.php"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:19
+# 3f3ad6e610784b949ce6e7665affb329
+msgid "manifest.xml"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:21
+# 90fda77b2beb4e5b8b43810e8c7c6010
+msgid "Copy this to the ``manifest.xml`` file:"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:39
+# c5be9cfb542e4576afcaed83992d2634
+msgid "Add your name to the ``<author></author>`` element."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:41
+# 698ca638e4d34fca83c8cbaea5f6877d
+msgid "The plugin has now the minimum requirements for your site to recognize it. Log in to your site as an administrator and access the plugins page at the administration panel. By default the plugin is at the bottom of the plugins list. Click the \"Activate\" button to start it."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:50
+# ec1fc444fc2c412cab8a44dc55f54747
+msgid "The Hello world plugin has appeared to the bottom of the plugin list"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:53
+# 98858f65becb43f78d1f7cf5c2be3539
+msgid "Initializing the plugin"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:55
+# eb400b2ae9134f87a2f55884375e5d06
+msgid "The next step is to add some actual features. Open the ``start.php`` and copy this to it:"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:68
+# df2a1055e6814f1cb85f41781f3c909e
+msgid "This piece of code tells Elgg that it should call the function ``hello_world_init()`` when the Elgg core system is initiated."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:74
+# 40d8929459744aed9f92def9c7b040c1
+msgid "The next step is to register a page handler which has the purpose of handling request that users make to the URL http://www.mysite.com/hello/."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:77
+# f0e6b8354af747d1a74312a9b1553803
+msgid "Update the ``start.php`` to look like this:"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:101
+# 143c133e0c0545069d1b19150530c151
+msgid "The call to ``elgg_register_page_handler()`` tells Elgg that it should call the function ``hello_world_page_handler()`` when user goes to your site and has \"hello\" at the end of the URL."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:105
+# 7141fd29f2b941a9b58c2551496901a2
+msgid "The ``hello_world_page_handler()`` makes it possible for the users to access the actual page. Inside the function we first give an array of parameters to the ``elgg_view_layout()`` function."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:112
+# d674139383b3407f832958b800bc8fbf
+msgid "The parameters include:"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:110
+# 39ae19e96f7647afa1bad27c2b7a2cab
+msgid "The title of the page"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:111
+# a2c05fc744424725a7ad6ab47f2d742a
+msgid "The contents of the page"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:112
+# 0e023acd91af4bc6b42d72021ede2996
+msgid "Filter which is left empty because there's currently nothing to filter"
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:114
+# e89ed392f406466eb551d59468324440
+msgid "This creates the basic layout for the page. The layout is then run through ``elgg_view_page()`` which assembles and outputs the full page."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:117
+# a803fff65f354ae1a81ee816face6639
+msgid "You can now go to the address http://www.mysite.com/hello/ and you should see the page."
+msgstr ""
+
+#: ..\..\tutorials\hello_world.rst:123
+# dba004dae60c4c90982efb38fffc7536
+msgid "Elgg is now routing the URL http://www.mysite.com/hello/ to the page you created."
+msgstr ""
+
+#: ..\..\tutorials\index.rst:2
+# eef9cec2a1c245a6bb809a1573ffd51c
+msgid "Plugin Tutorials"
+msgstr ""
+
+#: ..\..\tutorials\index.rst:4
+# e3536ba12a8b4703b6a766834a277323
+msgid "Walk through all the required steps in order to create your own plugins."
+msgstr ""
+
+#: ..\..\tutorials\index.rst:6
+# 5e9a26e2663d48df96ab033763887a25
+msgid "The instructions are detailed enough that you don't need much previous experience on plugin development."
+msgstr ""
+
+#: ..\..\tutorials\indexpage.rst:2
+# 56e020bbebf148c59c46c7f0749116d6
+msgid "Customizing the Home Page"
+msgstr ""
+
+#: ..\..\tutorials\indexpage.rst:4
+# 81f72ec3ad24490f9be6c61590da819a
+msgid "Overwrite the default index page on your Elgg install."
+msgstr ""
+
+#: ..\..\tutorials\indexpage.rst:9
+# b37143aed3b84554a1fe061187507ea0
+msgid "Register a function for the plugin hook called ``index, system`` that returns ``true``. This tells Elgg to assume that another front page has been drawn so it doesn't display the default page."
+msgstr ""
+
+#: ..\..\tutorials\indexpage.rst:12
+# 33ecd7a7be244effae507cf60a4f5138
+msgid "Inside start.php you will need something like the following:"
+msgstr ""
+
+#: ..\..\tutorials\indexpage.rst:31
+# 8bb0c252f5024473a90c14b8ad6b8485
+msgid "pages/index.php"
+msgstr ""
+
+#: ..\..\tutorials\indexpage.rst:33
+# cdb773c7610248739ab92f39c932f1cd
+msgid "Then implement the page handler script (/pluginname/pages/index.php) to generate the desired output. Anything output from this script will become your new home page."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:2
+# 6988b88d37994443ab9440a2a334714c
+msgid "Basic Widget"
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:4
+# 4eda955ca35d4557823a93d260de7fd1
+msgid "Create a widget that will display “Hello, World!” and optionally any text the user wants."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:6
+# c9947ab9d1e34fd5bbe64e35cf0ee37b
+msgid "In Elgg, widgets are those components that you can drag onto your profile or admin dashboard."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:8
+# 816b93d607e84adfb493f252e439fa36
+msgid "This tutorial assumes you are familiar with basic Elgg concepts such as:"
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:10
+# 7ddbfac8758f4b24978151d125fbd3cd
+msgid ":doc:`/guides/views`"
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:11
+# 83e81bd2da4d451ca586b88b61b9f18f
+msgid ":doc:`/admin/plugins`."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:13
+# 2a6c1c400b534faa935e2ef2eb619b0e
+msgid "You should review those if you get confused along the way."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:16
+# ec5afdafde4a41e1871d6ec79c89c7b7
+msgid "Registering your plugin"
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:18
+# c80522ec07f7449bb96a569a90312591
+msgid "Plugins are always placed in the ``/mod`` directory. Create a subdirectory there called ``hello``. This will be the name of your plugin and will show up in the Plugins Administration section of Elgg by this name."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:23
+# 02c09b73165f439cbbb785e7388dde56
+msgid "In ``/mod/hello``, create an empty file called ``start.php``. If this file exists, Elgg will load your plugin. Otherwise, you will see a misconfigured plugin error. Go to the admin section of your Elgg install and enable your plugin. Click on the “more info” link under your plugin name. You will notice that nothing happens."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:30
+# 4af74bd6831b402d85e72b37e07061cc
+msgid "Copy the manifest.xml file from one of the plugins in your elgg install into ``/mod/hello``. Update its values so you are listed as the author and change the description to describe this new plugin. Reload the Tools Administration page in your browser and check “more info” again. It will now display the information that you've entered."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:36
+# ec18883004984f6e8937e018e92b08bf
+msgid "Adding the widget view code"
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:38
+# 7e1f4732163f44fda4172897c07178d6
+msgid "Elgg automatically scans particular directories under plugins looking for particular files. :doc:`/guides/views` make it easy to add your display code or do other things like override default Elgg behavior. For now, we will just be adding the view code for your widget. Create a file at ``/mod/hello/views/default/widgets/helloworld/content.php``. “helloworld” will be the name of your widget within the hello plugin. In this file add the code:"
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:51
+# 503f760c259245dbb4af89037d13c4f0
+msgid "This will add these words to the widget canvas when it is drawn. Elgg takes care of loading the widget."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:55
+# 1542cd1d56a74603a8433cc847fdce21
+msgid "Registering your widget"
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:57
+# 7a75878ff573421fbe0d6080ac0d563e
+msgid "Elgg needs to be told explicitly that the plugin contains a widget so that it will scan the widget views directory. This is done by calling the elgg\\_register\\_widget\\_type() function. Edit ``/mod/hello/start.php``. In it add these lines:"
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:72
+# 6a6acfc8397c486eabfe0b19663d83fe
+msgid "Now go to your profile page using a web browser and add the “hello, world” widget. It should display “Hello, world!”."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:77
+# ebc9a2932cb84eeaad8d1fb5d4b8dbdc
+msgid "For real widgets, it is always a good idea to support :doc:`/guides/i18n`."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:80
+# 8e421615a1d744ca8be2ed7feb1bdfb9
+msgid "Allow user customization"
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:82
+# e35a0a8953214c5ca8e81eec11bdd44c
+msgid "Click on the edit link on the toolbar of the widget that you've created. You will notice that the only control it gives you by default is over access (over who can see the widget)."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:86
+# 032f802d1de144729c07d6752b4504f3
+msgid "Suppose you want to allow the user to control what greeting is displayed in the widget. Just as Elgg automatically loads ``content.php`` when viewing a widget, it loads ``edit.php`` when a user attempts to edit a widget. In ``/mod/hello/views/default/widgets/helloworld/``, create a file named ``edit.php``. In this file, add the following code:"
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:109
+# e2325f0245f44317882503787900adb4
+msgid "Notice the relationship between the values passed to the 'name' and the 'value' fields of input/text. The name of the input text box is ``params[message]`` because Elgg will automatically handle widget variables put in the array ``params``. The actual php variable name will be ``message``. If we wanted to use the field ``greeting`` instead of ``message`` we would pass the values ``params[greeting]`` and ``$widget->greeting`` respectively."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:117
+# c6bd67a2c58246da90598a63d746208a
+msgid "The reason we set the 'value' option of the array is so that the edit view remembers what the user typed in the previous time he changed the value of his message text."
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:121
+# 15146874b48c4ab1b8c64308435d955c
+msgid "Now to display the user's message we need to modify content.php to use this *message* variable. Edit content.php and change it to:"
+msgstr ""
+
+#: ..\..\tutorials\widget.rst:133
+# cd341cce3772499aaf8e1ae131bf7c77
+msgid "You should now be able to enter a message in the text box and see it appear in the widget."
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:2
+# a25f58f393904e66b253f4c504b7e3d7
+msgid "Integrating a Rich Text Editor"
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:4
+# ceef37df539341f5b4f315eebf014a33
+msgid "Build your own wysiwyg plugin."
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:6
+# 78688f70d3ba40288982bbfb283f6500
+msgid "Elgg is bundled with a plugin for CKEditor_, and previously shipped with TinyMCE_ support. However, if you have a wysiwyg that you prefer, you could use this tutorial to help you build your own."
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:12
+# 470ac54790ac400fb434e3dbab5d15d1
+msgid "All forms in Elgg should try to use the provided input views located in ``views/default/input``. If these views are used, then it is simple for plugin authors to replace a view, in this case longtext.php, with their wysiwyg."
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:17
+# 1878ecf4986f4250a79b1ca7bb3ff143
+msgid "Create your plugin skeleton"
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:19
+# c1ad76e7fd4e436b8cc793de941357fe
+msgid "You will need to create your plugin and give it a start.php file where the plugin gets initialized, as well as a manifest.xml file to tell the Elgg engine about your plugin."
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:22
+# 683ba325ff4c43e3b0a142536988744a
+msgid "Read more in the guide about :doc:`/guides/plugins`."
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:25
+# 153d41d178ac44d1af4874fd20569b66
+msgid "Add the WYSIWYG library code"
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:27
+# cdaa72173bf248cb88c2281fd982f61b
+msgid "Now you need to upload TinyMCE into a directory in your plugin. We strongly encourage you to put third party libraries in a “vendors” directory, as that is standard practice in Elgg plugins and will make your plugin much more approachable by other developers::"
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:35
+# 2b92f5b4373947b5a24cb2e666fc7a2e
+msgid "Tell Elgg when and how to load TinyMCE"
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:37
+# 104bbc9f2884429ba5063ce8fb926dec
+msgid "Now that you have:"
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:39
+# 8c1de4f2858a4a61b6c9770d9329abb2
+msgid "created your start file"
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:40
+# a533b77f29df4a368ae6c7c070c5e132
+msgid "intialized the plugin"
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:41
+# 50a5fcf9cc524c1ab2815fa4ec5b4fb3
+msgid "uploaded the wysiwyg code"
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:43
+# 651c53fa9d77461da85643aa0035b31b
+msgid "It is time to tell Elgg how to apply TinyMCE to longtext fields."
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:45
+# da360b0e435142e188b25e9c21cb23ec
+msgid "We're going to do that by extending the input/longtext view and including some javascript. Create a view tinymce/longtext and add the following code:"
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:81
+# 1890d6a33f3c4c9396752d79a8663d6d
+msgid "Then, in your plugin's init function, extend the input/longtext view"
+msgstr ""
+
+#: ..\..\tutorials\wysiwyg.rst:89
+# 2a525338fc5e4062a456e4cc3496de32
+msgid "That's it! Now every time someone uses input/longtext, TinyMCE will be loaded and applied to that textarea."
+msgstr ""
+

@@ -55,6 +55,9 @@ tmtags
 Thumbs.db
 Desktop.ini
 
+# Codio.com
+startup.sh
+
 # don't ignore special configs
 !/.mailmap
 !/.travis.yml

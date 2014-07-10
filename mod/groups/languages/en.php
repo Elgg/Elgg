@@ -261,6 +261,7 @@ or click below to view the group's join requests:
 	'river:join:group:default' => '%s joined the group %s',
 	'river:create:object:groupforumtopic' => '%s added a new discussion topic %s',
 	'river:reply:object:groupforumtopic' => '%s replied on the discussion topic %s',
+	'river:reply:view' => 'view reply',
 
 	'groups:nowidgets' => 'No widgets have been defined for this group.',
 
@@ -298,6 +299,8 @@ or click below to view the group's join requests:
 
 	'groups:invitekilled' => 'The invite has been deleted.',
 	'groups:joinrequestkilled' => 'The join request has been deleted.',
+	'groups:error:addedtogroup' => "Could not add %s to the group",
+	'groups:add:alreadymember' => "%s is already a member of this group",
 
 	/**
 	 * ecml

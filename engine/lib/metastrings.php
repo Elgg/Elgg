@@ -662,7 +662,7 @@ function _elgg_set_metastring_based_object_enabled_by_id($id, $enabled, $type) {
  *
  * @warning This returns null on no ops.
  *
- * @param array  $options    An options array. {@see _elgg_get_metastring_based_objects()}
+ * @param array  $options    An options array. {@link _elgg_get_metastring_based_objects()}
  * @param string $callback   The callback to pass each result through
  * @param bool   $inc_offset Increment the offset? Pass false for callbacks that delete / disable
  *

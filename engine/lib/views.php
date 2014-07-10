@@ -381,7 +381,7 @@ function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
  * the output of the extended view will be appended to the original view.
  *
  * Views can be extended multiple times, and extensions are not checked for
- * uniqueness. Use {@see elgg_unextend_view()} to help manage duplicates.
+ * uniqueness. Use {@link elgg_unextend_view()} to help manage duplicates.
  *
  * Priority can be specified and affects the order in which extensions
  * are appended or prepended.
@@ -763,7 +763,7 @@ function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
  * @param array      $vars   Array of variables to pass to the entity view.
  *                           In Elgg 1.7 and earlier it was the boolean $full_view
  * @param boolean    $bypass If true, will not pass to a custom template handler.
- *                           {@see set_template_handler()}
+ *                           {@link set_template_handler()}
  * @param boolean    $debug  Complain if views are missing
  *
  * @return string HTML to display or false
@@ -887,7 +887,7 @@ function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = arr
  * @param ElggAnnotation $annotation The annotation to display
  * @param array          $vars       Variable array for view.
  * @param bool           $bypass     If true, will not pass to a custom
- *                                   template handler. {@see set_template_handler()}
+ *                                   template handler. {@link set_template_handler()}
  * @param bool           $debug      Complain if views are missing
  *
  * @return string/false Rendered annotation

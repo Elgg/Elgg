@@ -1,17 +1,11 @@
 <?php
 /**
- * Elgg password input
  * Displays a password input field
- *
- * @uses $vars['value'] The current value, if any
- * @uses $vars['name'] The name of the input field
- *
  */
 
-$class = "input-password";
+$vars['class'] = 'elgg-input-password';
+$vars['type'] = 'password';
 
-$value = htmlentities($vars['value'], ENT_QUOTES, 'UTF-8');
+$attrs = elgg_format_attributes($vars);
 
-?>
-
-<input type="password" name="<?php echo $vars['name']; ?>" value="<?php echo $value; ?>" class="<?php echo $class; ?>" />
+echo "<input $attrs>";

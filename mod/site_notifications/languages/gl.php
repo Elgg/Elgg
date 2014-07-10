@@ -1,0 +1,11 @@
+<?php
+return array(
+	'site_notifications' => 'Notificacións do sitio',
+	'notification:method:site' => 'Sitio',
+	'site_notifications:topbar' => 'Notificacións',
+	'item:object:site_notification' => 'Notificacións do siti',
+
+	'site_notifications:no_access' => 'Non ten acceso á páxina. Pode que necesite identificarse',
+	'site_notifications:no_delete' => 'Non é posíbel eliminar',
+	'site_notifications:empty' => 'Non hai notificacións.',
+);

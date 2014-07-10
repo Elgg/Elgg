@@ -9,7 +9,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	outline: 0;
 	font-weight: inherit;
 	font-style: inherit;
 	font-size: 100%;
@@ -20,7 +19,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 body {
 	color: #333333;
 	background: #4690d6;
-	font-size: 80%;
 	font-family: "Lucida Grande",Arial,Tahoma,Verdana,sans-serif;
 	text-align: left;
 }
@@ -28,25 +26,26 @@ body {
 h1, h2, h3, h4, h5, h6 {
 	font-weight: bold;
 }
-h1 { font-size: 1.8em; }
-h2 { font-size: 1.5em; }
-h3 { font-size: 1.2em; }
-h4 { font-size: 1.0em; }
-h5 { font-size: 0.9em; }
-h6 { font-size: 0.8em; }
+h1 { font-size: 2em; }
+h2 { font-size: 1.75em; }
+h3 { font-size: 1.5em; }
+h4 { font-size: 1.25em; }
+h5 { font-size: 1.0em; }
+h6 { font-size: 0.75em; }
 
 a {
 	color: #4690d6;
 	text-decoration: none;
 }
 
-a:hover {
+a:hover,
+a:focus {
 	color: #0054a7;
 	text-decoration: underline;
 }
 
 p {
-	margin: 0px 0px 15px 0;
+	margin: 0 0 1em 0;
 }
 
 img {
@@ -55,7 +54,7 @@ img {
 
 h2 {
 	border-bottom: 1px solid #555555;
-	margin-bottom: 20px;
+	margin-bottom: 1.5em;
 }
 
 ul {
@@ -63,19 +62,26 @@ ul {
 }
 
 .elgg-page {
-	width: 880px;
+	max-width: 55em;
 	margin: auto;
-	margin-top: 20px;
 }
+
+@media (min-width: 880px) {
+	.elgg-page {
+		margin-top: 1.5em;
+	}
+}
+
+
 .elgg-page-header {
 	border-right: 1px solid #666666;
-	padding: 15px 50px 10px;
+	padding: 1em;
 	background: white;
 }
 .elgg-page-body {
 	border-bottom: 1px solid #666666;
 	border-right: 1px solid #666666;
-	padding: 0 40px 5px;
+	padding: 0 1em .5em;
 	background: white;
 }
 
@@ -89,23 +95,27 @@ ul {
 	clear: both;
 }
 
-.elgg-sidebar {
-	float: left;
-	width: 250px;
+@media (min-width: 55em) {
+	.elgg-sidebar {
+		float: left;
+		padding-right: 1em;
+		width: 30%;
+	}
 }
+
 .elgg-body {
 	overflow: hidden;
-	min-height: 320px;
-	padding-bottom: 10px;
+	min-height: 20em;
+	padding-bottom: .5em;
 	position: relative;
 }
 .elgg-page-footer {
-	width: 800px;
-	height: 20px;
+	max-width: 50em;
+	height: 1.5em;
 	clear: both;
-	padding: 10px 20px 0 20px;
+	padding: .5em 1em;
 	margin: auto;
-	margin-bottom: 40px;
+	margin-bottom: 2.5em;
 }
 
 .elgg-install-nav {
@@ -122,16 +132,16 @@ ul {
 .elgg-page-footer li {
 	float: left;
 	list-style: none;
-	margin-right: 20px;
+	margin-right: 1.5em;
 }
 
 .elgg-sidebar ol {
-	padding-left: 30px;
+	padding-left: 2em;
 }
 
 .elgg-sidebar li {
-	font-size: 1.2em;
-	margin-bottom: 5px;
+	font-size: 1.25em;
+	margin-bottom: .5em;
 }
 
 .past {
@@ -146,40 +156,51 @@ ul {
 }
 
 h3 {
-	margin: 15px 0 5px;
+	margin: 1em 0 .5em;
 }
 
-form > div {
-	margin-bottom: 15px;
+.elgg-form-field {
+	display: block;
 }
-label {
+
+* + .elgg-form-field {
+	margin-top: 1em;
+}
+
+.elgg-form-field-label {
+	color: #333333;
+	display: block;
 	font-weight: bold;
-	color: #333333;
-	font-size: 140%;
 }
-.elgg-combo-label {
-	font-size: 120%;
+
+.elgg-form-field-help {
+	display: block;
+	font-size: .9em;
 }
+
 input[type="text"],
-input[type="password"]  {
-	font: 120% Arial, Helvetica, sans-serif;
-	padding: 5px;
+input[type="password"],
+input[type="email"],
+input[type="url"] {
 	border: 1px solid #cccccc;
+	box-sizing: border-box;
 	color: #666666;
-	width: 96%;
+	font: inherit;
+	padding: .5em;
+	width: 100%;
 }
-.database-settings input[type="text"],
-.database-settings input[type="password"] {
-	width: 220px;
-}
-input[type="password"]:focus, input[type="text"]:focus {
-	border: solid 1px #4690d6;
+
+input[type="password"]:focus,
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="url"]:focus {
 	background: #e4ecf5;
+	border: solid 1px #4690d6;
 	color: #333333;
 }
+
 input[type="submit"] {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 16px;
+	font: inherit;
 	font-weight: bold;
 	color: #fff;
 	background: #4690d6;
@@ -196,56 +217,54 @@ input[type="submit"] {
 	cursor: pointer;
 	float: right;
 }
-input[type="submit"]:hover {
+
+input[type="submit"]:hover,
+input[type="submit"]:focus {
 	background: #0054a7;
 	border: 4px solid #0054a7;
 }
+
 select {
 	display: block;
-	padding: 5px;
-}
-
-.install-help {
-	font-size: 90%;
+	padding: .5em;
 }
 
 .elgg-require-database {
-	padding-bottom: 50px;
+	padding-bottom: 3em;
 }
 
 .elgg-install-nav a {
-	font-family: Arial, Helvetica, sans-serif;
-	font-size: 16px;
 	font-weight: bold;
 	color: #ffffff;
 	background: #4690d6;
 	border: 4px solid #4690d6;
 	
-	-webkit-border-radius: 4px;
-	-moz-border-radius: 4px;
 	border-radius: 4px;
 	
-	padding: 2px 9px;
-	margin: 10px;
+	padding: .25em .5em;
+	margin: .5em;
 	cursor: pointer;
 	float: right;
+	
+	text-decoration: none;
 }
 
-.elgg-install-nav a:hover {
-	text-decoration: none;
+.elgg-install-nav a:hover,
+.elgg-install-nav a:focus {
 	background: #0054a7;
 	border: 4px solid #0054a7;
 }
 .elgg-install-nav .elgg-state-disabled,
-.elgg-install-nav .elgg-state-disabled:hover {
+.elgg-install-nav .elgg-state-disabled:hover,
+.elgg-install-nav .elgg-state-disabled:focus {
 	background: #555555;
 	border-color: #555555;
 	cursor: default;
 }
 
 .elgg-system-messages li {
-	padding: 3px 10px 3px 10px;
-	margin-bottom: 20px;
+	padding: .25em .5em;
+	margin-bottom: 1.5em;
 }
 
 .elgg-state-success {
@@ -264,8 +283,8 @@ select {
 }
 
 .elgg-body li {
-	margin-top: 5px;
-	padding: 5px;
+	margin-top: .25em;
+	padding: .25em;
 }
 
 .pass {
@@ -289,7 +308,8 @@ select {
 }
 
 .messages {
-	padding: 3px 10px 3px 10px;
-	margin: 20px 0px 10px 0px;
-	width: 95%;
+	box-sizing: border-box;
+	width: 100%;
+	padding: .25em .5em;
+	margin: 1.5em 0 .5em 0;
 }

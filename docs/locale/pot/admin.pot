@@ -1,0 +1,753 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg 1.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-10 06:02+0200\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ..\..\admin\index.rst:2
+# 179d4397725945e98f0bc2dc80760ec6
+msgid "Administrator Guides"
+msgstr ""
+
+#: ..\..\admin\index.rst:4
+# 39f8c879ad6a4caa8f6258a4cd9df4bc
+msgid "Best practices for effectively managing an Elgg-based site."
+msgstr ""
+
+#: ..\..\admin\performance.rst:2
+# 45c57570932a45a3ae4f6cdd8ae99127
+msgid "Performance"
+msgstr ""
+
+#: ..\..\admin\performance.rst:4
+# a1371a6005c647e0aae4616aedcd4026
+msgid "Make your site run as smoothly and responsively as possible."
+msgstr ""
+
+#: ..\..\admin\performance.rst:8
+# 9eb44a19694747a79f29bbf02ef5381d
+msgid "Can Elgg scale to X million users?"
+msgstr ""
+
+#: ..\..\admin\performance.rst:10
+# b92d0bba3ae34f42bdc991164dd5caca
+msgid "People often ask whether Elgg can scale to large installations."
+msgstr ""
+
+#: ..\..\admin\performance.rst:12
+# 0194870f8f794817969916dc6522586e
+msgid "First, we might stop and ask, \"where are you planning to get all those users?\" Seriously, though, this is a really interesting problem. Making Elgg scale is, if anything, an issue of technical engineering. It's interesting but more or less a solved problem. Computer science doesn't work differently for Elgg than for Google, for example. Getting millions of users? That's like the Holy Grail of the entire tech industry."
+msgstr ""
+
+#: ..\..\admin\performance.rst:19
+# 21ac830190cc4ead9db2351bf6c811db
+msgid "Second, as with most things in life, the answer is \"it depends\":"
+msgstr ""
+
+#: ..\..\admin\performance.rst:21
+# cc7b3689b48e449d9430583660e8badd
+msgid "How active are your users?"
+msgstr ""
+
+#: ..\..\admin\performance.rst:22
+# 0da1d91bc97a4375b7b3c003e98edf6f
+msgid "What hardware is Elgg running on?"
+msgstr ""
+
+#: ..\..\admin\performance.rst:23
+# 00506ebc7b004c57a352e8ea7260580a
+msgid "Are your plugins behaving well?"
+msgstr ""
+
+#: ..\..\admin\performance.rst:25
+# 83aadcd3d0b64d20b3c73177bacfd08a
+msgid "`Improving the efficiency of the Elgg engine`__ is an ongoing project, although there are limits to the amount that any script can do."
+msgstr ""
+
+#: ..\..\admin\performance.rst:30
+# 94c0c724ed344a158d47407947b6bda7
+msgid "If you are serious about scalability you will probably want to look at a number of things yourself."
+msgstr ""
+
+#: ..\..\admin\performance.rst:33
+# 6e28474f91f746528ab2dbee3b61527a
+msgid "Measure first"
+msgstr ""
+
+#: ..\..\admin\performance.rst:35
+# 3ea73aa66efe4f8db178d64a6bf16f0d
+msgid "There is no point in throwing resources at a problem if you don't know:"
+msgstr ""
+
+#: ..\..\admin\performance.rst:37
+# dbf4c636dd6b45969ba9b99be5cd35bf
+msgid "what the problem is"
+msgstr ""
+
+#: ..\..\admin\performance.rst:38
+# c502c6c3cd734579ab116f89823a6388
+msgid "what resources the problem needs"
+msgstr ""
+
+#: ..\..\admin\performance.rst:39
+# a9cf2de8b9b9487eab9dabebd1484876
+msgid "where those resources are needed"
+msgstr ""
+
+#: ..\..\admin\performance.rst:41
+# eb3c71f44ebc4f439d404cc505e89f45
+msgid "Invest in some kind of profiling to tell you where your bottleneck is, especially if you're considering throwing significant money at a problem."
+msgstr ""
+
+#: ..\..\admin\performance.rst:45
+# 379f537a48ff4a8aad72518d7b22f832
+msgid "Tune MySQL"
+msgstr ""
+
+#: ..\..\admin\performance.rst:47
+# 0777d98a824646788d7fb6c522d45009
+msgid "Elgg makes extensive use of the back end database, making many trips on each pageload. This is perfectly normal and a well configured database server will be able to cope with thousands of requests per second."
+msgstr ""
+
+#: ..\..\admin\performance.rst:50
+# 76f04e172e2442358dda0b7511f5160a
+msgid "Here are some configuration tips that might help:"
+msgstr ""
+
+#: ..\..\admin\performance.rst:52
+# 9578b86abb9342c0b9aa1080e13bc6c3
+msgid "Make sure that MySQL is configured to use an appropriate my.cnf for the size of your website."
+msgstr ""
+
+#: ..\..\admin\performance.rst:53
+# 7161d1a113234adcb00b0c8e37b2204d
+msgid "Increase the amount of memory available to PHP and MySQL (you will have to increase the amount of memory available to the php process in any case)"
+msgstr ""
+
+#: ..\..\admin\performance.rst:57
+# 0efb1800d8c7425a84a911c9eeb07969
+msgid "Enable caching"
+msgstr ""
+
+#: ..\..\admin\performance.rst:59
+# add23242ccfa4f668c8df46fdb20804b
+msgid "Generally, if a program is slow, that is because it is repeatedly performing an expensive computation or operation. Caching allows the system to avoid doing that work over and over again by using memory to store the results so that you can skip all the work on subsequent requests. Below we discuss several generally-available caching solutions relevant to Elgg."
+msgstr ""
+
+#: ..\..\admin\performance.rst:66
+# 0dd607060203484a9cc4676f7aeffa16
+msgid "Simplecache"
+msgstr ""
+
+#: ..\..\admin\performance.rst:68
+# 7c5f8e9edeea43f6a8dc3833c051e04d
+msgid "By default, views are cached in the Elgg data directory for a given period of time. This removes the need for a view to be regenerated on every page load."
+msgstr ""
+
+#: ..\..\admin\performance.rst:71
+# 18114ab6163f426380a05aa63a843498
+msgid "This can be disabled by setting ``$CONFIG->simplecache_enabled = false;`` For best performance, make sure this value is set to ``true``."
+msgstr ""
+
+#: ..\..\admin\performance.rst:74
+# 3420a89216664a3eb9eecd1172a6b359
+msgid "This does lead to artifacts during development if you are editing themes in your plugin as the cached version will be used in preference to the one provided by your plugin."
+msgstr ""
+
+#: ..\..\admin\performance.rst:77
+# 0b9706803eef467f9cd5910d2be58e26
+msgid "The simple cache can be disabled via the administration menu. It is recommended that you do this on your development platform if you are writing Elgg plugins."
+msgstr ""
+
+#: ..\..\admin\performance.rst:80
+# 781159ae83454ec3a013a9b97b83aeed
+msgid "This cache is automatically flushed when a plugin is enabled, disabled or reordered, or when upgrade.php is executed."
+msgstr ""
+
+#: ..\..\admin\performance.rst:84
+# 3e20dd531a404feb997a7ba6d5d9202a
+msgid "System cache"
+msgstr ""
+
+#: ..\..\admin\performance.rst:86
+# 18fb059804bb4a98bc1b45c1c7358cc7
+msgid "The location of views are cached so that they do not have to be discovered (profiling indicated that page load took a non-linear amount of time the more plugins were enabled due to view discovery). Elgg also caches information like the language mapping and class map."
+msgstr ""
+
+#: ..\..\admin\performance.rst:91
+# af06638f0efd44fea55d06a866607c4a
+msgid "This can be disabled by setting ``$CONFIG->system_cache_enabled = false;`` For best performance, make sure this value is set to ``true``."
+msgstr ""
+
+#: ..\..\admin\performance.rst:94
+# 4dcb2786542c46ada6922ccd5cd1b61f
+msgid "This is currently stored in files in your dataroot (although later versions of Elgg may use memcache). As with the simple cache it is flushed when a plugin is enabled, disabled or reordered, or when upgrade.php is executed."
+msgstr ""
+
+#: ..\..\admin\performance.rst:99
+# b804c2e92c0e4de7ae4d8650971141d5
+msgid "The system cache can be disabled via the administration menu, and it is recommended that you do this on your development platform if you are writing Elgg plugins."
+msgstr ""
+
+#: ..\..\admin\performance.rst:104
+# 68b608789097494ca5101c50c88bd7e7
+msgid "Database query cache"
+msgstr ""
+
+#: ..\..\admin\performance.rst:106
+# 97e4981977864bbeb46226e225b40735
+msgid "For the lifetime of a given page's execution, a cache of all ``SELECT`` queries is kept. This means that for a given page load a given select query will only ever go out to the database once, even if it is executed multiple times. Any write to the database will flush this cache, so it is advised that on complicated pages you postpone database writes until the end of the page or use the ``execute_delayed_*`` functionality. This cache will be automatically cleared at the end of a page load."
+msgstr ""
+
+#: ..\..\admin\performance.rst:113
+# 1ecd28ac724b49f8b2c6f4edb050728a
+msgid "You may experience memory problems if you use the Elgg framework as a library in a PHP CLI script. This can be disabled by setting ``$CONFIG->db_disable_query_cache = true;``"
+msgstr ""
+
+#: ..\..\admin\performance.rst:118
+# 2e209fbbfcfa477f9120392404d1ceef
+msgid "Etags and Expires headers"
+msgstr ""
+
+#: ..\..\admin\performance.rst:120
+# 83809389fa41406f83de113d27c0dc9f
+msgid "These technologies tell your users' browsers to cache static assets (CSS, JS, images) locally. Having these enabled greatly reduces server load and improves user-perceived performance."
+msgstr ""
+
+#: ..\..\admin\performance.rst:123
+# c1b642d45777406f9b21d24a0cf66b85
+msgid "Use the `Firefox yslow plugin`__ or Chrome DevTools Audits to confirm which technologies are currently running on your site."
+msgstr ""
+
+#: ..\..\admin\performance.rst:129
+# 01ccd54ff20f4f7bb96f336ea9f125aa
+msgid "If the static assets aren't being cached:"
+msgstr ""
+
+#: ..\..\admin\performance.rst:127
+# 2769b65807c24543812396d3e8e79873
+msgid "Verify that you have these extensions installed and enabled on your host"
+msgstr ""
+
+#: ..\..\admin\performance.rst:128
+# 4dfd0e4b5c8e464d929791046fe73933
+msgid "Update your .htaccess file, if you are upgrading from a previous version of Elgg"
+msgstr ""
+
+#: ..\..\admin\performance.rst:129
+# a9baa84d83e240e9aa3ff63e42ee5037
+msgid "Enable Simplecache_, which turns select views into browser-cacheable assets"
+msgstr ""
+
+#: ..\..\admin\performance.rst:134
+# 4886b3975219440a84049ba5da411785
+msgid "Memcache"
+msgstr ""
+
+#: ..\..\admin\performance.rst:136
+# af29bd5ee8d5428294407aaea59caaf1
+msgid "Memcache is a generic caching technology developed by Brad Fitzpatrick for LiveJournal."
+msgstr ""
+
+#: ..\..\admin\performance.rst:138
+# 8b594b9bde1b468e9116bc8ce1161502
+msgid "SUPPORT FOR MEMCACHE IS EXPERIMENTAL AND MAY BE CHANGED."
+msgstr ""
+
+#: ..\..\admin\performance.rst:140
+# a11d8a29383c4e6cb2f887e66250ab93
+msgid "Installation requirements:"
+msgstr ""
+
+#: ..\..\admin\performance.rst:142
+# 957f31d8853440c5b1063c4bd63a5e2c
+msgid "``   * php5-memcache``"
+msgstr ""
+
+#: ..\..\admin\performance.rst:143
+# d04f212376aa46128d6c063f1e6db54f
+msgid "``   * memcached``"
+msgstr ""
+
+#: ..\..\admin\performance.rst:145
+# 2c01d2df989a45c1b047c502cfef1a3b
+msgid "Configuration:"
+msgstr ""
+
+#: ..\..\admin\performance.rst:147
+# e2e2bc8b76364410abdc0a17bc67c5bd
+msgid "Uncomment and populate the following sections in settings.php"
+msgstr ""
+
+#: ..\..\admin\performance.rst:159
+# 91d24d18d9ad4d2cbe9d5a74a1813b91
+msgid "Squid"
+msgstr ""
+
+#: ..\..\admin\performance.rst:161
+# ba0284b2d7be4f9f94f88d9181aaab15
+msgid "We have had good results by using `Squid`_ to cache images for us."
+msgstr ""
+
+#: ..\..\admin\performance.rst:167
+# 9a31454c0262491986464867be2cdb87
+msgid "Bytecode caching"
+msgstr ""
+
+#: ..\..\admin\performance.rst:169
+# 365ee93535af44dfa2721ccc20d8fd9d
+msgid "There are numerous PHP code caches available on the market. These speed up your site by caching the compiled byte code from your script meaning that your server doesn't have to compile the PHP code each time it is executed."
+msgstr ""
+
+#: ..\..\admin\performance.rst:175
+# ff1aabdae11940e7992a2ed9ccb32569
+msgid "Hosting"
+msgstr ""
+
+#: ..\..\admin\performance.rst:177
+# e7ce939fad7f4a558a66b94b09c13f77
+msgid "Don't expect to run a site catering for millions of users on a cheap shared host. You will need to have your own host hardware and access over the configuration, as well as lots of bandwidth and memory available."
+msgstr ""
+
+#: ..\..\admin\performance.rst:182
+# 2fd3bbb8ad52411ab5f884771e0ad835
+msgid "Memory, CPU and bandwidth"
+msgstr ""
+
+#: ..\..\admin\performance.rst:184
+# d91534eb30814e60bdab71d7c04ef7b3
+msgid "Due to the nature of caching, all caching solutions will require memory. It is a fairly cheap return to throw memory and CPU at the problem."
+msgstr ""
+
+#: ..\..\admin\performance.rst:187
+# 170f4b37e75b4915af211486d3f8160b
+msgid "On advanced hardware it is likely that bandwidth is going to be your bottleneck before the server itself. Ensure that your host can support the load you are suggesting."
+msgstr ""
+
+#: ..\..\admin\performance.rst:191
+# 030bd79b147444be8ba5c8f65bcd2181
+msgid "Configuration"
+msgstr ""
+
+#: ..\..\admin\performance.rst:193
+# d8e964551f9243d49e886fccd0dd7c2c
+msgid "Lastly, take a look at your configuration as there are a few gotchas that can catch people."
+msgstr ""
+
+#: ..\..\admin\performance.rst:195
+# 196dce7aaebb44db961dc4a132a0392a
+msgid "For example, out of the box, Apache can handle quite a high load. However, most distros of Linux come with mysql configured for small sites. This can result in Apache processes getting stalled waiting to talk to one very overloaded MySQL process."
+msgstr ""
+
+#: ..\..\admin\performance.rst:200
+# b0b5e5d651044126b99458983efb6fef
+msgid "Check for poorly-behaved plugins"
+msgstr ""
+
+#: ..\..\admin\performance.rst:202
+# 1a7013d1d3bc466b87ae873b000fbdae
+msgid "Plugins can be programmed in a very naive way and this can cause your whole site to feel slow."
+msgstr ""
+
+#: ..\..\admin\performance.rst:204
+# 6dbad968b2e94bbd8279087a175309b7
+msgid "Try disabling some plugins to see if that noticeably improves performance. Once you've found a likely offender, go to the original plugin author and report your findings."
+msgstr ""
+
+#: ..\..\admin\performance.rst:208
+# a7e104620bf54ff6b690bb01f58b66dd
+msgid "Use client-rendered HTML"
+msgstr ""
+
+#: ..\..\admin\performance.rst:210
+# b7e6adb0d276428ca9ead8e008d1bc5a
+msgid "We've found that at a certain point, much of the time spent on the server is simply building the HTML of the page with Elgg's views system."
+msgstr ""
+
+#: ..\..\admin\performance.rst:213
+# 29d3edf47ac54477a5f61292d6bbfa3d
+msgid "It's very difficult to cache the output of templates since they can generally take arbitrary inputs. Instead of trying to cache the HTML output of certain pages or views, the suggestion is to switch to an HTML-based templating system so that the user's browser can cache the templates themselves. Then have the user's computer do the work of generating the output by applying JSON data to those templates."
+msgstr ""
+
+#: ..\..\admin\performance.rst:218
+# 563357b7b4cb442596bc3c6d8a3522b9
+msgid "This can be very effective, but has the downside of being significant extra development cost. The Elgg team is looking to integrate this strategy into Elgg directly, since it is so effective especially on pages with repeated or hidden content."
+msgstr ""
+
+#: ..\..\admin\plugins.rst:2
+# 40967d012d1a449d988317fd6ce34a34
+msgid "Plugins"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:4
+# f87376a100004004a76e17d1cb6defa4
+msgid "Plugins can modify the behavior of and add new features to Elgg."
+msgstr ""
+
+#: ..\..\admin\plugins.rst:7
+# 800673ff20e84f92ac72dc76b87a1e7c
+msgid "Where to get plugins"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:9
+# a2982082232748faa3e8a4a927c64937
+msgid "Plugins can be obtained from:"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:11
+# ed166825ef164eac98b56c5912ff11cd
+msgid "`The Elgg Community <http://community.elgg.org/plugins>`_"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:12
+# 8927a12f941c487f895f2124b521e30d
+msgid "`Github <https://github.com/Elgg>`_"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:13
+# 5b91b136136f45d0aee36110aad9c63a
+msgid "Third-party sites (typically for a price)"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:15
+# bc0d7d4820a54fd5b84f28c6fc12b9b3
+msgid "If no existing plugins meet your needs, you can `hire a developer`__ or :doc:`create your own </guides/index>`."
+msgstr ""
+
+#: ..\..\admin\plugins.rst:20
+# c826b13a796c4451a916526d2e857f77
+msgid "Types of plugins"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:23
+# 3a58e62c89ce491480d73c64f346e8a4
+msgid "Themes"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:25
+# dfb200fdb6454dfcbafabb69dca2eaca
+msgid "Themes are just plugins that modify the look-and-feel of your site, so you'll typically find them wherever Elgg plugins are available."
+msgstr ""
+
+#: ..\..\admin\plugins.rst:29
+# d1ad617aaadb4abe97e7b50e7f7aa95a
+msgid "Language Packs"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:31
+# fb84cb4828c547238306e84024e15c13
+msgid "Language packs are just plugins that provide support for another language. There are language packs for the core and they are usually installed in the languages directory off the elgg root directory. Other language packs are provided for various plugins. Generally, the authors make it easy to copy those files into the languages directory of each plugin under the mod directory."
+msgstr ""
+
+#: ..\..\admin\plugins.rst:37
+# 9e33acbb0f484804a9fc24ca658ae9a4
+msgid "Installation"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:39
+# 5668eca28e724d319493865185b2afde
+msgid "To install a plugin, unzip the archive and copy the plugin's main folder to the “mod” directory in your Elgg installation."
+msgstr ""
+
+#: ..\..\admin\plugins.rst:42
+# e8ea9f74a85a49c7ba88f4e36af5d973
+msgid "You must then activate it from the admin panel:"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:44
+# 1451ef1f27da447fa465da581937118a
+msgid "Log in to your Elgg site with your administrator account"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:45
+# 3bd1ef73dca34d489ba4b8e63212c94e
+msgid "Go to Administration -> Configure -> Plugins"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:46
+# 0067aa6bcb6a4c19a813f143bc9c8699
+msgid "Find your plugin in the list of installed plugins and click on the 'enable' button."
+msgstr ""
+
+#: ..\..\admin\plugins.rst:50
+# 680ff4d6ddb044ada50faa9e47a7bba6
+msgid "Pre-1.8 notes"
+msgstr ""
+
+#: ..\..\admin\plugins.rst:52
+# 05db2f8e3a37442aa3bd0649e68b5207
+msgid "In Elgg 1.7 and below, the interface for managing installed plugins is located at Administration -> Tool Administration."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:2
+# 7eec33cd6c14470c88562820a1239f15
+msgid "Upgrading Elgg"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:4
+# e19cf620931442d6b3c2ae76382cd259
+msgid "Switch a live site to a new version of Elgg."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:6
+# 7618b99fd8d24cdabe698d421b7552aa
+msgid "If you've written custom plugins, you should also read the developer guides for :doc:`information on upgrading plugin code </guides/upgrading>` for the latest version of Elgg."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:10
+# 992a7498cc4b42a8b00cc836a2e82fec
+msgid "Advice"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:12
+# 8697d63c887a4d0fbe719346d852ad42
+msgid "**Back up your database** and code"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:13
+# d8010824d20744c9857d7b1bb3e72773
+msgid "Mind any version-specific comments below"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:14
+# 329fa6c5fc5346168a7085723930e2c9
+msgid "Upgrade only one minor version at a time (1.6 => 1.7, then 1.7 => 1.8)"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:15
+# f9dd941a3a9a4239a8fea5545202be21
+msgid "Try out the new version on a test site before doing an upgrade"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:16
+# 550df00144644037bacab46dd9b0d9a6
+msgid "Report any problems in plugins to the plugin authors"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:17
+# 5ae092647ba24e56bbf3f69a0ecf3b3e
+msgid "If you are a plugin author you can `report any backwards-compatibility issues to GitHub <issues_>`_"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:22
+# 027aedd1bbc0476f87d54aa6810bddb1
+msgid "Basic instructions"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:24
+# 69d34c41ed994024a93c63222eb5fc58
+msgid "**Back up your database, data directory and code**"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:25
+# fc5e2939d426495caa33d10467a13faa
+msgid "Download the new version of Elgg from http://elgg.org"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:26
+# bc5936ad88bf4e7eaa8738d546ab370b
+msgid "Overwrite your existing files with the new version of Elgg"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:27
+# 4725c5f6e8da43db82f9c50717c8d3a1
+msgid "Merge any new changes from ``htaccess_dist`` into ``.htaccess``"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:28
+# 96128d4ef01649ee8f2f9dced236c1be
+msgid "Merge any new changes from ``settings.example.php`` into ``settings.php``"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:29
+# f9d6a94ad49249a2932f6893fd5afaea
+msgid "Visit http://your-elgg-site.com/upgrade.php"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:33
+# 83a11ea68456472a8e9c5e4dfefdd496
+msgid "Any modifications should have been written within plugins, so that they are not lost on overwriting. If this is not the case, take care to maintain your modifications."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:38
+# 6c5e208b57b8478794084ff3d9f68b51
+msgid "If you modified the default .htaccess, be sure to port your modifications over to the new one."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:41
+# 8d6bf83e6de8436baaffebf590dae803
+msgid "From 1.8 to 1.9"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:42
+# 130aaca7f75244489a11a44e91763f6a
+msgid "Elgg 1.9 is a much lighter upgrade than 1.8 was."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:45
+# e762e379498645b596b100241ed11031
+msgid "Breaking changes"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:46
+# de5505443aaa44a8aed6cd6a349959e7
+msgid "Plugins and themes written for 1.8 are expected to be compatible with 1.9 except as it pertains to comments, discussion replies, and notifications. Please `report any backwards compatibility issues <issues_>`_ besides those just listed."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:51
+# eaed5fb287604cb9abcad00713f5b9fd
+msgid "Upgrade steps"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:52
+# 4b35efd4f47d4db6bc51a09e3e75726d
+msgid "There are several data migrations involved, so it is especially important that you **back up your database and data directory** before performing the upgrade."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:55
+# b369a41355914472ad5f3551876f171d
+msgid "You may also consider getting rid of obsolete files from formerly installed Elgg versions by deleting everyting from the Elgg installation directory except for:"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:58
+# 360a2ed90d6b49219a35af597fd7e699
+msgid "``.htaccess``"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:59
+# 2a26a8972a60441489d05d3dbc6edcee
+msgid "``engine/settings.php``"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:60
+# 5c09178e466e417aa2c6e552bab18f87
+msgid "any 3rd-party plugin folders in the ``mod`` directory"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:62
+# 9bb4ef1086474104903cc208be148da3
+msgid "Follow the basic instructions listed above."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:64
+# 3d9d8895ccdf440dabc1ab5e87789a91
+msgid "After you've visited ``upgrade.php``, go to the admin area of your site. You should see a notification that you have pending upgrades. Click the link in the notification bar to view and run the upgrades."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:70
+# 3a5b84d43b5445a8b8122d9a6abad8dd
+msgid "Time commitment"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:71
+# b95874f980ad4361b27c8cb8e40d1964
+msgid "Running all of the listed upgrades `took about 1 hour and 15 minutes`__ on the Elgg community site which at the time had to migrate:"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:74
+# db2c82c401844ba1b3247d76357c3579
+msgid "~75,000 discussion replies"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:75
+# 5260063094854ba2ac2fabdae15a7317
+msgid "~75,000 comments"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:76
+# 5397c1e168d14ec5b69bf811793c4101
+msgid "~75,000 data directories"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:80
+# 244fc45c521244f28742851d8c5cf634
+msgid "You should take this only as a ballpark estimate for your own upgrade. How long it takes will depend on how large your site is and how powerful your servers are."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:84
+# ecbab9845b5541dd9d28c2f6bb202430
+msgid "From 1.7 to 1.8"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:85
+# 251572d680aa453aa0a11edf5c4126a5
+msgid "Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0. As such, there is more work to update core and plugins than with previous upgrades."
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:89
+# 9bd6359c8e4d4b6a821b9ef149a50c02
+msgid "Updating core"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:90
+# 410c1a8799f44d299f3b4286491da8ac
+msgid "Delete the following core directories (same level as _graphics and engine):"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:92
+# bdd6346a5be54ac58bdeca515ea6f282
+msgid "_css"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:93
+# 695ade6223554905a36d2317535f2ef7
+msgid "account"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:94
+# b869dc846b11432a9001f5ff5efa3be1
+msgid "admin"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:95
+# d5924a015a624e4c8e5127ae3ea57317
+msgid "dashboard"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:96
+# 1a17d3b8897648859bf67f895ecf58a9
+msgid "entities"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:97
+# 78e461ac2910413c8cbeac4cdbac01c2
+msgid "friends"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:98
+# 906fcdce076a42e5ad2aca73dc54bf21
+msgid "search"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:99
+# c9c2740fe89847ad83637b43fc691896
+msgid "settings"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:100
+# 89d23e873fa9404a859b7cb313b3530e
+msgid "simplecache"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:101
+# ae23aec962a944dc9bc068116fce98f1
+msgid "views"
+msgstr ""
+
+#: ..\..\admin\upgrading.rst:105
+# df322a0874e44176b4e3bf9ba97ba8dc
+msgid "If you do not delete these directories before an upgrade, you will have problems!"
+msgstr ""
+

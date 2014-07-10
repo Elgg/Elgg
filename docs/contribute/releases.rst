@@ -16,7 +16,8 @@ Requirements
 * Access to `Twitter account`_
 * Access to `G+ page`_
 * Node.js and NPM installed
-* Transifex client installed (`easy_install transifex-client`)
+* Sphinx installed
+* Transifex client installed (``easy_install transifex-client``)
 * Transifex account with access to Elgg project
  
 1. Prepare and tag the release

@@ -128,10 +128,16 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	 * @return void
 	 */
 	public function offsetSet($key, $value) {
-		if (is_object($this->object)) {
+		$this->displayWarning();
+		if (is_object($this->object) && !$this->object instanceof ArrayAccess) {
 			$this->object->$key = $value;
 		} else {
-			$this->object[$key] = $value;
+			if ($key === null) {
+				// Yes this is necessary. Otherwise $key will be interpreted as empty string
+				$this->object[] = $value;
+			} else {
+				$this->object[$key] = $value;
+			}
 		}
 	}
 
@@ -145,7 +151,8 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	 * @return mixed
 	 */
 	public function offsetGet($key) {
-		if (is_object($this->object)) {
+		$this->displayWarning();
+		if (is_object($this->object) && !$this->object instanceof ArrayAccess) {
 			return $this->object->$key;
 		} else {
 			return $this->object[$key];
@@ -162,7 +169,8 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	 * @return void
 	 */
 	public function offsetUnset($key) {
-		if (is_object($this->object)) {
+		$this->displayWarning();
+		if (is_object($this->object) && !$this->object instanceof ArrayAccess) {
 			unset($this->object->$key);
 		} else {
 			unset($this->object[$key]);
@@ -179,7 +187,8 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	 * @return bool
 	 */
 	public function offsetExists($offset) {
-		if (is_object($this->object)) {
+		$this->displayWarning();
+		if (is_object($this->object) && !$this->object instanceof ArrayAccess) {
 			return isset($this->object->$offset);
 		} else {
 			return array_key_exists($offset, $this->object);
