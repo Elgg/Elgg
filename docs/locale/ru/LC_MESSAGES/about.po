@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# 
+# Translators:
+# tacid, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg Core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-06-21 18:39\n"
+"PO-Revision-Date: 2014-06-24 17:11+0000\n"
+"Last-Translator: tacid\n"
+"Language-Team: Russian (http://www.transifex.com/projects/p/elgg-core/language/ru/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: ru\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 0b44897056b842748171babb6b1b8183
+#: ../../about/contributing.rst:4
+msgid "Contributor Guide"
+msgstr "Инструкция по внесению своих изменений"
+
+# 11f9b77938454d1d81f10137ef965e91
+# f7e5b74c90df48d8b4a2aacd333a2d62
+# a965dd2a145e4735905ea9805139bfd9
+# 209ecdc5fb0446afa2d8a92ab0511b54
+# c07099de010446d8a6c8c3babf7ca67c
+#: ../../about/contributing.rst:6 ../../about/history.rst:6
+#: ../../about/index.rst:6 ../../about/releases.rst:6
+#: ../../about/roadmap.rst:6
+msgid "This page has moved."
+msgstr "Страница перемещена."
+
+# 59b5b01a7ec343488f68d6ece68097cd
+#: ../../about/contributing.rst:8
+msgid ":doc:`/contribute/index`"
+msgstr ":doc:`/contribute/index`"
+
+# 848d522d42664ae38622bc6a401cd636
+#: ../../about/history.rst:4
+msgid "History"
+msgstr "Архив"
+
+# b6c59b40cff04b578c4b69408f3d10c3
+#: ../../about/history.rst:8
+msgid ":doc:`/appendix/history`"
+msgstr ":doc:`/appendix/history`"
+
+# 0ca4e12af0e2450b9bd4998c65e15fe1
+#: ../../about/index.rst:4
+msgid "About"
+msgstr "О сайте"
+
+# 99bc62254d5144ee86b24f9c46bb5776
+#: ../../about/index.rst:8
+msgid ":doc:`/appendix/index`"
+msgstr ":doc:`/appendix/index`"
+
+# a2d0cbae95764f92aa7f9a37e309b6c7
+#: ../../about/releases.rst:4
+msgid "Release Policy"
+msgstr "Политика релиза"
+
+# 5b6bc0d423c94824aa4d38af9effe9a7
+#: ../../about/releases.rst:8
+msgid ":doc:`/appendix/releases`"
+msgstr ":doc:`/appendix/releases`"
+
+# 7d17b577613c40e09a141ccdd945ae49
+#: ../../about/roadmap.rst:4
+msgid "Roadmap"
+msgstr "Дорожная карта"
+
+# 1c598bd41d96473eab16175563dad25c
+#: ../../about/roadmap.rst:8
+msgid ":doc:`/appendix/roadmap`"
+msgstr ":doc:`/appendix/roadmap`"

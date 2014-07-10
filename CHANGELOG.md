@@ -1,3 +1,51 @@
+<a name="1.9.0-rc.4"></a>
+### 1.9.0-rc.4  (2014-07-10)
+
+#### Contributors
+
+* Evan Winslow (9)
+* Paweł Sroka (6)
+* Matt Beckett (3)
+* Jeroen Dalsem (2)
+* Paul Shepel (2)
+* Steve Clay (2)
+* Adrián Chaves Fernández (Gallaecio) (1)
+* JoseLGM (1)
+* Per Jensen (1)
+
+#### Features
+
+* **discussions:** Added email SMTP headers for better thread grouping. ([91755a86](https://github.com/Elgg/Elgg/commit/91755a86b7ea89db71e29d632c23120b9938e87b), closes [#6894](https://github.com/Elgg/Elgg/issues/6894))
+
+
+#### Documentation
+
+* **i18n:** internationalized the documentation ([ff5fd9be](https://github.com/Elgg/Elgg/commit/ff5fd9bee7ff956cf6089bfb7d15847406f205b4), closes [#5899](https://github.com/Elgg/Elgg/issues/5899))
+* **upgrading:** Added upgrade instructions for 1.8 to 1.9 ([001e3ffa](https://github.com/Elgg/Elgg/commit/001e3ffa46688f4210e284458b5f72db106453aa), closes [#5900](https://github.com/Elgg/Elgg/issues/5900))
+
+
+#### Bug Fixes
+
+* **aalborg_theme:** selected page menu does not collapse sub menu ([53f696ce](https://github.com/Elgg/Elgg/commit/53f696ce36b6555ebc1766d77429f04242b7c88d), closes [#6979](https://github.com/Elgg/Elgg/issues/6979))
+* **collections:**  make urls work regardless of username ([76827f22](https://github.com/Elgg/Elgg/commit/76827f22f7092608f02a560d7dc2bda93f6ca994), closes [#6059](https://github.com/Elgg/Elgg/issues/6059))
+* **core:** Added missing options array support for ElggUser methods ([30d98c67](https://github.com/Elgg/Elgg/commit/30d98c67c1a097b57ad3e684c40d53edff312603), closes [#6994](https://github.com/Elgg/Elgg/issues/6994))
+* **deprecation:** the deprecation wrapper correctly handles array access ([264fc5f2](https://github.com/Elgg/Elgg/commit/264fc5f2adcad7d4ed2a9d748add58a24437b39b), closes [#7017](https://github.com/Elgg/Elgg/issues/7017), [#6917](https://github.com/Elgg/Elgg/issues/6917))
+* **discussion:** no longer show entity menu items on non-discussions ([d3c7c953](https://github.com/Elgg/Elgg/commit/d3c7c9535beedcd563ac3f1ae6e98e01a68e29d2), closes [#6508](https://github.com/Elgg/Elgg/issues/6508))
+* **file:**
+  * destroy output buffer before sending file ([007021ff](https://github.com/Elgg/Elgg/commit/007021ff67727e618d02a3fda05d78175f7ec082))
+  * download adds header Content-Length ([8375eb09](https://github.com/Elgg/Elgg/commit/8375eb09d9daeddc818d99db481880eca4f24de6))
+* **groups:** give feedback if a user cannot be added to a group ([07cddc61](https://github.com/Elgg/Elgg/commit/07cddc615b7791d9bff677f7efdd7e88ef7aac40), closes [#6081](https://github.com/Elgg/Elgg/issues/6081))
+* **install:** Make installer usable on smartphones ([b528d988](https://github.com/Elgg/Elgg/commit/b528d98894061fcf3a162882418e98f72794c8c7))
+* **members:** prevent members search with empty query ([12f7b88f](https://github.com/Elgg/Elgg/commit/12f7b88f28a60ff8348bc122884c7e8d6c183e4f))
+* **notifications:** Corrected html entities handling for email subject and body ([4bfb849e](https://github.com/Elgg/Elgg/commit/4bfb849ecd0ec9ece59e445149dd252dfc352d32), closes [#6905](https://github.com/Elgg/Elgg/issues/6905))
+* **release:** Corrected release script Windows system compatibility ([18f78403](https://github.com/Elgg/Elgg/commit/18f78403564e1432ff66d486d959c9e1a76fbd5e))
+* **router:** Can return 'handler' param in `'route', $identifier` hook again ([6e09758f](https://github.com/Elgg/Elgg/commit/6e09758fe9bf43dd7ef8b648cc2afd7701f4d651), closes [#6696](https://github.com/Elgg/Elgg/issues/6696))
+* **rss:** River entries include their full correct summaries again ([96679d8b](https://github.com/Elgg/Elgg/commit/96679d8b774048a5be7fde1da216cedbf6516253), closes [#6901](https://github.com/Elgg/Elgg/issues/6901))
+* **thewire:** More effective textarea change detection ([e07f6975](https://github.com/Elgg/Elgg/commit/e07f697594996fc931a3cd1d2849480d83ff60f2))
+* **ui:** Corrected bad stretching of non-square, large avatars. Now upscaling by width. ([71ea155b](https://github.com/Elgg/Elgg/commit/71ea155bf9188abc9683a81d7f2df38da4bc0104), closes [#5602](https://github.com/Elgg/Elgg/issues/5602))
+* **upgrade:** test for ability to connect to localhost if rewrite test fails ([7c49e4ce](https://github.com/Elgg/Elgg/commit/7c49e4ceee996f53ef0120df4ff0c2850c63652b), closes [#6888](https://github.com/Elgg/Elgg/issues/6888))
+
+
 <a name="1.9.0-rc.3"></a>
 ### 1.9.0-rc.3  (2014-06-23)
 
