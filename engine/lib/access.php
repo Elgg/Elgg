@@ -179,8 +179,9 @@ function get_access_array($user_guid = 0, $site_guid = 0, $flush = false) {
 	} else {
 		$access_array = array(ACCESS_PUBLIC);
 
-		// The following can only return sensible data if the user is logged in.
-		if (elgg_is_logged_in()) {
+		// The following can only return sensible data if the user is
+		// logged in or guid explicitly passed
+		if ($user_guid) {
 			$access_array[] = ACCESS_LOGGED_IN;
 
 			// Get ACL memberships
