@@ -257,23 +257,24 @@ class Elgg_Notifications_NotificationsService {
 			return false;
 		}
 
-		$language = $recipient->language;
-		$params = array(
-			'event' => $event,
-			'method' => $method,
-			'recipient' => $recipient,
-			'language' => $language,
-		);
-
 		$actor = $event->getActor();
 		$object = $event->getObject();
 		if (!$actor || !$object) {
 			return false;
 		}
 
+		$language = $recipient->language;
+		$params = array(
+			'event' => $event,
+			'method' => $method,
+			'recipient' => $recipient,
+			'language' => $language,
+			'object' => $object,
+		);
+
 		$subject = elgg_echo('notification:subject', array($actor->name), $language);
 		$body = elgg_echo('notification:body', array($object->getURL()), $language);
-		$notification = new Elgg_Notifications_Notification($event->getActor(), $recipient, $language, $subject, $body);
+		$notification = new Elgg_Notifications_Notification($event->getActor(), $recipient, $language, $subject, $body, '', $params);
 
 		$type = 'notification:' . $event->getDescription();
 		if ($this->hooks->hasHandler('prepare', $type)) {

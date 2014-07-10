@@ -220,7 +220,59 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 		$from = 'noreply@' . $site->getDomain();
 	}
 
-	return elgg_send_email($from, $to, $message->subject, $message->body);
+	return elgg_send_email($from, $to, $message->subject, $message->body, $params);
+}
+
+/**
+ * Adds default thread SMTP headers to group messages correctly.
+ * Note that it won't be sufficient for some email clients. Ie. Gmail is looking at message subject anyway.
+ *
+ * @param string $hook        Equals to 'email'
+ * @param string $type        Equals to 'system'
+ * @param array  $returnvalue Array containing fields: 'to', 'from', 'subject', 'body', 'headers', 'params'
+ * @param array  $params      The same value as $returnvalue
+ * @return array
+ * @access private
+ */
+function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $params) {
+
+	$notificationParams = elgg_extract('params', $returnvalue, array());
+	/** @var Elgg_Notifications_Notification */
+	$notification = elgg_extract('notification', $notificationParams);
+
+	if (!($notification instanceof Elgg_Notifications_Notification)) {
+		return $returnvalue;
+	}
+
+	$hostname = parse_url(elgg_get_site_url(), PHP_URL_HOST);
+	$urlPath = parse_url(elgg_get_site_url(), PHP_URL_PATH);
+
+	$object = elgg_extract('object', $notification->params);
+	/** @var Elgg_Notifications_Event $event */
+	$event = elgg_extract('event', $notification->params);
+
+	if (($object instanceof ElggEntity) && ($event instanceof Elgg_Notifications_Event)) {
+		if ($event->getAction() === 'create') {
+			// create event happens once per entity and we need to guarantee message id uniqueness
+			// and at the same time have thread message id that we don't need to store
+			$messageId = "<{$urlPath}.entity.{$object->guid}@{$hostname}>";
+		} else {
+			$mt = microtime(true);
+			$messageId = "<{$urlPath}.entity.{$object->guid}.$mt@{$hostname}>";
+		}
+		$returnvalue['headers']["Message-ID"] = $messageId;
+		$container = $object->getContainerEntity();
+
+		// let's just thread comments by default
+		if (($container instanceof ElggEntity) && ($object instanceof ElggComment)) {
+
+			$threadMessageId = "<{$urlPath}.entity.{$container->guid}@{$hostname}>";
+			$returnvalue['headers']['In-Reply-To'] = $threadMessageId;
+			$returnvalue['headers']['References'] = $threadMessageId;
+		}
+	}
+
+	return $returnvalue;
 }
 
 /**
@@ -233,6 +285,7 @@ function _elgg_notifications_init() {
 	// add email notifications
 	elgg_register_notification_method('email');
 	elgg_register_plugin_hook_handler('send', 'notification:email', '_elgg_send_email_notification');
+	elgg_register_plugin_hook_handler('email', 'system', '_elgg_notifications_smtp_thread_headers');
 
 	// add ability to set personal notification method
 	elgg_extend_view('forms/account/settings', 'core/settings/account/notifications');
@@ -589,13 +642,13 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	// Sanitise subject by stripping line endings
 	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
 	// this is because Elgg encodes everything and matches what is done with body
-	$subject = html_entity_decode($subject, ENT_COMPAT, 'UTF-8'); // Decode any html entities
+	$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8'); // Decode any html entities
 	if (is_callable('mb_encode_mimeheader')) {
 		$subject = mb_encode_mimeheader($subject, "UTF-8", "B");
 	}
 
 	// Format message
-	$body = html_entity_decode($body, ENT_COMPAT, 'UTF-8'); // Decode any html entities
+	$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8'); // Decode any html entities
 	$body = elgg_strip_tags($body); // Strip tags from message
 	$body = preg_replace("/(\r\n|\r)/", "\n", $body); // Convert to unix line endings in body
 	$body = preg_replace("/^From/", ">From", $body); // Change lines starting with From to >From
