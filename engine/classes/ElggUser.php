@@ -185,8 +185,6 @@ class ElggUser extends ElggEntity
 			unset($USERNAME_TO_GUID_MAP_CACHE[$this->username]);
 		}
 
-		clear_user_files($this);
-
 		// Delete entity
 		return parent::delete();
 	}

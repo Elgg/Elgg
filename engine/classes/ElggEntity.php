@@ -2079,6 +2079,10 @@ abstract class ElggEntity extends ElggData implements
 				$this->getDatabase()->deleteData("DELETE FROM $sub_table WHERE guid = $guid");
 			}
 		}
+		
+		if ($res) {
+			elgg_trigger_event('delete:after', $this->type, $this);
+		}
 
 		return (bool)$res;
 	}

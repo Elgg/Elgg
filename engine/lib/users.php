@@ -1147,6 +1147,20 @@ function users_pagesetup() {
 }
 
 /**
+ * Clears the users files after the user has been deleted
+ *
+ * @param string   $event       delete
+ * @param string   $object_type user
+ * @param ElggUser $user        User object
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_clear_deleted_user_files($event, $object_type, $user) {
+	clear_user_files($user);
+}
+
+/**
  * Users initialisation function, which establishes the page handler
  *
  * @return void
@@ -1203,4 +1217,5 @@ function users_test($hook, $type, $value, $params) {
 elgg_register_event_handler('init', 'system', 'users_init', 0);
 elgg_register_event_handler('init', 'system', 'elgg_profile_fields_setup', 10000); // Ensure this runs after other plugins
 elgg_register_event_handler('pagesetup', 'system', 'users_pagesetup', 0);
+elgg_register_event_handler('delete:after', 'user', '_elgg_clear_deleted_user_files');
 elgg_register_plugin_hook_handler('unit_test', 'system', 'users_test');
