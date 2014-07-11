@@ -1,3 +1,18 @@
+<a name="1.9.0-rc.5"></a>
+### 1.9.0-rc.5  (2014-07-10)
+
+#### Contributors
+
+* Matt Beckett (3)
+* Jerôme Bakker (1)
+
+#### Bug Fixes
+
+* **core:** output/iframe made to the w3c standard ([cb25d684](https://github.com/Elgg/Elgg/commit/cb25d68478ba78115d027d587981542467dee842))
+* **river:** add enabled col to river table, update on enable/disable of referenced entities ([eb041ebd](https://github.com/Elgg/Elgg/commit/eb041ebd822eb461a008ef3da93ee35d613af973), closes [#6022](https://github.com/Elgg/Elgg/issues/6022))
+* **upgrade:** use correct table prefixes on river upgrade script ([1c5c2b63](https://github.com/Elgg/Elgg/commit/1c5c2b632c790cef0d1e401f3f5493da785c13ec), closes [#7033](https://github.com/Elgg/Elgg/issues/7033))
+
+
 <a name="1.9.0-rc.4"></a>
 ### 1.9.0-rc.4  (2014-07-10)
 
