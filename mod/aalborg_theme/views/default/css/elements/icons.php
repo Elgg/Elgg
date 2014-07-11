@@ -389,9 +389,12 @@
 	width: 100px;
 	height: 100px;
 }
+.elgg-avatar-large {
+	width: 100%;
+}
 .elgg-avatar-large > a > img {
-	width: 200px;
-	height: 200px;
+	width: 100%;
+	height: auto;
 }
 .elgg-state-banned {
 	opacity: 0.5;

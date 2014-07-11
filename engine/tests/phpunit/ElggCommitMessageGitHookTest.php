@@ -8,15 +8,6 @@ class ElggCommitMessageGitHookTest extends PHPUnit_Framework_TestCase {
 	protected $filesDir;
 	protected $validateScript;
 
-	protected $validTypes = array(
-		'feature',
-		'fix',
-		'docs',
-		'chore',
-		'perf',
-		'security'
-	);
-
 	public function setUp() {
 		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
 			$this->markTestSkipped('Can only test in *nix envs.');
@@ -32,41 +23,45 @@ class ElggCommitMessageGitHookTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * Test failures for missing input
 	 */
-	public function testInvalidInputs() {
+	public function testRejectsEmptyStringInput() {
 		// have to pass an empty arg because it looks for stdin
 		$cmd = "$this->validateScript ''";
 		$result = $this->runCmd($cmd, $output);
 		$this->assertFalse($result, $output);
-
+	}
+	
+	public function testRejectsEmptyFileInput() {
 		$cmd = "$this->validateScript /dev/null";
 		$result = $this->runCmd($cmd, $output);
 		$this->assertFalse($result, $output);
-
+	}
+	
+	public function testRejectsEmptyPipeInput() {
 		$cmd = "echo '' | $this->validateScript";
 		$result = $this->runCmd($cmd, $output);
 		$this->assertFalse($result, $output);
 	}
 
-	public function testInvalidMessage() {
+	public function testRejectsInvalidFileInput() {
 		$cmd = "$this->validateScript {$this->filesDir}invalid_format.txt";
 		$result = $this->runCmd($cmd, $output);
 		$this->assertFalse($result, $output);
 	}
 
-	public function testFile() {
+	public function testAcceptsValidFileInput() {
 		$cmd = "$this->validateScript {$this->filesDir}valid.txt";
 		$result = $this->runCmd($cmd, $output);
 		$this->assertTrue($result, $output);
 	}
 	
-	public function testPipe() {
+	public function testAcceptsValidPipeInput() {
 		$msg = escapeshellarg(file_get_contents("{$this->filesDir}valid.txt"));
 		$cmd = "echo $msg | $this->validateScript";
 		$result = $this->runCmd($cmd, $output);
 		$this->assertTrue($result, $output);
 	}
 
-	public function testArg() {
+	public function testAcceptsValidStringInput() {
 		$msg = escapeshellarg(file_get_contents("{$this->filesDir}valid.txt"));
 		$cmd = "$this->validateScript $msg";
 		$result = $this->runCmd($cmd, $output);

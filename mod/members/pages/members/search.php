@@ -6,6 +6,10 @@
 
 $query = get_input("member_query");
 
+if (empty($query)) {
+	forward("members");
+}
+
 $limit = get_input("limit");
 $offset = get_input("offset");
 

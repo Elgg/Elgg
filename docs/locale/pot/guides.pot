@@ -1,0 +1,3539 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg 1.9\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-10 19:59-0700\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: ../../guides/actions.rst:2
+# 6f666272e73d45d39cf4d0e1c45302e4
+msgid "Forms + Actions"
+msgstr ""
+
+#: ../../guides/actions.rst:4
+# d33fa45ee8ea4d05b17b42ab1cd52bba
+msgid "Create, update, or delete content."
+msgstr ""
+
+#: ../../guides/actions.rst:6
+# 5380ef44a7114c7e816904fcdc2cf4fe
+msgid "Elgg forms submit to actions. Actions define the behavior for form submission."
+msgstr ""
+
+#: ../../guides/actions.rst:8
+# 967b27c50f1c4321842259395f32a18f
+msgid "This guide assumes basic familiarity with:"
+msgstr ""
+
+#: ../../guides/actions.rst:10
+#: ../../guides/themes.rst:9
+# c5de434f2c024655bfbd93c882782de9
+# 901049c8af574c4382de9964c0a6ad68
+msgid ":doc:`/admin/plugins`"
+msgstr ""
+
+#: ../../guides/actions.rst:11
+#: ../../guides/themes.rst:10
+# 0031c218db794ad18fc75a2805fa9054
+# 26e0f9633d3e430aab9c6ee15bbf55ef
+msgid ":doc:`views`"
+msgstr ""
+
+#: ../../guides/actions.rst:12
+# 4dee2e87135e4e7c8c1c3407020a9efb
+msgid ":doc:`i18n`"
+msgstr ""
+
+#: ../../guides/actions.rst:15
+# d955d324c131418ca636a0a75305c743
+msgid "Registering actions"
+msgstr ""
+
+#: ../../guides/actions.rst:17
+# 66b0abc16758451ab6dc5cf96f2c01c3
+msgid "Actions must be registered before use. Use ``elgg_register_action`` for this:"
+msgstr ""
+
+#: ../../guides/actions.rst:23
+# 755068d64a384d8cb91d88a2b52afb70
+msgid "The ``mod/example/actions/example.php`` script will now be run whenever a form is submitted to ``http://localhost/elgg/action/example``."
+msgstr ""
+
+#: ../../guides/actions.rst:27
+# 7d5b8565915c4524ba8c191ac04acf97
+msgid "Permissions"
+msgstr ""
+
+#: ../../guides/actions.rst:28
+# 0b0fb8e5d81f4b09b480157c03c1f7a8
+msgid "By default, actions are only available to logged in users."
+msgstr ""
+
+#: ../../guides/actions.rst:30
+# e4661a44c21f426c95a24e940019c7e3
+msgid "To make an action available to logged out users, pass ``“public”`` as the third parameter:"
+msgstr ""
+
+#: ../../guides/actions.rst:36
+# 49d329231b1642acabdbbb9aa62d1303
+msgid "To restrict an action to only administrators, pass ``”admin”`` for the last parameter:"
+msgstr ""
+
+#: ../../guides/actions.rst:44
+# eef2458e381d49f7840b9282d458c040
+msgid "Implementing actions"
+msgstr ""
+
+#: ../../guides/actions.rst:46
+# b19c8cc19f2f407b852439fcd75adf83
+msgid "Use the ``get_input`` function to get access to request parameters:"
+msgstr ""
+
+#: ../../guides/actions.rst:52
+# 9739c363c8ef4d16915c9082a46b96d7
+msgid "You can then use the :doc:`database` api to load entities and perform actions on them accordingly."
+msgstr ""
+
+#: ../../guides/actions.rst:54
+# 72ee8b55a8694a61acb21eb12e2d60ab
+msgid "To redirect the page once you've completed your actions, use the ``forward`` function:"
+msgstr ""
+
+#: ../../guides/actions.rst:60
+# cb4dde3b8cc344d4bfb636c15074e27e
+msgid "For example, to forward to the user's profile:"
+msgstr ""
+
+#: ../../guides/actions.rst:67
+# 494e8d9ab9db4a75969f4e1cbe6e3b26
+msgid "URLs can be relative to the Elgg root:"
+msgstr ""
+
+#: ../../guides/actions.rst:74
+# dc9710f109e548859c9905567fbdc17d
+msgid "Redirect to the referring page by using the ``REFERRER`` constant:"
+msgstr ""
+
+#: ../../guides/actions.rst:81
+# d6952cc85d4e43909debe02dd0d45ec3
+msgid "Give feedback to the user about the status of the action by using ``system_message`` for positive feedback or ``register_error`` for warnings and errors:"
+msgstr ""
+
+#: ../../guides/actions.rst:94
+# 03316bc2ca4b4439936f7f014ff95043
+msgid "Customizing actions"
+msgstr ""
+
+#: ../../guides/actions.rst:96
+# de31fd52d274481da57fc215222237c6
+msgid "Before executing any action, Elgg triggers a hook:"
+msgstr ""
+
+#: ../../guides/actions.rst:102
+# f2f25ee8e76e48f0a34c2672a76508b2
+msgid "Where ``$action`` is the action being called. If the hook returns ``false`` then the action will not be executed."
+msgstr ""
+
+#: ../../guides/actions.rst:105
+# 832809f4bd704f6d9c4eebc3017b71bc
+msgid "Example: Captcha"
+msgstr ""
+
+#: ../../guides/actions.rst:107
+# 570aaa52aa4341bf899b6979f8f988c3
+msgid "The captcha module uses this to intercept the ``register`` and ``user/requestnewpassword`` actions and redirect them to a function which checks the captcha code. This check returns ``true`` if valid or ``false`` if not (which prevents the associated action from executing)."
+msgstr ""
+
+#: ../../guides/actions.rst:109
+# 7c7d939c69e94ca99e641d50e67014f9
+msgid "This is done as follows:"
+msgstr ""
+
+#: ../../guides/actions.rst:131
+# ee58223f8eee452388412e2b394bc5ed
+msgid "This lets a plugin extend an existing action without the need to replace the whole action. In the case of the captcha plugin it allows the plugin to provide captcha support in a very loosely coupled way."
+msgstr ""
+
+#: ../../guides/actions.rst:134
+# 90dd50b6bcb8439dae302b484f892572
+msgid "To output a form, use the elgg_view_form function like so:"
+msgstr ""
+
+#: ../../guides/actions.rst:140
+# 1d64d60bd05c42bea72f6a4fa6c91f52
+msgid "Doing this should generate something like the following markup:"
+msgstr ""
+
+#: ../../guides/actions.rst:151
+# 2ad7fa90bb9d4233a22c2ecbd7a7f7d8
+msgid "Elgg does some things automatically for you when you generate forms this way:"
+msgstr ""
+
+#: ../../guides/actions.rst:153
+# 55ceb601290b4c11a43993255b1f450f
+msgid "It sets the action to the appropriate url based on the name of the action you pass to it"
+msgstr ""
+
+#: ../../guides/actions.rst:154
+# c5f00950a314405788173350cce41b4d
+msgid "It adds some anti-csrf tokens (``__elgg_ts`` and ``__elgg_token``) to help keep your actions secure"
+msgstr ""
+
+#: ../../guides/actions.rst:155
+# c750f13a3a6f4f2a800a93aa4200669c
+msgid "It automatically looks for the body of the form in the ``forms/example`` view."
+msgstr ""
+
+#: ../../guides/actions.rst:157
+# 9c928db55cd54c17a5dafeeb3ae53b8d
+msgid "Put the content of your form in your plugin’s ``forms/example`` view:"
+msgstr ""
+
+#: ../../guides/actions.rst:165
+# 517797407f5446af984e143621f2c9ad
+msgid "Now when you call ``elgg_view_form('example')``, Elgg will produce:"
+msgstr ""
+
+#: ../../guides/actions.rst:180
+# 744fd9a32a1b475a9b27206d2902b671
+msgid "Files and images"
+msgstr ""
+
+#: ../../guides/actions.rst:182
+# e01bf996ece94afc9f0de8e84a3e8620
+msgid "Use the input/file view in your form’s content view."
+msgstr ""
+
+#: ../../guides/actions.rst:189
+# f9ae479cf455443294e7b9b93c093503
+msgid "Set the enctype of the form to multipart/form-data:"
+msgstr ""
+
+#: ../../guides/actions.rst:197
+# cc328c07cb24403c94632a6fb671c69c
+msgid "In your action file, use the ``$_FILES`` global to access the uploaded file:"
+msgstr ""
+
+#: ../../guides/actions.rst:204
+# 924d80b613c54faba336cd8b523bc5d9
+msgid "Sticky forms"
+msgstr ""
+
+#: ../../guides/actions.rst:206
+# 38f3dde6a14145ef985b07de65822927
+msgid "Sticky forms are forms that retain user input if saving fails. They are \"sticky\" because the user's data \"sticks\" in the form after submitting, though it was never saved to the database. This greatly improves the user experience by minimizing data loss. Elgg 1.8 includes helper functions so you can make any form sticky."
+msgstr ""
+
+#: ../../guides/actions.rst:209
+# 91bb8a142b16437b95e2f2296f102d92
+msgid "Helper functions"
+msgstr ""
+
+#: ../../guides/actions.rst:211
+# 5b2029707fe54735a6d8c8993f5d7526
+msgid "Sticky forms are implemented in Elgg 1.8 by the following functions:"
+msgstr ""
+
+#: ../../guides/actions.rst:213
+# 9a96f44fb25544de8c7ff2f75382043a
+msgid "``elgg_make_sticky_form($name)`` Tells the engine to make all input on a form sticky."
+msgstr ""
+
+#: ../../guides/actions.rst:216
+# 15d2728356394249b0b3234262185d59
+msgid "``elgg_clear_sticky_form($name)`` Tells the engine to discard all sticky input on a form."
+msgstr ""
+
+#: ../../guides/actions.rst:219
+# 8a8a2513b38d4498a4482e38f3530092
+msgid "``elgg_is_sticky_form($name)`` Checks if $name is a valid sticky form."
+msgstr ""
+
+#: ../../guides/actions.rst:222
+# 6650137757a44723943a0eaea7b95c2e
+msgid "``elgg_get_sticky_values($name)`` Returns all sticky values saved for $name by elgg_make_sticky_form()."
+msgstr ""
+
+#: ../../guides/actions.rst:226
+#: ../../guides/i18n.rst:9
+# bfc78a4e94224f1da33f184a942f283a
+# e2b75860f1834c1e94bfdb516f8fd6f0
+msgid "Overview"
+msgstr ""
+
+#: ../../guides/actions.rst:228
+# 5e4efda5c26b4df1864fc5bce43a294a
+msgid "The basic flow of using sticky forms is: Call ``elgg_make_sticky_form($name)`` at the top of actions for forms you want to be sticky. Use ``elgg_is_sticky_form($name)`` and ``elgg_get_sticky_values($name)`` to get sticky values when rendering a form view. Call ``elgg_clear_sticky_form($name)`` after the action has completed successfully or after data has been loaded by ``elgg_get_sticky_values($name)``."
+msgstr ""
+
+#: ../../guides/actions.rst:234
+# faa077cce0ad475db7ee49fb31ab2489
+msgid "Example: User registration"
+msgstr ""
+
+#: ../../guides/actions.rst:236
+# e45bf45166764975bef8c07420d64a26
+msgid "Simple sticky forms require little logic to determine the input values for the form. This logic is placed at the top of the form body view itself."
+msgstr ""
+
+#: ../../guides/actions.rst:238
+# 4ba857474a254b259e3ffcf19b93929d
+msgid "The registration form view first sets default values for inputs, then checks if there are sticky values. If so, it loads the sticky values before clearing the sticky form:"
+msgstr ""
+
+#: ../../guides/actions.rst:253
+# 7ce6e33d0d5e4251b8809380d2137605
+msgid "The registration action sets creates the sticky form and clears it once the action is completed:"
+msgstr ""
+
+#: ../../guides/actions.rst:270
+# 5cfb12dcc67444b0b3738e662d5c8f26
+msgid "Example: Bookmarks"
+msgstr ""
+
+#: ../../guides/actions.rst:272
+# b879f58e662e4e3a82353f73bf89e059
+msgid "The bundled plugin Bookmarks' save form and action is an example of a complex sticky form."
+msgstr ""
+
+#: ../../guides/actions.rst:274
+# f3b94ad0b8f446ee803afe5ad29577a3
+msgid "The form view for the save bookmark action uses ``elgg_extract()`` to pull values from the ``$vars`` array:"
+msgstr ""
+
+#: ../../guides/actions.rst:288
+# aa1546b58a8b4748bc74f2fac4827288
+msgid "The page handler scripts prepares the form variables and calls ``elgg_view_form()`` passing the correct values:"
+msgstr ""
+
+#: ../../guides/actions.rst:296
+# 8e645d08382a4ffba15c883df725e3e6
+msgid "Similarly, ``mod/bookmarks/pages/edit.php`` uses the same function, but passes the entity that is being edited as an argument:"
+msgstr ""
+
+#: ../../guides/actions.rst:308
+# f19b0b8a8cc64dc1a16a0327a35d3eea
+msgid "The library file defines ``bookmarks_prepare_form_vars()``. This function accepts an ``ElggEntity`` as an argument and does 3 things:"
+msgstr ""
+
+#: ../../guides/actions.rst:310
+# 124320679cc549c082fb0ed9775ffa2e
+msgid "Defines the input names and default values for form inputs."
+msgstr ""
+
+#: ../../guides/actions.rst:311
+# d55d67ebcebb4fd793410fc6ad2c621b
+msgid "Extracts the values from a bookmark object if it's passed."
+msgstr ""
+
+#: ../../guides/actions.rst:312
+# 1719a0793baf45e89ef21a10aef00e70
+msgid "Extracts the values from a sticky form if it exists."
+msgstr ""
+
+#: ../../guides/actions.rst:314
+# db36517cb3214b149d29597a1f9c3021
+msgid "TODO: Include directly from lib/bookmarks.php"
+msgstr ""
+
+#: ../../guides/actions.rst:353
+# 523a2b97971045c1a20a3c63c12d4996
+msgid "The save action checks the input, then clears the sticky form upon success:"
+msgstr ""
+
+#: ../../guides/actions.rst:367
+# 76b7b4e848334b3ea1f0d9d4ac92c605
+msgid "Ajax"
+msgstr ""
+
+#: ../../guides/actions.rst:369
+# a99c8f33600c4e98b53fd85d9aa40e3f
+msgid "To call an action via javascript without actually submitting a form, use ``elgg.action``:"
+msgstr ""
+
+#: ../../guides/actions.rst:375
+# 14996cca732d48d5bb1f52be43cb1cc8
+msgid "This does a few things under the hood:"
+msgstr ""
+
+#: ../../guides/actions.rst:377
+# d5710359183d4029b6645ab2e4986a36
+msgid "Automatically normalizes the request URL to http://localhost/elgg/action/example."
+msgstr ""
+
+#: ../../guides/actions.rst:378
+# 64b489ac520b4df699d511320e096c68
+msgid "Adds XSRF tokens to the request body for security"
+msgstr ""
+
+#: ../../guides/actions.rst:379
+# f64c0979dfe446f59b576093a1d6b075
+msgid "If the action emits any system messages or errors, they will automatically be displayed when the response comes back."
+msgstr ""
+
+#: ../../guides/actions.rst:381
+# 968173ba37ee449286a4bbfd9cbea301
+msgid "Often you’ll want to do something in response to a successful action:"
+msgstr ""
+
+#: ../../guides/actions.rst:394
+# d491c1cdd3a84dbe846ec4f3aa10407a
+msgid "Security"
+msgstr ""
+
+#: ../../guides/actions.rst:395
+# d694d5202f62420e9b611cb1defd37ed
+msgid "For enhanced security, all actions require an XSRF token. Calls to action URLs that do not include security tokens will be ignored and a warning will be generated."
+msgstr ""
+
+#: ../../guides/actions.rst:397
+# 9bbc8dc095f6481bb10e0876f2d2cdc3
+msgid "A few views and functions automatically generate security tokens:"
+msgstr ""
+
+#: ../../guides/actions.rst:406
+# 701199add8c5470baa5fc0a26bbf6c3e
+msgid "In rare cases, you may need to generate tokens manually:"
+msgstr ""
+
+#: ../../guides/actions.rst:413
+# ff5f887115e347d89c6d7db9d7f91c22
+msgid "You can also access the tokens from javascript:"
+msgstr ""
+
+#: ../../guides/actions.rst:420
+# b24129db465e460cb2686242a04f4cee
+msgid "These are refreshed periodically so should always be up-to-date."
+msgstr ""
+
+#: ../../guides/database.rst:2
+# 71c0de8f7cc24987afefcf0dd164e062
+msgid "Database"
+msgstr ""
+
+#: ../../guides/database.rst:4
+# 7cbc585fd9454f72862e6b7a08263059
+msgid "Persist user-generated content and settings with Elgg's generic storage API."
+msgstr ""
+
+#: ../../guides/database.rst:7
+# 777e42abd73f437ea49b0dcdb7ad3214
+msgid "Entities"
+msgstr ""
+
+#: ../../guides/database.rst:10
+# 7a30dd60b4b54893a0bb6a82d4bd4aea
+msgid "Creating an object"
+msgstr ""
+
+#: ../../guides/database.rst:12
+# 8673c66225a140a291513dd194b316bd
+msgid "To create an object in your code, you need to instantiate an ``ElggObject``. Setting data is simply a matter of adding instance variables or properties. The built-in properties are:"
+msgstr ""
+
+#: ../../guides/database.rst:16
+# 89f23f468449420297056b93841cae56
+msgid "**``guid``** The entity's GUID; set automatically"
+msgstr ""
+
+#: ../../guides/database.rst:17
+# ad42e66503e1455c87fe02c990df7fd5
+msgid "**``owner_guid``** The owning user's GUID"
+msgstr ""
+
+#: ../../guides/database.rst:18
+# 3bacc6f83a664d409defc33e38b4546a
+msgid "**``site_guid``** The owning site's GUID. This is set automatically when an instance of ``ElggObject`` gets created)"
+msgstr ""
+
+#: ../../guides/database.rst:20
+# 76ad051cdddd47b792b09e58a2c6d724
+msgid "**``subtype``** A single-word arbitrary string that defines what kind of object it is, for example ``blog``"
+msgstr ""
+
+#: ../../guides/database.rst:22
+# d651470c0f9a46a9a7d09d53c5128ee4
+msgid "**``access_id``** An integer representing the access level of the object"
+msgstr ""
+
+#: ../../guides/database.rst:24
+# 7eac3fc1107b468282b1820d6a1e55e1
+msgid "**``title``** The title of the object"
+msgstr ""
+
+#: ../../guides/database.rst:25
+# 0c0c1d8ea1524a6ab9cffb3b9ed6f52e
+msgid "**``description``** The description of the object"
+msgstr ""
+
+#: ../../guides/database.rst:27
+# fd05e45f149f4e30a0f6cc3bc062008c
+msgid "The object subtype is a special property. This is an arbitrary string that describes what the object is. For example, if you were writing a blog plugin, your subtype string might be *blog*. It's a good idea to make this unique, so that other plugins don't accidentally try and use the same subtype. For the purposes of this document, let's assume we're building a simple forum. Therefore, the subtype will be *forum*:"
+msgstr ""
+
+#: ../../guides/database.rst:41
+# a96b13ac646d4e1a828a3e7b71cfb6be
+msgid "``access_id`` is another important property. If you don't set this, your object will be private, and only the creator user will be able to see it. Elgg defines constants for the special values of ``access_id``:"
+msgstr ""
+
+#: ../../guides/database.rst:45
+# 990e19660fb6477281b5d293ef0320b6
+msgid "**ACCESS_PRIVATE** Only the owner can see it"
+msgstr ""
+
+#: ../../guides/database.rst:46
+# a6658d16d1ff4c0f94a72dbb870ac207
+msgid "**ACCESS_FRIENDS** Only the owner and his/her friends can see it"
+msgstr ""
+
+#: ../../guides/database.rst:47
+# e84f702d15d6487184575011dbb519a3
+msgid "**ACCESS_LOGGED_IN** Any logged in user can see it"
+msgstr ""
+
+#: ../../guides/database.rst:48
+# 8fc94b0ece4f44cca412e3bab5fd9aa1
+msgid "**ACCESS_PUBLIC** Even visitors not logged in can see it"
+msgstr ""
+
+#: ../../guides/database.rst:50
+# 299a2de99ddb4470a5673d0b4089d2fa
+msgid "Saving the object will automatically populate the ``$object->guid`` property if successful. If you change any more base properties, you can call ``$object->save()`` again, and it will update the database for you."
+msgstr ""
+
+#: ../../guides/database.rst:54
+# 16e08d8401f14cceb00ea6d6c1f66d6b
+msgid "You can set metadata on an object just like a standard property. Let's say we want to set the SKU of a product:"
+msgstr ""
+
+#: ../../guides/database.rst:61
+# fd804520b1454721a17017e6f640b188
+msgid "If you assign an array, all the values will be set for that metadata. This is how, for example, you set tags."
+msgstr ""
+
+#: ../../guides/database.rst:64
+# 01eb5a5b42434c8ebe2c47c69db18279
+msgid "Metadata cannot be persisted to the database until the entity has been saved, but for convenience, ElggEntity can cache it internally and save it when saving the entity."
+msgstr ""
+
+#: ../../guides/database.rst:69
+# 4129befb02d248d59b411216dafcd6c9
+msgid "Loading an object"
+msgstr ""
+
+#: ../../guides/database.rst:72
+# dee40c78ec5940b780bd92a6f78c0b69
+msgid "By GUID"
+msgstr ""
+
+#: ../../guides/database.rst:81
+# bdc3fc0a14c24c5c816189673e0c1b3f
+msgid "But what if you don't know the GUID? There are several options."
+msgstr ""
+
+#: ../../guides/database.rst:84
+# f1a23973be514de49acf9024342c029c
+msgid "By user, subtype or site"
+msgstr ""
+
+#: ../../guides/database.rst:86
+# 406952360b994842ad668716186936c6
+msgid "If you know the user ID you want to get objects for, or the subtype, or the site, you have several options. The easiest is probably to call the procedural function ``elgg_get_entities``:"
+msgstr ""
+
+#: ../../guides/database.rst:98
+# 2ca57625dd5a425b9aa68e7cd7a5b313
+msgid "This will return an array of ``ElggEntity`` objects that you can iterate through. ``elgg_get_entities`` paginates by default, with a limit of 10; and offset 0."
+msgstr ""
+
+#: ../../guides/database.rst:102
+# 9da23c2dd5214b1997f471bcfd4ef6e4
+msgid "You can leave out ``owner_guid`` to get all objects and leave out subtype or type to get objects of all types/subtypes."
+msgstr ""
+
+#: ../../guides/database.rst:105
+# 846050902de349b3b6b763e3751a00f7
+msgid "If you already have an ``ElggUser`` – e.g. ``elgg_get_logged_in_user_entity``, which always has the current user's object when you're logged in – you can simply use:"
+msgstr ""
+
+#: ../../guides/database.rst:113
+# 86478f5f91c5432c8d584f9128c1cac7
+msgid "But what about getting objects with a particular piece of metadata?"
+msgstr ""
+
+#: ../../guides/database.rst:116
+# ed16751f95274cd1a61c89e2c8950a4e
+msgid "By metadata"
+msgstr ""
+
+#: ../../guides/database.rst:118
+# fc7fa013e79a480bafe31f4f7440f759
+msgid "The function ``elgg_get_entities_from_metadata`` allows fetching entities with metadata in a variety of ways."
+msgstr ""
+
+#: ../../guides/database.rst:122
+# 66f881402d0349d6b264493bef61adbf
+msgid "Displaying entities"
+msgstr ""
+
+#: ../../guides/database.rst:124
+# fcd8b788686d4b37b966e37f58d2f3da
+msgid "In order for entities to be displayed in `listing functions`_ you need to provide a view for the entity in the views system."
+msgstr ""
+
+#: ../../guides/database.rst:127
+# 3e15ecf7d04a48d699b246e99fc5ce98
+msgid "To display an entity, create a view EntityType/subtype where EntityType is one of the following:"
+msgstr ""
+
+#: ../../guides/database.rst:130
+# d5dee6d561fb4d31be1966b34ddbb46a
+msgid "object: for entities derived from ElggObject user: for entities derived from ElggUser site: for entities derived from ElggSite group: for entities derived from ElggGroup"
+msgstr ""
+
+#: ../../guides/database.rst:137
+# 78a370bddfc14e5791ad3af8dd3963d8
+msgid "A default view for all entities has already been created, this is called EntityType/default."
+msgstr ""
+
+#: ../../guides/database.rst:141
+#: ../../guides/database.rst:239
+# c651cd89696d4d5087075caa3d37d0bd
+# 0e76543271d348498027006b0ad87243
+msgid "Entity Icons"
+msgstr ""
+
+#: ../../guides/database.rst:143
+# 81290e1bba9242aea216a2f51cbea12b
+msgid "Entities all have a method called ->getIcon($size)."
+msgstr ""
+
+#: ../../guides/database.rst:145
+# 84b43624ab9547b5b95e0abd3bfc71cd
+msgid "This method accepts a $size variable, which can be either 'large', 'medium', 'small' or 'tiny'."
+msgstr ""
+
+#: ../../guides/database.rst:148
+# 256a24d8817b4fa0bd10dc4109060686
+msgid "The method triggers a `plugin hook`_ - 'entity:icon:url'. This is passed the following parameters:"
+msgstr ""
+
+#: ../../guides/database.rst:151
+# 20f2874c26d94e94a37ae853500f0b11
+msgid "'entity' : The entity in question 'viewtype' : The type of `view`_ e.g. 'default' or 'mobile'. 'size' : The size."
+msgstr ""
+
+#: ../../guides/database.rst:155
+# 42362e62bd88408e8caab2c52b78211d
+msgid "The hook should return a url."
+msgstr ""
+
+#: ../../guides/database.rst:157
+# 4fb256abe5154e59b7a0239047b37f81
+msgid "Hooks have already been defined, and will look in the following places for default values (in this order):"
+msgstr ""
+
+#: ../../guides/database.rst:163
+# 844a99d45bf642b78862ae54bad56e74
+msgid "views/$viewtype/graphics/icons/$type/$subtype/$size.png"
+msgstr ""
+
+#: ../../guides/database.rst:164
+# 615078aa03ba4b4ea77c4f3ff6aa86c7
+msgid "views/$viewtype/graphics/icons/$type/default/$size.png"
+msgstr ""
+
+#: ../../guides/database.rst:165
+# d5d55bec2c5b46bdbe51990750171443
+msgid "views/$viewtype/graphics/icons/default/$size.png"
+msgstr ""
+
+#: ../../guides/database.rst:167
+# fd99bc487b6d4fa4b55ee8fe56ee257c
+msgid "Where"
+msgstr ""
+
+#: ../../guides/database.rst:169
+# ff792e35794e4f29891642e8bb2507cd
+msgid "$viewtype : The type of `view`_ e.g. 'default' or 'mobile'. $type : The type of entity - group, site, user, object. $subtype : Subtype of $type, e.g. blog, page. $size : Size - 'large', 'medium', 'small' or 'tiny'"
+msgstr ""
+
+#: ../../guides/database.rst:175
+# 55953c39c07a428fb908001a70474ff3
+msgid "Adding, reading and deleting annotations"
+msgstr ""
+
+#: ../../guides/database.rst:177
+# 0052aa983c724c5ea57639b72a4f853f
+msgid "Annotations could be used, for example, to track ratings. To annotate an entity you can use the object's ``annotate()`` method. For example, to give a blog post a rating of 5, you could use:"
+msgstr ""
+
+#: ../../guides/database.rst:187
+# d94a181e1d024ece8078e6a12d171961
+msgid "To retrieve the ratings on the blog post, use ``$blogpost->getAnnotations('rating')`` and if you want to delete an annotation, you can operate on the ``ElggAnnotation`` class, eg ``$annotation->delete()``."
+msgstr ""
+
+#: ../../guides/database.rst:192
+# 8e1a93788d48488b90dfb36312074b58
+msgid "Retrieving a single annotation can be done with ``get_annotation()`` if you have the annotation's ID. If you delete an ElggEntity of any kind, all its metadata, annotations, and relationships will be automatically deleted as well."
+msgstr ""
+
+#: ../../guides/database.rst:198
+# 35c9770f4ba44107aa1bcfcd53f56155
+msgid "Extending ElggEntity"
+msgstr ""
+
+#: ../../guides/database.rst:200
+# a34699f359d74e138a9c0f463f7dddc2
+msgid "If you derive from one of the Elgg core classes, you'll need to tell Elgg how to properly instantiate the new type of object so that get\\_entity() et al. will return the appropriate PHP class. For example, if I customize ElggGroup in a class called \"Committee\", I need to make Elgg aware of the new mapping. Following is an example class extension:"
+msgstr ""
+
+#: ../../guides/database.rst:230
+# 6fb1f03437ca4daf9baf215e7d162a2c
+msgid "Now if you invoke ``get_entity()`` with the GUID of a committee object, you'll get back an object of type Committee."
+msgstr ""
+
+#: ../../guides/database.rst:233
+# 14a1d84e6d774b80b6bd08beba0415b8
+msgid "This template was extracted from the definition of ElggFile."
+msgstr ""
+
+#: ../../guides/database.rst:236
+# 22e2dd8dcd4c4712bba63964fc8dcecb
+msgid "Advanced features"
+msgstr ""
+
+#: ../../guides/database.rst:241
+# b533b33b7a0d4bcc83fdf41c98fc5c80
+msgid "A url for an icon representing a given entity can be retrieved by the ``getIcon()`` method."
+msgstr ""
+
+#: ../../guides/database.rst:244
+# 9515cac1e18645729d957c928eb215cb
+msgid "This is handy as it provides a generic interface which allows the Elgg framework to draw an icon for your data - it also allows you to override icons for existing data types - for example providing `Gravatar support for user icons`_."
+msgstr ""
+
+#: ../../guides/database.rst:252
+# fc25dc745c4f4fdea99a7cc1a50a3f89
+msgid "If no icon can be provided for the data type a default one is used, defined either by your current theme or the Elgg default."
+msgstr ""
+
+#: ../../guides/database.rst:256
+# 198592ba756c4d999a2946e2293a9050
+msgid "Overriding the url for a specific instance"
+msgstr ""
+
+#: ../../guides/database.rst:258
+# 268f38f9ec09417b8c096cd2f899a0df
+msgid "To override the icon of a specific instance of an entity in a non-permanent and one off way, you can use the entity's ``setIcon()`` method."
+msgstr ""
+
+#: ../../guides/database.rst:263
+# 3efa7d1487a74fdeb686a3b9c9009c03
+msgid "Replacing icons via the views interface"
+msgstr ""
+
+#: ../../guides/database.rst:265
+# f5bd6447cc6149db92862d7f5049307b
+msgid "If you want to provide an icon for a new data type, or override an existing one you can do this simply through the views interface."
+msgstr ""
+
+#: ../../guides/database.rst:268
+# 5a2463f640ca469e83533cedd62076c7
+msgid "Views are in the format:"
+msgstr ""
+
+#: ../../guides/database.rst:270
+# 53e1a208c1874148ad271434c8b03fcf
+msgid "``icon/``\\ **``[TYPE]``**\\ ``/``\\ **``[SUBTYPE]``**\\ ``/``\\ **``[SIZE]``**"
+msgstr ""
+
+#: ../../guides/database.rst:274
+# dcafadbf19204863a6562c303cf6dc44
+msgid "Where:"
+msgstr ""
+
+#: ../../guides/database.rst:276
+# 9927464b10e942429eba63a26ddb232b
+msgid "[TYPE]: is the elgg type of the object - \"user\", \"group\", \"object\" or \"site\". [SUBTYPE]: is the specific subtype of the object, or \"default\" for the default icon for the given type. [SIZE]: the size, one of the following \"master\", \"large\", \"medium\", \"small\", \"topbar\" or \"tiny\"."
+msgstr ""
+
+#: ../../guides/database.rst:283
+# 79e53b4579f54d17ac871b5a21d1aa5d
+msgid "This view should contain the URL to the image only."
+msgstr ""
+
+#: ../../guides/database.rst:286
+# b98670fdf0b5455194e35390de41aebc
+msgid "Overriding icons via a handler"
+msgstr ""
+
+#: ../../guides/database.rst:288
+# 76115421b162417b9478a23ddc298ac9
+msgid "The final way to replace icons is via a handler to a plugin hook."
+msgstr ""
+
+#: ../../guides/database.rst:290
+# b01deb8ecd2642a5b6fb61be7ea19673
+msgid "This method lets you perform some additional logic in order to decide better which url to return."
+msgstr ""
+
+#: ../../guides/database.rst:293
+# 4f62308a3de24891bd51ac5d7c333a28
+msgid "The hook triggered is:"
+msgstr ""
+
+#: ../../guides/database.rst:295
+# f61ab74119994bb0a99dfbe3265b4b89
+msgid "``trigger_plugin_hook('entity:icon:url', $entity->getType(), array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size));``"
+msgstr ""
+
+#: ../../guides/database.rst:296
+# 5a87d621ce7c4314b90279aa24c9428c
+msgid "``       ``"
+msgstr ""
+
+#: ../../guides/database.rst:299
+# c329077a988441659017b459d4ab6fb3
+msgid "Entity URLs"
+msgstr ""
+
+#: ../../guides/database.rst:301
+# a419a311738946ce8d14b3eb15a2ddd9
+msgid "Entity urls are provided by the ``getURL()`` interface and provide the Elgg framework with a common way of directing users to the appropriate display handler for any given object."
+msgstr ""
+
+#: ../../guides/database.rst:305
+# 30aa38427d174f50a33c3bf0e3ba7e48
+msgid "For example, a profile page in the case of users."
+msgstr ""
+
+#: ../../guides/database.rst:307
+# 48c09e27cef246109dadd7954e493a94
+msgid "The url is set using the ``elgg\\_register\\_entity\\_url\\_handler()`` function. The function you register must return the appropriate url for the given type - this itself can be an address set up by a page handler."
+msgstr ""
+
+#: ../../guides/database.rst:314
+# 38ce25dcf0c24503b21239cc6c8efa2e
+msgid "The default handler is to use the default export interface."
+msgstr ""
+
+#: ../../guides/database.rst:317
+# 4642731d57af40c88a7122c1bf2c102e
+msgid "Pre-1.8 Notes"
+msgstr ""
+
+#: ../../guides/database.rst:319
+# d0207f26115a4bf8882bf3e1265cd239
+msgid "update\\_subtype(): This function is new in 1.8. In prior versions, you would need to edit the database by hand if you updated the class name associated with a given subtype."
+msgstr ""
+
+#: ../../guides/database.rst:323
+# f53c1e0b11604055b18e234a78e88adc
+msgid "elgg\\_register\\_entity\\_url\\_handler(): This function is new in 1.8. It deprecates register\\_entity\\_url\\_handler(), which you should use if developing for a pre-1.8 version of Elgg."
+msgstr ""
+
+#: ../../guides/database.rst:327
+# b3acb1705c6743178173bfd431543094
+msgid "elgg\\_get\\_entities\\_from\\_metadata(): This function is new in 1.8. It deprecates get\\_entities\\_from\\_metadata(), which you should use if developing for a pre-1.8 version of Elgg."
+msgstr ""
+
+#: ../../guides/events-list.rst:2
+# ae406b4e4f8a4d6f9cd140b6f1f4c0d0
+msgid "List of events in core"
+msgstr ""
+
+#: ../../guides/events-list.rst:8
+# cb0fe931ea974eaba0058da3de6e4235
+msgid "System events"
+msgstr ""
+
+#: ../../guides/events-list.rst:11
+# ed1c8953910f47b6946dae59a93b247c
+msgid "**boot, system**"
+msgstr ""
+
+#: ../../guides/events-list.rst:11
+# c800ccedf51340cb93301a476a540908
+msgid "first event triggered. Triggered before plugins have been loaded."
+msgstr ""
+
+#: ../../guides/events-list.rst:14
+# bf9e794bf4ec488ab1a5bf41398a0034
+msgid "**plugins_boot, system**"
+msgstr ""
+
+#: ../../guides/events-list.rst:14
+# 6aa3cc9dce9540d1919fc12be81a6f62
+msgid "triggered just after the plugins are loaded. Rarely used. init, system is used instead."
+msgstr ""
+
+#: ../../guides/events-list.rst:17
+# 85834d08c6b44f46b14aef6d36bb39a2
+msgid "**init, system**"
+msgstr ""
+
+#: ../../guides/events-list.rst:17
+# 351a1d7494ff4f84909f39ac7f45b1ce
+msgid "plugins tend to use this event for initialization (extending views, registering callbacks, etc.)"
+msgstr ""
+
+#: ../../guides/events-list.rst:19
+# 8f1ff2701eb04fe48feed6ad4c16a173
+msgid "**ready, system**"
+msgstr ""
+
+#: ../../guides/events-list.rst:22
+# b2488e10ed274cda996050031eecbf28
+msgid "**pagesetup, system**"
+msgstr ""
+
+#: ../../guides/events-list.rst:22
+# 667a8d78590e42a59633769be590d40d
+msgid "called just before the first content is produced. Is triggered by elgg_view()."
+msgstr ""
+
+#: ../../guides/events-list.rst:28
+# 5d00add2527e467597861fb3b4f4aef3
+msgid "**shutdown, system**"
+msgstr ""
+
+#: ../../guides/events-list.rst:25
+# b70f30f825fe41b3bea378aca8e4cec9
+msgid "triggered after the page has been sent to the user. Expensive operations could be done here and not make the user wait. Note: Depending upon your server configuration the PHP output might not be shown until after the process is completed. This means that any long-running processes will still delay the page load."
+msgstr ""
+
+#: ../../guides/events-list.rst:30
+# bd0ff3deace84d9c969fe11076740ec7
+msgid "**log, systemlog**"
+msgstr ""
+
+#: ../../guides/events-list.rst:32
+# b4c7ee36bc3242df879d775c4c9db452
+msgid "**upgrade, system**"
+msgstr ""
+
+#: ../../guides/events-list.rst:34
+# 89dc99b043cc4b17a5a52433c61fb3a4
+msgid "**upgrade, upgrade**"
+msgstr ""
+
+#: ../../guides/events-list.rst:37
+# 0abdf38792ab4840b100ee2be7b3e4fb
+msgid "**activate, plugin**"
+msgstr ""
+
+#: ../../guides/events-list.rst:37
+# f580e8902d58485d91495c50cf32d26b
+msgid "return false to prevent activation of the plugin."
+msgstr ""
+
+#: ../../guides/events-list.rst:40
+# bd786e56a5e241b5813d353d8aee399c
+msgid "**deactivate, plugin**"
+msgstr ""
+
+#: ../../guides/events-list.rst:40
+# 52e2b7bee7ef4f25970f6dc2bb56bdd1
+msgid "return false to prevent deactivation of the plugin."
+msgstr ""
+
+#: ../../guides/events-list.rst:43
+# 79b4d9c4ebdf439d8f1637ba8d04fc8f
+msgid "**init:cookie, <name>**"
+msgstr ""
+
+#: ../../guides/events-list.rst:43
+# 09de593f843341d3ba1b8b5e9245c3ff
+msgid "return false to override setting a cookie."
+msgstr ""
+
+#: ../../guides/events-list.rst:46
+# 7b604756eb7c40b5adc75746fc2d35d0
+msgid "User events"
+msgstr ""
+
+#: ../../guides/events-list.rst:49
+# d4d0e9f813a249c2b6da5ac8888e0976
+msgid "**login, user**"
+msgstr ""
+
+#: ../../guides/events-list.rst:49
+# 90b70089d0c94eee9073db4321811053
+msgid "triggered during login. Returning false prevents the user from logging"
+msgstr ""
+
+#: ../../guides/events-list.rst:52
+# 3bdf555872f3428f8ac2a8d12c7a59bf
+msgid "**logout, user**"
+msgstr ""
+
+#: ../../guides/events-list.rst:52
+# db51c00c9e694260a659a030e120af77
+msgid "triggered during logout. Returning false should prevent the user from logging out."
+msgstr ""
+
+#: ../../guides/events-list.rst:57
+# 2abefbc8f6334d169950e388843921c6
+msgid "**validate, user**"
+msgstr ""
+
+#: ../../guides/events-list.rst:55
+# 5e3bce1b3425455997c71d5938756f68
+msgid "when a user registers, the user's account is disabled. This event is triggered to allow a plugin to determine how the user should be validated (for example, through an email with a validation link)."
+msgstr ""
+
+#: ../../guides/events-list.rst:60
+# 0045cd9cc23f4853a08058bad1992704
+msgid "**profileupdate, user**"
+msgstr ""
+
+#: ../../guides/events-list.rst:60
+# 8f030fbf67ed40119c044fd58fedbb3a
+msgid "user has changed profile"
+msgstr ""
+
+#: ../../guides/events-list.rst:63
+# 3e2e2d00df7c458bbf3f3c70b2b02fd1
+msgid "**profileiconupdate, user**"
+msgstr ""
+
+#: ../../guides/events-list.rst:63
+# 54343da2449e4bd2978dc693c78c646e
+msgid "user has changed profile icon"
+msgstr ""
+
+#: ../../guides/events-list.rst:66
+# 49fc8159a9a54fe391435510e557c143
+msgid "**ban, user**"
+msgstr ""
+
+#: ../../guides/events-list.rst:66
+# 0a97cdf913254815b58207fd62aefe74
+msgid "return true to ban user"
+msgstr ""
+
+#: ../../guides/events-list.rst:69
+# 3fdf844c79ba4ad5a57e971cd41e3abf
+msgid "**unban, user**"
+msgstr ""
+
+#: ../../guides/events-list.rst:69
+# 186853c63e9d47fd83c1f4889e0db9f2
+msgid "return true to unban user"
+msgstr ""
+
+#: ../../guides/events-list.rst:71
+# e73b67757a384d1a82a14801cc5b51f5
+msgid "**make_admin, user**"
+msgstr ""
+
+#: ../../guides/events-list.rst:73
+# 1d19b66301844fa08670798c8f659577
+msgid "**remove_admin, user**"
+msgstr ""
+
+#: ../../guides/events-list.rst:76
+# f81c937dd2274eb99ea2686bae4147bd
+msgid "Relationship events"
+msgstr ""
+
+#: ../../guides/events-list.rst:80
+# 4b8515f01a504135981f2527315fb274
+msgid "**create, <relationship>**"
+msgstr ""
+
+#: ../../guides/events-list.rst:79
+# a530aa5f20034b76b8e6b0ce29e5ca0a
+msgid "called after the relationship has been created. Returning false deletes the relationship that was just created."
+msgstr ""
+
+#: ../../guides/events-list.rst:84
+# e377186f4c7b40f59a62eb2fed1bd025
+msgid "**delete, <relationship>**"
+msgstr ""
+
+#: ../../guides/events-list.rst:83
+# 7a6d7138cfb845789ccf352b1d8b168a
+msgid "called before the relationship is deleted. Return false to prevent it from being deleted."
+msgstr ""
+
+#: ../../guides/events-list.rst:87
+# 1d1c2196b1f349838e1a59076e5a61f0
+msgid "**join, group**"
+msgstr ""
+
+#: ../../guides/events-list.rst:87
+# 6d22b9c1d9b54ad98e1e6dc64945a786
+msgid "user joined a group"
+msgstr ""
+
+#: ../../guides/events-list.rst:90
+# cebe721300404e129a8cf52ad8fce621
+msgid "**leave, group**"
+msgstr ""
+
+#: ../../guides/events-list.rst:90
+# 4916feb628be449dadc2cf93a19fe9ee
+msgid "user left a group"
+msgstr ""
+
+#: ../../guides/events-list.rst:93
+# 613c771e596248ae8ba0b45f23ae5bc9
+msgid "Entity events"
+msgstr ""
+
+#: ../../guides/events-list.rst:97
+# 32248a75f18f4a379519774815137618
+msgid "**create, <entity type>**"
+msgstr ""
+
+#: ../../guides/events-list.rst:96
+# 4974a780fd484d95a5e32afa85766a57
+msgid "called for user, group, object, and site entities after creation. Return true or entity is deleted."
+msgstr ""
+
+#: ../../guides/events-list.rst:104
+# 2e7f44ed4b1f4e24af82346a8d6ff572
+msgid "**update, <entity type>**"
+msgstr ""
+
+#: ../../guides/events-list.rst:100
+# be1b15a1dd5d4836ac6cd37deae95145
+msgid "called after group update and return false to delete group. Called after object update and return false to delete the object. Called after site update and return false to delete site. Called after user update and returning false deletes the user. Called before entity update and returning false prevents update."
+msgstr ""
+
+#: ../../guides/events-list.rst:107
+# 2af4f07f9cc5476a9ae2260f35162913
+msgid "**delete, <entity type>**"
+msgstr ""
+
+#: ../../guides/events-list.rst:107
+# 8628702c5e54405da9b8f64c1f58d30e
+msgid "called before entity deletion and returning false prevents deletion."
+msgstr ""
+
+#: ../../guides/events-list.rst:110
+# a20bc1edee1548b8bab0bab03bb4702b
+msgid "**disable, <entity type>**"
+msgstr ""
+
+#: ../../guides/events-list.rst:110
+# d43bc5d4033a4919b606effa1334e953
+msgid "return false to prevent disable"
+msgstr ""
+
+#: ../../guides/events-list.rst:113
+# fba420c895b34ac2ba2dd99867a8b181
+msgid "**enable, <entity type>**"
+msgstr ""
+
+#: ../../guides/events-list.rst:113
+# c4dccda6190c466ab3d0f1d34c892f0e
+msgid "return false to prevent enable"
+msgstr ""
+
+#: ../../guides/events-list.rst:116
+# f9b5e17a7f19449a89b81e6bbcbe106e
+msgid "Metadata events"
+msgstr ""
+
+#: ../../guides/events-list.rst:120
+# 5ea43a8c3adf4ddba59605e8f02340bb
+msgid "**create, metadata**"
+msgstr ""
+
+#: ../../guides/events-list.rst:119
+# e712540888d543c6a75934dc4e9d7b2a
+msgid "called after the metadata has been created. Return false to delete the metadata that was just created."
+msgstr ""
+
+#: ../../guides/events-list.rst:124
+# 182243ffa29f4a0181d2fd8e3d03ecab
+msgid "**update, metadata**"
+msgstr ""
+
+#: ../../guides/events-list.rst:123
+# 21ac14a3289e4e49bc047174422d94bc
+msgid "called after the metadata has been updated. Return false to delete the metadata. (That doesn't sound like a good idea)"
+msgstr ""
+
+#: ../../guides/events-list.rst:127
+# f6e6865331b4435c9721a7e4e0254903
+msgid "**delete, metadata**"
+msgstr ""
+
+#: ../../guides/events-list.rst:127
+# 7b78c1e1f09a4d4ba59ced026c15830e
+msgid "called before metadata is deleted. Return false to prevent deletion."
+msgstr ""
+
+#: ../../guides/events-list.rst:130
+# 54315ecf523a41aba7a88bc13695bb81
+msgid "Annotation events"
+msgstr ""
+
+#: ../../guides/events-list.rst:134
+# cf00822f4b214119a62cf7d130c3b1f5
+msgid "**annotate, <entity type>**"
+msgstr ""
+
+#: ../../guides/events-list.rst:133
+# 15bb60cc25484e66a8f2ea79c4e8a67b
+msgid "called before the annotation has been created. Return false to prevent annotation of this entity."
+msgstr ""
+
+#: ../../guides/events-list.rst:138
+# e3980d5ea0214568a6a6fe6741558502
+msgid "**create, annotation**"
+msgstr ""
+
+#: ../../guides/events-list.rst:137
+# d5c7108f4afc427e915aa734399c0667
+msgid "called after the annotation has been created. Return false to delete the annotation."
+msgstr ""
+
+#: ../../guides/events-list.rst:142
+# f3b9b71e08974ebba32eea4fbcb757c8
+msgid "**update, annotation**"
+msgstr ""
+
+#: ../../guides/events-list.rst:141
+# f07ec101af10470b89d3adfd6d31aa64
+msgid "called after the annotation has been updated. Return false to delete the annotation. (That doesn't sound like a good idea)"
+msgstr ""
+
+#: ../../guides/events-list.rst:145
+# 9cf8db52992c4e4daa6487a99c68d9c3
+msgid "**delete, annotation**"
+msgstr ""
+
+#: ../../guides/events-list.rst:145
+# 790048e3cd344a9eb7e5ebcdfcdac061
+msgid "called before annotation is deleted. Return false to prevent deletion."
+msgstr ""
+
+#: ../../guides/events-list.rst:148
+# 115cc332ab0644a9816150f1587c037e
+msgid "Notes"
+msgstr ""
+
+#: ../../guides/events-list.rst:150
+# 6a3690d0b83e40ee9d098c8a70129ced
+msgid "Because of bugs in the Elgg core, some events may be thrown more than once on the same action. update, object is an example of an event that is thrown twice."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:2
+# 1a9cc415e4c14d488446844bc234e18f
+msgid "List of plugin hooks in core"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:8
+# 147e01940458464db2d6a04b974038a9
+msgid "System hooks"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:10
+# 48a012528f9a4e418991b24e2f0700ee
+msgid "**index, system**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:12
+# beffbe68c306462c99405f4c9d5b5df7
+msgid "**email, system**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:14
+# 962a5276d66c47368de95f177fa8dc64
+msgid "**page_owner, system**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:16
+# d32008b9198a4574b3eab9e7303b512a
+msgid "**siteid, system**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:18
+# 9e97513c4cb84bd2ad83783c9540db19
+msgid "**gc, system**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:20
+# 1941d0974e5244e08b66f382c6c62351
+msgid "**unit_test, system**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:22
+# 1160c042a7204bbd80dc6a0f53c6431d
+msgid "**diagnostics:report, system**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:24
+#: ../../guides/hooks-list.rst:265
+# b6b6ab3387a14c5b914ea4d0dfe0fcf5
+# a0c2dc03e80f4b7a97c7a1a72647b02d
+msgid "**search_types, get_types**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:26
+# 0657aee0ec9b4a72ab5ccf5083959506
+msgid "**cron, <period>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:28
+# 33c90ae26f344c97b9e9bcb813304312
+msgid "**validate, input**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:30
+# a5817a99d2de44fd84246e807ae259d5
+msgid "**geocode, location**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:32
+# 78375808b7f04b96a6fa11a487a9af8e
+msgid "**diagnostics:report, all**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:34
+# 1990a1bea57a402da9b5e6285125e9ef
+msgid "**debug, log**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:36
+# a1a3a862de8f47938a8e1f87aadffb6b
+msgid "**format, friendly:title**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:38
+# 480eb2ffd8354168b375fa8772ef9724
+msgid "**format, friendly:time**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:40
+# 165e1a936e6b4cb091dcb592990cbbff
+msgid "**format, strip_tags**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:45
+# b747c8c99410493197ba5224704376ad
+msgid "**output:before, page**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:43
+# 23351e9a23c1476eb10ed0800b2a7148
+msgid "In elgg_view_page(), this filters $vars before it's passed to the page shell view (page/\\*). To stop sending the X-Frame-Options header, unregister the handler _elgg_views_send_header_x_frame_options() from this hook."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:48
+# 967b4b823c384c5e8a58cabcc8e40f42
+msgid "**output, page**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:48
+# 720fea53294c45e78c52f39f3fc4d0a4
+msgid "In elgg_view_page(), this filters the output return value"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:50
+# 159a05dfddf44fb3bf82e389c8929cb7
+msgid "**register, menu:<menu_name>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:52
+# 7b8a00f2368740a78cd0ac09a3671feb
+msgid "**prepare, menu:<menu_name>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:54
+# 209de51dcc2c419dbb2b3000fff52305
+msgid "**add, river**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:57
+# cc89d176d80b48deb7d1074b40eb2d53
+msgid "User hooks"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:59
+# f1991479f35e4da5909f80ace461339e
+msgid "**usersettings:save, user**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:61
+# 23074c5994b242efaf5b03c021da2828
+msgid "**unvalidated_login_attempt, user**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:63
+# 53816a78d01a4c62aa8c76b8dd41a559
+msgid "**unvalidated_requestnewpassword, user**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:65
+#: ../../guides/hooks-list.rst:121
+# bd8d9ee57e2b4fa9bcf52e8cfd52c228
+# a72a0136ea844d72ae8b52d82ff3eedb
+msgid "**access:collections:write, user**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:67
+# 03cb70d7faec43efa7df4f945a6b4122
+msgid "**registeruser:validate:username, all**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:69
+# 8804254b35b543ccb940012afd9ee9f1
+msgid "**registeruser:validate:password, all**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:71
+# b25e4e91c51d485ea6121d9669335d3d
+msgid "**registeruser:validate:email, all**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:73
+#: ../../guides/hooks-list.rst:115
+# 56b49cfdeaac49e48dc92a73e363f8a6
+# 6e42be9f08ad4f03a5b8a4779f5e15b3
+msgid "**session:get, <key>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:75
+# 866c6e8061184cc19296be0714d5d8de
+msgid "**register, user**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:78
+# 05cd0df2333a43c19a912879a6fd1d5a
+msgid "**login:forward, user**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:78
+# 618f214276164468808b963d6a48357e
+msgid "Filters the URL to which the user will be forwarded after login"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:81
+# 95211278a650469abea8ee11ff8f208a
+msgid "Object hooks"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:83
+# dc39e75530e94bb19f92104d9c672f4b
+msgid "**comments, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:85
+# 7cf36024ecab4407af2fe7e3e94aa516
+msgid "**comments:count, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:87
+# bb8c7fcbbdc8411fa9312bb0014fc63c
+msgid "**likes:count, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:90
+# 60302c6e02a24487912e92f36b68b88c
+msgid "Action hooks"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:92
+# ab2ffc0fe23e4289acf284667d499a39
+msgid "**action, <action>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:94
+# 3055419d1b6a43e29704afba0600e285
+msgid "**action_gatekeeper:permissions:check, all**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:96
+# 1d47e5b2e72943568f895ef9c7a78eb5
+msgid "**forward, <reason>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:99
+# 9fe41543bb6e40ad93001d4a2ed320bd
+msgid "Permission hooks"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:101
+# 9b47715916bf48cd8902143caa2b75b4
+msgid "**container_permissions_check, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:103
+# 4cfc6bb42f0e4fc7931298872820fd94
+msgid "**permissions_check, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:105
+# a722898fe7f540f187ca26a4e8c9efb6
+msgid "**permissions_check, widget_layout**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:107
+# 898e02e487014632a3b4e03056dde443
+msgid "**permissions_check:metadata, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:109
+# 70c1eb9506c844f8a6124c9d8873e0bf
+msgid "**permissions_check:comment, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:111
+# 8f60ff7f700842e2a1c1d945dcaaca84
+msgid "**permissions_check:annotate**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:113
+# 098116de2df647be9f3fd9a72888573c
+msgid "**fail, auth**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:117
+# 63172f3d6cca4eab842abe3b24437a0b
+msgid "**api_key, use**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:119
+# 82023bdcc6524cae93caaebeee2e7f93
+msgid "**access:collections:read, user**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:123
+# af7ee2fb3c6a437d9f7e0a721fbc3629
+msgid "**access:collections:addcollection, collection**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:125
+# 78b05deeab9e4c6d9b42b8072a147b34
+msgid "**access:collections:deletecollection, collection**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:127
+# 5e5fe24900b54ead8b46953124110215
+msgid "**access:collections:add_user, collection**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:129
+# 2aee72631990499ea544213b8bff175c
+msgid "**access:collections:remove_user, collection**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:132
+# a83753afa2ff410e81f2884faf970404
+msgid "**get_sql, access**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:132
+# 09df89ea4f9647c4bea3f338270be9a9
+msgid "Filters the SQL clauses used in _elgg_get_access_where_sql()"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:135
+#: ../../guides/views.rst:2
+# 43a2c907b42a488f8cbfd01b516ffba9
+# 9d8f604b4e634386ad14934d0291e3bd
+msgid "Views"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:138
+# 33f60a58fdda41da9ccbae25f8d60f6f
+msgid "**view, <view_name>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:138
+# dcfeeb6376e0491f89ef45311448d976
+msgid "Filters the returned content of views"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:141
+# f1131af152c54986b506119e372d6b60
+msgid "**layout, page**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:141
+# 250e80118d97478c9534fd61d9a4931d
+msgid "In elgg_view_layout(), filters the layout name"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:144
+# 5496e8a92b1a41399969f8282dd44750
+msgid "**display, view**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:144
+# 0cfe7b87b4aa414e8504b3bf0a26e68d
+msgid "Deprecated in 1.8! Use view, (view) instead"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:147
+# 2ac88e51bb3f423ab04598b6ab178746
+msgid "**shell, view**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:147
+# 2a3b49a5815f442283b03acc5d79c249
+msgid "In elgg_view_page(), filters the page shell name"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:150
+# 6027b47667c04798bb3fabe13c1f845d
+msgid "**head, page**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:150
+# cf196d9ae9b04fccbd4c06ea67b6fce0
+msgid "In elgg_view_page(), filters $vars['head']"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:153
+# c8caa40a06a54130aa5bb70d3b758092
+msgid "Other"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:156
+# e9c08fd9abce4f2db0fd84250152d4b7
+msgid "**default, access**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:156
+# 76c9e2e065694abaa8fea3a567e0fba0
+msgid "In get_default_access(), filters the return value"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:158
+# 6ed461513e7c45d792957423bee8aa24
+msgid "**entity:icon:url, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:160
+# f698fecc0b9e4708a19cde9b1fe8e794
+msgid "**file:icon:url, override**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:162
+# 9201e0257b6b41b6a4fcc26b8e1bbd94
+msgid "**entity:annotate, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:164
+# d588bf7a9b1e466bae5cd0240d6ecd80
+msgid "**import, all**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:166
+# 988f8d0d6e5e4fac85c6bcf29c3fed73
+msgid "**export, all**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:168
+# f6b046827d164a72b8ac20535c9b8c65
+msgid "**object:notifications, <object_subtype>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:170
+# a3eb8807213d4917af6f6d8b8d0dc525
+msgid "**notify:entity:message, <entity_type> or is it <object_subtype>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:172
+# 3172941d9baa48e1bfa07251d72bab2f
+msgid "**plugin:usersetting, user**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:174
+# e01f8f4ee9aa4d419ff6706dba40e285
+msgid "**plugin:setting, plugin**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:176
+# 5bc95a988f574a0b85dada17211a641d
+msgid "**profile:fields, group**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:178
+# 346e45995ff54c2c9ec0ec4e93a3c66d
+msgid "**profile:fields, profile**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:180
+# f8926509b5864b33b7932f0383bf0907
+msgid "**widget_settings, <widget_handler>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:182
+# 636176e7508948db91263c57f6a07ee8
+msgid "**get_list, default_widgets**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:184
+# 4d623a3d358649d5bace8844dae20df5
+msgid "**rest, init**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:186
+# 1b3fb13c2e524757ad9346c43134423b
+msgid "**public_pages, walled_garden**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:188
+# 419a79ff30a748988782cdef4c09b0a3
+msgid "**volatile, metadata**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:191
+# 9e92a44bbb9d443e80702093250a956e
+msgid "**maintenance:allow, url**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:191
+# 9bdb704ec7064e26993e5459bfcbb48b
+msgid "Allows whitelisting URLs to non-admins during maintenance mode"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:194
+#: ../../guides/plugins.rst:2
+# 2793dd3beed14b70bbf6815e9c84245c
+# 6e8a82b09e6a48ed885562660fc3c44b
+msgid "Plugins"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:197
+# 468bcb9c46c749049655fcbe81c901c9
+msgid "File"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:200
+# 03afb391998b40fd8bffed0d3c3f75a0
+msgid "**simple_type, file**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:200
+# 12c360ef545c472bb97caa1781f1c285
+msgid "In file_get_simple_type(), filters the return value"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:203
+# 4b5afbaefadf4857bf2e215014e90cb8
+msgid "Embed"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:205
+# 1bd590c53cd64616835ac1df25bb3b6a
+msgid "**embed_get_items, <active_section>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:207
+# ee2dcdcccf3a4607a3dbc70bf1a27493
+msgid "**embed_get_sections, all**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:209
+# 116535b8073949f1b7f6580b0daa56c6
+msgid "**embed_get_upload_sections, all**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:212
+# d2b4f7e517894071a68089293a43afa8
+msgid "HTMLawed"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:214
+# 1e1ac26c6f8040b6b75c84c3b72209e3
+msgid "**allowed_styles, htmlawed**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:216
+# 04bf49ef0d2b4f0d9e780240699f5ac8
+msgid "**config, htmlawed**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:219
+# 4f8656bc7a4a4fc89e48bc86a2218224
+msgid "Members"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:222
+# d5e98011a7b747078fb21f855ac426b0
+msgid "**members:list, <page_segment>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:222
+# 8420819107a3450197beabe9799f6a74
+msgid "To handle the page /members/$page_segment, handle this hook and return the HTML of the list."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:226
+# e9eca58ff9cd41cda3dc000465692554
+msgid "**members:config, tabs**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:225
+# 18fcee120bd940d5b9e070a0c39c43a6
+msgid "This hook is used to assemble an array of tabs to be passed to the navigation/tabs view for the members pages."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:229
+# 5febc3bf56014c1dba3514c184a62572
+msgid "Twitter API"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:231
+# f86c64423b0a4681afb12790010a590d
+msgid "**login, twitter_api**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:233
+# be9bf885075d41929f021ffd31801884
+msgid "**new_twitter_user, twitter_service**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:235
+# e7a9f2458ad94e67ba0c3033f4376b68
+msgid "**first_login, twitter_api**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:237
+# 60477c5fd1324753a73a37f4cc7dfd7d
+msgid "**authorize, twitter_api**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:239
+# e0129ebb7b3941f6940ff3f1b1e55be2
+msgid "**plugin_list, twitter_service**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:242
+# 6c9952d99f124d368f5e0351294e2028
+msgid "Reported Content"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:244
+# e97abeaecb574c87a3df21049e89bb76
+msgid "**reportedcontent:add, system**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:246
+# 11169af7e9ac4ab0a141043434fb5b73
+msgid "**reportedcontent:archive, system**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:248
+# 1e1009ef697348d9b78949fe5544c4b4
+msgid "**reportedcontent:delete, system**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:250
+# a4d1138014dd45fbb231e2a9f98221cc
+msgid "**reportedcontent:add, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:252
+# eba1de0c1bc248b4badb20f2249e5c89
+msgid "**reportedcontent:archive, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:254
+# 176e209bb363473b9afb19e41a40cf08
+msgid "**reportedcontent:delete, <entity_type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:257
+# 49455e37f41d40e38a80ca7785e94295
+msgid "Search"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:259
+# f84a12d42f65476591b6f807911ace41
+msgid "**search, <type>:<subtype>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:261
+# 597e493252cf4d3599bbf9a901191610
+msgid "**search, tags**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:263
+# c7c3f935d508455aa1f33f2491de84e5
+msgid "**search, <type>**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:269
+# 7b6fa7d0fa2c4fa2b874a6b873261ed1
+msgid "**search_types, get_queries**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:268
+# 3680f7c8bf9e4250ba788eaffb7a6c90
+msgid "Before a search this filters the types queried. This can be used to reorder the display of search results."
+msgstr ""
+
+#: ../../guides/i18n.rst:2
+# 883b3e831b21417bb04993c1298124f5
+msgid "Internationalization"
+msgstr ""
+
+#: ../../guides/i18n.rst:4
+# e22a513a31dd4baa874d8ad0b9324e06
+msgid "Make your UI translatable into many different languages."
+msgstr ""
+
+#: ../../guides/i18n.rst:6
+# b18053aafaaf4df5a963d0bec96fda26
+msgid "If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`."
+msgstr ""
+
+#: ../../guides/i18n.rst:11
+# 603e46dbbbda423a885740e4b2de779e
+msgid "Translations are stored in PHP files in the ``/languages`` directory of your plugin. Each file corresponds to a language. The format is ``/languages/{language-code}.php`` where ``{language-code}`` is the ISO 639-1 short code for the language. For example:"
+msgstr ""
+
+#: ../../guides/i18n.rst:22
+# bb0d087e82834480ac7bc505552286ab
+msgid "The default language is “en” for English."
+msgstr ""
+
+#: ../../guides/i18n.rst:24
+# dcf421956ef44d73827c02571d197976
+msgid "To change the wording of any phrase, provide a new mapping in your plugin’s ``{language}.php`` file for the associated key:"
+msgstr ""
+
+#: ../../guides/i18n.rst:36
+# b6f95a7e4e324fd8aeaef43a84a59602
+msgid "Unless you are overriding core’s or another plugin’s language strings, it is good practice for the language keys to start with your plugin name. For example: “yourplugin:success,” “yourplugin:title,” etc. This helps avoid conflicts with other language keys."
+msgstr ""
+
+#: ../../guides/i18n.rst:40
+# 96eacc7172bd41ce97c4f4682dfab2c8
+msgid "Server-side API"
+msgstr ""
+
+#: ../../guides/i18n.rst:42
+# 448f19ad3a064e2ca64d5175267bdf17
+msgid "``elgg_echo($key, $args, $language)``"
+msgstr ""
+
+#: ../../guides/i18n.rst:44
+# 8f00f533b7c04d63a180491f6c6ee10a
+msgid "Output the translation of the key in the current language."
+msgstr ""
+
+#: ../../guides/i18n.rst:46
+# 55bf1558f64a44369731469f1896303e
+msgid "Example:"
+msgstr ""
+
+#: ../../guides/i18n.rst:52
+# 35388439bb034595ad7393d8900dc847
+msgid "It also supports variable replacement using sprintf syntax:"
+msgstr ""
+
+#: ../../guides/i18n.rst:62
+# 5a7ec3b5764440319e1792729b0d7f2b
+msgid "To force which language should be used for translation, set the third parameter:"
+msgstr ""
+
+#: ../../guides/i18n.rst:71
+# b20b57cea6654f7aa94f1b5eebcb8f20
+msgid "Javascript API"
+msgstr ""
+
+#: ../../guides/i18n.rst:73
+# f813d55003214bf09ade13434c03e65d
+msgid "``elgg.echo(key, args, language)``"
+msgstr ""
+
+#: ../../guides/i18n.rst:75
+# 2c252bcac2f84bd1bad100272313d81b
+msgid "This function is the exact counterpart to ``elgg_echo`` in PHP."
+msgstr ""
+
+#: ../../guides/i18n.rst:77
+# 82c52855ff3641a680733d50985d9b53
+msgid "Client-side translations are loaded asynchronously. This means ``elgg.echo`` will not be ready until after the system is done initializing."
+msgstr ""
+
+#: ../../guides/index.rst:2
+# 2bf076522c8145cebe83c52a32863802
+msgid "Developer Guides"
+msgstr ""
+
+#: ../../guides/index.rst:4
+# ce4a32a0b89748beaa4a1f1db3246c34
+msgid "Customize Elgg's behavior with plugins."
+msgstr ""
+
+#: ../../guides/javascript.rst:2
+# f28e57c56571430c935efce23e03aa92
+msgid "JavaScript"
+msgstr ""
+
+#: ../../guides/javascript.rst:7
+# c69aeec5392e47f1a1335ff8fbd2bbb8
+msgid "As of Elgg 1.9, we encourage all developers to adopt the `AMD (Asynchronous Module Definition) <http://requirejs.org/docs/whyamd.html>`_ standard for writing JavaScript code in Elgg. The 1.8 version is still functional and is :ref:`described below<1.8-js>`."
+msgstr ""
+
+#: ../../guides/javascript.rst:12
+# f933a721aa7d4ffda2695a86ac695f06
+msgid "AMD"
+msgstr ""
+
+#: ../../guides/javascript.rst:14
+# 8e1282705810452f9a060f6b0efb1019
+msgid "Defining and loading a module in Elgg 1.9 takes two steps:"
+msgstr ""
+
+#: ../../guides/javascript.rst:16
+# d4ba00d2cd50422f900f26c08108efae
+msgid "Define your module as asynchronous JavaScript."
+msgstr ""
+
+#: ../../guides/javascript.rst:17
+# aabac167c6aa4c19bfebfaa31476060d
+msgid "Tell Elgg to asynchronously execute your module in the current page."
+msgstr ""
+
+#: ../../guides/javascript.rst:20
+# 03c2c020f65342849249142f14254748
+msgid "1. Define your module as asynchronous JavaScript"
+msgstr ""
+
+#: ../../guides/javascript.rst:22
+# f60bfd4cdc1b4c51ad0d9b9fa0fe05a0
+msgid "You can define a module by creating a view or registering a URL."
+msgstr ""
+
+#: ../../guides/javascript.rst:25
+# 644521366af14a18b8b7ccf75e077ea8
+msgid "Defining modules as a view"
+msgstr ""
+
+#: ../../guides/javascript.rst:27
+# be2a5a1a9b8241a9a99a53c5bbd1e91d
+msgid "Modules defined by creating views are immediately available for use and require no registration. To register a module named ``my/module``, create the view ``views/default/js/my/module.js``."
+msgstr ""
+
+#: ../../guides/javascript.rst:32
+# df9aa3de63fc424195e22b4d459ee6dd
+msgid "A basic module could look like this:"
+msgstr ""
+
+#: ../../guides/javascript.rst:46
+# 25df3ddeb71848deae291cc9142517ba
+msgid "Define your module via a URL"
+msgstr ""
+
+#: ../../guides/javascript.rst:48
+# 93372ae602cc40379abfdbcab9680183
+msgid "You can define an existing AMD module using ``elgg_define_js()``. Traditional (browser-globals) JavaScript files can also be defined as AMD modules if you shim them by setting ``exports`` and optionally ``deps``."
+msgstr ""
+
+#: ../../guides/javascript.rst:52
+# 42dc76cfa1cb453895c408ceebf9b58e
+msgid "Calls to ``elgg_define_js()`` must be in an ``init, system`` event handler."
+msgstr ""
+
+#: ../../guides/javascript.rst:78
+# e1314bfeb5f44528a0967be83670e726
+msgid "Some things to note"
+msgstr ""
+
+#: ../../guides/javascript.rst:80
+# efc81b93e6874bb7a91fd9b159d1ee4d
+msgid "1. Do not use ``elgg.provide()`` or ``elgg.require()`` anymore. They are fully replaced by ``define()`` and ``require()`` respectively. 2. Return the value of the module instead of adding to a global variable. 3. Static views (.css, .js) are automatically minified and cached by Elgg's simplecache system."
+msgstr ""
+
+#: ../../guides/javascript.rst:87
+# 5d5590f087824e54baba10871af3f310
+msgid "2. Tell Elgg to asynchronously execute your module in the current page"
+msgstr ""
+
+#: ../../guides/javascript.rst:88
+# 94599271b0134146b327476b2f427960
+msgid "Once an AMD module is defined, you can use ``require([\"my/module\"])`` from JavaScript to access its \"exported\" value."
+msgstr ""
+
+#: ../../guides/javascript.rst:91
+# 3125f5f51bfd40398be1a8e351746fd3
+msgid "Also, calling ``elgg_require_js(\"my/module\")`` from PHP tells Elgg to execute the module code on the current page."
+msgstr ""
+
+#: ../../guides/javascript.rst:96
+# 939d9007a4b94925847aa3a1215e4f16
+msgid "Migrating JS from Elgg 1.8 to AMD / 1.9"
+msgstr ""
+
+#: ../../guides/javascript.rst:97
+# a6a91a62b29b4ca1bd922824bf27fb56
+msgid "**Current 1.8 JavaScript modules will continue to work with Elgg**."
+msgstr ""
+
+#: ../../guides/javascript.rst:99
+# 2f3adac6ff824ecfbe1d162bb1d760fa
+msgid "We do not anticipate any backwards compatibility issues with this new direction and will fix any issues that do come up. The old system will still be functional in Elgg 1.9, but developers are encouraged to begin looking to AMD as the future of JS in Elgg."
+msgstr ""
+
+#: ../../guides/javascript.rst:106
+# c3595c183fd74786946e004fe4def329
+msgid "Traditional JavaScript (1.8)"
+msgstr ""
+
+#: ../../guides/javascript.rst:109
+# ef4dd5583d8b4eeab667275c67e59d9c
+msgid "Register third-party libraries with ``elgg_register_js``:"
+msgstr ""
+
+#: ../../guides/javascript.rst:115
+# 0e7e99b1e6624e4caa844e88ec5bf3bc
+msgid "This will override any URLs previously registered under this name."
+msgstr ""
+
+#: ../../guides/javascript.rst:117
+# a3a8b9da362e4521a4049d9d8b0ba377
+msgid "Load a library on the current page with ``elgg_load_js``:"
+msgstr ""
+
+#: ../../guides/javascript.rst:123
+# 8662c2dae2634fd2a63a5c4b001b2c75
+msgid "This will include and execute the linked code."
+msgstr ""
+
+#: ../../guides/javascript.rst:130
+# 0ad28c9231bb431ba561fbe9ce032669
+msgid "Using inline scripts is strongly discouraged because:"
+msgstr ""
+
+#: ../../guides/javascript.rst:128
+# f1421c3c3716460691825ca263a9aa95
+msgid "They are not testable (maintainability)"
+msgstr ""
+
+#: ../../guides/javascript.rst:129
+# ac75ad5d85f94ce6ae8c1eca5a9bc65f
+msgid "They are not cacheable (performance)"
+msgstr ""
+
+#: ../../guides/javascript.rst:130
+# 4f35cb2137854ebfb6f309f1d3c18665
+msgid "Doing so forces some scripts to be loaded in ``<head>`` (performance)"
+msgstr ""
+
+#: ../../guides/javascript.rst:132
+# 9cce085979de4b6b952a533a8fa2e834
+msgid "Inline scripts in core or bundled plugins are considered legacy bugs."
+msgstr ""
+
+#: ../../guides/javascript.rst:135
+# 4464c6b4601444d39bae401142e47972
+msgid "Core functions available in JS"
+msgstr ""
+
+#: ../../guides/javascript.rst:137
+# 01d7d1d091d74722b6ab3e5e96215502
+msgid "``elgg.echo``"
+msgstr ""
+
+#: ../../guides/javascript.rst:139
+# 3ba19c109a4048f3b7e4578518f88b29
+msgid "Translate interface text"
+msgstr ""
+
+#: ../../guides/javascript.rst:146
+# 29f4ad5032a44c34aa3a2c87faf6f9b0
+msgid "``elgg.system_message(message)``"
+msgstr ""
+
+#: ../../guides/javascript.rst:148
+# fe9ea9fb227a4bf58f18dc3e453d4b98
+msgid "Display a status message to the user."
+msgstr ""
+
+#: ../../guides/javascript.rst:155
+# 6480f1b9f1594fa7bf1917a1352b6dd5
+msgid "``elgg.register_error(message)``"
+msgstr ""
+
+#: ../../guides/javascript.rst:157
+# 1acfa9147d2541cf9acd76e44c3b76b3
+msgid "Display an error message to the user."
+msgstr ""
+
+#: ../../guides/javascript.rst:164
+# 468f7969a0994f729d51d0b15fbc061a
+msgid "``elgg.forward()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:166
+# 44df3c674bc148eba8b1723d87b20a54
+msgid "``elgg.normalize_url()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:168
+# 390bfaeb07054ed286801af0c4bc19c6
+msgid "Normalize a URL relative to the elgg root:"
+msgstr ""
+
+#: ../../guides/javascript.rst:175
+# 9da35da302c74bfa861967367d5f1483
+msgid "Redirect to a new page."
+msgstr ""
+
+#: ../../guides/javascript.rst:181
+# 0d0e5ba575574517a8e67ecd2b11a535
+msgid "This function automatically normalizes the URL."
+msgstr ""
+
+#: ../../guides/javascript.rst:184
+# 5d9c1671d14d4dca9152eae9f7d3c1a9
+msgid "``elgg.parse_url()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:186
+# 9d0c125679b64dc281270c2f0c6e2899
+msgid "Parse a URL into its component parts:"
+msgstr ""
+
+#: ../../guides/javascript.rst:199
+# 87bb7e7f73ef46ccb98765d4c5b6a8aa
+msgid "``elgg.get_page_owner_guid()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:201
+# 1a89bbb1ac8042c6820617ee1f67816a
+msgid "Get the GUID of the current page's owner."
+msgstr ""
+
+#: ../../guides/javascript.rst:204
+# b9fd8635e97f460fb37e9a990884e583
+msgid "``elgg.security.refreshToken()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:206
+# 8db40695e9584f7498250003d575d7e0
+msgid "Force a refresh of all XSRF tokens on the page."
+msgstr ""
+
+#: ../../guides/javascript.rst:208
+# d963ee012b6e4af8b1fb5e1e8e95a408
+msgid "This is automatically called every 5 minutes by default."
+msgstr ""
+
+#: ../../guides/javascript.rst:210
+# b85298d0ab6749d6ae301c91e2dc3841
+msgid "This requires a valid security token in 1.8, but not in 1.9."
+msgstr ""
+
+#: ../../guides/javascript.rst:212
+# 100397584e0a4612a81eb1c7fd92fb8b
+msgid "The user will be warned if their session has expired."
+msgstr ""
+
+#: ../../guides/javascript.rst:215
+# a06e011e09c74153b1dcf978810d1cc9
+msgid "``elgg.security.addToken()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:217
+# a66293bf90bb4150900b0d9e0e7cc97c
+msgid "Add a security token to an object, URL, or query string:"
+msgstr ""
+
+#: ../../guides/javascript.rst:234
+# 4f5235fcf5d14f71b5916c336c5c57c8
+msgid "``elgg.get_logged_in_user_entity()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:236
+# 6505d2cb6fda49ba86d8a00f915b9c8a
+msgid "Returns the logged in user as an JS ElggUser object."
+msgstr ""
+
+#: ../../guides/javascript.rst:239
+# 731851cfe26c488b8963d747b57b00d8
+msgid "``elgg.get_logged_in_user_guid()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:241
+# c227a71cd2da4fce9df05a9eb4aad223
+msgid "Returns the logged in user's guid."
+msgstr ""
+
+#: ../../guides/javascript.rst:244
+# 62dda56f72d74afd99debbd3bdf2be8d
+msgid "``elgg.is_logged_in()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:246
+# 1c738878caf149b29f85cd26c8a9e115
+msgid "True if the user is logged in."
+msgstr ""
+
+#: ../../guides/javascript.rst:249
+# ce34774faeed4d3bbd4bb8b7ebee1539
+msgid "``elgg.is_admin_logged_in()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:251
+# d00132a8a7774584adba38a5e7518577
+msgid "True if the user is logged in and is an admin."
+msgstr ""
+
+#: ../../guides/javascript.rst:254
+# d8f3628ed5464661b39f21a6c66d0542
+msgid "``elgg.config.get_language()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:256
+# 99f141be614b4eedb0390f7d71a81316
+msgid "Get the current page's language."
+msgstr ""
+
+#: ../../guides/javascript.rst:259
+# 2a4f041863b7490bb84fce498dab264f
+msgid "There are a number of configuration values set in the elgg object:"
+msgstr ""
+
+#: ../../guides/plugins.rst:5
+# 31a543c41a104e3c9a27d4429909ea09
+msgid "start.php"
+msgstr ""
+
+#: ../../guides/plugins.rst:8
+# 273b6f80d70b4fb0a9803b9a42f11b77
+msgid "manifest.xml"
+msgstr ""
+
+#: ../../guides/routing.rst:2
+# 1d98e0b29b474f6b8f3b1708d20ac2af
+msgid "Routing"
+msgstr ""
+
+#: ../../guides/routing.rst:4
+# 3f52498f2a2c448fa18b884d751e8f18
+msgid "Add new pages and customize URLs."
+msgstr ""
+
+#: ../../guides/themes.rst:2
+# 1d5f2ffaa93a4161acf398e415846d41
+msgid "Themes"
+msgstr ""
+
+#: ../../guides/themes.rst:4
+# d7080597aeea48d294b9ed90b234d6d5
+msgid "Customize the look and feel of Elgg."
+msgstr ""
+
+#: ../../guides/themes.rst:6
+# 19301fce91c14792847fe2de97f12309
+msgid "A theme is a type of :doc:`plugin </admin/plugins>` that overrides display aspects of Elgg."
+msgstr ""
+
+#: ../../guides/themes.rst:11
+# 97c26907e23444b6aa3948757df5183e
+msgid "This guide assumes you are familiar with:"
+msgstr ""
+
+#: ../../guides/themes.rst:14
+# a7314545cac04b6abf228d573e4dfea5
+msgid "Create your plugin"
+msgstr ""
+
+#: ../../guides/themes.rst:16
+# 021998ad1ae74849be8e2e62e36957bb
+msgid "Create your plugin as described in the :doc:`developer guide </guides/index>`."
+msgstr ""
+
+#: ../../guides/themes.rst:18
+# 2919252adaab4199b9929c9d5a852365
+msgid "Create a new directory under mod/"
+msgstr ""
+
+#: ../../guides/themes.rst:19
+# 330f2e9b604247be88161f4d2f4921bc
+msgid "Create a new start.php"
+msgstr ""
+
+#: ../../guides/themes.rst:20
+# fd3bb25d78974751b396e07887b7709d
+msgid "Create a manifest.xml file describing your theme."
+msgstr ""
+
+#: ../../guides/themes.rst:23
+# b309d206c9694cecafb8d37e95609b20
+msgid "Customize the CSS"
+msgstr ""
+
+#: ../../guides/themes.rst:25
+# 020936299d56433991b2009dc99868fa
+msgid "As of Elgg 1.8, the css is split into several files based on what aspects of the site you're theming. This allows you to tackle them one at a time, giving you a chance to make real progress without getting overwhelmed."
+msgstr ""
+
+#: ../../guides/themes.rst:30
+# e3465e2686b048258cdfaa48599296de
+msgid "Here is a list of the existing CSS views:"
+msgstr ""
+
+#: ../../guides/themes.rst:32
+# c02cad6bf0954c64968917a345570bbe
+msgid "css/elements/buttons: Provides a way to style all the different kinds of buttons your site will use. There are 5 kinds of buttons that plugins will expect to be available: action, cancel, delete, submit, and special."
+msgstr ""
+
+#: ../../guides/themes.rst:33
+# d9da98603aed46b9b30fac24f58cbb71
+msgid "css/elements/chrome: This file has some miscellaneous look-and-feel classes."
+msgstr ""
+
+#: ../../guides/themes.rst:34
+# c6b4dc42e5244f648798723fcda1187a
+msgid "css/elements/components: This file contains many “css objects” that are used all over the site: media block, list, gallery, table, owner block, system messages, river, tags, photo, and comments."
+msgstr ""
+
+#: ../../guides/themes.rst:35
+# 0df5422a763c45a5a1d3ca12d38b9ad3
+msgid "css/elements/forms: This file determines what your forms and input elements will look like."
+msgstr ""
+
+#: ../../guides/themes.rst:36
+# 3c5cdfd08e154e3d9c11663da80e9592
+msgid "css/elements/icons: Contains styles for the sprite icons and avatars used on your site."
+msgstr ""
+
+#: ../../guides/themes.rst:37
+# 3d21519c61be4a1186e9e861bb6a6306
+msgid "css/elements/layout: Determines what your page layout will look like: sidebars, page wrapper, main body, header, footer, etc."
+msgstr ""
+
+#: ../../guides/themes.rst:38
+# be1c7815eb914f13aa2135b3cffce561
+msgid "css/elements/modules: Lots of content in Elgg is displayed in boxes with a title and a content body. We called these modules. There are a few kinds: info, aside, featured, dropdown, popup, widget. Widget styles are included in this file too, since they are a subset of modules."
+msgstr ""
+
+#: ../../guides/themes.rst:39
+# 89bb573161764c5baca36fd432f69e30
+msgid "css/elements/navigation: This file determines what all your menus will look like."
+msgstr ""
+
+#: ../../guides/themes.rst:40
+# 1609ce78187f48c884900cb26b6ac910
+msgid "css/elements/typography: This file determines what the content and headings of your site will look like."
+msgstr ""
+
+#: ../../guides/themes.rst:41
+# 88b8ef3f030d4d278b282c7a2a316d44
+msgid "css/ie6: Custom rules for ie6 and below."
+msgstr ""
+
+#: ../../guides/themes.rst:42
+# bb71ba9d8461445b9acc67582666fb64
+msgid "css/ie7: Custom rules for ie7 and below."
+msgstr ""
+
+#: ../../guides/themes.rst:43
+# cb8f9bbda6fc421496ead877ad840d91
+msgid "css/rtl: Custom rules for users viewing your site in a right-to-left language."
+msgstr ""
+
+#: ../../guides/themes.rst:44
+# 3dd45f7e29864920a38e527f971aa18e
+msgid "css/admin: A completely separate theme for the admin area (usually not overridden)."
+msgstr ""
+
+#: ../../guides/themes.rst:45
+# 64191b23b4da4bb38be2c956596451a1
+msgid "css/elgg: Compiles all the core css/elements/\\* files into one file (DO NOT OVERRIDE)."
+msgstr ""
+
+#: ../../guides/themes.rst:46
+# 77dcb8e96e6c4340a20f1ddadd75445f
+msgid "css/elements/core: Contains base styles for the more complicated “css objects”. If you find yourself wanting to override this, you probably need to report a bug to Elgg core instead (DO NOT OVERRIDE)."
+msgstr ""
+
+#: ../../guides/themes.rst:47
+# 02e75e830a594031b16c556e265d99e2
+msgid "css/elements/reset: Contains a reset stylesheet that forces elements to have the same default"
+msgstr ""
+
+#: ../../guides/themes.rst:51
+# a4ca1677b0cd4a7392ea3c5efa85ad81
+msgid "View extension"
+msgstr ""
+
+#: ../../guides/themes.rst:53
+# 3a2dd70b075241c682359c94ab2c3969
+msgid "There are two ways you can modify views:"
+msgstr ""
+
+#: ../../guides/themes.rst:55
+# fbeeed1abb8b4ab5bf6a7596420c47b4
+msgid "The first way is to add extra stuff to an existing view via the extend view function from within your start.php’s initialization function."
+msgstr ""
+
+#: ../../guides/themes.rst:58
+# d5455e4796a347f9b6c39d767614e9c2
+msgid "For example, the following start.php will add mytheme/css to Elgg's core css file:"
+msgstr ""
+
+#: ../../guides/themes.rst:73
+# 318fb4b38e5b41b0aec0c7cc1ac4d002
+msgid "View overloading"
+msgstr ""
+
+#: ../../guides/themes.rst:75
+# ac0f41fe5739472c8a87e7367ef72542
+msgid "Plugins can have a view hierarchy, any file that exists here will replace any files in the existing core view hierarchy... so for example, if my plugin has a file:"
+msgstr ""
+
+#: ../../guides/themes.rst:79
+# 130d667b95b14b6db58c9e0dfd6a0dac
+msgid "``/mod/myplugin/views/default/css/elements/typography.php``"
+msgstr ""
+
+#: ../../guides/themes.rst:81
+# 7a6bb7c35bd34c2cbdf61f96b543c315
+msgid "it will replace:"
+msgstr ""
+
+#: ../../guides/themes.rst:83
+# e9c8c1c6b64f488981a7edfec3ec342b
+msgid "``/views/default/css/elements/typography.php``"
+msgstr ""
+
+#: ../../guides/themes.rst:85
+# 087482fb7b194813b853f5ac310ba020
+msgid "But only when the plugin is active."
+msgstr ""
+
+#: ../../guides/themes.rst:87
+# ca09437356204087a1c332e26eb586be
+msgid "This gives you total control over the way elgg looks and behaves. It gives you the option to either slightly modify or totally replace existing views."
+msgstr ""
+
+#: ../../guides/themes.rst:92
+# 0eef5a6d54e94186ae280065006d957d
+msgid "Tools"
+msgstr ""
+
+#: ../../guides/themes.rst:94
+# b465574faee34d48bad3a9b4d6aa50e0
+msgid "Starting in Elgg 1.8, we've provided you with some development tools to help you with theming: Turn on the “Developers” plugin and go to the “Theme Preview” page to start tracking your theme's progress."
+msgstr ""
+
+#: ../../guides/themes.rst:99
+# 55276021dbe7412c9a740d2fd1b3f3a8
+msgid "Customizing the front page"
+msgstr ""
+
+#: ../../guides/themes.rst:100
+# 0954dfd64b8042e781d9eeb593e73078
+msgid "The main Elgg index page runs a plugin hook called 'index,system'. If this returns true, it assumes that another front page has been drawn and doesn't display the default page."
+msgstr ""
+
+#: ../../guides/themes.rst:104
+# 44976f4591464a7f84be55f49eb5cd7a
+msgid "Therefore, you can override it by registering a function to the 'index,system' plugin hook and then returning true from that function."
+msgstr ""
+
+#: ../../guides/themes.rst:107
+# f25ce564326f4601ba4d3035c974d8d9
+msgid "Here's a quick overview:"
+msgstr ""
+
+#: ../../guides/themes.rst:109
+# 7d7d8093fc034ccbafbd29ed3c6d5bb5
+msgid "Create your new plugin"
+msgstr ""
+
+#: ../../guides/themes.rst:111
+# 010486e376974f5a9b473ebf6ac8b814
+msgid "In the start.php you will need something like the following:"
+msgstr ""
+
+#: ../../guides/themes.rst:133
+# a7f24264b41443d7a0fa4b9a655926bb
+msgid "Then, create an index page (/pluginname/pages/index.php) and use that to put the content you would like on the front page of your Elgg site."
+msgstr ""
+
+#: ../../guides/upgrading.rst:2
+# 07fd1d1c165a46b38eb5866c5f4cd508
+msgid "Upgrading Plugins"
+msgstr ""
+
+#: ../../guides/upgrading.rst:4
+# 2c7f372d01c843e6a0e1b94108176761
+msgid "Prepare your plugin for the next version of Elgg."
+msgstr ""
+
+#: ../../guides/upgrading.rst:6
+# cc7f9634c1224e9da15cffa987549848
+msgid "See the administator guides for :doc:`how to upgrade a live site </admin/upgrading>`."
+msgstr ""
+
+#: ../../guides/upgrading.rst:9
+# c5c4f09c6276488a9a4d5b85ad38e9ca
+msgid "From 1.8 to 1.9"
+msgstr ""
+
+#: ../../guides/upgrading.rst:11
+# 1eb81f4c57cc4e888a209a36ea7c8c76
+msgid "In the examples we are upgrading an imaginary \"Photos\" plugin."
+msgstr ""
+
+#: ../../guides/upgrading.rst:13
+# 079364941adf499d866656e4bba1b622
+msgid "Only the key changes are included. For example some of the deprecated functions are not mentioned here separately."
+msgstr ""
+
+#: ../../guides/upgrading.rst:15
+# 23aa467e0d3846338b459ee7cd668ae2
+msgid "Each section will include information whether the change is backwards compatible with Elgg 1.8."
+msgstr ""
+
+#: ../../guides/upgrading.rst:18
+# 8156493783674dbc82f336b86a2740e8
+msgid "The manifest file"
+msgstr ""
+
+#: ../../guides/upgrading.rst:20
+# d23b68dfb8b34eefb3ec1b2fe0df96a3
+msgid "No changes are needed if your plugin is compatible with 1.8."
+msgstr ""
+
+#: ../../guides/upgrading.rst:22
+# d1b6a52571f8420da782eb8b50391c60
+msgid "It's however recommended to add the ``<id>`` tag. It's value should be the name of the directory where the plugin is located inside the ``mod/`` directory."
+msgstr ""
+
+#: ../../guides/upgrading.rst:24
+# 177542d2f0544ce8a50295ad2d03541d
+msgid "If you make changes that break BC, you must update the plugin version and the required Elgg release."
+msgstr ""
+
+#: ../../guides/upgrading.rst:26
+# 2eeea5df11a64185b6902e32cd4af560
+msgid "Example of (shortened) old version:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:42
+# b1ebce08fc0a47ab87c2275feda96a02
+msgid "Example of (shortened) new version:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:60
+# a825d1ac3d0c4e568e4ee246b6837156
+msgid "$CONFIG and $vars['config']"
+msgstr ""
+
+#: ../../guides/upgrading.rst:62
+# de9b32066c744e0d95dd176c5a5c3edb
+msgid "Both the global ``$CONFIG`` variable and the ``$vars['config']`` parameter have been deprecated. They should be replaced with the ``elgg_get_config()`` function."
+msgstr ""
+
+#: ../../guides/upgrading.rst:64
+# f07ae0694407440a8df8007ea5ae69de
+msgid "Example of old code:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:75
+# 02046f16bdf0454e9292966fe028b1e2
+msgid "Example of new code:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:83
+# f7121d947f904ebf91bdecdbb43666de
+msgid "Compatible with 1.8"
+msgstr ""
+
+#: ../../guides/upgrading.rst:87
+# 6f707077c5a641348b31e2d4fed05024
+msgid "See how the community_plugins plugin was updated: https://github.com/Elgg/community_plugins/commit/f233999bbd1478a200ee783679c2e2897c9a0483"
+msgstr ""
+
+#: ../../guides/upgrading.rst:90
+# 9c7b664cc7ed418d9e840bcbc0069c89
+msgid "Language files"
+msgstr ""
+
+#: ../../guides/upgrading.rst:92
+# b409244e8f6548a1a426a7327685fddc
+msgid "In Elgg 1.8 the language files needed to use the ``add_translation()`` function. In 1.9 it is enough to just return the array that was previously passed to the function as a parameter. Elgg core will use the file name (e.g. en.php) to tell which language the file contains."
+msgstr ""
+
+#: ../../guides/upgrading.rst:95
+# 788e27961274429f83b7ba7cf735836a
+msgid "Example of the old way in ``languages/en.php``:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:104
+# 27b48eb4ebd144a896533ce48736cf00
+msgid "Example of new way:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:114
+#: ../../guides/upgrading.rst:204
+#: ../../guides/upgrading.rst:236
+#: ../../guides/upgrading.rst:298
+# bc223f0c3027415daaa354195fde30d9
+# e1d8a7cffb5248238c490c19f05fa560
+# 198bac0584ef49dd8c76fe792cd1ca0c
+# 152429768f154ae784daed4413447582
+msgid "Not compatible with 1.8"
+msgstr ""
+
+#: ../../guides/upgrading.rst:117
+# 02a1d27457414897aaba2ece0f30483a
+msgid "Notifications"
+msgstr ""
+
+#: ../../guides/upgrading.rst:119
+# 0ffd9a5b5b50405e95024255b2ddefa3
+msgid "One of the biggest changes in Elgg 1.9 is the notifications system. The new system allows more flexible and scalable way of sending notifications."
+msgstr ""
+
+#: ../../guides/upgrading.rst:121
+#: ../../guides/upgrading.rst:243
+# 9abfffa76fc64aafae2d16ec7fd48e99
+# 530e5f078bed4621a8314c2749c16afc
+msgid "Example of the old way:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:160
+#: ../../guides/upgrading.rst:264
+# 41a1a75459bd4e15b51c5d9f8feb3bb0
+# 1c86acfc9fd6499bb723b1e6936ddb9e
+msgid "Example of the new way:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:208
+# 26d3d4e288cd4e7ea6ce0e9712c90029
+msgid "See how the community_plugins plugin was updated to use the new system: https://github.com/Elgg/community_plugins/commit/bfa356cfe8fb99ebbca4109a1b8a1383b70ff123"
+msgstr ""
+
+#: ../../guides/upgrading.rst:211
+# ec9c7b422bcf4c49a8fd222dbee4d758
+msgid "Adding items to the Activity listing"
+msgstr ""
+
+#: ../../guides/upgrading.rst:226
+# 76dfead0296f42e18e883154888a174b
+msgid "You can also add the optional ``target_guid`` parameter which tells the target of the create action."
+msgstr ""
+
+#: ../../guides/upgrading.rst:228
+# ff4d0d92ad444e8ebdd034ca21467991
+msgid "If the photo would had been added for example into a photo album, we could add it by passing in also:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:239
+# 5a4c8568c95a4b0a9e05c54a310bc96f
+msgid "Entity URL handlers"
+msgstr ""
+
+#: ../../guides/upgrading.rst:241
+# 67a9beb71ac94e8687b1139b6ff2d7bd
+msgid "The ``elgg_register_entity_url_handler()`` function has been deprecated. In 1.9 you should use the ``'entity:url', 'object'`` plugin hook instead."
+msgstr ""
+
+#: ../../guides/upgrading.rst:301
+# 86916b123c7e42d88270ec2bd16ade6f
+msgid "From 1.7 to 1.8"
+msgstr ""
+
+#: ../../guides/upgrading.rst:302
+# 1d70e90bbfa24651a4935d06ba149d97
+msgid "Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0. As such, there is more work to update core and plugins than with previous upgrades. There were a small number of API changes and following our standard practice, the methods we deprecated have been updated to work with the new API. The biggest changes are in the standardization of plugins and in the views system."
+msgstr ""
+
+#: ../../guides/upgrading.rst:310
+# 75fb5fa6f3dc46999bf6614c8625cc8c
+msgid "Updating core"
+msgstr ""
+
+#: ../../guides/upgrading.rst:311
+# 10335285ec8c4ba09f63c3977f131791
+msgid "Delete the following core directories (same level as _graphics and engine):"
+msgstr ""
+
+#: ../../guides/upgrading.rst:313
+# 38dc5fdd03564d8284194663980245aa
+msgid "_css"
+msgstr ""
+
+#: ../../guides/upgrading.rst:314
+# 1caf042e6ec54378a6ac7c012ad9cb35
+msgid "account"
+msgstr ""
+
+#: ../../guides/upgrading.rst:315
+# 30ff54cf225e4f7aa7febd38f1ab7b60
+msgid "admin"
+msgstr ""
+
+#: ../../guides/upgrading.rst:316
+# 006d242f9f674991a4ca3f3ea3f352c4
+msgid "dashboard"
+msgstr ""
+
+#: ../../guides/upgrading.rst:317
+# b935058a368c47589ac890a47a5db1f2
+msgid "entities"
+msgstr ""
+
+#: ../../guides/upgrading.rst:318
+# c2f751782b1c4bb5a9681b6a38be7a0d
+msgid "friends"
+msgstr ""
+
+#: ../../guides/upgrading.rst:319
+# 4983290f755643869fdc298744a16bc3
+msgid "search"
+msgstr ""
+
+#: ../../guides/upgrading.rst:320
+# bc74eafce2164cebae6a840f7827982f
+msgid "settings"
+msgstr ""
+
+#: ../../guides/upgrading.rst:321
+# cf744b6a34c6440782433f4244e63a45
+msgid "simplecache"
+msgstr ""
+
+#: ../../guides/upgrading.rst:322
+# e83fdedd23a54c678fccdd8bb0fa642e
+msgid "views"
+msgstr ""
+
+#: ../../guides/upgrading.rst:326
+# 17dc92a8cbf8424d819f9ead39f3264d
+msgid "If you do not delete these directories before an upgrade, you will have problems!"
+msgstr ""
+
+#: ../../guides/upgrading.rst:330
+# c4be6ed978704acbb4d636db16704cf7
+msgid "Updating plugins"
+msgstr ""
+
+#: ../../guides/upgrading.rst:333
+# 98416bef1a5f4b57bbe9b14bd40f4a38
+msgid "Use standardized routing with page handlers"
+msgstr ""
+
+#: ../../guides/upgrading.rst:334
+# cabdee3998cd4c5c9747d89c85068a6a
+msgid "All: /page_handler/all"
+msgstr ""
+
+#: ../../guides/upgrading.rst:335
+# fa1c45f9569c48dc981bd55993d35d99
+msgid "User’s content: /page_handler/owner/:username"
+msgstr ""
+
+#: ../../guides/upgrading.rst:336
+# 13a2a6b0514d495cb4e071459aa13f30
+msgid "User’s friends' content: /page_handler/friends/:username"
+msgstr ""
+
+#: ../../guides/upgrading.rst:337
+# 7b8507b5ce214d73b92c9cbe1fd20b7f
+msgid "Single entity: /page_handler/view/:guid/:title"
+msgstr ""
+
+#: ../../guides/upgrading.rst:338
+# 0fa57465b25847b48adfaf024936b7e2
+msgid "Added: /page_handler/add/:container_guid"
+msgstr ""
+
+#: ../../guides/upgrading.rst:339
+# af870a36b2e244ceb822d8d8a5cab838
+msgid "Editing: /page_handler/edit/:guid"
+msgstr ""
+
+#: ../../guides/upgrading.rst:340
+# a2e71f01d3a34409843aa3c31376dc1f
+msgid "Group list: /page_handler/group/:guid/all"
+msgstr ""
+
+#: ../../guides/upgrading.rst:344
+# 69f386ffec494524ae40d16a58ce7d03
+msgid "Include page handler scripts from the page handler"
+msgstr ""
+
+#: ../../guides/upgrading.rst:345
+# 94c08dd70be44a6d8c1c871cf93eb2fd
+msgid "Almost every page handler should have a page handler script. (Example: ``bookmarks/all => mod/bookmarks/pages/bookmarks/all.php``)"
+msgstr ""
+
+#: ../../guides/upgrading.rst:348
+# a815742165f04e6295095c48e7ff1900
+msgid "Call ``set_input()`` for entity guids in the page handler and use ``get_input()`` in the page handler scripts."
+msgstr ""
+
+#: ../../guides/upgrading.rst:349
+# a76150ffad854ada869584d6a16074ad
+msgid "Call ``gatekeeper()`` and ``admin_gatekeeper()`` in the page handler function if required."
+msgstr ""
+
+#: ../../guides/upgrading.rst:350
+# 4bfcf31463be4fa2ae6bd7ace95f5d46
+msgid "The group URL should use the ``pages/:handler/owner.php`` script."
+msgstr ""
+
+#: ../../guides/upgrading.rst:351
+# f5fa8a1b5692439b906c4e0042ce7d25
+msgid "Page handlers should not contain HTML."
+msgstr ""
+
+#: ../../guides/upgrading.rst:352
+# c54023d163994ba58bc09d1a6f1e3f61
+msgid "Update the URLs throughout the plugin. (Don't forget to remove ``/pg/``!)"
+msgstr ""
+
+#: ../../guides/upgrading.rst:356
+# 218ee489ae8f4484b28c567a198e1568
+msgid "Use standardized page handlers and scripts"
+msgstr ""
+
+#: ../../guides/upgrading.rst:357
+# c65335df27854d8ebb3663b165d8a2ad
+msgid "Store page handler scripts in ``mod/:plugin/pages/:page_handler/:page_name.php``"
+msgstr ""
+
+#: ../../guides/upgrading.rst:358
+# fc9df45e9a0841de83910ca32146f4b2
+msgid "Use the content page layout in page handler scripts:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:364
+# 94c2728b2b2b4e0cab7e3f152dcbf28f
+msgid "Page handler scripts should not contain HTML."
+msgstr ""
+
+#: ../../guides/upgrading.rst:365
+# 8e57c283012d4a048a1a2413ab4c7db1
+msgid "Call ``elgg_push_breadcrumb()`` in the page handler scripts."
+msgstr ""
+
+#: ../../guides/upgrading.rst:366
+# 22fc6699158b41c894a8abfd9c57b12b
+msgid "No need to set page owner if the URLs are in the standardized format."
+msgstr ""
+
+#: ../../guides/upgrading.rst:367
+# 3dfe2939620e427d87d32a601d9b4780
+msgid "For group content, check the container_guid by using elgg_get_page_owner_entity()."
+msgstr ""
+
+#: ../../guides/upgrading.rst:371
+# 8f7edbedcd244c5aa2aadbc4c050194a
+msgid "The ``object/:subtype`` view"
+msgstr ""
+
+#: ../../guides/upgrading.rst:372
+# ea87a9e76f8241d99b04815c8e04ec33
+msgid "Make sure there are views for ``$vars['full_view'] == true`` and ``$vars['full_view'] == false``. ``$vars['full_view']`` replaced ``$vars['full]``."
+msgstr ""
+
+#: ../../guides/upgrading.rst:373
+# fcdc2d2f6b124aee93773303a7195af5
+msgid "Check for the object in ``$vars['entity']``. Use ``elgg_instance_of()`` to make sure it's the type of entity you want."
+msgstr ""
+
+#: ../../guides/upgrading.rst:374
+# 46e53258b2ce49e4afad7b113f47b306
+msgid "Return ``true`` to short circuit the view if the entity is missing or wrong."
+msgstr ""
+
+#: ../../guides/upgrading.rst:375
+# 5387be62476b4cc589b615246056c939
+msgid "Use ``elgg_view(‘object/elements/summary’, array(‘entity’ => $entity));`` and ``elgg_view_menu(‘entity’, array(‘entity’ => $entity));`` to help format. You should use very little markup in these views."
+msgstr ""
+
+#: ../../guides/upgrading.rst:379
+# b34268efc7424e57bc01828ec9035455
+msgid "Update action structure"
+msgstr ""
+
+#: ../../guides/upgrading.rst:380
+# 5ba6819fb5464b21bd57aad12bc79e0e
+msgid "Namespace action files and action names (example: ``mod/blog/actions/blog/save.php`` => ``action/blog/save``)"
+msgstr ""
+
+#: ../../guides/upgrading.rst:381
+# a9fb2f55af7a445eb06bf12dd907d823
+msgid "Use the following action URLs:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:383
+# f80507a2479c496f86d48be4b4df004b
+msgid "Add: ``action/:plugin/save``"
+msgstr ""
+
+#: ../../guides/upgrading.rst:384
+# 1e6c9e2636624b9397480b2565e14d31
+msgid "Edit: ``action/:plugin/save``"
+msgstr ""
+
+#: ../../guides/upgrading.rst:385
+# afe6d75d8850492c87a9f8a2bd9cbb40
+msgid "Delete: ``action/:plugin/delete``"
+msgstr ""
+
+#: ../../guides/upgrading.rst:387
+# d34a6e41f82d4ef4834cd80b667ab4d8
+msgid "Make the delete action accept ``action/:handler/delete?guid=:guid`` so the metadata entity menu has the correct URL by default."
+msgstr ""
+
+#: ../../guides/upgrading.rst:391
+# 1d462fa1dfb44de0a9d02b7250fa57ab
+msgid "Update deprecated functions"
+msgstr ""
+
+#: ../../guides/upgrading.rst:392
+# b4e316faaa554669988c503172a8bd95
+msgid "Functions deprecated in 1.7 will produce visible errors in 1.8."
+msgstr ""
+
+#: ../../guides/upgrading.rst:394
+# f08df20554f040f3a8bebb4124af6747
+msgid "See ``/engine/lib/deprecated-1.7.php`` for the full list."
+msgstr ""
+
+#: ../../guides/upgrading.rst:396
+# 443befcebaa54e4782b806174d2766dd
+msgid "You can also update functions deprecated in 1.8."
+msgstr ""
+
+#: ../../guides/upgrading.rst:398
+# 4e709b4d728f41d2a01a0a9166f55bf3
+msgid "Many registration functions simply added an ``elgg_`` prefix for consistency, and should be easy to update."
+msgstr ""
+
+#: ../../guides/upgrading.rst:399
+# 7bd529e705ce4b02bedf4fd1bc6c2b85
+msgid "See ``/engine/lib/deprecated-1.8.php`` for the full list."
+msgstr ""
+
+#: ../../guides/upgrading.rst:400
+# b621f4de0fe6410b9334367a79881c5e
+msgid "You can set the debug level to “warning” to get visual reminders of deprecated functions."
+msgstr ""
+
+#: ../../guides/upgrading.rst:404
+# b3ab59f7810e4e92b154c633122636a8
+msgid "Update the widget views"
+msgstr ""
+
+#: ../../guides/upgrading.rst:405
+# 2075462544e4461684d1ba3e349b625e
+msgid "See the blog or file widgets for examples."
+msgstr ""
+
+#: ../../guides/upgrading.rst:409
+# 87e114a913c84528b543fcebac49801f
+msgid "Update the group profile module"
+msgstr ""
+
+#: ../../guides/upgrading.rst:410
+# f6c9d8b126b347e18a841717a059ac28
+msgid "Use the blog or file plugins for examples. This will help with making your plugin themeable by the new CSS framework."
+msgstr ""
+
+#: ../../guides/upgrading.rst:414
+# 350698cfabcd4bc9a319ef4c462fcf01
+msgid "Update forms"
+msgstr ""
+
+#: ../../guides/upgrading.rst:415
+# 0039014e2876468e89295ea968f147b4
+msgid "Move form bodies to the ``forms/:action`` view to use Evan's new ``elgg_view_form``."
+msgstr ""
+
+#: ../../guides/upgrading.rst:416
+# c2d2bd07bdc940c29611eff1cfd4a02e
+msgid "Use input views in form bodies rather than html. This helps with theming and future-proofing."
+msgstr ""
+
+#: ../../guides/upgrading.rst:417
+# d9422640c2cd4727862900d16c2fd0ee
+msgid "Add a function that prepares the form (see ``mod/file/lib/file.php`` for an example)"
+msgstr ""
+
+#: ../../guides/upgrading.rst:418
+# b54fffa02cf64a17b6e6b99da1024c2e
+msgid "Make your forms sticky (see the file plugin's upload action and form prepare function)."
+msgstr ""
+
+#: ../../guides/upgrading.rst:420
+# 64ae48aecb8d4f28bea722fcd70bd309
+msgid "The forms API is discussed in more detail in :doc:`/guides/actions`."
+msgstr ""
+
+#: ../../guides/upgrading.rst:424
+# fac926b539cd46f0947356d98cc40573
+msgid "Clean up CSS/HTML"
+msgstr ""
+
+#: ../../guides/upgrading.rst:425
+# f4218281239e41b09550b0642b9aa3a9
+msgid "We have added many CSS patterns to the base CSS file (modules, image block, spacing primitives). We encourage you to use these patterns and classes wherever possible. Doing so should:"
+msgstr ""
+
+#: ../../guides/upgrading.rst:427
+# de777ff8b8d04b2f982ea0758201b0b3
+msgid "Reduce maintenance costs, since you can delete most custom CSS."
+msgstr ""
+
+#: ../../guides/upgrading.rst:428
+# 17803547dd84429a832124d376b67b88
+msgid "Make your plugin more compatible with community themes."
+msgstr ""
+
+#: ../../guides/upgrading.rst:430
+# 3917c50c10e94452b9b2018fbd167341
+msgid "Look for patterns that can be moved into core if you need significant CSS."
+msgstr ""
+
+#: ../../guides/upgrading.rst:432
+# 23aa2ab1fabd46b18b8753852f1ad984
+msgid "We use hyphens rather than underscores in classes/ids and encourage you do the same for consistency."
+msgstr ""
+
+#: ../../guides/upgrading.rst:434
+# 1e74ed68c8ad4bac922b0e6cc635f075
+msgid "If you do need your own CSS, you should use your own namespace, rather than ``elgg-``."
+msgstr ""
+
+#: ../../guides/upgrading.rst:438
+# af0e274892cb484fb6ff5f436473c3ed
+msgid "Update manifest.xml"
+msgstr ""
+
+#: ../../guides/upgrading.rst:439
+# b7ad17de76a841afbc32fd4fcc74ffe2
+msgid "Use http://el.gg/manifest17to18 to automate this."
+msgstr ""
+
+#: ../../guides/upgrading.rst:440
+# 13d38bf46c744ccab2ffc578c886f1ec
+msgid "Don't use the \"bundled\" category with your plugins. That is only for plugins distributed with Elgg."
+msgstr ""
+
+#: ../../guides/upgrading.rst:444
+# 01bb2ca11b0d4d4caf8103c4500518bd
+msgid "Update settings and user settings views"
+msgstr ""
+
+#: ../../guides/upgrading.rst:445
+# dc285ea8d3fc4fad8007974bb23abfd1
+msgid "The view for settings is now ``plugins/:plugin/settings`` (previously ``settings/:plugin/edit``)."
+msgstr ""
+
+#: ../../guides/upgrading.rst:446
+# f688c3b2329643218ca4b3e069c014fc
+msgid "The view for user settings is now ``plugins/:plugin/usersettings`` (previously ``usersettings/:plugin/edit``)."
+msgstr ""
+
+#: ../../guides/web-services.rst:2
+# d46e818e6a5c4eaf9eff730b5c5c5b6f
+msgid "Web services"
+msgstr ""
+
+#: ../../guides/web-services.rst:4
+# f5cdc47e8e9c4addb1aeb9d628fe3847
+msgid "Build an HTTP API for your site."
+msgstr ""
+
+#: ../../guides/web-services.rst:6
+# 6ff6048575fb4853ba5f8096a4af05ea
+msgid "Elgg provides a powerful framework for building web services. This allows developers to expose functionality to other web sites and desktop applications along with doing integrations with third-party web applications. While we call the API RESTful, it is actually a REST/RPC hybrid similar to the APIs provided by sites like Flickr and Twitter."
+msgstr ""
+
+#: ../../guides/web-services.rst:12
+# 7cbb86b0d29c49d6a2fceec830088544
+msgid "To create an API for your Elgg site, you need to do 3 things:"
+msgstr ""
+
+#: ../../guides/web-services.rst:14
+# e47025bce1444f0b8a1c1a39deaed33d
+msgid "expose methods"
+msgstr ""
+
+#: ../../guides/web-services.rst:15
+# 4441dfe1f8ac4f56a87519922175901e
+msgid "setup API authentication"
+msgstr ""
+
+#: ../../guides/web-services.rst:16
+# 9527b43f6d1848f8baef6745e8605985
+msgid "setup user authentication"
+msgstr ""
+
+#: ../../guides/web-services.rst:18
+# 51ebdf215a1545ca973386bbec16bef1
+msgid "Additionally, you may want to control what types of authentication are available on your site. This will also be covered."
+msgstr ""
+
+#: ../../guides/web-services.rst:22
+# de673983453d45f59e94cc8e7c82fbbe
+msgid "Exposing methods"
+msgstr ""
+
+#: ../../guides/web-services.rst:24
+# 9c5bdfad4d2f4169a158b1ac6157a828
+msgid "The function to use to expose a method is `expose\\_function()`_. As an example, let's assume you want to expose a function that echos text back to the calling application. The function could look like this"
+msgstr ""
+
+#: ../../guides/web-services.rst:34
+# 977243c605fd4210a3ff48719165a1f3
+msgid "Since we are providing this function to allow developers to test their API clients, we will require neither API authentication nor user authentication. This call registers the function with the web services API framework:"
+msgstr ""
+
+#: ../../guides/web-services.rst:50
+# 1264cfaa49ea4a2886d6d3f3f0c67ffc
+msgid "If you add this code to a plugin and then go to http://yoursite.com/services/api/rest/xml/?method=system.api.list, you should now see your test.echo method listed as an API call. Further, to test the exposed method from a web browser, you could hit the url: http://yoursite.com/services/api/rest/xml/?method=test.echo&string=testing and you should see xml data like this:"
+msgstr ""
+
+#: ../../guides/web-services.rst:65
+# dc371de381b14859b74c8dc232862e9e
+msgid "Response formats"
+msgstr ""
+
+#: ../../guides/web-services.rst:67
+# 4a90fe4aee694e648f85c132ebbccab5
+msgid "The web services API framework provides three different response formats by default: xml, json, and serialized php. You can request the different formats for substituting “json” or “php” for “xml” in the above URLs. You can also add additional response formats by defining new viewtypes."
+msgstr ""
+
+#: ../../guides/web-services.rst:73
+# 2a8f709f2580409f9f242a1cc2c398d7
+msgid "API authentication"
+msgstr ""
+
+#: ../../guides/web-services.rst:75
+# 761e0cc3824d488f9427391ba34ffc84
+msgid "You may want to control access to some of the functions that you expose. Perhaps you are exposing functions in order to integrate Elgg with another open source platform on the same server. In that case, you only want to allow that other application access to these methods. Another possibility is that you want to limit what external developers have access to your API. Or maybe you want to limit how many calls a developer can make against your API in a single day."
+msgstr ""
+
+#: ../../guides/web-services.rst:85
+# b91fe190e972424d908617fd72da639d
+msgid "In all of these cases, you can use Elgg's API authentication functions to control access. Elgg provides two built-in methods to perform API authentication: key based and HMAC signature based. You can also add your own authentication methods. The key based approach is very similar to what Google, Flickr, or Twitter. Developers can request a key (a random string) and pass that key with all calls that require API authentication. The keys are stored in the database and if an API call is made without a key or a bad key, the call is denied and an error message is returned."
+msgstr ""
+
+#: ../../guides/web-services.rst:96
+# 9013cd7bcde544978c112e924adb5080
+msgid "Key-based authentication"
+msgstr ""
+
+#: ../../guides/web-services.rst:98
+# 4f340861595f41d180f6877f24d7511b
+msgid "As an example, let's write a function that returns the number of users that have viewed the site in the last x minutes."
+msgstr ""
+
+#: ../../guides/web-services.rst:109
+# 79c8fab97e0744f8aa3bcec2921a79c1
+msgid "Now, let's expose it and make the number of minutes an optional parameter:"
+msgstr ""
+
+#: ../../guides/web-services.rst:124
+# df2989cae6d641d3b599e0f2cd572a07
+msgid "This function is now available and if you check ``system.api.list``, you will see that it requires API authentication. If you hit the method with a web browser, it will return an error message about failing the API authentication. To test this method, you need an API key. Fortunately, there is a plugin called apiadmin that creates keys for you. It is available in the Elgg plugin repository. It will return a public and private key and you will use the public key for this kind of API authentication. Grab a key and then do a GET request with your browser on this API method passing in the key string as the parameter ``api_key``. It might look something like this: http://yoursite.com/services/api/rest/xml/?method=users.active&api_key=1140321cb56c71710c38feefdf72bc462938f59f."
+msgstr ""
+
+#: ../../guides/web-services.rst:137
+# 59c01e26bc5041ea9adf9587315b217a
+msgid "Signature-based authentication"
+msgstr ""
+
+#: ../../guides/web-services.rst:139
+# cac82610aea442ad9855b6dc5b1d0417
+msgid "The `HMAC Authentication`_ is similar to what is used with `OAuth`_ or Amazon's S3 service. This involves both the public and private key. If you want to be very sure that the API calls are coming from the developer you think they are coming from and you want to make sure the data is not being tampered with during transmission, you would use this authentication method. Be aware that it is much more involved and could turn off developers when there are other sites out there with key-based authentication."
+msgstr ""
+
+#: ../../guides/web-services.rst:149
+# 645cd8db06b1475c9e7a238ff5dad9ab
+msgid "OAuth"
+msgstr ""
+
+#: ../../guides/web-services.rst:151
+# 9c509ec79fed4229b25c4049da1907f0
+msgid "With the addition of the `OAuth`_ plugin, Elgg also fully supports the OAuth 1.0a authorization standard. Clients can then use standard OAuth libraries to make any API calls to the site."
+msgstr ""
+
+#: ../../guides/web-services.rst:159
+# ffd86136540e4457891256dd32f23547
+msgid "User authentication"
+msgstr ""
+
+#: ../../guides/web-services.rst:161
+# c40b31a8563b4a9eb6bebfd660e74ea4
+msgid "So far you have been allowing developers to pull data out of your Elgg site. Now we'll move on to pushing data into Elgg. In this case, it is going to be done by a user. Maybe you have created a desktop application that allows your Users to post to the wire without going to the site. You need to expose a method for posting to the wire and you need to make sure that a user cannot post using someone else's account. Elgg provides a token-based approach for user authentication. It allows a user to submit their username and password in exchange for a token using the method ``auth.gettoken``. This token can then be used for some amount of time to authenticate all calls to the API before it expires by passing it as the parameter ``auth_token``. If you do not want to have your users trusting their passwords to 3rd-party applications, you can also extend the current capability to use an approach like OAuth."
+msgstr ""
+
+#: ../../guides/web-services.rst:175
+# 73571497fcd5485d86615d0c7bc59f0d
+msgid "Let's write our wire posting function:"
+msgstr ""
+
+#: ../../guides/web-services.rst:189
+# df09a15196324af786487a010f57e6b5
+msgid "Exposing this function is the same as the previous except we require user authentication and we're going to make this use POST rather than GET HTTP requests."
+msgstr ""
+
+#: ../../guides/web-services.rst:204
+# 1fdfecbb29ea4bf0877b5bbeb6cf9f0c
+msgid "Please note that you will not be able to test this using a web browser as you did with the other methods. You need to write some client code to do this. There is some example client code in ``/engine/lib/api.php``. Take a look at `send\\_api\\_post\\_call()`_. You can also do a search for clients that have been written for the APIs of Flickr or Twitter or any other similar API. You will find a wide variety written in almost any language you can think of."
+msgstr ""
+
+#: ../../guides/web-services.rst:213
+# 71b8ce440b194f9d897564fad457a516
+msgid "Building out your API"
+msgstr ""
+
+#: ../../guides/web-services.rst:215
+# 9e5a31b5ccea4c879564f3f9d0a74c5f
+msgid "As soon as you feel comfortable with Elgg's web services API framework, you will want to step back and design your API. What sort of data are you trying to expose? Who or what will be API users? How do you want them to get access to authentication keys? How are you going to document your API? Be sure to take a look at the APIs created by popular Web 2.0 sites for inspiration. If you are looking for 3rd party developers to build applications using your API, you will probably want to provide one or more language-specific clients."
+msgstr ""
+
+#: ../../guides/web-services.rst:227
+# d7c06277fe6c4c089c37891c78fd73ce
+msgid "Determining the authentication available"
+msgstr ""
+
+#: ../../guides/web-services.rst:229
+# ce780902d02640c68cae5a6f9333e69f
+msgid "Elgg's web services API uses a type of `pluggable authentication module (PAM)`_ architecture to manage how users and developers are authenticated. This provides you the flexibility to add and remove authentication modules. Do you want to not use the default user authentication PAM but would prefer using OAuth? You can do this."
+msgstr ""
+
+#: ../../guides/web-services.rst:235
+# 58f5a7a2513742129e7eaed7d0ebfd55
+msgid "The first step is registering a callback function for the *rest, init* plugin hook:"
+msgstr ""
+
+#: ../../guides/web-services.rst:242
+# 0409b05f8c2d43d7bd337429425a578a
+msgid "Then in the callback function, you register the PAMs that you want to use:"
+msgstr ""
+
+#: ../../guides/web-services.rst:258
+# fd43a8a5c3234ea88f237c94df56bd86
+msgid "When testing, you may find it useful to register the ``pam_auth_session`` PAM so that you can easily test your methods from the browser. Be careful not to use this PAM on a production site because it could open up your users to a `CSRF attack`_."
+msgstr ""
+
+#: ../../guides/web-services.rst:263
+# 346f3237c00f4862a722458157241f57
+msgid "Right now, the only other PAMs publicly available besides those provided by the Elgg core are the OAuth PAMs. See `Justin Richer's OAuth plugin`_ for more detail."
+msgstr ""
+
+#: ../../guides/widgets.rst:2
+# 4faa139f1a9a46829544b6eb07d9c840
+msgid "Widgets"
+msgstr ""
+
+#: ../../guides/widgets.rst:4
+# 9ae84a1425a54a4e8612d4bf23ef3a48
+msgid "Widgets are content areas that users can drag around their page to customize the layout. They can typically be customized by their owner to show more/less content and determine who sees the widget. By default Elgg provides plugins for customizing the profile page and dashboard via widgets."
+msgstr ""
+
+#: ../../guides/widgets.rst:8
+# 0232da9d46324940b0dc19b5b85df584
+msgid "TODO: Screenshot"
+msgstr ""
+
+#: ../../guides/widgets.rst:11
+# 4e4c63d3535d4c3bba2e047e5dd3a8b7
+msgid "Structure"
+msgstr ""
+
+#: ../../guides/widgets.rst:13
+# c7b040c970104404b775a3a037eaeb85
+msgid "To create a widget, create two views:"
+msgstr ""
+
+#: ../../guides/widgets.rst:15
+# 0c694d64354342f7b826857b3be01c12
+msgid "``widgets/:widget/edit``"
+msgstr ""
+
+#: ../../guides/widgets.rst:16
+# a8eb9f0dae114b5e808a67c8e617deaf
+msgid "``widgets/:widget/content``"
+msgstr ""
+
+#: ../../guides/widgets.rst:18
+# d891c5fbd269458a8354b4c356eb0aa8
+msgid "``content.php`` is responsible for all the content that will output within the widget. The edit.php file contains any extra edit functions you wish to present to the user. You do not need to add access level as this comes as part of the widget framework."
+msgstr ""
+
+#: ../../guides/widgets.rst:22
+# f1c3a0adcf58441dae777919fe10eea1
+msgid "NOTE: using HTML checkboxes to set widget flags is problematic because if unchecked, the checkbox input is omitted from form submission. The effect is that you can only set and not clear flags. The \"input/checkboxes\" view will not work properly in a widget's edit panel."
+msgstr ""
+
+#: ../../guides/widgets.rst:28
+# dab02ea0a9894fed804667baadd86682
+msgid "Initialise the widget"
+msgstr ""
+
+#: ../../guides/widgets.rst:30
+# 9232af61f12a4d25a63ecb0fbb576647
+msgid "Once you have created your edit and view pages, you need to initialize the plugin widget. This is done within the plugins init() function."
+msgstr ""
+
+#: ../../guides/widgets.rst:38
+# 392d7efd9ae14685bcaddd0b5ce735b6
+msgid "Note: it is possible to add multiple widgets for a plugin. You just initialize as many widget directories as you need."
+msgstr ""
+
+#: ../../guides/widgets.rst:52
+# 8899eb080a164fae8c9da69cf42b6e22
+msgid "Multiple widgets"
+msgstr ""
+
+#: ../../guides/widgets.rst:54
+# 0ba9b092fe9b41ee8f312e01658a7d38
+msgid "Make sure you have the corrosponding directories within your plugin views structure:"
+msgstr ""
+
+#: ../../guides/widgets.rst:57
+# 40d48331fb6b42d7b9c22da4676868fc
+msgid "'Plugin'"
+msgstr ""
+
+#: ../../guides/widgets.rst:59
+# e69a435480b44f40ac10871fb8b10ae4
+msgid "/views"
+msgstr ""
+
+#: ../../guides/widgets.rst:61
+# 1b2e791304de4bc19c0c23fbdd0e4082
+msgid "/default"
+msgstr ""
+
+#: ../../guides/widgets.rst:63
+# 47f05b6308334559a46688800182665e
+msgid "/widgets"
+msgstr ""
+
+#: ../../guides/widgets.rst:65
+# 6500e33789a948c8a0b988f20e6163af
+msgid "/filerepo"
+msgstr ""
+
+#: ../../guides/widgets.rst:67
+#: ../../guides/widgets.rst:72
+#: ../../guides/widgets.rst:77
+# 2f3ec5f5591d4b2da88cda2d69f967b0
+# 74612b4458ee4984ac9eeabe4873a40d
+# c80c8de982b54f808b5b50c72c5595a7
+msgid "/edit.php"
+msgstr ""
+
+#: ../../guides/widgets.rst:68
+#: ../../guides/widgets.rst:73
+#: ../../guides/widgets.rst:78
+# 7e8978b41334459186e789170e45d1c4
+# d6af0c93de3a4b0ea58139cd1e628189
+# 8f97060e04f34ac092e6fff9bacf9400
+msgid "/view.php"
+msgstr ""
+
+#: ../../guides/widgets.rst:70
+# b3827fbafdcd403ab962073d36bcb0f4
+msgid "/filerepo2"
+msgstr ""
+
+#: ../../guides/widgets.rst:75
+# 22aec7de195b42e987d0b214ef04a607
+msgid "/filerepo3"
+msgstr ""
+
+#: ../../guides/widgets.rst:81
+# 83893763efd04a878b259428f07c770e
+msgid "Elgg 1.8: Default widgets"
+msgstr ""
+
+#: ../../guides/widgets.rst:83
+# fb9d7803b6a241e1afe7fea0830ef66e
+msgid "If your plugin uses the widget canvas, you can register default widget support with Elgg core, which will handle everything else."
+msgstr ""
+
+#: ../../guides/widgets.rst:86
+# 6a6e2a95db554600ada567588e465be3
+msgid "To announce default widget support in your plugin, register for the ``get_list, default_widgets`` plugin hook:"
+msgstr ""
+
+#: ../../guides/widgets.rst:93
+# 629e94c19db640f99131afe65b8df1b0
+msgid "In the plugin hook handler, push an array into the return value defining your default widget support and when to create default widgets. Arrays require the following keys to be defined:"
+msgstr ""
+
+#: ../../guides/widgets.rst:97
+# e9a3e7d3d2b14a0cb4bb67d81c79ce85
+msgid "name - The name of the widgets page. This is displayed on the tab in the admin interface."
+msgstr ""
+
+#: ../../guides/widgets.rst:99
+# 8589bb28d71541659df6c3c04e0cfac1
+msgid "widget\\_context - The context the widgets page is called from. (If not explicitly set, this is your plugin's id.)"
+msgstr ""
+
+#: ../../guides/widgets.rst:101
+# 421cb46b1a024431b1808b5ed46b878f
+msgid "widget\\_columns - How many columns the widgets page will use."
+msgstr ""
+
+#: ../../guides/widgets.rst:102
+# d8ada8f547f641b7a0283d67286b8ba6
+msgid "event - The Elgg event to create new widgets for. This is usually “create.”"
+msgstr ""
+
+#: ../../guides/widgets.rst:104
+# e5b3df46a9d2482ba6218d9e88b91cd6
+msgid "entity\\_type - The entity type to create new widgets for."
+msgstr ""
+
+#: ../../guides/widgets.rst:105
+# 0d0f59afe66340e99a4640cb02a6fd9c
+msgid "entity\\_subtype - The entity subtype to create new widgets for. The can be ELGG\\_ENTITIES\\_ANY\\_VALUE to create for all entity types."
+msgstr ""
+
+#: ../../guides/widgets.rst:108
+# 13ad703eca6a4c969863ced9f466d8b3
+msgid "When an object triggers an event that matches the event, entity\\_type, and entity\\_subtype parameters passed, Elgg core will look for default widgets that match the widget\\_context and will copy them to that object's owner\\_guid and container\\_guid. All widget settings will also be copied."
+msgstr ""
+
+#: ../../guides/widgets.rst:131
+# 89839a9e11424868bd9fbfb5fa8a98fd
+msgid "Simple Example"
+msgstr ""
+
+#: ../../guides/widgets.rst:133
+# 780746e29dc9467ea68cb287816793f6
+msgid "Here is a simple Flickr widget that uses Flickr's JSON output."
+msgstr ""
+
+#: ../../guides/widgets.rst:135
+# 4d1fd411e357494da3fe32e7f135e1b8
+msgid "Widget edit page:"
+msgstr ""
+
+#: ../../guides/widgets.rst:146
+# b3d66c287ffd41cb9642e716c218d2f0
+msgid "Widget view page:"
+msgstr ""
+

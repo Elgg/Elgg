@@ -3,14 +3,30 @@
 class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 
 	/**
+	 * @var Elgg_PluginHooksService
+	 */
+	protected $hooks;
+
+	/**
 	 * @var Elgg_Router
 	 */
 	protected $router;
+
+	/**
+	 * @var string
+	 */
+	protected $pages;
+
+	/**
+	 * @var int
+	 */
+	protected $fooHandlerCalls = 0;
 
 	function setUp() {
 		$this->hooks = new Elgg_PluginHooksService();
 		$this->router = new Elgg_Router($this->hooks);
 		$this->pages = dirname(dirname(__FILE__)) . '/test_files/pages';
+		$this->fooHandlerCalls = 0;
 	}
 
 	function hello_page_handler($segments, $identifier) {
@@ -52,5 +68,35 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		// that the output we buffered is empty.
 		// $this->assertFalse($handled);
 		$this->assertEmpty($output);
+	}
+
+	/**
+	 * 1. Register a page handler for `/foo`
+	 * 2. Register a plugin hook that uses the "handler" result param
+	 *    to route all `/bar/*` requests to the `/foo` handler.
+	 * 3. Route a request for a `/bar` page.
+	 * 4. Check that the `/foo` handler was called.
+	 */
+	function testRouteSupportsSettingHandlerInHookResultForBackwardsCompatibility() {
+		$this->router->registerPageHandler('foo', array($this, 'foo_page_handler'));
+		$this->hooks->registerHandler('route', 'bar', array($this, 'bar_route_handler'));
+		
+		$query = http_build_query(array('__elgg_uri' => 'bar/baz'));
+
+		ob_start();
+		$this->router->route(Elgg_Http_Request::create("http://localhost/?$query"));
+		ob_end_clean();
+		
+		$this->assertEquals(1, $this->fooHandlerCalls);
+	}
+	
+	function foo_page_handler() {
+		$this->fooHandlerCalls++;
+		return true;
+	}
+	
+	function bar_route_handler($hook, $type, $value, $params) {
+		$value['handler'] = 'foo';
+		return $value;
 	}
 }

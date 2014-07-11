@@ -487,6 +487,7 @@ class ElggInstaller {
 				'type' => 'password',
 				'value' => '',
 				'required' => TRUE,
+				'pattern' => '.{6,}',
 				),
 			'password2' => array(
 				'type' => 'password',

@@ -122,7 +122,8 @@ function elgg_create_river_item(array $options = array()) {
 		" object_guid = $object_guid, " .
 		" target_guid = $target_guid, " .
 		" annotation_id = $annotation_id, " .
-		" posted = $posted");
+		" posted = $posted, " .
+		" enabled = 'yes'");
 
 	// update the entities which had the action carried out on it
 	// @todo shouldn't this be done elsewhere? Like when an annotation is saved?
@@ -338,6 +339,10 @@ function elgg_get_river(array $options = array()) {
 
 	if ($options['posted_time_upper'] && is_int($options['posted_time_upper'])) {
 		$wheres[] = "rv.posted <= {$options['posted_time_upper']}";
+	}
+	
+	if (!access_get_show_hidden_status()) {
+		$wheres[] = "rv.enabled = 'yes'";
 	}
 
 	$joins = $options['joins'];
@@ -740,6 +745,67 @@ function _elgg_river_test($hook, $type, $value) {
 }
 
 /**
+ * Disable river entries that reference a disabled entity as subject/object/target
+ * 
+ * @param string $event The event 'disable'
+ * @param string $type Type of entity being disabled 'all'
+ * @param mixed $entity The entity being disabled
+ * @return boolean
+ * @access private
+ */
+function _elgg_river_disable($event, $type, $entity) {
+	
+	if (!elgg_instanceof($entity)) {
+		return true;
+	}
+	
+	$dbprefix = elgg_get_config('dbprefix');
+	$query = <<<QUERY
+	UPDATE {$dbprefix}river AS rv
+	SET rv.enabled = 'no'
+	WHERE (rv.subject_guid = {$entity->guid} OR rv.object_guid = {$entity->guid} OR rv.target_guid = {$entity->guid});
+QUERY;
+	
+	update_data($query);
+	return true;
+}
+
+
+/**
+ * Enable river entries that reference a re-enabled entity as subject/object/target
+ * 
+ * @param string $event The event 'enable'
+ * @param string $type Type of entity being enabled 'all'
+ * @param mixed $entity The entity being enabled
+ * @return boolean
+ * @access private
+ */
+function _elgg_river_enable($event, $type, $entity) {
+	
+	if (!elgg_instanceof($entity)) {
+		return true;
+	}
+	
+	$dbprefix = elgg_get_config('dbprefix');
+	$query = <<<QUERY
+	UPDATE {$dbprefix}river AS rv
+	LEFT JOIN {$dbprefix}entities AS se ON se.guid = rv.subject_guid
+	LEFT JOIN {$dbprefix}entities AS oe ON oe.guid = rv.object_guid
+	LEFT JOIN {$dbprefix}entities AS te ON te.guid = rv.target_guid
+	SET rv.enabled = 'yes'
+	WHERE (
+			(se.enabled = 'yes' OR se.guid IS NULL) AND 
+			(oe.enabled = 'yes' OR oe.guid IS NULL) AND
+			(te.enabled = 'yes' OR te.guid IS NULL)		
+		)
+		AND (se.guid = {$entity->guid} OR oe.guid = {$entity->guid} OR te.guid = {$entity->guid});
+QUERY;
+
+	update_data($query);
+	return true;
+}
+
+/**
  * Initialize river library
  * @access private
  */
@@ -756,3 +822,5 @@ function _elgg_river_init() {
 }
 
 elgg_register_event_handler('init', 'system', '_elgg_river_init');
+elgg_register_event_handler('disable:after', 'all', '_elgg_river_disable');
+elgg_register_event_handler('enable:after', 'all', '_elgg_river_enable');

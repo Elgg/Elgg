@@ -111,7 +111,7 @@ function twitter_api_pagehandler($page) {
  */
 function twitter_api_tweet($hook, $type, $returnvalue, $params) {
 
-	if (!elgg_instanceof($params['user'])) {
+	if (!$params['user'] instanceof ElggUser) {
 		return;
 	}
 

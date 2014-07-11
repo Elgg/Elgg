@@ -3,6 +3,7 @@
 $params = array(
 	'name' => 'member_query',
 	'class' => 'mbm',
+	'required' => true,
 );
 echo elgg_view('input/text', $params);
 

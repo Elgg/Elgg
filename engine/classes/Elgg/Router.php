@@ -65,7 +65,12 @@ class Elgg_Router {
 			return true;
 		}
 
-		$identifier = $result['identifier'];
+		if ($identifier != $result['identifier']) {
+			$identifier = $result['identifier'];
+		} else if ($identifier != $result['handler']) {
+			$identifier = $result['handler'];
+		}
+
 		$segments = $result['segments'];
 
 		$handled = false;

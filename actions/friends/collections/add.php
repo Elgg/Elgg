@@ -20,7 +20,7 @@ if ($id) {
 	$result = update_access_collection($id, $friends);
 	if ($result) {
 		system_message(elgg_echo("friends:collectionadded"));
-		forward("collections/" . elgg_get_logged_in_user_entity()->username);
+		forward("collections/owner/" . elgg_get_logged_in_user_entity()->username);
 	} else {
 		register_error(elgg_echo("friends:nocollectionname"));
 		forward(REFERER);
