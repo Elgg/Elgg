@@ -55,9 +55,20 @@ Feature PRs:
 Choosing a branch to submit to
 ------------------------------
 
--  New features: master (we do not introduce new features in bugfix branches).
--  Bug fixes: latest branch (or master if the bug only appears in master).
--  Security fixes: lowest supported branch (If master is 1.9, then submit against 1.7).
+The following table assumes the latest stable release is 1.9.
+
+============== ====================================
+Type of change Branch to submit against
+============== ====================================
+Security fix   1.8 (Email security@elgg.org first!)
+Bug fix        1.9
+Deprecation    1.x
+Minor feature  1.x
+Major feature  master
+Breaking       master
+============== ====================================
+
+The difference between minor and major feature is subjective and up to the core team.
 
 Commit message format
 ---------------------
