@@ -427,6 +427,7 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 	$from = (int)$from;
 	$from = get_entity($from) ? $from : elgg_get_site_entity()->guid;
 	$sender = get_entity($from);
+	$summary = elgg_extract('summary', $params, '');
 
 	// Get notification methods
 	if (($methods_override) && (!is_array($methods_override))) {
@@ -471,7 +472,7 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 							continue;
 						}
 						$language = $recipient->language;
-						$notification = new Elgg_Notifications_Notification($sender, $recipient, $language, $subject, $message, '', $params);
+						$notification = new Elgg_Notifications_Notification($sender, $recipient, $language, $subject, $message, $summary, $params);
 						$params['notification'] = $notification;
 						$result[$guid][$method] = _elgg_services()->hooks->trigger('send', "notification:$method", $params, false);
 					} else {
