@@ -43,6 +43,7 @@ function members_list_popular($hook, $type, $returnvalue, $params) {
 	$options = $params['options'];
 	$options['relationship'] = 'friend';
 	$options['inverse_relationship'] = false;
+	$options['query_name'] = 'members/popular';
 	return elgg_list_entities_from_relationship_count($options);
 }
 
@@ -59,6 +60,7 @@ function members_list_newest($hook, $type, $returnvalue, $params) {
 	if ($returnvalue !== null) {
 		return;
 	}
+	$params['options']['query_name'] = 'members/all';
 	return elgg_list_entities($params['options']);
 }
 
@@ -75,6 +77,12 @@ function members_list_online($hook, $type, $returnvalue, $params) {
 	if ($returnvalue !== null) {
 		return;
 	}
+
+	// Due to the design of find_active_users, we can't pass query_name down to
+	// it, but devs can already use the [find_active_users, system] hook to alter
+	// this query.
+	//$params['options']['query_name'] = 'members/online';
+
 	return get_online_users();
 }
 

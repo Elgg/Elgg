@@ -34,6 +34,7 @@ $content = elgg_list_river(array(
 	'wheres' => array(
 		"(e1.container_guid = $group->guid OR e2.container_guid = $group->guid)",
 	),
+	'query_name' => 'group_module/activity',
 ));
 elgg_pop_context();
 

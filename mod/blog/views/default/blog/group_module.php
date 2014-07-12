@@ -23,7 +23,8 @@ $options = array(
 	'limit' => 6,
 	'full_view' => false,
 	'pagination' => false,
-	'no_results' => elgg_echo('blog:none')
+	'no_results' => elgg_echo('blog:none'),
+	'query_name' => 'group_module/blog',
 );
 $content = elgg_list_entities($options);
 elgg_pop_context();

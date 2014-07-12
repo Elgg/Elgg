@@ -26,6 +26,9 @@ switch ($page_type) {
 		$title = elgg_echo('river:mine');
 		$page_filter = 'mine';
 		$options['subject_guid'] = elgg_get_logged_in_user_guid();
+
+		// We use "owner" instead of "mine" for consistency with most other core URLs
+		$options['query_name'] = 'activity/owner';
 		break;
 	case 'owner':
 		$subject_username = get_input('subject_username', '', false);
@@ -37,16 +40,19 @@ switch ($page_type) {
 		$title = elgg_echo('river:owner', array(htmlspecialchars($subject->name, ENT_QUOTES, 'UTF-8', false)));
 		$page_filter = 'subject';
 		$options['subject_guid'] = $subject->guid;
+		$options['query_name'] = 'activity/owner';
 		break;
 	case 'friends':
 		$title = elgg_echo('river:friends');
 		$page_filter = 'friends';
 		$options['relationship_guid'] = elgg_get_logged_in_user_guid();
 		$options['relationship'] = 'friend';
+		$options['query_name'] = 'activity/friends';
 		break;
 	default:
 		$title = elgg_echo('river:all');
 		$page_filter = 'all';
+		$options['query_name'] = 'activity/all';
 		break;
 }
 

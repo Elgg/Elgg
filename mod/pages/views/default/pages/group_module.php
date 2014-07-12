@@ -28,6 +28,7 @@ $options = array(
 	'full_view' => false,
 	'pagination' => false,
 	'no_results' => elgg_echo('pages:none'),
+	'query_name' => 'group_module/page',
 );
 $content = elgg_list_entities($options);
 elgg_pop_context();

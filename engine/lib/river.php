@@ -279,11 +279,22 @@ function elgg_delete_river(array $options = array()) {
  *   order_by             => STR     Order by clause (rv.posted desc)
  *   group_by             => STR     Group by clause
  *
+ *   query_name           => STR     If provided, $options will be filtered by the
+ *                                   plugin hook ["river:options", <query_name>]
+ *
  * @return array|int
  * @since 1.8.0
  */
 function elgg_get_river(array $options = array()) {
 	global $CONFIG;
+
+	// allow modification of options before the defaults are merged in
+	if (!empty($options['query_name']) && is_string($options['query_name'])) {
+		$params = array(
+			'options' => $options,
+		);
+		$options = elgg_trigger_plugin_hook("river:options", $options['query_name'], $params, $options);
+	}
 
 	$defaults = array(
 		'ids'                  => ELGG_ENTITIES_ANY_VALUE,

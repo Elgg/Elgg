@@ -98,4 +98,31 @@ class ElggCoreRiverAPITest extends ElggCoreUnitTest {
 		$result = _elgg_get_river_type_subtype_where_sql('rv', $types, $subtypes, null);
 		$this->assertIdentical($result, "((rv.type = 'object') AND ((rv.subtype = 'blog') OR (rv.subtype = 'file')))");
 	}
+
+	public function testNamedQueriesFilterOptions() {
+		$query_name = __FUNCTION__;
+		elgg_register_plugin_hook_handler('river:options', $query_name, __CLASS__ . '::namedQueryHandler');
+
+		// create in case river is empty
+		$user = elgg_get_logged_in_user_entity();
+		$id = elgg_create_river_item(array(
+			'view' => 'river/relationship/friend/create',
+			'action_type' => 'create',
+			'subject_guid' => $user->guid,
+			'object_guid' => $user->guid,
+		));
+
+		$items = elgg_get_river(array(
+			'query_name' => $query_name,
+		));
+		$this->assertTrue(is_int($items));
+		
+		elgg_delete_river(array('id' => $id));
+	}
+
+	public static function namedQueryHandler($hook, $type, $options, $param) {
+		return array_merge($options, array(
+			'count' => true,
+		));
+	}
 }

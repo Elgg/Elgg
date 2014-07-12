@@ -198,12 +198,21 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *                                   objects.
  *                                   See the docs for elgg_get_entities_from_annotation_calculation()
  *                                   for the proper use of the "calculation" option.
- *
+ * query_name                     => STR If provided, $options will be filtered by the plugin hook
+ *                                   ["annotations:options", <query_name>]
  *
  * @return ElggAnnotation[]|mixed
  * @since 1.8.0
  */
 function elgg_get_annotations(array $options = array()) {
+
+	// allow modification of options before the defaults are merged in
+	if (!empty($options['query_name']) && is_string($options['query_name'])) {
+		$params = array(
+			'options' => $options,
+		);
+		$options = elgg_trigger_plugin_hook("annotations:options", $options['query_name'], $params, $options);
+	}
 
 	// @todo remove support for count shortcut - see #4393
 	if (isset($options['__egefac']) && $options['__egefac']) {

@@ -149,6 +149,52 @@ Views
 **head, page**
     In elgg_view_page(), filters $vars['head']
 
+Named query hooks
+=================
+
+If a string is passed in for ``$options["query_name"]`` in some query functions, the ``$options`` parameter
+will be filtered through one of the following hooks.
+
+**entities:options, <query_name>**
+    In elgg_get_entities(), filters the ``$options`` argument if ``$options["query_name"]`` is present.
+
+    With this hook the following query names are used in Elgg core:
+
+    -  ``blog/(all|friends|owner|group|archive)``
+    -  ``bookmarks/(all|owner|friends)``
+    -  ``custom_index/(blog|bookmark|file|member|group)``
+    -  ``discussion/(all|owner|latest)``
+    -  ``file/(all|friends|owner)``
+    -  ``friends(of)``
+    -  ``group_module/(blog|bookmark|discussion|file|page)``
+    -  ``groups/(all|owner|member)``
+    -  ``members/(all|popular)``
+    -  ``messages/(inbox|sent)``
+    -  ``pages/(all|friends|owner)``
+    -  ``sidebar/(featured_groups|group_members|comments_block)``
+    -  ``thewire/(all|friends|owner|thread)``
+
+**river:options, <query_name>**
+    In elgg_get_river(), filters the ``$options`` argument if ``$options["query_name"]`` is present.
+
+    With this hook the following query names are used in Elgg core:
+
+    -  ``activity/(all|friends|owner|group)``
+    -  ``group_module/activity``
+
+**annotations:options, <query_name>**
+    In elgg_get_annotations(), filters the ``$options`` argument if ``$options["query_name"]`` is present.
+
+    With this hook the following query names are used in Elgg core:
+
+    -  ``pages/history``
+    -  ``sidebar/page_history``
+
+E.g. to show 50 river entries on the site-wide activity page, register for the
+``[river:options, activity/all]`` hook, and in your handler set ``$return_value['limit'] = 50;``
+
+Note: Often the hook will be called twice, the first time for a COUNT query.
+
 Other
 =====
 

@@ -21,6 +21,7 @@ $content .= elgg_list_entities(array(
 	'full_view' => false,
 	'view_toggle_type' => false,
 	'no_results' => elgg_echo('bookmarks:none'),
+	'query_name' => 'bookmarks/owner',
 ));
 
 $title = elgg_echo('bookmarks:owner', array($page_owner->name));

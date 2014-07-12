@@ -25,6 +25,7 @@ $content = elgg_list_entities(array(
 	'container_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
 	'no_results' => elgg_echo('pages:none'),
+	'query_name' => 'pages/owner',
 ));
 
 $filter_context = '';

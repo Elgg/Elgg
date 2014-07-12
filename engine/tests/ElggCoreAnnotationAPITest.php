@@ -145,4 +145,27 @@ class ElggCoreAnnotationAPITest extends ElggCoreUnitTest {
 		$this->assertTrue($e->delete());
 		$this->assertFalse(elgg_annotation_exists($guid, 'test_annotation'));
 	}
+
+	public function testNamedQueriesFilterOptions() {
+		$query_name = __FUNCTION__;
+		elgg_register_plugin_hook_handler('annotations:options', $query_name, __CLASS__ . '::namedQueryHandler');
+
+		// create in case no annotations
+		$user = elgg_get_logged_in_user_entity();
+		$id = $user->annotate('test', 'test');
+
+		$annotations = elgg_get_annotations(array(
+			'query_name' => $query_name,
+			'limit' => 1,
+		));
+		$this->assertIsA($annotations[0], 'stdClass');
+
+		elgg_delete_annotation_by_id($id);
+	}
+
+	public static function namedQueryHandler($hook, $type, $options, $param) {
+		return array_merge($options, array(
+			'callback' => '',
+		));
+	}
 }

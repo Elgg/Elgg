@@ -12,7 +12,8 @@ if ($vars['page']) {
 		'guid' => $vars['page']->guid,
 		'annotation_name' => 'page',
 		'limit' => 20,
-		'reverse_order_by' => true
+		'reverse_order_by' => true,
+		'query_name' => 'sidebar/page_history',
 	);
 	elgg_push_context('widgets');
 	$content = elgg_list_annotations($options);
