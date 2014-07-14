@@ -363,6 +363,20 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
  * @param string $subject          Message subject.
  * @param string $message          Message body.
  * @param array  $params           Misc additional parameters specific to various methods.
+ *
+ *                                 By default Elgg core supports three parameters, which give
+ *                                 notification plugins more control over the notifications:
+ *
+ *                                 object => null|ElggEntity|ElggAnnotation The object that
+ *                                           is triggering the notification.
+ *
+ *                                 action => null|string Word that describes the action that
+ *                                           is triggering the notification (e.g. "create"
+ *                                           or "update").
+ *
+ *                                 summary => null|string Summary that notification plugins
+ *                                            can use alongside the notification title and body.
+ *
  * @param mixed  $methods_override A string, or an array of strings specifying the delivery
  *                                 methods to use - or leave blank for delivery using the
  *                                 user's chosen delivery methods.
