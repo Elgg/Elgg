@@ -412,6 +412,20 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
  * @param string $subject          Message subject.
  * @param string $message          Message body.
  * @param array  $params           Misc additional parameters specific to various methods.
+ *
+ *                                 By default Elgg core supports three parameters, which give
+ *                                 notification plugins more control over the notifications:
+ *
+ *                                 object => null|ElggEntity|ElggAnnotation The object that
+ *                                           is triggering the notification.
+ *
+ *                                 action => null|string Word that describes the action that
+ *                                           is triggering the notification (e.g. "create"
+ *                                           or "update").
+ *
+ *                                 summary => null|string Summary that notification plugins
+ *                                            can use alongside the notification title and body.
+ *
  * @param mixed  $methods_override A string, or an array of strings specifying the delivery
  *                                 methods to use - or leave blank for delivery using the
  *                                 user's chosen delivery methods.
@@ -427,6 +441,7 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 	$from = (int)$from;
 	$from = get_entity($from) ? $from : elgg_get_site_entity()->guid;
 	$sender = get_entity($from);
+	$summary = elgg_extract('summary', $params, '');
 
 	// Get notification methods
 	if (($methods_override) && (!is_array($methods_override))) {
@@ -471,7 +486,7 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 							continue;
 						}
 						$language = $recipient->language;
-						$notification = new Elgg_Notifications_Notification($sender, $recipient, $language, $subject, $message, '', $params);
+						$notification = new Elgg_Notifications_Notification($sender, $recipient, $language, $subject, $message, $summary, $params);
 						$params['notification'] = $notification;
 						$result[$guid][$method] = _elgg_services()->hooks->trigger('send', "notification:$method", $params, false);
 					} else {
