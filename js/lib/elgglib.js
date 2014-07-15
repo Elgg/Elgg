@@ -257,7 +257,7 @@ elgg.normalize_url = function(url) {
 	url = url || '';
 	elgg.assertTypeOf('string', url);
 
-	var validated = (function(url) {
+	function validate(url) {
 		url = elgg.parse_url(url);
 		if (url.scheme){
 			url.scheme = url.scheme.toLowerCase();
@@ -276,10 +276,18 @@ elgg.normalize_url = function(url) {
 			return false;
 		}
 		return true;
-	})(url);
+	};
+
+	// ignore anything with a recognized scheme
+	if (url.indexOf('http:') === 0 ||
+		url.indexOf('https:') === 0 ||
+		url.indexOf('javascript:') === 0 ||
+		url.indexOf('mailto:') === 0 ) {
+		return url;
+	}
 
 	// all normal URLs including mailto:
-	if (validated) {		
+	else if (validate(url)) {
 		return url;
 	}
 
@@ -289,10 +297,6 @@ elgg.normalize_url = function(url) {
 		return url;
 	}
 
-	// 'javascript:'
-	else if (url.indexOf('javascript:') === 0 || url.indexOf('mailto:') === 0 ) {
-		return url;
-	}
 
 	// watch those double escapes in JS.
 
