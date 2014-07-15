@@ -143,17 +143,21 @@ define(function(require) {
 			
 			it("leaves absolute and scheme-relative URLs alone", function() {
 				[
-					['http://example.com', 'http://example.com'],
-					['https://example.com', 'https://example.com'],
-					['http://example-time.com', 'http://example-time.com'],
-					['//example.com', '//example.com'],
-			
-					['ftp://example.com/file', 'ftp://example.com/file'],
-					['mailto:brett@elgg.org', 'mailto:brett@elgg.org'],
-					['javascript:alert("test")', 'javascript:alert("test")'],
-					['app://endpoint', 'app://endpoint'],
-				].forEach(function(args) {
-					expect(elgg.normalize_url(args[0])).toBe(args[1]);
+					'http://example.com',
+					'http://example-time.com',
+					'https://example.com',
+
+					'//example.com',
+
+					'http://shouldn\'t matter what\'s here',
+					'http://elgg_private.srokap.c9.io/',
+					'https://shouldn\'t matter what\'s here',
+					'ftp://example.com/file',
+					'mailto:brett@elgg.org',
+					'javascript:alert("test")',
+					'app://endpoint',
+				].forEach(function(url) {
+					expect(elgg.normalize_url(url)).toBe(url);
 				});
 			});
 			
