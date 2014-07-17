@@ -5,7 +5,14 @@
     "license": "GPL-2.0",
     "type": "project",
     "require": {
-        "php": ">=5.3.3"
+        "php": ">=5.3.3",
+        "ext-mysql": "*",
+        "ext-gd": "*",
+        "ext-json": "*",
+        "ext-xml": "*"
+    },
+    "suggest": {
+        "ext-mbstring": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "4.1"
