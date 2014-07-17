@@ -19,6 +19,9 @@
         "ircmaxell/password-compat": "~1.0",
         "roave/security-advisories": "dev-master"
     },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
     "suggest": {
         "ext-mbstring": "*"
     },

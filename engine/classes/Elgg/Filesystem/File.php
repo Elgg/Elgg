@@ -28,17 +28,21 @@ class File {
 	}
 	
 	/**
-	 * @return boolean Whether this file exists.
+	 * Whether this file exists.
+	 * 
+	 * @return boolean 
 	 */
 	public function exists() {
 		return $this->directory->isFile($this->path);
 	}
 	
 	/**
-	 * @return string The file's basename.
+	 * Get the part of the file after the directory, except the suffix.
+	 * 
+	 * @return string 
 	 */
-	public function getBasename() {
-		return pathinfo($this->path, PATHINFO_BASENAME);
+	public function getBasename($suffix = '') {
+		return basename($this->path, $suffix);
 	}
 	
 	/**
@@ -51,10 +55,39 @@ class File {
 	}
 	
 	/**
-	 * @return string The file's extension.
+	 * Get the directory path without the final file name.
+	 * 
+	 * @return string 
+	 */
+	public function getDirname() {
+		return pathinfo($this->path, PATHINFO_DIRNAME);
+	}
+	
+	/**
+	 * Get the file's extension.
+	 * 
+	 * @return string 
 	 */
 	public function getExtension() {
 		return pathinfo($this->path, PATHINFO_EXTENSION);
+	}
+	
+	/**
+	 * Get the entire path including that of the containing directory.
+	 * 
+	 * @return string 
+	 */
+	public function getFullPath() {
+		return $this->directory->getFullPath($this->path);
+	}
+	
+	/**
+	 * Get the path relative to the containing directory.
+	 * 
+	 * @return string
+	 */
+	public function getPath() {
+		return $this->path;
 	}
 	
 	/**
@@ -68,8 +101,27 @@ class File {
 		return $this->directory->includeFile($this->path);
 	}
 	
+	/**
+	 * True if the file begins with a dot or is in a directory that begins with a dot.
+	 * 
+	 * @return bool 
+	 */
+	public function isPrivate() {
+		return strpos($this->getPath(), "/.") !== false ||
+			strpos($this->getPath(), ".") === 0;
+	}
+	
+	/**
+	 * Set the content of this file, overwriting old content if necessary.
+	 * 
+	 * @return void
+	 */
+	public function putContents($content) {
+		$this->directory->putContents($this->path, $content);
+	}
+	
 	/** @inheritDoc */
 	public function __toString() {
-		return $this->path;
+		return $this->getFullPath();
 	}
 }

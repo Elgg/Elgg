@@ -1,4 +1,8 @@
 <?php
+
+use Elgg\Filesystem\Filesystem;
+
+
 /**
  * Stores site-side plugin settings as private data.
  *
@@ -814,11 +818,45 @@ class ElggPlugin extends \ElggObject {
 	 * @return void
 	 */
 	protected function registerViews() {
-		if (!_elgg_services()->views->registerPluginViews($this->path, $failed_dir)) {
-			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterViews',
-				array($this->getID(), $this->guid, $failed_dir));
+		$views = _elgg_services()->views;
+		$translator = _elgg_services()->translator;
+		
+		$views_dir = Filesystem::createLocal("$this->path/views");
+		
+		// plugins don't have to have views.
+		if (!is_dir("$views_dir")) {
+			return true;
+		}
+		
+		// but if they do, they have to be readable
+		$handle = opendir("$views_dir");
+		if (!$handle) {
+			$msg = $translator->translate('ElggPlugin:Exception:CannotRegisterViews',
+							array($this->getID(), $this->guid, "$views_dir"));
 			throw new \PluginException($msg);
 		}
+		
+		$view_type_names = [];
+		
+		while (($view_type_name = readdir($handle)) !== false) {
+			// ignore private-directories and non-directories
+			if (substr($view_type_name, 0, 1) !== '.' && !$views_dir->isDirectory($view_type_name)) {
+				$view_types[] = $view_type_name;
+			}
+		}
+		
+		foreach ($view_type_names as $view_type_name) {
+			try {
+				$view_type_dir = $views_dir->chroot($view_type_name);
+				$views->registerViews('', $view_type_dir, $view_type_name);
+			} catch (\Exception $e) {
+				$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterViews',
+								array($this->getID(), $this->guid, "$view_type_dir"));
+				throw new \PluginException($msg);
+			}
+		}
+
+		return true;
 	}
 
 	/**
