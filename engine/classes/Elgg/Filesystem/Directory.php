@@ -72,6 +72,15 @@ interface Directory {
 	public function getDirectories($path = '', $recursive = true);
 
 	/**
+	 * Get the absolute path to the given directory-relative path.
+	 * 
+	 * @param string $path A file/directory path within this directory.
+	 * 
+	 * @return string
+	 */
+	public function getFullPath($path = '');
+
+	/**
 	 * Do a PHP include of the file and return the result.
 	 * 
 	 * NB: This only really works with local filesystems amirite?
@@ -83,6 +92,15 @@ interface Directory {
 	 * @throws \InvalidArgumentException
 	 */
 	public function includeFile($path);
+	
+	/**
+	 * Whether this directory has an existing subdirectory at the given path.
+	 * 
+	 * @param string $path The relative path within this directory
+	 * 
+	 * @return boolean
+	 */
+	public function isDirectory($path);
 	
 	/**
 	 * Whether this directory has an existing file at the given location.
@@ -106,4 +124,11 @@ interface Directory {
 	 * @throws \InvalidArgumentException
 	 */
 	public function putContents($path, $content);
+	
+	/**
+	 * Returns the full path of this directory
+	 * 
+	 * @return string
+	 */
+	public function __toString();
 }

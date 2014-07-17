@@ -1,4 +1,8 @@
 <?php
+
+use Elgg\Filesystem\GaufretteDirectory;
+
+
 /**
  * Stores site-side plugin settings as private data.
  *
@@ -740,11 +744,6 @@ class ElggPlugin extends \ElggObject {
 			$this->includeFile('start.php');
 		}
 
-		// include views
-		if ($flags & ELGG_PLUGIN_REGISTER_VIEWS) {
-			$this->registerViews();
-		}
-
 		// include languages
 		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
 			$this->registerLanguages();
@@ -805,20 +804,6 @@ class ElggPlugin extends \ElggObject {
 	 */
 	protected function canReadFile($filename) {
 		return is_readable($this->path . '/' . $filename);
-	}
-
-	/**
-	 * Registers the plugin's views
-	 *
-	 * @throws PluginException
-	 * @return void
-	 */
-	protected function registerViews() {
-		if (!_elgg_services()->views->registerPluginViews($this->path, $failed_dir)) {
-			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterViews',
-				array($this->getID(), $this->guid, $failed_dir));
-			throw new \PluginException($msg);
-		}
 	}
 
 	/**

@@ -1853,8 +1853,6 @@ function _elgg_engine_boot() {
 
 	_elgg_session_boot();
 
-	_elgg_services()->systemCache->loadAll();
-
 	_elgg_services()->translator->loadTranslations();
 }
 
