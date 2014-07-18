@@ -141,7 +141,6 @@ class ElggInstaller {
 		$defaults = array(
 			'dbhost' => 'localhost',
 			'dbprefix' => 'elgg_',
-			'path' => $CONFIG->path,
 			'language' => 'en',
 			'siteaccess' => ACCESS_PUBLIC,
 		);
@@ -405,11 +404,6 @@ class ElggInstaller {
 			'wwwroot' => array(
 				'type' => 'url',
 				'value' => elgg_get_site_url(),
-				'required' => TRUE,
-				),
-			'path' => array(
-				'type' => 'text',
-				'value' => $CONFIG->path,
 				'required' => TRUE,
 				),
 			'dataroot' => array(

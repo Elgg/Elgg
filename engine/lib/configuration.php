@@ -633,11 +633,6 @@ function _elgg_load_application_config() {
 		}
 	}
 
-	$path = datalist_get('path');
-	if (!empty($path)) {
-		$CONFIG->path = $path;
-	}
-
 	// allow sites to set dataroot and simplecache_enabled in settings.php
 	if (isset($CONFIG->dataroot)) {
 		$CONFIG->dataroot = sanitise_filepath($CONFIG->dataroot);
