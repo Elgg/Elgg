@@ -1,0 +1,13 @@
+{
+	"name": "elgg/sniffs",
+	"description": "Elgg coding standards",
+	"version": "0.1.0",
+	"require": {
+		"squizlabs/php_codesniffer": ">=1.3.4"
+	},
+	"autoload": {
+		"psr-0": {
+			"Elgg_Sniffs_": "src/"
+		}
+	}
+}
