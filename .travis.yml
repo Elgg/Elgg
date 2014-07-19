@@ -24,6 +24,7 @@ matrix:
        - mkdir ../elgg-coding-standards
        - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
        - phpenv rehash
+       - composer install
        - npm install
        - sudo easy_install "Sphinx==1.1.3"
        - wget https://scrutinizer-ci.com/ocular.phar
@@ -42,6 +43,8 @@ matrix:
 
 services: 
  - mysql
+
+install: composer install
 
 before_script:
  - mysql -e 'create database elgg;'
