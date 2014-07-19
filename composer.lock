@@ -4,23 +4,50 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "538c915a2da277c5f9e1f9b9de380fa3",
+    "hash": "09f0b557620cf5bd1a7fe9231bb287f2",
     "packages": [
 
     ],
     "packages-dev": [
         {
-            "name": "phpunit/php-code-coverage",
-            "version": "2.0.8",
+            "name": "elgg/sniffs",
+            "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
-                "reference": "58401826c8cfc8fd689b60026e91c337df374bca"
+                "url": "https://github.com/elgg/elgg-coding-standards.git",
+                "reference": "e07a68431204d2c67cbc3ca7c8d281f6a63e6b65"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/58401826c8cfc8fd689b60026e91c337df374bca",
-                "reference": "58401826c8cfc8fd689b60026e91c337df374bca",
+                "url": "https://api.github.com/repos/elgg/elgg-coding-standards/zipball/e07a68431204d2c67cbc3ca7c8d281f6a63e6b65",
+                "reference": "e07a68431204d2c67cbc3ca7c8d281f6a63e6b65",
+                "shasum": ""
+            },
+            "require": {
+                "squizlabs/php_codesniffer": ">=1.3.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-0": {
+                    "Elgg_Sniffs_": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "description": "Elgg coding standards",
+            "time": "2014-07-19 11:21:28"
+        },
+        {
+            "name": "phpunit/php-code-coverage",
+            "version": "2.0.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/sebastianbergmann/php-code-coverage.git",
+                "reference": "ed8ac99ce38c3fd134128c898f7ca74665abef7f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/sebastianbergmann/php-code-coverage/zipball/ed8ac99ce38c3fd134128c898f7ca74665abef7f",
+                "reference": "ed8ac99ce38c3fd134128c898f7ca74665abef7f",
                 "shasum": ""
             },
             "require": {
@@ -72,7 +99,7 @@
                 "testing",
                 "xunit"
             ],
-            "time": "2014-05-26 14:55:24"
+            "time": "2014-06-29 08:14:40"
         },
         {
             "name": "phpunit/php-file-iterator",
@@ -333,16 +360,16 @@
         },
         {
             "name": "phpunit/phpunit-mock-objects",
-            "version": "2.1.4",
+            "version": "2.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/sebastianbergmann/phpunit-mock-objects.git",
-                "reference": "1a894a16b6c15fcdc5ef2b110f0e6233952c9b0f"
+                "reference": "7878b9c41edb3afab92b85edf5f0981014a2713a"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/1a894a16b6c15fcdc5ef2b110f0e6233952c9b0f",
-                "reference": "1a894a16b6c15fcdc5ef2b110f0e6233952c9b0f",
+                "url": "https://api.github.com/repos/sebastianbergmann/phpunit-mock-objects/zipball/7878b9c41edb3afab92b85edf5f0981014a2713a",
+                "reference": "7878b9c41edb3afab92b85edf5f0981014a2713a",
                 "shasum": ""
             },
             "require": {
@@ -386,7 +413,7 @@
                 "mock",
                 "xunit"
             ],
-            "time": "2014-06-07 16:22:57"
+            "time": "2014-06-12 07:22:15"
         },
         {
             "name": "sebastian/comparator",
@@ -657,18 +684,93 @@
             "time": "2014-03-07 15:35:33"
         },
         {
+            "name": "squizlabs/php_codesniffer",
+            "version": "1.5.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/squizlabs/PHP_CodeSniffer.git",
+                "reference": "396178ada8499ec492363587f037125bf7b07fcc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/squizlabs/PHP_CodeSniffer/zipball/396178ada8499ec492363587f037125bf7b07fcc",
+                "reference": "396178ada8499ec492363587f037125bf7b07fcc",
+                "shasum": ""
+            },
+            "require": {
+                "ext-tokenizer": "*",
+                "php": ">=5.1.2"
+            },
+            "suggest": {
+                "phpunit/php-timer": "dev-master"
+            },
+            "bin": [
+                "scripts/phpcs"
+            ],
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-phpcs-fixer": "2.0.x-dev"
+                }
+            },
+            "autoload": {
+                "classmap": [
+                    "CodeSniffer.php",
+                    "CodeSniffer/CLI.php",
+                    "CodeSniffer/Exception.php",
+                    "CodeSniffer/File.php",
+                    "CodeSniffer/Report.php",
+                    "CodeSniffer/Reporting.php",
+                    "CodeSniffer/Sniff.php",
+                    "CodeSniffer/Tokens.php",
+                    "CodeSniffer/Reports/",
+                    "CodeSniffer/CommentParser/",
+                    "CodeSniffer/Tokenizers/",
+                    "CodeSniffer/DocGenerators/",
+                    "CodeSniffer/Standards/AbstractPatternSniff.php",
+                    "CodeSniffer/Standards/AbstractScopeSniff.php",
+                    "CodeSniffer/Standards/AbstractVariableSniff.php",
+                    "CodeSniffer/Standards/IncorrectPatternException.php",
+                    "CodeSniffer/Standards/Generic/Sniffs/",
+                    "CodeSniffer/Standards/MySource/Sniffs/",
+                    "CodeSniffer/Standards/PEAR/Sniffs/",
+                    "CodeSniffer/Standards/PSR1/Sniffs/",
+                    "CodeSniffer/Standards/PSR2/Sniffs/",
+                    "CodeSniffer/Standards/Squiz/Sniffs/",
+                    "CodeSniffer/Standards/Zend/Sniffs/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "BSD-3-Clause"
+            ],
+            "authors": [
+                {
+                    "name": "Greg Sherwood",
+                    "role": "lead"
+                }
+            ],
+            "description": "PHP_CodeSniffer tokenises PHP, JavaScript and CSS files and detects violations of a defined set of coding standards.",
+            "homepage": "http://www.squizlabs.com/php-codesniffer",
+            "keywords": [
+                "phpcs",
+                "standards"
+            ],
+            "time": "2014-05-01 03:07:07"
+        },
+        {
             "name": "symfony/yaml",
-            "version": "v2.5.0",
+            "version": "v2.5.2",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c"
+                "reference": "f868ecdbcc0276b6158dfbf08b9e98ce07f014e1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/b4b09c68ec2f2727574544ef0173684281a5033c",
-                "reference": "b4b09c68ec2f2727574544ef0173684281a5033c",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/f868ecdbcc0276b6158dfbf08b9e98ce07f014e1",
+                "reference": "f868ecdbcc0276b6158dfbf08b9e98ce07f014e1",
                 "shasum": ""
             },
             "require": {
@@ -703,16 +805,16 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2014-05-16 14:25:18"
+            "time": "2014-07-09 09:05:48"
         }
     ],
     "aliases": [
 
     ],
     "minimum-stability": "stable",
-    "stability-flags": [
-
-    ],
+    "stability-flags": {
+        "elgg/sniffs": 20
+    },
     "platform": [
 
     ],
