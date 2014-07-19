@@ -214,6 +214,7 @@ CREATE TABLE `prefix_river` (
   `target_guid` int(11) NOT NULL,
   `annotation_id` int(11) NOT NULL,
   `posted` int(11) NOT NULL,
+  `enabled` enum('yes','no') NOT NULL DEFAULT 'yes',
   PRIMARY KEY (`id`),
   KEY `type` (`type`),
   KEY `action_type` (`action_type`),

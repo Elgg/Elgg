@@ -1882,6 +1882,7 @@ abstract class ElggEntity extends ElggData implements
 
 		if ($res) {
 			$this->attributes['enabled'] = 'no';
+			elgg_trigger_event('disable:after', $this->type, $this);
 		}
 
 		return $res;
@@ -1943,6 +1944,7 @@ abstract class ElggEntity extends ElggData implements
 	
 		if ($result) {
 			$this->attributes['enabled'] = 'yes';
+			elgg_trigger_event('enable:after', $this->type, $this);
 		}
 
 		return $result;
