@@ -67,7 +67,7 @@ optionally ``deps``.
 		));
 
 		// Shimmed AMD module
-		elgg_register_js('jquery.form', array(
+		elgg_define_js('jquery.form', array(
 			'src' => '/vendors/jquery/jquery.form.js',
 			'deps' => array('jquery'),
 			'exports' => 'jQuery.fn.ajaxForm',
