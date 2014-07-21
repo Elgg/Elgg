@@ -29,7 +29,7 @@ Language Packs
 --------------
 
 Language packs are just plugins that provide support for another language.
-There are language packs for the core and they are usually installed in the languages directory off the elgg root directory.
+There are language packs for the core and they are usually installed in the languages directory off the Elgg root directory.
 Other language packs are provided for various plugins. 
 Generally, the authors make it easy to copy those files into the languages directory of each plugin under the mod directory.
 

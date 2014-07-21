@@ -53,7 +53,7 @@ There are several data migrations involved, so it is especially important that y
 **back up your database and data directory** before performing the upgrade.
 
 You may also consider getting rid of obsolete files from formerly installed Elgg versions
-by deleting everyting from the Elgg installation directory except for:
+by deleting everything from the Elgg installation directory except for:
 
  * ``.htaccess``
  * ``engine/settings.php``
