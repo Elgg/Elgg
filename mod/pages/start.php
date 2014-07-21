@@ -86,8 +86,6 @@ function pages_init() {
 
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
-	
-	elgg_register_event_handler('upgrade', 'system', 'pages_run_upgrades');
 }
 
 /**
