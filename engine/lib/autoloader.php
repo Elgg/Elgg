@@ -7,6 +7,8 @@
  * @subpackage Autoloader
  */
 
+require_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
+
 /**
  * @return Elgg_Di_ServiceProvider
  * @access private
@@ -30,22 +32,9 @@ function _elgg_services() {
  * @access private
  */
 function _elgg_create_service_provider() {
-	// manually load classes needed for autoloading
-	$dir = dirname(dirname(__FILE__)) . '/classes';
-	foreach (array('Elgg_ClassMap', 'Elgg_ClassLoader', 'Elgg_AutoloadManager') as $class) {
-		if (!class_exists($class)) {
-			$file = "{$dir}/" . strtr($class, '_\\', '//') . ".php";
-			include $file;
-			if (!class_exists($class, false)) {
-				throw new RuntimeException("Could not load {$class} in {$file}.");
-			}
-		}
-	}
-
 	$loader = new Elgg_ClassLoader(new Elgg_ClassMap());
 	// until the cache can be loaded, just setup PSR-0 autoloading
 	// out of the classes directory. No need to build a full map.
-	$loader->addFallback($dir);
 	$loader->register();
 	$manager = new Elgg_AutoloadManager($loader);
 
