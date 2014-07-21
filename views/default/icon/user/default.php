@@ -17,7 +17,8 @@
 
 $user = elgg_extract('entity', $vars, elgg_get_logged_in_user_entity());
 $size = elgg_extract('size', $vars, 'medium');
-if (!in_array($size, array('topbar', 'tiny', 'small', 'medium', 'large', 'master'))) {
+$icon_sizes = elgg_get_config('icon_sizes');
+if (!array_key_exists($size, $icon_sizes)) {
 	$size = 'medium';
 }
 
