@@ -1058,7 +1058,7 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'installation:minify_js:label' => "Comprimir JavaScript (recomendado)",
 	'installation:minify_css:label' => "Comprimir CSS (recomendado)",
 
-	'installation:htaccess:needs_upgrade' => "Debe actualizar el fichero «.htaccess» para que la ruta se inyecte en el parámetro GET «__elgg_uri» (puede usar «htaccess_dist» a modo de guía).",
+	'installation:htaccess:needs_upgrade' => "Debe actualizar el fichero «.htaccess» para que la ruta se inyecte en el parámetro GET «__elgg_uri» (puede usar «install/config/htaccess.dist» a modo de guía).",
 
 	'installation:systemcache:description' => "The system cache decreases the loading time of the Elgg engine by caching data to files.",
 	'installation:systemcache:label' => "Use system cache (recommended)",

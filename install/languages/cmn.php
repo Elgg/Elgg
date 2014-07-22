@@ -29,7 +29,7 @@ return array(
 
 		1.變更根目錄上的權限
 
-		2.將檔案 htaccess_dist 拷貝為 .htaccess',
+		2.將檔案 install/config/htaccess.dist 拷貝為 .htaccess',
 
 	'install:check:php:version' => 'Elgg 要求 PHP %s 或以上。這個伺服器正在使用版本 %s。',
 	'install:check:php:extension' => 'Elgg 要求 PHP 延伸功能 %s。',
@@ -143,11 +143,11 @@ return array(
 	'install:error:rewrite:iis' => '我們認為您的主機正在運行 IIS 網頁伺服器。',
 	'install:error:rewrite:allowoverride' => "改寫測試失敗的原因，很有可能是 AllowOverride 對於 Elgg 的目錄並非設定為 All。這會防止 Apache 去處理含有改寫規則的 .htaccess 檔案。
 				\n\n較不可能的原因是 Apache 被組配了別名給 Elgg 目錄，而您需要在 .htaccess 中設定 RewriteBase。在 Elgg 目錄的 .htaccess 檔案中有些進一步的指示。",
-	'install:error:rewrite:htaccess:write_permission' => '網頁伺服器沒有在 Elgg 的目錄中建立.htaccess 檔案的權限。您需要手動將 htaccess_dist 拷貝為 .htaccess，或是變更目錄上的權限。',
+	'install:error:rewrite:htaccess:write_permission' => '網頁伺服器沒有在 Elgg 的目錄中建立.htaccess 檔案的權限。您需要手動將 install/config/htaccess.dist 拷貝為 .htaccess，或是變更目錄上的權限。',
 	'install:error:rewrite:htaccess:read_permission' => '在 Elgg 的目錄中有 .htaccess 檔案，但是網頁伺服器沒有讀取它的權限。',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => '在 Elgg 的目錄中有 .htaccess 檔案，但那不是由 Elgg 所建立的。請移除它。',
 	'install:error:rewrite:htaccess:old_elgg_htaccess' => '在 Elgg 的目錄中似乎是舊的 Elgg .htaccess 檔案。它不包含改寫規則用於測試網頁伺服器。',
-	'install:error:rewrite:htaccess:cannot_copy' => '不明發生錯誤當建立.htaccess 檔案。您需要手動在 Elgg 的目錄中將 htaccess_dist 拷貝為 .htaccess。',
+	'install:error:rewrite:htaccess:cannot_copy' => '不明發生錯誤當建立.htaccess 檔案。您需要手動在 Elgg 的目錄中將 install/config/htaccess.dist 拷貝為 .htaccess。',
 	'install:error:rewrite:altserver' => '改寫規則測試失敗。您需要組配網頁伺服器與 Elgg 的改寫規則並再次嘗試。',
 	'install:error:rewrite:unknown' => '哎呀，我們無法認出在主機中運行什麼樣的網頁伺服器，而它的改寫規則失敗。我們無法提供任何特定的建言。請看看疑難排解鏈結。',
 	'install:warning:rewrite:unknown' => '您的伺服器不支援自動的改寫規則測試，而您的瀏覽器不支援經由 JavaScript 的檢查。您可以繼續進行安裝，但是也許會遇到一些站臺問題。您可以藉由按下這個鏈結，來手動<a href="%s" target="_blank ">測試</a>改寫規則。如果規則發生作用，您將會看到成功的字樣。',

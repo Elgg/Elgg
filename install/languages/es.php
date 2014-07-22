@@ -29,7 +29,7 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 
 		1. Modificar los permisos en el directorio raíz
 
-		2. Copiar el archivo htaccess_dist a .htaccess',
+		2. Copiar el archivo install/config/htaccess.dist a .htaccess',
 
 	'install:check:php:version' => 'Elgg requiere la versión %s de PHP o superior. Este servidor se encuentra ejecutando la versión %s.',
 	'install:check:php:extension' => 'Elgg requiere la extensión %s de PHP.',
@@ -143,11 +143,11 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 	'install:error:rewrite:iis' => 'Creemos que su servidor se encuentra ejecutando el web server Microsoft IIS.',
 	'install:error:rewrite:allowoverride' => "La prueba de reescritura falló, la causa mas común es que AllowOverride no se encuentra establecido en All en el directorio de Elgg. Esto le impide al apache procesar el archivo .htaccess el cual contiene las reglas de reescritura.
 				\n\nOtra causa puede ser que el Apache tenga configurado un alias para el directorio de Elgg y deba establecer RewriteBase en su archivo .htaccess. Hay varias instrucciones en el archivo .htaccess de su directorio de Elgg.",
-	'install:error:rewrite:htaccess:write_permission' => 'Su servidor web no tiene permisos para escribir el archivo .htaccess en la carpeta de Elgg. Debe copiar manualmente htaccess_dist a .htaccess o modificar los permisos en el directorio.',
+	'install:error:rewrite:htaccess:write_permission' => 'Su servidor web no tiene permisos para escribir el archivo .htaccess en la carpeta de Elgg. Debe copiar manualmente install/config/htaccess.dist a .htaccess o modificar los permisos en el directorio.',
 	'install:error:rewrite:htaccess:read_permission' => 'Hay un archivo .htaccess en el directorio de Elgg, pero su servidor web no tiene los permisos necesarios para leerlo.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'Hay un archivo .htaccess en el directorio de Elgg que no ha sido creado por Elgg. Por favor elimínelo.',
 	'install:error:rewrite:htaccess:old_elgg_htaccess' => 'Al parecer hay un archivo .htaccess de Elgg antiguo en el directorio de Elgg. El mismo no contiene la regla de reescritura para realizar la prueba del servidor web.',
-	'install:error:rewrite:htaccess:cannot_copy' => 'Ha ocurrido un error desconocido al crear el archivo .htaccess. Deberá copiar manualmente htaccess_dist a .htaccess en el directorio de Elgg.',
+	'install:error:rewrite:htaccess:cannot_copy' => 'Ha ocurrido un error desconocido al crear el archivo .htaccess. Deberá copiar manualmente install/config/htaccess.dist a .htaccess en el directorio de Elgg.',
 	'install:error:rewrite:altserver' => 'La prueba de la reescritura de reglas ha fallado. Debe configurar su servidor web con reescritura de reglas e intentar nuevamente.',
 	'install:error:rewrite:unknown' => 'Oof. No podemos saber qué tipo de servidor web se encuentra ejecutando y falló la reescritura de reglas. No podemos ofrecer ninguna ayuda específica. Por favor verifique el enlace de solución de problemas.',
 	'install:warning:rewrite:unknown' => 'Su servidor no soporta la prueba automática de reescritura de reglas. Puede continuar con la instalación, pero puede experimentar problemas con el sitio. Puede probar manualmente las reescritura de reglas accediento a este enlace: <a href="%s" target="_blank">pruebas</a>. Observará la palabra success si la ejecución ha sido exitosa.',

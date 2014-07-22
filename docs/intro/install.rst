@@ -298,7 +298,7 @@ Run the following in cloud9's terminal:
 
     rm -rf * # Clear out the c9 hello-world stuff
     git clone https://github.com/Elgg/Elgg . # the hotness
-    cp htaccess_dist .htaccess
+    cp install/config/htaccess.dist .htaccess
     cp engine/settings.example.php engine/settings.php
     mysql-ctl start # start c9's local mysql server
     mkdir ../elgg-data # setup data dir for Elgg
@@ -367,10 +367,10 @@ this page to them.
 
 The ``.htaccess``, if not generated automatically (that happens when you
 have problem with ``mod_rewrite``), you can create it by renaming
-``htaccess_dist`` file you find with elgg package to ``.htaccess``. Also
+``install/config/htaccess.dist`` file you find with elgg package to ``.htaccess``. Also
 if you find a ``.htaccess`` file inside the installation path, but you 
 are still getting 404 error, make sure the contents of ``.htaccess`` are
-same as that of ``htaccess_dist``.
+same as that of ``install/config/htaccess.dist``.
 
 `Instructions for testing mod\_rewrite`_
 

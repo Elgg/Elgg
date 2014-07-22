@@ -1065,7 +1065,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'installation:minify_js:label' => "JavaScript comprimeren (aangeraden)",
 	'installation:minify_css:label' => "CSS comprimeren (aangeraden)",
 
-	'installation:htaccess:needs_upgrade' => "Je moet het bestand .htaccess zodanig wijzigen dat het pad geïnjecteerd wordt in de GET-parameter __elgg_uri. Je kunt htaccess_dist als voorbeeld gebruiken.",
+	'installation:htaccess:needs_upgrade' => "Je moet het bestand .htaccess zodanig wijzigen dat het pad geïnjecteerd wordt in de GET-parameter __elgg_uri. Je kunt install/config/htaccess.dist als voorbeeld gebruiken.",
 
 	'installation:systemcache:description' => "De systeemcache verlaagd de laad tijd van de Elgg engine door te cachen naar bestanden.",
 	'installation:systemcache:label' => "Gebruik systeemcache (aanbevolen)",

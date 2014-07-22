@@ -1063,7 +1063,7 @@ return array(
 	'installation:minify_js:label' => "JavaScript を圧縮（推奨）",
 	'installation:minify_css:label' => "CSS を圧縮（推奨）",
 
-	'installation:htaccess:needs_upgrade' => ".htaccess をアップデートしてください。そうすることにより、path が GET のパラメタ __elgg_uri にインジェクトされます。(ファイル htaccess_dist を参考にしてください。)",
+	'installation:htaccess:needs_upgrade' => ".htaccess をアップデートしてください。そうすることにより、path が GET のパラメタ __elgg_uri にインジェクトされます。(ファイル install/config/htaccess.dist を参考にしてください。)",
 
 	'installation:systemcache:description' => "ステムキャッシュはデータをファイルにキャッシュすることでElggの読み込み時間を少なくします。",
 	'installation:systemcache:label' => "システムキャッシュを使う(推奨)",

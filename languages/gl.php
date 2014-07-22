@@ -1065,7 +1065,7 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'installation:minify_js:label' => "Comprimir o código JavaScript (recomendado).",
 	'installation:minify_css:label' => "Comprimir o código CSS (recomendado).",
 
-	'installation:htaccess:needs_upgrade' => "Debe actualizar o seu ficheiro .htaccess para que a ruta se insira no parámetro GET «__elgg_uri» (pode guiarse por «htaccess_dist»).",
+	'installation:htaccess:needs_upgrade' => "Debe actualizar o seu ficheiro .htaccess para que a ruta se insira no parámetro GET «__elgg_uri» (pode guiarse por «install/config/htaccess.dist»).",
 
 	'installation:systemcache:description' => "A caché do sistema almacena datos en ficheiros para diminuír o tempo de carga de Elgg",
 	'installation:systemcache:label' => "Usar a caché do sistema (recomendado).",
