@@ -42,6 +42,7 @@ class Elgg_Di_ServiceProvider extends Elgg_Di_DiContainer {
 		$this->setClassName('actions', 'Elgg_ActionsService');
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 		$this->setClassName('autoP', 'ElggAutoP');
+		$this->setValue('context', new \Elgg\Context());
 		$this->setClassName('crypto', 'ElggCrypto');
 		$this->setFactory('db', array($this, 'getDatabase'));
 		$this->setFactory('events', array($this, 'getEvents'));
