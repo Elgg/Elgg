@@ -10,15 +10,7 @@
  */
 function full_url() {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use current_page_url()', 1.9);
-	$request = _elgg_services()->request;
-	$url = $request->getSchemeAndHttpHost();
-
-	// This is here to prevent XSS in poorly written browsers used by 80% of the population.
-	// svn commit [5813]: https://github.com/Elgg/Elgg/commit/0c947e80f512cb0a482b1864fd0a6965c8a0cd4a
-	// @todo encoding like this should occur when inserting into web page, not here
-	$quotes = array('\'', '"');
-	$encoded = array('%27', '%22');
-	return $url . str_replace($quotes, $encoded, $request->getRequestUri());
+	return _elgg_services()->request->getFullUrl();
 }
 
 /**

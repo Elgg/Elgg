@@ -1,18 +1,9 @@
 <?php
+namespace Elgg\Http;
 
-$engine = dirname(dirname(dirname(__FILE__)));
-require_once "$engine/lib/mb_wrapper.php";// for elgg_parse_str used by elgg_http_add_url_query_elements
+class UrlTest extends \PHPUnit_Framework_TestCase {
 
-/**
- * @see \ElggCoreHelpersTest
- * @todo migrate similar simpletest tests to this class
- */
-class ElggCoreUrlHelpersTest extends \PHPUnit_Framework_TestCase {
-
-	/**
-	 * Test if elgg_http_add_url_query_elements() preserves original url when no params are passed
-	 */
-	public function testElggHttpAddURLQueryElementsPreserveURL() {
+	public function testSetQueryElementsPreservesOriginalUrlWhenNoParamsArePassed() {
 		$tests = array(
 			array('', array(), '?'),
 			array('/', array(), '/'),
@@ -43,10 +34,7 @@ class ElggCoreUrlHelpersTest extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
-	/**
-	 * Test elgg_http_add_url_query_elements() addition of parameters
-	 */
-	public function testElggHttpAddURLQueryElementsAddElements() {
+	public function testSetQueryElementsAddsToExistingUrl() {
 		$tests = array(
 			array('', array('foo' => 'bar'), '?foo=bar'),
 			array('/', array('foo' => 'bar'), '/?foo=bar'),
@@ -78,10 +66,7 @@ class ElggCoreUrlHelpersTest extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
-	/**
-	 * Test elgg_http_add_url_query_elements() removal of parameters
-	 */
-	public function testElggHttpAddURLQueryElementsRemoveElements() {
+	public function testSetQueryElementsRemovesElementsWhenSetToNull() {
 		$tests = array(
 			array('?foo=bar', array('foo' => ''), '?foo='),
 			array('?foo=bar', array('foo' => 0), '?foo=0'),

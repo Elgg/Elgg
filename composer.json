@@ -10,8 +10,9 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
-        "mrclay/minify": "2.*",
-        "knplabs/gaufrette": "0.1.*"
+        "mrclay/minify": "~2.2",
+        "knplabs/gaufrette": "0.1.*",
+        "symfony/http-foundation": "~2.5"
     },
     "suggest": {
         "ext-mbstring": "*"
@@ -22,7 +23,7 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "4.1",
+        "phpunit/phpunit": "~4.1",
         "elgg/sniffs": "dev-master",
         "squizlabs/php_codesniffer": "1.*"
     }

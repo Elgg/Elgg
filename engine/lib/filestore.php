@@ -41,17 +41,12 @@ function get_dir_size($dir, $totalsize = 0) {
  * @return mixed|false The contents of the file, or false on failure.
  */
 function get_uploaded_file($input_name) {
-	$files = _elgg_services()->request->files;
-	if (!$files->has($input_name)) {
+	$file = _elgg_services()->request->getFile($input_name);
+	if (isset($file)) {
+		return $file->getContents();
+	} else {
 		return false;
 	}
-	
-	$file = $files->get($input_name);
-	if (elgg_extract('error', $file) !== 0) {
-		return false;
-	}
-
-	return file_get_contents(elgg_extract('tmp_name', $file));
 }
 
 /**
@@ -70,17 +65,12 @@ function get_uploaded_file($input_name) {
  */
 function get_resized_image_from_uploaded_file($input_name, $maxwidth, $maxheight,
 $square = false, $upscale = false) {
-	$files = _elgg_services()->request->files;
-	if (!$files->has($input_name)) {
+	$file = _elgg_services()->request->getFile($input_name);
+	if (!isset($file)) {
 		return false;
 	}
-
-	$file = $files->get($input_name);
-	if (elgg_extract('error', $file) !== 0) {
-		return false;
-	}
-
-	return get_resized_image_from_existing_file(elgg_extract('tmp_name', $file), $maxwidth,
+	
+	return get_resized_image_from_existing_file($file, $maxwidth,
 		$maxheight, $square, 0, 0, 0, 0, $upscale);
 }
 
