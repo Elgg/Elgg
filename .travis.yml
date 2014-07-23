@@ -18,11 +18,8 @@ matrix:
   include:
     - php: 5.3
       env: VARIA=true
-      before_script:
+      install:
        - node -v
-       - pear install pear/PHP_CodeSniffer
-       - mkdir ../elgg-coding-standards
-       - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
        - phpenv rehash
        - composer install
        - npm install
@@ -30,7 +27,7 @@ matrix:
        - wget https://scrutinizer-ci.com/ocular.phar
       script:
        - bash .scripts/travis/check_commit_msgs.sh
-       - phpcs --standard=../elgg-coding-standards/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
+       - vendor/bin/phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
        - npm test
        - sphinx-build -b html -nW docs docs/_build/html
          # Flags used here, not in `make html`:
