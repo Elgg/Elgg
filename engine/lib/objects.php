@@ -23,7 +23,7 @@ function get_object_entity_as_row($guid) {
 }
 
 /**
- * Runs unit tests for ElggObject
+ * Runs unit tests for \ElggObject
  *
  * @param string $hook   unit_test
  * @param string $type   system

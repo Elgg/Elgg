@@ -1,12 +1,12 @@
 <?php
+namespace Elgg\Notifications;
 /**
  * Notification event
  * 
  * @package    Elgg.Core
  * @subpackage Notifications
- * @since      1.9.0
  */
-class Elgg_Notifications_Event {
+class Event {
 	/* @var string The name of the action/event */
 	protected $action;
 
@@ -26,12 +26,13 @@ class Elgg_Notifications_Event {
 	/**
 	 * Create a notification event
 	 *
-	 * @param ElggData $object The object of the event (ElggEntity)
-	 * @param string   $action The name of the action (default: create)
-	 * @param ElggUser $actor  The user that caused the event (default: logged in user)
-	 * @throws InvalidArgumentException
+	 * @param \ElggData $object The object of the event (\ElggEntity)
+	 * @param string    $action The name of the action (default: create)
+	 * @param \ElggUser $actor  The user that caused the event (default: logged in user)
+	 * 
+	 * @throws \InvalidArgumentException
 	 */
-	public function __construct(ElggData $object, $action, ElggUser $actor = null) {
+	public function __construct(\ElggData $object, $action, \ElggUser $actor = null) {
 		if (elgg_instanceof($object)) {
 			$this->object_type = $object->getType();
 			$this->object_subtype = $object->getSubtype();
@@ -54,7 +55,7 @@ class Elgg_Notifications_Event {
 	/**
 	 * Get the actor of the event
 	 *
-	 * @return ElggUser
+	 * @return \ElggUser
 	 */
 	public function getActor() {
 		return get_entity($this->actor_guid);
@@ -72,7 +73,7 @@ class Elgg_Notifications_Event {
 	/**
 	 * Get the object of the event
 	 *
-	 * @return ElggData
+	 * @return \ElggData
 	 */
 	public function getObject() {
 		switch ($this->object_type) {
@@ -110,3 +111,13 @@ class Elgg_Notifications_Event {
 		return "{$this->action}:{$this->object_type}:{$this->object_subtype}";
 	}
 }
+
+/**
+ * Notification event
+ * 
+ * @package    Elgg.Core
+ * @subpackage Notifications
+ * @since      1.9.0
+ */
+class Elgg_Notifications_Event extends \Elgg\Notifications\Event {}
+

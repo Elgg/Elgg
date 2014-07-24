@@ -3,18 +3,18 @@
  * Test elgg_get_entities_from_relationship() and
  * elgg_get_entities_from_relationship_count()
  */
-class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTest {
+class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTest {
 
 	// Make sure metadata doesn't affect getting entities by relationship.  See #2274
 	public function testElggApiGettersEntityRelationshipWithMetadata() {
 		$guids = array();
 
-		$obj1 = new ElggObject();
+		$obj1 = new \ElggObject();
 		$obj1->test_md = 'test';
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
-		$obj2 = new ElggObject();
+		$obj2 = new \ElggObject();
 		$obj2->test_md = 'test';
 		$obj2->save();
 		$guids[] = $obj2->guid;
@@ -43,11 +43,11 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 	public function testElggApiGettersEntityRelationshipWithOutMetadata() {
 		$guids = array();
 
-		$obj1 = new ElggObject();
+		$obj1 = new \ElggObject();
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
-		$obj2 = new ElggObject();
+		$obj2 = new \ElggObject();
 		$obj2->save();
 		$guids[] = $obj2->guid;
 
@@ -75,12 +75,12 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 	public function testElggApiGettersEntityRelationshipWithMetadataIncludingRealMetadata() {
 		$guids = array();
 
-		$obj1 = new ElggObject();
+		$obj1 = new \ElggObject();
 		$obj1->test_md = 'test';
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
-		$obj2 = new ElggObject();
+		$obj2 = new \ElggObject();
 		$obj2->test_md = 'test';
 		$obj2->save();
 		$guids[] = $obj2->guid;
@@ -111,12 +111,12 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 	public function testElggApiGettersEntityRelationshipWithMetadataIncludingFakeMetadata() {
 		$guids = array();
 
-		$obj1 = new ElggObject();
+		$obj1 = new \ElggObject();
 		$obj1->test_md = 'test';
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
-		$obj2 = new ElggObject();
+		$obj2 = new \ElggObject();
 		$obj2->test_md = 'test';
 		$obj2->save();
 		$guids[] = $obj2->guid;

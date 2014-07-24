@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -11,22 +12,22 @@
  * @subpackage Hooks
  * @since      1.9.0
  */
-abstract class Elgg_HooksRegistrationService {
+abstract class HooksRegistrationService {
 	
 	private $handlers = array();
 
 	/**
-	 * @var Elgg_Logger
+	 * @var \Elgg\Logger
 	 */
 	protected $logger;
 
 	/**
 	 * Set a logger instance, e.g. for reporting uncallable handlers
 	 *
-	 * @param Elgg_Logger $logger The logger
+	 * @param \Elgg\Logger $logger The logger
 	 * @return self
 	 */
-	public function setLogger(Elgg_Logger $logger = null) {
+	public function setLogger(\Elgg\Logger $logger = null) {
 		$this->logger = $logger;
 		return $this;
 	}
@@ -120,7 +121,7 @@ abstract class Elgg_HooksRegistrationService {
 	 * @param string $name The name of the hook
 	 * @param string $type The type of the hook
 	 * @return array
-	 * @see Elgg_HooksRegistrationService::getAllHandlers()
+	 * @see \Elgg\HooksRegistrationService::getAllHandlers()
 	 */
 	protected function getOrderedHandlers($name, $type) {
 		$handlers = array();
@@ -165,8 +166,8 @@ abstract class Elgg_HooksRegistrationService {
 			}
 			return "(" . get_class($callable[0]) . ")->{$callable[1]}";
 		}
-		if ($callable instanceof Closure) {
-			$ref = new ReflectionFunction($callable);
+		if ($callable instanceof \Closure) {
+			$ref = new \ReflectionFunction($callable);
 			$file = $ref->getFileName();
 			$line = $ref->getStartLine();
 			return "(Closure {$file}:{$line})";
@@ -177,3 +178,4 @@ abstract class Elgg_HooksRegistrationService {
 		return "(unknown)";
 	}
 }
+

@@ -5,13 +5,13 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreFilestoreTest extends ElggCoreUnitTest {
+class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 
 	/**
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		$this->filestore = new ElggDiskFilestore();
+		$this->filestore = new \ElggDiskFilestore();
 	}
 
 	/**
@@ -26,10 +26,10 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		
 		// create a user to own the file
 		$user = $this->createTestUser();
-		$dir = new Elgg_EntityDirLocator($user->guid);
+		$dir = new \Elgg\EntityDirLocator($user->guid);
 		
 		// setup a test file
-		$file = new ElggFile();
+		$file = new \ElggFile();
 		$file->owner_guid = $user->guid;
 		$file->setFilename('testing/filestore.txt');
 		$file->open('write');
@@ -53,9 +53,9 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 		
 		$user = $this->createTestUser();
 		$filestore = $this->filestore;
-		$dir = new Elgg_EntityDirLocator($user->guid);
+		$dir = new \Elgg\EntityDirLocator($user->guid);
 		
-		$file = new ElggFile();
+		$file = new \ElggFile();
 		$file->owner_guid = $user->guid;
 		$file->setFilename('testing/ElggFileDelete');
 		$this->assertTrue($file->open('write'));
@@ -74,7 +74,7 @@ class ElggCoreFilestoreTest extends ElggCoreUnitTest {
 	}
 
 	protected function createTestUser($username = 'fileTest') {
-		$user = new ElggUser();
+		$user = new \ElggUser();
 		$user->username = $username;
 		$guid = $user->save();
 		

@@ -377,9 +377,6 @@ Naming
   
 * All other function names must begin with ``_elgg_``.
 
-* The names of all classes and interfaces must use underscores as namespace
-  separators and be within the Elgg namespace. (``Elgg_Cache_LRUCache``)
-
 * Name globals and constants in ``ALL_CAPS`` (``ACCESS_FRIENDS``, ``$CONFIG``).
 
 Miscellaneous

@@ -316,9 +316,9 @@ function get_image_resize_parameters($width, $height, $options) {
 }
 
 /**
- * Delete an ElggFile file
+ * Delete an \ElggFile file
  *
- * @param int $guid ElggFile GUID
+ * @param int $guid \ElggFile GUID
  *
  * @return bool
  */
@@ -329,19 +329,19 @@ function file_delete($guid) {
 			$smallthumb = $file->smallthumb;
 			$largethumb = $file->largethumb;
 			if ($thumbnail) {
-				$delfile = new ElggFile();
+				$delfile = new \ElggFile();
 				$delfile->owner_guid = $file->owner_guid;
 				$delfile->setFilename($thumbnail);
 				$delfile->delete();
 			}
 			if ($smallthumb) {
-				$delfile = new ElggFile();
+				$delfile = new \ElggFile();
 				$delfile->owner_guid = $file->owner_guid;
 				$delfile->setFilename($smallthumb);
 				$delfile->delete();
 			}
 			if ($largethumb) {
-				$delfile = new ElggFile();
+				$delfile = new \ElggFile();
 				$delfile->owner_guid = $file->owner_guid;
 				$delfile->setFilename($largethumb);
 				$delfile->delete();
@@ -437,18 +437,18 @@ function delete_directory($directory) {
  * @warning This only deletes the physical files and not their entities.
  * This will result in FileExceptions being thrown.  Don't use this function.
  *
- * @warning This must be kept in sync with ElggDiskFilestore.
+ * @warning This must be kept in sync with \ElggDiskFilestore.
  *
  * @todo Remove this when all files are entities.
  *
- * @param ElggUser $user An ElggUser
+ * @param \ElggUser $user An \ElggUser
  *
  * @return void
  */
 function clear_user_files($user) {
 	global $CONFIG;
 
-	$dir = new Elgg_EntityDirLocator($user->guid);
+	$dir = new \Elgg\EntityDirLocator($user->guid);
 	$file_path = $CONFIG->dataroot . $dir;
 	if (file_exists($file_path)) {
 		delete_directory($file_path);
@@ -462,7 +462,7 @@ $DEFAULT_FILE_STORE = null;
 /**
  * Return the default filestore.
  *
- * @return ElggFilestore
+ * @return \ElggFilestore
  */
 function get_default_filestore() {
 	global $DEFAULT_FILE_STORE;
@@ -473,11 +473,11 @@ function get_default_filestore() {
 /**
  * Set the default filestore for the system.
  *
- * @param ElggFilestore $filestore An ElggFilestore object.
+ * @param \ElggFilestore $filestore An \ElggFilestore object.
  *
  * @return true
  */
-function set_default_filestore(ElggFilestore $filestore) {
+function set_default_filestore(\ElggFilestore $filestore) {
 	global $DEFAULT_FILE_STORE;
 
 	$DEFAULT_FILE_STORE = $filestore;
@@ -497,7 +497,7 @@ function _elgg_filestore_init() {
 
 	// Now register a default filestore
 	if (isset($CONFIG->dataroot)) {
-		set_default_filestore(new ElggDiskFilestore($CONFIG->dataroot));
+		set_default_filestore(new \ElggDiskFilestore($CONFIG->dataroot));
 	}
 
 	// Unit testing

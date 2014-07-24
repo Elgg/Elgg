@@ -124,7 +124,7 @@ function elgg_group_gatekeeper($forward = true, $group_guid = null) {
 	}
 
 	// this handles non-groups and invisible groups
-	$visibility = Elgg_GroupItemVisibility::factory($group_guid);
+	$visibility = \Elgg\GroupItemVisibility::factory($group_guid);
 
 	if (!$visibility->shouldHideItems) {
 		return true;

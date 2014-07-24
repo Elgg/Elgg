@@ -1,20 +1,22 @@
 <?php
+namespace Elgg;
 
-class Elgg_PluginHooksServiceTest extends PHPUnit_Framework_TestCase {
+
+class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testTriggerCallsRegisteredHandlers() {
-		$hooks = new Elgg_PluginHooksService();
+		$hooks = new \Elgg\PluginHooksService();
 		
 		$this->setExpectedException('InvalidArgumentException');
 		
-		$hooks->registerHandler('foo', 'bar', array('Elgg_PluginHooksServiceTest', 'throwInvalidArg'));
+		$hooks->registerHandler('foo', 'bar', array('\Elgg\PluginHooksServiceTest', 'throwInvalidArg'));
 
 		$hooks->trigger('foo', 'bar');
 	}
 	
 	public function testCanPassParamsAndChangeReturnValue() {
-		$hooks = new Elgg_PluginHooksService();
-		$hooks->registerHandler('foo', 'bar', array('Elgg_PluginHooksServiceTest', 'changeReturn'));
+		$hooks = new \Elgg\PluginHooksService();
+		$hooks->registerHandler('foo', 'bar', array('\Elgg\PluginHooksServiceTest', 'changeReturn'));
 		
 		$returnval = $hooks->trigger('foo', 'bar', array(
 			'testCase' => $this,
@@ -24,11 +26,11 @@ class Elgg_PluginHooksServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testUncallableHandlersAreLogged() {
-		$hooks = new Elgg_PluginHooksService();
+		$hooks = new \Elgg\PluginHooksService();
 
-		$loggerMock = $this->getMock('Elgg_Logger', array(), array(), '', false);
+		$loggerMock = $this->getMock('\Elgg\Logger', array(), array(), '', false);
 		$hooks->setLogger($loggerMock);
-		$hooks->registerHandler('foo', 'bar', array(new stdClass(), 'uncallableMethod'));
+		$hooks->registerHandler('foo', 'bar', array(new \stdClass(), 'uncallableMethod'));
 
 		$expectedMsg = 'handler for plugin hook [foo, bar] is not callable: (stdClass)->uncallableMethod';
 		$loggerMock->expects($this->once())->method('warn')->with($expectedMsg);
@@ -49,6 +51,7 @@ class Elgg_PluginHooksServiceTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public static function throwInvalidArg() {
-		throw new InvalidArgumentException();
+		throw new \InvalidArgumentException();
 	}
 }
+

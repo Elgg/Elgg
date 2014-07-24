@@ -1,11 +1,11 @@
 <?php
 /**
- * Elgg Test ElggUser
+ * Elgg Test \ElggUser
  *
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreUserTest extends ElggCoreUnitTest {
+class ElggCoreUserTest extends \ElggCoreUnitTest {
 
 	/**
 	 * Called before each test object.
@@ -20,7 +20,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		$this->user = new ElggUserTest();
+		$this->user = new \ElggUserTest();
 	}
 
 	/**
@@ -73,7 +73,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 
 	public function testElggUserLoad() {
 		// new object
-		$object = new ElggObject();
+		$object = new \ElggObject();
 		$this->AssertEqual($object->getGUID(), 0);
 		$guid = $object->save();
 		$this->AssertNotEqual($guid, 0);
@@ -87,7 +87,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 
 	public function testElggUserConstructorWithGarbage() {
 		try {
-			$error = new ElggUserTest(array('invalid'));
+			$error = new \ElggUserTest(array('invalid'));
 			$this->assertTrue(false);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -96,7 +96,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 
 	public function testElggUserConstructorByDbRow() {
 		$row = $this->fetchUser(elgg_get_logged_in_user_guid());
-		$user = new ElggUser($row);
+		$user = new \ElggUser($row);
 		$this->assertIdenticalEntities($user, $_SESSION['user']);
 	}
 
@@ -219,7 +219,7 @@ class ElggCoreUserTest extends ElggCoreUnitTest {
 	}
 }
 
-class ElggUserTest extends ElggUser {
+class ElggUserTest extends \ElggUser {
 	public function expose_attributes() {
 		return $this->attributes;
 	}

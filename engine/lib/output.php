@@ -165,7 +165,7 @@ function elgg_format_attributes(array $attrs = array()) {
 		 * Ignore non-array values and allow attribute values to be an array
 		 *  <code>
 		 *  $attrs = array(
-		 *		'entity' => <ElggObject>, // will be ignored
+		 *		'entity' => <\ElggObject>, // will be ignored
 		 * 		'class' => array('elgg-input', 'elgg-input-text'), // will be imploded with spaces
 		 * 		'style' => array('margin-left:10px;', 'color: #666;'), // will be imploded with spaces
 		 *		'alt' => 'Alt text', // will be left as is
@@ -214,7 +214,7 @@ function elgg_format_attributes(array $attrs = array()) {
  */
 function elgg_format_element($tag_name, array $attributes = array(), $text = '', array $options = array()) {
 	if (!is_string($tag_name)) {
-		throw new InvalidArgumentException('$tag_name is required');
+		throw new \InvalidArgumentException('$tag_name is required');
 	}
 
 	if (isset($options['is_void'])) {
@@ -378,7 +378,7 @@ function elgg_get_friendly_title($title) {
 	// titles are often stored HTML encoded
 	$title = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
 	
-	$title = Elgg_Translit::urlize($title);
+	$title = \Elgg\Translit::urlize($title);
 
 	return $title;
 }

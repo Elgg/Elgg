@@ -4,14 +4,14 @@
 $engine = dirname(dirname(dirname(__FILE__)));
 require_once "$engine/lib/languages.php";
 
-class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
+class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 	protected $obj;
 
 	protected function setUp() {
-		// required by ElggEntity when setting the owner/container
-		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
+		// required by \ElggEntity when setting the owner/container
+		_elgg_services()->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
 
-		$this->obj = $this->getMockBuilder('ElggUpgrade')
+		$this->obj = $this->getMockBuilder('\ElggUpgrade')
 				->setMethods(null)
 				->getMock();
 
@@ -24,7 +24,7 @@ class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
 
 	public function mock_egefps_with_entities() {
 		return array(
-			new stdClass()
+			new \stdClass()
 		);
 	}
 

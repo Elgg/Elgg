@@ -10,12 +10,12 @@
 /* Filepath Cache */
 
 /**
- * Returns an ElggCache object suitable for caching system information
+ * Returns an \ElggCache object suitable for caching system information
  *
  * @todo Can this be done in a cleaner way?
  * @todo Swap to memcache etc?
  *
- * @return ElggFileCache
+ * @return \ElggFileCache
  */
 function elgg_get_system_cache() {
 	global $CONFIG;
@@ -26,7 +26,7 @@ function elgg_get_system_cache() {
 	static $FILE_PATH_CACHE;
 
 	if (!$FILE_PATH_CACHE) {
-		$FILE_PATH_CACHE = new ElggFileCache($CONFIG->dataroot . 'system_cache/');
+		$FILE_PATH_CACHE = new \ElggFileCache($CONFIG->dataroot . 'system_cache/');
 	}
 
 	return $FILE_PATH_CACHE;
@@ -303,7 +303,7 @@ function _elgg_load_cache() {
 
 	$CONFIG->system_cache_loaded = false;
 
-	$CONFIG->views = new stdClass();
+	$CONFIG->views = new \stdClass();
 	$data = elgg_load_system_cache('view_locations');
 	if (!is_string($data)) {
 		return;

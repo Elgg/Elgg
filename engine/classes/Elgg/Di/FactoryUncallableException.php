@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Di;
 
 /**
  * Factory uncallable exception
@@ -7,4 +8,5 @@
  * 
  * @package Elgg.Core
  */
-class Elgg_Di_FactoryUncallableException extends Exception {}
+class FactoryUncallableException extends \Exception {}
+

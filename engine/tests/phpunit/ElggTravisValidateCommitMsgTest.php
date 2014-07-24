@@ -3,7 +3,7 @@
  * Tests the travis shell script
  */
 
-class ElggTravisValidateCommitMsgTest extends ElggCommitMessageGitHookTest {
+class ElggTravisValidateCommitMsgTest extends \ElggCommitMessageGitHookTest {
 	protected $travisScript;
 
 	public function setUp() {

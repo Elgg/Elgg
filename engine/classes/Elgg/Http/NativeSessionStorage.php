@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Http;
 
 /**
  * Based on Symfony2's NativeSessionStorage.
@@ -32,7 +33,7 @@
  * @package    Elgg.Core
  * @subpackage Http
  */
-class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
+class NativeSessionStorage implements \Elgg\Http\SessionStorage {
 
 	/** @var boolean */
 	protected $started = false;
@@ -75,10 +76,10 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 	 * upload_progress.freq, "1%"
 	 * upload_progress.min-freq, "1"
 	 * 
-	 * @param array                    $options Session config options
-	 * @param Elgg_Http_SessionHandler $handler Session handler
+	 * @param array                     $options Session config options
+	 * @param \Elgg\Http\SessionHandler $handler Session handler
 	 */
-	public function __construct(array $options = array(), Elgg_Http_SessionHandler $handler = null) {
+	public function __construct(array $options = array(), \Elgg\Http\SessionHandler $handler = null) {
 		$this->setOptions($options);
 		$this->setHandler($handler);
 	}
@@ -92,7 +93,7 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 		}
 
 		if (!session_start()) {
-			throw new RuntimeException('Failed to start the session');
+			throw new \RuntimeException('Failed to start the session');
 		}
 
 		$this->started = true;
@@ -144,7 +145,7 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 	 */
 	public function setId($id) {
 		if ($this->started) {
-			throw new RuntimeException('Cannot change the ID of an active session');
+			throw new \RuntimeException('Cannot change the ID of an active session');
 		}
 
 		session_id($id);
@@ -277,7 +278,7 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 	/**
 	 * Set the session handler class with PHP
 	 * 
-	 * @param Elgg_Http_SessionHandler $handler Handler object
+	 * @param \Elgg\Http\SessionHandler $handler Handler object
 	 * @return void
 	 */
 	protected function setHandler($handler) {
@@ -291,3 +292,4 @@ class Elgg_Http_NativeSessionStorage implements Elgg_Http_SessionStorage {
 	}
 
 }
+

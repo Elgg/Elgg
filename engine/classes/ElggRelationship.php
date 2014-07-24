@@ -11,7 +11,7 @@
  * @property int    $guid_two     The GUID of the target of the relationship
  * @property int    $time_created A UNIX timestamp of when the relationship was created (read-only, set on first save)
  */
-class ElggRelationship extends ElggData implements
+class ElggRelationship extends \ElggData implements
 	Importable // deprecated
 {
 	// database column limit
@@ -20,7 +20,7 @@ class ElggRelationship extends ElggData implements
 	/**
 	 * Create a relationship object
 	 *
-	 * @param stdClass $row Database row or null for new relationship
+	 * @param \stdClass $row Database row or null for new relationship
 	 * @throws InvalidArgumentException
 	 */
 	public function __construct($row = null) {
@@ -31,16 +31,16 @@ class ElggRelationship extends ElggData implements
 			return;
 		}
 
-		if (!($row instanceof stdClass)) {
+		if (!($row instanceof \stdClass)) {
 			if (!is_numeric($row)) {
-				throw new InvalidArgumentException("Constructor accepts only a stdClass or null.");
+				throw new \InvalidArgumentException("Constructor accepts only a \stdClass or null.");
 			}
 
 			$id = (int)$row;
 			elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use get_relationship()', 1.9);
 			$row = _elgg_get_relationship_row($id);
 			if (!$row) {
-				throw new InvalidArgumentException("Relationship not found with ID $id");
+				throw new \InvalidArgumentException("Relationship not found with ID $id");
 			}
 		}
 
@@ -52,7 +52,7 @@ class ElggRelationship extends ElggData implements
 	/**
 	 * (non-PHPdoc)
 	 *
-	 * @see ElggData::initializeAttributes()
+	 * @see \ElggData::initializeAttributes()
 	 *
 	 * @return void
 	 */
@@ -129,7 +129,7 @@ class ElggRelationship extends ElggData implements
 
 		$this->id = add_entity_relationship($this->guid_one, $this->relationship, $this->guid_two);
 		if (!$this->id) {
-			throw new IOException("Unable to save new " . get_class());
+			throw new \IOException("Unable to save new " . get_class());
 		}
 
 		return $this->id;
@@ -188,7 +188,7 @@ class ElggRelationship extends ElggData implements
 	 * {@inheritdoc}
 	 */
 	public function toObject() {
-		$object = new stdClass();
+		$object = new \stdClass();
 		$object->id = $this->id;
 		$object->subject_guid = $this->guid_one;
 		$object->relationship = $this->relationship;
@@ -250,7 +250,7 @@ class ElggRelationship extends ElggData implements
 	public function import(ODD $data) {
 		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
 		if (!($data instanceof ODDRelationship)) {
-			throw new InvalidParameterException("import() passed an unexpected ODD class");
+			throw new \InvalidParameterException("import() passed an unexpected ODD class");
 		}
 
 		$uuid_one = $data->getAttribute('uuid1');
@@ -274,7 +274,7 @@ class ElggRelationship extends ElggData implements
 				// save
 				$result = $this->save();
 				if (!$result) {
-					throw new ImportException("There was a problem saving " . get_class());
+					throw new \ImportException("There was a problem saving " . get_class());
 				}
 
 				return true;
@@ -303,7 +303,7 @@ class ElggRelationship extends ElggData implements
 	 *
 	 * @param int $id ID
 	 *
-	 * @return ElggRelationship
+	 * @return \ElggRelationship
 	 */
 	public function getObjectFromID($id) {
 		return get_relationship($id);

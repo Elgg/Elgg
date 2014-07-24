@@ -41,7 +41,7 @@ if ($dbversion < 2009100701) {
 
 		foreach ($qs as $q) {
 			if (!update_data($q)) {
-				throw new Exception('Couldn\'t execute upgrade query: ' . $q);
+				throw new \Exception('Couldn\'t execute upgrade query: ' . $q);
 			}
 		}
 

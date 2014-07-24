@@ -1,13 +1,13 @@
 <?php
 /**
  * Shared memory cache description.
- * Extends ElggCache with functions useful to shared memory
+ * Extends \ElggCache with functions useful to shared memory
  * style caches (static variables, memcache etc)
  *
  * @package    Elgg.Core
  * @subpackage Cache
  */
-abstract class ElggSharedMemoryCache extends ElggCache {
+abstract class ElggSharedMemoryCache extends \ElggCache {
 	/**
 	 * Namespace variable used to keep various bits of the cache
 	 * separate.

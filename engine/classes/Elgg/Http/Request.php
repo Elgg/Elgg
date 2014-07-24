@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Http;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -34,39 +35,39 @@
  * @since      1.9.0
  * @access private
  */
-class Elgg_Http_Request {
+class Request {
 	/**
-	 * @var Elgg_Http_ParameterBag GET parameters
+	 * @var \Elgg\Http\ParameterBag GET parameters
 	 */
 	public $query;
 
 	/**
 	 *
-	 * @var Elgg_Http_ParameterBag POST parameters
+	 * @var \Elgg\Http\ParameterBag POST parameters
 	 */
 	public $request;
 
 	/**
 	 *
-	 * @var Elgg_Http_ParameterBag COOKIE parameters
+	 * @var \Elgg\Http\ParameterBag COOKIE parameters
 	 */
 	public $cookies;
 
 	/**
 	 *
-	 * @var Elgg_Http_ParameterBag FILES parameters
+	 * @var \Elgg\Http\ParameterBag FILES parameters
 	 */
 	public $files;
 
 	/**
 	 *
-	 * @var Elgg_Http_ParameterBag SERVER parameters
+	 * @var \Elgg\Http\ParameterBag SERVER parameters
 	 */
 	public $server;
 
 	/**
 	 *
-	 * @var Elgg_Http_ParameterBag Header parameters
+	 * @var \Elgg\Http\ParameterBag Header parameters
 	 */
 	public $headers;
 
@@ -111,25 +112,25 @@ class Elgg_Http_Request {
 	 */
 	protected function initialize(array $query = array(), array $request = array(),
 			array $cookies = array(), array $files = array(), array $server = array()) {
-		$this->query = new Elgg_Http_ParameterBag($this->stripSlashesIfMagicQuotes($query));
-		$this->request = new Elgg_Http_ParameterBag($this->stripSlashesIfMagicQuotes($request));
-		$this->cookies = new Elgg_Http_ParameterBag($this->stripSlashesIfMagicQuotes($cookies));
+		$this->query = new \Elgg\Http\ParameterBag($this->stripSlashesIfMagicQuotes($query));
+		$this->request = new \Elgg\Http\ParameterBag($this->stripSlashesIfMagicQuotes($request));
+		$this->cookies = new \Elgg\Http\ParameterBag($this->stripSlashesIfMagicQuotes($cookies));
 		// Symfony uses FileBag so this will change in next Elgg version
-		$this->files = new Elgg_Http_ParameterBag($files);
-		$this->server = new Elgg_Http_ParameterBag($server);
+		$this->files = new \Elgg\Http\ParameterBag($files);
+		$this->server = new \Elgg\Http\ParameterBag($server);
 	
 		$headers = $this->prepareHeaders();
 		// Symfony uses HeaderBag so this will change in next Elgg version
-		$this->headers = new Elgg_Http_ParameterBag($headers);
+		$this->headers = new \Elgg\Http\ParameterBag($headers);
 	}
 
 	/**
 	 * Creates a request from PHP's globals
 	 *
-	 * @return Elgg_Http_Request
+	 * @return \Elgg\Http\Request
 	 */
 	public static function createFromGlobals() {
-		return new Elgg_Http_Request($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
+		return new \Elgg\Http\Request($_GET, $_POST, $_COOKIE, $_FILES, $_SERVER);
 	}
 
 	/**
@@ -145,7 +146,7 @@ class Elgg_Http_Request {
 	 * @param array  $files      The request files ($_FILES)
 	 * @param array  $server     The server parameters ($_SERVER)
 	 *
-	 * @return Elgg_Http_Request
+	 * @return \Elgg\Http\Request
 	 */
 	public static function create($uri, $method = 'GET', $parameters = array(), $cookies = array(), $files = array(), $server = array()) {
 		$server = array_merge(array(
@@ -218,7 +219,7 @@ class Elgg_Http_Request {
 		$server['REQUEST_URI'] = $components['path'] . ('' !== $queryString ? '?' . $queryString : '');
 		$server['QUERY_STRING'] = $queryString;
 
-		return new Elgg_Http_Request($query, $request, $cookies, $files, $server);
+		return new \Elgg\Http\Request($query, $request, $cookies, $files, $server);
 	}
 
 	/**
@@ -355,7 +356,7 @@ class Elgg_Http_Request {
 	 *
 	 * @return string
 	 *
-	 * @throws UnexpectedValueException when the host name is invalid
+	 * @throws \UnexpectedValueException when the host name is invalid
 	 */
 	public function getHost() {
 		if (!$host = $this->headers->get('HOST')) {
@@ -372,7 +373,7 @@ class Elgg_Http_Request {
 		// SERVER_NAME too can come from the user)
 		// check that it does not contain forbidden characters (see RFC 952 and RFC 2181)
 		if ($host && !preg_match('/^\[?(?:[a-zA-Z0-9-:\]_]+\.?)+$/', $host)) {
-			throw new UnexpectedValueException('Invalid Host');
+			throw new \UnexpectedValueException('Invalid Host');
 		}
 
 		return $host;
@@ -449,7 +450,7 @@ class Elgg_Http_Request {
 	 * @return string|null A normalized query string for the Request
 	 */
 	public function getQueryString() {
-		$qs = Elgg_Http_Request::normalizeQueryString($this->server->get('QUERY_STRING'));
+		$qs = \Elgg\Http\Request::normalizeQueryString($this->server->get('QUERY_STRING'));
 
 		return '' === $qs ? null : $qs;
 	}
@@ -457,7 +458,7 @@ class Elgg_Http_Request {
 	/**
 	 * Get URL segments from the path info
 	 *
-	 * @see Elgg_Http_Request::getPathInfo()
+	 * @see \Elgg\Http\Request::getPathInfo()
 	 *
 	 * @return array
 	 */
@@ -473,7 +474,7 @@ class Elgg_Http_Request {
 	/**
 	 * Get first URL segment from the path info
 	 *
-	 * @see Elgg_Http_Request::getUrlSegments()
+	 * @see \Elgg\Http\Request::getUrlSegments()
 	 *
 	 * @return string
 	 */
@@ -684,3 +685,4 @@ class Elgg_Http_Request {
 	}
 
 }
+

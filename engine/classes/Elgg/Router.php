@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 
 /**
  * Delegates requests to controllers based on the registered configuration.
@@ -12,16 +13,16 @@
  * @since      1.9.0
  * @access private
  */
-class Elgg_Router {
+class Router {
 	private $handlers = array();
 	private $hooks;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Elgg_PluginHooksService $hooks For customized routing.
+	 * @param \Elgg\PluginHooksService $hooks For customized routing.
 	 */
-	public function __construct(Elgg_PluginHooksService $hooks) {
+	public function __construct(\Elgg\PluginHooksService $hooks) {
 		$this->hooks = $hooks;
 	}
 
@@ -31,11 +32,11 @@ class Elgg_Router {
 	 * This function triggers a plugin hook `'route', $identifier` so that plugins can
 	 * modify the routing or handle a request.
 	 *
-	 * @param Elgg_Http_Request $request The request to handle.
+	 * @param \Elgg\Http\Request $request The request to handle.
 	 * @return boolean Whether the request was routed successfully.
 	 * @access private
 	 */
-	public function route(Elgg_Http_Request $request) {
+	public function route(\Elgg\Http\Request $request) {
 		$segments = $request->getUrlSegments();
 		if ($segments) {
 			$identifier = array_shift($segments);
@@ -120,3 +121,4 @@ class Elgg_Router {
 		return $this->handlers;
 	}
 }
+

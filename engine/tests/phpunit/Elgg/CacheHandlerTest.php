@@ -1,15 +1,17 @@
 <?php
+namespace Elgg;
 
-class Elgg_CacheHandlerTest extends PHPUnit_Framework_TestCase {
+
+class CacheHandlerTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var Elgg_CacheHandler
+	 * @var \Elgg\CacheHandler
 	 */
 	protected $handler;
 
 	public function setUp() {
 		$config = (object)array();
-		$this->handler = new Elgg_CacheHandler($config);
+		$this->handler = new \Elgg\CacheHandler($config);
 	}
 
 	protected function _testParseFail($input) {
@@ -48,3 +50,4 @@ class Elgg_CacheHandlerTest extends PHPUnit_Framework_TestCase {
 		), $this->handler->parseRequestVar('/1234/default/hel/8lo-wo_rl.d.js'));
 	}
 }
+

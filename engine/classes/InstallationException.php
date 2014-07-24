@@ -6,4 +6,4 @@
  * @package    Elgg.Core
  * @subpackage Exception
  */
-class InstallationException extends ConfigurationException {}
+class InstallationException extends \ConfigurationException {}

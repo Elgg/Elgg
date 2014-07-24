@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
+class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 	protected $metastrings;
 
 	/**
@@ -13,7 +13,7 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 	 */
 	public function setUp() {
 		$this->metastrings = array();
-		$this->object = new ElggObject();
+		$this->object = new \ElggObject();
 	}
 
 	/**
@@ -97,7 +97,7 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 	}
 
 	public function testElggDeleteMetadata() {
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->save();
 
 		for ($i = 0; $i < 30; $i++) {
@@ -139,15 +139,15 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 	// by another user
 	// https://github.com/elgg/elgg/issues/2776
 	public function test_elgg_metadata_multiple_values() {
-		$u1 = new ElggUser();
+		$u1 = new \ElggUser();
 		$u1->username = rand();
 		$u1->save();
 
-		$u2 = new ElggUser();
+		$u2 = new \ElggUser();
 		$u2->username = rand();
 		$u2->save();
 
-		$obj = new ElggObject();
+		$obj = new \ElggObject();
 		$obj->owner_guid = $u1->guid;
 		$obj->container_guid = $u1->guid;
 		$obj->access_id = ACCESS_PUBLIC;

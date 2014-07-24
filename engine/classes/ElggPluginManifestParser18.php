@@ -6,7 +6,7 @@
  * @subpackage Plugins
  * @since      1.8
  */
-class ElggPluginManifestParser18 extends ElggPluginManifestParser {
+class ElggPluginManifestParser18 extends \ElggPluginManifestParser {
 	/**
 	 * The valid top level attributes and defaults for a 1.8 manifest array.
 	 *
@@ -101,7 +101,7 @@ class ElggPluginManifestParser18 extends ElggPluginManifestParser {
 		// check we have all the required fields
 		foreach ($this->requiredAttributes as $attr) {
 			if (!array_key_exists($attr, $parsed)) {
-				throw new PluginException(elgg_echo('PluginException:ParserErrorMissingRequiredAttribute',
+				throw new \PluginException(elgg_echo('PluginException:ParserErrorMissingRequiredAttribute',
 							array($attr, $this->caller->getPluginID())));
 			}
 		}

@@ -5,7 +5,7 @@
  * @package Elgg.Core
  * @subpackage Plugins.Test
  */
-class ElggCorePluginsAPITest extends ElggCoreUnitTest {
+class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 	// 1.8 manifest object
 	var $manifest18;
 
@@ -21,34 +21,34 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 	public function __construct() {
 		parent::__construct();
 
-		$this->manifest18 = new ElggPluginManifest(get_config('path') . 'engine/tests/test_files/plugin_18/manifest.xml', 'plugin_test_18');
-		$this->manifest17 = new ElggPluginManifest(get_config('path') . 'engine/tests/test_files/plugin_17/manifest.xml', 'plugin_test_17');
+		$this->manifest18 = new \ElggPluginManifest(get_config('path') . 'engine/tests/test_files/plugin_18/manifest.xml', 'plugin_test_18');
+		$this->manifest17 = new \ElggPluginManifest(get_config('path') . 'engine/tests/test_files/plugin_17/manifest.xml', 'plugin_test_17');
 
-		$this->package18 = new ElggPluginPackage(get_config('path') . 'engine/tests/test_files/plugin_18');
-		$this->package17 = new ElggPluginPackage(get_config('path') . 'engine/tests/test_files/plugin_17');
+		$this->package18 = new \ElggPluginPackage(get_config('path') . 'engine/tests/test_files/plugin_18');
+		$this->package17 = new \ElggPluginPackage(get_config('path') . 'engine/tests/test_files/plugin_17');
 	}
 
 	// generic tests
 	public function testElggPluginManifestFromString() {
 		$manifest_file = file_get_contents(get_config('path') . 'engine/tests/test_files/plugin_17/manifest.xml');
-		$manifest = new ElggPluginManifest($manifest_file);
+		$manifest = new \ElggPluginManifest($manifest_file);
 
-		$this->assertIsA($manifest, 'ElggPluginManifest');
+		$this->assertIsA($manifest, '\ElggPluginManifest');
 	}
 
 	public function testElggPluginManifestFromFile() {
 		$file = get_config('path') . 'engine/tests/test_files/plugin_17/manifest.xml';
-		$manifest = new ElggPluginManifest($file);
+		$manifest = new \ElggPluginManifest($file);
 
-		$this->assertIsA($manifest, 'ElggPluginManifest');
+		$this->assertIsA($manifest, '\ElggPluginManifest');
 	}
 
 	public function testElggPluginManifestFromXMLEntity() {
 		$manifest_file = file_get_contents(get_config('path') . 'engine/tests/test_files/plugin_17/manifest.xml');
-		$xml = new ElggXMLElement($manifest_file);
-		$manifest = new ElggPluginManifest($xml);
+		$xml = new \ElggXMLElement($manifest_file);
+		$manifest = new \ElggPluginManifest($xml);
 
-		$this->assertIsA($manifest, 'ElggPluginManifest');
+		$this->assertIsA($manifest, '\ElggPluginManifest');
 	}
 
 	// exact manifest values
@@ -297,27 +297,27 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		$this->assertIdentical($this->manifest18->getActivateOnInstall(), true);
 	}
 
-	// ElggPluginPackage
+	// \ElggPluginPackage
 	public function testElggPluginPackageDetectIDFromPath() {
 		$this->assertEqual($this->package18->getID(), 'plugin_18');
 	}
 
 	public function testElggPluginPackageDetectIDFromPluginID() {
-		$package = new ElggPluginPackage('profile');
+		$package = new \ElggPluginPackage('profile');
 		$this->assertEqual($package->getID(), 'profile');
 	}
 	
-	// ElggPlugin
+	// \ElggPlugin
 	public function testElggPluginIsValid() {
 		
-		$test_plugin = new ElggPlugin('profile');
+		$test_plugin = new \ElggPlugin('profile');
 		
 		$this->assertIdentical(true, $test_plugin->isValid());
 	}
 	
 	public function testElggPluginGetID() {
 		
-		$test_plugin = new ElggPlugin('profile');
+		$test_plugin = new \ElggPlugin('profile');
 		
 		$this->assertIdentical('profile', $test_plugin->getID());
 	}

@@ -59,7 +59,7 @@ class ElggInstaller {
 
 		$this->bootstrapEngine();
 
-		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
+		_elgg_services()->setValue('session', new ElggSession(new Elgg\Http\MockSessionStorage()));
 
 		elgg_set_viewtype('installation');
 
@@ -1625,8 +1625,8 @@ class ElggInstaller {
 		create_metadata($guid, 'validated_method', 'admin_user', '', 0, ACCESS_PUBLIC);
 
 		if ($login) {
-			$handler = new Elgg_Http_DatabaseSessionHandler(_elgg_services()->db);
-			$storage = new Elgg_Http_NativeSessionStorage(array(), $handler);
+			$handler = new Elgg\Http\DatabaseSessionHandler(_elgg_services()->db);
+			$storage = new Elgg\Http\NativeSessionStorage(array(), $handler);
 			$session = new ElggSession($storage);
 			$session->setName('Elgg');
 			_elgg_services()->setValue('session', $session);

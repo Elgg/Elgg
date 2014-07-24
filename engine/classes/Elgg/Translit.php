@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 /**
  * Elgg Transliterate
  *
@@ -27,7 +28,7 @@
  *
  * @access private Plugin authors should not use this directly
  */
-class Elgg_Translit {
+class Translit {
 
 	/**
 	 * Create a version of a string for embedding in a URL
@@ -265,3 +266,4 @@ class Elgg_Translit {
 		return $ret;
 	}
 }
+

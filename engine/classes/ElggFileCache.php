@@ -1,12 +1,12 @@
 <?php
 /**
- * ElggFileCache
+ * \ElggFileCache
  * Store cached data in a file store.
  *
  * @package    Elgg.Core
  * @subpackage Caches
  */
-class ElggFileCache extends ElggCache {
+class ElggFileCache extends \ElggCache {
 	/**
 	 * Set the Elgg cache.
 	 *
@@ -22,7 +22,7 @@ class ElggFileCache extends ElggCache {
 		$this->setVariable("max_size", $max_size);
 
 		if ($cache_path == "") {
-			throw new ConfigurationException("Cache path set to nothing!");
+			throw new \ConfigurationException("Cache path set to nothing!");
 		}
 	}
 
@@ -30,7 +30,7 @@ class ElggFileCache extends ElggCache {
 	/**
 	 * Create and return a handle to a file.
 	 *
-	 * @deprecated 1.8 Use ElggFileCache::createFile()
+	 * @deprecated 1.8 Use \ElggFileCache::createFile()
 	 *
 	 * @param string $filename Filename to save as
 	 * @param string $rw       Write mode
@@ -38,7 +38,7 @@ class ElggFileCache extends ElggCache {
 	 * @return mixed
 	 */
 	protected function create_file($filename, $rw = "rb") {
-		elgg_deprecated_notice('ElggFileCache::create_file() is deprecated by ::createFile()', 1.8);
+		elgg_deprecated_notice('\ElggFileCache::create_file() is deprecated by ::createFile()', 1.8);
 
 		return $this->createFile($filename, $rw);
 	}
@@ -78,7 +78,7 @@ class ElggFileCache extends ElggCache {
 	/**
 	 * Create a sanitised filename for the file.
 	 *
-	 * @deprecated 1.8 Use ElggFileCache::sanitizeFilename()
+	 * @deprecated 1.8 Use \ElggFileCache::sanitizeFilename()
 	 *
 	 * @param string $filename The filename
 	 *
@@ -207,7 +207,7 @@ class ElggFileCache extends ElggCache {
 
 		$files = scandir($dir);
 		if (!$files) {
-			throw new IOException($dir . " is not a directory.");
+			throw new \IOException($dir . " is not a directory.");
 		}
 
 		// Perform cleanup

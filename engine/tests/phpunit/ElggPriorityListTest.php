@@ -1,8 +1,8 @@
 <?php
 
-class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
+class ElggPriorityListTest extends \PHPUnit_Framework_TestCase {
 	public function testAdd() {
-		$pl = new ElggPriorityList();
+		$pl = new \ElggPriorityList();
 		$elements = array(
 			'Test value',
 			'Test value 2',
@@ -29,7 +29,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testAddWithPriority() {
-		$pl = new ElggPriorityList();
+		$pl = new \ElggPriorityList();
 
 		$elements = array(
 			10 => 'Test Element 10',
@@ -64,7 +64,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetNextPriority() {
-		$pl = new ElggPriorityList();
+		$pl = new \ElggPriorityList();
 
 		$elements = array(
 			2 => 'Test Element',
@@ -87,11 +87,11 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testRemove() {
-		$pl = new ElggPriorityList();
+		$pl = new \ElggPriorityList();
 
 		$elements = array();
 		for ($i=0; $i<3; $i++) {
-			$element = new stdClass();
+			$element = new \stdClass();
 			$element->name = "Test Element $i";
 			$element->someAttribute = rand(0, 9999);
 			$elements[] = $element;
@@ -109,7 +109,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testMove() {
-		$pl = new ElggPriorityList();
+		$pl = new \ElggPriorityList();
 
 		$elements = array(
 			-5 => 'Test Element -5',
@@ -140,7 +140,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 			-5 => 'Test Element -5'
 		);
 
-		$pl = new ElggPriorityList($elements);
+		$pl = new \ElggPriorityList($elements);
 		$test_elements = $pl->getElements();
 
 		$elements_sorted = array(
@@ -156,7 +156,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetPriority() {
-		$pl = new ElggPriorityList();
+		$pl = new \ElggPriorityList();
 
 		$elements = array(
 			'Test element 0',
@@ -174,7 +174,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testGetElement() {
-		$pl = new ElggPriorityList();
+		$pl = new \ElggPriorityList();
 		$priorities = array();
 
 		$elements = array(
@@ -193,7 +193,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testPriorityCollision() {
-		$pl = new ElggPriorityList();
+		$pl = new \ElggPriorityList();
 		
 		$elements = array(
 			5 => 'Test element 5',
@@ -219,7 +219,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 			5 => 'Test element 5',
 		);
 		
-		$pl = new ElggPriorityList($elements);
+		$pl = new \ElggPriorityList($elements);
 
 		foreach ($pl as $priority => $element) {
 			$this->assertSame($elements[$priority], $element);
@@ -227,7 +227,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCountable() {
-		$pl = new ElggPriorityList();
+		$pl = new \ElggPriorityList();
 
 		$this->assertEquals(0, count($pl));
 
@@ -253,7 +253,7 @@ class ElggPriorityListTest extends PHPUnit_Framework_TestCase {
 		$elements_sorted_string = $elements;
 
 		shuffle($elements);
-		$pl = new ElggPriorityList($elements);
+		$pl = new \ElggPriorityList($elements);
 
 		// will sort by priority
 		$test_elements = $pl->getElements();

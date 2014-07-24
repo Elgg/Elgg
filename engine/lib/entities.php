@@ -1,6 +1,6 @@
 <?php
 /**
- * Procedural code for creating, loading, and modifying ElggEntity objects.
+ * Procedural code for creating, loading, and modifying \ElggEntity objects.
  *
  * @package Elgg.Core
  * @subpackage DataModel.Entities
@@ -9,7 +9,7 @@
 /**
  * Cache entities in memory once loaded.
  *
- * @global ElggEntity[] $ENTITY_CACHE
+ * @global \ElggEntity[] $ENTITY_CACHE
  * @access private
  */
 global $ENTITY_CACHE;
@@ -90,20 +90,20 @@ function _elgg_invalidate_cache_for_entity($guid) {
  *
  * Stores an entity in $ENTITY_CACHE;
  *
- * @param ElggEntity $entity Entity to cache
+ * @param \ElggEntity $entity Entity to cache
  *
  * @return void
  * @see _elgg_retrieve_cached_entity()
  * @see _elgg_invalidate_cache_for_entity()
  * @access private
- * @todo Use an ElggCache object
+ * @todo Use an \ElggCache object
  */
-function _elgg_cache_entity(ElggEntity $entity) {
+function _elgg_cache_entity(\ElggEntity $entity) {
 	global $ENTITY_CACHE, $ENTITY_CACHE_DISABLED_GUIDS;
 
 	// Don't cache non-plugin entities while access control is off, otherwise they could be
 	// exposed to users who shouldn't see them when control is re-enabled.
-	if (!($entity instanceof ElggPlugin) && elgg_get_ignore_access()) {
+	if (!($entity instanceof \ElggPlugin) && elgg_get_ignore_access()) {
 		return;
 	}
 
@@ -126,7 +126,7 @@ function _elgg_cache_entity(ElggEntity $entity) {
  *
  * @param int $guid The guid
  *
- * @return ElggEntity|bool false if entity not cached, or not fully loaded
+ * @return \ElggEntity|bool false if entity not cached, or not fully loaded
  * @see _elgg_cache_entity()
  * @see _elgg_invalidate_cache_for_entity()
  * @access private
@@ -146,11 +146,11 @@ function _elgg_retrieve_cached_entity($guid) {
 /**
  * Return the id for a given subtype.
  *
- * ElggEntity objects have a type and a subtype.  Subtypes
+ * \ElggEntity objects have a type and a subtype.  Subtypes
  * are defined upon creation and cannot be changed.
  *
  * Plugin authors generally don't need to use this function
- * unless writing their own SQL queries.  Use {@link ElggEntity::getSubtype()}
+ * unless writing their own SQL queries.  Use {@link \ElggEntity::getSubtype()}
  * to return the string subtype.
  *
  * @internal Subtypes are stored in the entity_subtypes table.  There is a foreign
@@ -214,7 +214,7 @@ function get_subtype_from_id($subtype_id) {
  *
  * @param string $type
  * @param string $subtype
- * @return stdClass|null
+ * @return \stdClass|null
  *
  * @access private
  */
@@ -309,7 +309,7 @@ function get_subtype_class_from_id($subtype_id) {
 }
 
 /**
- * Register ElggEntities with a certain type and subtype to be loaded as a specific class.
+ * Register \ElggEntities with a certain type and subtype to be loaded as a specific class.
  *
  * By default entities are loaded as one of the 4 parent objects: site, user, object, or group.
  * If you subclass any of these you can register the classname with add_subtype() so
@@ -361,7 +361,7 @@ function add_subtype($type, $subtype, $class = "") {
 }
 
 /**
- * Removes a registered ElggEntity type, subtype, and classname.
+ * Removes a registered \ElggEntity type, subtype, and classname.
  *
  * @warning You do not want to use this function. If you want to unregister
  * a class for a subtype, use update_subtype(). Using this function will
@@ -392,7 +392,7 @@ function remove_subtype($type, $subtype) {
 }
 
 /**
- * Update a registered ElggEntity type, subtype, and class name
+ * Update a registered \ElggEntity type, subtype, and class name
  *
  * @param string $type    Type
  * @param string $subtype Subtype
@@ -495,7 +495,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
  *
  * @param int $guid The GUID of the object to extract
  *
- * @return stdClass|false
+ * @return \stdClass|false
  * @see entity_row_to_elggstar()
  * @access private
  */
@@ -517,9 +517,9 @@ function get_entity_as_row($guid) {
  *
  * Handles loading all tables into the correct class.
  *
- * @param stdClass $row The row of the entry in the entities table.
+ * @param \stdClass $row The row of the entry in the entities table.
  *
- * @return ElggEntity|false
+ * @return \ElggEntity|false
  * @see get_entity_as_row()
  * @see add_subtype()
  * @see get_entity()
@@ -528,7 +528,7 @@ function get_entity_as_row($guid) {
  * @throws ClassException|InstallationException
  */
 function entity_row_to_elggstar($row) {
-	if (!($row instanceof stdClass)) {
+	if (!($row instanceof \stdClass)) {
 		return $row;
 	}
 
@@ -541,7 +541,7 @@ function entity_row_to_elggstar($row) {
 	// Create a memcache cache if we can
 	static $newentity_cache;
 	if ((!$newentity_cache) && (is_memcache_available())) {
-		$newentity_cache = new ElggMemcache('new_entity_cache');
+		$newentity_cache = new \ElggMemcache('new_entity_cache');
 	}
 	if ($newentity_cache) {
 		$new_entity = $newentity_cache->load($row->guid);
@@ -556,9 +556,9 @@ function entity_row_to_elggstar($row) {
 		if (class_exists($classname)) {
 			$new_entity = new $classname($row);
 
-			if (!($new_entity instanceof ElggEntity)) {
-				$msg = $classname . " is not a " . 'ElggEntity' . ".";
-				throw new ClassException($msg);
+			if (!($new_entity instanceof \ElggEntity)) {
+				$msg = $classname . " is not a " . '\ElggEntity' . ".";
+				throw new \ClassException($msg);
 			}
 		} else {
 			error_log("Class '" . $classname . "' was not found, missing plugin?");
@@ -569,20 +569,20 @@ function entity_row_to_elggstar($row) {
 		//@todo Make this into a function
 		switch ($row->type) {
 			case 'object' :
-				$new_entity = new ElggObject($row);
+				$new_entity = new \ElggObject($row);
 				break;
 			case 'user' :
-				$new_entity = new ElggUser($row);
+				$new_entity = new \ElggUser($row);
 				break;
 			case 'group' :
-				$new_entity = new ElggGroup($row);
+				$new_entity = new \ElggGroup($row);
 				break;
 			case 'site' :
-				$new_entity = new ElggSite($row);
+				$new_entity = new \ElggSite($row);
 				break;
 			default:
 				$msg = "Entity type " . $row->type . " is not supported.";
-				throw new InstallationException($msg);
+				throw new \InstallationException($msg);
 		}
 	}
 
@@ -599,7 +599,7 @@ function entity_row_to_elggstar($row) {
  *
  * @param int $guid The GUID of the entity
  *
- * @return ElggEntity The correct Elgg or custom object based upon entity type and subtype
+ * @return \ElggEntity The correct Elgg or custom object based upon entity type and subtype
  */
 function get_entity($guid) {
 	// This should not be a static local var. Notice that cache writing occurs in a completely
@@ -623,7 +623,7 @@ function get_entity($guid) {
 	// Check shared memory cache, if available
 	if (null === $shared_cache) {
 		if (is_memcache_available()) {
-			$shared_cache = new ElggMemcache('new_entity_cache');
+			$shared_cache = new \ElggMemcache('new_entity_cache');
 		} else {
 			$shared_cache = false;
 		}
@@ -931,11 +931,11 @@ function elgg_get_entities(array $options = array()) {
 			// populate entity and metadata caches
 			$guids = array();
 			foreach ($dt as $item) {
-				// A custom callback could result in items that aren't ElggEntity's, so check for them
-				if ($item instanceof ElggEntity) {
+				// A custom callback could result in items that aren't \ElggEntity's, so check for them
+				if ($item instanceof \ElggEntity) {
 					_elgg_cache_entity($item);
 					// plugins usually have only settings
-					if (!$item instanceof ElggPlugin) {
+					if (!$item instanceof \ElggPlugin) {
 						$guids[] = $item->guid;
 					}
 				}
@@ -958,13 +958,13 @@ function elgg_get_entities(array $options = array()) {
  * Return entities from an SQL query generated by elgg_get_entities.
  *
  * @param string    $sql
- * @param ElggBatch $batch
- * @return ElggEntity[]
+ * @param \ElggBatch $batch
+ * @return \ElggEntity[]
  *
  * @access private
  * @throws LogicException
  */
-function _elgg_fetch_entities_from_sql($sql, ElggBatch $batch = null) {
+function _elgg_fetch_entities_from_sql($sql, \ElggBatch $batch = null) {
 	static $plugin_subtype;
 	if (null === $plugin_subtype) {
 		$plugin_subtype = get_subtype_id('object', 'plugin');
@@ -997,7 +997,7 @@ function _elgg_fetch_entities_from_sql($sql, ElggBatch $batch = null) {
 	// First pass: use cache where possible, gather GUIDs that we're optimizing
 	foreach ($rows as $i => $row) {
 		if (empty($row->guid) || empty($row->type)) {
-			throw new LogicException('Entity row missing guid or type');
+			throw new \LogicException('Entity row missing guid or type');
 		}
 		$entity = _elgg_retrieve_cached_entity($row->guid);
 		if ($entity) {
@@ -1035,7 +1035,7 @@ function _elgg_fetch_entities_from_sql($sql, ElggBatch $batch = null) {
 	}
 	// Second pass to finish conversion
 	foreach ($rows as $i => $row) {
-		if ($row instanceof ElggEntity) {
+		if ($row instanceof \ElggEntity) {
 			continue;
 		} else {
 			try {
@@ -1407,7 +1407,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
  * 	attribute_name_value_pairs_operator => null|STR The operator to use for combining
  *                                        (name = value) OPERATOR (name = value); default is AND
  *
- * @return ElggEntity[]|mixed If count, int. If not count, array. false on errors.
+ * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.9.0
  * @throws InvalidArgumentException
  * @todo Does not support ordering by attributes or using an attribute pair shortcut like this ('title' => 'foo')
@@ -1459,11 +1459,11 @@ function elgg_get_entities_from_attributes(array $options = array()) {
 function _elgg_get_entity_attribute_where_sql(array $options = array()) {
 
 	if (!isset($options['types'])) {
-		throw new InvalidArgumentException("The entity type must be defined for elgg_get_entities_from_attributes()");
+		throw new \InvalidArgumentException("The entity type must be defined for elgg_get_entities_from_attributes()");
 	}
 
 	if (is_array($options['types']) && count($options['types']) !== 1) {
-		throw new InvalidArgumentException("Only one type can be passed to elgg_get_entities_from_attributes()");
+		throw new \InvalidArgumentException("Only one type can be passed to elgg_get_entities_from_attributes()");
 	}
 
 	// type can be passed as string or array
@@ -1472,9 +1472,9 @@ function _elgg_get_entity_attribute_where_sql(array $options = array()) {
 		$type = $type[0];
 	}
 
-	// @todo the types should be defined somewhere (as constant on ElggEntity?)
+	// @todo the types should be defined somewhere (as constant on \ElggEntity?)
 	if (!in_array($type, array('group', 'object', 'site', 'user'))) {
-		throw new InvalidArgumentException("Invalid type '$type' passed to elgg_get_entities_from_attributes()");
+		throw new \InvalidArgumentException("Invalid type '$type' passed to elgg_get_entities_from_attributes()");
 	}
 
 	global $CONFIG;
@@ -1491,7 +1491,7 @@ function _elgg_get_entity_attribute_where_sql(array $options = array()) {
 	}
 
 	if (!is_array($options['attribute_name_value_pairs'])) {
-		throw new InvalidArgumentException("attribute_name_value_pairs must be an array for elgg_get_entities_from_attributes()");
+		throw new \InvalidArgumentException("attribute_name_value_pairs must be an array for elgg_get_entities_from_attributes()");
 	}
 
 	$wheres = array();
@@ -1870,7 +1870,7 @@ function elgg_list_registered_entities(array $options = array()) {
 }
 
 /**
- * Checks if $entity is an ElggEntity and optionally for type and subtype.
+ * Checks if $entity is an \ElggEntity and optionally for type and subtype.
  *
  * @tip Use this function in actions and views to check that you are dealing
  * with the correct type of entity.
@@ -1884,10 +1884,10 @@ function elgg_list_registered_entities(array $options = array()) {
  * @since 1.8.0
  */
 function elgg_instanceof($entity, $type = null, $subtype = null, $class = null) {
-	$return = ($entity instanceof ElggEntity);
+	$return = ($entity instanceof \ElggEntity);
 
 	if ($type) {
-		/* @var ElggEntity $entity */
+		/* @var \ElggEntity $entity */
 		$return = $return && ($entity->getType() == $type);
 	}
 

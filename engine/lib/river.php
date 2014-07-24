@@ -432,7 +432,7 @@ function elgg_get_river(array $options = array()) {
 /**
  * Prefetch entities that will be displayed in the river.
  *
- * @param ElggRiverItem[] $river_items
+ * @param \ElggRiverItem[] $river_items
  * @access private
  */
 function _elgg_prefetch_river_entities(array $river_items) {
@@ -523,20 +523,20 @@ function elgg_list_river(array $options = array()) {
 }
 
 /**
- * Convert a database row to a new ElggRiverItem
+ * Convert a database row to a new \ElggRiverItem
  *
- * @param stdClass $row Database row from the river table
+ * @param \stdClass $row Database row from the river table
  *
- * @return ElggRiverItem
+ * @return \ElggRiverItem
  * @since 1.8.0
  * @access private
  */
 function _elgg_row_to_elgg_river_item($row) {
-	if (!($row instanceof stdClass)) {
+	if (!($row instanceof \stdClass)) {
 		return null;
 	}
 
-	return new ElggRiverItem($row);
+	return new \ElggRiverItem($row);
 }
 
 /**
@@ -811,7 +811,7 @@ QUERY;
  */
 function _elgg_river_init() {
 	elgg_register_page_handler('activity', '_elgg_river_page_handler');
-	$item = new ElggMenuItem('activity', elgg_echo('activity'), 'activity');
+	$item = new \ElggMenuItem('activity', elgg_echo('activity'), 'activity');
 	elgg_register_menu_item('site', $item);
 
 	elgg_register_widget_type('river_widget', elgg_echo('river:widget:title'), elgg_echo('river:widget:description'));

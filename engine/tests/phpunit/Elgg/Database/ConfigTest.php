@@ -1,24 +1,26 @@
 <?php
+namespace Elgg\Database;
 
-class Elgg_Database_ConfigTest extends PHPUnit_Framework_TestCase {
+
+class ConfigTest extends \PHPUnit_Framework_TestCase {
 
 	public function testGetTablePrefix() {
-		$CONFIG = new stdClass();
+		$CONFIG = new \stdClass();
 		$CONFIG->dbprefix = "foo";
-		$conf = new Elgg_Database_Config($CONFIG);
+		$conf = new \Elgg\Database\Config($CONFIG);
 		$this->assertEquals($CONFIG->dbprefix, $conf->getTablePrefix());
 	}
 
 	public function testIsDatabaseSplitNotSet() {
-		$CONFIG = new stdClass();
-		$conf = new Elgg_Database_Config($CONFIG);
+		$CONFIG = new \stdClass();
+		$conf = new \Elgg\Database\Config($CONFIG);
 		$this->assertFalse($conf->isDatabaseSplit());
 	}
 
 	public function testIsDatabaseSplitInSettings() {
-		$CONFIG = new stdClass();
+		$CONFIG = new \stdClass();
 		$CONFIG->db['split'] = true;
-		$conf = new Elgg_Database_Config($CONFIG);
+		$conf = new \Elgg\Database\Config($CONFIG);
 		$this->assertTrue($conf->isDatabaseSplit());
 	}
 
@@ -29,12 +31,12 @@ class Elgg_Database_ConfigTest extends PHPUnit_Framework_TestCase {
 			'password' => 'xxxx',
 			'database' => 'elgg',
 		);
-		$CONFIG = new stdClass();
+		$CONFIG = new \stdClass();
 		$CONFIG->dbhost = $ans['host'];
 		$CONFIG->dbuser = $ans['user'];
 		$CONFIG->dbpass = $ans['password'];
 		$CONFIG->dbname = $ans['database'];
-		$conf = new Elgg_Database_Config($CONFIG);
+		$conf = new \Elgg\Database\Config($CONFIG);
 		$this->assertEquals($ans, $conf->getConnectionConfig());
 	}
 
@@ -45,13 +47,13 @@ class Elgg_Database_ConfigTest extends PHPUnit_Framework_TestCase {
 			'password' => 'xxxx',
 			'database' => 'elgg',
 		);
-		$CONFIG = new stdClass();
+		$CONFIG = new \stdClass();
 		$CONFIG->db['write']['dbhost'] = $ans['host'];
 		$CONFIG->db['write']['dbuser'] = $ans['user'];
 		$CONFIG->db['write']['dbpass'] = $ans['password'];
 		$CONFIG->db['write']['dbname'] = $ans['database'];
-		$conf = new Elgg_Database_Config($CONFIG);
-		$this->assertEquals($ans, $conf->getConnectionConfig(Elgg_Database_Config::WRITE));
+		$conf = new \Elgg\Database\Config($CONFIG);
+		$this->assertEquals($ans, $conf->getConnectionConfig(\Elgg\Database\Config::WRITE));
 	}
 
 	public function testGetConnectionConfigWithMultipleRead() {
@@ -69,7 +71,7 @@ class Elgg_Database_ConfigTest extends PHPUnit_Framework_TestCase {
 				'database' => 'elgg1',
 			),
 		);
-		$CONFIG = new stdClass();
+		$CONFIG = new \stdClass();
 		$CONFIG->db['read'][0]['dbhost'] = $ans[0]['host'];
 		$CONFIG->db['read'][0]['dbuser'] = $ans[0]['user'];
 		$CONFIG->db['read'][0]['dbpass'] = $ans[0]['password'];
@@ -78,9 +80,9 @@ class Elgg_Database_ConfigTest extends PHPUnit_Framework_TestCase {
 		$CONFIG->db['read'][1]['dbuser'] = $ans[1]['user'];
 		$CONFIG->db['read'][1]['dbpass'] = $ans[1]['password'];
 		$CONFIG->db['read'][1]['dbname'] = $ans[1]['database'];
-		$conf = new Elgg_Database_Config($CONFIG);
+		$conf = new \Elgg\Database\Config($CONFIG);
 
-		$connConf = $conf->getConnectionConfig(Elgg_Database_Config::READ);
+		$connConf = $conf->getConnectionConfig(\Elgg\Database\Config::READ);
 		$this->assertEquals($ans[$connConf['host']], $connConf);
 	}
 
@@ -92,14 +94,14 @@ class Elgg_Database_ConfigTest extends PHPUnit_Framework_TestCase {
 			'password' => 'xxxx',
 			'database' => 'elgg',
 		);
-		$CONFIG = new stdClass();
-		$CONFIG->db['write'] = new stdClass();
+		$CONFIG = new \stdClass();
+		$CONFIG->db['write'] = new \stdClass();
 		$CONFIG->db['write']->dbhost = $ans['host'];
 		$CONFIG->db['write']->dbuser = $ans['user'];
 		$CONFIG->db['write']->dbpass = $ans['password'];
 		$CONFIG->db['write']->dbname = $ans['database'];
-		$conf = new Elgg_Database_Config($CONFIG);
-		$this->assertEquals($ans, $conf->getConnectionConfig(Elgg_Database_Config::WRITE));
+		$conf = new \Elgg\Database\Config($CONFIG);
+		$this->assertEquals($ans, $conf->getConnectionConfig(\Elgg\Database\Config::WRITE));
 	}
 
 	// Elgg < 1.9 used objects to store the config
@@ -118,20 +120,21 @@ class Elgg_Database_ConfigTest extends PHPUnit_Framework_TestCase {
 				'database' => 'elgg1',
 			),
 		);
-		$CONFIG = new stdClass();
-		$CONFIG->db['read'][0] = new stdClass();
+		$CONFIG = new \stdClass();
+		$CONFIG->db['read'][0] = new \stdClass();
 		$CONFIG->db['read'][0]->dbhost = $ans[0]['host'];
 		$CONFIG->db['read'][0]->dbuser = $ans[0]['user'];
 		$CONFIG->db['read'][0]->dbpass = $ans[0]['password'];
 		$CONFIG->db['read'][0]->dbname = $ans[0]['database'];
-		$CONFIG->db['read'][1] = new stdClass();
+		$CONFIG->db['read'][1] = new \stdClass();
 		$CONFIG->db['read'][1]->dbhost = $ans[1]['host'];
 		$CONFIG->db['read'][1]->dbuser = $ans[1]['user'];
 		$CONFIG->db['read'][1]->dbpass = $ans[1]['password'];
 		$CONFIG->db['read'][1]->dbname = $ans[1]['database'];
-		$conf = new Elgg_Database_Config($CONFIG);
+		$conf = new \Elgg\Database\Config($CONFIG);
 
-		$connConf = $conf->getConnectionConfig(Elgg_Database_Config::READ);
+		$connConf = $conf->getConnectionConfig(\Elgg\Database\Config::READ);
 		$this->assertEquals($ans[$connConf['host']], $connConf);
 	}
 }
+

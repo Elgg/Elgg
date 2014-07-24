@@ -2,7 +2,7 @@
 /**
  * Iterate over elements in a specific priority.
  *
- * $pl = new ElggPriorityList();
+ * $pl = new \ElggPriorityList();
  * $pl->add('Element 0');
  * $pl->add('Element 10', 10);
  * $pl->add('Element -10', -10);
@@ -19,7 +19,7 @@
  * Collisions on priority are handled by inserting the element at or as close to the
  * requested priority as possible:
  *
- * $pl = new ElggPriorityList();
+ * $pl = new \ElggPriorityList();
  * $pl->add('Element 5', 5);
  * $pl->add('Colliding element 5', 5);
  * $pl->add('Another colliding element 5', 5);
@@ -35,7 +35,7 @@
  *
  * You can do priority lookups by element:
  *
- * $pl = new ElggPriorityList();
+ * $pl = new \ElggPriorityList();
  * $pl->add('Element 0');
  * $pl->add('Element -5', -5);
  * $pl->add('Element 10', 10);
@@ -55,7 +55,7 @@
  * To move an element:
  * $pl->move('Element -5', -3);
  *
- * ElggPriorityList only tracks priority. No checking is done in ElggPriorityList for duplicates or
+ * \ElggPriorityList only tracks priority. No checking is done in \ElggPriorityList for duplicates or
  * updating. If you need to track this use objects and an external map:
  *
  * function elgg_register_something($id, $display_name, $location, $priority = 500) {
@@ -64,7 +64,7 @@
  *	static $list;
  *
  *	if (!$list) {
- *		$list = new ElggPriorityList();
+ *		$list = new \ElggPriorityList();
  *	}
  *
  *	// update if already registered.
@@ -77,7 +77,7 @@
  *		$element->display_name = $display_name;
  *		$element->location = $location;
  *	} else {
- *		$element = new stdClass();
+ *		$element = new \stdClass();
  *		$element->display_name = $display_name;
  *		$element->location = $location;
  *		if (!$list->add($element, $priority)) {
@@ -93,7 +93,7 @@
  * @subpackage Helpers
  */
 class ElggPriorityList
-	implements Iterator, Countable {
+	implements \Iterator, \Countable {
 
 	/**
 	 * The list of elements

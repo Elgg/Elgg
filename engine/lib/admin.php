@@ -83,7 +83,7 @@ function elgg_add_admin_notice($id, $message) {
 		// need to handle when no one is logged in
 		$old_ia = elgg_set_ignore_access(true);
 
-		$admin_notice = new ElggObject();
+		$admin_notice = new \ElggObject();
 		$admin_notice->subtype = 'admin_notice';
 		// admins can see ACCESS_PRIVATE but no one else can.
 		$admin_notice->access_id = ACCESS_PRIVATE;
@@ -220,15 +220,15 @@ function elgg_register_admin_menu_item($section, $menu_id, $parent_id = null, $p
 }
 
 /**
- * Add an admin notice when a new ElggUpgrade object is created.
+ * Add an admin notice when a new \ElggUpgrade object is created.
  *
  * @param string     $event
  * @param string     $type
- * @param ElggObject $object
+ * @param \ElggObject $object
  * @access private
  */
 function _elgg_create_notice_of_pending_upgrade($event, $type, $object) {
-	if ($object instanceof ElggUpgrade) {
+	if ($object instanceof \ElggUpgrade) {
 		// Link to the Upgrades section
 		$link = elgg_view('output/url', array(
 			'href' => 'admin/upgrades',
@@ -489,19 +489,19 @@ function _elgg_admin_add_plugin_settings_menu() {
 function _elgg_admin_sort_page_menu($hook, $type, $return, $params) {
 	$configure_items = $return['configure'];
 	if (is_array($configure_items)) {
-		/* @var ElggMenuItem[] $configure_items */
+		/* @var \ElggMenuItem[] $configure_items */
 		foreach ($configure_items as $menu_item) {
 			if ($menu_item->getName() == 'settings') {
 				$settings = $menu_item;
 			}
 		}
 
-		if (!empty($settings) && $settings instanceof ElggMenuItem) {
+		if (!empty($settings) && $settings instanceof \ElggMenuItem) {
 			// keep the basic and advanced settings at the top
-			/* @var ElggMenuItem $settings */
+			/* @var \ElggMenuItem $settings */
 			$children = $settings->getChildren();
 			$site_settings = array_splice($children, 0, 2);
-			usort($children, array('ElggMenuBuilder', 'compareByText'));
+			usort($children, array('\ElggMenuBuilder', 'compareByText'));
 			array_splice($children, 0, 0, $site_settings);
 			$settings->setChildren($children);
 		}
@@ -807,7 +807,7 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
  *
  * @param string $event
  * @param string $type
- * @param ElggUser $user
+ * @param \ElggUser $user
  *
  * @return null|true
  * @access private
@@ -831,7 +831,7 @@ function _elgg_add_admin_widgets($event, $type, $user) {
 			$guid = elgg_create_widget($user->getGUID(), $handler, 'admin');
 			if ($guid) {
 				$widget = get_entity($guid);
-				/* @var ElggWidget $widget */
+				/* @var \ElggWidget $widget */
 				$widget->move($column, $position);
 			}
 		}

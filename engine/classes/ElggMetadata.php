@@ -1,22 +1,22 @@
 <?php
 
 /**
- * ElggMetadata
+ * \ElggMetadata
  *
- * This class describes metadata that can be attached to an ElggEntity. It is
+ * This class describes metadata that can be attached to an \ElggEntity. It is
  * rare that a plugin developer needs to use this API for metadata. Almost all
- * interaction with metadata occurs through the methods of ElggEntity. See its
+ * interaction with metadata occurs through the methods of \ElggEntity. See its
  * __set(), __get(), and setMetadata() methods.
  *
  * @package    Elgg.Core
  * @subpackage Metadata
  */
-class ElggMetadata extends ElggExtender {
+class ElggMetadata extends \ElggExtender {
 
 	/**
 	 * (non-PHPdoc)
 	 *
-	 * @see ElggData::initializeAttributes()
+	 * @see \ElggData::initializeAttributes()
 	 *
 	 * @return void
 	 */
@@ -29,17 +29,17 @@ class ElggMetadata extends ElggExtender {
 	/**
 	 * Construct a metadata object
 	 *
-	 * Plugin developers will probably never need to use this API. See ElggEntity
+	 * Plugin developers will probably never need to use this API. See \ElggEntity
 	 * for its API for setting and getting metadata.
 	 *
-	 * @param stdClass $row Database row as stdClass object
+	 * @param \stdClass $row Database row as \stdClass object
 	 */
 	public function __construct($row = null) {
 		$this->initializeAttributes();
 
 		if (!empty($row)) {
 			// Create from db row
-			if ($row instanceof stdClass) {
+			if ($row instanceof \stdClass) {
 				$metadata = $row;
 				
 				$objarray = (array) $metadata;
@@ -47,7 +47,7 @@ class ElggMetadata extends ElggExtender {
 					$this->attributes[$key] = $value;
 				}
 			} else {
-				// get an ElggMetadata object and copy its attributes
+				// get an \ElggMetadata object and copy its attributes
 				elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use elgg_get_metadata_from_id()', 1.9);
 				$metadata = elgg_get_metadata_from_id($row);
 				$this->attributes = $metadata->attributes;
@@ -86,7 +86,7 @@ class ElggMetadata extends ElggExtender {
 				$this->value_type, $this->owner_guid, $this->access_id);
 
 			if (!$this->id) {
-				throw new IOException("Unable to save new " . get_class());
+				throw new \IOException("Unable to save new " . get_class());
 			}
 			return $this->id;
 		}
@@ -146,7 +146,7 @@ class ElggMetadata extends ElggExtender {
 	 *
 	 * @param int $id Metadata ID
 	 *
-	 * @return ElggMetadata
+	 * @return \ElggMetadata
 	 */
 	public function getObjectFromID($id) {
 		return elgg_get_metadata_from_id($id);

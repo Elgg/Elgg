@@ -1,20 +1,23 @@
 <?php
+namespace Elgg\Di;
 
-class Elgg_Di_DiContainerTest extends PHPUnit_Framework_TestCase {
+namespace Elgg\Di;
 
-	const TEST_CLASS = 'Elgg_Di_DiContainerTestObject';
+class DiContainerTest extends \PHPUnit_Framework_TestCase {
 
-	public function getFoo(Elgg_Di_DiContainer $di) {
-		return new Elgg_Di_DiContainerTestObject($di);
+	const TEST_CLASS = '\Elgg\Di\DiContainerTestObject';
+
+	public function getFoo(\Elgg\Di\DiContainer $di) {
+		return new \Elgg\Di\DiContainerTestObject($di);
 	}
 
 	public function testEmptyContainer() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 		$this->assertFalse($di->has('foo'));
 	}
 
 	public function testSetValue() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 
 		$this->assertSame($di, $di->setValue('foo', 'Foo'));
 		$this->assertTrue($di->has('foo'));
@@ -22,7 +25,7 @@ class Elgg_Di_DiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testSetFactoryShared() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 
 		$this->assertSame($di, $di->setFactory('foo', array($this, 'getFoo')));
 		$this->assertTrue($di->has('foo'));
@@ -33,7 +36,7 @@ class Elgg_Di_DiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testSetFactoryUnshared() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 
 		$this->assertSame($di, $di->setFactory('foo', array($this, 'getFoo'), false));
 		$this->assertTrue($di->has('foo'));
@@ -44,7 +47,7 @@ class Elgg_Di_DiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testContainerIsPassedToFactory() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 		$di->setFactory('foo', array($this, 'getFoo'));
 
 		$foo = $di->foo;
@@ -52,31 +55,31 @@ class Elgg_Di_DiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testSetFactoryLooksUncallable() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 
 		$this->setExpectedException('InvalidArgumentException', '$factory must appear callable');
-		$di->setFactory('foo', new stdClass());
+		$di->setFactory('foo', new \stdClass());
 	}
 
 	public function testGetFactoryUncallable() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 		$di->setFactory('foo', 'not-a-real-callable');
 
 		$this->setExpectedException(
-			'Elgg_Di_FactoryUncallableException',
+			'\Elgg\Di\FactoryUncallableException',
 			"Factory for 'foo' was uncallable: 'not-a-real-callable'");
 		$di->foo;
 	}
 
 	public function testGetMissingValue() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 
-		$this->setExpectedException('Elgg_Di_MissingValueException', "Value or factory was not set for: foo");
+		$this->setExpectedException('\Elgg\Di\MissingValueException', "Value or factory was not set for: foo");
 		$di->foo;
 	}
 
 	public function testRemove() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 		$di->setValue('foo', 'Foo');
 
 		$this->assertSame($di, $di->remove('foo'));
@@ -84,7 +87,7 @@ class Elgg_Di_DiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testSetClassNames() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 		$di->setClassName('foo', self::TEST_CLASS);
 
 		$this->assertInstanceOf(self::TEST_CLASS, $di->foo);
@@ -94,7 +97,7 @@ class Elgg_Di_DiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testSettingInvalidClassNameThrows() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 		
 		$euro = "\xE2\x82\xAC";
 		
@@ -110,18 +113,20 @@ class Elgg_Di_DiContainerTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testAccessRemovedValue() {
-		$di = new Elgg_Di_DiContainer();
+		$di = new \Elgg\Di\DiContainer();
 		$di->setValue('foo', 'Foo');
 		$di->remove('foo');
 
-		$this->setExpectedException('Elgg_Di_MissingValueException');
+		$this->setExpectedException('\Elgg\Di\MissingValueException');
 		$di->foo;
 	}
 }
 
-class Elgg_Di_DiContainerTestObject {
+
+class DiContainerTestObject {
 	public $di;
 	public function __construct($di = null) {
 		$this->di = $di;
 	}
 }
+

@@ -1,6 +1,6 @@
 <?php
 
-class ElggCryptoTest extends PHPUnit_Framework_TestCase {
+class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @var PHPUnit_Framework_MockObject_MockObject
@@ -8,7 +8,7 @@ class ElggCryptoTest extends PHPUnit_Framework_TestCase {
 	protected $stub;
 
 	protected function setUp() {
-		$this->stub = $this->getMockBuilder('ElggCrypto')
+		$this->stub = $this->getMockBuilder('\ElggCrypto')
 			->setMethods(array('getRandomBytes'))
 			->getMock();
 
@@ -29,8 +29,8 @@ class ElggCryptoTest extends PHPUnit_Framework_TestCase {
 	function provider() {
 		return array(
 			array(32, null, 'kwG37f3ds_7awuiaL52mVWXud9dqT1GF'),
-			array(32, ElggCrypto::CHARS_HEX, '9301b7edfdddb3fedac2e89a2f9da655'),
-			array(32, ElggCrypto::CHARS_PASSWORD, 'kl4lmjwyrpyh6rpqct3rkd9zvxwvqww8'),
+			array(32, \ElggCrypto::CHARS_HEX, '9301b7edfdddb3fedac2e89a2f9da655'),
+			array(32, \ElggCrypto::CHARS_PASSWORD, 'kl4lmjwyrpyh6rpqct3rkd9zvxwvqww8'),
 			array(32, "0123456789", "78181215379307389761767024720714"),
 		);
 	}

@@ -3,12 +3,12 @@
 /**
  * Test configuration for site and application (datalist)
  */
-class ElggCoreConfigTest extends ElggCoreUnitTest {
+class ElggCoreConfigTest extends \ElggCoreUnitTest {
 
 	public function testSetConfigWithTooLongName() {
 		// prevent the error message from being logged
 		$old_log_level = _elgg_services()->logger->getLevel();
-		_elgg_services()->logger->setLevel(Elgg_Logger::OFF);
+		_elgg_services()->logger->setLevel(\Elgg\Logger::OFF);
 
 		$name = '';
 		for ($i = 1; $i <= 256; $i++) {
@@ -40,7 +40,7 @@ class ElggCoreConfigTest extends ElggCoreUnitTest {
 
 	public function testSetConfigWithObject() {
 		$name = 'foo' . rand(0, 1000);
-		$value = new stdClass();
+		$value = new \stdClass();
 		$value->test = true;
 		$this->assertTrue(set_config($name, $value, 22));
 		$this->assertIdentical($value, get_config($name, 22));
@@ -98,7 +98,7 @@ class ElggCoreConfigTest extends ElggCoreUnitTest {
 	public function testDatalistSetWithTooLongName() {
 		// prevent the error message from being logged
 		$old_log_level = _elgg_services()->logger->getLevel();
-		_elgg_services()->logger->setLevel(Elgg_Logger::OFF);
+		_elgg_services()->logger->setLevel(\Elgg\Logger::OFF);
 
 		$name = '';
 		for ($i = 1; $i <= 256; $i++) {

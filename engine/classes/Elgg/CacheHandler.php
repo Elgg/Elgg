@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 
 /**
  * Simplecache handler
@@ -7,14 +8,14 @@
  *
  * @package Elgg.Core
  */
-class Elgg_CacheHandler {
+class CacheHandler {
 
 	protected $config;
 
 	/**
 	 * Constructor
 	 *
-	 * @param stdClass $config Elgg config object
+	 * @param \stdClass $config Elgg config object
 	 */
 	public function __construct($config) {
 		$this->config = $config;
@@ -263,3 +264,4 @@ class Elgg_CacheHandler {
 		exit;
 	}
 }
+

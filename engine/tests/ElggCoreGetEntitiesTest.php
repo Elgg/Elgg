@@ -3,7 +3,7 @@
 /**
  * Test elgg_get_entities()
  */
-class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
+class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 
 	/***********************************
 	 * TYPE TESTS
@@ -624,7 +624,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		// create an entity we can later delete.
 		// order by guid and limit by 1 should == this entity.
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->save();
 
 		$options = array(
@@ -651,7 +651,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		// create an entity we can later delete.
 		// order by time created and limit by 1 should == this entity.
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->save();
 
 		$options = array(
@@ -682,11 +682,11 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$subtype = 'subtype_' . rand();
 
-		$e_subtype = new ElggObject();
+		$e_subtype = new \ElggObject();
 		$e_subtype->subtype = $subtype;
 		$e_subtype->save();
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->save();
 
 		$options = array(
@@ -721,7 +721,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$guids = array();
 
-		$obj1 = new ElggObject();
+		$obj1 = new \ElggObject();
 		$obj1->test_md = 'test';
 		// luckily this is never checked.
 		$obj1->site_guid = 2;
@@ -729,7 +729,7 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 		$guids[] = $obj1->guid;
 		$right_guid = $obj1->guid;
 
-		$obj2 = new ElggObject();
+		$obj2 = new \ElggObject();
 		$obj2->test_md = 'test';
 		$obj2->site_guid = $CONFIG->site->guid;
 		$obj2->save();
@@ -756,14 +756,14 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$guids = array();
 
-		$obj1 = new ElggObject();
+		$obj1 = new \ElggObject();
 		$obj1->test_md = 'test';
 		// luckily this is never checked.
 		$obj1->site_guid = 2;
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
-		$obj2 = new ElggObject();
+		$obj2 = new \ElggObject();
 		$obj2->test_md = 'test';
 		$obj2->site_guid = $CONFIG->site->guid;
 		$obj2->save();
@@ -795,14 +795,14 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$guids = array();
 
-		$obj1 = new ElggObject();
+		$obj1 = new \ElggObject();
 		$obj1->test_md = 'test';
 		// luckily this is never checked.
 		$obj1->site_guid = 2;
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
-		$obj2 = new ElggObject();
+		$obj2 = new \ElggObject();
 		$obj2->test_md = 'test';
 		$obj2->site_guid = $CONFIG->site->guid;
 		$obj2->save();
@@ -834,14 +834,14 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$guids = array();
 
-		$obj1 = new ElggObject();
+		$obj1 = new \ElggObject();
 		$obj1->test_md = 'test';
 		// luckily this is never checked.
 		$obj1->site_guid = 2;
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
-		$obj2 = new ElggObject();
+		$obj2 = new \ElggObject();
 		$obj2->test_md = 'test';
 		$obj2->save();
 		$guids[] = $obj2->guid;
@@ -872,14 +872,14 @@ class ElggCoreGetEntitiesTest extends ElggCoreGetEntitiesBaseTest {
 
 		$guids = array();
 
-		$obj1 = new ElggObject();
+		$obj1 = new \ElggObject();
 		$obj1->test_md = 'test';
 		// luckily this is never checked.
 		$obj1->site_guid = 2;
 		$obj1->save();
 		$guids[] = $obj1->guid;
 
-		$obj2 = new ElggObject();
+		$obj2 = new \ElggObject();
 		$obj2->test_md = 'test';
 		$obj2->save();
 		$guids[] = $obj2->guid;

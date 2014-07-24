@@ -1,11 +1,11 @@
 <?php
 /**
- * Elgg Test ElggObject
+ * Elgg Test \ElggObject
  *
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreObjectTest extends ElggCoreUnitTest {
+class ElggCoreObjectTest extends \ElggCoreUnitTest {
 
 	/**
 	 * Called before each test object.
@@ -18,7 +18,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		$this->entity = new ElggObjectTest();
+		$this->entity = new \ElggObjectTest();
 	}
 
 	/**
@@ -65,17 +65,17 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$this->AssertNotEqual($guid, 0);
 
 		$entity_row = $this->get_entity_row($guid);
-		$this->assertIsA($entity_row, 'stdClass');
+		$this->assertIsA($entity_row, '\stdClass');
 
 		// update existing object
 		$this->entity->title = 'testing';
-		$this->entity->description = 'ElggObject';
+		$this->entity->description = '\ElggObject';
 		$this->assertEqual($this->entity->save(), $guid);
 
 		$object_row = $this->get_object_row($guid);
-		$this->assertIsA($object_row, 'stdClass');
+		$this->assertIsA($object_row, '\stdClass');
 		$this->assertIdentical($object_row->title, 'testing');
-		$this->assertIdentical($object_row->description, 'ElggObject');
+		$this->assertIdentical($object_row->description, '\ElggObject');
 
 		// clean up
 		$this->entity->delete();
@@ -83,7 +83,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 
 	public function testElggConstructorWithGarbage() {
 		try {
-			$error = new ElggObjectTest('garbage');
+			$error = new \ElggObjectTest('garbage');
 			$this->assertTrue(false);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -92,7 +92,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 
 	public function testElggObjectClone() {
 		$this->entity->title = 'testing';
-		$this->entity->description = 'ElggObject';
+		$this->entity->description = '\ElggObject';
 		$this->entity->var1 = "test";
 		$this->entity->var2 = 1;
 		$this->entity->var3 = true;
@@ -103,13 +103,13 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$tagarray = string_to_tag_array($tag_string);
 		$this->entity->tags = $tagarray;
 
-		// a cloned ElggEntity has the guid reset
+		// a cloned \ElggEntity has the guid reset
 		$object = clone $this->entity;
 		$this->assertIdentical(0, (int)$object->guid);
 
 		// make sure attributes were copied over
 		$this->assertIdentical($object->title, 'testing');
-		$this->assertIdentical($object->description, 'ElggObject');
+		$this->assertIdentical($object->description, '\ElggObject');
 
 		$guid = $object->save();
 		$this->assertTrue($guid !== 0);
@@ -130,7 +130,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		$this->assertEqual($this->entity->getContainerGUID(), elgg_get_logged_in_user_guid());
 
 		// create and save to group
-		$group = new ElggGroup();
+		$group = new \ElggGroup();
 		$guid = $group->save();
 		$this->assertTrue($this->entity->setContainerGUID($guid));
 
@@ -186,14 +186,14 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 
 	// see https://github.com/elgg/elgg/issues/1196
 	public function testElggEntityRecursiveDisableWhenLoggedOut() {
-		$e1 = new ElggObject();
+		$e1 = new \ElggObject();
 		$e1->access_id = ACCESS_PUBLIC;
 		$e1->owner_guid = 0;
 		$e1->container_guid = 0;
 		$e1->save();
 		$guid1 = $e1->getGUID();
 
-		$e2 = new ElggObject();
+		$e2 = new \ElggObject();
 		$e2->container_guid = $guid1;
 		$e2->access_id = ACCESS_PUBLIC;
 		$e2->owner_guid = 0;
@@ -230,18 +230,18 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggRecursiveDelete() {
-		$types = array('ElggGroup', 'ElggObject', 'ElggUser', 'ElggSite');
+		$types = array('\ElggGroup', '\ElggObject', '\ElggUser', '\ElggSite');
 		$db_prefix = elgg_get_config('dbprefix');
 
 		foreach ($types as $type) {
 			$parent = new $type();
 			$this->assertTrue($parent->save());
 			
-			$child = new ElggObject();
+			$child = new \ElggObject();
 			$child->container_guid = $parent->guid;
 			$this->assertTrue($child->save());
 
-			$grandchild = new ElggObject();
+			$grandchild = new \ElggObject();
 			$grandchild->container_guid = $child->guid;
 			$this->assertTrue($grandchild->save());
 
@@ -262,7 +262,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 
 		// object that owns itself
 		// can't check container_guid because of infinite loops in can_edit_entity()
-		$obj = new ElggObject();
+		$obj = new \ElggObject();
 		$obj->save();
 		$obj->owner_guid = $obj->guid;
 		$obj->save();
@@ -289,7 +289,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 	}
 }
 
-class ElggObjectTest extends ElggObject {
+class ElggObjectTest extends \ElggObject {
 	public function expose_attributes() {
 		return $this->attributes;
 	}

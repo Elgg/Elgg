@@ -3,12 +3,12 @@
  * Elgg Object
  *
  * Elgg objects are the most common means of storing information in the database.
- * They are a child class of ElggEntity, so receive all the benefits of the Entities,
+ * They are a child class of \ElggEntity, so receive all the benefits of the Entities,
  * but also include a title and description field.
  *
- * An ElggObject represents a row from the objects_entity table, as well
+ * An \ElggObject represents a row from the objects_entity table, as well
  * as the related row in the entities table as represented by the parent
- * ElggEntity object.
+ * \ElggEntity object.
  *
  * @internal Title and description are stored in the objects_entity table.
  *
@@ -19,7 +19,7 @@
  * @property string $description The body, description, or content of the object
  * @property array  $tags        Tags that describe the object (metadata)
  */
-class ElggObject extends ElggEntity {
+class ElggObject extends \ElggEntity {
 
 	/**
 	 * Initialize the attributes array to include the type,
@@ -37,16 +37,16 @@ class ElggObject extends ElggEntity {
 	}
 
 	/**
-	 * Create a new ElggObject.
+	 * Create a new \ElggObject.
 	 *
 	 * Plugin developers should only use the constructor to create a new entity.
 	 * To retrieve entities, use get_entity() and the elgg_get_entities* functions.
 	 *
 	 * If no arguments are passed, it creates a new entity.
-	 * If a database result is passed as a stdClass instance, it instantiates
+	 * If a database result is passed as a \stdClass instance, it instantiates
 	 * that entity.
 	 *
-	 * @param stdClass $row Database row result. Default is null to create a new object.
+	 * @param \stdClass $row Database row result. Default is null to create a new object.
 	 *
 	 * @throws IOException If cannot load remaining data from db
 	 * @throws InvalidParameterException If not passed a db row result
@@ -59,15 +59,15 @@ class ElggObject extends ElggEntity {
 
 		if (!empty($row)) {
 			// Is $row is a DB row from the entity table
-			if ($row instanceof stdClass) {
+			if ($row instanceof \stdClass) {
 				// Load the rest
 				if (!$this->load($row)) {
 					$msg = "Failed to load new " . get_class() . " for GUID: " . $row->guid;
-					throw new IOException($msg);
+					throw new \IOException($msg);
 				}
-			} else if ($row instanceof ElggObject) {
-				// $row is an ElggObject so this is a copy constructor
-				elgg_deprecated_notice('This type of usage of the ElggObject constructor was deprecated. Please use the clone method.', 1.7);
+			} else if ($row instanceof \ElggObject) {
+				// $row is an \ElggObject so this is a copy constructor
+				elgg_deprecated_notice('This type of usage of the \ElggObject constructor was deprecated. Please use the clone method.', 1.7);
 				foreach ($row->attributes as $key => $value) {
 					$this->attributes[$key] = $value;
 				}
@@ -75,25 +75,25 @@ class ElggObject extends ElggEntity {
 				// $row is a GUID so load
 				elgg_deprecated_notice('Passing a GUID to constructor is deprecated. Use get_entity()', 1.9);
 				if (!$this->load($row)) {
-					throw new IOException("Failed to load new " . get_class() . " from GUID:" . $row);
+					throw new \IOException("Failed to load new " . get_class() . " from GUID:" . $row);
 				}
 			} else {
-				throw new InvalidParameterException("Unrecognized value passed to constuctor.");
+				throw new \InvalidParameterException("Unrecognized value passed to constuctor.");
 			}
 		}
 	}
 
 	/**
-	 * Loads the full ElggObject when given a guid.
+	 * Loads the full \ElggObject when given a guid.
 	 *
-	 * @param mixed $guid GUID of an ElggObject or the stdClass object from entities table
+	 * @param mixed $guid GUID of an \ElggObject or the \stdClass object from entities table
 	 *
 	 * @return bool
 	 * @throws InvalidClassException
 	 */
 	protected function load($guid) {
-		$attr_loader = new Elgg_AttributeLoader(get_class(), 'object', $this->attributes);
-		$attr_loader->requires_access_control = !($this instanceof ElggPlugin);
+		$attr_loader = new \Elgg\AttributeLoader(get_class(), 'object', $this->attributes);
+		$attr_loader->requires_access_control = !($this instanceof \ElggPlugin);
 		$attr_loader->secondary_loader = 'get_object_entity_as_row';
 
 		$attrs = $attr_loader->getRequiredAttributes($guid);
@@ -175,7 +175,7 @@ class ElggObject extends ElggEntity {
 	 *
 	 * Site membership is determined by relationships and not site_guid.
 	 *
-	 * @todo Moved to ElggEntity so remove this in 2.0
+	 * @todo Moved to \ElggEntity so remove this in 2.0
 	 *
 	 * @param array $options Options array. Used to be $subtype
 	 * @param int   $limit   The number of results to return (deprecated)
@@ -185,7 +185,7 @@ class ElggObject extends ElggEntity {
 	 */
 	public function getSites($options = "", $limit = 10, $offset = 0) {
 		if (is_string($options)) {
-			elgg_deprecated_notice('ElggObject::getSites() takes an options array', 1.9);
+			elgg_deprecated_notice('\ElggObject::getSites() takes an options array', 1.9);
 			return get_site_objects($this->getGUID(), $options, $limit, $offset);
 		}
 
@@ -195,13 +195,13 @@ class ElggObject extends ElggEntity {
 	/**
 	 * Add this object to a site
 	 *
-	 * @param ElggSite $site The site to add this object to. This used to be the
+	 * @param \ElggSite $site The site to add this object to. This used to be the
 	 *                       the site guid (still supported by deprecated)
 	 * @return bool
 	 */
 	public function addToSite($site) {
 		if (is_numeric($site)) {
-			elgg_deprecated_notice('ElggObject::addToSite() takes a site entity', 1.9);
+			elgg_deprecated_notice('\ElggObject::addToSite() takes a site entity', 1.9);
 			return add_site_object($site, $this->getGUID());
 		}
 
@@ -239,7 +239,7 @@ class ElggObject extends ElggEntity {
 	/**
 	 * Can a user comment on this object?
 	 *
-	 * @see ElggEntity::canComment()
+	 * @see \ElggEntity::canComment()
 	 *
 	 * @param int $user_guid User guid (default is logged in user)
 	 * @return bool

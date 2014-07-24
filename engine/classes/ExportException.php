@@ -6,4 +6,4 @@
  * @subpackage Exception
  * @deprecated 1.9
  */
-class ExportException extends DataFormatException {}
+class ExportException extends \DataFormatException {}

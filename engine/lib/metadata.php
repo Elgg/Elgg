@@ -8,19 +8,19 @@
  */
 
 /**
- * Convert a database row to a new ElggMetadata
+ * Convert a database row to a new \ElggMetadata
  *
- * @param stdClass $row An object from the database
+ * @param \stdClass $row An object from the database
  *
- * @return stdClass|ElggMetadata
+ * @return \stdClass|\ElggMetadata
  * @access private
  */
 function row_to_elggmetadata($row) {
-	if (!($row instanceof stdClass)) {
+	if (!($row instanceof \stdClass)) {
 		return $row;
 	}
 
-	return new ElggMetadata($row);
+	return new \ElggMetadata($row);
 }
 
 /**
@@ -30,7 +30,7 @@ function row_to_elggmetadata($row) {
  *
  * @param int $id The id of the metadata object being retrieved.
  *
- * @return ElggMetadata|false  false if not found
+ * @return \ElggMetadata|false  false if not found
  */
 function elgg_get_metadata_from_id($id) {
 	return _elgg_get_metastring_based_object_from_id($id, 'metadata');
@@ -168,11 +168,11 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
 	// If memcached then we invalidate the cache for this entry
 	static $metabyname_memcache;
 	if ((!$metabyname_memcache) && (is_memcache_available())) {
-		$metabyname_memcache = new ElggMemcache('metabyname_memcache');
+		$metabyname_memcache = new \ElggMemcache('metabyname_memcache');
 	}
 
 	if ($metabyname_memcache) {
-		// @todo fix memcache (name_id is not a property of ElggMetadata)
+		// @todo fix memcache (name_id is not a property of \ElggMetadata)
 		$metabyname_memcache->delete("{$md->entity_guid}:{$md->name_id}");
 	}
 
@@ -274,9 +274,9 @@ $access_id = ACCESS_PRIVATE, $allow_multiple = false) {
  *                                   The "metadata_calculation" option causes this function to
  *                                   return the result of performing a mathematical calculation on
  *                                   all metadata that match the query instead of returning
- *                                   ElggMetadata objects.
+ *                                   \ElggMetadata objects.
  *
- * @return ElggMetadata[]|mixed
+ * @return \ElggMetadata[]|mixed
  * @since 1.8.0
  */
 function elgg_get_metadata(array $options = array()) {
@@ -365,7 +365,7 @@ function elgg_enable_metadata(array $options) {
 }
 
 /**
- * ElggEntities interfaces
+ * \ElggEntities interfaces
  */
 
 /**
@@ -425,7 +425,7 @@ function elgg_enable_metadata(array $options) {
  *
  *  metadata_owner_guids => null|ARR guids for metadata owners
  *
- * @return ElggEntity[]|mixed If count, int. If not count, array. false on errors.
+ * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_metadata(array $options = array()) {
@@ -815,13 +815,13 @@ function is_metadata_independent($type, $subtype) {
  *
  * @param string     $event       The name of the event
  * @param string     $object_type The type of object
- * @param ElggEntity $object      The entity itself
+ * @param \ElggEntity $object      The entity itself
  *
  * @return true
  * @access private Set as private in 1.9.0
  */
 function metadata_update($event, $object_type, $object) {
-	if ($object instanceof ElggEntity) {
+	if ($object instanceof \ElggEntity) {
 		if (!is_metadata_independent($object->getType(), $object->getSubtype())) {
 			$db_prefix = elgg_get_config('dbprefix');
 			$access_id = (int) $object->access_id;
@@ -836,14 +836,14 @@ function metadata_update($event, $object_type, $object) {
 /**
  * Get the global metadata cache instance
  *
- * @return ElggVolatileMetadataCache
+ * @return \ElggVolatileMetadataCache
  *
  * @access private
  */
 function _elgg_get_metadata_cache() {
 	global $CONFIG;
 	if (empty($CONFIG->local_metadata_cache)) {
-		$CONFIG->local_metadata_cache = new ElggVolatileMetadataCache();
+		$CONFIG->local_metadata_cache = new \ElggVolatileMetadataCache();
 	}
 	return $CONFIG->local_metadata_cache;
 }

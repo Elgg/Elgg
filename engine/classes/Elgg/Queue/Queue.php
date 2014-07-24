@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Queue;
 
 /**
  * Queue interface
@@ -11,7 +12,7 @@
  * @subpackage Queue
  * @since      1.9.0
  */
-interface Elgg_Queue_Queue {
+interface Queue {
 	/**
 	 * Add an item to the queue
 	 *

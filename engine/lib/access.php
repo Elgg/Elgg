@@ -59,9 +59,9 @@ function elgg_get_ignore_access() {
 }
 
 /**
- * Return an ElggCache static variable cache for the access caches
+ * Return an \ElggCache static variable cache for the access caches
  *
- * @staticvar ElggStaticVariableCache $access_cache
+ * @staticvar \ElggStaticVariableCache $access_cache
  * @return \ElggStaticVariableCache
  * @access private
  */
@@ -72,7 +72,7 @@ function _elgg_get_access_cache() {
 	static $access_cache;
 
 	if (!$access_cache) {
-		$access_cache = new ElggStaticVariableCache('access');
+		$access_cache = new \ElggStaticVariableCache('access');
 	}
 
 	return $access_cache;
@@ -239,11 +239,11 @@ function get_access_array($user_guid = 0, $site_guid = 0, $flush = false) {
  * If want you to change the default access based on group of other information,
  * use the 'default', 'access' plugin hook.
  *
- * @param ElggUser $user Get the user's default access. Defaults to logged in user.
+ * @param \ElggUser $user Get the user's default access. Defaults to logged in user.
  *
  * @return int default access id (see ACCESS defines in elgglib.php)
  */
-function get_default_access(ElggUser $user = null) {
+function get_default_access(\ElggUser $user = null) {
 	global $CONFIG;
 
 	// site default access
@@ -426,8 +426,8 @@ function _elgg_get_access_where_sql(array $options = array()) {
  * entity to test access for. We need to be able to tell whether the entity exists
  * and whether the user has access to the entity.
  *
- * @param ElggEntity $entity The entity to check access for.
- * @param ElggUser   $user   Optionally user to check access for. Defaults to
+ * @param \ElggEntity $entity The entity to check access for.
+ * @param \ElggUser   $user   Optionally user to check access for. Defaults to
  *                           logged in user (which is a useless default).
  *
  * @return bool
@@ -555,7 +555,7 @@ function can_edit_access_collection($collection_id, $user_guid = null) {
 
 	$collection = get_access_collection($collection_id);
 
-	if (!($user instanceof ElggUser) || !$collection) {
+	if (!($user instanceof \ElggUser) || !$collection) {
 		return false;
 	}
 
@@ -840,7 +840,7 @@ function get_user_access_collections($owner_guid, $site_guid = 0) {
  * @param int  $collection The collection's ID
  * @param bool $idonly     If set to true, will only return the members' GUIDs (default: false)
  *
- * @return array ElggUser guids or entities if successful, false if not
+ * @return ElggUser[]|int[]|false guids or entities if successful, false if not
  * @see add_user_to_access_collection()
  */
 function get_members_of_access_collection($collection, $idonly = false) {
@@ -967,12 +967,12 @@ function elgg_check_access_overrides($user_guid = 0) {
 }
 
 /**
- * Returns the Elgg_Access object.
+ * Returns the \Elgg\Access object.
  *
  * // @todo comment is incomplete
  * This is used to
  *
- * @return Elgg_Access
+ * @return \Elgg\Access
  * @since 1.7.0
  * @access private
  */
@@ -980,7 +980,7 @@ function elgg_get_access_object() {
 	static $elgg_access;
 
 	if (!$elgg_access) {
-		$elgg_access = new Elgg_Access();
+		$elgg_access = new \Elgg\Access();
 	}
 
 	return $elgg_access;
@@ -1038,7 +1038,7 @@ function elgg_override_permissions($hook, $type, $value, $params) {
 	}
 
 	// don't do this so ignore access still works with no one logged in
-	//if (!$user instanceof ElggUser) {
+	//if (!$user instanceof \ElggUser) {
 	//	return false;
 	//}
 

@@ -6,30 +6,30 @@
  * Reserved keys: last_forward_from, msg, sticky_forms, user, guid, id, code, name, username
  * Deprecated keys: user, id, name, username
  * 
- * ArrayAccess was deprecated in Elgg 1.9. This means you should use 
+ * \ArrayAccess was deprecated in Elgg 1.9. This means you should use 
  * $session->get('foo') rather than $session['foo'].
- * Warning: You can not access multidimensional arrays through ArrayAccess like
+ * Warning: You can not access multidimensional arrays through \ArrayAccess like
  * this $session['foo']['bar']
  *
  * @package    Elgg.Core
  * @subpackage Session
  * @see        elgg_get_session()
  */
-class ElggSession implements ArrayAccess {
+class ElggSession implements \ArrayAccess {
 
-	/** @var Elgg_Http_SessionStorage */
+	/** @var \Elgg\Http\SessionStorage */
 	protected $storage;
 
-	/** @var ElggUser */
+	/** @var \ElggUser */
 	protected $loggedInUser;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Elgg_Http_SessionStorage $storage The storage engine
+	 * @param \Elgg\Http\SessionStorage $storage The storage engine
 	 * @access private Use elgg_get_session()
 	 */
-	public function __construct(Elgg_Http_SessionStorage $storage) {
+	public function __construct(\Elgg\Http\SessionStorage $storage) {
 		$this->storage = $storage;
 		$this->loggedInUser = null;
 	}
@@ -185,11 +185,11 @@ class ElggSession implements ArrayAccess {
 	/**
 	 * Sets the logged in user
 	 * 
-	 * @param ElggUser $user The user who is logged in
+	 * @param \ElggUser $user The user who is logged in
 	 * @return void
 	 * @since 1.9
 	 */
-	public function setLoggedInUser(ElggUser $user) {
+	public function setLoggedInUser(\ElggUser $user) {
 		$this->set('guid', $user->guid);
 		$this->loggedInUser = $user;
 	}
@@ -197,7 +197,7 @@ class ElggSession implements ArrayAccess {
 	/**
 	 * Gets the logged in user
 	 * 
-	 * @return ElggUser
+	 * @return \ElggUser
 	 * @since 1.9
 	 */
 	public function getLoggedInUser() {
@@ -261,7 +261,7 @@ class ElggSession implements ArrayAccess {
 	 * Get a variable from either the session, or if its not in the session
 	 * attempt to get it from an api call.
 	 *
-	 * @see ArrayAccess::offsetGet()
+	 * @see \ArrayAccess::offsetGet()
 	 *
 	 * @param mixed $key Name
 	 *
@@ -308,7 +308,7 @@ class ElggSession implements ArrayAccess {
 	/**
 	 * Unset a value from the cache and the session.
 	 *
-	 * @see ArrayAccess::offsetUnset()
+	 * @see \ArrayAccess::offsetUnset()
 	 *
 	 * @param mixed $key Name
 	 *
@@ -323,7 +323,7 @@ class ElggSession implements ArrayAccess {
 	/**
 	 * Return whether the value is set in either the session or the cache.
 	 *
-	 * @see ArrayAccess::offsetExists()
+	 * @see \ArrayAccess::offsetExists()
 	 *
 	 * @param int $offset Offset
 	 *

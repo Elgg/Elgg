@@ -6,4 +6,4 @@
  * @package    Elgg.Core
  * @subpackage Exceptions.Stub
  */
-class DataFormatException extends Exception {}
+class DataFormatException extends \Exception {}

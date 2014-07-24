@@ -46,13 +46,13 @@ function _elgg_comments_page_handler($page) {
 				forward(REFERER);
 			}
 			$comment = get_entity($page[1]);
-			if (!($comment instanceof ElggComment) || !$comment->canEdit()) {
+			if (!($comment instanceof \ElggComment) || !$comment->canEdit()) {
 				register_error(elgg_echo('generic_comment:notfound'));
 				forward(REFERER);
 			}
 
 			$target = $comment->getContainerEntity();
-			if (!($target instanceof ElggEntity)) {
+			if (!($target instanceof \ElggEntity)) {
 				register_error(elgg_echo('generic_comment:notfound'));
 				forward(REFERER);
 			}
@@ -90,7 +90,7 @@ function _elgg_comments_page_handler($page) {
  *
  * @param string         $hook   'register'
  * @param string         $type   'menu:entity'
- * @param ElggMenuItem[] $return Array of ElggMenuItem objects
+ * @param \ElggMenuItem[] $return Array of \ElggMenuItem objects
  * @param array          $params Array of view vars
  *
  * @return array
@@ -131,7 +131,7 @@ function _elgg_comment_setup_entity_menu($hook, $type, $return, $params) {
  */
 function _elgg_comment_url_handler($hook, $type, $return, $params) {
 	$entity = $params['entity'];
-	/* @var ElggObject $entity */
+	/* @var \ElggObject $entity */
 
 	if (!elgg_instanceof($entity, 'object', 'comment') || !$entity->getOwnerEntity()) {
 		// not a comment or has no owner

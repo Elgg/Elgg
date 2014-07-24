@@ -15,7 +15,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreSkeletonTest extends ElggCoreUnitTest {
+class ElggCoreSkeletonTest extends \ElggCoreUnitTest {
 
 	/**
 	 * Called before each test object.

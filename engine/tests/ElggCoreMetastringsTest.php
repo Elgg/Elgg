@@ -5,7 +5,7 @@
  * @package Elgg.Core
  * @subpackage Metastrings.Test
  */
-class ElggCoreMetastringsTest extends ElggCoreUnitTest {
+class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
 
 	public $metastringTypes = array('metadata', 'annotation');
 	public $metastringTables = array(
@@ -20,7 +20,7 @@ class ElggCoreMetastringsTest extends ElggCoreUnitTest {
 		parent::__construct();
 
 		$this->metastrings = array();
-		$this->object = new ElggObject();
+		$this->object = new \ElggObject();
 		$this->object->save();
 	}
 

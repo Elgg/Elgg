@@ -54,7 +54,7 @@ function _elgg_cron_page_handler($page) {
 	$allowed_periods = elgg_get_config('elgg_cron_periods');
 
 	if (!in_array($period, $allowed_periods)) {
-		throw new CronException("$period is not a recognized cron period.");
+		throw new \CronException("$period is not a recognized cron period.");
 	}
 
 	// Get a list of parameters

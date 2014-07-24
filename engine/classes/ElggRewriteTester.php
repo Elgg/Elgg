@@ -30,7 +30,7 @@ class ElggRewriteTester {
 	 */
 	public function run($url, $path) {
 
-		$this->webserver = ElggRewriteTester::guessWebServer();
+		$this->webserver = \ElggRewriteTester::guessWebServer();
 
 		$this->rewriteTestPassed = $this->runRewriteTest($url);
 

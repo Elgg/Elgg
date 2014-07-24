@@ -3,7 +3,7 @@
 /**
  * Test attribute loader for entities
  */
-class ElggCoreAttributeLoaderTest extends ElggCoreUnitTest {
+class ElggCoreAttributeLoaderTest extends \ElggCoreUnitTest {
 
 	/**
 	 * Checks if additional select columns are readable as volatile data
@@ -16,7 +16,7 @@ class ElggCoreAttributeLoaderTest extends ElggCoreUnitTest {
 		$access = elgg_set_ignore_access(false);
 
 		// may not have groups in DB but guaranteed to have user, object, site
-		$group = new ElggGroup();
+		$group = new \ElggGroup();
 		$group->name = 'test_group';
 		$group->access_id = ACCESS_PUBLIC;
 		$this->assertTrue($group->save() !== false);
@@ -28,7 +28,7 @@ class ElggCoreAttributeLoaderTest extends ElggCoreUnitTest {
 				'limit' => 1,
 			));
 			$entity = array_shift($entities);
-			$this->assertTrue($entity instanceof ElggEntity);
+			$this->assertTrue($entity instanceof \ElggEntity);
 			$this->assertEqual($entity->added_col2, null, "Additional select columns are leaking to attributes for " . get_class($entity));
 			$this->assertEqual($entity->getVolatileData('select:added_col2'), 42);
 		}
@@ -49,7 +49,7 @@ class ElggCoreAttributeLoaderTest extends ElggCoreUnitTest {
 		$access = elgg_set_ignore_access(false);
 
 		// may not have groups in DB - let's create one
-		$group = new ElggGroup();
+		$group = new \ElggGroup();
 		$group->name = 'test_group';
 		$group->access_id = ACCESS_PUBLIC;
 		$this->assertTrue($group->save() !== false);
@@ -61,7 +61,7 @@ class ElggCoreAttributeLoaderTest extends ElggCoreUnitTest {
 				'limit' => 1,
 			));
 			$entity = array_shift($entities);
-			$this->assertTrue($entity instanceof ElggEntity);
+			$this->assertTrue($entity instanceof \ElggEntity);
 			$this->assertEqual($entity->added_col3, null, "Additional select columns are leaking to attributes for " . get_class($entity));
 			$this->assertEqual($entity->getVolatileData('select:added_col3'), 42);
 
@@ -77,7 +77,7 @@ class ElggCoreAttributeLoaderTest extends ElggCoreUnitTest {
 				'limit' => 1,
 			));
 			$entity = array_shift($entities);
-			$this->assertTrue($entity instanceof ElggEntity);
+			$this->assertTrue($entity instanceof \ElggEntity);
 			$this->assertEqual($entity->added_col3, null, "Additional select columns are leaking to attributes for " . get_class($entity));
 			$this->assertEqual($entity->getVolatileData('select:added_col3'), 64, "Failed to overwrite volatile data in cached entity");
 		}

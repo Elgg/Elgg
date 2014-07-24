@@ -1,7 +1,7 @@
 <?php
 /**
  * A generic class that contains shared code among
- * ElggExtender, ElggEntity, and ElggRelationship
+ * \ElggExtender, \ElggEntity, and \ElggRelationship
  *
  * @package    Elgg.Core
  * @subpackage DataModel
@@ -9,7 +9,7 @@
 abstract class ElggData implements
 	Loggable,    // Can events related to this object class be logged
 	Iterator,    // Override foreach behaviour
-	ArrayAccess, // Override for array access
+	\ArrayAccess, // Override for array access
 	Exportable   // (deprecated 1.9)
 {
 
@@ -62,7 +62,7 @@ abstract class ElggData implements
 	/**
 	 * Provides a pointer to the database object.
 	 *
-	 * @return Elgg_Database The database where this data is (will be) stored.
+	 * @return \Elgg\Database The database where this data is (will be) stored.
 	 */
 	protected function getDatabase() {
 		return _elgg_services()->db;
@@ -135,7 +135,7 @@ abstract class ElggData implements
 	/**
 	 * Get a plain old object copy for public consumption
 	 * 
-	 * @return stdClass
+	 * @return \stdClass
 	 */
 	abstract public function toObject();
 
@@ -233,7 +233,7 @@ abstract class ElggData implements
 	/**
 	 * Array access interface
 	 *
-	 * @see ArrayAccess::offsetSet()
+	 * @see \ArrayAccess::offsetSet()
 	 *
 	 * @param mixed $key   Name
 	 * @param mixed $value Value
@@ -249,7 +249,7 @@ abstract class ElggData implements
 	/**
 	 * Array access interface
 	 *
-	 * @see ArrayAccess::offsetGet()
+	 * @see \ArrayAccess::offsetGet()
 	 *
 	 * @param mixed $key Name
 	 *
@@ -265,7 +265,7 @@ abstract class ElggData implements
 	/**
 	 * Array access interface
 	 *
-	 * @see ArrayAccess::offsetUnset()
+	 * @see \ArrayAccess::offsetUnset()
 	 *
 	 * @param mixed $key Name
 	 *
@@ -281,7 +281,7 @@ abstract class ElggData implements
 	/**
 	 * Array access interface
 	 *
-	 * @see ArrayAccess::offsetExists()
+	 * @see \ArrayAccess::offsetExists()
 	 *
 	 * @param int $offset Offset
 	 *

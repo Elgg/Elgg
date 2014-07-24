@@ -6,4 +6,4 @@
  * @package    Elgg.Core
  * @subpackage Exception
  */
-class InvalidClassException extends ClassException {}
+class InvalidClassException extends \ClassException {}

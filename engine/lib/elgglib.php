@@ -50,12 +50,12 @@ function elgg_load_library($name) {
 
 	if (!isset($CONFIG->libraries[$name])) {
 		$error = $name . " is not a registered library";
-		throw new InvalidParameterException($error);
+		throw new \InvalidParameterException($error);
 	}
 
 	if (!include_once($CONFIG->libraries[$name])) {
 		$error = "Could not load the " . $name . " library from " . $CONFIG->libraries[$name];
-		throw new InvalidParameterException($error);
+		throw new \InvalidParameterException($error);
 	}
 
 	$loaded_libraries[] = $name;
@@ -96,7 +96,7 @@ function forward($location = "", $reason = 'system') {
 			exit;
 		}
 	} else {
-		throw new SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
+		throw new \SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
 			. "Output started in file $file at line $line. Search http://docs.elgg.org/ for more information.");
 	}
 }
@@ -316,7 +316,7 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
 			$priority = $CONFIG->externals[$type]->add($item, $priority);
 		}
 	} else {
-		$item = new stdClass();
+		$item = new \stdClass();
 		$item->loaded = false;
 		$item->url = $url;
 		$item->location = $location;
@@ -376,7 +376,7 @@ function elgg_load_external_file($type, $name) {
 		// update a registered item
 		$item->loaded = true;
 	} else {
-		$item = new stdClass();
+		$item = new \stdClass();
 		$item->loaded = true;
 		$item->url = '';
 		$item->location = '';
@@ -398,7 +398,7 @@ function elgg_load_external_file($type, $name) {
 function elgg_get_loaded_external_files($type, $location) {
 	global $CONFIG;
 
-	if (isset($CONFIG->externals) && $CONFIG->externals[$type] instanceof ElggPriorityList) {
+	if (isset($CONFIG->externals) && $CONFIG->externals[$type] instanceof \ElggPriorityList) {
 		$items = $CONFIG->externals[$type]->getElements();
 
 		$callback = "return \$v->loaded == true && \$v->location == '$location';";
@@ -424,8 +424,8 @@ function _elgg_bootstrap_externals_data_structure($type) {
 		$CONFIG->externals = array();
 	}
 
-	if (!isset($CONFIG->externals[$type]) || !$CONFIG->externals[$type] instanceof ElggPriorityList) {
-		$CONFIG->externals[$type] = new ElggPriorityList();
+	if (!isset($CONFIG->externals[$type]) || !$CONFIG->externals[$type] instanceof \ElggPriorityList) {
+		$CONFIG->externals[$type] = new \ElggPriorityList();
 	}
 
 	if (!isset($CONFIG->externals_map)) {
@@ -759,7 +759,7 @@ function elgg_trigger_before_event($event, $object_type, $object = null) {
  */
 function elgg_trigger_after_event($event, $object_type, $object = null) {
 	$options = array(
-		Elgg_EventsService::OPTION_STOPPABLE => false,
+		\Elgg\EventsService::OPTION_STOPPABLE => false,
 	);
 	return _elgg_services()->events->trigger("$event:after", $object_type, $object, $options);
 }
@@ -779,8 +779,8 @@ function elgg_trigger_after_event($event, $object_type, $object = null) {
  */
 function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message, $version) {
 	$options = array(
-		Elgg_EventsService::OPTION_DEPRECATION_MESSAGE => $message,
-		Elgg_EventsService::OPTION_DEPRECATION_VERSION => $version,
+		\Elgg\EventsService::OPTION_DEPRECATION_MESSAGE => $message,
+		\Elgg\EventsService::OPTION_DEPRECATION_VERSION => $version,
 	);
 	return _elgg_services()->events->trigger($event, $object_type, $object, $options);
 }
@@ -1039,7 +1039,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 			register_error("ERROR: $error");
 
 			// Since this is a fatal error, we want to stop any further execution but do so gracefully.
-			throw new Exception($error);
+			throw new \Exception($error);
 			break;
 
 		case E_WARNING :
@@ -1821,9 +1821,9 @@ function _elgg_sql_reverse_order_by_clause($order_by) {
 /**
  * Enable objects with an enable() method.
  *
- * Used as a callback for ElggBatch.
+ * Used as a callback for \ElggBatch.
  *
- * @todo why aren't these static methods on ElggBatch?
+ * @todo why aren't these static methods on \ElggBatch?
  *
  * @param object $object The object to enable
  * @return bool
@@ -1837,7 +1837,7 @@ function elgg_batch_enable_callback($object) {
 /**
  * Disable objects with a disable() method.
  *
- * Used as a callback for ElggBatch.
+ * Used as a callback for \ElggBatch.
  *
  * @param object $object The object to disable
  * @return bool
@@ -1851,7 +1851,7 @@ function elgg_batch_disable_callback($object) {
 /**
  * Delete objects with a delete() method.
  *
- * Used as a callback for ElggBatch.
+ * Used as a callback for \ElggBatch.
  *
  * @param object $object The object to disable
  * @return bool
@@ -1983,7 +1983,7 @@ function _elgg_walled_garden_init() {
 	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
 
 	// check for external page view
-	if (isset($CONFIG->site) && $CONFIG->site instanceof ElggSite) {
+	if (isset($CONFIG->site) && $CONFIG->site instanceof \ElggSite) {
 		$CONFIG->site->checkWalledGarden();
 	}
 }
@@ -2107,7 +2107,7 @@ function _elgg_api_test($hook, $type, $value, $params) {
 }
 
 /**#@+
- * Controls access levels on ElggEntity entities, metadata, and annotations.
+ * Controls access levels on \ElggEntity entities, metadata, and annotations.
  *
  * @warning ACCESS_DEFAULT is a place holder for the input/access view. Do not
  * use it when saving an entity.

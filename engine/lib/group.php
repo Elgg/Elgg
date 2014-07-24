@@ -43,7 +43,7 @@ function add_group_tool_option($name, $label, $default_on = true) {
 		$CONFIG->group_tool_options = array();
 	}
 
-	$group_tool_option = new stdClass;
+	$group_tool_option = new \stdClass;
 
 	$group_tool_option->name = $name;
 	$group_tool_option->label = $label;
@@ -90,7 +90,7 @@ function _elgg_groups_container_override($hook, $type, $result, $params) {
 	$container = $params['container'];
 	$user = $params['user'];
 	if (elgg_instanceof($container, 'group') && $user) {
-		/* @var ElggGroup $container */
+		/* @var \ElggGroup $container */
 		if ($container->isMember($user)) {
 			return true;
 		}

@@ -41,7 +41,7 @@ function elgg_get_page_owner_guid($guid = 0) {
  *
  * @note Access is disabled when getting the page owner entity.
  *
- * @return ElggUser|ElggGroup|false The current page owner or false if none.
+ * @return \ElggUser|\ElggGroup|false The current page owner or false if none.
  *
  * @since 1.8.0
  */

@@ -1,10 +1,10 @@
 <?php
 
 /**
- * test ElggBatch
+ * test \ElggBatch
  *
  */
-class ElggBatchTest extends ElggCoreUnitTest {
+class ElggBatchTest extends \ElggCoreUnitTest {
 
 	// see https://github.com/elgg/elgg/issues/4288
 	public function testElggBatchIncOffset() {
@@ -13,7 +13,7 @@ class ElggBatchTest extends ElggCoreUnitTest {
 			'offset' => 0,
 			'limit' => 11
 		);
-		$batch = new ElggBatch(array('ElggBatchTest', 'elgg_batch_callback_test'), $options,
+		$batch = new \ElggBatch(array('\ElggBatchTest', 'elgg_batch_callback_test'), $options,
 				null, 5);
 		$j = 0;
 		foreach ($batch as $e) {
@@ -26,12 +26,12 @@ class ElggBatchTest extends ElggCoreUnitTest {
 		$this->assertEqual(11, $j);
 
 		// no increment, 0 start
-		ElggBatchTest::elgg_batch_callback_test(array(), true);
+		\ElggBatchTest::elgg_batch_callback_test(array(), true);
 		$options = array(
 			'offset' => 0,
 			'limit' => 11
 		);
-		$batch = new ElggBatch(array('ElggBatchTest', 'elgg_batch_callback_test'), $options,
+		$batch = new \ElggBatch(array('\ElggBatchTest', 'elgg_batch_callback_test'), $options,
 				null, 5);
 		$batch->setIncrementOffset(false);
 
@@ -45,12 +45,12 @@ class ElggBatchTest extends ElggCoreUnitTest {
 		$this->assertEqual(11, $j);
 
 		// no increment, 3 start
-		ElggBatchTest::elgg_batch_callback_test(array(), true);
+		\ElggBatchTest::elgg_batch_callback_test(array(), true);
 		$options = array(
 			'offset' => 3,
 			'limit' => 11
 		);
-		$batch = new ElggBatch(array('ElggBatchTest', 'elgg_batch_callback_test'), $options,
+		$batch = new \ElggBatch(array('\ElggBatchTest', 'elgg_batch_callback_test'), $options,
 				null, 5);
 		$batch->setIncrementOffset(false);
 
@@ -69,7 +69,7 @@ class ElggBatchTest extends ElggCoreUnitTest {
 		$num_test_entities = 8;
 		$guids = array();
 		for ($i = $num_test_entities; $i > 0; $i--) {
-			$entity = new ElggObject();
+			$entity = new \ElggObject();
 			$entity->type = 'object';
 			$entity->subtype = 'test_5357_subtype';
 			$entity->access_id = ACCESS_PUBLIC;
@@ -93,8 +93,8 @@ class ElggBatchTest extends ElggCoreUnitTest {
 		);
 
 		$entities_visited = array();
-		$batch = new ElggBatch('elgg_get_entities', $options, null, 2);
-		/* @var ElggEntity[] $batch */
+		$batch = new \ElggBatch('elgg_get_entities', $options, null, 2);
+		/* @var \ElggEntity[] $batch */
 		foreach ($batch as $entity) {
 			$entities_visited[] = $entity->guid;
 		}
@@ -120,7 +120,7 @@ class ElggBatchTest extends ElggCoreUnitTest {
 		$num_test_entities = 8;
 		$guids = array();
 		for ($i = $num_test_entities; $i > 0; $i--) {
-			$entity = new ElggObject();
+			$entity = new \ElggObject();
 			$entity->type = 'object';
 			$entity->subtype = 'test_5357_subtype';
 			$entity->access_id = ACCESS_PUBLIC;
@@ -144,8 +144,8 @@ class ElggBatchTest extends ElggCoreUnitTest {
 		);
 
 		$entities_visited = array();
-		$batch = new ElggBatch('elgg_get_entities', $options, null, 2, false);
-		/* @var ElggEntity[] $batch */
+		$batch = new \ElggBatch('elgg_get_entities', $options, null, 2, false);
+		/* @var \ElggEntity[] $batch */
 		foreach ($batch as $entity) {
 			$entities_visited[] = $entity->guid;
 			$entity->delete();

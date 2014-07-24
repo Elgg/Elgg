@@ -10,7 +10,7 @@
  * See file actions/admin/upgrades/upgrade_comments.php for details.
  */
 
-$upgrade = new ElggUpgrade();
+$upgrade = new \ElggUpgrade();
 $url = "admin/upgrades/datadirs";
 
 // Create the upgrade if one with the same URL doesn't already exist

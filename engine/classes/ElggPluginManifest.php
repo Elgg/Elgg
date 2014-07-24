@@ -2,12 +2,12 @@
 /**
  * Parses Elgg manifest.xml files.
  *
- * Normalizes the values from the ElggManifestParser object.
+ * Normalizes the values from the \ElggManifestParser object.
  *
- * This requires an ElggPluginManifestParser class implementation
+ * This requires an \ElggPluginManifestParser class implementation
  * as $this->parser.
  *
- * To add new parser versions, name them ElggPluginManifestParserXX
+ * To add new parser versions, name them \ElggPluginManifestParserXX
  * where XX is the version specified in the top-level <plugin_manifest>
  * tag's XML namespace.
  *
@@ -20,7 +20,7 @@ class ElggPluginManifest {
 	/**
 	 * The parser object
 	 *
-	 * @var ElggPluginManifestParser18
+	 * @var \ElggPluginManifestParser18
 	 */
 	protected $parser;
 
@@ -154,7 +154,7 @@ class ElggPluginManifest {
 		}
 
 		// see if we need to construct the xml object.
-		if ($manifest instanceof ElggXMLElement) {
+		if ($manifest instanceof \ElggXMLElement) {
 			$manifest_obj = $manifest;
 		} else {
 			$raw_xml = '';
@@ -166,14 +166,14 @@ class ElggPluginManifest {
 				$raw_xml = file_get_contents($manifest);
 			}
 			if ($raw_xml) {
-				$manifest_obj = new ElggXMLElement($raw_xml);
+				$manifest_obj = new \ElggXMLElement($raw_xml);
 			} else {
 				$manifest_obj = null;
 			}
 		}
 
 		if (!$manifest_obj) {
-			throw new PluginException(elgg_echo('PluginException:InvalidManifest',
+			throw new \PluginException(elgg_echo('PluginException:InvalidManifest',
 						array($this->getPluginID())));
 		}
 
@@ -187,7 +187,7 @@ class ElggPluginManifest {
 
 		$this->apiVersion = $version;
 
-		$parser_class_name = 'ElggPluginManifestParser' . str_replace('.', '', $this->apiVersion);
+		$parser_class_name = '\ElggPluginManifestParser' . str_replace('.', '', $this->apiVersion);
 
 		// @todo currently the autoloader freaks out if a class doesn't exist.
 		try {
@@ -199,12 +199,12 @@ class ElggPluginManifest {
 		if ($class_exists) {
 			$this->parser = new $parser_class_name($manifest_obj, $this);
 		} else {
-			throw new PluginException(elgg_echo('PluginException:NoAvailableParser',
+			throw new \PluginException(elgg_echo('PluginException:NoAvailableParser',
 							array($this->apiVersion, $this->getPluginID())));
 		}
 
 		if (!$this->parser->parse()) {
-			throw new PluginException(elgg_echo('PluginException:ParserError',
+			throw new \PluginException(elgg_echo('PluginException:ParserError',
 						array($this->apiVersion, $this->getPluginID())));
 		}
 	}
