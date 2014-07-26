@@ -49,19 +49,39 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		$url = 'embed?container_guid=' . $page_owner->getGUID();
 	}
 
-	$items[] = ElggMenuItem::factory(array(
-		'name' => 'embed',
-		'href' => $url,
-		'text' => elgg_echo('embed:media'),
-		'rel' => "embed-lightbox-{$vars['id']}",
-		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$vars['id']}",
-		'priority' => 10,
-	));
-
 	elgg_load_js('lightbox');
 	elgg_load_css('lightbox');
 	elgg_require_js('jquery.form');
 	elgg_load_js('elgg.embed');
+
+	$text = elgg_echo('embed:media');
+
+	// if loaded through ajax (like on /activity), pull in JS libs manually
+	// hack for #6422 because we haven't converted everything to amd yet
+	if (elgg_in_context('ajax')) {
+		$externals = elgg_get_config('externals_map');
+		$embed = elgg_extract('elgg.embed', $externals['js']);
+		$lightbox_js = elgg_extract('lightbox', $externals['js']);
+		$lightbox_css = elgg_extract('lightbox', $externals['css']);
+		
+		$text .= <<<___JS
+<script>
+	$('body').append('<' + 'script src="$embed->url"></' + 'script>');
+	$('body').append('<' + 'script src="$lightbox_js->url"></' + 'script>');
+	$('head').append('<link rel="stylesheet" href="$lightbox_css->url"></link>');
+	require(['jquery.form']);
+</script>
+___JS;
+	}
+
+	$items[] = ElggMenuItem::factory(array(
+		'name' => 'embed',
+		'href' => $url,
+		'text' => $text,
+		'rel' => "embed-lightbox-{$vars['id']}",
+		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$vars['id']}",
+		'priority' => 10,
+	));
 	
 	return $items;
 }
