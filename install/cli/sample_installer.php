@@ -42,7 +42,9 @@ if (PHP_SAPI !== 'cli') {
 	exit;
 }
 
-require_once(dirname(dirname(__FILE__)) . "/ElggInstaller.php");
+$elggRoot = dirname(dirname(__DIR__));
+
+require_once "$elggRoot/vendor/autoload.php";
 
 $installer = new ElggInstaller();
 

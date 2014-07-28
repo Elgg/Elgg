@@ -28,7 +28,7 @@
  * @subpackage Installer
  */
 class ElggInstaller {
-
+	
 	protected $steps = array(
 		'welcome',
 		'requirements',
@@ -53,9 +53,6 @@ class ElggInstaller {
 	 * Constructor bootstraps the Elgg engine
 	 */
 	public function __construct() {
-		// load ElggRewriteTester as we depend on it
-		require_once(dirname(__FILE__) . "/ElggRewriteTester.php");
-
 		$this->isAction = isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST';
 
 		$this->bootstrapConfig();
@@ -69,7 +66,14 @@ class ElggInstaller {
 		set_error_handler('_elgg_php_error_handler');
 		set_exception_handler('_elgg_php_exception_handler');
 
-		register_translations(dirname(__FILE__) . '/languages/', TRUE);
+		register_translations("{$this->getElggRoot()}/install/languages/", TRUE);
+	}
+	
+	/**
+	 * @return string The absolute path to Elgg's root directory
+	 */
+	private function getElggRoot() {
+		return dirname(dirname(__DIR__));
 	}
 
 	/**
@@ -413,7 +417,7 @@ class ElggInstaller {
 				),
 			'siteaccess' => array(
 				'type' => 'access',
-				'value' =>  ACCESS_PUBLIC,
+				'value' => ACCESS_PUBLIC,
 				'required' => TRUE,
 				),
 		);
@@ -826,7 +830,7 @@ class ElggInstaller {
 			}
 
 			_elgg_services()->db->setupConnections();
-			register_translations(dirname(dirname(__FILE__)) . "/languages/");
+			register_translations("{$this->getElggRoot()}/languages/");
 			$CONFIG->language = 'en';
 
 			if ($stepIndex > $settingsIndex) {
@@ -856,7 +860,7 @@ class ElggInstaller {
 
 		$CONFIG->wwwroot = $this->getBaseUrl();
 		$CONFIG->url = $CONFIG->wwwroot;
-		$CONFIG->path = dirname(dirname(__FILE__)) . '/';
+		$CONFIG->path = "{$this->getElggRoot()}/";
 		$CONFIG->viewpath =	$CONFIG->path . 'views/';
 		$CONFIG->pluginspath = $CONFIG->path . 'mod/';
 		$CONFIG->entity_types = array('group', 'object', 'site', 'user');
@@ -869,8 +873,8 @@ class ElggInstaller {
 	 * @return bool Whether the install process is encrypted.
 	 */
 	private function isHttps() {
-	    return (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") ||
-	        $_SERVER['SERVER_PORT'] == 443;
+		return (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") ||
+			$_SERVER['SERVER_PORT'] == 443;
 	}
 
 	/**
@@ -1334,8 +1338,9 @@ class ElggInstaller {
 	/**
 	 * Create the data directory if requested
 	 *
-	 * @param array $submissionVars Submitted vars
-	 * @param array $formVars       Variables in the form
+	 * @param array &$submissionVars Submitted vars
+	 * @param array $formVars        Variables in the form
+	 * 
 	 * @return bool
 	 */
 	protected function createDataDirectory(&$submissionVars, $formVars) {

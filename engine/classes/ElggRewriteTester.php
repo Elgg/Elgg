@@ -122,6 +122,11 @@ class ElggRewriteTester {
 		return true;
 	}
 	
+	/**
+	 * Check whether the site homepage can be fetched via curl
+	 * 
+	 * @return boolean
+	 */
 	public function runLocalhostAccessTest() {
 		$url = elgg_get_site_url();
 		if (ini_get('allow_url_fopen')) {
