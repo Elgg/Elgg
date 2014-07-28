@@ -663,9 +663,6 @@ function _elgg_load_application_config() {
 		$CONFIG->system_cache_enabled = 1;
 	}
 
-	// initialize context here so it is set before the first get_input call
-	$CONFIG->context = array();
-
 	// needs to be set before system, init for links in html head
 	$CONFIG->lastcache = (int)datalist_get("simplecache_lastupdate");
 

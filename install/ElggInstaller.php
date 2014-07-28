@@ -859,7 +859,6 @@ class ElggInstaller {
 		$CONFIG->path = dirname(dirname(__FILE__)) . '/';
 		$CONFIG->viewpath =	$CONFIG->path . 'views/';
 		$CONFIG->pluginspath = $CONFIG->path . 'mod/';
-		$CONFIG->context = array();
 		$CONFIG->entity_types = array('group', 'object', 'site', 'user');
 		// required by elgg_view_page()
 		$CONFIG->sitename = '';
