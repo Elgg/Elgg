@@ -9,7 +9,8 @@
         "ext-mysql": "*",
         "ext-gd": "*",
         "ext-json": "*",
-        "ext-xml": "*"
+        "ext-xml": "*",
+        "league/flysystem": "0.5.3"
     },
     "suggest": {
         "ext-mbstring": "*"
