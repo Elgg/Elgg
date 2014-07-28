@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "cb92803f23b5fb380df702e48f0ee1fa",
+    "hash": "748b2805a10c55147966395384099a89",
     "packages": [
 
     ],
@@ -14,13 +14,13 @@
             "version": "dev-master",
             "source": {
                 "type": "git",
-                "url": "https://github.com/elgg/elgg-coding-standards.git",
-                "reference": "e07a68431204d2c67cbc3ca7c8d281f6a63e6b65"
+                "url": "https://github.com/Elgg/elgg-coding-standards.git",
+                "reference": "2e9bb0aabc60cb128b139351f20c16bd4bbd8e28"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/elgg/elgg-coding-standards/zipball/e07a68431204d2c67cbc3ca7c8d281f6a63e6b65",
-                "reference": "e07a68431204d2c67cbc3ca7c8d281f6a63e6b65",
+                "url": "https://api.github.com/repos/Elgg/elgg-coding-standards/zipball/2e9bb0aabc60cb128b139351f20c16bd4bbd8e28",
+                "reference": "2e9bb0aabc60cb128b139351f20c16bd4bbd8e28",
                 "shasum": ""
             },
             "require": {
@@ -34,7 +34,7 @@
             },
             "notification-url": "https://packagist.org/downloads/",
             "description": "Elgg coding standards",
-            "time": "2014-07-19 11:21:28"
+            "time": "2014-07-19 11:25:06"
         },
         {
             "name": "phpunit/php-code-coverage",
@@ -815,6 +815,7 @@
     "stability-flags": {
         "elgg/sniffs": 20
     },
+    "prefer-stable": false,
     "platform": {
         "php": ">=5.3.3",
         "ext-mysql": "*",
