@@ -1,11 +1,6 @@
 <?php
 namespace Elgg\Notifications;
 
-// the Event class has a dependency on elgg_instance_of() and get_entity()
-$engine = dirname(dirname(dirname(dirname(dirname(__FILE__)))));
-require_once "$engine/lib/entities.php";
-
-
 class NotificationsServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp() {

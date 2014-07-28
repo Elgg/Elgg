@@ -1,11 +1,5 @@
 <?php
 namespace Elgg;
-// @codeCoverageIgnoreStart
-$engine = dirname(dirname(dirname(dirname(__FILE__))));
-// require_once "$engine/lib/configuration.php";
-require_once "$engine/lib/actions.php";
-// @codeCoverageIgnoreEnd
-
 
 class ActionsServiceTest extends \PHPUnit_Framework_TestCase {
 

@@ -1,9 +1,5 @@
 <?php
 
-// needed for detect_extender_valuetype()
-$engine = dirname(dirname(dirname(__FILE__)));
-require_once "$engine/lib/extender.php";
-
 class ElggExtenderTest extends \PHPUnit_Framework_TestCase {
 
 	public function testSettingAndGettingAttribute() {

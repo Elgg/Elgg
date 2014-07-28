@@ -1,8 +1,5 @@
 <?php
 
-$engine = dirname(dirname(dirname(__FILE__)));
-require_once "$engine/lib/output.php";
-
 /**
  * This requires elgg_get_logged_in_user_guid() in session.php, the access 
  * constants defined in entities.php, and elgg_normalize_url() in output.php

@@ -53,66 +53,7 @@ if (!include_once("$engine_dir/settings.php")) {
 	exit;
 }
 
-$lib_dir = "$engine_dir/lib";
-
-require_once("$lib_dir/autoloader.php");
-require_once("$lib_dir/elgglib.php");
-
-// load the rest of the library files from engine/lib/
-// All on separate lines to make diffs easy to read + make it apparent how much
-// we're actually loading on every page (Hint: it's too much).
-$lib_files = array(
-	'access.php',
-	'actions.php',
-	'admin.php',
-	'annotations.php',
-	'cache.php',
-	'comments.php',
-	'configuration.php',
-	'cron.php',
-	'database.php',
-	'entities.php',
-	'extender.php',
-	'filestore.php',
-	'friends.php',
-	'group.php',
-	'input.php',
-	'languages.php',
-	'mb_wrapper.php',
-	'memcache.php',
-	'metadata.php',
-	'metastrings.php',
-	'navigation.php',
-	'notification.php',
-	'objects.php',
-	'output.php',
-	'pagehandler.php',
-	'pageowner.php',
-	'pam.php',
-	'plugins.php',
-	'private_settings.php',
-	'relationships.php',
-	'river.php',
-	'sessions.php',
-	'sites.php',
-	'statistics.php',
-	'system_log.php',
-	'tags.php',
-	'user_settings.php',
-	'users.php',
-	'upgrade.php',
-	'views.php',
-	'widgets.php',
-
-	// backward compatibility
-	'deprecated-1.7.php',
-	'deprecated-1.8.php',
-	'deprecated-1.9.php',
-);
-
-foreach ($lib_files as $file) {
-	require_once("$lib_dir/$file");
-}
+require_once "$engine_dir/load.php";
 
 // Connect to database, load language files, load configuration, init session
 // Plugins can't use this event because they haven't been loaded yet.
