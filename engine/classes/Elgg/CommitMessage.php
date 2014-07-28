@@ -1,6 +1,16 @@
 <?php
+namespace Elgg;
 
-class ElggCommitMessage {
+
+/**
+ * Provides a structured format for parsing and examining our commit messages.
+ * 
+ * @package Elgg.Core
+ * @since   1.9
+ * 
+ * @access  private
+ */
+class CommitMessage {
 	/**
 	 * Valid parts of the message
 	 * The index is the index of the $matches array for regex
@@ -140,7 +150,10 @@ class ElggCommitMessage {
 
 	/**
 	 * Sets the active message
-	 * @param type $msg
+	 * 
+	 * @param string $msg The message content
+	 * 
+	 * @return void
 	 */
 	public function setMsg($msg) {
 		$this->originalMsg = $msg;
@@ -205,9 +218,8 @@ class ElggCommitMessage {
 	}
 	
 	/**
-	 * Is the overall format valid
-	 *
-	 * @param type $return_matches If true, will return
+	 * Whether the message format conforms to our standards.
+	 * 
 	 * @return boolean
 	 */
 	public function isValidFormat() {
@@ -265,7 +277,9 @@ class ElggCommitMessage {
 	 * Sets the max line length allowed.
 	 * Defaults to 160.
 	 *
-	 * @param int $len
+	 * @param int $len The maximum length.
+	 * 
+	 * @return void
 	 */
 	public function setMaxLineLength($len) {
 		$this->maxLineLength = (int)$len;
@@ -274,7 +288,8 @@ class ElggCommitMessage {
 	/**
 	 * Get part of the message
 	 *
-	 * @param string $part
+	 * @param string $part One section of the message.
+	 * 
 	 * @return string
 	 * @throws UnexpectedValueException
 	 */
@@ -289,7 +304,8 @@ class ElggCommitMessage {
 	/**
 	 * Removes all lines that start with #
 	 *
-	 * @param string $msg
+	 * @param string $msg The msg body of the commit
+	 * 
 	 * @return string
 	 */
 	public static function removeComments($msg) {
@@ -306,8 +322,9 @@ class ElggCommitMessage {
 	/**
 	 * Returns an array of line numbers > $max_len
 	 *
-	 * @param string $msg
-	 * @param int    $max_len
+	 * @param string $msg     The content to parse
+	 * @param int    $max_len Maximum length between \n in the $msg
+	 * 
 	 * @return array
 	 */
 	public static function findLengthyLines($msg, $max_len) {
@@ -324,6 +341,7 @@ class ElggCommitMessage {
 	}
 
 
+	/** @inheritDoc */
 	public function __toString() {
 		return $this->getMsg();
 	}
