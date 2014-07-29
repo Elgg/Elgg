@@ -1450,13 +1450,6 @@ function autoregister_views($view_base, $folder, $base_location_path, $viewtype)
  * @access private
  */
 function _elgg_views_minify($hook, $type, $content, $params) {
-	static $autoload_registered;
-	if (!$autoload_registered) {
-		$path = elgg_get_root_path() . 'vendors/minify/lib';
-		elgg_get_class_loader()->addFallback($path);
-		$autoload_registered = true;
-	}
-
 	if (preg_match('~[\.-]min\.~', $params['view'])) {
 		// bypass minification
 		return;
@@ -1468,7 +1461,7 @@ function _elgg_views_minify($hook, $type, $content, $params) {
 		}
 	} elseif ($type == 'css') {
 		if (elgg_get_config('simplecache_minify_css')) {
-			$cssmin = new CSSMin();
+			$cssmin = new CSSmin();
 			return $cssmin->run($content);
 		}
 	}
