@@ -66,10 +66,14 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 		
 		$text .= <<<___JS
 <script>
-	$('body').append('<' + 'script src="$embed->url"></' + 'script>');
-	$('body').append('<' + 'script src="$lightbox_js->url"></' + 'script>');
-	$('head').append('<link rel="stylesheet" href="$lightbox_css->url"></link>');
 	require(['jquery.form']);
+	if (typeof $.fancybox === 'undefined') {
+		$.getScript('$lightbox_js->url');
+		$('head').append('<link rel="stylesheet" href="$lightbox_css->url"></link>');
+	}
+	if (typeof elgg.embed === 'undefined') {
+		$.getScript('$embed->url');
+	}
 </script>
 ___JS;
 	}
