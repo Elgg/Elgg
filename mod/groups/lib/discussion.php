@@ -25,6 +25,7 @@ function discussion_handle_all_page() {
 	$params = array(
 		'content' => $content,
 		'title' => $title,
+		'sidebar' => elgg_view('discussion/sidebar'),
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
@@ -53,7 +54,7 @@ function discussion_handle_list_page($guid) {
 	elgg_register_title_button();
 
 	$title = elgg_echo('item:object:groupforumtopic');
-	
+
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'groupforumtopic',
@@ -68,6 +69,7 @@ function discussion_handle_list_page($guid) {
 	$params = array(
 		'content' => $content,
 		'title' => $title,
+		'sidebar' => elgg_view('discussion/sidebar'),
 		'filter' => '',
 	);
 
@@ -130,6 +132,7 @@ function discussion_handle_edit_page($type, $guid) {
 	$params = array(
 		'content' => $content,
 		'title' => $title,
+		'sidebar' => elgg_view('discussion/sidebar/edit'),
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
@@ -179,6 +182,7 @@ function discussion_handle_reply_edit_page($type, $guid) {
 	$params = array(
 		'content' => $content,
 		'title' => $title,
+		'sidebar' => elgg_view('discussion/sidebar/edit'),
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
@@ -234,6 +238,7 @@ function discussion_handle_view_page($guid) {
 	$params = array(
 		'content' => $content,
 		'title' => $topic->title,
+		'sidebar' => elgg_view('discussion/sidebar'),
 		'filter' => '',
 	);
 	$body = elgg_view_layout('content', $params);
