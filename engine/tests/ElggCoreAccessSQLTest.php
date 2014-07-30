@@ -5,9 +5,9 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
+class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
-	/** @var ElggUser */
+	/** @var \ElggUser */
 	protected $user;
 	
 	/**
@@ -16,7 +16,7 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 	public function __construct() {
 		parent::__construct();
 
-		$this->user = new ElggUser();
+		$this->user = new \ElggUser();
 		$this->user->username = 'fake_user_' . rand();
 		$this->user->email = 'fake_email@fake.com' . rand();
 		$this->user->name = 'fake user ' . rand();
@@ -34,7 +34,7 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 	public function setUp() {
 		// Replace current hook service with new instance for each test
 		$this->original_hooks = _elgg_services()->hooks;
-		_elgg_services()->hooks = new Elgg_PluginHooksService();
+		_elgg_services()->hooks = new \Elgg\PluginHooksService();
 	}
 
 	/**
@@ -122,7 +122,7 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 
 	public function testLoggedOutUser() {
 		$originalSession = _elgg_services()->session;
-		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
+		_elgg_services()->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
 
 		$sql = _elgg_get_access_where_sql();
 		$access_clause = $this->getLoggedOutAccessListClause('e');

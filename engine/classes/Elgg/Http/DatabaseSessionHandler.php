@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Http;
 
 /**
  * Database session handler
@@ -8,17 +9,17 @@
  * @package    Elgg.Core
  * @subpackage Http
  */
-class Elgg_Http_DatabaseSessionHandler implements Elgg_Http_SessionHandler {
+class DatabaseSessionHandler implements \Elgg\Http\SessionHandler {
 
-	/** @var Elgg_Database $db */
+	/** @var \Elgg\Database $db */
 	protected $db;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Elgg_Database $db The database
+	 * @param \Elgg\Database $db The database
 	 */
-	public function __construct(Elgg_Database $db) {
+	public function __construct(\Elgg\Database $db) {
 		$this->db = $db;
 	}
 
@@ -91,3 +92,4 @@ class Elgg_Http_DatabaseSessionHandler implements Elgg_Http_SessionHandler {
 	}
 
 }
+

@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 
 /**
  * Upgrade service for Elgg
@@ -11,7 +12,7 @@
  * @package    Elgg.Core
  * @subpackage Upgrade
  */
-class Elgg_UpgradeService {
+class UpgradeService {
 
 	/**
 	 * Run the upgrade process
@@ -98,7 +99,7 @@ class Elgg_UpgradeService {
 						$success = false;
 						error_log("Could not include $upgrade_path/$upgrade");
 					}
-				} catch (Exception $e) {
+				} catch (\Exception $e) {
 					$success = false;
 					error_log($e->getMessage());
 				}
@@ -251,7 +252,7 @@ class Elgg_UpgradeService {
 			system_message(elgg_echo('upgrade:core'));
 
 			// Now we trigger an event to give the option for plugins to do something
-			$upgrade_details = new stdClass;
+			$upgrade_details = new \stdClass;
 			$upgrade_details->from = $dbversion;
 			$upgrade_details->to = elgg_get_version();
 
@@ -404,7 +405,7 @@ class Elgg_UpgradeService {
 					if ($quiet) {
 						try {
 							run_sql_script($fromdir . $sqlfile);
-						} catch (DatabaseException $e) {
+						} catch (\DatabaseException $e) {
 							error_log($e->getmessage());
 						}
 					} else {
@@ -419,3 +420,4 @@ class Elgg_UpgradeService {
 	}
 
 }
+

@@ -25,7 +25,7 @@ function is_memcache_available() {
 	// If we haven't set variable to something
 	if (($memcache_available !== true) && ($memcache_available !== false)) {
 		try {
-			$tmp = new ElggMemcache();
+			$tmp = new \ElggMemcache();
 			// No exception thrown so we have memcache available
 			$memcache_available = true;
 		} catch (Exception $e) {
@@ -48,7 +48,7 @@ function _elgg_invalidate_memcache_for_entity($entity_guid) {
 	static $newentity_cache;
 	
 	if ((!$newentity_cache) && (is_memcache_available())) {
-		$newentity_cache = new ElggMemcache('new_entity_cache');
+		$newentity_cache = new \ElggMemcache('new_entity_cache');
 	}
 	
 	if ($newentity_cache) {

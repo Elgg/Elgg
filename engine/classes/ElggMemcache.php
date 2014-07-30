@@ -5,7 +5,7 @@
  * @package    Elgg.Core
  * @subpackage Memcache
  */
-class ElggMemcache extends ElggSharedMemoryCache {
+class ElggMemcache extends \ElggSharedMemoryCache {
 	/**
 	 * Minimum version of memcached needed to run
 	 *
@@ -42,7 +42,7 @@ class ElggMemcache extends ElggSharedMemoryCache {
 
 		// Do we have memcache?
 		if (!class_exists('Memcache')) {
-			throw new ConfigurationException('PHP memcache module not installed, you must install php5-memcache');
+			throw new \ConfigurationException('PHP memcache module not installed, you must install php5-memcache');
 		}
 
 		// Create memcache object
@@ -50,7 +50,7 @@ class ElggMemcache extends ElggSharedMemoryCache {
 
 		// Now add servers
 		if (!$CONFIG->memcache_servers) {
-			throw new ConfigurationException('No memcache servers defined, please populate the $CONFIG->memcache_servers variable');
+			throw new \ConfigurationException('No memcache servers defined, please populate the $CONFIG->memcache_servers variable');
 		}
 
 		if (is_callable(array($this->memcache, 'addServer'))) {
@@ -86,13 +86,13 @@ class ElggMemcache extends ElggSharedMemoryCache {
 
 		// Get version
 		$this->version = $this->memcache->getVersion();
-		if (version_compare($this->version, ElggMemcache::$MINSERVERVERSION, '<')) {
+		if (version_compare($this->version, \ElggMemcache::$MINSERVERVERSION, '<')) {
 			$msg = vsprintf('Memcache needs at least version %s to run, you are running %s',
-				array(ElggMemcache::$MINSERVERVERSION,
+				array(\ElggMemcache::$MINSERVERVERSION,
 				$this->version
 			));
 
-			throw new ConfigurationException($msg);
+			throw new \ConfigurationException($msg);
 		}
 
 		// Set some defaults

@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -11,7 +12,7 @@
  * @subpackage Actions
  * @since      1.9.0
  */
-class Elgg_ActionsService {
+class ActionsService {
 	
 	/**
 	 * Registered actions storage
@@ -200,7 +201,7 @@ class Elgg_ActionsService {
 	}
 
 	/**
-	 * @see Elgg_ActionsService::validateActionToken
+	 * @see \Elgg\ActionsService::validateActionToken
 	 * @access private
 	 * @since 1.9.0
 	 * @return int number of seconds that action token is valid
@@ -345,3 +346,4 @@ class Elgg_ActionsService {
 		return $this->actions;
 	}
 }
+

@@ -80,7 +80,7 @@ function site_notifications_set_topbar() {
  * @param array  $params Hook parameters
  */
 function site_notifications_send($hook, $type, $result, $params) {
-	/* @var Elgg_Notifications_Notification */
+	/* @var Elgg\Notifications\Notification */
 	$notification = $params['notification'];
 	if ($notification->summary) {
 		$message = $notification->summary;

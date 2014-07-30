@@ -5,9 +5,9 @@
 
 require dirname(dirname(dirname(dirname(__FILE__)))) . '/.scripts/ElggCommitMessage.php';
 
-class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
+class ElggCommitMessageTest extends \PHPUnit_Framework_TestCase {
 	public function assertInvalidCommitMessages(array $msgs) {
-		$msg = new ElggCommitMessage();
+		$msg = new \ElggCommitMessage();
 
 		foreach ($msgs as $text) {
 			$msg->setMsg($text);
@@ -39,7 +39,7 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 	
 	public function assertIgnoreCommitMessages(array $ignored) {
 		foreach ($ignored as $msg) {
-			$msg = new ElggCommitMessage($msg);
+			$msg = new \ElggCommitMessage($msg);
 			$this->assertTrue($msg->shouldIgnore(), $msg);
 		}
 	}
@@ -67,7 +67,7 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 	public function testCanParseMessagesWithoutBody() {
 		$text = "chore(test): Summary";
 		
-		$msg = new ElggCommitMessage($text);
+		$msg = new \ElggCommitMessage($text);
 
 		$this->assertTrue($msg->isValidFormat());
 		$this->assertSame('chore', $msg->getPart('type'));
@@ -78,7 +78,7 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 
 	public function testCanParseMessagesWithOneLineBody() {
 		$text = "chore(test): Summary\nOptional body";
-		$msg = new ElggCommitMessage($text);
+		$msg = new \ElggCommitMessage($text);
 
 		$this->assertTrue($msg->isValidFormat());
 		$this->assertSame('chore', $msg->getPart('type'));
@@ -98,7 +98,7 @@ Refs #789
 ___MSG;
 		$text = "$title\n$body";
 
-		$msg = new ElggCommitMessage($text);
+		$msg = new \ElggCommitMessage($text);
 
 		$this->assertTrue($msg->isValidFormat());
 		$this->assertSame('chore', $msg->getPart('type'));
@@ -109,7 +109,7 @@ ___MSG;
 
 	public function testIsValidLineLengthRejectsLinesOverTheMaxLineLength() {
 		$text = "chore(test): But with long line";
-		$msg = new ElggCommitMessage();
+		$msg = new \ElggCommitMessage();
 		$msg->setMaxLineLength(15);
 		$msg->setMsg($text);
 		$this->assertFalse($msg->isValidLineLength());
@@ -117,10 +117,10 @@ ___MSG;
 
 	public function testFindLengthyLinesFindsLinesOverTheMaxLineLength() {
 		$text = "This text is 33 characters long.";
-		$this->assertSame(array(1), ElggCommitMessage::findLengthyLines($text, 30));
+		$this->assertSame(array(1), \ElggCommitMessage::findLengthyLines($text, 30));
 
 		$text2 = 'This line is only 22.';
-		$this->assertSame(array(), ElggCommitMessage::findLengthyLines($text2, 30));
+		$this->assertSame(array(), \ElggCommitMessage::findLengthyLines($text2, 30));
 
 		$text3 = <<<___TEXT
 This has multiple lines.
@@ -128,7 +128,7 @@ Some of which are not really very long at all.
 Some are.
 ___TEXT;
 
-		$this->assertSame(array(2), ElggCommitMessage::findLengthyLines($text3, 30));
+		$this->assertSame(array(2), \ElggCommitMessage::findLengthyLines($text3, 30));
 	}
 
 	public function testGetLengthyLinesFindsLinesOverTheMaxLineLength() {
@@ -139,17 +139,17 @@ The long line is down here. This line is much longer than the other.
 And this one is short.
 But here we go again with another long line.
 ___MSG;
-		$msg = new ElggCommitMessage();
+		$msg = new \ElggCommitMessage();
 		$msg->setMaxLineLength(40);
 		$msg->setMsg($text);
 		$this->assertSame(array(3, 5), $msg->getLengthyLines());
 	}
 
 	public function testIsValidTypeReturnsTrueForValidTypes() {
-		$types = ElggCommitMessage::getValidTypes();
+		$types = \ElggCommitMessage::getValidTypes();
 
 		foreach ($types as $type) {
-			$msg = new ElggCommitMessage("{$type}(component): Summary");
+			$msg = new \ElggCommitMessage("{$type}(component): Summary");
 			$this->assertTrue($msg->isValidType(), "Invalid type `$type`.");
 		}
 	}
@@ -163,6 +163,6 @@ And more text
 ___TEXT;
 
 		$expected = "These are lines of text\nAnd more text";
-		$this->assertSame($expected, ElggCommitMessage::removeComments($text));
+		$this->assertSame($expected, \ElggCommitMessage::removeComments($text));
 	}
 }

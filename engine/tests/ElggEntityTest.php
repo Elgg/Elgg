@@ -1,12 +1,12 @@
 <?php
 /**
- * Test ElggEntity
+ * Test \ElggEntity
  *
  */
-class ElggCoreEntityTest extends ElggCoreUnitTest {
+class ElggCoreEntityTest extends \ElggCoreUnitTest {
 
 	/**
-	 * @var ElggEntity
+	 * @var \ElggEntity
 	 */
 	protected $entity;
 
@@ -14,8 +14,8 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		// use ElggObject since ElggEntity is an abstract class
-		$this->entity = new ElggObject();
+		// use \ElggObject since \ElggEntity is an abstract class
+		$this->entity = new \ElggObject();
 		$this->entity->subtype = 'elgg_entity_test_subtype';
 		$this->entity->save();
 	}
@@ -65,7 +65,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 
 	public function testSubtypeAddRemove() {
 		$test_subtype = 'test_1389988642';
-		$object = new ElggObject();
+		$object = new \ElggObject();
 		$object->subtype = $test_subtype;
 		$object->save();
 
@@ -83,7 +83,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 		// save entity and check for annotation
 		$this->entity->annotate('non_existent', 'foo');
 		$annotations = $this->entity->getAnnotations(array('annotation_name' => 'non_existent'));
-		$this->assertIsA($annotations[0], 'ElggAnnotation');
+		$this->assertIsA($annotations[0], '\ElggAnnotation');
 		$this->assertIdentical($annotations[0]->name, 'non_existent');
 		$this->assertEqual($this->entity->countAnnotations('non_existent'), 1);
 
@@ -151,10 +151,10 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 	public function testElggEntityRecursiveDisableAndEnable() {
 		global $CONFIG;
 
-		$obj1 = new ElggObject();
+		$obj1 = new \ElggObject();
 		$obj1->container_guid = $this->entity->getGUID();
 		$obj1->save();
-		$obj2 = new ElggObject();
+		$obj2 = new \ElggObject();
 		$obj2->container_guid = $this->entity->getGUID();
 		$obj2->save();
 
@@ -205,7 +205,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggEntityMultipleMetadata() {
-		foreach (array($this->entity, new ElggObject()) as $obj) {
+		foreach (array($this->entity, new \ElggObject()) as $obj) {
 			$md = array('brett', 'bryan', 'brad');
 			$name = 'test_md_' . rand();
 
@@ -216,7 +216,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggEntitySingleElementArrayMetadata() {
-		foreach (array($this->entity, new ElggObject()) as $obj) {
+		foreach (array($this->entity, new \ElggObject()) as $obj) {
 			$md = array('test');
 			$name = 'test_md_' . rand();
 
@@ -227,7 +227,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggEntityAppendMetadata() {
-		foreach (array($this->entity, new ElggObject()) as $obj) {
+		foreach (array($this->entity, new \ElggObject()) as $obj) {
 			$md = 'test';
 			$name = 'test_md_' . rand();
 
@@ -239,7 +239,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggEntitySingleElementArrayAppendMetadata() {
-		foreach (array($this->entity, new ElggObject()) as $obj) {
+		foreach (array($this->entity, new \ElggObject()) as $obj) {
 			$md = 'test';
 			$name = 'test_md_' . rand();
 
@@ -251,7 +251,7 @@ class ElggCoreEntityTest extends ElggCoreUnitTest {
 	}
 
 	public function testElggEntityArrayAppendMetadata() {
-		foreach (array($this->entity, new ElggObject()) as $obj) {
+		foreach (array($this->entity, new \ElggObject()) as $obj) {
 			$md = array('brett', 'bryan', 'brad');
 			$md2 = array('test1', 'test2', 'test3');
 			$name = 'test_md_' . rand();

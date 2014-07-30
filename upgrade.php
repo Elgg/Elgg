@@ -37,7 +37,7 @@ if (strpos($forward_url, '/') !== 0) {
 
 if (get_input('upgrade') == 'upgrade') {
 
-	$upgrader = new Elgg_UpgradeService();
+	$upgrader = new \Elgg\UpgradeService();
 	$result = $upgrader->run();
 	if ($result['failure'] == true) {
 		register_error($result['reason']);
@@ -48,7 +48,7 @@ if (get_input('upgrade') == 'upgrade') {
 	if (!class_exists('ElggRewriteTester')) {
 		require dirname(__FILE__) . '/install/ElggRewriteTester.php';
 	}
-	$rewriteTester = new ElggRewriteTester();
+	$rewriteTester = new \ElggRewriteTester();
 	$url = elgg_get_site_url() . "__testing_rewrite?__testing_rewrite=1";
 	if (!$rewriteTester->runRewriteTest($url)) {
 		// see if there is a problem accessing the site at all

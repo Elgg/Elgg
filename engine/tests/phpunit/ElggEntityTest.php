@@ -7,15 +7,15 @@ require_once "$engine/lib/output.php";
  * This requires elgg_get_logged_in_user_guid() in session.php, the access 
  * constants defined in entities.php, and elgg_normalize_url() in output.php
  */
-class ElggEntityTest extends PHPUnit_Framework_TestCase {
+class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 
-	/** @var ElggEntity */
+	/** @var \ElggEntity */
 	protected $obj;
 
 	protected function setUp() {
-		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
-		$this->obj = $this->getMockForAbstractClass('ElggEntity');
-		$reflection = new ReflectionClass('ElggEntity');
+		_elgg_services()->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
+		$this->obj = $this->getMockForAbstractClass('\ElggEntity');
+		$reflection = new ReflectionClass('\ElggEntity');
 		$method = $reflection->getMethod('initializeAttributes');
 		if (method_exists($method, 'setAccessible')) {
 			$method->setAccessible(true);
@@ -124,7 +124,7 @@ class ElggEntityTest extends PHPUnit_Framework_TestCase {
 	 * @expectedException InvalidParameterException
 	 */
 	public function testSaveWithoutType() {
-		$db = $this->getMock('Elgg_Database',
+		$db = $this->getMock('\Elgg\Database',
 			array('getData', 'getTablePrefix', 'sanitizeString'),
 			array(),
 			'',

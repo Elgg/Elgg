@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 /**
  * Class used to determine if access is being ignored.
  *
@@ -9,7 +10,7 @@
  *
  * @todo       I don't remember why this was required beyond scope concerns.
  */
-class Elgg_Access {
+class Access {
 	/**
 	 * Bypass Elgg's access control if true.
 	 * @var bool
@@ -21,10 +22,10 @@ class Elgg_Access {
 	 * Get current ignore access setting.
 	 *
 	 * @return bool
-	 * @deprecated 1.8 Use Elgg_Access::getIgnoreAccess()
+	 * @deprecated 1.8 Use \Elgg\Access::getIgnoreAccess()
 	 */
 	public function get_ignore_access() {
-		elgg_deprecated_notice('Elgg_Access::get_ignore_access() is deprecated by Elgg_Access::getIgnoreAccess()', 1.8);
+		elgg_deprecated_notice('\Elgg\Access::get_ignore_access() is deprecated by \Elgg\Access::getIgnoreAccess()', 1.8);
 		return $this->getIgnoreAccess();
 	}
 	// @codingStandardsIgnoreEnd
@@ -46,10 +47,10 @@ class Elgg_Access {
 	 *
 	 * @return bool Previous setting
 	 *
-	 * @deprecated 1.8 Use Elgg_Access:setIgnoreAccess()
+	 * @deprecated 1.8 Use \Elgg\Access:setIgnoreAccess()
 	 */
 	public function set_ignore_access($ignore = true) {
-		elgg_deprecated_notice('Elgg_Access::set_ignore_access() is deprecated by Elgg_Access::setIgnoreAccess()', 1.8);
+		elgg_deprecated_notice('\Elgg\Access::set_ignore_access() is deprecated by \Elgg\Access::setIgnoreAccess()', 1.8);
 		return $this->setIgnoreAccess($ignore);
 	}
 	// @codingStandardsIgnoreEnd
@@ -68,3 +69,4 @@ class Elgg_Access {
 		return $prev;
 	}
 }
+

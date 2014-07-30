@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Http;
 
 /**
  * Based on Symfony2's ParameterBag.
@@ -32,7 +33,7 @@
  * @package    Elgg.Core
  * @subpackage Http
  */
-class Elgg_Http_ParameterBag implements IteratorAggregate, Countable {
+class ParameterBag implements \IteratorAggregate, \Countable {
 
 	/**
 	 * Parameter storage.
@@ -98,7 +99,7 @@ class Elgg_Http_ParameterBag implements IteratorAggregate, Countable {
 	 *
 	 * @return mixed
 	 *
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 */
 	public function get($path, $default = null, $deep = false) {
 		if (!$deep || false === $pos = strpos($path, '[')) {
@@ -117,13 +118,13 @@ class Elgg_Http_ParameterBag implements IteratorAggregate, Countable {
 
 			if ('[' === $char) {
 				if (null !== $currentKey) {
-					throw new InvalidArgumentException(sprintf('Malformed path. Unexpected "[" at position %d.', $i));
+					throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "[" at position %d.', $i));
 				}
 
 				$currentKey = '';
 			} elseif (']' === $char) {
 				if (null === $currentKey) {
-					throw new InvalidArgumentException(sprintf('Malformed path. Unexpected "]" at position %d.', $i));
+					throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "]" at position %d.', $i));
 				}
 
 				if (!is_array($value) || !array_key_exists($currentKey, $value)) {
@@ -134,7 +135,7 @@ class Elgg_Http_ParameterBag implements IteratorAggregate, Countable {
 				$currentKey = null;
 			} else {
 				if (null === $currentKey) {
-					throw new InvalidArgumentException(sprintf('Malformed path. Unexpected "%s" at position %d.', $char, $i));
+					throw new \InvalidArgumentException(sprintf('Malformed path. Unexpected "%s" at position %d.', $char, $i));
 				}
 
 				$currentKey .= $char;
@@ -142,7 +143,7 @@ class Elgg_Http_ParameterBag implements IteratorAggregate, Countable {
 		}
 
 		if (null !== $currentKey) {
-			throw new InvalidArgumentException(sprintf('Malformed path. Path must end with "]".'));
+			throw new \InvalidArgumentException(sprintf('Malformed path. Path must end with "]".'));
 		}
 
 		return $value;
@@ -265,10 +266,10 @@ class Elgg_Http_ParameterBag implements IteratorAggregate, Countable {
 	/**
 	 * Returns an iterator for parameters.
 	 *
-	 * @return ArrayIterator
+	 * @return \ArrayIterator
 	 */
 	public function getIterator() {
-		return new ArrayIterator($this->parameters);
+		return new \ArrayIterator($this->parameters);
 	}
 
 	/**
@@ -281,3 +282,4 @@ class Elgg_Http_ParameterBag implements IteratorAggregate, Countable {
 	}
 
 }
+

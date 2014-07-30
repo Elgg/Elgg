@@ -659,7 +659,7 @@ function elgg_view_layout($layout_name, $vars = array()) {
  *                                  'register' (registration order) or a
  *                                  php callback (a compare function for usort)
  *                              handler: string the page handler to build action URLs
- *                              entity: ElggEntity to use to build action URLs
+ *                              entity: \ElggEntity to use to build action URLs
  *                              class: string the class for the entire menu.
  *                              show_section_headers: bool show headers before menu sections.
  *
@@ -683,7 +683,7 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 	// This supports dynamic menus (example: user_hover).
 	$menu = elgg_trigger_plugin_hook('register', "menu:$menu_name", $vars, $menu);
 
-	$builder = new ElggMenuBuilder($menu);
+	$builder = new \ElggMenuBuilder($menu);
 	$vars['menu'] = $builder->getMenu($sort_by);
 	$vars['selected_item'] = $builder->getSelected();
 
@@ -700,12 +700,12 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 /**
  * Render a menu item (usually as a link)
  *
- * @param ElggMenuItem $item The menu item
- * @param array        $vars Options to pass to output/url if a link
+ * @param \ElggMenuItem $item The menu item
+ * @param array         $vars Options to pass to output/url if a link
  * @return string
  * @since 1.9.0
  */
-function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
+function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
 	if (!isset($vars['class'])) {
 		$vars['class'] = 'elgg-menu-content';
 	}
@@ -750,7 +750,7 @@ function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
  * using the $type/default view.
  *
  * The entity view is called with the following in $vars:
- *  - ElggEntity 'entity' The entity being viewed
+ *  - \ElggEntity 'entity' The entity being viewed
  *
  * Other common view $vars paramters:
  *  - bool 'full_view' Whether to show a full or condensed view. (Default: true)
@@ -759,20 +759,20 @@ function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
  * view and a handler is registered for the entity:annotate.  See https://github.com/Elgg/Elgg/issues/964 and
  * {@link elgg_view_entity_annotations()}.
  *
- * @param ElggEntity $entity The entity to display
- * @param array      $vars   Array of variables to pass to the entity view.
- *                           In Elgg 1.7 and earlier it was the boolean $full_view
- * @param boolean    $bypass If true, will not pass to a custom template handler.
- *                           {@link set_template_handler()}
- * @param boolean    $debug  Complain if views are missing
+ * @param \ElggEntity $entity The entity to display
+ * @param array       $vars   Array of variables to pass to the entity view.
+ *                            In Elgg 1.7 and earlier it was the boolean $full_view
+ * @param boolean     $bypass If true, will not pass to a custom template handler.
+ *                            {@link set_template_handler()}
+ * @param boolean     $debug  Complain if views are missing
  *
  * @return string HTML to display or false
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
-function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = false, $debug = false) {
+function elgg_view_entity(\ElggEntity $entity, $vars = array(), $bypass = false, $debug = false) {
 
 	// No point continuing if entity is null
-	if (!$entity || !($entity instanceof ElggEntity)) {
+	if (!$entity || !($entity instanceof \ElggEntity)) {
 		return false;
 	}
 
@@ -833,18 +833,18 @@ function elgg_view_entity(ElggEntity $entity, $vars = array(), $bypass = false, 
  * Entities that do not have a defined icon/$type/$subtype view will fall back to using
  * the icon/$type/default view.
  *
- * @param ElggEntity $entity The entity to display
- * @param string     $size   The size: tiny, small, medium, large
- * @param array      $vars   An array of variables to pass to the view. Some possible
- *                           variables are img_class and link_class. See the
- *                           specific icon view for more parameters.
+ * @param \ElggEntity $entity The entity to display
+ * @param string      $size   The size: tiny, small, medium, large
+ * @param array       $vars   An array of variables to pass to the view. Some possible
+ *                            variables are img_class and link_class. See the
+ *                            specific icon view for more parameters.
  *
  * @return string HTML to display or false
  */
-function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = array()) {
+function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = array()) {
 
 	// No point continuing if entity is null
-	if (!$entity || !($entity instanceof ElggEntity)) {
+	if (!$entity || !($entity instanceof \ElggEntity)) {
 		return false;
 	}
 
@@ -882,17 +882,17 @@ function elgg_view_entity_icon(ElggEntity $entity, $size = 'medium', $vars = arr
  * @warning annotation/default is not currently defined in core.
  *
  * The annotation view is called with the following in $vars:
- *  - ElggEntity 'annotation' The annotation being viewed.
+ *  - \ElggEntity 'annotation' The annotation being viewed.
  *
- * @param ElggAnnotation $annotation The annotation to display
- * @param array          $vars       Variable array for view.
- * @param bool           $bypass     If true, will not pass to a custom
- *                                   template handler. {@link set_template_handler()}
- * @param bool           $debug      Complain if views are missing
+ * @param \ElggAnnotation $annotation The annotation to display
+ * @param array           $vars       Variable array for view.
+ * @param bool            $bypass     If true, will not pass to a custom
+ *                                    template handler. {@link set_template_handler()}
+ * @param bool            $debug      Complain if views are missing
  *
  * @return string/false Rendered annotation
  */
-function elgg_view_annotation(ElggAnnotation $annotation, array $vars = array(), $bypass = false, $debug = false) {
+function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array(), $bypass = false, $debug = false) {
 	global $autofeed;
 	$autofeed = true;
 
@@ -1051,14 +1051,14 @@ function elgg_view_annotation_list($annotations, array $vars = array()) {
  *
  * This is called automatically by the framework from {@link elgg_view_entity()}
  *
- * @param ElggEntity $entity    Entity
- * @param bool       $full_view Display full view?
+ * @param \ElggEntity $entity    Entity
+ * @param bool        $full_view Display full view?
  *
  * @return mixed string or false on failure
  * @todo Change the hook name.
  */
-function elgg_view_entity_annotations(ElggEntity $entity, $full_view = true) {
-	if (!($entity instanceof ElggEntity)) {
+function elgg_view_entity_annotations(\ElggEntity $entity, $full_view = true) {
+	if (!($entity instanceof \ElggEntity)) {
 		return false;
 	}
 
@@ -1117,14 +1117,14 @@ function elgg_view_friendly_time($time) {
  * for the comments, $entity_type hook.  The handler is responsible
  * for formatting the comments and the add comment form.
  *
- * @param ElggEntity $entity      The entity to view comments of
- * @param bool       $add_comment Include a form to add comments?
- * @param array      $vars        Variables to pass to comment view
+ * @param \ElggEntity $entity      The entity to view comments of
+ * @param bool        $add_comment Include a form to add comments?
+ * @param array       $vars        Variables to pass to comment view
  *
  * @return string|false Rendered comments or false on failure
  */
 function elgg_view_comments($entity, $add_comment = true, array $vars = array()) {
-	if (!($entity instanceof ElggEntity)) {
+	if (!($entity instanceof \ElggEntity)) {
 		return false;
 	}
 
@@ -1187,13 +1187,13 @@ function elgg_view_module($type, $title, $body, array $vars = array()) {
 /**
  * Renders a human-readable representation of a river item
  *
- * @param ElggRiverItem $item A river item object
- * @param array         $vars An array of variables for the view
+ * @param \ElggRiverItem $item A river item object
+ * @param array          $vars An array of variables for the view
  *
  * @return string returns empty string if could not be rendered
  */
 function elgg_view_river_item($item, array $vars = array()) {
-	if (!($item instanceof ElggRiverItem)) {
+	if (!($item instanceof \ElggRiverItem)) {
 		return '';
 	}
 	// checking default viewtype since some viewtypes do not have unique views per item (rss)
@@ -1214,7 +1214,7 @@ function elgg_view_river_item($item, array $vars = array()) {
 	// see https://github.com/elgg/elgg/issues/4789
 	//	else {
 	//		// hide based on object's container
-	//		$visibility = Elgg_GroupItemVisibility::factory($object->container_guid);
+	//		$visibility = \Elgg\GroupItemVisibility::factory($object->container_guid);
 	//		if ($visibility->shouldHideItems) {
 	//			return '';
 	//		}
@@ -1317,7 +1317,7 @@ function elgg_view_tagcloud(array $options = array()) {
 /**
  * View an item in a list
  *
- * @param ElggEntity|ElggAnnotation $item
+ * @param \ElggEntity|\ElggAnnotation $item
  * @param array  $vars Additional parameters for the rendering
  *
  * @return string
@@ -1480,7 +1480,7 @@ function _elgg_views_minify($hook, $type, $content, $params) {
  * @access private
  */
 function _elgg_views_amd($hook, $type, $content, $params) {
-	$filter = new Elgg_Amd_ViewFilter();
+	$filter = new \Elgg\Amd\ViewFilter();
 	return $filter->filter($params['view'], $content);
 }
 

@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreRiverAPITest extends ElggCoreUnitTest {
+class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
 
 	public function testElggCreateRiverItemWorks() {
 		$entity = elgg_get_entities(array('limit' => 1));
@@ -100,10 +100,10 @@ class ElggCoreRiverAPITest extends ElggCoreUnitTest {
 	}
 	
 	public function testElggRiverDisableEnable() {
-		$user = new ElggUser();
+		$user = new \ElggUser();
 		$user->save();
 		
-		$entity = new ElggObject();
+		$entity = new \ElggObject();
 		$entity->save();
 		
 		$params = array(

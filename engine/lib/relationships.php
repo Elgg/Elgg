@@ -7,16 +7,16 @@
  */
 
 /**
- * Convert a database row to a new ElggRelationship
+ * Convert a database row to a new \ElggRelationship
  *
- * @param stdClass $row Database row from the relationship table
+ * @param \stdClass $row Database row from the relationship table
  *
- * @return ElggRelationship|false
+ * @return \ElggRelationship|false
  * @access private
  */
 function row_to_elggrelationship($row) {
-	if ($row instanceof stdClass) {
-		return new ElggRelationship($row);
+	if ($row instanceof \stdClass) {
+		return new \ElggRelationship($row);
 	}
 
 	return false;
@@ -27,7 +27,7 @@ function row_to_elggrelationship($row) {
  *
  * @param int $id The relationship ID
  *
- * @return ElggRelationship|false False if not found
+ * @return \ElggRelationship|false False if not found
  */
 function get_relationship($id) {
 	$row = _elgg_get_relationship_row($id);
@@ -35,7 +35,7 @@ function get_relationship($id) {
 		return false;
 	}
 
-	return new ElggRelationship($row);
+	return new \ElggRelationship($row);
 }
 
 /**
@@ -43,7 +43,7 @@ function get_relationship($id) {
  *
  * @param int $id The relationship ID
  *
- * @return stdClass|false False if no row found
+ * @return \stdClass|false False if no row found
  * @access private
  */
 function _elgg_get_relationship_row($id) {
@@ -91,8 +91,8 @@ function delete_relationship($id) {
 function add_entity_relationship($guid_one, $relationship, $guid_two) {
 	global $CONFIG;
 
-	if (strlen($relationship) > ElggRelationship::RELATIONSHIP_LIMIT) {
-		$msg = "relationship name cannot be longer than " . ElggRelationship::RELATIONSHIP_LIMIT;
+	if (strlen($relationship) > \ElggRelationship::RELATIONSHIP_LIMIT) {
+		$msg = "relationship name cannot be longer than " . \ElggRelationship::RELATIONSHIP_LIMIT;
 		throw InvalidArgumentException($msg);
 	}
 
@@ -136,7 +136,7 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
  * @param string $relationship Type of the relationship
  * @param int    $guid_two     GUID of the target entity of the relationship
  *
- * @return ElggRelationship|false Depending on success
+ * @return \ElggRelationship|false Depending on success
  */
 function check_entity_relationship($guid_one, $relationship, $guid_two) {
 	global $CONFIG;
@@ -252,7 +252,7 @@ function remove_entity_relationships($guid, $relationship = "", $inverse_relatio
  * @param bool $inverse_relationship Is $guid the target of the deleted relationships? By default $guid is
  *                                   the subject of the relationships.
  *
- * @return ElggRelationship[]
+ * @return \ElggRelationship[]
  */
 function get_entity_relationships($guid, $inverse_relationship = false) {
 	global $CONFIG;
@@ -298,7 +298,7 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
  *                          2. use 'owner_guid' if you want the entities the user's friends own (including in groups)
  *                          3. use 'container_guid' if you want the entities in the user's personal space (non-group)
  *
- * @return ElggEntity[]|mixed If count, int. If not count, array. false on errors.
+ * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_relationship($options) {
@@ -422,7 +422,7 @@ function elgg_list_entities_from_relationship(array $options = array()) {
  *
  * @param array $options An options array compatible with elgg_get_entities_from_relationship()
  *
- * @return ElggEntity[]|int|boolean If count, int. If not count, array. false on errors.
+ * @return \ElggEntity[]|int|boolean If count, int. If not count, array. false on errors.
  * @since 1.8.0
  */
 function elgg_get_entities_from_relationship_count(array $options = array()) {

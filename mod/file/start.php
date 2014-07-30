@@ -187,9 +187,9 @@ function file_register_toggle() {
  * 
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
- * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param Elgg\Notifications\Notification $notification The notification to prepare
  * @param array                           $params       Hook parameters
- * @return Elgg_Notifications_Notification
+ * @return Elgg\Notifications\Notification
  */
 function file_prepare_notification($hook, $type, $notification, $params) {
 	$entity = $params['event']->getObject();

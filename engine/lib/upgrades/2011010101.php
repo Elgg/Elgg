@@ -1,6 +1,6 @@
 <?php
 /**
- * Migrate plugins to the new system using ElggPlugin and private settings
+ * Migrate plugins to the new system using \ElggPlugin and private settings
  */
 
 $old_ia = elgg_set_ignore_access(true);

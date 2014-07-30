@@ -30,12 +30,12 @@ function full_url() {
  *
  * @return bool Depending on success
  * @see get_entity_url()
- * @see ElggEntity::getURL()
+ * @see \ElggEntity::getURL()
  * @since 1.8.0
- * @deprecated 1.9.0 Use the plugin hook in ElggEntity::getURL()
+ * @deprecated 1.9.0 Use the plugin hook in \ElggEntity::getURL()
  */
 function elgg_register_entity_url_handler($entity_type, $entity_subtype, $function_name) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use the plugin hook in ElggEntity::getURL()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use the plugin hook in \ElggEntity::getURL()', 1.9);
 	global $CONFIG;
 
 	if (!is_callable($function_name, true)) {
@@ -62,7 +62,7 @@ function elgg_register_entity_url_handler($entity_type, $entity_subtype, $functi
  * @param string $function_name     The function to register
  *
  * @return bool Depending on success
- * @deprecated 1.9 Use the plugin hook in ElggRelationship::getURL()
+ * @deprecated 1.9 Use the plugin hook in \ElggRelationship::getURL()
  */
 function elgg_register_relationship_url_handler($relationship_type, $function_name) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use the plugin hook in getURL()', 1.9);
@@ -87,10 +87,10 @@ function elgg_register_relationship_url_handler($relationship_type, $function_na
  * @param int $id Relationship ID
  *
  * @return string
- * @deprecated 1.9 Use ElggRelationship::getURL()
+ * @deprecated 1.9 Use \ElggRelationship::getURL()
  */
 function get_relationship_url($id) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggRelationship::getURL()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggRelationship::getURL()', 1.9);
 	global $CONFIG;
 
 	$id = (int)$id;
@@ -137,7 +137,7 @@ function get_relationship_url($id) {
  * @param string $function_name The function to register
  *
  * @return bool
- * @deprecated 1.9 Use plugin hook in ElggExtender::getURL()
+ * @deprecated 1.9 Use plugin hook in \ElggExtender::getURL()
  */
 function elgg_register_extender_url_handler($extender_type, $extender_name, $function_name) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use the plugin hook in getURL()', 1.9, 2);
@@ -163,13 +163,13 @@ function elgg_register_extender_url_handler($extender_type, $extender_name, $fun
  * Get the URL of a given elgg extender.
  * Used by get_annotation_url and get_metadata_url.
  *
- * @param ElggExtender $extender An extender object
+ * @param \ElggExtender $extender An extender object
  *
  * @return string
  * @deprecated 1.9 Use method getURL()
  */
-function get_extender_url(ElggExtender $extender) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggExtender::getURL()', 1.9);
+function get_extender_url(\ElggExtender $extender) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggExtender::getURL()', 1.9);
 	global $CONFIG;
 
 	$view = elgg_get_viewtype();
@@ -216,7 +216,7 @@ function get_extender_url(ElggExtender $extender) {
  * @deprecated 1.9 Use method getURL() on annotation object
  */
 function get_annotation_url($id) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggAnnotation::getURL()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggAnnotation::getURL()', 1.9);
 	$id = (int)$id;
 
 	if ($extender = elgg_get_annotation_from_id($id)) {
@@ -232,7 +232,7 @@ function get_annotation_url($id) {
  * @param string $function      The function name.
  *
  * @return bool
- * @deprecated 1.9 Use the plugin hook in ElggExtender::getURL()
+ * @deprecated 1.9 Use the plugin hook in \ElggExtender::getURL()
  */
 function elgg_register_metadata_url_handler($extender_name, $function) {
 	// deprecation notice comes from elgg_register_extender_url_handler()
@@ -246,7 +246,7 @@ function elgg_register_metadata_url_handler($extender_name, $function) {
  * @param string $function_name The function.
  *
  * @return string
- * @deprecated 1.9 Use the plugin hook in ElggExtender::getURL()
+ * @deprecated 1.9 Use the plugin hook in \ElggExtender::getURL()
  */
 function elgg_register_annotation_url_handler($extender_name = "all", $function_name) {
 	// deprecation notice comes from elgg_register_extender_url_handler()
@@ -263,10 +263,10 @@ function elgg_register_annotation_url_handler($extender_name = "all", $function_
  * @param bool $count      Return the users (false) or the count of them (true)
  *
  * @return mixed
- * @deprecated 1.9 Use ElggGroup::getMembers()
+ * @deprecated 1.9 Use \ElggGroup::getMembers()
  */
 function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0, $count = false) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggGroup::getMembers()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggGroup::getMembers()', 1.9);
 
 	// in 1.7 0 means "not set."  rewrite to make sense.
 	if (!$site_guid) {
@@ -289,14 +289,14 @@ function get_group_members($group_guid, $limit = 10, $offset = 0, $site_guid = 0
  * Add an object to the given group.
  *
  * @param int $group_guid  The group to add the object to.
- * @param int $object_guid The guid of the elgg object (must be ElggObject or a child thereof)
+ * @param int $object_guid The guid of the elgg object (must be \ElggObject or a child thereof)
  *
  * @return bool
  * @throws InvalidClassException
- * @deprecated 1.9 Use ElggGroup::addObjectToGroup()
+ * @deprecated 1.9 Use \ElggGroup::addObjectToGroup()
  */
 function add_object_to_group($group_guid, $object_guid) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggGroup::addObjectToGroup()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggGroup::addObjectToGroup()', 1.9);
 	$group_guid = (int)$group_guid;
 	$object_guid = (int)$object_guid;
 
@@ -307,14 +307,14 @@ function add_object_to_group($group_guid, $object_guid) {
 		return false;
 	}
 
-	if (!($group instanceof ElggGroup)) {
-		$msg = "GUID:" . $group_guid . " is not a valid " . 'ElggGroup';
-		throw new InvalidClassException($msg);
+	if (!($group instanceof \ElggGroup)) {
+		$msg = "GUID:" . $group_guid . " is not a valid " . '\ElggGroup';
+		throw new \InvalidClassException($msg);
 	}
 
-	if (!($object instanceof ElggObject)) {
-		$msg = "GUID:" . $object_guid . " is not a valid " . 'ElggObject';
-		throw new InvalidClassException($msg);
+	if (!($object instanceof \ElggObject)) {
+		$msg = "GUID:" . $object_guid . " is not a valid " . '\ElggObject';
+		throw new \InvalidClassException($msg);
 	}
 
 	$object->container_guid = $group_guid;
@@ -329,10 +329,10 @@ function add_object_to_group($group_guid, $object_guid) {
  *
  * @return bool
  * @throws InvalidClassException
- * @deprecated 1.9 Use ElggGroup::removeObjectFromGroup()
+ * @deprecated 1.9 Use \ElggGroup::removeObjectFromGroup()
  */
 function remove_object_from_group($group_guid, $object_guid) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggGroup::removeObjectFromGroup()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggGroup::removeObjectFromGroup()', 1.9);
 	$group_guid = (int)$group_guid;
 	$object_guid = (int)$object_guid;
 
@@ -343,14 +343,14 @@ function remove_object_from_group($group_guid, $object_guid) {
 		return false;
 	}
 
-	if (!($group instanceof ElggGroup)) {
-		$msg = "GUID:" . $group_guid . " is not a valid " . 'ElggGroup';
-		throw new InvalidClassException($msg);
+	if (!($group instanceof \ElggGroup)) {
+		$msg = "GUID:" . $group_guid . " is not a valid " . '\ElggGroup';
+		throw new \InvalidClassException($msg);
 	}
 
-	if (!($object instanceof ElggObject)) {
-		$msg = "GUID:" . $object_guid . " is not a valid " . 'ElggObject';
-		throw new InvalidClassException($msg);
+	if (!($object instanceof \ElggObject)) {
+		$msg = "GUID:" . $object_guid . " is not a valid " . '\ElggObject';
+		throw new \InvalidClassException($msg);
 	}
 
 	$object->container_guid = $object->owner_guid;
@@ -364,10 +364,10 @@ function remove_object_from_group($group_guid, $object_guid) {
  * @param int $user_guid  The user guid
  *
  * @return bool
- * @deprecated 1.9 Use Use ElggGroup::isMember()
+ * @deprecated 1.9 Use Use \ElggGroup::isMember()
  */
 function is_group_member($group_guid, $user_guid) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggGroup::isMember()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggGroup::isMember()', 1.9);
 	$object = check_entity_relationship($user_guid, 'member', $group_guid);
 	if ($object) {
 		return true;
@@ -383,10 +383,10 @@ function is_group_member($group_guid, $user_guid) {
  * @param int $user_guid GUID of user
  *
  * @return array|false
- * @deprecated 1.9 Use ElggUser::getGroups()
+ * @deprecated 1.9 Use \ElggUser::getGroups()
  */
 function get_users_membership($user_guid) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::getGroups()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::getGroups()', 1.9);
 	$options = array(
 		'type' => 'group',
 		'relationship' => 'member',
@@ -404,10 +404,10 @@ function get_users_membership($user_guid) {
  * @param int $friend_guid The GUID of the friend
  *
  * @return bool
- * @deprecated 1.9 Use ElggUser::isFriendsOf() or ElggUser::isFriendsWith()
+ * @deprecated 1.9 Use \ElggUser::isFriendsOf() or \ElggUser::isFriendsWith()
  */
 function user_is_friend($user_guid, $friend_guid) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::isFriendsOf() or ElggUser::isFriendsWith()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::isFriendsOf() or \ElggUser::isFriendsWith()', 1.9);
 	return check_entity_relationship($user_guid, "friend", $friend_guid) !== false;
 }
 
@@ -419,12 +419,12 @@ function user_is_friend($user_guid, $friend_guid) {
  * @param int    $limit     Number of results to return (default 10)
  * @param int    $offset    Indexing offset, if any
  *
- * @return ElggUser[]|false Either an array of ElggUsers or false, depending on success
- * @deprecated 1.9 Use ElggUser::getFriends()
+ * @return \ElggUser[]|false Either an array of \ElggUsers or false, depending on success
+ * @deprecated 1.9 Use \ElggUser::getFriends()
  */
 function get_user_friends($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
 $offset = 0) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::getFriends()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::getFriends()', 1.9);
 
 	return elgg_get_entities_from_relationship(array(
 		'relationship' => 'friend',
@@ -444,12 +444,12 @@ $offset = 0) {
  * @param int    $limit     Number of results to return (default 10)
  * @param int    $offset    Indexing offset, if any
  *
- * @return ElggUser[]|false Either an array of ElggUsers or false, depending on success
- * @deprecated 1.9 Use ElggUser::getFriendsOf()
+ * @return \ElggUser[]|false Either an array of \ElggUsers or false, depending on success
+ * @deprecated 1.9 Use \ElggUser::getFriendsOf()
  */
 function get_user_friends_of($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
 $offset = 0) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::getFriendsOf()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::getFriendsOf()', 1.9);
 
 	return elgg_get_entities_from_relationship(array(
 		'relationship' => 'friend',
@@ -469,10 +469,10 @@ $offset = 0) {
  * @param int $friend_guid The GUID of the user to friend
  *
  * @return bool Depending on success
- * @deprecated 1.9 Use ElggUser::addFriend()
+ * @deprecated 1.9 Use \ElggUser::addFriend()
  */
 function user_add_friend($user_guid, $friend_guid) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::addFriend()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::addFriend()', 1.9);
 	$user_guid = (int) $user_guid;
 	$friend_guid = (int) $friend_guid;
 	if ($user_guid == $friend_guid) {
@@ -484,7 +484,7 @@ function user_add_friend($user_guid, $friend_guid) {
 	if (!$user = get_entity($user_guid)) {
 		return false;
 	}
-	if ((!($user instanceof ElggUser)) || (!($friend instanceof ElggUser))) {
+	if ((!($user instanceof \ElggUser)) || (!($friend instanceof \ElggUser))) {
 		return false;
 	}
 	return add_entity_relationship($user_guid, "friend", $friend_guid);
@@ -497,10 +497,10 @@ function user_add_friend($user_guid, $friend_guid) {
  * @param int $friend_guid The GUID of the user on the friends list
  *
  * @return bool Depending on success
- * @deprecated 1.9 Use ElggUser::removeFriend()
+ * @deprecated 1.9 Use \ElggUser::removeFriend()
  */
 function user_remove_friend($user_guid, $friend_guid) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser::removeFriend()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser::removeFriend()', 1.9);
 	$user_guid = (int) $user_guid;
 	$friend_guid = (int) $friend_guid;
 
@@ -522,10 +522,10 @@ function user_remove_friend($user_guid, $friend_guid) {
  * @param int $user_guid User guid
  *
  * @return bool
- * @deprecated 1.9 Use ElggSite::addEntity()
+ * @deprecated 1.9 Use \ElggSite::addEntity()
  */
 function add_site_user($site_guid, $user_guid) {
-	elgg_deprecated_notice('add_site_user() is deprecated. Use ElggEntity::addEntity()', 1.9);
+	elgg_deprecated_notice('add_site_user() is deprecated. Use \ElggEntity::addEntity()', 1.9);
 	$site_guid = (int)$site_guid;
 	$user_guid = (int)$user_guid;
 
@@ -539,10 +539,10 @@ function add_site_user($site_guid, $user_guid) {
  * @param int $user_guid User GUID
  *
  * @return bool
- * @deprecated 1.9 Use ElggSite::removeEntity()
+ * @deprecated 1.9 Use \ElggSite::removeEntity()
  */
 function remove_site_user($site_guid, $user_guid) {
-	elgg_deprecated_notice('remove_site_user() is deprecated. Use ElggEntity::removeEntity()', 1.9);
+	elgg_deprecated_notice('remove_site_user() is deprecated. Use \ElggEntity::removeEntity()', 1.9);
 	$site_guid = (int)$site_guid;
 	$user_guid = (int)$user_guid;
 
@@ -556,10 +556,10 @@ function remove_site_user($site_guid, $user_guid) {
  * @param int $object_guid Object GUID
  *
  * @return mixed
- * @deprecated 1.9 Use ElggSite::addEntity()
+ * @deprecated 1.9 Use \ElggSite::addEntity()
  */
 function add_site_object($site_guid, $object_guid) {
-	elgg_deprecated_notice('add_site_object() is deprecated. Use ElggEntity::addEntity()', 1.9);
+	elgg_deprecated_notice('add_site_object() is deprecated. Use \ElggEntity::addEntity()', 1.9);
 	$site_guid = (int)$site_guid;
 	$object_guid = (int)$object_guid;
 
@@ -573,10 +573,10 @@ function add_site_object($site_guid, $object_guid) {
  * @param int $object_guid Object GUID
  *
  * @return bool
- * @deprecated 1.9 Use ElggSite::removeEntity()
+ * @deprecated 1.9 Use \ElggSite::removeEntity()
  */
 function remove_site_object($site_guid, $object_guid) {
-	elgg_deprecated_notice('remove_site_object() is deprecated. Use ElggEntity::removeEntity()', 1.9);
+	elgg_deprecated_notice('remove_site_object() is deprecated. Use \ElggEntity::removeEntity()', 1.9);
 	$site_guid = (int)$site_guid;
 	$object_guid = (int)$object_guid;
 
@@ -592,10 +592,10 @@ function remove_site_object($site_guid, $object_guid) {
  * @param int    $offset    Offset
  *
  * @return mixed
- * @deprecated 1.9 Use ElggSite::getEntities()
+ * @deprecated 1.9 Use \ElggSite::getEntities()
  */
 function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
-	elgg_deprecated_notice('get_site_objects() is deprecated. Use ElggSite::getEntities()', 1.9);
+	elgg_deprecated_notice('get_site_objects() is deprecated. Use \ElggSite::getEntities()', 1.9);
 	$site_guid = (int)$site_guid;
 	$limit = (int)$limit;
 	$offset = (int)$offset;
@@ -618,11 +618,11 @@ function get_site_objects($site_guid, $subtype = "", $limit = 10, $offset = 0) {
  * @param int $limit       Number of results to return
  * @param int $offset      Any indexing offset
  *
- * @return array On success, an array of ElggSites
- * @deprecated 1.9 Use ElggEntity::getSites()
+ * @return array On success, an array of \ElggSites
+ * @deprecated 1.9 Use \ElggEntity::getSites()
  */
 function get_object_sites($object_guid, $limit = 10, $offset = 0) {
-	elgg_deprecated_notice('get_object_sites() is deprecated. Use ElggEntity::getSites()', 1.9);
+	elgg_deprecated_notice('get_object_sites() is deprecated. Use \ElggEntity::getSites()', 1.9);
 	$object_guid = (int)$object_guid;
 	$limit = (int)$limit;
 	$offset = (int)$offset;
@@ -643,11 +643,11 @@ function get_object_sites($object_guid, $limit = 10, $offset = 0) {
  * @param int $limit     Number of results to return
  * @param int $offset    Any indexing offset
  *
- * @return ElggSite[]|false On success, an array of ElggSites
- * @deprecated 1.9 Use ElggEntity::getSites()
+ * @return \ElggSite[]|false On success, an array of \ElggSites
+ * @deprecated 1.9 Use \ElggEntity::getSites()
  */
 function get_user_sites($user_guid, $limit = 10, $offset = 0) {
-	elgg_deprecated_notice('get_user_sites() is deprecated. Use ElggEntity::getSites()', 1.9);
+	elgg_deprecated_notice('get_user_sites() is deprecated. Use \ElggEntity::getSites()', 1.9);
 	$user_guid = (int)$user_guid;
 	$limit = (int)$limit;
 	$offset = (int)$offset;
@@ -674,7 +674,7 @@ function get_user_sites($user_guid, $limit = 10, $offset = 0) {
  * @deprecated 1.9 Use the appropriate canEdit() method on metadata or annotations
  */
 function can_edit_extender($extender_id, $type, $user_guid = 0) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggExtender::canEdit()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggExtender::canEdit()', 1.9);
 
 	// Since Elgg 1.0, Elgg has returned false from can_edit_extender()
 	// if no user was logged in. This breaks the access override so we add this
@@ -699,10 +699,10 @@ function can_edit_extender($extender_id, $type, $user_guid = 0) {
 		return false;
 	}
 
-	if (!($extender instanceof ElggExtender)) {
+	if (!($extender instanceof \ElggExtender)) {
 		return false;
 	}
-	/* @var ElggExtender $extender */
+	/* @var \ElggExtender $extender */
 
 	// If the owner is the specified user, great! They can edit.
 	if ($extender->getOwnerGUID() == $user_guid) {
@@ -842,7 +842,7 @@ function get_metastring_id($string, $case_sensitive = TRUE) {
 		$msfc = null;
 		static $metastrings_memcache;
 		if ((!$metastrings_memcache) && (is_memcache_available())) {
-			$metastrings_memcache = new ElggMemcache('metastrings_memcache');
+			$metastrings_memcache = new \ElggMemcache('metastrings_memcache');
 		}
 		if ($metastrings_memcache) {
 			$msfc = $metastrings_memcache->load($string);
@@ -958,7 +958,7 @@ function get_metastring($id) {
  * @param int    $timelower The earliest time the entity can have been created. Default: all
  * @param int    $timeupper The latest time the entity can have been created. Default: all
  *
- * @return ElggObject[]|false An array of ElggObjects or false, depending on success
+ * @return \ElggObject[]|false An array of \ElggObjects or false, depending on success
  * @deprecated 1.9 Use elgg_get_entities_from_relationship()
  */
 function get_user_friends_objects($user_guid, $subtype = ELGG_ENTITIES_ANY_VALUE, $limit = 10,
@@ -1109,7 +1109,7 @@ function elgg_geocode_location($location) {
  *					single float will result in a square in degrees.
  * @warning The Earth is round.
  *
- * @see ElggEntity::setLatLong()
+ * @see \ElggEntity::setLatLong()
  *
  * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.8.0
@@ -2040,7 +2040,7 @@ function already_attached($guid_one, $guid_two) {
  * @param int    $guid Entity GUID
  * @param string $type The type of object to return e.g. 'file', 'friend_of' etc
  *
- * @return an array of objects
+ * @return ElggObject[] array of objects
  * @access private
  * @deprecated 1.9 Use elgg_get_entities_from_relationship()
  */
@@ -2105,10 +2105,10 @@ function make_attachment($guid_one, $guid_two) {
  * @param int $entity_guid The GUID of the entity
  *
  * @return string The URL of the entity
- * @deprecated 1.9 Use ElggEntity::getURL()
+ * @deprecated 1.9 Use \ElggEntity::getURL()
  */
 function get_entity_url($entity_guid) {
-	elgg_deprecated_notice('get_entity_url has been deprecated in favor of ElggEntity::getURL', '1.9');
+	elgg_deprecated_notice('get_entity_url has been deprecated in favor of \ElggEntity::getURL', '1.9');
 	if ($entity = get_entity($entity_guid)) {
 		return $entity->getURL();
 	}
@@ -2134,10 +2134,10 @@ function get_entity_url($entity_guid) {
  *
  * @return bool
  * @access private
- * @deprecated 1.9 Use ElggEntity::delete() instead.
+ * @deprecated 1.9 Use \ElggEntity::delete() instead.
  */
 function delete_entity($guid, $recursive = true) {
-	elgg_deprecated_notice('delete_entity has been deprecated in favor of ElggEntity::delete', '1.9');
+	elgg_deprecated_notice('delete_entity has been deprecated in favor of \ElggEntity::delete', '1.9');
 	$guid = (int)$guid;
 	if ($entity = get_entity($guid)) {
 		return $entity->delete($recursive);
@@ -2148,7 +2148,7 @@ function delete_entity($guid, $recursive = true) {
 /**
  * Enable an entity.
  *
- * @warning In order to enable an entity using ElggEntity::enable(),
+ * @warning In order to enable an entity using \ElggEntity::enable(),
  * you must first use {@link access_show_hidden_entities()}.
  *
  * @param int  $guid      GUID of entity to enable
@@ -2185,13 +2185,13 @@ function enable_entity($guid, $recursive = true) {
  *
  * @param int          $entity_guid The GUID of the entity
  * @param int          $user_guid   The GUID of the user
- * @param ElggMetadata $metadata    The metadata to specifically check (if any; default null)
+ * @param \ElggMetadata $metadata    The metadata to specifically check (if any; default null)
  *
  * @return bool Whether the user can edit metadata on the entity.
- * @deprecated 1.9 Use ElggEntity::canEditMetadata
+ * @deprecated 1.9 Use \ElggEntity::canEditMetadata
  */
 function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null) {
-	elgg_deprecated_notice('can_edit_entity_metadata has been deprecated in favor of ElggEntity::canEditMetadata', '1.9');
+	elgg_deprecated_notice('can_edit_entity_metadata has been deprecated in favor of \ElggEntity::canEditMetadata', '1.9');
 	if ($entity = get_entity($entity_guid)) {
 		return $entity->canEditMetadata($metadata, $user_guid);
 	} else {
@@ -2217,10 +2217,10 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
  * @return bool
  * @see access_show_hidden_entities()
  * @access private
- * @deprecated 1.9 Use ElggEntity::disable instead.
+ * @deprecated 1.9 Use \ElggEntity::disable instead.
  */
 function disable_entity($guid, $reason = "", $recursive = true) {
-	elgg_deprecated_notice('disable_entity was deprecated in favor of ElggEntity::disable', '1.9');
+	elgg_deprecated_notice('disable_entity was deprecated in favor of \ElggEntity::disable', '1.9');
 	
 	if ($entity = get_entity($guid)) {
 		return $entity->disable($reason, $recursive);
@@ -2240,10 +2240,10 @@ function disable_entity($guid, $reason = "", $recursive = true) {
  * @param int $user_guid   The GUID of the user
  *
  * @return bool
- * @deprecated 1.9 Use ElggEntity::canEdit instead
+ * @deprecated 1.9 Use \ElggEntity::canEdit instead
  */
 function can_edit_entity($entity_guid, $user_guid = 0) {
-	elgg_deprecated_notice('can_edit_entity was deprecated in favor of ElggEntity::canEdit', '1.9');
+	elgg_deprecated_notice('can_edit_entity was deprecated in favor of \ElggEntity::canEdit', '1.9');
 	if ($entity = get_entity($entity_guid)) {
 		return $entity->canEdit($user_guid);
 	}
@@ -2258,15 +2258,15 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
  * @param int $user_guid  The user GUID.
  *
  * @return bool
- * @deprecated 1.9 Use ElggGroup::join instead.
+ * @deprecated 1.9 Use \ElggGroup::join instead.
  */
 function join_group($group_guid, $user_guid) {
-	elgg_deprecated_notice('join_group was deprecated in favor of ElggGroup::join', '1.9');
+	elgg_deprecated_notice('join_group was deprecated in favor of \ElggGroup::join', '1.9');
 	
 	$group = get_entity($group_guid);
 	$user = get_entity($user_guid);
 	
-	if ($group instanceof ElggGroup && $user instanceof ElggUser) {
+	if ($group instanceof \ElggGroup && $user instanceof \ElggUser) {
 		return $group->join($user);
 	}
 	
@@ -2280,14 +2280,14 @@ function join_group($group_guid, $user_guid) {
  * @param int $user_guid  The user.
  *
  * @return bool Whether the user was removed from the group.
- * @deprecated 1.9 Use ElggGroup::leave()
+ * @deprecated 1.9 Use \ElggGroup::leave()
  */
 function leave_group($group_guid, $user_guid) {
-	elgg_deprecated_notice('leave_group was deprecated in favor of ElggGroup::leave', '1.9');
+	elgg_deprecated_notice('leave_group was deprecated in favor of \ElggGroup::leave', '1.9');
 	$group = get_entity($group_guid);
 	$user = get_entity($user_guid);
 	
-	if ($group instanceof ElggGroup && $user instanceof ElggUser) {
+	if ($group instanceof \ElggGroup && $user instanceof \ElggUser) {
 		return $group->leave($user);
 	}
 
@@ -2380,10 +2380,10 @@ function unregister_service_handler($handler) {
  *
  * @return bool
  * @access private
- * @deprecated 1.9 Use ElggSite constructor
+ * @deprecated 1.9 Use \ElggSite constructor
  */
 function create_site_entity($guid, $name, $description, $url) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggSite constructor', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggSite constructor', 1.9);
 	global $CONFIG;
 
 	$guid = (int)$guid;
@@ -2442,10 +2442,10 @@ function create_site_entity($guid, $name, $description, $url) {
  *
  * @return bool
  * @access private
- * @deprecated 1.9 Use ElggGroup constructor
+ * @deprecated 1.9 Use \ElggGroup constructor
  */
 function create_group_entity($guid, $name, $description) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggGroup constructor', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggGroup constructor', 1.9);
 	global $CONFIG;
 
 	$guid = (int)$guid;
@@ -2505,10 +2505,10 @@ function create_group_entity($guid, $name, $description) {
  *
  * @return bool
  * @access private
- * @deprecated 1.9 Use ElggUser constructor
+ * @deprecated 1.9 Use \ElggUser constructor
  */
 function create_user_entity($guid, $name, $username, $password, $salt, $email, $language, $code) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggUser constructor', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggUser constructor', 1.9);
 	global $CONFIG;
 
 	$guid = (int)$guid;
@@ -2570,10 +2570,10 @@ function create_user_entity($guid, $name, $username, $password, $salt, $email, $
  *
  * @return bool
  * @access private
- * @deprecated 1.9 Use ElggObject constructor
+ * @deprecated 1.9 Use \ElggObject constructor
  */
 function create_object_entity($guid, $title, $description) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggObject constructor', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggObject constructor', 1.9);
 	global $CONFIG;
 
 	$guid = (int)$guid;
@@ -2665,11 +2665,11 @@ function ODD_factory (XmlElement $element) {
 
 /**
  * Utility function used by import_entity_plugin_hook() to
- * process an ODDEntity into an unsaved ElggEntity.
+ * process an ODDEntity into an unsaved \ElggEntity.
  *
  * @param ODDEntity $element The OpenDD element
  *
- * @return ElggEntity the unsaved entity which should be populated by items.
+ * @return \ElggEntity the unsaved entity which should be populated by items.
  * @todo Remove this.
  * @access private
  *
@@ -2691,9 +2691,9 @@ function oddentity_to_elggentity(ODDEntity $element) {
 			if (class_exists($classname)) {
 				$tmp = new $classname();
 
-				if (!($tmp instanceof ElggEntity)) {
+				if (!($tmp instanceof \ElggEntity)) {
 					$msg = $classname . " is not a " . get_class() . ".";
-					throw new ClassException($msg);
+					throw new \ClassException($msg);
 				}
 			} else {
 				error_log("Class '" . $classname . "' was not found, missing plugin?");
@@ -2701,20 +2701,20 @@ function oddentity_to_elggentity(ODDEntity $element) {
 		} else {
 			switch ($class) {
 				case 'object' :
-					$tmp = new ElggObject();
+					$tmp = new \ElggObject();
 					break;
 				case 'user' :
-					$tmp = new ElggUser();
+					$tmp = new \ElggUser();
 					break;
 				case 'group' :
-					$tmp = new ElggGroup();
+					$tmp = new \ElggGroup();
 					break;
 				case 'site' :
-					$tmp = new ElggSite();
+					$tmp = new \ElggSite();
 					break;
 				default:
 					$msg = "Type " . $class . " is not supported. This indicates an error in your installation, most likely caused by an incomplete upgrade.";
-					throw new InstallationException($msg);
+					throw new \InstallationException($msg);
 			}
 		}
 	}
@@ -2722,7 +2722,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 	if ($tmp) {
 		if (!$tmp->import($element)) {
 			$msg = "Could not import element " . $element->getAttribute('uuid');
-			throw new ImportException($msg);
+			throw new \ImportException($msg);
 		}
 
 		return $tmp;
@@ -2790,16 +2790,16 @@ function ODD_Export(ODDDocument $document) {
 /**
  * Get a UUID from a given object.
  *
- * @param mixed $object The object either an ElggEntity, ElggRelationship or ElggExtender
+ * @param mixed $object The object either an \ElggEntity, \ElggRelationship or \ElggExtender
  *
  * @return string|false the UUID or false
  * @deprecated 1.9
  */
 function get_uuid_from_object($object) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated', 1.9);
-	if ($object instanceof ElggEntity) {
+	if ($object instanceof \ElggEntity) {
 		return guid_to_uuid($object->guid);
-	} else if ($object instanceof ElggExtender) {
+	} else if ($object instanceof \ElggExtender) {
 		$type = $object->type;
 		if ($type == 'volatile') {
 			$uuid = guid_to_uuid($object->entity_guid) . $type . "/{$object->name}/";
@@ -2808,7 +2808,7 @@ function get_uuid_from_object($object) {
 		}
 
 		return $uuid;
-	} else if ($object instanceof ElggRelationship) {
+	} else if ($object instanceof \ElggRelationship) {
 		return guid_to_uuid($object->guid_one) . "relationship/{$object->id}/";
 	}
 
@@ -2850,7 +2850,7 @@ function is_uuid_this_domain($uuid) {
  *
  * @param string $uuid A unique ID
  *
- * @return ElggEntity|false
+ * @return \ElggEntity|false
  * @deprecated 1.9
  */
 function get_entity_from_uuid($uuid) {
@@ -2943,7 +2943,7 @@ function exportAsArray($guid) {
 
 	// Sanity check
 	if ((!is_array($to_be_serialised)) || (count($to_be_serialised) == 0)) {
-		throw new ExportException("No such entity GUID:" . $guid);
+		throw new \ExportException("No such entity GUID:" . $guid);
 	}
 
 	return $to_be_serialised;
@@ -2960,7 +2960,7 @@ function exportAsArray($guid) {
  * @param int $guid The GUID.
  *
  * @return string XML
- * @see ElggEntity for an example of its usage.
+ * @see \ElggEntity for an example of its usage.
  * @access private
  * @deprecated 1.9
  */
@@ -2991,7 +2991,7 @@ function import($xml) {
 
 	$document = ODD_Import($xml);
 	if (!$document) {
-		throw new ImportException("No OpenDD elements found in import data, import failed.");
+		throw new \ImportException("No OpenDD elements found in import data, import failed.");
 	}
 
 	foreach ($document as $element) {
@@ -2999,7 +2999,7 @@ function import($xml) {
 	}
 
 	if ($IMPORTED_OBJECT_COUNTER != count($IMPORTED_DATA)) {
-		throw new ImportException("Not all elements were imported.");
+		throw new \ImportException("Not all elements were imported.");
 	}
 
 	return true;
@@ -3151,7 +3151,7 @@ $posted = 0, $annotation_id = 0, $target_guid = 0) {
 /**
  * This function serialises an object recursively into an XML representation.
  *
- * The function attempts to call $data->export() which expects a stdClass in return,
+ * The function attempts to call $data->export() which expects a \stdClass in return,
  * otherwise it will attempt to get the object variables using get_object_vars (which
  * will only return public variables!)
  *
@@ -3171,7 +3171,7 @@ function serialise_object_to_xml($data, $name = "", $n = 0) {
 
 	$output = "";
 
-	if (($n == 0) || ( is_object($data) && !($data instanceof stdClass))) {
+	if (($n == 0) || ( is_object($data) && !($data instanceof \stdClass))) {
 		$output = "<$classname>";
 	}
 
@@ -3191,7 +3191,7 @@ function serialise_object_to_xml($data, $name = "", $n = 0) {
 		$output .= "</$key>\n";
 	}
 
-	if (($n == 0) || (is_object($data) && !($data instanceof stdClass))) {
+	if (($n == 0) || (is_object($data) && !($data instanceof \stdClass))) {
 		$output .= "</$classname>\n";
 	}
 
@@ -3251,28 +3251,28 @@ function serialise_array_to_xml(array $data, $n = 0) {
  *
  * @param string $xml The XML
  *
- * @return ElggXMLElement
- * @deprecated 1.9 Use ElggXMLElement
+ * @return \ElggXMLElement
+ * @deprecated 1.9 Use \ElggXMLElement
  */
 function xml_to_object($xml) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by ElggXMLElement', 1.9);
-	return new ElggXMLElement($xml);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated by \ElggXMLElement', 1.9);
+	return new \ElggXMLElement($xml);
 }
 
 /**
  * Retrieve a site and return the domain portion of its url.
  *
- * @param int $guid ElggSite GUID
+ * @param int $guid \ElggSite GUID
  *
  * @return string
- * @deprecated 1.9 Use ElggSite::getDomain()
+ * @deprecated 1.9 Use \ElggSite::getDomain()
  */
 function get_site_domain($guid) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use ElggSite::getDomain()', 1.9);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use \ElggSite::getDomain()', 1.9);
 	$guid = (int)$guid;
 
 	$site = get_entity($guid);
-	if ($site instanceof ElggSite) {
+	if ($site instanceof \ElggSite) {
 		$breakdown = parse_url($site->url);
 		return $breakdown['host'];
 	}
@@ -3343,7 +3343,7 @@ function remove_notification_interest($user_guid, $author_guid) {
  * @deprecated 1.9
  */
 function object_notifications($event, $object_type, $object) {
-	throw new BadFunctionCallException("object_notifications is a private function and should not be called directly");
+	throw new \BadFunctionCallException("object_notifications is a private function and should not be called directly");
 }
 
 /**
@@ -3351,7 +3351,7 @@ function object_notifications($event, $object_type, $object) {
  *
  * @param string $method  The method
  * @param string $handler The handler function, in the format
- *                        "handler(ElggEntity $from, ElggUser $to, $subject,
+ *                        "handler(\ElggEntity $from, \ElggUser $to, $subject,
  *                        $message, array $params = NULL)". This function should
  *                        return false on failure, and true/a tracking message ID on success.
  * @param array  $params  An associated array of other parameters for this handler
@@ -3412,12 +3412,12 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 			// Make sure its saved
 			if (!$tmp->save()) {
 				$msg = "There was a problem saving " . $element->getAttribute('uuid');
-				throw new ImportException($msg);
+				throw new \ImportException($msg);
 			}
 
 			// Belts and braces
 			if (!$tmp->guid) {
-				throw new ImportException("New entity created but has no GUID, this should not happen.");
+				throw new \ImportException("New entity created but has no GUID, this should not happen.");
 			}
 
 			// We have saved, so now tag
@@ -3448,20 +3448,20 @@ function import_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+		throw new \InvalidParameterException("GUID has not been specified during export, this should never happen.");
 	}
 
 	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+		throw new \InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
 	}
 
 	$guid = (int)$params['guid'];
 
 	// Get the entity
 	$entity = get_entity($guid);
-	if (!($entity instanceof ElggEntity)) {
+	if (!($entity instanceof \ElggEntity)) {
 		$msg = "GUID:" . $guid . " is not a valid " . get_class();
-		throw new InvalidClassException($msg);
+		throw new \InvalidClassException($msg);
 	}
 
 	$export = $entity->export();
@@ -3485,7 +3485,7 @@ function export_entity_plugin_hook($hook, $entity_type, $returnvalue, $params) {
  * @param string $returnvalue Return value from previous hook
  * @param array  $params      The parameters, passed 'guid' and 'varname'
  *
- * @return ElggMetadata|null
+ * @return \ElggMetadata|null
  * @elgg_plugin_hook_handler volatile metadata
  * @todo investigate more.
  * @access private
@@ -3504,7 +3504,7 @@ function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $pa
 					$view = elgg_view_entity(get_entity($guid));
 					elgg_set_viewtype();
 
-					$tmp = new ElggMetadata();
+					$tmp = new \ElggMetadata();
 					$tmp->type = 'volatile';
 					$tmp->name = 'renderedentity';
 					$tmp->value = $view;
@@ -3536,11 +3536,11 @@ function volatile_data_export_plugin_hook($hook, $entity_type, $returnvalue, $pa
 function export_annotation_plugin_hook($hook, $type, $returnvalue, $params) {
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+		throw new \InvalidParameterException("GUID has not been specified during export, this should never happen.");
 	}
 
 	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException("Entity serialization function passed a non-array returnvalue parameter");
+		throw new \InvalidParameterException("Entity serialization function passed a non-array returnvalue parameter");
 	}
 
 	$guid = (int)$params['guid'];
@@ -3586,7 +3586,7 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
 		$entity_uuid = $element->getAttribute('entity_uuid');
 		$entity = get_entity_from_uuid($entity_uuid);
 		if (!$entity) {
-			throw new ImportException("Entity '" . $entity_uuid . "' could not be found.");
+			throw new \ImportException("Entity '" . $entity_uuid . "' could not be found.");
 		}
 
 		oddmetadata_to_elggextender($entity, $element);
@@ -3595,7 +3595,7 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
 		if (!$entity->save()) {
 			$attr_name = $element->getAttribute('name');
 			$msg = "There was a problem updating '" . $attr_name . "' on entity '" . $entity_uuid . "'";
-			throw new ImportException($msg);
+			throw new \ImportException($msg);
 		}
 
 		return true;
@@ -3607,14 +3607,14 @@ function import_extender_plugin_hook($hook, $entity_type, $returnvalue, $params)
  * an ODDMetaData and add it to an entity. This function does not
  * hit ->save() on the entity (this lets you construct in memory)
  *
- * @param ElggEntity  $entity  The entity to add the data to.
+ * @param \ElggEntity  $entity  The entity to add the data to.
  * @param ODDMetaData $element The OpenDD element
  *
  * @return bool
  * @access private
  * @deprecated 1.9
  */
-function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
+function oddmetadata_to_elggextender(\ElggEntity $entity, ODDMetaData $element) {
 	// Get the type of extender (metadata, type, attribute etc)
 	$type = $element->getAttribute('type');
 	$attr_name = $element->getAttribute('name');
@@ -3660,11 +3660,11 @@ function oddmetadata_to_elggextender(ElggEntity $entity, ODDMetaData $element) {
 function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+		throw new \InvalidParameterException("GUID has not been specified during export, this should never happen.");
 	}
 
 	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+		throw new \InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
 	}
 
 	$result = elgg_get_metadata(array(
@@ -3673,7 +3673,7 @@ function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params)
 	));
 
 	if ($result) {
-		/* @var ElggMetadata[] $result */
+		/* @var \ElggMetadata[] $result */
 		foreach ($result as $r) {
 			$returnvalue[] = $r->export();
 		}
@@ -3699,11 +3699,11 @@ function export_metadata_plugin_hook($hook, $entity_type, $returnvalue, $params)
 function export_relationship_plugin_hook($hook, $entity_type, $returnvalue, $params) {
 	// Sanity check values
 	if ((!is_array($params)) && (!isset($params['guid']))) {
-		throw new InvalidParameterException("GUID has not been specified during export, this should never happen.");
+		throw new \InvalidParameterException("GUID has not been specified during export, this should never happen.");
 	}
 
 	if (!is_array($returnvalue)) {
-		throw new InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
+		throw new \InvalidParameterException("Entity serialisation function passed a non-array returnvalue parameter");
 	}
 
 	$guid = (int)$params['guid'];
@@ -3737,7 +3737,7 @@ function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $par
 	$tmp = NULL;
 
 	if ($element instanceof ODDRelationship) {
-		$tmp = new ElggRelationship();
+		$tmp = new \ElggRelationship();
 		$tmp->import($element);
 
 		return $tmp;

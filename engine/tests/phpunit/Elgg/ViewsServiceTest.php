@@ -1,18 +1,20 @@
 <?php
+namespace Elgg;
 
-class Elgg_ViewsServiceTest extends PHPUnit_Framework_TestCase {
+
+class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 	
 	public function setUp() {
 		$this->viewsDir = dirname(dirname(__FILE__)) . "/test_files/views";
 		
-		$this->hooks = new Elgg_PluginHooksService();
-		$this->logger = $this->getMock('Elgg_Logger', array(), array(), '', false);
+		$this->hooks = new \Elgg\PluginHooksService();
+		$this->logger = $this->getMock('\Elgg\Logger', array(), array(), '', false);
 		
-		$this->views = new Elgg_ViewsService($this->hooks, $this->logger);
+		$this->views = new \Elgg\ViewsService($this->hooks, $this->logger);
 		$this->views->autoregisterViews('', "$this->viewsDir/default", "$this->viewsDir/", 'default');
 
 		// supports deprecation wrapper for $vars['user'] 
-		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
+		_elgg_services()->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
 	}
 	
 	public function testCanExtendViews() {
@@ -69,3 +71,4 @@ class Elgg_ViewsServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->views->isCacheableView('js/static.js'));
 	}
 }
+

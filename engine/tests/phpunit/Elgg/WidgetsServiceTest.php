@@ -1,13 +1,15 @@
 <?php
+namespace Elgg;
 
-class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
+
+class WidgetsServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function elgg_set_config($key, $val) {
 		//do nothing, that's only for BC
 	}
 	
 	public function testRegisterTypeParametersControl() {
-		$service = new Elgg_WidgetsService(array($this, 'elgg_set_config'));
+		$service = new \Elgg\WidgetsService(array($this, 'elgg_set_config'));
 
 		$this->assertFalse($service->registerType('', 'Widget name', 'Widget description'));
 		$this->assertFalse($service->registerType(0, 'Widget name', 'Widget description'));
@@ -23,7 +25,7 @@ class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
 	 * Tests register, exists and unregisrer
 	 */
 	public function testCanRegisterType() {
-		$service = new Elgg_WidgetsService(array($this, 'elgg_set_config'));
+		$service = new \Elgg\WidgetsService(array($this, 'elgg_set_config'));
 		
 		$this->assertFalse($service->validateType('widget_type'));
 		$this->assertFalse($service->validateType('not_registered_widget'));
@@ -46,7 +48,7 @@ class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @depends testCanRegisterType
-	 * @param Elgg_WidgetsService $service
+	 * @param \Elgg\WidgetsService $service
 	 */
 	public function testRegistrationParametersPreserveContext($service) {
 		
@@ -76,7 +78,7 @@ class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * @depends testRegistrationParametersPreserveContext
-	 * @param Elgg_WidgetsService $service
+	 * @param \Elgg\WidgetsService $service
 	 */
 	public function testRegistrationParametersPreserveMultiple($service) {
 		
@@ -93,7 +95,7 @@ class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
 			foreach ($contexts as $context) {
 				$items = $service->getTypes($context, $exact);
 				foreach ($items as $handler => $item) {
-					$this->assertInstanceOf('stdClass', $item);
+					$this->assertInstanceOf('\stdClass', $item);
 					$this->assertNotEmpty($handler);
 					$this->assertInternalType('string', $handler);
 					$this->assertArrayHasKey($handler, $resps);
@@ -107,7 +109,7 @@ class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * @depends testRegistrationParametersPreserveMultiple
-	 * @param Elgg_WidgetsService $service
+	 * @param \Elgg\WidgetsService $service
 	 */
 	public function testRegistrationParametersPreserveNameDescription($service) {
 		
@@ -124,7 +126,7 @@ class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
 			foreach ($contexts as $context) {
 				$items = $service->getTypes($context, $exact);
 				foreach ($items as $handler => $item) {
-					$this->assertInstanceOf('stdClass', $item);
+					$this->assertInstanceOf('\stdClass', $item);
 					$this->assertNotEmpty($handler);
 					$this->assertInternalType('string', $handler);
 					$this->assertArrayHasKey($handler, $resps);
@@ -140,7 +142,7 @@ class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
 	
 	/**
 	 * @depends testRegistrationParametersPreserveNameDescription
-	 * @param Elgg_WidgetsService $service
+	 * @param \Elgg\WidgetsService $service
 	 */
 	public function testCanUnregisterType($service) {
 
@@ -159,3 +161,4 @@ class Elgg_WidgetsServiceTest extends PHPUnit_Framework_TestCase {
 	//TODO get, view, create, canEditLayout, defaultWidgetsInit, createDefault, defaultWidgetsPermissionsOverride
 
 }
+

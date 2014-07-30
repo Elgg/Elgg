@@ -8,20 +8,20 @@
  */
 
 /**
- * Convert a database row to a new ElggAnnotation
+ * Convert a database row to a new \ElggAnnotation
  *
- * @param stdClass $row Db row result object
+ * @param \stdClass $row Db row result object
  *
- * @return ElggAnnotation
+ * @return \ElggAnnotation
  * @access private
  */
 function row_to_elggannotation($row) {
-	if (!($row instanceof stdClass)) {
+	if (!($row instanceof \stdClass)) {
 		// @todo should throw in this case?
 		return $row;
 	}
 
-	return new ElggAnnotation($row);
+	return new \ElggAnnotation($row);
 }
 
 /**
@@ -31,7 +31,7 @@ function row_to_elggannotation($row) {
  *
  * @param int $id The id of the annotation object being retrieved.
  *
- * @return ElggAnnotation|false
+ * @return \ElggAnnotation|false
  */
 function elgg_get_annotation_from_id($id) {
 	return _elgg_get_metastring_based_object_from_id($id, 'annotation');
@@ -194,13 +194,13 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  *                                   "calculation" option to elgg_get_entities_from_annotation_calculation().
  *                                   The "annotation_calculation" option causes this function to
  *                                   return the result of performing a mathematical calculation on
- *                                   all annotations that match the query instead of ElggAnnotation
+ *                                   all annotations that match the query instead of \ElggAnnotation
  *                                   objects.
  *                                   See the docs for elgg_get_entities_from_annotation_calculation()
  *                                   for the proper use of the "calculation" option.
  *
  *
- * @return ElggAnnotation[]|mixed
+ * @return \ElggAnnotation[]|mixed
  * @since 1.8.0
  */
 function elgg_get_annotations(array $options = array()) {
@@ -516,7 +516,7 @@ function elgg_annotation_exists($entity_guid, $annotation_type, $owner_guid = nu
  */
 function _elgg_set_comment_url($hook, $type, $url, $params) {
 	$annotation = $params['extender'];
-	/* @var ElggExtender $annotation */
+	/* @var \ElggExtender $annotation */
 	if ($annotation->getSubtype() == 'generic_comment') {
 		$entity = $annotation->getEntity();
 		if ($entity) {

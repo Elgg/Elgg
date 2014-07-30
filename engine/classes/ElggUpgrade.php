@@ -3,7 +3,7 @@
  * Upgrade object for upgrades that need to be tracked
  * and listed in the admin area.
  *
- * @todo Expand for all upgrades to be ElggUpgrade subclasses.
+ * @todo Expand for all upgrades to be \ElggUpgrade subclasses.
  */
 
 /**
@@ -12,7 +12,7 @@
  *
  * @package Elgg.Admin
  */
-class ElggUpgrade extends ElggObject {
+class ElggUpgrade extends \ElggObject {
 	private $requiredProperties = array(
 		'title',
 		'description',
@@ -75,13 +75,13 @@ class ElggUpgrade extends ElggObject {
 		// elgg_normalize_url() returns the root URL if passed an empty string
 		
 		if (!$url) {
-			throw new InvalidArgumentException(elgg_echo('ElggUpgrade:error:url_invalid'));
+			throw new \InvalidArgumentException(elgg_echo('ElggUpgrade:error:url_invalid'));
 		}
 
 		$url = elgg_normalize_url($url);
 
 		if ($this->getUpgradeFromURL($url)) {
-			throw new InvalidArgumentException(elgg_echo('ElggUpgrade:error:url_not_unique'));
+			throw new \InvalidArgumentException(elgg_echo('ElggUpgrade:error:url_not_unique'));
 		}
 
 		return $this->upgrade_url = $url;
@@ -128,7 +128,7 @@ class ElggUpgrade extends ElggObject {
 	public function save() {
 		foreach ($this->requiredProperties as $prop) {
 			if (!$this->$prop) {
-				throw new UnexpectedValueException(elgg_echo("ElggUpgrade:error:{$prop}_required"));
+				throw new \UnexpectedValueException(elgg_echo("ElggUpgrade:error:{$prop}_required"));
 			}
 		}
 
@@ -168,10 +168,10 @@ class ElggUpgrade extends ElggObject {
 	}
 
 	/**
-	 * Find an ElggUpgrade object by the unique URL
+	 * Find an \ElggUpgrade object by the unique URL
 	 *
-	 * @param type $url The Upgrade URL
-	 * @return boolean
+	 * @param string $url The Upgrade URL
+	 * @return \ElggUpgrade|boolean
 	 */
 	public function getUpgradeFromURL($url) {
 		$url = elgg_normalize_url($url);

@@ -34,7 +34,7 @@
  * @example
  * <code>
  * // using foreach
- * $batch = new ElggBatch('elgg_get_entities', array());
+ * $batch = new \ElggBatch('elgg_get_entities', array());
  * $batch->setIncrementOffset(false);
  *
  * foreach ($batch as $entity) {
@@ -47,7 +47,7 @@
  *  return true;
  * }
  *
- * $batch = new ElggBatch('elgg_get_annotations', array('guid' => 2), $callback);
+ * $batch = new \ElggBatch('elgg_get_annotations', array('guid' => 2), $callback);
  * </code>
  *
  * @package    Elgg.Core
@@ -55,7 +55,7 @@
  * @since      1.8
  */
 class ElggBatch
-	implements Iterator {
+	implements \Iterator {
 
 	/**
 	 * The objects to interator over.
@@ -151,7 +151,7 @@ class ElggBatch
 	/**
 	 * Entities that could not be instantiated during a fetch
 	 *
-	 * @var stdClass[]
+	 * @var \stdClass[]
 	 */
 	private $incompleteEntities = array();
 
@@ -182,7 +182,7 @@ class ElggBatch
 	 *                           and hitting the db server too often.
 	 * @param bool   $inc_offset Increment the offset on each fetch. This must be false for
 	 *                           callbacks that delete rows. You can set this after the
-	 *                           object is created with {@link ElggBatch::setIncrementOffset()}.
+	 *                           object is created with {@link \ElggBatch::setIncrementOffset()}.
 	 */
 	public function __construct($getter, $options, $callback = null, $chunk_size = 25,
 			$inc_offset = true) {
@@ -201,10 +201,10 @@ class ElggBatch
 		$this->offset = elgg_extract('offset', $options, 0);
 		$this->limit = elgg_extract('limit', $options, 10);
 
-		// if passed a callback, create a new ElggBatch with the same options
+		// if passed a callback, create a new \ElggBatch with the same options
 		// and pass each to the callback.
 		if ($callback && is_callable($callback)) {
-			$batch = new ElggBatch($getter, $options, null, $chunk_size, $inc_offset);
+			$batch = new \ElggBatch($getter, $options, null, $chunk_size, $inc_offset);
 
 			$all_results = null;
 
@@ -233,11 +233,11 @@ class ElggBatch
 	/**
 	 * Tell the process that an entity was incomplete during a fetch
 	 *
-	 * @param stdClass $row
+	 * @param \stdClass $row
 	 *
 	 * @access private
 	 */
-	public function reportIncompleteEntity(stdClass $row) {
+	public function reportIncompleteEntity(\stdClass $row) {
 		$this->incompleteEntities[] = $row;
 	}
 

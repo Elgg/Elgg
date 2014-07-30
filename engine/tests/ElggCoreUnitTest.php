@@ -35,11 +35,11 @@ abstract class ElggCoreUnitTest extends UnitTestCase {
 	 * @param string $message Message to display.
 	 * @return boolean
 	 */
-	public function assertIdenticalEntities(ElggEntity $first, ElggEntity $second, $message = '%s') {
-		if (!($res = $this->assertIsA($first, 'ElggEntity'))) {
+	public function assertIdenticalEntities(\ElggEntity $first, \ElggEntity $second, $message = '%s') {
+		if (!($res = $this->assertIsA($first, '\ElggEntity'))) {
 			return $res;
 		}
-		if (!($res = $this->assertIsA($second, 'ElggEntity'))) {
+		if (!($res = $this->assertIsA($second, '\ElggEntity'))) {
 			return $res;
 		}
 		if (!($res = $this->assertEqual(get_class($first), get_class($second)))) {
@@ -83,7 +83,7 @@ class IdenticalEntityExpectation extends EqualExpectation {
 	/**
 	 * Converts entity to array and filters not important attributes
 	 *
-	 * @param ElggEntity $entity An entity to convert
+	 * @param \ElggEntity $entity An entity to convert
 	 * @return array
 	 */
 	protected function entityToFilteredArray($entity) {

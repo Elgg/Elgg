@@ -2,7 +2,7 @@
 /**
  * Test elgg_get_entities_from_metadata()
  */
-class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
+class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 
 	//names
 	function testElggApiGettersEntityMetadataNameValidSingle() {
@@ -13,7 +13,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -47,7 +47,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_names[] = $md_name;
 		$e_guids = array();
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -57,7 +57,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_value = 'test_metadata_value_' . rand();
 		$md_names[] = $md_name;
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -86,7 +86,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -112,7 +112,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -145,7 +145,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_names[] = $md_name;
 		$e_guids = array();
 
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->$md_name = $md_value;
 		$valid->save();
@@ -157,7 +157,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		// add a random invalid name.
 		$md_names[] = 'test_metadata_name_' . rand();
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -195,7 +195,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -229,7 +229,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_values[] = $md_value;
 		$e_guids = array();
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -239,7 +239,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_value = 'test_metadata_value_' . rand();
 		$md_values[] = $md_value;
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -268,7 +268,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -294,7 +294,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_name = 'test_metadata_name_' . rand();
 		$md_value = 'test_metadata_value_' . rand();
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -327,7 +327,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_values[] = $md_value;
 		$e_guids = array();
 
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->$md_name = $md_value;
 		$valid->save();
@@ -339,7 +339,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		// add a random invalid value.
 		$md_values[] = 'test_metadata_value_' . rand();
 
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $md_value;
 		$e->save();
@@ -379,7 +379,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids = array();
 
 		// our target
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->$md_name = $md_value;
 		$valid->save();
@@ -387,14 +387,14 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		// make some bad ones
 		$invalid_md_name = 'test_metadata_name_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$invalid_md_name = $md_value;
 		$e->save();
 		$guids[] = $e->getGUID();
 
 		$invalid_md_value = 'test_metadata_value_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $invalid_md_value;
 		$e->save();
@@ -444,7 +444,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids = array();
 
 		// our target
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->$md_name = $md_value;
 		$valid->$md_name2 = $md_value2;
@@ -456,7 +456,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$invalid_md_name = 'test_metadata_name_' . rand();
 		$invalid_md_name2 = 'test_metadata_name_' . rand();
 		$invalid_md_name3 = 'test_metadata_name_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$invalid_md_name = $md_value;
 		$e->$invalid_md_name2 = $md_value2;
@@ -465,7 +465,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids[] = $e->getGUID();
 
 		$invalid_md_value = 'test_metadata_value_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $invalid_md_value;
 		$e->$md_name2 = $invalid_md_value;
@@ -524,7 +524,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids = array();
 
 		// our target
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->$md_name = $md_value;
 		$valid->$md_name2 = $md_value2;
@@ -534,7 +534,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		// make some bad ones
 		$invalid_md_name = 'test_metadata_name_' . rand();
 		$invalid_md_name2 = 'test_metadata_name_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$invalid_md_name = $md_value;
 		$e->$invalid_md_name2 = $md_value2;
@@ -542,7 +542,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids[] = $e->getGUID();
 
 		$invalid_md_value = 'test_metadata_value_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $invalid_md_value;
 		$e->$md_name2 = $invalid_md_value;
@@ -609,7 +609,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids = array();
 
 		// our target
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->$md_name = $md_value;
 		$valid->$md_name2 = $md_value2;
@@ -621,7 +621,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		// make some bad ones
 		$invalid_md_name = 'test_metadata_name_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$invalid_md_name = $md_value;
 		$e->$md_name2 = $md_value2;
@@ -632,7 +632,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$guids[] = $e->getGUID();
 
 		$invalid_md_value = 'test_metadata_value_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $invalid_md_value;
 		$e->$md_name2 = $invalid_md_value;
@@ -701,14 +701,14 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		// make some bad ones
 		$invalid_md_name = 'test_metadata_name_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$invalid_md_name = $md_value;
 		$e->save();
 		$guids[] = $e->getGUID();
 
 		$invalid_md_value = 'test_metadata_value_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $invalid_md_value;
 		$e->save();
@@ -748,14 +748,14 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		// make some bad ones
 		$invalid_md_name = 'test_metadata_name_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$invalid_md_name = $md_value;
 		$e->save();
 		$guids[] = $e->getGUID();
 
 		$invalid_md_value = 'test_metadata_value_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $invalid_md_value;
 		$e->save();
@@ -793,7 +793,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$valid_guids = array();
 
 		// our targets
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->$md_name = $md_value;
 		$valid->save();
@@ -803,7 +803,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_name2 = 'test_metadata_name_' . rand();
 		$md_value2 = 'test_metadata_value_' . rand();
 
-		$valid2 = new ElggObject();
+		$valid2 = new \ElggObject();
 		$valid2->subtype = $subtype;
 		$valid2->$md_name2 = $md_value2;
 		$valid2->save();
@@ -812,14 +812,14 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		// make some bad ones
 		$invalid_md_name = 'test_metadata_name_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$invalid_md_name = $md_value;
 		$e->save();
 		$guids[] = $e->getGUID();
 
 		$invalid_md_value = 'test_metadata_value_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $invalid_md_value;
 		$e->save();
@@ -871,7 +871,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$valid_guids = array();
 
 		// our targets
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->$md_name = $md_value;
 		$valid->save();
@@ -881,7 +881,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$md_name2 = 'test_metadata_name_' . rand();
 		$md_value2 = 'test_metadata_value_' . rand();
 
-		$valid2 = new ElggObject();
+		$valid2 = new \ElggObject();
 		$valid2->subtype = $subtype;
 		$valid2->$md_name2 = $md_value2;
 		$valid2->save();
@@ -890,14 +890,14 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		// make some bad ones
 		$invalid_md_name = 'test_metadata_name_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$invalid_md_name = $md_value;
 		$e->save();
 		$guids[] = $e->getGUID();
 
 		$invalid_md_value = 'test_metadata_value_' . rand();
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->subtype = $subtype;
 		$e->$md_name = $invalid_md_value;
 		$e->save();
@@ -948,21 +948,21 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$valid_guids = array();
 
 		// our targets
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->$md_name = 1;
 		$valid->save();
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid->getGUID();
 
-		$valid2 = new ElggObject();
+		$valid2 = new \ElggObject();
 		$valid2->subtype = $subtype;
 		$valid2->$md_name = 2;
 		$valid2->save();
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid2->getGUID();
 
-		$valid3 = new ElggObject();
+		$valid3 = new \ElggObject();
 		$valid3->subtype = $subtype;
 		$valid3->$md_name = 3;
 		$valid3->save();
@@ -1006,21 +1006,21 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		$valid_guids = array();
 
 		// our targets
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->$md_name = 'a';
 		$valid->save();
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid->getGUID();
 
-		$valid2 = new ElggObject();
+		$valid2 = new \ElggObject();
 		$valid2->subtype = $subtype;
 		$valid2->$md_name = 'b';
 		$valid2->save();
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid2->getGUID();
 
-		$valid3 = new ElggObject();
+		$valid3 = new \ElggObject();
 		$valid3->subtype = $subtype;
 		$valid3->$md_name = 'c';
 		$valid3->save();

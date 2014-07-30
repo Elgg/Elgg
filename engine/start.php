@@ -35,11 +35,11 @@ $START_MICROTIME = microtime(true);
  *
  * @see elgg_get_config()
  * @see engine/settings.php
- * @global stdClass $CONFIG
+ * @global \stdClass $CONFIG
  */
 global $CONFIG;
 if (!isset($CONFIG)) {
-	$CONFIG = new stdClass;
+	$CONFIG = new \stdClass;
 }
 $CONFIG->boot_complete = false;
 

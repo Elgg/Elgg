@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Database;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -9,21 +10,21 @@
  * @subpackage Database
  * @since      1.9.0
  */
-class Elgg_Database_Config {
+class Config {
 
 	const READ = 'read';
 	const WRITE = 'write';
 	const READ_WRITE = 'readwrite';
 
-	/** @var stdClass $config Elgg's config object */
+	/** @var \stdClass $config Elgg's config object */
 	protected $config;
 
 	/**
 	 * Constructor
 	 *
-	 * @param stdClass $config Elgg's $CONFIG object
+	 * @param \stdClass $config Elgg's $CONFIG object
 	 */
-	public function __construct(stdClass $config) {
+	public function __construct(\stdClass $config) {
 		$this->config = $config;
 	}
 
@@ -156,3 +157,4 @@ class Elgg_Database_Config {
 		return $config;
 	}
 }
+

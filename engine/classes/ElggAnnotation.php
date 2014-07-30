@@ -11,12 +11,12 @@
  * @package    Elgg.Core
  * @subpackage DataModel.Annotations
  */
-class ElggAnnotation extends ElggExtender {
+class ElggAnnotation extends \ElggExtender {
 
 	/**
 	 * (non-PHPdoc)
 	 *
-	 * @see ElggData::initializeAttributes()
+	 * @see \ElggData::initializeAttributes()
 	 *
 	 * @return void
 	 */
@@ -30,16 +30,16 @@ class ElggAnnotation extends ElggExtender {
 	 * Construct a new annotation object
 	 *
 	 * Plugin developers will probably never use the constructor.
-	 * See ElggEntity for its API for adding annotations.
+	 * See \ElggEntity for its API for adding annotations.
 	 *
-	 * @param stdClass $row Database row as stdClass object
+	 * @param \stdClass $row Database row as \stdClass object
 	 */
 	public function __construct($row = null) {
 		$this->initializeAttributes();
 
 		if (!empty($row)) {
 			// Create from db row
-			if ($row instanceof stdClass) {
+			if ($row instanceof \stdClass) {
 				$annotation = $row;
 
 				$objarray = (array) $annotation;
@@ -47,7 +47,7 @@ class ElggAnnotation extends ElggExtender {
 					$this->attributes[$key] = $value;
 				}
 			} else {
-				// get an ElggAnnotation object and copy its attributes
+				// get an \ElggAnnotation object and copy its attributes
 				elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use elgg_get_annotation_from_id()', 1.9);
 				$annotation = elgg_get_annotation_from_id($row);
 				$this->attributes = $annotation->attributes;
@@ -71,7 +71,7 @@ class ElggAnnotation extends ElggExtender {
 				$this->value_type, $this->owner_guid, $this->access_id);
 
 			if (!$this->id) {
-				throw new IOException("Unable to save new " . get_class());
+				throw new \IOException("Unable to save new " . get_class());
 			}
 			return $this->id;
 		}
@@ -159,7 +159,7 @@ class ElggAnnotation extends ElggExtender {
 	 *
 	 * @param int $id An annotation ID.
 	 *
-	 * @return ElggAnnotation
+	 * @return \ElggAnnotation
 	 */
 	public function getObjectFromID($id) {
 		return elgg_get_annotation_from_id($id);

@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Http;
 
 /**
  * Mock session handler
@@ -8,7 +9,7 @@
  * @package    Elgg.Core
  * @subpackage Http
  */
-class Elgg_Http_MockSessionHandler implements Elgg_Http_SessionHandler {
+class MockSessionHandler implements \Elgg\Http\SessionHandler {
 
 	/**
 	 * {@inheritDoc}
@@ -53,3 +54,4 @@ class Elgg_Http_MockSessionHandler implements Elgg_Http_SessionHandler {
 	}
 
 }
+

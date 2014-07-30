@@ -3,7 +3,7 @@
  * Elgg 1.9.0-dev upgrade 2014050600
  * replies_to_entities
  *
- * Registers discussion reply subtype and adds ElggUpgrade for ajax upgrade.
+ * Registers discussion reply subtype and adds \ElggUpgrade for ajax upgrade.
  *
  * We do not migrate discussion replies in this upgrade. See the upgrade action
  * in actions/admin/upgrades/upgrade_discussion_replies.php for that.
@@ -33,7 +33,7 @@ $discussion_replies = elgg_get_annotations(array(
 // Notify administrator only if there are existing discussion replies
 if ($discussion_replies) {
 	$url = "admin/upgrades/discussion_replies";
-	$upgrade = new ElggUpgrade();
+	$upgrade = new \ElggUpgrade();
 
 	// Create the upgrade if one with the same URL doesn't already exist
 	if (!$upgrade->getUpgradeFromURL($url)) {

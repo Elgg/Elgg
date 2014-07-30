@@ -1,19 +1,19 @@
 <?php
 /**
- * Many methods for ElggSession pass through to the storage class so we
+ * Many methods for \ElggSession pass through to the storage class so we
  * don't test them here.
  */
 
-class ElggSessionTest extends PHPUnit_Framework_TestCase {
+class ElggSessionTest extends \PHPUnit_Framework_TestCase {
 
 	public function testStart() {
-		$session = new ElggSession(new Elgg_Http_MockSessionStorage());
+		$session = new \ElggSession(new \Elgg\Http\MockSessionStorage());
 		$this->assertTrue($session->start());
 		$this->assertTrue($session->has('__elgg_session'));
 	}
 
 	public function testInvalidate() {
-		$session = new ElggSession(new Elgg_Http_MockSessionStorage());
+		$session = new \ElggSession(new \Elgg\Http\MockSessionStorage());
 		$session->start();
 		$session->set('foo', 5);
 		$id = $session->getId();
@@ -24,7 +24,7 @@ class ElggSessionTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testMigrate() {
-		$session = new ElggSession(new Elgg_Http_MockSessionStorage());
+		$session = new \ElggSession(new \Elgg\Http\MockSessionStorage());
 		$session->start();
 		$session->set('foo', 5);
 		$id = $session->getId();

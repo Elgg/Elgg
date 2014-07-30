@@ -3,12 +3,12 @@
  * Test elgg_get_entities_from_annotations() and
  * elgg_get_entities_from_annotation_calculation()
  */
-class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest {
+class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTest {
 
 	/**
 	 * Creates random annotations on $entity
 	 *
-	 * @param ElggEntity $entity
+	 * @param \ElggEntity $entity
 	 * @param int        $max
 	 */
 	protected function createRandomAnnotations($entity, $max = 1) {
@@ -39,13 +39,13 @@ class ElggCoreGetEntitiesFromAnnotationsTest extends ElggCoreGetEntitiesBaseTest
 		$guids = array();
 
 		// our targets
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->save();
 		$guids[] = $valid->getGUID();
 		create_annotation($valid->getGUID(), $annotation_name, $annotation_value, 'integer', $users[0]->getGUID());
 
-		$valid2 = new ElggObject();
+		$valid2 = new \ElggObject();
 		$valid2->subtype = $subtype;
 		$valid2->save();
 		$guids[] = $valid2->getGUID();

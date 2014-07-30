@@ -3,7 +3,7 @@
 /**
  * Setup entities for getter tests
  */
-abstract class ElggCoreGetEntitiesBaseTest extends ElggCoreUnitTest {
+abstract class ElggCoreGetEntitiesBaseTest extends \ElggCoreUnitTest {
 
 	/** @var array */
 	protected $entities;
@@ -34,7 +34,7 @@ abstract class ElggCoreGetEntitiesBaseTest extends ElggCoreUnitTest {
 		// 5 with random subtypes
 		for ($i=0; $i<5; $i++) {
 			$subtype = 'test_object_subtype_' . rand();
-			$e = new ElggObject();
+			$e = new \ElggObject();
 			$e->subtype = $subtype;
 			$e->save();
 
@@ -45,7 +45,7 @@ abstract class ElggCoreGetEntitiesBaseTest extends ElggCoreUnitTest {
 		// and users
 		for ($i=0; $i<5; $i++) {
 			$subtype = "test_user_subtype_" . rand();
-			$e = new ElggUser();
+			$e = new \ElggUser();
 			$e->username = "test_user_" . rand();
 			$e->subtype = $subtype;
 			$e->save();
@@ -57,7 +57,7 @@ abstract class ElggCoreGetEntitiesBaseTest extends ElggCoreUnitTest {
 		// and groups
 		for ($i=0; $i<5; $i++) {
 			$subtype = "test_group_subtype_" . rand();
-			$e = new ElggGroup();
+			$e = new \ElggGroup();
 			$e->subtype = $subtype;
 			$e->save();
 
@@ -151,7 +151,7 @@ abstract class ElggCoreGetEntitiesBaseTest extends ElggCoreUnitTest {
 	 * Return an array of invalid strings for type or subtypes.
 	 *
 	 * @param int $num
-	 * @return arr
+	 * @return string[]
 	 */
 	protected function getRandomInvalids($num = 1) {
 		$r = array();

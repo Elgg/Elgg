@@ -1,34 +1,36 @@
 <?php
+namespace Elgg;
 
-class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
+
+class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var ElggSession
+	 * @var \ElggSession
 	 */
 	protected $session;
 
 	/**
-	 * @var PHPUnit_Framework_MockObject_MockObject
+	 * @var \PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected $dbMock;
 
 	/**
-	 * @var PHPUnit_Framework_MockObject_MockObject
+	 * @var \PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected $cryptoMock;
 
 	/**
-	 * @var Elgg_PersistentLoginService
+	 * @var \Elgg\PersistentLoginService
 	 */
 	protected $svc;
 
 	/**
-	 * @var PHPUnit_Framework_MockObject_MockObject
+	 * @var \PHPUnit_Framework_MockObject_MockObject
 	 */
 	protected $user123;
 
 	/**
-	 * @var ElggCookie
+	 * @var \ElggCookie
 	 */
 	protected $lastCookieSet;
 
@@ -61,10 +63,10 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 
 		$this->user123 = $this->getMockElggUser(123);
 
-		$this->session = new ElggSession(new Elgg_Http_MockSessionStorage());
+		$this->session = new \ElggSession(new \Elgg\Http\MockSessionStorage());
 
 		// mock DB
-		$this->dbMock = $this->getMockBuilder('Elgg_Database')
+		$this->dbMock = $this->getMockBuilder('\Elgg\Database')
 			->disableOriginalConstructor()
 			->getMock();
 		// use addslashes as ->sanitizeString (my local CLI doesn't have MySQL)
@@ -72,7 +74,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 			->method('sanitizeString')
 			->will($this->returnCallback(array($this, 'mock_sanitizeString')));
 
-		$this->cryptoMock = $this->getMockBuilder('ElggCrypto')->getMock();
+		$this->cryptoMock = $this->getMockBuilder('\ElggCrypto')->getMock();
 		$this->cryptoMock->expects($this->any())
 			->method('getRandomString')
 			->will($this->returnValue(str_repeat('a', 31)));
@@ -274,9 +276,9 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame($this->mockToken, $this->session->get('code'));
 	}
 
-	// mock ElggUser which will return the GUID on ->guid reads
+	// mock \ElggUser which will return the GUID on ->guid reads
 	function getMockElggUser($guid) {
-		$user = $this->getMockBuilder('ElggUser')
+		$user = $this->getMockBuilder('\ElggUser')
 			->disableOriginalConstructor()
 			->getMock();
 		$user->expects($this->any())
@@ -293,7 +295,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 		return null;
 	}
 
-	function mock_elgg_set_cookie(ElggCookie $cookie) {
+	function mock_elgg_set_cookie(\ElggCookie $cookie) {
 		$this->lastCookieSet = $cookie;
 	}
 
@@ -308,7 +310,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 
 	/**
 	 * @param string $cookie_token
-	 * @return Elgg_PersistentLoginService
+	 * @return \Elgg\PersistentLoginService
 	 */
 	protected function getSvcWithCookie($cookie_token = '') {
 		$cookie_config = array(
@@ -321,7 +323,7 @@ class Elgg_PersistentLoginTest extends PHPUnit_Framework_TestCase {
 			'expire' => time() + (30 * 86400),
 		);
 		$time = $this->thirtyDaysAgo + (30 * 86400);
-		$svc = new Elgg_PersistentLoginService(
+		$svc = new \Elgg\PersistentLoginService(
 			$this->dbMock, $this->session, $this->cryptoMock,
 			$cookie_config, $cookie_token, $time);
 

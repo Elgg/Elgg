@@ -62,7 +62,7 @@
  *
  * @param string $menu_name The name of the menu: site, page, userhover,
  *                          userprofile, groupprofile, or any custom menu
- * @param mixed  $menu_item A ElggMenuItem object or an array of options in format:
+ * @param mixed  $menu_item A \ElggMenuItem object or an array of options in format:
  *                          name        => STR  Menu item identifier (required)
  *                          text        => STR  Menu item display text as HTML (required)
  *                          href        => STR  Menu item URL (required) (false for non-links.
@@ -96,7 +96,7 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 	}
 
 	if (is_array($menu_item)) {
-		$item = ElggMenuItem::factory($menu_item);
+		$item = \ElggMenuItem::factory($menu_item);
 		if (!$item) {
 			elgg_log("Unable to add menu item '{$menu_item['name']}' to '$menu_name' menu", 'WARNING');
 			return false;
@@ -115,7 +115,7 @@ function elgg_register_menu_item($menu_name, $menu_item) {
  * @param string $menu_name The name of the menu
  * @param string $item_name The unique identifier for this menu item
  *
- * @return ElggMenuItem|null
+ * @return \ElggMenuItem|null
  * @since 1.8.0
  */
 function elgg_unregister_menu_item($menu_name, $item_name) {
@@ -126,7 +126,7 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
 	}
 
 	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
-		/* @var ElggMenuItem $menu_object */
+		/* @var \ElggMenuItem $menu_object */
 		if ($menu_object->getName() == $item_name) {
 			$item = $CONFIG->menus[$menu_name][$index];
 			unset($CONFIG->menus[$menu_name][$index]);
@@ -154,7 +154,7 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
 	}
 
 	foreach ($CONFIG->menus[$menu_name] as $menu_object) {
-		/* @var ElggMenuItem $menu_object */
+		/* @var \ElggMenuItem $menu_object */
 		if ($menu_object->getName() == $item_name) {
 			return true;
 		}
@@ -169,7 +169,7 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
  * @param string $menu_name The name of the menu
  * @param string $item_name The unique identifier for this menu item
  *
- * @return ElggMenuItem
+ * @return \ElggMenuItem
  * @since 1.9.0
  */
 function elgg_get_menu_item($menu_name, $item_name) {
@@ -180,7 +180,7 @@ function elgg_get_menu_item($menu_name, $item_name) {
 	}
 
 	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
-		/* @var ElggMenuItem $menu_object */
+		/* @var \ElggMenuItem $menu_object */
 		if ($menu_object->getName() == $item_name) {
 			return $CONFIG->menus[$menu_name][$index];
 		}
@@ -293,7 +293,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 		// we have featured or custom menu items
 
 		$registered = $return['default'];
-		/* @var ElggMenuItem[] $registered */
+		/* @var \ElggMenuItem[] $registered */
 
 		// set up featured menu items
 		$featured = array();
@@ -309,7 +309,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 		// add custom menu items
 		$n = 1;
 		foreach ($custom_menu_items as $title => $url) {
-			$item = new ElggMenuItem("custom$n", $title, $url);
+			$item = new \ElggMenuItem("custom$n", $title, $url);
 			$featured[] = $item;
 			$n++;
 		}
@@ -333,7 +333,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 	// check if we have anything selected
 	$selected = false;
 	foreach ($return as $section) {
-		/* @var ElggMenuItem[] $section */
+		/* @var \ElggMenuItem[] $section */
 
 		foreach ($section as $item) {
 			if ($item->getSelected()) {
@@ -373,7 +373,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 function _elgg_river_menu_setup($hook, $type, $return, $params) {
 	if (elgg_is_logged_in()) {
 		$item = $params['item'];
-		/* @var ElggRiverItem $item */
+		/* @var \ElggRiverItem $item */
 		$object = $item->getObjectEntity();
 		// add comment link but annotations cannot be commented on
 		if ($item->annotation_id == 0) {
@@ -386,7 +386,7 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 					'rel' => 'toggle',
 					'priority' => 50,
 				);
-				$return[] = ElggMenuItem::factory($options);
+				$return[] = \ElggMenuItem::factory($options);
 			}
 		}
 		
@@ -399,7 +399,7 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 				'confirm' => elgg_echo('deleteconfirm'),
 				'priority' => 200,
 			);
-			$return[] = ElggMenuItem::factory($options);
+			$return[] = \ElggMenuItem::factory($options);
 		}
 	}
 
@@ -416,7 +416,7 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 	}
 	
 	$entity = $params['entity'];
-	/* @var ElggEntity $entity */
+	/* @var \ElggEntity $entity */
 	$handler = elgg_extract('handler', $params, false);
 
 	// access
@@ -427,7 +427,7 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 		'href' => false,
 		'priority' => 100,
 	);
-	$return[] = ElggMenuItem::factory($options);
+	$return[] = \ElggMenuItem::factory($options);
 
 	if ($entity->canEdit() && $handler) {
 		// edit link
@@ -438,7 +438,7 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'href' => "$handler/edit/{$entity->getGUID()}",
 			'priority' => 200,
 		);
-		$return[] = ElggMenuItem::factory($options);
+		$return[] = \ElggMenuItem::factory($options);
 
 		// delete link
 		$options = array(
@@ -449,7 +449,7 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 300,
 		);
-		$return[] = ElggMenuItem::factory($options);
+		$return[] = \ElggMenuItem::factory($options);
 	}
 
 	return $return;
@@ -462,7 +462,7 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 
 	$widget = $params['entity'];
-	/* @var ElggWidget $widget */
+	/* @var \ElggWidget $widget */
 	$show_edit = elgg_extract('show_edit', $params, true);
 
 	$collapse = array(
@@ -473,7 +473,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 		'rel' => 'toggle',
 		'priority' => 1,
 	);
-	$return[] = ElggMenuItem::factory($collapse);
+	$return[] = \ElggMenuItem::factory($collapse);
 
 	if ($widget->canEdit()) {
 		$delete = array(
@@ -487,7 +487,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 			'data-elgg-widget-type' => $widget->handler,
 			'priority' => 900,
 		);
-		$return[] = ElggMenuItem::factory($delete);
+		$return[] = \ElggMenuItem::factory($delete);
 
 		if ($show_edit) {
 			$edit = array(
@@ -499,7 +499,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 				'rel' => 'toggle',
 				'priority' => 800,
 			);
-			$return[] = ElggMenuItem::factory($edit);
+			$return[] = \ElggMenuItem::factory($edit);
 		}
 	}
 
@@ -513,7 +513,7 @@ function _elgg_widget_menu_setup($hook, $type, $return, $params) {
 function _elgg_login_menu_setup($hook, $type, $return, $params) {
 
 	if (elgg_get_config('allow_registration')) {
-		$return[] = ElggMenuItem::factory(array(
+		$return[] = \ElggMenuItem::factory(array(
 			'name' => 'register',
 			'href' => 'register',
 			'text' => elgg_echo('register'),
@@ -521,7 +521,7 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
 		));
 	}
 
-	$return[] = ElggMenuItem::factory(array(
+	$return[] = \ElggMenuItem::factory(array(
 		'name' => 'forgotpassword',
 		'href' => 'forgotpassword',
 		'text' => elgg_echo('user:password:lost'),
@@ -543,7 +543,7 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
 
-	elgg_register_menu_item('footer', ElggMenuItem::factory(array(
+	elgg_register_menu_item('footer', \ElggMenuItem::factory(array(
 		'name' => 'powered',
 		'text' => elgg_echo("elgg:powered"),
 		'href' => 'http://elgg.org',

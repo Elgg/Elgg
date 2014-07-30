@@ -1,11 +1,13 @@
 <?php
+namespace Elgg\Http;
 
-class Elgg_Http_MockSessionStorageTest extends PHPUnit_Framework_TestCase {
-	/** @var Elgg_Http_MockSessionStorage */
+
+class MockSessionStorageTest extends \PHPUnit_Framework_TestCase {
+	/** @var \Elgg\Http\MockSessionStorage */
 	protected $storage;
 
 	protected function setUp() {
-		$this->storage = new Elgg_Http_MockSessionStorage();
+		$this->storage = new \Elgg\Http\MockSessionStorage();
 	}
 
 	public function testGetId() {
@@ -21,7 +23,7 @@ class Elgg_Http_MockSessionStorageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @expectedException RuntimeException
+	 * @expectedException \RuntimeException
 	 */
 	public function testSetIdAfterStart() {
 		$this->storage->start();
@@ -66,7 +68,7 @@ class Elgg_Http_MockSessionStorageTest extends PHPUnit_Framework_TestCase {
 
 	protected function setUpAttributes() {
 		$this->data = array(
-			'user' => new stdClass(),
+			'user' => new \stdClass(),
 			'guid' => 64,
 			'msg' => array('success' => 'You are logged in'),
 		);
@@ -75,7 +77,7 @@ class Elgg_Http_MockSessionStorageTest extends PHPUnit_Framework_TestCase {
 
 	public static function provideAttributes() {
 		return array(
-			array('user', new stdClass(), true),
+			array('user', new \stdClass(), true),
 			array('guid', 64, true),
 			array('msg', array('success' => 'You are logged in'), true),
 			array('not_exist', null, false),

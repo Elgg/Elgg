@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 /**
  * Manages core autoloading and caching of class maps
  *
@@ -7,14 +8,14 @@
  * @package    Elgg.Core
  * @subpackage Autoloader
  */
-class Elgg_AutoloadManager {
+class AutoloadManager {
 
 	const FILENAME = 'autoload_data.php';
 	const KEY_CLASSES = 'classes';
 	const KEY_SCANNED_DIRS = 'scannedDirs';
 
 	/**
-	 * @var Elgg_ClassLoader
+	 * @var \Elgg\ClassLoader
 	 */
 	protected $loader;
 
@@ -29,16 +30,16 @@ class Elgg_AutoloadManager {
 	protected $altered = false;
 
 	/**
-	 * @var ElggCache
+	 * @var \ElggCache
 	 */
 	protected $storage = null;
 
 	/**
 	 * Constructor
 	 * 
-	 * @param Elgg_ClassLoader $loader Class loader object
+	 * @param \Elgg\ClassLoader $loader Class loader object
 	 */
-	public function __construct(Elgg_ClassLoader $loader) {
+	public function __construct(\Elgg\ClassLoader $loader) {
 		$this->loader = $loader;
 	}
 
@@ -50,7 +51,7 @@ class Elgg_AutoloadManager {
 	 * rescan unless the cache is emptied.
 	 *
 	 * @param string $dir Directory of classes
-	 * @return Elgg_AutoloadManager
+	 * @return \Elgg\AutoloadManager
 	 */
 	public function addClasses($dir) {
 		if (!in_array($dir, $this->scannedDirs)) {
@@ -73,11 +74,11 @@ class Elgg_AutoloadManager {
 	 * @return array
 	 */
 	protected function scanClassesDir($dir) {
-		$dir = new DirectoryIterator($dir);
+		$dir = new \DirectoryIterator($dir);
 		$map = array();
 
 		foreach ($dir as $file) {
-			/* @var SplFileInfo $file */
+			/* @var \SplFileInfo $file */
 			if (!$file->isFile() || !$file->isReadable()) {
 				continue;
 			}
@@ -99,7 +100,7 @@ class Elgg_AutoloadManager {
 	 *
 	 * @param string $class Class name
 	 * @param string $path  Path of class file
-	 * @return Elgg_AutoloadManager
+	 * @return \Elgg\AutoloadManager
 	 */
 	public function setClassPath($class, $path) {
 		$this->loader->getClassMap()->setPath($class, $path);
@@ -109,7 +110,7 @@ class Elgg_AutoloadManager {
 	/**
 	 * If necessary, save necessary state details
 	 *
-	 * @return Elgg_AutoloadManager
+	 * @return \Elgg\AutoloadManager
 	 */
 	public function saveCache() {
 		if ($this->storage) {
@@ -165,7 +166,7 @@ class Elgg_AutoloadManager {
 	/**
 	 * Delete the cache file
 	 *
-	 * @return Elgg_AutoloadManager
+	 * @return \Elgg\AutoloadManager
 	 */
 	public function deleteCache() {
 		if ($this->storage) {
@@ -177,7 +178,7 @@ class Elgg_AutoloadManager {
 	/**
 	 * Get the class loader
 	 * 
-	 * @return Elgg_ClassLoader
+	 * @return \Elgg\ClassLoader
 	 */
 	public function getLoader() {
 		return $this->loader;
@@ -186,10 +187,11 @@ class Elgg_AutoloadManager {
 	/**
 	 * Set the cache storage object
 	 * 
-	 * @param ElggCache $storage Cache object
+	 * @param \ElggCache $storage Cache object
 	 * @return void
 	 */
-	public function setStorage(ElggCache $storage) {
+	public function setStorage(\ElggCache $storage) {
 		$this->storage = $storage;
 	}
 }
+

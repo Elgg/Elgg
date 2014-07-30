@@ -270,9 +270,9 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
  * 
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
- * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param Elgg\Notifications\Notification $notification The notification to prepare
  * @param array                           $params       Hook parameters
- * @return Elgg_Notifications_Notification
+ * @return Elgg\Notifications\Notification
  */
 function pages_prepare_notification($hook, $type, $notification, $params) {
 	$entity = $params['event']->getObject();

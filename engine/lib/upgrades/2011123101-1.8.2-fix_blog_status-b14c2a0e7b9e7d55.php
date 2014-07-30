@@ -13,7 +13,7 @@ $options = array(
 	'subtype' => 'blog',
 	'limit' => 0,
 );
-$batch = new ElggBatch('elgg_get_entities', $options);
+$batch = new \ElggBatch('elgg_get_entities', $options);
 
 foreach ($batch as $entity) {
 	if (!$entity->status) {

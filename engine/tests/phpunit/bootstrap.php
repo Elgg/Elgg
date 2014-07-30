@@ -27,5 +27,5 @@ require_once "$engine/lib/autoloader.php";
 // Provide some basic global functions/initialization.
 require_once "$engine/lib/elgglib.php";
 
-// This is required by ElggEntity
+// This is required by \ElggEntity
 require_once "$engine/lib/sessions.php";

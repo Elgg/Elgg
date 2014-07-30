@@ -17,7 +17,7 @@
 require_once dirname(dirname(__FILE__)) . '/classes/Elgg/CacheHandler.php';
 
 require_once dirname(dirname(__FILE__)) . '/settings.php';
-/* @var stdClass $CONFIG */
+/* @var \stdClass $CONFIG */
 
 // dataroot must have trailing slash
 // @todo need a lib with core functions that have no depedencies
@@ -25,6 +25,6 @@ if (isset($CONFIG->dataroot)) {
 	$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 }
 
-$handler = new Elgg_CacheHandler($CONFIG);
+$handler = new \Elgg\CacheHandler($CONFIG);
 
 $handler->handleRequest($_GET, $_SERVER);

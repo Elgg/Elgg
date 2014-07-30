@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Amd;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -11,7 +12,7 @@
  * 
  * @access private
  */
-class Elgg_Amd_ViewFilter {
+class ViewFilter {
 	/**
 	 * Given the view name, returns the AMD name.
 	 * 
@@ -50,3 +51,4 @@ class Elgg_Amd_ViewFilter {
 		return $content;
 	}
 }
+

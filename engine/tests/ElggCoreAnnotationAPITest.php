@@ -5,14 +5,14 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreAnnotationAPITest extends ElggCoreUnitTest {
+class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
 	protected $metastrings;
 
 	/**
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		$this->object = new ElggObject();
+		$this->object = new \ElggObject();
 	}
 
 	/**
@@ -43,7 +43,7 @@ class ElggCoreAnnotationAPITest extends ElggCoreUnitTest {
 	}
 
 	public function testElggDeleteAnnotations() {
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->save();
 
 		for ($i=0; $i<30; $i++) {
@@ -70,7 +70,7 @@ class ElggCoreAnnotationAPITest extends ElggCoreUnitTest {
 	}
 
 	public function testElggDisableAnnotations() {
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->save();
 
 		for ($i=0; $i<30; $i++) {
@@ -96,7 +96,7 @@ class ElggCoreAnnotationAPITest extends ElggCoreUnitTest {
 	}
 
 	public function testElggEnableAnnotations() {
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->save();
 
 		for ($i=0; $i<30; $i++) {
@@ -124,7 +124,7 @@ class ElggCoreAnnotationAPITest extends ElggCoreUnitTest {
 	}
 
 	public function testElggAnnotationExists() {
-		$e = new ElggObject();
+		$e = new \ElggObject();
 		$e->save();
 		$guid = $e->getGUID();
 

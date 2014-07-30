@@ -10,7 +10,7 @@
 require_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
 
 /**
- * @return Elgg_Di_ServiceProvider
+ * @return \Elgg\Di\ServiceProvider
  * @access private
  */
 function _elgg_services() {
@@ -32,13 +32,13 @@ function _elgg_services() {
  * @access private
  */
 function _elgg_create_service_provider() {
-	$loader = new Elgg_ClassLoader(new Elgg_ClassMap());
+	$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
 	// until the cache can be loaded, just setup PSR-0 autoloading
 	// out of the classes directory. No need to build a full map.
 	$loader->register();
-	$manager = new Elgg_AutoloadManager($loader);
+	$manager = new \Elgg\AutoloadManager($loader);
 
-	return new Elgg_Di_ServiceProvider($manager);
+	return new \Elgg\Di\ServiceProvider($manager);
 }
 
 /**
@@ -77,7 +77,7 @@ function _elgg_delete_autoload_cache() {
 /**
  * Get Elgg's class loader
  *
- * @return Elgg_ClassLoader
+ * @return \Elgg\ClassLoader
  */
 function elgg_get_class_loader() {
 	return _elgg_services()->autoloadManager->getLoader();

@@ -1,14 +1,14 @@
 <?php
 /**
- * Elgg Test ElggSite
+ * Elgg Test \ElggSite
  *
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreSiteTest extends ElggCoreUnitTest {
+class ElggCoreSiteTest extends \ElggCoreUnitTest {
 
 	/**
-	 * @var ElggSite
+	 * @var \ElggSite
 	 */
 	public $site;
 
@@ -23,7 +23,7 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		$this->site = new ElggSiteTest();
+		$this->site = new \ElggSiteTest();
 	}
 
 	/**
@@ -77,7 +77,7 @@ class ElggCoreSiteTest extends ElggCoreUnitTest {
 	}
 }
 
-class ElggSiteTest extends ElggSite {
+class ElggSiteTest extends \ElggSite {
 	public function expose_attributes() {
 		return $this->attributes;
 	}

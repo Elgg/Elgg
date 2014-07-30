@@ -1,6 +1,6 @@
 <?php
 
-class ElggTravisInstallTest extends ElggCoreUnitTest {
+class ElggTravisInstallTest extends \ElggCoreUnitTest {
 
 	public function setUp() {
 		if (!getenv('TRAVIS')) {
@@ -15,7 +15,7 @@ class ElggTravisInstallTest extends ElggCoreUnitTest {
 	public function testThemePluginsAreLast() {
 		$plugins = elgg_get_plugins('all');
 		$plugins = array_reverse($plugins);
-		/* @var ElggPlugin[] $plugins */
+		/* @var \ElggPlugin[] $plugins */
 
 		$found_non_theme = false;
 		foreach ($plugins as $i => $plugin) {

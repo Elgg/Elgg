@@ -122,13 +122,13 @@ function groups_init() {
  */
 function discussion_notification_email_subject($hook, $type, $returnvalue, $params){
 
-	/** @var Elgg_Notifications_Notification */
+	/** @var Elgg\Notifications\Notification */
 	$notification = elgg_extract('notification', $returnvalue['params']);
 
-	if ($notification instanceof Elgg_Notifications_Notification) {
+	if ($notification instanceof Elgg\Notifications\Notification) {
 
 		$object = elgg_extract('object', $notification->params);
-		/** @var Elgg_Notifications_Event $event */
+		/** @var Elgg\Notifications\Event $event */
 		$event = elgg_extract('event', $notification->params);
 
 		if ($object instanceof ElggEntity) {
@@ -1032,9 +1032,9 @@ function discussion_add_to_river_menu($hook, $type, $return, $params) {
  *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
- * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param Elgg\Notifications\Notification $notification The notification to prepare
  * @param array                           $params       Hook parameters
- * @return Elgg_Notifications_Notification
+ * @return Elgg\Notifications\Notification
  */
 function discussion_prepare_notification($hook, $type, $notification, $params) {
 	$entity = $params['event']->getObject();
@@ -1065,9 +1065,9 @@ function discussion_prepare_notification($hook, $type, $notification, $params) {
  *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
- * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param Elgg\Notifications\Notification $notification The notification to prepare
  * @param array                           $params       Hook parameters
- * @return Elgg_Notifications_Notification
+ * @return Elgg\Notifications\Notification
  */
 function discussion_prepare_reply_notification($hook, $type, $notification, $params) {
 	$reply = $params['event']->getObject();

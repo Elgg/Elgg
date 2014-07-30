@@ -6,7 +6,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreHelpersTest extends ElggCoreUnitTest {
+class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 
 	/**
 	 * Called before each test object.
@@ -44,7 +44,7 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 	 * Test elgg_instanceof()
 	 */
 	public function testElggInstanceOf() {
-		$entity = new ElggObject();
+		$entity = new \ElggObject();
 		$entity->subtype = 'test_subtype';
 		$entity->save();
 

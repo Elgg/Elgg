@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -11,7 +12,7 @@
  * @subpackage Logging
  * @since      1.9.0
  */
-class Elgg_Logger {
+class Logger {
 
 	const OFF = 0;
 	const ERROR = 400;
@@ -33,15 +34,15 @@ class Elgg_Logger {
 	/** @var bool $display Display to user? */
 	protected $display = false;
 
-	/** @var Elgg_PluginHooksService $hooks */
+	/** @var \Elgg\PluginHooksService $hooks */
 	protected $hooks;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Elgg_PluginHooksService $hooks Hooks service
+	 * @param \Elgg\PluginHooksService $hooks Hooks service
 	 */
-	public function __construct(Elgg_PluginHooksService $hooks) {
+	public function __construct(\Elgg\PluginHooksService $hooks) {
 		$this->hooks = $hooks;
 	}
 
@@ -204,3 +205,4 @@ class Elgg_Logger {
 		}
 	}
 }
+

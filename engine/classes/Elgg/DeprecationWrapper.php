@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 /**
  * Wrap an object and display warnings whenever the object's variables are
  * accessed or a method is used. It can also be used to wrap a string.
@@ -20,7 +21,7 @@
  * 
  * @package Elgg.Core
  */
-class Elgg_DeprecationWrapper implements ArrayAccess {
+class DeprecationWrapper implements \ArrayAccess {
 	/** @var object */
 	protected $object;
 
@@ -120,7 +121,7 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	/**
 	 * Array access interface
 	 *
-	 * @see ArrayAccess::offsetSet()
+	 * @see \ArrayAccess::offsetSet()
 	 *
 	 * @param mixed $key   Name
 	 * @param mixed $value Value
@@ -129,7 +130,7 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	 */
 	public function offsetSet($key, $value) {
 		$this->displayWarning();
-		if (is_object($this->object) && !$this->object instanceof ArrayAccess) {
+		if (is_object($this->object) && !$this->object instanceof \ArrayAccess) {
 			$this->object->$key = $value;
 		} else {
 			if ($key === null) {
@@ -144,7 +145,7 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	/**
 	 * Array access interface
 	 *
-	 * @see ArrayAccess::offsetGet()
+	 * @see \ArrayAccess::offsetGet()
 	 *
 	 * @param mixed $key Name
 	 *
@@ -152,7 +153,7 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	 */
 	public function offsetGet($key) {
 		$this->displayWarning();
-		if (is_object($this->object) && !$this->object instanceof ArrayAccess) {
+		if (is_object($this->object) && !$this->object instanceof \ArrayAccess) {
 			return $this->object->$key;
 		} else {
 			return $this->object[$key];
@@ -162,7 +163,7 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	/**
 	 * Array access interface
 	 *
-	 * @see ArrayAccess::offsetUnset()
+	 * @see \ArrayAccess::offsetUnset()
 	 *
 	 * @param mixed $key Name
 	 *
@@ -170,7 +171,7 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	 */
 	public function offsetUnset($key) {
 		$this->displayWarning();
-		if (is_object($this->object) && !$this->object instanceof ArrayAccess) {
+		if (is_object($this->object) && !$this->object instanceof \ArrayAccess) {
 			unset($this->object->$key);
 		} else {
 			unset($this->object[$key]);
@@ -180,7 +181,7 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	/**
 	 * Array access interface
 	 *
-	 * @see ArrayAccess::offsetExists()
+	 * @see \ArrayAccess::offsetExists()
 	 *
 	 * @param mixed $offset Offset
 	 *
@@ -188,10 +189,11 @@ class Elgg_DeprecationWrapper implements ArrayAccess {
 	 */
 	public function offsetExists($offset) {
 		$this->displayWarning();
-		if (is_object($this->object) && !$this->object instanceof ArrayAccess) {
+		if (is_object($this->object) && !$this->object instanceof \ArrayAccess) {
 			return isset($this->object->$offset);
 		} else {
 			return array_key_exists($offset, $this->object);
 		}
 	}
 }
+

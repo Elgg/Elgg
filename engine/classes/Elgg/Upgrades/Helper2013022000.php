@@ -1,11 +1,12 @@
 <?php
+namespace Elgg\Upgrades;
 
 /**
  * Helper for data directory upgrade
  *
  * @access private
  */
-class Elgg_Upgrades_Helper2013022000 {
+class Helper2013022000 {
 	const RELATIONSHIP_SUCCESS = '2013022000';
 	const RELATIONSHIP_FAILURE = '2013022000_fail';
 
@@ -72,7 +73,7 @@ class Elgg_Upgrades_Helper2013022000 {
 	/**
 	 * Get the old directory location
 	 *
-	 * @param stdClass $user_row
+	 * @param \stdClass $user_row
 	 * @return string
 	 */
 	public function makeMatrix($user_row) {
@@ -116,7 +117,7 @@ class Elgg_Upgrades_Helper2013022000 {
 	 * @return int
 	 */
 	public function getLowerBucketBound($guid) {
-		$bucket_size = Elgg_EntityDirLocator::BUCKET_SIZE;
+		$bucket_size = \Elgg\EntityDirLocator::BUCKET_SIZE;
 		if ($guid < 1) {
 			return false;
 		}
@@ -181,3 +182,4 @@ class Elgg_Upgrades_Helper2013022000 {
 		return ($row->cnt > 0);
 	}
 }
+

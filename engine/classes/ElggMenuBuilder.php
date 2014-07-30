@@ -9,16 +9,16 @@
 class ElggMenuBuilder {
 
 	/**
-	 * @var ElggMenuItem[]
+	 * @var \ElggMenuItem[]
 	 */
 	protected $menu = array();
 
 	protected $selected = null;
 
 	/**
-	 * ElggMenuBuilder constructor
+	 * \ElggMenuBuilder constructor
 	 *
-	 * @param ElggMenuItem[] $menu Array of ElggMenuItem objects
+	 * @param \ElggMenuItem[] $menu Array of \ElggMenuItem objects
 	 */
 	public function __construct(array $menu) {
 		$this->menu = $menu;
@@ -27,7 +27,7 @@ class ElggMenuBuilder {
 	/**
 	 * Get a prepared menu array
 	 *
-	 * @param mixed $sort_by Method to sort the menu by. @see ElggMenuBuilder::sort()
+	 * @param mixed $sort_by Method to sort the menu by. @see \ElggMenuBuilder::sort()
 	 * @return array
 	 */
 	public function getMenu($sort_by = 'text') {
@@ -48,7 +48,7 @@ class ElggMenuBuilder {
 	/**
 	 * Get the selected menu item
 	 *
-	 * @return ElggMenuItem
+	 * @return \ElggMenuItem
 	 */
 	public function getSelected() {
 		return $this->selected;
@@ -69,7 +69,7 @@ class ElggMenuBuilder {
 		$selected_menu = array();
 		foreach ($this->menu as $menu_item) {
 			if (!is_object($menu_item)) {
-				elgg_log("A non-object was passed to ElggMenuBuilder", "ERROR");
+				elgg_log("A non-object was passed to \ElggMenuBuilder", "ERROR");
 				continue;
 			}
 			if ($menu_item->inContext()) {
@@ -110,7 +110,7 @@ class ElggMenuBuilder {
 			$children = array();
 			// divide base nodes from children
 			foreach ($section as $menu_item) {
-				/* @var ElggMenuItem $menu_item */
+				/* @var \ElggMenuItem $menu_item */
 				$parent_name = $menu_item->getParentName();
 				if (!$parent_name) {
 					$parents[$menu_item->getName()] = $menu_item;
@@ -151,7 +151,7 @@ class ElggMenuBuilder {
 	/**
 	 * Find the menu item that is currently selected
 	 *
-	 * @return ElggMenuItem
+	 * @return \ElggMenuItem
 	 */
 	protected function findSelected() {
 
@@ -188,13 +188,13 @@ class ElggMenuBuilder {
 
 		switch ($sort_by) {
 			case 'text':
-				$sort_callback = array('ElggMenuBuilder', 'compareByText');
+				$sort_callback = array('\ElggMenuBuilder', 'compareByText');
 				break;
 			case 'name':
-				$sort_callback = array('ElggMenuBuilder', 'compareByName');
+				$sort_callback = array('\ElggMenuBuilder', 'compareByName');
 				break;
 			case 'priority':
-				$sort_callback = array('ElggMenuBuilder', 'compareByPriority');
+				$sort_callback = array('\ElggMenuBuilder', 'compareByPriority');
 				break;
 			case 'register':
 				// use registration order - usort breaks this
@@ -223,7 +223,7 @@ class ElggMenuBuilder {
 				array_push($stack, $root);
 				while (!empty($stack)) {
 					$node = array_pop($stack);
-					/* @var ElggMenuItem $node */
+					/* @var \ElggMenuItem $node */
 					$node->sortChildren($sort_callback);
 					$children = $node->getChildren();
 					if ($children) {
@@ -237,8 +237,8 @@ class ElggMenuBuilder {
 	/**
 	 * Compare two menu items by their display text
 	 *
-	 * @param ElggMenuItem $a Menu item
-	 * @param ElggMenuItem $b Menu item
+	 * @param \ElggMenuItem $a Menu item
+	 * @param \ElggMenuItem $b Menu item
 	 * @return bool
 	 */
 	public static function compareByText($a, $b) {
@@ -255,8 +255,8 @@ class ElggMenuBuilder {
 	/**
 	 * Compare two menu items by their identifiers
 	 *
-	 * @param ElggMenuItem $a Menu item
-	 * @param ElggMenuItem $b Menu item
+	 * @param \ElggMenuItem $a Menu item
+	 * @param \ElggMenuItem $b Menu item
 	 * @return bool
 	 */
 	public static function compareByName($a, $b) {
@@ -273,8 +273,8 @@ class ElggMenuBuilder {
 	/**
 	 * Compare two menu items by their priority
 	 *
-	 * @param ElggMenuItem $a Menu item
-	 * @param ElggMenuItem $b Menu item
+	 * @param \ElggMenuItem $a Menu item
+	 * @param \ElggMenuItem $b Menu item
 	 * @return bool
 	 * @since 1.9.0
 	 */
@@ -291,13 +291,13 @@ class ElggMenuBuilder {
 	/**
 	 * Compare two menu items by their priority
 	 *
-	 * @param ElggMenuItem $a Menu item
-	 * @param ElggMenuItem $b Menu item
+	 * @param \ElggMenuItem $a Menu item
+	 * @param \ElggMenuItem $b Menu item
 	 * @return bool
 	 * @deprecated 1.9 Use compareByPriority()
 	 */
 	public static function compareByWeight($a, $b) {
-		elgg_deprecated_notice("ElggMenuBuilder::compareByWeight() deprecated by ElggMenuBuilder::compareByPriority", 1.9);
+		elgg_deprecated_notice("\ElggMenuBuilder::compareByWeight() deprecated by \ElggMenuBuilder::compareByPriority", 1.9);
 		$aw = $a->getPriority();
 		$bw = $b->getPriority();
 

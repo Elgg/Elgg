@@ -3,7 +3,7 @@
  * Tests the commit message validation shell script used by the git hook and travis
  */
 
-class ElggCommitMessageGitHookTest extends PHPUnit_Framework_TestCase {
+class ElggCommitMessageGitHookTest extends \PHPUnit_Framework_TestCase {
 	protected $scriptsDir;
 	protected $filesDir;
 	protected $validateScript;

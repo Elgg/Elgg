@@ -1,16 +1,18 @@
 <?php
+namespace Elgg\Notifications;
+
 /**
  * Notification container
  * 
  * @package    Elgg.Core
  * @subpackage Notifications
- * @since      1.9.0
+ * @since      1.10
  */
-class Elgg_Notifications_Notification {
-	/** @var ElggEntity The entity causing or creating the notification */
+class Notification {
+	/** @var \ElggEntity The entity causing or creating the notification */
 	protected $from;
 
-	/** @var ElggUser The user receiving the notification */
+	/** @var \ElggUser The user receiving the notification */
 	protected $to;
 
 	/** @var string A single sentence summary string */
@@ -31,21 +33,21 @@ class Elgg_Notifications_Notification {
 	/**
 	 * Create a notification
 	 *
-	 * @param ElggEntity $from     The entity sending the notification (usually the site)
-	 * @param ElggEntity $to       The entity receiving the notification
-	 * @param string     $language The language code for the notification
-	 * @param string     $subject  The subject of the notification
-	 * @param string     $body     The body of the notification
-	 * @param string     $summary  Optional summary of the notification
-	 * @param array      $params   Optional array of parameters
-	 * @throws InvalidArgumentException
+	 * @param \ElggEntity $from     The entity sending the notification (usually the site)
+	 * @param \ElggEntity $to       The entity receiving the notification
+	 * @param string      $language The language code for the notification
+	 * @param string      $subject  The subject of the notification
+	 * @param string      $body     The body of the notification
+	 * @param string      $summary  Optional summary of the notification
+	 * @param array       $params   Optional array of parameters
+	 * @throws \InvalidArgumentException
 	 */
-	public function __construct(ElggEntity $from, ElggEntity $to, $language, $subject, $body, $summary = '', array $params = array()) {
+	public function __construct(\ElggEntity $from, \ElggEntity $to, $language, $subject, $body, $summary = '', array $params = array()) {
 		if (!$from) {
-			throw new InvalidArgumentException('$from is not a valid ElggEntity');
+			throw new \InvalidArgumentException('$from is not a valid \ElggEntity');
 		}
 		if (!$to) {
-			throw new InvalidArgumentException('$to is not a valid ElggEntity');
+			throw new \InvalidArgumentException('$to is not a valid \ElggEntity');
 		}
 		$this->from = $from;
 		$this->to = $to;
@@ -59,7 +61,7 @@ class Elgg_Notifications_Notification {
 	/**
 	 * Get the sender entity
 	 *
-	 * @return ElggEntity
+	 * @return \ElggEntity
 	 */
 	public function getSender() {
 		return $this->from;
@@ -77,7 +79,7 @@ class Elgg_Notifications_Notification {
 	/**
 	 * Get the recipient entity
 	 *
-	 * @return ElggEntity
+	 * @return \ElggEntity
 	 */
 	public function getRecipient() {
 		return $this->to;
@@ -92,3 +94,14 @@ class Elgg_Notifications_Notification {
 		return $this->to->guid;
 	}
 }
+
+/**
+ * Notification container
+ * 
+ * @package    Elgg.Core
+ * @subpackage Notifications
+ * @since      1.9.0
+ * 
+ * @deprecated 1.10 Use \Elgg\Notifications\Notification instead
+ */
+class Elgg_Notifications_Notification extends \Elgg\Notifications\Notification {}

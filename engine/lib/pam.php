@@ -14,7 +14,7 @@
  * For more information on PAMs see:
  * http://www.freebsd.org/doc/en/articles/pam/index.html
  *
- * @see ElggPAM
+ * @see \ElggPAM
  *
  * @package Elgg.Core
  * @subpackage Authentication.PAM
@@ -49,7 +49,7 @@ function register_pam_handler($handler, $importance = "sufficient", $policy = "u
 
 	// @todo remove requirement that $handle be a global function
 	if (is_string($handler) && is_callable($handler, true)) {
-		$_PAM_HANDLERS[$policy][$handler] = new stdClass;
+		$_PAM_HANDLERS[$policy][$handler] = new \stdClass;
 
 		$_PAM_HANDLERS[$policy][$handler]->handler = $handler;
 		$_PAM_HANDLERS[$policy][$handler]->importance = strtolower($importance);

@@ -17,7 +17,7 @@
  * @param int    $owner_guid The owner GUID of the layout
  * @param string $context    The context (profile, dashboard, etc)
  *
- * @return array An 2D array of ElggWidget objects
+ * @return array An 2D array of \ElggWidget objects
  * @since 1.8.0
  */
 function elgg_get_widgets($owner_guid, $context) {
@@ -108,7 +108,7 @@ function elgg_is_widget_type($handler) {
 /**
  * Get the widget types for a context
  *
- * The widget types are stdClass objects.
+ * The widget types are \stdClass objects.
  *
  * @param string $context The widget context or empty string for current context
  * @param bool   $exact   Only return widgets registered for this context (false)
@@ -214,7 +214,7 @@ function _elgg_default_widgets_init() {
  *
  * @param string $event  The event
  * @param string $type   The type of object
- * @param ElggEntity $entity The entity being created
+ * @param \ElggEntity $entity The entity being created
  * @return void
  * @access private
  */
@@ -250,7 +250,7 @@ function _elgg_create_default_widgets($event, $type, $entity) {
 				);
 
 				$widgets = elgg_get_entities_from_private_settings($options);
-				/* @var ElggWidget[] $widgets */
+				/* @var \ElggWidget[] $widgets */
 
 				foreach ($widgets as $widget) {
 					// change the container and owner

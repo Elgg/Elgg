@@ -46,7 +46,7 @@ function elgg_get_metastring_id($string, $case_sensitive = true) {
 		$msfc = null;
 		static $metastrings_memcache;
 		if ((!$metastrings_memcache) && (is_memcache_available())) {
-			$metastrings_memcache = new ElggMemcache('metastrings_memcache');
+			$metastrings_memcache = new \ElggMemcache('metastrings_memcache');
 		}
 		if ($metastrings_memcache) {
 			$msfc = $metastrings_memcache->load($string);
@@ -131,7 +131,7 @@ function _elgg_delete_orphaned_metastrings() {
 		if ($dead) {
 			static $metastrings_memcache;
 			if (!$metastrings_memcache) {
-				$metastrings_memcache = new ElggMemcache('metastrings_memcache');
+				$metastrings_memcache = new \ElggMemcache('metastrings_memcache');
 			}
 
 			foreach ($dead as $d) {
@@ -153,7 +153,7 @@ function _elgg_delete_orphaned_metastrings() {
 }
 
 /**
- * Returns an array of either ElggAnnotation or ElggMetadata objects.
+ * Returns an array of either \ElggAnnotation or \ElggMetadata objects.
  * Accepts all elgg_get_entities() options for entity restraints.
  *
  * @see elgg_get_entities
@@ -179,7 +179,7 @@ function _elgg_delete_orphaned_metastrings() {
  *                                            This differs from egef_annotation_calculation in that
  *                                            it returns only the calculation of all annotation values.
  *                                            You can sum, avg, count, etc. egef_annotation_calculation()
- *                                            returns ElggEntities ordered by a calculation on their
+ *                                            returns \ElggEntities ordered by a calculation on their
  *                                            annotation values.
  *
  *  metastring_type               => STR      metadata or annotation(s)
@@ -674,7 +674,7 @@ function _elgg_batch_metastring_based_objects(array $options, $callback, $inc_of
 		return false;
 	}
 
-	$batch = new ElggBatch('_elgg_get_metastring_based_objects', $options, $callback, 50, $inc_offset);
+	$batch = new \ElggBatch('_elgg_get_metastring_based_objects', $options, $callback, 50, $inc_offset);
 	return $batch->callbackResult;
 }
 
@@ -683,7 +683,7 @@ function _elgg_batch_metastring_based_objects(array $options, $callback, $inc_of
  *
  * @param int    $id   The metastring-based object's ID
  * @param string $type The type: annotation or metadata
- * @return ElggExtender
+ * @return \ElggExtender
  * @access private
  */
 function _elgg_get_metastring_based_object_from_id($id, $type) {
@@ -742,7 +742,7 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 		if ($type == 'metadata') {
 			static $metabyname_memcache;
 			if ((!$metabyname_memcache) && (is_memcache_available())) {
-				$metabyname_memcache = new ElggMemcache('metabyname_memcache');
+				$metabyname_memcache = new \ElggMemcache('metabyname_memcache');
 			}
 
 			if ($metabyname_memcache) {

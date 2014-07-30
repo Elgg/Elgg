@@ -6,4 +6,4 @@
  * @package    Elgg.Core
  * @subpackage Exceptions
  */
-class RegistrationException extends InstallationException {}
+class RegistrationException extends \InstallationException {}

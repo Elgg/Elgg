@@ -10,12 +10,12 @@
  *    would be named 'publish:object:blog'.
  * 
  *    The parameter array for the plugin hook has the keys 'event', 'method',
- *    'recipient', and 'language'. The event is an Elgg_Notifications_Event 
+ *    'recipient', and 'language'. The event is an \Elgg\Notifications\Event 
  *    object and can provide access to the original object of the event through 
  *    the method getObject() and the original actor through getActor().
  * 
  *    The plugin hook callback modifies and returns a 
- *    Elgg_Notifications_Notification object that holds the message content.
+ *    \Elgg\Notifications\Notification object that holds the message content.
  *
  *
  * Adding a Delivery Method
@@ -24,7 +24,9 @@
  * 
  * 2. Register for the plugin hook for sending notifications:
  *    'send', 'notification:[method name]'. It receives the notification object 
- *    of the class Elgg_Notifications_Notification in the params array with the 
+ *    of the namespace Elgg\Notifications;
+
+class Notification in the params array with the 
  *    key 'notification'. The callback should return a boolean to indicate whether 
  *    the message was sent.
  * 
@@ -77,7 +79,7 @@ function elgg_unregister_notification_event($object_type, $object_subtype) {
  * 
  * Register for the 'send', 'notification:[method name]' plugin hook to handle
  * sending a notification. A notification object is in the params array for the
- * hook with the key 'notification'. See Elgg_Notifications_Notification.
+ * hook with the key 'notification'. See \Elgg\Notifications\Notification.
  *
  * @param string $name The notification method name
  * @return void
@@ -112,7 +114,7 @@ function elgg_unregister_notification_method($name) {
 function elgg_add_subscription($user_guid, $method, $target_guid) {
 	$methods = _elgg_services()->notifications->getMethods();
 	$db = _elgg_services()->db;
-	$subs = new Elgg_Notifications_SubscriptionsService($db, $methods);
+	$subs = new \Elgg\Notifications\SubscriptionsService($db, $methods);
 	return $subs->addSubscription($user_guid, $method, $target_guid);
 }
 
@@ -128,7 +130,7 @@ function elgg_add_subscription($user_guid, $method, $target_guid) {
 function elgg_remove_subscription($user_guid, $method, $target_guid) {
 	$methods = _elgg_services()->notifications->getMethods();
 	$db = _elgg_services()->db;
-	$subs = new Elgg_Notifications_SubscriptionsService($db, $methods);
+	$subs = new \Elgg\Notifications\SubscriptionsService($db, $methods);
 	return $subs->removeSubscription($user_guid, $method, $target_guid);
 }
 
@@ -149,7 +151,7 @@ function elgg_remove_subscription($user_guid, $method, $target_guid) {
 function elgg_get_subscriptions_for_container($container_guid) {
 	$methods = _elgg_services()->notifications->getMethods();
 	$db = _elgg_services()->db;
-	$subs = new Elgg_Notifications_SubscriptionsService($db, $methods);
+	$subs = new \Elgg\Notifications\SubscriptionsService($db, $methods);
 	return $subs->getSubscriptionsForContainer($container_guid);
 }
 
@@ -163,7 +165,7 @@ function elgg_get_subscriptions_for_container($container_guid) {
  *
  * @param string   $action The name of the action
  * @param string   $type   The type of the object
- * @param ElggData $object The object of the event
+ * @param \ElggData $object The object of the event
  * @return void
  * @access private
  * @since 1.9
@@ -193,7 +195,7 @@ function _elgg_notifications_cron() {
  * @access private
  */
 function _elgg_send_email_notification($hook, $type, $result, $params) {
-	/* @var Elgg_Notifications_Notification $message */
+	/* @var \Elgg\Notifications\Notification $message */
 	$message = $params['notification'];
 
 	$sender = $message->getSender();
@@ -211,7 +213,7 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 
 	$site = elgg_get_site_entity();
 	// If there's an email address, use it - but only if it's not from a user.
-	if (!($sender instanceof ElggUser) && $sender->email) {
+	if (!($sender instanceof \ElggUser) && $sender->email) {
 		$from = $sender->email;
 	} else if ($site->email) {
 		$from = $site->email;
@@ -237,10 +239,10 @@ function _elgg_send_email_notification($hook, $type, $result, $params) {
 function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $params) {
 
 	$notificationParams = elgg_extract('params', $returnvalue, array());
-	/** @var Elgg_Notifications_Notification */
+	/** @var \Elgg\Notifications\Notification */
 	$notification = elgg_extract('notification', $notificationParams);
 
-	if (!($notification instanceof Elgg_Notifications_Notification)) {
+	if (!($notification instanceof \Elgg\Notifications\Notification)) {
 		return $returnvalue;
 	}
 
@@ -248,10 +250,10 @@ function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $pa
 	$urlPath = parse_url(elgg_get_site_url(), PHP_URL_PATH);
 
 	$object = elgg_extract('object', $notification->params);
-	/** @var Elgg_Notifications_Event $event */
+	/** @var \Elgg\Notifications\Event $event */
 	$event = elgg_extract('event', $notification->params);
 
-	if (($object instanceof ElggEntity) && ($event instanceof Elgg_Notifications_Event)) {
+	if (($object instanceof \ElggEntity) && ($event instanceof \Elgg\Notifications\Event)) {
 		if ($event->getAction() === 'create') {
 			// create event happens once per entity and we need to guarantee message id uniqueness
 			// and at the same time have thread message id that we don't need to store
@@ -264,7 +266,7 @@ function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $pa
 		$container = $object->getContainerEntity();
 
 		// let's just thread comments by default
-		if (($container instanceof ElggEntity) && ($object instanceof ElggComment)) {
+		if (($container instanceof \ElggEntity) && ($object instanceof \ElggComment)) {
 
 			$threadMessageId = "<{$urlPath}.entity.{$container->guid}@{$hostname}>";
 			$returnvalue['headers']['In-Reply-To'] = $threadMessageId;
@@ -416,7 +418,7 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
  *                                 By default Elgg core supports three parameters, which give
  *                                 notification plugins more control over the notifications:
  *
- *                                 object => null|ElggEntity|ElggAnnotation The object that
+ *                                 object => null|\ElggEntity|\ElggAnnotation The object that
  *                                           is triggering the notification.
  *
  *                                 action => null|string Word that describes the action that
@@ -451,7 +453,7 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 	// temporary backward compatibility for 1.8 and earlier notifications
 	$event = null;
 	if (isset($params['object']) && isset($params['action'])) {
-		$event = new Elgg_Notifications_Event($params['object'], $params['action'], $sender);
+		$event = new \Elgg\Notifications\Event($params['object'], $params['action'], $sender);
 	}
 	$params['event'] = $event;
 
@@ -486,7 +488,7 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 							continue;
 						}
 						$language = $recipient->language;
-						$notification = new Elgg_Notifications_Notification($sender, $recipient, $language, $subject, $message, $summary, $params);
+						$notification = new \Elgg\Notifications\Notification($sender, $recipient, $language, $subject, $message, $summary, $params);
 						$params['notification'] = $notification;
 						$result[$guid][$method] = _elgg_services()->hooks->trigger('send', "notification:$method", $params, false);
 					} else {
@@ -505,7 +507,7 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
  *
  * @param int $user_guid The user id
  *
- * @return stdClass|false
+ * @return \stdClass|false
  */
 function get_user_notification_settings($user_guid = 0) {
 	$user_guid = (int)$user_guid;
@@ -522,7 +524,7 @@ function get_user_notification_settings($user_guid = 0) {
 	));
 	if ($all_metadata) {
 		$prefix = "notification:method:";
-		$return = new stdClass;
+		$return = new \stdClass;
 
 		foreach ($all_metadata as $meta) {
 			$name = substr($meta->name, strlen($prefix));
@@ -557,7 +559,7 @@ function set_user_notification_setting($user_guid, $method, $value) {
 		$user = elgg_get_logged_in_user_entity();
 	}
 
-	if (($user) && ($user instanceof ElggUser)) {
+	if (($user) && ($user instanceof \ElggUser)) {
 		$prefix = "notification:method:$method";
 		$user->$prefix = $value;
 		$user->save();
@@ -586,12 +588,12 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 
 	if (!$from) {
 		$msg = "Missing a required parameter, '" . 'from' . "'";
-		throw new NotificationException($msg);
+		throw new \NotificationException($msg);
 	}
 
 	if (!$to) {
 		$msg = "Missing a required parameter, '" . 'to' . "'";
-		throw new NotificationException($msg);
+		throw new \NotificationException($msg);
 	}
 
 	$headers = array(

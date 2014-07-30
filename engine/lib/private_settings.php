@@ -278,7 +278,7 @@ function get_private_setting($entity_guid, $name) {
 	$name = sanitise_string($name);
 
 	$entity = get_entity($entity_guid);
-	if (!$entity instanceof ElggEntity) {
+	if (!$entity instanceof \ElggEntity) {
 		return null;
 	}
 
@@ -297,7 +297,7 @@ function get_private_setting($entity_guid, $name) {
  *
  * @param int $entity_guid The entity GUID
  *
- * @return array|empty array if no settings
+ * @return string[] empty array if no settings
  * @see set_private_setting()
  * @see get_private_settings()
  * @see remove_private_setting()
@@ -308,7 +308,7 @@ function get_all_private_settings($entity_guid) {
 
 	$entity_guid = (int) $entity_guid;
 	$entity = get_entity($entity_guid);
-	if (!$entity instanceof ElggEntity) {
+	if (!$entity instanceof \ElggEntity) {
 		return false;
 	}
 
@@ -372,7 +372,7 @@ function remove_private_setting($entity_guid, $name) {
 	$entity_guid = (int) $entity_guid;
 
 	$entity = get_entity($entity_guid);
-	if (!$entity instanceof ElggEntity) {
+	if (!$entity instanceof \ElggEntity) {
 		return false;
 	}
 
@@ -400,7 +400,7 @@ function remove_all_private_settings($entity_guid) {
 	$entity_guid = (int) $entity_guid;
 
 	$entity = get_entity($entity_guid);
-	if (!$entity instanceof ElggEntity) {
+	if (!$entity instanceof \ElggEntity) {
 		return false;
 	}
 
