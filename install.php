@@ -12,7 +12,7 @@ if (version_compare(PHP_VERSION, '5.0.0', '<')) {
 	exit;
 }
 
-require_once(dirname(__FILE__) . "/install/ElggInstaller.php");
+require_once __DIR__ . "/vendor/autoload.php";
 
 $installer = new ElggInstaller();
 
