@@ -38,6 +38,15 @@ class Config {
 	}
 
 	/**
+	-	 * Get the database encoding
+	-	 *
+	-	 * @return string
+	-	 */
+	public function getDbEncoding() {
+		return $this->config->dbencoding;
+	}
+
+	/**
 	 * Is the query cache enabled?
 	 *
 	 * @return bool
