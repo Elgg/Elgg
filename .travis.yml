@@ -1,7 +1,7 @@
 language: php
 php:
- - 5.3
  - 5.3.3
+ - 5.3
  - 5.4
  - 5.5
  - 5.6
@@ -16,34 +16,44 @@ branches:
 
 matrix:
   include:
-    - php: 5.3
+    - php: 5.6
       env: VARIA=true
       install:
-       - node -v
        - phpenv rehash
        - composer install
-       - npm install
-       - sudo easy_install "Sphinx==1.1.3"
        - wget https://scrutinizer-ci.com/ocular.phar
       script:
        - bash .scripts/travis/check_commit_msgs.sh
        - vendor/bin/phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
-       - npm test
-       - sphinx-build -b html -nW docs docs/_build/html
-         # Flags used here, not in `make html`:
-         #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
-         #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
        - phpunit --coverage-clover=coverage.clover
        - composer validate
       after_script:
        - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
-
+       
+    # Build and test javascript
+    - php: 5.6
+      env: VARIA=true
+      install:
+       - npm install
+      script:
+       - npm test
+      
+    # Build docs and check for errors
+    # Flags used here, not in `make html`:
+    #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
+    #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
+    - php: 5.6
+      env: VARIA=true
+      install: 
+       - sudo easy_install "Sphinx==1.1.3"
+      script:
+       - sphinx-build -b html -nW docs docs/_build/html
+      
 services: 
  - mysql
 
-install: composer install
-
-before_script:
+install: 
+ - composer install
  - mysql -e 'create database elgg;'
  - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
  - mkdir "${HOME}/elgg_data/"
