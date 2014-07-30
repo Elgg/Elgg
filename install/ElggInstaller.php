@@ -1258,22 +1258,21 @@ class ElggInstaller {
 		$result = mysql_select_db($dbname, $mysql_dblink);
 
 		// check MySQL version - must be 5.0 or >
-		$required_version = 50000;
-		$versionText = mysql_get_server_info();
-		$points = explode('.', $versionText);
-		$version = $points[0] * 10000 + $points[1] * 100 + $points[2];
-		if ( $version < $required_version ) {
-			register_error(elgg_echo('install:error:oldmysql', array($versionText)));
-			return FALSE;
+		$required_version = '5.0.0';
+		$version = mysql_get_server_info($mysql_dblink);
+		if ( version_compare($version, $required_version, '<') ) {
+			register_error(elgg_echo('install:error:oldmysql', array($version)));
+			$result = FALSE;
 		}
 
 		// check encoding and MySQL version for utf8mb4 - must be 5.5.3 or >
-		$required_version_utf8mb4 = 50503;
+		$required_version_utf8mb4 = '5.5.3';
 		if ( $encoding != 'utf8' && $encoding != 'utf8mb4' ) {
 			register_error(elgg_echo('install:error:dbencoding', array($encoding)));
-			return FALSE;
-		} else if ( ($encoding == 'utf8mb4') && ($version < $required_version_utf8mb4) ) {
-			register_error(elgg_echo('install:error:utf8mb4', array($versionText)));
+			$result = FALSE;
+		} else if ( ($encoding == 'utf8mb4') && version_compare($version, $required_version_utf8mb4, '<') ) {
+			register_error(elgg_echo('install:error:utf8mb4', array($version)));
+			$result = FALSE;
 		}
 
 		mysql_close($mysql_dblink);
@@ -1324,35 +1323,35 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function createDatabase($params) {
-		if ( $params['dbcreateuser'] ) {
-			$temporaryLink =  mysql_connect($params['dbhost'], $params['dbcreateuser'], $params['dbcreatepassword'], true);
-			if ( !$temporaryLink ) {
-				register_error(elgg_echo('install:error:databasesettings'));
-				return FALSE;
-			}
-			$dbname = mysql_real_escape_string($params['dbname'], $temporaryLink);
-			$dbencoding = mysql_real_escape_string($params['dbencoding'], $temporaryLink);
-			mysql_query("CREATE DATABASE IF NOT EXISTS `$dbname` CHARACTER SET $dbencoding;", $temporaryLink);
-			if ( mysql_errno($temporaryLink) ) {
-				register_error(elgg_echo('install:error:createdb', array(mysql_error($temporaryLink))));
-				mysql_close($temporaryLink);
-				return FALSE;
-			}
-			$dbuser = mysql_real_escape_string($params['dbuser'], $temporaryLink);
-			$dbpassword = mysql_real_escape_string($params['dbpassword'], $temporaryLink);
-			mysql_query("CREATE USER '$dbuser'@'localhost' IDENTIFIED BY '$dbpassword';", $temporaryLink);
-			// commented out as message won't show if database creation succeeds
+		if (!$params['dbcreateuser']) {
+			return true;
+		}
+		$temporaryLink =  mysql_connect($params['dbhost'], $params['dbcreateuser'], $params['dbcreatepassword'], true);
+		if ( !$temporaryLink ) {
+			register_error(elgg_echo('install:error:databasesettings'));
+			return FALSE;
+		}
+		$dbname = mysql_real_escape_string($params['dbname'], $temporaryLink);
+		$dbencoding = mysql_real_escape_string($params['dbencoding'], $temporaryLink);
+		mysql_query("CREATE DATABASE IF NOT EXISTS `$dbname` CHARACTER SET $dbencoding;", $temporaryLink);
+		if ( mysql_errno($temporaryLink) ) {
+			register_error(elgg_echo('install:error:createdb', array(mysql_error($temporaryLink))));
+			mysql_close($temporaryLink);
+			return FALSE;
+		}
+		$dbuser = mysql_real_escape_string($params['dbuser'], $temporaryLink);
+		$dbpassword = mysql_real_escape_string($params['dbpassword'], $temporaryLink);
+		mysql_query("CREATE USER '$dbuser'@'localhost' IDENTIFIED BY '$dbpassword';", $temporaryLink);
+		// commented out as message won't show if database creation succeeds
 //			if ( mysql_errno($temporaryLink) ) {
 //				register_error(elgg_echo('install:error:dbuserexists'));
 //			}
-			mysql_query("GRANT ALL ON `$dbname`.* TO '$dbuser'@'localhost' IDENTIFIED BY '$dbpassword';", $temporaryLink);
-			if ( mysql_errno($temporaryLink) ) {
-				register_error(elgg_echo('install:error:createdb', array(mysql_error($temporaryLink))));
-				mysql_close($temporaryLink);
-				return FALSE;
-			}
+		mysql_query("GRANT ALL ON `$dbname`.* TO '$dbuser'@'localhost' IDENTIFIED BY '$dbpassword';", $temporaryLink);
+		if ( mysql_errno($temporaryLink) ) {
+			register_error(elgg_echo('install:error:createdb', array(mysql_error($temporaryLink))));
+			mysql_close($temporaryLink);
+			return FALSE;
 		}
-		mysql_close($temporaryLink);
 		return TRUE;
 	}
 

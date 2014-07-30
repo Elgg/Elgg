@@ -58,7 +58,7 @@ If you are ready to proceed, click the Next button.",
 	'install:check:rewrite:success' => 'The test of the rewrite rules was successful.',
 	'install:check:database' => 'The database requirements are checked when Elgg loads its database.',
 
-	'install:database:instructions' => "If you haven't already created a database for Elgg, do that now. Then fill in the values below to initialize the Elgg database.",
+	'install:database:instructions' => "<p>If you haven't already created a database for Elgg, the installer can do it for you. Just provide the username and password of a MySQL superuser. The installer will also create the user you specify for connecting to the Elgg database if it does not exist yet.</p><p>If you already have a MySQL database and user ready for Elgg, just leave the superuser fields blank and fill in the other values below to initialize the existing database.</p>",
 	'install:database:error' => 'There was an error creating the Elgg database and installation cannot continue. Review the message above and correct any problems. If you need more help, visit the Install troubleshooting link below or post to the Elgg community forums.',
 
 	'install:database:label:dbcreateuser' =>  'Database Superuser for Database Creation',
