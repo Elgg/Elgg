@@ -11,6 +11,13 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($CONFIG->dbprefix, $conf->getTablePrefix());
 	}
 
+	public function testGetDbEncoding() {
+		$CONFIG = new \stdClass();
+		$CONFIG->dbencoding = "utf8";
+		$conf = new \Elgg\Database\Config($CONFIG);
+		$this->assertEquals($CONFIG->dbencoding, $conf->getDbEncoding());
+	}
+
 	public function testIsDatabaseSplitNotSet() {
 		$CONFIG = new \stdClass();
 		$conf = new \Elgg\Database\Config($CONFIG);

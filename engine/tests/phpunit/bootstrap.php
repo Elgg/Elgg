@@ -13,6 +13,7 @@ error_reporting(E_ALL | E_STRICT);
 global $CONFIG;
 $CONFIG = (object) array(
 	'dbprefix' => 'elgg_',
+	'dbencoding' => 'utf8',
 	'boot_complete' => false,
 );
 

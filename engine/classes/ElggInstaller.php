@@ -28,7 +28,7 @@
  * @subpackage Installer
  */
 class ElggInstaller {
-	
+
 	protected $steps = array(
 		'welcome',
 		'requirements',
@@ -145,6 +145,7 @@ class ElggInstaller {
 		$defaults = array(
 			'dbhost' => 'localhost',
 			'dbprefix' => 'elgg_',
+			'dbencoding' => 'utf8',
 			'language' => 'en',
 			'siteaccess' => ACCESS_PUBLIC,
 		);
@@ -309,6 +310,16 @@ class ElggInstaller {
 	protected function database($submissionVars) {
 
 		$formVars = array(
+			'dbcreateuser' => array(
+				'type' => 'text',
+				'value' => '',
+				'required' => FALSE,
+			),
+			'dbcreatepassword' => array(
+				'type' => 'password',
+				'value' => '',
+				'required' => FALSE,
+			),
 			'dbuser' => array(
 				'type' => 'text',
 				'value' => '',
@@ -334,6 +345,15 @@ class ElggInstaller {
 				'value' => 'elgg_',
 				'required' => TRUE,
 				),
+			'dbencoding' => array(
+				'type' => 'dropdown',
+				'value' => 'utf8',
+				'required' => TRUE,
+				'options_values' => array(
+					'utf8' => elgg_echo('install:database:label:dbencoding:utf8'),
+					'utf8mb4' => elgg_echo('install:database:label:dbencoding:utf8mb4')
+				),
+			)
 		);
 
 		if ($this->checkSettingsFile()) {
@@ -345,6 +365,11 @@ class ElggInstaller {
 			do {
 				// only create settings file if it doesn't exist
 				if (!$this->checkSettingsFile()) {
+					// creates the specified database if the superuser credentials were specified
+					if (!$this->createDatabase($submissionVars)) {
+						break;
+					}
+
 					if (!$this->validateDatabaseVars($submissionVars, $formVars)) {
 						// error so we break out of action and serve same page
 						break;
@@ -615,6 +640,7 @@ class ElggInstaller {
 				$CONFIG->dbuser,
 				$CONFIG->dbpass,
 				$CONFIG->dbname,
+				$CONFIG->dbencoding,
 				$CONFIG->dbhost
 				);
 		if ($dbSettingsPass == FALSE) {
@@ -868,7 +894,7 @@ class ElggInstaller {
 		$CONFIG->sitename = '';
 		$CONFIG->sitedescription = '';
 	}
-	
+
 	/**
 	 * @return bool Whether the install process is encrypted.
 	 */
@@ -1209,6 +1235,7 @@ class ElggInstaller {
 					$submissionVars['dbuser'],
 					$submissionVars['dbpassword'],
 					$submissionVars['dbname'],
+					$submissionVars['dbencoding'],
 					$submissionVars['dbhost']
 				);
 	}
@@ -1219,11 +1246,12 @@ class ElggInstaller {
 	 * @param string $user     Username
 	 * @param string $password Password
 	 * @param string $dbname   Database name
+	 * @param string $encoding Default database encoding (utf8 or utf8mb4)
 	 * @param string $host     Host
 	 *
 	 * @return bool
 	 */
-	protected function checkDatabaseSettings($user, $password, $dbname, $host) {
+	protected function checkDatabaseSettings($user, $password, $dbname, $encoding, $host) {
 		$mysql_dblink = mysql_connect($host, $user, $password, true);
 		if ($mysql_dblink == FALSE) {
 			register_error(elgg_echo('install:error:databasesettings'));
@@ -1233,12 +1261,21 @@ class ElggInstaller {
 		$result = mysql_select_db($dbname, $mysql_dblink);
 
 		// check MySQL version - must be 5.0 or >
-		$required_version = 5.0;
-		$version = mysql_get_server_info();
-		$points = explode('.', $version);
-		if ($points[0] < $required_version) {
+		$required_version = '5.0.0';
+		$version = mysql_get_server_info($mysql_dblink);
+		if (version_compare($version, $required_version, '<')) {
 			register_error(elgg_echo('install:error:oldmysql', array($version)));
-			return FALSE;
+			$result = FALSE;
+		}
+
+		// check encoding and MySQL version for utf8mb4 - must be 5.5.3 or >
+		$required_version_utf8mb4 = '5.5.3';
+		if ($encoding != 'utf8' && $encoding != 'utf8mb4') {
+			register_error(elgg_echo('install:error:dbencoding', array($encoding)));
+			$result = FALSE;
+		} else if (($encoding == 'utf8mb4') && version_compare($version, $required_version_utf8mb4, '<')) {
+			register_error(elgg_echo('install:error:utf8mb4', array($version)));
+			$result = FALSE;
 		}
 
 		mysql_close($mysql_dblink);
@@ -1278,6 +1315,46 @@ class ElggInstaller {
 			return FALSE;
 		}
 
+		return TRUE;
+	}
+
+	/**
+	 * Creates the specified database if the superuser credentials were specified
+	 *
+	 * @param array $params Array of inputted params from the user
+	 *
+	 * @return bool
+	 */
+	protected function createDatabase($params) {
+		if (!$params['dbcreateuser']) {
+			return true;
+		}
+		$temporaryLink = mysql_connect($params['dbhost'], $params['dbcreateuser'], $params['dbcreatepassword'], true);
+		if (!$temporaryLink) {
+			register_error(elgg_echo('install:error:databasesettings'));
+			return FALSE;
+		}
+		$dbname = mysql_real_escape_string($params['dbname'], $temporaryLink);
+		$dbencoding = mysql_real_escape_string($params['dbencoding'], $temporaryLink);
+		mysql_query("CREATE DATABASE IF NOT EXISTS `$dbname` CHARACTER SET $dbencoding;", $temporaryLink);
+		if (mysql_errno($temporaryLink)) {
+			register_error(elgg_echo('install:error:createdb', array(mysql_error($temporaryLink))));
+			mysql_close($temporaryLink);
+			return FALSE;
+		}
+		$dbuser = mysql_real_escape_string($params['dbuser'], $temporaryLink);
+		$dbpassword = mysql_real_escape_string($params['dbpassword'], $temporaryLink);
+		mysql_query("CREATE USER '$dbuser'@'localhost' IDENTIFIED BY '$dbpassword';", $temporaryLink);
+		// commented out as message won't show if database creation succeeds
+		//	if ( mysql_errno($temporaryLink) ) {
+		//		register_error(elgg_echo('install:error:dbuserexists'));
+		//	}
+		mysql_query("GRANT ALL ON `$dbname`.* TO '$dbuser'@'localhost' IDENTIFIED BY '$dbpassword';", $temporaryLink);
+		if (mysql_errno($temporaryLink)) {
+			register_error(elgg_echo('install:error:createdb', array(mysql_error($temporaryLink))));
+			mysql_close($temporaryLink);
+			return FALSE;
+		}
 		return TRUE;
 	}
 
