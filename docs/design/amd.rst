@@ -16,8 +16,10 @@ Why AMD?
 ========
 
 We have been working hard to make Elgg's JavaScript more maintainable and useful.
-We made some strides in 1.8 with the introduction of the "elgg" JavaScript object and library, but
-have quickly realized the approach we were taking was not scalable. The size of `JS on the web is growing
+We made some strides in 1.8 with the introduction of the "``elgg``" JavaScript object and library, but
+have quickly realized the approach we were taking was not scalable.
+
+The size of `JS on the web is growing
 <http://httparchive.org/trends.php?s=All&minlabel=Feb+11+2011&maxlabel=Feb+1+2013#bytesJS&reqJS>`_
 quickly, and JS in Elgg is growing too. We want Elgg to be able to offer a solution that makes JS
 development as productive and maintainable as possible going forward.

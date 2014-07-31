@@ -530,7 +530,7 @@ Javascript guidelines
 
 Same formatting standards as PHP apply.
 
-All functions should be in the elgg namespace.
+All functions should be in the ``elgg`` namespace.
 
 Function expressions should end with a semi-colon.
 

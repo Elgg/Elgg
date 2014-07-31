@@ -493,8 +493,9 @@ class ElggSite extends \ElggEntity {
 			}
 			elgg_register_plugin_hook_handler(
 					'access:collections:write',
-					'user',
-					'_elgg_walled_garden_remove_public_access');
+					'all',
+					'_elgg_walled_garden_remove_public_access',
+					9999);
 
 			if (!elgg_is_logged_in()) {
 				// override the front page
