@@ -27,10 +27,10 @@ Go to the admin section of your Elgg install and enable your plugin.
 Click on the “more info” link under your plugin name.
 You will notice that nothing happens.
 
-Copy the manifest.xml file from one of the plugins in your elgg install into ``/mod/hello``.
-Update its values so you are listed as the author and change the description to describe this new plugin.
-Reload the Tools Administration page in your browser and check “more info” again.
-It will now display the information that you've entered.
+ * Copy the ``manifest.xml`` file from one of the plugins in your elgg install into ``/mod/hello``.
+ * Update its values so you are listed as the author and change the description to describe this new plugin.
+ * Reload the Tools Administration page in your browser and check “more info” again.
+ * It will now display the information that you've entered.
 
 Adding the widget view code
 ---------------------------

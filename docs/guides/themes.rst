@@ -84,7 +84,7 @@ it will replace:
 
 But only when the plugin is active.
 
-This gives you total control over the way elgg looks and behaves. It
+This gives you total control over the way Elgg looks and behaves. It
 gives you the option to either slightly modify or totally replace
 existing views.
 

@@ -53,7 +53,7 @@ There are several data migrations involved, so it is especially important that y
 **back up your database and data directory** before performing the upgrade.
 
 You may also consider getting rid of obsolete files from formerly installed Elgg versions
-by deleting everyting from the Elgg installation directory except for:
+by deleting everything from the Elgg installation directory except for:
 
  * ``.htaccess``
  * ``engine/settings.php``
@@ -65,6 +65,11 @@ After you've visited ``upgrade.php``, go to the admin area of your site.
 You should see a notification that you have pending upgrades.
 Click the link in the notification bar to view and run the upgrades.
 
+The new notifications system delivers messages via a minutely cron handler.
+If you haven't done so yet, you will need to :doc:`install and configure crontab </admin/cron>`
+on your server. If cron jobs are already configured, note that the scope of
+available cron periods may have changed and you may need to update your current crontab
+to reflect these changes.
 
 Time commitment
 ---------------
