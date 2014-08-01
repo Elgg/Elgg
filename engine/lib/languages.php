@@ -19,10 +19,6 @@
  * or the original language string.
  */
 function elgg_echo($message_key, $args = array(), $language = "") {
-	global $CONFIG;
-
-	static $CURRENT_LANGUAGE;
-
 	// old param order is deprecated
 	if (!is_array($args)) {
 		elgg_deprecated_notice(
@@ -33,36 +29,10 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 		$language = $args;
 		$args = array();
 	}
+	
+	$locale = $language ? Locale::parse($language) : _elgg_services()->locale;
 
-	if (!isset($CONFIG->translations)) {
-		// this means we probably had an exception before translations were initialized
-		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
-	}
-
-	if (!$CURRENT_LANGUAGE) {
-		$CURRENT_LANGUAGE = get_language();
-	}
-	if (!$language) {
-		$language = $CURRENT_LANGUAGE;
-	}
-
-	if (isset($CONFIG->translations[$language][$message_key])) {
-		$string = $CONFIG->translations[$language][$message_key];
-	} else if (isset($CONFIG->translations["en"][$message_key])) {
-		$string = $CONFIG->translations["en"][$message_key];
-		elgg_log(sprintf('Missing %s translation for "%s" language key', $language, $message_key), 'NOTICE');
-	} else {
-		$string = $message_key;
-		elgg_log(sprintf('Missing English translation for "%s" language key', $message_key), 'NOTICE');
-	}
-
-	// only pass through if we have arguments to allow backward compatibility
-	// with manual sprintf() calls.
-	if ($args) {
-		$string = vsprintf($string, $args);
-	}
-
-	return $string;
+	return _elgg_services()->translator->translate($message_key, $args, $locale);
 }
 
 /**
@@ -79,22 +49,14 @@ function elgg_echo($message_key, $args = array(), $language = "") {
  * @return bool Depending on success
  */
 function add_translation($country_code, $language_array) {
-	global $CONFIG;
-	if (!isset($CONFIG->translations)) {
-		$CONFIG->translations = array();
-	}
-
-	$country_code = strtolower($country_code);
-	$country_code = trim($country_code);
-	if (is_array($language_array) && sizeof($language_array) > 0 && $country_code != "") {
-		if (!isset($CONFIG->translations[$country_code])) {
-			$CONFIG->translations[$country_code] = $language_array;
-		} else {
-			$CONFIG->translations[$country_code] = $language_array + $CONFIG->translations[$country_code];
-		}
+	try {
+		$locale = Locale::parse($country_code);
+		$map = _elgg_services()->translationLoader->loadTranslation($locale);
+		$map->addTranslations($language_array);
 		return true;
+	} catch (\Exception $e) {
+		return false;
 	}
-	return false;
 }
 
 /**
@@ -103,14 +65,9 @@ function add_translation($country_code, $language_array) {
  * @return string The language code for the site/user or "en" if not set
  */
 function get_current_language() {
-	$language = get_language();
-
-	if (!$language) {
-		$language = 'en';
-	}
-
-	return $language;
+	return _elgg_services()->locale->__toString();
 }
+
 
 /**
  * Gets the current language in use by the system or user.
@@ -122,53 +79,21 @@ function get_language() {
 
 	$user = elgg_get_logged_in_user_entity();
 	$language = false;
-
+	
 	if (($user) && ($user->language)) {
 		$language = $user->language;
 	}
-
+	
 	if ((!$language) && (isset($CONFIG->language)) && ($CONFIG->language)) {
 		$language = $CONFIG->language;
 	}
 
-	if ($language) {
-		return $language;
+	if (!$language) {
+		return false;
 	}
-
-	return false;
+	
+	return $language;
 }
-
-/**
- * @access private
- */
-function _elgg_load_translations() {
-	global $CONFIG;
-
-	if ($CONFIG->system_cache_enabled) {
-		$loaded = true;
-		$languages = array_unique(array('en', get_current_language()));
-		foreach ($languages as $language) {
-			$data = elgg_load_system_cache("$language.lang");
-			if ($data) {
-				add_translation($language, unserialize($data));
-			} else {
-				$loaded = false;
-			}
-		}
-
-		if ($loaded) {
-			$CONFIG->i18n_loaded_from_cache = true;
-			// this is here to force 
-			$CONFIG->language_paths[dirname(dirname(dirname(__FILE__))) . "/languages/"] = true;
-			return;
-		}
-	}
-
-	// load core translations from languages directory
-	register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
-}
-
-
 
 /**
  * When given a full path, finds translation files and loads them

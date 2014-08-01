@@ -1,6 +1,12 @@
 <?php
 namespace Elgg\Di;
 
+use Elgg\I18n\Locale;
+use Elgg\I18n\Translator;
+use Elgg\I18n\DefaultTranslator;
+use Elgg\I18n\NullTranslator;
+
+
 /**
  * Provides common Elgg services.
  *
@@ -16,6 +22,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\PluginHooksService                 $hooks
+ * @property-read Locale                                   $locale
  * @property-read \Elgg\Logger                             $logger
  * @property-read \ElggVolatileMetadataCache               $metadataCache
  * @property-read \Elgg\Notifications\NotificationsService $notifications
@@ -24,6 +31,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\Http\Request                       $request
  * @property-read \Elgg\Router                             $router
+ * @property-read Translator                               $translator
  * @property-read \ElggSession                             $session
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
@@ -49,6 +57,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('db', array($this, 'getDatabase'));
 		$this->setFactory('events', array($this, 'getEvents'));
 		$this->setFactory('hooks', array($this, 'getHooks'));
+		$this->setFactory('locale', array($this, 'getLocale'));
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setClassName('metadataCache', '\ElggVolatileMetadataCache');
 		$this->setFactory('persistentLogin', array($this, 'getPersistentLogin'));
@@ -57,6 +66,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('request', array($this, 'getRequest'));
 		$this->setFactory('router', array($this, 'getRouter'));
 		$this->setFactory('session', array($this, 'getSession'));
+		$this->setFactory('translator', array($this, 'getTranslator'));
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setClassName('widgets', '\Elgg\WidgetsService');
 		$this->setFactory('notifications', array($this, 'getNotifications'));
@@ -81,6 +91,20 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 */
 	protected function getEvents(\Elgg\Di\ServiceProvider $c) {
 		return $this->resolveLoggerDependencies('events');
+	}
+
+	/**
+	 * Locale factory
+	 * 
+	 * @param \Elgg\Di\ServiceProvider $c Dependency Injection container
+	 * @return Locale
+	 */
+	protected function getLocale(\Elgg\Di\ServiceProvider $c) {
+		try {
+			$locale = Locale::parse(get_language());
+		} catch (\Exception $e) {}
+		
+		return isset($locale) ? $locale : Locale::parse('en');
 	}
 
 	/**
@@ -168,6 +192,20 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$session = new \ElggSession($storage);
 
 		return $session;
+	}
+
+	/**
+	 * Translator factory
+	 * 
+	 * @param \Elgg\Di\ServiceProvider $c Dependency injection container
+	 * @return Translator
+	 */
+	protected function getTranslator(\Elgg\Di\ServiceProvider $c) {
+		$translator = new DefaultTranslator($c->translationLoader, $c->logger);
+		$translator->setSiteLocale();
+		$translator->setUserLocale();
+		
+		return $translator;
 	}
 
 	/**
