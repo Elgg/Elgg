@@ -10,8 +10,8 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
-        "league/flysystem": "0.5.3",
-        "mrclay/minify": "2.*"
+        "mrclay/minify": "2.*",
+        "knplabs/gaufrette": "0.1.*"
     },
     "suggest": {
         "ext-mbstring": "*"

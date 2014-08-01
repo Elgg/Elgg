@@ -1,8 +1,6 @@
 <?php
 namespace Elgg\Filesystem;
 
-use League\Flysystem;
-
 /**
  * Represents a file that may or may not actually exist.
  * 
@@ -14,7 +12,7 @@ use League\Flysystem;
  */
 class File {
 	
-	/** @var Flysystem\Filesystem */
+	/** @var Filesystem */
 	private $filesystem;
 	
 	/** @var string */
@@ -23,10 +21,10 @@ class File {
 	/**
 	 * Constructor
 	 * 
-	 * @param Flysystem\Filesystem $filesystem The filesystem
-	 * @param string               $path       The path to this file in the filesystem
+	 * @param Filesystem $filesystem The filesystem
+	 * @param string     $path       The path to this file in the filesystem
 	 */
-	public function __construct(Flysystem\Filesystem $filesystem, $path) {
+	public function __construct(Filesystem $filesystem, $path) {
 		$this->filesystem = $filesystem;
 		$this->path = $path;
 	}
@@ -35,7 +33,7 @@ class File {
 	 * @return boolean Whether this file exists.
 	 */
 	public function exists() {
-		return $this->filesystem->hasFile($this->path);
+		return $this->filesystem->isFile($this->path);
 	}
 	
 	/**
@@ -53,14 +51,23 @@ class File {
 	}
 	
 	/**
+	 * Get the text content of this file. Empty string if it doesn't exist.
+	 * 
+	 * @return string
+	 */
+	public function getContents() {
+		return $this->filesystem->getFileContents($this->path);
+	}
+	
+	/**
 	 * Do a PHP include of the file and return the result.
 	 * 
 	 * TODO: This may only work for local filesystem?
 	 * 
 	 * @return mixed
 	 */
-	public function include() {
-		return include $this->path;
+	public function includeFile() {
+		return $this->filesystem->includeFile($this->path);
 	}
 	
 	/** @inheritDoc */
