@@ -71,6 +71,8 @@ On Windows servers, there is a number of cron emulators available.
 
 For information on setting up cron jobs using cPanel see `cPanel Docs`__.
 
+If your server doesn't have adequate Cron, you can use online cron job service like https://www.easycron.com.
+
 In the ``command`` field, enter the appropriate link of the cron page.
 For example, for a weekly cron job, enter the command as http://www.example.com/cron/weekly/.
 
