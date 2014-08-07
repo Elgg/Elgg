@@ -628,7 +628,7 @@ abstract class ElggEntity extends ElggData implements
 	/**
 	 * Add a relationship between this an another entity.
 	 *
-	 * @tip Read the relationship like "$guid is a $relationship of this entity."
+	 * @tip Read the relationship like "This entity is a $relationship of $guid_two."
 	 *
 	 * @param int    $guid_two     GUID of the target entity of the relationship.
 	 * @param string $relationship The type of relationship.
