@@ -83,11 +83,11 @@
 	background: #5ED9CD;
 }
 /* Use .elgg-size-small or .elgg-size-large for additional sizes */
-.elgg-size-small {
+.elgg-button.elgg-size-small {
 	font-size: 12px;
 	padding: 4px 8px;
 }
-.elgg-size-large {
+.elgg-button.elgg-size-large {
 	font-size: 20px;
 	padding: 14px 20px;
 	margin: 15px 0;
