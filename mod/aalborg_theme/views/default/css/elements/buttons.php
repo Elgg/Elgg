@@ -73,3 +73,23 @@
 	background: #60B8F7;
 	text-decoration: none;
 }
+.elgg-button-special {
+	border: 1px solid #1C786F; /* Fallback */
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	background: #42C5B8;
+}
+.elgg-button-special:hover,
+.elgg-button-special:focus {
+	background: #5ED9CD;
+}
+/* Use .elgg-size-small or .elgg-size-large for additional sizes */
+.elgg-size-small {
+	font-size: 12px;
+	padding: 4px 8px;
+}
+.elgg-size-large {
+	font-size: 20px;
+	padding: 14px 20px;
+	margin: 15px 0;
+	border-radius: 5px;
+}
