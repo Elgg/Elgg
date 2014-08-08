@@ -54,9 +54,6 @@ services:
 
 install: 
  - composer install
- - mysql -e 'create database elgg;'
- - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
- - mkdir "${HOME}/elgg_data/"
  - php -f ./install/cli/travis_installer.php
 
 script:

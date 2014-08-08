@@ -1,6 +1,6 @@
 <?php
 
-class ElggTravisInstallTest extends \ElggCoreUnitTest {
+class ElggTravisInstallTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 		if (!getenv('TRAVIS')) {

@@ -3,7 +3,7 @@
  * Test elgg_get_entities_from_annotations() and
  * elgg_get_entities_from_annotation_calculation()
  */
-class ElggCoreGetEntitiesFromAnnotationsTest extends \ElggCoreGetEntitiesBaseTest {
+class ElggCoreGetEntitiesFromAnnotationsTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Creates random annotations on $entity

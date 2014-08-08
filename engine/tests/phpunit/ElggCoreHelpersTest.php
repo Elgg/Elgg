@@ -6,7 +6,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreHelpersTest extends \ElggCoreUnitTest {
+class ElggCoreHelpersTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Called before each test object.

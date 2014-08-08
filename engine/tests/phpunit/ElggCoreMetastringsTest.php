@@ -5,7 +5,7 @@
  * @package Elgg.Core
  * @subpackage Metastrings.Test
  */
-class ElggCoreMetastringsTest extends \ElggCoreUnitTest {
+class ElggCoreMetastringsTest extends \PHPUnit_Framework_TestCase {
 
 	public $metastringTypes = array('metadata', 'annotation');
 	public $metastringTables = array(

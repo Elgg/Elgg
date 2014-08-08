@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
+class ElggCoreAccessSQLTest extends \PHPUnit_Framework_TestCase {
 
 	/** @var \ElggUser */
 	protected $user;

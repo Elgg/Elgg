@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
+class ElggCoreMetadataCacheTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @var \ElggVolatileMetadataCache

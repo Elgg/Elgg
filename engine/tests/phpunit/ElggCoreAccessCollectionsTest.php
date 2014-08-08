@@ -5,14 +5,9 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
+class ElggCoreAccessCollectionsTest extends \PHPUnit_Framework_TestCase {
 
-	/**
-	 * Called before each test object.
-	 */
-	public function __construct() {
-		parent::__construct();
-
+	public function setUp() {
 		$this->dbPrefix = get_config("dbprefix");
 
 		$user = new \ElggUser();
@@ -29,13 +24,8 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$this->user = $user;
 	}
 
-	/**
-	 * Called after each test object.
-	 */
-	public function __destruct() {
-		// all __destruct() code should go above here
+	public function tearDown() {
 		$this->user->delete();
-		parent::__destruct();
 	}
 
 	public function testCreateGetDeleteACL() {

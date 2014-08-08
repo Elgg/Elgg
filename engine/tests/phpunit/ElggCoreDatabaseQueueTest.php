@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreDatabaseQueueTest extends \ElggCoreUnitTest {
+class ElggCoreDatabaseQueueTest extends \PHPUnit_Framework_TestCase {
 
 	public function testEnqueueAndDequeue() {
 		$queue = new \Elgg\Queue\DatabaseQueue('unit:test', _elgg_services()->db);

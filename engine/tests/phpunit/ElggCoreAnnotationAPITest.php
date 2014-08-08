@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreAnnotationAPITest extends \ElggCoreUnitTest {
+class ElggCoreAnnotationAPITest extends \PHPUnit_Framework_TestCase {
 	protected $metastrings;
 
 	/**

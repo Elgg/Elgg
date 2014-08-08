@@ -4,7 +4,7 @@
  * test \ElggBatch
  *
  */
-class ElggBatchTest extends \ElggCoreUnitTest {
+class ElggBatchTest extends \PHPUnit_Framework_TestCase {
 
 	// see https://github.com/elgg/elgg/issues/4288
 	public function testElggBatchIncOffset() {

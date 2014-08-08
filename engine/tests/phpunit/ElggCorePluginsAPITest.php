@@ -5,7 +5,7 @@
  * @package Elgg.Core
  * @subpackage Plugins.Test
  */
-class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
+class ElggCorePluginsAPITest extends \PHPUnit_Framework_TestCase {
 	// 1.8 manifest object
 	var $manifest18;
 
