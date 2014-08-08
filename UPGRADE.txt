@@ -45,7 +45,7 @@ Upgrading from Elgg 1.7 to 1.8.
 
 5. Upload and overwrite your existing Elgg files with the Elgg 1.8 files.
 
-6. Copy htaccess_dist to .htaccess, replacing your existing version. Any
+6. Copy install/config/htaccess.dist to .htaccess, replacing your existing version. Any
    modifications to the original .htaccess should be moved to the new
    .htaccess file.
 
@@ -64,7 +64,7 @@ Upgrading to the latest release
    not the case, take care to maintain your modifications. If you have
    modified core files, Elgg may not work correctly.
 
-4. Copy htaccess_dist to .htaccess, replacing your existing version. Any 
+4. Copy install/config/htaccess.dist to .htaccess, replacing your existing version. Any 
    modifications to the original .htaccess should be moved to the new
    .htaccess file.
 

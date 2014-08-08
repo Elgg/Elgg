@@ -103,7 +103,7 @@ will need to either
 
 2. Copy engine/settings.example.php to engine/settings.php, open
    it up in a text editor and fill in your database details. Then
-   copy /htaccess_dist to /.htaccess 
+   copy /install/config/htaccess.dist to /.htaccess 
 
 
 

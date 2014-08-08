@@ -24,7 +24,7 @@ Basic instructions
 * **Back up your database, data directory and code**
 * Download the new version of Elgg from http://elgg.org
 * Overwrite your existing files with the new version of Elgg
-* Merge any new changes from ``htaccess_dist`` into ``.htaccess``
+* Merge any new changes from ``install/config/htaccess.dist`` into ``.htaccess``
 * Merge any new changes from ``settings.example.php`` into ``settings.php``
 * Visit http://your-elgg-site.com/upgrade.php
 

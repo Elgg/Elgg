@@ -1066,7 +1066,7 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'installation:minify_js:label' => "JavaScript-Dateien komprimieren (empfohlen)",
 	'installation:minify_css:label' => "CSS-Dateien komprimieren (empfohlen)",
 
-	'installation:htaccess:needs_upgrade' => "Du mußt die .htaccess-Datei auf Deinem Server anpassen, damit der Pfad in den GET-Parameter __elgg_uri eingebunden wird (Du kannst die htaccess_dist-Datei als Vorlage für Deine .htacess-Datei dafür verwenden).",
+	'installation:htaccess:needs_upgrade' => "Du mußt die .htaccess-Datei auf Deinem Server anpassen, damit der Pfad in den GET-Parameter __elgg_uri eingebunden wird (Du kannst die install/config/htaccess.dist-Datei als Vorlage für Deine .htacess-Datei dafür verwenden).",
 
 	'installation:systemcache:description' => "Der Systemcache veringert die Ladezeit von Elgg, indem einige häufig notwendige Daten in Dateien vorgehalten werden.",
 	'installation:systemcache:label' => "Systemcache aktivieren (empfohlen)",

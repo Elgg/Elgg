@@ -693,8 +693,8 @@ msgstr "Visite http://your-elgg-site-URL/upgrade.php."
 
 # 63c61b55151e427bbf18892278fc56aa
 #: ../../admin/upgrading.rst:24
-msgid "Copy htaccess_dist over .htaccess."
-msgstr "Copie «htaccess_dist» en «.htaccess»."
+msgid "Copy install/config/htaccess.dist over .htaccess."
+msgstr "Copie «install/config/htaccess.dist» en «.htaccess»."
 
 # a23a6fe0efcc48d8bef8f74c9342569c
 #: ../../admin/upgrading.rst:29

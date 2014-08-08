@@ -1066,7 +1066,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'installation:minify_js:label' => "Pakkaa JavaScript (suositus)",
 	'installation:minify_css:label' => "Pakkaa CSS (suositus)",
 
-	'installation:htaccess:needs_upgrade' => "Elggin juuressa oleva .htaccess-tiedosto pitää päivittää syöttämään polku \"__elgg_uri\"-nimiseen GET-parametriin (voit ottaa mallia htaccess_dist-tiedostosta).",
+	'installation:htaccess:needs_upgrade' => "Elggin juuressa oleva .htaccess-tiedosto pitää päivittää syöttämään polku \"__elgg_uri\"-nimiseen GET-parametriin (voit ottaa mallia install/config/htaccess.dist-tiedostosta).",
 
 	'installation:systemcache:description' => "Välimuisti vähentää liitännäisten latausaikaa tallentamalla muistiin niiden käytössä olevien näkymien sijainnit.",
 	'installation:systemcache:label' => "Käytä välimuistia (suositus)",

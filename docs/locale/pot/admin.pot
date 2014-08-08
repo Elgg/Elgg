@@ -563,7 +563,7 @@ msgstr ""
 
 #: ../../admin/upgrading.rst:27
 # f8c693ad63b74589b22075052736e425
-msgid "Merge any new changes from ``htaccess_dist`` into ``.htaccess``"
+msgid "Merge any new changes from ``install/config/htaccess.dist`` into ``.htaccess``"
 msgstr ""
 
 #: ../../admin/upgrading.rst:28

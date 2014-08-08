@@ -1064,7 +1064,7 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 	'installation:minify_js:label' => "Kompresuj JavaScript (zalecane)",
 	'installation:minify_css:label' => "Kompresuj CSS (zalecane)",
 
-	'installation:htaccess:needs_upgrade' => "Musisz zaktualizować swój plik .htaccess aby ścieżka byłą przekazywana jako parametr GET o nazwie __elgg_uri (możesz użyć htaccess_dist jako prykładu).",
+	'installation:htaccess:needs_upgrade' => "Musisz zaktualizować swój plik .htaccess aby ścieżka byłą przekazywana jako parametr GET o nazwie __elgg_uri (możesz użyć install/config/htaccess.dist jako prykładu).",
 
 	'installation:systemcache:description' => "Systemowa pamięć podręczna zmniejsza czas ładowania rdzenia Elgg, poprzez zapisywanie danych do plików.",
 	'installation:systemcache:label' => "Użyj systemowej pamięci podręcznej (zalecane)",

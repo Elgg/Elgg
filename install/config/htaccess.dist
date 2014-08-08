@@ -1,6 +1,11 @@
 # Elgg htaccess directives
 
-<Files "htaccess_dist">
+<Files "install/config/htaccess.dist">
+	order allow,deny
+	deny from all
+</Files>
+
+<Files "install/config/nginx.dist">
 	order allow,deny
 	deny from all
 </Files>
