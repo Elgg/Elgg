@@ -3,7 +3,7 @@ $engine = dirname(dirname(dirname(__FILE__)));
 
 date_default_timezone_set('America/Los_Angeles');
 
-error_reporting(E_ALL | E_STRICT);
+error_reporting(E_STRICT);
 
 /**
  * This is here as a temporary solution only. Instead of adding more global
@@ -12,20 +12,20 @@ error_reporting(E_ALL | E_STRICT);
  */
 global $CONFIG;
 $CONFIG = (object) array(
+	'site_guid' => 0,
 	'dbprefix' => 'elgg_',
 	'boot_complete' => false,
+	'wwwroot' => 'http://localhost/',
+	'cookies' => array(
+		'session' => session_get_cookie_params(),
+	),
 );
 
-// @todo remove once views service and menu tests no longer need it
-function elgg_get_site_url() {
-	return 'http://localhost/';
-}
-
-// Set up class auto-loading
-require_once "$engine/lib/autoloader.php";
+$CONFIG->cookies['session']['name'] = 'Elgg';
 
 // Provide some basic global functions/initialization.
+require_once "$engine/lib/autoloader.php";
 require_once "$engine/lib/elgglib.php";
-
-// This is required by \ElggEntity
+require_once "$engine/lib/configuration.php";
 require_once "$engine/lib/sessions.php";
+require_once "$engine/lib/users.php";

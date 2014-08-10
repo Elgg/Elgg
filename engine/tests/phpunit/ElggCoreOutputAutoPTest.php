@@ -2,7 +2,7 @@
 /**
  * Test case for \ElggAutoP functionality.
  */
-class ElggCoreOutputAutoPTest extends \ElggCoreUnitTest {
+class ElggCoreOutputAutoPTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @var \ElggAutoP

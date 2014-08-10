@@ -3,7 +3,7 @@
 /**
  * Test attribute loader for entities
  */
-class ElggCoreAttributeLoaderTest extends \ElggCoreUnitTest {
+class ElggCoreAttributeLoaderTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Checks if additional select columns are readable as volatile data

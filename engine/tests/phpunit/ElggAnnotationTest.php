@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggAnnotationTest extends \ElggCoreUnitTest {
+class ElggAnnotationTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @var \ElggEntity

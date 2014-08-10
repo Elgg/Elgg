@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreRiverAPITest extends \ElggCoreUnitTest {
+class ElggCoreRiverAPITest extends \PHPUnit_Framework_TestCase {
 
 	public function testElggCreateRiverItemWorks() {
 		$entity = elgg_get_entities(array('limit' => 1));

@@ -3,7 +3,7 @@
 /**
  * Test configuration for site and application (datalist)
  */
-class ElggCoreConfigTest extends \ElggCoreUnitTest {
+class ElggCoreConfigTest extends \PHPUnit_Framework_TestCase {
 
 	public function testSetConfigWithTooLongName() {
 		// prevent the error message from being logged

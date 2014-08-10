@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
+class ElggCoreFilestoreTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * Called before each test method.
