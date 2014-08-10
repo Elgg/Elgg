@@ -17,13 +17,7 @@ if (is_callable('mb_internal_encoding')) {
  * @since 1.7.0
  */
 function elgg_parse_str($str) {
-	if (is_callable('mb_parse_str')) {
-		mb_parse_str($str, $results);
-	} else {
-		parse_str($str, $results);
-	}
-
-	return $results;
+	return Url::parseStr($str);
 }
 
 

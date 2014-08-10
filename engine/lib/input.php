@@ -25,38 +25,7 @@
  * @return mixed
  */
 function get_input($variable, $default = null, $filter_result = true) {
-
-	global $CONFIG;
-
-	$result = $default;
-
-	elgg_push_context('input');
-
-	if (isset($CONFIG->input[$variable])) {
-		// a plugin has already set this variable
-		$result = $CONFIG->input[$variable];
-		if ($filter_result) {
-			$result = filter_tags($result);
-		}
-	} else {
-		$request = _elgg_services()->request;
-		$value = $request->get($variable);
-		if ($value !== null) {
-			$result = $value;
-			if (is_string($result)) {
-				// @todo why trim
-				$result = trim($result);
-			}
-
-			if ($filter_result) {
-				$result = filter_tags($result);
-			}
-		}
-	}
-
-	elgg_pop_context();
-
-	return $result;
+	return _elgg_services()->request->get($variable, $default, $filter_result);
 }
 
 /**
@@ -70,29 +39,19 @@ function get_input($variable, $default = null, $filter_result = true) {
  * @return void
  */
 function set_input($variable, $value) {
-	global $CONFIG;
-	if (!isset($CONFIG->input)) {
-		$CONFIG->input = array();
-	}
-
-	if (is_array($value)) {
-		array_walk_recursive($value, create_function('&$v, $k', '$v = trim($v);'));
-		$CONFIG->input[trim($variable)] = $value;
-	} else {
-		$CONFIG->input[trim($variable)] = trim($value);
-	}
+	_elgg_services()->request->set($variable, $value);
 }
 
 /**
  * Filter tags from a given string based on registered hooks.
  *
  * @param mixed $var Anything that does not include an object (strings, ints, arrays)
- *					 This includes multi-dimensional arrays.
+ *                   This includes multi-dimensional arrays.
  *
  * @return mixed The filtered result - everything will be strings
  */
 function filter_tags($var) {
-	return elgg_trigger_plugin_hook('validate', 'input', null, $var);
+	return _elgg_services()->request->filterTags($var);
 }
 
 /**
@@ -104,19 +63,7 @@ function filter_tags($var) {
  * @return string The current page URL.
  */
 function current_page_url() {
-	$url = parse_url(elgg_get_site_url());
-
-	$page = $url['scheme'] . "://" . $url['host'];
-
-	if (isset($url['port']) && $url['port']) {
-		$page .= ":" . $url['port'];
-	}
-
-	$page = trim($page, "/");
-
-	$page .= _elgg_services()->request->getRequestUri();
-
-	return $page;
+	return $this->getCurrentPageUrl();
 }
 
 /**
@@ -147,11 +94,9 @@ function elgg_make_sticky_form($form_name) {
 
 	$session = _elgg_services()->session;
 	$data = $session->get('sticky_forms', array());
-	$req = _elgg_services()->request;
 
 	// will go through XSS filtering in elgg_get_sticky_value()
-	$vars = array_merge($req->query->all(), $req->request->all());
-	$data[$form_name] = $vars;
+	$data[$form_name] = _elgg_services()->request->all();
 
 	$session->set('sticky_forms', $data);
 }

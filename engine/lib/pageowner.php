@@ -265,7 +265,7 @@ function page_owner_boot() {
 	$request = _elgg_services()->request;
 
 	// don't do this for *_handler.php, etc.
-	if (basename($request->server->get('SCRIPT_FILENAME')) === 'index.php') {
+	if (basename($_SERVER['SCRIPT_FILENAME']) === 'index.php') {
 		$context = $request->getFirstUrlSegment();
 		if (!$context) {
 			$context = 'main';

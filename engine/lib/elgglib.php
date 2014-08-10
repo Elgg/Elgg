@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Http\Url;
+
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
  *
@@ -77,27 +80,12 @@ function elgg_load_library($name) {
  * @throws SecurityException
  */
 function forward($location = "", $reason = 'system') {
-	if (!headers_sent($file, $line)) {
-		if ($location === REFERER) {
-			$location = _elgg_services()->request->headers->get('Referer');
-		}
-
-		$location = elgg_normalize_url($location);
-
-		// return new forward location or false to stop the forward or empty string to exit
-		$current_page = current_page_url();
-		$params = array('current_url' => $current_page, 'forward_url' => $location);
-		$location = elgg_trigger_plugin_hook('forward', $reason, $params, $location);
-
-		if ($location) {
-			header("Location: {$location}");
-			exit;
-		} else if ($location === '') {
-			exit;
-		}
-	} else {
-		throw new \SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
-			. "Output started in file $file at line $line. Search http://docs.elgg.org/ for more information.");
+	$location = _elgg_services()->request->forward($location, $reason);
+	if ($location) {
+		header("Location: {$location}");
+		exit;
+	} else if ($location === '') {
+		exit;
 	}
 }
 
@@ -1240,20 +1228,12 @@ function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
  * @since 1.7.0
  */
 function elgg_http_build_url(array $parts, $html_encode = true) {
-	// build only what's given to us.
-	$scheme = isset($parts['scheme']) ? "{$parts['scheme']}://" : '';
-	$host = isset($parts['host']) ? "{$parts['host']}" : '';
-	$port = isset($parts['port']) ? ":{$parts['port']}" : '';
-	$path = isset($parts['path']) ? "{$parts['path']}" : '';
-	$query = isset($parts['query']) ? "?{$parts['query']}" : '';
-	$fragment = isset($parts['fragment']) ? "#{$parts['fragment']}" : '';
-
-	$string = $scheme . $host . $port . $path . $query . $fragment;
+	$url = Url::createFromParts($parts);
 
 	if ($html_encode) {
-		return elgg_format_url($string);
+		return elgg_format_url($url);
 	} else {
-		return $string;
+		return "$url";
 	}
 }
 
@@ -1276,25 +1256,18 @@ function elgg_http_build_url(array $parts, $html_encode = true) {
  */
 function elgg_add_action_tokens_to_url($url, $html_encode = false) {
 	$url = elgg_normalize_url($url);
-	$components = parse_url($url);
+	$url = Url::parse($url);
 
-	if (isset($components['query'])) {
-		$query = elgg_parse_str($components['query']);
-	} else {
-		$query = array();
-	}
-
+	$query = $url->getQueryParams();
 	if (isset($query['__elgg_ts']) && isset($query['__elgg_token'])) {
-		return $url;
+		return "$url";
 	}
 
-	// append action tokens to the existing query
-	$query['__elgg_ts'] = time();
-	$query['__elgg_token'] = generate_action_token($query['__elgg_ts']);
-	$components['query'] = http_build_query($query);
-
-	// rebuild the full url
-	return elgg_http_build_url($components, $html_encode);
+	$time = time();
+	return (string)$url->setQueryParams(array(
+		'__elgg_ts' => $time,
+		'__elgg_token' => generate_action_token($time),
+	));
 }
 
 /**
@@ -1309,7 +1282,7 @@ function elgg_add_action_tokens_to_url($url, $html_encode = false) {
  * @since 1.7.0
  */
 function elgg_http_remove_url_query_element($url, $element) {
-	return elgg_http_add_url_query_elements($url, array($element => null));
+	return (string)Url::parse($url)->setQueryParams(array($element => null));
 }
 
 /**
@@ -1323,33 +1296,7 @@ function elgg_http_remove_url_query_element($url, $element) {
  * @since 1.7.0
  */
 function elgg_http_add_url_query_elements($url, array $elements) {
-	$url_array = parse_url($url);
-
-	if (isset($url_array['query'])) {
-		$query = elgg_parse_str($url_array['query']);
-	} else {
-		$query = array();
-	}
-
-	foreach ($elements as $k => $v) {
-		if ($v === null) {
-			unset($query[$k]);
-		} else {
-			$query[$k] = $v;
-		}
-	}
-
-	// why check path? A: if no path, this may be a relative URL like "?foo=1". In this case,
-	// the output "" would be interpreted the current URL, so in this case we *must* set
-	// a query to make sure elements are removed.
-	if ($query || empty($url_array['path'])) {
-		$url_array['query'] = http_build_query($query);
-	} else {
-		unset($url_array['query']);
-	}
-	$string = elgg_http_build_url($url_array, false);
-
-	return $string;
+	return (string)Url::parse($url)->setQueryParams($elements);
 }
 
 /**
@@ -1370,80 +1317,11 @@ function elgg_http_url_is_identical($url1, $url2, $ignore_params = array('offset
 	$url1 = elgg_normalize_url($url1);
 	$url2 = elgg_normalize_url($url2);
 
-	// @todo - should probably do something with relative URLs
-
 	if ($url1 == $url2) {
 		return true;
 	}
 
-	$url1_info = parse_url($url1);
-	$url2_info = parse_url($url2);
-
-	if (isset($url1_info['path'])) {
-		$url1_info['path'] = trim($url1_info['path'], '/');
-	}
-	if (isset($url2_info['path'])) {
-		$url2_info['path'] = trim($url2_info['path'], '/');
-	}
-
-	// compare basic bits
-	$parts = array('scheme', 'host', 'path');
-
-	foreach ($parts as $part) {
-		if ((isset($url1_info[$part]) && isset($url2_info[$part]))
-		&& $url1_info[$part] != $url2_info[$part]) {
-			return false;
-		} elseif (isset($url1_info[$part]) && !isset($url2_info[$part])) {
-			return false;
-		} elseif (!isset($url1_info[$part]) && isset($url2_info[$part])) {
-			return false;
-		}
-	}
-
-	// quick compare of get params
-	if (isset($url1_info['query']) && isset($url2_info['query'])
-	&& $url1_info['query'] == $url2_info['query']) {
-		return true;
-	}
-
-	// compare get params that might be out of order
-	$url1_params = array();
-	$url2_params = array();
-
-	if (isset($url1_info['query'])) {
-		if ($url1_info['query'] = html_entity_decode($url1_info['query'])) {
-			$url1_params = elgg_parse_str($url1_info['query']);
-		}
-	}
-
-	if (isset($url2_info['query'])) {
-		if ($url2_info['query'] = html_entity_decode($url2_info['query'])) {
-			$url2_params = elgg_parse_str($url2_info['query']);
-		}
-	}
-
-	// drop ignored params
-	foreach ($ignore_params as $param) {
-		if (isset($url1_params[$param])) {
-			unset($url1_params[$param]);
-		}
-		if (isset($url2_params[$param])) {
-			unset($url2_params[$param]);
-		}
-	}
-
-	// array_diff_assoc only returns the items in arr1 that aren't in arrN
-	// but not the items that ARE in arrN but NOT in arr1
-	// if arr1 is an empty array, this function will return 0 no matter what.
-	// since we only care if they're different and not how different,
-	// add the results together to get a non-zero (ie, different) result
-	$diff_count = count(array_diff_assoc($url1_params, $url2_params));
-	$diff_count += count(array_diff_assoc($url2_params, $url1_params));
-	if ($diff_count > 0) {
-		return false;
-	}
-
-	return true;
+	return Url::parse($url1)->equals(Url::parse($url2));
 }
 
 /**
@@ -1636,7 +1514,7 @@ function _elgg_shutdown_hook() {
 		elgg_trigger_event('shutdown', 'system');
 
 		$time = (float)(microtime(true) - $START_MICROTIME);
-		$uri = _elgg_services()->request->server->get('REQUEST_URI', 'CLI');
+		$uri = elgg_extract('REQUEST_URI', $_SERVER, 'CLI');
 		// demoted to NOTICE from DEBUG so javascript is not corrupted
 		elgg_log("Page {$uri} generated in $time seconds", 'INFO');
 	} catch (Exception $e) {
@@ -1687,11 +1565,7 @@ function _elgg_ajax_page_handler($page) {
 			exit;
 		}
 
-		// pull out GET parameters through filter
-		$vars = array();
-		foreach (_elgg_services()->request->query->keys() as $name) {
-			$vars[$name] = get_input($name);
-		}
+		$vars = _elgg_services()->request->getQueryParams();
 
 		if (isset($vars['guid'])) {
 			$vars['entity'] = get_entity($vars['guid']);
