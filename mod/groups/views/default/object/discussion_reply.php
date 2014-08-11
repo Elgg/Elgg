@@ -41,6 +41,7 @@ $subtitle = "$poster_text $date";
 $content = elgg_view('output/longtext', array(
 	'value' => $reply->description,
 	'class' => 'elgg-inner',
+	'data-role' => 'discussion-reply-text',
 ));
 
 $params = array(
