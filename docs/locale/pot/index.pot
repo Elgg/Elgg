@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-07-10 19:59-0700\n"
+"POT-Creation-Date: 2014-08-11 01:01+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,62 +17,62 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../index.rst:2
-# bf8ba62941ba4683abaffd50ceed5c04
+# ecc15a9e86a44ecb92b8094c7be82221
 msgid "Elgg |version| Documentation"
 msgstr ""
 
 #: ../../index.rst:4
-# ab226a9b65fc40a5b7e77ca1d82fdb2b
+# 82c5cb68acb944eb9925cafee895814d
 msgid "Elgg_ (`pronunciation`__) is a rapid development framework with built-in social features. It is a great fit for building any app where users log in and share information."
 msgstr ""
 
 #: ../../index.rst:9
-# c0e4a7709c9f4591b238ad5d2046f55a
+# 6d76540fe6ee491784fff4414e15985e
 msgid "It has been used to build `all kinds of social apps`__:"
 msgstr ""
 
 #: ../../index.rst:13
-# d21733a29c7348de87ac706ed9eda003
+# 77f2e248c73f48ecb9b7f9419ea5fbda
 msgid "open networks (similar to Facebook)"
 msgstr ""
 
 #: ../../index.rst:14
-# e2b7f615d09347c6b380fa5dbf6968e9
+# 104e8b0416784b739f0979b00b58712e
 msgid "topical (like the Elgg Community)"
 msgstr ""
 
 #: ../../index.rst:15
-# 1a8a975bbb5740cd87fe2cc3df499425
+# 0d3aca5436ca4248b4006d721de4c42b
 msgid "private intranets"
 msgstr ""
 
 #: ../../index.rst:16
-# a75994e0b1db423fa8edfceec158ca61
+# 23ef9fb4b55446bd8d16d42a7dc3a52a
 msgid "dating"
 msgstr ""
 
 #: ../../index.rst:17
-# a682947d671443dd8d2ed7c6de5cc0a3
+# a3fd25be8ea74e74b4cf8c4edc8ad8f0
 msgid "educational"
 msgstr ""
 
 #: ../../index.rst:18
-# 3664d68ff6694471b4e97575bffa1665
+# c10b10527e9f42c5ae0022ea8684cb6c
 msgid "company blog"
 msgstr ""
 
 #: ../../index.rst:19
-# 196a21144de44294862af9535f255b12
+# 1e4e0f368aa94c359a0bec6bf5cd9686
 msgid "etc."
 msgstr ""
 
 #: ../../index.rst:21
-# d487b0ba604340fe89e55a17c1321077
+# 18cdde61be3244db9b75d8742b60f9b9
 msgid "There is also a `demo site`_ running a standard installation of Elgg."
 msgstr ""
 
 #: ../../index.rst:23
-# d94b70b267b34149a7f857b5b7fbf809
+# 51e9c1238a4d4aaa842f03d464822646
 msgid "This is the canonical documentation for the Elgg_ project. This aims to replace the wiki_, which is out-of-date in many areas."
 msgstr ""
 
