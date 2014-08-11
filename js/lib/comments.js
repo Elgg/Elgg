@@ -69,7 +69,7 @@ elgg.comments.Comment.prototype = {
 			success: function(json) {
 				if (json.status === 0) {
 					// Update list item content
-					that.$item.find('.elgg-output').html(value);
+					that.$item.find('[data-role="comment-text"]').html(value);
 				}
 				that.hideForm(function () {
 					that.getForm().remove();
