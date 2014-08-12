@@ -15,11 +15,8 @@ echo "<h2 class=\"p-name fn\">{$user->name}</h2>";
 // the controller doesn't allow non-admins to view banned users' profiles
 if ($user->isBanned()) {
 	$title = elgg_echo('banned');
-	$body = $user->ban_reason;
-
-	echo elgg_view_module('info', $title, $body, array(
-		'class' => 'profile-banned-user'
-	));
+	$reason = ($user->ban_reason === 'banned') ? '' : $user->ban_reason;
+	echo "<div class='profile-banned-user'><h4 class='mbs'>$title</h4>$reason</div>";
 }
 
 echo elgg_view("profile/status", array("entity" => $user));
