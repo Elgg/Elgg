@@ -253,13 +253,13 @@ class Elgg_Notifications_NotificationsService {
 			return false;
 		}
 
-		if (!has_access_to_entity($event->getObject(), $recipient)) {
-			return false;
-		}
-
 		$actor = $event->getActor();
 		$object = $event->getObject();
 		if (!$actor || !$object) {
+			return false;
+		}
+
+		if (($object instanceof ElggEntity) && !has_access_to_entity($object, $recipient)) {
 			return false;
 		}
 
