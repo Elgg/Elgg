@@ -435,11 +435,16 @@ function _elgg_get_access_where_sql(array $options = array()) {
 function has_access_to_entity($entity, $user = null) {
 	global $CONFIG;
 
+	// See #7159. Must not allow ignore access to affect query
+	$ia = elgg_set_ignore_access(false);
+
 	if (!isset($user)) {
-		$access_bit = _elgg_get_access_where_sql();	
+		$access_bit = _elgg_get_access_where_sql();
 	} else {
 		$access_bit = _elgg_get_access_where_sql(array('user_guid' => $user->getGUID()));
 	}
+
+	elgg_set_ignore_access($ia);
 
 	$query = "SELECT guid from {$CONFIG->dbprefix}entities e WHERE e.guid = " . $entity->getGUID();
 	// Add access controls
