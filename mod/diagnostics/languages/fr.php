@@ -15,7 +15,7 @@ Elgg Révision %s, version %s
 
 ------------------------------------------------------------------------',
 	'diagnostics:report:php' => '
-PHP info :
+PHP info:
 %s
 ------------------------------------------------------------------------',
 	'diagnostics:report:plugins' => '
@@ -24,12 +24,12 @@ Plugins installés et détails:
 %s
 ------------------------------------------------------------------------',
 	'diagnostics:report:md5' => '
-Fichiers installés et somme de contrôles :
+Fichiers installés et sommes de contrôle:
 
 %s
 ------------------------------------------------------------------------',
 	'diagnostics:report:globals' => '
-Variables globales :
+Variables globales:
 
 %s
 ------------------------------------------------------------------------',

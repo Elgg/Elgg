@@ -1,7 +1,7 @@
 <?php
 return array(
 	'site_notifications' => 'Уведомления сайта',
-	'notification:method:site' => 'Сайт',
+	'notification:method:site' => 'Сообщения',
 	'site_notifications:topbar' => 'Уведомления',
 	'item:object:site_notification' => 'Уведомления сайта',
 
