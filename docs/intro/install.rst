@@ -27,6 +27,29 @@ By "official support", we mean that:
 -  Priority on bug reports is given to Apache users if the bug is web server specific
    (but those are rare).
 
+Browser support policy
+----------------------
+
+Feature branches support the latest 2 versions of all major browsers
+as were available at the time of the first stable release on that branch.
+
+Bugfix release will not alter browser support,
+even if a new version of the browser has since been released.
+
+Major browsers here means all of the following, plus their mobile counterparts:
+
+ * Android Browser
+ * Chrome
+ * Firefox
+ * IE
+ * Safari
+
+"Support" may mean that we take advantage of newer, unimplemented technologies
+but provide a JavaScript polyfill for the browsers that need it.
+
+You may find that Elgg happens to work on unsupported browsers,
+but compatibility may break at any time, even during a bugfix release.
+
 Overview
 ========
 
