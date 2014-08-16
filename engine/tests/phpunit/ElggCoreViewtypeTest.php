@@ -1,10 +1,5 @@
 <?php
 
-$engine = dirname(dirname(dirname(__FILE__)));
-require_once "$engine/lib/views.php";
-require_once "$engine/lib/input.php";
-require_once "$engine/lib/pageowner.php";
-
 class ElggCoreViewtypeTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {

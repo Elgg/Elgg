@@ -1,8 +1,5 @@
 <?php
 
-$engine = dirname(dirname(dirname(__FILE__)));
-require_once "$engine/lib/mb_wrapper.php";// for elgg_parse_str used by elgg_http_add_url_query_elements
-
 /**
  * @see \ElggCoreHelpersTest
  * @todo migrate similar simpletest tests to this class

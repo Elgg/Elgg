@@ -721,33 +721,7 @@ class ElggInstaller {
 	protected function bootstrapEngine() {
 		global $CONFIG;
 
-		$lib_dir = $CONFIG->path . 'engine/lib/';
-
-		// bootstrapping with required files in a required order
-		$required_files = array(
-			'autoloader.php',
-			'elgglib.php',
-			'views.php',
-			'access.php',
-			'system_log.php',
-			'configuration.php',
-			'database.php',
-			'sessions.php',
-			'languages.php',
-			'pageowner.php',
-			'input.php',
-			'cache.php',
-			'output.php',
-		);
-
-		foreach ($required_files as $file) {
-			$path = $lib_dir . $file;
-			if (!include($path)) {
-				echo "Could not load file '$path'. "
-					. 'Please check your Elgg installation for all required files.';
-				exit;
-			}
-		}
+		require_once $CONFIG->path . 'engine/load.php';
 	}
 
 	/**

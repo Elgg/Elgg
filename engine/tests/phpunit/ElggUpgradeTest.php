@@ -1,9 +1,5 @@
 <?php
 
-// Exceptions are translated
-$engine = dirname(dirname(dirname(__FILE__)));
-require_once "$engine/lib/languages.php";
-
 class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 	protected $obj;
 
