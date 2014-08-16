@@ -57,7 +57,7 @@ return array(
 
 	'file:delete:confirm' => "本当にこのファイルを削除しますか？",
 
-	'file:upload_limit' => 'アップロードできるファイルの最大許容サイズは、 %s です。',
+	'file:upload_limit' => 'Maximum allowed file size is %s',
 
 	'file:tagcloud' => "タグクラウド",
 

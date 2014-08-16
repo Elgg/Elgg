@@ -64,6 +64,7 @@ return array(
 	'groups:featuredon' => '%s es miembro de un grupo destacado.',
 	'groups:unfeatured' => '%s has been removed from the featured groups.',
 	'groups:featured_error' => 'Grupo inv&aacute;lido.',
+	'groups:nofeatured' => 'Sin grupos destacados.',
 	'groups:joinrequest' => 'Solicitar unirse',
 	'groups:join' => 'Unirse al grupo',
 	'groups:leave' => 'Abandonar el grupo',
@@ -299,6 +300,8 @@ O click a continuaci&oacute;n para ver las solicitudes de membres&iacute;a del g
 
 	'groups:invitekilled' => 'El invitado ha sido eliminado.',
 	'groups:joinrequestkilled' => 'La solicitud ha sido borrada.',
+	'groups:error:addedtogroup' => "No ha sido posible añadir a %s al grupo.",
+	'groups:add:alreadymember' => "%s ya forma parte del grupo.",
 
 	/**
 	 * ecml

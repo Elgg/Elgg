@@ -66,7 +66,7 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:database:help:dbhost' => 'Der Hostname des MySQL-Servers (normalerweise \'localhost\')',
 	'install:database:help:dbprefix' => "Das Tabellen-Prefix das bei allen Elgg-Tabellen in der Datenbank gesetzt wird (normalerweise \'elgg_\')",
 
-	'install:settings:instructions' => 'Für die weitere Konfiguration der Elgg-Seite benötigen wir einige Eingaben. Wenn Du noch kein\'t <a href="http://docs.elgg.org/wiki/Data_directory" target="_blank">Elgg-Datenverzeichnis</a> angelegt hast, mußt Du dies jetzt tun.',
+	'install:settings:instructions' => 'Für die weitere Konfiguration der Elgg-Seite benötigen wir einige Eingaben. Wenn Du noch kein\'t <a href=""http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">Elgg-Datenverzeichnis</a> angelegt hast, mußt Du dies jetzt tun.',
 
 	'install:settings:label:sitename' => 'Seiten-Name',
 	'install:settings:label:siteemail' => 'Email-Adresse',

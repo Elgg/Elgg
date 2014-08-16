@@ -64,6 +64,7 @@ return array(
 	'groups:featuredon' => '%s on nyt mainostettu ryhmä.',
 	'groups:unfeatured' => '%s on poistettu mainostettavista ryhmistä.',
 	'groups:featured_error' => 'Virheellinen ryhmä.',
+	'groups:nofeatured' => 'Ei valikoituja ryhmiä',
 	'groups:joinrequest' => 'Ano jäsenyyttä',
 	'groups:join' => 'Liity ryhmään',
 	'groups:leave' => 'Eroa ryhmästä',
@@ -261,6 +262,7 @@ tai tästä nähdäksesi ryhmän jäsenanomukset:
 	'river:join:group:default' => '%s liittyi ryhmään %s',
 	'river:create:object:groupforumtopic' => '%s lisäsi uuden keskusteluaiheen %s',
 	'river:reply:object:groupforumtopic' => '%s vastasi keskusteluun %s',
+	'river:reply:view' => 'näytä vastaukset',
 
 	'groups:nowidgets' => 'Tälle ryhmälle ei ole määritetty vimpaimia.',
 
@@ -298,6 +300,8 @@ tai tästä nähdäksesi ryhmän jäsenanomukset:
 
 	'groups:invitekilled' => 'Kutsu poistettu.',
 	'groups:joinrequestkilled' => 'Pyyntö poistettu.',
+	'groups:error:addedtogroup' => "Käyttäjän %s lisääminen epäonnistui",
+	'groups:add:alreadymember' => "%s on jo tämän ryhmän jäsen",
 
 	/**
 	 * ecml
