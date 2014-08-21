@@ -66,7 +66,7 @@ return array(
 	'install:database:help:dbhost' => 'MySQL serverのあるホスト名(たいていは、localhost)',
 	'install:database:help:dbprefix' => "全てのElgg用テーブル名につける接頭辞(Prefix)(たいていは、elgg_)",
 
-	'install:settings:instructions' => 'Elggを構築するにあたってこのサイトについてのいくつかの情報が必要です。もし、まだElgg用の<a href="http://docs.elgg.org/wiki/Data_directory" target="_blank">データディレクトリを作成</a>されておられないなら、今作成してください。',
+	'install:settings:instructions' => 'Elggを構築するにあたってこのサイトについてのいくつかの情報が必要です。もし、まだElgg用の<a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">データディレクトリを作成</a>されておられないなら、今作成してください。',
 
 	'install:settings:label:sitename' => 'サイトの名前',
 	'install:settings:label:siteemail' => 'サイトのEmailアドレス',

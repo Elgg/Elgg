@@ -1067,7 +1067,8 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'installation:minify_css:label' => "CSS-Dateien komprimieren (empfohlen)",
 
 	'installation:htaccess:needs_upgrade' => "Du mußt die .htaccess-Datei auf Deinem Server anpassen, damit der Pfad in den GET-Parameter __elgg_uri eingebunden wird (Du kannst die htaccess_dist-Datei als Vorlage für Deine .htacess-Datei dafür verwenden).",
-
+	'installation:htaccess:localhost:connectionfailed' => "Elgg war es nicht möglich, eine Verbindung zu sich selbst aufzubauen, um die Rewrite-Regeln zu testen. Stelle sicher, dass curl auf dem Server installiert ist und korrekt funktioniert. Es dürfen auch keine IP Adressen-Beschränkungen vorhanden sein, die möglicherweise Verbindungen auf localhost selbst unterbinden.",
+	
 	'installation:systemcache:description' => "Der Systemcache veringert die Ladezeit von Elgg, indem einige häufig notwendige Daten in Dateien vorgehalten werden.",
 	'installation:systemcache:label' => "Systemcache aktivieren (empfohlen)",
 

@@ -64,6 +64,7 @@ return array(
 	'groups:featuredon' => '%s は、クローズアップ欄に表示されます',
 	'groups:unfeatured' => '%s は、クローズアップ欄から外されました',
 	'groups:featured_error' => '不正なグループです。',
+	'groups:nofeatured' => 'No featured groups',
 	'groups:joinrequest' => '参加希望',
 	'groups:join' => '参加',
 	'groups:leave' => '脱退',
@@ -299,6 +300,8 @@ return array(
 
 	'groups:invitekilled' => '招待状を削除しました。',
 	'groups:joinrequestkilled' => '参加希望申請を削除しました。',
+	'groups:error:addedtogroup' => "%s さんをグループに加えることができませんでした。",
+	'groups:add:alreadymember' => "%s さんは、すでにこのグループのメンバーです。",
 
 	/**
 	 * ecml

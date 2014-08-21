@@ -94,7 +94,7 @@ which we will create in a moment. Here is the content of
     </div>
 
 Notice how the form is calling input views like ``input/longtext``.
-These are built into elgg and make it easy to add form components.
+These are built into Elgg and make it easy to add form components.
 You can see a complete list of input views in the ``/views/default/input/`` directory.
 
 .. warning::

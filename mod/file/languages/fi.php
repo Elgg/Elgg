@@ -57,6 +57,8 @@ return array(
 
 	'file:delete:confirm' => "Haluatko varmasti poistaa tämän tiedoston?",
 
+	'file:upload_limit' => 'Suurin sallittu tiedostokoko: %s',
+
 	'file:tagcloud' => "Tagipilvi",
 
 	'file:display:number' => "Näytettävien kohteiden määrä",

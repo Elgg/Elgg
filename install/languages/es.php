@@ -66,7 +66,7 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 	'install:database:help:dbhost' => 'Nombre del Host para el servidor MySQL (normalmente localhost)',
 	'install:database:help:dbprefix' => "Prefijo para todas las tablas de Elgg (normalmente elgg_)",
 
-	'install:settings:instructions' => 'Necesitamos alguna información sobre el sitio para configurar Elgg. Si usted no <a href="http://docs.elgg.org/wiki/Data_directory" target="_blank">creó un directorio de datos (data)</a> para Elgg, debe hacerlo ahora.',
+	'install:settings:instructions' => 'Durante la configuración de Elgg será necesaria cierta información sobre el sitio. Si no ha <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">creado una carpeta de datos</a> para Elgg, hágalo ahora.',
 
 	'install:settings:label:sitename' => 'Nombre del Sitio',
 	'install:settings:label:siteemail' => 'Dirección de Email del Sitio',

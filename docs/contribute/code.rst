@@ -55,9 +55,20 @@ Feature PRs:
 Choosing a branch to submit to
 ------------------------------
 
--  New features: master (we do not introduce new features in bugfix branches).
--  Bug fixes: latest branch (or master if the bug only appears in master).
--  Security fixes: lowest supported branch (If master is 1.9, then submit against 1.7).
+The following table assumes the latest stable release is 1.9.
+
+============== ====================================
+Type of change Branch to submit against
+============== ====================================
+Security fix   1.8 (Email security@elgg.org first!)
+Bug fix        1.9
+Deprecation    1.x
+Minor feature  1.x
+Major feature  master
+Breaking       master
+============== ====================================
+
+The difference between minor and major feature is subjective and up to the core team.
 
 Commit message format
 ---------------------
@@ -131,6 +142,68 @@ we'll ask you to rewrite it:
 4. Force push the branch to update your PR:
 
    ``git push -f your_remote your_branch``
+
+Testing
+=======
+
+Elgg has automated tests for both PHP and JavaScript functionality.
+All new contributions are required to come with appropriate tests.
+
+PHPUnit Tests
+-------------
+
+TODO
+
+Jasmine Tests
+-------------
+
+Test files must be named ``*Test.js`` and should go in either ``js/tests/`` or next
+to their source files in ``views/default/js``. Karma will automatically pick up
+on new ``*Test.js`` files and run those tests. 
+
+Test boilerplate
+----------------
+
+.. code:: javascript
+
+	define(function(require) {
+		var elgg = require('elgg');
+		
+		describe("This new test", function() {
+			it("fails automatically", function() {
+				expect(true).toBe(false);
+			});
+		});
+	});
+
+Running the tests
+-----------------
+Elgg uses `Karma`_ with `Jasmine`_ to run JS unit tests.
+
+.. _Karma: http://karma-runner.github.io/0.8/index.html
+.. _Jasmine: http://pivotal.github.io/jasmine/
+
+You will need to have nodejs and npm installed.
+
+First install all the development dependencies:
+
+.. code::
+
+   npm install
+
+Run through the tests just once and then quit:
+
+.. code::
+   
+   npm test
+
+You can also run tests continuously during development so they run on each save:
+
+.. code::
+
+   karma start js/tests/karma.conf.js
+
+
 
 Coding best practices
 =====================
@@ -460,7 +533,7 @@ Javascript guidelines
 
 Same formatting standards as PHP apply.
 
-All functions should be in the elgg namespace.
+All functions should be in the ``elgg`` namespace.
 
 Function expressions should end with a semi-colon.
 

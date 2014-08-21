@@ -57,6 +57,8 @@ return array(
 
 	'file:delete:confirm' => "&iquest;Seguro que deseas borrar este archivo?",
 
+	'file:upload_limit' => 'El tamaño máximo permitido por fichero son %s.',
+
 	'file:tagcloud' => "Nube de etiquetas",
 
 	'file:display:number' => "N&uacute;mero de archivos a mostrar",
