@@ -69,7 +69,7 @@ elgg.discussion.Reply.prototype = {
 			success: function(json) {
 				if (json.status === 0) {
 					// Update list item content
-					that.$item.find('.elgg-content').html(value);
+					that.$item.find('[data-role="discussion-reply-text"]').html(value);
 				}
 				that.hideForm(function () {
 					that.getForm().remove();

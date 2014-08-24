@@ -10,13 +10,13 @@ and to streamline onboarding of new team members.
 Requirements
 ============
 
-* SSH access to elgg.osuosl.org
+* SSH access to elgg.org
 * Commit access to http://github.com/Elgg/Elgg
 * Author access to http://blog.elgg.org
 * Access to `Twitter account`_
 * Access to `G+ page`_
 * Node.js and NPM installed
-* Sphinx installed
+* Sphinx installed (``easy_install sphinx``)
 * Transifex client installed (``easy_install transifex-client``)
 * Transifex account with access to Elgg project
  
@@ -34,6 +34,7 @@ Install the prerequisites:
 .. code:: sh
 
    npm install elgg-conventional-changelog
+   easy_install sphinx
    easy_install transifex-client
 
 Run the ``release.php`` script. For example, to release 1.9.1:
@@ -71,7 +72,7 @@ The downloads need to point to the new releases.
 Build Package
 -------------
 
- * ssh to elgg.osuosl.org
+ * ssh to elgg.org
  * Clone https://github.com/Elgg/elgg-scripts
  * Use elgg-scripts/build/build.sh to generate the .zip file.
 
@@ -108,7 +109,7 @@ Update homepage, download, and previous download pages
 
 This should be the very last thing you do.
 
-* Compose a blog on http://blog.elgg.org with HTML version of CHANGELOG.md.
+* Sign in at http://blog.elgg.org/pg/login and compose a blog on with HTML version of CHANGELOG.md.
 * Add tags “release” and “elgg1.x” where x is whatever branch is being released.
 * Tweet from the elgg `Twitter account`_
 * Post from the `G+ page`_

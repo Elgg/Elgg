@@ -125,6 +125,7 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 			'page/handler?p=v&p2=v2' =>      	elgg_get_site_url() . 'page/handler?p=v&p2=v2',
 			'mod/plugin/file.php' =>            elgg_get_site_url() . 'mod/plugin/file.php',
 			'mod/plugin/file.php?p=v&p2=v2' =>  elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
+            'search?foo.bar' =>                 elgg_get_site_url() . 'search?foo.bar',
 			'rootfile.php' =>                   elgg_get_site_url() . 'rootfile.php',
 			'rootfile.php?p=v&p2=v2' =>         elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
 

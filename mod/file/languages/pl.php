@@ -57,6 +57,8 @@ return array(
 
 	'file:delete:confirm' => "Czy na pewno chcesz usunąć ten plik?",
 
+	'file:upload_limit' => 'Maksymalny dozwolony rozmar pliku to %s',
+
 	'file:tagcloud' => "Chmura tagów",
 
 	'file:display:number' => "Liczba plików do wyświetlenia",

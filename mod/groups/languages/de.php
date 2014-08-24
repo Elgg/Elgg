@@ -64,6 +64,7 @@ return array(
 	'groups:featuredon' => '%s ist nun eine "Besondere Gruppe".',
 	'groups:unfeatured' => '%s wurde aus der Liste der "Besonderen Gruppen" entfernt.',
 	'groups:featured_error' => 'Ungültige Gruppe.',
+	'groups:nofeatured' => 'Keine "Besonderen Gruppen" vorhanden.',
 	'groups:joinrequest' => 'Gruppenbeitritt beantragen',
 	'groups:join' => 'Gruppe beitreten',
 	'groups:leave' => 'Gruppe verlassen',
@@ -261,6 +262,7 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 	'river:join:group:default' => '%s ist der Gruppe %s beigetreten',
 	'river:create:object:groupforumtopic' => '%s schrieb einen neuen Diskussionsbeitrag %s',
 	'river:reply:object:groupforumtopic' => '%s schrieb einen Kommentar zum Diskussionsbeitrag %s',
+	'river:reply:view' => 'Kommentar anzeigen',
 
 	'groups:nowidgets' => 'Für diese Gruppe wurden keine Widgets aktiviert.',
 
@@ -298,6 +300,8 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 
 	'groups:invitekilled' => 'Die Einladung wurde gelöscht.',
 	'groups:joinrequestkilled' => 'Der Antrag zum Gruppenbeitritt wurde gelöscht.',
+	'groups:error:addedtogroup' => "Das Hinzufügen von %s als Mitglied der Gruppe ist fehlgeschlagen.",
+	'groups:add:alreadymember' => "%s ist bereits ein Mitglied dieser Gruppe.",
 
 	/**
 	 * ecml
