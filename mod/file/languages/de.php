@@ -57,6 +57,8 @@ return array(
 
 	'file:delete:confirm' => "Bist Du sicher, dass Du diese Datei löschen willst?",
 
+	'file:upload_limit' => 'Die maximal zulässige Dateigröße ist %s.',
+
 	'file:tagcloud' => "Tagcloud",
 
 	'file:display:number' => "Anzahl der anzuzeigenden Dateien",

@@ -5,6 +5,7 @@
  * @package Profile
  */
 ?>
+/* <style> /**/
 /* ***************************************
 	Profile
 *************************************** */
@@ -91,7 +92,13 @@
 	padding: 2px 0 0 3px;
 }
 .profile-banned-user {
-	border: 2px solid red;
-	padding: 4px 8px;
-	border-radius: 6px;
+	margin: 10px 0;
+	padding: 20px;
+	color: #B94A48;
+	background-color: #F8E8E8;
+	border: 1px solid #E5B7B5;
+	border-radius: 5px;
+}
+.profile-banned-user h4 {
+	color: #B94A48;
 }

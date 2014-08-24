@@ -1064,7 +1064,8 @@ return array(
 	'installation:minify_css:label' => "CSS を圧縮（推奨）",
 
 	'installation:htaccess:needs_upgrade' => ".htaccess をアップデートしてください。そうすることにより、path が GET のパラメタ __elgg_uri にインジェクトされます。(ファイル htaccess_dist を参考にしてください。)",
-
+	'installation:htaccess:localhost:connectionfailed' => "Elggはrewriteルールのプロパティをテストするために自分自身に接続することはできません。curlが動作することとlocalhostへの接続を妨げるようなIPの制限設定が無いかどうかを確認してください。",
+	
 	'installation:systemcache:description' => "ステムキャッシュはデータをファイルにキャッシュすることでElggの読み込み時間を少なくします。",
 	'installation:systemcache:label' => "システムキャッシュを使う(推奨)",
 
