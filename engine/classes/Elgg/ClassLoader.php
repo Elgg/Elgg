@@ -1,4 +1,6 @@
 <?php
+namespace Elgg;
+
 /**
  * A class/interface/trait autoloader for PHP
  *
@@ -44,30 +46,30 @@
  * @subpackage Autoloader
  * @author     Fabien Potencier <fabien@symfony.com>
  */
-class Elgg_ClassLoader {
+class ClassLoader {
 
 	protected $namespaces = array();
 	protected $prefixes = array();
 	protected $fallbacks = array();
 
 	/**
-	 * @var Elgg_ClassMap Map of classes to files
+	 * @var \Elgg\ClassMap Map of classes to files
 	 */
 	protected $map;
 
 	/**
 	 * Constructor
 	 * 
-	 * @param Elgg_ClassMap $map Class map
+	 * @param \Elgg\ClassMap $map Class map
 	 */
-	public function __construct(Elgg_ClassMap $map) {
+	public function __construct(\Elgg\ClassMap $map) {
 		$this->map = $map;
 	}
 
 	/**
 	 * Get the class map
 	 * 
-	 * @return Elgg_ClassMap
+	 * @return \Elgg\ClassMap
 	 */
 	public function getClassMap() {
 		return $this->map;
@@ -235,3 +237,4 @@ class Elgg_ClassLoader {
 		}
 	}
 }
+

@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Queue;
 
 /**
  * FIFO queue that is memory based (not persistent)
@@ -11,7 +12,7 @@
  * @subpackage Queue
  * @since      1.9.0
  */
-class Elgg_Queue_MemoryQueue implements Elgg_Queue_Queue {
+class MemoryQueue implements \Elgg\Queue\Queue {
 
 	/* @var array */
 	protected $queue = array();
@@ -51,3 +52,4 @@ class Elgg_Queue_MemoryQueue implements Elgg_Queue_Queue {
 		return count($this->queue);
 	}
 }
+

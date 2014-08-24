@@ -18,7 +18,7 @@ $options = array(
 	'site_guid' => 0,
 	'limit' => 0,
 );
-$batch = new ElggBatch('elgg_get_entities', $options);
+$batch = new \ElggBatch('elgg_get_entities', $options);
 
 foreach ($batch as $entity) {
 	if (!$entity->site_guid) {

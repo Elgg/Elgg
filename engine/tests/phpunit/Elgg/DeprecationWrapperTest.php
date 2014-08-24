@@ -1,6 +1,7 @@
 <?php
+namespace Elgg;
 
-class Elgg_DeprecationWrapperTest extends PHPUnit_Framework_TestCase {
+class DeprecationWrapperTest extends \PHPUnit_Framework_TestCase {
 
 	public $last_stack_line = '';
 
@@ -29,7 +30,7 @@ class Elgg_DeprecationWrapperTest extends PHPUnit_Framework_TestCase {
 
 	function testWrapString() {
 		$str = 'Hello';
-		$str = new Elgg_DeprecationWrapper($str, 'BAD!', 1.8, array($this, 'report'));
+		$str = new DeprecationWrapper($str, 'BAD!', 1.8, array($this, 'report'));
 		$file = __FILE__;
 		$new_str = "$str"; $line = __LINE__;
 		$this->assertEquals('Hello', $new_str);
@@ -37,8 +38,8 @@ class Elgg_DeprecationWrapperTest extends PHPUnit_Framework_TestCase {
 	}
 
 	function testWrapObject() {
-		$obj = new Elgg_DeprecationWrapperTestObj1();
-		$obj = new Elgg_DeprecationWrapper($obj, 'BAD!', 1.8, array($this, 'report'));
+		$obj = new DeprecationWrapperTestObj1();
+		$obj = new DeprecationWrapper($obj, 'BAD!', 1.8, array($this, 'report'));
 		$file = __FILE__;
 		$foo = $obj->foo; $line = __LINE__;
 		$this->assertEquals($foo, 'foo');
@@ -55,9 +56,9 @@ class Elgg_DeprecationWrapperTest extends PHPUnit_Framework_TestCase {
 
 	function testArrayAccessProxiesObjectArrayAccessMethods() {
 		$file = __FILE__;
-		$obj = new Elgg_DeprecationWrapperTestObj2();
+		$obj = new DeprecationWrapperTestObj2();
 		$obj->data['foo'] = 'test';
-		$wrapper = new Elgg_DeprecationWrapper($obj, 'FOO', 1.9, array($this, 'report'));
+		$wrapper = new DeprecationWrapper($obj, 'FOO', 1.9, array($this, 'report'));
 
 		$foo = $wrapper['foo']; $line = __LINE__;
 		$this->assertEquals('test', $foo);
@@ -80,9 +81,9 @@ class Elgg_DeprecationWrapperTest extends PHPUnit_Framework_TestCase {
 
 	function testArrayAccessProxiesProperties() {
 		$file = __FILE__;
-		$obj = new stdClass();
+		$obj = new \stdClass();
 		$obj->foo = 'test';
-		$wrapper = new Elgg_DeprecationWrapper($obj, 'FOO', 1.9, array($this, 'report'));
+		$wrapper = new DeprecationWrapper($obj, 'FOO', 1.9, array($this, 'report'));
 
 		$foo = $wrapper['foo']; $line = __LINE__;
 		$this->assertEquals('test', $foo);
@@ -94,13 +95,14 @@ class Elgg_DeprecationWrapperTest extends PHPUnit_Framework_TestCase {
 	}
 }
 
-class Elgg_DeprecationWrapperTestObj1 {
+class DeprecationWrapperTestObj1 {
 	public $foo = 'foo';
 	public function foo() { return 'foo'; }
 	public function __toString() { return 'foo'; }
 }
 
-class Elgg_DeprecationWrapperTestObj2 extends ArrayObject {
+
+class DeprecationWrapperTestObj2 extends \ArrayObject {
 	public $data = array();
 	public function offsetSet($offset, $value) {
 		if (is_null($offset)) {
@@ -119,3 +121,4 @@ class Elgg_DeprecationWrapperTestObj2 extends ArrayObject {
 		return isset($this->data[$offset]) ? $this->data[$offset] : null;
 	}
 }
+

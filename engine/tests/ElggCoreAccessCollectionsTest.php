@@ -5,7 +5,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
+class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
 	/**
 	 * Called before each test object.
@@ -15,7 +15,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 
 		$this->dbPrefix = get_config("dbprefix");
 
-		$user = new ElggUser();
+		$user = new \ElggUser();
 		$user->username = 'test_user_' . rand();
 		$user->email = 'fake_email@fake.com' . rand();
 		$user->name = 'fake user';
@@ -78,7 +78,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 
 	public function testUpdateACL() {
 		// another fake user to test with
-		$user = new ElggUser();
+		$user = new \ElggUser();
 		$user->username = 'test_user_' . rand();
 		$user->email = 'fake_email@fake.com' . rand();
 		$user->name = 'fake user';
@@ -197,7 +197,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 			return;
 		}
 		
-		$group = new ElggGroup();
+		$group = new \ElggGroup();
 		$group->name = 'Test group';
 		$group->save();
 		$acl = get_access_collection($group->group_acl);
@@ -219,7 +219,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 			return;
 		}
 
-		$group = new ElggGroup();
+		$group = new \ElggGroup();
 		$group->name = 'Test group';
 		$group->save();
 
@@ -253,7 +253,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 
 	public function testAccessCaching() {
 		// create a new user to check against
-		$user = new ElggUser();
+		$user = new \ElggUser();
 		$user->username = 'access_test_user';
 		$user->save();
 

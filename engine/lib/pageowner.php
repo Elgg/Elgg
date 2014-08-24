@@ -41,7 +41,7 @@ function elgg_get_page_owner_guid($guid = 0) {
  *
  * @note Access is disabled when getting the page owner entity.
  *
- * @return ElggUser|ElggGroup|false The current page owner or false if none.
+ * @return \ElggUser|\ElggGroup|false The current page owner or false if none.
  *
  * @since 1.8.0
  */
@@ -194,20 +194,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
  * @since 1.8.0
  */
 function elgg_set_context($context) {
-	global $CONFIG;
-
-	$context = trim($context);
-
-	if (empty($context)) {
-		return false;
-	}
-
-	$context = strtolower($context);
-
-	array_pop($CONFIG->context);
-	array_push($CONFIG->context, $context);
-
-	return true;
+	return _elgg_services()->context->set($context);
 }
 
 /**
@@ -219,13 +206,7 @@ function elgg_set_context($context) {
  * @since 1.8.0
  */
 function elgg_get_context() {
-	global $CONFIG;
-
-	if (!$CONFIG->context) {
-		return null;
-	}
-
-	return $CONFIG->context[count($CONFIG->context) - 1];
+	return _elgg_services()->context->peek();
 }
 
 /**
@@ -236,9 +217,7 @@ function elgg_get_context() {
  * @since 1.8.0
  */
 function elgg_push_context($context) {
-	global $CONFIG;
-
-	array_push($CONFIG->context, $context);
+	return _elgg_services()->context->push($context);
 }
 
 /**
@@ -248,9 +227,7 @@ function elgg_push_context($context) {
  * @since 1.8.0
  */
 function elgg_pop_context() {
-	global $CONFIG;
-
-	return array_pop($CONFIG->context);
+	return _elgg_services()->context->pop();
 }
 
 /**
@@ -266,9 +243,7 @@ function elgg_pop_context() {
  * @since 1.8.0
  */
 function elgg_in_context($context) {
-	global $CONFIG;
-
-	return in_array($context, $CONFIG->context);
+	return _elgg_services()->context->contains($context);
 }
 
 /**

@@ -2,7 +2,7 @@
 /**
  * Test elgg_get_entities_from_private_settings()
  */
-class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBaseTest {
+class ElggCoreGetEntitiesFromPrivateSettingsTest extends \ElggCoreGetEntitiesBaseTest {
 
 	public function testElggApiGettersEntitiesFromPrivateSettings() {
 
@@ -17,14 +17,14 @@ class ElggCoreGetEntitiesFromPrivateSettingsTest extends ElggCoreGetEntitiesBase
 		$guids = array();
 
 		// our targets
-		$valid = new ElggObject();
+		$valid = new \ElggObject();
 		$valid->subtype = $subtype;
 		$valid->save();
 		$guids[] = $valid->getGUID();
 		set_private_setting($valid->getGUID(), $setting_name, $setting_value);
 		set_private_setting($valid->getGUID(), $setting_name2, $setting_value2);
 
-		$valid2 = new ElggObject();
+		$valid2 = new \ElggObject();
 		$valid2->subtype = $subtype;
 		$valid2->save();
 		$guids[] = $valid2->getGUID();

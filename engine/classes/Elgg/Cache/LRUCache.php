@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Cache;
 
 /**
  * Least Recently Used Cache
@@ -13,7 +14,7 @@
  * @package    Elgg.Core
  * @subpackage Cache
  */
-class Elgg_Cache_LRUCache implements ArrayAccess {
+class LRUCache implements \ArrayAccess {
 	/** @var int */
 	protected $maximumSize;
 
@@ -28,11 +29,11 @@ class Elgg_Cache_LRUCache implements ArrayAccess {
 	 * Create a LRU Cache
 	 *
 	 * @param int $size The size of the cache
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 */
 	public function __construct($size) {
 		if (!is_int($size) || $size <= 0) {
-			throw new InvalidArgumentException();
+			throw new \InvalidArgumentException();
 		}
 		$this->maximumSize = $size;
 	}
@@ -133,7 +134,7 @@ class Elgg_Cache_LRUCache implements ArrayAccess {
 	/**
 	 * Assigns a value for the specified key
 	 *
-	 * @see ArrayAccess::offsetSet()
+	 * @see \ArrayAccess::offsetSet()
 	 *
 	 * @param int|string $key   The key to assign the value to.
 	 * @param mixed      $value The value to set.
@@ -146,7 +147,7 @@ class Elgg_Cache_LRUCache implements ArrayAccess {
 	/**
 	 * Get the value for specified key
 	 *
-	 * @see ArrayAccess::offsetGet()
+	 * @see \ArrayAccess::offsetGet()
 	 *
 	 * @param int|string $key The key to retrieve.
 	 * @return mixed
@@ -158,7 +159,7 @@ class Elgg_Cache_LRUCache implements ArrayAccess {
 	/**
 	 * Unsets a key.
 	 *
-	 * @see ArrayAccess::offsetUnset()
+	 * @see \ArrayAccess::offsetUnset()
 	 *
 	 * @param int|string $key The key to unset.
 	 * @return void
@@ -170,7 +171,7 @@ class Elgg_Cache_LRUCache implements ArrayAccess {
 	/**
 	 * Does key exist?
 	 *
-	 * @see ArrayAccess::offsetExists()
+	 * @see \ArrayAccess::offsetExists()
 	 *
 	 * @param int|string $key A key to check for.
 	 * @return boolean
@@ -179,3 +180,4 @@ class Elgg_Cache_LRUCache implements ArrayAccess {
 		return $this->containsKey($key);
 	}
 }
+

@@ -204,10 +204,10 @@
 .elgg-river-comments li:last-child {
 	border-radius-bottomleft: 0 0 5px 5px;
 }
-.elgg-river-comments li {
+.elgg-river-comments > li {
 	background-color: #EEE;
 	border-bottom: none;
-	padding: 4px 4px 4px 10px;
+	padding: 4px 10px;
 	margin-bottom: 2px;
 }
 .elgg-river-comments li .elgg-output {

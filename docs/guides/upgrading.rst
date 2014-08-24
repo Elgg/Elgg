@@ -207,6 +207,70 @@ Example of the new way:
 
     See how the community_plugins plugin was updated to use the new system: https://github.com/Elgg/community_plugins/commit/bfa356cfe8fb99ebbca4109a1b8a1383b70ff123
 
+Notifications can also be sent with the ``notify_user()`` function.
+
+It has however been updated to support three new optional parameters passed inside an array as the fifth parameter.
+
+The parameters give notification plugins more control over the notifications, so they should be included whenever possible. For example the bundled site_notifications plugin won't work properly if the parameters are missing.
+
+Parameters:
+
+-  **object** The object that we are notifying about (e.g. ElggEntity or ElggAnnotation). This is needed so that notification plugins can provide a link to the object.
+-  **action** String that describes the action that triggered the notification (e.g. "create", "update", etc).
+-  **summary** String that contains a summary of the notification. (It should be more informative than the notification subject but less informative than the notification body.)
+
+Example of the old way:
+
+.. code:: php
+
+	// Notify $owner that $user has added a $rating to an $entity created by him
+
+	$subject = elgg_echo('rating:notify:subject');
+	$body = elgg_echo('rating:notify:body', array(
+		$owner->name,
+		$user->name,
+		$entity->title,
+		$entity->getURL(),
+	));
+
+	notify_user($owner->guid,
+				$user->guid,
+				$subject,
+				$body
+			);
+
+Example of the new way:
+
+.. code:: php
+
+	// Notify $owner that $user has added a $rating to an $entity created by him
+
+	$subject = elgg_echo('rating:notify:subject');
+	$summary = elgg_echo('rating:notify:summary', array($entity->title));
+	$body = elgg_echo('rating:notify:body', array(
+		$owner->name,
+		$user->name,
+		$entity->title,
+		$entity->getURL(),
+	));
+
+	$params = array(
+		'object' => $rating,
+		'action' => 'create',
+		'summary' => $summary,
+	);
+
+	notify_user($owner->guid,
+				$user->guid,
+				$subject,
+				$body,
+				$params
+			);
+
+.. note::
+
+    Compatible with 1.8
+
 Adding items to the Activity listing
 ------------------------------------
 

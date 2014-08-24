@@ -1,11 +1,7 @@
 <?php
-// @codeCoverageIgnoreStart
-$engine = dirname(dirname(dirname(dirname(__FILE__))));
-// require_once "$engine/lib/configuration.php";
-require_once "$engine/lib/actions.php";
-// @codeCoverageIgnoreEnd
+namespace Elgg;
 
-class Elgg_ActionsServiceTest extends PHPUnit_Framework_TestCase {
+class ActionsServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 		$this->actionsDir = dirname(dirname(__FILE__)) . "/test_files/actions";
@@ -15,7 +11,7 @@ class Elgg_ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	 * Tests register, exists and unregisrer
 	 */
 	public function testCanRegisterFilesAsActions() {
-		$actions = new Elgg_ActionsService();
+		$actions = new \Elgg\ActionsService();
 		
 		$this->assertFalse($actions->exists('test/output'));
 		$this->assertFalse($actions->exists('test/not_registered'));
@@ -48,7 +44,7 @@ class Elgg_ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	 * Tests overwriting existing action
 	 */
 	public function testCanOverrideRegisteredActions() {
-		$actions = new Elgg_ActionsService();
+		$actions = new \Elgg\ActionsService();
 		
 		$this->assertFalse($actions->exists('test/output'));
 		
@@ -62,7 +58,7 @@ class Elgg_ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testActionsAccessLevels() {
-		$actions = new Elgg_ActionsService();
+		$actions = new \Elgg\ActionsService();
 		
 		$this->assertFalse($actions->exists('test/output'));
 		$this->assertFalse($actions->exists('test/not_registered'));
@@ -81,7 +77,7 @@ class Elgg_ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	
 	//TODO token generation/validation
 // 	public function testGenerateValidateTokens() {
-// 		$actions = new Elgg_ActionsService();
+// 		$actions = new \Elgg\ActionsService();
 		
 // 		$i = 40;
 		
@@ -97,3 +93,4 @@ class Elgg_ActionsServiceTest extends PHPUnit_Framework_TestCase {
 	
 	//TODO gatekeeper?
 }
+

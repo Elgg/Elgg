@@ -1,16 +1,16 @@
 <?php
 /**
- * The base class for ElggEntity extenders.
+ * The base class for \ElggEntity extenders.
  *
  * Extenders allow you to attach extended information to an
- * ElggEntity.  Core supports two: ElggAnnotation and ElggMetadata.
+ * \ElggEntity.  Core supports two: \ElggAnnotation and \ElggMetadata.
  *
  * Saving the extender data to database is handled by the child class.
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Extender
- * @see        ElggAnnotation
- * @see        ElggMetadata
+ * @see        \ElggAnnotation
+ * @see        \ElggMetadata
  * 
  * @property string $type         annotation or metadata (read-only after save)
  * @property int    $id           The unique identifier (read-only)
@@ -23,12 +23,12 @@
  * @property string $value_type   'integer' or 'text'
  * @property string $enabled      Is this extender enabled ('yes' or 'no')
  */
-abstract class ElggExtender extends ElggData {
+abstract class ElggExtender extends \ElggData {
 
 	/**
 	 * (non-PHPdoc)
 	 *
-	 * @see ElggData::initializeAttributes()
+	 * @see \ElggData::initializeAttributes()
 	 *
 	 * @return void
 	 */
@@ -108,8 +108,8 @@ abstract class ElggExtender extends ElggData {
 						return $this->attributes['value'];
 						break;
 					default :
-						$msg = "{$this->attributes['value_type']} is not a supported ElggExtender value type.";
-						throw new UnexpectedValueException($msg);
+						$msg = "{$this->attributes['value_type']} is not a supported \ElggExtender value type.";
+						throw new \UnexpectedValueException($msg);
 						break;
 				}
 			}
@@ -148,14 +148,14 @@ abstract class ElggExtender extends ElggData {
 	 * @deprecated 1.8 Use getOwnerGUID
 	 */
 	public function getOwner() {
-		elgg_deprecated_notice("ElggExtender::getOwner deprecated for ElggExtender::getOwnerGUID", 1.8);
+		elgg_deprecated_notice("\ElggExtender::getOwner deprecated for \ElggExtender::getOwnerGUID", 1.8);
 		return $this->getOwnerGUID();
 	}
 
 	/**
 	 * Get the entity that owns this extender
 	 *
-	 * @return ElggEntity
+	 * @return \ElggEntity
 	 */
 	public function getOwnerEntity() {
 		return get_entity($this->owner_guid);
@@ -164,7 +164,7 @@ abstract class ElggExtender extends ElggData {
 	/**
 	 * Get the entity this describes.
 	 *
-	 * @return ElggEntity The entity
+	 * @return \ElggEntity The entity
 	 */
 	public function getEntity() {
 		return get_entity($this->entity_guid);
@@ -185,7 +185,7 @@ abstract class ElggExtender extends ElggData {
 	 * {@inheritdoc}
 	 */
 	public function toObject() {
-		$object = new stdClass();
+		$object = new \stdClass();
 		$object->id = $this->id;
 		$object->entity_guid = $this->entity_guid;
 		$object->owner_guid = $this->owner_guid;

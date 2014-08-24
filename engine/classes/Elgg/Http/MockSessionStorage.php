@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Http;
 
 /**
  * Based on Symfony2's NativeSessionStorage.
@@ -32,7 +33,7 @@
  * @package    Elgg.Core
  * @subpackage Http
  */
-class Elgg_Http_MockSessionStorage implements Elgg_Http_SessionStorage {
+class MockSessionStorage implements \Elgg\Http\SessionStorage {
 
 	/** @var boolean */
 	protected $started = false;
@@ -94,7 +95,7 @@ class Elgg_Http_MockSessionStorage implements Elgg_Http_SessionStorage {
 	 */
 	public function save() {
 		if (!$this->started || $this->closed) {
-			throw new RuntimeException("Trying to save a session that was not started yet or was already closed");
+			throw new \RuntimeException("Trying to save a session that was not started yet or was already closed");
 		}
 		$this->closed = false;
 	}
@@ -118,7 +119,7 @@ class Elgg_Http_MockSessionStorage implements Elgg_Http_SessionStorage {
 	 */
 	public function setId($id) {
 		if ($this->started) {
-			throw new RuntimeException('Cannot change the ID of an active session');
+			throw new \RuntimeException('Cannot change the ID of an active session');
 		}
 
 		$this->id = $id;
@@ -230,3 +231,4 @@ class Elgg_Http_MockSessionStorage implements Elgg_Http_SessionStorage {
 	}
 
 }
+

@@ -1,16 +1,16 @@
 <?php
 /**
- * Test case for ElggAutoP functionality.
+ * Test case for \ElggAutoP functionality.
  */
-class ElggCoreOutputAutoPTest extends ElggCoreUnitTest {
+class ElggCoreOutputAutoPTest extends \ElggCoreUnitTest {
 
 	/**
-	 * @var ElggAutoP
+	 * @var \ElggAutoP
 	 */
 	protected $_autop;
 
 	public function setUp() {
-		$this->_autop = new ElggAutoP();
+		$this->_autop = new \ElggAutoP();
 	}
 	
 	public function testDomRoundtrip() {

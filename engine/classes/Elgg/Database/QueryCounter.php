@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Database;
 
 /**
  * Count queries performed
@@ -11,7 +12,7 @@
  * @subpackage Database
  * @since      1.9.0
  */
-class Elgg_Database_QueryCounter {
+class QueryCounter {
 
 	/**
 	 * @var int
@@ -19,16 +20,16 @@ class Elgg_Database_QueryCounter {
 	protected $initial;
 
 	/**
-	 * @var Elgg_Database
+	 * @var \Elgg\Database
 	 */
 	protected $db;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Elgg_Database $db Elgg's database
+	 * @param \Elgg\Database $db Elgg's database
 	 */
-	public function __construct(Elgg_Database $db) {
+	public function __construct(\Elgg\Database $db) {
 		$this->db = $db;
 		$this->initial = $db->getQueryCount();
 	}
@@ -73,3 +74,4 @@ class Elgg_Database_QueryCounter {
 		return "<script>console.log($msg)</script>";
 	}
 }
+

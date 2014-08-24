@@ -16,7 +16,7 @@
 
 global $CONFIG;
 if (!isset($CONFIG)) {
-	$CONFIG = new stdClass;
+	$CONFIG = new \stdClass;
 }
 
 /*

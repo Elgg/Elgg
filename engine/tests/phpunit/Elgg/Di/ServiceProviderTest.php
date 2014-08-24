@@ -1,33 +1,35 @@
 <?php
+namespace Elgg\Di;
 
-class Elgg_Di_ServiceProviderTest extends PHPUnit_Framework_TestCase {
+
+class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 
 	public function testPropertiesReturnCorrectClassNames() {
-		$mgr = $this->getMock('Elgg_AutoloadManager', array(), array(), '', false);
+		$mgr = $this->getMock('\Elgg\AutoloadManager', array(), array(), '', false);
 
-		$sp = new Elgg_Di_ServiceProvider($mgr);
+		$sp = new \Elgg\Di\ServiceProvider($mgr);
 
 		$svcClasses = array(
-			'actions' => 'Elgg_ActionsService',
+			'actions' => '\Elgg\ActionsService',
 			
 			// requires _elgg_get_simplecache_root() to be defined
-			//'amdConfig' => 'Elgg_Amd_Config',
+			//'amdConfig' => '\Elgg\Amd\Config',
 			
-			'autoP' => 'ElggAutoP',
-			'autoloadManager' => 'Elgg_AutoloadManager',
-			'db' => 'Elgg_Database',
-			'events' => 'Elgg_EventsService',
-			'hooks' => 'Elgg_PluginHooksService',
-			'logger' => 'Elgg_Logger',
-			'metadataCache' => 'ElggVolatileMetadataCache',
-			'request' => 'Elgg_Http_Request',
-			'router' => 'Elgg_Router',
+			'autoP' => '\ElggAutoP',
+			'autoloadManager' => '\Elgg\AutoloadManager',
+			'db' => '\Elgg\Database',
+			'events' => '\Elgg\EventsService',
+			'hooks' => '\Elgg\PluginHooksService',
+			'logger' => '\Elgg\Logger',
+			'metadataCache' => '\ElggVolatileMetadataCache',
+			'request' => '\Elgg\Http\Request',
+			'router' => '\Elgg\Router',
 			
 			// Will this start session?
-			//'session' => 'ElggSession'
+			//'session' => '\ElggSession'
 			
-			'views' => 'Elgg_ViewsService',
-			'widgets' => 'Elgg_WidgetsService',
+			'views' => '\Elgg\ViewsService',
+			'widgets' => '\Elgg\WidgetsService',
 		);
 
 		foreach ($svcClasses as $key => $class) {
@@ -38,3 +40,4 @@ class Elgg_Di_ServiceProviderTest extends PHPUnit_Framework_TestCase {
 		}
 	}
 }
+

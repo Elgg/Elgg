@@ -1,9 +1,11 @@
 <?php
+namespace Elgg\Amd;
 
-class Elgg_Amd_ConfigTest extends PHPUnit_Framework_TestCase {
+
+class ConfigTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testCanConfigureModulePaths() {
-		$amdConfig = new Elgg_Amd_Config();
+		$amdConfig = new \Elgg\Amd\Config();
 		$amdConfig->addPath('jquery', '/some/path.js');
 		
 		$configArray = $amdConfig->getConfig();
@@ -12,7 +14,7 @@ class Elgg_Amd_ConfigTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanConfigureModuleShims() {
-		$amdConfig = new Elgg_Amd_Config();
+		$amdConfig = new \Elgg\Amd\Config();
 		$amdConfig->addShim('jquery', array(
 			'deps' => array('dep'),
 			'exports' => 'jQuery',
@@ -27,7 +29,7 @@ class Elgg_Amd_ConfigTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanRequireUnregisteredAmdModules() {
-		$amdConfig = new Elgg_Amd_Config();
+		$amdConfig = new \Elgg\Amd\Config();
 		$amdConfig->addDependency('jquery');
 		
 		$configArray = $amdConfig->getConfig();
@@ -36,10 +38,10 @@ class Elgg_Amd_ConfigTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-     * @expectedException InvalidParameterException
+     * @expectedException \InvalidParameterException
      */
 	public function testThrowsOnBadShim() {
-		$amdConfig = new Elgg_Amd_Config();
+		$amdConfig = new \Elgg\Amd\Config();
 		$amdConfig->addShim('bad_shim', array('invalid' => 'config'));
 
 		$configArray = $amdConfig->getConfig();
@@ -48,7 +50,7 @@ class Elgg_Amd_ConfigTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanAddModuleAsAmd() {
-		$amdConfig = new Elgg_Amd_Config();
+		$amdConfig = new \Elgg\Amd\Config();
 		$amdConfig->addModule('jquery');
 
 		$configArray = $amdConfig->getConfig();
@@ -57,7 +59,7 @@ class Elgg_Amd_ConfigTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanAddModuleAsShim() {
-		$amdConfig = new Elgg_Amd_Config();
+		$amdConfig = new \Elgg\Amd\Config();
 		$amdConfig->addModule('jquery.form', array('exports' => 'jquery.fn.ajaxform'));
 
 		$configArray = $amdConfig->getConfig();
@@ -66,3 +68,4 @@ class Elgg_Amd_ConfigTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(array('exports' => 'jquery.fn.ajaxform'), $configArray['shim']['jquery.form']);
 	}
 }
+

@@ -6,7 +6,7 @@
  * @package Elgg
  * @subpackage Test
  */
-class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
+class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
 	/**
 	 * Called before each test object.
@@ -31,7 +31,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	 * #1558
 	 */
 	public function testElggObjectDeleteAnnotations() {
-		$this->entity = new ElggObject();
+		$this->entity = new \ElggObject();
 		$guid = $this->entity->save();
 
 		$this->entity->annotate('test', 'hello', ACCESS_PUBLIC);
@@ -100,7 +100,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 
 	// #3722 Check canEdit() works for contains regardless of groups
 	function test_can_write_to_container() {
-		$user = new ElggUser();
+		$user = new \ElggUser();
 		$user->username = 'test_user_' . rand();
 		$user->name = 'test_user_name_' . rand();
 		$user->email = 'test@user.net';
@@ -108,10 +108,10 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$user->owner_guid = 0;
 		$user->save();
 
-		$object = new ElggObject();
+		$object = new \ElggObject();
 		$object->save();
 
-		$group = new ElggGroup();
+		$group = new \ElggGroup();
 		$group->save();
 
 		// disable access overrides because we're admin.
@@ -172,7 +172,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		);
 
 		// where available, string is converted to NFC before transliteration
-		if (Elgg_Translit::hasNormalizerSupport()) {
+		if (\Elgg\Translit::hasNormalizerSupport()) {
 			$form_d = "A\xCC\x8A"; // A followed by 'COMBINING RING ABOVE' (U+030A)
 			$cases[$form_d] = "a";
 		}
@@ -255,7 +255,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		global $ENTITY_CACHE;
 
 		// may not have groups in DB - let's create one
-		$group = new ElggGroup();
+		$group = new \ElggGroup();
 		$group->name = 'test_group';
 		$group->access_id = ACCESS_PUBLIC;
 		$this->assertTrue($group->save() !== false);
@@ -280,14 +280,14 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	}
 
 	/**
-	 * Ensure that ElggBatch doesn't go into infinite loop when disabling annotations recursively when show hidden is enabled.
+	 * Ensure that \ElggBatch doesn't go into infinite loop when disabling annotations recursively when show hidden is enabled.
 	 *
 	 * https://github.com/Elgg/Elgg/issues/5952
 	 */
 	public function test_disabling_annotations_infinite_loop() {
 
 		//let's have some entity
-		$group = new ElggGroup();
+		$group = new \ElggGroup();
 		$group->name = 'test_group';
 		$group->access_id = ACCESS_PUBLIC;
 		$this->assertTrue($group->save() !== false);
@@ -303,7 +303,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		access_show_hidden_entities(true);
 		$options = array(
 			'guid' => $group->guid,
-			'limit' => $total, //using strict limit to avoid real infinite loop and just see ElggBatch limiting on it before finishing the work
+			'limit' => $total, //using strict limit to avoid real infinite loop and just see \ElggBatch limiting on it before finishing the work
 		);
 		elgg_disable_annotations($options);
 		access_show_hidden_entities($show_hidden);
@@ -341,7 +341,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 
 		if ($can_load_entity) {
 			$this->expectError("SimpleXMLElement::__construct(): I/O warning : failed to load external entity &quot;" . $path . "&quot;");
-			$el = new ElggXMLElement($payload);
+			$el = new \ElggXMLElement($payload);
 			$chidren = $el->getChildren();
 			$content = $chidren[0]->getContent();
 			$this->assertNoPattern('/secret/', $content);
@@ -351,17 +351,17 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 	}
 
 	public function test_update_handlers_can_change_attributes() {
-		$object = new ElggObject();
+		$object = new \ElggObject();
 		$object->subtype = 'issue6225';
 		$object->access_id = ACCESS_PUBLIC;
 		$object->save();
 		$guid = $object->guid;
 
-		elgg_register_event_handler('update', 'object', array('ElggCoreRegressionBugsTest', 'handleUpdateForIssue6225test'));
+		elgg_register_event_handler('update', 'object', array('\ElggCoreRegressionBugsTest', 'handleUpdateForIssue6225test'));
 
 		$object->save();
 
-		elgg_unregister_event_handler('update', 'object', array('ElggCoreRegressionBugsTest', 'handleUpdateForIssue6225test'));
+		elgg_unregister_event_handler('update', 'object', array('\ElggCoreRegressionBugsTest', 'handleUpdateForIssue6225test'));
 
 		_elgg_invalidate_cache_for_entity($guid);
 		$object = get_entity($guid);
@@ -370,7 +370,7 @@ class ElggCoreRegressionBugsTest extends ElggCoreUnitTest {
 		$object->delete();
 	}
 
-	public static function handleUpdateForIssue6225test($event, $type, ElggObject $object) {
+	public static function handleUpdateForIssue6225test($event, $type, \ElggObject $object) {
 		$object->access_id = ACCESS_PRIVATE;
 	}
 

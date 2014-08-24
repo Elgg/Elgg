@@ -384,7 +384,7 @@ function input_livesearch_page_handler($page) {
 					foreach ($entities as $entity) {
 						// @todo use elgg_get_entities (don't query in a loop!)
 						$entity = get_entity($entity->guid);
-						/* @var ElggGroup $entity */
+						/* @var \ElggGroup $entity */
 						if (!$entity) {
 							continue;
 						}

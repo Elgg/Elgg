@@ -1,6 +1,6 @@
 <?php
 /**
- * ElggVolatileMetadataCache
+ * \ElggVolatileMetadataCache
  * In memory cache of known metadata values stored by entity.
  *
  * @package    Elgg.Core

@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# 
+# Translators:
+# Giuseppe Mariniello, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg Core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-07-10 19:59-0700\n"
+"PO-Revision-Date: 2014-07-14 12:51+0000\n"
+"Last-Translator: Giuseppe Mariniello\n"
+"Language-Team: Italian (http://www.transifex.com/projects/p/elgg-core/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+# b19d0252f1024d1da999b77295e0352d
+#: ../../about/contributing.rst:4
+msgid "Contributor Guide"
+msgstr "Guida ai collaboratori"
+
+# c8ea256a7d0d4c8b9068ccc9e7c5715f
+# 9465a83a4f6044c6ad6f2a8a8f723353
+# 9b550baa108a4de2ab654dd3e36f6b9d
+# c7854ad17f2d4a0397e9e546dfa1611d
+# 181fb20d2c664359a4398e36b83b32be
+#: ../../about/contributing.rst:6 ../../about/history.rst:6
+#: ../../about/index.rst:6 ../../about/releases.rst:6
+#: ../../about/roadmap.rst:6
+msgid "This page has moved."
+msgstr "Questa pagina è stata spostata."
+
+# 7a7387af75fd4507b5414f7ab412db1e
+#: ../../about/contributing.rst:8
+msgid ":doc:`/contribute/index`"
+msgstr ":doc:`/contribute/index`"
+
+# ab32b0d6c08d44d6a0287aa7938e025e
+#: ../../about/history.rst:4
+msgid "History"
+msgstr "Cronologia"
+
+# 9ebafd3025194bb8aa28f33b3d66aa1a
+#: ../../about/history.rst:8
+msgid ":doc:`/appendix/history`"
+msgstr ":doc:`/appendix/history`"
+
+# cf70fd3938124325988363f171f30a87
+#: ../../about/index.rst:4
+msgid "About"
+msgstr "Informazioni"
+
+# e571ee8999074a67b3af1a353ac8150b
+#: ../../about/index.rst:8
+msgid ":doc:`/appendix/index`"
+msgstr ":doc:`/appendix/index`"
+
+# f3d2da9d50614aeab8bebb9161881bfd
+#: ../../about/releases.rst:4
+msgid "Release Policy"
+msgstr "Termini di rilascio"
+
+# f3936ced56cf4801a9f5aadc31407973
+#: ../../about/releases.rst:8
+msgid ":doc:`/appendix/releases`"
+msgstr ":doc:`/appendix/releases`"
+
+# e0d96d459bd044f89a6ff79c3f95607f
+#: ../../about/roadmap.rst:4
+msgid "Roadmap"
+msgstr "Tabella di marcia"
+
+# 9044f3f318294575be6315803090f701
+#: ../../about/roadmap.rst:8
+msgid ":doc:`/appendix/roadmap`"
+msgstr ":doc:`/appendix/roadmap`"

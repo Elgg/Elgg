@@ -178,7 +178,7 @@
 .elgg-river-comments-tab {
 	display: block;
 	background-color: #EEE;
-	color: #4690D6;
+	color: #aaa;
 	margin-top: 5px;
 	width: auto;
 	float: right;
@@ -198,7 +198,7 @@
 .elgg-river-comments li:last-child {
 	border-radius-bottomleft: 0 0 5px 5px;
 }
-.elgg-river-comments li {
+.elgg-river-comments > li {
 	background-color: #EEE;
 	border-bottom: none;
 	padding: 4px;

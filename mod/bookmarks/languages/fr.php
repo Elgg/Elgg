@@ -4,13 +4,13 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'bookmarks' => "Eléments mis en signets",
-	'bookmarks:add' => "Ajouter un favori",
+	'bookmarks' => "Signets",
+	'bookmarks:add' => "Ajouter un signet",
 	'bookmarks:edit' => "Modifier le signet",
 	'bookmarks:owner' => "Les signets de %s",
 	'bookmarks:friends' => "Signets des contacts",
 	'bookmarks:everyone' => "Tous les signets du site",
-	'bookmarks:this' => "Mettre en signet cette page",
+	'bookmarks:this' => "Mettre cette page en signet",
 	'bookmarks:this:group' => "Mettre en signet dans %s",
 	'bookmarks:bookmarklet' => "Récupérer le 'bookmarklet'",
 	'bookmarks:bookmarklet:group' => "Récupérer le 'bookmarklet' du groupe",
@@ -18,18 +18,18 @@ return array(
 	'bookmarks:with' => "Partager avec",
 	'bookmarks:new' => "Un nouveau signet",
 	'bookmarks:address' => "Adresse de la ressource à ajouter à vos signets",
-	'bookmarks:none' => 'Aucun signets',
+	'bookmarks:none' => 'Aucun signet',
 
-	'bookmarks:notify:summary' => 'Nouveau favori appelé %s',
-	'bookmarks:notify:subject' => 'Nouveau favori : %s',
+	'bookmarks:notify:summary' => 'Nouveau signet nommé %s',
+	'bookmarks:notify:subject' => 'Nouveau signet: %s',
 	'bookmarks:notify:body' =>
-'%s a ajouté un nouveau favori : %s
+'%s a ajouté un nouveau signet: %s
 
-Adresse : %s
+Adresse: %s
 
 %s
 
-Voir et commenter le favori : 
+Voir et commenter ce signet: 
 %s
 ',
 
@@ -58,10 +58,10 @@ Voir et commenter le favori :
 	'bookmarks:widget:description' => "Ce widget affiche vos derniers signets.",
 
 	'bookmarks:bookmarklet:description' =>
-			"Le bookmarklet vous permez de partager ce que vous trouvez sur le web avec vos contact, ou pour vous-même. Pour l'utiliser, glissez simplement le bouton ci-dessous dans votre barre de liens de votre navigateur.",
+			"Le bookmarklet vous permet de partager ce que vous trouvez sur le web avec vos contacts, ou pour vous-même. Pour l'utiliser, glissez simplement le bouton ci-dessous dans votre barre de liens de votre navigateur.",
 
 	'bookmarks:bookmarklet:descriptionie' =>
-			"Si vous utilisez Internet Explorer, faites un clic droit sur le bouton et ajouter le dans vos favoris, puis votre barre de liens.",
+			"Si vous utilisez Internet Explorer, faites un clic droit sur le bouton et ajoutez le dans vos favoris, puis dans votre barre de liens.",
 
 	'bookmarks:bookmarklet:description:conclusion' =>
 			"Vous pouvez mettre en signet n'importe quelle page en cliquant sur le bookmarklet.",
@@ -77,8 +77,8 @@ Voir et commenter le favori :
 	 * Error messages
 	 */
 
-	'bookmarks:save:failed' => "Votre élément n'a pu être correctement mis en signet. Vérifiez que le titre et le lien soient correct et réessayez.",
-	'bookmarks:save:invalid' => "L'addresse du signet est invalide et ne peut être sauvé.",
-	'bookmarks:delete:failed' => "Votre signet n'a pu être supprimé. Merci de réessayer.",
-	'bookmarks:unknown_bookmark' => 'Impossible de trouver le favori spécifié',
+	'bookmarks:save:failed' => "Votre signet n'a pas pu être enregistré. Vérifiez que le titre et le lien sont corrects et réessayez.",
+	'bookmarks:save:invalid' => "L’adresse du signet est invalide et ne peut donc pas être sauvegardée.",
+	'bookmarks:delete:failed' => "Votre signet n'a pas pu être supprimé. Merci de réessayer.",
+	'bookmarks:unknown_bookmark' => 'Impossible de trouver le signet spécifié',
 );

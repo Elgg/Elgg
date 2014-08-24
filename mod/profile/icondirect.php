@@ -58,7 +58,7 @@ if ($mysql_dblink) {
 		if (isset($data_root) && isset($elgg_path)) {
 			require_once $engine_dir . "classes/Elgg/EntityDirLocator.php";
 
-			$locator = new Elgg_EntityDirLocator($guid);
+			$locator = new Elgg\EntityDirLocator($guid);
 			$user_path = $data_root . $locator->getPath();
 
 			$filename = $user_path . "profile/{$guid}{$size}.jpg";

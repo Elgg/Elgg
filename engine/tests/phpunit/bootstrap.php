@@ -14,18 +14,7 @@ global $CONFIG;
 $CONFIG = (object) array(
 	'dbprefix' => 'elgg_',
 	'boot_complete' => false,
+	'wwwroot' => 'http://localhost/',
 );
 
-// @todo remove once views service and menu tests no longer need it
-function elgg_get_site_url() {
-	return 'http://localhost/';
-}
-
-// Set up class auto-loading
-require_once "$engine/lib/autoloader.php";
-
-// Provide some basic global functions/initialization.
-require_once "$engine/lib/elgglib.php";
-
-// This is required by ElggEntity
-require_once "$engine/lib/sessions.php";
+require_once "$engine/load.php";

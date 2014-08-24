@@ -67,7 +67,7 @@ Se estás listo para continuar, preme o botón de «Seguinte».",
 	'install:database:help:dbhost' => 'Enderezo do servidor de MySQL (normalmente é «localhost»).',
 	'install:database:help:dbprefix' => "O prefixo que se lles engade a todas as táboas de Elgg (normalmente é «elgg_»).",
 
-	'install:settings:instructions' => 'Necesitamos algunha información sobre o sitio para configurar Elgg. Se aínda non <a href="http://docs.elgg.org/wiki/Data_directory" target="_blank">creou un cartafol de datos</a> para Elgg, fágao agora.',
+	'install:settings:instructions' => 'Necesítase algunha información sobre o sitio durante a configuración de Elgg. Se aínda non <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">creou un cartafol de datos</a> para Elgg, fágao agora.',
 
 	'install:settings:label:sitename' => 'Nome',
 	'install:settings:label:siteemail' => 'Enderezo de correo',

@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -14,7 +15,7 @@
  * @subpackage Views
  * @since      1.9.0
  */
-class Elgg_ViewsService {
+class ViewsService {
 
 	protected $config_wrapper;
 	protected $site_url_wrapper;
@@ -22,7 +23,7 @@ class Elgg_ViewsService {
 	protected $user_wrapped;
 
 	/**
-	 * @see Elgg_ViewsService::fileExists
+	 * @see \Elgg\ViewsService::fileExists
 	 * @var array
 	 */
 	protected $file_exists_cache = array();
@@ -30,10 +31,10 @@ class Elgg_ViewsService {
 	/**
 	 * Constructor
 	 *
-	 * @param Elgg_PluginHooksService $hooks  The hooks service
-	 * @param Elgg_Logger             $logger Logger
+	 * @param \Elgg\PluginHooksService $hooks  The hooks service
+	 * @param \Elgg\Logger             $logger Logger
 	 */
-	public function __construct(Elgg_PluginHooksService $hooks, Elgg_Logger $logger) {
+	public function __construct(\Elgg\PluginHooksService $hooks, \Elgg\Logger $logger) {
 		$this->hooks = $hooks;
 		$this->logger = $logger;
 	}
@@ -41,7 +42,7 @@ class Elgg_ViewsService {
 	/**
 	 * Get the user object in a wrapper
 	 * 
-	 * @return Elgg_DeprecationWrapper|null
+	 * @return \Elgg\DeprecationWrapper|null
 	 */
 	protected function getUserWrapper() {
 		$user = elgg_get_logged_in_user_entity();
@@ -49,7 +50,7 @@ class Elgg_ViewsService {
 			if ($user !== $this->user_wrapped) {
 				$warning = 'Use elgg_get_logged_in_user_entity() rather than assuming elgg_view() '
 							. 'populates $vars["user"]';
-				$this->user_wrapper = new Elgg_DeprecationWrapper($user, $warning, 1.8);
+				$this->user_wrapper = new \Elgg\DeprecationWrapper($user, $warning, 1.8);
 			}
 			$user = $this->user_wrapper;
 		}
@@ -116,7 +117,7 @@ class Elgg_ViewsService {
 		}
 
 		if (!isset($CONFIG->views)) {
-			$CONFIG->views = new stdClass;
+			$CONFIG->views = new \stdClass;
 		}
 
 		if (!isset($CONFIG->views->locations)) {
@@ -137,7 +138,7 @@ class Elgg_ViewsService {
 		global $CONFIG;
 
 		if (!isset($CONFIG->viewtype)) {
-			$CONFIG->viewtype = new stdClass;
+			$CONFIG->viewtype = new \stdClass;
 		}
 
 		if (!isset($CONFIG->viewtype->fallback)) {
@@ -223,14 +224,14 @@ class Elgg_ViewsService {
 		if (!isset($vars['config'])) {
 			if (!$this->config_wrapper) {
 				$warning = 'Do not rely on $vars["config"] or $CONFIG being available in views';
-				$this->config_wrapper = new Elgg_DeprecationWrapper($CONFIG, $warning, 1.8);
+				$this->config_wrapper = new \Elgg\DeprecationWrapper($CONFIG, $warning, 1.8);
 			}
 			$vars['config'] = $this->config_wrapper;
 		}
 		if (!isset($vars['url'])) {
 			if (!$this->site_url_wrapper) {
 				$warning = 'Do not rely on $vars["url"] being available in views';
-				$this->site_url_wrapper = new Elgg_DeprecationWrapper(elgg_get_site_url(), $warning, 1.8);
+				$this->site_url_wrapper = new \Elgg\DeprecationWrapper(elgg_get_site_url(), $warning, 1.8);
 			}
 			$vars['url'] = $this->site_url_wrapper;
 		}
@@ -471,7 +472,7 @@ class Elgg_ViewsService {
 		global $CONFIG;
 
 		if (!isset($CONFIG->views)) {
-			$CONFIG->views = new stdClass;
+			$CONFIG->views = new \stdClass;
 		}
 
 		if (!isset($CONFIG->views->simplecache)) {
@@ -488,7 +489,7 @@ class Elgg_ViewsService {
 		global $CONFIG;
 
 		if (!isset($CONFIG->views)) {
-			$CONFIG->views = new stdClass;
+			$CONFIG->views = new \stdClass;
 		}
 
 		if (!isset($CONFIG->views->simplecache)) {

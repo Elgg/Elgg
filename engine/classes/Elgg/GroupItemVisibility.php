@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 
 /**
  * Determines if otherwise visible items should be hidden from a user due to group
@@ -9,7 +10,7 @@
  *
  * @access private
  */
-class Elgg_GroupItemVisibility {
+class GroupItemVisibility {
 
 	const REASON_NON_MEMBER = 'non_member';
 	const REASON_LOGGED_OUT = 'logged_out';
@@ -31,7 +32,7 @@ class Elgg_GroupItemVisibility {
 	 * @param int  $container_guid GUID of a container (may/may not be a group)
 	 * @param bool $use_cache      Use the cached result of
 	 *
-	 * @return Elgg_GroupItemVisibility
+	 * @return \Elgg\GroupItemVisibility
 	 *
 	 * @todo Make this faster, considering it must run for every river item.
 	 */
@@ -42,7 +43,7 @@ class Elgg_GroupItemVisibility {
 		static $cache = array();
 
 		if (!$container_guid) {
-			return new Elgg_GroupItemVisibility();
+			return new \Elgg\GroupItemVisibility();
 		}
 
 		$user = elgg_get_logged_in_user_entity();
@@ -64,13 +65,13 @@ class Elgg_GroupItemVisibility {
 				elgg_set_ignore_access($prev_access);
 			}
 
-			$ret = new Elgg_GroupItemVisibility();
+			$ret = new \Elgg\GroupItemVisibility();
 
-			if ($container && $container instanceof ElggGroup) {
-				/* @var ElggGroup $container */
+			if ($container && $container instanceof \ElggGroup) {
+				/* @var \ElggGroup $container */
 
 				if ($is_visible) {
-					if ($container->getContentAccessMode() === ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+					if ($container->getContentAccessMode() === \ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 						if ($user) {
 							if (!$container->isMember($user) && !$user->isAdmin()) {
 								$ret->shouldHideItems = true;
@@ -100,3 +101,4 @@ class Elgg_GroupItemVisibility {
 		return $return;
 	}
 }
+

@@ -9,9 +9,9 @@
 
 $tiny = elgg_get_plugin_from_id('tinymce');
 
-if ($tiny instanceof ElggPlugin && $tiny->isActive()) {
+if ($tiny instanceof \ElggPlugin && $tiny->isActive()) {
 	$ck = elgg_get_plugin_from_id('ckeditor');
-	if ($ck instanceof ElggPlugin) {
+	if ($ck instanceof \ElggPlugin) {
 		$ck->activate();
 	}
 

@@ -14,7 +14,7 @@ $options = array(
 	'metadata_name' => 'location',
 	'limit' => 0,
 );
-$batch = new ElggBatch('elgg_get_entities_from_metadata', $options);
+$batch = new \ElggBatch('elgg_get_entities_from_metadata', $options);
 
 foreach ($batch as $entity) {
 	if (is_array($entity->location)) {

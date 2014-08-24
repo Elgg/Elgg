@@ -4,18 +4,18 @@
  *
  * @package    Elgg.Core
  * @subpackage DataStorage
- * @class   ElggFilestore
+ * @class   \ElggFilestore
  */
 abstract class ElggFilestore {
 	/**
 	 * Attempt to open the file $file for storage or writing.
 	 *
-	 * @param ElggFile $file A file
-	 * @param string   $mode "read", "write", "append"
+	 * @param \ElggFile $file A file
+	 * @param string    $mode "read", "write", "append"
 	 *
 	 * @return mixed A handle to the opened file or false on error.
 	 */
-	abstract public function open(ElggFile $file, $mode);
+	abstract public function open(\ElggFile $file, $mode);
 
 	/**
 	 * Write data to a given file handle.
@@ -78,29 +78,29 @@ abstract class ElggFilestore {
 	/**
 	 * Delete the file associated with a given file handle.
 	 *
-	 * @param ElggFile $file The file
+	 * @param \ElggFile $file The file
 	 *
 	 * @return bool
 	 */
-	abstract public function delete(ElggFile $file);
+	abstract public function delete(\ElggFile $file);
 
 	/**
 	 * Return the size in bytes for a given file.
 	 *
-	 * @param ElggFile $file The file
+	 * @param \ElggFile $file The file
 	 *
 	 * @return int
 	 */
-	abstract public function getFileSize(ElggFile $file);
+	abstract public function getFileSize(\ElggFile $file);
 
 	/**
 	 * Return the filename of a given file as stored on the filestore.
 	 *
-	 * @param ElggFile $file The file
+	 * @param \ElggFile $file The file
 	 *
 	 * @return string
 	 */
-	abstract public function getFilenameOnFilestore(ElggFile $file);
+	abstract public function getFilenameOnFilestore(\ElggFile $file);
 
 	/**
 	 * Get the filestore's creation parameters as an associative array.
@@ -126,14 +126,14 @@ abstract class ElggFilestore {
 	 *
 	 * @return mixed The file contents.
 	 */
-	abstract public function grabFile(ElggFile $file);
+	abstract public function grabFile(\ElggFile $file);
 
 	/**
 	 * Return whether a file physically exists or not.
 	 *
-	 * @param ElggFile $file The file
+	 * @param \ElggFile $file The file
 	 *
 	 * @return bool
 	 */
-	abstract public function exists(ElggFile $file);
+	abstract public function exists(\ElggFile $file);
 }

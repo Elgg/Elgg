@@ -6,4 +6,4 @@
  * @package    Elgg.Core
  * @subpackage Exception
  */
-class InvalidParameterException extends CallException {}
+class InvalidParameterException extends \CallException {}

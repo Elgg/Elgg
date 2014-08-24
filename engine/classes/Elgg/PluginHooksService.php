@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -11,7 +12,7 @@
  * @subpackage Hooks
  * @since      1.9.0
  */
-class Elgg_PluginHooksService extends Elgg_HooksRegistrationService {
+class PluginHooksService extends \Elgg\HooksRegistrationService {
 
 	/**
 	 * Triggers a plugin hook

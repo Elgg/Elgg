@@ -86,8 +86,6 @@ function pages_init() {
 
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
-	
-	elgg_register_event_handler('upgrade', 'system', 'pages_run_upgrades');
 }
 
 /**
@@ -272,9 +270,9 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
  * 
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
- * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param Elgg\Notifications\Notification $notification The notification to prepare
  * @param array                           $params       Hook parameters
- * @return Elgg_Notifications_Notification
+ * @return Elgg\Notifications\Notification
  */
 function pages_prepare_notification($hook, $type, $notification, $params) {
 	$entity = $params['event']->getObject();

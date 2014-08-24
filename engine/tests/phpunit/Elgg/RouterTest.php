@@ -1,14 +1,16 @@
 <?php
+namespace Elgg;
 
-class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
+
+class RouterTest extends \PHPUnit_Framework_TestCase {
 
 	/**
-	 * @var Elgg_PluginHooksService
+	 * @var \Elgg\PluginHooksService
 	 */
 	protected $hooks;
 
 	/**
-	 * @var Elgg_Router
+	 * @var \Elgg\Router
 	 */
 	protected $router;
 
@@ -23,8 +25,8 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 	protected $fooHandlerCalls = 0;
 
 	function setUp() {
-		$this->hooks = new Elgg_PluginHooksService();
-		$this->router = new Elgg_Router($this->hooks);
+		$this->hooks = new \Elgg\PluginHooksService();
+		$this->router = new \Elgg\Router($this->hooks);
 		$this->pages = dirname(dirname(__FILE__)) . '/test_files/pages';
 		$this->fooHandlerCalls = 0;
 	}
@@ -42,7 +44,7 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 
 		$path = "hello/1/\xE2\x82\xAC"; // euro sign
 		$qs = http_build_query(array('__elgg_uri' => $path));
-		$request = Elgg_Http_Request::create("http://localhost/?$qs");
+		$request = \Elgg\Http\Request::create("http://localhost/?$qs");
 		
 		ob_start();
 		$handled = $this->router->route($request);
@@ -56,7 +58,7 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		$this->router->registerPageHandler('hello', array($this, 'hello_page_handler'));
 		$this->router->unregisterPageHandler('hello');
 		
-		$request = Elgg_Http_Request::create('http://localhost/hello/');
+		$request = \Elgg\Http\Request::create('http://localhost/hello/');
 		
 		ob_start();
 		$handled = $this->router->route($request);
@@ -84,7 +86,7 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		$query = http_build_query(array('__elgg_uri' => 'bar/baz'));
 
 		ob_start();
-		$this->router->route(Elgg_Http_Request::create("http://localhost/?$query"));
+		$this->router->route(\Elgg\Http\Request::create("http://localhost/?$query"));
 		ob_end_clean();
 		
 		$this->assertEquals(1, $this->fooHandlerCalls);
@@ -100,3 +102,4 @@ class Elgg_RouterTest extends PHPUnit_Framework_TestCase {
 		return $value;
 	}
 }
+

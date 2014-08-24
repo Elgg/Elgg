@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 
 /**
  * Service for Events
@@ -9,7 +10,7 @@
  * @subpackage Hooks
  * @since      1.9.0
  */
-class Elgg_EventsService extends Elgg_HooksRegistrationService {
+class EventsService extends \Elgg\HooksRegistrationService {
 
 	const OPTION_STOPPABLE = 'stoppable';
 	const OPTION_DEPRECATION_MESSAGE = 'deprecation_message';

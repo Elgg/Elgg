@@ -6,7 +6,7 @@
  * @subpackage Plugins
  * @since      1.8
  */
-class ElggPluginManifestParser17 extends ElggPluginManifestParser {
+class ElggPluginManifestParser17 extends \ElggPluginManifestParser {
 	/**
 	 * The valid top level attributes and defaults for a 1.7 manifest
 	 */
@@ -66,7 +66,7 @@ class ElggPluginManifestParser17 extends ElggPluginManifestParser {
 	/**
 	 * Return an attribute in the manifest.
 	 *
-	 * Overrides ElggPluginManifestParser::getAttribute() because before 1.8
+	 * Overrides \ElggPluginManifestParser::getAttribute() because before 1.8
 	 * there were no rules...weeeeeeeee!
 	 *
 	 * @param string $name Attribute name

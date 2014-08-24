@@ -165,9 +165,9 @@ function thewire_set_url($hook, $type, $url, $params) {
  *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
- * @param Elgg_Notifications_Notification $notification The notification to prepare
+ * @param Elgg\Notifications\Notification $notification The notification to prepare
  * @param array                           $params       Hook parameters
- * @return Elgg_Notifications_Notification
+ * @return Elgg\Notifications\Notification
  */
 function thewire_prepare_notification($hook, $type, $notification, $params) {
 

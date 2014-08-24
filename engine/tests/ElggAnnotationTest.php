@@ -1,14 +1,14 @@
 <?php
 /**
- * test ElggAnnotation
+ * test \ElggAnnotation
  *
  * @package Elgg
  * @subpackage Test
  */
-class ElggAnnotationTest extends ElggCoreUnitTest {
+class ElggAnnotationTest extends \ElggCoreUnitTest {
 
 	/**
-	 * @var ElggEntity
+	 * @var \ElggEntity
 	 */
 	protected $entity;
 
@@ -17,9 +17,9 @@ class ElggAnnotationTest extends ElggCoreUnitTest {
 	 */
 	public function setUp() {
 		$this->original_hooks = _elgg_services()->hooks;
-		_elgg_services()->hooks = new Elgg_PluginHooksService();
+		_elgg_services()->hooks = new \Elgg\PluginHooksService();
 
-		$this->entity = new ElggObject();
+		$this->entity = new \ElggObject();
 		$this->entity->subtype = 'elgg_annotation_test';
 		$this->entity->access_id = ACCESS_PUBLIC;
 		$this->entity->save();
@@ -36,7 +36,7 @@ class ElggAnnotationTest extends ElggCoreUnitTest {
 	}
 
 	public function testCanEdit() {
-		$user = new ElggUser();
+		$user = new \ElggUser();
 		$user->save();
 
 		$id = $this->entity->annotate('test', 'foo', ACCESS_LOGGED_IN, elgg_get_logged_in_user_guid());

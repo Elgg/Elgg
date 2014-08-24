@@ -1,15 +1,6 @@
 <?php
 
-$engine = dirname(dirname(dirname(__FILE__)));
-require_once "$engine/lib/views.php";
-require_once "$engine/lib/input.php";
-require_once "$engine/lib/pageowner.php";
-
-global $CONFIG;
-$CONFIG->context = array();
-
-
-class ElggCoreViewtypeTest extends PHPUnit_Framework_TestCase {
+class ElggCoreViewtypeTest extends \PHPUnit_Framework_TestCase {
 
 	protected function setUp() {
 		global $CURRENT_SYSTEM_VIEWTYPE;

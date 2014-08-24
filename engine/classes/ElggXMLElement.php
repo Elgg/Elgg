@@ -12,7 +12,7 @@ class ElggXMLElement {
 	private $_element;
 
 	/**
-	 * Creates an ElggXMLParser from a string or existing SimpleXMLElement
+	 * Creates an \ElggXMLParser from a string or existing SimpleXMLElement
 	 * 
 	 * @param string|SimpleXMLElement $xml The XML to parse
 	 */
@@ -69,13 +69,13 @@ class ElggXMLElement {
 	}
 
 	/**
-	 * @return ElggXMLElement[] Child elements
+	 * @return \ElggXMLElement[] Child elements
 	 */
 	public function getChildren() {
 		$children = $this->_element->children();
 		$result = array();
 		foreach ($children as $val) {
-			$result[] = new ElggXMLElement($val);
+			$result[] = new \ElggXMLElement($val);
 		}
 
 		return $result;

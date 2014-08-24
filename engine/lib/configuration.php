@@ -33,10 +33,10 @@ function elgg_get_site_url($site_guid = 0) {
 
 	$site = get_entity($site_guid);
 
-	if (!$site instanceof ElggSite) {
+	if (!$site instanceof \ElggSite) {
 		return false;
 	}
-	/* @var ElggSite $site */
+	/* @var \ElggSite $site */
 
 	return $site->url;
 }
@@ -222,7 +222,7 @@ function datalist_get($name) {
 	$value = null;
 	static $datalist_memcache = null;
 	if (!$datalist_memcache && is_memcache_available()) {
-		$datalist_memcache = new ElggMemcache('datalist_memcache');
+		$datalist_memcache = new \ElggMemcache('datalist_memcache');
 	}
 	if ($datalist_memcache) {
 		$value = $datalist_memcache->load($name);
@@ -280,7 +280,7 @@ function datalist_set($name, $value) {
 	// If memcache is available then invalidate the cached copy
 	static $datalist_memcache = null;
 	if ((!$datalist_memcache) && (is_memcache_available())) {
-		$datalist_memcache = new ElggMemcache('datalist_memcache');
+		$datalist_memcache = new \ElggMemcache('datalist_memcache');
 	}
 
 	if ($datalist_memcache) {
@@ -555,7 +555,7 @@ function _elgg_load_site_config() {
 	$CONFIG->site_id = $CONFIG->site_guid;
 	$CONFIG->site = get_entity($CONFIG->site_guid);
 	if (!$CONFIG->site) {
-		throw new InstallationException("Unable to handle this request. This site is not configured or the database is down.");
+		throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 	}
 
 	$CONFIG->wwwroot = $CONFIG->site->url;
@@ -633,11 +633,6 @@ function _elgg_load_application_config() {
 		}
 	}
 
-	$path = datalist_get('path');
-	if (!empty($path)) {
-		$CONFIG->path = $path;
-	}
-
 	// allow sites to set dataroot and simplecache_enabled in settings.php
 	if (isset($CONFIG->dataroot)) {
 		$CONFIG->dataroot = sanitise_filepath($CONFIG->dataroot);
@@ -667,9 +662,6 @@ function _elgg_load_application_config() {
 	} else {
 		$CONFIG->system_cache_enabled = 1;
 	}
-
-	// initialize context here so it is set before the first get_input call
-	$CONFIG->context = array();
 
 	// needs to be set before system, init for links in html head
 	$CONFIG->lastcache = (int)datalist_get("simplecache_lastupdate");

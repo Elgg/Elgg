@@ -57,6 +57,8 @@ return array(
 
 	'file:delete:confirm' => "Está seguro de que quere eliminar este ficheiro?",
 
+	'file:upload_limit' => 'O tamaño máximo permitido para os ficheiros son %s.',
+
 	'file:tagcloud' => "Nube de etiquetas",
 
 	'file:display:number' => "Número de ficheiros para mostrar",

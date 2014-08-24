@@ -1066,7 +1066,8 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'installation:minify_css:label' => "Comprimir o código CSS (recomendado).",
 
 	'installation:htaccess:needs_upgrade' => "Debe actualizar o seu ficheiro .htaccess para que a ruta se insira no parámetro GET «__elgg_uri» (pode guiarse por «htaccess_dist»).",
-
+	'installation:htaccess:localhost:connectionfailed' => "Elgg non pode conectarse a si mesmo para probar as regras de substitución correctamente. Comprobe que o programa «curl» funciona e que non existen restricións de enderezos IP que impidan as conexións locais.",
+	
 	'installation:systemcache:description' => "A caché do sistema almacena datos en ficheiros para diminuír o tempo de carga de Elgg",
 	'installation:systemcache:label' => "Usar a caché do sistema (recomendado).",
 

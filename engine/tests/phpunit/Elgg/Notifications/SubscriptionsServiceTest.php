@@ -1,13 +1,15 @@
 <?php
+namespace Elgg\Notifications;
 
-class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_TestCase {
+
+class SubscriptionsServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 		$this->containerGuid = 42;
 
-		// mock ElggObject that has a container guid
+		// mock \ElggObject that has a container guid
 		$object = $this->getMock(
-				'ElggObject',
+				'\ElggObject',
 				array('getContainerGUID'),
 				array(),
 				'',
@@ -18,7 +20,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 
 		// mock event that holds the mock object
 		$this->event = $this->getMock(
-				'Elgg_Notifications_Event',
+				'\Elgg\Notifications\Event',
 				array('getObject'),
 				array(),
 				'',
@@ -26,7 +28,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 		$this->event->expects($this->any())
 				->method('getObject')
 				->will($this->returnValue($object));
-		$this->db = $this->getMock('Elgg_Database',
+		$this->db = $this->getMock('\Elgg\Database',
 				array('getData', 'getTablePrefix', 'sanitizeString'),
 				array(),
 				'',
@@ -40,17 +42,17 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 				->will($this->returnArgument(0));
 
 		// Event class has dependency on elgg_get_logged_in_user_guid()
-		_elgg_services()->setValue('session', new ElggSession(new Elgg_Http_MockSessionStorage()));
+		_elgg_services()->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
 	}
 
 	public function testGetSubscriptionsWithNoMethodsRegistered() {
-		$service = new Elgg_Notifications_SubscriptionsService($this->db);
+		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
 		$this->assertEquals(array(), $service->getSubscriptions($this->event));
 	}
 
 	public function testGetSubscriptionsWithBadObject() {
 		$this->event = $this->getMock(
-				'Elgg_Notifications_Event',
+				'\Elgg\Notifications\Event',
 				array('getObject'),
 				array(),
 				'',
@@ -58,7 +60,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 		$this->event->expects($this->any())
 				->method('getObject')
 				->will($this->returnValue(null));
-		$service = new Elgg_Notifications_SubscriptionsService($this->db);
+		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
 		$service->methods = array('one', 'two');
 		$this->assertEquals(array(), $service->getSubscriptions($this->event));
 	}
@@ -73,7 +75,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 				->method('getData')
 				->with($this->equalTo($query))
 				->will($this->returnValue(array()));
-		$service = new Elgg_Notifications_SubscriptionsService($this->db);
+		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
 
 		$service->methods = $methods;
 		$this->assertEquals(array(), $service->getSubscriptions($this->event));
@@ -92,7 +94,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 		$this->db->expects($this->once())
 				->method('getData')
 				->will($this->returnValue($queryResult));
-		$service = new Elgg_Notifications_SubscriptionsService($this->db);
+		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
 
 		$service->methods = $methods;
 		$this->assertEquals($subscriptions, $service->getSubscriptions($this->event));
@@ -100,7 +102,7 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 
 	public function testGetSubscriptionsForContainerWithNoMethodsRegistered() {
 		$container_guid = 132;
-		$service = new Elgg_Notifications_SubscriptionsService($this->db);
+		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
 		$this->assertEquals(array(), $service->getSubscriptionsForContainer($container_guid));
 	}
 
@@ -119,17 +121,18 @@ class Elgg_Notifications_SubscriptionsServiceTest extends PHPUnit_Framework_Test
 		$this->db->expects($this->once())
 				->method('getData')
 				->will($this->returnValue($queryResult));
-		$service = new Elgg_Notifications_SubscriptionsService($this->db);
+		$service = new \Elgg\Notifications\SubscriptionsService($this->db);
 
 		$service->methods = $methods;
 		$this->assertEquals($subscriptions, $service->getSubscriptionsForContainer($container_guid));
 	}
 
 	protected function createObjectFromArray(array $data) {
-		$obj = new stdClass();
+		$obj = new \stdClass();
 		foreach ($data as $key => $value) {
 			$obj->$key = $value;
 		}
 		return $obj;
 	}
 }
+

@@ -8,22 +8,22 @@
  */
 
 /**
- * Tells ElggPlugin::start() to include the start.php file.
+ * Tells \ElggPlugin::start() to include the start.php file.
  */
 define('ELGG_PLUGIN_INCLUDE_START', 1);
 
 /**
- * Tells ElggPlugin::start() to automatically register the plugin's views.
+ * Tells \ElggPlugin::start() to automatically register the plugin's views.
  */
 define('ELGG_PLUGIN_REGISTER_VIEWS', 2);
 
 /**
- * Tells ElggPlugin::start() to automatically register the plugin's languages.
+ * Tells \ElggPlugin::start() to automatically register the plugin's languages.
  */
 define('ELGG_PLUGIN_REGISTER_LANGUAGES', 4);
 
 /**
- * Tells ElggPlugin::start() to automatically register the plugin's classes.
+ * Tells \ElggPlugin::start() to automatically register the plugin's classes.
  */
 define('ELGG_PLUGIN_REGISTER_CLASSES', 8);
 
@@ -43,7 +43,7 @@ define('ELGG_PLUGIN_USER_SETTING_PREFIX', 'plugin:user_setting:');
 /**
  * Internal settings prefix
  *
- * @todo This could be resolved by promoting ElggPlugin to a 5th type.
+ * @todo This could be resolved by promoting \ElggPlugin to a 5th type.
  */
 define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
 
@@ -81,10 +81,10 @@ function _elgg_get_plugin_dirs_in_dir($dir = null) {
 }
 
 /**
- * Discovers plugins in the plugins_path setting and creates ElggPlugin
+ * Discovers plugins in the plugins_path setting and creates \ElggPlugin
  * entities for them if they don't exist.  If there are plugins with entities
- * but not actual files, will disable the ElggPlugin entities and mark as inactive.
- * The ElggPlugin object holds config data, so don't delete.
+ * but not actual files, will disable the \ElggPlugin entities and mark as inactive.
+ * The \ElggPlugin object holds config data, so don't delete.
  *
  * @return bool
  * @since 1.8.0
@@ -110,7 +110,7 @@ function _elgg_generate_plugin_entities() {
 		'limit' => ELGG_ENTITIES_NO_VALUE,
 	);
 	$known_plugins = elgg_get_entities_from_relationship($options);
-	/* @var ElggPlugin[] $known_plugins */
+	/* @var \ElggPlugin[] $known_plugins */
 
 	if (!$known_plugins) {
 		$known_plugins = array();
@@ -153,7 +153,7 @@ function _elgg_generate_plugin_entities() {
 		} else {
 			// create new plugin
 			// priority is forced to last in save() if not set.
-			$plugin = new ElggPlugin($mod_dir . $plugin_id);
+			$plugin = new \ElggPlugin($mod_dir . $plugin_id);
 			$plugin->save();
 		}
 	}
@@ -184,21 +184,21 @@ function _elgg_generate_plugin_entities() {
 /**
  * Cache a reference to this plugin by its ID
  * 
- * @param ElggPlugin $plugin
+ * @param \ElggPlugin $plugin
  * 
  * @access private
  */
-function _elgg_cache_plugin_by_id(ElggPlugin $plugin) {
+function _elgg_cache_plugin_by_id(\ElggPlugin $plugin) {
 	$map = (array) elgg_get_config('plugins_by_id_map');
 	$map[$plugin->getID()] = $plugin;
 	elgg_set_config('plugins_by_id_map', $map);
 }
 
 /**
- * Returns an ElggPlugin object with the path $path.
+ * Returns an \ElggPlugin object with the path $path.
  *
  * @param string $plugin_id The id (dir name) of the plugin. NOT the guid.
- * @return ElggPlugin|null
+ * @return \ElggPlugin|null
  * @since 1.8.0
  */
 function elgg_get_plugin_from_id($plugin_id) {
@@ -289,7 +289,7 @@ function elgg_is_active_plugin($plugin_id, $site_guid = null) {
 		$site = elgg_get_site_entity();
 	}
 
-	if (!($site instanceof ElggSite)) {
+	if (!($site instanceof \ElggSite)) {
 		return false;
 	}
 
@@ -366,7 +366,7 @@ function _elgg_load_plugins() {
  *
  * @param string $status    The status of the plugins. active, inactive, or all.
  * @param mixed  $site_guid Optional site guid
- * @return ElggPlugin[]
+ * @return \ElggPlugin[]
  * @since 1.8.0
  */
 function elgg_get_plugins($status = 'active', $site_guid = null) {
@@ -423,7 +423,7 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
  * Reorder plugins to an order specified by the array.
  * Plugins not included in this array will be appended to the end.
  *
- * @note This doesn't use the ElggPlugin->setPriority() method because
+ * @note This doesn't use the \ElggPlugin->setPriority() method because
  *       all plugins are being changed and we don't want it to automatically
  *       reorder plugins.
  *
@@ -447,7 +447,7 @@ function _elgg_set_plugin_priorities(array $order) {
 	$order = array_values($order);
 
 	$missing_plugins = array();
-	/* @var ElggPlugin[] $missing_plugins */
+	/* @var \ElggPlugin[] $missing_plugins */
 
 	foreach ($plugins as $plugin) {
 		$plugin_id = $plugin->getID();
@@ -534,7 +534,7 @@ function _elgg_namespace_plugin_private_setting($type, $name, $id = null) {
 
 /**
  * @var array cache used by elgg_get_plugins_provides function
- * @todo move it with all other functions to Elgg_PluginsService
+ * @todo move it with all other functions to \Elgg\PluginsService
  */
 global $ELGG_PLUGINS_PROVIDES_CACHE;
 
@@ -567,7 +567,7 @@ function _elgg_get_plugins_provides($type = null, $name = null) {
 		foreach ($active_plugins as $plugin) {
 			$plugin_provides = array();
 			$manifest = $plugin->getManifest();
-			if ($manifest instanceof ElggPluginManifest) {
+			if ($manifest instanceof \ElggPluginManifest) {
 				$plugin_provides = $plugin->getManifest()->getProvides();
 			}
 			if ($plugin_provides) {
@@ -660,7 +660,7 @@ function _elgg_check_plugins_provides($type, $name, $version = null, $comparison
  * 	'comment'		=>	Free form text to help resovle the problem ("Enable / Search for plugin <link>")
  * )
  *
- * @param array $dep An ElggPluginPackage dependency array
+ * @param array $dep An \ElggPluginPackage dependency array
  * @return array
  * @since 1.8.0
  * @access private
@@ -779,9 +779,9 @@ function _elgg_get_plugin_dependency_strings($dep) {
 }
 
 /**
- * Returns the ElggPlugin entity of the last plugin called.
+ * Returns the \ElggPlugin entity of the last plugin called.
  *
- * @return mixed ElggPlugin or false
+ * @return ElggPlugin|false
  * @since 1.8.0
  * @access private
  * @deprecated 1.9
@@ -806,7 +806,7 @@ function elgg_get_calling_plugin_entity() {
  *                           views where the settings are passed as $vars['entity'].
  * @return array
  * @since 1.8.0
- * @see ElggPlugin::getAllUserSettings()
+ * @see \ElggPlugin::getAllUserSettings()
  */
 function elgg_get_all_plugin_user_settings($user_guid = 0, $plugin_id = null, $return_obj = false) {
 	if ($plugin_id) {
@@ -816,14 +816,14 @@ function elgg_get_all_plugin_user_settings($user_guid = 0, $plugin_id = null, $r
 		$plugin = elgg_get_calling_plugin_entity();
 	}
 
-	if (!$plugin instanceof ElggPlugin) {
+	if (!$plugin instanceof \ElggPlugin) {
 		return false;
 	}
 
 	$settings = $plugin->getAllUserSettings((int)$user_guid);
 
 	if ($settings && $return_obj) {
-		$return = new stdClass;
+		$return = new \stdClass;
 
 		foreach ($settings as $k => $v) {
 			$return->$k = $v;
@@ -845,7 +845,7 @@ function elgg_get_all_plugin_user_settings($user_guid = 0, $plugin_id = null, $r
  *
  * @return bool
  * @since 1.8.0
- * @see ElggPlugin::setUserSetting()
+ * @see \ElggPlugin::setUserSetting()
  */
 function elgg_set_plugin_user_setting($name, $value, $user_guid = 0, $plugin_id = null) {
 	if ($plugin_id) {
@@ -871,7 +871,7 @@ function elgg_set_plugin_user_setting($name, $value, $user_guid = 0, $plugin_id 
  *
  * @return bool
  * @since 1.8.0
- * @see ElggPlugin::unsetUserSetting()
+ * @see \ElggPlugin::unsetUserSetting()
  */
 function elgg_unset_plugin_user_setting($name, $user_guid = 0, $plugin_id = null) {
 	if ($plugin_id) {
@@ -897,7 +897,7 @@ function elgg_unset_plugin_user_setting($name, $user_guid = 0, $plugin_id = null
  *
  * @return mixed
  * @since 1.8.0
- * @see ElggPlugin::getUserSetting()
+ * @see \ElggPlugin::getUserSetting()
  */
 function elgg_get_plugin_user_setting($name, $user_guid = 0, $plugin_id = null) {
 	if ($plugin_id) {
@@ -923,7 +923,7 @@ function elgg_get_plugin_user_setting($name, $user_guid = 0, $plugin_id = null) 
  *
  * @return bool
  * @since 1.8.0
- * @see ElggPlugin::setSetting()
+ * @see \ElggPlugin::setSetting()
  */
 function elgg_set_plugin_setting($name, $value, $plugin_id = null) {
 	if ($plugin_id) {
@@ -949,7 +949,7 @@ function elgg_set_plugin_setting($name, $value, $plugin_id = null) {
  *
  * @return mixed
  * @since 1.8.0
- * @see ElggPlugin::getSetting()
+ * @see \ElggPlugin::getSetting()
  */
 function elgg_get_plugin_setting($name, $plugin_id = null, $default = null) {
 	if ($plugin_id) {
@@ -974,7 +974,7 @@ function elgg_get_plugin_setting($name, $plugin_id = null, $default = null) {
  *
  * @return bool
  * @since 1.8.0
- * @see ElggPlugin::unsetSetting()
+ * @see \ElggPlugin::unsetSetting()
  */
 function elgg_unset_plugin_setting($name, $plugin_id = null) {
 	if ($plugin_id) {
@@ -998,7 +998,7 @@ function elgg_unset_plugin_setting($name, $plugin_id = null) {
  *
  * @return bool
  * @since 1.8.0
- * @see ElggPlugin::unsetAllSettings()
+ * @see \ElggPlugin::unsetAllSettings()
  */
 function elgg_unset_all_plugin_settings($plugin_id = null) {
 	if ($plugin_id) {

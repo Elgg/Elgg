@@ -199,7 +199,7 @@ function _elgg_db_log_profiling_data() {
  * $counter->setDeltaHeader();
  * </code>
  *
- * @return Elgg_Database_QueryCounter
+ * @return \Elgg\Database\QueryCounter
  * @access private
  */
 function _elgg_db_get_query_counter() {

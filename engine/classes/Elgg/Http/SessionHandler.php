@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Http;
 
 /**
  * Session handler interface
@@ -10,7 +11,7 @@
  * @package    Elgg.Core
  * @subpackage Http
  */
-interface Elgg_Http_SessionHandler {
+interface SessionHandler {
 
 	/**
 	 * Re-initialize existing session, or creates a new one.

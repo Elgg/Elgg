@@ -129,7 +129,7 @@ function get_log_entry($entry_id) {
 /**
  * Return the object referred to by a given log entry
  *
- * @param stdClass|int $entry The log entry row or its ID
+ * @param \stdClass|int $entry The log entry row or its ID
  *
  * @return mixed
  */
@@ -192,7 +192,7 @@ function system_log($object, $event) {
 
 	if ($object instanceof Loggable) {
 
-		/* @var ElggEntity|ElggExtender $object */
+		/* @var \ElggEntity|\ElggExtender $object */
 		if (datalist_get('version') < 2012012000) {
 			// this is a site that doesn't have the ip_address column yet
 			return;

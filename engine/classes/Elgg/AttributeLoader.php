@@ -1,19 +1,20 @@
 <?php
+namespace Elgg;
 
 /**
- * Loads ElggEntity attributes from DB or validates those passed in via constructor
+ * Loads \ElggEntity attributes from DB or validates those passed in via constructor
  *
  * @access private
  *
  * @package    Elgg.Core
  * @subpackage DataModel
  */
-class Elgg_AttributeLoader {
+class AttributeLoader {
 
 	/**
 	 * @var array names of attributes in all entities
 	 *
-	 * @todo require this to be injected and get it from ElggEntity
+	 * @todo require this to be injected and get it from \ElggEntity
 	 */
 	protected static $primary_attr_names = array(
 		'guid',
@@ -41,7 +42,7 @@ class Elgg_AttributeLoader {
 		'time_created',
 		'time_updated',
 		'last_action',
-		// ElggUser
+		// \ElggUser
 		'prev_last_action',
 		'last_login',
 		'prev_last_login'
@@ -108,16 +109,16 @@ class Elgg_AttributeLoader {
 	 * @param string $class             class of object being loaded
 	 * @param string $required_type     entity type this is being used to populate
 	 * @param array  $initialized_attrs attributes after initializeAttributes() has been run
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 */
 	public function __construct($class, $required_type, array $initialized_attrs) {
 		if (!is_string($class)) {
-			throw new InvalidArgumentException('$class must be a class name.');
+			throw new \InvalidArgumentException('$class must be a class name.');
 		}
 		$this->class = $class;
 
 		if (!is_string($required_type)) {
-			throw new InvalidArgumentException('$requiredType must be a system entity type.');
+			throw new \InvalidArgumentException('$requiredType must be a system entity type.');
 		}
 		$this->required_type = $required_type;
 
@@ -129,7 +130,7 @@ class Elgg_AttributeLoader {
 	/**
 	 * Get primary attributes missing that are missing
 	 *
-	 * @param stdClass $row Database row
+	 * @param \stdClass $row Database row
 	 * @return array
 	 */
 	protected function isMissingPrimaries($row) {
@@ -139,7 +140,7 @@ class Elgg_AttributeLoader {
 	/**
 	 * Get secondary attributes that are missing
 	 *
-	 * @param stdClass $row Database row
+	 * @param \stdClass $row Database row
 	 * @return array
 	 */
 	protected function isMissingSecondaries($row) {
@@ -149,14 +150,14 @@ class Elgg_AttributeLoader {
 	/**
 	 * Check that the type is correct
 	 *
-	 * @param stdClass $row Database row
+	 * @param \stdClass $row Database row
 	 * @return void
-	 * @throws InvalidClassException
+	 * @throws \InvalidClassException
 	 */
 	protected function checkType($row) {
 		if ($row['type'] !== $this->required_type) {
 			$msg = "GUID:" . $row['guid'] . " is not a valid " . $this->class;
-			throw new InvalidClassException($msg);
+			throw new \InvalidClassException($msg);
 		}
 	}
 
@@ -177,19 +178,19 @@ class Elgg_AttributeLoader {
 	 * "secondary" attributes (e.g. those in {prefix}objects_entity), but can load all at once if a
 	 * combined loader is available.
 	 *
-	 * @param mixed $row a row loaded from DB (array or stdClass) or a GUID
+	 * @param mixed $row a row loaded from DB (array or \stdClass) or a GUID
 	 * @return array will be empty if failed to load all attributes (access control or entity doesn't exist)
 	 *
-	 * @throws InvalidArgumentException|LogicException|IncompleteEntityException
+	 * @throws \InvalidArgumentException|\LogicException|\IncompleteEntityException
 	 */
 	public function getRequiredAttributes($row) {
-		if (!is_array($row) && !($row instanceof stdClass)) {
+		if (!is_array($row) && !($row instanceof \stdClass)) {
 			// assume row is the GUID
 			$row = array('guid' => $row);
 		}
 		$row = (array) $row;
 		if (empty($row['guid'])) {
-			throw new InvalidArgumentException('$row must be or contain a GUID');
+			throw new \InvalidArgumentException('$row must be or contain a GUID');
 		}
 
 		$was_missing_primaries = $this->isMissingPrimaries($row);
@@ -206,7 +207,7 @@ class Elgg_AttributeLoader {
 		} else {
 			if ($was_missing_primaries) {
 				if (!is_callable($this->primary_loader)) {
-					throw new LogicException('Primary attribute loader must be callable');
+					throw new \LogicException('Primary attribute loader must be callable');
 				}
 				if ($this->requires_access_control) {
 					$fetched = (array) call_user_func($this->primary_loader, $row['guid']);
@@ -227,11 +228,11 @@ class Elgg_AttributeLoader {
 
 			if ($was_missing_secondaries) {
 				if (!is_callable($this->secondary_loader)) {
-					throw new LogicException('Secondary attribute loader must be callable');
+					throw new \LogicException('Secondary attribute loader must be callable');
 				}
 				$fetched = (array) call_user_func($this->secondary_loader, $row['guid']);
 				if (!$fetched) {
-					throw new IncompleteEntityException("Secondary loader failed to return row for {$row['guid']}");
+					throw new \IncompleteEntityException("Secondary loader failed to return row for {$row['guid']}");
 				}
 				$row = array_merge($row, $fetched);
 			}
@@ -281,3 +282,4 @@ class Elgg_AttributeLoader {
 		return $row;
 	}
 }
+

@@ -1,27 +1,30 @@
 <?php
+namespace Elgg;
 
-class Elgg_LoggerTest extends PHPUnit_Framework_TestCase {
+
+class LoggerTest extends \PHPUnit_Framework_TestCase {
 
 	public function testLoggingOff() {
-		$mock = $this->getMock('Elgg_PluginHooksService', array('trigger'));
+		$mock = $this->getMock('\Elgg\PluginHooksService', array('trigger'));
 		$mock->expects($this->never())->method('trigger');
-		$logger = new Elgg_Logger($mock);
-		$logger->setLevel(Elgg_Logger::OFF);
+		$logger = new \Elgg\Logger($mock);
+		$logger->setLevel(\Elgg\Logger::OFF);
 		$this->assertFalse($logger->log("hello"));
 	}
 
 	public function testLoggingLevelTooLow() {
-		$mock = $this->getMock('Elgg_PluginHooksService', array('trigger'));
+		$mock = $this->getMock('\Elgg\PluginHooksService', array('trigger'));
 		$mock->expects($this->never())->method('trigger');
-		$logger = new Elgg_Logger($mock);
-		$logger->setLevel(Elgg_Logger::WARNING);
-		$this->assertFalse($logger->log("hello", Elgg_Logger::NOTICE));
+		$logger = new \Elgg\Logger($mock);
+		$logger->setLevel(\Elgg\Logger::WARNING);
+		$this->assertFalse($logger->log("hello", \Elgg\Logger::NOTICE));
 	}
 
 	public function testLoggingLevelNotExist() {
-		$mock = $this->getMock('Elgg_PluginHooksService', array('trigger'));
+		$mock = $this->getMock('\Elgg\PluginHooksService', array('trigger'));
 		$mock->expects($this->never())->method('trigger');
-		$logger = new Elgg_Logger($mock);
+		$logger = new \Elgg\Logger($mock);
 		$this->assertFalse($logger->log("hello", 123));
 	}
 }
+

@@ -1,6 +1,6 @@
 <?php
 /**
- * ElggPAM Pluggable Authentication Module
+ * \ElggPAM Pluggable Authentication Module
  *
  * @package    Elgg.Core
  * @subpackage Authentication
@@ -17,7 +17,7 @@ class ElggPAM {
 	protected $messages;
 
 	/**
-	 * ElggPAM constructor
+	 * \ElggPAM constructor
 	 * 
 	 * @param string $policy PAM policy type: user, api, or plugin-defined policies
 	 */

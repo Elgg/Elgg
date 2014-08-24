@@ -1,12 +1,12 @@
 <?php
 /**
- * ElggComment
+ * \ElggComment
  * 
  * @package    Elgg.Core
  * @subpackage Comments
  * @since      1.9.0
  */
-class ElggComment extends ElggObject {
+class ElggComment extends \ElggObject {
 
 	/**
 	 * Set subtype to comment
@@ -23,7 +23,7 @@ class ElggComment extends ElggObject {
 	 * Can a user comment on this object? Always returns false (threaded comments
 	 * not yet supported)
 	 *
-	 * @see ElggEntity::canComment()
+	 * @see \ElggEntity::canComment()
 	 *
 	 * @param int $user_guid User guid (default is logged in user)
 	 * @return bool False

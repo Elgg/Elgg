@@ -1,4 +1,5 @@
 <?php
+namespace Elgg\Http;
 /**
  * If you make a change in the tests for native storage, update the tests for mock storage
  * 
@@ -6,13 +7,14 @@
  * the session from starting.
  */
 
-class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 
-	/** @var Elgg_Http_NativeSessionStorage */
+class NativeSessionStorageTest extends \PHPUnit_Framework_TestCase {
+
+	/** @var \Elgg\Http\NativeSessionStorage */
 	protected $storage;
 
 	protected function setUp() {
-		$this->storage = new Elgg_Http_NativeSessionStorage(array(), new Elgg_Http_MockSessionHandler());
+		$this->storage = new \Elgg\Http\NativeSessionStorage(array(), new \Elgg\Http\MockSessionHandler());
 	}
 
 	protected function tearDown() {
@@ -40,7 +42,7 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @expectedException RuntimeException
+	 * @expectedException \RuntimeException
 	 */
 	public function testSetIdAfterStart() {
 		if (headers_sent()) {
@@ -103,7 +105,7 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 
 	protected function setUpAttributes() {
 		$this->data = array(
-			'user' => new stdClass(),
+			'user' => new \stdClass(),
 			'guid' => 64,
 			'msg' => array('success' => 'You are logged in'),
 		);
@@ -112,7 +114,7 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 
 	public static function provideAttributes() {
 		return array(
-			array('user', new stdClass(), true),
+			array('user', new \stdClass(), true),
 			array('guid', 64, true),
 			array('msg', array('success' => 'You are logged in'), true),
 			array('not_exist', null, false),
@@ -207,3 +209,4 @@ class Elgg_Http_NativeSessionStorageTest extends PHPUnit_Framework_TestCase {
 	}
 
 }
+

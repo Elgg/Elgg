@@ -1,9 +1,9 @@
 <?php
 
 /**
- * ElggWidget
+ * \ElggWidget
  *
- * Stores metadata in private settings rather than as ElggMetadata
+ * Stores metadata in private settings rather than as \ElggMetadata
  *
  * @package    Elgg.Core
  * @subpackage Widgets
@@ -13,7 +13,7 @@
  * @property-read string $order   internal, do not use
  * @property-read string $context internal, do not use
  */
-class ElggWidget extends ElggObject {
+class ElggWidget extends \ElggObject {
 
 	/**
 	 * Set subtype to widget.

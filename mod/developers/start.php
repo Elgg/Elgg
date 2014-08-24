@@ -151,7 +151,7 @@ function developers_log_events($name, $type) {
 	// 1 => call_user_func_array
 	// 2 => hook class trigger
 	$stack = debug_backtrace();
-	if (isset($stack[2]['class']) && $stack[2]['class'] == 'Elgg_EventsService') {
+	if (isset($stack[2]['class']) && $stack[2]['class'] == 'Elgg\EventsService') {
 		$event_type = 'Event';
 	} else {
 		$event_type = 'Plugin hook';

@@ -1,9 +1,11 @@
 <?php
+namespace Elgg\Amd;
 
-class Elgg_Amd_ViewFilterTest extends PHPUnit_Framework_TestCase {
+
+class ViewFilterTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testInsertsNamesForAnonymousModules() {
-		$viewFilter = new Elgg_Amd_ViewFilter();
+		$viewFilter = new \Elgg\Amd\ViewFilter();
 		
 		$originalContent = "// Comment\ndefine({})";
 		$filteredContent = $viewFilter->filter('js/my/mod.js', $originalContent);
@@ -12,10 +14,11 @@ class Elgg_Amd_ViewFilterTest extends PHPUnit_Framework_TestCase {
 	}
 	
 	public function testLeavesNamedModulesAlone() {
-		$viewFilter = new Elgg_Amd_ViewFilter();
+		$viewFilter = new \Elgg\Amd\ViewFilter();
 		
 		$originalContent = "// Comment\ndefine('any/mod', {})";
 		$filteredContent = $viewFilter->filter('js/my/mod.js', $originalContent);
 		$this->assertEquals($originalContent, $filteredContent);
 	}
 }
+

@@ -1059,7 +1059,8 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'installation:minify_css:label' => "Comprimir CSS (recomendado)",
 
 	'installation:htaccess:needs_upgrade' => "Debe actualizar el fichero «.htaccess» para que la ruta se inyecte en el parámetro GET «__elgg_uri» (puede usar «htaccess_dist» a modo de guía).",
-
+	'installation:htaccess:localhost:connectionfailed' => "Elgg no puede conectarse a sí mismo para poner a prueba las reglas de substitución. Asegúrese de que «curl» está funcionando, y de que no existen restricciones por dirección IP que impidan las conexiones locales al propio servidor (localhost).",
+	
 	'installation:systemcache:description' => "The system cache decreases the loading time of the Elgg engine by caching data to files.",
 	'installation:systemcache:label' => "Use system cache (recommended)",
 

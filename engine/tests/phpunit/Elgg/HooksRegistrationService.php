@@ -1,11 +1,13 @@
 <?php
+namespace Elgg;
 
-class Elgg_HooksRegistrationServiceTest extends PHPUnit_Framework_TestCase {
+
+class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 		parent::setUp();
 
-		$this->mock = $this->getMockForAbstractClass('Elgg_HooksRegistrationService');
+		$this->mock = $this->getMockForAbstractClass('\Elgg\HooksRegistrationService');
 	}
 	
 	public function testCanRegisterHandlers() {
@@ -69,3 +71,4 @@ class Elgg_HooksRegistrationServiceTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame($expected_foo_baz, $this->mock->getOrderedHandlers('foo', 'baz'));
 	}
 }
+

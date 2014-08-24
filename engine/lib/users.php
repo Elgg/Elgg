@@ -18,7 +18,7 @@ $USERNAME_TO_GUID_MAP_CACHE = array();
 /**
  * Return the user specific details of a user by a row.
  *
- * @param int $guid The ElggUser guid
+ * @param int $guid The \ElggUser guid
  *
  * @return mixed
  * @access private
@@ -71,7 +71,7 @@ function ban_user($user_guid, $reason = "") {
 
 	$user = get_entity($user_guid);
 
-	if (($user) && ($user->canEdit()) && ($user instanceof ElggUser)) {
+	if (($user) && ($user->canEdit()) && ($user instanceof \ElggUser)) {
 		if (elgg_trigger_event('ban', 'user', $user)) {
 			// Add reason
 			if ($reason) {
@@ -81,7 +81,7 @@ function ban_user($user_guid, $reason = "") {
 			// invalidate memcache for this user
 			static $newentity_cache;
 			if ((!$newentity_cache) && (is_memcache_available())) {
-				$newentity_cache = new ElggMemcache('new_entity_cache');
+				$newentity_cache = new \ElggMemcache('new_entity_cache');
 			}
 
 			if ($newentity_cache) {
@@ -113,14 +113,14 @@ function unban_user($user_guid) {
 
 	$user = get_entity($user_guid);
 
-	if (($user) && ($user->canEdit()) && ($user instanceof ElggUser)) {
+	if (($user) && ($user->canEdit()) && ($user instanceof \ElggUser)) {
 		if (elgg_trigger_event('unban', 'user', $user)) {
 			create_metadata($user_guid, 'ban_reason', '', '', 0, ACCESS_PUBLIC);
 
 			// invalidate memcache for this user
 			static $newentity_cache;
 			if ((!$newentity_cache) && (is_memcache_available())) {
-				$newentity_cache = new ElggMemcache('new_entity_cache');
+				$newentity_cache = new \ElggMemcache('new_entity_cache');
 			}
 
 			if ($newentity_cache) {
@@ -150,13 +150,13 @@ function make_user_admin($user_guid) {
 
 	$user = get_entity((int)$user_guid);
 
-	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
+	if (($user) && ($user instanceof \ElggUser) && ($user->canEdit())) {
 		if (elgg_trigger_event('make_admin', 'user', $user)) {
 
 			// invalidate memcache for this user
 			static $newentity_cache;
 			if ((!$newentity_cache) && (is_memcache_available())) {
-				$newentity_cache = new ElggMemcache('new_entity_cache');
+				$newentity_cache = new \ElggMemcache('new_entity_cache');
 			}
 
 			if ($newentity_cache) {
@@ -186,13 +186,13 @@ function remove_user_admin($user_guid) {
 
 	$user = get_entity((int)$user_guid);
 
-	if (($user) && ($user instanceof ElggUser) && ($user->canEdit())) {
+	if (($user) && ($user instanceof \ElggUser) && ($user->canEdit())) {
 		if (elgg_trigger_event('remove_admin', 'user', $user)) {
 
 			// invalidate memcache for this user
 			static $newentity_cache;
 			if ((!$newentity_cache) && (is_memcache_available())) {
-				$newentity_cache = new ElggMemcache('new_entity_cache');
+				$newentity_cache = new \ElggMemcache('new_entity_cache');
 			}
 
 			if ($newentity_cache) {
@@ -213,11 +213,11 @@ function remove_user_admin($user_guid) {
 /**
  * Get a user object from a GUID.
  *
- * This function returns an ElggUser from a given GUID.
+ * This function returns an \ElggUser from a given GUID.
  *
  * @param int $guid The GUID
  *
- * @return ElggUser|false
+ * @return \ElggUser|false
  */
 function get_user($guid) {
 	// Fixes "Exception thrown without stack frame" when db_select fails
@@ -225,7 +225,7 @@ function get_user($guid) {
 		$result = get_entity($guid);
 	}
 
-	if ((!empty($result)) && (!($result instanceof ElggUser))) {
+	if ((!empty($result)) && (!($result instanceof \ElggUser))) {
 		return false;
 	}
 
@@ -241,7 +241,7 @@ function get_user($guid) {
  *
  * @param string $username The user's username
  *
- * @return ElggUser|false Depending on success
+ * @return \ElggUser|false Depending on success
  */
 function get_user_by_username($username) {
 	global $CONFIG, $USERNAME_TO_GUID_MAP_CACHE;
@@ -279,7 +279,7 @@ function get_user_by_username($username) {
  *
  * @param string $hash Hash of the persistent login password
  *
- * @return ElggUser
+ * @return \ElggUser
  */
 function get_user_by_code($hash) {
 	_elgg_services()->persistentLogin->getUserFromHash($hash);
@@ -322,7 +322,7 @@ function get_user_by_email($email) {
  * @param int   $offset  Offset (deprecated usage, use $options)
  * @param bool  $count   Count (deprecated usage, use $options)
  *
- * @return ElggUser[]|int
+ * @return \ElggUser[]|int
  */
 function find_active_users($options = array(), $limit = 10, $offset = 0, $count = false) {
 
@@ -387,7 +387,7 @@ function send_new_password_request($user_guid) {
 	$user_guid = (int)$user_guid;
 
 	$user = get_entity($user_guid);
-	if ($user instanceof ElggUser) {
+	if ($user instanceof \ElggUser) {
 		// generate code
 		$code = generate_random_cleartext_password();
 		$user->setPrivateSetting('passwd_conf_code', $code);
@@ -419,7 +419,7 @@ function send_new_password_request($user_guid) {
  */
 function force_user_password_reset($user_guid, $password) {
 	$user = get_entity($user_guid);
-	if ($user instanceof ElggUser) {
+	if ($user instanceof \ElggUser) {
 		$ia = elgg_set_ignore_access();
 
 		$user->salt = _elgg_generate_password_salt();
@@ -498,7 +498,7 @@ function execute_new_password_request($user_guid, $conf_code, $password = null) 
  * @return string
  */
 function generate_random_cleartext_password() {
-	return _elgg_services()->crypto->getRandomString(12, ElggCrypto::CHARS_PASSWORD);
+	return _elgg_services()->crypto->getRandomString(12, \ElggCrypto::CHARS_PASSWORD);
 }
 
 /**
@@ -514,12 +514,12 @@ function _elgg_generate_password_salt() {
 /**
  * Hash a password for storage. Currently salted MD5.
  *
- * @param ElggUser $user     The user this is being generated for.
- * @param string   $password Password in clear text
+ * @param \ElggUser $user     The user this is being generated for.
+ * @param string    $password Password in clear text
  *
  * @return string
  */
-function generate_user_password(ElggUser $user, $password) {
+function generate_user_password(\ElggUser $user, $password) {
 	return md5($password . $user->salt);
 }
 
@@ -543,13 +543,13 @@ function validate_username($username) {
 
 	if (strlen($username) < $CONFIG->minusername) {
 		$msg = elgg_echo('registration:usernametooshort', array($CONFIG->minusername));
-		throw new RegistrationException($msg);
+		throw new \RegistrationException($msg);
 	}
 	
 	// username in the database has a limit of 128 characters
 	if (strlen($username) > 128) {
 		$msg = elgg_echo('registration:usernametoolong', array(128));
-		throw new RegistrationException($msg);
+		throw new \RegistrationException($msg);
 	}
 
 	// Blacklist for bad characters (partially nicked from mediawiki)
@@ -564,7 +564,7 @@ function validate_username($username) {
 
 	if (preg_match($blacklist, $username)) {
 		// @todo error message needs work
-		throw new RegistrationException(elgg_echo('registration:invalidchars'));
+		throw new \RegistrationException(elgg_echo('registration:invalidchars'));
 	}
 
 	// Belts and braces
@@ -575,7 +575,7 @@ function validate_username($username) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
 			$msg = elgg_echo('registration:invalidchars', array($blacklist2[$n], $blacklist2));
 			$msg = htmlspecialchars($msg, ENT_QUOTES, 'UTF-8');
-			throw new RegistrationException($msg);
+			throw new \RegistrationException($msg);
 		}
 	}
 
@@ -601,7 +601,7 @@ function validate_password($password) {
 
 	if (strlen($password) < $CONFIG->min_password_length) {
 		$msg = elgg_echo('registration:passwordtooshort', array($CONFIG->min_password_length));
-		throw new RegistrationException($msg);
+		throw new \RegistrationException($msg);
 	}
 
 	$result = true;
@@ -619,7 +619,7 @@ function validate_password($password) {
  */
 function validate_email_address($address) {
 	if (!is_email_address($address)) {
-		throw new RegistrationException(elgg_echo('registration:notemail'));
+		throw new \RegistrationException(elgg_echo('registration:notemail'));
 	}
 
 	// Got here, so lets try a hook (defaulting to ok)
@@ -661,29 +661,29 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
 	access_show_hidden_entities(true);
 
 	if (!validate_email_address($email)) {
-		throw new RegistrationException(elgg_echo('registration:emailnotvalid'));
+		throw new \RegistrationException(elgg_echo('registration:emailnotvalid'));
 	}
 
 	if (!validate_password($password)) {
-		throw new RegistrationException(elgg_echo('registration:passwordnotvalid'));
+		throw new \RegistrationException(elgg_echo('registration:passwordnotvalid'));
 	}
 
 	if (!validate_username($username)) {
-		throw new RegistrationException(elgg_echo('registration:usernamenotvalid'));
+		throw new \RegistrationException(elgg_echo('registration:usernamenotvalid'));
 	}
 
 	if ($user = get_user_by_username($username)) {
-		throw new RegistrationException(elgg_echo('registration:userexists'));
+		throw new \RegistrationException(elgg_echo('registration:userexists'));
 	}
 
 	if ((!$allow_multiple_emails) && (get_user_by_email($email))) {
-		throw new RegistrationException(elgg_echo('registration:dupeemail'));
+		throw new \RegistrationException(elgg_echo('registration:dupeemail'));
 	}
 
 	access_show_hidden_entities($access_status);
 
 	// Create user
-	$user = new ElggUser();
+	$user = new \ElggUser();
 	$user->username = $username;
 	$user->email = $email;
 	$user->name = $name;
@@ -830,7 +830,7 @@ function set_last_login($user_guid) {
  *
  * @param string   $event       create
  * @param string   $object_type user
- * @param ElggUser $object      User object
+ * @param \ElggUser $object      User object
  *
  * @return void
  * @access private
@@ -866,17 +866,17 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
  */
 function elgg_user_hover_menu($hook, $type, $return, $params) {
 	$user = $params['entity'];
-	/* @var ElggUser $user */
+	/* @var \ElggUser $user */
 
 	if (elgg_is_logged_in()) {
 		if (elgg_get_logged_in_user_guid() == $user->guid) {
 			$url = "profile/$user->username/edit";
-			$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
+			$item = new \ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
 			$item->setSection('action');
 			$return[] = $item;
 
 			$url = "avatar/edit/$user->username";
-			$item = new ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
+			$item = new \ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
 			$item->setSection('action');
 			$return[] = $item;
 		}
@@ -905,7 +905,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		foreach ($actions as $action) {
 			$url = "action/admin/user/$action?guid={$user->guid}";
 			$url = elgg_add_action_tokens_to_url($url);
-			$item = new ElggMenuItem($action, elgg_echo($action), $url);
+			$item = new \ElggMenuItem($action, elgg_echo($action), $url);
 			$item->setSection('admin');
 			$item->setLinkClass('elgg-requires-confirmation');
 
@@ -913,17 +913,17 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		}
 
 		$url = "profile/$user->username/edit";
-		$item = new ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
+		$item = new \ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
 		$item->setSection('admin');
 		$return[] = $item;
 
 		$url = "settings/user/$user->username";
-		$item = new ElggMenuItem('settings:edit', elgg_echo('settings:edit'), $url);
+		$item = new \ElggMenuItem('settings:edit', elgg_echo('settings:edit'), $url);
 		$item->setSection('admin');
 		$return[] = $item;
 
 		$url = "activity/owner/$user->username";
-		$item = new ElggMenuItem('activity:owner', elgg_echo('activity:owner'), $url);
+		$item = new \ElggMenuItem('activity:owner', elgg_echo('activity:owner'), $url);
 		$item->setSection('action');
 		$return[] = $item;
 	}
@@ -951,7 +951,7 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 	if (!elgg_instanceof($entity, 'user')) {
 		return $return;
 	}
-	/* @var ElggUser $entity */
+	/* @var \ElggUser $entity */
 
 	if ($entity->isBanned()) {
 		$banned = elgg_echo('banned');
@@ -961,7 +961,7 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 			'href' => false,
 			'priority' => 0,
 		);
-		$return = array(ElggMenuItem::factory($options));
+		$return = array(\ElggMenuItem::factory($options));
 	} else {
 		$return = array();
 		if (isset($entity->location)) {
@@ -972,7 +972,7 @@ function elgg_users_setup_entity_menu($hook, $type, $return, $params) {
 				'href' => false,
 				'priority' => 150,
 			);
-			$return[] = ElggMenuItem::factory($options);
+			$return[] = \ElggMenuItem::factory($options);
 		}
 	}
 
@@ -1184,7 +1184,7 @@ function users_init() {
 }
 
 /**
- * Runs unit tests for ElggUser
+ * Runs unit tests for \ElggUser
  *
  * @param string $hook   unit_test
  * @param string $type   system

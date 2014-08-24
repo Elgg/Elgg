@@ -1,4 +1,5 @@
 <?php
+namespace Elgg;
 
 /**
  * An object representing a single Elgg database.
@@ -10,7 +11,7 @@
  * @package    Elgg.Core
  * @subpackage Database
  */
-class Elgg_Database {
+class Database {
 
 	/** @var string $tablePrefix Prefix for database tables */
 	private $tablePrefix;
@@ -28,9 +29,9 @@ class Elgg_Database {
 	 * <code>
 	 * $DB_QUERY_CACHE[query hash] => array(result1, result2, ... resultN)
 	 * </code>
-	 * @see Elgg_Database::getResults() for details on the hash.
+	 * @see \Elgg\Database::getResults() for details on the hash.
 	 *
-	 * @var Elgg_Cache_LRUCache $queryCache The cache
+	 * @var \Elgg\Cache\LRUCache $queryCache The cache
 	 */
 	private $queryCache = null;
 
@@ -59,19 +60,19 @@ class Elgg_Database {
 	/** @var bool $installed Is the database installed? */
 	private $installed = false;
 
-	/** @var Elgg_Database_Config $config Database configuration */
+	/** @var \Elgg\Database\Config $config Database configuration */
 	private $config;
 
-	/** @var Elgg_Logger $logger The logger */
+	/** @var \Elgg\Logger $logger The logger */
 	private $logger;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Elgg_Database_Config $config Database configuration
-	 * @param Elgg_Logger          $logger The logger
+	 * @param \Elgg\Database\Config $config Database configuration
+	 * @param \Elgg\Logger          $logger The logger
 	 */
-	public function __construct(Elgg_Database_Config $config, Elgg_Logger $logger) {
+	public function __construct(\Elgg\Database\Config $config, \Elgg\Logger $logger) {
 
 		$this->logger = $logger;
 		$this->config = $config;
@@ -85,12 +86,12 @@ class Elgg_Database {
 	 * Gets (if required, also creates) a database link resource.
 	 *
 	 * The database link resources are created by
-	 * {@link Elgg_Database::setupConnections()}, which is called if no links exist.
+	 * {@link \Elgg\Database::setupConnections()}, which is called if no links exist.
 	 *
 	 * @param string $type The type of link we want: "read", "write" or "readwrite".
 	 *
 	 * @return resource Database link
-	 * @throws DatabaseException
+	 * @throws \DatabaseException
 	 * @todo make protected once we get rid of get_db_link()
 	 */
 	public function getLink($type) {
@@ -111,7 +112,7 @@ class Elgg_Database {
 	 * links up separately; otherwise just create the one database link.
 	 *
 	 * @return void
-	 * @throws DatabaseException
+	 * @throws \DatabaseException
 	 */
 	public function setupConnections() {
 		if ($this->config->isDatabaseSplit()) {
@@ -132,7 +133,7 @@ class Elgg_Database {
 	 * resource: "read", "write", or "readwrite".
 	 *
 	 * @return void
-	 * @throws DatabaseException
+	 * @throws \DatabaseException
 	 */
 	public function establishLink($dblinkname = "readwrite") {
 
@@ -142,12 +143,12 @@ class Elgg_Database {
 		$this->dbLinks[$dblinkname] = mysql_connect($conf['host'], $conf['user'], $conf['password'], true);
 		if (!$this->dbLinks[$dblinkname]) {
 			$msg = "Elgg couldn't connect to the database using the given credentials. Check the settings file.";
-			throw new DatabaseException($msg);
+			throw new \DatabaseException($msg);
 		}
 
 		if (!mysql_select_db($conf['database'], $this->dbLinks[$dblinkname])) {
 			$msg = "Elgg couldn't select the database '{$conf['database']}'. Please check that the database is created and you have access to it.";
-			throw new DatabaseException($msg);
+			throw new \DatabaseException($msg);
 		}
 
 		// Set DB for UTF8
@@ -157,7 +158,7 @@ class Elgg_Database {
 	/**
 	 * Retrieve rows from the database.
 	 *
-	 * Queries are executed with {@link Elgg_Database::executeQuery()} and results
+	 * Queries are executed with {@link \Elgg\Database::executeQuery()} and results
 	 * are retrieved with {@link mysql_fetch_object()}.  If a callback
 	 * function $callback is defined, each row will be passed as a single
 	 * argument to $callback.  If no callback function is defined, the
@@ -168,7 +169,7 @@ class Elgg_Database {
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
-	 * @throws DatabaseException
+	 * @throws \DatabaseException
 	 */
 	public function getData($query, $callback = '') {
 		return $this->getResults($query, $callback, false);
@@ -177,7 +178,7 @@ class Elgg_Database {
 	/**
 	 * Retrieve a single row from the database.
 	 *
-	 * Similar to {@link Elgg_Database::getData()} but returns only the first row
+	 * Similar to {@link \Elgg\Database::getData()} but returns only the first row
 	 * matched.  If a callback function $callback is specified, the row will be passed
 	 * as the only argument to $callback.
 	 *
@@ -185,7 +186,7 @@ class Elgg_Database {
 	 * @param string $callback A callback function
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
-	 * @throws DatabaseException
+	 * @throws \DatabaseException
 	 */
 	public function getDataRow($query, $callback = '') {
 		return $this->getResults($query, $callback, true);
@@ -200,11 +201,11 @@ class Elgg_Database {
 	 *
 	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
 	 *                   defined, 0 if not, and false on failure.
-	 * @throws DatabaseException
+	 * @throws \DatabaseException
 	 */
 	public function insertData($query) {
 
-		$this->logger->log("DB query $query", Elgg_Logger::INFO);
+		$this->logger->log("DB query $query", \Elgg\Logger::INFO);
 
 		$dblink = $this->getLink('write');
 
@@ -226,11 +227,11 @@ class Elgg_Database {
 	 * @param bool   $getNumRows Return the number of rows affected (default: false)
 	 *
 	 * @return bool|int
-	 * @throws DatabaseException
+	 * @throws \DatabaseException
 	 */
 	public function updateData($query, $getNumRows = false) {
 
-		$this->logger->log("DB query $query", Elgg_Logger::INFO);
+		$this->logger->log("DB query $query", \Elgg\Logger::INFO);
 
 		$dblink = $this->getLink('write');
 
@@ -255,11 +256,11 @@ class Elgg_Database {
 	 * @param string $query The SQL query to run
 	 *
 	 * @return int|false The number of affected rows or false on failure
-	 * @throws DatabaseException
+	 * @throws \DatabaseException
 	 */
 	public function deleteData($query) {
 
-		$this->logger->log("DB query $query", Elgg_Logger::INFO);
+		$this->logger->log("DB query $query", \Elgg\Logger::INFO);
 
 		$dblink = $this->getLink('write');
 
@@ -282,7 +283,7 @@ class Elgg_Database {
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
-	 * @throws DatabaseException
+	 * @throws \DatabaseException
 	 */
 	protected function getResults($query, $callback = null, $single = false) {
 
@@ -295,7 +296,7 @@ class Elgg_Database {
 		// Is cached?
 		if ($this->queryCache) {
 			if (isset($this->queryCache[$hash])) {
-				$this->logger->log("DB query $query results returned from cache (hash: $hash)", Elgg_Logger::INFO);
+				$this->logger->log("DB query $query results returned from cache (hash: $hash)", \Elgg\Logger::INFO);
 				return $this->queryCache[$hash];
 			}
 		}
@@ -324,13 +325,13 @@ class Elgg_Database {
 		}
 
 		if (empty($return)) {
-			$this->logger->log("DB query $query returned no results.", Elgg_Logger::INFO);
+			$this->logger->log("DB query $query returned no results.", \Elgg\Logger::INFO);
 		}
 
 		// Cache result
 		if ($this->queryCache) {
 			$this->queryCache[$hash] = $return;
-			$this->logger->log("DB query $query results cached (hash: $hash)", Elgg_Logger::INFO);
+			$this->logger->log("DB query $query results cached (hash: $hash)", \Elgg\Logger::INFO);
 		}
 
 		return $return;
@@ -346,17 +347,17 @@ class Elgg_Database {
 	 * @param resource $dblink The DB link
 	 *
 	 * @return resource|bool The result of mysql_query()
-	 * @throws DatabaseException
+	 * @throws \DatabaseException
 	 * @todo should this be public?
 	 */
 	public function executeQuery($query, $dblink) {
 
 		if ($query == null) {
-			throw new DatabaseException("Query cannot be null");
+			throw new \DatabaseException("Query cannot be null");
 		}
 
 		if (!is_resource($dblink)) {
-			throw new DatabaseException("Connection to database was lost.");
+			throw new \DatabaseException("Connection to database was lost.");
 		}
 
 		$this->queryCount++;
@@ -364,7 +365,7 @@ class Elgg_Database {
 		$result = mysql_query($query, $dblink);
 
 		if (mysql_errno($dblink)) {
-			throw new DatabaseException(mysql_error($dblink) . "\n\n QUERY: $query");
+			throw new \DatabaseException(mysql_error($dblink) . "\n\n QUERY: $query");
 		}
 
 		return $result;
@@ -388,7 +389,7 @@ class Elgg_Database {
 	 * @param string $scriptlocation The full path to the script
 	 *
 	 * @return void
-	 * @throws DatabaseException
+	 * @throws \DatabaseException
 	 */
 	public function runSqlScript($scriptlocation) {
 		$script = file_get_contents($scriptlocation);
@@ -408,7 +409,7 @@ class Elgg_Database {
 				if (!empty($statement)) {
 					try {
 						$this->updateData($statement);
-					} catch (DatabaseException $e) {
+					} catch (\DatabaseException $e) {
 						$errors[] = $e->getMessage();
 					}
 				}
@@ -420,11 +421,11 @@ class Elgg_Database {
 				}
 
 				$msg = "There were a number of issues: " . $errortxt;
-				throw new DatabaseException($msg);
+				throw new \DatabaseException($msg);
 			}
 		} else {
 			$msg = "Elgg couldn't find the requested database script at " . $scriptlocation . ".";
-			throw new DatabaseException($msg);
+			throw new \DatabaseException($msg);
 		}
 	}
 
@@ -477,7 +478,7 @@ class Elgg_Database {
 					$link = $this->getLink($link);
 				} elseif (!is_resource($link)) {
 					$msg = "Link for delayed query not valid resource or db_link type. Query: {$query_details['q']}";
-					$this->logger->log($msg, Elgg_Logger::WARNING);
+					$this->logger->log($msg, \Elgg\Logger::WARNING);
 				}
 
 				$result = $this->executeQuery($query_details['q'], $link);
@@ -485,9 +486,9 @@ class Elgg_Database {
 				if ((isset($query_details['h'])) && (is_callable($query_details['h']))) {
 					$query_details['h']($result);
 				}
-			} catch (DatabaseException $e) {
+			} catch (\DatabaseException $e) {
 				// Suppress all exceptions since page already sent to requestor
-				$this->logger->log($e, Elgg_Logger::ERROR);
+				$this->logger->log($e, \Elgg\Logger::ERROR);
 			}
 		}
 	}
@@ -495,14 +496,14 @@ class Elgg_Database {
 	/**
 	 * Enable the query cache
 	 * 
-	 * This does not take precedence over the Elgg_Database_Config setting.
+	 * This does not take precedence over the \Elgg\Database\Config setting.
 	 * 
 	 * @return void
 	 */
 	public function enableQueryCache() {
 		if ($this->config->isQueryCacheEnabled() && $this->queryCache === null) {
 			// @todo if we keep this cache, expose the size as a config parameter
-			$this->queryCache = new Elgg_Cache_LRUCache($this->queryCacheSize);
+			$this->queryCache = new \Elgg\Cache\LRUCache($this->queryCacheSize);
 		}
 	}
 
@@ -526,7 +527,7 @@ class Elgg_Database {
 	protected function invalidateQueryCache() {
 		if ($this->queryCache) {
 			$this->queryCache->clear();
-			$this->logger->log("Query cache invalidated", Elgg_Logger::INFO);
+			$this->logger->log("Query cache invalidated", \Elgg\Logger::INFO);
 		}
 	}
 
@@ -534,7 +535,7 @@ class Elgg_Database {
 	 * Test that the Elgg database is installed
 	 *
 	 * @return void
-	 * @throws InstallationException
+	 * @throws \InstallationException
 	 */
 	public function assertInstalled() {
 
@@ -546,10 +547,10 @@ class Elgg_Database {
 			$dblink = $this->getLink('read');
 			mysql_query("SELECT value FROM {$this->tablePrefix}datalists WHERE name = 'installed'", $dblink);
 			if (mysql_errno($dblink) > 0) {
-				throw new DatabaseException();
+				throw new \DatabaseException();
 			}
-		} catch (DatabaseException $e) {
-			throw new InstallationException("Unable to handle this request. This site is not configured or the database is down.");
+		} catch (\DatabaseException $e) {
+			throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 		}
 
 		$this->installed = true;
@@ -602,3 +603,4 @@ class Elgg_Database {
 		return mysql_real_escape_string($value);
 	}
 }
+

@@ -2,15 +2,15 @@
 /**
  * Manages plugin packages under mod.
  *
- * @todo This should eventually be merged into ElggPlugin.
- * Currently ElggPlugin objects are only used to get and save
+ * @todo This should eventually be merged into \ElggPlugin.
+ * Currently \ElggPlugin objects are only used to get and save
  * plugin settings and user settings, so not every plugin
- * has an ElggPlugin object.  It's not implemented in ElggPlugin
+ * has an \ElggPlugin object.  It's not implemented in \ElggPlugin
  * right now because of conflicts with at least the constructor,
  * enable(), disable(), and private settings.
  *
  * Around 1.9 or so we should each plugin over to using
- * ElggPlugin and merge ElggPluginPackage and ElggPlugin.
+ * \ElggPlugin and merge \ElggPluginPackage and \ElggPlugin.
  *
  * @package    Elgg.Core
  * @subpackage Plugins
@@ -64,7 +64,7 @@ class ElggPluginPackage {
 	/**
 	 * The plugin's manifest object
 	 *
-	 * @var ElggPluginManifest
+	 * @var \ElggPluginManifest
 	 */
 	protected $manifest;
 
@@ -112,7 +112,7 @@ class ElggPluginPackage {
 			// this is a plugin id
 			// strict plugin names
 			if (preg_match('/[^a-z0-9\.\-_]/i', $plugin)) {
-				throw new PluginException(elgg_echo('PluginException:InvalidID', array($plugin)));
+				throw new \PluginException(elgg_echo('PluginException:InvalidID', array($plugin)));
 			}
 
 			$path = "{$plugin_path}$plugin/";
@@ -120,7 +120,7 @@ class ElggPluginPackage {
 		}
 
 		if (!is_dir($path)) {
-			throw new PluginException(elgg_echo('PluginException:InvalidPath', array($path)));
+			throw new \PluginException(elgg_echo('PluginException:InvalidPath', array($path)));
 		}
 
 		$this->path = $path;
@@ -128,10 +128,10 @@ class ElggPluginPackage {
 
 		if ($validate && !$this->isValid()) {
 			if ($this->errorMsg) {
-				throw new PluginException(elgg_echo('PluginException:InvalidPlugin:Details',
+				throw new \PluginException(elgg_echo('PluginException:InvalidPlugin:Details',
 							array($plugin, $this->errorMsg)));
 			} else {
-				throw new PluginException(elgg_echo('PluginException:InvalidPlugin', array($plugin)));
+				throw new \PluginException(elgg_echo('PluginException:InvalidPlugin', array($plugin)));
 			}
 		}
 	}
@@ -144,12 +144,12 @@ class ElggPluginPackage {
 	 * Checks if this is a valid Elgg plugin.
 	 *
 	 * Checks for requires files as defined at the start of this
-	 * class.  Will check require manifest fields via ElggPluginManifest
+	 * class.  Will check require manifest fields via \ElggPluginManifest
 	 * for Elgg 1.8 plugins.
 	 *
 	 * @note This doesn't check dependencies or conflicts.
-	 * Use {@link ElggPluginPackage::canActivate()} or
-	 * {@link ElggPluginPackage::checkDependencies()} for that.
+	 * Use {@link \ElggPluginPackage::canActivate()} or
+	 * {@link \ElggPluginPackage::checkDependencies()} for that.
 	 *
 	 * @return bool
 	 */
@@ -284,7 +284,7 @@ class ElggPluginPackage {
 	/**
 	 * Returns a parsed manifest file.
 	 *
-	 * @return ElggPluginManifest
+	 * @return \ElggPluginManifest
 	 */
 	public function getManifest() {
 		if (!$this->manifest) {
@@ -298,7 +298,7 @@ class ElggPluginPackage {
 
 	/**
 	 * Loads the manifest into this->manifest as an
-	 * ElggPluginManifest object.
+	 * \ElggPluginManifest object.
 	 *
 	 * @return bool
 	 */
@@ -306,13 +306,13 @@ class ElggPluginPackage {
 		$file = $this->path . 'manifest.xml';
 
 		try {
-			$this->manifest = new ElggPluginManifest($file, $this->id);
+			$this->manifest = new \ElggPluginManifest($file, $this->id);
 		} catch (Exception $e) {
 			$this->errorMsg = $e->getMessage();
 			return false;
 		}
 
-		if ($this->manifest instanceof ElggPluginManifest) {
+		if ($this->manifest instanceof \ElggPluginManifest) {
 			return true;
 		}
 
@@ -365,7 +365,7 @@ class ElggPluginPackage {
 		foreach ($enabled_plugins as $plugin) {
 			$temp_conflicts = array();
 			$temp_manifest = $plugin->getManifest();
-			if ($temp_manifest instanceof ElggPluginManifest) {
+			if ($temp_manifest instanceof \ElggPluginManifest) {
 				$temp_conflicts = $plugin->getManifest()->getConflicts();
 			}
 			foreach ($temp_conflicts as $conflict) {
@@ -501,7 +501,7 @@ class ElggPluginPackage {
 	 * @return bool
 	 */
 	private function checkDepPriority(array $dep, array $plugins, $inverse = false) {
-		// grab the ElggPlugin using this package.
+		// grab the \ElggPlugin using this package.
 		$plugin_package = elgg_get_plugin_from_id($this->getID());
 		$plugin_priority = $plugin_package->getPriority();
 		$test_plugin = elgg_get_plugin_from_id($dep['plugin']);
@@ -655,7 +655,7 @@ class ElggPluginPackage {
 
 		// ini_get() normalizes truthy values to 1 but falsey values to 0 or ''.
 		// version_compare() considers '' < 0, so normalize '' to 0.
-		// ElggPluginManifest normalizes all bool values and '' to 1 or 0.
+		// \ElggPluginManifest normalizes all bool values and '' to 1 or 0.
 		$setting = ini_get($name);
 
 		if ($setting === '') {
