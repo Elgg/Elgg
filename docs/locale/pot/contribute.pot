@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 01:01+0300\n"
+"POT-Creation-Date: 2014-08-25 21:36+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1390,7 +1390,7 @@ msgstr ""
 
 #: ../../contribute/releases.rst:13
 # fd607e6093df47bdaead76dc24ffcf90
-msgid "SSH access to elgg.osuosl.org"
+msgid "SSH access to elgg.org"
 msgstr ""
 
 #: ../../contribute/releases.rst:14
@@ -1419,8 +1419,8 @@ msgid "Node.js and NPM installed"
 msgstr ""
 
 #: ../../contribute/releases.rst:19
-# 59c93003db0a4e04bb805a6eac8bc521
-msgid "Sphinx installed"
+# 48844ac794124a7094d355b0c56eb34d
+msgid "Sphinx installed (``easy_install sphinx``)"
 msgstr ""
 
 #: ../../contribute/releases.rst:20
@@ -1453,152 +1453,152 @@ msgstr ""
 msgid "Install the prerequisites:"
 msgstr ""
 
-#: ../../contribute/releases.rst:39
+#: ../../contribute/releases.rst:40
 # aa7485d93d4b4444bff2d45846341b59
 msgid "Run the ``release.php`` script. For example, to release 1.9.1:"
 msgstr ""
 
-#: ../../contribute/releases.rst:46
+#: ../../contribute/releases.rst:47
 # 8fc5a3f0d1174d15a4215c6235b8692f
 msgid "This creates a ``release-1.9.1`` branch in your local repo."
 msgstr ""
 
-#: ../../contribute/releases.rst:48
+#: ../../contribute/releases.rst:49
 # a58a7bed04a0481bbeea71c25fef63ad
 msgid "Next, submit a PR via Github:"
 msgstr ""
 
-#: ../../contribute/releases.rst:54
+#: ../../contribute/releases.rst:55
 # 10387ad0c7be42acb1640793c903860b
 msgid "Once approved and merged, tag the release:"
 msgstr ""
 
-#: ../../contribute/releases.rst:63
-# be67779b64c446c89a7a9d4189044fe6
+#: ../../contribute/releases.rst:64
+# 3e51a9b66bf44d938654549dafe25937
 msgid "Update Milestones on Github"
 msgstr ""
 
-#: ../../contribute/releases.rst:63
+#: ../../contribute/releases.rst:64
 # f0ce5a0f77704df28c88c20fb5443f9b
 msgid "Mark release milestones as completed"
 msgstr ""
 
-#: ../../contribute/releases.rst:64
+#: ../../contribute/releases.rst:65
 # 125cd257046643c0b412b23f1a25d25a
 msgid "Move unresolved tickets in released milestones to later milestones"
 msgstr ""
 
-#: ../../contribute/releases.rst:67
+#: ../../contribute/releases.rst:68
 # 206288cbc8264b3f88985948e2c4ff57
 msgid "2. Update the website"
 msgstr ""
 
-#: ../../contribute/releases.rst:69
+#: ../../contribute/releases.rst:70
 # 8e2430ec72104c7f8fa0339edaf2b6ab
 msgid "The downloads need to point to the new releases."
 msgstr ""
 
-#: ../../contribute/releases.rst:72
+#: ../../contribute/releases.rst:73
 # 70a2e61378374310b77093a79526946b
 msgid "Build Package"
 msgstr ""
 
-#: ../../contribute/releases.rst:74
+#: ../../contribute/releases.rst:75
 # 5796d384af4048f299bd53dcec97fc5b
-msgid "ssh to elgg.osuosl.org"
+msgid "ssh to elgg.org"
 msgstr ""
 
-#: ../../contribute/releases.rst:75
+#: ../../contribute/releases.rst:76
 # f48b7c807ccd42f7b3567f4de54272fa
 msgid "Clone https://github.com/Elgg/elgg-scripts"
 msgstr ""
 
-#: ../../contribute/releases.rst:76
+#: ../../contribute/releases.rst:77
 # c53d57738dd64017ae21587d07a12a74
 msgid "Use elgg-scripts/build/build.sh to generate the .zip file."
 msgstr ""
 
-#: ../../contribute/releases.rst:78
+#: ../../contribute/releases.rst:79
 # 4f4af339a9764e4f9e544fd51d38c4d0
 msgid "Run without arguments to see usage. This also generates the ChangeLog.txt file."
 msgstr ""
 
-#: ../../contribute/releases.rst:80
+#: ../../contribute/releases.rst:81
 # 3eaedcbab1a84f35a54fde0fce4452ca
 msgid "Example::"
 msgstr ""
 
-#: ../../contribute/releases.rst:84
+#: ../../contribute/releases.rst:85
 # fe046545e52b4bac98275e9148f58b95
 msgid "MIT::"
 msgstr ""
 
-#: ../../contribute/releases.rst:89
+#: ../../contribute/releases.rst:90
 # 318ffdfa8ce34d7ea65425509e1c5a4f
 msgid "Update homepage, download, and previous download pages"
 msgstr ""
 
-#: ../../contribute/releases.rst:91
+#: ../../contribute/releases.rst:92
 # 15041b9e098f41f9a535c552b2f66221
 msgid "Clone https://github.com/Elgg/old-elgg-website"
 msgstr ""
 
-#: ../../contribute/releases.rst:92
+#: ../../contribute/releases.rst:93
 # 5a6508e2cdd445188cb0786bcac4a5c0
 msgid "Make changes, commit, push."
 msgstr ""
 
-#: ../../contribute/releases.rst:94
+#: ../../contribute/releases.rst:95
 # afe13af3c4b84000a5a429ed537c0392
 msgid "index.php"
 msgstr ""
 
-#: ../../contribute/releases.rst:95
+#: ../../contribute/releases.rst:96
 # ffbaa7cf2fb9476685ab0102def02000
 msgid "download.php"
 msgstr ""
 
-#: ../../contribute/releases.rst:96
+#: ../../contribute/releases.rst:97
 # 3feb49f1f2174a9c92632549c0b304fa
 msgid "previous.php"
 msgstr ""
 
-#: ../../contribute/releases.rst:98
+#: ../../contribute/releases.rst:99
 # b7a0e36983a84f60b8e505061e27bea7
 msgid "Pull to live site"
 msgstr ""
 
-#: ../../contribute/releases.rst:104
+#: ../../contribute/releases.rst:105
 # 06dfdb434c314de7a7c8cee0a7d29ff0
 msgid "flush apc cache (via community admin panel)"
 msgstr ""
 
-#: ../../contribute/releases.rst:107
+#: ../../contribute/releases.rst:108
 # ac7549a4bdef4263ab7c9df1c9a1e324
 msgid "3. Make the announcement"
 msgstr ""
 
-#: ../../contribute/releases.rst:109
+#: ../../contribute/releases.rst:110
 # bc43da46f06342a9b6da4612600c1bb8
 msgid "This should be the very last thing you do."
 msgstr ""
 
-#: ../../contribute/releases.rst:111
+#: ../../contribute/releases.rst:112
 # a137160503b54fc3a3931752bdb89efc
-msgid "Compose a blog on http://blog.elgg.org with HTML version of CHANGELOG.md."
+msgid "Sign in at http://blog.elgg.org/pg/login and compose a blog on with HTML version of CHANGELOG.md."
 msgstr ""
 
-#: ../../contribute/releases.rst:112
+#: ../../contribute/releases.rst:113
 # 62496f22abee4558ad48b7113d020a2a
 msgid "Add tags “release” and “elgg1.x” where x is whatever branch is being released."
 msgstr ""
 
-#: ../../contribute/releases.rst:113
+#: ../../contribute/releases.rst:114
 # 674e09f0be414eed89930d6bac23633a
 msgid "Tweet from the elgg `Twitter account`_"
 msgstr ""
 
-#: ../../contribute/releases.rst:114
+#: ../../contribute/releases.rst:115
 # e2b7571a00984e458ee0545619b07edb
 msgid "Post from the `G+ page`_"
 msgstr ""
