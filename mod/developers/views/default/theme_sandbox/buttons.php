@@ -81,3 +81,45 @@
 		</tr>
 	</tbody>
 </table>
+
+<table class="theme-sandbox-table mtl">
+	<thead>
+	<tr>
+		<th>Button</th>
+		<th>Default</th>
+		<th>Disabled (.elgg-state-disabled)</th>
+	</tr>
+	</thead>
+	<tbody>
+	<tr>
+		<th>Base (.elgg-button)</th>
+		<td><button class="elgg-button">button</button></td>
+		<td><button class="elgg-button elgg-state-disabled">button</button></td>
+	</tr>
+	<tr>
+		<th>Action (.elgg-button-action)</th>
+		<td><button class="elgg-button elgg-button-action">button</button></td>
+		<td><button class="elgg-button elgg-button-action elgg-state-disabled">button</button></td>
+	</tr>
+	<tr>
+		<th>Cancel (.elgg-button-cancel)</th>
+		<td><button class="elgg-button elgg-button-cancel">button</button></td>
+		<td><button class="elgg-button elgg-button-cancel elgg-state-disabled">button</button></td>
+	</tr>
+	<tr>
+		<th>Submit (.elgg-button-submit)</th>
+		<td><button class="elgg-button elgg-button-submit">button</button></td>
+		<td><button class="elgg-button elgg-button-submit elgg-state-disabled">button</button></td>
+	</tr>
+	<tr>
+		<th>Special (.elgg-button-special)</th>
+		<td><button class="elgg-button elgg-button-special">button</button></td>
+		<td><button class="elgg-button elgg-button-special elgg-state-disabled">button</button></td>
+	</tr>
+	<tr>
+		<th>Delete (.elgg-button-delete)</th>
+		<td><button class="elgg-button elgg-button-delete">button</button></td>
+		<td><button class="elgg-button elgg-button-delete elgg-state-disabled">button</button></td>
+	</tr>
+	</tbody>
+</table>
