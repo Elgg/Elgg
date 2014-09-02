@@ -306,14 +306,16 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		$recipient = get_user($recipient_guid);
 		$sender = get_user($sender_guid);
 		
-		$subject = elgg_echo('messages:email:subject');
+		$subject = elgg_echo('messages:email:subject', array(), $recipient->language);
 		$body = elgg_echo('messages:email:body', array(
-			$sender->name,
-			$message_contents,
-			elgg_get_site_url() . "messages/inbox/" . $recipient->username,
-			$sender->name,
-			elgg_get_site_url() . "messages/compose?send_to=" . $sender_guid
-		));
+				$sender->name,
+				$message_contents,
+				elgg_get_site_url() . "messages/inbox/" . $recipient->username,
+				$sender->name,
+				elgg_get_site_url() . "messages/compose?send_to=" . $sender_guid
+			),
+			$recipient->language
+		);
 
 		notify_user($recipient_guid, $sender_guid, $subject, $body);
 	}
