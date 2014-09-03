@@ -249,7 +249,10 @@ function reload_all_translations() {
 		$cache_dir = $cache->getVariable("cache_path");
 		$filenames = elgg_get_file_list($cache_dir, array(), array(), array(".lang"));
 		foreach ($filenames as $filename) {
-			if (preg_match('/([a-z]+)\.[^.]+$/', $filename, $matches)) {
+			// Look for files matching for example 'en.lang', 'cmn.lang' or 'pt_br.lang'.
+			// Note that this regex is just for the system cache. The original language
+			// files are allowed to have uppercase letters (e.g. pt_BR.php).
+			if (preg_match('/(([a-z]{2,3})(_[a-z]{2})?)\.lang$/', $filename, $matches)) {
 				$language = $matches[1];
 				$data = elgg_load_system_cache("$language.lang");
 				if ($data) {
