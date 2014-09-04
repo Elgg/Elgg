@@ -1234,7 +1234,7 @@ You cannot reply to this email.",
 	'js:security:token_refreshed' => 'Connection to %s restored!',
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 	"aa" => "Afar",
 	"ab" => "Abkhazian",
@@ -1253,6 +1253,7 @@ You cannot reply to this email.",
 	"bo" => "Tibetan",
 	"br" => "Breton",
 	"ca" => "Catalan",
+	"cmn" => "Mandarin Chinese", // ISO 639-3
 	"co" => "Corsican",
 	"cs" => "Czech",
 	"cy" => "Welsh",
@@ -1329,6 +1330,7 @@ You cannot reply to this email.",
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
+	"pt_br" => 'Brazilian Portuguese',
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
