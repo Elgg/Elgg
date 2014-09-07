@@ -1,3 +1,19 @@
+<a name="1.9.0"></a>
+## 1.9.0  (2014-09-07)
+
+#### Contributors
+
+* Juho Jaakkola (3)
+* Ismayil Khayredinov (1)
+* Matt Beckett (1)
+
+#### Bug Fixes
+
+* **embed:** embed jquery target is now searched for instead of assuming last class ([cfe605d4](https://github.com/Elgg/Elgg/commit/cfe605d48ef96e855015d2cb0b08dfb1d2e26347))
+* **i18n:** system cache now supports regional designators in language codes ([735ceb4e](https://github.com/Elgg/Elgg/commit/735ceb4e3feb0ccbf34fd7b59d3133d8a956eaac), closes [#7187](https://github.com/Elgg/Elgg/issues/7187))
+* **messages:** use recipient's language in the notification ([ee88054f](https://github.com/Elgg/Elgg/commit/ee88054f215fee8260ad698425025c667207aad0), closes [#6902](https://github.com/Elgg/Elgg/issues/6902))
+
+
 <a name="1.9.0-rc.7"></a>
 ### 1.9.0-rc.7  (2014-08-25)
 
