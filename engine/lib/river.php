@@ -76,21 +76,9 @@ function elgg_create_river_item(array $options = array()) {
 		}
 	}
 
-	$type = $object->getType();
-	$subtype = $object->getSubtype();
-
-	$view = sanitise_string($view);
-	$action_type = sanitise_string($action_type);
-	$subject_guid = sanitise_int($subject_guid);
-	$object_guid = sanitise_int($object_guid);
-	$target_guid = sanitise_int($target_guid);
-	$access_id = sanitise_int($access_id);
-	$posted = sanitise_int($posted);
-	$annotation_id = sanitise_int($annotation_id);
-
 	$values = array(
-		'type' => $type,
-		'subtype' => $subtype,
+		'type' => $object->getType(),
+		'subtype' => $object->getSubtype(),
 		'action_type' => $action_type,
 		'access_id' => $access_id,
 		'view' => $view,
@@ -108,9 +96,18 @@ function elgg_create_river_item(array $options = array()) {
 		return true;
 	}
 
-	extract($values);
-
 	$dbprefix = elgg_get_config('dbprefix');
+
+	$type = sanitize_string($values['type']);
+	$subtype = sanitize_string($values['subtype']);
+	$action_type = sanitize_string($values['action_type']);
+	$access_id = sanitize_int($values['access_id']);
+	$view = sanitize_string($values['view']);
+	$subject_guid = sanitize_int($values['subject_guid']);
+	$object_guid = sanitize_int($values['object_guid']);
+	$target_guid = sanitize_int($values['target_guid']);
+	$annotation_id = sanitize_int($values['annotation_id']);
+	$posted = sanitize_int($values['posted']);
 
 	$id = insert_data("INSERT INTO {$dbprefix}river " .
 		" SET type = '$type', " .

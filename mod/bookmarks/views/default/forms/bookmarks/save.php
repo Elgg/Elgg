@@ -5,7 +5,6 @@
  * @package Bookmarks
  */
 
-// once elgg_view stops throwing all sorts of junk into $vars, we can use extract()
 $title = elgg_extract('title', $vars, '');
 $desc = elgg_extract('description', $vars, '');
 $address = elgg_extract('address', $vars, '');
