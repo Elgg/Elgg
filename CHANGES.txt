@@ -1,3 +1,25 @@
+Version 1.8.20
+(September 7, 2014 from https://github.com/Elgg/Elgg/tree/1.8)
+  Contributing Developers:
+   * Matt Beckett
+   * Juho Jaakkola
+   * Pawel Sroka
+   * Brett Profitt
+   * Arsalan Shah
+
+  Bugfixes:
+   * Embed jquery target is now searched for instead of assuming last class.
+   * System cache again supports regional designators in language codes.
+   * Use recipient's language in site message notifications.
+   * Fix Thewire word count JS events tapping.
+
+  Improvements:
+   * Allow custom local scripts to trigger on uncaught exceptions.
+
+  Documentation
+   * Updated docs for elgg_extend_view() to address uniqueness of extended views.
+
+
 Version 1.8.19
 (March 12, 2014 from https://github.com/Elgg/Elgg/tree/1.8)
   Contributing Developers:
