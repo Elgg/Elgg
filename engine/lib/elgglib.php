@@ -146,7 +146,7 @@ function elgg_register_js($name, $url, $location = 'head', $priority = null) {
  * @param array  $config An array like the following:
  *                       array  'deps'    An array of AMD module dependencies
  *                       string 'exports' The name of the exported module
- *                       string 'path'    The URL to the JS. Can be relative.
+ *                       string 'src'     The URL to the JS. Can be relative.
  *
  * @return void
  */
