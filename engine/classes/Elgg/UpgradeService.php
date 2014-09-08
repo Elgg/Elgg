@@ -94,7 +94,7 @@ class Elgg_UpgradeService {
 			if ($quiet) {
 				// hide include errors as well as any exceptions that might happen
 				try {
-					if (!@include("$upgrade_path/$upgrade")) {
+					if (!@self::includeCode("$upgrade_path/$upgrade")) {
 						$success = false;
 						error_log("Could not include $upgrade_path/$upgrade");
 					}
@@ -103,7 +103,7 @@ class Elgg_UpgradeService {
 					error_log($e->getMessage());
 				}
 			} else {
-				if (!include("$upgrade_path/$upgrade")) {
+				if (!self::includeCode("$upgrade_path/$upgrade")) {
 					$success = false;
 					error_log("Could not include $upgrade_path/$upgrade");
 				}
@@ -126,6 +126,16 @@ class Elgg_UpgradeService {
 		}
 
 		return true;
+	}
+
+	/**
+	 * PHP include a file with a very limited scope
+	 *
+	 * @param string $file File path to include
+	 * @return mixed
+	 */
+	protected static function includeCode($file) {
+		return include $file;
 	}
 
 	/**
