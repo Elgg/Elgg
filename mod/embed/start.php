@@ -100,9 +100,7 @@ ___JS;
  */
 function embed_select_tab($hook, $type, $items, $vars) {
 
-	// can this ba called from page handler instead?
-	$page = get_input('page');
-	$tab_name = array_pop(explode('/', $page));
+	$tab_name = get_input('tab_name');
 	foreach ($items as $item) {
 		if ($item->getName() == $tab_name) {
 			$item->setSelected();
@@ -133,7 +131,7 @@ function embed_page_handler($page) {
 		}
 	}
 
-	set_input('page', $page[1]); 
+	set_input('tab_name', $page[1]);
 
 	echo elgg_view('embed/layout');
 
