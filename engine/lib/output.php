@@ -220,54 +220,49 @@ function elgg_clean_vars(array $vars = array()) {
 }
 
 /**
- * Converts shorthand urls to absolute urls.
+ * Makes routing URLs absolute and prepends "http://" to URL that start
+ * with a hostname. No validation is performed.
  *
- * If the url is already absolute or protocol-relative, no change is made.
+ * No change is made if the URL begins with a scheme, is scheme-relative, or contains
+ * only a query string or fragment.
+ *
+ * In the special case that a PHP filename is given, it is assumed to be located
+ * at the root of the Elgg install. E.g. "install.php"
+ *
+ * Note that URLs starting with hostnames without a period (e.g. "localhost/foo")
+ * will not be recognized, and will be misinterpreted as a path.
  *
  * @example
- * elgg_normalize_url('');                   // 'http://my.site.com/'
- * elgg_normalize_url('dashboard');          // 'http://my.site.com/dashboard'
- * elgg_normalize_url('http://google.com/'); // no change
- * elgg_normalize_url('//google.com/');      // no change
+ * elgg_normalize_url('');                     // 'http://my.site.com/'
+ * elgg_normalize_url('dashboard');            // 'http://my.site.com/dashboard'
+ * elgg_normalize_url('example.com/path');     // 'http://example.com/path'
+ * elgg_normalize_url('example.php?query');    // 'http://my.site.com/example.php?query'
+ * elgg_normalize_url('http://google.com/');   // no change
+ * elgg_normalize_url('any-scheme:foo');       // no change
+ * elgg_normalize_url('//google.com/');        // no change
+ * elgg_normalize_url('?query');               // no change
+ * elgg_normalize_url('#fragment');            // no change
+ * elgg_normalize_url('javascript:...');       // no change
+ * elgg_normalize_url('mailto:...');           // no change
+ * elgg_normalize_url('localhost/path');       // 'http://my.site.com/localhost/path'
  *
  * @param string $url The URL to normalize
  *
- * @return string The absolute url
+ * @return string The normalized URL
  */
 function elgg_normalize_url($url) {
-	// see https://bugs.php.net/bug.php?id=51192
-	// from the bookmarks save action.
-	$php_5_2_13_and_below = version_compare(PHP_VERSION, '5.2.14', '<');
-	$php_5_3_0_to_5_3_2 = version_compare(PHP_VERSION, '5.3.0', '>=') &&
-			version_compare(PHP_VERSION, '5.3.3', '<');
-
-	if ($php_5_2_13_and_below || $php_5_3_0_to_5_3_2) {
-		$tmp_address = str_replace("-", "", $url);
-		$validated = filter_var($tmp_address, FILTER_VALIDATE_URL);
-	} else {
-		$validated = filter_var($url, FILTER_VALIDATE_URL);
-	}
-
-	// work around for handling absoluate IRIs (RFC 3987) - see #4190
-	if (!$validated && (strpos($url, 'http:') === 0) || (strpos($url, 'https:') === 0)) {
-		$validated = true;
-	}
-
-	if ($validated) {
-		// all normal URLs including mailto:
+	if (preg_match("#^[a-z0-9][a-z0-9\-\.]*\:#i", $url)) {
+		// starts with any scheme:
+		// http://en.wikipedia.org/wiki/URI_scheme#Examples
 		return $url;
 
-	} elseif (preg_match("#^(\#|\?|//)#i", $url)) {
-		// '//example.com' (Shortcut for protocol.)
-		// '?query=test', #target
-		return $url;
-	
-	} elseif (stripos($url, 'javascript:') === 0 || stripos($url, 'mailto:') === 0) {
-		// 'javascript:' and 'mailto:'
-		// Not covered in FILTER_VALIDATE_URL
+	} elseif (preg_match("#^(\#|\?|//)#", $url)) {
+		// '#target'
+		// '//example.com' (Scheme-relative URL)
+		// '?query=test'
 		return $url;
 
-	} elseif (preg_match("#^[^/]*\.php(\?.*)?$#i", $url)) {
+	} elseif (preg_match("#^[^/]*\.php([\?\#].*)?$#", $url)) {
 		// 'install.php', 'install.php?step=step'
 		return elgg_get_site_url() . $url;
 
@@ -282,6 +277,36 @@ function elgg_normalize_url($url) {
 		// with a trailing /
 		return elgg_get_site_url() . ltrim($url, '/');
 	}
+}
+
+/**
+ * Validate a URL using PHP's validator with a few modifications
+ *
+ * @param string $url       The URL to validate
+ * @param bool   $only_http Only accept URLs beginning with "http://" or "https://"
+ * @return bool
+ * @access private
+ */
+function _elgg_validate_url($url, $only_http = true) {
+	if ($only_http && !preg_match('~^https?\://~', $url)) {
+		return false;
+	}
+
+	// see https://bugs.php.net/bug.php?id=51192
+	$php_5_2_13_and_below = version_compare(PHP_VERSION, '5.2.14', '<');
+	$php_5_3_0_to_5_3_2 = version_compare(PHP_VERSION, '5.3.0', '>=') &&
+		version_compare(PHP_VERSION, '5.3.3', '<');
+	if ($php_5_2_13_and_below || $php_5_3_0_to_5_3_2) {
+		$url = str_replace("-", "", $url);
+	}
+
+	// Elgg produces paths containing non-ASCII chars (usernames). We just remove
+	// these before validating because PHP won't accept them
+	if (preg_match('~^(https?\://[^/]+/)(.*)~', $url, $m)) {
+		$url = $m[1] . preg_replace('/[^\x20-\x7E]/', '', $m[2]);
+	}
+
+	return (false !== filter_var($url, FILTER_VALIDATE_URL));
 }
 
 /**

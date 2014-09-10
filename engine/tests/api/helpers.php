@@ -76,24 +76,41 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 			'https://example.com' => 'https://example.com',
 			'http://example-time.com' => 'http://example-time.com',
 
+			// https://github.com/Elgg/Elgg/issues/4190
+			'http://example.com/profile/தமிழ்' => 'http://example.com/profile/தமிழ்',
+
 			'//example.com' => '//example.com',
+			'?query' => '?query',
+			'#fragment' => '#fragment',
+
+			// any schemes are passed through
 			'ftp://example.com/file' => 'ftp://example.com/file',
-			'mailto:brett@elgg.org' => 'mailto:brett@elgg.org',
-			'javascript:alert("test")' => 'javascript:alert("test")',
+			'MAILto:brett@elgg.org' => 'MAILto:brett@elgg.org',
+			'javaSCript:alert("test")' => 'javaSCript:alert("test")',
+			'chrome-extension:foo' => 'chrome-extension:foo',
+			'z39.50r:foo' => 'z39.50r:foo',
 			'app://endpoint' => 'app://endpoint',
 
+			// prepends scheme if seems to be hostname
 			'example.com' => 'http://example.com',
+			'123.123.123.123' => 'http://123.123.123.123',
 			'example.com/subpage' => 'http://example.com/subpage',
+			// should fail if hostname has no period
+			'localhost/subpage' =>              elgg_get_site_url() . 'localhost/subpage',
 
-			'page/handler' =>                	elgg_get_site_url() . 'page/handler',
-			'page/handler?p=v&p2=v2' =>      	elgg_get_site_url() . 'page/handler?p=v&p2=v2',
+			'page/handler' =>                   elgg_get_site_url() . 'page/handler',
+			'page/handler?p=v&p2=v2' =>         elgg_get_site_url() . 'page/handler?p=v&p2=v2',
 			'mod/plugin/file.php' =>            elgg_get_site_url() . 'mod/plugin/file.php',
 			'mod/plugin/file.php?p=v&p2=v2' =>  elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
 			'rootfile.php' =>                   elgg_get_site_url() . 'rootfile.php',
 			'rootfile.php?p=v&p2=v2' =>         elgg_get_site_url() . 'rootfile.php?p=v&p2=v2',
+			'rootfile.php#fragment' =>          elgg_get_site_url() . 'rootfile.php#fragment',
 
-			'/page/handler' =>               	elgg_get_site_url() . 'page/handler',
-			'/page/handler?p=v&p2=v2' =>     	elgg_get_site_url() . 'page/handler?p=v&p2=v2',
+			// https://github.com/Elgg/Elgg/issues/4190
+			'profile/தமிழ்' =>                   elgg_get_site_url() . 'profile/தமிழ்',
+
+			'/page/handler' =>                  elgg_get_site_url() . 'page/handler',
+			'/page/handler?p=v&p2=v2' =>        elgg_get_site_url() . 'page/handler?p=v&p2=v2',
 			'/mod/plugin/file.php' =>           elgg_get_site_url() . 'mod/plugin/file.php',
 			'/mod/plugin/file.php?p=v&p2=v2' => elgg_get_site_url() . 'mod/plugin/file.php?p=v&p2=v2',
 			'/rootfile.php' =>                  elgg_get_site_url() . 'rootfile.php',
@@ -105,6 +122,31 @@ class ElggCoreHelpersTest extends ElggCoreUnitTest {
 		}
 	}
 
+	/**
+	 * Test _elgg_validate_url()
+	 */
+	public function testElggValidateURL() {
+		$results = array(
+			'http://example.com' => true,
+			'https://example.com' => true,
+			'ftp://example.com/file' => false,
+			'app://endpoint' => false,
+
+			// https://github.com/Elgg/Elgg/issues/4190
+			'http://example.com/profile/தமிழ்' => true,
+		);
+		foreach ($results as $input => $output) {
+			$this->assertIdentical($output, _elgg_validate_url($input));
+		}
+
+		$results = array(
+			'ftp://example.com/file' => true,
+			'app://endpoint' => true,
+		);
+		foreach ($results as $input => $output) {
+			$this->assertIdentical($output, _elgg_validate_url($input, false));
+		}
+	}
 
 	/**
 	 * Test elgg_register_js()

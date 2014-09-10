@@ -568,6 +568,7 @@ $english = array(
 
 	'admin:configuration:success' => "Your settings have been saved.",
 	'admin:configuration:fail' => "Your settings could not be saved.",
+	'admin:configuration:site_url' => "Please provide a valid site URL",
 	'admin:configuration:dataroot:relative_path' => 'Cannot set "%s" as the dataroot because it is not an absolute path.',
 
 	'admin:unknown_section' => 'Invalid Admin Section.',
