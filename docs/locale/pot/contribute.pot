@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-07 20:42+0300\n"
+"POT-Creation-Date: 2014-09-12 00:53+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -917,7 +917,7 @@ msgid "Elgg is not an acronym, so writing it in all caps (ELGG or E-LGG) is inco
 msgstr ""
 
 #: ../../contribute/docs.rst:48
-# 8893812ce3b247dfbcbc4207af96831d
+# 3c02d75c3a474fbea327fc804370d1bc
 msgid "In English, Elgg does not take an article when used as a noun. Here are some examples to emulate:"
 msgstr ""
 
@@ -932,7 +932,7 @@ msgid "“Install Elgg to get your community online”"
 msgstr ""
 
 #: ../../contribute/docs.rst:52
-# 5d1b8587468f402ea57e5e1b5a827061
+# a092ecc4a3d04fc49b6f2d961dbf5db0
 msgid "When used as an adjective, the article applies to the main noun, so you should use one. For example:"
 msgstr ""
 
@@ -1254,7 +1254,7 @@ msgid "Becoming a Financial Supporter"
 msgstr ""
 
 #: ../../contribute/money.rst:5
-# 06e09dcd4b024c7393ee8995b46c85e9
+# 30ae5c3a55c343aba30e749435a060ab
 msgid "All funds raised via the Elgg supporters network go directly into:"
 msgstr ""
 
@@ -1474,7 +1474,7 @@ msgid "Once approved and merged, tag the release:"
 msgstr ""
 
 #: ../../contribute/releases.rst:64
-# 3e51a9b66bf44d938654549dafe25937
+# 07a4a350c8bb4ef6a7a056965176586e
 msgid "Update Milestones on Github"
 msgstr ""
 

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-07 20:42+0300\n"
+"POT-Creation-Date: 2014-09-12 00:53+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -284,7 +284,7 @@ msgid "First of all you need a directory that will hold all the files required b
 msgstr ""
 
 #: ../../tutorials/hello_world.rst:18
-# 6419699536f4404baf3cf47417f222f5
+# 7f313e9ad91747cfa1cac17cec287053
 msgid "Go to the ``hello_world`` directory and create these two files inside it:"
 msgstr ""
 
@@ -356,7 +356,7 @@ msgid "The ``hello_world_page_handler()`` makes it possible for the users to acc
 msgstr ""
 
 #: ../../tutorials/hello_world.rst:111
-# a6568dc7fb804cc8a94fd184d6e61c3e
+# 4e29e817e5d14c08b154dd85c31abdb7
 msgid "The parameters include:"
 msgstr ""
 
