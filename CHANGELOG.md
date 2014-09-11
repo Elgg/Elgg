@@ -1,3 +1,15 @@
+<a name="1.9.1"></a>
+### 1.9.1  (2014-09-12)
+
+#### Contributors
+
+* Juho Jaakkola (2)
+
+#### Bug Fixes
+
+* **upgrade:** fixes erroneous values in the list of processed upgrades ([c6ebbdb2](https://github.com/Elgg/Elgg/commit/c6ebbdb28442927e2254b3a8942ae53eae9c01e7), closes [#7198](https://github.com/Elgg/Elgg/issues/7198))
+
+
 <a name="1.9.0"></a>
 ## 1.9.0  (2014-09-07)
 
