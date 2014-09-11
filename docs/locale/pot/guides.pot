@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-07 20:42+0300\n"
+"POT-Creation-Date: 2014-09-12 00:53+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -860,7 +860,7 @@ msgid "System events"
 msgstr ""
 
 #: ../../guides/events-list.rst:10
-# 8b0dc59da3a74d77bd58766308366145
+# dbfcfb12c1db4b9184b2d737a801217a
 msgid "**boot, system**"
 msgstr ""
 
@@ -870,7 +870,7 @@ msgid "first event triggered. Triggered before plugins have been loaded."
 msgstr ""
 
 #: ../../guides/events-list.rst:13
-# f6037e675c21419ead0053605ad94ed1
+# 97cb32a3a2074bdf98a06577b89a740f
 msgid "**plugins_boot, system**"
 msgstr ""
 
@@ -880,7 +880,7 @@ msgid "triggered just after the plugins are loaded. Rarely used. init, system is
 msgstr ""
 
 #: ../../guides/events-list.rst:16
-# eba6265f89c947abaf45644aee84fdfd
+# 2bd77b9525ee4e2abf4ebbbafb498626
 msgid "**init, system**"
 msgstr ""
 
@@ -895,7 +895,7 @@ msgid "**ready, system**"
 msgstr ""
 
 #: ../../guides/events-list.rst:21
-# fd91339020b24debb4d22538185ccb43
+# e93719106d4145efb0963d67babad46f
 msgid "**pagesetup, system**"
 msgstr ""
 
@@ -905,7 +905,7 @@ msgid "called just before the first content is produced. Is triggered by elgg_vi
 msgstr ""
 
 #: ../../guides/events-list.rst:27
-# 889ed21b57c64382885ffb4a16bfa74f
+# 76dae6933c0245a6bb7b601bad1ffbda
 msgid "**shutdown, system**"
 msgstr ""
 
@@ -930,7 +930,7 @@ msgid "**upgrade, upgrade**"
 msgstr ""
 
 #: ../../guides/events-list.rst:36
-# 796994f6f43d431ea97f062745dd1581
+# 706b4369379c46a8a52d02e7ab32da1e
 msgid "**activate, plugin**"
 msgstr ""
 
@@ -940,7 +940,7 @@ msgid "return false to prevent activation of the plugin."
 msgstr ""
 
 #: ../../guides/events-list.rst:39
-# 1160afd95c31416582537f43db44dbab
+# 16c96c3a50774c0eb342c7472063720c
 msgid "**deactivate, plugin**"
 msgstr ""
 
@@ -950,7 +950,7 @@ msgid "return false to prevent deactivation of the plugin."
 msgstr ""
 
 #: ../../guides/events-list.rst:42
-# 90312ded70a343d88502e30194e1b310
+# 466153eb077e4cc2865b598fa6dd057f
 msgid "**init:cookie, <name>**"
 msgstr ""
 
@@ -965,7 +965,7 @@ msgid "User events"
 msgstr ""
 
 #: ../../guides/events-list.rst:48
-# a246b14991b94e8087691d7d4ec0d56f
+# a88539dca27d4e8f87d624a879d4cf0a
 msgid "**login, user**"
 msgstr ""
 
@@ -975,7 +975,7 @@ msgid "triggered during login. Returning false prevents the user from logging"
 msgstr ""
 
 #: ../../guides/events-list.rst:51
-# 45851c8942c64999a792e7a98b38c8cd
+# f420098b156f4fcca6f09b0d67037649
 msgid "**logout, user**"
 msgstr ""
 
@@ -985,7 +985,7 @@ msgid "triggered during logout. Returning false should prevent the user from log
 msgstr ""
 
 #: ../../guides/events-list.rst:56
-# 0a9bbb0e49eb490d92dd645b3c3e2737
+# 6e22d67409e948ef84a304d8be8fc7e5
 msgid "**validate, user**"
 msgstr ""
 
@@ -995,7 +995,7 @@ msgid "when a user registers, the user's account is disabled. This event is trig
 msgstr ""
 
 #: ../../guides/events-list.rst:59
-# e445b72def2245e4ab8ee30e13bb9059
+# 0d44bdd20fa6425da0da78a0509a9feb
 msgid "**profileupdate, user**"
 msgstr ""
 
@@ -1005,7 +1005,7 @@ msgid "user has changed profile"
 msgstr ""
 
 #: ../../guides/events-list.rst:62
-# 61bcaffcb2ac44f0a38263128a3d083e
+# 4c01d706802646d1a411b96616ce4ff8
 msgid "**profileiconupdate, user**"
 msgstr ""
 
@@ -1015,7 +1015,7 @@ msgid "user has changed profile icon"
 msgstr ""
 
 #: ../../guides/events-list.rst:65
-# fe26961aba1a4ef7985902cb53b0a9df
+# 7dbe7d3e75cd44f9bcd4332815e93556
 msgid "**ban, user**"
 msgstr ""
 
@@ -1025,7 +1025,7 @@ msgid "return true to ban user"
 msgstr ""
 
 #: ../../guides/events-list.rst:68
-# 3ad78842722e45ff8417cb7b1f5ec66f
+# 8f8c7f83d91446a083ecc5a5830d928e
 msgid "**unban, user**"
 msgstr ""
 
@@ -1050,7 +1050,7 @@ msgid "Relationship events"
 msgstr ""
 
 #: ../../guides/events-list.rst:79
-# b6b53532238246178310140ebd75ed57
+# a9815cce6b33498496d4c506c614afdf
 msgid "**create, <relationship>**"
 msgstr ""
 
@@ -1060,7 +1060,7 @@ msgid "called after the relationship has been created. Returning false deletes t
 msgstr ""
 
 #: ../../guides/events-list.rst:83
-# f8ddeb60857d498d8bfee8351473a880
+# 5c7e29d34d6945ceb684890b77506a00
 msgid "**delete, <relationship>**"
 msgstr ""
 
@@ -1070,7 +1070,7 @@ msgid "called before the relationship is deleted. Return false to prevent it fro
 msgstr ""
 
 #: ../../guides/events-list.rst:86
-# c1e7daf4eecd462090156d379d244bb7
+# 7cd0099b4a724609b3e0d8edf34d47b2
 msgid "**join, group**"
 msgstr ""
 
@@ -1080,7 +1080,7 @@ msgid "user joined a group"
 msgstr ""
 
 #: ../../guides/events-list.rst:89
-# 1f83f3219a1f42ceac7aa2cd70366d59
+# 3987f447b167497998d87e1b4b6db15f
 msgid "**leave, group**"
 msgstr ""
 
@@ -1095,7 +1095,7 @@ msgid "Entity events"
 msgstr ""
 
 #: ../../guides/events-list.rst:96
-# 204a13ec9442497ba29a39dffc354f34
+# 4adeab813d264e8cb64fe13356c1e6d1
 msgid "**create, <entity type>**"
 msgstr ""
 
@@ -1105,7 +1105,7 @@ msgid "called for user, group, object, and site entities after creation. Return 
 msgstr ""
 
 #: ../../guides/events-list.rst:103
-# c57f4e86ee73495888bded275e72be18
+# ca0bf3447a2b48efaea778311525dd94
 msgid "**update, <entity type>**"
 msgstr ""
 
@@ -1115,7 +1115,7 @@ msgid "called after group update and return false to delete group. Called after 
 msgstr ""
 
 #: ../../guides/events-list.rst:106
-# e8cf0a72a86646b19f01553c4699f6b3
+# 2aaf2555d7fd422995670701590a7bf8
 msgid "**delete, <entity type>**"
 msgstr ""
 
@@ -1125,7 +1125,7 @@ msgid "called before entity deletion and returning false prevents deletion."
 msgstr ""
 
 #: ../../guides/events-list.rst:109
-# 9e41f1cd1e8a4ab197b4f6de5ce0802c
+# 850a6c5182b646be972a7faa93da8418
 msgid "**disable, <entity type>**"
 msgstr ""
 
@@ -1135,7 +1135,7 @@ msgid "return false to prevent disable"
 msgstr ""
 
 #: ../../guides/events-list.rst:112
-# f2dd1b228c4b42faa29b5a519786b2b3
+# 208f7c8abab8466ab687ff9568f9c226
 msgid "**enable, <entity type>**"
 msgstr ""
 
@@ -1150,7 +1150,7 @@ msgid "Metadata events"
 msgstr ""
 
 #: ../../guides/events-list.rst:119
-# 757a1ed2b35d46258857d2055bfe85f4
+# 8706d05651a44b71885cea853f565ddb
 msgid "**create, metadata**"
 msgstr ""
 
@@ -1160,7 +1160,7 @@ msgid "called after the metadata has been created. Return false to delete the me
 msgstr ""
 
 #: ../../guides/events-list.rst:123
-# 69a47294f21544318c67d849928f0c53
+# 1a9c1e926a6d477c834ad23909259ff5
 msgid "**update, metadata**"
 msgstr ""
 
@@ -1170,7 +1170,7 @@ msgid "called after the metadata has been updated. Return false to delete the me
 msgstr ""
 
 #: ../../guides/events-list.rst:126
-# bd7bff36828b4707a061d7b45772cd01
+# 1e4a7faa64c9460a91296413a44e3410
 msgid "**delete, metadata**"
 msgstr ""
 
@@ -1185,7 +1185,7 @@ msgid "Annotation events"
 msgstr ""
 
 #: ../../guides/events-list.rst:133
-# 643e529ffe4d41909f4e0b45115e1952
+# 2a726d760226462d87fcd4fedfee8918
 msgid "**annotate, <entity type>**"
 msgstr ""
 
@@ -1195,7 +1195,7 @@ msgid "called before the annotation has been created. Return false to prevent an
 msgstr ""
 
 #: ../../guides/events-list.rst:137
-# e51fa34df7e74da6b7d43fef403467ed
+# e7560f88d37844e8aa06b952e55deba0
 msgid "**create, annotation**"
 msgstr ""
 
@@ -1205,7 +1205,7 @@ msgid "called after the annotation has been created. Return false to delete the 
 msgstr ""
 
 #: ../../guides/events-list.rst:141
-# 8187c39f00694d1884ae5ef0dda38807
+# e7f1d4711efa467c980fff98a71c717b
 msgid "**update, annotation**"
 msgstr ""
 
@@ -1215,7 +1215,7 @@ msgid "called after the annotation has been updated. Return false to delete the 
 msgstr ""
 
 #: ../../guides/events-list.rst:144
-# cd4582af866841c1962397a8b2d5badd
+# f3ac11db0b39415faaf941fd93a003db
 msgid "**delete, annotation**"
 msgstr ""
 
@@ -1327,7 +1327,7 @@ msgid "**format, strip_tags**"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:44
-# 4d88dbbb26f04f20be58e47a6485bd63
+# 811ddca3d9d04878a4f311ff084d061c
 msgid "**output:before, page**"
 msgstr ""
 
@@ -1337,7 +1337,7 @@ msgid "In elgg_view_page(), this filters $vars before it's passed to the page sh
 msgstr ""
 
 #: ../../guides/hooks-list.rst:47
-# d81d4f7ca8ea4e27bee647abbcf3e0c7
+# f9cf05629a78467fb79edb6cb2411f4d
 msgid "**output, page**"
 msgstr ""
 
@@ -1416,7 +1416,7 @@ msgid "**register, user**"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:77
-# adfa2a2a8072461dbda16af72ee34c1d
+# 5bb7e441aad94f17bac56de5a7ce89f1
 msgid "**login:forward, user**"
 msgstr ""
 
@@ -1536,7 +1536,7 @@ msgid "**access:collections:remove_user, collection**"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:131
-# 7e169913ffe04ff7a30b441b34d8c72f
+# 3a8e8bf9e3fe40f8bd3e8b34bada9947
 msgid "**get_sql, access**"
 msgstr ""
 
@@ -1553,7 +1553,7 @@ msgid "Views"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:137
-# 8f59484720ca4edbb4cd0b86426854c6
+# 2eb4d5925a374196a6c99edacd7f2e2d
 msgid "**view, <view_name>**"
 msgstr ""
 
@@ -1563,7 +1563,7 @@ msgid "Filters the returned content of views"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:140
-# 71d34e36a9da45e9bc9e5d5a4a3e2b4e
+# c8b0ed6f543f40fa9354832f7fa4debe
 msgid "**layout, page**"
 msgstr ""
 
@@ -1573,7 +1573,7 @@ msgid "In elgg_view_layout(), filters the layout name"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:143
-# cc98c841a0a34be48c84a6259c8b5e50
+# 20e4746157414aaa9509aab25fab8896
 msgid "**display, view**"
 msgstr ""
 
@@ -1583,7 +1583,7 @@ msgid "Deprecated in 1.8! Use view, (view) instead"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:146
-# 95116a970edd4c048e1d6b5b72ab294f
+# c486cb1824c24e2083e9f431b9a15188
 msgid "**shell, view**"
 msgstr ""
 
@@ -1593,7 +1593,7 @@ msgid "In elgg_view_page(), filters the page shell name"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:149
-# fd2498fd3e344ff29c02e6e4ac5987e9
+# b688585248154e82a19a0097ccf1f55c
 msgid "**head, page**"
 msgstr ""
 
@@ -1608,7 +1608,7 @@ msgid "Other"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:155
-# 735aef1cb9474cdda4b99be2c164082a
+# 879fdaab638b46de965f1c69257b1d1c
 msgid "**default, access**"
 msgstr ""
 
@@ -1698,7 +1698,7 @@ msgid "**volatile, metadata**"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:190
-# 3c1228b7f15942bba687a3b44619c03a
+# 12e4841061d9423a9316b356d474ef91
 msgid "**maintenance:allow, url**"
 msgstr ""
 
@@ -1720,7 +1720,7 @@ msgid "File"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:199
-# 250f7e81554a48d1ab2cdc8c9950e1c6
+# 87091d76133741ce84f887d9a8414311
 msgid "**simple_type, file**"
 msgstr ""
 
@@ -1770,7 +1770,7 @@ msgid "Members"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:221
-# 898a991abb6a42fbb0ee267288b66257
+# 34c8492f34ff490bb2a077a05f8f5c53
 msgid "**members:list, <page_segment>**"
 msgstr ""
 
@@ -1780,7 +1780,7 @@ msgid "To handle the page /members/$page_segment, handle this hook and return th
 msgstr ""
 
 #: ../../guides/hooks-list.rst:225
-# 771da171215544eb986292ab9e32a868
+# 8f0f844b044247a3a191bae7859d0682
 msgid "**members:config, tabs**"
 msgstr ""
 
@@ -1875,7 +1875,7 @@ msgid "**search, <type>**"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:268
-# 1ba7bd0c58064fc3a46f350c44b28a7e
+# 71c5b0cd67dd4e06ad6b384f3f7f4efe
 msgid "**search_types, get_queries**"
 msgstr ""
 
@@ -2115,7 +2115,7 @@ msgid "This will include and execute the linked code."
 msgstr ""
 
 #: ../../guides/javascript.rst:129
-# f6e4034367a044ebbafd896f710c347b
+# 0bd12a6c5284453391b58ce15a595d20
 msgid "Using inline scripts is strongly discouraged because:"
 msgstr ""
 
@@ -2345,7 +2345,7 @@ msgid "A theme is a type of :doc:`plugin </admin/plugins>` that overrides displa
 msgstr ""
 
 #: ../../guides/themes.rst:10
-# 4fb7f2d7eed54c0eb0c23ae3d0ce6cb9
+# 57f8e2b42e174902ba3049a4000b2914
 msgid "This guide assumes you are familiar with:"
 msgstr ""
 

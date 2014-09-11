@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-07 20:42+0300\n"
+"POT-Creation-Date: 2014-09-12 00:53+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -131,7 +131,7 @@ msgid "You can extend entities with extra information in two ways:"
 msgstr ""
 
 #: ../../design/database.rst:29
-# 3a01b2c8b5f2424f99233005deb72bbe
+# 8713c74d59be4211af5883c9b4266254
 msgid "``Metadata``: This is information you can add to an object to"
 msgstr ""
 
@@ -141,7 +141,7 @@ msgid "describe it further. For example, tags, an ISBN number, a file location o
 msgstr ""
 
 #: ../../design/database.rst:33
-# 176e01b6252842939986b53cc2940b36
+# fa4b216d12874329ab6b78ba2b416e10
 msgid "``Annotations``: Information generally added by third parties which"
 msgstr ""
 
@@ -1721,7 +1721,7 @@ msgid "Password salting"
 msgstr ""
 
 #: ../../design/security.rst:20
-# 3b121aaf83fa41c9a996d2e9300df6fb
+# ff7812abc2924a71a92d65a6ecf331c0
 msgid "Elgg salts passwords with a unique 8 character random string. The salt is generated each time the password is set. The main security advantages of the salting are:"
 msgstr ""
 

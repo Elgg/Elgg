@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-07 20:42+0300\n"
+"POT-Creation-Date: 2014-09-12 00:53+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -384,7 +384,7 @@ msgid "Use the `Firefox yslow plugin`__ or Chrome DevTools Audits to confirm whi
 msgstr ""
 
 #: ../../admin/performance.rst:128
-# 898fa1061da545788e68d291ffb8efe1
+# 381df7c08fb14f4197748e190f49f06f
 msgid "If the static assets aren't being cached:"
 msgstr ""
 
@@ -624,7 +624,7 @@ msgid "All plugins reside in the ``mod`` directory of your Elgg installation."
 msgstr ""
 
 #: ../../admin/plugins.rst:56
-# 8f3cead5e41240aea78368659f569193
+# 97f666f8de4f4964a14af46fcba64578
 msgid "To install a new plugin:"
 msgstr ""
 
@@ -644,7 +644,7 @@ msgid "activate the plugin from your admin panel"
 msgstr ""
 
 #: ../../admin/plugins.rst:62
-# b1d7d6b4c8404bd1958d0b6612bf96f0
+# 3f716e07f2ae4ebbbb3b67a2299aa968
 msgid "To activate a plugin:"
 msgstr ""
 
