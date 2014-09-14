@@ -11,11 +11,11 @@
  */
 
 $upgrade = new ElggUpgrade();
-$url = "admin/upgrades/datadirs";
+$path = "admin/upgrades/datadirs";
 
 // Create the upgrade if one with the same URL doesn't already exist
-if (!$upgrade->getUpgradeFromURL($url)) {
-	$upgrade->setURL($url);
+if (!$upgrade->getUpgradeFromPath($path)) {
+	$upgrade->setPath($path);
 	$upgrade->title = 'Data directory upgrade';
 	$upgrade->description = 'Data directory structure has been improved in Elgg 1.9 and it requires a migration. Run this upgrade to complete the migration.';
 	$upgrade->save();
