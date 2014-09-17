@@ -1183,8 +1183,9 @@ function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
 	$elgg_major_version = (int)$elgg_version_arr[0];
 	$elgg_minor_version = (int)$elgg_version_arr[1];
 
-	$dep_major_version = (int)$dep_version;
-	$dep_minor_version = 10 * ($dep_version - $dep_major_version);
+	$dep_version_arr = explode('.', (string)$dep_version);
+	$dep_major_version = (int)$dep_version_arr[0];
+	$dep_minor_version = (int)$dep_version_arr[1];
 
 	$visual = false;
 
