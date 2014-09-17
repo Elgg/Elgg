@@ -20,10 +20,8 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'])) {
 	if ($container && $container instanceof ElggGroup) {
 		// we decided to show that the item is in a group, rather than its actual access level
 		// not required. Group ACLs are prepended with "Group: " when written.
-		//$access_id_string = elgg_echo('groups:group') . $container->name;
-		$membership = $container->membership;
 
-		if ($membership == ACCESS_PUBLIC) {
+		if ($container->membership == ACCESS_PUBLIC) {
 			$access_class .= ' elgg-access-group-open';
 		} else {
 			$access_class .= ' elgg-access-group-closed';
@@ -40,8 +38,11 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'])) {
 }
 
 $access_id_string = get_readable_access_level($access_id);
-$access_id_string = htmlspecialchars($access_id_string, ENT_QUOTES, 'UTF-8', false);
 
-$help_text = elgg_echo('access:help');
-
-echo "<span title=\"$help_text\" class=\"$access_class\">$access_id_string</span>";
+$attributes = array(
+	'title' => elgg_echo('access:help'),
+	'class' => $access_class,
+);
+echo elgg_format_element('span', $attributes, $access_id_string, array(
+	'encode_text' => true,
+));
