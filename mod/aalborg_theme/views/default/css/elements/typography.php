@@ -148,6 +148,8 @@ h6 { font-size: 0.8em; }
 }
 .elgg-output ol {
 	list-style-type: decimal;
+	list-style-position: inside;
+	padding-left: .4em;
 }
 .elgg-output table {
 	border: 1px solid #DCDCDC;
