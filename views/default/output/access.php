@@ -13,7 +13,7 @@ $access_class = 'elgg-access';
 if (isset($vars['entity']) && elgg_instanceof($vars['entity'])) {
 	$access_id = $vars['entity']->access_id;
 
-	// if within a group or shared access collection display group name and open/closed membership status
+	// if within a group, display group name and open/closed membership status
 	// @todo have a better way to do this instead of checking against subtype / class.
 	$container = $vars['entity']->getContainerEntity();
 
@@ -27,9 +27,6 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'])) {
 			$access_class .= ' elgg-access-group-closed';
 		}
 
-		// @todo this is plugin specific code in core. Should be removed.
-	} elseif ($container && $container->getSubtype() == 'shared_access') {
-		$access_class .= ' shared_collection';
 	} elseif ($access_id == ACCESS_PRIVATE) {
 		$access_class .= ' elgg-access-private';
 	}
