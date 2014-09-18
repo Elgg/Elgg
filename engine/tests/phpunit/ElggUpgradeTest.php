@@ -5,6 +5,9 @@ $engine = dirname(dirname(dirname(__FILE__)));
 require_once "$engine/lib/languages.php";
 
 class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
+	/**
+	 * @var ElggUpgrade
+	 */
 	protected $obj;
 
 	protected function setUp() {
@@ -23,9 +26,19 @@ class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function mock_egefps_with_entities() {
-		return array(
-			new stdClass()
-		);
+		return array(new stdClass());
+	}
+
+	public function mock_egefps_for_full_url($options) {
+		return array(new stdClass());
+	}
+
+	public function mock_egefps_for_path($options) {
+		if ($options['private_setting_value'] === 'test') {
+			return array(new stdClass());
+		} else {
+			return array();
+		}
 	}
 
 	public function testDefaultAttrs() {
@@ -35,34 +48,34 @@ class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
 		$this->assertSame(0, $this->obj->is_completed);
 	}
 
-	public function testSetURL() {
-		$url = 'admin/upgrades';
-		$this->obj->setURL($url);
-		$this->assertSame(elgg_normalize_url($url), $this->obj->getURL());
+	public function testSetPath() {
+		$path = 'admin/upgrades';
+		$this->obj->setPath($path);
+		$this->assertSame(elgg_normalize_url($path), $this->obj->getURL());
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testThrowsOnBadURL() {
-		$url = false;
-		$this->obj->setURL($url);
+	public function testThrowsOnBadPath() {
+		$path = false;
+		$this->obj->setPath($path);
 	}
 
 	/**
 	 * @expectedException InvalidArgumentException
 	 */
-	public function testThrowsOnDuplicateURL() {
+	public function testThrowsOnDuplicatePath() {
 		$this->obj->_callable_egefps = array($this, 'mock_egefps_with_entities');
-		$url = 'admin/upgrades';
-		$this->obj->setURL($url);
+		$path = 'admin/upgrades';
+		$this->obj->setPath($path);
 	}
 
 	/**
 	 * @expectedException UnexpectedValueException
 	 * @expectedExceptionMessage ElggUpgrade:error:upgrade_url_required
 	 */
-	public function testThrowsOnSaveWithoutURL() {
+	public function testThrowsOnSaveWithoutPath() {
 		$this->obj->description = 'Test';
 		$this->obj->title = 'Test';
 		$this->obj->save();
@@ -73,7 +86,7 @@ class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
 	 * @expectedExceptionMessage ElggUpgrade:error:title_required
 	 */
 	public function testThrowsOnSaveWithoutTitle() {
-		$this->obj->setURL('test');
+		$this->obj->setPath('test');
 		$this->obj->description = 'Test';
 		$this->obj->save();
 	}
@@ -83,9 +96,23 @@ class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
 	 * @expectedExceptionMessage ElggUpgrade:error:description_required
 	 */
 	public function testThrowsOnSaveWithoutDesc() {
-		$this->obj->setURL('test');
+		$this->obj->setPath('test');
 		$this->obj->title = 'Test';
 		$this->obj->save();
+	}
+
+	public function testCanFindUpgradesByPath() {
+		$this->obj->_callable_egefps = array($this, 'mock_egefps_for_path');
+		$upgrade = $this->obj->getUpgradeFromPath('test');
+		$this->assertTrue((bool)$upgrade);
+	}
+
+	public function testCanFindUpgradesByFullUrl() {
+		$this->obj->_callable_egefps = array($this, 'mock_egefps_for_full_url');
+		$this->obj->upgrade_url = elgg_normalize_url('test');
+		$upgrade = $this->obj->getUpgradeFromPath('test');
+		$this->assertTrue((bool)$upgrade);
+		$this->assertSame('test', $upgrade->upgrade_url);
 	}
 
 	// can't test save without db mocking

@@ -14,7 +14,7 @@ $batch_run_time_in_secs = 2;
 if (get_input('upgrade_completed')) {
 	// set the upgrade as completed
 	$factory = new ElggUpgrade();
-	$upgrade = $factory->getUpgradeFromURL('/admin/upgrades/comments');
+	$upgrade = $factory->getUpgradeFromPath('admin/upgrades/comments');
 	if ($upgrade instanceof ElggUpgrade) {
 		$upgrade->setCompleted();
 	}
