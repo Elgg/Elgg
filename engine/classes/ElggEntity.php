@@ -2005,12 +2005,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		// Delete contained owned and otherwise releated objects (depth first)
 		if ($recursive) {
-			// Temporary token overriding access controls
-			// @todo Do this better.
-			static $__RECURSIVE_DELETE_TOKEN;
-			// Make it slightly harder to guess
-			$__RECURSIVE_DELETE_TOKEN = md5(elgg_get_logged_in_user_guid());
-
+			// Temporarily overriding access controls
 			$entity_disable_override = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
 			$ia = elgg_set_ignore_access(true);
@@ -2034,7 +2029,6 @@ abstract class ElggEntity extends \ElggData implements
 			}
 
 			access_show_hidden_entities($entity_disable_override);
-			$__RECURSIVE_DELETE_TOKEN = null;
 			elgg_set_ignore_access($ia);
 		}
 
