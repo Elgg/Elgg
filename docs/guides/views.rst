@@ -153,12 +153,12 @@ Post processing views
 
 Sometimes it is preferable to process or rewrite the output of a view instead of overriding it.
 
-The output of each view is run through the `plugin hook <guides/events#post-plugin-hooks>`__ ``[view, view_name]`` before being returned by ``elgg_view()``. Each registered handler function is passed these arguments:
+The output of each view is run through the `plugin hook <guides/events.html#post-plugin-hooks>`__ ``[view, view_name]`` before being returned by ``elgg_view()``. Each registered handler function is passed these arguments:
 
 * ``$hook`` - the string ``"view"``
 * ``$type`` - the view name being rendered (the first argument passed to ``elgg_view()``)
 * ``$returnvalue`` - the rendered output of the view (or the return value of the last handler)
-* ``$params`` - an array containing the key ``viewtype`` with value being the `viewtype <views#viewtypes>`__ being rendered
+* ``$params`` - an array containing the key ``viewtype`` with value being the `viewtype <views.html#viewtypes>`__ being rendered
 
 To alter the view output, the handler just needs to alter ``$returnvalue`` and return a new string.
 
