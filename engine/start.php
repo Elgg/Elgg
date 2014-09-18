@@ -45,13 +45,18 @@ $CONFIG->boot_complete = false;
 
 $engine_dir = dirname(__FILE__);
 
-/*
- * No settings means a fresh install
- */
-if (!include_once("$engine_dir/settings.php")) {
+// No settings means a fresh install
+if (!is_file("$engine_dir/settings.php")) {
 	header("Location: install.php");
 	exit;
 }
+
+if (!is_readable("$engine_dir/settings.php")) {
+	echo "The Elgg settings file exists but the web server doesn't have read permission to it.";
+	exit;
+}
+
+include_once("$engine_dir/settings.php");
 
 $lib_dir = "$engine_dir/lib";
 
