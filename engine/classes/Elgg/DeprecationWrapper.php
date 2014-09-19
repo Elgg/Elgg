@@ -16,6 +16,7 @@ namespace Elgg;
  *  config object in ViewsService
  *  user object in ViewsService
  *  session object in session lib
+ *  config object in ElggPlugin::includeFile
  *
  * @access private
  * 
@@ -31,7 +32,7 @@ class DeprecationWrapper implements \ArrayAccess {
 	/** @var string */
 	protected $message;
 
-	/** @var float */
+	/** @var string */
 	protected $version;
 
 	/** @var callable */
@@ -42,7 +43,7 @@ class DeprecationWrapper implements \ArrayAccess {
 	 * 
 	 * @param mixed    $object   The object or string to wrap
 	 * @param string   $message  The deprecation message to display when used
-	 * @param float    $version  The Elgg version this was deprecated
+	 * @param string   $version  The Elgg version this was deprecated
 	 * @param callable $reporter function called to report deprecation
 	 */
 	public function __construct($object, $message, $version, $reporter = 'elgg_deprecated_notice') {
