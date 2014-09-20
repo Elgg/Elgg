@@ -187,30 +187,38 @@ p {
 	color: white;
 	text-decoration: none;
 }
-.elgg-menu-user {
+.elgg-menu-user,
+.elgg-menu-admin-header {
 	float: right;
-	margin-top: 5px;
+	margin: 5px 8px 0 0;
 }
-.elgg-menu-user, .elgg-menu-user a {
+.elgg-menu-user,
+.elgg-menu-admin-header, 
+.elgg-menu-user a,
+.elgg-menu-admin-header a {
 	color: #999999;
 }
-.elgg-menu-user a {
+.elgg-menu-user a,
+.elgg-menu-admin-header a {
 	text-decoration: underline;
 }
-.elgg-menu-user a:hover {
+.elgg-menu-user a:hover,
+.elgg-menu-admin-header a:hover {
 	color: white;
 }
-.elgg-menu-user li {
+.elgg-menu-user li,
+.elgg-menu-admin-header li {
 	display: inline;
 }
-.elgg-menu-user li:after {
+.elgg-menu-user li:after,
+.elgg-menu-admin-header li:after {
 	content: "|";
 	display: inline-block;
 	font-weight: normal;
-	margin-left: 8px;
-	margin-right: 4px;
+	margin: 0 8px;
 }
-.elgg-menu-user li:last-child:after {
+.elgg-menu-user li:last-child:after,
+.elgg-menu-admin-header li:last-child:after {
 	content: "";
 }
 a.elgg-maintenance-mode-warning {
