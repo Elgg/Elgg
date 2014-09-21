@@ -1,3 +1,26 @@
+<a name="1.9.2"></a>
+### 1.9.2  (2014-09-21)
+
+#### Contributors
+
+* Juho Jaakkola (8)
+* Steve Clay (2)
+
+#### Documentation
+
+* **manifest:** document how to use manifest.xml ([f4fa7487](https://github.com/Elgg/Elgg/commit/f4fa7487f6befdeb09ee891a4867ebbd99fac688))
+* **river:** adds documentation on how to use the river ([d8be198c](https://github.com/Elgg/Elgg/commit/d8be198c1f6b549856c61f316653634c468c229f))
+* **upgrade:** clarifies upgrade instructions about updating Elgg codebase ([6a8fec02](https://github.com/Elgg/Elgg/commit/6a8fec02857f3df7dadc3a7876d936689f319138), closes [#7225](https://github.com/Elgg/Elgg/issues/7225))
+* **views:** adds documentation for the views system ([ff6cf55b](https://github.com/Elgg/Elgg/commit/ff6cf55be3f85d3d00cd2d4cf511adb8f66e8462))
+
+
+#### Bug Fixes
+
+* **install:** confirm that settings.php exists and is readable before including it ([aaa828ed](https://github.com/Elgg/Elgg/commit/aaa828edd980bc7b3cb45fec67c78f6581195bc3))
+* **style:** ordered list markers now always visible ([ecccafc3](https://github.com/Elgg/Elgg/commit/ecccafc356349372e60e7ba7e9075ad1f4b2e0a9), closes [#7206](https://github.com/Elgg/Elgg/issues/7206))
+* **upgrades:** now stores ElggUpgrade by paths instead of full URLs ([39cf72f0](https://github.com/Elgg/Elgg/commit/39cf72f0a25e1d383dc8310f92e10572f9204e30), closes [#6838](https://github.com/Elgg/Elgg/issues/6838))
+
+
 <a name="1.9.1"></a>
 ### 1.9.1  (2014-09-12)
 
