@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-12 00:53+0300\n"
+"POT-Creation-Date: 2014-09-21 23:12+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -583,7 +583,9 @@ msgid "The function ``elgg_get_entities_from_metadata`` allows fetching entities
 msgstr ""
 
 #: ../../guides/database.rst:122
+#: ../../guides/views.rst:187
 # 91347ce95f5247d784ee663726466a99
+# 9b4e51224cdd4c98bafe7bf434093fdc
 msgid "Displaying entities"
 msgstr ""
 
@@ -2319,6 +2321,283 @@ msgstr ""
 msgid "manifest.xml"
 msgstr ""
 
+#: ../../guides/plugins.rst:10
+# a6670f4c62154828be714bce2e8b4135
+msgid "Elgg plugins are required to have a ``manifest.xml`` file in the root of a plugin."
+msgstr ""
+
+#: ../../guides/plugins.rst:12
+# bca0233b6b8a408c9a4858d42d3beeb5
+msgid "The ``manifest.xml`` file includes information about the plugin itself, requirements to run the plugin, and optional information including where to display the plugin in the admin area and what APIs the plugin provides."
+msgstr ""
+
+#: ../../guides/plugins.rst:15
+# e4e10983a41e45ba97fba11589a364bf
+msgid "Syntax"
+msgstr ""
+
+#: ../../guides/plugins.rst:17
+# bd954c890e08425191115fb6dc33a835
+msgid "The manifest file is a standard XML file in UTF-8. Everything is a child of the ``<plugin_manifest>`` element."
+msgstr ""
+
+#: ../../guides/plugins.rst:24
+# d001f26050224757b2d6ff89f5040a2c
+msgid "The manifest syntax is as follows:"
+msgstr ""
+
+#: ../../guides/plugins.rst:30
+# 223678ff14944f72b2f6c825bea3a93f
+msgid "Many elements can contain children attributes:"
+msgstr ""
+
+#: ../../guides/plugins.rst:40
+# a2f68dcce6e14f4babc83fce9f607d8d
+msgid "Required Elements"
+msgstr ""
+
+#: ../../guides/plugins.rst:42
+# bc0591fbaaed44ff8b68ecfe64d637cc
+msgid "All plugins are required to define the following elements in their manifest files:"
+msgstr ""
+
+#: ../../guides/plugins.rst:44
+# feaf1c02659a4c0eaec9f15eae2a92ea
+msgid "id - This has the name as the directory that the plugin uses."
+msgstr ""
+
+#: ../../guides/plugins.rst:45
+# d0c16f625fdd4b59a86cad4c2f2e70ac
+msgid "name - The display name of the plugin."
+msgstr ""
+
+#: ../../guides/plugins.rst:46
+# 2f4fc857e2b74caba4618203d0ec6c17
+msgid "author - The name of the author who wrote the plugin."
+msgstr ""
+
+#: ../../guides/plugins.rst:47
+# 856cff9d36ef42609bd6be2f0ffc5839
+msgid "version - The version of the plugin."
+msgstr ""
+
+#: ../../guides/plugins.rst:48
+# 06fab55f1cf746f7b3f92589bd807352
+msgid "description - A description of the what the plugin provides, its features, and other relevant information"
+msgstr ""
+
+#: ../../guides/plugins.rst:49
+# 91c870fe5d044fbeac15fa6c30d1f8bd
+msgid "requires - Each plugin must specify the release of Elgg it was developed for. See the plugin Dependencies page for more information."
+msgstr ""
+
+#: ../../guides/plugins.rst:52
+# 09688869140e46f48f61fd7658c51588
+msgid "Available Elements"
+msgstr ""
+
+#: ../../guides/plugins.rst:54
+# a79fd769f1f24ada80376d6a00df25f1
+msgid "In addition to the require elements above, the follow elements are available to use:"
+msgstr ""
+
+#: ../../guides/plugins.rst:56
+# 4cdc3869eccb4a3bb8a175b346c2a2d3
+msgid "blurb - A short description of the plugin."
+msgstr ""
+
+#: ../../guides/plugins.rst:57
+# 6e6b5ed530ce469896da873e8e756032
+msgid "category - The category of the plugin. It is recommended to follow the [[Plugin_Guidelines|plugin guidelines]] and use one of the defined categories. There can be multiple entries."
+msgstr ""
+
+#: ../../guides/plugins.rst:58
+# 294e8ca3cea94314b326736c590cde2c
+msgid "conflicts - Specifies that the plugin conflicts with a certain system configuration."
+msgstr ""
+
+#: ../../guides/plugins.rst:59
+# f11a14a086fd45ca9a0249744c7a89fc
+msgid "copyright - The plugin's copyright information."
+msgstr ""
+
+#: ../../guides/plugins.rst:60
+# 9d00199f56c448e5994727ca0c6fad76
+msgid "license - The plugin's license information."
+msgstr ""
+
+#: ../../guides/plugins.rst:61
+# 81f1c48b157b40aa83425421aad7059b
+msgid "provides - Specifies that this plugin provides the same functionality as another Elgg plugin or a PHP extension."
+msgstr ""
+
+#: ../../guides/plugins.rst:62
+# 0c7ac5f0b92d4bb6a0b022e37d84714e
+msgid "screenshot - Screenshots of the plugin. There can be multiple entries. See the advanced example for syntax."
+msgstr ""
+
+#: ../../guides/plugins.rst:63
+# dfd3567e95904d62ae74cec4808687b6
+msgid "suggests - Parallels the requires system, but doesn't affect if the plugin can be enabled. Used to suggest other plugins that interact or build on the plugin."
+msgstr ""
+
+#: ../../guides/plugins.rst:64
+# ddb32a0b506a475194f749ee58de99d0
+msgid "website - A link to the website for the plugin."
+msgstr ""
+
+#: ../../guides/plugins.rst:67
+#: ../../guides/widgets.rst:131
+# 2110f9da18054f44bdae70335e2b75a3
+# b45fe232ed6741b3bb599abbaad80dd7
+msgid "Simple Example"
+msgstr ""
+
+#: ../../guides/plugins.rst:69
+# b8787f8357cc4c7ea7b8f08a806f2a71
+msgid "This manifest file is the bare minimum a plugin must have."
+msgstr ""
+
+#: ../../guides/plugins.rst:87
+# 493bd9d62d5449b28db2bd56c0de1ed0
+msgid "Advanced example"
+msgstr ""
+
+#: ../../guides/plugins.rst:89
+# 33b729b339814e6aa65e4187038656cd
+msgid "This example uses all of the available elements:"
+msgstr ""
+
+#: ../../guides/river.rst:2
+# 2436bc354bfd40058076f45a97362ef9
+msgid "River"
+msgstr ""
+
+#: ../../guides/river.rst:4
+# b743047fd3434c938db20e922cdf1e95
+msgid "Elgg natively supports the \"river\", an activity stream containing descriptions of activities performed by site members. This page gives an overview of adding events to the river in an Elgg plugin."
+msgstr ""
+
+#: ../../guides/river.rst:9
+# 1ef0f26c10144bdeb577ac57ee24340e
+msgid "Pushing river items"
+msgstr ""
+
+#: ../../guides/river.rst:11
+# fee212d9422b4f4394c24338897e9776
+msgid "Items are pushed to the activity river through a function call, which you must include in your plugins for the items to appear."
+msgstr ""
+
+#: ../../guides/river.rst:14
+# 6b4a298ee87c481589b6ae704c05debd
+msgid "Here we add a river item telling that a user has created a new blog post:"
+msgstr ""
+
+#: ../../guides/river.rst:27
+# 8cf74392304549bf96ff4dbe270e8634
+msgid "All available parameters:"
+msgstr ""
+
+#: ../../guides/river.rst:29
+# c6f4d69cd3b64662afd1e9f9ca9792de
+msgid "``view`` => STR The view that will handle the river item (must exist)"
+msgstr ""
+
+#: ../../guides/river.rst:30
+# c008052064da434198b401b17997d1a4
+msgid "``action_type`` => STR An arbitrary string to define the action (e.g. 'create', 'update', 'vote', 'review', etc)"
+msgstr ""
+
+#: ../../guides/river.rst:31
+# f07a0d66390d4f349edcbf0cd4f5b332
+msgid "``subject_guid`` => INT The GUID of the entity doing the action"
+msgstr ""
+
+#: ../../guides/river.rst:32
+# 222408459b15478e8d310973066ec33d
+msgid "``object_guid`` => INT The GUID of the entity being acted upon"
+msgstr ""
+
+#: ../../guides/river.rst:33
+# 8e6989c22a75453285f78b34d927174c
+msgid "``target_guid`` => INT The GUID of the the object entity's container (optional)"
+msgstr ""
+
+#: ../../guides/river.rst:34
+# f20ac864e4ff4ec1bc164550baa47455
+msgid "``access_id`` => INT The access ID of the river item (default: same as the object)"
+msgstr ""
+
+#: ../../guides/river.rst:35
+# 04eb1636819447cdb9879059ef62f12a
+msgid "``posted`` => INT The UNIX epoch timestamp of the river item (default: now)"
+msgstr ""
+
+#: ../../guides/river.rst:36
+# 035d64148c9c40dea21c14b1e2ea3a48
+msgid "``annotation_id`` => INT The annotation ID associated with this river entry (optional)"
+msgstr ""
+
+#: ../../guides/river.rst:38
+# f6a40f4e4a74432e8820b0288e1fe263
+msgid "When an item is deleted or changed, the river item will be updated automatically."
+msgstr ""
+
+#: ../../guides/river.rst:41
+# 095c5e5dc6f340ca9ef89e5ad66974c4
+msgid "River views"
+msgstr ""
+
+#: ../../guides/river.rst:43
+# 8c45ebb6f3af41a39ad8e178c06d3df0
+msgid "In order for events to appear in the river you need to provide a corresponding `view <views.html>`__ with the name specified in the function above."
+msgstr ""
+
+#: ../../guides/river.rst:46
+# d5a259e679d04a5c8d7ceb2167b528a5
+msgid "We recommend ``/river/{type}/{subtype}/{action}``, where:"
+msgstr ""
+
+#: ../../guides/river.rst:48
+# 3879b40777b249a3b2b0cb181de11864
+msgid "{type} is the entity type of the content we're interested in (``object`` for objects, ``user`` for users, etc)"
+msgstr ""
+
+#: ../../guides/river.rst:49
+# 740c66fbfec14c359108804d9307b931
+msgid "{subtype} is the entity subtype of the content we're interested in (``blog`` for blogs, ``photo_album`` for albums, etc)"
+msgstr ""
+
+#: ../../guides/river.rst:50
+# a8f1458439a94d54bf752ca798e9f2b8
+msgid "{action} is the action that took place (''create'', ''update'', etc)"
+msgstr ""
+
+#: ../../guides/river.rst:52
+# ab278b6211904ed58e0a6de685ac3a7e
+msgid "River item information will be passed in an object called ``$vars['item']``, which contains the following important parameters:"
+msgstr ""
+
+#: ../../guides/river.rst:54
+# 1727bfe8cfd543eaa06ba144868d004b
+msgid "``$vars['item']->subject_guid`` The GUID of the user performing the action"
+msgstr ""
+
+#: ../../guides/river.rst:55
+# f86a1753a4844ad3b48ab8592c4ada2a
+msgid "``$vars['item']->object_guid`` The GUID of the entity being acted upon"
+msgstr ""
+
+#: ../../guides/river.rst:57
+# 0a1615fcea2f4d06aa645ca7f5c9255c
+msgid "Timestamps etc will be generated for you."
+msgstr ""
+
+#: ../../guides/river.rst:59
+# faea7e86c14b43c9b61b44b167f002ea
+msgid "For example, the blog plugin uses the following code for its river view:"
+msgstr ""
+
 #: ../../guides/routing.rst:2
 # 57122b6363794a6db20253b1598bf455
 msgid "Routing"
@@ -3190,6 +3469,351 @@ msgstr ""
 msgid "The view for user settings is now ``plugins/:plugin/usersettings`` (previously ``usersettings/:plugin/edit``)."
 msgstr ""
 
+#: ../../guides/views.rst:5
+# 030a1091096449eaa309100a16b471b9
+msgid "Introduction"
+msgstr ""
+
+#: ../../guides/views.rst:7
+# d4eaed659f0547bd85eccc4edf3067d8
+msgid "Elgg follows a MVC pattern and Views are the V in MVC. Views are responsible for creating the output. Generally, this will be HTML sent to a web browser, but it could also be RSS, JSON or any number of other data formats."
+msgstr ""
+
+#: ../../guides/views.rst:9
+# dfecc331a0374cc1abf80a026eddbc9c
+msgid "The Views system handles everything from the layout of pages and chunks of presentation output (like a footer or a toolbar) down to individual links and form inputs. It also allows for advanced features like automatic RSS generation, a swift-to-develop mobile interface, and the alternative interfaces suggested below."
+msgstr ""
+
+#: ../../guides/views.rst:12
+# a449fb3738444926b86dbb86c42c2a6f
+msgid "Using views"
+msgstr ""
+
+#: ../../guides/views.rst:14
+# fbed254e064849138b2635cb9aa5e648
+msgid "At their most basic level, the default views are just PHP files with snippets of html. For example:"
+msgstr ""
+
+#: ../../guides/views.rst:20
+# 202246c8e1604e09b3023277c367c671
+msgid "Assuming this view is located at ``/views/default/hello.php``, we could output it like so:"
+msgstr ""
+
+#: ../../guides/views.rst:26
+# 432265d9b6f34793a002d40492b2226a
+msgid "For your convenience, Elgg comes with quite a lot of views by default. In order to keep things manageable, they are organized into subdirectories. Elgg handles this situation quite nicely. For example, our simple view might live in ``/views/default/hello/world.php``, in which case it would be called like so:"
+msgstr ""
+
+#: ../../guides/views.rst:32
+# 05f0275803f84e96aeff866760899f32
+msgid "Well that's easy enough to remember! The name of the view simply reflects the location of the view in the views directory."
+msgstr ""
+
+#: ../../guides/views.rst:35
+# fdc4cc18f08e46948cd7229acc226fa7
+msgid "Views as templates"
+msgstr ""
+
+#: ../../guides/views.rst:37
+# c09a1caf246a4b23a028a44d5f73e8cb
+msgid "Views would be pretty useless if they could only contain static information. Fortunately, you can pass arbitrary data to a view via the ``$vars`` array. Our ``hello/world`` view might be modified to accept a variable like so:"
+msgstr ""
+
+#: ../../guides/views.rst:43
+# ccbec6a012f049ec86aa60a2d37eef8d
+msgid "In this case, we can pass an arbitrary name parameter to the view like so:"
+msgstr ""
+
+#: ../../guides/views.rst:49
+# a1a7f1f2d6244bf9a4ed48b87dd97902
+msgid "which would produce the following output:"
+msgstr ""
+
+#: ../../guides/views.rst:56
+# dce09311a84d4395afe1e2e7aee6c814
+msgid "Overriding views in plugins"
+msgstr ""
+
+#: ../../guides/views.rst:58
+# c06c318da13b4e7b95ec57d59049b034
+msgid "You may want to change the output or rendering strategy of a view that Elgg provides by default. Fortunately, Elgg's plugin system makes this easy. Each plugin may have its own ``/views`` directory, with its own viewtypes. Views in plugin directories always override views in the core directory, so this allows you to customize the behavior of any number of views without touching Elgg core."
+msgstr ""
+
+#: ../../guides/views.rst:60
+# 009ee96a5c0349848fa2559b9613a6c4
+msgid "For example, if we wanted to customize the ``hello/world`` view to use an ``h2`` instead of an ``h1``, we could create a file at ``/mod/example/views/default/hello/world.php`` like this:"
+msgstr ""
+
+#: ../../guides/views.rst:66
+# 4078397ed56541e8aae32cdc1c933f7f
+msgid "While it is **not recommended**, one *could* alternatively force the location of a view using the ``set_view_location`` function:"
+msgstr ""
+
+#: ../../guides/views.rst:72
+# 17deec0d6f9046fc9720e268e65940fb
+msgid "Again, the best way to override views is to place them in the appropriate place in the views hierarchy."
+msgstr ""
+
+#: ../../guides/views.rst:76
+# 0713d8d541b44150b5d5bdad37722947
+msgid "When considering long-term maintenance, overriding views in the core and bundled plugins has a cost: Upgrades may bring changes in views, and if you have overridden them, you will not get those changes. You may want to use `post processing <views#post-processing-views>`__ if the change you're making can be easily made with string replacement methods."
+msgstr ""
+
+#: ../../guides/views.rst:80
+# c90cddc2b77d4c94b9308a8f8cb87398
+msgid "Elgg caches view locations. This means that you should disable the system cache while working with views. When you install the changes to a production environment you mush flush the caches."
+msgstr ""
+
+#: ../../guides/views.rst:83
+# ac1f76894dbb4b6398ef86ca8a01b1d1
+msgid "Viewtypes"
+msgstr ""
+
+#: ../../guides/views.rst:85
+# 1c3e730287ae495a9bd2e9efb903b076
+msgid "You might be wondering, \"what's with the 'default' in the directory structure? Why don't we just put the ``hello/world`` view at ``/views/hello/world.php``?\"."
+msgstr ""
+
+#: ../../guides/views.rst:87
+# e9293509d76f455cbcc397c7065037e7
+msgid "Great question."
+msgstr ""
+
+#: ../../guides/views.rst:89
+# 2f155a8e870941a980568db00dae2891
+msgid "This subdirectory (the one under ``/views``) determines the *viewtype* of the views below it. It's possible that you might want your Elgg site to have several sets of interface pages. For example:"
+msgstr ""
+
+#: ../../guides/views.rst:91
+# fb70babaa64542e3a3c458e6b06b70b1
+msgid "Standard HTML for desktop browsing (This is the default view)"
+msgstr ""
+
+#: ../../guides/views.rst:92
+# 346b0ed5c9444e54b8d00510697b9149
+msgid "HTML optimized for Mobile devices (iPhone, Android, Blackberry, etc.)"
+msgstr ""
+
+#: ../../guides/views.rst:93
+# 4df2cc3943c04d0b9c35149123b68511
+msgid "HTML optimized Tablet devices (iPad, etc.)"
+msgstr ""
+
+#: ../../guides/views.rst:94
+# d3818e692b9440aa9c2ae775f44d9495
+msgid "RSS"
+msgstr ""
+
+#: ../../guides/views.rst:95
+# a2f89f1991c349bdabdc255ec39c0ca3
+msgid "Atom"
+msgstr ""
+
+#: ../../guides/views.rst:96
+# 8b38fb5aaff642089ba1bc35f3ebfad4
+msgid "JSON"
+msgstr ""
+
+#: ../../guides/views.rst:97
+# cc8a0d0fff60447d9ee6f65682aaf508
+msgid "etc..."
+msgstr ""
+
+#: ../../guides/views.rst:99
+# c9bb5de5fdfe40a09554d3785b3d8a06
+msgid "In Elgg, one set of these interface pages is called a *viewtype*. You can force Elgg to use a particular viewtype to render the page simply by setting the ``$view`` input variable. For example, to get an RSS version of the home page, you would access ``http://localhost/elgg/?view=rss``."
+msgstr ""
+
+#: ../../guides/views.rst:101
+# 7e732b0231a740e7b16f4fd1d4151217
+msgid "You could also write a plugin to set this automatically using the ``set_input()`` function. For example, your plugin might detect that the page was accessed with an iPhone's browser string, and set the viewtype to *handheld* by calling:"
+msgstr ""
+
+#: ../../guides/views.rst:107
+# e62ffa5d16ad4747a15f682340bfbf2e
+msgid "The plugin would presumably also supply a set of views optimized for handheld devices."
+msgstr ""
+
+#: ../../guides/views.rst:110
+# 41d2d72203d1455dba969017361d8eb7
+msgid "Extending views"
+msgstr ""
+
+#: ../../guides/views.rst:112
+# 3cc8b8d6720547a8ba247b8e1073ea5b
+msgid "There may be other situations in which you don't want to override the whole view, you just want to add some more content to the end of it. In Elgg this is called *extending* a view."
+msgstr ""
+
+#: ../../guides/views.rst:114
+# 53c1a3c0266e483abd9dfcd27ab1eeb4
+msgid "For example, instead of overriding the ``hello/world`` view, we could extend it like so:"
+msgstr ""
+
+#: ../../guides/views.rst:120
+# 19e66bddfdfe4004b8ce5c1da0888213
+msgid "If the contents of ``/views/default/hello/greeting.php`` is:"
+msgstr ""
+
+#: ../../guides/views.rst:126
+# 04b3c8dd3b6940639d39451f800d3c26
+msgid "Then every time we call ``elgg_view('hello/world');``, we'll get:"
+msgstr ""
+
+#: ../../guides/views.rst:133
+# 4604b60575fd46d28e48c158a06572c8
+msgid "You can also optionally prepend views as well by passing a value to the 3rd parameter that is less than 500:"
+msgstr ""
+
+#: ../../guides/views.rst:143
+# c927e5d98ce14831995b19fcf545c9cc
+msgid "Note that if you extend the core css view like this:"
+msgstr ""
+
+#: ../../guides/views.rst:149
+# 0e6522a43a2d489bbf28c8962029374b
+msgid "You **must** do so within code that is executed by engine/start.php (normally this would mean your plugin's init code).  Because the core css view is loaded separately via a ``<link>`` tag, any extensions you add will not have the same context as the rest of your page."
+msgstr ""
+
+#: ../../guides/views.rst:152
+# e8e5ae526bd944758cd29adefe43d247
+msgid "Post processing views"
+msgstr ""
+
+#: ../../guides/views.rst:154
+# 19afa059d34e4fb8a5bf1f9b7e9f92f3
+msgid "Sometimes it is preferable to process or rewrite the output of a view instead of overriding it."
+msgstr ""
+
+#: ../../guides/views.rst:156
+# 70435b0202db43768cefe0e994c92a50
+msgid "The output of each view is run through the `plugin hook <guides/events.html#post-plugin-hooks>`__ ``[view, view_name]`` before being returned by ``elgg_view()``. Each registered handler function is passed these arguments:"
+msgstr ""
+
+#: ../../guides/views.rst:158
+# 708c85e910a94c60974c96baffe835d7
+msgid "``$hook`` - the string ``\"view\"``"
+msgstr ""
+
+#: ../../guides/views.rst:159
+# eae44456f1904f9dae6e1e3f6403465e
+msgid "``$type`` - the view name being rendered (the first argument passed to ``elgg_view()``)"
+msgstr ""
+
+#: ../../guides/views.rst:160
+# 2ccb0f1ab67d46758001bc3798dc345f
+msgid "``$returnvalue`` - the rendered output of the view (or the return value of the last handler)"
+msgstr ""
+
+#: ../../guides/views.rst:161
+# 677b8a61e76a4566b26128d9fead901c
+msgid "``$params`` - an array containing the key ``viewtype`` with value being the `viewtype <views.html#viewtypes>`__ being rendered"
+msgstr ""
+
+#: ../../guides/views.rst:163
+# a41d7bbb19c44741bc974cf66514ba95
+msgid "To alter the view output, the handler just needs to alter ``$returnvalue`` and return a new string."
+msgstr ""
+
+#: ../../guides/views.rst:166
+# 5b12e462c9eb4297bf36ed7d9e158c21
+msgid "Post pocessing view example"
+msgstr ""
+
+#: ../../guides/views.rst:168
+# a9f72139c40d4113a2365bb39de7b7bc
+msgid "Here we'll eliminate breadcrumbs that don't have at least one link."
+msgstr ""
+
+#: ../../guides/views.rst:189
+# 51ed79f3758b40e399067bddf81d5d38
+msgid "If you don't know what an entity is, :doc:`check this page out first </design/database>`."
+msgstr ""
+
+#: ../../guides/views.rst:191
+# faa62ef8da50439eacb17f2635744ae2
+msgid "The following code will automatically display the entity in ``$entity``:"
+msgstr ""
+
+#: ../../guides/views.rst:197
+# 14b921b25c6f441584b53ac5c81bf8f8
+msgid "As you'll know from the data model introduction, all entities have a *type* (object, site, user or group), and optionally a subtype (which could be anything - 'blog', 'forumpost', 'banana'). ``elgg_view_entity`` will automatically look for a view called ``type/subtype``; if there's no subtype, it will look for ``type/type``. Failing that, before it gives up completely it tries ``type/default``. (RSS feeds in Elgg generally work by outputting the ``object/default`` view in the 'rss' viewtype.)"
+msgstr ""
+
+#: ../../guides/views.rst:199
+# 4b102dc8fa27438d822f3e956384b96c
+msgid "So for example, the view to display a blogpost might be ``object/blog``. The view to display a user is ``user/user``."
+msgstr ""
+
+#: ../../guides/views.rst:202
+# 5bb00299da754f24b00660f20055a1b7
+msgid "Full and partial entity views"
+msgstr ""
+
+#: ../../guides/views.rst:204
+# 8ee0305e370a4694a82854cd4339fa57
+msgid "``elgg_view_entity`` actually has a number of parameters, although only the very first one is required. The first three are:"
+msgstr ""
+
+#: ../../guides/views.rst:206
+# b54e0ac9853f43008362fcdcfa3369c4
+msgid "``$entity`` - The entity to display"
+msgstr ""
+
+#: ../../guides/views.rst:207
+# 5ddf03814905415c95c25fedadb10f9e
+msgid "``$viewtype`` - The viewtype to display in (defaults to the one we're currently in, but it can be forced - eg to display a snippet of RSS within an HTML page)"
+msgstr ""
+
+#: ../../guides/views.rst:208
+# eed68194e1f0466e90fa75e4fa6bdb51
+msgid "``$full_view`` - Whether to display a *full* version of the entity. (Defaults to false.)"
+msgstr ""
+
+#: ../../guides/views.rst:210
+# 3d9c29e787d047288d47c1e196b14e7c
+msgid "This last parameter is passed to the view as ``$vars['full_view']``. It's up to you what you do with it; the usual behaviour is to only display comments and similar information if this is set to true."
+msgstr ""
+
+#: ../../guides/views.rst:213
+# 89493b3fe99f454984b4b8c6a4bf0bee
+msgid "Listing entities"
+msgstr ""
+
+#: ../../guides/views.rst:215
+# 5a0a6fba2cb842d296de40923904a97b
+msgid "This is then used in the provided listing functions. To automatically display a list of blog posts (:doc:`see the full tutorial </tutorials/blog>`), you can call:"
+msgstr ""
+
+#: ../../guides/views.rst:224
+# 64b17fa247d4452291bfcbf43c18a661
+msgid "This function checks to see if there are any entities; if there are, it first displays the ``navigation/pagination`` view in order to display a way to move from page to page. It then repeatedly calls ``elgg_view_entity`` on each entity, before returning the result."
+msgstr ""
+
+#: ../../guides/views.rst:226
+# 96a6c3f3c7f54e3b9ada8fcf39d98568
+msgid "Because it does this, Elgg knows that it can automatically supply an RSS feed - it extends the ``metatags`` view (which is called by the header) in order to provide RSS autodiscovery, which is why you can see the orange RSS icon on those pages."
+msgstr ""
+
+#: ../../guides/views.rst:228
+# 3e0358c1b127422999eeb29868d21c09
+msgid "See also :doc:`check this page out first </design/database>`."
+msgstr ""
+
+#: ../../guides/views.rst:231
+# 91b120cbc745472d9d8009b90fdec274
+msgid "Using a different templating system"
+msgstr ""
+
+#: ../../guides/views.rst:233
+# f6dcdf31252c4b8180a532687a1ac4bf
+msgid "You can write your own templating system if you want to."
+msgstr ""
+
+#: ../../guides/views.rst:235
+# 80eb98be8bff421182acee724b638093
+msgid "Before going through the motions of drawing views, Elgg checks the ``$CONFIG->template_handler`` variable to see if it contains the name of a callable function. If it does, the function will be passed the view name and template vars, and the return value of this function will be returned instead of the standard output:"
+msgstr ""
+
 #: ../../guides/web-services.rst:2
 # 8fc13f8252ee47b0ae821510d3c0b977
 msgid "Web services"
@@ -3556,11 +4180,6 @@ msgstr ""
 #: ../../guides/widgets.rst:108
 # c0f54e0b64b84335a4831998ed1c4441
 msgid "When an object triggers an event that matches the event, entity\\_type, and entity\\_subtype parameters passed, Elgg core will look for default widgets that match the widget\\_context and will copy them to that object's owner\\_guid and container\\_guid. All widget settings will also be copied."
-msgstr ""
-
-#: ../../guides/widgets.rst:131
-# b45fe232ed6741b3bb599abbaad80dd7
-msgid "Simple Example"
 msgstr ""
 
 #: ../../guides/widgets.rst:133
