@@ -143,7 +143,7 @@ function messageboard_annotation_menu_setup($hook, $type, $return, $params) {
 		$options = array(
 			'name' => 'delete',
 			'href' => $url,
-			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
+			'text' => elgg_view_icon('delete'),
 			'confirm' => elgg_echo('deleteconfirm'),
 			'encode_text' => false
 		);
