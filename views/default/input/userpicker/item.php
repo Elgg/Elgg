@@ -25,7 +25,7 @@ if ($name == '') {
 <li data-guid='<?php echo $entity->guid ?>'>
 	<div class='elgg-image-block'>
 		<div class='elgg-image'><?php echo $icon ?></div>
-		<div class='elgg-image-alt'><span class="elgg-icon elgg-icon-delete-alt elgg-user-picker-remove"></span></div>
+		<div class='elgg-image-alt'><?php echo elgg_view_icon('delete-alt', 'elgg-user-picker-remove'); ?></div>
 		<div class='elgg-body'><?php echo htmlspecialchars($name, ENT_QUOTES, 'UTF-8'); ?></div>
 	</div>
 	<input type="hidden"

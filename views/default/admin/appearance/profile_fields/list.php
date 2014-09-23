@@ -43,12 +43,10 @@ foreach ($items as $item) {
 		'is_trusted' => true,
 	));
 	$type = elgg_echo($item->type);
-	echo <<<HTML
-<li id="$item->shortname" class="clearfix">
-	<span class="elgg-icon elgg-icon-drag-arrow elgg-state-draggable"></span>
-	<b><span id="elgg-profile-field-{$item->shortname}" class="elgg-state-editable">$item->translation</span></b> [$type] $url
-</li>
-HTML;
+	echo "<li id='" . $item->shortname . " class='clearfix'>";
+	echo elgg_view_icon("drag-arrow", "elgg-state-draggable");
+	echo "<b><span id='elgg-profile-field-" . $item->shortname . "' class='elgg-state-editable'>" . $item->translation . "</span></b> [" . $type . "] " . $url;
+	echo "</li>";
 }
 
 ?>
