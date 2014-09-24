@@ -157,12 +157,12 @@ Plugin Hooks
 ============
 
 Plugin Hooks provide a way for plugins to collaboratively determine or alter
-a value. E.g. this could be to set a configuration array or to decide whether
-a user has permission to edit an entity.
+a value. For example, to decide whether a user has permission to edit an entity
+or to add additional configuration options to a plugin.
 
 A plugin hook has a value passed into the trigger function, and each handler
 has an opportunity to alter the value before it's passed to the next handler.
-After the last handler has completed, the current value is returned by the
+After the last handler has completed, the final value is returned by the
 trigger.
 
 Plugin Hook Handlers
@@ -232,5 +232,4 @@ Parameters:
 -  **$params** Arbitrary data passed from the trigger to the handlers.
 -  **$value** The initial value of the plugin hook.
 
-**Caveat!** The `$params` and `$value` arguments are reversed between the
-plugin hook handlers and trigger functions!
+.. warning:: The `$params` and `$value` arguments are reversed between the plugin hook handlers and trigger functions!

@@ -7,25 +7,38 @@ List of plugin hooks in core
 System hooks
 ============
 
-**index, system**
-
 **email, system**
+	Triggered when sending email. ``$params`` contains:
+
+	* to
+	* from
+	* subject
+	* body
+	* headers
+	* params
+
 
 **page_owner, system**
+	Filter the page_owner for the current page. No options are passed.
 
 **siteid, system**
 
 **gc, system**
+	Allows plugins to run garbage collection for ``$params['period']``.
 
 **unit_test, system**
+	Add deprecated Simple Test tests.
 
 **diagnostics:report, system**
+	Filter the output for the diagnostics report download.
 
 **search_types, get_types**
 
 **cron, <period>**
+	Triggered by cron for each period.
 
 **validate, input**
+	Filter GET and POST input. This is used by get_input() to sanitize user input.
 
 **geocode, location**
 
@@ -34,102 +47,182 @@ System hooks
 **debug, log**
 
 **format, friendly:title**
+	Formats the "friendly" title for strings. This is used for generating URLs.
 
 **format, friendly:time**
+	Formats the "friendly" time for the timestamp ``$params['time']``.
 
 **format, strip_tags**
+	Filters a string to remove tags. The original string is passed as ``$params['original_string']``
+	and an optional set of allowed tags is passed as ``$params['allowed_tags']``.
 
 **output:before, page**
-    In elgg_view_page(), this filters $vars before it's passed to the page shell
-    view (page/\*). To stop sending the X-Frame-Options header, unregister the
+    In ``elgg_view_page()``, this filters $vars before it's passed to the page shell
+    view (page/<page_shell>). To stop sending the X-Frame-Options header, unregister the
     handler _elgg_views_send_header_x_frame_options() from this hook.
 
 **output, page**
-    In elgg_view_page(), this filters the output return value
+    In ``elgg_view_page()``, this filters the output return value
+
+
+**output:before, layout**
+	In ``elgg_view_layout()``, filters $params before it's passed to the layout view.
+
+**output:after, layout**
+	In ``elgg_view_layout()``, filters the return value of the layout view.
+
+**output, ajax**
+	Triggered in the ajax forward hook that is called for ajax requests. Allows you alter the
+	output returned, including the forward URL, system messages, and errors.
 
 **register, menu:<menu_name>**
+	Triggered by elgg_view_menu(). Used to add dynamic menu items.
 
 **prepare, menu:<menu_name>**
+	Trigger by ``elgg_view_menu()``. Used to sort, add, remove, and modify menu items.
 
+@TODO - I don't see this anywhere...
 **add, river**
+
+**creating, river**
+	Triggered before a river item is created. Return false to prevent river item from being
+	created.
+
+**simplecache:generate, <view>**
+	Triggered when generating the cached content of a view.
+
+**get, subscriptions**
+	For notification subscriptions, return an array of <user guid> => array('subscription', 'types')
 
 User hooks
 ==========
 
 **usersettings:save, user**
+	Triggered in the aggregate action to save user settings. Return false prevent sticky
+	forms from being cleared.
 
 **unvalidated_login_attempt, user**
 
 **unvalidated_requestnewpassword, user**
 
 **access:collections:write, user**
+	Filters an array of access permissions that the user ``$params['user_id']`` is allowed to save
+	content with. Permissions returned are of the form (id => 'Hunan Readable Name').
 
 **registeruser:validate:username, all**
+	Return boolean for if the string in ``$params['username']`` is valid for a username.
 
 **registeruser:validate:password, all**
+	Return boolean for if the string in ``$params['password']`` is valid for a password.
 
 **registeruser:validate:email, all**
-
-**session:get, <key>**
+	Return boolean for if the string in ``$params['email']`` is valid for an email address.
 
 **register, user**
+	Triggered after user registers. Return false to delete the user.
 
 **login:forward, user**
     Filters the URL to which the user will be forwarded after login
+
+**find_active_users, system**
+	Return the number of active users.
+
+**status, user**
+	Triggered by The Wire when adding a post.
 
 Object hooks
 ============
 
 **comments, <entity_type>**
+	Triggered in ``elgg_view_comments()``. If returning content, this overrides the
+	``page/elements/comments`` view.
 
 **comments:count, <entity_type>**
+	Return the number of comments on ``$params['entity']``.
 
 **likes:count, <entity_type>**
+	Filter the number of likes an entity has.
 
 Action hooks
 ============
 
 **action, <action>**
+	Triggered before executing action scripts. Return false to abort action.
 
 **action_gatekeeper:permissions:check, all**
+	Triggered after a CSRF token is validated. Return false to prevent validation.
+
+**action_gatekeeper:upload_exceeded_msg, all**
+	Triggered when a POST exceeds the max size allowed by the server. Return the error message
+	to display.
 
 **forward, <reason>**
+	Filter the URL to forward a user to when forward($url, $reason) is called.
 
 Permission hooks
 ================
 
 **container_permissions_check, <entity_type>**
+	Return boolean for if the user ``$params['user']`` can use the entity ``$params['container']``
+	as a container for an entity of <entity_type> and subtype ``$params['subtype']``.
 
 **permissions_check, <entity_type>**
+	Return boolean for if the user ``$params['user']`` can edit the entity ``$params['entity']``.
 
 **permissions_check, widget_layout**
+	Return boolean for if ``$params['user']`` can edit the widgets in the context passed as
+	``$params['context']`` and with a page owner of ``$params['page_owner']``.
 
 **permissions_check:metadata, <entity_type>**
+	Return boolean for if the user ``$params['user']`` can edit the metadata ``$params['metadata']``
+	on the entity ``$params['entity']``.
 
 **permissions_check:comment, <entity_type>**
+	Return boolean for if the user ``$params['user']`` can comment on the entity ``$params['entity']``.
 
 **permissions_check:annotate**
+	Return boolean for if the user ``$params['user']`` can create an annotation with the name
+	``$params['annotation']`` on the entity ``$params['entity']``.
+
+	.. warning:: This is functions differently than the ``permissions_check:metadata`` hook by passing the annotation name instead of the metadata object.
+
+**permissions_check:annotation**
+	Return boolean for if the user in ``$params['user']`` can edit the annotation ``$params['annotation']`` on the
+	entity ``$params['entity']``. The user can be null.
 
 **fail, auth**
+	Return the failure message if authentication failed. An array of previous PAM failure methods
+	is passed as ``$params``.
 
 **session:get, <key>**
 
 **api_key, use**
+	Triggered by ``api_auth_key()``. Returning false prevents the key from being authenticated.
 
 **access:collections:read, user**
+	Filters an array of access IDs that the user ``$params['user_id']`` can see.
+
+	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
 
 **access:collections:write, user**
 
 **access:collections:addcollection, collection**
+	Triggered after an access collection ``$params['collection_id']`` is created.
 
 **access:collections:deletecollection, collection**
+	Triggered before an access collection ``$params['collection_id']`` is deleted.
+	Return false to prevent deletion.
 
 **access:collections:add_user, collection**
+	Triggered before adding user ``$params['user_id']`` to collection ``$params['collection_id']``.
+	Return false to prevent adding.
 
 **access:collections:remove_user, collection**
+	Triggered before removing user ``$params['user_id']`` to collection ``$params['collection_id']``.
+	Return false to prevent removal.
 
 **get_sql, access**
-    Filters the SQL clauses used in _elgg_get_access_where_sql()
+    Filters the SQL clauses used in _elgg_get_access_where_sql().
 
 Views
 =====
@@ -140,26 +233,46 @@ Views
 **layout, page**
     In elgg_view_layout(), filters the layout name
 
-**display, view**
-    Deprecated in 1.8! Use view, (view) instead
-
-**shell, view**
+**shell, page**
     In elgg_view_page(), filters the page shell name
 
 **head, page**
-    In elgg_view_page(), filters $vars['head']
+    In elgg_view_page(), filters ``$vars['head']``
 
 Other
 =====
 
 **default, access**
-    In get_default_access(), filters the return value
+    In get_default_access(), filters the return value.
 
 **entity:icon:url, <entity_type>**
+	Return the URL for the icon of size ``$params['size']`` for the entity ``$params['entity']``.
+
+**entity:url, <entity_type>**
+	Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the
+	getUrl() method of ElggEntity. This hook should be used when it's not possible to subclass
+	(like if you want to extend a bundled plugin without overriding many views).
+
+**to:object, <entity_type|metadata|annotation|relationship|river_item>**
+	Converts the entity ``$params['entity']`` to a StdClass object. This is used mostly for exporting
+	entity properties for portable data formats like JSON and XML.
+
+**extender:url, <annotation|metadata>**
+	Return the URL for the annotation or metadatum ``$params['extender']``.
 
 **file:icon:url, override**
+	Override a file icon URL.
+
+**mime_type, file**
+	Return the mimetype for the filename ``$params['filename']`` with original filename ``$params['original_filename']``
+	and with the default detected mimetype of ``$params['default']``.
+
+**is_member, group**
+	Return boolean for if the user ``$params['user']`` is a member of the group ``$params['group']``.
 
 **entity:annotate, <entity_type>**
+	Triggered in ``elgg_view_entity_annotations()``, which is called by ``elgg_view_entity()``. Can
+	be used to add annotations to all full entity views.
 
 **import, all**
 
@@ -169,26 +282,72 @@ Other
 
 **notify:entity:message, <entity_type> or is it <object_subtype>**
 
-**plugin:usersetting, user**
+**usersetting, plugin**
+	Filter user settings for plugins. ``$params`` contains:
 
-**plugin:setting, plugin**
+	- ``user`` - An ElggUser instance
+	- ``plugin`` - An ElggPlugin instance
+	- ``plugin_id`` - The plugin ID
+	- ``name`` - The name of the setting
+	- ``value`` - The value to set
+
+
+**setting, plugin**
+	Filter plugin settings. ``$params`` contains:
+
+	- ``plugin`` - An ElggPlugin instance
+	- ``plugin_id`` - The plugin ID
+	- ``name`` - The name of the setting
+	- ``value`` - The value to set
+
+**relationship:url, <relationship_name>**
+	Filter the URL for the relationship object ``$params['relationship']``.
 
 **profile:fields, group**
+	Filter an array of profile fields. The result should be returned as an array in the format
+	``name => input view name``. For example, 'about' => 'longtext'.
 
 **profile:fields, profile**
+	Filter an array of profile fields. The result should be returned as an array in the format
+	``name => input view name``. For example, 'about' => 'longtext'.
 
 **widget_settings, <widget_handler>**
+	Triggered when saving a widget settings. If handling saving the settings, the handler
+	should return true to prevent the default code from running. ``$params`` contains
+	an ElggWidget ``widget`` and an array of settings ``params``.
 
 **get_list, default_widgets**
+	Filters a list of default widgets to add for newly registered users. The list is an array
+	of arrays in the format:
+
+.. code:: php
+
+	array(
+		'event' => $event,
+		'entity_type' => $entity_type,
+		'entity_subtype' => $entity_subtype,
+		'widget_context' => $widget_context
+	)
 
 **rest, init**
+	Triggered by the web services rest handler. Plugins can set up their own authentication
+	handlers, then return true to prevent the default handlers from being registered.
 
 **public_pages, walled_garden**
+	Filter the URLs that are can be seen by logged out users if Walled Garden is
+	enabled. ``$params`` is an array of regex strings that will allow access if matched.
 
 **volatile, metadata**
+	Triggered when exporting an entity through the export handler. This is rare.
+	This allows handler to handle any volatile (non-persisted) metadata on the entity.
+	It's preferred to use into the ``to:object, <type>`` hook.
 
 **maintenance:allow, url**
-    Allows whitelisting URLs to non-admins during maintenance mode
+    Return boolean if the URL ``$params['current_url']`` and the path ``$params['current_path']``
+	is allowed during maintenance mode.
+
+**robots.txt, site**
+	Filter the robots.txt values for ``$params['site']``.
 
 Plugins
 =======
@@ -197,7 +356,7 @@ File
 ----
 
 **simple_type, file**
-    In file_get_simple_type(), filters the return value
+    In file_get_simple_type(), filters the return value for the file type.
 
 Embed
 -----
@@ -212,8 +371,10 @@ HTMLawed
 --------
 
 **allowed_styles, htmlawed**
+	Filter the HTMLawed allowed style array.
 
 **config, htmlawed**
+	Filter the HTMLawed config array.
 
 Members
 -------
@@ -236,6 +397,7 @@ Twitter API
 
 **authorize, twitter_api**
 
+
 **plugin_list, twitter_service**
 
 Reported Content
@@ -257,12 +419,18 @@ Search
 ------
 
 **search, <type>:<subtype>**
+	Filter more granular search results than searching by type alone. Must return an array with ``count`` as the
+	total count of results and  ``entities`` an array of ElggUser entities.
 
 **search, tags**
 
 **search, <type>**
+	Filter the search for entities for type ``$type``. Must return an array with ``count`` as the
+	total count of results and  ``entities`` an array of ElggUser entities.
 
 **search_types, get_types**
+	Filter an array of search types. This allows plugins to add custom types that don't correspond
+	directly to entities.
 
 **search_types, get_queries**
     Before a search this filters the types queried. This can be used to reorder
