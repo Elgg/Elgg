@@ -128,8 +128,7 @@ function messages_page_handler($page) {
  */
 function messages_notifier() {
 	if (elgg_is_logged_in()) {
-		$class = "elgg-icon elgg-icon-mail";
-		$text = "<span class='$class'></span>";
+		$text = elgg_view_icon("mail");
 		$tooltip = elgg_echo("messages");
 		
 		// get unread messages
