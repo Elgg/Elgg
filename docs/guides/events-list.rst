@@ -17,13 +17,17 @@ System events
     Plugins tend to use this event for initialization (extending views, registering callbacks, etc.)
 
 **ready, system**
+	Triggered after the ``init, system`` event. All plugins are fully loaded and the engine is ready
+	to serve pages.
 
 **pagesetup, system**
-    Called just before the first content is produced. Is triggered by elgg_view().
+    Called just before the first content is produced. Is triggered by ``elgg_view()``.
 
 **shutdown, system**
     Triggered after the page has been sent to the user. Expensive operations could be done here
-    and not make the user wait. Note: Depending upon your server configuration the PHP output
+    and not make the user wait.
+
+.. note:: Depending upon your server configuration the PHP output
     might not be shown until after the process is completed. This means that any long-running
     processes will still delay the page load.
 
@@ -32,8 +36,8 @@ System events
 	the ``system_log`` table.
 
 **upgrade, system**
-	A system upgrade finished. All upgrade scripts have run, but the caches are not cleared. Handlers
-	are not passed any options.
+	Triggered after a system upgrade has finished. All upgrade scripts have run, but the caches 
+	are not cleared.
 
 **upgrade, upgrade**
 	A single upgrade script finished executing. Handlers are passed a ``stdClass`` object with the properties
@@ -76,53 +80,54 @@ User events
     User has changed profile icon
 
 **ban, user**
-    Return true to ban user
+    Triggered before a user is banned. Return false to prevent.
 
 **unban, user**
-    Return true to unban user
+    Triggered before a user is unbanned. Return false to prevent.
 
 **make_admin, user**
+	Triggered before a user is promoted to an admin. Return false to prevent.
 
 **remove_admin, user**
+	Triggered before a user is demoted from an admin. Return false to prevent.
 
 Relationship events
 ===================
 
 **create, <relationship>**
-    Called after the relationship has been created. Returning false deletes
+    Triggered after a relationship has been created. Returning false deletes
     the relationship that was just created.
 
 **delete, <relationship>**
-    Called before the relationship is deleted. Return false to prevent it
+    Triggered before a relationship is deleted. Return false to prevent it
     from being deleted.
 
 **join, group**
-    User joined a group
+    Triggered after the user ``$params['user']`` has joined the group ``$params['group']``.
 
 **leave, group**
-    User left a group
+    Triggered before the user ``$params['user']`` has left the group ``$params['group']``.
 
 Entity events
 =============
 
 **create, <entity type>**
-    Called for user, group, object, and site entities after creation. Return
-    true or entity is deleted.
+    Triggered for user, group, object, and site entities after creation. Return false to delete entity.
 
 **update, <entity type>**
 	Triggered before an update for the user, group, object, and site entities. Return false to prevent update.
 
 **delete, <entity type>**
-    Called before entity deletion and returning false prevents deletion.
+    Triggered before entity deletion. Return false to prevent deletion.
 
 **disable, <entity type>**
-    Triggered before the entity is disabled. Return false to prevent disable
+    Triggered before the entity is disabled. Return false to prevent disabling.
 
 **disable:after, <entity type>**
 	Triggered after the entity is disabled.
 
 **enable, <entity type>**
-    Return false to prevent enable
+    Return false to prevent enabling.
 
 **enable:after, <entity type>**
 	Triggered after the entity is enabled.
@@ -135,8 +140,7 @@ Metadata events
     metadata that was just created.
 
 **update, metadata**
-    Called after the metadata has been updated. Return false to *delete the
-    metadata.*
+    Called after the metadata has been updated. Return false to *delete the metadata.*
 
 **delete, metadata**
     Called before metadata is deleted. Return false to prevent deletion.
@@ -159,8 +163,7 @@ Annotation events
     the annotation.
 
 **update, annotation**
-    Called after the annotation has been updated. Return false to *delete the
-    annotation.*
+    Called after the annotation has been updated. Return false to *delete the annotation.*
 
 **delete, annotation**
     Called before annotation is deleted. Return false to prevent deletion.

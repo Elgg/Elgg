@@ -27,7 +27,7 @@ System hooks
 	Allows plugins to run garbage collection for ``$params['period']``.
 
 **unit_test, system**
-	Add deprecated Simple Test tests.
+	Add a Simple Test test. (Deprecated.)
 
 **diagnostics:report, system**
 	Filter the output for the diagnostics report download.
@@ -38,13 +38,25 @@ System hooks
 	Triggered by cron for each period.
 
 **validate, input**
-	Filter GET and POST input. This is used by get_input() to sanitize user input.
+	Filter GET and POST input. This is used by ``get_input()`` to sanitize user input.
 
 **geocode, location**
+	Deprecated as of 1.9.
 
-**diagnostics:report, all**
+**diagnostics:report, system**
+	Filters the output for a diagnostic report.
 
 **debug, log**
+	Triggered by the Logger. Return false to stop the default logging method. ``$params`` includes:
+
+	* level - The debug level. One of:
+		* ``Elgg_Logger::OFF``
+		* ``Elgg_Logger::ERROR``
+		* ``Elgg_Logger::WARNING``
+		* ``Elgg_Logger::NOTICE``
+		* ``Elgg_Logger::INFO``
+	* msg - The message
+	* display - Should this message be displayed?
 
 **format, friendly:title**
 	Formats the "friendly" title for strings. This is used for generating URLs.
@@ -57,42 +69,46 @@ System hooks
 	and an optional set of allowed tags is passed as ``$params['allowed_tags']``.
 
 **output:before, page**
-    In ``elgg_view_page()``, this filters $vars before it's passed to the page shell
-    view (page/<page_shell>). To stop sending the X-Frame-Options header, unregister the
-    handler _elgg_views_send_header_x_frame_options() from this hook.
+    In ``elgg_view_page()``, this filters ``$vars`` before it's passed to the page shell
+    view (``page/<page_shell>``). To stop sending the X-Frame-Options header, unregister the
+    handler ``_elgg_views_send_header_x_frame_options()`` from this hook.
 
 **output, page**
-    In ``elgg_view_page()``, this filters the output return value
-
+    In ``elgg_view_page()``, this filters the output return value.
 
 **output:before, layout**
-	In ``elgg_view_layout()``, filters $params before it's passed to the layout view.
+	In ``elgg_view_layout()``, filters ``$params`` before it's passed to the layout view.
 
 **output:after, layout**
 	In ``elgg_view_layout()``, filters the return value of the layout view.
 
 **output, ajax**
-	Triggered in the ajax forward hook that is called for ajax requests. Allows you alter the
+	Triggered in the ajax forward hook that is called for ajax requests. Allows plugins to alter the
 	output returned, including the forward URL, system messages, and errors.
 
 **register, menu:<menu_name>**
-	Triggered by elgg_view_menu(). Used to add dynamic menu items.
+	Triggered by ``elgg_view_menu()``. Used to add dynamic menu items.
 
 **prepare, menu:<menu_name>**
 	Trigger by ``elgg_view_menu()``. Used to sort, add, remove, and modify menu items.
 
-@TODO - I don't see this anywhere...
-**add, river**
-
 **creating, river**
-	Triggered before a river item is created. Return false to prevent river item from being
-	created.
+	Triggered before a river item is created. Return false to prevent river item from being created.
 
 **simplecache:generate, <view>**
 	Triggered when generating the cached content of a view.
 
 **get, subscriptions**
-	For notification subscriptions, return an array of <user guid> => array('subscription', 'types')
+	Filter notification subscriptions for users for the Elgg_Notifications_Event ``$params['event']``.
+	Return an array like:
+
+.. code:: php
+
+	array(
+		<user guid> => array('subscription', 'types'),
+		<user_guid2> => array('email', 'sms', 'ajax')
+	);
+
 
 User hooks
 ==========
@@ -101,13 +117,9 @@ User hooks
 	Triggered in the aggregate action to save user settings. Return false prevent sticky
 	forms from being cleared.
 
-**unvalidated_login_attempt, user**
-
-**unvalidated_requestnewpassword, user**
-
 **access:collections:write, user**
 	Filters an array of access permissions that the user ``$params['user_id']`` is allowed to save
-	content with. Permissions returned are of the form (id => 'Hunan Readable Name').
+	content with. Permissions returned are of the form (id => 'Human Readable Name').
 
 **registeruser:validate:username, all**
 	Return boolean for if the string in ``$params['username']`` is valid for a username.
@@ -122,7 +134,7 @@ User hooks
 	Triggered after user registers. Return false to delete the user.
 
 **login:forward, user**
-    Filters the URL to which the user will be forwarded after login
+    Filters the URL to which the user will be forwarded after login.
 
 **find_active_users, system**
 	Return the number of active users.
@@ -141,7 +153,7 @@ Object hooks
 	Return the number of comments on ``$params['entity']``.
 
 **likes:count, <entity_type>**
-	Filter the number of likes an entity has.
+	Return the number of likes for ``$params['entity']``.
 
 Action hooks
 ============
@@ -153,11 +165,11 @@ Action hooks
 	Triggered after a CSRF token is validated. Return false to prevent validation.
 
 **action_gatekeeper:upload_exceeded_msg, all**
-	Triggered when a POST exceeds the max size allowed by the server. Return the error message
+	Triggered when a POST exceeds the max size allowed by the server. Return an error message
 	to display.
 
 **forward, <reason>**
-	Filter the URL to forward a user to when forward($url, $reason) is called.
+	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
 
 Permission hooks
 ================
@@ -194,8 +206,6 @@ Permission hooks
 	Return the failure message if authentication failed. An array of previous PAM failure methods
 	is passed as ``$params``.
 
-**session:get, <key>**
-
 **api_key, use**
 	Triggered by ``api_auth_key()``. Returning false prevents the key from being authenticated.
 
@@ -205,6 +215,9 @@ Permission hooks
 	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
 
 **access:collections:write, user**
+	Filters an array of access IDs that the user ``$params['user_id']`` can write to.
+
+	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
 
 **access:collections:addcollection, collection**
 	Triggered after an access collection ``$params['collection_id']`` is created.
@@ -222,7 +235,7 @@ Permission hooks
 	Return false to prevent removal.
 
 **get_sql, access**
-    Filters the SQL clauses used in _elgg_get_access_where_sql().
+    Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
 
 Views
 =====
@@ -231,26 +244,26 @@ Views
     Filters the returned content of views
 
 **layout, page**
-    In elgg_view_layout(), filters the layout name
+    In ``elgg_view_layout()``, filters the layout name
 
 **shell, page**
-    In elgg_view_page(), filters the page shell name
+    In ``elgg_view_page()``, filters the page shell name
 
 **head, page**
-    In elgg_view_page(), filters ``$vars['head']``
+    In ``elgg_view_page()``, filters ``$vars['head']``
 
 Other
 =====
 
 **default, access**
-    In get_default_access(), filters the return value.
+    In ``get_default_access()``, filters the return value.
 
 **entity:icon:url, <entity_type>**
 	Return the URL for the icon of size ``$params['size']`` for the entity ``$params['entity']``.
 
 **entity:url, <entity_type>**
 	Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the
-	getUrl() method of ElggEntity. This hook should be used when it's not possible to subclass
+	``getUrl()`` method of ElggEntity. This hook should be used when it's not possible to subclass
 	(like if you want to extend a bundled plugin without overriding many views).
 
 **to:object, <entity_type|metadata|annotation|relationship|river_item>**
@@ -274,14 +287,6 @@ Other
 	Triggered in ``elgg_view_entity_annotations()``, which is called by ``elgg_view_entity()``. Can
 	be used to add annotations to all full entity views.
 
-**import, all**
-
-**export, all**
-
-**object:notifications, <object_subtype>**
-
-**notify:entity:message, <entity_type> or is it <object_subtype>**
-
 **usersetting, plugin**
 	Filter user settings for plugins. ``$params`` contains:
 
@@ -290,7 +295,6 @@ Other
 	- ``plugin_id`` - The plugin ID
 	- ``name`` - The name of the setting
 	- ``value`` - The value to set
-
 
 **setting, plugin**
 	Filter plugin settings. ``$params`` contains:
@@ -305,16 +309,28 @@ Other
 
 **profile:fields, group**
 	Filter an array of profile fields. The result should be returned as an array in the format
-	``name => input view name``. For example, 'about' => 'longtext'.
+	``name => input view name``. For example:
+
+.. code:: php
+
+	array(
+		'about' => 'longtext'
+	);
+
 
 **profile:fields, profile**
 	Filter an array of profile fields. The result should be returned as an array in the format
-	``name => input view name``. For example, 'about' => 'longtext'.
+	``name => input view name``. For example:
+
+.. code:: php
+
+	array(
+		'about' => 'longtext'
+	);
 
 **widget_settings, <widget_handler>**
-	Triggered when saving a widget settings. If handling saving the settings, the handler
-	should return true to prevent the default code from running. ``$params`` contains
-	an ElggWidget ``widget`` and an array of settings ``params``.
+	Triggered when saving a widget settings ``$params['params']`` for widget ``$params['widget']``.
+	If handling saving the settings, the handler should return true to prevent the default code from running.
 
 **get_list, default_widgets**
 	Filters a list of default widgets to add for newly registered users. The list is an array
@@ -335,12 +351,12 @@ Other
 
 **public_pages, walled_garden**
 	Filter the URLs that are can be seen by logged out users if Walled Garden is
-	enabled. ``$params`` is an array of regex strings that will allow access if matched.
+	enabled. ``$value`` is an array of regex strings that will allow access if matched.
 
 **volatile, metadata**
 	Triggered when exporting an entity through the export handler. This is rare.
 	This allows handler to handle any volatile (non-persisted) metadata on the entity.
-	It's preferred to use into the ``to:object, <type>`` hook.
+	It's preferred to use the ``to:object, <type>`` hook.
 
 **maintenance:allow, url**
     Return boolean if the URL ``$params['current_url']`` and the path ``$params['current_path']``
@@ -356,16 +372,7 @@ File
 ----
 
 **simple_type, file**
-    In file_get_simple_type(), filters the return value for the file type.
-
-Embed
------
-
-**embed_get_items, <active_section>**
-
-**embed_get_sections, all**
-
-**embed_get_upload_sections, all**
+    In ``file_get_simple_type()``, filters the return value for the file type.
 
 HTMLawed
 --------
@@ -380,7 +387,7 @@ Members
 -------
 
 **members:list, <page_segment>**
-    To handle the page /members/$page_segment, handle this hook and return the HTML of the list.
+    To handle the page ``/members/$page_segment``, register for this hook and return the HTML of the list.
 
 **members:config, tabs**
     This hook is used to assemble an array of tabs to be passed to the navigation/tabs view
@@ -389,31 +396,21 @@ Members
 Twitter API
 -----------
 
-**login, twitter_api**
-
-**new_twitter_user, twitter_service**
-
-**first_login, twitter_api**
-
 **authorize, twitter_api**
-
-
-**plugin_list, twitter_service**
+	Triggered when a user is authorizes Twitter for a login. ``$params['token']`` contains the Twitter
+	authorization token.
 
 Reported Content
 ----------------
 
 **reportedcontent:add, system**
+	Triggered after adding the reported content object ``$params['report']``. Return false to delete report.
 
 **reportedcontent:archive, system**
+	Triggered before archiving the reported content object ``$params['report']``. Return false to prevent archiving.
 
 **reportedcontent:delete, system**
-
-**reportedcontent:add, <entity_type>**
-
-**reportedcontent:archive, <entity_type>**
-
-**reportedcontent:delete, <entity_type>**
+	Triggered before deleting the reported content object ``$params['report']``. Return false to prevent deleting.
 
 Search
 ------
@@ -435,4 +432,3 @@ Search
 **search_types, get_queries**
     Before a search this filters the types queried. This can be used to reorder
     the display of search results.
-
