@@ -30,12 +30,12 @@ $options = array(
 );
 
 if (elgg_get_annotations($options)) {
-	$url = "admin/upgrades/comments";
+	$path = "admin/upgrades/comments";
 	$upgrade = new \ElggUpgrade();
 
 	// Create the upgrade if one with the same URL doesn't already exist
-	if (!$upgrade->getUpgradeFromURL($url)) {
-		$upgrade->setURL($url);
+	if (!$upgrade->getUpgradeFromPath($path)) {
+		$upgrade->setPath($path);
 		$upgrade->title = 'Comments Upgrade';
 		$upgrade->description = 'Comments have been improved in Elgg 1.9 and require a migration. Run this upgrade to complete the migration.';
 		$upgrade->save();

@@ -9,7 +9,7 @@ if (isset($vars['entity']) && elgg_instanceof($vars['entity'], 'object', 'admin_
 
 	$delete = elgg_view('output/url', array(
 		'href' => "action/admin/delete_admin_notice?guid=$notice->guid",
-		'text' => '<span class="elgg-icon elgg-icon-delete"></span>',
+		'text' => elgg_view_icon('delete'),
 		'is_action' => true,
 		'class' => 'elgg-admin-notice',
 		'is_trusted' => true,

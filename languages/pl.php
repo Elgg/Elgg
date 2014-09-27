@@ -42,28 +42,28 @@ return array(
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) to źle skonfigurowany plugin i został wyłączony. Proszę sprawdzić możliwe przyczyny na wiki (http://docs.elgg.org/wiki/).",
 	'PluginException:CannotStart' => '%s (guid: %s) nie mógł wystartować i został wyłączony. Przyczyna: %s',
-	'PluginException:InvalidID' => "%s jest niepoprawnym identyfikatorem pluginu.",
-	'PluginException:InvalidPath' => "%s jest niepoprawną ścieżką pluginu.",
-	'PluginException:InvalidManifest' => 'Niepoprawny plik manifestu w pluginie %s',
-	'PluginException:InvalidPlugin' => '%s nie jest poprawnym pluginem.',
-	'PluginException:InvalidPlugin:Details' => '%s nie jest poprawnym pluginem: %s',
-	'PluginException:NullInstantiated' => 'Nie można było utworzyć instancji ElggPlugin. Musisz przekazać GUID, identyfikator pluginu lub pełną ścieżkę.',
-	'ElggPlugin:MissingID' => 'Brak identyfikatora pluginu (guid %s)',
+	'PluginException:InvalidID' => "%s jest niepoprawnym identyfikatorem rozszerzenia.",
+	'PluginException:InvalidPath' => "%s jest niepoprawną ścieżką rozszerzenia.",
+	'PluginException:InvalidManifest' => 'Niepoprawny plik manifestu w rozszerzeniu %s',
+	'PluginException:InvalidPlugin' => '%s nie jest poprawnym rozszerzeniem.',
+	'PluginException:InvalidPlugin:Details' => '%s nie jest poprawnym rozszerzeniem: %s',
+	'PluginException:NullInstantiated' => 'Nie można było utworzyć instancji ElggPlugin. Musisz przekazać GUID, identyfikator rozszerzenia lub pełną ścieżkę.',
+	'ElggPlugin:MissingID' => 'Brak identyfikatora rozszerzenia (guid %s)',
 	'ElggPlugin:NoPluginPackagePackage' => 'Brak ElggPluginPackage dla identyfikatora %s (guid %s)',
 	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'Nie znaleziono wymaganego pliku "%s".',
-	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'Katalog tego pluginu musi mieć zmienioną nazwę na "%s" aby być zgodny z ID ustawionym w manifeście.',
+	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'Katalog tego rozszerzenia musi mieć zmienioną nazwę na "%s" aby być zgodny z ID ustawionym w manifeście.',
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Ten manifest zawiera niepoprawny rodzaj zależności "%s".',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Ten manifest zawiera niepoprawny typ zależności "provides" "%s".',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Wykryto niepoprawną %s zależność "%s" w pluginie %s. Plugin nie może konfliktować ze sobą lub wymagać zależności, którą sam zapewnia.',
-	'ElggPlugin:Exception:CannotIncludeFile' => 'Nie można wczytać %s dla pluginu %s (guid: %s) w %s.',
-	'ElggPlugin:Exception:CannotRegisterViews' => 'Nie można otworzyć katalogu widoków pluginu %s (guid: %s) w %s.',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Nie można zarejestrować tłumaczeń dla pluginu %s (guid: %s) w %s.',
-	'ElggPlugin:Exception:NoID' => 'Brak identyfikatora pluginu guid %s!',
-	'PluginException:NoPluginName' => "Nie można znaleźć nazwy wtyczki.",
-	'PluginException:ParserError' => 'Błąd w trakcie parsowania manifestu dla wersji API %s w pluginie %s.',
-	'PluginException:NoAvailableParser' => 'Nie znaleziono parsera dla wersji API manifestu %s w pluginie %s.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "Brak wymaganego atrybutu '%s' w manifeście pluginu %s.",
-	'ElggPlugin:InvalidAndDeactivated' => '%s jest niepoprawnym pluginem i został wyłączony.',
+	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Wykryto niepoprawną %s zależność "%s" w rozszerzeniu %s. Rozszerzenie nie może konfliktować ze sobą lub wymagać zależności, którą sam zapewnia.',
+	'ElggPlugin:Exception:CannotIncludeFile' => 'Nie można wczytać %s dla rozszerzenia %s (guid: %s) w %s.',
+	'ElggPlugin:Exception:CannotRegisterViews' => 'Nie można otworzyć katalogu widoków rozszerzenia %s (guid: %s) w %s.',
+	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Nie można zarejestrować tłumaczeń dla rozszerzenia %s (guid: %s) w %s.',
+	'ElggPlugin:Exception:NoID' => 'Brak identyfikatora rozszerzenia guid %s!',
+	'PluginException:NoPluginName' => "Nie można znaleźć nazwy rozszerzenia.",
+	'PluginException:ParserError' => 'Błąd w trakcie parsowania manifestu dla wersji API %s w rozszerzeniu %s.',
+	'PluginException:NoAvailableParser' => 'Nie znaleziono parsera dla wersji API manifestu %s w rozszerzeniu %s.',
+	'PluginException:ParserErrorMissingRequiredAttribute' => "Brak wymaganego atrybutu '%s' w manifeście rozszerzenia %s.",
+	'ElggPlugin:InvalidAndDeactivated' => '%s jest niepoprawnym rozszerzeniem i został wyłączony.',
 
 	'ElggPlugin:Dependencies:Requires' => 'Wymaga',
 	'ElggPlugin:Dependencies:Suggests' => 'Sugeruje',
@@ -76,13 +76,13 @@ return array(
 	'ElggPlugin:Dependencies:PhpVersion' => 'Wersja PHP',
 	'ElggPlugin:Dependencies:PhpExtension' => 'Rozszerzenie PHP: %s',
 	'ElggPlugin:Dependencies:PhpIni' => 'Ustawienie INI dla PHP: %s',
-	'ElggPlugin:Dependencies:Plugin' => 'Plugin: %s',
+	'ElggPlugin:Dependencies:Plugin' => 'Rozszerzenie: %s',
 	'ElggPlugin:Dependencies:Priority:After' => 'Poniżej %s',
 	'ElggPlugin:Dependencies:Priority:Before' => 'Powyżej %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s jest niezainstalowany',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Brak',
 	
-	'ElggPlugin:Dependencies:ActiveDependent' => 'Inne pluginy korzystają z %s jako zależności. Aby go wyłączyć, musisz najpierw wyłączyć następujące pluginy: %s',
+	'ElggPlugin:Dependencies:ActiveDependent' => 'Inne rozszerzenia korzystają z %s jako zależności. Aby go wyłączyć, musisz najpierw wyłączyć następujące rozszerzenia: %s',
 
 
 	'RegistrationException:EmptyPassword' => 'Hasło nie może być puste',
@@ -100,7 +100,7 @@ return array(
 	'viewfailure' => 'Wystąpił wewnętrzny błąd w widoku %s',
 	'view:missing_param' => "Nie znaleziono wymaganego parametru '%s' w widoku %s",
 	'changebookmark' => 'Proszę zaktualizować swoją zakładkę dla tej strony',
-	'noaccess' => 'Treść, którą usiłujesz wyświetlić jest dostępna po zalogowaniu, została usunięta lub nie masz uprawnień do jej przeglądania.',
+	'noaccess' => 'Treść, którą usiłujesz wyświetlić, została usunięta lub nie masz uprawnień do jej przeglądania.',
 	'error:missing_data' => 'Zabrakło pewnych danych w twoim zapytaniu',
 	'save:fail' => 'Zapis danych nie powiódł się',
 	'save:success' => 'Twoje dane zostały zapisane',
@@ -452,7 +452,7 @@ return array(
 	'admin:unknown_section' => 'Niepoprawna sekcja panelu administracyjnego.',
 
 	'admin' => "Administracja",
-	'admin:description' => "Panel administratora umożliwia kontrolę wszystkich aspektów tego systemu, od zarządzania użytkownikiem, do konfiguracji wtyczek. Wybierz opcję poniżej, aby rozpocząć.",
+	'admin:description' => "Panel administratora umożliwia kontrolę wszystkich aspektów tego systemu, od zarządzania użytkownikiem, do konfiguracji rozszerzeń. Wybierz opcję poniżej, aby rozpocząć.",
 
 	'admin:statistics' => "Statystyki",
 	'admin:statistics:overview' => 'Przegląd',
@@ -524,10 +524,9 @@ return array(
 "Nawigacja w panelu administracyjnym jest dostępna poprzez menu po prawej stronie. Jest ona podzielona na trzy sekcje:
 <dl>
 		<dt>Administracja</dt><dd>Codzienne zadania, takie jak przeglądanie zgłoszonej treści, kontrola użytkowników on-line lub przeglądanie statystyk.</dd>
-		<dt>Konfiguracja</dt><dd>Doraźne zadania, takie jak ustawianie nazwy strony lub aktywacja pluginu.</dd>
-		<dt>Develop</dt><dd>Dla programistów budujących pluginy lub projektujących motywy graficzne. (Wymaga pluginu Developers)</dd>
-	</dl>
-",
+		<dt>Konfiguracja</dt><dd>Doraźne zadania, takie jak ustawianie nazwy strony lub aktywacja rozszerzenia.</dd>
+		<dt>Develop</dt><dd>Dla programistów budujących rozszerzenia lub projektujących motywy graficzne. (Wymaga rozszerzenia Developers)</dd>
+	</dl>",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Upewnij się, że sprawdziłeś zasoby dostępne poprzez linki dostępne w stopce. Dziękujemy za wybór Elgg!',
@@ -543,9 +542,9 @@ return array(
 	'admin:footer:community_forums' => 'Forum społeczności Elgg',
 	'admin:footer:blog' => 'Blog Elgg',
 
-	'admin:plugins:category:all' => 'Wszystkie pluginy',
-	'admin:plugins:category:active' => 'Aktywne pluginy',
-	'admin:plugins:category:inactive' => 'Nieaktywne pluginy',
+	'admin:plugins:category:all' => 'Wszystkie rozszerzenia',
+	'admin:plugins:category:active' => 'Aktywne rozszerzenia',
+	'admin:plugins:category:inactive' => 'Nieaktywne rozszerzenia',
 	'admin:plugins:category:admin' => 'Administracja',
 	'admin:plugins:category:bundled' => 'W pakiecie',
 	'admin:plugins:category:nonbundled' => 'Spoza pakietu',
@@ -561,7 +560,7 @@ return array(
 	'admin:plugins:category:widget' => 'Gadżety',
 	'admin:plugins:category:utility' => 'Narzędzia',
 
-	'admin:plugins:markdown:unknown_plugin' => 'Nieznany plugin',
+	'admin:plugins:markdown:unknown_plugin' => 'Nieznane rozszerzenie',
 	'admin:plugins:markdown:unknown_file' => 'Nieznany plik.',
 
 	'admin:notices:could_not_delete' => 'Nie można usunąć notatki.',
@@ -573,14 +572,14 @@ return array(
  * Plugins
  */
 
-	'plugins:disabled' => 'Pluginy nie są wczytywane, ponieważ plik o nazwie "disabled" jest obecny w katalogu mod.',
-	'plugins:settings:save:ok' => "Ustawienia dla %s plugin zostały pomyśłnie zapisane.",
-	'plugins:settings:save:fail' => "Wystąpił problem podczas zapisu ustawień dla %s plugin.",
-	'plugins:usersettings:save:ok' => "Ustawienia użytkownika dla %s plugin zostały pomyślnie zapisane.",
-	'plugins:usersettings:save:fail' => "Wystąpił problem podczas zapisywania ustawień użytkownika dla %s plugin.",
-	'item:object:plugin' => 'Plugin ustawienia',
+	'plugins:disabled' => 'Rozszerzenia nie są wczytywane, ponieważ plik o nazwie "disabled" jest obecny w katalogu mod.',
+	'plugins:settings:save:ok' => "Ustawienia dla rozszerzenia %s zostały pomyśłnie zapisane.",
+	'plugins:settings:save:fail' => "Wystąpił problem podczas zapisu ustawień dla rozszerzenia %s.",
+	'plugins:usersettings:save:ok' => "Ustawienia użytkownika dla rozszerzenia %s zostały pomyślnie zapisane.",
+	'plugins:usersettings:save:fail' => "Wystąpił problem podczas zapisywania ustawień użytkownika dla rozszerzenia %s.",
+	'item:object:plugin' => 'Rozszerzenie',
 
-	'admin:plugins' => "Narzędzia - administracja",
+	'admin:plugins' => "Rozszerzenia",
 	'admin:plugins:activate_all' => 'Aktywuj wszystkie',
 	'admin:plugins:deactivate_all' => 'Dezaktywuj wszystkie',
 	'admin:plugins:activate' => 'Aktywuj',
@@ -607,9 +606,9 @@ return array(
 	'admin:plugins:label:contributors:description' => 'Opis',
 	'admin:plugins:label:dependencies' => 'Zależności',
 
-	'admin:plugins:warning:elgg_version_unknown' => 'Ten plugin używa starszego manifestu i nie specyfikuje kompatybilnej wersji Elgg. Prawdopodobnie nie będzie działać!',
-	'admin:plugins:warning:unmet_dependencies' => 'Ten plugin ma niezapewnione zależności i nie może być włączony. Sprawdź wymagane zależności w \'więcej informacji\'.',
-	'admin:plugins:warning:invalid' => 'Ten plugin jest niepoprawwny: %s',
+	'admin:plugins:warning:elgg_version_unknown' => 'To rozszerzenie używa starszego manifestu i nie specyfikuje kompatybilnej wersji Elgg. Prawdopodobnie nie będzie działać!',
+	'admin:plugins:warning:unmet_dependencies' => 'To rozszerzenie ma brakujące zależności i nie może być włączone. Sprawdź wymagane zależności w \'więcej informacji\'.',
+	'admin:plugins:warning:invalid' => 'To rozszerzenie jest niepoprawne: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Sprawdź <a href="http://docs.elgg.org/Invalid_Plugin">dokumentację Elgg</a> w poszukiwaniu wskazówek.',
 	'admin:plugins:cannot_activate' => 'nie można włączyć',
 
@@ -623,11 +622,11 @@ return array(
 	'admin:plugins:activate:no' => "Nie można było aktywować %s.",
 	'admin:plugins:activate:no_with_msg' => "Nie można było aktywować %s. Błąd: %s",
 	'admin:plugins:categories:all' => 'Wszystkie kategorie',
-	'admin:plugins:plugin_website' => 'Strona www pluginu',
+	'admin:plugins:plugin_website' => 'Strona www rozszerzenia',
 	'admin:plugins:author' => '%s',
 	'admin:plugins:version' => 'Wersja %s',
-	'admin:plugin_settings' => 'Ustawienia pluginu',
-	'admin:plugins:warning:unmet_dependencies_active' => 'Ten plugin jest aktywny, ale ma niespełnione zależności. Możesz napotkać problemy. Zobacz \'więcej informacji\' w celu uzuskania szczegółów.',
+	'admin:plugin_settings' => 'Ustawienia rozszerzenia',
+	'admin:plugins:warning:unmet_dependencies_active' => 'To rozszerzenie jest aktywne, ale ma niespełnione zależności. Możesz napotkać problemy. Zobacz \'więcej informacji\' w celu uzuskania szczegółów.',
 
 	'admin:plugins:dependencies:type' => 'Typ',
 	'admin:plugins:dependencies:name' => 'Nazwa',
@@ -697,7 +696,7 @@ return array(
 	'admin:default_widgets:instructions' => 'Dodaj, usuń, ustaw i konfiguruj domyślne gadżety dla wybranej strony gadżetów.',
 
 	'admin:robots.txt:instructions' => "Edytuj poniżej plik robots.txt dla tej strony",
-	'admin:robots.txt:plugins' => "Pluginy dodają poniższe do pliku robots.txt",
+	'admin:robots.txt:plugins' => "Rozszerzenia dodają poniższą treść do pliku robots.txt",
 	'admin:robots.txt:subdir' => "Plik robots.txt nie zadziała, ponieważ Elgg jest zainstalowany w podkatalogu",
 
 	'admin:maintenance_mode:default_message' => 'Ta strona jest w trakcie prac konserwacyjnych',
@@ -713,7 +712,7 @@ return array(
  * User settings
  */
 		
-	'usersettings:description' => "Panel ustawień użytkownika pozwala na kontrolę wszystkich ustawień osobistych. Wybierz opcję poniżej, aby rozpocząć.",
+	'usersettings:description' => "Panel ustawień użytkownika pozwala na kontrolę wszystkich ustawień osobistych oraz zachowania rozszerzeń. Wybierz opcję poniżej, aby rozpocząć.",
 
 	'usersettings:statistics' => "Twoje statystyki",
 	'usersettings:statistics:opt:description' => "Zobacz informacje statystyczne na temat użytkowników i obiektów na stronie.",
@@ -973,7 +972,7 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
  * Time
  */
 
-	'friendlytime:justnow' => "tylko teraz",
+	'friendlytime:justnow' => "przed chwilą",
 	'friendlytime:minutes' => "%s minut temu",
 	'friendlytime:minutes:singular' => "minutę temu",
 	'friendlytime:hours' => "%s godzin temu",
@@ -1129,7 +1128,7 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
  * Welcome
  */
 
-	'welcome' => "Witaj %s",
+	'welcome' => "Witaj",
 	'welcome:user' => 'Witaj %s',
 
 /**
@@ -1157,7 +1156,7 @@ Aby zobaczyć jego profil, kliknij tutaj:
 Nie możesz odpowiedzieć na ten e-mail.",
 
 	'email:changepassword:subject' => "Hasło zmienione!",
-	'email:changepassword:body' => "WItaj %s,
+	'email:changepassword:body' => "Witaj %s,
 
 Twoje hasło zostało zmienione.",
 
@@ -1234,7 +1233,7 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	
 	'byline' => 'Przez %s',
 	'entity:default:strapline' => 'Stworzone %s przez %s',
-	'entity:default:missingsupport:popup' => 'Przedmiot ten nie może zostać wyświetlony poprawnie. Może to być spowodowane brakiem wtyczki.',
+	'entity:default:missingsupport:popup' => 'Przedmiot ten nie może zostać wyświetlony poprawnie. Może to być spowodowane brakiem uprzednio zainstalowanego rozszerzenia.',
 
 	'entity:delete:success' => 'Element %s został skasowany',
 	'entity:delete:fail' => 'Element %s nie został skasowany',
