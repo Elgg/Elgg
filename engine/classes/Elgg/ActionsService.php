@@ -253,9 +253,9 @@ class ActionsService {
 		$session_id = _elgg_services()->session->getId();
 		// Session token
 		$st = _elgg_services()->session->get('__elgg_session');
-	
-		if (($site_secret) && ($session_id)) {
-			return md5($site_secret . $timestamp . $session_id . $st);
+
+		if ($session_id && $site_secret) {
+			return _elgg_hmac($timestamp . $session_id . $st, $site_secret, 'md5');
 		}
 	
 		return false;
