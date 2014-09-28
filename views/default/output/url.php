@@ -14,7 +14,7 @@
  */
 
 $url = elgg_extract('href', $vars, null);
-if (!$url and isset($vars['value'])) {
+if (!$url && isset($vars['value'])) {
 	$url = trim($vars['value']);
 	unset($vars['value']);
 }

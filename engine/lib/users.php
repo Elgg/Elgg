@@ -711,8 +711,31 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
  * @return string Invite code
  */
 function generate_invite_code($username) {
-	$secret = datalist_get('__site_secret__');
-	return md5($username . $secret);
+	$time = time();
+	return $time . "." . _elgg_hmac($time . $username);
+}
+
+/**
+ * Validate a user's invite code
+ *
+ * @param string $username The username
+ * @param string $code     The invite code
+ *
+ * @return bool
+ */
+function elgg_validate_invite_code($username, $code) {
+	if (!preg_match('~^(\d+)\.(\w+)$~', $code, $m)) {
+		return false;
+	}
+	$time = $m[1];
+	$mac = $m[2];
+	if ($mac !== _elgg_hmac($time . $username)) {
+		return false;
+	}
+	if ((time() - $time) > 86400 * 10) {
+		return false;
+	}
+	return true;
 }
 
 /**

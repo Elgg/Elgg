@@ -1,9 +1,10 @@
 <?php
+namespace Elgg;
+
 /**
  * Tests the commit message validation shell script used by the git hook and travis
  */
-
-class ElggCommitMessageGitHookTest extends \PHPUnit_Framework_TestCase {
+class CommitMessageGitHookTest extends \PHPUnit_Framework_TestCase {
 	protected $scriptsDir;
 	protected $filesDir;
 	protected $validateScript;
@@ -13,8 +14,8 @@ class ElggCommitMessageGitHookTest extends \PHPUnit_Framework_TestCase {
 			$this->markTestSkipped('Can only test in *nix envs.');
 		}
 
-		$this->scriptsDir = dirname(dirname(dirname(dirname(__FILE__)))) . '/.scripts/';
-		$this->filesDir = dirname(__FILE__) . '/test_files/commit_messages/';
+		$this->scriptsDir = dirname(dirname(dirname(dirname(__DIR__)))) . '/.scripts/';
+		$this->filesDir = dirname(__DIR__) . '/test_files/commit_messages/';
 		$this->validateScript = "php {$this->scriptsDir}validate_commit_msg.php";
 
 		parent::setUp();

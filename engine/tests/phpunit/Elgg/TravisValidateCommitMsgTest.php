@@ -1,9 +1,10 @@
 <?php
+namespace Elgg;
+
 /**
  * Tests the travis shell script
  */
-
-class ElggTravisValidateCommitMsgTest extends \ElggCommitMessageGitHookTest {
+class TravisValidateCommitMsgTest extends CommitMessageGitHookTest {
 	protected $travisScript;
 
 	public function setUp() {
