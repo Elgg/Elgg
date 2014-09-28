@@ -188,7 +188,7 @@ function generate_action_token($timestamp) {
  * @return string
  *
  * @access private
- * @since 1.9
+ * @since 1.10
  */
 function _elgg_hmac($data, $key = '', $algo = 'sha256') {
 	if (!$key) {

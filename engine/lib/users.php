@@ -709,6 +709,7 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
  * @param string $username The username of the user sending the invitation
  *
  * @return string Invite code
+ * @see elgg_validate_invite_code
  */
 function generate_invite_code($username) {
 	$time = time();
@@ -722,20 +723,17 @@ function generate_invite_code($username) {
  * @param string $code     The invite code
  *
  * @return bool
+ * @see generate_invite_code
+ * @since 1.10
  */
 function elgg_validate_invite_code($username, $code) {
+	// This line validates the format of the token created by generate_invite_code()
 	if (!preg_match('~^(\d+)\.(\w+)$~', $code, $m)) {
 		return false;
 	}
 	$time = $m[1];
 	$mac = $m[2];
-	if ($mac !== _elgg_hmac($time . $username)) {
-		return false;
-	}
-	if ((time() - $time) > 86400 * 10) {
-		return false;
-	}
-	return true;
+	return $mac === _elgg_hmac($time . $username);
 }
 
 /**
