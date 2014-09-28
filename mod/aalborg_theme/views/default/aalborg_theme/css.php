@@ -116,21 +116,15 @@ html {
 	}
 	.elgg-main {
         padding: 12px 20px 10px;
+		
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
     }
-    .elgg-layout-one-sidebar .elgg-main {
-        width: auto;
+    .elgg-layout-one-sidebar .elgg-main,
+	.elgg-layout-two-sidebar .elgg-main {
+        width: 100%;
     }
-    .elgg-layout-two-sidebar .elgg-main {
-        width: auto;
-    }
-	.elgg-layout-one-sidebar {
-		width: 100%;
-		float: left;
-	}
-	.elgg-layout-two-sidebar {
-		width: 100%;
-		float: left;
-	}
 	.elgg-sidebar {
 		border-left: none;
 		border-top: 1px solid #DCDCDC;

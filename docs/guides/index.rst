@@ -12,6 +12,8 @@ Customize Elgg's behavior with plugins.
    i18n
    events-list
    hooks-list
+   menus
+   river
    routing
    widgets
    views

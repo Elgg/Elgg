@@ -1101,11 +1101,11 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:site_secret_warning:moderate' => "You are encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 	'upgrade:site_secret_warning:weak' => "You are strongly encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 
-	'ElggUpgrade:error:url_invalid' => 'Invalid value for URL.',
-	'ElggUpgrade:error:url_not_unique' => 'Upgrade URLs must be unique.',
+	'ElggUpgrade:error:url_invalid' => 'Invalid value for URL path.',
+	'ElggUpgrade:error:url_not_unique' => 'Upgrade URL paths must be unique.',
 	'ElggUpgrade:error:title_required' => 'ElggUpgrade objects must have a title.',
 	'ElggUpgrade:error:description_required' => 'ElggUpgrade objects must have a description.',
-	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade objects must have an upgrade URL.',
+	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade objects must have an upgrade URL path.',
 
 	'deprecated:function' => '%s() was deprecated by %s()',
 
@@ -1287,7 +1287,7 @@ Please do not reply to this email.",
 	'elgg:powered' => "Powered by Elgg",
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 
 	"aa" => "Afar",
@@ -1307,6 +1307,7 @@ Please do not reply to this email.",
 	"bo" => "Tibetan",
 	"br" => "Breton",
 	"ca" => "Catalan",
+	"cmn" => "Mandarin Chinese", // ISO 639-3
 	"co" => "Corsican",
 	"cs" => "Czech",
 	"cy" => "Welsh",
@@ -1383,6 +1384,7 @@ Please do not reply to this email.",
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
+	"pt_br" => 'Brazilian Portuguese',
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
