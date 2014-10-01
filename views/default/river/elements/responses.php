@@ -14,6 +14,8 @@ if ($responses) {
 }
 
 $item = $vars['item'];
+/* @var ElggRiverItem $item */
+
 $object = $item->getObjectEntity();
 $target = $item->getTargetEntity();
 

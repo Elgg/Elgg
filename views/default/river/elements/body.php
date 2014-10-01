@@ -10,6 +10,7 @@
  */
 
 $item = $vars['item'];
+/* @var ElggRiverItem $item */
 
 $menu = elgg_view_menu('river', array(
 	'item' => $item,
@@ -31,13 +32,13 @@ if ($summary === false) {
 	));
 }
 
-$message = elgg_extract('message', $vars, false);
-if ($message !== false) {
+$message = elgg_extract('message', $vars);
+if ($message !== null) {
 	$message = "<div class=\"elgg-river-message\">$message</div>";
 }
 
-$attachments = elgg_extract('attachments', $vars, false);
-if ($attachments !== false) {
+$attachments = elgg_extract('attachments', $vars);
+if ($attachments !== null) {
 	$attachments = "<div class=\"elgg-river-attachments clearfix\">$attachments</div>";
 }
 
