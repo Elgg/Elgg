@@ -13,7 +13,7 @@ Translations are stored in PHP files in the ``/languages`` directory of your plu
 .. code-block:: php
 
    <?php
-   
+
    // mod/example/languages/en.php
    return array(
      ‘example:text’ => ‘Some example text’,
@@ -74,7 +74,14 @@ Javascript API
 
 This function is the exact counterpart to ``elgg_echo`` in PHP.
 
-Client-side translations are loaded asynchronously. This means ``elgg.echo`` will not be ready until after the system is done initializing. 
+Client-side translations are loaded asynchronously. Ensure translations are available by requiring the "elgg" AMD module:
 
+.. code-block:: javascript
 
+	define(function(require) {
+		var elgg = require("elgg");
 
+		alert(elgg.echo('my_key'));
+	});
+
+Translations are also available after the ``init, system`` JavaScript event.
