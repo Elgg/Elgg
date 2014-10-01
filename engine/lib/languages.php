@@ -14,11 +14,14 @@
  * @param array  $args        An array of arguments to pass through vsprintf().
  * @param string $language    Optionally, the standard language code
  *                            (defaults to site/user default, then English)
+ * @param bool   $quiet       If set to true, no notices will be logged about missing translations
+ *                            and the function will return an empty string if no translation is found. This is
+ *                            particularly useful for allowing missing translations with fallback keys.
  *
- * @return string Either the translated string, the English string,
- * or the original language string.
+ * @return string|false Either the translated string, the English string, or the original language string. If
+ *                      $quiet is true, "" may be returned.
  */
-function elgg_echo($message_key, $args = array(), $language = "") {
+function elgg_echo($message_key, $args = array(), $language = "", $quiet = false) {
 	global $CONFIG;
 
 	static $CURRENT_LANGUAGE;
@@ -50,8 +53,13 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 		$string = $CONFIG->translations[$language][$message_key];
 	} else if (isset($CONFIG->translations["en"][$message_key])) {
 		$string = $CONFIG->translations["en"][$message_key];
-		elgg_log(sprintf('Missing %s translation for "%s" language key', $language, $message_key), 'NOTICE');
+		if (!$quiet) {
+			elgg_log(sprintf('Missing %s translation for "%s" language key', $language, $message_key), 'NOTICE');
+		}
 	} else {
+		if ($quiet) {
+			return false;
+		}
 		$string = $message_key;
 		elgg_log(sprintf('Missing English translation for "%s" language key', $message_key), 'NOTICE');
 	}

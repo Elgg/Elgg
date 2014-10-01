@@ -3,7 +3,7 @@ Internationalization
 
 Make your UI translatable into many different languages.
 
-If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`.
+If you'd like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`.
 
 Overview
 ========
@@ -13,27 +13,27 @@ Translations are stored in PHP files in the ``/languages`` directory of your plu
 .. code:: php
 
    <?php
-   
+
    // mod/example/languages/en.php
    return array(
-     ‘example:text’ => ‘Some example text’,
+     'example:text' => 'Some example text',
    );
 
 The default language is “en” for English.
 
-To change the wording of any phrase, provide a new mapping in your plugin’s ``{language}.php`` file for the associated key:
+To change the wording of any phrase, provide a new mapping in your plugin's ``{language}.php`` file for the associated key:
 
 .. code:: php
 
    <?php
 
    return array(
-     ‘example:text’ => ‘This is an example’,
+     'example:text' => 'This is an example',
    );
 
 .. note::
 
-   Unless you are overriding core’s or another plugin’s language strings, it is good practice for the language keys to start with your plugin name. For example: “yourplugin:success,” “yourplugin:title,” etc. This helps avoid conflicts with other language keys.
+   Unless you are overriding core's or another plugin's language strings, it is good practice for the language keys to start with your plugin name. For example: “yourplugin:success,” “yourplugin:title,” etc. This helps avoid conflicts with other language keys.
 
 
 Server-side API
@@ -47,15 +47,15 @@ Example:
 
 .. code:: php
 
-   echo elgg_echo(‘example:text’);
+   echo elgg_echo('example:text');
 
 It also supports variable replacement using sprintf syntax:
 
 .. code:: php
 
-   // ‘welcome’ => ‘Welcome to %s, %s!’
-   echo elgg_echo(‘welcome’, array(
-     elgg_get_config(‘sitename’),
+   // 'welcome' => 'Welcome to %s, %s!'
+   echo elgg_echo('welcome', array(
+     elgg_get_config('sitename'),
      elgg_get_logged_in_user_entity()->name,
    ));
 
@@ -63,9 +63,18 @@ To force which language should be used for translation, set the third parameter:
 
 .. code:: php
 
-   echo elgg_echo(‘welcome’, array(), ‘es’);
+   echo elgg_echo('welcome', array(), 'es');
 
+You can use the ``$quiet`` parameter to allow translation key fallbacks:
 
+.. code:: php
+
+    $key = 'key_that_may_not_exist';
+    $output = elgg_echo($key, array(), '', true);
+    if (false === $output) {
+        $key = 'fallback_key';
+        $output = (string)elgg_echo($key, array(), '', true);
+    }
 
 Javascript API
 ==============
@@ -74,7 +83,7 @@ Javascript API
 
 This function is the exact counterpart to ``elgg_echo`` in PHP.
 
-Client-side translations are loaded asynchronously. This means ``elgg.echo`` will not be ready until after the system is done initializing. 
+Client-side translations are loaded asynchronously. This means ``elgg.echo`` will not be ready until after the system is done initializing.
 
 
 
