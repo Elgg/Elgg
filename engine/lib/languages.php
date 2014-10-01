@@ -8,15 +8,20 @@
  */
 
 /**
- * Given a message key, returns an appropriately translated full-text string
+ * Given a message key, returns an appropriately translated full-text string.
  *
- * @param string $message_key The short message code
+ * The function will fallback to an English translation, but emits a notice upon doing so.
+ *
+ * If you wish to try multiple keys, or "test" keys, give an array for $message_key. The
+ * function will return the first translation available, or false if none are found.
+ *
+ * @param string $message_key The short message code, or an array of codes
  * @param array  $args        An array of arguments to pass through vsprintf().
  * @param string $language    Optionally, the standard language code
  *                            (defaults to site/user default, then English)
  *
- * @return string Either the translated string, the English string,
- * or the original language string.
+ * @return string|false Either the translated string, the English string,
+ * or the original language string. May be false if $message_key is an array.
  */
 function elgg_echo($message_key, $args = array(), $language = "") {
 	global $CONFIG;
@@ -44,6 +49,24 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 	}
 	if (!$language) {
 		$language = $CURRENT_LANGUAGE;
+	}
+
+	if (is_array($message_key)) {
+		foreach ($message_key as $key) {
+			if (isset($CONFIG->translations[$language][$key])) {
+				$string = $CONFIG->translations[$language][$key];
+			} elseif (isset($CONFIG->translations["en"][$key])) {
+				$string = $CONFIG->translations["en"][$key];
+			} else {
+				continue;
+			}
+
+			if ($args) {
+				$string = vsprintf($string, $args);
+			}
+			return $string;
+		}
+		return false;
 	}
 
 	if (isset($CONFIG->translations[$language][$message_key])) {
