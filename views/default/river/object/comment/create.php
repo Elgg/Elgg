@@ -25,12 +25,13 @@ $target_link = elgg_view('output/url', array(
 
 $type = $target->getType();
 $subtype = $target->getSubtype() ? $target->getSubtype() : 'default';
+
 $key = "river:comment:$type:$subtype";
-$summary = elgg_echo($key, array($subject_link, $target_link));
-if ($summary == $key) {
+$lang = elgg_get_echo_language($key);
+if (!$lang) {
 	$key = "river:comment:$type:default";
-	$summary = elgg_echo($key, array($subject_link, $target_link));
 }
+$summary = elgg_echo($key, array($subject_link, $target_link), $lang);
 
 echo elgg_view('river/elements/layout', array(
 	'item' => $vars['item'],

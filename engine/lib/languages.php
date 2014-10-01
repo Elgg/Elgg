@@ -66,6 +66,45 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 }
 
 /**
+ * Get the language in which the translation key exists. This is for checking keys before
+ * use in elgg_echo().
+ *
+ * Like elgg_echo(), if language is not "en" then this also checks for an English translation. The
+ * developer can then decide whether or not to accept an English translation.
+ *
+ * @param string $key      The translation key to search for
+ * @param string $language The language code to check first. Defaults to get_current_language()
+ *
+ * @return string The language code in which the translation key was found, or empty string.
+ *
+ * @see get_current_language
+ * @see elgg_echo
+ * @since 1.10
+ */
+function elgg_get_echo_language($key, $language = "") {
+	global $CONFIG;
+
+	if (!isset($CONFIG->translations)) {
+		// this means we probably had an exception before translations were initialized
+		register_translations(dirname(dirname(dirname(__FILE__))) . "/languages/");
+	}
+
+	if (!$language) {
+		$language = get_current_language();
+	}
+
+	if (isset($CONFIG->translations[$language][$key])) {
+		return $language;
+	}
+
+	if ($language !== 'en' && isset($CONFIG->translations['en'][$key])) {
+		return 'en';
+	}
+
+	return '';
+}
+
+/**
  * Add a translation.
  *
  * Translations are arrays in the Zend Translation array format, eg:
