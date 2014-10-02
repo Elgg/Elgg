@@ -267,7 +267,7 @@ elgg.ui.loginHandler = function(hook, type, params, options) {
  * @requires jqueryui.datepicker
  */
 elgg.ui.initDatePicker = function() {
-	var loadDatePicker = function() {
+	function loadDatePicker() {
 		$('.elgg-input-date').datepicker({
 			// ISO-8601
 			dateFormat: 'yy-mm-dd',
@@ -283,11 +283,16 @@ elgg.ui.initDatePicker = function() {
 				}
 			}
 		});
-	};
-	
-	if ($('.elgg-input-date').length && elgg.get_language() == 'en') {
+	}
+
+	if (!$('.elgg-input-date').length) {
+		return;
+	}
+
+	if (elgg.get_language() == 'en') {
 		loadDatePicker();
-	} else if ($('.elgg-input-date').length) {
+	} else {
+		// load language first
 		elgg.get({
 			url: elgg.config.wwwroot + 'vendors/jquery/i18n/jquery.ui.datepicker-'+ elgg.get_language() +'.js',
 			dataType: "script",
@@ -301,7 +306,7 @@ elgg.ui.initDatePicker = function() {
 /**
  * This function registers two menu items that are actions that are the opposite
  * of each other and ajaxifies them. E.g. like/unlike, friend/unfriend, ban/unban, etc.
- * 
+ *
  * Note the menu item names must be given in their normalized form. So if the
  * name is remove_friend, you should call this function with "remove-friend" instead.
  */
@@ -309,10 +314,10 @@ elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 	// Handles clicking the first button.
 	$('.elgg-menu-item-' + menuItemNameA + ' a').live('click', function() {
 		var $menu = $(this).closest('.elgg-menu');
-		
+
 		// Be optimistic about success
 		elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
-		
+
 		// Send the ajax request
 		elgg.action($(this).attr('href'), {
 			success: function(json) {
@@ -325,19 +330,19 @@ elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 				// Something went wrong, so undo the optimistic changes
 				elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
 			}
-		}); 
-		
+		});
+
 		// Don't want to actually click the link
 		return false;
 	});
-	
+
 	// Handles clicking the second button
 	$('.elgg-menu-item-' + menuItemNameB + ' a').live('click', function() {
 		var $menu = $(this).closest('.elgg-menu');
-		
+
 		// Be optimistic about success
 		elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
-		
+
 		// Send the ajax request
 		elgg.action($(this).attr('href'), {
 			success: function(json) {
@@ -350,8 +355,8 @@ elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 				// Something went wrong, so undo the optimistic changes
 				elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
 			}
-		}); 
-		
+		});
+
 		// Don't want to actually click the link
 		return false;
 	});
