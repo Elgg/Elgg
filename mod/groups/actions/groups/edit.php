@@ -192,7 +192,7 @@ if ($has_uploaded_icon) {
 	$filehandler->close();
 	$filename = $filehandler->getFilenameOnFilestore();
 
-	$sizes = array('tiny', 'small', 'medium', 'large');
+	$sizes = array('tiny', 'small', 'medium', 'large', 'master');
 
 	$thumbs = array();
 	foreach ($sizes as $size) {
