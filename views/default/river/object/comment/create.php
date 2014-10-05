@@ -4,6 +4,7 @@
  */
 
 $item = $vars['item'];
+/* @var ElggRiverItem $item */
 
 $comment = $item->getObjectEntity();
 $subject = $item->getSubjectEntity();

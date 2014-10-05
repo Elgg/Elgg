@@ -7,7 +7,10 @@
  * @uses $vars['item']
  */
 
-$subject = $vars['item']->getSubjectEntity();
+$item = $vars['item'];
+/* @var ElggRiverItem $item */
+
+$subject = $item->getSubjectEntity();
 
 if (elgg_in_context('widgets')) {
 	echo elgg_view_entity_icon($subject, 'tiny');
