@@ -1,3 +1,23 @@
+<a name="1.9.3"></a>
+### 1.9.3  (2014-10-06)
+
+#### Contributors
+
+* Juho Jaakkola (3)
+* Jeroen Dalsem (1)
+* Steve Clay (1)
+
+#### Documentation
+
+* **js:** Adds docs for more JS functions, improves docs for elgg.echo ([fa0d0fa8](https://github.com/Elgg/Elgg/commit/fa0d0fa873d674083f199a6f588d39edf2dc048c))
+* **menus:** document how to use menus ([18ac4008](https://github.com/Elgg/Elgg/commit/18ac4008bf3f32663df4bffca7a211dc11d15b20))
+
+
+#### Bug Fixes
+
+* **icons:** some elgg icons were not using internal view ([493e5c9f](https://github.com/Elgg/Elgg/commit/493e5c9fd0402b14428e23f3dec9c33e841de247))
+
+
 <a name="1.9.2"></a>
 ### 1.9.2  (2014-09-21)
 
