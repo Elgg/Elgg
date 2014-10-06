@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-09-21 23:12+0300\n"
+"POT-Creation-Date: 2014-10-06 21:28+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1927,7 +1927,7 @@ msgid "Server-side API"
 msgstr ""
 
 #: ../../guides/i18n.rst:42
-# 2835d6621f214f5cad2863e41a369943
+# 4d1fd26cb57549baa5b72b9c56bf92de
 msgid "``elgg_echo($key, $args, $language)``"
 msgstr ""
 
@@ -1957,7 +1957,7 @@ msgid "Javascript API"
 msgstr ""
 
 #: ../../guides/i18n.rst:73
-# bf08eaee54054a9e9920f413b21456c5
+# a1e87bb7808a48f992c653f39cc97fe7
 msgid "``elgg.echo(key, args, language)``"
 msgstr ""
 
@@ -1968,7 +1968,12 @@ msgstr ""
 
 #: ../../guides/i18n.rst:77
 # b13ce413882240b2b6cad6f584b93975
-msgid "Client-side translations are loaded asynchronously. This means ``elgg.echo`` will not be ready until after the system is done initializing."
+msgid "Client-side translations are loaded asynchronously. Ensure translations are available by requiring the \"elgg\" AMD module:"
+msgstr ""
+
+#: ../../guides/i18n.rst:87
+# fb79bed6eee646da8cbb213c6c51b30f
+msgid "Translations are also available after the ``init, system`` JavaScript event."
 msgstr ""
 
 #: ../../guides/index.rst:2
@@ -2117,7 +2122,7 @@ msgid "This will include and execute the linked code."
 msgstr ""
 
 #: ../../guides/javascript.rst:129
-# 0bd12a6c5284453391b58ce15a595d20
+# 69b5d6f9d2044af2a55827e7586a78c3
 msgid "Using inline scripts is strongly discouraged because:"
 msgstr ""
 
@@ -2148,7 +2153,7 @@ msgstr ""
 
 #: ../../guides/javascript.rst:137
 # 603aaf4ebc1f4a04a5fc952eb06b2fa5
-msgid "``elgg.echo``"
+msgid "``elgg.echo()``"
 msgstr ""
 
 #: ../../guides/javascript.rst:139
@@ -2157,8 +2162,8 @@ msgid "Translate interface text"
 msgstr ""
 
 #: ../../guides/javascript.rst:146
-# 8e8989a8136349e981ef3d5c5d76f9e9
-msgid "``elgg.system_message(message)``"
+# 9a91aee08e044996a07e1a7c5aa21c2a
+msgid "``elgg.system_message()``"
 msgstr ""
 
 #: ../../guides/javascript.rst:148
@@ -2168,7 +2173,7 @@ msgstr ""
 
 #: ../../guides/javascript.rst:155
 # 269c9f29f1ec4230a75d4c03d23adfd2
-msgid "``elgg.register_error(message)``"
+msgid "``elgg.register_error()``"
 msgstr ""
 
 #: ../../guides/javascript.rst:157
@@ -2211,104 +2216,266 @@ msgstr ""
 msgid "Parse a URL into its component parts:"
 msgstr ""
 
-#: ../../guides/javascript.rst:199
+#: ../../guides/javascript.rst:200
 # d2ca2940fdc84670b65021b043f132f9
 msgid "``elgg.get_page_owner_guid()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:201
+#: ../../guides/javascript.rst:202
 # 773a678ca8cd439c9f55afd212ba473d
 msgid "Get the GUID of the current page's owner."
 msgstr ""
 
-#: ../../guides/javascript.rst:204
+#: ../../guides/javascript.rst:205
+# c4689607c7f14fefa8856e88d08bd46e
+msgid "``elgg.register_hook_handler()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:207
+# 0e22b410d2a74d289182085db979a24b
+msgid "Register a hook handler with the event system."
+msgstr ""
+
+#: ../../guides/javascript.rst:222
+# d7bb31f2389b4586a1510f96ef09878a
+msgid "``elgg.trigger_hook()``"
+msgstr ""
+
+#: ../../guides/javascript.rst:224
+# 1a77364a43c7460db7398bf8e86efe86
+msgid "Emit a hook event in the event system."
+msgstr ""
+
+#: ../../guides/javascript.rst:232
 # ef42737ebb9b42a78a37b10ec9b91b4f
 msgid "``elgg.security.refreshToken()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:206
+#: ../../guides/javascript.rst:234
 # d32e726a1d3746d7b4bb742857620b11
 msgid "Force a refresh of all XSRF tokens on the page."
 msgstr ""
 
-#: ../../guides/javascript.rst:208
+#: ../../guides/javascript.rst:236
 # cec28f5107674bb09892db5834bd6b9b
 msgid "This is automatically called every 5 minutes by default."
 msgstr ""
 
-#: ../../guides/javascript.rst:210
+#: ../../guides/javascript.rst:238
 # f3c471e5ad1c457cbaf6b0ddebf57abb
 msgid "This requires a valid security token in 1.8, but not in 1.9."
 msgstr ""
 
-#: ../../guides/javascript.rst:212
+#: ../../guides/javascript.rst:240
 # abd41187cd51423ca3ef78b0c2529bad
 msgid "The user will be warned if their session has expired."
 msgstr ""
 
-#: ../../guides/javascript.rst:215
+#: ../../guides/javascript.rst:243
 # 1bff65805e9c43888633ee0b2969b71d
 msgid "``elgg.security.addToken()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:217
+#: ../../guides/javascript.rst:245
 # 2815b237ae5749ce87461d5acbdf63bc
 msgid "Add a security token to an object, URL, or query string:"
 msgstr ""
 
-#: ../../guides/javascript.rst:234
+#: ../../guides/javascript.rst:263
 # b24edb199bdc46a7ab68922d250b03b2
 msgid "``elgg.get_logged_in_user_entity()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:236
+#: ../../guides/javascript.rst:265
 # 2f7e900db6944ea8b8a54c1520d4f5d6
 msgid "Returns the logged in user as an JS ElggUser object."
 msgstr ""
 
-#: ../../guides/javascript.rst:239
+#: ../../guides/javascript.rst:268
 # 68d7160618e44e55a5e98598defa4540
 msgid "``elgg.get_logged_in_user_guid()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:241
+#: ../../guides/javascript.rst:270
 # f915cbf51bd3436399857401dfad6c24
 msgid "Returns the logged in user's guid."
 msgstr ""
 
-#: ../../guides/javascript.rst:244
+#: ../../guides/javascript.rst:273
 # d7bb31f2389b4586a1510f96ef09878a
 msgid "``elgg.is_logged_in()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:246
+#: ../../guides/javascript.rst:275
 # 97ebded841374a7fa16ec191926d8d47
 msgid "True if the user is logged in."
 msgstr ""
 
-#: ../../guides/javascript.rst:249
+#: ../../guides/javascript.rst:278
 # e40366f65fe5425db5cee7b240ab6358
 msgid "``elgg.is_admin_logged_in()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:251
+#: ../../guides/javascript.rst:280
 # a9c987001c1544ab8b41b13cccb0c7ba
 msgid "True if the user is logged in and is an admin."
 msgstr ""
 
-#: ../../guides/javascript.rst:254
+#: ../../guides/javascript.rst:283
 # f336be3f05584f98a494580e7027dc01
 msgid "``elgg.config.get_language()``"
 msgstr ""
 
-#: ../../guides/javascript.rst:256
+#: ../../guides/javascript.rst:285
 # 89a888ce2fce4328b2b3aae1a5efc2f6
 msgid "Get the current page's language."
 msgstr ""
 
-#: ../../guides/javascript.rst:259
+#: ../../guides/javascript.rst:288
 # d2433136f6be4607bafd2418d9e5bb03
 msgid "There are a number of configuration values set in the elgg object:"
+msgstr ""
+
+#: ../../guides/menus.rst:2
+# b30ed14a047847e3b1d0cd0493e63bcd
+msgid "Menus"
+msgstr ""
+
+#: ../../guides/menus.rst:4
+# 063b81f3cdda43578de3120a81994bf8
+msgid "Elgg contains helper code to build menus throughout the site."
+msgstr ""
+
+#: ../../guides/menus.rst:6
+# ea01b9ccb3b143f8b7b138e2cd5c9451
+msgid "Every single menu requires a name, as does every single menu item. These are required in order to allow easy overriding and manipulation, as well as to provide hooks for theming."
+msgstr ""
+
+#: ../../guides/menus.rst:11
+# 87475d85b6774cb3937ee95d5281fcfa
+msgid "Basic usage"
+msgstr ""
+
+#: ../../guides/menus.rst:13
+# 40a5fa27f61f4013bb4ff9d110cad00d
+msgid "Basic functionalities can be achieved through these two functions:"
+msgstr ""
+
+#: ../../guides/menus.rst:15
+# 09f78281213444ef944ebf6a61e471d0
+msgid "`elgg_register_menu_item()`__ to add an item to a menu"
+msgstr ""
+
+#: ../../guides/menus.rst:16
+# 694b5baf1b004a51b811aef634eef942
+msgid "`elgg_unregister_menu_item()`__ to remove an item from a menu"
+msgstr ""
+
+#: ../../guides/menus.rst:18
+# bf891e2792284caabc75ba679d8f0dfc
+msgid "You normally want to call them from your plugin's init function."
+msgstr ""
+
+#: ../../guides/menus.rst:24
+#: ../../guides/menus.rst:61
+# 2cd3f741651341fb936a2a2208bb3a27
+# 6804d5cabb524af1b7a38b18554d13ab
+msgid "Examples"
+msgstr ""
+
+#: ../../guides/menus.rst:41
+# e46c1ced32ee4fc98a910fb83effea3b
+msgid "Advanced usage"
+msgstr ""
+
+#: ../../guides/menus.rst:43
+# 68d002e522094e4ca9fb2035d7d7772e
+msgid "You can get more control over menus by using `plugin hooks </design/events.html#plugin-hooks>`_ and the public methods provided by the ElggMenuItem__ class."
+msgstr ""
+
+#: ../../guides/menus.rst:47
+# 713bb632f7f042f59a22b4719acda518
+msgid "There are two hooks that can be used to modify a menu:"
+msgstr ""
+
+#: ../../guides/menus.rst:47
+# 96739c4fd45b4fc280982cbca86a3fac
+msgid "``'register', 'menu:<menu name>'`` to add or modify items (especially in dynamic menus)"
+msgstr ""
+
+#: ../../guides/menus.rst:48
+# 46d07c6e7f5b443e82b4afa77bce4218
+msgid "``'prepare', 'menu:<menu name>'`` to modify the structure of the menu before it is displayed"
+msgstr ""
+
+#: ../../guides/menus.rst:50
+# 39fc49d975174498a2bd068513400aa2
+msgid "When you register a plugin hook handler, replace the ``<menu name>`` part with the internal name of the menu."
+msgstr ""
+
+#: ../../guides/menus.rst:53
+# 1d3dcd5c38b84fa9a0127843584cd43f
+msgid "The third parameter passed into a menu handler contains all the menu items that have been registered so far by Elgg core and other enabled plugins. In the handler we can loop through the menu items and use the class methods to interact with the properties of the menu item."
+msgstr ""
+
+#: ../../guides/menus.rst:63
+# b844201b32fa43a4a3bff880212d0bcb
+msgid "**Example 1:** Change the URL for menu item called \"albums\" in the ``owner_block`` menu:"
+msgstr ""
+
+#: ../../guides/menus.rst:104
+# c3710d90952546b2a61b4f73955a1c9a
+msgid "**Example 2:** Modify the ``entity`` menu for the ``ElggBlog`` objects"
+msgstr ""
+
+#: ../../guides/menus.rst:104
+# 274084027e7c41e08d3519f2b2ad218d
+msgid "Remove the thumb icon"
+msgstr ""
+
+#: ../../guides/menus.rst:105
+# a90c7cdfa2cc4ce79652cf9256ff9945
+msgid "Change the \"Edit\" text into a custom icon"
+msgstr ""
+
+#: ../../guides/menus.rst:147
+# 31f97ff929264ab7af31aaabe47deb19
+msgid "Creating a new menu"
+msgstr ""
+
+#: ../../guides/menus.rst:149
+# 75e17da83bdb43eb9c4cac37642e4a4b
+msgid "Elgg provides multiple different menus by default. Sometimes you may however need some menu items that don't fit in any of the existing menus. If this is the case, you can create your very own menu with the `elgg_view_menu()`__ function. You must call the function from the view, where you want to menu to be displayed."
+msgstr ""
+
+#: ../../guides/menus.rst:157
+# b82f260ca63b4a12b0eaba89adf2a6b1
+msgid "**Example:** Display a menu called \"my_menu\" that displays it's menu items in alphapetical order:"
+msgstr ""
+
+#: ../../guides/menus.rst:164
+# bd3541102e9f47a780666f4a67a8f149
+msgid "You can now add new items to the menu like this:"
+msgstr ""
+
+#: ../../guides/menus.rst:174
+# 9fd04001edae4be5aa1f33b09cebc41d
+msgid "Furthermore it is now possible to modify the menu using the hooks ``'register', 'menu:my_menu'`` and ``'prepare', 'menu:my_menu'``."
+msgstr ""
+
+#: ../../guides/menus.rst:178
+# 380ab231ed9b41aead86e39b09d8ab89
+msgid "Theming"
+msgstr ""
+
+#: ../../guides/menus.rst:180
+# 2e79830efc4c483b9c1e7eac50770bd7
+msgid "The menu name, section names, and item names are all embedded into the HTML as CSS classes (normalized to contain only hyphens, rather that underscores or colons). This increases the size of the markup slightly but provides themers with a high degree of control and flexibility when styling the site."
+msgstr ""
+
+#: ../../guides/menus.rst:185
+# ca69453835ba46e3989a3d6c770f4aa0
+msgid "**Example:** The following would be the output of the ``foo`` menu with sections ``alt`` and ``default`` containing items ``baz`` and ``bar`` respectively."
 msgstr ""
 
 #: ../../guides/plugins.rst:5

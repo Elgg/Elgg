@@ -20,7 +20,7 @@ return array(
 	'logout' => "Déconnexion",
 	'logoutok' => "Vous avez été déconnecté(e).",
 	'logouterror' => "Nous n'avons pas pu vous déconnecter. Essayez à nouveau.",
-	'session_expired' => "Votre session a expiré. Merci de recharger la page pour pouvoir vous identifier. ",
+	'session_expired' => "Suite à un temps d'inactivité prolongé, votre session de travail a expiré. Veuillez svp recharger la page afin de vous identifier à nouveau.",
 
 	'loggedinrequired' => "Vous devez être connecté(e) pour voir cette page.",
 	'adminrequired' => "Vous devez être administrateur pour voir cette page.",
@@ -692,7 +692,7 @@ return array(
 	'admin:menu_items:hide_toolbar_entries' => 'Supprimer les liens dans le menu barre d\'outils ?',
 	'admin:menu_items:saved' => 'Les éléments de menu sauvés.',
 	'admin:add_menu_item' => 'Ajouter un élément de menu personnalisé',
-	'admin:add_menu_item:description' => 'Remplissez le nom et l\'URL d\'affichage pour ajouter des éléments personnalisés à votre menu de navigation.',
+	'admin:add_menu_item:description' => 'Remplissez le nom à afficher et l\'URL correspondante afin d\'ajouter des éléments personnalisés à votre menu de navigation.',
 
 	'admin:appearance:default_widgets' => 'Widgets par défaut',
 	'admin:default_widgets:unknown_type' => 'Type du widget Inconnu',
@@ -1067,7 +1067,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'installation:minify_css:label' => "Compresser les CSS (recommandé)",
 
 	'installation:htaccess:needs_upgrade' => "Vous devez mettre à jour votre fichier .htaccess afin que le chemin soit ajouté au paramètre GET __elgg_uri (vous pouvez vous aider de htaccess_dist)",
-	'installation:htaccess:localhost:connectionfailed' => "Elgg ne peut pas se connecter à lui-même pour tester les règles de réécriture. Veuillez vérifier si l'extension curl fonctionne, et s'il n'y a pas de restriction au niveau des IP interdisant de se connecter depuis localhost.",
+	'installation:htaccess:localhost:connectionfailed' => "Elgg ne peut pas se connecter à lui-même pour tester les règles de réécriture. Veuillez vérifier si l'extension curl fonctionne, et qu'il n'y a pas de restriction au niveau des IP interdisant de se connecter depuis localhost.",
 	
 	'installation:systemcache:description' => "Le cache système diminue le temps de chargement du moteur Elgg en mettant en cache les données dans des fichiers.",
 	'installation:systemcache:label' => "Utiliser le cache système (recommandé)",
@@ -1101,11 +1101,11 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'upgrade:site_secret_warning:moderate' => "Nous vous conseillons de régénérer votre clé de site afin d'améliorer votre sécurité. Voir dans Configuration / Paramètres avancés",
 	'upgrade:site_secret_warning:weak' => "Vous êtes fortement encouragé  régénérer votre clé de site afin d'améliorer la sécurité de votre système. Voir dans Configuration / Paramètres avancés",
 
-	'ElggUpgrade:error:url_invalid' => 'Valeur incorrecte pour l\'URL.',
-	'ElggUpgrade:error:url_not_unique' => 'Les URLs de mise à jour doivent être uniques.',
+	'ElggUpgrade:error:url_invalid' => 'Valeur non valide pour le chemin de l\'URL',
+	'ElggUpgrade:error:url_not_unique' => 'Les chemins d\'URL de mise à niveau doivent être uniques.',
 	'ElggUpgrade:error:title_required' => 'Les objets de mise à niveau ElggUpgrade doivent avoir un titre.',
 	'ElggUpgrade:error:description_required' => 'Les objets de mise à niveau ElggUpgrade doivent avoir une description.',
-	'ElggUpgrade:error:upgrade_url_required' => 'Les objets de mise à niveau ElggUpgrade doivent avoir une URL de mise à niveau.',
+	'ElggUpgrade:error:upgrade_url_required' => 'Les objets ElggUpgrade doivent avoir un chemin d\'URL de mise à niveau.',
 
 	'deprecated:function' => '%s() a été déclaré obsolète par %s()',
 
@@ -1287,7 +1287,7 @@ Ne répondez pas à cet e-mail.",
 	'elgg:powered' => "Propulsé par Elgg",
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 
 	"aa" => "Afar",
@@ -1307,6 +1307,7 @@ Ne répondez pas à cet e-mail.",
 	"bo" => "Tibétain",
 	"br" => "Breton",
 	"ca" => "Catalan",
+	"cmn" => "Chinois Mandarin", // ISO 639-3
 	"co" => "Corse",
 	"cs" => "Tchèque",
 	"cy" => "Gallois",
@@ -1383,6 +1384,7 @@ Ne répondez pas à cet e-mail.",
 	"pl" => "Polonais",
 	"ps" => "Pachto",
 	"pt" => "Portugais",
+	"pt_br" => 'Portugais Brésilien',
 	"qu" => "Quechua",
 	"rm" => "Romanche",
 	"rn" => "Kirundi",
