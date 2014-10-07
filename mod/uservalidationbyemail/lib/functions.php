@@ -48,9 +48,22 @@ function uservalidationbyemail_request_validation($user_guid, $admin_requested =
 		// Get email to show in the next page
 		elgg_get_session()->set('emailsent', $user->email);
 
+		$subject = elgg_echo('email:validate:subject', array(
+				$user->name,
+				$site->name
+			), $user->language
+		);
+
+		$body = elgg_echo('email:validate:body', array(
+				$user->name,
+				$site->name,
+				$link,
+				$site->name,
+				$site->url
+			), $user->language
+		);
+
 		// Send validation email
-		$subject = elgg_echo('email:validate:subject', array($user->name, $site->name));
-		$body = elgg_echo('email:validate:body', array($user->name, $site->name, $link, $site->name, $site->url));
 		$result = notify_user($user->guid, $site->guid, $subject, $body, array(), 'email');
 
 		return $result;

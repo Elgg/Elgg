@@ -393,15 +393,24 @@ function send_new_password_request($user_guid) {
 		$user->setPrivateSetting('passwd_conf_code', $code);
 		$user->setPrivateSetting('passwd_conf_time', time());
 
-		// generate link
+		// email subject
+		$subject = elgg_echo('email:changereq:subject', array(), $user->language);
+
+		// link for changing the password
 		$link = elgg_get_site_url() . "changepassword?u=$user_guid&c=$code";
 
-		// generate email
+		// IP address of the current user
 		$ip_address = _elgg_services()->request->getClientIp();
-		$email = elgg_echo('email:changereq:body', array($user->name, $ip_address, $link));
+
+		// email message body
+		$email = elgg_echo('email:changereq:body', array(
+			$user->name,
+			$ip_address,
+			$link
+		), $user->language);
 
 		return notify_user($user->guid, elgg_get_site_entity()->guid,
-			elgg_echo('email:changereq:subject'), $email, array(), 'email');
+			$subject, $email, array(), 'email');
 	}
 
 	return false;
@@ -480,8 +489,8 @@ function execute_new_password_request($user_guid, $conf_code, $password = null) 
 
 		notify_user($user->guid,
 			elgg_get_site_entity()->guid,
-			elgg_echo("email:$ns:subject"),
-			elgg_echo("email:$ns:body", array($user->username, $password)),
+			elgg_echo("email:$ns:subject", array(), $user->language),
+			elgg_echo("email:$ns:body", array($user->username, $password), $user->language),
 			array(),
 			'email'
 		);
@@ -545,7 +554,7 @@ function validate_username($username) {
 		$msg = elgg_echo('registration:usernametooshort', array($CONFIG->minusername));
 		throw new RegistrationException($msg);
 	}
-	
+
 	// username in the database has a limit of 128 characters
 	if (strlen($username) > 128) {
 		$msg = elgg_echo('registration:usernametoolong', array(128));
@@ -1094,7 +1103,7 @@ function users_pagesetup() {
 	$owner = elgg_get_page_owner_entity();
 	$viewer = elgg_get_logged_in_user_entity();
 
-	if ($owner) {		
+	if ($owner) {
 		elgg_register_menu_item('page', array(
 			'name' => 'edit_avatar',
 			'href' => "avatar/edit/{$owner->username}",

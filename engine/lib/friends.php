@@ -210,9 +210,19 @@ function _elgg_send_friend_notification($event, $type, $object) {
 	$user_one = get_entity($object->guid_one);
 	/* @var ElggUser $user_one */
 
-	return notify_user($object->guid_two,
-			$object->guid_one,
-			elgg_echo('friend:newfriend:subject', array($user_one->name)),
-			elgg_echo("friend:newfriend:body", array($user_one->name, $user_one->getURL()))
-	);
+	$user_two = get_entity($object->guid_two);
+	/* @var ElggUser $user_two */
+
+	// Notification subject
+	$subject = elgg_echo('friend:newfriend:subject', array(
+		$user_one->name
+	), $user_two->language);
+
+	// Notification body
+	$body = elgg_echo("friend:newfriend:body", array(
+		$user_one->name,
+		$user_one->getURL()
+	), $user_two->language);
+
+	return notify_user($user_two->guid, $object->guid_one, $subject, $body);
 }

@@ -52,18 +52,22 @@ if ($entity->owner_guid != $user->guid) {
 	$site = elgg_get_site_entity();
 
 	$subject = elgg_echo('likes:notifications:subject', array(
-					$user->name,
-					$title_str
-				));
+			$user->name,
+			$title_str
+		),
+		$owner->language
+	);
 
 	$body = elgg_echo('likes:notifications:body', array(
-					$owner->name,
-					$user->name,
-					$title_str,
-					$site->name,
-					$entity->getURL(),
-					$user->getURL()
-				));
+			$owner->name,
+			$user->name,
+			$title_str,
+			$site->name,
+			$entity->getURL(),
+			$user->getURL()
+		),
+		$owner->language
+	);
 
 	notify_user(
 		$entity->owner_guid,
