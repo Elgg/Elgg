@@ -1101,12 +1101,6 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:site_secret_warning:moderate' => "You are encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 	'upgrade:site_secret_warning:weak' => "You are strongly encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 
-	'ElggUpgrade:error:url_invalid' => 'Invalid value for URL path.',
-	'ElggUpgrade:error:url_not_unique' => 'Upgrade URL paths must be unique.',
-	'ElggUpgrade:error:title_required' => 'ElggUpgrade objects must have a title.',
-	'ElggUpgrade:error:description_required' => 'ElggUpgrade objects must have a description.',
-	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade objects must have an upgrade URL path.',
-
 	'deprecated:function' => '%s() was deprecated by %s()',
 
 	'admin:pending_upgrades' => 'The site has pending upgrades that require your immediate attention.',
