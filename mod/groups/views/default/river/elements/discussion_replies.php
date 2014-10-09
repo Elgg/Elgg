@@ -15,8 +15,6 @@ $options = array(
 $count = elgg_get_entities($options);
 
 if ($count) {
-	$replies_text = elgg_echo('group:replies');
-	echo "<span class=\"elgg-river-comments-tab\">$replies_text</span>";
 
 	$list_options = array(
 		'order_by' => 'e.time_created desc',
