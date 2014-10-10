@@ -14,8 +14,6 @@ if ($responses) {
 }
 
 $item = $vars['item'];
-/* @var ElggRiverItem $item */
-
 $object = $item->getObjectEntity();
 $target = $item->getTargetEntity();
 
@@ -39,11 +37,6 @@ if ($comments) {
 	// comments by sorting desc and limiting by 3, but we want to display
 	// these comments with the latest at the bottom.
 	$comments = array_reverse($comments);
-
-?>
-	<span class="elgg-river-comments-tab"><?php echo elgg_echo('comments'); ?></span>
-
-<?php
 
 	echo elgg_view_entity_list($comments, array('list_class' => 'elgg-river-comments'));
 
