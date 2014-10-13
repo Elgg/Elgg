@@ -149,6 +149,12 @@ Views
 **head, page**
     In elgg_view_page(), filters $vars['head']
 
+Files
+=====
+
+**mime_type, file**
+    In ElggFile::detectMimeType, filters the detected mime type
+
 Other
 =====
 

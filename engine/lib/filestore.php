@@ -45,7 +45,7 @@ function get_uploaded_file($input_name) {
 	if (!$files->has($input_name)) {
 		return false;
 	}
-	
+
 	$file = $files->get($input_name);
 	if (elgg_extract('error', $file) !== 0) {
 		return false;
@@ -500,8 +500,51 @@ function _elgg_filestore_init() {
 		set_default_filestore(new \ElggDiskFilestore($CONFIG->dataroot));
 	}
 
+	// Fix mimetype detection for Microsoft zipped formats
+	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
+
 	// Unit testing
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
+}
+
+/**
+ * Fix mimetype detection for Microsoft zipped formats
+ *
+ * @param string $hook     Hook name
+ * @param string $type     Hook type
+ * @param string $mime_type Detected mimetype
+ * @param array  $params   Hook parameters
+ * @return string
+ * @access private
+ */
+function _elgg_filestore_detect_mimetype($hook, $type, $mime_type, $params) {
+
+	$original_filename = elgg_extract('original_filename', $params);
+
+	$info = pathinfo($original_filename);
+
+	// hack for Microsoft zipped formats
+	$office_formats = array('docx', 'xlsx', 'pptx');
+	if ($mime_type == "application/zip" && in_array($info['extension'], $office_formats)) {
+		switch ($info['extension']) {
+			case 'docx':
+				$mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+				break;
+			case 'xlsx':
+				$mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+				break;
+			case 'pptx':
+				$mime_type = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+				break;
+		}
+	}
+
+	// check for bad ppt detection
+	if ($mime_type == "application/vnd.ms-office" && $info['extension'] == "ppt") {
+		$mime_type = "application/vnd.ms-powerpoint";
+	}
+
+	return $mime_type;
 }
 
 /**
