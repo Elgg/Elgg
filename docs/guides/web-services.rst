@@ -9,8 +9,9 @@ applications along with doing integrations with third-party web
 applications. While we call the API RESTful, it is actually a REST/RPC
 hybrid similar to the APIs provided by sites like Flickr and Twitter.
 
-To create an API for your Elgg site, you need to do 3 things:
+To create an API for your Elgg site, you need to do 4 things:
 
+-  enable the web services plugin
 -  expose methods
 -  setup API authentication
 -  setup user authentication
@@ -21,7 +22,7 @@ available on your site. This will also be covered.
 Exposing methods
 ----------------
 
-The function to use to expose a method is `expose\_function()`_. As an
+The function to use to expose a method is ``elgg_ws_expose_function()``. As an
 example, let's assume you want to expose a function that echos text back
 to the calling application. The function could look like this
 
@@ -38,7 +39,7 @@ API framework:
 
 .. code:: php
 
-    expose_function("test.echo", 
+    elgg_ws_expose_function("test.echo", 
                     "my_echo", 
                      array("string" => array('type' => 'string')),
                      'A testing method which echos back a string',
@@ -80,8 +81,6 @@ possibility is that you want to limit what external developers have
 access to your API. Or maybe you want to limit how many calls a
 developer can make against your API in a single day.
 
-.. _expose\_function(): http://reference.elgg.org/lib_2api_8php.html#6d685d08532695a80625908f846d9cb6
-
 In all of these cases, you can use Elgg's API authentication functions
 to control access. Elgg provides two built-in methods to perform API
 authentication: key based and HMAC signature based. You can also add
@@ -111,7 +110,7 @@ parameter:
 
 .. code:: php
 
-    expose_function("users.active", 
+    elgg_ws_expose_function("users.active", 
                     "count_active_users", 
                      array("minutes" => array('type' => 'int',
                                               'required' => false)),
@@ -192,7 +191,7 @@ GET HTTP requests.
 
 .. code:: php
 
-    expose_function("thewire.post", 
+    elgg_ws_expose_function("thewire.post", 
                     "my_post_to_wire", 
                      array("text" => array('type' => 'string')),
                      'Post to the wire. 140 characters or less',
