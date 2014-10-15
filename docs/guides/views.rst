@@ -225,6 +225,18 @@ This function checks to see if there are any entities; if there are, it first di
 
 Because it does this, Elgg knows that it can automatically supply an RSS feed - it extends the ``metatags`` view (which is called by the header) in order to provide RSS autodiscovery, which is why you can see the orange RSS icon on those pages.
 
+If your entity list will display the entity owners, you can improve performance a bit by preloading all owner entities:
+
+.. code-block:: php
+
+	echo elgg_list_entities(array(
+	    'type' => 'object',
+	    'subtype' => 'blog',
+
+	    // enable owner preloading
+	    'preload_owners' => true,
+	));
+
 See also :doc:`check this page out first </design/database>`.
 
 Using a different templating system

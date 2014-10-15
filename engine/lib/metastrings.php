@@ -248,6 +248,7 @@ function _elgg_get_metastring_based_objects($options) {
 		'wheres' => array(),
 		'joins' => array(),
 
+		'preload_owners' => false,
 		'callback' => $callback,
 	);
 
@@ -432,6 +433,11 @@ function _elgg_get_metastring_based_objects($options) {
 		}
 
 		$dt = get_data($query, $options['callback']);
+
+		if ($options['preload_owners'] && is_array($dt) && count($dt) > 1) {
+			_elgg_services()->ownerPreloader->preload($dt);
+		}
+
 		return $dt;
 	} else {
 		$result = get_data_row($query);
