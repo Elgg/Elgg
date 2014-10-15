@@ -375,10 +375,14 @@ class Elgg_Database {
 	 *
 	 * The file specified should be a standard SQL file as created by
 	 * mysqldump or similar.  Statements must be terminated with ;
-	 * and a newline character (\n or \r\n) with only one statement per line.
+	 * and a newline character (\n or \r\n).
 	 *
 	 * The special string 'prefix_' is replaced with the database prefix
 	 * as defined in {@link $this->tablePrefix}.
+	 *
+	 * @warning Only single line comments are supported. A comment
+	 * must start with '-- ' or '# ', where the comment sign is at the
+	 * very beginning of each line.
 	 *
 	 * @warning Errors do not halt execution of the script.  If a line
 	 * generates an error, the error message is saved and the
@@ -396,11 +400,11 @@ class Elgg_Database {
 
 			$errors = array();
 
-			// Remove MySQL -- style comments
-			$script = preg_replace('/\-\-.*\n/', '', $script);
+			// Remove MySQL '-- ' and '# ' style comments
+			$script = preg_replace('/^(?:--|#) .*$/m', '', $script);
 
 			// Statements must end with ; and a newline
-			$sql_statements = preg_split('/;[\n\r]+/', $script);
+			$sql_statements = preg_split('/;[\n\r]+/', "$script\n");
 
 			foreach ($sql_statements as $statement) {
 				$statement = trim($statement);
