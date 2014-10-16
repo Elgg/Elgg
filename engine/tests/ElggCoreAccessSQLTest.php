@@ -21,7 +21,7 @@ class ElggCoreAccessSQLTest extends ElggCoreUnitTest {
 		$this->user->email = 'fake_email@fake.com' . rand();
 		$this->user->name = 'fake user ' . rand();
 		$this->user->access_id = ACCESS_PUBLIC;
-		$this->user->salt = generate_random_cleartext_password();
+		$this->user->salt = _elgg_generate_password_salt();
 		$this->user->password = generate_user_password($this->user, rand());
 		$this->user->owner_guid = 0;
 		$this->user->container_guid = 0;
