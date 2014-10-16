@@ -13,7 +13,8 @@ $options = array(
 	'type' => 'object',
 	'subtype' => 'comment',
 	'limit' => elgg_extract('limit', $vars, 4),
-	'wheres' => array()
+	'wheres' => array(),
+	'preload_owners' => true,
 );
 
 $owner_guid = elgg_extract('owner_guid', $vars);

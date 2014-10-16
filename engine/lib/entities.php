@@ -764,6 +764,10 @@ function elgg_enable_entity($guid, $recursive = true) {
  *
  * 	joins => array() Additional joins
  *
+ * 	preload_owners => bool (false) If set to true, this function will preload
+ * 					  all the owners of the returned entities resulting in better
+ * 					  performance when displaying entities owned by several users
+ *
  * 	callback => string A callback function to pass each row through
  *
  * @return mixed If count, int. If not count, array. false on errors.
@@ -802,8 +806,10 @@ function elgg_get_entities(array $options = array()) {
 		'wheres'				=>	array(),
 		'joins'					=>	array(),
 
+		'preload_owners'		=> false,
 		'callback'				=> 'entity_row_to_elggstar',
 
+		// private API
 		'__ElggBatch'			=> null,
 	);
 
@@ -928,7 +934,7 @@ function elgg_get_entities(array $options = array()) {
 		}
 
 		if ($dt) {
-			// populate entity and metadata caches
+			// populate entity and metadata caches, and prepare $entities for preloader
 			$guids = array();
 			foreach ($dt as $item) {
 				// A custom callback could result in items that aren't \ElggEntity's, so check for them
@@ -945,6 +951,10 @@ function elgg_get_entities(array $options = array()) {
 
 			if ($guids) {
 				_elgg_get_metadata_cache()->populateFromEntities($guids);
+			}
+
+			if ($options['preload_owners'] && count($dt) > 1) {
+				_elgg_services()->ownerPreloader->preload($dt);
 			}
 		}
 		return $dt;
@@ -1982,6 +1992,7 @@ function _elgg_entities_test($hook, $type, $value) {
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggOwnerPreloaderIntegrationTest.php';
 	return $value;
 }
 
