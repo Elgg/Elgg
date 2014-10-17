@@ -41,11 +41,6 @@ if (isset($vars['class'])) {
 
 			echo $vars['content'];
 
-			// @deprecated 1.8
-			if (isset($vars['area1'])) {
-				echo $vars['area1'];
-			}
-
 			echo elgg_view('page/layouts/elements/footer', $vars);
 		?>
 	</div>
