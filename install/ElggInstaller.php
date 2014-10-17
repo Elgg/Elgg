@@ -81,6 +81,10 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	public function run($step) {
+		global $CONFIG;
+
+		// language needs to be set before the first call to elgg_echo()
+		$CONFIG->language = 'en';
 
 		// check if this is a URL rewrite test coming in
 		$this->processRewriteTest();
@@ -833,7 +837,6 @@ class ElggInstaller {
 
 			_elgg_services()->db->setupConnections();
 			register_translations(dirname(dirname(__FILE__)) . "/languages/");
-			$CONFIG->language = 'en';
 
 			if ($stepIndex > $settingsIndex) {
 				$CONFIG->site_guid = (int) datalist_get('default_site');
