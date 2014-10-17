@@ -373,10 +373,11 @@ class ElggPlugin extends \ElggObject {
 	 *
 	 * @param string $name      The setting name
 	 * @param int    $user_guid The user GUID
+	 * @param mixed  $default   The default value to return if none is set
 	 *
-	 * @return mixed The setting string value or false
+	 * @return mixed The setting string value, the default value or false if there is no user
 	 */
-	public function getUserSetting($name, $user_guid = 0) {
+	public function getUserSetting($name, $user_guid = 0, $default = null) {
 		$user_guid = (int)$user_guid;
 
 		if ($user_guid) {
@@ -390,7 +391,9 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
-		return get_private_setting($user->guid, $name);
+		
+		$val = get_private_setting($user->guid, $name);
+		return $val !== null ? $val : $default;
 	}
 
 	/**
