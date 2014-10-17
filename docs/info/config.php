@@ -343,16 +343,24 @@ $CONFIG->lastcache;
 /**
  * This is an optional script used to override Elgg's default handling of
  * uncaught exceptions.
- * 
+ *
  * This should be an absolute file path to a php script that will be called
  * any time an uncaught exception is thrown.
- * 
+ *
  * The script will have access to the following variables as part of the scope
  * global $CONFIG
  * $exception - the unhandled exception
- * 
+ *
  * @warning - the database may not be available
- * 
+ *
  * @global string $CONFIG->exception_include
  */
 $CONFIG->exception_include = '';
+
+/**
+ * A flag to optionally load APIs that have been deprecated and removed from core according
+ * to deprecation policy
+ *
+ * @global boolean $CONFIG->load_legacy_apis
+ */
+$CONFIG->load_legacy_apis;

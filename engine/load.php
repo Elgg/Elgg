@@ -1,11 +1,12 @@
 <?php
 /**
  * This file is used to make all of Elgg's code available without going through
- * the boot process. Useful for internal testing purposes. 
- * 
+ * the boot process. Useful for internal testing purposes.
+ *
  * @access private
  */
 
+global $CONFIG;
 
 $lib_dir = __DIR__ . "/lib";
 
@@ -16,7 +17,7 @@ $lib_files = array(
 	// These need to be loaded first to correctly bootstrap
 	'autoloader.php',
 	'elgglib.php',
-	
+
 	// The order of these doesn't matter, so keep them alphabetical
 	'access.php',
 	'actions.php',
@@ -61,10 +62,13 @@ $lib_files = array(
 	'widgets.php',
 
 	// backward compatibility
-	'deprecated-1.7.php',
-	'deprecated-1.8.php',
 	'deprecated-1.9.php',
 );
+
+if ($CONFIG->load_legacy_apis === true) {
+	$lib_files[] = 'deprecated-1.7.php';
+	$lib_files[] = 'deprecated-1.8.php';
+}
 
 foreach ($lib_files as $file) {
 	require_once("$lib_dir/$file");
