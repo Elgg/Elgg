@@ -63,13 +63,6 @@ if ($options && count($options) > 0) {
 
 		$attributes = elgg_format_attributes($vars);
 
-		// handle indexed array where label is not specified
-		// @deprecated 1.8 Remove in 1.9
-		if (is_integer($label)) {
-			elgg_deprecated_notice('$vars[\'options\'] must be an associative array in input/radio', 1.8);
-			$label = $option;
-		}
-
 		echo "<li><label><input type=\"radio\" $attributes />$label</label></li>";
 	}
 	echo '</ul>';
