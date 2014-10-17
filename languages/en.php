@@ -1170,10 +1170,10 @@ Your password has been changed.",
 
 Your password has been reset to: %s",
 
-	'email:changereq:subject' => "Request for change password.",
+	'email:changereq:subject' => "Request for password change.",
 	'email:changereq:body' => "Hi %s,
 
-Somebody (from the IP address %s) has requested change password for their account.
+Somebody (from the IP address %s) has requested a password change for their account.
 
 If you requested this, click on the link below. Otherwise ignore this email.
 
