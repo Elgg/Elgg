@@ -191,5 +191,81 @@ class ElggCoreGetEntitiesFromRelationshipTest extends ElggCoreGetEntitiesBaseTes
 			}
 		}
 	}
+	
+	/**
+	 * Make sure elgg_get_entities_from_relationship() returns distinct (unique) results when relationship_guid is not set
+	 * See #5775
+	 * @covers elgg_get_entities_from_relationship()
+	 */
+	public function testElggApiGettersEntityRelationshipDistinctResult() {
+
+		$obj1 = new ElggObject();
+		$obj1->save();
+
+		$obj2 = new ElggObject();
+		$obj2->save();
+
+		$obj3 = new ElggObject();
+		$obj3->save();
+
+		add_entity_relationship($obj2->guid, 'test_5775', $obj1->guid);
+		add_entity_relationship($obj3->guid, 'test_5775', $obj1->guid);
+
+		$options = array(
+			'relationship' => 'test_5775',
+			'inverse_relationship' => false,
+			'count' => true,
+		);
+		
+		$count = elgg_get_entities_from_relationship($options);
+		$this->assertIdentical($count, 1);
+
+		unset($options['count']);
+		$objects = elgg_get_entities_from_relationship($options);
+		$this->assertTrue(is_array($objects));
+		$this->assertIdentical(count($objects), 1);
+		
+		$obj1->delete();
+		$obj2->delete();
+		$obj3->delete();
+	}
+	
+	/**
+	 * Make sure changes related to #5775 do not affect inverse relationship queries
+	 * @covers elgg_get_entities_from_relationship()
+	 */
+	public function testElggApiGettersEntityRelationshipDistinctResultInverse() {
+
+		
+		$obj1 = new ElggObject();
+		$obj1->save();
+
+		$obj2 = new ElggObject();
+		$obj2->save();
+
+		$obj3 = new ElggObject();
+		$obj3->save();
+
+		add_entity_relationship($obj2->guid, 'test_5775_inverse', $obj1->guid);
+		add_entity_relationship($obj3->guid, 'test_5775_inverse', $obj1->guid);
+
+		$options = array(
+			'relationship' => 'test_5775_inverse',
+			'inverse_relationship' => true,
+			'count' => true,
+		);
+		
+		$count = elgg_get_entities_from_relationship($options);
+		$this->assertIdentical($count, 2);
+
+		unset($options['count']);
+		$objects = elgg_get_entities_from_relationship($options);
+		$this->assertTrue(is_array($objects));
+		$this->assertIdentical(count($objects), 2);
+		
+		$obj1->delete();
+		$obj2->delete();
+		$obj3->delete();
+	}
 
 }
