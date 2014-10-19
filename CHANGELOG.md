@@ -1,3 +1,40 @@
+<a name="1.9.4"></a>
+### 1.9.4  (2014-10-20)
+
+#### Contributors
+
+* Juho Jaakkola (6)
+* Jeroen Dalsem (4)
+* Steve Clay (4)
+* Per Jensen (3)
+* Stian Liknes (3)
+* Jerôme Bakker (1)
+
+#### Documentation
+
+* **plugins:** Information on activation/deactivation ([4e58ad4d](https://github.com/Elgg/Elgg/commit/4e58ad4d88861819fe17bb0a4be498905907125b))
+* **web_services:** Documentation for Elgg 1.9 ([7cf0f8fd](https://github.com/Elgg/Elgg/commit/7cf0f8fd8a75defed22de8a184bbba3a09f6c3f8))
+
+
+#### Bug Fixes
+
+* **aalborg_theme:** display search when logged out ([31d3d190](https://github.com/Elgg/Elgg/commit/31d3d1905a3c6426838b2c67f28c1aa14c2a76e1))
+* **bookmarks:** fixes more link in group bookmarks widget ([adb46369](https://github.com/Elgg/Elgg/commit/adb463699a35cbe18c4b48408f554ce7d2395264), closes [#6583](https://github.com/Elgg/Elgg/issues/6583))
+* **css:**
+  * stop CSS from overwriting the width and height added in CKEditor ([428234c0](https://github.com/Elgg/Elgg/commit/428234c0dd407758f3ca1e3917c6a0e8636311fb), closes [#7269](https://github.com/Elgg/Elgg/issues/7269))
+  * removed datepicker fixed width causing visual bug ([803e05f5](https://github.com/Elgg/Elgg/commit/803e05f5719fcaffac4e42272f2da344d8f8f745))
+  * prevent select box from overflowing its container ([3b7e94d5](https://github.com/Elgg/Elgg/commit/3b7e94d53e1d4315a942247d64eedaa576b323ba), closes [#7290](https://github.com/Elgg/Elgg/issues/7290))
+* **database:** More robust sql script execution. ([0c5ed4f2](https://github.com/Elgg/Elgg/commit/0c5ed4f220906823f4bdc9f76f7b54c49fd32826))
+* **db:** query cache properly handles more callable types ([b8e58304](https://github.com/Elgg/Elgg/commit/b8e5830418ec1a336afcae383008385853d074fa))
+* **discussion:** discussion replies respect previous subscribers ([d699fe63](https://github.com/Elgg/Elgg/commit/d699fe63f5aa5ba68f5b8935fc47c69f726bd475))
+* **i18n:**
+  * improved change password email subject and body text ([ade6d1c1](https://github.com/Elgg/Elgg/commit/ade6d1c1776b6de328abe8c638988f745425a017))
+  * translate notification messages to the recipient's language ([071b2989](https://github.com/Elgg/Elgg/commit/071b298985599792da762791e659dbfca1124590), closes [#7241](https://github.com/Elgg/Elgg/issues/7241), [#NaN](https://github.com/Elgg/Elgg/issues/NaN))
+  * allow core to load translations for a specific language on-demand ([6417d213](https://github.com/Elgg/Elgg/commit/6417d213c1fc7e4944714bcd718783ac95dec4f9))
+* **install:** prevent WSOD caused by site default language not being defined early enough ([3b9dc902](https://github.com/Elgg/Elgg/commit/3b9dc902c6c56c98e274238536f3f7159f1ae483))
+* **search:** keep container param intact when navigating search results ([3dd87ec1](https://github.com/Elgg/Elgg/commit/3dd87ec19de40d03fba53b704c84c1cadb745dfd))
+
+
 <a name="1.9.3"></a>
 ### 1.9.3  (2014-10-06)
 
