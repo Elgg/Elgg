@@ -4,7 +4,7 @@
  */
 $form_body = "";
 
-foreach (array('sitename','sitedescription', 'siteemail') as $field) {
+foreach (array('sitename','sitedescription', 'siteemail', 'default_limit') as $field) {
 	$form_body .= "<div>";
 	$form_body .= elgg_echo('installation:' . $field) . "<br />";
 	$warning = elgg_echo('installation:warning:' . $field);

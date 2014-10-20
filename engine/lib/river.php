@@ -493,7 +493,7 @@ function elgg_list_river(array $options = array()) {
 
 	$defaults = array(
 		'offset'     => (int) max(get_input('offset', 0), 0),
-		'limit'      => (int) max(get_input('limit', 20), 0),
+		'limit'      => (int) max(get_input('limit', max(20, elgg_get_config('default_limit'))), 0),
 		'pagination' => true,
 		'list_class' => 'elgg-list-river',
 		'no_results' => '',

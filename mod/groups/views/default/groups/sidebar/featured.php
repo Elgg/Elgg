@@ -9,7 +9,7 @@ $featured_groups = elgg_get_entities_from_metadata(array(
 	'metadata_name' => 'featured_group',
 	'metadata_value' => 'yes',
 	'type' => 'group',
-	'limit' => 10,
+	'limit' => elgg_get_config('default_limit'),
 ));
 
 if ($featured_groups) {

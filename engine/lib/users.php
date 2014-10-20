@@ -312,7 +312,7 @@ function get_user_by_email($email) {
  * @param array $options Array of options with keys:
  *
  *   seconds (int)  => Length of period (default 600 = 10min)
- *   limit   (int)  => Limit (default 10)
+ *   limit   (int)  => Limit (default from settings)
  *   offset  (int)  => Offset (default 0)
  *   count   (bool) => Return a count instead of users? (default false)
  *
@@ -324,7 +324,7 @@ function get_user_by_email($email) {
  *
  * @return \ElggUser[]|int
  */
-function find_active_users($options = array(), $limit = 10, $offset = 0, $count = false) {
+function find_active_users($options = array(), $limit = null, $offset = 0, $count = false) {
 
 	$seconds = 600; //default value
 
@@ -334,6 +334,10 @@ function find_active_users($options = array(), $limit = 10, $offset = 0, $count 
 			$options = $seconds; //assign default value
 		}
 		$options = array('seconds' => $options);
+	}
+
+	if ($limit === null) {
+		$limit = elgg_get_config('default_limit');
 	}
 
 	$options = array_merge(array(
