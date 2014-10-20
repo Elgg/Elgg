@@ -82,7 +82,7 @@ class ElggMenuBuilder {
 
 	/**
 	 * Group the menu items into sections
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function setupSections() {
@@ -122,7 +122,7 @@ class ElggMenuBuilder {
 			// attach children to parents
 			$iteration = 0;
 			$current_gen = $parents;
-			$next_gen = null;
+			$next_gen = array();
 			while (count($children) && $iteration < 5) {
 				foreach ($children as $index => $menu_item) {
 					$parent_name = $menu_item->getParentName();
