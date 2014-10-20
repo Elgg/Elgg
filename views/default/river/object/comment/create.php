@@ -27,10 +27,10 @@ $target_link = elgg_view('output/url', array(
 $type = $target->getType();
 $subtype = $target->getSubtype() ? $target->getSubtype() : 'default';
 $key = "river:comment:$type:$subtype";
-$summary = elgg_echo($key, array($subject_link, $target_link));
-if ($summary == $key) {
+$summary = elgg_echo($key, array($subject_link, $target_link), '', true);
+if (false === $summary) {
 	$key = "river:comment:$type:default";
-	$summary = elgg_echo($key, array($subject_link, $target_link));
+	$summary = (string)elgg_echo($key, array($subject_link, $target_link), '', true);
 }
 
 echo elgg_view('river/elements/layout', array(
