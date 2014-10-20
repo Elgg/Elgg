@@ -4,6 +4,10 @@
  *
  * To create a menu item that is not a link, pass false for $href.
  *
+ * Any undocumented properties set will be passed to the output/url view during rendering. E.g.
+ * to give a menu item a "target" attribute, set $item->target, or include a "target" key in
+ * the options array for factory().
+ *
  * @package    Elgg.Core
  * @subpackage Navigation
  * @since      1.8.0
@@ -85,12 +89,28 @@ class ElggMenuItem {
 	}
 
 	/**
-	 * ElggMenuItem factory method
-	 *
-	 * This static method creates an ElggMenuItem from an associative array.
-	 * Required keys are name, text, and href.
+	 * Create an ElggMenuItem from an associative array. Required keys are name, text, and href.
 	 *
 	 * @param array $options Option array of key value pairs
+	 *
+	 *    name        => STR  Menu item identifier (required)
+	 *    text        => STR  Menu item display text as HTML (required)
+	 *    href        => STR  Menu item URL (required) (false for non-links.
+	 *                        @warning If you disable the href the <a> tag will
+	 *                        not appear, so the link_class will not apply. If you
+	 *                        put <a> tags in manually through the 'text' option
+	 *                        the default CSS selector .elgg-menu-$menu > li > a
+	 *                        may affect formatting. Wrap in a <span> if it does.)
+	 *
+	 *    section     => STR  Menu section identifier
+	 *    link_class  => STR  A class or classes for the <a> tag
+	 *    item_class  => STR  A class or classes for the <li> tag
+	 *    parent_name => STR  Identifier of the parent menu item
+	 *    contexts    => ARR  Page context strings
+	 *    title       => STR  Menu item tooltip
+	 *    selected    => BOOL Is this menu item currently selected?
+	 *    confirm     => STR  If set, the link will be drawn with the output/confirmlink view instead of output/url.
+	 *    data        => ARR  Custom attributes stored in the menu item.
 	 *
 	 * @return ElggMenuItem or null on error
 	 */
