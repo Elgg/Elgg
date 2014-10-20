@@ -61,7 +61,7 @@ class Router {
 			'handler' => $identifier, // backward compatibility
 			'segments' => $segments,
 		);
-		$result = $this->hooks->trigger('route', $identifier, null, $result);
+		$result = $this->hooks->trigger('route', $identifier, $result, $result);
 		if ($result === false) {
 			return true;
 		}
