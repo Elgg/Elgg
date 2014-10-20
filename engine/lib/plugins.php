@@ -894,12 +894,13 @@ function elgg_unset_plugin_user_setting($name, $user_guid = 0, $plugin_id = null
  * @param string $name      The name of the setting.
  * @param int    $user_guid The user GUID or 0 for the currently logged in user.
  * @param string $plugin_id The plugin ID (Required)
+ * @param mixed  $default   The default value to return if none is set
  *
  * @return mixed
  * @since 1.8.0
  * @see \ElggPlugin::getUserSetting()
  */
-function elgg_get_plugin_user_setting($name, $user_guid = 0, $plugin_id = null) {
+function elgg_get_plugin_user_setting($name, $user_guid = 0, $plugin_id = null, $default = null) {
 	if ($plugin_id) {
 		$plugin = elgg_get_plugin_from_id($plugin_id);
 	} else {
@@ -911,7 +912,7 @@ function elgg_get_plugin_user_setting($name, $user_guid = 0, $plugin_id = null) 
 		return false;
 	}
 
-	return $plugin->getUserSetting($name, (int)$user_guid);
+	return $plugin->getUserSetting($name, (int)$user_guid, $default);
 }
 
 /**
