@@ -716,7 +716,7 @@ function elgg_view_menu_item(ElggMenuItem $item, array $vars = array()) {
 		$vars['class'] .= ' ' . $item->getLinkClass();
 	}
 
-	if ($item->getHref() === false) {
+	if ($item->getHref() === false || $item->getHref() === null) {
 		$text = $item->getText();
 
 		// if contains elements, don't wrap
