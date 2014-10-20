@@ -21,7 +21,13 @@ $menu = elgg_view_menu('river', array(
 // river item header
 $timestamp = elgg_view_friendly_time($item->getTimePosted());
 
-$summary = elgg_extract('summary', $vars, elgg_view('river/elements/summary', array('item' => $vars['item'])));
+$summary = elgg_extract('summary', $vars);
+if ($summary === null) {
+	$summary = elgg_view('river/elements/summary', array(
+		'item' => $vars['item'],
+	));
+}
+
 if ($summary === false) {
 	$subject = $item->getSubjectEntity();
 	$summary = elgg_view('output/url', array(
