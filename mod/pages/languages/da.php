@@ -58,7 +58,6 @@ Se og kommenter på den nye side:
 
 	'pages:title' => 'Side titel',
 	'pages:description' => 'Side indhold',
-	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Parent page',
 	'pages:access_id' => 'Læseadgang',
 	'pages:write_access_id' => 'Skriveadgang',

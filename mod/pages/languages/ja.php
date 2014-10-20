@@ -58,7 +58,6 @@ return array(
 
 	'pages:title' => 'タイトル',
 	'pages:description' => '本文',
-	'pages:tags' => 'タグ',
 	'pages:parent_guid' => '親ページ',
 	'pages:access_id' => '公開範囲',
 	'pages:write_access_id' => '書込許可',

@@ -58,7 +58,6 @@ Vexa e deixe un comentario na páxina:
 
 	'pages:title' => 'Títul',
 	'pages:description' => 'Text',
-	'pages:tags' => 'Etiquetas',
 	'pages:parent_guid' => 'Páxina superior',
 	'pages:access_id' => 'Lectura',
 	'pages:write_access_id' => 'Escritura',

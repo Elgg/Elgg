@@ -59,7 +59,6 @@ Ver y comentar:
 
 	'pages:title' => 'T&iacute;tulo de la p&aacute;gina',
 	'pages:description' => 'Contenido',
-	'pages:tags' => 'Etiquetas',
 	'pages:parent_guid' => 'Página antecesora',
 	'pages:access_id' => 'S&oacute;lo lectura',
 	'pages:write_access_id' => 'Acceso de escritura',

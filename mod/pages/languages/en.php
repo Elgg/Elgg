@@ -58,7 +58,6 @@ View and comment on the page:
 
 	'pages:title' => 'Page title',
 	'pages:description' => 'Page text',
-	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Parent page',
 	'pages:access_id' => 'Read access',
 	'pages:write_access_id' => 'Write access',

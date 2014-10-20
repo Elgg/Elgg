@@ -58,7 +58,6 @@ return array(
 
 	'pages:title' => 'Заголовок документа',
 	'pages:description' => 'Содержимое документа',
-	'pages:tags' => 'Теги',
 	'pages:parent_guid' => 'Родительствий документ',
 	'pages:access_id' => 'Доступ',
 	'pages:write_access_id' => 'Доступ на запись',

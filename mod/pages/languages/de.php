@@ -58,7 +58,6 @@ Schau Dir die neue Coop-Seite an und schreibe einen Kommentar:
 
 	'pages:title' => 'Titel der Coop-Seite',
 	'pages:description' => 'Seitentext',
-	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Übergeordnete Coop-Seite',
 	'pages:access_id' => 'Zugangslevel',
 	'pages:write_access_id' => 'Schreibberechtigung',

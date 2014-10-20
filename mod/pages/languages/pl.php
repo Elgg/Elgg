@@ -58,7 +58,6 @@ Wyświetl i skomentuj nową stronę:
 
 	'pages:title' => 'Tytuł strony',
 	'pages:description' => 'Treść strony',
-	'pages:tags' => 'Tagi',
 	'pages:parent_guid' => 'Strona nadrzędna',
 	'pages:access_id' => 'Uprawnienia odczytu',
 	'pages:write_access_id' => 'Uprawnienia zapisu',

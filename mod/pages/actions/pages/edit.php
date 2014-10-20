@@ -5,27 +5,20 @@
  * @package ElggPages
  */
 
-$variables = elgg_get_config('pages');
-$input = array();
-foreach ($variables as $name => $type) {
-	if ($name == 'title') {
-		$input[$name] = htmlspecialchars(get_input($name, '', false), ENT_QUOTES, 'UTF-8');
-	} else {
-		$input[$name] = get_input($name);
-	}
-	if ($type == 'tags') {
-		$input[$name] = string_to_tag_array($input[$name]);
-	}
-}
-
-// Get guids
-$page_guid = (int)get_input('page_guid');
-$container_guid = (int)get_input('container_guid');
-$parent_guid = (int)get_input('parent_guid');
-
 elgg_make_sticky_form('page');
 
-if (!$input['title']) {
+$title = htmlspecialchars(get_input('title', '', false), ENT_QUOTES, 'UTF-8');
+$description = get_input('description');
+$access_id = (int) get_input('access_id');
+$write_access_id = (int) get_input('write_access_id');
+$tags = string_to_tag_array(get_input('tags'));
+
+// Get guids
+$page_guid = (int) get_input('page_guid');
+$container_guid = (int) get_input('container_guid');
+$parent_guid = (int) get_input('parent_guid');
+
+if (!$title) {
 	register_error(elgg_echo('pages:error:no_title'));
 	forward(REFERER);
 }
@@ -47,25 +40,20 @@ if ($page_guid) {
 	$new_page = true;
 }
 
-if (sizeof($input) > 0) {
-	// don't change access if not an owner/admin
-	$user = elgg_get_logged_in_user_entity();
-	$can_change_access = true;
+$page->title = $title;
+$page->description = $description;
+$page->tags = $tags;
 
-	if ($user && $page) {
-		$can_change_access = $user->isAdmin() || $user->getGUID() == $page->owner_guid;
-	}
-	
-	foreach ($input as $name => $value) {
-		if (($name == 'access_id' || $name == 'write_access_id') && !$can_change_access) {
-			continue;
-		}
-		if ($name == 'parent_guid') {
-			continue;
-		}
+// don't change access if not an owner/admin
+$user = elgg_get_logged_in_user_entity();
+$can_change_access = true;
+if ($user && $page) {
+	$can_change_access = $user->isAdmin() || $user->getGUID() == $page->owner_guid;
+}
 
-		$page->$name = $value;
-	}
+if ($can_change_access) {
+	$page->access_id = $access_id;
+	$page->write_access_id = $write_access_id;
 }
 
 // need to add check to make sure user can write to container

@@ -58,7 +58,6 @@ Bekijk en reageer op de pagina:
 
 	'pages:title' => 'Pagina titel',
 	'pages:description' => 'Jouw tekst',
-	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Hoofdpagina',
 	'pages:access_id' => 'Toegang',
 	'pages:write_access_id' => 'Schrijf toegang',

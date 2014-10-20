@@ -58,7 +58,6 @@ Veja e comente a página:
 
 	'pages:title' => 'Título da página',
 	'pages:description' => 'Texto da página',
-	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Página principal',
 	'pages:access_id' => 'Acesso para leitura',
 	'pages:write_access_id' => 'Acesso para escrita',
