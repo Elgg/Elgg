@@ -99,7 +99,7 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	$mime_type = $file->detectMimeType($_FILES['upload']['tmp_name'], $_FILES['upload']['type']);
 
 	$file->setMimeType($mime_type);
-	$file->simpletype = file_get_simple_type($mime_type);
+	$file->simpletype = elgg_get_file_simple_type($mime_type);
 
 	// Open the file to guarantee the directory exists
 	$file->open("write");

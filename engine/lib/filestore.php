@@ -105,7 +105,7 @@ $square = false, $upscale = false) {
  * @return false|mixed The contents of the resized image, or false on failure
  */
 function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = false,
-$x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = false) {
+		$x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = false) {
 
 	// Get the size information from the image
 	$imgsizearray = getimagesize($input_name);
@@ -160,8 +160,8 @@ $x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = false) {
 
 	// color transparencies white (default is black)
 	imagefilledrectangle(
-		$new_image, 0, 0, $params['newwidth'], $params['newheight'],
-		imagecolorallocate($new_image, 255, 255, 255)
+			$new_image, 0, 0, $params['newwidth'], $params['newheight'],
+			imagecolorallocate($new_image, 255, 255, 255)
 	);
 
 	$rtn_code = imagecopyresampled(	$new_image,
@@ -355,47 +355,6 @@ function file_delete($guid) {
 }
 
 /**
- * Returns an overall file type from the mimetype
- *
- * @param string $mimetype The MIME type
- *
- * @return string The overall type
- */
-function file_get_general_file_type($mimetype) {
-	switch($mimetype) {
-
-		case "application/msword":
-			return "document";
-			break;
-		case "application/pdf":
-			return "document";
-			break;
-	}
-
-	if (substr_count($mimetype, 'text/')) {
-		return "document";
-	}
-
-	if (substr_count($mimetype, 'audio/')) {
-		return "audio";
-	}
-
-	if (substr_count($mimetype, 'image/')) {
-		return "image";
-	}
-
-	if (substr_count($mimetype, 'video/')) {
-		return "video";
-	}
-
-	if (substr_count($mimetype, 'opendocument')) {
-		return "document";
-	}
-
-	return "general";
-}
-
-/**
  * Delete a directory and all its contents
  *
  * @param string $directory Directory to delete
@@ -486,6 +445,18 @@ function set_default_filestore(\ElggFilestore $filestore) {
 }
 
 /**
+ * Returns a simple (overall) file type from the mimetype
+ * 
+ * @param string $mimetype The MIME type
+ * @return string The overall type: 'general' (default), 'document', 'audio' or 'video'
+ * @since 1.10
+ */
+function elgg_get_file_simple_type($mimetype) {
+	$params = array('mime_type' => $mimetype);
+	return elgg_trigger_plugin_hook('simple_type', 'file', $params, 'general');
+}
+
+/**
  * Initialize the file library.
  * Listens to system init and configures the default filestore
  *
@@ -502,6 +473,9 @@ function _elgg_filestore_init() {
 
 	// Fix mimetype detection for Microsoft zipped formats
 	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
+	
+	// Parse overall simpletype from mimetype
+	elgg_register_plugin_hook_handler('simple_type', 'file', '_elgg_filestore_parse_simpletype');
 
 	// Unit testing
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
@@ -545,6 +519,50 @@ function _elgg_filestore_detect_mimetype($hook, $type, $mime_type, $params) {
 	}
 
 	return $mime_type;
+}
+
+/**
+ * Parse overall file type from mimetype
+ *
+ * @param string $hook        Hook name
+ * @param string $type        Hook type
+ * @param string $simple_type The overall type
+ * @param array  $params      Hook parameters
+ * @uses string @params['mime_type'] Mimetype
+ * @return string
+ * @access private
+ */
+function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
+
+	$mime_type = elgg_extract('mime_type', $params);
+
+	switch ($mime_type) {
+		case "application/msword":
+		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+			$simple_type = "document";
+			break;
+		case "application/pdf":
+			$simple_type = "document";
+			break;
+		case "application/ogg":
+			$simple_type = "audio";
+			break;
+		default:
+			if (substr_count($mime_type, 'text/')) {
+				$simple_type = "document";
+			} elseif (substr_count($mime_type, 'audio/')) {
+				$simple_type = "audio";
+			} elseif (substr_count($mime_type, 'image/')) {
+				$simple_type = "image";
+			} elseif (substr_count($mime_type, 'video/')) {
+				$simple_type = "video";
+			} elseif (substr_count($mime_type, 'opendocument')) {
+				$simple_type = "document";
+			}
+			break;
+	}
+
+	return $simple_type;
 }
 
 /**
