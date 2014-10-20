@@ -233,54 +233,6 @@ function file_owner_block_menu($hook, $type, $return, $params) {
 }
 
 /**
- * Returns an overall file type from the mimetype
- *
- * @param string $mimetype The MIME type
- * @return string The overall type
- */
-function file_get_simple_type($mimetype) {
-
-	$simple_type = null;
-
-	switch ($mimetype) {
-		case "application/msword":
-		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-			$simple_type = "document";
-			break;
-		case "application/pdf":
-			$simple_type = "document";
-			break;
-		case "application/ogg":
-			$simple_type = "audio";
-			break;
-		default:
-			if (substr_count($mimetype, 'text/')) {
-				$simple_type = "document";
-			} elseif (substr_count($mimetype, 'audio/')) {
-				$simple_type = "audio";
-			} elseif (substr_count($mimetype, 'image/')) {
-				$simple_type = "image";
-			} elseif (substr_count($mimetype, 'video/')) {
-				$simple_type = "video";
-			} elseif (substr_count($mimetype, 'opendocument')) {
-				$simple_type = "document";
-			} else {
-				$simple_type = "general";
-			}
-			break;
-	}
-
-	$params = array('mime_type' => $mimetype);
-	return elgg_trigger_plugin_hook('simple_type', 'file', $params, $simple_type);
-}
-
-// deprecated and will be removed
-function get_general_file_type($mimetype) {
-	elgg_deprecated_notice('Use file_get_simple_type() instead of get_general_file_type()', 1.8);
-	return file_get_simple_type($mimetype);
-}
-
-/**
  * Returns a list of filetypes
  *
  * @param int       $container_guid The GUID of the container of the files
