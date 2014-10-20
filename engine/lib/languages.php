@@ -8,17 +8,18 @@
  */
 
 /**
- * Given a message key, returns an appropriately translated full-text string
+ * Given a translation key, returns an appropriately translated full-text string
  *
- * @param string $message_key The short message code
- * @param array  $args        An array of arguments to pass through vsprintf().
- * @param string $language    Optionally, the standard language code
- *                            (defaults to site/user default, then English)
+ * @param string $key      The translation key
+ * @param array  $args     An array of arguments to pass through vsprintf().
+ * @param string $language The language code to check first. Defaults to get_current_language()
  *
- * @return string Either the translated string, the English string,
- * or the original language string.
+ * @return string Either the translated string, the English string, or the original language string.
+ *
+ * @see elgg_get_echo_language
+ * @see get_current_language
  */
-function elgg_echo($message_key, $args = array(), $language = "") {
+function elgg_echo($key, $args = array(), $language = "") {
 	global $CONFIG;
 
 	static $CURRENT_LANGUAGE;
@@ -40,20 +41,20 @@ function elgg_echo($message_key, $args = array(), $language = "") {
 	}
 
 	if (!$CURRENT_LANGUAGE) {
-		$CURRENT_LANGUAGE = get_language();
+		$CURRENT_LANGUAGE = get_current_language();
 	}
 	if (!$language) {
 		$language = $CURRENT_LANGUAGE;
 	}
 
-	if (isset($CONFIG->translations[$language][$message_key])) {
-		$string = $CONFIG->translations[$language][$message_key];
-	} else if (isset($CONFIG->translations["en"][$message_key])) {
-		$string = $CONFIG->translations["en"][$message_key];
-		elgg_log(sprintf('Missing %s translation for "%s" language key', $language, $message_key), 'NOTICE');
+	if (isset($CONFIG->translations[$language][$key])) {
+		$string = $CONFIG->translations[$language][$key];
+	} else if ($language !== 'en' && isset($CONFIG->translations["en"][$key])) {
+		$string = $CONFIG->translations["en"][$key];
+		elgg_log(sprintf('Missing %s translation for translation key "%s"', $language, $key), 'NOTICE');
 	} else {
-		$string = $message_key;
-		elgg_log(sprintf('Missing English translation for "%s" language key', $message_key), 'NOTICE');
+		$string = $key;
+		elgg_log(sprintf('Missing English translation for translation key "%s"', $key), 'NOTICE');
 	}
 
 	// only pass through if we have arguments to allow backward compatibility
@@ -98,44 +99,26 @@ function add_translation($country_code, $language_array) {
 }
 
 /**
- * Detect the current language being used by the current site or logged in user.
+ * Get the language set by the user, by the system, or a default value if no language is set.
  *
- * @return string The language code for the site/user or "en" if not set
- */
-function get_current_language() {
-	$language = get_language();
-
-	if (!$language) {
-		$language = 'en';
-	}
-
-	return $language;
-}
-
-/**
- * Gets the current language in use by the system or user.
+ * @param mixed $default Value returned if no user/site languages are set.
  *
- * @return string The language code (eg "en") or false if not set
+ * @return mixed The language code for the site/user or the given default.
  */
-function get_language() {
+function get_current_language($default = 'en') {
 	global $CONFIG;
 
 	$user = elgg_get_logged_in_user_entity();
-	$language = false;
 
-	if (($user) && ($user->language)) {
-		$language = $user->language;
+	if ($user && $user->language) {
+		return $user->language;
 	}
 
-	if ((!$language) && (isset($CONFIG->language)) && ($CONFIG->language)) {
-		$language = $CONFIG->language;
+	if (!empty($CONFIG->language)) {
+		return $CONFIG->language;
 	}
 
-	if ($language) {
-		return $language;
-	}
-
-	return false;
+	return $default;
 }
 
 /**
