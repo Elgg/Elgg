@@ -82,6 +82,18 @@ function elgg_load_system_cache($type) {
 }
 
 /**
+ * Deletes a given cache from the system cache
+ *
+ * @param string $type The type or identifier of the cache
+ *
+ * @return bool
+ */
+function elgg_delete_system_cache($type) {
+	$cache = elgg_get_system_cache();
+	return $cache->delete($type);
+}
+
+/**
  * Enables the system disk cache.
  *
  * Uses the 'system_cache_enabled' datalist with a boolean value.
