@@ -1110,7 +1110,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'admin:upgrades:none' => 'Your installation is up to date!',
 
 	'upgrade:item_count' => 'There are <b>%s</b> items that need to be upgraded.',
-	'upgrade:warning' => '<b>Warning:</b> on a large site this upgrade may take a significantly long time!',
+	'upgrade:warning' => '<b>Warning:</b> On a large site this upgrade may take a significantly long time!',
 	'upgrade:success_count' => 'Upgraded:',
 	'upgrade:error_count' => 'Errors:',
 	'upgrade:river_update_failed' => 'Failed to update the river entry for item id %s',
