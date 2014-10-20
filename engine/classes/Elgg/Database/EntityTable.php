@@ -68,7 +68,7 @@ class EntityTable {
 	 * @see get_entity()
 	 * @access private
 	 *
-	 * @throws ClassException|InstallationException
+	 * @throws \ClassException|\InstallationException
 	 */
 	function rowToElggStar($row) {
 		if (!($row instanceof \stdClass)) {
@@ -344,7 +344,7 @@ class EntityTable {
 			'reverse_order_by'		=>	false,
 			'order_by' 				=>	'e.time_created desc',
 			'group_by'				=>	ELGG_ENTITIES_ANY_VALUE,
-			'limit'					=>	10,
+			'limit'					=>	_elgg_services()->config->get('default_limit'),
 			'offset'				=>	0,
 			'count'					=>	false,
 			'selects'				=>	array(),

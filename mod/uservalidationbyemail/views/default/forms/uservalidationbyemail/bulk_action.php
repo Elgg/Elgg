@@ -6,7 +6,7 @@
  * @subpackage UserValidationByEmail.Administration
  */
 
-$limit = get_input('limit', 10);
+$limit = get_input('limit', elgg_get_config('default_limit'));
 $offset = get_input('offset', 0);
 
 // can't use elgg_list_entities() and friends because we don't use the default view for users.

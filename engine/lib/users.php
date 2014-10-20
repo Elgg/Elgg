@@ -127,7 +127,7 @@ function get_user_by_email($email) {
  * @param array $options Array of options with keys:
  *
  *   seconds (int)  => Length of period (default 600 = 10min)
- *   limit   (int)  => Limit (default 10)
+ *   limit   (int)  => Limit (default from settings)
  *   offset  (int)  => Offset (default 0)
  *   count   (bool) => Return a count instead of users? (default false)
  *

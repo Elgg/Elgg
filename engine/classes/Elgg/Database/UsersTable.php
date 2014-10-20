@@ -332,7 +332,11 @@ class UsersTable {
 			}
 			$options = array('seconds' => $options);
 		}
-	
+
+		if ($limit === null) {
+			$limit = _elgg_services()->config->get('default_limit');
+		}
+
 		$options = array_merge(array(
 			'seconds' => $seconds,
 			'limit' => $limit,
