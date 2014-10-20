@@ -58,7 +58,6 @@ Voir et commenter cette page:
 
 	'pages:title' => 'Titre de la page',
 	'pages:description' => 'Texte de la page',
-	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Page Parente',
 	'pages:access_id' => 'Accès en lecture',
 	'pages:write_access_id' => 'Accès en écriture',

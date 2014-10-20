@@ -61,17 +61,6 @@ function pages_init() {
 	//add a widget
 	elgg_register_widget_type('pages', elgg_echo('pages'), elgg_echo('pages:widget:description'));
 
-	// Language short codes must be of the form "pages:key"
-	// where key is the array key below
-	elgg_set_config('pages', array(
-		'title' => 'text',
-		'description' => 'longtext',
-		'tags' => 'tags',
-		'parent_guid' => 'parent',
-		'access_id' => 'access',
-		'write_access_id' => 'write_access',
-	));
-
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'pages_owner_block_menu');
 
 	// write permission plugin hooks

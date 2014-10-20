@@ -58,7 +58,6 @@ Voit lukea sivun täällä:
 
 	'pages:title' => 'Sivun otsikko',
 	'pages:description' => 'Sivun sisältö',
-	'pages:tags' => 'Tagit',
 	'pages:parent_guid' => 'Yläsivu',
 	'pages:access_id' => 'Lukuoikeus',
 	'pages:write_access_id' => 'Kirjoitusoikeus',

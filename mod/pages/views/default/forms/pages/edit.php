@@ -5,7 +5,6 @@
  * @package ElggPages
  */
 
-$variables = elgg_get_config('pages');
 $user = elgg_get_logged_in_user_entity();
 $entity = elgg_extract('entity', $vars);
 $can_change_access = true;
@@ -13,40 +12,59 @@ if ($user && $entity) {
 	$can_change_access = ($user->isAdmin() || $user->getGUID() == $entity->owner_guid);
 }
 
-foreach ($variables as $name => $type) {
-	// don't show read / write access inputs for non-owners or admin when editing
-	if (($type == 'access' || $type == 'write_access') && !$can_change_access) {
-		continue;
-	}
-	
-	// don't show parent picker input for top or new pages.
-	if ($name == 'parent_guid' && (!$vars['parent_guid'] || !$vars['guid'])) {
-		continue;
-	}
+echo '<div>';
+echo '<label>' . elgg_echo('pages:title') . '</label><br />';
+echo elgg_view('input/text', array(
+	'name' => 'title',
+	'value' => elgg_extract('title', $vars),
+));
+echo '</div>';
 
-	if ($type == 'parent') {
-		$input_view = "pages/input/$type";
-	} else {
-		$input_view = "input/$type";
-	}
+echo '<div>';
+echo '<label>' . elgg_echo('pages:description') . '</label>';
+echo elgg_view('input/longtext', array(
+	'name' => 'description',
+	'value' => elgg_extract('description', $vars)
+));
+echo '</div>';
 
-?>
-<div>
-	<label><?php echo elgg_echo("pages:$name") ?></label>
-	<?php
-		if ($type != 'longtext') {
-			echo '<br />';
-		}
+echo '<div>';
+echo '<label>' . elgg_echo('tags') . '</label><br />';
+echo elgg_view('input/tags', array(
+	'name' => 'tags',
+	'value' => elgg_extract('tags', $vars)
+));
+echo '</div>';
 
-		echo elgg_view($input_view, array(
-			'name' => $name,
-			'value' => $vars[$name],
-			'entity' => ($name == 'parent_guid') ? $vars['entity'] : null,
-		));
-	?>
-</div>
-<?php
+if (!$vars['parent_guid'] && !$vars['guid']) {
+	echo '<div>';
+	echo '<label>' . elgg_echo('pages:parent_guid') . '</label><br />';
+	echo elgg_view('pages/input/parent', array(
+		'name' => 'parent_guid',
+		'value' => elgg_extract('parent_guid', $vars),
+		'entity' => $entity
+	));
+	echo '</div>';
 }
+
+echo '<div>';
+echo '<label>' . elgg_echo('pages:access_id') . '</label><br />';
+echo elgg_view('input/access', array(
+	'name' => 'access_id',
+	'value' => elgg_extract('access_id', $vars)
+));
+echo '</div>';
+
+echo '<div>';
+echo '<label>' . elgg_echo('pages:write_access_id') . '</label><br />';
+echo elgg_view('input/write_access', array(
+	'name' => 'write_access_id',
+	'value' => elgg_extract('write_access_id', $vars)
+));
+echo '</div>';
+
+// deprecated way of form extension
+echo elgg_view("pages/input/deprecated", $vars);
 
 $cats = elgg_view('input/categories', $vars);
 if (!empty($cats)) {
