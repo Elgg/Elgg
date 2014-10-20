@@ -5,6 +5,19 @@ Prepare your plugin for the next version of Elgg.
 
 See the administator guides for :doc:`how to upgrade a live site </admin/upgrading>`.
 
+From 1.9 to 1.10
+================
+
+File uploads
+------------
+
+If your plugin is using a snippet copied from the ``file/upload`` action to fix detected mime types for Microsoft zipped formats, it can now be safely removed.
+
+If your upload action performs other manipulations on detected mime and simple types, it is recommended to make use of available plugin hooks:
+
+- ``'mime_type','file'`` for filtering detected mime types
+- ``'simple_type','file'`` for filtering parsed simple types
+
 From 1.8 to 1.9
 ===============
 
