@@ -7,6 +7,7 @@
 
 $full = elgg_extract('full_view', $vars, false);
 $message = elgg_extract('entity', $vars, false);
+$bulk_actions = (bool) elgg_extract('bulk_actions', $vars, false);
 
 if (!$message) {
 	return true;
@@ -54,11 +55,7 @@ if ($message->toId == elgg_get_page_owner_guid()) {
 
 $timestamp = elgg_view_friendly_time($message->time_created);
 
-$subject_info = '';
-if (!$full) {
-	$subject_info .= "<input type='checkbox' name=\"message_id[]\" value=\"{$message->guid}\" />";
-}
-$subject_info .= elgg_view('output/url', array(
+$subject_info = elgg_view('output/url', array(
 	'href' => $message->getURL(),
 	'text' => $message->title,
 	'is_trusted' => true,
@@ -82,5 +79,20 @@ if ($full) {
 	echo elgg_view_image_block($icon, $body, array('class' => $class));
 	echo elgg_view('output/longtext', array('value' => $message->description));
 } else {
-	echo elgg_view_image_block($icon, $body, array('class' => $class));
+	
+	$body .= elgg_view("output/longtext", array("value" => elgg_get_excerpt($message->description), "class" => "elgg-subtext clearfloat"));
+	
+	if ($bulk_actions) {
+		$checkbox = elgg_view('input/checkbox', array(
+			'name' => 'message_id[]',
+			'value' => $message->guid,
+			'default' => false
+		));
+	
+		$entity_listing = elgg_view_image_block($icon, $body, array('class' => $class));
+		
+		echo elgg_view_image_block($checkbox, $entity_listing);
+	} else {
+		echo elgg_view_image_block($icon, $body, array('class' => $class));
+	}
 }
