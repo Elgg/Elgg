@@ -858,8 +858,6 @@ class ElggInstaller {
 			$CONFIG = new stdClass;
 		}
 
-		$CONFIG->installer_running = true;
-
 		$CONFIG->wwwroot = $this->getBaseUrl();
 		$CONFIG->url = $CONFIG->wwwroot;
 		$CONFIG->path = dirname(dirname(__FILE__)) . '/';
