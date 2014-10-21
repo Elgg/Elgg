@@ -10,26 +10,26 @@
 /**
  * Get the size of the specified directory.
  *
- * @param string $dir       The full path of the directory
- * @param int    $totalsize Add to current dir size
+ * @param string $dir        The full path of the directory
+ * @param int    $total_size Add to current dir size
  *
- * @return int The size of the directory.
+ * @return int The size of the directory in bytes
  */
-function get_dir_size($dir, $totalsize = 0) {
+function get_dir_size($dir, $total_size = 0) {
 	$handle = @opendir($dir);
 	while ($file = @readdir($handle)) {
-		if (eregi("^\.{1,2}$", $file)) {
+		if (in_array($file, array('.', '..'))) {
 			continue;
 		}
 		if (is_dir($dir . $file)) {
-			$totalsize = get_dir_size($dir . $file . "/", $totalsize);
+			$total_size = get_dir_size($dir . $file . "/", $total_size);
 		} else {
-			$totalsize += filesize($dir . $file);
+			$total_size += filesize($dir . $file);
 		}
 	}
 	@closedir($handle);
 
-	return($totalsize);
+	return($total_size);
 }
 
 /**
@@ -323,35 +323,34 @@ function get_image_resize_parameters($width, $height, $options) {
  * @return bool
  */
 function file_delete($guid) {
-	if ($file = get_entity($guid)) {
-		if ($file->canEdit()) {
-			$thumbnail = $file->thumbnail;
-			$smallthumb = $file->smallthumb;
-			$largethumb = $file->largethumb;
-			if ($thumbnail) {
-				$delfile = new \ElggFile();
-				$delfile->owner_guid = $file->owner_guid;
-				$delfile->setFilename($thumbnail);
-				$delfile->delete();
-			}
-			if ($smallthumb) {
-				$delfile = new \ElggFile();
-				$delfile->owner_guid = $file->owner_guid;
-				$delfile->setFilename($smallthumb);
-				$delfile->delete();
-			}
-			if ($largethumb) {
-				$delfile = new \ElggFile();
-				$delfile->owner_guid = $file->owner_guid;
-				$delfile->setFilename($largethumb);
-				$delfile->delete();
-			}
-
-			return $file->delete();
-		}
+	$file = get_entity($guid);
+	if (!$file || !$file->canEdit()) {
+		return false;
 	}
 
-	return false;
+	$thumbnail = $file->thumbnail;
+	$smallthumb = $file->smallthumb;
+	$largethumb = $file->largethumb;
+	if ($thumbnail) {
+		$delfile = new \ElggFile();
+		$delfile->owner_guid = $file->owner_guid;
+		$delfile->setFilename($thumbnail);
+		$delfile->delete();
+	}
+	if ($smallthumb) {
+		$delfile = new \ElggFile();
+		$delfile->owner_guid = $file->owner_guid;
+		$delfile->setFilename($smallthumb);
+		$delfile->delete();
+	}
+	if ($largethumb) {
+		$delfile = new \ElggFile();
+		$delfile->owner_guid = $file->owner_guid;
+		$delfile->setFilename($largethumb);
+		$delfile->delete();
+	}
+
+	return $file->delete();
 }
 
 /**

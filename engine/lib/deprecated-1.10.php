@@ -25,4 +25,3 @@ function file_get_general_file_type($mime_type) {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_file_simple_type()', '1.10');
 	return elgg_get_file_simple_type($mime_type);
 }
-
