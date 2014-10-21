@@ -1340,7 +1340,7 @@ $time_created_lower = null, $time_updated_upper = null, $time_updated_lower = nu
  *                   list_type => STR 'list' or 'gallery'
  *                   list_type_toggle => BOOL Display gallery / list switch
  *                   pagination => BOOL Display pagination links
- *                   no_results => STR Message to display when there are no entities
+ *                   no_results => STR|Closure Message to display when there are no entities
  *
  * @param callback $getter  The entity getter function to use to fetch the entities.
  * @param callback $viewer  The function to use to view the entity list.

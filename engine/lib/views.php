@@ -943,7 +943,7 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  *      'pagination'       Display pagination?
  *      'list_type'        List type: 'list' (default), 'gallery'
  *      'list_type_toggle' Display the list type toggle?
- *      'no_results'       Message to display if no results
+ *      'no_results'       Message to display if no results (string|Closure)
  *
  * @return string The rendered list of entities
  * @access private
@@ -1018,7 +1018,7 @@ $list_type_toggle = true, $pagination = true) {
  *      'full_view'  Display the full view of the annotation?
  *      'list_class' CSS Class applied to the list
  *      'offset_key' The url parameter key used for offset
- *      'no_results' Message to display if no results
+ *      'no_results' Message to display if no results (string|Closure)
  *
  * @return string The list of annotations
  * @access private
