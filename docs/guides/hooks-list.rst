@@ -156,9 +156,11 @@ Files
     In ElggFile::detectMimeType, filters the detected mime type
 
 **simple_type, file**
-    In ``elgg_file_get_simple_type()``, filters the return value
-    The hook uses ``$params['mime_type']`` (e.g. ``application/pdf`` or ``image/jpeg``) and determines the corresponding simple (overall) type (e.g. ``document`` or ``image``)
-    Bundled file plugin and other-third party plugins usually store ``simpletype`` metadata on file entities and makes use of it when serving icons and constructing ``ege*`` filters and menus
+    In ``elgg_get_file_simple_type()``, filters the return value. The hook uses ``$params['mime_type']``
+    (e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall category like
+    ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store
+    ``simpletype`` metadata on file entities and make use of it when serving icons and constructing
+    ``ege*`` filters and menus.
 
 Other
 =====

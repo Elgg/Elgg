@@ -105,7 +105,7 @@ $square = false, $upscale = false) {
  * @return false|mixed The contents of the resized image, or false on failure
  */
 function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight, $square = false,
-		$x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = false) {
+$x1 = 0, $y1 = 0, $x2 = 0, $y2 = 0, $upscale = false) {
 
 	// Get the size information from the image
 	$imgsizearray = getimagesize($input_name);
@@ -160,8 +160,8 @@ function get_resized_image_from_existing_file($input_name, $maxwidth, $maxheight
 
 	// color transparencies white (default is black)
 	imagefilledrectangle(
-			$new_image, 0, 0, $params['newwidth'], $params['newheight'],
-			imagecolorallocate($new_image, 255, 255, 255)
+		$new_image, 0, 0, $params['newwidth'], $params['newheight'],
+		imagecolorallocate($new_image, 255, 255, 255)
 	);
 
 	$rtn_code = imagecopyresampled(	$new_image,
@@ -445,14 +445,15 @@ function set_default_filestore(\ElggFilestore $filestore) {
 }
 
 /**
- * Returns a simple (overall) file type from the mimetype
- * 
- * @param string $mimetype The MIME type
- * @return string The overall type: 'general' (default), 'document', 'audio' or 'video'
+ * Returns the category of a file from its MIME type
+ *
+ * @param string $mime_type The MIME type
+ *
+ * @return string 'document', 'audio', 'video', or 'general' if the MIME type was unrecognized
  * @since 1.10
  */
-function elgg_get_file_simple_type($mimetype) {
-	$params = array('mime_type' => $mimetype);
+function elgg_get_file_simple_type($mime_type) {
+	$params = array('mime_type' => $mime_type);
 	return elgg_trigger_plugin_hook('simple_type', 'file', $params, 'general');
 }
 
@@ -471,10 +472,10 @@ function _elgg_filestore_init() {
 		set_default_filestore(new \ElggDiskFilestore($CONFIG->dataroot));
 	}
 
-	// Fix mimetype detection for Microsoft zipped formats
+	// Fix MIME type detection for Microsoft zipped formats
 	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
 	
-	// Parse overall simpletype from mimetype
+	// Parse category of file from MIME type
 	elgg_register_plugin_hook_handler('simple_type', 'file', '_elgg_filestore_parse_simpletype');
 
 	// Unit testing
@@ -482,13 +483,14 @@ function _elgg_filestore_init() {
 }
 
 /**
- * Fix mimetype detection for Microsoft zipped formats
+ * Fix MIME type detection for Microsoft zipped formats
  *
- * @param string $hook     Hook name
- * @param string $type     Hook type
- * @param string $mime_type Detected mimetype
- * @param array  $params   Hook parameters
- * @return string
+ * @param string $hook      "mime_type"
+ * @param string $type      "file"
+ * @param string $mime_type Detected MIME type
+ * @param array  $params    Hook parameters
+ *
+ * @return string The MIME type
  * @access private
  */
 function _elgg_filestore_detect_mimetype($hook, $type, $mime_type, $params) {
@@ -522,14 +524,14 @@ function _elgg_filestore_detect_mimetype($hook, $type, $mime_type, $params) {
 }
 
 /**
- * Parse overall file type from mimetype
+ * Parse a file category of file from a MIME type
  *
- * @param string $hook        Hook name
- * @param string $type        Hook type
- * @param string $simple_type The overall type
+ * @param string $hook        "simple_type"
+ * @param string $type        "file"
+ * @param string $simple_type The category of file
  * @param array  $params      Hook parameters
- * @uses string @params['mime_type'] Mimetype
- * @return string
+ *
+ * @return string 'document', 'audio', 'video', or 'general' if the MIME type is unrecognized
  * @access private
  */
 function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
@@ -539,29 +541,21 @@ function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
 	switch ($mime_type) {
 		case "application/msword":
 		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
-			$simple_type = "document";
-			break;
 		case "application/pdf":
-			$simple_type = "document";
-			break;
+			return "document";
+
 		case "application/ogg":
-			$simple_type = "audio";
-			break;
-		default:
-			if (substr_count($mime_type, 'text/')) {
-				$simple_type = "document";
-			} elseif (substr_count($mime_type, 'audio/')) {
-				$simple_type = "audio";
-			} elseif (substr_count($mime_type, 'image/')) {
-				$simple_type = "image";
-			} elseif (substr_count($mime_type, 'video/')) {
-				$simple_type = "video";
-			} elseif (substr_count($mime_type, 'opendocument')) {
-				$simple_type = "document";
-			}
-			break;
+			return "audio";
 	}
 
+	if (preg_match('~^(audio|image|video)/~', $mime_type, $m)) {
+		return $m[1];
+	}
+	if (0 === strpos($mime_type, 'text/') || false !== strpos($mime_type, 'opendocument')) {
+		return "document";
+	}
+
+	// unrecognized MIME
 	return $simple_type;
 }
 
