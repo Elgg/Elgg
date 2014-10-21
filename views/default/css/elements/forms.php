@@ -82,7 +82,7 @@ input[type="radio"] {
 	padding-right: 10px;
 }
 
-.elgg-form-login, .elgg-form-account {
+.elgg-form-account {
 	max-width: 450px;
 }
 

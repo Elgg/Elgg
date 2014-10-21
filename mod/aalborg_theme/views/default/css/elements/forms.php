@@ -79,10 +79,8 @@ select {
 	padding: 4px; 
 }
 .elgg-form-account {
-	margin-bottom: 15px;
-}
-.elgg-form-login, .elgg-form-account {
 	max-width: 450px;
+	margin-bottom: 15px;
 }
 
 /* ***************************************
