@@ -274,6 +274,36 @@ class Database {
 	}
 
 	/**
+	 * Get a string that uniquely identifies a callback during the current request.
+	 *
+	 * This is used to cache queries whose results were transformed by the callback. If the callback involves
+	 * object method calls of the same class, different instances will return different values.
+	 *
+	 * @param callable $callback The callable value to fingerprint
+	 *
+	 * @return string A string that is unique for each callable passed in
+	 * @since 1.9.4
+	 * @access private
+	 * @todo Make this protected once we can setAccessible(true) via reflection
+	 */
+	public function fingerprintCallback($callback) {
+		if (is_string($callback)) {
+			return $callback;
+		}
+		if (is_object($callback)) {
+			return spl_object_hash($callback) . "::__invoke";
+		}
+		if (is_array($callback)) {
+			if (is_string($callback[0])) {
+				return "{$callback[0]}::{$callback[1]}";
+			}
+			return spl_object_hash($callback[0]) . "::{$callback[1]}";
+		}
+		// this should not happen
+		return "";
+	}
+
+	/**
 	 * Handles queries that return results, running the results through a
 	 * an optional callback function. This is for R queries (from CRUD).
 	 *
@@ -290,8 +320,20 @@ class Database {
 		// Since we want to cache results of running the callback, we need to
 		// need to namespace the query with the callback and single result request.
 		// https://github.com/elgg/elgg/issues/4049
-		$callback_hash = is_object($callback) ? spl_object_hash($callback) : (string)$callback;
-		$hash = $callback_hash . (int)$single . $query;
+		$query_id = (int)$single . $query . '|';
+		if ($callback) {
+			$is_callable = is_callable($callback);
+			if ($is_callable) {
+				$query_id .= $this->fingerprintCallback($callback);
+			} else {
+				// TODO do something about invalid callbacks
+				$callback = null;
+			}
+		} else {
+			$is_callable = false;
+		}
+		// MD5 yields smaller mem usage for cache and cleaner logs
+		$hash = md5($query_id);
 
 		// Is cached?
 		if ($this->queryCache) {
@@ -305,11 +347,6 @@ class Database {
 		$return = array();
 
 		if ($result = $this->executeQuery("$query", $dblink)) {
-
-			// test for callback once instead of on each iteration.
-			// @todo check profiling to see if this needs to be broken out into
-			// explicit cases instead of checking in the interation.
-			$is_callable = is_callable($callback);
 			while ($row = mysql_fetch_object($result)) {
 				if ($is_callable) {
 					$row = call_user_func($callback, $row);
@@ -376,10 +413,14 @@ class Database {
 	 *
 	 * The file specified should be a standard SQL file as created by
 	 * mysqldump or similar.  Statements must be terminated with ;
-	 * and a newline character (\n or \r\n) with only one statement per line.
+	 * and a newline character (\n or \r\n).
 	 *
 	 * The special string 'prefix_' is replaced with the database prefix
 	 * as defined in {@link $this->tablePrefix}.
+	 *
+	 * @warning Only single line comments are supported. A comment
+	 * must start with '-- ' or '# ', where the comment sign is at the
+	 * very beginning of each line.
 	 *
 	 * @warning Errors do not halt execution of the script.  If a line
 	 * generates an error, the error message is saved and the
@@ -397,11 +438,11 @@ class Database {
 
 			$errors = array();
 
-			// Remove MySQL -- style comments
-			$script = preg_replace('/\-\-.*\n/', '', $script);
+			// Remove MySQL '-- ' and '# ' style comments
+			$script = preg_replace('/^(?:--|#) .*$/m', '', $script);
 
 			// Statements must end with ; and a newline
-			$sql_statements = preg_split('/;[\n\r]+/', $script);
+			$sql_statements = preg_split('/;[\n\r]+/', "$script\n");
 
 			foreach ($sql_statements as $statement) {
 				$statement = trim($statement);

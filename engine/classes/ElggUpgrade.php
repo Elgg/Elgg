@@ -40,12 +40,12 @@ class ElggUpgrade extends \ElggObject {
 		parent::initializeAttributes();
 
 		$this->attributes['subtype'] = 'elgg_upgrade';
-		
-		// unowned 
+
+		// unowned
 		$this->attributes['site_guid'] = 0;
 		$this->attributes['container_guid'] = 0;
 		$this->attributes['owner_guid'] = 0;
-		
+
 		$this->is_completed = 0;
 	}
 
@@ -77,13 +77,13 @@ class ElggUpgrade extends \ElggObject {
 	 */
 	public function setPath($path) {
 		if (!$path) {
-			throw new InvalidArgumentException(elgg_echo('ElggUpgrade:error:url_invalid'));
+			throw new InvalidArgumentException('Invalid value for URL path.');
 		}
 
 		$path = ltrim($path, '/');
 
 		if ($this->getUpgradeFromPath($path)) {
-			throw new InvalidArgumentException(elgg_echo('ElggUpgrade:error:url_not_unique'));
+			throw new InvalidArgumentException('Upgrade URL paths must be unique.');
 		}
 
 		$this->upgrade_url = $path;
@@ -130,7 +130,7 @@ class ElggUpgrade extends \ElggObject {
 	public function save() {
 		foreach ($this->requiredProperties as $prop) {
 			if (!$this->$prop) {
-				throw new \UnexpectedValueException(elgg_echo("ElggUpgrade:error:{$prop}_required"));
+				throw new \UnexpectedValueException("ElggUpgrade objects must have a value for the $prop property.");
 			}
 		}
 

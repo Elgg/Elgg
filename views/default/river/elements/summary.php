@@ -9,7 +9,6 @@ $item = $vars['item'];
 
 $subject = $item->getSubjectEntity();
 $object = $item->getObjectEntity();
-$container = $object->getContainerEntity();
 
 $subject_link = elgg_view('output/url', array(
 	'href' => $subject->getURL(),
@@ -29,16 +28,6 @@ $object_link = elgg_view('output/url', array(
 $action = $item->action_type;
 $type = $item->type;
 $subtype = $item->subtype ? $item->subtype : 'default';
-
-if ($container instanceof ElggGroup) {
-	$params = array(
-		'href' => $container->getURL(),
-		'text' => $container->name,
-		'is_trusted' => true,
-	);
-	$group_link = elgg_view('output/url', $params);
-	$group_string = elgg_echo('river:ingroup', array($group_link));
-}
 
 // check summary translation keys.
 // will use the $type:$subtype if that's defined, otherwise just uses $type:default

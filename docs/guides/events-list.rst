@@ -8,144 +8,180 @@ System events
 =============
 
 **boot, system**
-    first event triggered. Triggered before plugins have been loaded.
+    First event triggered. Triggered before plugins have been loaded.
 
 **plugins_boot, system**
-    triggered just after the plugins are loaded. Rarely used. init, system is used instead.
+    Triggered just after the plugins are loaded. Rarely used. init, system is used instead.
 
 **init, system**
-    plugins tend to use this event for initialization (extending views, registering callbacks, etc.)
+    Plugins tend to use this event for initialization (extending views, registering callbacks, etc.)
 
 **ready, system**
+	Triggered after the ``init, system`` event. All plugins are fully loaded and the engine is ready
+	to serve pages.
 
 **pagesetup, system**
-    called just before the first content is produced. Is triggered by elgg_view().
+    Called just before the first content is produced. Is triggered by ``elgg_view()``.
 
 **shutdown, system**
-    triggered after the page has been sent to the user. Expensive operations could be done here
-    and not make the user wait. Note: Depending upon your server configuration the PHP output
+    Triggered after the page has been sent to the user. Expensive operations could be done here
+    and not make the user wait.
+
+.. note:: Depending upon your server configuration the PHP output
     might not be shown until after the process is completed. This means that any long-running
     processes will still delay the page load.
 
 **log, systemlog**
+	Called for all triggered events. Used internally by ``system_log_default_logger()`` to populate
+	the ``system_log`` table.
 
 **upgrade, system**
+	Triggered after a system upgrade has finished. All upgrade scripts have run, but the caches 
+	are not cleared.
 
 **upgrade, upgrade**
+	A single upgrade script finished executing. Handlers are passed a ``stdClass`` object with the properties
+		* from - The version of Elgg upgrading from.
+		* to - The version just upgraded to.
 
 **activate, plugin**
-    return false to prevent activation of the plugin.
+    Return false to prevent activation of the plugin.
 
 **deactivate, plugin**
-    return false to prevent deactivation of the plugin.
+    Return false to prevent deactivation of the plugin.
 
 **init:cookie, <name>**
-    return false to override setting a cookie.
+    Return false to override setting a cookie.
 
 User events
 ===========
 
-**login, user**
-    triggered during login. Returning false prevents the user from logging
+**login:before, user**
+    Triggered during login. Returning false prevents the user from logging
 
-**logout, user**
-    triggered during logout. Returning false should prevent the user from logging out.
+**login:after, user**
+	Triggered after the user logs in.
+
+**logout:before, user**
+    Triggered during logout. Returning false should prevent the user from logging out.
+
+**logout:after, user**
+	Triggered after the user logouts.
 
 **validate, user**
-    when a user registers, the user's account is disabled. This event is triggered
+    When a user registers, the user's account is disabled. This event is triggered
     to allow a plugin to determine how the user should be validated (for example,
     through an email with a validation link).
 
 **profileupdate, user**
-    user has changed profile
+    User has changed profile
 
 **profileiconupdate, user**
-    user has changed profile icon
+    User has changed profile icon
 
 **ban, user**
-    return true to ban user
+    Triggered before a user is banned. Return false to prevent.
 
 **unban, user**
-    return true to unban user
+    Triggered before a user is unbanned. Return false to prevent.
 
 **make_admin, user**
+	Triggered before a user is promoted to an admin. Return false to prevent.
 
 **remove_admin, user**
+	Triggered before a user is demoted from an admin. Return false to prevent.
 
 Relationship events
 ===================
 
 **create, <relationship>**
-    called after the relationship has been created. Returning false deletes
+    Triggered after a relationship has been created. Returning false deletes
     the relationship that was just created.
 
 **delete, <relationship>**
-    called before the relationship is deleted. Return false to prevent it
+    Triggered before a relationship is deleted. Return false to prevent it
     from being deleted.
 
 **join, group**
-    user joined a group
+    Triggered after the user ``$params['user']`` has joined the group ``$params['group']``.
 
 **leave, group**
-    user left a group
+    Triggered before the user ``$params['user']`` has left the group ``$params['group']``.
 
 Entity events
 =============
 
 **create, <entity type>**
-    called for user, group, object, and site entities after creation. Return
-    true or entity is deleted.
+    Triggered for user, group, object, and site entities after creation. Return false to delete entity.
 
 **update, <entity type>**
-    called after group update and return false to delete group. Called after
-    object update and return false to delete the object. Called after site
-    update and return false to delete site. Called after user update and
-    returning false deletes the user. Called before entity update and returning
-    false prevents update.
+	Triggered before an update for the user, group, object, and site entities. Return false to prevent update.
 
 **delete, <entity type>**
-    called before entity deletion and returning false prevents deletion.
+    Triggered before entity deletion. Return false to prevent deletion.
 
 **disable, <entity type>**
-    return false to prevent disable
+    Triggered before the entity is disabled. Return false to prevent disabling.
+
+**disable:after, <entity type>**
+	Triggered after the entity is disabled.
 
 **enable, <entity type>**
-    return false to prevent enable
+    Return false to prevent enabling.
+
+**enable:after, <entity type>**
+	Triggered after the entity is enabled.
 
 Metadata events
 ===============
 
 **create, metadata**
-    called after the metadata has been created. Return false to delete the
+    Called after the metadata has been created. Return false to delete the
     metadata that was just created.
 
 **update, metadata**
-    called after the metadata has been updated. Return false to delete the
-    metadata. (That doesn't sound like a good idea)
+    Called after the metadata has been updated. Return false to *delete the metadata.*
 
 **delete, metadata**
-    called before metadata is deleted. Return false to prevent deletion.
+    Called before metadata is deleted. Return false to prevent deletion.
+
+**enable, metadata**
+	Called when enabling metadata. Return false to prevent enabling.
+
+**disable, metadata**
+	Called when disabling metadata. Return false to prevent disabling.
 
 Annotation events
 =================
 
 **annotate, <entity type>**
-    called before the annotation has been created. Return false to prevent
+    Called before the annotation has been created. Return false to prevent
     annotation of this entity.
 
 **create, annotation**
-    called after the annotation has been created. Return false to delete
+    Called after the annotation has been created. Return false to delete
     the annotation.
 
 **update, annotation**
-    called after the annotation has been updated. Return false to delete the
-    annotation. (That doesn't sound like a good idea)
+    Called after the annotation has been updated. Return false to *delete the annotation.*
 
 **delete, annotation**
-    called before annotation is deleted. Return false to prevent deletion.
+    Called before annotation is deleted. Return false to prevent deletion.
+
+**enable, annotation**
+	Called when enabling annotations. Return false to prevent enabling.
+
+**disable, annotations**
+	Called when disabling annotations. Return false to prevent disabling.
+
+River events
+============
+
+**created, river**
+	Called after a river item is created.
 
 Notes
 =====
 
 Because of bugs in the Elgg core, some events may be thrown more than once
-on the same action. update, object is an example of an event that is thrown twice.
+on the same action. For example, ``update, object`` is thrown twice.

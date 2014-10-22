@@ -85,6 +85,10 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	public function run($step) {
+		global $CONFIG;
+
+		// language needs to be set before the first call to elgg_echo()
+		$CONFIG->language = 'en';
 
 		// check if this is a URL rewrite test coming in
 		$this->processRewriteTest();

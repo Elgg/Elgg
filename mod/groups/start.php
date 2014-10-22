@@ -1107,7 +1107,9 @@ function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 	}
 
 	$group_guid = $reply->getContainerEntity()->container_guid;
-	return elgg_get_subscriptions_for_container($group_guid);
+	$group_subscribers = elgg_get_subscriptions_for_container($group_guid);
+	
+	return ($subscriptions + $group_subscribers);
 }
 
 /**
