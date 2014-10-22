@@ -744,35 +744,50 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
 /**
  * Returns a string of a rendered entity.
  *
- * Entity views are either determined by setting the view property on the entity
- * or by having a view named after the entity $type/$subtype.  Entities that have
- * neither a view property nor a defined $type/$subtype view will fall back to
- * using the $type/default view.
+ * If the entity happens to have a string "view" property, that view is used to render it, but generally the function
+ * searches for a view to render it based on the entity's type/subtype and the "format" or "full_view" options.
  *
- * The entity view is called with the following in $vars:
- *  - \ElggEntity 'entity' The entity being viewed
+ * If the format is not given, but full_view is given, the format is set to "full" or "brief" depending on whether
+ * full_view was given as true or false respectively.
  *
- * Other common view $vars paramters:
- *  - bool 'full_view' Whether to show a full or condensed view. (Default: true)
+ * If format is given as "full" or "brief", the full_view option is overridden to the value true or false
+ * respectively.
  *
- * @tip This function can automatically appends annotations to entities if in full
- * view and a handler is registered for the entity:annotate.  See https://github.com/Elgg/Elgg/issues/964 and
+ * The function first looks for a format view, which has the name "$type/$subtype/$format" or "$type/default/$format".
+ *
+ * If neither view exists, and format is neither "full" nor "brief", an empty string is returned. Otherwise the
+ * function looks for the legacy views "$type/$subtype" and "$type/default".
+ *
+ * The legacy views are passed the full_view value as $vars['full_view']. The format views are passed the format
+ * as $vars['format'].
+ *
+ * All views are passed the entity as $vars['entity'].
+ *
+ * @tip This function can automatically appends annotations to entities if in full view and if a handler is registered
+ * for the entity:annotate.  See https://github.com/Elgg/Elgg/issues/964 and
  * {@link elgg_view_entity_annotations()}.
  *
- * @param \ElggEntity $entity The entity to display
- * @param array       $vars   Array of variables to pass to the entity view.
- *                            In Elgg 1.7 and earlier it was the boolean $full_view
- * @param boolean     $bypass If true, will not pass to a custom template handler.
- *                            {@link set_template_handler()}
- * @param boolean     $debug  Complain if views are missing
+ * @internal When writing a function that passes options to this function, it's best to not specify a default format
+ *           so the BC full_view option will be considered. If you must give format a default, use an empty string.
+ *
+ * @param \ElggEntity $entity  The entity to display
+ * @param array       $options Array of options for the entity views (In Elgg 1.7 and earlier it was the
+ *                             boolean $full_view).
+ *
+ *    format    : string   The format of rendering requested. See the description for more information. Default "full".
+ *    full_view : boolean  Should the fallback format be "full" or "brief" if format isn't specified? Default true.
+ *
+ * @param boolean     $bypass  If true, will not pass to a custom template handler.
+ *                             {@link set_template_handler()}
+ * @param boolean     $debug   Complain if views are missing
  *
  * @return string HTML to display or false
  * @todo The annotation hook might be better as a generic plugin hook to append content.
  */
-function elgg_view_entity(\ElggEntity $entity, $vars = array(), $bypass = false, $debug = false) {
+function elgg_view_entity(\ElggEntity $entity, $options = array(), $bypass = false, $debug = false) {
 
 	// No point continuing if entity is null
-	if (!$entity || !($entity instanceof \ElggEntity)) {
+	if (!$entity instanceof \ElggEntity) {
 		return false;
 	}
 
@@ -780,20 +795,32 @@ function elgg_view_entity(\ElggEntity $entity, $vars = array(), $bypass = false,
 	$autofeed = true;
 
 	$defaults = array(
+		'format' => 'full',
 		'full_view' => true,
 	);
 
-	if (is_array($vars)) {
-		$vars = array_merge($defaults, $vars);
-	} else {
+	if (!is_array($options)) {
 		elgg_deprecated_notice("Update your use of elgg_view_entity()", 1.8);
-		$vars = array(
-			'full_view' => $vars,
+		$options = array(
+			'format' => $options ? 'full' : 'brief',
 		);
 	}
 
-	$vars['entity'] = $entity;
+	// resolve options for easiest BC with 1.8 views
+	if (empty($options['format'])) {
+		if (isset($options['full_view'])) {
+			$options['format'] = $options['full_view'] ? 'full' : 'brief';
+		}
+	} else {
+		if ($options['format'] === 'full') {
+			$options['full_view'] = true;
+		} elseif ($options['format'] === 'brief') {
+			$options['full_view'] = false;
+		}
+	}
 
+	$vars = array_merge($defaults, $options);
+	$vars['entity'] = $entity;
 
 	// if this entity has a view defined, use it
 	$view = $entity->view;
@@ -801,24 +828,37 @@ function elgg_view_entity(\ElggEntity $entity, $vars = array(), $bypass = false,
 		return elgg_view($view, $vars, $bypass, $debug);
 	}
 
-	$entity_type = $entity->getType();
-
+	// must find the view
+	$type = $entity->getType();
 	$subtype = $entity->getSubtype();
 	if (empty($subtype)) {
 		$subtype = 'default';
 	}
+	$format = $vars['format'];
 
-	$contents = '';
-	if (elgg_view_exists("$entity_type/$subtype")) {
-		$contents = elgg_view("$entity_type/$subtype", $vars, $bypass, $debug);
+	if (elgg_view_exists("$type/$subtype/$format")) {
+		unset($vars['full_view']);
+		$contents = elgg_view("$type/$subtype/$format", $vars, $bypass, $debug);
+	} elseif (elgg_view_exists("$type/default/$format")) {
+		unset($vars['full_view']);
+		$contents = elgg_view("$type/default/$format", $vars, $bypass, $debug);
 	} else {
-		$contents = elgg_view("$entity_type/default", $vars, $bypass, $debug);
+		// legacy views
+		if ($format !== 'full' && $format !== 'brief') {
+			// can't use legacy
+			return "";
+		}
+		unset($vars['format']);
+		if (elgg_view_exists("$type/$subtype")) {
+			$contents = elgg_view("$type/$subtype", $vars, $bypass, $debug);
+		} else {
+			$contents = elgg_view("$type/default", $vars, $bypass, $debug);
+		}
 	}
 
 	// Marcus Povey 20090616 : Speculative and low impact approach for fixing #964
-	if ($vars['full_view']) {
-		$annotations = elgg_view_entity_annotations($entity, $vars['full_view']);
-
+	if ($format === 'full') {
+		$annotations = elgg_view_entity_annotations($entity, true);
 		if ($annotations) {
 			$contents .= $annotations;
 		}
@@ -926,6 +966,9 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  * Returns a rendered list of entities with pagination. This function should be
  * called by wrapper functions.
  *
+ * @see elgg_view_entity() This function is used for rendering, hence here we accept the "format" and "full_view"
+ *      options. For BC purposes this function sets a default only for the "full_view" option.
+ *
  * @see elgg_list_entities()
  * @see list_user_friends_objects()
  * @see elgg_list_entities_from_metadata()
@@ -937,7 +980,8 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  *      'count'            The total number of entities across all pages
  *      'offset'           The current indexing offset
  *      'limit'            The number of entities to display per page
- *      'full_view'        Display the full view of the entities?
+ *      'format'           The format in which to render entities. {@link elgg_view_entity()}
+ *      'full_view'        Legacy method to specify format. {@link elgg_view_entity()}
  *      'list_class'       CSS class applied to the list
  *      'item_class'       CSS class applied to the list items
  *      'pagination'       Display pagination?
