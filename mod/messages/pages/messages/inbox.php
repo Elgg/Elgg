@@ -32,6 +32,7 @@ $list = elgg_list_entities_from_metadata(array(
 	'owner_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
 	'preload_owners' => true,
+	'bulk_actions' => true
 ));
 
 $body_vars = array(
