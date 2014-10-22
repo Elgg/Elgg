@@ -14,15 +14,15 @@ Plugins influence the system by creating handlers (`callables <http://php.net/ma
 such as functions and methods) and registering them to handle
 two types of events: `Elgg Events`_ and `Plugin Hooks`_.
 
-When an event is triggered, a set of handlers is assembled in order
-of priority, then each is executed. Each handler is passed arguments
-and has a chance to influence the process. Finally the "trigger"
+When an event is triggered, a set of handlers is executed in order
+of priority. Each handler is passed arguments
+and has a chance to influence the process. After execution, the "trigger"
 function returns a value based on the behavior of the handlers.
 
 Elgg Events vs. Plugin Hooks
 ----------------------------
 
-There are a few big differences between `Elgg Events`_ and `Plugin Hooks`_:
+The main differences between `Elgg Events`_ and `Plugin Hooks`_ are:
 
 #. Most Elgg events can be cancelled; unless the event is an "after" event,
    a handler that returns `false` can cancel the event, and no more handlers
@@ -31,8 +31,6 @@ There are a few big differences between `Elgg Events`_ and `Plugin Hooks`_:
 #. Plugin hooks pass an arbitrary value through the handlers, giving each
    a chance to alter along the way.
 
-Note: Plugin hooks also allow passing a parameters array to the handlers,
-though this will eventually come to Elgg events as well.
 
 Elgg Events
 ===========
@@ -42,7 +40,7 @@ deleted; and at important milestones while the Elgg framework is
 loading. Examples: a blog post being created or a user logging in.
 
 Unlike `Plugin Hooks`_, *most Elgg events can be cancelled*, halting the
-execution of the handlers, and possibly cancelling or reverting some
+execution of the handlers, and possibly cancelling an some
 action in the Elgg core.
 
 Each Elgg event has a name and an object type (system, user, object,
@@ -53,7 +51,7 @@ Before and After Events
 -----------------------
 
 Some events are split into "before" and "after". This avoids confusion
-around the state of the system while in flux. E.g. Should the user be
+around the state of the system while in flux. E.g. Is the user
 logged in during the [login, user] event?
 
 Before Events have names ending in ":before" and are triggered before
@@ -106,7 +104,7 @@ Parameters:
 -  **$handler** The callback of the handler function.
 -  **$priority** The priority - 0 is first and the default is 500.
 
-**Object** here does not refer to an ``ElggObject`` but rather any object
+**Object** here does not refer to an ``ElggObject`` but rather a string describing any object
 in the framework: system, user, object, relationship, annotation, group.
 
 Example:
@@ -131,6 +129,20 @@ You can trigger a custom Elgg event using ``elgg_trigger_event``:
         // Event was cancelled. Roll back any progress made before the event.
     }
 
+For events with ambiguous states, like logging in a user, you should use `Before and After Events`_
+by calling ``elgg_trigger_before_event`` or ``elgg_trigger_after_event``.
+This makes it clear for the event handler what state to expect and which events can be cancelled.
+
+.. code:: php
+
+	// handlers for the user, login:before event know the user isn't logged in yet.
+	if (!elgg_trigger_before_event('login', 'user', $user)) {
+		return false;
+	}
+
+	// handlers for the user, login:after event know the user is logged in.
+	elgg_trigger_after_event('login', 'user', $user);
+
 Parameters:
 
 -  **$event** The event name.
@@ -138,19 +150,19 @@ Parameters:
 -  **$object** The object (e.g. an instance of ``ElggUser`` or ``ElggGroup``)
 
 The function will return ``false`` if any of the selected handlers returned
-``false``, otherwise it will return ``true``.
+``false`` and the event is stoppable, otherwise it will return ``true``.
 
 
 Plugin Hooks
 ============
 
 Plugin Hooks provide a way for plugins to collaboratively determine or alter
-a value. E.g. this could be to set a configuration array or to decide whether
-a user has permission to edit an entity.
+a value. For example, to decide whether a user has permission to edit an entity
+or to add additional configuration options to a plugin.
 
 A plugin hook has a value passed into the trigger function, and each handler
 has an opportunity to alter the value before it's passed to the next handler.
-After the last handler has completed, the current value is returned by the
+After the last handler has completed, the final value is returned by the
 trigger.
 
 Plugin Hook Handlers
@@ -220,5 +232,4 @@ Parameters:
 -  **$params** Arbitrary data passed from the trigger to the handlers.
 -  **$value** The initial value of the plugin hook.
 
-**Caveat!** The `$params` and `$value` arguments are reversed between the
-plugin hook handlers and trigger functions!
+.. warning:: The `$params` and `$value` arguments are reversed between the plugin hook handlers and trigger functions!

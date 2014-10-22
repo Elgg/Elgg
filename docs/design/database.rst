@@ -9,29 +9,30 @@ A thorough discussion of Elgg's data model design and motivation.
 Overview
 ========
 
-In Elgg, everything runs on a unified data model, based on atomic
+In Elgg, everything runs on a unified data model based on atomic
 units of data called entities.
 
-Plugins are strongly discouraged from dealing with database issues
-themselves, which makes for a more stable system that also has visible
-benefits for the end user. Content created by different plugins can be
-mixed together in consistent ways, which are programmed using generic
-principles - in other words, plugins are faster to develop, and are at
-the same time much more powerful.
+Plugins are discouraged from interacting directly with the database,
+which creates a more stable system and a better user experience becase
+content created by different plugins can be mixed together in
+consistent ways. With this approach, plugins are faster to develop,
+and are at the same time much more powerful.
 
 Every entity in the system inherits the ``ElggEntity`` class. This class
-controls access permissions, ownership and so on.
+controls access permissions, ownership
 
 .. _thumb\|The Elgg data model diagramIn: image:Elgg_data_model.png
 
 You can extend entities with extra information in two ways:
 
-``Metadata``: This is information you can add to an object to
-   describe it further. For example, tags, an ISBN number, a file
-   location or language information would fall under metadata.
-``Annotations``: Information generally added by third parties which
-   adds to the information provided by the entity. For example, ratings
-   are annotations (and comments were before 1.9).
+``Metadata``: This is information describing the entity, usually
+   added by the author of the entity when the entity is created.
+   For example, tags, an ISBN number, a file location, or
+   source language is metadata.
+``Annotations``: This is information about the entity, usually
+   added by a third party after the entity is created. 
+   For example, ratings, likes, and votes are annotations.
+   (Comments were before 1.9.)
 
 Entities
 ========
