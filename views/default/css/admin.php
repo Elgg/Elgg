@@ -1521,6 +1521,9 @@ ul.elgg-plugin-resources, ul.elgg-plugin-resources > li {
 .elgg-markdown p {
 	margin: 15px 0;
 }
+.elgg-markdown pre > code {
+	border: none;
+}
 
 /* ***************************************
 	MISC
