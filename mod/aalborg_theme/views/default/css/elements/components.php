@@ -141,6 +141,32 @@
 	border: 1px solid #E5B7B5;
 	border-radius: 5px;
 }
+.elgg-box {
+	margin: 10px 0;
+	padding: 20px;
+	border-radius: 5px;
+	box-sizing: border-box;
+}
+.elgg-box.elgg-state-error {
+	color: #B94A48;
+	background-color: #F8E8E8;
+	border: 1px solid #E5B7B5;
+}
+.elgg-box.elgg-state-notice {
+	color: #3B8BC9;
+	background-color: #E7F1F9;
+	border: 1px solid #B1D1E9;
+}
+.elgg-box.elgg-state-success {
+	color: #397F2E;
+	background-color: #EAF8E8;
+	border: 1px solid #AADEA2;
+}
+.elgg-box.elgg-state-warning {
+	color: #6B420F;
+	background-color: #FCF8E4;
+	border: 1px solid #EDDC7D;
+}
 
 /* ***************************************
 	River
