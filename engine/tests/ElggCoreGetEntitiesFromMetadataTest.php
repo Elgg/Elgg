@@ -26,7 +26,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -71,7 +71,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 2);
 
 		foreach ($entities as $entity) {
@@ -171,7 +171,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -208,7 +208,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -253,7 +253,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 2);
 
 		foreach ($entities as $entity) {
@@ -353,7 +353,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -413,7 +413,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -496,7 +496,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -568,7 +568,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -673,7 +673,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 1);
 
 		foreach ($entities as $entity) {
@@ -847,7 +847,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 2);
 
 		foreach ($entities as $entity) {
@@ -925,7 +925,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 2);
 
 		foreach ($entities as $entity) {
@@ -980,7 +980,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 3);
 
 		$i = 1;
@@ -1038,7 +1038,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 
 		$entities = elgg_get_entities_from_metadata($options);
 
-		$this->assertIsa($entities, 'array');
+		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 3);
 
 		$alpha = array('a', 'b', 'c');
@@ -1058,4 +1058,294 @@ class ElggCoreGetEntitiesFromMetadataTest extends ElggCoreGetEntitiesBaseTest {
 		}
 	}
 
+	// test getting by name sorting by value as integer
+	function testElggApiGettersEntityMetadataNOrderByMDInt() {
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$md_name = 'test_metadata_name_' . rand();
+		$guids = array();
+		$valid_guids = array();
+
+		// our targets
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->$md_name = 5;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid->getGUID();
+
+		$valid2 = new ElggObject();
+		$valid2->subtype = $subtype;
+		$valid2->$md_name = 1;
+		$valid2->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid2->getGUID();
+
+		$valid3 = new ElggObject();
+		$valid3->subtype = $subtype;
+		$valid3->$md_name = 15;
+		$valid3->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid3->getGUID();
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			'metadata_name' => $md_name,
+			'order_by_metadata' => array('name' => $md_name, 'as' => 'integer')
+		);
+
+		$entities = elgg_get_entities_from_metadata($options);
+
+		$this->assertIsA($entities, 'array');
+		$this->assertEqual(count($entities), 3);
+
+		$num = array(1, 5, 15);
+
+		$i = 0;
+		foreach ($entities as $entity) {
+			$this->assertTrue(in_array($entity->getGUID(), $valid_guids));
+			$this->assertEqual($entity->$md_name, $num[$i]);
+			$i++;
+			$entity->delete();
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
+	
+	// test getting by name sorting by value as integer with defined values
+	function testElggApiGettersEntityMetadataNOrderByMDIntDefinedVals() {
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$md_name = 'test_metadata_name_' . rand();
+		$guids = array();
+		$valid_guids = array();
+
+		// our targets
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->$md_name = 5;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid->getGUID();
+
+		$valid2 = new ElggObject();
+		$valid2->subtype = $subtype;
+		$valid2->$md_name = 1;
+		$valid2->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid2->getGUID();
+
+		$valid3 = new ElggObject();
+		$valid3->subtype = $subtype;
+		$valid3->$md_name = 15;
+		$valid3->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid3->getGUID();
+		
+		$num = array(1, 5, 15);
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			'metadata_name' => $md_name,
+			'metadata_values' => $num,
+			'order_by_metadata' => array('name' => $md_name, 'as' => 'integer')
+		);
+
+		$entities = elgg_get_entities_from_metadata($options);
+
+		$this->assertIsA($entities, 'array');
+		$this->assertEqual(count($entities), 3);
+
+		$i = 0;
+		foreach ($entities as $entity) {
+			$this->assertTrue(in_array($entity->getGUID(), $valid_guids));
+			$this->assertEqual($entity->$md_name, $num[$i]);
+			$i++;
+			$entity->delete();
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
+	
+	// test getting by name_value_pairs sorting by value as integer
+	// because string comparison '5' > '15'
+	function testElggApiGettersEntityMetadataNVPOrderByMDInt() {
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$md_name = 'test_metadata_name_' . rand();
+		$guids = array();
+		$valid_guids = array();
+
+		// our targets
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->$md_name = 5;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid->getGUID();
+
+		$valid2 = new ElggObject();
+		$valid2->subtype = $subtype;
+		$valid2->$md_name = 1;
+		$valid2->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid2->getGUID();
+
+		$valid3 = new ElggObject();
+		$valid3->subtype = $subtype;
+		$valid3->$md_name = 15;
+		$valid3->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid3->getGUID();
+		
+		$num = array(1, 5, 15);
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			'metadata_name_value_pairs' => array(
+				'name' => $md_name,
+				'value' => $num
+			),
+			'order_by_metadata' => array('name' => $md_name, 'as' => 'integer')
+		);
+
+		$entities = elgg_get_entities_from_metadata($options);
+
+		$this->assertIsA($entities, 'array');
+		$this->assertEqual(count($entities), 3);
+
+		$i = 0;
+		foreach ($entities as $entity) {
+			$this->assertTrue(in_array($entity->getGUID(), $valid_guids));
+			$this->assertEqual($entity->$md_name, $num[$i]);
+			$i++;
+			$entity->delete();
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
+	
+	// test getting by name sorting by value as integer with defined values
+	function testElggApiGettersEntityMetadataNVPGreaterThanInt() {
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$md_name = 'test_metadata_name_' . rand();
+		$guids = array();
+		$valid_guids = array();
+
+		// our targets
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->$md_name = 5;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid->getGUID();
+
+		$valid2 = new ElggObject();
+		$valid2->subtype = $subtype;
+		$valid2->$md_name = 1;
+		$valid2->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid2->getGUID();
+
+		$valid3 = new ElggObject();
+		$valid3->subtype = $subtype;
+		$valid3->$md_name = 15;
+		$valid3->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid3->getGUID();
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			'metadata_name_value_pairs' => array(
+				'name' => $md_name,
+				'value' => 4,
+				'operand' => '>'
+			),
+			'order_by_metadata' => array('name' => $md_name, 'as' => 'integer')
+		);
+
+		$entities = elgg_get_entities_from_metadata($options);
+
+		$this->assertIsA($entities, 'array');
+		$this->assertEqual(count($entities), 2);
+		
+		$num = array(5, 15);
+
+		$i = 0;
+		foreach ($entities as $entity) {
+			$this->assertTrue(in_array($entity->getGUID(), $valid_guids));
+			$this->assertEqual($entity->$md_name, $num[$i]);
+			$i++;
+			$entity->delete();
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
+	
+	// test getting from string value interpreted as numeric
+	// see https://github.com/Elgg/Elgg/issues/7009
+	function testElggApiGettersEntityMetadataNVPInvalidDouble() {
+		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
+		$subtype = $subtypes[0];
+		$md_name = 'test_metadata_name_' . rand();
+		$guids = array();
+		$valid_guids = array();
+		
+		$value = '052e866869';
+
+		// our targets
+		$valid = new ElggObject();
+		$valid->subtype = $subtype;
+		$valid->$md_name = $value;
+		$valid->save();
+		$guids[] = $valid->getGUID();
+		$valid_guids[] = $valid->getGUID();
+
+		$options = array(
+			'type' => 'object',
+			'subtype' => $subtype,
+			'metadata_name_value_pairs' => array(
+				'name' => $md_name,
+				'value' => $value
+			)
+		);
+
+		$entities = elgg_get_entities_from_metadata($options);
+
+		$this->assertIsA($entities, 'array');
+		$this->assertEqual(count($entities), 1);
+
+		foreach ($entities as $entity) {
+			$this->assertTrue(in_array($entity->getGUID(), $valid_guids));
+			$this->assertEqual($entity->$md_name, $value);
+			$entity->delete();
+		}
+
+		foreach ($guids as $guid) {
+			if ($e = get_entity($guid)) {
+				$e->delete();
+			}
+		}
+	}
 }
