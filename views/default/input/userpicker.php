@@ -50,8 +50,8 @@ $limit = (int)elgg_extract('limit', $vars, 0);
 		}
 		if(empty($guids)){
 		  echo elgg_view('input/hidden', array(
-											  'name' => $vars['name']											   
-											   ));
+		  	'name' => $vars['name']	
+		  ));
 		}
 		?>
 	</ul>
