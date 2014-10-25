@@ -16,7 +16,6 @@ __ http://community.elgg.org/showcase
  * dating
  * educational
  * company blog
- * etc.
 
 There is also a `demo site`_ running a standard installation of Elgg.
 

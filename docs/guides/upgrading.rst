@@ -374,6 +374,14 @@ Example of the new way:
 
     Not compatible with 1.8
 
+Web services
+------------
+
+In Elgg 1.8 the web services API was included in core and methods were exposed
+using ``expose_function()``. To enable the same functionality for Elgg 1.9,
+enable the "Web services 1.9" plugin and replace all calls to
+``expose_function()`` with  ``elgg_ws_expose_function()``.
+
 From 1.7 to 1.8
 ===============
 Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0.

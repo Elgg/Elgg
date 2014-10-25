@@ -1101,12 +1101,6 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:site_secret_warning:moderate' => "You are encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 	'upgrade:site_secret_warning:weak' => "You are strongly encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 
-	'ElggUpgrade:error:url_invalid' => 'Invalid value for URL path.',
-	'ElggUpgrade:error:url_not_unique' => 'Upgrade URL paths must be unique.',
-	'ElggUpgrade:error:title_required' => 'ElggUpgrade objects must have a title.',
-	'ElggUpgrade:error:description_required' => 'ElggUpgrade objects must have a description.',
-	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade objects must have an upgrade URL path.',
-
 	'deprecated:function' => '%s() was deprecated by %s()',
 
 	'admin:pending_upgrades' => 'The site has pending upgrades that require your immediate attention.',
@@ -1116,7 +1110,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'admin:upgrades:none' => 'Your installation is up to date!',
 
 	'upgrade:item_count' => 'There are <b>%s</b> items that need to be upgraded.',
-	'upgrade:warning' => '<b>Warning:</b> on a large site this upgrade may take a significantly long time!',
+	'upgrade:warning' => '<b>Warning:</b> On a large site this upgrade may take a significantly long time!',
 	'upgrade:success_count' => 'Upgraded:',
 	'upgrade:error_count' => 'Errors:',
 	'upgrade:river_update_failed' => 'Failed to update the river entry for item id %s',
@@ -1176,10 +1170,10 @@ Your password has been changed.",
 
 Your password has been reset to: %s",
 
-	'email:changereq:subject' => "Request for change password.",
+	'email:changereq:subject' => "Request for password change.",
 	'email:changereq:body' => "Hi %s,
 
-Somebody (from the IP address %s) has requested change password for their account.
+Somebody (from the IP address %s) has requested a password change for their account.
 
 If you requested this, click on the link below. Otherwise ignore this email.
 

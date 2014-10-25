@@ -69,7 +69,7 @@ class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade:error:upgrade_url_required
+	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the upgrade_url property.
 	 */
 	public function testThrowsOnSaveWithoutPath() {
 		$this->obj->description = 'Test';
@@ -79,7 +79,7 @@ class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade:error:title_required
+	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the title property.
 	 */
 	public function testThrowsOnSaveWithoutTitle() {
 		$this->obj->setPath('test');
@@ -89,7 +89,7 @@ class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade:error:description_required
+	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the description property.
 	 */
 	public function testThrowsOnSaveWithoutDesc() {
 		$this->obj->setPath('test');
