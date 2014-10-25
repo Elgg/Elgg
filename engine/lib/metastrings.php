@@ -184,7 +184,7 @@ function _elgg_delete_orphaned_metastrings() {
  *
  *  metastring_type               => STR      metadata or annotation(s)
  *
- * @return mixed
+ * @return ElggExtender[]|int An array or count of metastring based objects
  * @access private
  */
 function _elgg_get_metastring_based_objects($options) {
@@ -435,7 +435,7 @@ function _elgg_get_metastring_based_objects($options) {
 		return $dt;
 	} else {
 		$result = get_data_row($query);
-		return $result->calculation;
+		return (int) $result->calculation;
 	}
 }
 
