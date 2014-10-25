@@ -182,6 +182,7 @@ html {
 	}
 	/***** CUSTOM INDEX ******/
 	.elgg-col-1of2 {
+		float: none;
 		width: 100%;
 	}
 	.prl {
@@ -193,8 +194,9 @@ html {
 	#elgg-widget-col-1,
 	#elgg-widget-col-2,
 	#elgg-widget-col-3 {
-		width: 100%;
+		float: none;
 		min-height: 0 !important;
+		width: 100%;
 	}
 	.elgg-module-widget {
 		margin: 0 0 15px;
