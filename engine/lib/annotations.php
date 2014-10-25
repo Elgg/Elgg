@@ -402,7 +402,10 @@ function elgg_list_entities_from_annotations($options = array()) {
 
 /**
  * Get entities ordered by a mathematical calculation on annotation values
- *
+ * 
+ * @tip This function is different from other ege* functions, as it uses a metastring-based getter function { @link elgg_get_annotations() },
+ * therefore the callback function should be a derivative of { @link entity_row_to_elggstar() } and not of { @link row_to_annotation() }
+ * 
  * @param array $options An options array:
  * 	'calculation'            => The calculation to use. Must be a valid MySQL function.
  *                              Defaults to sum.  Result selected as 'annotation_calculation'.
@@ -418,8 +421,11 @@ function elgg_list_entities_from_annotations($options = array()) {
  *
  *	'metadata_names'         => The name of metadata on the entity.
  *	'metadata_values'        => The value of metadata on the entitiy.
+ * 
+ *  'callback'               => Callback function to pass each row through
  *
- * @return mixed If count, int. If not count, array. false on errors.
+ * @return ElggEntity[]|int An array or a count of entities
+ * @see elgg_get_annotations()
  */
 function elgg_get_entities_from_annotation_calculation($options) {
 	$db_prefix = elgg_get_config('dbprefix');
@@ -443,7 +449,10 @@ function elgg_get_entities_from_annotation_calculation($options) {
 	// don't need access control because it's taken care of by elgg_get_annotations.
 	$options['group_by'] = 'n_table.entity_guid';
 
-	$options['callback'] = 'entity_row_to_elggstar';
+	// do not default to callback function used in elgg_get_annotation()
+	if (!isset($options['callback'])) {
+		$options['callback'] = 'entity_row_to_elggstar';
+	}
 
 	// see #4393
 	// @todo remove after the 'count' shortcut is removed from elgg_get_annotations()
