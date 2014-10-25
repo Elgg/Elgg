@@ -10,5 +10,6 @@ $class= '';
 if (isset($vars['class'])) {
 	$class = " class=\"{$vars['class']}\"";
 }
-
-echo "<h2{$class}>{$vars['title']}</h2>";
+if(isset($vars['title'])){
+       echo "<h2{$class}>{$vars['title']}</h2>";
+}
