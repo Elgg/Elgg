@@ -205,17 +205,12 @@ function update_annotation($annotation_id, $name, $value, $value_type, $owner_gu
  */
 function elgg_get_annotations(array $options = array()) {
 
-	// @todo remove support for count shortcut - see #4393
-	if (isset($options['__egefac']) && $options['__egefac']) {
-		unset($options['__egefac']);
-	} else {
-		// support shortcut of 'count' => true for 'annotation_calculation' => 'count'
-		if (isset($options['count']) && $options['count']) {
-			$options['annotation_calculation'] = 'count';
-			unset($options['count']);
-		}
+	// support shortcut of 'count' => true for 'annotation_calculation' => 'count'
+	if (isset($options['count']) && $options['count']) {
+		$options['annotation_calculation'] = 'count';
+		unset($options['count']);
 	}
-	
+
 	$options['metastring_type'] = 'annotations';
 	return _elgg_get_metastring_based_objects($options);
 }
@@ -426,8 +421,14 @@ function elgg_list_entities_from_annotations($options = array()) {
  *
  * @return ElggEntity[]|int An array or a count of entities
  * @see elgg_get_annotations()
+ * @see elgg_get_entities_from_annotations()
  */
 function elgg_get_entities_from_annotation_calculation($options) {
+	
+	if (isset($options['count']) && $options['count']) {
+		return elgg_get_entities_from_annotations($options);
+	}
+	
 	$db_prefix = elgg_get_config('dbprefix');
 	$defaults = array(
 		'calculation' => 'sum',
@@ -453,10 +454,6 @@ function elgg_get_entities_from_annotation_calculation($options) {
 	if (!isset($options['callback'])) {
 		$options['callback'] = 'entity_row_to_elggstar';
 	}
-
-	// see #4393
-	// @todo remove after the 'count' shortcut is removed from elgg_get_annotations()
-	$options['__egefac'] = true;
 
 	return elgg_get_annotations($options);
 }
