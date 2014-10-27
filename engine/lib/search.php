@@ -15,6 +15,7 @@
  * @param string $search_type Search type
  * @param array  $params      An array of all options accepted by { @link elgg_get_entities } (except for 'order_by') plus:
  * 
+ * advanced_search      => whether to use advanced search, for example, search through profile fields when search for users (default: true)
  * highlight_matches    => whether query matches should be highlighted and stored as volatile date for each entity
  * sort                 => type of sorting to apply to matched results ('relevance', 'created', 'updated', 'action_on' or 'alpha'), 
  *                         Default sort type is 'relevance'. 'order_by' option, if passed, will always be overriden to respect 'sort' option
@@ -97,6 +98,7 @@ function _elgg_search_objects_hook($hook, $type, $value, $params) {
 		'joins' => array(),
 		'preload_owners' => true,
 		'highlight_matches' => true,
+		'advanced_search' => true,
 	);
 
 	$params = array_merge($defaults, $params);
@@ -112,7 +114,10 @@ function _elgg_search_objects_hook($hook, $type, $value, $params) {
 	if (!is_array($params['wheres'])) {
 		$params['wheres'] = array($params['wheres']);
 	}
-	$fields = array('title', 'description');
+	$fields = array('title');
+	if ($params['advanced_search']) {
+		$fields[] = 'description';
+	}
 	$where = search_get_where_sql('oe', $fields, $params);
 	array_unshift($params['wheres'], $where);
 
@@ -162,6 +167,7 @@ function _elgg_search_groups_hook($hook, $type, $value, $params) {
 		'joins' => array(),
 		'preload_owners' => false,
 		'highlight_matches' => true,
+		'advaned_search' => true,
 	);
 
 	$params = array_merge($defaults, $params);
@@ -180,7 +186,10 @@ function _elgg_search_groups_hook($hook, $type, $value, $params) {
 	if (!is_array($params['wheres'])) {
 		$params['wheres'] = array($params['wheres']);
 	}
-	$fields = array('name', 'description');
+	$fields = array('name');
+	if ($params['advanced_search']) {
+		$fields[] = 'description';
+	}
 	$where = search_get_where_sql('ge', $fields, $params);
 	array_unshift($params['wheres'], $where);
 
@@ -232,6 +241,7 @@ function _elgg_search_users_hook($hook, $type, $value, $params) {
 		'joins' => array(),
 		'preload_owners' => false,
 		'highlight_matches' => true,
+		'advanced_search' => true,
 	);
 
 	$params = array_merge($defaults, $params);
@@ -252,30 +262,34 @@ function _elgg_search_users_hook($hook, $type, $value, $params) {
 	$fields = array('username', 'name');
 	$where = search_get_where_sql('ue', $fields, $params, FALSE);
 
-	// profile fields
-	$profile_fields = array_keys(elgg_get_config('profile_fields'));
+	if ($params['advanced_search']) {
+		// profile fields
+		$profile_fields = array_keys(elgg_get_config('profile_fields'));
 
-	// get the where clauses for the md names
-	// can't use egef_metadata() because the n_table join comes too late.
-	$clauses = _elgg_entities_get_metastrings_options('metadata', array(
-		'metadata_names' => $profile_fields,
-	));
+		// get the where clauses for the md names
+		// can't use egef_metadata() because the n_table join comes too late.
+		$clauses = _elgg_entities_get_metastrings_options('metadata', array(
+			'metadata_names' => $profile_fields,
+		));
 
-	$joins = array(
-		"JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid",
-		"JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id"
-	);
-	$joins = array_merge($clauses['joins'], $joins);
-	$params['joins'] = array_merge($joins, $params['joins']);
+		$joins = array(
+			"JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid",
+			"JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id"
+		);
+		$joins = array_merge($clauses['joins'], $joins);
+		$params['joins'] = array_merge($joins, $params['joins']);
+
+		// no fulltext index, can't disable fulltext search in this function.
+		// $md_where .= " AND " . search_get_where_sql('msv', array('string'), $params, FALSE);
+		$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
+		$params['wheres'][] = "(($where) OR ($md_where))";
+	} else {
+		array_unshift($params['wheres'], $where);
+	}
 	
-	// no fulltext index, can't disable fulltext search in this function.
-	// $md_where .= " AND " . search_get_where_sql('msv', array('string'), $params, FALSE);
-	$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
-	$params['wheres'][] = "(($where) OR ($md_where))";
-
 	$params['count'] = true;
 	$count = elgg_get_entities($params);
-	
+
 	// no need to continue if nothing here.
 	if (!$count) {
 		return array('entities' => array(), 'count' => $count);
@@ -344,6 +358,7 @@ function _elgg_search_tags_hook($hook, $type, $value, $params) {
 		'joins' => array(),
 		'preload_owners' => true,
 		'highlight_matches' => true,
+		'advanced_search' => false,
 	);
 
 	$params = array_merge($defaults, $params);
