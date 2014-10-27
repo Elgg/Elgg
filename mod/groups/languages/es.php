@@ -14,9 +14,9 @@ return array(
 	'groups:edit' => "Editar grupo",
 	'groups:delete' => 'Borrar grupo',
 	'groups:membershiprequests' => 'Manejar solicitudes de uni&oacute;n a grupos',
-	'groups:membershiprequests:pending' => 'Manage join requests (%s)',
+	'groups:membershiprequests:pending' => 'Administrar solicitudes (%s)',
 	'groups:invitations' => 'Invitaciones de grupo',
-	'groups:invitations:pending' => 'Group invitations (%s)',
+	'groups:invitations:pending' => 'Invitaciones pendientes (%s)',
 
 	'groups:icon' => '&iacute;cono de grupo (dejar en blanco para no hacer cambios)',
 	'groups:name' => 'Nombre del Grupo',
@@ -26,11 +26,11 @@ return array(
 	'groups:interests' => 'Etiquetas',
 	'groups:website' => 'Sitio Web',
 	'groups:members' => 'Miembros del grupo',
-	'groups:my_status' => 'My status',
-	'groups:my_status:group_owner' => 'You own this group',
-	'groups:my_status:group_member' => 'You are in this group',
-	'groups:subscribed' => 'Group notifications on',
-	'groups:unsubscribed' => 'Group notifications off',
+	'groups:my_status' => 'Mi estado',
+	'groups:my_status:group_owner' => 'Eres due&ntilde;o de este grupo',
+	'groups:my_status:group_member' => 'Usted est&aacute; en este grupo',
+	'groups:subscribed' => 'Notificaciones de grupo activadas',
+	'groups:unsubscribed' => 'Notificaciones de grupo desactivadas',
 
 	'groups:members:title' => 'Miembros de %s',
 	'groups:members:more' => "Ver todos los miembros",
@@ -41,7 +41,7 @@ return array(
 	'groups:content_access_mode:membersonly' => "Solo miembros - Los que no son miembros nunca podrán accesar al contenido del grupo",
 	'groups:access' => "Permisos de acceso",
 	'groups:owner' => "Propietario",
-	'groups:owner:warning' => "Warning: if you change this value, you will no longer be the owner of this group.",
+	'groups:owner:warning' => "Advertencia: si cambia este valor, usted ya no ser&aacute; el due&ntilde;o de este grupo.",
 	'groups:widget:num_display' => 'N&uacute;mero de miembros a mostrar',
 	'groups:widget:membership' => 'Miembros del grupo',
 	'groups:widgets:description' => 'Muestra los grupos en dond eeres miembro',
@@ -76,10 +76,10 @@ return array(
 	'groups:viagroups' => "via grupos",
 	'groups:group' => "Grupo",
 	'groups:search:tags' => "etiqueta",
-	'groups:search:title' => "Search for groups tagged with '%s'",
-	'groups:search:none' => "No matching groups were found",
-	'groups:search_in_group' => "Search in this group",
-	'groups:acl' => "Group: %s",
+	'groups:search:title' => "B&uacute;squeda de grupos etiquetados con '%s'",
+	'groups:search:none' => "No se encontraron grupos que coincidan",
+	'groups:search_in_group' => "Buscar en este grupo",
+	'groups:acl' => "Grupo: %s",
 
 	'discussion:topic:notify:summary' => 'Nuevo tema de discusión llamado %s',
 	'discussion:topic:notify:subject' => 'Nuevo tema de discusión: %s',
@@ -280,7 +280,7 @@ O click a continuaci&oacute;n para ver las solicitudes de membres&iacute;a del g
 	'groups:forumtopic:edited' => 'Tema de discusi&oacute;n guaddado con &eacute;xito.',
 
 	'groups:allowhiddengroups' => '&iquest;Desea habilitar los grupos provados?',
-	'groups:whocancreate' => 'Who can create new groups?',
+	'groups:whocancreate' => '&iquest;Qui&eacuten puede crear nuevos grupos?',
 
 	/**
 	 * Action messages
