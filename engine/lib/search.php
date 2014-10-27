@@ -9,6 +9,29 @@
  */
 
 /**
+ * Find entities using one of the core search types ('object', 'group', 'user' or 'tags') or one of the custom search types
+ * 
+ * @param string $query       Query string to search for
+ * @param string $search_type Search type
+ * @param array  $params      An array of all options accepted by { @link elgg_get_entities } (except for 'order_by') plus:
+ * 
+ * highlight_matches    => whether query matches should be highlighted and stored as volatile date for each entity
+ * sort                 => type of sorting to apply to matched results ('relevance', 'created', 'updated', 'action_on' or 'alpha'), 
+ *                         Default sort type is 'relevance'. 'order_by' option, if passed, will always be overriden to respect 'sort' option
+ * order                => asc or desc
+ *
+ * @param mixed  $default     Default value to return
+ * @return type array An array in the form <code>array('entities' => $entities, 'count' => $count);</code>
+ */
+function elgg_search($query, $search_type, $params = array(), $default = null) {
+
+	$params['query'] = sanitize_string(stripslashes($query));
+	$params['search_type'] = $search_type;
+
+	return elgg_trigger_plugin_hook('search', $search_type, $params, $default);
+}
+
+/**
  * Initialize the file library.
  * Listens to system init and configures the search system
  *
@@ -240,12 +263,11 @@ function _elgg_search_users_hook($hook, $type, $value, $params) {
 
 	$joins = array(
 		"JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid",
-		"JOIN {$db_prefix}metadata md on e.guid = md.entity_guid",
 		"JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id"
 	);
-	$joins = array_merge($joins, $clauses['joins']);
+	$joins = array_merge($clauses['joins'], $joins);
 	$params['joins'] = array_merge($joins, $params['joins']);
-
+	
 	// no fulltext index, can't disable fulltext search in this function.
 	// $md_where .= " AND " . search_get_where_sql('msv', array('string'), $params, FALSE);
 	$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
@@ -253,7 +275,7 @@ function _elgg_search_users_hook($hook, $type, $value, $params) {
 
 	$params['count'] = true;
 	$count = elgg_get_entities($params);
-
+	
 	// no need to continue if nothing here.
 	if (!$count) {
 		return array('entities' => array(), 'count' => $count);
