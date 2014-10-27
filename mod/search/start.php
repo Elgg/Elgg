@@ -10,21 +10,13 @@ elgg_register_event_handler('init','system','search_init');
  * Initialize search plugin
  */
 function search_init() {
-	global $CONFIG;
 	require_once 'search_hooks.php';
-
+	
 	// page handler for search actions and results
 	elgg_register_page_handler('search', 'search_page_handler');
 
-	// register some default search hooks
-	elgg_register_plugin_hook_handler('search', 'object', 'search_objects_hook');
-	elgg_register_plugin_hook_handler('search', 'user', 'search_users_hook');
-	elgg_register_plugin_hook_handler('search', 'group', 'search_groups_hook');
-
-	// tags and comments are a bit different.
-	// register a search types and a hooks for them.
+	// add tags as custom search to be displayed in search results
 	elgg_register_plugin_hook_handler('search_types', 'get_types', 'search_custom_types_tags_hook');
-	elgg_register_plugin_hook_handler('search', 'tags', 'search_tags_hook');
 
 	// add in CSS for search elements
 	elgg_extend_view('css/elgg', 'search/css');
