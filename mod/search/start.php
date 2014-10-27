@@ -26,25 +26,6 @@ function search_init() {
 	elgg_register_plugin_hook_handler('search_types', 'get_types', 'search_custom_types_tags_hook');
 	elgg_register_plugin_hook_handler('search', 'tags', 'search_tags_hook');
 
-	// get server min and max allowed chars for ft searching
-	$CONFIG->search_info = array();
-
-	$result = false;
-	try {
-		$result = get_data_row('SELECT @@ft_min_word_len as min, @@ft_max_word_len as max');
-	} catch (DatabaseException $e) {
-		// some servers don't have these values set which leads to exception
-		// we ignore the exception
-	}
-	if ($result) {
-		$CONFIG->search_info['min_chars'] = $result->min;
-		$CONFIG->search_info['max_chars'] = $result->max;
-	} else {
-		// defaults from MySQL on Ubuntu Linux
-		$CONFIG->search_info['min_chars'] = 4;
-		$CONFIG->search_info['max_chars'] = 90;
-	}
-
 	// add in CSS for search elements
 	elgg_extend_view('css/elgg', 'search/css');
 
