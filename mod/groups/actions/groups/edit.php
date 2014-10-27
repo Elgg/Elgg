@@ -192,7 +192,7 @@ if ($has_uploaded_icon) {
 	$filehandler->close();
 	$filename = $filehandler->getFilenameOnFilestore();
 
-	$sizes = array('tiny', 'small', 'medium', 'large');
+	$sizes = array('tiny', 'small', 'medium', 'large', 'master');
 
 	$thumbs = array();
 	foreach ($sizes as $size) {
@@ -227,7 +227,7 @@ if ($must_move_icons) {
 	$filehandler->owner_guid = $old_owner_guid;
 	$old_path = $filehandler->getFilenameOnFilestore();
 
-	$sizes = array('', 'tiny', 'small', 'medium', 'large');
+	$sizes = array('', 'tiny', 'small', 'medium', 'large', 'master');
 
 	if ($has_uploaded_icon) {
 		// delete those under old owner
@@ -252,7 +252,7 @@ if ($must_move_icons) {
 		$filehandler->owner_guid = $old_owner_guid;
 		$old_path = $filehandler->getFilenameOnFilestore();
 		
-		$sizes = array('', 'tiny', 'small', 'medium', 'large');
+		$sizes = array('', 'tiny', 'small', 'medium', 'large', 'master');
 	
 		foreach($sizes as $size) {
 			unlink("$old_path/{$group_guid}{$size}.jpg");
@@ -270,7 +270,7 @@ if ($must_move_icons) {
 	$filehandler->owner_guid = $group->owner_guid;
 	$new_path = $filehandler->getFilenameOnFilestore();
 	
-	$sizes = array('', 'tiny', 'small', 'medium', 'large');
+	$sizes = array('', 'tiny', 'small', 'medium', 'large', 'master');
 	
 	foreach($sizes as $size) {
 		rename("$old_path/{$group_guid}{$size}.jpg", "$new_path/{$group_guid}{$size}.jpg");
