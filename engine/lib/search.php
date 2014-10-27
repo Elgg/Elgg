@@ -55,7 +55,6 @@ function _elgg_search_upgrade() {
 
 	elgg_save_config('ft_min_word_len', $min);
 	elgg_save_config('ft_max_word_len', $max);
-	
 }
 
 /**
@@ -70,15 +69,30 @@ function _elgg_search_upgrade() {
  */
 function _elgg_search_objects_hook($hook, $type, $value, $params) {
 
+	$defaults = array(
+		'wheres' => array(),
+		'joins' => array(),
+		'preload_owners' => true,
+		'highlight_matches' => true,
+	);
+
+	$params = array_merge($defaults, $params);
+
 	$db_prefix = elgg_get_config('dbprefix');
 
+	if (!is_array($params['joins'])) {
+		$params['joins'] = array($params['joins']);
+	}
 	$join = "JOIN {$db_prefix}objects_entity oe ON e.guid = oe.guid";
-	$params['joins'] = array($join);
+	array_unshift($params['joins'], $join);
+
+	if (!is_array($params['wheres'])) {
+		$params['wheres'] = array($params['wheres']);
+	}
 	$fields = array('title', 'description');
-
 	$where = search_get_where_sql('oe', $fields, $params);
+	array_unshift($params['wheres'], $where);
 
-	$params['wheres'] = array($where);
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
 
@@ -89,16 +103,17 @@ function _elgg_search_objects_hook($hook, $type, $value, $params) {
 
 	$params['count'] = FALSE;
 	$params['order_by'] = search_get_order_by_sql('e', 'oe', $params['sort'], $params['order']);
-	$params['preload_owners'] = true;
 	$entities = elgg_get_entities($params);
 
-	// add the volatile data for why these entities have been returned.
-	foreach ($entities as $entity) {
-		$title = search_get_highlighted_relevant_substrings($entity->title, $params['query']);
-		$entity->setVolatileData('search_matched_title', $title);
+	if ($params['highlight_matches']) {
+		// add the volatile data for why these entities have been returned.
+		foreach ($entities as $entity) {
+			$title = search_get_highlighted_relevant_substrings($entity->title, $params['query']);
+			$entity->setVolatileData('search_matched_title', $title);
 
-		$desc = search_get_highlighted_relevant_substrings($entity->description, $params['query']);
-		$entity->setVolatileData('search_matched_description', $desc);
+			$desc = search_get_highlighted_relevant_substrings($entity->description, $params['query']);
+			$entity->setVolatileData('search_matched_description', $desc);
+		}
 	}
 
 	return array(
@@ -118,18 +133,33 @@ function _elgg_search_objects_hook($hook, $type, $value, $params) {
  * @access private
  */
 function _elgg_search_groups_hook($hook, $type, $value, $params) {
+
+	$defaults = array(
+		'wheres' => array(),
+		'joins' => array(),
+		'preload_owners' => false,
+		'highlight_matches' => true,
+	);
+
+	$params = array_merge($defaults, $params);
+
 	$db_prefix = elgg_get_config('dbprefix');
 
 	$query = sanitise_string($params['query']);
 
+	if (!is_array($params['joins'])) {
+		$params['joins'] = array($params['joins']);
+	}
+
 	$join = "JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid";
-	$params['joins'] = array($join);
+	array_unshift($params['joins'], $join);
 
+	if (!is_array($params['wheres'])) {
+		$params['wheres'] = array($params['wheres']);
+	}
 	$fields = array('name', 'description');
-
 	$where = search_get_where_sql('ge', $fields, $params);
-
-	$params['wheres'] = array($where);
+	array_unshift($params['wheres'], $where);
 
 	// override subtype -- All groups should be returned regardless of subtype.
 	$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
@@ -146,13 +176,15 @@ function _elgg_search_groups_hook($hook, $type, $value, $params) {
 	$params['order_by'] = search_get_order_by_sql('e', 'ge', $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);
 
-	// add the volatile data for why these entities have been returned.
-	foreach ($entities as $entity) {
-		$name = search_get_highlighted_relevant_substrings($entity->name, $query);
-		$entity->setVolatileData('search_matched_title', $name);
+	if ($params['highlight_matches']) {
+		// add the volatile data for why these entities have been returned.
+		foreach ($entities as $entity) {
+			$name = search_get_highlighted_relevant_substrings($entity->name, $query);
+			$entity->setVolatileData('search_matched_title', $name);
 
-		$description = search_get_highlighted_relevant_substrings($entity->description, $query);
-		$entity->setVolatileData('search_matched_description', $description);
+			$description = search_get_highlighted_relevant_substrings($entity->description, $query);
+			$entity->setVolatileData('search_matched_description', $description);
+		}
 	}
 
 	return array(
@@ -174,15 +206,27 @@ function _elgg_search_groups_hook($hook, $type, $value, $params) {
  * @access private
  */
 function _elgg_search_users_hook($hook, $type, $value, $params) {
+
+	$defaults = array(
+		'wheres' => array(),
+		'joins' => array(),
+		'preload_owners' => false,
+		'highlight_matches' => true,
+	);
+
+	$params = array_merge($defaults, $params);
+
 	$db_prefix = elgg_get_config('dbprefix');
 
 	$query = sanitise_string($params['query']);
 
-	$params['joins'] = array(
-		"JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid",
-		"JOIN {$db_prefix}metadata md on e.guid = md.entity_guid",
-		"JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id"
-	);
+	if (!is_array($params['joins'])) {
+		$params['joins'] = array($params['joins']);
+	}
+
+	if (!is_array($params['wheres'])) {
+		$params['wheres'] = array($params['wheres']);
+	}
 
 	// username and display name
 	$fields = array('username', 'name');
@@ -197,12 +241,18 @@ function _elgg_search_users_hook($hook, $type, $value, $params) {
 		'metadata_names' => $profile_fields,
 	));
 
-	$params['joins'] = array_merge($clauses['joins'], $params['joins']);
+	$joins = array(
+		"JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid",
+		"JOIN {$db_prefix}metadata md on e.guid = md.entity_guid",
+		"JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id"
+	);
+	$joins = array_merge($joins, $clauses['joins']);
+	$params['joins'] = array_merge($joins, $params['joins']);
+
 	// no fulltext index, can't disable fulltext search in this function.
 	// $md_where .= " AND " . search_get_where_sql('msv', array('string'), $params, FALSE);
 	$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
-
-	$params['wheres'] = array("(($where) OR ($md_where))");
+	$params['wheres'][] = "(($where) OR ($md_where))";
 
 	// override subtype -- All users should be returned regardless of subtype.
 	$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
@@ -218,38 +268,40 @@ function _elgg_search_users_hook($hook, $type, $value, $params) {
 	$params['order_by'] = search_get_order_by_sql('e', 'ue', $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);
 
-	// add the volatile data for why these entities have been returned.
-	foreach ($entities as $entity) {
+	if ($params['highlight_matches']) {
+		// add the volatile data for why these entities have been returned.
+		foreach ($entities as $entity) {
 
-		$title = search_get_highlighted_relevant_substrings($entity->name, $query);
+			$title = search_get_highlighted_relevant_substrings($entity->name, $query);
 
-		// include the username if it matches but the display name doesn't.
-		if (false !== strpos($entity->username, $query)) {
-			$username = search_get_highlighted_relevant_substrings($entity->username, $query);
-			$title .= " ($username)";
-		}
+			// include the username if it matches but the display name doesn't.
+			if (false !== strpos($entity->username, $query)) {
+				$username = search_get_highlighted_relevant_substrings($entity->username, $query);
+				$title .= " ($username)";
+			}
 
-		$entity->setVolatileData('search_matched_title', $title);
+			$entity->setVolatileData('search_matched_title', $title);
 
-		$matched = '';
-		foreach ($profile_fields as $md_name) {
-			$metadata = $entity->$md_name;
-			if (is_array($metadata)) {
-				foreach ($metadata as $text) {
-					if (stristr($text, $query)) {
+			$matched = '';
+			foreach ($profile_fields as $md_name) {
+				$metadata = $entity->$md_name;
+				if (is_array($metadata)) {
+					foreach ($metadata as $text) {
+						if (stristr($text, $query)) {
+							$matched .= elgg_echo("profile:{$md_name}") . ': '
+									. search_get_highlighted_relevant_substrings($text, $query);
+						}
+					}
+				} else {
+					if (stristr($metadata, $query)) {
 						$matched .= elgg_echo("profile:{$md_name}") . ': '
-								. search_get_highlighted_relevant_substrings($text, $query);
+								. search_get_highlighted_relevant_substrings($metadata, $query);
 					}
 				}
-			} else {
-				if (stristr($metadata, $query)) {
-					$matched .= elgg_echo("profile:{$md_name}") . ': '
-							. search_get_highlighted_relevant_substrings($metadata, $query);
-				}
 			}
-		}
 
-		$entity->setVolatileData('search_matched_description', $matched);
+			$entity->setVolatileData('search_matched_description', $matched);
+		}
 	}
 
 	return array(
@@ -269,6 +321,25 @@ function _elgg_search_users_hook($hook, $type, $value, $params) {
  * @access private
  */
 function _elgg_search_tags_hook($hook, $type, $value, $params) {
+
+	$defaults = array(
+		'wheres' => array(),
+		'joins' => array(),
+		'preload_owners' => true,
+		'highlight_matches' => true,
+	);
+
+	$params = array_merge($defaults, $params);
+
+	if (!is_array($params['joins'])) {
+		$params['joins'] = array($params['joins']);
+	}
+
+	if (!is_array($params['wheres'])) {
+		$params['wheres'] = array($params['wheres']);
+	}
+
+
 	$db_prefix = elgg_get_config('dbprefix');
 
 	$valid_tag_names = elgg_get_registered_tag_metadata_names();
@@ -279,7 +350,7 @@ function _elgg_search_tags_hook($hook, $type, $value, $params) {
 	// if passed a tag metadata name, only search on that tag name.
 	// tag_name isn't included in the params because it's specific to
 	// tag searches.
-	if ($tag_names = get_input('tag_names')) {
+	if ($tag_names = elgg_extract('tag_names', $params, get_input('tag_names'))) {
 		if (is_array($tag_names)) {
 			$search_tag_names = $tag_names;
 		} else {
@@ -297,7 +368,7 @@ function _elgg_search_tags_hook($hook, $type, $value, $params) {
 	}
 
 	if (!$search_tag_names) {
-		return array('entities' => array(), 'count' => $count);
+		return array('entities' => array(), 'count' => 0);
 	}
 
 	// don't use elgg_get_entities_from_metadata() here because of
@@ -331,59 +402,61 @@ function _elgg_search_tags_hook($hook, $type, $value, $params) {
 	$params['order_by'] = search_get_order_by_sql('e', null, $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);
 
-	// add the volatile data for why these entities have been returned.
-	foreach ($entities as $entity) {
-		$matched_tags_strs = array();
+	if ($params['highlight_matches']) {
+		// add the volatile data for why these entities have been returned.
+		foreach ($entities as $entity) {
+			$matched_tags_strs = array();
 
-		// get tags for each tag name requested to find which ones matched.
-		foreach ($search_tag_names as $tag_name) {
-			$tags = $entity->getTags($tag_name);
+			// get tags for each tag name requested to find which ones matched.
+			foreach ($search_tag_names as $tag_name) {
+				$tags = $entity->getTags($tag_name);
 
-			// @todo make one long tag string and run this through the highlight
-			// function.  This might be confusing as it could chop off
-			// the tag labels.
-			if (in_array(strtolower($query), array_map('strtolower', $tags))) {
-				if (is_array($tags)) {
-					$tag_name_str = elgg_echo("tag_names:$tag_name");
-					$matched_tags_strs[] = "$tag_name_str: " . implode(', ', $tags);
+				// @todo make one long tag string and run this through the highlight
+				// function.  This might be confusing as it could chop off
+				// the tag labels.
+				if (in_array(strtolower($query), array_map('strtolower', $tags))) {
+					if (is_array($tags)) {
+						$tag_name_str = elgg_echo("tag_names:$tag_name");
+						$matched_tags_strs[] = "$tag_name_str: " . implode(', ', $tags);
+					}
 				}
 			}
+
+			// different entities have different titles
+			switch ($entity->type) {
+				case 'site':
+				case 'user':
+				case 'group':
+					$title_tmp = $entity->name;
+					break;
+
+				case 'object':
+					$title_tmp = $entity->title;
+					break;
+			}
+
+			// Nick told me my idea was dirty, so I'm hard coding the numbers.
+			$title_tmp = strip_tags($title_tmp);
+			if (elgg_strlen($title_tmp) > 297) {
+				$title_str = elgg_substr($title_tmp, 0, 297) . '...';
+			} else {
+				$title_str = $title_tmp;
+			}
+
+			$desc_tmp = strip_tags($entity->description);
+			if (elgg_strlen($desc_tmp) > 297) {
+				$desc_str = elgg_substr($desc_tmp, 0, 297) . '...';
+			} else {
+				$desc_str = $desc_tmp;
+			}
+
+			$tags_str = implode('. ', $matched_tags_strs);
+			$tags_str = search_get_highlighted_relevant_substrings($tags_str, $params['query'], 30, 300, true);
+
+			$entity->setVolatileData('search_matched_title', $title_str);
+			$entity->setVolatileData('search_matched_description', $desc_str);
+			$entity->setVolatileData('search_matched_extra', $tags_str);
 		}
-
-		// different entities have different titles
-		switch ($entity->type) {
-			case 'site':
-			case 'user':
-			case 'group':
-				$title_tmp = $entity->name;
-				break;
-
-			case 'object':
-				$title_tmp = $entity->title;
-				break;
-		}
-
-		// Nick told me my idea was dirty, so I'm hard coding the numbers.
-		$title_tmp = strip_tags($title_tmp);
-		if (elgg_strlen($title_tmp) > 297) {
-			$title_str = elgg_substr($title_tmp, 0, 297) . '...';
-		} else {
-			$title_str = $title_tmp;
-		}
-
-		$desc_tmp = strip_tags($entity->description);
-		if (elgg_strlen($desc_tmp) > 297) {
-			$desc_str = elgg_substr($desc_tmp, 0, 297) . '...';
-		} else {
-			$desc_str = $desc_tmp;
-		}
-
-		$tags_str = implode('. ', $matched_tags_strs);
-		$tags_str = search_get_highlighted_relevant_substrings($tags_str, $params['query'], 30, 300, true);
-
-		$entity->setVolatileData('search_matched_title', $title_str);
-		$entity->setVolatileData('search_matched_description', $desc_str);
-		$entity->setVolatileData('search_matched_extra', $tags_str);
 	}
 
 	return array(
@@ -507,7 +580,7 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 
 	// add to end of string if last substring doesn't hit the end.
 	$starts = array_keys($return_strs);
-	$last_pos = $starts[count($starts)-1];
+	$last_pos = $starts[count($starts) - 1];
 	if ($last_pos + elgg_strlen($return_strs[$last_pos]) < $haystack_length) {
 		$return .= '...';
 	}
@@ -516,7 +589,6 @@ function search_get_highlighted_relevant_substrings($haystack, $query, $min_matc
 
 	return $return;
 }
-
 
 /**
  * Takes an array of offsets and lengths and consolidates any
@@ -545,13 +617,13 @@ function search_consolidate_substrings($offsets, $lengths) {
 
 	$return = array();
 	$count = count($offsets);
-	for ($i=0; $i<$count; $i++) {
+	for ($i = 0; $i < $count; $i++) {
 		$offset = $offsets[$i];
 		$length = $lengths[$i];
 		$end_pos = $offset + $length;
 
 		// find the next entry that doesn't overlap
-		while (array_key_exists($i+1, $offsets) && $end_pos > $offsets[$i+1]) {
+		while (array_key_exists($i + 1, $offsets) && $end_pos > $offsets[$i + 1]) {
 			$i++;
 			if (!array_key_exists($i, $offsets)) {
 				break;
@@ -587,10 +659,10 @@ function search_highlight_words($words, $string) {
 	foreach ($words as $word) {
 		// remove any boolean mode operators
 		$word = preg_replace("/([\-\+~])([\w]+)/i", '$2', $word);
-		
+
 		// escape the delimiter and any other regexp special chars
 		$word = preg_quote($word, '/');
-		
+
 		$search = "/($word)/i";
 
 		// @todo
@@ -630,7 +702,7 @@ function search_remove_ignored_words($query, $format = 'array') {
 	// don't worry about "s or boolean operators
 	//$query = str_replace(array('"', '-', '+', '~'), '', stripslashes(strip_tags($query)));
 	$query = stripslashes(strip_tags($query));
-	
+
 	$words = explode(' ', $query);
 
 	$min_chars = $CONFIG->search_info['min_chars'];
@@ -639,7 +711,7 @@ function search_remove_ignored_words($query, $format = 'array') {
 		// clean out any words that are ignored by mysql
 		foreach ($words as $i => $word) {
 			if (elgg_strlen($word) < $min_chars) {
-				unset ($words[$i]);
+				unset($words[$i]);
 			}
 		}
 	}
@@ -669,7 +741,7 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 			$fields[$i] = "$table.$field";
 		}
 	}
-	
+
 	$where = '';
 
 	// if query is shorter than the min for fts words
@@ -689,12 +761,12 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 		if (!$use_fulltext) {
 			$query = '+' . str_replace(' ', ' +', $query);
 		}
-		
+
 		// if using advanced, boolean operators, or paired "s, switch into boolean mode
 		$booleans_used = preg_match("/([\-\+~])([\w]+)/i", $query);
 		$advanced_search = (isset($params['advanced_search']) && $params['advanced_search']);
-		$quotes_used = (elgg_substr_count($query, '"') >= 2); 
-		
+		$quotes_used = (elgg_substr_count($query, '"') >= 2);
+
 		if (!$use_fulltext || $booleans_used || $advanced_search || $quotes_used) {
 			$options = 'IN BOOLEAN MODE';
 		} else {
@@ -702,7 +774,7 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 			//$options = 'IN NATURAL LANGUAGE MODE';
 			$options = '';
 		}
-		
+
 		// if short query, use query expansion.
 		// @todo doesn't seem to be working well.
 //		if (elgg_strlen($query) < 5) {
@@ -716,7 +788,6 @@ function search_get_where_sql($table, $fields, $params, $use_fulltext = TRUE) {
 
 	return $where;
 }
-
 
 /**
  * Returns ORDER BY sql for insertion into elgg_get_entities().
