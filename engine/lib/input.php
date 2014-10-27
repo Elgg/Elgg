@@ -302,8 +302,12 @@ function input_livesearch_page_handler($page) {
 		$owner_guid = ELGG_ENTITIES_ANY_VALUE;
 	}
 
-	$params['limit'] = get_input('limit', 10);
-	$params['offset'] = get_input('offset', 0);
+	$params = array(
+		'limit' => get_input('limit', 10),
+		'offset' => get_input('offset', 0),
+		'advanced_search' => false,
+		'highlight_matches' => false,
+	);
 	
 	// grab a list of entities and send them in json.
 	$results = array();
