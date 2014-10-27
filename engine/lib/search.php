@@ -161,9 +161,6 @@ function _elgg_search_groups_hook($hook, $type, $value, $params) {
 	$where = search_get_where_sql('ge', $fields, $params);
 	array_unshift($params['wheres'], $where);
 
-	// override subtype -- All groups should be returned regardless of subtype.
-	$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
-
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
 
@@ -254,8 +251,6 @@ function _elgg_search_users_hook($hook, $type, $value, $params) {
 	$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
 	$params['wheres'][] = "(($where) OR ($md_where))";
 
-	// override subtype -- All users should be returned regardless of subtype.
-	$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
 	$params['count'] = true;
 	$count = elgg_get_entities($params);
 
