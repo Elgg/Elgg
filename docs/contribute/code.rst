@@ -405,6 +405,8 @@ Good:
 
 	echo "Hello, $name!  How is your $time_of_day?";
 
+Remove trailing whitespace at the end of lines. An easy way to do this before you commit is to run
+``php .scripts/fix_style.php`` from the installation root.
 
 CSS guidelines
 --------------
