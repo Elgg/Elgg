@@ -17,7 +17,7 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 
 	// 1.7 package at test_files/plugin_17/
 	var $package17;
-	
+
 	public function __construct() {
 		parent::__construct();
 
@@ -84,7 +84,7 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 				array('description' => 'Fun things to do 1', 'path' => 'graphics/plugin_ss1.png'),
 				array('description' => 'Fun things to do 2', 'path' => 'graphics/plugin_ss2.png'),
 			),
-			
+
 			'contributor' => array(
 				array('name' => 'Evan Winslow', 'email' => 'evan@elgg.org', 'website' => 'http://evanwinslow.com/', 'username' => 'ewinslow', 'description' => "Description of Evan's role in the project"),
 				array('name' => 'Cash Costello', 'email' => 'cash@elgg.org', 'description' => "Description of Cash's role in the project"),
@@ -166,17 +166,17 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		$this->assertEqual($this->manifest18->getWebsite(), 'http://www.elgg.org/');
 		$this->assertEqual($this->manifest17->getWebsite(), 'http://www.elgg.org/');
 	}
-	
+
 	public function testElggPluginManifestGetRepository() {
 		$this->assertEqual($this->manifest18->getRepositoryURL(), 'https://github.com/Elgg/Elgg');
 		$this->assertEqual($this->manifest17->getRepositoryURL(), '');
 	}
-	
+
 		public function testElggPluginManifestGetBugtracker() {
 		$this->assertEqual($this->manifest18->getBugTrackerURL(), 'https://github.com/elgg/elgg/issues');
 		$this->assertEqual($this->manifest17->getBugTrackerURL(), '');
 	}
-	
+
 		public function testElggPluginManifestGetDonationsPage() {
 		$this->assertEqual($this->manifest18->getDonationsPageURL(), 'http://elgg.org/supporter.php');
 		$this->assertEqual($this->manifest17->getDonationsPageURL(), '');
@@ -251,7 +251,7 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		$this->assertIdentical($this->package18->getManifest()->getScreenshots(), $screenshots);
 		$this->assertIdentical($this->package17->getManifest()->getScreenshots(), array());
 	}
-	
+
 	public function testElggPluginManifestGetContributors() {
 		$contributors = array(
 			array('name' => 'Evan Winslow', 'email' => 'evan@elgg.org', 'website' => 'http://evanwinslow.com/', 'username' => 'ewinslow', 'description' => "Description of Evan's role in the project"),
@@ -306,19 +306,19 @@ class ElggCorePluginsAPITest extends ElggCoreUnitTest {
 		$package = new ElggPluginPackage('profile');
 		$this->assertEqual($package->getID(), 'profile');
 	}
-	
+
 	// ElggPlugin
 	public function testElggPluginIsValid() {
-		
+
 		$test_plugin = new ElggPlugin('profile');
-		
+
 		$this->assertIdentical(true, $test_plugin->isValid());
 	}
-	
+
 	public function testElggPluginGetID() {
-		
+
 		$test_plugin = new ElggPlugin('profile');
-		
+
 		$this->assertIdentical('profile', $test_plugin->getID());
 	}
 }

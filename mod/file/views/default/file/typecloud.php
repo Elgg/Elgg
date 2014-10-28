@@ -12,7 +12,7 @@ function file_type_cloud_get_url($type, $friends) {
 
 	if ($friends) {
 		$url .= "&friends=$friends";
-	} 
+	}
 
 	if ($type->tag == "image") {
 		$url .= "&list_type=gallery";

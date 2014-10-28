@@ -1,7 +1,7 @@
 <?php
 /**
- * File CSS extender 
- * 
+ * File CSS extender
+ *
  * @package ElggFile
  */
 ?>

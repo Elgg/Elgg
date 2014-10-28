@@ -5,8 +5,8 @@
  *
  * Reserved keys: last_forward_from, msg, sticky_forms, user, guid, id, code, name, username
  * Deprecated keys: user, id, name, username
- * 
- * ArrayAccess was deprecated in Elgg 1.9. This means you should use 
+ *
+ * ArrayAccess was deprecated in Elgg 1.9. This means you should use
  * $session->get('foo') rather than $session['foo'].
  * Warning: You can not access multidimensional arrays through ArrayAccess like
  * this $session['foo']['bar']
@@ -184,7 +184,7 @@ class ElggSession implements ArrayAccess {
 
 	/**
 	 * Sets the logged in user
-	 * 
+	 *
 	 * @param ElggUser $user The user who is logged in
 	 * @return void
 	 * @since 1.9
@@ -196,7 +196,7 @@ class ElggSession implements ArrayAccess {
 
 	/**
 	 * Gets the logged in user
-	 * 
+	 *
 	 * @return ElggUser
 	 * @since 1.9
 	 */
@@ -206,7 +206,7 @@ class ElggSession implements ArrayAccess {
 
 	/**
 	 * Remove the logged in user
-	 * 
+	 *
 	 * @return void
 	 * @since 1.9
 	 */
@@ -217,9 +217,9 @@ class ElggSession implements ArrayAccess {
 
 	/**
 	 * Adds a token to the session
-	 * 
+	 *
 	 * This is used in creation of CSRF token
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function generateSessionToken() {

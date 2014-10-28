@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg log browser.
- * 
+ *
  * @package ElggLogBrowser
  */
 
@@ -11,9 +11,9 @@ elgg_register_event_handler('init', 'system', 'logbrowser_init');
  * Initialize the log browser plugin.
  */
 function logbrowser_init() {
-	
+
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'logbrowser_user_hover_menu');
-	
+
 	elgg_register_admin_menu_item('administer', 'logbrowser', 'administer_utilities');
 }
 

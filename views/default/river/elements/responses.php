@@ -32,7 +32,7 @@ if ($comment_count) {
 		'limit' => 3,
 		'order_by' => 'e.time_created desc'
 	));
-	
+
 	// why is this reversing it? because we're asking for the 3 latest
 	// comments by sorting desc and limiting by 3, but we want to display
 	// these comments with the latest at the bottom.

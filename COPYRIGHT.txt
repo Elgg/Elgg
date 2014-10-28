@@ -1,4 +1,4 @@
-The follow individuals, companies, or entities have contributed significant 
+The follow individuals, companies, or entities have contributed significant
 code to the Elgg project and share the copyright. (In alphabetical order.)
 
 Organizations:

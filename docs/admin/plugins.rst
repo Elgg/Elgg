@@ -31,7 +31,7 @@ Language Packs
 
 Language packs are plugins that provide support for other languages.
 
-Language packs can extend and include translations for language strings 
+Language packs can extend and include translations for language strings
 found in the core, core plugins and/or third-party plugins.
 
 Some of the language packs are already included in the core, and can be found in

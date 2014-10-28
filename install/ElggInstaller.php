@@ -499,7 +499,7 @@ class ElggInstaller {
 				'required' => TRUE,
 				),
 		);
-		
+
 		if ($this->isAction) {
 			do {
 				if (!$this->validateAdminVars($submissionVars, $formVars)) {
@@ -872,7 +872,7 @@ class ElggInstaller {
 		$CONFIG->sitename = '';
 		$CONFIG->sitedescription = '';
 	}
-	
+
 	/**
 	 * @return bool Whether the install process is encrypted.
 	 */
@@ -891,7 +891,7 @@ class ElggInstaller {
 	 */
 	protected function getBaseUrl() {
 		$protocol = $this->isHttps() ? 'https' : 'http';
-		
+
 		if (isset($_SERVER["SERVER_PORT"])) {
 			$port = ':' . $_SERVER["SERVER_PORT"];
 		} else {

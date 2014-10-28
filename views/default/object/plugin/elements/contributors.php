@@ -16,7 +16,7 @@ if (empty($contributors)) {
 echo '<ul class="elgg-plugin-contributors">';
 
 foreach ($contributors as $contributor) {
-	
+
 	if ($contributor['name']) {
 		$contributor['name'] = elgg_view('output/text', array(
 			'value' => $contributor['name'],
@@ -24,7 +24,7 @@ foreach ($contributors as $contributor) {
 	} else {
 		continue;
 	}
-	
+
 	if ($contributor['website']) {
 		$contributor['website'] = elgg_view('output/url', array(
 			'href' => $contributor['website'],
@@ -32,7 +32,7 @@ foreach ($contributors as $contributor) {
 			'is_trusted' => true,
 		));
 	}
-	
+
 	if ($contributor['username']) {
 		$contributor['username'] = elgg_view('output/url', array(
 			'href' => "http://community.elgg.org/profile/{$contributor['username']}/",
@@ -40,13 +40,13 @@ foreach ($contributors as $contributor) {
 			'is_trusted' => true,
 		));
 	}
-	
+
 	if ($contributor['description']) {
 		$contributor['description'] = elgg_view('output/text', array(
 			'value' => $contributor['description'],
 		));
 	}
-	
+
 	if ($contributor['name']) { // Name is requiried
 		echo '<li><dl>';
 		foreach ($contributor as $field => $value) {

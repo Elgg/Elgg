@@ -186,7 +186,7 @@ class ElggBatch
 	 */
 	public function __construct($getter, $options, $callback = null, $chunk_size = 25,
 			$inc_offset = true) {
-		
+
 		$this->getter = $getter;
 		$this->options = $options;
 		$this->callback = $callback;

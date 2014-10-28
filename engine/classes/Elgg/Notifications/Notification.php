@@ -1,7 +1,7 @@
 <?php
 /**
  * Notification container
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Notifications
  * @since      1.9.0

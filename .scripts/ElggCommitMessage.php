@@ -104,7 +104,7 @@ class ElggCommitMessage {
 
 	/**
 	 * Regex to extract the message parts
-	 * 
+	 *
 	 * type(component): message
 	 * with an optional body following
 	 *
@@ -184,7 +184,7 @@ class ElggCommitMessage {
 	 */
 	private function processMsg() {
 		$matches = array();
-		
+
 		preg_match($this->formatRegex, $this->msg, $matches);
 		foreach ($this->validMsgParts as $i => $part) {
 			$this->$part = isset($matches[$i]) ? $matches[$i] : '';
@@ -203,7 +203,7 @@ class ElggCommitMessage {
 				$this->isValidLineLength() &&
 				$this->isValidType();
 	}
-	
+
 	/**
 	 * Is the overall format valid
 	 *

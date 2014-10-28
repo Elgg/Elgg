@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg Groups css
- * 
+ *
  * @package groups
  */
 
@@ -19,7 +19,7 @@
 .groups-profile-fields .odd,
 .groups-profile-fields .even {
 	background: #f4f4f4;
-	border-radius: 4px;	
+	border-radius: 4px;
 	padding: 2px 4px;
 	margin-bottom: 7px;
 }

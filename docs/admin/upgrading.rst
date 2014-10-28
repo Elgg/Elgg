@@ -33,7 +33,7 @@ Basic instructions
 .. note::
 
    Any modifications should have been written within plugins, so that they are not lost on overwriting.
-   If this is not the case, take care to maintain your modifications. 
+   If this is not the case, take care to maintain your modifications.
 
 .. note::
 

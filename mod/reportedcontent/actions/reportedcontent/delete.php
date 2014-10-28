@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg reported content: delete action
- * 
+ *
  * @package ElggReportedContent
  */
 
@@ -23,6 +23,6 @@ if ($report->getSubtype() == "reported_content" && $report->canEdit()) {
 	} else {
 		register_error(elgg_echo("reportedcontent:notdeleted"));
 	}
-	
+
 	forward(REFERER);
 }

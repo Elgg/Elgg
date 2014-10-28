@@ -12,9 +12,9 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 		foreach ($msgs as $text) {
 			$msg->setMsg($text);
 			$this->assertFalse($msg->isValidFormat(), $text);
-		}		
+		}
 	}
-	
+
 	public function testRejectsMessagesWithoutSummary() {
 		$this->assertInvalidCommitMessages(array(
 			'chore(test):',
@@ -22,13 +22,13 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 			"chore(test):\n",
 		));
 	}
-	
+
 	public function testRejectsMessagesWithoutType() {
 		$this->assertInvalidCommitMessages(array(
 			'A bad commit message',
 		));
 	}
-	
+
 	public function testRejectsMessagesWithoutComponent() {
 		$this->assertInvalidCommitMessages(array(
 			'chore: Summary',
@@ -36,14 +36,14 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 			'chore(test):Summary',
 		));
 	}
-	
+
 	public function assertIgnoreCommitMessages(array $ignored) {
 		foreach ($ignored as $msg) {
 			$msg = new ElggCommitMessage($msg);
 			$this->assertTrue($msg->shouldIgnore(), $msg);
 		}
 	}
-	
+
 	public function testShouldIgnoreMerges() {
 		$this->assertIgnoreCommitMessages(array(
 			'Merge pull request',
@@ -52,7 +52,7 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 			'Merge release 1.8.18 into master.',
 		));
 	}
-	
+
 	public function testShouldIgnoreReverts() {
 		$this->assertIgnoreCommitMessages(array(
 			'Revert "fix(amd): removed elgg_require_js for backwards compatibility"
@@ -60,13 +60,13 @@ class ElggCommitMessageTest extends PHPUnit_Framework_TestCase {
 			This reverts commit 76584089bee2b3246c736edb6b250e149acf906f.
 
 			Conflicts:
-				engine/lib/views.php'		
+				engine/lib/views.php'
 		));
 	}
 
 	public function testCanParseMessagesWithoutBody() {
 		$text = "chore(test): Summary";
-		
+
 		$msg = new ElggCommitMessage($text);
 
 		$this->assertTrue($msg->isValidFormat());

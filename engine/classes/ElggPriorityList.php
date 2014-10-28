@@ -42,7 +42,7 @@
  * $pl->add('Element -10', -10);
  *
  * $priority = $pl->getPriority('Element -5');
- * 
+ *
  * Or element lookups by priority.
  * $element = $pl->getElement(-5);
  *
@@ -172,7 +172,7 @@ class ElggPriorityList
 	 */
 	public function move($element, $new_priority, $strict = false) {
 		$new_priority = (int) $new_priority;
-		
+
 		$current_priority = $this->getPriority($element, $strict);
 		if ($current_priority === false) {
 			return false;
@@ -203,7 +203,7 @@ class ElggPriorityList
 	 *
 	 * If no user function is provided the elements are sorted by priority registered.
 	 *
-	 * The callback function should accept the array of elements as the first 
+	 * The callback function should accept the array of elements as the first
 	 * argument and should return a sorted array.
 	 *
 	 * This function can be called multiple times.
@@ -223,7 +223,7 @@ class ElggPriorityList
 
 			$this->elements = $sorted;
 		}
-		
+
 		$this->sorted = true;
 		return true;
 	}
@@ -247,7 +247,7 @@ class ElggPriorityList
 	 */
 	public function getNextPriority($near = 0) {
 		$near = (int) $near;
-		
+
 		while (array_key_exists($near, $this->elements)) {
 			$near++;
 		}
@@ -257,7 +257,7 @@ class ElggPriorityList
 
 	/**
 	 * Returns the priority of an element if it exists in the list.
-	 * 
+	 *
 	 * @warning This can return 0 if the element's priority is 0.
 	 *
 	 * @param mixed $element The element to check for.
@@ -289,7 +289,7 @@ class ElggPriorityList
 		return $this->getPriority($element, $strict) !== false;
 	}
 
-	
+
 	/**********************
 	 * Interface methods *
 	 **********************/

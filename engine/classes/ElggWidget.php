@@ -28,7 +28,7 @@ class ElggWidget extends ElggObject {
 
 	/**
 	 * Get a value from attributes or private settings
-	 * 
+	 *
 	 * @param string $name The name of the value
 	 * @return mixed
 	 */
@@ -63,7 +63,7 @@ class ElggWidget extends ElggObject {
 
 	/**
 	 * Set an attribute or private setting value
-	 * 
+	 *
 	 * @param string $name  The name of the value to set
 	 * @param mixed  $value The value to set
 	 * @return void
@@ -173,7 +173,7 @@ class ElggWidget extends ElggObject {
 		if ($column == $this->column) {
 			$bottom_rank--;
 		}
-		
+
 		if ($rank == 0) {
 			// top of the column
 			$this->order = reset($widgets)->order - 10;

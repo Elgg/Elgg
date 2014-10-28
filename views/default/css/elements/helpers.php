@@ -10,7 +10,7 @@
 ?>
 /* <style> /**/
 
-.clearfloat { 
+.clearfloat {
 	clear: both;
 }
 

@@ -111,7 +111,7 @@ elgg.ui.widgets.remove = function(event) {
 		event.preventDefault();
 		return;
 	}
-	
+
 	var $widget = $(this).closest('.elgg-module-widget');
 
 	// if widget type is single instance type, enable the add buton

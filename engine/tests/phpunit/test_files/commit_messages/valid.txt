@@ -5,4 +5,4 @@ It has a correctly formatted type, component, and summary,
 and includes a body with references to issues in the last lines.
 
 Refs #123, #456
-Fixes #789 
+Fixes #789

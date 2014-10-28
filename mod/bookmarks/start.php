@@ -165,7 +165,7 @@ function bookmark_set_url($hook, $type, $url, $params) {
 
 /**
  * Add a menu item to an ownerblock
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param array  $return
@@ -189,7 +189,7 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 
 /**
  * Prepare a notification message about a new bookmark
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg_Notifications_Notification $notification The notification to prepare
@@ -206,7 +206,7 @@ function bookmarks_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language); 
+	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language);
 	$notification->body = elgg_echo('bookmarks:notify:body', array(
 		$owner->name,
 		$title,
@@ -235,7 +235,7 @@ function bookmarks_page_menu($hook, $type, $return, $params) {
 			if (!$page_owner) {
 				$page_owner = elgg_get_logged_in_user_entity();
 			}
-			
+
 			if ($page_owner instanceof ElggGroup) {
 				$title = elgg_echo('bookmarks:bookmarklet:group');
 			} else {

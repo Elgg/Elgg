@@ -115,7 +115,7 @@ abstract class ElggData implements
 	 * @return bool
 	 */
 	abstract public function save();
-	
+
 	/**
 	 * Delete this data.
 	 *
@@ -134,7 +134,7 @@ abstract class ElggData implements
 
 	/**
 	 * Get a plain old object copy for public consumption
-	 * 
+	 *
 	 * @return stdClass
 	 */
 	abstract public function toObject();

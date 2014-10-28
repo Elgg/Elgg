@@ -64,10 +64,10 @@ foreach ($items as $item) {
 	$li = elgg_view_list_item($item, $vars);
 	if ($li) {
 		$item_classes = array($item_class);
-		
+
 		if (elgg_instanceof($item)) {
 			$id = "elgg-{$item->getType()}-{$item->getGUID()}";
-			
+
 			$item_classes[] = "elgg-item-" . $item->getType();
 			$subtype = $item->getSubType();
 			if ($subtype) {
@@ -76,9 +76,9 @@ foreach ($items as $item) {
 		} else {
 			$id = "item-{$item->getType()}-{$item->id}";
 		}
-		
+
 		$item_classes = implode(" ", $item_classes);
-		
+
 		$html .= "<li id=\"$id\" class=\"$item_classes\">$li</li>";
 	}
 }

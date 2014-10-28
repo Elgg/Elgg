@@ -1,7 +1,7 @@
 <?php
 /**
 * Elgg file delete
-* 
+*
 * @package ElggFile
 */
 

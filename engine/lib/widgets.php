@@ -122,7 +122,7 @@ function elgg_get_widget_types($context = "", $exact = false) {
 
 /**
  * Set the widget title on ajax return from save action
- * 
+ *
  * @param string $hook    Hook name
  * @param string $type    Hook type
  * @param array  $results Array to be encoded as json
@@ -162,7 +162,7 @@ function _elgg_widgets_init() {
  * register menu items for default widgets with the admin section.
  *
  * A plugin that wants to register a new context for default widgets should
- * register for the plugin hook 'get_list', 'default_widgets'. The handler 
+ * register for the plugin hook 'get_list', 'default_widgets'. The handler
  * can register the new type of default widgets by adding an associate array to
  * the return value array like this:
  * array(

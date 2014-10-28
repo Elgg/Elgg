@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg Profile CSS
- * 
+ *
  * @package Profile
  */
 ?>
@@ -37,7 +37,7 @@
 }
 .profile-content-menu a {
 	display: block;
-	border-radius: 8px;	
+	border-radius: 8px;
 	background-color: white;
 	margin: 3px 0 5px 0;
 	padding: 2px 4px 2px 8px;
@@ -52,7 +52,7 @@
 }
 .profile-admin-menu-wrapper a {
 	display: block;
-	border-radius: 8px;	
+	border-radius: 8px;
 	background-color: white;
 	margin: 3px 0 5px 0;
 	padding: 2px 4px 2px 8px;
@@ -72,19 +72,19 @@
 /*** profile details ***/
 #profile-details .odd {
 	background-color: #f4f4f4;
-	border-radius: 4px;	
+	border-radius: 4px;
 	margin: 0 0 7px;
 	padding: 2px 4px;
 }
 #profile-details .even {
 	background-color:#f4f4f4;
-	border-radius: 4px;	
+	border-radius: 4px;
 	margin: 0 0 7px;
 	padding: 2px 4px;
 }
 .profile-aboutme-title {
 	background-color:#f4f4f4;
-	border-radius: 4px;	
+	border-radius: 4px;
 	margin: 0;
 	padding: 2px 4px;
 }

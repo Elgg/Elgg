@@ -267,7 +267,7 @@ function _elgg_tagcloud_page_handler($page) {
 function _elgg_tags_init() {
 	// register the standard tags metadata name
 	elgg_register_tag_metadata_name('tags');
-	
+
 	elgg_register_page_handler('tags', '_elgg_tagcloud_page_handler');
 }
 

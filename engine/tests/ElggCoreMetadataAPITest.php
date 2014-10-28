@@ -163,7 +163,7 @@ class ElggCoreMetadataAPITest extends ElggCoreUnitTest {
 		// good times without mocking.
 		$original_user = elgg_get_logged_in_user_entity();
 		$_SESSION['user'] = $u1;
-		
+
 		elgg_set_ignore_access(false);
 
 		// add metadata as one user

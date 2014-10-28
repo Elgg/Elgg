@@ -25,7 +25,7 @@ if ($guid) {
 	if (!$activity) {
 		$activity = '<p>' . elgg_echo('groups:widget:group_activity:content:noactivity') . '</p>';
 	}
-	
+
 	$content .= $activity;
 } else {
 	// no group selected yet

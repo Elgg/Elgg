@@ -1,6 +1,6 @@
 <?php
 $admins = elgg_list_entities(array(), 'elgg_get_admins');
-	
+
 ?>
 <div class="elgg-module elgg-module-inline">
 	<div class="elgg-head">

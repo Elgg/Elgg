@@ -39,7 +39,7 @@ if ($page->canEdit()) {
 	}
 
 	$vars = pages_prepare_form_vars($page, $page->parent_guid, $revision);
-	
+
 	$content = elgg_view_form('pages/edit', array(), $vars);
 } else {
 	$content = elgg_echo("pages:noaccess");

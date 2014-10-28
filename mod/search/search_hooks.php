@@ -28,12 +28,12 @@ function search_objects_hook($hook, $type, $value, $params) {
 	$params['wheres'] = array($where);
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
-	
+
 	// no need to continue if nothing here.
 	if (!$count) {
 		return array('entities' => array(), 'count' => $count);
 	}
-	
+
 	$params['count'] = FALSE;
 	$params['order_by'] = search_get_order_by_sql('e', 'oe', $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);
@@ -69,7 +69,7 @@ function search_groups_hook($hook, $type, $value, $params) {
 
 	$join = "JOIN {$db_prefix}groups_entity ge ON e.guid = ge.guid";
 	$params['joins'] = array($join);
-	
+
 	$fields = array('name', 'description');
 
 	$where = search_get_where_sql('ge', $fields, $params);
@@ -81,12 +81,12 @@ function search_groups_hook($hook, $type, $value, $params) {
 
 	$params['count'] = TRUE;
 	$count = elgg_get_entities($params);
-	
+
 	// no need to continue if nothing here.
 	if (!$count) {
 		return array('entities' => array(), 'count' => $count);
 	}
-	
+
 	$params['count'] = FALSE;
 	$params['order_by'] = search_get_order_by_sql('e', 'ge', $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);
@@ -110,7 +110,7 @@ function search_groups_hook($hook, $type, $value, $params) {
  * Get users that match the search parameters.
  *
  * Searches on username, display name, and profile fields
- * 
+ *
  * @param string $hook   Hook name
  * @param string $type   Hook type
  * @param array  $value  Empty array
@@ -127,14 +127,14 @@ function search_users_hook($hook, $type, $value, $params) {
 		"JOIN {$db_prefix}metadata md on e.guid = md.entity_guid",
 		"JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id"
 	);
-		
+
 	// username and display name
 	$fields = array('username', 'name');
 	$where = search_get_where_sql('ue', $fields, $params, FALSE);
 
 	// profile fields
 	$profile_fields = array_keys(elgg_get_config('profile_fields'));
-	
+
 	// get the where clauses for the md names
 	// can't use egef_metadata() because the n_table join comes too late.
 	$clauses = _elgg_entities_get_metastrings_options('metadata', array(
@@ -145,7 +145,7 @@ function search_users_hook($hook, $type, $value, $params) {
 	// no fulltext index, can't disable fulltext search in this function.
 	// $md_where .= " AND " . search_get_where_sql('msv', array('string'), $params, FALSE);
 	$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
-	
+
 	$params['wheres'] = array("(($where) OR ($md_where))");
 
 	// override subtype -- All users should be returned regardless of subtype.
@@ -157,14 +157,14 @@ function search_users_hook($hook, $type, $value, $params) {
 	if (!$count) {
 		return array('entities' => array(), 'count' => $count);
 	}
-	
+
 	$params['count'] = FALSE;
 	$params['order_by'] = search_get_order_by_sql('e', 'ue', $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
-		
+
 		$title = search_get_highlighted_relevant_substrings($entity->name, $query);
 
 		// include the username if it matches but the display name doesn't.
@@ -269,7 +269,7 @@ function search_tags_hook($hook, $type, $value, $params) {
 	if (!$count) {
 		return array('entities' => array(), 'count' => $count);
 	}
-	
+
 	$params['count'] = FALSE;
 	$params['order_by'] = search_get_order_by_sql('e', null, $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);

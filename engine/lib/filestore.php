@@ -45,7 +45,7 @@ function get_uploaded_file($input_name) {
 	if (!$files->has($input_name)) {
 		return false;
 	}
-	
+
 	$file = $files->get($input_name);
 	if (elgg_extract('error', $file) !== 0) {
 		return false;

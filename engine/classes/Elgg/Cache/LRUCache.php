@@ -5,11 +5,11 @@
  *
  * A fixed sized cache that removes the element used last when it reaches its
  * size limit.
- * 
+ *
  * Based on https://github.com/cash/LRUCache
- * 
+ *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Cache
  */
@@ -111,7 +111,7 @@ class Elgg_Cache_LRUCache implements ArrayAccess {
 
 	/**
 	 * Clear the cache
-	 * 
+	 *
 	 * @return void
 	 */
 	public function clear() {
@@ -120,7 +120,7 @@ class Elgg_Cache_LRUCache implements ArrayAccess {
 
 	/**
 	 * Moves the element from current position to end of array
-	 * 
+	 *
 	 * @param int|string $key The key
 	 * @return void
 	 */

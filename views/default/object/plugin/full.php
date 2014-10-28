@@ -258,7 +258,7 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 					echo "<p class=\"elgg-state-error\">$message</p>";
 				}
 			}
-	
+
 			if (!$can_activate) {
 				if ($active) {
 					$message = elgg_echo('admin:plugins:warning:unmet_dependencies_active');
@@ -269,17 +269,17 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 				}
 			}
 			?>
-	
+
 			<div><?php echo $description; ?></div>
 			<p><?php echo $author . ' - ' . $website; ?></p>
-			
+
 			<?php
 				echo $resources_html;
 				echo $docs;
 			?>
-	
+
 			<div class="pts">
-			<?php 
+			<?php
 				echo elgg_view('output/url', array(
 					'href' => "#elgg-plugin-manifest-$css_id",
 					'text' => elgg_echo("admin:plugins:label:moreinfo"),

@@ -34,7 +34,7 @@ function thewire_init() {
 
 	// remove edit and access and add thread, reply, view previous
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'thewire_setup_entity_menu_items');
-	
+
 	// Extend system CSS with our own styles, which are defined in the thewire/css view
 	elgg_extend_view('css/elgg', 'thewire/css');
 
@@ -292,7 +292,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 	// set thread guid
 	if ($parent_guid) {
 		$post->addRelationship($parent_guid, 'parent');
-		
+
 		// name conversation threads by guid of first post (works even if first post deleted)
 		$parent_post = get_entity($parent_guid);
 		$post->wire_thread = $parent_post->wire_thread;
@@ -319,7 +319,7 @@ function thewire_save_post($text, $userid, $access_id, $parent_guid = 0, $method
 		);
 		elgg_trigger_plugin_hook('status', 'user', $params);
 	}
-	
+
 	return $guid;
 }
 
@@ -483,7 +483,7 @@ function thewire_test($hook, $type, $value, $params) {
 function thewire_run_upgrades() {
 	$path = dirname(__FILE__) . '/upgrades/';
 	$files = elgg_get_upgrade_files($path);
-	
+
 	foreach ($files as $file) {
 		include $path . $file;
 	}

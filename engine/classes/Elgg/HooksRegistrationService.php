@@ -2,17 +2,17 @@
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Use the elgg_* versions instead.
- * 
+ *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Hooks
  * @since      1.9.0
  */
 abstract class Elgg_HooksRegistrationService {
-	
+
 	private $handlers = array();
 
 	/**
@@ -30,7 +30,7 @@ abstract class Elgg_HooksRegistrationService {
 		$this->logger = $logger;
 		return $this;
 	}
-	
+
 	/**
 	 * Registers a handler.
 	 *
@@ -43,28 +43,28 @@ abstract class Elgg_HooksRegistrationService {
 		if (empty($name) || empty($type) || !is_callable($callback, true)) {
 			return false;
 		}
-	
+
 		if (!isset($this->handlers[$name])) {
 			$this->handlers[$name] = array();
 		}
-		
+
 		if (!isset($this->handlers[$name][$type])) {
 			$this->handlers[$name][$type] = array();
 		}
-		
+
 		// Priority cannot be lower than 0
 		$priority = max((int) $priority, 0);
-	
+
 		while (isset($this->handlers[$name][$type][$priority])) {
 			$priority++;
 		}
-		
+
 		$this->handlers[$name][$type][$priority] = $callback;
 		ksort($this->handlers[$name][$type]);
 
 		return true;
 	}
-	
+
 	/**
 	 * Unregister a handler
 	 *
@@ -95,7 +95,7 @@ abstract class Elgg_HooksRegistrationService {
 	 *         $priority => callback, ...
 	 *     )
 	 * )
-	 * 
+	 *
 	 * @access private
 	 * @return array
 	 */
@@ -105,7 +105,7 @@ abstract class Elgg_HooksRegistrationService {
 
 	/**
 	 * Does the hook have a handler?
-	 * 
+	 *
 	 * @param string $name The name of the hook
 	 * @param string $type The type of the hook
 	 * @return boolean
@@ -124,7 +124,7 @@ abstract class Elgg_HooksRegistrationService {
 	 */
 	protected function getOrderedHandlers($name, $type) {
 		$handlers = array();
-		
+
 		if (isset($this->handlers[$name][$type])) {
 			if ($name != 'all' && $type != 'all') {
 				$handlers = array_merge($handlers, array_values($this->handlers[$name][$type]));

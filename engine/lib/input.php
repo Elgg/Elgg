@@ -97,7 +97,7 @@ function filter_tags($var) {
 
 /**
  * Returns the current page's complete URL.
- * 
+ *
  * It uses the configured site URL for the hostname rather than depending on
  * what the server uses to populate $_SERVER.
  *

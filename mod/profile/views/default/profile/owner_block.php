@@ -47,7 +47,7 @@ if (elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != elgg_get_page
 	}
 	$admin_links .= '</ul>';
 	$admin_links .= '</li>';
-	$admin_links .= '</ul>';	
+	$admin_links .= '</ul>';
 }
 
 // content links

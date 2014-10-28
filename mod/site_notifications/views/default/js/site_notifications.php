@@ -19,7 +19,7 @@ elgg.site_notifications.init = function() {
  * @return void
  */
 elgg.site_notifications.delete = function(event) {
-	
+
 	var $item = $(this).closest('.elgg-item');
 	$item.slideToggle('medium');
 

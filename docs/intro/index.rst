@@ -7,6 +7,6 @@ Discover if Elgg is right for your community.
    :maxdepth: 1
   
    features
-   license 
+   license
    install
    development

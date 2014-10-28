@@ -215,7 +215,7 @@ function elgg_get_annotations(array $options = array()) {
 			unset($options['count']);
 		}
 	}
-	
+
 	$options['metastring_type'] = 'annotations';
 	return _elgg_get_metastring_based_objects($options);
 }
@@ -274,7 +274,7 @@ function elgg_disable_annotations(array $options) {
 	if (!_elgg_is_valid_options_for_batch_operation($options, 'annotation')) {
 		return false;
 	}
-	
+
 	// if we can see hidden (disabled) we need to use the offset
 	// otherwise we risk an infinite loop if there are more than 50
 	$inc_offset = access_get_show_hidden_status();

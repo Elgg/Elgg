@@ -41,7 +41,7 @@ class ElggMetadata extends ElggExtender {
 			// Create from db row
 			if ($row instanceof stdClass) {
 				$metadata = $row;
-				
+
 				$objarray = (array) $metadata;
 				foreach ($objarray as $key => $value) {
 					$this->attributes[$key] = $value;

@@ -44,7 +44,7 @@ $data = array(
 		'checked' => elgg_get_plugin_setting('screen_log', 'developers') == 1,
 		'readonly' => false,
 	),
-	
+
 	'show_strings' => array(
 		'type' => 'checkbox',
 		'value' => 1,

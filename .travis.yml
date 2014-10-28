@@ -39,7 +39,7 @@ matrix:
       after_script:
        - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
-services: 
+services:
  - mysql
 
 before_script:
@@ -51,7 +51,7 @@ before_script:
 script:
  - phpunit
  - php -f ./engine/tests/suite.php
- 
+
 notifications:
   email:
     secure: exC/ws07lLOj3Y43C89jiaKpyB8Yt7DPGSCShV4R3Wkw/hVVzjxt1BinPxzsyL5DC7APUMcTHGOhDB2oCE4ynDE6o6L9bH79fc+V8IYAiNaEIGL0AOuHdnRdGN9GMrr2jv78cZ5MctuUTkeYLaoOEyDGHmkMhqa6SufIDAY8b58=

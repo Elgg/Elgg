@@ -1,4 +1,4 @@
-<?php 
+<?php
 
 $params = array();
 $params['menu'] = array();

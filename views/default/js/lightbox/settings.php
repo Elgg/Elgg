@@ -2,7 +2,7 @@
 /**
  * Elgg lightbox settings view
  *
- * Override this view to change the default colorbox settings. 
+ * Override this view to change the default colorbox settings.
  * See the js/lightbox view for more ways to change lightbox behavior.
  */
 ?>

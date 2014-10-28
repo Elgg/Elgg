@@ -1,7 +1,7 @@
 <?php
 return array(
 	'admin:users:unvalidated' => 'Unvalidated',
-	
+
 	'email:validate:subject' => "%s please confirm your email address for %s!",
 	'email:validate:body' => "%s,
 
@@ -35,7 +35,7 @@ If you can't click on the link, copy and paste it to your browser manually.
 	'uservalidationbyemail:confirm_validate_checked' => 'Validate checked users?',
 	'uservalidationbyemail:confirm_resend_validation_checked' => 'Resend validation to checked users?',
 	'uservalidationbyemail:confirm_delete_checked' => 'Delete checked users?',
-	
+
 	'uservalidationbyemail:errors:unknown_users' => 'Unknown users',
 	'uservalidationbyemail:errors:could_not_validate_user' => 'Could not validate user.',
 	'uservalidationbyemail:errors:could_not_validate_users' => 'Could not validate all checked users.',

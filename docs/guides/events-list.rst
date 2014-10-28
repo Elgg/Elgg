@@ -36,7 +36,7 @@ System events
 	the ``system_log`` table.
 
 **upgrade, system**
-	Triggered after a system upgrade has finished. All upgrade scripts have run, but the caches 
+	Triggered after a system upgrade has finished. All upgrade scripts have run, but the caches
 	are not cleared.
 
 **upgrade, upgrade**

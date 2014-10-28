@@ -13,7 +13,7 @@ if (!$period) {
 ?>
 <div>
 	<?php echo elgg_echo('garbagecollector:period'); ?>
-	
+
 	<?php
 		echo elgg_view('input/select', array(
 			'name' => 'params[period]',

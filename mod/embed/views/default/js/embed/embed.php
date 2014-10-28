@@ -111,7 +111,7 @@ elgg.embed.insert = function(event) {
 elgg.embed.submit = function(event) {
 	$('.embed-wrapper .elgg-form-file-upload').hide();
 	$('.embed-throbber').show();
-	
+
 	$(this).ajaxSubmit({
 		dataType : 'json',
 		data     : { 'X-Requested-With' : 'XMLHttpRequest'},

@@ -4,7 +4,7 @@
  * Service for Events
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Hooks
  * @since      1.9.0
@@ -17,7 +17,7 @@ class Elgg_EventsService extends Elgg_HooksRegistrationService {
 
 	/**
 	 * Triggers an Elgg event.
-	 * 
+	 *
 	 * @see elgg_trigger_event
 	 * @see elgg_trigger_after_event
 	 * @access private

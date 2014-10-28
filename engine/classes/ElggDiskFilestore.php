@@ -324,7 +324,7 @@ class ElggDiskFilestore extends ElggFilestore {
 	}
 
 
-	
+
 	/**
 	 * Deprecated methods
 	 */

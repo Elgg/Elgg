@@ -30,13 +30,13 @@ if (empty($vars['tagcloud']) && !empty($vars['value'])) {
 if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 	$counter = 0;
 	$max = 0;
-	
+
 	foreach ($vars['tagcloud'] as $tag) {
 		if ($tag->total > $max) {
 			$max = $tag->total;
 		}
 	}
-	
+
 	$cloud = '';
 	foreach ($vars['tagcloud'] as $tag) {
 		$tag->tag = htmlspecialchars($tag->tag, ENT_QUOTES, 'UTF-8', false);
@@ -59,7 +59,7 @@ if (!empty($vars['tagcloud']) && is_array($vars['tagcloud'])) {
 			'rel' => 'tag'
 		));
 	}
-	
+
 	$cloud .= elgg_view('tagcloud/extend');
 
 	echo "<div class=\"elgg-tagcloud\">$cloud</div>";

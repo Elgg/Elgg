@@ -34,7 +34,7 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Cache metadata for an entity
-	 * 
+	 *
 	 * @param int   $entity_guid The GUID of the entity
 	 * @param array $values      The metadata values to cache
 	 * @return void
@@ -48,7 +48,7 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Get the metadata for an entity
-	 * 
+	 *
 	 * @param int $entity_guid The GUID of the entity
 	 * @return array
 	 */
@@ -73,7 +73,7 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Have all the metadata for this entity been cached?
-	 * 
+	 *
 	 * @param int $entity_guid The GUID of the entity
 	 * @return bool
 	 */
@@ -83,11 +83,11 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Cache a piece of metadata
-	 * 
+	 *
 	 * @param int                   $entity_guid    The GUID of the entity
 	 * @param string                $name           The metadata name
-	 * @param array|int|string|null $value          The metadata value. null means it is 
-	 *                                              known that there is no fetch-able 
+	 * @param array|int|string|null $value          The metadata value. null means it is
+	 *                                              known that there is no fetch-able
 	 *                                              metadata under this name
 	 * @param bool                  $allow_multiple Can the metadata be an array
 	 * @return void
@@ -187,7 +187,7 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Clear entire cache and mark all entities as out of sync
-	 * 
+	 *
 	 * @return void
 	 */
 	public function flush() {
@@ -210,7 +210,7 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Tell the cache to call elgg_get_ignore_access() to determing access status.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function unsetIgnoreAccess() {
@@ -219,7 +219,7 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Get the ignore access value
-	 * 
+	 *
 	 * @return bool
 	 */
 	protected function getIgnoreAccess() {
@@ -262,7 +262,7 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Populate the cache from a set of entities
-	 * 
+	 *
 	 * @param int|array $guids Array of or single GUIDs
 	 * @return void
 	 */

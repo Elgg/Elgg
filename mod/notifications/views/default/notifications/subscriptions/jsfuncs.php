@@ -2,18 +2,18 @@
 
 $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
-?> 
+?>
 <?php //@todo JS 1.8: no ?>
 <script type="text/javascript">
 
 $(document).ready(function () {
-<?php 
+<?php
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 ?>
 	$('input[type=checkbox]:checked').parent("a.<?php echo $method; ?>toggleOff").each(function(){
 		$(this).removeClass('<?php echo $method; ?>toggleOff').addClass('<?php echo $method; ?>toggleOn');
 	});
-	
+
 <?php
 }
 ?>
@@ -22,12 +22,12 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 
 	clickflag = 0;
 
-<?php 
+<?php
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 ?>
 function adjust<?php echo $method; ?>(linkId) {
 	var obj = $(this).prev("a");
-	
+
 	if (obj.className == "<?php echo $method; ?>toggleOff") {
 		obj.className = "<?php echo $method; ?>toggleOn";
 	} else {
@@ -37,7 +37,7 @@ function adjust<?php echo $method; ?>(linkId) {
 }
 function adjust<?php echo $method; ?>_alt(linkId) {
 	var obj = document.getElementById(linkId);
-	
+
 	if (obj.className == "<?php echo $method; ?>toggleOff") {
 		obj.className = "<?php echo $method; ?>toggleOn";
 		$('#' + linkId).children("input[type='checkbox']").attr('checked', true);

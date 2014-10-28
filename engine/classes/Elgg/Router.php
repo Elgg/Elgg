@@ -113,7 +113,7 @@ class Elgg_Router {
 
 	/**
 	 * Get page handlers as array of identifier => callback
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getPageHandlers() {

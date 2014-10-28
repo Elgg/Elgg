@@ -260,7 +260,7 @@
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	
+
 	max-width: 100%;
 	height: auto;
 }

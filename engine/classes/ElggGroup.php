@@ -5,7 +5,7 @@
  *
  * @package    Elgg.Core
  * @subpackage Groups
- * 
+ *
  * @property string $name        A short name that captures the purpose of the group
  * @property string $description A longer body of content that gives more details about the group
  */
@@ -77,7 +77,7 @@ class ElggGroup extends ElggEntity
 	public function getDisplayName() {
 		return $this->name;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
@@ -433,12 +433,12 @@ class ElggGroup extends ElggEntity
 	 */
 	public function join(ElggUser $user) {
 		$result = add_entity_relationship($user->guid, 'member', $this->guid);
-	
+
 		if ($result) {
 			$params = array('group' => $this, 'user' => $user);
 			elgg_trigger_event('join', 'group', $params);
 		}
-	
+
 		return $result;
 	}
 
@@ -487,27 +487,27 @@ class ElggGroup extends ElggEntity
 	 */
 	protected function update() {
 		global $CONFIG;
-		
+
 		if (!parent::update()) {
 			return false;
 		}
-		
+
 		$guid = (int)$this->guid;
 		$name = sanitize_string($this->name);
 		$description = sanitize_string($this->description);
-		
+
 		$query = "UPDATE {$CONFIG->dbprefix}groups_entity set"
 			. " name='$name', description='$description' where guid=$guid";
 
 		return $this->getDatabase()->updateData($query) !== false;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
 	protected function create() {
 		global $CONFIG;
-		
+
 		$guid = parent::create();
 		$name = sanitize_string($this->name);
 		$description = sanitize_string($this->description);
@@ -520,7 +520,7 @@ class ElggGroup extends ElggEntity
 			// TODO(evan): Throw an exception here?
 			return false;
 		}
-		
+
 		return $guid;
 	}
 

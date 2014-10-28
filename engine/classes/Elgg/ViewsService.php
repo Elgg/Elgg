@@ -40,7 +40,7 @@ class Elgg_ViewsService {
 
 	/**
 	 * Get the user object in a wrapper
-	 * 
+	 *
 	 * @return Elgg_DeprecationWrapper|null
 	 */
 	protected function getUserWrapper() {
@@ -333,7 +333,7 @@ class Elgg_ViewsService {
 
 	/**
 	 * Includes view PHP or static file
-	 * 
+	 *
 	 * @param string $view                 The view name
 	 * @param array  $vars                 Variables passed to view
 	 * @param string $viewtype             The viewtype

@@ -2,7 +2,7 @@
 /**
  * Delete a group
  */
-		
+
 $guid = (int) get_input('guid');
 if (!$guid) {
 	// backward compatible
