@@ -259,7 +259,53 @@ Other
     In ``get_default_access()``, filters the return value.
 
 **entity:icon:url, <entity_type>**
-	Return the URL for the icon of size ``$params['size']`` for the entity ``$params['entity']``.
+	Triggered when entity icon URL is requested, see `entity icons`_. Callback should
+	return URL for the icon of size ``$params['size']`` for the entity ``$params['entity']``.
+	Following parameters are available through the ``$params`` array:
+
+	entity
+		Entity for which icon url is requested.
+	viewtype
+		The type of `view`_ e.g. ``'default'`` or ``'json'``.
+	size
+		Size requested, see `entity icons`_ for possible values.
+
+	Example on how one could default to a Gravatar icon for users that
+	have not yet uploaded an avatar:
+
+.. code:: php
+
+	// Priority 600 so that handler is triggered after avatar handler
+	elgg_register_plugin_hook_handler('entity:icon:url', 'user', 'gravatar_icon_handler', 600);
+
+	/**
+	 * Default to icon from gravatar for users without avatar.
+	 */
+	function gravatar_icon_handler($hook, $type, $url, $params) {
+		// Allow users to upload avatars
+		if ($params['entity']->icontime) {
+			return $url;
+		}
+		
+		// Generate gravatar hash for user email
+		$hash = md5(strtolower(trim($params['entity']->email)));
+		
+		// Default icon size
+		$size = '150x150';
+
+		// Use configured size if possible
+		$config = elgg_get_config('icon_sizes');
+		$key = $params['size'];
+		if (isset($config[$key])) {
+			$size = $config[$key]['w'] . 'x' . $config[$key]['h'];
+		}
+		
+		// Produce URL used to retrieve icon
+		return "http://www.gravatar.com/avatar/$hash?s=$size";
+	}
+
+.. _entity icons: database.rst#entity-icons
+.. _view: views.rst#listing-entities
 
 **entity:url, <entity_type>**
 	Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the
