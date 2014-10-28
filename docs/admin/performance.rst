@@ -12,7 +12,7 @@ People often ask whether Elgg can scale to large installations.
 First, we might stop and ask, "where are you planning to get all those users?"
 Seriously, though, this is a really interesting problem.
 Making Elgg scale is, if anything, an issue of technical engineering.
-It's interesting but more or less a solved problem. 
+It's interesting but more or less a solved problem.
 Computer science doesn't work differently for Elgg than for Google, for example.
 Getting millions of users? That's like the Holy Grail of the entire tech industry.
 

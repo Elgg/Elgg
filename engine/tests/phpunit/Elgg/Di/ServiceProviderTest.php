@@ -9,10 +9,10 @@ class Elgg_Di_ServiceProviderTest extends PHPUnit_Framework_TestCase {
 
 		$svcClasses = array(
 			'actions' => 'Elgg_ActionsService',
-			
+
 			// requires _elgg_get_simplecache_root() to be defined
 			//'amdConfig' => 'Elgg_Amd_Config',
-			
+
 			'autoP' => 'ElggAutoP',
 			'autoloadManager' => 'Elgg_AutoloadManager',
 			'db' => 'Elgg_Database',
@@ -22,10 +22,10 @@ class Elgg_Di_ServiceProviderTest extends PHPUnit_Framework_TestCase {
 			'metadataCache' => 'ElggVolatileMetadataCache',
 			'request' => 'Elgg_Http_Request',
 			'router' => 'Elgg_Router',
-			
+
 			// Will this start session?
 			//'session' => 'ElggSession'
-			
+
 			'views' => 'Elgg_ViewsService',
 			'widgets' => 'Elgg_WidgetsService',
 		);

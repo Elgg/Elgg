@@ -33,7 +33,7 @@ $owner = elgg_get_logged_in_user_entity();
 					'name' => 'address',
 							'value' => $address,
 					));
-			
+
 			?>
 	</label>
 </div>

@@ -28,7 +28,7 @@ Create the file ``add.php`` in ``/mod/my_blog/pages/my_blog/``.
 .. code:: php
 
     <?php
-    // make sure only logged in users can see this page 
+    // make sure only logged in users can see this page
     gatekeeper();
                     
     // set the title
@@ -180,7 +180,7 @@ just be something like:
     
     echo elgg_view_title($vars['entity']->title);
     echo elgg_view('output/longtext', array('value' => $vars['entity']->description));
-    echo elgg_view('output/tags', array('tags' => $vars['entity']->tags)); 
+    echo elgg_view('output/tags', array('tags' => $vars['entity']->tags));
 
 The last line takes the tags on the my\_blog post and automatically
 displays them as a series of clickable links. Search is handled

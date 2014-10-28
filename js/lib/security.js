@@ -13,7 +13,7 @@ elgg.security.tokenRefreshTimer = null;
  * @param {Object} json The json representation of a token containing __elgg_ts and __elgg_token
  * @return {Void}
  */
-elgg.security.setToken = function(json) {	
+elgg.security.setToken = function(json) {
 	//update the convenience object
 	elgg.security.token = json;
 
@@ -31,7 +31,7 @@ elgg.security.setToken = function(json) {
 
 /**
  * Security tokens time out so we refresh those every so often.
- * 
+ *
  * @private
  */
 elgg.security.refreshToken = function() {
@@ -62,7 +62,7 @@ elgg.security.addToken = function(data) {
 		var parts = elgg.parse_url(data),
 			args = {},
 			base = '';
-		
+
 		if (parts['host'] === undefined) {
 			if (data.indexOf('?') === 0) {
 				// query string

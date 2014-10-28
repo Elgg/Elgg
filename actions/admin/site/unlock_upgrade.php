@@ -1,6 +1,6 @@
 <?php
 /**
- * Unlocks the upgrade script 
+ * Unlocks the upgrade script
  */
 
 $upgrader = new Elgg_UpgradeService();

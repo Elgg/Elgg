@@ -133,7 +133,7 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	// if image, we need to create thumbnails (this should be moved into a function)
 	if ($guid && $file->simpletype == "image") {
 		$file->icontime = time();
-		
+
 		$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 60, 60, true);
 		if ($thumbnail) {
 			$thumb = new ElggFile();
@@ -170,17 +170,17 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	} elseif ($file->icontime) {
 		// if it is not an image, we do not need thumbnails
 		unset($file->icontime);
-		
+
 		$thumb = new ElggFile();
-		
+
 		$thumb->setFilename($prefix . "thumb" . $filestorename);
 		$thumb->delete();
 		unset($file->thumbnail);
-		
+
 		$thumb->setFilename($prefix . "smallthumb" . $filestorename);
 		$thumb->delete();
 		unset($file->smallthumb);
-		
+
 		$thumb->setFilename($prefix . "largethumb" . $filestorename);
 		$thumb->delete();
 		unset($file->largethumb);

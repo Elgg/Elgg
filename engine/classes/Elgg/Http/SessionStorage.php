@@ -27,7 +27,7 @@
  * Interface for session storage
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Http
  */
@@ -168,7 +168,7 @@ interface Elgg_Http_SessionStorage {
 
 	/**
 	 * Clears all attributes.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function clear();

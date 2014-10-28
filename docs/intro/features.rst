@@ -27,7 +27,7 @@ For admins
  * Responsive, mobile-friendly design
  * RSS support
  * Activity stream
- * Plugins for common content types like blogs, bookmarks, files, microblogging, private messages, documents, message boards, discussion 
+ * Plugins for common content types like blogs, bookmarks, files, microblogging, private messages, documents, message boards, discussion
  * User authentication and administration
 
 If you need more functionality than what Elgg offers out-of-the-box there are a couple of options:

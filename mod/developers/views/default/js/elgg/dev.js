@@ -12,10 +12,10 @@ define(function(require) {
 	 * @param {Object} event
 	 */
 	var inspectSubmit = function(event) {
-	
+
 		$("#developers-inspect-results").hide();
 		$("#developers-ajax-loader").show();
-		
+
 		$(this).ajaxSubmit({
 			dataType : 'json',
 			success  : function(response) {
@@ -31,7 +31,7 @@ define(function(require) {
 				}
 			}
 		});
-	
+
 		event.preventDefault();
 	};
 

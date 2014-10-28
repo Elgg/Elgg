@@ -11,7 +11,7 @@
  * @subpackage DataModel.Extender
  * @see        ElggAnnotation
  * @see        ElggMetadata
- * 
+ *
  * @property string $type         annotation or metadata (read-only after save)
  * @property int    $id           The unique identifier (read-only)
  * @property int    $entity_guid  The GUID of the entity that this extender describes
@@ -59,7 +59,7 @@ abstract class ElggExtender extends ElggData {
 
 	/**
 	 * Set the value of the extender
-	 * 
+	 *
 	 * @param mixed  $value      The value being set
 	 * @param string $value_type The type of the : 'integer' or 'text'
 	 * @return void

@@ -20,5 +20,5 @@ $q2 = <<<Q2
 	SET rv.enabled = 'no'
 	WHERE (se.enabled = 'no' OR te.enabled = 'no' OR oe.enabled = 'no');
 Q2;
-		
+
 update_data($q2);

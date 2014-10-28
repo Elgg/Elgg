@@ -314,7 +314,7 @@ function elgg_normalize_url($url) {
 		// '//example.com' (Shortcut for protocol.)
 		// '?query=test', #target
 		return $url;
-	
+
 	} elseif (stripos($url, 'javascript:') === 0 || stripos($url, 'mailto:') === 0) {
 		// 'javascript:' and 'mailto:'
 		// Not covered in FILTER_VALIDATE_URL
@@ -356,7 +356,7 @@ function elgg_get_friendly_title($title) {
 
 	// titles are often stored HTML encoded
 	$title = html_entity_decode($title, ENT_QUOTES, 'UTF-8');
-	
+
 	$title = Elgg_Translit::urlize($title);
 
 	return $title;
@@ -374,7 +374,7 @@ function elgg_get_friendly_title($title) {
  * @since 1.7.2
  */
 function elgg_get_friendly_time($time, $current_time = null) {
-	
+
 	if (!$current_time) {
 		$current_time = time();
 	}
@@ -395,7 +395,7 @@ function elgg_get_friendly_time($time, $current_time = null) {
 	if ($diff < $minute) {
 		return elgg_echo("friendlytime:justnow");
 	}
-	
+
 	if ($diff < $hour) {
 		$granularity = ':minutes';
 		$diff = round($diff / $minute);
@@ -410,7 +410,7 @@ function elgg_get_friendly_time($time, $current_time = null) {
 	if ($diff == 0) {
 		$diff = 1;
 	}
-	
+
 	$future = ((int)$current_time - (int)$time < 0) ? ':future' : '';
 	$singular = ($diff == 1) ? ':singular' : '';
 
@@ -427,11 +427,11 @@ function elgg_get_friendly_upload_error($error_code) {
 	switch ($error_code) {
 		case UPLOAD_ERR_OK:
 			return '';
-			
+
 		case UPLOAD_ERR_INI_SIZE:
 			$key = 'ini_size';
 			break;
-		
+
 		case UPLOAD_ERR_FORM_SIZE:
 			$key = 'form_size';
 			break;
@@ -455,7 +455,7 @@ function elgg_get_friendly_upload_error($error_code) {
 		case UPLOAD_ERR_EXTENSION:
 			$key = 'extension';
 			break;
-		
+
 		default:
 			$key = 'unknown';
 			break;
@@ -529,7 +529,7 @@ function _elgg_html_decode($string) {
 
 /**
  * Prepares query string for output to prevent CSRF attacks.
- * 
+ *
  * @param string $string
  * @return string
  *

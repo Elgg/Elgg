@@ -39,7 +39,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 	}
 
 	public function testCreateGetDeleteACL() {
-		
+
 		$acl_name = 'test access collection';
 		$acl_id = create_access_collection($acl_name);
 
@@ -165,7 +165,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 			'acl_id' => $acl_id,
 			'user' => $this->user
 		);
-		
+
 		function test_acl_access_hook($hook, $type, $value, $params) {
 			global $acl_test_info;
 			if ($params['user_id'] == $acl_test_info['user']->guid) {
@@ -196,7 +196,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 		if (!elgg_is_active_plugin('groups')) {
 			return;
 		}
-		
+
 		$group = new ElggGroup();
 		$group->name = 'Test group';
 		$group->save();
@@ -207,7 +207,7 @@ class ElggCoreAccessCollectionsTest extends ElggCoreUnitTest {
 
 		// removing group and acl
 		$this->assertTrue($group->delete());
-		
+
 		$acl = get_access_collection($group->group_acl);
 		$this->assertFalse($acl);
 

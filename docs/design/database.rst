@@ -30,7 +30,7 @@ You can extend entities with extra information in two ways:
    For example, tags, an ISBN number, a file location, or
    source language is metadata.
 ``Annotations``: This is information about the entity, usually
-   added by a third party after the entity is created. 
+   added by a third party after the entity is created.
    For example, ratings, likes, and votes are annotations.
    (Comments were before 1.9.)
 

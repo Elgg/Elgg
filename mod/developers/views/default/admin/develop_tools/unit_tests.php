@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg unit and integration tests
- * 
+ *
  */
 
 echo '<p>' . elgg_echo('developers:unit_tests:description') . '</p>';

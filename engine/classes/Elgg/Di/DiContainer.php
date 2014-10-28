@@ -20,7 +20,7 @@
  * </code>
  *
  * @access private
- * 
+ *
  * @package Elgg.Core
  * @since   1.9
  */
@@ -65,7 +65,7 @@ class Elgg_Di_DiContainer {
 
 	/**
 	 * Build a value
-	 * 
+	 *
 	 * @param mixed  $factory The factory for the value
 	 * @param string $name    The name of the value
 	 * @return mixed
@@ -143,7 +143,7 @@ class Elgg_Di_DiContainer {
 
 	/**
 	 * Remove a value from the container
-	 * 
+	 *
 	 * @param string $name The name of the value
 	 * @return Elgg_Di_DiContainer
 	 */
@@ -155,7 +155,7 @@ class Elgg_Di_DiContainer {
 
 	/**
 	 * Does the container have this value
-	 * 
+	 *
 	 * @param string $name The name of the value
 	 * @return bool
 	 */

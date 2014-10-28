@@ -342,7 +342,7 @@ a.elgg-maintenance-mode-warning {
 }
 .elgg-module-popup {
 	background-color: white;
-	border: 1px solid #ccc;	
+	border: 1px solid #ccc;
 	z-index: 9999;
 	margin-bottom: 0;
 	padding: 5px;
@@ -1331,17 +1331,17 @@ a.elgg-widget-collapsed:before {
 .elgg-avatar-tiny > a > img {
 	width: 25px;
 	height: 25px;
-	
+
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 3px;
-	
+
 	background-clip:  border;
 	background-size: 25px;
 }
 .elgg-avatar-small > a > img {
 	width: 40px;
 	height: 40px;
-	
+
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 5px;
 	background-clip:  border;

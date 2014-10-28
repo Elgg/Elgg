@@ -31,6 +31,6 @@ class ElggExtenderTest extends PHPUnit_Framework_TestCase {
 		$obj = $this->getMockForAbstractClass('ElggExtender');
 		$obj->setValue('36', 'integer');
 		$this->assertSame(36, $obj->value);
-		$this->assertEquals('integer', $obj->value_type);		
+		$this->assertEquals('integer', $obj->value_type);
 	}
 }

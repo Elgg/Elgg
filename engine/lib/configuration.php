@@ -192,7 +192,7 @@ $DATALIST_CACHE = array();
 
 /**
  * Get the value of a datalist element.
- * 
+ *
  * Plugin authors should use elgg_get_config() and pass null for the site GUID.
  *
  * @internal Datalists are stored in the datalist table.
@@ -251,12 +251,12 @@ function datalist_get($name) {
 
 /**
  * Set the value for a datalist element.
- * 
+ *
  * Plugin authors should use elgg_save_config() and pass null for the site GUID.
- * 
+ *
  * @warning Names should be selected so as not to collide with the names for the
  * site config.
- * 
+ *
  * @warning Values set through datalist_set() are not available in $CONFIG until
  * next page load.
  *
@@ -350,7 +350,7 @@ function run_function_once($functionname, $timelastupdatedcheck = 0) {
 /**
  * Removes a config setting.
  *
- * @internal These settings are stored in the dbprefix_config table and read 
+ * @internal These settings are stored in the dbprefix_config table and read
  * during system boot into $CONFIG.
  *
  * @param string $name      The name of the field.
@@ -383,17 +383,17 @@ function unset_config($name, $site_guid = 0) {
 
 /**
  * Add or update a config setting.
- * 
+ *
  * Plugin authors should use elgg_set_config().
  *
  * If the config name already exists, it will be updated to the new value.
  *
  * @warning Names should be selected so as not to collide with the names for the
  * datalist (application configuration)
- * 
- * @internal These settings are stored in the dbprefix_config table and read 
+ *
+ * @internal These settings are stored in the dbprefix_config table and read
  * during system boot into $CONFIG.
- * 
+ *
  * @internal The value is serialized so we maintain type information.
  *
  * @param string $name      The name of the configuration value
@@ -436,10 +436,10 @@ function set_config($name, $value, $site_guid = 0) {
 
 /**
  * Gets a configuration value
- * 
+ *
  * Plugin authors should use elgg_get_config().
  *
- * @internal These settings are stored in the dbprefix_config table and read 
+ * @internal These settings are stored in the dbprefix_config table and read
  * during system boot into $CONFIG.
  *
  * @param string $name      The name of the config value
@@ -540,12 +540,12 @@ function _elgg_get_all_config($site_guid = 0) {
 /**
  * Loads configuration related to this site
  *
- * This runs on engine boot and loads from the config database table and the 
+ * This runs on engine boot and loads from the config database table and the
  * site entity. It runs after the application configuration is loaded by
  * _elgg_load_application_config().
- * 
+ *
  * @see _elgg_engine_boot()
- * 
+ *
  * @access private
  */
 function _elgg_load_site_config() {
@@ -578,9 +578,9 @@ function _elgg_load_site_config() {
  * Loads configuration related to Elgg as an application
  *
  * This runs on the engine boot and loads from the datalists database table.
- * 
+ *
  * @see _elgg_engine_boot()
- * 
+ *
  * @access private
  */
 function _elgg_load_application_config() {

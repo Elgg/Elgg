@@ -3,7 +3,7 @@
  * Groups latest activity
  *
  * @todo add people joining group to activity
- * 
+ *
  * @package Groups
  */
 

@@ -464,7 +464,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, $head_params);
 
 	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
-	
+
 	// check for deprecated view
 	if ($page_shell == 'default' && elgg_view_exists('pageshells/pageshell')) {
 		elgg_deprecated_notice("pageshells/pageshell is deprecated by page/$page_shell", 1.8);
@@ -507,12 +507,12 @@ function _elgg_views_prepare_head($title) {
 		'name' => 'description',
 		'content' => elgg_get_config('sitedescription')
 	);
-	
+
 	// https://developer.chrome.com/multidevice/android/installtohomescreen
 	$data['metas'][] = array(
 		'name' => 'viewport',
 		'content' => 'width=device-width',
-	);    
+	);
 	$data['metas'][] = array(
 		'name' => 'mobile-web-app-capable',
 		'content' => 'yes',
@@ -1050,9 +1050,9 @@ function elgg_view_annotation_list($annotations, array $vars = array()) {
 		'full_view' => true,
 		'offset_key' => 'annoff',
 	);
-	
+
 	$vars = array_merge($defaults, $vars);
-	
+
 	if (!$vars["limit"] && !$vars["offset"]) {
 		// no need for pagination if listing is unlimited
 		$vars["pagination"] = false;
@@ -1372,9 +1372,9 @@ function elgg_view_icon($name, $class = '') {
 		elgg_deprecated_notice("Using a boolean to float the icon is deprecated. Use the class float.", 1.9);
 		$class = 'float';
 	}
-	
+
 	$icon_class = array("elgg-icon-$name" , $class);
-	
+
 	return elgg_view("output/icon", array("class" => $icon_class));
 }
 

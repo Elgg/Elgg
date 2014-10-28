@@ -183,9 +183,9 @@ function _elgg_generate_plugin_entities() {
 
 /**
  * Cache a reference to this plugin by its ID
- * 
+ *
  * @param ElggPlugin $plugin
- * 
+ *
  * @access private
  */
 function _elgg_cache_plugin_by_id(ElggPlugin $plugin) {
@@ -561,7 +561,7 @@ function _elgg_get_plugins_provides($type = null, $name = null) {
 	global $ELGG_PLUGINS_PROVIDES_CACHE;
 	if (!isset($ELGG_PLUGINS_PROVIDES_CACHE)) {
 		$active_plugins = elgg_get_plugins('active');
-	
+
 		$provides = array();
 
 		foreach ($active_plugins as $plugin) {
@@ -579,10 +579,10 @@ function _elgg_get_plugins_provides($type = null, $name = null) {
 				}
 			}
 		}
-		
+
 		$ELGG_PLUGINS_PROVIDES_CACHE = $provides;
 	}
-	
+
 	if ($type && $name) {
 		if (isset($ELGG_PLUGINS_PROVIDES_CACHE[$type][$name])) {
 			return $ELGG_PLUGINS_PROVIDES_CACHE[$type][$name];
@@ -602,7 +602,7 @@ function _elgg_get_plugins_provides($type = null, $name = null) {
 
 /**
  * Deletes all cached data on plugins being provided.
- * 
+ *
  * @return boolean
  * @since 1.9.0
  * @access private
@@ -722,7 +722,7 @@ function _elgg_get_plugin_dependency_strings($dep) {
 			$strings['local_value'] = $dep['value'];
 			$strings['comment'] = '';
 			break;
-		
+
 		case 'php_extension':
 			// PHP Extension %s [version]
 			$strings['name'] = elgg_echo('ElggPlugin:Dependencies:PhpExtension', array($info['name']));

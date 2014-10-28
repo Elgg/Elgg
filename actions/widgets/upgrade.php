@@ -4,7 +4,7 @@
  *
  * Pre-1.8, default widgets were stored as metadata on a defaultwidgets object.
  * Now they are stored as widget objects owned by the site.
- * 
+ *
  * @package Elgg.Core
  * @subpackage Widgets.Management
  */

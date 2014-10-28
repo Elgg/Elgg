@@ -7,7 +7,7 @@
  * @uses $vars['id']            Optional id for the div
  * @uses $vars['class']         Optional additional class for the div
  * @uses $vars['limit']         Optional limit value (default is 25)
- * 
+ *
  * @todo look into restructuring this so we are not calling elgg_list_entities()
  * in this view
  */

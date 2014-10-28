@@ -4,13 +4,13 @@
  * This is an optional script used to override Elgg's default handling of
  * uncaught exceptions.
  * This is defined in the global $CONFIG->exception_include in settings.php
- * 
+ *
  * The script will have access to the following variables as part of the scope
  * global $CONFIG
  * $exception - the unhandled exception
- * 
+ *
  * @warning - the database may not be available
- * 
+ *
  */
 
 // notify some important people that a problem has occurred
@@ -24,7 +24,7 @@ $emails = array(
 $url = $_SERVER['HTTP_HOST'] . $_SERVER['REQUEST_URI'];
 $subject = "Exception: $url";
 $message = $exception->getMessage();
-		
+
 foreach ($emails as $email) {
 	mail($email, $subject, $message);
 }

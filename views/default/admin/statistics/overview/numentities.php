@@ -2,7 +2,7 @@
 // Get entity statistics
 $entity_stats = get_entity_statistics();
 $even_odd = "";
-?>		
+?>
 <table class="elgg-table-alt">
 <?php
 foreach ($entity_stats as $k => $entry) {
@@ -27,7 +27,7 @@ foreach ($entity_stats as $k => $entry) {
 				$a = "$k $a";
 			}
 		}
-		
+
 		echo <<< END
 			<tr class="{$even_odd}">
 				<td>{$a}:</td>

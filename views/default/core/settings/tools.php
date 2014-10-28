@@ -23,9 +23,9 @@ $count = count($installed_plugins);
 foreach ($installed_plugins as $plugin) {
 	$plugin_id = $plugin->getID();
 	if ($plugin->isActive()) {
-		if (elgg_view_exists("usersettings/$plugin_id/edit") 
+		if (elgg_view_exists("usersettings/$plugin_id/edit")
 			|| elgg_view_exists("plugins/$plugin_id/usersettings")) {
-	
+
 			$title = $plugin->getManifest()->getName();
 			$body = elgg_view_form('plugins/usersettings/save', array(), array('entity' => $plugin));
 			echo elgg_view_module('info', $title, $body);

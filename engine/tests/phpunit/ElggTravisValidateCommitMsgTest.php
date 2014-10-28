@@ -10,7 +10,7 @@ class ElggTravisValidateCommitMsgTest extends ElggCommitMessageGitHookTest {
 		parent::setUp();
 
 		$this->travisScript = $this->scriptsDir . 'travis/check_commit_msgs.sh';
-		
+
 		$this->markTestSkipped('Testing against particular SHAs is too flaky.');
 	}
 

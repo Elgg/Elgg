@@ -1,8 +1,8 @@
 ## DISCLAIMERS
 
  * **SECURITY ISSUES SHOULD BE REPORTED TO security @ elgg . org!** Please do not post any security issues on github.
- * Support requests belong on the [Community site][2]. Tickets with support requests will be closed. 
- * We cannot make any guarantees as to when your ticket will be resolved or your PR merged. 
+ * Support requests belong on the [Community site][2]. Tickets with support requests will be closed.
+ * We cannot make any guarantees as to when your ticket will be resolved or your PR merged.
 
 ## Pull requests
 
@@ -62,5 +62,5 @@ Good feature request checklist:
  [4]: http://en.wikipedia.org/wiki/MIT_License
  [6]: https://github.com/Elgg/Elgg/issues/new
  [7]: http://docs.elgg.org/wiki/Development/Contributing/Patches
- [8]: http://docs.elgg.org/wiki/Plugin_development  
+ [8]: http://docs.elgg.org/wiki/Plugin_development
  [9]: https://github.com/Elgg/Elgg/tree/master/docs/coding_standards

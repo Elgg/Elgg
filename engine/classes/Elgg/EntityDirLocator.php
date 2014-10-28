@@ -9,7 +9,7 @@
  *       being used directly.
  *
  * @access private
- * 
+ *
  * @package Elgg.Core
  */
 class Elgg_EntityDirLocator {
@@ -21,7 +21,7 @@ class Elgg_EntityDirLocator {
 
 	/**
 	 * Find an entity's data dir.
-	 * 
+	 *
 	 * @param int $guid GUID of the entity.
 	 *
 	 * @throws InvalidArgumentException
@@ -36,7 +36,7 @@ class Elgg_EntityDirLocator {
 
 		$this->guid = $guid;
 	}
-	
+
 	/**
 	 * Construct a file path matrix for an entity.
 	 * As of 1.9.0 matrixes are based on GUIDs and separated into dirs of 5000 entries

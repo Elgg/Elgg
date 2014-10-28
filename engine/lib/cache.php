@@ -139,9 +139,9 @@ function elgg_register_simplecache_view($view_name) {
 
 /**
  * Get the URL for the cached file
- * 
+ *
  * This automatically registers the view with Elgg's simplecache.
- * 
+ *
  * @example
  * 		$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
  *		elgg_register_js('elgg.blog', $blog_js);
@@ -165,7 +165,7 @@ function elgg_get_simplecache_url($type, $view) {
 
 /**
  * Get the base url for simple cache requests
- * 
+ *
  * @return string The simplecache root url for the current viewtype.
  * @access private
  */
@@ -183,14 +183,14 @@ function _elgg_get_simplecache_root() {
 
 /**
  * Returns the type of output expected from the view.
- * 
+ *
  * css/* views always return "css"
  * js/* views always return "js"
  *
  * @todo why isn't this in the CacheHandler class? It is not used anywhere else.
- * 
+ *
  * @todo view/name.suffix returns "suffix"
- * 
+ *
  * Otherwise, returns "unknown"
  *
  * @param string $view The view name
@@ -256,7 +256,7 @@ function elgg_disable_simplecache() {
  */
 function _elgg_rmdir($dir) {
 	$files = array_diff(scandir($dir), array('.', '..'));
-	
+
 	foreach ($files as $file) {
 		if (is_dir("$dir/$file")) {
 			_elgg_rmdir("$dir/$file");
@@ -264,7 +264,7 @@ function _elgg_rmdir($dir) {
 			unlink("$dir/$file");
 		}
 	}
-	
+
 	return rmdir($dir);
 }
 
@@ -294,7 +294,7 @@ function elgg_invalidate_simplecache() {
 
 /**
  * Loads the system cache during engine boot
- * 
+ *
  * @see elgg_reset_system_cache()
  * @access private
  */
@@ -309,7 +309,7 @@ function _elgg_load_cache() {
 		return;
 	}
 	$CONFIG->views->locations = unserialize($data);
-	
+
 	$data = elgg_load_system_cache('view_types');
 	if (!is_string($data)) {
 		return;
@@ -322,7 +322,7 @@ function _elgg_load_cache() {
 /**
  * Initializes the simplecache lastcache variable and creates system cache files
  * when appropriate.
- * 
+ *
  * @access private
  */
 function _elgg_cache_init() {

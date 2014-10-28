@@ -97,7 +97,7 @@ elgg.comments.Comment.prototype = {
 
 /**
  * Initialize comment inline editing
- * 
+ *
  * @return void
  */
 elgg.comments.init = function() {

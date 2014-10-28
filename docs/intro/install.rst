@@ -65,7 +65,7 @@ selecting 'properties' or 'Get Info'.
 
 .. note::
 
-   Directories must be executable to be read and written to. The 
+   Directories must be executable to be read and written to. The
    suggested permissions depend upon the exact server and user
    configuration. If the data directory is owned by the web server
    user, the recommended permissions are 770.
@@ -122,7 +122,7 @@ Other Configurations
 
 Lighttpd
 --------
-Have you installed Elgg on a server running lighttpd? 
+Have you installed Elgg on a server running lighttpd?
 We are looking for someone to share any configuration
 and installation steps involved in setting this up.
 
@@ -185,7 +185,7 @@ XAMPP
 These intructions are provided in case you want to test your Elgg
 installation on your local computer running Windows.
 
--  Download and install XAMPP to your computer from 
+-  Download and install XAMPP to your computer from
    http://www.apachefriends.org/en/xampp.html
 -  Once the installation is completed, it will prompt you to start the
    XAMPP controller panel. Leave it for now.
@@ -241,7 +241,7 @@ EasyPHP
 
 2. Download and install the latest Easy PHP from http://www.easyphp.org (16MB download)
 
-3. Set up the database and point the web server to your Elgg folder (all done from the EasyPHP tray icon) 
+3. Set up the database and point the web server to your Elgg folder (all done from the EasyPHP tray icon)
    -  Right click EasyPHP tray icon, select "Administration"
    -  A new tab is created in your browser for managing Easy PHP
    -  Add your Elgg folder to Apache in "Alias" section
@@ -253,7 +253,7 @@ EasyPHP
      #LoadModule rewrite_module modules/mod_rewrite.so
 
 5. (Ignore this step for v5.3 or later) Change ``AllowOverride None`` to ``AllowOverride All``
-   in the relevant directory entry in Configuration/Apache 
+   in the relevant directory entry in Configuration/Apache
 
 6. (Ignore this step for v5.3 or later) From the tray icon fo Configuration/PHP
    and uncomment this line::
@@ -371,7 +371,7 @@ this page to them.
 The ``.htaccess``, if not generated automatically (that happens when you
 have problem with ``mod_rewrite``), you can create it by renaming
 ``htaccess_dist`` file you find with elgg package to ``.htaccess``. Also
-if you find a ``.htaccess`` file inside the installation path, but you 
+if you find a ``.htaccess`` file inside the installation path, but you
 are still getting 404 error, make sure the contents of ``.htaccess`` are
 same as that of ``htaccess_dist``.
 
@@ -395,7 +395,7 @@ reads:
 
 ``AllowOverride all``
 
-This will tell Apache to pick up the ``mod_rewrite`` rules from 
+This will tell Apache to pick up the ``mod_rewrite`` rules from
 ``.htaccess``.
 
 **Elgg is not installed in the root of your web directory (ex:
@@ -536,7 +536,7 @@ have broken something else. Try doing a clean install:
 -  delete the Elgg source files
 -  start over
 
-If that fails, seek the help of the `Elgg community`_. 
+If that fails, seek the help of the `Elgg community`_.
 Be sure to mention what version of Elgg you are installing, details of
 your server platform, and any error messages that you may have received
 including ones in the error log of your server.

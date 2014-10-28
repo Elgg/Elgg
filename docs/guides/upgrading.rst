@@ -442,7 +442,7 @@ Use standardized page handlers and scripts
 The ``object/:subtype`` view
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Make sure there are views for ``$vars['full_view'] == true`` and ``$vars['full_view'] == false``. ``$vars['full_view']`` replaced ``$vars['full]``.
-* Check for the object in ``$vars['entity']``. Use ``elgg_instance_of()`` to make sure it's the type of entity you want. 
+* Check for the object in ``$vars['entity']``. Use ``elgg_instance_of()`` to make sure it's the type of entity you want.
 * Return ``true`` to short circuit the view if the entity is missing or wrong.
 * Use ``elgg_view(‘object/elements/summary’, array(‘entity’ => $entity));`` and ``elgg_view_menu(‘entity’, array(‘entity’ => $entity));`` to help format. You should use very little markup in these views.
 

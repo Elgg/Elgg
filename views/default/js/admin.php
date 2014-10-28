@@ -157,7 +157,7 @@ elgg.admin.moveProfileField = function(e, ui) {
 elgg.admin.deleteNotice = function(e) {
 	e.preventDefault();
 	var $container = $(this).closest('p');
-	
+
 	elgg.action($(this).attr('href'), {
 		success: function(json) {
 			$container.slideUp('medium');

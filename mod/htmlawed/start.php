@@ -18,7 +18,7 @@ function htmlawed_init() {
 
 	$lib = elgg_get_plugins_path() . "htmlawed/vendors/htmLawed/htmLawed.php";
 	elgg_register_library('htmlawed', $lib);
-	
+
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'htmlawed_test');
 }
 
@@ -84,7 +84,7 @@ function htmLawedArray(&$v, $k, $htmlawed_config) {
 
 /**
  * Post processor for tags in htmlawed
- * 
+ *
  * This runs after htmlawed has filtered. It runs for each tag and filters out
  * style attributes we don't want.
  *

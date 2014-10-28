@@ -27,7 +27,7 @@ if (isset($vars['class'])) {
 			echo elgg_view('page/elements/sidebar_alt', $vars);
 		?>
 	</div>
-	
+
 	<div class="elgg-main elgg-body">
 		<?php
 			echo elgg_extract('nav', $vars, elgg_view('navigation/breadcrumbs'));
@@ -35,7 +35,7 @@ if (isset($vars['class'])) {
 			echo elgg_view('page/layouts/elements/header', $vars);
 
 			echo $vars['content'];
-			
+
 			// @deprecated 1.8
 			if (isset($vars['area1'])) {
 				echo $vars['area1'];

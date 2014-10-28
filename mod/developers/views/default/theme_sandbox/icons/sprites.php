@@ -1,4 +1,4 @@
-<?php 
+<?php
 $icons = array(
 	'arrow-left',
 	'arrow-right',

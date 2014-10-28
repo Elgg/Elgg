@@ -13,7 +13,7 @@ foreach ($variables as $name => $params) {
 	$label = elgg_echo("install:$type:label:$name");
 	$help = elgg_echo("install:$type:help:$name");
 	$params['name'] = $name;
-	
+
 	$input = elgg_view("input/{$params['type']}", $params);
 
 	$field = <<<FIELD

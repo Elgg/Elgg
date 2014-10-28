@@ -19,7 +19,7 @@ function legacy_urls_init() {
 
 /**
  * Redirect the requestor to the new URL
- * 
+ *
  * @param string $url Relative or absolute URL
  */
 function legacy_urls_redirect($url) {
@@ -53,7 +53,7 @@ function legacy_urls_redirect($url) {
 
 /**
  * Adds query parameters to URL for redirect
- * 
+ *
  * @param string $url        The URL
  * @param array  $query_vars Additional query parameters in associate array
  * @return string
@@ -67,7 +67,7 @@ function legacy_urls_prepare_url($url, array $query_vars = array()) {
 	}
 	$params = array_merge($params, $query_vars);
 	if ($params) {
-		return elgg_http_add_url_query_elements($url, $params);		
+		return elgg_http_add_url_query_elements($url, $params);
 	} else {
 		return $url;
 	}
@@ -92,7 +92,7 @@ function legacy_urls_pg_handler($segments) {
 
 /**
  * blog forwarder
- * 
+ *
  * 1.0-1.7.5
  * Group blogs page: /blog/group:<container_guid>/
  * Group blog view:  /blog/group:<container_guid>/read/<guid>/<title>
@@ -130,7 +130,7 @@ function legacy_urls_blog_forward($hook, $type, $result) {
 	if ($page[0] == "read") {
 		$url = "blog/view/{$page[1]}/";
 		legacy_urls_redirect(legacy_urls_prepare_url($url));
-		return false;		
+		return false;
 	}
 
 	// user usernames
@@ -197,7 +197,7 @@ function legacy_urls_bookmarks_forward($hook, $type, $result) {
 	if ($page[0] == "read") {
 		$url = "bookmarks/view/{$page[1]}/";
 		legacy_urls_redirect(legacy_urls_prepare_url($url));
-		return false;		
+		return false;
 	}
 
 	$user = get_user_by_username($page[0]);
@@ -276,7 +276,7 @@ function legacy_urls_groups_forward($hook, $type, $result) {
 
 /**
  * group forum forwarder
- * 
+ *
  */
 function legacy_urls_forum_handler($page) {
 	switch ($page[0]) {

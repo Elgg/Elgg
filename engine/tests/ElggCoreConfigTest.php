@@ -172,6 +172,6 @@ class ElggCoreConfigTest extends ElggCoreUnitTest {
 		$value = 'test';
 		$this->assertTrue(elgg_save_config($name, $value, 17));
 		$this->assertIdentical($value, elgg_get_config($name, 17));
-		$this->assertTrue(unset_config($name, 17));		
-	} 
+		$this->assertTrue(unset_config($name, 17));
+	}
 }

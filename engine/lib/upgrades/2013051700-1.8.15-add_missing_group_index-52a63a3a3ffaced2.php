@@ -20,7 +20,7 @@ if ($results) {
 }
 
 if ($full_text_index_exists == false) {
-	$query = "ALTER TABLE {$db_prefix}groups_entity 
+	$query = "ALTER TABLE {$db_prefix}groups_entity
 		ADD FULLTEXT name_2 (name, description)";
 	if (!update_data($query)) {
 		elgg_log("Failed to add full text index to groups_entity table", 'ERROR');

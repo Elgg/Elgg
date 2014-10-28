@@ -27,7 +27,7 @@
  */
 
 /**
- * Get the admin users 
+ * Get the admin users
  *
  * @param array $options Options array, @see elgg_get_entities() for parameters
  *
@@ -333,7 +333,7 @@ function _elgg_admin_init() {
 		'priority' => 10,
 		'section' => 'configure'
 	));
-	
+
 	// plugins
 	elgg_register_menu_item('page', array(
 		'name' => 'plugins',
@@ -375,7 +375,7 @@ function _elgg_admin_init() {
 			'section' => 'alt',
 		));
 	}
-			
+
 	// widgets
 	$widgets = array('online_users', 'new_users', 'content_stats', 'banned_users', 'admin_welcome', 'control_panel');
 	foreach ($widgets as $widget) {
@@ -541,7 +541,7 @@ function _elgg_admin_page_handler($page) {
 
 	// special page for plugin settings since we create the form for them
 	if ($page[0] == 'plugin_settings') {
-		if (isset($page[1]) && (elgg_view_exists("settings/{$page[1]}/edit") || 
+		if (isset($page[1]) && (elgg_view_exists("settings/{$page[1]}/edit") ||
 			elgg_view_exists("plugins/{$page[1]}/settings"))) {
 
 			$view = 'admin/plugin_settings';
@@ -685,7 +685,7 @@ function _elgg_admin_markdown_page_handler($pages) {
 		'content' => '<div class="elgg-markdown">' . $text . '</div>',
 		'title' => $title
 	));
-	
+
 	echo elgg_view_page($title, $body, 'admin');
 	return true;
 }
@@ -735,7 +735,7 @@ function _elgg_admin_maintenance_allow_url($current_url) {
 
 /**
  * Handle requests when in maintenance mode
- * 
+ *
  * @access private
  */
 function _elgg_admin_maintenance_handler($hook, $type, $info) {
@@ -788,16 +788,16 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
 
 	if ($type == 'login') {
 		$username = get_input('username');
-		
+
 		$user = get_user_by_username($username);
-		
+
 		if (!$user) {
 			$users = get_user_by_email($username);
 			if ($users) {
 				$user = $users[0];
 			}
 		}
-		
+
 		if ($user && $user->isAdmin()) {
 			return true;
 		}
@@ -835,7 +835,7 @@ function _elgg_add_admin_widgets($event, $type, $user) {
 		1 => array('control_panel', 'admin_welcome'),
 		2 => array('online_users', 'new_users', 'content_stats'),
 	);
-	
+
 	foreach ($adminWidgets as $column => $handlers) {
 		foreach ($handlers as $position => $handler) {
 			$guid = elgg_create_widget($user->getGUID(), $handler, 'admin');

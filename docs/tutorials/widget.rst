@@ -3,7 +3,7 @@ Basic Widget
 
 Create a widget that will display “Hello, World!” and optionally any text the user wants.
 
-In Elgg, widgets are those components that you can drag onto your profile or admin dashboard. 
+In Elgg, widgets are those components that you can drag onto your profile or admin dashboard.
 
 This tutorial assumes you are familiar with basic Elgg concepts such as:
 
@@ -63,11 +63,11 @@ Edit ``/mod/hello/start.php``. In it add these lines:
 
     <?php
     
-    function hello_init() {        
+    function hello_init() {
         elgg_register_widget_type('helloworld', 'Hello, world!', 'The "Hello, world!" widget');
     }
         
-    elgg_register_event_handler('init', 'system', 'hello_init');       
+    elgg_register_event_handler('init', 'system', 'hello_init');
 
 Now go to your profile page using a web browser and add the “hello, world” widget.
 It should display “Hello, world!”.
@@ -83,7 +83,7 @@ Click on the edit link on the toolbar of the widget that you've created.
 You will notice that the only control it gives you by default is over
 access (over who can see the widget).
 
-Suppose you want to allow the user to control what greeting is displayed in the widget. 
+Suppose you want to allow the user to control what greeting is displayed in the widget.
 Just as Elgg automatically loads ``content.php`` when viewing a widget,
 it loads ``edit.php`` when a user attempts to edit a widget.
 In ``/mod/hello/views/default/widgets/helloworld/``, create a file named ``edit.php``.
@@ -92,22 +92,22 @@ In this file, add the following code:
 .. code:: php
 
     <div>
-        <label>Message:</label> 
-        <?php 
+        <label>Message:</label>
+        <?php
             //This is an instance of the ElggWidget class that represents our widget.
             $widget = $vars['entity'];
     
             // Give the user a plain text box to input a message
             echo elgg_view('input/text', array(
-                'name' => 'params[message]', 
+                'name' => 'params[message]',
                 'value' => $widget->message,
                 'class' => 'hello-input-text',
-            )); 
+            ));
         ?>
     </div>
 
 Notice the relationship between the values passed to the 'name' and the
-'value' fields of input/text. 
+'value' fields of input/text.
 The name of the input text box is ``params[message]``
 because Elgg will automatically handle widget variables put in the array ``params``.
 The actual php variable name will be ``message``.
@@ -123,11 +123,11 @@ Edit content.php and change it to:
 
 .. code:: php
 
-    <?php 
+    <?php
     
     $widget = $vars['entity'];
     
     // Always use the corresponding output/* view for security!
-    echo elgg_view('output/text', array('value' => $widget->message)); 
+    echo elgg_view('output/text', array('value' => $widget->message));
 
 You should now be able to enter a message in the text box and see it appear in the widget.

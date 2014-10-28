@@ -65,7 +65,7 @@ foreach ($profile_fields as $shortname => $valuetype) {
 		)));
 		forward(REFERER);
 	}
-	
+
 	$input[$shortname] = $value;
 }
 
@@ -89,11 +89,11 @@ if (sizeof($input) > 0) {
 			'limit' => false
 		);
 		elgg_delete_metadata($options);
-		
+
 		if (!is_null($value) && ($value !== '')) {
 			// only create metadata for non empty values (0 is allowed) to prevent metadata records
 			// with empty string values #4858
-			
+
 			if (isset($accesslevel[$shortname])) {
 				$access_id = (int) $accesslevel[$shortname];
 			} else {

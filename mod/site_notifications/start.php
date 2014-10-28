@@ -1,7 +1,7 @@
 <?php
 /**
  * Site notifications
- * 
+ *
  * @todo check for notifications when setting topbar icon
  * @todo add a remove visible and all notifications button
  */
@@ -28,9 +28,9 @@ function site_notifications_init() {
 
 /**
  * Page handler
- * 
+ *
  * /site_notifications/view/<username>
- * 
+ *
  * @param array $segments URL segments
  * @return boolean
  */
@@ -67,13 +67,13 @@ function site_notifications_set_topbar() {
 			'text' => elgg_view_icon('info') . elgg_echo('site_notifications:topbar'),
 			'priority' => 150,
 			'section' => 'alt',
-		));	
+		));
 	}
 }
 
 /**
  * Create a site notification
- * 
+ *
  * @param string $hook   Hook name
  * @param string $type   Hook type
  * @param bool   $result Has the notification been sent

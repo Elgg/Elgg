@@ -19,7 +19,7 @@ class ElggCommitMessageGitHookTest extends PHPUnit_Framework_TestCase {
 
 		parent::setUp();
 	}
-	
+
 	/**
 	 * Test failures for missing input
 	 */
@@ -29,13 +29,13 @@ class ElggCommitMessageGitHookTest extends PHPUnit_Framework_TestCase {
 		$result = $this->runCmd($cmd, $output);
 		$this->assertFalse($result, $output);
 	}
-	
+
 	public function testRejectsEmptyFileInput() {
 		$cmd = "$this->validateScript /dev/null";
 		$result = $this->runCmd($cmd, $output);
 		$this->assertFalse($result, $output);
 	}
-	
+
 	public function testRejectsEmptyPipeInput() {
 		$cmd = "echo '' | $this->validateScript";
 		$result = $this->runCmd($cmd, $output);
@@ -53,7 +53,7 @@ class ElggCommitMessageGitHookTest extends PHPUnit_Framework_TestCase {
 		$result = $this->runCmd($cmd, $output);
 		$this->assertTrue($result, $output);
 	}
-	
+
 	public function testAcceptsValidPipeInput() {
 		$msg = escapeshellarg(file_get_contents("{$this->filesDir}valid.txt"));
 		$cmd = "echo $msg | $this->validateScript";

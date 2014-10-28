@@ -9,7 +9,7 @@
 
 /**
  * Set a user's password
- * 
+ *
  * @return bool
  * @since 1.8.0
  * @access private
@@ -76,7 +76,7 @@ function _elgg_set_user_password() {
 
 /**
  * Set a user's display name
- * 
+ *
  * @return bool
  * @since 1.8.0
  * @access private
@@ -117,7 +117,7 @@ function _elgg_set_user_name() {
 
 /**
  * Set a user's language
- * 
+ *
  * @return bool
  * @since 1.8.0
  * @access private
@@ -342,7 +342,7 @@ function _elgg_user_settings_init() {
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_default_access');
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_name');
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_set_user_email');
-	
+
 	elgg_register_action("usersettings/save");
 
 	// extend the account settings form

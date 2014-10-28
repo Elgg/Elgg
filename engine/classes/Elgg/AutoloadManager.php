@@ -3,7 +3,7 @@
  * Manages core autoloading and caching of class maps
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Autoloader
  */
@@ -35,7 +35,7 @@ class Elgg_AutoloadManager {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param Elgg_ClassLoader $loader Class loader object
 	 */
 	public function __construct(Elgg_ClassLoader $loader) {
@@ -145,7 +145,7 @@ class Elgg_AutoloadManager {
 
 	/**
 	 * Some method that does something
-	 * 
+	 *
 	 * @todo what is a spec?
 	 * @return bool|array
 	 */
@@ -176,7 +176,7 @@ class Elgg_AutoloadManager {
 
 	/**
 	 * Get the class loader
-	 * 
+	 *
 	 * @return Elgg_ClassLoader
 	 */
 	public function getLoader() {
@@ -185,7 +185,7 @@ class Elgg_AutoloadManager {
 
 	/**
 	 * Set the cache storage object
-	 * 
+	 *
 	 * @param ElggCache $storage Cache object
 	 * @return void
 	 */

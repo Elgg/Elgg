@@ -12,7 +12,7 @@ class ElggCoreOutputAutoPTest extends ElggCoreUnitTest {
 	public function setUp() {
 		$this->_autop = new ElggAutoP();
 	}
-	
+
 	public function testDomRoundtrip() {
 		$d = dir(dirname(__FILE__) . '/test_files/output/autop');
 		$in = file_get_contents($d->path . "/domdoc_in.html");
@@ -38,7 +38,7 @@ class ElggCoreOutputAutoPTest extends ElggCoreUnitTest {
 			$exp = $this->flattenString($exp);
 			$out = $this->_autop->process($in);
 			$out = $this->flattenString($out);
-			
+
 			$this->assertEqual($exp, $out, "Equality case {$test}");
 		}
 	}

@@ -13,7 +13,7 @@ class ElggLogCache {
 
 	/**
 	 * Insert into cache
-	 * 
+	 *
 	 * @param mixed $data The log data to cache
 	 */
 	public function insert($data) {
@@ -22,10 +22,10 @@ class ElggLogCache {
 
 	/**
 	 * Insert into cache from plugin hook
-	 * 
+	 *
 	 * @param string $hook
 	 * @param string $type
-	 * @param bool   $result 
+	 * @param bool   $result
 	 * @param array  $params Must have the data at $params['msg']
 	 */
 	public function insertDump($hook, $type, $result, $params) {

@@ -14,7 +14,7 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Object
- * 
+ *
  * @property string $title       The title, name, or summary of this object
  * @property string $description The body, description, or content of the object
  * @property array  $tags        Tags that describe the object (metadata)
@@ -123,7 +123,7 @@ class ElggObject extends ElggEntity {
 		}
 		$title = sanitize_string($this->title);
 		$description = sanitize_string($this->description);
-		
+
 		$query = "INSERT into {$CONFIG->dbprefix}objects_entity
 			(guid, title, description) values ($guid, '$title', '$description')";
 
@@ -132,7 +132,7 @@ class ElggObject extends ElggEntity {
 			// TODO(evan): Throw an exception here?
 			return false;
 		}
-		
+
 		return $guid;
 	}
 
@@ -145,7 +145,7 @@ class ElggObject extends ElggEntity {
 		if (!parent::update()) {
 			return false;
 		}
-		
+
 		$guid = (int)$this->guid;
 		$title = sanitize_string($this->title);
 		$description = sanitize_string($this->description);

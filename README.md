@@ -18,7 +18,7 @@ The Elgg project was started in 2004 by
  - Dave Tosh (<https://twitter.com/davetosh>).
 
 Elgg is released under the GNU General Public License (GPL) Version 2 and the
-Massachusetts Institute of Technology (MIT-X11) License. See LICENSE.txt 
+Massachusetts Institute of Technology (MIT-X11) License. See LICENSE.txt
 in the root of the package you downloaded.
 
 For installation instructions, see INSTALL.txt.

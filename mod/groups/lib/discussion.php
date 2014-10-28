@@ -53,7 +53,7 @@ function discussion_handle_list_page($guid) {
 	elgg_register_title_button();
 
 	$title = elgg_echo('item:object:groupforumtopic');
-	
+
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'groupforumtopic',

@@ -28,7 +28,7 @@
  * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Http
  * @since      1.9.0
@@ -117,7 +117,7 @@ class Elgg_Http_Request {
 		// Symfony uses FileBag so this will change in next Elgg version
 		$this->files = new Elgg_Http_ParameterBag($files);
 		$this->server = new Elgg_Http_ParameterBag($server);
-	
+
 		$headers = $this->prepareHeaders();
 		// Symfony uses HeaderBag so this will change in next Elgg version
 		$this->headers = new Elgg_Http_ParameterBag($headers);

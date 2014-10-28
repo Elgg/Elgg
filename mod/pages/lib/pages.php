@@ -73,7 +73,7 @@ function pages_prepare_parent_breadcrumbs($page) {
 
 /**
  * Produce the navigation tree
- * 
+ *
  * @param ElggEntity $container Container entity for the pages
  *
  * @return array
@@ -134,7 +134,7 @@ function pages_get_navigation_tree($container) {
 
 /**
  * Register the navigation menu
- * 
+ *
  * @param ElggEntity $container Container entity for the pages
  */
 function pages_register_navigation_tree($container) {

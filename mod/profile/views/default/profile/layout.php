@@ -1,7 +1,7 @@
 <?php
 /**
  * Profile layout
- * 
+ *
  * @uses $vars['entity']  The user
  */
 

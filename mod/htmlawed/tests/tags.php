@@ -18,7 +18,7 @@ class HtmLawedTest extends ElggCoreUnitTest {
 		'margin', 'margin-top', 'margin-bottom', 'margin-left',
 		'margin-right',	'padding', 'float', 'text-decoration'
 	);
-	
+
 	/**
 	 * Called before each test object.
 	 */
@@ -85,7 +85,7 @@ class HtmLawedTest extends ElggCoreUnitTest {
 
 		// set context to input to avoid adding nofollow
 		elgg_push_context('input');
-		
+
 		foreach ($tests as $input => $expected) {
 			$result = htmlawed_filter_tags(null, null, $input);
 			$this->assertEqual($expected, $result);

@@ -1,7 +1,7 @@
 <?php
 /**
  * Notification event
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Notifications
  * @since      1.9.0
@@ -62,7 +62,7 @@ class Elgg_Notifications_Event {
 
 	/**
 	 * Get the GUID of the actor
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getActorGUID() {

@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Initialize Elgg's js lib with the uncacheable data
  */

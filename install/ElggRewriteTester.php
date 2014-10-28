@@ -66,7 +66,7 @@ class ElggRewriteTester {
 	 *
 	 * @param string $url Rewrite test URL
 	 *
-	 * @return string|bool Subdirectory string with beginning and trailing slash or false if were unable to determine subdirectory 
+	 * @return string|bool Subdirectory string with beginning and trailing slash or false if were unable to determine subdirectory
 	 * or pointing at root of domain already
 	 */
 	public function guessSubdirectory($url) {
@@ -121,7 +121,7 @@ class ElggRewriteTester {
 
 		return true;
 	}
-	
+
 	public function runLocalhostAccessTest() {
 		$url = elgg_get_site_url();
 		if (ini_get('allow_url_fopen')) {
@@ -141,7 +141,7 @@ class ElggRewriteTester {
 			$response = curl_exec($ch);
 			curl_close($ch);
 		}
-		
+
 		return $response !== false;
 	}
 
@@ -187,7 +187,7 @@ class ElggRewriteTester {
 			$this->htaccessIssue = 'cannot_copy';
 			return FALSE;
 		}
-		
+
 		// does default RewriteBase work already?
 		if (!$this->runRewriteTest($url)) {
 			//try to rewrite to guessed subdirectory
@@ -221,7 +221,7 @@ class ElggRewriteTester {
 		if ($this->serverSupportsRemoteRead == FALSE) {
 			$msg = elgg_echo('install:warning:rewrite:unknown', array($url));
 			$msg .= elgg_view('install/js_rewrite_check', array('url' => $url));
-			
+
 			return array(
 				'severity' => 'warning',
 				'message' => $msg,
@@ -234,7 +234,7 @@ class ElggRewriteTester {
 			if (!isset($this->htaccessIssue)) {
 				$msg .= elgg_echo('install:error:rewrite:allowoverride');
 				$msg .= elgg_view('install/js_rewrite_check', array('url' => $url));
-			
+
 				return array(
 					'severity' => 'failure',
 					'message' => $msg,

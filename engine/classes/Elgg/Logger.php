@@ -62,7 +62,7 @@ class Elgg_Logger {
 
 	/**
 	 * Get the current logging level
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getLevel() {

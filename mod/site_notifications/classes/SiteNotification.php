@@ -17,7 +17,7 @@ class SiteNotification extends ElggObject {
 
 	/**
 	 * Get the actor involved in the notification
-	 * 
+	 *
 	 * @return ElggEntity|null
 	 */
 	public function getActor() {
@@ -31,7 +31,7 @@ class SiteNotification extends ElggObject {
 
 	/**
 	 * Set the actor involved in the notification
-	 * 
+	 *
 	 * @param ElggEntity $entity Actor
 	 */
 	public function setActor($entity) {
@@ -40,7 +40,7 @@ class SiteNotification extends ElggObject {
 
 	/**
 	 * Get the url for this notification
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getURL() {
@@ -49,7 +49,7 @@ class SiteNotification extends ElggObject {
 
 	/**
 	 * Set the url for the notification
-	 * 
+	 *
 	 * @param string $url The URL for the notification link
 	 */
 	public function setURL($url) {
@@ -60,7 +60,7 @@ class SiteNotification extends ElggObject {
 
 	/**
 	 * Set the read status
-	 * 
+	 *
 	 * @param bool $read Has the notification been read
 	 */
 	public function setRead($read) {
@@ -69,7 +69,7 @@ class SiteNotification extends ElggObject {
 
 	/**
 	 * Has the notification been read?
-	 * 
+	 *
 	 * @return bool
 	 */
 	public function isRead() {

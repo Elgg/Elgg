@@ -2,11 +2,11 @@
 
 /**
  * FIFO queue that is memory based (not persistent)
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Queue
  * @since      1.9.0

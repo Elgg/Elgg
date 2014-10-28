@@ -344,7 +344,7 @@ function _elgg_get_metastring_based_objects($options) {
 	$custom_callback = ($options['callback'] == 'row_to_elggmetadata'
 						|| $options['callback'] == 'row_to_elggannotation');
 	$is_calculation = $options['metastring_calculation'] ? true : false;
-	
+
 	if ($custom_callback || $is_calculation) {
 		$joins[] = "JOIN {$db_prefix}metastrings n on n_table.name_id = n.id";
 		$joins[] = "JOIN {$db_prefix}metastrings v on n_table.value_id = v.id";

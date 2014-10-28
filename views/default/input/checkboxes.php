@@ -7,7 +7,7 @@
  * to make sure something is sent to the server.  The default value is 0.
  * If using JS, be specific to avoid selecting the hidden default value:
  * 	$('input[type=checkbox][name=name]')
- * 
+ *
  * @warning Passing integers as labels does not currently work due to a
  * deprecated hack that will be removed in Elgg 1.9. To use integer labels,
  * the labels must be character codes: 1 would be &#0049;
@@ -82,7 +82,7 @@ if (count($vars['options']) > 0) {
 		$input_vars['checked'] = in_array(elgg_strtolower($value), $values);
 		$input_vars['value'] = $value;
 		$input_vars['label'] = $label;
-		
+
 		$input = elgg_view('input/checkbox', $input_vars);
 
 		echo "<li>$input</li>";

@@ -4,7 +4,7 @@
  *
  * @package Elgg
  * @subpackage Core
- * 
+ *
  */
 
 $name = $username = $email = $password = $password2 = $admin = '';
@@ -64,7 +64,7 @@ if (elgg_is_sticky_form('useradd')) {
 	?>
 </div>
 <div>
-<?php 
+<?php
 	echo elgg_view('input/checkboxes', array(
 		'name' => "admin",
 		'options' => array(elgg_echo('admin_option') => 1),

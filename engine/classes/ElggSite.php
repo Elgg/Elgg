@@ -208,7 +208,7 @@ class ElggSite extends ElggEntity {
 
 		return parent::disable($reason, $recursive);
 	}
-	
+
 	/**
 	 * Returns the URL for this site
 	 *

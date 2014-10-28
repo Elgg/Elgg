@@ -184,7 +184,7 @@ function file_register_toggle() {
 
 /**
  * Prepare a notification message about a new file
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg_Notifications_Notification $notification The notification to prepare
@@ -201,7 +201,7 @@ function file_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('file:notify:subject', array($entity->title), $language); 
+	$notification->subject = elgg_echo('file:notify:subject', array($entity->title), $language);
 	$notification->body = elgg_echo('file:notify:body', array(
 		$owner->name,
 		$title,
@@ -415,7 +415,7 @@ function file_set_icon_url($hook, $type, $url, $params) {
 		} else {
 			$ext = '';
 		}
-		
+
 		$url = "mod/file/graphics/icons/{$type}{$ext}.gif";
 		$url = elgg_trigger_plugin_hook('file:icon:url', 'override', $params, $url);
 		return $url;

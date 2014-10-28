@@ -310,7 +310,7 @@ Similarly, ``mod/bookmarks/pages/edit.php`` uses the same function, but passes t
 The library file defines ``bookmarks_prepare_form_vars()``. This function accepts an ``ElggEntity`` as an argument and does 3 things:
 
  1. Defines the input names and default values for form inputs.
- 2. Extracts the values from a bookmark object if it's passed. 
+ 2. Extracts the values from a bookmark object if it's passed.
  3. Extracts the values from a sticky form if it exists.
 
 TODO: Include directly from lib/bookmarks.php

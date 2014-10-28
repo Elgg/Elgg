@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg report action
- * 
+ *
  * @package ElggReportContent
  */
 $title = get_input('title');

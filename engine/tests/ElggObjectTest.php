@@ -236,7 +236,7 @@ class ElggCoreObjectTest extends ElggCoreUnitTest {
 		foreach ($types as $type) {
 			$parent = new $type();
 			$this->assertTrue($parent->save());
-			
+
 			$child = new ElggObject();
 			$child->container_guid = $parent->guid;
 			$this->assertTrue($child->save());

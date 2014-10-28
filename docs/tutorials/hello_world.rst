@@ -120,4 +120,4 @@ You can now go to the address http://www.mysite.com/hello/ and you should see th
    :align: center
    :width: 60%
 
-   Elgg is now routing the URL http://www.mysite.com/hello/ to the page you created. 
+   Elgg is now routing the URL http://www.mysite.com/hello/ to the page you created.

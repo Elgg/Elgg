@@ -2159,7 +2159,7 @@ function delete_entity($guid, $recursive = true) {
  */
 function enable_entity($guid, $recursive = true) {
 	elgg_deprecated_notice('enable_entity has been deprecated in favor of elgg_enable_entity', '1.9');
-	
+
 	$guid = (int)$guid;
 
 	// Override access only visible entities
@@ -2221,11 +2221,11 @@ function can_edit_entity_metadata($entity_guid, $user_guid = 0, $metadata = null
  */
 function disable_entity($guid, $reason = "", $recursive = true) {
 	elgg_deprecated_notice('disable_entity was deprecated in favor of ElggEntity::disable', '1.9');
-	
+
 	if ($entity = get_entity($guid)) {
 		return $entity->disable($reason, $recursive);
 	}
-	
+
 	return false;
 }
 
@@ -2247,7 +2247,7 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
 	if ($entity = get_entity($entity_guid)) {
 		return $entity->canEdit($user_guid);
 	}
-	
+
 	return false;
 }
 
@@ -2262,14 +2262,14 @@ function can_edit_entity($entity_guid, $user_guid = 0) {
  */
 function join_group($group_guid, $user_guid) {
 	elgg_deprecated_notice('join_group was deprecated in favor of ElggGroup::join', '1.9');
-	
+
 	$group = get_entity($group_guid);
 	$user = get_entity($user_guid);
-	
+
 	if ($group instanceof ElggGroup && $user instanceof ElggUser) {
 		return $group->join($user);
 	}
-	
+
 	return false;
 }
 
@@ -2286,7 +2286,7 @@ function leave_group($group_guid, $user_guid) {
 	elgg_deprecated_notice('leave_group was deprecated in favor of ElggGroup::leave', '1.9');
 	$group = get_entity($group_guid);
 	$user = get_entity($user_guid);
-	
+
 	if ($group instanceof ElggGroup && $user instanceof ElggUser) {
 		return $group->leave($user);
 	}
@@ -2308,7 +2308,7 @@ function autop($string) {
 
 /**
  * Register a function as a web service method
- * 
+ *
  * @deprecated 1.9 Enable the web services plugin and use elgg_ws_expose_function().
  */
 function expose_function($method, $function, array $parameters = NULL, $description = "",
@@ -3288,7 +3288,7 @@ function get_site_domain($guid) {
  * @param string $language_name  Its localized notification string (eg "New blog post")
  *
  * @return void
- * @deprecated 1.9 Use elgg_register_notification_event(). The 3rd argument was used 
+ * @deprecated 1.9 Use elgg_register_notification_event(). The 3rd argument was used
  * as the subject line in a notification. As of Elgg 1.9, it is now set by a callback
  * for a plugin hook. See the documentation at the top of the notifications library
  * titled "Adding a New Notification Event" for more details.
@@ -3762,7 +3762,7 @@ elgg_register_plugin_hook_handler('volatile', 'metadata', 'volatile_data_export_
 /**
  * Returns the SQL where clause for a table with access_id and enabled columns.
  *
- * This handles returning where clauses for ACCESS_FRIENDS in addition to using 
+ * This handles returning where clauses for ACCESS_FRIENDS in addition to using
  * get_access_list() for access collections and the standard access levels.
  *
  * Note that if this code is executed in privileged mode it will return (1=1).

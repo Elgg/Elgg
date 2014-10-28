@@ -175,7 +175,7 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 
 /**
  * By default, only authors can edit their comments.
- * 
+ *
  * @param string  $hook   'permissions_check'
  * @param string  $type   'object'
  * @param boolean $return Can the given user edit the given entity?
@@ -186,10 +186,10 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 function _elgg_comments_permissions_override($hook, $type, $return, $params) {
 	$entity = $params['entity'];
 	$user = $params['user'];
-	
+
 	if (elgg_instanceof($entity, 'object', 'comment') && $user) {
 		return $entity->getOwnerGUID() == $user->getGUID();
 	}
-	
+
 	return $return;
 }

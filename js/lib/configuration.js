@@ -11,7 +11,7 @@ elgg.get_site_url = function() {
 
 /**
  * Get the URL for the cached file
- * 
+ *
  * @param {String} type
  * @param {String} view
  * @return {String} The site URL.

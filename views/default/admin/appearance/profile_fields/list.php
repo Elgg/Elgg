@@ -1,7 +1,7 @@
 <?php
 /**
  * Profile fields.
- * 
+ *
  * @todo Needs some review
  */
 

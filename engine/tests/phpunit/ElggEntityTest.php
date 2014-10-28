@@ -4,7 +4,7 @@ $engine = dirname(dirname(dirname(__FILE__)));
 require_once "$engine/lib/output.php";
 
 /**
- * This requires elgg_get_logged_in_user_guid() in session.php, the access 
+ * This requires elgg_get_logged_in_user_guid() in session.php, the access
  * constants defined in entities.php, and elgg_normalize_url() in output.php
  */
 class ElggEntityTest extends PHPUnit_Framework_TestCase {
@@ -56,7 +56,7 @@ class ElggEntityTest extends PHPUnit_Framework_TestCase {
 	public function testSettingIntegerAttributes() {
 		foreach (array('access_id', 'owner_guid', 'container_guid') as $name) {
 			$this->obj->$name = '77';
-			$this->assertSame(77, $this->obj->$name);			
+			$this->assertSame(77, $this->obj->$name);
 		}
 	}
 
@@ -66,8 +66,8 @@ class ElggEntityTest extends PHPUnit_Framework_TestCase {
 	public function testSettingUnsettableAttributes() {
 		foreach (array('guid', 'time_updated', 'last_action') as $name) {
 			$this->obj->$name = 'foo';
-			$this->assertNotEquals('foo', $this->obj->$name);			
-		}		
+			$this->assertNotEquals('foo', $this->obj->$name);
+		}
 	}
 
 	/**

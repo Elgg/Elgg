@@ -30,7 +30,7 @@ if ($people_ents = elgg_get_entities_from_relationship(array(
 		'type' => 'user',
 		'limit' => false,
 	))) {
-	
+
 	foreach($people_ents as $ent) {
 		$people[] = $ent->guid;
 	}

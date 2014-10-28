@@ -423,7 +423,7 @@ class ElggPluginPackage {
 					case 'php_version':
 						$result = $this->checkDepPhpVersion($dep, $inverse);
 						break;
-					
+
 					case 'php_extension':
 						$result = $this->checkDepPhpExtension($dep, $inverse);
 						break;
@@ -431,7 +431,7 @@ class ElggPluginPackage {
 					case 'php_ini':
 						$result = $this->checkDepPhpIni($dep, $inverse);
 						break;
-						
+
 					default:
 						$result = null;//skip further check
 						break;
@@ -685,7 +685,7 @@ class ElggPluginPackage {
 
 	/**
 	 * Returns the last error message.
-	 * 
+	 *
 	 * @return string
 	 */
 	public function getError() {

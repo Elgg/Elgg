@@ -535,9 +535,9 @@ class Elgg_Database {
 
 	/**
 	 * Enable the query cache
-	 * 
+	 *
 	 * This does not take precedence over the Elgg_Database_Config setting.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function enableQueryCache() {
@@ -549,10 +549,10 @@ class Elgg_Database {
 
 	/**
 	 * Disable the query cache
-	 * 
+	 *
 	 * This is useful for special scripts that pull large amounts of data back
 	 * in single queries.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function disableQueryCache() {

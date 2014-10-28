@@ -4,7 +4,7 @@
  *
  * @package Elgg
  * @subpackage Core
- * 
+ *
  * @deprecated 1.8 See how file plugin adds a toggle in function file_register_toggle()
  */
 
