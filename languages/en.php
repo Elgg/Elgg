@@ -280,7 +280,7 @@ return array(
 	'profile:edit:default' => 'Edit profile fields',
 	'profile:label' => "Profile label",
 	'profile:type' => "Profile type",
-	'profile:editdefault:delete:fail' => 'Removed default profile item field failed',
+	'profile:editdefault:delete:fail' => 'Removing profile field failed',
 	'profile:editdefault:delete:success' => 'Profile field deleted',
 	'profile:defaultprofile:reset' => 'Profile fields reset to the system default',
 	'profile:resetdefault' => 'Reset profile fields to system defaults',
