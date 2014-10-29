@@ -384,7 +384,7 @@ Naming
 Miscellaneous
 ^^^^^^^^^^^^^
 
-Use PHP 5.2-compatible syntax in Elgg versions before 1.10.
+For PHP requirements, see ``composer.json``.
 
 Do not use PHP shortcut tags (``<?`` or ``<?=`` or ``<%``).
 
