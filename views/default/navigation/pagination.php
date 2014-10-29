@@ -50,12 +50,12 @@ $current_page = ceil($offset / $limit) + 1;
 
 $pages = new stdClass();
 $pages->prev = array(
-	'text' => '&laquo; ' . elgg_echo('previous'),
+	'text' => elgg_echo('previous'),
 	'href' => '',
 	'is_trusted' => true,
 );
 $pages->next = array(
-	'text' => elgg_echo('next') . ' &raquo;',
+	'text' => elgg_echo('next'),
 	'href' => '',
 	'is_trusted' => true,
 );
