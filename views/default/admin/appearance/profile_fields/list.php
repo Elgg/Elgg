@@ -29,9 +29,6 @@ if ($fieldlist) {
 <ul id="elgg-profile-fields" class="mvm">
 <?php
 
-$save = elgg_echo('save');
-$cancel = elgg_echo('cancel');
-
 foreach ($items as $item) {
 	echo elgg_view("profile/", array('value' => $item->translation));
 

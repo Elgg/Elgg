@@ -45,7 +45,7 @@ elgg.discussion.Reply.prototype = {
 
 				var $form = that.getForm();
 
-				$form.find('.elgg-cancel').on('click', function () {
+				$form.find('.elgg-button-cancel').on('click', function () {
 					that.hideForm();
 					return false;
 				});
