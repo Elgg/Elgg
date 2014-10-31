@@ -250,8 +250,9 @@ function _elgg_tagcloud_page_handler($page) {
 		'limit' => 100,
 		'tag_name' => 'tags',
 	);
-	$tags = elgg_view_tagcloud($options);
-	$content = $tags;
+
+	$content = elgg_view_tagcloud($options);
+
 	$body = elgg_view_layout('one_sidebar', array(
 		'title' => $title,
 		'content' => $content,
