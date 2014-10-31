@@ -208,7 +208,7 @@ $files = $plugin->getAvailableTextFiles();
 
 $docs = '';
 if ($files) {
-	$docs = '<ul>';
+	$docs = '<ul class="elgg-menu elgg-menu-hz">';
 	foreach ($files as $file => $path) {
 		$url = 'admin_plugin_text_file/' . $plugin->getID() . "/$file";
 		$link = elgg_view('output/url', array(

@@ -1494,6 +1494,10 @@ ul.elgg-plugin-resources, ul.elgg-plugin-resources > li {
 	border-width: 2px;
 	border-color: #0054A7;
 }
+.elgg-plugin .elgg-menu-hz > li:after {
+	content: ",";
+	padding-right: 10px;
+}
 
 /****************************************
 	MARKDOWN
