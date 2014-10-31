@@ -1948,31 +1948,6 @@ function update_entity_last_action($guid, $posted = null) {
 }
 
 /**
- * Garbage collect stub and fragments from any broken delete/create calls
- *
- * @return void
- * @elgg_plugin_hook_handler gc system
- * @access private
- */
-function _elgg_entities_gc() {
-	global $CONFIG;
-
-	$tables = array(
-		'site' => 'sites_entity',
-		'object' => 'objects_entity',
-		'group' => 'groups_entity',
-		'user' => 'users_entity',
-	);
-
-	foreach ($tables as $type => $table) {
-		delete_data("DELETE FROM {$CONFIG->dbprefix}{$table}
-			WHERE guid NOT IN (SELECT guid FROM {$CONFIG->dbprefix}entities)");
-		delete_data("DELETE FROM {$CONFIG->dbprefix}entities
-			WHERE type = '$type' AND guid NOT IN (SELECT guid FROM {$CONFIG->dbprefix}{$table})");
-	}
-}
-
-/**
  * Runs unit tests for the entity objects.
  *
  * @param string $hook   unit_test
@@ -2005,7 +1980,6 @@ function _elgg_entities_test($hook, $type, $value) {
  */
 function _elgg_entities_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_entities_test');
-	elgg_register_plugin_hook_handler('gc', 'system', '_elgg_entities_gc');
 }
 
 elgg_register_event_handler('init', 'system', '_elgg_entities_init');

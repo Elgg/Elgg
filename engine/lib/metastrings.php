@@ -108,51 +108,6 @@ function _elgg_add_metastring($string) {
 }
 
 /**
- * Delete any orphaned entries in metastrings. This is run by the garbage collector.
- *
- * @return bool
- * @access private
- */
-function _elgg_delete_orphaned_metastrings() {
-	global $CONFIG;
-
-	// If memcache is enabled then we need to flush it of deleted values
-	if (is_memcache_available()) {
-		$select_query = "
-		SELECT * FROM {$CONFIG->dbprefix}metastrings WHERE
-		(
-			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}metadata)) AND
-			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}metadata)) AND
-			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}annotations)) AND
-			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}annotations))
-		)";
-
-		$dead = get_data($select_query);
-		if ($dead) {
-			static $metastrings_memcache;
-			if (!$metastrings_memcache) {
-				$metastrings_memcache = new \ElggMemcache('metastrings_memcache');
-			}
-
-			foreach ($dead as $d) {
-				$metastrings_memcache->delete($d->string);
-			}
-		}
-	}
-
-	$query = "
-		DELETE FROM {$CONFIG->dbprefix}metastrings WHERE
-		(
-			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}metadata)) AND
-			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}metadata)) AND
-			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}annotations)) AND
-			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}annotations))
-		)";
-
-	return delete_data($query);
-}
-
-/**
  * Returns an array of either \ElggAnnotation or \ElggMetadata objects.
  * Accepts all elgg_get_entities() options for entity restraints.
  *
