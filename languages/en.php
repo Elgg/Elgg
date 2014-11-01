@@ -905,7 +905,6 @@ These changes will only affect new users on the site.',
 	'title' => "Title",
 	'description' => "Description",
 	'tags' => "Tags",
-	'spotlight' => "Spotlight",
 	'all' => "All",
 	'mine' => "Mine",
 
