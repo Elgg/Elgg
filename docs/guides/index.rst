@@ -13,6 +13,7 @@ Customize Elgg's behavior with plugins.
    events-list
    hooks-list
    menus
+   notifications
    river
    routing
    widgets
