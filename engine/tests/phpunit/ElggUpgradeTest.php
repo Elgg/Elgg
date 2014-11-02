@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\I18n\Translator;
+
 class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var ElggUpgrade
@@ -69,7 +71,6 @@ class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade:error:upgrade_url_required
 	 */
 	public function testThrowsOnSaveWithoutPath() {
 		$this->obj->description = 'Test';
@@ -79,7 +80,6 @@ class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade:error:title_required
 	 */
 	public function testThrowsOnSaveWithoutTitle() {
 		$this->obj->setPath('test');
@@ -89,7 +89,6 @@ class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade:error:description_required
 	 */
 	public function testThrowsOnSaveWithoutDesc() {
 		$this->obj->setPath('test');

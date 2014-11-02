@@ -10,8 +10,10 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
-        "mrclay/minify": "2.*",
-        "knplabs/gaufrette": "0.1.*"
+        "knplabs/gaufrette": "~0.1.0",
+        "mrclay/minify": "~2.2",
+        "mnapoli/php-di": "~4.1",
+        "doctrine/cache": "~1.3"
     },
     "suggest": {
         "ext-mbstring": "*"
@@ -22,8 +24,8 @@
         }
     },
     "require-dev": {
-        "phpunit/phpunit": "4.1",
+        "phpunit/phpunit": "~4.1",
         "elgg/sniffs": "dev-master",
-        "squizlabs/php_codesniffer": "1.*"
+        "squizlabs/php_codesniffer": "~1.0"
     }
 }

@@ -4,13 +4,13 @@ namespace Elgg\Database;
 /**
  * Count queries performed
  *
- * Do not use directly. Use _elgg_db_get_query_counter().
- *
  * @access private
  *
  * @package    Elgg.Core
  * @subpackage Database
  * @since      1.9.0
+ * 
+ * @Injectable(scope="prototype")
  */
 class QueryCounter {
 

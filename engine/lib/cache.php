@@ -18,18 +18,7 @@
  * @return \ElggFileCache
  */
 function elgg_get_system_cache() {
-	global $CONFIG;
-
-	/**
-	 * A default filestore cache using the dataroot.
-	 */
-	static $FILE_PATH_CACHE;
-
-	if (!$FILE_PATH_CACHE) {
-		$FILE_PATH_CACHE = new \ElggFileCache($CONFIG->dataroot . 'system_cache/');
-	}
-
-	return $FILE_PATH_CACHE;
+	return _elgg_services()->systemCache;
 }
 
 /**
