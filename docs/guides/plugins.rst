@@ -141,6 +141,61 @@ This example uses all of the available elements:
 		</suggests>
 	</plugin_manifest>
 
+Testing
+=======
+
+Elgg core developers use PHPUnit as the primary test framework and plugin authors are encouraged to
+do the same. To keep your tests simple, keep global state at a minimum and test each component
+individually. To test a plugin, it should be sufficient to run ``phpunit`` from the plugin
+directory. All tests should be placed in a folder named **tests** under your plugin root.
+
+Use the test setup included below to get started quickly. This setup will also give you access to
+the Elgg API so that you can test how your plugin interacts with the engine. If you are testing
+custom entites, make sure that your tests consider the entity cache.
+
+MYPLUGIN/phpunit.xml
+--------------------
+
+Test configuration.
+
+.. code:: xml
+
+	<?xml version="1.0" encoding="UTF-8"?>
+	<phpunit bootstrap="tests/bootstrap.php" colors="true">
+    	<testsuites>
+        	<testsuite name="My plugin tests">
+            	<directory>tests</directory>
+        	</testsuite>
+    	</testsuites>
+	</phpunit>
+
+MYPLUGIN/tests/bootstrap.php
+----------------------------
+
+Bootstrap used to start the elgg engine before testing starts. Place custom
+initialization code here if necessary.
+
+.. code:: php
+
+	<?php
+
+	define('ELGG_TEST_SETTINGS', dirname(__FILE__) . '/settings.php');
+	require_once dirname(__FILE__) . '/../../../engine/start.php';
+
+MYPLUGIN/tests/settings.php
+---------------------------
+
+Override Elgg settings here if necessary.
+
+.. code:: php
+
+	<?php
+
+	global $CONFIG;
+	$CONFIG->dbname = 'test';
+	$CONFIG->dbuser = 'test';
+	$CONFIG->dbpass = 'test';
+
 Related
 =======
 

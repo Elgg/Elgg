@@ -57,6 +57,9 @@ if (!is_readable("$engine_dir/settings.php")) {
 }
 
 include_once("$engine_dir/settings.php");
+if (defined('ELGG_TEST_SETTINGS')) {
+	include_once(ELGG_TEST_SETTINGS);
+}
 
 $lib_dir = "$engine_dir/lib";
 
