@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg single tag output
+ * Elgg single tag output. Accepts all output/url options
  *
  * @uses $vars['value']    String
  * @uses $vars['type']     The entity type, optional
@@ -20,26 +20,26 @@ $query_params["search_type"] = "tags";
 
 if (!empty($vars['type'])) {
 	$query_params["type"] = $vars['type'];
+	unset($vars['type']);
 }
 
 if (!empty($vars['subtype'])) {
 	$query_params["subtype"] = $vars['subtype'];
+	unset($vars['subtype']);
 }
 
-if (!empty($vars['base_url'])) {
-	$url = $vars['base_url'];
-} else {
-	$url = elgg_get_site_url() . "search";
-}
+$url = !empty($vars['base_url']) ? $vars['base_url'] : 'search';
+unset($vars['base_url']);
 
-$http_query = http_build_query($query_params);
-if ($http_query) {
-	$url .= "?" . $http_query;
-}
+$url .= '?' . http_build_query($query_params);
 
-echo elgg_view('output/url', array(
+$params = array(
 	'href' => $url,
 	'text' => $vars['value'],
 	'encode_text' => true,
 	'rel' => 'tag',
-));
+);
+
+$params = $params + $vars;
+
+echo elgg_view('output/url', $params);
