@@ -72,18 +72,57 @@ The difference between minor and major feature is subjective and up to the core 
 Commit message format
 ---------------------
 
-Here is an example of a good commit message:
+We require a particular format to allow releasing more often, and with improved changelogs and source history. Just
+follow these steps:
 
-.. code::
+1. Start with the ``type`` by selecting the *last category which applies* from this list:
 
-    perf(upgrade): speeds up migrating remember me codes
+   * **docs** - *only* docs are being updated
+   * **chore** - this include refactoring, code style changes, adding missing tests, Travis stuff, etc.
+   * **perf** - the primary purpose is to improve performance
+   * **fix** - this fixes a bug
+   * **deprecate** - the change deprecates any part of the API
+   * **feature** - this adds a new user-facing or developer feature
+   * **security** - the change affects a security issue in any way. *Please do not push this commit to any public repo.* Instead contact security@elgg.org.
 
-    The Remember me cookie implementation has been improved by moving codes
-    to a separate table. This performs that migration in one query.
+   E.g. if your commit refactors to fix a bug, it's still a "fix". If that bug is security-related, however, the type
+   must be "security" and you should email security@elgg.org before proceeding. When in doubt, make your best guess
+   and a reviewer will provide guidance.
 
-    Fixes #6204
+2. In parenthesis, add the ``component``, a short string which describes the subsystem being changed.
 
-All commit messages are required to adhere to this format:
+   Some examples: "views", "i18n", "seo", "a11y", "cache", "db", "session", "router", "<plugin_name>".
+
+3. Add a colon, a space, and a brief ``summary`` of the changes, which will appear in the changelog.
+
+   No line may exceed 100 characters in length, so keep your summary concise.
+
+   ================================================ ======================================================================================================
+   Good summary                                     Bad summary (problem)
+   ================================================ ======================================================================================================
+   page owners see their own owner blocks on pages  bug fix (vague)
+   bar view no longer dies if 'foo' not set         updates views/default/bar.php so bar view no longer... (redundant info)
+   narrows river layout to fit iPhone               alters the river layout (vague)
+   elgg_foo() handles arrays for $bar               in elgg_foo() you can now pass an array for $bar and the function will... (move detail to description)
+   removes link color from comments header in river fixes db so that... (redundant info)
+   requires non-empty title when saving pages       can save pages with no title (confusingly summarizes old behavior)
+   ================================================ ======================================================================================================
+
+4. (recommended) Skip a line and add a ``description`` of the changes. Include the motivation for making them, any info
+   about back or forward compatibility, and any rationale of why the change had to be done a certain way. Example:
+
+       We speed up the Remember Me table migration by using a single INSERT INTO ... SELECT query instead of row-by-row.
+       This migration takes place during the upgrade to 1.9.
+
+   Unless your change is trivial/obvious, a description is required.
+
+5. If the commit resolves a GitHub issue, skip a line and add ``Fixes #`` followed by the issue number. E.g.
+   ``Fixes #1234``. You can include multiple issues by separating with commas.
+
+   GitHub will auto-close the issue when the commit is merged. If you just want to reference an issue, use
+   ``Refs #`` instead.
+
+When done, your commit message will have the format:
 
 .. code::
 
@@ -96,51 +135,43 @@ All commit messages are required to adhere to this format:
 	Closes/Fixes/Refs #123, #456, #789
 
 
-Where ``type`` is one of:
+Here is an example of a good commit message:
 
-* feature
-* fix
-* docs (when *only* docs are being updated)
-* chore (refactoring, style changes, add missing tests, Travis stuff, etc.)
-* perf (when primary purpose of change is to improve performance)
-* security (any change affecting a security issue)
-* deprecate (any change that deprecates any part of the API)
+.. code::
 
-And ``component`` is one of:
+    perf(upgrade): speeds up migrating remember me codes
 
-* i18n
-* seo
-* a11y
-* cache
-* db
-* views
-* session
-* router
-* etc...
+    We speed up the Remember Me table migration by using a single INSERT INTO ... SELECT query instead of row-by-row.
+    This migration takes place during the upgrade to 1.9.
 
-All lines of the commit message must not be longer than 100 characters.
+    Fixes #6204
 
-To validate commit messages locally, copy or symlink the
-``.scripts/validate_commit_msg.php`` to ``.git/hooks/commit-msg``
-and make sure it's executable.
 
-Enforcing a particular format allows us to automatically build a changelog when it comes time to release.
-This saves a lot of time and makes it possible to release more often.
+To validate commit messages locally, make sure ``.scripts/validate_commit_msg.php`` is executable, and make a copy
+or symlink to it in the directory ``.git/hooks/commit-msg``.
+
+.. code::
+
+    chmod u+x .scripts/validate_commit_msg.php
+    ln -s .scripts/validate_commit_msg.php .git/hooks/commit-msg/validate_commit_msg.php
 
 Rewriting commit messages
 -------------------------
-If your PR does not conform to the standard commit message format,
-we'll ask you to rewrite it:
+If your PR does not conform to the standard commit message format, we'll ask you to rewrite it.
 
-1. Rebase last commit (Git will open the git-rebase-todo file for editing)
+To edit just the last commit:
 
-   ``git rebase -i HEAD~``
-2. Change ``pick`` to ``r`` (for reword) and save/exit the editor.
-   (Git will present a file to alter the commit message)
-3. Change the commit message, save/exit the editor.
-4. Force push the branch to update your PR:
+1. Amend the commit: ``git commit --amend`` (git opens the message in a text editor).
+2. Change the message and save/exit the editor.
+3. Force push your branch: ``git push -f your_remote your_branch`` (your PR with be updated).
 
-   ``git push -f your_remote your_branch``
+Otherwise you may need to perform an interactive rebase:
+
+1. Rebase the last N commits: ``git rebase -i HEAD~N`` where N is a number.
+   (Git will open the git-rebase-todo file for editing)
+2. For the commits that need to change, change ``pick`` to ``r`` (for reword) and save/exit the editor.
+3. Change the commit message(s), save/exit the editor (git will present a file for each commit that needs rewording).
+4. ``git push -f your_remote your_branch`` to force push the branch (updating your PR).
 
 Testing
 =======
@@ -218,10 +249,14 @@ General coding
 Don't Repeat Yourself
 ^^^^^^^^^^^^^^^^^^^^^
 
-If you are copy-pasting code, you are doing something wrong.
-If you find a block of code that you want to use multiple times, make a
-function.  If you find views that are identical except for a single value,
-pull it out into a generic view that takes an option.
+If you are copy-pasting code a significant amount of code, consider whether there's an opportunity to reduce
+duplication by introducing a function, an additional argument, a view, or a new component class.
+
+E.g. If you find views that are identical except for a single value, refactor into a single view
+that takes an option.
+
+**Note:** In a bugfix release, *some duplication is preferrable to refactoring*. Fix bugs in the simplest
+way possible and refactor to reduce duplication in the next minor release branch.
 
 Embrace SOLID and GRASP
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -250,6 +285,8 @@ Functions
 Where possible, have functions/methods return a single type.
 Use empty values such as array(), "", or 0 to indicate no results.
 
+Be careful where valid return values (like ``"0"``) could be interpreted as empty.
+
 Functions not throwing an exception on error should return ``false`` upon failure.
 
 Functions returning only boolean should be prefaced with ``is_`` or ``has_``
@@ -261,17 +298,17 @@ Ternary syntax
 Acceptable only for single-line, non-embedded statements.
 
 Minimize complexity
-~~~~~~~~~~~~~~~~~~~
+^^^^^^^^^^^^^^^^^^^
 
 Minimize nested blocks and distinct execution paths through code. Use
-`Return Early`__ to reduce cognitive load when reading code.
+`Return Early`__ to reduce nesting levels and cognitive load when reading code.
 
 __ http://www.mrclay.org/2013/09/18/when-reasonable-return-early/
 
 Use comments effectively
 ^^^^^^^^^^^^^^^^^^^^^^^^
 
-Good comments describe the "why."  Good code describes the "how."  Ex:
+Good comments describe the "why."  Good code describes the "how." E.g.:
 
 Bad:
 
@@ -295,11 +332,27 @@ Good:
 		}
 	}
 
+Always include a comment if it's not obvious that something must be done in a certain way. Other
+developers looking at the code should be discouraged from refactoring in a way that would break the code.
+
+.. code:: php
+
+    // Can't use empty()/boolean: "0" is a valid value
+    if ($str === '') {
+        register_error(elgg_echo('foo:string_cannot_be_empty'));
+        forward(REFERER);
+    }
+
 Commit effectively
 ^^^^^^^^^^^^^^^^^^
 
-Err on the side of atomic commits and avoid mixing in extensive whitespace changes.
-One revision with many changes is scary and difficult to review.
+* Err on the side of `atomic commits`__ which are highly focused on changing one aspect of the system.
+* Avoid mixing in unrelated changes or extensive whitespace changes. Commits with many changes are scary and
+  make pull requests difficult to review.
+* Use visual git tools to craft `highly precise and readable diffs`__.
+
+__ http://en.wikipedia.org/wiki/Atomic_commit#Atomic_Commit_Convention
+__ http://www.mrclay.org/2014/02/14/gitx-for-cleaner-commits/
 
 Include tests
 ~~~~~~~~~~~~~
@@ -308,7 +361,7 @@ When at all possible include unit tests for code you add or alter. We use:
 
 * PHPUnit for PHP unit tests.
 
-* SimpleTest for PHP tests that require use of the database. Our long-term goal
+* SimpleTest for legacy PHP tests that require use of the database. Our long-term goal
   is to move all tests to PHPUnit.
 
 * Karma for JavaScript unit tests
@@ -384,7 +437,7 @@ Naming
 Miscellaneous
 ^^^^^^^^^^^^^
 
-Use PHP 5.2-compatible syntax in Elgg versions before 1.10.
+For PHP requirements, see ``composer.json``.
 
 Do not use PHP shortcut tags (``<?`` or ``<?=`` or ``<%``).
 

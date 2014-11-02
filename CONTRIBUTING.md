@@ -16,7 +16,7 @@ Before submitting a pull request:
 Good PR checklist:
 
  * Clear, meaningful title
- * Correctly formatted [commit message](https://github.com/Elgg/Elgg/issues/5976)
+ * Correctly formatted [commit message](http://learn.elgg.org/en/stable/contribute/code.html#commit-message-format)
  * Detailed description
  * Includes relevant tests (unit, e2e, etc.)
  * Includes documentation update
