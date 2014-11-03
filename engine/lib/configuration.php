@@ -181,16 +181,6 @@ function elgg_save_config($name, $value, $site_guid = 0) {
 }
 
 /**
- * An array of key value pairs from the datalists table.
- *
- * Used as a cache in datalist functions.
- *
- * @global array $DATALIST_CACHE
- */
-global $DATALIST_CACHE;
-$DATALIST_CACHE = array();
-
-/**
  * Get the value of a datalist element.
  * 
  * Plugin authors should use elgg_get_config() and pass null for the site GUID.
@@ -204,49 +194,7 @@ $DATALIST_CACHE = array();
  * @access private
  */
 function datalist_get($name) {
-	global $CONFIG, $DATALIST_CACHE;
-
-	$name = trim($name);
-
-	// cannot store anything longer than 255 characters in db, so catch here
-	if (elgg_strlen($name) > 255) {
-		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
-		return false;
-	}
-
-	if (isset($DATALIST_CACHE[$name])) {
-		return $DATALIST_CACHE[$name];
-	}
-
-	// If memcache enabled then cache value in memcache
-	$value = null;
-	static $datalist_memcache = null;
-	if (!$datalist_memcache && is_memcache_available()) {
-		$datalist_memcache = new \ElggMemcache('datalist_memcache');
-	}
-	if ($datalist_memcache) {
-		$value = $datalist_memcache->load($name);
-	}
-	// @todo cannot cache 0 or false?
-	if ($value) {
-		return $value;
-	}
-
-	// not in cache and not in memcache so check database
-	$escaped_name = sanitize_string($name);
-	$result = get_data_row("SELECT * FROM {$CONFIG->dbprefix}datalists WHERE name = '$escaped_name'");
-	if ($result) {
-		$DATALIST_CACHE[$result->name] = $result->value;
-
-		// Cache it if memcache is available
-		if ($datalist_memcache) {
-			$datalist_memcache->save($result->name, $result->value);
-		}
-
-		return $result->value;
-	}
-
-	return null;
+	return _elgg_services()->datalist->get($name);
 }
 
 /**
@@ -267,38 +215,7 @@ function datalist_get($name) {
  * @access private
  */
 function datalist_set($name, $value) {
-	global $CONFIG, $DATALIST_CACHE;
-
-	$name = trim($name);
-
-	// cannot store anything longer than 255 characters in db, so catch before we set
-	if (elgg_strlen($name) > 255) {
-		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
-		return false;
-	}
-
-	// If memcache is available then invalidate the cached copy
-	static $datalist_memcache = null;
-	if ((!$datalist_memcache) && (is_memcache_available())) {
-		$datalist_memcache = new \ElggMemcache('datalist_memcache');
-	}
-
-	if ($datalist_memcache) {
-		$datalist_memcache->delete($name);
-	}
-
-	$escaped_name = sanitize_string($name);
-	$escaped_value = sanitize_string($value);
-	$success = insert_data("INSERT INTO {$CONFIG->dbprefix}datalists"
-		. " SET name = '$escaped_name', value = '$escaped_value'"
-		. " ON DUPLICATE KEY UPDATE value = '$escaped_value'");
-
-	if ($success !== false) {
-		$DATALIST_CACHE[$name] = $value;
-		return true;
-	} else {
-		return false;
-	}
+	return _elgg_services()->datalist->set($name, $value);
 }
 
 /**
@@ -329,22 +246,7 @@ function datalist_set($name, $value) {
  * @todo deprecate
  */
 function run_function_once($functionname, $timelastupdatedcheck = 0) {
-	$lastupdated = datalist_get($functionname);
-	if ($lastupdated) {
-		$lastupdated = (int) $lastupdated;
-	} elseif ($lastupdated !== false) {
-		$lastupdated = 0;
-	} else {
-		// unable to check datalist
-		return false;
-	}
-	if (is_callable($functionname) && $lastupdated <= $timelastupdatedcheck) {
-		$functionname();
-		datalist_set($functionname, time());
-		return true;
-	} else {
-		return false;
-	}
+	return _elgg_services()->datalist->runFunctionOnce($functionname, $timelastupdatedcheck);
 }
 
 /**
@@ -584,7 +486,7 @@ function _elgg_load_site_config() {
  * @access private
  */
 function _elgg_load_application_config() {
-	global $CONFIG, $DATALIST_CACHE;
+	global $CONFIG;
 
 	$install_root = str_replace("\\", "/", dirname(dirname(dirname(__FILE__))));
 	$defaults = array(
@@ -621,16 +523,8 @@ function _elgg_load_application_config() {
 	$session_defaults['expire'] = strtotime("+30 days");
 	$CONFIG->cookies['remember_me'] = array_merge($session_defaults, $CONFIG->cookies['remember_me']);
 
-	// load entire datalist
-	// This can cause OOM problems when the datalists table is large
-	// @todo make a list of datalists that we want to get in one grab
 	if (!is_memcache_available()) {
-		$result = get_data("SELECT * FROM {$CONFIG->dbprefix}datalists");
-		if ($result) {
-			foreach ($result as $row) {
-				$DATALIST_CACHE[$row->name] = $row->value;
-			}
-		}
+		_elgg_services()->datalist->loadAll();
 	}
 
 	// allow sites to set dataroot and simplecache_enabled in settings.php
