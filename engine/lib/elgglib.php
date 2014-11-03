@@ -280,53 +280,7 @@ function elgg_get_loaded_css() {
  * @since 1.8.0
  */
 function elgg_register_external_file($type, $name, $url, $location, $priority = 500) {
-	global $CONFIG;
-
-	if (empty($name) || empty($url)) {
-		return false;
-	}
-
-	$url = elgg_format_url($url);
-	$url = elgg_normalize_url($url);
-	
-	_elgg_bootstrap_externals_data_structure($type);
-
-	$name = trim(strtolower($name));
-
-	// normalize bogus priorities, but allow empty, null, and false to be defaults.
-	if (!is_numeric($priority)) {
-		$priority = 500;
-	}
-
-	// no negative priorities right now.
-	$priority = max((int)$priority, 0);
-
-	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
-
-	if ($item) {
-		// updating a registered item
-		// don't update loaded because it could already be set
-		$item->url = $url;
-		$item->location = $location;
-
-		// if loaded before registered, that means it hasn't been added to the list yet
-		if ($CONFIG->externals[$type]->contains($item)) {
-			$priority = $CONFIG->externals[$type]->move($item, $priority);
-		} else {
-			$priority = $CONFIG->externals[$type]->add($item, $priority);
-		}
-	} else {
-		$item = new \stdClass();
-		$item->loaded = false;
-		$item->url = $url;
-		$item->location = $location;
-
-		$priority = $CONFIG->externals[$type]->add($item, $priority);
-	}
-
-	$CONFIG->externals_map[$type][$name] = $item;
-
-	return $priority !== false;
+	return _elgg_services()->externalFiles->register($type, $name, $url, $location, $priority);
 }
 
 /**
@@ -339,19 +293,7 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
  * @since 1.8.0
  */
 function elgg_unregister_external_file($type, $name) {
-	global $CONFIG;
-
-	_elgg_bootstrap_externals_data_structure($type);
-
-	$name = trim(strtolower($name));
-	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
-
-	if ($item) {
-		unset($CONFIG->externals_map[$type][$name]);
-		return $CONFIG->externals[$type]->remove($item);
-	}
-
-	return false;
+	return _elgg_services()->externalFiles->unregister($type, $name);
 }
 
 /**
@@ -364,26 +306,7 @@ function elgg_unregister_external_file($type, $name) {
  * @since 1.8.0
  */
 function elgg_load_external_file($type, $name) {
-	global $CONFIG;
-
-	_elgg_bootstrap_externals_data_structure($type);
-
-	$name = trim(strtolower($name));
-
-	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
-
-	if ($item) {
-		// update a registered item
-		$item->loaded = true;
-	} else {
-		$item = new \stdClass();
-		$item->loaded = true;
-		$item->url = '';
-		$item->location = '';
-
-		$CONFIG->externals[$type]->add($item);
-		$CONFIG->externals_map[$type][$name] = $item;
-	}
+	return _elgg_services()->externalFiles->load($type, $name);
 }
 
 /**
@@ -396,19 +319,7 @@ function elgg_load_external_file($type, $name) {
  * @since 1.8.0
  */
 function elgg_get_loaded_external_files($type, $location) {
-	global $CONFIG;
-
-	if (isset($CONFIG->externals) && $CONFIG->externals[$type] instanceof \ElggPriorityList) {
-		$items = $CONFIG->externals[$type]->getElements();
-
-		$callback = "return \$v->loaded == true && \$v->location == '$location';";
-		$items = array_filter($items, create_function('$v', $callback));
-		if ($items) {
-			array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
-		}
-		return $items;
-	}
-	return array();
+	return _elgg_services()->externalFiles->getLoadedFiles($type, $location);
 }
 
 /**
@@ -418,23 +329,7 @@ function elgg_get_loaded_external_files($type, $location) {
  * @access private
  */
 function _elgg_bootstrap_externals_data_structure($type) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->externals)) {
-		$CONFIG->externals = array();
-	}
-
-	if (!isset($CONFIG->externals[$type]) || !$CONFIG->externals[$type] instanceof \ElggPriorityList) {
-		$CONFIG->externals[$type] = new \ElggPriorityList();
-	}
-
-	if (!isset($CONFIG->externals_map)) {
-		$CONFIG->externals_map = array();
-	}
-
-	if (!isset($CONFIG->externals_map[$type])) {
-		$CONFIG->externals_map[$type] = array();
-	}
+	_elgg_services()->externalFiles->bootstrap($type);
 }
 
 /**
