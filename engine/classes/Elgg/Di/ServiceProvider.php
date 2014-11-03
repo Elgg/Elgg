@@ -49,6 +49,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	public function __construct(\Elgg\AutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
 
+		$this->setClassName('accessCollections', '\Elgg\Database\AccessCollections');
 		$this->setClassName('actions', '\Elgg\ActionsService');
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 		$this->setClassName('annotations', '\Elgg\Database\Annotations');

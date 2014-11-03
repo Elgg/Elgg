@@ -10,6 +10,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 		$sp = new \Elgg\Di\ServiceProvider($mgr);
 
 		$svcClasses = array(
+			'accessCollections' => '\Elgg\Database\AccessCollections',
 			'actions' => '\Elgg\ActionsService',
 			'annotations' => '\Elgg\Database\Annotations',
 
