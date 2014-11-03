@@ -26,19 +26,7 @@
  * @since 1.8.0
  */
 function elgg_get_site_url($site_guid = 0) {
-	if ($site_guid == 0) {
-		global $CONFIG;
-		return $CONFIG->wwwroot;
-	}
-
-	$site = get_entity($site_guid);
-
-	if (!$site instanceof \ElggSite) {
-		return false;
-	}
-	/* @var \ElggSite $site */
-
-	return $site->url;
+	return _elgg_services()->config->getSiteUrl($site_guid);
 }
 
 /**
@@ -48,8 +36,7 @@ function elgg_get_site_url($site_guid = 0) {
  * @since 1.8.0
  */
 function elgg_get_plugins_path() {
-	global $CONFIG;
-	return $CONFIG->pluginspath;
+	return _elgg_services()->config->getPluginsPath();
 }
 
 /**
@@ -59,8 +46,7 @@ function elgg_get_plugins_path() {
  * @since 1.8.0
  */
 function elgg_get_data_path() {
-	global $CONFIG;
-	return $CONFIG->dataroot;
+	return _elgg_services()->config->getDataPath();
 }
 
 /**
@@ -70,8 +56,7 @@ function elgg_get_data_path() {
  * @since 1.8.0
  */
 function elgg_get_root_path() {
-	global $CONFIG;
-	return $CONFIG->path;
+	return _elgg_services()->config->getRootPath();
 }
 
 /**
@@ -84,42 +69,7 @@ function elgg_get_root_path() {
  * @since 1.8.0
  */
 function elgg_get_config($name, $site_guid = 0) {
-	global $CONFIG;
-
-	$name = trim($name);
-
-	// do not return $CONFIG value if asking for non-current site
-	if (($site_guid === 0 || $site_guid === null || $site_guid == $CONFIG->site_guid) && isset($CONFIG->$name)) {
-		return $CONFIG->$name;
-	}
-
-	if ($site_guid === null) {
-		// installation wide setting
-		$value = datalist_get($name);
-	} else {
-		if ($site_guid == 0) {
-			$site_guid = (int) $CONFIG->site_guid;
-		}
-
-		// hit DB only if we're not sure if value isn't already loaded
-		if (!isset($CONFIG->site_config_loaded) || $site_guid != $CONFIG->site_guid) {
-			// site specific setting
-			$value = get_config($name, $site_guid);
-		} else {
-			$value = null;
-		}
-	}
-
-	// @todo document why we don't cache false
-	if ($value === false) {
-		return null;
-	}
-
-	if ($site_guid == $CONFIG->site_guid || $site_guid === null) {
-		$CONFIG->$name = $value;
-	}
-
-	return $value;
+	return _elgg_services()->config->get($name, $site_guid);
 }
 
 /**
@@ -134,11 +84,7 @@ function elgg_get_config($name, $site_guid = 0) {
  * @since 1.8.0
  */
 function elgg_set_config($name, $value) {
-	global $CONFIG;
-
-	$name = trim($name);
-
-	$CONFIG->$name = $value;
+	return _elgg_services()->config->set($name, $value);
 }
 
 /**
@@ -152,32 +98,7 @@ function elgg_set_config($name, $value) {
  * @since 1.8.0
  */
 function elgg_save_config($name, $value, $site_guid = 0) {
-	global $CONFIG;
-
-	$name = trim($name);
-
-	if (strlen($name) > 255) {
-		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
-		return false;
-	}
-
-	if ($site_guid === null) {
-		if (is_array($value) || is_object($value)) {
-			return false;
-		}
-		$result = datalist_set($name, $value);
-	} else {
-		if ($site_guid == 0) {
-			$site_guid = (int) $CONFIG->site_guid;
-		}
-		$result = set_config($name, $value, $site_guid);
-	}
-
-	if ($site_guid === null || $site_guid == $CONFIG->site_guid) {
-		elgg_set_config($name, $value);
-	}
-
-	return $result;
+	return _elgg_services()->config->save($name, $value, $site_guid);
 }
 
 /**
