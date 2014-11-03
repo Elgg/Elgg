@@ -25,38 +25,7 @@
  * @return mixed
  */
 function get_input($variable, $default = null, $filter_result = true) {
-
-	global $CONFIG;
-
-	$result = $default;
-
-	elgg_push_context('input');
-
-	if (isset($CONFIG->input[$variable])) {
-		// a plugin has already set this variable
-		$result = $CONFIG->input[$variable];
-		if ($filter_result) {
-			$result = filter_tags($result);
-		}
-	} else {
-		$request = _elgg_services()->request;
-		$value = $request->get($variable);
-		if ($value !== null) {
-			$result = $value;
-			if (is_string($result)) {
-				// @todo why trim
-				$result = trim($result);
-			}
-
-			if ($filter_result) {
-				$result = filter_tags($result);
-			}
-		}
-	}
-
-	elgg_pop_context();
-
-	return $result;
+	return _elgg_services()->input->get($variable, $default, $filter_result);
 }
 
 /**
@@ -70,17 +39,7 @@ function get_input($variable, $default = null, $filter_result = true) {
  * @return void
  */
 function set_input($variable, $value) {
-	global $CONFIG;
-	if (!isset($CONFIG->input)) {
-		$CONFIG->input = array();
-	}
-
-	if (is_array($value)) {
-		array_walk_recursive($value, create_function('&$v, $k', '$v = trim($v);'));
-		$CONFIG->input[trim($variable)] = $value;
-	} else {
-		$CONFIG->input[trim($variable)] = trim($value);
-	}
+	_elgg_services()->input->set($variable, $value);
 }
 
 /**
