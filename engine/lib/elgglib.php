@@ -8,60 +8,6 @@
  */
 
 /**
- * Register a php library.
- *
- * @param string $name     The name of the library
- * @param string $location The location of the file
- *
- * @return void
- * @since 1.8.0
- */
-function elgg_register_library($name, $location) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->libraries)) {
-		$CONFIG->libraries = array();
-	}
-
-	$CONFIG->libraries[$name] = $location;
-}
-
-/**
- * Load a php library.
- *
- * @param string $name The name of the library
- *
- * @return void
- * @throws InvalidParameterException
- * @since 1.8.0
- */
-function elgg_load_library($name) {
-	global $CONFIG;
-
-	static $loaded_libraries = array();
-
-	if (in_array($name, $loaded_libraries)) {
-		return;
-	}
-
-	if (!isset($CONFIG->libraries)) {
-		$CONFIG->libraries = array();
-	}
-
-	if (!isset($CONFIG->libraries[$name])) {
-		$error = $name . " is not a registered library";
-		throw new \InvalidParameterException($error);
-	}
-
-	if (!include_once($CONFIG->libraries[$name])) {
-		$error = "Could not load the " . $name . " library from " . $CONFIG->libraries[$name];
-		throw new \InvalidParameterException($error);
-	}
-
-	$loaded_libraries[] = $name;
-}
-
-/**
  * Forward to $location.
  *
  * Sends a 'Location: $location' header and exists.  If headers have
