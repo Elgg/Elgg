@@ -13,6 +13,7 @@ namespace Elgg\Di;
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \ElggCrypto                              $crypto
+ * @property-read \Elgg\Database\Datalist                  $datalist
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\PluginHooksService                 $hooks
@@ -47,6 +48,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('autoP', '\ElggAutoP');
 		$this->setValue('context', new \Elgg\Context());
 		$this->setClassName('crypto', '\ElggCrypto');
+		$this->setClassName('datalist', '\Elgg\Database\Datalist');
 		$this->setFactory('db', array($this, 'getDatabase'));
 		$this->setFactory('events', array($this, 'getEvents'));
 		$this->setFactory('hooks', array($this, 'getHooks'));
