@@ -12,8 +12,10 @@ error_reporting(E_ALL | E_STRICT);
  */
 global $CONFIG;
 $CONFIG = (object) array(
-	'dbprefix' => 'elgg_',
 	'boot_complete' => false,
+	'dataroot' => __DIR__ . "/test_files/",
+	'dbprefix' => 'elgg_',
+	'site_guid' => 1,
 	'wwwroot' => 'http://localhost/',
 );
 

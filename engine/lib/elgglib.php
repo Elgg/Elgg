@@ -1637,7 +1637,7 @@ function _elgg_shutdown_hook() {
 		elgg_trigger_event('shutdown', 'system');
 
 		$time = (float)(microtime(true) - $START_MICROTIME);
-		$uri = _elgg_services()->request->server->get('REQUEST_URI', 'CLI');
+		$uri = _elgg_services()->server->get('REQUEST_URI', 'CLI');
 		// demoted to NOTICE from DEBUG so javascript is not corrupted
 		elgg_log("Page {$uri} generated in $time seconds", 'INFO');
 	} catch (Exception $e) {
@@ -2028,8 +2028,6 @@ function _elgg_engine_boot() {
 	_elgg_services()->db->assertInstalled();
 
 	_elgg_load_application_config();
-
-	_elgg_load_autoload_cache();
 
 	_elgg_load_site_config();
 

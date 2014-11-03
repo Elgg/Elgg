@@ -1,42 +1,30 @@
 <?php
 namespace Elgg\Di;
 
+use Elgg\Http\MockSessionStorage;
 
 class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 
-	public function testPropertiesReturnCorrectClassNames() {
-		$mgr = $this->getMock('\Elgg\AutoloadManager', array(), array(), '', false);
+	public function testCanInstantiateAllServices() {
 
-		$sp = new \Elgg\Di\ServiceProvider($mgr);
+		$sp = _elgg_create_service_provider();
+		$di = require dirname(dirname(dirname(dirname(__DIR__)))) . "/di.php";
 
-		$svcClasses = array(
-			'actions' => '\Elgg\ActionsService',
-			
-			// requires _elgg_get_simplecache_root() to be defined
-			//'amdConfig' => '\Elgg\Amd\Config',
-			
-			'autoP' => '\ElggAutoP',
-			'autoloadManager' => '\Elgg\AutoloadManager',
-			'db' => '\Elgg\Database',
-			'events' => '\Elgg\EventsService',
-			'hooks' => '\Elgg\PluginHooksService',
-			'logger' => '\Elgg\Logger',
-			'metadataCache' => '\ElggVolatileMetadataCache',
-			'request' => '\Elgg\Http\Request',
-			'router' => '\Elgg\Router',
-			
-			// Will this start session?
-			//'session' => '\ElggSession'
-			
-			'views' => '\Elgg\ViewsService',
-			'widgets' => '\Elgg\WidgetsService',
-		);
-
-		foreach ($svcClasses as $key => $class) {
-			$obj1 = $sp->{$key};
-			$obj2 = $sp->{$key};
-			$this->assertInstanceOf($class, $obj1);
-			$this->assertSame($obj1, $obj2);
+		// Some services not compatible with unit test environment...
+		$sp->setValue('Elgg\Http\SessionStorage', new MockSessionStorage());
+		unset($di['cookies']);
+		unset($di['db']);
+		unset($di['jsroot']);
+		unset($di['notifications']);
+		unset($di['persistentLogin']);
+		unset($di['Elgg\AmdConfig']);
+		unset($di['Elgg\Database']);
+		unset($di['Elgg\Queue\Queue']);
+		unset($di['Elgg\PersistentLoginService']);
+		
+		// Create all services without throwing exceptions
+		foreach ($di as $key => $definition) {
+			$sp->$key; 
 		}
 	}
 }

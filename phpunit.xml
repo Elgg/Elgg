@@ -1,4 +1,6 @@
-<phpunit bootstrap="./engine/tests/phpunit/bootstrap.php">
+<phpunit bootstrap="./engine/tests/phpunit/bootstrap.php"
+         backupGlobals="false" backupStaticAttributes="false"
+         strict="true">
 	<testsuites>
 		<testsuite name="All Tests">
 			<directory>./engine/tests/phpunit/</directory>

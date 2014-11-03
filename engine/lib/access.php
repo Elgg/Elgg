@@ -982,13 +982,7 @@ function elgg_check_access_overrides($user_guid = 0) {
  * @access private
  */
 function elgg_get_access_object() {
-	static $elgg_access;
-
-	if (!$elgg_access) {
-		$elgg_access = new \Elgg\Access();
-	}
-
-	return $elgg_access;
+	return _elgg_services()->access;
 }
 
 /**
