@@ -497,9 +497,10 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 
 		// Add remove link if we can edit the group, and if we're not trying to remove the group owner
 		if ($group->canEdit() && $group->getOwnerGUID() != $entity->guid) {
-			$remove = elgg_view('output/confirmlink', array(
+			$remove = elgg_view('output/url', array(
 				'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
 				'text' => elgg_echo('groups:removeuser'),
+				'confirm' => true,
 			));
 
 			$options = array(
@@ -538,7 +539,7 @@ function groups_annotation_menu_setup($hook, $type, $return, $params) {
 			'href' => $url,
 			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
 			'confirm' => elgg_echo('deleteconfirm'),
-			'encode_text' => false
+			'encode_text' => false,
 		);
 		$return[] = ElggMenuItem::factory($options);
 
