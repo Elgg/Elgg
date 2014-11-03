@@ -16,6 +16,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\PluginHooksService                 $hooks
+ * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
  * @property-read \ElggVolatileMetadataCache               $metadataCache
  * @property-read \Elgg\Notifications\NotificationsService $notifications
@@ -49,6 +50,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('db', array($this, 'getDatabase'));
 		$this->setFactory('events', array($this, 'getEvents'));
 		$this->setFactory('hooks', array($this, 'getHooks'));
+		$this->setClassName('input', 'Elgg\Http\Input');
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setClassName('metadataCache', '\ElggVolatileMetadataCache');
 		$this->setFactory('persistentLogin', array($this, 'getPersistentLogin'));
