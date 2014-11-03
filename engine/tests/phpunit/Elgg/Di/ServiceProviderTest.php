@@ -30,6 +30,8 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			// Will this start session?
 			//'session' => '\ElggSession'
 			
+			'simpleCache' => '\Elgg\Cache\SimpleCache',
+			'systemCache' => '\Elgg\Cache\SystemCache',
 			'views' => '\Elgg\ViewsService',
 			'widgets' => '\Elgg\WidgetsService',
 		);

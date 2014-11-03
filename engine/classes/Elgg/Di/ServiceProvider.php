@@ -27,6 +27,8 @@ namespace Elgg\Di;
  * @property-read \Elgg\Http\Request                       $request
  * @property-read \Elgg\Router                             $router
  * @property-read \ElggSession                             $session
+ * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
+ * @property-read \Elgg\Cache\SystemCache                  $systemCache
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
  * 
@@ -61,6 +63,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('request', array($this, 'getRequest'));
 		$this->setFactory('router', array($this, 'getRouter'));
 		$this->setFactory('session', array($this, 'getSession'));
+		$this->setClassName('simpleCache', '\Elgg\Cache\SimpleCache');
+		$this->setClassName('systemCache', '\Elgg\Cache\SystemCache');
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setClassName('widgets', '\Elgg\WidgetsService');
 		$this->setFactory('notifications', array($this, 'getNotifications'));

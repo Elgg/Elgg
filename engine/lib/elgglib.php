@@ -1981,7 +1981,7 @@ function _elgg_engine_boot() {
 
 	_elgg_session_boot();
 
-	_elgg_load_cache();
+	_elgg_services()->systemCache->loadAll();
 
 	_elgg_load_translations();
 }
