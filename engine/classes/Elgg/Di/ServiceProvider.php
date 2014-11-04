@@ -28,6 +28,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Router                             $router
  * @property-read \ElggSession                             $session
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
+ * @property-read \Elgg\Database\SubtypeTable              $subtypeTable
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
@@ -66,6 +67,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('router', array($this, 'getRouter'));
 		$this->setFactory('session', array($this, 'getSession'));
 		$this->setClassName('simpleCache', '\Elgg\Cache\SimpleCache');
+		$this->setClassName('subtypeTable', '\Elgg\Database\SubtypeTable');
 		$this->setClassName('systemCache', '\Elgg\Cache\SystemCache');
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setClassName('widgets', '\Elgg\WidgetsService');
