@@ -185,23 +185,7 @@ function run_function_once($functionname, $timelastupdatedcheck = 0) {
  * @see set_config()
  */
 function unset_config($name, $site_guid = 0) {
-	global $CONFIG;
-
-	$name = trim($name);
-
-	$site_guid = (int) $site_guid;
-	if ($site_guid == 0) {
-		$site_guid = (int) $CONFIG->site_guid;
-	}
-
-	if ($site_guid == $CONFIG->site_guid && isset($CONFIG->$name)) {
-		unset($CONFIG->$name);
-	}
-
-	$escaped_name = sanitize_string($name);
-	$query = "DELETE FROM {$CONFIG->dbprefix}config WHERE name = '$escaped_name' AND site_guid = $site_guid";
-
-	return delete_data($query) !== false;
+	return _elgg_services()->configTable->remove($name, $site_guid);
 }
 
 /**
@@ -229,32 +213,7 @@ function unset_config($name, $site_guid = 0) {
  * @access private
  */
 function set_config($name, $value, $site_guid = 0) {
-	global $CONFIG;
-
-	$name = trim($name);
-
-	// cannot store anything longer than 255 characters in db, so catch before we set
-	if (elgg_strlen($name) > 255) {
-		elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
-		return false;
-	}
-
-	$site_guid = (int) $site_guid;
-	if ($site_guid == 0) {
-		$site_guid = (int) $CONFIG->site_guid;
-	}
-
-	if ($site_guid == $CONFIG->site_guid) {
-		$CONFIG->$name = $value;
-	}
-
-	$escaped_name = sanitize_string($name);
-	$escaped_value = sanitize_string(serialize($value));
-	$result = insert_data("INSERT INTO {$CONFIG->dbprefix}config
-		SET name = '$escaped_name', value = '$escaped_value', site_guid = $site_guid
-		ON DUPLICATE KEY UPDATE value = '$escaped_value'");
-
-	return $result !== false;
+	return _elgg_services()->configTable->set($name, $value, $site_guid);
 }
 
 /**
@@ -274,61 +233,7 @@ function set_config($name, $value, $site_guid = 0) {
  * @access private
  */
 function get_config($name, $site_guid = 0) {
-	global $CONFIG;
-
-	$name = trim($name);
-
-	$site_guid = (int) $site_guid;
-
-	// check for deprecated values.
-	// @todo might be a better spot to define this?
-	$new_name = false;
-	switch($name) {
-		case 'viewpath':
-			$new_name = 'view_path';
-			break;
-
-		case 'pluginspath':
-			$new_name = 'plugins_path';
-			break;
-
-		case 'sitename':
-			$new_name = 'site_name';
-			break;
-	}
-
-	// @todo these haven't really been implemented in Elgg 1.8. Complete in 1.9.
-	// show dep message
-	if ($new_name) {
-		//	$msg = "Config value $name has been renamed as $new_name";
-		$name = $new_name;
-		//	elgg_deprecated_notice($msg, $dep_version);
-	}
-
-	if ($site_guid == 0) {
-		$site_guid = (int) $CONFIG->site_guid;
-	}
-
-	// decide from where to return the value
-	if ($site_guid == $CONFIG->site_guid && isset($CONFIG->$name)) {
-		return $CONFIG->$name;
-	}
-
-	$escaped_name = sanitize_string($name);
-	$result = get_data_row("SELECT value FROM {$CONFIG->dbprefix}config
-		WHERE name = '$escaped_name' AND site_guid = $site_guid");
-
-	if ($result) {
-		$result = unserialize($result->value);
-
-		if ($site_guid == $CONFIG->site_guid) {
-			$CONFIG->$name = $result;
-		}
-
-		return $result;
-	}
-
-	return null;
+	return _elgg_services()->configTable->get($name, $site_guid);
 }
 
 /**
@@ -340,24 +245,7 @@ function get_config($name, $site_guid = 0) {
  * @access private
  */
 function _elgg_get_all_config($site_guid = 0) {
-	global $CONFIG;
-
-	$site_guid = (int) $site_guid;
-
-	if ($site_guid == 0) {
-		$site_guid = (int) $CONFIG->site_guid;
-	}
-
-	if ($result = get_data("SELECT * FROM {$CONFIG->dbprefix}config WHERE site_guid = $site_guid")) {
-		foreach ($result as $r) {
-			$name = $r->name;
-			$value = $r->value;
-			$CONFIG->$name = unserialize($value);
-		}
-
-		return true;
-	}
-	return false;
+	return _elgg_services()->configTable->loadAll();
 }
 
 /**

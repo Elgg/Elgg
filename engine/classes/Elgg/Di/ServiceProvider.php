@@ -13,6 +13,8 @@ namespace Elgg\Di;
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \ElggCrypto                              $crypto
+ * @property-read \Elgg\Config                             $config
+ * @property-read \Elgg\Database\ConfigTable               $configTable
  * @property-read \Elgg\Database\Datalist                  $datalist
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\EventsService                      $events
@@ -49,6 +51,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
 		$this->setClassName('autoP', '\ElggAutoP');
 		$this->setClassName('config', '\Elgg\Config');
+		$this->setClassName('configTable', '\Elgg\Database\ConfigTable');
 		$this->setValue('context', new \Elgg\Context());
 		$this->setClassName('crypto', '\ElggCrypto');
 		$this->setClassName('datalist', '\Elgg\Database\Datalist');
