@@ -733,9 +733,6 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
 
 	if ($item->getConfirmText()) {
 		$vars['confirm'] = $item->getConfirmText();
-		return elgg_view('output/confirmlink', $vars);
-	} else {
-		unset($vars['confirm']);
 	}
 
 	return elgg_view('output/url', $vars);

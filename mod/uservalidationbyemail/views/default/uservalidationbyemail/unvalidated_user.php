@@ -16,19 +16,19 @@ $checkbox = elgg_view('input/checkbox', array(
 
 $created = elgg_echo('uservalidationbyemail:admin:user_created', array(elgg_view_friendly_time($user->time_created)));
 
-$validate = elgg_view('output/confirmlink', array(
+$validate = elgg_view('output/url', array(
 	'confirm' => elgg_echo('uservalidationbyemail:confirm_validate_user', array($user->username)),
 	'href' => "action/uservalidationbyemail/validate/?user_guids[]=$user->guid",
 	'text' => elgg_echo('uservalidationbyemail:admin:validate')
 ));
 
-$resend_email = elgg_view('output/confirmlink', array(
+$resend_email = elgg_view('output/url', array(
 	'confirm' => elgg_echo('uservalidationbyemail:confirm_resend_validation', array($user->username)),
 	'href' => "action/uservalidationbyemail/resend_validation/?user_guids[]=$user->guid",
 	'text' => elgg_echo('uservalidationbyemail:admin:resend_validation')
 ));
 
-$delete = elgg_view('output/confirmlink', array(
+$delete = elgg_view('output/url', array(
 	'confirm' => elgg_echo('uservalidationbyemail:confirm_delete', array($user->username)),
 	'href' => "action/uservalidationbyemail/delete/?user_guids[]=$user->guid",
 	'text' => elgg_echo('delete')

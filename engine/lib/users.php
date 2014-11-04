@@ -907,7 +907,7 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 			$url = elgg_add_action_tokens_to_url($url);
 			$item = new \ElggMenuItem($action, elgg_echo($action), $url);
 			$item->setSection('admin');
-			$item->setLinkClass('elgg-requires-confirmation');
+			$item->setConfirmText(true);
 
 			$return[] = $item;
 		}

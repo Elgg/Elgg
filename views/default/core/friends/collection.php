@@ -21,11 +21,12 @@ echo "<li><h2>";
 //as collections are private, check that the logged in user is the owner
 if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
 	echo "<div class=\"friends_collections_controls\">";
-	echo elgg_view('output/confirmlink', array(
+	echo elgg_view('output/url', array(
 			'href' => 'action/friends/collections/delete?collection=' . $coll->id,
 			'class' => 'delete_collection',
 			'text' => elgg_view_icon('delete'),
 			'encode_text' => false,
+			'confirm' => true,
 		));
 	echo "</div>";
 }

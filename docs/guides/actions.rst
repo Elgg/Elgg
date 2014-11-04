@@ -399,7 +399,6 @@ A few views and functions automatically generate security tokens:
 .. code:: php
 
    elgg_view('output/url', array('is_action' => TRUE));
-   elgg_view('output/confirmlink');
    elgg_view('input/securitytoken');
    $url = elgg_add_action_tokens_to_url("http://localhost/elgg/action/example");
 

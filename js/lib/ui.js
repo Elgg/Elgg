@@ -22,7 +22,10 @@ elgg.ui.init = function () {
 
 	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
 
-	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
+    $('*[data-confirm], .elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
+    if ($('.elgg-requires-confirmation').length > 0) {
+        elgg.deprecated_notice('Use of .elgg-requires-confirmation is deprecated by data-confirm', '1.10');
+    }
 
 	$('.elgg-autofocus').focus();
 	if ($('.elgg-autofocus').length > 0) {

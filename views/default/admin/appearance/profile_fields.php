@@ -6,7 +6,7 @@
 $add = elgg_view_form('profile/fields/add', array('class' => 'elgg-form-settings'), array());
 $list = elgg_view('admin/appearance/profile_fields/list');
 
-$reset = elgg_view('output/confirmlink', array(
+$reset = elgg_view('output/url', array(
 	'text' => elgg_echo('reset'),
 	'href' => 'action/profile/fields/reset',
 	'title' => elgg_echo('profile:resetdefault'),

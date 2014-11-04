@@ -80,10 +80,8 @@
  *                          item_class  => STR  A class or classes for the <li> tag
  *
  *                          Additional options that the view output/url takes can be
- *							passed in the array. If the 'confirm' key is passed, the
- *							menu link uses the 'output/confirmlink' view. Custom
- *							options can be added by using the 'data' key with the
- *							value being an associative array.
+ *							passed in the array. Custom options can be added by using
+ *							the 'data' key with the	value being an associative array.
  *
  * @return bool
  * @since 1.8.0
