@@ -53,6 +53,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('crypto', '\ElggCrypto');
 		$this->setClassName('datalist', '\Elgg\Database\Datalist');
 		$this->setFactory('db', array($this, 'getDatabase'));
+		$this->setClassName('entityTable', '\Elgg\Database\EntityTable');
 		$this->setFactory('events', array($this, 'getEvents'));
 		$this->setClassName('externalFiles', '\Elgg\Assets\ExternalFiles');
 		$this->setFactory('hooks', array($this, 'getHooks'));
