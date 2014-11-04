@@ -196,7 +196,7 @@ function _elgg_get_metastring_based_objects($options) {
 
 		// sql
 		'order_by' => 'n_table.time_created asc',
-		'limit' => 10,
+		'limit' => elgg_get_config('default_limit'),
 		'offset' => 0,
 		'count' => false,
 		'selects' => array(),

@@ -23,7 +23,7 @@ if (elgg_instanceof($blog, 'object', 'blog') && $blog->canEdit()) {
 	// count(FALSE) == 1!  AHHH!!!
 	$saved_revisions = $blog->getAnnotations(array(
 		'annotation_name' => 'blog_revision',
-		'limit' => 10,
+		'limit' => elgg_get_config('default_limit'),
 		'reverse_order_by' => true,
 	));
 	if ($saved_revisions) {

@@ -171,6 +171,13 @@ $CONFIG->sitedescription;
 $CONFIG->siteemail;
 
 /**
+ * The default "limit" used in site queries.
+ *
+ * @global int $CONFIG->default_limit
+ */
+$CONFIG->default_limit;
+
+/**
  * The current view type
  *
  * View types determin the location of view files that are used to draw pages.

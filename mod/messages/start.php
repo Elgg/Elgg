@@ -348,14 +348,14 @@ function count_unread_messages() {
  * Returns the unread messages in a user's inbox
  *
  * @param int  $user_guid GUID of user whose inbox we're counting (0 for logged in user)
- * @param int  $limit     Number of unread messages to return (default = 10)
+ * @param int  $limit     Number of unread messages to return (default from settings)
  * @param int  $offset    Start at a defined offset (for listings)
  * @param bool $count     Switch between entities array or count mode
  *
  * @return array, int (if $count = true)
  * @since 1.9
  */
-function messages_get_unread($user_guid = 0, $limit = 10, $offset = 0, $count = false) {
+function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count = false) {
 	if (!$user_guid) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
@@ -368,6 +368,10 @@ function messages_get_unread($user_guid = 0, $limit = 10, $offset = 0, $count = 
 	foreach ($strings as $string) {
 		$id = elgg_get_metastring_id($string);
 		$map[$string] = $id;
+	}
+
+	if ($limit === null) {
+		$limit = elgg_get_config('default_limit');
 	}
 
 	$options = array(
