@@ -138,6 +138,11 @@ class SimpleCache {
 		return true;
 	}
 
+	/**
+	 * Set up $CONFIG appropriately on engine boot.
+	 *
+	 * @return void
+	 */
 	function init() {
 		global $CONFIG;
 
