@@ -11,7 +11,8 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 
 		$svcClasses = array(
 			'actions' => '\Elgg\ActionsService',
-			
+			'annotations' => '\Elgg\Database\Annotations',
+
 			// requires _elgg_get_simplecache_root() to be defined
 			//'amdConfig' => '\Elgg\Amd\Config',
 			
