@@ -33,6 +33,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			
 			// Will this start session?
 			//'session' => '\ElggSession'
+			'stickyForms' => '\Elgg\Forms\StickyForms',
 			
 			'simpleCache' => '\Elgg\Cache\SimpleCache',
 			'subtypeTable' => '\Elgg\Database\SubtypeTable',
