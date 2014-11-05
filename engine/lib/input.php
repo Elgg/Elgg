@@ -101,18 +101,7 @@ function is_email_address($address) {
  * @since 1.8.0
  */
 function elgg_make_sticky_form($form_name) {
-
-	elgg_clear_sticky_form($form_name);
-
-	$session = _elgg_services()->session;
-	$data = $session->get('sticky_forms', array());
-	$req = _elgg_services()->request;
-
-	// will go through XSS filtering in elgg_get_sticky_value()
-	$vars = array_merge($req->query->all(), $req->request->all());
-	$data[$form_name] = $vars;
-
-	$session->set('sticky_forms', $data);
+	_elgg_services()->stickyForms->makeStickyForm($form_name);
 }
 
 /**
@@ -128,10 +117,7 @@ function elgg_make_sticky_form($form_name) {
  * @since 1.8.0
  */
 function elgg_clear_sticky_form($form_name) {
-	$session = _elgg_services()->session;
-	$data = $session->get('sticky_forms', array());
-	unset($data[$form_name]);
-	$session->set('sticky_forms', $data);
+	_elgg_services()->stickyForms->clearStickyForm($form_name);
 }
 
 /**
@@ -143,9 +129,7 @@ function elgg_clear_sticky_form($form_name) {
  * @since 1.8.0
  */
 function elgg_is_sticky_form($form_name) {
-	$session = _elgg_services()->session;
-	$data = $session->get('sticky_forms', array());
-	return isset($data[$form_name]);
+	return _elgg_services()->stickyForms->isStickyForm($form_name);
 }
 
 /**
@@ -162,17 +146,8 @@ function elgg_is_sticky_form($form_name) {
  * @since 1.8.0
  */
 function elgg_get_sticky_value($form_name, $variable = '', $default = null, $filter_result = true) {
-	$session = _elgg_services()->session;
-	$data = $session->get('sticky_forms', array());
-	if (isset($data[$form_name][$variable])) {
-		$value = $data[$form_name][$variable];
-		if ($filter_result) {
-			// XSS filter result
-			$value = filter_tags($value);
-		}
-		return $value;
-	}
-	return $default;
+	return _elgg_services()->stickyForms->getStickyValue($form_name, $variable, $default, $filter_result);
+
 }
 
 /**
@@ -185,20 +160,7 @@ function elgg_get_sticky_value($form_name, $variable = '', $default = null, $fil
  * @since 1.8.0
  */
 function elgg_get_sticky_values($form_name, $filter_result = true) {
-	$session = _elgg_services()->session;
-	$data = $session->get('sticky_forms', array());
-	if (!isset($data[$form_name])) {
-		return array();
-	}
-
-	$values = $data[$form_name];
-	if ($filter_result) {
-		foreach ($values as $key => $value) {
-			// XSS filter result
-			$values[$key] = filter_tags($value);
-		}
-	}
-	return $values;
+	return _elgg_services()->stickyForms->getStickyValues($form_name, $filter_result);
 }
 
 /**
@@ -211,10 +173,7 @@ function elgg_get_sticky_values($form_name, $filter_result = true) {
  * @since 1.8.0
  */
 function elgg_clear_sticky_value($form_name, $variable) {
-	$session = _elgg_services()->session;
-	$data = $session->get('sticky_forms', array());
-	unset($data[$form_name][$variable]);
-	$session->set('sticky_forms', $data);
+	_elgg_services()->stickyForms->clearStickyValue($form_name, $variable);
 }
 
 /**
