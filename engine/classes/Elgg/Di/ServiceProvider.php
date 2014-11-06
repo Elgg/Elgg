@@ -33,6 +33,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Forms\StickyForms                  $stickyForms
  * @property-read \Elgg\Database\SubtypeTable              $subtypeTable
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
+ * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
  * 
@@ -77,6 +78,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('stickyForms', 'Elgg\Forms\StickyForms');
 		$this->setClassName('subtypeTable', '\Elgg\Database\SubtypeTable');
 		$this->setClassName('systemCache', '\Elgg\Cache\SystemCache');
+		$this->setClassName('usersTable', '\Elgg\Database\UsersTable');
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setClassName('widgets', '\Elgg\WidgetsService');
 		$this->setFactory('notifications', array($this, 'getNotifications'));
