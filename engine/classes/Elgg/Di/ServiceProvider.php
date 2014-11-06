@@ -27,6 +27,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\Http\Request                       $request
+ * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
  * @property-read \Elgg\Router                             $router
  * @property-read \ElggSession                             $session
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
@@ -71,6 +72,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('ownerPreloader', array($this, 'getOwnerPreloader'));
 		$this->setFactory('queryCounter', array($this, 'getQueryCounter'), false);
 		$this->setFactory('request', array($this, 'getRequest'));
+		$this->setClassName('relationshipsTable', '\Elgg\Database\RelationshipsTable');
 		$this->setFactory('router', array($this, 'getRouter'));
 		$this->setFactory('session', array($this, 'getSession'));
 		$this->setClassName('simpleCache', '\Elgg\Cache\SimpleCache');
