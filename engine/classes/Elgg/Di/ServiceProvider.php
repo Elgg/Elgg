@@ -30,6 +30,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Router                             $router
  * @property-read \ElggSession                             $session
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
+ * @property-read \Elgg\Database\SiteSecret                $siteSecret
  * @property-read \Elgg\Forms\StickyForms                  $stickyForms
  * @property-read \Elgg\Database\SubtypeTable              $subtypeTable
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
@@ -74,6 +75,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('router', array($this, 'getRouter'));
 		$this->setFactory('session', array($this, 'getSession'));
 		$this->setClassName('simpleCache', '\Elgg\Cache\SimpleCache');
+		$this->setClassName('siteSecret', '\Elgg\Database\SiteSecret');
 		$this->setClassName('stickyForms', 'Elgg\Forms\StickyForms');
 		$this->setClassName('subtypeTable', '\Elgg\Database\SubtypeTable');
 		$this->setClassName('systemCache', '\Elgg\Cache\SystemCache');
