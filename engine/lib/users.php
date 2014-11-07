@@ -709,10 +709,31 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
  * @param string $username The username of the user sending the invitation
  *
  * @return string Invite code
+ * @see elgg_validate_invite_code
  */
 function generate_invite_code($username) {
-	$secret = datalist_get('__site_secret__');
-	return md5($username . $secret);
+	$time = time();
+	return $time . "." . _elgg_hmac($time . $username);
+}
+
+/**
+ * Validate a user's invite code
+ *
+ * @param string $username The username
+ * @param string $code     The invite code
+ *
+ * @return bool
+ * @see generate_invite_code
+ * @since 1.10
+ */
+function elgg_validate_invite_code($username, $code) {
+	// This line validates the format of the token created by generate_invite_code()
+	if (!preg_match('~^(\d+)\.(\w+)$~', $code, $m)) {
+		return false;
+	}
+	$time = $m[1];
+	$mac = $m[2];
+	return $mac === _elgg_hmac($time . $username);
 }
 
 /**
