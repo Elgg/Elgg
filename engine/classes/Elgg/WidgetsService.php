@@ -110,11 +110,11 @@ class WidgetsService {
 	public function canEditLayout($context, $user_guid = 0) {
 		$user = get_entity((int)$user_guid);
 		if (!$user) {
-			$user = elgg_get_logged_in_user_entity();
+			$user = _elgg_services()->session->getLoggedInUser();
 		}
 
 		$return = false;
-		if (elgg_is_admin_logged_in()) {
+		if (_elgg_services()->session->isAdminLoggedIn()) {
 			$return = true;
 		}
 		if (elgg_get_page_owner_guid() == $user->guid) {

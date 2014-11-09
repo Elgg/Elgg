@@ -45,7 +45,7 @@ class ViewsService {
 	 * @return \Elgg\DeprecationWrapper|null
 	 */
 	protected function getUserWrapper() {
-		$user = elgg_get_logged_in_user_entity();
+		$user = _elgg_services()->session->getLoggedInUser();
 		if ($user) {
 			if ($user !== $this->user_wrapped) {
 				$warning = 'Use elgg_get_logged_in_user_entity() rather than assuming elgg_view() '
