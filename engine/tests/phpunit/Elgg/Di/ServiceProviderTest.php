@@ -40,6 +40,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			'simpleCache' => '\Elgg\Cache\SimpleCache',
 			'subtypeTable' => '\Elgg\Database\SubtypeTable',
 			'systemCache' => '\Elgg\Cache\SystemCache',
+			'usersTable' => '\Elgg\Database\UsersTable',
 			'views' => '\Elgg\ViewsService',
 			'widgets' => '\Elgg\WidgetsService',
 		);
