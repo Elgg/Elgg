@@ -32,12 +32,13 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			'metadataCache' => '\ElggVolatileMetadataCache',
 			'request' => '\Elgg\Http\Request',
 			'router' => '\Elgg\Router',
-			
+
 			// Will this start session?
 			//'session' => '\ElggSession'
-			'stickyForms' => '\Elgg\Forms\StickyForms',
-			
+
 			'simpleCache' => '\Elgg\Cache\SimpleCache',
+			'siteSecret' => '\Elgg\Database\SiteSecret',
+			'stickyForms' => '\Elgg\Forms\StickyForms',
 			'subtypeTable' => '\Elgg\Database\SubtypeTable',
 			'systemCache' => '\Elgg\Cache\SystemCache',
 			'usersTable' => '\Elgg\Database\UsersTable',

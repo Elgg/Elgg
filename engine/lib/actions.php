@@ -191,13 +191,7 @@ function generate_action_token($timestamp) {
  * @todo Move to better file.
  */
 function init_site_secret() {
-	$secret = 'z' . _elgg_services()->crypto->getRandomString(31);
-
-	if (datalist_set('__site_secret__', $secret)) {
-		return $secret;
-	}
-
-	return false;
+	return _elgg_services()->siteSecret->init();
 }
 
 /**
@@ -210,12 +204,7 @@ function init_site_secret() {
  * @todo Move to better file.
  */
 function get_site_secret() {
-	$secret = datalist_get('__site_secret__');
-	if (!$secret) {
-		$secret = init_site_secret();
-	}
-
-	return $secret;
+	return _elgg_services()->siteSecret->get();
 }
 
 /**
@@ -225,17 +214,7 @@ function get_site_secret() {
  * @access private
  */
 function _elgg_get_site_secret_strength() {
-	$secret = get_site_secret();
-	if ($secret[0] !== 'z') {
-		$rand_max = getrandmax();
-		if ($rand_max < pow(2, 16)) {
-			return 'weak';
-		}
-		if ($rand_max < pow(2, 32)) {
-			return 'moderate';
-		}
-	}
-	return 'strong';
+	return _elgg_services()->siteSecret->getStrength();
 }
 
 /**
