@@ -247,7 +247,7 @@ class ElggWidget extends \ElggObject {
 			'widget' => $this,
 			'params' => $params
 		);
-		if (elgg_trigger_plugin_hook('widget_settings', $this->handler, $hook_params, false) == true) {
+		if (_elgg_services()->hooks->trigger('widget_settings', $this->handler, $hook_params, false) == true) {
 			return true;
 		}
 

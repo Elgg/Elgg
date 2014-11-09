@@ -45,7 +45,7 @@ class UsersTable {
 		global $CONFIG;
 		$owner_guid = (int) $owner_guid;
 		if ($entity = get_entity($owner_guid)) {
-			if (elgg_trigger_event('disable', $entity->type, $entity)) {
+			if (_elgg_services()->events->trigger('disable', $entity->type, $entity)) {
 				if ($entity->canEdit()) {
 					$query = "UPDATE {$CONFIG->dbprefix}entities
 						set enabled='no' where owner_guid={$owner_guid}
@@ -76,7 +76,7 @@ class UsersTable {
 		$user = get_entity($user_guid);
 	
 		if (($user) && ($user->canEdit()) && ($user instanceof \ElggUser)) {
-			if (elgg_trigger_event('ban', 'user', $user)) {
+			if (_elgg_services()->events->trigger('ban', 'user', $user)) {
 				// Add reason
 				if ($reason) {
 					create_metadata($user_guid, 'ban_reason', $reason, '', 0, ACCESS_PUBLIC);
@@ -118,7 +118,7 @@ class UsersTable {
 		$user = get_entity($user_guid);
 	
 		if (($user) && ($user->canEdit()) && ($user instanceof \ElggUser)) {
-			if (elgg_trigger_event('unban', 'user', $user)) {
+			if (_elgg_services()->events->trigger('unban', 'user', $user)) {
 				create_metadata($user_guid, 'ban_reason', '', '', 0, ACCESS_PUBLIC);
 	
 				// invalidate memcache for this user
@@ -155,7 +155,7 @@ class UsersTable {
 		$user = get_entity((int)$user_guid);
 	
 		if (($user) && ($user instanceof \ElggUser) && ($user->canEdit())) {
-			if (elgg_trigger_event('make_admin', 'user', $user)) {
+			if (_elgg_services()->events->trigger('make_admin', 'user', $user)) {
 	
 				// invalidate memcache for this user
 				static $newentity_cache;
@@ -191,7 +191,7 @@ class UsersTable {
 		$user = get_entity((int)$user_guid);
 	
 		if (($user) && ($user instanceof \ElggUser) && ($user->canEdit())) {
-			if (elgg_trigger_event('remove_admin', 'user', $user)) {
+			if (_elgg_services()->events->trigger('remove_admin', 'user', $user)) {
 	
 				// invalidate memcache for this user
 				static $newentity_cache;
@@ -350,7 +350,7 @@ class UsersTable {
 			'count' => $options['count'],
 			'options' => $options,
 		);
-		$data = elgg_trigger_plugin_hook('find_active_users', 'system', $params, null);
+		$data = _elgg_services()->hooks->trigger('find_active_users', 'system', $params, null);
 		// check null because the handler could legitimately return falsey values.
 		if ($data !== null) {
 			return $data;

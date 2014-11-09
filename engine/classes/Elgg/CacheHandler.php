@@ -212,7 +212,7 @@ class CacheHandler {
 			'viewtype' => $viewtype,
 			'view_content' => $content,
 		);
-		return elgg_trigger_plugin_hook('simplecache:generate', $hook_type, $hook_params, $content);
+		return _elgg_services()->hooks->trigger('simplecache:generate', $hook_type, $hook_params, $content);
 	}
 
 	/**

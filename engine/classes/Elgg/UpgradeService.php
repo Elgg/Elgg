@@ -33,8 +33,8 @@ class UpgradeService {
 		}
 
 		// disable the system log for upgrades to avoid exceptions when the schema changes.
-		elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
-		elgg_unregister_event_handler('all', 'all', 'system_log_listener');
+		_elgg_services()->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
+		_elgg_services()->events->unregisterHandler('all', 'all', 'system_log_listener');
 
 		// turn off time limit
 		set_time_limit(0);
@@ -43,7 +43,7 @@ class UpgradeService {
 			$this->processUpgrades();
 		}
 
-		elgg_trigger_event('upgrade', 'system', null);
+		_elgg_services()->events->trigger('upgrade', 'system', null);
 		elgg_invalidate_simplecache();
 		elgg_reset_system_cache();
 
@@ -266,7 +266,7 @@ class UpgradeService {
 			$upgrade_details->from = $dbversion;
 			$upgrade_details->to = elgg_get_version();
 
-			elgg_trigger_event('upgrade', 'upgrade', $upgrade_details);
+			_elgg_services()->events->trigger('upgrade', 'upgrade', $upgrade_details);
 
 			return true;
 		}

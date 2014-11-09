@@ -212,7 +212,7 @@ class ViewsService {
 		// Trigger the pagesetup event
 		if (!isset($CONFIG->pagesetupdone) && $CONFIG->boot_complete) {
 			$CONFIG->pagesetupdone = true;
-			elgg_trigger_event('pagesetup', 'system');
+			_elgg_services()->events->trigger('pagesetup', 'system');
 		}
 
 		// @warning - plugin authors: do not expect user, config, and url to be
@@ -305,10 +305,10 @@ class ViewsService {
 
 		// Plugin hook
 		$params = array('view' => $view_orig, 'vars' => $vars, 'viewtype' => $viewtype);
-		$content = elgg_trigger_plugin_hook('view', $view_orig, $params, $content);
+		$content = _elgg_services()->hooks->trigger('view', $view_orig, $params, $content);
 
 		// backward compatibility with less granular hook will be gone in 2.0
-		$content_tmp = elgg_trigger_plugin_hook('display', 'view', $params, $content);
+		$content_tmp = _elgg_services()->hooks->trigger('display', 'view', $params, $content);
 
 		if ($content_tmp !== $content) {
 			$content = $content_tmp;

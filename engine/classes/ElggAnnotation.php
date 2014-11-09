@@ -147,7 +147,7 @@ class ElggAnnotation extends \ElggExtender {
 
 		// Trigger plugin hook - note that $user may be null
 		$params = array('entity' => $entity, 'user' => $user, 'annotation' => $this);
-		return elgg_trigger_plugin_hook('permissions_check', 'annotation', $params, $result);
+		return _elgg_services()->hooks->trigger('permissions_check', 'annotation', $params, $result);
 	}
 
 	// SYSTEM LOG INTERFACE

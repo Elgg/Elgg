@@ -159,7 +159,7 @@ class ElggFile extends \ElggObject {
 			'original_filename' => $file->originalfilename, // @see file upload action
 			'default' => $default,
 		);
-		return elgg_trigger_plugin_hook('mime_type', 'file', $params, $mime);
+		return _elgg_services()->hooks->trigger('mime_type', 'file', $params, $mime);
 	}
 
 	/**

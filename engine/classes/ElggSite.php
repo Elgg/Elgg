@@ -491,7 +491,7 @@ class ElggSite extends \ElggEntity {
 			if ($CONFIG->default_access == ACCESS_PUBLIC) {
 				$CONFIG->default_access = ACCESS_LOGGED_IN;
 			}
-			elgg_register_plugin_hook_handler(
+			_elgg_services()->hooks->registerHandler(
 					'access:collections:write',
 					'all',
 					'_elgg_walled_garden_remove_public_access',
@@ -558,7 +558,7 @@ class ElggSite extends \ElggEntity {
 		);
 
 		// include a hook for plugin authors to include public pages
-		$plugins = elgg_trigger_plugin_hook('public_pages', 'walled_garden', null, array());
+		$plugins = _elgg_services()->hooks->trigger('public_pages', 'walled_garden', null, array());
 
 		// allow public pages
 		foreach (array_merge($defaults, $plugins) as $public) {
