@@ -324,7 +324,7 @@ class UpgradeService {
 
 		if (!$this->isUpgradeLocked()) {
 			// lock it
-			insert_data("create table {$CONFIG->dbprefix}upgrade_lock (id INT)");
+			_elgg_services()->db->insertData("create table {$CONFIG->dbprefix}upgrade_lock (id INT)");
 			elgg_log('Locked for upgrade.', 'NOTICE');
 			return true;
 		}
@@ -340,7 +340,7 @@ class UpgradeService {
 	 */
 	public function releaseUpgradeMutex() {
 		global $CONFIG;
-		delete_data("drop table {$CONFIG->dbprefix}upgrade_lock");
+		_elgg_services()->db->deleteData("drop table {$CONFIG->dbprefix}upgrade_lock");
 		elgg_log('Upgrade unlocked.', 'NOTICE');
 	}
 
@@ -352,7 +352,7 @@ class UpgradeService {
 	public function isUpgradeLocked() {
 		global $CONFIG;
 
-		$is_locked = count(get_data("SHOW TABLES LIKE '{$CONFIG->dbprefix}upgrade_lock'"));
+		$is_locked = count(_elgg_services()->db->getData("SHOW TABLES LIKE '{$CONFIG->dbprefix}upgrade_lock'"));
 
 		return (bool)$is_locked;
 	}
@@ -412,12 +412,12 @@ class UpgradeService {
 					// hide all errors.
 					if ($quiet) {
 						try {
-							run_sql_script($fromdir . $sqlfile);
+							_elgg_services()->db->runSqlScript($fromdir . $sqlfile);
 						} catch (\DatabaseException $e) {
 							error_log($e->getmessage());
 						}
 					} else {
-						run_sql_script($fromdir . $sqlfile);
+						_elgg_services()->db->runSqlScript($fromdir . $sqlfile);
 					}
 					$i++;
 				}

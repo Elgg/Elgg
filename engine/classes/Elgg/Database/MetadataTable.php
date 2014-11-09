@@ -82,7 +82,7 @@ class MetadataTable {
 		$query = "SELECT * from {$CONFIG->dbprefix}metadata"
 			. " WHERE entity_guid = $entity_guid and name_id=" . elgg_get_metastring_id($name) . " limit 1";
 	
-		$existing = get_data_row($query);
+		$existing = _elgg_services()->db->getDataRow($query);
 		if ($existing && !$allow_multiple) {
 			$id = (int)$existing->id;
 			$result = update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id);
@@ -112,7 +112,7 @@ class MetadataTable {
 				. " (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)"
 				. " VALUES ($entity_guid, '$name_id','$value_id','$value_type', $owner_guid, $time, $access_id)";
 	
-			$id = insert_data($query);
+			$id = _elgg_services()->db->insertData($query);
 	
 			if ($id !== false) {
 				$obj = elgg_get_metadata_from_id($id);
@@ -194,7 +194,7 @@ class MetadataTable {
 			. " set name_id='$name_id', value_id='$value_id', value_type='$value_type', access_id=$access_id,"
 			. " owner_guid=$owner_guid where id=$id";
 	
-		$result = update_data($query);
+		$result = _elgg_services()->db->updateData($query);
 		if ($result !== false) {
 	
 			_elgg_get_metadata_cache()->save($md->entity_guid, $name, $value);
@@ -772,7 +772,7 @@ class MetadataTable {
 				$access_id = (int) $object->access_id;
 				$guid = (int) $object->getGUID();
 				$query = "update {$db_prefix}metadata set access_id = {$access_id} where entity_guid = {$guid}";
-				update_data($query);
+				_elgg_services()->db->updateData($query);
 			}
 		}
 		return true;

@@ -31,7 +31,7 @@ class UsersTable {
 		global $CONFIG;
 	
 		$guid = (int)$guid;
-		return get_data_row("SELECT * from {$CONFIG->dbprefix}users_entity where guid=$guid");
+		return _elgg_services()->db->getDataRow("SELECT * from {$CONFIG->dbprefix}users_entity where guid=$guid");
 	}
 	
 	/**
@@ -51,7 +51,7 @@ class UsersTable {
 						set enabled='no' where owner_guid={$owner_guid}
 						or container_guid = {$owner_guid}";
 	
-					$res = update_data($query);
+					$res = _elgg_services()->db->updateData($query);
 					return $res;
 				}
 			}
@@ -94,7 +94,7 @@ class UsersTable {
 	
 				// Set ban flag
 				$query = "UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid";
-				return update_data($query);
+				return _elgg_services()->db->updateData($query);
 			}
 	
 			return false;
@@ -133,7 +133,7 @@ class UsersTable {
 	
 	
 				$query = "UPDATE {$CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid";
-				return update_data($query);
+				return _elgg_services()->db->updateData($query);
 			}
 	
 			return false;
@@ -167,7 +167,7 @@ class UsersTable {
 					$newentity_cache->delete($user_guid);
 				}
 	
-				$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='yes' where guid=$user_guid");
+				$r = _elgg_services()->db->updateData("UPDATE {$CONFIG->dbprefix}users_entity set admin='yes' where guid=$user_guid");
 				_elgg_invalidate_cache_for_entity($user_guid);
 				return $r;
 			}
@@ -203,7 +203,7 @@ class UsersTable {
 					$newentity_cache->delete($user_guid);
 				}
 	
-				$r = update_data("UPDATE {$CONFIG->dbprefix}users_entity set admin='no' where guid=$user_guid");
+				$r = _elgg_services()->db->updateData("UPDATE {$CONFIG->dbprefix}users_entity set admin='no' where guid=$user_guid");
 				_elgg_invalidate_cache_for_entity($user_guid);
 				return $r;
 			}
@@ -268,7 +268,7 @@ class UsersTable {
 			JOIN {$CONFIG->dbprefix}entities e ON e.guid = u.guid
 			WHERE u.username = '$username' AND $access";
 	
-		$entity = get_data_row($query, 'entity_row_to_elggstar');
+		$entity = _elgg_services()->db->getDataRow($query, 'entity_row_to_elggstar');
 		if ($entity) {
 			$USERNAME_TO_GUID_MAP_CACHE[$username] = $entity->guid;
 		} else {
@@ -296,7 +296,7 @@ class UsersTable {
 			JOIN {$CONFIG->dbprefix}users_entity u ON e.guid = u.guid
 			WHERE email = '$email' AND $access";
 	
-		return get_data($query, 'entity_row_to_elggstar');
+		return _elgg_services()->db->getData($query, 'entity_row_to_elggstar');
 	}
 	
 	/**

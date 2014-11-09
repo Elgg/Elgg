@@ -627,7 +627,7 @@ class ElggInstaller {
 
 		// check that the config table has been created
 		$query = "show tables";
-		$result = get_data($query);
+		$result = _elgg_services()->db->getData($query);
 		if ($result) {
 			foreach ($result as $table) {
 				$table = (array) $table;
@@ -645,7 +645,7 @@ class ElggInstaller {
 
 		// check that the config table has entries
 		$query = "SELECT COUNT(*) AS total FROM {$CONFIG->dbprefix}config";
-		$result = get_data($query);
+		$result = _elgg_services()->db->getData($query);
 		if ($result && $result[0]->total > 0) {
 			$this->status['settings'] = TRUE;
 		} else {
@@ -654,7 +654,7 @@ class ElggInstaller {
 
 		// check that the users entity table has an entry
 		$query = "SELECT COUNT(*) AS total FROM {$CONFIG->dbprefix}users_entity";
-		$result = get_data($query);
+		$result = _elgg_services()->db->getData($query);
 		if ($result && $result[0]->total > 0) {
 			$this->status['admin'] = TRUE;
 		} else {
@@ -1292,7 +1292,7 @@ class ElggInstaller {
 		global $CONFIG;
 
 		try {
-			run_sql_script("{$CONFIG->path}engine/schema/mysql.sql");
+			_elgg_services()->db->runSqlScript("{$CONFIG->path}engine/schema/mysql.sql");
 		} catch (Exception $e) {
 			$msg = $e->getMessage();
 			if (strpos($msg, 'already exists')) {
