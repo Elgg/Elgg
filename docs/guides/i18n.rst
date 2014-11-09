@@ -65,6 +65,17 @@ To force which language should be used for translation, set the third parameter:
 
    echo elgg_echo(‘welcome’, array(), ‘es’);
 
+If you want to automatically fallback to different message keys, give an array
+of them as ``$key``. The function will try all of them and return ``false`` if no
+translation can be found.
+
+.. code:: php
+
+    $keys = array('key_that_may_not_exist', 'fallback_key');
+    $translation = elgg_echo($keys);
+    if ($translation === false) {
+        // no translation was available, including in English
+    }
 
 
 Javascript API
