@@ -44,6 +44,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			'stickyForms' => '\Elgg\Forms\StickyForms',
 			'subtypeTable' => '\Elgg\Database\SubtypeTable',
 			'systemCache' => '\Elgg\Cache\SystemCache',
+			'translator' => '\Elgg\I18n\Translator',
 			'usersTable' => '\Elgg\Database\UsersTable',
 			'views' => '\Elgg\ViewsService',
 			'widgets' => '\Elgg\WidgetsService',
