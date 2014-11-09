@@ -116,7 +116,7 @@ class MetadataTable {
 	
 			if ($id !== false) {
 				$obj = elgg_get_metadata_from_id($id);
-				if (elgg_trigger_event('create', 'metadata', $obj)) {
+				if (_elgg_services()->events->trigger('create', 'metadata', $obj)) {
 	
 					_elgg_get_metadata_cache()->save($entity_guid, $name, $value, $allow_multiple);
 	
@@ -203,7 +203,7 @@ class MetadataTable {
 			// let you do anything about it. What is needed is a plugin hook before
 			// the update that passes old and new values.
 			$obj = elgg_get_metadata_from_id($id);
-			elgg_trigger_event('update', 'metadata', $obj);
+			_elgg_services()->events->trigger('update', 'metadata', $obj);
 		}
 	
 		return $result;

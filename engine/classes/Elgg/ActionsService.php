@@ -66,7 +66,7 @@ class ActionsService {
 		} else {
 			// Returning falsy doesn't produce an error
 			// We assume this will be handled in the hook itself.
-			if (elgg_trigger_plugin_hook('action', $action, null, true)) {
+			if (_elgg_services()->hooks->trigger('action', $action, null, true)) {
 				if (!include($this->actions[$action]['file'])) {
 					register_error(elgg_echo('actionnotfound', array($action)));
 				}
@@ -140,7 +140,7 @@ class ActionsService {
 				if ($this->validateTokenTimestamp($ts)) {
 					// We have already got this far, so unless anything
 					// else says something to the contrary we assume we're ok
-					$returnval = elgg_trigger_plugin_hook('action_gatekeeper:permissions:check', 'all', array(
+					$returnval = _elgg_services()->hooks->trigger('action_gatekeeper:permissions:check', 'all', array(
 						'token' => $token,
 						'time' => $ts
 					), true);
@@ -172,7 +172,7 @@ class ActionsService {
 			$post_count = count($req->request);
 			if ($length && $post_count < 1) {
 				// The size of $_POST or uploaded file has exceed the size limit
-				$error_msg = elgg_trigger_plugin_hook('action_gatekeeper:upload_exceeded_msg', 'all', array(
+				$error_msg = _elgg_services()->hooks->trigger('action_gatekeeper:upload_exceeded_msg', 'all', array(
 					'post_size' => $length,
 					'visible_errors' => $visible_errors,
 				), elgg_echo('actiongatekeeper:uploadexceeded'));
@@ -309,7 +309,7 @@ class ActionsService {
 			}
 
 			$context = array('action' => $this->currentAction);
-			$params = elgg_trigger_plugin_hook('output', 'ajax', $context, $params);
+			$params = _elgg_services()->hooks->trigger('output', 'ajax', $context, $params);
 	
 			// Check the requester can accept JSON responses, if not fall back to
 			// returning JSON in a plain-text response.  Some libraries request

@@ -421,7 +421,7 @@ class ElggGroup extends \ElggEntity
 			'user' => $user,
 			'group' => $this,
 		);
-		return elgg_trigger_plugin_hook('is_member', 'group', $params, $result);
+		return _elgg_services()->hooks->trigger('is_member', 'group', $params, $result);
 	}
 
 	/**
@@ -436,7 +436,7 @@ class ElggGroup extends \ElggEntity
 	
 		if ($result) {
 			$params = array('group' => $this, 'user' => $user);
-			elgg_trigger_event('join', 'group', $params);
+			_elgg_services()->events->trigger('join', 'group', $params);
 		}
 	
 		return $result;
@@ -452,7 +452,7 @@ class ElggGroup extends \ElggEntity
 	public function leave(\ElggUser $user) {
 		// event needs to be triggered while user is still member of group to have access to group acl
 		$params = array('group' => $this, 'user' => $user);
-		elgg_trigger_event('leave', 'group', $params);
+		_elgg_services()->events->trigger('leave', 'group', $params);
 
 		return remove_entity_relationship($user->guid, 'member', $this->guid);
 	}

@@ -57,7 +57,7 @@ class RelationshipsTable {
 	
 		$relationship = get_relationship($id);
 	
-		if (elgg_trigger_event('delete', 'relationship', $relationship)) {
+		if (_elgg_services()->events->trigger('delete', 'relationship', $relationship)) {
 			return delete_data("DELETE FROM {$CONFIG->dbprefix}entity_relationships WHERE id = $id");
 		}
 	
@@ -103,9 +103,9 @@ class RelationshipsTable {
 			$obj = get_relationship($id);
 	
 			// this event has been deprecated in 1.9. Use 'create', 'relationship'
-			$result_old = elgg_trigger_event('create', $relationship, $obj);
+			$result_old = _elgg_services()->events->trigger('create', $relationship, $obj);
 	
-			$result = elgg_trigger_event('create', 'relationship', $obj);
+			$result = _elgg_services()->events->trigger('create', 'relationship', $obj);
 			if ($result && $result_old) {
 				return true;
 			} else {
@@ -171,9 +171,9 @@ class RelationshipsTable {
 		}
 	
 		// this event has been deprecated in 1.9. Use 'delete', 'relationship'
-		$result_old = elgg_trigger_event('delete', $relationship, $obj);
+		$result_old = _elgg_services()->events->trigger('delete', $relationship, $obj);
 	
-		$result = elgg_trigger_event('delete', 'relationship', $obj);
+		$result = _elgg_services()->events->trigger('delete', 'relationship', $obj);
 		if ($result && $result_old) {
 			$query = "DELETE FROM {$CONFIG->dbprefix}entity_relationships
 				WHERE guid_one = $guid_one

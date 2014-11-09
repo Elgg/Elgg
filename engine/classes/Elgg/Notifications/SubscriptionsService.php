@@ -70,7 +70,7 @@ class SubscriptionsService {
 		}
 
 		$params = array('event' => $event);
-		return elgg_trigger_plugin_hook('get', 'subscriptions', $params, $subscriptions);
+		return _elgg_services()->hooks->trigger('get', 'subscriptions', $params, $subscriptions);
 	}
 
 	/**

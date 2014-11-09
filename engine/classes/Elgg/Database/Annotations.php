@@ -81,14 +81,14 @@ class Annotations {
 		// not have access to the entity
 		$entity = get_entity($entity_guid);
 	
-		if (elgg_trigger_event('annotate', $entity->type, $entity)) {
+		if (_elgg_services()->events->trigger('annotate', $entity->type, $entity)) {
 			$result = insert_data("INSERT INTO {$CONFIG->dbprefix}annotations
 				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
 				($entity_guid, $name_id, $value_id, '$value_type', $owner_guid, $time, $access_id)");
 	
 			if ($result !== false) {
 				$obj = elgg_get_annotation_from_id($result);
-				if (elgg_trigger_event('create', 'annotation', $obj)) {
+				if (_elgg_services()->events->trigger('create', 'annotation', $obj)) {
 					return $result;
 				} else {
 					// plugin returned false to reject annotation
@@ -154,7 +154,7 @@ class Annotations {
 		if ($result !== false) {
 			// @todo add plugin hook that sends old and new annotation information before db access
 			$obj = elgg_get_annotation_from_id($annotation_id);
-			elgg_trigger_event('update', 'annotation', $obj);
+			_elgg_services()->events->trigger('update', 'annotation', $obj);
 		}
 	
 		return $result;

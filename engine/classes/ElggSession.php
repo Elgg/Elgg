@@ -296,7 +296,7 @@ class ElggSession implements \ArrayAccess {
 		}
 
 		$orig_value = null;
-		$value = elgg_trigger_plugin_hook('session:get', $key, null, $orig_value);
+		$value = _elgg_services()->hooks->trigger('session:get', $key, null, $orig_value);
 		if ($orig_value !== $value) {
 			elgg_deprecated_notice("Plugin hook session:get has been deprecated.", 1.9);
 		}

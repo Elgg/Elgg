@@ -126,7 +126,7 @@ class WidgetsService {
 			'context' => $context,
 			'page_owner' => elgg_get_page_owner_entity(),
 		);
-		return elgg_trigger_plugin_hook('permissions_check', 'widget_layout', $params, $return);
+		return _elgg_services()->hooks->trigger('permissions_check', 'widget_layout', $params, $return);
 	}
 
 	/**

@@ -157,7 +157,7 @@ class ElggRiverItem {
 		$object->time_posted = date('c', $this->getTimePosted());
 		$object->enabled = $this->enabled;
 		$params = array('item' => $this);
-		return elgg_trigger_plugin_hook('to:object', 'river_item', $params, $object);
+		return _elgg_services()->hooks->trigger('to:object', 'river_item', $params, $object);
 	}
 
 }

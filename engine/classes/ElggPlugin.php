@@ -467,7 +467,7 @@ class ElggPlugin extends \ElggObject {
 
 		// Hook to validate setting
 		// note: this doesn't pass the namespaced name
-		$value = elgg_trigger_plugin_hook('usersetting', 'plugin', array(
+		$value = _elgg_services()->hooks->trigger('usersetting', 'plugin', array(
 			'user' => $user,
 			'plugin' => $this,
 			'plugin_id' => $this->getID(),
@@ -652,7 +652,7 @@ class ElggPlugin extends \ElggObject {
 				'plugin_entity' => $this,
 			);
 
-			$return = elgg_trigger_event('activate', 'plugin', $params);
+			$return = _elgg_services()->events->trigger('activate', 'plugin', $params);
 
 			// if there are any on_enable functions, start the plugin now and run them
 			// Note: this will not run re-run the init hooks!
@@ -694,7 +694,7 @@ class ElggPlugin extends \ElggObject {
 			'plugin_entity' => $this,
 		);
 
-		$return = elgg_trigger_event('deactivate', 'plugin', $params);
+		$return = _elgg_services()->events->trigger('deactivate', 'plugin', $params);
 
 		// run any deactivate code
 		if ($return) {
@@ -942,7 +942,7 @@ class ElggPlugin extends \ElggObject {
 			$this->attributes[$name] = $value;
 		} else {
 			// Hook to validate setting
-			$value = elgg_trigger_plugin_hook('setting', 'plugin', array(
+			$value = _elgg_services()->hooks->trigger('setting', 'plugin', array(
 				'plugin_id' => $this->getID(),
 				'plugin' => $this,
 				'name' => $name,

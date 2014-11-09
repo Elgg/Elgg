@@ -163,7 +163,7 @@ class AccessCollections {
 		);
 	
 		// see the warning in the docs for this function about infinite loop potential
-		return elgg_trigger_plugin_hook('access:collections:read', 'user', $options, $access_array);
+		return _elgg_services()->hooks->trigger('access:collections:read', 'user', $options, $access_array);
 	}
 	
 	/**
@@ -261,7 +261,7 @@ class AccessCollections {
 			$clauses['ands'][] = "{$table_alias}enabled = 'yes'";
 		}
 	
-		$clauses = elgg_trigger_plugin_hook('get_sql', 'access', $options, $clauses);
+		$clauses = _elgg_services()->hooks->trigger('get_sql', 'access', $options, $clauses);
 	
 		$clauses_str = '';
 		if (is_array($clauses['ors']) && $clauses['ors']) {
@@ -398,7 +398,7 @@ class AccessCollections {
 			'user_id' => $user_guid,
 			'site_id' => $site_guid
 		);
-		return elgg_trigger_plugin_hook('access:collections:write', 'user',
+		return _elgg_services()->hooks->trigger('access:collections:write', 'user',
 			$options, $access_array);
 	}
 
@@ -485,7 +485,7 @@ class AccessCollections {
 			'collection_id' => $id
 		);
 	
-		if (!elgg_trigger_plugin_hook('access:collections:addcollection', 'collection', $params, true)) {
+		if (!_elgg_services()->hooks->trigger('access:collections:addcollection', 'collection', $params, true)) {
 			return false;
 		}
 	
@@ -546,7 +546,7 @@ class AccessCollections {
 		$collection_id = (int) $collection_id;
 		$params = array('collection_id' => $collection_id);
 	
-		if (!elgg_trigger_plugin_hook('access:collections:deletecollection', 'collection', $params, true)) {
+		if (!_elgg_services()->hooks->trigger('access:collections:deletecollection', 'collection', $params, true)) {
 			return false;
 		}
 	
@@ -612,7 +612,7 @@ class AccessCollections {
 			'user_guid' => $user_guid
 		);
 	
-		$result = elgg_trigger_plugin_hook('access:collections:add_user', 'collection', $params, true);
+		$result = _elgg_services()->hooks->trigger('access:collections:add_user', 'collection', $params, true);
 		if ($result == false) {
 			return false;
 		}
@@ -654,7 +654,7 @@ class AccessCollections {
 			'user_guid' => $user_guid
 		);
 	
-		if (!elgg_trigger_plugin_hook('access:collections:remove_user', 'collection', $params, true)) {
+		if (!_elgg_services()->hooks->trigger('access:collections:remove_user', 'collection', $params, true)) {
 			return false;
 		}
 	
