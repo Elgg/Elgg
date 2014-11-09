@@ -65,7 +65,7 @@ class UpgradeService {
 		global $CONFIG;
 
 		$version = (int) $version;
-		$upgrade_path = elgg_get_config('path') . 'engine/lib/upgrades/';
+		$upgrade_path = _elgg_services()->config->get('path') . 'engine/lib/upgrades/';
 		$processed_upgrades = $this->getProcessedUpgrades();
 
 		// upgrading from 1.7 to 1.8. Need to bootstrap.
@@ -114,7 +114,7 @@ class UpgradeService {
 				// don't set the version to a lower number in instances where an upgrade
 				// has been merged from a lower version of Elgg
 				if ($upgrade_version > $version) {
-					datalist_set('version', $upgrade_version);
+					_elgg_services()->datalist->set('version', $upgrade_version);
 				}
 
 				// incrementally set upgrade so we know where to start if something fails.
@@ -148,7 +148,7 @@ class UpgradeService {
 		$processed_upgrades = $this->getProcessedUpgrades();
 		$processed_upgrades[] = $upgrade;
 		$processed_upgrades = array_unique($processed_upgrades);
-		return datalist_set('processed_upgrades', serialize($processed_upgrades));
+		return _elgg_services()->datalist->set('processed_upgrades', serialize($processed_upgrades));
 	}
 
 	/**
@@ -157,7 +157,7 @@ class UpgradeService {
 	 * @return mixed Array of processed upgrade filenames or false
 	 */
 	protected function getProcessedUpgrades() {
-		$upgrades = datalist_get('processed_upgrades');
+		$upgrades = _elgg_services()->datalist->get('processed_upgrades');
 		$unserialized = unserialize($upgrades);
 		return $unserialized;
 	}
@@ -187,7 +187,7 @@ class UpgradeService {
 	 */
 	protected function getUpgradeFiles($upgrade_path = null) {
 		if (!$upgrade_path) {
-			$upgrade_path = elgg_get_config('path') . 'engine/lib/upgrades/';
+			$upgrade_path = _elgg_services()->config->get('path') . 'engine/lib/upgrades/';
 		}
 		$upgrade_path = sanitise_filepath($upgrade_path);
 		$handle = opendir($upgrade_path);
@@ -229,7 +229,7 @@ class UpgradeService {
 		}
 
 		if ($processed_upgrades === null) {
-			$processed_upgrades = unserialize(datalist_get('processed_upgrades'));
+			$processed_upgrades = unserialize(_elgg_services()->datalist->get('processed_upgrades'));
 			if (!is_array($processed_upgrades)) {
 				$processed_upgrades = array();
 			}
@@ -246,7 +246,7 @@ class UpgradeService {
 	 */
 	protected function processUpgrades() {
 
-		$dbversion = (int) datalist_get('version');
+		$dbversion = (int) _elgg_services()->datalist->get('version');
 
 		// No version number? Oh snap...this is an upgrade from a clean installation < 1.7.
 		// Run all upgrades without error reporting and hope for the best.
@@ -284,7 +284,7 @@ class UpgradeService {
 	 * @return bool
 	 */
 	protected function bootstrap17to18() {
-		$db_version = (int) datalist_get('version');
+		$db_version = (int) _elgg_services()->datalist->get('version');
 
 		// the 1.8 upgrades before the upgrade system change that are interspersed with 1.7 upgrades.
 		$upgrades_18 = array(

@@ -356,7 +356,7 @@ class UsersTable {
 			return $data;
 		}
 	
-		$dbprefix = elgg_get_config('dbprefix');
+		$dbprefix = _elgg_services()->config->get('dbprefix');
 		$time = time() - $options['seconds'];
 		return elgg_get_entities(array(
 			'type' => 'user',
@@ -387,7 +387,7 @@ class UsersTable {
 			$user->setPrivateSetting('passwd_conf_time', time());
 	
 			// generate link
-			$link = elgg_get_site_url() . "changepassword?u=$user_guid&c=$code";
+			$link = _elgg_services()->config->getSiteUrl() . "changepassword?u=$user_guid&c=$code";
 	
 			// generate email
 			$ip_address = _elgg_services()->request->getClientIp();
@@ -580,7 +580,7 @@ class UsersTable {
 	 * @return string Invite code
 	 */
 	function generateInviteCode($username) {
-		$secret = datalist_get('__site_secret__');
+		$secret = _elgg_services()->datalist->get('__site_secret__');
 		return md5($username . $secret);
 	}
 	

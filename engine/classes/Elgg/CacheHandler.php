@@ -76,7 +76,7 @@ class CacheHandler {
 			$this->send403();
 		}
 
-		$cache_timestamp = (int)elgg_get_config('lastcache');
+		$cache_timestamp = (int)_elgg_services()->config->get('lastcache');
 
 		if ($cache_timestamp == $ts) {
 			$this->sendCacheHeaders($etag);
@@ -230,7 +230,7 @@ class CacheHandler {
 		}
 
 		// disable error reporting so we don't cache problems
-		elgg_set_config('debug', null);
+		_elgg_services()->config->set('debug', null);
 
 		// @todo elgg_view() checks if the page set is done (isset($CONFIG->pagesetupdone)) and
 		// triggers an event if it's not. Calling elgg_view() here breaks submenus
@@ -238,7 +238,7 @@ class CacheHandler {
 		// contexts can be correctly set (since this is called before page_handler()).
 		// To avoid this, lie about $CONFIG->pagehandlerdone to force
 		// the trigger correctly when the first view is actually being output.
-		elgg_set_config('pagesetupdone', true);
+		_elgg_services()->config->set('pagesetupdone', true);
 
 		return elgg_view($view);
 	}

@@ -84,7 +84,7 @@ class Config {
 	
 		if ($site_guid === null) {
 			// installation wide setting
-			$value = datalist_get($name);
+			$value = _elgg_services()->datalist->get($name);
 		} else {
 			if ($site_guid == 0) {
 				$site_guid = (int) $CONFIG->site_guid;
@@ -93,7 +93,7 @@ class Config {
 			// hit DB only if we're not sure if value isn't already loaded
 			if (!isset($CONFIG->site_config_loaded) || $site_guid != $CONFIG->site_guid) {
 				// site specific setting
-				$value = get_config($name, $site_guid);
+				$value = _elgg_services()->configTable->set($name, $site_guid);
 			} else {
 				$value = null;
 			}
@@ -152,16 +152,16 @@ class Config {
 			if (is_array($value) || is_object($value)) {
 				return false;
 			}
-			$result = datalist_set($name, $value);
+			$result = _elgg_services()->datalist->set($name, $value);
 		} else {
 			if ($site_guid == 0) {
 				$site_guid = (int) $CONFIG->site_guid;
 			}
-			$result = set_config($name, $value, $site_guid);
+			$result = _elgg_services()->configTable->set($name, $value, $site_guid);
 		}
 	
 		if ($site_guid === null || $site_guid == $CONFIG->site_guid) {
-			elgg_set_config($name, $value);
+			_elgg_services()->config->set($name, $value);
 		}
 	
 		return $result;

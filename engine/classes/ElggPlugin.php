@@ -49,17 +49,17 @@ class ElggPlugin extends \ElggObject {
 		if (is_object($path)) {
 			// database object
 			parent::__construct($path);
-			$this->path = elgg_get_plugins_path() . $this->getID();
+			$this->path = _elgg_services()->config->getPluginsPath() . $this->getID();
 		} else if (is_numeric($path)) {
 			// guid
 			// @todo plugins with directory names of '12345'
 			elgg_deprecated_notice("Use elgg_get_plugin_from_id() to load a plugin.", 1.9);
 			parent::__construct($path);
-			$this->path = elgg_get_plugins_path() . $this->getID();
+			$this->path = _elgg_services()->config->getPluginsPath() . $this->getID();
 		} else {
 			$this->initializeAttributes();
 			
-			$mod_dir = elgg_get_plugins_path();
+			$mod_dir = _elgg_services()->config->getPluginsPath();
 
 			// not a full path, so assume a directory name and use the default path
 			if (strpos($path, $mod_dir) !== 0) {
@@ -93,7 +93,7 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function save() {
 		// own by the current site so users can be deleted without affecting plugins
-		$site = get_config('site');
+		$site = _elgg_services()->configTable->get('site');
 		$this->attributes['site_guid'] = $site->guid;
 		$this->attributes['owner_guid'] = $site->guid;
 		$this->attributes['container_guid'] = $site->guid;
@@ -199,7 +199,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		$db_prefix = get_config('dbprefix');
+		$db_prefix = _elgg_services()->configTable->get('dbprefix');
 		$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
 		// if no priority assume a priority of 1
 		$old_priority = (int) $this->getPriority();
@@ -291,7 +291,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_services()->config->get('dbprefix');
 		// need to remove all namespaced private settings.
 		$us_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 		$is_prefix = _elgg_namespace_plugin_private_setting('internal', '', $this->getID());
@@ -353,7 +353,7 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function unsetAllSettings() {
-		$db_prefix = get_config('dbprefix');
+		$db_prefix = _elgg_services()->configTable->get('dbprefix');
 		$us_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 		$is_prefix = elgg_namespace_plugin_private_setting('internal', '', $this->getID());
 
@@ -417,7 +417,7 @@ class ElggPlugin extends \ElggObject {
 			return false;
 		}
 
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_services()->config->get('dbprefix');
 		// send an empty name so we just get the first part of the namespace
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 		$ps_prefix_len = strlen($ps_prefix);
@@ -520,7 +520,7 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function unsetAllUserSettings($user_guid) {
-		$db_prefix = get_config('dbprefix');
+		$db_prefix = _elgg_services()->configTable->get('dbprefix');
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
 		$q = "DELETE FROM {$db_prefix}private_settings
@@ -539,7 +539,7 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function unsetAllUsersSettings() {
-		$db_prefix = get_config('dbprefix');
+		$db_prefix = _elgg_services()->configTable->get('dbprefix');
 		$ps_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 
 		$q = "DELETE FROM {$db_prefix}private_settings
@@ -592,7 +592,7 @@ class ElggPlugin extends \ElggObject {
 		if ($site_guid) {
 			$site = get_entity($site_guid);
 		} else {
-			$site = get_config('site');
+			$site = _elgg_services()->configTable->get('site');
 		}
 
 		if (!($site instanceof \ElggSite)) {
@@ -989,7 +989,7 @@ class ElggPlugin extends \ElggObject {
 				return false;
 			}
 		} else {
-			$site = get_config('site');
+			$site = _elgg_services()->configTable->get('site');
 		}
 
 		if ($active) {

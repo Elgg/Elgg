@@ -768,7 +768,7 @@ class MetadataTable {
 	function handleUpdate($event, $object_type, $object) {
 		if ($object instanceof \ElggEntity) {
 			if (!is_metadata_independent($object->getType(), $object->getSubtype())) {
-				$db_prefix = elgg_get_config('dbprefix');
+				$db_prefix = _elgg_services()->config->get('dbprefix');
 				$access_id = (int) $object->access_id;
 				$guid = (int) $object->getGUID();
 				$query = "update {$db_prefix}metadata set access_id = {$access_id} where entity_guid = {$guid}";

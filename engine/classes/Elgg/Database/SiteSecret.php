@@ -24,7 +24,7 @@ class SiteSecret {
 	function init() {
 		$secret = 'z' . _elgg_services()->crypto->getRandomString(31);
 	
-		if (datalist_set('__site_secret__', $secret)) {
+		if (_elgg_services()->datalist->set('__site_secret__', $secret)) {
 			return $secret;
 		}
 	
@@ -40,7 +40,7 @@ class SiteSecret {
 	 * @access private
 	 */
 	function get() {
-		$secret = datalist_get('__site_secret__');
+		$secret = _elgg_services()->datalist->get('__site_secret__');
 		if (!$secret) {
 			$secret = init_site_secret();
 		}

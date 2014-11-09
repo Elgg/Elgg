@@ -94,7 +94,7 @@ class SystemCache {
 	function enable() {
 		global $CONFIG;
 	
-		datalist_set('system_cache_enabled', 1);
+		_elgg_services()->datalist->set('system_cache_enabled', 1);
 		$CONFIG->system_cache_enabled = 1;
 		elgg_reset_system_cache();
 	}
@@ -110,7 +110,7 @@ class SystemCache {
 	function disable() {
 		global $CONFIG;
 	
-		datalist_set('system_cache_enabled', 0);
+		_elgg_services()->datalist->set('system_cache_enabled', 0);
 		$CONFIG->system_cache_enabled = 0;
 		elgg_reset_system_cache();
 	}

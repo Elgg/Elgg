@@ -278,7 +278,7 @@ class ElggVolatileMetadataCache {
 		// could be useful at some point in future
 		//$guids = $this->filterMetadataHeavyEntities($guids);
 
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_services()->config->get('dbprefix');
 		$options = array(
 			'guids' => $guids,
 			'limit' => 0,
@@ -332,7 +332,7 @@ class ElggVolatileMetadataCache {
 	 * @return array
 	 */
 	public function filterMetadataHeavyEntities(array $guids, $limit = 1024000) {
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_services()->config->get('dbprefix');
 
 		$options = array(
 			'guids' => $guids,
