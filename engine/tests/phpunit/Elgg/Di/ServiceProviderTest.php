@@ -31,6 +31,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			'logger' => '\Elgg\Logger',
 			'metadataCache' => '\ElggVolatileMetadataCache',
 			'request' => '\Elgg\Http\Request',
+			'relationshipsTable' => '\Elgg\Database\RelationshipsTable',
 			'router' => '\Elgg\Router',
 
 			// Will this start session?
