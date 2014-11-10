@@ -52,7 +52,7 @@ CREATE TABLE `prefix_api_users` (
 
 -- site specific configuration
 CREATE TABLE `prefix_config` (
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) CHARSET utf8 NOT NULL,
   `value` text NOT NULL,
   `site_guid` int(11) NOT NULL,
   PRIMARY KEY (`name`,`site_guid`)
@@ -60,7 +60,7 @@ CREATE TABLE `prefix_config` (
 
 -- application specific configuration
 CREATE TABLE `prefix_datalists` (
-  `name` varchar(255) NOT NULL,
+  `name` varchar(255) CHARSET utf8 NOT NULL,
   `value` text NOT NULL,
   PRIMARY KEY (`name`)
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8;
@@ -229,9 +229,9 @@ CREATE TABLE `prefix_river` (
 -- secondary table for site entities
 CREATE TABLE `prefix_sites_entity` (
   `guid` bigint(20) unsigned NOT NULL,
-  `name` text NOT NULL,
-  `description` text NOT NULL,
-  `url` varchar(255) NOT NULL,
+  `name` text CHARSET utf8 NOT NULL,
+  `description` text CHARSET utf8 NOT NULL,
+  `url` varchar(255) CHARSET utf8 NOT NULL,
   PRIMARY KEY (`guid`),
   UNIQUE KEY `url` (`url`),
   FULLTEXT KEY `name` (`name`,`description`,`url`)
@@ -312,7 +312,7 @@ CREATE TABLE `prefix_users_remember_me_cookies` (
 
 -- user sessions
 CREATE TABLE `prefix_users_sessions` (
-  `session` varchar(255) NOT NULL,
+  `session` varchar(255) CHARSET utf8 NOT NULL,
   `ts` int(11) unsigned NOT NULL DEFAULT '0',
   `data` mediumblob,
   PRIMARY KEY (`session`),
