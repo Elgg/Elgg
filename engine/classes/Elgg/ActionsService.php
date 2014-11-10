@@ -50,7 +50,7 @@ class ActionsService {
 			action_gatekeeper($action);
 		}
 	
-		$forwarder = str_replace(elgg_get_site_url(), "", $forwarder);
+		$forwarder = str_replace(_elgg_services()->config->getSiteUrl(), "", $forwarder);
 		$forwarder = str_replace("http://", "", $forwarder);
 		$forwarder = str_replace("@", "", $forwarder);
 		if (substr($forwarder, 0, 1) == "/") {
@@ -88,7 +88,7 @@ class ActionsService {
 	
 		if (empty($filename)) {
 			
-			$path = elgg_get_config('path');
+			$path = _elgg_services()->config->get('path');
 			if ($path === null) {
 				$path = "";
 			}
@@ -153,7 +153,7 @@ class ActionsService {
 				} else if ($visible_errors) {
 					// this is necessary because of #5133
 					if (elgg_is_xhr()) {
-						register_error(elgg_echo('js:security:token_refresh_failed', array(elgg_get_site_url())));
+						register_error(elgg_echo('js:security:token_refresh_failed', array(_elgg_services()->config->getSiteUrl())));
 					} else {
 						register_error(elgg_echo('actiongatekeeper:timeerror'));
 					}
@@ -161,7 +161,7 @@ class ActionsService {
 			} else if ($visible_errors) {
 				// this is necessary because of #5133
 				if (elgg_is_xhr()) {
-					register_error(elgg_echo('js:security:token_refresh_failed', array(elgg_get_site_url())));
+					register_error(elgg_echo('js:security:token_refresh_failed', array(_elgg_services()->config->getSiteUrl())));
 				} else {
 					register_error(elgg_echo('actiongatekeeper:tokeninvalid'));
 				}
@@ -207,7 +207,7 @@ class ActionsService {
 	 * @return int number of seconds that action token is valid
 	 */
 	public function getActionTokenTimeout() {
-		if (($timeout = elgg_get_config('action_token_timeout')) === null) {
+		if (($timeout = _elgg_services()->config->get('action_token_timeout')) === null) {
 			// default to 2 hours
 			$timeout = 2;
 		}

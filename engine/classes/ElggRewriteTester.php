@@ -128,7 +128,7 @@ class ElggRewriteTester {
 	 * @return boolean
 	 */
 	public function runLocalhostAccessTest() {
-		$url = elgg_get_site_url();
+		$url = _elgg_services()->config->getSiteUrl();
 		if (ini_get('allow_url_fopen')) {
 			$ctx = stream_context_create(array(
 				'http' => array(

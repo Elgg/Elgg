@@ -245,7 +245,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 * @return \Elgg\PersistentLoginService
 	 */
 	protected function getPersistentLogin(\Elgg\Di\ServiceProvider $c) {
-		$cookies_config = elgg_get_config('cookies');
+		$cookies_config = _elgg_services()->config->get('cookies');
 		$remember_me_cookies_config = $cookies_config['remember_me'];
 		$cookie_name = $remember_me_cookies_config['name'];
 		$cookie_token = $c->request->cookies->get($cookie_name, '');

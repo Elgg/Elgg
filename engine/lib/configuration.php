@@ -237,18 +237,6 @@ function get_config($name, $site_guid = 0) {
 }
 
 /**
- * Loads all configuration values from the dbprefix_config table into $CONFIG.
- *
- * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
- *
- * @return bool
- * @access private
- */
-function _elgg_get_all_config($site_guid = 0) {
-	return _elgg_services()->configTable->loadAll();
-}
-
-/**
  * Loads configuration related to this site
  *
  * This runs on engine boot and loads from the config database table and the 
@@ -275,7 +263,8 @@ function _elgg_load_site_config() {
 	$CONFIG->siteemail = $CONFIG->site->email;
 	$CONFIG->url = $CONFIG->wwwroot;
 
-	_elgg_get_all_config();
+	_elgg_services()->configTable->loadAll();
+
 	// gives hint to elgg_get_config function how to approach missing values
 	$CONFIG->site_config_loaded = true;
 

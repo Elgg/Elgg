@@ -92,8 +92,7 @@ class Datalist {
 	 * @warning Names should be selected so as not to collide with the names for the
 	 * site config.
 	 * 
-	 * @warning Values set through datalist_set() are not available in $CONFIG until
-	 * next page load.
+	 * @warning Values set here are not available in $CONFIG until next page load.
 	 *
 	 * @param string $name  The name of the datalist
 	 * @param string $value The new value
@@ -183,7 +182,7 @@ class Datalist {
 	 * @todo deprecate
 	 */
 	function runFunctionOnce($functionname, $timelastupdatedcheck = 0) {
-		$lastupdated = datalist_get($functionname);
+		$lastupdated = _elgg_services()->datalist->get($functionname);
 		if ($lastupdated) {
 			$lastupdated = (int) $lastupdated;
 		} elseif ($lastupdated !== false) {
@@ -194,7 +193,7 @@ class Datalist {
 		}
 		if (is_callable($functionname) && $lastupdated <= $timelastupdatedcheck) {
 			$functionname();
-			datalist_set($functionname, time());
+			_elgg_services()->datalist->set($functionname, time());
 			return true;
 		} else {
 			return false;

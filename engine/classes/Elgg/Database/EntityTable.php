@@ -551,7 +551,7 @@ class EntityTable {
 		}
 		// Do secondary queries and merge rows
 		if ($lookup_types) {
-			$dbprefix = elgg_get_config('dbprefix');
+			$dbprefix = _elgg_services()->config->get('dbprefix');
 	
 			foreach ($lookup_types as $type => $guids) {
 				$set = "(" . implode(',', $guids) . ")";
@@ -611,7 +611,7 @@ class EntityTable {
 		}
 	
 		// these are the only valid types for entities in elgg
-		$valid_types = elgg_get_config('entity_types');
+		$valid_types = _elgg_services()->config->get('entity_types');
 	
 		// pairs override
 		$wheres = array();

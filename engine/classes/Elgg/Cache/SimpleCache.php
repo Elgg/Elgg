@@ -68,7 +68,7 @@ class SimpleCache {
 		$viewtype = elgg_get_viewtype();
 		if (elgg_is_simplecache_enabled()) {
 			// stored in datalist as 'simplecache_lastupdate'
-			$lastcache = (int)elgg_get_config('lastcache');
+			$lastcache = (int)_elgg_services()->config->get('lastcache');
 		} else {
 			$lastcache = 0;
 		}
@@ -82,7 +82,7 @@ class SimpleCache {
 	 * @return bool
 	 */
 	function isEnabled() {
-		return (bool) elgg_get_config('simplecache_enabled');
+		return (bool) _elgg_services()->config->get('simplecache_enabled');
 	}
 	
 	/**
@@ -92,8 +92,8 @@ class SimpleCache {
 	 * @return void
 	 */
 	function enable() {
-		datalist_set('simplecache_enabled', 1);
-		elgg_set_config('simplecache_enabled', 1);
+		_elgg_services()->datalist->set('simplecache_enabled', 1);
+		_elgg_services()->config->set('simplecache_enabled', 1);
 		elgg_invalidate_simplecache();
 	}
 	
@@ -106,12 +106,12 @@ class SimpleCache {
 	 * @return void
 	 */
 	function disable() {
-		if (elgg_get_config('simplecache_enabled')) {
-			datalist_set('simplecache_enabled', 0);
-			elgg_set_config('simplecache_enabled', 0);
+		if (_elgg_services()->config->get('simplecache_enabled')) {
+			_elgg_services()->datalist->set('simplecache_enabled', 0);
+			_elgg_services()->config->set('simplecache_enabled', 0);
 	
 			// purge simple cache
-			_elgg_rmdir(elgg_get_data_path() . "views_simplecache");
+			_elgg_rmdir(_elgg_services()->config->getDataPath() . "views_simplecache");
 		}
 	}
 	
@@ -132,7 +132,7 @@ class SimpleCache {
 		mkdir("{$CONFIG->dataroot}views_simplecache");
 	
 		$time = time();
-		datalist_set("simplecache_lastupdate", $time);
+		_elgg_services()->datalist->set("simplecache_lastupdate", $time);
 		$CONFIG->lastcache = $time;
 	
 		return true;
@@ -147,7 +147,7 @@ class SimpleCache {
 		global $CONFIG;
 
 		if (!defined('UPGRADING') && empty($CONFIG->lastcache)) {
-			$CONFIG->lastcache = (int)datalist_get('simplecache_lastupdate');
+			$CONFIG->lastcache = (int)_elgg_services()->datalist->get('simplecache_lastupdate');
 		}
 	}	
 }

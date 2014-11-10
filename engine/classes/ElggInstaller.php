@@ -407,7 +407,7 @@ class ElggInstaller {
 				),
 			'wwwroot' => array(
 				'type' => 'url',
-				'value' => elgg_get_site_url(),
+				'value' => _elgg_services()->config->getSiteUrl(),
 				'required' => TRUE,
 				),
 			'dataroot' => array(
@@ -590,7 +590,7 @@ class ElggInstaller {
 	 */
 	protected function getNextStepUrl($currentStep) {
 		$nextStep = $this->getNextStep($currentStep);
-		return elgg_get_site_url() . "install.php?step=$nextStep";
+		return _elgg_services()->config->getSiteUrl() . "install.php?step=$nextStep";
 	}
 
 	/**
@@ -808,10 +808,10 @@ class ElggInstaller {
 			$CONFIG->language = 'en';
 
 			if ($stepIndex > $settingsIndex) {
-				$CONFIG->site_guid = (int) datalist_get('default_site');
+				$CONFIG->site_guid = (int) _elgg_services()->datalist->get('default_site');
 				$CONFIG->site_id = $CONFIG->site_guid;
 				$CONFIG->site = get_entity($CONFIG->site_guid);
-				$CONFIG->dataroot = datalist_get('dataroot');
+				$CONFIG->dataroot = _elgg_services()->datalist->get('dataroot');
 				_elgg_session_boot();
 			}
 
@@ -1108,7 +1108,7 @@ class ElggInstaller {
 		global $CONFIG;
 
 		$tester = new ElggRewriteTester();
-		$url = elgg_get_site_url() . "rewrite.php";
+		$url = _elgg_services()->config->getSiteUrl() . "rewrite.php";
 		$report['rewrite'] = array($tester->run($url, $CONFIG->path));
 	}
 
@@ -1446,25 +1446,25 @@ class ElggInstaller {
 		$CONFIG->site_id = $guid;
 		$CONFIG->site = $site;
 
-		datalist_set('installed', time());
-		datalist_set('path', $submissionVars['path']);
-		datalist_set('dataroot', $submissionVars['dataroot']);
-		datalist_set('default_site', $site->getGUID());
-		datalist_set('version', elgg_get_version());
-		datalist_set('simplecache_enabled', 1);
-		datalist_set('system_cache_enabled', 1);
-		datalist_set('simplecache_lastupdate', time());
+		_elgg_services()->datalist->set('installed', time());
+		_elgg_services()->datalist->set('path', $submissionVars['path']);
+		_elgg_services()->datalist->set('dataroot', $submissionVars['dataroot']);
+		_elgg_services()->datalist->set('default_site', $site->getGUID());
+		_elgg_services()->datalist->set('version', elgg_get_version());
+		_elgg_services()->datalist->set('simplecache_enabled', 1);
+		_elgg_services()->datalist->set('system_cache_enabled', 1);
+		_elgg_services()->datalist->set('simplecache_lastupdate', time());
 
 		// new installations have run all the upgrades
 		$upgrades = elgg_get_upgrade_files($submissionVars['path'] . 'engine/lib/upgrades/');
-		datalist_set('processed_upgrades', serialize($upgrades));
+		_elgg_services()->datalist->set('processed_upgrades', serialize($upgrades));
 
-		set_config('view', 'default', $site->getGUID());
-		set_config('language', 'en', $site->getGUID());
-		set_config('default_access', $submissionVars['siteaccess'], $site->getGUID());
-		set_config('allow_registration', TRUE, $site->getGUID());
-		set_config('walled_garden', FALSE, $site->getGUID());
-		set_config('allow_user_default_access', '', $site->getGUID());
+		_elgg_services()->configTable->set('view', 'default', $site->getGUID());
+		_elgg_services()->configTable->set('language', 'en', $site->getGUID());
+		_elgg_services()->configTable->set('default_access', $submissionVars['siteaccess'], $site->getGUID());
+		_elgg_services()->configTable->set('allow_registration', TRUE, $site->getGUID());
+		_elgg_services()->configTable->set('walled_garden', FALSE, $site->getGUID());
+		_elgg_services()->configTable->set('allow_user_default_access', '', $site->getGUID());
 
 		$this->setSubtypeClasses();
 
@@ -1538,7 +1538,7 @@ class ElggInstaller {
 			return FALSE;
 		}
 
-		$minLength = get_config('min_password_length');
+		$minLength = _elgg_services()->configTable->get('min_password_length');
 		if (strlen($submissionVars['password1']) < $minLength) {
 			register_error(elgg_echo('install:admin:password:tooshort'));
 			return FALSE;
@@ -1590,7 +1590,7 @@ class ElggInstaller {
 		if ($user->makeAdmin() == FALSE) {
 			register_error(elgg_echo('install:error:adminaccess'));
 		} else {
-			datalist_set('admin_registered', 1);
+			_elgg_services()->datalist->set('admin_registered', 1);
 		}
 		elgg_set_ignore_access(false);
 

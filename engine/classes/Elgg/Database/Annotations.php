@@ -368,7 +368,7 @@ class Annotations {
 	 * @return mixed If count, int. If not count, array. false on errors.
 	 */
 	function getEntitiesFromCalculation($options) {
-		$db_prefix = elgg_get_config('dbprefix');
+		$db_prefix = _elgg_services()->config->get('dbprefix');
 		$defaults = array(
 			'calculation' => 'sum',
 			'order_by' => 'annotation_calculation desc'

@@ -535,7 +535,7 @@ class ElggSite extends \ElggEntity {
 		}
 
 		// always allow index page
-		if ($url == elgg_get_site_url($this->guid)) {
+		if ($url == _elgg_services()->config->getSiteUrl($this->guid)) {
 			return true;
 		}
 
