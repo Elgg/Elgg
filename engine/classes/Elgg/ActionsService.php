@@ -59,9 +59,9 @@ class ActionsService {
 	
 		if (!isset($this->actions[$action])) {
 			register_error(elgg_echo('actionundefined', array($action)));
-		} elseif (!elgg_is_admin_logged_in() && ($this->actions[$action]['access'] === 'admin')) {
+		} elseif (!_elgg_services()->session->isAdminLoggedIn() && ($this->actions[$action]['access'] === 'admin')) {
 			register_error(elgg_echo('actionunauthorized'));
-		} elseif (!elgg_is_logged_in() && ($this->actions[$action]['access'] !== 'public')) {
+		} elseif (!_elgg_services()->session->isLoggedIn() && ($this->actions[$action]['access'] !== 'public')) {
 			register_error(elgg_echo('actionloggedout'));
 		} else {
 			// Returning falsy doesn't produce an error

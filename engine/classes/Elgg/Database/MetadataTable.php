@@ -74,7 +74,7 @@ class MetadataTable {
 		}
 	
 		if ($owner_guid == 0) {
-			$owner_guid = elgg_get_logged_in_user_guid();
+			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 	
 		$access_id = (int)$access_id;
@@ -169,7 +169,7 @@ class MetadataTable {
 	
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid == 0) {
-			$owner_guid = elgg_get_logged_in_user_guid();
+			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 	
 		$access_id = (int)$access_id;

@@ -497,7 +497,7 @@ class ElggSite extends \ElggEntity {
 					'_elgg_walled_garden_remove_public_access',
 					9999);
 
-			if (!elgg_is_logged_in()) {
+			if (!_elgg_services()->session->isLoggedIn()) {
 				// override the front page
 				elgg_register_page_handler('', '_elgg_walled_garden_index');
 

@@ -36,7 +36,7 @@ class AccessCollections {
 		}
 	
 		if ($user_guid == 0) {
-			$user_guid = elgg_get_logged_in_user_guid();
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 	
 		if (($site_guid == 0) && (isset($CONFIG->site_id))) {
@@ -96,7 +96,7 @@ class AccessCollections {
 		}
 	
 		if ($user_guid == 0) {
-			$user_guid = elgg_get_logged_in_user_guid();
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 	
 		if (($site_guid == 0) && (isset($CONFIG->site_guid))) {
@@ -210,7 +210,7 @@ class AccessCollections {
 	
 		$defaults = array(
 			'table_alias' => 'e',
-			'user_guid' => elgg_get_logged_in_user_guid(),
+			'user_guid' => _elgg_services()->session->getLoggedInUserGuid(),
 			'use_enabled_clause' => !$ENTITY_SHOW_HIDDEN_OVERRIDE,
 			'access_column' => 'access_id',
 			'owner_guid_column' => 'owner_guid',
@@ -355,7 +355,7 @@ class AccessCollections {
 		}
 	
 		if ($user_guid == 0) {
-			$user_guid = elgg_get_logged_in_user_guid();
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 	
 		if (($site_guid == 0) && (isset($CONFIG->site_id))) {
@@ -420,7 +420,7 @@ class AccessCollections {
 		if ($user_guid) {
 			$user = get_entity((int) $user_guid);
 		} else {
-			$user = elgg_get_logged_in_user_entity();
+			$user = _elgg_services()->session->getLoggedInUser();
 		}
 	
 		$collection = get_access_collection($collection_id);
@@ -465,7 +465,7 @@ class AccessCollections {
 		}
 	
 		if ($owner_guid == 0) {
-			$owner_guid = elgg_get_logged_in_user_guid();
+			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 		if (($site_guid == 0) && (isset($CONFIG->site_guid))) {
 			$site_guid = $CONFIG->site_guid;

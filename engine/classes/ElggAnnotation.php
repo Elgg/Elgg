@@ -127,8 +127,8 @@ class ElggAnnotation extends \ElggExtender {
 				return false;
 			}
 		} else {
-			$user = elgg_get_logged_in_user_entity();
-			$user_guid = elgg_get_logged_in_user_guid();
+			$user = _elgg_services()->session->getLoggedInUser();
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 
 		$result = false;

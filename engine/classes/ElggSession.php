@@ -205,6 +205,41 @@ class ElggSession implements \ArrayAccess {
 	}
 
 	/**
+	 * Return the current logged in user by guid.
+	 *
+	 * @see elgg_get_logged_in_user_entity()
+	 * @return int
+	 */
+	public function getLoggedInUserGuid() {
+		$user = $this->getLoggedInUser();
+		if ($user) {
+			return $user->guid;
+		}
+	
+		return 0;
+	}
+	
+	/**
+	 * Returns whether or not the viewer is currently logged in and an admin user.
+	 *
+	 * @return bool
+	 */
+	public function isAdminLoggedIn() {
+		$user = $this->getLoggedInUser();
+	
+		return $user && $user->isAdmin();
+	}
+	
+	/**
+	 * Returns whether or not the user is currently logged in
+	 *
+	 * @return bool
+	 */
+	public function isLoggedIn() {
+		return (bool)$this->getLoggedInUser();
+	}
+
+	/**
 	 * Remove the logged in user
 	 * 
 	 * @return void

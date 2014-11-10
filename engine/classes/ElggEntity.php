@@ -106,8 +106,8 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['type'] = null;
 		$this->attributes['subtype'] = null;
 
-		$this->attributes['owner_guid'] = elgg_get_logged_in_user_guid();
-		$this->attributes['container_guid'] = elgg_get_logged_in_user_guid();
+		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid();
+		$this->attributes['container_guid'] = _elgg_services()->session->getLoggedInUserGuid();
 
 		$this->attributes['site_guid'] = null;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
@@ -1037,7 +1037,7 @@ abstract class ElggEntity extends \ElggData implements
 		$user_guid = (int)$user_guid;
 		$user = get_entity($user_guid);
 		if (!$user) {
-			$user = elgg_get_logged_in_user_entity();
+			$user = _elgg_services()->session->getLoggedInUser();
 		}
 
 		$return = false;
@@ -1093,7 +1093,7 @@ abstract class ElggEntity extends \ElggData implements
 				return false;
 			}
 		} else {
-			$user = elgg_get_logged_in_user_entity();
+			$user = _elgg_services()->session->getLoggedInUser();
 			$user_guid = $user->guid;
 		}
 
@@ -1139,7 +1139,7 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function canComment($user_guid = 0) {
 		if ($user_guid == 0) {
-			$user_guid = elgg_get_logged_in_user_guid();
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 		$user = get_entity($user_guid);
 
@@ -1165,7 +1165,7 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function canAnnotate($user_guid = 0, $annotation_name = '') {
 		if ($user_guid == 0) {
-			$user_guid = elgg_get_logged_in_user_guid();
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 		$user = get_entity($user_guid);
 
@@ -2358,7 +2358,7 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['subtype'] = $data->getAttribute('subclass');
 
 		// Set owner
-		$this->attributes['owner_guid'] = elgg_get_logged_in_user_guid(); // Import as belonging to importer.
+		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid(); // Import as belonging to importer.
 
 		// Set time
 		$this->attributes['time_created'] = strtotime($data->getAttribute('published'));
