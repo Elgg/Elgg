@@ -26,6 +26,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Notifications\NotificationsService $notifications
  * @property-read \Elgg\EntityPreloader                    $ownerPreloader
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
+ * @property-read \Elgg\Database\Plugins                   $plugins
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\Http\Request                       $request
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
@@ -75,6 +76,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('metadataCache', '\ElggVolatileMetadataCache');
 		$this->setClassName('metadataTable', '\Elgg\Database\MetadataTable');
 		$this->setFactory('persistentLogin', array($this, 'getPersistentLogin'));
+		$this->setClassName('plugins', '\Elgg\Database\Plugins');
 		$this->setFactory('ownerPreloader', array($this, 'getOwnerPreloader'));
 		$this->setFactory('queryCounter', array($this, 'getQueryCounter'), false);
 		$this->setFactory('request', array($this, 'getRequest'));

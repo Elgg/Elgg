@@ -3825,3 +3825,22 @@ function elgg_get_calling_plugin_id($mainfilename = false) {
 	}
 	return false;
 }
+
+/**
+ * Returns the \ElggPlugin entity of the last plugin called.
+ *
+ * @return ElggPlugin|false
+ * @since 1.8.0
+ * @access private
+ * @deprecated 1.9
+ */
+function elgg_get_calling_plugin_entity() {
+	elgg_deprecated_notice("elgg_get_calling_plugin_entity() is deprecated.", 1.9);
+	$plugin_id = elgg_get_calling_plugin_id();
+
+	if ($plugin_id) {
+		return elgg_get_plugin_from_id($plugin_id);
+	}
+
+	return false;
+}
