@@ -123,7 +123,7 @@ class AccessCollections {
 					. " LEFT JOIN {$CONFIG->dbprefix}access_collections ag ON ag.id = am.access_collection_id"
 					. " WHERE am.user_guid = $user_guid AND (ag.site_guid = $site_guid OR ag.site_guid = 0)";
 	
-				$collections = get_data($query);
+				$collections = _elgg_services()->db->getData($query);
 				if ($collections) {
 					foreach ($collections as $collection) {
 						if (!empty($collection->access_collection_id)) {
@@ -136,7 +136,7 @@ class AccessCollections {
 				$query = "SELECT ag.id FROM {$CONFIG->dbprefix}access_collections ag ";
 				$query .= "WHERE ag.owner_guid = $user_guid AND (ag.site_guid = $site_guid OR ag.site_guid = 0)";
 	
-				$collections = get_data($query);
+				$collections = _elgg_services()->db->getData($query);
 				if ($collections) {
 					foreach ($collections as $collection) {
 						if (!empty($collection->id)) {
@@ -314,7 +314,7 @@ class AccessCollections {
 		$query = "SELECT guid from {$CONFIG->dbprefix}entities e WHERE e.guid = " . $entity->getGUID();
 		// Add access controls
 		$query .= " AND " . $access_bit;
-		if (get_data($query)) {
+		if (_elgg_services()->db->getData($query)) {
 			return true;
 		} else {
 			return false;
@@ -382,7 +382,7 @@ class AccessCollections {
 			$query .= " WHERE (ag.site_guid = $site_guid OR ag.site_guid = 0)";
 			$query .= " AND (ag.owner_guid = $user_guid)";
 	
-			$collections = get_data($query);
+			$collections = _elgg_services()->db->getData($query);
 			if ($collections) {
 				foreach ($collections as $collection) {
 					$access_array[$collection->id] = $collection->name;
@@ -476,7 +476,7 @@ class AccessCollections {
 			SET name = '{$name}',
 				owner_guid = {$owner_guid},
 				site_guid = {$site_guid}";
-		$id = insert_data($q);
+		$id = _elgg_services()->db->insertData($q);
 		if (!$id) {
 			return false;
 		}
@@ -553,11 +553,11 @@ class AccessCollections {
 		// Deleting membership doesn't affect result of deleting ACL.
 		$q = "DELETE FROM {$CONFIG->dbprefix}access_collection_membership
 			WHERE access_collection_id = {$collection_id}";
-		delete_data($q);
+		_elgg_services()->db->deleteData($q);
 	
 		$q = "DELETE FROM {$CONFIG->dbprefix}access_collections
 			WHERE id = {$collection_id}";
-		$result = delete_data($q);
+		$result = _elgg_services()->db->deleteData($q);
 	
 		return (bool)$result;
 	}
@@ -579,7 +579,7 @@ class AccessCollections {
 		$collection_id = (int) $collection_id;
 	
 		$query = "SELECT * FROM {$CONFIG->dbprefix}access_collections WHERE id = {$collection_id}";
-		$get_collection = get_data_row($query);
+		$get_collection = _elgg_services()->db->getDataRow($query);
 	
 		return $get_collection;
 	}
@@ -621,7 +621,7 @@ class AccessCollections {
 		$q = "INSERT INTO {$CONFIG->dbprefix}access_collection_membership
 				SET access_collection_id = $collection_id, user_guid = $user_guid
 				ON DUPLICATE KEY UPDATE user_guid = user_guid";
-		$result = insert_data($q);
+		$result = _elgg_services()->db->insertData($q);
 	
 		return $result !== false;
 	}
@@ -662,7 +662,7 @@ class AccessCollections {
 			WHERE access_collection_id = {$collection_id}
 				AND user_guid = {$user_guid}";
 	
-		return (bool)delete_data($q);
+		return (bool)_elgg_services()->db->deleteData($q);
 	}
 	
 	/**
@@ -687,7 +687,7 @@ class AccessCollections {
 				AND site_guid = {$site_guid}
 				ORDER BY name ASC";
 	
-		$collections = get_data($query);
+		$collections = _elgg_services()->db->getData($query);
 	
 		return $collections;
 	}
@@ -708,12 +708,12 @@ class AccessCollections {
 			$query = "SELECT e.* FROM {$CONFIG->dbprefix}access_collection_membership m"
 				. " JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.user_guid"
 				. " WHERE m.access_collection_id = {$collection}";
-			$collection_members = get_data($query, "entity_row_to_elggstar");
+			$collection_members = _elgg_services()->db->getData($query, "entity_row_to_elggstar");
 		} else {
 			$query = "SELECT e.guid FROM {$CONFIG->dbprefix}access_collection_membership m"
 				. " JOIN {$CONFIG->dbprefix}entities e ON e.guid = m.user_guid"
 				. " WHERE m.access_collection_id = {$collection}";
-			$collection_members = get_data($query);
+			$collection_members = _elgg_services()->db->getData($query);
 			if (!$collection_members) {
 				return false;
 			}

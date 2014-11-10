@@ -40,7 +40,7 @@ class ConfigTable {
 		$escaped_name = sanitize_string($name);
 		$query = "DELETE FROM {$CONFIG->dbprefix}config WHERE name = '$escaped_name' AND site_guid = $site_guid";
 	
-		return delete_data($query) !== false;
+		return _elgg_services()->db->deleteData($query) !== false;
 	}
 	
 	/**
@@ -86,7 +86,7 @@ class ConfigTable {
 	
 		$escaped_name = sanitize_string($name);
 		$escaped_value = sanitize_string(serialize($value));
-		$result = insert_data("INSERT INTO {$CONFIG->dbprefix}config
+		$result = _elgg_services()->db->insertData("INSERT INTO {$CONFIG->dbprefix}config
 			SET name = '$escaped_name', value = '$escaped_value', site_guid = $site_guid
 			ON DUPLICATE KEY UPDATE value = '$escaped_value'");
 	
@@ -148,7 +148,7 @@ class ConfigTable {
 		}
 	
 		$escaped_name = sanitize_string($name);
-		$result = get_data_row("SELECT value FROM {$CONFIG->dbprefix}config
+		$result = _elgg_services()->db->getDataRow("SELECT value FROM {$CONFIG->dbprefix}config
 			WHERE name = '$escaped_name' AND site_guid = $site_guid");
 	
 		if ($result) {
@@ -180,7 +180,7 @@ class ConfigTable {
 			$site_guid = (int) $CONFIG->site_guid;
 		}
 	
-		if ($result = get_data("SELECT * FROM {$CONFIG->dbprefix}config WHERE site_guid = $site_guid")) {
+		if ($result = _elgg_services()->db->getData("SELECT * FROM {$CONFIG->dbprefix}config WHERE site_guid = $site_guid")) {
 			foreach ($result as $r) {
 				$name = $r->name;
 				$value = $r->value;

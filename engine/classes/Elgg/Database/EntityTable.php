@@ -35,7 +35,7 @@ class EntityTable {
 		$guid = (int) $guid;
 		$access = _elgg_get_access_where_sql(array('table_alias' => ''));
 	
-		return get_data_row("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and $access");
+		return _elgg_services()->db->getDataRow("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and $access");
 	}
 	
 	/**
@@ -201,7 +201,7 @@ class EntityTable {
 		$guid = sanitize_int($guid);
 	
 		$query = "SELECT count(*) as total FROM {$CONFIG->dbprefix}entities WHERE guid = $guid";
-		$result = get_data_row($query);
+		$result = _elgg_services()->db->getDataRow($query);
 		if ($result->total == 0) {
 			return false;
 		} else {
@@ -453,7 +453,7 @@ class EntityTable {
 			if ($options['callback'] === 'entity_row_to_elggstar') {
 				$dt = _elgg_fetch_entities_from_sql($query, $options['__ElggBatch']);
 			} else {
-				$dt = get_data($query, $options['callback']);
+				$dt = _elgg_services()->db->getData($query, $options['callback']);
 			}
 	
 			if ($dt) {
@@ -482,7 +482,7 @@ class EntityTable {
 			}
 			return $dt;
 		} else {
-			$total = get_data_row($query);
+			$total = _elgg_services()->db->getDataRow($query);
 			return (int)$total->total;
 		}
 	}
@@ -511,7 +511,7 @@ class EntityTable {
 			'group' => 'name',
 		);
 	
-		$rows = get_data($sql);
+		$rows = _elgg_services()->db->getData($sql);
 	
 		// guids to look up in each type
 		$lookup_types = array();
@@ -556,7 +556,7 @@ class EntityTable {
 			foreach ($lookup_types as $type => $guids) {
 				$set = "(" . implode(',', $guids) . ")";
 				$sql = "SELECT * FROM {$dbprefix}{$type}s_entity WHERE guid IN $set";
-				$secondary_rows = get_data($sql);
+				$secondary_rows = _elgg_services()->db->getData($sql);
 				if ($secondary_rows) {
 					foreach ($secondary_rows as $secondary_row) {
 						$key = $guid_to_key[$secondary_row->guid];
@@ -1110,7 +1110,7 @@ class EntityTable {
 		}
 	
 		$sql .= "1=1 ORDER BY $order_by";
-		if ($result = get_data($sql)) {
+		if ($result = _elgg_services()->db->getData($sql)) {
 			$endresult = array();
 			foreach ($result as $res) {
 				$endresult[] = $res->yearmonth;
@@ -1144,7 +1144,7 @@ class EntityTable {
 		if ($guid) {
 			//now add to the river updated table
 			$query = "UPDATE {$CONFIG->dbprefix}entities SET last_action = {$posted} WHERE guid = {$guid}";
-			$result = update_data($query);
+			$result = _elgg_services()->db->updateData($query);
 			if ($result) {
 				return true;
 			} else {

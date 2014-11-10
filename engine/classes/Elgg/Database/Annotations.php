@@ -82,7 +82,7 @@ class Annotations {
 		$entity = get_entity($entity_guid);
 	
 		if (_elgg_services()->events->trigger('annotate', $entity->type, $entity)) {
-			$result = insert_data("INSERT INTO {$CONFIG->dbprefix}annotations
+			$result = _elgg_services()->db->insertData("INSERT INTO {$CONFIG->dbprefix}annotations
 				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
 				($entity_guid, $name_id, $value_id, '$value_type', $owner_guid, $time, $access_id)");
 	
@@ -146,7 +146,7 @@ class Annotations {
 			return false;
 		}
 	
-		$result = update_data("UPDATE {$CONFIG->dbprefix}annotations
+		$result = _elgg_services()->db->updateData("UPDATE {$CONFIG->dbprefix}annotations
 			SET name_id = $name_id, value_id = $value_id, value_type = '$value_type',
 			access_id = $access_id, owner_guid = $owner_guid
 			WHERE id = $annotation_id");
@@ -423,7 +423,7 @@ class Annotations {
 				" WHERE a.owner_guid = $owner_guid AND a.entity_guid = $entity_guid" .
 				" AND m.string = '$annotation_type'";
 	
-		if (get_data_row($sql)) {
+		if (_elgg_services()->db->getDataRow($sql)) {
 			return true;
 		}
 	

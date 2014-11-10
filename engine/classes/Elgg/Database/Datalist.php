@@ -69,7 +69,7 @@ class Datalist {
 	
 		// not in cache and not in memcache so check database
 		$escaped_name = sanitize_string($name);
-		$result = get_data_row("SELECT * FROM {$CONFIG->dbprefix}datalists WHERE name = '$escaped_name'");
+		$result = _elgg_services()->db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}datalists WHERE name = '$escaped_name'");
 		if ($result) {
 			$DATALIST_CACHE[$result->name] = $result->value;
 	
@@ -123,7 +123,7 @@ class Datalist {
 	
 		$escaped_name = sanitize_string($name);
 		$escaped_value = sanitize_string($value);
-		$success = insert_data("INSERT INTO {$CONFIG->dbprefix}datalists"
+		$success = _elgg_services()->db->insertData("INSERT INTO {$CONFIG->dbprefix}datalists"
 			. " SET name = '$escaped_name', value = '$escaped_value'"
 			. " ON DUPLICATE KEY UPDATE value = '$escaped_value'");
 	
@@ -146,7 +146,7 @@ class Datalist {
 	 * @access private
 	 */
 	function loadAll() {
-		$result = get_data("SELECT * FROM {$CONFIG->dbprefix}datalists");
+		$result = _elgg_services()->db->getData("SELECT * FROM {$CONFIG->dbprefix}datalists");
 		if ($result) {
 			foreach ($result as $row) {
 				$DATALIST_CACHE[$row->name] = $row->value;

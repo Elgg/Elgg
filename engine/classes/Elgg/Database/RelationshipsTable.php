@@ -40,7 +40,7 @@ class RelationshipsTable {
 	
 		$id = (int)$id;
 	
-		return get_data_row("SELECT * FROM {$CONFIG->dbprefix}entity_relationships WHERE id = $id");
+		return _elgg_services()->db->getDataRow("SELECT * FROM {$CONFIG->dbprefix}entity_relationships WHERE id = $id");
 	}
 	
 	/**
@@ -58,7 +58,7 @@ class RelationshipsTable {
 		$relationship = get_relationship($id);
 	
 		if (_elgg_services()->events->trigger('delete', 'relationship', $relationship)) {
-			return delete_data("DELETE FROM {$CONFIG->dbprefix}entity_relationships WHERE id = $id");
+			return _elgg_services()->db->deleteData("DELETE FROM {$CONFIG->dbprefix}entity_relationships WHERE id = $id");
 		}
 	
 		return false;
@@ -95,7 +95,7 @@ class RelationshipsTable {
 			return false;
 		}
 	
-		$id = insert_data("INSERT INTO {$CONFIG->dbprefix}entity_relationships
+		$id = _elgg_services()->db->insertData("INSERT INTO {$CONFIG->dbprefix}entity_relationships
 			(guid_one, relationship, guid_two, time_created)
 			VALUES ($guid_one, '$relationship', $guid_two, $time)");
 	
@@ -139,7 +139,7 @@ class RelationshipsTable {
 				AND relationship='$relationship'
 				AND guid_two=$guid_two limit 1";
 	
-		$row = row_to_elggrelationship(get_data_row($query));
+		$row = row_to_elggrelationship(_elgg_services()->db->getDataRow($query));
 		if ($row) {
 			return $row;
 		}
@@ -180,7 +180,7 @@ class RelationshipsTable {
 				AND relationship = '$relationship'
 				AND guid_two = $guid_two";
 	
-			return (bool)delete_data($query);
+			return (bool)_elgg_services()->db->deleteData($query);
 		} else {
 			return false;
 		}
@@ -224,7 +224,7 @@ class RelationshipsTable {
 	
 		$guid_col = $inverse_relationship ? "guid_two" : "guid_one";
 	
-		delete_data("
+		_elgg_services()->db->deleteData("
 			DELETE er FROM {$CONFIG->dbprefix}entity_relationships AS er
 			$join
 			WHERE $guid_col = $guid
@@ -252,7 +252,7 @@ class RelationshipsTable {
 	
 		$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where {$where}";
 	
-		return get_data($query, "row_to_elggrelationship");
+		return _elgg_services()->db->getData($query, "row_to_elggrelationship");
 	}
 	
 	/**
