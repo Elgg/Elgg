@@ -292,7 +292,7 @@ class Plugins {
 		// temporary disable all plugins if there is a file called 'disabled' in the plugin dir
 		if (file_exists("$plugins_path/disabled")) {
 			if (elgg_is_admin_logged_in() && elgg_in_context('admin')) {
-				system_message(elgg_echo('plugins:disabled'));
+				system_message(_elgg_services()->translator->translate('plugins:disabled'));
 			}
 			return false;
 		}
@@ -313,7 +313,7 @@ class Plugins {
 					$plugin->start($start_flags);
 				} catch (Exception $e) {
 					$plugin->deactivate();
-					$msg = elgg_echo('PluginException:CannotStart',
+					$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
 									array($plugin->getID(), $plugin->guid, $e->getMessage()));
 					elgg_add_admin_notice('cannot_start' . $plugin->getID(), $msg);
 					$return = false;
@@ -618,6 +618,7 @@ class Plugins {
 	 * @access private
 	 */
 	function getDependencyStrings($dep) {
+		$translator = _elgg_services()->translator;
 		$dep_system = elgg_extract('type', $dep);
 		$info = elgg_extract('dep', $dep);
 		$type = elgg_extract('type', $info);
@@ -655,13 +656,13 @@ class Plugins {
 		'priority'	'before blog'		--		after	'move it'
 		*/
 		$strings = array();
-		$strings['type'] = elgg_echo('ElggPlugin:Dependencies:' . ucwords($dep_system));
+		$strings['type'] = $translator->translate('ElggPlugin:Dependencies:' . ucwords($dep_system));
 	
 		switch ($type) {
 			case 'elgg_version':
 			case 'elgg_release':
 				// 'Elgg Version'
-				$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Elgg');
+				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:Elgg');
 				$strings['expected_value'] = "$comparison {$info['version']}";
 				$strings['local_value'] = $dep['value'];
 				$strings['comment'] = '';
@@ -669,7 +670,7 @@ class Plugins {
 	
 			case 'php_version':
 				// 'PHP version'
-				$strings['name'] = elgg_echo('ElggPlugin:Dependencies:PhpVersion');
+				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:PhpVersion');
 				$strings['expected_value'] = "$comparison {$info['version']}";
 				$strings['local_value'] = $dep['value'];
 				$strings['comment'] = '';
@@ -677,7 +678,7 @@ class Plugins {
 			
 			case 'php_extension':
 				// PHP Extension %s [version]
-				$strings['name'] = elgg_echo('ElggPlugin:Dependencies:PhpExtension', array($info['name']));
+				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:PhpExtension', array($info['name']));
 				if ($info['version']) {
 					$strings['expected_value'] = "$comparison {$info['version']}";
 					$strings['local_value'] = $dep['value'];
@@ -689,15 +690,15 @@ class Plugins {
 				break;
 	
 			case 'php_ini':
-				$strings['name'] = elgg_echo('ElggPlugin:Dependencies:PhpIni', array($info['name']));
+				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:PhpIni', array($info['name']));
 				$strings['expected_value'] = "$comparison {$info['value']}";
 				$strings['local_value'] = $dep['value'];
 				$strings['comment'] = '';
 				break;
 	
 			case 'plugin':
-				$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Plugin', array($info['name']));
-				$expected = $info['version'] ? "$comparison {$info['version']}" : elgg_echo('any');
+				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:Plugin', array($info['name']));
+				$expected = $info['version'] ? "$comparison {$info['version']}" : $translator->translate('any');
 				$strings['expected_value'] = $expected;
 				$strings['local_value'] = $dep['value'] ? $dep['value'] : '--';
 				$strings['comment'] = '';
@@ -706,24 +707,24 @@ class Plugins {
 			case 'priority':
 				$expected_priority = ucwords($info['priority']);
 				$real_priority = ucwords($dep['value']);
-				$strings['name'] = elgg_echo('ElggPlugin:Dependencies:Priority');
-				$strings['expected_value'] = elgg_echo("ElggPlugin:Dependencies:Priority:$expected_priority", array($info['plugin']));
-				$strings['local_value'] = elgg_echo("ElggPlugin:Dependencies:Priority:$real_priority", array($info['plugin']));
+				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:Priority');
+				$strings['expected_value'] = $translator->translate("ElggPlugin:Dependencies:Priority:$expected_priority", array($info['plugin']));
+				$strings['local_value'] = $translator->translate("ElggPlugin:Dependencies:Priority:$real_priority", array($info['plugin']));
 				$strings['comment'] = '';
 				break;
 		}
 	
 		if ($dep['type'] == 'suggests') {
 			if ($dep['status']) {
-				$strings['comment'] = elgg_echo('ok');
+				$strings['comment'] = $translator->translate('ok');
 			} else {
-				$strings['comment'] = elgg_echo('ElggPlugin:Dependencies:Suggests:Unsatisfied');
+				$strings['comment'] = $translator->translate('ElggPlugin:Dependencies:Suggests:Unsatisfied');
 			}
 		} else {
 			if ($dep['status']) {
-				$strings['comment'] = elgg_echo('ok');
+				$strings['comment'] = $translator->translate('ok');
 			} else {
-				$strings['comment'] = elgg_echo('error');
+				$strings['comment'] = $translator->translate('error');
 			}
 		}
 	

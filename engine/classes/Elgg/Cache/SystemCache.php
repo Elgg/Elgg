@@ -156,7 +156,7 @@ class SystemCache {
 		}
 	
 		if ($CONFIG->system_cache_enabled && !$CONFIG->i18n_loaded_from_cache) {
-			reload_all_translations();
+			_elgg_services()->translator->reloadAllTranslations();
 			foreach ($CONFIG->translations as $lang => $map) {
 				elgg_save_system_cache("$lang.lang", serialize($map));
 			}

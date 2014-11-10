@@ -28,7 +28,7 @@ class UpgradeService {
 		// prevent someone from running the upgrade script in parallel (see #4643)
 		if (!$this->getUpgradeMutex()) {
 			$result['failure'] = true;
-			$result['reason'] = elgg_echo('upgrade:locked');
+			$result['reason'] = _elgg_services()->translator->translate('upgrade:locked');
 			return $result;
 		}
 
@@ -255,11 +255,11 @@ class UpgradeService {
 
 		// Note: Database upgrades are deprecated as of 1.8.  Use code upgrades.  See #1433
 		if ($this->dbUpgrade($dbversion, '', $quiet)) {
-			system_message(elgg_echo('upgrade:db'));
+			system_message(_elgg_services()->translator->translate('upgrade:db'));
 		}
 
 		if ($this->upgradeCode($dbversion, $quiet)) {
-			system_message(elgg_echo('upgrade:core'));
+			system_message(_elgg_services()->translator->translate('upgrade:core'));
 
 			// Now we trigger an event to give the option for plugins to do something
 			$upgrade_details = new \stdClass;

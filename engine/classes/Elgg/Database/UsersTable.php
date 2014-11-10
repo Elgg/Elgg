@@ -391,10 +391,10 @@ class UsersTable {
 	
 			// generate email
 			$ip_address = _elgg_services()->request->getClientIp();
-			$email = elgg_echo('email:changereq:body', array($user->name, $ip_address, $link));
+			$email = _elgg_services()->translator->translate('email:changereq:body', array($user->name, $ip_address, $link));
 	
 			return notify_user($user->guid, elgg_get_site_entity()->guid,
-				elgg_echo('email:changereq:subject'), $email, array(), 'email');
+				_elgg_services()->translator->translate('email:changereq:subject'), $email, array(), 'email');
 		}
 	
 		return false;
@@ -473,8 +473,8 @@ class UsersTable {
 	
 			notify_user($user->guid,
 				elgg_get_site_entity()->guid,
-				elgg_echo("email:$ns:subject"),
-				elgg_echo("email:$ns:body", array($user->username, $password)),
+				_elgg_services()->translator->translate("email:$ns:subject"),
+				_elgg_services()->translator->translate("email:$ns:body", array($user->username, $password)),
 				array(),
 				'email'
 			);
@@ -530,23 +530,23 @@ class UsersTable {
 		access_show_hidden_entities(true);
 	
 		if (!validate_email_address($email)) {
-			throw new \RegistrationException(elgg_echo('registration:emailnotvalid'));
+			throw new \RegistrationException(_elgg_services()->translator->translate('registration:emailnotvalid'));
 		}
 	
 		if (!validate_password($password)) {
-			throw new \RegistrationException(elgg_echo('registration:passwordnotvalid'));
+			throw new \RegistrationException(_elgg_services()->translator->translate('registration:passwordnotvalid'));
 		}
 	
 		if (!validate_username($username)) {
-			throw new \RegistrationException(elgg_echo('registration:usernamenotvalid'));
+			throw new \RegistrationException(_elgg_services()->translator->translate('registration:usernamenotvalid'));
 		}
 	
 		if ($user = get_user_by_username($username)) {
-			throw new \RegistrationException(elgg_echo('registration:userexists'));
+			throw new \RegistrationException(_elgg_services()->translator->translate('registration:userexists'));
 		}
 	
 		if ((!$allow_multiple_emails) && (get_user_by_email($email))) {
-			throw new \RegistrationException(elgg_echo('registration:dupeemail'));
+			throw new \RegistrationException(_elgg_services()->translator->translate('registration:dupeemail'));
 		}
 	
 		access_show_hidden_entities($access_status);
@@ -561,7 +561,7 @@ class UsersTable {
 		$user->password = generate_user_password($user, $password);
 		$user->owner_guid = 0; // Users aren't owned by anyone, even if they are admin created.
 		$user->container_guid = 0; // Users aren't contained by anyone, even if they are admin created.
-		$user->language = get_current_language();
+		$user->language = _elgg_services()->translator->getCurrentLanguage();
 		if ($user->save() === false) {
 			return false;
 		}

@@ -71,7 +71,7 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 				}
 			}
 		} else {
-			// don't use elgg_echo() here because most of the config hasn't been loaded yet
+			// don't use _elgg_services()->translator->translate() here because most of the config hasn't been loaded yet
 			// and it caches the language, which is hard coded in $CONFIG->language as en.
 			// overriding it with real values later has no effect because it's already cached.
 			_elgg_services()->logger->error("This version of the PHP memcache API doesn't support multiple servers.");

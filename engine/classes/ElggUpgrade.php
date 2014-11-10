@@ -77,13 +77,13 @@ class ElggUpgrade extends \ElggObject {
 	 */
 	public function setPath($path) {
 		if (!$path) {
-			throw new InvalidArgumentException(elgg_echo('ElggUpgrade:error:url_invalid'));
+			throw new InvalidArgumentException(_elgg_services()->translator->translate('ElggUpgrade:error:url_invalid'));
 		}
 
 		$path = ltrim($path, '/');
 
 		if ($this->getUpgradeFromPath($path)) {
-			throw new InvalidArgumentException(elgg_echo('ElggUpgrade:error:url_not_unique'));
+			throw new InvalidArgumentException(_elgg_services()->translator->translate('ElggUpgrade:error:url_not_unique'));
 		}
 
 		$this->upgrade_url = $path;
@@ -130,7 +130,7 @@ class ElggUpgrade extends \ElggObject {
 	public function save() {
 		foreach ($this->requiredProperties as $prop) {
 			if (!$this->$prop) {
-				throw new \UnexpectedValueException(elgg_echo("ElggUpgrade:error:{$prop}_required"));
+				throw new \UnexpectedValueException(_elgg_services()->translator->translate("ElggUpgrade:error:{$prop}_required"));
 			}
 		}
 

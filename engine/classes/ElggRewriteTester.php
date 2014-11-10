@@ -219,12 +219,12 @@ class ElggRewriteTester {
 		if ($this->rewriteTestPassed) {
 			return array(
 				'severity' => 'pass',
-				'message' => elgg_echo('install:check:rewrite:success'),
+				'message' => _elgg_services()->translator->translate('install:check:rewrite:success'),
 			);
 		}
 
 		if ($this->serverSupportsRemoteRead == FALSE) {
-			$msg = elgg_echo('install:warning:rewrite:unknown', array($url));
+			$msg = _elgg_services()->translator->translate('install:warning:rewrite:unknown', array($url));
 			$msg .= elgg_view('install/js_rewrite_check', array('url' => $url));
 			
 			return array(
@@ -234,10 +234,10 @@ class ElggRewriteTester {
 		}
 
 		if ($this->webserver == 'apache') {
-			$serverString = elgg_echo('install:error:rewrite:apache');
+			$serverString = _elgg_services()->translator->translate('install:error:rewrite:apache');
 			$msg = "$serverString\n\n";
 			if (!isset($this->htaccessIssue)) {
-				$msg .= elgg_echo('install:error:rewrite:allowoverride');
+				$msg .= _elgg_services()->translator->translate('install:error:rewrite:allowoverride');
 				$msg .= elgg_view('install/js_rewrite_check', array('url' => $url));
 			
 				return array(
@@ -245,7 +245,7 @@ class ElggRewriteTester {
 					'message' => $msg,
 				);
 			}
-			$msg .= elgg_echo("install:error:rewrite:htaccess:{$this->htaccessIssue}");
+			$msg .= _elgg_services()->translator->translate("install:error:rewrite:htaccess:{$this->htaccessIssue}");
 			return array(
 				'severity' => 'failure',
 				'message' => $msg,
@@ -253,9 +253,9 @@ class ElggRewriteTester {
 		}
 
 		if ($this->webserver != 'unknown') {
-			$serverString = elgg_echo("install:error:rewrite:{$this->webserver}");
+			$serverString = _elgg_services()->translator->translate("install:error:rewrite:{$this->webserver}");
 			$msg = "$serverString\n\n";
-			$msg .= elgg_echo("install:error:rewrite:altserver");
+			$msg .= _elgg_services()->translator->translate("install:error:rewrite:altserver");
 			return array(
 				'severity' => 'failure',
 				'message' => $msg,
@@ -264,7 +264,7 @@ class ElggRewriteTester {
 
 		return array(
 			'severity' => 'failure',
-			'message' => elgg_echo('install:error:rewrite:unknown'),
+			'message' => _elgg_services()->translator->translate('install:error:rewrite:unknown'),
 		);
 	}
 }

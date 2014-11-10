@@ -372,10 +372,10 @@ class AccessCollections {
 		} else {
 			// @todo is there such a thing as public write access?
 			$access_array = array(
-				ACCESS_PRIVATE => elgg_echo("PRIVATE"),
-				ACCESS_FRIENDS => elgg_echo("access:friends:label"),
-				ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
-				ACCESS_PUBLIC => elgg_echo("PUBLIC")
+				ACCESS_PRIVATE => _elgg_services()->translator->translate("PRIVATE"),
+				ACCESS_FRIENDS => _elgg_services()->translator->translate("access:friends:label"),
+				ACCESS_LOGGED_IN => _elgg_services()->translator->translate("LOGGED_IN"),
+				ACCESS_PUBLIC => _elgg_services()->translator->translate("PUBLIC")
 			);
 			
 			$query = "SELECT ag.* FROM {$CONFIG->dbprefix}access_collections ag ";

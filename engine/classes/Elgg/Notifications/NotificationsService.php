@@ -273,8 +273,8 @@ class NotificationsService {
 			'object' => $object,
 		);
 
-		$subject = elgg_echo('notification:subject', array($actor->name), $language);
-		$body = elgg_echo('notification:body', array($object->getURL()), $language);
+		$subject = _elgg_services()->translator->translate('notification:subject', array($actor->name), $language);
+		$body = _elgg_services()->translator->translate('notification:body', array($object->getURL()), $language);
 		$notification = new \Elgg\Notifications\Notification($event->getActor(), $recipient, $language, $subject, $body, '', $params);
 
 		$type = 'notification:' . $event->getDescription();

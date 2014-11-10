@@ -58,17 +58,17 @@ class ActionsService {
 		}
 	
 		if (!isset($this->actions[$action])) {
-			register_error(elgg_echo('actionundefined', array($action)));
+			register_error(_elgg_services()->translator->translate('actionundefined', array($action)));
 		} elseif (!_elgg_services()->session->isAdminLoggedIn() && ($this->actions[$action]['access'] === 'admin')) {
-			register_error(elgg_echo('actionunauthorized'));
+			register_error(_elgg_services()->translator->translate('actionunauthorized'));
 		} elseif (!_elgg_services()->session->isLoggedIn() && ($this->actions[$action]['access'] !== 'public')) {
-			register_error(elgg_echo('actionloggedout'));
+			register_error(_elgg_services()->translator->translate('actionloggedout'));
 		} else {
 			// Returning falsy doesn't produce an error
 			// We assume this will be handled in the hook itself.
 			if (_elgg_services()->hooks->trigger('action', $action, null, true)) {
 				if (!include($this->actions[$action]['file'])) {
-					register_error(elgg_echo('actionnotfound', array($action)));
+					register_error(_elgg_services()->translator->translate('actionnotfound', array($action)));
 				}
 			}
 		}
@@ -148,22 +148,22 @@ class ActionsService {
 					if ($returnval) {
 						return true;
 					} else if ($visible_errors) {
-						register_error(elgg_echo('actiongatekeeper:pluginprevents'));
+						register_error(_elgg_services()->translator->translate('actiongatekeeper:pluginprevents'));
 					}
 				} else if ($visible_errors) {
 					// this is necessary because of #5133
 					if (elgg_is_xhr()) {
-						register_error(elgg_echo('js:security:token_refresh_failed', array(_elgg_services()->config->getSiteUrl())));
+						register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array(_elgg_services()->config->getSiteUrl())));
 					} else {
-						register_error(elgg_echo('actiongatekeeper:timeerror'));
+						register_error(_elgg_services()->translator->translate('actiongatekeeper:timeerror'));
 					}
 				}
 			} else if ($visible_errors) {
 				// this is necessary because of #5133
 				if (elgg_is_xhr()) {
-					register_error(elgg_echo('js:security:token_refresh_failed', array(_elgg_services()->config->getSiteUrl())));
+					register_error(_elgg_services()->translator->translate('js:security:token_refresh_failed', array(_elgg_services()->config->getSiteUrl())));
 				} else {
-					register_error(elgg_echo('actiongatekeeper:tokeninvalid'));
+					register_error(_elgg_services()->translator->translate('actiongatekeeper:tokeninvalid'));
 				}
 			}
 		} else {
@@ -175,9 +175,9 @@ class ActionsService {
 				$error_msg = _elgg_services()->hooks->trigger('action_gatekeeper:upload_exceeded_msg', 'all', array(
 					'post_size' => $length,
 					'visible_errors' => $visible_errors,
-				), elgg_echo('actiongatekeeper:uploadexceeded'));
+				), _elgg_services()->translator->translate('actiongatekeeper:uploadexceeded'));
 			} else {
-				$error_msg = elgg_echo('actiongatekeeper:missingfields');
+				$error_msg = _elgg_services()->translator->translate('actiongatekeeper:missingfields');
 			}
 			if ($visible_errors) {
 				register_error($error_msg);
@@ -230,7 +230,7 @@ class ActionsService {
 			if ($token && $this->validateTokenTimestamp($ts)) {
 				// The tokens are present and the time looks valid: this is probably a mismatch due to the 
 				// login form being on a different domain.
-				register_error(elgg_echo('actiongatekeeper:crosssitelogin'));
+				register_error(_elgg_services()->translator->translate('actiongatekeeper:crosssitelogin'));
 
 				forward('login', 'csrf');
 			}
