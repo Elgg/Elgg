@@ -74,7 +74,7 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 			// don't use elgg_echo() here because most of the config hasn't been loaded yet
 			// and it caches the language, which is hard coded in $CONFIG->language as en.
 			// overriding it with real values later has no effect because it's already cached.
-			elgg_log("This version of the PHP memcache API doesn't support multiple servers.", 'ERROR');
+			_elgg_services()->logger->error("This version of the PHP memcache API doesn't support multiple servers.");
 
 			$server = $CONFIG->memcache_servers[0];
 			if (is_array($server)) {
@@ -148,9 +148,9 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 
 		$result = $this->memcache->set($key, $data, null, $expires);
 		if ($result === false) {
-			elgg_log("MEMCACHE: SAVE FAIL $key", 'ERROR');
+			_elgg_services()->logger->error("MEMCACHE: SAVE FAIL $key");
 		} else {
-			elgg_log("MEMCACHE: SAVE SUCCESS $key", 'INFO');
+			_elgg_services()->logger->info("MEMCACHE: SAVE SUCCESS $key");
 		}
 
 		return $result;
@@ -170,9 +170,9 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 
 		$result = $this->memcache->get($key);
 		if ($result === false) {
-			elgg_log("MEMCACHE: LOAD MISS $key", 'INFO');
+			_elgg_services()->logger->info("MEMCACHE: LOAD MISS $key");
 		} else {
-			elgg_log("MEMCACHE: LOAD HIT $key", 'INFO');
+			_elgg_services()->logger->info("MEMCACHE: LOAD HIT $key");
 		}
 
 		return $result;

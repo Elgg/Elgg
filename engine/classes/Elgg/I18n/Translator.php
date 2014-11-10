@@ -62,10 +62,10 @@ class Translator {
 			$string = $CONFIG->translations[$language][$message_key];
 		} else if (isset($CONFIG->translations["en"][$message_key])) {
 			$string = $CONFIG->translations["en"][$message_key];
-			elgg_log(sprintf('Missing %s translation for "%s" language key', $language, $message_key), 'NOTICE');
+			_elgg_services()->logger->notice(sprintf('Missing %s translation for "%s" language key', $language, $message_key));
 		} else {
 			$string = $message_key;
-			elgg_log(sprintf('Missing English translation for "%s" language key', $message_key), 'NOTICE');
+			_elgg_services()->logger->notice(sprintf('Missing English translation for "%s" language key', $message_key));
 		}
 	
 		// only pass through if we have arguments to allow backward compatibility
@@ -204,7 +204,7 @@ class Translator {
 	
 		// Get the current language based on site defaults and user preference
 		$current_language = get_current_language();
-		elgg_log("Translations loaded from: $path", "INFO");
+		_elgg_services()->logger->info("Translations loaded from: $path");
 	
 		// only load these files unless $load_all is true.
 		$load_language_files = array(
@@ -216,7 +216,7 @@ class Translator {
 	
 		$handle = opendir($path);
 		if (!$handle) {
-			elgg_log("Could not open language path: $path", 'ERROR');
+			_elgg_services()->logger->error("Could not open language path: $path");
 			return false;
 		}
 	

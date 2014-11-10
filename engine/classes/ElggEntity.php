@@ -150,7 +150,7 @@ abstract class ElggEntity extends \ElggData implements
 	public function __clone() {
 		$orig_entity = get_entity($this->guid);
 		if (!$orig_entity) {
-			elgg_log("Failed to clone entity with GUID $this->guid", "ERROR");
+			_elgg_services()->logger->error("Failed to clone entity with GUID $this->guid");
 			return;
 		}
 

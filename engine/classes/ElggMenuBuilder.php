@@ -69,7 +69,7 @@ class ElggMenuBuilder {
 		$selected_menu = array();
 		foreach ($this->menu as $menu_item) {
 			if (!is_object($menu_item)) {
-				elgg_log("A non-object was passed to \ElggMenuBuilder", "ERROR");
+				_elgg_services()->logger->error("A non-object was passed to \ElggMenuBuilder");
 				continue;
 			}
 			if ($menu_item->inContext()) {

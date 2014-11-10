@@ -144,7 +144,7 @@ class Config {
 		$name = trim($name);
 	
 		if (strlen($name) > 255) {
-			elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
+			_elgg_services()->logger->error("The name length for configuration variables cannot be greater than 255");
 			return false;
 		}
 	
