@@ -93,7 +93,7 @@ class ElggPAM {
 	 * @return string
 	 */
 	public function getFailureMessage() {
-		$message = elgg_echo('auth:nopams');
+		$message = _elgg_services()->translator->translate('auth:nopams');
 		if (!empty($this->messages['required'])) {
 			$message = $this->messages['required'][0];
 		} elseif (!empty($this->messages['sufficient'])) {

@@ -1878,7 +1878,7 @@ function _elgg_engine_boot() {
 
 	_elgg_services()->systemCache->loadAll();
 
-	_elgg_load_translations();
+	_elgg_services()->translator->loadTranslations();
 }
 
 /**

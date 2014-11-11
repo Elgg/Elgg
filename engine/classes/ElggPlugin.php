@@ -561,12 +561,12 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function isValid() {
 		if (!$this->getID()) {
-			$this->errorMsg = elgg_echo('ElggPlugin:MissingID', array($this->guid));
+			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:MissingID', array($this->guid));
 			return false;
 		}
 
 		if (!$this->getPackage() instanceof \ElggPluginPackage) {
-			$this->errorMsg = elgg_echo('ElggPlugin:NoPluginPackagePackage', array($this->getID(), $this->guid));
+			$this->errorMsg = _elgg_services()->translator->translate('ElggPlugin:NoPluginPackagePackage', array($this->getID(), $this->guid));
 			return false;
 		}
 
@@ -781,7 +781,7 @@ class ElggPlugin extends \ElggObject {
 		$filepath = "$this->path/$filename";
 
 		if (!$this->canReadFile($filename)) {
-			$msg = elgg_echo('ElggPlugin:Exception:CannotIncludeFile',
+			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotIncludeFile',
 							array($filename, $this->getID(), $this->guid, $this->path));
 			throw new \PluginException($msg);
 		}
@@ -816,7 +816,7 @@ class ElggPlugin extends \ElggObject {
 		// but if they do, they have to be readable
 		$handle = opendir($view_dir);
 		if (!$handle) {
-			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterViews',
+			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterViews',
 							array($this->getID(), $this->guid, $view_dir));
 			throw new \PluginException($msg);
 		}
@@ -828,7 +828,7 @@ class ElggPlugin extends \ElggObject {
 				if (autoregister_views('', $view_type_dir, $view_dir, $view_type)) {
 					elgg_register_viewtype($view_type);
 				} else {
-					$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterViews',
+					$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterViews',
 									array($this->getID(), $view_type_dir));
 					throw new \PluginException($msg);
 				}
@@ -853,8 +853,8 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		// but need to have working ones.
-		if (!register_translations($languages_path)) {
-			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterLanguages',
+		if (!_elgg_services()->translator->registerTranslations($languages_path)) {
+			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterLanguages',
 							array($this->getID(), $this->guid, $languages_path));
 			throw new \PluginException($msg);
 		}

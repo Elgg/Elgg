@@ -48,11 +48,11 @@ class Translator {
 	
 		if (!isset($CONFIG->translations)) {
 			// this means we probably had an exception before translations were initialized
-			register_translations($this->defaultPath);
+			$this->registerTranslations($this->defaultPath);
 		}
 	
 		if (!$CURRENT_LANGUAGE) {
-			$CURRENT_LANGUAGE = get_language();
+			$CURRENT_LANGUAGE = $this->getLanguage();
 		}
 		if (!$language) {
 			$language = $CURRENT_LANGUAGE;
@@ -115,7 +115,7 @@ class Translator {
 	 * @return string The language code for the site/user or "en" if not set
 	 */
 	function getCurrentLanguage() {
-		$language = get_language();
+		$language = $this->getLanguage();
 	
 		if (!$language) {
 			$language = 'en';
@@ -158,11 +158,11 @@ class Translator {
 	
 		if ($CONFIG->system_cache_enabled) {
 			$loaded = true;
-			$languages = array_unique(array('en', get_current_language()));
+			$languages = array_unique(array('en', $this->getCurrentLanguage()));
 			foreach ($languages as $language) {
 				$data = elgg_load_system_cache("$language.lang");
 				if ($data) {
-					add_translation($language, unserialize($data));
+					$this->addTranslation($language, unserialize($data));
 				} else {
 					$loaded = false;
 				}
@@ -177,7 +177,7 @@ class Translator {
 		}
 	
 		// load core translations from languages directory
-		register_translations($this->defaultPath);
+		$this->registerTranslations($this->defaultPath);
 	}
 	
 	
@@ -203,9 +203,9 @@ class Translator {
 		$CONFIG->language_paths[$path] = true;
 	
 		// Get the current language based on site defaults and user preference
-		$current_language = get_current_language();
+		$current_language = $this->getCurrentLanguage();
 		_elgg_services()->logger->info("Translations loaded from: $path");
-	
+
 		// only load these files unless $load_all is true.
 		$load_language_files = array(
 			'en.php',
@@ -233,7 +233,7 @@ class Translator {
 					$return = false;
 					continue;
 				} elseif (is_array($result)) {
-					add_translation(basename($language, '.php'), $result);
+					$this->addTranslation(basename($language, '.php'), $result);
 				}
 			}
 		}
@@ -270,13 +270,13 @@ class Translator {
 					$language = $matches[1];
 					$data = elgg_load_system_cache("$language.lang");
 					if ($data) {
-						add_translation($language, unserialize($data));
+						$this->addTranslation($language, unserialize($data));
 					}
 				}
 			}
 		} else {
 			foreach ($CONFIG->language_paths as $path => $dummy) {
-				register_translations($path, true);
+				$this->registerTranslations($path, true);
 			}
 		}
 	
@@ -293,16 +293,16 @@ class Translator {
 		global $CONFIG;
 	
 		// Ensure that all possible translations are loaded
-		reload_all_translations();
+		$this->reloadAllTranslations();
 	
 		$installed = array();
 	
 		foreach ($CONFIG->translations as $k => $v) {
-			$installed[$k] = elgg_echo($k, array(), $k);
+			$installed[$k] = $this->translate($k, array(), $k);
 			if (_elgg_services()->session->isAdminLoggedIn()) {
-				$completeness = get_language_completeness($k);
+				$completeness = $this->getLanguageCompleteness($k);
 				if (($completeness < 100) && ($k != 'en')) {
-					$installed[$k] .= " (" . $completeness . "% " . elgg_echo('complete') . ")";
+					$installed[$k] .= " (" . $completeness . "% " . $this->translate('complete') . ")";
 				}
 			}
 		}
@@ -321,13 +321,13 @@ class Translator {
 		global $CONFIG;
 	
 		// Ensure that all possible translations are loaded
-		reload_all_translations();
+		$this->reloadAllTranslations();
 	
 		$language = sanitise_string($language);
 	
 		$en = count($CONFIG->translations['en']);
 	
-		$missing = get_missing_language_keys($language);
+		$missing = $this->getMissingLanguageKeys($language);
 		if ($missing) {
 			$missing = count($missing);
 		} else {
@@ -352,7 +352,7 @@ class Translator {
 		global $CONFIG;
 	
 		// Ensure that all possible translations are loaded
-		reload_all_translations();
+		$this->reloadAllTranslations();
 	
 		$missing = array();
 	

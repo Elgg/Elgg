@@ -57,13 +57,6 @@ function get_language() {
 	return _elgg_services()->translator->getLanguage();
 }
 
-/**
- * @access private
- */
-function _elgg_load_translations() {
-	_elgg_services()->translator->loadTranslations();
-}
-
 
 
 /**

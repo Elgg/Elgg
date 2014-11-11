@@ -505,7 +505,7 @@ class ElggSite extends \ElggEntity {
 					if (!elgg_is_xhr()) {
 						_elgg_services()->session->set('last_forward_from', current_page_url());
 					}
-					register_error(elgg_echo('loggedinrequired'));
+					register_error(_elgg_services()->translator->translate('loggedinrequired'));
 					forward('', 'walled_garden');
 				}
 			}
