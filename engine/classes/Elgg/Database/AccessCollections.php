@@ -603,7 +603,7 @@ class AccessCollections {
 	
 		$collection = get_access_collection($collection_id);
 	
-		if (!($user instanceof Elgguser) || !$collection) {
+		if (!($user instanceof \ElggUser) || !$collection) {
 			return false;
 		}
 	
@@ -645,7 +645,7 @@ class AccessCollections {
 	
 		$collection = get_access_collection($collection_id);
 	
-		if (!($user instanceof Elgguser) || !$collection) {
+		if (!($user instanceof \ElggUser) || !$collection) {
 			return false;
 		}
 	
@@ -698,7 +698,7 @@ class AccessCollections {
 	 * @param int  $collection The collection's ID
 	 * @param bool $idonly     If set to true, will only return the members' GUIDs (default: false)
 	 *
-	 * @return ElggUser[]|int[]|false guids or entities if successful, false if not
+	 * @return \ElggUser[]|int[]|false guids or entities if successful, false if not
 	 */
 	function getMembers($collection, $idonly = false) {
 		global $CONFIG;

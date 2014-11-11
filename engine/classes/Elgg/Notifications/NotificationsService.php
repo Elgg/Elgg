@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\Notifications;
 
+use ElggEntity;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *

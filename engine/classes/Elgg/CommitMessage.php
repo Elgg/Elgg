@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
 
+use UnexpectedValueException;
+
 
 /**
  * Provides a structured format for parsing and examining our commit messages.
