@@ -601,7 +601,7 @@ class EntityTable {
 	function getEntityTypeSubtypeWhereSql($table, $types, $subtypes, $pairs) {
 		// subtype depends upon type.
 		if ($subtypes && !$types) {
-			elgg_log("Cannot set subtypes without type.", 'WARNING');
+			_elgg_services()->logger->warn("Cannot set subtypes without type.");
 			return false;
 		}
 	
@@ -670,7 +670,7 @@ class EntityTable {
 								$subtype_ids[] = $subtype_id;
 							} else {
 								$valid_subtypes_count--;
-								elgg_log("Type-subtype '$type:$subtype' does not exist!", 'NOTICE');
+								_elgg_services()->logger->notice("Type-subtype '$type:$subtype' does not exist!");
 								continue;
 							}
 						}
@@ -725,7 +725,7 @@ class EntityTable {
 								ELGG_ENTITIES_NO_VALUE : $paired_subtype_id;
 						} else {
 							$valid_pairs_subtypes_count--;
-							elgg_log("Type-subtype '$paired_type:$paired_subtype' does not exist!", 'NOTICE');
+							_elgg_services()->logger->notice("Type-subtype '$paired_type:$paired_subtype' does not exist!");
 							// return false if we're all invalid subtypes in the only valid type
 							continue;
 						}

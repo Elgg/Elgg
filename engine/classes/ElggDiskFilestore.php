@@ -69,7 +69,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 			try {
 				$this->makeDirectoryRoot($path);
 			} catch (Exception $e) {
-				elgg_log("Couldn't create directory: $path", 'WARNING');
+				_elgg_services()->logger->warn("Couldn't create directory: $path");
 				return false;
 			}
 		}

@@ -325,11 +325,11 @@ class UpgradeService {
 		if (!$this->isUpgradeLocked()) {
 			// lock it
 			_elgg_services()->db->insertData("create table {$CONFIG->dbprefix}upgrade_lock (id INT)");
-			elgg_log('Locked for upgrade.', 'NOTICE');
+			_elgg_services()->logger->notice('Locked for upgrade.');
 			return true;
 		}
 
-		elgg_log('Cannot lock for upgrade: already locked.', 'WARNING');
+		_elgg_services()->logger->warn('Cannot lock for upgrade: already locked');
 		return false;
 	}
 
@@ -341,7 +341,7 @@ class UpgradeService {
 	public function releaseUpgradeMutex() {
 		global $CONFIG;
 		_elgg_services()->db->deleteData("drop table {$CONFIG->dbprefix}upgrade_lock");
-		elgg_log('Upgrade unlocked.', 'NOTICE');
+		_elgg_services()->logger->notice('Upgrade unlocked.');
 	}
 
 	/**

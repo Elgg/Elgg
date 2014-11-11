@@ -1025,7 +1025,7 @@ class ElggPlugin extends \ElggObject {
 		try {
 			$this->manifest = $this->getPackage()->getManifest();
 		} catch (Exception $e) {
-			elgg_log("Failed to load manifest for plugin $this->guid. " . $e->getMessage(), 'WARNING');
+			_elgg_services()->logger->warn("Failed to load manifest for plugin $this->guid. " . $e->getMessage());
 			$this->errorMsg = $e->getmessage();
 		}
 
@@ -1045,7 +1045,7 @@ class ElggPlugin extends \ElggObject {
 		try {
 			$this->package = new \ElggPluginPackage($this->path, false);
 		} catch (Exception $e) {
-			elgg_log("Failed to load package for $this->guid. " . $e->getMessage(), 'WARNING');
+			_elgg_services()->logger->warn("Failed to load package for $this->guid. " . $e->getMessage());
 			$this->errorMsg = $e->getmessage();
 		}
 

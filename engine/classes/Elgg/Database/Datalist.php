@@ -45,7 +45,7 @@ class Datalist {
 	
 		// cannot store anything longer than 255 characters in db, so catch here
 		if (elgg_strlen($name) > 255) {
-			elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
+			_elgg_services()->logger->error("The name length for configuration variables cannot be greater than 255");
 			return false;
 		}
 	
@@ -107,7 +107,7 @@ class Datalist {
 	
 		// cannot store anything longer than 255 characters in db, so catch before we set
 		if (elgg_strlen($name) > 255) {
-			elgg_log("The name length for configuration variables cannot be greater than 255", "ERROR");
+			_elgg_services()->logger->error("The name length for configuration variables cannot be greater than 255");
 			return false;
 		}
 	
