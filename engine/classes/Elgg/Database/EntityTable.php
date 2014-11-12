@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\Database;
 
+use IncompleteEntityException;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *

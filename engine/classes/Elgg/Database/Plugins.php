@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\Database;
 
+use Exception;
+
 /**
  * @var array cache used by elgg_get_plugins_provides function
  * @todo move it with all other functions to \Elgg\PluginsService
