@@ -7,6 +7,13 @@
  */
 class ElggMemcache extends \ElggSharedMemoryCache {
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
 	 * Minimum version of memcached needed to run
 	 *
 	 */
@@ -37,6 +44,7 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	 */
 	public function __construct($namespace = 'default') {
 		global $CONFIG;
+		$this->CONFIG = $CONFIG;
 
 		$this->setNamespace($namespace);
 
@@ -49,12 +57,12 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 		$this->memcache	= new Memcache;
 
 		// Now add servers
-		if (!$CONFIG->memcache_servers) {
-			throw new \ConfigurationException('No memcache servers defined, please populate the $CONFIG->memcache_servers variable');
+		if (!$this->CONFIG->memcache_servers) {
+			throw new \ConfigurationException('No memcache servers defined, please populate the $this->CONFIG->memcache_servers variable');
 		}
 
 		if (is_callable(array($this->memcache, 'addServer'))) {
-			foreach ($CONFIG->memcache_servers as $server) {
+			foreach ($this->CONFIG->memcache_servers as $server) {
 				if (is_array($server)) {
 					$this->memcache->addServer(
 						$server[0],
@@ -72,11 +80,11 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 			}
 		} else {
 			// don't use _elgg_services()->translator->translate() here because most of the config hasn't been loaded yet
-			// and it caches the language, which is hard coded in $CONFIG->language as en.
+			// and it caches the language, which is hard coded in $this->CONFIG->language as en.
 			// overriding it with real values later has no effect because it's already cached.
 			_elgg_services()->logger->error("This version of the PHP memcache API doesn't support multiple servers.");
 
-			$server = $CONFIG->memcache_servers[0];
+			$server = $this->CONFIG->memcache_servers[0];
 			if (is_array($server)) {
 				$this->memcache->connect($server[0], $server[1]);
 			} else {
@@ -96,8 +104,8 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 		}
 
 		// Set some defaults
-		if (isset($CONFIG->memcache_expires)) {
-			$this->expires = $CONFIG->memcache_expires;
+		if (isset($this->CONFIG->memcache_expires)) {
+			$this->expires = $this->CONFIG->memcache_expires;
 		}
 	}
 

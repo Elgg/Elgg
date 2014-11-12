@@ -13,9 +13,18 @@ namespace Elgg\I18n;
 class Translator {
 	
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
 	 * Initializes new translator
 	 */
 	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
 		$this->defaultPath = dirname(dirname(dirname(dirname(__DIR__)))) . "/languages/";
 	}
 	
@@ -31,7 +40,7 @@ class Translator {
 	 * or the original language string.
 	 */
 	function translate($message_key, $args = array(), $language = "") {
-		global $CONFIG;
+		
 	
 		static $CURRENT_LANGUAGE;
 	
@@ -46,7 +55,7 @@ class Translator {
 			$args = array();
 		}
 	
-		if (!isset($CONFIG->translations)) {
+		if (!isset($this->CONFIG->translations)) {
 			// this means we probably had an exception before translations were initialized
 			$this->registerTranslations($this->defaultPath);
 		}
@@ -58,10 +67,10 @@ class Translator {
 			$language = $CURRENT_LANGUAGE;
 		}
 	
-		if (isset($CONFIG->translations[$language][$message_key])) {
-			$string = $CONFIG->translations[$language][$message_key];
-		} else if (isset($CONFIG->translations["en"][$message_key])) {
-			$string = $CONFIG->translations["en"][$message_key];
+		if (isset($this->CONFIG->translations[$language][$message_key])) {
+			$string = $this->CONFIG->translations[$language][$message_key];
+		} else if (isset($this->CONFIG->translations["en"][$message_key])) {
+			$string = $this->CONFIG->translations["en"][$message_key];
 			_elgg_services()->logger->notice(sprintf('Missing %s translation for "%s" language key', $language, $message_key));
 		} else {
 			$string = $message_key;
@@ -91,18 +100,18 @@ class Translator {
 	 * @return bool Depending on success
 	 */
 	function addTranslation($country_code, $language_array) {
-		global $CONFIG;
-		if (!isset($CONFIG->translations)) {
-			$CONFIG->translations = array();
+		
+		if (!isset($this->CONFIG->translations)) {
+			$this->CONFIG->translations = array();
 		}
 	
 		$country_code = strtolower($country_code);
 		$country_code = trim($country_code);
 		if (is_array($language_array) && sizeof($language_array) > 0 && $country_code != "") {
-			if (!isset($CONFIG->translations[$country_code])) {
-				$CONFIG->translations[$country_code] = $language_array;
+			if (!isset($this->CONFIG->translations[$country_code])) {
+				$this->CONFIG->translations[$country_code] = $language_array;
 			} else {
-				$CONFIG->translations[$country_code] = $language_array + $CONFIG->translations[$country_code];
+				$this->CONFIG->translations[$country_code] = $language_array + $this->CONFIG->translations[$country_code];
 			}
 			return true;
 		}
@@ -130,7 +139,7 @@ class Translator {
 	 * @return string The language code (eg "en") or false if not set
 	 */
 	function getLanguage() {
-		global $CONFIG;
+		
 	
 		$user = _elgg_services()->session->getLoggedInUser();
 		$language = false;
@@ -139,8 +148,8 @@ class Translator {
 			$language = $user->language;
 		}
 	
-		if ((!$language) && (isset($CONFIG->language)) && ($CONFIG->language)) {
-			$language = $CONFIG->language;
+		if ((!$language) && (isset($this->CONFIG->language)) && ($this->CONFIG->language)) {
+			$language = $this->CONFIG->language;
 		}
 	
 		if ($language) {
@@ -154,9 +163,9 @@ class Translator {
 	 * @access private
 	 */
 	function loadTranslations() {
-		global $CONFIG;
+		
 	
-		if ($CONFIG->system_cache_enabled) {
+		if ($this->CONFIG->system_cache_enabled) {
 			$loaded = true;
 			$languages = array_unique(array('en', $this->getCurrentLanguage()));
 			foreach ($languages as $language) {
@@ -169,9 +178,9 @@ class Translator {
 			}
 	
 			if ($loaded) {
-				$CONFIG->i18n_loaded_from_cache = true;
+				$this->CONFIG->i18n_loaded_from_cache = true;
 				// this is here to force 
-				$CONFIG->language_paths[$this->defaultPath] = true;
+				$this->CONFIG->language_paths[$this->defaultPath] = true;
 				return;
 			}
 		}
@@ -192,15 +201,15 @@ class Translator {
 	 * @return bool success
 	 */
 	function registerTranslations($path, $load_all = false) {
-		global $CONFIG;
+		
 	
 		$path = sanitise_filepath($path);
 	
 		// Make a note of this path just incase we need to register this language later
-		if (!isset($CONFIG->language_paths)) {
-			$CONFIG->language_paths = array();
+		if (!isset($this->CONFIG->language_paths)) {
+			$this->CONFIG->language_paths = array();
 		}
-		$CONFIG->language_paths[$path] = true;
+		$this->CONFIG->language_paths[$path] = true;
 	
 		// Get the current language based on site defaults and user preference
 		$current_language = $this->getCurrentLanguage();
@@ -251,14 +260,14 @@ class Translator {
 	 * @return void
 	 */
 	function reloadAllTranslations() {
-		global $CONFIG;
+		
 	
 		static $LANG_RELOAD_ALL_RUN;
 		if ($LANG_RELOAD_ALL_RUN) {
 			return;
 		}
 	
-		if ($CONFIG->i18n_loaded_from_cache) {
+		if ($this->CONFIG->i18n_loaded_from_cache) {
 			$cache = elgg_get_system_cache();
 			$cache_dir = $cache->getVariable("cache_path");
 			$filenames = elgg_get_file_list($cache_dir, array(), array(), array(".lang"));
@@ -275,7 +284,7 @@ class Translator {
 				}
 			}
 		} else {
-			foreach ($CONFIG->language_paths as $path => $dummy) {
+			foreach ($this->CONFIG->language_paths as $path => $dummy) {
 				$this->registerTranslations($path, true);
 			}
 		}
@@ -290,14 +299,14 @@ class Translator {
 	 * @return array
 	 */
 	function getInstalledTranslations() {
-		global $CONFIG;
+		
 	
 		// Ensure that all possible translations are loaded
 		$this->reloadAllTranslations();
 	
 		$installed = array();
 	
-		foreach ($CONFIG->translations as $k => $v) {
+		foreach ($this->CONFIG->translations as $k => $v) {
 			$installed[$k] = $this->translate($k, array(), $k);
 			if (_elgg_services()->session->isAdminLoggedIn()) {
 				$completeness = $this->getLanguageCompleteness($k);
@@ -318,14 +327,14 @@ class Translator {
 	 * @return int
 	 */
 	function getLanguageCompleteness($language) {
-		global $CONFIG;
+		
 	
 		// Ensure that all possible translations are loaded
 		$this->reloadAllTranslations();
 	
 		$language = sanitise_string($language);
 	
-		$en = count($CONFIG->translations['en']);
+		$en = count($this->CONFIG->translations['en']);
 	
 		$missing = $this->getMissingLanguageKeys($language);
 		if ($missing) {
@@ -334,7 +343,7 @@ class Translator {
 			$missing = 0;
 		}
 	
-		//$lang = count($CONFIG->translations[$language]);
+		//$lang = count($this->CONFIG->translations[$language]);
 		$lang = $en - $missing;
 	
 		return round(($lang / $en) * 100, 2);
@@ -349,16 +358,16 @@ class Translator {
 	 * @return mixed
 	 */
 	function getMissingLanguageKeys($language) {
-		global $CONFIG;
+		
 	
 		// Ensure that all possible translations are loaded
 		$this->reloadAllTranslations();
 	
 		$missing = array();
 	
-		foreach ($CONFIG->translations['en'] as $k => $v) {
-			if ((!isset($CONFIG->translations[$language][$k]))
-			|| ($CONFIG->translations[$language][$k] == $CONFIG->translations['en'][$k])) {
+		foreach ($this->CONFIG->translations['en'] as $k => $v) {
+			if ((!isset($this->CONFIG->translations[$language][$k]))
+			|| ($this->CONFIG->translations[$language][$k] == $this->CONFIG->translations['en'][$k])) {
 				$missing[] = $k;
 			}
 		}

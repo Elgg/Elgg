@@ -12,6 +12,21 @@ namespace Elgg\Database;
  */
 class Annotations {
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
+	}
+
+	/**
 	 * Get a specific annotation by its id.
 	 * If you want multiple annotation objects, use
 	 * {@link elgg_get_annotations()}.
@@ -51,7 +66,7 @@ class Annotations {
 	 * @return int|bool id on success or false on failure
 	 */
 	function create($entity_guid, $name, $value, $value_type = '', $owner_guid = 0, $access_id = ACCESS_PRIVATE) {
-		global $CONFIG;
+		
 	
 		$result = false;
 	
@@ -82,7 +97,7 @@ class Annotations {
 		$entity = get_entity($entity_guid);
 	
 		if (_elgg_services()->events->trigger('annotate', $entity->type, $entity)) {
-			$result = _elgg_services()->db->insertData("INSERT INTO {$CONFIG->dbprefix}annotations
+			$result = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}annotations
 				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
 				($entity_guid, $name_id, $value_id, '$value_type', $owner_guid, $time, $access_id)");
 	
@@ -114,7 +129,7 @@ class Annotations {
 	 * @return bool
 	 */
 	function update($annotation_id, $name, $value, $value_type, $owner_guid, $access_id) {
-		global $CONFIG;
+		
 	
 		$annotation_id = (int)$annotation_id;
 	
@@ -146,7 +161,7 @@ class Annotations {
 			return false;
 		}
 	
-		$result = _elgg_services()->db->updateData("UPDATE {$CONFIG->dbprefix}annotations
+		$result = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}annotations
 			SET name_id = $name_id, value_id = $value_id, value_type = '$value_type',
 			access_id = $access_id, owner_guid = $owner_guid
 			WHERE id = $annotation_id");
@@ -408,7 +423,7 @@ class Annotations {
 	 * @return bool
 	 */
 	function exists($entity_guid, $annotation_type, $owner_guid = null) {
-		global $CONFIG;
+		
 	
 		if (!$owner_guid && !($owner_guid = _elgg_services()->session->getLoggedInUserGuid())) {
 			return false;
@@ -418,8 +433,8 @@ class Annotations {
 		$owner_guid = sanitize_int($owner_guid);
 		$annotation_type = sanitize_string($annotation_type);
 	
-		$sql = "SELECT a.id FROM {$CONFIG->dbprefix}annotations a" .
-				" JOIN {$CONFIG->dbprefix}metastrings m ON a.name_id = m.id" .
+		$sql = "SELECT a.id FROM {$this->CONFIG->dbprefix}annotations a" .
+				" JOIN {$this->CONFIG->dbprefix}metastrings m ON a.name_id = m.id" .
 				" WHERE a.owner_guid = $owner_guid AND a.entity_guid = $entity_guid" .
 				" AND m.string = '$annotation_type'";
 	

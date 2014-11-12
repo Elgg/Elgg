@@ -21,17 +21,25 @@ class ElggDiskFilestore extends \ElggFilestore {
 	const BUCKET_SIZE = 5000;
 
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
 	 * Construct a disk filestore using the given directory root.
 	 *
 	 * @param string $directory_root Root directory, must end in "/"
 	 */
 	public function __construct($directory_root = "") {
 		global $CONFIG;
+		$this->CONFIG = $CONFIG;
 
 		if ($directory_root) {
 			$this->dir_root = $directory_root;
 		} else {
-			$this->dir_root = $CONFIG->dataroot;
+			$this->dir_root = $this->CONFIG->dataroot;
 		}
 	}
 

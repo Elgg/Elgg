@@ -29,12 +29,21 @@ class ViewsService {
 	protected $file_exists_cache = array();
 
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
 	 * Constructor
 	 *
 	 * @param \Elgg\PluginHooksService $hooks  The hooks service
 	 * @param \Elgg\Logger             $logger Logger
 	 */
 	public function __construct(\Elgg\PluginHooksService $hooks, \Elgg\Logger $logger) {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
 		$this->hooks = $hooks;
 		$this->logger = $logger;
 	}
@@ -89,20 +98,20 @@ class ViewsService {
 	 * @access private
 	 */
 	public function getViewLocation($view, $viewtype = '') {
-		global $CONFIG;
+		
 
 		if (empty($viewtype)) {
 			$viewtype = elgg_get_viewtype();
 		}
 
-		if (!isset($CONFIG->views->locations[$viewtype][$view])) {
-			if (!isset($CONFIG->viewpath)) {
+		if (!isset($this->CONFIG->views->locations[$viewtype][$view])) {
+			if (!isset($this->CONFIG->viewpath)) {
 				return dirname(dirname(dirname(__FILE__))) . "/views/";
 			} else {
-				return $CONFIG->viewpath;
+				return $this->CONFIG->viewpath;
 			}
 		} else {
-			return $CONFIG->views->locations[$viewtype][$view];
+			return $this->CONFIG->views->locations[$viewtype][$view];
 		}
 	}
 
@@ -110,24 +119,24 @@ class ViewsService {
 	 * @access private
 	 */
 	public function setViewLocation($view, $location, $viewtype = '') {
-		global $CONFIG;
+		
 
 		if (empty($viewtype)) {
 			$viewtype = 'default';
 		}
 
-		if (!isset($CONFIG->views)) {
-			$CONFIG->views = new \stdClass;
+		if (!isset($this->CONFIG->views)) {
+			$this->CONFIG->views = new \stdClass;
 		}
 
-		if (!isset($CONFIG->views->locations)) {
-			$CONFIG->views->locations = array($viewtype => array($view => $location));
+		if (!isset($this->CONFIG->views->locations)) {
+			$this->CONFIG->views->locations = array($viewtype => array($view => $location));
 
-		} else if (!isset($CONFIG->views->locations[$viewtype])) {
-			$CONFIG->views->locations[$viewtype] = array($view => $location);
+		} else if (!isset($this->CONFIG->views->locations[$viewtype])) {
+			$this->CONFIG->views->locations[$viewtype] = array($view => $location);
 
 		} else {
-			$CONFIG->views->locations[$viewtype][$view] = $location;
+			$this->CONFIG->views->locations[$viewtype][$view] = $location;
 		}
 	}
 
@@ -135,27 +144,27 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerViewtypeFallback($viewtype) {
-		global $CONFIG;
+		
 
-		if (!isset($CONFIG->viewtype)) {
-			$CONFIG->viewtype = new \stdClass;
+		if (!isset($this->CONFIG->viewtype)) {
+			$this->CONFIG->viewtype = new \stdClass;
 		}
 
-		if (!isset($CONFIG->viewtype->fallback)) {
-			$CONFIG->viewtype->fallback = array();
+		if (!isset($this->CONFIG->viewtype->fallback)) {
+			$this->CONFIG->viewtype->fallback = array();
 		}
 
-		$CONFIG->viewtype->fallback[] = $viewtype;
+		$this->CONFIG->viewtype->fallback[] = $viewtype;
 	}
 
 	/**
 	 * @access private
 	 */
 	public function doesViewtypeFallback($viewtype) {
-		global $CONFIG;
+		
 
-		if (isset($CONFIG->viewtype) && isset($CONFIG->viewtype->fallback)) {
-			return in_array($viewtype, $CONFIG->viewtype->fallback);
+		if (isset($this->CONFIG->viewtype) && isset($this->CONFIG->viewtype->fallback)) {
+			return in_array($viewtype, $this->CONFIG->viewtype->fallback);
 		}
 
 		return false;
@@ -186,7 +195,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function renderView($view, array $vars = array(), $bypass = false, $viewtype = '', $issue_missing_notice = true) {
-		global $CONFIG;
+		
 
 		if (!is_string($view) || !is_string($viewtype)) {
 			$this->logger->log("View and Viewtype in views must be a strings: $view", 'NOTICE');
@@ -210,8 +219,8 @@ class ViewsService {
 		$view_orig = $view;
 
 		// Trigger the pagesetup event
-		if (!isset($CONFIG->pagesetupdone) && $CONFIG->boot_complete) {
-			$CONFIG->pagesetupdone = true;
+		if (!isset($this->CONFIG->pagesetupdone) && $this->CONFIG->boot_complete) {
+			$this->CONFIG->pagesetupdone = true;
 			_elgg_services()->events->trigger('pagesetup', 'system');
 		}
 
@@ -224,7 +233,7 @@ class ViewsService {
 		if (!isset($vars['config'])) {
 			if (!$this->config_wrapper) {
 				$warning = 'Do not rely on $vars["config"] or $CONFIG being available in views';
-				$this->config_wrapper = new \Elgg\DeprecationWrapper($CONFIG, $warning, 1.8);
+				$this->config_wrapper = new \Elgg\DeprecationWrapper($this->CONFIG, $warning, 1.8);
 			}
 			$vars['config'] = $this->config_wrapper;
 		}
@@ -270,16 +279,16 @@ class ViewsService {
 		}
 
 		// If it's been requested, pass off to a template handler instead
-		if ($bypass == false && isset($CONFIG->template_handler) && !empty($CONFIG->template_handler)) {
-			$template_handler = $CONFIG->template_handler;
+		if ($bypass == false && isset($this->CONFIG->template_handler) && !empty($this->CONFIG->template_handler)) {
+			$template_handler = $this->CONFIG->template_handler;
 			if (is_callable($template_handler)) {
 				return call_user_func($template_handler, $view, $vars);
 			}
 		}
 
 		// Set up any extensions to the requested view
-		if (isset($CONFIG->views->extensions[$view])) {
-			$viewlist = $CONFIG->views->extensions[$view];
+		if (isset($this->CONFIG->views->extensions[$view])) {
+			$viewlist = $this->CONFIG->views->extensions[$view];
 		} else {
 			$viewlist = array(500 => $view);
 		}
@@ -368,21 +377,21 @@ class ViewsService {
 	 * @access private
 	 */
 	public function viewExists($view, $viewtype = '', $recurse = true) {
-		global $CONFIG;
+		
 
 		// Detect view type
 		if ($viewtype === '' || !_elgg_is_valid_viewtype($viewtype)) {
 			$viewtype = elgg_get_viewtype();
 		}
 
-		if (!isset($CONFIG->views->locations[$viewtype][$view])) {
-			if (!isset($CONFIG->viewpath)) {
+		if (!isset($this->CONFIG->views->locations[$viewtype][$view])) {
+			if (!isset($this->CONFIG->viewpath)) {
 				$location = dirname(dirname(dirname(__FILE__))) . "/views/";
 			} else {
-				$location = $CONFIG->viewpath;
+				$location = $this->CONFIG->viewpath;
 			}
 		} else {
-			$location = $CONFIG->views->locations[$viewtype][$view];
+			$location = $this->CONFIG->views->locations[$viewtype][$view];
 		}
 
 		if ($this->fileExists("{$location}$viewtype/$view.php") ||
@@ -392,8 +401,8 @@ class ViewsService {
 
 		// If we got here then check whether this exists as an extension
 		// We optionally recursively check whether the extended view exists also for the viewtype
-		if ($recurse && isset($CONFIG->views->extensions[$view])) {
-			foreach ($CONFIG->views->extensions[$view] as $view_extension) {
+		if ($recurse && isset($this->CONFIG->views->extensions[$view])) {
+			foreach ($this->CONFIG->views->extensions[$view] as $view_extension) {
 				// do not recursively check to stay away from infinite loops
 				if ($this->viewExists($view_extension, $viewtype, false)) {
 					return true;
@@ -414,26 +423,26 @@ class ViewsService {
 	 * @access private
 	 */
 	public function extendView($view, $view_extension, $priority = 501, $viewtype = '') {
-		global $CONFIG;
+		
 
-		if (!isset($CONFIG->views)) {
-			$CONFIG->views = (object) array(
+		if (!isset($this->CONFIG->views)) {
+			$this->CONFIG->views = (object) array(
 				'extensions' => array(),
 			);
-			$CONFIG->views->extensions[$view][500] = (string) $view;
+			$this->CONFIG->views->extensions[$view][500] = (string) $view;
 		} else {
-			if (!isset($CONFIG->views->extensions[$view])) {
-				$CONFIG->views->extensions[$view][500] = (string) $view;
+			if (!isset($this->CONFIG->views->extensions[$view])) {
+				$this->CONFIG->views->extensions[$view][500] = (string) $view;
 			}
 		}
 
 		// raise priority until it doesn't match one already registered
-		while (isset($CONFIG->views->extensions[$view][$priority])) {
+		while (isset($this->CONFIG->views->extensions[$view][$priority])) {
 			$priority++;
 		}
 
-		$CONFIG->views->extensions[$view][$priority] = (string) $view_extension;
-		ksort($CONFIG->views->extensions[$view]);
+		$this->CONFIG->views->extensions[$view][$priority] = (string) $view_extension;
+		ksort($this->CONFIG->views->extensions[$view]);
 
 	}
 
@@ -441,26 +450,26 @@ class ViewsService {
 	 * @access private
 	 */
 	public function unextendView($view, $view_extension) {
-		global $CONFIG;
+		
 
-		if (!isset($CONFIG->views)) {
+		if (!isset($this->CONFIG->views)) {
 			return false;
 		}
 
-		if (!isset($CONFIG->views->extensions)) {
+		if (!isset($this->CONFIG->views->extensions)) {
 			return false;
 		}
 
-		if (!isset($CONFIG->views->extensions[$view])) {
+		if (!isset($this->CONFIG->views->extensions[$view])) {
 			return false;
 		}
 
-		$priority = array_search($view_extension, $CONFIG->views->extensions[$view]);
+		$priority = array_search($view_extension, $this->CONFIG->views->extensions[$view]);
 		if ($priority === false) {
 			return false;
 		}
 
-		unset($CONFIG->views->extensions[$view][$priority]);
+		unset($this->CONFIG->views->extensions[$view][$priority]);
 
 		return true;
 	}
@@ -469,34 +478,34 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerCacheableView($view) {
-		global $CONFIG;
+		
 
-		if (!isset($CONFIG->views)) {
-			$CONFIG->views = new \stdClass;
+		if (!isset($this->CONFIG->views)) {
+			$this->CONFIG->views = new \stdClass;
 		}
 
-		if (!isset($CONFIG->views->simplecache)) {
-			$CONFIG->views->simplecache = array();
+		if (!isset($this->CONFIG->views->simplecache)) {
+			$this->CONFIG->views->simplecache = array();
 		}
 
-		$CONFIG->views->simplecache[$view] = true;
+		$this->CONFIG->views->simplecache[$view] = true;
 	}
 
 	/**
 	 * @access private
 	 */
 	public function isCacheableView($view) {
-		global $CONFIG;
+		
 
-		if (!isset($CONFIG->views)) {
-			$CONFIG->views = new \stdClass;
+		if (!isset($this->CONFIG->views)) {
+			$this->CONFIG->views = new \stdClass;
 		}
 
-		if (!isset($CONFIG->views->simplecache)) {
-			$CONFIG->views->simplecache = array();
+		if (!isset($this->CONFIG->views->simplecache)) {
+			$this->CONFIG->views->simplecache = array();
 		}
 
-		if (isset($CONFIG->views->simplecache[$view])) {
+		if (isset($this->CONFIG->views->simplecache[$view])) {
 			return true;
 		} else {
 			$currentViewtype = elgg_get_viewtype();

@@ -13,6 +13,21 @@ namespace Elgg\Http;
  */
 class Input {
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
+	}
+
+	/**
 	 * Sets an input value that may later be retrieved by get_input
 	 *
 	 * Note: this function does not handle nested arrays (ex: form input of param[m][n])
@@ -23,16 +38,16 @@ class Input {
 	 * @return void
 	 */
 	public function set($variable, $value) {
-		global $CONFIG;
-		if (!isset($CONFIG->input)) {
-			$CONFIG->input = array();
+		
+		if (!isset($this->CONFIG->input)) {
+			$this->CONFIG->input = array();
 		}
 	
 		if (is_array($value)) {
 			array_walk_recursive($value, create_function('&$v, $k', '$v = trim($v);'));
-			$CONFIG->input[trim($variable)] = $value;
+			$this->CONFIG->input[trim($variable)] = $value;
 		} else {
-			$CONFIG->input[trim($variable)] = trim($value);
+			$this->CONFIG->input[trim($variable)] = trim($value);
 		}
 	}
 	
@@ -56,15 +71,15 @@ class Input {
 	 */
 	function get($variable, $default = null, $filter_result = true) {
 			
-		global $CONFIG;
+		
 	
 		$result = $default;
 	
 		elgg_push_context('input');
 	
-		if (isset($CONFIG->input[$variable])) {
+		if (isset($this->CONFIG->input[$variable])) {
 			// a plugin has already set this variable
-			$result = $CONFIG->input[$variable];
+			$result = $this->CONFIG->input[$variable];
 			if ($filter_result) {
 				$result = filter_tags($result);
 			}

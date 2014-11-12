@@ -12,6 +12,21 @@ namespace Elgg\Database;
  */
 class EntityTable {
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
+	}
+
+	/**
 	 * Returns a database row from the entities table.
 	 *
 	 * @tip Use get_entity() to return the fully loaded entity.
@@ -26,7 +41,7 @@ class EntityTable {
 	 * @access private
 	 */
 	function getRow($guid) {
-		global $CONFIG;
+		
 	
 		if (!$guid) {
 			return false;
@@ -35,7 +50,7 @@ class EntityTable {
 		$guid = (int) $guid;
 		$access = _elgg_get_access_where_sql(array('table_alias' => ''));
 	
-		return _elgg_services()->db->getDataRow("SELECT * from {$CONFIG->dbprefix}entities where guid=$guid and $access");
+		return _elgg_services()->db->getDataRow("SELECT * from {$this->CONFIG->dbprefix}entities where guid=$guid and $access");
 	}
 	
 	/**
@@ -196,11 +211,11 @@ class EntityTable {
 	 * @return bool
 	 */
 	function exists($guid) {
-		global $CONFIG;
+		
 	
 		$guid = sanitize_int($guid);
 	
-		$query = "SELECT count(*) as total FROM {$CONFIG->dbprefix}entities WHERE guid = $guid";
+		$query = "SELECT count(*) as total FROM {$this->CONFIG->dbprefix}entities WHERE guid = $guid";
 		$result = _elgg_services()->db->getDataRow($query);
 		if ($result->total == 0) {
 			return false;
@@ -302,7 +317,7 @@ class EntityTable {
 	 * @see elgg_list_entities()
 	 */
 	function getEntities(array $options = array()) {
-		global $CONFIG;
+		
 	
 		$defaults = array(
 			'types'					=>	ELGG_ENTITIES_ANY_VALUE,
@@ -312,7 +327,7 @@ class EntityTable {
 			'guids'					=>	ELGG_ENTITIES_ANY_VALUE,
 			'owner_guids'			=>	ELGG_ENTITIES_ANY_VALUE,
 			'container_guids'		=>	ELGG_ENTITIES_ANY_VALUE,
-			'site_guids'			=>	$CONFIG->site_guid,
+			'site_guids'			=>	$this->CONFIG->site_guid,
 	
 			'modified_time_lower'	=>	ELGG_ENTITIES_ANY_VALUE,
 			'modified_time_upper'	=>	ELGG_ENTITIES_ANY_VALUE,
@@ -410,9 +425,9 @@ class EntityTable {
 		}
 	
 		if (!$options['count']) {
-			$query = "SELECT DISTINCT e.*{$selects} FROM {$CONFIG->dbprefix}entities e ";
+			$query = "SELECT DISTINCT e.*{$selects} FROM {$this->CONFIG->dbprefix}entities e ";
 		} else {
-			$query = "SELECT count(DISTINCT e.guid) as total FROM {$CONFIG->dbprefix}entities e ";
+			$query = "SELECT count(DISTINCT e.guid) as total FROM {$this->CONFIG->dbprefix}entities e ";
 		}
 	
 		// add joins
@@ -939,8 +954,8 @@ class EntityTable {
 			throw new \InvalidArgumentException("Invalid type '$type' passed to elgg_get_entities_from_attributes()");
 		}
 	
-		global $CONFIG;
-		$type_table = "{$CONFIG->dbprefix}{$type}s_entity";
+		
+		$type_table = "{$this->CONFIG->dbprefix}{$type}s_entity";
 	
 		$return = array(
 			'joins' => array(),
@@ -1038,11 +1053,11 @@ class EntityTable {
 	function getDates($type = '', $subtype = '', $container_guid = 0, $site_guid = 0,
 			$order_by = 'time_created') {
 	
-		global $CONFIG;
+		
 	
 		$site_guid = (int) $site_guid;
 		if ($site_guid == 0) {
-			$site_guid = $CONFIG->site_guid;
+			$site_guid = $this->CONFIG->site_guid;
 		}
 		$where = array();
 	
@@ -1103,7 +1118,7 @@ class EntityTable {
 		$where[] = _elgg_get_access_where_sql(array('table_alias' => ''));
 	
 		$sql = "SELECT DISTINCT EXTRACT(YEAR_MONTH FROM FROM_UNIXTIME(time_created)) AS yearmonth
-			FROM {$CONFIG->dbprefix}entities where ";
+			FROM {$this->CONFIG->dbprefix}entities where ";
 	
 		foreach ($where as $w) {
 			$sql .= " $w and ";
@@ -1133,7 +1148,7 @@ class EntityTable {
 	 * @access private
 	 */
 	function updateLastAction($guid, $posted = null) {
-		global $CONFIG;
+		
 		$guid = (int)$guid;
 		$posted = (int)$posted;
 	
@@ -1143,7 +1158,7 @@ class EntityTable {
 	
 		if ($guid) {
 			//now add to the river updated table
-			$query = "UPDATE {$CONFIG->dbprefix}entities SET last_action = {$posted} WHERE guid = {$guid}";
+			$query = "UPDATE {$this->CONFIG->dbprefix}entities SET last_action = {$posted} WHERE guid = {$guid}";
 			$result = _elgg_services()->db->updateData($query);
 			if ($result) {
 				return true;

@@ -13,6 +13,21 @@ namespace Elgg\Assets;
  */
 class ExternalFiles {
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
+	}
+	
+	/**
 	 * Core registration function for external files
 	 *
 	 * @param string $type     Type of external resource (js or css)
@@ -24,7 +39,7 @@ class ExternalFiles {
 	 * @return bool
 	 */
 	function register($type, $name, $url, $location, $priority = 500) {
-		global $CONFIG;
+		
 	
 		if (empty($name) || empty($url)) {
 			return false;
@@ -45,7 +60,7 @@ class ExternalFiles {
 		// no negative priorities right now.
 		$priority = max((int)$priority, 0);
 	
-		$item = elgg_extract($name, $CONFIG->externals_map[$type]);
+		$item = elgg_extract($name, $this->CONFIG->externals_map[$type]);
 	
 		if ($item) {
 			// updating a registered item
@@ -54,10 +69,10 @@ class ExternalFiles {
 			$item->location = $location;
 	
 			// if loaded before registered, that means it hasn't been added to the list yet
-			if ($CONFIG->externals[$type]->contains($item)) {
-				$priority = $CONFIG->externals[$type]->move($item, $priority);
+			if ($this->CONFIG->externals[$type]->contains($item)) {
+				$priority = $this->CONFIG->externals[$type]->move($item, $priority);
 			} else {
-				$priority = $CONFIG->externals[$type]->add($item, $priority);
+				$priority = $this->CONFIG->externals[$type]->add($item, $priority);
 			}
 		} else {
 			$item = new \stdClass();
@@ -65,10 +80,10 @@ class ExternalFiles {
 			$item->url = $url;
 			$item->location = $location;
 	
-			$priority = $CONFIG->externals[$type]->add($item, $priority);
+			$priority = $this->CONFIG->externals[$type]->add($item, $priority);
 		}
 	
-		$CONFIG->externals_map[$type][$name] = $item;
+		$this->CONFIG->externals_map[$type][$name] = $item;
 	
 		return $priority !== false;
 	}
@@ -82,16 +97,16 @@ class ExternalFiles {
 	 * @return bool
 	 */
 	function unregister($type, $name) {
-		global $CONFIG;
+		
 	
 		_elgg_bootstrap_externals_data_structure($type);
 	
 		$name = trim(strtolower($name));
-		$item = elgg_extract($name, $CONFIG->externals_map[$type]);
+		$item = elgg_extract($name, $this->CONFIG->externals_map[$type]);
 	
 		if ($item) {
-			unset($CONFIG->externals_map[$type][$name]);
-			return $CONFIG->externals[$type]->remove($item);
+			unset($this->CONFIG->externals_map[$type][$name]);
+			return $this->CONFIG->externals[$type]->remove($item);
 		}
 	
 		return false;
@@ -106,13 +121,13 @@ class ExternalFiles {
 	 * @return void
 	 */
 	function load($type, $name) {
-		global $CONFIG;
+		
 	
 		_elgg_bootstrap_externals_data_structure($type);
 	
 		$name = trim(strtolower($name));
 	
-		$item = elgg_extract($name, $CONFIG->externals_map[$type]);
+		$item = elgg_extract($name, $this->CONFIG->externals_map[$type]);
 	
 		if ($item) {
 			// update a registered item
@@ -123,8 +138,8 @@ class ExternalFiles {
 			$item->url = '';
 			$item->location = '';
 	
-			$CONFIG->externals[$type]->add($item);
-			$CONFIG->externals_map[$type][$name] = $item;
+			$this->CONFIG->externals[$type]->add($item);
+			$this->CONFIG->externals_map[$type][$name] = $item;
 		}
 	}
 	
@@ -137,10 +152,10 @@ class ExternalFiles {
 	 * @return array
 	 */
 	function getLoadedFiles($type, $location) {
-		global $CONFIG;
+		
 	
-		if (isset($CONFIG->externals) && $CONFIG->externals[$type] instanceof \ElggPriorityList) {
-			$items = $CONFIG->externals[$type]->getElements();
+		if (isset($this->CONFIG->externals) && $this->CONFIG->externals[$type] instanceof \ElggPriorityList) {
+			$items = $this->CONFIG->externals[$type]->getElements();
 	
 			$callback = "return \$v->loaded == true && \$v->location == '$location';";
 			$items = array_filter($items, create_function('$v', $callback));
@@ -159,22 +174,22 @@ class ExternalFiles {
 	 * @access private
 	 */
 	function bootstrap($type) {
-		global $CONFIG;
+		
 	
-		if (!isset($CONFIG->externals)) {
-			$CONFIG->externals = array();
+		if (!isset($this->CONFIG->externals)) {
+			$this->CONFIG->externals = array();
 		}
 	
-		if (!isset($CONFIG->externals[$type]) || !$CONFIG->externals[$type] instanceof \ElggPriorityList) {
-			$CONFIG->externals[$type] = new \ElggPriorityList();
+		if (!isset($this->CONFIG->externals[$type]) || !$this->CONFIG->externals[$type] instanceof \ElggPriorityList) {
+			$this->CONFIG->externals[$type] = new \ElggPriorityList();
 		}
 	
-		if (!isset($CONFIG->externals_map)) {
-			$CONFIG->externals_map = array();
+		if (!isset($this->CONFIG->externals_map)) {
+			$this->CONFIG->externals_map = array();
 		}
 	
-		if (!isset($CONFIG->externals_map[$type])) {
-			$CONFIG->externals_map[$type] = array();
+		if (!isset($this->CONFIG->externals_map[$type])) {
+			$this->CONFIG->externals_map[$type] = array();
 		}
 	}
 }
