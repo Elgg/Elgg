@@ -1,20 +1,29 @@
 <?php
 
+use Elgg\I18n\NullTranslator;
+
 class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @var ElggUpgrade
 	 */
 	protected $obj;
 
-	protected function setUp() {
+	public function setUp() {
+		$this->oldTranslator = _elgg_services()->translator;
+
 		// required by \ElggEntity when setting the owner/container
 		_elgg_services()->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
+		_elgg_services()->setValue('translator', new NullTranslator());
 
 		$this->obj = $this->getMockBuilder('\ElggUpgrade')
 				->setMethods(null)
 				->getMock();
 
 		$this->obj->_callable_egefps = array($this, 'mock_egefps');
+	}
+	
+	public function tearDown() {
+		_elgg_services()->setValue('translator', $this->oldTranslator);
 	}
 
 	public function mock_egefps($options) {

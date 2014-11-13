@@ -13,6 +13,21 @@ namespace Elgg\Database;
  */
 class MetadataTable {
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
+	}
+
+	/**
 	 * Get a specific metadata object by its id.
 	 * If you want multiple metadata objects, use
 	 * {@link elgg_get_metadata()}.
@@ -58,7 +73,7 @@ class MetadataTable {
 	function create($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
 		$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 	
-		global $CONFIG;
+		
 	
 		$entity_guid = (int)$entity_guid;
 		// name and value are encoded in add_metastring()
@@ -79,7 +94,7 @@ class MetadataTable {
 	
 		$access_id = (int)$access_id;
 	
-		$query = "SELECT * from {$CONFIG->dbprefix}metadata"
+		$query = "SELECT * from {$this->CONFIG->dbprefix}metadata"
 			. " WHERE entity_guid = $entity_guid and name_id=" . elgg_get_metastring_id($name) . " limit 1";
 	
 		$existing = _elgg_services()->db->getDataRow($query);
@@ -108,7 +123,7 @@ class MetadataTable {
 			}
 	
 			// If ok then add it
-			$query = "INSERT into {$CONFIG->dbprefix}metadata"
+			$query = "INSERT into {$this->CONFIG->dbprefix}metadata"
 				. " (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)"
 				. " VALUES ($entity_guid, '$name_id','$value_id','$value_type', $owner_guid, $time, $access_id)";
 	
@@ -143,7 +158,7 @@ class MetadataTable {
 	 * @return bool
 	 */
 	function update($id, $name, $value, $value_type, $owner_guid, $access_id) {
-		global $CONFIG;
+		
 	
 		$id = (int)$id;
 	
@@ -190,7 +205,7 @@ class MetadataTable {
 		}
 	
 		// If ok then add it
-		$query = "UPDATE {$CONFIG->dbprefix}metadata"
+		$query = "UPDATE {$this->CONFIG->dbprefix}metadata"
 			. " set name_id='$name_id', value_id='$value_id', value_type='$value_type', access_id=$access_id,"
 			. " owner_guid=$owner_guid where id=$id";
 	
@@ -461,7 +476,7 @@ class MetadataTable {
 			$pairs = null, $pair_operator = 'AND', $case_sensitive = true, $order_by_metadata = null,
 			$owner_guids = null) {
 	
-		global $CONFIG;
+		
 	
 		// short circuit if nothing requested
 		// 0 is a valid (if not ill-conceived) metadata name.
@@ -492,7 +507,7 @@ class MetadataTable {
 		);
 	
 		// will always want to join these tables if pulling metastrings.
-		$return['joins'][] = "JOIN {$CONFIG->dbprefix}{$n_table} n_table on
+		$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}{$n_table} n_table on
 			{$e_table}.guid = n_table.entity_guid";
 	
 		$wheres = array();
@@ -514,7 +529,7 @@ class MetadataTable {
 			}
 	
 			if ($names_str = implode(',', $sanitised_names)) {
-				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn on n_table.name_id = msn.id";
+				$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msn on n_table.name_id = msn.id";
 				$names_where = "(msn.string IN ($names_str))";
 			}
 		}
@@ -536,7 +551,7 @@ class MetadataTable {
 			}
 	
 			if ($values_str = implode(',', $sanitised_values)) {
-				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv on n_table.value_id = msv.id";
+				$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msv on n_table.value_id = msv.id";
 				$values_where = "({$binary}msv.string IN ($values_str))";
 			}
 		}
@@ -629,11 +644,11 @@ class MetadataTable {
 				$name = sanitise_string($pair['name']);
 	
 				// @todo The multiple joins are only needed when the operator is AND
-				$return['joins'][] = "JOIN {$CONFIG->dbprefix}{$n_table} n_table{$i}
+				$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}{$n_table} n_table{$i}
 					on {$e_table}.guid = n_table{$i}.entity_guid";
-				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i}
+				$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msn{$i}
 					on n_table{$i}.name_id = msn{$i}.id";
-				$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i}
+				$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msv{$i}
 					on n_table{$i}.value_id = msv{$i}.id";
 	
 				$pair_wheres[] = "(msn{$i}.string = '$name' AND {$pair_binary}msv{$i}.string
@@ -676,11 +691,11 @@ class MetadataTable {
 					} else {
 						$direction = 'ASC';
 					}
-					$return['joins'][] = "JOIN {$CONFIG->dbprefix}{$n_table} n_table{$i}
+					$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}{$n_table} n_table{$i}
 						on {$e_table}.guid = n_table{$i}.entity_guid";
-					$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msn{$i}
+					$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msn{$i}
 						on n_table{$i}.name_id = msn{$i}.id";
-					$return['joins'][] = "JOIN {$CONFIG->dbprefix}metastrings msv{$i}
+					$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msv{$i}
 						on n_table{$i}.value_id = msv{$i}.id";
 	
 					$access = _elgg_get_access_where_sql(array('table_alias' => "n_table{$i}"));
@@ -727,11 +742,11 @@ class MetadataTable {
 	 * @return void
 	 */
 	function registerMetadataAsIndependent($type, $subtype = '*') {
-		global $CONFIG;
-		if (!isset($CONFIG->independents)) {
-			$CONFIG->independents = array();
+		
+		if (!isset($this->CONFIG->independents)) {
+			$this->CONFIG->independents = array();
 		}
-		$CONFIG->independents[$type][$subtype] = true;
+		$this->CONFIG->independents[$type][$subtype] = true;
 	}
 	
 	/**
@@ -744,12 +759,12 @@ class MetadataTable {
 	 * @return bool
 	 */
 	function isMetadataIndependent($type, $subtype) {
-		global $CONFIG;
-		if (empty($CONFIG->independents)) {
+		
+		if (empty($this->CONFIG->independents)) {
 			return false;
 		}
-		if (!empty($CONFIG->independents[$type][$subtype])
-			|| !empty($CONFIG->independents[$type]['*'])) {
+		if (!empty($this->CONFIG->independents[$type][$subtype])
+			|| !empty($this->CONFIG->independents[$type]['*'])) {
 				return true;
 			}
 		return false;

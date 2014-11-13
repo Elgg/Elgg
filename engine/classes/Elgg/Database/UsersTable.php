@@ -20,6 +20,21 @@ $USERNAME_TO_GUID_MAP_CACHE = array();
  */
 class UsersTable {
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
+	}
+
+	/**
 	 * Return the user specific details of a user by a row.
 	 *
 	 * @param int $guid The \ElggUser guid
@@ -28,10 +43,10 @@ class UsersTable {
 	 * @access private
 	 */
 	function getRow($guid) {
-		global $CONFIG;
+		
 	
 		$guid = (int)$guid;
-		return _elgg_services()->db->getDataRow("SELECT * from {$CONFIG->dbprefix}users_entity where guid=$guid");
+		return _elgg_services()->db->getDataRow("SELECT * from {$this->CONFIG->dbprefix}users_entity where guid=$guid");
 	}
 	
 	/**
@@ -42,12 +57,12 @@ class UsersTable {
 	 * @return bool Depending on success
 	 */
 	function disableEntities($owner_guid) {
-		global $CONFIG;
+		
 		$owner_guid = (int) $owner_guid;
 		if ($entity = get_entity($owner_guid)) {
 			if (_elgg_services()->events->trigger('disable', $entity->type, $entity)) {
 				if ($entity->canEdit()) {
-					$query = "UPDATE {$CONFIG->dbprefix}entities
+					$query = "UPDATE {$this->CONFIG->dbprefix}entities
 						set enabled='no' where owner_guid={$owner_guid}
 						or container_guid = {$owner_guid}";
 	
@@ -69,7 +84,7 @@ class UsersTable {
 	 * @return bool
 	 */
 	function ban($user_guid, $reason = "") {
-		global $CONFIG;
+		
 	
 		$user_guid = (int)$user_guid;
 	
@@ -93,7 +108,7 @@ class UsersTable {
 				}
 	
 				// Set ban flag
-				$query = "UPDATE {$CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid";
+				$query = "UPDATE {$this->CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid";
 				return _elgg_services()->db->updateData($query);
 			}
 	
@@ -111,7 +126,7 @@ class UsersTable {
 	 * @return bool
 	 */
 	function unban($user_guid) {
-		global $CONFIG;
+		
 	
 		$user_guid = (int)$user_guid;
 	
@@ -132,7 +147,7 @@ class UsersTable {
 				}
 	
 	
-				$query = "UPDATE {$CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid";
+				$query = "UPDATE {$this->CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid";
 				return _elgg_services()->db->updateData($query);
 			}
 	
@@ -150,7 +165,7 @@ class UsersTable {
 	 * @return bool
 	 */
 	function makeAdmin($user_guid) {
-		global $CONFIG;
+		
 	
 		$user = get_entity((int)$user_guid);
 	
@@ -167,7 +182,7 @@ class UsersTable {
 					$newentity_cache->delete($user_guid);
 				}
 	
-				$r = _elgg_services()->db->updateData("UPDATE {$CONFIG->dbprefix}users_entity set admin='yes' where guid=$user_guid");
+				$r = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}users_entity set admin='yes' where guid=$user_guid");
 				_elgg_invalidate_cache_for_entity($user_guid);
 				return $r;
 			}
@@ -186,7 +201,7 @@ class UsersTable {
 	 * @return bool
 	 */
 	function removeAdmin($user_guid) {
-		global $CONFIG;
+		
 	
 		$user = get_entity((int)$user_guid);
 	
@@ -203,7 +218,7 @@ class UsersTable {
 					$newentity_cache->delete($user_guid);
 				}
 	
-				$r = _elgg_services()->db->updateData("UPDATE {$CONFIG->dbprefix}users_entity set admin='no' where guid=$user_guid");
+				$r = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}users_entity set admin='no' where guid=$user_guid");
 				_elgg_invalidate_cache_for_entity($user_guid);
 				return $r;
 			}
@@ -248,7 +263,7 @@ class UsersTable {
 	 * @return \ElggUser|false Depending on success
 	 */
 	function getByUsername($username) {
-		global $CONFIG, $USERNAME_TO_GUID_MAP_CACHE;
+		global $USERNAME_TO_GUID_MAP_CACHE;
 	
 		// Fixes #6052. Username is frequently sniffed from the path info, which,
 		// unlike $_GET, is not URL decoded. If the username was not URL encoded,
@@ -264,8 +279,8 @@ class UsersTable {
 			return _elgg_retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]);
 		}
 	
-		$query = "SELECT e.* FROM {$CONFIG->dbprefix}users_entity u
-			JOIN {$CONFIG->dbprefix}entities e ON e.guid = u.guid
+		$query = "SELECT e.* FROM {$this->CONFIG->dbprefix}users_entity u
+			JOIN {$this->CONFIG->dbprefix}entities e ON e.guid = u.guid
 			WHERE u.username = '$username' AND $access";
 	
 		$entity = _elgg_services()->db->getDataRow($query, 'entity_row_to_elggstar');
@@ -286,14 +301,14 @@ class UsersTable {
 	 * @return array
 	 */
 	function getByEmail($email) {
-		global $CONFIG;
+		
 	
 		$email = sanitise_string($email);
 	
 		$access = _elgg_get_access_where_sql();
 	
-		$query = "SELECT e.* FROM {$CONFIG->dbprefix}entities e
-			JOIN {$CONFIG->dbprefix}users_entity u ON e.guid = u.guid
+		$query = "SELECT e.* FROM {$this->CONFIG->dbprefix}entities e
+			JOIN {$this->CONFIG->dbprefix}users_entity u ON e.guid = u.guid
 			WHERE email = '$email' AND $access";
 	
 		return _elgg_services()->db->getData($query, 'entity_row_to_elggstar');
@@ -633,10 +648,10 @@ class UsersTable {
 	 */
 	function setLastAction($user_guid) {
 		$user_guid = (int) $user_guid;
-		global $CONFIG;
+		
 		$time = time();
 	
-		$query = "UPDATE {$CONFIG->dbprefix}users_entity
+		$query = "UPDATE {$this->CONFIG->dbprefix}users_entity
 			set prev_last_action = last_action,
 			last_action = {$time} where guid = {$user_guid}";
 	
@@ -652,10 +667,10 @@ class UsersTable {
 	 */
 	function setLastLogin($user_guid) {
 		$user_guid = (int) $user_guid;
-		global $CONFIG;
+		
 		$time = time();
 	
-		$query = "UPDATE {$CONFIG->dbprefix}users_entity
+		$query = "UPDATE {$this->CONFIG->dbprefix}users_entity
 			set prev_last_login = last_login, last_login = {$time} where guid = {$user_guid}";
 	
 		execute_delayed_write_query($query);

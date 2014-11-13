@@ -16,6 +16,21 @@ namespace Elgg\Database;
 class ConfigTable {
 		
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
+	}
+
+	/**
 	 * Removes a config setting.
 	 *
 	 * @param string $name      The name of the field.
@@ -24,21 +39,21 @@ class ConfigTable {
 	 * @return bool Success or failure
 	 */
 	function remove($name, $site_guid = 0) {
-		global $CONFIG;
+		
 	
 		$name = trim($name);
 	
 		$site_guid = (int) $site_guid;
 		if ($site_guid == 0) {
-			$site_guid = (int) $CONFIG->site_guid;
+			$site_guid = (int) $this->CONFIG->site_guid;
 		}
 	
-		if ($site_guid == $CONFIG->site_guid && isset($CONFIG->$name)) {
-			unset($CONFIG->$name);
+		if ($site_guid == $this->CONFIG->site_guid && isset($this->CONFIG->$name)) {
+			unset($this->CONFIG->$name);
 		}
 	
 		$escaped_name = sanitize_string($name);
-		$query = "DELETE FROM {$CONFIG->dbprefix}config WHERE name = '$escaped_name' AND site_guid = $site_guid";
+		$query = "DELETE FROM {$this->CONFIG->dbprefix}config WHERE name = '$escaped_name' AND site_guid = $site_guid";
 	
 		return _elgg_services()->db->deleteData($query) !== false;
 	}
@@ -65,7 +80,7 @@ class ConfigTable {
 	 * @return bool
 	 */
 	function set($name, $value, $site_guid = 0) {
-		global $CONFIG;
+		
 	
 		$name = trim($name);
 	
@@ -77,16 +92,16 @@ class ConfigTable {
 	
 		$site_guid = (int) $site_guid;
 		if ($site_guid == 0) {
-			$site_guid = (int) $CONFIG->site_guid;
+			$site_guid = (int) $this->CONFIG->site_guid;
 		}
 	
-		if ($site_guid == $CONFIG->site_guid) {
-			$CONFIG->$name = $value;
+		if ($site_guid == $this->CONFIG->site_guid) {
+			$this->CONFIG->$name = $value;
 		}
 	
 		$escaped_name = sanitize_string($name);
 		$escaped_value = sanitize_string(serialize($value));
-		$result = _elgg_services()->db->insertData("INSERT INTO {$CONFIG->dbprefix}config
+		$result = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}config
 			SET name = '$escaped_name', value = '$escaped_value', site_guid = $site_guid
 			ON DUPLICATE KEY UPDATE value = '$escaped_value'");
 	
@@ -107,7 +122,7 @@ class ConfigTable {
 	 * @return mixed|null
 	 */
 	function get($name, $site_guid = 0) {
-		global $CONFIG;
+		
 	
 		$name = trim($name);
 	
@@ -139,23 +154,23 @@ class ConfigTable {
 		}
 	
 		if ($site_guid == 0) {
-			$site_guid = (int) $CONFIG->site_guid;
+			$site_guid = (int) $this->CONFIG->site_guid;
 		}
 	
 		// decide from where to return the value
-		if ($site_guid == $CONFIG->site_guid && isset($CONFIG->$name)) {
-			return $CONFIG->$name;
+		if ($site_guid == $this->CONFIG->site_guid && isset($this->CONFIG->$name)) {
+			return $this->CONFIG->$name;
 		}
 	
 		$escaped_name = sanitize_string($name);
-		$result = _elgg_services()->db->getDataRow("SELECT value FROM {$CONFIG->dbprefix}config
+		$result = _elgg_services()->db->getDataRow("SELECT value FROM {$this->CONFIG->dbprefix}config
 			WHERE name = '$escaped_name' AND site_guid = $site_guid");
 	
 		if ($result) {
 			$result = unserialize($result->value);
 	
-			if ($site_guid == $CONFIG->site_guid) {
-				$CONFIG->$name = $result;
+			if ($site_guid == $this->CONFIG->site_guid) {
+				$this->CONFIG->$name = $result;
 			}
 	
 			return $result;
@@ -172,19 +187,19 @@ class ConfigTable {
 	 * @return bool
 	 */
 	function loadAll($site_guid = 0) {
-		global $CONFIG;
+		
 	
 		$site_guid = (int) $site_guid;
 	
 		if ($site_guid == 0) {
-			$site_guid = (int) $CONFIG->site_guid;
+			$site_guid = (int) $this->CONFIG->site_guid;
 		}
 	
-		if ($result = _elgg_services()->db->getData("SELECT * FROM {$CONFIG->dbprefix}config WHERE site_guid = $site_guid")) {
+		if ($result = _elgg_services()->db->getData("SELECT * FROM {$this->CONFIG->dbprefix}config WHERE site_guid = $site_guid")) {
 			foreach ($result as $r) {
 				$name = $r->name;
 				$value = $r->value;
-				$CONFIG->$name = unserialize($value);
+				$this->CONFIG->$name = unserialize($value);
 			}
 	
 			return true;

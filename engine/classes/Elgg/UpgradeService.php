@@ -15,6 +15,21 @@ namespace Elgg;
 class UpgradeService {
 
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
+	}
+
+	/**
 	 * Run the upgrade process
 	 *
 	 * @return array
@@ -62,7 +77,7 @@ class UpgradeService {
 	 */
 	protected function upgradeCode($version, $quiet = false) {
 		// do not remove - some upgrade scripts depend on this
-		global $CONFIG;
+		
 
 		$version = (int) $version;
 		$upgrade_path = _elgg_services()->config->get('path') . 'engine/lib/upgrades/';
@@ -320,11 +335,11 @@ class UpgradeService {
 	 * @return bool
 	 */
 	protected function getUpgradeMutex() {
-		global $CONFIG;
+		
 
 		if (!$this->isUpgradeLocked()) {
 			// lock it
-			_elgg_services()->db->insertData("create table {$CONFIG->dbprefix}upgrade_lock (id INT)");
+			_elgg_services()->db->insertData("create table {$this->CONFIG->dbprefix}upgrade_lock (id INT)");
 			_elgg_services()->logger->notice('Locked for upgrade.');
 			return true;
 		}
@@ -339,8 +354,8 @@ class UpgradeService {
 	 * @return void
 	 */
 	public function releaseUpgradeMutex() {
-		global $CONFIG;
-		_elgg_services()->db->deleteData("drop table {$CONFIG->dbprefix}upgrade_lock");
+		
+		_elgg_services()->db->deleteData("drop table {$this->CONFIG->dbprefix}upgrade_lock");
 		_elgg_services()->logger->notice('Upgrade unlocked.');
 	}
 
@@ -350,9 +365,9 @@ class UpgradeService {
 	 * @return bool
 	 */
 	public function isUpgradeLocked() {
-		global $CONFIG;
+		
 
-		$is_locked = count(_elgg_services()->db->getData("SHOW TABLES LIKE '{$CONFIG->dbprefix}upgrade_lock'"));
+		$is_locked = count(_elgg_services()->db->getData("SHOW TABLES LIKE '{$this->CONFIG->dbprefix}upgrade_lock'"));
 
 		return (bool)$is_locked;
 	}
@@ -380,12 +395,12 @@ class UpgradeService {
 	 * @deprecated 1.8 Use PHP upgrades for sql changes.
 	 */
 	protected function dbUpgrade($version, $fromdir = "", $quiet = false) {
-		global $CONFIG;
+		
 
 		$version = (int) $version;
 
 		if (!$fromdir) {
-			$fromdir = $CONFIG->path . 'engine/schema/upgrades/';
+			$fromdir = $this->CONFIG->path . 'engine/schema/upgrades/';
 		}
 
 		$i = 0;

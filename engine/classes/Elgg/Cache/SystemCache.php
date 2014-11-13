@@ -12,6 +12,21 @@ namespace Elgg\Cache;
  */
 class SystemCache {
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
+	}
+
+	/**
 	 * Returns an \ElggCache object suitable for caching system information
 	 *
 	 * @todo Can this be done in a cleaner way?
@@ -20,7 +35,7 @@ class SystemCache {
 	 * @return \ElggFileCache
 	 */
 	function get() {
-		global $CONFIG;
+		
 	
 		/**
 		 * A default filestore cache using the dataroot.
@@ -28,7 +43,7 @@ class SystemCache {
 		static $FILE_PATH_CACHE;
 	
 		if (!$FILE_PATH_CACHE) {
-			$FILE_PATH_CACHE = new \ElggFileCache($CONFIG->dataroot . 'system_cache/');
+			$FILE_PATH_CACHE = new \ElggFileCache($this->CONFIG->dataroot . 'system_cache/');
 		}
 	
 		return $FILE_PATH_CACHE;
@@ -52,9 +67,9 @@ class SystemCache {
 	 * @return bool
 	 */
 	function save($type, $data) {
-		global $CONFIG;
+		
 	
-		if ($CONFIG->system_cache_enabled) {
+		if ($this->CONFIG->system_cache_enabled) {
 			$cache = elgg_get_system_cache();
 			return $cache->save($type, $data);
 		}
@@ -69,9 +84,9 @@ class SystemCache {
 	 * @return string
 	 */
 	function load($type) {
-		global $CONFIG;
+		
 	
-		if ($CONFIG->system_cache_enabled) {
+		if ($this->CONFIG->system_cache_enabled) {
 			$cache = elgg_get_system_cache();
 			$cached_data = $cache->load($type);
 	
@@ -92,10 +107,10 @@ class SystemCache {
 	 * @return void
 	 */
 	function enable() {
-		global $CONFIG;
+		
 	
 		_elgg_services()->datalist->set('system_cache_enabled', 1);
-		$CONFIG->system_cache_enabled = 1;
+		$this->CONFIG->system_cache_enabled = 1;
 		elgg_reset_system_cache();
 	}
 	
@@ -108,10 +123,10 @@ class SystemCache {
 	 * @return void
 	 */
 	function disable() {
-		global $CONFIG;
+		
 	
 		_elgg_services()->datalist->set('system_cache_enabled', 0);
-		$CONFIG->system_cache_enabled = 0;
+		$this->CONFIG->system_cache_enabled = 0;
 		elgg_reset_system_cache();
 	}
 	
@@ -122,24 +137,24 @@ class SystemCache {
 	 * @access private
 	 */
 	function loadAll() {
-		global $CONFIG;
+		
 	
-		$CONFIG->system_cache_loaded = false;
+		$this->CONFIG->system_cache_loaded = false;
 	
-		$CONFIG->views = new \stdClass();
+		$this->CONFIG->views = new \stdClass();
 		$data = elgg_load_system_cache('view_locations');
 		if (!is_string($data)) {
 			return;
 		}
-		$CONFIG->views->locations = unserialize($data);
+		$this->CONFIG->views->locations = unserialize($data);
 		
 		$data = elgg_load_system_cache('view_types');
 		if (!is_string($data)) {
 			return;
 		}
-		$CONFIG->view_types = unserialize($data);
+		$this->CONFIG->view_types = unserialize($data);
 	
-		$CONFIG->system_cache_loaded = true;
+		$this->CONFIG->system_cache_loaded = true;
 	}
 	
 	/**
@@ -150,14 +165,14 @@ class SystemCache {
 	 */
 	function init() {
 		// cache system data if enabled and not loaded
-		if ($CONFIG->system_cache_enabled && !$CONFIG->system_cache_loaded) {
-			elgg_save_system_cache('view_locations', serialize($CONFIG->views->locations));
-			elgg_save_system_cache('view_types', serialize($CONFIG->view_types));
+		if ($this->CONFIG->system_cache_enabled && !$this->CONFIG->system_cache_loaded) {
+			elgg_save_system_cache('view_locations', serialize($this->CONFIG->views->locations));
+			elgg_save_system_cache('view_types', serialize($this->CONFIG->view_types));
 		}
 	
-		if ($CONFIG->system_cache_enabled && !$CONFIG->i18n_loaded_from_cache) {
+		if ($this->CONFIG->system_cache_enabled && !$this->CONFIG->i18n_loaded_from_cache) {
 			_elgg_services()->translator->reloadAllTranslations();
-			foreach ($CONFIG->translations as $lang => $map) {
+			foreach ($this->CONFIG->translations as $lang => $map) {
 				elgg_save_system_cache("$lang.lang", serialize($map));
 			}
 		}

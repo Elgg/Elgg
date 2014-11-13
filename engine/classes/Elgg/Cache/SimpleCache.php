@@ -11,6 +11,21 @@ namespace Elgg\Cache;
  * @since      1.10.0
  */
 class SimpleCache {
+	
+	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
+	}
 
 	/**
 	 * Registers a view to simple cache.
@@ -122,18 +137,18 @@ class SimpleCache {
 	 * @return bool
 	 */
 	function invalidate() {
-		global $CONFIG;
+		
 	
-		if (!isset($CONFIG->views->simplecache) || !is_array($CONFIG->views->simplecache)) {
+		if (!isset($this->CONFIG->views->simplecache) || !is_array($this->CONFIG->views->simplecache)) {
 			return false;
 		}
 	
-		_elgg_rmdir("{$CONFIG->dataroot}views_simplecache");
-		mkdir("{$CONFIG->dataroot}views_simplecache");
+		_elgg_rmdir("{$this->CONFIG->dataroot}views_simplecache");
+		mkdir("{$this->CONFIG->dataroot}views_simplecache");
 	
 		$time = time();
 		_elgg_services()->datalist->set("simplecache_lastupdate", $time);
-		$CONFIG->lastcache = $time;
+		$this->CONFIG->lastcache = $time;
 	
 		return true;
 	}
@@ -144,10 +159,10 @@ class SimpleCache {
 	 * @return void
 	 */
 	function init() {
-		global $CONFIG;
+		
 
-		if (!defined('UPGRADING') && empty($CONFIG->lastcache)) {
-			$CONFIG->lastcache = (int)_elgg_services()->datalist->get('simplecache_lastupdate');
+		if (!defined('UPGRADING') && empty($this->CONFIG->lastcache)) {
+			$this->CONFIG->lastcache = (int)_elgg_services()->datalist->get('simplecache_lastupdate');
 		}
 	}	
 }
