@@ -161,6 +161,8 @@ class Datalist {
 	 * @access private
 	 */
 	function loadAll() {
+		global $DATALIST_CACHE;
+
 		$result = _elgg_services()->db->getData("SELECT * FROM {$this->CONFIG->dbprefix}datalists");
 		if ($result) {
 			foreach ($result as $row) {
