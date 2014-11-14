@@ -50,13 +50,6 @@ $limit = (int)elgg_extract('limit', $vars, 0);
 		}
 		?>
 	</ul>
-	<?php
-	if (empty($guids)) {
-		echo elgg_view('input/hidden', array(
-			'name' => $vars['name'],
-		));
-	}
-	?>
 </div>
 <script>
 require(['elgg/UserPicker'], function (UserPicker) {
