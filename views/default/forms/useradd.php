@@ -7,14 +7,20 @@
  * 
  */
 
-$name = $username = $email = $password = $password2 = $admin = '';
-
 if (elgg_is_sticky_form('useradd')) {
-	extract(elgg_get_sticky_values('useradd'));
+	$values = elgg_get_sticky_values('useradd');
 	elgg_clear_sticky_form('useradd');
-	if (is_array($admin)) {
-		$admin = $admin[0];
-	}
+} else {
+	$values = array();
+}
+
+$password = $password2 = '';
+$name = elgg_extract('name', $values);
+$username = elgg_extract('username', $values);
+$email = elgg_extract('email', $values);
+$admin = elgg_extract('admin', $values);
+if (is_array($admin)) {
+	$admin = array_shift($admin);
 }
 
 ?>
