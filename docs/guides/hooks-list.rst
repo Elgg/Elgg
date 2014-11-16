@@ -171,6 +171,8 @@ Action hooks
 **forward, <reason>**
 	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
 
+.. _guides/hooks-list#permission-hooks:
+
 Permission hooks
 ================
 
@@ -237,6 +239,8 @@ Permission hooks
 **get_sql, access**
     Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
 
+.. _guides/hooks-list#views:
+
 Views
 =====
 
@@ -252,6 +256,8 @@ Views
 **head, page**
     In ``elgg_view_page()``, filters ``$vars['head']``
 
+.. _guides/hooks-list#other:
+
 Other
 =====
 
@@ -259,16 +265,16 @@ Other
     In ``get_default_access()``, filters the return value.
 
 **entity:icon:url, <entity_type>**
-	Triggered when entity icon URL is requested, see `entity icons`_. Callback should
+	Triggered when entity icon URL is requested, see :ref:`entity icons <guides/database#entity-icons>`. Callback should
 	return URL for the icon of size ``$params['size']`` for the entity ``$params['entity']``.
 	Following parameters are available through the ``$params`` array:
 
 	entity
 		Entity for which icon url is requested.
 	viewtype
-		The type of `view`_ e.g. ``'default'`` or ``'json'``.
+		The type of :ref:`view <guides/views#listing-entities>` e.g. ``'default'`` or ``'json'``.
 	size
-		Size requested, see `entity icons`_ for possible values.
+		Size requested, see :ref:`entity icons <guides/database#entity-icons>` for possible values.
 
 	Example on how one could default to a Gravatar icon for users that
 	have not yet uploaded an avatar:
@@ -303,9 +309,6 @@ Other
 		// Produce URL used to retrieve icon
 		return "http://www.gravatar.com/avatar/$hash?s=$size";
 	}
-
-.. _entity icons: database.rst#entity-icons
-.. _view: views.rst#listing-entities
 
 **entity:url, <entity_type>**
 	Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the
