@@ -109,7 +109,7 @@ $ipsum = elgg_view('developers/ipsum');
 			<?php echo elgg_view('input/autocomplete', array(
 					'name' => 'f11',
 					'id' => 'f11',
-					'match_on' => 'users',
+					'match_on' => array('groups', 'friends'),
 					));
 			?>
 		</div>
