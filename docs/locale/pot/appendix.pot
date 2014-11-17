@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-10-20 01:11+0300\n"
+"POT-Creation-Date: 2014-11-17 04:18+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,233 +16,498 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ../../appendix/history.rst:2
-# 354f15d64de14428a736f5b7ac0790db
+#: ..\..\appendix\faqs.rst:2
+# 3a8ec4fdc8b84bf7bac0a9a372d825d0
+msgid "FAQs and Other Troubleshooting"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:4
+# a7ead9e6abaa438a9bf55bb172e783c2
+msgid "Below are some commonly asked questions about Elgg."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:9
+# 315aee4cb8d44a119f3d3a9fb4e0027a
+msgid "General"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:12
+# be08b023dbd54213a027a39ad74b5c0f
+msgid "\"Plugin cannot start and has been deactivated\" or \"This plugin is invalid\""
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:13
+# 00084c1dd54541179751bd0e14afe991
+msgid "This error is usually accompanied by more details explaining why the plugin is invalid. This is usually caused by an incorrectly installed plugin."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:16
+# 5a5e342405864f3796142c9cd80007f0
+msgid "If you are installing a plugin called \"test\", there will be a test directory under mod. In that test directory there needs to be a start.php file: ``/mod/test/start.php`` and a manifest.xml file ``/mod/test/manifest.xml``."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:22
+# 0d681018649d4606a32a6b35cb923623
+msgid "If these files do not exist, it could be caused by:"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:19
+# 60c6895026c844298e50c3d4c89e1193
+msgid "installing a plugin to the wrong directory"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:20
+# 8affdcbaeeb241ceaaab95cd902cd405
+msgid "creating a directory under /mod that does not contain a plugin"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:21
+# 3f61c123a51943879ec1d50f69729947
+msgid "a bad ftp transfer"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:22
+# 276c0090687d4cd18732ae60f9e7819e
+msgid "unzipping a plugin into an extra directory (myplugin.zip unzips to ``myplugin/myplugin``)"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:24
+# 78f41bfe1f964dfaa4b75a6cc15772eb
+msgid "If you are on a Unix-based host and the files exist in the correct directory, check the permissions. Elgg must have read access to the files and read + execute access on the directories."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:27
+# 628b7bba435c49cc8778285be2e13af7
+msgid "White Page (WSOD)"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:32
+# 33d6477a47bd468499b65065e68920b2
+msgid "A blank, white page (often called a \"white screen of death\") means there is a PHP syntax error. There are a few possible causes of this:"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:30
+# c19458274f3a42638d8544067cf00b1c
+msgid "corrupted file - try transfering the code again to your server"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:31
+# 04a4a5a624014eaa8e820fac5c073298
+msgid "a call to a php module that was not loaded - this can happen after you install a plugin that requires a specific module."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:32
+# 570212441a084ce0a26c30faa4a50046
+msgid "bad plugin - not all plugins have been written to the same quality so you should be careful which ones you install."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:34
+# 306f79084cef41f4844ddf9c40051caf
+msgid "To find where the error is occurring, change the .htaccess file to display errors to the browser. Set display_errors to 1 and load the same page again. You should see a PHP error in your browser. Change the setting back once you've resolved the problem."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:36
+# 8ade5ddd75184bc7b57ccfa852d1302f
+msgid "If you are using the Developer's Tools plugin, go to its settings page and make sure you have \"Display fatal PHP errors\" enabled."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:38
+# 29331181c07447f2993bc802095d42d5
+msgid "If the white screen is due to a bad plugin, remove the latest plugins that you have installed by deleting their directories and then reload the page."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:40
+# 897ccb7574c94a0f8526b48348b9a438
+msgid "You can temporarily disable all plugins by creating an empty file at ``mod/disabled``. You can then disable the offending module via the administrator tools panel."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:42
+# 1641fa14b1cc4f93aea656facfd55e24
+msgid "If you are getting a WSOD when performing an action, like logging in or posting a blog, but there are no error messages, it's most likely caused by non-printable characters in plugin code. Check the plugin for white spaces/new lines characters after finishing php tag (?>) and remove them."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:45
+# 8462590cbecd44f3a2ca4481ee2f76eb
+msgid "Login token mismatch"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:47
+# 03cb3b01fc3b47a2a1975cd59fb30ab1
+msgid "If you have to log in twice to your site and the error message after the first attempt says there was a token mismatch error, the URL in Elgg's settings does not match the URL used to access it. The most common cause for this is adding or removing the \"www\" when accessing the site. For example, www.elgg.org vs elgg.org. This causes a problem with session handling because of the way that web browsers save cookies."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:49
+# 7ef724443afd4289bc4186adba760194
+msgid "To fix this, you can add rewrite rules. To redirect from www.elgg.org to elgg.org in Apache, the rules might look like::"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:55
+# 0e1fb9cf238d43039a007210f2b331c5
+msgid "Redirecting from non-www to www could look like this::"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:60
+# a5d07b02bba2411ca6355cd44d4e10bf
+msgid "If you don't know how to configure rewrite rules, ask your host for more information."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:63
+# 3be2234c359840cd87f1d90f08b93c28
+msgid "Form is missing __token or __ts fields"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:65
+# 92370c65769348338c3458027bfb83f4
+msgid "All Elgg actions require a security token, and this error occurs when that token is missing. This is either a problem with your server configuration or with a 3rd party plugin."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:67
+# 518daefaeac544f5adb67367126602d0
+msgid "If you experience this on a new installation, make sure that your server is properly configured and your rewrite rules are correct. If you experience this on an upgrade, make sure you have updated your rewrite rules either in .htaccess (Apache) or in the server configuration."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:69
+# b08abcaf1a084db39b7f16ff68044377
+msgid "If you are experiencing this, disable all 3rd party plugins and try again. Very old plugins for Elgg don't use security tokens. If the problem goes away when plugins are disabled, it's due to a plugin that should be updated by its author."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:72
+# 480796b16ffd418a8d12ef78f69c1733
+msgid "Maintenance mode"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:74
+# b27f2d7b78044b35a15961817dc41064
+msgid "To take your site temporarily offline, go to Administration -> Utilities -> Maintenance Mode. Complete the form and hit save to disable your site for everyone except admin users."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:77
+# ea48e6f492bf4759b1d5543abc0a0aa6
+msgid "Missing email"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:79
+# b8e05c755ac94a0d85fc0dcbd4401757
+msgid "If your users are reporting that validation emails are not showing up, have them check their spam folder. It is possible that the emails coming from your server are being marked as spam. This depends on many factors such as whether your hosting provider has a problem with spammers, how your PHP mail configuration is set up, what mail transport agent your server is using, or your host limiting the number of email that you can send in an hour."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:81
+# a16c6610be8c413faf1eccd1a822d5d5
+msgid "If no one gets email at all, it is quite likely your server is not configured properly for email. Your server needs a program to send email (called a Mail Transfer Agent - MTA) and PHP must be configured to use the MTA."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:83
+# 32bd0b06e45e4e26ab7c2f736c176266
+msgid "To quickly check if PHP and an MTA are correctly configured, create a file on your server with the following content:"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:102
+# 8ed12856b3724208a17170286bf1f595
+msgid "Be sure to replace \"your_email@your_host.com\" with your actual email address.  Take care to keep quotes around it!  When you access this page through your web browser, it will attempt to send a test email.  This test will let you know that PHP and your MTA are correctly configured.  If it fails--either you get an error or you never receive the email--you will need to do more investigating and possibly contact your service provider."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:104
+# 80a5aa7321a5459293ce97f3446c3331
+msgid "Fully configuring an MTA and PHP's email functionality is beyond the scope of this FAQ and you should search the Internet for more resources on this. Some basic information on php parameters can be found on `PHP's site`__"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:110
+# f9102d4b29654e00aaa8fe885ce111d2
+msgid "Server logs"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:112
+# 03947037233a4b7eb075e9369a05c649
+msgid "Most likely you are using Apache as your web server. Warnings and errors are written to a log by the web server and can be useful for debugging problems. You will commonly see two types of log files: access logs and error logs. Information from PHP and Elgg is written to the server error log."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:114
+# 90d330b207fd4b69832add725aab1f1d
+msgid "Linux -- The error log is probably in /var/log/httpd or /var/log/apache2."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:115
+# abcb834475fb407c8438b1fd09e1a762
+msgid "Windows - It is probably inside your Apache directory."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:116
+# 07f8350bb9c04be2bb64c8121651c850
+msgid "Mac OS - The error log is probably in /var/log/apache2/error_log"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:118
+# ef174c44c4904f0199fbb804f70b4f72
+msgid "If you are using shared hosting without ssh access, your hosting provider may provide a mechanism for obtaining access to your server logs. You will need to ask them about this."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:121
+# 2948a8c7c3f24c1b80691c4ff7654ca4
+msgid "User validation"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:123
+# 125988cbe74442e5b641f83a0f3ed324
+msgid "By default, all users who self-register must validate their accounts through email. If a user has problems validating an account, you can validate users manually by going to Administration -> Users -> Unvalidated."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:126
+# 1106de0b8d7e46188be4ca8b70319a9d
+msgid "You can remove this requirement by deactivating the User Validation by Email plugin."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:128
+# 0784e8844f3542ce85276a9e99b1cdcc
+msgid "Removing validation has some consequences: There is no way to know that a user registered with a working email address, and it may leave you system open to spammers."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:131
+# 7703dbaf12a94afe9c8b21e5e0cb068c
+msgid "I'm making or just installed a new theme, but graphics or other elements aren't working"
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:133
+# 6f3ac5fc9e56401d905c3cb89f9fe2fd
+msgid "Make sure the theme is at the bottom of the plugin list."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:135
+# 89997a8576584ca591476a8c54416d92
+msgid "Clear your browser cache and reload the page. To lighten the load on the server, Elgg instructs the browser to rarely load the CSS file. A new theme will completely change the CSS file and a refresh should cause the browser to request the CSS file again."
+msgstr ""
+
+#: ..\..\appendix\faqs.rst:137
+# cd14d4f3edeb4ae3a83cd0e55b00c31a
+msgid "If you're building or modifying a theme, make sure you have disabled the simple and system caches. This can be done by enabling the Developer Tools plugin, then browsing to Administration -> Develop -> Settings. Once you're satisfied with the changes, enable the caches or performance will suffer."
+msgstr ""
+
+#: ..\..\appendix\history.rst:2
+# 6a3758c7d15b47a69d0240a143f2145e
 msgid "History"
 msgstr ""
 
-#: ../../appendix/history.rst:4
-# 365e4f80d96243538018432f53c4c6cd
+#: ..\..\appendix\history.rst:4
+# 7c375cd4511943cb919df1635ac2b5d3
 msgid "The name comes from `a town in Switzerland`__. It also means \"elk\" or \"moose\" in Danish."
 msgstr ""
 
-#: ../../appendix/history.rst:8
-# 78aa88c0dc3a469baaba8934884b5982
-msgid "Elgg's initial funding was by a company called Curverider Ltd, which was started by David Tosh and Ben Werdmuller. In 2010, Curverider was acquired by Thematic Networks and control of the open-source project was turned over to `The Elgg Foundation`_. Today, Elgg is a community-driven open source project and has a variety of contributors and sponsors."
+#: ..\..\appendix\history.rst:8
+# 1e864f5083324b0b924f9def562dc245
+msgid "Elgg's initial funding was by a company called Curverider Ltd, which was started by David Tosh and Ben Werdmuller. In 2010, Curverider was acquired by Thematic Networks and control of the open-source project was turned over to `The Elgg Foundation`_. Today, Elgg is a community-driven open source project and has a variety of contributors and supporters."
 msgstr ""
 
-#: ../../appendix/index.rst:2
-# 693566506562447ab9d89d6ca88817ac
+#: ..\..\appendix\index.rst:2
+# 4718323e068042c48e9e26ac827a26d0
 msgid "Appendix"
 msgstr ""
 
-#: ../../appendix/index.rst:4
-# 4b5ce5be1838455d8f5b15f942fccdba
+#: ..\..\appendix\index.rst:4
+# fbb17dbddc734ea59ebeaa1b232b25dc
 msgid "Miscellaneous information about the project."
 msgstr ""
 
-#: ../../appendix/releases.rst:2
-# e735039f33924887bad53d2e91592ad4
+#: ..\..\appendix\releases.rst:2
+# 53df3427b0254550819e2f145a138bd5
 msgid "Release Policy"
 msgstr ""
 
-#: ../../appendix/releases.rst:4
-# b2ce416c53d84379a0bce8c8bca5de2b
+#: ..\..\appendix\releases.rst:4
+# ab5e4333e1d14ac0b810b4651ce91a79
 msgid "What to expect when upgrading Elgg."
 msgstr ""
 
-#: ../../appendix/releases.rst:6
-# b391286229194433833eb2ee2531d722
+#: ..\..\appendix\releases.rst:6
+# a40f73570cda49a295f40e310f340f77
 msgid "In general, we adhere to `semantic versioning`_."
 msgstr ""
 
-#: ../../appendix/releases.rst:10
-# 2b49c2dc7ba641fc98de384c656a5843
+#: ..\..\appendix\releases.rst:10
+# 2b18f360763142dab389e6726214acad
 msgid "Follow the blog to `stay up to date on the latest releases`__."
 msgstr ""
 
-#: ../../appendix/releases.rst:15
-# 6960927b159c485e8c6e2512f116b612
+#: ..\..\appendix\releases.rst:15
+# f4b3edc0732848b399d596d773c29e59
 msgid "Bugfix Releases (1.9.x)"
 msgstr ""
 
-#: ../../appendix/releases.rst:16
-# 5a833625805d4fbc9e03ef63dc48f95e
+#: ..\..\appendix\releases.rst:16
+# 6cf606fe3aff49fdbab8f6729b9ae2fe
 msgid "Every few weeks."
 msgstr ""
 
-#: ../../appendix/releases.rst:18
-# b0727d475284439195a237045fdfd8e4
+#: ..\..\appendix\releases.rst:18
+# 036112cef7bc42da9a896286f0ff55ab
 msgid "Bugfix releases are made regularly to make sure Elgg stays stable, secure, and bug-free. The higher the third digit, the more tested and stable the release is. Since bugfix release focus on fixing bugs and not making major changes, themes and plugins should work from bugfix release to bugfix release."
 msgstr ""
 
-#: ../../appendix/releases.rst:25
-# 022cd03da49a4928a8e9cb25c86c9eb9
+#: ..\..\appendix\releases.rst:25
+# dcccd315580846ebb8872fa9ee9f61fd
 msgid "Feature Releases (1.x.0)"
 msgstr ""
 
-#: ../../appendix/releases.rst:26
-# 66b92e1f3b3e4939858e103efbbc00bd
+#: ..\..\appendix\releases.rst:26
+# aabc58ebdc6f4478a90727a0a4540485
 msgid "Every few months."
 msgstr ""
 
-#: ../../appendix/releases.rst:28
-# 86358af97098457e9c54ea9c93b354b0
+#: ..\..\appendix\releases.rst:28
+# 483ddbd65cd74436ac4b12e3e194f2df
 msgid "New features are introduced in Elgg every few months in minor new feature releases. These versions are identified by the second digit (1.**8**.0). These releases aren't as mature as bugfix release, but are considered stable and useable. Though these releases try to be backward compatible, features are added, unused code removed, and overall improvements are made, so plugins and themes might need to be updated to make use of the new and improved features."
 msgstr ""
 
-#: ../../appendix/releases.rst:37
-# fbfb73eda47b46dba13743092fe4cafa
+#: ..\..\appendix\releases.rst:37
+# 6e03df324ebc44818bba4c816328a862
 msgid "Major Releases (x.0.0)"
 msgstr ""
 
-#: ../../appendix/releases.rst:38
-# 8c63708c125848bbbcc0f53d8e618443
+#: ..\..\appendix\releases.rst:38
+# 4793ac6095414a868189448fbaffdb17
 msgid "Every few years."
 msgstr ""
 
-#: ../../appendix/releases.rst:40
-# 20e8f0225f72428bbc31441ea248ff97
+#: ..\..\appendix\releases.rst:40
+# b36b12025263461c97a55b259c507665
 msgid "Elgg, as all software, inevitably undergoes serious changes and a major new feature release is made. These releases are opportunities for the core team to make dramatic improvements to the underlying platform. Themes and plugins from older versions are not expected to work without modification on different major releases."
 msgstr ""
 
-#: ../../appendix/releases.rst:46
-# 79bcfaa6b6924e06baa277a752164591
+#: ..\..\appendix\releases.rst:46
+# 1793836e53c94e5d9c48bd5e6d8d241f
 msgid "Release Candidates/Betas"
 msgstr ""
 
-#: ../../appendix/releases.rst:47
-# f8acb11a62964d62b53f0926dfca4d48
+#: ..\..\appendix\releases.rst:47
+# 593d81c37f8c4d5091999d09af58591e
 msgid "Before feature releases and major releases, the core team will typically offer a release candidate or beta. These are meant for testing only and should not be considered production quality. The core team makes these releases available to get some real-world testing and feedback on the release. That said, the API in release candidates is considered stable, so once a release candidate is made available, you should feel comfortable writing plugins against any new APIs."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:2
-# fe82696f3b184c168a629141feecc38f
+#: ..\..\appendix\roadmap.rst:2
+# 604de4440138414bb48536f427be674e
 msgid "Roadmap"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:4
-# 3cd096f64e674a269a50296d3b535d2f
+#: ..\..\appendix\roadmap.rst:4
+# 3109f2d547654944a620b95208d78b41
 msgid "What direction is the project going? What exciting new features are coming soon?"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:6
-# e23b8881a28546e8ba5b9e0b09ebc90f
+#: ..\..\appendix\roadmap.rst:6
+# 4dba2b3e70b64e96a426fdbba55b1ca4
 msgid "We do not publish detailed roadmaps, but it’s possible to get a sense for our general direction by utilizing the following resources:"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:9
-# f3740b91e37d44f799fc4dab4b1fc706
+#: ..\..\appendix\roadmap.rst:9
+# 0f46232bc8ad49eeb021224d4cae6452
 msgid "Our `feedback and planning group`_ is used to host early discussion about what will be worked on next."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:10
-# 68dff2532c004bb2aba013ebfb61d992
+#: ..\..\appendix\roadmap.rst:10
+# d4df68a6aab742388320152e75ce690b
 msgid "Our `Github milestones`_ represent a general direction for the future releases of Elgg. This is the closest thing to a traditional roadmap that we have."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:12
-# 9ebf38f17ab243a68a583a5dd5896bbd
+#: ..\..\appendix\roadmap.rst:12
+# fbb73318dd864dd29bbaa82d08da0a0b
 msgid "`Github pull requests`_ will give you a good idea of what’s currently being developed, but nothing is sure until the PR is actually checked in."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:14
-# c3d02f4fb46c4abbb61f78c15e756aac
+#: ..\..\appendix\roadmap.rst:14
+# d68d8866463644e293b54c0984dfd028
 msgid "We use the `developer blog`_ to post announcements of features that have recently been checked in to our development branch, which gives the surest indication of what features will be available in the next release."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:24
-# 89ba1a73c7394558a07147a0c80384e0
+#: ..\..\appendix\roadmap.rst:24
+# d0a4281713a44d8e92b9dad00cb347db
 msgid "Values"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:26
-# a6f12ab7e2484ab3a6a89af3354147e2
+#: ..\..\appendix\roadmap.rst:26
+# cfe7849c7b2f422d8766c2fbb9e048dd
 msgid "We have several overarching goals/values that affect the direction of Elgg. Enhancements generally must promote these values in order to be accepted."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:30
-# cd11ee079ec64ac9916bd61255a781bf
+#: ..\..\appendix\roadmap.rst:30
+# 67e75e001b1a4b01b8880ab35872e9a9
 msgid "Accessibility"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:32
-# 0620bdd527e04e7c8a9b7a65bda4a1f6
+#: ..\..\appendix\roadmap.rst:32
+# d7ad2ef6bd0a49a49c837c234a788fd2
 msgid "Elgg-based sites should be usable by anyone anywhere. That means we'll always strive to make Elgg:"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:34
-# 6afaf91bc9654464b23e38918b2c6305
+#: ..\..\appendix\roadmap.rst:34
+# a1258b73b01744f4b2d0d83b1a8bb88f
 msgid "Device-agnostic -- mobile, tablet, desktop, etc. friendly"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:35
-# 6ffdd9238c12489cb103a2fa050a318a
+#: ..\..\appendix\roadmap.rst:35
+# 7dd7847d23964d4e9070cb7d9988c940
 msgid "Language-agnostic -- i18n, RTL, etc."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:36
-# d767996d45b543d0b14e45ca1c24140b
+#: ..\..\appendix\roadmap.rst:36
+# 492f827be9094bc19abbbaff9d668d5f
 msgid "Capability-agnostic -- touch, keyboard, screen-reader friendly"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:39
-# 4baffe640c0e4f23a4c191aa17edff35
+#: ..\..\appendix\roadmap.rst:39
+# 71954aeffec2499ca44e5dd522d62d69
 msgid "Testability"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:41
-# e009fa5f43884d70a3eb93b61f9c1ed7
+#: ..\..\appendix\roadmap.rst:41
+# d3e3ecd6d27c4779a30d8033e463c0ee
 msgid "We want to **make manual testing unnecessary** for core developers, plugin authors, and site administrators by promoting and enabling fast, automated testing at every level of the Elgg stack."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:44
-# 4e05265383024a6ab7060322c6c76444
+#: ..\..\appendix\roadmap.rst:44
+# 71227d2b557b47268a656af785cd497a
 msgid "We think APIs are broken if they require plugin authors to write untestable code. We know there are a lot of violations of this principle in core currently and are working to fix it."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:47
-# d344365118c94c2ca36bf1d7ea985f4a
+#: ..\..\appendix\roadmap.rst:47
+# 1c49e1cc26a24a048e41eddd2f2c24c7
 msgid "We look forward to a world where the core developers do not need to do any manual testing to verify the correctness of code contributed to Elgg. Similarly, we envision a world where site administrators can upgrade and install new plugins with confidence that everything works well together."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:51
-# 106a14eb9ecb4ee6a76876c5475d0de6
+#: ..\..\appendix\roadmap.rst:51
+# c80b12ff18ee4a9490f01c54cdb05fde
 msgid "TODO: other goals/values?"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:54
-# 51bdd91422fd4597b4f19e959e5fcfb9
+#: ..\..\appendix\roadmap.rst:54
+# 3dc6bde51a3f4a80b638b9992eccc806
 msgid "FAQ"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:57
-# c8db66612d2741eeb9f6dad96bd326b2
+#: ..\..\appendix\roadmap.rst:57
+# 4dadfbe649c74344bfaea8e39f905095
 msgid "When will feature X be implemented?"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:58
-# 0162ecdfd2a74db590ad1c2533963d6b
+#: ..\..\appendix\roadmap.rst:58
+# cd8c759464f84e08aafcee0de96d2fd4
 msgid "We cannot promise when features will get implemented because new features are checked into Elgg only when someone is motivated enough to implement the feature and submit a pull request. The best we can do is tell you to look out for what features existing developers have expressed interest in working on."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:64
-# b3a660053ec943a2b0e43d9d78c78d34
+#: ..\..\appendix\roadmap.rst:64
+# 98b6acecf1ec406b9ea05ef59abd1cc6
 msgid "The best way to ensure a feature gets implemented is to discuss it with the core team and implement it yourself. See our :doc:`/about/contributing` guide if you're interested. We love new contributors!"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:67
-# 3b90570c85514660bd884170646feca8
+#: ..\..\appendix\roadmap.rst:67
+# 1d1564db067143ce84bd86608b6d3878
 msgid "Do not rely on future enhancements if you're on the fence as to whether to use Elgg. Evaluate it given the current feature set. Upcoming features will almost certainly not materialize within your timeline."
 msgstr ""
 
-#: ../../appendix/roadmap.rst:72
-# 07c0c98d5c3a45968d44cce924b6bdec
+#: ..\..\appendix\roadmap.rst:72
+# ab8ea7f3a875465cb936b187d6ed8e35
 msgid "When is version X.Y.Z going to be released?"
 msgstr ""
 
-#: ../../appendix/roadmap.rst:73
-# 3f3c61f846534fd788d67e049097e6cf
+#: ..\..\appendix\roadmap.rst:73
+# 6ae0ab1bdb814b3d8e5c19d3dff9dbc8
 msgid "The next version will be released when the core team feels it's ready and has time to cut the release. http://github.com/Elgg/Elgg/issues/milestones will give you some rough ideas of timeline."
 msgstr ""
 
