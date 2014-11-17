@@ -1,3 +1,80 @@
+<a name="1.9.5"></a>
+### 1.9.5  (2014-11-17)
+
+#### Contributors
+
+* Jeroen Dalsem (18)
+* Brett Profitt (7)
+* Steve Clay (7)
+* Evan Winslow (3)
+* Ismayil Khayredinov (3)
+* Juho Jaakkola (3)
+* Per Jensen (3)
+* Jerôme Bakker (2)
+* Paweł Sroka (2)
+* Stian Liknes (2)
+* Diego Andrés Ramírez Aragón (1)
+* Matt Beckett (1)
+* iionly (1)
+
+#### Performance
+
+* **db:** correctly re-enable query cache after ElggBatch run ([a8c3fbd9](https://github.com/Elgg/Elgg/commit/a8c3fbd972d0c641e1fd5f7f58f8c8504f4fdaf1))
+* **river:** only fetch comments if comment_count > 0 ([db64e16d](https://github.com/Elgg/Elgg/commit/db64e16d4a9640c8b9f61dcb7ee9308031c992d7))
+
+
+#### Documentation
+
+* **actions:** Migrated actions section from old Getting Started docs and cleaned up related sections. ([d47a980f](https://github.com/Elgg/Elgg/commit/d47a980f67f8965666d87a094032a7a7039c376e))
+* **admin:** Migrated Getting Started guide from wiki. ([11e589f6](https://github.com/Elgg/Elgg/commit/11e589f66e1a1321e96813168bb73fb6c53d550b))
+* **all:**
+  * Cleanup docs. ([914fa69a](https://github.com/Elgg/Elgg/commit/914fa69aa94fc854150d061c5563f8af495966e6))
+  * Added getting started for developers. ([848d0d51](https://github.com/Elgg/Elgg/commit/848d0d5114c350cafa93281c68fe1ca1aeeefc6d))
+* **coding:** improves docs for commits/amending/standards ([e8166d78](https://github.com/Elgg/Elgg/commit/e8166d78c664aa6cfee1c6ba3da53fd350c85dad))
+* **database:** updated and expanded information on entity icons ([7bb60185](https://github.com/Elgg/Elgg/commit/7bb601858851d37d371f6386199b787c95282ba4))
+* **events:** Updated event list and cleaned up existing event docs. ([433ed90c](https://github.com/Elgg/Elgg/commit/433ed90cc5bcc2d9bdce47c92418fe1aa9845322))
+* **faqs:** Started migrating some FAQs. ([cd3afdcc](https://github.com/Elgg/Elgg/commit/cd3afdcc6915453e2ec10a42ed6bf494991a4771))
+* **hook:** Updated hooks docs. ([327ecb48](https://github.com/Elgg/Elgg/commit/327ecb48894d20b2c85be448180c52c5e67e222a))
+* **menus:** improve docs for menu item factory ([61751db6](https://github.com/Elgg/Elgg/commit/61751db6ccd2acf5c276b1abe036872a0a7a2e52))
+* **notifications:** documentation for the notifications system ([ac12ac99](https://github.com/Elgg/Elgg/commit/ac12ac990e9d950e8165fefb6b8c2f54026f7343), closes [#7308](https://github.com/Elgg/Elgg/issues/7308))
+* **style:** documents trailing whitespace policy and script ([798810c7](https://github.com/Elgg/Elgg/commit/798810c70b4afba55182c52c684bbce08a57cbda))
+
+
+#### Bug Fixes
+
+* **aalborg:** More robust grid reflows for smaller screens ([8d8155e7](https://github.com/Elgg/Elgg/commit/8d8155e7948869325ae5886ea188b77e8d08f4d3), closes [#7393](https://github.com/Elgg/Elgg/issues/7393))
+* **access:** always display readable access level for ACCESS_* constants ([a74421f9](https://github.com/Elgg/Elgg/commit/a74421f9c0d7cb06a19021d9e673b8a51a56cb8d), closes [#6801](https://github.com/Elgg/Elgg/issues/6801))
+* **core:**
+  * renaming to _elgg_namespace_plugin_private_setting forgotten in unsetAllSettings ([782b75f2](https://github.com/Elgg/Elgg/commit/782b75f2767482025110b4d7f902bd18d6937e72))
+  * prevent sql exception when metastring is interpreted as very large number in egef_metadata ([bab43d60](https://github.com/Elgg/Elgg/commit/bab43d60b920d4cd2c33a9a61c72ececb2143d38), closes [#7009](https://github.com/Elgg/Elgg/issues/7009))
+* **css:** markdown code blocks should not should nested borders ([8c736c2f](https://github.com/Elgg/Elgg/commit/8c736c2f28ce98223399a50453087025f52931c4))
+* **friends:** show friends collections menu item in friend context ([5073deeb](https://github.com/Elgg/Elgg/commit/5073deebda5743d4934cdfaf43f340865d5418c2))
+* **i18n:**
+  * Commit docs/*.mo files on release so docs can be translated ([8ca2b6b6](https://github.com/Elgg/Elgg/commit/8ca2b6b6a1ebb72df64b9d919ecc52bb4af4aa98), closes [#7034](https://github.com/Elgg/Elgg/issues/7034))
+  * improved removing profile field delete failure notice ([a6f561e2](https://github.com/Elgg/Elgg/commit/a6f561e2e7ad01df67a46e46f83ebaf5fb2386b5))
+  * grammar fix in upgrade warning ([f5d4d35f](https://github.com/Elgg/Elgg/commit/f5d4d35f772caaa641a368b3251bb81686b91403))
+* **login:** also allow login by email in maintenance mode ([4258bc3d](https://github.com/Elgg/Elgg/commit/4258bc3d6b8b39c9f5d5a9013b1397236d430251))
+* **menu:** only show access entity menu item if logged in ([714b0834](https://github.com/Elgg/Elgg/commit/714b08340a697f79a44f55fccedfeda33afb059d))
+* **menus:** allow max depth of 20 to prevent losing menu items ([d3e33db3](https://github.com/Elgg/Elgg/commit/d3e33db30a1560e81514d75ed30044f849b41fd3))
+* **pagination:** removes hard-coded arrows from php file ([eb136ef1](https://github.com/Elgg/Elgg/commit/eb136ef1a580b7fb1172379ff79baa908c05b00b), closes [#5298](https://github.com/Elgg/Elgg/issues/5298))
+* **plugins:** trigger plugin hooks when saving plugin settings ([5afadfc8](https://github.com/Elgg/Elgg/commit/5afadfc8ba6ba480d029a9fdc649f952f61c42b4), closes [#6820](https://github.com/Elgg/Elgg/issues/6820))
+* **relationships:** distinct ege* results when relationship_guid is not set ([4d87b950](https://github.com/Elgg/Elgg/commit/4d87b950891fa80545ef680d10e2e68b1b6801cb), closes [#5775](https://github.com/Elgg/Elgg/issues/5775))
+* **release:** Corrected release script Windows system compatibility. ([00012389](https://github.com/Elgg/Elgg/commit/0001238921a5c1a1bc9e7ad65aabc22158ba6530))
+* **upgrade:**
+  * Rechecks that all annotation comments have been migrated to entities ([7d81094c](https://github.com/Elgg/Elgg/commit/7d81094c10d60e613723b6eac0995dfdd350c1be), closes [#7486](https://github.com/Elgg/Elgg/issues/7486))
+  * Ensure that `$CONFIG` is always available to upgrade scripts ([c102a713](https://github.com/Elgg/Elgg/commit/c102a7138180b3fa04ec78aacbdcacbe53da150e), closes [#7457](https://github.com/Elgg/Elgg/issues/7457))
+* **uservalidationbyemail:** makes emailsent page public ([70bbdd65](https://github.com/Elgg/Elgg/commit/70bbdd652ce3485ab3151e696f22bc8cad966785), closes [#7334](https://github.com/Elgg/Elgg/issues/7334))
+* **views:**
+  * Revert erroneous changes made to input/userpicker ([e4008c65](https://github.com/Elgg/Elgg/commit/e4008c657a1680c47015ce632c47c470f138a562))
+  * input/userpicker can now remove all users on edit ([4cf113ab](https://github.com/Elgg/Elgg/commit/4cf113ab60f6e3c5e0d445f70fdd8cd530917642), closes [#6982](https://github.com/Elgg/Elgg/issues/6982))
+  * comma separating links to text files in plugin list ([4e9b8ad1](https://github.com/Elgg/Elgg/commit/4e9b8ad125e5025ed967e83c4a6cb47c71186cb1), closes [#7420](https://github.com/Elgg/Elgg/issues/7420))
+  * usersettings form now has correct userguid set ([2c204200](https://github.com/Elgg/Elgg/commit/2c204200da2be41d981b437080582e5297e1cd19))
+  * use elgg-button-action class on all cancel buttons ([857df27a](https://github.com/Elgg/Elgg/commit/857df27a176da9e1afb4888c9cc9c1e793218394))
+  * prevent output of empty heading when there is no page title ([c3f7f225](https://github.com/Elgg/Elgg/commit/c3f7f225bf5c6e009aa22c7af10ae17cbac018da))
+  * add apple-touch-icon ([3e4d2164](https://github.com/Elgg/Elgg/commit/3e4d2164eefa65e74773a224feb08770de2e69ad), closes [#6176](https://github.com/Elgg/Elgg/issues/6176))
+* **widgets:** determine default values for num display in content view ([bd20730d](https://github.com/Elgg/Elgg/commit/bd20730d9cc6b925dc17e34d4e1ac41f58336a4c))
+
+
 <a name="1.9.4"></a>
 ### 1.9.4  (2014-10-20)
 
