@@ -12,19 +12,45 @@ namespace Elgg\Database;
  * @since      1.10.0
  */
 class AccessCollections {
-	/**
-	 * Global Elgg configuration
-	 * 
-	 * @var \stdClass
-	 */
+	
+	/** @var \Elgg\Access */
+	private $access;
+	
+	/** @var \ElggStaticVariableCache */
+	private $cache;
+	
+	/** @var \stdClass Global Elgg configuration */
 	private $CONFIG;
-
+	
+	/** @var \Elgg\Database */
+	private $db;
+	
+	/** @var \Elgg\HooksRegistrationService */
+	private $hooks;
+	
+	/** @var \ElggSession */
+	private $session;
+	
+	/** @var \Elgg\I18n\Translator */
+	private $translator;
+	
+	/** @var \Elgg\Database\UsersTable */
+	private $usersTable;
+	
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
 		global $CONFIG;
+
+		$this->access = _elgg_services()->access;
+		$this->cache = new \ElggStaticVariableCache('access');
 		$this->CONFIG = $CONFIG;
+		$this->db = _elgg_services()->db;
+		$this->hooks = _elgg_services()->hooks;
+		$this->session = _elgg_services()->session;
+		$this->translator = _elgg_services()->translator;
+		$this->usersTable = _elgg_services()->usersTable;
 	}
 
 	/**
@@ -44,14 +70,14 @@ class AccessCollections {
 	 */
 	function getAccessList($user_guid = 0, $site_guid = 0, $flush = false) {
 		global $init_finished;
-		$cache = _elgg_get_access_cache();
+		$cache = $this->cache;
 		
 		if ($flush) {
 			$cache->clear();
 		}
 	
 		if ($user_guid == 0) {
-			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$user_guid = $this->session->getLoggedInUserGuid();
 		}
 	
 		if (($site_guid == 0) && (isset($this->CONFIG->site_id))) {
@@ -66,7 +92,7 @@ class AccessCollections {
 			return $cache[$hash];
 		}
 		
-		$access_array = get_access_array($user_guid, $site_guid, $flush);
+		$access_array = $this->getAccessArray($user_guid, $site_guid, $flush);
 		$access = "(" . implode(",", $access_array) . ")";
 	
 		if ($init_finished) {
@@ -104,14 +130,14 @@ class AccessCollections {
 	function getAccessArray($user_guid = 0, $site_guid = 0, $flush = false) {
 		global $init_finished;
 	
-		$cache = _elgg_get_access_cache();
+		$cache = $this->cache;
 	
 		if ($flush) {
 			$cache->clear();
 		}
 	
 		if ($user_guid == 0) {
-			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$user_guid = $this->session->getLoggedInUserGuid();
 		}
 	
 		if (($site_guid == 0) && (isset($this->CONFIG->site_guid))) {
@@ -138,7 +164,7 @@ class AccessCollections {
 					. " LEFT JOIN {$this->CONFIG->dbprefix}access_collections ag ON ag.id = am.access_collection_id"
 					. " WHERE am.user_guid = $user_guid AND (ag.site_guid = $site_guid OR ag.site_guid = 0)";
 	
-				$collections = _elgg_services()->db->getData($query);
+				$collections = $this->db->getData($query);
 				if ($collections) {
 					foreach ($collections as $collection) {
 						if (!empty($collection->access_collection_id)) {
@@ -151,7 +177,7 @@ class AccessCollections {
 				$query = "SELECT ag.id FROM {$this->CONFIG->dbprefix}access_collections ag ";
 				$query .= "WHERE ag.owner_guid = $user_guid AND (ag.site_guid = $site_guid OR ag.site_guid = 0)";
 	
-				$collections = _elgg_services()->db->getData($query);
+				$collections = $this->db->getData($query);
 				if ($collections) {
 					foreach ($collections as $collection) {
 						if (!empty($collection->id)) {
@@ -160,7 +186,7 @@ class AccessCollections {
 					}
 				}
 	
-				$ignore_access = elgg_check_access_overrides($user_guid);
+				$ignore_access = $this->access->checkAccessOverrides($user_guid);
 	
 				if ($ignore_access == true) {
 					$access_array[] = ACCESS_PRIVATE;
@@ -178,7 +204,7 @@ class AccessCollections {
 		);
 	
 		// see the warning in the docs for this function about infinite loop potential
-		return _elgg_services()->hooks->trigger('access:collections:read', 'user', $options, $access_array);
+		return $this->hooks->trigger('access:collections:read', 'user', $options, $access_array);
 	}
 	
 	/**
@@ -225,7 +251,7 @@ class AccessCollections {
 	
 		$defaults = array(
 			'table_alias' => 'e',
-			'user_guid' => _elgg_services()->session->getLoggedInUserGuid(),
+			'user_guid' => $this->session->getLoggedInUserGuid(),
 			'use_enabled_clause' => !$ENTITY_SHOW_HIDDEN_OVERRIDE,
 			'access_column' => 'access_id',
 			'owner_guid_column' => 'owner_guid',
@@ -238,14 +264,14 @@ class AccessCollections {
 		$options['table_alias'] = rtrim($options['table_alias'], '.');
 	
 		foreach (array('table_alias', 'access_column', 'owner_guid_column', 'guid_column') as $key) {
-			$options[$key] = sanitize_string($options[$key]);
+			$options[$key] = $this->db->sanitizeString($options[$key]);
 		}
-		$options['user_guid'] = sanitize_int($options['user_guid'], false);
+		$options['user_guid'] = $this->db->sanitizeInt($options['user_guid'], false);
 	
 		// only add dot if we have an alias or table name
 		$table_alias = $options['table_alias'] ? $options['table_alias'] . '.' : '';
 	
-		$options['ignore_access'] = elgg_check_access_overrides($options['user_guid']);
+		$options['ignore_access'] = $this->access->checkAccessOverrides($options['user_guid']);
 	
 		$clauses = array(
 			'ors' => array(),
@@ -268,7 +294,7 @@ class AccessCollections {
 	
 		// include standard accesses (public, logged in, access collections)
 		if (!$options['ignore_access']) {
-			$access_list = get_access_list($options['user_guid']);
+			$access_list = $this->getAccessList($options['user_guid']);
 			$clauses['ors'][] = "$table_alias{$options['access_column']} IN {$access_list}";
 		}
 	
@@ -276,7 +302,7 @@ class AccessCollections {
 			$clauses['ands'][] = "{$table_alias}enabled = 'yes'";
 		}
 	
-		$clauses = _elgg_services()->hooks->trigger('get_sql', 'access', $options, $clauses);
+		$clauses = $this->hooks->trigger('get_sql', 'access', $options, $clauses);
 	
 		$clauses_str = '';
 		if (is_array($clauses['ors']) && $clauses['ors']) {
@@ -316,20 +342,20 @@ class AccessCollections {
 		
 	
 		// See #7159. Must not allow ignore access to affect query
-		$ia = elgg_set_ignore_access(false);
+		$ia = $this->access->setIgnoreAccess(false);
 	
 		if (!isset($user)) {
-			$access_bit = _elgg_get_access_where_sql();
+			$access_bit = $this->getWhereSql();
 		} else {
-			$access_bit = _elgg_get_access_where_sql(array('user_guid' => $user->getGUID()));
+			$access_bit = $this->getWhereSql(array('user_guid' => $user->getGUID()));
 		}
 	
-		elgg_set_ignore_access($ia);
+		$this->access->setIgnoreAccess($ia);
 	
 		$query = "SELECT guid from {$this->CONFIG->dbprefix}entities e WHERE e.guid = " . $entity->getGUID();
 		// Add access controls
 		$query .= " AND " . $access_bit;
-		if (_elgg_services()->db->getData($query)) {
+		if ($this->db->getData($query)) {
 			return true;
 		} else {
 			return false;
@@ -363,14 +389,14 @@ class AccessCollections {
 	 */
 	function getWriteAccessArray($user_guid = 0, $site_guid = 0, $flush = false) {
 		global $init_finished;
-		$cache = _elgg_get_access_cache();
+		$cache = $this->cache;
 	
 		if ($flush) {
 			$cache->clear();
 		}
 	
 		if ($user_guid == 0) {
-			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$user_guid = $this->session->getLoggedInUserGuid();
 		}
 	
 		if (($site_guid == 0) && (isset($this->CONFIG->site_id))) {
@@ -387,17 +413,17 @@ class AccessCollections {
 		} else {
 			// @todo is there such a thing as public write access?
 			$access_array = array(
-				ACCESS_PRIVATE => _elgg_services()->translator->translate("PRIVATE"),
-				ACCESS_FRIENDS => _elgg_services()->translator->translate("access:friends:label"),
-				ACCESS_LOGGED_IN => _elgg_services()->translator->translate("LOGGED_IN"),
-				ACCESS_PUBLIC => _elgg_services()->translator->translate("PUBLIC")
+				ACCESS_PRIVATE => $this->translator->translate("PRIVATE"),
+				ACCESS_FRIENDS => $this->translator->translate("access:friends:label"),
+				ACCESS_LOGGED_IN => $this->translator->translate("LOGGED_IN"),
+				ACCESS_PUBLIC => $this->translator->translate("PUBLIC")
 			);
 			
 			$query = "SELECT ag.* FROM {$this->CONFIG->dbprefix}access_collections ag ";
 			$query .= " WHERE (ag.site_guid = $site_guid OR ag.site_guid = 0)";
 			$query .= " AND (ag.owner_guid = $user_guid)";
 	
-			$collections = _elgg_services()->db->getData($query);
+			$collections = $this->db->getData($query);
 			if ($collections) {
 				foreach ($collections as $collection) {
 					$access_array[$collection->id] = $collection->name;
@@ -413,7 +439,7 @@ class AccessCollections {
 			'user_id' => $user_guid,
 			'site_id' => $site_guid
 		);
-		return _elgg_services()->hooks->trigger('access:collections:write', 'user',
+		return $this->hooks->trigger('access:collections:write', 'user',
 			$options, $access_array);
 	}
 
@@ -433,24 +459,24 @@ class AccessCollections {
 	 */
 	function canEdit($collection_id, $user_guid = null) {
 		if ($user_guid) {
-			$user = get_entity((int) $user_guid);
+			$user = $this->usersTable->get((int) $user_guid);
 		} else {
-			$user = _elgg_services()->session->getLoggedInUser();
+			$user = $this->session->getLoggedInUser();
 		}
 	
-		$collection = get_access_collection($collection_id);
+		$collection = $this->get($collection_id);
 	
 		if (!($user instanceof \ElggUser) || !$collection) {
 			return false;
 		}
 	
-		$write_access = get_write_access_array($user->getGUID(), 0, true);
+		$write_access = $this->getWriteAccessArray($user->getGUID(), 0, true);
 	
 		// don't ignore access when checking users.
 		if ($user_guid) {
 			return array_key_exists($collection_id, $write_access);
 		} else {
-			return elgg_get_ignore_access() || array_key_exists($collection_id, $write_access);
+			return $this->access->getIgnoreAccess() || array_key_exists($collection_id, $write_access);
 		}
 	}
 	
@@ -472,26 +498,24 @@ class AccessCollections {
 	 * @return int|false The collection ID if successful and false on failure.
 	 */
 	function create($name, $owner_guid = 0, $site_guid = 0) {
-		
-	
 		$name = trim($name);
 		if (empty($name)) {
 			return false;
 		}
 	
 		if ($owner_guid == 0) {
-			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 		if (($site_guid == 0) && (isset($this->CONFIG->site_guid))) {
 			$site_guid = $this->CONFIG->site_guid;
 		}
-		$name = sanitise_string($name);
+		$name = $this->db->sanitizeString($name);
 	
 		$q = "INSERT INTO {$this->CONFIG->dbprefix}access_collections
 			SET name = '{$name}',
 				owner_guid = {$owner_guid},
 				site_guid = {$site_guid}";
-		$id = _elgg_services()->db->insertData($q);
+		$id = $this->db->insertData($q);
 		if (!$id) {
 			return false;
 		}
@@ -500,7 +524,7 @@ class AccessCollections {
 			'collection_id' => $id
 		);
 	
-		if (!_elgg_services()->hooks->trigger('access:collections:addcollection', 'collection', $params, true)) {
+		if (!$this->hooks->trigger('access:collections:addcollection', 'collection', $params, true)) {
 			return false;
 		}
 	
@@ -522,14 +546,14 @@ class AccessCollections {
 	 * @return bool
 	 */
 	function update($collection_id, $members) {
-		$acl = get_access_collection($collection_id);
+		$acl = $this->get($collection_id);
 	
 		if (!$acl) {
 			return false;
 		}
 		$members = (is_array($members)) ? $members : array();
 	
-		$cur_members = get_members_of_access_collection($collection_id, true);
+		$cur_members = $this->getMembers($collection_id, true);
 		$cur_members = (is_array($cur_members)) ? $cur_members : array();
 	
 		$remove_members = array_diff($cur_members, $members);
@@ -538,11 +562,11 @@ class AccessCollections {
 		$result = true;
 	
 		foreach ($add_members as $guid) {
-			$result = $result && add_user_to_access_collection($guid, $collection_id);
+			$result = $result && $this->addUser($guid, $collection_id);
 		}
 	
 		foreach ($remove_members as $guid) {
-			$result = $result && remove_user_from_access_collection($guid, $collection_id);
+			$result = $result && $this->removeUser($guid, $collection_id);
 		}
 	
 		return $result;
@@ -556,23 +580,21 @@ class AccessCollections {
 	 * @return bool
 	 */
 	function delete($collection_id) {
-		
-	
 		$collection_id = (int) $collection_id;
 		$params = array('collection_id' => $collection_id);
 	
-		if (!_elgg_services()->hooks->trigger('access:collections:deletecollection', 'collection', $params, true)) {
+		if (!$this->hooks->trigger('access:collections:deletecollection', 'collection', $params, true)) {
 			return false;
 		}
 	
 		// Deleting membership doesn't affect result of deleting ACL.
 		$q = "DELETE FROM {$this->CONFIG->dbprefix}access_collection_membership
 			WHERE access_collection_id = {$collection_id}";
-		_elgg_services()->db->deleteData($q);
+		$this->db->deleteData($q);
 	
 		$q = "DELETE FROM {$this->CONFIG->dbprefix}access_collections
 			WHERE id = {$collection_id}";
-		$result = _elgg_services()->db->deleteData($q);
+		$result = $this->db->deleteData($q);
 	
 		return (bool)$result;
 	}
@@ -590,11 +612,10 @@ class AccessCollections {
 	 * @return object|false
 	 */
 	function get($collection_id) {
-		
 		$collection_id = (int) $collection_id;
 	
 		$query = "SELECT * FROM {$this->CONFIG->dbprefix}access_collections WHERE id = {$collection_id}";
-		$get_collection = _elgg_services()->db->getDataRow($query);
+		$get_collection = $this->db->getDataRow($query);
 	
 		return $get_collection;
 	}
@@ -610,13 +631,11 @@ class AccessCollections {
 	 * @return bool
 	 */
 	function addUser($user_guid, $collection_id) {
-		
-	
 		$collection_id = (int) $collection_id;
 		$user_guid = (int) $user_guid;
-		$user = get_user($user_guid);
+		$user = $this->usersTable->get($user_guid);
 	
-		$collection = get_access_collection($collection_id);
+		$collection = $this->get($collection_id);
 	
 		if (!($user instanceof \ElggUser) || !$collection) {
 			return false;
@@ -627,7 +646,7 @@ class AccessCollections {
 			'user_guid' => $user_guid
 		);
 	
-		$result = _elgg_services()->hooks->trigger('access:collections:add_user', 'collection', $params, true);
+		$result = $this->hooks->trigger('access:collections:add_user', 'collection', $params, true);
 		if ($result == false) {
 			return false;
 		}
@@ -636,7 +655,7 @@ class AccessCollections {
 		$q = "INSERT INTO {$this->CONFIG->dbprefix}access_collection_membership
 				SET access_collection_id = $collection_id, user_guid = $user_guid
 				ON DUPLICATE KEY UPDATE user_guid = user_guid";
-		$result = _elgg_services()->db->insertData($q);
+		$result = $this->db->insertData($q);
 	
 		return $result !== false;
 	}
@@ -652,13 +671,11 @@ class AccessCollections {
 	 * @return bool
 	 */
 	function removeUser($user_guid, $collection_id) {
-		
-	
 		$collection_id = (int) $collection_id;
 		$user_guid = (int) $user_guid;
-		$user = get_user($user_guid);
+		$user = $this->usersTable->get($user_guid);
 	
-		$collection = get_access_collection($collection_id);
+		$collection = $this->get($collection_id);
 	
 		if (!($user instanceof \ElggUser) || !$collection) {
 			return false;
@@ -669,7 +686,7 @@ class AccessCollections {
 			'user_guid' => $user_guid
 		);
 	
-		if (!_elgg_services()->hooks->trigger('access:collections:remove_user', 'collection', $params, true)) {
+		if (!$this->hooks->trigger('access:collections:remove_user', 'collection', $params, true)) {
 			return false;
 		}
 	
@@ -677,7 +694,7 @@ class AccessCollections {
 			WHERE access_collection_id = {$collection_id}
 				AND user_guid = {$user_guid}";
 	
-		return (bool)_elgg_services()->db->deleteData($q);
+		return (bool)$this->db->deleteData($q);
 	}
 	
 	/**
@@ -689,7 +706,6 @@ class AccessCollections {
 	 * @return array|false
 	 */
 	function getUserCollections($owner_guid, $site_guid = 0) {
-		
 		$owner_guid = (int) $owner_guid;
 		$site_guid = (int) $site_guid;
 	
@@ -702,7 +718,7 @@ class AccessCollections {
 				AND site_guid = {$site_guid}
 				ORDER BY name ASC";
 	
-		$collections = _elgg_services()->db->getData($query);
+		$collections = $this->db->getData($query);
 	
 		return $collections;
 	}
@@ -716,19 +732,18 @@ class AccessCollections {
 	 * @return \ElggUser[]|int[]|false guids or entities if successful, false if not
 	 */
 	function getMembers($collection, $idonly = false) {
-		
 		$collection = (int)$collection;
 	
 		if (!$idonly) {
 			$query = "SELECT e.* FROM {$this->CONFIG->dbprefix}access_collection_membership m"
 				. " JOIN {$this->CONFIG->dbprefix}entities e ON e.guid = m.user_guid"
 				. " WHERE m.access_collection_id = {$collection}";
-			$collection_members = _elgg_services()->db->getData($query, "entity_row_to_elggstar");
+			$collection_members = $this->db->getData($query, "entity_row_to_elggstar");
 		} else {
 			$query = "SELECT e.guid FROM {$this->CONFIG->dbprefix}access_collection_membership m"
 				. " JOIN {$this->CONFIG->dbprefix}entities e ON e.guid = m.user_guid"
 				. " WHERE m.access_collection_id = {$collection}";
-			$collection_members = _elgg_services()->db->getData($query);
+			$collection_members = $this->db->getData($query);
 			if (!$collection_members) {
 				return false;
 			}

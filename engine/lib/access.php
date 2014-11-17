@@ -41,10 +41,7 @@
  * @see elgg_get_ignore_access()
  */
 function elgg_set_ignore_access($ignore = true) {
-	$cache = _elgg_get_access_cache();
-	$cache->clear();
-	$elgg_access = elgg_get_access_object();
-	return $elgg_access->setIgnoreAccess($ignore);
+	return _elgg_services()->access->setIgnoreAccess($ignore);
 }
 
 /**
@@ -56,26 +53,6 @@ function elgg_set_ignore_access($ignore = true) {
  */
 function elgg_get_ignore_access() {
 	return elgg_get_access_object()->getIgnoreAccess();
-}
-
-/**
- * Return an \ElggCache static variable cache for the access caches
- *
- * @staticvar \ElggStaticVariableCache $access_cache
- * @return \ElggStaticVariableCache
- * @access private
- */
-function _elgg_get_access_cache() {
-	/**
-	 * A default filestore cache using the dataroot.
-	 */
-	static $access_cache;
-
-	if (!$access_cache) {
-		$access_cache = new \ElggStaticVariableCache('access');
-	}
-
-	return $access_cache;
 }
 
 /**
@@ -550,13 +527,7 @@ function elgg_check_access_overrides($user_guid = 0) {
  * @access private
  */
 function elgg_get_access_object() {
-	static $elgg_access;
-
-	if (!$elgg_access) {
-		$elgg_access = new \Elgg\Access();
-	}
-
-	return $elgg_access;
+	return _elgg_services()->access;
 }
 
 /**
