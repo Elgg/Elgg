@@ -4,6 +4,7 @@
  *
  * @uses $vars['entity'] ElggUser entity
  * @uses $vars['size']   Size of the icon
+ * @uses $vars['title']  Optional override for the title
  */
 
 $entity = $vars['entity'];
@@ -11,15 +12,22 @@ $size = elgg_extract('size', $vars, 'tiny');
 
 $icon = elgg_view_entity_icon($entity, $size, $vars);
 
-// Simple XFN
-$rel = '';
-if (elgg_get_logged_in_user_guid() == $entity->guid) {
-	$rel = 'rel="me"';
-} elseif (check_entity_relationship(elgg_get_logged_in_user_guid(), 'friend', $entity->guid)) {
-	$rel = 'rel="friend"';
-}
+$title = elgg_extract('title', $vars);
+if (!$title) {
+	$link_params = array(
+		'href' => $entity->getUrl(),
+		'text' => $entity->name,
+	);
 
-$title = "<a href=\"" . $entity->getUrl() . "\" $rel>" . $entity->name . "</a>";
+	// Simple XFN, see http://gmpg.org/xfn/
+	if (elgg_get_logged_in_user_guid() == $entity->guid) {
+		$link_params['rel'] = 'me';
+	} elseif (check_entity_relationship(elgg_get_logged_in_user_guid(), 'friend', $entity->guid)) {
+		$link_params['rel'] = 'friend';
+	}
+
+	$title = elgg_view('output/url', $link_params);
+}
 
 $metadata = elgg_view_menu('entity', array(
 	'entity' => $entity,
