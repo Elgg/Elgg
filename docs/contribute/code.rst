@@ -18,11 +18,10 @@ Pull requests
 Pull requests (PRs) are the best way to get code contributed to Elgg core.
 The core development team uses them even for the most trivial changes.
 
-For new features, `submit a feature request <issues.html>`__ or `talk to us`_ first and make
+For new features, `submit a feature request <https://github.com/Elgg/Elgg/issues>`__ or `talk to us`_ first and make
 sure the core team approves of your direction before spending lots of time on code.
 
 .. _talk to us: http://community.elgg.org/groups/profile/211069/feedback-and-planning
-
 
 Checklists
 ----------

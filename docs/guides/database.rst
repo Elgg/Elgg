@@ -121,7 +121,7 @@ with metadata in a variety of ways.
 Displaying entities
 -------------------
 
-In order for entities to be displayed in `listing functions`_ you need
+In order for entities to be displayed in listing functions you need
 to provide a view for the entity in the views system.
 
 To display an entity, create a view EntityType/subtype where EntityType
@@ -132,10 +132,10 @@ user: for entities derived from ElggUser
 site: for entities derived from ElggSite
 group: for entities derived from ElggGroup
 
-.. _listing functions: Views#Listing_entities
-
 A default view for all entities has already been created, this is called
 EntityType/default.
+
+.. _guides/database#entity-icons:
 
 Entity Icons
 ~~~~~~~~~~~~
@@ -144,7 +144,7 @@ Every entity can be assigned an icon which is retrieved using the ``ElggEntity::
 This method accepts a ``$size`` argument that can be either of the configured icon sizes.  Use
 ``elgg_get_config('icon_sizes')`` to get all possible values. The following sizes exist by default:
 ``'large'``, ``'medium'``, ``'small'``, ``'tiny'``, and ``'topbar'``. The method triggers the
-``entity:icon:url`` hook_.
+``entity:icon:url`` :ref:`hook <guides/hooks-list#other>`.
 
 Use ``elgg_view_entity_icon($entity, $size, $vars)`` to render an icon. This will scan the following
 locations for a view and include the first match.
@@ -165,8 +165,6 @@ $subtype
 By convention entities that have an uploaded avatar or icon will have the ``icontime`` property
 assigned. This means that you can use ``$entity->icontime`` to check if an icon exists for the given
 entity.
-
-.. _hook: hooks-list.rst#other
 
 Adding, reading and deleting annotations
 ----------------------------------------

@@ -375,8 +375,6 @@ if you find a ``.htaccess`` file inside the installation path, but you
 are still getting 404 error, make sure the contents of ``.htaccess`` are
 same as that of ``htaccess_dist``.
 
-`Instructions for testing mod\_rewrite`_
-
 **``mod_rewrite`` isn't installed.**
 
 Check your ``httpd.conf`` to make sure that this module is being loaded
@@ -386,7 +384,6 @@ if the module is being loaded.
 
 **The rules in ``.htaccess`` aren't being obeyed.**
 
-.. _Instructions for testing mod\_rewrite: mod_rewrite_test
 .. _PHP info: http://uk.php.net/manual/en/function.phpinfo.php
 
 In your virtual host configuration settings (which may be contained

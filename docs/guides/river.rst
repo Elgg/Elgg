@@ -41,7 +41,7 @@ River views
 ===========
 
 In order for events to appear in the river you need to provide a corresponding
-`view <views.html>`__ with the name specified in the function above.
+:doc:`view <views>` with the name specified in the function above.
 
 We recommend ``/river/{type}/{subtype}/{action}``, where:
 

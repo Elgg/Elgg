@@ -135,7 +135,7 @@ http://yoursite.com/services/api/rest/xml/?method=users.active&api_key=1140321cb
 Signature-based authentication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The `HMAC Authentication`_ is similar to what is used with `OAuth`_ or
+The HMAC Authentication is similar to what is used with OAuth or
 Amazon's S3 service. This involves both the public and private key. If
 you want to be very sure that the API calls are coming from the
 developer you think they are coming from and you want to make sure the
@@ -147,12 +147,9 @@ authentication.
 OAuth
 ~~~~~
 
-With the addition of the `OAuth`_ plugin, Elgg also fully supports the
+With the addition of the OAuth plugin, Elgg also fully supports the
 OAuth 1.0a authorization standard. Clients can then use standard OAuth
 libraries to make any API calls to the site.
-
-.. _HMAC Authentication: HMAC Authentication
-.. _OAuth: OAuth
 
 User authentication
 -------------------

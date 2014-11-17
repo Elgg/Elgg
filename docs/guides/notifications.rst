@@ -12,7 +12,7 @@ The generic method to send a notification to a user is via the function `notify_
 It is normally used when we want to notify only a single user. Notification like
 this might for example inform that someone has liked or commented the user's post.
 
-The function usually gets called in an `action <actions.html>`__ file.
+The function usually gets called in an :doc:`action <actions>` file.
 
 __ http://reference.elgg.org/notification_8php.html#a9d8de7faa63baf2dcd5d42eb8f76eaa1
 
@@ -91,7 +91,7 @@ Tell Elgg to send notifications when a new object of subtype "photo" is created:
 .. note::
 
 	In order to send the event-based notifications you must have the one-minute
-	`CRON <admin/cron.html>`__ interval configured.
+	:doc:`CRON </admin/cron>` interval configured.
 
 Contents of the notification message can be defined with the
 ``'prepare', 'notification:[action]:[type]:[subtype]'`` hook.
