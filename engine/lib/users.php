@@ -151,7 +151,7 @@ function find_active_users($options = array(), $limit = 10, $offset = 0, $count 
  * @return bool
  */
 function send_new_password_request($user_guid) {
-	return _elgg_services()->usersTable->sendNewPasswordRequest($user_guid);
+	return _elgg_services()->passwords->sendNewPasswordRequest($user_guid);
 }
 
 /**
@@ -165,7 +165,7 @@ function send_new_password_request($user_guid) {
  * @return bool
  */
 function force_user_password_reset($user_guid, $password) {
-	return _elgg_services()->usersTable->forcePasswordReset($user_guid, $password);
+	return _elgg_services()->passwords->forcePasswordReset($user_guid, $password);
 }
 
 /**
@@ -178,7 +178,7 @@ function force_user_password_reset($user_guid, $password) {
  * @return bool True on success
  */
 function execute_new_password_request($user_guid, $conf_code, $password = null) {
-	return _elgg_services()->usersTable->executeNewPasswordReset($user_guid, $conf_code, $password);
+	return _elgg_services()->passwords->executeNewPasswordReset($user_guid, $conf_code, $password);
 }
 
 /**
@@ -190,27 +190,7 @@ function generate_random_cleartext_password() {
 	return _elgg_services()->crypto->getRandomString(12, \ElggCrypto::CHARS_PASSWORD);
 }
 
-/**
- * Generate an 8 character Base64 URL salt for the password
- *
- * @return string
- * @access private
- */
-function _elgg_generate_password_salt() {
-	return _elgg_services()->crypto->getRandomString(8);
-}
 
-/**
- * Hash a password for storage. Currently salted MD5.
- *
- * @param \ElggUser $user     The user this is being generated for.
- * @param string    $password Password in clear text
- *
- * @return string
- */
-function generate_user_password(\ElggUser $user, $password) {
-	return md5($password . $user->salt);
-}
 
 /**
  * Simple function which ensures that a username contains only valid characters.

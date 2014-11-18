@@ -216,8 +216,7 @@ function twitter_api_create_user($twitter) {
 	$user->username = $username;
 	$user->name = $name;
 	$user->access_id = ACCESS_PUBLIC;
-	$user->salt = _elgg_generate_password_salt();
-	$user->password = generate_user_password($user, $password);
+	$user->setPassword($password);
 	$user->owner_guid = 0;
 	$user->container_guid = 0;
 
