@@ -339,7 +339,9 @@ function input_livesearch_page_handler($page) {
 
 						$output = elgg_view_list_item($entity, array(
 							'use_hover' => false,
+							'use_link' => false,
 							'class' => 'elgg-autocomplete-item',
+							'title' => $entity->name, // Default title would be a link
 						));
 
 						$icon = elgg_view_entity_icon($entity, 'tiny', array(
@@ -389,6 +391,8 @@ function input_livesearch_page_handler($page) {
 							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',
 							'full_view' => false,
+							'href' => false,
+							'title' => $entity->name, // Default title would be a link
 						));
 
 						$icon = elgg_view_entity_icon($entity, 'tiny', array(
@@ -430,7 +434,9 @@ function input_livesearch_page_handler($page) {
 						
 						$output = elgg_view_list_item($entity, array(
 							'use_hover' => false,
+							'use_link' => false,
 							'class' => 'elgg-autocomplete-item',
+							'title' => $entity->name, // Default title would be a link
 						));
 
 						$icon = elgg_view_entity_icon($entity, 'tiny', array(
