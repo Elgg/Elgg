@@ -51,9 +51,9 @@ function _elgg_set_user_password() {
 
 		if ($result) {
 			if ($password == $password2) {
-				$user->salt = _elgg_generate_password_salt();
-				$user->password = generate_user_password($user, $password);
+				$user->setPassword($password);
 				_elgg_services()->persistentLogin->handlePasswordChange($user, elgg_get_logged_in_user_entity());
+
 				if ($user->save()) {
 					system_message(elgg_echo('user:password:success'));
 					return true;
