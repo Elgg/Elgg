@@ -1645,6 +1645,9 @@ function _elgg_shutdown_hook() {
 		error_log($message);
 		error_log("Exception trace stack: {$e->getTraceAsString()}");
 	}
+
+	// Prevent an APC session bug: https://bugs.php.net/bug.php?id=60657
+	session_write_close();
 }
 
 /**
