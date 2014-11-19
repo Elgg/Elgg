@@ -18,11 +18,11 @@ if (isset($vars['entity'])) {
 	unset($vars['entity']);
 }
 
-if (empty($vars['tags']) && !empty($vars['value'])) {
+if (empty($vars['tags']) && (!empty($vars['value']) || $vars['value'] === 0 || $vars['value'] === '0')) {
 	$vars['tags'] = $vars['value'];
 }
 
-if (empty($vars['tags'])) {
+if (empty($vars['tags']) && $vars['value'] !== 0 && $vars['value'] !== '0') {
 	return;
 }
 
@@ -41,11 +41,11 @@ if (isset($vars['item_class'])) {
 }
 
 $icon_class = elgg_extract('icon_class', $vars);
-$list_items = '<li>' . elgg_view_icon('tag', $icon_class) . '</li>';
+$list_items = ''; 
 
 $params = $vars;
 foreach($vars['tags'] as $tag) {
-	if (is_string($tag)) {
+	if (is_string($tag) && strlen($tag) > 0) {
 		$params['value'] = $tag;
 
 		$list_items .= "<li class=\"$item_class\">";
@@ -54,9 +54,16 @@ foreach($vars['tags'] as $tag) {
 	}
 }
 
+if (empty($list_items)) {
+	return;
+}
+
+$icon = elgg_view_icon('tag', $icon_class);
+
 $list = <<<___HTML
 	<div class="clearfix">
 		<ul class="$list_class">
+			<li>$icon</li>
 			$list_items
 		</ul>
 	</div>
