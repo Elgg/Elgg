@@ -7,6 +7,7 @@ elgg_register_event_handler('init', 'system', 'tagcloud_init');
 
 function tagcloud_init() {
 	elgg_extend_view('theme_sandbox/components', 'tagcloud/theme_sandbox/component');
+	elgg_extend_view('css/elgg', 'css/elgg/tagcloud.css');
 	
 	elgg_register_page_handler('tags', 'tagcloud_tags_page_handler');
 	

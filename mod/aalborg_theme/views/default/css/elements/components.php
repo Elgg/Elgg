@@ -336,8 +336,3 @@
 .elgg-tags li.elgg-tag:last-child:after {
 	content: "";
 }
-.elgg-tagcloud {
-	text-align: justify;
-	margin-bottom: 5px;
-}
-
