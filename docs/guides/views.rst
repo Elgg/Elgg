@@ -243,3 +243,12 @@ Before going through the motions of drawing views, Elgg checks the ``$CONFIG->te
 .. code-block:: php
 
 	return $template_handler($view, $vars);
+
+Related
+=======
+
+.. toctree::
+   :maxdepth: 1
+   
+   views/page-structure
+	
