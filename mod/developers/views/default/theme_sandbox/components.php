@@ -15,9 +15,6 @@ echo elgg_view_module('theme-sandbox-demo', 'Table (.elgg-table)', $body);
 $body = elgg_view('theme_sandbox/components/table', array('class' => 'elgg-table-alt'));
 echo elgg_view_module('theme-sandbox-demo', 'Table Alternate (.elgg-table-alt)', $body);
 
-$body = elgg_view('theme_sandbox/components/tagcloud');
-echo elgg_view_module('theme-sandbox-demo', 'Tag cloud (.elgg-tagcloud)', $body);
-
 $body = elgg_view('theme_sandbox/components/tags');
 echo elgg_view_module('theme-sandbox-demo', 'Tags (.elgg-tag)', $body);
 
