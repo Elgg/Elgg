@@ -1271,7 +1271,6 @@ Please do not reply to this email.",
  */
 
 	'tag_names:tags' => 'Tags',
-	'tags:site_cloud' => 'Site Tag Cloud',
 
 /**
  * Javascript
