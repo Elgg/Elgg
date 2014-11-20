@@ -916,7 +916,6 @@ These changes will only affect new users on the site.',
 	'relationships' => "Relationships",
 	'metadata' => "Metadata",
 	'tagcloud' => "Tag cloud",
-	'tagcloud:allsitetags' => "All site tags",
 
 	'on' => 'On',
 	'off' => 'Off',
