@@ -144,6 +144,7 @@ This example uses all of the available elements:
 Related
 =======
 
-- `Plugin skeleton`_
-
-.. _Plugin skeleton: http://docs.elgg.org/wiki/Plugin_skeleton
+.. toctree::
+   :maxdepth: 1
+   
+   plugins/plugin-skeleton
