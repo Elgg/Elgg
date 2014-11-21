@@ -659,6 +659,19 @@ and/or related entities. A few are listed below:
 - ``elgg_get_entities_from_relationship()`` : fetch entities in relationships in a
   variety of ways
 
+E.g. retrieving users who joined your site in January 2014.
+
+.. code:: php
+
+    $entities = elgg_get_entities_from_relationship(array(
+        'relationship' => 'member_of_site',
+        'relationship_guid' => elgg_get_site_entity()->guid,
+        'inverse_relationship' => true,
+
+        'relationship_created_time_lower' => 1388534400, // January 1st 2014
+        'relationship_created_time_upper' => 1391212800, // February 1st 2014
+    ));
+
 Access Control
 ==============
 
