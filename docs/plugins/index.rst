@@ -15,3 +15,32 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
    pages
    profile
    thewire
+
+The following plugins are also bundled with Elgg, but are not (yet) documented
+
+- aalborg_theme
+- bookmarks
+- categories
+- ckeditor
+- custom_index
+- developers
+- diagnostics
+- embed
+- externalpages
+- garbagecollector
+- htmlawed
+- invitefriends
+- legacy_urls
+- likes
+- logbrowser
+- logrotate
+- members
+- notifications
+- reportedcontent
+- search
+- site_notifications
+- tagcloud
+- twitter_api
+- uservalidationbyemail
+- web_services
+- zaudio
