@@ -21,6 +21,7 @@ Customize Elgg's behavior with plugins.
    context
    themes
    javascript
+   settings
    web-services
    upgrading
    events-list
