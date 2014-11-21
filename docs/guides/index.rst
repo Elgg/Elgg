@@ -11,8 +11,6 @@ Customize Elgg's behavior with plugins.
    actions
    database
    i18n
-   events-list
-   hooks-list
    menus
    notifications
    river
@@ -20,7 +18,10 @@ Customize Elgg's behavior with plugins.
    routing
    widgets
    views
+   context
    themes
    javascript
    web-services
    upgrading
+   events-list
+   hooks-list
