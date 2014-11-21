@@ -7,6 +7,7 @@ Customize Elgg's behavior with plugins.
    :maxdepth: 1
    
    plugins
+   helpers
    actions
    database
    i18n
