@@ -22,6 +22,7 @@ Customize Elgg's behavior with plugins.
    themes
    javascript
    settings
+   permissions-check
    web-services
    upgrading
    events-list
