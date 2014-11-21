@@ -6,6 +6,7 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
 .. toctree::
    :maxdepth: 1
    
+   blog
    dashboard
    file
    groups
