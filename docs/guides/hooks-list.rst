@@ -77,6 +77,11 @@ User hooks
 **login:forward, user**
     Filters the URL to which the user will be forwarded after login
 
+**username:character_blacklist, user**
+	Filters the string of blacklisted characters used to validate username during registration.
+	The return value should be a string consisting of the disallowed characters. The default
+	string can be found from ``$params['blacklist']``.
+
 Object hooks
 ============
 

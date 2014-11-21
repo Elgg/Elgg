@@ -258,7 +258,10 @@ function validate_username($username) {
 
 	// Belts and braces
 	// @todo Tidy into main unicode
-	$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@-+=';
+	$blacklist2 = '\'/\\"*& ?#%^(){}[]~?<>;|¬`@+=';
+
+	$blacklist2 = elgg_trigger_plugin_hook('username:character_blacklist', 'user',
+		array('blacklist' => $blacklist2), $blacklist2);
 
 	for ($n = 0; $n < strlen($blacklist2); $n++) {
 		if (strpos($username, $blacklist2[$n]) !== false) {
