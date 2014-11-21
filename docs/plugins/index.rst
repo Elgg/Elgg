@@ -14,3 +14,4 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
    messages
    pages
    profile
+   thewire
