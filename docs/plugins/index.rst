@@ -10,5 +10,6 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
    file
    groups
    messageboard
+   messages
    pages
    profile
