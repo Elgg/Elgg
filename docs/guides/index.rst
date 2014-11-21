@@ -23,6 +23,7 @@ Customize Elgg's behavior with plugins.
    javascript
    settings
    permissions-check
+   authentication
    web-services
    upgrading
    events-list
