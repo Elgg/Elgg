@@ -15,6 +15,7 @@ Customize Elgg's behavior with plugins.
    menus
    notifications
    river
+   pagehandler
    routing
    widgets
    views
