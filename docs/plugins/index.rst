@@ -9,3 +9,4 @@ Elgg comes with a set of plugins. These provide the basic functionality for your
    dashboard
    file
    groups
+   profile
