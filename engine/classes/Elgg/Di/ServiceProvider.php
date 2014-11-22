@@ -65,7 +65,14 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('configTable', '\Elgg\Database\ConfigTable');
 		$this->setValue('context', new \Elgg\Context());
 		$this->setClassName('crypto', '\ElggCrypto');
-		$this->setClassName('datalist', '\Elgg\Database\Datalist');
+
+		$this->setFactory('datalist', function(ServiceProvider $c) {
+			// TODO(ewinslow): Add back memcached support
+			$dbprefix = $c->config->get('dbprefix');
+			return new \Elgg\Database\Datalist(
+				new \Elgg\Cache\MemoryPool(), $c->db, $c->logger, "{$dbprefix}datalists");
+		});
+
 		$this->setFactory('db', array($this, 'getDatabase'));
 		$this->setClassName('entityTable', '\Elgg\Database\EntityTable');
 		$this->setFactory('events', array($this, 'getEvents'));
