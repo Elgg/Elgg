@@ -28,6 +28,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
+ * @property-read \Stash\Pool|null                         $memcacheStashPool
  * @property-read \ElggVolatileMetadataCache               $metadataCache
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
  * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
@@ -126,6 +127,22 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('logger', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('logger');
+		});
+
+		$this->setFactory('memcacheStashPool', function(ServiceProvider $c) {
+			if (!$c->config->get('memcache')) {
+				return null;
+			}
+
+			$servers = $c->config->get('memcache_servers');
+			if (!$servers) {
+				return null;
+			}
+			$driver = new \Stash\Driver\Memcache();
+			$driver->setOptions(array(
+				'servers' => $servers,
+			));
+			return new \Stash\Pool($driver);
 		});
 
 		$this->setClassName('metadataCache', '\ElggVolatileMetadataCache');

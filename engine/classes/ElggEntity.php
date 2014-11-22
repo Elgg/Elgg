@@ -1715,13 +1715,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		// If memcache is available then delete this entry from the cache
-		static $newentity_cache;
-		if ((!$newentity_cache) && (is_memcache_available())) {
-			$newentity_cache = new \ElggMemcache('new_entity_cache');
-		}
-		if ($newentity_cache) {
-			$newentity_cache->delete($guid);
-		}
+		_elgg_invalidate_memcache_for_entity($guid);
 
 		if ($ret !== false) {
 			$this->attributes['time_updated'] = $time;
@@ -1996,15 +1990,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		_elgg_invalidate_cache_for_entity($guid);
-		
-		// If memcache is available then delete this entry from the cache
-		static $newentity_cache;
-		if ((!$newentity_cache) && (is_memcache_available())) {
-			$newentity_cache = new \ElggMemcache('new_entity_cache');
-		}
-		if ($newentity_cache) {
-			$newentity_cache->delete($guid);
-		}
+		_elgg_invalidate_memcache_for_entity($guid);
 
 		// Delete contained owned and otherwise releated objects (depth first)
 		if ($recursive) {

@@ -14,26 +14,7 @@
  * @return bool
  */
 function is_memcache_available() {
-	global $CONFIG;
-
-	static $memcache_available;
-
-	if ((!isset($CONFIG->memcache)) || (!$CONFIG->memcache)) {
-		return false;
-	}
-
-	// If we haven't set variable to something
-	if (($memcache_available !== true) && ($memcache_available !== false)) {
-		try {
-			$tmp = new \ElggMemcache();
-			// No exception thrown so we have memcache available
-			$memcache_available = true;
-		} catch (Exception $e) {
-			$memcache_available = false;
-		}
-	}
-
-	return $memcache_available;
+	return (bool) _elgg_services()->memcacheStashPool;
 }
 
 /**
@@ -45,13 +26,37 @@ function is_memcache_available() {
  * @access private
  */
 function _elgg_invalidate_memcache_for_entity($entity_guid) {
-	static $newentity_cache;
-	
-	if ((!$newentity_cache) && (is_memcache_available())) {
-		$newentity_cache = new \ElggMemcache('new_entity_cache');
+	_elgg_get_memcache('new_entity_cache')->delete($entity_guid);
+}
+
+/**
+ * Get a namespaced ElggMemcache object (if memcache is available) or a null cache
+ *
+ * @param string $namespace Namespace to add to all keys used
+ *
+ * @return ElggMemcache|ElggNullCache
+ * @access private
+ * @since 1.10
+ */
+function _elgg_get_memcache($namespace = 'default') {
+	static $cache_pool = 'initial';
+	static $null_cache;
+	static $objects = array();
+
+	// can't use null because the service may be null
+	if ($cache_pool === 'initial') {
+		$cache_pool = _elgg_services()->memcacheStashPool;
 	}
-	
-	if ($newentity_cache) {
-		$newentity_cache->delete($entity_guid);
+
+	if (!$cache_pool) {
+		if ($null_cache === null) {
+			$null_cache = new ElggNullCache();
+		}
+		return $null_cache;
 	}
+
+	if (!isset($objects[$namespace])) {
+		$objects[$namespace] = new ElggMemcache($namespace, $cache_pool);
+	}
+	return $objects[$namespace];
 }

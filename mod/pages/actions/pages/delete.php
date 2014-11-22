@@ -23,7 +23,6 @@ if (pages_is_page($page)) {
 		if ($children) {
 			$db_prefix = elgg_get_config('dbprefix');
 			$subtype_id = (int)get_subtype_id('object', 'page_top');
-			$newentity_cache = is_memcache_available() ? new ElggMemcache('new_entity_cache') : null;
 
 			foreach ($children as $child) {
 				if ($parent) {
@@ -41,9 +40,7 @@ if (pages_is_page($page)) {
 					));
 
 					_elgg_invalidate_cache_for_entity($child_guid);
-					if ($newentity_cache) {
-						$newentity_cache->delete($child_guid);
-					}
+					_elgg_invalidate_memcache_for_entity($child_guid);
 				}
 			}
 		}

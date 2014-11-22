@@ -142,11 +142,7 @@ function garbagecollector_orphaned_metastrings() {
 
 		$dead = get_data($select_query);
 		if ($dead) {
-			static $metastrings_memcache;
-			
-			if (!$metastrings_memcache) {
-				$metastrings_memcache = new \ElggMemcache('metastrings_memcache');
-			}
+			$metastrings_memcache = _elgg_get_memcache('metastrings_memcache');
 
 			foreach ($dead as $d) {
 				$metastrings_memcache->delete($d->string);
