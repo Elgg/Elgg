@@ -308,10 +308,46 @@ elgg.ui.getLocaleSettings = function(language){
             break;
         case 'nl':
             url += 'jquery.ui.datepicker-nl.js';
+            break;
         case 'de':
             url += 'jquery.ui.datepicker-de.js';
+            break;
         case 'es':
-            url += 'jquery.ui.datepicker-es';
+            url += 'jquery.ui.datepicker-es.js';
+            break;
+        case 'fi': 
+            url += 'jquery.ui.datepicker-fi.js';
+            break;
+        case 'ru':
+            url += 'jquery.ui.datepicker-ru.js';
+            break;
+        case 'ca':
+            url += 'jquery.ui.datepicker-ca.js';
+            break;
+        case 'cmn':
+            url += 'jquery.ui.datepicker-zh-CN.js';
+            break;
+        case 'gl':
+            url += 'jquery.ui.datepicker-gl.js';
+            break;
+        case 'ja':
+            url += 'jquery.ui.datepicker-ja.js';
+            break;
+        case 'da':
+            url += 'jquery.ui.datepicker-da.js';
+            break;
+        case 'pl':
+            url += 'jquery.ui.datepicker-pl.js';
+            break;
+        case 'it':
+            url += 'jquery.ui.datepicker-it.js';
+            break;
+        case 'fa':
+            url += 'jquery.ui.datepicker-fa.js';
+            break;
+        case 'el':
+            url += 'jquery.ui.datepicker-el.js';
+            break;
         default:
             return;
     }
