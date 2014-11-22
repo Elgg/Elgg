@@ -44,8 +44,6 @@ class EntityTable {
 	 * @access private
 	 */
 	function getRow($guid) {
-		
-	
 		if (!$guid) {
 			return false;
 		}
@@ -80,17 +78,11 @@ class EntityTable {
 			return $row;
 		}
 	
-		$new_entity = false;
-	
 		// Create a memcache cache if we can
-		static $newentity_cache;
-		if ((!$newentity_cache) && (is_memcache_available())) {
-			$newentity_cache = new \ElggMemcache('new_entity_cache');
-		}
-		if ($newentity_cache) {
-			$new_entity = $newentity_cache->load($row->guid);
-		}
-		if ($new_entity) {
+		$memcache = _elgg_get_memcache('new_entity_cache');
+		$new_entity = $memcache->load($row->guid);
+		if ($new_entity instanceof \ElggEntity) {
+			$new_entity->refresh($row);
 			return $new_entity;
 		}
 	
@@ -130,10 +122,7 @@ class EntityTable {
 			}
 		}
 	
-		// Cache entity if we have a cache available
-		if (($newentity_cache) && ($new_entity)) {
-			$newentity_cache->save($new_entity->guid, $new_entity);
-		}
+		$new_entity->storeInPersistedCache($memcache);
 	
 		return $new_entity;
 	}
@@ -155,8 +144,20 @@ class EntityTable {
 			return false;
 		}
 		
-		// Check local cache first
+		// Check caches
+		$memcache = _elgg_get_memcache('new_entity_cache');
+
 		$new_entity = _elgg_retrieve_cached_entity($guid);
+		if (!$new_entity) {
+			$new_entity = $memcache->load($guid);
+			if ($new_entity instanceof \ElggEntity) {
+				// until ACLs in memcache, DB query is required to determine access
+				if (!$this->getRow($guid)) {
+					$new_entity = false;
+				}
+			}
+		}
+		// Verify type of cached entity
 		if ($new_entity) {
 			if ($type) {
 				return elgg_instanceof($new_entity, $type) ? $new_entity : false;
@@ -582,11 +583,10 @@ class EntityTable {
 	 * @throws \LogicException
 	 */
 	function fetchFromSql($sql, \ElggBatch $batch = null) {
-		static $plugin_subtype;
-		if (null === $plugin_subtype) {
-			$plugin_subtype = get_subtype_id('object', 'plugin');
-		}
-	
+		$plugin_subtype = _elgg_services()->subtypeTable->getId('object', 'plugin');
+		$db = _elgg_services()->db;
+		$memcache = _elgg_get_memcache('new_entity_cache');
+
 		// Keys are types, values are columns that, if present, suggest that the secondary
 		// table is already JOINed. Note it's OK if guess incorrectly because entity load()
 		// will fetch any missing attributes.
@@ -596,8 +596,8 @@ class EntityTable {
 			'group' => 'name',
 			'site' => 'url',
 		);
-	
-		$rows = _elgg_services()->db->getData($sql);
+
+		$rows = $db->getData($sql);
 	
 		// guids to look up in each type
 		$lookup_types = array();
@@ -612,18 +612,26 @@ class EntityTable {
 			// but abandon the extra queries.
 			$types_to_optimize = array();
 		}
-	
+
 		// First pass: use cache where possible, gather GUIDs that we're optimizing
 		foreach ($rows as $i => $row) {
 			if (empty($row->guid) || empty($row->type)) {
 				throw new \LogicException('Entity row missing guid or type');
 			}
+
 			$entity = _elgg_retrieve_cached_entity($row->guid);
-			if ($entity) {
+			if (!$entity) {
+				$entity = $memcache->load($row->guid);
+			}
+
+			if ($entity instanceof \ElggEntity) {
+				// from static var or memcache, both must be refreshed in case columns
+				// need storing in volatile data
 				$entity->refresh($row);
 				$rows[$i] = $entity;
 				continue;
 			}
+
 			if (isset($types_to_optimize[$row->type])) {
 				// check if row already looks JOINed.
 				if (isset($row->{$types_to_optimize[$row->type]})) {
@@ -637,12 +645,12 @@ class EntityTable {
 		}
 		// Do secondary queries and merge rows
 		if ($lookup_types) {
-			$dbprefix = _elgg_services()->config->get('dbprefix');
+			$dbprefix = $db->getTablePrefix();
 	
 			foreach ($lookup_types as $type => $guids) {
 				$set = "(" . implode(',', $guids) . ")";
 				$sql = "SELECT * FROM {$dbprefix}{$type}s_entity WHERE guid IN $set";
-				$secondary_rows = _elgg_services()->db->getData($sql);
+				$secondary_rows = $db->getData($sql);
 				if ($secondary_rows) {
 					foreach ($secondary_rows as $secondary_row) {
 						$key = $guid_to_key[$secondary_row->guid];
@@ -658,7 +666,7 @@ class EntityTable {
 				continue;
 			} else {
 				try {
-					$rows[$i] = entity_row_to_elggstar($row);
+					$rows[$i] = $this->rowToElggStar($row);
 				} catch (IncompleteEntityException $e) {
 					// don't let incomplete entities throw fatal errors
 					unset($rows[$i]);

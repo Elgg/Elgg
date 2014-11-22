@@ -47,7 +47,7 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 	}
 
 	public function testElggGetEntitiesFromMetadata() {
-		global $CONFIG, $METASTRINGS_CACHE;
+		global $METASTRINGS_CACHE;
 		$METASTRINGS_CACHE = array();
 
 		$this->object->title = 'Meta Unit Test';
@@ -265,6 +265,8 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 	protected function delete_metastrings($string) {
 		global $CONFIG, $METASTRINGS_CACHE;
 		$METASTRINGS_CACHE = array();
+
+		_elgg_get_memcache('metastrings_memcache')->delete(md5($string));
 
 		$string = sanitise_string($string);
 		_elgg_services()->db->deleteData("

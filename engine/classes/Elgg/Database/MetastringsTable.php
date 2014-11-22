@@ -111,14 +111,22 @@ class MetastringsTable {
 	private function getIdCaseSensitive($string) {
 		$string = (string)$string;
 		return $this->cache->get($string, function() use ($string) {
+
+			$memcache = _elgg_get_memcache('metastrings_memcache');
+
+			// Stash can't handle arbitrary keys
+			$result = $memcache->load(md5($string));
+			if ($result !== false) {
+				return $result;
+			}
+
 			$escaped_string = $this->db->sanitizeString($string);
 			$query = "SELECT id FROM {$this->getTableName()} WHERE string = BINARY '$escaped_string' LIMIT 1";
 			$results = $this->db->getData($query);
-			if (isset($results[0])) {
-				return $results[0]->id;
-			} else {
-				return $this->add($string);
-			}
+			$result = isset($results[0]) ? $results[0]->id : $this->add($string);
+
+			$memcache->save(md5($string), $result);
+			return $result;
 		});
 	}
 	

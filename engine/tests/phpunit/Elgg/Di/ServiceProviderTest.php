@@ -32,7 +32,19 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 
 		$obj1 = $sp->{$name};
 		$obj2 = $sp->{$name};
-		$this->assertInstanceOf($type, $obj1);
+
+		// support $type like "Foo\Bar|Baz|null"
+		$passed = false;
+		foreach (explode('|', $type) as $test_type) {
+			if ($test_type === 'null') {
+				if ($obj1 === null) {
+					$passed = true;
+				}
+			} elseif ($obj1 instanceof $test_type) {
+				$passed = true;
+			}
+		}
+		$this->assertTrue($passed, "\$obj1 did not match type $type");
 
 		if (in_array($name, $non_shared_names)) {
 			$this->assertNotSame($obj1, $obj2);
