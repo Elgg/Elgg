@@ -269,41 +269,58 @@ elgg.ui.loginHandler = function(hook, type, params, options) {
  * @return void
  * @requires jqueryui.datepicker
  */
-elgg.ui.initDatePicker = function() {
-	function loadDatePicker() {
-		$('.elgg-input-date').datepicker({
-			// ISO-8601
-			dateFormat: 'yy-mm-dd',
-			onSelect: function(dateText) {
-				if ($(this).is('.elgg-input-timestamp')) {
-					// convert to unix timestamp
-					var dateParts = dateText.split("-");
-					var timestamp = Date.UTC(dateParts[0], dateParts[1] - 1, dateParts[2]);
-					timestamp = timestamp / 1000;
+elgg.ui.initDatePicker = function(){
+    
+    if(elgg.get_language() !== 'en'){
+        elgg.ui.getLocaleSettings(elgg.get_language());
+    }
 
-					var id = $(this).attr('id');
-					$('input[name="' + id + '"]').val(timestamp);
-				}
-			}
-		});
-	}
+    $('.elgg-input-date').datepicker({
+        onSelect: function(dateText){
+            if($(this).is('.elgg-input-timestamp')){
+                var timestamp = $.datepicker.formatDate("@", new Date(dateText));
 
-	if (!$('.elgg-input-date').length) {
-		return;
-	}
+                //javascript handles time in miliseconds. Timestamp is given in seconds
+                timestamp = timestamp / 1000;
+                var id = $(this).attr('id');
+                $('input[name="' + id + '"]').val(timestamp);
+            }
+        }
+    });
+};
 
-	if (elgg.get_language() == 'en') {
-		loadDatePicker();
-	} else {
-		// load language first
-		elgg.get({
-			url: elgg.config.wwwroot + 'vendors/jquery/i18n/jquery.ui.datepicker-'+ elgg.get_language() +'.js',
-			dataType: "script",
-			cache: true,
-			success: loadDatePicker,
-			error: loadDatePicker // english language is already loaded.
-		});
-	}
+/**
+ * Get the jquery i18n locale configuration for datepicker
+ * accordingly with the current language set for the system.
+ * 
+ * @param {string} language
+ * @returns {void}
+ */
+elgg.ui.getLocaleSettings = function(language){
+    var url = elgg.config.wwwroot + 'vendors/jquery/i18n/';
+    
+    switch(language){
+        case 'pt_br':
+            url += 'jquery.ui.datepicker-pt-BR.js';
+            break;
+        case 'fr':
+            url += 'jquery.ui.datepicker-fr.js';
+            break;
+        case 'nl':
+            url += 'jquery.ui.datepicker-nl.js';
+        case 'de':
+            url += 'jquery.ui.datepicker-de.js';
+        case 'es':
+            url += 'jquery.ui.datepicker-es';
+        default:
+            return;
+    }
+
+    elgg.get({
+        url: url,
+        dataType: "script",
+        cache: true
+    });
 };
 
 /**
