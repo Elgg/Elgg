@@ -35,11 +35,6 @@ class EntityCache {
 	private $metadata_cache;
 
 	/**
-	 * @var \ElggMemcache
-	 */
-	private $memcache;
-
-	/**
 	 * @var array
 	 */
 	private $username_cache = [];
@@ -55,10 +50,6 @@ class EntityCache {
 		$this->metadata_cache = $metadata_cache;
 
 		$GLOBALS['ENTITY_CACHE'] = $this->entities;
-
-		if (is_memcache_available()) {
-			$this->memcache = new \ElggMemcache('new_entity_cache');
-		}
 	}
 
 	/**
@@ -72,13 +63,6 @@ class EntityCache {
 		$this->checkGlobal();
 
 		$guid = (int) $guid;
-
-		if ($this->memcache) {
-			$entity = $this->memcache->load($guid);
-			if ($entity && $entity->isFullyLoaded()) {
-				return $entity;
-			}
-		}
 
 		if (isset($this->entities[$guid]) && $this->entities[$guid]->isFullyLoaded()) {
 			return $this->entities[$guid];
@@ -111,10 +95,6 @@ class EntityCache {
 		$this->checkGlobal();
 
 		$guid = $entity->guid;
-
-		if ($this->memcache) {
-			$this->memcache->save($guid, $entity);
-		}
 
 		if (!$guid || isset($this->entities[$guid]) || isset($this->disabled_guids[$guid])) {
 			// have it or not saved
@@ -150,10 +130,6 @@ class EntityCache {
 		$this->checkGlobal();
 
 		$guid = (int)$guid;
-
-		if ($this->memcache) {
-			$this->memcache->delete($guid);
-		}
 		
 		if (!isset($this->entities[$guid])) {
 			return;
@@ -181,10 +157,6 @@ class EntityCache {
 		$this->entities = [];
 		$this->username_cache = [];
 		$GLOBALS['ENTITY_CACHE'] = $this->entities;
-
-		if ($this->memcache) {
-			$this->memcache->clear();
-		}
 	}
 
 	/**

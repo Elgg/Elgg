@@ -1,111 +1,48 @@
 <?php
 /**
  * Memcache wrapper class.
- *
- * @package    Elgg.Core
- * @subpackage Memcache
  */
 class ElggMemcache extends \ElggSharedMemoryCache {
+
 	/**
-	 * Global Elgg configuration
+	 * TTL of saved items (default timeout after a day to prevent anything getting too stale)
+	 */
+	private $ttl = 86400;
+
+	/**
+	 * @var \Stash\Pool
+	 */
+	private $stash_pool;
+
+	/**
+	 * Constructor
 	 *
-	 * @var \stdClass
-	 */
-	private $CONFIG;
-
-	/**
-	 * Minimum version of memcached needed to run
-	 *
-	 */
-	private static $MINSERVERVERSION = '1.1.12';
-
-	/**
-	 * Memcache object
-	 */
-	private $memcache;
-
-	/**
-	 * Expiry of saved items (default timeout after a day to prevent anything getting too stale)
-	 */
-	private $expires = 86400;
-
-	/**
-	 * The version of memcache running
-	 */
-	private $version = 0;
-
-	/**
-	 * Connect to memcache.
-	 *
-	 * @param string $namespace The namespace for this cache to write to -
-	 * note, namespaces of the same name are shared!
+	 * @param string      $namespace The namespace for this cache to write to
+	 * @param \Stash\Pool $pool      The cache pool to use. Default is memcache.
+	 * @param int         $ttl       The TTL in seconds. Default is from $CONFIG->memcache_expires.
 	 *
 	 * @throws ConfigurationException
+	 *
+	 * @see _elgg_get_memcache() Core developers should use this instead of direct construction.
 	 */
-	public function __construct($namespace = 'default') {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct($namespace = 'default', \Stash\Pool $pool = null, $ttl = null) {
+		parent::__construct();
 
 		$this->setNamespace($namespace);
 
-		// Do we have memcache?
-		if (!class_exists('Memcache')) {
-			throw new \ConfigurationException('PHP memcache module not installed, you must install php5-memcache');
-		}
-
-		// Create memcache object
-		$this->memcache	= new Memcache;
-
-		// Now add servers
-		if (!$this->CONFIG->memcache_servers) {
-			throw new \ConfigurationException('No memcache servers defined, please populate the $this->CONFIG->memcache_servers variable');
-		}
-
-		if (is_callable(array($this->memcache, 'addServer'))) {
-			foreach ($this->CONFIG->memcache_servers as $server) {
-				if (is_array($server)) {
-					$this->memcache->addServer(
-						$server[0],
-						isset($server[1]) ? $server[1] : 11211,
-						isset($server[2]) ? $server[2] : false,
-						isset($server[3]) ? $server[3] : 1,
-						isset($server[4]) ? $server[4] : 1,
-						isset($server[5]) ? $server[5] : 15,
-						isset($server[6]) ? $server[6] : true
-					);
-
-				} else {
-					$this->memcache->addServer($server, 11211);
-				}
-			}
-		} else {
-			// don't use _elgg_services()->translator->translate() here because most of the config hasn't been loaded yet
-			// and it caches the language, which is hard coded in $this->CONFIG->language as en.
-			// overriding it with real values later has no effect because it's already cached.
-			_elgg_services()->logger->error("This version of the PHP memcache API doesn't support multiple servers.");
-
-			$server = $this->CONFIG->memcache_servers[0];
-			if (is_array($server)) {
-				$this->memcache->connect($server[0], $server[1]);
-			} else {
-				$this->memcache->addServer($server, 11211);
+		if (!$pool) {
+			$pool = _elgg_services()->memcacheStashPool;
+			if (!$pool) {
+				throw new \ConfigurationException('No memcache servers defined, please populate the $this->CONFIG->memcache_servers variable');
 			}
 		}
+		$this->stash_pool = $pool;
 
-		// Get version
-		$this->version = $this->memcache->getVersion();
-		if (version_compare($this->version, \ElggMemcache::$MINSERVERVERSION, '<')) {
-			$msg = vsprintf('Memcache needs at least version %s to run, you are running %s',
-				array(\ElggMemcache::$MINSERVERVERSION,
-				$this->version
-			));
-
-			throw new \ConfigurationException($msg);
+		if ($ttl === null) {
+			$ttl = _elgg_services()->config->get('memcache_expires');
 		}
-
-		// Set some defaults
-		if (isset($this->CONFIG->memcache_expires)) {
-			$this->expires = $this->CONFIG->memcache_expires;
+		if (isset($ttl)) {
+			$this->ttl = $ttl;
 		}
 		
 		// make sure memcache is reset
@@ -113,14 +50,14 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	}
 
 	/**
-	 * Set the default expiry.
+	 * Set the default TTL.
 	 *
-	 * @param int $expires The lifetime as a unix timestamp or time from now. Defaults forever.
+	 * @param int $ttl The TTL in seconds from now. Default is no expiration.
 	 *
 	 * @return void
 	 */
-	public function setDefaultExpiry($expires = 0) {
-		$this->expires = $expires;
+	public function setDefaultExpiry($ttl = 0) {
+		$this->ttl = $ttl;
 	}
 
 	/**
@@ -132,36 +69,34 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	 * @return string The new key.
 	 */
 	private function makeMemcacheKey($key) {
-		$prefix = $this->getNamespace() . ":";
-
-		if (strlen($prefix . $key) > 250) {
-			$key = md5($key);
-		}
-
-		return $prefix . $key;
+		// using stacks grouping http://www.stashphp.com/Grouping.html#stacks
+		// this will allowing clearing the namespace later
+		return "/{$this->getNamespace()}/$key";
 	}
 
 	/**
 	 * Saves a name and value to the cache
 	 *
-	 * @param string  $key     Name
-	 * @param string  $data    Value
-	 * @param integer $expires Expires (in seconds)
+	 * @param string  $key  Name
+	 * @param string  $data Value
+	 * @param integer $ttl  TTL of cache item (seconds), 0 for no expiration, null for default.
 	 *
 	 * @return bool
 	 */
-	public function save($key, $data, $expires = null) {
+	public function save($key, $data, $ttl = null) {
 		$key = $this->makeMemcacheKey($key);
 
-		if ($expires === null) {
-			$expires = $this->expires;
+		if ($ttl === null) {
+			$ttl = $this->ttl;
 		}
 
-		$result = $this->memcache->set($key, $data, null, $expires);
-		if ($result === false) {
-			_elgg_services()->logger->error("MEMCACHE: SAVE FAIL $key");
-		} else {
+		$item = $this->stash_pool->getItem($key);
+		$result = $item->set($data, $ttl);
+
+		if ($result) {
 			_elgg_services()->logger->info("MEMCACHE: SAVE SUCCESS $key");
+		} else {
+			_elgg_services()->logger->error("MEMCACHE: SAVE FAIL $key");
 		}
 
 		return $result;
@@ -170,23 +105,28 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	/**
 	 * Retrieves data.
 	 *
-	 * @param string $key    Name of data to retrieve
-	 * @param int    $offset Offset
-	 * @param int    $limit  Limit
+	 * @param string $key     Name of data to retrieve
+	 * @param int    $unused1 Unused
+	 * @param int    $unused2 Unused
 	 *
 	 * @return mixed
 	 */
-	public function load($key, $offset = 0, $limit = null) {
+	public function load($key, $unused1 = 0, $unused2 = null) {
 		$key = $this->makeMemcacheKey($key);
 
-		$result = $this->memcache->get($key);
-		if ($result === false) {
+		$item = $this->stash_pool->getItem($key);
+
+		// no invalidation strategy allows very short TTLs
+		$value = $item->get(\Stash\Invalidation::NONE);
+
+		if ($item->isMiss()) {
 			_elgg_services()->logger->info("MEMCACHE: LOAD MISS $key");
-		} else {
-			_elgg_services()->logger->info("MEMCACHE: LOAD HIT $key");
+			return false;
 		}
 
-		return $result;
+		_elgg_services()->logger->info("MEMCACHE: LOAD HIT $key");
+
+		return $value;
 	}
 
 	/**
@@ -198,28 +138,18 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	 */
 	public function delete($key) {
 		$key = $this->makeMemcacheKey($key);
-
-		return $this->memcache->delete($key, 0);
+		return $this->stash_pool->getItem($key)->clear();
 	}
 
 	/**
-	 * Clears the entire cache
+	 * Clears all values in the namespace of this cache
 	 *
-	 * @return true
+	 * @return bool
 	 */
 	public function clear() {
-		$result = $this->memcache->flush();
-		if ($result === false) {
-			_elgg_services()->logger->info("MEMCACHE: failed to flush {$this->getNamespace()}");
-		} else {
-			sleep(1); // needed because http://php.net/manual/en/memcache.flush.php#81420
-			
-			_elgg_services()->logger->info("MEMCACHE: flushed {$this->getNamespace()}");
-		}
-		
-		return $result;
-
-		// @todo Namespaces as in #532
+		// using stacks grouping http://www.stashphp.com/Grouping.html#stacks
+		// this will clear all key keys beneath it
+		return $this->stash_pool->getItem("/{$this->getNamespace()}")->clear();
 	}
 	
 	/**
@@ -232,9 +162,9 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	 * @return void
 	 */
 	public function setNamespace($namespace = "default") {
-		
-		if (isset($this->CONFIG->memcache_namespace_prefix)) {
-			$namespace = $this->CONFIG->memcache_namespace_prefix . $namespace;
+		$config_prefix = _elgg_services()->config->getVolatile('memcache_namespace_prefix');
+		if ($config_prefix) {
+			$namespace = $config_prefix . $namespace;
 		}
 		
 		parent::setNamespace($namespace);

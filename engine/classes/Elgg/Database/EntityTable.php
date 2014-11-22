@@ -247,6 +247,14 @@ class EntityTable {
 		if (!isset($row->guid) || !isset($row->subtype)) {
 			return $row;
 		}
+	
+		// Create a memcache cache if we can
+		$memcache = _elgg_get_memcache('new_entity_cache');
+		$entity = $memcache->load($row->guid);
+		if ($entity instanceof ElggEntity) {
+			$entity->refresh($row);
+			return $entity;
+		}
 
 		$class_name = $this->subtype_table->getClassFromId($row->subtype);
 		if ($class_name && !class_exists($class_name)) {
@@ -270,11 +278,12 @@ class EntityTable {
 		}
 
 		$entity = new $class_name($row);
-
 		if (!$entity instanceof ElggEntity) {
 			throw new ClassException("$class_name must extend " . ElggEntity::class);
 		}
 
+		$entity->storeInPersistedCache($memcache);
+		
 		return $entity;
 	}
 
@@ -298,10 +307,22 @@ class EntityTable {
 		}
 
 		$guid = (int) $guid;
-		
-		// Check local cache first
+
 		$entity = $this->entity_cache->get($guid);
-		
+		if (!$entity) {
+			// Check caches
+			$memcache = _elgg_get_memcache('new_entity_cache');
+
+			$entity = $memcache->load($guid);
+			if ($entity instanceof ElggEntity) {
+				// until ACLs in memcache, DB query is required to determine access
+				if (!$this->getRow($guid)) {
+					$entity = false;
+				}
+			}
+		}
+
+		// Verify type of cached entity		
 		if ($entity) {
 			if ($type) {
 				return elgg_instanceof($entity, $type) ? $entity : false;
@@ -723,11 +744,10 @@ class EntityTable {
 	 * @return ElggEntity[]
 	 * @throws LogicException
 	 */
-	public function fetchFromSql($sql, ElggBatch $batch = null) {
-		static $plugin_subtype;
-		if (null === $plugin_subtype) {
-			$plugin_subtype = get_subtype_id('object', 'plugin');
-		}
+	public function fetchFromSql($sql, \ElggBatch $batch = null) {
+		$plugin_subtype = get_subtype_id('object', 'plugin');
+
+		$memcache = _elgg_get_memcache('new_entity_cache');
 
 		// Keys are types, values are columns that, if present, suggest that the secondary
 		// table is already JOINed. Note it's OK if guess incorrectly because entity load()
@@ -760,12 +780,20 @@ class EntityTable {
 			if (empty($row->guid) || empty($row->type)) {
 				throw new LogicException('Entity row missing guid or type');
 			}
+
 			$entity = $this->entity_cache->get($row->guid);
-			if ($entity) {
+			if (!$entity) {
+				$entity = $memcache->load($row->guid);
+			}
+
+			if ($entity instanceof ElggEntity) {
+				// from static var or memcache, both must be refreshed in case columns
+				// need storing in volatile data
 				$entity->refresh($row);
 				$rows[$i] = $entity;
 				continue;
 			}
+
 			if (isset($types_to_optimize[$row->type])) {
 				// check if row already looks JOINed.
 				if (isset($row->{$types_to_optimize[$row->type]})) {
@@ -779,11 +807,9 @@ class EntityTable {
 		}
 		// Do secondary queries and merge rows
 		if ($lookup_types) {
-			$dbprefix = $this->db->getTablePrefix();
-
 			foreach ($lookup_types as $type => $guids) {
 				$set = "(" . implode(',', $guids) . ")";
-				$sql = "SELECT * FROM {$dbprefix}{$type}s_entity WHERE guid IN $set";
+				$sql = "SELECT * FROM {$this->db->prefix}{$type}s_entity WHERE guid IN $set";
 				$secondary_rows = $this->db->getData($sql);
 				if ($secondary_rows) {
 					foreach ($secondary_rows as $secondary_row) {
@@ -839,7 +865,7 @@ class EntityTable {
 		}
 
 		// these are the only valid types for entities in elgg
-		$valid_types = _elgg_services()->config->get('entity_types');
+		$valid_types = $this->config->get('entity_types');
 
 		// pairs override
 		$wheres = array();
@@ -1395,22 +1421,22 @@ class EntityTable {
 	 */
 	public function getUserForPermissionsCheck($guid = 0) {
 		if (!$guid) {
-			return _elgg_services()->session->getLoggedInUser();
+			return $this->session->getLoggedInUser();
 		}
 
 		// need to ignore access and show hidden entities for potential hidden/disabled users
-		$ia = _elgg_services()->session->setIgnoreAccess(true);
+		$ia = $this->session->setIgnoreAccess(true);
 		$show_hidden = access_show_hidden_entities(true);
 
 		$user = $this->get($guid, 'user');
 
-		_elgg_services()->session->setIgnoreAccess($ia);
+		$this->session->setIgnoreAccess($ia);
 		access_show_hidden_entities($show_hidden);
 
 		if (!$user) {
 			// requested to check access for a specific user_guid, but there is no user entity, so the caller
 			// should cancel the check and return false
-			$message = _elgg_services()->translator->translate('UserFetchFailureException', array($guid));
+			$message = $this->translator->translate('UserFetchFailureException', array($guid));
 			$this->logger->warn($message);
 
 			throw new UserFetchFailureException();
@@ -1445,8 +1471,10 @@ class EntityTable {
 			':owner_guid' => (int) $owner_guid,
 		];
 
+		_elgg_invalidate_cache_for_entity($entity->guid);
+		_elgg_invalidate_memcache_for_entity($entity->guid);
+		
 		if ($this->db->updateData($query, true, $params)) {
-			_elgg_services()->entityCache->clear();
 			return true;
 		}
 

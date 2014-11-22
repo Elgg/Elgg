@@ -71,7 +71,7 @@ class UsersTable {
 	) {
 		$this->config = $config;
 		$this->db = $db;
-		$this->table = $this->db->getTablePrefix() . "users_entity";
+		$this->table = $this->db->prefix . "users_entity";
 		$this->entities = $entities;
 		$this->entity_cache = $cache;
 		$this->events = $events;
@@ -128,8 +128,10 @@ class UsersTable {
 
 		create_metadata($user_guid, 'ban_reason', $reason, '', 0, ACCESS_PUBLIC);
 
+		_elgg_invalidate_cache_for_entity($user_guid);
+		_elgg_invalidate_memcache_for_entity($user_guid);
+
 		if ($this->markBanned($user_guid, true)) {
-			$this->entity_cache->remove($user_guid);
 			return true;
 		}
 
@@ -170,7 +172,7 @@ class UsersTable {
 	public function unban($user_guid) {
 
 		$user = get_entity($user_guid);
-
+	
 		if (!$user instanceof ElggUser || !$user->canEdit()) {
 			return false;
 		}
@@ -180,6 +182,9 @@ class UsersTable {
 		}
 
 		create_metadata($user_guid, 'ban_reason', '', '', 0, ACCESS_PUBLIC);
+
+		_elgg_invalidate_cache_for_entity($user_guid);
+		_elgg_invalidate_memcache_for_entity($user_guid);
 
 		return $this->markBanned($user_guid, false);
 	}
@@ -211,8 +216,10 @@ class UsersTable {
 			':guid' => (int) $user_guid,
 		];
 
+		_elgg_invalidate_cache_for_entity($user_guid);
+		_elgg_invalidate_memcache_for_entity($user_guid);
+
 		if ($this->db->updateData($query, true, $params)) {
-			$this->entity_cache->remove($user_guid);
 			return true;
 		}
 
@@ -247,8 +254,10 @@ class UsersTable {
 			':guid' => (int) $user_guid,
 		];
 
+		_elgg_invalidate_cache_for_entity($user_guid);
+		_elgg_invalidate_memcache_for_entity($user_guid);
+
 		if ($this->db->updateData($query, true, $params)) {
-			$this->entity_cache->remove($user_guid);
 			return true;
 		}
 
@@ -522,6 +531,8 @@ class UsersTable {
 	/**
 	 * Sets the last action time of the given user to right now.
 	 *
+	 * @see _elgg_session_boot The session boot calls this at the beginning of every request
+	 *
 	 * @param int $user_guid The user GUID
 	 * @return void
 	 */
@@ -534,13 +545,29 @@ class UsersTable {
 			WHERE guid = :guid
 		";
 
+		$time = $this->getCurrentTime()->getTimestamp();
 		$params = [
-			':last_action' => $this->getCurrentTime()->getTimestamp(),
+			':last_action' => $time,
 			':guid' => (int) $user_guid,
 		];
 
 		execute_delayed_write_query($query, null, $params);
-		register_shutdown_function("_elgg_invalidate_cache_for_entity", (int) $user_guid);
+		if (is_memcache_available()) {
+			// If we save the user to memcache during this request, then we'll end up with the
+			// old (incorrect) attributes cached (notice the above query is delayed). So it's
+			// simplest to just resave the user after all plugin code runs.
+			register_shutdown_function(function () use ($user_guid, $time) {
+				$cache = _elgg_get_memcache('new_entity_cache');
+				$user = $cache->load($user_guid);
+				if (!$user) {
+					return;
+				}
+
+				/* @var \ElggUser $user */
+				$user->prev_last_action = $user->last_action;
+				$user->storeInPersistedCache($cache, $time);
+			});
+		}
 	}
 
 	/**
@@ -550,7 +577,7 @@ class UsersTable {
 	 * @return void
 	 */
 	public function setLastLogin($user_guid) {
-
+	
 		$query = "
 			UPDATE {$this->table}
 			SET
@@ -565,7 +592,14 @@ class UsersTable {
 		];
 
 		execute_delayed_write_query($query, null, $params);
-		register_shutdown_function("_elgg_invalidate_cache_for_entity", (int) $user_guid);
-	}
 
+		if (is_memcache_available()) {
+			// If we save the user to memcache during this request, then we'll end up with the
+			// old (incorrect) attributes cached. Hence we want to invalidate as late as possible.
+			// the user object gets saved
+			register_shutdown_function(function () use ($user_guid) {
+				_elgg_invalidate_memcache_for_entity($user_guid);
+			});
+		}
+	}
 }

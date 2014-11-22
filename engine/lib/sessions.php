@@ -353,6 +353,7 @@ function login(\ElggUser $user, $persistent = false) {
 	reset_login_failure_count($user->guid);
 
 	elgg_trigger_after_event('login', 'user', $user);
+
 	return true;
 }
 
