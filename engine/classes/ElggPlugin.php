@@ -354,8 +354,8 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function unsetAllSettings() {
 		$db_prefix = _elgg_services()->configTable->get('dbprefix');
-		$us_prefix = elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
-		$is_prefix = elgg_namespace_plugin_private_setting('internal', '', $this->getID());
+		$us_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
+		$is_prefix = _elgg_namespace_plugin_private_setting('internal', '', $this->getID());
 
 		$q = "DELETE FROM {$db_prefix}private_settings
 			WHERE entity_guid = $this->guid
