@@ -291,66 +291,22 @@ elgg.ui.initDatePicker = function(){
 
 /**
  * Get the jquery i18n locale configuration for datepicker
- * accordingly with the current language set for the system.
+ * according to the current language set for the system.
  * 
  * @param {string} language
  * @returns {void}
  */
-elgg.ui.getLocaleSettings = function(language){
+elgg.ui.getLocaleSettings = function(locale){
     var url = elgg.config.wwwroot + 'vendors/jquery/i18n/';
+
+    var localeMap = {
+        'pt_br': 'pt-BR',
+        'cmn': 'zh-CN',
+    };
     
-    switch(language){
-        case 'pt_br':
-            url += 'jquery.ui.datepicker-pt-BR.js';
-            break;
-        case 'fr':
-            url += 'jquery.ui.datepicker-fr.js';
-            break;
-        case 'nl':
-            url += 'jquery.ui.datepicker-nl.js';
-            break;
-        case 'de':
-            url += 'jquery.ui.datepicker-de.js';
-            break;
-        case 'es':
-            url += 'jquery.ui.datepicker-es.js';
-            break;
-        case 'fi': 
-            url += 'jquery.ui.datepicker-fi.js';
-            break;
-        case 'ru':
-            url += 'jquery.ui.datepicker-ru.js';
-            break;
-        case 'ca':
-            url += 'jquery.ui.datepicker-ca.js';
-            break;
-        case 'cmn':
-            url += 'jquery.ui.datepicker-zh-CN.js';
-            break;
-        case 'gl':
-            url += 'jquery.ui.datepicker-gl.js';
-            break;
-        case 'ja':
-            url += 'jquery.ui.datepicker-ja.js';
-            break;
-        case 'da':
-            url += 'jquery.ui.datepicker-da.js';
-            break;
-        case 'pl':
-            url += 'jquery.ui.datepicker-pl.js';
-            break;
-        case 'it':
-            url += 'jquery.ui.datepicker-it.js';
-            break;
-        case 'fa':
-            url += 'jquery.ui.datepicker-fa.js';
-            break;
-        case 'el':
-            url += 'jquery.ui.datepicker-el.js';
-            break;
-        default:
-            return;
-    }
+    var file = localeMap[locale] || locale;
+
+    url += 'jquery.ui.datepicker-' + file + '.js';
 
     elgg.get({
         url: url,
