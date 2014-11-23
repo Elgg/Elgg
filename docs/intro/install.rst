@@ -82,13 +82,16 @@ to `set the permissions on the directory`_.
 
 .. _set the permissions on the directory: http://en.wikipedia.org/wiki/Filesystem_permissions#Traditional_Unix_permissions
 
-TODO: What is the recommended setting? 755? 644?
-
 If you are using a graphical FTP client to upload files, you can
 usually set permissions by right clicking on the folder and
 selecting 'properties' or 'Get Info'.
 
 .. note::
+
+   Directories must be executable to be read and written to. The 
+   suggested permissions depend upon the exact server and user
+   configuration. If the data directory is owned by the web server
+   user, the recommended permissions are 770.
 
    Setting your data directory to 777 will work, but it is insecure
    and is not recommended. If you are unsure how to correctly set

@@ -123,7 +123,7 @@ class ElggMenuBuilder {
 			$iteration = 0;
 			$current_gen = $parents;
 			$next_gen = null;
-			while (count($children) && $iteration < 5) {
+			while (count($children) && $iteration < 20) {
 				foreach ($children as $index => $menu_item) {
 					$parent_name = $menu_item->getParentName();
 					if (array_key_exists($parent_name, $current_gen)) {

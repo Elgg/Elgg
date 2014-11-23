@@ -57,6 +57,8 @@ return array(
 
 	'file:delete:confirm' => "Weet je zeken dat je dit bestand wilt verwijderen?",
 
+	'file:upload_limit' => 'Maximaal toegestane bestandsgrootte is %s',
+
 	'file:tagcloud' => "Tag cloud",
 
 	'file:display:number' => "Aantal bestanden om weer te geven",

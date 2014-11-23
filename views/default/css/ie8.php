@@ -16,3 +16,7 @@
 .elgg-gallery .elgg-avatar > .elgg-icon-hover-menu {
     bottom: 4px;
 }
+/* Maintain the aspect ratio of images. */
+.elgg-output img {
+	width: auto;
+}

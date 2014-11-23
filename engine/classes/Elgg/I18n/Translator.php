@@ -66,7 +66,15 @@ class Translator {
 		if (!$language) {
 			$language = $CURRENT_LANGUAGE;
 		}
-	
+
+		if (!isset($this->CONFIG->translations[$language])) {
+			// The language being requested is not the same as the language of the
+			// logged in user, so we will have to load it separately. (Most likely
+			// we're sending a notification and the recipient is using a different
+			// language than the logged in user.)
+			_elgg_load_translations_for_language($language);
+		}
+
 		if (isset($this->CONFIG->translations[$language][$message_key])) {
 			$string = $this->CONFIG->translations[$language][$message_key];
 		} else if (isset($this->CONFIG->translations["en"][$message_key])) {
@@ -139,8 +147,6 @@ class Translator {
 	 * @return string The language code (eg "en") or false if not set
 	 */
 	function getLanguage() {
-		
-	
 		$user = _elgg_services()->session->getLoggedInUser();
 		$language = false;
 	
@@ -201,8 +207,6 @@ class Translator {
 	 * @return bool success
 	 */
 	function registerTranslations($path, $load_all = false) {
-		
-	
 		$path = sanitise_filepath($path);
 	
 		// Make a note of this path just incase we need to register this language later

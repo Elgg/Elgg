@@ -140,36 +140,33 @@ EntityType/default.
 Entity Icons
 ~~~~~~~~~~~~
 
-Entities all have a method called ->getIcon($size).
+Every entity can be assigned an icon which is retrieved using the ``ElggEntity::getIconURL($size)`` method.
+This method accepts a ``$size`` argument that can be either of the configured icon sizes.  Use
+``elgg_get_config('icon_sizes')`` to get all possible values. The following sizes exist by default:
+``'large'``, ``'medium'``, ``'small'``, ``'tiny'``, and ``'topbar'``. The method triggers the
+``entity:icon:url`` hook_.
 
-This method accepts a $size variable, which can be either 'large',
-'medium', 'small' or 'tiny'.
+Use ``elgg_view_entity_icon($entity, $size, $vars)`` to render an icon. This will scan the following
+locations for a view and include the first match.
 
-The method triggers a `plugin hook`_ - 'entity:icon:url'. This is passed
-the following parameters:
-
-'entity' : The entity in question
-'viewtype' : The type of `view`_ e.g. 'default' or 'mobile'.
-'size' : The size.
-
-The hook should return a url.
-
-Hooks have already been defined, and will look in the following places
-for default values (in this order):
-
-.. _plugin hook: PluginHooks
-.. _view: Views
-
-#. views/$viewtype/graphics/icons/$type/$subtype/$size.png
-#. views/$viewtype/graphics/icons/$type/default/$size.png
-#. views/$viewtype/graphics/icons/default/$size.png
+#. views/$viewtype/icon/$type/$subtype.php
+#. views/$viewtype/icon/$type/default.php
+#. views/$viewtype/icon/default.php
 
 Where
 
-$viewtype : The type of `view`_ e.g. 'default' or 'mobile'.
-$type : The type of entity - group, site, user, object.
-$subtype : Subtype of $type, e.g. blog, page.
-$size : Size - 'large', 'medium', 'small' or 'tiny'
+$viewtype
+	Type of view, e.g. ``'default'`` or ``'json'``.
+$type
+	Type of entity, e.g. ``'group'`` or ``'user'``.
+$subtype
+	Entity subtype, e.g. ``'blog'`` or ``'page'``.
+
+By convention entities that have an uploaded avatar or icon will have the ``icontime`` property
+assigned. This means that you can use ``$entity->icontime`` to check if an icon exists for the given
+entity.
+
+.. _hook: hooks-list.rst#other
 
 Adding, reading and deleting annotations
 ----------------------------------------
@@ -235,66 +232,6 @@ This template was extracted from the definition of ElggFile.
 Advanced features
 -----------------
 
-Entity Icons
-~~~~~~~~~~~~
-
-A url for an icon representing a given entity can be retrieved by the
-``getIcon()`` method.
-
-This is handy as it provides a generic interface which allows the Elgg
-framework to draw an icon for your data - it also allows you to override
-icons for existing data types - for example providing `Gravatar support
-for user icons`_.
-
-.. _getIcon(): http://reference.elgg.org/classElggEntity.html#fe2a187620e99603bd08cf4ee4238a70
-.. _Gravatar support for user icons: http://www.marcus-povey.co.uk/2008/10/20/overriding-icons/
-
-If no icon can be provided for the data type a default one is used,
-defined either by your current theme or the Elgg default.
-
-Overriding the url for a specific instance
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-To override the icon of a specific instance of an entity in a
-non-permanent and one off way, you can use the entity's ``setIcon()``
-method.
-
-Replacing icons via the views interface
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you want to provide an icon for a new data type, or override an
-existing one you can do this simply through the views interface.
-
-Views are in the format:
-
-``icon/``\ **``[TYPE]``**\ ``/``\ **``[SUBTYPE]``**\ ``/``\ **``[SIZE]``**
-
-.. _setIcon(): http://reference.elgg.org/classElggEntity.html#28b9d72a1641fdf4b65130b818f4f35f
-
-Where:
-
-[TYPE]: is the elgg type of the object - "user", "group", "object" or
-"site".
-[SUBTYPE]: is the specific subtype of the object, or "default" for the
-default icon for the given type.
-[SIZE]: the size, one of the following "master", "large", "medium",
-"small", "topbar" or "tiny".
-
-This view should contain the URL to the image only.
-
-Overriding icons via a handler
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-
-The final way to replace icons is via a handler to a plugin hook.
-
-This method lets you perform some additional logic in order to decide
-better which url to return.
-
-The hook triggered is:
-
-| ``trigger_plugin_hook('entity:icon:url', $entity->getType(), array('entity' => $entity, 'viewtype' => $viewtype, 'size' => $size));``
-| ``       ``
-
 Entity URLs
 ~~~~~~~~~~~
 
@@ -327,3 +264,45 @@ developing for a pre-1.8 version of Elgg.
 elgg\_get\_entities\_from\_metadata(): This function is new in 1.8. It
 deprecates get\_entities\_from\_metadata(), which you should use if
 developing for a pre-1.8 version of Elgg.
+
+Custom database functionality
+=============================
+
+It is strongly recommended to use entities wherever possible. However, Elgg
+supports custom SQL queries using the database API.
+
+Example: Run SQL script on plugin activation
+--------------------------------------------
+
+This example shows how you can populate your database on plugin activation.
+
+my_plugin/activate.php:
+
+.. code:: php
+
+    if (!elgg_get_plugin_setting('database_version', 'my_plugin') {
+        run_sql_script(__DIR__ . '/sql/activate.sql');
+        elgg_set_plugin_setting('database_version', 1, 'my_plugin');
+    }
+
+
+my_plugin/sql/activate.sql:
+
+.. code:: sql
+
+    -- Create some table
+    CREATE TABLE prefix_custom_table(
+        id INTEGER AUTO_INCREMENT,
+        name VARCHAR(32),
+        description VARCHAR(32),
+        PRIMARY KEY (id)
+    );
+
+    -- Insert initial values for table
+    INSERT INTO prefix_custom_table (name, description)
+    VALUES ('Peter', 'Some guy'), ('Lisa', 'Some girl');
+
+Note that Elgg execute statements through PHPs built-in functions and have
+limited support for comments. I.e. only single line comments are supported
+and must be prefixed by "-- " or "# ". A comment must start at the very beginning
+of a line.

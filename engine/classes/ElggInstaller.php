@@ -99,6 +99,10 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	public function run($step) {
+		global $CONFIG;
+
+		// language needs to be set before the first call to elgg_echo()
+		$CONFIG->language = 'en';
 
 		// check if this is a URL rewrite test coming in
 		$this->processRewriteTest();
@@ -846,6 +850,7 @@ class ElggInstaller {
 		$this->CONFIG->path = "{$this->getElggRoot()}/";
 		$this->CONFIG->viewpath =	$this->CONFIG->path . 'views/';
 		$this->CONFIG->pluginspath = $this->CONFIG->path . 'mod/';
+		$this->CONFIG->context = array();
 		$this->CONFIG->entity_types = array('group', 'object', 'site', 'user');
 		// required by elgg_view_page()
 		$this->CONFIG->sitename = '';

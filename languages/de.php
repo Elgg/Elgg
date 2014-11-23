@@ -1103,11 +1103,11 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'upgrade:site_secret_warning:moderate' => "Es ist emfehlenswert, den Geheimschlüssel Deiner Community-Seite neu erzeugen zu lassen, um die Sicherheit für Deine Seite zu verbessern. Siehe Konfigurieren &gt; Einstellungen &gt; Erweiterte Einstellungen",
 	'upgrade:site_secret_warning:weak' => "Wir empfehlen nachdrücklich, den Geheimschlüssel Deiner Community-Seite neu erzeugen zu lassen, um die Sicherheit für Deine Seite zu verbessern. Siehe Konfigurieren &gt; Einstellungen &gt; Erweiterte Einstellungen",
 
-	'ElggUpgrade:error:url_invalid' => 'Unzulässiger Wert für die URL.',
-	'ElggUpgrade:error:url_not_unique' => 'Aktualisierungs-URLs müssen eindeutig sein.',
+	'ElggUpgrade:error:url_invalid' => 'Unzulässiger Wert für den URL-Pfad.',
+	'ElggUpgrade:error:url_not_unique' => 'Die Aktualisierungs-URL-Pfade müssen eindeutig sein.',
 	'ElggUpgrade:error:title_required' => 'ElggUpgrade-Objekte müssen einen Titel haben.',
 	'ElggUpgrade:error:description_required' => 'ElggUpgrade-Objekte müssen eine Beschreibung haben.',
-	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade-Objekte müssen eine Aktualisierungs-URL haben.',
+	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade-Objekte müssen einen Aktualisierungs-URL-Pfad haben.',
 
 	'deprecated:function' => '%s() wurde durch %s() als veraltet markiert.',
 
@@ -1291,7 +1291,7 @@ Du kannst auf diese Email NICHT antworten.",
 	'elgg:powered' => "Community-Seite erstellt mit Elgg",
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 
 	"aa" => "Afar",
@@ -1311,6 +1311,7 @@ Du kannst auf diese Email NICHT antworten.",
 	"bo" => "Tibetisch",
 	"br" => "Bretonisch",
 	"ca" => "Katalanisch",
+	"cmn" => "Chinesisch (Mandarin)", // ISO 639-3
 	"co" => "Korsisch",
 	"cs" => "Tschechisch",
 	"cy" => "Walisisch",
@@ -1387,6 +1388,7 @@ Du kannst auf diese Email NICHT antworten.",
 	"pl" => "Polnisch",
 	"ps" => "Paschtunisch",
 	"pt" => "Portugiesisch",
+	"pt_br" => 'Portugiesisch (Brasilianisch)',
 	"qu" => "Quechua",
 	"rm" => "Rätoromanisch",
 	"rn" => "Kirundi",

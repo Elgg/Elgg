@@ -773,7 +773,17 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
 	}
 
 	if ($type == 'login') {
-		$user = get_user_by_username(get_input('username'));
+		$username = get_input('username');
+		
+		$user = get_user_by_username($username);
+		
+		if (!$user) {
+			$users = get_user_by_email($username);
+			if ($users) {
+				$user = $users[0];
+			}
+		}
+		
 		if ($user && $user->isAdmin()) {
 			return true;
 		}

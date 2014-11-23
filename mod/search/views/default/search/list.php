@@ -30,6 +30,7 @@ $query = http_build_query(
 		'limit' => $vars['params']['limit'],
 		'offset' => $vars['params']['offset'],
 		'search_type' => $vars['params']['search_type'],
+		'container_guid' => $vars['params']['container_guid'],
 	//@todo include vars for sorting, order, and friend-only.
 	)
 );

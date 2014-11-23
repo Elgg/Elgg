@@ -346,6 +346,10 @@ class RelationshipsTable {
 			$select = array('r.id');
 	
 			$options['selects'] = array_merge($options['selects'], $select);
+			
+			if (!isset($options['group_by'])) {
+				$options['group_by'] = $clauses['group_by'];
+			}
 		}
 	
 		return elgg_get_entities_from_metadata($options);
@@ -371,11 +375,10 @@ class RelationshipsTable {
 		if ($relationship == null && $relationship_guid == null) {
 			return '';
 		}
-	
-		
-	
+
 		$wheres = array();
 		$joins = array();
+		$group_by = '';
 	
 		if ($inverse_relationship) {
 			$joins[] = "JOIN {$this->CONFIG->dbprefix}entity_relationships r on r.guid_one = $column";
@@ -393,11 +396,15 @@ class RelationshipsTable {
 			} else {
 				$wheres[] = "r.guid_one = '$relationship_guid'";
 			}
+		} else {
+			// See #5775. Queries that do not include a relationship_guid must be grouped by entity table alias,
+			// otherwise the result set is not unique
+			$group_by = $column;
 		}
 	
 		if ($where_str = implode(' AND ', $wheres)) {
 	
-			return array('wheres' => array("($where_str)"), 'joins' => $joins);
+			return array('wheres' => array("($where_str)"), 'joins' => $joins, 'group_by' => $group_by);
 		}
 	
 		return '';

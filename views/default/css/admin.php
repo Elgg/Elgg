@@ -1549,6 +1549,9 @@ ul.elgg-plugin-resources, ul.elgg-plugin-resources > li {
 	height: auto;
 	margin: 10px 0;
 }
+.elgg-markdown pre > code {
+	border: none;
+}
 
 /* ***************************************
 	MISC

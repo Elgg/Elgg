@@ -1,8 +1,22 @@
 Plugins
 #######
 
+Plugins must provide a start.php and manifest.xml file in the plugin root
+in order to be recognized by Elgg.
+
 start.php
 =========
+
+The start.php file bootstraps plugin by registering event listeners and plugin
+hooks.
+
+activate.php, deactivate.php
+============================
+
+The activate.php and deactivate.php files contain procedural code that will run
+upon plugin activation and deactivation. Use these files to perform one-time
+events such as registering a persistent admin notice, registering subtypes, or performing
+garbage collection when deactivated.
 
 manifest.xml
 ============
@@ -126,3 +140,10 @@ This example uses all of the available elements:
 			<version>1.0</version>
 		</suggests>
 	</plugin_manifest>
+
+Related
+=======
+
+- `Plugin skeleton`_
+
+.. _Plugin skeleton: http://docs.elgg.org/wiki/Plugin_skeleton

@@ -89,10 +89,10 @@ By default Elgg comes with the htmLawed filtering code as a plugin. Developers c
 
 The ``filter_tags()`` function is called on any user input as long as the input is obtained through a call to ``get_input()``. If for some reason a developer did not want to perform the default filtering on some user input, the ``get_input()`` function has a parameter for turning off filtering.
 
-XSRF
-====
+CSRF / XSRF
+===========
 
-Elgg generates security tokens to prevent XSRF attacks. These are embedded in all forms and state-modifying AJAX requests as long as the correct API is used. Read more in the :doc:`/guides/actions` developer guide.
+Elgg generates security tokens to prevent `cross-site request forgery`_. These are embedded in all forms and state-modifying AJAX requests as long as the correct API is used. Read more in the :doc:`/guides/actions` developer guide.
 
 SQL Injection
 =============
@@ -104,5 +104,4 @@ Privacy
 
 Elgg uses an ACL system to control which users have access to various pieces of content. Read more in the :doc:`/design/database` design doc.
 
-
-
+.. _cross-site request forgery: http://en.wikipedia.org/wiki/Cross-site_request_forgery
