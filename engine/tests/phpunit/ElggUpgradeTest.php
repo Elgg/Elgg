@@ -1,19 +1,14 @@
 <?php
 
-use Elgg\I18n\NullTranslator;
-
-class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
+class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
 	/**
 	 * @var ElggUpgrade
 	 */
 	protected $obj;
 
 	public function setUp() {
-		$this->oldTranslator = _elgg_services()->translator;
-
 		// required by \ElggEntity when setting the owner/container
 		_elgg_services()->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
-		_elgg_services()->setValue('translator', new NullTranslator());
 
 		$this->obj = $this->getMockBuilder('\ElggUpgrade')
 				->setMethods(null)
@@ -22,10 +17,6 @@ class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 		$this->obj->_callable_egefps = array($this, 'mock_egefps');
 	}
 	
-	public function tearDown() {
-		_elgg_services()->setValue('translator', $this->oldTranslator);
-	}
-
 	public function mock_egefps($options) {
 		return array();
 	}
@@ -78,7 +69,7 @@ class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade:error:upgrade_url_required
+	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the upgrade_url property.
 	 */
 	public function testThrowsOnSaveWithoutPath() {
 		$this->obj->description = 'Test';
@@ -88,7 +79,7 @@ class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade:error:title_required
+	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the title property.
 	 */
 	public function testThrowsOnSaveWithoutTitle() {
 		$this->obj->setPath('test');
@@ -98,7 +89,7 @@ class ElggUpgradeTest extends \PHPUnit_Framework_TestCase {
 
 	/**
 	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade:error:description_required
+	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the description property.
 	 */
 	public function testThrowsOnSaveWithoutDesc() {
 		$this->obj->setPath('test');

@@ -34,17 +34,23 @@ if (count($user_guids) > 0 && elgg_instanceof($group, 'group') && $group->canEdi
 		// Create relationship
 		add_entity_relationship($group->guid, 'invited', $user->guid);
 
-		// Send notification
 		$url = elgg_normalize_url("groups/invitations/$user->username");
-		$result = notify_user($user->getGUID(), $group->owner_guid,
-				elgg_echo('groups:invite:subject', array($user->name, $group->name)),
-				elgg_echo('groups:invite:body', array(
-					$user->name,
-					$logged_in_user->name,
-					$group->name,
-					$url,
-				)),
-				NULL);
+
+		$subject = elgg_echo('groups:invite:subject', array(
+			$user->name,
+			$group->name
+		), $user->language);
+
+		$body = elgg_echo('groups:invite:body', array(
+			$user->name,
+			$logged_in_user->name,
+			$group->name,
+			$url,
+		), $user->language);
+
+		// Send notification
+		$result = notify_user($user->getGUID(), $group->owner_guid, $subject, $body, NULL);
+
 		if ($result) {
 			system_message(elgg_echo("groups:userinvited"));
 		} else {

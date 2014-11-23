@@ -220,6 +220,7 @@ function uservalidationbyemail_validate_new_admin_user($event, $type, $user) {
  */
 function uservalidationbyemail_public_pages($hook, $type, $return_value, $params) {
 	$return_value[] = 'uservalidationbyemail/confirm';
+	$return_value[] = 'uservalidationbyemail/emailsent';
 	return $return_value;
 }
 

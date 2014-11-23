@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# 
+# Translators:
+# Renato Cerceau <cerceau@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg Core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-21 23:12+0300\n"
+"PO-Revision-Date: 2014-10-11 00:10+0000\n"
+"Last-Translator: Renato Cerceau <cerceau@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/elgg-core/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# 20ee79bce5334e6db7423cd12b1300a1
+#: ../../about/contributing.rst:4
+msgid "Contributor Guide"
+msgstr "Guia do Colaborador"
+
+# 955a75c371784813822ccfa94f2a138e
+# 08e313306dd14bc4abd5caae63c87570
+# 0e75b770b2d940f48ed85d5c88be9900
+# 7e07da16a6744a7cb9020c54b18b3900
+# 1909955df34b4c528db3a49e10bfaa7d
+#: ../../about/contributing.rst:6 ../../about/history.rst:6
+#: ../../about/index.rst:6 ../../about/releases.rst:6
+#: ../../about/roadmap.rst:6
+msgid "This page has moved."
+msgstr "Esta página foi removida"
+
+# d309805fd57a437b8bd38fc427688db6
+#: ../../about/contributing.rst:8
+msgid ":doc:`/contribute/index`"
+msgstr ":doc:`/contribute/index`"
+
+# edc5a6639e9245a3bf3f5f02184ed0a9
+#: ../../about/history.rst:4
+msgid "History"
+msgstr "Histórico"
+
+# 9702b149bf9a435cb545a21de1cbc5aa
+#: ../../about/history.rst:8
+msgid ":doc:`/appendix/history`"
+msgstr ":doc:`/appendix/history`"
+
+# 80956cb8cfa14ad49176c6774745e1f0
+#: ../../about/index.rst:4
+msgid "About"
+msgstr "Sobre"
+
+# 288a5563d168490b8362c5eda594b10b
+#: ../../about/index.rst:8
+msgid ":doc:`/appendix/index`"
+msgstr ":doc:`/appendix/index`"
+
+# cfae71d3eb1443b68822ea261239a682
+#: ../../about/releases.rst:4
+msgid "Release Policy"
+msgstr "Politica de distribuição"
+
+# 109e3d796cf549c299a2766778744d6e
+#: ../../about/releases.rst:8
+msgid ":doc:`/appendix/releases`"
+msgstr ":doc:`/appendix/releases`"
+
+# 8348defad8004581bbc3f1389f444250
+#: ../../about/roadmap.rst:4
+msgid "Roadmap"
+msgstr "Roteiro"
+
+# 3f10e1dc45c747b5a2d11d43556d5d98
+#: ../../about/roadmap.rst:8
+msgid ":doc:`/appendix/roadmap`"
+msgstr ":doc:`/appendix/roadmap`"

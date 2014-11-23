@@ -488,26 +488,44 @@ function elgg_list_entities_from_access_id(array $options = array()) {
 }
 
 /**
- * Return the name of an ACCESS_* constant or a access collection,
- * but only if the user has write access on that ACL.
- *
- * @warning This function probably doesn't work how it's meant to.
- *
+ * Return the name of an ACCESS_* constant or an access collection,
+ * but only if the logged in user has write access to it. 
+ * Write access requirement prevents us from exposing names of access collections
+ * that current user has been added to by other members and may contain
+ * sensitive classification of the current user (e.g. close friends vs acquaintances).
+ * 
+ * Returns a string in the language of the user for global access levels, e.g.'Public, 'Friends', 'Logged in', 'Public'; 
+ * or a name of the owned access collection, e.g. 'My work colleagues'; 
+ * or a name of the group or other access collection, e.g. 'Group: Elgg technical support';
+ * or 'Limited' if the user access is restricted to read-only, e.g. a friends collection the user was added to
+ * 
+ * @uses get_write_access_array()
+ * 
  * @param int $entity_access_id The entity's access id
- *
- * @return string 'Public', 'Private', etc.
+ * @return string
  * @since 1.7.0
- * @todo I think this probably wants get_access_array() instead of get_write_access_array(),
- * but those two functions return different types of arrays.
  */
 function get_readable_access_level($entity_access_id) {
 	$access = (int) $entity_access_id;
 
-	//get the access level for object in readable string
-	$options = get_write_access_array();
+	// Check if entity access id is a defined global constant
+	$access_array = array(
+		ACCESS_PRIVATE => elgg_echo("PRIVATE"),
+		ACCESS_FRIENDS => elgg_echo("access:friends:label"),
+		ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
+		ACCESS_PUBLIC => elgg_echo("PUBLIC")
+	);
 
-	if (array_key_exists($access, $options)) {
-		return $options[$access];
+	if (array_key_exists($access, $access_array)) {
+		return $access_array[$access];
+	}
+
+	// Entity access id is a custom access collection
+	// Check if the user has write access to it and can see it's label
+	$write_access_array = get_write_access_array();
+
+	if (array_key_exists($access, $write_access_array)) {
+		return $write_access_array[$access];
 	}
 
 	// return 'Limited' if the user does not have access to the access collection

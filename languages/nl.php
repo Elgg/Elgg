@@ -1066,7 +1066,8 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'installation:minify_css:label' => "CSS comprimeren (aangeraden)",
 
 	'installation:htaccess:needs_upgrade' => "Je moet het bestand .htaccess zodanig wijzigen dat het pad geïnjecteerd wordt in de GET-parameter __elgg_uri. Je kunt htaccess_dist als voorbeeld gebruiken.",
-
+	'installation:htaccess:localhost:connectionfailed' => "Elgg kan niet zelf de rewrite rules testen. Controleer dat curl werkt en dat er geen IP restricties zijn die localhost connecties blokkeren.",
+	
 	'installation:systemcache:description' => "De systeemcache verlaagd de laad tijd van de Elgg engine door te cachen naar bestanden.",
 	'installation:systemcache:label' => "Gebruik systeemcache (aanbevolen)",
 
@@ -1093,11 +1094,11 @@ Als je meer gedetailleerde instructie, ga naar de <a href="http://docs.elgg.org/
 	'upgrade:site_secret_warning:moderate' => "We raden je ten zeerste aan om je 'sitegeheim' opnieuw te genereren! Zie ook: Configureren &gt; Instellingen &gt; Geavanceerd",
 	'upgrade:site_secret_warning:weak' => "We raden je ten zeerste aan om je 'sitegeheim' opnieuw te genereren! Zie ook: Configureren &gt; Instellingen &gt; Geavanceerd",
 
-	'ElggUpgrade:error:url_invalid' => 'De URL is niet geldig.',
-	'ElggUpgrade:error:url_not_unique' => 'De URL\'s om te upgraden moeten uniek zijn.',
+	'ElggUpgrade:error:url_invalid' => 'Ongeldige waarde voor URL pad.',
+	'ElggUpgrade:error:url_not_unique' => 'Upgrade URL paden moeten uniek zijn.',
 	'ElggUpgrade:error:title_required' => 'ElggUpgrade-objecten moeten een titel hebben.',
 	'ElggUpgrade:error:description_required' => 'ElggUpgrade-objecten moeten een beschrijving hebben.',
-	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade-objecten moeten een upgrade-URL hebben.',
+	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade objecten moeten een upgrade URL pad hebben.',
 
 	'deprecated:function' => '%s() is vervangen door %s()',
 
@@ -1277,7 +1278,7 @@ Je kunt niet antwoorden op deze e-mail.",
 	'elgg:powered' => "Gebouwd op Elgg",
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 
 	"aa" => "Afar",
@@ -1297,6 +1298,7 @@ Je kunt niet antwoorden op deze e-mail.",
 	"bo" => "Tibetan",
 	"br" => "Breton",
 	"ca" => "Catalan",
+	"cmn" => "Mandarijn Chinees", // ISO 639-3
 	"co" => "Corsican",
 	"cs" => "Czech",
 	"cy" => "Welsh",
@@ -1373,6 +1375,7 @@ Je kunt niet antwoorden op deze e-mail.",
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
+	"pt_br" => 'Braziliaans Portugees',
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",

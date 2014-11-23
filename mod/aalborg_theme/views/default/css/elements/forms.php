@@ -74,6 +74,10 @@ input[type="radio"] {
 	display: inline;
 	padding-right: 10px;
 }
+select {
+	max-width: 100%;
+	padding: 4px; 
+}
 .elgg-form-account {
 	margin-bottom: 15px;
 }

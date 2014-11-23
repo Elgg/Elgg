@@ -6,7 +6,7 @@
  * open group so user joins
  * closed group so request sent to group owner
  * closed group with invite so user joins
- * 
+ *
  * @package ElggGroups
  */
 
@@ -46,20 +46,25 @@ if ($user && ($group instanceof ElggGroup)) {
 	} else {
 		add_entity_relationship($user->guid, 'membership_request', $group->guid);
 
-		// Notify group owner
+		$owner = $group->getOwnerEntity();
+
 		$url = "{$CONFIG->url}groups/requests/$group->guid";
+
 		$subject = elgg_echo('groups:request:subject', array(
 			$user->name,
 			$group->name,
-		));
+		), $owner->language);
+
 		$body = elgg_echo('groups:request:body', array(
 			$group->getOwnerEntity()->name,
 			$user->name,
 			$group->name,
 			$user->getURL(),
 			$url,
-		));
-		if (notify_user($group->owner_guid, $user->getGUID(), $subject, $body)) {
+		), $owner->language);
+
+		// Notify group owner
+		if (notify_user($owner->guid, $user->getGUID(), $subject, $body)) {
 			system_message(elgg_echo("groups:joinrequestmade"));
 		} else {
 			register_error(elgg_echo("groups:joinrequestnotmade"));

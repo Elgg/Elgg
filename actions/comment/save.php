@@ -59,9 +59,11 @@ if ($comment_guid) {
 
 	// Notify if poster wasn't owner
 	if ($entity->owner_guid != $user->guid) {
-		notify_user($entity->owner_guid,
+		$owner = $entity->getOwnerEntity();
+
+		notify_user($owner->guid,
 			$user->guid,
-			elgg_echo('generic_comment:email:subject'),
+			elgg_echo('generic_comment:email:subject', array(), $owner->language),
 			elgg_echo('generic_comment:email:body', array(
 				$entity->title,
 				$user->name,
@@ -69,7 +71,7 @@ if ($comment_guid) {
 				$entity->getURL(),
 				$user->name,
 				$user->getURL()
-			)),
+			), $owner->language),
 			array(
 				'object' => $comment,
 				'action' => 'create',

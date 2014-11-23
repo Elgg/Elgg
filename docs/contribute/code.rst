@@ -77,22 +77,22 @@ Here is an example of a good commit message:
 .. code::
 
     perf(upgrade): speeds up migrating remember me codes
-    
+
     The Remember me cookie implementation has been improved by moving codes
     to a separate table. This performs that migration in one query.
-    
+
     Fixes #6204
 
 All commit messages are required to adhere to this format:
 
 .. code::
-   
+
 	type(component): summary
-	
+
 	Optional body
 	Details about the solution.
 	Opportunity to call out as breaking change.
-	
+
 	Closes/Fixes/Refs #123, #456, #789
 
 
@@ -133,8 +133,8 @@ If your PR does not conform to the standard commit message format,
 we'll ask you to rewrite it:
 
 1. Rebase last commit (Git will open the git-rebase-todo file for editing)
-   
-   ``git rebase -i HEAD~`` 
+
+   ``git rebase -i HEAD~``
 2. Change ``pick`` to ``r`` (for reword) and save/exit the editor.
    (Git will present a file to alter the commit message)
 3. Change the commit message, save/exit the editor.
@@ -158,16 +158,16 @@ Jasmine Tests
 
 Test files must be named ``*Test.js`` and should go in either ``js/tests/`` or next
 to their source files in ``views/default/js``. Karma will automatically pick up
-on new ``*Test.js`` files and run those tests. 
+on new ``*Test.js`` files and run those tests.
 
 Test boilerplate
 ----------------
 
-.. code:: javascript
+.. code:: js
 
 	define(function(require) {
 		var elgg = require('elgg');
-		
+
 		describe("This new test", function() {
 			it("fails automatically", function() {
 				expect(true).toBe(false);
@@ -193,7 +193,7 @@ First install all the development dependencies:
 Run through the tests just once and then quit:
 
 .. code::
-   
+
    npm test
 
 You can also run tests continuously during development so they run on each save:
@@ -373,7 +373,7 @@ Naming
   and properties. Method names are camelCase.
 
 * Names of functions for public use must begin with ``elgg_``.
-  
+
 * All other function names must begin with ``_elgg_``.
 
 * Name globals and constants in ``ALL_CAPS`` (``ACCESS_FRIENDS``, ``$CONFIG``).
@@ -393,14 +393,14 @@ When creating strings with variables:
 Bad (hard to read, misuse of quotes and {}s):
 
 .. code:: php
-	
+
 	echo 'Hello, '.$name."!  How is your {$time_of_day}?";
-		
+
 Good:
-  
+
 .. code:: php
-	
-	echo "Hello, $name!  How is your $time_of_day?"; 
+
+	echo "Hello, $name!  How is your $time_of_day?";
 
 
 CSS guidelines
@@ -533,7 +533,7 @@ All functions should be in the ``elgg`` namespace.
 
 Function expressions should end with a semi-colon.
 
-.. code:: javascript
+.. code:: js
 
 	elgg.ui.toggles = function(event) {
 		event.preventDefault();
@@ -544,7 +544,7 @@ Function expressions should end with a semi-colon.
 Deprecating APIs
 ================
 
-Occasionally, functions and classes must be deprecated in favor of newer replacements. 
+Occasionally, functions and classes must be deprecated in favor of newer replacements.
 Since 3rd party plugin authors rely on a consistent API,
 backward compatibility must be maintained,
 but will not be maintained indefinitely as
@@ -558,7 +558,7 @@ deprecated APIs will follow these guidelines:
   This compatibility layer uses ``elgg_deprecated_notice('...', '1.7')``
   to log that the function is deprecated.
 
-* The following minor versions (1.8+) maintain the backward compatibility layer, 
+* The following minor versions (1.8+) maintain the backward compatibility layer,
   but ``elgg_deprecated_notice()`` will produce a visible warning.
 
 * The next major revision (2.0) removes the compatibility layer.
