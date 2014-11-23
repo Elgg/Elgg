@@ -29,6 +29,16 @@
 .elgg-pagination li:last-child span {
 	border-radius: 0 3px 3px 0;
 }
+.elgg-pagination li:first-child a:before,
+.elgg-pagination li:first-child span:before {
+	content: "\ab";
+	margin-right: 6px;
+}
+.elgg-pagination li:last-child a:after,
+.elgg-pagination li:last-child span:after {
+	content: "\bb";
+	margin-left: 6px;
+}
 .elgg-pagination a,
 .elgg-pagination span {
 	display: inline-block;

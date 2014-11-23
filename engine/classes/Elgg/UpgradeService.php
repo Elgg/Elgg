@@ -76,9 +76,6 @@ class UpgradeService {
 	 * @return bool
 	 */
 	protected function upgradeCode($version, $quiet = false) {
-		// do not remove - some upgrade scripts depend on this
-		
-
 		$version = (int) $version;
 		$upgrade_path = _elgg_services()->config->get('path') . 'engine/lib/upgrades/';
 		$processed_upgrades = $this->getProcessedUpgrades();
@@ -149,6 +146,9 @@ class UpgradeService {
 	 * @return mixed
 	 */
 	protected static function includeCode($file) {
+		// do not remove - some upgrade scripts depend on this
+		global $CONFIG;
+
 		return include $file;
 	}
 
