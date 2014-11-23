@@ -7,18 +7,24 @@ Customize Elgg's behavior with plugins.
    :maxdepth: 1
    
    plugins
+   helpers
    actions
    database
    i18n
-   events-list
-   hooks-list
    menus
    notifications
    river
+   pagehandler
    routing
    widgets
    views
+   context
    themes
    javascript
+   settings
+   permissions-check
+   authentication
    web-services
    upgrading
+   events-list
+   hooks-list

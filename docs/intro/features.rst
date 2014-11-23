@@ -3,6 +3,8 @@ Features
 
 Demo: http://demo.elgg.org/
 
+Showcases: https://community.elgg.org/showcase
+
 For developers
 ==============
 
