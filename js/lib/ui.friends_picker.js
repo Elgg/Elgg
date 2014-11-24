@@ -24,6 +24,7 @@ jQuery.fn.friendsPicker = function(iterator) {
 		container.find("div.friends-picker-container").css("width" , friendsPicker_containerWidth);
 
 		// global variables for container.each function below
+		var distanceToMoveFriendsPicker_container;
 		var friendsPickerNavigationWidth = 0;
 		var currentPanel = 1;
 
@@ -46,7 +47,7 @@ jQuery.fn.friendsPicker = function(iterator) {
 				// set-up individual tab clicks
 				$(this).bind("click", function() {
 					$(this).addClass("current").parent().parent().find("a").not($(this)).removeClass("current"); 
-					var distanceToMoveFriendsPicker_container = - (panelWidth*individualTabItemNumber);
+					distanceToMoveFriendsPicker_container = - (panelWidth*individualTabItemNumber);
 					currentPanel = individualTabItemNumber + 1;
 					$(this).parent().parent().parent().next().find("div.friends-picker-container").animate({ left: distanceToMoveFriendsPicker_container}, settings.easeTime, settings.easeFunc);
 				});
@@ -55,11 +56,11 @@ jQuery.fn.friendsPicker = function(iterator) {
 			// Right arow click function
 			$("div#friends-picker-navigation-r" + iterator + " a").click(function() {
 				if (currentPanel == panelCount) {
-					var distanceToMoveFriendsPicker_container = 0;
+					distanceToMoveFriendsPicker_container = 0;
 					currentPanel = 1; 
 					$(this).parent().parent().find("div.friends-picker-navigation a.current").removeClass("current").parent().parent().find("a:eq(0)").addClass("current");
 				} else {
-					var distanceToMoveFriendsPicker_container = - (panelWidth*currentPanel);
+					distanceToMoveFriendsPicker_container = - (panelWidth*currentPanel);
 					currentPanel += 1;
 					$(this).parent().parent().find("div.friends-picker-navigation a.current").removeClass("current").parent().next().find("a").addClass("current");
 				};
@@ -70,12 +71,12 @@ jQuery.fn.friendsPicker = function(iterator) {
 			// Left arrow click function
 			$("div#friends-picker-navigation-l" + iterator + " a").click(function() {
 				if (currentPanel == 1) {
-					var distanceToMoveFriendsPicker_container = - (panelWidth*(panelCount - 1));
+					distanceToMoveFriendsPicker_container = - (panelWidth*(panelCount - 1));
 					currentPanel = panelCount;
 					$(this).parent().parent().find("div.friends-picker-navigation a.current").removeClass("current").parent().parent().find("li:last a").addClass("current");
 				} else {
 					currentPanel -= 1;
-					var distanceToMoveFriendsPicker_container = - (panelWidth*(currentPanel - 1));
+					distanceToMoveFriendsPicker_container = - (panelWidth*(currentPanel - 1));
 					$(this).parent().parent().find("div.friends-picker-navigation a.current").removeClass("current").parent().prev().find("a").addClass("current");
 				};
 				$(this).parent().parent().find("div.friends-picker-container").animate({ left: distanceToMoveFriendsPicker_container}, settings.easeTime, settings.easeFunc);
