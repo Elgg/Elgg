@@ -138,6 +138,20 @@ Clear your browser cache and reload the page. To lighten the load on the server,
 If you're building or modifying a theme, make sure you have disabled the simple and system caches. This can be done by
 enabling the Developer Tools plugin, then browsing to Administration -> Develop -> Settings. Once you're satisfied with the changes, enable the caches or performance will suffer.
 
+Changing profile fields
+-----------------------
+
+Within the Administration settings of Elgg is a page for replacing the default profile fields. Elgg by default gives the administrator two choices:
+
+- Use the default profile fields
+- Replace the default with a set of custom profile fields
+
+You cannot add new profile fields to the default ones. Adding a new profile field through the replace profile fields option clears the default ones. Before letting in users, it is best to determine what profile fields you want, what field types they should be, and the order they should appear. You cannot change the field type or order or delete fields after they have been created without wiping the entire profile blank.
+
+More flexibility can be gained through plugins. There is at least two plugins on the community site that enable you to have more control over profile fields. The `Profile Manager`_ plugin has become quite popular in the Elgg community. It lets you add new profile fields whenever you want, change the order, group profile fields, and add them to registration.
+
+.. _Profile Manager: https://community.elgg.org/plugins/385114
+
 Development
 ===========
 
