@@ -152,6 +152,22 @@ More flexibility can be gained through plugins. There is at least two plugins on
 
 .. _Profile Manager: https://community.elgg.org/plugins/385114
 
+Changing registration
+---------------------
+
+The registration process can be changed through a plugin. Everything about registration can be changed: the look and feel, different registration fields, additional validation of the fields, additional steps and so on. These types of changes require some basic knowledge of HTML, CSS, PHP.
+
+Another option is to use the `Profile Manager`_ plugin that lets you add fields to both user profiles and the registration form.
+
+Create the plugin skeleton
+  :doc:`/guides/plugins/plugin-skeleton`
+
+Changing registration display
+   Override the ``account/forms/register`` view
+
+Changing the registration action handler
+   You can write your own action to create the user's account
+
 Development
 ===========
 
