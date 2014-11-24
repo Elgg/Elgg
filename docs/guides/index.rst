@@ -16,6 +16,7 @@ Customize Elgg's behavior with plugins.
    river
    pagehandler
    routing
+   page-owner
    widgets
    views
    context
