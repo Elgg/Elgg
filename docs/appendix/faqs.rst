@@ -4,6 +4,7 @@ FAQs and Other Troubleshooting
 Below are some commonly asked questions about Elgg.
 
 .. contents::
+   :depth: 3
 
 General
 =======
@@ -136,3 +137,32 @@ Clear your browser cache and reload the page. To lighten the load on the server,
 
 If you're building or modifying a theme, make sure you have disabled the simple and system caches. This can be done by
 enabling the Developer Tools plugin, then browsing to Administration -> Develop -> Settings. Once you're satisfied with the changes, enable the caches or performance will suffer.
+
+Development
+===========
+
+What should I use to edit php code
+----------------------------------
+
+There are two main options: text editor or `integrated development environment`_ (IDE).
+
+Text Editor
+^^^^^^^^^^^
+
+If you are new to software development or do not have much experience with IDEs, using a text editor will get you up and running the quickest. At a minimum, you will want one that does syntax highlighting to make the code easier to read. If you think you might submit patches to the bug tracker, you will want to make sure that your text editor does not change line endings. If you are using Windows, `Notepad++`_ is a good choice. If you are on a Mac, TextWrangler_ is a popular choice. You could also give TextMate_ a try.
+   
+Integrated Development Environment
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+An IDE does just what it's name implies: it includes a set of tools that you would normally use separately. Most IDEs will include source code control which will allow you to directly commit and update your code from your cvs repository. It may have an FTP client built into it to make the transfer of files to a remote server easier. It will have syntax checking to catch errors before you try to execute the code on a server.
+
+The two most popular free IDEs for PHP developers are Eclipse_ and NetBeans_. Eclipse has two different plugins for working with PHP code: PDT_ and PHPEclipse_.
+
+.. _integrated development environment: http://en.wikipedia.org/wiki/Integrated_development_environment
+.. _Notepad++: http://notepad-plus-plus.org/
+.. _TextWrangler: http://www.barebones.com/products/textwrangler/index.html
+.. _TextMate: http://macromates.com/
+.. _Eclipse: http://www.eclipse.org/
+.. _NetBeans: http://netbeans.org/
+.. _PDT: http://www.eclipse.org/pdt/
+.. _PHPEclipse: http://www.phpeclipse.com/
