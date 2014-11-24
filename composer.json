@@ -11,7 +11,8 @@
         "ext-json": "*",
         "ext-xml": "*",
         "mrclay/minify": "2.*",
-        "knplabs/gaufrette": "0.1.*"
+        "knplabs/gaufrette": "0.1.*",
+        "tedivm/stash": "~0.12"
     },
     "suggest": {
         "ext-mbstring": "*"
@@ -21,8 +22,13 @@
             "": "engine/classes/"
         }
     },
+    "autoload-dev": {
+        "psr-0": {
+            "": "engine/tests/phpunit/"
+        }
+    },
     "require-dev": {
-        "phpunit/phpunit": "4.1",
+        "phpunit/phpunit": "~4.1",
         "elgg/sniffs": "dev-master",
         "squizlabs/php_codesniffer": "1.*"
     }
