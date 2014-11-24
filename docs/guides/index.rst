@@ -17,6 +17,7 @@ Customize Elgg's behavior with plugins.
    pagehandler
    routing
    page-owner
+   gatekeeper
    widgets
    views
    context
