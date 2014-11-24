@@ -251,4 +251,5 @@ Related
    :maxdepth: 1
    
    views/page-structure
+   views/simplecache
 	
