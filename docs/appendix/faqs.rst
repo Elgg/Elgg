@@ -196,3 +196,49 @@ The two most popular free IDEs for PHP developers are Eclipse_ and NetBeans_. Ec
 .. _NetBeans: http://netbeans.org/
 .. _PDT: http://www.eclipse.org/pdt/
 .. _PHPEclipse: http://www.phpeclipse.com/
+
+I don't like the wording of something in Elgg. How do I change it?
+------------------------------------------------------------------
+
+The best way to do this is with a plugin.
+
+Create the plugin skeleton
+^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+:doc:`/guides/plugins/plugin-skeleton`
+
+Locate the string that you want to change
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+All the strings that a user sees should be in the ``/languages`` directory or in a plugin's languages directory (``/mod/<plugin name>/languages``). This is done so that it is easy to change what language Elgg uses. For more information on this see the developer documentation on :doc:`/guides/i18n` .
+
+To find the string use ``grep`` or a text editor that provides searching through files to locate the string. (A good text editor for Windows is `Notepad++`_ ) Let's say we want to change the string "Add friend" to "Make a new friend". The ``grep`` command to find this string would be ``grep -r "Add friend" *``. Using `Notepad++`_ , you would use the "Find in files" command. You would search for the string, set the filter to ``*.php``, set the directory to the base directory of Elgg, and make sure it searches all subdirectories. You might want to set it to be case sensitive also.
+
+You should locate the string "Add friend" in ``/languages/en.php``. You should see something like this in the file:
+
+.. code:: php
+   
+   'friend:add' => "Add friend",
+
+This means every time Elgg sees ``friend:add`` it replaces it with "Add friend". We want to change the definition of ``friend:add``.
+
+Override the string
+^^^^^^^^^^^^^^^^^^^
+
+To override this definition, we will add a languages file to the plugin that we built in the first step.
+
+1. Create a new directory: ``/mod/<your plugin name>/languages``
+2. Create a file in that directory called ``en.php``
+3. Add these lines to that file
+
+.. code:: php
+   
+   <?php
+   
+   return array(   
+      'friend:add' => 'Make a new friend',   
+   );
+
+Make sure that you do not have any spaces or newlines before the ``<?php``.
+
+You're done now and should be able to enable the plugin and see the change. If you are override the language of a plugin, make sure your plugin is loaded after the one you are trying to modify. The loading order is determined in the Tools Administration page of the admin section. As you find more things that you'd like to change, you can keep adding them to this plugin.
