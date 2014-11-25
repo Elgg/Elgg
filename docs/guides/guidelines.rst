@@ -7,6 +7,10 @@ In addition to the Elgg Coding Standards, these are guidelines for creating plug
 
    Be sure to follow the :doc:`plugins/plugin-skeleton` for your plugin's layout.
 
+.. warning::
+
+  :doc:`dont-modify-core`
+
 .. contents::
    :depth: 2
 

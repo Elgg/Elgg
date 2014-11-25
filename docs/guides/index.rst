@@ -6,6 +6,7 @@ Customize Elgg's behavior with plugins.
 .. toctree::
    :maxdepth: 1
    
+   dont-modify-core
    plugins
    guidelines
    helpers
