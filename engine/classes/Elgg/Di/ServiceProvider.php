@@ -82,8 +82,17 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('input', 'Elgg\Http\Input');
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setClassName('metadataCache', '\ElggVolatileMetadataCache');
-		$this->setClassName('metadataTable', '\Elgg\Database\MetadataTable');
-		$this->setClassName('metastringsTable', '\Elgg\Database\MetastringsTable');
+		$this->setFactory('metadataTable', function(ServiceProvider $c) {
+			// TODO(ewinslow): Use Elgg\Cache\Pool instead of MetadataCache
+			return new \Elgg\Database\MetadataTable(
+				$c->metadataCache, $c->db, $c->entityTable,
+				$c->events, $c->metastringsTable, $c->session);
+		});
+		$this->setFactory('metastringsTable', function(ServiceProvider $c) {
+			// TODO(ewinslow): Use memcache-based Pool if available...
+			return new \Elgg\Database\MetastringsTable(
+				new \Elgg\Cache\MemoryPool(), $c->db);
+		});
 		$this->setFactory('persistentLogin', array($this, 'getPersistentLogin'));
 		$this->setClassName('plugins', '\Elgg\Database\Plugins');
 		$this->setFactory('ownerPreloader', array($this, 'getOwnerPreloader'));

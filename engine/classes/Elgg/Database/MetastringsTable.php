@@ -1,13 +1,8 @@
 <?php
 namespace Elgg\Database;
 
-/** Cache metastrings for a page */
-/**
- * @var string[] $METASTRINGS_CACHE
- * @access private
- */
-global $METASTRINGS_CACHE;
-$METASTRINGS_CACHE = array();
+use Elgg\Cache\Pool;
+use Elgg\Database;
 
 
 /**
@@ -24,6 +19,24 @@ $METASTRINGS_CACHE = array();
  * @access private
  */
 class MetastringsTable {
+
+	/** @var Pool */
+	private $cache;
+
+	/** @var Database */
+	private $db;
+
+	/**
+	 * Constructor
+	 * 
+	 * @param Pool     $cache A cache for this table.
+	 * @param Database $db    The database.
+	 */
+	public function __construct(Pool $cache, Database $db) {
+		$this->cache = $cache;
+		$this->db = $db;
+	}
+
 	/**
 	 * Gets the metastring identifier for a value.
 	 *
@@ -39,63 +52,53 @@ class MetastringsTable {
 	 * @return int|array metastring id or array of ids
 	 */
 	function getId($string, $case_sensitive = true) {
-		global $CONFIG, $METASTRINGS_CACHE;
-	
-		// caching doesn't work for case insensitive requests
 		if ($case_sensitive) {
-			$result = array_search($string, $METASTRINGS_CACHE, true);
-	
-			if ($result !== false) {
-				return $result;
-			}
-	
-			// Experimental memcache
-			$msfc = null;
-			static $metastrings_memcache;
-			if ((!$metastrings_memcache) && (is_memcache_available())) {
-				$metastrings_memcache = new \ElggMemcache('metastrings_memcache');
-			}
-			if ($metastrings_memcache) {
-				$msfc = $metastrings_memcache->load($string);
-			}
-			if ($msfc) {
-				return $msfc;
-			}
-		}
-	
-		$escaped_string = sanitise_string($string);
-		if ($case_sensitive) {
-			$query = "SELECT * FROM {$CONFIG->dbprefix}metastrings WHERE string = BINARY '$escaped_string' LIMIT 1";
+			return $this->getIdCaseSensitive($string);
 		} else {
-			$query = "SELECT * FROM {$CONFIG->dbprefix}metastrings WHERE string = '$escaped_string'";
+			return $this->getIdCaseInsensitive($string);
 		}
+	}
 	
-		$id = false;
-		$results = get_data($query);
-		if (is_array($results)) {
-			if (!$case_sensitive) {
-				$ids = array();
-				foreach ($results as $result) {
-					$ids[] = $result->id;
-				}
-				// return immediately because we don't want to cache case insensitive results
-				return $ids;
-			} else if (isset($results[0])) {
-				$id = $results[0]->id;
+	/**
+	 * Gets the id associated with this string, case-sensitively.
+	 * Will add the string to the table if not present.
+	 * 
+	 * @param string $string The value
+	 * 
+	 * @return int
+	 */
+	private function getIdCaseSensitive($string) {
+		$string = (string)$string;
+		return $this->cache->get($string, function() use ($string) {
+			$escaped_string = $this->db->sanitizeString($string);
+			$query = "SELECT * FROM {$this->getTableName()} WHERE string = BINARY '$escaped_string' LIMIT 1";
+			$results = $this->db->getData($query);
+			if (isset($results[0])) {
+				return $results[0]->id;
+			} else {
+				return $this->add($string);
 			}
+		});
+	}
+	
+	/**
+	 * Gets all ids associated with this string when taken case-insensitively.
+	 * 
+	 * @param string $string The value
+	 * 
+	 * @return int[]
+	 */
+	private function getIdCaseInsensitive($string) {
+		$string = (string)$string;
+		// caching doesn't work for case insensitive requests
+		$escaped_string = $this->db->sanitizeString($string);
+		$query = "SELECT * FROM {$this->getTableName()} WHERE string = '$escaped_string'";
+		$results = $this->db->getData($query);
+		$ids = array();
+		foreach ($results as $result) {
+			$ids[] = $result->id;
 		}
-	
-		if (!$id) {
-			$id = _elgg_add_metastring($string);
-		}
-	
-		$METASTRINGS_CACHE[$id] = $string;
-	
-		if ($metastrings_memcache) {
-			$metastrings_memcache->save($string, $id);
-		}
-	
-		return $id;
+		return $ids;
 	}	
 	
 	/**
@@ -107,10 +110,17 @@ class MetastringsTable {
 	 * @return int The identifier for this string
 	 */
 	function add($string) {
-		global $CONFIG;
+		$escaped_string = $this->db->sanitizeString($string);
 	
-		$escaped_string = sanitise_string($string);
+		return $this->db->insertData("INSERT INTO {$this->getTableName()} (string) VALUES ('$escaped_string')");
+	}
 	
-		return insert_data("INSERT INTO {$CONFIG->dbprefix}metastrings (string) VALUES ('$escaped_string')");
+	/**
+	 * The full name of the metastrings table, including prefix.
+	 * 
+	 * @return string
+	 */
+	public function getTableName() {
+		return $this->db->getTablePrefix() . "metastrings";
 	}
 }
