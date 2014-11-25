@@ -268,3 +268,4 @@ Related
 .. toctree::
 
    backup/ftp-backup-script
+   duplicate-installation

@@ -12,3 +12,4 @@ Best practices for effectively managing an Elgg-based site.
 	performance
 	cron
 	backup-restore
+	duplicate-installation
