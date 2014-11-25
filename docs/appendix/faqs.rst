@@ -122,6 +122,19 @@ Most likely you are using Apache as your web server. Warnings and errors are wri
 
 If you are using shared hosting without ssh access, your hosting provider may provide a mechanism for obtaining access to your server logs. You will need to ask them about this.
 
+How does registration work?
+---------------------------
+
+With a default setup, this is how registration works:
+
+1. User fills out registration form and submits it
+2. User account is created and disabled until validated
+3. Email is sent to user with a link to validate the account
+4. When a user clicks on the link, the account is validated
+5. The user can now log in
+
+Failures during this process include the user entering an incorrect email address, the validation email being marked as spam, or a user never bothering to validate the account.
+
 User validation
 ---------------
 
