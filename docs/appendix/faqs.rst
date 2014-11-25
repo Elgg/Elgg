@@ -185,6 +185,13 @@ Changing registration display
 Changing the registration action handler
    You can write your own action to create the user's account
 
+How do I change PHP settings using .htaccess?
+---------------------------------------------
+
+You may want to change php settings in your ``.htaccess`` file. This is especially true if your hosting provider does not give you access to the server's ``php.ini`` file. The variables could be related to file upload size limits, security, session length, or any number of other php attributes. For examples of how to do this, see the `PHP documentation`_ on this.
+
+.. _PHP documentation: http://us2.php.net/configuration.changes
+
 Development
 ===========
 
