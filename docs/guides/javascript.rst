@@ -294,3 +294,40 @@ There are a number of configuration values set in the elgg object:
    elgg.config.viewtype; // The current page's viewtype
    elgg.config.version; // The Elgg version (YYYYMMDDXX).
    elgg.config.release; // The Elgg release (X.Y.Z).
+
+Ajax helper functions
+---------------------
+
+The JS engine includes many features related to AJAX. Some are specific to Elgg, and some extend jQuery's native AJAX features.
+
+``elgg.get()``
+
+Wrapper for jQuery's ``$.ajax()``, but forces GET and does URL normalization. Accepts all standard jQuery options.
+
+.. code:: js
+
+   // normalizes the url to the current <site_url>/activity
+   elgg.get('/activity', {
+      success: function(resultText, success, xhr) {
+         console.log(resultText);
+      }
+   });
+
+``elgg.post()``
+
+Wrapper for jQuery's $.ajax(), but forces POST and does URL normalization. Accepts all standard jQuery options.
+
+``elgg.action()``
+
+Calls an Elgg action with the data passed. This handles outputting of system messages and errors.
+
+.. code:: js
+
+   elgg.action('friend/add', {
+      data: {
+         friend: 1234
+      },
+      success: function(json) {
+         // do something
+      }
+   });
