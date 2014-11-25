@@ -9,6 +9,10 @@ Below are some commonly asked questions about Elgg.
 General
 =======
 
+.. seealso::
+
+   :doc:`/admin/getting-help`
+
 "Plugin cannot start and has been deactivated" or "This plugin is invalid"
 --------------------------------------------------------------------------
 This error is usually accompanied by more details explaining why the plugin is invalid. This is usually
