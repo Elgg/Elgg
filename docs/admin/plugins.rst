@@ -62,6 +62,16 @@ To activate a plugin:
  * Find your plugin in the list of installed plugins and click on the
    'enable' button.
 
+Plugin order
+============
+
+Plugins are loaded according to the order they are listed on the Plugins page. The initial ordering after an install is more or less random. As more plugins are added by an administrator, they are placed at the bottom of the list.
+
+Some general rules for ordering plugins:
+
+- A theme plugin should be last or at least near the bottom
+- A plugin that modifies the behavior of another plugin should be lower in the plugin list
+
 Pre-1.8 notes
 =============
 
