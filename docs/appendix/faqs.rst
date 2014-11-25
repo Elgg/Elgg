@@ -242,3 +242,20 @@ To override this definition, we will add a languages file to the plugin that we 
 Make sure that you do not have any spaces or newlines before the ``<?php``.
 
 You're done now and should be able to enable the plugin and see the change. If you are override the language of a plugin, make sure your plugin is loaded after the one you are trying to modify. The loading order is determined in the Tools Administration page of the admin section. As you find more things that you'd like to change, you can keep adding them to this plugin.
+
+How do I find the code that does x?
+-----------------------------------
+
+The best way to find the code that does something that you would like to change is to use ``grep`` or a similar search tool. If you do not have ``grep`` as a part of your operating system, you will want to install a grep tool or use a text-editor/IDE that has good searching in files. `Notepad++`_ is a good choice for Windows users. `Eclipse`_ with PHP and `NetBeans`_ are good choices for any platform.
+
+String Example
+^^^^^^^^^^^^^^
+
+Let's say that you want to find where the *Log In* box code is located. A string from the *Log In* box that should be fairly unique is ``Remember me``. ``Grep`` for that string. You will find that it is only used in the ``en.php`` file in the ``/languages`` directory. There it is used to define the :doc:`/guides/i18n` string ``user:persistent``. ``Grep`` for that string now. You will find it in two places: the same ``en.php`` language file and in ``/views/default/forms/login.php``. The latter defines the html code that makes up the *Log In* box.
+
+Action Example
+^^^^^^^^^^^^^^
+
+Let's say that you want to find the code that is run when a user clicks on the *Save* button when arranging widgets on a profile page. View the Profile page for a test user. Use Firebug to drill down through the html of the page until you come to the action of the edit widgets form. You'll see the url from the base is ``action/widgets/move``.
+
+``Grep`` on ``widgets/move`` and two files are returned. One is the JavaScript code for the widgets : ``/js/lib/ui.widgets.js``. The other one, ``/engine/lib/widgets.php``, is where the action is registered using ``elgg_register_action('widgets/reorder')``. You may not be familiar with that function in which case, you should look it up at the API reference. Do a search on the function and it returns the documentation on the function. This tells you that the action is in the default location since a file location was not specified. The default location for actions is ``/actions`` so you will find the file at ``/actions/widgets/move.php``.
