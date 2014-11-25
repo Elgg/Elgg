@@ -89,3 +89,54 @@ Action Example
 Let's say that you want to find the code that is run when a user clicks on the *Save* button when arranging widgets on a profile page. View the Profile page for a test user. Use Firebug to drill down through the html of the page until you come to the action of the edit widgets form. You'll see the url from the base is ``action/widgets/move``.
 
 ``Grep`` on ``widgets/move`` and two files are returned. One is the JavaScript code for the widgets : ``/js/lib/ui.widgets.js``. The other one, ``/engine/lib/widgets.php``, is where the action is registered using ``elgg_register_action('widgets/reorder')``. You may not be familiar with that function in which case, you should look it up at the API reference. Do a search on the function and it returns the documentation on the function. This tells you that the action is in the default location since a file location was not specified. The default location for actions is ``/actions`` so you will find the file at ``/actions/widgets/move.php``.
+
+Debug mode
+----------
+
+During the installation process you might have noticed a checkbox that controlled whether debug mode was turned on or off. This setting can also be changed on the Site Administration page. Debug mode writes a lot of extra data to your php log. For example, when running in this mode every query to the database is written to your logs. It may be useful for debugging a problem though it can produce an overwhelming amount of data that may not be related to the problem at all. You may want to experiment with this mode to understand what it does, but make sure you run Elgg in normal mode on a production server.
+
+.. warning::
+
+   Because of the amount of data being logged, don't enable this on a production server as it can fill up the log files really quick.
+
+What goes into the log in debug mode?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+- All database queries
+- Database query profiling
+- Page generation time
+- Number of queries per page
+- List of plugin language files
+- Additional errors/warnings compared to normal mode (it's very rare for these types of errors to be related to any problem that you might be having)
+
+What does the data look like?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+.. code::
+
+   [07-Mar-2009 14:27:20] Query cache invalidated
+   [07-Mar-2009 14:27:20] ** GUID:1 loaded from DB
+   [07-Mar-2009 14:27:20] SELECT * from elggentities where guid=1 and ( (1 = 1)  and enabled='yes') results cached
+   [07-Mar-2009 14:27:20] SELECT guid from elggsites_entity where guid = 1 results cached
+   [07-Mar-2009 14:27:20] Query cache invalidated
+   [07-Mar-2009 14:27:20] ** GUID:1 loaded from DB
+   [07-Mar-2009 14:27:20] SELECT * from elggentities where guid=1 and ( (1 = 1)  and enabled='yes') results cached
+   [07-Mar-2009 14:27:20] ** GUID:1 loaded from DB
+   [07-Mar-2009 14:27:20] SELECT * from elggentities where guid=1 and ( (1 = 1)  and enabled='yes') results returned from cache
+   [07-Mar-2009 14:27:20] ** Sub part of GUID:1 loaded from DB
+   [07-Mar-2009 14:27:20] SELECT * from elggsites_entity where guid=1 results cached
+   [07-Mar-2009 14:27:20] Query cache invalidated
+   [07-Mar-2009 14:27:20] DEBUG: 2009-03-07 14:27:20 (MST): "Undefined index:  user" in file /var/www/elgg/engine/lib/elgglib.php (line 62)
+   [07-Mar-2009 14:27:20] DEBUG: 2009-03-07 14:27:20 (MST): "Undefined index:  pass" in file /var/www/elgg/engine/lib/elgglib.php (line 62)
+   [07-Mar-2009 14:27:20] ***************** DB PROFILING ********************
+   [07-Mar-2009 14:27:20] 1 times: 'SELECT * from elggdatalists' 
+   [07-Mar-2009 14:27:20] 1 times: 'SELECT * from elggentities where guid=1 and (  (access_id in (2) or (owner_guid = -1) or (access_id = 0 and owner_guid = -1)) and enabled='yes')' 
+   ...
+   [07-Mar-2009 14:27:20] 2 times: 'update elggmetadata set access_id = 2 where entity_guid = 1' 
+   [07-Mar-2009 14:27:20] 1 times: 'UPDATE elggentities set owner_guid='0', access_id='2', container_guid='0', time_updated='1236461868' WHERE guid=1' 
+   [07-Mar-2009 14:27:20] 1 times: 'SELECT guid from elggsites_entity where guid = 1' 
+   [07-Mar-2009 14:27:20] 1 times: 'UPDATE elggsites_entity set name='3124/944', description='', url='http://example.org/' where guid=1' 
+   [07-Mar-2009 14:27:20] 1 times: 'UPDATE elggusers_entity set prev_last_action = last_action, last_action = 1236461868 where guid = 2' 
+   [07-Mar-2009 14:27:20] DB Queries for this page: 56
+   [07-Mar-2009 14:27:20] ***************************************************
+   [07-Mar-2009 14:27:20] Page /action/admin/site/update_basic generated in 0.36997294426 seconds
