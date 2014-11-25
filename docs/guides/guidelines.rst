@@ -7,6 +7,9 @@ In addition to the Elgg Coding Standards, these are guidelines for creating plug
 
    Be sure to follow the :doc:`plugins/plugin-skeleton` for your plugin's layout.
 
+.. contents::
+   :depth: 2
+
 Use standardized routing with page handlers
 -------------------------------------------
 
@@ -68,6 +71,35 @@ The object/<subtype> view
    +---------+----------------------+
 - Make the delete action accept ``action/<handler>/delete?guid=<guid>`` so the metadata entity menu has the correct URL by default
 - If updating a 1.7 plugin, replace calls to functions deprecated in 1.7 because these will produce visible errors on every load in 1.8
+
+Actions
+-------
+
+Actions are transient states to perform an action such as updating the database or sending a notification to a user. Used correctly, actions are secure and prevent against CSRF and XSS attacks.
+
+.. note::
+
+   As of Elgg 1.7 all actions require action tokens.
+   
+Action best practices
+^^^^^^^^^^^^^^^^^^^^^
+
+Never call an action directly by saying:
+
+.. code:: html
+
+   ...href="/mod/mymod/actions/myaction.php"
+
+This circumvents the security systems in Elgg.
+
+There is no need to include the ``engine/start.php`` file in your actions. Actions should never be called directly, so the engine will be started automatically when called correctly.
+
+Because actions are time-sensitive they are not suitable for links in emails or other delayed notifications. An example of this would be invitations to join a group. The clean way to create an invitation link is to create a page handler for invitations and email that link to the user. It is then the page handler's responsibility to create the action links for a user to join or ignore the invitation request.
+
+Directly calling a file
+-----------------------
+
+This is an easy one: **Don't do it**. With the exception of 3rd party application integration, there is not a reason to directly call a file in mods directory.
 
 Recommended
 -----------
