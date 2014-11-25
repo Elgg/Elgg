@@ -142,6 +142,11 @@ User hooks
 **status, user**
 	Triggered by The Wire when adding a post.
 
+**username:character_blacklist, user**
+	Filters the string of blacklisted characters used to validate username during registration.
+	The return value should be a string consisting of the disallowed characters. The default
+	string can be found from ``$params['blacklist']``.
+
 Object hooks
 ============
 
