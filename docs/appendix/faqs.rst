@@ -38,11 +38,15 @@ A blank, white page (often called a "white screen of death") means there is a PH
 
 To find where the error is occurring, change the .htaccess file to display errors to the browser. Set display_errors to 1 and load the same page again. You should see a PHP error in your browser. Change the setting back once you've resolved the problem.
 
-	.. note:: If you are using the Developer's Tools plugin, go to its settings page and make sure you have "Display fatal PHP errors" enabled.
+.. note:: 
+
+   If you are using the Developer's Tools plugin, go to its settings page and make sure you have "Display fatal PHP errors" enabled.
 
 If the white screen is due to a bad plugin, remove the latest plugins that you have installed by deleting their directories and then reload the page.
 
-	.. note:: You can temporarily disable all plugins by creating an empty file at ``mod/disabled``. You can then disable the offending module via the administrator tools panel.
+.. note:: 
+
+   You can temporarily disable all plugins by creating an empty file at ``mod/disabled``. You can then disable the offending module via the administrator tools panel.
 
 If you are getting a WSOD when performing an action, like logging in or posting a blog, but there are no error messages, it's most likely caused by non-printable characters in plugin code. Check the plugin for white spaces/new lines characters after finishing php tag (?>) and remove them.
 
@@ -143,7 +147,18 @@ problems validating an account, you can validate users manually by going to Admi
 
 You can remove this requirement by deactivating the User Validation by Email plugin.
 
-	.. note:: Removing validation has some consequences: There is no way to know that a user registered with a working email address, and it may leave you system open to spammers.
+.. note:: 
+
+   Removing validation has some consequences: There is no way to know that a user registered with a working email address, and it may leave you system open to spammers.
+
+Manually add user
+-----------------
+
+To manually add a user, under the Administer controls go to Users. There you will see a link title "Add new User". After you fill out the information and submit the form, the new user will receive an email with username and password and a reminder to change the password. 
+
+.. note::
+
+   Elgg does not force the user to change the password.
 
 I'm making or just installed a new theme, but graphics or other elements aren't working
 ---------------------------------------------------------------------------------------
