@@ -77,6 +77,10 @@ In addition to the require elements above, the follow elements are available to 
 * suggests - Parallels the requires system, but doesn't affect if the plugin can be enabled. Used to suggest other plugins that interact or build on the plugin.
 * website - A link to the website for the plugin.
 
+.. seealso::
+
+   :doc:`plugins/dependencies`
+
 Simple Example
 --------------
 
@@ -148,3 +152,4 @@ Related
    :maxdepth: 1
    
    plugins/plugin-skeleton
+   plugins/dependencies
