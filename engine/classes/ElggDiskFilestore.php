@@ -215,6 +215,11 @@ class ElggDiskFilestore extends ElggFilestore {
 			throw new InvalidParameterException($msg);
 		}
 
+		$filename = $file->getFilename();
+		if (!$filename) {
+			return '';
+		}
+
 		$dir = new Elgg_EntityDirLocator($owner_guid);
 
 		return $this->dir_root . $dir . $file->getFilename();
