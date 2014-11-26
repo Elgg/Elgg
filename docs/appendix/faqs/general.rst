@@ -231,3 +231,8 @@ Web server configuration
 
 Permissions on files
    It could also be a permissions problem on a file. Apache needs to be able to read Elgg's files. Using permissions 755 on directories and 644 on files will allow Apache to read the files.
+
+When I upload a photo or change my profile picture I get a white screen
+-----------------------------------------------------------------------
+
+Most likely you don't have the PHP GD library installed or configured properly. You may need assistance from the administrator of your server.
