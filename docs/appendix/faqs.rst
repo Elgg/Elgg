@@ -3,8 +3,9 @@ FAQs and Other Troubleshooting
 
 Below are some commonly asked questions about Elgg.
 
-.. contents::
-   :depth: 3
+.. contents:: Contents
+   :depth: 2
+   :local:
 
 .. toctree::
    :hidden:
