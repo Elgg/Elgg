@@ -1,41 +1,41 @@
 Widgets
-#######
+=======
 
-Widgets are content areas that users can drag around their page to customize the layout.
-They can typically be customized by their owner to show more/less content and determine who sees the widget.
-By default Elgg provides plugins for customizing the profile page and dashboard via widgets.
+Widgets are content areas that users can drag around their page to customize the layout. They can typically be customized by their owner to show more/less content and determine who sees the widget. By default Elgg provides plugins for customizing the profile page and dashboard via widgets.
 
 TODO: Screenshot
 
+.. contents:: Contents
+   :local:
+   :depth: 2
+
 Structure
-=========
+---------
 
 To create a widget, create two views:
 
-* ``widgets/:widget/edit``
-* ``widgets/:widget/content``
+* ``widgets/widget/edit``
+* ``widgets/widget/content``
 
-``content.php`` is responsible for all the content that will output within the widget.
-The edit.php file contains any extra edit functions you wish to present to the user.
-You do not need to add access level as this comes as part of the widget framework.
+``content.php`` is responsible for all the content that will output within the widget. The ``edit.php`` file contains any extra edit functions you wish to present to the user. You do not need to add access level as this comes as part of the widget framework.
 
-NOTE: using HTML checkboxes to set widget flags is problematic because if unchecked,
-the checkbox input is omitted from form submission.
-The effect is that you can only set and not clear flags.
-The "input/checkboxes" view will not work properly in a widget's edit panel.
+.. note::
+   
+   Using HTML checkboxes to set widget flags is problematic because if unchecked, the checkbox input is omitted from form submission. The effect is that you can only set and not clear flags. The "input/checkboxes" view will not work properly in a widget's edit panel.
 
 Initialise the widget
-~~~~~~~~~~~~~~~~~~~~~
+---------------------
 
-Once you have created your edit and view pages, you need to initialize the plugin widget.
-This is done within the plugins init() function.
+Once you have created your edit and view pages, you need to initialize the plugin widget. This is done within the plugins ``init()`` function.
 
 .. code:: php
 
     // Add generic new file widget
     add_widget_type('filerepo', elgg_echo("file:widget"), elgg_echo("file:widget:description"));
 
-Note: it is possible to add multiple widgets for a plugin. You just initialize as many widget directories as you need.
+.. note::
+
+   It is possible to add multiple widgets for a plugin. You just initialize as many widget directories as you need.
 
 .. code:: php
 
@@ -49,67 +49,48 @@ Note: it is possible to add multiple widgets for a plugin. You just initialize a
     add_widget_type('filerepo3', elgg_echo("file:widget3"), elgg_echo("file:widget:description3"));
 
 Multiple widgets
-~~~~~~~~~~~~~~~~
+----------------
 
 Make sure you have the corrosponding directories within your plugin
 views structure:
 
-'Plugin'
+.. code::
 
--  /views
-
-   -  /default
-
-      -  /widgets
-
-         -  /filerepo
-
-            -  /edit.php
-            -  /view.php
-
-         -  /filerepo2
-
-            -  /edit.php
-            -  /view.php
-
-         -  /filerepo3
-
-            -  /edit.php
-            -  /view.php
+   'Plugin'
+      /views
+         /default
+            /widgets
+               /filerepo
+                  /edit.php
+                  /contents.php
+               /filerepo2
+                  /edit.php
+                  /contents.php
+               /filerepo3
+                  /edit.php
+                  /contents.php
 
 Elgg 1.8: Default widgets
 -------------------------
 
-If your plugin uses the widget canvas, you can register default widget
-support with Elgg core, which will handle everything else.
+If your plugin uses the widget canvas, you can register default widget support with Elgg core, which will handle everything else.
 
-To announce default widget support in your plugin, register for the
-``get_list, default_widgets`` plugin hook:
+To announce default widget support in your plugin, register for the ``get_list, default_widgets`` plugin hook:
 
 .. code:: php
 
     elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'my_plugin_default_widgets');
 
-In the plugin hook handler, push an array into the return value defining
-your default widget support and when to create default widgets. Arrays
-require the following keys to be defined:
+In the plugin hook handler, push an array into the return value defining your default widget support and when to create default widgets. Arrays require the following keys to be defined:
 
--  name - The name of the widgets page. This is displayed on the tab in
-   the admin interface.
--  widget\_context - The context the widgets page is called from. (If
-   not explicitly set, this is your plugin's id.)
+-  name - The name of the widgets page. This is displayed on the tab in the admin interface.
+-  widget\_context - The context the widgets page is called from. (If not explicitly set, this is your plugin's id.)
 -  widget\_columns - How many columns the widgets page will use.
--  event - The Elgg event to create new widgets for. This is usually
-   “create.”
+-  event - The Elgg event to create new widgets for. This is usually ``create``.
 -  entity\_type - The entity type to create new widgets for.
--  entity\_subtype - The entity subtype to create new widgets for. The
-   can be ELGG\_ENTITIES\_ANY\_VALUE to create for all entity types.
+-  entity\_subtype - The entity subtype to create new widgets for. The can be ELGG\_ENTITIES\_ANY\_VALUE to create for all entity types.
 
-When an object triggers an event that matches the event, entity\_type,
-and entity\_subtype parameters passed, Elgg core will look for default
-widgets that match the widget\_context and will copy them to that
-object's owner\_guid and container\_guid. All widget settings will also
-be copied.
+When an object triggers an event that matches the event, entity\_type, and entity\_subtype parameters passed, Elgg core will look for default widgets that match the widget\_context and will copy them to that object's owner\_guid and container\_guid. All widget settings will also be copied.
 
 .. code:: php
 
@@ -213,4 +194,33 @@ Widget view page:
         }
     ?>
 
+How to restrict where widgets can be used
+-----------------------------------------
 
+Any plugin that has a widget must register that widget with Elgg. The widget can specify the context that it can be used in (all, just profile, just dashboard, etc.). If you want to change where your users can use a widget, you can make a quick edit to the plugin's source.
+
+Find where the plugin registers the widget
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+The function you are looking for is ``add_widget_type()``. It is typically used in an init function in ``start.php``. You should be able to go to ``/mod/<plugin name>/``, open ``start.php`` in a text editor, and find the string ``add_widget_type``.
+
+Changing the function's parameters
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Let's use the friends plugin as an example. We want to restrict it so that it can only be used on a user's profile. Currently, the function call looks like this:
+
+.. warning::
+
+   Keep in mind :doc:`dont-modify-core`
+
+.. code:: php
+
+   add_widget_type('friends',elgg_echo("friends"),elgg_echo('friends:widget:description'));
+
+To restrict it to the profile, change it to this:
+
+.. code:: php
+
+   add_widget_type('friends',elgg_echo("friends"),elgg_echo('friends:widget:description'), "profile");
+   
+Notice that the context was not specified originally (there were only 3 parameters and we added a 4th). That means it defaulted to the "all" context. Besides "all" and "profile", the only other context available in default Elgg is "dashboard".
