@@ -1,12 +1,13 @@
 JavaScript
 ##########
 
-.. toctree::
-   :maxdepth: 2
-
 As of Elgg 1.9, we encourage all developers to adopt the `AMD (Asynchronous Module
 Definition) <http://requirejs.org/docs/whyamd.html>`_ standard for writing JavaScript code in Elgg.
 The 1.8 version is still functional and is :ref:`described below<1.8-js>`.
+
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 AMD
 ===
@@ -77,8 +78,7 @@ optionally ``deps``.
 Some things to note
 ^^^^^^^^^^^^^^^^^^^
 
-1. Do not use ``elgg.provide()`` or ``elgg.require()`` anymore. They are fully replaced by
-``define()`` and ``require()`` respectively.
+1. Do not use ``elgg.provide()`` or ``elgg.require()`` anymore. They are fully replaced by ``define()`` and ``require()`` respectively.
 2. Return the value of the module instead of adding to a global variable.
 3. Static views (.css, .js) are automatically minified and cached by Elgg's simplecache system.
 
@@ -331,3 +331,55 @@ Calls an Elgg action with the data passed. This handles outputting of system mes
          // do something
       }
    });
+
+Hooks
+-----
+
+The JS engine has a hooks system similar to the PHP engine's plugin hooks: hooks are triggered and plugins can register callbacks to react or alter information. There is no concept of Elgg events in the JS engine; everything in the JS engine is implemented as a hook.
+
+Registering a callback to a hook
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Callbacks are registered using ``elgg.register_hook_handler()``. Multiple callbacks can be registered for the same hook.
+
+The following example registers the ``elgg.ui.initDatePicker`` callback for the *init*, *system* event. Note that a difference in the JS engine is that instead of passing a string you pass the function itself to ``elgg.register_hook_handler()`` as the callback.
+
+.. code:: javascript
+
+   elgg.provide('elgg.ui.initDatePicker');
+   elgg.ui.initDatePicker = function() { ... }
+   
+   elgg.register_hook_handler('init', 'system', elgg.ui.initDatePicker);
+
+The callback
+^^^^^^^^^^^^
+
+The callback accepts 4 arguments:
+
+- **hook** - The hook name
+- **type** - The hook type
+- **params** - An object or set of parameters specific to the hook
+- **value** - The current value
+
+The ``value`` will be passed through each hook. Depending on the hook, callbacks can simply react or alter data.
+
+Triggering custom hooks
+^^^^^^^^^^^^^^^^^^^^^^^
+
+Plugins can trigger their own hooks:
+
+.. code:: javascript
+
+   elgg.hook.trigger_hook('name', 'type', {params}, "value");
+
+Available hooks
+^^^^^^^^^^^^^^^
+
+init, system
+   This hook is fired when the JS system is ready. Plugins should register their init functions for this hook.
+
+ready, system
+   This hook is fired when the system has fully booted.
+
+getOptions, ui.popup
+   This hook is fired for pop up displays ("rel"="popup") and allows for customized placement options.
