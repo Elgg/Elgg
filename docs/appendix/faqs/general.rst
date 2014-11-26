@@ -198,3 +198,8 @@ How do I change PHP settings using .htaccess?
 You may want to change php settings in your ``.htaccess`` file. This is especially true if your hosting provider does not give you access to the server's ``php.ini`` file. The variables could be related to file upload size limits, security, session length, or any number of other php attributes. For examples of how to do this, see the `PHP documentation`_ on this.
 
 .. _PHP documentation: http://us2.php.net/configuration.changes
+
+HTTPS login turned on accidently
+--------------------------------
+
+If you have turned on HTTPS login but do not have SSL configured, you are now locked out of your Elgg install. To turn off this configuration parameter, you will need to edit your database. Use a tool like phpMyAdmin to view your database. Select the ``config`` table and delete the row that has the name ``https_login``.
