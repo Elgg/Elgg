@@ -11,7 +11,9 @@ Below are some commonly asked questions about Elgg.
    :hidden:
    
    faqs/general
+   faqs/security
    faqs/development
 
 .. include:: faqs/general.rst
+.. include:: faqs/security.rst
 .. include:: faqs/development.rst
