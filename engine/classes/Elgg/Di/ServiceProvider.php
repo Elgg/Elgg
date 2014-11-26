@@ -82,6 +82,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setClassName('metadataCache', '\ElggVolatileMetadataCache');
 		$this->setClassName('metadataTable', '\Elgg\Database\MetadataTable');
+		$this->setClassName('metastringsTable', '\Elgg\Database\MetastringsTable');
 		$this->setFactory('persistentLogin', array($this, 'getPersistentLogin'));
 		$this->setClassName('plugins', '\Elgg\Database\Plugins');
 		$this->setFactory('ownerPreloader', array($this, 'getOwnerPreloader'));

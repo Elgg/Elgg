@@ -32,6 +32,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			'logger' => '\Elgg\Logger',
 			'metadataCache' => '\ElggVolatileMetadataCache',
 			'metadataTable' => '\Elgg\Database\MetadataTable',
+			'metastringsTable' => '\Elgg\Database\MetastringsTable',
 			'plugins' => '\Elgg\Database\Plugins',
 			'request' => '\Elgg\Http\Request',
 			'relationshipsTable' => '\Elgg\Database\RelationshipsTable',
