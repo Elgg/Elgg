@@ -328,3 +328,11 @@ On many installs (e.g. Debian & Ubuntu) this is turned on by default. If it is n
 
 .. _multibyte string support: http://uk.php.net/manual/en/mbstring.installation.php
 .. _phpinfo: http://php.net/manual/en/function.phpinfo.php
+
+Session length
+--------------
+
+Session length is controlled by your php configuration. You will first need to locate your ``php.ini`` file. In that file will be several session variables. A complete list and what they do can be found in the `php manual`_.
+
+.. _php manual: http://php.net/manual/en/session.configuration.php
+
