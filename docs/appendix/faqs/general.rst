@@ -305,3 +305,16 @@ I know PHP and MySQL and have a legitimate reason to edit the database. Is it ok
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Make sure you understand Elgg's :doc:`data model </design/database>` and schema first. Make a backup, edit carefully, then test copiously.
+
+Internet Explorer (IE) login problem
+------------------------------------
+
+Canonical URL
+^^^^^^^^^^^^^
+
+IE does not like working with sites that use both http://example.org and http://www.example.org. It stores multiple cookies and this causes problems. Best to only use one base URL. For details on how to do this see Login token mismatch error.
+
+Chrome Frame
+^^^^^^^^^^^^
+
+Using the chrome frame within IE can break the login process.
