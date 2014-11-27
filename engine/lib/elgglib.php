@@ -1900,6 +1900,23 @@ function _elgg_init() {
 	elgg_register_page_handler('css', '_elgg_css_page_handler');
 	elgg_register_page_handler('ajax', '_elgg_ajax_page_handler');
 
+	elgg_register_page_handler('manifest.json', function() {
+		$site = elgg_get_site_entity();
+		$resource = new \Elgg\Http\WebAppManifestResource($site);
+		header('Content-Type: application/json');
+		echo json_encode($resource->get());
+		return true;
+	});
+
+	elgg_register_plugin_hook_handler('head', 'page', function($hook, $type, array $result) {
+		$result['links']['manifest'] = [
+			'rel' => 'manifest',
+			'href' => elgg_normalize_url('/manifest.json'),
+		];
+
+		return $result;
+	});
+
 	elgg_register_js('elgg.autocomplete', 'js/lib/ui.autocomplete.js');
 	elgg_register_js('jquery.ui.autocomplete.html', 'vendors/jquery/jquery.ui.autocomplete.html.js');
 
