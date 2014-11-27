@@ -355,3 +355,42 @@ Fixes
 `Database Validator`_ plugin will check your database for these causes and provide an option to fix them. Be sure to backup the database before you try the fix option.
 
 .. _Database Validator: https://community.elgg.org/plugins/438616
+
+No images
+---------
+
+If profile images, group images, or other files have stopped working on your site it is likely due to a misconfiguration, especially if you have migrated to a new server.
+
+These are the most common misconfigurations that cause images and other files to stop working.
+
+Wrong path for data directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Make sure the data directory's path is correct in the Site Administration admin area. It should have a trailing slash.
+
+Wrong permissions on the data directory
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Check the permissions for the data directory. The data directory should be readable and writeable by the web server user.
+
+Different timezone
+^^^^^^^^^^^^^^^^^^
+
+.. note::
+
+   This only applies to Elgg versions before 1.9
+
+If you migrated servers or upgraded PHP, check that PHP's timezone settings are the same between the old and the new. If you cannot or don't want to change the system-wide ``php.ini`` file, you can put the following at the top of ``engine/settings.php``:
+
+.. code:: php
+
+   date_default_timezone_set('MY_TIME_ZONE');
+   
+Where ``MY_TIME_ZONE`` is a valid `PHP timezone`_.
+
+.. _PHP timezone: http://php.net/manual/en/timezones.php
+
+Migrated installation with new data directory location
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+If you migrated an installation and need to change your data directory path, be sure to update the SQL for the filestore location as documented in the :doc:`/admin/duplicate-installation` instructions.
