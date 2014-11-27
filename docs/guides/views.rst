@@ -1,6 +1,10 @@
 Views
 #####
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Introduction
 ============
 
@@ -251,4 +255,5 @@ Related
    :maxdepth: 1
    
    views/page-structure
+   views/simplecache
 	

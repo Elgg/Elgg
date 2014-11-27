@@ -3,6 +3,9 @@ Writing Documentation
 
 New documentation should fit well with the rest of Elgg's docs.
 
+.. contents:: Contents
+   :local:
+   :depth: 1
 
 Follow the existing document organization
 -----------------------------------------

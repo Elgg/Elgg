@@ -6,7 +6,10 @@ Customize Elgg's behavior with plugins.
 .. toctree::
    :maxdepth: 1
    
+   dont-modify-core
    plugins
+   guidelines
+   accessibility
    helpers
    actions
    database
@@ -16,6 +19,8 @@ Customize Elgg's behavior with plugins.
    river
    pagehandler
    routing
+   page-owner
+   gatekeeper
    widgets
    views
    context
@@ -24,6 +29,7 @@ Customize Elgg's behavior with plugins.
    settings
    permissions-check
    authentication
+   walled-garden
    web-services
    upgrading
    events-list

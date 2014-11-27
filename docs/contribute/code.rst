@@ -3,6 +3,10 @@ Writing Code
 
 Understand Elgg's standards and processes to get your changes accepted as quickly as possible.
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 License agreement
 =================
 

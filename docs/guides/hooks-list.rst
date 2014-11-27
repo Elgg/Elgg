@@ -1,8 +1,9 @@
 List of plugin hooks in core
 ############################
 
-.. toctree::
-   :maxdepth: 2
+.. contents:: Contents
+   :local:
+   :depth: 1
 
 System hooks
 ============

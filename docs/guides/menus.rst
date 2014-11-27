@@ -7,6 +7,10 @@ Every single menu requires a name, as does every single menu item. These are
 required in order to allow easy overriding and manipulation, as well as to
 provide hooks for theming.
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Basic usage
 ===========
 

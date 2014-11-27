@@ -6,6 +6,10 @@ Build a simple blogging plugin using Elgg.
 This duplicates features in the bundled blog plugin,
 so be sure to disable that while working on your own version.
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Create the plugin skeleton
 ==========================
 
