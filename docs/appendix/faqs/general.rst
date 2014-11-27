@@ -318,3 +318,13 @@ Chrome Frame
 ^^^^^^^^^^^^
 
 Using the chrome frame within IE can break the login process.
+
+Emails don't support non-Latin characters
+-----------------------------------------
+
+In order to support non-Latin characters, (such as Cyrillic or Chinese) Elgg requires `multibyte string support`_ to be compiled into PHP.
+
+On many installs (e.g. Debian & Ubuntu) this is turned on by default. If it is not, you need to turn it on (or recompile PHP to include it). To check whether your server supports multibyte strings, check `phpinfo`_.
+
+.. _multibyte string support: http://uk.php.net/manual/en/mbstring.installation.php
+.. _phpinfo: http://php.net/manual/en/function.phpinfo.php
