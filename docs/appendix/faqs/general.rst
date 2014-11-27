@@ -236,3 +236,21 @@ When I upload a photo or change my profile picture I get a white screen
 -----------------------------------------------------------------------
 
 Most likely you don't have the PHP GD library installed or configured properly. You may need assistance from the administrator of your server.
+
+CSS is missing
+--------------
+
+Wrong URL
+^^^^^^^^^
+
+Sometimes people install Elgg so that the base URL is ``localhost`` and then try to view the site using a hostname. In this case, the browser won't be able to load the CSS file. Try viewing the source of the web page and copying the link for the CSS file. Paste that into your browser. If you get a 404 error, it is likely this is your problem. You will need to change the base URL of your site.
+
+Syntax error
+^^^^^^^^^^^^
+
+Elgg stores its CSS as PHP code to provide flexibility and power. If there is a syntax error, the CSS file served to the browser may be blank. Disabling non-bundled plugins is the recommended first step.
+
+Rewrite rules errors
+^^^^^^^^^^^^^^^^^^^^
+
+A bad ``.htaccess`` file could also result in a 404 error when requesting the CSS file. This could happen when doing an upgrade and forgetting to also upgrade ``.htaccess``.
