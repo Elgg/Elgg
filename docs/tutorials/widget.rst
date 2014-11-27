@@ -8,9 +8,13 @@ In Elgg, widgets are those components that you can drag onto your profile or adm
 This tutorial assumes you are familiar with basic Elgg concepts such as:
 
  * :doc:`/guides/views`
- * :doc:`/admin/plugins`.
+ * :doc:`/admin/plugins`
 
 You should review those if you get confused along the way.
+
+.. contents:: Contents
+   :local:
+   :depth: 1
 
 Registering your plugin
 -----------------------

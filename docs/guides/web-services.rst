@@ -19,6 +19,10 @@ To create an API for your Elgg site, you need to do 4 things:
 Additionally, you may want to control what types of authentication are
 available on your site. This will also be covered.
 
+.. contents:: Contents
+   :local:
+   :depth: 2
+
 Exposing methods
 ----------------
 

@@ -1,8 +1,9 @@
 Backup and Restore
 ##################
 
-.. contents::
-   :depth: 3
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Introduction
 ============

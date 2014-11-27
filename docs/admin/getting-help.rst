@@ -5,8 +5,9 @@ Having a problem with Elgg? The best way to get help is to ask at the `Community
 
 .. _Community Site: https://community.elgg.org/
 
-.. contents::
-   :depth: 3
+.. contents:: Contents
+   :local:
+   :depth: 1
 
 Getting help
 ============

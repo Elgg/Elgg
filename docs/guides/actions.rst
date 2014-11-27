@@ -7,9 +7,13 @@ Elgg forms submit to actions. Actions define the behavior for form submission.
 
 This guide assumes basic familiarity with:
 
- * :doc:`/admin/plugins`
- * :doc:`views`
- * :doc:`i18n`
+- :doc:`/admin/plugins`
+- :doc:`views`
+- :doc:`i18n`
+
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Registering actions
 ===================

@@ -3,6 +3,10 @@ Installation
 
 Get your own instance of Elgg running in no time.
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Requirements
 ============
 

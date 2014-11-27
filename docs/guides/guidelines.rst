@@ -11,8 +11,9 @@ In addition to the Elgg Coding Standards, these are guidelines for creating plug
 
   :doc:`dont-modify-core`
 
-.. contents::
-   :depth: 2
+.. contents:: Contents
+   :local:
+   :depth: 1
 
 Use standardized routing with page handlers
 -------------------------------------------

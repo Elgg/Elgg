@@ -1,6 +1,10 @@
 Views
 #####
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Introduction
 ============
 

@@ -3,8 +3,9 @@ Database
 
 A thorough discussion of Elgg's data model design and motivation.
 
-.. toctree::
-   :maxdepth: 2
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Overview
 ========
@@ -715,10 +716,9 @@ function that has announced it wants to be referenced. Returning
 ``true`` will allow write access; returning ``false`` will deny it. See
 :ref:`the plugin hook reference for permissions\_check <guides/hooks-list#permission-hooks>` for more details.
 
-Also see
---------
+.. seealso::
 
--  `Access library reference`_
+   `Access library reference`_
 
 .. _Access library reference: http://reference.elgg.org/engine_2lib_2access_8php.html
 

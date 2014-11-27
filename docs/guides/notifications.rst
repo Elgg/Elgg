@@ -5,6 +5,10 @@ There are two ways to send notifications in Elgg:
  - Instant notifications
  - Event-based notifications send using a notifications queue
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Instant notifications
 =====================
 

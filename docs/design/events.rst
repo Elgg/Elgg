@@ -1,8 +1,9 @@
 Events and Plugin Hooks
 #######################
 
-.. toctree::
-   :maxdepth: 2
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Overview
 ========
