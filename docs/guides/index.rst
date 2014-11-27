@@ -29,6 +29,7 @@ Customize Elgg's behavior with plugins.
    settings
    permissions-check
    authentication
+   walled-garden
    web-services
    upgrading
    events-list
