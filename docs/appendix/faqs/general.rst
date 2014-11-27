@@ -254,3 +254,42 @@ Rewrite rules errors
 ^^^^^^^^^^^^^^^^^^^^
 
 A bad ``.htaccess`` file could also result in a 404 error when requesting the CSS file. This could happen when doing an upgrade and forgetting to also upgrade ``.htaccess``.
+
+Should I edit the database manually?
+------------------------------------
+
+.. warning::
+
+   No, you should never manually edit the database!
+   
+Will editing the database manually break my site?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Yes.
+
+Can I add extra fields to tables in the database?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+(AKA: I don't understand the Elgg :doc:`data model </design/database>` so I'm going to add columns. Will you help?)
+
+No, this is a bad idea. Learn the :doc:`data model </design/database>` and you will see that unless it's a very specific and highly customized installation, you can do everything you need within Elgg's current data model.
+
+I want to remove users. Can't I just delete them from the elgg_users_entity table?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+No, it will corrupt your database. Delete them through the site.
+
+I want to remove spam. Can't I just search and delete it from the elgg_objects_entity table?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+No, it will corrupt your database. Delete it through the site.
+
+Someone on the community site told me to edit the database manually. Should I?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Who was it? Is it someone experienced with Elgg, like one of the core developers or a well-known plugin author? Did he or she give you clear and specific instructions on what to edit? If you don't know who it is, or if you can't understand or aren't comfortable following the instructions, do not edit the database manually.
+
+I know PHP and MySQL and have a legitimate reason to edit the database. Is it okay to manually edit the database?
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Make sure you understand Elgg's :doc:`data model </design/database>` and schema first. Make a backup, edit carefully, then test copiously.
