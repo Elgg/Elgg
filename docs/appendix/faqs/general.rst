@@ -394,3 +394,14 @@ Migrated installation with new data directory location
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 If you migrated an installation and need to change your data directory path, be sure to update the SQL for the filestore location as documented in the :doc:`/admin/duplicate-installation` instructions.
+
+Deprecation warnings
+--------------------
+
+If you are seeing many deprecation warnings that say things like
+
+.. code::
+
+   Deprecated in 1.7: extend_view() was deprecated by elgg_extend_view()!
+
+then you are using a plugin that was written for an older version of Elgg. This means the plugin is using functions that are scheduled to be removed in a future version of Elgg. You can ask the plugin developer if the plugin will be updated or you can update the plugin yourself. If neither of those are likely to happen, you should not use that plugin.
