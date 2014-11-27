@@ -164,3 +164,19 @@ What variables are reserved by Elgg?
 - ``$autofeed``
 - ``$_GET['action']`` / ``$_POST['action']``
 - ``$viewtype``
+
+Copy a plugin
+-------------
+
+There are many questions asked about how to copy a plugin. Let's say you want to copy the ``blog`` plugin in order to run one plugin called ``blog`` and another called ``poetry``. This is not difficult but it does require a lot of work. You would need to
+
+- change the directory name
+- change the names of every function (having two functions causes PHP to crash)
+- change the name of every view (so as not to override the views on the original plugin)
+- change any data model subtypes
+- change the language file
+- change anything else that was specific to the original plugin
+
+.. note::
+
+   If you are trying to clone the ``groups`` plugin, you will have the additional difficulty that the group plugin does not set a subtype.
