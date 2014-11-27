@@ -3,6 +3,10 @@ Database
 
 Persist user-generated content and settings with Elgg's generic storage API.
 
+.. contents:: Contents
+   :local:
+   :depth: 2
+
 Entities
 ========
 
@@ -304,3 +308,63 @@ Note that Elgg execute statements through PHPs built-in functions and have
 limited support for comments. I.e. only single line comments are supported
 and must be prefixed by "-- " or "# ". A comment must start at the very beginning
 of a line.
+
+Systemlog
+=========
+
+.. note::
+
+   This section need some attention and will contain outdated information
+
+The default Elgg system log is a simple way of recording what happens within an Elgg system. It's viewable and searchable directly from the administration panel.
+
+System log storage
+------------------
+
+A system log row is stored whenever an event concerning an object whose class implements the ``Loggable`` interface is triggered. ``ElggEntity`` and ``ElggExtender`` implement ``Loggable``, so a system log row is created whenever an event is performed on all objects, users, groups, sites, metadata and annotations.
+
+Common events include:
+
+- create
+- update
+- delete
+- login
+
+Creating your own system log
+----------------------------
+
+There are some reasons why you might want to create your own system log. For example, you might need to store a full copy of entities when they are updated or deleted, for auditing purposes. You might also need to notify an administrator when certain types of events occur.
+
+To do this, you can create a function that listens to all events for all types of object:
+
+.. code:: php
+
+   register_elgg_event_handler('all','all','your_function_name');
+
+Your function can then be defined as:
+
+.. code:: php
+
+   function your_function_name($object, $event) {
+      if ($object instanceof Loggable) {
+         ...
+      }
+   }
+
+You can then use the extra methods defined by ``Loggable`` to extract the information you need.
+
+Database details
+----------------
+
+The default system log is stored in the ``system_log`` :doc:`database table </design/database>`. It contains the following fields:
+
+- **id** - A unique numeric row ID
+- **object_id** - The GUID of the entity being acted upon
+- **object_class** - The class of the entity being acted upon (eg ElggObject)
+- **object_type** - The type of the entity being acted upon (eg object)
+- **object_subtype** - The subtype of the entity being acted upon (eg blog)
+- **event** - The event being logged (eg create or update)
+- **performed_by_guid** - The GUID of the acting entity (the user performing the action)
+- **owner_guid** - The GUID of the user which owns the entity being acted upon
+- **access_id** - The access restriction associated with this log entry
+- **time_created** - The UNIX epoch timestamp of the time the event took place
