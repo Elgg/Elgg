@@ -9,6 +9,7 @@ Customize Elgg's behavior with plugins.
    dont-modify-core
    plugins
    guidelines
+   accessibility
    helpers
    actions
    database
