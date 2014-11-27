@@ -40,7 +40,19 @@ If the white screen is due to a bad plugin, remove the latest plugins that you h
 
    You can temporarily disable all plugins by creating an empty file at ``mod/disabled``. You can then disable the offending module via the administrator tools panel.
 
-If you are getting a WSOD when performing an action, like logging in or posting a blog, but there are no error messages, it's most likely caused by non-printable characters in plugin code. Check the plugin for white spaces/new lines characters after finishing php tag (?>) and remove them.
+If you are getting a WSOD when performing an action, like logging in or posting a blog, but there are no error messages, it's most likely caused by non-printable characters in plugin code. Check the plugin for white spaces/new lines characters after finishing php tag (``?>``) and remove them.
+
+Page not found
+--------------
+
+If you have recently installed your Elgg site, the most likely cause for a page not found error is that ``mod_rewrite`` is not setup correctly on your server. There is information in the :doc:`Install Troubleshooting </intro/install>` page on fixing this. The second most likely cause is that your site url in your database is incorrect.
+
+If you've been running your site for a while and suddenly start getting page not found errors, you need to ask yourself what has changed. Have you added any plugins? Did you change your server configuration?
+
+To debug a page not found error:
+
+- Confirm that the link leading to the missing page is correct. If not, how is that link being generated?
+- Confirm that the ``.htaccess`` rewrite rules are being picked up.
 
 Login token mismatch
 --------------------
