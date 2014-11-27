@@ -321,7 +321,7 @@ The default Elgg system log is a simple way of recording what happens within an 
 System log storage
 ------------------
 
-A system log row is stored whenever an event concerning an object whose class implements the ``Loggable`` interface is triggered. ``ElggEntity`` and ``ElggExtender`` implement ``Loggable``, so a system log row is created whenever an event is performed on all objects, users, groups, sites, metadata and annotations.
+A system log row is stored whenever an event concerning an object whose class implements the :doc:`/design/loggable` interface is triggered. ``ElggEntity`` and ``ElggExtender`` implement :doc:`/design/loggable`, so a system log row is created whenever an event is performed on all objects, users, groups, sites, metadata and annotations.
 
 Common events include:
 
@@ -351,20 +351,4 @@ Your function can then be defined as:
       }
    }
 
-You can then use the extra methods defined by ``Loggable`` to extract the information you need.
-
-Database details
-----------------
-
-The default system log is stored in the ``system_log`` :doc:`database table </design/database>`. It contains the following fields:
-
-- **id** - A unique numeric row ID
-- **object_id** - The GUID of the entity being acted upon
-- **object_class** - The class of the entity being acted upon (eg ElggObject)
-- **object_type** - The type of the entity being acted upon (eg object)
-- **object_subtype** - The subtype of the entity being acted upon (eg blog)
-- **event** - The event being logged (eg create or update)
-- **performed_by_guid** - The GUID of the acting entity (the user performing the action)
-- **owner_guid** - The GUID of the user which owns the entity being acted upon
-- **access_id** - The access restriction associated with this log entry
-- **time_created** - The UNIX epoch timestamp of the time the event took place
+You can then use the extra methods defined by :doc:`/design/loggable` to extract the information you need.
