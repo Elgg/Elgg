@@ -40,17 +40,29 @@ elgg.ui.init = function () {
  *
  * Use rel="toggle" on the toggler element
  * Set the href to target the item you want to toggle (<a rel="toggle" href="#id-of-target">)
+ * or use data-toggle-selector="your_jquery_selector" to have an advanced selection method
+ * 
+ * By default elements perform a slideToggle. 
+ * If you want a normal toggle (hide/show) you can add data-toggle-slide="0" on the elements to prevent a slide.
  *
  * @param {Object} event
  * @return void
  */
 elgg.ui.toggles = function(event) {
 	event.preventDefault();
-
-	// @todo might want to switch this to elgg.getSelectorFromUrlFragment().
-	var target = $(this).toggleClass('elgg-state-active').attr('href');
-
-	$(target).slideToggle('medium');
+	var target = $(this).data().toggleSelector;
+	
+	if (!target) {
+		target = elgg.getSelectorFromUrlFragment($(this).attr('href')); 
+	}
+	
+	$(target).each(function(index, elem) {
+		if ($(elem).data().toggleSlide != false) {
+			$(elem).slideToggle('medium');
+		} else {
+			$(elem).toggle();
+		}
+	});
 };
 
 /**
