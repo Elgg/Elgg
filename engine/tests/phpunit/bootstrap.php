@@ -18,3 +18,5 @@ $CONFIG = (object) array(
 );
 
 require_once "$engine/load.php";
+
+_elgg_services()->autoloadManager->getLoader()->addFallback(__DIR__);
