@@ -30,7 +30,8 @@ if ($num_of_likes) {
 		'guid' => $guid,
 		'annotation_name' => 'likes',
 		'limit' => 99,
-		'list_class' => 'elgg-list-likes'
+		'list_class' => 'elgg-list-likes',
+		'preload_owners' => true,
 	));
 	$list .= "</div>";
 	echo $list;

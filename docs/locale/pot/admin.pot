@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 01:01+0300\n"
+"POT-Creation-Date: 2014-10-20 01:11+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -384,7 +384,7 @@ msgid "Use the `Firefox yslow plugin`__ or Chrome DevTools Audits to confirm whi
 msgstr ""
 
 #: ../../admin/performance.rst:128
-# 898fa1061da545788e68d291ffb8efe1
+# 381df7c08fb14f4197748e190f49f06f
 msgid "If the static assets aren't being cached:"
 msgstr ""
 
@@ -624,7 +624,7 @@ msgid "All plugins reside in the ``mod`` directory of your Elgg installation."
 msgstr ""
 
 #: ../../admin/plugins.rst:56
-# 8f3cead5e41240aea78368659f569193
+# 97f666f8de4f4964a14af46fcba64578
 msgid "To install a new plugin:"
 msgstr ""
 
@@ -644,7 +644,7 @@ msgid "activate the plugin from your admin panel"
 msgstr ""
 
 #: ../../admin/plugins.rst:62
-# b1d7d6b4c8404bd1958d0b6612bf96f0
+# 3f716e07f2ae4ebbbb3b67a2299aa968
 msgid "To activate a plugin:"
 msgstr ""
 
@@ -739,201 +739,216 @@ msgid "Download the new version of Elgg from http://elgg.org"
 msgstr ""
 
 #: ../../admin/upgrading.rst:26
-# de9f55181d73453ca0e448c1ec9ada40
-msgid "Overwrite your existing files with the new version of Elgg"
+# 1dfae8ed20a449f1942ad2c225628404
+msgid "Update the files"
 msgstr ""
 
 #: ../../admin/upgrading.rst:27
+# de9f55181d73453ca0e448c1ec9ada40
+msgid "If doing a patch upgrade (1.9.x), overwrite your existing files with the new version of Elgg"
+msgstr ""
+
+#: ../../admin/upgrading.rst:28
+# e303a80480e84272a4962ba2790592e0
+msgid "If doing a minor upgrade (1.x), replace the existing core files completely"
+msgstr ""
+
+#: ../../admin/upgrading.rst:29
 # a895082cf7ff444395b4643d24835b88
 msgid "Merge any new changes from ``htaccess_dist`` into ``.htaccess``"
 msgstr ""
 
-#: ../../admin/upgrading.rst:28
+#: ../../admin/upgrading.rst:30
 # aa3c9b91761746baa271f20b525ee5d1
 msgid "Merge any new changes from ``settings.example.php`` into ``settings.php``"
 msgstr ""
 
-#: ../../admin/upgrading.rst:29
+#: ../../admin/upgrading.rst:31
 # 416ab5f73f3d46b8949a3b68a75f8687
 msgid "Visit http://your-elgg-site.com/upgrade.php"
 msgstr ""
 
-#: ../../admin/upgrading.rst:33
+#: ../../admin/upgrading.rst:35
 # 97aeed7b5d05498596192d7bc01e1f33
 msgid "Any modifications should have been written within plugins, so that they are not lost on overwriting. If this is not the case, take care to maintain your modifications."
 msgstr ""
 
-#: ../../admin/upgrading.rst:38
+#: ../../admin/upgrading.rst:40
 # 60a97723135e4529a6055d24be350f89
 msgid "If you modified the default .htaccess, be sure to port your modifications over to the new one."
 msgstr ""
 
-#: ../../admin/upgrading.rst:41
+#: ../../admin/upgrading.rst:43
 # 71ca1133c5324e76938d8423a85f28c7
 msgid "From 1.8 to 1.9"
 msgstr ""
 
-#: ../../admin/upgrading.rst:42
+#: ../../admin/upgrading.rst:44
 # 4065e2bf22264b8c9677568a6a4d08b8
 msgid "Elgg 1.9 is a much lighter upgrade than 1.8 was."
 msgstr ""
 
-#: ../../admin/upgrading.rst:45
+#: ../../admin/upgrading.rst:47
 # 98d7ce947f7a4025bb94eaa8f51c144b
 msgid "Breaking changes"
 msgstr ""
 
-#: ../../admin/upgrading.rst:46
+#: ../../admin/upgrading.rst:48
 # 55d35a0e2cf44d338fb01e5a59e8e0cb
 msgid "Plugins and themes written for 1.8 are expected to be compatible with 1.9 except as it pertains to comments, discussion replies, and notifications. Please `report any backwards compatibility issues <issues_>`_ besides those just listed."
 msgstr ""
 
-#: ../../admin/upgrading.rst:51
+#: ../../admin/upgrading.rst:53
 # 34254d63bcd94c95a0988c78771330b6
 msgid "Upgrade steps"
 msgstr ""
 
-#: ../../admin/upgrading.rst:52
+#: ../../admin/upgrading.rst:54
 # 3ce53f8c071f49e289d5adeb124221ab
 msgid "There are several data migrations involved, so it is especially important that you **back up your database and data directory** before performing the upgrade."
 msgstr ""
 
-#: ../../admin/upgrading.rst:55
-# 434f5fe1d1a64e5b9ba45581150d0942
-msgid "You may also consider getting rid of obsolete files from formerly installed Elgg versions by deleting everything from the Elgg installation directory except for:"
-msgstr ""
-
-#: ../../admin/upgrading.rst:58
-# c5be7db81a4f4aa7b5ed7a05409adc17
-msgid "``.htaccess``"
+#: ../../admin/upgrading.rst:57
+# 752311d038d94815a1966bb6e492ab0b
+msgid "Download the new version and copy these files from the existing 1.8 site:"
 msgstr ""
 
 #: ../../admin/upgrading.rst:59
+# 3d0ed31073ac48a4a20eb84ae02461b6
+msgid "``.htaccess``"
+msgstr ""
+
+#: ../../admin/upgrading.rst:60
 # f8d7b0f0b9ce4d54b2d95c26910d4e51
 msgid "``engine/settings.php``"
 msgstr ""
 
-#: ../../admin/upgrading.rst:60
+#: ../../admin/upgrading.rst:61
 # 24a79547716d4a10a4b372371ea81643
 msgid "any 3rd-party plugin folders in the ``mod`` directory"
 msgstr ""
 
-#: ../../admin/upgrading.rst:62
+#: ../../admin/upgrading.rst:63
+# e27921e183ef4df8b895a8f9f1eecee3
+msgid "Then replace the old installation directory with the new one. This way you are guaranteed to get rid of obsolete files which might cause problems if left behind."
+msgstr ""
+
+#: ../../admin/upgrading.rst:66
 # 096f681b7a104322992be5331ad9cd8e
 msgid "Follow the basic instructions listed above."
 msgstr ""
 
-#: ../../admin/upgrading.rst:64
+#: ../../admin/upgrading.rst:68
 # d2370e6dcab041b78c805d7154fc061d
 msgid "After you've visited ``upgrade.php``, go to the admin area of your site. You should see a notification that you have pending upgrades. Click the link in the notification bar to view and run the upgrades."
 msgstr ""
 
-#: ../../admin/upgrading.rst:68
+#: ../../admin/upgrading.rst:72
 # c6f99614c41749e0874a7dde9481e7c4
 msgid "The new notifications system delivers messages via a minutely cron handler. If you haven't done so yet, you will need to :doc:`install and configure crontab </admin/cron>` on your server. If cron jobs are already configured, note that the scope of available cron periods may have changed and you may need to update your current crontab to reflect these changes."
 msgstr ""
 
-#: ../../admin/upgrading.rst:75
+#: ../../admin/upgrading.rst:79
 # db5404f6e9754e1d910def169318ec2a
 msgid "Time commitment"
 msgstr ""
 
-#: ../../admin/upgrading.rst:76
+#: ../../admin/upgrading.rst:80
 # 44c9c9d7360649ad8c59ed987400b560
 msgid "Running all of the listed upgrades `took about 1 hour and 15 minutes`__ on the Elgg community site which at the time had to migrate:"
 msgstr ""
 
-#: ../../admin/upgrading.rst:79
+#: ../../admin/upgrading.rst:83
 # f7b773676fcd4906b7130a6d5e497780
 msgid "~75,000 discussion replies"
 msgstr ""
 
-#: ../../admin/upgrading.rst:80
+#: ../../admin/upgrading.rst:84
 # 0124a1832dc14ab59883017a8c4ed91a
 msgid "~75,000 comments"
 msgstr ""
 
-#: ../../admin/upgrading.rst:81
+#: ../../admin/upgrading.rst:85
 # bf2c5c3c98204f0b93517250ac02d764
 msgid "~75,000 data directories"
 msgstr ""
 
-#: ../../admin/upgrading.rst:85
+#: ../../admin/upgrading.rst:89
 # 9a778a38cc204230ae0b8e57e54bf888
 msgid "You should take this only as a ballpark estimate for your own upgrade. How long it takes will depend on how large your site is and how powerful your servers are."
 msgstr ""
 
-#: ../../admin/upgrading.rst:89
+#: ../../admin/upgrading.rst:93
 # 1dc86ecd7d2b479c9feab1164ef96ee3
 msgid "From 1.7 to 1.8"
 msgstr ""
 
-#: ../../admin/upgrading.rst:90
+#: ../../admin/upgrading.rst:94
 # b8c7178356c84094a1480fbe6621c9b0
 msgid "Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0. As such, there is more work to update core and plugins than with previous upgrades."
 msgstr ""
 
-#: ../../admin/upgrading.rst:94
+#: ../../admin/upgrading.rst:98
 # 4264f9bb690544779fda996e365fa5f8
 msgid "Updating core"
 msgstr ""
 
-#: ../../admin/upgrading.rst:95
+#: ../../admin/upgrading.rst:99
 # 2d1f985c5fc744fb9f2a803678ba938b
 msgid "Delete the following core directories (same level as _graphics and engine):"
 msgstr ""
 
-#: ../../admin/upgrading.rst:97
+#: ../../admin/upgrading.rst:101
 # 6175fe9259f442b39c1bb7e84c955f28
 msgid "_css"
 msgstr ""
 
-#: ../../admin/upgrading.rst:98
+#: ../../admin/upgrading.rst:102
 # 0c5561f8390142658d11b391c16f8c14
 msgid "account"
 msgstr ""
 
-#: ../../admin/upgrading.rst:99
+#: ../../admin/upgrading.rst:103
 # bb955eee8da541a2a8ca750489fb12de
 msgid "admin"
 msgstr ""
 
-#: ../../admin/upgrading.rst:100
+#: ../../admin/upgrading.rst:104
 # e9d68491748d4796be02b3099ef6bb49
 msgid "dashboard"
 msgstr ""
 
-#: ../../admin/upgrading.rst:101
+#: ../../admin/upgrading.rst:105
 # 7982b1d8e56141b19f8bbe5793624c62
 msgid "entities"
 msgstr ""
 
-#: ../../admin/upgrading.rst:102
+#: ../../admin/upgrading.rst:106
 # 93fedd75fd9241439f2d1db01c1d62af
 msgid "friends"
 msgstr ""
 
-#: ../../admin/upgrading.rst:103
+#: ../../admin/upgrading.rst:107
 # 9486ef1b129948f89cb6a45257b5d616
 msgid "search"
 msgstr ""
 
-#: ../../admin/upgrading.rst:104
+#: ../../admin/upgrading.rst:108
 # 5db99b0bf09442729c26cc9f3d6d8caf
 msgid "settings"
 msgstr ""
 
-#: ../../admin/upgrading.rst:105
+#: ../../admin/upgrading.rst:109
 # 05da4c4007044df3a1cf93cfe8dd962f
 msgid "simplecache"
 msgstr ""
 
-#: ../../admin/upgrading.rst:106
+#: ../../admin/upgrading.rst:110
 # 461bf6ffbbb34fa384f4e4e36a3126ce
 msgid "views"
 msgstr ""
 
-#: ../../admin/upgrading.rst:110
+#: ../../admin/upgrading.rst:114
 # 800dedffbf0b4eec88c03d468d8c2465
 msgid "If you do not delete these directories before an upgrade, you will have problems!"
 msgstr ""

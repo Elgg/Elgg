@@ -54,7 +54,7 @@ return array(
 	'theme_sandbox:navigation' => 'Navigaatio',
 	'theme_sandbox:typography' => 'Typografia',
 
-	'theme_sandbox:icons:blurb' => 'Käytä funktiota <code>elgg_view_icon($name)</code>  tai luokkaa <code>elgg-icon-$name<code> näyttääksesi ikoneita.',
+	'theme_sandbox:icons:blurb' => 'Käytä funktiota <code>elgg_view_icon($name)</code>  tai luokkaa <code>elgg-icon-$name</code> näyttääksesi ikoneita.',
 
 	// unit tests
 	'developers:unit_tests:description' => 'Elgg sisältää yksikkö- ja integraatiotestejä, joiden avulla voidaan havaita virheitä sen ytimen luokissa ja funktioissa.',

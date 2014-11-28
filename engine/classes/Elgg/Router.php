@@ -47,7 +47,7 @@ class Router {
 			// to register for the '' (empty string) handler.
 			// allow plugins to override the front page (return true to indicate
 			// that the front page has been served)
-			$result = elgg_trigger_plugin_hook('index', 'system', null, false);
+			$result = _elgg_services()->hooks->trigger('index', 'system', null, false);
 			if ($result === true) {
 				elgg_deprecated_notice("The 'index', 'system' plugin has been deprecated. See elgg_front_page_handler()", 1.9);
 				exit;
@@ -61,7 +61,7 @@ class Router {
 			'handler' => $identifier, // backward compatibility
 			'segments' => $segments,
 		);
-		$result = $this->hooks->trigger('route', $identifier, null, $result);
+		$result = $this->hooks->trigger('route', $identifier, $result, $result);
 		if ($result === false) {
 			return true;
 		}

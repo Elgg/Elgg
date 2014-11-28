@@ -5,6 +5,19 @@ Prepare your plugin for the next version of Elgg.
 
 See the administator guides for :doc:`how to upgrade a live site </admin/upgrading>`.
 
+From 1.9 to 1.10
+================
+
+File uploads
+------------
+
+If your plugin is using a snippet copied from the ``file/upload`` action to fix detected mime types for Microsoft zipped formats, it can now be safely removed.
+
+If your upload action performs other manipulations on detected mime and simple types, it is recommended to make use of available plugin hooks:
+
+- ``'mime_type','file'`` for filtering detected mime types
+- ``'simple_type','file'`` for filtering parsed simple types
+
 From 1.8 to 1.9
 ===============
 
@@ -87,7 +100,7 @@ Example of new code:
     See how the community_plugins plugin was updated: https://github.com/Elgg/community_plugins/commit/f233999bbd1478a200ee783679c2e2897c9a0483
 
 Language files
-==============
+--------------
 
 In Elgg 1.8 the language files needed to use the ``add_translation()`` function. In 1.9 it is enough to just return the array that was
 previously passed to the function as a parameter. Elgg core will use the file name (e.g. en.php) to tell which language the file contains.
@@ -360,6 +373,14 @@ Example of the new way:
 .. warning::
 
     Not compatible with 1.8
+
+Web services
+------------
+
+In Elgg 1.8 the web services API was included in core and methods were exposed
+using ``expose_function()``. To enable the same functionality for Elgg 1.9,
+enable the "Web services 1.9" plugin and replace all calls to
+``expose_function()`` with  ``elgg_ws_expose_function()``.
 
 From 1.7 to 1.8
 ===============

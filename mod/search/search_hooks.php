@@ -36,6 +36,7 @@ function search_objects_hook($hook, $type, $value, $params) {
 	
 	$params['count'] = FALSE;
 	$params['order_by'] = search_get_order_by_sql('e', 'oe', $params['sort'], $params['order']);
+	$params['preload_owners'] = true;
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.

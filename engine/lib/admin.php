@@ -75,29 +75,7 @@ function elgg_get_admins(array $options = array()) {
  * @since 1.8.0
  */
 function elgg_add_admin_notice($id, $message) {
-	if ($id && $message) {
-		if (elgg_admin_notice_exists($id)) {
-			return false;
-		}
-
-		// need to handle when no one is logged in
-		$old_ia = elgg_set_ignore_access(true);
-
-		$admin_notice = new \ElggObject();
-		$admin_notice->subtype = 'admin_notice';
-		// admins can see ACCESS_PRIVATE but no one else can.
-		$admin_notice->access_id = ACCESS_PRIVATE;
-		$admin_notice->admin_notice_id = $id;
-		$admin_notice->description = $message;
-
-		$result = $admin_notice->save();
-
-		elgg_set_ignore_access($old_ia);
-
-		return (bool)$result;
-	}
-
-	return false;
+	return _elgg_services()->adminNotices->add($id, $message);
 }
 
 /**
@@ -114,23 +92,7 @@ function elgg_add_admin_notice($id, $message) {
  * @since 1.8.0
  */
 function elgg_delete_admin_notice($id) {
-	if (!$id) {
-		return false;
-	}
-	$result = true;
-	$notices = elgg_get_entities_from_metadata(array(
-		'metadata_name' => 'admin_notice_id',
-		'metadata_value' => $id
-	));
-
-	if ($notices) {
-		// in case a bad plugin adds many, let it remove them all at once.
-		foreach ($notices as $notice) {
-			$result = ($result && $notice->delete());
-		}
-		return $result;
-	}
-	return false;
+	return _elgg_services()->adminNotices->delete($id);
 }
 
 /**
@@ -142,11 +104,7 @@ function elgg_delete_admin_notice($id) {
  * @since 1.8.0
  */
 function elgg_get_admin_notices($limit = 10) {
-	return elgg_get_entities_from_metadata(array(
-		'type' => 'object',
-		'subtype' => 'admin_notice',
-		'limit' => $limit
-	));
+	return _elgg_services()->adminNotices->find($limit);
 }
 
 /**
@@ -158,15 +116,7 @@ function elgg_get_admin_notices($limit = 10) {
  * @since 1.8.0
  */
 function elgg_admin_notice_exists($id) {
-	$old_ia = elgg_set_ignore_access(true);
-	$notice = elgg_get_entities_from_metadata(array(
-		'type' => 'object',
-		'subtype' => 'admin_notice',
-		'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id)
-	));
-	elgg_set_ignore_access($old_ia);
-
-	return ($notice) ? true : false;
+	return _elgg_services()->adminNotices->exists($id);
 }
 
 /**
@@ -411,7 +361,43 @@ function _elgg_admin_pagesetup() {
 		elgg_register_css('elgg.admin', $url);
 		elgg_load_css('elgg.admin');
 		elgg_unregister_css('elgg');
+		
+		$admin = elgg_get_logged_in_user_entity();
 
+		// setup header menu
+		elgg_register_menu_item('admin_header', array(
+			'name' => 'admin_logout',
+			'href' => 'action/logout',
+			'text' => elgg_echo('logout'),
+			'is_trusted' => true,
+			'priority' => 1000,
+		));
+		
+		elgg_register_menu_item('admin_header', array(
+			'name' => 'view_site',
+			'href' => elgg_get_site_url(),
+			'text' => elgg_echo('admin:view_site'),
+			'is_trusted' => true,
+			'priority' => 900,
+		));
+
+		elgg_register_menu_item('admin_header', array(
+			'name' => 'admin_profile',
+			'href' => false,
+			'text' => elgg_echo('admin:loggedin', array($admin->name)),
+			'priority' => 800,
+		));		
+
+		if (elgg_get_config('elgg_maintenance_mode', null)) {
+			elgg_register_menu_item('admin_header', array(
+				'name' => 'maintenance',
+				'href' => 'admin/administer_utilities/maintenance',
+				'text' => elgg_echo('admin:administer_utilities:maintenance'),
+				'link_class' => 'elgg-maintenance-mode-warning',
+				'priority' => 700,
+			));
+		}
+				
 		// setup footer menu
 		elgg_register_menu_item('admin_footer', array(
 			'name' => 'faq',
@@ -787,7 +773,17 @@ function _elgg_admin_maintenance_action_check($hook, $type) {
 	}
 
 	if ($type == 'login') {
-		$user = get_user_by_username(get_input('username'));
+		$username = get_input('username');
+		
+		$user = get_user_by_username($username);
+		
+		if (!$user) {
+			$users = get_user_by_email($username);
+			if ($users) {
+				$user = $users[0];
+			}
+		}
+		
 		if ($user && $user->isAdmin()) {
 			return true;
 		}

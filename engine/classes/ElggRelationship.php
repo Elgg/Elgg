@@ -179,7 +179,7 @@ class ElggRelationship extends \ElggData implements
 
 		$type = $this->getType();
 		$params = array('relationship' => $this);
-		$url = elgg_trigger_plugin_hook('relationship:url', $type, $params, $url);
+		$url = _elgg_services()->hooks->trigger('relationship:url', $type, $params, $url);
 
 		return elgg_normalize_url($url);
 	}
@@ -195,7 +195,7 @@ class ElggRelationship extends \ElggData implements
 		$object->object_guid = $this->guid_two;
 		$object->time_created = date('c', $this->getTimeCreated());
 		$params = array('relationship' => $this);
-		return elgg_trigger_plugin_hook('to:object', 'relationship', $params, $object);
+		return _elgg_services()->hooks->trigger('to:object', 'relationship', $params, $object);
 	}
 
 	// EXPORTABLE INTERFACE ////////////////////////////////////////////////////////////

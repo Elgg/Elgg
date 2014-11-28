@@ -4,6 +4,8 @@
  *
  * @package Elgg
  * @subpackage Test
+ * 
+ * TODO(ewinslow): Move this to Elgg\Database\AccessCollectionsTest
  */
 class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 

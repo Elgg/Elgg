@@ -497,9 +497,10 @@ function groups_user_entity_menu_setup($hook, $type, $return, $params) {
 
 		// Add remove link if we can edit the group, and if we're not trying to remove the group owner
 		if ($group->canEdit() && $group->getOwnerGUID() != $entity->guid) {
-			$remove = elgg_view('output/confirmlink', array(
+			$remove = elgg_view('output/url', array(
 				'href' => "action/groups/remove?user_guid={$entity->guid}&group_guid={$group->guid}",
 				'text' => elgg_echo('groups:removeuser'),
+				'confirm' => true,
 			));
 
 			$options = array(
@@ -536,9 +537,9 @@ function groups_annotation_menu_setup($hook, $type, $return, $params) {
 		$options = array(
 			'name' => 'delete',
 			'href' => $url,
-			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
+			'text' => elgg_view_icon('delete'),
 			'confirm' => elgg_echo('deleteconfirm'),
-			'encode_text' => false
+			'encode_text' => false,
 		);
 		$return[] = ElggMenuItem::factory($options);
 
@@ -831,8 +832,7 @@ function discussion_init() {
 	elgg_register_action('discussion/delete', "$action_base/delete.php");
 	elgg_register_action('discussion/reply/save', "$action_base/reply/save.php");
 	elgg_register_action('discussion/reply/delete', "$action_base/reply/delete.php");
-	elgg_register_action('discussion/upgrade/2013100401', "$action_base/upgrades/2013100401.php", 'admin');
-
+	
 	// add link to owner block
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'discussion_owner_block_menu');
 
@@ -945,7 +945,7 @@ function discussion_set_topic_url($hook, $type, $url, $params) {
 
 /**
  * We don't want people commenting on topics in the river
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param string $return
@@ -960,7 +960,7 @@ function discussion_comment_override($hook, $type, $return, $params) {
 
 /**
  * Add owner block link
- * 
+ *
  * @param string          $hook    'register'
  * @param string          $type    'menu:owner_block'
  * @param ElggMenuItem[]  $return
@@ -981,10 +981,10 @@ function discussion_owner_block_menu($hook, $type, $return, $params) {
 
 /**
  * Set up menu items for river items
- * 
+ *
  * Add reply button for discussion topic. Remove the possibility
  * to comment on a discussion reply.
- * 
+ *
  * @param string         $hook   'register'
  * @param string         $type   'menu:river'
  * @param ElggMenuItem[] $return
@@ -1107,12 +1107,14 @@ function discussion_get_subscriptions($hook, $type, $subscriptions, $params) {
 	}
 
 	$group_guid = $reply->getContainerEntity()->container_guid;
-	return elgg_get_subscriptions_for_container($group_guid);
+	$group_subscribers = elgg_get_subscriptions_for_container($group_guid);
+	
+	return ($subscriptions + $group_subscribers);
 }
 
 /**
  * A simple function to see who can edit a group discussion post
- * 
+ *
  * @param ElggComment $entity      the  comment $entity
  * @param ELggUser    $group_owner user who owns the group $group_owner
  * @return boolean
@@ -1142,7 +1144,7 @@ function groups_run_upgrades() {
 
 /**
  * Allow group owner and discussion owner to edit discussion replies.
- * 
+ *
  * @param string  $hook   'permissions_check'
  * @param string  $type   'object'
  * @param boolean $return
@@ -1177,7 +1179,7 @@ function discussion_can_edit_reply($hook, $type, $return, $params) {
 
 /**
  * Allow group members to post to a group discussion
- * 
+ *
  * @param string $hook   'container_permissions_check'
  * @param string $type   'object'
  * @param array  $return
@@ -1202,7 +1204,7 @@ function discussion_reply_container_permissions_override($hook, $type, $return, 
 
 /**
  * Update access_id of discussion replies when topic access_id is updated.
- * 
+ *
  * @param string     $event  'update'
  * @param string     $type   'object'
  * @param ElggObject $object ElggObject
@@ -1231,7 +1233,7 @@ function discussion_update_reply_access_ids($event, $type, $object) {
 
 /**
  * Set up discussion reply entity menu
- * 
+ *
  * @param string          $hook   'register'
  * @param string          $type   'menu:entity'
  * @param ElggMenuItem[]  $return

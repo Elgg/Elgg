@@ -38,12 +38,10 @@ $html = elgg_list_entities(array(
 	'reverse_order_by' => true,
 	'full_view' => true,
 	'limit' => $limit,
+	'preload_owners' => true,
 ));
 
-if ($html) {
-	echo '<h3 id="comments">' . elgg_echo('comments') . '</h3>';
-	echo $html;
-}
+echo $html;
 
 if ($show_add_form) {
 	echo elgg_view_form('comment/save', array(), $vars);

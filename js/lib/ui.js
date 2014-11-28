@@ -22,7 +22,10 @@ elgg.ui.init = function () {
 
 	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
 
-	$('.elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
+    $('*[data-confirm], .elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
+    if ($('.elgg-requires-confirmation').length > 0) {
+        elgg.deprecated_notice('Use of .elgg-requires-confirmation is deprecated by data-confirm', '1.10');
+    }
 
 	$('.elgg-autofocus').focus();
 	if ($('.elgg-autofocus').length > 0) {
@@ -37,17 +40,29 @@ elgg.ui.init = function () {
  *
  * Use rel="toggle" on the toggler element
  * Set the href to target the item you want to toggle (<a rel="toggle" href="#id-of-target">)
+ * or use data-toggle-selector="your_jquery_selector" to have an advanced selection method
+ * 
+ * By default elements perform a slideToggle. 
+ * If you want a normal toggle (hide/show) you can add data-toggle-slide="0" on the elements to prevent a slide.
  *
  * @param {Object} event
  * @return void
  */
 elgg.ui.toggles = function(event) {
 	event.preventDefault();
-
-	// @todo might want to switch this to elgg.getSelectorFromUrlFragment().
-	var target = $(this).toggleClass('elgg-state-active').attr('href');
-
-	$(target).slideToggle('medium');
+	var target = $(this).data().toggleSelector;
+	
+	if (!target) {
+		target = elgg.getSelectorFromUrlFragment($(this).attr('href')); 
+	}
+	
+	$(target).each(function(index, elem) {
+		if ($(elem).data().toggleSlide != false) {
+			$(elem).slideToggle('medium');
+		} else {
+			$(elem).toggle();
+		}
+	});
 };
 
 /**
@@ -267,7 +282,7 @@ elgg.ui.loginHandler = function(hook, type, params, options) {
  * @requires jqueryui.datepicker
  */
 elgg.ui.initDatePicker = function() {
-	var loadDatePicker = function() {
+	function loadDatePicker() {
 		$('.elgg-input-date').datepicker({
 			// ISO-8601
 			dateFormat: 'yy-mm-dd',
@@ -283,11 +298,16 @@ elgg.ui.initDatePicker = function() {
 				}
 			}
 		});
-	};
-	
-	if ($('.elgg-input-date').length && elgg.get_language() == 'en') {
+	}
+
+	if (!$('.elgg-input-date').length) {
+		return;
+	}
+
+	if (elgg.get_language() == 'en') {
 		loadDatePicker();
-	} else if ($('.elgg-input-date').length) {
+	} else {
+		// load language first
 		elgg.get({
 			url: elgg.config.wwwroot + 'vendors/jquery/i18n/jquery.ui.datepicker-'+ elgg.get_language() +'.js',
 			dataType: "script",
@@ -301,7 +321,7 @@ elgg.ui.initDatePicker = function() {
 /**
  * This function registers two menu items that are actions that are the opposite
  * of each other and ajaxifies them. E.g. like/unlike, friend/unfriend, ban/unban, etc.
- * 
+ *
  * Note the menu item names must be given in their normalized form. So if the
  * name is remove_friend, you should call this function with "remove-friend" instead.
  */
@@ -309,10 +329,10 @@ elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 	// Handles clicking the first button.
 	$('.elgg-menu-item-' + menuItemNameA + ' a').live('click', function() {
 		var $menu = $(this).closest('.elgg-menu');
-		
+
 		// Be optimistic about success
 		elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
-		
+
 		// Send the ajax request
 		elgg.action($(this).attr('href'), {
 			success: function(json) {
@@ -325,19 +345,19 @@ elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 				// Something went wrong, so undo the optimistic changes
 				elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
 			}
-		}); 
-		
+		});
+
 		// Don't want to actually click the link
 		return false;
 	});
-	
+
 	// Handles clicking the second button
 	$('.elgg-menu-item-' + menuItemNameB + ' a').live('click', function() {
 		var $menu = $(this).closest('.elgg-menu');
-		
+
 		// Be optimistic about success
 		elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
-		
+
 		// Send the ajax request
 		elgg.action($(this).attr('href'), {
 			success: function(json) {
@@ -350,8 +370,8 @@ elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 				// Something went wrong, so undo the optimistic changes
 				elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
 			}
-		}); 
-		
+		});
+
 		// Don't want to actually click the link
 		return false;
 	});

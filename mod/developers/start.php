@@ -21,7 +21,6 @@ function developers_init() {
 
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
-	elgg_register_action('developers/inspect', "$action_base/inspect.php", 'admin');
 
 	elgg_define_js('jquery.jstree', array(
 		'src' => '/mod/developers/vendors/jsTree/jquery.jstree.js',
@@ -65,7 +64,7 @@ function developers_process_settings() {
 
 function developers_setup_menu() {
 	if (elgg_in_context('admin')) {
-		elgg_register_admin_menu_item('develop', 'inspect', 'develop_tools');
+		elgg_register_admin_menu_item('develop', 'inspect');
 		elgg_register_admin_menu_item('develop', 'sandbox', 'develop_tools');
 		elgg_register_admin_menu_item('develop', 'unit_tests', 'develop_tools');
 
@@ -77,6 +76,18 @@ function developers_setup_menu() {
 			'priority' => 10,
 			'section' => 'develop'
 		));
+		
+		$inspect_options = developers_get_inspect_options();
+		foreach ($inspect_options as $key => $value) {
+			elgg_register_menu_item('page', array(
+				'name' => 'dev_inspect_' . elgg_get_friendly_title($key),
+				'href' => "admin/develop_tools/inspect?inspect_type={$value}",
+				'text' => $value,
+				'context' => 'admin',
+				'section' => 'develop',
+				'parent_name' => 'inspect'
+			));
+		}
 	}
 }
 
@@ -226,4 +237,29 @@ function developers_theme_sandbox_controller($page) {
 
 	echo elgg_view_page("Theme Sandbox : $title", $layout, 'theme_sandbox');
 	return true;
+}
+
+/**
+ * Get the available inspect options
+ * 
+ * @return array
+ */
+function developers_get_inspect_options() {
+	$options = array(
+		'Actions' => 'Actions',
+		'Events' => 'Events',
+		'Menus' => 'Menus',
+		'Plugin Hooks' => 'Plugin Hooks',
+		'Simple Cache' => 'Simple Cache',
+		'Views' => 'Views',
+		'Widgets' => 'Widgets',
+	);
+	
+	if (elgg_is_active_plugin('web_services')) {
+		$options['Web Services'] = 'Web Services';
+	}
+	
+	ksort($options);
+	
+	return $options;
 }

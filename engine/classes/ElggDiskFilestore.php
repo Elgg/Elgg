@@ -21,17 +21,25 @@ class ElggDiskFilestore extends \ElggFilestore {
 	const BUCKET_SIZE = 5000;
 
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
 	 * Construct a disk filestore using the given directory root.
 	 *
 	 * @param string $directory_root Root directory, must end in "/"
 	 */
 	public function __construct($directory_root = "") {
 		global $CONFIG;
+		$this->CONFIG = $CONFIG;
 
 		if ($directory_root) {
 			$this->dir_root = $directory_root;
 		} else {
-			$this->dir_root = $CONFIG->dataroot;
+			$this->dir_root = $this->CONFIG->dataroot;
 		}
 	}
 
@@ -69,7 +77,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 			try {
 				$this->makeDirectoryRoot($path);
 			} catch (Exception $e) {
-				elgg_log("Couldn't create directory: $path", 'WARNING');
+				_elgg_services()->logger->warn("Couldn't create directory: $path");
 				return false;
 			}
 		}
@@ -207,7 +215,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	public function getFilenameOnFilestore(\ElggFile $file) {
 		$owner_guid = $file->getOwnerGuid();
 		if (!$owner_guid) {
-			$owner_guid = elgg_get_logged_in_user_guid();
+			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 
 		if (!$owner_guid) {

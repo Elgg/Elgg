@@ -18,29 +18,31 @@ Actions must be registered before use. Use ``elgg_register_action`` for this:
 
 .. code:: php
 
-   elgg_register_action(“example”, __DIR__ . “/actions/example.php”);
+   elgg_register_action("example", __DIR__ . "/actions/example.php");
 
 The ``mod/example/actions/example.php`` script will now be run whenever a form is submitted to ``http://localhost/elgg/action/example``.
+
+.. warning:: A stumbling point for many new developers is the URL for actions. The URL always uses ``/action/`` (singular) and never ``/actions/`` (plural). However, action script files are usually saved under the directory ``/actions/`` (plural) and always have an extension.
 
 
 Permissions
 -----------
 By default, actions are only available to logged in users.
 
-To make an action available to logged out users, pass ``“public”`` as the third parameter:
+To make an action available to logged out users, pass ``"public"`` as the third parameter:
 
 .. code:: php
 
-   elgg_register_action(“example”, $filepath, “public”);
+   elgg_register_action("example", $filepath, "public");
 
-To restrict an action to only administrators, pass ``”admin”`` for the last parameter:
+To restrict an action to only administrators, pass ``"admin"`` for the last parameter:
 
 .. code:: php
 
-   elgg_register_action(“example”, $filepath, “admin”);
+   elgg_register_action("example", $filepath, "admin");
 
 
-Implementing actions
+Writing action files
 --------------------
 
 Use the ``get_input`` function to get access to request parameters:
@@ -69,7 +71,7 @@ URLs can be relative to the Elgg root:
 .. code:: php
 
    $user = elgg_get_logged_in_user_entity();
-   forward(“/example/$user->username”);
+   forward("/example/$user->username");
 
 Redirect to the referring page by using the ``REFERRER`` constant:
 
@@ -137,7 +139,7 @@ To output a form, use the elgg_view_form function like so:
    
    echo elgg_view_form('example');
 
-Doing this should generate something like the following markup:
+Doing this generates something like the following markup:
 
 .. code:: html
 
@@ -150,7 +152,7 @@ Doing this should generate something like the following markup:
 
 Elgg does some things automatically for you when you generate forms this way:
 
- 1. It sets the action to the appropriate url based on the name of the action you pass to it
+ 1. It sets the action to the appropriate URL based on the name of the action you pass to it
  2. It adds some anti-csrf tokens (``__elgg_ts`` and ``__elgg_token``) to help keep your actions secure
  3. It automatically looks for the body of the form in the ``forms/example`` view.
 
@@ -366,7 +368,7 @@ The save action checks the input, then clears the sticky form upon success:
 Ajax
 ====
 
-To call an action via javascript without actually submitting a form, use ``elgg.action``:
+To call an action via JavaScript without actually submitting a form, use ``elgg.action``:
 
 .. code:: js
 
@@ -399,7 +401,6 @@ A few views and functions automatically generate security tokens:
 .. code:: php
 
    elgg_view('output/url', array('is_action' => TRUE));
-   elgg_view('output/confirmlink');
    elgg_view('input/securitytoken');
    $url = elgg_add_action_tokens_to_url("http://localhost/elgg/action/example");
 

@@ -9,6 +9,7 @@ elgg.provide('elgg.site_notifications');
 elgg.site_notifications.init = function() {
 	$('.site-notifications-delete').live('click', elgg.site_notifications.delete);
 	$('.site-notifications-link').live('click', elgg.site_notifications.auto_delete);
+	$('#site-notifications-toggle').live('click', elgg.site_notifications.toggle_all);
 };
 
 /**
@@ -51,5 +52,14 @@ elgg.site_notifications.auto_delete = function(event) {
 	id = id.replace("link", "delete");
 	elgg.action($('#' + id).attr('href'), {});
 }
+
+/**
+ * Toggle the checkboxes in the site notification listing
+ *
+ * @return void
+ */
+elgg.site_notifications.toggle_all = function() {
+	$('.site-notifications-container input[type=checkbox]').click();
+};
 
 elgg.register_hook_handler('init', 'system', elgg.site_notifications.init);

@@ -13,17 +13,33 @@ namespace Elgg\Di;
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \ElggCrypto                              $crypto
+ * @property-read \Elgg\Config                             $config
+ * @property-read \Elgg\Database\ConfigTable               $configTable
+ * @property-read \Elgg\Database\Datalist                  $datalist
  * @property-read \Elgg\Database                           $db
+ * @property-read \Elgg\Database\EntityTable               $entityTable
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\PluginHooksService                 $hooks
+ * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
  * @property-read \ElggVolatileMetadataCache               $metadataCache
+ * @property-read \Elgg\Database\MetadataTable             $metadataTable
  * @property-read \Elgg\Notifications\NotificationsService $notifications
+ * @property-read \Elgg\EntityPreloader                    $ownerPreloader
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
+ * @property-read \Elgg\Database\Plugins                   $plugins
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\Http\Request                       $request
+ * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
  * @property-read \Elgg\Router                             $router
  * @property-read \ElggSession                             $session
+ * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
+ * @property-read \Elgg\Database\SiteSecret                $siteSecret
+ * @property-read \Elgg\Forms\StickyForms                  $stickyForms
+ * @property-read \Elgg\Database\SubtypeTable              $subtypeTable
+ * @property-read \Elgg\Cache\SystemCache                  $systemCache
+ * @property-read \Elgg\I18n\Translator                    $translator
+ * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
  * 
@@ -40,21 +56,49 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	public function __construct(\Elgg\AutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
 
+		$this->setClassName('accessCollections', '\Elgg\Database\AccessCollections');
 		$this->setClassName('actions', '\Elgg\ActionsService');
+		$this->setClassName('adminNotices', '\Elgg\Database\AdminNotices');
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
+		$this->setClassName('annotations', '\Elgg\Database\Annotations');
 		$this->setClassName('autoP', '\ElggAutoP');
+		$this->setClassName('config', '\Elgg\Config');
+		$this->setClassName('configTable', '\Elgg\Database\ConfigTable');
 		$this->setValue('context', new \Elgg\Context());
 		$this->setClassName('crypto', '\ElggCrypto');
+
+		$this->setFactory('datalist', function(ServiceProvider $c) {
+			// TODO(ewinslow): Add back memcached support
+			$dbprefix = $c->config->get('dbprefix');
+			return new \Elgg\Database\Datalist(
+				new \Elgg\Cache\MemoryPool(), $c->db, $c->logger, "{$dbprefix}datalists");
+		});
+
 		$this->setFactory('db', array($this, 'getDatabase'));
+		$this->setClassName('entityTable', '\Elgg\Database\EntityTable');
 		$this->setFactory('events', array($this, 'getEvents'));
+		$this->setClassName('externalFiles', '\Elgg\Assets\ExternalFiles');
 		$this->setFactory('hooks', array($this, 'getHooks'));
+		$this->setClassName('input', 'Elgg\Http\Input');
 		$this->setFactory('logger', array($this, 'getLogger'));
 		$this->setClassName('metadataCache', '\ElggVolatileMetadataCache');
+		$this->setClassName('metadataTable', '\Elgg\Database\MetadataTable');
+		$this->setClassName('metastringsTable', '\Elgg\Database\MetastringsTable');
 		$this->setFactory('persistentLogin', array($this, 'getPersistentLogin'));
+		$this->setClassName('plugins', '\Elgg\Database\Plugins');
+		$this->setFactory('ownerPreloader', array($this, 'getOwnerPreloader'));
 		$this->setFactory('queryCounter', array($this, 'getQueryCounter'), false);
 		$this->setFactory('request', array($this, 'getRequest'));
+		$this->setClassName('relationshipsTable', '\Elgg\Database\RelationshipsTable');
 		$this->setFactory('router', array($this, 'getRouter'));
 		$this->setFactory('session', array($this, 'getSession'));
+		$this->setClassName('simpleCache', '\Elgg\Cache\SimpleCache');
+		$this->setClassName('siteSecret', '\Elgg\Database\SiteSecret');
+		$this->setClassName('stickyForms', 'Elgg\Forms\StickyForms');
+		$this->setClassName('subtypeTable', '\Elgg\Database\SubtypeTable');
+		$this->setClassName('systemCache', '\Elgg\Cache\SystemCache');
+		$this->setClassName('translator', '\Elgg\I18n\Translator');
+		$this->setClassName('usersTable', '\Elgg\Database\UsersTable');
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setClassName('widgets', '\Elgg\WidgetsService');
 		$this->setFactory('notifications', array($this, 'getNotifications'));
@@ -210,11 +254,21 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 * @return \Elgg\PersistentLoginService
 	 */
 	protected function getPersistentLogin(\Elgg\Di\ServiceProvider $c) {
-		$cookies_config = elgg_get_config('cookies');
+		$cookies_config = _elgg_services()->config->get('cookies');
 		$remember_me_cookies_config = $cookies_config['remember_me'];
 		$cookie_name = $remember_me_cookies_config['name'];
 		$cookie_token = $c->request->cookies->get($cookie_name, '');
 		return new \Elgg\PersistentLoginService($c->db, $c->session, $c->crypto, $remember_me_cookies_config, $cookie_token);
+	}
+
+	/**
+	 * Owner preloader factory
+	 *
+	 * @param \Elgg\Di\ServiceProvider $c Dependency injection container
+	 * @return \Elgg\EntityPreloader
+	 */
+	protected function getOwnerPreloader(\Elgg\Di\ServiceProvider $c) {
+		return new \Elgg\EntityPreloader(array('owner_guid'));
 	}
 
 	/**

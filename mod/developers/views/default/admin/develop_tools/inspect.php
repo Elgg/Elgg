@@ -8,7 +8,16 @@
 elgg_load_js('jquery.jstree');
 elgg_load_css('jquery.jstree');
 
-echo elgg_view_form('developers/inspect', array('class' => 'developers-form-inspect'));
+$inspect_type = get_input('inspect_type');
+$method = 'get' . str_replace(' ', '', $inspect_type);
 
-echo '<div id="developers-inspect-results"></div>';
-echo elgg_view('graphics/ajax_loader', array('id' => 'developers-ajax-loader'));
+$inspector = new ElggInspector();
+$inspect_result = '';
+if ($inspector && method_exists($inspector, $method)) {
+	$tree = $inspector->$method();
+	$inspect_result = elgg_view('developers/tree', array('tree' => $tree));
+}
+
+echo '<p>' . elgg_echo('developers:inspect:help') . '</p>';
+
+echo "<div id=\"developers-inspect-results\" class=\"hidden\">{$inspect_result}</div>";

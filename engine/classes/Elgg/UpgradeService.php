@@ -15,6 +15,21 @@ namespace Elgg;
 class UpgradeService {
 
 	/**
+	 * Global Elgg configuration
+	 * 
+	 * @var \stdClass
+	 */
+	private $CONFIG;
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		global $CONFIG;
+		$this->CONFIG = $CONFIG;
+	}
+
+	/**
 	 * Run the upgrade process
 	 *
 	 * @return array
@@ -28,13 +43,13 @@ class UpgradeService {
 		// prevent someone from running the upgrade script in parallel (see #4643)
 		if (!$this->getUpgradeMutex()) {
 			$result['failure'] = true;
-			$result['reason'] = elgg_echo('upgrade:locked');
+			$result['reason'] = _elgg_services()->translator->translate('upgrade:locked');
 			return $result;
 		}
 
 		// disable the system log for upgrades to avoid exceptions when the schema changes.
-		elgg_unregister_event_handler('log', 'systemlog', 'system_log_default_logger');
-		elgg_unregister_event_handler('all', 'all', 'system_log_listener');
+		_elgg_services()->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
+		_elgg_services()->events->unregisterHandler('all', 'all', 'system_log_listener');
 
 		// turn off time limit
 		set_time_limit(0);
@@ -43,7 +58,7 @@ class UpgradeService {
 			$this->processUpgrades();
 		}
 
-		elgg_trigger_event('upgrade', 'system', null);
+		_elgg_services()->events->trigger('upgrade', 'system', null);
 		elgg_invalidate_simplecache();
 		elgg_reset_system_cache();
 
@@ -61,11 +76,8 @@ class UpgradeService {
 	 * @return bool
 	 */
 	protected function upgradeCode($version, $quiet = false) {
-		// do not remove - some upgrade scripts depend on this
-		global $CONFIG;
-
 		$version = (int) $version;
-		$upgrade_path = elgg_get_config('path') . 'engine/lib/upgrades/';
+		$upgrade_path = _elgg_services()->config->get('path') . 'engine/lib/upgrades/';
 		$processed_upgrades = $this->getProcessedUpgrades();
 
 		// upgrading from 1.7 to 1.8. Need to bootstrap.
@@ -95,7 +107,7 @@ class UpgradeService {
 			if ($quiet) {
 				// hide include errors as well as any exceptions that might happen
 				try {
-					if (!@include("$upgrade_path/$upgrade")) {
+					if (!@self::includeCode("$upgrade_path/$upgrade")) {
 						$success = false;
 						error_log("Could not include $upgrade_path/$upgrade");
 					}
@@ -104,23 +116,21 @@ class UpgradeService {
 					error_log($e->getMessage());
 				}
 			} else {
-				if (!include("$upgrade_path/$upgrade")) {
+				if (!self::includeCode("$upgrade_path/$upgrade")) {
 					$success = false;
 					error_log("Could not include $upgrade_path/$upgrade");
 				}
 			}
 
 			if ($success) {
-				// incrementally set upgrade so we know where to start if something fails.
-				$processed_upgrades[] = $upgrade;
-
 				// don't set the version to a lower number in instances where an upgrade
 				// has been merged from a lower version of Elgg
 				if ($upgrade_version > $version) {
-					datalist_set('version', $upgrade_version);
+					_elgg_services()->datalist->set('version', $upgrade_version);
 				}
 
-				$this->setProcessedUpgrades($processed_upgrades);
+				// incrementally set upgrade so we know where to start if something fails.
+				$this->setProcessedUpgrade($upgrade);
 			} else {
 				return false;
 			}
@@ -130,15 +140,30 @@ class UpgradeService {
 	}
 
 	/**
-	 * Saves the processed upgrades to a dataset.
+	 * PHP include a file with a very limited scope
 	 *
-	 * @param array $processed_upgrades An array of processed upgrade filenames
-	 *                                  (not the path, just the file)
+	 * @param string $file File path to include
+	 * @return mixed
+	 */
+	protected static function includeCode($file) {
+		// do not remove - some upgrade scripts depend on this
+		global $CONFIG;
+
+		return include $file;
+	}
+
+	/**
+	 * Saves a processed upgrade to a dataset.
+	 *
+	 * @param string $upgrade Filename of the processed upgrade
+	 *                        (not the path, just the file)
 	 * @return bool
 	 */
-	protected function setProcessedUpgrades(array $processed_upgrades) {
+	protected function setProcessedUpgrade($upgrade) {
+		$processed_upgrades = $this->getProcessedUpgrades();
+		$processed_upgrades[] = $upgrade;
 		$processed_upgrades = array_unique($processed_upgrades);
-		return datalist_set('processed_upgrades', serialize($processed_upgrades));
+		return _elgg_services()->datalist->set('processed_upgrades', serialize($processed_upgrades));
 	}
 
 	/**
@@ -147,7 +172,7 @@ class UpgradeService {
 	 * @return mixed Array of processed upgrade filenames or false
 	 */
 	protected function getProcessedUpgrades() {
-		$upgrades = datalist_get('processed_upgrades');
+		$upgrades = _elgg_services()->datalist->get('processed_upgrades');
 		$unserialized = unserialize($upgrades);
 		return $unserialized;
 	}
@@ -177,7 +202,7 @@ class UpgradeService {
 	 */
 	protected function getUpgradeFiles($upgrade_path = null) {
 		if (!$upgrade_path) {
-			$upgrade_path = elgg_get_config('path') . 'engine/lib/upgrades/';
+			$upgrade_path = _elgg_services()->config->get('path') . 'engine/lib/upgrades/';
 		}
 		$upgrade_path = sanitise_filepath($upgrade_path);
 		$handle = opendir($upgrade_path);
@@ -219,7 +244,7 @@ class UpgradeService {
 		}
 
 		if ($processed_upgrades === null) {
-			$processed_upgrades = unserialize(datalist_get('processed_upgrades'));
+			$processed_upgrades = unserialize(_elgg_services()->datalist->get('processed_upgrades'));
 			if (!is_array($processed_upgrades)) {
 				$processed_upgrades = array();
 			}
@@ -236,7 +261,7 @@ class UpgradeService {
 	 */
 	protected function processUpgrades() {
 
-		$dbversion = (int) datalist_get('version');
+		$dbversion = (int) _elgg_services()->datalist->get('version');
 
 		// No version number? Oh snap...this is an upgrade from a clean installation < 1.7.
 		// Run all upgrades without error reporting and hope for the best.
@@ -245,18 +270,18 @@ class UpgradeService {
 
 		// Note: Database upgrades are deprecated as of 1.8.  Use code upgrades.  See #1433
 		if ($this->dbUpgrade($dbversion, '', $quiet)) {
-			system_message(elgg_echo('upgrade:db'));
+			system_message(_elgg_services()->translator->translate('upgrade:db'));
 		}
 
 		if ($this->upgradeCode($dbversion, $quiet)) {
-			system_message(elgg_echo('upgrade:core'));
+			system_message(_elgg_services()->translator->translate('upgrade:core'));
 
 			// Now we trigger an event to give the option for plugins to do something
 			$upgrade_details = new \stdClass;
 			$upgrade_details->from = $dbversion;
 			$upgrade_details->to = elgg_get_version();
 
-			elgg_trigger_event('upgrade', 'upgrade', $upgrade_details);
+			_elgg_services()->events->trigger('upgrade', 'upgrade', $upgrade_details);
 
 			return true;
 		}
@@ -274,7 +299,7 @@ class UpgradeService {
 	 * @return bool
 	 */
 	protected function bootstrap17to18() {
-		$db_version = (int) datalist_get('version');
+		$db_version = (int) _elgg_services()->datalist->get('version');
 
 		// the 1.8 upgrades before the upgrade system change that are interspersed with 1.7 upgrades.
 		$upgrades_18 = array(
@@ -299,11 +324,9 @@ class UpgradeService {
 
 			// this has already been run in a previous 1.7.X -> 1.7.X upgrade
 			if ($upgrade_version < $db_version) {
-				$processed_upgrades[] = $upgrade_file;
+				$this->setProcessedUpgrade($upgrade_file);
 			}
 		}
-
-		return $this->setProcessedUpgrades($processed_upgrades);
 	}
 
 	/**
@@ -312,16 +335,16 @@ class UpgradeService {
 	 * @return bool
 	 */
 	protected function getUpgradeMutex() {
-		global $CONFIG;
+		
 
 		if (!$this->isUpgradeLocked()) {
 			// lock it
-			insert_data("create table {$CONFIG->dbprefix}upgrade_lock (id INT)");
-			elgg_log('Locked for upgrade.', 'NOTICE');
+			_elgg_services()->db->insertData("create table {$this->CONFIG->dbprefix}upgrade_lock (id INT)");
+			_elgg_services()->logger->notice('Locked for upgrade.');
 			return true;
 		}
 
-		elgg_log('Cannot lock for upgrade: already locked.', 'WARNING');
+		_elgg_services()->logger->warn('Cannot lock for upgrade: already locked');
 		return false;
 	}
 
@@ -331,9 +354,9 @@ class UpgradeService {
 	 * @return void
 	 */
 	public function releaseUpgradeMutex() {
-		global $CONFIG;
-		delete_data("drop table {$CONFIG->dbprefix}upgrade_lock");
-		elgg_log('Upgrade unlocked.', 'NOTICE');
+		
+		_elgg_services()->db->deleteData("drop table {$this->CONFIG->dbprefix}upgrade_lock");
+		_elgg_services()->logger->notice('Upgrade unlocked.');
 	}
 
 	/**
@@ -342,9 +365,9 @@ class UpgradeService {
 	 * @return bool
 	 */
 	public function isUpgradeLocked() {
-		global $CONFIG;
+		
 
-		$is_locked = count(get_data("SHOW TABLES LIKE '{$CONFIG->dbprefix}upgrade_lock'"));
+		$is_locked = count(_elgg_services()->db->getData("SHOW TABLES LIKE '{$this->CONFIG->dbprefix}upgrade_lock'"));
 
 		return (bool)$is_locked;
 	}
@@ -372,12 +395,12 @@ class UpgradeService {
 	 * @deprecated 1.8 Use PHP upgrades for sql changes.
 	 */
 	protected function dbUpgrade($version, $fromdir = "", $quiet = false) {
-		global $CONFIG;
+		
 
 		$version = (int) $version;
 
 		if (!$fromdir) {
-			$fromdir = $CONFIG->path . 'engine/schema/upgrades/';
+			$fromdir = $this->CONFIG->path . 'engine/schema/upgrades/';
 		}
 
 		$i = 0;
@@ -404,12 +427,12 @@ class UpgradeService {
 					// hide all errors.
 					if ($quiet) {
 						try {
-							run_sql_script($fromdir . $sqlfile);
+							_elgg_services()->db->runSqlScript($fromdir . $sqlfile);
 						} catch (\DatabaseException $e) {
 							error_log($e->getmessage());
 						}
 					} else {
-						run_sql_script($fromdir . $sqlfile);
+						_elgg_services()->db->runSqlScript($fromdir . $sqlfile);
 					}
 					$i++;
 				}

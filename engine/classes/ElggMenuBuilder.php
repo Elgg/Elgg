@@ -69,7 +69,7 @@ class ElggMenuBuilder {
 		$selected_menu = array();
 		foreach ($this->menu as $menu_item) {
 			if (!is_object($menu_item)) {
-				elgg_log("A non-object was passed to \ElggMenuBuilder", "ERROR");
+				_elgg_services()->logger->error("A non-object was passed to \ElggMenuBuilder");
 				continue;
 			}
 			if ($menu_item->inContext()) {
@@ -123,7 +123,7 @@ class ElggMenuBuilder {
 			$iteration = 0;
 			$current_gen = $parents;
 			$next_gen = null;
-			while (count($children) && $iteration < 5) {
+			while (count($children) && $iteration < 20) {
 				foreach ($children as $index => $menu_item) {
 					$parent_name = $menu_item->getParentName();
 					if (array_key_exists($parent_name, $current_gen)) {

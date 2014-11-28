@@ -116,21 +116,15 @@ html {
 	}
 	.elgg-main {
         padding: 12px 20px 10px;
+		
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
     }
-    .elgg-layout-one-sidebar .elgg-main {
-        width: auto;
+    .elgg-layout-one-sidebar .elgg-main,
+	.elgg-layout-two-sidebar .elgg-main {
+        width: 100%;
     }
-    .elgg-layout-two-sidebar .elgg-main {
-        width: auto;
-    }
-	.elgg-layout-one-sidebar {
-		width: 100%;
-		float: left;
-	}
-	.elgg-layout-two-sidebar {
-		width: 100%;
-		float: left;
-	}
 	.elgg-sidebar {
 		border-left: none;
 		border-top: 1px solid #DCDCDC;
@@ -188,6 +182,7 @@ html {
 	}
 	/***** CUSTOM INDEX ******/
 	.elgg-col-1of2 {
+		float: none;
 		width: 100%;
 	}
 	.prl {
@@ -199,8 +194,9 @@ html {
 	#elgg-widget-col-1,
 	#elgg-widget-col-2,
 	#elgg-widget-col-3 {
-		width: 100%;
+		float: none;
 		min-height: 0 !important;
+		width: 100%;
 	}
 	.elgg-module-widget {
 		margin: 0 0 15px;

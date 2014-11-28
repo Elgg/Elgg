@@ -8,6 +8,7 @@ define(function(require) {
 		allowedContent: true,
 		baseHref: elgg.config.wwwroot,
 		removePlugins: 'contextmenu,tabletools,resize',
+		extraPlugins: 'blockimagepaste',
 		defaultLanguage: 'en',
 		language: elgg.config.language,
 		skin: 'moono',

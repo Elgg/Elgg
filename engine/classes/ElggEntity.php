@@ -106,8 +106,8 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['type'] = null;
 		$this->attributes['subtype'] = null;
 
-		$this->attributes['owner_guid'] = elgg_get_logged_in_user_guid();
-		$this->attributes['container_guid'] = elgg_get_logged_in_user_guid();
+		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid();
+		$this->attributes['container_guid'] = _elgg_services()->session->getLoggedInUserGuid();
 
 		$this->attributes['site_guid'] = null;
 		$this->attributes['access_id'] = ACCESS_PRIVATE;
@@ -150,7 +150,7 @@ abstract class ElggEntity extends \ElggData implements
 	public function __clone() {
 		$orig_entity = get_entity($this->guid);
 		if (!$orig_entity) {
-			elgg_log("Failed to clone entity with GUID $this->guid", "ERROR");
+			_elgg_services()->logger->error("Failed to clone entity with GUID $this->guid");
 			return;
 		}
 
@@ -963,7 +963,7 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function countComments() {
 		$params = array('entity' => $this);
-		$num = elgg_trigger_plugin_hook('comments:count', $this->getType(), $params);
+		$num = _elgg_services()->hooks->trigger('comments:count', $this->getType(), $params);
 
 		if (is_int($num)) {
 			return $num;
@@ -1037,7 +1037,7 @@ abstract class ElggEntity extends \ElggData implements
 		$user_guid = (int)$user_guid;
 		$user = get_entity($user_guid);
 		if (!$user) {
-			$user = elgg_get_logged_in_user_entity();
+			$user = _elgg_services()->session->getLoggedInUser();
 		}
 
 		$return = false;
@@ -1063,7 +1063,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		$params = array('entity' => $this, 'user' => $user);
-		return elgg_trigger_plugin_hook('permissions_check', $this->type, $params, $return);
+		return _elgg_services()->hooks->trigger('permissions_check', $this->type, $params, $return);
 	}
 
 	/**
@@ -1093,7 +1093,7 @@ abstract class ElggEntity extends \ElggData implements
 				return false;
 			}
 		} else {
-			$user = elgg_get_logged_in_user_entity();
+			$user = _elgg_services()->session->getLoggedInUser();
 			$user_guid = $user->guid;
 		}
 
@@ -1110,7 +1110,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		// metadata and user may be null
 		$params = array('entity' => $this, 'user' => $user, 'metadata' => $metadata);
-		return elgg_trigger_plugin_hook('permissions_check:metadata', $this->type, $params, $return);
+		return _elgg_services()->hooks->trigger('permissions_check:metadata', $this->type, $params, $return);
 	}
 
 	/**
@@ -1139,14 +1139,14 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function canComment($user_guid = 0) {
 		if ($user_guid == 0) {
-			$user_guid = elgg_get_logged_in_user_guid();
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 		$user = get_entity($user_guid);
 
 		// By default, we don't take a position of whether commenting is allowed
 		// because it is handled by the subclasses of \ElggEntity
 		$params = array('entity' => $this, 'user' => $user);
-		return elgg_trigger_plugin_hook('permissions_check:comment', $this->type, $params, null);
+		return _elgg_services()->hooks->trigger('permissions_check:comment', $this->type, $params, null);
 	}
 
 	/**
@@ -1165,7 +1165,7 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function canAnnotate($user_guid = 0, $annotation_name = '') {
 		if ($user_guid == 0) {
-			$user_guid = elgg_get_logged_in_user_guid();
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 		$user = get_entity($user_guid);
 
@@ -1179,7 +1179,7 @@ abstract class ElggEntity extends \ElggData implements
 			'user' => $user,
 			'annotation_name' => $annotation_name,
 		);
-		return elgg_trigger_plugin_hook('permissions_check:annotate', $this->type, $params, $return);
+		return _elgg_services()->hooks->trigger('permissions_check:annotate', $this->type, $params, $return);
 	}
 
 	/**
@@ -1353,7 +1353,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		$type = $this->getType();
 		$params = array('entity' => $this);
-		$url = elgg_trigger_plugin_hook('entity:url', $type, $params, $url);
+		$url = _elgg_services()->hooks->trigger('entity:url', $type, $params, $url);
 
 		// @todo remove when \ElggEntity::setURL() has been removed
 		if (!empty($this->url_override)) {
@@ -1404,7 +1404,7 @@ abstract class ElggEntity extends \ElggData implements
 			'size' => $size,
 		);
 
-		$url = elgg_trigger_plugin_hook('entity:icon:url', $type, $params, null);
+		$url = _elgg_services()->hooks->trigger('entity:icon:url', $type, $params, null);
 		if ($url == null) {
 			$url = "_graphics/icons/default/$size.png";
 		}
@@ -1533,7 +1533,7 @@ abstract class ElggEntity extends \ElggData implements
 		} else {
 			$guid = $this->create();
 			if ($guid) {
-				if (elgg_trigger_event('create', $this->type, $this)) {
+				if (_elgg_services()->events->trigger('create', $this->type, $this)) {
 					return $guid;
 				} else {
 					// plugins that return false to event don't need to override the access system
@@ -1680,7 +1680,7 @@ abstract class ElggEntity extends \ElggData implements
 		unset($persisted_entity);
 
 		if ($allow_edit) {
-			$allow_edit = elgg_trigger_event('update', $this->type, $this);
+			$allow_edit = _elgg_services()->events->trigger('update', $this->type, $this);
 		}
 
 		_elgg_enable_caching_for_entity($this->guid);
@@ -1833,7 +1833,7 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 		
-		if (!elgg_trigger_event('disable', $this->type, $this)) {
+		if (!_elgg_services()->events->trigger('disable', $this->type, $this)) {
 			return false;
 		}
 		
@@ -1882,7 +1882,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		if ($res) {
 			$this->attributes['enabled'] = 'no';
-			elgg_trigger_event('disable:after', $this->type, $this);
+			_elgg_services()->events->trigger('disable:after', $this->type, $this);
 		}
 
 		return $res;
@@ -1904,7 +1904,7 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 		
-		if (!elgg_trigger_event('enable', $this->type, $this)) {
+		if (!_elgg_services()->events->trigger('enable', $this->type, $this)) {
 			return false;
 		}
 		
@@ -1944,7 +1944,7 @@ abstract class ElggEntity extends \ElggData implements
 	
 		if ($result) {
 			$this->attributes['enabled'] = 'yes';
-			elgg_trigger_event('enable:after', $this->type, $this);
+			_elgg_services()->events->trigger('enable:after', $this->type, $this);
 		}
 
 		return $result;
@@ -1984,7 +1984,7 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 		
-		if (!elgg_trigger_event('delete', $this->type, $this)) {
+		if (!_elgg_services()->events->trigger('delete', $this->type, $this)) {
 			return false;
 		}
 		
@@ -2005,12 +2005,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		// Delete contained owned and otherwise releated objects (depth first)
 		if ($recursive) {
-			// Temporary token overriding access controls
-			// @todo Do this better.
-			static $__RECURSIVE_DELETE_TOKEN;
-			// Make it slightly harder to guess
-			$__RECURSIVE_DELETE_TOKEN = md5(elgg_get_logged_in_user_guid());
-
+			// Temporarily overriding access controls
 			$entity_disable_override = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
 			$ia = elgg_set_ignore_access(true);
@@ -2034,7 +2029,6 @@ abstract class ElggEntity extends \ElggData implements
 			}
 
 			access_show_hidden_entities($entity_disable_override);
-			$__RECURSIVE_DELETE_TOKEN = null;
 			elgg_set_ignore_access($ia);
 		}
 
@@ -2091,7 +2085,7 @@ abstract class ElggEntity extends \ElggData implements
 	public function toObject() {
 		$object = $this->prepareObject(new \stdClass());
 		$params = array('entity' => $this);
-		$object = elgg_trigger_plugin_hook('to:object', 'entity', $params, $object);
+		$object = _elgg_services()->hooks->trigger('to:object', 'entity', $params, $object);
 		return $object;
 	}
 
@@ -2364,7 +2358,7 @@ abstract class ElggEntity extends \ElggData implements
 		$this->attributes['subtype'] = $data->getAttribute('subclass');
 
 		// Set owner
-		$this->attributes['owner_guid'] = elgg_get_logged_in_user_guid(); // Import as belonging to importer.
+		$this->attributes['owner_guid'] = _elgg_services()->session->getLoggedInUserGuid(); // Import as belonging to importer.
 
 		// Set time
 		$this->attributes['time_created'] = strtotime($data->getAttribute('published'));

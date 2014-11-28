@@ -7,15 +7,6 @@
  * @subpackage DataModel.MetaStrings
  */
 
-/** Cache metastrings for a page */
-/**
- * @var string[] $METASTRINGS_CACHE
- * @access private
- */
-global $METASTRINGS_CACHE;
-$METASTRINGS_CACHE = array();
-
-
 /**
  * Gets the metastring identifier for a value.
  *
@@ -32,63 +23,7 @@ $METASTRINGS_CACHE = array();
  * @since 1.9.0
  */
 function elgg_get_metastring_id($string, $case_sensitive = true) {
-	global $CONFIG, $METASTRINGS_CACHE;
-
-	// caching doesn't work for case insensitive requests
-	if ($case_sensitive) {
-		$result = array_search($string, $METASTRINGS_CACHE, true);
-
-		if ($result !== false) {
-			return $result;
-		}
-
-		// Experimental memcache
-		$msfc = null;
-		static $metastrings_memcache;
-		if ((!$metastrings_memcache) && (is_memcache_available())) {
-			$metastrings_memcache = new \ElggMemcache('metastrings_memcache');
-		}
-		if ($metastrings_memcache) {
-			$msfc = $metastrings_memcache->load($string);
-		}
-		if ($msfc) {
-			return $msfc;
-		}
-	}
-
-	$escaped_string = sanitise_string($string);
-	if ($case_sensitive) {
-		$query = "SELECT * FROM {$CONFIG->dbprefix}metastrings WHERE string = BINARY '$escaped_string' LIMIT 1";
-	} else {
-		$query = "SELECT * FROM {$CONFIG->dbprefix}metastrings WHERE string = '$escaped_string'";
-	}
-
-	$id = false;
-	$results = get_data($query);
-	if (is_array($results)) {
-		if (!$case_sensitive) {
-			$ids = array();
-			foreach ($results as $result) {
-				$ids[] = $result->id;
-			}
-			// return immediately because we don't want to cache case insensitive results
-			return $ids;
-		} else if (isset($results[0])) {
-			$id = $results[0]->id;
-		}
-	}
-
-	if (!$id) {
-		$id = _elgg_add_metastring($string);
-	}
-
-	$METASTRINGS_CACHE[$id] = $string;
-
-	if ($metastrings_memcache) {
-		$metastrings_memcache->save($string, $id);
-	}
-
-	return $id;
+	return _elgg_services()->metastringsTable->getId($string, $case_sensitive);
 }
 
 /**
@@ -100,56 +35,7 @@ function elgg_get_metastring_id($string, $case_sensitive = true) {
  * @return int The identifier for this string
  */
 function _elgg_add_metastring($string) {
-	global $CONFIG;
-
-	$escaped_string = sanitise_string($string);
-
-	return insert_data("INSERT INTO {$CONFIG->dbprefix}metastrings (string) VALUES ('$escaped_string')");
-}
-
-/**
- * Delete any orphaned entries in metastrings. This is run by the garbage collector.
- *
- * @return bool
- * @access private
- */
-function _elgg_delete_orphaned_metastrings() {
-	global $CONFIG;
-
-	// If memcache is enabled then we need to flush it of deleted values
-	if (is_memcache_available()) {
-		$select_query = "
-		SELECT * FROM {$CONFIG->dbprefix}metastrings WHERE
-		(
-			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}metadata)) AND
-			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}metadata)) AND
-			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}annotations)) AND
-			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}annotations))
-		)";
-
-		$dead = get_data($select_query);
-		if ($dead) {
-			static $metastrings_memcache;
-			if (!$metastrings_memcache) {
-				$metastrings_memcache = new \ElggMemcache('metastrings_memcache');
-			}
-
-			foreach ($dead as $d) {
-				$metastrings_memcache->delete($d->string);
-			}
-		}
-	}
-
-	$query = "
-		DELETE FROM {$CONFIG->dbprefix}metastrings WHERE
-		(
-			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}metadata)) AND
-			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}metadata)) AND
-			(id NOT IN (SELECT name_id FROM {$CONFIG->dbprefix}annotations)) AND
-			(id NOT IN (SELECT value_id FROM {$CONFIG->dbprefix}annotations))
-		)";
-
-	return delete_data($query);
+	return _elgg_services()->metastringsTable->add($string);
 }
 
 /**
@@ -248,6 +134,7 @@ function _elgg_get_metastring_based_objects($options) {
 		'wheres' => array(),
 		'joins' => array(),
 
+		'preload_owners' => false,
 		'callback' => $callback,
 	);
 
@@ -432,6 +319,11 @@ function _elgg_get_metastring_based_objects($options) {
 		}
 
 		$dt = get_data($query, $options['callback']);
+
+		if ($options['preload_owners'] && is_array($dt) && count($dt) > 1) {
+			_elgg_services()->ownerPreloader->preload($dt);
+		}
+
 		return $dt;
 	} else {
 		$result = get_data_row($query);

@@ -147,7 +147,7 @@ class Helper2013022000 {
 	 */
 	public function forgetFailures() {
 		$relationship = sanitise_string(self::RELATIONSHIP_FAILURE);
-		update_data("
+		_elgg_services()->db->updateData("
 			DELETE FROM {$this->dbPrefix}entity_relationships
 			WHERE relationship = '$relationship'
 			  AND guid_two = {$this->siteGuid}
@@ -159,7 +159,7 @@ class Helper2013022000 {
 	 */
 	public function forgetSuccesses() {
 		$relationship = sanitise_string(self::RELATIONSHIP_SUCCESS);
-		update_data("
+		_elgg_services()->db->updateData("
 			DELETE FROM {$this->dbPrefix}entity_relationships
 			WHERE relationship = '$relationship'
 			  AND guid_two = {$this->siteGuid}
@@ -178,7 +178,7 @@ class Helper2013022000 {
 			WHERE relationship = '$relationship'
 			  AND guid_two = {$this->siteGuid}
 		";
-		$row = get_data_row($sql);
+		$row = _elgg_services()->db->getDataRow($sql);
 		return ($row->cnt > 0);
 	}
 }

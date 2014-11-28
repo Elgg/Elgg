@@ -9,3 +9,4 @@ Discover if Elgg is right for your community.
    features
    license 
    install
+   development

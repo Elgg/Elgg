@@ -21,12 +21,14 @@ Advice
 Basic instructions
 ==================
 
-* **Back up your database, data directory and code**
-* Download the new version of Elgg from http://elgg.org
-* Overwrite your existing files with the new version of Elgg
-* Merge any new changes from ``htaccess_dist`` into ``.htaccess``
-* Merge any new changes from ``settings.example.php`` into ``settings.php``
-* Visit http://your-elgg-site.com/upgrade.php
+#. **Back up your database, data directory and code**
+#. Download the new version of Elgg from http://elgg.org
+#. Update the files
+    * If doing a patch upgrade (1.9.x), overwrite your existing files with the new version of Elgg
+    * If doing a minor upgrade (1.x), replace the existing core files completely
+#. Merge any new changes from ``htaccess_dist`` into ``.htaccess``
+#. Merge any new changes from ``settings.example.php`` into ``settings.php``
+#. Visit http://your-elgg-site.com/upgrade.php
 
 .. note::
 
@@ -52,12 +54,14 @@ Upgrade steps
 There are several data migrations involved, so it is especially important that you
 **back up your database and data directory** before performing the upgrade.
 
-You may also consider getting rid of obsolete files from formerly installed Elgg versions
-by deleting everything from the Elgg installation directory except for:
+Download the new version and copy these files from the existing 1.8 site:
 
  * ``.htaccess``
  * ``engine/settings.php``
  * any 3rd-party plugin folders in the ``mod`` directory
+
+Then replace the old installation directory with the new one. This way you are
+guaranteed to get rid of obsolete files which might cause problems if left behind.
 
 Follow the basic instructions listed above.
 

@@ -4727,3 +4727,16 @@ function retrieve_cached_entity($guid) {
 	elgg_deprecated_notice('retrieve_cached_entity() is a private function and should not be used.', 1.8);
 	return _elgg_retrieve_cached_entity($guid);
 }
+
+/**
+ * Returns the category of a file from its MIME type
+ *
+ * @param string $mime_type The MIME type
+ *
+ * @return string 'document', 'audio', 'video', or 'general' if the MIME type was unrecognized
+ * @deprecated 1.8 Use elgg_get_file_simple_type()
+ */
+function get_general_file_type($mime_type) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_file_get_simple_type()', 1.8);
+	return elgg_get_file_simple_type($mime_type);
+}

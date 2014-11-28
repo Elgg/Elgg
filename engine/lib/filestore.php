@@ -10,26 +10,26 @@
 /**
  * Get the size of the specified directory.
  *
- * @param string $dir       The full path of the directory
- * @param int    $totalsize Add to current dir size
+ * @param string $dir        The full path of the directory
+ * @param int    $total_size Add to current dir size
  *
- * @return int The size of the directory.
+ * @return int The size of the directory in bytes
  */
-function get_dir_size($dir, $totalsize = 0) {
+function get_dir_size($dir, $total_size = 0) {
 	$handle = @opendir($dir);
 	while ($file = @readdir($handle)) {
-		if (eregi("^\.{1,2}$", $file)) {
+		if (in_array($file, array('.', '..'))) {
 			continue;
 		}
 		if (is_dir($dir . $file)) {
-			$totalsize = get_dir_size($dir . $file . "/", $totalsize);
+			$total_size = get_dir_size($dir . $file . "/", $total_size);
 		} else {
-			$totalsize += filesize($dir . $file);
+			$total_size += filesize($dir . $file);
 		}
 	}
 	@closedir($handle);
 
-	return($totalsize);
+	return($total_size);
 }
 
 /**
@@ -45,7 +45,7 @@ function get_uploaded_file($input_name) {
 	if (!$files->has($input_name)) {
 		return false;
 	}
-	
+
 	$file = $files->get($input_name);
 	if (elgg_extract('error', $file) !== 0) {
 		return false;
@@ -323,76 +323,34 @@ function get_image_resize_parameters($width, $height, $options) {
  * @return bool
  */
 function file_delete($guid) {
-	if ($file = get_entity($guid)) {
-		if ($file->canEdit()) {
-			$thumbnail = $file->thumbnail;
-			$smallthumb = $file->smallthumb;
-			$largethumb = $file->largethumb;
-			if ($thumbnail) {
-				$delfile = new \ElggFile();
-				$delfile->owner_guid = $file->owner_guid;
-				$delfile->setFilename($thumbnail);
-				$delfile->delete();
-			}
-			if ($smallthumb) {
-				$delfile = new \ElggFile();
-				$delfile->owner_guid = $file->owner_guid;
-				$delfile->setFilename($smallthumb);
-				$delfile->delete();
-			}
-			if ($largethumb) {
-				$delfile = new \ElggFile();
-				$delfile->owner_guid = $file->owner_guid;
-				$delfile->setFilename($largethumb);
-				$delfile->delete();
-			}
-
-			return $file->delete();
-		}
+	$file = get_entity($guid);
+	if (!$file || !$file->canEdit()) {
+		return false;
 	}
 
-	return false;
-}
-
-/**
- * Returns an overall file type from the mimetype
- *
- * @param string $mimetype The MIME type
- *
- * @return string The overall type
- */
-function file_get_general_file_type($mimetype) {
-	switch($mimetype) {
-
-		case "application/msword":
-			return "document";
-			break;
-		case "application/pdf":
-			return "document";
-			break;
+	$thumbnail = $file->thumbnail;
+	$smallthumb = $file->smallthumb;
+	$largethumb = $file->largethumb;
+	if ($thumbnail) {
+		$delfile = new \ElggFile();
+		$delfile->owner_guid = $file->owner_guid;
+		$delfile->setFilename($thumbnail);
+		$delfile->delete();
+	}
+	if ($smallthumb) {
+		$delfile = new \ElggFile();
+		$delfile->owner_guid = $file->owner_guid;
+		$delfile->setFilename($smallthumb);
+		$delfile->delete();
+	}
+	if ($largethumb) {
+		$delfile = new \ElggFile();
+		$delfile->owner_guid = $file->owner_guid;
+		$delfile->setFilename($largethumb);
+		$delfile->delete();
 	}
 
-	if (substr_count($mimetype, 'text/')) {
-		return "document";
-	}
-
-	if (substr_count($mimetype, 'audio/')) {
-		return "audio";
-	}
-
-	if (substr_count($mimetype, 'image/')) {
-		return "image";
-	}
-
-	if (substr_count($mimetype, 'video/')) {
-		return "video";
-	}
-
-	if (substr_count($mimetype, 'opendocument')) {
-		return "document";
-	}
-
-	return "general";
+	return $file->delete();
 }
 
 /**
@@ -486,6 +444,19 @@ function set_default_filestore(\ElggFilestore $filestore) {
 }
 
 /**
+ * Returns the category of a file from its MIME type
+ *
+ * @param string $mime_type The MIME type
+ *
+ * @return string 'document', 'audio', 'video', or 'general' if the MIME type was unrecognized
+ * @since 1.10
+ */
+function elgg_get_file_simple_type($mime_type) {
+	$params = array('mime_type' => $mime_type);
+	return elgg_trigger_plugin_hook('simple_type', 'file', $params, 'general');
+}
+
+/**
  * Initialize the file library.
  * Listens to system init and configures the default filestore
  *
@@ -500,8 +471,91 @@ function _elgg_filestore_init() {
 		set_default_filestore(new \ElggDiskFilestore($CONFIG->dataroot));
 	}
 
+	// Fix MIME type detection for Microsoft zipped formats
+	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
+	
+	// Parse category of file from MIME type
+	elgg_register_plugin_hook_handler('simple_type', 'file', '_elgg_filestore_parse_simpletype');
+
 	// Unit testing
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
+}
+
+/**
+ * Fix MIME type detection for Microsoft zipped formats
+ *
+ * @param string $hook      "mime_type"
+ * @param string $type      "file"
+ * @param string $mime_type Detected MIME type
+ * @param array  $params    Hook parameters
+ *
+ * @return string The MIME type
+ * @access private
+ */
+function _elgg_filestore_detect_mimetype($hook, $type, $mime_type, $params) {
+
+	$original_filename = elgg_extract('original_filename', $params);
+
+	$info = pathinfo($original_filename);
+
+	// hack for Microsoft zipped formats
+	$office_formats = array('docx', 'xlsx', 'pptx');
+	if ($mime_type == "application/zip" && in_array($info['extension'], $office_formats)) {
+		switch ($info['extension']) {
+			case 'docx':
+				$mime_type = "application/vnd.openxmlformats-officedocument.wordprocessingml.document";
+				break;
+			case 'xlsx':
+				$mime_type = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+				break;
+			case 'pptx':
+				$mime_type = "application/vnd.openxmlformats-officedocument.presentationml.presentation";
+				break;
+		}
+	}
+
+	// check for bad ppt detection
+	if ($mime_type == "application/vnd.ms-office" && $info['extension'] == "ppt") {
+		$mime_type = "application/vnd.ms-powerpoint";
+	}
+
+	return $mime_type;
+}
+
+/**
+ * Parse a file category of file from a MIME type
+ *
+ * @param string $hook        "simple_type"
+ * @param string $type        "file"
+ * @param string $simple_type The category of file
+ * @param array  $params      Hook parameters
+ *
+ * @return string 'document', 'audio', 'video', or 'general' if the MIME type is unrecognized
+ * @access private
+ */
+function _elgg_filestore_parse_simpletype($hook, $type, $simple_type, $params) {
+
+	$mime_type = elgg_extract('mime_type', $params);
+
+	switch ($mime_type) {
+		case "application/msword":
+		case "application/vnd.openxmlformats-officedocument.wordprocessingml.document":
+		case "application/pdf":
+			return "document";
+
+		case "application/ogg":
+			return "audio";
+	}
+
+	if (preg_match('~^(audio|image|video)/~', $mime_type, $m)) {
+		return $m[1];
+	}
+	if (0 === strpos($mime_type, 'text/') || false !== strpos($mime_type, 'opendocument')) {
+		return "document";
+	}
+
+	// unrecognized MIME
+	return $simple_type;
 }
 
 /**

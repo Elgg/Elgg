@@ -13,7 +13,7 @@ $batch_run_time_in_secs = 2;
 if (get_input('upgrade_completed')) {
 	// set the upgrade as completed
 	$factory = new ElggUpgrade();
-	$upgrade = $factory->getUpgradeFromURL('/admin/upgrades/discussion_replies');
+	$upgrade = $factory->getUpgradeFromPath('admin/upgrades/discussion_replies');
 	if ($upgrade instanceof ElggUpgrade) {
 		$upgrade->setCompleted();
 	}
@@ -53,7 +53,8 @@ do {
 		// no annotations left
 
 		// set the upgrade as completed
-		$upgrade = ElggUpgrade::getUpgradeFromURL('/admin/upgrades/comments');
+		$factory = new ElggUpgrade();
+		$upgrade = $factory->getUpgradeFromPath('admin/upgrades/comments');
 		if ($upgrade instanceof ElggUpgrade) {
 			$upgrade->setCompleted();
 		}

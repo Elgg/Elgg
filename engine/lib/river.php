@@ -76,21 +76,9 @@ function elgg_create_river_item(array $options = array()) {
 		}
 	}
 
-	$type = $object->getType();
-	$subtype = $object->getSubtype();
-
-	$view = sanitise_string($view);
-	$action_type = sanitise_string($action_type);
-	$subject_guid = sanitise_int($subject_guid);
-	$object_guid = sanitise_int($object_guid);
-	$target_guid = sanitise_int($target_guid);
-	$access_id = sanitise_int($access_id);
-	$posted = sanitise_int($posted);
-	$annotation_id = sanitise_int($annotation_id);
-
 	$values = array(
-		'type' => $type,
-		'subtype' => $subtype,
+		'type' => $object->getType(),
+		'subtype' => $object->getSubtype(),
 		'action_type' => $action_type,
 		'access_id' => $access_id,
 		'view' => $view,
@@ -100,6 +88,18 @@ function elgg_create_river_item(array $options = array()) {
 		'annotation_id' => $annotation_id,
 		'posted' => $posted,
 	);
+	$col_types = array(
+		'type' => 'string',
+		'subtype' => 'string',
+		'action_type' => 'string',
+		'access_id' => 'int',
+		'view' => 'string',
+		'subject_guid' => 'int',
+		'object_guid' => 'int',
+		'target_guid' => 'int',
+		'annotation_id' => 'int',
+		'posted' => 'int',
+	);
 
 	// return false to stop insert
 	$values = elgg_trigger_plugin_hook('creating', 'river', null, $values);
@@ -108,27 +108,21 @@ function elgg_create_river_item(array $options = array()) {
 		return true;
 	}
 
-	extract($values);
-
 	$dbprefix = elgg_get_config('dbprefix');
 
-	$id = insert_data("INSERT INTO {$dbprefix}river " .
-		" SET type = '$type', " .
-		" subtype = '$subtype', " .
-		" action_type = '$action_type', " .
-		" access_id = $access_id, " .
-		" view = '$view', " .
-		" subject_guid = $subject_guid, " .
-		" object_guid = $object_guid, " .
-		" target_guid = $target_guid, " .
-		" annotation_id = $annotation_id, " .
-		" posted = $posted, " .
-		" enabled = 'yes'");
+	// escape values array and build INSERT assignments
+	$assignments = array();
+	foreach ($col_types as $name => $type) {
+		$values[$name] = ($type === 'int') ? (int)$values[$name] : sanitize_string($values[$name]);
+		$assignments[] = "$name = '{$values[$name]}'";
+	}
+
+	$id = insert_data("INSERT INTO {$dbprefix}river SET " . implode(',', $assignments));
 
 	// update the entities which had the action carried out on it
 	// @todo shouldn't this be done elsewhere? Like when an annotation is saved?
 	if ($id) {
-		update_entity_last_action($object_guid, $posted);
+		update_entity_last_action($values['object_guid'], $values['posted']);
 
 		$river_items = elgg_get_river(array('id' => $id));
 		if ($river_items) {

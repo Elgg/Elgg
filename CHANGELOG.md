@@ -1,3 +1,135 @@
+<a name="1.9.4"></a>
+### 1.9.4  (2014-10-20)
+
+#### Contributors
+
+* Juho Jaakkola (6)
+* Jeroen Dalsem (4)
+* Steve Clay (4)
+* Per Jensen (3)
+* Stian Liknes (3)
+* Jerôme Bakker (1)
+
+#### Documentation
+
+* **plugins:** Information on activation/deactivation ([4e58ad4d](https://github.com/Elgg/Elgg/commit/4e58ad4d88861819fe17bb0a4be498905907125b))
+* **web_services:** Documentation for Elgg 1.9 ([7cf0f8fd](https://github.com/Elgg/Elgg/commit/7cf0f8fd8a75defed22de8a184bbba3a09f6c3f8))
+
+
+#### Bug Fixes
+
+* **aalborg_theme:** display search when logged out ([31d3d190](https://github.com/Elgg/Elgg/commit/31d3d1905a3c6426838b2c67f28c1aa14c2a76e1))
+* **bookmarks:** fixes more link in group bookmarks widget ([adb46369](https://github.com/Elgg/Elgg/commit/adb463699a35cbe18c4b48408f554ce7d2395264), closes [#6583](https://github.com/Elgg/Elgg/issues/6583))
+* **css:**
+  * stop CSS from overwriting the width and height added in CKEditor ([428234c0](https://github.com/Elgg/Elgg/commit/428234c0dd407758f3ca1e3917c6a0e8636311fb), closes [#7269](https://github.com/Elgg/Elgg/issues/7269))
+  * removed datepicker fixed width causing visual bug ([803e05f5](https://github.com/Elgg/Elgg/commit/803e05f5719fcaffac4e42272f2da344d8f8f745))
+  * prevent select box from overflowing its container ([3b7e94d5](https://github.com/Elgg/Elgg/commit/3b7e94d53e1d4315a942247d64eedaa576b323ba), closes [#7290](https://github.com/Elgg/Elgg/issues/7290))
+* **database:** More robust sql script execution. ([0c5ed4f2](https://github.com/Elgg/Elgg/commit/0c5ed4f220906823f4bdc9f76f7b54c49fd32826))
+* **db:** query cache properly handles more callable types ([b8e58304](https://github.com/Elgg/Elgg/commit/b8e5830418ec1a336afcae383008385853d074fa))
+* **discussion:** discussion replies respect previous subscribers ([d699fe63](https://github.com/Elgg/Elgg/commit/d699fe63f5aa5ba68f5b8935fc47c69f726bd475))
+* **i18n:**
+  * improved change password email subject and body text ([ade6d1c1](https://github.com/Elgg/Elgg/commit/ade6d1c1776b6de328abe8c638988f745425a017))
+  * translate notification messages to the recipient's language ([071b2989](https://github.com/Elgg/Elgg/commit/071b298985599792da762791e659dbfca1124590), closes [#7241](https://github.com/Elgg/Elgg/issues/7241), [#NaN](https://github.com/Elgg/Elgg/issues/NaN))
+  * allow core to load translations for a specific language on-demand ([6417d213](https://github.com/Elgg/Elgg/commit/6417d213c1fc7e4944714bcd718783ac95dec4f9))
+* **install:** prevent WSOD caused by site default language not being defined early enough ([3b9dc902](https://github.com/Elgg/Elgg/commit/3b9dc902c6c56c98e274238536f3f7159f1ae483))
+* **search:** keep container param intact when navigating search results ([3dd87ec1](https://github.com/Elgg/Elgg/commit/3dd87ec19de40d03fba53b704c84c1cadb745dfd))
+
+
+<a name="1.9.3"></a>
+### 1.9.3  (2014-10-06)
+
+#### Contributors
+
+* Juho Jaakkola (3)
+* Jeroen Dalsem (1)
+* Steve Clay (1)
+
+#### Documentation
+
+* **js:** Adds docs for more JS functions, improves docs for elgg.echo ([fa0d0fa8](https://github.com/Elgg/Elgg/commit/fa0d0fa873d674083f199a6f588d39edf2dc048c))
+* **menus:** document how to use menus ([18ac4008](https://github.com/Elgg/Elgg/commit/18ac4008bf3f32663df4bffca7a211dc11d15b20))
+
+
+#### Bug Fixes
+
+* **icons:** some elgg icons were not using internal view ([493e5c9f](https://github.com/Elgg/Elgg/commit/493e5c9fd0402b14428e23f3dec9c33e841de247))
+
+
+<a name="1.9.2"></a>
+### 1.9.2  (2014-09-21)
+
+#### Contributors
+
+* Juho Jaakkola (8)
+* Steve Clay (2)
+
+#### Documentation
+
+* **manifest:** document how to use manifest.xml ([f4fa7487](https://github.com/Elgg/Elgg/commit/f4fa7487f6befdeb09ee891a4867ebbd99fac688))
+* **river:** adds documentation on how to use the river ([d8be198c](https://github.com/Elgg/Elgg/commit/d8be198c1f6b549856c61f316653634c468c229f))
+* **upgrade:** clarifies upgrade instructions about updating Elgg codebase ([6a8fec02](https://github.com/Elgg/Elgg/commit/6a8fec02857f3df7dadc3a7876d936689f319138), closes [#7225](https://github.com/Elgg/Elgg/issues/7225))
+* **views:** adds documentation for the views system ([ff6cf55b](https://github.com/Elgg/Elgg/commit/ff6cf55be3f85d3d00cd2d4cf511adb8f66e8462))
+
+
+#### Bug Fixes
+
+* **install:** confirm that settings.php exists and is readable before including it ([aaa828ed](https://github.com/Elgg/Elgg/commit/aaa828edd980bc7b3cb45fec67c78f6581195bc3))
+* **style:** ordered list markers now always visible ([ecccafc3](https://github.com/Elgg/Elgg/commit/ecccafc356349372e60e7ba7e9075ad1f4b2e0a9), closes [#7206](https://github.com/Elgg/Elgg/issues/7206))
+* **upgrades:** now stores ElggUpgrade by paths instead of full URLs ([39cf72f0](https://github.com/Elgg/Elgg/commit/39cf72f0a25e1d383dc8310f92e10572f9204e30), closes [#6838](https://github.com/Elgg/Elgg/issues/6838))
+
+
+<a name="1.9.1"></a>
+### 1.9.1  (2014-09-12)
+
+#### Contributors
+
+* Juho Jaakkola (2)
+
+#### Bug Fixes
+
+* **upgrade:** fixes erroneous values in the list of processed upgrades ([c6ebbdb2](https://github.com/Elgg/Elgg/commit/c6ebbdb28442927e2254b3a8942ae53eae9c01e7), closes [#7198](https://github.com/Elgg/Elgg/issues/7198))
+
+
+<a name="1.9.0"></a>
+## 1.9.0  (2014-09-07)
+
+#### Contributors
+
+* Juho Jaakkola (3)
+* Ismayil Khayredinov (1)
+* Matt Beckett (1)
+
+#### Bug Fixes
+
+* **embed:** embed jquery target is now searched for instead of assuming last class ([cfe605d4](https://github.com/Elgg/Elgg/commit/cfe605d48ef96e855015d2cb0b08dfb1d2e26347))
+* **i18n:** system cache now supports regional designators in language codes ([735ceb4e](https://github.com/Elgg/Elgg/commit/735ceb4e3feb0ccbf34fd7b59d3133d8a956eaac), closes [#7187](https://github.com/Elgg/Elgg/issues/7187))
+* **messages:** use recipient's language in the notification ([ee88054f](https://github.com/Elgg/Elgg/commit/ee88054f215fee8260ad698425025c667207aad0), closes [#6902](https://github.com/Elgg/Elgg/issues/6902))
+
+
+<a name="1.9.0-rc.7"></a>
+### 1.9.0-rc.7  (2014-08-25)
+
+#### Contributors
+
+* Steve Clay (5)
+* Juho Jaakkola (3)
+* Paweł Sroka (2)
+* Per Jensen (2)
+* Brett Profitt (1)
+
+#### Bug Fixes
+
+* **aalborg_theme:** broken layout on small screens ([a2e88157](https://github.com/Elgg/Elgg/commit/a2e88157fce471e96151b4f508d8f218a78ff620), closes [#7175](https://github.com/Elgg/Elgg/issues/7175))
+* **access:**
+  * has_access_to_entity() now respects ACLs also when set to be ignored ([bac9a80a](https://github.com/Elgg/Elgg/commit/bac9a80a4bbc425688a2bbbcbf9cdb6f961f6068), closes [#7159](https://github.com/Elgg/Elgg/issues/7159))
+  * get_access_array() works correctly when logged out ([7fb67a29](https://github.com/Elgg/Elgg/commit/7fb67a2929605bcc040067ddbf61c8a7dedfe798))
+* **css:** removes padding and margin from elgg-menu-entity items ([04c5e61f](https://github.com/Elgg/Elgg/commit/04c5e61f27ce12f16aab05dcc97db4225abe9655))
+* **discussion:** Fixes inline edit of replies temporarily changing applied styles to the text ([fa8572cb](https://github.com/Elgg/Elgg/commit/fa8572cbf7812c5c7eb97fc7b0e698a39cc6341e), closes [#6879](https://github.com/Elgg/Elgg/issues/6879))
+* **notification:** avoids fatal error if notification event lacks object ([5dfa343d](https://github.com/Elgg/Elgg/commit/5dfa343dd452033808c03dc9ebdc26515660b532), closes [#7157](https://github.com/Elgg/Elgg/issues/7157))
+* **output:** elgg_normalize_url no longer mistakes querystrings for domains ([505d249b](https://github.com/Elgg/Elgg/commit/505d249b926e78ec622e7cee3d58680fa6d26459))
+* **profile:** Making banned users more obvious when using custom profile fields. ([c8c7098a](https://github.com/Elgg/Elgg/commit/c8c7098a77e9a8a8347e7f64771e19d4f5c87aee))
+
+
 <a name="1.9.0-rc.6"></a>
 ### 1.9.0-rc.6  (2014-08-11)
 

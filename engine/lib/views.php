@@ -507,6 +507,24 @@ function _elgg_views_prepare_head($title) {
 		'name' => 'description',
 		'content' => elgg_get_config('sitedescription')
 	);
+	
+	// https://developer.chrome.com/multidevice/android/installtohomescreen
+	$data['metas'][] = array(
+		'name' => 'viewport',
+		'content' => 'width=device-width',
+	);    
+	$data['metas'][] = array(
+		'name' => 'mobile-web-app-capable',
+		'content' => 'yes',
+	);
+	$data['metas'][] = array(
+		'name' => 'apple-mobile-web-app-capable',
+		'content' => 'yes',
+	);
+	$data['links'][] = array(
+		'rel' => 'apple-touch-icon',
+		'href' => elgg_normalize_url('_graphics/favicon-128.png'),
+	);
 
 	// favicons
 	$params['links'][] = array(
@@ -733,9 +751,6 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
 
 	if ($item->getConfirmText()) {
 		$vars['confirm'] = $item->getConfirmText();
-		return elgg_view('output/confirmlink', $vars);
-	} else {
-		unset($vars['confirm']);
 	}
 
 	return elgg_view('output/url', $vars);

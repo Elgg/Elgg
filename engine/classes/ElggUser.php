@@ -369,17 +369,30 @@ class ElggUser extends \ElggEntity
 	/**
 	 * Adds a user as a friend
 	 *
-	 * @param int $friend_guid The GUID of the user to add
+	 * @param int  $friend_guid       The GUID of the user to add
+	 * @param bool $create_river_item Create the river item announcing this friendship
 	 *
 	 * @return bool
-	 * @todo change to accept \ElggUser
 	 */
-	public function addFriend($friend_guid) {
+	public function addFriend($friend_guid, $create_river_item = false) {
 		if (!get_user($friend_guid)) {
 			return false;
 		}
 
-		return add_entity_relationship($this->guid, "friend", $friend_guid);
+		if (!add_entity_relationship($this->guid, "friend", $friend_guid)) {
+			return false;
+		}
+
+		if ($create_river_item) {
+			elgg_create_river_item(array(
+				'view' => 'river/relationship/friend/create',
+				'action_type' => 'friend',
+				'subject_guid' => $this->guid,
+				'object_guid' => $friend_guid,
+			));
+		}
+
+		return true;
 	}
 
 	/**
@@ -388,7 +401,6 @@ class ElggUser extends \ElggEntity
 	 * @param int $friend_guid The GUID of the user to remove
 	 *
 	 * @return bool
-	 * @todo change to accept \ElggUser
 	 */
 	public function removeFriend($friend_guid) {
 		if (!get_user($friend_guid)) {
@@ -413,7 +425,7 @@ class ElggUser extends \ElggEntity
 	 * @return bool
 	 */
 	public function isFriend() {
-		return $this->isFriendOf(elgg_get_logged_in_user_guid());
+		return $this->isFriendOf(_elgg_services()->session->getLoggedInUserGuid());
 	}
 
 	/**
