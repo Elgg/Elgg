@@ -1095,7 +1095,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 		Uusimman julkaisun voit ladata osoitteesta
 		<a href="http://elgg.org/download.php">http://elgg.org/download.php</a>.<br /><br />
 
-		Lisätietoja saat <a href="http://learn.elgg.org/en/1.9/admin/upgrading.html">
+		Lisätietoja saat <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
 		Elggin päivitysdokumentaatiosta</a>. Tarvittaessa voit kysyä apua
 		<a href="http://community.elgg.org/groups/discussion/">Elggin tukifoorumilta</a>.',
 
