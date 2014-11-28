@@ -30,9 +30,9 @@ final class StashPool implements Pool {
 
 	/** @inheritDoc */
 	public function get($key, callable $callback) {
-		assert(is_string($key));
+		assert(is_string($key) || is_int($key));
 
-		$item = $this->stash->getItem($key);
+		$item = $this->stash->getItem((string)$key);
 
 		$result = $item->get();
 
@@ -49,16 +49,16 @@ final class StashPool implements Pool {
 
 	/** @inheritDoc */
 	public function invalidate($key) {
-		assert(is_string($key));
+		assert(is_string($key) || is_int($key));
 		
-		$this->stash->getItem($key)->clear();
+		$this->stash->getItem((string)$key)->clear();
 	}
 	
 	/** @inheritDoc */
 	public function put($key, $value) {
-		assert(is_string($key));
+		assert(is_string($key) || is_int($key));
 
-		$this->stash->getItem($key)->set($value);
+		$this->stash->getItem((string)$key)->set($value);
 	}
 	
 	/**

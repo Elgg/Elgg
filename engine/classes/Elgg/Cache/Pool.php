@@ -20,8 +20,8 @@ interface Pool {
 	/**
 	 * Fetches a value from the cache, calculating on miss via $callback.
 	 * 
-	 * @param string   $key      A plain string ID for the cache entry
-	 * @param callable $callback Logic for calculating the cache entry on miss
+	 * @param string|int $key      A plain string ID for the cache entry
+	 * @param callable   $callback Logic for calculating the cache entry on miss
 	 * 
 	 * @return mixed The cache value
 	 */
@@ -34,7 +34,7 @@ interface Pool {
 	 *  * Immediately consider the value stale
 	 *  * Recalculate the value at the next opportunity
 	 * 
-	 * @param string $key A plain string ID for the cache entry to invalidate.
+	 * @param string|int $key A plain string ID for the cache entry to invalidate.
 	 * 
 	 * @return void
 	 */
@@ -47,8 +47,8 @@ interface Pool {
 	 * For example, when a list of rows is fetched from the database, you can
 	 * prime the cache for each individual result.
 	 * 
-	 * @param string $key   A plain string ID for the cache entry
-	 * @param mixed  $value The cache value
+	 * @param string|int $key   A plain string ID for the cache entry
+	 * @param mixed      $value The cache value
 	 * 
 	 * @return void
 	 */
