@@ -1,5 +1,4 @@
 <?php
-
 $tags = array(
 	(object)array('tag' => 'php', 'total' => 2),
 	(object)array('tag' => 'elgg', 'total' => 8),
@@ -12,6 +11,8 @@ $tags = array(
 	(object)array('tag' => 'code', 'total' => 2),
 );
 
-echo '<div style="width: 200px;">';
-echo elgg_view('output/tagcloud', array('value' => $tags));
-echo '</div>';
+$body = '<div style="width: 200px;">';
+$body .= elgg_view('output/tagcloud', array('value' => $tags));
+$body .= '</div>';
+
+echo elgg_view_module('theme-sandbox-demo', 'Tag cloud (.elgg-tagcloud)', $body);
