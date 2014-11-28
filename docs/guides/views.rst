@@ -162,8 +162,8 @@ The output of each view is run through the `plugin hook <guides/events.html#post
 
 To alter the view output, the handler just needs to alter ``$returnvalue`` and return a new string.
 
-Post pocessing view example
-===========================
+Post processing view example
+============================
 
 Here we'll eliminate breadcrumbs that don't have at least one link.
 
@@ -194,25 +194,32 @@ The following code will automatically display the entity in ``$entity``:
 
 	echo elgg_view_entity($entity);
 
-As you'll know from the data model introduction, all entities have a *type* (object, site, user or group), and optionally a subtype (which could be anything - 'blog', 'forumpost', 'banana'). ``elgg_view_entity`` will automatically look for a view called ``type/subtype``; if there's no subtype, it will look for ``type/type``. Failing that, before it gives up completely it tries ``type/default``. (RSS feeds in Elgg generally work by outputting the ``object/default`` view in the 'rss' viewtype.)
+``elgg_view_entity`` renders an entity in a format using the string option **format** (most commonly 'full' and 'brief'). E.g. the 'full' view might include a full rendering of a blog post with all content, whereas the 'brief' format might return a compact rendering for a search result.
 
-So for example, the view to display a blogpost might be ``object/blog``. The view to display a user is ``user/user``.
+*format* was added in Elgg 1.10; for backward compatibility it's commonly implicitly specified via the legacy boolean option **full_view**, with ``true`` and ``false`` mapped to 'full' and 'brief' respectively.
 
-Full and partial entity views
-=============================
+As you'll know from the data model introduction, all entities have a *type* (object, site, user or group), and optionally a *subtype* (which could be anything - 'blog', 'forumpost', 'banana'). ``elgg_view_entity`` renders using a view it finds with a name based on the type, subtype and format. It checks the following formats and uses the first one that exists:
 
-``elgg_view_entity`` actually has a number of parameters, although only the very first one is required. The first three are:
+* ``type/subtype/format`` - A specific view for this type/subtype and format
+* ``type/default/format`` - A generic view for the type and format
+* ``type/subtype`` - A legacy specific view for this type/subtype (only for formats 'full' and 'brief')
+* ``type/default`` - A legacy generic view for this type (only for formats 'full' and 'brief')
 
-* ``$entity`` - The entity to display
-* ``$viewtype`` - The viewtype to display in (defaults to the one we're currently in, but it can be forced - eg to display a snippet of RSS within an HTML page)
-* ``$full_view`` - Whether to display a *full* version of the entity. (Defaults to false.)
+So for example, the view to display a full blog post might be ``object/blog/full`` or ``object/blog``.
 
-This last parameter is passed to the view as ``$vars['full_view']``. It's up to you what you do with it; the usual behaviour is to only display comments and similar information if this is set to true.
+Into the format-specific views, the *format* is passed as ``$vars['format']``. Into legacy views, the *full_view* option is passed as ``$vars['full_view']``. Note that this happens even when *format* is implied via a given *full_view* option or vise-versa.
+
+Considering viewtype when rendering an entity
+=============================================
+
+``elgg_view_entity`` renders by default using the current viewtype. E.g. RSS feeds in Elgg generally work by outputting the ``object/default`` view in the 'rss' viewtype.
+
+However, the **viewtype** option can be set to force a viewtype during rendering. E.g. a snippet of RSS could be displayed within an HTML page.
 
 Listing entities
 ================
 
-This is then used in the provided listing functions. To automatically display a list of blog posts (:doc:`see the full tutorial </tutorials/blog>`), you can call:
+Listing functions provide a way to render lists of entities in query results. E.g. a list of blog posts (:doc:`see the full tutorial </tutorials/blog>`), can be rendered via:
 
 .. code-block:: php
 
@@ -224,6 +231,16 @@ This is then used in the provided listing functions. To automatically display a 
 This function checks to see if there are any entities; if there are, it first displays the ``navigation/pagination`` view in order to display a way to move from page to page. It then repeatedly calls ``elgg_view_entity`` on each entity, before returning the result. 
 
 Because it does this, Elgg knows that it can automatically supply an RSS feed - it extends the ``metatags`` view (which is called by the header) in order to provide RSS autodiscovery, which is why you can see the orange RSS icon on those pages.
+
+Listing functions pass options through to ``elgg_view_entity``, so you can specify the *format* in which the entities are rendered:
+
+.. code-block:: php
+
+	// a compact list of links to users
+	echo elgg_list_entities(array(
+	    'type' => 'user',
+	    'format' => 'link',
+	));
 
 If your entity list will display the entity owners, you can improve performance a bit by preloading all owner entities:
 

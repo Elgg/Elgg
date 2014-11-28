@@ -558,16 +558,20 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
  *
  * @tip Pagination is handled automatically.
  *
+ * @see elgg_view_entity() This function is used for rendering, hence here we accept the "format" and "full_view"
+ *      options. For BC purposes this function sets a default only for the "full_view" option.
+ *
  * @internal This also provides the views for elgg_view_annotation().
  *
  * @internal If the initial COUNT query returns 0, the $getter will not be called again.
  *
  * @param array    $options Any options from $getter options plus:
- *                   full_view => BOOL Display full view of entities (default: false)
- *                   list_type => STR 'list' or 'gallery'
- *                   list_type_toggle => BOOL Display gallery / list switch
- *                   pagination => BOOL Display pagination links
- *                   no_results => STR Message to display when there are no entities
+ *     format => STR The format in which to render entities. {@link elgg_view_entity()}
+ *     full_view => BOOL Legacy method to specify format. {@link elgg_view_entity()}
+ *     list_type => STR 'list' or 'gallery'
+ *     list_type_toggle => BOOL Display gallery / list switch
+ *     pagination => BOOL Display pagination links
+ *     no_results => STR Message to display when there are no entities
  *
  * @param callback $getter  The entity getter function to use to fetch the entities.
  * @param callback $viewer  The function to use to view the entity list.
