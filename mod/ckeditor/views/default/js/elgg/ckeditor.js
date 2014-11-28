@@ -2,8 +2,9 @@ define(function(require) {
 	var elgg = require('elgg');
 	var $ = require('jquery'); require('jquery.ckeditor');
 	var CKEDITOR = require('ckeditor');
+	var blockimagepaste = require('elgg/ckeditor/blockimagepaste')
 
-	CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_site_url() + 'mod/ckeditor/views/default/js/elgg/ckeditor/blockimagepaste.js', '');
+	CKEDITOR.plugins.add('blockimagepaste', blockimagepaste);
 	
 	var elggCKEditor = {
 
