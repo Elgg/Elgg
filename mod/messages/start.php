@@ -22,13 +22,13 @@ function messages_init() {
 			'href' => "messages/inbox/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
 		));
-		
+
 		elgg_register_menu_item('page', array(
 			'name' => 'messages:sentmessages',
 			'text' => elgg_echo('messages:sentmessages'),
 			'href' => "messages/sent/" . elgg_get_logged_in_user_entity()->username,
 			'context' => 'messages',
-		));		
+		));
 	}
 
 	elgg_register_event_handler('pagesetup', 'system', 'messages_notifier');
@@ -36,7 +36,7 @@ function messages_init() {
 	// Extend system CSS with our own styles, which are defined in the messages/css view
 	elgg_extend_view('css/elgg', 'messages/css');
 	elgg_extend_view('js/elgg', 'messages/js');
-	
+
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('messages', 'messages_page_handler');
 
@@ -130,7 +130,7 @@ function messages_notifier() {
 	if (elgg_is_logged_in()) {
 		$text = elgg_view_icon("mail");
 		$tooltip = elgg_echo("messages");
-		
+
 		// get unread messages
 		$num_messages = (int)messages_count_unread();
 		if ($num_messages != 0) {
@@ -304,7 +304,7 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 	if (($recipient_guid != elgg_get_logged_in_user_guid()) && $notify) {
 		$recipient = get_user($recipient_guid);
 		$sender = get_user($sender_guid);
-		
+
 		$subject = elgg_echo('messages:email:subject', array(), $recipient->language);
 		$body = elgg_echo('messages:email:body', array(
 				$sender->name,

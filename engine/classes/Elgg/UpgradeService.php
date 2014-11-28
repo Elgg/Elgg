@@ -16,7 +16,7 @@ class UpgradeService {
 
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -335,7 +335,7 @@ class UpgradeService {
 	 * @return bool
 	 */
 	protected function getUpgradeMutex() {
-		
+
 
 		if (!$this->isUpgradeLocked()) {
 			// lock it
@@ -354,7 +354,7 @@ class UpgradeService {
 	 * @return void
 	 */
 	public function releaseUpgradeMutex() {
-		
+
 		_elgg_services()->db->deleteData("drop table {$this->CONFIG->dbprefix}upgrade_lock");
 		_elgg_services()->logger->notice('Upgrade unlocked.');
 	}
@@ -365,7 +365,7 @@ class UpgradeService {
 	 * @return bool
 	 */
 	public function isUpgradeLocked() {
-		
+
 
 		$is_locked = count(_elgg_services()->db->getData("SHOW TABLES LIKE '{$this->CONFIG->dbprefix}upgrade_lock'"));
 
@@ -395,7 +395,7 @@ class UpgradeService {
 	 * @deprecated 1.8 Use PHP upgrades for sql changes.
 	 */
 	protected function dbUpgrade($version, $fromdir = "", $quiet = false) {
-		
+
 
 		$version = (int) $version;
 

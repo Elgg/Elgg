@@ -3,7 +3,7 @@
  * Elgg log browser admin page
  *
  * @note The ElggObject this creates for each entry is temporary
- * 
+ *
  * @package ElggLogBrowser
  */
 

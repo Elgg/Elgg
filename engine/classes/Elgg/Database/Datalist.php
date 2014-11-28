@@ -7,7 +7,7 @@ use Elgg\Logger;
 
 /**
  * Persistent, installation-wide key-value storage.
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
@@ -17,7 +17,7 @@ use Elgg\Logger;
  * @since      1.10.0
  */
 class Datalist {
-	
+
 	/** @var Pool */
 	private $cache;
 
@@ -32,7 +32,7 @@ class Datalist {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param Pool     $cache  Some kind of caching implementation
 	 * @param Database $db     The database
 	 * @param Logger   $logger A logger
@@ -44,10 +44,10 @@ class Datalist {
 		$this->logger = $logger;
 		$this->table = $table;
 	}
-	
+
 	/**
 	 * Get the value of a datalist element.
-	 * 
+	 *
 	 * Plugin authors should use elgg_get_config() and pass null for the site GUID.
 	 *
 	 * @internal Datalists are stored in the datalist table.
@@ -60,7 +60,7 @@ class Datalist {
 	 */
 	function get($name) {
 		$name = trim($name);
-	
+
 		// cannot store anything longer than 255 characters in db, so catch here
 		if (elgg_strlen($name) > 255) {
 			$this->logger->error("The name length for configuration variables cannot be greater than 255");
@@ -73,15 +73,15 @@ class Datalist {
 			return $result ? $result->value : null;
 		});
 	}
-	
+
 	/**
 	 * Set the value for a datalist element.
-	 * 
+	 *
 	 * Plugin authors should use elgg_save_config() and pass null for the site GUID.
-	 * 
+	 *
 	 * @warning Names should be selected so as not to collide with the names for the
 	 * site config.
-	 * 
+	 *
 	 * @warning Values set here are not available in $CONFIG until next page load.
 	 *
 	 * @param string $name  The name of the datalist
@@ -92,14 +92,14 @@ class Datalist {
 	 */
 	function set($name, $value) {
 		$name = trim($name);
-	
+
 		// cannot store anything longer than 255 characters in db, so catch before we set
 		if (elgg_strlen($name) > 255) {
 			$this->logger->error("The name length for configuration variables cannot be greater than 255");
 			return false;
 		}
-	
-	
+
+
 		$escaped_name = $this->db->sanitizeString($name);
 		$escaped_value = $this->db->sanitizeString($value);
 		$success = $this->db->insertData("INSERT INTO {$this->table}"
@@ -107,17 +107,17 @@ class Datalist {
 			. " ON DUPLICATE KEY UPDATE value = '$escaped_value'");
 
 		$this->cache->put($name, $value);
-	
+
 		return $success !== false;
 	}
-	
+
 	/**
 	 * Load entire datalist in memory.
-	 * 
+	 *
 	 * This could cause OOM problems if the datalists table is large.
-	 * 
+	 *
 	 * @todo make a list of datalists that we want to get in one grab
-	 * 
+	 *
 	 * @return array
 	 * @access private
 	 */
@@ -133,7 +133,7 @@ class Datalist {
 
 		return $map;
 	}
-	
+
 	/**
 	 * Run a function one time per installation.
 	 *

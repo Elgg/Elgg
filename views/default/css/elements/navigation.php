@@ -22,7 +22,7 @@
 	text-align: center;
 }
 .elgg-pagination a, .elgg-pagination span {
-	border-radius: 4px;	
+	border-radius: 4px;
 	display: block;
 	padding: 2px 6px;
 	color: #4690d6;
@@ -311,7 +311,7 @@
 
 .elgg-menu-page a {
 	display: block;
-	border-radius: 5px;	
+	border-radius: 5px;
 	background-color: white;
 	margin: 0 0 3px;
 	padding: 2px 4px 2px 8px;
@@ -459,7 +459,7 @@
 *************************************** */
 .elgg-menu-owner-block li a {
 	display: block;
-	border-radius: 5px;	
+	border-radius: 5px;
 	background-color: white;
 	margin: 3px 0 5px 0;
 	padding: 2px 4px 2px 8px;

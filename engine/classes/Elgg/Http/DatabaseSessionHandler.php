@@ -5,7 +5,7 @@ namespace Elgg\Http;
  * Database session handler
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Http
  */
@@ -34,7 +34,7 @@ class DatabaseSessionHandler implements \Elgg\Http\SessionHandler {
 	 * {@inheritDoc}
 	 */
 	public function read($session_id) {
-		
+
 		$id = sanitize_string($session_id);
 		$query = "SELECT * FROM {$this->db->getTablePrefix()}users_sessions WHERE session='$id'";
 		$result = $this->db->getDataRow($query);
@@ -75,7 +75,7 @@ class DatabaseSessionHandler implements \Elgg\Http\SessionHandler {
 	 * {@inheritDoc}
 	 */
 	public function destroy($session_id) {
-		
+
 		$id = sanitize_string($session_id);
 		$query = "DELETE FROM {$this->db->getTablePrefix()}users_sessions WHERE session='$id'";
 		return (bool) $this->db->deleteData($query);
@@ -85,7 +85,7 @@ class DatabaseSessionHandler implements \Elgg\Http\SessionHandler {
 	 * {@inheritDoc}
 	 */
 	public function gc($max_lifetime) {
-		
+
 		$life = time() - $max_lifetime;
 		$query = "DELETE FROM {$this->db->getTablePrefix()}users_sessions WHERE ts < '$life'";
 		return (bool) $this->db->deleteData($query);

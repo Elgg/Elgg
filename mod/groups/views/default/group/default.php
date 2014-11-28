@@ -1,7 +1,7 @@
-<?php 
+<?php
 /**
  * Group entity view
- * 
+ *
  * @package ElggGroups
  */
 

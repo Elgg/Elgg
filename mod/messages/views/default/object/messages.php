@@ -79,18 +79,18 @@ if ($full) {
 	echo elgg_view_image_block($icon, $body, array('class' => $class));
 	echo elgg_view('output/longtext', array('value' => $message->description));
 } else {
-	
+
 	$body .= elgg_view("output/longtext", array("value" => elgg_get_excerpt($message->description), "class" => "elgg-subtext clearfloat"));
-	
+
 	if ($bulk_actions) {
 		$checkbox = elgg_view('input/checkbox', array(
 			'name' => 'message_id[]',
 			'value' => $message->guid,
 			'default' => false
 		));
-	
+
 		$entity_listing = elgg_view_image_block($icon, $body, array('class' => $class));
-		
+
 		echo elgg_view_image_block($checkbox, $entity_listing);
 	} else {
 		echo elgg_view_image_block($icon, $body, array('class' => $class));

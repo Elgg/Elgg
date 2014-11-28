@@ -178,7 +178,7 @@ function default_page_owner_handler($hook, $entity_type, $returnvalue, $params) 
  * output could be different for those two contexts ('blog' vs 'widget').
  *
  * Pages that pass through the page handling system set the context to the
- * first string after the root url. Example: http://example.org/elgg/bookmarks/ 
+ * first string after the root url. Example: http://example.org/elgg/bookmarks/
  * results in the initial context being set to 'bookmarks'.
  *
  * The context is a stack so that for a widget on a profile, the context stack
@@ -255,7 +255,7 @@ function elgg_in_context($context) {
  * @access private
  */
 function page_owner_boot() {
-	
+
 	elgg_register_plugin_hook_handler('page_owner', 'system', 'default_page_owner_handler');
 
 	// Bootstrap the context stack by setting its first entry to the handler.

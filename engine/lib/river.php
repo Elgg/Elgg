@@ -334,7 +334,7 @@ function elgg_get_river(array $options = array()) {
 	if ($options['posted_time_upper'] && is_int($options['posted_time_upper'])) {
 		$wheres[] = "rv.posted <= {$options['posted_time_upper']}";
 	}
-	
+
 	if (!access_get_show_hidden_status()) {
 		$wheres[] = "rv.enabled = 'yes'";
 	}
@@ -740,7 +740,7 @@ function _elgg_river_test($hook, $type, $value) {
 
 /**
  * Disable river entries that reference a disabled entity as subject/object/target
- * 
+ *
  * @param string $event The event 'disable'
  * @param string $type Type of entity being disabled 'all'
  * @param mixed $entity The entity being disabled
@@ -748,18 +748,18 @@ function _elgg_river_test($hook, $type, $value) {
  * @access private
  */
 function _elgg_river_disable($event, $type, $entity) {
-	
+
 	if (!elgg_instanceof($entity)) {
 		return true;
 	}
-	
+
 	$dbprefix = elgg_get_config('dbprefix');
 	$query = <<<QUERY
 	UPDATE {$dbprefix}river AS rv
 	SET rv.enabled = 'no'
 	WHERE (rv.subject_guid = {$entity->guid} OR rv.object_guid = {$entity->guid} OR rv.target_guid = {$entity->guid});
 QUERY;
-	
+
 	update_data($query);
 	return true;
 }
@@ -767,7 +767,7 @@ QUERY;
 
 /**
  * Enable river entries that reference a re-enabled entity as subject/object/target
- * 
+ *
  * @param string $event The event 'enable'
  * @param string $type Type of entity being enabled 'all'
  * @param mixed $entity The entity being enabled
@@ -775,11 +775,11 @@ QUERY;
  * @access private
  */
 function _elgg_river_enable($event, $type, $entity) {
-	
+
 	if (!elgg_instanceof($entity)) {
 		return true;
 	}
-	
+
 	$dbprefix = elgg_get_config('dbprefix');
 	$query = <<<QUERY
 	UPDATE {$dbprefix}river AS rv
@@ -788,9 +788,9 @@ function _elgg_river_enable($event, $type, $entity) {
 	LEFT JOIN {$dbprefix}entities AS te ON te.guid = rv.target_guid
 	SET rv.enabled = 'yes'
 	WHERE (
-			(se.enabled = 'yes' OR se.guid IS NULL) AND 
+			(se.enabled = 'yes' OR se.guid IS NULL) AND
 			(oe.enabled = 'yes' OR oe.guid IS NULL) AND
-			(te.enabled = 'yes' OR te.guid IS NULL)		
+			(te.enabled = 'yes' OR te.guid IS NULL)
 		)
 		AND (se.guid = {$entity->guid} OR oe.guid = {$entity->guid} OR te.guid = {$entity->guid});
 QUERY;

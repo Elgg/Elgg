@@ -3,7 +3,7 @@ namespace Elgg\Http;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Provides unified access to the $_GET and $_POST inputs.
  *
  * @package    Elgg.Core
@@ -14,7 +14,7 @@ namespace Elgg\Http;
 class Input {
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -38,11 +38,11 @@ class Input {
 	 * @return void
 	 */
 	public function set($variable, $value) {
-		
+
 		if (!isset($this->CONFIG->input)) {
 			$this->CONFIG->input = array();
 		}
-	
+
 		if (is_array($value)) {
 			array_walk_recursive($value, create_function('&$v, $k', '$v = trim($v);'));
 			$this->CONFIG->input[trim($variable)] = $value;
@@ -50,8 +50,8 @@ class Input {
 			$this->CONFIG->input[trim($variable)] = trim($value);
 		}
 	}
-	
-	
+
+
 	/**
 	 * Get some input from variables passed submitted through GET or POST.
 	 *
@@ -70,13 +70,13 @@ class Input {
 	 * @return mixed
 	 */
 	function get($variable, $default = null, $filter_result = true) {
-			
-		
-	
+
+
+
 		$result = $default;
-	
+
 		elgg_push_context('input');
-	
+
 		if (isset($this->CONFIG->input[$variable])) {
 			// a plugin has already set this variable
 			$result = $this->CONFIG->input[$variable];
@@ -92,15 +92,15 @@ class Input {
 					// @todo why trim
 					$result = trim($result);
 				}
-	
+
 				if ($filter_result) {
 					$result = filter_tags($result);
 				}
 			}
 		}
-	
+
 		elgg_pop_context();
-	
+
 		return $result;
 
 	}

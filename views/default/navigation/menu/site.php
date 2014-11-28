@@ -19,12 +19,12 @@ if ($more_items) {
 
 	$more = elgg_echo('more');
 	echo "<a href=\"#\">$more</a>";
-	
+
 	echo elgg_view('navigation/menu/elements/section', array(
-		'class' => 'elgg-menu elgg-menu-site elgg-menu-site-more', 
+		'class' => 'elgg-menu elgg-menu-site elgg-menu-site-more',
 		'items' => $more_items,
 	));
-	
+
 	echo '</li>';
 }
 echo '</ul>';

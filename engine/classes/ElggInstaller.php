@@ -28,7 +28,7 @@
  * @subpackage Installer
  */
 class ElggInstaller {
-	
+
 	protected $steps = array(
 		'welcome',
 		'requirements',
@@ -51,7 +51,7 @@ class ElggInstaller {
 
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -82,7 +82,7 @@ class ElggInstaller {
 
 		_elgg_services()->translator->registerTranslations("{$this->getElggRoot()}/install/languages/", TRUE);
 	}
-	
+
 	/**
 	 * @return string The absolute path to Elgg's root directory
 	 */
@@ -155,7 +155,7 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	public function batchInstall(array $params, $createHtaccess = FALSE) {
-		
+
 
 		restore_error_handler();
 		restore_exception_handler();
@@ -410,7 +410,7 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function settings($submissionVars) {
-		
+
 
 		$formVars = array(
 			'sitename' => array(
@@ -511,7 +511,7 @@ class ElggInstaller {
 				'required' => TRUE,
 				),
 		);
-		
+
 		if ($this->isAction) {
 			do {
 				if (!$this->validateAdminVars($submissionVars, $formVars)) {
@@ -530,7 +530,7 @@ class ElggInstaller {
 		}
 
 		// bit of a hack to get the password help to show right number of characters
-		
+
 		$lang = _elgg_services()->translator->getCurrentLanguage();
 		$this->CONFIG->translations[$lang]['install:admin:help:password1'] =
 				sprintf($this->CONFIG->translations[$lang]['install:admin:help:password1'],
@@ -618,7 +618,7 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	protected function setInstallStatus() {
-		
+
 
 		if (!is_readable("{$this->CONFIG->path}engine/settings.php")) {
 			return;
@@ -737,7 +737,7 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function bootstrapEngine() {
-		
+
 
 		require_once $this->CONFIG->path . 'engine/load.php';
 	}
@@ -771,7 +771,7 @@ class ElggInstaller {
 
 		if ($stepIndex > $dbIndex) {
 			// once the database has been created, load rest of engine
-			
+
 			$lib_dir = $this->CONFIG->path . 'engine/lib/';
 
 			$this->loadSettingsFile();
@@ -856,7 +856,7 @@ class ElggInstaller {
 		$this->CONFIG->sitename = '';
 		$this->CONFIG->sitedescription = '';
 	}
-	
+
 	/**
 	 * @return bool Whether the install process is encrypted.
 	 */
@@ -875,7 +875,7 @@ class ElggInstaller {
 	 */
 	protected function getBaseUrl() {
 		$protocol = $this->isHttps() ? 'https' : 'http';
-		
+
 		if (isset($_SERVER["SERVER_PORT"])) {
 			$port = ':' . $_SERVER["SERVER_PORT"];
 		} else {
@@ -899,7 +899,7 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	protected function loadSettingsFile() {
-		
+
 
 		if (!include_once("{$this->CONFIG->path}engine/settings.php")) {
 			throw new InstallationException(_elgg_services()->translator->translate('InstallationException:CannotLoadSettings'));
@@ -954,7 +954,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function checkEngineDir(&$report) {
-		
+
 
 		$writable = is_writable("{$this->CONFIG->path}engine");
 		if (!$writable) {
@@ -978,7 +978,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function checkSettingsFile(&$report = array()) {
-		
+
 
 		if (!file_exists("{$this->CONFIG->path}engine/settings.php")) {
 			return FALSE;
@@ -1119,7 +1119,7 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function checkRewriteRules(&$report) {
-		
+
 
 		$tester = new ElggRewriteTester();
 		$url = _elgg_services()->config->getSiteUrl() . "rewrite.php";
@@ -1246,7 +1246,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function createSettingsFile($params) {
-		
+
 
 		$templateFile = "{$this->CONFIG->path}engine/settings.example.php";
 		$template = file_get_contents($templateFile);
@@ -1275,7 +1275,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function connectToDatabase() {
-		
+
 
 		if (!include_once("{$this->CONFIG->path}engine/settings.php")) {
 			register_error('Elgg could not load the settings file. It does not exist or there is a file permissions issue.');
@@ -1303,7 +1303,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function installDatabase() {
-		
+
 
 		try {
 			_elgg_services()->db->runSqlScript("{$this->CONFIG->path}engine/schema/mysql.sql");
@@ -1328,7 +1328,7 @@ class ElggInstaller {
 	 *
 	 * @param array &$submissionVars Submitted vars
 	 * @param array $formVars        Variables in the form
-	 * 
+	 *
 	 * @return bool
 	 */
 	protected function createDataDirectory(&$submissionVars, $formVars) {
@@ -1366,7 +1366,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function validateSettingsVars($submissionVars, $formVars) {
-		
+
 
 		foreach ($formVars as $field => $info) {
 			$submissionVars[$field] = trim($submissionVars[$field]);
@@ -1436,7 +1436,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function saveSiteSettings($submissionVars) {
-		
+
 
 		// ensure that file path, data path, and www root end in /
 		$submissionVars['path'] = sanitise_filepath($submissionVars['path']);

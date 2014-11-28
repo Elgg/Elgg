@@ -1,7 +1,7 @@
 <?php
 /**
  * Avatar upload form
- * 
+ *
  * @uses $vars['entity']
  */
 

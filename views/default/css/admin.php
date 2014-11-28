@@ -195,7 +195,7 @@ p {
 	margin: 8px 8px 0 0;
 }
 .elgg-menu-user,
-.elgg-menu-admin-header, 
+.elgg-menu-admin-header,
 .elgg-menu-user a,
 .elgg-menu-admin-header a {
 	color: #999999;
@@ -288,7 +288,7 @@ a.elgg-maintenance-mode-warning {
 	width: 210px;
 	float: right;
 	margin-left: 30px;
-	
+
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -350,7 +350,7 @@ a.elgg-maintenance-mode-warning {
 }
 .elgg-module-popup {
 	background-color: white;
-	border: 1px solid #ccc;	
+	border: 1px solid #ccc;
 	z-index: 9999;
 	margin-bottom: 0;
 	padding: 5px;
@@ -480,7 +480,7 @@ input {
 	color: #666;
 	border-radius: 5px;
 	margin: 0;
-	
+
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -507,7 +507,7 @@ input[type="radio"] {
 
 select {
 	max-width: 100%;
-	padding: 4px; 
+	padding: 4px;
 }
 
 .elgg-fieldset {
@@ -531,7 +531,7 @@ select {
 	padding: 6px 12px;
 	margin-bottom: 5px;
 	cursor: pointer;
-	
+
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
@@ -1354,17 +1354,17 @@ a.elgg-widget-collapsed:before {
 .elgg-avatar-tiny > a > img {
 	width: 25px;
 	height: 25px;
-	
+
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 3px;
-	
+
 	background-clip:  border;
 	background-size: 25px;
 }
 .elgg-avatar-small > a > img {
 	width: 40px;
 	height: 40px;
-	
+
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 5px;
 	background-clip:  border;
@@ -1723,7 +1723,7 @@ html {
 .elgg-admin-button-nav {
 	display: none;
 	float: right;
-	margin: 6px 0 0 10px;	
+	margin: 6px 0 0 10px;
 	cursor: pointer;
 }
 .elgg-admin-button-nav:hover .icon-bar {
@@ -1731,7 +1731,7 @@ html {
 }
 .elgg-admin-button-nav .icon-bar {
 	background-color: #F5F5F5;
-	border-radius: 1px 1px 1px 1px;	
+	border-radius: 1px 1px 1px 1px;
 	display: block;
 	height: 3px;
 	width: 26px;
@@ -1756,7 +1756,7 @@ html {
 	}
 }
 @media (max-width: 768px) {
-	.elgg-admin-button-nav {		
+	.elgg-admin-button-nav {
 		display: block;
 	}
 	.elgg-heading-site {

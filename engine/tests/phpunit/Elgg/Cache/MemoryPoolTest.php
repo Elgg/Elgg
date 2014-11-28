@@ -11,14 +11,14 @@ class MemoryPoolTest extends TestCase implements PoolTestCase {
 		$result = $pool->get('foo', function() { return 2; });
 		$this->assertEquals(1, $result);
 	}
-	
+
 	public function testGetRegeneratesValueFromCallbackOnMiss() {
 		$pool = new MemoryPool();
-		
+
 		$result = $pool->get('foo', function() { return 1; });
 		$this->assertEquals(1, $result);
 	}
-	
+
 	public function testInvalidateForcesTheSpecifiedValueToBeRegenerated() {
 		$pool = new MemoryPool();
 

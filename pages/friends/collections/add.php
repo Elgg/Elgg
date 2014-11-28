@@ -16,7 +16,7 @@ $content = elgg_view_form('friends/collections/add', array(), array(
 ));
 
 $body = elgg_view_layout('one_sidebar', array(
-	'title' => $title, 
+	'title' => $title,
 	'content' => $content
 ));
 

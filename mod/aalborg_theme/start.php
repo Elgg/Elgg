@@ -53,7 +53,7 @@ function aalborg_theme_pagesetup() {
 				elgg_register_menu_item('site', $item);
 			}
 		}
-		
+
 		$item = elgg_get_menu_item('topbar', 'usersettings');
 		if ($item) {
 			$item->setParentName('account');
@@ -109,7 +109,7 @@ function aalborg_theme_setup_head($hook, $type, $data) {
 		'name' => 'viewport',
 		'content' => 'width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0',
 	);
-    
+
     // https://developer.chrome.com/multidevice/android/installtohomescreen
     $data['metas'][] = array(
         'name' => 'mobile-web-app-capable',

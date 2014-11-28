@@ -1,4 +1,4 @@
-<?php 
+<?php
 /**
  * Elgg widget edit settings
  *

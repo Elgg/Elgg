@@ -3,7 +3,7 @@ namespace Elgg\Notifications;
 
 /**
  * Notification container
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Notifications
  * @since      1.10
@@ -97,11 +97,11 @@ class Notification {
 
 /**
  * Notification container
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Notifications
  * @since      1.9.0
- * 
+ *
  * @deprecated 1.10 Use \Elgg\Notifications\Notification instead
  */
 class Elgg_Notifications_Notification extends \Elgg\Notifications\Notification {}

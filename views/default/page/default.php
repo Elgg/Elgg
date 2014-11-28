@@ -49,7 +49,7 @@ if (elgg_is_logged_in()) {
 		</div>
 	</div>
 __BODY;
-}	
+}
 $body .= <<<__BODY
 	<div class="elgg-page-header">
 		<div class="elgg-inner">

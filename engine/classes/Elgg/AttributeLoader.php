@@ -169,7 +169,7 @@ class AttributeLoader {
 	public function getAdditionalSelectValues() {
 		return $this->additional_select_values;
 	}
-	
+
 	/**
 	 * Get all required attributes for the entity, validating any that are passed in. Returns empty array
 	 * if can't be loaded (Check $failure_reason).

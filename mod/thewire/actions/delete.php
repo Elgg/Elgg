@@ -1,7 +1,7 @@
 <?php
 /**
  * Action for deleting a wire post
- * 
+ *
  */
 
 // Get input data

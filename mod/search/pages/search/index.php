@@ -22,7 +22,7 @@ $display_query = _elgg_get_display_query($query);
 // check that we have an actual query
 if (!$query) {
 	$title = sprintf(elgg_echo('search:results'), "\"$display_query\"");
-	
+
 	$body = elgg_echo('search:no_query');
 	$layout = elgg_view_layout('one_sidebar', array(
 		'title' => elgg_echo('search:search_error'),

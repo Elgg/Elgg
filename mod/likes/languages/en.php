@@ -35,5 +35,5 @@ or view %2$s\'s profile here:
 Thanks,
 %4$s
 ',
-	
+
 );

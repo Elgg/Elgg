@@ -29,7 +29,7 @@ namespace Elgg\Http;
  * Mock for unit tests.
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Http
  */

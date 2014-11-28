@@ -96,7 +96,7 @@ elgg.trigger_hook = function(name, type, params, value) {
 	elgg.provide('all.all', hooks);
 
 	var hooksList = [];
-	
+
 	if (name != 'all' && type != 'all') {
 		hooksList.push(hooks[name][type]);
 	}

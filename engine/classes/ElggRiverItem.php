@@ -4,7 +4,7 @@
  *
  * @package    Elgg.Core
  * @subpackage Core
- * 
+ *
  * @property-read int    $id            The unique identifier (read-only)
  * @property-read int    $subject_guid  The GUID of the actor
  * @property-read int    $object_guid   The GUID of the object
@@ -55,7 +55,7 @@ class ElggRiverItem {
 
 	/**
 	 * Get the subject of this river item
-	 * 
+	 *
 	 * @return \ElggEntity
 	 */
 	public function getSubjectEntity() {
@@ -82,7 +82,7 @@ class ElggRiverItem {
 
 	/**
 	 * Get the Annotation for this river item
-	 * 
+	 *
 	 * @return \ElggAnnotation
 	 */
 	public function getAnnotation() {
@@ -100,7 +100,7 @@ class ElggRiverItem {
 
 	/**
 	 * Get the time this activity was posted
-	 * 
+	 *
 	 * @return int
 	 * @deprecated 1.9 Use getTimePosted()
 	 */
@@ -111,7 +111,7 @@ class ElggRiverItem {
 
 	/**
 	 * Get the time this activity was posted
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getTimePosted() {
@@ -120,7 +120,7 @@ class ElggRiverItem {
 
 	/**
 	 * Get the type of the object
-	 * 
+	 *
 	 * This is required for elgg_view_list_item(). All the other data types
 	 * (entities, extenders, relationships) have a type/subtype.
 	 *
@@ -132,7 +132,7 @@ class ElggRiverItem {
 
 	/**
 	 * Get the subtype of the object
-	 * 
+	 *
 	 * This is required for elgg_view_list_item().
 	 *
 	 * @return string 'item'
@@ -143,7 +143,7 @@ class ElggRiverItem {
 
 	/**
 	 * Get a plain old object copy for public consumption
-	 * 
+	 *
 	 * @return \stdClass
 	 */
 	public function toObject() {

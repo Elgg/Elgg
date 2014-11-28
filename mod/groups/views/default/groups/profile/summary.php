@@ -31,7 +31,7 @@ if (!$owner) {
 					'href' => '',
 					'width' => '',
 					'height' => '',
-				)); 
+				));
 			?>
 		</div>
 		<div class="groups-stats">

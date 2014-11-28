@@ -77,21 +77,21 @@ abstract class ElggEntity extends \ElggData implements
 	 * in-memory that isn't sync'd back to the metadata table.
 	 */
 	protected $volatile = array();
-	
+
 	/**
 	 * Tells how many tables are going to need to be searched in order to fully populate this object
-	 * 
+	 *
 	 * @var int
 	 */
 	protected $tables_split;
-	
+
 	/**
 	 * Tells how many tables describing object have been loaded thus far
-	 * 
+	 *
 	 * @var int
 	 */
 	protected $tables_loaded;
-	
+
 	/**
 	 * Initialize the attributes array.
 	 *
@@ -183,12 +183,12 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Set an attribute or metadata value for this entity
-	 * 
+	 *
 	 * Anything that is not an attribute is saved as metadata.
-	 * 
-	 * @warning Metadata set this way will inherit the entity's owner and 
+	 *
+	 * @warning Metadata set this way will inherit the entity's owner and
 	 * access ID. If you want more control over metadata, use \ElggEntity::setMetadata()
-	 * 
+	 *
 	 * @param string $name  Name of the attribute or metadata
 	 * @param mixed  $value The value to be set
 	 * @return void
@@ -239,13 +239,13 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Get an attribute or metadata value
-	 * 
+	 *
 	 * If the name matches an attribute, the attribute is returned. If metadata
 	 * does not exist with that name, a null is returned.
 	 *
 	 * This only returns an array if there are multiple values for a particular
 	 * $name key.
-	 * 
+	 *
 	 * @param string $name Name of the attribute or metadata
 	 * @return mixed
 	 */
@@ -275,14 +275,14 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Get the entity's display name
-	 * 
+	 *
 	 * @return string The title or name of this entity.
 	 */
 	abstract public function getDisplayName();
 
 	/**
 	 * Sets the title or name of this entity.
-	 * 
+	 *
 	 * @param string $displayName The title or name of this entity.
 	 * @return void
 	 */
@@ -1047,11 +1047,11 @@ abstract class ElggEntity extends \ElggData implements
 			if ($this->getOwnerGUID() == $user->getGUID()) {
 				$return = true;
 			}
-			
+
 			if ($this->getContainerGUID() == $user->getGUID()) {
 				$return = true;
 			}
-			
+
 			if ($this->getGUID() == $user->getGUID()) {
 				$return = true;
 			}
@@ -1323,7 +1323,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return string The URL of the entity
 	 */
 	public function getURL() {
-		
+
 		$url = "";
 
 		// @todo remove when elgg_register_entity_url_handler() has been removed
@@ -1543,10 +1543,10 @@ abstract class ElggEntity extends \ElggData implements
 				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Create a new entry in the entities table.
 	 *
@@ -1568,7 +1568,7 @@ abstract class ElggEntity extends \ElggData implements
 		if ($type == "") {
 			throw new \InvalidParameterException("Entity type must be set.");
 		}
-		
+
 		$subtype = $this->attributes['subtype'];
 		$subtype_id = add_subtype($type, $subtype);
 		$owner_guid = (int)$this->attributes['owner_guid'];
@@ -1581,7 +1581,7 @@ abstract class ElggEntity extends \ElggData implements
 			$site_guid = $CONFIG->site_guid;
 		}
 		$site_guid = (int)$site_guid;
-		
+
 		$container_guid = $this->attributes['container_guid'];
 		if ($container_guid == 0) {
 			$container_guid = $owner_guid;
@@ -1596,14 +1596,14 @@ abstract class ElggEntity extends \ElggData implements
 		if ($owner && !$owner->canWriteToContainer(0, $type, $subtype)) {
 			return false;
 		}
-		
+
 		if ($owner_guid != $container_guid) {
 			$container = $this->getContainerEntity();
 			if ($container && !$container->canWriteToContainer(0, $type, $subtype)) {
 				return false;
 			}
 		}
-		
+
 		$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
 			(type, subtype, owner_guid, site_guid, container_guid,
 				access_id, time_created, time_updated, last_action)
@@ -1614,7 +1614,7 @@ abstract class ElggEntity extends \ElggData implements
 		if (!$result) {
 			throw new \IOException("Unable to save new object's base entity information!");
 		}
-	
+
 		// for BC with 1.8, ->subtype always returns ID, ->getSubtype() the string
 		$this->attributes['subtype'] = (int)$subtype_id;
 		$this->attributes['guid'] = (int)$result;
@@ -1629,7 +1629,7 @@ abstract class ElggEntity extends \ElggData implements
 			foreach ($this->temp_metadata as $name => $value) {
 				$this->$name = $value;
 			}
-			
+
 			$this->temp_metadata = array();
 		}
 
@@ -1638,7 +1638,7 @@ abstract class ElggEntity extends \ElggData implements
 			foreach ($this->temp_annotations as $name => $value) {
 				$this->annotate($name, $value);
 			}
-			
+
 			$this->temp_annotations = array();
 		}
 
@@ -1647,12 +1647,12 @@ abstract class ElggEntity extends \ElggData implements
 			foreach ($this->temp_private_settings as $name => $value) {
 				$this->setPrivateSetting($name, $value);
 			}
-			
+
 			$this->temp_private_settings = array();
 		}
 
 		_elgg_cache_entity($this);
-		
+
 		return $result;
 	}
 
@@ -1700,7 +1700,7 @@ abstract class ElggEntity extends \ElggData implements
 		if ($access_id == ACCESS_DEFAULT) {
 			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
 		}
-		
+
 		$ret = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
 			set owner_guid='$owner_guid', access_id='$access_id',
 			container_guid='$container_guid', time_created='$time_created',
@@ -1780,7 +1780,7 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Stores non-attributes from the loading of the entity as volatile data
-	 * 
+	 *
 	 * @param array $data Key value array
 	 * @return void
 	 */
@@ -1789,7 +1789,7 @@ abstract class ElggEntity extends \ElggData implements
 			$this->setVolatileData("select:$name", $value);
 		}
 	}
-	
+
 	/**
 	 * Load new data from database into existing entity. Overwrites data but
 	 * does not change values not included in the latest data.
@@ -1797,7 +1797,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @internal This is used when the same entity is selected twice during a
 	 * request in case different select clauses were used to load different data
 	 * into volatile data.
-	 * 
+	 *
 	 * @param \stdClass $row DB row with new entity data
 	 * @return bool
 	 * @access private
@@ -1832,29 +1832,29 @@ abstract class ElggEntity extends \ElggData implements
 		if (!$this->guid) {
 			return false;
 		}
-		
+
 		if (!_elgg_services()->events->trigger('disable', $this->type, $this)) {
 			return false;
 		}
-		
+
 		if (!$this->canEdit()) {
 			return false;
 		}
 
 		_elgg_invalidate_cache_for_entity($this->guid);
-		
+
 		if ($reason) {
 			$this->disable_reason = $reason;
 		}
 
 		global $CONFIG;
 		$guid = (int)$this->guid;
-		
+
 		if ($recursive) {
 			$hidden = access_get_show_hidden_status();
 			access_show_hidden_entities(true);
 			$ia = elgg_set_ignore_access(true);
-			
+
 			$sub_entities = $this->getDatabase()->getData("SELECT * FROM {$CONFIG->dbprefix}entities
 				WHERE (
 				container_guid = $guid
@@ -1868,7 +1868,7 @@ abstract class ElggEntity extends \ElggData implements
 					$e->disable($reason);
 				}
 			}
-			
+
 			access_show_hidden_entities($hidden);
 			elgg_set_ignore_access($ia);
 		}
@@ -1903,21 +1903,21 @@ abstract class ElggEntity extends \ElggData implements
 		if (!$guid) {
 			return false;
 		}
-		
+
 		if (!_elgg_services()->events->trigger('enable', $this->type, $this)) {
 			return false;
 		}
-		
+
 		if (!$this->canEdit()) {
 			return false;
 		}
-		
+
 		global $CONFIG;
-	
+
 		// Override access only visible entities
 		$old_access_status = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
-	
+
 		$result = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
 			SET enabled = 'yes'
 			WHERE guid = $guid");
@@ -1939,9 +1939,9 @@ abstract class ElggEntity extends \ElggData implements
 				remove_entity_relationship($e->guid, 'disabled_with', $guid);
 			}
 		}
-	
+
 		access_show_hidden_entities($old_access_status);
-	
+
 		if ($result) {
 			$this->attributes['enabled'] = 'yes';
 			_elgg_services()->events->trigger('enable:after', $this->type, $this);
@@ -1983,17 +1983,17 @@ abstract class ElggEntity extends \ElggData implements
 		if (!$guid) {
 			return false;
 		}
-		
+
 		if (!_elgg_services()->events->trigger('delete', $this->type, $this)) {
 			return false;
 		}
-		
+
 		if (!$this->canEdit()) {
 			return false;
 		}
 
 		_elgg_invalidate_cache_for_entity($guid);
-		
+
 		// If memcache is available then delete this entry from the cache
 		static $newentity_cache;
 		if ((!$newentity_cache) && (is_memcache_available())) {
@@ -2035,7 +2035,7 @@ abstract class ElggEntity extends \ElggData implements
 		$entity_disable_override = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
 		$ia = elgg_set_ignore_access(true);
-		
+
 		// Now delete the entity itself
 		$this->deleteMetadata();
 		$this->deleteOwnedMetadata();
@@ -2091,7 +2091,7 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Prepare an object copy for toObject()
-	 * 
+	 *
 	 * @param \stdClass $object Object representation of the entity
 	 * @return \stdClass
 	 */
@@ -2214,7 +2214,7 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Returns the end timestamp.
-	 * 
+	 *
 	 * @return int
 	 * @deprecated 1.9
 	 */

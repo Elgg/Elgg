@@ -1,7 +1,7 @@
 <?php
 /**
  * Move user data directories
- * 
+ *
  * Run for 2 seconds per request as set by $batch_run_time_in_secs. This includes
  * the engine loading time.
  */

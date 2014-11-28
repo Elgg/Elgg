@@ -1,7 +1,7 @@
 <?php
 /**
 * Ssend a message action
-* 
+*
 * @package ElggMessages
 */
 
@@ -19,7 +19,7 @@ if (!$recipient_username) {
 
 if ($recipient_username == elgg_get_logged_in_user_entity()->username) {
 	register_error(elgg_echo("messages:user:self"));
-	forward("messages/compose");	
+	forward("messages/compose");
 }
 
 $user = get_user_by_username($recipient_username);
@@ -34,7 +34,7 @@ if (!$body || !$subject) {
 	forward("messages/compose");
 }
 
-// Otherwise, 'send' the message 
+// Otherwise, 'send' the message
 $result = messages_send($subject, $body, $user->guid, 0, $original_msg_guid);
 
 // Save 'send' the message
@@ -44,7 +44,7 @@ if (!$result) {
 }
 
 elgg_clear_sticky_form('messages');
-	
+
 system_message(elgg_echo("messages:posted"));
 
 forward('messages/inbox/' . elgg_get_logged_in_user_entity()->username);

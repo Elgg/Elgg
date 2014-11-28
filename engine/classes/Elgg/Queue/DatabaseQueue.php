@@ -7,7 +7,7 @@ namespace Elgg\Queue;
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Queue
  * @since      1.9.0
@@ -52,7 +52,7 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 */
 	public function dequeue() {
 		$prefix = $this->db->getTablePrefix();
-		$update = "UPDATE {$prefix}queue 
+		$update = "UPDATE {$prefix}queue
 			SET worker = '$this->workerId'
 			WHERE name = '$this->name' AND worker IS NULL
 			ORDER BY id ASC LIMIT 1";

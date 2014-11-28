@@ -1,7 +1,7 @@
 <?php
 /**
  * Select how to redirect to the new URL
- * 
+ *
  * Options:
  *  * immediate 301
  *  * immediate 301 with error message

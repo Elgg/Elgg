@@ -8,7 +8,7 @@
 class ElggMemcache extends \ElggSharedMemoryCache {
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;

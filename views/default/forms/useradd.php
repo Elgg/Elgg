@@ -4,7 +4,7 @@
  *
  * @package Elgg
  * @subpackage Core
- * 
+ *
  */
 
 if (elgg_is_sticky_form('useradd')) {
@@ -70,7 +70,7 @@ if (is_array($admin)) {
 	?>
 </div>
 <div>
-<?php 
+<?php
 	echo elgg_view('input/checkboxes', array(
 		'name' => "admin",
 		'options' => array(elgg_echo('admin_option') => 1),

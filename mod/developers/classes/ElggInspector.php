@@ -116,7 +116,7 @@ class ElggInspector {
 			'admin' => 'admin only',
 		);
 		foreach (_elgg_services()->actions->getAllActions() as $action => $info) {
-			
+
 			$tree[$action] = array($info['file'], $access[$info['access']]);
 		}
 
@@ -170,7 +170,7 @@ class ElggInspector {
 
 		return $tree;
 	}
-	
+
 	/**
 	 * Get information about registered menus
 	 *
@@ -178,19 +178,19 @@ class ElggInspector {
 	 *
 	 */
 	public function getMenus() {
-		
+
 		$menus = elgg_get_config('menus');
-		
+
 		// get JIT menu items
 		// note that 'river' is absent from this list - hooks attempt to get object/subject entities cause problems
 		$jit_menus = array('annotation', 'entity', 'login', 'longtext', 'owner_block', 'user_hover', 'widget');
-		
+
 		// create generic ElggEntity, ElggAnnotation, ElggUser, ElggWidget
 		$annotation = new ElggAnnotation();
 		$annotation->id = 999;
 		$annotation->name = 'generic_comment';
 		$annotation->value = 'testvalue';
-		
+
 		$entity = new ElggObject();
 		$entity->guid = 999;
 		$entity->subtype = 'blog';
@@ -200,12 +200,12 @@ class ElggInspector {
 		$user = new ElggUser();
 		$user->guid = 999;
 		$user->name = "Test User";
-		$user->username = 'test_user';		
-		
+		$user->username = 'test_user';
+
 		$widget = new ElggWidget();
 		$widget->guid = 999;
 		$widget->title = 'test widget';
-		
+
 		// call plugin hooks
 		foreach ($jit_menus as $type) {
 			$params = array('entity' => $entity, 'annotation' => $annotation, 'user' => $user);
@@ -223,7 +223,7 @@ class ElggInspector {
 			}
 			$menus[$type] = elgg_trigger_plugin_hook('register', 'menu:'.$type, $params, array());
 		}
-		
+
 		// put the menus in tree form for inspection
 		$tree = array();
 
@@ -242,7 +242,7 @@ class ElggInspector {
 				if (!$parent) {
 					$parent = 'none';
 				}
-    
+
 				$tree[$menu_name][$name] = array(
 					"text: $text",
 					"href: $href",
@@ -251,9 +251,9 @@ class ElggInspector {
 				);
 			}
 		}
-		
+
 		ksort($tree);
-		
+
 		return $tree;
 	}
 

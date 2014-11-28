@@ -3,7 +3,7 @@
  * Elgg reported content CSS
  *
  * Footer link CSS
- * 
+ *
  * @package ElggReportContent
  */
 

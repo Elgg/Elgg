@@ -4,7 +4,7 @@ namespace Elgg;
  * A map of class names to absolute file paths
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Autoloader
  */
@@ -60,7 +60,7 @@ class ClassMap {
 
 	/**
 	 * Set the altered flag
-	 * 
+	 *
 	 * @param bool $altered Whether the class map has been altered
 	 * @return \Elgg\ClassMap
 	 */
@@ -92,7 +92,7 @@ class ClassMap {
 
 	/**
 	 * Merge a class map with the current map
-	 * 
+	 *
 	 * @param array $map array with keys being class/interface/trait names and
 	 *                   values the absolute file paths that define them
 	 * @return \Elgg\ClassMap

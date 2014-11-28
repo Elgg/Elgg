@@ -34,7 +34,7 @@ if ($widget && $widget->saveSettings($params)) {
 	if ($context) {
 		elgg_push_context($context);
 	}
-	
+
 	if (!$default_widgets) {
 		if (elgg_view_exists("widgets/$widget->handler/content")) {
 			$view = "widgets/$widget->handler/content";

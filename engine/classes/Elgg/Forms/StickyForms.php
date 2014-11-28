@@ -11,7 +11,7 @@ namespace Elgg\Forms;
  * @access private
  */
 class StickyForms {
-	
+
 	/**
 	 * Load all the GET and POST variables into the sticky form cache
 	 *
@@ -23,20 +23,20 @@ class StickyForms {
 	 * @return void
 	 */
 	public function makeStickyForm($form_name) {
-	
+
 		elgg_clear_sticky_form($form_name);
-	
+
 		$session = _elgg_services()->session;
 		$data = $session->get('sticky_forms', array());
 		$req = _elgg_services()->request;
-	
+
 		// will go through XSS filtering in elgg_get_sticky_value()
 		$vars = array_merge($req->query->all(), $req->request->all());
 		$data[$form_name] = $vars;
-	
+
 		$session->set('sticky_forms', $data);
 	}
-	
+
 	/**
 	 * Clear the sticky form cache
 	 *
@@ -54,7 +54,7 @@ class StickyForms {
 		unset($data[$form_name]);
 		$session->set('sticky_forms', $data);
 	}
-	
+
 	/**
 	 * Has this form been made sticky?
 	 *
@@ -67,7 +67,7 @@ class StickyForms {
 		$data = $session->get('sticky_forms', array());
 		return isset($data[$form_name]);
 	}
-	
+
 	/**
 	 * Get a specific sticky variable
 	 *
@@ -93,7 +93,7 @@ class StickyForms {
 		}
 		return $default;
 	}
-	
+
 	/**
 	 * Get all the values in a sticky form in an array
 	 *
@@ -108,7 +108,7 @@ class StickyForms {
 		if (!isset($data[$form_name])) {
 			return array();
 		}
-	
+
 		$values = $data[$form_name];
 		if ($filter_result) {
 			foreach ($values as $key => $value) {
@@ -118,7 +118,7 @@ class StickyForms {
 		}
 		return $values;
 	}
-	
+
 	/**
 	 * Clear a specific sticky variable
 	 *
@@ -133,5 +133,5 @@ class StickyForms {
 		unset($data[$form_name][$variable]);
 		$session->set('sticky_forms', $data);
 	}
-	
+
 }

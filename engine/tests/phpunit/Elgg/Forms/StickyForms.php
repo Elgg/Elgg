@@ -7,11 +7,11 @@ class StickyFormsTest extends TestCase {
 	public function testIsStickyReturnsTrueForFormsMarkedAsSticky() {
 		$this->markTestIncomplete();
 	}
-	
+
 	public function testIsStickyReturnsFalseForClearedStickyForms() {
 		$this->markTestIncomplete();
 	}
-	
+
 	/**
 	 * It's important to test that this information is actually stored in the
 	 * session because that is a meaningful implementation detail that guarantees

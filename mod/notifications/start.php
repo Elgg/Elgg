@@ -91,7 +91,7 @@ function notifications_plugin_pagesetup() {
 			'section' => "notifications",
 		);
 		elgg_register_menu_item('page', $params);
-		
+
 		if (elgg_is_active_plugin('groups')) {
 			$params = array(
 				'name' => '2_group_notify',

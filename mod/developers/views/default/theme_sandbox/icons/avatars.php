@@ -1,7 +1,7 @@
 <?php
 	$user = new ElggUser();
 	$group = new ElggGroup();
-	
+
 	$sizes = array('large', 'medium', 'small', 'tiny');
 ?>
 <table class="theme-sandbox-table">

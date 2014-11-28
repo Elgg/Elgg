@@ -11,7 +11,7 @@
 if (elgg_is_active_plugin('messages')) {
 	// get the site_notifications plugin
 	$site_notifications = elgg_get_plugin_from_id('site_notifications');
-	
+
 	if (!empty($site_notifications)) {
 		$site_notifications->activate();
 	}

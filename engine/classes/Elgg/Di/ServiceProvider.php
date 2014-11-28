@@ -7,7 +7,7 @@ namespace Elgg\Di;
  * We extend the container because it allows us to document properties in the PhpDoc, which assists
  * IDEs to auto-complete properties and understand the types returned. Extension allows us to keep
  * the container generic.
- * 
+ *
  * @property-read \Elgg\ActionsService                     $actions
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \ElggAutoP                               $autoP
@@ -42,7 +42,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
- * 
+ *
  * @package Elgg.Core
  * @access private
  */
@@ -50,7 +50,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param \Elgg\AutoloadManager $autoload_manager Class autoloader
 	 */
 	public function __construct(\Elgg\AutoloadManager $autoload_manager) {
@@ -127,7 +127,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 	/**
 	 * Logger factory
-	 * 
+	 *
 	 * @param \Elgg\Di\ServiceProvider $c Dependency injection container
 	 * @return \Elgg\Logger
 	 */
@@ -167,7 +167,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 	/**
 	 * Views service factory
-	 * 
+	 *
 	 * @param \Elgg\Di\ServiceProvider $c Dependency injection container
 	 * @return \Elgg\ViewsService
 	 */
@@ -177,7 +177,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 	/**
 	 * AMD Config factory
-	 * 
+	 *
 	 * @param \Elgg\Di\ServiceProvider $c Dependency injection container
 	 * @return \Elgg\Amd\Config
 	 */
@@ -189,7 +189,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 	/**
 	 * Session factory
-	 * 
+	 *
 	 * @param \Elgg\Di\ServiceProvider $c Dependency injection container
 	 * @return \ElggSession
 	 */
@@ -214,7 +214,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 	/**
 	 * Request factory
-	 * 
+	 *
 	 * @param \Elgg\Di\ServiceProvider $c Dependency injection container
 	 * @return \Elgg\Http\Request
 	 */
@@ -224,7 +224,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 	/**
 	 * Router factory
-	 * 
+	 *
 	 * @param \Elgg\Di\ServiceProvider $c Dependency injection container
 	 * @return \Elgg\Router
 	 */
@@ -235,7 +235,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 	/**
 	 * Notification service factory
-	 * 
+	 *
 	 * @param \Elgg\Di\ServiceProvider $c Dependency injection container
 	 * @return \Elgg\Notifications\NotificationsService
 	 */

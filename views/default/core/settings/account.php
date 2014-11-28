@@ -1,7 +1,7 @@
 <?php
 /**
  * Account settings form wrapper
- * 
+ *
  * @package Elgg
  * @subpackage Core
  */

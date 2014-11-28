@@ -25,7 +25,7 @@ elgg_load_js('jquery.easing');
 
 // Get friends and subscriptions
 $friends = $user->getFriends(array('limit' => 0));
-		
+
 $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 	$subsbig[$method] = elgg_get_entities_from_relationship(array(
@@ -35,11 +35,11 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 		'limit' => false,
 	));
 }
-		
+
 $subs = array();
 foreach($subsbig as $method => $big) {
 	if (is_array($subsbig[$method]) && sizeof($subsbig[$method])) {
-		foreach($subsbig[$method] as $u) { 
+		foreach($subsbig[$method] as $u) {
 			$subs[$method][] = $u->guid;
 		}
 	}
@@ -56,7 +56,7 @@ if (!isset($vars['name'])) {
 } else {
 	$name = $vars['name'];
 }
-		
+
 // Initialise values
 if (!isset($vars['value'])) {
 	$vars['value'] = array();
@@ -73,7 +73,7 @@ if (isset($vars['callback'])) {
 } else {
 	$callback = false;
 }
-		
+
 // We need to count the number of friends pickers on the page.
 if (!isset($vars['friendspicker'])) {
 	global $friendspicker;
@@ -87,7 +87,7 @@ if (!isset($vars['friendspicker'])) {
 
 $users = array();
 $activeletters = array();
-		
+
 // Are we displaying form tags and submit buttons?
 // (If we've been given a target, then yes! Otherwise, no.)
 if (isset($vars['formtarget'])) {
@@ -95,11 +95,11 @@ if (isset($vars['formtarget'])) {
 } else {
 	$formtarget = false;
 }
-		
+
 // Sort users by letter
 if (is_array($friends) && sizeof($friends)) {
 	foreach($friends as $friend) {
-				
+
 		$letter = elgg_substr($friend->name,0,1);
 		$letter = elgg_strtoupper($letter);
 		if (!elgg_substr_count($chararray,$letter)) {
@@ -113,7 +113,7 @@ if (is_array($friends) && sizeof($friends)) {
 }
 
 if (!$callback) {
-			
+
 ?>
 
 <div class="friends-picker-main-wrapper">
@@ -123,17 +123,17 @@ if (!$callback) {
 	if (isset($vars['content'])) {
 		echo $vars['content'];
 	}
-	
+
 ?>
 
 	<div id="friends-picker_placeholder<?php echo $friendspicker; ?>">
 
 <?php
-	
+
 }
-	
+
 if (!isset($vars['replacement'])) {
-	
+
 	if ($formtarget) {
 ?>
 <?php //@todo JS 1.8: no ?>
@@ -166,7 +166,7 @@ if (!isset($vars['replacement'])) {
 	}
 
 	echo elgg_view('notifications/subscriptions/jsfuncs',$vars);
-		
+
 ?>
 
 	<div class="friends-picker-wrapper">
@@ -182,8 +182,8 @@ if (!isset($vars['replacement'])) {
 ?>
 			<div class="panel" title="<?php echo $letter; ?>">
 				<div class="wrapper">
-					<h3><?php echo $letter; ?></h3>					
-					
+					<h3><?php echo $letter; ?></h3>
+
 <?php
 
 		if (isset($users[$letter])) {
@@ -213,15 +213,15 @@ if (!isset($vars['replacement'])) {
 			if (is_array($users[$letter]) && sizeof($users[$letter]) > 0) {
 				foreach($users[$letter] as $friend) {
 					if ($friend instanceof ElggUser ) {
-				
+
 						if (!in_array($letter,$activeletters)) {
 							$activeletters[] = $letter;
 						}
-				
+
 						$method = array();
 						$fields = '';
 						$i = 0;
-				
+
 						foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 							if (isset($subs[$method]) && in_array($friend->guid,$subs[$method])) {
 								$checked[$method] = 'checked="checked"';
@@ -251,7 +251,7 @@ END;
 			<a href="<?php echo $friend->getURL(); ?>"><?php echo $friend->name ?></a>
 		</p>
 	</td>
-	
+
 <?php echo $fields; ?>
 
 <td>&nbsp;</td>
@@ -270,30 +270,30 @@ END;
 		}
 
 ?>
-			
+
 				</div>
 			</div>
-<?php			
+<?php
 		$letpos++;
 		if ($letpos == elgg_strlen($chararray)) {
 			break;
 		}
 		$letter = elgg_substr($chararray,$letpos,1);
 	}
-		
+
 ?>
-		</div>		
+		</div>
 	</div>
 	</div>
-	
+
 <?php
 } else {
-	echo $vars['replacement']; 
+	echo $vars['replacement'];
 }
 if (!$callback) {
 
 ?>
-			
+
 	</div>
 </div>
 

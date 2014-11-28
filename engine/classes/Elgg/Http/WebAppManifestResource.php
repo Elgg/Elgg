@@ -18,19 +18,19 @@ use ElggSite;
 class WebAppManifestResource {
 	/** @var ElggSite */
 	private $site;
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param ElggSite $site The site serving this manifest.
 	 */
 	public function __construct(ElggSite $site) {
 		$this->site = $site;
 	}
-	
+
 	/**
 	 * Behavior for HTTP GET method
-	 * 
+	 *
 	 * @return array
 	 */
 	public function get() {

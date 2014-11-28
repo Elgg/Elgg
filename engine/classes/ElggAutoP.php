@@ -7,7 +7,7 @@
  *
  * In DIV elements, Ps are only added when there would be at
  * least two of them.
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Output
  */
@@ -25,8 +25,8 @@ class ElggAutoP {
 	 */
 	protected $_xpath = null;
 
-	protected $_blocks = 'address article area aside blockquote caption col colgroup dd 
-		details div dl dt fieldset figure figcaption footer form h1 h2 h3 h4 h5 h6 header 
+	protected $_blocks = 'address article area aside blockquote caption col colgroup dd
+		details div dl dt fieldset figure figcaption footer form h1 h2 h3 h4 h5 h6 header
 		hr hgroup legend map math menu nav noscript p pre section select style summary
 		table tbody td tfoot th thead tr ul ol option li';
 
@@ -95,7 +95,7 @@ class ElggAutoP {
 		// Do not load entities. May be unnecessary, better safe than sorry
 		$disable_load_entities = libxml_disable_entity_loader(true);
 
-		if (!$this->_doc->loadHTML("<html><meta http-equiv='content-type' " 
+		if (!$this->_doc->loadHTML("<html><meta http-equiv='content-type' "
 				. "content='text/html; charset={$this->encoding}'><body>{$html}</body>"
 				. "</html>")) {
 
@@ -174,14 +174,14 @@ class ElggAutoP {
 		$bodyStart = strpos($html, '<body>');
 		$bodyEnd = strpos($html, '</body>', $bodyStart + 6);
 		$html = substr($html, $bodyStart + 6, $bodyEnd - $bodyStart - 6);
-		
+
 		// strip AUTOPs that should be removed
 		$html = preg_replace('@<autop r="1">(.*?)</autop>@', '\\1', $html);
 
 		// commit to converting AUTOPs to Ps
 		$html = str_replace('<autop>', "\n<p>", $html);
 		$html = str_replace('</autop>', "</p>\n", $html);
-		
+
 		$html = str_replace('<br>', '<br />', $html);
 		$html = str_replace($this->_unique . 'AMP', '&', $html);
 		return $html;

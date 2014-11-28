@@ -6,7 +6,7 @@
  * @subpackage UI
  */
 
-/* 
+/*
  * Colors:
  *  #4690D6 - elgg light blue
  *  #0054A7 - elgg dark blue

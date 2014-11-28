@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg custom index page
- * 
+ *
  */
 
 elgg_push_context('front');

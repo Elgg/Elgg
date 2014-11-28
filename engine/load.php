@@ -1,8 +1,8 @@
 <?php
 /**
  * This file is used to make all of Elgg's code available without going through
- * the boot process. Useful for internal testing purposes. 
- * 
+ * the boot process. Useful for internal testing purposes.
+ *
  * @access private
  */
 
@@ -16,7 +16,7 @@ $lib_files = array(
 	// These need to be loaded first to correctly bootstrap
 	'autoloader.php',
 	'elgglib.php',
-	
+
 	// The order of these doesn't matter, so keep them alphabetical
 	'access.php',
 	'actions.php',

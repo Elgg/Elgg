@@ -23,14 +23,14 @@ class SiteSecret {
 	 */
 	function init() {
 		$secret = 'z' . _elgg_services()->crypto->getRandomString(31);
-	
+
 		if (_elgg_services()->datalist->set('__site_secret__', $secret)) {
 			return $secret;
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Returns the site secret.
 	 *
@@ -44,10 +44,10 @@ class SiteSecret {
 		if (!$secret) {
 			$secret = init_site_secret();
 		}
-	
+
 		return $secret;
 	}
-	
+
 	/**
 	 * Get the strength of the site secret
 	 *
@@ -67,5 +67,5 @@ class SiteSecret {
 		}
 		return 'strong';
 	}
-		
+
 }

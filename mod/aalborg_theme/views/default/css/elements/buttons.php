@@ -28,7 +28,7 @@
 .elgg-button:focus {
 	text-decoration: none;
 }
-.elgg-button-submit {	
+.elgg-button-submit {
 	border: 1px solid #3873AB; /* Fallback */
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #4787B8;

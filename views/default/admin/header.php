@@ -2,7 +2,7 @@
 /**
  * Elgg admin header
  */
- 
+
 $admin_title = elgg_get_site_entity()->name . ' ' . elgg_echo('admin');
 
 $options = array(
@@ -23,4 +23,4 @@ $options = array(
 	<span class="icon-bar"></span>
 </a>
 
-<?php echo elgg_view_menu('admin_header', $options); ?>
+<?php echo elgg_view_menu('admin_header', $options); 

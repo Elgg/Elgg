@@ -5,9 +5,9 @@ namespace Elgg\Http;
  * Session handler interface
  *
  * Use SessionHandlerInterface when minimum PHP version becomes 5.4
- * 
+ *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Http
  */

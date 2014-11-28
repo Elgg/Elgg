@@ -58,7 +58,7 @@ class ElggPlugin extends \ElggObject {
 			$this->path = _elgg_services()->config->getPluginsPath() . $this->getID();
 		} else {
 			$this->initializeAttributes();
-			
+
 			$mod_dir = _elgg_services()->config->getPluginsPath();
 
 			// not a full path, so assume a directory name and use the default path
@@ -76,7 +76,7 @@ class ElggPlugin extends \ElggObject {
 
 			// check if we're loading an existing plugin
 			$existing_plugin = elgg_get_plugin_from_id($plugin_id);
-			
+
 			if ($existing_plugin) {
 				$this->load($existing_plugin->guid);
 			}
@@ -97,7 +97,7 @@ class ElggPlugin extends \ElggObject {
 		$this->attributes['site_guid'] = $site->guid;
 		$this->attributes['owner_guid'] = $site->guid;
 		$this->attributes['container_guid'] = $site->guid;
-		
+
 		if (parent::save()) {
 			// make sure we have a priority
 			$priority = $this->getPriority();
@@ -391,7 +391,7 @@ class ElggPlugin extends \ElggObject {
 		}
 
 		$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
-		
+
 		$val = get_private_setting($user->guid, $name);
 		return $val !== null ? $val : $default;
 	}
@@ -726,7 +726,7 @@ class ElggPlugin extends \ElggObject {
 		if ($flags & ELGG_PLUGIN_REGISTER_CLASSES) {
 			$this->registerClasses();
 		}
-		
+
 		// include start file
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			$this->includeFile('start.php');

@@ -30,7 +30,7 @@ class ViewsService {
 
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -50,7 +50,7 @@ class ViewsService {
 
 	/**
 	 * Get the user object in a wrapper
-	 * 
+	 *
 	 * @return \Elgg\DeprecationWrapper|null
 	 */
 	protected function getUserWrapper() {
@@ -98,7 +98,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function getViewLocation($view, $viewtype = '') {
-		
+
 
 		if (empty($viewtype)) {
 			$viewtype = elgg_get_viewtype();
@@ -119,7 +119,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function setViewLocation($view, $location, $viewtype = '') {
-		
+
 
 		if (empty($viewtype)) {
 			$viewtype = 'default';
@@ -144,7 +144,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerViewtypeFallback($viewtype) {
-		
+
 
 		if (!isset($this->CONFIG->viewtype)) {
 			$this->CONFIG->viewtype = new \stdClass;
@@ -161,7 +161,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function doesViewtypeFallback($viewtype) {
-		
+
 
 		if (isset($this->CONFIG->viewtype) && isset($this->CONFIG->viewtype->fallback)) {
 			return in_array($viewtype, $this->CONFIG->viewtype->fallback);
@@ -195,7 +195,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function renderView($view, array $vars = array(), $bypass = false, $viewtype = '', $issue_missing_notice = true) {
-		
+
 
 		if (!is_string($view) || !is_string($viewtype)) {
 			$this->logger->log("View and Viewtype in views must be a strings: $view", 'NOTICE');
@@ -343,7 +343,7 @@ class ViewsService {
 
 	/**
 	 * Includes view PHP or static file
-	 * 
+	 *
 	 * @param string $view                 The view name
 	 * @param array  $vars                 Variables passed to view
 	 * @param string $viewtype             The viewtype
@@ -377,7 +377,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function viewExists($view, $viewtype = '', $recurse = true) {
-		
+
 
 		// Detect view type
 		if ($viewtype === '' || !_elgg_is_valid_viewtype($viewtype)) {
@@ -423,7 +423,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function extendView($view, $view_extension, $priority = 501, $viewtype = '') {
-		
+
 
 		if (!isset($this->CONFIG->views)) {
 			$this->CONFIG->views = (object) array(
@@ -450,7 +450,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function unextendView($view, $view_extension) {
-		
+
 
 		if (!isset($this->CONFIG->views)) {
 			return false;
@@ -478,7 +478,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerCacheableView($view) {
-		
+
 
 		if (!isset($this->CONFIG->views)) {
 			$this->CONFIG->views = new \stdClass;
@@ -495,7 +495,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function isCacheableView($view) {
-		
+
 
 		if (!isset($this->CONFIG->views)) {
 			$this->CONFIG->views = new \stdClass;

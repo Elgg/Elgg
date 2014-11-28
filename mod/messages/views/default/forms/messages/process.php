@@ -5,7 +5,7 @@
  * Provides form body for mass deleting messages
  *
  * @uses $vars['list'] List of messages
- * 
+ *
  */
 
 $messages = $vars['list'];

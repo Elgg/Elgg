@@ -36,24 +36,24 @@ if (elgg_is_logged_in() && $actions) {
 // main
 if ($main) {
 	echo '<li>';
-	
+
 	echo elgg_view('navigation/menu/elements/section', array(
 		'class' => 'elgg-menu elgg-menu-hover-default',
 		'items' => $main,
 	));
-	
+
 	echo '</li>';
 }
 
 // admin
 if (elgg_is_admin_logged_in() && $admin) {
 	echo '<li>';
-	
+
 	echo elgg_view('navigation/menu/elements/section', array(
 		'class' => 'elgg-menu elgg-menu-hover-admin',
 		'items' => $admin,
 	));
-	
+
 	echo '</li>';
 }
 

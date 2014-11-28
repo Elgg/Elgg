@@ -2,7 +2,7 @@
 /**
  * Friendly title
  * Makes a URL-friendly title.
- * 
+ *
  * @uses string $vars['title'] Title to create from.
  */
 

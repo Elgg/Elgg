@@ -7,25 +7,25 @@ namespace Elgg;
  * Use the elgg_* versions instead.
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Actions
  * @since      1.9.0
  */
 class ActionsService {
-	
+
 	/**
 	 * Registered actions storage
 	 * @var array
 	 */
 	private $actions = array();
 
-	/** 
+	/**
 	 * The current action being processed
-	 * @var string 
+	 * @var string
 	 */
 	private $currentAction = null;
-	
+
 	/**
 	 * @see action
 	 * @access private
@@ -33,7 +33,7 @@ class ActionsService {
 	public function execute($action, $forwarder = "") {
 		$action = rtrim($action, '/');
 		$this->currentAction = $action;
-	
+
 		// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
 		// Allow users to disable plugins without a token in order to
 		// remove plugins that are incompatible.
@@ -44,19 +44,19 @@ class ActionsService {
 			'logout',
 			'file/download',
 		);
-	
+
 		if (!in_array($action, $exceptions)) {
 			// All actions require a token.
 			action_gatekeeper($action);
 		}
-	
+
 		$forwarder = str_replace(_elgg_services()->config->getSiteUrl(), "", $forwarder);
 		$forwarder = str_replace("http://", "", $forwarder);
 		$forwarder = str_replace("@", "", $forwarder);
 		if (substr($forwarder, 0, 1) == "/") {
 			$forwarder = substr($forwarder, 1);
 		}
-	
+
 		if (!isset($this->actions[$action])) {
 			register_error(_elgg_services()->translator->translate('actionundefined', array($action)));
 		} elseif (!_elgg_services()->session->isAdminLoggedIn() && ($this->actions[$action]['access'] === 'admin')) {
@@ -72,11 +72,11 @@ class ActionsService {
 				}
 			}
 		}
-	
+
 		$forwarder = empty($forwarder) ? REFERER : $forwarder;
 		forward($forwarder);
 	}
-	
+
 	/**
 	 * @see elgg_register_action
 	 * @access private
@@ -85,24 +85,24 @@ class ActionsService {
 		// plugins are encouraged to call actions with a trailing / to prevent 301
 		// redirects but we store the actions without it
 		$action = rtrim($action, '/');
-	
+
 		if (empty($filename)) {
-			
+
 			$path = _elgg_services()->config->get('path');
 			if ($path === null) {
 				$path = "";
 			}
-	
+
 			$filename = $path . "actions/" . $action . ".php";
 		}
-	
+
 		$this->actions[$action] = array(
 			'file' => $filename,
 			'access' => $access,
 		);
 		return true;
 	}
-	
+
 	/**
 	 * @see elgg_unregister_action
 	 * @access private
@@ -124,17 +124,17 @@ class ActionsService {
 		if (!$token) {
 			$token = get_input('__elgg_token');
 		}
-	
+
 		if (!$ts) {
 			$ts = get_input('__elgg_ts');
 		}
 
 		$session_id = _elgg_services()->session->getId();
-	
+
 		if (($token) && ($ts) && ($session_id)) {
 			// generate token, check with input and forward if invalid
 			$required_token = generate_action_token($ts);
-	
+
 			// Validate token
 			if ($token == $required_token) {
 				if ($this->validateTokenTimestamp($ts)) {
@@ -189,9 +189,9 @@ class ActionsService {
 
 	/**
 	 * Is the token timestamp within acceptable range?
-	 * 
+	 *
 	 * @param int $ts timestamp from the CSRF token
-	 * 
+	 *
 	 * @return bool
 	 */
 	protected function validateTokenTimestamp($ts) {
@@ -228,7 +228,7 @@ class ActionsService {
 			$token = get_input('__elgg_token');
 			$ts = (int)get_input('__elgg_ts');
 			if ($token && $this->validateTokenTimestamp($ts)) {
-				// The tokens are present and the time looks valid: this is probably a mismatch due to the 
+				// The tokens are present and the time looks valid: this is probably a mismatch due to the
 				// login form being on a different domain.
 				register_error(_elgg_services()->translator->translate('actiongatekeeper:crosssitelogin'));
 
@@ -243,7 +243,7 @@ class ActionsService {
 
 		forward(REFERER, 'csrf');
 	}
-	
+
 	/**
 	 * @see generate_action_token
 	 * @access private
@@ -253,14 +253,14 @@ class ActionsService {
 		$session_id = _elgg_services()->session->getId();
 		// Session token
 		$st = _elgg_services()->session->get('__elgg_session');
-	
+
 		if (($site_secret) && ($session_id)) {
 			return md5($site_secret . $timestamp . $session_id . $st);
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * @see elgg_action_exists
 	 * @access private
@@ -268,7 +268,7 @@ class ActionsService {
 	public function exists($action) {
 		return (isset($this->actions[$action]) && file_exists($this->actions[$action]['file']));
 	}
-	
+
 	/**
 	 * @see ajax_forward_hook
 	 * @access private
@@ -284,10 +284,10 @@ class ActionsService {
 					'success' => array()
 				)
 			));
-	
+
 			//grab any data echo'd in the action
 			$output = ob_get_clean();
-	
+
 			//Avoid double-encoding in case data is json
 			$json = json_decode($output);
 			if (isset($json)) {
@@ -295,14 +295,14 @@ class ActionsService {
 			} else {
 				$params['output'] = $output;
 			}
-	
+
 			//Grab any system messages so we can inject them via ajax too
 			$system_messages = system_messages(null, "");
-	
+
 			if (isset($system_messages['success'])) {
 				$params['system_messages']['success'] = $system_messages['success'];
 			}
-	
+
 			if (isset($system_messages['error'])) {
 				$params['system_messages']['error'] = $system_messages['error'];
 				$params['status'] = -1;
@@ -310,7 +310,7 @@ class ActionsService {
 
 			$context = array('action' => $this->currentAction);
 			$params = _elgg_services()->hooks->trigger('output', 'ajax', $context, $params);
-	
+
 			// Check the requester can accept JSON responses, if not fall back to
 			// returning JSON in a plain-text response.  Some libraries request
 			// JSON in an invisible iframe which they then read from the iframe,
@@ -321,12 +321,12 @@ class ActionsService {
 			} else {
 				header("Content-type: application/json");
 			}
-	
+
 			echo json_encode($params);
 			exit;
 		}
 	}
-	
+
 	/**
 	 * @see ajax_action_hook
 	 * @access private
@@ -339,7 +339,7 @@ class ActionsService {
 
 	/**
 	 * Get all actions
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getAllActions() {

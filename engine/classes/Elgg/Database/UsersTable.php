@@ -21,7 +21,7 @@ $USERNAME_TO_GUID_MAP_CACHE = array();
 class UsersTable {
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -43,12 +43,12 @@ class UsersTable {
 	 * @access private
 	 */
 	function getRow($guid) {
-		
-	
+
+
 		$guid = (int)$guid;
 		return _elgg_services()->db->getDataRow("SELECT * from {$this->CONFIG->dbprefix}users_entity where guid=$guid");
 	}
-	
+
 	/**
 	 * Disables all of a user's entities
 	 *
@@ -57,7 +57,7 @@ class UsersTable {
 	 * @return bool Depending on success
 	 */
 	function disableEntities($owner_guid) {
-		
+
 		$owner_guid = (int) $owner_guid;
 		if ($entity = get_entity($owner_guid)) {
 			if (_elgg_services()->events->trigger('disable', $entity->type, $entity)) {
@@ -65,16 +65,16 @@ class UsersTable {
 					$query = "UPDATE {$this->CONFIG->dbprefix}entities
 						set enabled='no' where owner_guid={$owner_guid}
 						or container_guid = {$owner_guid}";
-	
+
 					$res = _elgg_services()->db->updateData($query);
 					return $res;
 				}
 			}
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Ban a user
 	 *
@@ -84,40 +84,40 @@ class UsersTable {
 	 * @return bool
 	 */
 	function ban($user_guid, $reason = "") {
-		
-	
+
+
 		$user_guid = (int)$user_guid;
-	
+
 		$user = get_entity($user_guid);
-	
+
 		if (($user) && ($user->canEdit()) && ($user instanceof \ElggUser)) {
 			if (_elgg_services()->events->trigger('ban', 'user', $user)) {
 				// Add reason
 				if ($reason) {
 					create_metadata($user_guid, 'ban_reason', $reason, '', 0, ACCESS_PUBLIC);
 				}
-	
+
 				// invalidate memcache for this user
 				static $newentity_cache;
 				if ((!$newentity_cache) && (is_memcache_available())) {
 					$newentity_cache = new \ElggMemcache('new_entity_cache');
 				}
-	
+
 				if ($newentity_cache) {
 					$newentity_cache->delete($user_guid);
 				}
-	
+
 				// Set ban flag
 				$query = "UPDATE {$this->CONFIG->dbprefix}users_entity set banned='yes' where guid=$user_guid";
 				return _elgg_services()->db->updateData($query);
 			}
-	
+
 			return false;
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Unban a user.
 	 *
@@ -126,37 +126,37 @@ class UsersTable {
 	 * @return bool
 	 */
 	function unban($user_guid) {
-		
-	
+
+
 		$user_guid = (int)$user_guid;
-	
+
 		$user = get_entity($user_guid);
-	
+
 		if (($user) && ($user->canEdit()) && ($user instanceof \ElggUser)) {
 			if (_elgg_services()->events->trigger('unban', 'user', $user)) {
 				create_metadata($user_guid, 'ban_reason', '', '', 0, ACCESS_PUBLIC);
-	
+
 				// invalidate memcache for this user
 				static $newentity_cache;
 				if ((!$newentity_cache) && (is_memcache_available())) {
 					$newentity_cache = new \ElggMemcache('new_entity_cache');
 				}
-	
+
 				if ($newentity_cache) {
 					$newentity_cache->delete($user_guid);
 				}
-	
-	
+
+
 				$query = "UPDATE {$this->CONFIG->dbprefix}users_entity set banned='no' where guid=$user_guid";
 				return _elgg_services()->db->updateData($query);
 			}
-	
+
 			return false;
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Makes user $guid an admin.
 	 *
@@ -165,34 +165,34 @@ class UsersTable {
 	 * @return bool
 	 */
 	function makeAdmin($user_guid) {
-		
-	
+
+
 		$user = get_entity((int)$user_guid);
-	
+
 		if (($user) && ($user instanceof \ElggUser) && ($user->canEdit())) {
 			if (_elgg_services()->events->trigger('make_admin', 'user', $user)) {
-	
+
 				// invalidate memcache for this user
 				static $newentity_cache;
 				if ((!$newentity_cache) && (is_memcache_available())) {
 					$newentity_cache = new \ElggMemcache('new_entity_cache');
 				}
-	
+
 				if ($newentity_cache) {
 					$newentity_cache->delete($user_guid);
 				}
-	
+
 				$r = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}users_entity set admin='yes' where guid=$user_guid");
 				_elgg_invalidate_cache_for_entity($user_guid);
 				return $r;
 			}
-	
+
 			return false;
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Removes user $guid's admin flag.
 	 *
@@ -201,34 +201,34 @@ class UsersTable {
 	 * @return bool
 	 */
 	function removeAdmin($user_guid) {
-		
-	
+
+
 		$user = get_entity((int)$user_guid);
-	
+
 		if (($user) && ($user instanceof \ElggUser) && ($user->canEdit())) {
 			if (_elgg_services()->events->trigger('remove_admin', 'user', $user)) {
-	
+
 				// invalidate memcache for this user
 				static $newentity_cache;
 				if ((!$newentity_cache) && (is_memcache_available())) {
 					$newentity_cache = new \ElggMemcache('new_entity_cache');
 				}
-	
+
 				if ($newentity_cache) {
 					$newentity_cache->delete($user_guid);
 				}
-	
+
 				$r = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}users_entity set admin='no' where guid=$user_guid");
 				_elgg_invalidate_cache_for_entity($user_guid);
 				return $r;
 			}
-	
+
 			return false;
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Get a user object from a GUID.
 	 *
@@ -243,18 +243,18 @@ class UsersTable {
 		if (!empty($guid)) {
 			$result = get_entity($guid);
 		}
-	
+
 		if ((!empty($result)) && (!($result instanceof \ElggUser))) {
 			return false;
 		}
-	
+
 		if (!empty($result)) {
 			return $result;
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Get user by username
 	 *
@@ -264,35 +264,35 @@ class UsersTable {
 	 */
 	function getByUsername($username) {
 		global $USERNAME_TO_GUID_MAP_CACHE;
-	
+
 		// Fixes #6052. Username is frequently sniffed from the path info, which,
 		// unlike $_GET, is not URL decoded. If the username was not URL encoded,
 		// this is harmless.
 		$username = rawurldecode($username);
-	
+
 		$username = sanitise_string($username);
 		$access = _elgg_get_access_where_sql();
-	
+
 		// Caching
 		if ((isset($USERNAME_TO_GUID_MAP_CACHE[$username]))
 				&& (_elgg_retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]))) {
 			return _elgg_retrieve_cached_entity($USERNAME_TO_GUID_MAP_CACHE[$username]);
 		}
-	
+
 		$query = "SELECT e.* FROM {$this->CONFIG->dbprefix}users_entity u
 			JOIN {$this->CONFIG->dbprefix}entities e ON e.guid = u.guid
 			WHERE u.username = '$username' AND $access";
-	
+
 		$entity = _elgg_services()->db->getDataRow($query, 'entity_row_to_elggstar');
 		if ($entity) {
 			$USERNAME_TO_GUID_MAP_CACHE[$username] = $entity->guid;
 		} else {
 			$entity = false;
 		}
-	
+
 		return $entity;
 	}
-	
+
 	/**
 	 * Get an array of users from an email address
 	 *
@@ -301,19 +301,19 @@ class UsersTable {
 	 * @return array
 	 */
 	function getByEmail($email) {
-		
-	
+
+
 		$email = sanitise_string($email);
-	
+
 		$access = _elgg_get_access_where_sql();
-	
+
 		$query = "SELECT e.* FROM {$this->CONFIG->dbprefix}entities e
 			JOIN {$this->CONFIG->dbprefix}users_entity u ON e.guid = u.guid
 			WHERE email = '$email' AND $access";
-	
+
 		return _elgg_services()->db->getData($query, 'entity_row_to_elggstar');
 	}
-	
+
 	/**
 	 * Return users (or the number of them) who have been active within a recent period.
 	 *
@@ -333,9 +333,9 @@ class UsersTable {
 	 * @return \ElggUser[]|int
 	 */
 	function findActive($options = array(), $limit = 10, $offset = 0, $count = false) {
-	
+
 		$seconds = 600; //default value
-	
+
 		if (!is_array($options)) {
 			elgg_deprecated_notice("find_active_users() now accepts an \$options array", 1.9);
 			if (!$options) {
@@ -343,20 +343,20 @@ class UsersTable {
 			}
 			$options = array('seconds' => $options);
 		}
-	
+
 		$options = array_merge(array(
 			'seconds' => $seconds,
 			'limit' => $limit,
 			'offset' => $offset,
 			'count' => $count,
 		), $options);
-	
+
 		// cast options we're sending to hook
 		foreach (array('seconds', 'limit', 'offset') as $key) {
 			$options[$key] = (int)$options[$key];
 		}
 		$options['count'] = (bool)$options['count'];
-	
+
 		// allow plugins to override
 		$params = array(
 			'seconds' => $options['seconds'],
@@ -370,7 +370,7 @@ class UsersTable {
 		if ($data !== null) {
 			return $data;
 		}
-	
+
 		$dbprefix = _elgg_services()->config->get('dbprefix');
 		$time = time() - $options['seconds'];
 		return elgg_get_entities(array(
@@ -383,7 +383,7 @@ class UsersTable {
 			'order_by' => "u.last_action desc",
 		));
 	}
-	
+
 	/**
 	 * Generate and send a password request email to a given user's registered email address.
 	 *
@@ -393,28 +393,28 @@ class UsersTable {
 	 */
 	function sendNewPasswordRequest($user_guid) {
 		$user_guid = (int)$user_guid;
-	
+
 		$user = get_entity($user_guid);
 		if ($user instanceof \ElggUser) {
 			// generate code
 			$code = generate_random_cleartext_password();
 			$user->setPrivateSetting('passwd_conf_code', $code);
 			$user->setPrivateSetting('passwd_conf_time', time());
-	
+
 			// generate link
 			$link = _elgg_services()->config->getSiteUrl() . "changepassword?u=$user_guid&c=$code";
-	
+
 			// generate email
 			$ip_address = _elgg_services()->request->getClientIp();
 			$email = _elgg_services()->translator->translate('email:changereq:body', array($user->name, $ip_address, $link));
-	
+
 			return notify_user($user->guid, elgg_get_site_entity()->guid,
 				_elgg_services()->translator->translate('email:changereq:subject'), $email, array(), 'email');
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Low level function to reset a given user's password.
 	 *
@@ -429,20 +429,20 @@ class UsersTable {
 		$user = get_entity($user_guid);
 		if ($user instanceof \ElggUser) {
 			$ia = elgg_set_ignore_access();
-	
+
 			$user->salt = _elgg_generate_password_salt();
 			$hash = generate_user_password($user, $password);
 			$user->password = $hash;
 			$result = (bool)$user->save();
-	
+
 			elgg_set_ignore_access($ia);
-	
+
 			return $result;
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Validate and change password for a user.
 	 *
@@ -453,39 +453,39 @@ class UsersTable {
 	 * @return bool True on success
 	 */
 	function executeNewPasswordReset($user_guid, $conf_code, $password = null) {
-	
+
 		$user_guid = (int)$user_guid;
 		$user = get_entity($user_guid);
-	
+
 		if ($password === null) {
 			$password = generate_random_cleartext_password();
 			$reset = true;
 		}
-	
+
 		if (!elgg_instanceof($user, 'user')) {
 			return false;
 		}
-	
+
 		$saved_code = $user->getPrivateSetting('passwd_conf_code');
 		$code_time = (int) $user->getPrivateSetting('passwd_conf_time');
-	
+
 		if (!$saved_code || $saved_code != $conf_code) {
 			return false;
 		}
-	
+
 		// Discard for security if it is 24h old
 		if (!$code_time || $code_time < time() - 24 * 60 * 60) {
 			return false;
 		}
-	
+
 		if (force_user_password_reset($user_guid, $password)) {
 			remove_private_setting($user_guid, 'passwd_conf_code');
 			remove_private_setting($user_guid, 'passwd_conf_time');
 			// clean the logins failures
 			reset_login_failure_count($user_guid);
-	
+
 			$ns = $reset ? 'resetpassword' : 'changepassword';
-	
+
 			notify_user($user->guid,
 				elgg_get_site_entity()->guid,
 				_elgg_services()->translator->translate("email:$ns:subject"),
@@ -493,13 +493,13 @@ class UsersTable {
 				array(),
 				'email'
 			);
-	
+
 			return true;
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Hash a password for storage. Currently salted MD5.
 	 *
@@ -511,7 +511,7 @@ class UsersTable {
 	function generatePassword(\ElggUser $user, $password) {
 		return md5($password . $user->salt);
 	}
-	
+
 	/**
 	 * Registers a user, returning false if the username already exists
 	 *
@@ -526,12 +526,12 @@ class UsersTable {
 	 * @throws RegistrationException
 	 */
 	function register($username, $password, $name, $email, $allow_multiple_emails = false) {
-	
+
 		// no need to trim password.
 		$username = trim($username);
 		$name = trim(strip_tags($name));
 		$email = trim($email);
-	
+
 		// A little sanity checking
 		if (empty($username)
 				|| empty($password)
@@ -539,33 +539,33 @@ class UsersTable {
 				|| empty($email)) {
 			return false;
 		}
-	
+
 		// Make sure a user with conflicting details hasn't registered and been disabled
 		$access_status = access_get_show_hidden_status();
 		access_show_hidden_entities(true);
-	
+
 		if (!validate_email_address($email)) {
 			throw new \RegistrationException(_elgg_services()->translator->translate('registration:emailnotvalid'));
 		}
-	
+
 		if (!validate_password($password)) {
 			throw new \RegistrationException(_elgg_services()->translator->translate('registration:passwordnotvalid'));
 		}
-	
+
 		if (!validate_username($username)) {
 			throw new \RegistrationException(_elgg_services()->translator->translate('registration:usernamenotvalid'));
 		}
-	
+
 		if ($user = get_user_by_username($username)) {
 			throw new \RegistrationException(_elgg_services()->translator->translate('registration:userexists'));
 		}
-	
+
 		if ((!$allow_multiple_emails) && (get_user_by_email($email))) {
 			throw new \RegistrationException(_elgg_services()->translator->translate('registration:dupeemail'));
 		}
-	
+
 		access_show_hidden_entities($access_status);
-	
+
 		// Create user
 		$user = new \ElggUser();
 		$user->username = $username;
@@ -580,13 +580,13 @@ class UsersTable {
 		if ($user->save() === false) {
 			return false;
 		}
-	
+
 		// Turn on email notifications by default
 		set_user_notification_setting($user->getGUID(), 'email', true);
-	
+
 		return $user->getGUID();
 	}
-	
+
 	/**
 	 * Generates a unique invite code for a user
 	 *
@@ -598,7 +598,7 @@ class UsersTable {
 		$secret = _elgg_services()->datalist->get('__site_secret__');
 		return md5($username . $secret);
 	}
-	
+
 	/**
 	 * Set the validation status for a user.
 	 *
@@ -616,7 +616,7 @@ class UsersTable {
 			return false;
 		}
 	}
-	
+
 	/**
 	 * Gets the validation status of a user.
 	 *
@@ -631,14 +631,14 @@ class UsersTable {
 		if ($md == false) {
 			return null;
 		}
-	
+
 		if ($md[0]->value) {
 			return true;
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Sets the last action time of the given user to right now.
 	 *
@@ -648,16 +648,16 @@ class UsersTable {
 	 */
 	function setLastAction($user_guid) {
 		$user_guid = (int) $user_guid;
-		
+
 		$time = time();
-	
+
 		$query = "UPDATE {$this->CONFIG->dbprefix}users_entity
 			set prev_last_action = last_action,
 			last_action = {$time} where guid = {$user_guid}";
-	
+
 		execute_delayed_write_query($query);
 	}
-	
+
 	/**
 	 * Sets the last logon time of the given user to right now.
 	 *
@@ -667,13 +667,13 @@ class UsersTable {
 	 */
 	function setLastLogin($user_guid) {
 		$user_guid = (int) $user_guid;
-		
+
 		$time = time();
-	
+
 		$query = "UPDATE {$this->CONFIG->dbprefix}users_entity
 			set prev_last_login = last_login, last_login = {$time} where guid = {$user_guid}";
-	
+
 		execute_delayed_write_query($query);
 	}
-		
+
 }

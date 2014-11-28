@@ -22,7 +22,7 @@ files = [
 
   {pattern:'js/tests/*Test.js',included: false},
   {pattern:'views/default/js/**/*.js',included:false},
-  
+
   'js/tests/requirejs.config.js',
 ];
 

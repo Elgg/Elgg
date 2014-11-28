@@ -25,7 +25,7 @@ if ($simple_cache || $system_cache) {
 		'href' => 'admin/developers/settings',
 		'is_trusted' => true
 	));
-	
+
 	$body = "Caches are enabled. Changes you make to CSS and views might not appear. It is
 	always recommended to disable caches while developing themes and plugins. To
 	disable caches, visit the $advanced or $developers pages.";

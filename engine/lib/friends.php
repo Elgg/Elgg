@@ -156,7 +156,7 @@ function _elgg_collections_page_handler($page_elements) {
 		switch ($page_elements[0]) {
 			case 'add':
 				elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
-				
+
 				require_once "{$base}pages/friends/collections/add.php";
 				return true;
 				break;
@@ -164,7 +164,7 @@ function _elgg_collections_page_handler($page_elements) {
 				$user = get_user_by_username($page_elements[1]);
 				if ($user) {
 					elgg_set_page_owner_guid($user->getGUID());
-					
+
 					require_once "{$base}pages/friends/collections/view.php";
 					return true;
 				}
@@ -181,10 +181,10 @@ function _elgg_collections_page_handler($page_elements) {
  * @access private
  */
 function _elgg_setup_collections_menu() {
-	
+
 	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		$user = elgg_get_page_owner_entity();
-		
+
 		elgg_register_menu_item('page', array(
 			'name' => 'friends:view:collections',
 			'text' => elgg_echo('friends:collections'),

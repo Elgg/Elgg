@@ -4,7 +4,7 @@
  *
  * @package    Elgg.Core
  * @subpackage Core
- * 
+ *
  * @property int    $id           The unique identifier (read-only)
  * @property int    $guid_one     The GUID of the subject of the relationship
  * @property string $relationship The type of the relationship (limit of 50 characters long)
@@ -103,7 +103,7 @@ class ElggRelationship extends \ElggData implements
 
 		return null;
 	}
-	
+
 	/**
 	 * Class member get overloading
 	 *

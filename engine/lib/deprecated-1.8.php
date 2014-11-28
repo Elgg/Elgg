@@ -267,7 +267,7 @@ function list_entities_from_annotation_count($entity_type = "", $entity_subtype 
  * Adds an entry in $CONFIG[$register_name][$subregister_name].
  *
  * @deprecated 1.8 Use the new menu system.
- * 
+ *
  * This is only used for the site-wide menu.  See {@link add_menu()}.
  *
  * @param string $register_name     The name of the top-level register
@@ -410,7 +410,7 @@ function events($event = "", $object_type = "", $function = "", $priority = 500,
  * Alias function for events, that registers a function to a particular kind of event
  *
  * @deprecated 1.8 Use elgg_register_event_handler() instead
- * 
+ *
  * @param string $event The event type
  * @param string $object_type The object type
  * @param string $function The function name
@@ -423,7 +423,7 @@ function register_elgg_event_handler($event, $object_type, $callback, $priority 
 
 /**
  * Unregisters a function to a particular kind of event
- * 
+ *
  * @deprecated 1.8 Use elgg_unregister_event_handler instead
  *
  * @param string $event The event type
@@ -440,7 +440,7 @@ function unregister_elgg_event_handler($event, $object_type, $callback) {
  * Alias function for events, that triggers a particular kind of event
  *
  * @deprecated 1.8 Use elgg_trigger_event() instead
- * 
+ *
  * @param string $event The event type
  * @param string $object_type The object type
  * @param string $function The function name
@@ -455,7 +455,7 @@ function trigger_elgg_event($event, $object_type, $object = null) {
  * Register a function to a plugin hook for a particular entity type, with a given priority.
  *
  * @deprecated 1.8 Use elgg_register_plugin_hook_handler() instead
- * 
+ *
  * eg if you want the function "export_user" to be called when the hook "export" for "user" entities
  * is run, use:
  *
@@ -485,7 +485,7 @@ function register_plugin_hook($hook, $type, $callback, $priority = 500) {
  * Unregister a function to a plugin hook for a particular entity type
  *
  * @deprecated 1.8 Use elgg_unregister_plugin_hook_handler() instead
- * 
+ *
  * @param string $hook The name of the hook
  * @param string $entity_type The name of the type of entity (eg "user", "object" etc)
  * @param string $function The name of a valid function to be run
@@ -3927,7 +3927,7 @@ function register_page_handler($handler, $function){
  *
  * @param string $handler The page type identifier
  * @since 1.7.2
- * 
+ *
  * @deprecated 1.8 Use {@link elgg_unregister_page_handler()}
  */
 function unregister_page_handler($handler) {
@@ -3973,7 +3973,7 @@ function register_extender_url_handler($function, $type = "all", $name = "all") 
  * @param string $type The type of entity (object, site, user, group)
  * @param string $subtype The subtype to register (may be blank)
  * @return true|false Depending on success
- * 
+ *
  * @deprecated 1.8 Use {@link elgg_register_entity_type()}
  */
 function register_entity_type($type, $subtype = null) {
@@ -3986,7 +3986,7 @@ function register_entity_type($type, $subtype = null) {
  *
  * @param string $function_name The function.
  * @param string $extender_name The name, default 'all'.
- * 
+ *
  * @deprecated 1.8 Use {@link elgg_register_metadata_url_handler()}
  */
 function register_metadata_url_handler($function, $extender_name = "all") {
@@ -3999,7 +3999,7 @@ function register_metadata_url_handler($function, $extender_name = "all") {
  * @param string $function_name The function to register
  * @param string $relationship_type The relationship type.
  * @return true|false Depending on success
- * 
+ *
  * @deprecated 1.8 Use {@link elgg_register_relationship_url_handler()}
  */
 function register_relationship_url_handler($function_name, $relationship_type = "all") {
@@ -4041,7 +4041,7 @@ function elgg_view_regenerate_simplecache($viewtype = NULL) {
  * Enables the simple cache.
  *
  * @see elgg_view_register_simplecache()
- * 
+ *
  * @deprecated 1.8 Use {@link elgg_enable_simplecache()}
  */
 function elgg_view_enable_simplecache() {
@@ -4053,7 +4053,7 @@ function elgg_view_enable_simplecache() {
  * Disables the simple cache.
  *
  * @see elgg_view_register_simplecache()
- * 
+ *
  * @deprecated 1.8 Use {@link elgg_disable_simplecache()}
  */
 function elgg_view_disable_simplecache() {
@@ -4564,7 +4564,7 @@ function using_widgets() {
  *
  * @param \ElggObject $widget The widget to display
  * @return string The HTML for the widget, including JavaScript wrapper
- * 
+ *
  * @deprecated 1.8 Use elgg_view_entity()
  */
 function display_widget(\ElggObject $widget) {

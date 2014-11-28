@@ -3,16 +3,16 @@ namespace Elgg\Amd;
 
 
 class ConfigTest extends \PHPUnit_Framework_TestCase {
-	
+
 	public function testCanConfigureModulePaths() {
 		$amdConfig = new \Elgg\Amd\Config();
 		$amdConfig->addPath('jquery', '/some/path.js');
-		
+
 		$configArray = $amdConfig->getConfig();
-		
+
 		$this->assertEquals(array('/some/path'), $configArray['paths']['jquery']);
 	}
-	
+
 	public function testCanConfigureModuleShims() {
 		$amdConfig = new \Elgg\Amd\Config();
 		$amdConfig->addShim('jquery', array(
@@ -20,20 +20,20 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 			'exports' => 'jQuery',
 			'random' => 'stuff',
 		));
-		
+
 		$configArray = $amdConfig->getConfig();
 
 		$this->assertEquals(array('dep'), $configArray['shim']['jquery']['deps']);
 		$this->assertEquals('jQuery', $configArray['shim']['jquery']['exports']);
 		$this->assertFalse(isset($configArray['shim']['jquery']['random']));
 	}
-	
+
 	public function testCanRequireUnregisteredAmdModules() {
 		$amdConfig = new \Elgg\Amd\Config();
 		$amdConfig->addDependency('jquery');
-		
+
 		$configArray = $amdConfig->getConfig();
-		
+
 		$this->assertEquals(array('jquery'), $configArray['deps']);
 	}
 

@@ -6,10 +6,10 @@ use UnexpectedValueException;
 
 /**
  * Provides a structured format for parsing and examining our commit messages.
- * 
+ *
  * @package Elgg.Core
  * @since   1.9
- * 
+ *
  * @access  private
  */
 class CommitMessage {
@@ -116,7 +116,7 @@ class CommitMessage {
 
 	/**
 	 * Regex to extract the message parts
-	 * 
+	 *
 	 * type(component): message
 	 * with an optional body following
 	 *
@@ -152,9 +152,9 @@ class CommitMessage {
 
 	/**
 	 * Sets the active message
-	 * 
+	 *
 	 * @param string $msg The message content
-	 * 
+	 *
 	 * @return void
 	 */
 	public function setMsg($msg) {
@@ -199,7 +199,7 @@ class CommitMessage {
 	 */
 	private function processMsg() {
 		$matches = array();
-		
+
 		preg_match($this->formatRegex, $this->msg, $matches);
 		foreach ($this->validMsgParts as $i => $part) {
 			$this->$part = isset($matches[$i]) ? $matches[$i] : '';
@@ -218,10 +218,10 @@ class CommitMessage {
 				$this->isValidLineLength() &&
 				$this->isValidType();
 	}
-	
+
 	/**
 	 * Whether the message format conforms to our standards.
-	 * 
+	 *
 	 * @return boolean
 	 */
 	public function isValidFormat() {
@@ -280,7 +280,7 @@ class CommitMessage {
 	 * Defaults to 160.
 	 *
 	 * @param int $len The maximum length.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function setMaxLineLength($len) {
@@ -291,7 +291,7 @@ class CommitMessage {
 	 * Get part of the message
 	 *
 	 * @param string $part One section of the message.
-	 * 
+	 *
 	 * @return string
 	 * @throws UnexpectedValueException
 	 */
@@ -307,7 +307,7 @@ class CommitMessage {
 	 * Removes all lines that start with #
 	 *
 	 * @param string $msg The msg body of the commit
-	 * 
+	 *
 	 * @return string
 	 */
 	public static function removeComments($msg) {
@@ -326,7 +326,7 @@ class CommitMessage {
 	 *
 	 * @param string $msg     The content to parse
 	 * @param int    $max_len Maximum length between \n in the $msg
-	 * 
+	 *
 	 * @return array
 	 */
 	public static function findLengthyLines($msg, $max_len) {

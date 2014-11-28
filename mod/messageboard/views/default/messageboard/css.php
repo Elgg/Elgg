@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg Messageboard CSS view
- * 
+ *
  */
 ?>
 

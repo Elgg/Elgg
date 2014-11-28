@@ -1116,7 +1116,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 			}
 		}
 	}
-	
+
 	// test getting by name sorting by value as integer with defined values
 	function testElggApiGettersEntityMetadataNOrderByMDIntDefinedVals() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
@@ -1146,7 +1146,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$valid3->save();
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid3->getGUID();
-		
+
 		$num = array(1, 5, 15);
 
 		$options = array(
@@ -1176,7 +1176,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 			}
 		}
 	}
-	
+
 	// test getting by name_value_pairs sorting by value as integer
 	// because string comparison '5' > '15'
 	function testElggApiGettersEntityMetadataNVPOrderByMDInt() {
@@ -1207,7 +1207,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$valid3->save();
 		$guids[] = $valid->getGUID();
 		$valid_guids[] = $valid3->getGUID();
-		
+
 		$num = array(1, 5, 15);
 
 		$options = array(
@@ -1239,7 +1239,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 			}
 		}
 	}
-	
+
 	// test getting by name sorting by value as integer with defined values
 	function testElggApiGettersEntityMetadataNVPGreaterThanInt() {
 		$subtypes = $this->getRandomValidSubtypes(array('object'), 1);
@@ -1285,7 +1285,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 
 		$this->assertIsA($entities, 'array');
 		$this->assertEqual(count($entities), 2);
-		
+
 		$num = array(5, 15);
 
 		$i = 0;
@@ -1302,7 +1302,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 			}
 		}
 	}
-	
+
 	// test getting from string value interpreted as numeric
 	// see https://github.com/Elgg/Elgg/issues/7009
 	function testElggApiGettersEntityMetadataNVPInvalidDouble() {
@@ -1311,7 +1311,7 @@ class ElggCoreGetEntitiesFromMetadataTest extends \ElggCoreGetEntitiesBaseTest {
 		$md_name = 'test_metadata_name_' . rand();
 		$guids = array();
 		$valid_guids = array();
-		
+
 		$value = '052e866869';
 
 		// our targets

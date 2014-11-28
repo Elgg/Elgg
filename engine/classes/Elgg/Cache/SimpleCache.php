@@ -11,10 +11,10 @@ namespace Elgg\Cache;
  * @since      1.10.0
  */
 class SimpleCache {
-	
+
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -47,12 +47,12 @@ class SimpleCache {
 	function registerView($view_name) {
 		elgg_register_external_view($view_name, true);
 	}
-	
+
 	/**
 	 * Get the URL for the cached file
-	 * 
+	 *
 	 * This automatically registers the view with Elgg's simplecache.
-	 * 
+	 *
 	 * @example
 	 * 		$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
 	 *		elgg_register_js('elgg.blog', $blog_js);
@@ -67,15 +67,15 @@ class SimpleCache {
 		if (($type === 'js' || $type === 'css') && 0 === strpos($view, $type . '/')) {
 			$view = substr($view, strlen($type) + 1);
 		}
-	
+
 		elgg_register_simplecache_view("$type/$view");
 		return _elgg_get_simplecache_root() . "$type/$view";
 	}
-	
-	
+
+
 	/**
 	 * Get the base url for simple cache requests
-	 * 
+	 *
 	 * @return string The simplecache root url for the current viewtype.
 	 * @access private
 	 */
@@ -87,10 +87,10 @@ class SimpleCache {
 		} else {
 			$lastcache = 0;
 		}
-	
+
 		return elgg_normalize_url("/cache/$lastcache/$viewtype/");
 	}
-	
+
 	/**
 	 * Is simple cache enabled
 	 *
@@ -99,7 +99,7 @@ class SimpleCache {
 	function isEnabled() {
 		return (bool) _elgg_services()->config->get('simplecache_enabled');
 	}
-	
+
 	/**
 	 * Enables the simple cache.
 	 *
@@ -111,7 +111,7 @@ class SimpleCache {
 		_elgg_services()->config->set('simplecache_enabled', 1);
 		elgg_invalidate_simplecache();
 	}
-	
+
 	/**
 	 * Disables the simple cache.
 	 *
@@ -124,12 +124,12 @@ class SimpleCache {
 		if (_elgg_services()->config->get('simplecache_enabled')) {
 			_elgg_services()->datalist->set('simplecache_enabled', 0);
 			_elgg_services()->config->set('simplecache_enabled', 0);
-	
+
 			// purge simple cache
 			_elgg_rmdir(_elgg_services()->config->getDataPath() . "views_simplecache");
 		}
 	}
-	
+
 	/**
 	 * Deletes all cached views in the simplecache and sets the lastcache and
 	 * lastupdate time to 0 for every valid viewtype.
@@ -137,19 +137,19 @@ class SimpleCache {
 	 * @return bool
 	 */
 	function invalidate() {
-		
-	
+
+
 		if (!isset($this->CONFIG->views->simplecache) || !is_array($this->CONFIG->views->simplecache)) {
 			return false;
 		}
-	
+
 		_elgg_rmdir("{$this->CONFIG->dataroot}views_simplecache");
 		mkdir("{$this->CONFIG->dataroot}views_simplecache");
-	
+
 		$time = time();
 		_elgg_services()->datalist->set("simplecache_lastupdate", $time);
 		$this->CONFIG->lastcache = $time;
-	
+
 		return true;
 	}
 
@@ -159,10 +159,10 @@ class SimpleCache {
 	 * @return void
 	 */
 	function init() {
-		
+
 
 		if (!defined('UPGRADING') && empty($this->CONFIG->lastcache)) {
 			$this->CONFIG->lastcache = (int)_elgg_services()->datalist->get('simplecache_lastupdate');
 		}
-	}	
+	}
 }

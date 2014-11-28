@@ -61,7 +61,7 @@
 		<name>short_open_tag</name>
 		<value>off</value>
 	</requires>
-	
+
 	<requires>
 		<type>php_version</type>
 		<version>5.6</version>

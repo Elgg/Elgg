@@ -19,7 +19,7 @@ final class NullPool implements Pool {
 	public function get($key, callable $callback) {
 		return call_user_func($callback);
 	}
-	
+
 	/** @inheritDoc */
 	public function invalidate($key) {
 		// values are always expired, so nothing to do

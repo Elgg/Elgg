@@ -29,7 +29,7 @@ namespace Elgg\Http;
  * Interface for session storage
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Http
  */
@@ -170,7 +170,7 @@ interface SessionStorage {
 
 	/**
 	 * Clears all attributes.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function clear();

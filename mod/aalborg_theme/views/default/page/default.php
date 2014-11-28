@@ -39,7 +39,7 @@ $body = <<<__BODY
 		$messages
 	</div>
 __BODY;
-	
+
 if (elgg_is_logged_in()) {
 	$topbar = elgg_view('page/elements/topbar', $vars);
 

@@ -1,7 +1,7 @@
 <?php
 /**
  * View a wire post
- * 
+ *
  * @uses $vars['entity']
  */
 

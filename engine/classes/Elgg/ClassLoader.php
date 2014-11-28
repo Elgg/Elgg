@@ -59,7 +59,7 @@ class ClassLoader {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param \Elgg\ClassMap $map Class map
 	 */
 	public function __construct(\Elgg\ClassMap $map) {
@@ -68,7 +68,7 @@ class ClassLoader {
 
 	/**
 	 * Get the class map
-	 * 
+	 *
 	 * @return \Elgg\ClassMap
 	 */
 	public function getClassMap() {
@@ -151,7 +151,7 @@ class ClassLoader {
 
 	/**
 	 * Registers this instance as an autoloader.
-	 * 
+	 *
 	 * @return void
 	 */
 	public function register() {

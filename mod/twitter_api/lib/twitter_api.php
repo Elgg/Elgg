@@ -7,7 +7,7 @@
 
 /**
  * Get the API wrapper object
- * 
+ *
  * @param string $oauth_token        User's OAuth token
  * @param string $oauth_token_secret User's OAuth secret
  * @return TwitterOAuth|null
@@ -191,7 +191,7 @@ function twitter_api_login() {
 
 /**
  * Create a new user from Twitter information
- * 
+ *
  * @param object $twitter Twitter OAuth response
  * @return ElggUser
  */
@@ -261,7 +261,7 @@ function twitter_api_update_user_avatar($user, $file_location) {
 		$filehandler->write($image);
 		$filehandler->close();
 	}
-	
+
 	// update user's icontime
 	$user->icontime = time();
 }
@@ -309,7 +309,7 @@ function twitter_api_authorize() {
 	elgg_set_plugin_user_setting('twitter_name', $token['screen_name'], 0, 'twitter_api');
 	elgg_set_plugin_user_setting('access_key', $token['oauth_token'], 0, 'twitter_api');
 	elgg_set_plugin_user_setting('access_secret', $token['oauth_token_secret'], 0, 'twitter_api');
-	
+
 	// trigger authorization hook
 	elgg_trigger_plugin_hook('authorize', 'twitter_api', array('token' => $token));
 

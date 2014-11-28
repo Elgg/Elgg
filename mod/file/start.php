@@ -237,7 +237,7 @@ function file_owner_block_menu($hook, $type, $return, $params) {
  *
  * @param int       $container_guid The GUID of the container of the files
  * @param bool      $friends        Whether we're looking at the container or the container's friends
- * 
+ *
  * @return string The typecloud
  */
 function file_get_type_cloud($container_guid = "", $friends = false) {
@@ -277,7 +277,7 @@ function file_get_type_cloud($container_guid = "", $friends = false) {
 			'text' => elgg_echo('all'),
 			'href' =>  file_type_cloud_get_url($all, $friends),
 		));
-		
+
 		foreach ($types as $type) {
 			elgg_register_menu_item('page', array(
 				'name' => "file:$type->tag",
@@ -286,7 +286,7 @@ function file_get_type_cloud($container_guid = "", $friends = false) {
 			));
 		}
 	}
-	
+
 	// returning the view is needed for BC
 	$params = array(
 		'friends' => $friends,

@@ -14,26 +14,26 @@ function moveNamespaceToTop($file) {
 	if (!is_file($file)) {
 		return;
 	}
-	
+
 	$contents = file_get_contents($file);
 	$lines = explode("\n", $contents);
-	
+
 	$nsDeclarationPosition = findPositionOfNamespaceDeclaration($lines);
-	
+
 	if ($nsDeclarationPosition == -1) {
 		return;
 	}
-	
+
 	$declaration = $lines[$nsDeclarationPosition];
-	
+
 	// echo "$declaration\n";
-	
+
 	unset($lines[$nsDeclarationPosition]);
-	
+
 	array_splice($lines, 1, 0, $declaration);
-	
+
 	$newContents = implode("\n", $lines) . "\n";
-	
+
 	file_put_contents($file, $newContents);
 }
 
@@ -44,7 +44,7 @@ function findPositionOfNamespaceDeclaration($lines) {
 			$position = $pos;
 		}
 	}
-	
+
 	return $position;
 }
 

@@ -47,7 +47,7 @@ class Logger {
 	 */
 	public function __construct(\Elgg\PluginHooksService $hooks) {
 		global $CONFIG;
-		
+
 		$this->CONFIG = $CONFIG;
 		$this->hooks = $hooks;
 	}
@@ -69,7 +69,7 @@ class Logger {
 
 	/**
 	 * Get the current logging level
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getLevel() {
@@ -176,7 +176,7 @@ class Logger {
 	 * @return void
 	 */
 	protected function process($data, $display, $level) {
-		
+
 
 		// plugin can return false to stop the default logging method
 		$params = array(

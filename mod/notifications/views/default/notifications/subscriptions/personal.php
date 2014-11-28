@@ -21,7 +21,7 @@ $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecated
 	<tr>
 		<td>&nbsp;</td>
 <?php
-$i = 0; 
+$i = 0;
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 	if ($i > 0) {
 		echo "<td class='spacercolumn'>&nbsp;</td>";

@@ -3,7 +3,7 @@ River
 
 Elgg natively supports the "river", an activity stream containing descriptions
 of activities performed by site members. This page gives an overview of adding
-events to the river in an Elgg plugin. 
+events to the river in an Elgg plugin.
 
 Pushing river items
 ===================

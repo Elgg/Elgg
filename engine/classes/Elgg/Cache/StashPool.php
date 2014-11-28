@@ -5,7 +5,7 @@ use Stash;
 
 /**
  * Defers to Stash for the meat of the caching logic.
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @package    Elgg
@@ -50,17 +50,17 @@ final class StashPool implements Pool {
 	/** @inheritDoc */
 	public function invalidate($key) {
 		assert(is_string($key) || is_int($key));
-		
+
 		$this->stash->getItem((string)$key)->clear();
 	}
-	
+
 	/** @inheritDoc */
 	public function put($key, $value) {
 		assert(is_string($key) || is_int($key));
 
 		$this->stash->getItem((string)$key)->set($value);
 	}
-	
+
 	/**
 	 * Create an in-memory implementation of the pool.
 	 *

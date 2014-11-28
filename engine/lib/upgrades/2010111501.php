@@ -1,6 +1,6 @@
 <?php
 /**
- * Set validation metadata on unvalidated users to false rather than 
+ * Set validation metadata on unvalidated users to false rather than
  * not existing. This is needed because of the change in how validation is
  * being handled.
  */

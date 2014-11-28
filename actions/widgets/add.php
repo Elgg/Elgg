@@ -35,7 +35,7 @@ if ($page_owner && elgg_can_edit_widget_layout($context)) {
 		echo elgg_view_entity($widget, array('show_access' => $show_access));
 
 		forward(REFERER);
-	}	
+	}
 }
 
 register_error(elgg_echo('widgets:add:failure'));

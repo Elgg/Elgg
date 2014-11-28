@@ -157,7 +157,7 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
  *
  *  inverse_relationship => false|BOOL Is relationship_guid is the target entity of the relationship? By default,
  * 	                        relationship_guid is the subject.
- * 
+ *
  *  relationship_join_on => null|STR How the entities relate: guid (default), container_guid, or owner_guid
  *                          Add in Elgg 1.9.0. Examples using the relationship 'friend':
  *                          1. use 'guid' if you want the user's friends
