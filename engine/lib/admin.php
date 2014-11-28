@@ -416,13 +416,13 @@ function _elgg_admin_pagesetup() {
 		elgg_register_menu_item('admin_footer', array(
 			'name' => 'faq',
 			'text' => elgg_echo('admin:footer:faq'),
-			'href' => 'http://docs.elgg.org/wiki/Category:Administration_FAQ',
+			'href' => 'http://learn.elgg.org/en/stable/appendix/faqs.html',
 		));
 
 		elgg_register_menu_item('admin_footer', array(
 			'name' => 'manual',
 			'text' => elgg_echo('admin:footer:manual'),
-			'href' => 'http://docs.elgg.org/wiki/Administration_Manual',
+			'href' => 'http://learn.elgg.org/en/stable/admin/index.html',
 		));
 
 		elgg_register_menu_item('admin_footer', array(

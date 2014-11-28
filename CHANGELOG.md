@@ -1423,7 +1423,7 @@ A tip about updating plugins:
 
 It's not difficult to update 1.7 plugins for 1.8. There is a detailed
 document outlining this process on the wiki:
-http://docs.elgg.org/wiki/Updating_plugins_for_Elgg_1.8
+http://learn.elgg.org/en/stable/guides/upgrading.html#from-1-7-to-1-8
 
 The basic process is:
 

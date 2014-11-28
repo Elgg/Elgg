@@ -97,7 +97,7 @@ function forward($location = "", $reason = 'system') {
 		}
 	} else {
 		throw new SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
-			. "Output started in file $file at line $line. Search http://docs.elgg.org/ for more information.");
+			. "Output started in file $file at line $line. Search http://learn.elgg.org/ for more information.");
 	}
 }
 

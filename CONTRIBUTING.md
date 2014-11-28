@@ -61,6 +61,6 @@ Good feature request checklist:
  [3]: http://www.gnu.org/licenses/old-licenses/gpl-2.0.html
  [4]: http://en.wikipedia.org/wiki/MIT_License
  [6]: https://github.com/Elgg/Elgg/issues/new
- [7]: http://docs.elgg.org/wiki/Development/Contributing/Patches
- [8]: http://docs.elgg.org/wiki/Plugin_development
+ [7]: http://learn.elgg.org/en/stable/contribute/code.html
+ [8]: http://learn.elgg.org/en/stable/tutorials/index.html
  [9]: https://github.com/Elgg/Elgg/tree/master/docs/coding_standards

@@ -1,8 +1,8 @@
 The latest version of the installation instructions is available at:
-[http://docs.elgg.org/wiki/Installation]
+[http://learn.elgg.org/en/stable/intro/install.html]
 
 Installation Troubleshooting is available at:
-[http://docs.elgg.org/wiki/Troubleshooting]
+[http://learn.elgg.org/en/stable/appendix/faqs.html]
 
 
 ELGG INSTALLATION INSTRUCTIONS
@@ -39,7 +39,7 @@ INSTALLING ELGG
 Before you begin, make sure you have read Elgg's technical
 requirements. If you discover problems after following these
 instructions, check out the troubleshooting page at
-[http://docs.elgg.org/wiki/Troubleshooting].
+[http://learn.elgg.org/en/stable/appendix/faqs.html].
 
 
 1. Upload Elgg
@@ -108,7 +108,7 @@ will need to either
 
 
 The latest version of this document is available at:
-[http://docs.elgg.org/wiki/Installation]
+[http://learn.elgg.org/en/stable/intro/install.html]
 
 Installation Troubleshooting is available at:
-[http://docs.elgg.org/wiki/Troubleshooting]
+[http://learn.elgg.org/en/stable/appendix/faqs.html]
