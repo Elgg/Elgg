@@ -32,6 +32,52 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 		$this->assertEquals(2, $result);
 	}
 
+	public function testAcceptsStringAndIntKeys() {
+		$pool = StashPool::createEphemeral();
+
+		foreach (array('123', 123) as $key) {
+			$pool->put($key, 'foo');
+			$pool->get($key, function () { return 'foo'; });
+			$pool->invalidate($key);
+		}
+	}
+
+	/**
+	 * @dataProvider invalidKeyProvider
+	 */
+	public function testPutComplainsAboutInvalidKeys($key) {
+		$pool = StashPool::createEphemeral();
+		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert(): Assertion failed');
+		$pool->put($key, 'foo');
+	}
+
+	/**
+	 * @dataProvider invalidKeyProvider
+	 */
+	public function testGetComplainsAboutInvalidKeys($key) {
+		$pool = StashPool::createEphemeral();
+		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert(): Assertion failed');
+		$pool->get($key, function () { return 'foo'; });
+	}
+
+	/**
+	 * @dataProvider invalidKeyProvider
+	 */
+	public function testInvalidateComplainsAboutInvalidKeys($key) {
+		$pool = StashPool::createEphemeral();
+		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert(): Assertion failed');
+		$pool->invalidate($key);
+	}
+
+	public function invalidKeyProvider() {
+		return array(
+			array(123.1),
+			array(true),
+			array(array()),
+			array(new \stdClass()),
+		);
+	}
+
 	/**
 	 * Stash recommends always calling $item->lock() on miss to make sure that
 	 * the caching is as performant as possible by avoiding multiple
