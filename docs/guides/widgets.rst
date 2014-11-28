@@ -56,19 +56,19 @@ views structure:
 
 .. code::
 
-   'Plugin'
-      /views
-         /default
-            /widgets
-               /filerepo
-                  /edit.php
-                  /contents.php
-               /filerepo2
-                  /edit.php
-                  /contents.php
-               /filerepo3
-                  /edit.php
-                  /contents.php
+    'Plugin'
+        /views
+            /default
+                /widgets
+                   /filerepo
+                      /edit.php
+                      /contents.php
+                   /filerepo2
+                      /edit.php
+                      /contents.php
+                   /filerepo3
+                      /edit.php
+                      /contents.php
 
 Elgg 1.8: Default widgets
 -------------------------

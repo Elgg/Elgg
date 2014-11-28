@@ -169,14 +169,16 @@ Normalize a URL relative to the elgg root:
 
 .. code:: js
 
-   elgg.normalize_url('/blog'); // “http://localhost/elgg/blog”
+    // "http://localhost/elgg/blog"
+    elgg.normalize_url('/blog');
+
 
 
 Redirect to a new page.
 
 .. code:: js
 
-   elgg.forward('/blog');
+    elgg.forward('/blog');
 
 This function automatically normalizes the URL.
 
@@ -289,11 +291,16 @@ There are a number of configuration values set in the elgg object:
 
 .. code:: js
 
-   elgg.config.wwwroot; // The root of the website.
-   elgg.config.language; // The default site language.
-   elgg.config.viewtype; // The current page's viewtype
-   elgg.config.version; // The Elgg version (YYYYMMDDXX).
-   elgg.config.release; // The Elgg release (X.Y.Z).
+    // The root of the website.
+    elgg.config.wwwroot;
+    // The default site language.
+    elgg.config.language;
+    // The current page's viewtype
+    elgg.config.viewtype;
+    // The Elgg version (YYYYMMDDXX).
+    elgg.config.version;
+    // The Elgg release (X.Y.Z).
+    elgg.config.release;
 
 Ajax helper functions
 ---------------------
