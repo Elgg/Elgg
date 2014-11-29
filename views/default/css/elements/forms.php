@@ -83,7 +83,8 @@ input[type="radio"] {
 }
 
 .elgg-form-login, .elgg-form-account {
-	max-width: 450px;
+	max-width: 475px;
+	margin: 0 auto;
 }
 
 /* ***************************************
