@@ -4,7 +4,7 @@
  *
  * @package Elgg.Core
  * @subpackage UI
- * 
+ *
  * To work around subpixel rounding discrepancies, apply .elgg-col-last to
  * the last column
  * @todo we need broswer-specific test cases for this

@@ -435,7 +435,7 @@ elgg.parse_url = function(url, component, expand) {
 	// It was modified to fix mailto: and javascript: support.
 	expand = expand || false;
 	component = component || false;
-	
+
 	var re_str =
 			// scheme (and user@ testing)
 			'^(?:(?![^:@]+:[^:@/]*@)([^:/?#.]+):)?(?://)?'
@@ -525,7 +525,7 @@ elgg.parse_str = function(string) {
 			params[key] = value;
 		}
 	}
-	
+
 	return params;
 };
 

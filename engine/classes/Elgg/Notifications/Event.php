@@ -2,7 +2,7 @@
 namespace Elgg\Notifications;
 /**
  * Notification event
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Notifications
  */
@@ -29,7 +29,7 @@ class Event {
 	 * @param \ElggData $object The object of the event (\ElggEntity)
 	 * @param string    $action The name of the action (default: create)
 	 * @param \ElggUser $actor  The user that caused the event (default: logged in user)
-	 * 
+	 *
 	 * @throws \InvalidArgumentException
 	 */
 	public function __construct(\ElggData $object, $action, \ElggUser $actor = null) {
@@ -63,7 +63,7 @@ class Event {
 
 	/**
 	 * Get the GUID of the actor
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getActorGUID() {
@@ -114,7 +114,7 @@ class Event {
 
 /**
  * Notification event
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Notifications
  * @since      1.9.0

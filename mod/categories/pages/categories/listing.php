@@ -28,7 +28,7 @@ $content = elgg_list_entities_from_metadata($params);
 
 $body = elgg_view_layout('one_sidebar', array(
 	'title' => $title,
-	'content' => $content	
+	'content' => $content
 ));
 
 echo elgg_view_page($title, $body);

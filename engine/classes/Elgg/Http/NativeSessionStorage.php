@@ -29,7 +29,7 @@ namespace Elgg\Http;
  * PHP Session Storage
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Http
  */
@@ -43,7 +43,7 @@ class NativeSessionStorage implements \Elgg\Http\SessionStorage {
 
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * List of options for $options array with their defaults.
 	 * @see http://php.net/session.configuration for options
 	 * but we omit 'session.' from the beginning of the keys for convenience.
@@ -75,7 +75,7 @@ class NativeSessionStorage implements \Elgg\Http\SessionStorage {
 	 * upload_progress.name, "PHP_SESSION_UPLOAD_PROGRESS"
 	 * upload_progress.freq, "1%"
 	 * upload_progress.min-freq, "1"
-	 * 
+	 *
 	 * @param array                     $options Session config options
 	 * @param \Elgg\Http\SessionHandler $handler Session handler
 	 */
@@ -277,7 +277,7 @@ class NativeSessionStorage implements \Elgg\Http\SessionStorage {
 
 	/**
 	 * Set the session handler class with PHP
-	 * 
+	 *
 	 * @param \Elgg\Http\SessionHandler $handler Handler object
 	 * @return void
 	 */

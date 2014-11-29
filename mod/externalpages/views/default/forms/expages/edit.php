@@ -1,9 +1,9 @@
 <?php
 /**
  * Edit form body for external pages
- * 
+ *
  * @uses $vars['type']
- * 
+ *
  */
 
 $type = $vars['type'];

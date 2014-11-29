@@ -1,4 +1,4 @@
-<?php	
+<?php
 /**
  * Feature a group
  *

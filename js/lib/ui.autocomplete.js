@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 elgg.provide('elgg.autocomplete');
 

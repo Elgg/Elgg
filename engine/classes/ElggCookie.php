@@ -14,28 +14,28 @@
 class ElggCookie {
 	/** @var string */
 	private $name;
-	
+
 	/** @var string */
 	public $value = "";
-	
+
 	/** @var int */
 	public $expire = 0;
-	
+
 	/** @var string */
 	public $path = "/";
-	
+
 	/** @var string */
 	public $domain = "";
-	
+
 	/** @var bool */
 	public $secure = false;
-	
+
 	/** @var bool */
 	public $httpOnly = false;
-	
+
 	/**
 	 * Constructor
-	 * 
+	 *
 	 * @param string $name The name of the cookie.
 	 */
 	public function __construct($name) {
@@ -44,7 +44,7 @@ class ElggCookie {
 
 	/**
 	 * Get an attribute
-	 * 
+	 *
 	 * @param string $name Attribute name
 	 * @return mixed
 	 */

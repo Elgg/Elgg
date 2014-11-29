@@ -101,7 +101,7 @@ class TheWireRegexTest extends ElggCoreUnitTest {
 		$expected = "test " . $this->getUserWireLink('user') . ", test";
 		$result = thewire_filter($text);
 		$this->assertEqual($result, $expected);
-		
+
 		// preceded by comma
 		$text = "test ,@user test";
 		$expected = "test ," . $this->getUserWireLink('user') . " test";

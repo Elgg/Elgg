@@ -27,10 +27,10 @@
 		<input type="checkbox" name="persistent" value="true" />
 		<?php echo elgg_echo('user:persistent'); ?>
 	</label>
-	
+
 	<?php echo elgg_view('input/submit', array('value' => elgg_echo('login'))); ?>
-	
-	<?php 
+
+	<?php
 	if (isset($vars['returntoreferer'])) {
 		echo elgg_view('input/hidden', array('name' => 'returntoreferer', 'value' => 'true'));
 	}

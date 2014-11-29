@@ -18,7 +18,7 @@ foreach ($variables as $name => $type) {
 	if (($type == 'access' || $type == 'write_access') && !$can_change_access) {
 		continue;
 	}
-	
+
 	// don't show parent picker input for top or new pages.
 	if ($name == 'parent_guid' && (!$vars['parent_guid'] || !$vars['guid'])) {
 		continue;

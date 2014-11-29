@@ -6,7 +6,7 @@
  * Convert comment annotations to entities.
  *
  * Register comment subtype and add \ElggUpgrade for ajax upgrade.
- * 
+ *
  * We do not migrate comments in this upgrade. See the comment
  * upgrade action in actions/admin/upgrades/upgrade_comments.php for that.
  */

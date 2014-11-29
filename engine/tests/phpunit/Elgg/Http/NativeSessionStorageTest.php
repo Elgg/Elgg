@@ -2,7 +2,7 @@
 namespace Elgg\Http;
 /**
  * If you make a change in the tests for native storage, update the tests for mock storage
- * 
+ *
  * Travis-CI cannot handle these tests because PHPUnit output is echoed preventing
  * the session from starting.
  */

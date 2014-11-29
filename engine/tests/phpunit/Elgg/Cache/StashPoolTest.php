@@ -13,14 +13,14 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 		$result = $pool->get('foo', function() { return 2; });
 		$this->assertEquals(1, $result);
 	}
-	
+
 	public function testGetRegeneratesValueFromCallbackOnMiss() {
 		$pool = StashPool::createEphemeral();
-		
+
 		$result = $pool->get('foo', function() { return 1; });
 		$this->assertEquals(1, $result);
 	}
-	
+
 	public function testInvalidateForcesTheSpecifiedValueToBeRegenerated() {
 		$pool = StashPool::createEphemeral();
 
@@ -82,9 +82,9 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 	 * Stash recommends always calling $item->lock() on miss to make sure that
 	 * the caching is as performant as possible by avoiding multiple
 	 * simultaneous regenerations of the same value.
-	 * 
+	 *
 	 * http://www.stashphp.com/Invalidation.html#stampede-protection
-	 * 
+	 *
 	 * 1. Create a new cache
 	 * 2. Get any entry
 	 * 3. Check that Stash\Item::lock() was called

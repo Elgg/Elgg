@@ -30,7 +30,7 @@ $messages .= $notices_html;
 $content = $vars["body"];
 
 $footer = elgg_view('admin/footer', $vars);
-			
+
 $body = <<<__BODY
 <div class="elgg-page elgg-page-admin">
 	<div class="elgg-inner">

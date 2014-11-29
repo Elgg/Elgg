@@ -1,10 +1,10 @@
 <?php
 /**
  * Elgg custom index layout
- * 
- * You can edit the layout of this page with your own layout and style. 
+ *
+ * You can edit the layout of this page with your own layout and style.
  * Whatever you put in this view will appear on the front page of your site.
- * 
+ *
  */
 
 $mod_params = array('class' => 'elgg-module-highlight');

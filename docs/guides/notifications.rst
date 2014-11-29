@@ -198,7 +198,7 @@ Example:
 
 	/**
 	 * Send an SMS notification
-	 * 
+	 *
 	 * @param string $hook   Hook name
 	 * @param string $type   Hook type
 	 * @param bool   $result Has anyone sent a message yet?
@@ -216,7 +216,7 @@ Example:
 			return false;
 		}
 
-		// (A pseudo SMS API class) 
+		// (A pseudo SMS API class)
 		$sms = new SmsApi();
 
 		return $sms->send($recipient->mobile, $message->body);

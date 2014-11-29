@@ -7,7 +7,7 @@ namespace Elgg\Queue;
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Queue
  * @since      1.9.0
@@ -30,7 +30,7 @@ interface Queue {
 
 	/**
 	 * Clear all items from the queue
-	 * 
+	 *
 	 * @return void
 	 */
 	public function clear();

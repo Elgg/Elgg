@@ -5,9 +5,9 @@ use Stash;
 
 /**
  * An in-memory implementation of a cache pool.
- * 
+ *
  * NB: Data put into this cache is not persisted between requests.
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @package    Elgg
@@ -19,7 +19,7 @@ use Stash;
 final class MemoryPool implements Pool {
 	/** @var Pool */
 	private $pool;
-	
+
 	/**
 	 * Happens to use Stash for the in-memory caching, but this
 	 * should be considered just an implementation detail.
@@ -27,12 +27,12 @@ final class MemoryPool implements Pool {
 	public function __construct() {
 		$this->pool = StashPool::createEphemeral();
 	}
-	
+
 	/** @inheritDoc */
 	public function get($key, callable $callback) {
 		return $this->pool->get($key, $callback);
 	}
-	
+
 	/** @inheritDoc */
 	public function invalidate($key) {
 		$this->pool->invalidate($key);

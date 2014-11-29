@@ -14,7 +14,7 @@ function reportedcontent_init() {
 
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('reportedcontent', 'reportedcontent_page_handler');
-	
+
 	// Extend CSS
 	elgg_extend_view('css/elgg', 'reportedcontent/css');
 	elgg_extend_view('css/admin', 'reportedcontent/admin_css');
@@ -24,7 +24,7 @@ function reportedcontent_init() {
 		$href = "javascript:elgg.forward('reportedcontent/add'";
 		$href .= "+'?address='+encodeURIComponent(location.href)";
 		$href .= "+'&title='+encodeURIComponent(document.title));";
-		
+
 		elgg_register_menu_item('extras', array(
 			'name' => 'report_this',
 			'href' => $href,
@@ -67,7 +67,7 @@ function reportedcontent_page_handler($page) {
 	elgg_gatekeeper();
 
 	$title = elgg_echo('reportedcontent:this');
-	
+
 	$content = elgg_view_form('reportedcontent/add');
 	$sidebar = elgg_echo('reportedcontent:instructions');
 

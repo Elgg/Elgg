@@ -3,9 +3,9 @@ namespace Elgg\Database;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Controls all admin notices in the system.
- * 
+ *
  * @access private
  *
  * @package    Elgg.Core
@@ -33,27 +33,27 @@ class AdminNotices {
 			if (elgg_admin_notice_exists($id)) {
 				return false;
 			}
-	
+
 			// need to handle when no one is logged in
 			$old_ia = elgg_set_ignore_access(true);
-	
+
 			$admin_notice = new \ElggObject();
 			$admin_notice->subtype = 'admin_notice';
 			// admins can see ACCESS_PRIVATE but no one else can.
 			$admin_notice->access_id = ACCESS_PRIVATE;
 			$admin_notice->admin_notice_id = $id;
 			$admin_notice->description = $message;
-	
+
 			$result = $admin_notice->save();
-	
+
 			elgg_set_ignore_access($old_ia);
-	
+
 			return (bool)$result;
 		}
-	
+
 		return false;
 	}
-	
+
 	/**
 	 * Remove an admin notice by ID.
 	 *
@@ -75,7 +75,7 @@ class AdminNotices {
 			'metadata_name' => 'admin_notice_id',
 			'metadata_value' => $id
 		));
-	
+
 		if ($notices) {
 			// in case a bad plugin adds many, let it remove them all at once.
 			foreach ($notices as $notice) {
@@ -85,7 +85,7 @@ class AdminNotices {
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Get admin notices. An admin must be logged in since the notices are private.
 	 *
@@ -100,7 +100,7 @@ class AdminNotices {
 			'limit' => $limit
 		));
 	}
-	
+
 	/**
 	 * Check if an admin notice is currently active.
 	 *
@@ -117,7 +117,7 @@ class AdminNotices {
 			'metadata_name_value_pair' => array('name' => 'admin_notice_id', 'value' => $id)
 		));
 		elgg_set_ignore_access($old_ia);
-	
+
 		return ($notice) ? true : false;
 	}
 }

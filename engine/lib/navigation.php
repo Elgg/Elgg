@@ -143,7 +143,7 @@ function elgg_unregister_menu_item($menu_name, $item_name) {
  *
  * @param string $menu_name The name of the menu
  * @param string $item_name The unique identifier for this menu item
- * 
+ *
  * @return bool
  * @since 1.8.0
  */
@@ -330,7 +330,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 			$return['more'] = array_splice($return['default'], $max_display_items);
 		}
 	}
-	
+
 	// check if we have anything selected
 	$selected = false;
 	foreach ($return as $section) {
@@ -343,7 +343,7 @@ function _elgg_site_menu_setup($hook, $type, $return, $params) {
 			}
 		}
 	}
-	
+
 	if (!$selected) {
 		// nothing selected, match name to context or match url
 		$current_url = current_page_url();
@@ -390,7 +390,7 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 				$return[] = \ElggMenuItem::factory($options);
 			}
 		}
-		
+
 		if (elgg_is_admin_logged_in()) {
 			$options = array(
 				'name' => 'delete',
@@ -415,7 +415,7 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 	if (elgg_in_context('widgets')) {
 		return $return;
 	}
-	
+
 	$entity = $params['entity'];
 	/* @var \ElggEntity $entity */
 	$handler = elgg_extract('handler', $params, false);
@@ -431,7 +431,7 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 		);
 		$return[] = \ElggMenuItem::factory($options);
 	}
-	
+
 	if ($entity->canEdit() && $handler) {
 		// edit link
 		$options = array(

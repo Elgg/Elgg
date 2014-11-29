@@ -116,7 +116,7 @@ html {
 	}
 	.elgg-main {
         padding: 12px 20px 10px;
-		
+
 		-webkit-box-sizing: border-box;
 		-moz-box-sizing: border-box;
 		box-sizing: border-box;
@@ -161,7 +161,7 @@ html {
 		border-style: solid;
 		border-width: 1px 1px 0 1px;
 		margin: 0;
-		padding: 10px;		
+		padding: 10px;
 		background-color: #FFFFFF;
 	}
 	.elgg-menu-page a:hover,

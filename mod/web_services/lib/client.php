@@ -1,7 +1,7 @@
 <?php
 /**
  * A library for building an API client
- * 
+ *
  * Load the library 'elgg:ws:client' to use the functions in this library
  */
 

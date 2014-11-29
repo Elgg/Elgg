@@ -247,7 +247,7 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 	 */
 	public function testElggRegisterCSS() {
 		global $CONFIG;
-		
+
 		// specify name
 		$result = elgg_register_css('key', 'http://test1.com');
 		$this->assertTrue($result);
@@ -272,7 +272,7 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 		$base = trim(elgg_get_site_url(), "/");
 
 		$urls = array('id1' => "$base/urla", 'id2' => "$base/urlb", 'id3' => "$base/urlc");
-		
+
 		foreach ($urls as $id => $url) {
 			elgg_register_js($id, $url);
 		}
@@ -283,7 +283,7 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 		$js = $CONFIG->externals['js'];
 		$elements = $js->getElements();
 		$this->assertFalse(isset($CONFIG->externals_map['js']['id1']));
-		
+
 		foreach ($elements as $element) {
 			if (isset($element->name)) {
 				$this->assertFalse($element->name == 'id1');
@@ -325,7 +325,7 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 		elgg_load_js('key');
 		$result = elgg_register_js('key', 'http://test1.com', 'footer');
 		$this->assertTrue($result);
-		
+
 		$js_urls = elgg_get_loaded_js('footer');
 		$this->assertIdentical(array(500 => 'http://test1.com'), $js_urls);
 	}
@@ -343,7 +343,7 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 			'id2' => "$base/urlb",
 			'id3' => "$base/urlc"
 		);
-		
+
 		foreach ($urls as $id => $url) {
 			elgg_register_js($id, $url);
 			elgg_load_js($id);
@@ -358,7 +358,7 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 		$js_urls = elgg_get_loaded_js('footer');
 		$this->assertIdentical(array(), $js_urls);
 	}
-	
+
 	/**
 	 * Test elgg_get_friendly_time()
 	 */
@@ -374,7 +374,7 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 			'120' => elgg_echo('friendlytime:future:minutes', array('2')),
 			'86400' => elgg_echo('friendlytime:future:days:singular'),
 		);
-		
+
 		foreach ($offsets as $num_seconds => $friendlytime) {
 			$this->assertIdentical(elgg_get_friendly_time($current_time + $num_seconds, $current_time), $friendlytime);
 		}

@@ -16,7 +16,7 @@ class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
 
 		$this->obj->_callable_egefps = array($this, 'mock_egefps');
 	}
-	
+
 	public function mock_egefps($options) {
 		return array();
 	}

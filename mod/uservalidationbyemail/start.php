@@ -241,10 +241,10 @@ function uservalidationbyemail_check_manual_login($event, $type, $user) {
 	if (($user instanceof ElggUser) && !$user->isEnabled() && !$user->validated) {
 		// send new validation email
 		uservalidationbyemail_request_validation($user->getGUID());
-		
+
 		// restore hidden entities settings
 		access_show_hidden_entities($access_status);
-		
+
 		// throw error so we get a nice error message
 		throw new LoginException(elgg_echo('uservalidationbyemail:login:fail'));
 	}

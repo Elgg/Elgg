@@ -1,5 +1,5 @@
 <?php
-return array(	
+return array(
 	'custom:bookmarks' => "Latest bookmarks",
 	'custom:groups' => "Latest groups",
 	'custom:files' => "Latest files",

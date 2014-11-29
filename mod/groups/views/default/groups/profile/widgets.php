@@ -1,10 +1,10 @@
 <?php
 /**
 * Profile widgets/tools
-* 
+*
 * @package ElggGroups
-*/ 
-	
+*/
+
 // tools widget area
 echo '<ul id="groups-tools" class="elgg-gallery elgg-gallery-fluid mtl clearfix">';
 

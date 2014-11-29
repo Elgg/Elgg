@@ -15,9 +15,9 @@
  * copy or symlink to .git/hooks/commit-msg.
  *
  */
- 
+
  $rootDir = dirname(__DIR__);
- 
+
  require_once "$rootDir/vendor/autoload.php";
 
 $is_file = false;
@@ -25,7 +25,7 @@ $is_file = false;
 if ($argc === 2) {
 	// check file or msg itself
 	$arg = $argv[1];
-	
+
 	if (file_exists($arg)) {
 		$is_file = true;
 		$msg_tmp = file_get_contents($arg);
@@ -88,7 +88,7 @@ if ($errors) {
 		output($error, 'error');
 	}
 	$arg = escapeshellarg($msg);
-	
+
 	$cmd = "printf '%s' $arg | nl -ba";
 	$output = shell_exec($cmd);
 	output($output, 'error', false);

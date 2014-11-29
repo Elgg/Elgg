@@ -233,7 +233,7 @@
 .elgg-river-more {
     border-color: #DCDCDC;
     border-style: solid;
-    border-width: 0 1px 1px 1px;	
+    border-width: 0 1px 1px 1px;
 	padding: 5px 10px;
 	font-size: 85%;
 }
@@ -315,7 +315,7 @@
 	-webkit-box-sizing: border-box;
 	-moz-box-sizing: border-box;
 	box-sizing: border-box;
-	
+
 	max-width: 100%;
 	height: auto;
 }

@@ -4,7 +4,7 @@
  *
  * @package Elgg
  * @subpackage Core
- * 
+ *
  * @uses $vars['class'] CSS class that replaces elgg-button-cancel
  */
 

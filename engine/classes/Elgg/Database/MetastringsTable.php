@@ -12,7 +12,7 @@ $METASTRINGS_CACHE = array();
 
 /**
  * Normalization for strings used in metadata and annoations tables.
- * 
+ *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
@@ -20,7 +20,7 @@ $METASTRINGS_CACHE = array();
  * @package    Elgg.Core
  * @subpackage Database
  * @since      1.10.0
- * 
+ *
  * @access private
  */
 class MetastringsTable {
@@ -40,15 +40,15 @@ class MetastringsTable {
 	 */
 	function getId($string, $case_sensitive = true) {
 		global $CONFIG, $METASTRINGS_CACHE;
-	
+
 		// caching doesn't work for case insensitive requests
 		if ($case_sensitive) {
 			$result = array_search($string, $METASTRINGS_CACHE, true);
-	
+
 			if ($result !== false) {
 				return $result;
 			}
-	
+
 			// Experimental memcache
 			$msfc = null;
 			static $metastrings_memcache;
@@ -62,14 +62,14 @@ class MetastringsTable {
 				return $msfc;
 			}
 		}
-	
+
 		$escaped_string = sanitise_string($string);
 		if ($case_sensitive) {
 			$query = "SELECT * FROM {$CONFIG->dbprefix}metastrings WHERE string = BINARY '$escaped_string' LIMIT 1";
 		} else {
 			$query = "SELECT * FROM {$CONFIG->dbprefix}metastrings WHERE string = '$escaped_string'";
 		}
-	
+
 		$id = false;
 		$results = get_data($query);
 		if (is_array($results)) {
@@ -84,20 +84,20 @@ class MetastringsTable {
 				$id = $results[0]->id;
 			}
 		}
-	
+
 		if (!$id) {
 			$id = _elgg_add_metastring($string);
 		}
-	
+
 		$METASTRINGS_CACHE[$id] = $string;
-	
+
 		if ($metastrings_memcache) {
 			$metastrings_memcache->save($string, $id);
 		}
-	
+
 		return $id;
-	}	
-	
+	}
+
 	/**
 	 * Add a metastring.
 	 *
@@ -108,9 +108,9 @@ class MetastringsTable {
 	 */
 	function add($string) {
 		global $CONFIG;
-	
+
 		$escaped_string = sanitise_string($string);
-	
+
 		return insert_data("INSERT INTO {$CONFIG->dbprefix}metastrings (string) VALUES ('$escaped_string')");
 	}
 }

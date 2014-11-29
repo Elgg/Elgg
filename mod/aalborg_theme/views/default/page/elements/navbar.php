@@ -1,7 +1,7 @@
 <?php
 /**
  * Aalborg theme navbar
- * 
+ *
  */
 
 // drop-down login

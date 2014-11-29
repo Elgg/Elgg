@@ -1,7 +1,7 @@
 <?php
 /**
  * Redirect message
- * 
+ *
  * @uses $vars['url'] URL we're redirecting the user to (note: not relying on legacy site URL injection)
  */
 

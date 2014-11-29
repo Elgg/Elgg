@@ -808,7 +808,7 @@ function _elgg_php_exception_handler($exception) {
 			ob_start();
 			include $CONFIG->exception_include;
 			$exception_output = ob_get_clean();
-			
+
 			// if content is returned from the custom handler we will output
 			// that instead of our default failsafe view
 			if (!empty($exception_output)) {
@@ -886,7 +886,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 		case E_WARNING :
 		case E_USER_WARNING :
 		case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
-			
+
 			// check if the error wasn't suppressed by the error control operator (@)
 			if (error_reporting()) {
 				error_log("PHP WARNING: $error");
@@ -1571,7 +1571,7 @@ function _elgg_css_page_handler($page) {
 		// default css
 		$page[0] = 'elgg';
 	}
-	
+
 	return _elgg_cacheable_view_page_handler($page, 'css');
 }
 
@@ -1770,7 +1770,7 @@ function _elgg_walled_garden_index() {
 
 	elgg_load_css('elgg.walled_garden');
 	elgg_load_js('elgg.walled_garden');
-	
+
 	$content = elgg_view('core/walled_garden/login');
 
 	$params = array(
@@ -1928,10 +1928,10 @@ function _elgg_init() {
 	elgg_register_js('elgg.ui.river', 'js/lib/ui.river.js');
 
 	elgg_register_css('jquery.imgareaselect', 'vendors/jquery/jquery.imgareaselect/css/imgareaselect-deprecated.css');
-	
+
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');
-	
+
 	// Sets a blacklist of words in the current language.
 	// This is a comma separated list in word:blacklist.
 	// @todo possibly deprecate

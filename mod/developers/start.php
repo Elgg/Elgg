@@ -76,7 +76,7 @@ function developers_setup_menu() {
 			'priority' => 10,
 			'section' => 'develop'
 		));
-		
+
 		$inspect_options = developers_get_inspect_options();
 		foreach ($inspect_options as $key => $value) {
 			elgg_register_menu_item('page', array(
@@ -104,13 +104,13 @@ function developers_clear_strings() {
 
 /**
  * Post-process a view to add wrapper comments to it
- * 
+ *
  * 1. Only process views served with the 'default' viewtype.
  * 2. Does not wrap views that begin with js/ or css/ as they are not HTML.
  * 3. Does not wrap views that are images (start with icon/). Is this still true?
  * 4. Does not wrap input and output views (why?).
  * 5. Does not wrap html head or the primary page shells
- * 
+ *
  * @warning this will break views in the default viewtype that return non-HTML data
  * that do not match the above restrictions.
  */
@@ -218,7 +218,7 @@ function developers_theme_sandbox_controller($page) {
 		'navigation',
 		'typography',
 	);
-	
+
 	foreach ($pages as $page_name) {
 		elgg_register_menu_item('theme_sandbox', array(
 			'name' => $page_name,
@@ -241,7 +241,7 @@ function developers_theme_sandbox_controller($page) {
 
 /**
  * Get the available inspect options
- * 
+ *
  * @return array
  */
 function developers_get_inspect_options() {
@@ -254,12 +254,12 @@ function developers_get_inspect_options() {
 		'Views' => 'Views',
 		'Widgets' => 'Widgets',
 	);
-	
+
 	if (elgg_is_active_plugin('web_services')) {
 		$options['Web Services'] = 'Web Services';
 	}
-	
+
 	ksort($options);
-	
+
 	return $options;
 }

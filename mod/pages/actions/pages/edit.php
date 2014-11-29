@@ -55,7 +55,7 @@ if (sizeof($input) > 0) {
 	if ($user && $page) {
 		$can_change_access = $user->isAdmin() || $user->getGUID() == $page->owner_guid;
 	}
-	
+
 	foreach ($input as $name => $value) {
 		if (($name == 'access_id' || $name == 'write_access_id') && !$can_change_access) {
 			continue;

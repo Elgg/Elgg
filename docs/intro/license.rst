@@ -22,7 +22,7 @@ __ http://www.gnu.org/licenses/gpl-faq.html
 
 How much does Elgg cost?
 ------------------------
-Elgg is free to download, install, and use. 
+Elgg is free to download, install, and use.
 If you’d like to donate, we do appreciate our `financial supporters`__!
 
 __ http://elgg.org/supporter.php
@@ -58,7 +58,7 @@ What’s the difference between the MIT and GPL versions?
 -------------------------------------------------------
 Plugins are not included with the MIT version.
 
-You can distribute a commercial product based on Elgg using the MIT version without making your modifications available. 
+You can distribute a commercial product based on Elgg using the MIT version without making your modifications available.
 
 With the GPL licensed version, you have to include make your modifications of the framework public if you redistribute the framework.
 

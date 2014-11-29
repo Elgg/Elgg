@@ -6,7 +6,7 @@ namespace Elgg\Amd;
  *
  * @package    Elgg.Core
  * @subpackage JavaScript
- * 
+ *
  * @access private
  */
 class Config {

@@ -85,26 +85,26 @@ class DiContainerTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($di, $di->remove('foo'));
 		$this->assertFalse($di->has('foo'));
 	}
-	
+
 	public function testSetClassNames() {
 		$di = new \Elgg\Di\DiContainer();
 		$di->setClassName('foo', self::TEST_CLASS);
 
 		$this->assertInstanceOf(self::TEST_CLASS, $di->foo);
-		
+
 		$this->setExpectedException('InvalidArgumentException', 'Class names must be valid PHP class names');
 		$di->setClassName('foo', array());
 	}
-	
+
 	public function testSettingInvalidClassNameThrows() {
 		$di = new \Elgg\Di\DiContainer();
-		
+
 		$euro = "\xE2\x82\xAC";
-		
+
 		$di->setClassName('foo1', "Foo2{$euro}3");
 		$di->setClassName('foo2', "\\Foo2{$euro}3");
 		$di->setClassName('foo3', "Foo2{$euro}3\\Foo2{$euro}3");
-		
+
 		$this->setExpectedException('InvalidArgumentException', 'Class names must be valid PHP class names');
 		$di->setClassName('foo', 'Not Valid');
 	}

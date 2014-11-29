@@ -3,7 +3,7 @@
  * Page shell for upgrade script
  *
  * Displays an ajax loader until upgrade is complete
- * 
+ *
  * @uses $vars['head']        Parameters for the <head> element
  * @uses $vars['body']        The main content of the page
  * @uses $vars['sysmessages'] A 2d array of various message registers, passed from system_messages()

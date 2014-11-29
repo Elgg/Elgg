@@ -15,7 +15,7 @@ $params['menu']['default'][1]->addChild($m);
 ?>
 
 <div class="theme-sandbox-demo-sidebar">
-<?php 
+<?php
 	echo elgg_view('navigation/menu/page', $params);
 ?>
 </div>

@@ -1,7 +1,7 @@
 <?php
 /**
  * User's wire posts
- * 
+ *
  */
 
 $owner = elgg_get_page_owner_entity();

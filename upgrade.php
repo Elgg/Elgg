@@ -64,7 +64,7 @@ if (get_input('upgrade') == 'upgrade') {
 			echo $msg;
 			exit;
 		}
-		
+
 		// note: translation may not be available until after upgrade
 		$msg = elgg_echo("installation:htaccess:needs_upgrade");
 		if ($msg === "installation:htaccess:needs_upgrade") {
@@ -85,7 +85,7 @@ if (get_input('upgrade') == 'upgrade') {
 		// can't have pretty messages because we don't know the state of the views.
 		$content = elgg_echo('upgrade:unable_to_upgrade_info');
 		$title = elgg_echo('upgrade:unable_to_upgrade');
-		
+
 		echo elgg_view_page($title, $content);
 		exit;
 	}

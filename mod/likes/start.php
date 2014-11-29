@@ -32,7 +32,7 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 
 	if ($entity->canAnnotate(0, 'likes')) {
 		$hasLiked = elgg_annotation_exists($entity->guid, 'likes');
-		
+
 		// Always register both. That makes it super easy to toggle with javascript
 		$return[] = ElggMenuItem::factory(array(
 			'name' => 'like',
@@ -51,7 +51,7 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 			'priority' => 1000,
 		));
 	}
-	
+
 	// likes count
 	$count = elgg_view('likes/count', array('entity' => $entity));
 	if ($count) {
@@ -83,12 +83,12 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 		if ($item->type == "user") {
 			return $return;
 		}
-		
+
 		$object = $item->getObjectEntity();
 		if (!elgg_in_context('widgets') && $item->annotation_id == 0) {
 			if ($object->canAnnotate(0, 'likes')) {
 				$hasLiked = elgg_annotation_exists($object->guid, 'likes');
-				
+
 				// Always register both. That makes it super easy to toggle with javascript
 				$return[] = ElggMenuItem::factory(array(
 					'name' => 'like',

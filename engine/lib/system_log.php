@@ -41,7 +41,7 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
 	} else {
 		$by_user = (int)$by_user;
 	}
-	
+
 	$event = sanitise_string($event);
 	$class = sanitise_string($class);
 	$type = sanitise_string($type);
@@ -165,7 +165,7 @@ function get_object_from_log_entry($entry) {
 			$object = new $class($entry->object_id);
 			return $object;
 		} catch (Exception $e) {
-			
+
 		}
 	}
 

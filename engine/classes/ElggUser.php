@@ -6,7 +6,7 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.User
- * 
+ *
  * @property string $name     The display name that the user will be known by in the network
  * @property string $username The short, reference name for the user in the network
  * @property string $email    The email address to which Elgg will send email notifications
@@ -124,7 +124,7 @@ class ElggUser extends \ElggEntity
 	 */
 	protected function create() {
 		global $CONFIG;
-	
+
 		$guid = parent::create();
 		$name = sanitize_string($this->name);
 		$username = sanitize_string($this->username);
@@ -142,20 +142,20 @@ class ElggUser extends \ElggEntity
 			// TODO(evan): Throw an exception here?
 			return false;
 		}
-		
+
 		return $guid;
 	}
-	
+
 	/**
 	 * {@inheritdoc}
 	 */
 	protected function update() {
 		global $CONFIG;
-		
+
 		if (!parent::update()) {
 			return false;
 		}
-		
+
 		$guid = (int)$this->guid;
 		$name = sanitize_string($this->name);
 		$username = sanitize_string($this->username);
@@ -748,7 +748,7 @@ class ElggUser extends \ElggEntity
 	 * Can a user comment on this user?
 	 *
 	 * @see \ElggEntity::canComment()
-	 * 
+	 *
 	 * @param int $user_guid User guid (default is logged in user)
 	 * @return bool
 	 * @since 1.8.0

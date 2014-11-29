@@ -44,7 +44,7 @@ function ws_init() {
 
 /**
  * Handle a web service request
- * 
+ *
  * Handles requests of format: http://site/services/api/handler/response_format/request
  * The first element after 'services/api/' is the service handler name as
  * registered by {@link register_service_handler()}.
@@ -55,7 +55,7 @@ function ws_init() {
  * function registered by {@link register_service_handler()}.
  *
  * If a service handler isn't found, a 404 header is sent.
- * 
+ *
  * @param array $segments URL segments
  * @return bool
  */

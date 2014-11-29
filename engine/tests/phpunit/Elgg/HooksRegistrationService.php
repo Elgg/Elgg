@@ -9,7 +9,7 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->mock = $this->getMockForAbstractClass('\Elgg\HooksRegistrationService');
 	}
-	
+
 	public function testCanRegisterHandlers() {
 		$this->assertTrue($this->mock->registerHandler('foo', 'bar', 'callback1'));
 		$this->assertTrue($this->mock->registerHandler('foo', 'bar', 'callback2'));
@@ -32,7 +32,7 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		// check possibly invalid callbacks
 		$this->assertFalse($this->mock->registerHandler('foo', 'bar', 1234));
 	}
-	
+
 	public function testCanUnregisterHandlers() {
 		$this->mock->registerHandler('foo', 'bar', 'callback1');
 		$this->mock->registerHandler('foo', 'bar', 'callback2', 100);
@@ -46,7 +46,7 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 				)
 			)
 		);
-		
+
 		$this->assertSame($expected, $this->mock->getAllHandlers());
 
 		// check unregistering things that aren't registered

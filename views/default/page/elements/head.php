@@ -1,7 +1,7 @@
 <?php
 /**
  * The HTML head
- * 
+ *
  * JavaScript load sequence (set in views library and this view)
  * ------------------------
  * 1. Elgg's initialization which is inline because it can change on every page load.

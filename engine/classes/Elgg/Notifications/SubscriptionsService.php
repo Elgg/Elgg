@@ -18,7 +18,7 @@ class SubscriptionsService {
 	const RELATIONSHIP_PREFIX = 'notify';
 
 	/**
-	 *  @var array Array of strings. Delivery names as registered with 
+	 *  @var array Array of strings. Delivery names as registered with
 	 *             elgg_register_notification_method()
 	 */
 	public $methods;
@@ -105,9 +105,9 @@ class SubscriptionsService {
 
 	/**
 	 * Subscribe a user to notifications about a target entity
-	 * 
+	 *
 	 * This method will return false if the subscription already exists.
-	 * 
+	 *
 	 * @param int    $userGuid   The GUID of the user to subscribe to notifications
 	 * @param string $method     The delivery method of the notifications
 	 * @param int    $targetGuid The entity to receive notifications about
@@ -123,7 +123,7 @@ class SubscriptionsService {
 
 	/**
 	 * Unsubscribe a user to notifications about a target entity
-	 * 
+	 *
 	 * @param int    $userGuid   The GUID of the user to unsubscribe to notifications
 	 * @param string $method     The delivery method of the notifications to stop
 	 * @param int    $targetGuid The entity to stop receiving notifications about
@@ -165,7 +165,7 @@ class SubscriptionsService {
 
 	/**
 	 * Get the relationship names for notifications
-	 * 
+	 *
 	 * @return array
 	 */
 	protected function getMethodRelationships() {

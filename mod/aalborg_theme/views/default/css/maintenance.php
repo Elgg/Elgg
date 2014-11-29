@@ -7,7 +7,7 @@ $url = elgg_get_site_url();
 
 echo elgg_view('css/elements/reset', $vars);
 echo elgg_view('css/elements/core', $vars);
-echo elgg_view('css/elements/helpers', $vars); 
+echo elgg_view('css/elements/helpers', $vars);
 
 ?>
 /* <style> /**/
@@ -47,7 +47,7 @@ a {
 	position: absolute;
 	top: 0;
 	left: 0;
-	
+
     background-color: #FFF;
     border: 1px solid #DEDEDE;
     padding: 10px;
@@ -80,13 +80,13 @@ a {
 }
 
 .elgg-output {
-	font-size: 14px;	
+	font-size: 14px;
 	margin-top: 20px;
 	padding: 20px;
 	color: #B94A48;
 	background-color: #F8E8E8;
 	border: 1px solid #E5B7B5;
-	border-radius: 5px;	
+	border-radius: 5px;
 	margin-bottom: 42px;
 }
 .elgg-form-login {
@@ -198,7 +198,7 @@ input[type="radio"] {
 	border-color: #555;
 	color: white;
 	text-shadow: none;
-	text-decoration: none; 
+	text-decoration: none;
 }
 .elgg-button-submit:hover {
 	background-color: #333;

@@ -20,7 +20,7 @@ function garbagecollector_init() {
 
 	// Register cron hook
 	elgg_register_plugin_hook_handler('cron', $period, 'garbagecollector_cron');
-	
+
 	elgg_register_plugin_hook_handler('gc', 'system', 'garbagecollector_orphaned_metastrings');
 	elgg_register_plugin_hook_handler('gc', 'system', 'garbagecollector_entities');
 }
@@ -125,7 +125,7 @@ function garbagecollector_entities() {
  */
 function garbagecollector_orphaned_metastrings() {
 	$dbprefix = elgg_get_config('dbprefix');
-	
+
 	// Garbage collect metastrings
 	echo elgg_echo('garbagecollector:gc:metastrings');
 
@@ -143,7 +143,7 @@ function garbagecollector_orphaned_metastrings() {
 		$dead = get_data($select_query);
 		if ($dead) {
 			static $metastrings_memcache;
-			
+
 			if (!$metastrings_memcache) {
 				$metastrings_memcache = new \ElggMemcache('metastrings_memcache');
 			}
@@ -164,7 +164,7 @@ function garbagecollector_orphaned_metastrings() {
 		)";
 
 	$result = delete_data($query);
-	
+
 	if ($result !== false) {
 		echo elgg_echo('garbagecollector:ok');
 	} else {

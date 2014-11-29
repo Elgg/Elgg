@@ -191,7 +191,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 			}
 		}
 	}
-	
+
 	/**
 	 * Make sure elgg_get_entities_from_relationship() returns distinct (unique) results when relationship_guid is not set
 	 * See #5775
@@ -216,7 +216,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 			'inverse_relationship' => false,
 			'count' => true,
 		);
-		
+
 		$count = elgg_get_entities_from_relationship($options);
 		$this->assertIdentical($count, 1);
 
@@ -224,19 +224,19 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 		$objects = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($objects));
 		$this->assertIdentical(count($objects), 1);
-		
+
 		$obj1->delete();
 		$obj2->delete();
 		$obj3->delete();
 	}
-	
+
 	/**
 	 * Make sure changes related to #5775 do not affect inverse relationship queries
 	 * @covers elgg_get_entities_from_relationship()
 	 */
 	public function testElggApiGettersEntityRelationshipDistinctResultInverse() {
 
-		
+
 		$obj1 = new ElggObject();
 		$obj1->save();
 
@@ -254,7 +254,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 			'inverse_relationship' => true,
 			'count' => true,
 		);
-		
+
 		$count = elgg_get_entities_from_relationship($options);
 		$this->assertIdentical($count, 2);
 
@@ -262,7 +262,7 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 		$objects = elgg_get_entities_from_relationship($options);
 		$this->assertTrue(is_array($objects));
 		$this->assertIdentical(count($objects), 2);
-		
+
 		$obj1->delete();
 		$obj2->delete();
 		$obj3->delete();

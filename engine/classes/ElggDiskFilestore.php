@@ -22,7 +22,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -332,7 +332,7 @@ class ElggDiskFilestore extends \ElggFilestore {
 	}
 
 
-	
+
 	/**
 	 * Deprecated methods
 	 */

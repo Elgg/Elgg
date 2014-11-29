@@ -57,7 +57,7 @@ class ElggPluginManifest {
 		'version' => '',
 		'comparison' => 'ge'
 	);
-	
+
 	/**
 	 * The expected structure of a requires php_version dependency element
 	 */
@@ -113,7 +113,7 @@ class ElggPluginManifest {
 		'description' => '',
 		'path' => ''
 	);
-	
+
 	/**
 	 * The expected structure of a contributor element
 	 */
@@ -423,7 +423,7 @@ class ElggPluginManifest {
 
 		return $normalized;
 	}
-	
+
 	/**
 	 * Return the contributors listed.
 	 *
@@ -559,7 +559,7 @@ class ElggPluginManifest {
 			case 'php_version':
 				$struct = $this->depsStructPhpVersion;
 				break;
-			
+
 			case 'php_extension':
 				$struct = $this->depsStructPhpExtension;
 				break;

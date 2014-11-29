@@ -19,7 +19,7 @@ namespace Elgg;
  *  config object in ElggPlugin::includeFile
  *
  * @access private
- * 
+ *
  * @package Elgg.Core
  */
 class DeprecationWrapper implements \ArrayAccess {
@@ -40,7 +40,7 @@ class DeprecationWrapper implements \ArrayAccess {
 
 	/**
 	 * Create the wrapper
-	 * 
+	 *
 	 * @param mixed    $object   The object or string to wrap
 	 * @param string   $message  The deprecation message to display when used
 	 * @param string   $version  The Elgg version this was deprecated
@@ -59,7 +59,7 @@ class DeprecationWrapper implements \ArrayAccess {
 
 	/**
 	 * Get a property on the object
-	 * 
+	 *
 	 * @param string $name Property name
 	 * @return mixed
 	 */
@@ -70,7 +70,7 @@ class DeprecationWrapper implements \ArrayAccess {
 
 	/**
 	 * Set a property on the object
-	 * 
+	 *
 	 * @param string $name  Property name
 	 * @param mixed  $value Property value
 	 * @return void
@@ -82,7 +82,7 @@ class DeprecationWrapper implements \ArrayAccess {
 
 	/**
 	 * Call a method on the object
-	 * 
+	 *
 	 * @param string $name      Method name
 	 * @param array  $arguments Method arguments
 	 * @return mixed
@@ -94,7 +94,7 @@ class DeprecationWrapper implements \ArrayAccess {
 
 	/**
 	 * Get the object as string
-	 * 
+	 *
 	 * @return string
 	 */
 	public function __toString() {
@@ -108,7 +108,7 @@ class DeprecationWrapper implements \ArrayAccess {
 
 	/**
 	 * Display a warning
-	 * 
+	 *
 	 * @return void
 	 */
 	protected function displayWarning() {

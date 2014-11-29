@@ -9,7 +9,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
 	/** @var \ElggUser */
 	protected $user;
-	
+
 	/**
 	 * Called before each test object.
 	 */
@@ -65,7 +65,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	public function testTurningEnabledOff() {
 		$sql = _elgg_get_access_where_sql(array('use_enabled_clause' => false));
 		$ans = "((1 = 1))";
-		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");		
+		$this->assertTrue($this->assertSqlEqual($ans, $sql), "$sql does not match $ans");
 	}
 
 	public function testNonAdminUser() {
@@ -156,7 +156,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 		$clauses['ors'] = array();
 		return $clauses;
 	}
-	
+
 	public function testAccessPluginHookAddOr() {
 		elgg_register_plugin_hook_handler('get_sql', 'access', array($this, 'addOrCallback'));
 		$sql = _elgg_get_access_where_sql();
@@ -190,7 +190,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	protected function getFriendsClause($user_guid, $table_alias, $owner_guid = 'owner_guid') {
 		global $CONFIG;
 		$table_alias = $table_alias ? $table_alias . '.' : '';
-	
+
 		return "{$table_alias}access_id = " . ACCESS_FRIENDS . "
 			AND {$table_alias}{$owner_guid} IN (
 				SELECT guid_one FROM {$CONFIG->dbprefix}entity_relationships

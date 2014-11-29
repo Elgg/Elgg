@@ -6,7 +6,7 @@
 ?>
 
 <div class="elgg-col elgg-col-2of3">
-<?php 
+<?php
 	echo elgg_view('output/longtext', array(
 		'id' => 'dashboard-info',
 		'class' => 'elgg-inner pam mhs mtn',

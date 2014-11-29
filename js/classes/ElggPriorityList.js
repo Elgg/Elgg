@@ -12,7 +12,7 @@ elgg.ElggPriorityList = function() {
  *
  * @param {Object} obj          The object to insert
  * @param {Number} opt_priority An optional priority to insert at.
- * 
+ *
  * @return {Void}
  */
 elgg.ElggPriorityList.prototype.insert = function(obj, opt_priority) {

@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg Messages CSS
- * 
+ *
  * @package ElggMessages
  */
 ?>
@@ -44,7 +44,7 @@
 	color: white;
 	background-color: red;
 	border-radius: 10px;
-	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);	
+	box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.50);
 	position: absolute;
 	text-align: center;
 	top: 0px;

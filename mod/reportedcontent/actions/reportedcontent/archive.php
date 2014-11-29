@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg reported content: archive action
- * 
+ *
  * @package ElggReportedContent
  */
 

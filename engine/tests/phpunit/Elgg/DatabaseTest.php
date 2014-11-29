@@ -1,7 +1,7 @@
 <?php
 
 class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
-	
+
 	private $dbClass, $configClass;
 
 	/**
@@ -14,7 +14,7 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 		// the database instance with a mock.
 		$db = _elgg_create_service_provider()->db;
 		$this->dbClass = get_class($db);
-		
+
 		// Config class
 		$reflectionClass = new ReflectionClass($db);
 		$reflectionProperty = $reflectionClass->getProperty('config');
@@ -26,7 +26,7 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 			$this->configClass = 'Elgg_Database_Config';
 		}
 	}
-	
+
 	/**
 	 * @dataProvider scriptsWithOneStatement
 	 */
@@ -45,7 +45,7 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 			array('one_statement_with_comments.sql'),
 		);
 	}
-	
+
 	/**
 	 * @dataProvider scriptsWithMultipleStatements
 	 * @todo Use @see withConsecutive() to test consecutive method calls after upgrading to PHPUnit 4.
@@ -63,7 +63,7 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 		$this->expectExecutedStatement($db2, 2, $this->matches("INSERT INTO test_sometable (`key`) VALUES ('Value 3')"));
 		$db2->runSqlScript($this->getFixture($script));
 	}
-	
+
 	public function scriptsWithMultipleStatements() {
 		return array(
 			array('multiple_statements.sql'),
@@ -102,7 +102,7 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 			DIRECTORY_SEPARATOR . 'sql' .
 			DIRECTORY_SEPARATOR . $filename;
 	}
-	
+
 	/**
 	 * @return PHPUnit_Framework_MockObject_MockObject
 	 */
@@ -117,7 +117,7 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 			)
 		);
 	}
-		
+
 	/**
 	 * @param PHPUnit_Framework_MockObject_MockObject $db
 	 * @param int $index

@@ -1,7 +1,7 @@
 <?php
 /**
  * All wire posts
- * 
+ *
  */
 
 elgg_push_breadcrumb(elgg_echo('thewire'));

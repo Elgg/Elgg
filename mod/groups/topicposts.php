@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg Groups topic posts page
- * 
+ *
  * @package ElggGroups
  *
  * @deprecated 1.8

@@ -5,7 +5,7 @@ namespace Elgg\Http;
  * Mock session handler
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Http
  */

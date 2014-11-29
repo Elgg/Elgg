@@ -132,7 +132,7 @@ class ElggMenuItem {
 			$options['contexts'] = $options['context'];
 			unset($options['context']);
 		}
-		
+
 		// make sure contexts is set correctly
 		if (isset($options['contexts'])) {
 			$item->setContext($options['contexts']);
@@ -157,7 +157,7 @@ class ElggMenuItem {
 			$item->setData($options['data']);
 			unset($options['data']);
 		}
-		
+
 		foreach ($options as $key => $value) {
 			if (isset($item->data[$key])) {
 				$item->data[$key] = $value;
@@ -222,7 +222,7 @@ class ElggMenuItem {
 
 	/**
 	 * Set the display text of the menu item
-	 * 
+	 *
 	 * @param string $text The display text as HTML
 	 * @return void
 	 */
@@ -443,7 +443,7 @@ class ElggMenuItem {
 	// @codingStandardsIgnoreStart
 	/**
 	 * Add additional classes
-	 * 
+	 *
 	 * @param array $current    The current array of classes
 	 * @param mixed $additional Additional classes (either array of string)
 	 * @return void
@@ -540,7 +540,7 @@ class ElggMenuItem {
 
 	/**
 	 * Set the parent menu item
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param \ElggMenuItem $parent The parent of this menu item
@@ -553,7 +553,7 @@ class ElggMenuItem {
 
 	/**
 	 * Get the parent menu item
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @return \ElggMenuItem or null
@@ -565,7 +565,7 @@ class ElggMenuItem {
 
 	/**
 	 * Add a child menu item
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param \ElggMenuItem $item A child menu item
@@ -578,7 +578,7 @@ class ElggMenuItem {
 
 	/**
 	 * Set the menu item's children
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param array $children Array of \ElggMenuItems
@@ -591,7 +591,7 @@ class ElggMenuItem {
 
 	/**
 	 * Get the children menu items
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @return array
@@ -603,7 +603,7 @@ class ElggMenuItem {
 
 	/**
 	 * Sort the children
-	 * 
+	 *
 	 * This is reserved for the \ElggMenuBuilder.
 	 *
 	 * @param string $sortFunction A function that is passed to usort()
@@ -619,7 +619,7 @@ class ElggMenuItem {
 
 	/**
 	 * Get all the values for this menu item. Useful for rendering.
-	 * 
+	 *
 	 * @return array
 	 * @since 1.9.0
 	 */

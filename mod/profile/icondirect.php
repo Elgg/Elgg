@@ -1,8 +1,8 @@
 <?php
 /**
  * Elgg profile icon cache/bypass
- * 
- * 
+ *
+ *
  * @package ElggProfile
  */
 
@@ -48,7 +48,7 @@ if ($mysql_dblink) {
 				} elseif ($row->name == 'path') {
 					$elgg_path = $row->value;
 				}
-				
+
 				$row = mysql_fetch_object($result);
 			}
 		}
@@ -63,7 +63,7 @@ if ($mysql_dblink) {
 
 			$filename = $user_path . "profile/{$guid}{$size}.jpg";
 			$filesize = @filesize($filename);
-			
+
 			if ($filesize) {
 				header("Content-type: image/jpeg");
 				header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);

@@ -3,15 +3,15 @@ namespace Elgg;
 
 /**
  * PRIVATE CLASS. API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * PLUGIN DEVELOPERS SHOULD USE elgg_*_context FUNCTIONS INSTEAD.
- * 
+ *
  * Views can modify their output based on the local context. You may want to
  * display a list of blogs on a blog page or in a small widget. The rendered
  * output could be different for those two contexts ('blog' vs 'widget').
  *
  * Pages that pass through the page handling system set the context to the
- * first string after the root url. Example: http://example.org/elgg/bookmarks/ 
+ * first string after the root url. Example: http://example.org/elgg/bookmarks/
  * results in the initial context being set to 'bookmarks'.
  *
  * The context is a stack so that for a widget on a profile, the context stack
@@ -19,15 +19,15 @@ namespace Elgg;
  *
  * @warning The context is not available until the page_handler runs (after
  * the 'init, system' event processing has completed).
- * 
+ *
  * @package Elgg.Core
  * @access  private
  * @since   1.10.0
  */
 final class Context {
-	
+
 	private $stack = array();
-	
+
 	/**
 	 * Get the most recently pushed context value.
 	 *
@@ -35,7 +35,7 @@ final class Context {
 	 */
 	public function peek() {
 		$topPos = count($this->stack) - 1;
-		
+
 		if ($topPos >= 0) {
 			return $this->stack[$topPos];
 		} else {
@@ -43,7 +43,7 @@ final class Context {
 		}
 
 	}
-	
+
 	/**
 	 * Push a context onto the top of the stack
 	 *
@@ -53,7 +53,7 @@ final class Context {
 	public function push($context) {
 		array_push($this->stack, $context);
 	}
-	
+
 	/**
 	 * Removes and returns the top context string from the stack
 	 *
@@ -62,7 +62,7 @@ final class Context {
 	public function pop() {
 		return array_pop($this->stack);
 	}
-	
+
 	/**
 	 * Sets the page context
 	 *

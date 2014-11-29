@@ -65,7 +65,7 @@ function elgg_gatekeeper() {
 
 /**
  * Alias of elgg_gatekeeper()
- * 
+ *
  * Used at the top of a page to mark it as logged in users only.
  *
  * @return void
@@ -195,7 +195,7 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
 			// user is logged in but still does not have access to it
 			register_error(elgg_echo('limited_access'));
 			forward();
-		}		
+		}
 	}
 
 	if ($type) {
@@ -208,7 +208,7 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
 
 /**
  * Front page handler
- * 
+ *
  * @return bool
  */
 function elgg_front_page_handler() {
@@ -255,13 +255,13 @@ function elgg_error_page_handler($hook, $type, $result, $params) {
 			// use default if there is no title for this error type
 			$title = elgg_echo("error:default:title");
 		}
-		
+
 		$content = elgg_view("errors/$type", $params);
 	} else {
 		$title = elgg_echo("error:default:title");
 		$content = elgg_view("errors/default", $params);
 	}
-	
+
 	$httpCodes = array(
 		'400' => 'Bad Request',
 		'401' => 'Unauthorized',
@@ -271,7 +271,7 @@ function elgg_error_page_handler($hook, $type, $result, $params) {
 		'500' => 'Internal Server Error',
 		'503' => 'Service Unavailable',
 	);
-	
+
 	if (isset($httpCodes[$type])) {
 		header("HTTP/1.1 $type {$httpCodes[$type]}");
 	}

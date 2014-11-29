@@ -37,7 +37,7 @@ How does it work?
 =================
 
 Elgg activates its cron handler when particular cron pages are loaded.
-As an example, loading http://example.com/cron/hourly/ in a web browser 
+As an example, loading http://example.com/cron/hourly/ in a web browser
 activates the hourly hook. To automate this, cron jobs are setup to hit those
 pages at certain times. This is done by setting up a ``crontab`` which is a
 configuration file that determines what cron jobs do and at what interval.

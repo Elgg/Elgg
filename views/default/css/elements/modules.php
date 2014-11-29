@@ -11,7 +11,7 @@
 /* Aside */
 .elgg-module-aside .elgg-head {
 	border-bottom: 1px solid #CCC;
-	
+
 	margin-bottom: 5px;
 	padding-bottom: 5px;
 }
@@ -30,7 +30,7 @@
 /* Popup */
 .elgg-module-popup {
 	background-color: white;
-	border: 1px solid #ccc;	
+	border: 1px solid #ccc;
 	z-index: 9999;
 	margin-bottom: 0;
 	padding: 5px;
@@ -48,13 +48,13 @@
 .elgg-module-dropdown {
 	background-color:white;
 	border:5px solid #CCC;
-	border-radius: 5px 0 5px 5px;	
+	border-radius: 5px 0 5px 5px;
 	display:none;
 	width: 210px;
 	padding: 12px;
 	margin-right: 0px;
 	z-index:100;
-	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);	
+	box-shadow: 0 3px 3px rgba(0, 0, 0, 0.45);
 	position:absolute;
 	right: 0px;
 	top: 100%;

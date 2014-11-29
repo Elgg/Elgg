@@ -4,7 +4,7 @@ Views
 Introduction
 ============
 
-Elgg follows a MVC pattern and Views are the V in MVC. Views are responsible for creating the output. Generally, this will be HTML sent to a web browser, but it could also be RSS, JSON or any number of other data formats. 
+Elgg follows a MVC pattern and Views are the V in MVC. Views are responsible for creating the output. Generally, this will be HTML sent to a web browser, but it could also be RSS, JSON or any number of other data formats.
 
 The Views system handles everything from the layout of pages and chunks of presentation output (like a footer or a toolbar) down to individual links and form inputs. It also allows for advanced features like automatic RSS generation, a swift-to-develop mobile interface, and the alternative interfaces suggested below.
 
@@ -73,7 +73,7 @@ Again, the best way to override views is to place them in the appropriate place 
 
 .. note::
 
-	When considering long-term maintenance, overriding views in the core and bundled plugins has a cost: Upgrades may bring changes in views, and if you have overridden them, you will not get those changes. You may want to use `post processing <views#post-processing-views>`__ if the change you're making can be easily made with string replacement methods.  
+	When considering long-term maintenance, overriding views in the core and bundled plugins has a cost: Upgrades may bring changes in views, and if you have overridden them, you will not get those changes. You may want to use `post processing <views#post-processing-views>`__ if the change you're making can be easily made with string replacement methods.
 
 .. note::
 
@@ -221,7 +221,7 @@ This is then used in the provided listing functions. To automatically display a 
 	    'subtype' => 'blog',
 	));
 
-This function checks to see if there are any entities; if there are, it first displays the ``navigation/pagination`` view in order to display a way to move from page to page. It then repeatedly calls ``elgg_view_entity`` on each entity, before returning the result. 
+This function checks to see if there are any entities; if there are, it first displays the ``navigation/pagination`` view in order to display a way to move from page to page. It then repeatedly calls ``elgg_view_entity`` on each entity, before returning the result.
 
 Because it does this, Elgg knows that it can automatically supply an RSS feed - it extends the ``metatags`` view (which is called by the header) in order to provide RSS autodiscovery, which is why you can see the orange RSS icon on those pages.
 

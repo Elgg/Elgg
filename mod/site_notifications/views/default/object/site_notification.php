@@ -39,8 +39,8 @@ $menu = elgg_view_menu('site_notifications', array(
 ));
 
 $checkbox = elgg_view('input/checkbox', array(
-	'name' => 'notification_id[]', 
-	'value' => $entity->getGUID(), 
+	'name' => 'notification_id[]',
+	'value' => $entity->getGUID(),
 	'default' => false
 ));
 
