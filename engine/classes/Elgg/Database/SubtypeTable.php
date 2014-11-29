@@ -134,6 +134,7 @@ class SubtypeTable {
 	function populateCache() {
 		global $SUBTYPE_CACHE;
 		
+		// $this->table->fromSelf($s)->select('*');
 		$results = _elgg_services()->db->getData("SELECT * FROM {$this->CONFIG->dbprefix}entity_subtypes");
 		
 		$SUBTYPE_CACHE = array();
@@ -242,6 +243,7 @@ class SubtypeTable {
 			$subtype = sanitise_string($subtype);
 			$class = sanitise_string($class);
 	
+			// $this->table->insert(['type' => $type, 'subtype' => $subtype, 'class' => $class])
 			$id = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}entity_subtypes"
 				. " (type, subtype, class) VALUES ('$type', '$subtype', '$class')");
 			
@@ -273,6 +275,10 @@ class SubtypeTable {
 		$type = sanitise_string($type);
 		$subtype = sanitise_string($subtype);
 	
+		// $this->table->fromSelf($s)
+		//   ->where($s->type->equals($type)->and($s->subtype->equals($subtype)))
+		//   ->limit(1)
+		//   ->delete();
 		$success = _elgg_services()->db->deleteData("DELETE FROM {$this->CONFIG->dbprefix}entity_subtypes"
 			. " WHERE type = '$type' AND subtype = '$subtype'");
 		
@@ -311,6 +317,9 @@ class SubtypeTable {
 		$subtype = sanitise_string($subtype);
 		$class = sanitise_string($class);
 		
+		// $this->table->fromSelf($s)
+		//   ->where($s->id->equals($id))
+		//   ->update(['type' => $type, 'subtype' => $subtype, 'class' => $class]);
 		$success = _elgg_services()->db->updateData("UPDATE {$this->CONFIG->dbprefix}entity_subtypes
 			SET type = '$type', subtype = '$subtype', class = '$class'
 			WHERE id = $id
