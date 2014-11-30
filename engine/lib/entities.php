@@ -567,7 +567,7 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
  *                   list_type => STR 'list' or 'gallery'
  *                   list_type_toggle => BOOL Display gallery / list switch
  *                   pagination => BOOL Display pagination links
- *                   no_results => STR Message to display when there are no entities
+ *                   no_results => STR|Closure Message to display when there are no entities
  *
  * @param callback $getter  The entity getter function to use to fetch the entities.
  * @param callback $viewer  The function to use to view the entity list.
