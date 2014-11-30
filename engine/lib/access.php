@@ -145,7 +145,7 @@ function get_default_access(\ElggUser $user = null) {
 
 	// user default access if enabled
 	if ($CONFIG->allow_user_default_access) {
-		$user = $user ? $user : elgg_get_logged_in_user_entity();
+		$user = $user ? $user : _elgg_services()->session->getLoggedInUser();
 		if ($user) {
 			$user_access = $user->getPrivateSetting('elgg_default_access');
 			if ($user_access !== null) {
@@ -158,7 +158,7 @@ function get_default_access(\ElggUser $user = null) {
 		'user' => $user,
 		'default_access' => $default_access,
 	);
-	return elgg_trigger_plugin_hook('default', 'access', $params, $default_access);
+	return _elgg_services()->hooks->trigger('default', 'access', $params, $default_access);
 }
 
 /**
@@ -470,7 +470,7 @@ function elgg_get_entities_from_access_id(array $options = array()) {
 	}
 
 	// return entities with the desired options
-	return elgg_get_entities($options);
+	return _elgg_services()->entityTable->getEntities($options);
 }
 
 /**
@@ -508,12 +508,14 @@ function elgg_list_entities_from_access_id(array $options = array()) {
 function get_readable_access_level($entity_access_id) {
 	$access = (int) $entity_access_id;
 
+	$translator = _elgg_services()->translator;
+
 	// Check if entity access id is a defined global constant
 	$access_array = array(
-		ACCESS_PRIVATE => elgg_echo("PRIVATE"),
-		ACCESS_FRIENDS => elgg_echo("access:friends:label"),
-		ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
-		ACCESS_PUBLIC => elgg_echo("PUBLIC")
+		ACCESS_PRIVATE => $translator->translate("PRIVATE"),
+		ACCESS_FRIENDS => $translator->translate("access:friends:label"),
+		ACCESS_LOGGED_IN => $translator->translate("LOGGED_IN"),
+		ACCESS_PUBLIC => $translator->translate("PUBLIC"),
 	);
 
 	if (array_key_exists($access, $access_array)) {
@@ -529,7 +531,7 @@ function get_readable_access_level($entity_access_id) {
 	}
 
 	// return 'Limited' if the user does not have access to the access collection
-	return elgg_echo('access:limited:label');
+	return $translator->translate('access:limited:label');
 }
 
 /**
@@ -623,9 +625,9 @@ function access_init() {
 function elgg_override_permissions($hook, $type, $value, $params) {
 	$user = elgg_extract('user', $params);
 	if ($user) {
-		$user_guid = $user->getGUID();
+		$user_guid = $user->guid;
 	} else {
-		$user_guid = elgg_get_logged_in_user_guid();
+		$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 	}
 
 	// don't do this so ignore access still works with no one logged in
@@ -639,7 +641,7 @@ function elgg_override_permissions($hook, $type, $value, $params) {
 	}
 
 	// check access overrides
-	if ((elgg_check_access_overrides($user_guid))) {
+	if (elgg_check_access_overrides($user_guid)) {
 		return true;
 	}
 
