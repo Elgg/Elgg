@@ -8,6 +8,61 @@
  */
 
 /**
+ * Register a PHP file as a library.
+ *
+ * @see elgg_load_library
+ *
+ * @param string $name     The name of the library
+ * @param string $location The location of the file
+ *
+ * @return void
+ * @since 1.8.0
+ */
+function elgg_register_library($name, $location) {
+	$config = _elgg_services()->config;
+
+	$libraries = $config->get('libraries');
+	if ($libraries === null) {
+		$libraries = array();
+	}
+	$libraries[$name] = $location;
+	$config->set('libraries', $libraries);
+}
+
+/**
+ * Load a PHP library.
+ *
+ * @see elgg_register_library
+ *
+ * @param string $name The name of the library
+ *
+ * @return void
+ * @throws InvalidParameterException
+ * @since 1.8.0
+ */
+function elgg_load_library($name) {
+	static $loaded_libraries = array();
+
+	if (in_array($name, $loaded_libraries)) {
+		return;
+	}
+
+	$libraries = _elgg_services()->config->get('libraries');
+
+	if (!isset($libraries[$name])) {
+		$error = "$name is not a registered library";
+		throw new \InvalidParameterException($error);
+	}
+
+	if (!include_once($libraries[$name])) {
+		$error = "Could not load the $name library from {$libraries[$name]}";
+		throw new \InvalidParameterException($error);
+	}
+
+	$loaded_libraries[] = $name;
+}
+
+/**
  * Forward to $location.
  *
  * Sends a 'Location: $location' header and exists.  If headers have
