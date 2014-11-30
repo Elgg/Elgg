@@ -1,4 +1,4 @@
-Elgg [![Build Status](https://secure.travis-ci.org/Elgg/Elgg.png?branch=master)](https://travis-ci.org/Elgg/Elgg) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=ef3560cf83f4fd1ae3abbd6e93c20e5b4832c343)](https://scrutinizer-ci.com/g/Elgg/Elgg/)
+Elgg [![Build Status](https://secure.travis-ci.org/Elgg/Elgg.png?branch=master)](https://travis-ci.org/Elgg/Elgg) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=ef3560cf83f4fd1ae3abbd6e93c20e5b4832c343)](https://scrutinizer-ci.com/g/Elgg/Elgg/)  [![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?version=1.9)](http://learn.elgg.org/en/1.9/)
 ====
 
 Copyright (c) 2008-2014, see COPYRIGHT.txt
