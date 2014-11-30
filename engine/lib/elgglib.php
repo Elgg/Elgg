@@ -8,7 +8,9 @@
  */
 
 /**
- * Register a php library.
+ * Register a PHP file as a library.
+ *
+ * @see elgg_load_library
  *
  * @param string $name     The name of the library
  * @param string $location The location of the file
@@ -17,17 +19,20 @@
  * @since 1.8.0
  */
 function elgg_register_library($name, $location) {
-	global $CONFIG;
+	$config = _elgg_services()->config;
 
-	if (!isset($CONFIG->libraries)) {
-		$CONFIG->libraries = array();
+	$libraries = $config->get('libraries');
+	if ($libraries === null) {
+		$libraries = array();
 	}
-
-	$CONFIG->libraries[$name] = $location;
+	$libraries[$name] = $location;
+	$config->set('libraries', $libraries);
 }
 
 /**
- * Load a php library.
+ * Load a PHP library.
+ *
+ * @see elgg_register_library
  *
  * @param string $name The name of the library
  *
@@ -36,25 +41,21 @@ function elgg_register_library($name, $location) {
  * @since 1.8.0
  */
 function elgg_load_library($name) {
-	global $CONFIG;
-
 	static $loaded_libraries = array();
 
 	if (in_array($name, $loaded_libraries)) {
 		return;
 	}
 
-	if (!isset($CONFIG->libraries)) {
-		$CONFIG->libraries = array();
-	}
+	$libraries = _elgg_services()->config->get('libraries');
 
-	if (!isset($CONFIG->libraries[$name])) {
-		$error = $name . " is not a registered library";
+	if (!isset($libraries[$name])) {
+		$error = "$name is not a registered library";
 		throw new \InvalidParameterException($error);
 	}
 
-	if (!include_once($CONFIG->libraries[$name])) {
-		$error = "Could not load the " . $name . " library from " . $CONFIG->libraries[$name];
+	if (!include_once($libraries[$name])) {
+		$error = "Could not load the $name library from {$libraries[$name]}";
 		throw new \InvalidParameterException($error);
 	}
 
