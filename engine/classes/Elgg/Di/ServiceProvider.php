@@ -9,7 +9,9 @@ namespace Elgg\Di;
  * the container generic.
  * 
  * @property-read \Elgg\ActionsService                     $actions
+ * @property-read \Elgg\Database\AdminNotices              $adminNotices
  * @property-read \Elgg\Amd\Config                         $amdConfig
+ * @property-read \Elgg\Database\Annotations               $annotations
  * @property-read \ElggAutoP                               $autoP
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \ElggCrypto                              $crypto
@@ -19,11 +21,13 @@ namespace Elgg\Di;
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\Database\EntityTable               $entityTable
  * @property-read \Elgg\EventsService                      $events
+ * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
  * @property-read \ElggVolatileMetadataCache               $metadataCache
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
+ * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
  * @property-read \Elgg\Notifications\NotificationsService $notifications
  * @property-read \Elgg\EntityPreloader                    $ownerPreloader
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
