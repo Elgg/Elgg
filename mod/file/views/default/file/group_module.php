@@ -24,6 +24,7 @@ $options = array(
 	'full_view' => false,
 	'pagination' => false,
 	'no_results' => elgg_echo('file:none'),
+	'distinct' => false,
 );
 $content = elgg_list_entities($options);
 elgg_pop_context();

@@ -391,6 +391,7 @@ function messages_get_unread($user_guid = 0, $limit = 10, $offset = 0, $count = 
 		'limit' => $limit,
 		'offset' => $offset,
 		'count' => $count,
+		'distinct' => false,
 	);
 
 	return elgg_get_entities_from_metadata($options);

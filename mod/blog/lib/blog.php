@@ -65,6 +65,7 @@ function blog_get_page_content_list($container_guid = NULL) {
 		'full_view' => false,
 		'no_results' => elgg_echo('blog:none'),
 		'preload_owners' => true,
+		'distinct' => false,
 	);
 
 	$current_user = elgg_get_logged_in_user_entity();
@@ -181,6 +182,7 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 		'full_view' => false,
 		'no_results' => elgg_echo('blog:none'),
 		'preload_owners' => true,
+		'distinct' => false,
 	);
 
 	if ($owner_guid) {

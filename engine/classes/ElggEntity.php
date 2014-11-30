@@ -328,6 +328,7 @@ abstract class ElggEntity extends \ElggData implements
 			'guid' => $guid,
 			'metadata_name' => $name,
 			'limit' => 0,
+			'distinct' => false,
 		));
 
 		$value = null;
@@ -974,6 +975,7 @@ abstract class ElggEntity extends \ElggData implements
 				'subtype' => 'comment',
 				'container_guid' => $this->getGUID(),
 				'count' => true,
+				'distinct' => false,
 			));
 		}
 	}

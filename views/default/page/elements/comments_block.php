@@ -15,6 +15,7 @@ $options = array(
 	'limit' => elgg_extract('limit', $vars, 4),
 	'wheres' => array(),
 	'preload_owners' => true,
+	'distinct' => false,
 );
 
 $owner_guid = elgg_extract('owner_guid', $vars);
