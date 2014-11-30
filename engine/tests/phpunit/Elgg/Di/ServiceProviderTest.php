@@ -9,6 +9,8 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 
 		$sp = new \Elgg\Di\ServiceProvider($mgr);
 
+		$sp->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
+		
 		$svcClasses = array(
 			'accessCollections' => '\Elgg\Database\AccessCollections',
 			'actions' => '\Elgg\ActionsService',
@@ -37,10 +39,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			'request' => '\Elgg\Http\Request',
 			'relationshipsTable' => '\Elgg\Database\RelationshipsTable',
 			'router' => '\Elgg\Router',
-
-			// Will this start session?
-			//'session' => '\ElggSession'
-
+			'session' => '\ElggSession',
 			'simpleCache' => '\Elgg\Cache\SimpleCache',
 			'siteSecret' => '\Elgg\Database\SiteSecret',
 			'stickyForms' => '\Elgg\Forms\StickyForms',
