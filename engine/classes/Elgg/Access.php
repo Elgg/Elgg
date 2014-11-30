@@ -63,6 +63,8 @@ class Access {
 	 * @return bool Previous setting
 	 */
 	public function setIgnoreAccess($ignore = true) {
+		_elgg_services()->accessCache->clear();
+
 		$prev = $this->ignore_access;
 		$this->ignore_access = $ignore;
 
