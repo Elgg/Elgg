@@ -35,6 +35,7 @@ $num_replies = elgg_get_entities(array(
 	'subtype' => 'discussion_reply',
 	'container_guid' => $topic->getGUID(),
 	'count' => true,
+	'distinct' => false,
 ));
 
 if ($num_replies != 0) {
@@ -43,6 +44,7 @@ if ($num_replies != 0) {
 		'subtype' => 'discussion_reply',
 		'container_guid' => $topic->getGUID(),
 		'limit' => 1,
+		'distinct' => false,
 	));
 	if (isset($last_reply[0])) {
 		$last_reply = $last_reply[0];

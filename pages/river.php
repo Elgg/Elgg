@@ -3,7 +3,9 @@
  * Main activity stream list page
  */
 
-$options = array();
+$options = array(
+	'distinct' => false
+);
 
 $page_type = preg_replace('[\W]', '', get_input('page_type', 'all'));
 $type = preg_replace('[\W]', '', get_input('type', 'all'));

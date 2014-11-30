@@ -463,6 +463,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		elgg_get_entities(array(
 			'guids' => array_keys($guids),
 			'limit' => 0,
+			'distinct' => false,
 		));
 	}
 
@@ -479,6 +480,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		elgg_get_entities(array(
 			'guids' => array_keys($guids),
 			'limit' => 0,
+			'distinct' => false,
 		));
 	}
 }
