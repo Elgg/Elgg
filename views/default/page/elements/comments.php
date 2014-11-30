@@ -39,6 +39,7 @@ $html = elgg_list_entities(array(
 	'full_view' => true,
 	'limit' => $limit,
 	'preload_owners' => true,
+	'distinct' => false,
 ));
 
 echo $html;

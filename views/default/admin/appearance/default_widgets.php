@@ -9,6 +9,7 @@
 $object = elgg_get_entities(array(
 	'type' => 'object',
 	'subtype' => 'moddefaultwidgets',
+	'distinct' => false,
 	'limit' => 1,
 ));
 
