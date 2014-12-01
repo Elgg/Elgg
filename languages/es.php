@@ -280,7 +280,7 @@ return array(
 	'profile:edit:default' => 'Editar campos de perfil',
 	'profile:label' => "Etiqueta de perfil",
 	'profile:type' => "Tipo de perfil",
-	'profile:editdefault:delete:fail' => 'Error al eliminar item de perfil por defecto',
+	'profile:editdefault:delete:fail' => 'Se ha producido un error al eliminar el campo del perfil',
 	'profile:editdefault:delete:success' => 'Item de perfil por defecto eliminado!',
 	'profile:defaultprofile:reset' => 'Reinicio de perfil de sistema por defecto',
 	'profile:resetdefault' => 'Reiniciar perfil de sistema por defecto',
@@ -897,7 +897,6 @@ Cuando este modo esta activado, solo los administradores pueden ingresar y ver e
 	'title' => "T&iacute;tulo",
 	'description' => "Descripci&oacute;n",
 	'tags' => "Tags",
-	'spotlight' => "Enfoque",
 	'all' => "Todo",
 	'mine' => "M&iacute;o",
 
@@ -908,7 +907,6 @@ Cuando este modo esta activado, solo los administradores pueden ingresar y ver e
 	'relationships' => "Relaciones",
 	'metadata' => "Metadata",
 	'tagcloud' => "Nube de tags",
-	'tagcloud:allsitetags' => "Tags de todo el sitio",
 
 	'on' => 'Habilitado',
 	'off' => 'Deshabilitado',
@@ -1093,12 +1091,6 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'upgrade:site_secret_warning:moderate' => "Te recomendamos que regeneres la clave de tu sitio para mejorar la seguridad del sistema. Ver Configuración &gt; Preferencias &gt; Avanzado",
 	'upgrade:site_secret_warning:weak' => "Te recomendamos fuertemente que regeneres la clave de tu sitio para mejorar la seguridad del sistema. Ver Configuración &gt; Preferencias &gt; Avanzado",
 
-	'ElggUpgrade:error:url_invalid' => 'Valor inválido para la URL',
-	'ElggUpgrade:error:url_not_unique' => 'Las URL de Actualización deben ser únicas.',
-	'ElggUpgrade:error:title_required' => 'Objetos ElggUpgrade deben tener nombre.',
-	'ElggUpgrade:error:description_required' => 'Objetos ElggUpgrade deben tener una descripción.',
-	'ElggUpgrade:error:upgrade_url_required' => 'Objetos ElggUpgrade deben tener una URL de actualización',
-
 	'deprecated:function' => '%s() ha quedado obsoleta por %s()',
 
 	'admin:pending_upgrades' => 'Este sitio tiene actualizaciones pendientes que requieren tu atención inmediata',
@@ -1108,7 +1100,7 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'admin:upgrades:none' => 'Tu instalación esta al día!',
 
 	'upgrade:item_count' => 'Hay <b>%s</b> elementos que es necesario actualizar.',
-	'upgrade:warning' => '<b>Aviso:</b> En un sitio grande, la actualización puede llevar bastante tiempo.',
+	'upgrade:warning' => '<b>Aviso:</b> ¡En un sitio grande esta actualización puede llevar un tiempo significativo!',
 	'upgrade:success_count' => 'Actualizado:',
 	'upgrade:error_count' => 'Errores:',
 	'upgrade:river_update_failed' => 'No fue posible actualizar la entrada del River para el elemento con identificador «%s».',
@@ -1169,12 +1161,12 @@ Tu contraseña ha sido cambiada.",
  
 Tu contrase&ntilde;a ha sido restablecida a: %s",
 
-	'email:changereq:subject' => "Solicitar cambio contraseña.",
-	'email:changereq:body' => "Hola, %s.
+	'email:changereq:subject' => "Solicitud de cambio de contraseña.",
+	'email:changereq:body' => "Hola %s,
 
-Alguien a solicitado (desde la dirección IP %s) cambiar la contraseña de su cuenta.
+Alguien (desde la dirección IP %s) ha solicitado un cambio de contraseña para tu cuenta.
 
-Si ese alguien fue usted, siga el siguiente enlace. En caso contrario, puede ignorar este mensaje.
+Si has sido tu, utiliza el enlace inferior. Si no es así, puedes ignorar este mensaje.
 
 %s
 ",
@@ -1264,7 +1256,6 @@ Por favor no responda a este correo",
  */
 
 	'tag_names:tags' => 'Tags',
-	'tags:site_cloud' => 'Nube de Tags del Sitio',
 
 /**
  * Javascript
@@ -1280,7 +1271,7 @@ Por favor no responda a este correo",
 	'elgg:powered' => "Creado con Elgg",
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 
 	"aa" => "Afar",
@@ -1300,6 +1291,7 @@ Por favor no responda a este correo",
 	"bo" => "Tibetan",
 	"br" => "Breton",
 	"ca" => "Catalan",
+	"cmn" => "Chino Mandarín", // ISO 639-3
 	"co" => "Corsican",
 	"cs" => "Czech",
 	"cy" => "Welsh",
@@ -1376,6 +1368,7 @@ Por favor no responda a este correo",
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
+	"pt_br" => 'Portugués Brasileño',
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
