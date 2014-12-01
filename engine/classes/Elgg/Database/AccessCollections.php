@@ -133,6 +133,12 @@ class AccessCollections {
 				$access_array[] = ACCESS_LOGGED_IN;
 	
 				// Get ACL memberships
+				// $collections = $db->from('access_collection_membership', $am)
+				//   ->leftJoin('access_collections', $ag)->on($ag->id->equals($am->access_collection_id)
+				//   ->where($am->user_guid->equals($user_guid)->and(
+				//     $ag->site_guid->equals($site_guid)->or($ag->site_guid->equals(0))))
+				//   ->select($am->access_collection_id)->pluck('access_collection_id')
+				
 				$query = "SELECT am.access_collection_id"
 					. " FROM {$this->CONFIG->dbprefix}access_collection_membership am"
 					. " LEFT JOIN {$this->CONFIG->dbprefix}access_collections ag ON ag.id = am.access_collection_id"
@@ -148,6 +154,9 @@ class AccessCollections {
 				}
 	
 				// Get ACLs owned.
+				// $db->from('access_collections', $ag)
+				//   ->where($ag->owner_guid->equals($user_guid)->and($ag->site_guid->equals($site_guid)->or($ag->site_guid->equals(0))))
+				//   ->select($ag->id)->pluck('id');
 				$query = "SELECT ag.id FROM {$this->CONFIG->dbprefix}access_collections ag ";
 				$query .= "WHERE ag.owner_guid = $user_guid AND (ag.site_guid = $site_guid OR ag.site_guid = 0)";
 	
@@ -393,6 +402,9 @@ class AccessCollections {
 				ACCESS_PUBLIC => _elgg_services()->translator->translate("PUBLIC")
 			);
 			
+			// $db->from('access_collections', $ag)
+			//   ->where($ag->owner_guid->equals($user_guid)->and($ag->site_guid->equals($site_guid)->or($ag->site_guid->equals(0))))
+			//   ->select($ag->{'*'});
 			$query = "SELECT ag.* FROM {$this->CONFIG->dbprefix}access_collections ag ";
 			$query .= " WHERE (ag.site_guid = $site_guid OR ag.site_guid = 0)";
 			$query .= " AND (ag.owner_guid = $user_guid)";
@@ -485,8 +497,13 @@ class AccessCollections {
 		if (($site_guid == 0) && (isset($this->CONFIG->site_guid))) {
 			$site_guid = $this->CONFIG->site_guid;
 		}
+
+		// $this->collectionsSqlTable->insert([
+		//   'name' => $name,
+		//   'owner_guid' => $owner_guid,
+		//   'site_guid' => $site_guid,
+		// ]);
 		$name = sanitise_string($name);
-	
 		$q = "INSERT INTO {$this->CONFIG->dbprefix}access_collections
 			SET name = '{$name}',
 				owner_guid = {$owner_guid},
@@ -565,11 +582,18 @@ class AccessCollections {
 			return false;
 		}
 	
+		// $this->aclMembershipSqlTable->fromSelf($c)
+		//   ->where($c->access_collection_id->equals($collection_id))
+		//   ->delete();
+		
 		// Deleting membership doesn't affect result of deleting ACL.
 		$q = "DELETE FROM {$this->CONFIG->dbprefix}access_collection_membership
 			WHERE access_collection_id = {$collection_id}";
 		_elgg_services()->db->deleteData($q);
 	
+		// $this->aclsSqlTable->fromSelf($c)
+		//   ->where($c->access_collection_id->equals($collection_id))
+		//   ->delete();
 		$q = "DELETE FROM {$this->CONFIG->dbprefix}access_collections
 			WHERE id = {$collection_id}";
 		$result = _elgg_services()->db->deleteData($q);
@@ -590,9 +614,10 @@ class AccessCollections {
 	 * @return object|false
 	 */
 	function get($collection_id) {
-		
+		// $this->aclsSqlTable->fromSelf($acls)
+		//   ->where($acls->id->equals($collection_id))
+		//   ->select('*')
 		$collection_id = (int) $collection_id;
-	
 		$query = "SELECT * FROM {$this->CONFIG->dbprefix}access_collections WHERE id = {$collection_id}";
 		$get_collection = _elgg_services()->db->getDataRow($query);
 	
@@ -632,6 +657,10 @@ class AccessCollections {
 			return false;
 		}
 	
+		// $this->aclsMembersSqlTable->insert([
+		//   'access_collection_id' => $collection_id,
+		//   'user_guid' => $user_guid,
+		// ]);
 		// if someone tries to insert the same data twice, we do a no-op on duplicate key
 		$q = "INSERT INTO {$this->CONFIG->dbprefix}access_collection_membership
 				SET access_collection_id = $collection_id, user_guid = $user_guid
@@ -673,6 +702,10 @@ class AccessCollections {
 			return false;
 		}
 	
+		// $sqlDb->from('access_collection_membership', $aclm)
+		//   ->where($aclm->access_collection_id->equals($collection_id)
+		//     ->and($aclm->user_guid->equals($user_guid));
+		//   ->delete($aclm)
 		$q = "DELETE FROM {$this->CONFIG->dbprefix}access_collection_membership
 			WHERE access_collection_id = {$collection_id}
 				AND user_guid = {$user_guid}";
@@ -697,6 +730,10 @@ class AccessCollections {
 			$site_guid = $this->CONFIG->site_guid;
 		}
 	
+		// $db->from('access_collections', $acls)
+		//   ->where($acls->owner_guid->equals($owner_guid)
+		//     ->and($acls->site_guid->equals($site_guid))
+		//   ->orderBy($acls->name->asc())
 		$query = "SELECT * FROM {$this->CONFIG->dbprefix}access_collections
 				WHERE owner_guid = {$owner_guid}
 				AND site_guid = {$site_guid}
@@ -719,12 +756,17 @@ class AccessCollections {
 		
 		$collection = (int)$collection;
 	
+		// $query = $db->from('access_collection_membership', $m)
+		//   ->join('entities', $e)->on($e->guid->equals($m->user_guid))
+		//   ->where($m->access_collection_id->equals($collection))
 		if (!$idonly) {
+			// return $query->select($e->{'*'})->map('entity_row_to_elggstar');
 			$query = "SELECT e.* FROM {$this->CONFIG->dbprefix}access_collection_membership m"
 				. " JOIN {$this->CONFIG->dbprefix}entities e ON e.guid = m.user_guid"
 				. " WHERE m.access_collection_id = {$collection}";
 			$collection_members = _elgg_services()->db->getData($query, "entity_row_to_elggstar");
 		} else {
+			// return $query->select($e->guid)->pluck('guid');
 			$query = "SELECT e.guid FROM {$this->CONFIG->dbprefix}access_collection_membership m"
 				. " JOIN {$this->CONFIG->dbprefix}entities e ON e.guid = m.user_guid"
 				. " WHERE m.access_collection_id = {$collection}";

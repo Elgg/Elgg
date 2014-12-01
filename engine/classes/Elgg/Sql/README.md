@@ -1,17 +1,19 @@
-Elgg Storage Interface
-======================
+Elgg Sql
+========
 
 A SQL-inspired DBAL and query builder.
 
-Provides the following features:
+Features:
  - Security: Automatic escaping of untrusted input
  - Correctness: Automatic table prefixing (never again forget to prepend `$CONFIG->dbprefix`!)
  - Type safety: Not possible to construct invalid queries
- - Familiarity: Looks very similar to plain queries (most keywords appear in the same order)
+ - Familiarity: Looks very similar to plain MySQL queries
+   - most keywords appear in the same order as if you had written the query string by hand
+   - minimal extra PHP fluff 
+ - Abstracted: Can be used to access different sql backends (i.e. mysql + sqlite)
 
-Possible downsides:
- - Can't represent **every** valid SQL query
-
+Downsides:
+ - Can't represent every valid SQL query
 
 Examples
 --------
@@ -19,19 +21,23 @@ Examples
 Basic select with simple where clause.
 
 ```php
+// Old API
+$escaped_string = sanitize_string($string);
 $query = "
 SELECT *
-FROM `{$CONFIG->dbprefix}metastrings` as metastrings1
-WHERE metastrings1.string = '$escaped_string'
+FROM `{$CONFIG->dbprefix}metastrings`
+WHERE string = '$escaped_string'
 ";
+$db->getData($query);
 
-$database
-	->from('metastrings', $m)
-	->where($m->column('string')->equals($string))
+// New API
+$sqlDb->from('metastrings', $m)
+	->where($m->string->equals($string))
 	->select('*');
 ```
 
-// #. More complex select with a left join
+More complex select with a left join
+```php
 $query = "SELECT am.access_collection_id"
 	. " FROM {$this->CONFIG->dbprefix}access_collection_membership am"
 	. " LEFT JOIN {$this->CONFIG->dbprefix}access_collections ag ON ag.id = am.access_collection_id"
@@ -47,8 +53,11 @@ $aclMembershipTable
 			->or($ag->site_guid->equals(0))
 		)
 	)->select($am->access_collection_id);
+```
 
+Select with parenthesized OR clause (Conjunction of disjunctions)
 
+```php
 $query = "SELECT ag.id FROM {$this->CONFIG->dbprefix}access_collections ag ";
 $query .= "WHERE ag.owner_guid = $user_guid AND (ag.site_guid = $site_guid OR ag.site_guid = 0)";
 
@@ -57,7 +66,7 @@ $accessCollectionsTable
 	->where($ag->owner_guid->equals($user_guid)->and(
 		$ag->site_guid->equals($site_guid)->or($ag->site_guid->equals(0))
 	)->select($ag->id);
-
+```
 
 // DELETE EXAMPLES
 
