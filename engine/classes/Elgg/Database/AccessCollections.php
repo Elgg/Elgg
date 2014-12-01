@@ -522,14 +522,14 @@ class AccessCollections {
 	 * @return bool
 	 */
 	function update($collection_id, $members) {
-		$acl = get_access_collection($collection_id);
+		$acl = $this->get($collection_id);
 	
 		if (!$acl) {
 			return false;
 		}
 		$members = (is_array($members)) ? $members : array();
 	
-		$cur_members = get_members_of_access_collection($collection_id, true);
+		$cur_members = $this->getMembers($collection_id, true);
 		$cur_members = (is_array($cur_members)) ? $cur_members : array();
 	
 		$remove_members = array_diff($cur_members, $members);
@@ -538,11 +538,11 @@ class AccessCollections {
 		$result = true;
 	
 		foreach ($add_members as $guid) {
-			$result = $result && add_user_to_access_collection($guid, $collection_id);
+			$result = $result && $this->addUser($guid, $collection_id);
 		}
 	
 		foreach ($remove_members as $guid) {
-			$result = $result && remove_user_from_access_collection($guid, $collection_id);
+			$result = $result && $this->removeUser($guid, $collection_id);
 		}
 	
 		return $result;
@@ -610,13 +610,11 @@ class AccessCollections {
 	 * @return bool
 	 */
 	function addUser($user_guid, $collection_id) {
-		
-	
 		$collection_id = (int) $collection_id;
 		$user_guid = (int) $user_guid;
 		$user = get_user($user_guid);
 	
-		$collection = get_access_collection($collection_id);
+		$collection = $this->get($collection_id);
 	
 		if (!($user instanceof \ElggUser) || !$collection) {
 			return false;
@@ -652,13 +650,11 @@ class AccessCollections {
 	 * @return bool
 	 */
 	function removeUser($user_guid, $collection_id) {
-		
-	
 		$collection_id = (int) $collection_id;
 		$user_guid = (int) $user_guid;
 		$user = get_user($user_guid);
 	
-		$collection = get_access_collection($collection_id);
+		$collection = $this->get($collection_id);
 	
 		if (!($user instanceof \ElggUser) || !$collection) {
 			return false;
