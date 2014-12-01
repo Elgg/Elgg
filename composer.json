@@ -12,7 +12,8 @@
         "ext-xml": "*",
         "mrclay/minify": "2.*",
         "knplabs/gaufrette": "0.1.*",
-        "tedivm/stash": "~0.12"
+        "tedivm/stash": "~0.12",
+        "ircmaxell/password-compat": "1.*"
     },
     "suggest": {
         "ext-mbstring": "*"
