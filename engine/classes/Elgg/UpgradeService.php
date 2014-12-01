@@ -339,6 +339,9 @@ class UpgradeService {
 
 		if (!$this->isUpgradeLocked()) {
 			// lock it
+			// $db->tables->create('upgrade_lock', [
+			//   'id' => ColumnType::INT
+			// ])
 			_elgg_services()->db->insertData("create table {$this->CONFIG->dbprefix}upgrade_lock (id INT)");
 			_elgg_services()->logger->notice('Locked for upgrade.');
 			return true;
@@ -354,7 +357,7 @@ class UpgradeService {
 	 * @return void
 	 */
 	public function releaseUpgradeMutex() {
-		
+		// $db->tables->drop('upgrade_lock');
 		_elgg_services()->db->deleteData("drop table {$this->CONFIG->dbprefix}upgrade_lock");
 		_elgg_services()->logger->notice('Upgrade unlocked.');
 	}
@@ -365,8 +368,7 @@ class UpgradeService {
 	 * @return bool
 	 */
 	public function isUpgradeLocked() {
-		
-
+		// $db->tables->has('upgrade_lock')
 		$is_locked = count(_elgg_services()->db->getData("SHOW TABLES LIKE '{$this->CONFIG->dbprefix}upgrade_lock'"));
 
 		return (bool)$is_locked;

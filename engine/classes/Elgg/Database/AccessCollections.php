@@ -498,7 +498,7 @@ class AccessCollections {
 			$site_guid = $this->CONFIG->site_guid;
 		}
 
-		// $this->collectionsSqlTable->insert([
+		// $this->sql->insertInto('access_collections', [
 		//   'name' => $name,
 		//   'owner_guid' => $owner_guid,
 		//   'site_guid' => $site_guid,
@@ -657,7 +657,7 @@ class AccessCollections {
 			return false;
 		}
 	
-		// $this->aclsMembersSqlTable->insert([
+		// $this->sql->insertInto('access_collection_membership', [
 		//   'access_collection_id' => $collection_id,
 		//   'user_guid' => $user_guid,
 		// ]);

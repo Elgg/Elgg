@@ -12,9 +12,13 @@ namespace Elgg\Sql;
  */
 interface Database {
 	/**
-	 * @param string $name
+	 * Insert the values into the given table.
 	 * 
-	 * @return Table
+	 * Column names are trusted
+	 * 
+	 * 
+	 * @param string $tableName The unprefixed table name to insert values into.
+	 * @param array  $values    columnName => value map. Will auto-escape raw input.
 	 */
-	public function getTable($name);
+	public function insertInto($tableName, array $values);
 }

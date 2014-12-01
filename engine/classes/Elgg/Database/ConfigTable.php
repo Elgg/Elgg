@@ -101,6 +101,14 @@ class ConfigTable {
 	
 		$escaped_name = sanitize_string($name);
 		$escaped_value = sanitize_string(serialize($value));
+		// $db->insertInto('config')->onDuplicateKeyUpdate([
+		//   'value' => $value,
+		// ]), [
+		//   'name' => $name,
+		//   'value' => $value,
+		//   'site_guid' => $site_guid,
+		//   ''
+		// ])
 		$result = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}config
 			SET name = '$escaped_name', value = '$escaped_value', site_guid = $site_guid
 			ON DUPLICATE KEY UPDATE value = '$escaped_value'");

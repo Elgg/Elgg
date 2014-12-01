@@ -97,6 +97,15 @@ class Annotations {
 		$entity = get_entity($entity_guid);
 	
 		if (_elgg_services()->events->trigger('annotate', $entity->type, $entity)) {
+			// $this->sql->insertInto('annotations', [
+			//   'entity_guid' => $entity_guid,
+			//   'name_id' => $name_id,
+			//   'value_id' => $value_id,
+			//   'value_type' => $value_type,
+			//   'owner_guid' => $owner_guid,
+			//   'time_created' => $time,
+			//   'access_id' => $access_id,
+			// ])
 			$result = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}annotations
 				(entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id) VALUES
 				($entity_guid, $name_id, $value_id, '$value_type', $owner_guid, $time, $access_id)");

@@ -51,6 +51,15 @@ interface Collection extends Countable, Iterator {
 	 * @return boolean
 	 */
 	public function contains($item);
+	
+	/**
+	 * Returns all the values as a string with the $glue in between each value.
+	 * 
+	 * @param string $glue The separator
+	 * 
+	 * @return string
+	 */
+	public function join($glue);
 
 	/**
 	 * Take items of the collection and return a new collection

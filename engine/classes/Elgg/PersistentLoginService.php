@@ -183,8 +183,13 @@ class PersistentLoginService {
 	 */
 	protected function storeHash(\ElggUser $user, $hash) {
 		$time = time();
-		$hash = $this->db->sanitizeString($hash);
 
+		// $db->insert($this->table, [
+		//   'code' => $hash,
+		//   'guid' => $user->guid,
+		//   'time' => $time,
+		// ]);
+		$hash = $this->db->sanitizeString($hash);
 		$query = "
 			INSERT INTO {$this->table} (code, guid, timestamp)
 		    VALUES ('$hash', {$user->guid}, $time)

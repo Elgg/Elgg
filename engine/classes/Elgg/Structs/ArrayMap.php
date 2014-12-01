@@ -1,8 +1,6 @@
 <?php
 namespace Elgg\Structs;
 
-use Exception;
-
 /**
  * Uses native PHP array to implement the Collection interface.
  * 
@@ -12,14 +10,14 @@ use Exception;
  *
  * @access private
  */
-final class ArrayCollection implements Collection {
+final class ArrayMap implements Map {
 	/** @var array */
 	private $items;
 	
 	/**
 	 * Constructor
 	 * 
-	 * @param array $items The set of items in the collection
+	 * @param array $items The set of key-value pairs in the map
 	 */
 	public function __construct(array $items = array()) {
 		$this->items = $items;
@@ -44,13 +42,13 @@ final class ArrayCollection implements Collection {
 	public function filter(callable $filter) {
 		$results = array();
 		
-		foreach ($this->items as $item) {
-			if ($filter($item)) {
-				$results[] = $item;
+		foreach ($this->items as $key => $item) {
+			if (call_user_func($filter, $item, $key)) {
+				$results[$key] = $item;
 			}
 		}
 		
-		return new ArrayCollection($results);
+		return new ArrayMap($results);
 	}
 	
 	/** @inheritDoc */
@@ -66,10 +64,12 @@ final class ArrayCollection implements Collection {
 	/** @inheritDoc */
 	public function map(callable $mapper) {
 		$results = array();
-		foreach ($this->items as $item) {
-			$results[] = $mapper($item);
+		
+		foreach ($this->items as $key => $item) {
+			$results[$key] = call_user_func($mapper, $item, $key);
 		}
-		return new ArrayCollection($results);
+		
+		return new ArrayMap($results);
 	}
 	
 	/** @inheritDoc */

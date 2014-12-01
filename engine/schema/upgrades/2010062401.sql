@@ -1,1 +1,2 @@
+-- $db->alterTable('entity_relationships')->addColumn('time_created', Column::INT(11)->notNull()->after('guid_two'));
 ALTER TABLE `prefix_entity_relationships` ADD COLUMN `time_created` int(11) NOT NULL AFTER `guid_two`;
