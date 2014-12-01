@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-11-17 04:18+0100\n"
+"POT-Creation-Date: 2014-12-01 01:05+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -68,6 +68,6 @@ msgstr ""
 
 #: ..\..\index.rst:22
 # 41d182cf972a4e3896dceb0e37fc77cc
-msgid "This is the canonical documentation for the Elgg_ project. This aims to replace the wiki_, which is out-of-date in many areas."
+msgid "This is the canonical documentation for the Elgg_ project."
 msgstr ""
 
