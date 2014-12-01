@@ -274,6 +274,12 @@ function elgg_delete_river(array $options = array()) {
  *   order_by             => STR     Order by clause (rv.posted desc)
  *   group_by             => STR     Group by clause
  *
+ *   distinct             => BOOL    If set to false, Elgg will drop the DISTINCT
+ *                                   clause from the MySQL query, which will improve
+ *                                   performance in some situations. Avoid setting this
+ *                                   option without a full understanding of the
+ *                                   underlying SQL query Elgg creates. (true)
+ *
  * @return array|int
  * @since 1.8.0
  */
@@ -303,6 +309,7 @@ function elgg_get_river(array $options = array()) {
 		'limit'                => 20,
 		'offset'               => 0,
 		'count'                => false,
+		'distinct'             => true,
 
 		'order_by'             => 'rv.posted desc',
 		'group_by'             => ELGG_ENTITIES_ANY_VALUE,
@@ -372,9 +379,14 @@ function elgg_get_river(array $options = array()) {
 	$wheres = array_unique($wheres);
 
 	if (!$options['count']) {
-		$query = "SELECT DISTINCT rv.* FROM {$CONFIG->dbprefix}river rv ";
+		$distinct = $options['distinct'] ? "DISTINCT" : "";
+		
+		$query = "SELECT $distinct rv.* FROM {$CONFIG->dbprefix}river rv ";
 	} else {
-		$query = "SELECT COUNT(DISTINCT rv.id) AS total FROM {$CONFIG->dbprefix}river rv ";
+		// note: when DISTINCT unneeded, it's slightly faster to compute COUNT(*) than IDs
+		$count_expr = $options['distinct'] ? "DISTINCT rv.id" : "*";
+		
+		$query = "SELECT COUNT($count_expr) as total FROM {$CONFIG->dbprefix}river rv ";
 	}
 
 	// add joins
@@ -451,6 +463,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		elgg_get_entities(array(
 			'guids' => array_keys($guids),
 			'limit' => 0,
+			'distinct' => false,
 		));
 	}
 
@@ -467,6 +480,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		elgg_get_entities(array(
 			'guids' => array_keys($guids),
 			'limit' => 0,
+			'distinct' => false,
 		));
 	}
 }

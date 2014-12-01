@@ -10,6 +10,7 @@ $options = array(
 	'subtype' => 'discussion_reply',
 	'container_guid' => $topic->guid,
 	'count' => true,
+	'distinct' => false,
 );
 
 $count = elgg_get_entities($options);

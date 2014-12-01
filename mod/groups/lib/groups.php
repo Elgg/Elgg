@@ -36,6 +36,7 @@ function groups_handle_all_page() {
 				'limit' => 40,
 				'full_view' => false,
 				'no_results' => elgg_echo('discussion:none'),
+				'distinct' => false,
 			));
 			break;
 		case 'featured':
@@ -55,6 +56,7 @@ function groups_handle_all_page() {
 				'type' => 'group',
 				'full_view' => false,
 				'no_results' => elgg_echo('groups:none'),
+				'distinct' => false,
 			));
 			break;
 	}
@@ -131,6 +133,7 @@ function groups_handle_owned_page() {
 		'order_by' => 'ge.name ASC',
 		'full_view' => false,
 		'no_results' => elgg_echo('groups:none'),
+		'distinct' => false,
 	));
 
 	$params = array(

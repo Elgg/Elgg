@@ -134,6 +134,7 @@ function _elgg_get_metastring_based_objects($options) {
 		'wheres' => array(),
 		'joins' => array(),
 
+		'distinct' => true,
 		'preload_owners' => false,
 		'callback' => $callback,
 	);
@@ -260,6 +261,8 @@ function _elgg_get_metastring_based_objects($options) {
 		$wheres[] = _elgg_get_access_where_sql(array('table_alias' => 'n_table'));
 	}
 
+	$distinct = $options['distinct'] ? "DISTINCT " : "";
+
 	if ($options['metastring_calculation'] === ELGG_ENTITIES_NO_VALUE && !$options['count']) {
 		$selects = array_unique($selects);
 		// evalutate selects
@@ -270,10 +273,10 @@ function _elgg_get_metastring_based_objects($options) {
 			}
 		}
 
-		$query = "SELECT DISTINCT n_table.*{$select_str} FROM {$db_prefix}$type n_table";
+		$query = "SELECT $distinct n_table.*{$select_str} FROM {$db_prefix}$type n_table";
 	} elseif ($options['count']) {
 		// count is over the entities
-		$query = "SELECT count(DISTINCT e.guid) as calculation FROM {$db_prefix}$type n_table";
+		$query = "SELECT count($distinct e.guid) as calculation FROM {$db_prefix}$type n_table";
 	} else {
 		$query = "SELECT {$options['metastring_calculation']}(v.string) as calculation FROM {$db_prefix}$type n_table";
 	}

@@ -15,6 +15,7 @@ $replies = elgg_list_entities(array(
 	'subtype' => 'discussion_reply',
 	'container_guid' => $vars['topic']->getGUID(),
 	'reverse_order_by' => true,
+	'distinct' => false,
 ));
 
 echo $replies;

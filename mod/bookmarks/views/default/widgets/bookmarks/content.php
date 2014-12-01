@@ -17,6 +17,7 @@ $options = array(
 	'limit' => $max,
 	'full_view' => FALSE,
 	'pagination' => FALSE,
+	'distinct' => false,
 );
 $content = elgg_list_entities($options);
 

@@ -311,6 +311,11 @@ class EntityTable {
 	 *
 	 * 	callback => string A callback function to pass each row through
 	 *
+	 * 	distinct => bool (true) If set to false, Elgg will drop the DISTINCT clause from
+	 *				the MySQL query, which will improve performance in some situations.
+	 *				Avoid setting this option without a full understanding of the underlying
+	 *				SQL query Elgg creates.
+	 *
 	 * @return mixed If count, int. If not count, array. false on errors.
 	 * @see elgg_get_entities_from_metadata()
 	 * @see elgg_get_entities_from_relationship()
@@ -348,6 +353,7 @@ class EntityTable {
 	
 			'preload_owners'		=> false,
 			'callback'				=> 'entity_row_to_elggstar',
+			'distinct'				=> true,
 	
 			// private API
 			'__ElggBatch'			=> null,
@@ -427,9 +433,12 @@ class EntityTable {
 		}
 	
 		if (!$options['count']) {
-			$query = "SELECT DISTINCT e.*{$selects} FROM {$this->CONFIG->dbprefix}entities e ";
+			$distinct = $options['distinct'] ? "DISTINCT" : "";
+			$query = "SELECT $distinct e.*{$selects} FROM {$this->CONFIG->dbprefix}entities e ";
 		} else {
-			$query = "SELECT count(DISTINCT e.guid) as total FROM {$this->CONFIG->dbprefix}entities e ";
+			// note: when DISTINCT unneeded, it's slightly faster to compute COUNT(*) than GUIDs
+			$count_expr = $options['distinct'] ? "DISTINCT e.guid" : "*";
+			$query = "SELECT COUNT($count_expr) as total FROM {$this->CONFIG->dbprefix}entities e ";
 		}
 	
 		// add joins

@@ -188,6 +188,7 @@ class Plugins {
 			'selects' => array("oe.title", "oe.description"),
 			'wheres' => array("oe.title = '$plugin_id'"),
 			'limit' => 1,
+			'distinct' => false,
 		);
 	
 		$plugins = elgg_get_entities($options);
@@ -355,7 +356,8 @@ class Plugins {
 				"JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"
 				),
 			'wheres' => array("ps.name = '$priority'"),
-			'order_by' => "CAST(ps.value as unsigned), e.guid"
+			'order_by' => "CAST(ps.value as unsigned), e.guid",
+			'distinct' => false,
 		);
 	
 		switch ($status) {

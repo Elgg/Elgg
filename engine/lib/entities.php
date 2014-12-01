@@ -474,6 +474,11 @@ function elgg_enable_entity($guid, $recursive = true) {
  *
  * 	callback => string A callback function to pass each row through
  *
+ * 	distinct => bool (true) If set to false, Elgg will drop the DISTINCT clause from
+ *				the MySQL query, which will improve performance in some situations.
+ *				Avoid setting this option without a full understanding of the underlying
+ *				SQL query Elgg creates.
+ *
  * @return mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  * @see elgg_get_entities_from_metadata()
