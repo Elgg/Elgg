@@ -374,21 +374,6 @@ function metadata_update($event, $object_type, $object) {
 }
 
 /**
- * Get the global metadata cache instance
- *
- * @return \ElggVolatileMetadataCache
- *
- * @access private
- */
-function _elgg_get_metadata_cache() {
-	global $CONFIG;
-	if (empty($CONFIG->local_metadata_cache)) {
-		$CONFIG->local_metadata_cache = new \ElggVolatileMetadataCache();
-	}
-	return $CONFIG->local_metadata_cache;
-}
-
-/**
  * Invalidate the metadata cache based on options passed to various *_metadata functions
  *
  * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
@@ -399,7 +384,7 @@ function _elgg_get_metadata_cache() {
  */
 function _elgg_invalidate_metadata_cache($action, array $options) {
 	// remove as little as possible, optimizing for common cases
-	$cache = _elgg_get_metadata_cache();
+	$cache = _elgg_services()->metadataCache;
 	if (empty($options['guid'])) {
 		// safest to clear everything unless we want to make this even more complex :(
 		$cache->flush();

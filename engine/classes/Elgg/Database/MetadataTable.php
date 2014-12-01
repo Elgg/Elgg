@@ -2,6 +2,13 @@
 namespace Elgg\Database;
 
 
+use Elgg\Database;
+use Elgg\Database\EntityTable;
+use Elgg\Database\MetastringsTable;
+use Elgg\EventsService as Events;
+use ElggSession as Session;
+use ElggVolatileMetadataCache as Cache;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -12,19 +19,54 @@ namespace Elgg\Database;
  * @since      1.10.0
  */
 class MetadataTable {
-	/**
-	 * Global Elgg configuration
-	 * 
-	 * @var \stdClass
-	 */
-	private $CONFIG;
+	/** @var array */
+	private $independents = array();
+	
+	/** @var Cache */
+	private $cache;
+	
+	/** @var Database */
+	private $db;
+	
+	/** @var EntityTable */
+	private $entityTable;
+	
+	/** @var MetastringsTable */
+	private $metastringsTable;
+	
+	/** @var Events */
+	private $events;
+	
+	/** @var Session */
+	private $session;
+	
+	/** @var string */
+	private $table;
 
 	/**
 	 * Constructor
+	 * 
+	 * @param Cache            $cache            A cache for this table
+	 * @param Database         $db               The Elgg database
+	 * @param EntityTable      $entityTable      The entities table
+	 * @param Events           $events           The events registry
+	 * @param MetastringsTable $metastringsTable The metastrings table
+	 * @param Session          $session          The session
 	 */
-	public function __construct() {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct(
+			Cache $cache,
+			Database $db,
+			EntityTable $entityTable,
+			Events $events,
+			MetastringsTable $metastringsTable,
+			Session $session) {
+		$this->cache = $cache;
+		$this->db = $db;
+		$this->entityTable = $entityTable;
+		$this->events = $events;
+		$this->metastringsTable = $metastringsTable;
+		$this->session = $session;
+		$this->table = $this->db->getTablePrefix() . "metadata";
 	}
 
 	/**
@@ -47,11 +89,9 @@ class MetadataTable {
 	 * @return bool
 	 */
 	function delete($id) {
-		$metadata = elgg_get_metadata_from_id($id);
-		if (!$metadata) {
-			return false;
-		}
-		return $metadata->delete();
+		$metadata = $this->get($id);
+
+		return $metadata ? $metadata->delete() : false;
 	}
 	
 	/**
@@ -71,15 +111,11 @@ class MetadataTable {
 	 * @return int|false id of metadata or false if failure
 	 */
 	function create($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
-		$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
-	
-		
-	
+			$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
+
 		$entity_guid = (int)$entity_guid;
 		// name and value are encoded in add_metastring()
-		//$name = sanitise_string(trim($name));
-		//$value = sanitise_string(trim($value));
-		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
+		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
 		$time = time();
 		$owner_guid = (int)$owner_guid;
 		$allow_multiple = (boolean)$allow_multiple;
@@ -89,18 +125,18 @@ class MetadataTable {
 		}
 	
 		if ($owner_guid == 0) {
-			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 	
 		$access_id = (int)$access_id;
 	
-		$query = "SELECT * from {$this->CONFIG->dbprefix}metadata"
-			. " WHERE entity_guid = $entity_guid and name_id=" . elgg_get_metastring_id($name) . " limit 1";
+		$query = "SELECT * from {$this->table}"
+			. " WHERE entity_guid = $entity_guid and name_id=" . $this->metastringsTable->getId($name) . " limit 1";
 	
-		$existing = _elgg_services()->db->getDataRow($query);
+		$existing = $this->db->getDataRow($query);
 		if ($existing && !$allow_multiple) {
 			$id = (int)$existing->id;
-			$result = update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id);
+			$result = $this->update($id, $name, $value, $value_type, $owner_guid, $access_id);
 	
 			if (!$result) {
 				return false;
@@ -108,36 +144,36 @@ class MetadataTable {
 		} else {
 			// Support boolean types
 			if (is_bool($value)) {
-				$value = (int) $value;
+				$value = (int)$value;
 			}
 	
 			// Add the metastrings
-			$value_id = elgg_get_metastring_id($value);
+			$value_id = $this->metastringsTable->getId($value);
 			if (!$value_id) {
 				return false;
 			}
 	
-			$name_id = elgg_get_metastring_id($name);
+			$name_id = $this->metastringsTable->getId($name);
 			if (!$name_id) {
 				return false;
 			}
 	
 			// If ok then add it
-			$query = "INSERT into {$this->CONFIG->dbprefix}metadata"
+			$query = "INSERT into {$this->table}"
 				. " (entity_guid, name_id, value_id, value_type, owner_guid, time_created, access_id)"
 				. " VALUES ($entity_guid, '$name_id','$value_id','$value_type', $owner_guid, $time, $access_id)";
 	
-			$id = _elgg_services()->db->insertData($query);
+			$id = $this->db->insertData($query);
 	
 			if ($id !== false) {
-				$obj = elgg_get_metadata_from_id($id);
-				if (_elgg_services()->events->trigger('create', 'metadata', $obj)) {
+				$obj = $this->get($id);
+				if ($this->events->trigger('create', 'metadata', $obj)) {
 	
-					_elgg_get_metadata_cache()->save($entity_guid, $name, $value, $allow_multiple);
+					$this->cache->save($entity_guid, $name, $value, $allow_multiple);
 	
 					return $id;
 				} else {
-					elgg_delete_metadata_by_id($id);
+					$this->delete($id);
 				}
 			}
 		}
@@ -158,11 +194,9 @@ class MetadataTable {
 	 * @return bool
 	 */
 	function update($id, $name, $value, $value_type, $owner_guid, $access_id) {
-		
-	
 		$id = (int)$id;
 	
-		if (!$md = elgg_get_metadata_from_id($id)) {
+		if (!$md = $this->get($id)) {
 			return false;
 		}
 		if (!$md->canEdit()) {
@@ -180,45 +214,45 @@ class MetadataTable {
 			$metabyname_memcache->delete("{$md->entity_guid}:{$md->name_id}");
 		}
 	
-		$value_type = detect_extender_valuetype($value, sanitise_string(trim($value_type)));
+		$value_type = detect_extender_valuetype($value, $this->db->sanitizeString(trim($value_type)));
 	
 		$owner_guid = (int)$owner_guid;
 		if ($owner_guid == 0) {
-			$owner_guid = _elgg_services()->session->getLoggedInUserGuid();
+			$owner_guid = $this->session->getLoggedInUserGuid();
 		}
 	
 		$access_id = (int)$access_id;
 	
 		// Support boolean types (as integers)
 		if (is_bool($value)) {
-			$value = (int) $value;
+			$value = (int)$value;
 		}
 	
-		$value_id = elgg_get_metastring_id($value);
+		$value_id = $this->metastringsTable->getId($value);
 		if (!$value_id) {
 			return false;
 		}
 	
-		$name_id = elgg_get_metastring_id($name);
+		$name_id = $this->metastringsTable->getId($name);
 		if (!$name_id) {
 			return false;
 		}
 	
 		// If ok then add it
-		$query = "UPDATE {$this->CONFIG->dbprefix}metadata"
+		$query = "UPDATE {$this->table}"
 			. " set name_id='$name_id', value_id='$value_id', value_type='$value_type', access_id=$access_id,"
 			. " owner_guid=$owner_guid where id=$id";
 	
-		$result = _elgg_services()->db->updateData($query);
+		$result = $this->db->updateData($query);
 		if ($result !== false) {
 	
-			_elgg_get_metadata_cache()->save($md->entity_guid, $name, $value);
+			$this->cache->save($md->entity_guid, $name, $value);
 	
 			// @todo this event tells you the metadata has been updated, but does not
 			// let you do anything about it. What is needed is a plugin hook before
 			// the update that passes old and new values.
-			$obj = elgg_get_metadata_from_id($id);
-			_elgg_services()->events->trigger('update', 'metadata', $obj);
+			$obj = $this->get($id);
+			$this->events->trigger('update', 'metadata', $obj);
 		}
 	
 		return $result;
@@ -244,7 +278,7 @@ class MetadataTable {
 			$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
 	
 		foreach ($name_and_values as $k => $v) {
-			$result = create_metadata($entity_guid, $k, $v, $value_type, $owner_guid,
+			$result = $this->create($entity_guid, $k, $v, $value_type, $owner_guid,
 				$access_id, $allow_multiple);
 			if (!$result) {
 				return false;
@@ -314,7 +348,7 @@ class MetadataTable {
 	
 		// This moved last in case an object's constructor sets metadata. Currently the batch
 		// delete process has to create the entity to delete its metadata. See #5214
-		_elgg_get_metadata_cache()->invalidateByOptions('delete', $options);
+		$this->cache->invalidateByOptions('delete', $options);
 	
 		return $result;
 	}
@@ -332,7 +366,7 @@ class MetadataTable {
 			return false;
 		}
 	
-		_elgg_get_metadata_cache()->invalidateByOptions('disable', $options);
+		$this->cache->invalidateByOptions('disable', $options);
 	
 		// if we can see hidden (disabled) we need to use the offset
 		// otherwise we risk an infinite loop if there are more than 50
@@ -358,7 +392,7 @@ class MetadataTable {
 			return false;
 		}
 	
-		_elgg_get_metadata_cache()->invalidateByOptions('enable', $options);
+		$this->cache->invalidateByOptions('enable', $options);
 	
 		$options['metastring_type'] = 'metadata';
 		return _elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');
@@ -447,7 +481,7 @@ class MetadataTable {
 			return false;
 		}
 	
-		return elgg_get_entities($options);
+		return $this->entityTable->getEntities($options);
 	}
 	
 	/**
@@ -475,9 +509,6 @@ class MetadataTable {
 	function getEntityMetadataWhereSql($e_table, $n_table, $names = null, $values = null,
 			$pairs = null, $pair_operator = 'AND', $case_sensitive = true, $order_by_metadata = null,
 			$owner_guids = null) {
-	
-		
-	
 		// short circuit if nothing requested
 		// 0 is a valid (if not ill-conceived) metadata name.
 		// 0 is also a valid metadata value for false, null, or 0
@@ -507,7 +538,7 @@ class MetadataTable {
 		);
 	
 		// will always want to join these tables if pulling metastrings.
-		$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}{$n_table} n_table on
+		$return['joins'][] = "JOIN {$this->db->getTablePrefix()}{$n_table} n_table on
 			{$e_table}.guid = n_table.entity_guid";
 	
 		$wheres = array();
@@ -525,11 +556,11 @@ class MetadataTable {
 				if (!$name) {
 					$name = '0';
 				}
-				$sanitised_names[] = '\'' . sanitise_string($name) . '\'';
+				$sanitised_names[] = '\'' . $this->db->sanitizeString($name) . '\'';
 			}
 	
 			if ($names_str = implode(',', $sanitised_names)) {
-				$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msn on n_table.name_id = msn.id";
+				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msn on n_table.name_id = msn.id";
 				$names_where = "(msn.string IN ($names_str))";
 			}
 		}
@@ -547,11 +578,11 @@ class MetadataTable {
 				if (!$value) {
 					$value = 0;
 				}
-				$sanitised_values[] = '\'' . sanitise_string($value) . '\'';
+				$sanitised_values[] = '\'' . $this->db->sanitizeString($value) . '\'';
 			}
 	
 			if ($values_str = implode(',', $sanitised_values)) {
-				$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msv on n_table.value_id = msv.id";
+				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msv on n_table.value_id = msv.id";
 				$values_where = "({$binary}msv.string IN ($values_str))";
 			}
 		}
@@ -602,7 +633,7 @@ class MetadataTable {
 				}
 	
 				if (isset($pair['operand'])) {
-					$operand = sanitise_string($pair['operand']);
+					$operand = $this->db->sanitizeString($pair['operand']);
 				} else {
 					$operand = ' = ';
 				}
@@ -620,17 +651,17 @@ class MetadataTable {
 				$num_test_operand = trim(strtoupper($operand));
 	
 				if (is_numeric($pair['value']) && in_array($num_test_operand, $num_safe_operands)) {
-					$value = sanitize_string($pair['value']);
+					$value = $this->db->sanitizeString($pair['value']);
 				} else if (is_bool($pair['value'])) {
-					$value = (int) $pair['value'];
+					$value = (int)$pair['value'];
 				} else if (is_array($pair['value'])) {
 					$values_array = array();
 	
 					foreach ($pair['value'] as $pair_value) {
 						if (is_numeric($pair_value) && !in_array($num_test_operand, $num_safe_operands)) {
-							$values_array[] = sanitise_string($pair_value);
+							$values_array[] = $this->db->sanitizeString($pair_value);
 						} else {
-							$values_array[] = "'" . sanitise_string($pair_value) . "'";
+							$values_array[] = "'" . $this->db->sanitizeString($pair_value) . "'";
 						}
 					}
 	
@@ -644,17 +675,17 @@ class MetadataTable {
 				} else if ($trimmed_operand == 'in') {
 					$value = "({$pair['value']})";
 				} else {
-					$value = "'" . sanitise_string($pair['value']) . "'";
+					$value = "'" . $this->db->sanitizeString($pair['value']) . "'";
 				}
 	
-				$name = sanitise_string($pair['name']);
+				$name = $this->db->sanitizeString($pair['name']);
 	
 				// @todo The multiple joins are only needed when the operator is AND
-				$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}{$n_table} n_table{$i}
+				$return['joins'][] = "JOIN {$this->db->getTablePrefix()}{$n_table} n_table{$i}
 					on {$e_table}.guid = n_table{$i}.entity_guid";
-				$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msn{$i}
+				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msn{$i}
 					on n_table{$i}.name_id = msn{$i}.id";
-				$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msv{$i}
+				$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msv{$i}
 					on n_table{$i}.value_id = msv{$i}.id";
 	
 				$pair_wheres[] = "(msn{$i}.string = '$name' AND {$pair_binary}msv{$i}.string
@@ -674,7 +705,7 @@ class MetadataTable {
 				$sanitised = array_map('sanitise_int', $owner_guids);
 				$owner_str = implode(',', $sanitised);
 			} else {
-				$owner_str = sanitise_int($owner_guids);
+				$owner_str = (int)$owner_guids;
 			}
 	
 			$wheres[] = "(n_table.owner_guid IN ($owner_str))";
@@ -691,17 +722,17 @@ class MetadataTable {
 			}
 			foreach ($order_by_metadata as $order_by) {
 				if (is_array($order_by) && isset($order_by['name'])) {
-					$name = sanitise_string($order_by['name']);
+					$name = $this->db->sanitizeString($order_by['name']);
 					if (isset($order_by['direction'])) {
-						$direction = sanitise_string($order_by['direction']);
+						$direction = $this->db->sanitizeString($order_by['direction']);
 					} else {
 						$direction = 'ASC';
 					}
-					$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}{$n_table} n_table{$i}
+					$return['joins'][] = "JOIN {$this->db->getTablePrefix()}{$n_table} n_table{$i}
 						on {$e_table}.guid = n_table{$i}.entity_guid";
-					$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msn{$i}
+					$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msn{$i}
 						on n_table{$i}.name_id = msn{$i}.id";
-					$return['joins'][] = "JOIN {$this->CONFIG->dbprefix}metastrings msv{$i}
+					$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msv{$i}
 						on n_table{$i}.value_id = msv{$i}.id";
 	
 					$access = _elgg_get_access_where_sql(array('table_alias' => "n_table{$i}"));
@@ -730,12 +761,9 @@ class MetadataTable {
 	 * @return mixed
 	 */
 	function getUrl($id) {
-		$id = (int)$id;
-	
-		if ($extender = elgg_get_metadata_from_id($id)) {
-			return $extender->getURL();
-		}
-		return false;
+		$extender = $this->get($id);
+
+		return $extender ? $extender->getURL() : false;
 	}
 	
 	/**
@@ -748,11 +776,11 @@ class MetadataTable {
 	 * @return void
 	 */
 	function registerMetadataAsIndependent($type, $subtype = '*') {
-		
-		if (!isset($this->CONFIG->independents)) {
-			$this->CONFIG->independents = array();
+		if (!isset($this->independents[$type])) {
+			$this->independents[$type] = array();
 		}
-		$this->CONFIG->independents[$type][$subtype] = true;
+		
+		$this->independents[$type][$subtype] = true;
 	}
 	
 	/**
@@ -765,15 +793,12 @@ class MetadataTable {
 	 * @return bool
 	 */
 	function isMetadataIndependent($type, $subtype) {
-		
-		if (empty($this->CONFIG->independents)) {
+		if (empty($this->independents[$type])) {
 			return false;
 		}
-		if (!empty($this->CONFIG->independents[$type][$subtype])
-			|| !empty($this->CONFIG->independents[$type]['*'])) {
-				return true;
-			}
-		return false;
+
+		return !empty($this->independents[$type][$subtype])
+			|| !empty($this->independents[$type]['*']);
 	}
 	
 	/**
@@ -788,12 +813,11 @@ class MetadataTable {
 	 */
 	function handleUpdate($event, $object_type, $object) {
 		if ($object instanceof \ElggEntity) {
-			if (!is_metadata_independent($object->getType(), $object->getSubtype())) {
-				$db_prefix = _elgg_services()->config->get('dbprefix');
-				$access_id = (int) $object->access_id;
-				$guid = (int) $object->getGUID();
-				$query = "update {$db_prefix}metadata set access_id = {$access_id} where entity_guid = {$guid}";
-				_elgg_services()->db->updateData($query);
+			if (!$this->isMetadataIndependent($object->getType(), $object->getSubtype())) {
+				$access_id = (int)$object->access_id;
+				$guid = (int)$object->getGUID();
+				$query = "update {$this->table} set access_id = {$access_id} where entity_guid = {$guid}";
+				$this->db->updateData($query);
 			}
 		}
 		return true;

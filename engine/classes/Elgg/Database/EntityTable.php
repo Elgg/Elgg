@@ -490,7 +490,7 @@ class EntityTable {
 				reset($dt);
 	
 				if ($guids) {
-					_elgg_get_metadata_cache()->populateFromEntities($guids);
+					_elgg_services()->metadataCache->populateFromEntities($guids);
 				}
 	
 				if ($options['preload_owners'] && count($dt) > 1) {
