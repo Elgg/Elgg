@@ -69,6 +69,8 @@ class Datalist {
 
 		return $this->cache->get($name, function() use ($name) {
 			$escaped_name = $this->db->sanitizeString($name);
+			
+			// $this->table->fromSelf($d)->where($d->column('name')->equals($name))->select('*');
 			$result = $this->db->getDataRow("SELECT * FROM {$this->table} WHERE name = '$escaped_name'");
 			return $result ? $result->value : null;
 		});
@@ -102,6 +104,11 @@ class Datalist {
 	
 		$escaped_name = $this->db->sanitizeString($name);
 		$escaped_value = $this->db->sanitizeString($value);
+		
+		// $this->table->insert([
+		//   'name' => $name,
+		//   'value' => $value,
+		// ], ['value' => $value]);
 		$success = $this->db->insertData("INSERT INTO {$this->table}"
 			. " SET name = '$escaped_name', value = '$escaped_value'"
 			. " ON DUPLICATE KEY UPDATE value = '$escaped_value'");
@@ -122,6 +129,7 @@ class Datalist {
 	 * @access private
 	 */
 	function loadAll() {
+		// $this->table->fromSelf($d)->select('*');
 		$result = $this->db->getData("SELECT * FROM {$this->table}");
 		$map = array();
 		if (is_array($result)) {
