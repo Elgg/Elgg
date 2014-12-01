@@ -12,6 +12,8 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 		$sp->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
 		
 		$svcClasses = array(
+			'access' => '\Elgg\Access',
+			'accessCache' => '\ElggStaticVariableCache',
 			'accessCollections' => '\Elgg\Database\AccessCollections',
 			'actions' => '\Elgg\ActionsService',
 			'adminNotices' => '\Elgg\Database\AdminNotices',

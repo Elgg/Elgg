@@ -260,8 +260,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$user->save();
 
 		foreach (array('get_access_list', 'get_access_array') as $func) {
-			$cache = _elgg_get_access_cache();
-			$cache->clear();
+			_elgg_services()->accessCache->clear();
 
 			// admin users run tests, so disable access
 			elgg_set_ignore_access(true);

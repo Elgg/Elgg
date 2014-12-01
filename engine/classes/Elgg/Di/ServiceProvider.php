@@ -7,7 +7,10 @@ namespace Elgg\Di;
  * We extend the container because it allows us to document properties in the PhpDoc, which assists
  * IDEs to auto-complete properties and understand the types returned. Extension allows us to keep
  * the container generic.
- * 
+ *
+ * @property-read \Elgg\Access                             $access
+ * @property-read \Elgg\Database\AccessCollections         $accessCollections
+ * @property-read \ElggStaticVariableCache                 $accessCache
  * @property-read \Elgg\ActionsService                     $actions
  * @property-read \Elgg\Database\AdminNotices              $adminNotices
  * @property-read \Elgg\Amd\Config                         $amdConfig
@@ -60,7 +63,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	public function __construct(\Elgg\AutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
 
-		$this->setClassName('accessCollections', '\Elgg\Database\AccessCollections');
+		$this->setClassName('access', '\Elgg\Access');
+
+		$this->setFactory('accessCollections', function(ServiceProvider $c) {
+			return new \Elgg\Database\AccessCollections($c->config->get('site_guid'));
+		});
+
 		$this->setClassName('actions', '\Elgg\ActionsService');
 		$this->setClassName('adminNotices', '\Elgg\Database\AdminNotices');
 		$this->setFactory('amdConfig', array($this, 'getAmdConfig'));
@@ -115,6 +123,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('views', array($this, 'getViews'));
 		$this->setClassName('widgets', '\Elgg\WidgetsService');
 		$this->setFactory('notifications', array($this, 'getNotifications'));
+
+		$this->setFactory('accessCache', function(ServiceProvider $c) {
+			return new \ElggStaticVariableCache('access');
+		});
 	}
 
 	/**
@@ -256,8 +268,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		// @todo move queue in service provider
 		$queue = new \Elgg\Queue\DatabaseQueue(\Elgg\Notifications\NotificationsService::QUEUE_NAME, $c->db);
 		$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
-		$access = elgg_get_access_object();
-		return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $access);
+		return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->access);
 	}
 
 	/**
