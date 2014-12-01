@@ -158,6 +158,63 @@ class UsersTable {
 	}
 	
 	/**
+	 * Check if the given user has full access.
+	 *
+	 * @todo: Will always return full access if the user is an admin.
+	 *
+	 * @param int $user_guid The user to check
+	 *
+	 * @return bool
+	 * @since 1.7.1
+	 */
+	function isAdmin($user_guid) {
+		$CONFIG = $this->CONFIG;
+	
+		$user_guid = (int)$user_guid;
+	
+		$current_user = _elgg_services()->session->getLoggedInUser();
+		if ($current_user && $current_user->guid == $user_guid) {
+			return $current_user->isAdmin();
+		}
+	
+		// cannot use magic metadata here because of recursion
+	
+		// must support the old way of getting admin from metadata
+		// in order to run the upgrade to move it into the users table.
+		$version = (int) datalist_get('version');
+	
+		if ($version < 2010040201) {
+			$admin = elgg_get_metastring_id('admin');
+			$yes = elgg_get_metastring_id('yes');
+			$one = elgg_get_metastring_id('1');
+	
+			$query = "SELECT 1 FROM {$CONFIG->dbprefix}users_entity as e,
+				{$CONFIG->dbprefix}metadata as md
+				WHERE (
+					md.name_id = '$admin'
+					AND md.value_id IN ('$yes', '$one')
+					AND e.guid = md.entity_guid
+					AND e.guid = {$user_guid}
+					AND e.banned = 'no'
+				)";
+		} else {
+			$query = "SELECT 1 FROM {$CONFIG->dbprefix}users_entity as e
+				WHERE (
+					e.guid = {$user_guid}
+					AND e.admin = 'yes'
+				)";
+		}
+	
+		// normalizing the results from get_data()
+		// See #1242
+		$info = get_data($query);
+		if (!((is_array($info) && count($info) < 1) || $info === false)) {
+			return true;
+		}
+		return false;
+	}
+	
+	/**
 	 * Makes user $guid an admin.
 	 *
 	 * @param int $user_guid User guid

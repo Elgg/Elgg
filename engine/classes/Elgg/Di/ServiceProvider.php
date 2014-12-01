@@ -8,6 +8,8 @@ namespace Elgg\Di;
  * IDEs to auto-complete properties and understand the types returned. Extension allows us to keep
  * the container generic.
  * 
+ * @property-read \Elgg\Access                             $access
+ * @property-read \Elgg\Database\AccessCollections         $accessCollections
  * @property-read \Elgg\ActionsService                     $actions
  * @property-read \Elgg\Database\AdminNotices              $adminNotices
  * @property-read \Elgg\Amd\Config                         $amdConfig
@@ -60,6 +62,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	public function __construct(\Elgg\AutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
 
+		$this->setClassName('access', '\Elgg\Access');
 		$this->setClassName('accessCollections', '\Elgg\Database\AccessCollections');
 		$this->setClassName('actions', '\Elgg\ActionsService');
 		$this->setClassName('adminNotices', '\Elgg\Database\AdminNotices');
