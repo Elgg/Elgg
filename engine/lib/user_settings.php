@@ -254,20 +254,22 @@ function _elgg_user_settings_menu_setup() {
 		return;
 	}
 
+	if (!elgg_in_context("settings")) {
+		return;
+	}
+	
 	$params = array(
 		'name' => '1_account',
 		'text' => elgg_echo('usersettings:user:opt:linktext'),
 		'href' => "settings/user/{$user->username}",
 		'section' => 'configure',
-		'contexts' => array('settings'),
 	);
 	elgg_register_menu_item('page', $params);
 	$params = array(
 		'name' => '1_plugins',
 		'text' => elgg_echo('usersettings:plugins:opt:linktext'),
-		'href' => "settings/plugins/{$user->username}",
+		'href' => '#',
 		'section' => 'configure',
-		'contexts' => array('settings'),
 	);
 	elgg_register_menu_item('page', $params);
 	$params = array(
@@ -275,9 +277,68 @@ function _elgg_user_settings_menu_setup() {
 		'text' => elgg_echo('usersettings:statistics:opt:linktext'),
 		'href' => "settings/statistics/{$user->username}",
 		'section' => 'configure',
-		'contexts' => array('settings'),
 	);
 	elgg_register_menu_item('page', $params);
+	
+	// register plugin user settings menu items
+	$active_plugins = elgg_get_plugins();
+	
+	foreach ($active_plugins as $plugin) {
+		$plugin_id = $plugin->getID();
+		if (elgg_view_exists("usersettings/$plugin_id/edit") || elgg_view_exists("plugins/$plugin_id/usersettings")) {
+			$params = array(
+				'name' => $plugin_id,
+				'text' => $plugin->getFriendlyName(),
+				'href' => "settings/plugins/{$user->username}/$plugin_id",
+				'parent_name' => '1_plugins',
+				'section' => 'configure',
+			);
+			elgg_register_menu_item('page', $params);
+		}
+	}
+	
+	elgg_register_plugin_hook_handler("prepare", "menu:page", "_elgg_user_settings_menu_prepare");
+}
+
+/**
+ * Prepares the page menu to strip out empty plugins menu item for user settings
+ *
+ * @param string $hook   prepare
+ * @param string $type   menu:page
+ * @param array  $value  array of menu items
+ * @param array  $params menu related parameters
+ *
+ * @return array
+ * @access private
+ */
+function _elgg_user_settings_menu_prepare($hook, $type, $value, $params) {
+	if (empty($value)) {
+		return $value;
+	}
+	
+	if (!elgg_in_context("settings")) {
+		return $value;
+	}
+	
+	$configure = elgg_extract("configure", $value);
+	if (empty($configure)) {
+		return $value;
+	}	
+	
+	foreach ($configure as $index => $menu_item) {
+		if (!($menu_item instanceof ElggMenuItem)) {
+			continue;	
+		}
+		
+		if ($menu_item->getName() == "1_plugins") {
+			if (!$menu_item->getChildren()) {
+				// no need for this menu item if it has no children
+				unset($value["configure"][$index]);	
+			}
+		}
+	}
+	
+	return $value;
 }
 
 /**
@@ -311,8 +372,11 @@ function _elgg_user_settings_page_handler($page) {
 			$path = $CONFIG->path . "pages/settings/statistics.php";
 			break;
 		case 'plugins':
-			elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
-			$path = $CONFIG->path . "pages/settings/tools.php";
+			if (isset($page[2])) {
+				set_input("plugin_id", $page[2]);
+				elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
+				$path = $CONFIG->path . "pages/settings/tools.php";
+			}
 			break;
 		case 'user':
 			$path = $CONFIG->path . "pages/settings/account.php";
