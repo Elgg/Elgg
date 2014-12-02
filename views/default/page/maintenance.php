@@ -34,14 +34,6 @@ $body = <<<__BODY
 		$content
 	</div>
 </div>
-
-<!--[if IE 7]>
-<script>
-	var div = document.getElementById("elgg-maintenance-page-wrapper");
-	div.className = div.className + " ie7";
-</script>
-<![endif]-->
-
 __BODY;
 
 echo elgg_view("page/elements/html", array('head' => $head, 'body' => $body));

@@ -38,8 +38,6 @@ Here is a list of the existing CSS views:
  * css/elements/modules: Lots of content in Elgg is displayed in boxes with a title and a content body. We called these modules. There are a few kinds: info, aside, featured, dropdown, popup, widget. Widget styles are included in this file too, since they are a subset of modules.
  * css/elements/navigation: This file determines what all your menus will look like.
  * css/elements/typography: This file determines what the content and headings of your site will look like.
- * css/ie6: Custom rules for ie6 and below.
- * css/ie7: Custom rules for ie7 and below.
  * css/rtl: Custom rules for users viewing your site in a right-to-left language.
  * css/admin: A completely separate theme for the admin area (usually not overridden).
  * css/elgg: Compiles all the core css/elements/\* files into one file (DO NOT OVERRIDE).
