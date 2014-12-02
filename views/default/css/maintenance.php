@@ -223,16 +223,3 @@ input[type="radio"] {
 .elgg-state-notice {
 	background-color: #4690D6;
 }
-
-/* ***************************************
-	IE workarounds
-*************************************** */
-.ie7 .elgg-module-maintenance > .elgg-head,
-.ie7 .elgg-module-maintenance > .elgg-foot {
-	width: 530px;
-}
-.ie7 input[type=text],
-.ie7 input[type=password] {
-	width: 94%;
-}
-

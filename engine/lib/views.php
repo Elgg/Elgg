@@ -1581,8 +1581,6 @@ function elgg_views_boot() {
 	global $CONFIG;
 
 	elgg_register_simplecache_view('css/ie');
-	elgg_register_simplecache_view('css/ie7');
-	elgg_register_simplecache_view('css/ie8');
 
 	elgg_register_simplecache_view('js/text.js');
 
