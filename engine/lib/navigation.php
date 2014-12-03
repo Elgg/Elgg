@@ -231,11 +231,15 @@ function elgg_register_title_button($handler = null, $name = 'add') {
 /**
  * Adds a breadcrumb to the breadcrumbs stack.
  *
- * @param string $title The title to display
- * @param string $link  Optional. The link for the title.
+ * See elgg_get_breadcrumbs() and the navigation/breadcrumbs view.
+ *
+ * @param string $title The title to display. During rendering this is HTML encoded.
+ * @param string $link  Optional. The link for the title. During rendering links are
+ *                      normalized via elgg_normalize_url().
  *
  * @return void
  * @since 1.8.0
+ * @see elgg_get_breadcrumbs
  */
 function elgg_push_breadcrumb($title, $link = null) {
 	global $CONFIG;
@@ -243,40 +247,72 @@ function elgg_push_breadcrumb($title, $link = null) {
 		$CONFIG->breadcrumbs = array();
 	}
 
-	// avoid key collisions.
-	$CONFIG->breadcrumbs[] = array('title' => elgg_get_excerpt($title, 100), 'link' => $link);
+	$CONFIG->breadcrumbs[] = array('title' => $title, 'link' => $link);
 }
 
 /**
  * Removes last breadcrumb entry.
  *
- * @return array popped item.
+ * @return array popped breadcrumb array or empty array
  * @since 1.8.0
  */
 function elgg_pop_breadcrumb() {
 	global $CONFIG;
 
-	if (is_array($CONFIG->breadcrumbs)) {
-		return array_pop($CONFIG->breadcrumbs);
+	if (empty($CONFIG->breadcrumbs) || !is_array($CONFIG->breadcrumbs)) {
+		return array();
 	}
-
-	return false;
+	return array_pop($CONFIG->breadcrumbs);
 }
 
 /**
- * Returns all breadcrumbs as an array of array('title' => 'Readable Title', 'link' => 'URL')
+ * Returns all breadcrumbs as an array of array('title' => 'Title', 'link' => 'URL')
+ *
+ * Since 1.10, breadcrumbs are filtered through the plugin hook [prepare, breadcrumbs] before
+ * being returned.
  *
  * @return array Breadcrumbs
  * @since 1.8.0
+ * @see elgg_prepare_breadcrumbs
  */
 function elgg_get_breadcrumbs() {
 	global $CONFIG;
 
+	// if no crumbs set, still allow hook to populate it
 	if (isset($CONFIG->breadcrumbs) && is_array($CONFIG->breadcrumbs)) {
-		return $CONFIG->breadcrumbs;
+		$breadcrumbs = $CONFIG->breadcrumbs;
+	} else {
+		$breadcrumbs = array();
 	}
 
-	return array();
+	$params = array(
+		'breadcrumbs' => $breadcrumbs,
+	);
+	$breadcrumbs = elgg_trigger_plugin_hook('prepare', 'breadcrumbs', $params, $breadcrumbs);
+	if (!is_array($breadcrumbs)) {
+		return array();
+	}
+
+	return $breadcrumbs;
+}
+
+/**
+ * Hook handler to turn titles into 100-character excerpts. To remove this behavior, unregister this
+ * function from the [prepare, breadcrumbs] hook.
+ *
+ * @param string $hook        "prepare"
+ * @param string $type        "breadcrumbs"
+ * @param array  $breadcrumbs Breadcrumbs to be altered
+ * @param array  $params      Hook parameters
+ *
+ * @return array
+ * @since 1.10
+ */
+function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
+	foreach (array_keys($breadcrumbs) as $i) {
+		$breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
+	}
+	return $breadcrumbs;
 }
 
 /**
@@ -540,6 +576,8 @@ function _elgg_login_menu_setup($hook, $type, $return, $params) {
  * @access private
  */
 function _elgg_nav_init() {
+	elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
+
 	elgg_register_plugin_hook_handler('prepare', 'menu:site', '_elgg_site_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:river', '_elgg_river_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_entity_menu_setup');
