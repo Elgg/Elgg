@@ -19,6 +19,10 @@ To create an API for your Elgg site, you need to do 4 things:
 Additionally, you may want to control what types of authentication are
 available on your site. This will also be covered.
 
+.. contents:: Contents
+   :local:
+   :depth: 2
+
 Exposing methods
 ----------------
 
@@ -135,7 +139,7 @@ http://yoursite.com/services/api/rest/xml/?method=users.active&api_key=1140321cb
 Signature-based authentication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The `HMAC Authentication`_ is similar to what is used with `OAuth`_ or
+The :doc:`web-services/hmac` is similar to what is used with OAuth or
 Amazon's S3 service. This involves both the public and private key. If
 you want to be very sure that the API calls are coming from the
 developer you think they are coming from and you want to make sure the
@@ -147,12 +151,9 @@ authentication.
 OAuth
 ~~~~~
 
-With the addition of the `OAuth`_ plugin, Elgg also fully supports the
+With the addition of the OAuth plugin, Elgg also fully supports the
 OAuth 1.0a authorization standard. Clients can then use standard OAuth
 libraries to make any API calls to the site.
-
-.. _HMAC Authentication: HMAC Authentication
-.. _OAuth: OAuth
 
 User authentication
 -------------------
@@ -266,3 +267,11 @@ for more detail.
 .. _pluggable authentication module (PAM): http://en.wikipedia.org/wiki/Pluggable_Authentication_Modules
 .. _CSRF attack: http://en.wikipedia.org/wiki/Csrf
 .. _Justin Richer's OAuth plugin: http://community.elgg.org/pg/plugins/jricher/read/385119/oauth
+
+Related
+-------
+
+.. toctree::
+   :maxdepth: 1
+   
+   web-services/hmac

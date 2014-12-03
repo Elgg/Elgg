@@ -17,7 +17,7 @@ Elgg supporters are listed there unless they request not to be.
 
 Supporters are able to put this official logo on their site if they wish:
 
-.. image:: elgg-supporters.gif
+.. image:: elgg-supporters.png
    :alt: Proud supporter of Elgg
 
 

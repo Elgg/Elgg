@@ -1,3 +1,186 @@
+<a name="1.9.6"></a>
+### 1.9.6  (2014-12-01)
+
+#### Contributors
+
+* Jerôme Bakker (74)
+* Paweł Sroka (7)
+* Jeroen Dalsem (2)
+* Brett Profitt (1)
+* Juho Jaakkola (1)
+* iionly (1)
+
+#### Documentation
+
+* **admin:**
+  * moved the finding plugins page from docs ([d054a5fd](https://github.com/Elgg/Elgg/commit/d054a5fd9d24077100df645c39cdde047f38531f))
+  * moved the plugin order page from docs ([dfb68cb0](https://github.com/Elgg/Elgg/commit/dfb68cb0ee6d71fa4b03c518e1ab56a3fb9d7ba8))
+  * moved the getting help page from docs ([2546fc9f](https://github.com/Elgg/Elgg/commit/2546fc9f6edcbc3cc83b7238ec272ae8d94fa04c))
+  * moved duplicate installation from docs ([53dfaca8](https://github.com/Elgg/Elgg/commit/53dfaca85a65ebba492bef45947d935c037eb0f8))
+  * moved backup and restore page from docs ([e66a2432](https://github.com/Elgg/Elgg/commit/e66a2432ba833209ca2be7e4af019872c3eaf5e4))
+* **design:** moved the Loggable page from docs ([02f68068](https://github.com/Elgg/Elgg/commit/02f6806848b223f755d2734353648cfce0a59e4b))
+* **faq:**
+  * moved the Javascript not working page from docs ([94a00252](https://github.com/Elgg/Elgg/commit/94a00252d2c3e88ba32cceb8e4ce906090406b12))
+  * moved the Deprecation warnings page from docs ([66374e0f](https://github.com/Elgg/Elgg/commit/66374e0fb6f2d9d12e5b48ef2b8674967440a025))
+  * moved the No images page from docs ([2b261c8f](https://github.com/Elgg/Elgg/commit/2b261c8f6917f4cb89bed2bea403fbe164f04279))
+  * moved the File is missing an owner page from docs ([46f71887](https://github.com/Elgg/Elgg/commit/46f718874c72939466b39a7d86443b1be08a0c17))
+  * moved the Copy a plugin page from docs ([a0b4b27a](https://github.com/Elgg/Elgg/commit/a0b4b27a4337ac000b790ca7a3f934dcce4fad7e))
+  * moved the session length page from docs ([c337b834](https://github.com/Elgg/Elgg/commit/c337b8347306e1c8418864990b6e14075bee34af))
+  * moved Emails don't support non-Latin characters from docs ([c6001fba](https://github.com/Elgg/Elgg/commit/c6001fbade057dedddbefb6370cdf8184c06b19a))
+  * moved the What variables are reserved by Elgg page from docs ([2d5a2a16](https://github.com/Elgg/Elgg/commit/2d5a2a16c8706677f9926696456d3ae049a63423))
+  * moved the IE login problem page from docs ([7445c19c](https://github.com/Elgg/Elgg/commit/7445c19c8fc9109fb960e6956b066b45d42f587c))
+  * moved the page not found page from docs ([d0435c55](https://github.com/Elgg/Elgg/commit/d0435c551138ee547e3e64b840ca820f46d53f13))
+  * move the Should I edit the database manually page from docs ([d04a1383](https://github.com/Elgg/Elgg/commit/d04a13837c2d7534f8f0ade0fd5cbb146c61c3ce))
+  * moved the css is missing page from docs ([5b54b38c](https://github.com/Elgg/Elgg/commit/5b54b38c0cbf3c4b5d9864e82281394018d5502e))
+  * moved the filtering page from docs ([68baa0e6](https://github.com/Elgg/Elgg/commit/68baa0e6183d542b41328e957bf672baf4f84f4b))
+  * moved the When I upload a photo or change my profile picture I get a white screen page from docs ([ffbdd0d2](https://github.com/Elgg/Elgg/commit/ffbdd0d27eea20a40953861c704459b5e670dfe6))
+  * moved the security faq from docs ([627ff4f5](https://github.com/Elgg/Elgg/commit/627ff4f5b2af42613edc965b86972dd249570e91))
+  * moved the 500 - Internal Server Error page from docs ([68a8ce19](https://github.com/Elgg/Elgg/commit/68a8ce19b8ceeab3b0e94698cd9c0c2955865649))
+  * moved the What events are triggered on every page load page from docs ([be493213](https://github.com/Elgg/Elgg/commit/be493213962c66ac1f3a554fc4cdb92c5b3a1335))
+  * moved the Using a test site page from docs ([dc2fe2a7](https://github.com/Elgg/Elgg/commit/dc2fe2a7b1d9317aad1a83ce1d6377faf6038b37))
+  * moved the Https login turned on accidently page ([aeb32f65](https://github.com/Elgg/Elgg/commit/aeb32f65e95e8e61ec371f867a7fee00356e16f1))
+  * moved the debug mode page from docs ([6b2d18e3](https://github.com/Elgg/Elgg/commit/6b2d18e380d3f1720438e8e8ba7810e47e8b0863))
+  * split the faq page into different files for readability ([bb1de6a6](https://github.com/Elgg/Elgg/commit/bb1de6a6d24d4be3cb1a160baf69e6bd8d2e66c4))
+  * moved Manually add user from docs ([0fa6c070](https://github.com/Elgg/Elgg/commit/0fa6c07035e1d38f639413137bba87a056276678))
+  * moved How do I change PHP settings using .htaccess from docs ([0defcaaa](https://github.com/Elgg/Elgg/commit/0defcaaa788253738683c0cdfeb8615df182e9d6))
+  * moved how does registration work page from docs ([13ac44d3](https://github.com/Elgg/Elgg/commit/13ac44d3685e5b77d29dc7568432ce222b002ae6))
+  * moved How do I find the code that does x from docs ([ef30d048](https://github.com/Elgg/Elgg/commit/ef30d048e86c3f798b3d9243829e4c40aabe7855))
+  * move the I don't like the wording of something in Elgg page from docs ([9c13832b](https://github.com/Elgg/Elgg/commit/9c13832bb48a3f7878256c1872bcf2995eac33f8))
+  * moved the Changing registration page from docs ([6d7e4f48](https://github.com/Elgg/Elgg/commit/6d7e4f48edc68e86f08b478fbac3328c2b469495))
+  * moved the changing profile fields page from docs ([151d25a0](https://github.com/Elgg/Elgg/commit/151d25a033c3f891c4de8073e2dc43a93df12688))
+  * moved What should I use to edit php code from docs ([375869d1](https://github.com/Elgg/Elgg/commit/375869d1945d078a3fc17f432f461d289538bfd9))
+* **features:** added a link to the Elgg showcas page ([334d2010](https://github.com/Elgg/Elgg/commit/334d20101928554a076afbd5126a609d0e0e7920))
+* **general:** adds contents indexes to long pages ([ebf316c9](https://github.com/Elgg/Elgg/commit/ebf316c9964b4d76e8c1f7377fd833aa1f8a7c09))
+* **guides:**
+  * moved Walled Garden page from docs ([4100ccef](https://github.com/Elgg/Elgg/commit/4100ccef8cefd81415ae0003f204189af56c74ba))
+  * moved the Accessibility Guidelines from docs ([5b687a42](https://github.com/Elgg/Elgg/commit/5b687a42c32461a3ed5cbfe8b030f603c05581b8))
+  * moved the systemlog page from docs ([de73bb22](https://github.com/Elgg/Elgg/commit/de73bb2240716ca78fa68b48064157221f64fec5))
+  * moved the How to restrict where widgets can be used from docs ([17ec2d35](https://github.com/Elgg/Elgg/commit/17ec2d358767ef979211ae63332a0a42663c9d1d))
+  * moved the javascript hooks page from docs ([71551797](https://github.com/Elgg/Elgg/commit/715517971431e6f9f02e844ab5717cb5d5f80e54))
+  * moved the PluginDependencies from docs ([e37d79a2](https://github.com/Elgg/Elgg/commit/e37d79a2790e646478fe48292f9f4c61221f9ee0))
+  * moved hmac authentication page from docs ([7b37f083](https://github.com/Elgg/Elgg/commit/7b37f083d2c44ceb4f7638407b3dd5960b3232e6))
+  * moved don't modify core page from docs ([c99e0008](https://github.com/Elgg/Elgg/commit/c99e0008aaa90e5346a73e579351bcdd288c7789))
+  * moved the ajax page from docs ([b758c731](https://github.com/Elgg/Elgg/commit/b758c731faf11673aed40f213074ebed0eb7429c))
+  * moved Engine/Controllers/BestPractices from docs ([26f77b0d](https://github.com/Elgg/Elgg/commit/26f77b0d83dd2459f36828e19790a46c154a185f))
+  * move plugin coding guidelines from docs ([9c4ee9f9](https://github.com/Elgg/Elgg/commit/9c4ee9f996564833fcbb5b729d2fe11d660c28d5))
+  * moved the gatekeeper page from docs ([686fb7b2](https://github.com/Elgg/Elgg/commit/686fb7b25a7cc177b65685d8bf89e0b8864a7c8d))
+  * moved simplecache from docs ([a2d9b474](https://github.com/Elgg/Elgg/commit/a2d9b474bb347ca4de10068366208bc4ee993de4))
+  * moved the authentication page from docs ([0e928075](https://github.com/Elgg/Elgg/commit/0e9280755f3cb7c6e2f4da12788411e2b475f953))
+  * moved the permissions check documentation from docs ([d9a6a88a](https://github.com/Elgg/Elgg/commit/d9a6a88a7d3274fb04a2d5aa25c674e3041f7e06))
+  * moved the plugin (user)settings documentation from docs ([bf2d984d](https://github.com/Elgg/Elgg/commit/bf2d984d34976c856a9deecf48c0a7efe17334cb))
+  * moved the context documentation from docs ([87bd91f9](https://github.com/Elgg/Elgg/commit/87bd91f90340ccb1286292260ffe5ec9db70c762))
+  * moved the helper functions page from docs ([96d7d374](https://github.com/Elgg/Elgg/commit/96d7d3745e8811d2c11a0fa3e7ddca4b16d2c1bd))
+  * moved the page handler documentation from docs ([e327d354](https://github.com/Elgg/Elgg/commit/e327d3549c1ae63ad949f1a38f1dbdaf37ace106))
+* **guids:** moved page ownership from docs ([223d668a](https://github.com/Elgg/Elgg/commit/223d668afd0ae1b165ed3d608cd6f1c7d22a12b2))
+* **pdf:** Added LaTeX build testing to Travis ([021a95c5](https://github.com/Elgg/Elgg/commit/021a95c559784786b50905f8381f7973f270c843))
+* **plugins:**
+  * moved the System diagnostics page from docs ([df2062a7](https://github.com/Elgg/Elgg/commit/df2062a7bfbeb772b9bd87c65caa6e67939fca6c))
+  * moved the diagnostics page from docs ([b69c978c](https://github.com/Elgg/Elgg/commit/b69c978c71fc155a95772b3b14dc811e0c758218))
+  * completed the list of bundled plugins ([2a886a84](https://github.com/Elgg/Elgg/commit/2a886a8420b3441634a04b86195e1d0ac352283b))
+  * moved the thewire plugin description from docs ([5443e715](https://github.com/Elgg/Elgg/commit/5443e7157a8cb5759ebdf2b647a66ffadeee15f7))
+  * moved the blog plugin description from docs ([722d1202](https://github.com/Elgg/Elgg/commit/722d12029a9d710edac349d99f74610c9df78966))
+  * moved the messages plugin description from docs ([450c00b5](https://github.com/Elgg/Elgg/commit/450c00b59caad755a4909d846e02d9c8104eecc8))
+  * moved the messageboard plugin description from docs ([5d06e409](https://github.com/Elgg/Elgg/commit/5d06e409effd4779ab2dba327fd2ec51594f652b))
+  * moved the pages plugin description from docs ([47f9d2c8](https://github.com/Elgg/Elgg/commit/47f9d2c8f416a860e052f9caa8260650cc3416f1))
+  * moved the profile plugin description from docs ([3fd4168c](https://github.com/Elgg/Elgg/commit/3fd4168cec942a144e8fe149d2ac1662e995156f))
+  * moved the groups plugin description from docs ([0e1a6bdb](https://github.com/Elgg/Elgg/commit/0e1a6bdb5194e2c2cf1d832664db64081bc3f856))
+  * moved the file plugin description from docs ([140fb7ba](https://github.com/Elgg/Elgg/commit/140fb7bafc6fba9d6fde9f5f1d86d322492beaf8))
+  * moved the dashboard plugin description from docs ([2b17c2ce](https://github.com/Elgg/Elgg/commit/2b17c2ce31fe3b5d45394058b269607370d29f9d))
+  * moved the plugin skeleton documentation ([d8ae89c7](https://github.com/Elgg/Elgg/commit/d8ae89c75d1e6d75c73cdd053cf2b616d43dc29a))
+* **travis:** Added validation of translated docs sources for es language to Travis ([40d284e1](https://github.com/Elgg/Elgg/commit/40d284e171900e314fcd47149eb2f75200866660))
+* **views:** moved the page structure best practices page from docs ([c441a3f1](https://github.com/Elgg/Elgg/commit/c441a3f111d626bfb64bab41e8ca448e4e97237e))
+
+
+#### Bug Fixes
+
+* **core:** getFilenameOnFilestore() returns empty string if an ElggFile object has no filename set ([a03591e7](https://github.com/Elgg/Elgg/commit/a03591e7252ea89502a0fb60e604cea2d372f971))
+* **docs:**
+  * Fixed docs elements not allowing LaTeX builds to succeed. ([659d5796](https://github.com/Elgg/Elgg/commit/659d5796b0bdf7a21b0d08d6c552554b953158f2))
+  * Fixed docs syntax for the PDF builds. ([e3683683](https://github.com/Elgg/Elgg/commit/e36836838da991719e6fc174a490f20cde53af1f))
+* **forms:** Removes icon and title links from autocomplete results ([aff7e69e](https://github.com/Elgg/Elgg/commit/aff7e69ea37268c4e9d069d1c35cbbd95e9b30d5), closes [#5583](https://github.com/Elgg/Elgg/issues/5583))
+* **livesearch:** removed custom queries with ege* functions ([d3656fa2](https://github.com/Elgg/Elgg/commit/d3656fa20c3584417b4791b08dbe061a072e1514))
+* **plugins:** trigger plugin hooks when saving plugin settings ([19c31361](https://github.com/Elgg/Elgg/commit/19c31361557a04d047618f33e9d1ad8906d73dad), closes [#6820](https://github.com/Elgg/Elgg/issues/6820), [#7502](https://github.com/Elgg/Elgg/issues/7502))
+* **session:** Explicitly closing the session in the shutdown hook to work around APC session problems. ([7dbe7c6d](https://github.com/Elgg/Elgg/commit/7dbe7c6d54ec337f3c2e0a05ae7dd5c3cd562363), closes [#7186](https://github.com/Elgg/Elgg/issues/7186))
+* **views:** allow numeric 0 values to show on user and group profile ([edee47e5](https://github.com/Elgg/Elgg/commit/edee47e5c6fecd01d36edf58dfec84080356f32e))
+
+
+<a name="1.9.5"></a>
+### 1.9.5  (2014-11-17)
+
+#### Contributors
+
+* Jeroen Dalsem (18)
+* Brett Profitt (7)
+* Steve Clay (7)
+* Evan Winslow (3)
+* Ismayil Khayredinov (3)
+* Juho Jaakkola (3)
+* Per Jensen (3)
+* Jerôme Bakker (2)
+* Paweł Sroka (2)
+* Stian Liknes (2)
+* Diego Andrés Ramírez Aragón (1)
+* Matt Beckett (1)
+* iionly (1)
+
+#### Performance
+
+* **db:** correctly re-enable query cache after ElggBatch run ([a8c3fbd9](https://github.com/Elgg/Elgg/commit/a8c3fbd972d0c641e1fd5f7f58f8c8504f4fdaf1))
+* **river:** only fetch comments if comment_count > 0 ([db64e16d](https://github.com/Elgg/Elgg/commit/db64e16d4a9640c8b9f61dcb7ee9308031c992d7))
+
+
+#### Documentation
+
+* **actions:** Migrated actions section from old Getting Started docs and cleaned up related sections. ([d47a980f](https://github.com/Elgg/Elgg/commit/d47a980f67f8965666d87a094032a7a7039c376e))
+* **admin:** Migrated Getting Started guide from wiki. ([11e589f6](https://github.com/Elgg/Elgg/commit/11e589f66e1a1321e96813168bb73fb6c53d550b))
+* **all:**
+  * Cleanup docs. ([914fa69a](https://github.com/Elgg/Elgg/commit/914fa69aa94fc854150d061c5563f8af495966e6))
+  * Added getting started for developers. ([848d0d51](https://github.com/Elgg/Elgg/commit/848d0d5114c350cafa93281c68fe1ca1aeeefc6d))
+* **coding:** improves docs for commits/amending/standards ([e8166d78](https://github.com/Elgg/Elgg/commit/e8166d78c664aa6cfee1c6ba3da53fd350c85dad))
+* **database:** updated and expanded information on entity icons ([7bb60185](https://github.com/Elgg/Elgg/commit/7bb601858851d37d371f6386199b787c95282ba4))
+* **events:** Updated event list and cleaned up existing event docs. ([433ed90c](https://github.com/Elgg/Elgg/commit/433ed90cc5bcc2d9bdce47c92418fe1aa9845322))
+* **faqs:** Started migrating some FAQs. ([cd3afdcc](https://github.com/Elgg/Elgg/commit/cd3afdcc6915453e2ec10a42ed6bf494991a4771))
+* **hook:** Updated hooks docs. ([327ecb48](https://github.com/Elgg/Elgg/commit/327ecb48894d20b2c85be448180c52c5e67e222a))
+* **menus:** improve docs for menu item factory ([61751db6](https://github.com/Elgg/Elgg/commit/61751db6ccd2acf5c276b1abe036872a0a7a2e52))
+* **notifications:** documentation for the notifications system ([ac12ac99](https://github.com/Elgg/Elgg/commit/ac12ac990e9d950e8165fefb6b8c2f54026f7343), closes [#7308](https://github.com/Elgg/Elgg/issues/7308))
+* **style:** documents trailing whitespace policy and script ([798810c7](https://github.com/Elgg/Elgg/commit/798810c70b4afba55182c52c684bbce08a57cbda))
+
+
+#### Bug Fixes
+
+* **aalborg:** More robust grid reflows for smaller screens ([8d8155e7](https://github.com/Elgg/Elgg/commit/8d8155e7948869325ae5886ea188b77e8d08f4d3), closes [#7393](https://github.com/Elgg/Elgg/issues/7393))
+* **access:** always display readable access level for ACCESS_* constants ([a74421f9](https://github.com/Elgg/Elgg/commit/a74421f9c0d7cb06a19021d9e673b8a51a56cb8d), closes [#6801](https://github.com/Elgg/Elgg/issues/6801))
+* **core:**
+  * renaming to _elgg_namespace_plugin_private_setting forgotten in unsetAllSettings ([782b75f2](https://github.com/Elgg/Elgg/commit/782b75f2767482025110b4d7f902bd18d6937e72))
+  * prevent sql exception when metastring is interpreted as very large number in egef_metadata ([bab43d60](https://github.com/Elgg/Elgg/commit/bab43d60b920d4cd2c33a9a61c72ececb2143d38), closes [#7009](https://github.com/Elgg/Elgg/issues/7009))
+* **css:** markdown code blocks should not should nested borders ([8c736c2f](https://github.com/Elgg/Elgg/commit/8c736c2f28ce98223399a50453087025f52931c4))
+* **friends:** show friends collections menu item in friend context ([5073deeb](https://github.com/Elgg/Elgg/commit/5073deebda5743d4934cdfaf43f340865d5418c2))
+* **i18n:**
+  * Commit docs/*.mo files on release so docs can be translated ([8ca2b6b6](https://github.com/Elgg/Elgg/commit/8ca2b6b6a1ebb72df64b9d919ecc52bb4af4aa98), closes [#7034](https://github.com/Elgg/Elgg/issues/7034))
+  * improved removing profile field delete failure notice ([a6f561e2](https://github.com/Elgg/Elgg/commit/a6f561e2e7ad01df67a46e46f83ebaf5fb2386b5))
+  * grammar fix in upgrade warning ([f5d4d35f](https://github.com/Elgg/Elgg/commit/f5d4d35f772caaa641a368b3251bb81686b91403))
+* **login:** also allow login by email in maintenance mode ([4258bc3d](https://github.com/Elgg/Elgg/commit/4258bc3d6b8b39c9f5d5a9013b1397236d430251))
+* **menu:** only show access entity menu item if logged in ([714b0834](https://github.com/Elgg/Elgg/commit/714b08340a697f79a44f55fccedfeda33afb059d))
+* **menus:** allow max depth of 20 to prevent losing menu items ([d3e33db3](https://github.com/Elgg/Elgg/commit/d3e33db30a1560e81514d75ed30044f849b41fd3))
+* **pagination:** removes hard-coded arrows from php file ([eb136ef1](https://github.com/Elgg/Elgg/commit/eb136ef1a580b7fb1172379ff79baa908c05b00b), closes [#5298](https://github.com/Elgg/Elgg/issues/5298))
+* **plugins:** trigger plugin hooks when saving plugin settings ([5afadfc8](https://github.com/Elgg/Elgg/commit/5afadfc8ba6ba480d029a9fdc649f952f61c42b4), closes [#6820](https://github.com/Elgg/Elgg/issues/6820))
+* **relationships:** distinct ege* results when relationship_guid is not set ([4d87b950](https://github.com/Elgg/Elgg/commit/4d87b950891fa80545ef680d10e2e68b1b6801cb), closes [#5775](https://github.com/Elgg/Elgg/issues/5775))
+* **release:** Corrected release script Windows system compatibility. ([00012389](https://github.com/Elgg/Elgg/commit/0001238921a5c1a1bc9e7ad65aabc22158ba6530))
+* **upgrade:**
+  * Rechecks that all annotation comments have been migrated to entities ([7d81094c](https://github.com/Elgg/Elgg/commit/7d81094c10d60e613723b6eac0995dfdd350c1be), closes [#7486](https://github.com/Elgg/Elgg/issues/7486))
+  * Ensure that `$CONFIG` is always available to upgrade scripts ([c102a713](https://github.com/Elgg/Elgg/commit/c102a7138180b3fa04ec78aacbdcacbe53da150e), closes [#7457](https://github.com/Elgg/Elgg/issues/7457))
+* **uservalidationbyemail:** makes emailsent page public ([70bbdd65](https://github.com/Elgg/Elgg/commit/70bbdd652ce3485ab3151e696f22bc8cad966785), closes [#7334](https://github.com/Elgg/Elgg/issues/7334))
+* **views:**
+  * Revert erroneous changes made to input/userpicker ([e4008c65](https://github.com/Elgg/Elgg/commit/e4008c657a1680c47015ce632c47c470f138a562))
+  * input/userpicker can now remove all users on edit ([4cf113ab](https://github.com/Elgg/Elgg/commit/4cf113ab60f6e3c5e0d445f70fdd8cd530917642), closes [#6982](https://github.com/Elgg/Elgg/issues/6982))
+  * comma separating links to text files in plugin list ([4e9b8ad1](https://github.com/Elgg/Elgg/commit/4e9b8ad125e5025ed967e83c4a6cb47c71186cb1), closes [#7420](https://github.com/Elgg/Elgg/issues/7420))
+  * usersettings form now has correct userguid set ([2c204200](https://github.com/Elgg/Elgg/commit/2c204200da2be41d981b437080582e5297e1cd19))
+  * use elgg-button-action class on all cancel buttons ([857df27a](https://github.com/Elgg/Elgg/commit/857df27a176da9e1afb4888c9cc9c1e793218394))
+  * prevent output of empty heading when there is no page title ([c3f7f225](https://github.com/Elgg/Elgg/commit/c3f7f225bf5c6e009aa22c7af10ae17cbac018da))
+  * add apple-touch-icon ([3e4d2164](https://github.com/Elgg/Elgg/commit/3e4d2164eefa65e74773a224feb08770de2e69ad), closes [#6176](https://github.com/Elgg/Elgg/issues/6176))
+* **widgets:** determine default values for num display in content view ([bd20730d](https://github.com/Elgg/Elgg/commit/bd20730d9cc6b925dc17e34d4e1ac41f58336a4c))
+
+
 <a name="1.9.4"></a>
 ### 1.9.4  (2014-10-20)
 
@@ -1346,7 +1529,7 @@ A tip about updating plugins:
 
 It's not difficult to update 1.7 plugins for 1.8. There is a detailed
 document outlining this process on the wiki:
-http://docs.elgg.org/wiki/Updating_plugins_for_Elgg_1.8
+http://learn.elgg.org/en/stable/guides/upgrading.html#from-1-7-to-1-8
 
 The basic process is:
 

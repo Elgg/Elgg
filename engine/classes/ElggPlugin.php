@@ -329,7 +329,15 @@ class ElggPlugin extends \ElggObject {
 		if (!$this->guid) {
 			return false;
 		}
-
+		
+		// Hook to validate setting
+		$value = elgg_trigger_plugin_hook('setting', 'plugin', array(
+			'plugin_id' => $this->getID(),
+			'plugin' => $this,
+			'name' => $name,
+			'value' => $value,
+		), $value);
+		
 		return $this->setPrivateSetting($name, $value);
 	}
 
@@ -941,15 +949,8 @@ class ElggPlugin extends \ElggObject {
 
 			$this->attributes[$name] = $value;
 		} else {
-			// Hook to validate setting
-			$value = _elgg_services()->hooks->trigger('setting', 'plugin', array(
-				'plugin_id' => $this->getID(),
-				'plugin' => $this,
-				'name' => $name,
-				'value' => $value,
-			), $value);
-
-			$this->setPrivateSetting($name, $value);
+			// to make sure we trigger the correct hooks
+			$this->setSetting($name, $value);
 		}
 	}
 

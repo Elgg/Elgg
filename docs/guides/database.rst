@@ -3,6 +3,10 @@ Database
 
 Persist user-generated content and settings with Elgg's generic storage API.
 
+.. contents:: Contents
+   :local:
+   :depth: 2
+
 Entities
 ========
 
@@ -121,7 +125,7 @@ with metadata in a variety of ways.
 Displaying entities
 -------------------
 
-In order for entities to be displayed in `listing functions`_ you need
+In order for entities to be displayed in listing functions you need
 to provide a view for the entity in the views system.
 
 To display an entity, create a view EntityType/subtype where EntityType
@@ -132,10 +136,10 @@ user: for entities derived from ElggUser
 site: for entities derived from ElggSite
 group: for entities derived from ElggGroup
 
-.. _listing functions: Views#Listing_entities
-
 A default view for all entities has already been created, this is called
 EntityType/default.
+
+.. _guides/database#entity-icons:
 
 Entity Icons
 ~~~~~~~~~~~~
@@ -144,7 +148,7 @@ Every entity can be assigned an icon which is retrieved using the ``ElggEntity::
 This method accepts a ``$size`` argument that can be either of the configured icon sizes.  Use
 ``elgg_get_config('icon_sizes')`` to get all possible values. The following sizes exist by default:
 ``'large'``, ``'medium'``, ``'small'``, ``'tiny'``, and ``'topbar'``. The method triggers the
-``entity:icon:url`` hook_.
+``entity:icon:url`` :ref:`hook <guides/hooks-list#other>`.
 
 Use ``elgg_view_entity_icon($entity, $size, $vars)`` to render an icon. This will scan the following
 locations for a view and include the first match.
@@ -165,8 +169,6 @@ $subtype
 By convention entities that have an uploaded avatar or icon will have the ``icontime`` property
 assigned. This means that you can use ``$entity->icontime`` to check if an icon exists for the given
 entity.
-
-.. _hook: hooks-list.rst#other
 
 Adding, reading and deleting annotations
 ----------------------------------------
@@ -317,3 +319,47 @@ Note that Elgg execute statements through PHPs built-in functions and have
 limited support for comments. I.e. only single line comments are supported
 and must be prefixed by "-- " or "# ". A comment must start at the very beginning
 of a line.
+
+Systemlog
+=========
+
+.. note::
+
+   This section need some attention and will contain outdated information
+
+The default Elgg system log is a simple way of recording what happens within an Elgg system. It's viewable and searchable directly from the administration panel.
+
+System log storage
+------------------
+
+A system log row is stored whenever an event concerning an object whose class implements the :doc:`/design/loggable` interface is triggered. ``ElggEntity`` and ``ElggExtender`` implement :doc:`/design/loggable`, so a system log row is created whenever an event is performed on all objects, users, groups, sites, metadata and annotations.
+
+Common events include:
+
+- create
+- update
+- delete
+- login
+
+Creating your own system log
+----------------------------
+
+There are some reasons why you might want to create your own system log. For example, you might need to store a full copy of entities when they are updated or deleted, for auditing purposes. You might also need to notify an administrator when certain types of events occur.
+
+To do this, you can create a function that listens to all events for all types of object:
+
+.. code:: php
+
+   register_elgg_event_handler('all','all','your_function_name');
+
+Your function can then be defined as:
+
+.. code:: php
+
+   function your_function_name($object, $event) {
+      if ($object instanceof Loggable) {
+         ...
+      }
+   }
+
+You can then use the extra methods defined by :doc:`/design/loggable` to extract the information you need.

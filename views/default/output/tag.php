@@ -9,7 +9,7 @@
  *
  */
 
-if (empty($vars['value'])) {
+if (empty($vars['value']) && $vars['value'] !== 0 && $vars['value'] !== '0') {
 	return;
 }
 

@@ -13,3 +13,4 @@ and why it's built the way it is.
    i18n
    amd
    security
+   loggable

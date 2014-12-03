@@ -1,8 +1,9 @@
 Events and Plugin Hooks
 #######################
 
-.. toctree::
-   :maxdepth: 2
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Overview
 ========
@@ -152,6 +153,7 @@ Parameters:
 The function will return ``false`` if any of the selected handlers returned
 ``false`` and the event is stoppable, otherwise it will return ``true``.
 
+.. _design/events#plugin-hooks:
 
 Plugin Hooks
 ============

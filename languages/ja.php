@@ -98,7 +98,7 @@ return array(
 
 	'pageownerunavailable' => '警告： ページオーナー %d を許可できません。',
 	'viewfailure' => 'View %s において内部エラーが発生しました。',
-	'view:missing_param' => "View %2$s で必要なパラメータ '%1$s' がありません。",
+	'view:missing_param' => "View %2$s で必要なパラメータ「 %1$s 」がありません。",
 	'changebookmark' => 'このページに対するあなたのブックマークを変更してください。',
 	'noaccess' => 'あなたが閲覧しようとしているコンテントはすでに削除されてしまっているか、あるいはあなたに閲覧する権限がないかどちらかです。',
 	'error:missing_data' => 'あなたのリクエストにおいていくつかデータの欠損がありました。',
@@ -280,7 +280,7 @@ return array(
 	'profile:edit:default' => 'プロフィール項目を編集',
 	'profile:label' => "プロフィールのラベル",
 	'profile:type' => "プロフィールのタイプ",
-	'profile:editdefault:delete:fail' => 'デフォルトのプロフィール項目を削除するのに失敗しました！',
+	'profile:editdefault:delete:fail' => 'プロフィールの項目を削除するのに失敗しました。',
 	'profile:editdefault:delete:success' => 'デフォルトのプロフィール項目を削除しました！',
 	'profile:defaultprofile:reset' => 'デフォルトのシステムプロフィールにリセット',
 	'profile:resetdefault' => 'プロフィールの項目をシステムのデフォルトにリセットする',
@@ -902,7 +902,6 @@ return array(
 	'title' => "タイトル",
 	'description' => "説明",
 	'tags' => "タグ",
-	'spotlight' => "スポットライト",
 	'all' => "全部",
 	'mine' => "自分の",
 
@@ -913,7 +912,6 @@ return array(
 	'relationships' => "関連",
 	'metadata' => "メタデータ",
 	'tagcloud' => "タグクラウド",
-	'tagcloud:allsitetags' => "全タグ",
 
 	'on' => 'On',
 	'off' => 'Off',
@@ -1096,12 +1094,6 @@ return array(
 	'upgrade:site_secret_warning:moderate' => "システムの安全性を改善するために、サイトの秘密キーを再生成するようにしましょう。設定 &gt; セッティング &gt; 詳細設定で設定出来ます。",
 	'upgrade:site_secret_warning:weak' => "システムの安全性を改善するためにサイトの秘密キーを再生成してください。設定 &gt; セッティング &gt; 詳細設定",
 
-	'ElggUpgrade:error:url_invalid' => 'URLに不正な値がります。',
-	'ElggUpgrade:error:url_not_unique' => 'アップグレードの URLs は唯一のもの(unique)でなければいけません。',
-	'ElggUpgrade:error:title_required' => 'ElggUpgrade objects にはタイトル(a title)がなければいけません。',
-	'ElggUpgrade:error:description_required' => 'ElggUpgrade objects には説明(a description)がなければいけません。',
-	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade objects にはアプグレードURL(an upgrade URL)がなければいけません。',
-
 	'deprecated:function' => '関数 %s() は廃止され %s()に変わりました。',
 
 	'admin:pending_upgrades' => 'サイトはアップグレードの途中で中断されています。これ以降は直接あなたの操作が必要です。',
@@ -1111,7 +1103,7 @@ return array(
 	'admin:upgrades:none' => 'このインストールは最新の状態です！',
 
 	'upgrade:item_count' => 'アップグレードが必要なものが <b>%s</b> 個あります。',
-	'upgrade:warning' => '<b>警告:</b> 大きなサイトでは、このアップグレードはかなり長い時間かかるでしょう！',
+	'upgrade:warning' => '<b>警告:</b>大きなサイトならアップグレードするのに少々時間がかかるかもしれません。',
 	'upgrade:success_count' => 'アップグレード済み:',
 	'upgrade:error_count' => 'エラー:',
 	'upgrade:river_update_failed' => 'item id %s のriverエントリを更新するのに失敗しました。',
@@ -1171,12 +1163,12 @@ return array(
 
 あなたのパスワードをリセットしました: %s",
 
-	'email:changereq:subject' => "パスワード変更のリクエスト",
+	'email:changereq:subject' => "パスワード変更の申請",
 	'email:changereq:body' => "%s さん、こんにちは。
 
-誰か(from the IP address %s) があなたのアカウントのパスワードの変更を求めています。
+誰か ( IPアドレス %s ) がアカウントのパスワードの変更を求めています。
 
-御自身がパスワードの変更をリクエストされたのでしたら、下記リンクをクリックしてください。身に覚えが無いようでしたらこのメールを無視してください。
+これがあなたなのでしたら、下のリンクをクリックしてください。身に覚えがないようでしたら、このメールを無視してください。
 
 %s
 ",
@@ -1266,7 +1258,6 @@ return array(
  */
 
 	'tag_names:tags' => 'タグ',
-	'tags:site_cloud' => 'タグクラウド',
 
 /**
  * Javascript
@@ -1282,7 +1273,7 @@ return array(
 	'elgg:powered' => "Powered by Elgg",
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 
 	"aa" => "Afar",
@@ -1302,6 +1293,7 @@ return array(
 	"bo" => "Tibetan",
 	"br" => "Breton",
 	"ca" => "Catalan",
+	"cmn" => "中国語（官話）", // ISO 639-3
 	"co" => "Corsican",
 	"cs" => "Czech",
 	"cy" => "Welsh",
@@ -1378,6 +1370,7 @@ return array(
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
+	"pt_br" => 'ブラジルポルトガル語',
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
