@@ -83,6 +83,7 @@ class MetastringsTable {
 	
 	/**
 	 * Gets all ids associated with this string when taken case-insensitively.
+	 * Will add the string to the table if not present.
 	 * 
 	 * @param string $string The value
 	 * 
@@ -97,6 +98,9 @@ class MetastringsTable {
 		$ids = array();
 		foreach ($results as $result) {
 			$ids[] = $result->id;
+		}
+		if (empty($ids)) {
+			$ids[] = $this->add($string);
 		}
 		return $ids;
 	}	
