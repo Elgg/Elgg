@@ -235,7 +235,11 @@ function elgg_list_entities_from_annotations($options = array()) {
 
 /**
  * Get entities ordered by a mathematical calculation on annotation values
- *
+ * 
+ * @tip Note that this function uses { @link elgg_get_annotations() } to return a list of entities ordered by a mathematical
+ * calculation on annotation values, and { @link elgg_get_entities_from_annotations() } to return a count of entities 
+ * if $options['count'] is set to a truthy value
+ * 
  * @param array $options An options array:
  * 	'calculation'            => The calculation to use. Must be a valid MySQL function.
  *                              Defaults to sum.  Result selected as 'annotation_calculation'.
@@ -251,7 +255,7 @@ function elgg_list_entities_from_annotations($options = array()) {
  *
  *	'metadata_names'         => The name of metadata on the entity.
  *	'metadata_values'        => The value of metadata on the entitiy.
- *  'callback'               => Callback function to pass each row through.
+ *	'callback'               => Callback function to pass each row through.
  *                              @tip This function is different from other ege* functions, 
  *                              as it uses a metastring-based getter function { @link elgg_get_annotations() },
  *                              therefore the callback function should be a derivative of { @link entity_row_to_elggstar() } 
@@ -259,6 +263,7 @@ function elgg_list_entities_from_annotations($options = array()) {
  *
  * @return \ElggEntity[]|int An array or a count of entities
  * @see elgg_get_annotations()
+ * @see elgg_get_entities_from_annotations()
  */
 function elgg_get_entities_from_annotation_calculation($options) {
 	return _elgg_services()->annotations->getEntitiesFromCalculation($options);
