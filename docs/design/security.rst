@@ -3,7 +3,13 @@ Security
 
 Elgg’s approach to the various security issues common to all web applications.
 
-To report a potential vulnerability in Elgg, email security@elgg.org.
+.. tip::
+
+   To report a potential vulnerability in Elgg, email security@elgg.org.
+
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Passwords
 =========

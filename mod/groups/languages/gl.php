@@ -64,6 +64,7 @@ return array(
 	'groups:featuredon' => 'O grupo %s está destacado.',
 	'groups:unfeatured' => 'Deixo de destacarse %s.',
 	'groups:featured_error' => 'Grupo non válido.',
+	'groups:nofeatured' => 'Non hai grupos salientados.',
 	'groups:joinrequest' => 'Solicitar unirse',
 	'groups:join' => 'Unirse ao grupo',
 	'groups:leave' => 'Deixar o grupo',
@@ -261,6 +262,7 @@ Ou prema a seguinte ligazón para ver as solicitudes de admisión do grupo:
 	'river:join:group:default' => '%s uniuse ao grupo %s',
 	'river:create:object:groupforumtopic' => '%s engadiu un novo tema de conversa %s',
 	'river:reply:object:groupforumtopic' => '%s respondeu no tema de conversa «%s»',
+	'river:reply:view' => 'Ver a resposta',
 
 	'groups:nowidgets' => 'Non se definiu ningún trebello para este grupo.',
 
@@ -298,6 +300,8 @@ Ou prema a seguinte ligazón para ver as solicitudes de admisión do grupo:
 
 	'groups:invitekilled' => 'Eliminouse a invitación',
 	'groups:joinrequestkilled' => 'Eliminouse a solicitude de admisión',
+	'groups:error:addedtogroup' => "Non foi posíbel engadir a %s ao grupo",
+	'groups:add:alreadymember' => "%s xa pertence ao grupo.",
 
 	/**
 	 * ecml

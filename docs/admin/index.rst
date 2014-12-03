@@ -11,3 +11,6 @@ Best practices for effectively managing an Elgg-based site.
 	plugins
 	performance
 	cron
+	backup-restore
+	duplicate-installation
+	getting-help

@@ -51,4 +51,4 @@ Good feature request checklist:
 -  Proposed API
 
 .. _community site: http://community.elgg.org
-.. _develop a plugin: http://docs.elgg.org/wiki/Plugin_development
+.. _develop a plugin: http://learn.elgg.org/en/stable/tutorials/index.html

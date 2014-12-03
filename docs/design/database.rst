@@ -3,8 +3,9 @@ Database
 
 A thorough discussion of Elgg's data model design and motivation.
 
-.. toctree::
-   :maxdepth: 2
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Overview
 ========
@@ -709,21 +710,16 @@ The following rules govern write access:
    does not mean that the owner of a group can edit anything therein)
 -  Admins can edit anything
 
-You can override this behaviour using a `plugin hook`_ called
+You can override this behaviour using a :ref:`plugin hook <design/events#plugin-hooks>` called
 ``permissions_check``, which passes the entity in question to any
 function that has announced it wants to be referenced. Returning
 ``true`` will allow write access; returning ``false`` will deny it. See
-`the plugin hook reference for permissions\_check`_ for more details.
+:ref:`the plugin hook reference for permissions\_check <guides/hooks-list#permission-hooks>` for more details.
 
-Also see
---------
+.. seealso::
 
--  `Engine reference`_
--  `Access library reference`_
+   `Access library reference`_
 
-.. _plugin hook: PluginHooks
-.. _the plugin hook reference for permissions\_check: PluginHooks#permissions_check
-.. _Engine reference : Engine
 .. _Access library reference: http://reference.elgg.org/engine_2lib_2access_8php.html
 
 Schema

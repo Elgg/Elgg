@@ -3,6 +3,9 @@ Performance
 
 Make your site run as smoothly and responsively as possible.
 
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Can Elgg scale to X million users?
 ==================================
