@@ -235,40 +235,11 @@ function elgg_get_registered_tag_metadata_names() {
 }
 
 /**
- * Page hander for sitewide tag cloud
- *
- * @param array $page Page array
- *
- * @return bool
- * @access private
- */
-function _elgg_tagcloud_page_handler($page) {
-
-	$title = elgg_echo('tags:site_cloud');
-	$options = array(
-		'threshold' => 0,
-		'limit' => 100,
-		'tag_name' => 'tags',
-	);
-	$tags = elgg_view_tagcloud($options);
-	$content = $tags;
-	$body = elgg_view_layout('one_sidebar', array(
-		'title' => $title,
-		'content' => $content,
-	));
-
-	echo elgg_view_page($title, $body);
-	return true;
-}
-
-/**
  * @access private
  */
 function _elgg_tags_init() {
 	// register the standard tags metadata name
 	elgg_register_tag_metadata_name('tags');
-	
-	elgg_register_page_handler('tags', '_elgg_tagcloud_page_handler');
 }
 
 elgg_register_event_handler('init', 'system', '_elgg_tags_init');

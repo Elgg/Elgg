@@ -5,4 +5,4 @@
 
 $content = elgg_view_menu('page', array('sort_by' => 'priority', 'show_section_headers' => true));
 
-echo elgg_view_module('main', '', $content, array('class' => 'elgg-admin-sidebar-menu'));
+echo elgg_view_module('main', '', $content, array('class' => 'elgg-admin-sidebar-menu', 'id' => 'elgg-admin-nav-collapse'));

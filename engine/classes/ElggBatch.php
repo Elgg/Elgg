@@ -327,7 +327,7 @@ class ElggBatch
 			_elgg_services()->db->enableQueryCache();
 			return true;
 		} else {
-			_elgg_services()->db->disableQueryCache();
+			_elgg_services()->db->enableQueryCache();
 			return false;
 		}
 	}

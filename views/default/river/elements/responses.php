@@ -14,6 +14,7 @@ if ($responses) {
 }
 
 $item = $vars['item'];
+/* @var ElggRiverItem $item */
 $object = $item->getObjectEntity();
 $target = $item->getTargetEntity();
 
@@ -24,24 +25,20 @@ if ($item->annotation_id != 0 || !$object || elgg_instanceof($target, 'object', 
 
 $comment_count = $object->countComments();
 
-$comments = elgg_get_entities(array(
-	'type' => 'object',
-	'subtype' => 'comment',
-	'container_guid' => $object->getGUID(),
-	'limit' => 3,
-	'order_by' => 'e.time_created desc'
-));
+if ($comment_count) {
+	$comments = elgg_get_entities(array(
+		'type' => 'object',
+		'subtype' => 'comment',
+		'container_guid' => $object->getGUID(),
+		'limit' => 3,
+		'order_by' => 'e.time_created desc',
+		'distinct' => false,
+	));
 
-if ($comments) {
 	// why is this reversing it? because we're asking for the 3 latest
 	// comments by sorting desc and limiting by 3, but we want to display
 	// these comments with the latest at the bottom.
 	$comments = array_reverse($comments);
-
-?>
-	<span class="elgg-river-comments-tab"><?php echo elgg_echo('comments'); ?></span>
-
-<?php
 
 	echo elgg_view_entity_list($comments, array('list_class' => 'elgg-river-comments'));
 

@@ -10,6 +10,7 @@
  */
 
 $item = $vars['item'];
+/* @var ElggRiverItem $item */
 
 $menu = elgg_view_menu('river', array(
 	'item' => $item,
@@ -20,7 +21,13 @@ $menu = elgg_view_menu('river', array(
 // river item header
 $timestamp = elgg_view_friendly_time($item->getTimePosted());
 
-$summary = elgg_extract('summary', $vars, elgg_view('river/elements/summary', array('item' => $vars['item'])));
+$summary = elgg_extract('summary', $vars);
+if ($summary === null) {
+	$summary = elgg_view('river/elements/summary', array(
+		'item' => $vars['item'],
+	));
+}
+
 if ($summary === false) {
 	$subject = $item->getSubjectEntity();
 	$summary = elgg_view('output/url', array(
@@ -31,13 +38,13 @@ if ($summary === false) {
 	));
 }
 
-$message = elgg_extract('message', $vars, false);
-if ($message !== false) {
+$message = elgg_extract('message', $vars);
+if ($message !== null) {
 	$message = "<div class=\"elgg-river-message\">$message</div>";
 }
 
-$attachments = elgg_extract('attachments', $vars, false);
-if ($attachments !== false) {
+$attachments = elgg_extract('attachments', $vars);
+if ($attachments !== null) {
 	$attachments = "<div class=\"elgg-river-attachments clearfix\">$attachments</div>";
 }
 

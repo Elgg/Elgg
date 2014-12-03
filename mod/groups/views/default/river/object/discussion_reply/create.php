@@ -4,6 +4,7 @@
  */
 
 $item = $vars['item'];
+/* @var ElggRiverItem $item */
 
 $reply = $item->getObjectEntity();
 $subject = $item->getSubjectEntity();
@@ -33,7 +34,7 @@ $reply_link = elgg_view('output/url', array(
 $summary = elgg_echo('river:reply:object:groupforumtopic', array($subject_link, $target_link));
 
 echo elgg_view('river/elements/layout', array(
-	'item' => $vars['item'],
+	'item' => $item,
 	'message' => elgg_get_excerpt($reply->description). ' ' .$reply_link,
 	'summary' => $summary,
 ));

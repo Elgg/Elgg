@@ -47,7 +47,7 @@ Installation
 ============
 
 The ``crontab`` needs to specify a script or command that will hit the Elgg cron pages.
-Two commonly available programs for this are `GET`__ and `wget`__. You will need
+Two commonly available programs for this are `GET` and `wget`. You will need
 to determine the location of one of these on your server. Your crontab also needs
 to specify the location of your website.
 
@@ -77,8 +77,6 @@ For example, for a weekly cron job, enter the command as http://www.example.com/
 To see if your cron jobs are running, visit Statistics > Cron in your Elgg admin
 panel.
 
-__ http://docs.elgg.org/wiki/What_is_get
-__ http://www.gnu.org/software/wget/manual/html_node/index.html
 __ http://docs.cpanel.net/twiki/bin/view/AllDocumentation/CpanelDocs/CronJobs
 
 

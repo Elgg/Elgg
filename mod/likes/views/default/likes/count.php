@@ -5,10 +5,9 @@
  *  @uses $vars['entity']
  */
 
-
 $list = '';
-$num_of_likes = likes_count($vars['entity']);
-$guid = $vars['entity']->getGUID();
+$num_of_likes = \Elgg\Likes\DataService::instance()->getNumLikes($vars['entity']);
+$guid = $vars['entity']->guid;
 
 if ($num_of_likes) {
 	// display the number of likes
@@ -30,7 +29,8 @@ if ($num_of_likes) {
 		'guid' => $guid,
 		'annotation_name' => 'likes',
 		'limit' => 99,
-		'list_class' => 'elgg-list-likes'
+		'list_class' => 'elgg-list-likes',
+		'preload_owners' => true,
 	));
 	$list .= "</div>";
 	echo $list;

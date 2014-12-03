@@ -9,9 +9,12 @@ This guide assumes you are familiar with:
  * :doc:`/admin/plugins`
  * :doc:`views`
 
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Create your plugin
-------------------
+==================
 
 Create your plugin as described in the :doc:`developer guide </guides/index>`.
 
@@ -20,7 +23,7 @@ Create your plugin as described in the :doc:`developer guide </guides/index>`.
 -  Create a manifest.xml file describing your theme.
 
 Customize the CSS
------------------
+=================
 
 As of Elgg 1.8, the css is split into several files based on what
 aspects of the site you're theming. This allows you to tackle them one
@@ -38,8 +41,6 @@ Here is a list of the existing CSS views:
  * css/elements/modules: Lots of content in Elgg is displayed in boxes with a title and a content body. We called these modules. There are a few kinds: info, aside, featured, dropdown, popup, widget. Widget styles are included in this file too, since they are a subset of modules.
  * css/elements/navigation: This file determines what all your menus will look like.
  * css/elements/typography: This file determines what the content and headings of your site will look like.
- * css/ie6: Custom rules for ie6 and below.
- * css/ie7: Custom rules for ie7 and below.
  * css/rtl: Custom rules for users viewing your site in a right-to-left language.
  * css/admin: A completely separate theme for the admin area (usually not overridden).
  * css/elgg: Compiles all the core css/elements/\* files into one file (DO NOT OVERRIDE).
@@ -48,7 +49,7 @@ Here is a list of the existing CSS views:
 
 
 View extension
-~~~~~~~~~~~~~~
+--------------
 
 There are two ways you can modify views:
 
@@ -70,7 +71,7 @@ css file:
     ?>
 
 View overloading
-~~~~~~~~~~~~~~~~
+----------------
 
 Plugins can have a view hierarchy, any file that exists here will
 replace any files in the existing core view hierarchy... so for example,

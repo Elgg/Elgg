@@ -9,10 +9,13 @@ if (!isset($vars['entity'])) {
 	return true;
 }
 
-$guid = $vars['entity']->getGUID();
+$entity = $vars['entity'];
+/* @var ElggEntity $entity */
+
+$guid = $entity->getGUID();
 
 // check to see if the user has already liked this
-if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
+if (elgg_is_logged_in() && $entity->canAnnotate(0, 'likes')) {
 	if (!elgg_annotation_exists($guid, 'likes')) {
 		$url = elgg_get_site_url() . "action/likes/add?guid={$guid}";
 		$params = array(
@@ -34,6 +37,6 @@ if (elgg_is_logged_in() && $vars['entity']->canAnnotate(0, 'likes')) {
 		);
 		$likes_button = elgg_view('output/url', $params);
 	}
-}
 
-echo $likes_button;
+	echo $likes_button;
+}

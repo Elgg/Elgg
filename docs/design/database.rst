@@ -3,35 +3,37 @@ Database
 
 A thorough discussion of Elgg's data model design and motivation.
 
-.. toctree::
-   :maxdepth: 2
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Overview
 ========
 
-In Elgg, everything runs on a unified data model, based on atomic
+In Elgg, everything runs on a unified data model based on atomic
 units of data called entities.
 
-Plugins are strongly discouraged from dealing with database issues
-themselves, which makes for a more stable system that also has visible
-benefits for the end user. Content created by different plugins can be
-mixed together in consistent ways, which are programmed using generic
-principles - in other words, plugins are faster to develop, and are at
-the same time much more powerful.
+Plugins are discouraged from interacting directly with the database,
+which creates a more stable system and a better user experience becase
+content created by different plugins can be mixed together in
+consistent ways. With this approach, plugins are faster to develop,
+and are at the same time much more powerful.
 
 Every entity in the system inherits the ``ElggEntity`` class. This class
-controls access permissions, ownership and so on.
+controls access permissions, ownership
 
 .. _thumb\|The Elgg data model diagramIn: image:Elgg_data_model.png
 
 You can extend entities with extra information in two ways:
 
-``Metadata``: This is information you can add to an object to
-   describe it further. For example, tags, an ISBN number, a file
-   location or language information would fall under metadata.
-``Annotations``: Information generally added by third parties which
-   adds to the information provided by the entity. For example, ratings
-   are annotations (and comments were before 1.9).
+``Metadata``: This is information describing the entity, usually
+   added by the author of the entity when the entity is created.
+   For example, tags, an ISBN number, a file location, or
+   source language is metadata.
+``Annotations``: This is information about the entity, usually
+   added by a third party after the entity is created. 
+   For example, ratings, likes, and votes are annotations.
+   (Comments were before 1.9.)
 
 Entities
 ========
@@ -708,21 +710,16 @@ The following rules govern write access:
    does not mean that the owner of a group can edit anything therein)
 -  Admins can edit anything
 
-You can override this behaviour using a `plugin hook`_ called
+You can override this behaviour using a :ref:`plugin hook <design/events#plugin-hooks>` called
 ``permissions_check``, which passes the entity in question to any
 function that has announced it wants to be referenced. Returning
 ``true`` will allow write access; returning ``false`` will deny it. See
-`the plugin hook reference for permissions\_check`_ for more details.
+:ref:`the plugin hook reference for permissions\_check <guides/hooks-list#permission-hooks>` for more details.
 
-Also see
---------
+.. seealso::
 
--  `Engine reference`_
--  `Access library reference`_
+   `Access library reference`_
 
-.. _plugin hook: PluginHooks
-.. _the plugin hook reference for permissions\_check: PluginHooks#permissions_check
-.. _Engine reference : Engine
 .. _Access library reference: http://reference.elgg.org/engine_2lib_2access_8php.html
 
 Schema

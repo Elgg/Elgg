@@ -19,7 +19,7 @@
  *
  * @package    Elgg.Core
  * @subpackage DataMode.Site
- * @link       http://docs.elgg.org/DataModel/Sites
+ * @link       http://learn.elgg.org/en/stable/design/database.html
  *
  * @property string $name        The name or title of the website
  * @property string $description A motto, mission statement, or description of the website
@@ -491,13 +491,13 @@ class ElggSite extends \ElggEntity {
 			if ($CONFIG->default_access == ACCESS_PUBLIC) {
 				$CONFIG->default_access = ACCESS_LOGGED_IN;
 			}
-			elgg_register_plugin_hook_handler(
+			_elgg_services()->hooks->registerHandler(
 					'access:collections:write',
 					'all',
 					'_elgg_walled_garden_remove_public_access',
 					9999);
 
-			if (!elgg_is_logged_in()) {
+			if (!_elgg_services()->session->isLoggedIn()) {
 				// override the front page
 				elgg_register_page_handler('', '_elgg_walled_garden_index');
 
@@ -505,7 +505,7 @@ class ElggSite extends \ElggEntity {
 					if (!elgg_is_xhr()) {
 						_elgg_services()->session->set('last_forward_from', current_page_url());
 					}
-					register_error(elgg_echo('loggedinrequired'));
+					register_error(_elgg_services()->translator->translate('loggedinrequired'));
 					forward('', 'walled_garden');
 				}
 			}
@@ -535,7 +535,7 @@ class ElggSite extends \ElggEntity {
 		}
 
 		// always allow index page
-		if ($url == elgg_get_site_url($this->guid)) {
+		if ($url == _elgg_services()->config->getSiteUrl($this->guid)) {
 			return true;
 		}
 
@@ -558,7 +558,7 @@ class ElggSite extends \ElggEntity {
 		);
 
 		// include a hook for plugin authors to include public pages
-		$plugins = elgg_trigger_plugin_hook('public_pages', 'walled_garden', null, array());
+		$plugins = _elgg_services()->hooks->trigger('public_pages', 'walled_garden', null, array());
 
 		// allow public pages
 		foreach (array_merge($defaults, $plugins) as $public) {

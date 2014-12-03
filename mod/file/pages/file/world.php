@@ -16,6 +16,8 @@ $content = elgg_list_entities(array(
 	'subtype' => 'file',
 	'full_view' => false,
 	'no_results' => elgg_echo("file:none"),
+	'preload_owners' => true,
+	'distinct' => false,
 ));
 
 $sidebar = file_get_type_cloud();

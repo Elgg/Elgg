@@ -16,6 +16,7 @@ $content = elgg_list_entities_from_metadata(array(
 	"type" => "object",
 	"subtype" => "thewire",
 	"limit" => 20,
+	'preload_owners' => true,
 ));
 
 $body = elgg_view_layout('content', array(

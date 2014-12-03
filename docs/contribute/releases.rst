@@ -7,6 +7,10 @@ This is the process the core team follows for making a new Elgg release.
 We have published this information in the spirit of openness,
 and to streamline onboarding of new team members.
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Requirements
 ============
 

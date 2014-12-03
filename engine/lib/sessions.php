@@ -40,12 +40,7 @@ function elgg_get_logged_in_user_entity() {
  * @return int
  */
 function elgg_get_logged_in_user_guid() {
-	$user = _elgg_services()->session->getLoggedInUser();
-	if ($user) {
-		return $user->guid;
-	}
-
-	return 0;
+	return _elgg_services()->session->getLoggedInUserGuid();
 }
 
 /**
@@ -54,7 +49,7 @@ function elgg_get_logged_in_user_guid() {
  * @return bool
  */
 function elgg_is_logged_in() {
-	return (bool)_elgg_services()->session->getLoggedInUser();
+	return _elgg_services()->session->isLoggedIn();
 }
 
 /**
@@ -63,13 +58,7 @@ function elgg_is_logged_in() {
  * @return bool
  */
 function elgg_is_admin_logged_in() {
-	$user = elgg_get_logged_in_user_entity();
-
-	if ($user && $user->isAdmin()) {
-		return true;
-	}
-
-	return false;
+	return _elgg_services()->session->isAdminLoggedIn();
 }
 
 /**

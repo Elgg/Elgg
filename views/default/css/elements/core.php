@@ -42,10 +42,6 @@
 	width: auto;
 	word-wrap: break-word;
 	overflow: hidden;
-	
-	/* IE 6, 7 */
-	zoom:1;
-	*overflow:visible;
 }
 
 <?php

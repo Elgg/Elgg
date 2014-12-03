@@ -25,8 +25,8 @@ if (($user instanceof ElggUser) && ($user->canEdit())) {
 
 		notify_user($user->guid,
 			elgg_get_site_entity()->guid,
-			elgg_echo('email:resetpassword:subject'),
-			elgg_echo('email:resetpassword:body', array($user->username, $password)),
+			elgg_echo('email:resetpassword:subject', array(), $user->language),
+			elgg_echo('email:resetpassword:body', array($user->username, $password), $user->language),
 			array(),
 			'email');
 	} else {

@@ -60,6 +60,9 @@
  * @see elgg_view_menu() for the plugin hooks available for modifying a menu as
  * it is being rendered.
  *
+ * @see ElggMenuItem::factory() is used to turn an array value of $menu_item into an
+ * ElggMenuItem object.
+ *
  * @param string $menu_name The name of the menu: site, page, userhover,
  *                          userprofile, groupprofile, or any custom menu
  * @param mixed  $menu_item A \ElggMenuItem object or an array of options in format:
@@ -80,12 +83,10 @@
  *                          item_class  => STR  A class or classes for the <li> tag
  *
  *                          Additional options that the view output/url takes can be
- *							passed in the array. If the 'confirm' key is passed, the
- *							menu link uses the 'output/confirmlink' view. Custom
- *							options can be added by using the 'data' key with the
- *							value being an associative array.
+ *							passed in the array. Custom options can be added by using
+ *							the 'data' key with the	value being an associative array.
  *
- * @return bool
+ * @return bool False if the item could not be added
  * @since 1.8.0
  */
 function elgg_register_menu_item($menu_name, $menu_item) {
@@ -169,7 +170,7 @@ function elgg_is_menu_item_registered($menu_name, $item_name) {
  * @param string $menu_name The name of the menu
  * @param string $item_name The unique identifier for this menu item
  *
- * @return \ElggMenuItem
+ * @return ElggMenuItem|null
  * @since 1.9.0
  */
 function elgg_get_menu_item($menu_name, $item_name) {
@@ -420,15 +421,17 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 	$handler = elgg_extract('handler', $params, false);
 
 	// access
-	$access = elgg_view('output/access', array('entity' => $entity));
-	$options = array(
-		'name' => 'access',
-		'text' => $access,
-		'href' => false,
-		'priority' => 100,
-	);
-	$return[] = \ElggMenuItem::factory($options);
-
+	if (elgg_is_logged_in()) {
+		$access = elgg_view('output/access', array('entity' => $entity));
+		$options = array(
+			'name' => 'access',
+			'text' => $access,
+			'href' => false,
+			'priority' => 100,
+		);
+		$return[] = \ElggMenuItem::factory($options);
+	}
+	
 	if ($entity->canEdit() && $handler) {
 		// edit link
 		$options = array(

@@ -76,21 +76,9 @@ function elgg_create_river_item(array $options = array()) {
 		}
 	}
 
-	$type = $object->getType();
-	$subtype = $object->getSubtype();
-
-	$view = sanitise_string($view);
-	$action_type = sanitise_string($action_type);
-	$subject_guid = sanitise_int($subject_guid);
-	$object_guid = sanitise_int($object_guid);
-	$target_guid = sanitise_int($target_guid);
-	$access_id = sanitise_int($access_id);
-	$posted = sanitise_int($posted);
-	$annotation_id = sanitise_int($annotation_id);
-
 	$values = array(
-		'type' => $type,
-		'subtype' => $subtype,
+		'type' => $object->getType(),
+		'subtype' => $object->getSubtype(),
 		'action_type' => $action_type,
 		'access_id' => $access_id,
 		'view' => $view,
@@ -100,6 +88,18 @@ function elgg_create_river_item(array $options = array()) {
 		'annotation_id' => $annotation_id,
 		'posted' => $posted,
 	);
+	$col_types = array(
+		'type' => 'string',
+		'subtype' => 'string',
+		'action_type' => 'string',
+		'access_id' => 'int',
+		'view' => 'string',
+		'subject_guid' => 'int',
+		'object_guid' => 'int',
+		'target_guid' => 'int',
+		'annotation_id' => 'int',
+		'posted' => 'int',
+	);
 
 	// return false to stop insert
 	$values = elgg_trigger_plugin_hook('creating', 'river', null, $values);
@@ -108,27 +108,21 @@ function elgg_create_river_item(array $options = array()) {
 		return true;
 	}
 
-	extract($values);
-
 	$dbprefix = elgg_get_config('dbprefix');
 
-	$id = insert_data("INSERT INTO {$dbprefix}river " .
-		" SET type = '$type', " .
-		" subtype = '$subtype', " .
-		" action_type = '$action_type', " .
-		" access_id = $access_id, " .
-		" view = '$view', " .
-		" subject_guid = $subject_guid, " .
-		" object_guid = $object_guid, " .
-		" target_guid = $target_guid, " .
-		" annotation_id = $annotation_id, " .
-		" posted = $posted, " .
-		" enabled = 'yes'");
+	// escape values array and build INSERT assignments
+	$assignments = array();
+	foreach ($col_types as $name => $type) {
+		$values[$name] = ($type === 'int') ? (int)$values[$name] : sanitize_string($values[$name]);
+		$assignments[] = "$name = '{$values[$name]}'";
+	}
+
+	$id = insert_data("INSERT INTO {$dbprefix}river SET " . implode(',', $assignments));
 
 	// update the entities which had the action carried out on it
 	// @todo shouldn't this be done elsewhere? Like when an annotation is saved?
 	if ($id) {
-		update_entity_last_action($object_guid, $posted);
+		update_entity_last_action($values['object_guid'], $values['posted']);
 
 		$river_items = elgg_get_river(array('id' => $id));
 		if ($river_items) {
@@ -280,6 +274,12 @@ function elgg_delete_river(array $options = array()) {
  *   order_by             => STR     Order by clause (rv.posted desc)
  *   group_by             => STR     Group by clause
  *
+ *   distinct             => BOOL    If set to false, Elgg will drop the DISTINCT
+ *                                   clause from the MySQL query, which will improve
+ *                                   performance in some situations. Avoid setting this
+ *                                   option without a full understanding of the
+ *                                   underlying SQL query Elgg creates. (true)
+ *
  * @return array|int
  * @since 1.8.0
  */
@@ -309,6 +309,7 @@ function elgg_get_river(array $options = array()) {
 		'limit'                => 20,
 		'offset'               => 0,
 		'count'                => false,
+		'distinct'             => true,
 
 		'order_by'             => 'rv.posted desc',
 		'group_by'             => ELGG_ENTITIES_ANY_VALUE,
@@ -378,9 +379,14 @@ function elgg_get_river(array $options = array()) {
 	$wheres = array_unique($wheres);
 
 	if (!$options['count']) {
-		$query = "SELECT DISTINCT rv.* FROM {$CONFIG->dbprefix}river rv ";
+		$distinct = $options['distinct'] ? "DISTINCT" : "";
+		
+		$query = "SELECT $distinct rv.* FROM {$CONFIG->dbprefix}river rv ";
 	} else {
-		$query = "SELECT COUNT(DISTINCT rv.id) AS total FROM {$CONFIG->dbprefix}river rv ";
+		// note: when DISTINCT unneeded, it's slightly faster to compute COUNT(*) than IDs
+		$count_expr = $options['distinct'] ? "DISTINCT rv.id" : "*";
+		
+		$query = "SELECT COUNT($count_expr) as total FROM {$CONFIG->dbprefix}river rv ";
 	}
 
 	// add joins
@@ -457,6 +463,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		elgg_get_entities(array(
 			'guids' => array_keys($guids),
 			'limit' => 0,
+			'distinct' => false,
 		));
 	}
 
@@ -473,6 +480,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		elgg_get_entities(array(
 			'guids' => array_keys($guids),
 			'limit' => 0,
+			'distinct' => false,
 		));
 	}
 }
@@ -481,8 +489,8 @@ function _elgg_prefetch_river_entities(array $river_items) {
  * List river items
  *
  * @param array $options Any options from elgg_get_river() plus:
- *   pagination => BOOL Display pagination links (true)
- *   no_results => STR Message to display if no items
+ *   pagination => BOOL        Display pagination links (true)
+ *   no_results => STR|Closure Message to display if no items
  *
  * @return string
  * @since 1.8.0

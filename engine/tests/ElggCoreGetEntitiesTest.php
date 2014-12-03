@@ -979,4 +979,24 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 		$entities = elgg_get_entities($options);
 		$this->assertTrue(is_array($entities));
 	}
+
+	public function testDistinctCanBeDisabled() {
+		$prefix = _elgg_services()->config->get('dbprefix');
+		$options = array(
+			'callback' => '',
+			'joins' => array(
+				"RIGHT JOIN {$prefix}metadata m ON (e.guid = m.entity_guid)"
+			),
+			'wheres' => array(
+				'm.entity_guid = ' . elgg_get_logged_in_user_guid(),
+			),
+		);
+
+		$users = elgg_get_entities($options);
+		$this->assertEqual(1, count($users));
+
+		$options['distinct'] = false;
+		$users = elgg_get_entities($options);
+		$this->assertTrue(count($users) > 1);
+	}
 }

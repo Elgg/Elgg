@@ -40,7 +40,7 @@ return array(
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://docs.elgg.org/wiki/).",
+	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
 	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
 	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
@@ -158,6 +158,7 @@ return array(
 
 	'widgets:add' => 'Add widgets',
 	'widgets:add:description' => "Click on any widget button below to add it to the page.",
+	'widgets:panel:close' => "Close widgets panel",
 	'widgets:position:fixed' => '(Fixed position on page)',
 	'widget:unavailable' => 'You have already added this widget',
 	'widget:numbertodisplay' => 'Number of items to display',
@@ -280,7 +281,7 @@ return array(
 	'profile:edit:default' => 'Edit profile fields',
 	'profile:label' => "Profile label",
 	'profile:type' => "Profile type",
-	'profile:editdefault:delete:fail' => 'Removed default profile item field failed',
+	'profile:editdefault:delete:fail' => 'Removing profile field failed',
 	'profile:editdefault:delete:success' => 'Profile field deleted',
 	'profile:defaultprofile:reset' => 'Profile fields reset to the system default',
 	'profile:resetdefault' => 'Reset profile fields to system defaults',
@@ -611,7 +612,7 @@ three sections:
 	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',
 	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
 	'admin:plugins:warning:invalid' => 'This plugin is invalid: %s',
-	'admin:plugins:warning:invalid:check_docs' => 'Check <a href="http://docs.elgg.org/Invalid_Plugin">the Elgg documentation</a> for troubleshooting tips.',
+	'admin:plugins:warning:invalid:check_docs' => 'Check <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> for troubleshooting tips.',
 	'admin:plugins:cannot_activate' => 'cannot activate',
 
 	'admin:plugins:set_priority:yes' => "Reordered %s.",
@@ -905,7 +906,6 @@ These changes will only affect new users on the site.',
 	'title' => "Title",
 	'description' => "Description",
 	'tags' => "Tags",
-	'spotlight' => "Spotlight",
 	'all' => "All",
 	'mine' => "Mine",
 
@@ -916,7 +916,6 @@ These changes will only affect new users on the site.',
 	'relationships' => "Relationships",
 	'metadata' => "Metadata",
 	'tagcloud' => "Tag cloud",
-	'tagcloud:allsitetags' => "All site tags",
 
 	'on' => 'On',
 	'off' => 'Off',
@@ -1092,7 +1091,7 @@ Once you have logged in, we highly recommend that you change your password.
 		simply delete the views directory and replace it with the one from the latest
 		package of Elgg downloaded from <a href="http://elgg.org">elgg.org</a>.<br /><br />
 
-		If you need detailed instructions, please visit the <a href="http://docs.elgg.org/wiki/Upgrading_Elgg">
+		If you need detailed instructions, please visit the <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
 		Upgrading Elgg documentation</a>.  If you require assistance, please post to the
 		<a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a>.',
 
@@ -1100,12 +1099,6 @@ Once you have logged in, we highly recommend that you change your password.
 	'update:oauth_api:deactivated' => 'OAuth API (previously OAuth Lib) was deactivated during the upgrade.  Please activate it manually if required.',
 	'upgrade:site_secret_warning:moderate' => "You are encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 	'upgrade:site_secret_warning:weak' => "You are strongly encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
-
-	'ElggUpgrade:error:url_invalid' => 'Invalid value for URL.',
-	'ElggUpgrade:error:url_not_unique' => 'Upgrade URLs must be unique.',
-	'ElggUpgrade:error:title_required' => 'ElggUpgrade objects must have a title.',
-	'ElggUpgrade:error:description_required' => 'ElggUpgrade objects must have a description.',
-	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade objects must have an upgrade URL.',
 
 	'deprecated:function' => '%s() was deprecated by %s()',
 
@@ -1116,7 +1109,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'admin:upgrades:none' => 'Your installation is up to date!',
 
 	'upgrade:item_count' => 'There are <b>%s</b> items that need to be upgraded.',
-	'upgrade:warning' => '<b>Warning:</b> on a large site this upgrade may take a significantly long time!',
+	'upgrade:warning' => '<b>Warning:</b> On a large site this upgrade may take a significantly long time!',
 	'upgrade:success_count' => 'Upgraded:',
 	'upgrade:error_count' => 'Errors:',
 	'upgrade:river_update_failed' => 'Failed to update the river entry for item id %s',
@@ -1176,10 +1169,10 @@ Your password has been changed.",
 
 Your password has been reset to: %s",
 
-	'email:changereq:subject' => "Request for change password.",
+	'email:changereq:subject' => "Request for password change.",
 	'email:changereq:body' => "Hi %s,
 
-Somebody (from the IP address %s) has requested change password for their account.
+Somebody (from the IP address %s) has requested a password change for their account.
 
 If you requested this, click on the link below. Otherwise ignore this email.
 
@@ -1271,7 +1264,6 @@ Please do not reply to this email.",
  */
 
 	'tag_names:tags' => 'Tags',
-	'tags:site_cloud' => 'Site Tag Cloud',
 
 /**
  * Javascript
@@ -1287,7 +1279,7 @@ Please do not reply to this email.",
 	'elgg:powered' => "Powered by Elgg",
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 
 	"aa" => "Afar",
@@ -1307,6 +1299,7 @@ Please do not reply to this email.",
 	"bo" => "Tibetan",
 	"br" => "Breton",
 	"ca" => "Catalan",
+	"cmn" => "Mandarin Chinese", // ISO 639-3
 	"co" => "Corsican",
 	"cs" => "Czech",
 	"cy" => "Welsh",
@@ -1383,6 +1376,7 @@ Please do not reply to this email.",
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
+	"pt_br" => 'Brazilian Portuguese',
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
