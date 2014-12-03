@@ -49,7 +49,7 @@ unset($vars['icon_class']);
 $list_items = ''; 
 
 $params = $vars;
-foreach($vars['tags'] as $tag) {
+foreach($tags as $tag) {
 	if (is_string($tag) && strlen($tag) > 0) {
 		$params['value'] = $tag;
 
