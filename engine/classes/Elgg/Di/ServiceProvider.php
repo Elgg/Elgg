@@ -179,7 +179,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('session', function(ServiceProvider $c) {
 			// account for difference of session_get_cookie_params() and ini key names
-			$params = $c->config->get('session');
+			$params = $c->config->get('cookies')['session'];
 			foreach ($params as $key => $value) {
 				if (in_array($key, array('path', 'domain', 'secure', 'httponly'))) {
 					$params["cookie_$key"] = $value;
