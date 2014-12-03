@@ -251,8 +251,14 @@ function elgg_list_entities_from_annotations($options = array()) {
  *
  *	'metadata_names'         => The name of metadata on the entity.
  *	'metadata_values'        => The value of metadata on the entitiy.
+ *  'callback'               => Callback function to pass each row through.
+ *                              @tip This function is different from other ege* functions, 
+ *                              as it uses a metastring-based getter function { @link elgg_get_annotations() },
+ *                              therefore the callback function should be a derivative of { @link entity_row_to_elggstar() } 
+ *                              and not of { @link row_to_annotation() }
  *
- * @return mixed If count, int. If not count, array. false on errors.
+ * @return \ElggEntity[]|int An array or a count of entities
+ * @see elgg_get_annotations()
  */
 function elgg_get_entities_from_annotation_calculation($options) {
 	return _elgg_services()->annotations->getEntitiesFromCalculation($options);
