@@ -204,16 +204,11 @@ class Annotations {
 	 * @return \ElggAnnotation[]|mixed
 	 */
 	function find(array $options = array()) {
-	
-		// @todo remove support for count shortcut - see #4393
-		if (isset($options['__egefac']) && $options['__egefac']) {
-			unset($options['__egefac']);
-		} else {
-			// support shortcut of 'count' => true for 'annotation_calculation' => 'count'
-			if (isset($options['count']) && $options['count']) {
-				$options['annotation_calculation'] = 'count';
-				unset($options['count']);
-			}
+
+		// support shortcut of 'count' => true for 'annotation_calculation' => 'count'
+		if (isset($options['count']) && $options['count']) {
+			$options['annotation_calculation'] = 'count';
+			unset($options['count']);
 		}
 		
 		$options['metastring_type'] = 'annotations';
@@ -384,6 +379,10 @@ class Annotations {
 	/**
 	 * Get entities ordered by a mathematical calculation on annotation values
 	 *
+	 * @tip Note that this function uses { @link elgg_get_annotations() } to return a list of entities ordered by a mathematical
+     * calculation on annotation values, and { @link elgg_get_entities_from_annotations() } to return a count of entities 
+     * if $options['count'] is set to a truthy value
+     * 
 	 * @param array $options An options array:
 	 * 	'calculation'            => The calculation to use. Must be a valid MySQL function.
 	 *                              Defaults to sum.  Result selected as 'annotation_calculation'.
@@ -397,12 +396,24 @@ class Annotations {
 	 *	'annotation_names'       => The names of annotations on the entity.
 	 *	'annotation_values'	     => The values of annotations on the entity.
 	 *
-	 *	'metadata_names'         => The name of metadata on the entity.
-	 *	'metadata_values'        => The value of metadata on the entitiy.
+	 * 	'metadata_names'         => The name of metadata on the entity.
+	 * 	'metadata_values'        => The value of metadata on the entitiy.
+	 * 	'callback'               => Callback function to pass each row through.
+	 *                              @tip This function is different from other ege* functions, 
+	 *                              as it uses a metastring-based getter function { @link elgg_get_annotations() },
+     *                              therefore the callback function should be a derivative of { @link entity_row_to_elggstar() }
+	 *                              and not of { @link row_to_annotation() }
 	 *
-	 * @return mixed If count, int. If not count, array. false on errors.
+	 * @return \ElggEntity[]|int An array or a count of entities
+	 * @see elgg_get_annotations()
+	 * @see elgg_get_entities_from_annotations()
 	 */
 	function getEntitiesFromCalculation($options) {
+		
+		if (isset($options['count']) && $options['count']) {
+			return elgg_get_entities_from_annotations($options);
+		}
+		
 		$db_prefix = _elgg_services()->config->get('dbprefix');
 		$defaults = array(
 			'calculation' => 'sum',
@@ -423,13 +434,12 @@ class Annotations {
 	
 		// don't need access control because it's taken care of by elgg_get_annotations.
 		$options['group_by'] = 'n_table.entity_guid';
-	
-		$options['callback'] = 'entity_row_to_elggstar';
-	
-		// see #4393
-		// @todo remove after the 'count' shortcut is removed from elgg_get_annotations()
-		$options['__egefac'] = true;
-	
+
+		// do not default to a callback function used in elgg_get_annotation()
+		if (!isset($options['callback'])) {
+			$options['callback'] = 'entity_row_to_elggstar';
+		}
+
 		return elgg_get_annotations($options);
 	}
 	
