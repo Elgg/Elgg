@@ -122,6 +122,30 @@ By metadata
 The function ``elgg_get_entities_from_metadata`` allows fetching entities
 with metadata in a variety of ways.
 
+By annotation
+~~~~~~~~~~~~~
+
+The function ``elgg_get_entities_from_annotations`` allows fetching entities
+with metadata in a variety of ways.
+
+.. note::
+
+   As of Elgg 1.10 the default behaviour of `elgg_get_entities_from_annotations` was brought inline with the rest of the `elgg_get_entities*` functions.
+   
+   Pre Elgg 1.10 the sorting of the entities was based on the latest addition of an annotation (in $options your could add `$options['order_by'] = 'maxtime ASC'` or `$options['order_by'] = 'maxtime DESC'`. As of Elgg 1.10 this was changed to the creation time of the entity, just like the rest of the `elgg_get_entities*` functions.
+   To get the old behaviour back add the following to your `$options`:
+   
+   .. code:: php
+   
+      $options['selects'] = array('MAX(n_table.time_created) AS maxtime');
+      $options['group_by'] = 'n_table.entity_guid';
+      $options['order_by'] = 'maxtime ASC'
+      
+      or
+      
+      $options['order_by'] = 'maxtime DESC'
+      
+
 Displaying entities
 -------------------
 
