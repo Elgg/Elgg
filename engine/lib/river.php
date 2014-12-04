@@ -732,7 +732,6 @@ function _elgg_river_page_handler($page) {
 		if ($page_username == elgg_get_logged_in_user_entity()->username) {
 			$page_type = 'mine';
 		} else {
-			elgg_admin_gatekeeper();
 			set_input('subject_username', $page_username);
 		}
 	}
