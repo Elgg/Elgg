@@ -17,29 +17,32 @@ use Stash;
  * @access private
  */
 final class MemoryPool implements Pool {
-	/** @var Pool */
-	private $pool;
-	
 	/**
-	 * Happens to use Stash for the in-memory caching, but this
-	 * should be considered just an implementation detail.
+	 * @var array
 	 */
-	public function __construct() {
-		$this->pool = StashPool::createEphemeral();
-	}
+	private $values = array();
 	
 	/** @inheritDoc */
 	public function get($key, callable $callback) {
-		return $this->pool->get($key, $callback);
+		assert(is_string($key) || is_int($key));
+
+		if (!array_key_exists($key, $this->values)) {
+			$this->values[$key] = call_user_func($callback);
+		}
+		return $this->values[$key];
 	}
 	
 	/** @inheritDoc */
 	public function invalidate($key) {
-		$this->pool->invalidate($key);
+		assert(is_string($key) || is_int($key));
+
+		unset($this->values[$key]);
 	}
 
 	/** @inheritDoc */
 	public function put($key, $value) {
-		$this->pool->put($key, $value);
+		assert(is_string($key) || is_int($key));
+
+		$this->values[$key] = $value;
 	}
 }
