@@ -9,4 +9,5 @@ Miscellaneous information about the project.
    faqs
    roadmap
    releases
+   support
    history
