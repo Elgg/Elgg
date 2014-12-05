@@ -383,23 +383,23 @@ function elgg_get_user_validation_status($user_guid) {
  */
 function elgg_user_account_page_handler($page_elements, $handler) {
 
-	$base_dir = elgg_get_root_path() . 'pages/account';
 	switch ($handler) {
 		case 'login':
-			require_once("$base_dir/login.php");
+			echo elgg_view("resources/account/login");
 			break;
 		case 'forgotpassword':
-			require_once("$base_dir/forgotten_password.php");
+			echo elgg_view("resources/account/forgotten_password");
 			break;
 		case 'changepassword':
-			require_once("$base_dir/change_password.php");
+			echo elgg_view("resources/account/change_password");
 			break;
 		case 'register':
-			require_once("$base_dir/register.php");
+			echo elgg_view("resources/account/register");
 			break;
 		default:
 			return false;
 	}
+
 	return true;
 }
 
@@ -658,11 +658,11 @@ function elgg_avatar_page_handler($page) {
 	}
 
 	if ($page[0] == 'edit') {
-		require_once("{$CONFIG->path}pages/avatar/edit.php");
+		echo elgg_view("resources/avatar/edit");
 		return true;
 	} else {
 		set_input('size', $page[2]);
-		require_once("{$CONFIG->path}pages/avatar/view.php");
+		echo elgg_view("resources/avatar/view");
 		return true;
 	}
 	return false;
@@ -682,7 +682,7 @@ function elgg_profile_page_handler($page) {
 	elgg_set_page_owner_guid($user->guid);
 
 	if ($page[1] == 'edit') {
-		require_once("{$CONFIG->path}pages/profile/edit.php");
+		echo elgg_view("resources/profile/edit");
 		return true;
 	}
 	return false;
