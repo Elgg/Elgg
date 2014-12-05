@@ -45,7 +45,8 @@ if ($is_new_group
 	forward(REFERER);
 }
 
-$group = new ElggGroup($group_guid); // load if present, if not create a new group
+$entity = get_entity($group_guid);
+$group = new ElggGroup($entity); // load if present, if not create a new group
 if ($group_guid && !$group->canEdit()) {
 	register_error(elgg_echo("groups:cantedit"));
 	forward(REFERER);
