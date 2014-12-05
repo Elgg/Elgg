@@ -838,7 +838,8 @@ function discussion_init() {
 
 	// Register for search.
 	elgg_register_entity_type('object', 'groupforumtopic');
-
+	elgg_register_plugin_hook_handler('search', 'object:groupforumtopic', 'discussion_search_groupforumtopic');
+	
 	// because replies are not comments, need of our menu item
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'discussion_add_to_river_menu');
 
@@ -1304,4 +1305,30 @@ function groups_test($hook, $type, $value, $params) {
 	global $CONFIG;
 	$value[] = $CONFIG->pluginspath . 'groups/tests/write_access.php';
 	return $value;
+}
+
+/**
+ * Search in both forumtopics and topic replies
+ * 
+ * @param string $hook   the name of the hook
+ * @param string $type   the type of the hook
+ * @param mixed  $value  the current return value
+ * @param array  $params supplied params
+ */
+function discussion_search_groupforumtopic($hook, $type, $value, $params) {
+	
+	if (empty($params) || !is_array($params)) {
+		return $value;
+	}
+	
+	$subtype = elgg_extract("subtype", $params);
+	if (empty($subtype) || ($subtype !== "groupforumtopic")) {
+		return $value;
+	}
+	
+	unset($params["subtype"]);
+	$params["subtypes"] = array("groupforumtopic", "discussion_reply");
+	
+	// trigger the 'normal' object search as it can handle the added options
+	return elgg_trigger_plugin_hook('search', 'object', $params, array());
 }
