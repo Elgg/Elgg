@@ -737,7 +737,7 @@ function _elgg_river_page_handler($page) {
 	}
 	set_input('page_type', $page_type);
 
-	require_once("{$CONFIG->path}pages/river.php");
+	echo elgg_view("resources/river");
 	return true;
 }
 
