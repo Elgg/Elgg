@@ -2,6 +2,9 @@
 /**
  * Elgg custom index page
  * 
+ * You can edit the content of this page with your own layout and style. 
+ * Whatever you put in this view will appear on the front page of your site.
+ * 
  */
 
 elgg_push_context('front');
@@ -59,7 +62,8 @@ $params = array(
 	'login' => $login,
 	'members' => $newest_members,
 );
-$body = elgg_view_layout('custom_index', $params);
+
+$body = elgg_view('resources/index-content', $params);
 
 // no RSS feed with a "widget" front page
 global $autofeed;
