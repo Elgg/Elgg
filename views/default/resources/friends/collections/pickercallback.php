@@ -7,9 +7,6 @@
  */
 
 // Load Elgg engine
-require_once dirname(dirname(dirname(__DIR__))) . '/autoloader.php';
-(new \Elgg\Application())->bootCore();
-
 $site_url = elgg_get_site_url();
 
 // Get callback type (list or picker)
