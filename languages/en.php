@@ -449,6 +449,7 @@ return array(
 	'admin:configuration:success' => "Your settings have been saved.",
 	'admin:configuration:fail' => "Your settings could not be saved.",
 	'admin:configuration:dataroot:relative_path' => 'Cannot set "%s" as the dataroot because it is not an absolute path.',
+	'admin:configuration:default_limit' => 'The number of items per page must be at least 1.',
 
 	'admin:unknown_section' => 'Invalid Admin Section.',
 
@@ -1053,6 +1054,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
+	'installation:default_limit' => "Default number of items per page",
 
 	'admin:site:access:warning' => "This is the privacy setting suggested to users when they create new content. Changing it does not change access to content.",
 	'installation:allow_user_default_access:description' => "Enable this to allow users to set their own suggested privacy setting that overrides the system suggestion.",

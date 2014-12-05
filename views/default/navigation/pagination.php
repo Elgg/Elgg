@@ -19,7 +19,7 @@ if (elgg_in_context('widget')) {
 
 $offset = abs((int) elgg_extract('offset', $vars, 0));
 // because you can say $vars['limit'] = 0
-if (!$limit = (int) elgg_extract('limit', $vars, 10)) {
+if (!$limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'))) {
 	$limit = 10;
 }
 

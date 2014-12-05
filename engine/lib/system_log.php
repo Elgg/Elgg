@@ -18,7 +18,7 @@
  * @param string    $class      The class of object it effects.
  * @param string    $type       The type
  * @param string    $subtype    The subtype.
- * @param int       $limit      Maximum number of responses to return.
+ * @param int       $limit      Maximum number of responses to return. (default from settings)
  * @param int       $offset     Offset of where to start.
  * @param bool      $count      Return count or not
  * @param int       $timebefore Lower time limit
@@ -27,7 +27,7 @@
  * @param string    $ip_address The IP address.
  * @return mixed
  */
-function get_system_log($by_user = "", $event = "", $class = "", $type = "", $subtype = "", $limit = 10,
+function get_system_log($by_user = "", $event = "", $class = "", $type = "", $subtype = "", $limit = null,
 						$offset = 0, $count = false, $timebefore = 0, $timeafter = 0, $object_id = 0,
 						$ip_address = "") {
 
@@ -47,6 +47,9 @@ function get_system_log($by_user = "", $event = "", $class = "", $type = "", $su
 	$type = sanitise_string($type);
 	$subtype = sanitise_string($subtype);
 	$ip_address = sanitise_string($ip_address);
+	if ($limit === null) {
+		$limit = elgg_get_config('default_limit');
+	}
 	$limit = (int)$limit;
 	$offset = (int)$offset;
 

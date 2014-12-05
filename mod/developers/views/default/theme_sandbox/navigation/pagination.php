@@ -1,7 +1,7 @@
 <?php
 $params = array(
 	'count' => 1000,
-	'limit' => 10,
+	'limit' => elgg_get_config('default_limit'),
 	'offset' => 230,
 );
 

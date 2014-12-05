@@ -228,7 +228,7 @@ function input_livesearch_page_handler($page) {
 		$owner_guid = $user->getGUID();
 	}
 
-	$limit = sanitise_int(get_input('limit', 10));
+	$limit = sanitise_int(get_input('limit', elgg_get_config('default_limit')));
 
 	// grab a list of entities and send them in json.
 	$results = array();
