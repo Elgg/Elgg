@@ -37,8 +37,8 @@ if ($new_topic) {
 	$topic->subtype = 'groupforumtopic';
 } else {
 	// load original file object
-	$topic = new ElggObject($guid);
-	if (!$topic || !$topic->canEdit()) {
+	$topic = get_entity($guid);
+	if (!elgg_instanceof($topic, 'object', 'groupforumtopic') || !$topic->canEdit()) {
 		register_error(elgg_echo('discussion:topic:notfound'));
 		forward(REFERER);
 	}
