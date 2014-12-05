@@ -275,4 +275,6 @@ function page_owner_boot() {
 	}
 }
 
-elgg_register_event_handler('boot', 'system', 'page_owner_boot');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('boot', 'system', 'page_owner_boot');
+};

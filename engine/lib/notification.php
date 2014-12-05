@@ -294,10 +294,6 @@ function _elgg_notifications_init() {
 	elgg_register_plugin_hook_handler('usersettings:save', 'user', '_elgg_save_notification_user_settings');
 }
 
-elgg_register_event_handler('init', 'system', '_elgg_notifications_init');
-
-
-
 /**
  * Notify a user via their preferences.
  *
@@ -713,4 +709,8 @@ function _elgg_notifications_test($hook, $type, $tests) {
 	return $tests;
 }
 
-elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_notifications_test');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_notifications_init');
+
+	$hooks->registerHandler('unit_test', 'system', '_elgg_notifications_test');
+};

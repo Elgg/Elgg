@@ -829,6 +829,8 @@ function _elgg_river_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_river_test');
 }
 
-elgg_register_event_handler('init', 'system', '_elgg_river_init');
-elgg_register_event_handler('disable:after', 'all', '_elgg_river_disable');
-elgg_register_event_handler('enable:after', 'all', '_elgg_river_enable');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_river_init');
+	$events->registerHandler('disable:after', 'all', '_elgg_river_disable');
+	$events->registerHandler('enable:after', 'all', '_elgg_river_enable');
+};

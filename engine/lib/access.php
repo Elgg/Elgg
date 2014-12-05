@@ -624,12 +624,14 @@ function access_test($hook, $type, $value, $params) {
 	return $value;
 }
 
-// Tell the access functions the system has booted, plugins are loaded,
-// and the user is logged in so it can start caching
-elgg_register_event_handler('ready', 'system', 'access_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	// Tell the access functions the system has booted, plugins are loaded,
+	// and the user is logged in so it can start caching
+	$events->registerHandler('ready', 'system', 'access_init');
 
-// For overrided permissions
-elgg_register_plugin_hook_handler('permissions_check', 'all', 'elgg_override_permissions');
-elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'elgg_override_permissions');
+	// For overrided permissions
+	$hooks->registerHandler('permissions_check', 'all', 'elgg_override_permissions');
+	$hooks->registerHandler('container_permissions_check', 'all', 'elgg_override_permissions');
 
-elgg_register_plugin_hook_handler('unit_test', 'system', 'access_test');
+	$hooks->registerHandler('unit_test', 'system', 'access_test');
+};

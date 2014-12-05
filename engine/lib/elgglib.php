@@ -2072,8 +2072,10 @@ define('REFERRER', -1);
  */
 define('REFERER', -1);
 
-elgg_register_event_handler('init', 'system', '_elgg_init');
-elgg_register_event_handler('boot', 'system', '_elgg_engine_boot', 1);
-elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_api_test');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_init');
+	$events->registerHandler('boot', 'system', '_elgg_engine_boot', 1);
+	$hooks->registerHandler('unit_test', 'system', '_elgg_api_test');
 
-elgg_register_event_handler('init', 'system', '_elgg_walled_garden_init', 1000);
+	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
+};
