@@ -37,6 +37,11 @@
 			<td><a href="#" class="elgg-button elgg-button-delete">anchor</a></td>
 			<td><a href="#" class="elgg-button elgg-button-delete elgg-state-disabled">anchor</a></td>
 		</tr>
+		<tr>
+			<th>Dropdown (.elgg-button-dropdown)</th>
+			<td><a href="#" class="elgg-button elgg-button-dropdown">anchor</a></td>
+			<td><a href="#" class="elgg-button elgg-button-dropdown elgg-state-disabled">anchor</a></td>
+		</tr>
 	</tbody>
 </table>
 
@@ -78,6 +83,11 @@
 			<th>Delete (.elgg-button-delete)</th>
 			<td><input type="submit" class="elgg-button elgg-button-delete" value="submit" /></td>
 			<td><input type="submit" class="elgg-button elgg-button-delete elgg-state-disabled" value="submit" /></td>
+		</tr>
+		<tr>
+			<th>Dropdown (.elgg-button-dropdown)</th>
+			<td><input type="submit" class="elgg-button elgg-button-dropdown" value="submit" /></td>
+			<td><input type="submit" class="elgg-button elgg-button-dropdown elgg-state-disabled" value="submit" /></td>
 		</tr>
 	</tbody>
 </table>
