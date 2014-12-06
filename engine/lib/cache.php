@@ -232,4 +232,6 @@ function _elgg_cache_init() {
 	_elgg_services()->systemCache->init();
 }
 
-elgg_register_event_handler('ready', 'system', '_elgg_cache_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('ready', 'system', '_elgg_cache_init');
+};

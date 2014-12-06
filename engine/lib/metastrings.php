@@ -741,4 +741,6 @@ function _elgg_metastrings_test($hook, $type, $value) {
 	return $value;
 }
 
-elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_metastrings_test');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$hooks->registerHandler('unit_test', 'system', '_elgg_metastrings_test');
+};

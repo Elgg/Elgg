@@ -526,4 +526,6 @@ function _elgg_plugins_init() {
 	elgg_register_library('elgg:markdown', elgg_get_root_path() . 'vendors/markdown/markdown.php');
 }
 
-elgg_register_event_handler('init', 'system', '_elgg_plugins_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_plugins_init');
+};

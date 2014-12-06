@@ -113,4 +113,6 @@ function _elgg_cron_public_pages($hook, $type, $pages, $params) {
 	return $pages;
 }
 
-elgg_register_event_handler('init', 'system', '_elgg_cron_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_cron_init');
+};

@@ -404,9 +404,6 @@ function _elgg_invalidate_metadata_cache($action, array $options) {
 	}
 }
 
-/** Call a function whenever an entity is updated **/
-elgg_register_event_handler('update', 'all', 'metadata_update');
-
 /**
  * Metadata unit test
  *
@@ -425,4 +422,9 @@ function _elgg_metadata_test($hook, $type, $value, $params) {
 	return $value;
 }
 
-elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_metadata_test');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	/** Call a function whenever an entity is updated **/
+	$events->registerHandler('update', 'all', 'metadata_update');
+
+	$hooks->registerHandler('unit_test', 'system', '_elgg_metadata_test');
+};

@@ -373,4 +373,6 @@ function _elgg_config_test($hook, $type, $tests) {
 	return $tests;
 }
 
-elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_config_test');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$hooks->registerHandler('unit_test', 'system', '_elgg_config_test');
+};

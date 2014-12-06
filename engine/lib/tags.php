@@ -242,4 +242,6 @@ function _elgg_tags_init() {
 	elgg_register_tag_metadata_name('tags');
 }
 
-elgg_register_event_handler('init', 'system', '_elgg_tags_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_tags_init');
+};

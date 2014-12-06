@@ -1650,6 +1650,8 @@ function elgg_views_boot() {
 	}
 }
 
-elgg_register_event_handler('boot', 'system', 'elgg_views_boot');
-elgg_register_event_handler('init', 'system', 'elgg_views_handle_deprecated_views');
-elgg_register_event_handler('ready', 'system', '_elgg_views_deprecate_removed_views');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('boot', 'system', 'elgg_views_boot');
+	$events->registerHandler('init', 'system', 'elgg_views_handle_deprecated_views');
+	$events->registerHandler('ready', 'system', '_elgg_views_deprecate_removed_views');
+};
