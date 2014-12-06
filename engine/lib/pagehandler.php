@@ -59,7 +59,10 @@ function elgg_gatekeeper() {
 	if (!elgg_is_logged_in()) {
 		_elgg_services()->session->set('last_forward_from', current_page_url());
 		system_message(elgg_echo('loggedinrequired'));
-		forward('/login', 'login');
+		forward('/login', 'login', array(
+			'gatekeeper' => 'user',
+			'reason' => 'logged_out',
+		));
 	}
 }
 
@@ -81,12 +84,24 @@ function gatekeeper() {
  * @since 1.9.0
  */
 function elgg_admin_gatekeeper() {
-	elgg_gatekeeper();
+	$user = _elgg_services()->session->getLoggedInUser();
 
-	if (!elgg_is_admin_logged_in()) {
+	if (!$user) {
+		_elgg_services()->session->set('last_forward_from', current_page_url());
+		system_message(elgg_echo('loggedinrequired'));
+		forward('/login', 'login', array(
+			'gatekeeper' => 'admin',
+			'reason' => 'logged_out',
+		));
+	}
+
+	if (!$user->isAdmin()) {
 		_elgg_services()->session->set('last_forward_from', current_page_url());
 		register_error(elgg_echo('adminrequired'));
-		forward('', 'admin');
+		forward('', 'admin', array(
+			'gatekeeper' => 'admin',
+			'reason' => 'not_admin',
+		));
 	}
 }
 
@@ -129,28 +144,33 @@ function elgg_group_gatekeeper($forward = true, $group_guid = null) {
 	if (!$visibility->shouldHideItems) {
 		return true;
 	}
-	if ($forward) {
-		// only forward to group if user can see it
-		$group = get_entity($group_guid);
-		$forward_url = $group ? $group->getURL() : '';
 
-		if (!elgg_is_logged_in()) {
-			_elgg_services()->session->set('last_forward_from', current_page_url());
-			$forward_reason = 'login';
-		} else {
-			$forward_reason = 'member';
-		}
-
-		$msg_keys = array(
-			'non_member' => 'membershiprequired',
-			'logged_out' => 'loggedinrequired',
-			'no_access' => 'noaccess',
-		);
-		register_error(elgg_echo($msg_keys[$visibility->reasonHidden]));
-		forward($forward_url, $forward_reason);
+	if (!$forward) {
+		return false;
 	}
 
-	return false;
+	// only forward to group if user can see it
+	$group = get_entity($group_guid);
+	$forward_url = $group ? $group->getURL() : '';
+
+	if (!elgg_is_logged_in()) {
+		_elgg_services()->session->set('last_forward_from', current_page_url());
+		$forward_reason = 'login';
+	} else {
+		$forward_reason = 'member';
+	}
+
+	$msg_keys = array(
+		'non_member' => 'membershiprequired',
+		'logged_out' => 'loggedinrequired',
+		'no_access' => 'noaccess',
+	);
+	register_error(elgg_echo($msg_keys[$visibility->reasonHidden]));
+	forward($forward_url, $forward_reason, array(
+		'gatekeeper' => 'group',
+		'group_guid' => $group_guid,
+		'reason' => $visibility->reasonHidden,
+	));
 }
 
 /**
@@ -183,25 +203,40 @@ function group_gatekeeper($forward = true, $page_owner_guid = null) {
  * @since 1.9.0
  */
 function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
+	$forward_params = array(
+		'gatekeeper' => 'entity',
+		'guid' => $guid,
+		'type' => $type,
+		'subtype' => $subtype,
+	);
+
 	$entity = get_entity($guid);
 	if (!$entity) {
 		if (!elgg_entity_exists($guid)) {
 			// entity doesn't exist
-			forward('', '404');
+			$forward_params['reason'] = 'no_exist';
+			forward('', '404', $forward_params);
+
 		} elseif (!elgg_is_logged_in()) {
 			// entity requires at least a logged in user
-			elgg_gatekeeper();
+			_elgg_services()->session->set('last_forward_from', current_page_url());
+			system_message(elgg_echo('loggedinrequired'));
+			$forward_params['reason'] = 'logged_out';
+			forward('/login', 'login', $forward_params);
+
 		} else {
 			// user is logged in but still does not have access to it
 			register_error(elgg_echo('limited_access'));
-			forward();
+			$forward_params['reason'] = 'no_access';
+			forward('', 'system', $forward_params);
 		}		
 	}
 
 	if ($type) {
 		if (!elgg_instanceof($entity, $type, $subtype)) {
 			// entity is of wrong type/subtype
-			forward('', '404');
+			$forward_params['reason'] = 'unexpected_type/subtype';
+			forward('', '404', $forward_params);
 		}
 	}
 }

@@ -73,32 +73,36 @@ function elgg_load_library($name) {
  * @param string $reason   Short explanation for why we're forwarding. Set to
  *                         '404' to forward to error page. Default message is
  *                         'system'.
+ * @param array  $params   Params for the "forward" plugin hook. The "current_url" and
+ *                         "forward_url" keys are automatically set.
  *
  * @return void
  * @throws SecurityException
  */
-function forward($location = "", $reason = 'system') {
-	if (!headers_sent($file, $line)) {
-		if ($location === REFERER) {
-			$location = _elgg_services()->request->headers->get('Referer');
-		}
+function forward($location = "", $reason = 'system', array $params = array()) {
+	if (headers_sent($file, $line)) {
+		throw new \SecurityException("Redirect could not be issued due to headers already being sent. "
+			. "Halting execution for security. Output started in file $file at line $line.");
+	}
 
-		$location = elgg_normalize_url($location);
+	if ($location === REFERER) {
+		$location = _elgg_services()->request->headers->get('Referer');
+	}
 
-		// return new forward location or false to stop the forward or empty string to exit
-		$current_page = current_page_url();
-		$params = array('current_url' => $current_page, 'forward_url' => $location);
-		$location = elgg_trigger_plugin_hook('forward', $reason, $params, $location);
+	$location = elgg_normalize_url($location);
 
-		if ($location) {
-			header("Location: {$location}");
-			exit;
-		} else if ($location === '') {
-			exit;
-		}
-	} else {
-		throw new \SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
-			. "Output started in file $file at line $line. Search http://learn.elgg.org/ for more information.");
+	// return new forward location or false to stop the forward or empty string to exit
+	$current_page = current_page_url();
+	$params += array(
+		'current_url' => $current_page,
+		'forward_url' => $location
+	);
+	$location = elgg_trigger_plugin_hook('forward', $reason, $params, $location);
+	if ($location) {
+		header("Location: {$location}");
+		exit;
+	} else if ($location === '') {
+		exit;
 	}
 }
 
