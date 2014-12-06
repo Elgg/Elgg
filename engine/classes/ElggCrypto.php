@@ -158,6 +158,22 @@ class ElggCrypto {
 	}
 
 	/**
+	 * Generate a MAC with output in Base64URL encoding
+	 *
+	 * @param string $data Data we're creating a MAC for
+	 * @param string $key  HMAC key. uses elgg site secret if none given
+	 * @param string $algo HMAC hash algorithm
+	 * @return string
+	 */
+	function getHmac($data, $key = '', $algo = 'sha256') {
+		if (!$key) {
+			$key = _elgg_services()->siteSecret->get();
+		}
+		$bytes = hash_hmac($algo, $data, $key, true);
+		return strtr(rtrim(base64_encode($bytes), '='), '+/', '-_');
+	}
+
+	/**
 	 * Generate a random string of specified length.
 	 *
 	 * Uses supplied character list for generating the new string.
@@ -211,5 +227,58 @@ class ElggCrypto {
 		}
 
 		return $result;
+	}
+
+	/**
+	 * Are two strings equal (compared in constant time)?
+	 *
+	 * @param string $str1 First string to compare
+	 * @param string $str2 Second string to compare
+	 *
+	 * @return bool
+	 *
+	 * Based on password_verify in PasswordCompat
+	 * @author Anthony Ferrara <ircmaxell@php.net>
+	 * @license http://www.opensource.org/licenses/mit-license.html MIT License
+	 * @copyright 2012 The Authors
+	 */
+	public function areEqual($str1, $str2) {
+		$len1 = $this->strlen($str1);
+		$len2 = $this->strlen($str2);
+		if ($len1 !== $len2) {
+			return false;
+		}
+
+		$status = 0;
+		for ($i = 0; $i < $len1; $i++) {
+			$status |= (ord($str1[$i]) ^ ord($str2[$i]));
+		}
+
+		return $status === 0;
+	}
+
+	/**
+	 * Count the number of bytes in a string
+	 *
+	 * We cannot simply use strlen() for this, because it might be overwritten by the mbstring extension.
+	 * In this case, strlen() will count the number of *characters* based on the internal encoding. A
+	 * sequence of bytes might be regarded as a single multibyte character.
+	 *
+	 * Use elgg_strlen() to count UTF-characters instead of bytes.
+	 *
+	 * @param string $binary_string The input string
+	 *
+	 * @return int The number of bytes
+	 *
+	 * From PasswordCompat\binary\_strlen
+	 * @author Anthony Ferrara <ircmaxell@php.net>
+	 * @license http://www.opensource.org/licenses/mit-license.html MIT License
+	 * @copyright 2012 The Authors
+	 */
+	protected function strlen($binary_string) {
+		if (function_exists('mb_strlen')) {
+			return mb_strlen($binary_string, '8bit');
+		}
+		return strlen($binary_string);
 	}
 }

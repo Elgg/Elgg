@@ -73,7 +73,7 @@ function invitefriends_add_friends($hook, $type, $result, $params) {
 	// If $friend_guid has been set, make mutual friends
 	if ($friend_guid) {
 		if ($friend_user = get_user($friend_guid)) {
-			if ($invite_code == generate_invite_code($friend_user->username)) {
+			if (elgg_validate_invite_code($friend_user->username, $invite_code)) {
 				$user->addFriend($friend_guid, true);
 				$friend_user->addFriend($user->guid, true);
 			}
