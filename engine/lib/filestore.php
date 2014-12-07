@@ -390,7 +390,7 @@ function delete_directory($directory) {
 }
 
 /**
- * Removes all user files
+ * Removes all entity files
  *
  * @warning This only deletes the physical files and not their entities.
  * This will result in FileExceptions being thrown.  Don't use this function.
@@ -399,15 +399,14 @@ function delete_directory($directory) {
  *
  * @todo Remove this when all files are entities.
  *
- * @param \ElggUser $user An \ElggUser
+ * @param \ElggEntity $entity An \ElggEntity
  *
  * @return void
+ * @access private
  */
-function clear_user_files($user) {
-	global $CONFIG;
-
-	$dir = new \Elgg\EntityDirLocator($user->guid);
-	$file_path = $CONFIG->dataroot . $dir;
+function _elgg_clear_entity_files($entity) {
+	$dir = new \Elgg\EntityDirLocator($entity->guid);
+	$file_path = elgg_get_config('dataroot') . $dir;
 	if (file_exists($file_path)) {
 		delete_directory($file_path);
 	}

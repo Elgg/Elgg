@@ -43,7 +43,7 @@ class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 		$this->assertTrue(file_exists($filepath));
 		
 		// ensure file removed on user delete
-		// deleting the user calls clear_user_files()
+		// deleting the user calls _elgg_clear_entity_files()
 		$user->delete();
 		$this->assertFalse(file_exists($filepath));
 	}
