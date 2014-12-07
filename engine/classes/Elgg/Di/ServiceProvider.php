@@ -45,6 +45,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Forms\StickyForms                  $stickyForms
  * @property-read \Elgg\Database\SubtypeTable              $subtypeTable
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
+ * @property-read \Elgg\Testing                            $testing
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
@@ -201,6 +202,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('subtypeTable', '\Elgg\Database\SubtypeTable');
 
 		$this->setClassName('systemCache', '\Elgg\Cache\SystemCache');
+
+		$this->setFactory('testing', function(ServiceProvider $c) {
+			return new \Elgg\Testing($c);
+		});
 
 		$this->setClassName('translator', '\Elgg\I18n\Translator');
 
