@@ -150,3 +150,24 @@ function pages_register_navigation_tree($container) {
 		}
 	}
 }
+
+/**
+ * Function checking delete permission
+ *
+ * @package ElggPages
+ * @param mixed $value
+ *
+ * @return bool
+ */
+function pages_can_delete_page($page) {
+	if (! $page) {
+		return false;
+	} else {
+		$container = get_entity($page->container_guid);
+		if ($container->canEdit()) {
+			return true;
+                } else {
+			return false;
+		}
+	}
+}
