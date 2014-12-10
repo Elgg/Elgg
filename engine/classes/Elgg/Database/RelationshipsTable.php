@@ -301,7 +301,11 @@ class RelationshipsTable {
 	 *                          1. use 'guid' if you want the user's friends
 	 *                          2. use 'owner_guid' if you want the entities the user's friends own (including in groups)
 	 *                          3. use 'container_guid' if you want the entities in the user's personal space (non-group)
+	 *                          
+	 * 	relationship_created_time_lower => null|INT Relationship created time lower boundary in epoch time
 	 *
+	 * 	relationship_created_time_upper => null|INT Relationship created time upper boundary in epoch time
+	 * 
 	 * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
 	 */
 	function getEntities($options) {
@@ -310,6 +314,9 @@ class RelationshipsTable {
 			'relationship_guid' => null,
 			'inverse_relationship' => false,
 			'relationship_join_on' => 'guid',
+
+			'relationship_created_time_lower' => ELGG_ENTITIES_ANY_VALUE,
+			'relationship_created_time_upper' => ELGG_ENTITIES_ANY_VALUE,
 		);
 	
 		$options = array_merge($defaults, $options);
@@ -328,6 +335,12 @@ class RelationshipsTable {
 	
 			$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
 	
+			// limit based on time created
+			$time_wheres = _elgg_get_entity_time_where_sql('r', $options['relationship_created_time_upper'],
+					$options['relationship_created_time_lower']);
+			if ($time_wheres) {
+				$options['wheres'] = array_merge($options['wheres'], array($time_wheres));
+			}
 			// merge joins to pass to get_entities()
 			if (isset($options['joins']) && !is_array($options['joins'])) {
 				$options['joins'] = array($options['joins']);
