@@ -416,7 +416,7 @@ function _elgg_session_boot() {
 
 	// test whether we have a user session
 	if ($session->has('guid')) {
-		$user = get_user($session->get('guid'));
+		$user = _elgg_services()->entityTable->get($session->get('guid'), 'user');
 		if (!$user) {
 			// OMG user has been deleted.
 			$session->invalidate();
