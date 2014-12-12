@@ -27,6 +27,7 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\Database\Datalist                  $datalist
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\DeprecationService                 $deprecation
+ * @property-read \Elgg\EntityPreloader                    $entityPreloader
  * @property-read \Elgg\Database\EntityTable               $entityTable
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
@@ -37,7 +38,6 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
  * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
  * @property-read \Elgg\Notifications\NotificationsService $notifications
- * @property-read \Elgg\EntityPreloader                    $ownerPreloader
  * @property-read \Elgg\PasswordService                    $passwords
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
  * @property-read \Elgg\Database\Plugins                   $plugins
@@ -120,6 +120,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\DeprecationService($c->session, $c->logger);
 		});
 
+		$this->setClassName('entityPreloader', '\Elgg\EntityPreloader');
+
 		$this->setClassName('entityTable', '\Elgg\Database\EntityTable');
 
 		$this->setFactory('events', function(ServiceProvider $c) {
@@ -158,10 +160,6 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $c->db);
 			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
 			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->access);
-		});
-
-		$this->setFactory('ownerPreloader', function(ServiceProvider $c) {
-			return new \Elgg\EntityPreloader(array('owner_guid'));
 		});
 
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {

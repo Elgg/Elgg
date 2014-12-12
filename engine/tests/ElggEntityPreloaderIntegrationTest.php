@@ -1,6 +1,6 @@
 <?php
 
-class ElggOwnerPreloaderIntegrationTest extends ElggCoreUnitTest {
+class ElggEntityPreloaderIntegrationTest extends ElggCoreUnitTest {
 
 	protected $realPreloader;
 
@@ -10,14 +10,14 @@ class ElggOwnerPreloaderIntegrationTest extends ElggCoreUnitTest {
 	protected $mockPreloader;
 
 	public function setUp() {
-		$this->realPreloader = _elgg_services()->ownerPreloader;
+		$this->realPreloader = _elgg_services()->entityPreloader;
 
-		$this->mockPreloader = new MockEntityPreloader20140623(array('owner_guid'));
-		_elgg_services()->setValue('ownerPreloader', $this->mockPreloader);
+		$this->mockPreloader = new MockEntityPreloader20140623();
+		_elgg_services()->setValue('entityPreloader', $this->mockPreloader);
 	}
 
 	public function tearDown() {
-		_elgg_services()->setValue('ownerPreloader', $this->realPreloader);
+		_elgg_services()->setValue('entityPreloader', $this->realPreloader);
 	}
 
 	public function testEGECanUsePreloader() {

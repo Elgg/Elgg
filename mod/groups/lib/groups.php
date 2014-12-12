@@ -37,6 +37,7 @@ function groups_handle_all_page() {
 				'full_view' => false,
 				'no_results' => elgg_echo('discussion:none'),
 				'distinct' => false,
+				'preload_containers' => true,
 			));
 			break;
 		case 'featured':
