@@ -1,13 +1,13 @@
 <?php
 /**
- * Elgg pagination
+ * Elgg prev/next pagination without a total count
  *
  * @package Elgg
  * @subpackage Core
  *
  * @uses int    $vars['offset']     The offset in the list
  * @uses int    $vars['limit']      Number of items per page
- * @uses int    $vars['count']      Number of items in list
+ * @uses int    $vars['has_next']   Show the next button?
  * @uses string $vars['base_url']   Base URL to use in links
  * @uses string $vars['offset_key'] The string to use for offset in the URL
  */
@@ -19,11 +19,11 @@ if (elgg_in_context('widget')) {
 
 $offset = abs((int) elgg_extract('offset', $vars, 0));
 // because you can say $vars['limit'] = 0
-if (!$limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'))) {
+if (!$limit = (int) elgg_extract('limit', $vars, 10)) {
 	$limit = 10;
 }
 
-$count = (int) elgg_extract('count', $vars, 0);
+$has_next = (int) elgg_extract('has_next', $vars, 0);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 // some views pass an empty string for base_url
 if (isset($vars['base_url']) && $vars['base_url']) {
@@ -40,12 +40,11 @@ if (isset($vars['base_url']) && $vars['base_url']) {
 $num_pages = elgg_extract('num_pages', $vars, 10);
 $delta = ceil($num_pages / 2);
 
-if ($count <= $limit && $offset == 0) {
+if (!$has_next && $offset == 0) {
 	// no need for pagination
 	return true;
 }
 
-$total_pages = ceil($count / $limit);
 $current_page = ceil($offset / $limit) + 1;
 
 $pages = new stdClass();
@@ -81,20 +80,12 @@ $pages->items[] = $current_page;
 
 
 // add pages after the current one
-if ($current_page < $total_pages) {
+if ($has_next) {
 	$next_offset = $offset + $limit;
-	if ($next_offset >= $count) {
-		$next_offset--;
-	}
-
 	$pages->next['href'] = elgg_http_add_url_query_elements($base_url, array($offset_key => $next_offset));
 
-	$last_page = $current_page + $delta;
-	if ($last_page > $total_pages) {
-		$last_page = $total_pages;
-	}
-
-	$pages->items = array_merge($pages->items, range($current_page + 1, $last_page));
+	$pages->items[] = $current_page + 1;
+	$pages->items[] = $current_page + 2;
 }
 
 
@@ -110,6 +101,8 @@ if ($pages->prev['href']) {
 foreach ($pages->items as $page) {
 	if ($page == $current_page) {
 		echo "<li class=\"elgg-state-selected\"><span>$page</span></li>";
+	} elseif ($page == $current_page + 2) {
+		echo "<li class=\"elgg-state-disabled\"><span>&hellip;</span></li>";
 	} else {
 		$page_offset = (($page - 1) * $limit);
 		if ($page_offset == 0) {

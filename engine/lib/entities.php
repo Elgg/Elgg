@@ -572,6 +572,8 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
  *                   list_type => STR 'list' or 'gallery'
  *                   list_type_toggle => BOOL Display gallery / list switch
  *                   pagination => BOOL Display pagination links
+ *                   model => STR 'count' or 'no_count'. If no_count, Elgg will request one more than
+ *                            the limit to decide on the next link. (default: count)
  *                   no_results => STR|Closure Message to display when there are no entities
  *
  * @param callback $getter  The entity getter function to use to fetch the entities.
@@ -596,6 +598,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 		'full_view' => false,
 		'list_type_toggle' => false,
 		'pagination' => true,
+		'model' => _elgg_services()->config->get('pagination_model'),
 		'no_results' => '',
 	);
 
@@ -607,17 +610,27 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 		$options['list_type_toggle'] = $options['view_type_toggle'];
 	}
 
-	$options['count'] = true;
-	$count = call_user_func($getter, $options);
-
-	if ($count > 0) {
-		$options['count'] = false;
+	if ($options['model'] === 'no_count') {
+		if ($options['limit']) {
+			$options['limit'] += 1;
+		}
 		$entities = call_user_func($getter, $options);
+		if ($options['limit']) {
+			$options['limit'] -= 1;
+		}
 	} else {
-		$entities = array();
-	}
+		$options['count'] = true;
+		$count = call_user_func($getter, $options);
 
-	$options['count'] = $count;
+		if ($count > 0) {
+			$options['count'] = false;
+			$entities = call_user_func($getter, $options);
+		} else {
+			$entities = array();
+		}
+
+		$options['count'] = $count;
+	}
 
 	return call_user_func($viewer, $entities, $options);
 }

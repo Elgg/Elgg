@@ -490,6 +490,8 @@ function _elgg_prefetch_river_entities(array $river_items) {
  *
  * @param array $options Any options from elgg_get_river() plus:
  *   pagination => BOOL        Display pagination links (true)
+ *   model => STR 'count' or 'no_count'. If no_count, Elgg will request one more than
+ *            the limit to decide on the next link. (default: count)
  *   no_results => STR|Closure Message to display if no items
  *
  * @return string
@@ -503,6 +505,7 @@ function elgg_list_river(array $options = array()) {
 		'offset'     => (int) max(get_input('offset', 0), 0),
 		'limit'      => (int) max(get_input('limit', max(20, elgg_get_config('default_limit'))), 0),
 		'pagination' => true,
+		'model'      => _elgg_services()->config->get('pagination_model'),
 		'list_class' => 'elgg-list-river',
 		'no_results' => '',
 	);
@@ -514,17 +517,28 @@ function elgg_list_river(array $options = array()) {
 		$options["pagination"] = false;
 	}
 
-	$options['count'] = true;
-	$count = elgg_get_river($options);
-
-	if ($count > 0) {
-		$options['count'] = false;
+	if ($options['model'] === 'no_count') {
+		if ($options['limit']) {
+			$options['limit'] += 1;
+		}
 		$items = elgg_get_river($options);
+		if ($options['limit']) {
+			$options['limit'] -= 1;
+		}
 	} else {
-		$items = array();
+		$options['count'] = true;
+		$count = elgg_get_river($options);
+
+		if ($count > 0) {
+			$options['count'] = false;
+			$items = elgg_get_river($options);
+		} else {
+			$items = array();
+		}
+
+		$options['count'] = $count;
 	}
 
-	$options['count'] = $count;
 	$options['items'] = $items;
 
 	return elgg_view('page/components/list', $options);

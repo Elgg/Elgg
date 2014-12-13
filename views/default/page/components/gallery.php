@@ -52,14 +52,30 @@ if (isset($vars['item_class'])) {
 }
 
 $nav = '';
-if ($pagination && $count) {
-	$nav .= elgg_view('navigation/pagination', array(
-		'base_url' => $base_url,
-		'offset' => $offset,
-		'count' => $count,
-		'limit' => $limit,
-		'offset_key' => $offset_key,
-	));
+
+if ($pagination && $limit) {
+	if ($count) {
+		$nav .= elgg_view('navigation/pagination/count', array(
+			'base_url' => $base_url,
+			'offset' => $offset,
+			'count' => $count,
+			'limit' => $limit,
+			'offset_key' => $offset_key,
+		));
+	} else {
+		$nav .= elgg_view('navigation/pagination/no_count', array(
+			'base_url' => $base_url,
+			'offset' => $offset,
+			'has_next' => count($items) > $limit,
+			'limit' => $limit,
+			'offset_key' => $offset_key,
+		));
+	}
+}
+
+if ($limit) {
+	// if using prev_next pagination, we have one too many
+	$items = array_slice($items, 0, $limit);
 }
 
 if ($position == 'before' || $position == 'both') {
@@ -70,8 +86,8 @@ if ($position == 'before' || $position == 'both') {
 <ul class="<?php echo $gallery_class; ?>">
 	<?php
 		foreach ($items as $item) {
-			if (elgg_instanceof($item)) {
-			$id = "elgg-{$item->getType()}-{$item->getGUID()}";
+			if ($item instanceof ElggEntity) {
+				$id = "elgg-{$item->getType()}-{$item->getGUID()}";
 			} else {
 				$id = "item-{$item->getType()}-{$item->id}";
 			}

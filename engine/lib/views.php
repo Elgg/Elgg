@@ -949,7 +949,8 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  *
  * @param array $entities Array of entities
  * @param array $vars     Display variables
- *      'count'            The total number of entities across all pages
+ *      'count'            The total number of entities across all pages. If not provided, the pagination
+ *                         will only include the "next" link.
  *      'offset'           The current indexing offset
  *      'limit'            The number of entities to display per page (default from settings)
  *      'full_view'        Display the full view of the entities?
@@ -1652,6 +1653,8 @@ function elgg_views_boot() {
 		);
 		elgg_set_config('icon_sizes', $icon_sizes);
 	}
+
+	_elgg_services()->config->set('pagination_model', 'no_count');
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
