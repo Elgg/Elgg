@@ -23,17 +23,27 @@ if ($item->annotation_id != 0 || !$object || elgg_instanceof($target, 'object', 
 	return true;
 }
 
-$comment_count = $object->countComments();
+$max_comments = 3;
 
-if ($comment_count) {
-	$comments = elgg_get_entities(array(
-		'type' => 'object',
-		'subtype' => 'comment',
-		'container_guid' => $object->getGUID(),
-		'limit' => 3,
-		'order_by' => 'e.time_created desc',
-		'distinct' => false,
-	));
+// we request one more than we need to determine if we need to show the "more" link
+$comments = elgg_get_entities(array(
+	'type' => 'object',
+	'subtype' => 'comment',
+	'container_guid' => $object->getGUID(),
+	'limit' => $max_comments + 1,
+	'order_by' => 'e.time_created desc',
+	'distinct' => false,
+));
+
+if ($comments) {
+	$comment_count = count($comments);
+
+	if ($comment_count > $max_comments) {
+		// may be more, sadly we have to count
+		$comment_count = $object->countComments();
+		// we have to cut the extra one
+		array_pop($comments);
+	}
 
 	// why is this reversing it? because we're asking for the 3 latest
 	// comments by sorting desc and limiting by 3, but we want to display
@@ -42,8 +52,8 @@ if ($comment_count) {
 
 	echo elgg_view_entity_list($comments, array('list_class' => 'elgg-river-comments'));
 
-	if ($comment_count > count($comments)) {
-		$num_more_comments = $comment_count - count($comments);
+	if ($comment_count > $max_comments) {
+		$num_more_comments = $comment_count - $max_comments;
 		$url = $object->getURL();
 		$params = array(
 			'href' => $url,

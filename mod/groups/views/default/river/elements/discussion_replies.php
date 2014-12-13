@@ -9,31 +9,39 @@ $options = array(
 	'type' => 'object',
 	'subtype' => 'discussion_reply',
 	'container_guid' => $topic->guid,
-	'count' => true,
 	'distinct' => false,
+	'order_by' => 'e.time_created desc',
 );
 
-$count = elgg_get_entities($options);
+$max_responses = 3;
 
-if ($count) {
+// we request one more than we need to determine if we need to show the "more" link
+$options['limit'] = $max_responses + 1;
+$responses = elgg_get_entities($options);
 
-	$list_options = array(
-		'order_by' => 'e.time_created desc',
-		'list_class' => 'elgg-river-comments',
-		'pagination' => false,
-		'count' => false,
-		'limit' => 3,
-	);
+if ($responses) {
+	$response_count = count($responses);
 
-	$options = array_merge($options, $list_options);
+	if ($response_count > $max_responses) {
+		// may be more, sadly we have to count
+		$response_count = elgg_get_entities($options + ['count' => true]);
+		// we have to cut the extra one
+		array_pop($responses);
+	}
 
-	echo elgg_list_entities($options);
+	// why is this reversing it? because we're asking for the MAX latest
+	// responses by sorting desc and limiting by MAX, but we want to display
+	// these responses with the latest at the bottom.
+	$responses = array_reverse($responses);
 
-	if ($count > 3) {
-		$more_count = $count - 3;
+	echo elgg_view_entity_list($responses, array('list_class' => 'elgg-river-comments'));
+
+	if ($response_count > $max_responses) {
+		$num_more_responses = $response_count - $max_responses;
+		$url = $topic->getURL();
 		$params = array(
-			'href' => $topic->getURL(),
-			'text' => elgg_echo('river:comments:more', array($more_count)),
+			'href' => $url,
+			'text' => elgg_echo('river:comments:more', array($num_more_responses)),
 			'is_trusted' => true,
 		);
 		$link = elgg_view('output/url', $params);
