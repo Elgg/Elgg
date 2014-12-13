@@ -58,6 +58,7 @@ $lib_files = array(
 	'private_settings.php',
 	'relationships.php',
 	'river.php',
+	'search.php',
 	'sessions.php',
 	'sites.php',
 	'statistics.php',

@@ -194,23 +194,14 @@ function elgg_clear_sticky_value($form_name, $variable) {
  * @access private
  */
 function input_livesearch_page_handler($page) {
-	global $CONFIG;
 
-	// only return results to logged in users.
-	if (!$user = elgg_get_logged_in_user_entity()) {
-		exit;
-	}
+	$user = elgg_get_logged_in_user_entity();
 
 	if (!$q = get_input('term', get_input('q'))) {
 		exit;
 	}
 
 	$input_name = get_input('name', 'members');
-
-	$q = sanitise_string($q);
-
-	// replace mysql vars with escaped strings
-	$q = str_replace(array('_', '%'), array('\_', '\%'), $q);
 
 	$match_on = get_input('match_on', 'all');
 
@@ -224,34 +215,27 @@ function input_livesearch_page_handler($page) {
 	}
 
 	if (get_input('match_owner', false)) {
-		$owner_where = 'AND e.owner_guid = ' . $user->getGUID();
+		$owner_guid = ($user) ? $user->guid : ELGG_ENTITIES_NO_VALUE;
 	} else {
-		$owner_where = '';
+		$owner_guid = ELGG_ENTITIES_ANY_VALUE;
 	}
 
-	$limit = sanitise_int(get_input('limit', 10));
-
+	$params = array(
+		'limit' => get_input('limit', 10),
+		'offset' => get_input('offset', 0),
+		'advanced_search' => false,
+		'highlight_matches' => false,
+	);
+	
 	// grab a list of entities and send them in json.
 	$results = array();
 	foreach ($match_on as $match_type) {
 		switch ($match_type) {
 			case 'users':
-				$query = "SELECT * FROM {$CONFIG->dbprefix}users_entity as ue, {$CONFIG->dbprefix}entities as e
-					WHERE e.guid = ue.guid
-						AND e.enabled = 'yes'
-						AND ue.banned = 'no'
-						AND (ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')
-					LIMIT $limit
-				";
-
-				if ($entities = get_data($query)) {
+				$result = elgg_search($q, 'user', $params);
+				$entities = (is_array($result)) ? $result['entities'] : false;
+				if ($entities) {
 					foreach ($entities as $entity) {
-						// @todo use elgg_get_entities (don't query in a loop!)
-						$entity = get_user($entity->guid);
-						if (!$entity) {
-							continue;
-						}
-
 						if (in_array('groups', $match_on)) {
 							$value = $entity->guid;
 						} else {
@@ -291,22 +275,12 @@ function input_livesearch_page_handler($page) {
 				if (!elgg_is_active_plugin('groups')) {
 					continue;
 				}
-				$query = "SELECT * FROM {$CONFIG->dbprefix}groups_entity as ge, {$CONFIG->dbprefix}entities as e
-					WHERE e.guid = ge.guid
-						AND e.enabled = 'yes'
-						$owner_where
-						AND (ge.name LIKE '$q%' OR ge.name LIKE '% $q%' OR ge.description LIKE '% $q%')
-					LIMIT $limit
-				";
-				if ($entities = get_data($query)) {
+				$params['owner_guid'] = $owner_guid;
+				$result = elgg_search($q, 'group', $params);
+				$entities = (is_array($result)) ? $result['entities'] : false;
+				
+				if ($entities) {
 					foreach ($entities as $entity) {
-						// @todo use elgg_get_entities (don't query in a loop!)
-						$entity = get_entity($entity->guid);
-						/* @var \ElggGroup $entity */
-						if (!$entity) {
-							continue;
-						}
-
 						$output = elgg_view_list_item($entity, array(
 							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',
@@ -334,28 +308,15 @@ function input_livesearch_page_handler($page) {
 				break;
 
 			case 'friends':
-				$query = "SELECT * FROM
-						{$CONFIG->dbprefix}users_entity as ue,
-						{$CONFIG->dbprefix}entity_relationships as er,
-						{$CONFIG->dbprefix}entities as e
-					WHERE er.relationship = 'friend'
-						AND er.guid_one = {$user->getGUID()}
-						AND er.guid_two = ue.guid
-						AND e.guid = ue.guid
-						AND e.enabled = 'yes'
-						AND ue.banned = 'no'
-						AND (ue.name LIKE '$q%' OR ue.name LIKE '% $q%' OR ue.username LIKE '$q%')
-					LIMIT $limit
-				";
-
-				if ($entities = get_data($query)) {
+				$dbprefix = elgg_get_config('dbprefix');
+				$params['joins'] = array("JOIN {$dbprefix}entity_relationships er ON er.guid_two = e.guid");
+				$params['wheres'] = array("er.guid_one = $owner_guid AND er.relationship = 'friend");
+				
+				$result = elgg_search($q, 'user', $params);
+				$entities = (is_array($result)) ? $result['entities'] : false;
+				
+				if ($entities) {
 					foreach ($entities as $entity) {
-						// @todo use elgg_get_entities (don't query in a loop!)
-						$entity = get_user($entity->guid);
-						if (!$entity) {
-							continue;
-						}
-
 						$output = elgg_view_list_item($entity, array(
 							'use_hover' => false,
 							'class' => 'elgg-autocomplete-item',

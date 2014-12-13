@@ -174,8 +174,8 @@ if ($search_type == 'all' || $search_type == 'entities') {
 				$current_params['subtype'] = $subtype;
 				$current_params['type'] = $type;
 
-				$results = elgg_trigger_plugin_hook('search', "$type:$subtype", $current_params, NULL);
-				if ($results === FALSE) {
+				$results = elgg_search($query, "$type:$subtype", $current_params);
+				if ($results === false) {
 					// someone is saying not to display these types in searches.
 					continue;
 				} elseif (is_array($results) && !count($results)) {
@@ -184,7 +184,7 @@ if ($search_type == 'all' || $search_type == 'entities') {
 					// no results and not hooked.  use default type search.
 					// don't change the params here, since it's really a different subtype.
 					// Will be passed to elgg_get_entities().
-					$results = elgg_trigger_plugin_hook('search', $type, $current_params, array());
+					$results = elgg_search($query, $type, $current_params);
 				}
 
 				if (is_array($results['entities']) && $results['count']) {
@@ -200,10 +200,10 @@ if ($search_type == 'all' || $search_type == 'entities') {
 
 		// pull in default type entities with no subtypes
 		$current_params['type'] = $type;
-		$current_params['subtype'] = ELGG_ENTITIES_NO_VALUE;
-
-		$results = elgg_trigger_plugin_hook('search', $type, $current_params, array());
-		if ($results === FALSE) {
+		$current_params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
+		
+		$results = elgg_search($query, $type, $current_params);
+		if ($results === false) {
 			// someone is saying not to display these types in searches.
 			continue;
 		}
@@ -230,9 +230,9 @@ if ($search_type != 'entities' || $search_type == 'all') {
 			$current_params = $params;
 			$current_params['search_type'] = $type;
 
-			$results = elgg_trigger_plugin_hook('search', $type, $current_params, array());
+			$results = elgg_search($query, $type, $current_params);
 
-			if ($results === FALSE) {
+			if ($results === false) {
 				// someone is saying not to display these types in searches.
 				continue;
 			}
