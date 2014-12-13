@@ -171,7 +171,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\PasswordService();
 		});
 
-		$this->setClassName('plugins', '\Elgg\Database\Plugins');
+		$this->setFactory('plugins', function(ServiceProvider $c) {
+			return new \Elgg\Database\Plugins($c->events, new \Elgg\Cache\MemoryPool());
+		});
 
 		$this->setFactory('queryCounter', function(ServiceProvider $c) {
 			return new \Elgg\Database\QueryCounter($c->db);

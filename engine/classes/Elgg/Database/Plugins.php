@@ -22,6 +22,32 @@ global $ELGG_PLUGINS_PROVIDES_CACHE;
  * @since      1.10.0
  */
 class Plugins {
+
+	/**
+	 * @var string[] Active plugin IDs with IDs as the array keys. Missing keys imply inactive plugins.
+	 */
+	protected $active_ids = array();
+
+	/**
+	 * @var bool Has $active_ids been populated?
+	 */
+	protected $active_ids_known = false;
+
+	/**
+	 * @var \Elgg\Cache\MemoryPool
+	 */
+	protected $plugins_by_id;
+
+	/**
+	 * Constructor
+	 *
+	 * @param \Elgg\EventsService    $events Events service
+	 * @param \Elgg\Cache\MemoryPool $pool   Cache for referencing plugins by ID
+	 */
+	public function __construct(\Elgg\EventsService $events, \Elgg\Cache\MemoryPool $pool) {
+		$this->plugins_by_id = $pool;
+	}
+
 	/**
 	 * Returns a list of plugin directory names from a base directory.
 	 *
@@ -161,9 +187,7 @@ class Plugins {
 	 * @access private
 	 */
 	function cache(\ElggPlugin $plugin) {
-		$map = (array) elgg_get_config('plugins_by_id_map');
-		$map[$plugin->getID()] = $plugin;
-		elgg_set_config('plugins_by_id_map', $map);
+		$this->plugins_by_id->put($plugin->getID(), $plugin);
 	}
 	
 	/**
@@ -173,31 +197,28 @@ class Plugins {
 	 * @return \ElggPlugin|null
 	 */
 	function get($plugin_id) {
-		$map = (array) elgg_get_config('plugins_by_id_map');
-		if (isset($map[$plugin_id])) {
-			return $map[$plugin_id];
-		}
-	
-		$plugin_id = sanitize_string($plugin_id);
-		$db_prefix = get_config('dbprefix');
-	
-		$options = array(
-			'type' => 'object',
-			'subtype' => 'plugin',
-			'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
-			'selects' => array("oe.title", "oe.description"),
-			'wheres' => array("oe.title = '$plugin_id'"),
-			'limit' => 1,
-			'distinct' => false,
-		);
-	
-		$plugins = elgg_get_entities($options);
-	
-		if ($plugins) {
-			return $plugins[0];
-		}
-	
-		return null;
+		return $this->plugins_by_id->get($plugin_id, function () use ($plugin_id) {
+			$plugin_id = sanitize_string($plugin_id);
+			$db_prefix = get_config('dbprefix');
+
+			$options = array(
+				'type' => 'object',
+				'subtype' => 'plugin',
+				'joins' => array("JOIN {$db_prefix}objects_entity oe on oe.guid = e.guid"),
+				'selects' => array("oe.title", "oe.description"),
+				'wheres' => array("oe.title = '$plugin_id'"),
+				'limit' => 1,
+				'distinct' => false,
+			);
+
+			$plugins = elgg_get_entities($options);
+
+			if ($plugins) {
+				return $plugins[0];
+			}
+
+			return null;
+		});
 	}
 	
 	/**
@@ -252,6 +273,13 @@ class Plugins {
 	 * @return bool
 	 */
 	function isActive($plugin_id, $site_guid = null) {
+		$current_site_guid = elgg_get_site_entity()->guid;
+
+		if ($this->active_ids_known
+				&& ($site_guid === null || $site_guid == $current_site_guid)) {
+			return isset($this->active_ids[$plugin_id]);
+		}
+
 		if ($site_guid) {
 			$site = get_entity($site_guid);
 		} else {
@@ -309,23 +337,26 @@ class Plugins {
 		}
 	
 		$return = true;
-		$plugins = elgg_get_plugins('active');
+		$plugins = $this->find('active');
 		if ($plugins) {
 			foreach ($plugins as $plugin) {
+				$id = $plugin->getID();
 				try {
 					$plugin->start($start_flags);
+					$this->active_ids[$id] = true;
 				} catch (Exception $e) {
 					$plugin->deactivate();
 					$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
-									array($plugin->getID(), $plugin->guid, $e->getMessage()));
-					elgg_add_admin_notice('cannot_start' . $plugin->getID(), $msg);
+									array($id, $plugin->guid, $e->getMessage()));
+					elgg_add_admin_notice("cannot_start $id", $msg);
 					$return = false;
 	
 					continue;
 				}
 			}
 		}
-	
+
+		$this->active_ids_known = true;
 		return $return;
 	}
 	
@@ -569,6 +600,17 @@ class Plugins {
 		global $ELGG_PLUGINS_PROVIDES_CACHE;
 		$ELGG_PLUGINS_PROVIDES_CACHE = null;
 		return true;
+	}
+
+	/**
+	 * Delete the cache holding whether plugins are active or not
+	 *
+	 * @return void
+	 * @access private
+	 */
+	public function invalidateIsActiveCache() {
+		$this->active_ids = array();
+		$this->active_ids_known = false;
 	}
 	
 	/**
