@@ -33,6 +33,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
  * @property-read \Elgg\Notifications\NotificationsService $notifications
  * @property-read \Elgg\EntityPreloader                    $ownerPreloader
+ * @property-read \Elgg\PasswordService                    $passwords
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
  * @property-read \Elgg\Database\Plugins                   $plugins
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
@@ -160,6 +161,14 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$cookie_token = $c->request->cookies->get($cookie_name, '');
 			return new \Elgg\PersistentLoginService(
 				$c->db, $c->session, $c->crypto, $cookie_config, $cookie_token);
+		});
+
+		$this->setFactory('passwords', function (ServiceProvider $c) {
+			if (!function_exists('password_hash')) {
+				$root = $c->config->getRootPath();
+				require "{$root}vendor/ircmaxell/password-compat/lib/password.php";
+			}
+			return new \Elgg\PasswordService();
 		});
 
 		$this->setClassName('plugins', '\Elgg\Database\Plugins');

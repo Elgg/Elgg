@@ -15,7 +15,7 @@ $content = elgg_list_entities_from_metadata(array(
 	"metadata_value" => $thread_id,
 	"type" => "object",
 	"subtype" => "thewire",
-	"limit" => 20,
+	"limit" => max(20, elgg_get_config('default_limit')),
 	'preload_owners' => true,
 ));
 

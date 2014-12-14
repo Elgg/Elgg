@@ -9,9 +9,12 @@ This guide assumes you are familiar with:
  * :doc:`/admin/plugins`
  * :doc:`views`
 
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Create your plugin
-------------------
+==================
 
 Create your plugin as described in the :doc:`developer guide </guides/index>`.
 
@@ -20,7 +23,7 @@ Create your plugin as described in the :doc:`developer guide </guides/index>`.
 -  Create a manifest.xml file describing your theme.
 
 Customize the CSS
------------------
+=================
 
 As of Elgg 1.8, the css is split into several files based on what
 aspects of the site you're theming. This allows you to tackle them one
@@ -46,7 +49,7 @@ Here is a list of the existing CSS views:
 
 
 View extension
-~~~~~~~~~~~~~~
+--------------
 
 There are two ways you can modify views:
 
@@ -68,7 +71,7 @@ css file:
     ?>
 
 View overloading
-~~~~~~~~~~~~~~~~
+----------------
 
 Plugins can have a view hierarchy, any file that exists here will
 replace any files in the existing core view hierarchy... so for example,

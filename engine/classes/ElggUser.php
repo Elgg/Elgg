@@ -7,14 +7,15 @@
  * @package    Elgg.Core
  * @subpackage DataModel.User
  * 
- * @property string $name     The display name that the user will be known by in the network
- * @property string $username The short, reference name for the user in the network
- * @property string $email    The email address to which Elgg will send email notifications
- * @property string $language The language preference of the user (ISO 639-1 formatted)
- * @property string $banned   'yes' if the user is banned from the network, 'no' otherwise
- * @property string $admin    'yes' if the user is an administrator of the network, 'no' otherwise
- * @property string $password The hashed password of the user
- * @property string $salt     The salt used to secure the password before hashing
+ * @property      string $name          The display name that the user will be known by in the network
+ * @property      string $username      The short, reference name for the user in the network
+ * @property      string $email         The email address to which Elgg will send email notifications
+ * @property      string $language      The language preference of the user (ISO 639-1 formatted)
+ * @property      string $banned        'yes' if the user is banned from the network, 'no' otherwise
+ * @property      string $admin         'yes' if the user is an administrator of the network, 'no' otherwise
+ * @property-read string $password      The legacy (salted MD5) password hash of the user
+ * @property-read string $salt          The salt used to create the legacy password hash
+ * @property-read string $password_hash The hashed password of the user
  */
 class ElggUser extends \ElggEntity
 	implements Friendable {
@@ -33,6 +34,7 @@ class ElggUser extends \ElggEntity
 		$this->attributes['username'] = null;
 		$this->attributes['password'] = null;
 		$this->attributes['salt'] = null;
+		$this->attributes['password_hash'] = null;
 		$this->attributes['email'] = null;
 		$this->attributes['language'] = null;
 		$this->attributes['banned'] = "no";
@@ -130,12 +132,13 @@ class ElggUser extends \ElggEntity
 		$username = sanitize_string($this->username);
 		$password = sanitize_string($this->password);
 		$salt = sanitize_string($this->salt);
+		$password_hash = sanitize_string($this->password_hash);
 		$email = sanitize_string($this->email);
 		$language = sanitize_string($this->language);
 
 		$query = "INSERT into {$CONFIG->dbprefix}users_entity
-			(guid, name, username, password, salt, email, language)
-			values ($guid, '$name', '$username', '$password', '$salt', '$email', '$language')";
+			(guid, name, username, password, salt, password_hash, email, language)
+			values ($guid, '$name', '$username', '$password', '$salt', '$password_hash', '$email', '$language')";
 
 		$result = $this->getDatabase()->insertData($query);
 		if ($result === false) {
@@ -161,12 +164,13 @@ class ElggUser extends \ElggEntity
 		$username = sanitize_string($this->username);
 		$password = sanitize_string($this->password);
 		$salt = sanitize_string($this->salt);
+		$password_hash = sanitize_string($this->password_hash);
 		$email = sanitize_string($this->email);
 		$language = sanitize_string($this->language);
 
 		$query = "UPDATE {$CONFIG->dbprefix}users_entity
 			SET name='$name', username='$username', password='$password', salt='$salt',
-			email='$email', language='$language'
+			password_hash='$password_hash', email='$email', language='$language'
 			WHERE guid = $guid";
 
 		return $this->getDatabase()->updateData($query) !== false;
@@ -184,8 +188,6 @@ class ElggUser extends \ElggEntity
 		if (isset($USERNAME_TO_GUID_MAP_CACHE[$this->username])) {
 			unset($USERNAME_TO_GUID_MAP_CACHE[$this->username]);
 		}
-
-		clear_user_files($this);
 
 		// Delete entity
 		return parent::delete();
@@ -209,23 +211,41 @@ class ElggUser extends \ElggEntity
 	 * {@inheritdoc}
 	 */
 	public function __set($name, $value) {
-		if (array_key_exists($name, $this->attributes)) {
-			switch ($name) {
-				case 'prev_last_action':
-				case 'last_login':
-				case 'prev_last_login':
-					if ($value !== null) {
-						$this->attributes[$name] = (int)$value;
-					} else {
-						$this->attributes[$name] = null;
-					}
-					break;
-				default:
-					parent::__set($name, $value);
-					break;
-			}
-		} else {
+		if (!array_key_exists($name, $this->attributes)) {
 			parent::__set($name, $value);
+			return;
+		}
+
+		switch ($name) {
+			case 'prev_last_action':
+			case 'last_login':
+			case 'prev_last_login':
+				if ($value !== null) {
+					$this->attributes[$name] = (int)$value;
+				} else {
+					$this->attributes[$name] = null;
+				}
+				break;
+
+			case 'salt':
+			case 'password':
+				elgg_deprecated_notice("Setting salt/password directly is deprecated. Use ElggUser::setPassword().", "1.10");
+				$this->attributes[$name] = $value;
+
+				// this is emptied so that the user is not left with two usable hashes
+				$this->attributes['password_hash'] = '';
+
+				break;
+
+			// setting this not supported
+			case 'password_hash':
+				_elgg_services()->logger->error("password_hash is now an attribute of ElggUser and cannot be set.");
+				return;
+				break;
+
+			default:
+				parent::__set($name, $value);
+				break;
 		}
 	}
 
@@ -759,5 +779,21 @@ class ElggUser extends \ElggEntity
 			return $result;
 		}
 		return false;
+	}
+
+	/**
+	 * Set the necessary attributes to store a hash of the user's password. Also removes
+	 * the legacy hash/salt values.
+	 *
+	 * @tip You must save() to persist the attributes
+	 *
+	 * @param string $password The password to be hashed
+	 * @return void
+	 * @since 1.10.0
+	 */
+	public function setPassword($password) {
+		$this->attributes['salt'] = "";
+		$this->attributes['password'] = "";
+		$this->attributes['password_hash'] = _elgg_services()->passwords->generateHash($password);
 	}
 }

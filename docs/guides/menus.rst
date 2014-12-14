@@ -7,6 +7,10 @@ Every single menu requires a name, as does every single menu item. These are
 required in order to allow easy overriding and manipulation, as well as to
 provide hooks for theming.
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Basic usage
 ===========
 
@@ -40,7 +44,7 @@ Examples
 Advanced usage
 ==============
 
-You can get more control over menus by using `plugin hooks </design/events.html#plugin-hooks>`_
+You can get more control over menus by using :doc:`plugin hooks </design/events>`
 and the public methods provided by the ElggMenuItem__ class.
 
 There are two hooks that can be used to modify a menu:

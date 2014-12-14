@@ -163,16 +163,37 @@ function pam_auth_userpass(array $credentials = array()) {
 
 	$user = get_user_by_username($credentials['username']);
 	if (!$user) {
-		throw new \LoginException(elgg_echo('LoginException:UsernameFailure'));
+		throw new \LoginException(_elgg_services()->translator->translate('LoginException:UsernameFailure'));
 	}
 
 	if (check_rate_limit_exceeded($user->guid)) {
-		throw new \LoginException(elgg_echo('LoginException:AccountLocked'));
+		throw new \LoginException(_elgg_services()->translator->translate('LoginException:AccountLocked'));
 	}
 
-	if ($user->password !== generate_user_password($user, $credentials['password'])) {
+	$password_svc = _elgg_services()->passwords;
+	$password = $credentials['password'];
+	$hash = $user->password_hash;
+
+	if (!$hash) {
+		// try legacy hash
+		$legacy_hash = $password_svc->generateLegacyHash($user, $password);
+		if ($user->password !== $legacy_hash) {
+			log_login_failure($user->guid);
+			throw new \LoginException(_elgg_services()->translator->translate('LoginException:PasswordFailure'));
+		}
+
+		// migrate password
+		$password_svc->forcePasswordReset($user, $password);
+		return true;
+	}
+
+	if (!$password_svc->verify($password, $hash)) {
 		log_login_failure($user->guid);
-		throw new \LoginException(elgg_echo('LoginException:PasswordFailure'));
+		throw new \LoginException(_elgg_services()->translator->translate('LoginException:PasswordFailure'));
+	}
+
+	if ($password_svc->needsRehash($hash)) {
+		$password_svc->forcePasswordReset($user, $password);
 	}
 
 	return true;

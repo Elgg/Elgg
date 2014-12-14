@@ -280,7 +280,7 @@ return array(
 	'profile:edit:default' => 'Anpassen der Profilfelder',
 	'profile:label' => "Name des Profilfeldes",
 	'profile:type' => "Feldtyp",
-	'profile:editdefault:delete:fail' => 'Das Entfernen des Standard-Feldes aus dem Profil ist fehlgeschlagen.',
+	'profile:editdefault:delete:fail' => 'Das Entfernen des Profilfeldes ist fehlgeschlagen.',
 	'profile:editdefault:delete:success' => 'Das Profilfeld wurde gelöscht!',
 	'profile:defaultprofile:reset' => 'Die Standard-Profilfelder wurden wiederhergestellt.',
 	'profile:resetdefault' => 'Standard-Profilfelder wiederherstellen',
@@ -905,7 +905,6 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'title' => "Titel",
 	'description' => "Beschreibung",
 	'tags' => "Tags",
-	'spotlight' => "Spotlight",
 	'all' => "Alle",
 	'mine' => "Meine",
 
@@ -916,7 +915,6 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'relationships' => "Beziehungen",
 	'metadata' => "Metadaten",
 	'tagcloud' => "Tagcloud",
-	'tagcloud:allsitetags' => "Alle Tags der Seite",
 
 	'on' => 'An',
 	'off' => 'Aus',
@@ -1103,12 +1101,6 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'upgrade:site_secret_warning:moderate' => "Es ist emfehlenswert, den Geheimschlüssel Deiner Community-Seite neu erzeugen zu lassen, um die Sicherheit für Deine Seite zu verbessern. Siehe Konfigurieren &gt; Einstellungen &gt; Erweiterte Einstellungen",
 	'upgrade:site_secret_warning:weak' => "Wir empfehlen nachdrücklich, den Geheimschlüssel Deiner Community-Seite neu erzeugen zu lassen, um die Sicherheit für Deine Seite zu verbessern. Siehe Konfigurieren &gt; Einstellungen &gt; Erweiterte Einstellungen",
 
-	'ElggUpgrade:error:url_invalid' => 'Unzulässiger Wert für den URL-Pfad.',
-	'ElggUpgrade:error:url_not_unique' => 'Die Aktualisierungs-URL-Pfade müssen eindeutig sein.',
-	'ElggUpgrade:error:title_required' => 'ElggUpgrade-Objekte müssen einen Titel haben.',
-	'ElggUpgrade:error:description_required' => 'ElggUpgrade-Objekte müssen eine Beschreibung haben.',
-	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade-Objekte müssen einen Aktualisierungs-URL-Pfad haben.',
-
 	'deprecated:function' => '%s() wurde durch %s() als veraltet markiert.',
 
 	'admin:pending_upgrades' => 'Es gibt ausstehende Aktualisierungen auf Deiner Community-Seite. Du solltest diese baldmöglichst durchführen.',
@@ -1275,7 +1267,6 @@ Du kannst auf diese Email NICHT antworten.",
  */
 
 	'tag_names:tags' => 'Tags',
-	'tags:site_cloud' => 'Tagcloud',
 
 /**
  * Javascript

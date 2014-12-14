@@ -951,7 +951,7 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  * @param array $vars     Display variables
  *      'count'            The total number of entities across all pages
  *      'offset'           The current indexing offset
- *      'limit'            The number of entities to display per page
+ *      'limit'            The number of entities to display per page (default from settings)
  *      'full_view'        Display the full view of the entities?
  *      'list_class'       CSS class applied to the list
  *      'item_class'       CSS class applied to the list items
@@ -963,7 +963,7 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  * @return string The rendered list of entities
  * @access private
  */
-function elgg_view_entity_list($entities, $vars = array(), $offset = 0, $limit = 10, $full_view = true,
+function elgg_view_entity_list($entities, $vars = array(), $offset = 0, $limit = null, $full_view = true,
 $list_type_toggle = true, $pagination = true) {
 
 	if (!is_int($offset)) {
@@ -995,6 +995,10 @@ $list_type_toggle = true, $pagination = true) {
 	} else {
 		// old function parameters
 		elgg_deprecated_notice("Please update your use of elgg_view_entity_list()", 1.8);
+
+		if ($limit === null) {
+			$limit = elgg_get_config('default_limit');
+		}
 
 		$vars = array(
 			'items' => $entities,

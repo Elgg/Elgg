@@ -280,8 +280,10 @@ CREATE TABLE `prefix_users_entity` (
   `guid` bigint(20) unsigned NOT NULL,
   `name` text NOT NULL,
   `username` varchar(128) NOT NULL DEFAULT '',
-  `password` varchar(32) NOT NULL DEFAULT '',
-  `salt` varchar(8) NOT NULL DEFAULT '',
+  `password` varchar(32) NOT NULL DEFAULT '' COMMENT 'Legacy password hashes',
+  `salt` varchar(8) NOT NULL DEFAULT '' COMMENT 'Legacy password salts',
+  -- 255 chars is recommended by PHP.net to hold future hash formats
+  `password_hash` varchar(255) NOT NULL DEFAULT '',
   `email` text NOT NULL,
   `language` varchar(6) NOT NULL DEFAULT '',
   `banned` enum('yes','no') NOT NULL DEFAULT 'no',

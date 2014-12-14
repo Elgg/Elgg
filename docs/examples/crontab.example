@@ -4,7 +4,7 @@
 # trigger the events. For testing, you can simulate the cronjob by loading the
 # URL in a browser.
 #
-# See http://docs.elgg.org/wiki/Cron for more information
+# See http://learn.elgg.org/en/stable/admin/cron.html for more information
 #
 
 # Location of your site (don't forget the trailing slash!)

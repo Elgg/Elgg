@@ -57,6 +57,10 @@ if (!is_readable("$engine_dir/settings.php")) {
 }
 
 require_once "$engine_dir/settings.php";
+
+// This will be overridden by the DB value but may be needed before the upgrade script can be run.
+$CONFIG->default_limit = 10;
+
 require_once "$engine_dir/load.php";
 
 // Connect to database, load language files, load configuration, init session

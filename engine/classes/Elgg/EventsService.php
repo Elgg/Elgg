@@ -30,7 +30,7 @@ class EventsService extends \Elgg\HooksRegistrationService {
 			self::OPTION_DEPRECATION_VERSION => '',
 		), $options);
 
-		$events = $this->getOrderedHandlers($event, $type);
+		$events = $this->hasHandler($event, $type);
 		if ($events && $options[self::OPTION_DEPRECATION_MESSAGE]) {
 			elgg_deprecated_notice(
 				$options[self::OPTION_DEPRECATION_MESSAGE],
@@ -39,6 +39,7 @@ class EventsService extends \Elgg\HooksRegistrationService {
 			);
 		}
 
+		$events = $this->getOrderedHandlers($event, $type);
 		$args = array($event, $type, $object);
 
 		foreach ($events as $callback) {

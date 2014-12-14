@@ -93,19 +93,30 @@ $body = elgg_view_title($type_str, array(
 	'class' => 'search-heading-category',
 ));
 
-$view = search_get_search_view($vars['params'], 'entity');
-if ($view) {
-	$body .= '<ul class="elgg-list search-list">';
-	foreach ($entities as $entity) {
-		$id = "elgg-{$entity->getType()}-{$entity->getGUID()}";
-		$body .= "<li id=\"$id\" class=\"elgg-item\">";
-		$body .= elgg_view($view, array(
-			'entity' => $entity,
-			'params' => $vars['params'],
-			'results' => $vars['results']
-		));
-		$body .= '</li>';
+$list_body = '';
+$view_params = $vars['params'];
+foreach ($entities as $entity) {
+	$view_params['type'] = $entity->getType();
+	$view_params['subtype'] = $entity->getSubtype();
+	
+	$view = search_get_search_view($view_params, 'entity');
+	if (empty($view)) {
+		continue;
 	}
+	
+	$id = "elgg-{$entity->getType()}-{$entity->getGUID()}";
+	$list_body .= "<li id=\"$id\" class=\"elgg-item\">";
+	$list_body .= elgg_view($view, array(
+		'entity' => $entity,
+		'params' => $view_params,
+		'results' => $vars['results']
+	));
+	$list_body .= '</li>';
+}
+
+if (!empty($list_body)) {
+	$body .= '<ul class="elgg-list search-list">';
+	$body .= $list_body;
 	$body .= $more_link;
 	$body .= '</ul>';
 }

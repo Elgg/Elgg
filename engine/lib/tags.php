@@ -37,7 +37,7 @@ function string_to_tag_array($string) {
  *
  * 	tag_names => array() metadata tag names - must be registered tags
  *
- * 	limit => INT number of tags to return
+ * 	limit => INT number of tags to return (default from settings)
  *
  *  types => null|STR entity type (SQL: type = '$type')
  *
@@ -74,7 +74,7 @@ function elgg_get_tags(array $options = array()) {
 	$defaults = array(
 		'threshold' => 1,
 		'tag_names' => array(),
-		'limit' => 10,
+		'limit' => elgg_get_config('default_limit'),
 
 		'types' => ELGG_ENTITIES_ANY_VALUE,
 		'subtypes' => ELGG_ENTITIES_ANY_VALUE,

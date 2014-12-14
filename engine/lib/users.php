@@ -127,7 +127,7 @@ function get_user_by_email($email) {
  * @param array $options Array of options with keys:
  *
  *   seconds (int)  => Length of period (default 600 = 10min)
- *   limit   (int)  => Limit (default 10)
+ *   limit   (int)  => Limit (default from settings)
  *   offset  (int)  => Offset (default 0)
  *   count   (bool) => Return a count instead of users? (default false)
  *
@@ -151,7 +151,7 @@ function find_active_users($options = array(), $limit = 10, $offset = 0, $count 
  * @return bool
  */
 function send_new_password_request($user_guid) {
-	return _elgg_services()->usersTable->sendNewPasswordRequest($user_guid);
+	return _elgg_services()->passwords->sendNewPasswordRequest($user_guid);
 }
 
 /**
@@ -165,7 +165,7 @@ function send_new_password_request($user_guid) {
  * @return bool
  */
 function force_user_password_reset($user_guid, $password) {
-	return _elgg_services()->usersTable->forcePasswordReset($user_guid, $password);
+	return _elgg_services()->passwords->forcePasswordReset($user_guid, $password);
 }
 
 /**
@@ -178,7 +178,7 @@ function force_user_password_reset($user_guid, $password) {
  * @return bool True on success
  */
 function execute_new_password_request($user_guid, $conf_code, $password = null) {
-	return _elgg_services()->usersTable->executeNewPasswordReset($user_guid, $conf_code, $password);
+	return _elgg_services()->passwords->executeNewPasswordReset($user_guid, $conf_code, $password);
 }
 
 /**
@@ -190,27 +190,7 @@ function generate_random_cleartext_password() {
 	return _elgg_services()->crypto->getRandomString(12, \ElggCrypto::CHARS_PASSWORD);
 }
 
-/**
- * Generate an 8 character Base64 URL salt for the password
- *
- * @return string
- * @access private
- */
-function _elgg_generate_password_salt() {
-	return _elgg_services()->crypto->getRandomString(8);
-}
 
-/**
- * Hash a password for storage. Currently salted MD5.
- *
- * @param \ElggUser $user     The user this is being generated for.
- * @param string    $password Password in clear text
- *
- * @return string
- */
-function generate_user_password(\ElggUser $user, $password) {
-	return md5($password . $user->salt);
-}
 
 /**
  * Simple function which ensures that a username contains only valid characters.
@@ -343,9 +323,24 @@ function register_user($username, $password, $name, $email, $allow_multiple_emai
  * @param string $username The username of the user sending the invitation
  *
  * @return string Invite code
+ * @see elgg_validate_invite_code
  */
 function generate_invite_code($username) {
 	return _elgg_services()->usersTable->generateInviteCode($username);
+}
+
+/**
+ * Validate a user's invite code
+ *
+ * @param string $username The username
+ * @param string $code     The invite code
+ *
+ * @return bool
+ * @see generate_invite_code
+ * @since 1.10
+ */
+function elgg_validate_invite_code($username, $code) {
+	return _elgg_services()->usersTable->validateInviteCode($username, $code);
 }
 
 /**

@@ -10,8 +10,11 @@
 $guid = get_input('guid');
 $page = get_entity($guid);
 if (pages_is_page($page)) {
+	elgg_load_library('elgg:pages');
 	// only allow owners and admin to delete
-	if (elgg_is_admin_logged_in() || elgg_get_logged_in_user_guid() == $page->getOwnerGuid()) {
+	if (elgg_is_admin_logged_in() 
+		|| elgg_get_logged_in_user_guid() == $page->getOwnerGuid()
+		|| pages_can_delete_page($page)) {
 		$container = get_entity($page->container_guid);
 
 		// Bring all child elements forward

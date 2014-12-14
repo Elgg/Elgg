@@ -44,7 +44,7 @@ if ($entity->owner_guid != $user->guid) {
 
 	$annotation = elgg_get_annotation_from_id($annotation_id);
 
-	$title_str = $entity->title;
+	$title_str = $entity->getDisplayName();
 	if (!$title_str) {
 		$title_str = elgg_get_excerpt($entity->description);
 	}

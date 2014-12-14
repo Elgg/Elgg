@@ -5,6 +5,10 @@ Prepare your plugin for the next version of Elgg.
 
 See the administator guides for :doc:`how to upgrade a live site </admin/upgrading>`.
 
+.. contents:: Contents
+   :local:
+   :depth: 2
+
 From 1.9 to 1.10
 ================
 

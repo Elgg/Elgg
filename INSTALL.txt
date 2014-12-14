@@ -1,1 +1,1 @@
-http://learn.elgg.org/en/1.x/intro/install.html
+See http://learn.elgg.org/en/stable/intro/install.html
