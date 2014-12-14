@@ -62,7 +62,7 @@ The best we can do is tell you to look out for what features
 existing developers have expressed interest in working on.
 
 The best way to ensure a feature gets implemented is to discuss it with the core team and implement it yourself.
-See our :doc:`/about/contributing` guide if you're interested. We love new contributors!
+See our :doc:`/contribute/index` guide if you're interested. We love new contributors!
 
 Do not rely on future enhancements if you're on the fence as to whether to use Elgg.
 Evaluate it given the current feature set.

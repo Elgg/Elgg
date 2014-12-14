@@ -1,6 +1,10 @@
 Views
 #####
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Introduction
 ============
 
@@ -73,11 +77,13 @@ Again, the best way to override views is to place them in the appropriate place 
 
 .. note::
 
-	When considering long-term maintenance, overriding views in the core and bundled plugins has a cost: Upgrades may bring changes in views, and if you have overridden them, you will not get those changes. You may want to use `post processing <views#post-processing-views>`__ if the change you're making can be easily made with string replacement methods.  
+	When considering long-term maintenance, overriding views in the core and bundled plugins has a cost: Upgrades may bring changes in views, and if you have overridden them, you will not get those changes. You may want to use :ref:`post processing <guides/views#post-processing-views>` if the change you're making can be easily made with string replacement methods.
 
 .. note::
 
 	Elgg caches view locations. This means that you should disable the system cache while working with views. When you install the changes to a production environment you mush flush the caches.
+
+.. _guides/views#viewtypes:
 
 Viewtypes
 =========
@@ -148,17 +154,19 @@ Note that if you extend the core css view like this:
 
 You **must** do so within code that is executed by engine/start.php (normally this would mean your plugin's init code).  Because the core css view is loaded separately via a ``<link>`` tag, any extensions you add will not have the same context as the rest of your page.
 
+.. _guides/views#post-processing-views:
+
 Post processing views
 =====================
 
 Sometimes it is preferable to process or rewrite the output of a view instead of overriding it.
 
-The output of each view is run through the `plugin hook <guides/events.html#post-plugin-hooks>`__ ``[view, view_name]`` before being returned by ``elgg_view()``. Each registered handler function is passed these arguments:
+The output of each view is run through the :ref:`plugin hook <guides/hooks-list#views>` ``[view, view_name]`` before being returned by ``elgg_view()``. Each registered handler function is passed these arguments:
 
 * ``$hook`` - the string ``"view"``
 * ``$type`` - the view name being rendered (the first argument passed to ``elgg_view()``)
 * ``$returnvalue`` - the rendered output of the view (or the return value of the last handler)
-* ``$params`` - an array containing the key ``viewtype`` with value being the `viewtype <views.html#viewtypes>`__ being rendered
+* ``$params`` - an array containing the key ``viewtype`` with value being the :ref:`viewtype <guides/views#viewtypes>` being rendered
 
 To alter the view output, the handler just needs to alter ``$returnvalue`` and return a new string.
 
@@ -209,6 +217,8 @@ Full and partial entity views
 
 This last parameter is passed to the view as ``$vars['full_view']``. It's up to you what you do with it; the usual behaviour is to only display comments and similar information if this is set to true.
 
+.. _guides/views#listing-entities:
+
 Listing entities
 ================
 
@@ -249,3 +259,13 @@ Before going through the motions of drawing views, Elgg checks the ``$CONFIG->te
 .. code-block:: php
 
 	return $template_handler($view, $vars);
+
+Related
+=======
+
+.. toctree::
+   :maxdepth: 1
+   
+   views/page-structure
+   views/simplecache
+	

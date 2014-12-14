@@ -450,7 +450,7 @@ function elgg_enable_entity($guid, $recursive = true) {
  *
  *  reverse_order_by => BOOL Reverse the default order by clause
  *
- * 	limit => null (10)|INT SQL limit clause (0 means no limit)
+ * 	limit => null (from settings)|INT SQL limit clause (0 means no limit)
  *
  * 	offset => null (0)|INT SQL offset clause
  *
@@ -592,7 +592,7 @@ function elgg_list_entities(array $options = array(), $getter = 'elgg_get_entiti
 
 	$defaults = array(
 		'offset' => (int) max(get_input($offset_key, 0), 0),
-		'limit' => (int) max(get_input('limit', 10), 0),
+		'limit' => (int) max(get_input('limit', elgg_get_config('default_limit')), 0),
 		'full_view' => false,
 		'list_type_toggle' => false,
 		'pagination' => true,

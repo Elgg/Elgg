@@ -136,7 +136,8 @@ class ActionsService {
 			$required_token = generate_action_token($ts);
 	
 			// Validate token
-			if ($token == $required_token) {
+			$token_matches = _elgg_services()->crypto->areEqual($token, $required_token);
+			if ($token_matches) {
 				if ($this->validateTokenTimestamp($ts)) {
 					// We have already got this far, so unless anything
 					// else says something to the contrary we assume we're ok
@@ -249,13 +250,13 @@ class ActionsService {
 	 * @access private
 	 */
 	public function generateActionToken($timestamp) {
-		$site_secret = get_site_secret();
+		$site_secret = _elgg_services()->siteSecret->get();
 		$session_id = _elgg_services()->session->getId();
 		// Session token
 		$st = _elgg_services()->session->get('__elgg_session');
-	
-		if (($site_secret) && ($session_id)) {
-			return md5($site_secret . $timestamp . $session_id . $st);
+
+		if ($session_id && $site_secret) {
+			return _elgg_services()->crypto->getHmac($timestamp . $session_id . $st, $site_secret, 'md5');
 		}
 	
 		return false;

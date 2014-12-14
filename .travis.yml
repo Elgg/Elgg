@@ -14,6 +14,7 @@ branches:
 
 matrix:
   include:
+    # Lint checks for PHP code and composer.json
     - php: 5.6
       env: VARIA=true
       install:
@@ -44,8 +45,11 @@ matrix:
       env: VARIA=true
       install: 
        - sudo easy_install "Sphinx==1.2.2"
+       - sudo easy_install "sphinx-intl"
       script:
+       - sphinx-intl --locale-dir=docs/locale/ build
        - sphinx-build -b html -nW docs docs/_build/html
+       - sphinx-build -b html -D language=es -n docs docs/_build/html
       
 services: 
  - mysql

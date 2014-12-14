@@ -3,8 +3,9 @@ Database
 
 A thorough discussion of Elgg's data model design and motivation.
 
-.. toctree::
-   :maxdepth: 2
+.. contents:: Contents
+   :local:
+   :depth: 2
 
 Overview
 ========
@@ -33,6 +34,16 @@ You can extend entities with extra information in two ways:
    added by a third party after the entity is created. 
    For example, ratings, likes, and votes are annotations.
    (Comments were before 1.9.)
+
+Datamodel
+=========
+
+.. figure:: images/data_model.png
+   :figwidth: 650
+   :align: center
+   :alt: The Elgg data model diagram
+   
+   The Elgg data model diagram
 
 Entities
 ========
@@ -658,6 +669,19 @@ and/or related entities. A few are listed below:
 - ``elgg_get_entities_from_relationship()`` : fetch entities in relationships in a
   variety of ways
 
+E.g. retrieving users who joined your site in January 2014.
+
+.. code:: php
+
+    $entities = elgg_get_entities_from_relationship(array(
+        'relationship' => 'member_of_site',
+        'relationship_guid' => elgg_get_site_entity()->guid,
+        'inverse_relationship' => true,
+
+        'relationship_created_time_lower' => 1388534400, // January 1st 2014
+        'relationship_created_time_upper' => 1391212800, // February 1st 2014
+    ));
+
 Access Control
 ==============
 
@@ -709,21 +733,16 @@ The following rules govern write access:
    does not mean that the owner of a group can edit anything therein)
 -  Admins can edit anything
 
-You can override this behaviour using a `plugin hook`_ called
+You can override this behaviour using a :ref:`plugin hook <design/events#plugin-hooks>` called
 ``permissions_check``, which passes the entity in question to any
 function that has announced it wants to be referenced. Returning
 ``true`` will allow write access; returning ``false`` will deny it. See
-`the plugin hook reference for permissions\_check`_ for more details.
+:ref:`the plugin hook reference for permissions\_check <guides/hooks-list#permission-hooks>` for more details.
 
-Also see
---------
+.. seealso::
 
--  `Engine reference`_
--  `Access library reference`_
+   `Access library reference`_
 
-.. _plugin hook: PluginHooks
-.. _the plugin hook reference for permissions\_check: PluginHooks#permissions_check
-.. _Engine reference : Engine
 .. _Access library reference: http://reference.elgg.org/engine_2lib_2access_8php.html
 
 Schema

@@ -1479,6 +1479,7 @@ class ElggInstaller {
 		_elgg_services()->configTable->set('allow_registration', TRUE, $site->getGUID());
 		_elgg_services()->configTable->set('walled_garden', FALSE, $site->getGUID());
 		_elgg_services()->configTable->set('allow_user_default_access', '', $site->getGUID());
+		_elgg_services()->configTable->set('default_limit', 10, $site->getGUID());
 
 		$this->setSubtypeClasses();
 

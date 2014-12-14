@@ -51,14 +51,6 @@ do {
 
 	if (!$annotations) {
 		// no annotations left
-
-		// set the upgrade as completed
-		$factory = new ElggUpgrade();
-		$upgrade = $factory->getUpgradeFromPath('admin/upgrades/comments');
-		if ($upgrade instanceof ElggUpgrade) {
-			$upgrade->setCompleted();
-		}
-
 		break;
 	}
 
@@ -107,7 +99,7 @@ do {
 				$error_count++;
 			}
 
-			// set the time_updated and last_action for this comment
+			// set the time_updated and last_action for this reply
 			// to the original time_created
 			$fix_ts_query = "
 				UPDATE {$db_prefix}entities
@@ -137,16 +129,16 @@ do {
 		delete_data($delete_query);
 	}
 
-	// update the last action on containers to be the max of all its comments
+	// update the last action on containers to be the max of all its replies
 	// or its own last action
-	$comment_subtype_id = get_subtype_id('object', 'discussion_reply');
+	$reply_subtype_id = get_subtype_id('object', 'discussion_reply');
 
 	foreach (array_unique($container_guids) as $guid) {
 		// can't use a subquery in an update clause without hard to read tricks.
 		$max = get_data_row("SELECT MAX(time_updated) as max_time_updated
 					FROM {$db_prefix}entities e
 					WHERE e.container_guid = $guid
-					AND e.subtype = $comment_subtype_id");
+					AND e.subtype = $reply_subtype_id");
 
 		$query = "
 		UPDATE {$db_prefix}entities

@@ -163,6 +163,10 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
  *                          1. use 'guid' if you want the user's friends
  *                          2. use 'owner_guid' if you want the entities the user's friends own (including in groups)
  *                          3. use 'container_guid' if you want the entities in the user's personal space (non-group)
+ *                          
+ * 	relationship_created_time_lower => null|INT Relationship created time lower boundary in epoch time
+ *
+ * 	relationship_created_time_upper => null|INT Relationship created time upper boundary in epoch time
  *
  * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0

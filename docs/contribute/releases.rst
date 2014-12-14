@@ -7,6 +7,10 @@ This is the process the core team follows for making a new Elgg release.
 We have published this information in the spirit of openness,
 and to streamline onboarding of new team members.
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Requirements
 ============
 
@@ -19,8 +23,13 @@ Requirements
 * Sphinx installed (``easy_install sphinx``)
 * Transifex client installed (``easy_install transifex-client``)
 * Transifex account with access to Elgg project
- 
-1. Prepare and tag the release
+
+1. First new stable minor/major release
+=======================================
+
+Make sure to update the :doc:`/appendix/support` document to include the new minor/major release date and fill in the blanks for the previous release. 
+
+2. Prepare and tag the release
 ==============================
 
 Make sure your local git clone is up to date!
@@ -64,7 +73,7 @@ Update Milestones on Github
  * Mark release milestones as completed
  * Move unresolved tickets in released milestones to later milestones
 
-2. Update the website
+3. Update the website
 =====================
 
 The downloads need to point to the new releases.
@@ -104,7 +113,7 @@ Update homepage, download, and previous download pages
 
 * flush apc cache (via community admin panel)
 
-3. Make the announcement
+4. Make the announcement
 ========================
 
 This should be the very last thing you do.

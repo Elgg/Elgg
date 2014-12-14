@@ -40,7 +40,7 @@ return array(
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://docs.elgg.org/wiki/).",
+	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
 	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
 	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
@@ -449,6 +449,7 @@ return array(
 	'admin:configuration:success' => "Your settings have been saved.",
 	'admin:configuration:fail' => "Your settings could not be saved.",
 	'admin:configuration:dataroot:relative_path' => 'Cannot set "%s" as the dataroot because it is not an absolute path.',
+	'admin:configuration:default_limit' => 'The number of items per page must be at least 1.',
 
 	'admin:unknown_section' => 'Invalid Admin Section.',
 
@@ -612,7 +613,7 @@ three sections:
 	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',
 	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
 	'admin:plugins:warning:invalid' => 'This plugin is invalid: %s',
-	'admin:plugins:warning:invalid:check_docs' => 'Check <a href="http://docs.elgg.org/Invalid_Plugin">the Elgg documentation</a> for troubleshooting tips.',
+	'admin:plugins:warning:invalid:check_docs' => 'Check <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> for troubleshooting tips.',
 	'admin:plugins:cannot_activate' => 'cannot activate',
 
 	'admin:plugins:set_priority:yes' => "Reordered %s.",
@@ -1053,6 +1054,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
+	'installation:default_limit' => "Default number of items per page",
 
 	'admin:site:access:warning' => "This is the privacy setting suggested to users when they create new content. Changing it does not change access to content.",
 	'installation:allow_user_default_access:description' => "Enable this to allow users to set their own suggested privacy setting that overrides the system suggestion.",
@@ -1091,7 +1093,7 @@ Once you have logged in, we highly recommend that you change your password.
 		simply delete the views directory and replace it with the one from the latest
 		package of Elgg downloaded from <a href="http://elgg.org">elgg.org</a>.<br /><br />
 
-		If you need detailed instructions, please visit the <a href="http://docs.elgg.org/wiki/Upgrading_Elgg">
+		If you need detailed instructions, please visit the <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
 		Upgrading Elgg documentation</a>.  If you require assistance, please post to the
 		<a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a>.',
 

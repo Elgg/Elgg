@@ -103,6 +103,13 @@ class UpgradeService {
 			$upgrade_version = $this->getUpgradeFileVersion($upgrade);
 			$success = true;
 
+			if ($upgrade_version <= $version) {
+				// skip upgrade files from before the installation version of Elgg
+				// because the upgrade files from before the installation version aren't
+				// added to the database.
+				continue;
+			}
+			
 			// hide all errors.
 			if ($quiet) {
 				// hide include errors as well as any exceptions that might happen
