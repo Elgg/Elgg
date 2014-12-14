@@ -18,6 +18,11 @@
 function elgg_get_page_owner_guid($guid = 0) {
 	static $page_owner_guid;
 
+	if ($guid === false || $guid === null) {
+		$page_owner_guid = 0;
+		return $page_owner_guid;
+	}
+	
 	if ($guid) {
 		$page_owner_guid = (int)$guid;
 	}

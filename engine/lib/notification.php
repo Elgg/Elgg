@@ -450,14 +450,20 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 		$methods_override = array($methods_override);
 	}
 
+	$result = array();
+
+	$available_methods = _elgg_services()->notifications->getMethods();
+	if (!$available_methods) {
+		// There are no notifications methods to use
+		return $result;
+	}
+
 	// temporary backward compatibility for 1.8 and earlier notifications
 	$event = null;
 	if (isset($params['object']) && isset($params['action'])) {
 		$event = new \Elgg\Notifications\Event($params['object'], $params['action'], $sender);
 	}
 	$params['event'] = $event;
-
-	$result = array();
 
 	foreach ($to as $guid) {
 		// Results for a user are...
@@ -480,6 +486,11 @@ function notify_user($to, $from, $subject, $message, array $params = array(), $m
 			if ($methods) {
 				// Deliver
 				foreach ($methods as $method) {
+					if (!in_array($method, $available_methods)) {
+						// This method was available the last time the user saved their
+						// notification settings. It's however currently disabled.
+						continue;
+					}
 
 					if (_elgg_services()->hooks->hasHandler('send', "notification:$method")) {
 						// 1.9 style notification handler

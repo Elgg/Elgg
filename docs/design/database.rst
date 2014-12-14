@@ -35,6 +35,16 @@ You can extend entities with extra information in two ways:
    For example, ratings, likes, and votes are annotations.
    (Comments were before 1.9.)
 
+Datamodel
+=========
+
+.. figure:: images/data_model.png
+   :figwidth: 650
+   :align: center
+   :alt: The Elgg data model diagram
+   
+   The Elgg data model diagram
+
 Entities
 ========
 

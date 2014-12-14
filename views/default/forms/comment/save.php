@@ -84,6 +84,6 @@ if ($inline) {
 	$comment_guid_input
 	$entity_guid_input
 	$submit_input $cancel_button
-<div>
+</div>
 FORM;
 }
