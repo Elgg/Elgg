@@ -19,7 +19,7 @@ matrix:
       env: VARIA=true
       before_script:
        - node -v
-       - pear install pear/PHP_CodeSniffer
+       - pear install pear/PHP_CodeSniffer-1.5.6
        - mkdir ../elgg-coding-standards
        - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
        - phpenv rehash
