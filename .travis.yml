@@ -19,7 +19,7 @@ matrix:
       env: VARIA=true
       before_script:
        - node -v
-       - pear install pear/PHP_CodeSniffer
+       - composer update squizlabs/php_codesniffer
        - mkdir ../elgg-coding-standards
        - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
        - phpenv rehash
@@ -29,7 +29,7 @@ matrix:
        - wget https://scrutinizer-ci.com/ocular.phar
       script:
        - bash .scripts/travis/check_commit_msgs.sh
-       - phpcs --standard=../elgg-coding-standards/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
+       - vendor/bin/phpcs --standard=../elgg-coding-standards/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
        - npm test
        - sphinx-build -b html -nW docs docs/_build/html
        - sphinx-build -b latex -nW docs docs/_build/latex
