@@ -39,7 +39,7 @@ Before submitting a feature request:
 
 -  Check the `community site`_ for a plugin that has the features you
    need.
--  Consider if you can `develop a plugin`_ that does what you need.
+-  Consider if you can :doc:`develop a plugin </tutorials/index>` that does what you need.
 -  Search through the closed tickets to see if someone else suggested
    the same feature, but got turned down. You’ll need to be able to
    explain why your suggestion should be considered this time.
@@ -51,4 +51,3 @@ Good feature request checklist:
 -  Proposed API
 
 .. _community site: http://community.elgg.org
-.. _develop a plugin: http://learn.elgg.org/en/stable/tutorials/index.html

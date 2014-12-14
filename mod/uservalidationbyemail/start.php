@@ -33,7 +33,7 @@ function uservalidationbyemail_init() {
 	elgg_register_plugin_hook_handler('action', 'user/requestnewpassword', 'uservalidationbyemail_check_request_password');
 
 	// prevent the engine from logging in users via login()
-	elgg_register_event_handler('login:after', 'user', 'uservalidationbyemail_check_manual_login');
+	elgg_register_event_handler('login:before', 'user', 'uservalidationbyemail_check_manual_login');
 
 	// make admin users always validated
 	elgg_register_event_handler('make_admin', 'user', 'uservalidationbyemail_validate_new_admin_user');
