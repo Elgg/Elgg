@@ -1,13 +1,14 @@
 <?php
-$page = $vars['segments'];
+
+$guid = get_input('guid');
 
 elgg_gatekeeper();
 
-if (empty($page[1])) {
+if (!$guid) {
 	register_error(elgg_echo('generic_comment:notfound'));
 	forward(REFERER);
 }
-$comment = get_entity($page[1]);
+$comment = get_entity($guid);
 if (!($comment instanceof \ElggComment) || !$comment->canEdit()) {
 	register_error(elgg_echo('generic_comment:notfound'));
 	forward(REFERER);

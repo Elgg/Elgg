@@ -34,10 +34,12 @@ function _elgg_comments_init() {
  */
 function _elgg_comments_page_handler($page) {
 
-	switch ($page[0]) {
+	$page = elgg_extract(0, $page);
+	switch ($page) {
 
 		case 'edit':
-			echo elgg_view('resources/comments/edit', ['segments' => $page]);
+			set_input('guid', elgg_extract(1, $page));
+			echo elgg_view('resources/comments/edit');
 			return true;
 			break;
 

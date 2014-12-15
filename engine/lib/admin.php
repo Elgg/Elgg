@@ -565,9 +565,16 @@ function _elgg_admin_page_handler($page) {
  * @access private
  */
 function _elgg_admin_plugin_screenshot_page_handler($pages) {
-	echo elgg_view('resources/admin/plugin_screenshot.img', [
-		'segments' => $pages,
-	]);
+	set_input('plugin_id', elgg_extract(0, $pages));
+	set_input('size', elgg_extract(1, $pages, 'thumbnail'));
+
+	// the rest of the string is the filename
+	$filename_parts = array_slice($pages, 2);
+	$filename = implode('/', $filename_parts);
+	$filename = sanitise_filepath($filename, false);
+	set_input('filename', $filename);
+
+	echo elgg_view('resources/admin/plugin_screenshot.img');
 	return true;
 }
 
@@ -588,9 +595,10 @@ function _elgg_admin_plugin_screenshot_page_handler($pages) {
  * @access private
  */
 function _elgg_admin_markdown_page_handler($pages) {
-	echo elgg_view('resources/admin/plugin_text_file', [
-		'segments' => $pages,
-	]);
+	set_input('plugin_id', elgg_extract(0, $pages));
+	set_input('filename', elgg_extract(1, $pages));
+
+	echo elgg_view('resources/admin/plugin_text_file');
 	return true;
 }
 
@@ -649,7 +657,7 @@ function _elgg_admin_maintenance_handler($hook, $type, $info) {
 
 	elgg_unregister_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
 
-	echo elgg_view('resources/maintenance')
+	echo elgg_view('resources/maintenance');
 
 	return false;
 }

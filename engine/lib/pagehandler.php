@@ -230,10 +230,10 @@ function elgg_front_page_handler() {
  * @return void
  */
 function elgg_error_page_handler($hook, $type, $result, $params) {
-	echo elgg_view('resources/error', [
-		'type' => $type,
-		'params' => $params,
-	]);
+	set_input('type', $type);
+	set_input('params', $params);
+
+	echo elgg_view('resources/error');
 	exit;
 }
 
