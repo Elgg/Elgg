@@ -17,13 +17,25 @@ matrix:
     # Lint checks for PHP code and composer.json
     - php: 5.6
       env: VARIA=true
-      install:
+      before_script:
+       - node -v
+       - composer update squizlabs/php_codesniffer
+       - mkdir ../elgg-coding-standards
+       - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
        - phpenv rehash
        - composer install
        - wget https://scrutinizer-ci.com/ocular.phar
       script:
        - bash .scripts/travis/check_commit_msgs.sh
-       - vendor/bin/phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
+       - vendor/bin/phpcs --standard=../elgg-coding-standards/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
+       - npm test
+       - sphinx-build -b html -nW docs docs/_build/html
+       - sphinx-build -b latex -nW docs docs/_build/latex
+         # Flags used here, not in `make html`:
+         #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
+         #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
+       - sphinx-intl --locale-dir=docs/locale/ build
+       - sphinx-build -b html -D language=es -n docs docs/_build/html
        - phpunit --coverage-clover=coverage.clover
        - composer validate
       after_script:
