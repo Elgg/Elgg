@@ -2,9 +2,8 @@
 /**
  * Elgg custom index layout
  * 
- * You can edit the layout of this page with your own layout and style. 
- * Whatever you put in this view will appear on the front page of your site.
- * 
+ * This is just a helper view to make it easier to use Elgg's
+ * page-rendering helper functions like elgg_view_page.
  */
 
 $mod_params = array('class' => 'elgg-module-highlight');

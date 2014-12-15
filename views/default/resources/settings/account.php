@@ -1,6 +1,6 @@
 <?php
 /**
- * Elgg user statistics.
+ * Elgg user account settings.
  *
  * @package Elgg
  * @subpackage Core
@@ -15,9 +15,13 @@ if ((!elgg_get_page_owner_entity()) || (!elgg_get_page_owner_entity()->canEdit()
 	forward('/');
 }
 
-$title = elgg_echo("usersettings:statistics");
+$username = get_input('username');
 
-$content = elgg_view("core/settings/statistics");
+elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
+
+$title = elgg_echo('usersettings:user', array(elgg_get_page_owner_entity()->name));
+
+$content = elgg_view('core/settings/account');
 
 $params = array(
 	'content' => $content,
