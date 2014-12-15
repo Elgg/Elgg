@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.9\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-12-01 01:05+0100\n"
+"POT-Creation-Date: 2014-12-14 06:42-0800\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,66 +16,66 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: ..\..\about\contributing.rst:4
-# 7cd4bd198bbd4efb94a972eef04bfdac
+#: ../../about/contributing.rst:4
+# 5e373bbb3b674fe6bbb95cc21f45e400
 msgid "Contributor Guide"
 msgstr ""
 
-#: ..\..\about\contributing.rst:6
-#: ..\..\about\history.rst:6
-#: ..\..\about\index.rst:6
-#: ..\..\about\releases.rst:6
-#: ..\..\about\roadmap.rst:6
-# 3fddd8ccab194ba896e6569066661646
-# 5631494eb0a9408a93089b3670fbf783
-# f351e8e0dbc645b18ff59ab6c387d52c
-# cd04552db3cd493abc2a51f833538827
-# 89815bfa059f4ff1b4402df5b9309ef7
+#: ../../about/contributing.rst:6
+#: ../../about/history.rst:6
+#: ../../about/index.rst:6
+#: ../../about/releases.rst:6
+#: ../../about/roadmap.rst:6
+# 49f24a80d4cc4a69a7a403313444fe80
+# 400bcd2acce84b84acc859e5d56eb094
+# 0aaf9bfe752a46bdb87f475159fbdc4a
+# 055254f0521845329a5b1e70230dedc7
+# 036c616b2aa84943b84c0faf2f97a662
 msgid "This page has moved."
 msgstr ""
 
-#: ..\..\about\contributing.rst:8
-# 44eef58c7a894669b130b40ecdbae89a
+#: ../../about/contributing.rst:8
+# 8e8cd31c47f642259016789c113ec600
 msgid ":doc:`/contribute/index`"
 msgstr ""
 
-#: ..\..\about\history.rst:4
-# 90cd5fb70b704c18b8968e20223b5ca6
+#: ../../about/history.rst:4
+# f370d7a8d44848d8b634a3de47ecf5dd
 msgid "History"
 msgstr ""
 
-#: ..\..\about\history.rst:8
-# 8104cad4f368454c9e80758a678df7fe
+#: ../../about/history.rst:8
+# b076c464fa5148d38334fadb3f38b6e6
 msgid ":doc:`/appendix/history`"
 msgstr ""
 
-#: ..\..\about\index.rst:4
-# ed83800da02d4a6bb9be736b121327ef
+#: ../../about/index.rst:4
+# 811706bf91d54dbfb766c99b03130488
 msgid "About"
 msgstr ""
 
-#: ..\..\about\index.rst:8
-# e4bc4b11210344c6b37b8eb160e0e8e1
+#: ../../about/index.rst:8
+# 75b684c2a8ad48bf8ef7862f98a9d900
 msgid ":doc:`/appendix/index`"
 msgstr ""
 
-#: ..\..\about\releases.rst:4
-# 5e3c63ff4f9a43c59663713ce8464594
+#: ../../about/releases.rst:4
+# a4cdb7bed9e940f28bd2ebf36ddd15e0
 msgid "Release Policy"
 msgstr ""
 
-#: ..\..\about\releases.rst:8
-# cd14bead6dfe4ee2974802feb2d2ec4f
+#: ../../about/releases.rst:8
+# acba620d72aa4b6b8e7475fc3fbf8704
 msgid ":doc:`/appendix/releases`"
 msgstr ""
 
-#: ..\..\about\roadmap.rst:4
-# 5e1fcca634c14ba3912d46e5148c9634
+#: ../../about/roadmap.rst:4
+# a89c9a284f7445889e4f78699ed5deb6
 msgid "Roadmap"
 msgstr ""
 
-#: ..\..\about\roadmap.rst:8
-# c72fe9b26b24446182add47dda72e6a7
+#: ../../about/roadmap.rst:8
+# 8c60c3c13876471f80a21ef60281f6f3
 msgid ":doc:`/appendix/roadmap`"
 msgstr ""
 
