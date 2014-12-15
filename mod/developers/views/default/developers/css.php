@@ -12,9 +12,6 @@
 #developer-settings-form label {
 	margin-right: 5px;
 }
-.elgg-page .jstree-default.jstree-focused {
-	background-color: transparent;
-}
 .developers-log {
 	background-color: #EBF5FF;
 	border: 1px solid #999;
