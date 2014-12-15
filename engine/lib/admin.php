@@ -503,57 +503,9 @@ function _elgg_admin_sort_page_menu($hook, $type, $return, $params) {
  * @access private
  */
 function _elgg_admin_page_handler($page) {
-
-	elgg_admin_gatekeeper();
-	_elgg_admin_add_plugin_settings_menu();
-	elgg_set_context('admin');
-
-	elgg_unregister_css('elgg');
-	elgg_load_js('elgg.admin');
-	elgg_load_js('jquery.jeditable');
-
-	// default to dashboard
-	if (!isset($page[0]) || empty($page[0])) {
-		$page = array('dashboard');
-	}
-
-	// was going to fix this in the page_handler() function but
-	// it's commented to explicitly return a string if there's a trailing /
-	if (empty($page[count($page) - 1])) {
-		array_pop($page);
-	}
-
-	$vars = array('page' => $page);
-
-	// special page for plugin settings since we create the form for them
-	if ($page[0] == 'plugin_settings') {
-		if (isset($page[1]) && (elgg_view_exists("settings/{$page[1]}/edit") || 
-			elgg_view_exists("plugins/{$page[1]}/settings"))) {
-
-			$view = 'admin/plugin_settings';
-			$plugin = elgg_get_plugin_from_id($page[1]);
-			$vars['plugin'] = $plugin;
-
-			$title = elgg_echo("admin:{$page[0]}");
-		} else {
-			forward('', '404');
-		}
-	} else {
-		$view = 'admin/' . implode('/', $page);
-		$title = elgg_echo("admin:{$page[0]}");
-		if (count($page) > 1) {
-			$title .= ' : ' . elgg_echo('admin:' .  implode(':', $page));
-		}
-	}
-
-	// gets content and prevents direct access to 'components' views
-	if ($page[0] == 'components' || !($content = elgg_view($view, $vars))) {
-		$title = elgg_echo('admin:unknown_section');
-		$content = elgg_echo('admin:unknown_section');
-	}
-
-	$body = elgg_view_layout('admin', array('content' => $content, 'title' => $title));
-	echo elgg_view_page($title, $body, 'admin');
+	echo elgg_view('resources/admin', [
+		'segments' => $page,
+	]);
 	return true;
 }
 
@@ -566,41 +518,9 @@ function _elgg_admin_page_handler($page) {
  * @access private
  */
 function _elgg_admin_plugin_screenshot_page_handler($pages) {
-	// only admins can use this for security
-	elgg_admin_gatekeeper();
-
-	$plugin_id = elgg_extract(0, $pages);
-	// only thumbnail or full.
-	$size = elgg_extract(1, $pages, 'thumbnail');
-
-	// the rest of the string is the filename
-	$filename_parts = array_slice($pages, 2);
-	$filename = implode('/', $filename_parts);
-	$filename = sanitise_filepath($filename, false);
-
-	$plugin = elgg_get_plugin_from_id($plugin_id);
-	if (!$plugin) {
-		$file = elgg_get_root_path() . '_graphics/icons/default/medium.png';
-	} else {
-		$file = $plugin->getPath() . $filename;
-		if (!file_exists($file)) {
-			$file = elgg_get_root_path() . '_graphics/icons/default/medium.png';
-		}
-	}
-
-	header("Content-type: image/jpeg");
-
-	// resize to 100x100 for thumbnails
-	switch ($size) {
-		case 'thumbnail':
-			echo get_resized_image_from_existing_file($file, 100, 100, true);
-			break;
-
-		case 'full':
-		default:
-			echo file_get_contents($file);
-			break;
-	}
+	echo elgg_view('resources/admin/plugin_screenshot.img', [
+		'segments' => $pages,
+	]);
 	return true;
 }
 
@@ -621,58 +541,9 @@ function _elgg_admin_plugin_screenshot_page_handler($pages) {
  * @access private
  */
 function _elgg_admin_markdown_page_handler($pages) {
-	elgg_admin_gatekeeper();
-	_elgg_admin_add_plugin_settings_menu();
-	elgg_set_context('admin');
-
-	elgg_unregister_css('elgg');
-	elgg_load_js('elgg.admin');
-	elgg_load_js('jquery.jeditable');
-	elgg_load_library('elgg:markdown');
-
-	$plugin_id = elgg_extract(0, $pages);
-	$plugin = elgg_get_plugin_from_id($plugin_id);
-	$filename = elgg_extract(1, $pages);
-
-	$error = false;
-	if (!$plugin) {
-		$error = elgg_echo('admin:plugins:markdown:unknown_plugin');
-		$body = elgg_view_layout('admin', array('content' => $error, 'title' => $error));
-		echo elgg_view_page($error, $body, 'admin');
-		return true;
-	}
-
-	$text_files = $plugin->getAvailableTextFiles();
-
-	if (!array_key_exists($filename, $text_files)) {
-		$error = elgg_echo('admin:plugins:markdown:unknown_file');
-	}
-
-	$file = $text_files[$filename];
-	$file_contents = file_get_contents($file);
-
-	if (!$file_contents) {
-		$error = elgg_echo('admin:plugins:markdown:unknown_file');
-	}
-
-	if ($error) {
-		$title = $error;
-		$body = elgg_view_layout('admin', array('content' => $error, 'title' => $title));
-		echo elgg_view_page($title, $body, 'admin');
-		return true;
-	}
-
-	$title = $plugin->getManifest()->getName() . ": $filename";
-	$text = Markdown($file_contents);
-
-	$body = elgg_view_layout('admin', array(
-		// setting classes here because there's no way to pass classes
-		// to the layout
-		'content' => '<div class="elgg-markdown">' . $text . '</div>',
-		'title' => $title
-	));
-	
-	echo elgg_view_page($title, $body, 'admin');
+	echo elgg_view('resources/admin/plugin_text_file', [
+		'segments' => $pages,
+	]);
 	return true;
 }
 
@@ -682,15 +553,7 @@ function _elgg_admin_markdown_page_handler($pages) {
  * @access private
  */
 function _elgg_robots_page_handler() {
-	$site = elgg_get_site_entity();
-	header("Content-type: text/plain");
-	$content = $site->getPrivateSetting('robots.txt');
-	$plugin_content = elgg_trigger_plugin_hook('robots.txt', 'site', array('site' => $site), '');
-	if ($plugin_content) {
-		$content = $content . "\n\n" . $plugin_content;
-	}
-	echo $content;
-
+	echo elgg_view('resources/robots.txt');
 	return true;
 }
 
@@ -739,21 +602,7 @@ function _elgg_admin_maintenance_handler($hook, $type, $info) {
 
 	elgg_unregister_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
 
-	$site = elgg_get_site_entity();
-	$message = $site->getPrivateSetting('elgg_maintenance_message');
-	if (!$message) {
-		$message = elgg_echo('admin:maintenance_mode:default_message');
-	}
-
-	elgg_load_css('maintenance');
-
-	header("HTTP/1.1 503 Service Unavailable");
-
-	$body = elgg_view_layout('maintenance', array(
-		'message' => $message,
-		'site' => $site,
-	));
-	echo elgg_view_page($site->name, $body, 'maintenance');
+	echo elgg_view('resources/maintenance')
 
 	return false;
 }
