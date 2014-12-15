@@ -1,5 +1,9 @@
 <?php
-$pages = $vars['segments'];
+
+$plugin_id = get_input('plugin_id');
+$plugin = elgg_get_plugin_from_id($plugin_id);
+
+$filename = get_input('filename');
 
 elgg_admin_gatekeeper();
 _elgg_admin_add_plugin_settings_menu();
@@ -9,10 +13,6 @@ elgg_unregister_css('elgg');
 elgg_load_js('elgg.admin');
 elgg_load_js('jquery.jeditable');
 elgg_load_library('elgg:markdown');
-
-$plugin_id = elgg_extract(0, $pages);
-$plugin = elgg_get_plugin_from_id($plugin_id);
-$filename = elgg_extract(1, $pages);
 
 $error = false;
 if (!$plugin) {

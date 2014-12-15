@@ -15,6 +15,11 @@ if ((!elgg_get_page_owner_entity()) || (!elgg_get_page_owner_entity()->canEdit()
 	forward('/');
 }
 
+$username = get_input('username');
+
+elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
+elgg_push_breadcrumb(elgg_echo('usersettings:statistics:opt:linktext'));
+
 $title = elgg_echo("usersettings:statistics");
 
 $content = elgg_view("core/settings/statistics");

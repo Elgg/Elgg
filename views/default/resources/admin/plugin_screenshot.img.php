@@ -1,17 +1,11 @@
 <?php
-$pages = $vars['segments'];
 
 // only admins can use this for security
 elgg_admin_gatekeeper();
 
-$plugin_id = elgg_extract(0, $pages);
-// only thumbnail or full.
-$size = elgg_extract(1, $pages, 'thumbnail');
-
-// the rest of the string is the filename
-$filename_parts = array_slice($pages, 2);
-$filename = implode('/', $filename_parts);
-$filename = sanitise_filepath($filename, false);
+$plugin_id = get_input('plugin_id');
+$size = get_input('size');
+$filename = get_input('filename');
 
 $plugin = elgg_get_plugin_from_id($plugin_id);
 if (!$plugin) {
