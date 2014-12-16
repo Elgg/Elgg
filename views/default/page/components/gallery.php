@@ -20,6 +20,7 @@ $items = $vars['items'];
 $offset = $vars['offset'];
 $limit = $vars['limit'];
 $count = $vars['count'];
+$base_url = elgg_extract('base_url', $vars, '');
 $pagination = elgg_extract('pagination', $vars, true);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 $position = elgg_extract('position', $vars, 'after');
@@ -53,6 +54,7 @@ if (isset($vars['item_class'])) {
 $nav = '';
 if ($pagination && $count) {
 	$nav .= elgg_view('navigation/pagination', array(
+		'base_url' => $base_url,
 		'offset' => $offset,
 		'count' => $count,
 		'limit' => $limit,
