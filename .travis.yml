@@ -17,25 +17,22 @@ matrix:
   include:
     - php: 5.3
       env: VARIA=true
-      before_script:
-       - node -v
-       - composer update squizlabs/php_codesniffer
-       - mkdir ../elgg-coding-standards
-       - git clone https://github.com/Elgg/elgg-coding-standards.git ../elgg-coding-standards/
+      install:
        - phpenv rehash
+       - composer update squizlabs/php_codesniffer elgg/sniffs --prefer-source
        - npm install
        - sudo easy_install "Sphinx==1.1.3"
        - sudo easy_install "sphinx-intl"
        - wget https://scrutinizer-ci.com/ocular.phar
       script:
        - bash .scripts/travis/check_commit_msgs.sh
-       - vendor/bin/phpcs --standard=../elgg-coding-standards/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
+       - vendor/bin/phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
        - npm test
-       - sphinx-build -b html -nW docs docs/_build/html
-       - sphinx-build -b latex -nW docs docs/_build/latex
          # Flags used here, not in `make html`:
          #  -n   Run in nit-picky mode. Currently, this generates warnings for all missing references.
          #  -W   Turn warnings into errors. This means that the build stops at the first warning and sphinx-build exits with exit status 1.
+       - sphinx-build -b html -nW docs docs/_build/html
+       - sphinx-build -b latex -nW docs docs/_build/latex
        - sphinx-intl --locale-dir=docs/locale/ build
        - sphinx-build -b html -D language=es -n docs docs/_build/html
        - phpunit --coverage-clover=coverage.clover
