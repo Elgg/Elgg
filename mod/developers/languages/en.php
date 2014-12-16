@@ -37,6 +37,17 @@ return array(
 	
 	// inspection
 	'developers:inspect:help' => 'Inspect configuration of the Elgg framework.',
+	'developers:inspect:actions' => 'Actions',
+	'developers:inspect:events' => 'Events',
+	'developers:inspect:menus' => 'Menus',
+	'developers:inspect:pluginhooks' => 'Plugin Hooks',
+	'developers:inspect:simplecache' => 'Simple Cache',
+	'developers:inspect:views' => 'Views',
+	'developers:inspect:widgets' => 'Widgets',
+	'developers:inspect:webservices' => 'Webservices',
+	'developers:inspect:widgets:context' => 'Context',
+	'developers:inspect:functions' => 'Functions',
+	'developers:inspect:file_location' => 'File location',
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
