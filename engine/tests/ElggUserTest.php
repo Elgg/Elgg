@@ -56,6 +56,7 @@ class ElggCoreUserTest extends \ElggCoreUnitTest {
 		$attributes['username'] = null;
 		$attributes['password'] = null;
 		$attributes['salt'] = null;
+		$attributes['password_hash'] = null;
 		$attributes['email'] = null;
 		$attributes['language'] = null;
 		$attributes['banned'] = 'no';

@@ -36,7 +36,7 @@ echo elgg_view("input/submit", array("value" => elgg_echo("save")));
 
 if ($entity) {
 	$delete_url = "action/groups/delete?guid=" . $entity->getGUID();
-	echo elgg_view("output/confirmlink", array(
+	echo elgg_view("output/url", array(
 		"text" => elgg_echo("groups:delete"),
 		"href" => $delete_url,
 		"confirm" => elgg_echo("groups:deletewarning"),

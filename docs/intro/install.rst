@@ -3,6 +3,10 @@ Installation
 
 Get your own instance of Elgg running in no time.
 
+.. contents:: Contents
+   :local:
+   :depth: 1
+
 Requirements
 ============
 
@@ -82,13 +86,16 @@ to `set the permissions on the directory`_.
 
 .. _set the permissions on the directory: http://en.wikipedia.org/wiki/Filesystem_permissions#Traditional_Unix_permissions
 
-TODO: What is the recommended setting? 755? 644?
-
 If you are using a graphical FTP client to upload files, you can
 usually set permissions by right clicking on the folder and
 selecting 'properties' or 'Get Info'.
 
 .. note::
+
+   Directories must be executable to be read and written to. The 
+   suggested permissions depend upon the exact server and user
+   configuration. If the data directory is owned by the web server
+   user, the recommended permissions are 770.
 
    Setting your data directory to 777 will work, but it is insecure
    and is not recommended. If you are unsure how to correctly set
@@ -395,8 +402,6 @@ if you find a ``.htaccess`` file inside the installation path, but you
 are still getting 404 error, make sure the contents of ``.htaccess`` are
 same as that of ``htaccess_dist``.
 
-`Instructions for testing mod\_rewrite`_
-
 **``mod_rewrite`` isn't installed.**
 
 Check your ``httpd.conf`` to make sure that this module is being loaded
@@ -406,7 +411,6 @@ if the module is being loaded.
 
 **The rules in ``.htaccess`` aren't being obeyed.**
 
-.. _Instructions for testing mod\_rewrite: mod_rewrite_test
 .. _PHP info: http://uk.php.net/manual/en/function.phpinfo.php
 
 In your virtual host configuration settings (which may be contained

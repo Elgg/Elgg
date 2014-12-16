@@ -87,8 +87,9 @@ elgg.upgrades.upgradeBatch = function(offset) {
 		$('.elgg-progressbar').progressbar({ value: numProcessed });
 		var total = $('#upgrade-total').text();
 
+		var percent = 100;
 		if (numProcessed < total) {
-			var percent = parseInt(numProcessed * 100 / total);
+			percent = parseInt(numProcessed * 100 / total);
 
 			/**
 			 * Start next upgrade call. Offset is the total amount of erros so far.
@@ -97,7 +98,6 @@ elgg.upgrades.upgradeBatch = function(offset) {
 			elgg.upgrades.upgradeBatch(errorCount);
 		} else {
 			$('#upgrade-spinner').addClass('hidden');
-			percent = '100';
 
 			if (errorCount > 0) {
 				// Upgrade finished with errors. Give instructions on how to proceed.

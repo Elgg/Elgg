@@ -38,9 +38,13 @@ if ($reply && $reply->canEdit()) {
 	$submit_text = elgg_echo('reply');
 }
 
-$cancel_link = '';
+$cancel_button = '';
 if ($reply) {
-	$cancel_link = "<a class='elgg-cancel mlm' href='#'>" . elgg_echo('cancel') . "</a>";
+	$cancel_button = elgg_view('input/button', array(
+		'value' => elgg_echo('cancel'),
+		'class' => 'elgg-button-cancel mlm',
+		'href' => $entity ? $entity->getURL() : '#',
+	));
 }
 
 $submit_input = elgg_view('input/submit', array('value' => $submit_text));
@@ -71,7 +75,7 @@ echo <<<FORM
 	<div class="foot">
 		$reply_guid_input
 		$topic_guid_input
-		$submit_input $cancel_link
+		$submit_input $cancel_button
 	</div>
 FORM;
 }

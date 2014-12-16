@@ -226,4 +226,6 @@ function _elgg_db_init() {
 	register_shutdown_function('_elgg_db_log_profiling_data');
 }
 
-elgg_register_event_handler('init', 'system', '_elgg_db_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_db_init');
+};

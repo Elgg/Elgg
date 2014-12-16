@@ -6,7 +6,7 @@
 	<version>1.9</version>
 	<category>bundled</category>
 	<category>widget</category>
-	<description>Widget-based tag clouds.</description>
+	<description>Tag cloud related functionality</description>
 	<website>http://elgg.org/</website>
 	<copyright>See COPYRIGHT.txt</copyright>
 	<license>GNU General Public License version 2</license>

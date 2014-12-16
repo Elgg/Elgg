@@ -13,6 +13,7 @@ function legacy_urls_init() {
 	elgg_register_plugin_hook_handler('route', 'bookmarks', 'legacy_urls_bookmarks_forward');
 	elgg_register_plugin_hook_handler('route', 'file', 'legacy_urls_file_forward');
 	elgg_register_plugin_hook_handler('route', 'groups', 'legacy_urls_groups_forward');
+	elgg_register_plugin_hook_handler('route', 'settings', 'legacy_urls_settings_forward');
 	elgg_register_page_handler('forum', 'legacy_urls_forum_handler');
 	elgg_register_plugin_hook_handler('route', 'messageboard', 'legacy_urls_messageboard_forward');
 }
@@ -269,6 +270,29 @@ function legacy_urls_groups_forward($hook, $type, $result) {
 		$group = get_entity($page[0]);
 		if (elgg_instanceof($group, 'group', '', 'ElggGroup')) {
 			legacy_urls_redirect(legacy_urls_prepare_url($group->getURL()));
+			return false;
+		}
+	}
+}
+
+/**
+ * user settings forwarder
+ *
+ */
+function legacy_urls_settings_forward($hook, $type, $result) {
+
+	$page = $result['segments'];
+
+	// easier to work with and no notices
+	$page = array_pad($page, 4, "");
+	
+	if ($page[0] == "plugins") {
+		if (empty($page[2])) {
+			$url = "settings";
+			if (!empty($page[1])) {
+				$url .= "/user/" . $page[1];
+			}
+			legacy_urls_redirect(legacy_urls_prepare_url($url));
 			return false;
 		}
 	}

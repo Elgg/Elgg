@@ -44,7 +44,7 @@ if ($entity->owner_guid != $user->guid) {
 
 	$annotation = elgg_get_annotation_from_id($annotation_id);
 
-	$title_str = $entity->title;
+	$title_str = $entity->getDisplayName();
 	if (!$title_str) {
 		$title_str = elgg_get_excerpt($entity->description);
 	}
@@ -52,18 +52,22 @@ if ($entity->owner_guid != $user->guid) {
 	$site = elgg_get_site_entity();
 
 	$subject = elgg_echo('likes:notifications:subject', array(
-					$user->name,
-					$title_str
-				));
+			$user->name,
+			$title_str
+		),
+		$owner->language
+	);
 
 	$body = elgg_echo('likes:notifications:body', array(
-					$owner->name,
-					$user->name,
-					$title_str,
-					$site->name,
-					$entity->getURL(),
-					$user->getURL()
-				));
+			$owner->name,
+			$user->name,
+			$title_str,
+			$site->name,
+			$entity->getURL(),
+			$user->getURL()
+		),
+		$owner->language
+	);
 
 	notify_user(
 		$entity->owner_guid,

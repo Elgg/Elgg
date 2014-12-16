@@ -37,7 +37,6 @@ class DiContainer {
 	 */
 	protected $cache = array();
 
-	const CLASS_NAME_PATTERN_52 = '/^[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*$/i';
 	const CLASS_NAME_PATTERN_53 = '/^(\\\\?[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*)+$/i';
 
 	/**
@@ -134,11 +133,13 @@ class DiContainer {
 	 * @throws \InvalidArgumentException
 	 */
 	public function setClassName($name, $class_name, $shared = true) {
-		$classname_pattern = version_compare(PHP_VERSION, '5.3', '<') ? self::CLASS_NAME_PATTERN_52 : self::CLASS_NAME_PATTERN_53;
+		$classname_pattern = self::CLASS_NAME_PATTERN_53;
 		if (!is_string($class_name) || !preg_match($classname_pattern, $class_name)) {
 			throw new \InvalidArgumentException('Class names must be valid PHP class names');
 		}
-		$func = create_function('', "return new $class_name();");
+		$func = function () use ($class_name) {
+			return new $class_name();
+		};
 		return $this->setFactory($name, $func, $shared);
 	}
 

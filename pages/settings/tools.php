@@ -15,10 +15,22 @@ if ((!elgg_get_page_owner_entity()) || (!elgg_get_page_owner_entity()->canEdit()
 	forward('/');
 }
 
-$title = elgg_echo("usersettings:plugins");
+$plugin_id = get_input("plugin_id");
 
-$content = elgg_view("core/settings/tools",
-	array('installed_plugins' => elgg_get_plugins()));
+if (empty($plugin_id)) {
+	register_error(elgg_echo('ElggPlugin:MissingID'));
+	forward(REFERER);
+}
+
+$plugin = elgg_get_plugin_from_id($plugin_id);
+
+if (!$plugin) {
+	register_error(elgg_echo('PluginException:InvalidID', array($plugin_id)));
+	forward(REFERER);
+}
+
+$title = $plugin->getManifest()->getName();
+$content = elgg_view_form('plugins/usersettings/save', array(), array('entity' => $plugin));
 
 $params = array(
 	'content' => $content,

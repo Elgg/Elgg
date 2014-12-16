@@ -117,16 +117,16 @@ $CONFIG->installed;
 /**
  * The guid of the current site object.
  *
- * @global int $CONFIG->site_id
+ * @global int $CONFIG->site_guid
  */
-$CONFIG->site_id;
+$CONFIG->site_guid;
 
 /**
- * The guid of the current site object.
+ * Copy of $CONFIG->site_guid
  *
  * @global int $CONFIG->site_id
  */
-$CONFIG->site_guid;
+$CONFIG->site_id;
 
 /**
  * The current site object.
@@ -169,6 +169,13 @@ $CONFIG->sitedescription;
  * @global string $CONFIG->siteemail
  */
 $CONFIG->siteemail;
+
+/**
+ * The default "limit" used in site queries.
+ *
+ * @global int $CONFIG->default_limit
+ */
+$CONFIG->default_limit;
 
 /**
  * The current view type

@@ -6,15 +6,17 @@
  * @subpackage Core
  */
 
-$password = $password2 = '';
-$username = get_input('u');
-$email = get_input('e');
-$name = get_input('n');
-
 if (elgg_is_sticky_form('register')) {
-	extract(elgg_get_sticky_values('register'));
+	$values = elgg_get_sticky_values('register');
 	elgg_clear_sticky_form('register');
+} else {
+	$values = array();
 }
+
+$password = $password2 = '';
+$username = elgg_extract('username', $values, get_input('u'));
+$email = elgg_extract('email', $values, get_input('e'));
+$name = elgg_extract('name', $values, get_input('n'));
 
 ?>
 <div class="mtm">

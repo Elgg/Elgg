@@ -4,6 +4,8 @@
  *
  * @package Elgg
  * @subpackage Test
+ * 
+ * TODO(ewinslow): Move this to Elgg\Database\AccessCollectionsTest
  */
 class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
@@ -20,8 +22,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$user->email = 'fake_email@fake.com' . rand();
 		$user->name = 'fake user';
 		$user->access_id = ACCESS_PUBLIC;
-		$user->salt = _elgg_generate_password_salt();
-		$user->password = generate_user_password($user, rand());
+		$user->setPassword(rand());
 		$user->owner_guid = 0;
 		$user->container_guid = 0;
 		$user->save();
@@ -83,8 +84,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$user->email = 'fake_email@fake.com' . rand();
 		$user->name = 'fake user';
 		$user->access_id = ACCESS_PUBLIC;
-		$user->salt = _elgg_generate_password_salt();
-		$user->password = generate_user_password($user, rand());
+		$user->setPassword(rand());
 		$user->owner_guid = 0;
 		$user->container_guid = 0;
 		$user->save();
@@ -258,8 +258,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 		$user->save();
 
 		foreach (array('get_access_list', 'get_access_array') as $func) {
-			$cache = _elgg_get_access_cache();
-			$cache->clear();
+			_elgg_services()->accessCache->clear();
 
 			// admin users run tests, so disable access
 			elgg_set_ignore_access(true);

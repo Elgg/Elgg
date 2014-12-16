@@ -44,7 +44,7 @@ class Event {
 		}
 
 		if ($actor == null) {
-			$this->actor_guid = elgg_get_logged_in_user_guid();
+			$this->actor_guid = _elgg_services()->session->getLoggedInUserGuid();
 		} else {
 			$this->actor_guid = $actor->getGUID();
 		}

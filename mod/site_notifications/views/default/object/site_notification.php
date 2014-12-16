@@ -38,6 +38,15 @@ $menu = elgg_view_menu('site_notifications', array(
 	'class' => 'elgg-menu-hz elgg-menu-entity',
 ));
 
-echo elgg_view_image_block($icon, $text, array(
-	'image_alt' => $menu,
+$checkbox = elgg_view('input/checkbox', array(
+	'name' => 'notification_id[]', 
+	'value' => $entity->getGUID(), 
+	'default' => false
 ));
+
+$list_body = elgg_view_image_block($icon, $text, array(
+	'image_alt' => $menu,
+	'class' => 'pvn'
+));
+
+echo elgg_view_image_block($checkbox, $list_body);

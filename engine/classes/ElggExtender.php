@@ -194,7 +194,7 @@ abstract class ElggExtender extends \ElggData {
 		$object->time_created = date('c', $this->getTimeCreated());
 		$object->read_access = $this->access_id;
 		$params = array($this->getSubtype() => $this);
-		return elgg_trigger_plugin_hook('to:object', $this->getSubtype(), $params, $object);
+		return _elgg_services()->hooks->trigger('to:object', $this->getSubtype(), $params, $object);
 	}
 
 	/*
@@ -308,7 +308,7 @@ abstract class ElggExtender extends \ElggData {
 		}
 
 		$params = array('extender' => $this);
-		$url = elgg_trigger_plugin_hook('extender:url', $type, $params, $url);
+		$url = _elgg_services()->hooks->trigger('extender:url', $type, $params, $url);
 
 		return elgg_normalize_url($url);
 	}

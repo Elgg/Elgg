@@ -64,6 +64,7 @@ return array(
 	'groups:featuredon' => 'Сделано.',
 	'groups:unfeatured' => 'Убрано.',
 	'groups:featured_error' => 'Ошибка.',
+	'groups:nofeatured' => 'Нет избранных групп',
 	'groups:joinrequest' => 'Попросить членство',
 	'groups:join' => 'Вступить в группу',
 	'groups:leave' => 'Покинуть группу',
@@ -80,27 +81,27 @@ return array(
 	'groups:search_in_group' => "Поиск в этой группе",
 	'groups:acl' => "Группа: %s",
 
-	'discussion:topic:notify:summary' => 'New discussion topic called %s',
-	'discussion:topic:notify:subject' => 'New discussion topic: %s',
+	'discussion:topic:notify:summary' => 'Новое обсуждение %s',
+	'discussion:topic:notify:subject' => 'Новое обсуждение: %s',
 	'discussion:topic:notify:body' =>
-'%s added a new discussion topic to the group %s:
+'%s добавил[а] новое обсуждение в группу %s:
 
-Title: %s
+Тема: %s
 
 %s
 
-View and reply to the discussion topic:
+Посмотреть и ответить по ссылке:
 %s
 ',
 
-	'discussion:reply:notify:summary' => 'New reply in topic: %s',
-	'discussion:reply:notify:subject' => 'New reply in topic: %s',
+	'discussion:reply:notify:summary' => 'Новый ответ в обсуждении: %s',
+	'discussion:reply:notify:subject' => 'Новый ответ в обсуждении: %s',
 	'discussion:reply:notify:body' =>
-'%s replied to the discussion topic %s in the group %s:
+'%s ответил[а] в теме %s в группе %s:
 
 %s
 
-View and reply to the discussion:
+Посмотреть и ответить по ссылке:
 %s
 ',
 
@@ -261,6 +262,7 @@ View and reply to the discussion:
 	'river:join:group:default' => '%s вступил(а) в группу %s',
 	'river:create:object:groupforumtopic' => '%s добавил(а) новое сообщение на форум %s',
 	'river:reply:object:groupforumtopic' => '%s ответил(а) на сообщение %s',
+	'river:reply:view' => 'просмотреть ответ',
 
 	'groups:nowidgets' => 'У группы не определены элементы.',
 
@@ -298,6 +300,8 @@ View and reply to the discussion:
 
 	'groups:invitekilled' => 'Приглашение удалено.',
 	'groups:joinrequestkilled' => 'Запрос приглашения отклонен.',
+	'groups:error:addedtogroup' => "Не удалось добавить %s в группу",
+	'groups:add:alreadymember' => "%s уже состоит в этой группе",
 
 	/**
 	 * ecml

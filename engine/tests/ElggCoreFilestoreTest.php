@@ -43,7 +43,7 @@ class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 		$this->assertTrue(file_exists($filepath));
 		
 		// ensure file removed on user delete
-		// deleting the user calls clear_user_files()
+		// deleting the user calls _elgg_clear_entity_files()
 		$user->delete();
 		$this->assertFalse(file_exists($filepath));
 	}
@@ -71,6 +71,30 @@ class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 		$this->assertTrue($file->delete());
 		$this->assertFalse(file_exists($filepath));
 		$user->delete();
+	}
+
+	function testElggGetFileSimpletype() {
+
+		$tests = array(
+			'x-world/x-svr' => 'general',
+			'application/msword' => 'document',
+			'application/vnd.openxmlformats-officedocument.wordprocessingml.document' => 'document',
+			'application/vnd.oasis.opendocument.text' => 'document',
+			'application/pdf' => 'document',
+			'application/ogg' => 'audio',
+			'text/css' => 'document',
+			'text/plain' => 'document',
+			'audio/midi' => 'audio',
+			'audio/mpeg' => 'audio',
+			'image/jpeg' => 'image',
+			'image/bmp' => 'image',
+			'video/mpeg' => 'video',
+			'video/quicktime' => 'video',
+		);
+
+		foreach ($tests as $mime_type => $simple_type) {
+			$this->assertEqual($simple_type, elgg_get_file_simple_type($mime_type));
+		}
 	}
 
 	protected function createTestUser($username = 'fileTest') {

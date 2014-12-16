@@ -24,9 +24,14 @@ if ($object) {
 
 $site_url = parse_url(elgg_get_site_url());
 $domain = htmlspecialchars($site_url['host'], ENT_NOQUOTES, 'UTF-8');
+$path = '';
+if ($site_url['path']) {
+	$path = htmlspecialchars($site_url['path'], ENT_NOQUOTES, 'UTF-8');
+	$path = "::$path";
+}
 
 $html = <<<__HTML
-	<guid isPermaLink="false">$domain::river::$item->id</guid>
+	<guid isPermaLink="false">$domain$path::river::$item->id</guid>
 	<pubDate>$timestamp</pubDate>
 	<link>$url</link>
 	<title><![CDATA[$title]]></title>

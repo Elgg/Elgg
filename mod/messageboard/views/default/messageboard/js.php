@@ -7,12 +7,12 @@ elgg.messageboard.init = function() {
 
 	// remove the default binding for confirmation since we're doing extra stuff.
 	// @todo remove if we add a hook to the requires confirmation callback
-	form.parent().find('a.elgg-requires-confirmation')
+	form.parent().find('*[data-confirm]')
 		.click(elgg.messageboard.deletePost)
 
 		// double whammy for in case the load order changes.
 		.unbind('click', elgg.ui.requiresConfirmation)
-		.removeClass('elgg-requires-confirmation');
+		.removeAttr('data-confirm');
 };
 
 elgg.messageboard.submit = function(e) {

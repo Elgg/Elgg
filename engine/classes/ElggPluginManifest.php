@@ -173,7 +173,7 @@ class ElggPluginManifest {
 		}
 
 		if (!$manifest_obj) {
-			throw new \PluginException(elgg_echo('PluginException:InvalidManifest',
+			throw new \PluginException(_elgg_services()->translator->translate('PluginException:InvalidManifest',
 						array($this->getPluginID())));
 		}
 
@@ -199,12 +199,12 @@ class ElggPluginManifest {
 		if ($class_exists) {
 			$this->parser = new $parser_class_name($manifest_obj, $this);
 		} else {
-			throw new \PluginException(elgg_echo('PluginException:NoAvailableParser',
+			throw new \PluginException(_elgg_services()->translator->translate('PluginException:NoAvailableParser',
 							array($this->apiVersion, $this->getPluginID())));
 		}
 
 		if (!$this->parser->parse()) {
-			throw new \PluginException(elgg_echo('PluginException:ParserError',
+			throw new \PluginException(_elgg_services()->translator->translate('PluginException:ParserError',
 						array($this->apiVersion, $this->getPluginID())));
 		}
 	}
@@ -227,7 +227,7 @@ class ElggPluginManifest {
 		if ($this->pluginID) {
 			return $this->pluginID;
 		} else {
-			return elgg_echo('unknown');
+			return _elgg_services()->translator->translate('unknown');
 		}
 	}
 
@@ -707,7 +707,7 @@ class ElggPluginManifest {
 	 */
 	static public function getFriendlyCategory($category) {
 		$cat_raw_string = "admin:plugins:category:$category";
-		$cat_display_string = elgg_echo($cat_raw_string);
+		$cat_display_string = _elgg_services()->translator->translate($cat_raw_string);
 		if ($cat_display_string == $cat_raw_string) {
 			$category = str_replace(array('-', '_'), ' ', $category);
 			$cat_display_string = ucwords($category);

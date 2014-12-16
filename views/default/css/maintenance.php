@@ -116,6 +116,8 @@ p:last-child {
 }
 .elgg-output ol {
 	list-style-type: decimal;
+	list-style-position: inside;
+	padding-left: .4em;
 }
 .elgg-output table {
 	border: 1px solid #ccc;
@@ -221,16 +223,3 @@ input[type="radio"] {
 .elgg-state-notice {
 	background-color: #4690D6;
 }
-
-/* ***************************************
-	IE workarounds
-*************************************** */
-.ie7 .elgg-module-maintenance > .elgg-head,
-.ie7 .elgg-module-maintenance > .elgg-foot {
-	width: 530px;
-}
-.ie7 input[type=text],
-.ie7 input[type=password] {
-	width: 94%;
-}
-

@@ -9,8 +9,9 @@ applications along with doing integrations with third-party web
 applications. While we call the API RESTful, it is actually a REST/RPC
 hybrid similar to the APIs provided by sites like Flickr and Twitter.
 
-To create an API for your Elgg site, you need to do 3 things:
+To create an API for your Elgg site, you need to do 4 things:
 
+-  enable the web services plugin
 -  expose methods
 -  setup API authentication
 -  setup user authentication
@@ -18,10 +19,14 @@ To create an API for your Elgg site, you need to do 3 things:
 Additionally, you may want to control what types of authentication are
 available on your site. This will also be covered.
 
+.. contents:: Contents
+   :local:
+   :depth: 2
+
 Exposing methods
 ----------------
 
-The function to use to expose a method is `expose\_function()`_. As an
+The function to use to expose a method is ``elgg_ws_expose_function()``. As an
 example, let's assume you want to expose a function that echos text back
 to the calling application. The function could look like this
 
@@ -38,7 +43,7 @@ API framework:
 
 .. code:: php
 
-    expose_function("test.echo", 
+    elgg_ws_expose_function("test.echo", 
                     "my_echo", 
                      array("string" => array('type' => 'string')),
                      'A testing method which echos back a string',
@@ -80,8 +85,6 @@ possibility is that you want to limit what external developers have
 access to your API. Or maybe you want to limit how many calls a
 developer can make against your API in a single day.
 
-.. _expose\_function(): http://reference.elgg.org/lib_2api_8php.html#6d685d08532695a80625908f846d9cb6
-
 In all of these cases, you can use Elgg's API authentication functions
 to control access. Elgg provides two built-in methods to perform API
 authentication: key based and HMAC signature based. You can also add
@@ -111,7 +114,7 @@ parameter:
 
 .. code:: php
 
-    expose_function("users.active", 
+    elgg_ws_expose_function("users.active", 
                     "count_active_users", 
                      array("minutes" => array('type' => 'int',
                                               'required' => false)),
@@ -136,7 +139,7 @@ http://yoursite.com/services/api/rest/xml/?method=users.active&api_key=1140321cb
 Signature-based authentication
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
-The `HMAC Authentication`_ is similar to what is used with `OAuth`_ or
+The :doc:`web-services/hmac` is similar to what is used with OAuth or
 Amazon's S3 service. This involves both the public and private key. If
 you want to be very sure that the API calls are coming from the
 developer you think they are coming from and you want to make sure the
@@ -148,12 +151,9 @@ authentication.
 OAuth
 ~~~~~
 
-With the addition of the `OAuth`_ plugin, Elgg also fully supports the
+With the addition of the OAuth plugin, Elgg also fully supports the
 OAuth 1.0a authorization standard. Clients can then use standard OAuth
 libraries to make any API calls to the site.
-
-.. _HMAC Authentication: HMAC Authentication
-.. _OAuth: OAuth
 
 User authentication
 -------------------
@@ -192,7 +192,7 @@ GET HTTP requests.
 
 .. code:: php
 
-    expose_function("thewire.post", 
+    elgg_ws_expose_function("thewire.post", 
                     "my_post_to_wire", 
                      array("text" => array('type' => 'string')),
                      'Post to the wire. 140 characters or less',
@@ -267,3 +267,11 @@ for more detail.
 .. _pluggable authentication module (PAM): http://en.wikipedia.org/wiki/Pluggable_Authentication_Modules
 .. _CSRF attack: http://en.wikipedia.org/wiki/Csrf
 .. _Justin Richer's OAuth plugin: http://community.elgg.org/pg/plugins/jricher/read/385119/oauth
+
+Related
+-------
+
+.. toctree::
+   :maxdepth: 1
+   
+   web-services/hmac

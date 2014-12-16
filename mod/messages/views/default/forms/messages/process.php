@@ -23,8 +23,9 @@ echo '<div class="elgg-foot messages-buttonbank">';
 echo elgg_view('input/submit', array(
 	'value' => elgg_echo('delete'),
 	'name' => 'delete',
-	'class' => 'elgg-button-delete elgg-requires-confirmation',
+	'class' => 'elgg-button-delete',
 	'title' => elgg_echo('deleteconfirm:plural'),
+	'data-confirm' => elgg_echo('deleteconfirm:plural')
 ));
 
 if ($vars['folder'] == "inbox") {

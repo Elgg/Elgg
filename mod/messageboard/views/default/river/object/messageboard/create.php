@@ -3,10 +3,13 @@
  * Messageboard river view
  */
 
-$messageboard = $vars['item']->getAnnotation();
+$item = $vars['item'];
+/* @var ElggRiverItem $item */
+
+$messageboard = $item->getAnnotation();
 $excerpt = elgg_get_excerpt($messageboard->value);
 
 echo elgg_view('river/elements/layout', array(
-	'item' => $vars['item'],
+	'item' => $item,
 	'message' => $excerpt,
 ));

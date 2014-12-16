@@ -30,12 +30,7 @@ function row_to_elggrelationship($row) {
  * @return \ElggRelationship|false False if not found
  */
 function get_relationship($id) {
-	$row = _elgg_get_relationship_row($id);
-	if (!$row) {
-		return false;
-	}
-
-	return new \ElggRelationship($row);
+	return _elgg_services()->relationshipsTable->get($id);
 }
 
 /**
@@ -47,11 +42,7 @@ function get_relationship($id) {
  * @access private
  */
 function _elgg_get_relationship_row($id) {
-	global $CONFIG;
-
-	$id = (int)$id;
-
-	return get_data_row("SELECT * FROM {$CONFIG->dbprefix}entity_relationships WHERE id = $id");
+	return _elgg_services()->relationshipsTable->getRow($id);
 }
 
 /**
@@ -62,17 +53,8 @@ function _elgg_get_relationship_row($id) {
  * @return bool
  */
 function delete_relationship($id) {
-	global $CONFIG;
+	return _elgg_services()->relationshipsTable->delete($id);
 
-	$id = (int)$id;
-
-	$relationship = get_relationship($id);
-
-	if (elgg_trigger_event('delete', 'relationship', $relationship)) {
-		return delete_data("DELETE FROM {$CONFIG->dbprefix}entity_relationships WHERE id = $id");
-	}
-
-	return false;
 }
 
 /**
@@ -89,42 +71,7 @@ function delete_relationship($id) {
  * @throws InvalidArgumentException
  */
 function add_entity_relationship($guid_one, $relationship, $guid_two) {
-	global $CONFIG;
-
-	if (strlen($relationship) > \ElggRelationship::RELATIONSHIP_LIMIT) {
-		$msg = "relationship name cannot be longer than " . \ElggRelationship::RELATIONSHIP_LIMIT;
-		throw InvalidArgumentException($msg);
-	}
-
-	$guid_one = (int)$guid_one;
-	$relationship = sanitise_string($relationship);
-	$guid_two = (int)$guid_two;
-	$time = time();
-
-	// Check for duplicates
-	if (check_entity_relationship($guid_one, $relationship, $guid_two)) {
-		return false;
-	}
-
-	$id = insert_data("INSERT INTO {$CONFIG->dbprefix}entity_relationships
-		(guid_one, relationship, guid_two, time_created)
-		VALUES ($guid_one, '$relationship', $guid_two, $time)");
-
-	if ($id !== false) {
-		$obj = get_relationship($id);
-
-		// this event has been deprecated in 1.9. Use 'create', 'relationship'
-		$result_old = elgg_trigger_event('create', $relationship, $obj);
-
-		$result = elgg_trigger_event('create', 'relationship', $obj);
-		if ($result && $result_old) {
-			return true;
-		} else {
-			delete_relationship($result);
-		}
-	}
-
-	return false;
+	return _elgg_services()->relationshipsTable->add($guid_one, $relationship, $guid_two);
 }
 
 /**
@@ -139,23 +86,7 @@ function add_entity_relationship($guid_one, $relationship, $guid_two) {
  * @return \ElggRelationship|false Depending on success
  */
 function check_entity_relationship($guid_one, $relationship, $guid_two) {
-	global $CONFIG;
-
-	$guid_one = (int)$guid_one;
-	$relationship = sanitise_string($relationship);
-	$guid_two = (int)$guid_two;
-
-	$query = "SELECT * FROM {$CONFIG->dbprefix}entity_relationships
-		WHERE guid_one=$guid_one
-			AND relationship='$relationship'
-			AND guid_two=$guid_two limit 1";
-
-	$row = row_to_elggrelationship(get_data_row($query));
-	if ($row) {
-		return $row;
-	}
-
-	return false;
+	return _elgg_services()->relationshipsTable->check($guid_one, $relationship, $guid_two);
 }
 
 /**
@@ -170,31 +101,7 @@ function check_entity_relationship($guid_one, $relationship, $guid_two) {
  * @return bool
  */
 function remove_entity_relationship($guid_one, $relationship, $guid_two) {
-	global $CONFIG;
-
-	$guid_one = (int)$guid_one;
-	$relationship = sanitise_string($relationship);
-	$guid_two = (int)$guid_two;
-
-	$obj = check_entity_relationship($guid_one, $relationship, $guid_two);
-	if ($obj == false) {
-		return false;
-	}
-
-	// this event has been deprecated in 1.9. Use 'delete', 'relationship'
-	$result_old = elgg_trigger_event('delete', $relationship, $obj);
-
-	$result = elgg_trigger_event('delete', 'relationship', $obj);
-	if ($result && $result_old) {
-		$query = "DELETE FROM {$CONFIG->dbprefix}entity_relationships
-			WHERE guid_one = $guid_one
-			AND relationship = '$relationship'
-			AND guid_two = $guid_two";
-
-		return (bool)delete_data($query);
-	} else {
-		return false;
-	}
+	return _elgg_services()->relationshipsTable->remove($guid_one, $relationship, $guid_two);
 }
 
 /**
@@ -209,40 +116,7 @@ function remove_entity_relationship($guid_one, $relationship, $guid_two) {
  * @return true
  */
 function remove_entity_relationships($guid, $relationship = "", $inverse_relationship = false, $type = '') {
-	global $CONFIG;
-
-	$guid = (int) $guid;
-
-	if (!empty($relationship)) {
-		$relationship = sanitize_string($relationship);
-		$where = "AND er.relationship = '$relationship'";
-	} else {
-		$where = "";
-	}
-
-	if (!empty($type)) {
-		$type = sanitize_string($type);
-		if (!$inverse_relationship) {
-			$join = "JOIN {$CONFIG->dbprefix}entities e ON e.guid = er.guid_two";
-		} else {
-			$join = "JOIN {$CONFIG->dbprefix}entities e ON e.guid = er.guid_one";
-			$where .= " AND ";
-		}
-		$where .= " AND e.type = '$type'";
-	} else {
-		$join = "";
-	}
-
-	$guid_col = $inverse_relationship ? "guid_two" : "guid_one";
-
-	delete_data("
-		DELETE er FROM {$CONFIG->dbprefix}entity_relationships AS er
-		$join
-		WHERE $guid_col = $guid
-		$where
-	");
-
-	return true;
+	return _elgg_services()->relationshipsTable->removeAll($guid, $relationship, $inverse_relationship, $type);
 }
 
 /**
@@ -255,15 +129,7 @@ function remove_entity_relationships($guid, $relationship = "", $inverse_relatio
  * @return \ElggRelationship[]
  */
 function get_entity_relationships($guid, $inverse_relationship = false) {
-	global $CONFIG;
-
-	$guid = (int)$guid;
-
-	$where = ($inverse_relationship ? "guid_two='$guid'" : "guid_one='$guid'");
-
-	$query = "SELECT * from {$CONFIG->dbprefix}entity_relationships where {$where}";
-
-	return get_data($query, "row_to_elggrelationship");
+	return _elgg_services()->relationshipsTable->getAll($guid, $inverse_relationships);
 }
 
 /**
@@ -297,55 +163,16 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
  *                          1. use 'guid' if you want the user's friends
  *                          2. use 'owner_guid' if you want the entities the user's friends own (including in groups)
  *                          3. use 'container_guid' if you want the entities in the user's personal space (non-group)
+ *                          
+ * 	relationship_created_time_lower => null|INT Relationship created time lower boundary in epoch time
+ *
+ * 	relationship_created_time_upper => null|INT Relationship created time upper boundary in epoch time
  *
  * @return \ElggEntity[]|mixed If count, int. If not count, array. false on errors.
  * @since 1.7.0
  */
 function elgg_get_entities_from_relationship($options) {
-	$defaults = array(
-		'relationship' => null,
-		'relationship_guid' => null,
-		'inverse_relationship' => false,
-		'relationship_join_on' => 'guid',
-	);
-
-	$options = array_merge($defaults, $options);
-
-	$join_column = "e.{$options['relationship_join_on']}";
-	$clauses = elgg_get_entity_relationship_where_sql($join_column, $options['relationship'],
-		$options['relationship_guid'], $options['inverse_relationship']);
-
-	if ($clauses) {
-		// merge wheres to pass to get_entities()
-		if (isset($options['wheres']) && !is_array($options['wheres'])) {
-			$options['wheres'] = array($options['wheres']);
-		} elseif (!isset($options['wheres'])) {
-			$options['wheres'] = array();
-		}
-
-		$options['wheres'] = array_merge($options['wheres'], $clauses['wheres']);
-
-		// merge joins to pass to get_entities()
-		if (isset($options['joins']) && !is_array($options['joins'])) {
-			$options['joins'] = array($options['joins']);
-		} elseif (!isset($options['joins'])) {
-			$options['joins'] = array();
-		}
-
-		$options['joins'] = array_merge($options['joins'], $clauses['joins']);
-
-		if (isset($options['selects']) && !is_array($options['selects'])) {
-			$options['selects'] = array($options['selects']);
-		} elseif (!isset($options['selects'])) {
-			$options['selects'] = array();
-		}
-
-		$select = array('r.id');
-
-		$options['selects'] = array_merge($options['selects'], $select);
-	}
-
-	return elgg_get_entities_from_metadata($options);
+	return _elgg_services()->relationshipsTable->getEntities($options);
 }
 
 /**
@@ -364,41 +191,9 @@ function elgg_get_entities_from_relationship($options) {
  * @access private
  */
 function elgg_get_entity_relationship_where_sql($column, $relationship = null,
-$relationship_guid = null, $inverse_relationship = false) {
-
-	if ($relationship == null && $relationship_guid == null) {
-		return '';
-	}
-
-	global $CONFIG;
-
-	$wheres = array();
-	$joins = array();
-
-	if ($inverse_relationship) {
-		$joins[] = "JOIN {$CONFIG->dbprefix}entity_relationships r on r.guid_one = $column";
-	} else {
-		$joins[] = "JOIN {$CONFIG->dbprefix}entity_relationships r on r.guid_two = $column";
-	}
-
-	if ($relationship) {
-		$wheres[] = "r.relationship = '" . sanitise_string($relationship) . "'";
-	}
-
-	if ($relationship_guid) {
-		if ($inverse_relationship) {
-			$wheres[] = "r.guid_two = '$relationship_guid'";
-		} else {
-			$wheres[] = "r.guid_one = '$relationship_guid'";
-		}
-	}
-
-	if ($where_str = implode(' AND ', $wheres)) {
-
-		return array('wheres' => array("($where_str)"), 'joins' => $joins);
-	}
-
-	return '';
+		$relationship_guid = null, $inverse_relationship = false) {
+	return _elgg_services()->relationshipsTable->getEntityRelationshipWhereSql(
+		$column, $relationship, $relationship_guid, $inverse_relationship);
 }
 
 /**
@@ -426,10 +221,7 @@ function elgg_list_entities_from_relationship(array $options = array()) {
  * @since 1.8.0
  */
 function elgg_get_entities_from_relationship_count(array $options = array()) {
-	$options['selects'][] = "COUNT(e.guid) as total";
-	$options['group_by'] = 'r.guid_two';
-	$options['order_by'] = 'total desc';
-	return elgg_get_entities_from_relationship($options);
+	return _elgg_services()->relationshipsTable->getEntitiesFromCount($options);
 }
 
 /**

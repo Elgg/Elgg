@@ -15,9 +15,10 @@ function discussion_handle_all_page() {
 		'type' => 'object',
 		'subtype' => 'groupforumtopic',
 		'order_by' => 'e.last_action desc',
-		'limit' => 20,
+		'limit' => max(20, elgg_get_config('default_limit')),
 		'full_view' => false,
 		'no_results' => elgg_echo('discussion:none'),
+		'preload_owners' => true,
 	));
 
 	$title = elgg_echo('discussion:latest');
@@ -58,11 +59,12 @@ function discussion_handle_list_page($guid) {
 	$options = array(
 		'type' => 'object',
 		'subtype' => 'groupforumtopic',
-		'limit' => 20,
+		'limit' => max(20, elgg_get_config('default_limit')),
 		'order_by' => 'e.last_action desc',
 		'container_guid' => $guid,
 		'full_view' => false,
 		'no_results' => elgg_echo('discussion:none'),
+		'preload_owners' => true,
 	);
 	$content = elgg_list_entities($options);
 

@@ -7,8 +7,6 @@
  * @since 1.9
  */
 
-elgg_register_event_handler('init', 'system', '_elgg_comments_init');
-
 /**
  * Comments initialization function
  *
@@ -193,3 +191,7 @@ function _elgg_comments_permissions_override($hook, $type, $return, $params) {
 	
 	return $return;
 }
+
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_comments_init');
+};

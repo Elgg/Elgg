@@ -34,8 +34,6 @@ $elgg_init = elgg_view('js/initialize_elgg');
 
 $html5shiv_url = elgg_normalize_url('vendors/html5shiv.js');
 $ie_url = elgg_get_simplecache_url('css', 'ie');
-$ie8_url = elgg_get_simplecache_url('css', 'ie8');
-$ie7_url = elgg_get_simplecache_url('css', 'ie7');
 
 ?>
 
@@ -52,12 +50,6 @@ foreach ($css as $url) {
 ?>
 	<!--[if gt IE 8]>
 		<link rel="stylesheet" href="<?php echo $ie_url; ?>" />
-	<![endif]-->
-	<!--[if IE 8]>
-		<link rel="stylesheet" href="<?php echo $ie8_url; ?>" />
-	<![endif]-->
-	<!--[if IE 7]>
-		<link rel="stylesheet" href="<?php echo $ie7_url; ?>" />
 	<![endif]-->
 
 	<script><?php echo $elgg_init; ?></script>

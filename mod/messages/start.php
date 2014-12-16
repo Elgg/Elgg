@@ -128,8 +128,7 @@ function messages_page_handler($page) {
  */
 function messages_notifier() {
 	if (elgg_is_logged_in()) {
-		$class = "elgg-icon elgg-icon-mail";
-		$text = "<span class='$class'></span>";
+		$text = elgg_view_icon("mail");
 		$tooltip = elgg_echo("messages");
 		
 		// get unread messages
@@ -306,14 +305,16 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		$recipient = get_user($recipient_guid);
 		$sender = get_user($sender_guid);
 		
-		$subject = elgg_echo('messages:email:subject');
+		$subject = elgg_echo('messages:email:subject', array(), $recipient->language);
 		$body = elgg_echo('messages:email:body', array(
-			$sender->name,
-			$message_contents,
-			elgg_get_site_url() . "messages/inbox/" . $recipient->username,
-			$sender->name,
-			elgg_get_site_url() . "messages/compose?send_to=" . $sender_guid
-		));
+				$sender->name,
+				$message_contents,
+				elgg_get_site_url() . "messages/inbox/" . $recipient->username,
+				$sender->name,
+				elgg_get_site_url() . "messages/compose?send_to=" . $sender_guid
+			),
+			$recipient->language
+		);
 
 		notify_user($recipient_guid, $sender_guid, $subject, $body);
 	}
@@ -347,14 +348,14 @@ function count_unread_messages() {
  * Returns the unread messages in a user's inbox
  *
  * @param int  $user_guid GUID of user whose inbox we're counting (0 for logged in user)
- * @param int  $limit     Number of unread messages to return (default = 10)
+ * @param int  $limit     Number of unread messages to return (default from settings)
  * @param int  $offset    Start at a defined offset (for listings)
  * @param bool $count     Switch between entities array or count mode
  *
  * @return array, int (if $count = true)
  * @since 1.9
  */
-function messages_get_unread($user_guid = 0, $limit = 10, $offset = 0, $count = false) {
+function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count = false) {
 	if (!$user_guid) {
 		$user_guid = elgg_get_logged_in_user_guid();
 	}
@@ -367,6 +368,10 @@ function messages_get_unread($user_guid = 0, $limit = 10, $offset = 0, $count = 
 	foreach ($strings as $string) {
 		$id = elgg_get_metastring_id($string);
 		$map[$string] = $id;
+	}
+
+	if ($limit === null) {
+		$limit = elgg_get_config('default_limit');
 	}
 
 	$options = array(
@@ -390,6 +395,7 @@ function messages_get_unread($user_guid = 0, $limit = 10, $offset = 0, $count = 
 		'limit' => $limit,
 		'offset' => $offset,
 		'count' => $count,
+		'distinct' => false,
 	);
 
 	return elgg_get_entities_from_metadata($options);

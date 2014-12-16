@@ -280,7 +280,7 @@ return array(
 	'profile:edit:default' => 'Editar os campos do perfil.',
 	'profile:label' => "Nome do perfil",
 	'profile:type' => "Tipo de perfil",
-	'profile:editdefault:delete:fail' => 'Non foi posíbel eliminar o campo de perfil predeterminado.',
+	'profile:editdefault:delete:fail' => 'Non foi posíbel eliminar o campo do perfil.',
 	'profile:editdefault:delete:success' => 'Eliminouse o campo de perfil',
 	'profile:defaultprofile:reset' => 'Restablecéronse os campos de perfil predeterminados do sistema.',
 	'profile:resetdefault' => 'Restablecer os campos de perfil predeterminados do sistema',
@@ -904,7 +904,6 @@ Os cambios só afectarán a novos usuarios.',
 	'title' => "Títul",
 	'description' => "Descrición",
 	'tags' => "Etiquetas",
-	'spotlight' => "Destacado",
 	'all' => "Tod",
 	'mine' => "Propio",
 
@@ -915,7 +914,6 @@ Os cambios só afectarán a novos usuarios.',
 	'relationships' => "Relacións",
 	'metadata' => "Metadatos",
 	'tagcloud' => "Nube de etiquetas",
-	'tagcloud:allsitetags' => "Etiquetas globais",
 
 	'on' => 'Activado',
 	'off' => 'Desactivado',
@@ -1094,12 +1092,6 @@ Atopará instrucións detalladas na <a href="http://docs.elgg.org/wiki/Upgrading
 	'upgrade:site_secret_warning:moderate' => "Recomendámoslle que volva xerar a chave do sitio para mellorar a seguranza do sistema. Pode facelo desde «Configurar → Configuración → Avanzada».",
 	'upgrade:site_secret_warning:weak' => "Recomendámoslle encarecidamente que volva xerar a chave do sitio para mellorar a seguranza do sistema. Pode facelo desde «Configurar → Configuración → Avanzada».",
 
-	'ElggUpgrade:error:url_invalid' => 'Valor non válido para un URL.',
-	'ElggUpgrade:error:url_not_unique' => 'Os URL de anovación deben ser únicos.',
-	'ElggUpgrade:error:title_required' => 'Os obxectos ElggUpgrade necesitan un título.',
-	'ElggUpgrade:error:description_required' => 'Os obxectos ElggUpgrade necesitan unha descrición.',
-	'ElggUpgrade:error:upgrade_url_required' => 'Os obxectos ElggUpgrade necesitan un URL de anovación.',
-
 	'deprecated:function' => 'A función «%s()» está obsoleta, substitúaa por «%s()».',
 
 	'admin:pending_upgrades' => 'O sitio ten anovacións pendentes que requiren da súa atención inmediata.',
@@ -1109,7 +1101,7 @@ Atopará instrucións detalladas na <a href="http://docs.elgg.org/wiki/Upgrading
 	'admin:upgrades:none' => 'A instalación está actualizada.',
 
 	'upgrade:item_count' => 'É necesario anovar <b>%s</b> elementos.',
-	'upgrade:warning' => '<b>Aviso:</b> dependendo da magnitude do sitio, a anovación pode levar unha cantidade considerábel de tempo.',
+	'upgrade:warning' => '<b>Advertencia:</b> En sitios grandes, esta anovación pode levar bantante tempo.',
 	'upgrade:success_count' => 'Anovado:',
 	'upgrade:error_count' => 'Erros:',
 	'upgrade:river_update_failed' => 'Non foi posíbel actualizar a entrada da onda para o elemento con identificador «%s».',
@@ -1171,7 +1163,7 @@ Cambiouse o seu contrasinal.",
 
 Restableceuse o seu contrasinal, que agora é «%s».",
 
-	'email:changereq:subject' => "Solicitude de cambio de contrasinal",
+	'email:changereq:subject' => "Solicitude de cambio de contrasinal.",
 	'email:changereq:body' => "Ola, %s.
 
 Alguén (desde o enderezo IP %s) solicitou cambiar o contrasinal da súa conta.
@@ -1266,7 +1258,6 @@ Non responda a esta mensaxe.",
  */
 
 	'tag_names:tags' => 'Etiquetas',
-	'tags:site_cloud' => 'Nube de etiquetas global',
 
 /**
  * Javascript
@@ -1282,7 +1273,7 @@ Non responda a esta mensaxe.",
 	'elgg:powered' => "Construído con Elgg",
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 
 	"aa" => "Afar",
@@ -1302,6 +1293,7 @@ Non responda a esta mensaxe.",
 	"bo" => "Tibetano",
 	"br" => "Bretón",
 	"ca" => "Catalán",
+	"cmn" => "Chinés mandarín", // ISO 639-3
 	"co" => "Cors",
 	"cs" => "Checho",
 	"cy" => "Galés",
@@ -1378,6 +1370,7 @@ Non responda a esta mensaxe.",
 	"pl" => "Polaco",
 	"ps" => "Pashto",
 	"pt" => "Portugués",
+	"pt_br" => 'Portugués do Brasil',
 	"qu" => "Quechua",
 	"rm" => "Retorromance",
 	"rn" => "Rundi",
