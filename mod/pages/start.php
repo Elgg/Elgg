@@ -239,6 +239,7 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 		return $return;
 	}
 
+	elgg_load_library('elgg:pages');
 	$entity = $params['entity'];
 	$handler = elgg_extract('handler', $params, false);
 	if ($handler != 'pages') {
@@ -246,7 +247,9 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	// remove delete if not owner or admin
-	if (!elgg_is_admin_logged_in() && elgg_get_logged_in_user_guid() != $entity->getOwnerGuid()) {
+	if (!elgg_is_admin_logged_in() 
+		&& elgg_get_logged_in_user_guid() != $entity->getOwnerGuid() 
+		&& ! pages_can_delete_page($entity)) {
 		foreach ($return as $index => $item) {
 			if ($item->getName() == 'delete') {
 				unset($return[$index]);

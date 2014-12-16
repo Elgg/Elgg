@@ -23,6 +23,7 @@ $_elgg_special_river_catch = true;
 
 
 $item = $vars['item'];
+/* @var ElggRiverItem $item */
 
 echo elgg_view($item->getView(), $vars);
 

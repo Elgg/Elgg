@@ -199,7 +199,7 @@ class ElggBatch
 
 		// store these so we can compare later
 		$this->offset = elgg_extract('offset', $options, 0);
-		$this->limit = elgg_extract('limit', $options, 10);
+		$this->limit = elgg_extract('limit', $options, elgg_get_config('default_limit'));
 
 		// if passed a callback, create a new \ElggBatch with the same options
 		// and pass each to the callback.
@@ -327,7 +327,7 @@ class ElggBatch
 			_elgg_services()->db->enableQueryCache();
 			return true;
 		} else {
-			_elgg_services()->db->disableQueryCache();
+			_elgg_services()->db->enableQueryCache();
 			return false;
 		}
 	}

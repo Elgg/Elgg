@@ -3,10 +3,14 @@
  * Activity widget content view
  */
 
-$num = (int) $vars['entity']->num_display;
+$num_display = sanitize_int($vars['entity']->num_display, false);
+// set default value for display number
+if (!$num_display) {
+	$num_display = 8;
+}
 
 $options = array(
-	'limit' => $num,
+	'limit' => $num_display,
 	'pagination' => false,
 );
 

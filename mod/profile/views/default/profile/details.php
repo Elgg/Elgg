@@ -37,7 +37,7 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 		}
 		$value = $user->$shortname;
 
-		if (!empty($value)) {
+		if (!is_null($value)) {
 
 			// fix profile URLs populated by https://github.com/Elgg/Elgg/issues/5232
 			// @todo Replace with upgrade script, only need to alter users with last_update after 1.8.13

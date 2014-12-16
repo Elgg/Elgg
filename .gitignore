@@ -2,6 +2,7 @@
 /engine/settings.php
 /.htaccess
 /mod/*
+composer.lock
 
 # Don't check in third party code
 node_modules

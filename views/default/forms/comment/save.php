@@ -46,14 +46,14 @@ if ($comment && $comment->canEdit()) {
 	$submit_input = elgg_view('input/submit', array('value' => elgg_echo('comment')));
 }
 
-$cancel_link = '';
+$cancel_button = '';
 if ($comment) {
-	$cancel_link = elgg_format_element('a', array(
-		'class' => 'elgg-cancel mlm',
+	$cancel_button = elgg_view('input/button', array(
+		'value' => elgg_echo('cancel'),
+		'class' => 'elgg-button-cancel mlm',
 		'href' => $entity ? $entity->getURL() : '#',
-	), elgg_echo('cancel'));
+	));
 }
-
 
 if ($inline) {
 	$comment_input = elgg_view('input/text', array(
@@ -83,7 +83,7 @@ if ($inline) {
 	$is_edit_page_input
 	$comment_guid_input
 	$entity_guid_input
-	$submit_input $cancel_link
-<div>
+	$submit_input $cancel_button
+</div>
 FORM;
 }

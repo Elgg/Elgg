@@ -4,14 +4,15 @@
  *
  */
 
+$num_display = sanitize_int($vars['entity']->num_display, false);
 // set default value for display number
-if (!isset($vars['entity']->num_display)) {
-	$vars['entity']->num_display = 12;
+if (!$num_display) {
+	$num_display = 12;
 }
 
 $params = array(
 	'name' => 'params[num_display]',
-	'value' => $vars['entity']->num_display,
+	'value' => $num_display,
 	'options' => array(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 12, 15, 20, 30, 50, 100),
 );
 $display_dropdown = elgg_view('input/select', $params);

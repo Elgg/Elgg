@@ -19,7 +19,7 @@ if (elgg_in_context('widget')) {
 
 $offset = abs((int) elgg_extract('offset', $vars, 0));
 // because you can say $vars['limit'] = 0
-if (!$limit = (int) elgg_extract('limit', $vars, 10)) {
+if (!$limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'))) {
 	$limit = 10;
 }
 
@@ -50,12 +50,12 @@ $current_page = ceil($offset / $limit) + 1;
 
 $pages = new stdClass();
 $pages->prev = array(
-	'text' => '&laquo; ' . elgg_echo('previous'),
+	'text' => elgg_echo('previous'),
 	'href' => '',
 	'is_trusted' => true,
 );
 $pages->next = array(
-	'text' => elgg_echo('next') . ' &raquo;',
+	'text' => elgg_echo('next'),
 	'href' => '',
 	'is_trusted' => true,
 );

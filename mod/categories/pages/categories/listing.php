@@ -5,7 +5,7 @@
  * @package ElggCategories
  */
 
-$limit = get_input("limit", 10);
+$limit = get_input("limit", elgg_get_config('default_limit'));
 $offset = get_input("offset", 0);
 $category = get_input("category");
 $owner_guid = get_input("owner_guid", ELGG_ENTITIES_ANY_VALUE);
@@ -20,7 +20,6 @@ $params = array(
 	'type' => $type,
 	'subtype' => $subtype,
 	'owner_guid' => $owner_guid,
-	'limit' => $limit,
 	'full_view' => FALSE,
 	'metadata_case_sensitive' => FALSE,
 );

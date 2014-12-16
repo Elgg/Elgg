@@ -50,7 +50,7 @@ foreach ($batch as $user_row) {
 	if (!is_dir($bucket_dir)) {
 		// same perms as ElggDiskFilestore.
 		if (!mkdir($bucket_dir, 0700, true)) {
-			elgg_register_error("[$guid] Failed creating `$bucket_dir`");
+			register_error("[$guid] Failed creating `$bucket_dir`");
 			$num_errors += 1;
 			$helper->markFailure($guid);
 			continue;
@@ -58,7 +58,7 @@ foreach ($batch as $user_row) {
 	}
 
 	if (!rename($from, $to)) {
-		elgg_register_error("[$guid] Failed moving `$from` to `$to`");
+		register_error("[$guid] Failed moving `$from` to `$to`");
 		$num_errors += 1;
 		$helper->markFailure($guid);
 	} else {
@@ -85,7 +85,7 @@ if ($is_complete && !$helper->hasFailures()) {
 
 	// set the upgrade as completed
 	$factory = new ElggUpgrade();
-	$upgrade = $factory->getUpgradeFromURL('admin/upgrades/datadirs');
+	$upgrade = $factory->getUpgradeFromPath('admin/upgrades/datadirs');
 	if ($upgrade instanceof ElggUpgrade) {
 		$upgrade->setCompleted();
 	}

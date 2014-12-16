@@ -156,7 +156,7 @@ return array(
 	'dashboard' => "Kojelauta",
 	'dashboard:nowidgets' => "Kojelauta on henkilökohtainen työpöytäsi sivustolla. Klikkaa \"Lisää vimpaimia\" lisätäksesi kojelaudalle vimpaimia, joiden avulla voit seurata sivuston sisältöä ja toimintaa.",
 
-	'widgets:add' => 'Lisää vimpaimia',
+	'widgets:add' => 'Vimpaimet',
 	'widgets:add:description' => "Klikkaa alla olevia vimpaimia lisätäksesi ne sivulle.",
 	'widgets:position:fixed' => '(Lukittu sijainti sivulla)',
 	'widget:unavailable' => 'Olet jo lisännyt tämän vimpaimen',
@@ -1067,7 +1067,8 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'installation:minify_css:label' => "Pakkaa CSS (suositus)",
 
 	'installation:htaccess:needs_upgrade' => "Elggin juuressa oleva .htaccess-tiedosto pitää päivittää syöttämään polku \"__elgg_uri\"-nimiseen GET-parametriin (voit ottaa mallia htaccess_dist-tiedostosta).",
-
+	'installation:htaccess:localhost:connectionfailed' => "Elgg ei saa testattua rewrite-sääntöjä. Tarkista, että curl toimii oikein ja että palvelimelle ei ole määritetty IP-rajoituksia, jotka estävät localhost-yhteydet.",
+	
 	'installation:systemcache:description' => "Välimuisti vähentää liitännäisten latausaikaa tallentamalla muistiin niiden käytössä olevien näkymien sijainnit.",
 	'installation:systemcache:label' => "Käytä välimuistia (suositus)",
 
@@ -1094,7 +1095,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 		Uusimman julkaisun voit ladata osoitteesta
 		<a href="http://elgg.org/download.php">http://elgg.org/download.php</a>.<br /><br />
 
-		Lisätietoja saat <a href="http://learn.elgg.org/en/1.9/admin/upgrading.html">
+		Lisätietoja saat <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
 		Elggin päivitysdokumentaatiosta</a>. Tarvittaessa voit kysyä apua
 		<a href="http://community.elgg.org/groups/discussion/">Elggin tukifoorumilta</a>.',
 

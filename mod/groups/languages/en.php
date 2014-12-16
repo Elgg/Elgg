@@ -175,6 +175,8 @@ View and reply to the discussion:
 	'discussion:reply:error:notfound' => 'The discussion reply was not found',
 	'discussion:reply:error:notdeleted' => 'Could not delete the discussion reply',
 
+	'discussion:search:title' => 'Reply on topic: %s',
+	
 	'admin:groups' => 'Groups',
 
 	'reply:this' => 'Reply to this',

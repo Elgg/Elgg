@@ -7,5 +7,7 @@ Discover if Elgg is right for your community.
    :maxdepth: 1
   
    features
-   license 
+   /plugins/index
+   license
    install
+   development

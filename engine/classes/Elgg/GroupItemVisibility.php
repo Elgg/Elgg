@@ -46,7 +46,7 @@ class GroupItemVisibility {
 			return new \Elgg\GroupItemVisibility();
 		}
 
-		$user = elgg_get_logged_in_user_entity();
+		$user = _elgg_services()->session->getLoggedInUser();
 		$user_guid = $user ? $user->guid : 0;
 
 		$container_guid = (int) $container_guid;

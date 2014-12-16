@@ -47,14 +47,14 @@ try {
 		// @todo ugh, saving a guid as metadata!
 		$new_user->created_by_guid = elgg_get_logged_in_user_guid();
 
-		$subject = elgg_echo('useradd:subject');
+		$subject = elgg_echo('useradd:subject', array(), $new_user->language);
 		$body = elgg_echo('useradd:body', array(
 			$name,
 			elgg_get_site_entity()->name,
 			elgg_get_site_entity()->url,
 			$username,
 			$password,
-		));
+		), $new_user->language);
 
 		notify_user($new_user->guid, elgg_get_site_entity()->guid, $subject, $body);
 

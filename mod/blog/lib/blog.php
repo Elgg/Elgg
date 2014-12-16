@@ -64,6 +64,8 @@ function blog_get_page_content_list($container_guid = NULL) {
 		'subtype' => 'blog',
 		'full_view' => false,
 		'no_results' => elgg_echo('blog:none'),
+		'preload_owners' => true,
+		'distinct' => false,
 	);
 
 	$current_user = elgg_get_logged_in_user_entity();
@@ -136,6 +138,7 @@ function blog_get_page_content_friends($user_guid) {
 		'relationship_guid' => $user_guid,
 		'relationship_join_on' => 'container_guid',
 		'no_results' => elgg_echo('blog:none'),
+		'preload_owners' => true,
 	);
 
 	$return['content'] = elgg_list_entities_from_relationship($options);
@@ -178,6 +181,8 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 		'subtype' => 'blog',
 		'full_view' => false,
 		'no_results' => elgg_echo('blog:none'),
+		'preload_owners' => true,
+		'distinct' => false,
 	);
 
 	if ($owner_guid) {

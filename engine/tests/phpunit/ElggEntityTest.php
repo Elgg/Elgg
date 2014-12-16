@@ -20,9 +20,6 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
-	/**
-	 * @requires PHP 5.3.2
-	 */
 	public function testDefaultAttributes() {
 		$this->assertEquals(null, $this->obj->guid);
 		$this->assertEquals(null, $this->obj->type);
@@ -37,9 +34,6 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('yes', $this->obj->enabled);
 	}
 
-	/**
-	 * @requires PHP 5.3.2
-	 */
 	public function testSettingAndGettingAttribute() {
 		// Note: before save() subtype returns string, int after
 		// see https://github.com/Elgg/Elgg/issues/5920#issuecomment-25246298
@@ -47,9 +41,6 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('foo', $this->obj->subtype);
 	}
 
-	/**
-	 * @requires PHP 5.3.2
-	 */
 	public function testSettingIntegerAttributes() {
 		foreach (array('access_id', 'owner_guid', 'container_guid') as $name) {
 			$this->obj->$name = '77';
@@ -57,9 +48,6 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 		}
 	}
 
-	/**
-	 * @requires PHP 5.3.2
-	 */
 	public function testSettingUnsettableAttributes() {
 		foreach (array('guid', 'time_updated', 'last_action') as $name) {
 			$this->obj->$name = 'foo';
@@ -67,9 +55,6 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 		}		
 	}
 
-	/**
-	 * @requires PHP 5.3.2
-	 */
 	public function testSettingMetadataNoDatabase() {
 		$this->obj->foo = 'test';
 		$this->assertEquals('test', $this->obj->foo);
@@ -77,16 +62,10 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals('overwrite', $this->obj->foo);
 	}
 
-	/**
-	 * @requires PHP 5.3.2
-	 */
 	public function testGettingNonexistentMetadataNoDatabase() {
 		$this->assertNull($this->obj->foo);
 	}
 
-	/**
-	 * @requires PHP 5.3.2
-	 */
 	public function testSimpleGetters() {
 		$this->obj->type = 'foo';
 		$this->obj->subtype = 'subtype';
@@ -107,9 +86,6 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($this->obj->getTimeUpdated(), $this->obj->time_updated );
 	}
 
-	/**
-	 * @requires PHP 5.3.2
-	 */
 	public function testUnsetAttribute() {
 		$this->obj->access_id = 2;
 		unset($this->obj->access_id);
@@ -117,7 +93,6 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	/**
-	 * @requires PHP 5.3.2
 	 * @expectedException InvalidParameterException
 	 */
 	public function testSaveWithoutType() {
@@ -136,24 +111,15 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 		$this->obj->save();
 	}
 
-	/**
-	 * @requires PHP 5.3.2
-	 */
 	public function testIsEnabled() {
 		$this->assertTrue($this->obj->isEnabled());
 	}
 
-	/**
-	 * @requires PHP 5.3.2
-	 */
 	public function testDisableBeforeSaved() {
 		// false on disable because it's not saved yet.
 		$this->assertFalse($this->obj->disable());
 	}
 
-	/**
-	 * @requires PHP 5.3.2
-	 */
 	public function testToObject() {
 		$keys = array(
 			'guid',

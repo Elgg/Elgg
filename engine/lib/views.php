@@ -507,6 +507,24 @@ function _elgg_views_prepare_head($title) {
 		'name' => 'description',
 		'content' => elgg_get_config('sitedescription')
 	);
+	
+	// https://developer.chrome.com/multidevice/android/installtohomescreen
+	$data['metas'][] = array(
+		'name' => 'viewport',
+		'content' => 'width=device-width',
+	);    
+	$data['metas'][] = array(
+		'name' => 'mobile-web-app-capable',
+		'content' => 'yes',
+	);
+	$data['metas'][] = array(
+		'name' => 'apple-mobile-web-app-capable',
+		'content' => 'yes',
+	);
+	$data['links'][] = array(
+		'rel' => 'apple-touch-icon',
+		'href' => elgg_normalize_url('_graphics/favicon-128.png'),
+	);
 
 	// favicons
 	$params['links'][] = array(
@@ -716,7 +734,7 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
 		$vars['class'] .= ' ' . $item->getLinkClass();
 	}
 
-	if ($item->getHref() === false) {
+	if ($item->getHref() === false || $item->getHref() === null) {
 		$text = $item->getText();
 
 		// if contains elements, don't wrap
@@ -733,9 +751,6 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
 
 	if ($item->getConfirmText()) {
 		$vars['confirm'] = $item->getConfirmText();
-		return elgg_view('output/confirmlink', $vars);
-	} else {
-		unset($vars['confirm']);
 	}
 
 	return elgg_view('output/url', $vars);
@@ -936,19 +951,19 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  * @param array $vars     Display variables
  *      'count'            The total number of entities across all pages
  *      'offset'           The current indexing offset
- *      'limit'            The number of entities to display per page
+ *      'limit'            The number of entities to display per page (default from settings)
  *      'full_view'        Display the full view of the entities?
  *      'list_class'       CSS class applied to the list
  *      'item_class'       CSS class applied to the list items
  *      'pagination'       Display pagination?
  *      'list_type'        List type: 'list' (default), 'gallery'
  *      'list_type_toggle' Display the list type toggle?
- *      'no_results'       Message to display if no results
+ *      'no_results'       Message to display if no results (string|Closure)
  *
  * @return string The rendered list of entities
  * @access private
  */
-function elgg_view_entity_list($entities, $vars = array(), $offset = 0, $limit = 10, $full_view = true,
+function elgg_view_entity_list($entities, $vars = array(), $offset = 0, $limit = null, $full_view = true,
 $list_type_toggle = true, $pagination = true) {
 
 	if (!is_int($offset)) {
@@ -980,6 +995,10 @@ $list_type_toggle = true, $pagination = true) {
 	} else {
 		// old function parameters
 		elgg_deprecated_notice("Please update your use of elgg_view_entity_list()", 1.8);
+
+		if ($limit === null) {
+			$limit = elgg_get_config('default_limit');
+		}
 
 		$vars = array(
 			'items' => $entities,
@@ -1018,7 +1037,7 @@ $list_type_toggle = true, $pagination = true) {
  *      'full_view'  Display the full view of the annotation?
  *      'list_class' CSS Class applied to the list
  *      'offset_key' The url parameter key used for offset
- *      'no_results' Message to display if no results
+ *      'no_results' Message to display if no results (string|Closure)
  *
  * @return string The list of annotations
  * @access private
@@ -1520,6 +1539,28 @@ function _elgg_views_send_header_x_frame_options() {
 }
 
 /**
+ * Checks for usage of core views that have been removed
+ *
+ * @access private
+ */
+function _elgg_views_deprecate_removed_views() {
+	$removed_views = array(
+		"1.10" => array(
+			'core/settings/tools',
+		),
+	);
+
+	$views_svc = _elgg_services()->views;
+	foreach ($removed_views as $version => $names) {
+		foreach ($names as $name) {
+			if ($views_svc->viewExists($name)) {
+				elgg_deprecated_notice("The view $name is no longer used and should not be provided or extended.", $version);
+			}
+		}
+	}
+}
+
+/**
  * Registers deprecated views to avoid making some pages from older plugins
  * completely empty.
  *
@@ -1544,8 +1585,6 @@ function elgg_views_boot() {
 	global $CONFIG;
 
 	elgg_register_simplecache_view('css/ie');
-	elgg_register_simplecache_view('css/ie7');
-	elgg_register_simplecache_view('css/ie8');
 
 	elgg_register_simplecache_view('js/text.js');
 
@@ -1615,5 +1654,8 @@ function elgg_views_boot() {
 	}
 }
 
-elgg_register_event_handler('boot', 'system', 'elgg_views_boot');
-elgg_register_event_handler('init', 'system', 'elgg_views_handle_deprecated_views');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('boot', 'system', 'elgg_views_boot');
+	$events->registerHandler('init', 'system', 'elgg_views_handle_deprecated_views');
+	$events->registerHandler('ready', 'system', '_elgg_views_deprecate_removed_views');
+};

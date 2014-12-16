@@ -32,9 +32,7 @@ function aalborg_theme_init() {
 function aalborg_theme_pagesetup() {
 
 	elgg_unextend_view('page/elements/header', 'search/header');
-	if (elgg_is_logged_in()) {
-		elgg_extend_view('page/elements/sidebar', 'search/header', 0);
-	}
+	elgg_extend_view('page/elements/sidebar', 'search/header', 0);
 
 	if (elgg_is_logged_in()) {
 

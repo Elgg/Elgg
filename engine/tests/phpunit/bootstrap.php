@@ -15,6 +15,7 @@ $CONFIG = (object) array(
 	'dbprefix' => 'elgg_',
 	'boot_complete' => false,
 	'wwwroot' => 'http://localhost/',
+	'site_guid' => 1,
 );
 
 require_once "$engine/load.php";

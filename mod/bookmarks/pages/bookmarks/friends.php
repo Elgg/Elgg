@@ -25,6 +25,7 @@ $content = elgg_list_entities_from_relationship(array(
 	'relationship_guid' => $page_owner->guid,
 	'relationship_join_on' => 'container_guid',
 	'no_results' => elgg_echo('bookmarks:none'),
+	'preload_owners' => true,
 ));
 
 $params = array(

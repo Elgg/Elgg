@@ -4,6 +4,7 @@ return array(
 	'admin:develop_tools' => 'Tools',
 	'admin:develop_tools:sandbox' => 'Theme Sandbox',
 	'admin:develop_tools:inspect' => 'Inspect',
+	'admin:inspect' => 'Inspect',
 	'admin:develop_tools:unit_tests' => 'Unit Tests',
 	'admin:developers' => 'Developers',
 	'admin:developers:settings' => 'Settings',

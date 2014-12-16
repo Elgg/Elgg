@@ -8,7 +8,9 @@
  */
 
 /**
- * Register a php library.
+ * Register a PHP file as a library.
+ *
+ * @see elgg_load_library
  *
  * @param string $name     The name of the library
  * @param string $location The location of the file
@@ -17,17 +19,20 @@
  * @since 1.8.0
  */
 function elgg_register_library($name, $location) {
-	global $CONFIG;
+	$config = _elgg_services()->config;
 
-	if (!isset($CONFIG->libraries)) {
-		$CONFIG->libraries = array();
+	$libraries = $config->get('libraries');
+	if ($libraries === null) {
+		$libraries = array();
 	}
-
-	$CONFIG->libraries[$name] = $location;
+	$libraries[$name] = $location;
+	$config->set('libraries', $libraries);
 }
 
 /**
- * Load a php library.
+ * Load a PHP library.
+ *
+ * @see elgg_register_library
  *
  * @param string $name The name of the library
  *
@@ -36,25 +41,21 @@ function elgg_register_library($name, $location) {
  * @since 1.8.0
  */
 function elgg_load_library($name) {
-	global $CONFIG;
-
 	static $loaded_libraries = array();
 
 	if (in_array($name, $loaded_libraries)) {
 		return;
 	}
 
-	if (!isset($CONFIG->libraries)) {
-		$CONFIG->libraries = array();
-	}
+	$libraries = _elgg_services()->config->get('libraries');
 
-	if (!isset($CONFIG->libraries[$name])) {
-		$error = $name . " is not a registered library";
+	if (!isset($libraries[$name])) {
+		$error = "$name is not a registered library";
 		throw new \InvalidParameterException($error);
 	}
 
-	if (!include_once($CONFIG->libraries[$name])) {
-		$error = "Could not load the " . $name . " library from " . $CONFIG->libraries[$name];
+	if (!include_once($libraries[$name])) {
+		$error = "Could not load the $name library from {$libraries[$name]}";
 		throw new \InvalidParameterException($error);
 	}
 
@@ -97,7 +98,7 @@ function forward($location = "", $reason = 'system') {
 		}
 	} else {
 		throw new \SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
-			. "Output started in file $file at line $line. Search http://docs.elgg.org/ for more information.");
+			. "Output started in file $file at line $line. Search http://learn.elgg.org/ for more information.");
 	}
 }
 
@@ -146,7 +147,7 @@ function elgg_register_js($name, $url, $location = 'head', $priority = null) {
  * @param array  $config An array like the following:
  *                       array  'deps'    An array of AMD module dependencies
  *                       string 'exports' The name of the exported module
- *                       string 'path'    The URL to the JS. Can be relative.
+ *                       string 'src'     The URL to the JS. Can be relative.
  *
  * @return void
  */
@@ -280,53 +281,7 @@ function elgg_get_loaded_css() {
  * @since 1.8.0
  */
 function elgg_register_external_file($type, $name, $url, $location, $priority = 500) {
-	global $CONFIG;
-
-	if (empty($name) || empty($url)) {
-		return false;
-	}
-
-	$url = elgg_format_url($url);
-	$url = elgg_normalize_url($url);
-	
-	_elgg_bootstrap_externals_data_structure($type);
-
-	$name = trim(strtolower($name));
-
-	// normalize bogus priorities, but allow empty, null, and false to be defaults.
-	if (!is_numeric($priority)) {
-		$priority = 500;
-	}
-
-	// no negative priorities right now.
-	$priority = max((int)$priority, 0);
-
-	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
-
-	if ($item) {
-		// updating a registered item
-		// don't update loaded because it could already be set
-		$item->url = $url;
-		$item->location = $location;
-
-		// if loaded before registered, that means it hasn't been added to the list yet
-		if ($CONFIG->externals[$type]->contains($item)) {
-			$priority = $CONFIG->externals[$type]->move($item, $priority);
-		} else {
-			$priority = $CONFIG->externals[$type]->add($item, $priority);
-		}
-	} else {
-		$item = new \stdClass();
-		$item->loaded = false;
-		$item->url = $url;
-		$item->location = $location;
-
-		$priority = $CONFIG->externals[$type]->add($item, $priority);
-	}
-
-	$CONFIG->externals_map[$type][$name] = $item;
-
-	return $priority !== false;
+	return _elgg_services()->externalFiles->register($type, $name, $url, $location, $priority);
 }
 
 /**
@@ -339,19 +294,7 @@ function elgg_register_external_file($type, $name, $url, $location, $priority = 
  * @since 1.8.0
  */
 function elgg_unregister_external_file($type, $name) {
-	global $CONFIG;
-
-	_elgg_bootstrap_externals_data_structure($type);
-
-	$name = trim(strtolower($name));
-	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
-
-	if ($item) {
-		unset($CONFIG->externals_map[$type][$name]);
-		return $CONFIG->externals[$type]->remove($item);
-	}
-
-	return false;
+	return _elgg_services()->externalFiles->unregister($type, $name);
 }
 
 /**
@@ -364,26 +307,7 @@ function elgg_unregister_external_file($type, $name) {
  * @since 1.8.0
  */
 function elgg_load_external_file($type, $name) {
-	global $CONFIG;
-
-	_elgg_bootstrap_externals_data_structure($type);
-
-	$name = trim(strtolower($name));
-
-	$item = elgg_extract($name, $CONFIG->externals_map[$type]);
-
-	if ($item) {
-		// update a registered item
-		$item->loaded = true;
-	} else {
-		$item = new \stdClass();
-		$item->loaded = true;
-		$item->url = '';
-		$item->location = '';
-
-		$CONFIG->externals[$type]->add($item);
-		$CONFIG->externals_map[$type][$name] = $item;
-	}
+	return _elgg_services()->externalFiles->load($type, $name);
 }
 
 /**
@@ -396,19 +320,7 @@ function elgg_load_external_file($type, $name) {
  * @since 1.8.0
  */
 function elgg_get_loaded_external_files($type, $location) {
-	global $CONFIG;
-
-	if (isset($CONFIG->externals) && $CONFIG->externals[$type] instanceof \ElggPriorityList) {
-		$items = $CONFIG->externals[$type]->getElements();
-
-		$callback = "return \$v->loaded == true && \$v->location == '$location';";
-		$items = array_filter($items, create_function('$v', $callback));
-		if ($items) {
-			array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
-		}
-		return $items;
-	}
-	return array();
+	return _elgg_services()->externalFiles->getLoadedFiles($type, $location);
 }
 
 /**
@@ -418,23 +330,7 @@ function elgg_get_loaded_external_files($type, $location) {
  * @access private
  */
 function _elgg_bootstrap_externals_data_structure($type) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->externals)) {
-		$CONFIG->externals = array();
-	}
-
-	if (!isset($CONFIG->externals[$type]) || !$CONFIG->externals[$type] instanceof \ElggPriorityList) {
-		$CONFIG->externals[$type] = new \ElggPriorityList();
-	}
-
-	if (!isset($CONFIG->externals_map)) {
-		$CONFIG->externals_map = array();
-	}
-
-	if (!isset($CONFIG->externals_map[$type])) {
-		$CONFIG->externals_map[$type] = array();
-	}
+	_elgg_services()->externalFiles->bootstrap($type);
 }
 
 /**
@@ -1183,8 +1079,9 @@ function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
 	$elgg_major_version = (int)$elgg_version_arr[0];
 	$elgg_minor_version = (int)$elgg_version_arr[1];
 
-	$dep_major_version = (int)$dep_version;
-	$dep_minor_version = 10 * ($dep_version - $dep_major_version);
+	$dep_version_arr = explode('.', (string)$dep_version);
+	$dep_major_version = (int)$dep_version_arr[0];
+	$dep_minor_version = (int)$dep_version_arr[1];
 
 	$visual = false;
 
@@ -1645,6 +1542,9 @@ function _elgg_shutdown_hook() {
 		error_log($message);
 		error_log("Exception trace stack: {$e->getTraceAsString()}");
 	}
+
+	// Prevent an APC session bug: https://bugs.php.net/bug.php?id=60657
+	session_write_close();
 }
 
 /**
@@ -2034,9 +1934,9 @@ function _elgg_engine_boot() {
 
 	_elgg_session_boot();
 
-	_elgg_load_cache();
+	_elgg_services()->systemCache->loadAll();
 
-	_elgg_load_translations();
+	_elgg_services()->translator->loadTranslations();
 }
 
 /**
@@ -2057,6 +1957,23 @@ function _elgg_init() {
 	elgg_register_page_handler('js', '_elgg_js_page_handler');
 	elgg_register_page_handler('css', '_elgg_css_page_handler');
 	elgg_register_page_handler('ajax', '_elgg_ajax_page_handler');
+
+	elgg_register_page_handler('manifest.json', function() {
+		$site = elgg_get_site_entity();
+		$resource = new \Elgg\Http\WebAppManifestResource($site);
+		header('Content-Type: application/json');
+		echo json_encode($resource->get());
+		return true;
+	});
+
+	elgg_register_plugin_hook_handler('head', 'page', function($hook, $type, array $result) {
+		$result['links']['manifest'] = [
+			'rel' => 'manifest',
+			'href' => elgg_normalize_url('/manifest.json'),
+		];
+
+		return $result;
+	});
 
 	elgg_register_js('elgg.autocomplete', 'js/lib/ui.autocomplete.js');
 	elgg_register_js('jquery.ui.autocomplete.html', 'vendors/jquery/jquery.ui.autocomplete.html.js');
@@ -2158,8 +2075,10 @@ define('REFERRER', -1);
  */
 define('REFERER', -1);
 
-elgg_register_event_handler('init', 'system', '_elgg_init');
-elgg_register_event_handler('boot', 'system', '_elgg_engine_boot', 1);
-elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_api_test');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_init');
+	$events->registerHandler('boot', 'system', '_elgg_engine_boot', 1);
+	$hooks->registerHandler('unit_test', 'system', '_elgg_api_test');
 
-elgg_register_event_handler('init', 'system', '_elgg_walled_garden_init', 1000);
+	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
+};

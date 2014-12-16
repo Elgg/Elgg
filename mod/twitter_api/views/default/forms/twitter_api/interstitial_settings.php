@@ -3,17 +3,21 @@
  * Make the user set up some alternative ways to login.
  */
 
+if (elgg_is_sticky_form('twitter_api_interstitial')) {
+	$values = elgg_get_sticky_values('twitter_api_interstitial');
+	elgg_clear_sticky_form('twitter_api_interstitial');
+} else {
+	$values = array();
+}
+
+$site = elgg_get_site_entity();
+$user = elgg_get_logged_in_user_entity();
+$display_name = elgg_extract('display_name', $values);
+$email = elgg_extract('email', $values);
+
 echo '<div>';
-$site = get_config('site');
 echo elgg_echo('twitter_api:interstitial:description', array($site->name));
 echo '</div>';
-
-$user = elgg_get_logged_in_user_entity();
-
-if (elgg_is_sticky_form('twitter_api_interstitial')) {
-	extract(elgg_get_sticky_values('twitter_api_interstitial'));
-	elgg_clear_sticky_form('twitter_api_interstitial');
-}
 
 if (!isset($display_name)) {
 	$display_name = $user->name;

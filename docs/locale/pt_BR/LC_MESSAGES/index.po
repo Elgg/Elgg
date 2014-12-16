@@ -1,0 +1,84 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# 
+# Translators:
+# Renato Cerceau <cerceau@gmail.com>, 2014
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg Core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-09-21 23:12+0300\n"
+"PO-Revision-Date: 2014-10-11 00:20+0000\n"
+"Last-Translator: Renato Cerceau <cerceau@gmail.com>\n"
+"Language-Team: Portuguese (Brazil) (http://www.transifex.com/projects/p/elgg-core/language/pt_BR/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pt_BR\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+# ecc15a9e86a44ecb92b8094c7be82221
+#: ../../index.rst:2
+msgid "Elgg |version| Documentation"
+msgstr "Elgg |versão| Documentação"
+
+# 82c5cb68acb944eb9925cafee895814d
+#: ../../index.rst:4
+msgid ""
+"Elgg_ (`pronunciation`__) is a rapid development framework with built-in "
+"social features. It is a great fit for building any app where users log in "
+"and share information."
+msgstr "Elgg_ (`pronunciation`__) é um framework de desenvolvimento rápido, com recursos sociais integrados. É uma excelente opção para a construção de qualquer aplicativo onde os usuários fazem login e compartilhar informações."
+
+# 6d76540fe6ee491784fff4414e15985e
+#: ../../index.rst:9
+msgid "It has been used to build `all kinds of social apps`__:"
+msgstr "Tem sido utilizado para `todos tipos de aplicativos sociais`__:"
+
+# 77f2e248c73f48ecb9b7f9419ea5fbda
+#: ../../index.rst:13
+msgid "open networks (similar to Facebook)"
+msgstr "redes abertas (similar ao Facebook)"
+
+# 104e8b0416784b739f0979b00b58712e
+#: ../../index.rst:14
+msgid "topical (like the Elgg Community)"
+msgstr "tópica (como a Comunidade Elgg)"
+
+# 0d3aca5436ca4248b4006d721de4c42b
+#: ../../index.rst:15
+msgid "private intranets"
+msgstr "intranets privativas"
+
+# 23ef9fb4b55446bd8d16d42a7dc3a52a
+#: ../../index.rst:16
+msgid "dating"
+msgstr "encontros"
+
+# a3fd25be8ea74e74b4cf8c4edc8ad8f0
+#: ../../index.rst:17
+msgid "educational"
+msgstr "educacional"
+
+# c10b10527e9f42c5ae0022ea8684cb6c
+#: ../../index.rst:18
+msgid "company blog"
+msgstr "blog da empresa"
+
+# 1e4e0f368aa94c359a0bec6bf5cd9686
+#: ../../index.rst:19
+msgid "etc."
+msgstr "etc."
+
+# 18cdde61be3244db9b75d8742b60f9b9
+#: ../../index.rst:21
+msgid "There is also a `demo site`_ running a standard installation of Elgg."
+msgstr "Existe também uma site 'demo' funcionando como instalação padrão do Elgg."
+
+# 51e9c1238a4d4aaa842f03d464822646
+#: ../../index.rst:23
+msgid ""
+"This is the canonical documentation for the Elgg_ project. This aims to "
+"replace the wiki_, which is out-of-date in many areas."
+msgstr "Esta é a documentação (canonical documentation) para o projeto Elgg. Este tem como objetivo substituir o wiki_, que está desatualizado em muitas áreas."

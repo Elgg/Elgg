@@ -64,6 +64,7 @@ return array(
 	'groups:featuredon' => '%s is nu een aangeraden groep',
 	'groups:unfeatured' => '%s is verwijderd van de aangeraden groepen',
 	'groups:featured_error' => 'Ongeldige groep.',
+	'groups:nofeatured' => 'Geen aangeraden groepen',
 	'groups:joinrequest' => 'Verzoek lidmaatschap',
 	'groups:join' => 'Wordt lid',
 	'groups:leave' => 'Verlaat groep',
@@ -300,6 +301,8 @@ of klik hieronder om het verzoek te accepteren:
 
 	'groups:invitekilled' => 'De uitnodiging is verwijderd',
 	'groups:joinrequestkilled' => 'Lidmaatschap verzoek verwijderd.',
+	'groups:error:addedtogroup' => "Kon %s niet toevoegen aan de groep",
+	'groups:add:alreadymember' => "%s is al lid van deze groep",
 
 	/**
 	 * ecml

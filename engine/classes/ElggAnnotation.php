@@ -127,8 +127,8 @@ class ElggAnnotation extends \ElggExtender {
 				return false;
 			}
 		} else {
-			$user = elgg_get_logged_in_user_entity();
-			$user_guid = elgg_get_logged_in_user_guid();
+			$user = _elgg_services()->session->getLoggedInUser();
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 
 		$result = false;
@@ -147,7 +147,7 @@ class ElggAnnotation extends \ElggExtender {
 
 		// Trigger plugin hook - note that $user may be null
 		$params = array('entity' => $entity, 'user' => $user, 'annotation' => $this);
-		return elgg_trigger_plugin_hook('permissions_check', 'annotation', $params, $result);
+		return _elgg_services()->hooks->trigger('permissions_check', 'annotation', $params, $result);
 	}
 
 	// SYSTEM LOG INTERFACE

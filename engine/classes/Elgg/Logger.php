@@ -37,12 +37,18 @@ class Logger {
 	/** @var \Elgg\PluginHooksService $hooks */
 	protected $hooks;
 
+	/** @var \stdClass Global Elgg configuration */
+	private $CONFIG;
+
 	/**
 	 * Constructor
 	 *
 	 * @param \Elgg\PluginHooksService $hooks Hooks service
 	 */
 	public function __construct(\Elgg\PluginHooksService $hooks) {
+		global $CONFIG;
+		
+		$this->CONFIG = $CONFIG;
 		$this->hooks = $hooks;
 	}
 
@@ -170,7 +176,7 @@ class Logger {
 	 * @return void
 	 */
 	protected function process($data, $display, $level) {
-		global $CONFIG;
+		
 
 		// plugin can return false to stop the default logging method
 		$params = array(
@@ -187,7 +193,7 @@ class Logger {
 		// Do not want to write to screen before page creation has started.
 		// This is not fool-proof but probably fixes 95% of the cases when logging
 		// results in data sent to the browser before the page is begun.
-		if (!isset($CONFIG->pagesetupdone)) {
+		if (!isset($this->CONFIG->pagesetupdone)) {
 			$display = false;
 		}
 

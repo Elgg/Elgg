@@ -14,7 +14,7 @@
  * @uses $vars['full_view']   Show the full view of the items (default: false)
  * @uses $vars['list_class']  Additional CSS class for the <ul> element
  * @uses $vars['item_class']  Additional CSS class for the <li> elements
- * @uses $vars['no_results']  Message to display if no results
+ * @uses $vars['no_results']  Message to display if no results (string|Closure)
  */
 
 $items = $vars['items'];
@@ -28,6 +28,10 @@ $position = elgg_extract('position', $vars, 'after');
 $no_results = elgg_extract('no_results', $vars, '');
 
 if (!$items && $no_results) {
+	if ($no_results instanceof Closure) {
+		echo $no_results();
+		return;
+	}
 	echo "<p>$no_results</p>";
 	return;
 }

@@ -49,10 +49,10 @@ We like the edit-refresh cycle of web development. We wanted to make sure everyo
 Elgg could continue experiencing that joy. Synchronous module formats like Closure or CommonJS just
 weren't an option for us. But even though AMD doesn't require a build step, *it is still very
 build-friendly*. Because of the ``define()`` wrapper, it's possible to concatenate multiple modules
-into a single file and ship them all at once in a production environment. [*]_
+into a single file and ship them all at once in a production environment. [#]_
 
 AMD is a battle-tested and well thought out module loading system for the web today. We're very
 thankful for the work that has gone into it, and are excited to offer it as the standard solution
 for JavaScript development in Elgg starting with Elgg 1.9.
 
-.. [*] This is not currently supported by Elgg core, but we'll be looking into it since reducing round-trips is critical for a good first-view experience, especially on mobile devices.
+.. [#] This is not currently supported by Elgg core, but we'll be looking into it since reducing round-trips is critical for a good first-view experience, especially on mobile devices.

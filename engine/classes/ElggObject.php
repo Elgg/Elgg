@@ -252,7 +252,7 @@ class ElggObject extends \ElggEntity {
 		}
 
 		if ($user_guid == 0) {
-			$user_guid = elgg_get_logged_in_user_guid();
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
 		}
 
 		// must be logged in to comment

@@ -108,16 +108,18 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 		'annotation_id' => $result_id,
 	));
 
-	// only send notification if not self
+	// Send notification only if poster isn't the owner
 	if ($poster->guid != $owner->guid) {
-		$subject = elgg_echo('messageboard:email:subject');
+
+		$subject = elgg_echo('messageboard:email:subject', array(), $owner->language);
+
 		$body = elgg_echo('messageboard:email:body', array(
-						$poster->name,
-						$message,
-						elgg_get_site_url() . "messageboard/" . $owner->username,
-						$poster->name,
-						$poster->getURL()
-						));
+			$poster->name,
+			$message,
+			elgg_get_site_url() . "messageboard/" . $owner->username,
+			$poster->name,
+			$poster->getURL()
+		), $owner->language);
 
 		notify_user($owner->guid, $poster->guid, $subject, $body);
 	}
@@ -143,7 +145,7 @@ function messageboard_annotation_menu_setup($hook, $type, $return, $params) {
 		$options = array(
 			'name' => 'delete',
 			'href' => $url,
-			'text' => "<span class=\"elgg-icon elgg-icon-delete\"></span>",
+			'text' => elgg_view_icon('delete'),
 			'confirm' => elgg_echo('deleteconfirm'),
 			'encode_text' => false
 		);

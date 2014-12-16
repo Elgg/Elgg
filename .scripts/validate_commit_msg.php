@@ -15,6 +15,10 @@
  * copy or symlink to .git/hooks/commit-msg.
  *
  */
+ 
+ $rootDir = dirname(__DIR__);
+ 
+ require_once "$rootDir/vendor/autoload.php";
 
 $is_file = false;
 
@@ -33,9 +37,7 @@ if ($argc === 2) {
 	$msg_tmp = file_get_contents("php://stdin");
 }
 
-require_once 'ElggCommitMessage.php';
-
-$msg = new ElggCommitMessage($msg_tmp);
+$msg = new Elgg\CommitMessage($msg_tmp);
 
 if (!$msg->getMsg()) {
 	usage();

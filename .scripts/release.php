@@ -49,7 +49,8 @@ run_commands(array(
 // Update translations
 run_commands(array(
 	"tx pull -a --minimum-perc=100",
-	"make -C docs gettext",
+	"sphinx-build -b gettext docs docs/locale/pot",
+	"sphinx-intl --locale-dir=docs/locale/ build",
 	"git add .",
 	"git commit -am \"chore(i18n): update translations\"",
 ));
