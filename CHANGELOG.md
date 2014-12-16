@@ -1,3 +1,31 @@
+<a name="1.9.7"></a>
+### 1.9.7  (2014-12-14)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* iionly (3)
+* Jeroen Dalsem (2)
+* Juho Jaakkola (2)
+* Matt Beckett (1)
+
+#### Documentation
+
+* **design:** added the data model image from docs ([680c3cf8](https://github.com/Elgg/Elgg/commit/680c3cf817314d338eeb275e04500872e1560b6a))
+* **general:** moved pronuncation file from docs ([3718dac7](https://github.com/Elgg/Elgg/commit/3718dac70236b46d88fb3a781160bed39c14d62d))
+* **support:** added documentation about the support policies of Elgg ([bdd7855c](https://github.com/Elgg/Elgg/commit/bdd7855c51ed0f86361936866185b14730ecd76c))
+
+
+#### Bug Fixes
+
+* **core:** deprecation notices thrown at login/logout even if there's no valid reason ([d22a6406](https://github.com/Elgg/Elgg/commit/d22a64062b989d80ac9016962e977b467d728e88))
+* **likes:** Uses getDisplayName() instead of assuming the object has value in title property ([7ece624f](https://github.com/Elgg/Elgg/commit/7ece624f8e089aa3fb62c4d4108ab3a5612dfcbe))
+* **notifications:** Verifies that a notification method is registered before using it ([4eddf313](https://github.com/Elgg/Elgg/commit/4eddf313abea3eddc5a7e286e6b8707e0ad79a75), closes [#7647](https://github.com/Elgg/Elgg/issues/7647))
+* **pageowner:** allow unsetting of page owner guid ([a57e1fbe](https://github.com/Elgg/Elgg/commit/a57e1fbecb4d5fb215c9a71c2f0c827975514959))
+* **uservalidationbyemail:** usage of deprecated ['login', 'user'] event ([23939b80](https://github.com/Elgg/Elgg/commit/23939b8023aceda1a7b22907d4dd60f1f104cf4a))
+* **views:** correctly close the comment form contents ([0420bd00](https://github.com/Elgg/Elgg/commit/0420bd00947fd01623dedb46846612563ac929a5))
+
+
 <a name="1.9.6"></a>
 ### 1.9.6  (2014-12-01)
 
