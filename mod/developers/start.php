@@ -21,15 +21,6 @@ function developers_init() {
 
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
-
-	elgg_define_js('jquery.jstree', array(
-		'src' => '/mod/developers/vendors/jsTree/jquery.jstree.js',
-		'exports' => 'jQuery.fn.jstree',
-		'deps' => array('jquery'),
-	));
-	elgg_register_css('jquery.jstree', '/mod/developers/vendors/jsTree/themes/default/style.css');
-
-	elgg_require_js('elgg/dev');
 }
 
 function developers_process_settings() {
@@ -81,7 +72,7 @@ function developers_setup_menu() {
 		foreach ($inspect_options as $key => $value) {
 			elgg_register_menu_item('page', array(
 				'name' => 'dev_inspect_' . elgg_get_friendly_title($key),
-				'href' => "admin/develop_tools/inspect?inspect_type={$value}",
+				'href' => "admin/develop_tools/inspect?inspect_type={$key}",
 				'text' => $value,
 				'context' => 'admin',
 				'section' => 'develop',
@@ -246,17 +237,17 @@ function developers_theme_sandbox_controller($page) {
  */
 function developers_get_inspect_options() {
 	$options = array(
-		'Actions' => 'Actions',
-		'Events' => 'Events',
-		'Menus' => 'Menus',
-		'Plugin Hooks' => 'Plugin Hooks',
-		'Simple Cache' => 'Simple Cache',
-		'Views' => 'Views',
-		'Widgets' => 'Widgets',
+		'Actions' => elgg_echo('developers:inspect:actions'),
+		'Events' => elgg_echo('developers:inspect:events'),
+		'Menus' => elgg_echo('developers:inspect:menus'),
+		'Plugin Hooks' => elgg_echo('developers:inspect:pluginhooks'),
+		'Simple Cache' => elgg_echo('developers:inspect:simplecache'),
+		'Views' => elgg_echo('developers:inspect:views'),
+		'Widgets' => elgg_echo('developers:inspect:widgets'),
 	);
 	
 	if (elgg_is_active_plugin('web_services')) {
-		$options['Web Services'] = 'Web Services';
+		$options['Web Services'] = elgg_echo('developers:inspect:webservices');
 	}
 	
 	ksort($options);
