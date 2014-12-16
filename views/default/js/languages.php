@@ -1,33 +1,30 @@
 <?php
 /**
  * @uses $vars['language']
- * @uses $vars['lc'] if present, client will be sent long expires headers
  */
 
-$language = $vars['language'];
-$lastcache = elgg_extract('lc', $vars, 0);
+$language = elgg_extract('language', $vars);
 
-// @todo add server-side caching
-if ($lastcache) {
-	// we're relying on lastcache changes to predict language changes
-	$etag = '"' . md5("$language|$lastcache") .  '"';
+if (empty($language)) {
+	// try to detect it
+	preg_match("/\/js\/languages\/(.*?).js+/", current_page_url(), $matches);
+	
+	if (!empty($matches) && isset($matches[1])) {
+		$language = $matches[1];
+	}	
+}
 
-	header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
-	header("Pragma: public", true);
-	header("Cache-Control: public", true);
-	header("ETag: $etag");
-
-	if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']) === $etag) {
-		header("HTTP/1.1 304 Not Modified");
-		exit;
-	}
+if (empty($language)) {
+	// fallback to 'en'
+	$language = 'en';
 }
 
 $all_translations = elgg_get_config('translations');
 $translations = $all_translations['en'];
 
-if ($language != 'en') {
+if ($language != 'en' && isset($all_translations[$language])) {
 	$translations = array_merge($translations, $all_translations[$language]);
 }
+
 ?>
 define(<?php echo json_encode($translations); ?>);

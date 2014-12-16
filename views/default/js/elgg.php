@@ -64,12 +64,7 @@ elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTok
 elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->language); ?>';
 
 !function () {
-	var languagesUrl = elgg.config.wwwroot + 'ajax/view/js/languages?language=' + elgg.get_language();
-	if (elgg.config.simplecache_enabled) {
-		languagesUrl += '&lc=' + elgg.config.lastcache;
-	}
-
-	define('elgg', ['jquery', languagesUrl], function($, translations) {
+	define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
 		elgg.add_translation(elgg.get_language(), translations);
 
 		$(function() {
