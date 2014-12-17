@@ -12,17 +12,7 @@ class ElggInspector {
 	 * returns [event,type] => array(handlers)
 	 */
 	public function getEvents() {
-		$tree = array();
-		$events = _elgg_services()->events->getAllHandlers();
-		foreach ($events as $event => $types) {
-			foreach ($types as $type => $handlers) {
-				$tree[$event . ',' . $type] = array_values($handlers);
-			}
-		}
-
-		ksort($tree);
-
-		return $tree;
+		return $this->buildHandlerTree(_elgg_services()->events->getAllHandlers());
 	}
 
 	/**
@@ -31,35 +21,31 @@ class ElggInspector {
 	 * returns [hook,type] => array(handlers)
 	 */
 	public function getPluginHooks() {
-		$tree = array();
-		$hooks = _elgg_services()->hooks->getAllHandlers();
-		foreach ($hooks as $hook => $types) {
-			foreach ($types as $type => $handlers) {
-				$tree[$hook . ',' . $type] = array_values($handlers);
-			}
-		}
-
-		ksort($tree);
-
-		return $tree;
+		return $this->buildHandlerTree(_elgg_services()->hooks->getAllHandlers());
 	}
 
 	/**
 	 * Get Elgg view information
 	 *
 	 * returns [view] => array(view location and extensions)
+	 *
+	 * @param bool $strip_root Strip the Elgg root from the file path?
+	 * @return array
 	 */
-	public function getViews() {
+	public function getViews($strip_root = false) {
 		global $CONFIG;
 
-		$coreViews = $this->recurseFileTree($CONFIG->viewpath . "default/");
+		$core_views = $this->recurseFileTree($CONFIG->viewpath . "default/");
 
 		// remove base path and php extension
-		array_walk($coreViews, create_function('&$v,$k', 'global $CONFIG; $v = substr($v, strlen($CONFIG->viewpath . "default/"), -4);'));
+		array_walk($core_views, function (&$v, $k) {
+			global $CONFIG;
+			$v = substr($v, strlen($CONFIG->viewpath . "default/"), -4);
+		});
 
 		// setup views array before adding extensions and plugin views
 		$views = array();
-		foreach ($coreViews as $view) {
+		foreach ($core_views as $view) {
 			$views[$view] = array($CONFIG->viewpath . "default/" . $view . ".php");
 		}
 
@@ -82,6 +68,20 @@ class ElggInspector {
 		}
 
 		ksort($views);
+
+		if ($strip_root) {
+			$root = elgg_get_root_path();
+			$strip = function ($path) use ($root) {
+				if (0 !== strpos($path, $root)) {
+					return $path;
+				}
+				return substr($path, strlen($root));
+			};
+
+			foreach ($views as $k => $view_list) {
+				$views[$k] = array_map($strip, $view_list);
+			}
+		}
 
 		return $views;
 	}
@@ -107,16 +107,23 @@ class ElggInspector {
 	 * Get Elgg actions information
 	 *
 	 * returns [action] => array(file, access)
+	 *
+	 * @param bool $strip_root Strip the Elgg root from the file path?
+	 * @return array
 	 */
-	public function getActions() {
+	public function getActions($strip_root = false) {
 		$tree = array();
 		$access = array(
 			'public' => 'public',
 			'logged_in' => 'logged in only',
 			'admin' => 'admin only',
 		);
+		$start = strlen(elgg_get_root_path());
+
 		foreach (_elgg_services()->actions->getAllActions() as $action => $info) {
-			
+			if ($strip_root) {
+				$info['file'] = substr($info['file'], $start);
+			}
 			$tree[$action] = array($info['file'], $access[$info['access']]);
 		}
 
@@ -254,6 +261,68 @@ class ElggInspector {
 		
 		ksort($tree);
 		
+		return $tree;
+	}
+
+	/**
+	 * Get a string description of a callback
+	 *
+	 * E.g. "function_name", "Static::method", "(ClassName)->method", "(Closure path/to/file.php:23)"
+	 *
+	 * @param mixed  $callable  The callable value to describe
+	 * @param string $file_root if provided, it will be removed from the beginning of file names
+	 * @return string
+	 */
+	public function describeCallable($callable, $file_root = '') {
+		if (is_string($callable)) {
+			return $callable;
+		}
+		if (is_array($callable) && array_keys($callable) === array(0, 1) && is_string($callable[1])) {
+			if (is_string($callable[0])) {
+				return "{$callable[0]}::{$callable[1]}";
+			}
+			return "(" . get_class($callable[0]) . ")->{$callable[1]}";
+		}
+		if ($callable instanceof \Closure) {
+			$ref = new \ReflectionFunction($callable);
+			$file = $ref->getFileName();
+			$line = $ref->getStartLine();
+
+			if ($file_root && 0 === strpos($file, $file_root)) {
+				$file = substr($file, strlen($file_root));
+			}
+
+			return "(Closure {$file}:{$line})";
+		}
+		if (is_object($callable)) {
+			return "(" . get_class($callable) . ")->__invoke()";
+		}
+		return "(unknown)";
+	}
+
+	/**
+	 * Build a tree of event handlers
+	 *
+	 * @param array $all_handlers Set of handlers from a HooksRegistrationService
+	 *
+	 * @return array
+	 */
+	protected function buildHandlerTree($all_handlers) {
+		$tree = array();
+		$root = elgg_get_root_path();
+
+		foreach ($all_handlers as $hook => $types) {
+			foreach ($types as $type => $handlers) {
+				array_walk($handlers, function (&$callable, $priority) use ($root) {
+					$description = $this->describeCallable($callable, $root);
+					$callable = "$priority: $description";
+				});
+				$tree[$hook . ',' . $type] = $handlers;
+			}
+		}
+
+		ksort($tree);
+
 		return $tree;
 	}
 
