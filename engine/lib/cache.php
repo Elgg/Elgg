@@ -18,7 +18,7 @@
  * @return \ElggFileCache
  */
 function elgg_get_system_cache() {
-	return _elgg_services()->systemCache->get();
+	return _elgg_services()->systemCache->getFileCache();
 }
 
 /**

@@ -43,7 +43,7 @@ class ElggPlugin extends \ElggObject {
 	 */
 	public function __construct($path) {
 		if (!$path) {
-			throw new \PluginException("\ElggPlugin cannot be null instantiated. You must pass a full path.");
+			throw new \PluginException("ElggPlugin cannot be null instantiated. You must pass a full path.");
 		}
 
 		if (is_object($path)) {
@@ -63,7 +63,7 @@ class ElggPlugin extends \ElggObject {
 
 			// not a full path, so assume a directory name and use the default path
 			if (strpos($path, $mod_dir) !== 0) {
-				elgg_deprecated_notice("You should pass a full path to \ElggPlugin.", 1.9);
+				elgg_deprecated_notice("You should pass a full path to ElggPlugin.", 1.9);
 				$path = $mod_dir . $path;
 			}
 
@@ -811,39 +811,14 @@ class ElggPlugin extends \ElggObject {
 	 * Registers the plugin's views
 	 *
 	 * @throws PluginException
-	 * @return true
+	 * @return void
 	 */
 	protected function registerViews() {
-		$view_dir = "$this->path/views/";
-
-		// plugins don't have to have views.
-		if (!is_dir($view_dir)) {
-			return true;
-		}
-
-		// but if they do, they have to be readable
-		$handle = opendir($view_dir);
-		if (!$handle) {
+		if (!_elgg_services()->views->registerPluginViews($this->path, $failed_dir)) {
 			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterViews',
-							array($this->getID(), $this->guid, $view_dir));
+				array($this->getID(), $this->guid, $failed_dir));
 			throw new \PluginException($msg);
 		}
-
-		while (false !== ($view_type = readdir($handle))) {
-			$view_type_dir = $view_dir . $view_type;
-
-			if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
-				if (autoregister_views('', $view_type_dir, $view_dir, $view_type)) {
-					elgg_register_viewtype($view_type);
-				} else {
-					$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterViews',
-									array($this->getID(), $view_type_dir));
-					throw new \PluginException($msg);
-				}
-			}
-		}
-
-		return true;
 	}
 
 	/**
@@ -895,7 +870,7 @@ class ElggPlugin extends \ElggObject {
 	public function __get($name) {
 		// rewrite for old and inaccurate plugin:setting
 		if (strstr($name, 'plugin:setting:')) {
-			$msg = 'Direct access of user settings is deprecated. Use \ElggPlugin->getUserSetting()';
+			$msg = 'Direct access of user settings is deprecated. Use ElggPlugin->getUserSetting()';
 			elgg_deprecated_notice($msg, 1.8);
 			$name = str_replace('plugin:setting:', '', $name);
 			$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());

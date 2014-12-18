@@ -1,22 +1,16 @@
 <?php
-/**
- * Inspect Elgg variables
- *
- */
+namespace Elgg\Debug;
+
+use Elgg\Debug\Inspector\ViewComponent;
 
 /**
- * @deprecated 1.11
+ * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
+ * 
+ * @since 1.11
  */
-class ElggInspector {
-
-	/**
-	 * Constructor
-	 */
-	public function __construct() {
-		elgg_deprecated_notice(__CLASS__ . ' is deprecated and should not be used', '1.11');
-	}
+class Inspector {
 
 	/**
 	 * Get Elgg event information
@@ -24,17 +18,7 @@ class ElggInspector {
 	 * returns [event,type] => array(handlers)
 	 */
 	public function getEvents() {
-		$tree = array();
-		$events = _elgg_services()->events->getAllHandlers();
-		foreach ($events as $event => $types) {
-			foreach ($types as $type => $handlers) {
-				$tree[$event . ',' . $type] = array_values($handlers);
-			}
-		}
-
-		ksort($tree);
-
-		return $tree;
+		return $this->buildHandlerTree(_elgg_services()->events->getAllHandlers());
 	}
 
 	/**
@@ -43,41 +27,45 @@ class ElggInspector {
 	 * returns [hook,type] => array(handlers)
 	 */
 	public function getPluginHooks() {
-		$tree = array();
-		$hooks = _elgg_services()->hooks->getAllHandlers();
-		foreach ($hooks as $hook => $types) {
-			foreach ($types as $type => $handlers) {
-				$tree[$hook . ',' . $type] = array_values($handlers);
-			}
-		}
-
-		ksort($tree);
-
-		return $tree;
+		return $this->buildHandlerTree(_elgg_services()->hooks->getAllHandlers());
 	}
 
 	/**
 	 * Get Elgg view information
 	 *
-	 * returns [view] => array(view location and extensions)
+	 * returns [view] => map of priority to ViewComponent[]
 	 */
-	public function getViews() {
+	public function getViews($viewtype = 'default') {
 		global $CONFIG;
 
-		$coreViews = $this->recurseFileTree($CONFIG->viewpath . "default/");
+		$overrides = null;
+		if ($CONFIG->system_cache_enabled) {
+			$data = _elgg_services()->systemCache->load('view_overrides');
+			if ($data) {
+				$overrides = unserialize($data);
+			}
+		} else {
+			$overrides = _elgg_services()->views->getOverriddenLocations();
+		}
 
-		// remove base path and php extension
-		array_walk($coreViews, create_function('&$v,$k', 'global $CONFIG; $v = substr($v, strlen($CONFIG->viewpath . "default/"), -4);'));
+		// maps view name to array of ViewComponent[] with priority as keys
+		$views = array();
+
+		$location = "{$CONFIG->viewpath}{$viewtype}/";
+		$core_file_list = $this->recurseFileTree($location);
 
 		// setup views array before adding extensions and plugin views
-		$views = array();
-		foreach ($coreViews as $view) {
-			$views[$view] = array($CONFIG->viewpath . "default/" . $view . ".php");
+		foreach ($core_file_list as $path) {
+			$component = ViewComponent::fromPaths($path, $location);
+			$views[$component->view] = array(500 => $component);
 		}
 
 		// add plugins and handle overrides
-		foreach ($CONFIG->views->locations['default'] as $view => $location) {
-			$views[$view] = array($location . $view . ".php");
+		foreach ($CONFIG->views->locations[$viewtype] as $view => $location) {
+			$component = new ViewComponent();
+			$component->view = $view;
+			$component->location = "{$location}{$viewtype}/";
+			$views[$view] = array(500 => $component);
 		}
 
 		// now extensions
@@ -85,7 +73,7 @@ class ElggInspector {
 			$view_list = array();
 			foreach ($extensions as $priority => $ext_view) {
 				if (isset($views[$ext_view])) {
-					$view_list[] = $views[$ext_view][0];
+					$view_list[$priority] = $views[$ext_view][500];
 				}
 			}
 			if (count($view_list) > 0) {
@@ -94,6 +82,21 @@ class ElggInspector {
 		}
 
 		ksort($views);
+
+		// now overrides
+		foreach ($views as $view => $view_list) {
+			if (!empty($overrides[$viewtype][$view])) {
+				$overrides_list = array();
+				foreach ($overrides[$viewtype][$view] as $i => $location) {
+					$component = new ViewComponent();
+					$component->overridden = true;
+					$component->view = $view;
+					$component->location = "{$location}{$viewtype}/";
+					$overrides_list["o:$i"] = $component;
+				}
+				$views[$view] = $overrides_list + $view_list;
+			}
+		}
 
 		return $views;
 	}
@@ -119,6 +122,8 @@ class ElggInspector {
 	 * Get Elgg actions information
 	 *
 	 * returns [action] => array(file, access)
+	 *
+	 * @return array
 	 */
 	public function getActions() {
 		$tree = array();
@@ -127,13 +132,12 @@ class ElggInspector {
 			'logged_in' => 'logged in only',
 			'admin' => 'admin only',
 		);
+		$start = strlen(elgg_get_root_path());
 		foreach (_elgg_services()->actions->getAllActions() as $action => $info) {
-			
+			$info['file'] = substr($info['file'], $start);
 			$tree[$action] = array($info['file'], $access[$info['access']]);
 		}
-
 		ksort($tree);
-
 		return $tree;
 	}
 
@@ -174,7 +178,7 @@ class ElggInspector {
 				"params: $params",
 				$info['call_method'],
 				($info['require_api_auth']) ? 'API authentication required' : 'No API authentication required',
-			 	($info['require_user_auth']) ? 'User authentication required' : 'No user authentication required',
+				($info['require_user_auth']) ? 'User authentication required' : 'No user authentication required',
 			);
 		}
 
@@ -182,7 +186,7 @@ class ElggInspector {
 
 		return $tree;
 	}
-	
+
 	/**
 	 * Get information about registered menus
 	 *
@@ -190,34 +194,34 @@ class ElggInspector {
 	 *
 	 */
 	public function getMenus() {
-		
+
 		$menus = elgg_get_config('menus');
-		
+
 		// get JIT menu items
 		// note that 'river' is absent from this list - hooks attempt to get object/subject entities cause problems
 		$jit_menus = array('annotation', 'entity', 'login', 'longtext', 'owner_block', 'user_hover', 'widget');
-		
+
 		// create generic ElggEntity, ElggAnnotation, ElggUser, ElggWidget
-		$annotation = new ElggAnnotation();
+		$annotation = new \ElggAnnotation();
 		$annotation->id = 999;
 		$annotation->name = 'generic_comment';
 		$annotation->value = 'testvalue';
-		
-		$entity = new ElggObject();
+
+		$entity = new \ElggObject();
 		$entity->guid = 999;
 		$entity->subtype = 'blog';
 		$entity->title = 'test entity';
 		$entity->access_id = ACCESS_PUBLIC;
 
-		$user = new ElggUser();
+		$user = new \ElggUser();
 		$user->guid = 999;
 		$user->name = "Test User";
-		$user->username = 'test_user';		
-		
-		$widget = new ElggWidget();
+		$user->username = 'test_user';
+
+		$widget = new \ElggWidget();
 		$widget->guid = 999;
 		$widget->title = 'test widget';
-		
+
 		// call plugin hooks
 		foreach ($jit_menus as $type) {
 			$params = array('entity' => $entity, 'annotation' => $annotation, 'user' => $user);
@@ -235,12 +239,13 @@ class ElggInspector {
 			}
 			$menus[$type] = elgg_trigger_plugin_hook('register', 'menu:'.$type, $params, array());
 		}
-		
+
 		// put the menus in tree form for inspection
 		$tree = array();
 
 		foreach ($menus as $menu_name => $attributes) {
 			foreach ($attributes as $item) {
+				/* @var \ElggMenuItem $item */
 				$name = $item->getName();
 				$text = htmlspecialchars($item->getText(), ENT_QUOTES, 'UTF-8', false);
 				$href = $item->getHref();
@@ -254,7 +259,7 @@ class ElggInspector {
 				if (!$parent) {
 					$parent = 'none';
 				}
-    
+
 				$tree[$menu_name][$name] = array(
 					"text: $text",
 					"href: $href",
@@ -263,16 +268,78 @@ class ElggInspector {
 				);
 			}
 		}
-		
+
 		ksort($tree);
-		
+
+		return $tree;
+	}
+
+	/**
+	 * Get a string description of a callback
+	 *
+	 * E.g. "function_name", "Static::method", "(ClassName)->method", "(Closure path/to/file.php:23)"
+	 *
+	 * @param mixed  $callable  The callable value to describe
+	 * @param string $file_root if provided, it will be removed from the beginning of file names
+	 * @return string
+	 */
+	public function describeCallable($callable, $file_root = '') {
+		if (is_string($callable)) {
+			return $callable;
+		}
+		if (is_array($callable) && array_keys($callable) === array(0, 1) && is_string($callable[1])) {
+			if (is_string($callable[0])) {
+				return "{$callable[0]}::{$callable[1]}";
+			}
+			return "(" . get_class($callable[0]) . ")->{$callable[1]}";
+		}
+		if ($callable instanceof \Closure) {
+			$ref = new \ReflectionFunction($callable);
+			$file = $ref->getFileName();
+			$line = $ref->getStartLine();
+
+			if ($file_root && 0 === strpos($file, $file_root)) {
+				$file = substr($file, strlen($file_root));
+			}
+
+			return "(Closure {$file}:{$line})";
+		}
+		if (is_object($callable)) {
+			return "(" . get_class($callable) . ")->__invoke()";
+		}
+		return "(unknown)";
+	}
+
+	/**
+	 * Build a tree of event handlers
+	 *
+	 * @param array $all_handlers Set of handlers from a HooksRegistrationService
+	 *
+	 * @return array
+	 */
+	protected function buildHandlerTree($all_handlers) {
+		$tree = array();
+		$root = elgg_get_root_path();
+
+		foreach ($all_handlers as $hook => $types) {
+			foreach ($types as $type => $handlers) {
+				array_walk($handlers, function (&$callable, $priority) use ($root) {
+					$description = $this->describeCallable($callable, $root);
+					$callable = "$priority: $description";
+				});
+				$tree[$hook . ',' . $type] = $handlers;
+			}
+		}
+
+		ksort($tree);
+
 		return $tree;
 	}
 
 	/**
 	 * Create array of all php files in directory and subdirectories
 	 *
-	 * @param $dir full path to directory to begin search
+	 * @param string $dir full path to directory to begin search
 	 * @return array of every php file in $dir or below in file tree
 	 */
 	protected function recurseFileTree($dir) {
@@ -295,5 +362,4 @@ class ElggInspector {
 
 		return $view_list;
 	}
-
 }
