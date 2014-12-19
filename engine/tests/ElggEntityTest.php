@@ -38,7 +38,11 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$this->assertTrue($this->entity->save());
 		$guid = $this->entity->guid;
 
-		$subtype_prop = $this->entity->subtype;
+		$deprecations = _elgg_services()->testing->captureDeprecations(function () use (&$subtype_prop) {
+			$subtype_prop = $this->entity->subtype;
+		});
+		$this->assertTrue(isset($deprecations['1.9']['Use getSubtype()']));
+
 		$this->assertIsA($subtype_prop, 'int');
 		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
 
