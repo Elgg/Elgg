@@ -51,7 +51,21 @@ matrix:
        - sphinx-build -b latex -nW docs docs/_build/latex
        - sphinx-intl --locale-dir=docs/locale/ build
        - sphinx-build -b html -D language=es -n docs docs/_build/html
-      
+
+    # End to end tests
+    - php: 5.6
+      env: E2E=true
+      install:
+       - composer install
+       - mysql -e 'create database elgg;'
+       - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
+       - mkdir "${HOME}/elgg_data/"
+       - php -f ./install/cli/travis_installer.php
+       - php -S localhost:8888 index.php &
+       - sleep 3 # give Web server some time to bind to sockets, etc
+      script:
+       - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
+
 services: 
  - mysql
 

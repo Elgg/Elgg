@@ -35,7 +35,7 @@ $params = array(
 	// site settings
 	'sitename' => 'Elgg Travis Site',
 	'siteemail' => 'no_reply@travis.elgg.org',
-	'wwwroot' => 'http://travis.elgg.org/',
+	'wwwroot' => 'http://localhost:8888/',
 	'dataroot' => getenv('HOME') . '/elgg_data/',
 
 	// admin account
