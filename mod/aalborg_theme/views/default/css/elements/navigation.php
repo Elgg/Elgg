@@ -379,14 +379,10 @@
 	display: inline-block;
 	color: #999;
 }
-/* IE 8 fix */
-.elgg-menu-footer > li:before {
+
+.elgg-menu-footer > li:after {
 	content: "\007C";
 	padding: 0 6px;
-}
-.elgg-menu-footer > li:first-child:before {
-	content: "";
-	padding: 0;
 }
 
 .elgg-menu-footer-default {
