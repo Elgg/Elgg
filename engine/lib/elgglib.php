@@ -324,16 +324,6 @@ function elgg_get_loaded_external_files($type, $location) {
 }
 
 /**
- * Bootstraps the externals data structure in $CONFIG.
- *
- * @param string $type The type of external, js or css.
- * @access private
- */
-function _elgg_bootstrap_externals_data_structure($type) {
-	_elgg_services()->externalFiles->bootstrap($type);
-}
-
-/**
  * Returns a list of files in $directory.
  *
  * Only returns files.  Does not recurse into subdirs.
