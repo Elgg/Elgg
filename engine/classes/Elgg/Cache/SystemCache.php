@@ -151,12 +151,7 @@ class SystemCache {
 		}
 		$this->CONFIG->view_types = unserialize($data);
 
-		// don't need these for operation. Inspector can pull from cache
-//		$data = $this->load('view_overrides');
-//		if ($data) {
-//			$data = unserialize($data);
-//			_elgg_services()->views->setOverriddenLocations($data);
-//		}
+		// Note: We don't need view_overrides for operation. Inspector can pull this from the cache
 	
 		$this->CONFIG->system_cache_loaded = true;
 	}
