@@ -52,6 +52,16 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 		
 		$this->assertTrue($handled);
 		$this->assertEquals($path, $output);
+
+		$this->assertEquals(array(
+			'hello' => array($this, 'hello_page_handler')
+		), $this->router->getPageHandlers());
+	}
+
+	function testFailToRegisterInvalidCallback() {
+		$registered = $this->router->registerPageHandler('hello', new \stdClass());
+
+		$this->assertFalse($registered);
 	}
 	
 	function testCanUnregisterPageHandlers() {
@@ -91,6 +101,41 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 		
 		$this->assertEquals(1, $this->fooHandlerCalls);
 	}
+
+	/**
+	 * 1. Register a page handler for `/foo`
+	 * 2. Register a plugin hook that uses the "handler" result param
+	 *    to route all `/bar/*` requests to the `/foo` handler.
+	 * 3. Route a request for a `/bar` page.
+	 * 4. Check that the `/foo` handler was called.
+	 */
+	function testRouteSupportsSettingIdentifierInHookResultForBackwardsCompatibility() {
+		$this->router->registerPageHandler('foo', array($this, 'foo_page_handler'));
+		$this->hooks->registerHandler('route', 'bar', array($this, 'bar_route_identifier'));
+
+		$query = http_build_query(array('__elgg_uri' => 'bar/baz'));
+
+		ob_start();
+		$this->router->route(\Elgg\Http\Request::create("http://localhost/?$query"));
+		ob_end_clean();
+
+		$this->assertEquals(1, $this->fooHandlerCalls);
+	}
+
+	function testRouteOverridenFromHook() {
+		$this->router->registerPageHandler('foo', array($this, 'foo_page_handler'));
+		$this->hooks->registerHandler('route', 'foo', array($this, 'bar_route_override'));
+
+		$query = http_build_query(array('__elgg_uri' => 'foo'));
+
+		ob_start();
+		$this->router->route(\Elgg\Http\Request::create("http://localhost/?$query"));
+		$result = ob_get_contents();
+		ob_end_clean();
+
+		$this->assertEquals("Page handler override from hook", $result);
+		$this->assertEquals(0, $this->fooHandlerCalls);
+	}
 	
 	function foo_page_handler() {
 		$this->fooHandlerCalls++;
@@ -100,6 +145,16 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 	function bar_route_handler($hook, $type, $value, $params) {
 		$value['handler'] = 'foo';
 		return $value;
+	}
+
+	function bar_route_identifier($hook, $type, $value, $params) {
+		$value['identifier'] = 'foo';
+		return $value;
+	}
+
+	function bar_route_override($hook, $type, $value, $params) {
+		echo "Page handler override from hook";
+		return false;
 	}
 }
 
