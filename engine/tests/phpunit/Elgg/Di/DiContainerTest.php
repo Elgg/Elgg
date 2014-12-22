@@ -71,6 +71,26 @@ class DiContainerTest extends \PHPUnit_Framework_TestCase {
 		$di->foo;
 	}
 
+	public function testGetFactoryUncallableArray() {
+		$di = new \Elgg\Di\DiContainer();
+		$di->setFactory('foo', array('fakeClass', 'not-a-real-callable'));
+
+		$this->setExpectedException(
+			'\Elgg\Di\FactoryUncallableException',
+			"Factory for 'foo' was uncallable: 'fakeClass::not-a-real-callable'");
+		$di->foo;
+	}
+
+	public function testGetFactoryUncallableArrayObject() {
+		$di = new \Elgg\Di\DiContainer();
+		$di->setFactory('foo', array($this, 'not-a-real-callable'));
+
+		$this->setExpectedException(
+			'\Elgg\Di\FactoryUncallableException',
+			"Factory for 'foo' was uncallable: Elgg\\Di\\DiContainerTest->not-a-real-callable");
+		$di->foo;
+	}
+
 	public function testGetMissingValue() {
 		$di = new \Elgg\Di\DiContainer();
 
