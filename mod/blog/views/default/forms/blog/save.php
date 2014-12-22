@@ -33,7 +33,7 @@ if (!$vars['guid'] || ($blog && $blog->status != 'published')) {
 	$preview_button = elgg_view('input/submit', array(
 		'value' => elgg_echo('preview'),
 		'name' => 'preview',
-		'class' => 'mls',
+		'class' => 'elgg-button-submit mls',
 	));
 }
 
