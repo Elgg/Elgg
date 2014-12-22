@@ -1,4 +1,0 @@
-This file has been modified from its upstream. When upgrading, be sure to check the following mods:
-
-* @todo Autolink (f|ht)tp(s)?://link.com.
-* @todo GFM improvement for newlines:  http://github.github.com/github-flavored-markdown/

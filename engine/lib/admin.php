@@ -628,7 +628,6 @@ function _elgg_admin_markdown_page_handler($pages) {
 	elgg_unregister_css('elgg');
 	elgg_load_js('elgg.admin');
 	elgg_load_js('jquery.jeditable');
-	elgg_load_library('elgg:markdown');
 
 	$plugin_id = elgg_extract(0, $pages);
 	$plugin = elgg_get_plugin_from_id($plugin_id);
@@ -663,7 +662,7 @@ function _elgg_admin_markdown_page_handler($pages) {
 	}
 
 	$title = $plugin->getManifest()->getName() . ": $filename";
-	$text = Markdown($file_contents);
+	$text = \Michelf\MarkdownExtra::defaultTransform($file_contents);
 
 	$body = elgg_view_layout('admin', array(
 		// setting classes here because there's no way to pass classes

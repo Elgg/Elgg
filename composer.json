@@ -16,7 +16,8 @@
         "knplabs/gaufrette": "~0.1.0",
         "tedivm/stash": "~0.12",
         "ircmaxell/password-compat": "~1.0",
-        "roave/security-advisories": "dev-master"
+        "roave/security-advisories": "dev-master",
+        "michelf/php-markdown": "1.4.1"
     },
     "suggest": {
         "ext-mbstring": "*"

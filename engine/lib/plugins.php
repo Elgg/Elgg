@@ -523,7 +523,7 @@ function _elgg_plugins_init() {
 
 	elgg_register_action('admin/plugins/set_priority', '', 'admin');
 
-	elgg_register_library('elgg:markdown', elgg_get_root_path() . 'vendors/markdown/markdown.php');
+	elgg_register_library('elgg:markdown', dirname(__FILE__) . '/blank.php');
 }
 
 elgg_register_event_handler('init', 'system', '_elgg_plugins_init');
