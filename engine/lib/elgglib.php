@@ -1065,64 +1065,8 @@ function elgg_get_version($human_readable = false) {
  * @since 1.7.0
  */
 function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
-	// if it's a major release behind, visual and logged
-	// if it's a 1 minor release behind, visual and logged
-	// if it's for current minor release, logged.
-	// bugfixes don't matter because we are not deprecating between them
-
-	if (!$dep_version) {
-		return false;
-	}
-
-	$elgg_version = elgg_get_version(true);
-	$elgg_version_arr = explode('.', $elgg_version);
-	$elgg_major_version = (int)$elgg_version_arr[0];
-	$elgg_minor_version = (int)$elgg_version_arr[1];
-
-	$dep_version_arr = explode('.', (string)$dep_version);
-	$dep_major_version = (int)$dep_version_arr[0];
-	$dep_minor_version = (int)$dep_version_arr[1];
-
-	$visual = false;
-
-	if (($dep_major_version < $elgg_major_version) ||
-		($dep_minor_version < $elgg_minor_version)) {
-		$visual = true;
-	}
-
-	$msg = "Deprecated in $dep_major_version.$dep_minor_version: $msg";
-
-	if ($visual && elgg_is_admin_logged_in()) {
-		register_error($msg);
-	}
-
-	// Get a file and line number for the log. Never show this in the UI.
-	// Skip over the function that sent this notice and see who called the deprecated
-	// function itself.
-	$msg .= " Called from ";
-	$stack = array();
-	$backtrace = debug_backtrace();
-	// never show this call.
-	array_shift($backtrace);
-	$i = count($backtrace);
-
-	foreach ($backtrace as $trace) {
-		$stack[] = "[#$i] {$trace['file']}:{$trace['line']}";
-		$i--;
-
-		if ($backtrace_level > 0) {
-			if ($backtrace_level <= 1) {
-				break;
-			}
-			$backtrace_level--;
-		}
-	}
-
-	$msg .= implode("<br /> -> ", $stack);
-
-	elgg_log($msg, 'WARNING');
-
-	return true;
+	$backtrace_level += 1;
+	return _elgg_services()->deprecation->sendNotice($msg, $dep_version, $backtrace_level);
 }
 
 /**

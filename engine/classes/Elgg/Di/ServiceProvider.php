@@ -22,6 +22,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Database\ConfigTable               $configTable
  * @property-read \Elgg\Database\Datalist                  $datalist
  * @property-read \Elgg\Database                           $db
+ * @property-read \Elgg\DeprecationService                 $deprecation
  * @property-read \Elgg\Database\EntityTable               $entityTable
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
@@ -108,6 +109,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			global $CONFIG;
 			$db_config = new \Elgg\Database\Config($CONFIG);
 			return new \Elgg\Database($db_config, $c->logger);
+		});
+
+		$this->setFactory('deprecation', function(ServiceProvider $c) {
+			return new \Elgg\DeprecationService($c->session, $c->logger);
 		});
 
 		$this->setClassName('entityTable', '\Elgg\Database\EntityTable');
