@@ -137,12 +137,26 @@ function _elgg_get_metastring_based_objects($options) {
 		'distinct' => true,
 		'preload_owners' => false,
 		'callback' => $callback,
+
+		'batch' => false,
+		'batch_inc_offset' => true,
+		'batch_size' => 25,
 	);
 
 	// @todo Ignore site_guid right now because of #2910
 	$options['site_guid'] = ELGG_ENTITIES_ANY_VALUE;
 
 	$options = array_merge($defaults, $options);
+
+	if ($options['batch'] && !$options['count']) {
+		$batch_size = $options['batch_size'];
+		$batch_inc_offset = $options['batch_inc_offset'];
+
+		// clean batch keys from $options.
+		unset($options['batch'], $options['batch_size'], $options['batch_inc_offset']);
+
+		return new \ElggBatch('_elgg_get_metastring_based_objects', $options, null, $batch_size, $batch_inc_offset);
+	}
 
 	// can't use helper function with type_subtype_pair because
 	// it's already an array...just need to merge it

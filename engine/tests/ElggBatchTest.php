@@ -167,6 +167,44 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 		delete_data("DELETE FROM {$db_prefix}objects_entity WHERE guid IN (" . implode(',', $guids) . ")");
 	}
 
+	public function testBatchCanCount() {
+		$getter = function ($options) {
+			if ($options['count']) {
+				return 20;
+			}
+			return false;
+		};
+		$options = [];
+
+		$count1 = count(new ElggBatch($getter, $options));
+		$count2 = $getter($options + ['count' => true]);
+
+		$this->assertEqual($count1, $count2);
+	}
+
+	public function testCanGetBatchFromAnEntityGetter() {
+		$options = [
+			'type' => 'plugin',
+			'limit' => 5,
+			'callback' => function ($row) {
+				return $row->guid;
+			},
+		];
+		$guids1 = elgg_get_entities($options);
+
+		$batch = elgg_get_entities($options + ['batch' => true]);
+
+		$this->assertIsA($batch, 'Elgg\\BatchInterface');
+		/* @var ElggBatch $batch */
+
+		$guids2 = [];
+		foreach ($batch as $val) {
+			$guids2[] = $val;
+		}
+
+		$this->assertEqual($guids1, $guids2);
+	}
+
 	public static function elgg_batch_callback_test($options, $reset = false) {
 		static $count = 1;
 

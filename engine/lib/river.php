@@ -280,7 +280,17 @@ function elgg_delete_river(array $options = array()) {
  *                                   option without a full understanding of the
  *                                   underlying SQL query Elgg creates. (true)
  *
- * @return array|int
+ *   batch                => BOOL    If set to true, an ElggBatch object will be returned
+ *                                   instead of an array. (false)
+ *
+ *   batch_inc_offset     => BOOL    If "batch" is used, this tells ElggBatch to increment the offset
+ *                                   on each fetch. This must be set to false if you delete the batched
+ *                                   results. (true)
+ *
+ *   batch_size           => INT     If "batch" is used, this is the number of entities/rows to pull
+ *                                   in before requesting more. (25)
+ *
+ * @return \ElggRiverItem[]|\Elgg\BatchInterface|array|int
  * @since 1.8.0
  */
 function elgg_get_river(array $options = array()) {
@@ -311,6 +321,10 @@ function elgg_get_river(array $options = array()) {
 		'count'                => false,
 		'distinct'             => true,
 
+		'batch'                => false,
+		'batch_inc_offset'     => true,
+		'batch_size'           => 25,
+
 		'order_by'             => 'rv.posted desc',
 		'group_by'             => ELGG_ENTITIES_ANY_VALUE,
 
@@ -319,6 +333,16 @@ function elgg_get_river(array $options = array()) {
 	);
 
 	$options = array_merge($defaults, $options);
+
+	if ($options['batch'] && !$options['count']) {
+		$batch_size = $options['batch_size'];
+		$batch_inc_offset = $options['batch_inc_offset'];
+
+		// clean batch keys from $options.
+		unset($options['batch'], $options['batch_size'], $options['batch_inc_offset']);
+
+		return new \ElggBatch('elgg_get_river', $options, null, $batch_size, $batch_inc_offset);
+	}
 
 	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'type', 'subtype');
 	$options = _elgg_normalize_plural_options_array($options, $singulars);
