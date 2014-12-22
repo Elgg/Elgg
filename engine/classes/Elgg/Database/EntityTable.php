@@ -476,7 +476,22 @@ class EntityTable {
 	 * 				Avoid setting this option without a full understanding of the underlying
 	 * 				SQL query Elgg creates.
 	 *
-	 * @return mixed If count, int. If not count, array. false on errors.
+	 *  batch => bool (false) If set to true, an Elgg\BatchResult object will be returned instead of an array.
+	 *           Since 2.3
+	 *
+	 *  batch_inc_offset => bool (true) If "batch" is used, this tells the batch to increment the offset
+	 *                      on each fetch. This must be set to false if you delete the batched results.
+	 *
+	 *  batch_size => int (25) If "batch" is used, this is the number of entities/rows to pull in before
+	 *                requesting more.
+	 *
+	 * @return \ElggEntity[]|int|mixed If count, int. Otherwise an array or an Elgg\BatchResult. false on errors.
+	 *
+	 * @see elgg_get_entities_from_metadata()
+	 * @see elgg_get_entities_from_relationship()
+	 * @see elgg_get_entities_from_access_id()
+	 * @see elgg_get_entities_from_annotations()
+	 * @see elgg_list_entities()
 	 */
 	public function getEntities(array $options = array()) {
 
@@ -511,12 +526,26 @@ class EntityTable {
 			'callback'				=> 'entity_row_to_elggstar',
 			'distinct'				=> true,
 
+			'batch'					=> false,
+			'batch_inc_offset'		=> true,
+			'batch_size'			=> 25,
+
 			// private API
 			'__ElggBatch'			=> null,
 		);
 
 		$options = array_merge($defaults, $options);
 
+		if ($options['batch'] && !$options['count']) {
+			$batch_size = $options['batch_size'];
+			$batch_inc_offset = $options['batch_inc_offset'];
+
+			// clean batch keys from $options.
+			unset($options['batch'], $options['batch_size'], $options['batch_inc_offset']);
+
+			return new \ElggBatch([$this, 'getEntities'], $options, null, $batch_size, $batch_inc_offset);
+		}
+	
 		// can't use helper function with type_subtype_pair because
 		// it's already an array...just need to merge it
 		if (isset($options['type_subtype_pair'])) {

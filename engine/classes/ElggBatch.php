@@ -1,10 +1,21 @@
 <?php
+
+use Elgg\BatchResult;
+
 /**
- * Efficiently run operations on batches of results for any function
- * that supports an options array.
+ * A lazy-loading proxy for a result array from a fetching function
  *
- * This is usually used with elgg_get_entities() and friends,
- * elgg_get_annotations(), and elgg_get_metadata().
+ * A batch can be counted or iterated over via foreach, where the batch will
+ * internally fetch results several rows at a time. This allows you to efficiently
+ * work on large result sets without loading all results in memory.
+ *
+ * A batch can run operations for any function that supports an options array
+ * and supports the keys "offset", "limit", and "count". This is usually used
+ * with elgg_get_entities() and friends, elgg_get_annotations(), and
+ * elgg_get_metadata(). In fact, those functions will return results as
+ * batches by passing in "batch" as true.
+ *
+ * Unlike a real array, direct access of results is not supported.
  *
  * If you pass a valid PHP callback, all results will be run through that
  * callback. You can still foreach() through the result set after.  Valid
@@ -38,27 +49,31 @@
  * $batch->setIncrementOffset(false);
  *
  * foreach ($batch as $entity) {
- * 	$entity->disable();
+ * 	   $entity->disable();
  * }
  *
  * // using both a callback
  * $callback = function($result, $getter, $options) {
- * 	var_dump("Looking at annotation id: $result->id");
- *  return true;
+ * 	   var_dump("Looking at annotation id: $result->id");
+ *     return true;
  * }
  *
  * $batch = new \ElggBatch('elgg_get_annotations', array('guid' => 2), $callback);
+ *
+ * // get a batch from an Elgg getter function
+ * $batch = elgg_get_entities([
+ *     'batch' => true,
+ * ]);
  * </code>
  *
  * @package    Elgg.Core
  * @subpackage DataModel
  * @since      1.8
  */
-class ElggBatch
-	implements \Iterator {
+class ElggBatch implements BatchResult {
 
 	/**
-	 * The objects to interator over.
+	 * The objects to iterate over.
 	 *
 	 * @var array
 	 */
@@ -67,9 +82,16 @@ class ElggBatch
 	/**
 	 * The function used to get results.
 	 *
-	 * @var mixed A string, array, or closure, or lamda function
+	 * @var callable
 	 */
 	private $getter = null;
+
+	/**
+	 * The given $options to alter and pass to the getter.
+	 *
+	 * @var array
+	 */
+	private $options = array();
 
 	/**
 	 * The number of results to grab at a time.
@@ -81,7 +103,7 @@ class ElggBatch
 	/**
 	 * A callback function to pass results through.
 	 *
-	 * @var mixed A string, array, or closure, or lamda function
+	 * @var callable
 	 */
 	private $callback = null;
 
@@ -348,10 +370,7 @@ class ElggBatch
 	 */
 
 	/**
-	 * PHP Iterator Interface
-	 *
-	 * @see Iterator::rewind()
-	 * @return void
+	 * {@inheritdoc}
 	 */
 	public function rewind() {
 		$this->resultIndex = 0;
@@ -366,30 +385,21 @@ class ElggBatch
 	}
 
 	/**
-	 * PHP Iterator Interface
-	 *
-	 * @see Iterator::current()
-	 * @return mixed
+	 * {@inheritdoc}
 	 */
 	public function current() {
 		return current($this->results);
 	}
 
 	/**
-	 * PHP Iterator Interface
-	 *
-	 * @see Iterator::key()
-	 * @return int
+	 * {@inheritdoc}
 	 */
 	public function key() {
 		return $this->processedResults;
 	}
 
 	/**
-	 * PHP Iterator Interface
-	 *
-	 * @see Iterator::next()
-	 * @return mixed
+	 * {@inheritdoc}
 	 */
 	public function next() {
 		// if we'll be at the end.
@@ -418,10 +428,7 @@ class ElggBatch
 	}
 
 	/**
-	 * PHP Iterator Interface
-	 *
-	 * @see Iterator::valid()
-	 * @return bool
+	 * {@inheritdoc}
 	 */
 	public function valid() {
 		if (!is_array($this->results)) {
@@ -429,5 +436,58 @@ class ElggBatch
 		}
 		$key = key($this->results);
 		return ($key !== null && $key !== false);
+	}
+
+	/**
+	 * Count the total results available at this moment.
+	 *
+	 * As this performs a separate query, the count returned may not match the number of results you can
+	 * fetch via iteration on a very active DB.
+	 *
+	 * @see Countable::count()
+	 * @return int
+	 */
+	public function count() {
+		if (!is_callable($this->getter)) {
+			$inspector = new \Elgg\Debug\Inspector();
+			throw new RuntimeException("Getter is not callable: " . $inspector->describeCallable($this->getter));
+		}
+
+		$options = $this->options + ['count' => true];
+
+		return call_user_func($this->getter, $options);
+	}
+
+	/**
+	 * Read a property
+	 *
+	 * @param string $name
+	 * @return mixed
+	 * @access private
+	 */
+	public function __get($name) {
+		if ($name === 'options') {
+			elgg_deprecated_notice("The ElggBatch 'options' property is private and should not be used", "2.3");
+			return $this->options;
+		}
+
+		_elgg_services()->logger->warn("Read of non-existent property '$name'");
+		return null;
+	}
+
+	/**
+	 * Write a property
+	 *
+	 * @param string $name
+	 * @param mixed  $value
+	 * @return void
+	 * @access private
+	 */
+	public function __set($name, $value) {
+		if ($name === 'options') {
+			elgg_deprecated_notice("The ElggBatch 'options' property is private and should not be used", "2.3");
+		}
+
+		$this->{$name} = $value;
 	}
 }
