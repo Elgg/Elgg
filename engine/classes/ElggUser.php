@@ -476,6 +476,7 @@ class ElggUser extends \ElggEntity
 	 * @param array $options Options array. See elgg_get_entities_from_relationship()
 	 *                       for a list of options. 'relationship_guid' is set to
 	 *                       this entity, relationship name to 'friend' and type to 'user'.
+	 *                       'elggbatch' will return an ElggBatch instance for the query
 	 * @param int   $limit   The number of users to retrieve (deprecated)
 	 * @param int   $offset  Indexing offset, if any (deprecated)
 	 *
@@ -486,6 +487,17 @@ class ElggUser extends \ElggEntity
 			$options['relationship'] = 'friend';
 			$options['relationship_guid'] = $this->getGUID();
 			$options['type'] = 'user';
+			
+			if ($options['elggbatch']) {
+				$batch_defaults = array(
+					'elggbatch_callback' => null,
+					'elggbatch_size' => 25,
+					'elggbatch_inc_offset' => true
+				);
+				$options = array_merge($batch_defaults, $options);
+				$batch = new ElggBatch('elgg_get_entities_from_relationship', $options, $options['elggbatch_callback'], $options['elggbatch_size'], $options['elggbatch_inc_offset']);
+				return $batch;
+			}
 			return elgg_get_entities_from_relationship($options);
 		} else {
 			elgg_deprecated_notice("\ElggUser::getFriends takes an options array", 1.9);
@@ -507,6 +519,7 @@ class ElggUser extends \ElggEntity
 	 *                       for a list of options. 'relationship_guid' is set to
 	 *                       this entity, relationship name to 'friend', type to 'user'
 	 *                       and inverse_relationship to true.
+	 *                       'elggbatch' will return an ElggBatch instance for the query
 	 * @param int   $limit   The number of users to retrieve (deprecated)
 	 * @param int   $offset  Indexing offset, if any (deprecated)
 	 *
@@ -518,6 +531,18 @@ class ElggUser extends \ElggEntity
 			$options['relationship_guid'] = $this->getGUID();
 			$options['inverse_relationship'] = true;
 			$options['type'] = 'user';
+			
+			if ($options['elggbatch']) {
+				$batch_defaults = array(
+					'elggbatch_callback' => null,
+					'elggbatch_size' => 25,
+					'elggbatch_inc_offset' => true
+				);
+				$options = array_merge($batch_defaults, $options);
+				$batch = new ElggBatch('elgg_get_entities_from_relationship', $options, $options['elggbatch_callback'], $options['elggbatch_size'], $options['elggbatch_inc_offset']);
+				return $batch;
+			}
+			
 			return elgg_get_entities_from_relationship($options);
 		} else {
 			elgg_deprecated_notice("\ElggUser::getFriendsOf takes an options array", 1.9);
@@ -591,6 +616,17 @@ class ElggUser extends \ElggEntity
 			$options['relationship'] = 'member';
 			$options['relationship_guid'] = $this->guid;
 		}
+		
+		if ($options['elggbatch']) {
+			$batch_defaults = array(
+				'elggbatch_callback' => null,
+				'elggbatch_size' => 25,
+				'elggbatch_inc_offset' => true
+			);
+			$options = array_merge($batch_defaults, $options);
+			$batch = new ElggBatch('elgg_get_entities_from_relationship', $options, $options['elggbatch_callback'], $options['elggbatch_size'], $options['elggbatch_inc_offset']);
+			return $batch;
+		}
 
 		return elgg_get_entities_from_relationship($options);
 	}
@@ -628,6 +664,7 @@ class ElggUser extends \ElggEntity
 	 *
 	 * @param array $options Options array. See elgg_get_entities() for a list of options.
 	 *                       'type' is set to object and owner_guid to this entity.
+	 *                       'elggbatch' will return an ElggBatch instance for the query
 	 * @param int   $limit   Number of results to return (deprecated)
 	 * @param int   $offset  Any indexing offset (deprecated)
 	 *
@@ -637,6 +674,17 @@ class ElggUser extends \ElggEntity
 		if (is_array($options)) {
 			$options['type'] = 'object';
 			$options['owner_guid'] = $this->getGUID();
+			
+			if ($options['elggbatch']) {
+				$batch_defaults = array(
+					'elggbatch_callback' => null,
+					'elggbatch_size' => 25,
+					'elggbatch_inc_offset' => true
+				);
+				$options = array_merge($batch_defaults, $options);
+				$batch = new ElggBatch('elgg_get_entities', $options, $options['elggbatch_callback'], $options['elggbatch_size'], $options['elggbatch_inc_offset']);
+				return $batch;
+			}
 			return elgg_get_entities($options);
 		} else {
 			elgg_deprecated_notice("\ElggUser::getObjects takes an options array", 1.9);
@@ -657,6 +705,7 @@ class ElggUser extends \ElggEntity
 	 *                       for a list of options. 'relationship_guid' is set to
 	 *                       this entity, type to 'object', relationship name to 'friend'
 	 *                       and relationship_join_on to 'container_guid'.
+	 *                       'elggbatch' will return an ElggBatch instance for the query
 	 * @param int   $limit   Number of results to return (deprecated)
 	 * @param int   $offset  Any indexing offset (deprecated)
 	 *
@@ -668,6 +717,17 @@ class ElggUser extends \ElggEntity
 			$options['relationship'] = 'friend';
 			$options['relationship_guid'] = $this->getGUID();
 			$options['relationship_join_on'] = 'container_guid';
+			
+			if ($options['elggbatch']) {
+				$batch_defaults = array(
+					'elggbatch_callback' => null,
+					'elggbatch_size' => 25,
+					'elggbatch_inc_offset' => true
+				);
+				$options = array_merge($batch_defaults, $options);
+				$batch = new ElggBatch('elgg_get_entities_from_relationship', $options, $options['elggbatch_callback'], $options['elggbatch_size'], $options['elggbatch_inc_offset']);
+				return $batch;
+			}
 			return elgg_get_entities_from_relationship($options);
 		} else {
 			elgg_deprecated_notice("\ElggUser::getFriendsObjects takes an options array", 1.9);

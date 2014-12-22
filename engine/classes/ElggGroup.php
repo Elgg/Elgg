@@ -318,8 +318,9 @@ class ElggGroup extends \ElggEntity
 	 * @param array $options Options array. See elgg_get_entities_from_relationships
 	 *                       for a complete list. Common ones are 'limit', 'offset',
 	 *                       and 'count'. Options set automatically are 'relationship',
-	 *                       'relationship_guid', 'inverse_relationship', and 'type'. This argument
-	 *                       used to set the limit (deprecated usage)
+	 *                       'relationship_guid', 'inverse_relationship', and 'type'. 
+	 *                       'elggbatch' will return an ElggBatch instance for the query
+	 *                       This argument used to set the limit (deprecated usage)
 	 * @param int   $offset  Offset (deprecated)
 	 * @param bool  $count   Count (deprecated)
 	 *
@@ -344,6 +345,17 @@ class ElggGroup extends \ElggEntity
 			$options['type'] = 'user';
 		}
 
+		if ($options['elggbatch']) {
+			$batch_defaults = array(
+				'elggbatch_callback' => null,
+				'elggbatch_size' => 25,
+				'elggbatch_inc_offset' => true
+			);
+			$options = array_merge($batch_defaults, $options);
+			$batch = new ElggBatch('elgg_get_entities_from_relationship', $options, $options['elggbatch_callback'], $options['elggbatch_size'], $options['elggbatch_inc_offset']);
+			return $batch;
+		}
+		
 		return elgg_get_entities_from_relationship($options);
 	}
 
