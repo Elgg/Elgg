@@ -34,7 +34,7 @@ class SystemCache {
 	 *
 	 * @return \ElggFileCache
 	 */
-	function get() {
+	function getFileCache() {
 		
 	
 		/**
@@ -55,8 +55,7 @@ class SystemCache {
 	 * @return void
 	 */
 	function reset() {
-		$cache = elgg_get_system_cache();
-		$cache->clear();
+		$this->getFileCache()->clear();
 	}
 	
 	/**
@@ -70,8 +69,7 @@ class SystemCache {
 		
 	
 		if ($this->CONFIG->system_cache_enabled) {
-			$cache = elgg_get_system_cache();
-			return $cache->save($type, $data);
+			return $this->getFileCache()->save($type, $data);
 		}
 	
 		return false;
@@ -87,8 +85,7 @@ class SystemCache {
 		
 	
 		if ($this->CONFIG->system_cache_enabled) {
-			$cache = elgg_get_system_cache();
-			$cached_data = $cache->load($type);
+			$cached_data = $this->getFileCache()->load($type);
 	
 			if ($cached_data) {
 				return $cached_data;
@@ -111,7 +108,7 @@ class SystemCache {
 	
 		_elgg_services()->datalist->set('system_cache_enabled', 1);
 		$this->CONFIG->system_cache_enabled = 1;
-		elgg_reset_system_cache();
+		$this->reset();
 	}
 	
 	/**
@@ -127,7 +124,7 @@ class SystemCache {
 	
 		_elgg_services()->datalist->set('system_cache_enabled', 0);
 		$this->CONFIG->system_cache_enabled = 0;
-		elgg_reset_system_cache();
+		$this->reset();
 	}
 	
 	/**
@@ -142,17 +139,19 @@ class SystemCache {
 		$this->CONFIG->system_cache_loaded = false;
 	
 		$this->CONFIG->views = new \stdClass();
-		$data = elgg_load_system_cache('view_locations');
+		$data = $this->load('view_locations');
 		if (!is_string($data)) {
 			return;
 		}
 		$this->CONFIG->views->locations = unserialize($data);
 		
-		$data = elgg_load_system_cache('view_types');
+		$data = $this->load('view_types');
 		if (!is_string($data)) {
 			return;
 		}
 		$this->CONFIG->view_types = unserialize($data);
+
+		// Note: We don't need view_overrides for operation. Inspector can pull this from the cache
 	
 		$this->CONFIG->system_cache_loaded = true;
 	}
@@ -164,16 +163,23 @@ class SystemCache {
 	 * @access private
 	 */
 	function init() {
+		if (!$this->CONFIG->system_cache_enabled) {
+			return;
+		}
+
 		// cache system data if enabled and not loaded
-		if ($this->CONFIG->system_cache_enabled && !$this->CONFIG->system_cache_loaded) {
-			elgg_save_system_cache('view_locations', serialize($this->CONFIG->views->locations));
-			elgg_save_system_cache('view_types', serialize($this->CONFIG->view_types));
+		if (!$this->CONFIG->system_cache_loaded) {
+			$this->save('view_locations', serialize($this->CONFIG->views->locations));
+			$this->save('view_types', serialize($this->CONFIG->view_types));
+
+			// this is saved just for the inspector and is not loaded in loadAll()
+			$this->save('view_overrides', serialize(_elgg_services()->views->getOverriddenLocations()));
 		}
 	
-		if ($this->CONFIG->system_cache_enabled && !$this->CONFIG->i18n_loaded_from_cache) {
+		if (!$this->CONFIG->i18n_loaded_from_cache) {
 			_elgg_services()->translator->reloadAllTranslations();
 			foreach ($this->CONFIG->translations as $lang => $map) {
-				elgg_save_system_cache("$lang.lang", serialize($map));
+				$this->save("$lang.lang", serialize($map));
 			}
 		}
 	}

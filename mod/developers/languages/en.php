@@ -41,13 +41,16 @@ return array(
 	'developers:inspect:events' => 'Events',
 	'developers:inspect:menus' => 'Menus',
 	'developers:inspect:pluginhooks' => 'Plugin Hooks',
+	'developers:inspect:priority' => 'Priority',
 	'developers:inspect:simplecache' => 'Simple Cache',
 	'developers:inspect:views' => 'Views',
+	'developers:inspect:views:all_filtered' => "<b>Note!</b> All view output is filtered through these Plugin Hooks:",
+	'developers:inspect:views:filtered' => "(filtered by plugin hook: %s)",
 	'developers:inspect:widgets' => 'Widgets',
 	'developers:inspect:webservices' => 'Webservices',
 	'developers:inspect:widgets:context' => 'Context',
 	'developers:inspect:functions' => 'Functions',
-	'developers:inspect:file_location' => 'File location',
+	'developers:inspect:file_location' => 'File path from Elgg root',
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",

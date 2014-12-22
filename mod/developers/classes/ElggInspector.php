@@ -4,7 +4,19 @@
  *
  */
 
+/**
+ * @deprecated 1.11
+ *
+ * @access private
+ */
 class ElggInspector {
+
+	/**
+	 * Constructor
+	 */
+	public function __construct() {
+		elgg_deprecated_notice(__CLASS__ . ' is deprecated and should not be used', '1.11');
+	}
 
 	/**
 	 * Get Elgg event information
