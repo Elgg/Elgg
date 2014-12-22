@@ -333,6 +333,7 @@ class ElggSite extends \ElggEntity {
 	 * @param array $options Options array for elgg_get_entities_from_relationship()
 	 *                       Parameters set automatically by this method:
 	 *                       'relationship', 'relationship_guid', 'inverse_relationship'
+	 *                       'elggbatch' will return an ElggBatch for the query
 	 * @return array
 	 */
 	public function getEntities(array $options = array()) {
@@ -341,6 +342,17 @@ class ElggSite extends \ElggEntity {
 		$options['inverse_relationship'] = true;
 		if (!isset($options['site_guid']) || !isset($options['site_guids'])) {
 			$options['site_guids'] = ELGG_ENTITIES_ANY_VALUE;
+		}
+		
+		if ($options['elggbatch']) {
+			$batch_defaults = array(
+				'elggbatch_callback' => null,
+				'elggbatch_size' => 25,
+				'elggbatch_inc_offset' => true
+			);
+			$options = array_merge($batch_defaults, $options);
+			$batch = new ElggBatch('elgg_get_entities_from_relationship', $options, $options['elggbatch_callback'], $options['elggbatch_size'], $options['elggbatch_inc_offset']);
+			return $batch;
 		}
 
 		return elgg_get_entities_from_relationship($options);

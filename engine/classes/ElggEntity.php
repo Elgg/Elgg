@@ -843,6 +843,8 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * @param array  $options Array of options for elgg_get_annotations() except guid. This
 	 *               may be passed a string annotation name, but this usage is deprecated.
+	 *               'elggbatch' will return an ElggBatch instance for the query for existing
+	 *               entities only
 	 * @param int    $limit   Limit (deprecated)
 	 * @param int    $offset  Offset (deprecated)
 	 * @param string $order   Order by time: asc or desc (deprecated)
@@ -869,6 +871,17 @@ abstract class ElggEntity extends \ElggData implements
 				}
 			} else {
 				$options['guid'] = $this->guid;
+			}
+			
+			if ($options['elggbatch']) {
+				$batch_defaults = array(
+					'elggbatch_callback' => null,
+					'elggbatch_size' => 25,
+					'elggbatch_inc_offset' => true
+				);
+				$options = array_merge($batch_defaults, $options);
+				$batch = new ElggBatch('elgg_get_annotations', $options, $options['elggbatch_callback'], $options['elggbatch_size'], $options['elggbatch_inc_offset']);
+				return $batch;
 			}
 
 			return elgg_get_annotations($options);
@@ -986,6 +999,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @param array $options Options array. See elgg_get_entities_from_relationship()
 	 *                       for a list of options. 'relationship_guid' is set to
 	 *                       this entity.
+	 *                       'elggbatch' will return an ElggBatch for the query
 	 * @param bool  $inverse Is this an inverse relationship? (deprecated)
 	 * @param int   $limit   Number of elements to return (deprecated)
 	 * @param int   $offset  Indexing offset (deprecated)
@@ -996,6 +1010,17 @@ abstract class ElggEntity extends \ElggData implements
 	public function getEntitiesFromRelationship($options = array(), $inverse = false, $limit = 50, $offset = 0) {
 		if (is_array($options)) {
 			$options['relationship_guid'] = $this->getGUID();
+			
+			if ($options['elggbatch']) {
+				$batch_defaults = array(
+					'elggbatch_callback' => null,
+					'elggbatch_size' => 25,
+					'elggbatch_inc_offset' => true
+				);
+				$options = array_merge($batch_defaults, $options);
+				$batch = new ElggBatch('elgg_get_entities_from_relationship', $options, $options['elggbatch_callback'], $options['elggbatch_size'], $options['elggbatch_inc_offset']);
+				return $batch;
+			}
 			return elgg_get_entities_from_relationship($options);
 		} else {
 			elgg_deprecated_notice("\ElggEntity::getEntitiesFromRelationship takes an options array", 1.9);
