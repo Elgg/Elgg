@@ -92,10 +92,8 @@ function forward($location = "", $reason = 'system') {
 
 		if ($location) {
 			header("Location: {$location}");
-			exit;
-		} else if ($location === '') {
-			exit;
 		}
+		exit;
 	} else {
 		throw new \SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
 			. "Output started in file $file at line $line. Search http://learn.elgg.org/ for more information.");
