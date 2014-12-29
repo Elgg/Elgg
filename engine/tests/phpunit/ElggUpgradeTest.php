@@ -8,7 +8,7 @@ class ElggUpgradeTest extends PHPUnit_Framework_TestCase {
 
 	public function setUp() {
 		// required by \ElggEntity when setting the owner/container
-		_elgg_services()->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
+		_elgg_services()->setValue('session', \ElggSession::getMock());
 
 		$this->obj = $this->getMockBuilder('\ElggUpgrade')
 				->setMethods(null)

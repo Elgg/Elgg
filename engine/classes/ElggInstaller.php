@@ -73,7 +73,7 @@ class ElggInstaller {
 
 		$this->bootstrapEngine();
 
-		_elgg_services()->setValue('session', new ElggSession(new Elgg\Http\MockSessionStorage()));
+		_elgg_services()->setValue('session', \ElggSession::getMock());
 
 		elgg_set_viewtype('installation');
 
@@ -1615,8 +1615,15 @@ class ElggInstaller {
 
 		if ($login) {
 			$handler = new Elgg\Http\DatabaseSessionHandler(_elgg_services()->db);
-			$storage = new Elgg\Http\NativeSessionStorage(array(), $handler);
-			$session = new ElggSession($storage);
+
+			// session.cache_limiter is unfortunately set to "" by the NativeSessionStorage constructor,
+			// so we must capture and inject it directly.
+			$options = [
+				'cache_limiter' => session_cache_limiter(),
+			];
+			$storage = new Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage($options, $handler);
+
+			$session = new ElggSession(new Symfony\Component\HttpFoundation\Session\Session($storage));
 			$session->setName('Elgg');
 			_elgg_services()->setValue('session', $session);
 			if (login($user) == FALSE) {

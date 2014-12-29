@@ -8,8 +8,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 		$mgr = $this->getMock('\Elgg\AutoloadManager', array(), array(), '', false);
 
 		$sp = new \Elgg\Di\ServiceProvider($mgr);
-
-		$sp->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
+		$sp->setValue('session', \ElggSession::getMock());
 		
 		$svcClasses = array(
 			'access' => '\Elgg\Access',
