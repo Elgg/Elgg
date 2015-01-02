@@ -26,6 +26,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			'autoloadManager' => '\Elgg\AutoloadManager',
 			'config' => '\Elgg\Config',
 			'configTable' => '\Elgg\Database\ConfigTable',
+			'context' => '\Elgg\Context',
 			'datalist' => '\Elgg\Database\Datalist',
 			'db' => '\Elgg\Database',
 			'entityTable' => '\Elgg\Database\EntityTable',
