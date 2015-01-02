@@ -227,6 +227,8 @@ function developers_theme_sandbox_controller($page) {
 		));
 	}
 
+	elgg_require_js('elgg/dev/theme_sandbox');
+
 	$title = elgg_echo("theme_sandbox:{$page[0]}");
 	$body =  elgg_view("theme_sandbox/{$page[0]}");
 

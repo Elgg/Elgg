@@ -339,6 +339,28 @@ Calls an Elgg action with the data passed. This handles outputting of system mes
       }
    });
 
+Module ``elgg/Spinner``
+^^^^^^^^^^^^^^^^^^^^^^^
+
+The ``elgg/Spinner`` module can be used to create an Ajax loading indicator fixed to the top of the window.
+
+.. code:: js
+
+   define(function (require) {
+      var Spinner = require('elgg/Spinner');
+
+      var spinner = new Spinner;
+      elgg.action('friend/add', {
+          beforeSend: spinner.start,
+          complete: spinner.stop,
+          success: function (json) {
+              // ...
+          }
+      });
+   });
+
+**Note:** The indicator is only removed once all Spinner instances are stopped.
+
 Hooks
 -----
 
