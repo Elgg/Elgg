@@ -3,6 +3,8 @@
     "version": "1.10.0-rc.1",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "type": "project",
     "require": {
         "php": "~5.4",
@@ -13,7 +15,8 @@
         "mrclay/minify": "~2.0",
         "knplabs/gaufrette": "~0.1.0",
         "tedivm/stash": "~0.12",
-        "ircmaxell/password-compat": "~1.0"
+        "ircmaxell/password-compat": "~1.0",
+        "roave/security-advisories": "dev-master"
     },
     "suggest": {
         "ext-mbstring": "*"
