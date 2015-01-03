@@ -10,10 +10,10 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
-        "mrclay/minify": "2.*",
-        "knplabs/gaufrette": "0.1.*",
+        "mrclay/minify": "~2.0",
+        "knplabs/gaufrette": "~0.1.0",
         "tedivm/stash": "~0.12",
-        "ircmaxell/password-compat": "1.*"
+        "ircmaxell/password-compat": "~1.0"
     },
     "suggest": {
         "ext-mbstring": "*"
