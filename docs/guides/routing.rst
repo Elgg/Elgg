@@ -2,7 +2,7 @@ Routing
 #######
 
 Elgg has two mechanisms to respond to HTTP requests that don't already go through the
-:doc:`Actions` and :doc:`Simplecache` systems.
+:doc:`/design/actions` and :doc:`/guides/views/simplecache` systems.
 
 URL Segments
 ============
@@ -20,7 +20,7 @@ Page Handler
 ============
 
 To handle all URLs that begin with a particular segment, you can register a function to
-act as a **page handler**. When the handler is called, the initial segment is removed
+act as a :doc:`/guides/pagehandler`. When the handler is called, the initial segment is removed
 and the remaining segments array is passed in as the first argument.
 
 The following code registers a page handler for "blog" URLs and shows how one might route
@@ -55,6 +55,40 @@ The ``route`` Plugin Hook
 =========================
 
 The ``route`` plugin hook is triggered earlier, before page handlers are called. The
-first URL segment is type of the hook.
+first URL segment is type of the hook (called identifier). This hook can be used to either modify
+identifier and segments or to take over page rendering completely.
 
-more ...
+The following code intercepts requests to the page handler for ``customblog`` and internally redirects them
+to the ``blog`` page handler.
+
+.. code:: php
+
+    function myplugin_customblog_route_handler($hook, $type, $returnvalue, $params) {
+        // replaces 'customblog' with 'blog' to use ie. blog/all page under customblog/all path
+        $returnvalue['identifier'] = 'blog';
+        return $returnvalue;
+    }
+
+    elgg_register_plugin_hook_handler('route', 'customblog', 'myplugin_customblog_route_handler');
+
+The following code replaces part of ``blog`` page handler with custom implementation. That's usually good idea when
+changing only single pages, instead of whole page handler.
+
+.. code:: php
+
+    function myplugin_blog_all_handler($hook, $type, $returnvalue, $params) {
+        $segments = elgg_extract('segments', $returnvalue, array());
+
+        if (isset($segments[0]) && $segments[0] === 'all') {
+            $title = "Not a blog anymore";
+            $content = elgg_view_layout('one_column', array(
+                'title' => $title,
+                'content' => "We can take over page rendering completely"
+            ));
+            echo elgg_view_page($title, $content);
+            // tell Elgg by returing false, that we handled this page already, to prevent rendering original one
+            return false;
+        }
+    }
+
+    elgg_register_plugin_hook_handler('route', 'blog', 'myplugin_blog_all_handler');
