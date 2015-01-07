@@ -1,14 +1,17 @@
 server {
     listen 80;
-    #Server name, replace it with your server domain
-    server_name my-elggsite.dev;
+    
+    # Server name, replace it with your server domain
+    server_name example.org;
+    
     #Server root, replace it with your elgg installation location
-    root /sites/elgg;
+    root /srv/example.org;
+    
     index index.php index.html index.htm;
 
-    #Server logs, replace it with your project names
-    error_log	/var/log/nginx/elggsite_error.log;
-	access_log	/var/log/nginx/elggsite_access.log;
+    # Server logs, replace it with your project names
+    error_log	/var/log/nginx/example_error.log;
+		access_log	/var/log/nginx/example_access.log;
 
     location ~ (^\.|/\.) {
         return 403;
@@ -32,15 +35,16 @@ server {
     }
 
     #Important, PHP CGI OR PHP FPM CONFIGURATION, comment or delete the one that you dont use, default is php-fpm
-	location ~ \.php$ {
-		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-		# NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
-	
-		# With php5-cgi alone:
-	#	fastcgi_pass 127.0.0.1:9000;
-	#	# With php5-fpm:
-		fastcgi_pass unix:/var/run/php5-fpm.sock;
-		fastcgi_index index.php;
-		include fastcgi_params;
-	}
+		location ~ \.php$ {
+				fastcgi_split_path_info ^(.+\.php)(/.+)$;
+				# NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
+			
+				# With php5-cgi alone:
+				#	fastcgi_pass 127.0.0.1:9000;
+				
+				#	With php5-fpm:
+				fastcgi_pass unix:/var/run/php5-fpm.sock;
+				fastcgi_index index.php;
+				include fastcgi_params;
+		}
 }

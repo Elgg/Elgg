@@ -1,3 +1,3 @@
 # Server Configuration 
 
-In this folder you can find the htacess configuration for apache and the nignx configuration to enable the friend url support
+In this folder you can find the configuration files both for Apache (htaccess.dist) and Nginx (nginx.dist).
