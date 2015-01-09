@@ -20,7 +20,7 @@ There are many reasons you may want to duplicate an Elgg installation: moving th
 Also at least 5 pieces of information must be changed from the copied installation:
 
 - ``engine/settings.php`` file
-- ``.htaccess`` file
+- ``.htaccess`` file (Apache) or Nginx configuration depending on server used
 - database entry for your site entity
 - database entry for the installation path
 - database entry for the data path
@@ -209,6 +209,8 @@ Update Webserver Config
 =======================
 
 For this example, you must edit the Apache config to enable a subdomain with a document root of ``/var/www/elgg_test/``. If you plan to install into a subdirectory of your document root, this step is unnecessary.
+
+If you're using Nginx, you need to update server config to match new paths based on ``install/config/nginx.dist``.
 
 Run upgrade.php
 ===============

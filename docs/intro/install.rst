@@ -19,16 +19,20 @@ Requirements
 
 -  Web server with support for URL rewriting
 
-Official support is provided for the following configuration:
+Official support is provided for the following configurations:
 
--  Apache with the `rewrite module`_ enabled
--  PHP running as an Apache module
+- Apache server
+   -  Apache with the `rewrite module`_ enabled
+   -  PHP running as an Apache module
+
+- Nginx server
+   - Nginx with PHP-FPM using FastCGI
 
 By "official support", we mean that:
 
--  Most development and testing is performed with this configuration
--  Much of the installation documentation is written assuming Apache is used
--  Priority on bug reports is given to Apache users if the bug is web server specific
+-  Most development and testing is performed with these configurations
+-  Much of the installation documentation is written assuming Apache or Nginx is used
+-  Priority on bug reports is given to Apache and Nginx users if the bug is web server specific
    (but those are rare).
 
 Browser support policy
@@ -142,7 +146,8 @@ won't work, you will need to:
 
 -  Copy engine/settings.example.php to engine/settings.php, open it up
    in a text editor and fill in your database details
--  Copy /htaccess\_dist to /.htaccess
+-  On Apache server, copy ``install/config/htaccess.dist`` to ``.htaccess``
+-  On Nginx server copy ``install/config/nginx.dist`` to ``/etc/nginx/sites-enabled`` and adjust it's contents
 
 Other Configurations
 ====================
@@ -158,9 +163,9 @@ Nginx
 To run Elgg on Nginx, you will need to:
 
 -  configure Nginx to talk to a PHP process in either CGI or FPM mode
--  Port the rewrite rules
+-  Port the following rewrite rules
 
-TODO: Add the rewrite rules from the community site.
+.. literalinclude:: ../../install/config/nginx.dist
 
 IIS
 ---
@@ -328,7 +333,7 @@ Run the following in cloud9's terminal:
 
     rm -rf * # Clear out the c9 hello-world stuff
     git clone https://github.com/Elgg/Elgg . # the hotness
-    cp htaccess_dist .htaccess
+    cp install/config/htaccess.dist .htaccess
     cp engine/settings.example.php engine/settings.php
     mysql-ctl start # start c9's local mysql server
     mkdir ../elgg-data # setup data dir for Elgg
@@ -397,10 +402,10 @@ this page to them.
 
 The ``.htaccess``, if not generated automatically (that happens when you
 have problem with ``mod_rewrite``), you can create it by renaming
-``htaccess_dist`` file you find with elgg package to ``.htaccess``. Also
+``install/config/htaccess.dist`` file you find with elgg package to ``.htaccess``. Also
 if you find a ``.htaccess`` file inside the installation path, but you 
 are still getting 404 error, make sure the contents of ``.htaccess`` are
-same as that of ``htaccess_dist``.
+same as that of ``install/config/htaccess.dist``.
 
 **``mod_rewrite`` isn't installed.**
 
