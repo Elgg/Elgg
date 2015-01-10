@@ -21,6 +21,7 @@ function _elgg_comments_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
+	elgg_register_plugin_hook_handler('email', 'system', '_elgg_comments_notification_email_subject');
 
 	elgg_register_page_handler('comment', '_elgg_comments_page_handler');
 
@@ -192,4 +193,37 @@ function _elgg_comments_permissions_override($hook, $type, $return, $params) {
 	}
 
 	return $return;
+}
+
+/**
+ * Set subject for email notifications about new ElggComment objects
+ *
+ * The "Re: " part is required by some email clients in order to properly
+ * group the notifications in threads.
+ *
+ * Group discussion replies extend ElggComment objects so this takes care
+ * of their notifications also.
+ *
+ * @param string $hook        'email'
+ * @param string $type        'system'
+ * @param array  $returnvalue Current mail parameters
+ * @param array  $params      Original mail parameters
+ * @return array $returnvalue Modified mail parameters
+ */
+function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $params) {
+
+	/** @var Elgg_Notifications_Notification */
+	$notification = elgg_extract('notification', $returnvalue['params']);
+
+	if ($notification instanceof Elgg_Notifications_Notification) {
+		$object = elgg_extract('object', $notification->params);
+
+		if ($object instanceof ElggComment) {
+			$container = $object->getContainerEntity();
+
+			$returnvalue['subject'] = 'Re: ' . $container->getDisplayName();
+		}
+	}
+
+	return $returnvalue;
 }
