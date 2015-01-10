@@ -175,7 +175,7 @@ class CodeStyle {
 					continue;
 				}
 
-				if ($relative_path === 'htaccess_dist' || preg_match($this->file_pattern, $entry)) {
+				if ($relative_path === 'install/config/htaccess.dist' || preg_match($this->file_pattern, $entry)) {
 					$files[] = $full;
 					continue;
 				}

@@ -1,9 +1,9 @@
 # Elgg htaccess directives
 
-<Files "htaccess_dist">
+<FilesMatch "(nginx|htaccess).dist">
 	order allow,deny
 	deny from all
-</Files>
+</FilesMatch>
 
 # Don't allow listing directories
 Options -Indexes
