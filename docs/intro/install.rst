@@ -11,7 +11,7 @@ Requirements
 ============
 
 -  MySQL 5+
--  PHP 5.3.3+ with the following extensions:
+-  PHP 5.4+ with the following extensions:
 
    -  GD (for graphics processing)
    -  `Multibyte String support`_ (for i18n)
