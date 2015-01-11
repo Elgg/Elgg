@@ -23,12 +23,12 @@
     },
     "autoload": {
         "psr-0": {
-            "_empty_": "engine/classes/"
+            "": "engine/classes/"
         }
     },
     "autoload-dev": {
         "psr-0": {
-            "_empty_": "engine/tests/phpunit/"
+            "": "engine/tests/phpunit/"
         }
     },
     "require-dev": {
