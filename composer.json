@@ -1,8 +1,10 @@
 {
     "name": "elgg/elgg",
-    "version": "1.10.0-dev",
+    "version": "1.10.0-rc.1",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "type": "project",
     "require": {
         "php": "~5.4",
@@ -10,10 +12,11 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
-        "mrclay/minify": "2.*",
-        "knplabs/gaufrette": "0.1.*",
+        "mrclay/minify": "~2.0",
+        "knplabs/gaufrette": "~0.1.0",
         "tedivm/stash": "~0.12",
-        "ircmaxell/password-compat": "1.*"
+        "ircmaxell/password-compat": "~1.0",
+        "roave/security-advisories": "dev-master"
     },
     "suggest": {
         "ext-mbstring": "*"
@@ -31,6 +34,7 @@
     "require-dev": {
         "phpunit/phpunit": "~4.1",
         "elgg/sniffs": "dev-master",
-        "squizlabs/php_codesniffer": "~1.5"
+        "squizlabs/php_codesniffer": "~1.5",
+        "simpletest/simpletest": "~1.1"
     }
 }

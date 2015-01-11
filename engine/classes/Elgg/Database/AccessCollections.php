@@ -362,13 +362,14 @@ class AccessCollections {
 	 * standard access levels. It does not return access collections that the user
 	 * belongs to such as the access collection for a group.
 	 *
-	 * @param int  $user_guid The user's GUID.
-	 * @param int  $site_guid The current site.
-	 * @param bool $flush     If this is set to true, this will ignore a cached access array
+	 * @param int   $user_guid    The user's GUID.
+	 * @param int   $site_guid    The current site.
+	 * @param bool  $flush        If this is set to true, this will ignore a cached access array
+	 * @param array $input_params Some parameters passed into an input/access view
 	 *
 	 * @return array List of access permissions
 	 */
-	function getWriteAccessArray($user_guid = 0, $site_guid = 0, $flush = false) {
+	function getWriteAccessArray($user_guid = 0, $site_guid = 0, $flush = false, array $input_params = array()) {
 		global $init_finished;
 		$cache = _elgg_services()->accessCache;
 	
@@ -421,10 +422,10 @@ class AccessCollections {
 	
 		$options = array(
 			'user_id' => $user_guid,
-			'site_id' => $site_guid
+			'site_id' => $site_guid,
+			'input_params' => $input_params,
 		);
-		return _elgg_services()->hooks->trigger('access:collections:write', 'user',
-			$options, $access_array);
+		return _elgg_services()->hooks->trigger('access:collections:write', 'user', $options, $access_array);
 	}
 
 	/**

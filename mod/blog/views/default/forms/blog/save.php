@@ -33,7 +33,7 @@ if (!$vars['guid'] || ($blog && $blog->status != 'published')) {
 	$preview_button = elgg_view('input/submit', array(
 		'value' => elgg_echo('preview'),
 		'name' => 'preview',
-		'class' => 'mls',
+		'class' => 'elgg-button-submit mls',
 	));
 }
 
@@ -102,7 +102,10 @@ $access_label = elgg_echo('access');
 $access_input = elgg_view('input/access', array(
 	'name' => 'access_id',
 	'id' => 'blog_access_id',
-	'value' => $vars['access_id']
+	'value' => $vars['access_id'],
+	'entity' => $vars['entity'],
+	'entity_type' => 'object',
+	'entity_subtype' => 'blog',
 ));
 
 $categories_input = elgg_view('input/categories', $vars);
