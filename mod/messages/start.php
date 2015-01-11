@@ -49,6 +49,13 @@ function messages_init() {
 	// delete messages sent by a user when user is deleted
 	elgg_register_event_handler('delete', 'user', 'messages_purge');
 
+	// invalidate message count cache when messages are deleted
+	elgg_register_event_handler('delete', 'object', 'messages_handle_object_delete');
+
+	// invalidate message count cache when $message->readYet is changed.
+	// Why use "create"? See https://github.com/Elgg/Elgg/issues/7765
+	elgg_register_event_handler('create', 'metadata', 'messages_handle_metadata_create');
+
 	// ecml
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'messages_ecml_views_hook');
 
@@ -286,6 +293,10 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 		$message_sent->save();
 	}
 
+	// We must invalidate while the message is public access. Otherwise the ->toId metadata won't be
+	// accessible.
+	messages_invalidate_unread_cache($message_to);
+
 	$message_to->access_id = ACCESS_PRIVATE;
 	$message_to->save();
 
@@ -339,6 +350,10 @@ function messages_set_url($hook, $type, $url, $params) {
 	}
 }
 
+/**
+ * @return int
+ * @deprecated use messages_count_unread()
+ */
 function count_unread_messages() {
 	elgg_deprecated_notice('Your theme is using count_unread_messages which has been deprecated for messages_count_unread()', 1.8);
 	return messages_count_unread();
@@ -409,7 +424,23 @@ function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count 
  * @return int
  */
 function messages_count_unread($user_guid = 0) {
-	return messages_get_unread($user_guid, 10, 0, true);
+	$user = $user_guid ? get_user($user_guid) : elgg_get_logged_in_user_entity();
+	if (!$user) {
+		return 0;
+	}
+
+	$unread = $user->messages_count_unread;
+	if ($unread !== null && !is_array($unread)) {
+		return $unread;
+	}
+
+	$unread = messages_get_unread($user->guid, 10, 0, true);
+
+	$ia = elgg_set_ignore_access(true);
+	$user->setMetadata('messages_count_unread', $unread, 'integer', false, 0, ACCESS_PUBLIC);
+	elgg_set_ignore_access($ia);
+
+	return $unread;
 }
 
 /**
@@ -476,4 +507,57 @@ function messages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
 	$return_value['messages/messages'] = elgg_echo('messages');
 
 	return $return_value;
+}
+
+/**
+ * Invalidate the unread messages cache of the recipient of the message
+ *
+ * @param ElggObject $message A message
+ *
+ * @access private
+ */
+function messages_invalidate_unread_cache(ElggObject $message) {
+	$recipient = get_user($message->toId);
+	if (!$recipient) {
+		return;
+	}
+
+	$ia = elgg_set_ignore_access();
+	$recipient->deleteMetadata('messages_count_unread');
+	elgg_set_ignore_access($ia);
+}
+
+/**
+ * Handle the delete, object event
+ *
+ * @param string     $event  "delete"
+ * @param string     $type   "object"
+ * @param ElggObject $object The message object
+ *
+ * @access private
+ */
+function messages_handle_object_delete($event, $type, ElggObject $object) {
+	if ($object->getSubtype() === "messages") {
+		messages_invalidate_unread_cache($object);
+	}
+}
+
+/**
+ * Handle metadata creates
+ *
+ * @param string       $event "create"
+ * @param string       $type  "metadata"
+ * @param ElggMetadata $md    The metadata object
+ *
+ * @access private
+ */
+function messages_handle_metadata_create($event, $type, ElggMetadata $md) {
+	if ($md->name !== 'readYet') {
+		return;
+	}
+	$entity = $md->getEntity();
+	if (!elgg_instanceof($entity, 'object', 'messages')) {
+		return;
+	}
+	messages_invalidate_unread_cache($entity);
 }
