@@ -20,7 +20,7 @@ Requirements
 * Access to `Twitter account`_
 * Access to `G+ page`_
 * Node.js and NPM installed
-* Sphinx installed (``easy_install sphinx``)
+* Sphinx installed (``easy_install sphinx && easy_install sphinx-intl``)
 * Transifex client installed (``easy_install transifex-client``)
 * Transifex account with access to Elgg project
 
@@ -44,6 +44,7 @@ Install the prerequisites:
 
    npm install elgg-conventional-changelog
    easy_install sphinx
+   easy_install sphinx-intl
    easy_install transifex-client
 
 Run the ``release.php`` script. For example, to release 1.9.1:
