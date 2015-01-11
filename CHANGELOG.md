@@ -1,3 +1,36 @@
+<a name="1.10.0"></a>
+## 1.10.0  (2015-01-11)
+
+#### Contributors
+
+* Paweł Sroka (12)
+* Per Jensen (3)
+* Steve Clay (3)
+* Evan Winslow (2)
+* Arsalan Shah (1)
+* Juho Jaakkola (1)
+
+#### Features
+
+* **security:** No longer ship with vendors that have security advisories ([b193ebcf](https://github.com/Elgg/Elgg/commit/b193ebcf2cbfff13732303d3601a0d504c9f94a4), closes [#7738](https://github.com/Elgg/Elgg/issues/7738))
+* **test:** Added rewrite rules for builtin PHP cli server execution ([a0ff98e2](https://github.com/Elgg/Elgg/commit/a0ff98e21175a010b15f3d98517aaa2be95c114b))
+
+
+#### Documentation
+
+* **nginx:** Added sample nginx configuration and moved sample configs to install/config/ ([dbcd7548](https://github.com/Elgg/Elgg/commit/dbcd754839796ea00fd711cb149c9c94eff8e2da))
+* **requirements:** Updated PHP version used in docs as requirement to 5.4 ([5f4f8eea](https://github.com/Elgg/Elgg/commit/5f4f8eead513495a474b4eba4698c3c66795b0a0))
+
+
+#### Bug Fixes
+
+* **CSS:** adds margin between a file's text and image ([261e92b4](https://github.com/Elgg/Elgg/commit/261e92b40bad46455ec68bf2cfc695cef5cbf0dc), closes [#7712](https://github.com/Elgg/Elgg/issues/7712))
+* **amd:** Added coverage tests and fixed minor bugs. ([6250fd76](https://github.com/Elgg/Elgg/commit/6250fd76ca72bc196788da2a4f83f562f99a5d42))
+* **blog:** adds missing class to preview button ([be3b559b](https://github.com/Elgg/Elgg/commit/be3b559b20da20c08940c5a2623f5b817f0c3f12), closes [#7706](https://github.com/Elgg/Elgg/issues/7706))
+* **http:** Send a minimal 404 header for /favicon.ico requests ([b8c8a280](https://github.com/Elgg/Elgg/commit/b8c8a280457e34c43b9bf8a83f51e845339202e7), closes [#7261](https://github.com/Elgg/Elgg/issues/7261))
+* **settings:** It's again possible to set user specific setting for a plugin ([80e0c904](https://github.com/Elgg/Elgg/commit/80e0c904abafea70eb64b037f0e5d6f8144e7344))
+
+
 <a name="1.10.0-rc.1"></a>
 ### 1.10.0-rc.1  (2014-12-15)
 
