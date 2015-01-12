@@ -8,8 +8,8 @@ return array(
 	'install:admin' => 'Crear cuenta admin',
 	'install:complete' => 'Finalizado',
 
-	'install:next' => 'Next',
-	'install:refresh' => 'Refresh',
+	'install:next' => 'Siguiente',
+	'install:refresh' => 'Actualizar',
 
 	'install:welcome:instructions' => "La instalación de Elgg consta de 6 pasos simples y leer esta bienvenida es el primero!
 
@@ -109,7 +109,7 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
 	'install:complete:gotosite' => 'Ir al sitio',
 
 	'InstallationException:UnknownStep' => '%s es un paso de instalación desconocido.',
-	'InstallationException:MissingLibrary' => 'Could not load %s',
+	'InstallationException:MissingLibrary' => 'No se pudo cargar %s',
 	'InstallationException:CannotLoadSettings' => 'Elgg could not load the settings file. It does not exist or there is a file permissions issue.',
 
 	'install:success:database' => 'Se ha instalado la base de datos.',
@@ -154,5 +154,5 @@ Cuando se encuentre listo para continuar, presione el botón siguiente.",
     
 	// Bring over some error messages you might see in setup
 	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. If you are the site administrator check your settings file, otherwise contact the site administrator with the following information:',
-	'DatabaseException:WrongCredentials' => "Elgg couldn't connect to the database using the given credentials. Check the settings file.",
+	'DatabaseException:WrongCredentials' => "Elgg no puede conectar con la base de datos, usando los credenciales. Consulte en el archivo 'settings'.",
 );

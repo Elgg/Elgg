@@ -2,7 +2,7 @@
 return array(
 	'blog' => 'Blogs',
 	'blog:blogs' => 'Blogs',
-	'blog:revisions' => 'Revisione',
+	'blog:revisions' => 'Revisiones',
 	'blog:archives' => 'Archivos',
 	'blog:blog' => 'Blog',
 	'item:object:blog' => 'Blogs',

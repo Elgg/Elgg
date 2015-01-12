@@ -13,7 +13,7 @@ return array(
 	'likes:userlikedthis' => '%s vindt dit leuk',
 	'likes:userslikedthis' => '%s vinden dit leuk',
 	'likes:river:annotate' => 'vindt leuk',
-	'likes:delete:confirm' => 'Weet je zeker dat je deze Like wit verwijderen?',
+	'likes:delete:confirm' => 'Weet je zeker dat je deze \'like\' wilt verwijderen?',
 
 	'river:likes' => 'vindt %s leuk %s',
 
@@ -21,14 +21,21 @@ return array(
 	'likes:notifications:subject' => '%s vindt je item "%s" leuk',
 	'likes:notifications:body' =>
 'Beste %1$s,
+
 %2$s vindt je item "%3$s" op %4$s leuk!
 
 Bekijk je originele item hier:
 %5$s
-of bekijk %2$s\'s profiel hier:
+
+Je kunt het profiel van %2$s hier bekijken:
 %6$s
 
-Bedankt,
-%4$s',
+Dank je wel!
+%4$s
+
+---
+
+Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.
+',
 	
 );

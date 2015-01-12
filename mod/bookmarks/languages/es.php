@@ -44,7 +44,7 @@ Ver y comentar en el marcador:
 	'river:create:object:bookmarks' => '%s ha marcado %s',
 	'river:comment:object:bookmarks' => '%s ha comentado en el marcador %s',
 	'bookmarks:river:annotate' => 'ha comentado este marcador',
-	'bookmarks:river:item' => 'un item',
+	'bookmarks:river:item' => 'un art&iacute;culo',
 
 	'item:object:bookmarks' => 'Marcadores',
 
