@@ -229,6 +229,7 @@ select {
 .ui-autocomplete {
 	position: absolute;
 	cursor: default;
+	z-index: 10000;
 }
 .elgg-autocomplete-item .elgg-body {
 	max-width: 600px;

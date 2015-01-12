@@ -8,9 +8,9 @@ $label = get_input('label');
 $type = get_input('type');
 
 $fieldlist = elgg_get_config('profile_custom_fields');
-if (!$fieldlist) {
+if (!$fieldlist && $fieldlist !== '0') {
 	$fieldlist = '';
-	$id = 1;
+	$id = 0;
 } else {
 	$fieldlistarray = explode(',', $fieldlist);
 	foreach ($fieldlistarray as $key => $value) {
@@ -20,7 +20,7 @@ if (!$fieldlist) {
 }
 
 if (($label) && ($type)) {
-	if (!empty($fieldlist)) {
+	if ($fieldlist !== '') {
 		$fieldlist .= ',';
 	}
 	$fieldlist .= "$id";
