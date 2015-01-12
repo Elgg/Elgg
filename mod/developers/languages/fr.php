@@ -4,6 +4,7 @@ return array(
 	'admin:develop_tools' => 'Outils',
 	'admin:develop_tools:sandbox' => 'Thème bac à sable',
 	'admin:develop_tools:inspect' => 'Inspecter',
+	'admin:inspect' => 'Inspecter',
 	'admin:develop_tools:unit_tests' => 'Tests unitaires',
 	'admin:developers' => 'Les développeurs',
 	'admin:developers:settings' => 'Paramètres développeurs',
@@ -36,6 +37,20 @@ return array(
 	
 	// inspection
 	'developers:inspect:help' => 'Inspecter la configuration système d\'Elgg.',
+	'developers:inspect:actions' => 'Actions',
+	'developers:inspect:events' => 'Evénements',
+	'developers:inspect:menus' => 'Menus',
+	'developers:inspect:pluginhooks' => 'Hooks des plugins',
+	'developers:inspect:priority' => 'Priorité',
+	'developers:inspect:simplecache' => 'Cache simple',
+	'developers:inspect:views' => 'Vues',
+	'developers:inspect:views:all_filtered' => "<b>Note !</b> Toutes les sorties des vues sont filtrées par les hooks de plugins suivants :",
+	'developers:inspect:views:filtered' => "(filtré par le hook de plugin : %s)",
+	'developers:inspect:widgets' => 'Widget',
+	'developers:inspect:webservices' => 'Services web',
+	'developers:inspect:widgets:context' => 'Contexte',
+	'developers:inspect:functions' => 'Fonctions',
+	'developers:inspect:file_location' => 'Chemin à partir de la racine Elgg',
 
 	// event logging
 	'developers:event_log_msg' => "%s : '%s, %s' dans %s",

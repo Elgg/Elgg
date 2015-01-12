@@ -64,7 +64,7 @@ return array(
 	'groups:featuredon' => '%s は、クローズアップ欄に表示されます',
 	'groups:unfeatured' => '%s は、クローズアップ欄から外されました',
 	'groups:featured_error' => '不正なグループです。',
-	'groups:nofeatured' => 'No featured groups',
+	'groups:nofeatured' => 'クローズアップされたグループはありません',
 	'groups:joinrequest' => '参加希望',
 	'groups:join' => '参加',
 	'groups:leave' => '脱退',
@@ -175,6 +175,8 @@ return array(
 	'discussion:reply:error:notfound' => '議論の返答は見つかりませんでした。',
 	'discussion:reply:error:notdeleted' => '返答を削除することができませんでした。',
 
+	'discussion:search:title' => '議題「 %s 」に返答する',
+	
 	'admin:groups' => 'グループ',
 
 	'reply:this' => '返答する',

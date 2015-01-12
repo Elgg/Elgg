@@ -4,6 +4,7 @@ return array(
 	'admin:develop_tools' => 'Työkalut',
 	'admin:develop_tools:sandbox' => 'Teemojen kehittäminen',
 	'admin:develop_tools:inspect' => 'Tekninen rakenne',
+	'admin:inspect' => 'Tekninen rakenne',
 	'admin:develop_tools:unit_tests' => 'Yksikkötestit',
 	'admin:developers' => 'Kehittäjät',
 	'admin:developers:settings' => 'Asetukset',
@@ -36,6 +37,20 @@ return array(
 	
 	// inspection
 	'developers:inspect:help' => 'Tarkastele sivuston teknistä rakennetta.',
+	'developers:inspect:actions' => 'Actions',
+	'developers:inspect:events' => 'Events',
+	'developers:inspect:menus' => 'Menus',
+	'developers:inspect:pluginhooks' => 'Plugin hooks',
+	'developers:inspect:priority' => 'Tärkeysjärjestys',
+	'developers:inspect:simplecache' => 'Simple cache',
+	'developers:inspect:views' => 'Views',
+	'developers:inspect:views:all_filtered' => "<b>Huom!</b> Kaikki näkymät ajetaan seuraavien hookkien läpi:",
+	'developers:inspect:views:filtered' => "(ajettu läpi plugin-hookista: %s)",
+	'developers:inspect:widgets' => 'Vimpaimet',
+	'developers:inspect:webservices' => 'Webservices',
+	'developers:inspect:widgets:context' => 'Context',
+	'developers:inspect:functions' => 'Functions',
+	'developers:inspect:file_location' => 'Tiedostopolku Elggin juuresta',
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",

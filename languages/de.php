@@ -40,7 +40,7 @@ return array(
 	'actionloggedout' => "Entschuldigung, Du kannst diese Aktion nicht ausführen während Du nicht angemeldet bist.",
 	'actionunauthorized' => 'Du bist nicht authorisiert, diese Aktion auszuführen',
 
-	'PluginException:MisconfiguredPlugin' => "%s (GUID: %s) ist ein falsch konfiguriertes Plugin. Es wurde deaktiviert. Im Elgg-Wiki sind einige mögliche Ursachen für das Problem beschrieben (http://docs.elgg.org/wiki/).",
+	'PluginException:MisconfiguredPlugin' => "%s (GUID: %s) ist ein falsch konfiguriertes Plugin. Es wurde deaktiviert. Im Elgg-Wiki sind einige mögliche Ursachen für das Problem beschrieben (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (GUID: %s) kann nicht gestartet werden und wurde deaktiviert. Ursache: %s.',
 	'PluginException:InvalidID' => "%s ist eine ungültig Plugin-ID.",
 	'PluginException:InvalidPath' => "%s ist ungültiger Plugin-Dateipfad.",
@@ -158,6 +158,7 @@ return array(
 
 	'widgets:add' => 'Widgets hinzufügen',
 	'widgets:add:description' => "Klicke auf eines der unten aufgelisteten Widgets, um es zu Deiner Seite hinzuzufügen.",
+	'widgets:panel:close' => "Widgets-Auswahl schließen",
 	'widgets:position:fixed' => '(Feste Position auf der Seite)',
 	'widget:unavailable' => 'Du hast dieses Widget bereits hinzugefügt.',
 	'widget:numbertodisplay' => 'Anzahl der anzuzeigenden Einträge.',
@@ -448,6 +449,7 @@ return array(
 	'admin:configuration:success' => "Deine Einstellungen wurden gespeichert.",
 	'admin:configuration:fail' => "Deine Einstellungen konnten nicht gespeichert werden.",
 	'admin:configuration:dataroot:relative_path' => 'Der Pfad "%s" ist nicht als Pfad zum Datenverzeichnis zulässig, da es kein absoluter Pfad ist.',
+	'admin:configuration:default_limit' => 'Die Anzahl der Einträge pro Seite muss mindestens 1 sein.',
 
 	'admin:unknown_section' => 'Unbekannter Adminbereich.',
 
@@ -611,7 +613,7 @@ return array(
 	'admin:plugins:warning:elgg_version_unknown' => 'Dieses Plugin verwendet eine veraltete Manifest-Datei und es gibt keine Informationen bezüglich den kompatiblen Elgg-Versionen. Es wird wahrscheinlich nicht funktionieren!',
 	'admin:plugins:warning:unmet_dependencies' => 'Dieses Plugin hat unerfüllte Abhängigkeiten und kann deshalb nicht aktiviert werden. Prüfe die Abhängigkeiten für weitere Informationen.',
 	'admin:plugins:warning:invalid' => 'Dieses Plugin ist nicht standardkonform: %s.',
-	'admin:plugins:warning:invalid:check_docs' => 'Bitte schau in der <a href="http://docs.elgg.org/Invalid_Plugin">Elgg-Dokumentation</a> nach, um weitere Hinweise zur Problemlösung zu erhalten.',
+	'admin:plugins:warning:invalid:check_docs' => 'Bitte schau in der <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">Elgg-Dokumentation</a> nach, um weitere Hinweise zur Problemlösung zu erhalten.',
 	'admin:plugins:cannot_activate' => 'Aktivierung nicht möglich.',
 
 	'admin:plugins:set_priority:yes' => "%s neu angeordnet.",
@@ -1052,6 +1054,7 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'installation:view' => "Gebe den Ansichtsmodus an, der für Deine Community-Seite verwendet werden soll. Wenn Du nicht sicher bist was Du eingeben sollst, lass das Textfeld leer oder verwende \"default\", um den Standardmodus zu verwenden:",
 
 	'installation:siteemail' => "Email-Adresse Deiner Community-Seite (wird vom System verwendet, um Benachrichtigungen zu versenden)",
+	'installation:default_limit' => "Standardmäßige Anzahl der Einträge pro Seite",
 
 	'admin:site:access:warning' => "Dies ist der Zugangslevel, der Benutzern standardmäßig vorgeschlagen wird, wenn sie neue Inhalte erstellen. Eine Änderung hier verändert nicht den Zugangslevel der Inhalte selbst.",
 	'installation:allow_user_default_access:description' => "Aktiviere diese Option, um Benutzern zu erlauben, selbst den Zugangslevel festzulegen, der standardmäßig für sie ausgewählt ist, wenn sie neue Inhalte erstellen. Die benutzerspezifische Einstellung für den vorausgewählten Zugangslevel setzt die seitenweite Einstellung für diese Benutzer außer Kraft.",
@@ -1092,7 +1095,7 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 		das im Paket der neuesten Version von Elgg enthalten ist und von <a href="http://elgg.org">elgg.org</a>
 		heruntergeladen werden kann.<br /><br />
 
-		Wenn Du genauere Installationsanweisungen benötigst, lese die <a href="http://docs.elgg.org/wiki/Upgrading_Elgg">
+		Wenn Du genauere Installationsanweisungen benötigst, lese die <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
 		Dokumentation über die Aktualisierung von Elgg</a>.  Falls Du Hilfe benötigst, stelle Deine Frage in den
 		<a href="http://community.elgg.org/pg/groups/discussion/">Community Support-Foren</a>.',
 
