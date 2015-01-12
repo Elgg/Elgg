@@ -1,3 +1,20 @@
+<a name="1.9.8"></a>
+### 1.9.8  (2015-01-11)
+
+#### Contributors
+
+* Juho Jaakkola (1)
+* Matt Beckett (1)
+* Steve Clay (1)
+* iionly (1)
+
+#### Bug Fixes
+
+* **css:** Correct z-index for autocomplete form field when opened in lightbox ([e993141f](https://github.com/Elgg/Elgg/commit/e993141fb010f7cba6d9d134029a719ba625e0d5))
+* **notifications:** subject of comment notification email always starts with "Re: " ([b5175b56](https://github.com/Elgg/Elgg/commit/b5175b56280c0903fc28ab1caa0106bf730343ef), closes [#7743](https://github.com/Elgg/Elgg/issues/7743))
+* **profile:** admin defined profile fields are once again back-compatible ([8e577be4](https://github.com/Elgg/Elgg/commit/8e577be4aa77305f55e18394e2572d6d28fa5278), closes [#7634](https://github.com/Elgg/Elgg/issues/7634))
+
+
 <a name="1.9.7"></a>
 ### 1.9.7  (2014-12-14)
 
