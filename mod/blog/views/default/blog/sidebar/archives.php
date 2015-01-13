@@ -14,9 +14,11 @@ if (elgg_instanceof($page_owner, 'user')) {
 
 // This is a limitation of the URL schema.
 if ($page_owner && $vars['page'] != 'friends') {
-	$dates = array_reverse(get_entity_dates('object', 'blog', $page_owner->getGUID()));
-	
+	$dates = get_entity_dates('object', 'blog', $page_owner->getGUID());
+
 	if ($dates) {
+		$dates = array_reverse($dates);
+		
 		$title = elgg_echo('blog:archives');
 		$content = '<ul class="blog-archives">';
 		foreach ($dates as $date) {
