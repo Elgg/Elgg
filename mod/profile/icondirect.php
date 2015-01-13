@@ -20,7 +20,7 @@ if (!isset($_GET['joindate']) || !isset($_GET['guid'])) {
 }
 
 $join_date = (int)$_GET['joindate'];
-$last_cache = (int)$_GET['lastcache']; // icontime
+$last_cache = empty($_GET['lastcache']) ? 0 : (int)$_GET['lastcache']; // icontime
 $guid = (int)$_GET['guid'];
 
 // If is the same ETag, content didn't changed.
@@ -30,9 +30,12 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']
 	exit;
 }
 
-$size = strtolower($_GET['size']);
-if (!in_array($size, array('large', 'medium', 'small', 'tiny', 'master', 'topbar'))) {
-	$size = "medium";
+$size = "medium";
+if (!empty($_GET['size'])) {
+	$size = strtolower($_GET['size']);
+	if (!in_array($size, array('large', 'medium', 'small', 'tiny', 'master', 'topbar'))) {
+		$size = "medium";
+	}
 }
 
 $mysql_dblink = @mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true);
