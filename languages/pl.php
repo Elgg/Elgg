@@ -158,6 +158,7 @@ return array(
 
 	'widgets:add' => 'Dodaj gadżety',
 	'widgets:add:description' => "Kliknij na dowolnym przycisku poniżej, aby dodać gadżet do tej strony.",
+	'widgets:panel:close' => "Zamknij panel gadżetów",
 	'widgets:position:fixed' => '(Stała pozycja na stronie)',
 	'widget:unavailable' => 'Już dodałeś ten gadżet.',
 	'widget:numbertodisplay' => 'Ilość elementów do wyświetlenia',
@@ -448,6 +449,7 @@ return array(
 	'admin:configuration:success' => "Twoje ustawienia zostały zapisane.",
 	'admin:configuration:fail' => "Twoje ustawienie nie zostały zapisane.",
 	'admin:configuration:dataroot:relative_path' => 'Nie można ustawić "%s" jako dataroot, ponieważ nie jest to ścieżka bezwzględna.',
+	'admin:configuration:default_limit' => 'Liczba pozycji na stronie musi wynosić co najmniej 1.',
 
 	'admin:unknown_section' => 'Niepoprawna sekcja panelu administracyjnego.',
 
@@ -521,12 +523,14 @@ return array(
 'Witaj w Elgg! Właśnie patrzysz na tablicę administracyjną. Jest ona przydatna, gdy chcesz śledzić co się dzieje na stronie.',
 
 	'admin:widget:admin_welcome:admin_overview' =>
-"Nawigacja w panelu administracyjnym jest dostępna poprzez menu po prawej stronie. Jest ona podzielona na trzy sekcje:
-<dl>
+"Nawigacja w panelu administracyjnym jest dostępna poprzez menu po prawej stronie. Jest ona podzielona na
+trzy sekcje:
+	<dl>
 		<dt>Administracja</dt><dd>Codzienne zadania, takie jak przeglądanie zgłoszonej treści, kontrola użytkowników on-line lub przeglądanie statystyk.</dd>
 		<dt>Konfiguracja</dt><dd>Doraźne zadania, takie jak ustawianie nazwy strony lub aktywacja rozszerzenia.</dd>
 		<dt>Develop</dt><dd>Dla programistów budujących rozszerzenia lub projektujących motywy graficzne. (Wymaga rozszerzenia Developers)</dd>
-	</dl>",
+	</dl>
+	",
 
 	// argh, this is ugly
 	'admin:widget:admin_welcome:outro' => '<br />Upewnij się, że sprawdziłeś zasoby dostępne poprzez linki dostępne w stopce. Dziękujemy za wybór Elgg!',
@@ -693,7 +697,8 @@ return array(
 
 	'admin:appearance:default_widgets' => 'Domyślne gadżety',
 	'admin:default_widgets:unknown_type' => 'Nieznany typ gadżetu',
-	'admin:default_widgets:instructions' => 'Dodaj, usuń, ustaw i konfiguruj domyślne gadżety dla wybranej strony gadżetów.',
+	'admin:default_widgets:instructions' => 'Dodaj, usuń, ustaw i konfiguruj domyślne gadżety dla wybranej strony gadżetów.
+	Zmiany te dotyczą tylko nowych użytkowników na stronie.',
 
 	'admin:robots.txt:instructions' => "Edytuj poniżej plik robots.txt dla tej strony",
 	'admin:robots.txt:plugins' => "Rozszerzenia dodają poniższą treść do pliku robots.txt",
@@ -902,7 +907,6 @@ return array(
 	'title' => "Tytuł",
 	'description' => "Opis",
 	'tags' => "Tagi",
-	'spotlight' => "Wyróżnienie",
 	'all' => "Wszyscy",
 	'mine' => "Moje",
 
@@ -913,7 +917,6 @@ return array(
 	'relationships' => "Relacje",
 	'metadata' => "Metadane",
 	'tagcloud' => "Chmura tagów",
-	'tagcloud:allsitetags' => "Wszystkie tagi",
 
 	'on' => 'Włączony',
 	'off' => 'Wyłączony',
@@ -1051,6 +1054,7 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 	'installation:view' => "Wprowadź widok, który będzie domyślnie używany przez twoją stronę lub pozostaw wartość domyślną (w razie wątpliwości, pozostaw wartość domyślną):",
 
 	'installation:siteemail' => "Adres e-mail strony (używany do wysyłania systemowych e-mail)",
+	'installation:default_limit' => "Domyślna liczba elementów na stronie",
 
 	'admin:site:access:warning' => "Modyfikacja ustawienia poziomu dostępu, wpływa wyłącznie na treści tworzone w przyszłości.",
 	'installation:allow_user_default_access:description' => "Jeśli zaznaczone, indywidualni użytkownicy będą mogli ustawić własny, domyślny poziom dostępu nadpisujący systemowy domyślny poziom dostępu.",
@@ -1083,18 +1087,20 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 	'upgrade:unlock:success' => "Blokada aktualizacji zdjęta pomyślnie.",
 	'upgrade:unable_to_upgrade' => 'Aktualizacja nie powiodła się.',
 	'upgrade:unable_to_upgrade_info' =>
-		'Instalacja nie może być przeprowadzona ze względu na wykrycie starych widoków w głównym katalogu widoków. Te widoki są przestarzałe i muszą zostać usunięte aby Elgg pracował poprawnie. Jeśli nie wykonywałeś zmian w jądrze Elgg, możesz po prostu usunąć katalog views i zastąpić go wersją z najnowszego pakietu dostępnego na <a href="http://elgg.org">elgg.org</a>.<br /><br /> Jeśli potrzebujesz bardziej szczegółowych instrukcji, zajrzyj do <a href="http://docs.elgg.org/wiki/Upgrading_Elgg">Aktualizacja Elgg</a>. Jeśli potrzebujesz pomocy, napisz na stronie <a href="http://community.elgg.org/pg/groups/discussion/">Społecznościowego Forum Wsparcia</a>.',
+		'Instalacja nie może być przeprowadzona ze względu na wykrycie starych widoków
+		w głównym katalogu widoków. Te widoki są przestarzałe i muszą zostać
+		usunięte aby Elgg pracował poprawnie. Jeśli nie wykonywałeś zmian w jądrze Elgg, możesz
+		po prostu usunąć katalog views i zastąpić go wersją z najnowszego
+		pakietu dostępnego na <a href="http://elgg.org">elgg.org</a>.<br /><br />
+		
+		Jeśli potrzebujesz bardziej szczegółowych instrukcji, zajrzyj do <a href="		http://learn.elgg.org/en/stable/admin/upgrading.html">
+		Aktualizacja Elgg</a>. Jeśli potrzebujesz pomocy, napisz na stronie
+		<a href="http://community.elgg.org/pg/groups/discussion/">Społecznościowego Forum Wsparcia</a>.',
 
 	'update:twitter_api:deactivated' => 'Twitter API (dawniej: Usługi Twittera) został wyłączony w trakcie aktualizacji. W razie potrzeby, proszę aktywować ręcznie.',
 	'update:oauth_api:deactivated' => 'OAuth API (dawniej: OAuth Lib) został wyłączony w trakcie aktualizacji. W razie potrzeby, proszę aktywować ręcznie.',
 	'upgrade:site_secret_warning:moderate' => "Zalecamy ponowne utworzenie sekretnego klucza strony dla poprawy bezpieczeństwa strony. Zobacz Konfiguracja &gt; Ustawienia &gt; Zaawansowane",
 	'upgrade:site_secret_warning:weak' => "Zdecydowanie zalecamy ponowne utworzenie sekretnego klucza strony dla poprawy bezpieczeństwa strony. Zobacz Konfiguracja &gt; Ustawienia &gt; Zaawansowane",
-
-	'ElggUpgrade:error:url_invalid' => 'Niepoprawna wartość jako URL.',
-	'ElggUpgrade:error:url_not_unique' => 'URLe aktualizacji muszą być unikatowe.',
-	'ElggUpgrade:error:title_required' => 'Obiekty ElggUpgrade muszą posiadać tytuł.',
-	'ElggUpgrade:error:description_required' => 'Obiekty ElggUpgrade muszą posiadać opis.',
-	'ElggUpgrade:error:upgrade_url_required' => 'Obiekty ElggUpgrade muszą posiadać adres URL aktualizacji.',
 
 	'deprecated:function' => '%s() została zdeprecjonowana na rzecz %s()',
 
@@ -1153,7 +1159,7 @@ Aby zobaczyć jego profil, kliknij tutaj:
 
 %s
 
-Nie możesz odpowiedzieć na ten e-mail.",
+Prosimy nie odpowiadać na ten e-mail.",
 
 	'email:changepassword:subject' => "Hasło zmienione!",
 	'email:changepassword:body' => "Witaj %s,
@@ -1161,8 +1167,8 @@ Nie możesz odpowiedzieć na ten e-mail.",
 Twoje hasło zostało zmienione.",
 
 	'email:resetpassword:subject' => "Reset hasła!",
-	'email:resetpassword:body' => "Cześć %s,
-			
+	'email:resetpassword:body' => "Witaj %s,
+
 Twoje nowe hasło to: %s",
 
 	'email:changereq:subject' => "Prośba o zmianę hasła.",
@@ -1213,17 +1219,17 @@ Jeśli to byłeś Ty, kliknij odnośnik poniżej. W przeciwnym wypadku zignoruj 
 	'generic_comment:email:subject' => 'Masz nowy komentarz!',
 	'generic_comment:email:body' => "Masz nowy komentarz w \"%s\" od %s. Treść:
 
-			
+
 %s
 
 	
 Aby odpowiedzieć lub wyświetlić komentarz, kliknij tutaj:
 
-	%s
+%s
 
 Zobacz %s's profil, kliknij tutaj:
 
-	%s
+%s
 
 Nie możesz odpowiedzieć na ten e-mail.",
 
@@ -1260,7 +1266,6 @@ Nie możesz odpowiedzieć na ten e-mail.",
  */
 
 	'tag_names:tags' => 'Tagi',
-	'tags:site_cloud' => 'Chmura tagów strony',
 
 /**
  * Javascript
@@ -1276,7 +1281,7 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	'elgg:powered' => "Dostarczone przez Elgg",
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 
 	"aa" => "Afar",
@@ -1296,6 +1301,7 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	"bo" => "Tibetan",
 	"br" => "Breton",
 	"ca" => "Catalan",
+	"cmn" => "Mandarin Chinese", // ISO 639-3
 	"co" => "Corsican",
 	"cs" => "Czech",
 	"cy" => "Welsh",
@@ -1372,6 +1378,7 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	"pl" => "Polski",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
+	"pt_br" => 'Brazilian Portuguese',
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
