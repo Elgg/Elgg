@@ -64,6 +64,7 @@ return array(
 	'groups:featuredon' => '%s jest teraz promowaną grupą.',
 	'groups:unfeatured' => '%s przestała być promowaną grupą.',
 	'groups:featured_error' => 'Niepoprawna grupa.',
+	'groups:nofeatured' => 'Brak promowanych grup',
 	'groups:joinrequest' => 'Prośba o członkostwo',
 	'groups:join' => 'Dołącz do grupy',
 	'groups:leave' => 'Odejdź z grupy',
@@ -101,7 +102,8 @@ Wyświetl i odpowiedz w wątku:
 %s
 
 Wyświetl wpis i napisz odpowiedź:
-%s',
+%s
+',
 
 	'groups:activity' => "Aktywność w grupie",
 	'groups:enableactivity' => 'Włącz aktywność w grupie',
@@ -173,6 +175,8 @@ Wyświetl wpis i napisz odpowiedź:
 	'discussion:reply:error:notfound' => 'Nie znaleziono wskazanej odpowiedzi na forum',
 	'discussion:reply:error:notdeleted' => 'Usunięcie odpowiedzi z forum nie powiodło się',
 
+	'discussion:search:title' => 'Odpowiedź na temat: %s',
+	
 	'admin:groups' => 'Grupy',
 
 	'reply:this' => 'Napisz odpowiedź',
@@ -236,7 +240,7 @@ Zostałeś zaproszony do '% s' grupy, kliknij przycisk poniżej aby potwierdzić
 
 	'groups:welcome:subject' => "Witamy w %s !",
 	'groups:welcome:body' => "Cześć %s!
-		
+
 Jesteś już członkiem grupy \"% s\"! Kliknij poniżej aby rozpocząć postowanie!
 
 %s",
@@ -260,6 +264,7 @@ lub kliknij poniżej aby potwierdzić prośbę:
 	'river:join:group:default' => '%s dołączył do grupy %s',
 	'river:create:object:groupforumtopic' => '%s dodał nowy wątek na forum grupy %s',
 	'river:reply:object:groupforumtopic' => '%s napisał odpowiedź w wątku na forum grupy %s',
+	'river:reply:view' => 'zobaczył odpowiedź',
 
 	'groups:nowidgets' => 'Żaden gadżet nie został zdefiniowany dla tej grupy.',
 
@@ -297,6 +302,8 @@ lub kliknij poniżej aby potwierdzić prośbę:
 
 	'groups:invitekilled' => 'Usunięto zaproszenie.',
 	'groups:joinrequestkilled' => 'Usunięto prośbę o członkostwo.',
+	'groups:error:addedtogroup' => "Nie można dodać %s do grupy",
+	'groups:add:alreadymember' => "%s jest już członkiem grupy",
 
 	/**
 	 * ecml

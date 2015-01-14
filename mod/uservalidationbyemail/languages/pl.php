@@ -3,10 +3,17 @@ return array(
 	'admin:users:unvalidated' => 'Niezatwierdzony',
 	
 	'email:validate:subject' => "%s proszę potwierdź swój adres e-mail!",
-	'email:validate:body' => "Witaj %s,
+	'email:validate:body' => "%s,
 
-Proszę potwierdź swój adres e-mail poprzez klikniecie poniższego linku :
+Przed rozpoczęciem korzystania z %s, musisz potwierdzić swój adres email.
 
+Potwierdź swój adres email poprzez kliknięcie na link poniżej:
+
+%s
+
+Jeśli nie możesz kliknąć na link, skopiuj i wklej go manualnie do swojej przeglądarki.
+
+%s
 %s
 ",
 	'email:confirm:success' => "Potwierdzono adres e-mail!",

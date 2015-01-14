@@ -42,7 +42,7 @@ return array(
 	'messageboard:email:subject' => 'Masz nowy komentarz na tablicy ogłoszeń!',
 	'messageboard:email:body' => "Masz nową wiadomość od %s. Oto ona:
 
-			
+
 %s
 
 
