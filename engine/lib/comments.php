@@ -212,10 +212,10 @@ function _elgg_comments_permissions_override($hook, $type, $return, $params) {
  */
 function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $params) {
 
-	/** @var Elgg_Notifications_Notification */
+	/** @var Elgg\Notifications\Notification */
 	$notification = elgg_extract('notification', $returnvalue['params']);
 
-	if ($notification instanceof Elgg_Notifications_Notification) {
+	if ($notification instanceof Elgg\Notifications\Notification) {
 		$object = elgg_extract('object', $notification->params);
 
 		if ($object instanceof ElggComment) {
