@@ -10,7 +10,7 @@
 /**
  * Return the object specific details of a object by a row.
  *
- * @param int $guid The guid to retreive
+ * @param int $guid The guid to retrieve
  *
  * @return bool
  * @access private
