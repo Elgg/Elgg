@@ -19,6 +19,7 @@ matrix:
       env: VARIA=true
       install:
        - phpenv rehash
+       - composer self-update
        - composer install
        - wget https://scrutinizer-ci.com/ocular.phar
       script:
@@ -56,6 +57,7 @@ matrix:
     - php: 5.6
       env: E2E=true
       install:
+       - composer self-update
        - composer install
        - mysql -e 'create database elgg;'
        - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
@@ -69,7 +71,8 @@ matrix:
 services: 
  - mysql
 
-install: 
+install:
+ - composer self-update
  - composer install
  - mysql -e 'create database elgg;'
  - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
