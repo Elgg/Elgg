@@ -1,8 +1,6 @@
 <?php
 namespace Elgg;
 
-use Elgg\Http\MockSessionStorage;
-
 class SystemMessagesServiceTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -16,7 +14,7 @@ class SystemMessagesServiceTest extends \PHPUnit_Framework_TestCase {
 	protected $session;
 
 	function setup() {
-		$this->session = new \ElggSession(new MockSessionStorage());
+		$this->session = \ElggSession::getMock();
 		$this->svc = new SystemMessagesService($this->session);
 	}
 
