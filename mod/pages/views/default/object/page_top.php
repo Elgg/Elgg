@@ -35,6 +35,9 @@ if ($revision) {
 	));
 	if ($annotation) {
 		$annotation = $annotation[0];
+	} else {
+		elgg_log("Failed to access annotation for page with GUID {$page->guid}", 'WARNING');
+		return;
 	}
 }
 
