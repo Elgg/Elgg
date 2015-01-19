@@ -51,6 +51,7 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\Forms\StickyForms                  $stickyForms
  * @property-read \Elgg\Database\SubtypeTable              $subtypeTable
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
+ * @property-read \Elgg\SystemMessagesService              $systemMessages
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
@@ -229,6 +230,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('subtypeTable', '\Elgg\Database\SubtypeTable');
 
 		$this->setClassName('systemCache', '\Elgg\Cache\SystemCache');
+
+		$this->setFactory('systemMessages', function(ServiceProvider $c) {
+			return new \Elgg\SystemMessagesService($c->session);
+		});
 
 		$this->setClassName('translator', '\Elgg\I18n\Translator');
 

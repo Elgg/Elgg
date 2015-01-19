@@ -298,7 +298,7 @@ class ActionsService {
 			}
 	
 			//Grab any system messages so we can inject them via ajax too
-			$system_messages = system_messages(null, "");
+			$system_messages = _elgg_services()->systemMessages->dumpRegister();
 	
 			if (isset($system_messages['success'])) {
 				$params['system_messages']['success'] = $system_messages['success'];
