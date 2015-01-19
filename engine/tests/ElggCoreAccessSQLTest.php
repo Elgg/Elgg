@@ -121,7 +121,7 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 
 	public function testLoggedOutUser() {
 		$originalSession = _elgg_services()->session;
-		_elgg_services()->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
+		_elgg_services()->setValue('session', \ElggSession::getMock());
 
 		$sql = _elgg_get_access_where_sql();
 		$access_clause = $this->getLoggedOutAccessListClause('e');

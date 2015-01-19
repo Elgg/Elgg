@@ -1,6 +1,9 @@
 <?php
 namespace Elgg\Di;
 
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
+
 /**
  * Provides common Elgg services.
  *
@@ -205,8 +208,16 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			}
 
 			$handler = new \Elgg\Http\DatabaseSessionHandler($c->db);
-			$storage = new \Elgg\Http\NativeSessionStorage($params, $handler);
-			return new \ElggSession($storage);
+
+			// session.cache_limiter is unfortunately set to "" by the NativeSessionStorage
+			// constructor, so we must capture and inject it directly.
+			$options = [
+				'cache_limiter' => session_cache_limiter(),
+			];
+			$storage = new NativeSessionStorage($options, $handler);
+
+			$session = new SymfonySession($storage);
+			return new \ElggSession($session);
 		});
 
 		$this->setClassName('simpleCache', '\Elgg\Cache\SimpleCache');
