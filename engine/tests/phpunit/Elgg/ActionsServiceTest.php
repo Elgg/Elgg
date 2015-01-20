@@ -71,6 +71,10 @@ class ActionsServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->markTestIncomplete("Can't test execution due to missing configuration.php dependencies");
 // 		$actions->execute('test/not_registered');
 	}
+
+	public function testActionReturnValuesAreIgnored() {
+		$this->markTestIncomplete();
+	}
 	
 	//TODO call non existing
 
