@@ -210,7 +210,7 @@ html {
 	}
 }
 @media (min-width: 767px) {
-	.elgg-nav-collapse {
+	#elgg-nav-collapse {
 		display: block !important;
 	}
 }
@@ -225,7 +225,7 @@ html {
 		cursor: pointer;
 		display: block;
 	}
-	.elgg-nav-collapse {
+	#elgg-nav-collapse {
 		clear: both;
 		display: none;
 		width: 100%;
