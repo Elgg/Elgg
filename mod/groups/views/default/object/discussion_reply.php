@@ -12,7 +12,6 @@ if (!$reply) {
 }
 
 $poster = $reply->getOwnerEntity();
-$topic = $reply->getContainerEntity();
 
 $poster_icon = elgg_view_entity_icon($poster, 'tiny');
 $poster_link = elgg_view('output/url', array(

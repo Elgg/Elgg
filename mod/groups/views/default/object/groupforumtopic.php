@@ -13,7 +13,6 @@ if (!$topic) {
 }
 
 $poster = $topic->getOwnerEntity();
-$group = $topic->getContainerEntity();
 $excerpt = elgg_get_excerpt($topic->description);
 
 $poster_icon = elgg_view_entity_icon($poster, 'tiny');
