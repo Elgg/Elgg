@@ -5,28 +5,28 @@ return array(
 	 * Menu items and titles
 	 */
 	'file' => "Bestanden",
-	'file:user' => "%s's bestanden",
+	'file:user' => "Bestanden van %s",
 	'file:friends' => "Bestanden van vrienden",
-	'file:all' => "Alle Site bestanden",
+	'file:all' => "Alle bestanden op de site",
 	'file:edit' => "Bewerk bestand",
 	'file:more' => "Meer bestanden",
-	'file:list' => "lijst weergave",
-	'file:group' => "Groeps bestanden",
-	'file:gallery' => "galerij weergave",
-	'file:gallery_list' => "galerij of lijst weergave",
+	'file:list' => "lijstweergave",
+	'file:group' => "Groepsbestanden",
+	'file:gallery' => "galerijweergave",
+	'file:gallery_list' => "Galerij- of lijstweergave",
 	'file:num_files' => "Aantal bestanden om weer te geven",
-	'file:user:gallery'=>'Bekijk %s galerij',
+	'file:user:gallery'=>'Bekijk de galerij van %s',
 	'file:upload' => "Upload een bestand",
-	'file:replace' => 'Vervang bestandsinhoud (leeg laten om bestand niet te vervangen)',
-	'file:list:title' => "%s's %s %s",
+	'file:replace' => 'Vervang bestandsinhoud (laat dit leeg om het bestand <em>niet</em> te vervangen)',
+	'file:list:title' => "Van %s: %s en %s",
 	'file:title:friends' => "Vrienden",
 
 	'file:add' => 'Upload een bestand',
 
 	'file:file' => "Bestand",
 
-	'file:list:list' => 'Toon in lijst weergave',
-	'file:list:gallery' => 'Toon in galerij weergave',
+	'file:list:list' => 'Toon in lijstweergave',
+	'file:list:gallery' => 'Toon in galerijweergave',
 
 	'file:types' => "Geplaatste bestandstypen",
 
@@ -34,32 +34,32 @@ return array(
 	'file:type:all' => "Alle bestanden",
 	'file:type:video' => "Video's",
 	'file:type:document' => "Documenten",
-	'file:type:audio' => "Audio",
-	'file:type:image' => "Plaatjes",
+	'file:type:audio' => "Geluidsbestanden",
+	'file:type:image' => "Afbeeldingen",
 	'file:type:general' => "Algemeen",
 
-	'file:user:type:video' => "%s's video's",
-	'file:user:type:document' => "%s's documenten",
-	'file:user:type:audio' => "%s's audio",
-	'file:user:type:image' => "%s's plaatjes",
-	'file:user:type:general' => "%s's algemene bestanden",
+	'file:user:type:video' => "Video's van %s",
+	'file:user:type:document' => "Documenten van %s",
+	'file:user:type:audio' => "Geluidsbestanden van %s",
+	'file:user:type:image' => "Afbeeldingen van %s",
+	'file:user:type:general' => "Algemene bestanden van %s",
 
 	'file:friends:type:video' => "Video's van je vrienden",
 	'file:friends:type:document' => "Documenten van je vrienden",
-	'file:friends:type:audio' => "Audio van je vrienden",
-	'file:friends:type:image' => "Plaatjes van je vrienden",
+	'file:friends:type:audio' => "Geluidsbestanden van je vrienden",
+	'file:friends:type:image' => "Afbeeldingen van je vrienden",
 	'file:friends:type:general' => "Algemene bestanden van je vrienden",
 
-	'file:widget' => "Bestanden widget",
-	'file:widget:description' => "Laat je laatste bestanden zien",
+	'file:widget' => "Bestandenwidget",
+	'file:widget:description' => "Laat je laatst geüploade bestanden zien",
 
-	'groups:enablefiles' => 'Activeer groep bestanden',
+	'groups:enablefiles' => 'Activeer groepsbestanden',
 
 	'file:delete:confirm' => "Weet je zeken dat je dit bestand wilt verwijderen?",
 
 	'file:upload_limit' => 'Maximaal toegestane bestandsgrootte is %s',
 
-	'file:tagcloud' => "Tag cloud",
+	'file:tagcloud' => "Tag-cloud",
 
 	'file:display:number' => "Aantal bestanden om weer te geven",
 
@@ -71,12 +71,19 @@ return array(
 	'file:notify:summary' => 'Nieuw bestand met de titel %s',
 	'file:notify:subject' => 'Nieuw bestand: %s',
 	'file:notify:body' =>
-'%s laadde een nieuw bestand op: %s
+'Hallo!
+
+%s heeft een nieuw bestand geüpload.
 
 %s
-
-Bekijk en reageer op het bestand:
 %s
+
+Je kunt het bestand hier bekijken:
+%s
+
+-----
+
+Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
 ',
 
 	/**
@@ -94,6 +101,6 @@ Bekijk en reageer op het bestand:
 	'file:uploadfailed' => "Sorry, we konden het bestand niet opslaan.",
 	'file:downloadfailed' => "Sorry, dit bestand is op dit moment niet beschikbaar.",
 	'file:deletefailed' => "Je bestand kon op dit moment niet worden verwijderd.",
-	'file:noaccess' => "Je hebt geen toegang om dit bestand aan te passen",
-	'file:nofile' => "Je moet een bestand selecteren",
+	'file:noaccess' => "Je hebt onvoldoende rechten om dit bestand aan te passen",
+	'file:nofile' => "Selecteer een bestand",
 );
