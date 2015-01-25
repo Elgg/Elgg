@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-01-11 18:24-0500\n"
+"POT-Creation-Date: 2015-01-26 00:05+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -3854,7 +3854,7 @@ msgid "This example uses all of the available elements:"
 msgstr ""
 
 #: ../../guides/plugins.rst:149
-#: ../../guides/views.rst:264
+#: ../../guides/views.rst:266
 #: ../../guides/web-services.rst:272
 msgid "Related"
 msgstr ""
@@ -4491,7 +4491,107 @@ msgid "Routing"
 msgstr ""
 
 #: ../../guides/routing.rst:4
-msgid "Add new pages and customize URLs."
+msgid "Elgg has two mechanisms to respond to HTTP requests that don't already go through the :doc:`/design/actions` and :doc:`/guides/views/simplecache` systems."
+msgstr ""
+
+#: ../../guides/routing.rst:8
+msgid "URL Identifier and Segments"
+msgstr ""
+
+#: ../../guides/routing.rst:10
+msgid "After removing the site URL, Elgg splits the URL path by ``/`` into an array. The first element, the **identifier**, is shifted off, and the remaining elements are called the **segments**. For example, if the site URL is ``http://example.com/elgg/``, the URL ``http://example.com/elgg/blog/owner/jane?foo=123`` produces:"
+msgstr ""
+
+#: ../../guides/routing.rst:15
+msgid "Identifier: ``'blog'``. Segments: ``['owner', 'jane']``. (the query string parameters are available via ``get_input()``)"
+msgstr ""
+
+#: ../../guides/routing.rst:18
+msgid "The site URL (home page) is a special case that produces an empty string identifier and an empty segments array."
+msgstr ""
+
+#: ../../guides/routing.rst:23
+msgid "Page Handler"
+msgstr ""
+
+#: ../../guides/routing.rst:25
+msgid "To handle all URLs that begin with a particular identifier, you can register a function to act as a :doc:`/guides/pagehandler`. When the handler is called, the segments array is passed in as the first argument."
+msgstr ""
+
+#: ../../guides/routing.rst:29
+msgid "The following code registers a page handler for \"blog\" URLs and shows how one might route the request to a resource view."
+msgstr ""
+
+#: ../../guides/routing.rst:56
+msgid "The ``route`` Plugin Hook"
+msgstr ""
+
+#: ../../guides/routing.rst:58
+msgid "The ``route`` plugin hook is triggered earlier, before page handlers are called. The URL identifier is given as the type of the hook. This hook can be used to modify the identifier or segments, to take over page rendering completely, or just to add some logic before the request is handled elsewhere."
+msgstr ""
+
+#: ../../guides/routing.rst:63
+msgid "Generally devs should use a page handler unless they need to affect a single page or a wider variety of URLs."
+msgstr ""
+
+#: ../../guides/routing.rst:65
+msgid "The following code intercepts requests to the page handler for ``customblog`` and internally redirects them to the ``blog`` page handler."
+msgstr ""
+
+#: ../../guides/routing.rst:78
+msgid "The following code results in ``/blog/all`` requests being completely handled by the plugin hook handler. For these requests the ``blog`` page handler is never called."
+msgstr ""
+
+#: ../../guides/routing.rst:103
+msgid "Routing overview"
+msgstr ""
+
+#: ../../guides/routing.rst:105
+msgid "For regular pages, Elgg's program flow is something like this:"
+msgstr ""
+
+#: ../../guides/routing.rst:107
+msgid "A user requests ``http://example.com/blog/owner/jane``."
+msgstr ""
+
+#: ../../guides/routing.rst:108
+msgid "Plugins are initialized."
+msgstr ""
+
+#: ../../guides/routing.rst:109
+msgid "Elgg parses the URL to identifier ``blog`` and segments ``['owner', 'jane']``."
+msgstr ""
+
+#: ../../guides/routing.rst:110
+msgid "Elgg triggers the plugin hook ``route, blog`` (see above)."
+msgstr ""
+
+#: ../../guides/routing.rst:111
+msgid "Elgg finds a registered page handler (see above) for ``blog``, and calls the function, passing in the segments."
+msgstr ""
+
+#: ../../guides/routing.rst:113
+msgid "The page handler function determines it needs to render a single user's blog. It stores the username via ``set_input()`` and calls the view ``resources/blog/owner``."
+msgstr ""
+
+#: ../../guides/routing.rst:115
+msgid "The ``resources/blog/owner`` view gets the username via ``get_input()``, and uses many other views and formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()`` to create the entire HTML page."
+msgstr ""
+
+#: ../../guides/routing.rst:117
+msgid "The page handler echos the view HTML and returns ``true`` to indicate it handled the request."
+msgstr ""
+
+#: ../../guides/routing.rst:118
+msgid "PHP invokes Elgg's shutdown sequence."
+msgstr ""
+
+#: ../../guides/routing.rst:119
+msgid "The user receives a fully rendered page."
+msgstr ""
+
+#: ../../guides/routing.rst:121
+msgid "Elgg's coding standards suggest a particular URL layout, but there is no syntax enforced."
 msgstr ""
 
 #: ../../guides/settings.rst:2
@@ -5508,26 +5608,30 @@ msgid "This function checks to see if there are any entities; if there are, it f
 msgstr ""
 
 #: ../../guides/views.rst:236
-msgid "Because it does this, Elgg knows that it can automatically supply an RSS feed - it extends the ``metatags`` view (which is called by the header) in order to provide RSS autodiscovery, which is why you can see the orange RSS icon on those pages."
+msgid "Note that ``elgg_list_entities`` allows the URL to set its ``limit`` and ``offset`` options, so set those explicitly if you need particular values (e.g. if you're not using it for pagination)."
 msgstr ""
 
 #: ../../guides/views.rst:238
+msgid "Because it does this, Elgg knows that it can automatically supply an RSS feed - it extends the ``metatags`` view (which is called by the header) in order to provide RSS autodiscovery, which is why you can see the orange RSS icon on those pages."
+msgstr ""
+
+#: ../../guides/views.rst:240
 msgid "If your entity list will display the entity owners, you can improve performance a bit by preloading all owner entities:"
 msgstr ""
 
-#: ../../guides/views.rst:250
+#: ../../guides/views.rst:252
 msgid "See also :doc:`check this page out first </design/database>`."
 msgstr ""
 
-#: ../../guides/views.rst:253
+#: ../../guides/views.rst:255
 msgid "Using a different templating system"
 msgstr ""
 
-#: ../../guides/views.rst:255
+#: ../../guides/views.rst:257
 msgid "You can write your own templating system if you want to."
 msgstr ""
 
-#: ../../guides/views.rst:257
+#: ../../guides/views.rst:259
 msgid "Before going through the motions of drawing views, Elgg checks the ``$CONFIG->template_handler`` variable to see if it contains the name of a callable function. If it does, the function will be passed the view name and template vars, and the return value of this function will be returned instead of the standard output:"
 msgstr ""
 
