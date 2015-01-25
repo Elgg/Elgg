@@ -83,6 +83,11 @@ if ($full) {
 		'body' => $body,
 	));
 
+	echo elgg_view_menu('blog_navigation', [
+		'entity' => $blog,
+		'class' => 'elgg-menu-hz elgg-pagination',
+	]);
+
 } else {
 	// brief view
 

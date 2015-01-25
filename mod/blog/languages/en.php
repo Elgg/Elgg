@@ -15,6 +15,9 @@ return array(
 	'blog:enableblog' => 'Enable group blog',
 	'blog:write' => 'Write a blog post',
 
+	'blog:navigation:previous' => 'Previous post',
+	'blog:navigation:next' => 'Next post',
+
 	// Editing
 	'blog:add' => 'Add blog post',
 	'blog:edit' => 'Edit blog post',

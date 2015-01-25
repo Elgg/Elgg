@@ -28,7 +28,7 @@ function blog_init() {
 	elgg_register_event_handler('upgrade', 'upgrade', 'blog_run_upgrades');
 
 	// add to the main css
-	elgg_extend_view('css/elgg', 'blog/css');
+	elgg_extend_view('css/elgg', 'css/elgg/blog.css');
 
 	// routing of urls
 	elgg_register_page_handler('blog', 'blog_page_handler');
@@ -42,6 +42,9 @@ function blog_init() {
 
 	// add blog link to
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'blog_owner_block_menu');
+
+	// add prev/next post links
+	elgg_register_plugin_hook_handler('register', 'menu:blog_navigation', 'blog_prepare_navigation_menu');
 
 	// pingbacks
 	//elgg_register_event_handler('create', 'object', 'blog_incoming_ping');
@@ -232,6 +235,56 @@ function blog_entity_menu_setup($hook, $type, $return, $params) {
 		);
 		$return[] = ElggMenuItem::factory($options);
 	}
+
+	return $return;
+}
+
+/**
+ * Register the prev/next post buttons
+ *
+ * @param string $hook   "register"
+ * @param string $type   "menu:blog_navigation"
+ * @param array  $return Menu items
+ * @param array  $params Hook parameters
+ *
+ * @return array
+ */
+function blog_prepare_navigation_menu($hook, $type, $return, $params) {
+	$blog = $params['entity'];
+
+	$previous = elgg_get_entities([
+		"type" => "object",
+		"subtype" => "blog",
+		"container_guid" => $blog->container_guid,
+		"created_time_upper" => $blog->time_created,
+		"wheres" => ["e.guid != {$blog->guid}"],
+		"order_by" => "e.time_created DESC, e.guid DESC",
+		"limit" => 1,
+	]);
+	/* @var ElggBlog[] $previous */
+	$return[] = ElggMenuItem::factory([
+		'name' => 'prev',
+		'text' => elgg_echo('blog:navigation:previous'),
+		'href' => $previous ? $previous[0]->getUrl() : false,
+		'title' => $previous ? $previous[0]->getDisplayName() : '',
+	]);
+
+	$next = elgg_get_entities([
+		"type" => "object",
+		"subtype" => "blog",
+		"container_guid" => $blog->container_guid,
+		"created_time_lower" => $blog->time_created,
+		"wheres" => ["e.guid != {$blog->guid}"],
+		"order_by" => "e.time_created ASC, e.guid ASC",
+		"limit" => 1,
+	]);
+	/* @var ElggBlog[] $next */
+	$return[] = ElggMenuItem::factory([
+		'name' => 'next',
+		'text' => elgg_echo('blog:navigation:next'),
+		'href' => $next ? $next[0]->getUrl() : false,
+		'title' => $next ? $next[0]->getDisplayName() : '',
+	]);
 
 	return $return;
 }
