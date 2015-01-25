@@ -1,3 +1,34 @@
+<a name="1.10.1"></a>
+### 1.10.1  (2015-01-26)
+
+#### Contributors
+
+* Steve Clay (10)
+* Jerôme Bakker (2)
+* Ismayil Khayredinov (1)
+* Juho Jaakkola (1)
+
+#### Documentation
+
+* **routing:** Adds RST docs on routing ([fc3b0642](https://github.com/Elgg/Elgg/commit/fc3b064278841b55bb2fff1d641debf75b9d3484), closes [#7337](https://github.com/Elgg/Elgg/issues/7337))
+
+
+#### Bug Fixes
+
+* **blog:** correctly handle the archive listing if there is no archive ([71fbf79f](https://github.com/Elgg/Elgg/commit/71fbf79f4c7a977ec119b8f866e3b4d51c5c3860))
+* **css:** add missing selector prefix ([af3f003d](https://github.com/Elgg/Elgg/commit/af3f003d66996aa96392947e4bccf2679284a0d4))
+* **http:** don’t allow plugins to bypass a forward() call ([ac2d9f1e](https://github.com/Elgg/Elgg/commit/ac2d9f1e17e9ece15f485d395d90ef2b36141838), closes [#7637](https://github.com/Elgg/Elgg/issues/7637))
+* **notifications:**
+  * email replies again have “Re:” in subjects ([632c57d3](https://github.com/Elgg/Elgg/commit/632c57d39a22fa0a7977a58cad6dd4df2fc296ed))
+  * correctly unregister the default notifications save function ([f2adb5e2](https://github.com/Elgg/Elgg/commit/f2adb5e2ad426400bfc5de68720e44372c764eb4))
+* **plugins:**
+  * discussion replies no longer missing/reversed order on river ([78af4b69](https://github.com/Elgg/Elgg/commit/78af4b6906061cad774cbe1f9b0b65002cd40345), closes [#7801](https://github.com/Elgg/Elgg/issues/7801), [#7668](https://github.com/Elgg/Elgg/issues/7668))
+  * re-hides the likes button for groups ([f57d6ef8](https://github.com/Elgg/Elgg/commit/f57d6ef8532d72c2b9e531368c6a1a6b59ce35fa), closes [#7724](https://github.com/Elgg/Elgg/issues/7724))
+  * eliminates notices for missing GET keys in profile icon ([98fb967d](https://github.com/Elgg/Elgg/commit/98fb967d0f3352245920f63b00c3295a31f02db4))
+  * Eliminates deprecation notice on file plugin objects ([a0240add](https://github.com/Elgg/Elgg/commit/a0240added0159387e90a60d514a61d599eebb9d), closes [#7761](https://github.com/Elgg/Elgg/issues/7761))
+* **travis:** eliminates composer install failures ([f96ea171](https://github.com/Elgg/Elgg/commit/f96ea17150a7b7b5910aaba10add973d017a6f6f))
+
+
 <a name="1.10.0"></a>
 ## 1.10.0  (2015-01-11)
 
