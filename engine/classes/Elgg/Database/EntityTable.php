@@ -282,7 +282,12 @@ class EntityTable {
 	 *
 	 * 	preload_owners => bool (false) If set to true, this function will preload
 	 * 					  all the owners of the returned entities resulting in better
-	 * 					  performance when displaying entities owned by several users
+	 * 					  performance if those owners need to be displayed
+	 *
+	 *  preload_containers => bool (false) If set to true, this function will preload
+	 * 					      all the containers of the returned entities resulting in better
+	 * 					      performance if those containers need to be displayed
+	 *
 	 *
 	 * 	callback => string A callback function to pass each row through
 	 *
@@ -327,6 +332,7 @@ class EntityTable {
 			'joins'					=>	array(),
 	
 			'preload_owners'		=> false,
+			'preload_containers'	=> false,
 			'callback'				=> 'entity_row_to_elggstar',
 			'distinct'				=> true,
 	
@@ -437,57 +443,74 @@ class EntityTable {
 		if ($options['reverse_order_by']) {
 			$options['order_by'] = _elgg_sql_reverse_order_by_clause($options['order_by']);
 		}
-	
-		if (!$options['count']) {
-			if ($options['group_by']) {
-				$query .= " GROUP BY {$options['group_by']}";
-			}
-	
-			if ($options['order_by']) {
-				$query .= " ORDER BY {$options['order_by']}";
-			}
-	
-			if ($options['limit']) {
-				$limit = sanitise_int($options['limit'], false);
-				$offset = sanitise_int($options['offset'], false);
-				$query .= " LIMIT $offset, $limit";
-			}
-	
-			if ($options['callback'] === 'entity_row_to_elggstar') {
-				$dt = _elgg_fetch_entities_from_sql($query, $options['__ElggBatch']);
-			} else {
-				$dt = _elgg_services()->db->getData($query, $options['callback']);
-			}
-	
-			if ($dt) {
-				// populate entity and metadata caches, and prepare $entities for preloader
-				$guids = array();
-				foreach ($dt as $item) {
-					// A custom callback could result in items that aren't \ElggEntity's, so check for them
-					if ($item instanceof \ElggEntity) {
-						_elgg_cache_entity($item);
-						// plugins usually have only settings
-						if (!$item instanceof \ElggPlugin) {
-							$guids[] = $item->guid;
-						}
-					}
-				}
-				// @todo Without this, recursive delete fails. See #4568
-				reset($dt);
-	
-				if ($guids) {
-					_elgg_services()->metadataCache->populateFromEntities($guids);
-				}
-	
-				if ($options['preload_owners'] && count($dt) > 1) {
-					_elgg_services()->ownerPreloader->preload($dt);
-				}
-			}
-			return $dt;
-		} else {
+
+		if ($options['count']) {
 			$total = _elgg_services()->db->getDataRow($query);
 			return (int)$total->total;
 		}
+
+		if ($options['group_by']) {
+			$query .= " GROUP BY {$options['group_by']}";
+		}
+
+		if ($options['order_by']) {
+			$query .= " ORDER BY {$options['order_by']}";
+		}
+
+		if ($options['limit']) {
+			$limit = sanitise_int($options['limit'], false);
+			$offset = sanitise_int($options['offset'], false);
+			$query .= " LIMIT $offset, $limit";
+		}
+
+		if ($options['callback'] === 'entity_row_to_elggstar') {
+			$results = _elgg_fetch_entities_from_sql($query, $options['__ElggBatch']);
+		} else {
+			$results = _elgg_services()->db->getData($query, $options['callback']);
+		}
+
+		if (!$results) {
+			// no results, no preloading
+			return $results;
+		}
+
+		// populate entity and metadata caches, and prepare $entities for preloader
+		$guids = array();
+		foreach ($results as $item) {
+			// A custom callback could result in items that aren't \ElggEntity's, so check for them
+			if ($item instanceof \ElggEntity) {
+				_elgg_cache_entity($item);
+				// plugins usually have only settings
+				if (!$item instanceof \ElggPlugin) {
+					$guids[] = $item->guid;
+				}
+			}
+		}
+		// @todo Without this, recursive delete fails. See #4568
+		reset($results);
+
+		if ($guids) {
+			// there were entities in the result set, preload metadata for them
+			_elgg_services()->metadataCache->populateFromEntities($guids);
+		}
+
+		if (count($results) > 1) {
+			$props_to_preload = [];
+			if ($options['preload_owners']) {
+				$props_to_preload[] = 'owner_guid';
+			}
+			if ($options['preload_containers']) {
+				$props_to_preload[] = 'container_guid';
+			}
+			if ($props_to_preload) {
+				// note, ElggEntityPreloaderIntegrationTest assumes it can swap out
+				// the preloader after boot. If you inject this component at construction
+				// time that unit test will break. :/
+				_elgg_services()->entityPreloader->preload($results, $props_to_preload);
+			}
+		}
+
+		return $results;
 	}
 
 	/**
