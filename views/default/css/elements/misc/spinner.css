@@ -1,0 +1,18 @@
+/* ***************************************
+	FIXED AJAX SPINNER
+*************************************** */
+
+.elgg-wait-cursor,
+.elgg-wait-cursor * {
+    cursor: wait;
+}
+.elgg-spinner {
+    position: fixed;
+    top: 0;
+    left: 50%;
+    z-index: 10000;
+    padding: 10px;
+    border-radius: 0 0 10px 10px;
+    border: 1px solid #CCC;
+    border-top: 0;
+}

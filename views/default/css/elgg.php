@@ -58,6 +58,7 @@ echo elgg_view('css/elements/modules', $vars);
 echo elgg_view('css/elements/components', $vars);
 echo elgg_view('css/elements/layout', $vars);
 echo elgg_view('css/elements/misc', $vars);
+echo elgg_view('css/elements/misc/spinner.css', $vars);
 
 
 // included last to have higher priority
