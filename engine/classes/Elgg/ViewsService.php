@@ -36,6 +36,16 @@ class ViewsService {
 	private $CONFIG;
 
 	/**
+	 * @var PluginHooksService
+	 */
+	private $hooks;
+
+	/**
+	 * @var Logger
+	 */
+	private $logger;
+
+	/**
 	 * @var array
 	 */
 	private $overriden_locations = array();
