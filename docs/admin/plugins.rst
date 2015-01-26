@@ -102,6 +102,8 @@ To activate a plugin:
  * Find your plugin in the list of installed plugins and click on the
    'enable' button.
 
+.. _admin/plugins#plugin-order:
+
 Plugin order
 ============
 

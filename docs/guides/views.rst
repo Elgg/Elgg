@@ -56,33 +56,6 @@ which would produce the following output:
 
     <h1>Hello, World!</h1>
 
-Overriding views in plugins
-===========================
-
-You may want to change the output or rendering strategy of a view that Elgg provides by default. Fortunately, Elgg's plugin system makes this easy. Each plugin may have its own ``/views`` directory, with its own viewtypes. Views in plugin directories always override views in the core directory, so this allows you to customize the behavior of any number of views without touching Elgg core.
-
-For example, if we wanted to customize the ``hello/world`` view to use an ``h2`` instead of an ``h1``, we could create a file at ``/mod/example/views/default/hello/world.php`` like this:
-
-.. code-block:: php
-
-	<h2>Hello, <?php echo $vars['name']; ?></h2>
-
-While it is **not recommended**, one *could* alternatively force the location of a view using the ``set_view_location`` function:
-
-.. code-block:: php
-
-	set_view_location($view_name, $full_path_to_view_file);
-
-Again, the best way to override views is to place them in the appropriate place in the views hierarchy.
-
-.. note::
-
-	When considering long-term maintenance, overriding views in the core and bundled plugins has a cost: Upgrades may bring changes in views, and if you have overridden them, you will not get those changes. You may want to use :ref:`post processing <guides/views#post-processing-views>` if the change you're making can be easily made with string replacement methods.
-
-.. note::
-
-	Elgg caches view locations. This means that you should disable the system cache while working with views. When you install the changes to a production environment you mush flush the caches.
-
 .. _guides/views#viewtypes:
 
 Viewtypes
@@ -112,10 +85,50 @@ You could also write a plugin to set this automatically using the ``set_input()`
 
 The plugin would presumably also supply a set of views optimized for handheld devices.
 
-Extending views
-===============
+.. _guides/views#altering-views-via-plugin:
 
-There may be other situations in which you don't want to override the whole view, you just want to add some more content to the end of it. In Elgg this is called *extending* a view.
+Altering views via plugins
+==========================
+
+Without modifying Elgg's core, Elgg provides several ways to customize almost all output:
+
+* You can `override a view <#overriding-views>`_, completely changing the file used to render it.
+* You can `extend a view <#extending-views>`_ by prepending or appending the output of another view to it.
+* You can `alter a view's output <#altering-view-output>`_ by plugin hook.
+
+Overriding views
+----------------
+
+Via plugin you can completely replace the rendering strategy of a view provided by Elgg or another plugin. Each plugin may have its own ``/views`` directory, and within it define its own view implementations.
+
+Views in plugin directories always override views in the core directory, however, when plugins override the views of other plugins, :ref:`later plugins take precedent <admin/plugins#plugin-order>`.
+
+For example, if we wanted to customize the ``hello/world`` view to use an ``h2`` instead of an ``h1``, we could create a file at ``/mod/example/views/default/hello/world.php`` like this:
+
+.. code-block:: php
+
+	<h2>Hello, <?php echo $vars['name']; ?></h2>
+
+While it is **not recommended**, one *could* alternatively force the location of a view using the ``set_view_location`` function:
+
+.. code-block:: php
+
+	set_view_location($view_name, $full_path_to_view_file);
+
+Again, the best way to override views is to place them in the appropriate place in the views hierarchy.
+
+.. note::
+
+	When considering long-term maintenance, overriding views in the core and bundled plugins has a cost: Upgrades may bring changes in views, and if you have overridden them, you will not get those changes. You may instead want to :ref:`alter the input <guides/views#altering-view-input>` or the :ref:`the output <guides/views#altering-view-output>` of the view via plugin hooks.
+
+.. note::
+
+	Elgg caches view locations. This means that you should disable the system cache while working with views. When you install the changes to a production environment you mush flush the caches.
+
+Extending views
+---------------
+
+There may be other situations in which you don't want to override the whole view, you just want to prepend or append some more content to it. In Elgg this is called *extending* a view.
 
 For example, instead of overriding the ``hello/world`` view, we could extend it like so:
 
@@ -136,14 +149,14 @@ Then every time we call ``elgg_view('hello/world');``, we'll get:
 	<h1>Hello, World!</h1>
 	<h2>How are you today?</h2>
 
-You can also optionally prepend views as well by passing a value to the 3rd parameter that is less than 500:
+You can prepend views by passing a value to the 3rd parameter that is less than 500:
 
 .. code-block:: php
 
-	//appends 'hello/greeting' to every occurrence of 'hello/world'
+	// appends 'hello/greeting' to every occurrence of 'hello/world'
 	elgg_extend_view('hello/world', 'hello/greeting');
 
-	//prepends 'hello/greeting' to every occurrence of 'hello/world'
+	// prepends 'hello/greeting' to every occurrence of 'hello/world'
 	elgg_extend_view('hello/world', 'hello/greeting', 450);
 
 Note that if you extend the core css view like this:
@@ -154,12 +167,12 @@ Note that if you extend the core css view like this:
 
 You **must** do so within code that is executed by engine/start.php (normally this would mean your plugin's init code).  Because the core css view is loaded separately via a ``<link>`` tag, any extensions you add will not have the same context as the rest of your page.
 
-.. _guides/views#post-processing-views:
+.. _guides/views#altering-view-output:
 
-Post processing views
-=====================
+Altering view output
+--------------------
 
-Sometimes it is preferable to process or rewrite the output of a view instead of overriding it.
+Sometimes it is preferable to alter the output of a view instead of overriding it.
 
 The output of each view is run through the :ref:`plugin hook <guides/hooks-list#views>` ``[view, view_name]`` before being returned by ``elgg_view()``. Each registered handler function is passed these arguments:
 
@@ -170,8 +183,8 @@ The output of each view is run through the :ref:`plugin hook <guides/hooks-list#
 
 To alter the view output, the handler just needs to alter ``$returnvalue`` and return a new string.
 
-Post pocessing view example
-===========================
+Altering view output example
+----------------------------
 
 Here we'll eliminate breadcrumbs that don't have at least one link.
 
