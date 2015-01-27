@@ -209,6 +209,59 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$u2->delete();
 	}
 
+	public function testDefaultOrderedById() {
+		$ia = elgg_set_ignore_access(true);
+
+		$obj = new ElggObject();
+		$obj->owner_guid = elgg_get_site_entity()->guid;
+		$obj->container_guid = elgg_get_site_entity()->guid;
+		$obj->access_id = ACCESS_PUBLIC;
+		$obj->save();
+
+		$obj->test_md = [1, 2, 3];
+
+		$time = time();
+		$prefix = _elgg_services()->db->getTablePrefix();
+
+		// reverse the times
+		$mds = elgg_get_metadata([
+			'metadata_owner_guids' => $obj->guid,
+			'metadata_names' => 'test_md',
+			'order_by' => 'n_table.id ASC',
+		]);
+		foreach ($mds as $i => $md) {
+			update_data("
+				UPDATE {$prefix}metadata
+				SET time_created = " . ($time - $i) . "
+				WHERE id = {$md->id}
+			");
+		}
+
+		// verify ID order
+		$mds = elgg_get_metadata([
+			'guid' => $obj->guid,
+			'metadata_names' => 'test_md',
+		]);
+		$md_values = array_map(function (ElggMetadata $md) {
+			return (int)$md->value;
+		}, $mds);
+		$this->assertEqual($md_values, [1, 2, 3]);
+
+		// ignore access bypasses the MD cache, so we try it both ways
+		elgg_set_ignore_access(false);
+		_elgg_services()->metadataCache->clear($obj->guid);
+		$md_values = $obj->test_md;
+		$this->assertEqual($md_values, [1, 2, 3]);
+
+		elgg_set_ignore_access(true);
+		_elgg_services()->metadataCache->clear($obj->guid);
+		$md_values = $obj->test_md;
+		$this->assertEqual($md_values, [1, 2, 3]);
+
+		$obj->delete();
+		elgg_set_ignore_access($ia);
+	}
+
 	protected function delete_metastrings($string) {
 		global $CONFIG, $METASTRINGS_CACHE;
 		$METASTRINGS_CACHE = array();
