@@ -230,21 +230,6 @@ class UsersTable {
 	}
 	
 	/**
-	 * Get a user object from a GUID.
-	 *
-	 * This function returns an \ElggUser from a given GUID.
-	 *
-	 * @param int $guid The GUID
-	 *
-	 * @return \ElggUser|false
-	 */
-	function get($guid) {
-		$result = _elgg_services()->entityTable->get($guid);
-
-		return ($result instanceof \ElggUser) ? $result : false;
-	}
-	
-	/**
 	 * Get user by username
 	 *
 	 * @param string $username The user's username

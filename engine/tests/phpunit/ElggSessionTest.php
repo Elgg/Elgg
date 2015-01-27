@@ -7,13 +7,13 @@
 class ElggSessionTest extends \PHPUnit_Framework_TestCase {
 
 	public function testStart() {
-		$session = new \ElggSession(new \Elgg\Http\MockSessionStorage());
+		$session = \ElggSession::getMock();
 		$this->assertTrue($session->start());
 		$this->assertTrue($session->has('__elgg_session'));
 	}
 
 	public function testInvalidate() {
-		$session = new \ElggSession(new \Elgg\Http\MockSessionStorage());
+		$session = \ElggSession::getMock();
 		$session->start();
 		$session->set('foo', 5);
 		$id = $session->getId();
@@ -24,7 +24,7 @@ class ElggSessionTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testMigrate() {
-		$session = new \ElggSession(new \Elgg\Http\MockSessionStorage());
+		$session = \ElggSession::getMock();
 		$session->start();
 		$session->set('foo', 5);
 		$id = $session->getId();

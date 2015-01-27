@@ -85,7 +85,7 @@ function remove_user_admin($user_guid) {
  * @return \ElggUser|false
  */
 function get_user($guid) {
-	return _elgg_services()->usersTable->get($guid);
+	return _elgg_services()->entityTable->get($guid, 'user');
 }
 
 /**

@@ -69,6 +69,8 @@ function pages_init() {
 		'tags' => 'tags',
 		'parent_guid' => 'parent',
 		'access_id' => 'access',
+
+		// TODO change to "access" when input/write_access is removed
 		'write_access_id' => 'write_access',
 	));
 
@@ -77,6 +79,8 @@ function pages_init() {
 	// write permission plugin hooks
 	elgg_register_plugin_hook_handler('permissions_check', 'object', 'pages_write_permission_check');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'pages_container_permission_check');
+
+	elgg_register_plugin_hook_handler('access:collections:write', 'user', 'pages_write_access_options_hook');
 
 	// icon url override
 	elgg_register_plugin_hook_handler('entity:icon:url', 'object', 'pages_icon_url_override');
@@ -400,4 +404,26 @@ function pages_ecml_views_hook($hook, $entity_type, $return_value, $params) {
  */
 function pages_is_page($value) {
 	return ($value instanceof ElggObject) && in_array($value->getSubtype(), array('page', 'page_top'));
+}
+
+/**
+ * Return options for the write_access_id input
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array  $return_value
+ * @param array  $params
+ *
+ * @return array
+ */
+function pages_write_access_options_hook($hook, $type, $return_value, $params) {
+	if (empty($params['input_params']['entity_subtype'])
+			|| !in_array($params['input_params']['entity_subtype'], array('page', 'page_top'))) {
+		return null;
+	}
+
+	if ($params['input_params']['purpose'] === 'write') {
+		unset($return_value[ACCESS_PUBLIC]);
+		return $return_value;
+	}
 }

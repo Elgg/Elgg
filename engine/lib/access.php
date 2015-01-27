@@ -110,11 +110,12 @@ function get_access_array($user_guid = 0, $site_guid = 0, $flush = false) {
  * If want you to change the default access based on group of other information,
  * use the 'default', 'access' plugin hook.
  *
- * @param \ElggUser $user Get the user's default access. Defaults to logged in user.
+ * @param ElggUser $user         The user for whom we're getting default access. Defaults to logged in user.
+ * @param array    $input_params Parameters passed into an input/access view
  *
  * @return int default access id (see ACCESS defines in elgglib.php)
  */
-function get_default_access(\ElggUser $user = null) {
+function get_default_access(ElggUser $user = null, array $input_params = array()) {
 	global $CONFIG;
 
 	// site default access
@@ -134,6 +135,7 @@ function get_default_access(\ElggUser $user = null) {
 	$params = array(
 		'user' => $user,
 		'default_access' => $default_access,
+		'input_params' => $input_params,
 	);
 	return _elgg_services()->hooks->trigger('default', 'access', $params, $default_access);
 }
@@ -257,14 +259,15 @@ function has_access_to_entity($entity, $user = null) {
  * standard access levels. It does not return access collections that the user
  * belongs to such as the access collection for a group.
  *
- * @param int  $user_guid The user's GUID.
- * @param int  $site_guid The current site.
- * @param bool $flush     If this is set to true, this will ignore a cached access array
+ * @param int   $user_guid    The user's GUID.
+ * @param int   $site_guid    The current site.
+ * @param bool  $flush        If this is set to true, this will ignore a cached access array
+ * @param array $input_params Some parameters passed into an input/access view
  *
  * @return array List of access permissions
  */
-function get_write_access_array($user_guid = 0, $site_guid = 0, $flush = false) {
-	return _elgg_services()->accessCollections->getWriteAccessArray($user_guid, $site_guid, $flush);
+function get_write_access_array($user_guid = 0, $site_guid = 0, $flush = false, array $input_params = array()) {
+	return _elgg_services()->accessCollections->getWriteAccessArray($user_guid, $site_guid, $flush, $input_params);
 }
 
 /**

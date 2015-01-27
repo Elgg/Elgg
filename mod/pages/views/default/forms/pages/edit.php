@@ -38,11 +38,24 @@ foreach ($variables as $name => $type) {
 			echo '<br />';
 		}
 
-		echo elgg_view($input_view, array(
+		$view_vars = array(
 			'name' => $name,
 			'value' => $vars[$name],
 			'entity' => ($name == 'parent_guid') ? $vars['entity'] : null,
-		));
+		);
+		if ($input_view === 'input/access' || $input_view === 'input/write_access') {
+			$view_vars['entity'] = $entity;
+			$view_vars['entity_type'] = 'object';
+			$view_vars['entity_subtype'] = $vars['parent_guid'] ? 'page': 'page_top';
+			if ($name === 'write_access_id') {
+				$view_vars['purpose'] = 'write';
+				if ($entity) {
+					$view_vars['value'] = $entity->write_access_id;
+				}
+			}
+		}
+
+		echo elgg_view($input_view, $view_vars);
 	?>
 </div>
 <?php

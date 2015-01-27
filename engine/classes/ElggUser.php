@@ -30,19 +30,33 @@ class ElggUser extends \ElggEntity
 		parent::initializeAttributes();
 
 		$this->attributes['type'] = "user";
-		$this->attributes['name'] = null;
-		$this->attributes['username'] = null;
-		$this->attributes['password'] = null;
-		$this->attributes['salt'] = null;
-		$this->attributes['password_hash'] = null;
-		$this->attributes['email'] = null;
-		$this->attributes['language'] = null;
-		$this->attributes['banned'] = "no";
-		$this->attributes['admin'] = 'no';
-		$this->attributes['prev_last_action'] = null;
-		$this->attributes['last_login'] = null;
-		$this->attributes['prev_last_login'] = null;
+		$this->attributes += self::getExternalAttributes();
 		$this->tables_split = 2;
+	}
+
+	/**
+	 * Get default values for attributes stored in a separate table
+	 *
+	 * @return array
+	 * @access private
+	 *
+	 * @see \Elgg\Database\EntityTable::getEntities
+	 */
+	final public static function getExternalAttributes() {
+		return [
+			'name' => null,
+			'username' => null,
+			'password' => null,
+			'salt' => null,
+			'password_hash' => null,
+			'email' => null,
+			'language' => null,
+			'banned' => "no",
+			'admin' => 'no',
+			'prev_last_action' => null,
+			'last_login' => null,
+			'prev_last_login' => null,
+		];
 	}
 
 	/**
