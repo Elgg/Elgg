@@ -414,55 +414,21 @@ function sanitise_filepath($path, $append_slash = true) {
  * If $messages is null and $register is empty, all messages will be
  * returned and removed.
  *
- * @important This function handles the standard {@link system_message()} ($register =
- * 'messages') as well as {@link register_error()} messages ($register = 'errors').
- *
  * @param mixed  $message  Optionally, a single message or array of messages to add, (default: null)
  * @param string $register Types of message: "error", "success" (default: success)
  * @param bool   $count    Count the number of messages (default: false)
  *
  * @return bool|array Either the array of messages, or a response regarding
  *                          whether the message addition was successful.
- * @todo Clean up. Separate registering messages and retrieving them.
  */
 function system_messages($message = null, $register = "success", $count = false) {
-	$session = _elgg_services()->session;
-	$messages = $session->get('msg', array());
-	if (!isset($messages[$register]) && !empty($register)) {
-		$messages[$register] = array();
+	if ($count) {
+		return _elgg_services()->systemMessages->count($register);
 	}
-	if (!$count) {
-		if (!empty($message) && is_array($message)) {
-			$messages[$register] = array_merge($messages[$register], $message);
-			return true;
-		} else if (!empty($message) && is_string($message)) {
-			$messages[$register][] = $message;
-			$session->set('msg', $messages);
-			return true;
-		} else if (is_null($message)) {
-			if ($register != "") {
-				$returnarray = array();
-				$returnarray[$register] = $messages[$register];
-				$messages[$register] = array();
-			} else {
-				$returnarray = $messages;
-				$messages = array();
-			}
-			$session->set('msg', $messages);
-			return $returnarray;
-		}
-	} else {
-		if (!empty($register)) {
-			return sizeof($messages[$register]);
-		} else {
-			$count = 0;
-			foreach ($messages as $submessages) {
-				$count += sizeof($submessages);
-			}
-			return $count;
-		}
+	if ($message === null) {
+		return _elgg_services()->systemMessages->dumpRegister($register);
 	}
-	return false;
+	return _elgg_services()->systemMessages->addMessageToRegister($message, $register);
 }
 
 /**
@@ -473,7 +439,7 @@ function system_messages($message = null, $register = "success", $count = false)
  * @return integer The number of messages
  */
 function count_messages($register = "") {
-	return system_messages(null, $register, true);
+	return _elgg_services()->systemMessages->count($register);
 }
 
 /**
@@ -486,7 +452,7 @@ function count_messages($register = "") {
  * @return bool
  */
 function system_message($message) {
-	return system_messages($message, "success");
+	return _elgg_services()->systemMessages->addSuccessMessage($message);
 }
 
 /**
@@ -499,7 +465,7 @@ function system_message($message) {
  * @return bool
  */
 function register_error($error) {
-	return system_messages($error, "error");
+	return _elgg_services()->systemMessages->addErrorMessage($error);
 }
 
 /**
@@ -1065,64 +1031,8 @@ function elgg_get_version($human_readable = false) {
  * @since 1.7.0
  */
 function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
-	// if it's a major release behind, visual and logged
-	// if it's a 1 minor release behind, visual and logged
-	// if it's for current minor release, logged.
-	// bugfixes don't matter because we are not deprecating between them
-
-	if (!$dep_version) {
-		return false;
-	}
-
-	$elgg_version = elgg_get_version(true);
-	$elgg_version_arr = explode('.', $elgg_version);
-	$elgg_major_version = (int)$elgg_version_arr[0];
-	$elgg_minor_version = (int)$elgg_version_arr[1];
-
-	$dep_version_arr = explode('.', (string)$dep_version);
-	$dep_major_version = (int)$dep_version_arr[0];
-	$dep_minor_version = (int)$dep_version_arr[1];
-
-	$visual = false;
-
-	if (($dep_major_version < $elgg_major_version) ||
-		($dep_minor_version < $elgg_minor_version)) {
-		$visual = true;
-	}
-
-	$msg = "Deprecated in $dep_major_version.$dep_minor_version: $msg";
-
-	if ($visual && elgg_is_admin_logged_in()) {
-		register_error($msg);
-	}
-
-	// Get a file and line number for the log. Never show this in the UI.
-	// Skip over the function that sent this notice and see who called the deprecated
-	// function itself.
-	$msg .= " Called from ";
-	$stack = array();
-	$backtrace = debug_backtrace();
-	// never show this call.
-	array_shift($backtrace);
-	$i = count($backtrace);
-
-	foreach ($backtrace as $trace) {
-		$stack[] = "[#$i] {$trace['file']}:{$trace['line']}";
-		$i--;
-
-		if ($backtrace_level > 0) {
-			if ($backtrace_level <= 1) {
-				break;
-			}
-			$backtrace_level--;
-		}
-	}
-
-	$msg .= implode("<br /> -> ", $stack);
-
-	elgg_log($msg, 'WARNING');
-
-	return true;
+	$backtrace_level += 1;
+	return _elgg_services()->deprecation->sendNotice($msg, $dep_version, $backtrace_level);
 }
 
 /**

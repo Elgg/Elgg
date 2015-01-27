@@ -140,16 +140,13 @@ class EntityTable {
 	/**
 	 * Loads and returns an entity object from a guid.
 	 *
-	 * @param int $guid The GUID of the entity
+	 * @param int    $guid The GUID of the entity
+	 * @param string $type The type of the entity. If given, even an existing entity with the given GUID
+	 *                     will not be returned unless its type matches.
 	 *
 	 * @return \ElggEntity The correct Elgg or custom object based upon entity type and subtype
 	 */
-	function get($guid) {
-		// This should not be a static local var. Notice that cache writing occurs in a completely
-		// different instance outside this function.
-		// @todo We need a single Memcache instance with a shared pool of namespace wrappers. This function would pull an instance from the pool.
-		static $shared_cache;
-	
+	function get($guid, $type = '') {
 		// We could also use: if (!(int) $guid) { return false },
 		// but that evaluates to a false positive for $guid = true.
 		// This is a bit slower, but more thorough.
@@ -160,44 +157,22 @@ class EntityTable {
 		// Check local cache first
 		$new_entity = _elgg_retrieve_cached_entity($guid);
 		if ($new_entity) {
+			if ($type) {
+				return elgg_instanceof($new_entity, $type) ? $new_entity : false;
+			}
 			return $new_entity;
 		}
-	
-		// Check shared memory cache, if available
-		if (null === $shared_cache) {
-			if (is_memcache_available()) {
-				$shared_cache = new \ElggMemcache('new_entity_cache');
-			} else {
-				$shared_cache = false;
-			}
+
+		$options = [
+			'guid' => $guid,
+			'limit' => 1,
+			'site_guids' => ELGG_ENTITIES_ANY_VALUE, // for BC with get_entity, allow matching any site
+		];
+		if ($type) {
+			$options['type'] = $type;
 		}
-	
-		// until ACLs in memcache, DB query is required to determine access
-		$entity_row = get_entity_as_row($guid);
-		if (!$entity_row) {
-			return false;
-		}
-	
-		if ($shared_cache) {
-			$cached_entity = $shared_cache->load($guid);
-			// @todo store ACLs in memcache https://github.com/elgg/elgg/issues/3018#issuecomment-13662617
-			if ($cached_entity) {
-				// @todo use ACL and cached entity access_id to determine if user can see it
-				return $cached_entity;
-			}
-		}
-	
-		// don't let incomplete entities cause fatal exceptions
-		try {
-			$new_entity = entity_row_to_elggstar($entity_row);
-		} catch (IncompleteEntityException $e) {
-			return false;
-		}
-	
-		if ($new_entity) {
-			_elgg_cache_entity($new_entity);
-		}
-		return $new_entity;
+		$entities = $this->getEntities($options);
+		return $entities ? $entities[0] : false;
 	}
 	
 	/**
@@ -307,7 +282,12 @@ class EntityTable {
 	 *
 	 * 	preload_owners => bool (false) If set to true, this function will preload
 	 * 					  all the owners of the returned entities resulting in better
-	 * 					  performance when displaying entities owned by several users
+	 * 					  performance if those owners need to be displayed
+	 *
+	 *  preload_containers => bool (false) If set to true, this function will preload
+	 * 					      all the containers of the returned entities resulting in better
+	 * 					      performance if those containers need to be displayed
+	 *
 	 *
 	 * 	callback => string A callback function to pass each row through
 	 *
@@ -352,6 +332,7 @@ class EntityTable {
 			'joins'					=>	array(),
 	
 			'preload_owners'		=> false,
+			'preload_containers'	=> false,
 			'callback'				=> 'entity_row_to_elggstar',
 			'distinct'				=> true,
 	
@@ -374,7 +355,9 @@ class EntityTable {
 	
 		$singulars = array('type', 'subtype', 'guid', 'owner_guid', 'container_guid', 'site_guid');
 		$options = _elgg_normalize_plural_options_array($options, $singulars);
-	
+
+		$options = $this->autoJoinTables($options);
+
 		// evaluate where clauses
 		if (!is_array($options['wheres'])) {
 			$options['wheres'] = array($options['wheres']);
@@ -460,57 +443,127 @@ class EntityTable {
 		if ($options['reverse_order_by']) {
 			$options['order_by'] = _elgg_sql_reverse_order_by_clause($options['order_by']);
 		}
-	
-		if (!$options['count']) {
-			if ($options['group_by']) {
-				$query .= " GROUP BY {$options['group_by']}";
-			}
-	
-			if ($options['order_by']) {
-				$query .= " ORDER BY {$options['order_by']}";
-			}
-	
-			if ($options['limit']) {
-				$limit = sanitise_int($options['limit'], false);
-				$offset = sanitise_int($options['offset'], false);
-				$query .= " LIMIT $offset, $limit";
-			}
-	
-			if ($options['callback'] === 'entity_row_to_elggstar') {
-				$dt = _elgg_fetch_entities_from_sql($query, $options['__ElggBatch']);
-			} else {
-				$dt = _elgg_services()->db->getData($query, $options['callback']);
-			}
-	
-			if ($dt) {
-				// populate entity and metadata caches, and prepare $entities for preloader
-				$guids = array();
-				foreach ($dt as $item) {
-					// A custom callback could result in items that aren't \ElggEntity's, so check for them
-					if ($item instanceof \ElggEntity) {
-						_elgg_cache_entity($item);
-						// plugins usually have only settings
-						if (!$item instanceof \ElggPlugin) {
-							$guids[] = $item->guid;
-						}
-					}
-				}
-				// @todo Without this, recursive delete fails. See #4568
-				reset($dt);
-	
-				if ($guids) {
-					_elgg_services()->metadataCache->populateFromEntities($guids);
-				}
-	
-				if ($options['preload_owners'] && count($dt) > 1) {
-					_elgg_services()->ownerPreloader->preload($dt);
-				}
-			}
-			return $dt;
-		} else {
+
+		if ($options['count']) {
 			$total = _elgg_services()->db->getDataRow($query);
 			return (int)$total->total;
 		}
+
+		if ($options['group_by']) {
+			$query .= " GROUP BY {$options['group_by']}";
+		}
+
+		if ($options['order_by']) {
+			$query .= " ORDER BY {$options['order_by']}";
+		}
+
+		if ($options['limit']) {
+			$limit = sanitise_int($options['limit'], false);
+			$offset = sanitise_int($options['offset'], false);
+			$query .= " LIMIT $offset, $limit";
+		}
+
+		if ($options['callback'] === 'entity_row_to_elggstar') {
+			$results = _elgg_fetch_entities_from_sql($query, $options['__ElggBatch']);
+		} else {
+			$results = _elgg_services()->db->getData($query, $options['callback']);
+		}
+
+		if (!$results) {
+			// no results, no preloading
+			return $results;
+		}
+
+		// populate entity and metadata caches, and prepare $entities for preloader
+		$guids = array();
+		foreach ($results as $item) {
+			// A custom callback could result in items that aren't \ElggEntity's, so check for them
+			if ($item instanceof \ElggEntity) {
+				_elgg_cache_entity($item);
+				// plugins usually have only settings
+				if (!$item instanceof \ElggPlugin) {
+					$guids[] = $item->guid;
+				}
+			}
+		}
+		// @todo Without this, recursive delete fails. See #4568
+		reset($results);
+
+		if ($guids) {
+			// there were entities in the result set, preload metadata for them
+			_elgg_services()->metadataCache->populateFromEntities($guids);
+		}
+
+		if (count($results) > 1) {
+			$props_to_preload = [];
+			if ($options['preload_owners']) {
+				$props_to_preload[] = 'owner_guid';
+			}
+			if ($options['preload_containers']) {
+				$props_to_preload[] = 'container_guid';
+			}
+			if ($props_to_preload) {
+				// note, ElggEntityPreloaderIntegrationTest assumes it can swap out
+				// the preloader after boot. If you inject this component at construction
+				// time that unit test will break. :/
+				_elgg_services()->entityPreloader->preload($results, $props_to_preload);
+			}
+		}
+
+		return $results;
+	}
+
+	/**
+	 * Decorate getEntities() options in order to auto-join secondary tables where it's
+	 * safe to do so.
+	 *
+	 * @param array $options Options array in getEntities() after normalization
+	 * @return array
+	 */
+	protected function autoJoinTables(array $options) {
+		// we must be careful that the query doesn't specify any options that may join
+		// tables or change the selected columns
+		if (!is_array($options['types'])
+				|| count($options['types']) !== 1
+				|| !empty($options['selects'])
+				|| !empty($options['wheres'])
+				|| !empty($options['joins'])
+				|| $options['callback'] !== 'entity_row_to_elggstar'
+				|| $options['count']) {
+			// Too dangerous to auto-join
+			return $options;
+		}
+
+		$join_types = [
+			// Each class must have a static getExternalAttributes() : array
+			'object' => 'ElggObject',
+			'user' => 'ElggUser',
+			'group' => 'ElggGroup',
+			'site' => 'ElggSite',
+		];
+
+		// We use reset() because $options['types'] may not have a numeric key
+		$type = reset($options['types']);
+		if (empty($join_types[$type])) {
+			return $options;
+		}
+
+		// Get the columns we'll need to select. We can't use st.* because the order_by
+		// clause may reference "guid", which MySQL will complain about being ambiguous
+		if (!is_callable([$join_types[$type], 'getExternalAttributes'])) {
+			// for some reason can't get external attributes.
+			return $options;
+		}
+
+		$attributes = $join_types[$type]::getExternalAttributes();
+		foreach (array_keys($attributes) as $col) {
+			$options['selects'][] = "st.$col";
+		}
+
+		// join the secondary table
+		$options['joins'][] = "JOIN {$this->CONFIG->dbprefix}{$type}s_entity st ON (e.guid = st.guid)";
+
+		return $options;
 	}
 	
 	/**
@@ -521,7 +574,7 @@ class EntityTable {
 	 * @return \ElggEntity[]
 	 *
 	 * @access private
-	 * @throws LogicException
+	 * @throws \LogicException
 	 */
 	function fetchFromSql($sql, \ElggBatch $batch = null) {
 		static $plugin_subtype;
@@ -530,11 +583,13 @@ class EntityTable {
 		}
 	
 		// Keys are types, values are columns that, if present, suggest that the secondary
-		// table is already JOINed
+		// table is already JOINed. Note it's OK if guess incorrectly because entity load()
+		// will fetch any missing attributes.
 		$types_to_optimize = array(
 			'object' => 'title',
 			'user' => 'password',
 			'group' => 'name',
+			'site' => 'url',
 		);
 	
 		$rows = _elgg_services()->db->getData($sql);

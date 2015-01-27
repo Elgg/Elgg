@@ -1,5 +1,9 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 /**
  * Elgg Session Management
  *
@@ -17,7 +21,7 @@
  */
 class ElggSession implements \ArrayAccess {
 
-	/** @var \Elgg\Http\SessionStorage */
+	/** @var SessionInterface */
 	protected $storage;
 
 	/** @var \ElggUser */
@@ -26,10 +30,10 @@ class ElggSession implements \ArrayAccess {
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Http\SessionStorage $storage The storage engine
+	 * @param SessionInterface $storage The underlying Session implementation
 	 * @access private Use elgg_get_session()
 	 */
-	public function __construct(\Elgg\Http\SessionStorage $storage) {
+	public function __construct(SessionInterface $storage) {
 		$this->storage = $storage;
 		$this->loggedInUser = null;
 	}
@@ -55,7 +59,7 @@ class ElggSession implements \ArrayAccess {
 	 * @since 1.9
 	 */
 	public function migrate($destroy = false) {
-		return $this->storage->regenerate($destroy);
+		return $this->storage->migrate($destroy);
 	}
 
 	/**
@@ -383,5 +387,16 @@ class ElggSession implements \ArrayAccess {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Get an isolated ElggSession that does not persist between requests
+	 *
+	 * @return self
+	 */
+	public static function getMock() {
+		$storage = new MockArraySessionStorage();
+		$session = new Session($storage);
+		return new self($session);
 	}
 }

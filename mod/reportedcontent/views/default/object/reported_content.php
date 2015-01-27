@@ -6,10 +6,8 @@
  */
 
 $report = $vars['entity'];
+/* @var ElggObject $report */
 $reporter = $report->getOwnerEntity();
-
-$archive_url = elgg_get_site_url() . "action/reportedcontent/archive?guid=$report->guid";
-$delete_url = elgg_get_site_url() . "action/reportedcontent/delete?guid=$report->guid";
 
 //find out if the report is current or archive
 if ($report->state == 'archived') {
@@ -25,60 +23,54 @@ if ($report->state == 'archived') {
 		<div class="clearfix controls">
 <?php
 	if ($report->state != 'archived') {
-		$params = array(
-			'href' => $archive_url,
-			'text' => elgg_echo('reportedcontent:archive'),
-			'is_action' => true,
-			'is_trusted' => true,
+		$attrs = [
 			'class' => 'elgg-button elgg-button-action',
-		);
-		echo elgg_view('output/url', $params);
+			'data-elgg-action' => json_encode([
+				'name' => 'reportedcontent/archive',
+				'data' => [
+					'guid' => $report->guid,
+				]
+			]),
+		];
+		echo elgg_format_element('button', $attrs, elgg_echo('reportedcontent:archive'));
 	}
-	$params = array(
-		'href' => $delete_url,
-		'text' => elgg_echo('reportedcontent:delete'),
-		'is_action' => true,
-		'is_trusted' => true,
+	$attrs = [
 		'class' => 'elgg-button elgg-button-action',
-	);
-	echo elgg_view('output/url', $params);
+		'data-elgg-action' => json_encode([
+			'name' => 'reportedcontent/delete',
+			'data' => [
+				'guid' => $report->guid,
+			]
+		]),
+	];
+	echo elgg_format_element('button', $attrs, elgg_echo('reportedcontent:delete'));
 ?>
 		</div>
-		<p>
-			<b><?php echo elgg_echo('reportedcontent:by'); ?>:</b>
-			<?php echo elgg_view('output/url', array(
+		<h3 class="mbm">
+			<?php echo elgg_view('output/url', [
+				'text' => $report->title,
+				'href' => $report->address,
+				'is_trusted' => true,
+				'class' => 'elgg-reported-content-address elgg-lightbox',
+				'data-colorbox-opts' => json_encode([
+					'width' => '85%',
+					'height' => '85%',
+					'iframe' => true,
+				]),
+			]);
+			?>
+		</h3>
+		<p><b><?php echo elgg_echo('reportedcontent:by') ?></b>
+			<?php echo elgg_view('output/url', [
 				'href' => $reporter->getURL(),
 				'text' => $reporter->name,
 				'is_trusted' => true,
-			));
-			?>,
-			<?php echo elgg_view_friendly_time($report->time_created); ?>
-		</p>
-		<p>
-			<b><?php echo elgg_echo('title'); ?>:</b>
-			<?php echo $report->title; ?>
-		<p>
-			<b><?php echo elgg_echo('reportedcontent:objecturl'); ?>:</b>
-			<?php echo elgg_view('output/url', array(
-				'href' => $report->address,
-				'text' => elgg_echo('reportedcontent:visit'),
-				'is_trusted' => true,
-			));
+			]);
+			echo " " . elgg_view_friendly_time($report->time_created);
 			?>
 		</p>
-		<p>
-			<?php echo elgg_view('output/url', array(
-				'href' => "#report-$report->guid",
-				'text' => elgg_echo('more_info'),
-				'rel' => "toggle",
-			));
-			?>
-		</p>
-	</div>
-	<div class="report-details hidden" id="report-<?php echo $report->getGUID();?>">
-		<p>
-			<b><?php echo elgg_echo('reportedcontent:reason'); ?>:</b>
-			<?php echo $report->description; ?>
-		</p>
+		<?php if ($report->description): ?>
+			<p><?php echo $report->description; ?></p>
+		<?php endif; ?>
 	</div>
 </div>

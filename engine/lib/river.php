@@ -456,9 +456,8 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		}
 	}
 	if ($guids) {
-		// avoid creating oversized query
-		// @todo how to better handle this?
-		$guids = array_slice($guids, 0, 300, true);
+		// The entity cache only holds 256. We don't want to bump out any plugins.
+		$guids = array_slice($guids, 0, 200, true);
 		// return value unneeded, just priming cache
 		elgg_get_entities(array(
 			'guids' => array_keys($guids),
@@ -467,7 +466,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		));
 	}
 
-	// prefetch object containers
+	// prefetch object containers, in case they were not in the targets
 	$guids = array();
 	foreach ($river_items as $item) {
 		$object = $item->getObjectEntity();
@@ -476,13 +475,20 @@ function _elgg_prefetch_river_entities(array $river_items) {
 		}
 	}
 	if ($guids) {
-		$guids = array_slice($guids, 0, 300, true);
+		$guids = array_slice($guids, 0, 200, true);
 		elgg_get_entities(array(
 			'guids' => array_keys($guids),
 			'limit' => 0,
 			'distinct' => false,
+
+			// Why specify? user containers are likely already loaded via the owners, and
+			// specifying groups allows ege() to auto-join the groups_entity table
+			'type' => 'group',
 		));
 	}
+
+	// Note: We've tried combining the above ege() calls into one (pulling containers at the same time).
+	// Although it seems like it would reduce queries, it added some. o_O
 }
 
 /**

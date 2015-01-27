@@ -973,7 +973,7 @@ function _elgg_entities_test($hook, $type, $value) {
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggOwnerPreloaderIntegrationTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggEntityPreloaderIntegrationTest.php';
 	return $value;
 }
 

@@ -236,3 +236,23 @@ function get_language_completeness($language) {
 function get_missing_language_keys($language) {
 	return _elgg_services()->translator->getMissingLanguageKeys($language);
 }
+
+/**
+ * Initializes simplecache views for translations
+ * 
+ * @return void
+ */
+function _elgg_translations_init() {
+	$translations = _elgg_services()->translator->getInstalledTranslations();
+	foreach ($translations as $key => $language) {
+		// make the js view available for each language
+		elgg_extend_view("js/languages/$key.js", "js/languages");
+		
+		// register the js view for use in simplecache
+		elgg_register_simplecache_view("js/languages/$key.js");
+	}
+}
+
+return function(\Elgg\EventsService $events) {
+	$events->registerHandler('init', 'system', '_elgg_translations_init');
+};

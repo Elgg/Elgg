@@ -63,7 +63,7 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 
 		$this->user123 = $this->getMockElggUser(123);
 
-		$this->session = new \ElggSession(new \Elgg\Http\MockSessionStorage());
+		$this->session = \ElggSession::getMock();
 
 		// mock DB
 		$this->dbMock = $this->getMockBuilder('\Elgg\Database')

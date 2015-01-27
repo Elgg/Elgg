@@ -222,7 +222,7 @@ function elgg_get_context() {
  * @since 1.8.0
  */
 function elgg_push_context($context) {
-	return _elgg_services()->context->push($context);
+	_elgg_services()->context->push($context);
 }
 
 /**

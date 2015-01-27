@@ -42,7 +42,7 @@ class SubscriptionsServiceTest extends \PHPUnit_Framework_TestCase {
 				->will($this->returnArgument(0));
 
 		// Event class has dependency on elgg_get_logged_in_user_guid()
-		_elgg_services()->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
+		_elgg_services()->setValue('session', \ElggSession::getMock());
 	}
 
 	public function testGetSubscriptionsWithNoMethodsRegistered() {

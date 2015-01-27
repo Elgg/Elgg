@@ -10,7 +10,7 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 	protected $obj;
 
 	protected function setUp() {
-		_elgg_services()->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
+		_elgg_services()->setValue('session', \ElggSession::getMock());
 		$this->obj = $this->getMockForAbstractClass('\ElggEntity');
 		$reflection = new ReflectionClass('\ElggEntity');
 		$method = $reflection->getMethod('initializeAttributes');
