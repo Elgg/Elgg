@@ -11,7 +11,7 @@
 $owner_guid = elgg_extract('owner_guid', $vars, ELGG_ENTITIES_ANY_VALUE);
 $container_guid = elgg_extract('container_guid', $vars, ELGG_ENTITIES_ANY_VALUE);
 
-$type = 'object';
+$type = elgg_extract('type', $vars, 'object');
 
 $options = array(
 	'type' => $type,
