@@ -297,8 +297,8 @@ function elgg_get_breadcrumbs() {
 }
 
 /**
- * Hook handler to turn titles into 100-character excerpts. To remove this behavior, unregister this
- * function from the [prepare, breadcrumbs] hook.
+ * Prepare breadcrumbs before display. This turns titles into 100-character excerpts, and also
+ * removes the last crumb if it's not a link.
  *
  * @param string $hook        "prepare"
  * @param string $type        "breadcrumbs"
@@ -309,6 +309,13 @@ function elgg_get_breadcrumbs() {
  * @since 1.11
  */
 function elgg_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
+	// remove last crumb if not a link
+	$last_crumb = end($breadcrumbs);
+	if (empty($last_crumb['link'])) {
+		array_pop($breadcrumbs);
+	}
+
+	// apply excerpt to titles
 	foreach (array_keys($breadcrumbs) as $i) {
 		$breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
 	}

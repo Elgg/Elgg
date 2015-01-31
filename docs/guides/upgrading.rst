@@ -3,11 +3,34 @@ Upgrading Plugins
 
 Prepare your plugin for the next version of Elgg.
 
-See the administator guides for :doc:`how to upgrade a live site </admin/upgrading>`.
+See the administrator guides for :doc:`how to upgrade a live site </admin/upgrading>`.
 
 .. contents:: Contents
    :local:
    :depth: 2
+
+From 1.11 to 2.0
+================
+
+Breadcrumb display now removes the last item if it does not contain a link. To restore the previous behavior,
+replace the plugin hook handler ``elgg_prepare_breadcrumbs`` with your own:
+
+.. code:: php
+
+    elgg_unregister_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
+    elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'myplugin_prepare_breadcrumbs');
+
+    function myplugin_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
+        // just apply excerpt to titles
+        foreach (array_keys($breadcrumbs) as $i) {
+            $breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
+        }
+        return $breadcrumbs;
+    }
+
+
+From 1.10 to 1.11
+=================
 
 From 1.9 to 1.10
 ================
