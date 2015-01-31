@@ -389,4 +389,47 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 
 		elgg_pop_context();
 	}
+
+	/**
+	 * Tests get_entity_statistics() without owner
+	 * @covers get_entity_statistics()
+	 */
+	function test_global_get_entity_statistics() {
+
+		$subtype = 'issue7845' . rand(0,100);
+
+		$object = new \ElggObject();
+		$object->subtype = $subtype;
+		$object->save();
+
+		$stats = get_entity_statistics();
+
+		$this->assertEqual($stats['object'][$subtype], 1);
+
+		$object->delete();
+	}
+
+	/**
+	 * Tests get_entity_statistics() with an owner
+	 * @covers get_entity_statistics()
+	 */
+	function test_owned_get_entity_statistics() {
+
+		$user = new \ElggUser();
+		$user->save();
+
+		$subtype = 'issue7845' . rand(0,100);
+
+		$object = new \ElggObject();
+		$object->subtype = $subtype;
+		$object->owner_guid = $user->guid;
+		$object->save();
+
+		$stats = get_entity_statistics($user->guid);
+
+		$this->assertEqual($stats['object'][$subtype], 1);
+
+		$user->delete();
+	}
+
 }

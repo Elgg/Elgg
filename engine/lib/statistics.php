@@ -18,43 +18,29 @@
  * @return array
  */
 function get_entity_statistics($owner_guid = 0) {
-	global $CONFIG;
 
+	$owner_guid = (int) $owner_guid;
 	$entity_stats = array();
-	$owner_guid = (int)$owner_guid;
 
-	$query = "SELECT e.type,s.subtype,e.subtype as subtype_id
-		from {$CONFIG->dbprefix}entities e left
-		join {$CONFIG->dbprefix}entity_subtypes s on e.subtype=s.id";
-
-	$owner_query = "";
-	if ($owner_guid) {
-		$query .= " where owner_guid=$owner_guid";
-		$owner_query = "and owner_guid=$owner_guid ";
-	}
-
-	// Get a list of major types
-
-	$types = get_data($query);
-	foreach ($types as $type) {
-		// assume there are subtypes for now
-		if (!isset($entity_stats[$type->type]) || !is_array($entity_stats[$type->type])) {
-			$entity_stats[$type->type] = array();
-		}
-
-		$query = "SELECT count(*) as count
-			from {$CONFIG->dbprefix}entities where type='{$type->type}' $owner_query";
-
-		if ($type->subtype) {
-			$query .= " and subtype={$type->subtype_id}";
-		}
-
-		$subtype_cnt = get_data_row($query);
-
-		if ($type->subtype) {
-			$entity_stats[$type->type][$type->subtype] = $subtype_cnt->count;
-		} else {
-			$entity_stats[$type->type]['__base__'] = $subtype_cnt->count;
+	$grouped_entities = elgg_get_entities(array(
+		'selects' => array('COUNT(*) as cnt'),
+		'owner_guids' => ($owner_guid) ? : ELGG_ENTITIES_ANY_VALUE,
+		'group_by' => 'e.type, e.subtype',
+		'limit' => 0,
+		'order_by' => 'cnt DESC',
+	));
+	
+	if (!empty($grouped_entities)) {
+		foreach ($grouped_entities as $entity) {
+			$type = $entity->getType();
+			if (!isset($entity_stats[$type]) || !is_array($entity_stats[$type])) {
+				$entity_stats[$type] = array();
+			}
+			$subtype = $entity->getSubtype();
+			if (!$subtype) {
+				$subtype = '__base__';
+			}
+			$entity_stats[$type][$subtype] = $entity->getVolatileData('select:cnt');
 		}
 	}
 
