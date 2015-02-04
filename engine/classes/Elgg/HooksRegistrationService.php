@@ -90,6 +90,33 @@ abstract class HooksRegistrationService {
 	}
 
 	/**
+	 * Removes all handlers
+	 *
+	 * @param string   $name
+	 * @param string   $type
+	 *
+	 * @return array
+	 * @access private
+	 */
+	public function clearHandlers($name, $type = null) {
+		$handlers = array();
+		
+		if ($type !== null) {
+			if (isset($this->handlers[$name][$type])) {
+				$handlers = $this->handlers[$name][$type];
+				unset($this->handlers[$name][$type]);
+			}
+		} else {
+			if (isset($this->handlers[$name])) {
+				$handlers = $this->handlers[$name];
+				unset($this->handlers[$name]);
+			}
+		}
+		
+		return $handlers;
+	}
+
+	/**
 	 * Returns all registered handlers as array(
 	 * $name => array(
 	 *     $type => array(
