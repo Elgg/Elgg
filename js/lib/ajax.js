@@ -79,11 +79,30 @@ elgg.ajax.handleOptions = function(url, options) {
 		options = {data: data};
 	}
 
+	if (!elgg.isFunction(options.error)) {
+		// add a generic error handler
+		options.error = function(xhr, status, error) { 
+			elgg.ajax.handleAjaxError(xhr, status, error);
+		};
+	}
+	
 	if (url) {
 		options.url = url;
 	}
 
 	return options;
+};
+
+/**
+ * Handles low level errors like 404
+ *
+ * @param xhr
+ * @param status
+ * @param error
+ * @private
+ */
+elgg.ajax.handleAjaxError = function(xhr, status, error) {
+	elgg.register_error(elgg.echo('ajax:error'));
 };
 
 /**
