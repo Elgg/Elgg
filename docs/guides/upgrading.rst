@@ -12,6 +12,9 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.11 to 2.0
 ================
 
+Breadcrumbs
+-----------
+
 Breadcrumb display now removes the last item if it does not contain a link. To restore the previous behavior,
 replace the plugin hook handler ``elgg_prepare_breadcrumbs`` with your own:
 
@@ -28,6 +31,10 @@ replace the plugin hook handler ``elgg_prepare_breadcrumbs`` with your own:
         return $breadcrumbs;
     }
 
+Plugin Messages
+---------------
+
+Messages will no longer get the metadata 'msg' for newly created messages. This means you can not rely on that metadata to exist.
 
 From 1.10 to 1.11
 =================
