@@ -275,9 +275,6 @@ function messages_send($subject, $body, $recipient_guid, $sender_guid = 0, $orig
 	$message_sent->hiddenFrom = 0; // this is used when a user deletes a message in their sentbox, it is a flag
 	$message_sent->hiddenTo = 0; // this is used when a user deletes a message in their inbox
 
-	$message_to->msg = 1;
-	$message_sent->msg = 1;
-
 	// Save the copy of the message that goes to the recipient
 	$success = $message_to->save();
 
@@ -363,7 +360,7 @@ function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count 
 
 	// denormalize the md to speed things up.
 	// seriously, 10 joins if you don't.
-	$strings = array('toId', $user_guid, 'readYet', 0, 'msg', 1);
+	$strings = array('toId', $user_guid, 'readYet', 0);
 	$map = array();
 	foreach ($strings as $string) {
 		$id = elgg_get_metastring_id($string);
@@ -384,12 +381,10 @@ function messages_get_unread($user_guid = 0, $limit = null, $offset = 0, $count 
 		'joins' => array(
 			"JOIN {$db_prefix}metadata msg_toId on e.guid = msg_toId.entity_guid",
 			"JOIN {$db_prefix}metadata msg_readYet on e.guid = msg_readYet.entity_guid",
-			"JOIN {$db_prefix}metadata msg_msg on e.guid = msg_msg.entity_guid",
 		),
 		'wheres' => array(
 			"msg_toId.name_id='{$map['toId']}' AND msg_toId.value_id='{$map[$user_guid]}'",
 			"msg_readYet.name_id='{$map['readYet']}' AND msg_readYet.value_id='{$map[0]}'",
-			"msg_msg.name_id='{$map['msg']}' AND msg_msg.value_id='{$map[1]}'",
 		),
 		'owner_guid' => $user_guid,
 		'limit' => $limit,
