@@ -296,7 +296,9 @@ elgg.ui.initDatePicker = function() {
 					var id = $(this).attr('id');
 					$('input[name="' + id + '"]').val(timestamp);
 				}
-			}
+			},
+			nextText: '&#xBB;',
+			prevText: '&#xAB;'
 		});
 	}
 
