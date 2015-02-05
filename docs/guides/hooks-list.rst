@@ -260,8 +260,11 @@ Permission hooks
 Views
 =====
 
+**view_vars, <view_name>**
+	Filters the ``$vars`` array passed to the view
+
 **view, <view_name>**
-    Filters the returned content of views
+    Filters the returned content of the view
 
 **layout, page**
     In ``elgg_view_layout()``, filters the layout name
