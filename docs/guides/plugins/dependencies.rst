@@ -144,6 +144,7 @@ Every dependency verb has a mandatory ``<type>`` element that must be one of the
 4. **priority** - A plugin load priority
 5. **php_extension** - A PHP extension
 6. **php_ini** - A PHP setting
+7. **php_version** - A PHP version
 
 .. note::
 
@@ -217,6 +218,17 @@ This checks PHP settings. The following option elements are required:
 The following options are supported, but not required:
 
 - **comparison** - The comparison operator to use. Defaults to ==
+
+php_version
+-----------
+
+This checks the PHP version. The following option elements are required:
+
+- **version** - The PHP version
+
+The following option element is supported, but not required:
+
+- **comparison** - The comparison operator to use. Defaults to >= if not passed
 
 Comparison Operators
 ====================
@@ -298,6 +310,17 @@ Requires at least 256 MB memory in PHP
       <name>memory_limit</name>
       <value>256M</value>
       <comparison>ge</comparison>
+   </requires>
+
+
+Requires at least PHP version 5.3
+---------------------------------
+
+.. code:: xml
+
+   <requires>
+      <type>php_version</type>
+      <version>5.3</version>
    </requires>
 
 Suggest the TidyPics plugin is loaded
