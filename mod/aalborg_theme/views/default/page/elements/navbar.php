@@ -9,7 +9,7 @@ echo elgg_view('core/account/login_dropdown');
 
 ?>
 
-<a class="elgg-button-nav" rel="toggle" href=".elgg-nav-collapse">
+<a class="elgg-button-nav" rel="toggle" data-toggle-selector=".elgg-nav-collapse" href="#">
 	<span class="icon-bar"></span>
 	<span class="icon-bar"></span>
 	<span class="icon-bar"></span>
