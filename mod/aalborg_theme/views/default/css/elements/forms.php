@@ -281,7 +281,6 @@ select {
 	display: none;
 
 	margin-top: 3px;
-	width: 208px;
 	background-color: #FFF;
 	border: 1px solid #0054A7;
 	border-radius: 3px;
@@ -304,14 +303,21 @@ select {
 }
 .ui-datepicker-prev, .ui-datepicker-next {
 	position: absolute;
-	top: 5px;
+	top: 3px;
 	cursor: pointer;
+	border: 1px solid #fff;
+	border-radius: 3px;
+	padding: 1px 7px;
+}
+.ui-datepicker-prev:hover,
+.ui-datepicker-next:hover {
+	text-decoration: none;
 }
 .ui-datepicker-prev {
-	left: 6px;
+	left: 3px;
 }
 .ui-datepicker-next {
-	right: 6px;
+	right: 3px;
 }
 .ui-datepicker-title {
 	line-height: 1.8em;
