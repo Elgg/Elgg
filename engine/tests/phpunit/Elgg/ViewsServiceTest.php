@@ -3,7 +3,17 @@ namespace Elgg;
 
 
 class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
-	
+
+	/**
+	 * @var \Elgg\PluginHooksService
+	 */
+	protected $hooks;
+
+	/**
+	 * @var \Elgg\ViewsService
+	 */
+	protected $views;
+
 	public function setUp() {
 		$this->viewsDir = dirname(dirname(__FILE__)) . "/test_files/views";
 		
@@ -36,7 +46,9 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testUsesPhpToRenderNonStaticViews() {
-		$this->assertEquals("// PHP", $this->views->renderView('js/interpreted.js'));
+		$this->assertEquals("// PHPin", $this->views->renderView('js/interpreted.js', array(
+			'in' => 'in',
+		)));
 	}
 	
 	public function testDoesNotUsePhpToRenderStaticViews() {
@@ -69,6 +81,14 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testStaticViewsAreAlwaysCacheable() {
 		$this->assertTrue($this->views->isCacheableView('js/static.js'));
+	}
+
+	public function testCanAlterViewOutput() {
+		$this->hooks->registerHandler('view', 'js/interpreted.js', function ($h, $t, $v, $p) {
+			return '// Hello';
+		});
+
+		$this->assertEquals("// Hello", $this->views->renderView('js/interpreted.js'));
 	}
 }
 
