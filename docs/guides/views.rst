@@ -94,6 +94,7 @@ Without modifying Elgg's core, Elgg provides several ways to customize almost al
 
 * You can `override a view <#overriding-views>`_, completely changing the file used to render it.
 * You can `extend a view <#extending-views>`_ by prepending or appending the output of another view to it.
+* You can `alter a view's inputs <#altering-view-input>`_ by plugin hook.
 * You can `alter a view's output <#altering-view-output>`_ by plugin hook.
 
 Overriding views
@@ -166,6 +167,36 @@ Note that if you extend the core css view like this:
 	elgg_extend_view('css', 'custom/css');
 
 You **must** do so within code that is executed by engine/start.php (normally this would mean your plugin's init code).  Because the core css view is loaded separately via a ``<link>`` tag, any extensions you add will not have the same context as the rest of your page.
+
+.. _guides/views#altering-view-input:
+
+Altering view input
+-------------------
+
+It may be useful to alter a view's ``$vars`` array before it's rendered.
+
+Since 1.11, before each view rendering the ``$vars`` array is filtered by the :ref:`plugin hook <guides/hooks-list#views>` ``[view_vars, view_name]``. Each registered handler function is passed these arguments:
+
+* ``$hook`` - the string ``"view_vars"``
+* ``$type`` - the view name being rendered (the first argument passed to ``elgg_view()``)
+* ``$returnvalue`` - the ``$vars`` array
+* ``$params`` - an array containing: the unaltered ``$vars`` under the key ``vars``; :ref:`viewtype <guides/views#viewtypes>` being rendered under the key ``viewtype``; the view name under the key ``view``.
+
+Altering view input example
+---------------------------
+
+Here we'll alter the default pagination limit for the comments view:
+
+.. code-block:: php
+
+	// inside myplugin_init()
+	elgg_register_plugin_hook_handler('view_vars', 'page/elements/comments', 'myplugin_alter_comments_limit');
+
+	function myplugin_alter_comments_limit($hook, $type, $vars, $params) {
+	    // only 10 comments per page
+	    $vars['limit'] = elgg_extract('limit', $vars, 10);
+	    return $vars;
+	}
 
 .. _guides/views#altering-view-output:
 

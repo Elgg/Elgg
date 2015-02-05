@@ -225,6 +225,14 @@ class ViewsService {
 			$viewtype = elgg_get_viewtype();
 		}
 
+		// allow altering $vars
+		$vars_hook_params = [
+			'view' => $view,
+			'vars' => $vars,
+			'viewtype' => $viewtype,
+		];
+		$vars = $this->hooks->trigger('view_vars', $view, $vars_hook_params, $vars);
+
 		$view_orig = $view;
 
 		// Trigger the pagesetup event

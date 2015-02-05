@@ -83,6 +83,15 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->views->isCacheableView('js/static.js'));
 	}
 
+	public function testCanAlterViewInput() {
+		$this->hooks->registerHandler('view_vars', 'js/interpreted.js', function ($h, $t, $v, $p) {
+			$v['in'] = 'out';
+			return $v;
+		});
+
+		$this->assertEquals("// PHPout", $this->views->renderView('js/interpreted.js'));
+	}
+
 	public function testCanAlterViewOutput() {
 		$this->hooks->registerHandler('view', 'js/interpreted.js', function ($h, $t, $v, $p) {
 			return '// Hello';
