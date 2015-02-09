@@ -44,8 +44,7 @@ $checkbox = elgg_view('input/checkbox', array(
 	'default' => false
 ));
 
-$list_body = elgg_view_image_block($icon, $text, array(
-	'image_alt' => $menu,
+$list_body = elgg_view_image_block($icon, $menu . $text, array(
 	'class' => 'pvn'
 ));
 
