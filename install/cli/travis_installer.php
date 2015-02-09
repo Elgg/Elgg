@@ -31,6 +31,7 @@ $params = array(
 	'dbuser' => 'root',
 	'dbpassword' => 'password',
 	'dbname' => 'elgg',
+	'dbprefix' => 't_i_elgg_',
 
 	// site settings
 	'sitename' => 'Elgg Travis Site',
