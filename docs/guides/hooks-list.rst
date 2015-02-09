@@ -453,6 +453,9 @@ Other
 **robots.txt, site**
 	Filter the robots.txt values for ``$params['site']``.
 
+**config, amd**
+	Change the AMD config for the requirejs library.
+
 Plugins
 =======
 

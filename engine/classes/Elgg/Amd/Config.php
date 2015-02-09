@@ -226,11 +226,13 @@ class Config {
 	 * @return array
 	 */
 	public function getConfig() {
-		return array(
+		$defaults = array(
 			'baseUrl' => $this->baseUrl,
 			'paths' => $this->paths,
 			'shim' => $this->shim,
 			'deps' => $this->getDependencies(),
 		);
+		
+		return elgg_trigger_plugin_hook('config', 'amd', array('defaults' => $defaults), $defaults);
 	}
 }
