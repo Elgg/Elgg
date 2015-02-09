@@ -13,17 +13,18 @@
  *
  * @param string $string Comma-separated tag string
  *
- * @return array|false An array of strings, or false on failure
+ * @return mixed An array of strings or the original data if input was not a string
  */
 function string_to_tag_array($string) {
-	if (is_string($string)) {
-		$ar = explode(",", $string);
-		$ar = array_map('trim', $ar);
-		$ar = array_filter($ar, 'is_not_null');
-		$ar = array_map('strip_tags', $ar);
-		return $ar;
+	if (!is_string($string)) {
+		return $string;
 	}
-	return false;
+	
+	$ar = explode(",", $string);
+	$ar = array_map('trim', $ar);
+	$ar = array_filter($ar, 'is_not_null');
+	$ar = array_map('strip_tags', $ar);
+	return $ar;	
 }
 
 /**
