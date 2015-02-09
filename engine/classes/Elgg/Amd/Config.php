@@ -231,8 +231,13 @@ class Config {
 			'paths' => $this->paths,
 			'shim' => $this->shim,
 			'deps' => $this->getDependencies(),
+			'waitSeconds' => 20,
 		);
 		
-		return elgg_trigger_plugin_hook('config', 'amd', array('defaults' => $defaults), $defaults);
+		$params = array(
+			'defaults' => $defaults
+		);
+		
+		return elgg_trigger_plugin_hook('config', 'amd', $params, $defaults);
 	}
 }
