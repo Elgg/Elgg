@@ -1,26 +1,26 @@
-Page handler
-============
+Controlador de pàgina
+=====================
 
-Elgg offers a facility to manage your plugin pages via a page handler, enabling custom urls like ``http://yoursite/your_plugin/section``. To add a page handler to a plugin, a handler function needs to be registered in the plugin's ``start.php`` file with ``elgg_register_page_handler()``:
+Elgg facilita la gestió de les pàgines dels complements mitjançant un controlador de pàgina, habilitant enllaços personalitzats com ``http://elteulloc/el_teu_complement/apartat``. Per afegir un controlador de pàgina en un complement, cal registrar la funció del controlador ``elgg_register_page_handler()`` a l'arxiu ``start.php`` del complement:
 
 .. code:: php
    
-   elgg_register_page_handler('your_plugin', 'your_plugin_page_handler');
+   elgg_register_page_handler('el_teu_complement', 'controlador_de_pàgina_del_complement');
    
-The plugin's page handler is passed two parameters: 
+El controlador de pàgina del complement passa dos paràmetres: 
 
-- an array containing the sections of the URL exploded by '/'. With this information the handler will be able to apply any logic necessary, for example loading the appropriate view and returning its contents.
-- the handler, this is the handler that is currently used (in our example ``your_plugin``). If you don't register multiple page handlers to the same function you'll never need this.
+- una matriu que conté les seccions de la URL ha detonat al pas '/'. Amb aquesta informació el controlador serà capaç d'aplicar qualsevol lògica necessària, per exemple, carregar la vista apropiada i retornar el seu contingut.
+- el controlador, aquest és el controlador que s'utilitza actualment (en l'exemple ``el_teu_complement``). Si no es registren diversos controladors de pàgina per a la mateixa funció, mai necessitaràs això.
 
-Code flow
+Flux de codi
 ---------
 
-Pages in plugins should be served only through page handlers, stored in ``pages/`` of your plugin's directory and do not need to ``include`` or ``require`` Elgg's ``engine/start.php`` file. The purpose of these files are to knit together output from different views to form the page that the user sees. The program flow is something like this:
+Les pàgines en complements s'han d'utilitzar tan sols a través dels controladors de la pàgina, desades al directori ``pages/`` del complement i no són necessàries als arxius ``include`` o ``require`` o ``engine/start.php``. El propòsit d'aquests arxius és generar junts la sortida des de diferents punts de vista per formar la pàgina que l'usuari veu. El flux del programa és alguna cosa com això:
 
-1. A user requests ``/plugin_name/section/entity``
-2. Elgg checks if ``plugin_name`` is registered to a page handler and calls that function, passing ``array('section', 'entity')`` as the first argument
-3. The page handler function determines which page to display, optionally sets some values, and then includes the correct page under ``plugin_name/pages/plugin_name/``
-4. The included file combines many separate views, calls formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()``, and then echos the final output
-5. The user sees a fully rendered page
+1. Un usuari/a sol·licita ``/nom_complement/apartat/entitat``
+2. Elgg verifica si ``nom_complement`` està registrat en un controlador de pàgina i crida la funció, passa ``array('apartat', 'entitat')`` com a primer argument
+3. La funció del controlador de pàgina determina quina pàgina s'ha de mostrar, estableix opcionalment alguns valors, i després inclou la pàgina correcta sota ``nom_complement/pages/nom_complement/``
+4. L'arxiu inclòs combina molts punts de vista diferents, crida format de funcions com ``elgg_view_layout()`` i ``elgg_view_page()``, i després mostra la sortida final
+5. L'usuari veu una pàgina totalment acabada
 
-There is no syntax enforced on the URLs, but Elgg's coding standards suggests a certain format.
+No hi ha sintaxi forçada a les adreces URL, però els estàndards de codificació d'Elgg suggereix un format determinat.
