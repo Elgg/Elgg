@@ -405,7 +405,10 @@ class ViewsService {
 	 */
 	public function viewExists($view, $viewtype = '', $recurse = true) {
 		
-
+		if (empty($view) || !is_string($view)) {
+			return false;
+		}
+		
 		// Detect view type
 		if ($viewtype === '' || !_elgg_is_valid_viewtype($viewtype)) {
 			$viewtype = elgg_get_viewtype();
