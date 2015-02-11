@@ -43,7 +43,10 @@ function developers_process_settings() {
 		$cache = new ElggLogCache();
 		elgg_set_config('log_cache', $cache);
 		elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
-		elgg_extend_view('page/elements/foot', 'developers/log');
+		elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params) {
+			$vars['body'] .= elgg_view('developers/log');
+			return $vars;
+		});
 	}
 
 	if (elgg_get_plugin_setting('show_strings', 'developers') == 1) {
