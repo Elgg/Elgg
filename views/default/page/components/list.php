@@ -19,12 +19,8 @@
  */
 
 $items = $vars['items'];
-$offset = elgg_extract('offset', $vars);
-$limit = elgg_extract('limit', $vars);
 $count = elgg_extract('count', $vars);
-$base_url = elgg_extract('base_url', $vars, '');
 $pagination = elgg_extract('pagination', $vars, true);
-$offset_key = elgg_extract('offset_key', $vars, 'offset');
 $position = elgg_extract('position', $vars, 'after');
 $no_results = elgg_extract('no_results', $vars, '');
 
@@ -52,17 +48,7 @@ if (isset($vars['item_class'])) {
 }
 
 $html = "";
-$nav = "";
-
-if ($pagination && $count) {
-	$nav .= elgg_view('navigation/pagination', array(
-		'base_url' => $base_url,
-		'offset' => $offset,
-		'count' => $count,
-		'limit' => $limit,
-		'offset_key' => $offset_key,
-	));
-}
+$nav = ($pagination) ? elgg_view('navigation/pagination', $vars) : '';
 
 $html .= "<ul class=\"$list_class\">";
 foreach ($items as $item) {
