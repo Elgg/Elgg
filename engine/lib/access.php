@@ -509,7 +509,16 @@ function get_readable_access_level($entity_access_id) {
 	if (array_key_exists($access, $write_access_array)) {
 		return $write_access_array[$access];
 	}
-
+	
+	// Still here? Probably requesting a custom acl not from the logged in user.
+	// Admins should be able to see the readable version
+	if (elgg_is_admin_logged_in()) {
+		$collection = _elgg_services()->accessCollections->get($access);
+		if ($collection) {
+			return $collection->name;
+		}
+	}
+	
 	// return 'Limited' if the user does not have access to the access collection
 	return $translator->translate('access:limited:label');
 }
