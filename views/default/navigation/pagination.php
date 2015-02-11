@@ -17,13 +17,17 @@ if (elgg_in_context('widget')) {
 	return true;
 }
 
+$count = (int) elgg_extract('count', $vars, 0);
+if (!$count) {
+	return true;
+}
+
 $offset = abs((int) elgg_extract('offset', $vars, 0));
 // because you can say $vars['limit'] = 0
 if (!$limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'))) {
 	$limit = 10;
 }
 
-$count = (int) elgg_extract('count', $vars, 0);
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
 // some views pass an empty string for base_url
 if (isset($vars['base_url']) && $vars['base_url']) {

@@ -18,12 +18,8 @@
  */
 
 $items = $vars['items'];
-$offset = $vars['offset'];
-$limit = $vars['limit'];
 $count = $vars['count'];
-$base_url = elgg_extract('base_url', $vars, '');
 $pagination = elgg_extract('pagination', $vars, true);
-$offset_key = elgg_extract('offset_key', $vars, 'offset');
 $position = elgg_extract('position', $vars, 'after');
 $no_results = elgg_extract('no_results', $vars, '');
 
@@ -52,16 +48,7 @@ if (isset($vars['item_class'])) {
 	$item_class = "$item_class {$vars['item_class']}";
 }
 
-$nav = '';
-if ($pagination && $count) {
-	$nav .= elgg_view('navigation/pagination', array(
-		'base_url' => $base_url,
-		'offset' => $offset,
-		'count' => $count,
-		'limit' => $limit,
-		'offset_key' => $offset_key,
-	));
-}
+$nav = ($pagination) ? elgg_view('navigation/pagination', $vars) : '';
 
 if ($position == 'before' || $position == 'both') {
 	echo $nav;
