@@ -446,14 +446,16 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	$messages = null;
 	if ($system_messages->count()) {
-		// get messages - try for errors first
-		$messages = $system_messages->dumpRegister('error');
-		if (count($messages["error"]) == 0) {
-			// no errors so grab rest of messages
-			$messages = $system_messages->dumpRegister();
-		} else {
-			// we have errors - clear out remaining messages
-			$system_messages->dumpRegister();
+		$messages = $system_messages->dumpRegister();
+		
+		if (isset($messages['error'])) {
+			// always make sure error is the first type
+			$errors = array(
+				'error' => $messages['error']
+			);
+			
+			unset($messages['error']);
+			$messages = array_merge($errors, $messages);
 		}
 	}
 
