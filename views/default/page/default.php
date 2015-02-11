@@ -39,17 +39,8 @@ $body = <<<__BODY
 	</div>
 __BODY;
 
-if (elgg_is_logged_in()) {
-	$topbar = elgg_view('page/elements/topbar', $vars);
+$body .= elgg_view('page/elements/topbar_wrapper', $vars);
 
-	$body .= <<<__BODY
-	<div class="elgg-page-topbar">
-		<div class="elgg-inner">
-			$topbar
-		</div>
-	</div>
-__BODY;
-}	
 $body .= <<<__BODY
 	<div class="elgg-page-header">
 		<div class="elgg-inner">
