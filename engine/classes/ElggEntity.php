@@ -1388,12 +1388,18 @@ abstract class ElggEntity extends \ElggData implements
 	 * Plugins can register for the 'entity:icon:url', <type> plugin hook
 	 * to customize the icon for an entity.
 	 *
-	 * @param string $size Size of the icon: tiny, small, medium, large
-	 *
+	 * @param mixed $params A string defining the size of the icon (e.g. tiny, small, medium, large)
+	 *                      or an array of parameters including 'size'
 	 * @return string The URL
 	 * @since 1.8.0
 	 */
-	public function getIconURL($size = 'medium') {
+	public function getIconURL($params = array()) {
+		if (is_array($params)) {
+			$size = elgg_extract('size', $params, 'medium');
+		} else {	
+			$size = is_string($params) ? $params : 'medium';
+			$params = array();
+		}
 		$size = elgg_strtolower($size);
 
 		if (isset($this->icon_override[$size])) {
@@ -1401,11 +1407,10 @@ abstract class ElggEntity extends \ElggData implements
 			return $this->icon_override[$size];
 		}
 
+		$params['entity'] = $this;
+		$params['size'] = $size;
+
 		$type = $this->getType();
-		$params = array(
-			'entity' => $this,
-			'size' => $size,
-		);
 
 		$url = _elgg_services()->hooks->trigger('entity:icon:url', $type, $params, null);
 		if ($url == null) {

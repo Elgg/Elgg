@@ -262,4 +262,24 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 			$this->assertEqual(array_merge($md, $md2), $obj->$name);
 		}
 	}
+
+	public function testElggEntityGetIconURL() {
+
+		elgg_register_plugin_hook_handler('entity:icon:url', 'object', function ($hook, $type, $url, $params) {
+			$size = (string) elgg_extract('size', $params);
+			return "$size.jpg";
+		}, 99999);
+
+		$obj = new \ElggObject();
+		$obj->save();
+
+		// Test default size
+		$this->assertEqual($obj->getIconURL(), elgg_normalize_url('medium.jpg'));
+		// Test size
+		$this->assertEqual($obj->getIconURL('small'), elgg_normalize_url('small.jpg'));
+		// Test mixed params
+		$this->assertEqual($obj->getIconURL('small'), $obj->getIconURL(array('size' => 'small')));
+		// Test bad param
+		$this->assertEqual($obj->getIconURL(new \stdClass), elgg_normalize_url('medium.jpg'));
+	}
 }
