@@ -97,14 +97,16 @@ function elgg_get_viewtype() {
 
 	$viewtype = get_input('view', '', false);
 	if (_elgg_is_valid_viewtype($viewtype)) {
-		return $viewtype;
+		$CURRENT_SYSTEM_VIEWTYPE = $viewtype;
+		return $CURRENT_SYSTEM_VIEWTYPE;
 	}
 
 	if (isset($CONFIG->view) && _elgg_is_valid_viewtype($CONFIG->view)) {
-		return $CONFIG->view;
+		$CURRENT_SYSTEM_VIEWTYPE = $CONFIG->view;
+		return $CURRENT_SYSTEM_VIEWTYPE;
 	}
-
-	return 'default';
+	$CURRENT_SYSTEM_VIEWTYPE = 'default';
+	return $CURRENT_SYSTEM_VIEWTYPE;
 }
 
 /**
