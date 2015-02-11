@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gallery view
  *
@@ -16,9 +17,8 @@
  * @uses $vars['item_view']     Alternative view to render list items
  * @uses $vars['no_results']    Message to display if no results (string|Closure)
  */
-
 $items = $vars['items'];
-$count = $vars['count'];
+$count = elgg_extract('count', $vars);
 $pagination = elgg_extract('pagination', $vars, true);
 $position = elgg_extract('position', $vars, 'after');
 $no_results = elgg_extract('no_results', $vars, '');
@@ -38,39 +38,42 @@ if (!is_array($items) || count($items) == 0) {
 
 elgg_push_context('gallery');
 
-$gallery_class = 'elgg-gallery';
+$list_classes = ['elgg-gallery'];
 if (isset($vars['gallery_class'])) {
-	$gallery_class = "$gallery_class {$vars['gallery_class']}";
+	$list_classes[] = $vars['gallery_class'];
 }
 
-$item_class = 'elgg-item';
+$item_classes = ['elgg-item'];
 if (isset($vars['item_class'])) {
-	$item_class = "$item_class {$vars['item_class']}";
+	$item_classes[] = $vars['item_class'];
 }
 
 $nav = ($pagination) ? elgg_view('navigation/pagination', $vars) : '';
+
+$list_items = '';
+foreach ($items as $item) {
+	$item_view = elgg_view_list_item($item, $vars);
+	if (!$item_view) {
+		continue;
+	}
+
+	$li_attrs = ['class' => $item_classes];
+
+	if ($item instanceof \ElggEntity) {
+		$li_attrs['id'] = "elgg-{$item->getType()}-{$item->getGUID()}";
+	} else if (is_callable(array($item, 'getType'))) {
+		$li_attrs['id'] = "item-{$item->getType()}-{$item->id}";
+	}
+
+	$list_items .= elgg_format_element('li', $li_attrs, $item_view);
+}
 
 if ($position == 'before' || $position == 'both') {
 	echo $nav;
 }
 
-?>
-<ul class="<?php echo $gallery_class; ?>">
-	<?php
-		foreach ($items as $item) {
-			if (elgg_instanceof($item)) {
-			$id = "elgg-{$item->getType()}-{$item->getGUID()}";
-			} else {
-				$id = "item-{$item->getType()}-{$item->id}";
-			}
-			echo "<li id=\"$id\" class=\"$item_class\">";
-			echo elgg_view_list_item($item, $vars);
-			echo "</li>";
-		}
-	?>
-</ul>
+echo elgg_format_element('ul', ['class' => $list_classes], $list_items);
 
-<?php
 if ($position == 'after' || $position == 'both') {
 	echo $nav;
 }
