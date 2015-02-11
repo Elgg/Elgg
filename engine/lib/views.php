@@ -1340,22 +1340,20 @@ function elgg_view_tagcloud(array $options = array()) {
 /**
  * View an item in a list
  *
- * @param \ElggEntity|\ElggAnnotation $item
- * @param array  $vars Additional parameters for the rendering
+ * @param mixed $item An entity, an annotation, or a river item to display
+ * @param array $vars Additional parameters for the rendering
  *
  * @return string
  * @since 1.8.0
  * @access private
  */
 function elgg_view_list_item($item, array $vars = array()) {
-	global $CONFIG;
-
-	$type = $item->getType();
-	if (in_array($type, $CONFIG->entity_types)) {
+	
+	if ($item instanceof \ElggEntity) {
 		return elgg_view_entity($item, $vars);
-	} else if ($type == 'annotation') {
+	} else if ($item instanceof \ElggAnnotation) {
 		return elgg_view_annotation($item, $vars);
-	} else if ($type == 'river') {
+	} else if ($item instanceof \ElggRiverItem) {
 		return elgg_view_river_item($item, $vars);
 	}
 
