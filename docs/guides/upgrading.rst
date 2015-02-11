@@ -540,6 +540,13 @@ The metadata ``$entity->view`` no longer specifies the view used to render in ``
 
 Similarly the property ``$annotation->view`` no longer has an effect within ``elgg_view_annotation()``.
 
+Viewtype is static after the initial ``elgg_get_viewtype()`` call
+-----------------------------------------------------------------
+
+``elgg_set_viewtype()`` must be used to set the viewtype at runtime. Although Elgg still checks the
+``view`` input and ``$CONFIG->view`` initially, this is only done once per request.
+
+
 From 1.10 to 1.11
 =================
 

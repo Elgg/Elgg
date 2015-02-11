@@ -89,11 +89,24 @@ function elgg_set_viewtype($viewtype = "") {
  * @see elgg_set_viewtype()
  */
 function elgg_get_viewtype() {
-	global $CURRENT_SYSTEM_VIEWTYPE, $CONFIG;
+	global $CURRENT_SYSTEM_VIEWTYPE;
 
-	if ($CURRENT_SYSTEM_VIEWTYPE != "") {
-		return $CURRENT_SYSTEM_VIEWTYPE;
+	if (empty($CURRENT_SYSTEM_VIEWTYPE)) {
+		$CURRENT_SYSTEM_VIEWTYPE = _elgg_get_initial_viewtype();
 	}
+
+	return $CURRENT_SYSTEM_VIEWTYPE;
+}
+
+/**
+ * Get the initial viewtype
+ *
+ * @return string
+ * @access private
+ * @since 2.0.0
+ */
+function _elgg_get_initial_viewtype() {
+	global $CONFIG;
 
 	$viewtype = get_input('view', '', false);
 	if (_elgg_is_valid_viewtype($viewtype)) {
