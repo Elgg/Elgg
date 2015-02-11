@@ -13,12 +13,6 @@
 	<license>GNU General Public License version 2</license>
 
 	<requires>
-		<type>elgg_version</type>
-		<version>3009030802</version>
-		<comparison>lt</comparison>
-	</requires>
-
-	<requires>
 		<type>elgg_release</type>
 		<version>1.8-svn</version>
 	</requires>

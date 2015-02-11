@@ -41,19 +41,10 @@ Requires
 
 Using a ``requires`` dependency means that the plugin cannot be enabled unless the dependency is exactly met.
 
-Mandatory requires: elgg_version and elgg_release
+Mandatory requires: elgg_release
 -------------------------------------------------
 
-Every plugin must have at least one requires: the version of Elgg the plugin is developed for. This is specified either by the Elgg API ``version`` (2011010401) or the ``release`` (1.8). The default comparison ``>=``, but you can specify your own by passing the ``<comparison>`` element.
-
-Using elgg_version:
-
-.. code:: xml
-
-   <requires>
-      <type>elgg_version</type>
-      <version>2011010401</version>
-   </requires>
+Every plugin must have at least one requires: the version of Elgg the plugin is developed for. This is specified by the Elgg API ``release`` (1.8). The default comparison ``>=``, but you can specify your own by passing the ``<comparison>`` element.
 
 Using elgg_release:
 
@@ -104,13 +95,13 @@ Conflict with any version of the profile plugin:
       <name>profile</name>
    </conflicts>
 
-Conflict with a specific version of Elgg:
+Conflict with a specific release of Elgg:
 
 .. code:: xml
 
    <conflicts>
-      <type>elgg_version</type>
-      <version>2010112301</version>
+      <type>elgg_release</type>
+      <version>1.8</version>
       <comparison>==</comparison>
    </conflicts>
 
@@ -138,12 +129,11 @@ Types
 
 Every dependency verb has a mandatory ``<type>`` element that must be one of the following six values:
 
-1. **elgg_version** - The API version of Elgg (2011010401)
-2. **elgg_release** - The release version of Elgg (1.8)
-3. **plugin** - An Elgg plugin
-4. **priority** - A plugin load priority
-5. **php_extension** - A PHP extension
-6. **php_ini** - A PHP setting
+1. **elgg_release** - The release version of Elgg (1.8)
+2. **plugin** - An Elgg plugin
+3. **priority** - A plugin load priority
+4. **php_extension** - A PHP extension
+5. **php_ini** - A PHP setting
 
 .. note::
 
@@ -159,8 +149,8 @@ Every type is defined with a dependency verb as the parent element. Additional o
       <option_2>value_2</option_2>
    </verb>
 
-elgg_version and elgg_release
------------------------------
+elgg_release
+------------
 
 These concern the API and release versions of Elgg and requires the following option element:
 
@@ -234,7 +224,7 @@ The follow are valid comparison operators:
 
 If ``<comparison>`` is not passed, the follow are used as defaults, depending upon the dependency type:
 
-- requires->elgg_version and elgg_release: >=
+- requires->elgg_release: >=
 - requires->plugin: >=
 - requires->php_extension: =
 - requires->php_ini: =
