@@ -2,6 +2,34 @@
 -- Elgg database schema
 --
 
+-- list types (replaces relationship name)
+CREATE TABLE `prefix_list_types` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type` varchar(255) NOT NULL DEFAULT '',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx_type` (`type`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- lists are ordered GUIDs identified by /GUID/type. e.g. /123/members
+CREATE TABLE `prefix_lists` (
+  `id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `type_id` int(11) NOT NULL,
+  `target_guid` bigint(20) unsigned NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `idx` (`type_id`,`target_guid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- items in lists (item can be in a single list no more than once)
+CREATE TABLE `prefix_list_items` (
+  `position` int(11) unsigned NOT NULL AUTO_INCREMENT,
+  `list_id` int(11) unsigned NOT NULL,
+  `item_guid` bigint(20) unsigned NOT NULL,
+  `weight` float NOT NULL DEFAULT 1.0,
+  `time_added` int(11) unsigned DEFAULT NULL,
+  PRIMARY KEY (`position`),
+  KEY `idx` (`list_id`,`item_guid`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 -- record membership in an access collection
 CREATE TABLE `prefix_access_collection_membership` (
   `user_guid` int(11) NOT NULL,
@@ -90,17 +118,7 @@ CREATE TABLE `prefix_entities` (
 ) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 -- relationships between entities
-CREATE TABLE `prefix_entity_relationships` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `guid_one` bigint(20) unsigned NOT NULL,
-  `relationship` varchar(50) NOT NULL,
-  `guid_two` bigint(20) unsigned NOT NULL,
-  `time_created` int(11) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `guid_one` (`guid_one`,`relationship`,`guid_two`),
-  KEY `relationship` (`relationship`),
-  KEY `guid_two` (`guid_two`)
-) ENGINE=MyISAM AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
+-- migrated to lists
 
 -- entity type/subtype pairs
 CREATE TABLE `prefix_entity_subtypes` (
