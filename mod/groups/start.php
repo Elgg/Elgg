@@ -234,9 +234,9 @@ function groups_setup_sidebar_menus() {
 			elgg_register_menu_item('page', $item);
 
 			$url = "groups/invitations/$user->username";
-			$invitations = groups_get_invited_groups($user->getGUID());
-			if (is_array($invitations) && !empty($invitations)) {
-				$invitation_count = count($invitations);
+			$invitation_count = groups_get_invited_groups($user->getGUID(), false, array('count' => true));
+			
+			if ($invitation_count) {
 				$text = elgg_echo('groups:invitations:pending', array($invitation_count));
 			} else {
 				$text = elgg_echo('groups:invitations');
@@ -687,19 +687,26 @@ function groups_access_default_override($hook, $type, $access) {
  * Grabs groups by invitations
  * Have to override all access until there's a way override access to getter functions.
  *
- * @param int  $user_guid    The user's guid
- * @param bool $return_guids Return guids rather than ElggGroup objects
+ * @param int   $user_guid    The user's guid
+ * @param bool  $return_guids Return guids rather than ElggGroup objects
+ * @param array $options      Additional options
  *
- * @return array ElggGroups or guids depending on $return_guids
+ * @return mixed ElggGroups or guids depending on $return_guids, or count
  */
-function groups_get_invited_groups($user_guid, $return_guids = FALSE) {
-	$ia = elgg_set_ignore_access(TRUE);
-	$groups = elgg_get_entities_from_relationship(array(
+function groups_get_invited_groups($user_guid, $return_guids = false, $options = array()) {
+	
+	$ia = elgg_set_ignore_access(true);
+
+	$defaults = array(
 		'relationship' => 'invited',
-		'relationship_guid' => $user_guid,
-		'inverse_relationship' => TRUE,
+		'relationship_guid' => (int) $user_guid,
+		'inverse_relationship' => true,
 		'limit' => 0,
-	));
+	);
+
+	$options = array_merge($defaults, $options);
+	$groups = elgg_get_entities_from_relationship($options);
+	
 	elgg_set_ignore_access($ia);
 
 	if ($return_guids) {
