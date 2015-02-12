@@ -309,12 +309,14 @@ class Translator {
 		$this->reloadAllTranslations();
 	
 		$installed = array();
+		
+		$admin_logged_in = _elgg_services()->session->isAdminLoggedIn();
 	
 		foreach ($this->CONFIG->translations as $k => $v) {
 			$installed[$k] = $this->translate($k, array(), $k);
-			if (_elgg_services()->session->isAdminLoggedIn()) {
+			if ($admin_logged_in && ($k != 'en')) {
 				$completeness = $this->getLanguageCompleteness($k);
-				if (($completeness < 100) && ($k != 'en')) {
+				if ($completeness < 100) {
 					$installed[$k] .= " (" . $completeness . "% " . $this->translate('complete') . ")";
 				}
 			}
