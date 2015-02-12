@@ -309,6 +309,11 @@ function _elgg_clean_vars(array $vars = array()) {
  * @return string The absolute url
  */
 function elgg_normalize_url($url) {
+	static $site_url;
+	if (!isset($site_url)) {
+		$site_url = elgg_get_site_url();
+	}
+	
 	// see https://bugs.php.net/bug.php?id=51192
 	// from the bookmarks save action.
 	$php_5_2_13_and_below = version_compare(PHP_VERSION, '5.2.14', '<');
@@ -343,7 +348,7 @@ function elgg_normalize_url($url) {
 
 	} elseif (preg_match("#^[^/]*\.php(\?.*)?$#i", $url)) {
 		// 'install.php', 'install.php?step=step'
-		return elgg_get_site_url() . $url;
+		return $site_url . $url;
 
 	} elseif (preg_match("#^[^/?]*\.#i", $url)) {
 		// 'example.com', 'example.com/subpage'
@@ -354,7 +359,7 @@ function elgg_normalize_url($url) {
 
 		// trim off any leading / because the site URL is stored
 		// with a trailing /
-		return elgg_get_site_url() . ltrim($url, '/');
+		return $site_url . ltrim($url, '/');
 	}
 }
 
