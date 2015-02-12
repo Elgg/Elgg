@@ -36,7 +36,12 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 		// Unextending non-existent extension "fails."
 		$this->assertFalse($this->views->unextendView('foo', 'bar'));
 	}
-		
+
+	public function testViewCanOnlyExistIfString() {
+		$this->assertFalse($this->views->viewExists(1));
+		$this->assertFalse($this->views->viewExists(new \stdClass));
+	}
+
 	public function testRegistersPhpFilesAsViews() {
 		$this->assertTrue($this->views->viewExists('js/interpreted.js'));
 	}
