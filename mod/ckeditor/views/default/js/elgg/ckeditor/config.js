@@ -2,7 +2,7 @@ define(function(require) {
 	var elgg = require('elgg');
 	var $ = require('jquery');
 
-	return {
+	var config = {
 		toolbar: [['Bold', 'Italic', 'Underline', 'RemoveFormat'], ['Strike', 'NumberedList', 'BulletedList', 'Undo', 'Redo', 'Link', 'Unlink', 'Image', 'Blockquote', 'Paste', 'PasteFromWord', 'Maximize']],
 		removeButtons: 'Subscript,Superscript', // To have Underline back
 		allowedContent: true,
@@ -19,4 +19,8 @@ define(function(require) {
 		removeDialogTabs: 'image:advanced;image:Link;link:advanced;link:target',
 		autoGrow_maxHeight: $(window).height() - 100
 	};
+
+	config = elgg.trigger_hook('config', 'ckeditor', config, config);
+
+	return config;
 });
