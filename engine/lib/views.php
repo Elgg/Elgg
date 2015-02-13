@@ -1365,20 +1365,42 @@ function elgg_view_list_item($item, array $vars = array()) {
  *
  * Shorthand for <span class="elgg-icon elgg-icon-$name"></span>
  *
- * @param string $name  The specific icon to display
- * @param string $class Additional class: float, float-alt, or custom class
+ * @param string $name The specific icon to display
+ * @param mixed  $vars The additional classname as a string ('float', 'float-alt' or a custom class) 
+ *                     or an array of variables (array('class' => 'float')) to pass to the icon view.
  *
  * @return string The html for displaying an icon
+ * @throws InvalidArgumentException
  */
-function elgg_view_icon($name, $class = '') {
-	if ($class === true) {
-		elgg_deprecated_notice("Using a boolean to float the icon is deprecated. Use the class float.", 1.9);
-		$class = 'float';
+function elgg_view_icon($name, $vars = array()) {
+	if (empty($vars)) {
+		$vars = array();
 	}
 	
-	$icon_class = array("elgg-icon-$name" , $class);
+	if ($vars === true) {
+		elgg_deprecated_notice("Using a boolean to float the icon is deprecated. Use the class float.", 1.9);
+		$vars = array('class' => 'float');
+	}
 	
-	return elgg_view("output/icon", array("class" => $icon_class));
+	if (is_string($vars)) {
+		$vars = array('class' => $vars);
+	}
+	
+	if (!is_array($vars)) {
+		throw new \InvalidArgumentException('$vars needs to be a string or an array');
+	}
+	
+	if (!array_key_exists('class', $vars)) {
+		$vars['class'] = array();
+	}
+	
+	if (!is_array($vars['class'])) {
+		$vars['class'] = array($vars['class']);
+	}
+	
+	$vars['class'][] = "elgg-icon-$name";
+	
+	return elgg_view("output/icon", $vars);
 }
 
 /**
