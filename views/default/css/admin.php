@@ -1596,6 +1596,8 @@ table.mceLayout {
 	margin: 0 0 1em 2em;
 }
 
+<?php echo elgg_view('css/elements/misc/spinner.css') ?>
+
 /* ***************************************
 	HELPERS
 *************************************** */
