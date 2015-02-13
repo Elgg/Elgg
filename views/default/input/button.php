@@ -9,11 +9,13 @@
  * @uses $vars['class'] Additional CSS class
  */
 
-if (isset($vars['class'])) {
-	$vars['class'] = "elgg-button {$vars['class']}";
-} else {
-	$vars['class'] = "elgg-button";
+if (!isset($vars['class'])) {
+	$vars['class'] = array();
+} elseif (!is_array($vars['class'])) {
+	$vars['class'] = array($vars['class']);
 }
+
+$vars['class'][] = "elgg-button";
 
 $defaults = array(
 	'type' => 'button',
