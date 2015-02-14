@@ -125,8 +125,6 @@ function search_users_hook($hook, $type, $value, $params) {
 
 	$params['joins'] = array(
 		"JOIN {$db_prefix}users_entity ue ON e.guid = ue.guid",
-		"JOIN {$db_prefix}metadata md on e.guid = md.entity_guid",
-		"JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id"
 	);
 		
 	// username and display name
@@ -136,19 +134,26 @@ function search_users_hook($hook, $type, $value, $params) {
 	// profile fields
 	$profile_fields = array_keys(elgg_get_config('profile_fields'));
 	
-	// get the where clauses for the md names
-	// can't use egef_metadata() because the n_table join comes too late.
-	$clauses = _elgg_entities_get_metastrings_options('metadata', array(
-		'metadata_names' => $profile_fields,
-	));
-
-	$params['joins'] = array_merge($clauses['joins'], $params['joins']);
-	// no fulltext index, can't disable fulltext search in this function.
-	// $md_where .= " AND " . search_get_where_sql('msv', array('string'), $params, FALSE);
-	$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
+	if (!empty($profile_fields)) {
+		$params['joins'][] = "JOIN {$db_prefix}metadata md on e.guid = md.entity_guid";
+		$params['joins'][] = "JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id";
+		
+		// get the where clauses for the md names
+		// can't use egef_metadata() because the n_table join comes too late.
+		$clauses = _elgg_entities_get_metastrings_options('metadata', array(
+			'metadata_names' => $profile_fields,
+		));
 	
-	$params['wheres'] = array("(($where) OR ($md_where))");
-
+		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
+		// no fulltext index, can't disable fulltext search in this function.
+		// $md_where .= " AND " . search_get_where_sql('msv', array('string'), $params, FALSE);
+		$md_where = "(({$clauses['wheres'][0]}) AND msv.string LIKE '%$query%')";
+		
+		$params['wheres'] = array("(($where) OR ($md_where))");
+	} else {
+		$params['wheres'] = array("$where");
+	}
+	
 	// override subtype -- All users should be returned regardless of subtype.
 	$params['subtype'] = ELGG_ENTITIES_ANY_VALUE;
 	$params['count'] = true;
@@ -176,25 +181,27 @@ function search_users_hook($hook, $type, $value, $params) {
 
 		$entity->setVolatileData('search_matched_title', $title);
 
-		$matched = '';
-		foreach ($profile_fields as $md_name) {
-			$metadata = $entity->$md_name;
-			if (is_array($metadata)) {
-				foreach ($metadata as $text) {
-					if (stristr($text, $query)) {
+		if (!empty($profile_fields)) {
+			$matched = '';
+			foreach ($profile_fields as $md_name) {
+				$metadata = $entity->$md_name;
+				if (is_array($metadata)) {
+					foreach ($metadata as $text) {
+						if (stristr($text, $query)) {
+							$matched .= elgg_echo("profile:{$md_name}") . ': '
+									. search_get_highlighted_relevant_substrings($text, $query);
+						}
+					}
+				} else {
+					if (stristr($metadata, $query)) {
 						$matched .= elgg_echo("profile:{$md_name}") . ': '
-								. search_get_highlighted_relevant_substrings($text, $query);
+								. search_get_highlighted_relevant_substrings($metadata, $query);
 					}
 				}
-			} else {
-				if (stristr($metadata, $query)) {
-					$matched .= elgg_echo("profile:{$md_name}") . ': '
-							. search_get_highlighted_relevant_substrings($metadata, $query);
-				}
 			}
+	
+			$entity->setVolatileData('search_matched_description', $matched);
 		}
-
-		$entity->setVolatileData('search_matched_description', $matched);
 	}
 
 	return array(

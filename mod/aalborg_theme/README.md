@@ -11,7 +11,6 @@ Layout
 ------
 
 Aalborg theme is responsive and adapts the layout to the viewing environment using media queries and fluid images.
-Respond.js is used to enable responsiveness in browsers that don't support CSS3 media queries (IE 8).
 
 Elgg css is extended by views/default/aalborg_theme/css, containing the media queries.
 

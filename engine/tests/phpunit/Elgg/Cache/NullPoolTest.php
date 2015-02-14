@@ -38,7 +38,10 @@ class NullPoolTest extends TestCase implements PoolTestCase {
 		
 		$this->assertEquals(0, $pool->get('foo', $increment));
 		$this->assertEquals(1, $pool->get('foo', $increment));
+		$pool->put('foo', 4);
 		$this->assertEquals(2, $pool->get('foo', $increment));
+		$pool->invalidate('foo');
+		$this->assertEquals(3, $pool->get('foo', $increment));
 	}
 }
 

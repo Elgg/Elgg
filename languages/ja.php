@@ -40,7 +40,7 @@ return array(
 	'actionloggedout' => "ログアウトのままですと、アクションを実行できません。",
 	'actionunauthorized' => 'あなたの権限では、このアクションを実行することはできません。',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) は、設定にミスがあるプラグインですので、起動を無効にしました。起こり得る原因についてはElgg wikiにて検索してみてください。(http://docs.elgg.org/wiki/)",
+	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) は、設定に間違いのあるプラグインですので、起動不可となっています。 原因に当たっては、Elgg wiki (http://learn.elgg.org/) を参考にしてください。 ",
 	'PluginException:CannotStart' => '%s (guid: %s) は起動できず停止状態のままです。理由: %s',
 	'PluginException:InvalidID' => "%s は、不正なプラグインIDです。",
 	'PluginException:InvalidPath' => "%s は、不正なプラグインのpathです",
@@ -158,6 +158,7 @@ return array(
 
 	'widgets:add' => 'ウィジェットを追加',
 	'widgets:add:description' => "下のウィジェットボタンをクリックして、ページに追加してみてください。",
+	'widgets:panel:close' => "ウィジェットパネルを閉じる",
 	'widgets:position:fixed' => '（固定した位置）',
 	'widget:unavailable' => 'すでに、このウィジェットを追加済みです。',
 	'widget:numbertodisplay' => '表示するアイテムの数',
@@ -448,6 +449,7 @@ return array(
 	'admin:configuration:success' => "設定を保存しました。",
 	'admin:configuration:fail' => "設定を保存できませんでした。",
 	'admin:configuration:dataroot:relative_path' => '「 %s 」をデータルートとして仕様出来ません：絶対パスを使用してください。',
+	'admin:configuration:default_limit' => '項目の数は、１ページ当たり最低でも1つ以上にしてください。',
 
 	'admin:unknown_section' => '不正な管理セクションです',
 
@@ -609,7 +611,7 @@ return array(
 	'admin:plugins:warning:elgg_version_unknown' => 'このプラグインは、旧のマニフェストファイルを使用していますので互換性のあるElggバージョンを記載していません。おそらく、うまく作動しないでしょう。',
 	'admin:plugins:warning:unmet_dependencies' => 'このプラグインは依存関係が不適切なので起動できません。詳細情報で依存関係をチェックしてください。',
 	'admin:plugins:warning:invalid' => 'このプラグインは正しくありません: %s',
-	'admin:plugins:warning:invalid:check_docs' => '問題解決には <a href="http://docs.elgg.org/Invalid_Plugin">the Elgg documentation</a> をチェックしてみてください。',
+	'admin:plugins:warning:invalid:check_docs' => '問題解決のヒントは、 <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> にあるかもしれません。',
 	'admin:plugins:cannot_activate' => '起動できません',
 
 	'admin:plugins:set_priority:yes' => "%s を並べ直しました。",
@@ -1049,6 +1051,7 @@ return array(
 	'installation:view' => "あなたのサイトのデフォルトで使用するviewを入力してください。デフォルトviewを使用する場合は、空欄のままにしておいてください。(よくわからない場合は、そのままにしておいてください)",
 
 	'installation:siteemail' => "サイトの電子メールアドレス（システムメールを送信するときに使用します）:",
+	'installation:default_limit' => "1ページ当たりの項目数の既定値",
 
 	'admin:site:access:warning' => "ユーザが新しくコンテントを作成する際に示されるプライバシー・セッティングです。これを変更しても、すでにあるコンテントへのアクセス権は変更されません。",
 	'installation:allow_user_default_access:description' => "チェックすると、各ユーザがそれぞれののプライバシー・セッティングを設定することができます。この場合、システムのプライバシー・セッティングは上書きされます。",
@@ -1081,13 +1084,11 @@ return array(
 	'upgrade:unlock:success' => "アップグレードのロックを解除しました。",
 	'upgrade:unable_to_upgrade' => 'アップグレードできませんでした',
 	'upgrade:unable_to_upgrade_info' =>
-		'今回のインストールではアップグレードできませんでした。旧バージョンのviewがElggコアviewディレクトリにあるためです。
-		これらの旧viewは廃止または削除されたので、そのまま残っていると新Elggが正常に作動しなくなります。
-		もし、Elggコアに手を加えていないなら、単純にviewディレクトリを削除して最新のElggのと置き換えてください。
-		最新のElggは、<a href="http://elgg.org">elgg.org</a> よりダウンロードできます。<br /><br />
+		'Elggコアディレクトリに古いタイプのviewsが見つかったため、このインストレーションは、アップグレードできません。
 		
-		手順の詳細は、<a href="http://docs.elgg.org/wiki/Upgrading_Elgg">Upgrading Elgg documentation</a> をご覧ください。
-		その他なにかお困りでしたら、遠慮無く<a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a>に投稿してみてください。',
+このようなviewsは廃止予定にされており、Elggが正しく機能するためには削除しなければなりません。あなたがElggコアに独自に変更をしていなければ、そのviewsディレクトリを削除して、<a href="http://elgg.org">elgg.org</a>からダウンロードした最新のElggパッケージのものに差し替えるだけでよいでしょう。<br /><br />
+
+手順の詳細は、 <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">Upgrading Elgg documentation</a> をご覧ください。また、<a href="http://community.elgg.org/pg/groups/discussion/">Community Support Forums</a> に投稿すれば、きっと誰かが助けてくれるでしょう。',
 
 	'update:twitter_api:deactivated' => 'Twitter API(旧称Twitter Service)はアップグレード中に停止しました。必要なら、手動でプラグインを再起動させてください。',
 	'update:oauth_api:deactivated' => 'OAuth API(旧称 OAuth LIb)はアップグレード中に停止しました。必要なら、手動でプラグインを再起動させてください。',

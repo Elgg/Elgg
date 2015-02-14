@@ -40,7 +40,7 @@ return array(
 	'actionloggedout' => "Sorry, je kunt deze actie niet uitvoeren als je bent afgemeld.",
 	'actionunauthorized' => 'Je bent niet geautoriseerd om deze actie uit te voeren',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is een verkeerd geconfigureerde plugin. Hij is uitgeschakeld. In de Elgg-wiki kun je mogelijke oorzaken vinden (http://docs.elgg.org/wiki/).",
+	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is een verkeerd geconfigureerde plugin. Hij is uitgeschakeld. In de Elgg documentatie kun je mogelijke oorzaken vinden (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) kan niet starten. Reden: %s',
 	'PluginException:InvalidID' => "%s is een ongeldige plugin-ID.",
 	'PluginException:InvalidPath' => "%s is een ongeldig plugin-pad.",
@@ -159,6 +159,7 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 
 	'widgets:add' => 'Voeg widgets toe',
 	'widgets:add:description' => "Klik op een widgetknop om de widget aan jouw pagina toe te voegen.",
+	'widgets:panel:close' => "Sluit widgets paneel",
 	'widgets:position:fixed' => '(Vaste positie op pagina)',
 	'widget:unavailable' => 'Je hebt deze widget al toegevoegd',
 	'widget:numbertodisplay' => 'Aantal items om weer te geven',
@@ -455,6 +456,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:configuration:success' => "Je instellingen zijn opgeslagen.",
 	'admin:configuration:fail' => "Je instellingen zijn niet opgeslagen.",
 	'admin:configuration:dataroot:relative_path' => 'Kan \'%s\' niet als datamap opslaan, omdat het geen absoluut pad is.',
+	'admin:configuration:default_limit' => 'Het aantal items per pagina moet minstens 1 zijn.',
 
 	'admin:unknown_section' => 'Ongeldige beheersectie.',
 
@@ -616,7 +618,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:plugins:warning:elgg_version_unknown' => 'Deze plugin gebruikt een oud manifestbestand en heeft geen Elggversie gedefinieerd. <strong>Hij zal waarschijnlijk niet werken!</strong>',
 	'admin:plugins:warning:unmet_dependencies' => 'Deze plugin heeft onvervulde afhankelijkheden en kan niet worden geactiveerd. Controleer de afhankelijkheden onder \'meer info\'.',
 	'admin:plugins:warning:invalid' => '%s is geen geldige plugin voor Elgg. Controleer <a href="http://docs.elgg.org/Invalid_Plugin" target="_blank">de Elgg-documentatie</a> voor handige tips.',
-	'admin:plugins:warning:invalid:check_docs' => 'Controleer <a href="http://docs.elgg.org/Invalid_Plugin" target="_blank">de Elgg-documentatie</a> voor tips met betrekking tot foutopsporing.',
+	'admin:plugins:warning:invalid:check_docs' => 'Controleer <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">de Elgg documentatie</a> voor tips met betrekking tot foutopsporing.',
 	'admin:plugins:cannot_activate' => 'kan niet activeren',
 
 	'admin:plugins:set_priority:yes' => "%s herordend.",
@@ -1054,6 +1056,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'installation:view' => "Geeft de view op die standaard wordt gebruikt binnen de site, of laat het leeg voor de standaardview. Bij twijfel, laat de standaard staan!",
 
 	'installation:siteemail' => "Site e-mailadres (dit wordt gebruikt voor het verzenden van systeem e-mails):",
+	'installation:default_limit' => "Standaard aantal items per pagina",
 
 	'admin:site:access:warning' => "Het wijzigen van de toegangsinstellingen is alleen van toepassing op nieuwe content.",
 	'installation:allow_user_default_access:description' => "Als je dit aanvinkt hebben individuele gebruikers de mogelijkheid om hun eigen standaard toegangsniveau in te stellen. Dit kan anders zijn dan de standaardinstelling van de site.",
@@ -1088,7 +1091,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'upgrade:unable_to_upgrade_info' =>
 		'Deze installatie kan niet worden geüpgrade omdat er \'legacy views\' zijn ontdekt in de Elgg \'core views\' map. Deze views zijn verouderd en moeten worden verwijderd om Elgg correct te laten functioneren. Als je geen wijzigingen hebt gemaakt aan de Elgg-core kun je de map verwijderen en vervangen met de inhoud uit de laatste versie van Elgg, die je kunt vinden op <a href="http://elgg.org" target="_blank">elgg.org</a>.<br><br>
 
-Als je meer gedetailleerde instructie wilt, ga je naar de <a href="http://docs.elgg.org/wiki/Upgrading_Elgg" target="_blank">documentatie \'Upgrading Elgg\'</a>. Als je hulp nodig hebt, plaats je je vraag op de <a href="http://community.elgg.org/pg/groups/discussion/" target="_blank">Community Support Forums</a>.',
+Als je meer gedetailleerde instructie wilt, ga je naar de <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">documentatie \'Upgrading Elgg\'</a>. Als je hulp nodig hebt, plaats je je vraag op de <a href="http://community.elgg.org/pg/groups/discussion/" target="_blank">Community Support Forums</a>.',
 
 	'update:twitter_api:deactivated' => 'Twitter API (voorheen Twitter Service) is uitgeschakeld tijdens de upgrade. Activeer deze zelf weer als het nodig is.',
 	'update:oauth_api:deactivated' => 'OAuth API (voorheen OAuth Lib) is uitgeschakeld tijdens de upgrade. Activeer deze zelf weer als het nodig is.',

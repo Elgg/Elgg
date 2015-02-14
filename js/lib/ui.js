@@ -50,17 +50,23 @@ elgg.ui.init = function () {
  */
 elgg.ui.toggles = function(event) {
 	event.preventDefault();
-	var target = $(this).data().toggleSelector;
+	var $this = $(this),
+		target = $this.data().toggleSelector;
 	
 	if (!target) {
-		target = elgg.getSelectorFromUrlFragment($(this).attr('href')); 
+		// @todo we can switch to elgg.getSelectorFromUrlFragment() in 1.x if
+		// we also extend it to support href=".some-class"
+		target = $this.attr('href');
 	}
-	
+
+	$this.toggleClass('elgg-state-active');
+
 	$(target).each(function(index, elem) {
-		if ($(elem).data().toggleSlide != false) {
-			$(elem).slideToggle('medium');
+		var $elem = $(elem);
+		if ($elem.data().toggleSlide != false) {
+			$elem.slideToggle('medium');
 		} else {
-			$(elem).toggle();
+			$elem.toggle();
 		}
 	});
 };
@@ -296,7 +302,9 @@ elgg.ui.initDatePicker = function() {
 					var id = $(this).attr('id');
 					$('input[name="' + id + '"]').val(timestamp);
 				}
-			}
+			},
+			nextText: '&#xBB;',
+			prevText: '&#xAB;'
 		});
 	}
 

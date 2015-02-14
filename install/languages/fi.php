@@ -66,7 +66,7 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:database:help:dbhost' => 'MySQL-palvelimen sijainti (yleensä localhost)',
 	'install:database:help:dbprefix' => "Kaikille Elggin tietokantatauluille annettava etuliite (yleensä elgg_)",
 
-	'install:settings:instructions' => 'Elggin konfiguroimiseen tarvitaan vielä hieman lisätietoja. Jos et ole vielä luonut Elggille <a href="http://docs.elgg.org/wiki/Data_directory" target="_blank">datahakemistoa</a>, tee se nyt.',
+	'install:settings:instructions' => 'Elggin konfiguroimiseen tarvitaan vielä hieman lisätietoja. Jos et ole vielä luonut Elggille <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">datahakemistoa</a>, tee se nyt.',
 
 	'install:settings:label:sitename' => 'Sivuston nimi',
 	'install:settings:label:siteemail' => 'Sivuston sähköpostiosoite',

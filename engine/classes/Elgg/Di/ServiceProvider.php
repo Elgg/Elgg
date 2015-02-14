@@ -128,7 +128,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $this->resolveLoggerDependencies('events');
 		});
 
-		$this->setClassName('externalFiles', '\Elgg\Assets\ExternalFiles');
+		$this->setFactory('externalFiles', function(ServiceProvider $c) {
+			global $CONFIG;
+			return new \Elgg\Assets\ExternalFiles($CONFIG);
+		});
 
 		$this->setFactory('hooks', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('hooks');

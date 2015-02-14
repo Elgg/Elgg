@@ -175,6 +175,8 @@ Schau Dir den Diskussionsbeitrag an und antworte selbst darauf:
 	'discussion:reply:error:notfound' => 'Die ausgewählte Antwort im Diskussionsbeitrag ist nicht auffindbar.',
 	'discussion:reply:error:notdeleted' => 'Die Antwort im Diskussionsbeitrag konnte nicht gelöscht werden.',
 
+	'discussion:search:title' => 'Antwort im Diskussionsbeitrag: %s',
+	
 	'admin:groups' => 'Gruppen',
 
 	'reply:this' => 'Antwort schreiben',

@@ -20,15 +20,15 @@ if (!preg_match($regexp, $version, $matches)) {
 function run_commands($commands) {
 	foreach ($commands as $command) {
 		echo "$command\n";
-		passthru($command, $returnVal);
-		if ($returnVal !== 0) {
+		passthru($command, $return_val);
+		if ($return_val !== 0) {
 			echo "Error executing command! Interrupting!\n";
 			exit(2);
 		}
 	}
 }
 
-$elggPath = dirname(__DIR__);
+$elgg_path = dirname(__DIR__);
 
 $branch = "release-$version";
 
@@ -41,7 +41,7 @@ run_commands(array(
 	"node --version",
 	"sphinx-build --version",
 
-	"cd $elggPath",
+	"cd $elgg_path",
 	"git checkout -B $branch",
 ));
 
@@ -56,10 +56,14 @@ run_commands(array(
 ));
 
 // Update version in composer.json
-$composerPath = "$elggPath/composer.json";
-$composerJson = json_decode(file_get_contents($composerPath));
-$composerJson->version = $version;
-file_put_contents($composerPath, json_encode($composerJson, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES));
+require_once __DIR__ . '/../engine/classes/Elgg/Json/EmptyKeyEncoding.php';
+$encoding = new \Elgg\Json\EmptyKeyEncoding();
+
+$composer_path = "$elgg_path/composer.json";
+$composer_config = $encoding->decode(file_get_contents($composer_path));
+$composer_config->version = $version;
+$json = $encoding->encode($composer_config, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES);
+file_put_contents($composer_path, $json);
 
 // Generate changelog
 run_commands(array(

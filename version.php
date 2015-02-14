@@ -28,4 +28,3 @@ if (!isset($composer->version)) {
 	throw new Exception("Version field must be set in composer.json!");
 }
 $release = $composer->version;
-

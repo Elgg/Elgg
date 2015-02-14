@@ -604,15 +604,14 @@ function elgg_profile_fields_setup() {
 	);
 
 	$loaded_defaults = array();
-	if ($fieldlist = elgg_get_config('profile_custom_fields')) {
-		if (!empty($fieldlist)) {
-			$fieldlistarray = explode(',', $fieldlist);
-			foreach ($fieldlistarray as $listitem) {
-				if ($translation = elgg_get_config("admin_defined_profile_{$listitem}")) {
-					$type = elgg_get_config("admin_defined_profile_type_{$listitem}");
-					$loaded_defaults["admin_defined_profile_{$listitem}"] = $type;
-					add_translation(get_current_language(), array("profile:admin_defined_profile_{$listitem}" => $translation));
-				}
+	$fieldlist = elgg_get_config('profile_custom_fields');
+	if ($fieldlist || $fieldlist === '0') {
+		$fieldlistarray = explode(',', $fieldlist);
+		foreach ($fieldlistarray as $listitem) {
+			if ($translation = elgg_get_config("admin_defined_profile_{$listitem}")) {
+				$type = elgg_get_config("admin_defined_profile_type_{$listitem}");
+				$loaded_defaults["admin_defined_profile_{$listitem}"] = $type;
+				add_translation(get_current_language(), array("profile:admin_defined_profile_{$listitem}" => $translation));
 			}
 		}
 	}
