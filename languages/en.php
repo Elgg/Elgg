@@ -1067,7 +1067,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:minify_js:label' => "Compress JavaScript (recommended)",
 	'installation:minify_css:label' => "Compress CSS (recommended)",
 
-	'installation:htaccess:needs_upgrade' => "You must update your .htaccess file so that the path is injected into the GET parameter __elgg_uri (you can use htaccess_dist as a guide).",
+	'installation:htaccess:needs_upgrade' => "You must update your .htaccess file so that the path is injected into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg cannot connect to itself to test rewrite rules properly. Check that curl is working and there are no IP restrictions preventing localhost connections.",
 	
 	'installation:systemcache:description' => "The system cache decreases the loading time of Elgg by caching data to files.",
@@ -1251,7 +1251,7 @@ Please do not reply to this email.",
 	'actiongatekeeper:missingfields' => 'Form is missing __token or __ts fields',
 	'actiongatekeeper:tokeninvalid' => "The page you were using had expired. Please try again.",
 	'actiongatekeeper:timeerror' => 'The page you were using has expired. Please refresh and try again.',
-	'actiongatekeeper:pluginprevents' => 'A extension has prevented this form from being submitted.',
+	'actiongatekeeper:pluginprevents' => 'Sorry. Your form could not be submitted for an unknown reason.',
 	'actiongatekeeper:uploadexceeded' => 'The size of file(s) uploaded exceeded the limit set by your site administrator',
 	'actiongatekeeper:crosssitelogin' => "Sorry, logging in from a different domain is not permitted. Please try again.",
 

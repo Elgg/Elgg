@@ -187,7 +187,7 @@ class ElggRewriteTester {
 		}
 
 		// create the .htaccess file
-		$result = copy("{$path}htaccess_dist", $filename);
+		$result = copy("{$path}install/config/htaccess.dist", $filename);
 		if (!$result) {
 			$this->htaccessIssue = 'cannot_copy';
 			return FALSE;

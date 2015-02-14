@@ -409,7 +409,7 @@ a.elgg-maintenance-mode-warning {
 	background-color: #eee;
 	font-weight: bold;
 }
-.elgg-table-alt td, th {
+.elgg-table-alt td, .elgg-table-alt th {
 	padding: 2px 4px;
 	border-bottom: 1px solid #ccc;
 }

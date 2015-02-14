@@ -315,8 +315,9 @@ function search_remove_ignored_words($query, $format = 'array') {
 	// don't worry about "s or boolean operators
 	//$query = str_replace(array('"', '-', '+', '~'), '', stripslashes(strip_tags($query)));
 	$query = stripslashes(strip_tags($query));
+	$query = trim($query);
 	
-	$words = explode(' ', $query);
+	$words = preg_split('/\s+/', $query);
 
 	$min_chars = $CONFIG->search_info['min_chars'];
 	// if > ft_min_word we're not running in literal mode.

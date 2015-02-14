@@ -6,36 +6,43 @@ return array(
 	 */
 
 	'pages' => "Pagina's",
-	'pages:owner' => "%s's pagina's",
+	'pages:owner' => "Pagina's van %s",
 	'pages:friends' => "Pagina's van vrienden",
-	'pages:all' => "Alle site pagina's",
+	'pages:all' => "Alle sitepagina's",
 	'pages:add' => "Voeg pagina toe",
 
-	'pages:group' => "Groep pagina's",
-	'groups:enablepages' => 'Schakel groep pagina\'s in',
+	'pages:group' => "Groepspagina's",
+	'groups:enablepages' => 'Schakel groepspagina\'s in',
 
 	'pages:new' => "Een nieuwe pagina",
 	'pages:edit' => "Bewerk deze pagina",
 	'pages:delete' => "Verwijder deze pagina",
-	'pages:history' => "Pagina geschiedenis",
+	'pages:history' => "Paginageschiedenis",
 	'pages:view' => "Bekijk pagina",
 	'pages:revision' => "Revisie",
 	'pages:current_revision' => "Huidige revisie",
 	'pages:revert' => "Herstel",
 
-	'pages:navigation' => "Pagina navigatie",
+	'pages:navigation' => "Paginanavigatie",
 
 	'pages:notify:summary' => 'Nieuwe pagina met de titel %s',
 	'pages:notify:subject' => "Een nieuwe pagina: %s",
 	'pages:notify:body' =>
-'%s heeft een nieuwe pagina toegevoegd: %s
+'Hallo!
+
+%s heeft een nieuwe pagina gemaakt.
 
 %s
-
-Bekijk en reageer op de pagina:
 %s
+
+Je kunt de pagina hier lezen:
+%s
+
+-----
+
+Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
 ',
-	'item:object:page_top' => 'Hoofd pagina\'s',
+	'item:object:page_top' => 'Hoofdpagina\'s',
 	'item:object:page' => 'Pagina\'s',
 	'pages:nogroup' => 'Deze groep heeft nog geen pagina\'s',
 	'pages:more' => 'Meer pagina\'s',
@@ -45,23 +52,23 @@ Bekijk en reageer op de pagina:
 	* River
 	**/
 
-	'river:create:object:page' => '%s maakte de pagina %s',
-	'river:create:object:page_top' => '%s maakte de pagina %s',
-	'river:update:object:page' => '%s bewerkte de pagina %s',
-	'river:update:object:page_top' => '%s bewerkte de pagina %s',
-	'river:comment:object:page' => '%s reageerde op de pagina %s',
-	'river:comment:object:page_top' => '%s reageerde op de pagina %s',
+	'river:create:object:page' => '%s maakte de pagina \'%s\'',
+	'river:create:object:page_top' => '%s maakte de pagina \'%s\'',
+	'river:update:object:page' => '%s bewerkte de pagina \'%s\'',
+	'river:update:object:page_top' => '%s bewerkte de pagina \'%s\'',
+	'river:comment:object:page' => '%s reageerde op de pagina \'%s\'',
+	'river:comment:object:page_top' => '%s reageerde op de pagina \'%s\'',
 
 	/**
 	 * Form fields
 	 */
 
-	'pages:title' => 'Pagina titel',
+	'pages:title' => 'Paginatitel',
 	'pages:description' => 'Jouw tekst',
 	'pages:tags' => 'Tags',
 	'pages:parent_guid' => 'Hoofdpagina',
 	'pages:access_id' => 'Toegang',
-	'pages:write_access_id' => 'Schrijf toegang',
+	'pages:write_access_id' => 'Schrijfrechten',
 
 	/**
 	 * Status and error messages
@@ -73,19 +80,19 @@ Bekijk en reageer op de pagina:
 	'pages:error:no_title' => 'Je moet een titel opgeven voor deze pagina.',
 	'pages:delete:success' => 'Je pagina is succesvol verwijderd.',
 	'pages:delete:failure' => 'De pagina kon niet worden verwijderd.',
-	'pages:revision:delete:success' => 'De pagina revisie is succesvol verwijderd',
-	'pages:revision:delete:failure' => 'De pagina revisie kon niet worden verwijderd',
+	'pages:revision:delete:success' => 'De paginarevisie is succesvol verwijderd.',
+	'pages:revision:delete:failure' => 'De paginarevisie kon niet worden verwijderd.',
 	'pages:revision:not_found' => 'Kan deze revisie niet vinden',
 
 	/**
 	 * Page
 	 */
-	'pages:strapline' => 'Laatst bijgewerkt %s door %s',
+	'pages:strapline' => 'Laatst bijgewerkt: \'%s\' door %s',
 
 	/**
 	 * History
 	 */
-	'pages:revision:subtitle' => 'Revisie aangemaakt %s door %s',
+	'pages:revision:subtitle' => 'Revisie van de pagina \'%s\' door %s',
 
 	/**
 	 * Widget
@@ -99,15 +106,15 @@ Bekijk en reageer op de pagina:
 	 */
 	'pages:label:view' => "Bekijk pagina",
 	'pages:label:edit' => "Bewerk pagina",
-	'pages:label:history' => "Pagina geschiedenis",
+	'pages:label:history' => "Paginageschiedenis",
 
 	/**
 	 * Sidebar items
 	 */
 	'pages:sidebar:this' => "Deze pagina",
-	'pages:sidebar:children' => "Sub pagina's",
+	'pages:sidebar:children' => "Subpagina's",
 	'pages:sidebar:parent' => "Hoofdpagina",
 
-	'pages:newchild' => "Maak een sub pagina",
+	'pages:newchild' => "Maak een subpagina",
 	'pages:backtoparent' => "Terug naar '%s'",
 );

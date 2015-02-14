@@ -7,8 +7,8 @@ return array(
 	'messages' => "Berichten",
 	'messages:unreadcount' => "%s ongelezen",
 	'messages:back' => "terug naar berichten",
-	'messages:user' => "%s's postvak in",
-	'messages:posttitle' => "%s's berichten: %s",
+	'messages:user' => "Postvak in van %s",
+	'messages:posttitle' => "Berichten van %s: %s",
 	'messages:inbox' => "Postvak In",
 	'messages:sent' => "Verstuurde berichten",
 	'messages:message' => "Bericht",
@@ -24,7 +24,7 @@ return array(
 	'messages:yours' => "Jouw bericht",
 	'messages:toggle' => 'Selecteer alles',
 	'messages:markread' => 'Markeer als gelezen',
-	'messages:recipient' => 'Kies een ontvanger�',
+	'messages:recipient' => 'Kies een ontvanger...',
 	'messages:to_user' => 'Aan: %s',
 
 	'messages:new' => 'Nieuw bericht',
@@ -51,19 +51,23 @@ return array(
 	*/
 
 	'messages:email:subject' => 'Je hebt een nieuw bericht!',
-	'messages:email:body' => "Je hebt een nieuw bericht van %s. Het bericht is:
+	'messages:email:body' => "Hallo!
+
+Je hebt een nieuw bericht van %s. Het bericht is:
 
 %s
 
-Om jouw berichten te bekijken, klik hier:
+Om je berichten te bekijken klik je hier:
 
 %s
 
-Om %s een bericht te sturen, klik hier:
+Om %s direct een bericht te sturen klik je hier:
 
 %s
 
-Je kunt niet antwoorden op deze email.",
+---
+
+Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden. ",
 
 	/**
 	* Error messages
@@ -71,12 +75,12 @@ Je kunt niet antwoorden op deze email.",
 
 	'messages:blank' => "Sorry, je moet wel tekst invullen voordat we je bericht kunnen versturen.",
 	'messages:notfound' => "Sorry, we konden het opgegeven bericht niet vinden.",
-	'messages:notdeleted' => "Sorry we konden dit bericht niet verwijderen.",
-	'messages:nopermission' => "Je hebt geen toegang om dit bericht te mogen verwijderen.",
+	'messages:notdeleted' => "Sorry, we konden dit bericht niet verwijderen.",
+	'messages:nopermission' => "Je hebt onvoldoende rechten om dit bericht te kunnen verwijderen.",
 	'messages:nomessages' => "Er zijn geen berichten om weer te geven.",
-	'messages:user:nonexist' => "We konden de geadresseerde niet vinden in de gebruikers database.",
-	'messages:user:blank' => "Je hebt niemand geselecteerd om dit naar toe te sturen.",
-	'messages:user:self' => "Je kan geen bericht sturen naar jezelf.",
+	'messages:user:nonexist' => "We konden de geadresseerde niet in de gebruikerslijst vinden .",
+	'messages:user:blank' => "Je hebt niemand geselecteerd om dit naar te sturen.",
+	'messages:user:self' => "Je kunt geen berichten aan jezelf sturen!",
 
 	'messages:deleted_sender' => 'Verwijderde gebruiker',
 

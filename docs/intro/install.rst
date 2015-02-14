@@ -11,7 +11,7 @@ Requirements
 ============
 
 -  MySQL 5+
--  PHP 5.3.3+ with the following extensions:
+-  PHP 5.4+ with the following extensions:
 
    -  GD (for graphics processing)
    -  `Multibyte String support`_ (for i18n)
@@ -19,17 +19,24 @@ Requirements
 
 -  Web server with support for URL rewriting
 
-Official support is provided for the following configuration:
+Official support is provided for the following configurations:
 
--  Apache with the `rewrite module`_ enabled
--  PHP running as an Apache module
+- Apache server
+   -  Apache with the `rewrite module`_ enabled
+   -  PHP running as an Apache module
+
+- Nginx server
+   - Nginx with PHP-FPM using FastCGI
 
 By "official support", we mean that:
 
--  Most development and testing is performed with this configuration
--  Much of the installation documentation is written assuming Apache is used
--  Priority on bug reports is given to Apache users if the bug is web server specific
+-  Most development and testing is performed with these configurations
+-  Much of the installation documentation is written assuming Apache or Nginx is used
+-  Priority on bug reports is given to Apache and Nginx users if the bug is web server specific
    (but those are rare).
+
+.. _Multibyte String support: http://www.php.net/mbstring
+.. _rewrite module: http://httpd.apache.org/docs/2.0/mod/mod_rewrite.html
 
 Browser support policy
 ----------------------
@@ -142,224 +149,21 @@ won't work, you will need to:
 
 -  Copy engine/settings.example.php to engine/settings.php, open it up
    in a text editor and fill in your database details
--  Copy /htaccess\_dist to /.htaccess
+-  On Apache server, copy ``install/config/htaccess.dist`` to ``.htaccess``
+-  On Nginx server copy ``install/config/nginx.dist`` to ``/etc/nginx/sites-enabled`` and adjust it's contents
 
 Other Configurations
 ====================
 
-Lighttpd
---------
-Have you installed Elgg on a server running lighttpd? 
-We are looking for someone to share any configuration
-and installation steps involved in setting this up.
-
-Nginx
------
-To run Elgg on Nginx, you will need to:
-
--  configure Nginx to talk to a PHP process in either CGI or FPM mode
--  Port the rewrite rules
-
-TODO: Add the rewrite rules from the community site.
-
-IIS
----
-
-When installing on IIS, the problem is that the Apache mod\_rewrite
-rules will not be recognized, and this breaks the application. You need
-to convert the mod\_rewrite rules to the `IIS URL Rewrite`_ module
-format.
-
-You can do this using the IIS 7+ management console, and the "Import
-Rules" feature that will do the conversion, as describe in the tutorial
-"`importing Apache mod\_rewrite rules`_\ ".
-
-.. _IIS URL Rewrite: http://www.iis.net/download/URLRewrite
-.. _importing Apache mod\_rewrite rules: http://learn.iis.net/page.aspx/470/importing-apache-modrewrite-rules/
-
-MariaDB
--------
-
-This DBMS should be a drop-in replacement for MySQL, if you prefer it.
-
-http://community.elgg.org/discussion/view/1455994/alternative-dbmss
-
-Virtual host (e.g. Rackspace, Amazon EC2)
------------------------------------------
-
-For installation to proceed successfully, modify the .htaccess file in the
-root, and uncomment::
-
-    #RewriteBase /
-
-To be::
-
-    RewriteBase /
-
-MAMP
-----
-
-On certain versions of MAMP, Elgg will either fail to install or have
-intermittent problems while running.
-
-This is a known issue with MAMP and is related to the Zend Optimizer.
-Until Zend/MAMP have resolved this issue it is recommended that you turn
-off the Zend Optimizer in your PHP settings.
-
-XAMPP
------
-
-These intructions are provided in case you want to test your Elgg
-installation on your local computer running Windows.
-
--  Download and install XAMPP to your computer from 
-   http://www.apachefriends.org/en/xampp.html
--  Once the installation is completed, it will prompt you to start the
-   XAMPP controller panel. Leave it for now.
--  Open ``C:\xampp\apache\conf\httpd.conf`` file with notepad and uncomment
-   these lines::
-
-     #LoadModule rewrite_module modules/mod_rewrite.so
-     #LoadModule filter_module modules/mod_filter.so
-
--  Edit the php.ini file and change
-   ``arg_separator.output = &amp;amp;`` to ``arg_separator.output = &``
--  Go to ``C:\xampp`` and double click on the xampp_start application
--  Go to http://localhost/
--  Change your server's password in the security option
--  Go to http://localhost/phpmyadmin and login with the username and the
-   password of your server
--  Create a database called "elgg" in your phpmyadmin panel
--  Now download Elgg. Unzip it and extract to ``C:\xampp\htdocs\sites\elgg``
--  Create the Elgg data folder as ``C:\xampp\htdocs\sites\data``
--  Go to http://localhost/sites/elgg
--  You will be taken to the Elgg installation steps. Install it and enjoy.
-
-**A note on XAMPP 1.7.4 and eAccelerator**
-
-Elgg is compatible with opcode caches and it is highly recommended that
-you enable a PHP opcode caching tool for a faster experience.  XAMPP comes
-with support for eAccelerator out of the box, but unfortunately, the 1.7.4
-build of XAMPP leaves out the DLL that's required.  To get eAccelerator
-working, follow these steps:
-
--  Download the DLL from http://eac.qme.nl/eAccelerator_v1_0_svn427_for_v5_3_5-VC6.zip
--  Copy eAccelerator_ts.dll to ``C:\xampp\php\ext\php_eaccelerator.dll``
--  Uncomment this line in ``C:\xampp\php\php.ini``::
-   
-     ;zend_extension = "C:\xampp\php\ext\php_eaccelerator.dll"
-   
--  Restart apache
-
-To verify that it is on:
-
--  Go to localhost/xampp
--  Click on phpinfo() from the left sidebar
--  Ctrl+F for eaccelerator.  If you get no results, eAccelerator is not active
-
-
-EasyPHP
--------
-
--  Assuming no MySQL, PHP or Apache installations exist already.
--  Best run as a development/test server
-
-1. Stop IIS running if installed
-
-2. Download and install the latest Easy PHP from http://www.easyphp.org (16MB download)
-
-3. Set up the database and point the web server to your Elgg folder (all done from the EasyPHP tray icon) 
-   -  Right click EasyPHP tray icon, select "Administration"
-   -  A new tab is created in your browser for managing Easy PHP
-   -  Add your Elgg folder to Apache in "Alias" section
-   -  Click "Manage MySQL with PhpMyAdmin", create a database and account for Elgg
-
-4. (Ignore this step for v5.3 or later) From the tray icon go Configuration/Apache
-   and uncomment this line::
-   
-     #LoadModule rewrite_module modules/mod_rewrite.so
-
-5. (Ignore this step for v5.3 or later) Change ``AllowOverride None`` to ``AllowOverride All``
-   in the relevant directory entry in Configuration/Apache 
-
-6. (Ignore this step for v5.3 or later) From the tray icon fo Configuration/PHP
-   and uncomment this line::
-   
-     ;extension=php_curl.dll
-
-7. A reboot is best Elgg should run via http://127.0.0.1
-
-
-Ubuntu Linux
-------------
-
--  Install the dependencies::
-
-     sudo apt-get install apache2
-     sudo apt-get install mysql-server
-     sudo apt-get install php5 libapache2-mod-php5 php5-mysql
-     sudo apt-get install phpmyadmin
-     sudo a2enmod rewrite
-
--  Edit ``/etc/apache2/sites_available/default`` to enable .htaccess processing (set AllowOverride to All)
--  Restart Apache: ``sudo /etc/init.d/apache2 restart``
--  Follow the standard installation instructions above
-
-Cloud9IDE
----------
-
-**1. Create a c9 workspace**
-
--  Go to http://c9.io
--  Login with GitHub
--  On the Dashboard, click "Create new workspace" => "Create a new
-   workspace"
--  Choose a project name (e.g. "elgg")
--  Choose "PHP" for project type
--  Click "Create"
--  Wait... (~1 min for c9 workspace to be ready)
--  Click "Start editing" for the workspace
-
-**2. Set up the workspace for Elgg**
-
-Run the following in cloud9's terminal:
-
-.. code:: sh
-
-    rm -rf * # Clear out the c9 hello-world stuff
-    git clone https://github.com/Elgg/Elgg . # the hotness
-    cp htaccess_dist .htaccess
-    cp engine/settings.example.php engine/settings.php
-    mysql-ctl start # start c9's local mysql server
-    mkdir ../elgg-data # setup data dir for Elgg
-
-Configure ``engine/settings.php`` to be like so:
-
-.. code:: php
-
-    // Must set timezone explicitly!
-    date_default_timezone_set('America/Los_Angeles');
-    $CONFIG->dbuser = 'your_username'; // Your c9 username
-    $CONFIG->dbpass = '';
-    $CONFIG->dbname = 'c9';
-    $CONFIG->dbhost = $_SERVER['SERVER_ADDR'];
-    $CONFIG->dbprefix = 'elgg_';
-
-**3. Complete the install process from Elgg's UI**
-
--  Hit "Run" at the top of the page to start Apache.
--  Go to ``http://your-workspace.your-username.c9.io/install.php?step=database``
--  Change Site URL to ``http://your-workspace.your-username.c9.io/``
--  Put in the data directory path. Should be something like
-   ``/var/..../app-root/data/elgg-data/``.
--  Click "Next"
--  Create the admin account
--  Click "Go to site"
--  You may have to manually visit http://your-workspace.your-username.c9.io/
-   and login with the admin credentials you just configured.
-
-.. _Multibyte String support: http://www.php.net/mbstring
-.. _rewrite module: http://httpd.apache.org/docs/2.0/mod/mod_rewrite.html
+ * :doc:`Cloud9 <./install/cloud9>`
+ * :doc:`EasyPHP <./install/easyphp>`
+ * :doc:`IIS <./install/iis>`
+ * :doc:`MAMP <./install/mamp>`
+ * :doc:`MariaDB <./install/mariadb>`
+ * :doc:`Nginx <./install/nginx>`
+ * :doc:`Ubuntu <./install/ubuntu>`
+ * :doc:`Virtual hosts <./install/virtual>`
+ * :doc:`XAMPP <./install/xampp>`
 
 Troubleshooting
 ===============
@@ -397,10 +201,10 @@ this page to them.
 
 The ``.htaccess``, if not generated automatically (that happens when you
 have problem with ``mod_rewrite``), you can create it by renaming
-``htaccess_dist`` file you find with elgg package to ``.htaccess``. Also
+``install/config/htaccess.dist`` file you find with elgg package to ``.htaccess``. Also
 if you find a ``.htaccess`` file inside the installation path, but you 
 are still getting 404 error, make sure the contents of ``.htaccess`` are
-same as that of ``htaccess_dist``.
+same as that of ``install/config/htaccess.dist``.
 
 **``mod_rewrite`` isn't installed.**
 

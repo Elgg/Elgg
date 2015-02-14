@@ -106,4 +106,17 @@ class ContextTest extends \PHPUnit_Framework_TestCase {
 		
 		$this->assertFalse(elgg_in_context($popped));
 	}
+
+	public function testFailToSetEmptyContext() {
+		$context = new Context();
+
+		$context->set("  ");
+
+		$this->assertNull($context->peek());
+		$this->assertNull($context->pop());
+
+		$context->push("  ");
+		$this->assertEquals("  ", $context->peek());
+		$this->assertEquals("  ", $context->pop());
+	}
 }
