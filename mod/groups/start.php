@@ -101,6 +101,13 @@ function groups_init() {
 
 	// Add tests
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'groups_test');
+
+	// Sidebar modules
+	elgg_extend_view('groups/sidebar', 'groups/sidebar/find');
+	elgg_extend_view('groups/sidebar', 'groups/sidebar/featured');
+
+	elgg_register_plugin_hook_handler('register', 'menu:groups:my_status', 'groups_my_status_menu_setup');
+
 }
 
 /**
@@ -1316,4 +1323,75 @@ function discussion_search_groupforumtopic($hook, $type, $value, $params) {
 
 	// trigger the 'normal' object search as it can handle the added options
 	return elgg_trigger_plugin_hook('search', 'object', $params, array());
+}
+
+/**
+ * Set up 'My status' menu for group profile visitor
+ * 
+ * @param string $hook   "register"
+ * @param string $type   "menu:groups:my_status"
+ * @param array  $menu   Menu items
+ * @param array  $params Hook params
+ * @return array
+ */
+function groups_my_status_menu_setup($hook, $type, $menu, $params) {
+
+	$group = elgg_extract('entity', $params);
+	/* @var \ElggGroup $group */
+
+	$user = elgg_extract('user', $params, elgg_get_logged_in_user_entity());
+	/* @var \ElggUser $user */
+
+	if (!$group instanceof \ElggGroup || !$user instanceof \ElggUser) {
+		return $menu;
+	}
+
+	elgg_load_library('elgg:groups');
+
+	// membership status
+	$is_member = $group->isMember($user);
+	$is_owner = $group->getOwnerEntity()->guid == $user->guid;
+
+	if ($is_owner) {
+		$menu[] = ElggMenuItem::factory(array(
+			'name' => 'membership_status',
+			'text' => '<a>' . elgg_echo('groups:my_status:group_owner') . '</a>',
+			'href' => false,
+		));
+	} elseif ($is_member) {
+		$menu[] = ElggMenuItem::factory(array(
+			'name' => 'membership_status',
+			'text' => '<a>' . elgg_echo('groups:my_status:group_member') . '</a>',
+			'href' => false,
+		));
+	} else {
+		$menu[] = ElggMenuItem::factory(array(
+			'name' => 'membership_status',
+			'text' => elgg_echo('groups:join'),
+			'href' => "action/groups/join?group_guid={$group->getGUID()}",
+			'is_action' => true,
+		));
+	}
+
+	// notification info
+	if (elgg_is_active_plugin('notifications') && $is_member) {
+		$subscribed = elgg_extract('subscribed', $params, groups_is_user_subscribed($group, $user));
+		if ($subscribed) {
+			$menu[] = ElggMenuItem::factory(array(
+				'name' => 'subscription_status',
+				'text' => elgg_echo('groups:subscribed'),
+				'href' => "notifications/group/$user->username",
+				'is_action' => true,
+			));
+		} else {
+			$menu[] = ElggMenuItem::factory(array(
+				'name' => 'subscription_status',
+				'text' => elgg_echo('groups:unsubscribed'),
+				'href' => "notifications/group/$user->username",
+			));
+		}
+	}
+
+	return $menu;
+
 }

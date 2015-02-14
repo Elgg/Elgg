@@ -5,20 +5,18 @@
  * @package ElggGroups
  */
 
-$featured_groups = elgg_get_entities_from_metadata(array(
+elgg_push_context('widgets');
+
+$featured_groups = elgg_list_entities_from_metadata(array(
 	'metadata_name' => 'featured_group',
 	'metadata_value' => 'yes',
 	'type' => 'group',
-));
+	'full_view' => false,
+	'pagination' => false,
+		));
 
 if ($featured_groups) {
-
-	elgg_push_context('widgets');
-	$body = '';
-	foreach ($featured_groups as $group) {
-		$body .= elgg_view_entity($group, array('full_view' => false));
-	}
-	elgg_pop_context();
-
-	echo elgg_view_module('aside', elgg_echo("groups:featured"), $body);
+	echo elgg_view_module('aside', elgg_echo("groups:featured"), $featured_groups);
 }
+
+elgg_pop_context();

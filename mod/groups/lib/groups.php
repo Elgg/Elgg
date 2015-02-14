@@ -64,8 +64,7 @@ function groups_handle_all_page() {
 
 	$filter = elgg_view('groups/group_sort_menu', array('selected' => $selected_tab));
 
-	$sidebar = elgg_view('groups/sidebar/find');
-	$sidebar .= elgg_view('groups/sidebar/featured');
+	$sidebar = elgg_view('groups/sidebar');
 
 	$params = array(
 		'content' => $content,
@@ -94,8 +93,7 @@ function groups_search_page() {
 	);
 	$content = elgg_list_entities_from_metadata($params);
 
-	$sidebar = elgg_view('groups/sidebar/find');
-	$sidebar .= elgg_view('groups/sidebar/featured');
+	$sidebar = elgg_view('groups/sidebar');
 
 	$params = array(
 		'content' => $content,
@@ -290,33 +288,10 @@ function groups_handle_profile_page($guid) {
 	groups_register_profile_buttons($group);
 
 	$content = elgg_view('groups/profile/layout', array('entity' => $group));
-	$sidebar = '';
-
-	if (elgg_group_gatekeeper(false)) {
-		if (elgg_is_active_plugin('search')) {
-			$sidebar .= elgg_view('groups/sidebar/search', array('entity' => $group));
-		}
-		$sidebar .= elgg_view('groups/sidebar/members', array('entity' => $group));
-
-		$subscribed = false;
-		if (elgg_is_active_plugin('notifications')) {
-			$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
-			foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
-				$relationship = check_entity_relationship(elgg_get_logged_in_user_guid(),
-						'notify' . $method, $guid);
-
-				if ($relationship) {
-					$subscribed = true;
-					break;
-				}
-			}
-		}
-
-		$sidebar .= elgg_view('groups/sidebar/my_status', array(
-			'entity' => $group,
-			'subscribed' => $subscribed
-		));
-	}
+	$sidebar = elgg_view('groups/profile/sidebar', array(
+		'entity' => $group,
+		'subscribed' => groups_is_user_subscribed(),
+			));
 
 	$params = array(
 		'content' => $content,
@@ -612,4 +587,41 @@ function groups_prepare_form_vars($group = null) {
 	elgg_clear_sticky_form('groups');
 
 	return $values;
+}
+
+/**
+ * Checks if the user is subscribed to group notifications
+ *
+ * @param \ElggGroup $group Group entity (defaults to page owner)
+ * @param \ElggUser  $user  User entity (defaults to logged in user)
+ * @return bool
+ *
+ * @todo Use public API once #8145 is resolved
+ */
+function groups_is_user_subscribed($group = null, $user = null) {
+
+	if (is_null($group)) {
+		$group = elgg_get_page_owner_entity();
+	}
+
+	if (is_null($user)) {
+		$user = elgg_get_logged_in_user_entity();
+	}
+
+	if (!$group instanceof \ElggGroup || !$user instanceof \ElggUser) {
+		return false;
+	}
+
+	$subscribed = false;
+	$methods = array_keys(_elgg_services()->notifications->getMethodsAsDeprecatedGlobal());
+	$prefix = \Elgg\Notifications\SubscriptionsService::RELATIONSHIP_PREFIX;
+	foreach ($methods as $method) {
+		$relationship = check_entity_relationship($user->guid,  "$prefix$method", $group->guid);
+		if ($relationship) {
+			$subscribed = true;
+			break;
+		}
+	}
+
+	return $subscribed;
 }

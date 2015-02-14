@@ -5,6 +5,15 @@
  * @uses vars['entity'] ElggGroup
  */
 
+if (!elgg_is_active_plugin('search')) {
+	return;
+}
+
+$group = elgg_extract('entity', $vars);
+if (!$group instanceof \ElggGroup) {
+	return;
+}
+
 $url = elgg_get_site_url() . 'search';
 $body = elgg_view_form('groups/search', array(
 	'action' => $url,
