@@ -253,7 +253,8 @@ class CacheHandler {
 	 * @return void
 	 */
 	protected function loadEngine() {
-		require_once dirname(dirname(dirname(__FILE__))) . "/start.php";
+		$app = new \Elgg\Application();
+		$app->bootCore();
 	}
 
 	/**

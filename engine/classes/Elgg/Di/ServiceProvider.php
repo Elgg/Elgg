@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \Elgg\Database\Annotations               $annotations
  * @property-read \ElggAutoP                               $autoP
+ * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \ElggCrypto                              $crypto
  * @property-read \Elgg\Config                             $config
@@ -66,8 +67,20 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 * 
 	 * @param \Elgg\AutoloadManager $autoload_manager Class autoloader
 	 */
-	public function __construct(\Elgg\AutoloadManager $autoload_manager) {
-		$this->setValue('autoloadManager', $autoload_manager);
+	public function __construct() {
+
+		$this->setFactory('classLoader', function(ServiceProvider $c) {
+			$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
+			$loader->register();
+			return $loader;
+		});
+
+		$this->setFactory('autoloadManager', function(ServiceProvider $c) {
+			$manager = new \Elgg\AutoloadManager($c->classLoader);
+			$manager->setStorage($c->systemCache->getFileCache());
+			$manager->loadCache();
+			return $manager;
+		});
 
 		$this->setFactory('accessCache', function(ServiceProvider $c) {
 			return new \ElggStaticVariableCache('access');
@@ -91,7 +104,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('autoP', '\ElggAutoP');
 
-		$this->setClassName('config', '\Elgg\Config');
+		$this->setFactory('config', function(ServiceProvider $c) {
+			// TODO perhaps should inject \Elgg\Application and extract/inject config object from it instead
+			global $CONFIG;
+			return new \Elgg\Config($CONFIG);
+		});
 
 		$this->setClassName('configTable', '\Elgg\Database\ConfigTable');
 

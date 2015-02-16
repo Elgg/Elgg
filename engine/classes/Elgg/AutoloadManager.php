@@ -193,5 +193,9 @@ class AutoloadManager {
 	public function setStorage(\ElggCache $storage) {
 		$this->storage = $storage;
 	}
+
+	public function __destruct() {
+		$this->saveCache();
+	}
 }
 

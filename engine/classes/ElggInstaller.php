@@ -737,9 +737,10 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function bootstrapEngine() {
-		
 
-		require_once $this->CONFIG->path . 'engine/load.php';
+		$app = new \Elgg\Application();
+
+		$app->loadCore();
 	}
 
 	/**

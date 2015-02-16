@@ -17,14 +17,15 @@ class Config {
 	 * 
 	 * @var \stdClass
 	 */
-	private $CONFIG;
+	private $config;
 
 	/**
 	 * Constructor
+	 *
+	 * @param \stdClass $config Elgg's $CONFIG object
 	 */
-	public function __construct() {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct(\stdClass $config) {
+		$this->config = $config;
 	}
 
 	/**
@@ -36,7 +37,7 @@ class Config {
 	function getSiteUrl($site_guid = 0) {
 		if ($site_guid == 0) {
 			
-			return $this->CONFIG->wwwroot;
+			return $this->config->wwwroot;
 		}
 	
 		$site = get_entity($site_guid);
@@ -56,7 +57,7 @@ class Config {
 	 */
 	function getPluginsPath() {
 		
-		return $this->CONFIG->pluginspath;
+		return $this->config->pluginspath;
 	}
 	
 	/**
@@ -66,7 +67,7 @@ class Config {
 	 */
 	function getDataPath() {
 		
-		return $this->CONFIG->dataroot;
+		return $this->config->dataroot;
 	}
 	
 	/**
@@ -76,7 +77,7 @@ class Config {
 	 */
 	function getRootPath() {
 		
-		return $this->CONFIG->path;
+		return $this->config->path;
 	}
 	
 	/**
@@ -92,9 +93,9 @@ class Config {
 	
 		$name = trim($name);
 	
-		// do not return $CONFIG value if asking for non-current site
-		if (($site_guid === 0 || $site_guid === null || $site_guid == $this->CONFIG->site_guid) && isset($this->CONFIG->$name)) {
-			return $this->CONFIG->$name;
+		// do not return $config value if asking for non-current site
+		if (($site_guid === 0 || $site_guid === null || $site_guid == $this->config->site_guid) && isset($this->config->$name)) {
+			return $this->config->$name;
 		}
 	
 		if ($site_guid === null) {
@@ -102,11 +103,11 @@ class Config {
 			$value = _elgg_services()->datalist->get($name);
 		} else {
 			if ($site_guid == 0) {
-				$site_guid = (int) $this->CONFIG->site_guid;
+				$site_guid = (int) $this->config->site_guid;
 			}
 	
 			// hit DB only if we're not sure if value isn't already loaded
-			if (!isset($this->CONFIG->site_config_loaded) || $site_guid != $this->CONFIG->site_guid) {
+			if (!isset($this->config->site_config_loaded) || $site_guid != $this->config->site_guid) {
 				// site specific setting
 				$value = _elgg_services()->configTable->get($name, $site_guid);
 			} else {
@@ -119,8 +120,8 @@ class Config {
 			return null;
 		}
 	
-		if ($site_guid == $this->CONFIG->site_guid || $site_guid === null) {
-			$this->CONFIG->$name = $value;
+		if ($site_guid == $this->config->site_guid || $site_guid === null) {
+			$this->config->$name = $value;
 		}
 	
 		return $value;
@@ -141,7 +142,7 @@ class Config {
 	
 		$name = trim($name);
 	
-		$this->CONFIG->$name = $value;
+		$this->config->$name = $value;
 	}
 	
 	/**
@@ -170,12 +171,12 @@ class Config {
 			$result = _elgg_services()->datalist->set($name, $value);
 		} else {
 			if ($site_guid == 0) {
-				$site_guid = (int) $this->CONFIG->site_guid;
+				$site_guid = (int) $this->config->site_guid;
 			}
 			$result = _elgg_services()->configTable->set($name, $value, $site_guid);
 		}
 	
-		if ($site_guid === null || $site_guid == $this->CONFIG->site_guid) {
+		if ($site_guid === null || $site_guid == $this->config->site_guid) {
 			_elgg_services()->config->set($name, $value);
 		}
 	
