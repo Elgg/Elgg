@@ -243,13 +243,13 @@ function get_missing_language_keys($language) {
  * @return void
  */
 function _elgg_translations_init() {
-	$translations = _elgg_services()->translator->getInstalledTranslations();
-	foreach ($translations as $key => $language) {
+	$translations = _elgg_services()->translator->getAllLanguageCodes();
+	foreach ($translations as $language_code) {
 		// make the js view available for each language
-		elgg_extend_view("js/languages/$key.js", "js/languages");
-		
+		elgg_extend_view("js/languages/$language_code.js", "js/languages");
+	
 		// register the js view for use in simplecache
-		elgg_register_simplecache_view("js/languages/$key.js");
+		elgg_register_simplecache_view("js/languages/$language_code.js");
 	}
 }
 
