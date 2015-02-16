@@ -144,7 +144,26 @@ function _elgg_comment_url_handler($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	return $container->getURL();
+	// this won't work with threaded comments, but core doesn't support that yet
+	$count = elgg_get_entities([
+		'type' => 'object',
+		'subtype' => $entity->getSubtype(),
+		'container_guid' => $container->guid,
+		'count' => true,
+		'wheres' => ["e.guid < " . (int)$entity->guid],
+	]);
+	$limit = (int)get_input('limit');
+	if (!$limit) {
+		$limit = 25;
+	}
+	$offset = floor($count / $limit) * $limit;
+	if (!$offset) {
+		$offset = null;
+	}
+
+	return elgg_http_add_url_query_elements($container->getURL(), [
+		'offset' => $offset,
+	]) . "#elgg-object-{$entity->guid}";
 }
 
 /**

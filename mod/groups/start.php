@@ -900,18 +900,44 @@ function discussion_page_handler($page) {
 function discussion_set_topic_url($hook, $type, $url, $params) {
 	$entity = $params['entity'];
 
-	if (elgg_instanceof($entity, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
-		$topic = $entity->getContainerEntity();
-		$title = elgg_get_friendly_title($topic->title);
-		return "discussion/view/{$topic->guid}/{$title}";
+	if (!$entity instanceof ElggObject) {
+		return;
 	}
 
-	if (elgg_instanceof($entity, 'object', 'groupforumtopic')) {
+	if ($entity->getSubtype() === 'groupforumtopic') {
 		$title = elgg_get_friendly_title($entity->title);
 		return "discussion/view/{$entity->guid}/{$title}";
 	}
 
-	return $url;
+	if (!$entity instanceof ElggDiscussionReply) {
+		return;
+	}
+
+	// start with topic URL
+	$topic = $entity->getContainerEntity();
+	$title = elgg_get_friendly_title($topic->title);
+	$url = "discussion/view/{$topic->guid}/{$title}";
+
+	// this won't work with threaded comments, but core doesn't support that yet
+	$count = elgg_get_entities([
+		'type' => 'object',
+		'subtype' => $entity->getSubtype(),
+		'container_guid' => $topic->guid,
+		'count' => true,
+		'wheres' => ["e.guid < " . (int)$entity->guid],
+	]);
+	$limit = (int)get_input('limit', 0);
+	if (!$limit) {
+		$limit = _elgg_services()->config->get('default_limit');
+	}
+	$offset = floor($count / $limit) * $limit;
+	if (!$offset) {
+		$offset = null;
+	}
+
+	return elgg_http_add_url_query_elements($url, [
+		'offset' => $offset,
+	]) . "#elgg-object-{$entity->guid}";
 }
 
 /**
