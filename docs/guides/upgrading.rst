@@ -12,12 +12,14 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.11 to 2.0
 ================
 
-Removed Functions
------------------
+Removed Functions and Scripts
+-----------------------------
 
  - get_db_error()
  - execute_delayed_query()
  - get_db_link()
+ - load_plugins()
+ - mod/groups/icon.php
 
 Callbacks in Queries
 --------------------
@@ -67,6 +69,17 @@ The following views received ``label`` elements around some of the input fields.
 - views/default/forms/admin/plugins/filter.php
 - views/default/forms/admin/plugins/sort.php
 - views/default/forms/login.php
+
+engine/start.php is deprecated
+------------------------------
+
+Plugins should use the class ``Elgg\Application`` to boot Elgg. Typical usage:
+
+.. code:: php
+
+    // boot Elgg in mod/myplugin/foo.php
+    require_once dirname(dirname(__DIR__)) . '/autoloader.php';
+    (new \Elgg\Application)->bootCore();
 
 From 1.10 to 1.11
 =================

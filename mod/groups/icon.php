@@ -5,7 +5,9 @@
  * @package ElggGroups
  */
 
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+if (!isset($page)) {
+	die('This file cannot be called directly.');
+}
 
 $group_guid = get_input('group_guid');
 

@@ -80,26 +80,18 @@ The object/<subtype> view
 Actions
 -------
 
-Actions are transient states to perform an action such as updating the database or sending a notification to a user. Used correctly, actions are secure and prevent against CSRF and XSS attacks.
+Actions are transient states to perform an action such as updating the database or sending a notification to a user. Used correctly, actions provide a level of access control and prevent against CSRF attacks.
 
-.. note::
+Actions require action (CSRF) tokens to be submitted via GET/POST, but these are added automatically by elgg_view_form() and by using the ``is_action`` argument of the ``output/url`` view.
 
-   As of Elgg 1.7 all actions require action tokens.
-   
 Action best practices
 ^^^^^^^^^^^^^^^^^^^^^
 
-Never call an action directly by saying:
-
-.. code:: html
-
-   ...href="/mod/mymod/actions/myaction.php"
-
-This circumvents the security systems in Elgg.
-
-There is no need to include the ``engine/start.php`` file in your actions. Actions should never be called directly, so the engine will be started automatically when called correctly.
+Action files are included within Elgg's action system; like views, they are *not* regular scripts executable by users. Do not boot the Elgg core in your file and direct users to load it directly.
 
 Because actions are time-sensitive they are not suitable for links in emails or other delayed notifications. An example of this would be invitations to join a group. The clean way to create an invitation link is to create a page handler for invitations and email that link to the user. It is then the page handler's responsibility to create the action links for a user to join or ignore the invitation request.
+
+Consider that actions may be submitted via XHR requests, not just links or form submissions.
 
 Directly calling a file
 -----------------------

@@ -10,15 +10,18 @@ namespace Elgg;
  */
 class CacheHandler {
 
-	protected $config;
+	/**
+	 * @var Application
+	 */
+	private $application;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \stdClass $config Elgg config object
+	 * @param Application $app Elgg Application
 	 */
-	public function __construct($config) {
-		$this->config = $config;
+	public function __construct(Application $app) {
+		$this->application = $app;
 	}
 
 	/**
@@ -29,6 +32,8 @@ class CacheHandler {
 	 * @return void
 	 */
 	public function handleRequest($get_vars, $server_vars) {
+		$config = $this->application->getConfig();
+
 		if (empty($get_vars['request'])) {
 			$this->send403();
 		}
@@ -45,8 +50,11 @@ class CacheHandler {
 		// this may/may not have to connect to the DB
 		$this->setupSimplecache();
 
-		if (!$this->config->simplecache_enabled) {
-			$this->loadEngine();
+		// we can't use $config->get yet. It fails before the core is booted
+		if (!$config->getVolatile('simplecache_enabled')) {
+
+			$this->application->bootCore();
+
 			if (!_elgg_is_view_cacheable($view)) {
 				$this->send403();
 			} else {
@@ -62,28 +70,28 @@ class CacheHandler {
 			exit;
 		}
 
-		$filename = $this->config->dataroot . 'views_simplecache/' . md5("$viewtype|$view");
+		$filename = $config->getVolatile('dataroot') . 'views_simplecache/' . md5("$viewtype|$view");
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag);
 			readfile($filename);
 			exit;
 		}
 
-		$this->loadEngine();
+		$this->application->bootCore();
 
 		elgg_set_viewtype($viewtype);
 		if (!_elgg_is_view_cacheable($view)) {
 			$this->send403();
 		}
 
-		$cache_timestamp = (int)_elgg_services()->config->get('lastcache');
+		$cache_timestamp = (int)$config->get('lastcache');
 
 		if ($cache_timestamp == $ts) {
 			$this->sendCacheHeaders($etag);
 
 			$content = $this->getProcessedView($view, $viewtype);
 
-			$dir_name = $this->config->dataroot . 'views_simplecache/';
+			$dir_name = $config->getDataPath() . 'views_simplecache/';
 			if (!is_dir($dir_name)) {
 				mkdir($dir_name, 0700);
 			}
@@ -134,12 +142,16 @@ class CacheHandler {
 	 * @return void
 	 */
 	protected function setupSimplecache() {
-		if (!empty($this->config->dataroot) && isset($this->config->simplecache_enabled)) {
+		// we can't use Elgg\Config::get yet. It fails before the core is booted
+		$config = $this->application->getConfig();
+		$config->loadSettingsFile();
+
+		if ($config->getVolatile('dataroot') && $config->getVolatile('simplecache_enabled') !== null) {
+			// we can work with these...
 			return;
 		}
 
-		$db_config = new Database\Config($this->config);
-		$db = new Database($db_config, new Logger(new PluginHooksService()));
+		$db = $this->application->getDb();
 
 		try {
 			$rows = $db->getData("
@@ -160,10 +172,10 @@ class CacheHandler {
 		}
 
 		foreach ($rows as $row) {
-			$this->config->{$row->name} = $row->value;
+			$config->set($row->name, $row->value);
 		}
 
-		if (empty($this->config->dataroot)) {
+		if (!$config->getVolatile('dataroot')) {
 			$this->send403('Cache error: unable to get the data root');
 		}
 	}
@@ -234,7 +246,7 @@ class CacheHandler {
 		}
 
 		// disable error reporting so we don't cache problems
-		_elgg_services()->config->set('debug', null);
+		$this->application->getConfig()->set('debug', null);
 
 		// @todo elgg_view() checks if the page set is done (isset($CONFIG->pagesetupdone)) and
 		// triggers an event if it's not. Calling elgg_view() here breaks submenus
@@ -242,18 +254,9 @@ class CacheHandler {
 		// contexts can be correctly set (since this is called before page_handler()).
 		// To avoid this, lie about $CONFIG->pagehandlerdone to force
 		// the trigger correctly when the first view is actually being output.
-		_elgg_services()->config->set('pagesetupdone', true);
+		$this->application->getConfig()->set('pagesetupdone', true);
 
 		return elgg_view($view);
-	}
-
-	/**
-	 * Load the complete Elgg engine
-	 *
-	 * @return void
-	 */
-	protected function loadEngine() {
-		require_once dirname(dirname(dirname(__FILE__))) . "/start.php";
 	}
 
 	/**

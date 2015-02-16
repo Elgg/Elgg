@@ -15,7 +15,7 @@ The plugin's page handler is passed two parameters:
 Code flow
 ---------
 
-Pages in plugins should be served only through page handlers, stored in ``pages/`` of your plugin's directory and do not need to ``include`` or ``require`` Elgg's ``engine/start.php`` file. The purpose of these files are to knit together output from different views to form the page that the user sees. The program flow is something like this:
+Pages in plugins should be served only through page handlers, stored in ``pages/`` of your plugin's directory and do not need to use ``Elgg\Application``. The purpose of these files are to knit together output from different views to form the page that the user sees. The program flow is something like this:
 
 1. A user requests ``/plugin_name/section/entity``
 2. Elgg checks if ``plugin_name`` is registered to a page handler and calls that function, passing ``array('section', 'entity')`` as the first argument

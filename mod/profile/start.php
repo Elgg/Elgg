@@ -132,8 +132,7 @@ function profile_set_icon_url($hook, $type, $url, $params) {
 
 	try {
 		if ($filehandler->exists()) {
-			$join_date = $user->getTimeCreated();
-			return "mod/profile/icondirect.php?lastcache=$icon_time&joindate=$join_date&guid=$user_guid&size=$size";
+			return "mod/profile/icondirect.php?lastcache=$icon_time&guid=$user_guid&size=$size";
 		}
 	} catch (InvalidParameterException $e) {
 		elgg_log("Unable to get profile icon for user with GUID $user_guid", 'ERROR');
