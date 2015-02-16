@@ -39,6 +39,8 @@ return array(
 	'actionnotfound' => "The action file for %s was not found.",
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
+	
+	'ajax:error' => 'Unexpected error while performing an AJAX call. Maybe the connection to the server is lost.',
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
