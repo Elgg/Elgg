@@ -294,6 +294,9 @@ Files
 Other
 =====
 
+**config, comments_per_page**
+	Filters the number of comments displayed per page. Default is 25.
+
 **default, access**
 	In get_default_access(), this hook filters the return value, so it can be used to alter
 	the default value in the input/access view. For core plugins, the value "input_params" has

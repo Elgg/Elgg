@@ -154,7 +154,7 @@ function _elgg_comment_url_handler($hook, $type, $return, $params) {
 	]);
 	$limit = (int)get_input('limit');
 	if (!$limit) {
-		$limit = 25;
+		$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
 	}
 	$offset = floor($count / $limit) * $limit;
 	if (!$offset) {
