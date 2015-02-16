@@ -3,7 +3,6 @@
 namespace Elgg\Views;
 
 /**
- * 
  * @access private
  */
 class Viewtype {

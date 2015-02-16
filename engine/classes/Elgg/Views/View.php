@@ -5,10 +5,6 @@ use Elgg\Filesystem\File;
 use Elgg\DeprecationWrapper;
 
 /**
- * @package    Elgg.Core
- * @subpackage Views
- * @since      1.10
- * 
  * @access private
  */
 class View {
