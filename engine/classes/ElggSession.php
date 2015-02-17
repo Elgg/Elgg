@@ -15,6 +15,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * Warning: You can not access multidimensional arrays through \ArrayAccess like
  * this $session['foo']['bar']
  *
+ * Note: this extends Elgg\Access purely to provide BC for elgg_get_access_object().
+ *
+ * @todo Remove the Elgg\Access extension.
+ *
+ *
  * @package    Elgg.Core
  * @subpackage Session
  * @see        elgg_get_session()

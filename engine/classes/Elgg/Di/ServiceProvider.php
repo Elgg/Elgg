@@ -140,7 +140,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $this->resolveLoggerDependencies('logger');
 		});
 
-		$this->setClassName('metadataCache', '\ElggVolatileMetadataCache');
+		$this->setFactory('metadataCache', function (ServiceProvider $c) {
+			return new \ElggVolatileMetadataCache($c->session);
+		});
 
 		$this->setFactory('metadataTable', function(ServiceProvider $c) {
 			// TODO(ewinslow): Use Elgg\Cache\Pool instead of MetadataCache

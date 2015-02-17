@@ -1,262 +1,125 @@
 <?php
+
 /**
- * \ElggVolatileMetadataCache
  * In memory cache of known metadata values stored by entity.
- *
- * @package    Elgg.Core
- * @subpackage Cache
  *
  * @access private
  */
 class ElggVolatileMetadataCache {
 
 	/**
-	 * The cached values (or null for known to be empty). If the portion of the cache
-	 * is synchronized, missing values are assumed to indicate that values do not
-	 * exist in storage, otherwise, we don't know what's there.
+	 * The cached values (or null for known to be empty).
 	 *
 	 * @var array
 	 */
 	protected $values = array();
 
 	/**
-	 * Does the cache know that it contains all names fetch-able from storage?
-	 * The keys are entity GUIDs and either the value exists (true) or it's not set.
+	 * @var ElggSession
+	 */
+	protected $session;
+
+	/**
+	 * @var string
+	 */
+	protected $last_access_state;
+
+	/**
+	 * Constructor
 	 *
-	 * @var array
+	 * @param ElggSession $session The session service
 	 */
-	protected $isSynchronized = array();
+	public function __construct(ElggSession $session) {
+		$this->session = $session;
+	}
 
 	/**
-	 * @var null|bool
-	 */
-	protected $ignoreAccess = null;
-
-	/**
-	 * Cache metadata for an entity
-	 * 
+	 * Set the visible metadata for an entity in the cache
+	 *
+	 * Note this does NOT invalidate any other part of the cache.
+	 *
 	 * @param int   $entity_guid The GUID of the entity
 	 * @param array $values      The metadata values to cache
 	 * @return void
-	 */
-	public function saveAll($entity_guid, array $values) {
-		if (!$this->getIgnoreAccess()) {
-			$this->values[$entity_guid] = $values;
-			$this->isSynchronized[$entity_guid] = true;
-		}
-	}
-
-	/**
-	 * Get the metadata for an entity
-	 * 
-	 * @param int $entity_guid The GUID of the entity
-	 * @return array
-	 */
-	public function loadAll($entity_guid) {
-		if (isset($this->values[$entity_guid])) {
-			return $this->values[$entity_guid];
-		} else {
-			return array();
-		}
-	}
-
-	/**
-	 * Declare that there may be fetch-able metadata names in storage that this
-	 * cache doesn't know about
 	 *
-	 * @param int $entity_guid The GUID of the entity
-	 * @return void
+	 * @access private For testing only
 	 */
-	public function markOutOfSync($entity_guid) {
-		unset($this->isSynchronized[$entity_guid]);
+	public function inject($entity_guid, array $values) {
+		$this->values[$this->getAccessKey()][$entity_guid] = $values;
 	}
 
 	/**
-	 * Have all the metadata for this entity been cached?
-	 * 
-	 * @param int $entity_guid The GUID of the entity
-	 * @return bool
-	 */
-	public function isSynchronized($entity_guid) {
-		return isset($this->isSynchronized[$entity_guid]);
-	}
-
-	/**
-	 * Cache a piece of metadata
-	 * 
-	 * @param int                   $entity_guid    The GUID of the entity
-	 * @param string                $name           The metadata name
-	 * @param array|int|string|null $value          The metadata value. null means it is 
-	 *                                              known that there is no fetch-able 
-	 *                                              metadata under this name
-	 * @param bool                  $allow_multiple Can the metadata be an array
-	 * @return void
-	 */
-	public function save($entity_guid, $name, $value, $allow_multiple = false) {
-		if ($this->getIgnoreAccess()) {
-			// we don't know if what gets saves here will be available to user once
-			// access control returns, hence it's best to forget :/
-			$this->markUnknown($entity_guid, $name);
-		} else {
-			if ($allow_multiple) {
-				if ($this->isKnown($entity_guid, $name)) {
-					$existing = $this->load($entity_guid, $name);
-					if ($existing !== null) {
-						$existing = (array) $existing;
-						$existing[] = $value;
-						$value = $existing;
-					}
-				} else {
-					// we don't know whether there are unknown values, so it's
-					// safest to leave that assumption
-					$this->markUnknown($entity_guid, $name);
-					return;
-				}
-			}
-			$this->values[$entity_guid][$name] = $value;
-		}
-	}
-
-	/**
-	 * Warning: You should always call isKnown() beforehand to verify that this
-	 * function's return value should be trusted (otherwise a null return value
-	 * is ambiguous).
+	 * Get the metadata for a particular name. Note, this can return an array of values.
+	 *
+	 * Warning: You should always call isLoaded() beforehand to verify that this
+	 * function's return value can be trusted.
+	 *
+	 * @see isLoaded
 	 *
 	 * @param int    $entity_guid The GUID of the entity
 	 * @param string $name        The metadata name
+	 *
 	 * @return array|string|int|null null = value does not exist
 	 */
-	public function load($entity_guid, $name) {
-		if (isset($this->values[$entity_guid]) && array_key_exists($name, $this->values[$entity_guid])) {
-			return $this->values[$entity_guid][$name];
+	public function getSingle($entity_guid, $name) {
+		$access_key = $this->getAccessKey();
+
+		if (isset($this->values[$access_key][$entity_guid])
+				&& array_key_exists($name, $this->values[$access_key][$entity_guid])) {
+			return $this->values[$access_key][$entity_guid][$name];
 		} else {
 			return null;
 		}
 	}
 
 	/**
-	 * Forget about this metadata entry. We don't want to try to guess what the
-	 * next fetch from storage will return
-	 *
-	 * @param int    $entity_guid The GUID of the entity
-	 * @param string $name        The metadata name
-	 * @return void
-	 */
-	public function markUnknown($entity_guid, $name) {
-		unset($this->values[$entity_guid][$name]);
-		$this->markOutOfSync($entity_guid);
-	}
-
-	/**
-	 * If true, load() will return an accurate value for this name
-	 *
-	 * @param int    $entity_guid The GUID of the entity
-	 * @param string $name        The metadata name
-	 * @return bool
-	 */
-	public function isKnown($entity_guid, $name) {
-		if (isset($this->isSynchronized[$entity_guid])) {
-			return true;
-		} else {
-			return (isset($this->values[$entity_guid]) && array_key_exists($name, $this->values[$entity_guid]));
-		}
-
-	}
-
-	/**
-	 * Declare that metadata under this name is known to be not fetch-able from storage
-	 *
-	 * @param int    $entity_guid The GUID of the entity
-	 * @param string $name        The metadata name
-	 * @return array
-	 */
-	public function markEmpty($entity_guid, $name) {
-		$this->values[$entity_guid][$name] = null;
-	}
-
-	/**
-	 * Forget about all metadata for an entity
+	 * Forget about all metadata for an entity. For safety this affects all access states.
 	 *
 	 * @param int $entity_guid The GUID of the entity
 	 * @return void
 	 */
 	public function clear($entity_guid) {
-		unset($this->values[$entity_guid]);
-		$this->markOutOfSync($entity_guid);
+		foreach (array_keys($this->values) as $access_key) {
+			unset($this->values[$access_key][$entity_guid]);
+		}
 	}
 
 	/**
-	 * Clear entire cache and mark all entities as out of sync
-	 * 
-	 * @return void
-	 */
-	public function flush() {
-		$this->values = array();
-		$this->isSynchronized = array();
-	}
-
-	/**
-	 * Use this value instead of calling elgg_get_ignore_access(). By default that
-	 * function will be called.
+	 * If true, getSingle() will return an accurate values from the DB
 	 *
-	 * This setting makes this component a little more loosely-coupled.
-	 *
-	 * @param bool $ignore Whether to ignore access or not
-	 * @return void
-	 */
-	public function setIgnoreAccess($ignore) {
-		$this->ignoreAccess = (bool) $ignore;
-	}
-
-	/**
-	 * Tell the cache to call elgg_get_ignore_access() to determing access status.
-	 * 
-	 * @return void
-	 */
-	public function unsetIgnoreAccess() {
-		$this->ignoreAccess = null;
-	}
-
-	/**
-	 * Get the ignore access value
-	 * 
+	 * @param int $entity_guid The GUID of the entity
 	 * @return bool
 	 */
-	protected function getIgnoreAccess() {
-		if (null === $this->ignoreAccess) {
-			return elgg_get_ignore_access();
-		} else {
-			return $this->ignoreAccess;
+	public function isLoaded($entity_guid) {
+		$access_key = $this->getAccessKey();
+
+		if (empty($this->values[$access_key])) {
+			return false;
 		}
+		return array_key_exists($entity_guid, $this->values[$access_key]);
+	}
+
+	/**
+	 * Clear entire cache
+	 * 
+	 * @return void
+	 */
+	public function clearAll() {
+		$this->values = array();
 	}
 
 	/**
 	 * Invalidate based on options passed to the global *_metadata functions
 	 *
-	 * @param string $action  Action performed on metadata. "delete", "disable", or "enable"
-	 * @param array  $options Options passed to elgg_(delete|disable|enable)_metadata
-	 *                         "guid" if given, invalidation will be limited to this entity
-	 *                         "metadata_name" if given, invalidation will be limited to metadata with this name
+	 * @param array $options Options passed to elgg_(delete|disable|enable)_metadata
+	 *                       "guid" if given, invalidation will be limited to this entity
 	 * @return void
 	 */
-	public function invalidateByOptions($action, array $options) {
-		// remove as little as possible, optimizing for common cases
+	public function invalidateByOptions(array $options) {
 		if (empty($options['guid'])) {
-			// safest to clear everything unless we want to make this even more complex :(
-			$this->flush();
+			$this->clearAll();
 		} else {
-			if (empty($options['metadata_name'])) {
-				// safest to clear the whole entity
-				$this->clear($options['guid']);
-			} else {
-				switch ($action) {
-					case 'delete':
-						$this->markEmpty($options['guid'], $options['metadata_name']);
-						break;
-					default:
-						$this->markUnknown($options['guid'], $options['metadata_name']);
-				}
-			}
+			$this->clear($options['guid']);
 		}
 	}
 
@@ -270,6 +133,9 @@ class ElggVolatileMetadataCache {
 		if (empty($guids)) {
 			return;
 		}
+
+		$access_key = $this->getAccessKey();
+
 		if (!is_array($guids)) {
 			$guids = array($guids);
 		}
@@ -278,7 +144,7 @@ class ElggVolatileMetadataCache {
 		// could be useful at some point in future
 		//$guids = $this->filterMetadataHeavyEntities($guids);
 
-		$db_prefix = _elgg_services()->config->get('dbprefix');
+		$db_prefix = _elgg_services()->db->getTablePrefix();
 		$options = array(
 			'guids' => $guids,
 			'limit' => 0,
@@ -294,7 +160,12 @@ class ElggVolatileMetadataCache {
 			// @todo don't know why this is necessary
 			'wheres' => array(_elgg_get_access_where_sql(array('table_alias' => 'n_table'))),
 		);
-		$data = elgg_get_metadata($options);
+		$data = _elgg_services()->metadataTable->getAll($options);
+
+		// make sure we show all entities as loaded
+		foreach ($guids as $guid) {
+			$this->values[$access_key][$guid] = null;
+		}
 
 		// build up metadata for each entity, save when GUID changes (or data ends)
 		$last_guid = null;
@@ -306,7 +177,7 @@ class ElggVolatileMetadataCache {
 			$guid = $row->entity_guid;
 			if ($guid !== $last_guid) {
 				if ($last_guid) {
-					$this->saveAll($last_guid, $metadata);
+					$this->values[$access_key][$last_guid] = $metadata;
 				}
 				$metadata = array();
 			}
@@ -317,7 +188,7 @@ class ElggVolatileMetadataCache {
 				$metadata[$name] = $value;
 			}
 			if (($i == $last_row_idx)) {
-				$this->saveAll($guid, $metadata);
+				$this->values[$access_key][$guid] = $metadata;
 			}
 			$last_guid = $guid;
 		}
@@ -344,7 +215,7 @@ class ElggVolatileMetadataCache {
 			'order_by' => 'n_table.entity_guid, n_table.time_created ASC',
 			'group_by' => 'n_table.entity_guid',
 		);
-		$data = elgg_get_metadata($options);
+		$data = _elgg_services()->metadataTable->getAll($options);
 		// don't cache if metadata for entity is over 10MB (or rolled INT)
 		foreach ($data as $row) {
 			if ($row->bytes > $limit || $row->bytes < 0) {
@@ -352,5 +223,17 @@ class ElggVolatileMetadataCache {
 			}
 		}
 		return $guids;
+	}
+
+	/**
+	 * Get a key to represent the access ability of the system. This is used to shard the cache array.
+	 *
+	 * @return string E.g. "ignored" or "123"
+	 */
+	protected function getAccessKey() {
+		if ($this->session->getIgnoreAccess()) {
+			return "ignored";
+		}
+		return (string)$this->session->getLoggedInUserGuid();
 	}
 }
