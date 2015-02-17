@@ -1624,6 +1624,10 @@ function elgg_views_boot() {
 		'deps' => array('jquery'),
 		'exports' => 'jQuery.fn.ajaxForm',
 	));
+	elgg_define_js('jquery.ui', array(
+		'src' => '/vendors/jquery/jquery-ui-1.10.4.min.js',
+		'deps' => array('jquery'),
+	));
 
 	$elgg_js_url = elgg_get_simplecache_url('js', 'elgg');
 	elgg_register_js('elgg', $elgg_js_url, 'head');

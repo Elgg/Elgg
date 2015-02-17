@@ -17,8 +17,6 @@
  * When this happens, a hidden input is created to return the GUID in the array with the form
  */
 
-elgg_load_js('jquery.ui.autocomplete.html');
-
 if (empty($vars['name'])) {
 	$vars['name'] = 'members';
 }
