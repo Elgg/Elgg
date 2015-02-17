@@ -51,8 +51,8 @@ foreach ($profile_fields as $shortname => $valuetype) {
 		forward(REFERER);
 	}
 
-	if ($value && $valuetype == 'url' && !preg_match('~^https?\://~i', $value)) {
-		$value = "http://$value";
+	if ($value && $valuetype == 'url') {
+		$value = elgg_normalize_url($value);
 	}
 
 	if ($valuetype == 'tags') {
