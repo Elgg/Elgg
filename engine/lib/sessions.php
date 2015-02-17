@@ -332,12 +332,14 @@ function login(\ElggUser $user, $persistent = false) {
 	// #5933: set logged in user early so code in login event will be able to
 	// use elgg_get_logged_in_user_entity().
 	$session->setLoggedInUser($user);
+	_elgg_services()->metadataCache->flush();
 
 	// deprecate event
 	$message = "The 'login' event was deprecated. Register for 'login:before' or 'login:after'";
 	$version = "1.9";
 	if (!elgg_trigger_deprecated_event('login', 'user', $user, $message, $version)) {
 		$session->removeLoggedInUser();
+		_elgg_services()->metadataCache->flush();
 		throw new \LoginException(elgg_echo('LoginException:Unknown'));
 	}
 
@@ -392,6 +394,7 @@ function logout() {
 	// pass along any messages into new session
 	$old_msg = $session->get('msg');
 	$session->invalidate();
+	_elgg_services()->metadataCache->flush();
 	$session->set('msg', $old_msg);
 
 	elgg_trigger_after_event('logout', 'user', $user);
@@ -420,16 +423,19 @@ function _elgg_session_boot() {
 		if (!$user) {
 			// OMG user has been deleted.
 			$session->invalidate();
+			_elgg_services()->metadataCache->flush();
 			forward('');
 		}
 
 		$session->setLoggedInUser($user);
+		_elgg_services()->metadataCache->flush();
 
 		_elgg_services()->persistentLogin->replaceLegacyToken($user);
 	} else {
 		$user = _elgg_services()->persistentLogin->bootSession();
 		if ($user) {
 			$session->setLoggedInUser($user);
+			_elgg_services()->metadataCache->flush();
 		}
 	}
 
