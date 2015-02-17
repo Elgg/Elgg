@@ -610,7 +610,6 @@ three sections:
 	'admin:plugins:label:contributors:description' => 'Description',
 	'admin:plugins:label:dependencies' => 'Dependencies',
 
-	'admin:plugins:warning:elgg_version_unknown' => 'This plugin uses a legacy manifest file and does not specify a compatible Elgg version. It probably will not work!',
 	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
 	'admin:plugins:warning:invalid' => 'This plugin is invalid: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Check <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> for troubleshooting tips.',

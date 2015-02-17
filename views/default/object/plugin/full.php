@@ -251,14 +251,6 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 				<h3><?php echo $plugin->getManifest()->getName() . " $version $settings_link"; ?></h3>
 			</div>
 			<?php
-			if ($plugin->getManifest()->getApiVersion() < 1.8) {
-				$reqs = $plugin->getManifest()->getRequires();
-				if (!$reqs) {
-					$message = elgg_echo('admin:plugins:warning:elgg_version_unknown');
-					echo "<p class=\"elgg-state-error\">$message</p>";
-				}
-			}
-	
 			if (!$can_activate) {
 				if ($active) {
 					$message = elgg_echo('admin:plugins:warning:unmet_dependencies_active');

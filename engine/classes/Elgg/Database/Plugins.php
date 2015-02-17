@@ -705,7 +705,6 @@ class Plugins {
 		$strings['type'] = $translator->translate('ElggPlugin:Dependencies:' . ucwords($dep_system));
 	
 		switch ($type) {
-			case 'elgg_version':
 			case 'elgg_release':
 				// 'Elgg Version'
 				$strings['name'] = $translator->translate('ElggPlugin:Dependencies:Elgg');
