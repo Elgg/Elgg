@@ -17,10 +17,36 @@ function likes_init() {
 	// registered with priority < 500 so other plugins can remove likes
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'likes_river_menu_setup', 400);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'likes_entity_menu_setup', 400);
+	elgg_register_plugin_hook_handler('permissions_check', 'annotation', 'likes_permissions_check');
 
 	$actions_base = elgg_get_plugins_path() . 'likes/actions/likes';
 	elgg_register_action('likes/add', "$actions_base/add.php");
 	elgg_register_action('likes/delete', "$actions_base/delete.php");
+}
+
+/**
+ * Only allow annotation owner (or someone who can edit the owner, like an admin) to delete like
+ * 
+ * @param string $hook   "permissions_check"
+ * @param string $type   "annotation"
+ * @param array  $return Current value
+ * @param array  $params Hook parameters
+ * 
+ * @return bool
+ */
+function likes_permissions_check($hook, $type, $return, $params) {
+	
+	$annotation = elgg_extract('annotation', $params);
+	if (!$annotation || $annotation->name !== 'likes') {
+		return $return;
+	}
+	
+	$owner = $annotation->getOwnerEntity();
+	if (!$owner) {
+		return $return;
+	}
+	
+	return $owner->canEdit();
 }
 
 /**
