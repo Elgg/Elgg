@@ -491,7 +491,8 @@ class EntityTable {
 
 		if ($guids) {
 			// there were entities in the result set, preload metadata for them
-			_elgg_services()->metadataCache->populateFromEntities($guids);
+			$access = _elgg_services()->access->getState();
+			_elgg_services()->metadataCache->populateFromEntities($guids, $access);
 		}
 
 		if (count($results) > 1) {

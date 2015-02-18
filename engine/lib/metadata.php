@@ -385,20 +385,22 @@ function metadata_update($event, $object_type, $object) {
 function _elgg_invalidate_metadata_cache($action, array $options) {
 	// remove as little as possible, optimizing for common cases
 	$cache = _elgg_services()->metadataCache;
+	$access = _elgg_services()->access->getState();
+
 	if (empty($options['guid'])) {
 		// safest to clear everything unless we want to make this even more complex :(
 		$cache->flush();
 	} else {
 		if (empty($options['metadata_name'])) {
 			// safest to clear the whole entity
-			$cache->clear($options['guid']);
+			$cache->clear($options['guid'], $access);
 		} else {
 			switch ($action) {
 				case 'delete':
-					$cache->markEmpty($options['guid'], $options['metadata_name']);
+					$cache->markEmpty($options['guid'], $options['metadata_name'], $access);
 					break;
 				default:
-					$cache->markUnknown($options['guid'], $options['metadata_name']);
+					$cache->markUnknown($options['guid'], $options['metadata_name'], $access);
 			}
 		}
 	}

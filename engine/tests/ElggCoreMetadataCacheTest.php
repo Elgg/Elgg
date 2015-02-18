@@ -66,95 +66,105 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 	public function testBasicApi() {
 		// test de-coupled instance
 		$cache = new \ElggVolatileMetadataCache();
-		$cache->setIgnoreAccess(false);
 		$guid = 1;
 
-		$this->assertFalse($cache->isKnown($guid, $this->name));
+		$access = _elgg_services()->access->getState();
+		$access->ignored = false;
 
-		$cache->markEmpty($guid, $this->name);
-		$this->assertTrue($cache->isKnown($guid, $this->name));
-		$this->assertNull($cache->load($guid, $this->name));
+		$this->assertFalse($cache->isKnown($guid, $this->name, $access));
 
-		$cache->markUnknown($guid, $this->name);
-		$this->assertFalse($cache->isKnown($guid, $this->name));
+		$cache->markEmpty($guid, $this->name, $access);
+		$this->assertTrue($cache->isKnown($guid, $this->name, $access));
+		$this->assertNull($cache->load($guid, $this->name, $access));
 
-		$cache->save($guid, $this->name, $this->value);
-		$this->assertIdentical($cache->load($guid, $this->name), $this->value);
+		$cache->markUnknown($guid, $this->name, $access);
+		$this->assertFalse($cache->isKnown($guid, $this->name, $access));
 
-		$cache->save($guid, $this->name, 1, true);
-		$this->assertIdentical($cache->load($guid, $this->name), array($this->value, 1));
+		$cache->save($guid, $this->name, $this->value, false, $access);
+		$this->assertIdentical($cache->load($guid, $this->name, $access), $this->value);
 
-		$cache->clear($guid);
-		$this->assertFalse($cache->isKnown($guid, $this->name));
+		$cache->save($guid, $this->name, 1, true, $access);
+		$this->assertIdentical($cache->load($guid, $this->name, $access), array($this->value, 1));
+
+		$cache->clear($guid, $access);
+		$this->assertFalse($cache->isKnown($guid, $this->name, $access));
 	}
 
 	public function testReadsAreCached() {
+		$access = _elgg_services()->access->getState();
+
 		// test that reads fill cache
 		$this->obj1->setMetadata($this->name, $this->value);
 		$this->cache->flush();
 
 		$this->obj1->getMetadata($this->name);
-		$this->assertIdentical($this->cache->load($this->guid1, $this->name), $this->value);
+		$this->assertIdentical($this->cache->load($this->guid1, $this->name, $access), $this->value);
 	}
 
 	public function testWritesAreCached() {
+		$access = _elgg_services()->access->getState();
+
 		// delete should mark cache as known to be empty
 		$this->obj1->deleteMetadata($this->name);
-		$this->assertTrue($this->cache->isKnown($this->guid1, $this->name));
-		$this->assertNull($this->cache->load($this->guid1, $this->name));
+		$this->assertTrue($this->cache->isKnown($this->guid1, $this->name, $access));
+		$this->assertNull($this->cache->load($this->guid1, $this->name, $access));
 
 		// without name, delete should invalidate the entire entity
-		$this->cache->save($this->guid1, $this->name, $this->value);
+		$this->cache->save($this->guid1, $this->name, $this->value, false, $access);
 		elgg_delete_metadata(array(
 			'guid' => $this->guid1,
 		));
-		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name));
+		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name, $access));
 
 		// test set
 		$this->obj1->setMetadata($this->name, $this->value);
-		$this->assertIdentical($this->cache->load($this->guid1, $this->name), $this->value);
+		$this->assertIdentical($this->cache->load($this->guid1, $this->name, $access), $this->value);
 
 		// test set multiple
 		$this->obj1->setMetadata($this->name, 1, 'integer', true);
-		$this->assertIdentical($this->cache->load($this->guid1, $this->name), array($this->value, 1));
+		$this->assertIdentical($this->cache->load($this->guid1, $this->name, $access), array($this->value, 1));
 
 		// writes when access is ignore should invalidate
 		$tmp_ignore = elgg_set_ignore_access(true);
 		$this->obj1->setMetadata($this->name, $this->value);
-		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name));
+		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name, $access));
 		elgg_set_ignore_access($tmp_ignore);
 	}
 
 	public function testDisableAndEnable() {
+		$access = _elgg_services()->access->getState();
+
 		// both should mark cache unknown
 		$this->obj1->setMetadata($this->name, $this->value);
 		$this->obj1->disableMetadata($this->name);
-		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name));
+		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name, $access));
 
-		$this->cache->save($this->guid1, $this->name, $this->value);
+		$this->cache->save($this->guid1, $this->name, $this->value, false, $access);
 		$this->obj1->enableMetadata($this->name);
-		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name));
+		$this->assertFalse($this->cache->isKnown($this->guid1, $this->name, $access));
 	}
 
 	public function testPopulateFromEntities() {
 		// test populating cache from set of entities
+		$access = _elgg_services()->access->getState();
+
 		$this->obj1->setMetadata($this->name, $this->value);
 		$this->obj1->setMetadata($this->name, 4, 'integer', true);
 		$this->obj1->setMetadata("{$this->name}-2", "{$this->value}-2");
 		$this->obj2->setMetadata($this->name, $this->value);
 
-		$this->cache->flush();
-		$this->cache->populateFromEntities(array($this->guid1, $this->guid2));
+		$this->cache->flush($access);
+		$this->cache->populateFromEntities(array($this->guid1, $this->guid2), $access);
 
 		$expected = array();
 		$expected[$this->name][] = $this->value;
 		$expected[$this->name][] = 4;
 		$expected["{$this->name}-2"] = "{$this->value}-2";
-		$this->assertIdentical($this->cache->loadAll($this->guid1), $expected);
+		$this->assertIdentical($this->cache->loadAll($this->guid1, $access), $expected);
 
 		$expected = array();
 		$expected[$this->name] = $this->value;
-		$this->assertIdentical($this->cache->loadAll($this->guid2), $expected);
+		$this->assertIdentical($this->cache->loadAll($this->guid2, $access), $expected);
 	}
 
 	public function testFilterHeavyEntities() {

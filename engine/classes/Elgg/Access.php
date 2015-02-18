@@ -1,5 +1,8 @@
 <?php
 namespace Elgg;
+
+use Elgg\Access\AccessState;
+
 /**
  * Class used to determine if access is being ignored.
  *
@@ -69,6 +72,18 @@ class Access {
 		$this->ignore_access = $ignore;
 
 		return $prev;
+	}
+
+	/**
+	 * Get a snapshot of the current state of access control
+	 *
+	 * @return AccessState
+	 */
+	public function getState() {
+		$state = new AccessState();
+		$state->ignored = $this->ignore_access;
+		$state->current_user_guid = _elgg_services()->session->getLoggedInUserGuid();
+		return $state;
 	}
 }
 
