@@ -89,7 +89,7 @@ function ws_page_handler($segments) {
  *					default => value // optional
  * 				)
  * 			)
- * 			"call_method" = 'GET' | 'POST'
+ * 			"call_method" = 'GET' | 'POST' | array('GET', 'POST')
  * 			"require_api_auth" => true | false (default)
  * 			"require_user_auth" => true | false (default)
  * 		)
@@ -124,8 +124,9 @@ $ERRORS = array();
  *                                  					default => value (optional)
  *                                  	 )
  * @param string $description       (optional) human readable description of the function.
- * @param string $call_method       (optional) Define what http method must be used for
- *                                  this function. Default: GET
+ * @param mixed  $call_method       (optional) One or more HTTP method(s) that must be used for invoking
+ *                                  this callback function. Accepts a single method as string, or an array of methods
+ *                                  Default: GET
  * @param bool   $require_api_auth  (optional) (default is false) Does this method
  *                                  require API authorization? (example: API key)
  * @param bool   $require_user_auth (optional) (default is false) Does this method
@@ -135,7 +136,7 @@ $ERRORS = array();
  * @throws InvalidParameterException
  */
 function elgg_ws_expose_function($method, $function, array $parameters = NULL, $description = "",
-		$call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
+		$call_method = 'GET', $require_api_auth = false, $require_user_auth = false) {
 
 	global $API_METHODS;
 
@@ -143,14 +144,6 @@ function elgg_ws_expose_function($method, $function, array $parameters = NULL, $
 		$msg = elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet');
 		throw new InvalidParameterException($msg);
 	}
-
-	// does not check whether this method has already been exposed - good idea?
-	$API_METHODS[$method] = array();
-
-	$API_METHODS[$method]["description"] = $description;
-
-	// does not check whether callable - done in execute_method()
-	$API_METHODS[$method]["function"] = $function;
 
 	if ($parameters != NULL) {
 		if (!is_array($parameters)) {
@@ -174,28 +167,32 @@ function elgg_ws_expose_function($method, $function, array $parameters = NULL, $
 				$parameters[$key]['required'] = true;
 			}
 		}
-
-		$API_METHODS[$method]["parameters"] = $parameters;
 	}
 
-	$call_method = strtoupper($call_method);
-	switch ($call_method) {
-		case 'POST' :
-			$API_METHODS[$method]["call_method"] = 'POST';
-			break;
-		case 'GET' :
-			$API_METHODS[$method]["call_method"] = 'GET';
-			break;
-		default :
-			$msg = elgg_echo('InvalidParameterException:UnrecognisedHttpMethod',
-			array($call_method, $method));
+	$call_methods = (is_array($call_method)) ? $call_method : array($call_method);
+	$call_methods = array_map('strtoupper', $call_methods);
 
-			throw new InvalidParameterException($msg);
+	$recognized_call_methods = array('GET', 'POST', 'PUT', 'DELETE');
+	$unrecognized_call_methods = array_diff($call_methods, $recognized_call_methods);
+
+	if (count($unrecognized_call_methods)) {
+		$msg = elgg_echo('InvalidParameterException:UnrecognisedHttpMethod', array(implode(', ', $unrecognized_call_methods), $method));
+		throw new InvalidParameterException($msg);
 	}
 
-	$API_METHODS[$method]["require_api_auth"] = $require_api_auth;
+	if (isset($API_METHODS[$method])) {
+		$old_function = elgg_extract('function', $API_METHODS[$method]);
+		elgg_log("Callback function for web services method '$method' has been changed from '$old_function' to '$function'");
+	}
 
-	$API_METHODS[$method]["require_user_auth"] = $require_user_auth;
+	$API_METHODS[$method] = array(
+		'description' => $description,
+		'function' => $function,
+		'parameters' => $parameters,
+		'call_method' => $call_methods,
+		'require_api_auth' => $require_api_auth,
+		'require_user_auth' => $require_user_auth,
+	);
 
 	return true;
 }

@@ -13,6 +13,7 @@ return array(
 	'APIException:FunctionDoesNotExist' => "Function for method '%s' is not callable",
 	'APIException:AlgorithmNotSupported' => "Algorithm '%s' is not supported or has been disabled.",
 	'APIException:NotGetOrPost' => "Request method must be GET or POST",
+	'APIException:UnrecognisedHttpMethod' => "Unrecognized request method %s",
 	'APIException:MissingAPIKey' => "Missing API key",
 	'APIException:BadAPIKey' => "Bad API key",
 	'APIException:MissingHmac' => "Missing X-Elgg-hmac header",

@@ -11,7 +11,7 @@
  * @param array  $keys         The api keys.
  * @param string $url          URL of the endpoint.
  * @param array  $call         Associated array of "variable" => "value"
- * @param string $method       GET or POST
+ * @param string $method       GET, POST, PUT, DELETE
  * @param string $post_data    The post data
  * @param string $content_type The content type
  *
@@ -29,6 +29,8 @@ $content_type = 'application/octet-stream') {
 	switch (strtoupper($method)) {
 		case 'GET' :
 		case 'POST' :
+		case 'PUT' :
+		case 'DELETE' :
 			break;
 		default:
 			$msg = elgg_echo('NotImplementedException:CallMethodNotImplemented', array($method));
@@ -53,7 +55,7 @@ $content_type = 'application/octet-stream') {
 
 	// Construct headers
 	$posthash = "";
-	if ($method == 'POST') {
+	if ($method == 'POST' || $method == 'PUT') {
 		$posthash = calculate_posthash($post_data, 'md5');
 	}
 
@@ -71,7 +73,7 @@ $content_type = 'application/octet-stream') {
 			$posthash
 		);
 	}
-	if ($method == 'POST') {
+	if ($method == 'POST' || $method == 'PUT') {
 		$headers['X-Elgg-posthash'] = $posthash;
 		$headers['X-Elgg-posthash-algo'] = 'md5';
 
@@ -84,7 +86,7 @@ $content_type = 'application/octet-stream') {
 		'method' => $method,
 		'header' => serialise_api_headers($headers)
 	);
-	if ($method == 'POST') {
+	if ($method == 'POST' || $method == 'PUT') {
 		$http_opts['content'] = $post_data;
 	}
 
