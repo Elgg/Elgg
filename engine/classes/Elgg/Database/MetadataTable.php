@@ -168,8 +168,9 @@ class MetadataTable {
 			if ($id !== false) {
 				$obj = $this->get($id);
 				if ($this->events->trigger('create', 'metadata', $obj)) {
-	
-					$this->cache->save($entity_guid, $name, $value, $allow_multiple);
+
+					$access = _elgg_services()->access->getState();
+					$this->cache->save($entity_guid, $name, $value, $allow_multiple, $access);
 	
 					return $id;
 				} else {
@@ -245,8 +246,9 @@ class MetadataTable {
 	
 		$result = $this->db->updateData($query);
 		if ($result !== false) {
-	
-			$this->cache->save($md->entity_guid, $name, $value);
+
+			$access_key = _elgg_services()->access->getState();
+			$this->cache->save($md->entity_guid, $name, $value, false, $access_key);
 	
 			// @todo this event tells you the metadata has been updated, but does not
 			// let you do anything about it. What is needed is a plugin hook before
@@ -348,7 +350,7 @@ class MetadataTable {
 	
 		// This moved last in case an object's constructor sets metadata. Currently the batch
 		// delete process has to create the entity to delete its metadata. See #5214
-		$this->cache->invalidateByOptions('delete', $options);
+		$this->cache->invalidateByOptions('delete', $options, _elgg_services()->access->getState());
 	
 		return $result;
 	}
@@ -366,7 +368,7 @@ class MetadataTable {
 			return false;
 		}
 	
-		$this->cache->invalidateByOptions('disable', $options);
+		$this->cache->invalidateByOptions('disable', $options, _elgg_services()->access->getState());
 	
 		// if we can see hidden (disabled) we need to use the offset
 		// otherwise we risk an infinite loop if there are more than 50
@@ -392,7 +394,7 @@ class MetadataTable {
 			return false;
 		}
 	
-		$this->cache->invalidateByOptions('enable', $options);
+		$this->cache->invalidateByOptions('enable', $options, _elgg_services()->access->getState());
 	
 		$options['metastring_type'] = 'metadata';
 		return _elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');

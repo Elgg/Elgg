@@ -314,13 +314,15 @@ abstract class ElggEntity extends \ElggData implements
 		// upon first cache miss, just load/cache all the metadata and retry.
 		// if this works, the rest of this function may not be needed!
 		$cache = _elgg_services()->metadataCache;
-		if ($cache->isKnown($guid, $name)) {
-			return $cache->load($guid, $name);
+		$access = _elgg_services()->access->getState();
+
+		if ($cache->isKnown($guid, $name, $access)) {
+			return $cache->load($guid, $name, $access);
 		} else {
-			$cache->populateFromEntities(array($guid));
+			$cache->populateFromEntities(array($guid), $access);
 			// in case ignore_access was on, we have to check again...
-			if ($cache->isKnown($guid, $name)) {
-				return $cache->load($guid, $name);
+			if ($cache->isKnown($guid, $name, $access)) {
+				return $cache->load($guid, $name, $access);
 			}
 		}
 
@@ -341,7 +343,7 @@ abstract class ElggEntity extends \ElggData implements
 			$value = metadata_array_to_values($md);
 		}
 
-		$cache->save($guid, $name, $value);
+		$cache->save($guid, $name, $value, false, $access);
 
 		return $value;
 	}
