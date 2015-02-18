@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * IDEs to auto-complete properties and understand the types returned. Extension allows us to keep
  * the container generic.
  *
- * @property-read \Elgg\Access                             $access
  * @property-read \Elgg\Database\AccessCollections         $accessCollections
  * @property-read \ElggStaticVariableCache                 $accessCache
  * @property-read \Elgg\ActionsService                     $actions
@@ -69,8 +68,6 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 */
 	public function __construct(\Elgg\AutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
-
-		$this->setClassName('access', '\Elgg\Access');
 
 		$this->setFactory('accessCache', function(ServiceProvider $c) {
 			return new \ElggStaticVariableCache('access');
@@ -162,7 +159,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
 			$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $c->db);
 			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
-			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->access);
+			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session);
 		});
 
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {

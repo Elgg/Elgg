@@ -36,7 +36,9 @@ function file_get_general_file_type($mime_type) {
  */
 function elgg_get_access_object() {
 	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get/set_ignore_access()', '1.10');
-	return _elgg_services()->access;
+
+	// note we've already broken this function (it used to return an ElggAccess)
+	return _elgg_services()->session;
 }
 
 /**
