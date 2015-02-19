@@ -16,6 +16,8 @@ function expages_init() {
 	// Register public external pages
 	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', 'expages_public');
 
+	elgg_register_plugin_hook_handler('register', 'menu:expages', 'expages_menu_register_hook');
+
 	// add a menu item for the admin edit page
 	elgg_register_admin_menu_item('configure', 'expages', 'appearance');
 
@@ -98,6 +100,32 @@ function expages_page_handler($page, $handler) {
 	}
 	return true;
 }
+
+/**
+ * Adds menu items to the expages edit form
+ *
+ * @param string $hook   'register'
+ * @param string $type   'menu:expages'
+ * @param array  $return current menu items
+ * @param array  $params parameters
+ * 
+ * @return array
+ */
+function expages_menu_register_hook($hook, $type, $return, $params) {
+	$type = elgg_extract('type', $params);
+		
+	$pages = array('about', 'terms', 'privacy');
+	foreach ($pages as $page) {
+		$return[] = ElggMenuItem::factory(array(
+			'name' => $page,
+			'text' => elgg_echo("expages:$page"),
+			'href' => "admin/appearance/expages?type=$page",
+			'selected' => $page === $type,
+		));
+	}
+	return $return;
+}
+
 
 /**
  * Forward to the new style of URLs
