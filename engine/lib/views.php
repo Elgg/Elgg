@@ -461,6 +461,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	// head has keys 'title', 'metas', 'links'
 	$head_params = _elgg_views_prepare_head($title);
+
 	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, $head_params);
 
 	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
@@ -498,64 +499,64 @@ function _elgg_views_prepare_head($title) {
 		$params['title'] = $title . ' : ' . elgg_get_config('sitename');
 	}
 
-	$params['metas'][] = array(
+	$params['metas']['content-type'] = array(
 		'http-equiv' => 'Content-Type',
 		'content' => 'text/html; charset=utf-8',
 	);
 
-	$params['metas'][] = array(
+	$params['metas']['description'] = array(
 		'name' => 'description',
 		'content' => elgg_get_config('sitedescription')
 	);
 	
 	// https://developer.chrome.com/multidevice/android/installtohomescreen
-	$data['metas'][] = array(
+	$params['metas']['viewport'] = array(
 		'name' => 'viewport',
 		'content' => 'width=device-width',
 	);    
-	$data['metas'][] = array(
+	$params['metas']['mobile-web-app-capable'] = array(
 		'name' => 'mobile-web-app-capable',
 		'content' => 'yes',
 	);
-	$data['metas'][] = array(
+	$params['metas']['apple-mobile-web-app-capable'] = array(
 		'name' => 'apple-mobile-web-app-capable',
 		'content' => 'yes',
 	);
-	$data['links'][] = array(
+	$params['links']['apple-touch-icon'] = array(
 		'rel' => 'apple-touch-icon',
 		'href' => elgg_normalize_url('_graphics/favicon-128.png'),
 	);
 
 	// favicons
-	$params['links'][] = array(
+	$params['links']['icon-ico'] = array(
 		'rel' => 'icon',
 		'href' => elgg_normalize_url('_graphics/favicon.ico'),
 	);
-	$params['links'][] = array(
+	$params['links']['icon-vector'] = array(
 		'rel' => 'icon',
 		'sizes' => '16x16 32x32 48x48 64x64 128x128',
 		'type' => 'image/svg+xml',
 		'href' => elgg_normalize_url('_graphics/favicon.svg'),
 	);
-	$params['links'][] = array(
+	$params['links']['icon-16'] = array(
 		'rel' => 'icon',
 		'sizes' => '16x16',
 		'type' => 'image/png',
 		'href' => elgg_normalize_url('_graphics/favicon-16.png'),
 	);
-	$params['links'][] = array(
+	$params['links']['icon-32'] = array(
 		'rel' => 'icon',
 		'sizes' => '32x32',
 		'type' => 'image/png',
 		'href' => elgg_normalize_url('_graphics/favicon-32.png'),
 	);
-	$params['links'][] = array(
+	$params['links']['icon-64'] = array(
 		'rel' => 'icon',
 		'sizes' => '64x64',
 		'type' => 'image/png',
 		'href' => elgg_normalize_url('_graphics/favicon-64.png'),
 	);
-	$params['links'][] = array(
+	$params['links']['icon-128'] = array(
 		'rel' => 'icon',
 		'sizes' => '128x128',
 		'type' => 'image/png',
@@ -571,7 +572,7 @@ function _elgg_views_prepare_head($title) {
 		} else {
 			$url .= "?view=rss";
 		}
-		$params['links'][] = array(
+		$params['links']['rss'] = array(
 			'rel' => 'alternative',
 			'type' => 'application/rss+xml',
 			'title' => 'RSS',
