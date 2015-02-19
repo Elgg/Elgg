@@ -78,6 +78,15 @@ function expages_page_handler($page, $handler) {
 		$content .= elgg_echo("expages:notset");
 	}
 	$content = elgg_view('expages/wrapper', array('content' => $content));
+	
+	if (elgg_is_admin_logged_in()) {
+		elgg_register_menu_item('title', array(
+			'name' => 'edit',
+			'text' => elgg_echo('edit'),
+			'href' => "admin/appearance/expages?type=$type",
+			'link_class' => 'elgg-button elgg-button-action',
+		));
+	}
 
 	if (elgg_is_logged_in() || !elgg_get_config('walled_garden')) {
 		$body = elgg_view_layout('one_column', array('title' => $title, 'content' => $content));
