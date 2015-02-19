@@ -27,6 +27,10 @@ if (($entity) && ($entity instanceof ElggGroup)) {
 		$img->setFilename("{$prefix}{$name}.jpg");
 		$img->delete();
 	}
+	
+	// delete original icon
+	$img->setFilename("{$prefix}.jpg");
+	$img->delete();
 
 	// delete group
 	if ($entity->delete()) {
