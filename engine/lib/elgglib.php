@@ -885,7 +885,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 
 	switch ($errno) {
 		case E_USER_ERROR:
-			error_log("PHP ERROR: $error");
+			elgg_log("PHP: $error", 'ERROR');
 			register_error("ERROR: $error");
 
 			// Since this is a fatal error, we want to stop any further execution but do so gracefully.
@@ -898,14 +898,14 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 			
 			// check if the error wasn't suppressed by the error control operator (@)
 			if (error_reporting()) {
-				error_log("PHP WARNING: $error");
+				elgg_log("PHP: $error", 'WARNING');
 			}
 			break;
 
 		default:
 			global $CONFIG;
 			if (isset($CONFIG->debug) && $CONFIG->debug === 'NOTICE') {
-				error_log("PHP NOTICE: $error");
+				elgg_log("PHP: $error", 'NOTICE');
 			}
 	}
 
