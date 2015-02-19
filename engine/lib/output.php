@@ -153,6 +153,12 @@ function elgg_format_attributes(array $attrs = array()) {
 
 		unset($attrs['js']);
 	}
+	
+	if (isset($attrs['data-colorbox-opts'])) {
+		if (!@json_decode($attrs['data-colorbox-opts'])) {
+			elgg_log(elgg_echo('attributes:format:colorbox:invalid'), 'WARNING');
+		}		
+	}
 
 	foreach ($attrs as $attr => $val) {
 		$attr = strtolower($attr);

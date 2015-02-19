@@ -119,6 +119,7 @@ return array(
 	'upload:error:extension' => 'Cannot save the uploaded file.',
 	'upload:error:unknown' => 'The file upload failed.',
 
+	'attributes:format:colorbox:invalid' => 'Incorrect formatted value for data-colorbox-opts. Should be json_encoded, consider using json_encode().',
 
 /**
  * User details
