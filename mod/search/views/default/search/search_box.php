@@ -37,6 +37,7 @@ $search_attrs = elgg_format_attributes(array(
 	'name' => 'q',
 	'autocapitalize' => 'off',
 	'autocorrect' => 'off',
+	'required' => true,
 	'value' => $display_query,
 ));
 ?>
