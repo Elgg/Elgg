@@ -41,7 +41,7 @@
  * @see elgg_get_ignore_access()
  */
 function elgg_set_ignore_access($ignore = true) {
-	return _elgg_services()->access->setIgnoreAccess($ignore);
+	return _elgg_services()->session->setIgnoreAccess($ignore);
 }
 
 /**
@@ -52,7 +52,7 @@ function elgg_set_ignore_access($ignore = true) {
  * @see elgg_set_ignore_access()
  */
 function elgg_get_ignore_access() {
-	return _elgg_services()->access->getIgnoreAccess();
+	return _elgg_services()->session->getIgnoreAccess();
 }
 
 /**
@@ -545,7 +545,7 @@ function elgg_check_access_overrides($user_guid = 0) {
 		$is_admin = elgg_is_admin_user($user_guid);
 	}
 
-	return ($is_admin || _elgg_services()->access->getIgnoreAccess());
+	return ($is_admin || _elgg_services()->session->getIgnoreAccess());
 }
 
 /**
