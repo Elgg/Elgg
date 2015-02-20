@@ -15,16 +15,11 @@ use Symfony\Component\HttpFoundation\Session\Session;
  * Warning: You can not access multidimensional arrays through \ArrayAccess like
  * this $session['foo']['bar']
  *
- * Note: this extends Elgg\Access purely to provide BC for elgg_get_access_object().
- *
- * @todo Remove the Elgg\Access extension.
- *
- *
  * @package    Elgg.Core
  * @subpackage Session
  * @see        elgg_get_session()
  */
-class ElggSession extends \Elgg\Access implements \ArrayAccess {
+class ElggSession implements \ArrayAccess {
 
 	/**
 	 * @var SessionInterface
@@ -287,6 +282,37 @@ class ElggSession extends \Elgg\Access implements \ArrayAccess {
 
 		return $prev;
 	}
+
+	// @codingStandardsIgnoreStart
+	/**
+	 * Alias of getIgnoreAccess()
+	 *
+	 * @todo remove with elgg_get_access_object()
+	 *
+	 * @return bool
+	 * @deprecated 1.8 Use elgg_get_ignore_access()
+	 */
+	public function get_ignore_access() {
+		return $this->getIgnoreAccess();
+	}
+	// @codingStandardsIgnoreEnd
+
+	// @codingStandardsIgnoreStart
+	/**
+	 * Alias of setIgnoreAccess()
+	 *
+	 * @todo remove with elgg_get_access_object()
+	 *
+	 * @param bool $ignore Ignore access
+	 *
+	 * @return bool Previous setting
+	 *
+	 * @deprecated 1.8 Use elgg_set_ignore_access()
+	 */
+	public function set_ignore_access($ignore = true) {
+		return $this->setIgnoreAccess($ignore);
+	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Adds a token to the session
