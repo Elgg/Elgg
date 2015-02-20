@@ -859,30 +859,91 @@ function discussion_page_handler($page) {
 			discussion_handle_all_page();
 			break;
 		case 'owner':
-			discussion_handle_list_page($page[1]);
+			discussion_handle_list_page(elgg_extract(1, $page));
 			break;
 		case 'add':
-			discussion_handle_edit_page('add', $page[1]);
+			discussion_handle_edit_page('add', elgg_extract(1, $page));
 			break;
 		case 'reply':
-			switch ($page[1]) {
+			switch (elgg_extract(1, $page)) {
 				case 'edit':
-					discussion_handle_reply_edit_page('edit', $page[2]);
+					discussion_handle_reply_edit_page('edit', elgg_extract(2, $page));
+					break;
+				case 'view':
+					discussion_redirect_to_reply(elgg_extract(2, $page), elgg_extract(3, $page));
 					break;
 				default:
 					return false;
 			}
 			break;
 		case 'edit':
-			discussion_handle_edit_page('edit', $page[1]);
+			discussion_handle_edit_page('edit', elgg_extract(1, $page));
 			break;
 		case 'view':
-			discussion_handle_view_page($page[1]);
+			discussion_handle_view_page(elgg_extract(1, $page));
 			break;
 		default:
 			return false;
 	}
 	return true;
+}
+
+/**
+ * Redirect to the reply in context of the containing topic
+ *
+ * @param int $reply_guid    GUID of the reply
+ * @param int $fallback_guid GUID of the topic
+ *
+ * @return void
+ * @access private
+ */
+function discussion_redirect_to_reply($reply_guid, $fallback_guid) {
+	$fail = function () {
+		register_error(elgg_echo('discussion:reply:error:notfound'));
+		forward(REFERER);
+	};
+
+	$reply = get_entity($reply_guid);
+	if (!$reply) {
+		// try fallback
+		$fallback = get_entity($fallback_guid);
+		if (!elgg_instanceof($fallback, 'object', 'groupforumtopic')) {
+			$fail();
+		}
+
+		register_error(elgg_echo('discussion:reply:error:notfound_fallback'));
+		forward($fallback->getURL());
+	}
+
+	if (!$reply instanceof ElggDiscussionReply) {
+		$fail();
+	}
+
+	// start with topic URL
+	$topic = $reply->getContainerEntity();
+
+	// this won't work with threaded comments, but core doesn't support that yet
+	$count = elgg_get_entities([
+		'type' => 'object',
+		'subtype' => $reply->getSubtype(),
+		'container_guid' => $topic->guid,
+		'count' => true,
+		'wheres' => ["e.guid < " . (int)$reply->guid],
+	]);
+	$limit = (int)get_input('limit', 0);
+	if (!$limit) {
+		$limit = _elgg_services()->config->get('default_limit');
+	}
+	$offset = floor($count / $limit) * $limit;
+	if (!$offset) {
+		$offset = null;
+	}
+
+	$url = elgg_http_add_url_query_elements($topic->getURL(), [
+			'offset' => $offset,
+		]) . "#elgg-object-{$reply->guid}";
+
+	forward($url);
 }
 
 /**
@@ -900,18 +961,22 @@ function discussion_page_handler($page) {
 function discussion_set_topic_url($hook, $type, $url, $params) {
 	$entity = $params['entity'];
 
-	if (elgg_instanceof($entity, 'object', 'discussion_reply', 'ElggDiscussionReply')) {
-		$topic = $entity->getContainerEntity();
-		$title = elgg_get_friendly_title($topic->title);
-		return "discussion/view/{$topic->guid}/{$title}";
+	if (!$entity instanceof ElggObject) {
+		return;
 	}
 
-	if (elgg_instanceof($entity, 'object', 'groupforumtopic')) {
+	if ($entity->getSubtype() === 'groupforumtopic') {
 		$title = elgg_get_friendly_title($entity->title);
 		return "discussion/view/{$entity->guid}/{$title}";
 	}
 
-	return $url;
+	if (!$entity instanceof ElggDiscussionReply) {
+		return;
+	}
+
+	$topic = $entity->getContainerEntity();
+
+	return "discussion/reply/view/{$entity->guid}/{$topic->guid}";
 }
 
 /**
