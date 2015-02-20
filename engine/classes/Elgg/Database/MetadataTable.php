@@ -7,7 +7,7 @@ use Elgg\Database\EntityTable;
 use Elgg\Database\MetastringsTable;
 use Elgg\EventsService as Events;
 use ElggSession as Session;
-use ElggVolatileMetadataCache as Cache;
+use Elgg\Cache\MetadataCache as Cache;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.

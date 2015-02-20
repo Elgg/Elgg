@@ -33,7 +33,7 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
- * @property-read \ElggVolatileMetadataCache               $metadataCache
+ * @property-read \Elgg\Cache\MetadataCache                $metadataCache
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
  * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
  * @property-read \Elgg\Notifications\NotificationsService $notifications
@@ -141,7 +141,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('metadataCache', function (ServiceProvider $c) {
-			return new \ElggVolatileMetadataCache($c->session);
+			return new \Elgg\Cache\MetadataCache($c->session);
 		});
 
 		$this->setFactory('metadataTable', function(ServiceProvider $c) {

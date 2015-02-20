@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Cache\MetadataCache;
+
 /**
  * Elgg Test metadata cache
  *
@@ -8,7 +11,7 @@
 class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 
 	/**
-	 * @var \ElggVolatileMetadataCache
+	 * @var MetadataCache
 	 */
 	protected $cache;
 
@@ -64,7 +67,7 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 	}
 
 	public function testHas() {
-		$cache = new \ElggVolatileMetadataCache(ElggSession::getMock());
+		$cache = new MetadataCache(ElggSession::getMock());
 
 		$cache->inject(1, ['foo1' => 'bar']);
 		$cache->inject(2, []);
@@ -74,7 +77,7 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 	}
 
 	public function testLoad() {
-		$cache = new \ElggVolatileMetadataCache(ElggSession::getMock());
+		$cache = new MetadataCache(ElggSession::getMock());
 
 		$cache->inject(1, ['foo1' => 'bar']);
 		$cache->inject(2, []);
@@ -85,7 +88,7 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 	}
 
 	public function testDirectInvalidation() {
-		$cache = new \ElggVolatileMetadataCache(ElggSession::getMock());
+		$cache = new MetadataCache(ElggSession::getMock());
 
 		$cache->inject(1, ['foo1' => 'bar']);
 		$cache->inject(2, []);
@@ -101,7 +104,7 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 
 	public function testCacheIsSegregatedByAccessState() {
 		$session = ElggSession::getMock();
-		$cache = new \ElggVolatileMetadataCache($session);
+		$cache = new MetadataCache($session);
 		$cache->inject(1, ['foo' => 'bar']);
 
 		$session->setIgnoreAccess();
@@ -120,7 +123,7 @@ class ElggCoreMetadataCacheTest extends \ElggCoreUnitTest {
 
 	public function testClearActsOnAllAccessStates() {
 		$session = ElggSession::getMock();
-		$cache = new \ElggVolatileMetadataCache($session);
+		$cache = new MetadataCache($session);
 
 		$session->setIgnoreAccess(false);
 		$cache->inject(1, ['foo' => 'bar']);
