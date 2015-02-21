@@ -40,6 +40,7 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\PasswordService                    $passwords
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
  * @property-read \Elgg\Database\Plugins                   $plugins
+ * @property-read \Elgg\Cache\PluginSettingsCache          $pluginSettingsCache
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\Http\Request                       $request
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
@@ -182,7 +183,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('plugins', function(ServiceProvider $c) {
-			return new \Elgg\Database\Plugins($c->events, new \Elgg\Cache\MemoryPool());
+			$pool = new \Elgg\Cache\MemoryPool();
+			return new \Elgg\Database\Plugins($pool, $c->pluginSettingsCache);
+		});
+
+		$this->setFactory('pluginSettingsCache', function (ServiceProvider $c) {
+			return new \Elgg\Cache\PluginSettingsCache($c->db);
 		});
 
 		$this->setFactory('queryCounter', function(ServiceProvider $c) {

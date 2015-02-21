@@ -275,6 +275,11 @@ class ElggPlugin extends \ElggObject {
 	 * @return mixed
 	 */
 	public function getSetting($name, $default = null) {
+		$values = _elgg_services()->pluginSettingsCache->getAll($this->guid);
+		if ($values !== null) {
+			return isset($values[$name]) ? $values[$name] : null;
+		}
+
 		$val = $this->$name;
 		return $val !== null ? $val : $default;
 	}
@@ -289,6 +294,11 @@ class ElggPlugin extends \ElggObject {
 	public function getAllSettings() {
 		if (!$this->guid) {
 			return false;
+		}
+
+		$values = _elgg_services()->pluginSettingsCache->getAll($this->guid);
+		if ($values !== null) {
+			return $values;
 		}
 
 		$db_prefix = _elgg_services()->config->get('dbprefix');
@@ -361,6 +371,8 @@ class ElggPlugin extends \ElggObject {
 	 * @return bool
 	 */
 	public function unsetAllSettings() {
+		_elgg_services()->pluginSettingsCache->clear($this->guid);
+
 		$db_prefix = _elgg_services()->configTable->get('dbprefix');
 		$us_prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $this->getID());
 		$is_prefix = _elgg_namespace_plugin_private_setting('internal', '', $this->getID());

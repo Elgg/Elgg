@@ -2,6 +2,8 @@
 namespace Elgg\Database;
 
 use Exception;
+use Elgg\Cache\Pool;
+use Elgg\Cache\PluginSettingsCache;
 
 /**
  * @var array cache used by elgg_get_plugins_provides function
@@ -24,28 +26,34 @@ global $ELGG_PLUGINS_PROVIDES_CACHE;
 class Plugins {
 
 	/**
-	 * @var string[] Active plugin IDs with IDs as the array keys. Missing keys imply inactive plugins.
+	 * @var string[] Active plugins, with plugin ID => GUID. Missing keys imply inactive plugins.
 	 */
-	protected $active_ids = array();
+	private $active_guids = array();
 
 	/**
-	 * @var bool Has $active_ids been populated?
+	 * @var bool Has $active_guids been populated?
 	 */
-	protected $active_ids_known = false;
+	private $active_guids_known = false;
 
 	/**
-	 * @var \Elgg\Cache\MemoryPool
+	 * @var Pool
 	 */
-	protected $plugins_by_id;
+	private $plugins_by_id;
+
+	/**
+	 * @var PluginSettingsCache
+	 */
+	private $settings_cache;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\EventsService    $events Events service
-	 * @param \Elgg\Cache\MemoryPool $pool   Cache for referencing plugins by ID
+	 * @param Pool                $pool           Cache for referencing plugins by ID
+	 * @param PluginSettingsCache $settings_cache Plugin settings cache
 	 */
-	public function __construct(\Elgg\EventsService $events, \Elgg\Cache\MemoryPool $pool) {
+	public function __construct(Pool $pool, PluginSettingsCache $settings_cache) {
 		$this->plugins_by_id = $pool;
+		$this->settings_cache = $settings_cache;
 	}
 
 	/**
@@ -275,9 +283,9 @@ class Plugins {
 	function isActive($plugin_id, $site_guid = null) {
 		$current_site_guid = elgg_get_site_entity()->guid;
 
-		if ($this->active_ids_known
+		if ($this->active_guids_known
 				&& ($site_guid === null || $site_guid == $current_site_guid)) {
-			return isset($this->active_ids[$plugin_id]);
+			return isset($this->active_guids[$plugin_id]);
 		}
 
 		if ($site_guid) {
@@ -335,28 +343,38 @@ class Plugins {
 		if (elgg_get_config('i18n_loaded_from_cache')) {
 			$start_flags = $start_flags & ~ELGG_PLUGIN_REGISTER_LANGUAGES;
 		}
-	
-		$return = true;
+
 		$plugins = $this->find('active');
-		if ($plugins) {
-			foreach ($plugins as $plugin) {
-				$id = $plugin->getID();
-				try {
-					$plugin->start($start_flags);
-					$this->active_ids[$id] = true;
-				} catch (Exception $e) {
-					$plugin->deactivate();
-					$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
-									array($id, $plugin->guid, $e->getMessage()));
-					elgg_add_admin_notice("cannot_start $id", $msg);
-					$return = false;
-	
-					continue;
-				}
+		if (!$plugins) {
+			$this->active_guids_known = true;
+			return true;
+		}
+
+		// preload settings early because some plugins call them early
+		$guids = [];
+		foreach ($plugins as $plugin) {
+			$guids[] = $plugin->guid;
+		}
+		$this->settings_cache->populateFromPlugins($guids);
+
+		$return = true;
+		foreach ($plugins as $plugin) {
+			$id = $plugin->getID();
+			try {
+				$plugin->start($start_flags);
+				$this->active_guids[$id] = $plugin->guid;
+			} catch (Exception $e) {
+				$plugin->deactivate();
+				$msg = _elgg_services()->translator->translate('PluginException:CannotStart',
+								array($id, $plugin->guid, $e->getMessage()));
+				elgg_add_admin_notice("cannot_start $id", $msg);
+				$return = false;
+
+				continue;
 			}
 		}
 
-		$this->active_ids_known = true;
+		$this->active_guids_known = true;
 		return $return;
 	}
 	
@@ -609,8 +627,8 @@ class Plugins {
 	 * @access private
 	 */
 	public function invalidateIsActiveCache() {
-		$this->active_ids = array();
-		$this->active_ids_known = false;
+		$this->active_guids = array();
+		$this->active_guids_known = false;
 	}
 	
 	/**
