@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => 'Ubicaci&oacute;n del elemento',
 	'reportedcontent:success' => 'Tu reporte ha sido enviado',
 	'reportedcontent:failing' => 'Tu reporte no pudo ser enviado',
+	'reportedcontent:refresh' => 'Actualizar el listado',
 	'reportedcontent:report' => 'Reportar',
 	'reportedcontent:instructions' => 'Este reporte ha sido enviado para su revisi&oacute;n.',
 	'reportedcontent:numbertodisplay' => 'N&uacute;mero de reportes a mostrar',

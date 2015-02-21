@@ -20,7 +20,7 @@ return array(
 	'developers:label:display_errors' => 'Affichage des erreurs PHP fatales',
 	'developers:help:display_errors' => "Par défaut, le fichier .htaccess d'Elgg supprime l'affichage des erreurs fatales.",
 	'developers:label:screen_log' => "Journal à l'écran",
-	'developers:help:screen_log' => "Affiche les sorties elgg_log() et elgg_dump() sur la page web.",
+	'developers:help:screen_log' => "Ceci affiche les sorties de elgg_log() et de elgg_dump() et un compte des requêtes sur la BD",
 	'developers:label:show_strings' => "Montrer les chaînes de traduction brutes",
 	'developers:help:show_strings' => "Affiche les chaînes de traduction utilisées par elgg_echo().",
 	'developers:label:wrap_views' => "Vues contractées",
@@ -54,6 +54,7 @@ return array(
 
 	// event logging
 	'developers:event_log_msg' => "%s : '%s, %s' dans %s",
+	'developers:log_queries' => "%s requêtes sur la BD (n'inclue pas l'événement shutdown)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introduction',

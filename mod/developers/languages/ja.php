@@ -20,7 +20,7 @@ return array(
 	'developers:label:display_errors' => '致命的なPHPエラーを表示します',
 	'developers:help:display_errors' => "デフォルトでは、Elggの .htaccessファイルが致命的エラーの表示を抑制しています。",
 	'developers:label:screen_log' => "画面にログを出力",
-	'developers:help:screen_log' => "webページにelgg_log()とelgg_dump()の出力を表示します。",
+	'developers:help:screen_log' => "elgg_log()とelgg_dump()の出力と、DBクエリの数を表示します。",
 	'developers:label:show_strings' => "翻訳を表示する代わりに翻訳キーを表示します",
 	'developers:help:show_strings' => "elgg_echo()で使われる翻訳キー(\$message_key)を表示します。",
 	'developers:label:wrap_views' => "Wrap views",
@@ -53,6 +53,7 @@ return array(
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
+	'developers:log_queries' => "%s 件のDBクエリ(シャットダウンイベントを除く)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'イントロダクション',
