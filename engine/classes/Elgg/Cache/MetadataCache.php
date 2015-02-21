@@ -1,11 +1,12 @@
 <?php
+namespace Elgg\Cache;
 
 /**
  * In memory cache of known metadata values stored by entity.
  *
  * @access private
  */
-class ElggVolatileMetadataCache {
+class MetadataCache {
 
 	/**
 	 * The cached values (or null for known to be empty).
@@ -15,21 +16,16 @@ class ElggVolatileMetadataCache {
 	protected $values = array();
 
 	/**
-	 * @var ElggSession
+	 * @var \ElggSession
 	 */
 	protected $session;
 
 	/**
-	 * @var string
-	 */
-	protected $last_access_state;
-
-	/**
 	 * Constructor
 	 *
-	 * @param ElggSession $session The session service
+	 * @param \ElggSession $session The session service
 	 */
-	public function __construct(ElggSession $session) {
+	public function __construct(\ElggSession $session) {
 		$this->session = $session;
 	}
 
@@ -101,7 +97,7 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Clear entire cache
-	 * 
+	 *
 	 * @return void
 	 */
 	public function clearAll() {
@@ -125,7 +121,7 @@ class ElggVolatileMetadataCache {
 
 	/**
 	 * Populate the cache from a set of entities
-	 * 
+	 *
 	 * @param int|array $guids Array of or single GUIDs
 	 * @return void
 	 */
