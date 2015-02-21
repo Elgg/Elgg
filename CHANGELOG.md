@@ -1,3 +1,53 @@
+<a name="1.10.2"></a>
+### 1.10.2  (2015-02-21)
+
+#### Contributors
+
+* Jeroen Dalsem (16)
+* Steve Clay (6)
+* Evan Winslow (2)
+* Jerôme Bakker (2)
+* Ismayil Khayredinov (1)
+* Juho Jaakkola (1)
+
+#### Performance
+
+* **stats:** more efficient get_entity_statistics() ([f5ac3602](https://github.com/Elgg/Elgg/commit/f5ac3602048767761c3b843ca1becea6dbf26582))
+
+
+#### Documentation
+
+* **install:** Move environment-specific instructions to their own pages ([1b750298](https://github.com/Elgg/Elgg/commit/1b750298f4df5a585cabe521827a8071b95d2807), closes [#7834](https://github.com/Elgg/Elgg/issues/7834))
+
+
+#### Bug Fixes
+
+* **datepicker:** Prevents month navigation links from overlapping with other elements ([fb1596da](https://github.com/Elgg/Elgg/commit/fb1596daf1a8d18771e7a241392ad90edaf82619), closes [#7542](https://github.com/Elgg/Elgg/issues/7542))
+* **groups:** also delete original icon when deleting group ([b8d1612e](https://github.com/Elgg/Elgg/commit/b8d1612ece88a52bb20e7009d2c7dffc2002dac5))
+* **js:**
+  * correctly init datepicker when ajax loaded ([aecc0047](https://github.com/Elgg/Elgg/commit/aecc0047f196355295e911e116475489acd84988))
+  * fixes aalborg site menu by restoring 1.9 toggle behavior ([8ece7dd8](https://github.com/Elgg/Elgg/commit/8ece7dd89b1fabe11fb0983f9be1e5887a76e583), closes [#7790](https://github.com/Elgg/Elgg/issues/7790))
+  * catch global ajax errors and report to the user ([dd52baeb](https://github.com/Elgg/Elgg/commit/dd52baebfcd2020aa77b14371fd986319ce4dfb9))
+* **likes:**
+  * only allow likes to be deleted by owner ([b47f0166](https://github.com/Elgg/Elgg/commit/b47f01661d6bd74453e54b27fa581753b3931305))
+  * correctly register like button for ajax action ([d56b239d](https://github.com/Elgg/Elgg/commit/d56b239dbefeb6dd5bbf2d1c4ca5542d2b597302))
+* **messages:** forward to inbox after deleting a message ([015baf62](https://github.com/Elgg/Elgg/commit/015baf6246f808fed1ff4d6163b0bf6f77d3242b))
+* **metadata:** metadata values returned in more reliable order ([36517715](https://github.com/Elgg/Elgg/commit/36517715959773bb02d0aa57e1bd0ac012eb527b), closes [#5603](https://github.com/Elgg/Elgg/issues/5603))
+* **plugins:** pages with no annotation no longer cause fatal errors ([ffdb908d](https://github.com/Elgg/Elgg/commit/ffdb908dd2ffa0a909f20519275f480e20f997a8), closes [#7793](https://github.com/Elgg/Elgg/issues/7793))
+* **profile:** consider potential split db in profile icondirect ([bd8f3aed](https://github.com/Elgg/Elgg/commit/bd8f3aedc8290a580d7c8a43ffb29d286a2bf24f))
+* **search:**
+  * prevent search form submit if empty query ([becd5ba2](https://github.com/Elgg/Elgg/commit/becd5ba293013c73eef91640019671a13d8119f0))
+  * correctly split search words on multiple spaces ([2bde4af1](https://github.com/Elgg/Elgg/commit/2bde4af1e612671b958a8bf7aa846934d4c015d1))
+  * only query user metadata if there are profile fields ([6cdafa10](https://github.com/Elgg/Elgg/commit/6cdafa10c32c0ccfa26942d7006319a5a0dde0db))
+* **ui:** using site menu too early no longer results in 404 page ([b11acee5](https://github.com/Elgg/Elgg/commit/b11acee5c555a926d62c48e18d561ca875762e3a), closes [#7861](https://github.com/Elgg/Elgg/issues/7861))
+* **views:**
+  * use named keys when registering meta tags and links in head ([2cbaa770](https://github.com/Elgg/Elgg/commit/2cbaa770458886d6d30dc7ed446bfe00729e1e8a))
+  * improved check on non existing array keys ([bfc65a68](https://github.com/Elgg/Elgg/commit/bfc65a68a70a8b098ff2a3e3287915499f84e8b5))
+  * adds excerpt to comments and discussions in activity context ([4e09115a](https://github.com/Elgg/Elgg/commit/4e09115addb1ea40e005abb36b10b1056e839f12))
+  * deprecated notice no longer shows up in the wrong version ([3fcbee3f](https://github.com/Elgg/Elgg/commit/3fcbee3fad08ea1d3aaaa40d2c3865092cea3f7b))
+  * use correct page offset for divisors that have a modulo ([cdc85dca](https://github.com/Elgg/Elgg/commit/cdc85dca62d339934721db27a75ff6210b4b4170))
+
+
 <a name="1.10.1"></a>
 ### 1.10.1  (2015-01-26)
 
