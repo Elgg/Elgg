@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => 'Kohteen sijainti',
 	'reportedcontent:success' => 'Ilmoitus lähetettiin sivuston ylläpitäjälle',
 	'reportedcontent:failing' => 'Ilmoituksen lähettäminen epäonnistui',
+	'reportedcontent:refresh' => 'Päivitä lista',
 	'reportedcontent:report' => 'Ilmoita ylläpitäjälle',
 	'reportedcontent:instructions' => 'Tämä ilmoitus lähetetään sivuston ylläpitäjälle tarkistettavaksi.',
 	'reportedcontent:numbertodisplay' => 'Näytettävien kohteiden määrä',

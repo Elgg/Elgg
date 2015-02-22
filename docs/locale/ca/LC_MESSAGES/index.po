@@ -3,13 +3,13 @@
 # This file is distributed under the same license as the Elgg package.
 # 
 # Translators:
-# Jordi Brunet Castellano <jbrus77@cryptolab.net>, 2014
+# Jordi Brunet Castellano <jbrus77@cryptolab.net>, 2014-2015
 msgid ""
 msgstr ""
 "Project-Id-Version: Elgg Core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2014-08-11 01:01+0300\n"
-"PO-Revision-Date: 2014-09-05 22:30+0000\n"
+"POT-Creation-Date: 2015-01-26 00:05+0200\n"
+"PO-Revision-Date: 2015-02-11 08:11+0000\n"
 "Last-Translator: Jordi Brunet Castellano <jbrus77@cryptolab.net>\n"
 "Language-Team: Catalan (http://www.transifex.com/projects/p/elgg-core/language/ca/)\n"
 "MIME-Version: 1.0\n"
@@ -18,67 +18,49 @@ msgstr ""
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# ecc15a9e86a44ecb92b8094c7be82221
 #: ../../index.rst:2
 msgid "Elgg |version| Documentation"
 msgstr "Documentació d'Elgg |version|"
 
-# 82c5cb68acb944eb9925cafee895814d
 #: ../../index.rst:4
 msgid ""
-"Elgg_ (`pronunciation`__) is a rapid development framework with built-in "
-"social features. It is a great fit for building any app where users log in "
-"and share information."
-msgstr "Elgg_ (`pronunciation`__) és un entorn de treball de desenvolupament ràpid amb característiques socials integrades. És una excel·lent opció per a la construcció de qualsevol aplicació on els usuaris inicien sessió i comparteixen informació."
+"Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) is a "
+"rapid development framework with built-in social features. It is a great fit"
+" for building any app where users log in and share information."
+msgstr "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) és un marc de desenvolupament ràpid amb característiques socials integrades. És una excel·lent opció per a la construcció de qualsevol aplicació on els usuaris inicien sessió i comparteixen informació."
 
-# 6d76540fe6ee491784fff4414e15985e
-#: ../../index.rst:9
+#: ../../index.rst:7
 msgid "It has been used to build `all kinds of social apps`__:"
 msgstr "S'ha utilitzat per construir `tot tipus d'aplicacions socials`__:"
 
-# 77f2e248c73f48ecb9b7f9419ea5fbda
-#: ../../index.rst:13
+#: ../../index.rst:11
 msgid "open networks (similar to Facebook)"
 msgstr "xarxes obertes (similar a Facebook)"
 
-# 104e8b0416784b739f0979b00b58712e
-#: ../../index.rst:14
+#: ../../index.rst:12
 msgid "topical (like the Elgg Community)"
 msgstr "tòpica (com la Comunitat Elgg)"
 
-# 0d3aca5436ca4248b4006d721de4c42b
-#: ../../index.rst:15
+#: ../../index.rst:13
 msgid "private intranets"
 msgstr "xarxes privades"
 
-# 23ef9fb4b55446bd8d16d42a7dc3a52a
-#: ../../index.rst:16
+#: ../../index.rst:14
 msgid "dating"
 msgstr "cites"
 
-# a3fd25be8ea74e74b4cf8c4edc8ad8f0
-#: ../../index.rst:17
+#: ../../index.rst:15
 msgid "educational"
 msgstr "educatiu"
 
-# c10b10527e9f42c5ae0022ea8684cb6c
-#: ../../index.rst:18
+#: ../../index.rst:16
 msgid "company blog"
 msgstr "bloc de companyia"
 
-# 1e4e0f368aa94c359a0bec6bf5cd9686
-#: ../../index.rst:19
-msgid "etc."
-msgstr "etc."
-
-# 18cdde61be3244db9b75d8742b60f9b9
-#: ../../index.rst:21
+#: ../../index.rst:18
 msgid "There is also a `demo site`_ running a standard installation of Elgg."
 msgstr "També hi ha un `lloc de demostració`_ amb una instal·lació estàndard d'Elgg"
 
-# 51e9c1238a4d4aaa842f03d464822646
-#: ../../index.rst:23
-msgid ""
-"This is the canonical documentation for the Elgg_ project. This aims to "
-"replace the wiki_, which is out-of-date in many areas."
-msgstr "Aquesta és la documentació canònica per al projecte Elgg_. Això té com a objectiu reemplaçar el wiki_, que desactualitzat en moltes àrees."
+#: ../../index.rst:20
+msgid "This is the canonical documentation for the Elgg_ project."
+msgstr "Aquesta és la documentació canònica per al projecte Elgg_."
