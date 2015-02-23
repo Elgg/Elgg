@@ -94,6 +94,9 @@ if (get_input('upgrade') == 'upgrade') {
 		'forward' => $forward_url
 	);
 
+	// reset cache to have latest translations available during upgrade
+	elgg_reset_system_cache();
+	
 	echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade', $vars);
 	exit;
 }
