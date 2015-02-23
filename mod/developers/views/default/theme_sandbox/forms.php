@@ -131,6 +131,15 @@ $ipsum = elgg_view('developers/ipsum');
 			?>
 		</div>
 		<div>
+			<label for="f16">User picker input (with max 1 results) (.elgg-user-picker):</label>
+			<?php echo elgg_view('input/userpicker', array(
+					'name' => 'f16',
+					'id' => 'f16',
+					'limit' => 1
+					));
+			?>
+		</div>
+		<div>
 			<label for="f15">Plain textarea input (.elgg-input-plaintext):</label>
 			<?php echo elgg_view('input/plaintext', array(
 					'name' => 'f15',
