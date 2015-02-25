@@ -271,4 +271,26 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 
 		$user->delete();
 	}
+	
+	public function testAddMemberToACLRemoveMember() {
+		// create a new user to check against
+		$user = new \ElggUser();
+		$user->username = 'access_test_user';
+		$user->save();
+		
+		$acl_id = create_access_collection('test acl');
+
+		$result = add_user_to_access_collection($user->guid, $acl_id);
+		$this->assertTrue($result);
+
+		if ($result) {
+			$this->assertTrue($user->delete());
+			
+			// since there are no more members this should return false
+			$acl_members = get_members_of_access_collection($acl_id, true);
+			$this->assertFalse($acl_members);
+		}
+
+		delete_access_collection($acl_id);
+	}
 }

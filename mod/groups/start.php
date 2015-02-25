@@ -94,9 +94,6 @@ function groups_init() {
 	// Register a handler for create groups
 	elgg_register_event_handler('create', 'group', 'groups_create_event_listener');
 
-	// Register a handler for delete groups
-	elgg_register_event_handler('delete', 'group', 'groups_delete_event_listener');
-	
 	elgg_register_event_handler('join', 'group', 'groups_user_join_event_listener');
 	elgg_register_event_handler('leave', 'group', 'groups_user_leave_event_listener');
 	elgg_register_event_handler('pagesetup', 'system', 'groups_setup_sidebar_menus');
@@ -573,15 +570,6 @@ function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params
 	}
 
 	return $returnvalue;
-}
-
-/**
- * Groups deleted, so remove access lists.
- */
-function groups_delete_event_listener($event, $object_type, $object) {
-	delete_access_collection($object->group_acl);
-
-	return true;
 }
 
 /**

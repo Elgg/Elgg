@@ -403,7 +403,7 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
  * @see get_members_of_access_collection()
  */
 function get_user_access_collections($owner_guid, $site_guid = 0) {
-	return _elgg_services()->accessCollections->getUserCollections($owner_guid, $site_guid);
+	return _elgg_services()->accessCollections->getEntityCollections($owner_guid, $site_guid);
 }
 
 /**

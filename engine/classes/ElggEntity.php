@@ -2048,6 +2048,8 @@ abstract class ElggEntity extends \ElggData implements
 		$this->deleteAnnotations();
 		$this->deleteOwnedAnnotations();
 		$this->deleteRelationships();
+		$this->deleteAccessCollectionMemberships();
+		$this->deleteOwnedAccessCollections();
 
 		access_show_hidden_entities($entity_disable_override);
 		elgg_set_ignore_access($ia);
@@ -2434,5 +2436,63 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		return $entity_tags;
+	}
+	
+	/**
+	 * Remove the membership of all access collections for this entity (if the entity is a user)
+	 *
+	 * @return bool
+	 * @since 1.11
+	 */
+	public function deleteAccessCollectionMemberships() {
+	
+		if (!$this->guid) {
+			return false;
+		}
+		
+		if ($this->type !== 'user') {
+			return true;
+		}
+		
+		$ac = _elgg_services()->accessCollections;
+		
+		$collections = $ac->getCollectionsByMember($this->guid);
+		if (empty($collections)) {
+			return true;
+		}
+		
+		$result = true;
+		foreach ($collections as $collection) {
+			$result = $result & $ac->removeUser($this->guid, $collection->id);
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * Remove all access collections owned by this entity
+	 * 
+	 * @return bool
+	 * @since 1.11
+	 */
+	public function deleteOwnedAccessCollections() {
+		
+		if (!$this->guid) {
+			return false;
+		}
+		
+		$ac = _elgg_services()->accessCollections;
+		
+		$collections = $ac->getEntityCollections($this->guid);
+		if (empty($collections)) {
+			return true;
+		}
+		
+		$result = true;
+		foreach ($collections as $collection) {
+			$result = $result & $ac->delete($collection->id);
+		}
+		
+		return $result;
 	}
 }
