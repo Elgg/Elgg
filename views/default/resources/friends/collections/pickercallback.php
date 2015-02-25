@@ -7,8 +7,6 @@
  */
 
 // Load Elgg engine
-require_once(dirname(dirname(dirname(dirname(__FILE__)))) . "/engine/start.php");
-
 $site_url = elgg_get_site_url();
 
 // Get callback type (list or picker)

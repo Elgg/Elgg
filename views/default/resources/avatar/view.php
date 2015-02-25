@@ -30,7 +30,8 @@ $success = false;
 
 try {
 	if ($filehandler->open("read")) {
-		if ($contents = $filehandler->read($filehandler->getSize())) {
+		$contents = $filehandler->read($filehandler->getSize());
+		if ($contents) {
 			$success = true;
 		}
 	}

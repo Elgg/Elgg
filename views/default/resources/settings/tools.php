@@ -29,6 +29,11 @@ if (!$plugin) {
 	forward(REFERER);
 }
 
+$username = get_input('username');
+
+elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
+elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));
+
 $title = $plugin->getManifest()->getName();
 $content = elgg_view_form('plugins/usersettings/save', array(), array('entity' => $plugin));
 
