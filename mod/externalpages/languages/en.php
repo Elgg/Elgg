@@ -6,6 +6,7 @@ return array(
 	 */
 	'expages' => "Site pages",
 	'admin:appearance:expages' => "Site Pages",
+	'expages:edit:viewpage' => "View page on site",
 	'expages:about' => "About",
 	'expages:terms' => "Terms",
 	'expages:privacy' => "Privacy",
