@@ -18,7 +18,7 @@ tools:
             - vendors
             - vendor
     external_code_coverage:
-        timeout: '600'
+        timeout: '1200'
     php_hhvm: true
     php_sim: true
 
