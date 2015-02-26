@@ -18,8 +18,8 @@ Entity methods
 Entity and context retrieval
 ----------------------------
 
-- ``elgg_get_loggedin_user_entity()`` Returns the ElggUser for the current user
-- ``elgg_get_loggedin_user_guid()`` Returns the GUID of the current user
+- ``elgg_get_logged_in_user_entity()`` Returns the ElggUser for the current user
+- ``elgg_get_logged_in_user_guid()`` Returns the GUID of the current user
 - ``elgg_is_logged_in()`` Is the viewer logged in
 - ``elgg_is_admin_logged_in()`` Is the view an admin and logged in
 - ``elgg_gatekeeper()`` Shorthand for checking if a user is logged in. Forwards user to front page if not
