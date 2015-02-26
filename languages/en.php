@@ -148,6 +148,7 @@ return array(
 	'access:read' => "Read access",
 	'access:write' => "Write access",
 	'access:admin_only' => "Administrators only",
+	'access:missing_name' => "Missing access level name",
 
 /**
  * Dashboard and widgets
