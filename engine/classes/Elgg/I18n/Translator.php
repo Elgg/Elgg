@@ -147,6 +147,11 @@ class Translator {
 	 * @return string The language code (eg "en") or false if not set
 	 */
 	function getLanguage() {
+		$url_lang = _elgg_services()->input->get('hl');
+		if ($url_lang) {
+			return $url_lang;
+		}
+		
 		$user = _elgg_services()->session->getLoggedInUser();
 		$language = false;
 	
