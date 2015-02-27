@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "1.10.2",
+    "version": "1.11.0-dev",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0",
     "minimum-stability": "dev",
@@ -12,6 +12,7 @@
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
+        "symfony/http-foundation": "~2.6",
         "mrclay/minify": "~2.0",
         "knplabs/gaufrette": "~0.1.0",
         "tedivm/stash": "~0.12",

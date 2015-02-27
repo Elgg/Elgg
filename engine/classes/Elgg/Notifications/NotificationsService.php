@@ -25,8 +25,8 @@ class NotificationsService {
 	/** @var \Elgg\PluginHooksService */
 	protected $hooks;
 
-	/** @var \Elgg\Access */
-	protected $access;
+	/** @var \ElggSession */
+	protected $session;
 
 	/** @var array Registered notification events */
 	protected $events = array();
@@ -46,14 +46,14 @@ class NotificationsService {
 	 * @param \Elgg\Notifications\SubscriptionsService $subscriptions Subscription service
 	 * @param \Elgg\Queue\Queue                        $queue         Queue
 	 * @param \Elgg\PluginHooksService                 $hooks         Plugin hook service
-	 * @param \Elgg\Access                             $access        Access control service
+	 * @param \ElggSession                             $session       Session service
 	 */
 	public function __construct(\Elgg\Notifications\SubscriptionsService $subscriptions,
-			\Elgg\Queue\Queue $queue, \Elgg\PluginHooksService $hooks, \Elgg\Access $access) {
+			\Elgg\Queue\Queue $queue, \Elgg\PluginHooksService $hooks, \ElggSession $session) {
 		$this->subscriptions = $subscriptions;
 		$this->queue = $queue;
 		$this->hooks = $hooks;
-		$this->access = $access;
+		$this->session = $session;
 	}
 
 	/**
@@ -176,7 +176,7 @@ class NotificationsService {
 
 		// @todo grab mutex
 		
-		$ia = $this->access->setIgnoreAccess(true);
+		$ia = $this->session->setIgnoreAccess(true);
 
 		while (time() < $stopTime) {
 			// dequeue notification event
@@ -203,7 +203,7 @@ class NotificationsService {
 
 		// release mutex
 
-		$this->access->setIgnoreAccess($ia);
+		$this->session->setIgnoreAccess($ia);
 
 		return $count;
 	}

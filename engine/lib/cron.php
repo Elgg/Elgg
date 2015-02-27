@@ -15,7 +15,6 @@
 function _elgg_cron_init() {
 	elgg_register_page_handler('cron', '_elgg_cron_page_handler');
 
-	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_cron_public_pages');
 	elgg_register_plugin_hook_handler('cron', 'all', '_elgg_cron_monitor', 1000);
 
 	elgg_set_config('elgg_cron_periods', array(
@@ -92,25 +91,6 @@ function _elgg_cron_monitor($hook, $period, $output, $params) {
 	}
 }
 
-/**
- * Register cron's pages as public in case we're in Walled Garden mode
- *
- * @param string $hook   'public_pages'
- * @param string $type   'walled_garden'
- * @param array  $pages  Array of pages to allow
- * @param mixed  $params Params
- *
- * @return array
- * @access private
- */
-function _elgg_cron_public_pages($hook, $type, $pages, $params) {
-
-	$periods = elgg_get_config('elgg_cron_periods');
-	foreach ($periods as $period) {
-		$pages[] = "cron/$period";
-	}
-
-	return $pages;
-}
-
-elgg_register_event_handler('init', 'system', '_elgg_cron_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_cron_init');
+};

@@ -295,4 +295,6 @@ function actions_init() {
 	elgg_register_plugin_hook_handler('forward', 'all', 'ajax_forward_hook');
 }
 
-elgg_register_event_handler('init', 'system', 'actions_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', 'actions_init');
+};

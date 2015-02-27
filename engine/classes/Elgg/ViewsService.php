@@ -36,6 +36,21 @@ class ViewsService {
 	private $CONFIG;
 
 	/**
+	 * @var PluginHooksService
+	 */
+	private $hooks;
+
+	/**
+	 * @var Logger
+	 */
+	private $logger;
+
+	/**
+	 * @var array
+	 */
+	private $overriden_locations = array();
+
+	/**
 	 * Constructor
 	 *
 	 * @param \Elgg\PluginHooksService $hooks  The hooks service
@@ -136,6 +151,10 @@ class ViewsService {
 			$this->CONFIG->views->locations[$viewtype] = array($view => $location);
 
 		} else {
+			if (isset($this->CONFIG->views->locations[$viewtype][$view])) {
+				$this->overriden_locations[$viewtype][$view][] = $this->CONFIG->views->locations[$viewtype][$view];
+			}
+
 			$this->CONFIG->views->locations[$viewtype][$view] = $location;
 		}
 	}
@@ -215,6 +234,14 @@ class ViewsService {
 		if ($viewtype === '' || !_elgg_is_valid_viewtype($viewtype)) {
 			$viewtype = elgg_get_viewtype();
 		}
+
+		// allow altering $vars
+		$vars_hook_params = [
+			'view' => $view,
+			'vars' => $vars,
+			'viewtype' => $viewtype,
+		];
+		$vars = $this->hooks->trigger('view_vars', $view, $vars_hook_params, $vars);
 
 		$view_orig = $view;
 
@@ -314,10 +341,10 @@ class ViewsService {
 
 		// Plugin hook
 		$params = array('view' => $view_orig, 'vars' => $vars, 'viewtype' => $viewtype);
-		$content = _elgg_services()->hooks->trigger('view', $view_orig, $params, $content);
+		$content = $this->hooks->trigger('view', $view_orig, $params, $content);
 
 		// backward compatibility with less granular hook will be gone in 2.0
-		$content_tmp = _elgg_services()->hooks->trigger('display', 'view', $params, $content);
+		$content_tmp = $this->hooks->trigger('display', 'view', $params, $content);
 
 		if ($content_tmp !== $content) {
 			$content = $content_tmp;
@@ -378,7 +405,10 @@ class ViewsService {
 	 */
 	public function viewExists($view, $viewtype = '', $recurse = true) {
 		
-
+		if (empty($view) || !is_string($view)) {
+			return false;
+		}
+		
 		// Detect view type
 		if ($viewtype === '' || !_elgg_is_valid_viewtype($viewtype)) {
 			$viewtype = elgg_get_viewtype();
@@ -526,5 +556,68 @@ class ViewsService {
 			// Assume not-cacheable by default
 			return false;
 		}
+	}
+
+	/**
+	 * Register a plugin's views
+	 *
+	 * @param string $path       Base path of the plugin
+	 * @param string $failed_dir This var is set to the failed directory if registration fails
+	 * @return bool
+	 *
+	 * @access private
+	 */
+	public function registerPluginViews($path, &$failed_dir = '') {
+		$view_dir = "$path/views/";
+
+		// plugins don't have to have views.
+		if (!is_dir($view_dir)) {
+			return true;
+		}
+
+		// but if they do, they have to be readable
+		$handle = opendir($view_dir);
+		if (!$handle) {
+			$failed_dir = $view_dir;
+			return false;
+		}
+
+		while (false !== ($view_type = readdir($handle))) {
+			$view_type_dir = $view_dir . $view_type;
+
+			if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
+				if ($this->autoregisterViews('', $view_type_dir, $view_dir, $view_type)) {
+					elgg_register_viewtype($view_type);
+				} else {
+					$failed_dir = $view_type_dir;
+					return false;
+				}
+			}
+		}
+
+		return true;
+	}
+
+	/**
+	 * Get views overridden by setViewLocation() calls.
+	 *
+	 * @return array
+	 *
+	 * @access private
+	 */
+	public function getOverriddenLocations() {
+		return $this->overriden_locations;
+	}
+
+	/**
+	 * Set views overridden by setViewLocation() calls.
+	 *
+	 * @param array $locations
+	 * @return void
+	 *
+	 * @access private
+	 */
+	public function setOverriddenLocations(array $locations) {
+		$this->overriden_locations = $locations;
 	}
 }

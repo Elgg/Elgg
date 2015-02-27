@@ -64,10 +64,11 @@ class ActionsService {
 		} elseif (!_elgg_services()->session->isLoggedIn() && ($this->actions[$action]['access'] !== 'public')) {
 			register_error(_elgg_services()->translator->translate('actionloggedout'));
 		} else {
-			// Returning falsy doesn't produce an error
-			// We assume this will be handled in the hook itself.
+			// To quietly cancel the action file, return a falsey value in the "action" hook.
 			if (_elgg_services()->hooks->trigger('action', $action, null, true)) {
-				if (!include($this->actions[$action]['file'])) {
+				if (is_file($this->actions[$action]['file']) && is_readable($this->actions[$action]['file'])) {
+					self::includeFile($this->actions[$action]['file']);
+				} else {
 					register_error(_elgg_services()->translator->translate('actionnotfound', array($action)));
 				}
 			}
@@ -75,6 +76,16 @@ class ActionsService {
 	
 		$forwarder = empty($forwarder) ? REFERER : $forwarder;
 		forward($forwarder);
+	}
+
+	/**
+	 * Include an action file with isolated scope
+	 *
+	 * @param string $file File to be interpreted by PHP
+	 * @return void
+	 */
+	protected static function includeFile($file) {
+		include $file;
 	}
 	
 	/**
@@ -298,7 +309,7 @@ class ActionsService {
 			}
 	
 			//Grab any system messages so we can inject them via ajax too
-			$system_messages = system_messages(null, "");
+			$system_messages = _elgg_services()->systemMessages->dumpRegister();
 	
 			if (isset($system_messages['success'])) {
 				$params['system_messages']['success'] = $system_messages['success'];

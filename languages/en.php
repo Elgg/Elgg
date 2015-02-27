@@ -516,6 +516,8 @@ return array(
 	'admin:widget:banned_users:help' => 'Lists the banned users',
 	'admin:widget:content_stats' => 'Content statistics',
 	'admin:widget:content_stats:help' => 'Keep track of the content created by your users',
+	'admin:widget:cron_status' => 'Cron status',
+	'admin:widget:cron_status:help' => 'Shows the status of the last time cron jobs finished',
 	'widget:content_stats:type' => 'Content type',
 	'widget:content_stats:number' => 'Number',
 
@@ -1210,7 +1212,8 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'generic_comment:updated' => "The comment was successfully updated.",
 	'generic_comment:deleted' => "The comment was successfully deleted.",
 	'generic_comment:blank' => "Sorry, you need to actually put something in your comment before we can save it.",
-	'generic_comment:notfound' => "Sorry, we could not find the specified item.",
+	'generic_comment:notfound' => "Sorry, we could not find the specified comment.",
+	'generic_comment:notfound_fallback' => "Sorry, we could not find the specified comment, but we've forwarded you to the page where it was left.",
 	'generic_comment:notdeleted' => "Sorry, we could not delete this comment.",
 	'generic_comment:failure' => "An unexpected error occurred when saving the comment.",
 	'generic_comment:none' => 'No comments',

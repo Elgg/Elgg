@@ -110,6 +110,11 @@ System hooks
 		<user_guid2> => array('email', 'sms', 'ajax')
 	);
 
+**prepare, breadcrumbs**
+    In elgg_get_breadcrumbs(), this filters the registered breadcrumbs before
+    returning them, allowing a plugin to alter breadcrumb strategy site-wide.
+
+**add, river**
 
 User hooks
 ==========
@@ -223,7 +228,12 @@ Permission hooks
 	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
 
 **access:collections:write, user**
-	Filters an array of access IDs that the user ``$params['user_id']`` can write to.
+	Filters an array of access IDs that the user ``$params['user_id']`` can write to. In
+	get_write_access_array(), this hook filters the return value, so it can be used to alter
+	the available options in the input/access view. For core plugins, the value "input_params"
+	has the keys "entity" (ElggEntity|false), "entity_type" (string), "entity_subtype" (string),
+	"container_guid" (int) are provided. An empty entity value generally means the form is to
+	create a new object.
 
 	.. warning:: The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created.
 
@@ -250,8 +260,11 @@ Permission hooks
 Views
 =====
 
+**view_vars, <view_name>**
+	Filters the ``$vars`` array passed to the view
+
 **view, <view_name>**
-    Filters the returned content of views
+    Filters the returned content of the view
 
 **layout, page**
     In ``elgg_view_layout()``, filters the layout name
@@ -281,8 +294,15 @@ Files
 Other
 =====
 
+**config, comments_per_page**
+	Filters the number of comments displayed per page. Default is 25.
+
 **default, access**
-    In ``get_default_access()``, filters the return value.
+	In get_default_access(), this hook filters the return value, so it can be used to alter
+	the default value in the input/access view. For core plugins, the value "input_params" has
+	the keys "entity" (ElggEntity|false), "entity_type" (string), "entity_subtype" (string),
+	"container_guid" (int) are provided. An empty entity value generally means the form is to
+	create a new object.
 
 **entity:icon:url, <entity_type>**
 	Triggered when entity icon URL is requested, see :ref:`entity icons <guides/database#entity-icons>`. Callback should

@@ -8,11 +8,9 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 		$mgr = $this->getMock('\Elgg\AutoloadManager', array(), array(), '', false);
 
 		$sp = new \Elgg\Di\ServiceProvider($mgr);
-
-		$sp->setValue('session', new \ElggSession(new \Elgg\Http\MockSessionStorage()));
+		$sp->setValue('session', \ElggSession::getMock());
 		
 		$svcClasses = array(
-			'access' => '\Elgg\Access',
 			'accessCache' => '\ElggStaticVariableCache',
 			'accessCollections' => '\Elgg\Database\AccessCollections',
 			'actions' => '\Elgg\ActionsService',
@@ -26,6 +24,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			'autoloadManager' => '\Elgg\AutoloadManager',
 			'config' => '\Elgg\Config',
 			'configTable' => '\Elgg\Database\ConfigTable',
+			'context' => '\Elgg\Context',
 			'datalist' => '\Elgg\Database\Datalist',
 			'db' => '\Elgg\Database',
 			'entityTable' => '\Elgg\Database\EntityTable',
@@ -34,7 +33,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			'hooks' => '\Elgg\PluginHooksService',
 			'input' => '\Elgg\Http\Input',
 			'logger' => '\Elgg\Logger',
-			'metadataCache' => '\ElggVolatileMetadataCache',
+			'metadataCache' => '\Elgg\Cache\MetadataCache',
 			'metadataTable' => '\Elgg\Database\MetadataTable',
 			'metastringsTable' => '\Elgg\Database\MetastringsTable',
 			'passwords' => '\Elgg\PasswordService',

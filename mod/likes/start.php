@@ -22,6 +22,8 @@ function likes_init() {
 	$actions_base = elgg_get_plugins_path() . 'likes/actions/likes';
 	elgg_register_action('likes/add', "$actions_base/add.php");
 	elgg_register_action('likes/delete', "$actions_base/delete.php");
+	
+	elgg_register_ajax_view('likes/popup');
 }
 
 /**

@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => 'Location of the item',
 	'reportedcontent:success' => 'Your report has been sent to the site admin',
 	'reportedcontent:failing' => 'Your report could not be sent',
+	'reportedcontent:refresh' => 'Refresh this listing',
 	'reportedcontent:report' => 'Report this',
 	'reportedcontent:instructions' => 'This report will be sent to the administrators of this site for review.',
 	'reportedcontent:numbertodisplay' => 'Number of reports to display',

@@ -3018,9 +3018,6 @@ function _export_init() {
 	elgg_register_action("import/opendd");
 }
 
-// Register a startup event
-elgg_register_event_handler('init', 'system', '_export_init', 100);
-
 /**
  * Returns the name of views for in a directory.
  *
@@ -3745,20 +3742,6 @@ function import_relationship_plugin_hook($hook, $entity_type, $returnvalue, $par
 	return $tmp;
 }
 
-/** Register the import hook */
-elgg_register_plugin_hook_handler("import", "all", "import_entity_plugin_hook", 0);
-elgg_register_plugin_hook_handler("import", "all", "import_extender_plugin_hook", 2);
-elgg_register_plugin_hook_handler("import", "all", "import_relationship_plugin_hook", 3);
-
-/** Register the hook, ensuring entities are serialised first */
-elgg_register_plugin_hook_handler("export", "all", "export_entity_plugin_hook", 0);
-elgg_register_plugin_hook_handler("export", "all", "export_annotation_plugin_hook", 2);
-elgg_register_plugin_hook_handler("export", "all", "export_metadata_plugin_hook", 2);
-elgg_register_plugin_hook_handler("export", "all", "export_relationship_plugin_hook", 3);
-
-/** Hook to get certain named bits of volatile data about an entity */
-elgg_register_plugin_hook_handler('volatile', 'metadata', 'volatile_data_export_plugin_hook');
-
 /**
  * Returns the SQL where clause for a table with access_id and enabled columns.
  *
@@ -3844,3 +3827,22 @@ function elgg_get_calling_plugin_entity() {
 
 	return false;
 }
+
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	// Register a startup event
+	$events->registerHandler('init', 'system', '_export_init', 100);
+
+	/** Register the import hook */
+	$hooks->registerHandler("import", "all", "import_entity_plugin_hook", 0);
+	$hooks->registerHandler("import", "all", "import_extender_plugin_hook", 2);
+	$hooks->registerHandler("import", "all", "import_relationship_plugin_hook", 3);
+
+	/** Register the hook, ensuring entities are serialised first */
+	$hooks->registerHandler("export", "all", "export_entity_plugin_hook", 0);
+	$hooks->registerHandler("export", "all", "export_annotation_plugin_hook", 2);
+	$hooks->registerHandler("export", "all", "export_metadata_plugin_hook", 2);
+	$hooks->registerHandler("export", "all", "export_relationship_plugin_hook", 3);
+
+	/** Hook to get certain named bits of volatile data about an entity */
+	$hooks->registerHandler('volatile', 'metadata', 'volatile_data_export_plugin_hook');
+};

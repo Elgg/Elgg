@@ -1,6 +1,9 @@
 <?php
 namespace Elgg\Di;
 
+use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
+use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
+
 /**
  * Provides common Elgg services.
  *
@@ -8,7 +11,6 @@ namespace Elgg\Di;
  * IDEs to auto-complete properties and understand the types returned. Extension allows us to keep
  * the container generic.
  *
- * @property-read \Elgg\Access                             $access
  * @property-read \Elgg\Database\AccessCollections         $accessCollections
  * @property-read \ElggStaticVariableCache                 $accessCache
  * @property-read \Elgg\ActionsService                     $actions
@@ -20,19 +22,21 @@ namespace Elgg\Di;
  * @property-read \ElggCrypto                              $crypto
  * @property-read \Elgg\Config                             $config
  * @property-read \Elgg\Database\ConfigTable               $configTable
+ * @property-read \Elgg\Context                            $context
  * @property-read \Elgg\Database\Datalist                  $datalist
  * @property-read \Elgg\Database                           $db
+ * @property-read \Elgg\DeprecationService                 $deprecation
+ * @property-read \Elgg\EntityPreloader                    $entityPreloader
  * @property-read \Elgg\Database\EntityTable               $entityTable
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
- * @property-read \ElggVolatileMetadataCache               $metadataCache
+ * @property-read \Elgg\Cache\MetadataCache                $metadataCache
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
  * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
  * @property-read \Elgg\Notifications\NotificationsService $notifications
- * @property-read \Elgg\EntityPreloader                    $ownerPreloader
  * @property-read \Elgg\PasswordService                    $passwords
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
  * @property-read \Elgg\Database\Plugins                   $plugins
@@ -46,6 +50,7 @@ namespace Elgg\Di;
  * @property-read \Elgg\Forms\StickyForms                  $stickyForms
  * @property-read \Elgg\Database\SubtypeTable              $subtypeTable
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
+ * @property-read \Elgg\SystemMessagesService              $systemMessages
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
@@ -63,8 +68,6 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 */
 	public function __construct(\Elgg\AutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
-
-		$this->setClassName('access', '\Elgg\Access');
 
 		$this->setFactory('accessCache', function(ServiceProvider $c) {
 			return new \ElggStaticVariableCache('access');
@@ -110,6 +113,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Database($db_config, $c->logger);
 		});
 
+		$this->setFactory('deprecation', function(ServiceProvider $c) {
+			return new \Elgg\DeprecationService($c->session, $c->logger);
+		});
+
+		$this->setClassName('entityPreloader', '\Elgg\EntityPreloader');
+
 		$this->setClassName('entityTable', '\Elgg\Database\EntityTable');
 
 		$this->setFactory('events', function(ServiceProvider $c) {
@@ -131,7 +140,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $this->resolveLoggerDependencies('logger');
 		});
 
-		$this->setClassName('metadataCache', '\ElggVolatileMetadataCache');
+		$this->setFactory('metadataCache', function (ServiceProvider $c) {
+			return new \Elgg\Cache\MetadataCache($c->session);
+		});
 
 		$this->setFactory('metadataTable', function(ServiceProvider $c) {
 			// TODO(ewinslow): Use Elgg\Cache\Pool instead of MetadataCache
@@ -150,11 +161,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
 			$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $c->db);
 			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
-			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->access);
-		});
-
-		$this->setFactory('ownerPreloader', function(ServiceProvider $c) {
-			return new \Elgg\EntityPreloader(array('owner_guid'));
+			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session);
 		});
 
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {
@@ -174,7 +181,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\PasswordService();
 		});
 
-		$this->setClassName('plugins', '\Elgg\Database\Plugins');
+		$this->setFactory('plugins', function(ServiceProvider $c) {
+			return new \Elgg\Database\Plugins($c->events, new \Elgg\Cache\MemoryPool());
+		});
 
 		$this->setFactory('queryCounter', function(ServiceProvider $c) {
 			return new \Elgg\Database\QueryCounter($c->db);
@@ -200,8 +209,16 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			}
 
 			$handler = new \Elgg\Http\DatabaseSessionHandler($c->db);
-			$storage = new \Elgg\Http\NativeSessionStorage($params, $handler);
-			return new \ElggSession($storage);
+
+			// session.cache_limiter is unfortunately set to "" by the NativeSessionStorage
+			// constructor, so we must capture and inject it directly.
+			$options = [
+				'cache_limiter' => session_cache_limiter(),
+			];
+			$storage = new NativeSessionStorage($options, $handler);
+
+			$session = new SymfonySession($storage);
+			return new \ElggSession($session);
 		});
 
 		$this->setClassName('simpleCache', '\Elgg\Cache\SimpleCache');
@@ -213,6 +230,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('subtypeTable', '\Elgg\Database\SubtypeTable');
 
 		$this->setClassName('systemCache', '\Elgg\Cache\SystemCache');
+
+		$this->setFactory('systemMessages', function(ServiceProvider $c) {
+			return new \Elgg\SystemMessagesService($c->session);
+		});
 
 		$this->setClassName('translator', '\Elgg\I18n\Translator');
 

@@ -25,7 +25,7 @@ $target_link = elgg_view('output/url', array(
 ));
 
 $reply_link = elgg_view('output/url', array(
-	'href' => $target->getURL().'#elgg-object-'.$reply->getGUID(),
+	'href' => $reply->getURL(),
 	'text' => elgg_echo('river:reply:view'),
 	'class' => 'elgg-river-target',
 	'is_trusted' => true,

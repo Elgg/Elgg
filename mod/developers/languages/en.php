@@ -20,7 +20,7 @@ return array(
 	'developers:label:display_errors' => 'Display fatal PHP errors',
 	'developers:help:display_errors' => "By default, Elgg's .htaccess file supresses the display of fatal errors.",
 	'developers:label:screen_log' => "Log to the screen",
-	'developers:help:screen_log' => "This displays elgg_log() and elgg_dump() output on the web page.",
+	'developers:help:screen_log' => "This displays elgg_log() and elgg_dump() output and a DB query count.",
 	'developers:label:show_strings' => "Show raw translation strings",
 	'developers:help:show_strings' => "This displays the translation strings used by elgg_echo().",
 	'developers:label:wrap_views' => "Wrap views",
@@ -37,9 +37,24 @@ return array(
 	
 	// inspection
 	'developers:inspect:help' => 'Inspect configuration of the Elgg framework.',
+	'developers:inspect:actions' => 'Actions',
+	'developers:inspect:events' => 'Events',
+	'developers:inspect:menus' => 'Menus',
+	'developers:inspect:pluginhooks' => 'Plugin Hooks',
+	'developers:inspect:priority' => 'Priority',
+	'developers:inspect:simplecache' => 'Simple Cache',
+	'developers:inspect:views' => 'Views',
+	'developers:inspect:views:all_filtered' => "<b>Note!</b> All view output is filtered through these Plugin Hooks:",
+	'developers:inspect:views:filtered' => "(filtered by plugin hook: %s)",
+	'developers:inspect:widgets' => 'Widgets',
+	'developers:inspect:webservices' => 'Webservices',
+	'developers:inspect:widgets:context' => 'Context',
+	'developers:inspect:functions' => 'Functions',
+	'developers:inspect:file_location' => 'File path from Elgg root',
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
+	'developers:log_queries' => "%s DB queries (does not include the shutdown event)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introduction',

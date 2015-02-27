@@ -1,5 +1,9 @@
 <?php
 
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
+use Symfony\Component\HttpFoundation\Session\Storage\MockArraySessionStorage;
+use Symfony\Component\HttpFoundation\Session\Session;
+
 /**
  * Elgg Session Management
  *
@@ -17,21 +21,29 @@
  */
 class ElggSession implements \ArrayAccess {
 
-	/** @var \Elgg\Http\SessionStorage */
+	/**
+	 * @var SessionInterface
+	 */
 	protected $storage;
 
-	/** @var \ElggUser */
-	protected $loggedInUser;
+	/**
+	 * @var \ElggUser|null
+	 */
+	protected $logged_in_user;
+
+	/**
+	 * @var bool
+	 */
+	protected $ignore_access = false;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\Http\SessionStorage $storage The storage engine
+	 * @param SessionInterface $storage The underlying Session implementation
 	 * @access private Use elgg_get_session()
 	 */
-	public function __construct(\Elgg\Http\SessionStorage $storage) {
+	public function __construct(SessionInterface $storage) {
 		$this->storage = $storage;
-		$this->loggedInUser = null;
 	}
 
 	/**
@@ -55,7 +67,7 @@ class ElggSession implements \ArrayAccess {
 	 * @since 1.9
 	 */
 	public function migrate($destroy = false) {
-		return $this->storage->regenerate($destroy);
+		return $this->storage->migrate($destroy);
 	}
 
 	/**
@@ -68,7 +80,7 @@ class ElggSession implements \ArrayAccess {
 	 */
 	public function invalidate() {
 		$this->storage->clear();
-		$this->loggedInUser = null;
+		$this->logged_in_user = null;
 		$result = $this->migrate(true);
 		$this->generateSessionToken();
 		return $result;
@@ -191,7 +203,7 @@ class ElggSession implements \ArrayAccess {
 	 */
 	public function setLoggedInUser(\ElggUser $user) {
 		$this->set('guid', $user->guid);
-		$this->loggedInUser = $user;
+		$this->logged_in_user = $user;
 	}
 
 	/**
@@ -201,7 +213,7 @@ class ElggSession implements \ArrayAccess {
 	 * @since 1.9
 	 */
 	public function getLoggedInUser() {
-		return $this->loggedInUser;
+		return $this->logged_in_user;
 	}
 
 	/**
@@ -212,11 +224,7 @@ class ElggSession implements \ArrayAccess {
 	 */
 	public function getLoggedInUserGuid() {
 		$user = $this->getLoggedInUser();
-		if ($user) {
-			return $user->guid;
-		}
-	
-		return 0;
+		return $user ? $user->guid : 0;
 	}
 	
 	/**
@@ -246,9 +254,65 @@ class ElggSession implements \ArrayAccess {
 	 * @since 1.9
 	 */
 	public function removeLoggedInUser() {
-		$this->loggedInUser = null;
+		$this->logged_in_user = null;
 		$this->remove('guid');
 	}
+
+	/**
+	 * Get current ignore access setting.
+	 *
+	 * @return bool
+	 */
+	public function getIgnoreAccess() {
+		return $this->ignore_access;
+	}
+
+	/**
+	 * Set ignore access.
+	 *
+	 * @param bool $ignore Ignore access
+	 *
+	 * @return bool Previous setting
+	 */
+	public function setIgnoreAccess($ignore = true) {
+		_elgg_services()->accessCache->clear();
+
+		$prev = $this->ignore_access;
+		$this->ignore_access = $ignore;
+
+		return $prev;
+	}
+
+	// @codingStandardsIgnoreStart
+	/**
+	 * Alias of getIgnoreAccess()
+	 *
+	 * @todo remove with elgg_get_access_object()
+	 *
+	 * @return bool
+	 * @deprecated 1.8 Use elgg_get_ignore_access()
+	 */
+	public function get_ignore_access() {
+		return $this->getIgnoreAccess();
+	}
+	// @codingStandardsIgnoreEnd
+
+	// @codingStandardsIgnoreStart
+	/**
+	 * Alias of setIgnoreAccess()
+	 *
+	 * @todo remove with elgg_get_access_object()
+	 *
+	 * @param bool $ignore Ignore access
+	 *
+	 * @return bool Previous setting
+	 *
+	 * @deprecated 1.8 Use elgg_set_ignore_access()
+	 */
+	public function set_ignore_access($ignore = true) {
+		return $this->setIgnoreAccess($ignore);
+	}
+	// @codingStandardsIgnoreEnd
 
 	/**
 	 * Adds a token to the session
@@ -308,17 +372,17 @@ class ElggSession implements \ArrayAccess {
 
 		if (in_array($key, array('user', 'id', 'name', 'username'))) {
 			elgg_deprecated_notice("Only 'guid' is stored in session for user now", 1.9);
-			if ($this->loggedInUser) {
+			if ($this->logged_in_user) {
 				switch ($key) {
 					case 'user':
-						return $this->loggedInUser;
+						return $this->logged_in_user;
 						break;
 					case 'id':
-						return $this->loggedInUser->guid;
+						return $this->logged_in_user->guid;
 						break;
 					case 'name':
 					case 'username':
-						return $this->loggedInUser->$key;
+						return $this->logged_in_user->$key;
 						break;
 				}
 			} else {
@@ -370,7 +434,7 @@ class ElggSession implements \ArrayAccess {
 
 		if (in_array($offset, array('user', 'id', 'name', 'username'))) {
 			elgg_deprecated_notice("Only 'guid' is stored in session for user now", 1.9);
-			return (bool)$this->loggedInUser;
+			return (bool)$this->logged_in_user;
 		}
 
 		if ($this->has($offset)) {
@@ -383,5 +447,16 @@ class ElggSession implements \ArrayAccess {
 		}
 
 		return false;
+	}
+
+	/**
+	 * Get an isolated ElggSession that does not persist between requests
+	 *
+	 * @return self
+	 */
+	public static function getMock() {
+		$storage = new MockArraySessionStorage();
+		$session = new Session($storage);
+		return new self($session);
 	}
 }

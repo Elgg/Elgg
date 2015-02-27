@@ -21,6 +21,13 @@ $icon = elgg_view_entity_icon($user, 'large', array(
 $menu = elgg_trigger_plugin_hook('register', "menu:user_hover", array('entity' => $user), array());
 $builder = new ElggMenuBuilder($menu);
 $menu = $builder->getMenu();
+$menu = elgg_trigger_plugin_hook('prepare', "menu:user_hover", array(
+	'menu' => $menu,
+	'entity' => $user,
+	'username' => $user->username,
+	'name' => 'user_hover',
+), $menu);
+
 $actions = elgg_extract('action', $menu, array());
 $admin = elgg_extract('admin', $menu, array());
 

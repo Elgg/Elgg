@@ -324,7 +324,7 @@ function _elgg_get_metastring_based_objects($options) {
 		$dt = get_data($query, $options['callback']);
 
 		if ($options['preload_owners'] && is_array($dt) && count($dt) > 1) {
-			_elgg_services()->ownerPreloader->preload($dt);
+			_elgg_services()->entityPreloader->preload($dt, ['owner_guid']);
 		}
 
 		return $dt;
@@ -741,4 +741,6 @@ function _elgg_metastrings_test($hook, $type, $value) {
 	return $value;
 }
 
-elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_metastrings_test');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$hooks->registerHandler('unit_test', 'system', '_elgg_metastrings_test');
+};

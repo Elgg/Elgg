@@ -442,16 +442,20 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	array_shift($params['segments']);
 	$page_shell = elgg_trigger_plugin_hook('shell', 'page', $params, $page_shell);
 
+	$system_messages = _elgg_services()->systemMessages;
+
 	$messages = null;
-	if (count_messages()) {
-		// get messages - try for errors first
-		$messages = system_messages(null, "error");
-		if (count($messages["error"]) == 0) {
-			// no errors so grab rest of messages
-			$messages = system_messages(null, "");
-		} else {
-			// we have errors - clear out remaining messages
-			system_messages(null, "");
+	if ($system_messages->count()) {
+		$messages = $system_messages->dumpRegister();
+		
+		if (isset($messages['error'])) {
+			// always make sure error is the first type
+			$errors = array(
+				'error' => $messages['error']
+			);
+			
+			unset($messages['error']);
+			$messages = array_merge($errors, $messages);
 		}
 	}
 
@@ -1337,22 +1341,20 @@ function elgg_view_tagcloud(array $options = array()) {
 /**
  * View an item in a list
  *
- * @param \ElggEntity|\ElggAnnotation $item
- * @param array  $vars Additional parameters for the rendering
+ * @param mixed $item An entity, an annotation, or a river item to display
+ * @param array $vars Additional parameters for the rendering
  *
  * @return string
  * @since 1.8.0
  * @access private
  */
 function elgg_view_list_item($item, array $vars = array()) {
-	global $CONFIG;
-
-	$type = $item->getType();
-	if (in_array($type, $CONFIG->entity_types)) {
+	
+	if ($item instanceof \ElggEntity) {
 		return elgg_view_entity($item, $vars);
-	} else if ($type == 'annotation') {
+	} else if ($item instanceof \ElggAnnotation) {
 		return elgg_view_annotation($item, $vars);
-	} else if ($type == 'river') {
+	} else if ($item instanceof \ElggRiverItem) {
 		return elgg_view_river_item($item, $vars);
 	}
 
@@ -1364,20 +1366,42 @@ function elgg_view_list_item($item, array $vars = array()) {
  *
  * Shorthand for <span class="elgg-icon elgg-icon-$name"></span>
  *
- * @param string $name  The specific icon to display
- * @param string $class Additional class: float, float-alt, or custom class
+ * @param string $name The specific icon to display
+ * @param mixed  $vars The additional classname as a string ('float', 'float-alt' or a custom class) 
+ *                     or an array of variables (array('class' => 'float')) to pass to the icon view.
  *
  * @return string The html for displaying an icon
+ * @throws InvalidArgumentException
  */
-function elgg_view_icon($name, $class = '') {
-	if ($class === true) {
-		elgg_deprecated_notice("Using a boolean to float the icon is deprecated. Use the class float.", 1.9);
-		$class = 'float';
+function elgg_view_icon($name, $vars = array()) {
+	if (empty($vars)) {
+		$vars = array();
 	}
 	
-	$icon_class = array("elgg-icon-$name" , $class);
+	if ($vars === true) {
+		elgg_deprecated_notice("Using a boolean to float the icon is deprecated. Use the class float.", 1.9);
+		$vars = array('class' => 'float');
+	}
 	
-	return elgg_view("output/icon", array("class" => $icon_class));
+	if (is_string($vars)) {
+		$vars = array('class' => $vars);
+	}
+	
+	if (!is_array($vars)) {
+		throw new \InvalidArgumentException('$vars needs to be a string or an array');
+	}
+	
+	if (!array_key_exists('class', $vars)) {
+		$vars['class'] = array();
+	}
+	
+	if (!is_array($vars['class'])) {
+		$vars['class'] = array($vars['class']);
+	}
+	
+	$vars['class'][] = "elgg-icon-$name";
+	
+	return elgg_view("output/icon", $vars);
 }
 
 /**
@@ -1655,6 +1679,8 @@ function elgg_views_boot() {
 	}
 }
 
-elgg_register_event_handler('boot', 'system', 'elgg_views_boot');
-elgg_register_event_handler('init', 'system', 'elgg_views_handle_deprecated_views');
-elgg_register_event_handler('ready', 'system', '_elgg_views_deprecate_removed_views');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('boot', 'system', 'elgg_views_boot');
+	$events->registerHandler('init', 'system', 'elgg_views_handle_deprecated_views');
+	$events->registerHandler('ready', 'system', '_elgg_views_deprecate_removed_views');
+};

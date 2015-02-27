@@ -252,7 +252,7 @@ function _elgg_load_site_config() {
 
 	$CONFIG->site_guid = (int) datalist_get('default_site');
 	$CONFIG->site_id = $CONFIG->site_guid;
-	$CONFIG->site = get_entity($CONFIG->site_guid);
+	$CONFIG->site = _elgg_services()->entityTable->get($CONFIG->site_guid, 'site');
 	if (!$CONFIG->site) {
 		throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 	}
@@ -373,4 +373,6 @@ function _elgg_config_test($hook, $type, $tests) {
 	return $tests;
 }
 
-elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_config_test');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$hooks->registerHandler('unit_test', 'system', '_elgg_config_test');
+};

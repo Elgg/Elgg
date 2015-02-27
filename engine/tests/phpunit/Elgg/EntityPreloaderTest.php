@@ -14,7 +14,7 @@ class EntityPreloaderTest extends \PHPUnit_Framework_TestCase {
 	public $obj;
 
 	public function setup() {
-		$this->obj = new EntityPreloader(array('foo', 'bar'));
+		$this->obj = new EntityPreloader();
 		$dependency = new PreloaderMock_20140623();
 		$this->obj->_callable_cache_checker = array($dependency, 'isCached');
 		$this->obj->_callable_entity_loader = array($dependency, 'load');
@@ -34,7 +34,7 @@ class EntityPreloaderTest extends \PHPUnit_Framework_TestCase {
 		$this->obj->_callable_cache_checker = array($this->mock, 'isCached');
 		$this->mock->expects($this->once())->method('isCached')->with(123);
 		foreach ($inputs as $input) {
-			$this->obj->preload($input);
+			$this->obj->preload($input, array('foo', 'bar'));
 		}
 	}
 
@@ -45,7 +45,7 @@ class EntityPreloaderTest extends \PHPUnit_Framework_TestCase {
 			(object)array('foo' => 23,),
 			(object)array('bar' => 234,),
 			(object)array('bar' => 345,),
-		));
+		), array('foo', 'bar'));
 	}
 
 	public function testOnlyLoadsIfMoreThanOne() {
@@ -54,7 +54,7 @@ class EntityPreloaderTest extends \PHPUnit_Framework_TestCase {
 		$this->obj->preload(array(
 			(object)array('foo' => 23,),
 			(object)array('bar' => 234,),
-		));
+		), array('foo', 'bar'));
 	}
 
 	public function testQuietlyIgnoresMissingProperty() {
@@ -64,7 +64,7 @@ class EntityPreloaderTest extends \PHPUnit_Framework_TestCase {
 			(object)array('foo' => 234),
 			(object)array(),
 			(object)array('bar' => 345)
-		));
+		), array('foo', 'bar'));
 	}
 }
 

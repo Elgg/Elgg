@@ -973,7 +973,7 @@ function _elgg_entities_test($hook, $type, $value) {
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromPrivateSettingsTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromRelationshipTest.php';
 	$value[] = $CONFIG->path . 'engine/tests/ElggCoreGetEntitiesFromAttributesTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggOwnerPreloaderIntegrationTest.php';
+	$value[] = $CONFIG->path . 'engine/tests/ElggEntityPreloaderIntegrationTest.php';
 	return $value;
 }
 
@@ -988,4 +988,6 @@ function _elgg_entities_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_entities_test');
 }
 
-elgg_register_event_handler('init', 'system', '_elgg_entities_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_entities_init');
+};

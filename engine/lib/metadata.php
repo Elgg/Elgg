@@ -383,29 +383,8 @@ function metadata_update($event, $object_type, $object) {
  * @todo not used
  */
 function _elgg_invalidate_metadata_cache($action, array $options) {
-	// remove as little as possible, optimizing for common cases
-	$cache = _elgg_services()->metadataCache;
-	if (empty($options['guid'])) {
-		// safest to clear everything unless we want to make this even more complex :(
-		$cache->flush();
-	} else {
-		if (empty($options['metadata_name'])) {
-			// safest to clear the whole entity
-			$cache->clear($options['guid']);
-		} else {
-			switch ($action) {
-				case 'delete':
-					$cache->markEmpty($options['guid'], $options['metadata_name']);
-					break;
-				default:
-					$cache->markUnknown($options['guid'], $options['metadata_name']);
-			}
-		}
-	}
+	_elgg_services()->metadataCache->invalidateByOptions($options);
 }
-
-/** Call a function whenever an entity is updated **/
-elgg_register_event_handler('update', 'all', 'metadata_update');
 
 /**
  * Metadata unit test
@@ -425,4 +404,9 @@ function _elgg_metadata_test($hook, $type, $value, $params) {
 	return $value;
 }
 
-elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_metadata_test');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	/** Call a function whenever an entity is updated **/
+	$events->registerHandler('update', 'all', 'metadata_update');
+
+	$hooks->registerHandler('unit_test', 'system', '_elgg_metadata_test');
+};

@@ -296,4 +296,6 @@ function _elgg_page_handler_init() {
 	elgg_register_plugin_hook_handler('forward', '404', 'elgg_error_page_handler', 600);
 }
 
-elgg_register_event_handler('init', 'system', '_elgg_page_handler_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_page_handler_init');
+};

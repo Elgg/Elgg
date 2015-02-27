@@ -304,7 +304,9 @@ elgg.ui.initDatePicker = function() {
 				}
 			},
 			nextText: '&#xBB;',
-			prevText: '&#xAB;'
+			prevText: '&#xAB;',
+			changeMonth: true,
+			changeYear: true
 		});
 	}
 

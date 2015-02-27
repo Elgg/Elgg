@@ -325,8 +325,10 @@ function system_log_listener($event, $object_type, $object) {
 	return true;
 }
 
-/** Register event to listen to all events **/
-elgg_register_event_handler('all', 'all', 'system_log_listener', 400);
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	/** Register event to listen to all events **/
+	$events->registerHandler('all', 'all', 'system_log_listener', 400);
 
-/** Register a default system log handler */
-elgg_register_event_handler('log', 'systemlog', 'system_log_default_logger', 999);
+	/** Register a default system log handler */
+	$events->registerHandler('log', 'systemlog', 'system_log_default_logger', 999);
+};

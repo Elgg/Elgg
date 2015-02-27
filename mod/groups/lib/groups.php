@@ -37,6 +37,7 @@ function groups_handle_all_page() {
 				'full_view' => false,
 				'no_results' => elgg_echo('discussion:none'),
 				'distinct' => false,
+				'preload_containers' => true,
 			));
 			break;
 		case 'featured':
@@ -237,14 +238,24 @@ function groups_handle_edit_page($page, $guid = 0) {
 function groups_handle_invitations_page() {
 	elgg_gatekeeper();
 
-	$user = elgg_get_page_owner_entity();
+	$username = get_input('username');
+	if ($username) {
+		$user = get_user_by_username($username);
+		elgg_set_page_owner_guid($user->guid);
+	} else {
+		$user = elgg_get_logged_in_user_entity();
+		elgg_set_page_owner_guid($user->guid);
+	}
+
+	if (!$user || !$user->canEdit()) {
+		register_error(elgg_echo('noaccess'));
+		forward('');
+	}
 
 	$title = elgg_echo('groups:invitations');
 	elgg_push_breadcrumb($title);
 
-	// @todo temporary workaround for exts #287.
-	$invitations = groups_get_invited_groups(elgg_get_logged_in_user_guid());
-	$content = elgg_view('groups/invitationrequests', array('invitations' => $invitations));
+	$content = elgg_view('groups/invitationrequests');
 
 	$params = array(
 		'content' => $content,

@@ -7,9 +7,8 @@
 /* ***************************************
 	Likes
 *************************************** */
-.elgg-likes {
+.elgg-likes-popup {
 	width: 345px;
-	position: absolute;
 }
 
 .elgg-menu .elgg-menu-item-likes-count {

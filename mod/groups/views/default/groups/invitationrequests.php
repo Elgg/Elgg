@@ -5,10 +5,27 @@
  * @uses $vars['invitations'] Array of ElggGroups
  */
 
-if (!empty($vars['invitations']) && is_array($vars['invitations'])) {
+$user = elgg_get_page_owner_entity();
+if (!elgg_instanceof($user, 'user') || !$user->canEdit()) {
+	return true;
+}
+
+if (isset($vars['invitations'])) {
+	$invitations = $vars['invitations'];
+} else {
+	$limit = get_input('limit', elgg_get_config('default_limit'));
+	$offset = get_input('offset', 0);
+	$count = groups_get_invited_groups($user->guid, false, array('count' => true));
+	$invitations = groups_get_invited_groups($user->guid, false, array(
+		'limit' => $limit,
+		'offset' => $offset
+			));
+}
+
+if (is_array($invitations) && count($invitations) > 0) {
 	$user = elgg_get_logged_in_user_entity();
 	echo '<ul class="elgg-list">';
-	foreach ($vars['invitations'] as $group) {
+	foreach ($invitations as $group) {
 		if ($group instanceof ElggGroup) {
 			$icon = elgg_view_entity_icon($group, 'tiny', array('use_hover' => 'true'));
 
@@ -46,6 +63,14 @@ HTML;
 		}
 	}
 	echo '</ul>';
+
+	if (!empty($count)) {
+		echo elgg_view('navigation/pagination', array(
+			'count' => $count,
+			'limit' => $limit,
+			'offset' => $offset,
+		));
+	}
 } else {
 		echo '<p class="mtm">' . elgg_echo('groups:invitations:none') . "</p>";
 }

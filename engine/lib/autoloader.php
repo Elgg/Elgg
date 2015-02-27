@@ -7,12 +7,6 @@
  * @subpackage Autoloader
  */
 
-$autoload_path = dirname(dirname(__DIR__)) . '/vendor/autoload.php';
-$autoload_available = include_once($autoload_path);	
-if (!$autoload_available) {
-	die("Couldn't include '$autoload_path'. Did you run `composer install`?");
-}
-
 /**
  * @return \Elgg\Di\ServiceProvider
  * @access private
@@ -117,8 +111,7 @@ function elgg_register_class($class, $location) {
 	return true;
 }
 
-// set up autoloading and DIC
-_elgg_services();
-
-_elgg_services()->events->registerHandler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);
-_elgg_services()->events->registerHandler('upgrade', 'all', '_elgg_delete_autoload_cache');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);
+	$events->registerHandler('upgrade', 'all', '_elgg_delete_autoload_cache');
+};

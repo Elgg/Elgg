@@ -417,4 +417,6 @@ function _elgg_user_settings_init() {
 	elgg_extend_view('forms/account/settings', 'core/settings/account/default_access', 100);
 }
 
-elgg_register_event_handler('init', 'system', '_elgg_user_settings_init');
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_user_settings_init');
+};

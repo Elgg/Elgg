@@ -7,8 +7,6 @@
  * @since 1.9
  */
 
-elgg_register_event_handler('init', 'system', '_elgg_comments_init');
-
 /**
  * Comments initialization function
  *
@@ -80,10 +78,74 @@ function _elgg_comments_page_handler($page) {
 			return true;
 			break;
 
+		case 'view':
+			_elgg_comment_redirect(elgg_extract(1, $page), elgg_extract(2, $page));
+			break;
+
 		default:
 			return false;
 			break;
 	}
+}
+
+/**
+ * Redirect to the comment in context of the containing page
+ *
+ * @param int $comment_guid  GUID of the comment
+ * @param int $fallback_guid GUID of the containing entity
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_comment_redirect($comment_guid, $fallback_guid) {
+	$fail = function () {
+		register_error(elgg_echo('generic_comment:notfound'));
+		forward(REFERER);
+	};
+
+	$comment = get_entity($comment_guid);
+	if (!$comment) {
+		// try fallback if given
+		$fallback = get_entity($fallback_guid);
+		if (!$fallback) {
+			$fail();
+		}
+
+		register_error(elgg_echo('generic_comment:notfound_fallback'));
+		forward($fallback->getURL());
+	}
+
+	if (!elgg_instanceof($comment, 'object', 'comment')) {
+		$fail();
+	}
+
+	$container = $comment->getContainerEntity();
+	if (!$container) {
+		$fail();
+	}
+
+	// this won't work with threaded comments, but core doesn't support that yet
+	$count = elgg_get_entities([
+		'type' => 'object',
+		'subtype' => 'comment',
+		'container_guid' => $container->guid,
+		'count' => true,
+		'wheres' => ["e.guid < " . (int)$comment->guid],
+	]);
+	$limit = (int)get_input('limit');
+	if (!$limit) {
+		$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
+	}
+	$offset = floor($count / $limit) * $limit;
+	if (!$offset) {
+		$offset = null;
+	}
+
+	$url = elgg_http_add_url_query_elements($container->getURL(), [
+			'offset' => $offset,
+		]) . "#elgg-object-{$comment->guid}";
+
+	forward($url);
 }
 
 /**
@@ -146,7 +208,7 @@ function _elgg_comment_url_handler($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	return $container->getURL();
+	return "comment/view/{$entity->guid}/{$container->guid}";
 }
 
 /**
@@ -227,3 +289,7 @@ function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $
 
 	return $returnvalue;
 }
+
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_comments_init');
+};
