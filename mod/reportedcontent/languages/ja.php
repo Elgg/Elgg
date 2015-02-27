@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => '報告対象の場所',
 	'reportedcontent:success' => 'あなたの報告をサイト管理者に送信しました。',
 	'reportedcontent:failing' => 'あなたの報告を送信できませんでした。',
+	'reportedcontent:refresh' => 'このリストをリフレッシュする',
 	'reportedcontent:report' => '管理者に報告',
 	'reportedcontent:instructions' => 'この報告はサイトの管理者に監査してもらうために送られます。',
 	'reportedcontent:numbertodisplay' => '報告の表示数',

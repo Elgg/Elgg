@@ -173,8 +173,11 @@ Osallistu keskusteluun:
 	'discussion:reply:edit' => 'Muokkaa',
 	'discussion:reply:deleted' => 'Vastaus poistettu.',
 	'discussion:reply:error:notfound' => 'Viestiä ei löytynt',
+	'discussion:reply:error:notfound_fallback' => "Etsimääsi viestiä ei löytynyt, mutta ohjasimme sinut viestiketjuun, jonne se oli jätetty.",
 	'discussion:reply:error:notdeleted' => 'Viestiä ei voitu poistaa',
 
+	'discussion:search:title' => 'Vastaus aiheeseen: %s',
+	
 	'admin:groups' => 'Ryhmät',
 
 	'reply:this' => 'Vastaa',

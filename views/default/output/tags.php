@@ -15,17 +15,18 @@ if (isset($vars['entity'])) {
 	unset($vars['entity']);
 }
 
-if (empty($vars['tags']) && (!empty($vars['value']) || $vars['value'] === 0 || $vars['value'] === '0')) {
-	$vars['tags'] = $vars['value'];
+$value = elgg_extract('value', $vars);
+unset($vars['value']);
+if (empty($vars['tags']) && (!empty($value) || $value === 0 || $value === '0')) {
+	$vars['tags'] = $value;
 }
 
-if (empty($vars['tags']) && $vars['value'] !== 0 && $vars['value'] !== '0') {
+if (empty($vars['tags']) && $value !== 0 && $value !== '0') {
 	return;
 }
 
 $tags = $vars['tags'];
 unset($vars['tags']);
-unset($vars['value']);
 
 if (!is_array($tags)) {
 	$tags = array($tags);

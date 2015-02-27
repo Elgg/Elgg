@@ -314,4 +314,5 @@ Related
    
    views/page-structure
    views/simplecache
+   views/foot-vs-footer
 	

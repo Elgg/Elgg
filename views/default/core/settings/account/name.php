@@ -17,5 +17,6 @@ if ($user) {
 	echo elgg_view_module('info', $title, $content);
 
 	// need the user's guid to make sure the correct user gets updated
+	// TODO: remove the hidden input in 2.0. See #8001
 	echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $user->guid));
 }

@@ -184,6 +184,7 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
 	'discussion:reply:edit' => 'Bewerk reactie',
 	'discussion:reply:deleted' => 'Reactie op de discussie is verwijderd.',
 	'discussion:reply:error:notfound' => 'Reactie op discussie kon niet gevonden worden',
+	'discussion:reply:error:notfound_fallback' => "Helaas, we kunnen de specifieke reactie niet terug vinden, maar we hebben je doorgestuurd naar de originele discussie.",
 	'discussion:reply:error:notdeleted' => 'De reactie op de discussie kon niet worden verwijderd',
 
 	'discussion:search:title' => 'Reactie op onderwerp: %s',

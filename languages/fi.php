@@ -612,7 +612,7 @@ kolmeen osioon:
 
 	'admin:plugins:warning:elgg_version_unknown' => 'Tämä liitännäinen käyttää vanhentunutta manifest-tiedostoa, joka ei sisällä tietoa yhteensopivuudesta eri Elgg-versioiden kanssa. Liitännäinen ei todennäköisesti toimi oikein!',
 	'admin:plugins:warning:unmet_dependencies' => 'Tällä liitännäisellä on puuttuvia riippuvuuksia, joten sitä ei voida aktivoida. Tarkista riippuvuudet lisätiedoista.',
-	'admin:plugins:warning:invalid' => 'Liitännäinen \"%s\" on virheellinen',
+	'admin:plugins:warning:invalid' => 'Pluginissa on virhe: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Voit yrittää etsiä apua <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">Elggin dokumentaatiosta</a>.',
 	'admin:plugins:cannot_activate' => 'ei voi aktivoida',
 
@@ -710,7 +710,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'admin:maintenance_mode:mode_label' => 'Ylläpitotila',
 	'admin:maintenance_mode:message_label' => 'Käyttäjille näytettävä viesti',
 	'admin:maintenance_mode:saved' => 'Huoltotilan asetukset tallennettu',
-	'admin:maintenance_mode:indicator_menu_item' => 'Sivuston on huoltotilassa.',
+	'admin:maintenance_mode:indicator_menu_item' => 'Sivusto on huoltotilassa.',
 	'admin:login' => 'Ylläpitäjien kirjautuminen',
 
 /**
@@ -1067,7 +1067,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'installation:minify_js:label' => "Pakkaa JavaScript (suositus)",
 	'installation:minify_css:label' => "Pakkaa CSS (suositus)",
 
-	'installation:htaccess:needs_upgrade' => "Elggin juuressa oleva .htaccess-tiedosto pitää päivittää syöttämään polku \"__elgg_uri\"-nimiseen GET-parametriin (voit ottaa mallia htaccess_dist-tiedostosta).",
+	'installation:htaccess:needs_upgrade' => "Sivuston .htaccess-tiedosto pitää päivittää syöttämään polku __elgg_uri-nimiseen GET-parametriin. (Katso ohjeet tiedostosta install/config/htaccess.dist.)",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg ei saa testattua rewrite-sääntöjä. Tarkista, että curl toimii oikein ja että palvelimelle ei ole määritetty IP-rajoituksia, jotka estävät localhost-yhteydet.",
 	
 	'installation:systemcache:description' => "Välimuisti vähentää liitännäisten latausaikaa tallentamalla muistiin niiden käytössä olevien näkymien sijainnit.",
@@ -1207,7 +1207,8 @@ Jos anoit uutta salasanaa, klikkaa alla olevaa linkkiä. Muussa tapauksessa voit
 	'generic_comment:updated' => "Kommentti päivitetty.",
 	'generic_comment:deleted' => "Kommentti poistettu.",
 	'generic_comment:blank' => "Kommenttiin täytyy kirjoittaa jotain ennen kuin se voidaan tallentaa.",
-	'generic_comment:notfound' => "Kohdetta ei löytynyt.",
+	'generic_comment:notfound' => "Etsimääsi kommenttia ei löytynyt.",
+	'generic_comment:notfound_fallback' => "Etsimääsi kommenttia ei löytynyt, mutta ohjasimme sinut sivulle, jonne kommentti oli jätetty.",
 	'generic_comment:notdeleted' => "Kommentin poistaminen epäonnistui.",
 	'generic_comment:failure' => "Kommentin tallentamisessa tapahtui odottamaton virhe.",
 	'generic_comment:none' => 'Ei kommentteja',
@@ -1250,7 +1251,7 @@ Tähän viestiin ei voi vastata.",
 	'actiongatekeeper:missingfields' => 'Lomakkeesta puuttuu __token tai __ts -kentät',
 	'actiongatekeeper:tokeninvalid' => "Käyttämäsi sivu oli vanhentunut. Yritä uudelleen.",
 	'actiongatekeeper:timeerror' => 'Käyttämäsi sivu on vanhentunut. Päivitä sivu ja yritä uudelleen.',
-	'actiongatekeeper:pluginprevents' => 'Lisäosa estää tämän lomakkeen lähetyksen.',
+	'actiongatekeeper:pluginprevents' => 'Tietojen lähettäminen epäonnistui tuntemattoman ongelma vuoksi.',
 	'actiongatekeeper:uploadexceeded' => 'Lähettämäsi datan koko ylittää sivuston ylläpitäjän määrittämän maksimirajan',
 	'actiongatekeeper:crosssitelogin' => "Eri domainista kirjautuminen ei ole sallittua. Yritä uudelleen.",
 

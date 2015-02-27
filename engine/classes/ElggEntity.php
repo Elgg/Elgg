@@ -2153,8 +2153,8 @@ abstract class ElggEntity extends \ElggData implements
 	 * @todo Unimplemented
 	 */
 	public function setLatLong($lat, $long) {
-		$this->set('geo:lat', $lat);
-		$this->set('geo:long', $long);
+		$this->{"geo:lat"} = $lat;
+		$this->{"geo:long"} = $long;
 	}
 
 	/**
@@ -2164,7 +2164,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @todo Unimplemented
 	 */
 	public function getLatitude() {
-		return (float)$this->get('geo:lat');
+		return (float)$this->{"geo:lat"};
 	}
 
 	/**
@@ -2174,7 +2174,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @todo Unimplemented
 	 */
 	public function getLongitude() {
-		return (float)$this->get('geo:long');
+		return (float)$this->{"geo:long"};
 	}
 
 	/*
