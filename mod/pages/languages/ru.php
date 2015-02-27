@@ -19,7 +19,7 @@ return array(
 	'pages:delete' => "Удалить документы",
 	'pages:history' => "Архив",
 	'pages:view' => "Просмотреть документ",
-	'pages:revision' => "Версии",
+	'pages:revision' => "Версия",
 	'pages:current_revision' => "Текущая версия",
 	'pages:revert' => "Откатить",
 

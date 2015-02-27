@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => 'Адрес',
 	'reportedcontent:success' => 'Спасибо, Вы помогли сделать сайт лучше! Ваша жалоба отправлена администратору.',
 	'reportedcontent:failing' => 'Простите, Ваша жалоба не может быть отправлена.',
+	'reportedcontent:refresh' => 'Обновить этот список',
 	'reportedcontent:report' => 'Пожаловаться администратору',
 	'reportedcontent:instructions' => 'Этот отчет будет отправлен на администраторов этого сайта для просмотра.',
 	'reportedcontent:numbertodisplay' => 'Количество жалоб для отображения',

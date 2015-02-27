@@ -36,6 +36,7 @@ $limit = (int)elgg_extract('limit', $vars, 0);
 <div class="elgg-user-picker" data-limit="<?php echo $limit ?>" data-name="<?php echo $name ?>" data-handler="<?php echo $handler ?>">
 	<input type="text" class="elgg-input-user-picker" size="30"/>
 	<input type="checkbox" name="match_on" value="true" />
+	<?php echo elgg_view('input/hidden', array('name' => $vars['name'])); ?>
 	<label><?php echo elgg_echo('userpicker:only_friends'); ?></label>
 	<ul class="elgg-user-picker-list">
 		<?php

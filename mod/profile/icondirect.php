@@ -6,13 +6,6 @@
  * @package ElggProfile
  */
 
-$engine_dir = dirname(dirname(dirname(__FILE__))). '/engine/';
-
-// Get DB settings
-require_once $engine_dir . 'settings.php';
-
-global $CONFIG;
-
 // won't be able to serve anything if no joindate or guid
 if (!isset($_GET['joindate']) || !isset($_GET['guid'])) {
 	header("HTTP/1.1 404 Not Found");
@@ -30,6 +23,14 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']
 	exit;
 }
 
+$base_dir = dirname(dirname(dirname(__FILE__)));
+
+// Get DB settings
+require_once $base_dir . '/engine/settings.php';
+require_once $base_dir . '/vendor/autoload.php';
+
+global $CONFIG;
+
 $size = "medium";
 if (!empty($_GET['size'])) {
 	$size = strtolower($_GET['size']);
@@ -38,9 +39,17 @@ if (!empty($_GET['size'])) {
 	}
 }
 
-$mysql_dblink = @mysql_connect($CONFIG->dbhost, $CONFIG->dbuser, $CONFIG->dbpass, true);
+$conf = new \Elgg\Database\Config($CONFIG);
+
+if ($conf->isDatabaseSplit()) {
+	$read_connection = $conf->getConnectionConfig(\Elgg\Database\Config::READ);
+} else {
+	$read_connection = $conf->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
+}
+
+$mysql_dblink = @mysql_connect($read_connection['host'], $read_connection['user'], $read_connection['password'], true);
 if ($mysql_dblink) {
-	if (@mysql_select_db($CONFIG->dbname, $mysql_dblink)) {
+	if (@mysql_select_db($read_connection['database'], $mysql_dblink)) {
 		$q = "SELECT name, value FROM {$CONFIG->dbprefix}datalists WHERE name in ('dataroot', 'path')";
 		$result = mysql_query($q, $mysql_dblink);
 		if ($result) {
@@ -59,9 +68,8 @@ if ($mysql_dblink) {
 		@mysql_close($mysql_dblink);
 
 		if (isset($data_root) && isset($elgg_path)) {
-			require_once $engine_dir . "classes/Elgg/EntityDirLocator.php";
-
-			$locator = new Elgg\EntityDirLocator($guid);
+			
+			$locator = new \Elgg\EntityDirLocator($guid);
 			$user_path = $data_root . $locator->getPath();
 
 			$filename = $user_path . "profile/{$guid}{$size}.jpg";
@@ -82,6 +90,6 @@ if ($mysql_dblink) {
 }
 
 // something went wrong so load engine and try to forward to default icon
-require_once $engine_dir . "start.php";
+require_once $base_dir . "/engine/start.php";
 elgg_log("Profile icon direct failed.", "WARNING");
 forward("_graphics/icons/user/default{$size}.gif");

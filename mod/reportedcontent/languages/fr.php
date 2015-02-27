@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => 'Emplacement de l\'élément',
 	'reportedcontent:success' => 'Votre signalement a bien été envoyé à l\'adminsitrateur du site',
 	'reportedcontent:failing' => 'Votre signalement n\'a pu être envoyé',
+	'reportedcontent:refresh' => 'Actualiser la liste',
 	'reportedcontent:report' => 'Signaler ceci',
 	'reportedcontent:instructions' => 'Ce rapport sera envoyé aux administrateurs de ce site à des fins d\'examen.',
 	'reportedcontent:numbertodisplay' => 'Nombre de rapports à afficher',

@@ -46,18 +46,17 @@ return array(
 	'river:comment:object:blog' => '%s комментировал(а) пост %s',
 
 	// notifications
-	'blog:notify:summary' => 'Новый пост блога %s',
-	'blog:notify:subject' => 'Новый пост блога: %s',
+	'blog:notify:summary' => 'Новая запись блога %s',
+	'blog:notify:subject' => 'Новая запись блога: %s',
 	'blog:notify:body' =>
 '
+%s добавил[а] новую запись в блог: %s
 
-%s добавил[а] новый пост блога: %s<br>
+%s
 
-%s<br>
-
-Для просмотра и комментирования нажмите на
-
-<a href="%s">эту ссылку</a>.',
+Для просмотра и комментирования перейдите по ссылке:
+%s
+',
 
 	// widget
 	'blog:widget:description' => 'Показать последние посты',
