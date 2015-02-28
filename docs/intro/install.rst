@@ -15,6 +15,7 @@ Requirements
 
    -  GD (for graphics processing)
    -  `Multibyte String support`_ (for i18n)
+   -  ``intl`` extension enabled (for i18n)
    -  Proper configuration and ability to send email through an MTA
 
 -  Web server with support for URL rewriting

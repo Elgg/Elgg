@@ -36,6 +36,64 @@ Plugin Messages
 
 Messages will no longer get the metadata 'msg' for newly created messages. This means you can not rely on that metadata to exist.
 
+Translations
+------------
+As of Elgg 2.0, we have switched from sprintf-based string replacement
+to the ICU standard for message formatting. This gives us much better
+support for translating user-visible message including gender, plurals,
+and locale-specific date, time, number, and other formats.
+
+ICU also supports named and typed parameters, which should make it
+much easier for translators to format the translations in a way that
+makes the most sense for the target locale.
+
+For example, suppose you have an Elgg 1.x message that reads:
+
+.. code-block:
+
+    %s posted %d blogs before %s on %s.
+
+There are a few problems with this string:
+
+ 1. There is hardly any context around what these string replacements are
+    going to be. Are they names? Dates? Times? Numbers? Pronouns? These
+    differences matter greatly in translation.
+
+ 2. This message assumes there is only one plural form. There is no
+    way to change the message to say "1 blog" if the blog count is
+    only 1, or to say "didn't post any blogs" if the blog count is 0.
+
+ 3. If the translator needed to reorder these arguments, they would have
+    to use a clunky %1$s style syntax, and memorize which numbered
+    argument is which. Doing this for every translatable string is
+    far too painful.
+
+ 4. The onus is on the call site to format each number, date, etc. in a
+    locale-appropriate way. This is easy to forget and hard to get right.
+
+Consider an equivalent message in ICU format:
+
+.. code:
+
+    {count,plural,
+     =0 {{student_name} didn't post any blogs before {deadline,time,medium} on {deadline,date,medium}}
+     one {{student_name} posted 1 blog before {deadline,time,medium} on {deadline,date,medium}}
+     other {{student_name} posted # blogs before {deadline,time,medium} on {deadline,date,medium}}
+    }
+
+This is much better, because:
+
+ 1. Named arguments and data type information make the intent
+    of the message much clearer to translators.
+
+ 2. Named arguments make reordering of inputs a non-issue.
+
+ 3. It is sophisticated enough to handle several variants based on
+    the value of "count."
+
+ 4. Type information in the template relieves callers of worrying
+    about locale-specific formatting issues.
+
 From 1.10 to 1.11
 =================
 

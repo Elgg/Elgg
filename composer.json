@@ -9,6 +9,7 @@
         "ext-mysql": "*",
         "ext-gd": "*",
         "ext-json": "*",
+        "ext-intl": "*",
         "ext-xml": "*",
         "mrclay/minify": "2.*",
         "knplabs/gaufrette": "0.1.*",
