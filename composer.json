@@ -19,6 +19,13 @@
         "ircmaxell/password-compat": "~1.0",
         "roave/security-advisories": "dev-master"
     },
+    "scripts": {
+        "test": "phpunit",
+        "lint": [
+            "phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib",
+            "composer validate"
+        ]
+    },
     "suggest": {
         "ext-mbstring": "*"
     },

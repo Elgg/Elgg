@@ -25,9 +25,8 @@ matrix:
        - wget https://scrutinizer-ci.com/ocular.phar
       script:
        - bash .scripts/travis/check_commit_msgs.sh
-       - vendor/bin/phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
+       - composer lint
        - phpunit --coverage-clover=coverage.clover
-       - composer validate
       after_script:
        - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
        
