@@ -92,10 +92,8 @@ function forward($location = "", $reason = 'system') {
 
 		if ($location) {
 			header("Location: {$location}");
-			exit;
-		} else if ($location === '') {
-			exit;
 		}
+		exit;
 	} else {
 		throw new \SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
 			. "Output started in file $file at line $line. Search http://learn.elgg.org/ for more information.");
@@ -321,16 +319,6 @@ function elgg_load_external_file($type, $name) {
  */
 function elgg_get_loaded_external_files($type, $location) {
 	return _elgg_services()->externalFiles->getLoadedFiles($type, $location);
-}
-
-/**
- * Bootstraps the externals data structure in $CONFIG.
- *
- * @param string $type The type of external, js or css.
- * @access private
- */
-function _elgg_bootstrap_externals_data_structure($type) {
-	_elgg_services()->externalFiles->bootstrap($type);
 }
 
 /**
@@ -1544,6 +1532,28 @@ function _elgg_css_page_handler($page) {
 }
 
 /**
+ * Handle requests for /favicon.ico
+ *
+ * @param string[] $segments The URL segments
+ * @return bool
+ * @access private
+ * @since 1.10
+ */
+function _elgg_favicon_page_handler($segments) {
+	header("HTTP/1.1 404 Not Found", true, 404);
+
+	header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+1 week")), true);
+	header("Pragma: public", true);
+	header("Cache-Control: public", true);
+
+	// TODO in next 1.x send our default icon
+	//header('Content-Type: image/vnd.microsoft.icon');
+	//readfile(elgg_get_root_path() . '_graphics/favicon.ico');
+
+	return true;
+}
+
+/**
  * Serves a JS or CSS view with headers for caching.
  *
  * /<css||js>/name/of/view.<last_cache>.<css||js>
@@ -1867,6 +1877,7 @@ function _elgg_init() {
 	elgg_register_page_handler('js', '_elgg_js_page_handler');
 	elgg_register_page_handler('css', '_elgg_css_page_handler');
 	elgg_register_page_handler('ajax', '_elgg_ajax_page_handler');
+	elgg_register_page_handler('favicon.ico', '_elgg_favicon_page_handler');
 
 	elgg_register_page_handler('manifest.json', function() {
 		$site = elgg_get_site_entity();

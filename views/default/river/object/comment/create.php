@@ -18,7 +18,7 @@ $subject_link = elgg_view('output/url', array(
 ));
 
 $target_link = elgg_view('output/url', array(
-	'href' => $target->getURL(),
+	'href' => $comment->getURL(),
 	'text' => $target->getDisplayName(),
 	'class' => 'elgg-river-target',
 	'is_trusted' => true,

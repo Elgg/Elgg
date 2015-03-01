@@ -40,7 +40,7 @@ return array(
 	'actionloggedout' => "Désolé, vous ne pouvez pas effectuer cette action sans être connecté(e).",
 	'actionunauthorized' => 'Vous n êtes pas autorisé(e) à effectuer cette action.',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid : %s) est un plugin non configuré. Il a été désactivé. Veuillez chercher dans le wiki d'Elgg pour connaître les cause possibles (http://docs.elgg.org/wiki/).",
+	'PluginException:MisconfiguredPlugin' => "Le plugin %s (guid: %s) est mal configuré. Il a été désactivé. Veuillez rechercher dans le wiki d'aide les causes possibles (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid : %s) ne peut pas démarrer. Raison: %s',
 	'PluginException:InvalidID' => "%s est un ID de plugin invalide.",
 	'PluginException:InvalidPath' => "%s est un chemin invalide pour le plugin.",
@@ -97,7 +97,7 @@ return array(
 	'deprecatedfunction' => 'Attention : Ce code source utilise une fonction périmée \'%s\'. Il n\'est pas compatible avec cette version de Elgg.',
 
 	'pageownerunavailable' => 'Attention : La page de l\'utilisateur %d n\'est pas accessible.',
-	'viewfailure' => 'Il ya eu une erreur interne dans la vue %s',
+	'viewfailure' => 'Il y a eu une erreur interne dans la vue %s',
 	'view:missing_param' => "Le paramètre obligatoire '%s' manque dans la vue %s",
 	'changebookmark' => 'Veuillez changer votre favori pour cette page.',
 	'noaccess' => 'You need to login to view this content or the content has been removed or you do not have permission to view it.',
@@ -158,6 +158,7 @@ return array(
 
 	'widgets:add' => 'Ajouter des widgets',
 	'widgets:add:description' => "Cliquez sur n'importe quel widget ci-dessous pour l'ajouter à la page.",
+	'widgets:panel:close' => "Fermer le panneau des widgets",
 	'widgets:position:fixed' => '(Position modifiée sur la page)',
 	'widget:unavailable' => 'Vous avez déjà ajouté ce widget',
 	'widget:numbertodisplay' => 'Nombre d\'éléments à afficher ',
@@ -165,9 +166,9 @@ return array(
 	'widget:delete' => 'Supprimer %s',
 	'widget:edit' => 'Personnaliser ce widget',
 
-	'widgets' => "Widget",
+	'widgets' => "Widgets",
 	'widget' => "Widget",
-	'item:object:widget' => "Widget",
+	'item:object:widget' => "Widgets",
 	'widgets:save:success' => "Le widget a été sauvegardé avec succès.",
 	'widgets:save:failure' => "Un problème est survenu lors de l'enregistrement de votre widget. Veuillez recommencer.",
 	'widgets:add:success' => "Le widget a bien été ajouté.",
@@ -186,14 +187,14 @@ return array(
  * Users
  */
 
-	'user' => "Utilisateur",
-	'item:user' => "Utilisateurs",
+	'user' => "Membre",
+	'item:user' => "Membres",
 
 /**
  * Friends
  */
 
-	'friends' => "Amis",
+	'friends' => "Contacts",
 	'friends:yours' => "Vos contacts",
 	'friends:owned' => "Les contacts de %s",
 	'friend:add' => "Ajouter un contact",
@@ -202,10 +203,10 @@ return array(
 	'friends:add:successful' => "Vous avez ajouté %s à vos contacts.",
 	'friends:add:failure' => "%s n'a pas pu être ajouté(e) à vos contacts. Merci de réessayer ultérieurement.",
 
-	'friends:remove:successful' => "Vous avez supprimé %s de vos contacts.",
-	'friends:remove:failure' => "%s n'a pas pu être supprimé(e) de vos contacts. Merci de réessayer ultérieurement.",
+	'friends:remove:successful' => "Vous avez retiré %s de vos contacts.",
+	'friends:remove:failure' => "%s n'a pas pu être retiré(e) de vos contacts. Merci de réessayer ultérieurement.",
 
-	'friends:none' => "Cet utilisateur n'a pas encore ajouté de contact.",
+	'friends:none' => "Ce membre n'a pas encore ajouté de contact.",
 	'friends:none:you' => "Vous n'avez pas encore de contact !",
 
 	'friends:none:found' => "Aucun contact n'a été trouvé.",
@@ -225,8 +226,8 @@ return array(
 	'friends:collectionedit' => "Modifier ce groupement",
 	'friends:nocollections' => "Vous n'avez pas encore de groupement de contacts.",
 	'friends:collectiondeleted' => "Votre groupement de contacts a été supprimé.",
-	'friends:collectiondeletefailed' => "Le groupement de contacts n'a pas été supprimer. Vous n'avez pas de droits suffisants, ou un autre problème peut-être en cause.",
-	'friends:collectionadded' => "Votre groupement de contact a été créé avec succès",
+	'friends:collectiondeletefailed' => "Le groupement de contacts n'a pas été supprimé. Vous n'avez pas de droits suffisants, ou un autre problème peut-être en cause.",
+	'friends:collectionadded' => "Votre groupement de contacts a été créé avec succès",
 	'friends:nocollectionname' => "Vous devez nommer votre groupement de contact avant qu'il puisse être créé.",
 	'friends:collections:members' => "Membres du groupement",
 	'friends:collections:edit' => "Modifier le groupement de contacts",
@@ -280,7 +281,7 @@ return array(
 	'profile:edit:default' => 'Modifier les champs du profil',
 	'profile:label' => "Etiquette du profil",
 	'profile:type' => "Type de l'étiquette",
-	'profile:editdefault:delete:fail' => 'Echec de l\'enlevement du champ profil par défaut',
+	'profile:editdefault:delete:fail' => 'Echec de la suppression du champ de profil',
 	'profile:editdefault:delete:success' => 'Le champ profil par défaut est supprimé !',
 	'profile:defaultprofile:reset' => 'Réinitialisation du profil système par défaut',
 	'profile:resetdefault' => 'Réinitialisation du profil par défaut',
@@ -387,11 +388,10 @@ return array(
 	'registration:notemail' => 'L\'adresse e-mail que vous avez renseigné n\'apparaît pas comme valide.',
 	'registration:userexists' => 'Ce nom d\'utilisateur existe déjà',
 	'registration:usernametooshort' => 'Le nom d\'utilisateur doit faire %u caractères au minimum.',
-	'registration:usernametoolong' => 'Votre nom d\'utilisateur est trop long. Il peut y avoir un maximum de %u caractères.\',
-	\'registration:passwordtooshort\' => ',
+	'registration:usernametoolong' => 'Votre nom d\'utilisateur est trop long. Il peut comporter au maximum %u caractères.',
 	'registration:passwordtooshort' => 'Le mot de passe doit comporter un minimum de %u caractères.',
 	'registration:dupeemail' => 'Cette adresse e-mail est déjà utilisée.',
-	'registration:invalidchars' => 'Désolé, votre nom d\'utilisateur contient les caractères invalides suivants: %s. Tout ces caractères sont invalides: %s',
+	'registration:invalidchars' => 'Désolé, votre nom d\'utilisateur contient le caractère invalide %s qui est invalide. Les caractères suivants sont invalides : %s',
 	'registration:emailnotvalid' => 'Désolé, l\'adresse e-mail que vous avez entré est invalide sur ce site.',
 	'registration:passwordnotvalid' => 'Désolé, le mot de passe que vous avez entré est invalide sur ce site.',
 	'registration:usernamenotvalid' => 'Désolé, le nom d\'utilisateur que vous avez entré est invalide sur ce site.',
@@ -408,7 +408,7 @@ return array(
 	'user:set:password' => "Mot de passe",
 	'user:current_password:label' => 'Mot de passe actuel',
 	'user:password:label' => "Votre nouveau mot de passe",
-	'user:password2:label' => "Veuillez retaper votre nouveau mot de passe",
+	'user:password2:label' => "Veuillez saisir à nouveau votre nouveau mot de passe",
 	'user:password:success' => "Mot de passe modifié avec succès",
 	'user:password:fail' => "Impossible de modifier votre mot de passe.",
 	'user:password:fail:notsame' => "Les deux mots de passe ne correspondent pas !",
@@ -449,6 +449,7 @@ return array(
 	'admin:configuration:success' => "Vos paramètres ont été sauvegardés.",
 	'admin:configuration:fail' => "Vos paramètres n'ont pas pu être sauvegardés.",
 	'admin:configuration:dataroot:relative_path' => 'Impossible de définir %s comme racine de \'dataroot\' car ce n\'est pas un chemin absolu.',
+	'admin:configuration:default_limit' => 'Le nombre d\'éléments par page doit être d\'au moins 1.',
 
 	'admin:unknown_section' => 'Partie Admin invalide.',
 
@@ -461,7 +462,7 @@ return array(
 	'admin:statistics:cron' => 'Table de planification',
 	'admin:cron:record' => 'Dernière table de planification',
 	'admin:cron:period' => 'Période de la table de planification',
-	'admin:cron:friendly' => 'Dernière complétée',
+	'admin:cron:friendly' => 'Dernière exécution',
 	'admin:cron:date' => 'Date et heure',
 
 	'admin:appearance' => 'Apparence',
@@ -612,16 +613,16 @@ return array(
 	'admin:plugins:warning:elgg_version_unknown' => 'Ce plugin utilise un ancien fichier manifest.xml et ne précise pas si cette version est compatible avec l\'Elgg actuel. Il ne fonctionnera probablement pas !',
 	'admin:plugins:warning:unmet_dependencies' => 'Ce plugin ne retrouve pas certaines dépendances et ne peut être activé. Vérifiez les dépendances pour plus d\'infos.',
 	'admin:plugins:warning:invalid' => '%s n\'est pas un plugin valide d\'Elgg. Vérifiez <a href="http://docs.elgg.org/Invalid_Plugin">la documentation d\'Elgg</a> les conseils de dépannage.',
-	'admin:plugins:warning:invalid:check_docs' => 'Vérifier <a href=',
+	'admin:plugins:warning:invalid:check_docs' => 'Vérifiez <a href="http://learn.elgg.org/fr/stable/appendix/faqs.html">la documentation d\'Elgg</a> - ou la version <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">anglophone</a>, souvent plus complète - pour des astuces de débogage.',
 	'admin:plugins:cannot_activate' => 'Activation impossible',
 
-	'admin:plugins:set_priority:yes' => "%s Réordonné",
-	'admin:plugins:set_priority:no' => "Impossible de réordonné %s.",
+	'admin:plugins:set_priority:yes' => "%s réordonné",
+	'admin:plugins:set_priority:no' => "Impossible de réordonner %s.",
 	'admin:plugins:set_priority:no_with_msg' => "Impossible de réordonner %s. Erreur : %s",
-	'admin:plugins:deactivate:yes' => "Désactivé %s.",
+	'admin:plugins:deactivate:yes' => "Désactiver %s.",
 	'admin:plugins:deactivate:no' => "Impossible de désactiver %s.",
 	'admin:plugins:deactivate:no_with_msg' => "Impossible de désactiver %s. Erreur : %s",
-	'admin:plugins:activate:yes' => "%s Activé.",
+	'admin:plugins:activate:yes' => "%s activé.",
 	'admin:plugins:activate:no' => "Impossible d'activer %s.",
 	'admin:plugins:activate:no_with_msg' => "Impossible d'activer %s. Erreur : %s",
 	'admin:plugins:categories:all' => 'Toutes les catégories',
@@ -629,7 +630,7 @@ return array(
 	'admin:plugins:author' => '%s',
 	'admin:plugins:version' => 'Version %s',
 	'admin:plugin_settings' => 'Paramètres du plugin',
-	'admin:plugins:warning:unmet_dependencies_active' => 'Ce plugin est actif, mais a des dépendances non introuvables. Vous pouvez avoir des problèmes. Voir \'plus d\'info\' ci-dessous pour plus de détails.',
+	'admin:plugins:warning:unmet_dependencies_active' => 'Ce plugin est actif, mais a des dépendances non satisfaites. Cela peut poser des problèmes. Voir \'plus d\'info\' ci-dessous pour plus de détails.',
 
 	'admin:plugins:dependencies:type' => 'Type',
 	'admin:plugins:dependencies:name' => 'Nom',
@@ -638,7 +639,7 @@ return array(
 	'admin:plugins:dependencies:comment' => 'Commentaire',
 
 	'admin:statistics:description' => "Cette page est un résumé des statistiques de votre site. Si vous avez besoin de statistiques plus détaillées, une version professionnelle d'administration est disponible.",
-	'admin:statistics:opt:description' => "VVisualiser les statistiques des utilisateurs et des objets sur votre espace.",
+	'admin:statistics:opt:description' => "Visualiser les statistiques des utilisateurs et des objets de votre site.",
 	'admin:statistics:opt:linktext' => "Voir statistiques...",
 	'admin:statistics:label:basic' => "Statistiques basiques du site",
 	'admin:statistics:label:numentities' => "Entités sur le site",
@@ -653,28 +654,28 @@ return array(
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:web_server' => 'Serveur Web',
 	'admin:server:label:server' => 'Serveur',
-	'admin:server:label:log_location' => 'Emplacement Log',
-	'admin:server:label:php_version' => 'PHP version',
+	'admin:server:label:log_location' => 'Emplacement du journal',
+	'admin:server:label:php_version' => 'Version de PHP',
 	'admin:server:label:php_ini' => 'Emplacement fichier PHP .ini',
 	'admin:server:label:php_log' => 'Log PHP',
 	'admin:server:label:mem_avail' => 'Mémoire disponible',
 	'admin:server:label:mem_used' => 'Mémoire utilisée',
 	'admin:server:error_log' => "Serveur Web erreur du log",
-	'admin:server:label:post_max_size' => 'Taille maximum d\'un envoie',
-	'admin:server:label:upload_max_filesize' => 'Taille maximum d\'un envoie de fichier',
-	'admin:server:warning:post_max_too_small' => '(Remarque : Taille maximum d\'un envoie doit être plus grand que cette valeur pour supporter des envoies de fichier de cette taille)',
+	'admin:server:label:post_max_size' => 'Taille maximum d\'un envoi',
+	'admin:server:label:upload_max_filesize' => 'Taille maximum d\'un envoi de fichier',
+	'admin:server:warning:post_max_too_small' => '(Remarque : la valeur de post_max_size doit supérieure à cette valeur pour supporter des envois de fichier de cette taille)',
 
 	'admin:user:label:search' => "Trouver des utilisateurs :",
 	'admin:user:label:searchbutton' => "Chercher",
 
 	'admin:user:ban:no' => "Cet utilisateur ne peut pas être banni",
 	'admin:user:ban:yes' => "Utilisateur banni.",
-	'admin:user:self:ban:no' => "Vous ne pouvez pas vous bannir vous même",
+	'admin:user:self:ban:no' => "Vous ne pouvez pas vous bannir vous-même",
 	'admin:user:unban:no' => "Cet utilisateur ne peut pas être réintégré",
 	'admin:user:unban:yes' => "Utilisateur réintégré.",
 	'admin:user:delete:no' => "Cet utilisateur ne peut pas être supprimé",
 	'admin:user:delete:yes' => "Utilisateur supprimé",
-	'admin:user:self:delete:no' => "Vous ne pouvez pas vous supprimer",
+	'admin:user:self:delete:no' => "Vous ne pouvez pas supprimer votre propre compte",
 
 	'admin:user:resetpassword:yes' => "Mot de passe réinitialisé, utilisateur notifié.",
 	'admin:user:resetpassword:no' => "Le mot de passe n'a pas pu être réinitialisé.",
@@ -791,7 +792,7 @@ return array(
 	'revoke' => "Révoquer",
 	'load' => "Charger",
 	'upload' => "Charger",
-	'download' => "Télécharger le fichier '.txt'",
+	'download' => "Télécharger",
 	'ban' => "Bannir",
 	'unban' => "Réintégrer",
 	'banned' => "Banni",
@@ -831,9 +832,9 @@ return array(
 
 	'up' => 'Monter',
 	'down' => 'Descendre',
-	'top' => 'Au dessus',
-	'bottom' => 'Au dessous',
-	'right' => 'Droit',
+	'top' => 'Au-dessus',
+	'bottom' => 'Au-dessous',
+	'right' => 'Droite',
 	'left' => 'Gauche',
 	'back' => 'Derrière',
 
@@ -848,12 +849,12 @@ return array(
 	'option:no' => "Non",
 
 	'unknown' => 'Inconnu',
-	'never' => 'jamais',
+	'never' => 'Jamais',
 
 	'active' => 'Activé',
 	'total' => 'Total',
 	
-	'ok' => 'Ok',
+	'ok' => 'OK',
 	'any' => 'N\'importe',
 	'error' => 'Erreur',
 	
@@ -861,7 +862,7 @@ return array(
 	'options' => 'Options',
 	'advanced' => 'Avancées',
 
-	'learnmore' => "Cliquer ici pour en apprendre plus.",
+	'learnmore' => "Cliquer ici pour en savoir plus.",
 	'unknown_error' => 'Erreur inconnue',
 
 	'content' => "contenu",
@@ -874,7 +875,7 @@ return array(
  * Generic questions
  */
 
-	'question:areyousure' => 'Etês-vous sûr ?',
+	'question:areyousure' => 'Etes-vous sûr ?',
 
 /**
  * Status
@@ -905,7 +906,6 @@ return array(
 	'title' => "Titre",
 	'description' => "Description",
 	'tags' => "Tags",
-	'spotlight' => "Projecteur sur",
 	'all' => "Tous",
 	'mine' => "Moi",
 
@@ -916,7 +916,6 @@ return array(
 	'relationships' => "Relations",
 	'metadata' => "Métadonnées",
 	'tagcloud' => "Nuage de tags",
-	'tagcloud:allsitetags' => "Tous les tags du site",
 
 	'on' => 'Actif',
 	'off' => 'Arrêt',
@@ -933,7 +932,7 @@ return array(
  * Input / output strings
  */
 
-	'deleteconfirm' => "Etes-vous sur de voloir supprimer cet élément ?",
+	'deleteconfirm' => "Etes-vous sur de vouloir supprimer cet élément ?",
 	'deleteconfirm:plural' => "Etes-vous sûr de vouloir effacer ces éléments ?",
 	'fileexists' => "Un fichier a déjà été chargé. Pour le remplacer sélectionner le ci-dessous :",
 
@@ -1027,10 +1026,10 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
  * System settings
  */
 
-	'installation:sitename' => "Le nom de votre site (par exemple 'Mon site de réseau social') : ",
+	'installation:sitename' => "Le nom de votre site :",
 	'installation:sitedescription' => "Brève description du site (facultatif) : ",
-	'installation:wwwroot' => "L'URL du site, suivi de ' / ' : ",
-	'installation:path' => "Chemin physique des fichiers sur le serveur, suivi par ' / ' : ",
+	'installation:wwwroot' => "L'URL du site, suivie de ' / ' : ",
+	'installation:path' => "Chemin physique des fichiers sur le serveur, suivi de ' / ' : ",
 	'installation:dataroot' => "Chemin complet où seront hébergés les fichiers uploadés par les utilisateurs, suivi de ' / ' :",
 	'installation:dataroot:warning' => "Vous devez créer ce répertoire manuellement. Il doit se situer dans un répertoire différent de votre installation de Elgg.",
 	'installation:sitepermissions' => "Les permissions d'accés par défaut : ",
@@ -1054,6 +1053,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'installation:view' => "Entrer le nom de la vue qui sera utilisée automatiquement pour l'affichage du site (par exemple : 'mobile'), laissez par défaut en cas de doute :",
 
 	'installation:siteemail' => "L'adresse e-mail du site (utilisée lors d'envoi d'e-mail par le système)",
+	'installation:default_limit' => "Nombre d'éléments par page par défaut",
 
 	'admin:site:access:warning' => "Changer les paramètres d'accès n'affectera que les permissions de contenu créées dans le futur.",
 	'installation:allow_user_default_access:description' => "Si coché, les utilisateurs pourront modifier leur niveau d'accés par défaut et pourront surpasser le niveau d'accés mis en place par défaut dans le système.",
@@ -1081,51 +1081,39 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'upgrade:db' => 'Votre base de données a été mise à jour.',
 	'upgrade:core' => 'Votre installation d\'Elgg a été mise à jour.',
 	'upgrade:unlock' => 'Déverrouiller la mise à jour',
-	'upgrade:unlock:confirm' => "La base de données est verrouillée par une autre mise à jour. Exécuter des mises à jours concurrent est dangereux. Vous devriez continuer, si seulement vous savez qu'il n'y a pas d'autre mise à jour en cours d'exécution. Déverrouillé ?",
+	'upgrade:unlock:confirm' => "La base de données est verrouillée par une autre mise à jour. Exécuter des mises à jours concurrentes est dangereux. Vous devriez continuer seulement si vous savez qu'il n'y a pas d'autre mise à jour en cours d'exécution. Déverrouiller ?",
 	'upgrade:locked' => "Impossible de mettre à jour. Une autre mise à jour est en cours. Pour effacer le verrouillage de la mise à jour, visiter la partie administrateur.",
-	'upgrade:unlock:success' => "Mise à niveau débloquée avec succès.",
+	'upgrade:unlock:success' => "Mise à niveau débloquée.",
 	'upgrade:unable_to_upgrade' => 'Impossible de mettre à jour.',
 	'upgrade:unable_to_upgrade_info' =>
-		'Cette installation ne peut pas être mise à jour, car des fichiers de l\'ancienne version 
-		ont été détectées dans le répertoire noyau d\'Elgg (core). Ces fichiers ont été jugés obsolètes et doivent être
-		retirés pour Elgg pour fonctionner correctement. Si vous n\'avez pas apporté des changements au noyau d\'Elgg, vous pouvez
-		simplement supprimer le répertoire noyau (core) et le remplacer par celui du dernier
-		paquet téléchargé d\'Elgg depuis <a href="http://elgg.org> elgg.org" </ a>. <br /> <br />
+		'Cette installation ne peut pas être mise à jour, car des fichiers de l\'ancienne version ont été détectées dans le noyau d\'Elgg. Ces fichiers sont obsolètes et doivent être supprimés pour qu\'Elgg fonctionne correctement. Si vous n\'avez pas modifié les fichiers du noyau d\'Elgg, vous pouvez simplement supprimer le répertoire noyau et le remplacer par celui de la dernière version d\'Elgg téléchargée  depuis <a href="http://elgg.org> elgg.org" </ a>. <br /> <br />
 
-		Si vous avez besoin d\'instructions détaillées, s\'il vous plaît visiter <a href="http://docs.elgg.org/wiki/Upgrading_Elgg"> <a
-		Documentation sur la mise à niveau d\'Elgg </ a>. Si vous avez besoin d\'aide, merci d\'écrire à
-		<a Forums href="http://community.elgg.org/pg/groups/discussion/"> aide technique communautaire (support)</ a>. ',
+Si vous avez besoin d\'instructions détaillées, veuillez visiter la <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">Documentation sur la mise à niveau d\'Elgg</ a>. Si vous avez besoin d\'aide, veuillez poser votre question dans les <a href="http://community.elgg.org/pg/groups/discussion/"> Forums d\'aide technique communautaire</ a>.',
 
-	'update:twitter_api:deactivated' => 'Twitter API (précédemment Twitter Service) a été désactivé lors de la mise à niveau. S\'il vous plaît activer manuellement si nécessaire.',
-	'update:oauth_api:deactivated' => 'OAuth API (précédemment OAuth Lib) a été désactivé lors de la mise à niveau. S\'il vous plaît activer manuellement si nécessaire.',
-	'upgrade:site_secret_warning:moderate' => "Nous vous conseillons de régénérer votre clé de site afin d'améliorer votre sécurité. Voir dans Configuration / Paramètres avancés",
-	'upgrade:site_secret_warning:weak' => "Vous êtes fortement encouragé  régénérer votre clé de site afin d'améliorer la sécurité de votre système. Voir dans Configuration / Paramètres avancés",
+	'update:twitter_api:deactivated' => 'Twitter API (précédemment Twitter Service) a été désactivé lors de la mise à niveau. Veuillez l\'activer manuellement si nécessaire.',
+	'update:oauth_api:deactivated' => 'OAuth API (précédemment OAuth Lib) a été désactivé lors de la mise à niveau. Veuillez l\'activer manuellement si nécessaire.',
+	'upgrade:site_secret_warning:moderate' => "Vous êtes invité à régénérer la clé de votre site afin d'améliorer sa sécurité. Voir dans Configuration / Paramètres avancés",
+	'upgrade:site_secret_warning:weak' => "Vous êtes fortement encouragé à régénérer la clé de votre site afin d'améliorer la sécurité de votre système. Voir dans Configuration / Paramètres avancés",
 
-	'ElggUpgrade:error:url_invalid' => 'Valeur non valide pour le chemin de l\'URL',
-	'ElggUpgrade:error:url_not_unique' => 'Les chemins d\'URL de mise à niveau doivent être uniques.',
-	'ElggUpgrade:error:title_required' => 'Les objets de mise à niveau ElggUpgrade doivent avoir un titre.',
-	'ElggUpgrade:error:description_required' => 'Les objets de mise à niveau ElggUpgrade doivent avoir une description.',
-	'ElggUpgrade:error:upgrade_url_required' => 'Les objets ElggUpgrade doivent avoir un chemin d\'URL de mise à niveau.',
-
-	'deprecated:function' => '%s() a été déclaré obsolète par %s()',
+	'deprecated:function' => '%s() est obsolète et a été remplacé par %s()',
 
 	'admin:pending_upgrades' => 'Le site a des mises à niveau en attente qui nécessitent votre attention immédiate.',
 	'admin:view_upgrades' => 'Afficher les mises à jour en attente.',
  	'admin:upgrades' => 'Mise à niveau',
 	'item:object:elgg_upgrade' => 'Site mis à jour',
-	'admin:upgrades:none' => 'Votre traduction est à jour!',
+	'admin:upgrades:none' => 'Votre traduction est à jour !',
 
 	'upgrade:item_count' => 'Il y a <b>%s</b> éléments qui doivent être mis à niveau.',
-	'upgrade:warning' => '<b>Avertissement:</b> pour un grand site cette mise à jour peut prendre beaucoup de temps!',
-	'upgrade:success_count' => 'Mis à jour:',
-	'upgrade:error_count' => 'Erreurs:',
-	'upgrade:river_update_failed' => 'Impossible de mettre à jour l\'entrée du flux de l\'article id %s',
-	'upgrade:timestamp_update_failed' => 'Impossible de mettre à jour l\'horodatage de l\'article id %s',
+	'upgrade:warning' => '<b>Attention :</b> Sur un site volumineux cette mise à jour peut prendre un temps significatif (voire très long) !',
+	'upgrade:success_count' => 'Mise à jour :',
+	'upgrade:error_count' => 'Erreurs :',
+	'upgrade:river_update_failed' => 'Impossible de mettre à jour l\'entrée du flux de l\'élément d\'identifiant id %s',
+	'upgrade:timestamp_update_failed' => 'Impossible de mettre à jour l\'horodatage de l\'élément d\'identifiant id %s',
 	'upgrade:finished' => 'Mise à jour terminée',
 	'upgrade:finished_with_errors' => '<p>Mise à jour terminée sans erreurs. Rafraîchissez la page et tentez de relancer la mise à jour.</p></p><br />Si vous avez encore cette erreur, vérifiez le contenu du log d\'erreurs du serveur. Vous pouvez chercher de l\'aide sur cette erreur dans le <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">groupe de support technique</a> de la communauté Elgg.</p>',
 
 	// Strings specific for the comments upgrade
-	'admin:upgrades:comments' => 'Commentaires mis à jour',
+	'admin:upgrades:comments' => 'Mise à jour des commentaires',
 	'upgrade:comment:create_failed' => 'Impossible de convertir le commentaire id %s en une entité.',
 
 	// Strings specific for the datadir upgrade
@@ -1139,7 +1127,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
  * Welcome
  */
 
-	'welcome' => "Bienvenu",
+	'welcome' => "Bienvenue",
 	'welcome:user' => 'Bienvenue %s',
 
 /**
@@ -1154,7 +1142,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'email:settings' => "Paramètres e-mail",
 	'email:address:label' => "Votre adresse e-mail",
 
-	'email:save:success' => "New email address saved.",
+	'email:save:success' => "Nouvelle adresse e-mail enregistrée. Une vérification a été envoyée.",
 	'email:save:fail' => "Votre nouvelle adresse e-mail n'a pas pu être enregistrée.",
 
 	'friend:newfriend:subject' => "%s vous a ajouté comme contact !",
@@ -1166,7 +1154,7 @@ Pour voir son profil cliquer sur le lien ci-dessous
 
 Vous ne pouvez pas répondre à cet e-mail.",
 
-	'email:changepassword:subject' => "Mot de passe modifié!",
+	'email:changepassword:subject' => "Mot de passe modifié !",
 	'email:changepassword:body' => "Bonjour %s,
 
 Votre mot de passe a été modifié.",
@@ -1176,7 +1164,7 @@ Votre mot de passe a été modifié.",
 
 Votre nouveau mot de passe est : %s",
 
-	'email:changereq:subject' => "Demande de changement de mot de passe.",
+	'email:changereq:subject' => "Demander un nouveau mot de passe.",
 	'email:changereq:body' => "Bonjour %s,
 
 Quelqu'un (à partir de l'adresse IP %s) a demandé un changement de mot de passe pour son compte.
@@ -1190,10 +1178,10 @@ Si vous êtes à l'origine de cette demande, cliquez sur le lien ci-dessous. Sin
  * user default access
  */
 
-	'default_access:settings' => "Votre niveau d'accés par défaut",
-	'default_access:label' => "Accés par défaut",
-	'user:default_access:success' => "Votre nouveau niveau d'accés par défaut a été enregistré.",
-	'user:default_access:failure' => "Votre nouveau niveau d'accés par défaut n'a pu être enregistré.",
+	'default_access:settings' => "Votre niveau d'accès par défaut",
+	'default_access:label' => "Accès par défaut",
+	'user:default_access:success' => "Votre nouveau niveau d'accès par défaut a été enregistré.",
+	'user:default_access:failure' => "Votre nouveau niveau d'accès par défaut n'a pu être enregistré.",
 
 /**
  * Comments
@@ -1202,24 +1190,24 @@ Si vous êtes à l'origine de cette demande, cliquez sur le lien ci-dessous. Sin
 	'comments:count' => "%s commentaire(s)",
 	'item:object:comment' => 'Commentaires',
 
-	'river:comment:object:default' => '%s commenté sur %s',
+	'river:comment:object:default' => '%s a commenté %s',
 
 	'generic_comments:add' => "Laisser un commentaire",
 	'generic_comments:edit' => "Editer le commentaire",
 	'generic_comments:post' => "Poster un commentaire",
 	'generic_comments:text' => "Commentaire",
 	'generic_comments:latest' => "Derniers commentaires",
-	'generic_comment:posted' => "Votre commentaire a été publié avec succés.",
-	'generic_comment:updated' => "Le commentaire a été correctement mis à jour.",
+	'generic_comment:posted' => "Votre commentaire a été publié avec succès.",
+	'generic_comment:updated' => "Le commentaire a été mis à jour.",
 	'generic_comment:deleted' => "Votre commentaire a été correctement supprimé.",
-	'generic_comment:blank' => "Désolé; vous devez remplir votre commentaire avant de pouvoir l'enregistrer.",
-	'generic_comment:notfound' => "Désolé; l'élément recherché n'a pas été trouvé.",
+	'generic_comment:blank' => "Désolé ; vous devez écrire un commentaire avant de pouvoir l'enregistrer.",
+	'generic_comment:notfound' => "Désolé ; l'élément recherché n'a pas été trouvé.",
 	'generic_comment:notdeleted' => "Désolé; le commentaire n'a pu être supprimé.",
 	'generic_comment:failure' => "Une erreur inattendue a eu lieu pendant la sauvegarde du commentaire.",
-	'generic_comment:none' => 'Pas de commentaires',
-	'generic_comment:title' => 'Commentaire par %s',
+	'generic_comment:none' => 'Pas de commentaire',
+	'generic_comment:title' => 'Commentaire de %s',
 	'generic_comment:on' => '%s sur %s',
-	'generic_comments:latest:posted' => 'posté un',
+	'generic_comments:latest:posted' => 'publié un',
 
 	'generic_comment:email:subject' => 'Vous avez un nouveau commentaire !',
 	'generic_comment:email:body' => "Vous avez un nouveau commentaire sur l'élément '%s' de %s. Voici son contenu :
@@ -1244,7 +1232,7 @@ Ne répondez pas à cet e-mail.",
 	
 	'byline' => 'Par %s',
 	'entity:default:strapline' => 'Créé le %s par %s',
-	'entity:default:missingsupport:popup' => 'Cette entité ne peut pas être affichée correctement. C\'est peut-être du à un plugin qui a été supprimé.',
+	'entity:default:missingsupport:popup' => 'Cette entité ne peut pas être affichée correctement. C\'est peut-être dû à un plugin qui a été supprimé.',
 
 	'entity:delete:success' => 'L\'entité %s a été effacée',
 	'entity:delete:fail' => 'L\'entité %s n\'a pas pu être effacée',
@@ -1257,28 +1245,27 @@ Ne répondez pas à cet e-mail.",
 	'actiongatekeeper:tokeninvalid' => "The page you were using had expired. Please try again.",
 	'actiongatekeeper:timeerror' => 'La page a expiré, rafraichissez et recommencez à nouveau.',
 	'actiongatekeeper:pluginprevents' => 'Une extension a empêché ce formulaire d\'être envoyé',
-	'actiongatekeeper:uploadexceeded' => 'The size of file(s) uploaded exceeded the limit set by your site administrator',
-	'actiongatekeeper:crosssitelogin' => "Sorry, logging in from a different domain is not permitted. Please try again.",
+	'actiongatekeeper:uploadexceeded' => 'La taille du fichier dépasse la limite définie par l\'administrateur du site',
+	'actiongatekeeper:crosssitelogin' => "Désolé, il n'est pas permis de se connecter depuis un autre nom de domaine. Veuillez réessayer.",
 
 /**
  * Word blacklists
  */
 
-	'word:blacklist' => 'and, the, then, but, she, his, her, him, one, not, also, about, now, hence, however, still, likewise, otherwise, therefore, conversely, rather, consequently, furthermore, nevertheless, instead, meanwhile, accordingly, this, seems, what, whom, whose, whoever, whomever',
+	'word:blacklist' => 'et, le alors, elle, il, son, sa lui, un, une, pas, aussi, maintenant, malgré, cependant, toutefois, mais, plutôt, au, pendant, ce, cette, ces, quel, qui, que',
 
 /**
  * Tag labels
  */
 
 	'tag_names:tags' => 'Tags',
-	'tags:site_cloud' => 'Nuage de tag du site',
 
 /**
  * Javascript
  */
 
-	'js:security:token_refresh_failed' => 'Failed to contact %s. You may experience problems saving content. Please refresh this page.',
-	'js:security:token_refreshed' => 'La connexion à %s est restaurée !',
+	'js:security:token_refresh_failed' => 'Impossible de contacter %s. Vous risquez de ne pas pouvoir enregistrer le contenu. Veuillez rafraîchir cette page.',
+	'js:security:token_refreshed' => 'La connexion à %s est rétablie !',
 	'js:lightbox:current' => "image %s de %s",
 
 /**

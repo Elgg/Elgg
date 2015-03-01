@@ -11,7 +11,6 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * IDEs to auto-complete properties and understand the types returned. Extension allows us to keep
  * the container generic.
  *
- * @property-read \Elgg\Access                             $access
  * @property-read \Elgg\Database\AccessCollections         $accessCollections
  * @property-read \ElggStaticVariableCache                 $accessCache
  * @property-read \Elgg\ActionsService                     $actions
@@ -34,7 +33,7 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
- * @property-read \ElggVolatileMetadataCache               $metadataCache
+ * @property-read \Elgg\Cache\MetadataCache                $metadataCache
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
  * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
  * @property-read \Elgg\Notifications\NotificationsService $notifications
@@ -69,8 +68,6 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 */
 	public function __construct(\Elgg\AutoloadManager $autoload_manager) {
 		$this->setValue('autoloadManager', $autoload_manager);
-
-		$this->setClassName('access', '\Elgg\Access');
 
 		$this->setFactory('accessCache', function(ServiceProvider $c) {
 			return new \ElggStaticVariableCache('access');
@@ -128,7 +125,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $this->resolveLoggerDependencies('events');
 		});
 
-		$this->setClassName('externalFiles', '\Elgg\Assets\ExternalFiles');
+		$this->setFactory('externalFiles', function(ServiceProvider $c) {
+			global $CONFIG;
+			return new \Elgg\Assets\ExternalFiles($CONFIG);
+		});
 
 		$this->setFactory('hooks', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('hooks');
@@ -140,7 +140,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $this->resolveLoggerDependencies('logger');
 		});
 
-		$this->setClassName('metadataCache', '\ElggVolatileMetadataCache');
+		$this->setFactory('metadataCache', function (ServiceProvider $c) {
+			return new \Elgg\Cache\MetadataCache($c->session);
+		});
 
 		$this->setFactory('metadataTable', function(ServiceProvider $c) {
 			// TODO(ewinslow): Use Elgg\Cache\Pool instead of MetadataCache
@@ -159,7 +161,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
 			$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $c->db);
 			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
-			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->access);
+			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session);
 		});
 
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {

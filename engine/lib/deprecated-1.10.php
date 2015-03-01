@@ -27,16 +27,19 @@ function file_get_general_file_type($mime_type) {
 }
 
 /**
- * Returns the \Elgg\Access object.
+ * Returns an object with methods set_ignore_access() and get_ignore_access() for back compatibility.
  *
- * @return \Elgg\Access
+ * Note: This no longer promises to return an instance of ElggAccess or Elgg\Access.
+ *
+ * @return \ElggSession
  * @since 1.7.0
  * @access private
  * @deprecated 1.10 Use elgg_get_ignore_access or elgg_set_ignore_access
  */
 function elgg_get_access_object() {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get/set_ignore_access()', '1.10');
-	return _elgg_services()->access;
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get/set_ignore_access()', '1.8');
+
+	return _elgg_services()->session;
 }
 
 /**

@@ -33,13 +33,21 @@ if ($full_view) {
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-hz float-alt',
 	));
+	
+	if (elgg_in_context('activity')) {
 
-	$comment_text = elgg_view("output/longtext", array(
-		'value' => $comment->description,
-		'class' => 'elgg-inner',
-		'data-role' => 'comment-text',
-	));
-
+		$comment_text = '<div class="elgg-output elgg-inner" data-role="comment-text">';
+		$comment_text .= elgg_view('output/text', array(
+			'value' => elgg_get_excerpt($comment->description),
+		));
+		$comment_text .= '</div>';
+	} else {
+		$comment_text = elgg_view('output/longtext', array(
+			'value' => $comment->description,
+			'class' => 'elgg-inner',
+			'data-role' => 'comment-text',
+		));
+	}
 	$body = <<<HTML
 $anchor
 <div class="mbn">

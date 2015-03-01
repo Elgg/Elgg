@@ -4,9 +4,10 @@ return array(
 	'admin:develop_tools' => 'Herramientas',
 	'admin:develop_tools:sandbox' => 'Sanbox del Tema',
 	'admin:develop_tools:inspect' => 'Inspecciona',
+	'admin:inspect' => 'Inspecciona',
 	'admin:develop_tools:unit_tests' => 'Tests unitarios',
-	'admin:developers' => 'Desarrolladorxs',
-	'admin:developers:settings' => 'Configuración de Desarrolladorxs',
+	'admin:developers' => 'Desarrolladores',
+	'admin:developers:settings' => 'Configuraci&oacute;n',
 
 	// settings
 	'elgg_dev_tools:settings:explanation' => 'Controle su configuración de desarrollo y depuración. Algunas de estas opciones también se encuentran disponibles en otras secciones de la administración.',
@@ -19,7 +20,7 @@ return array(
 	'developers:label:display_errors' => 'Mostrar errores fatales de PHP',
 	'developers:help:display_errors' => "Por defecto, el archivo .htaccess de Elgg deshabilita la visualización de errores fatales.",
 	'developers:label:screen_log' => "Registrar en pantalla",
-	'developers:help:screen_log' => "Esto muestra las salidas de elgg_log() y elgg_dump() en la página.",
+	'developers:help:screen_log' => "Se muestra la salida de elgg_log() y elgg_dump() y el contador de consultas a la Base de Datos",
 	'developers:label:show_strings' => "Mostrar strings de traducciones extrañas",
 	'developers:help:show_strings' => "Esto muestra las traducciones utilizadas por elgg_echo().",
 	'developers:label:wrap_views' => "Wrap de vistas",
@@ -36,9 +37,24 @@ return array(
 	
 	// inspection
 	'developers:inspect:help' => 'Inspección de configuration del framework Elgg.',
+	'developers:inspect:actions' => 'Acciones',
+	'developers:inspect:events' => 'Eventos',
+	'developers:inspect:menus' => 'Menús',
+	'developers:inspect:pluginhooks' => 'Ganchos de complementos',
+	'developers:inspect:priority' => 'Prioridad',
+	'developers:inspect:simplecache' => 'Caché Simple',
+	'developers:inspect:views' => 'Vistas',
+	'developers:inspect:views:all_filtered' => "<b>¡Nota!</b> Todas las salidas devueltas por las vistas son filtradas mediante Hooks de los plugins:",
+	'developers:inspect:views:filtered' => "(filtrador por el hook del plugin: %s)",
+	'developers:inspect:widgets' => 'Artilugios',
+	'developers:inspect:webservices' => 'Servicios web',
+	'developers:inspect:widgets:context' => 'Contexto',
+	'developers:inspect:functions' => 'Funciones',
+	'developers:inspect:file_location' => 'Ruta de fichero de la raíz de Elgg',
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' en %s",
+	'developers:log_queries' => "%s consultas de Base de Datos (no se incluye el evento shutdown)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introducción',

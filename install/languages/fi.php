@@ -25,11 +25,11 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:require:settings' => 'Asetustiedosto',
 	'install:require:database' => 'Tietokanta',
 
-	'install:check:root' => 'Web-palvelimellasi ei ole oikeuksia luoda .htaccess-tiedostoa Elggin asennushakemistoon. Sinulla on kaksi vaihtoehtoa:
+	'install:check:root' => 'Web-palvelimellasi ei ole oikeutta luoda .htaccess-tiedostoa Elggin juurihakemistoon. Sinulla on kaksi vaihtoehtoa:
 
-		1. Muuta asennushakemiston oikeudet
+		1. Anna web-palvelimelle kirjoitusoikeus juurihakemistoon
 
-		2. Kopioi tiedosto htaccess_dist ja nimeä se: .htaccess',
+		2. Kopioi tiedosto install/config/htaccess.dist Elggin juureen ja nimeä se muotoon .htaccess',
 
 	'install:check:php:version' => 'Elgg vaatii vähintään PHP:n version %s. Palvelimesi käyttää versiota %s.',
 	'install:check:php:extension' => 'Elgg vaatii PHP:n laajennoksen: %s.',
@@ -66,7 +66,7 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:database:help:dbhost' => 'MySQL-palvelimen sijainti (yleensä localhost)',
 	'install:database:help:dbprefix' => "Kaikille Elggin tietokantatauluille annettava etuliite (yleensä elgg_)",
 
-	'install:settings:instructions' => 'Elggin konfiguroimiseen tarvitaan vielä hieman lisätietoja. Jos et ole vielä luonut Elggille <a href="http://docs.elgg.org/wiki/Data_directory" target="_blank">datahakemistoa</a>, tee se nyt.',
+	'install:settings:instructions' => 'Elggin konfiguroimiseen tarvitaan vielä hieman lisätietoja. Jos et ole vielä luonut Elggille <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">datahakemistoa</a>, tee se nyt.',
 
 	'install:settings:label:sitename' => 'Sivuston nimi',
 	'install:settings:label:siteemail' => 'Sivuston sähköpostiosoite',
@@ -143,11 +143,11 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:error:rewrite:iis' => 'Vaikuttaa siltä, että palvelimellasi on käytössä IIS web-palvelin.',
 	'install:error:rewrite:allowoverride' => "Polkujen uudelleenohjauksen testaaminen epäonnistui. Todennäköisin syy on, että Elggin asennushakemiston AllowOverride-asetuksen arvoksi ei ole määritetty \"All\". Tämän vuoksi Apache ei pysty käsittelemään .htaccess-tiedostoa, joka sisältää polkujen uudelleenohjaukseen liittyvät määritykset.
 				\n\nToinen mahdollisuus on, että Apacheen on määritetty Elgg-asennustasi varten alias. Tällöin sinun pitää määrittää Elggin .htaccess-tiedostoon RewriteBase-asetus. Löydät lisäohjeita .htacces-tiedostosta.",
-	'install:error:rewrite:htaccess:write_permission' => 'Web-palvelimellasi ei ole oikeuksia luoda .htaccess-tiedostoa Elggin asennushakemistoon. Sinun pitää joko muuttaa asennushakemiston oikeudet, tai kopioida htaccess_dist manuaalisesti ja nimetä se .htaccess.',
+	'install:error:rewrite:htaccess:write_permission' => 'Web-palvelimella ei ole oikeutta luoda .htaccess-tiedostoa Elggin juurihakemistoon. Joko tiedosto install/config/htaccess.dist pitää kopioida manuaalisesti Elggin juureen ja nimetä muotoon .htaccess, tai web-palvelimelle pitää myöntää kirjoitusoikeus juurihakemistoon.',
 	'install:error:rewrite:htaccess:read_permission' => 'Elggin asennushakemistossa on .htaccess-tiedosto, mutta web-palvelimellasi ei ole siihen lukuoikeuksia.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'Elggin asennushakemistossa on ylimääräinen Elggiin liittymätön .htaccess-tiedosto, joka pitää poistaa.',
 	'install:error:rewrite:htaccess:old_elgg_htaccess' => 'Elggin asennushakemistossa on vanhentunut .htacess-tiedosto. Se ei sisällä polkujen uudelleenohjauksen testaamiseen vaadittavia määrityksiä.',
-	'install:error:rewrite:htaccess:cannot_copy' => 'Tuntematon virhe esti .htaccess-tiedoston luomisen. Sinun pitää manuaalisesti kopioida Elggin asennushakemistosta löytyvä htaccess_dist-tiedosto ja nimetä se .htaccess.',
+	'install:error:rewrite:htaccess:cannot_copy' => 'Tuntematon virhe esti luomasta .htaccess-tiedostoa. Tiedosto install/config/htaccess.dist pitää kopioida manuaalisesti Elggin juureen ja nimetä muotoon .htaccess.',
 	'install:error:rewrite:altserver' => 'Polkujen uudelleenohjauksen testaaminen epäonnistui. Sinun pitää konfiguroida palvelimellesi Elggin vaatimat uudelleenohjaukseen liittyvät säännöt.',
 	'install:error:rewrite:unknown' => 'Polkujen uudelleenohjauksen testaaminen epäonnistui. Emme saaneet selvitettyä käyttämääsi web-palvelinta, joten emme pysty tarjoamaan ratkaisua ongelmaan. Voit yrittää etsiä apua sivun alalaidasta löytyvien linkkien kautta.',
 	'install:warning:rewrite:unknown' => 'Palvelimesi ei tue polkujen uudelleenohjaamisen automaattista testaamista, ja selaimesi ei tue sen testaamista JavaScriptin avulla. You can continue the installation, but you may experience problems with your site. Voit testata uudelleenohjausta tästä linkistä: <a href="%s" target="_blank">Testaa</a>.',

@@ -5,25 +5,25 @@ return array(
 	 * Menu items and titles
 	 */
 
-	'pages' => "Páginas",
-	'pages:owner' => "%s páginas",
-	'pages:friends' => "Páginas dos amigos",
-	'pages:all' => "Todas as páginas do site",
-	'pages:add' => "Adicionar uma página",
+	'pages' => "Páginas (Wiki)",
+	'pages:owner' => "páginas de %s",
+	'pages:friends' => "páginas dos amigos",
+	'pages:all' => "Todas páginas colaborativas (wiki) do site",
+	'pages:add' => "Adicionar página colaborativa (wiki)",
 
-	'pages:group' => "Páginas do grupo",
-	'groups:enablepages' => 'Ativar páginas do grupo',
+	'pages:group' => "Páginas colaborativas (wiki)",
+	'groups:enablepages' => 'Habilita páginas colaborativas (wiki) na comunidade',
 
-	'pages:new' => "Uma nova página",
-	'pages:edit' => "Editar essa página",
-	'pages:delete' => "Excluir essa página",
-	'pages:history' => "Histórico",
-	'pages:view' => "Ver página",
+	'pages:new' => "Nova página",
+	'pages:edit' => "Modifique esta página colaborativa",
+	'pages:delete' => "Apague esta página colaborativa (wiki)",
+	'pages:history' => "Histórico desta página colaborativa (wiki)",
+	'pages:view' => "Ver página colaborativa (wiki)",
 	'pages:revision' => "Revisão",
 	'pages:current_revision' => "Revisão atual",
 	'pages:revert' => "Reverter",
 
-	'pages:navigation' => "Navegação",
+	'pages:navigation' => "Navegação ",
 
 	'pages:notify:summary' => 'Nova página chamada %s',
 	'pages:notify:subject' => "Uma nova página: %s",
@@ -35,11 +35,11 @@ return array(
 Veja e comente a página:
 %s
 ',
-	'item:object:page_top' => 'Páginas mais importantes',
-	'item:object:page' => 'Páginas',
-	'pages:nogroup' => 'Este grupo ainda não possui quaisquer páginas',
-	'pages:more' => 'Mais páginas',
-	'pages:none' => 'Ainda não foi criado páginas',
+	'item:object:page_top' => 'Páginas colaborativas (wiki) do mais alto nível',
+	'item:object:page' => 'Páginas colaborativas (wiki)',
+	'pages:nogroup' => 'Esta comunidade ainda não possui páginas colaborativas (wiki)',
+	'pages:more' => 'Mais páginas colaborativas (wiki)',
+	'pages:none' => 'Nenhuma página colaborativa (wiki) criada ainda',
 
 	/**
 	* River
@@ -49,30 +49,30 @@ Veja e comente a página:
 	'river:create:object:page_top' => '%s criou a página %s',
 	'river:update:object:page' => '%s atualizou a página %s',
 	'river:update:object:page_top' => '%s atualizou a página %s',
-	'river:comment:object:page' => '%s comentou na página %s',
-	'river:comment:object:page_top' => '%s comentou na página %s',
+	'river:comment:object:page' => '%s comentou a página denominada %s',
+	'river:comment:object:page_top' => '%s comentou a página denominada %s',
 
 	/**
 	 * Form fields
 	 */
 
-	'pages:title' => 'Título da página',
-	'pages:description' => 'Texto da página',
-	'pages:tags' => 'Tags',
+	'pages:title' => 'Título da página colaborativa (wiki)',
+	'pages:description' => 'Texto da página colaborativa (wiki)',
+	'pages:tags' => 'Descritores (Tags)',
 	'pages:parent_guid' => 'Página principal',
-	'pages:access_id' => 'Acesso para leitura',
-	'pages:write_access_id' => 'Acesso para escrita',
+	'pages:access_id' => 'Permissão de leitura',
+	'pages:write_access_id' => 'Permissão de escrita',
 
 	/**
 	 * Status and error messages
 	 */
-	'pages:noaccess' => 'Não tem acesso a página',
-	'pages:cantedit' => 'Você não pode editar essa página',
-	'pages:saved' => 'Página salva',
-	'pages:notsaved' => 'A página não pode ser salva',
-	'pages:error:no_title' => 'Você deve especificar um título para essa página.',
-	'pages:delete:success' => 'A página foi excluída com sucesso.',
-	'pages:delete:failure' => 'A página não pode ser excluída.',
+	'pages:noaccess' => 'Nenhum acesso à página colaborativa (wiki).',
+	'pages:cantedit' => 'Você não pode editar esta página colaborativa (wiki).',
+	'pages:saved' => 'Página colaborativa (wiki) salva com sucesso.',
+	'pages:notsaved' => 'Página colaborativa (wiki) não pode ser salva corretamente.',
+	'pages:error:no_title' => 'Você deve especificar um título para esta página',
+	'pages:delete:success' => 'Sua página colaborativa (wiki) foi apagada com sucesso.',
+	'pages:delete:failure' => 'Página colaborativa (wiki) não pode ser apagada corretamente.',
 	'pages:revision:delete:success' => 'A revisão da página foi excluída com sucesso.',
 	'pages:revision:delete:failure' => 'A revisão da página não pode ser excluída.',
 	'pages:revision:not_found' => 'Não foi possível encontrar esta revisão.',
@@ -80,7 +80,7 @@ Veja e comente a página:
 	/**
 	 * Page
 	 */
-	'pages:strapline' => 'Última modificação %s por %s',
+	'pages:strapline' => 'Última atualização em %s por %s',
 
 	/**
 	 * History
@@ -91,23 +91,23 @@ Veja e comente a página:
 	 * Widget
 	 **/
 
-	'pages:num' => 'Número de páginas a serem exibidas',
-	'pages:widget:description' => "Lista com suas páginas.",
+	'pages:num' => 'Número de páginas colaborativa (wiki) para exibir',
+	'pages:widget:description' => "Esta é uma lista de suas páginas colaborativa (wiki).",
 
 	/**
 	 * Submenu items
 	 */
-	'pages:label:view' => "Ver página",
-	'pages:label:edit' => "Editar página",
-	'pages:label:history' => "Histórico da página",
+	'pages:label:view' => "Visualizar página colaborativa (wiki)",
+	'pages:label:edit' => "Editar página colaborativa (wiki)",
+	'pages:label:history' => "Histórico da página colaborativa (wiki)",
 
 	/**
 	 * Sidebar items
 	 */
-	'pages:sidebar:this' => "Essa página",
-	'pages:sidebar:children' => "Subpáginas",
-	'pages:sidebar:parent' => "Principal",
+	'pages:sidebar:this' => "Esta página colaborativa (wiki)",
+	'pages:sidebar:children' => "Sub-páginas colaborativas (wiki)",
+	'pages:sidebar:parent' => "Página colaborativa pai",
 
-	'pages:newchild' => "Criar uma subpágina",
+	'pages:newchild' => "Criar uma sub-página colaborativa (wiki)",
 	'pages:backtoparent' => "Voltar para '%s'",
 );

@@ -31,7 +31,7 @@ if (!$items && $no_results) {
 		echo $no_results();
 		return;
 	}
-	echo "<p>$no_results</p>";
+	echo "<p class='elgg-no-results'>$no_results</p>";
 	return;
 }
 

@@ -235,6 +235,14 @@ class ViewsService {
 			$viewtype = elgg_get_viewtype();
 		}
 
+		// allow altering $vars
+		$vars_hook_params = [
+			'view' => $view,
+			'vars' => $vars,
+			'viewtype' => $viewtype,
+		];
+		$vars = $this->hooks->trigger('view_vars', $view, $vars_hook_params, $vars);
+
 		$view_orig = $view;
 
 		// Trigger the pagesetup event
@@ -333,10 +341,10 @@ class ViewsService {
 
 		// Plugin hook
 		$params = array('view' => $view_orig, 'vars' => $vars, 'viewtype' => $viewtype);
-		$content = _elgg_services()->hooks->trigger('view', $view_orig, $params, $content);
+		$content = $this->hooks->trigger('view', $view_orig, $params, $content);
 
 		// backward compatibility with less granular hook will be gone in 2.0
-		$content_tmp = _elgg_services()->hooks->trigger('display', 'view', $params, $content);
+		$content_tmp = $this->hooks->trigger('display', 'view', $params, $content);
 
 		if ($content_tmp !== $content) {
 			$content = $content_tmp;
@@ -397,7 +405,10 @@ class ViewsService {
 	 */
 	public function viewExists($view, $viewtype = '', $recurse = true) {
 		
-
+		if (empty($view) || !is_string($view)) {
+			return false;
+		}
+		
 		// Detect view type
 		if ($viewtype === '' || !_elgg_is_valid_viewtype($viewtype)) {
 			$viewtype = elgg_get_viewtype();

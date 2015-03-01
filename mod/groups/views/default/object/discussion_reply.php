@@ -37,11 +37,19 @@ if (elgg_in_context('widgets')) {
 
 $subtitle = "$poster_text $date";
 
-$content = elgg_view('output/longtext', array(
-	'value' => $reply->description,
-	'class' => 'elgg-inner',
-	'data-role' => 'discussion-reply-text',
-));
+if (elgg_in_context('activity')) {
+	$content = '<div class="elgg-output elgg-inner" data-role="comment-text">';
+	$content .= elgg_view('output/text', array(
+		'value' => elgg_get_excerpt($reply->description)
+	));
+	$content .= '</div>';
+} else {
+	$content = elgg_view('output/longtext', array(
+		'value' => $reply->description,
+		'class' => 'elgg-inner',
+		'data-role' => 'discussion-reply-text',
+	));
+}
 
 $params = array(
 	'entity' => $reply,

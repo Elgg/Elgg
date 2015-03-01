@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => 'Adresse des Beitrags',
 	'reportedcontent:success' => 'Deine Meldung wurde an den Admin gesendet.',
 	'reportedcontent:failing' => 'Deine Meldung konnte nicht gesendet werden.',
+	'reportedcontent:refresh' => 'Auflistung neu laden',
 	'reportedcontent:report' => 'Einem Admin melden',
 	'reportedcontent:instructions' => 'Die Meldung wird an die Administratoren dieser Community-Seite gesendet, damit sie auf diesen Beitrag aufmerksam gemacht werden.',
 	'reportedcontent:numbertodisplay' => 'Anzahl der anzuzeigenden Meldungen',

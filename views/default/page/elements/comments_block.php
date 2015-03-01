@@ -2,11 +2,12 @@
 /**
  * Display the latest related comments
  *
- * Generally used in a sidebar. Does not work with groups currently.
+ * Generally used in a sidebar.
  *
- * @uses $vars['subtypes']   Object subtype string or array of subtypes
- * @uses $vars['owner_guid'] The owner of the content being commented on
- * @uses $vars['limit']      The number of comments to display
+ * @uses $vars['subtypes']       Object subtype string or array of subtypes
+ * @uses $vars['owner_guid']     The owner of the content being commented on
+ * @uses $vars['container_guid'] The container of the content being commented on
+ * @uses $vars['limit']          The number of comments to display
  */
 
 $options = array(
@@ -19,9 +20,10 @@ $options = array(
 );
 
 $owner_guid = elgg_extract('owner_guid', $vars);
+$container_guid = elgg_extract('container_guid', $vars);
 $subtypes = elgg_extract('subtypes', $vars);
 
-if ($owner_guid || $subtypes) {
+if ($owner_guid || $container_guid || $subtypes) {
 	$db_prefix = elgg_get_config('dbprefix');
 
 	// Join on the entities table to check container subtype and/or owner
@@ -31,13 +33,13 @@ if ($owner_guid || $subtypes) {
 // If owner is defined, view only the comments that have
 // been posted on objects owned by that user
 if ($owner_guid) {
-	$owner_entity = get_entity($owner_guid);
-	if (!$owner_entity instanceof ElggUser) {
-		// Only supporting users so no need to continue
-		return true;
-	}
-
 	$options['wheres'][] = "ce.owner_guid = $owner_guid";
+}
+
+// If container is defined, view only the comments that have
+// been posted on objects placed inside that container
+if ($container_guid) {
+	$options['wheres'][] = "ce.container_guid = $container_guid";
 }
 
 // If subtypes are defined, view only the comments that have been

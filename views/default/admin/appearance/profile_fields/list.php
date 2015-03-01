@@ -10,7 +10,7 @@ $n = 0;
 $loaded_defaults = array();
 $items = array();
 $fieldlist = elgg_get_config('profile_custom_fields');
-if ($fieldlist) {
+if ($fieldlist || $fieldlist === '0') {
 	$fieldlistarray = explode(',', $fieldlist);
 	foreach ($fieldlistarray as $listitem) {
 		$translation = elgg_get_config("admin_defined_profile_$listitem");

@@ -22,6 +22,12 @@ if (empty($language)) {
 $all_translations = elgg_get_config('translations');
 $translations = $all_translations['en'];
 
+if ($language != 'en' && !isset($all_translations[$language])) {
+	// try to reload missing translations
+	reload_all_translations();
+	$all_translations = elgg_get_config('translations');
+}
+
 if ($language != 'en' && isset($all_translations[$language])) {
 	$translations = array_merge($translations, $all_translations[$language]);
 }

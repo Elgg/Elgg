@@ -141,4 +141,16 @@ class ElggEntityTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals($keys, $object_keys);
 	}
+
+	public function testLatLong() {
+
+		// Coordinates for Elgg, Switzerland
+		$lat = 47.483333;
+		$long = 8.866667;
+
+		$this->obj->setLatLong($lat, $long);
+
+		$this->assertEquals($this->obj->getLatitude(), $lat);
+		$this->assertEquals($this->obj->getLongitude(), $long);
+	}
 }

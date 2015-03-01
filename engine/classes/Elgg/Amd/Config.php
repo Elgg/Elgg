@@ -55,10 +55,18 @@ class Config {
 	public function removePath($name, $path = null) {
 		if (!$path) {
 			unset($this->paths[$name]);
-		}
+		} else {
+			if (preg_match("/\.js$/", $path)) {
+				$path = preg_replace("/\.js$/", '', $path);
+			}
 
-		$key = array_search($path, $this->paths[$name]);
-		unset($this->paths[$name][$key]);
+			$key = array_search($path, $this->paths[$name]);
+			unset($this->paths[$name][$key]);
+
+			if (empty($this->paths[$name])) {
+				unset($this->paths[$name]);
+			}
+		}
 	}
 
 	/**
@@ -185,9 +193,9 @@ class Config {
 	 * @return bool
 	 */
 	public function removeModule($name) {
-		_elgg_services()->amdConfig->removeDependency($name);
-		_elgg_services()->amdConfig->removeShim($name);
-		_elgg_services()->amdConfig->removePath($name);
+		$this->removeDependency($name);
+		$this->removeShim($name);
+		$this->removePath($name);
 	}
 
 	/**
@@ -201,7 +209,7 @@ class Config {
 			return true;
 		}
 
-		if (isset($this->shims[$name])) {
+		if (isset($this->shim[$name])) {
 			return true;
 		}
 

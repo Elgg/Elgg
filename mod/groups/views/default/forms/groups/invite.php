@@ -8,7 +8,7 @@
 $group = $vars['entity'];
 $owner = $group->getOwnerEntity();
 $forward_url = $group->getURL();
-$friends = elgg_get_logged_in_user_entity()->getFriends('', 0);
+$friends = elgg_get_logged_in_user_entity()->getFriends(array('limit' => 0));
 
 if ($friends) {
 	echo elgg_view('input/friendspicker', array('entities' => $friends, 'name' => 'user_guid', 'highlight' => 'all'));

@@ -260,8 +260,11 @@ Permission hooks
 Views
 =====
 
+**view_vars, <view_name>**
+	Filters the ``$vars`` array passed to the view
+
 **view, <view_name>**
-    Filters the returned content of views
+    Filters the returned content of the view
 
 **layout, page**
     In ``elgg_view_layout()``, filters the layout name
@@ -290,6 +293,9 @@ Files
 
 Other
 =====
+
+**config, comments_per_page**
+	Filters the number of comments displayed per page. Default is 25.
 
 **default, access**
 	In get_default_access(), this hook filters the return value, so it can be used to alter

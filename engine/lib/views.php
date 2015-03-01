@@ -446,14 +446,16 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	$messages = null;
 	if ($system_messages->count()) {
-		// get messages - try for errors first
-		$messages = $system_messages->dumpRegister('error');
-		if (count($messages["error"]) == 0) {
-			// no errors so grab rest of messages
-			$messages = $system_messages->dumpRegister();
-		} else {
-			// we have errors - clear out remaining messages
-			$system_messages->dumpRegister();
+		$messages = $system_messages->dumpRegister();
+		
+		if (isset($messages['error'])) {
+			// always make sure error is the first type
+			$errors = array(
+				'error' => $messages['error']
+			);
+			
+			unset($messages['error']);
+			$messages = array_merge($errors, $messages);
 		}
 	}
 
@@ -463,6 +465,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 
 	// head has keys 'title', 'metas', 'links'
 	$head_params = _elgg_views_prepare_head($title);
+
 	$vars['head'] = elgg_trigger_plugin_hook('head', 'page', $vars, $head_params);
 
 	$vars = elgg_trigger_plugin_hook('output:before', 'page', null, $vars);
@@ -500,64 +503,64 @@ function _elgg_views_prepare_head($title) {
 		$params['title'] = $title . ' : ' . elgg_get_config('sitename');
 	}
 
-	$params['metas'][] = array(
+	$params['metas']['content-type'] = array(
 		'http-equiv' => 'Content-Type',
 		'content' => 'text/html; charset=utf-8',
 	);
 
-	$params['metas'][] = array(
+	$params['metas']['description'] = array(
 		'name' => 'description',
 		'content' => elgg_get_config('sitedescription')
 	);
 	
 	// https://developer.chrome.com/multidevice/android/installtohomescreen
-	$data['metas'][] = array(
+	$params['metas']['viewport'] = array(
 		'name' => 'viewport',
 		'content' => 'width=device-width',
 	);    
-	$data['metas'][] = array(
+	$params['metas']['mobile-web-app-capable'] = array(
 		'name' => 'mobile-web-app-capable',
 		'content' => 'yes',
 	);
-	$data['metas'][] = array(
+	$params['metas']['apple-mobile-web-app-capable'] = array(
 		'name' => 'apple-mobile-web-app-capable',
 		'content' => 'yes',
 	);
-	$data['links'][] = array(
+	$params['links']['apple-touch-icon'] = array(
 		'rel' => 'apple-touch-icon',
 		'href' => elgg_normalize_url('_graphics/favicon-128.png'),
 	);
 
 	// favicons
-	$params['links'][] = array(
+	$params['links']['icon-ico'] = array(
 		'rel' => 'icon',
 		'href' => elgg_normalize_url('_graphics/favicon.ico'),
 	);
-	$params['links'][] = array(
+	$params['links']['icon-vector'] = array(
 		'rel' => 'icon',
 		'sizes' => '16x16 32x32 48x48 64x64 128x128',
 		'type' => 'image/svg+xml',
 		'href' => elgg_normalize_url('_graphics/favicon.svg'),
 	);
-	$params['links'][] = array(
+	$params['links']['icon-16'] = array(
 		'rel' => 'icon',
 		'sizes' => '16x16',
 		'type' => 'image/png',
 		'href' => elgg_normalize_url('_graphics/favicon-16.png'),
 	);
-	$params['links'][] = array(
+	$params['links']['icon-32'] = array(
 		'rel' => 'icon',
 		'sizes' => '32x32',
 		'type' => 'image/png',
 		'href' => elgg_normalize_url('_graphics/favicon-32.png'),
 	);
-	$params['links'][] = array(
+	$params['links']['icon-64'] = array(
 		'rel' => 'icon',
 		'sizes' => '64x64',
 		'type' => 'image/png',
 		'href' => elgg_normalize_url('_graphics/favicon-64.png'),
 	);
-	$params['links'][] = array(
+	$params['links']['icon-128'] = array(
 		'rel' => 'icon',
 		'sizes' => '128x128',
 		'type' => 'image/png',
@@ -573,7 +576,7 @@ function _elgg_views_prepare_head($title) {
 		} else {
 			$url .= "?view=rss";
 		}
-		$params['links'][] = array(
+		$params['links']['rss'] = array(
 			'rel' => 'alternative',
 			'type' => 'application/rss+xml',
 			'title' => 'RSS',
@@ -1338,22 +1341,20 @@ function elgg_view_tagcloud(array $options = array()) {
 /**
  * View an item in a list
  *
- * @param \ElggEntity|\ElggAnnotation $item
- * @param array  $vars Additional parameters for the rendering
+ * @param mixed $item An entity, an annotation, or a river item to display
+ * @param array $vars Additional parameters for the rendering
  *
  * @return string
  * @since 1.8.0
  * @access private
  */
 function elgg_view_list_item($item, array $vars = array()) {
-	global $CONFIG;
-
-	$type = $item->getType();
-	if (in_array($type, $CONFIG->entity_types)) {
+	
+	if ($item instanceof \ElggEntity) {
 		return elgg_view_entity($item, $vars);
-	} else if ($type == 'annotation') {
+	} else if ($item instanceof \ElggAnnotation) {
 		return elgg_view_annotation($item, $vars);
-	} else if ($type == 'river') {
+	} else if ($item instanceof \ElggRiverItem) {
 		return elgg_view_river_item($item, $vars);
 	}
 
@@ -1365,20 +1366,42 @@ function elgg_view_list_item($item, array $vars = array()) {
  *
  * Shorthand for <span class="elgg-icon elgg-icon-$name"></span>
  *
- * @param string $name  The specific icon to display
- * @param string $class Additional class: float, float-alt, or custom class
+ * @param string $name The specific icon to display
+ * @param mixed  $vars The additional classname as a string ('float', 'float-alt' or a custom class) 
+ *                     or an array of variables (array('class' => 'float')) to pass to the icon view.
  *
  * @return string The html for displaying an icon
+ * @throws InvalidArgumentException
  */
-function elgg_view_icon($name, $class = '') {
-	if ($class === true) {
-		elgg_deprecated_notice("Using a boolean to float the icon is deprecated. Use the class float.", 1.9);
-		$class = 'float';
+function elgg_view_icon($name, $vars = array()) {
+	if (empty($vars)) {
+		$vars = array();
 	}
 	
-	$icon_class = array("elgg-icon-$name" , $class);
+	if ($vars === true) {
+		elgg_deprecated_notice("Using a boolean to float the icon is deprecated. Use the class float.", 1.9);
+		$vars = array('class' => 'float');
+	}
 	
-	return elgg_view("output/icon", array("class" => $icon_class));
+	if (is_string($vars)) {
+		$vars = array('class' => $vars);
+	}
+	
+	if (!is_array($vars)) {
+		throw new \InvalidArgumentException('$vars needs to be a string or an array');
+	}
+	
+	if (!array_key_exists('class', $vars)) {
+		$vars['class'] = array();
+	}
+	
+	if (!is_array($vars['class'])) {
+		$vars['class'] = array($vars['class']);
+	}
+	
+	$vars['class'][] = "elgg-icon-$name";
+	
+	return elgg_view("output/icon", $vars);
 }
 
 /**

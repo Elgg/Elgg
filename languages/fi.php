@@ -40,7 +40,7 @@ return array(
 	'actionloggedout' => "Tämän toiminnon suorittaminen edellyttää, että olet kirjautuneena sisään.",
 	'actionunauthorized' => 'Sinulla ei ole oikeuksia tämän toiminnon suorittamiseen',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) on virheellisesti konfiguroitu liitännäinen ja se poistettiin käytöstä. Voit yrittää löytää ratkaisun ongelmaan Elggin wikistä (http://docs.elgg.org/wiki/).",
+	'PluginException:MisconfiguredPlugin' => "Liitännäisessä %s (guid %s) on havaittu virhe, joten se on poistettu käytöstä. Voit yrittää etsiä lisätietoja Elggin dokumentaatiosta (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) ei käynnisty. Syy: %s',
 	'PluginException:InvalidID' => "%s on virheellinen pluginin ID.",
 	'PluginException:InvalidPath' => "%s on virheellinen pluginipolku.",
@@ -158,6 +158,7 @@ return array(
 
 	'widgets:add' => 'Vimpaimet',
 	'widgets:add:description' => "Klikkaa alla olevia vimpaimia lisätäksesi ne sivulle.",
+	'widgets:panel:close' => "Sulje vimpainpaneeli",
 	'widgets:position:fixed' => '(Lukittu sijainti sivulla)',
 	'widget:unavailable' => 'Olet jo lisännyt tämän vimpaimen',
 	'widget:numbertodisplay' => 'Näytettävien kohteiden määrä',
@@ -280,7 +281,7 @@ return array(
 	'profile:edit:default' => 'Muokkaa profiilikenttiä',
 	'profile:label' => "Kentän nimi",
 	'profile:type' => "Kentän tyyppi",
-	'profile:editdefault:delete:fail' => 'Oletuskentän poistaminen epäonnistui',
+	'profile:editdefault:delete:fail' => 'Kentän poistaminen epäonnistui',
 	'profile:editdefault:delete:success' => 'Oletuskenttä poistettu!',
 	'profile:defaultprofile:reset' => 'Käyttäjäprofiilin kenttien oletusasetukset palautettu',
 	'profile:resetdefault' => 'Palauta oletusarvoiset profiilikentät',
@@ -448,6 +449,7 @@ return array(
 	'admin:configuration:success' => "Asetukset tallennettiin.",
 	'admin:configuration:fail' => "Asetusten tallentaminen epäonnistui.",
 	'admin:configuration:dataroot:relative_path' => 'Sijaintia "%s" ei voida asettaa datahakemistoksi, koska se ei ole absoluuttinen polku.',
+	'admin:configuration:default_limit' => 'Kohteiden lukumäärän pitää olla vähintään 1',
 
 	'admin:unknown_section' => 'Virheellinen admin-osio.',
 
@@ -610,8 +612,8 @@ kolmeen osioon:
 
 	'admin:plugins:warning:elgg_version_unknown' => 'Tämä liitännäinen käyttää vanhentunutta manifest-tiedostoa, joka ei sisällä tietoa yhteensopivuudesta eri Elgg-versioiden kanssa. Liitännäinen ei todennäköisesti toimi oikein!',
 	'admin:plugins:warning:unmet_dependencies' => 'Tällä liitännäisellä on puuttuvia riippuvuuksia, joten sitä ei voida aktivoida. Tarkista riippuvuudet lisätiedoista.',
-	'admin:plugins:warning:invalid' => 'Liitännäinen \"%s\" on virheellinen',
-	'admin:plugins:warning:invalid:check_docs' => 'Voit etsiä lisätietoja Elggin <a href="http://docs.elgg.org/Invalid_Plugin">dokumentaatiosta</a>.',
+	'admin:plugins:warning:invalid' => 'Pluginissa on virhe: %s',
+	'admin:plugins:warning:invalid:check_docs' => 'Voit yrittää etsiä apua <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">Elggin dokumentaatiosta</a>.',
 	'admin:plugins:cannot_activate' => 'ei voi aktivoida',
 
 	'admin:plugins:set_priority:yes' => "Vaihdettiin liitännäisen \"%s\" prioriteettia.",
@@ -708,7 +710,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'admin:maintenance_mode:mode_label' => 'Ylläpitotila',
 	'admin:maintenance_mode:message_label' => 'Käyttäjille näytettävä viesti',
 	'admin:maintenance_mode:saved' => 'Huoltotilan asetukset tallennettu',
-	'admin:maintenance_mode:indicator_menu_item' => 'Sivuston on huoltotilassa.',
+	'admin:maintenance_mode:indicator_menu_item' => 'Sivusto on huoltotilassa.',
 	'admin:login' => 'Ylläpitäjien kirjautuminen',
 
 /**
@@ -905,7 +907,6 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'title' => "Otsikko",
 	'description' => "Kuvaus",
 	'tags' => "Tagit",
-	'spotlight' => "Merkillepantavaa",
 	'all' => "Kaikki",
 	'mine' => "Omasi",
 
@@ -916,7 +917,6 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'relationships' => "Suhteet",
 	'metadata' => "Metadata",
 	'tagcloud' => "Tagipilvi",
-	'tagcloud:allsitetags' => "Kaikki sivuston tagit",
 
 	'on' => 'On',
 	'off' => 'Off',
@@ -1054,6 +1054,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'installation:view' => "Syötä näkymä, jota käytetään sivustosi etusivuna. Jätä kenttä tyhjäksi käyttääksesi oletusnäkymää (jos et ole varma, jätä tämä oletukseksi):",
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
+	'installation:default_limit' => "Listauksissa näytettävien kohteiden oletusmäärä",
 
 	'admin:site:access:warning' => "Tämä määrittää oletusasetuksen, kun ollaan luomassa uutta sisältöä. Tämän asetuksen muuttaminen ei vaikuta jo olemassa oleviin sisältöihin.",
 	'installation:allow_user_default_access:description' => "Jos tämä on valittuna, käyttäjät voivat määrittää oman oletuspääsytasonsa, joka yliajaa järjestelmän oletustason.",
@@ -1066,7 +1067,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'installation:minify_js:label' => "Pakkaa JavaScript (suositus)",
 	'installation:minify_css:label' => "Pakkaa CSS (suositus)",
 
-	'installation:htaccess:needs_upgrade' => "Elggin juuressa oleva .htaccess-tiedosto pitää päivittää syöttämään polku \"__elgg_uri\"-nimiseen GET-parametriin (voit ottaa mallia htaccess_dist-tiedostosta).",
+	'installation:htaccess:needs_upgrade' => "Sivuston .htaccess-tiedosto pitää päivittää syöttämään polku __elgg_uri-nimiseen GET-parametriin. (Katso ohjeet tiedostosta install/config/htaccess.dist.)",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg ei saa testattua rewrite-sääntöjä. Tarkista, että curl toimii oikein ja että palvelimelle ei ole määritetty IP-rajoituksia, jotka estävät localhost-yhteydet.",
 	
 	'installation:systemcache:description' => "Välimuisti vähentää liitännäisten latausaikaa tallentamalla muistiin niiden käytössä olevien näkymien sijainnit.",
@@ -1086,29 +1087,16 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'upgrade:unlock:success' => "Avattiin päivityksen lukitus.",
 	'upgrade:unable_to_upgrade' => 'Päivityksen lukituksen avaaminen epäonnistui.',
 	'upgrade:unable_to_upgrade_info' =>
-		'Järjestelmää ei voida päivittää, koska Elggin ytimen näkymähakemistosta
-		(views/default/) löytyi vanhentuneita tiedostoja. Kyseiset tiedostot täytyy
-		poistaa, jotta järjestelmä toimii oikein.<br /><br />
+		'Sivustoa ei voi päivittää, koska Elggin lähdekoodissa havaittiin vanhentuneita tiedostoja. Kyseiset tiedostot pitää poistaa, jotta Elgg toimii oikein.
 
-		Jos Elggin ytimeen ei ole tehty muutoksia, voit poistaa näkymähakemiston
-		kokonaan, ja korvata sen uusimmasta Elgg-julkaisusta löytyvällä hakemistolla.
-		Uusimman julkaisun voit ladata osoitteesta
-		<a href="http://elgg.org/download.php">http://elgg.org/download.php</a>.<br /><br />
+Jos et ole tehnyt Elggin lähdekoodiin muutoksia, voit poistaa views-hakemiston kokonaan, ja korvata sen sitten Elggin uuden version mukana tulleella.
 
-		Lisätietoja saat <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
-		Elggin päivitysdokumentaatiosta</a>. Tarvittaessa voit kysyä apua
-		<a href="http://community.elgg.org/groups/discussion/">Elggin tukifoorumilta</a>.',
+Tarvittaessa voit lukea lisäohjeita <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">päivitysdokumentaatiosta</a> tai pyytää apua <a href="http://community.elgg.org/groups/discussion/">tukifoorumilla</a>.',
 
 	'update:twitter_api:deactivated' => 'Twitter API (aiemmin "Twitter Service") otettiin pois käytöstä päivityksen aikana. Ota se käyttöön manuaalisesti, mikäli sille on tarvetta.',
 	'update:oauth_api:deactivated' => 'OAuth API (aiemmin "OAuth Lib") otettiin pois käytöstä päivityksen aikana. Ota se käyttöön manuaalisesti, mikäli sille on tarvetta.',
 	'upgrade:site_secret_warning:moderate' => "On suositeltavaa, että uusit sivuston salausavaimen parantaaksesi tietoturvaa. Lisätietoja löydät kohdasta: Asetukset > Lisäasetukset",
 	'upgrade:site_secret_warning:weak' => "Sivustollasi on käytössä liian heikko salausavain, mikä saattaa heikentää tietoturvaa. Uudista salausavain kohdasta: Asetukset > Lisäasetukset",
-
-	'ElggUpgrade:error:url_invalid' => 'Virheellinen URL-osoite.',
-	'ElggUpgrade:error:url_not_unique' => 'Päivitysten osoitteiden täytyy olla yksilöllisiä.',
-	'ElggUpgrade:error:title_required' => 'ElggUpgrade-objekteilla täytyy olla otsikko.',
-	'ElggUpgrade:error:description_required' => 'ElggUpgrade-objekteilla täytyy olla kuvaus.',
-	'ElggUpgrade:error:upgrade_url_required' => 'ElggUpgrade-objekteilla täytyy olla URL-osoite.',
 
 	'deprecated:function' => '%s() on korvattu funktiolla %s()',
 
@@ -1119,7 +1107,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'admin:upgrades:none' => 'Sivustosi on ajan tasalla!',
 
 	'upgrade:item_count' => 'Sivustolla on <b>%s</b> kohdetta, jotka vaativat päivityksen.',
-	'upgrade:warning' => '<b>Varoitus:</b> päivitys saattaa kestää huomattavan kauan, jos sivustolla on paljon sisältöä!',
+	'upgrade:warning' => '<b>Varoitus:</b> Tämä päivitys saattaa viedä huomattavasti aikaa.',
 	'upgrade:success_count' => 'Päivitetyt kohteet:',
 	'upgrade:error_count' => 'Virheet:',
 	'upgrade:river_update_failed' => 'Ei voitu päivittää kohdetta (id %s) sivuston toimintalistaukseen',
@@ -1182,12 +1170,12 @@ Salasanasi on nollattu.
 
 Uusi salasanasi on: %s",
 
-	'email:changereq:subject' => "Anomus salasanan nollaamiseksi.",
-	'email:changereq:body' => "Hei %s,
+	'email:changereq:subject' => "Anomus salasanan vaihtamiseksi.",
+	'email:changereq:body' => "Hei %s
 
-Joku (IP-osoitteesta %s) on anonut tilillesi uutta salasanaa.
+Joku (IP-osoitteesta %s) on anonut uutta salasanaa tiliin, johon tämä sähköpostiosoite on liitetty.
 
-Jos teit anomuksen, klikkaa alla olevaa linkkiä. Muussa tapauksessa jätä tämä viesti huomioimatta.
+Jos anoit uutta salasanaa, klikkaa alla olevaa linkkiä. Muussa tapauksessa voit jättää tämän viestin huomiotta.
 
 %s
 ",
@@ -1219,7 +1207,8 @@ Jos teit anomuksen, klikkaa alla olevaa linkkiä. Muussa tapauksessa jätä täm
 	'generic_comment:updated' => "Kommentti päivitetty.",
 	'generic_comment:deleted' => "Kommentti poistettu.",
 	'generic_comment:blank' => "Kommenttiin täytyy kirjoittaa jotain ennen kuin se voidaan tallentaa.",
-	'generic_comment:notfound' => "Kohdetta ei löytynyt.",
+	'generic_comment:notfound' => "Etsimääsi kommenttia ei löytynyt.",
+	'generic_comment:notfound_fallback' => "Etsimääsi kommenttia ei löytynyt, mutta ohjasimme sinut sivulle, jonne kommentti oli jätetty.",
 	'generic_comment:notdeleted' => "Kommentin poistaminen epäonnistui.",
 	'generic_comment:failure' => "Kommentin tallentamisessa tapahtui odottamaton virhe.",
 	'generic_comment:none' => 'Ei kommentteja',
@@ -1262,7 +1251,7 @@ Tähän viestiin ei voi vastata.",
 	'actiongatekeeper:missingfields' => 'Lomakkeesta puuttuu __token tai __ts -kentät',
 	'actiongatekeeper:tokeninvalid' => "Käyttämäsi sivu oli vanhentunut. Yritä uudelleen.",
 	'actiongatekeeper:timeerror' => 'Käyttämäsi sivu on vanhentunut. Päivitä sivu ja yritä uudelleen.',
-	'actiongatekeeper:pluginprevents' => 'Lisäosa estää tämän lomakkeen lähetyksen.',
+	'actiongatekeeper:pluginprevents' => 'Tietojen lähettäminen epäonnistui tuntemattoman ongelma vuoksi.',
 	'actiongatekeeper:uploadexceeded' => 'Lähettämäsi datan koko ylittää sivuston ylläpitäjän määrittämän maksimirajan',
 	'actiongatekeeper:crosssitelogin' => "Eri domainista kirjautuminen ei ole sallittua. Yritä uudelleen.",
 
@@ -1277,7 +1266,6 @@ Tähän viestiin ei voi vastata.",
  */
 
 	'tag_names:tags' => 'Tagit',
-	'tags:site_cloud' => 'Tagipilvi',
 
 /**
  * Javascript
@@ -1293,7 +1281,7 @@ Tähän viestiin ei voi vastata.",
 	'elgg:powered' => "Powered by Elgg",
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 
 	"aa" => "Afar",
@@ -1313,6 +1301,7 @@ Tähän viestiin ei voi vastata.",
 	"bo" => "Tibetan",
 	"br" => "Breton",
 	"ca" => "Catalan",
+	"cmn" => "Mandarin Chinese", // ISO 639-3
 	"co" => "Corsican",
 	"cs" => "Czech",
 	"cy" => "Welsh",
@@ -1389,6 +1378,7 @@ Tähän viestiin ei voi vastata.",
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
+	"pt_br" => 'Brazilian Portuguese',
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",

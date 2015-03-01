@@ -14,7 +14,10 @@
 
 $show_add_form = elgg_extract('show_add_form', $vars, true);
 $full_view = elgg_extract('full_view', $vars, true);
-$limit = elgg_extract('limit', $vars, get_input('limit', 25));
+$limit = elgg_extract('limit', $vars, get_input('limit', 0));
+if (!$limit) {
+	$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
+}
 
 $id = '';
 if (isset($vars['id'])) {

@@ -21,10 +21,14 @@ class ExternalFiles {
 
 	/**
 	 * Constructor
+	 *
+	 * @param \stdClass $config Predefined configuration in format used by global $CONFIG variable
 	 */
-	public function __construct() {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct(\stdClass $config = null) {
+		if (!($config instanceof \stdClass)) {
+			$config = new \stdClass();
+		}
+		$this->CONFIG = $config;
 	}
 	
 	/**
@@ -38,7 +42,7 @@ class ExternalFiles {
 	 *
 	 * @return bool
 	 */
-	function register($type, $name, $url, $location, $priority = 500) {
+	public function register($type, $name, $url, $location, $priority = 500) {
 		
 	
 		if (empty($name) || empty($url)) {
@@ -47,8 +51,8 @@ class ExternalFiles {
 	
 		$url = elgg_format_url($url);
 		$url = elgg_normalize_url($url);
-		
-		_elgg_bootstrap_externals_data_structure($type);
+
+		$this->bootstrap($type);
 	
 		$name = trim(strtolower($name));
 	
@@ -96,10 +100,9 @@ class ExternalFiles {
 	 *
 	 * @return bool
 	 */
-	function unregister($type, $name) {
-		
-	
-		_elgg_bootstrap_externals_data_structure($type);
+	public function unregister($type, $name) {
+
+		$this->bootstrap($type);
 	
 		$name = trim(strtolower($name));
 		$item = elgg_extract($name, $this->CONFIG->externals_map[$type]);
@@ -120,10 +123,10 @@ class ExternalFiles {
 	 *
 	 * @return void
 	 */
-	function load($type, $name) {
+	public function load($type, $name) {
 		
 	
-		_elgg_bootstrap_externals_data_structure($type);
+		$this->bootstrap($type);
 	
 		$name = trim(strtolower($name));
 	
@@ -151,16 +154,23 @@ class ExternalFiles {
 	 *
 	 * @return array
 	 */
-	function getLoadedFiles($type, $location) {
+	public function getLoadedFiles($type, $location) {
 		
 	
-		if (isset($this->CONFIG->externals) && $this->CONFIG->externals[$type] instanceof \ElggPriorityList) {
+		if (
+			isset($this->CONFIG->externals)
+			&& isset($this->CONFIG->externals[$type])
+			&& $this->CONFIG->externals[$type] instanceof \ElggPriorityList
+		) {
 			$items = $this->CONFIG->externals[$type]->getElements();
 	
-			$callback = "return \$v->loaded == true && \$v->location == '$location';";
-			$items = array_filter($items, create_function('$v', $callback));
+			$items = array_filter($items, function($v) use ($location) {
+				return $v->loaded == true && $v->location == $location;
+			});
 			if ($items) {
-				array_walk($items, create_function('&$v,$k', '$v = $v->url;'));
+				array_walk($items, function(&$v, $k){
+					$v = $v->url;
+				});
 			}
 			return $items;
 		}
@@ -171,11 +181,10 @@ class ExternalFiles {
 	 * Bootstraps the externals data structure in $CONFIG.
 	 *
 	 * @param string $type The type of external, js or css.
-	 * @access private
+	 * @return null
 	 */
-	function bootstrap($type) {
-		
-	
+	protected function bootstrap($type) {
+
 		if (!isset($this->CONFIG->externals)) {
 			$this->CONFIG->externals = array();
 		}

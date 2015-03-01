@@ -1,0 +1,80 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# 
+# Translators:
+# Adam Stachowicz <saibamenppl@gmail.com>, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg Core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2014-12-14 06:42-0800\n"
+"PO-Revision-Date: 2015-01-14 23:40+0000\n"
+"Last-Translator: Adam Stachowicz <saibamenppl@gmail.com>\n"
+"Language-Team: Polish (http://www.transifex.com/projects/p/elgg-core/language/pl/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: pl\n"
+"Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2);\n"
+
+# 5e373bbb3b674fe6bbb95cc21f45e400
+#: ../../about/contributing.rst:4
+msgid "Contributor Guide"
+msgstr "Przewodnik współpracownika"
+
+# 49f24a80d4cc4a69a7a403313444fe80
+# 400bcd2acce84b84acc859e5d56eb094
+# 0aaf9bfe752a46bdb87f475159fbdc4a
+# 055254f0521845329a5b1e70230dedc7
+# 036c616b2aa84943b84c0faf2f97a662
+#: ../../about/contributing.rst:6 ../../about/history.rst:6
+#: ../../about/index.rst:6 ../../about/releases.rst:6
+#: ../../about/roadmap.rst:6
+msgid "This page has moved."
+msgstr "Ta strona została przeniesiona."
+
+# 8e8cd31c47f642259016789c113ec600
+#: ../../about/contributing.rst:8
+msgid ":doc:`/contribute/index`"
+msgstr ":doc:`/contribute/index`"
+
+# f370d7a8d44848d8b634a3de47ecf5dd
+#: ../../about/history.rst:4
+msgid "History"
+msgstr "Historia strony"
+
+# b076c464fa5148d38334fadb3f38b6e6
+#: ../../about/history.rst:8
+msgid ":doc:`/appendix/history`"
+msgstr ":doc:`/appendix/history`"
+
+# 811706bf91d54dbfb766c99b03130488
+#: ../../about/index.rst:4
+msgid "About"
+msgstr "O nas"
+
+# 75b684c2a8ad48bf8ef7862f98a9d900
+#: ../../about/index.rst:8
+msgid ":doc:`/appendix/index`"
+msgstr ":doc:`/appendix/index`"
+
+# a4cdb7bed9e940f28bd2ebf36ddd15e0
+#: ../../about/releases.rst:4
+msgid "Release Policy"
+msgstr "Polityka wydania"
+
+# acba620d72aa4b6b8e7475fc3fbf8704
+#: ../../about/releases.rst:8
+msgid ":doc:`/appendix/releases`"
+msgstr ":doc:`/appendix/releases`"
+
+# a89c9a284f7445889e4f78699ed5deb6
+#: ../../about/roadmap.rst:4
+msgid "Roadmap"
+msgstr "Mapa celów"
+
+# 8c60c3c13876471f80a21ef60281f6f3
+#: ../../about/roadmap.rst:8
+msgid ":doc:`/appendix/roadmap`"
+msgstr ":doc:`/appendix/roadmap`"

@@ -707,7 +707,7 @@ class AccessCollections {
 	 *
 	 * @return array|false
 	 */
-	function getUserCollections($owner_guid, $site_guid = 0) {
+	function getEntityCollections($owner_guid, $site_guid = 0) {
 		$owner_guid = (int) $owner_guid;
 		$site_guid = (int) $site_guid;
 	
@@ -761,5 +761,35 @@ class AccessCollections {
 		}
 	
 		return $collection_members;
-	}	
+	}
+	
+	/**
+	 * Return an array of database row objects of the access collections $entity_guid is a member of.
+	 * 
+	 * @param int $member_guid The entity guid
+	 * @param int $site_guid   The GUID of the site (default: current site).
+	 * 
+	 * @return array|false
+	 */
+	function getCollectionsByMember($member_guid, $site_guid = 0) {
+		$member_guid = (int) $member_guid;
+		$site_guid = (int) $site_guid;
+		
+		if (($site_guid == 0) && $this->site_guid) {
+			$site_guid = $this->site_guid;
+		}
+		
+		$db = _elgg_services()->db;
+		$prefix = $db->getTablePrefix();
+		
+		$query = "SELECT ac.* FROM {$prefix}access_collections ac
+				JOIN {$prefix}access_collection_membership m ON ac.id = m.access_collection_id
+				WHERE m.user_guid = {$member_guid}
+				AND ac.site_guid = {$site_guid}
+				ORDER BY name ASC";
+		
+		$collections = $db->getData($query);
+		
+		return $collections;
+	}
 }

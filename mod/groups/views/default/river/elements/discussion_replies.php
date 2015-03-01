@@ -16,18 +16,18 @@ $options = array(
 $count = elgg_get_entities($options);
 
 if ($count) {
-
-	$list_options = array(
+	$replies = elgg_get_entities(array_merge($options, [
 		'order_by' => 'e.time_created desc',
-		'list_class' => 'elgg-river-comments',
-		'pagination' => false,
 		'count' => false,
 		'limit' => 3,
-	);
+	]));
 
-	$options = array_merge($options, $list_options);
+	// why is this reversing it? because we're asking for the 3 latest
+	// comments by sorting desc and limiting by 3, but we want to display
+	// these comments with the latest at the bottom.
+	$replies = array_reverse($replies);
 
-	echo elgg_list_entities($options);
+	echo elgg_view_entity_list($replies, array('list_class' => 'elgg-river-comments'));
 
 	if ($count > 3) {
 		$more_count = $count - 3;

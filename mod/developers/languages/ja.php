@@ -4,6 +4,7 @@ return array(
 	'admin:develop_tools' => 'ツール',
 	'admin:develop_tools:sandbox' => 'テーマの見本',
 	'admin:develop_tools:inspect' => '内部を見る',
+	'admin:inspect' => '内部を見る',
 	'admin:develop_tools:unit_tests' => 'ユニットテスト',
 	'admin:developers' => '開発者',
 	'admin:developers:settings' => 'セッティング',
@@ -19,7 +20,7 @@ return array(
 	'developers:label:display_errors' => '致命的なPHPエラーを表示します',
 	'developers:help:display_errors' => "デフォルトでは、Elggの .htaccessファイルが致命的エラーの表示を抑制しています。",
 	'developers:label:screen_log' => "画面にログを出力",
-	'developers:help:screen_log' => "webページにelgg_log()とelgg_dump()の出力を表示します。",
+	'developers:help:screen_log' => "elgg_log()とelgg_dump()の出力と、DBクエリの数を表示します。",
 	'developers:label:show_strings' => "翻訳を表示する代わりに翻訳キーを表示します",
 	'developers:help:show_strings' => "elgg_echo()で使われる翻訳キー(\$message_key)を表示します。",
 	'developers:label:wrap_views' => "Wrap views",
@@ -35,9 +36,24 @@ return array(
 	
 	// inspection
 	'developers:inspect:help' => 'Elggフレームワークの構築設定を覗いてみる',
+	'developers:inspect:actions' => 'Actions（アクション）',
+	'developers:inspect:events' => 'Events（イベント）',
+	'developers:inspect:menus' => 'Menus（メニュー）',
+	'developers:inspect:pluginhooks' => 'Plugin Hooks（プラグイン・フック）',
+	'developers:inspect:priority' => '優先度',
+	'developers:inspect:simplecache' => 'Simple Cache（シンプル・キャッシュ）',
+	'developers:inspect:views' => 'Views（ビュー）',
+	'developers:inspect:views:all_filtered' => "<b>注意！</b> 全てのviewの出力結果は、以下の Plugin Hooks によってフィルタされています:",
+	'developers:inspect:views:filtered' => "(plugin hook「 %s 」によってフィルタされています)",
+	'developers:inspect:widgets' => 'Widgets（ウィジェット）',
+	'developers:inspect:webservices' => 'ウェブサービス',
+	'developers:inspect:widgets:context' => 'Context（コンテキスト）',
+	'developers:inspect:functions' => 'Functions（関数）',
+	'developers:inspect:file_location' => 'Elgg ルートディレクトリからのパス',
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
+	'developers:log_queries' => "%s 件のDBクエリ(シャットダウンイベントを除く)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'イントロダクション',
