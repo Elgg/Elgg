@@ -314,13 +314,13 @@ abstract class ElggEntity extends \ElggData implements
 		// upon first cache miss, just load/cache all the metadata and retry.
 		// if this works, the rest of this function may not be needed!
 		$cache = _elgg_services()->metadataCache;
-		if ($cache->isKnown($guid, $name)) {
-			return $cache->load($guid, $name);
+		if ($cache->isLoaded($guid)) {
+			return $cache->getSingle($guid, $name);
 		} else {
 			$cache->populateFromEntities(array($guid));
 			// in case ignore_access was on, we have to check again...
-			if ($cache->isKnown($guid, $name)) {
-				return $cache->load($guid, $name);
+			if ($cache->isLoaded($guid)) {
+				return $cache->getSingle($guid, $name);
 			}
 		}
 
@@ -340,8 +340,6 @@ abstract class ElggEntity extends \ElggData implements
 		} else if ($md && is_array($md)) {
 			$value = metadata_array_to_values($md);
 		}
-
-		$cache->save($guid, $name, $value);
 
 		return $value;
 	}
@@ -1388,12 +1386,18 @@ abstract class ElggEntity extends \ElggData implements
 	 * Plugins can register for the 'entity:icon:url', <type> plugin hook
 	 * to customize the icon for an entity.
 	 *
-	 * @param string $size Size of the icon: tiny, small, medium, large
-	 *
+	 * @param mixed $params A string defining the size of the icon (e.g. tiny, small, medium, large)
+	 *                      or an array of parameters including 'size'
 	 * @return string The URL
 	 * @since 1.8.0
 	 */
-	public function getIconURL($size = 'medium') {
+	public function getIconURL($params = array()) {
+		if (is_array($params)) {
+			$size = elgg_extract('size', $params, 'medium');
+		} else {	
+			$size = is_string($params) ? $params : 'medium';
+			$params = array();
+		}
 		$size = elgg_strtolower($size);
 
 		if (isset($this->icon_override[$size])) {
@@ -1401,11 +1405,10 @@ abstract class ElggEntity extends \ElggData implements
 			return $this->icon_override[$size];
 		}
 
+		$params['entity'] = $this;
+		$params['size'] = $size;
+
 		$type = $this->getType();
-		$params = array(
-			'entity' => $this,
-			'size' => $size,
-		);
 
 		$url = _elgg_services()->hooks->trigger('entity:icon:url', $type, $params, null);
 		if ($url == null) {
@@ -2045,6 +2048,8 @@ abstract class ElggEntity extends \ElggData implements
 		$this->deleteAnnotations();
 		$this->deleteOwnedAnnotations();
 		$this->deleteRelationships();
+		$this->deleteAccessCollectionMemberships();
+		$this->deleteOwnedAccessCollections();
 
 		access_show_hidden_entities($entity_disable_override);
 		elgg_set_ignore_access($ia);
@@ -2148,8 +2153,8 @@ abstract class ElggEntity extends \ElggData implements
 	 * @todo Unimplemented
 	 */
 	public function setLatLong($lat, $long) {
-		$this->set('geo:lat', $lat);
-		$this->set('geo:long', $long);
+		$this->{"geo:lat"} = $lat;
+		$this->{"geo:long"} = $long;
 	}
 
 	/**
@@ -2159,7 +2164,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @todo Unimplemented
 	 */
 	public function getLatitude() {
-		return (float)$this->get('geo:lat');
+		return (float)$this->{"geo:lat"};
 	}
 
 	/**
@@ -2169,7 +2174,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @todo Unimplemented
 	 */
 	public function getLongitude() {
-		return (float)$this->get('geo:long');
+		return (float)$this->{"geo:long"};
 	}
 
 	/*
@@ -2431,5 +2436,63 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		return $entity_tags;
+	}
+	
+	/**
+	 * Remove the membership of all access collections for this entity (if the entity is a user)
+	 *
+	 * @return bool
+	 * @since 1.11
+	 */
+	public function deleteAccessCollectionMemberships() {
+	
+		if (!$this->guid) {
+			return false;
+		}
+		
+		if ($this->type !== 'user') {
+			return true;
+		}
+		
+		$ac = _elgg_services()->accessCollections;
+		
+		$collections = $ac->getCollectionsByMember($this->guid);
+		if (empty($collections)) {
+			return true;
+		}
+		
+		$result = true;
+		foreach ($collections as $collection) {
+			$result = $result & $ac->removeUser($this->guid, $collection->id);
+		}
+		
+		return $result;
+	}
+	
+	/**
+	 * Remove all access collections owned by this entity
+	 * 
+	 * @return bool
+	 * @since 1.11
+	 */
+	public function deleteOwnedAccessCollections() {
+		
+		if (!$this->guid) {
+			return false;
+		}
+		
+		$ac = _elgg_services()->accessCollections;
+		
+		$collections = $ac->getEntityCollections($this->guid);
+		if (empty($collections)) {
+			return true;
+		}
+		
+		$result = true;
+		foreach ($collections as $collection) {
+			$result = $result & $ac->delete($collection->id);
+		}
+		
+		return $result;
 	}
 }

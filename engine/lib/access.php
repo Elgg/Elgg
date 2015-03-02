@@ -41,7 +41,7 @@
  * @see elgg_get_ignore_access()
  */
 function elgg_set_ignore_access($ignore = true) {
-	return _elgg_services()->access->setIgnoreAccess($ignore);
+	return _elgg_services()->session->setIgnoreAccess($ignore);
 }
 
 /**
@@ -52,7 +52,7 @@ function elgg_set_ignore_access($ignore = true) {
  * @see elgg_set_ignore_access()
  */
 function elgg_get_ignore_access() {
-	return _elgg_services()->access->getIgnoreAccess();
+	return _elgg_services()->session->getIgnoreAccess();
 }
 
 /**
@@ -403,7 +403,7 @@ function remove_user_from_access_collection($user_guid, $collection_id) {
  * @see get_members_of_access_collection()
  */
 function get_user_access_collections($owner_guid, $site_guid = 0) {
-	return _elgg_services()->accessCollections->getUserCollections($owner_guid, $site_guid);
+	return _elgg_services()->accessCollections->getEntityCollections($owner_guid, $site_guid);
 }
 
 /**
@@ -509,7 +509,16 @@ function get_readable_access_level($entity_access_id) {
 	if (array_key_exists($access, $write_access_array)) {
 		return $write_access_array[$access];
 	}
-
+	
+	// Still here? Probably requesting a custom acl not from the logged in user.
+	// Admins should be able to see the readable version
+	if (elgg_is_admin_logged_in()) {
+		$collection = _elgg_services()->accessCollections->get($access);
+		if ($collection) {
+			return $collection->name;
+		}
+	}
+	
 	// return 'Limited' if the user does not have access to the access collection
 	return $translator->translate('access:limited:label');
 }
@@ -536,7 +545,7 @@ function elgg_check_access_overrides($user_guid = 0) {
 		$is_admin = elgg_is_admin_user($user_guid);
 	}
 
-	return ($is_admin || _elgg_services()->access->getIgnoreAccess());
+	return ($is_admin || _elgg_services()->session->getIgnoreAccess());
 }
 
 /**

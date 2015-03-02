@@ -4,6 +4,7 @@ return array(
 	'admin:develop_tools' => 'Outils',
 	'admin:develop_tools:sandbox' => 'Thème bac à sable',
 	'admin:develop_tools:inspect' => 'Inspecter',
+	'admin:inspect' => 'Inspecter',
 	'admin:develop_tools:unit_tests' => 'Tests unitaires',
 	'admin:developers' => 'Les développeurs',
 	'admin:developers:settings' => 'Paramètres développeurs',
@@ -19,7 +20,7 @@ return array(
 	'developers:label:display_errors' => 'Affichage des erreurs PHP fatales',
 	'developers:help:display_errors' => "Par défaut, le fichier .htaccess d'Elgg supprime l'affichage des erreurs fatales.",
 	'developers:label:screen_log' => "Journal à l'écran",
-	'developers:help:screen_log' => "Affiche les sorties elgg_log() et elgg_dump() sur la page web.",
+	'developers:help:screen_log' => "Ceci affiche les sorties de elgg_log() et de elgg_dump() et un compte des requêtes sur la BD",
 	'developers:label:show_strings' => "Montrer les chaînes de traduction brutes",
 	'developers:help:show_strings' => "Affiche les chaînes de traduction utilisées par elgg_echo().",
 	'developers:label:wrap_views' => "Vues contractées",
@@ -36,9 +37,24 @@ return array(
 	
 	// inspection
 	'developers:inspect:help' => 'Inspecter la configuration système d\'Elgg.',
+	'developers:inspect:actions' => 'Actions',
+	'developers:inspect:events' => 'Evénements',
+	'developers:inspect:menus' => 'Menus',
+	'developers:inspect:pluginhooks' => 'Hooks des plugins',
+	'developers:inspect:priority' => 'Priorité',
+	'developers:inspect:simplecache' => 'Cache simple',
+	'developers:inspect:views' => 'Vues',
+	'developers:inspect:views:all_filtered' => "<b>Note !</b> Toutes les sorties des vues sont filtrées par les hooks de plugins suivants :",
+	'developers:inspect:views:filtered' => "(filtré par le hook de plugin : %s)",
+	'developers:inspect:widgets' => 'Widget',
+	'developers:inspect:webservices' => 'Services web',
+	'developers:inspect:widgets:context' => 'Contexte',
+	'developers:inspect:functions' => 'Fonctions',
+	'developers:inspect:file_location' => 'Chemin à partir de la racine Elgg',
 
 	// event logging
 	'developers:event_log_msg' => "%s : '%s, %s' dans %s",
+	'developers:log_queries' => "%s requêtes sur la BD (n'inclue pas l'événement shutdown)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introduction',

@@ -7,31 +7,36 @@ return array(
 	'bookmarks' => "Favorieten",
 	'bookmarks:add' => "Favoriet toevoegen",
 	'bookmarks:edit' => "Bewerk favoriet",
-	'bookmarks:owner' => "%s's favorieten",
+	'bookmarks:owner' => "Favorieten van %s",
 	'bookmarks:friends' => "Favorieten van vrienden",
-	'bookmarks:everyone' => "Alle Site favorieten",
+	'bookmarks:everyone' => "Alle sitefavorieten",
 	'bookmarks:this' => "Voeg favoriet toe",
-	'bookmarks:this:group' => "Favoriet in %s",
-	'bookmarks:bookmarklet' => "Browser plugin",
-	'bookmarks:bookmarklet:group' => "Verkrijg groeps bookmarklet",
-	'bookmarks:inbox' => "Favorieten inbox",
+	'bookmarks:this:group' => "Favoriet in '%s'",
+	'bookmarks:bookmarklet' => "Browser-plugin",
+	'bookmarks:bookmarklet:group' => "Verkrijg groeps-bookmarklet",
+	'bookmarks:inbox' => "Favorieteninbox",
 	'bookmarks:with' => "Deel met",
 	'bookmarks:new' => "Een nieuwe favoriet",
 	'bookmarks:address' => "Adres van de favoriet",
 	'bookmarks:none' => 'Geen favorieten',
 
-	'bookmarks:notify:summary' => 'Nieuwe favoriet genoemd %s',
+	'bookmarks:notify:summary' => 'Nieuwe favoriet genaamd \'%s\'',
 	'bookmarks:notify:subject' => 'Nieuwe favoriet: %s',
 	'bookmarks:notify:body' =>
-'%s voegde een nieuwe favoriet toe: %s
+'Hallo!
 
-Adres: %s
+%s voegde een nieuwe favoriet toe: %s
+
+De favoriet kun je hier vinden: %s
 
 %s
 
-Bekijk en reageer op de favoriet:
+Hier kun je de favoriet bekijken en erop reageren: 
 %s
-',
+
+----
+
+Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.',
 
 	'bookmarks:delete:confirm' => "Weet je zeker dat je deze favoriet wilt verwijderen?",
 
@@ -48,8 +53,8 @@ Bekijk en reageer op de favoriet:
 
 	'item:object:bookmarks' => 'Favorieten',
 
-	'bookmarks:group' => 'Groeps favorieten',
-	'bookmarks:enablebookmarks' => 'Schakel groeps favorieten in',
+	'bookmarks:group' => 'Groepsfavorieten',
+	'bookmarks:enablebookmarks' => 'Schakel groepsfavorieten in',
 	'bookmarks:nogroup' => 'Deze groep heeft nog geen favorieten',
 	
 	/**
@@ -58,10 +63,10 @@ Bekijk en reageer op de favoriet:
 	'bookmarks:widget:description' => "Deze widget is ontworpen voor je Dashboard en laat je de laatste favorieten in de Inbox zien.",
 
 	'bookmarks:bookmarklet:description' =>
-			"De favorieten Browser plugin maakt het mogelijk om iedere willekeurige pagina te delen met je vrienden, of om gewoon voor jezelf om te onthouden. Om het te gebruiken sleep je de Browser plugin naar je Links balk van je browser: ",
+			"De favorieten browser-plugin maakt het mogelijk om iedere willekeurige pagina te delen met je vrienden, of om gewoon voor jezelf om te onthouden. Om hem te gebruiken sleep je de browser-plugin naar de favorietenbalk van je browser (deze kan ook de bladwijzerbalk heten):",
 
 	'bookmarks:bookmarklet:descriptionie' =>
-			"Als je Internet Explorer gebruikt moet je met de rechter muisknop op de Browser plugin klikken en dan kiezen voor 'toevoegen aan favorieten' en dan de Links balk.",
+			"Als je Internet Explorer gebruikt moet je met de rechter muisknop op de browser-plugin klikken. Kies daarna voor 'toevoegen aan favorieten', en vervolgens de \"Links-balk\".",
 
 	'bookmarks:bookmarklet:description:conclusion' =>
 			"Je kunt dan iedere pagina die je bezoekt markeren door op de link te klikken.",

@@ -5,7 +5,7 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "Внешние страницы",
-	'admin:appearance:expages' => "Site Pages",
+	'admin:appearance:expages' => "Страницы сайта",
 	'expages:about' => "О сайте",
 	'expages:terms' => "Правила",
 	'expages:privacy' => "Конфиденциальность",

@@ -4,6 +4,7 @@ return array(
 	'admin:develop_tools' => 'Entwickler-Werkzeuge',
 	'admin:develop_tools:sandbox' => 'Theme-Sandbox',
 	'admin:develop_tools:inspect' => 'Prüfen',
+	'admin:inspect' => 'Prüfen',
 	'admin:develop_tools:unit_tests' => 'Modultests',
 	'admin:developers' => 'Entwickler',
 	'admin:developers:settings' => 'Einstellungen',
@@ -19,12 +20,12 @@ return array(
 	'developers:label:display_errors' => 'Fatal PHP Errors anzeigen',
 	'developers:help:display_errors' => "Standardmäßig unterdrückt die .htaccess-Datei von Elgg die Anzeige von Fatal Errors.",
 	'developers:label:screen_log' => "Protokolleinträge auf dem Bildschirm ausgeben",
-	'developers:help:screen_log' => "Diese Einstellung legt fest, ob die Ausgaben von elgg_log() und elgg_dump() im Browserfenster ausgegeben werden.",
+	'developers:help:screen_log' => "Anzeige der Ausgabe von elgg_log() und elgg_dump() und Anzeige der Anzahl der durchgeführten Datenbankabfragen.",
 	'developers:label:show_strings' => "Sprach-Strings im Rohformat anzeigen",
 	'developers:help:show_strings' => "Diese Einstellung legt fest, ob die von elgg_echo() verwendeten Sprach-Strings angezeigt werden.",
 	'developers:label:wrap_views' => "Views einkapseln",
 	'developers:help:wrap_views' => "Diese Einstellung aktiviert die Einkapselung fast aller Views in HTML-Kommentare. Dies kann hilfreich sein, um den erzeugten HTML-Code einer View zuzuordnen.
-                                                                        Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören. Siehe developers_wrap_views() für weitere Informationen.",
+Diese Option kann die Ausgabe von nicht-HTML-Views mit Standard-Viewtype stören. Siehe developers_wrap_views() für weitere Informationen.",
 	'developers:label:log_events' => "Events und Plugin Hooks protokollieren",
 	'developers:help:log_events' => "Einträge für Events und Plugin Hooks ins Log schreiben. Warnung: es gibt sehr viele davon bei jedem Seitenaufruf.",
 
@@ -36,9 +37,24 @@ return array(
 	
 	// inspection
 	'developers:inspect:help' => 'Konfiguration des Elgg-Frameworks prüfen.',
+	'developers:inspect:actions' => 'Actions',
+	'developers:inspect:events' => 'Events',
+	'developers:inspect:menus' => 'Menüs',
+	'developers:inspect:pluginhooks' => 'Plugin-Hooks',
+	'developers:inspect:priority' => 'Priorität',
+	'developers:inspect:simplecache' => 'Simple-Cache',
+	'developers:inspect:views' => 'Views',
+	'developers:inspect:views:all_filtered' => "<b>Zu beachten!</b> Die gesamte View-Ausgabe wird durch diese Plugin-Hooks gefiltert:",
+	'developers:inspect:views:filtered' => "(gefiltert durch Plugin-Hook: %s)",
+	'developers:inspect:widgets' => 'Widgets',
+	'developers:inspect:webservices' => 'Webservices',
+	'developers:inspect:widgets:context' => 'Kontext',
+	'developers:inspect:functions' => 'Funktionen',
+	'developers:inspect:file_location' => 'Dateipfad relativ zum Elgg-Root-Verzeichnis',
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
+	'developers:log_queries' => "%s Datenbankabfragen (Shutdown-Event nicht berücksichtigt)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Einführung',

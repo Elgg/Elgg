@@ -7,6 +7,23 @@ New documentation should fit well with the rest of Elgg's docs.
    :local:
    :depth: 1
 
+Testing docs locally
+--------------------
+Elgg has a `grunt`_ script that automatically builds the docs, opens them in a browser
+window, and automatically reloads as you make changes (the reload takes just a few
+seconds).
+
+.. code:: sh
+
+   cd path/to/elgg/
+   npm install
+   grunt
+
+It's that easy! Grunt will continue running, watching the docs for changes and
+automatically rebuilding.
+
+.. _grunt: http://gruntjs.com/
+
 Follow the existing document organization
 -----------------------------------------
 The current breakdown is not necessarily the One True Way to organize docs,

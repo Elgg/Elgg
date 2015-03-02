@@ -168,9 +168,12 @@ EntityType/default.
 Entity Icons
 ~~~~~~~~~~~~
 
-Every entity can be assigned an icon which is retrieved using the ``ElggEntity::getIconURL($size)`` method.
-This method accepts a ``$size`` argument that can be either of the configured icon sizes.  Use
-``elgg_get_config('icon_sizes')`` to get all possible values. The following sizes exist by default:
+Every entity can be assigned an icon which is retrieved using the ``ElggEntity::getIconURL($params)`` method.
+This method accepts a ``$params`` argument that can be either a string specifying on of the configured icon sizes,
+or an array of parameters, that specify the size and provide additional context for the hook to determine the icon
+to serve.
+
+Use ``elgg_get_config('icon_sizes')`` to get all possible values. The following sizes exist by default:
 ``'large'``, ``'medium'``, ``'small'``, ``'tiny'``, and ``'topbar'``. The method triggers the
 ``entity:icon:url`` :ref:`hook <guides/hooks-list#other>`.
 

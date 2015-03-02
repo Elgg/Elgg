@@ -69,7 +69,7 @@ if (get_input('upgrade') == 'upgrade') {
 		$msg = elgg_echo("installation:htaccess:needs_upgrade");
 		if ($msg === "installation:htaccess:needs_upgrade") {
 			$msg = "You must update your .htaccess file so that the path is injected "
-				. "into the GET parameter __elgg_uri (you can use htaccess_dist as a guide).";
+				. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
 		}
 		echo $msg;
 		exit;
@@ -94,6 +94,9 @@ if (get_input('upgrade') == 'upgrade') {
 		'forward' => $forward_url
 	);
 
+	// reset cache to have latest translations available during upgrade
+	elgg_reset_system_cache();
+	
 	echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade', $vars);
 	exit;
 }

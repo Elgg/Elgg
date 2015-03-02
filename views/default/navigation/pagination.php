@@ -114,8 +114,8 @@ foreach ($pages->items as $page) {
 	if ($page == $current_page) {
 		echo "<li class=\"elgg-state-selected\"><span>$page</span></li>";
 	} else {
-		$page_offset = (($page - 1) * $limit);
-		if ($page_offset == 0) {
+		$page_offset = (($page - $current_page) * $limit) + $offset;
+		if ($page_offset <= 0) {
 			// don't include offset=0
 			$page_offset = null;
 		}

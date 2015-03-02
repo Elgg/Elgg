@@ -25,11 +25,11 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:require:settings' => 'Konfigurationsdatei',
 	'install:require:database' => 'Datenbank',
 
-	'install:check:root' => 'Aufgrund fehlender Schreibberechtigung ist es leider nicht möglich, auf Deinem Server im Hauptverzeichnis der Elgg-Installation die Datei .htaccess zu erzeugen. Du hast zwei Möglichkeiten:
+	'install:check:root' => 'Aufgrund fehlender Schreibberechtigung ist es leider nicht möglich, auf Deinem Server im Hauptverzeichnis der Elgg-Installation die Datei .htaccess automatisch zu erzeugen. Du hast zwei Möglichkeiten:
 
-		1. Ändere (während der Installation) die Schreibberechtigungen für das Elgg-Hauptverzeichnis,
+		1. Ändere (nur während der Installation!) die Schreibberechtigung für das Elgg-Hauptverzeichnis,
 
-		2. Lege die Datei .htaccess selbst an, indem Du die Datei namens htaccess_dist zu .htaccess kopierst.',
+		2. Lege die Datei .htaccess im Elgg-Hauptverzeichnis selbst an, indem Du sie aus der Datei install/config/htaccess.dist durch Kopieren und Umbenennen erzeugst.',
 
 	'install:check:php:version' => 'Elgg benötigt PHP in Version %s oder neuer. Dieser Server verwendet Version %s.',
 	'install:check:php:extension' => 'Elgg benötigt die PHP-Erweiterung %s.',
@@ -143,11 +143,11 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:error:rewrite:iis' => 'Die Überprüfung Deines Servers hat ergeben, dass der IIS-Webserver verwendet wird.',
 	'install:error:rewrite:allowoverride' => "Der Rewrite-Test ist fehlgeschlagen. Die wahrscheinlichste Ursache ist, dass für das Elgg-Installationsverzeichnis 'AllowOverride All' nicht gesetzt ist. Die verhindert, dass der Apache-Webserver die Einstellungen in der Datei .htaccess verarbeiten kann, in welcher die Rewrite-Regeln gesetzt werden.
 		\n\nEine andere mögliche Ursache ist, dass in der Konfiguration des Apache-Webservers ein Alias für Dein Elgg-Installationsverzeichnis definiert ist. Dann mußt Du in der Datei .htaccess die richtige Einstellung für RewriteBase setzen. In der Datei .htaccess in Deinem Elgg-Installationsverzeichnis sind weitere Hinweise, was zu tun ist.",
-	'install:error:rewrite:htaccess:write_permission' => 'Dein Webserver hat keine Berechtigung, um im Elgg-Installationsverzeichnis die Datei .htaccess zu erzeugen. Du mußt entweder die Zugriffsberechtigungen anpassen oder selbst die Datei .htaccess anlegen, indem Du die Datei namens htaccess_dist zu .htaccess kopierst.',
+	'install:error:rewrite:htaccess:write_permission' => 'Dein Webserver hat nicht die notwendige Schreibberechtigung, um im Elgg-Installationsverzeichnis die Datei .htaccess automatisch zu erzeugen. Du mußt entweder (nur während der Installation!) die Zugriffsberechtigungen für das Elgg-Installationsverzeichnis ändern oder selbst die Datei .htaccess im Elgg-Installationsverzeichnis anlegen, indem Du sie aus der Datei install/config/htaccess.dist durch Kopieren und Umbenennen erzeugst.',
 	'install:error:rewrite:htaccess:read_permission' => 'Im Elgg-Installationsverzeichnis ist die Datei .htaccess vorhanden, aber Dein Webserver hat keine Leseberechtigung für diese Datei.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'Im Elgg-Installationsverzeichnis ist eine Datei namens .htaccess, die nicht von Elgg angelegt wurde. Bitte entferne diese Datei.',
 	'install:error:rewrite:htaccess:old_elgg_htaccess' => 'Im Elgg-Installationsverzeichnis scheint eine veraltete .htaccess-Datei vorhanden zu sein. Sie enthält nicht die Rewrite-Regeln für das Überprüfen des Webservers.',
-	'install:error:rewrite:htaccess:cannot_copy' => 'Beim Erzeugen der Datei .htaccess im Elgg-Installationsverzeichnis ist ein unbekannter Fehler aufgetreten. Du mußt die Datei .htaccess selbst anlegen, indem Du die Datei namens htaccess_dist zu .htaccess kopierst.',
+	'install:error:rewrite:htaccess:cannot_copy' => 'Beim Erzeugen der Datei .htaccess im Elgg-Installationsverzeichnis ist ein unbekannter Fehler aufgetreten. Du mußt die Datei .htaccess selbst im Elgg-Installationsverzeichnis anlegen, indem Du sie aus der Datei install/config/htaccess.dist durch Kopieren und Umbenennen erzeugst.',
 	'install:error:rewrite:altserver' => 'Der Test der Rewrite-Regeln ist fehlgeschlagen. Du mußt die Rewrite-Regeln von Elgg selbst zur Konfiguration Deines Webservers hinzufügen und es dann wieder versuchen.',
 	'install:error:rewrite:unknown' => 'Uups. Es war nicht möglich festzustellen, welches Webserver-Programm auf Deinem Server verwendet wird. Darüber hinaus ist der Test der Rewrite-Regeln von Elgg fehlgeschlagen. Es ist leider nicht möglich, spezifischere Hinweise zu den Ursachen des Problems zu geben. Bitte folge dem Link zu Hinweisen bei Installationsproblemen.',
 	'install:warning:rewrite:unknown' => 'Dein Server unterstützt die automatische Prüfung von Rewrite-Regeln nicht und Dein Browser unterstützt es nicht, mit Hilfe von Javascript die Rewrite-Regeln auf Funktionsfähigkeit zu überprüfen. Du kannst die Installation fortsetzen, aber es kann sein, das Deine Community-Seite nicht einwandfrei funktionieren wird. Du kannst die Überprüfung der Rewrite-Regeln selbst durchführen, indem Du diesem Link folgst: <a href="%s" target="_blank">Test</a>. Du wirst die Meldung \'success\' bekommen, wenn die Rewrite-Regeln funktionieren.',

@@ -126,7 +126,7 @@ function _elgg_get_metastring_based_objects($options) {
 		'metastring_ids' => ELGG_ENTITIES_ANY_VALUE,
 
 		// sql
-		'order_by' => 'n_table.time_created asc',
+		'order_by' => 'n_table.time_created ASC, n_table.id ASC',
 		'limit' => elgg_get_config('default_limit'),
 		'offset' => 0,
 		'count' => false,

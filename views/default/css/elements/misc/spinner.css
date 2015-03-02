@@ -1,0 +1,35 @@
+/* ***************************************
+	FIXED POSITION AJAX INDICATOR
+*************************************** */
+
+.elgg-spinner {
+    /* general spinner styles */
+    background: #fff;
+    padding: 10px;
+    border: 1px solid #CCC;
+    border-top: 0;
+    border-radius: 0 0 15px 15px;
+    /* negative half the width for proper centering */
+    margin-left: -25.5px;
+
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+
+    /* transitioned values */
+    left: -10000px;
+    opacity: 0;
+
+    /* fade out over 300ms, then jump offscreen */
+    -webkit-transition: opacity 300ms ease-in-out, left 0s linear 300ms;
+    transition: opacity 300ms ease-in-out, left 0s linear 300ms;
+}
+
+.elgg-spinner-active .elgg-spinner {
+    left: 50%;
+    opacity: 1;
+
+    /* set values immediately */
+    -webkit-transition: opacity 0s, left 0s;
+    transition: opacity 0s, left 0s;
+}

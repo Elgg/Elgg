@@ -409,7 +409,7 @@ a.elgg-maintenance-mode-warning {
 	background-color: #eee;
 	font-weight: bold;
 }
-.elgg-table-alt td, th {
+.elgg-table-alt td, .elgg-table-alt th {
 	padding: 2px 4px;
 	border-bottom: 1px solid #ccc;
 }
@@ -1595,6 +1595,8 @@ table.mceLayout {
 .elgg-output dd {
 	margin: 0 0 1em 2em;
 }
+
+<?php echo elgg_view('css/elements/misc/spinner.css') ?>
 
 /* ***************************************
 	HELPERS

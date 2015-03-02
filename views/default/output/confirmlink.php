@@ -13,7 +13,7 @@
  * @uses $vars['encode_text'] Run $vars['text'] through htmlspecialchars() (false)
  */
 
-elgg_deprecated_notice('The view output/confirmlink has been deprecated, please use output/url', 1.10);
+elgg_deprecated_notice('The view output/confirmlink has been deprecated, please use output/url', '1.10');
 
 if (!isset($vars['confirm'])) {
 	$vars['confirm'] = true;

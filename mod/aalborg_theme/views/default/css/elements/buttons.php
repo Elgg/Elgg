@@ -29,7 +29,6 @@
 	text-decoration: none;
 }
 .elgg-button-submit {	
-	border: 1px solid #3873AB; /* Fallback */
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #4787B8;
 }
@@ -42,7 +41,6 @@
 	cursor: default;
 }
 .elgg-button-cancel {
-	border: 1px solid #C88415; /* Fallback */
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #FAA51A;
 }
@@ -51,7 +49,6 @@
 	background: #E38F07;
 }
 .elgg-button-action {
-	border: 1px solid #B2B2B2; /* Fallback */
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #F0F0F0;
 	color: #333;
@@ -62,7 +59,6 @@
 	color: #333;
 }
 .elgg-button-delete {
-	border: 1px solid #CC2900; /* Fallback */
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #FF3300;
 }
@@ -89,7 +85,6 @@
 	text-decoration: none;
 }
 .elgg-button-special {
-	border: 1px solid #1C786F; /* Fallback */
 	border: 1px solid rgba(0, 0, 0, 0.2);
 	background: #42C5B8;
 }

@@ -19,6 +19,7 @@ function _elgg_comments_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
+	elgg_register_plugin_hook_handler('email', 'system', '_elgg_comments_notification_email_subject');
 
 	elgg_register_page_handler('comment', '_elgg_comments_page_handler');
 
@@ -77,10 +78,74 @@ function _elgg_comments_page_handler($page) {
 			return true;
 			break;
 
+		case 'view':
+			_elgg_comment_redirect(elgg_extract(1, $page), elgg_extract(2, $page));
+			break;
+
 		default:
 			return false;
 			break;
 	}
+}
+
+/**
+ * Redirect to the comment in context of the containing page
+ *
+ * @param int $comment_guid  GUID of the comment
+ * @param int $fallback_guid GUID of the containing entity
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_comment_redirect($comment_guid, $fallback_guid) {
+	$fail = function () {
+		register_error(elgg_echo('generic_comment:notfound'));
+		forward(REFERER);
+	};
+
+	$comment = get_entity($comment_guid);
+	if (!$comment) {
+		// try fallback if given
+		$fallback = get_entity($fallback_guid);
+		if (!$fallback) {
+			$fail();
+		}
+
+		register_error(elgg_echo('generic_comment:notfound_fallback'));
+		forward($fallback->getURL());
+	}
+
+	if (!elgg_instanceof($comment, 'object', 'comment')) {
+		$fail();
+	}
+
+	$container = $comment->getContainerEntity();
+	if (!$container) {
+		$fail();
+	}
+
+	// this won't work with threaded comments, but core doesn't support that yet
+	$count = elgg_get_entities([
+		'type' => 'object',
+		'subtype' => 'comment',
+		'container_guid' => $container->guid,
+		'count' => true,
+		'wheres' => ["e.guid < " . (int)$comment->guid],
+	]);
+	$limit = (int)get_input('limit');
+	if (!$limit) {
+		$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
+	}
+	$offset = floor($count / $limit) * $limit;
+	if (!$offset) {
+		$offset = null;
+	}
+
+	$url = elgg_http_add_url_query_elements($container->getURL(), [
+			'offset' => $offset,
+		]) . "#elgg-object-{$comment->guid}";
+
+	forward($url);
 }
 
 /**
@@ -143,7 +208,7 @@ function _elgg_comment_url_handler($hook, $type, $return, $params) {
 		return $return;
 	}
 
-	return $container->getURL();
+	return "comment/view/{$entity->guid}/{$container->guid}";
 }
 
 /**
@@ -190,6 +255,39 @@ function _elgg_comments_permissions_override($hook, $type, $return, $params) {
 	}
 	
 	return $return;
+}
+
+/**
+ * Set subject for email notifications about new ElggComment objects
+ *
+ * The "Re: " part is required by some email clients in order to properly
+ * group the notifications in threads.
+ *
+ * Group discussion replies extend ElggComment objects so this takes care
+ * of their notifications also.
+ *
+ * @param string $hook        'email'
+ * @param string $type        'system'
+ * @param array  $returnvalue Current mail parameters
+ * @param array  $params      Original mail parameters
+ * @return array $returnvalue Modified mail parameters
+ */
+function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $params) {
+
+	/** @var Elgg\Notifications\Notification */
+	$notification = elgg_extract('notification', $returnvalue['params']);
+
+	if ($notification instanceof Elgg\Notifications\Notification) {
+		$object = elgg_extract('object', $notification->params);
+
+		if ($object instanceof ElggComment) {
+			$container = $object->getContainerEntity();
+
+			$returnvalue['subject'] = 'Re: ' . $container->getDisplayName();
+		}
+	}
+
+	return $returnvalue;
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

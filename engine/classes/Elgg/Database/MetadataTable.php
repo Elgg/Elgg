@@ -7,7 +7,7 @@ use Elgg\Database\EntityTable;
 use Elgg\Database\MetastringsTable;
 use Elgg\EventsService as Events;
 use ElggSession as Session;
-use ElggVolatileMetadataCache as Cache;
+use Elgg\Cache\MetadataCache as Cache;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -168,8 +168,8 @@ class MetadataTable {
 			if ($id !== false) {
 				$obj = $this->get($id);
 				if ($this->events->trigger('create', 'metadata', $obj)) {
-	
-					$this->cache->save($entity_guid, $name, $value, $allow_multiple);
+
+					$this->cache->clear($entity_guid);
 	
 					return $id;
 				} else {
@@ -246,7 +246,7 @@ class MetadataTable {
 		$result = $this->db->updateData($query);
 		if ($result !== false) {
 	
-			$this->cache->save($md->entity_guid, $name, $value);
+			$this->cache->clear($md->entity_guid);
 	
 			// @todo this event tells you the metadata has been updated, but does not
 			// let you do anything about it. What is needed is a plugin hook before
@@ -348,7 +348,7 @@ class MetadataTable {
 	
 		// This moved last in case an object's constructor sets metadata. Currently the batch
 		// delete process has to create the entity to delete its metadata. See #5214
-		$this->cache->invalidateByOptions('delete', $options);
+		$this->cache->invalidateByOptions($options);
 	
 		return $result;
 	}
@@ -366,7 +366,7 @@ class MetadataTable {
 			return false;
 		}
 	
-		$this->cache->invalidateByOptions('disable', $options);
+		$this->cache->invalidateByOptions($options);
 	
 		// if we can see hidden (disabled) we need to use the offset
 		// otherwise we risk an infinite loop if there are more than 50
@@ -392,7 +392,7 @@ class MetadataTable {
 			return false;
 		}
 	
-		$this->cache->invalidateByOptions('enable', $options);
+		$this->cache->invalidateByOptions($options);
 	
 		$options['metastring_type'] = 'metadata';
 		return _elgg_batch_metastring_based_objects($options, 'elgg_batch_enable_callback');

@@ -1,20 +1,31 @@
 {
     "name": "elgg/elgg",
-    "version": "1.10.0-dev",
+    "version": "1.11.0-dev",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
     "type": "project",
     "require": {
-        "php": "~5.4",
+        "php": "~5.4 | ~7.0",
         "ext-mysql": "*",
         "ext-gd": "*",
         "ext-json": "*",
         "ext-xml": "*",
-        "mrclay/minify": "2.*",
-        "knplabs/gaufrette": "0.1.*",
         "symfony/http-foundation": "~2.6",
+        "mrclay/minify": "~2.0",
+        "knplabs/gaufrette": "~0.1.0",
         "tedivm/stash": "~0.12",
-        "ircmaxell/password-compat": "1.*"
+        "ircmaxell/password-compat": "~1.0",
+        "roave/security-advisories": "dev-master",
+        "elgg/login_as": "~1.9"
+    },
+    "scripts": {
+        "test": "phpunit",
+        "lint": [
+            "phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib",
+            "composer validate"
+        ]
     },
     "suggest": {
         "ext-mbstring": "*"
@@ -32,6 +43,7 @@
     "require-dev": {
         "phpunit/phpunit": "~4.1",
         "elgg/sniffs": "dev-master",
-        "squizlabs/php_codesniffer": "~1.5"
+        "squizlabs/php_codesniffer": "~1.5",
+        "simpletest/simpletest": "~1.1"
     }
 }

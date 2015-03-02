@@ -824,7 +824,7 @@ class Plugins {
 	 * @return bool
 	 * @see \ElggPlugin::setUserSetting()
 	 */
-	function setUserSettings($name, $value, $user_guid = 0, $plugin_id = null) {
+	function setUserSetting($name, $value, $user_guid = 0, $plugin_id = null) {
 		if ($plugin_id) {
 			$plugin = elgg_get_plugin_from_id($plugin_id);
 		} else {
