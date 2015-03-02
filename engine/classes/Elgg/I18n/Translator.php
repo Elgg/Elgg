@@ -6,9 +6,7 @@ namespace Elgg\I18n;
  *
  * @access private
  *
- * @package    Elgg.Core
- * @subpackage I18n
- * @since      1.10.0
+ * @since 1.10.0
  */
 class Translator {
 	
