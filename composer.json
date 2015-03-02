@@ -11,6 +11,7 @@
         "ext-mysql": "*",
         "ext-gd": "*",
         "ext-json": "*",
+        "ext-intl": "*",
         "ext-xml": "*",
         "symfony/http-foundation": "~2.6",
         "mrclay/minify": "~2.0",

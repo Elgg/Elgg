@@ -35,37 +35,37 @@ return array(
 	'exception:title' => "Fatal Error.",
 	'exception:contact_admin' => 'An unrecoverable error has occurred and has been logged. Contact the site administrator with the following information:',
 
-	'actionundefined' => "The requested action (%s) was not defined in the system.",
-	'actionnotfound' => "The action file for %s was not found.",
+	'actionundefined' => "The requested action ({0}) was not defined in the system.",
+	'actionnotfound' => "The action file for {0} was not found.",
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 	
 	'ajax:error' => 'Unexpected error while performing an AJAX call. Maybe the connection to the server is lost.',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://learn.elgg.org/).",
-	'PluginException:CannotStart' => '%s (guid: %s) cannot start and has been deactivated.  Reason: %s',
-	'PluginException:InvalidID' => "%s is an invalid plugin ID.",
-	'PluginException:InvalidPath' => "%s is an invalid plugin path.",
-	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin %s',
-	'PluginException:InvalidPlugin' => '%s is not a valid plugin.',
-	'PluginException:InvalidPlugin:Details' => '%s is not a valid plugin: %s',
+	'PluginException:MisconfiguredPlugin' => "{0} (guid: {1}) is a misconfigured plugin. It has been disabled. Please search the Elgg wiki for possible causes (http://learn.elgg.org/).",
+	'PluginException:CannotStart' => '{0} (guid: {1}) cannot start and has been deactivated.  Reason: {2}',
+	'PluginException:InvalidID' => "{0} is an invalid plugin ID.",
+	'PluginException:InvalidPath' => "{0} is an invalid plugin path.",
+	'PluginException:InvalidManifest' => 'Invalid manifest file for plugin {0}',
+	'PluginException:InvalidPlugin' => '{0} is not a valid plugin.',
+	'PluginException:InvalidPlugin:Details' => '{0} is not a valid plugin: {1}',
 	'PluginException:NullInstantiated' => 'ElggPlugin cannot be null instantiated. You must pass a GUID, a plugin ID, or a full path.',
-	'ElggPlugin:MissingID' => 'Missing plugin ID (guid %s)',
-	'ElggPlugin:NoPluginPackagePackage' => 'Missing ElggPluginPackage for plugin ID %s (guid %s)',
-	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'The required file "%s" is missing.',
-	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'This plugin\'s directory must be renamed to "%s" to match the ID in its manifest.',
-	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Its manifest contains an invalid dependency type "%s".',
-	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Its manifest contains an invalid provides type "%s".',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
-	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
-	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.',
-	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
+	'ElggPlugin:MissingID' => 'Missing plugin ID (guid {0})',
+	'ElggPlugin:NoPluginPackagePackage' => 'Missing ElggPluginPackage for plugin ID {0} (guid {1})',
+	'ElggPluginPackage:InvalidPlugin:MissingFile' => 'The required file "{0}" is missing.',
+	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'This plugin\'s directory must be renamed to "{0}" to match the ID in its manifest.',
+	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'Its manifest contains an invalid dependency type "{0}".',
+	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'Its manifest contains an invalid provides type "{0}".',
+	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid {0} dependency "{1}" in plugin {2}.  Plugins cannot conflict with or require something they provide!',
+	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include {0} for plugin {1} (guid: {2}) at {3}.',
+	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin {0} (guid: {1}) at {2}.',
+	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin {0} (guid: {1}) at {2}.',
+	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid {0}!',
 	'PluginException:NoPluginName' => "The plugin name could not be found",
-	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
-	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version %s in plugin %s.',
-	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '%s' attribute in manifest for plugin %s.",
-	'ElggPlugin:InvalidAndDeactivated' => '%s is an invalid plugin and has been deactivated.',
+	'PluginException:ParserError' => 'Error parsing manifest with API version {0} in plugin {1}.',
+	'PluginException:NoAvailableParser' => 'Cannot find a parser for manifest API version {0} in plugin {1}.',
+	'PluginException:ParserErrorMissingRequiredAttribute' => "Missing required '{0}' attribute in manifest for plugin {1}.",
+	'ElggPlugin:InvalidAndDeactivated' => '{0} is an invalid plugin and has been deactivated.',
 
 	'ElggPlugin:Dependencies:Requires' => 'Requires',
 	'ElggPlugin:Dependencies:Suggests' => 'Suggests',
@@ -76,15 +76,15 @@ return array(
 
 	'ElggPlugin:Dependencies:Elgg' => 'Elgg version',
 	'ElggPlugin:Dependencies:PhpVersion' => 'PHP version',
-	'ElggPlugin:Dependencies:PhpExtension' => 'PHP extension: %s',
-	'ElggPlugin:Dependencies:PhpIni' => 'PHP ini setting: %s',
-	'ElggPlugin:Dependencies:Plugin' => 'Plugin: %s',
-	'ElggPlugin:Dependencies:Priority:After' => 'After %s',
-	'ElggPlugin:Dependencies:Priority:Before' => 'Before %s',
-	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is not installed',
+	'ElggPlugin:Dependencies:PhpExtension' => 'PHP extension: {0}',
+	'ElggPlugin:Dependencies:PhpIni' => 'PHP ini setting: {0}',
+	'ElggPlugin:Dependencies:Plugin' => 'Plugin: {0}',
+	'ElggPlugin:Dependencies:Priority:After' => 'After {0}',
+	'ElggPlugin:Dependencies:Priority:Before' => 'Before {0}',
+	'ElggPlugin:Dependencies:Priority:Uninstalled' => '{0} is not installed',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Missing',
 	
-	'ElggPlugin:Dependencies:ActiveDependent' => 'There are other plugins that list %s as a dependency.  You must disable the following plugins before disabling this one: %s',
+	'ElggPlugin:Dependencies:ActiveDependent' => 'There are other plugins that list {0} as a dependency.  You must disable the following plugins before disabling this one: {1}',
 
 
 	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
@@ -96,11 +96,11 @@ return array(
 	'LoginException:ChangePasswordFailure' => 'Failed current password check.',
 	'LoginException:Unknown' => 'We could not log you in due to an unknown error.',
 
-	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
+	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'{0}\' and is not compatible with this version of Elgg',
 
-	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
-	'viewfailure' => 'There was an internal failure in the view %s',
-	'view:missing_param' => "The required parameter '%s' is missing in the view %s",
+	'pageownerunavailable' => 'Warning: The page owner {0} is not accessible!',
+	'viewfailure' => 'There was an internal failure in the view {0}',
+	'view:missing_param' => "The required parameter '{0}' is missing in the view {1}",
 	'changebookmark' => 'Please change your bookmark for this page',
 	'noaccess' => 'The content you were trying to view has been removed or you do not have permission to view it.',
 	'error:missing_data' => 'There was some data missing in your request',
@@ -165,7 +165,7 @@ return array(
 	'widget:unavailable' => 'You have already added this widget',
 	'widget:numbertodisplay' => 'Number of items to display',
 
-	'widget:delete' => 'Remove %s',
+	'widget:delete' => 'Remove {0}',
 	'widget:edit' => 'Customize this widget',
 
 	'widgets' => "Widgets",
@@ -198,15 +198,15 @@ return array(
 
 	'friends' => "Friends",
 	'friends:yours' => "Your friends",
-	'friends:owned' => "%s's friends",
+	'friends:owned' => "{0}'s friends",
 	'friend:add' => "Add friend",
 	'friend:remove' => "Remove friend",
 
-	'friends:add:successful' => "You have successfully added %s as a friend.",
-	'friends:add:failure' => "We couldn't add %s as a friend.",
+	'friends:add:successful' => "You have successfully added {0} as a friend.",
+	'friends:add:failure' => "We couldn't add {0} as a friend.",
 
-	'friends:remove:successful' => "You have successfully removed %s from your friends.",
-	'friends:remove:failure' => "We couldn't remove %s from your friends.",
+	'friends:remove:successful' => "You have successfully removed {0} from your friends.",
+	'friends:remove:failure' => "We couldn't remove {0} from your friends.",
 
 	'friends:none' => "No friends yet.",
 	'friends:none:you' => "You don't have any friends yet.",
@@ -216,7 +216,7 @@ return array(
 	'friends:of:none' => "Nobody has added this user as a friend yet.",
 	'friends:of:none:you' => "Nobody has added you as a friend yet. Start adding content and fill in your profile to let people find you!",
 
-	'friends:of:owned' => "People who have made %s a friend",
+	'friends:of:owned' => "People who have made {0} a friend",
 
 	'friends:of' => "Friends of",
 	'friends:collections' => "Friend collections",
@@ -291,9 +291,9 @@ return array(
 	'profile:explainchangefields' => "You can replace the existing profile fields with your own using the form below. \n\n Give the new profile field a label, for example, 'Favorite team', then select the field type (eg. text, url, tags), and click the 'Add' button. To re-order the fields drag on the handle next to the field label. To edit a field label - click on the label's text to make it editable. \n\n At any time you can revert back to the default profile set up, but you will lose any information already entered into custom fields on profile pages.",
 	'profile:editdefault:success' => 'New profile field added',
 	'profile:editdefault:fail' => 'Default profile could not be saved',
-	'profile:field_too_long' => 'Cannot save your profile information because the "%s" section is too long.',
+	'profile:field_too_long' => 'Cannot save your profile information because the "{0}" section is too long.',
 	'profile:noaccess' => "You do not have permission to edit this profile.",
-	'profile:invalid_email' => '%s must be a valid email address.',
+	'profile:invalid_email' => '{0} must be a valid email address.',
 
 
 /**
@@ -311,16 +311,16 @@ return array(
  * River
  */
 	'river' => "River",
-	'river:friend:user:default' => "%s is now a friend with %s",
-	'river:update:user:avatar' => '%s has a new avatar',
-	'river:update:user:profile' => '%s has updated their profile',
+	'river:friend:user:default' => "{0} is now a friend with {1}",
+	'river:update:user:avatar' => '{0} has a new avatar',
+	'river:update:user:profile' => '{0} has updated their profile',
 	'river:noaccess' => 'You do not have permission to view this item.',
-	'river:posted:generic' => '%s posted',
+	'river:posted:generic' => '{0} posted',
 	'riveritem:single:user' => 'a user',
 	'riveritem:plural:user' => 'some users',
-	'river:ingroup' => 'in the group %s',
+	'river:ingroup' => 'in the group {0}',
 	'river:none' => 'No activity',
-	'river:update' => 'Update for %s',
+	'river:update' => 'Update for {0}',
 	'river:delete' => 'Remove this activity item',
 	'river:delete:success' => 'River item has been deleted',
 	'river:delete:fail' => 'River item could not be deleted',
@@ -342,18 +342,18 @@ return array(
 	'notifications:usersettings:save:ok' => "Notification settings were successfully saved.",
 	'notifications:usersettings:save:fail' => "There was a problem saving the notification settings.",
 
-	'notification:subject' => 'Notification about %s',
-	'notification:body' => 'View the new activity at %s',
+	'notification:subject' => 'Notification about {0}',
+	'notification:body' => 'View the new activity at {0}',
 
 /**
  * Search
  */
 
 	'search' => "Search",
-	'searchtitle' => "Search: %s",
-	'users:searchtitle' => "Searching for users: %s",
-	'groups:searchtitle' => "Searching for groups: %s",
-	'advancedsearchtitle' => "%s with results matching %s",
+	'searchtitle' => "Search: {0}",
+	'users:searchtitle' => "Searching for users: {0}",
+	'groups:searchtitle' => "Searching for groups: {0}",
+	'advancedsearchtitle' => "{0} with results matching {1}",
 	'notfound' => "No results found.",
 	'next' => "Next",
 	'previous' => "Previous",
@@ -362,12 +362,12 @@ return array(
 	'viewtype:list' => "List view",
 	'viewtype:gallery' => "Gallery",
 
-	'tag:search:startblurb' => "Items with tags matching '%s':",
+	'tag:search:startblurb' => "Items with tags matching '{0}':",
 
-	'user:search:startblurb' => "Users matching '%s':",
+	'user:search:startblurb' => "Users matching '{0}':",
 	'user:search:finishblurb' => "To view more, click here.",
 
-	'group:search:startblurb' => "Groups matching '%s':",
+	'group:search:startblurb' => "Groups matching '{0}':",
 	'group:search:finishblurb' => "To view more, click here.",
 	'search:go' => 'Go',
 	'userpicker:only_friends' => 'Only friends',
@@ -382,18 +382,18 @@ return array(
 	'settings:edit' => 'Edit settings',
 
 	'register' => "Register",
-	'registerok' => "You have successfully registered for %s.",
+	'registerok' => "You have successfully registered for {0}.",
 	'registerbad' => "Your registration was unsuccessful because of an unknown error.",
 	'registerdisabled' => "Registration has been disabled by the system administrator",
 	'register:fields' => 'All fields are required',
 
 	'registration:notemail' => 'The email address you provided does not appear to be a valid email address.',
 	'registration:userexists' => 'That username already exists',
-	'registration:usernametooshort' => 'Your username must be a minimum of %u characters long.',
-	'registration:usernametoolong' => 'Your username is too long. It can have a maximum of %u characters.',
-	'registration:passwordtooshort' => 'The password must be a minimum of %u characters long.',
+	'registration:usernametooshort' => 'Your username must be a minimum of {0,number,integer} characters long.',
+	'registration:usernametoolong' => 'Your username is too long. It can have a maximum of {0,number,integer} characters.',
+	'registration:passwordtooshort' => 'The password must be a minimum of {0,number,integer} characters long.',
 	'registration:dupeemail' => 'This email address has already been registered.',
-	'registration:invalidchars' => 'Sorry, your username contains the character %s which is invalid. The following characters are invalid: %s',
+	'registration:invalidchars' => 'Sorry, your username contains the character {0} which is invalid. The following characters are invalid: {1}',
 	'registration:emailnotvalid' => 'Sorry, the email address you entered is invalid on this system',
 	'registration:passwordnotvalid' => 'Sorry, the password you entered is invalid on this system',
 	'registration:usernamenotvalid' => 'Sorry, the username you entered is invalid on this system',
@@ -424,7 +424,7 @@ return array(
 	'user:language:success' => "Language settings have been updated.",
 	'user:language:fail' => "Language settings could not be saved.",
 
-	'user:username:notfound' => 'Username %s not found.',
+	'user:username:notfound' => 'Username {0} not found.',
 
 	'user:password:lost' => 'Lost password',
 	'user:password:changereq:success' => 'Successfully requested a new password, email sent',
@@ -445,12 +445,12 @@ return array(
 	'menu:page:header:default' => 'Other',
 
 	'admin:view_site' => 'View site',
-	'admin:loggedin' => 'Logged in as %s',
+	'admin:loggedin' => 'Logged in as {0}',
 	'admin:menu' => 'Menu',
 
 	'admin:configuration:success' => "Your settings have been saved.",
 	'admin:configuration:fail' => "Your settings could not be saved.",
-	'admin:configuration:dataroot:relative_path' => 'Cannot set "%s" as the dataroot because it is not an absolute path.',
+	'admin:configuration:dataroot:relative_path' => 'Cannot set "{0}" as the dataroot because it is not an absolute path.',
 	'admin:configuration:default_limit' => 'The number of items per page must be at least 1.',
 
 	'admin:unknown_section' => 'Invalid Admin Section.',
@@ -581,10 +581,10 @@ three sections:
  */
 
 	'plugins:disabled' => 'Plugins are not being loaded because a file named "disabled" is in the mod directory.',
-	'plugins:settings:save:ok' => "Settings for the %s plugin were saved successfully.",
-	'plugins:settings:save:fail' => "There was a problem saving settings for the %s plugin.",
-	'plugins:usersettings:save:ok' => "User settings for the %s plugin were saved successfully.",
-	'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the %s plugin.",
+	'plugins:settings:save:ok' => "Settings for the {0} plugin were saved successfully.",
+	'plugins:settings:save:fail' => "There was a problem saving settings for the {0} plugin.",
+	'plugins:usersettings:save:ok' => "User settings for the {0} plugin were saved successfully.",
+	'plugins:usersettings:save:fail' => "There was a problem saving  user settings for the {0} plugin.",
 	'item:object:plugin' => 'Plugins',
 
 	'admin:plugins' => "Plugins",
@@ -615,23 +615,23 @@ three sections:
 	'admin:plugins:label:dependencies' => 'Dependencies',
 
 	'admin:plugins:warning:unmet_dependencies' => 'This plugin has unmet dependencies and cannot be activated. Check dependencies under more info.',
-	'admin:plugins:warning:invalid' => 'This plugin is invalid: %s',
+	'admin:plugins:warning:invalid' => 'This plugin is invalid: {0}',
 	'admin:plugins:warning:invalid:check_docs' => 'Check <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> for troubleshooting tips.',
 	'admin:plugins:cannot_activate' => 'cannot activate',
 
-	'admin:plugins:set_priority:yes' => "Reordered %s.",
-	'admin:plugins:set_priority:no' => "Could not reorder %s.",
-	'admin:plugins:set_priority:no_with_msg' => "Could not reorder %s. Error: %s",
-	'admin:plugins:deactivate:yes' => "Deactivated %s.",
-	'admin:plugins:deactivate:no' => "Could not deactivate %s.",
-	'admin:plugins:deactivate:no_with_msg' => "Could not deactivate %s. Error: %s",
-	'admin:plugins:activate:yes' => "Activated %s.",
-	'admin:plugins:activate:no' => "Could not activate %s.",
-	'admin:plugins:activate:no_with_msg' => "Could not activate %s. Error: %s",
+	'admin:plugins:set_priority:yes' => "Reordered {0}.",
+	'admin:plugins:set_priority:no' => "Could not reorder {0}.",
+	'admin:plugins:set_priority:no_with_msg' => "Could not reorder {0}. Error: {1}",
+	'admin:plugins:deactivate:yes' => "Deactivated {0}.",
+	'admin:plugins:deactivate:no' => "Could not deactivate {0}.",
+	'admin:plugins:deactivate:no_with_msg' => "Could not deactivate {0}. Error: {1}",
+	'admin:plugins:activate:yes' => "Activated {0}.",
+	'admin:plugins:activate:no' => "Could not activate {0}.",
+	'admin:plugins:activate:no_with_msg' => "Could not activate {0}. Error: {1}",
 	'admin:plugins:categories:all' => 'All categories',
 	'admin:plugins:plugin_website' => 'Plugin website',
-	'admin:plugins:author' => '%s',
-	'admin:plugins:version' => 'Version %s',
+	'admin:plugins:author' => '{0}',
+	'admin:plugins:version' => 'Version {0}',
 	'admin:plugin_settings' => 'Plugin Settings',
 	'admin:plugins:warning:unmet_dependencies_active' => 'This plugin is active but has unmet dependencies. You may encounter problems. See "more info" below for details.',
 
@@ -677,7 +677,7 @@ three sections:
 	'admin:user:unban:no' => "Can not unban user",
 	'admin:user:unban:yes' => "User unbanned.",
 	'admin:user:delete:no' => "Can not delete user",
-	'admin:user:delete:yes' => "The user %s has been deleted",
+	'admin:user:delete:yes' => "The user {0} has been deleted",
 	'admin:user:self:delete:no' => "You cannot delete yourself",
 
 	'admin:user:resetpassword:yes' => "Password reset, user notified.",
@@ -726,7 +726,7 @@ These changes will only affect new users on the site.',
 	'usersettings:statistics:opt:description' => "View statistical information about users and objects on your site.",
 	'usersettings:statistics:opt:linktext' => "Account statistics",
 
-	'usersettings:user' => "%s's settings",
+	'usersettings:user' => "{0}'s settings",
 	'usersettings:user:opt:description' => "This allows you to control user settings.",
 	'usersettings:user:opt:linktext' => "Change your settings",
 
@@ -749,11 +749,11 @@ These changes will only affect new users on the site.',
 		
 	'river:all' => 'All Site Activity',
 	'river:mine' => 'My Activity',
-	'river:owner' => 'Activity of %s',
+	'river:owner' => 'Activity of {0}',
 	'river:friends' => 'Friends Activity',
-	'river:select' => 'Show %s',
-	'river:comments:more' => '+%u more',
-	'river:generic_comment' => 'commented on %s %s',
+	'river:select' => 'Show {0}',
+	'river:comments:more' => '+{0,number,integer} more',
+	'river:generic_comment' => 'commented on {0} {1}',
 
 	'friends:widget:description' => "Displays some of your friends.",
 	'friends:num_display' => "Number of friends to display",
@@ -946,16 +946,16 @@ These changes will only affect new users on the site.',
 
 	'useradd:subject' => 'User account created',
 	'useradd:body' => '
-%s,
+{0},
 
-A user account has been created for you at %s. To log in, visit:
+A user account has been created for you at {1}. To log in, visit:
 
-%s
+{2}
 
 And log in with these user credentials:
 
-Username: %s
-Password: %s
+Username: {3}
+Password: {4}
 
 Once you have logged in, we highly recommend that you change your password.
 ',
@@ -979,33 +979,33 @@ Once you have logged in, we highly recommend that you change your password.
  */
 
 	'friendlytime:justnow' => "just now",
-	'friendlytime:minutes' => "%s minutes ago",
+	'friendlytime:minutes' => "{0} minutes ago",
 	'friendlytime:minutes:singular' => "a minute ago",
-	'friendlytime:hours' => "%s hours ago",
+	'friendlytime:hours' => "{0} hours ago",
 	'friendlytime:hours:singular' => "an hour ago",
-	'friendlytime:days' => "%s days ago",
+	'friendlytime:days' => "{0} days ago",
 	'friendlytime:days:singular' => "yesterday",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
 	
-	'friendlytime:future:minutes' => "in %s minutes",
+	'friendlytime:future:minutes' => "in {0} minutes",
 	'friendlytime:future:minutes:singular' => "in a minute",
-	'friendlytime:future:hours' => "in %s hours",
+	'friendlytime:future:hours' => "in {0} hours",
 	'friendlytime:future:hours:singular' => "in an hour",
-	'friendlytime:future:days' => "in %s days",
+	'friendlytime:future:days' => "in {0} days",
 	'friendlytime:future:days:singular' => "tomorrow",
 
-	'date:month:01' => 'January %s',
-	'date:month:02' => 'February %s',
-	'date:month:03' => 'March %s',
-	'date:month:04' => 'April %s',
-	'date:month:05' => 'May %s',
-	'date:month:06' => 'June %s',
-	'date:month:07' => 'July %s',
-	'date:month:08' => 'August %s',
-	'date:month:09' => 'September %s',
-	'date:month:10' => 'October %s',
-	'date:month:11' => 'November %s',
-	'date:month:12' => 'December %s',
+	'date:month:01' => 'January {0}',
+	'date:month:02' => 'February {0}',
+	'date:month:03' => 'March {0}',
+	'date:month:04' => 'April {0}',
+	'date:month:05' => 'May {0}',
+	'date:month:06' => 'June {0}',
+	'date:month:07' => 'July {0}',
+	'date:month:08' => 'August {0}',
+	'date:month:09' => 'September {0}',
+	'date:month:10' => 'October {0}',
+	'date:month:11' => 'November {0}',
+	'date:month:12' => 'December {0}',
 
 	'date:weekday:0' => 'Sunday',
 	'date:weekday:1' => 'Monday',
@@ -1105,7 +1105,7 @@ Once you have logged in, we highly recommend that you change your password.
 	'upgrade:site_secret_warning:moderate' => "You are encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 	'upgrade:site_secret_warning:weak' => "You are strongly encouraged to regenerate your site key to improve system security. See Configure &gt; Settings &gt; Advanced",
 
-	'deprecated:function' => '%s() was deprecated by %s()',
+	'deprecated:function' => '{0}() was deprecated by {1}()',
 
 	'admin:pending_upgrades' => 'The site has pending upgrades that require your immediate attention.',
 	'admin:view_upgrades' => 'View pending upgrades.',
@@ -1113,32 +1113,32 @@ Once you have logged in, we highly recommend that you change your password.
 	'item:object:elgg_upgrade' => 'Site upgrades',
 	'admin:upgrades:none' => 'Your installation is up to date!',
 
-	'upgrade:item_count' => 'There are <b>%s</b> items that need to be upgraded.',
+	'upgrade:item_count' => 'There are <b>{0}</b> items that need to be upgraded.',
 	'upgrade:warning' => '<b>Warning:</b> On a large site this upgrade may take a significantly long time!',
 	'upgrade:success_count' => 'Upgraded:',
 	'upgrade:error_count' => 'Errors:',
-	'upgrade:river_update_failed' => 'Failed to update the river entry for item id %s',
-	'upgrade:timestamp_update_failed' => 'Failed to update the timestamps for item id %s',
+	'upgrade:river_update_failed' => 'Failed to update the river entry for item id {0}',
+	'upgrade:timestamp_update_failed' => 'Failed to update the timestamps for item id {0}',
 	'upgrade:finished' => 'Upgrade finished',
 	'upgrade:finished_with_errors' => '<p>Upgrade finished with errors. Refresh the page and try running the upgrade again.</p></p><br />If the error recurs, check the server error log for possible cause. You can seek help for fixing the error from the <a href="http://community.elgg.org/groups/profile/179063/elgg-technical-support">Technical support group</a> in the Elgg community.</p>',
 
 	// Strings specific for the comments upgrade
 	'admin:upgrades:comments' => 'Comments upgrade',
-	'upgrade:comment:create_failed' => 'Failed to convert comment id %s to an entity.',
+	'upgrade:comment:create_failed' => 'Failed to convert comment id {0} to an entity.',
 
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'Data directory upgrade',
 
 	// Strings specific for the discussion reply upgrade
 	'admin:upgrades:discussion_replies' => 'Discussion reply upgrade',
-	'discussion:upgrade:replies:create_failed' => 'Failed to convert discussion reply id %s to an entity.',
+	'discussion:upgrade:replies:create_failed' => 'Failed to convert discussion reply id {0} to an entity.',
 
 /**
  * Welcome
  */
 
 	'welcome' => "Welcome",
-	'welcome:user' => 'Welcome %s',
+	'welcome:user' => 'Welcome {0}',
 
 /**
  * Emails
@@ -1155,33 +1155,33 @@ Once you have logged in, we highly recommend that you change your password.
 	'email:save:success' => "New email address saved. Verification is requested.",
 	'email:save:fail' => "New email address could not be saved.",
 
-	'friend:newfriend:subject' => "%s has made you a friend!",
-	'friend:newfriend:body' => "%s has made you a friend!
+	'friend:newfriend:subject' => "{0} has made you a friend!",
+	'friend:newfriend:body' => "{0} has made you a friend!
 
 To view their profile, click here:
 
-%s
+{0}
 
 Please do not reply to this email.",
 
 	'email:changepassword:subject' => "Password changed!",
-	'email:changepassword:body' => "Hi %s,
+	'email:changepassword:body' => "Hi {0},
 
 Your password has been changed.",
 
 	'email:resetpassword:subject' => "Password reset!",
-	'email:resetpassword:body' => "Hi %s,
+	'email:resetpassword:body' => "Hi {0},
 
-Your password has been reset to: %s",
+Your password has been reset to: {1}",
 
 	'email:changereq:subject' => "Request for password change.",
-	'email:changereq:body' => "Hi %s,
+	'email:changereq:body' => "Hi {0},
 
-Somebody (from the IP address %s) has requested a password change for their account.
+Somebody (from the IP address {1}) has requested a password change for their account.
 
 If you requested this, click on the link below. Otherwise ignore this email.
 
-%s
+{2}
 ",
 
 /**
@@ -1197,10 +1197,10 @@ If you requested this, click on the link below. Otherwise ignore this email.
  * Comments
  */
 
-	'comments:count' => "%s comments",
+	'comments:count' => "{0} comments",
 	'item:object:comment' => 'Comments',
 
-	'river:comment:object:default' => '%s commented on %s',
+	'river:comment:object:default' => '{0} commented on {1}',
 
 	'generic_comments:add' => "Leave a comment",
 	'generic_comments:edit' => "Edit comment",
@@ -1216,24 +1216,24 @@ If you requested this, click on the link below. Otherwise ignore this email.
 	'generic_comment:notdeleted' => "Sorry, we could not delete this comment.",
 	'generic_comment:failure' => "An unexpected error occurred when saving the comment.",
 	'generic_comment:none' => 'No comments',
-	'generic_comment:title' => 'Comment by %s',
-	'generic_comment:on' => '%s on %s',
+	'generic_comment:title' => 'Comment by {0}',
+	'generic_comment:on' => '{0} on {1}',
 	'generic_comments:latest:posted' => 'posted a',
 
 	'generic_comment:email:subject' => 'You have a new comment!',
-	'generic_comment:email:body' => "You have a new comment on your item \"%s\" from %s. It reads:
+	'generic_comment:email:body' => "You have a new comment on your item \"{0}\" from {1}. It reads:
 
 
-%s
+{2}
 
 
 To reply or view the original item, click here:
 
-%s
+{3}
 
-To view %s's profile, click here:
+To view {4}'s profile, click here:
 
-%s
+{5}
 
 Please do not reply to this email.",
 
@@ -1241,12 +1241,12 @@ Please do not reply to this email.",
  * Entities
  */
 	
-	'byline' => 'By %s',
-	'entity:default:strapline' => 'Created %s by %s',
+	'byline' => 'By {0}',
+	'entity:default:strapline' => 'Created {0} by {1}',
 	'entity:default:missingsupport:popup' => 'This entity cannot be displayed correctly. This may be because it requires support provided by a plugin that is no longer installed.',
 
-	'entity:delete:success' => 'Entity %s has been deleted',
-	'entity:delete:fail' => 'Entity %s could not be deleted',
+	'entity:delete:success' => 'Entity {0} has been deleted',
+	'entity:delete:fail' => 'Entity {0} could not be deleted',
 
 /**
  * Action gatekeeper
@@ -1275,9 +1275,9 @@ Please do not reply to this email.",
  * Javascript
  */
 
-	'js:security:token_refresh_failed' => 'Failed to contact %s. You may experience problems saving content. Please refresh this page.',
-	'js:security:token_refreshed' => 'Connection to %s restored!',
-	'js:lightbox:current' => "image %s of %s",
+	'js:security:token_refresh_failed' => 'Failed to contact {0}. You may experience problems saving content. Please refresh this page.',
+	'js:security:token_refreshed' => 'Connection to {0} restored!',
+	'js:lightbox:current' => "image {0} of {1}",
 
 /**
  * Miscellaneous

@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\I18n;
 
+use MessageFormatter;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -40,20 +42,7 @@ class Translator {
 	 * or the original language string.
 	 */
 	function translate($message_key, $args = array(), $language = "") {
-		
-	
 		static $CURRENT_LANGUAGE;
-	
-		// old param order is deprecated
-		if (!is_array($args)) {
-			elgg_deprecated_notice(
-				'As of Elgg 1.8, the 2nd arg to elgg_echo() is an array of string replacements and the 3rd arg is the language.',
-				1.8
-			);
-	
-			$language = $args;
-			$args = array();
-		}
 	
 		if (!isset($this->CONFIG->translations)) {
 			// this means we probably had an exception before translations were initialized
@@ -74,24 +63,21 @@ class Translator {
 			// language than the logged in user.)
 			_elgg_load_translations_for_language($language);
 		}
+		
+		$message = new MessageFormatter("en", $message_key);
 
 		if (isset($this->CONFIG->translations[$language][$message_key])) {
 			$string = $this->CONFIG->translations[$language][$message_key];
+			$message = new MessageFormatter($language, $string);
 		} else if (isset($this->CONFIG->translations["en"][$message_key])) {
 			$string = $this->CONFIG->translations["en"][$message_key];
+			$message = new MessageFormatter("en", $string);
 			_elgg_services()->logger->notice(sprintf('Missing %s translation for "%s" language key', $language, $message_key));
 		} else {
-			$string = $message_key;
 			_elgg_services()->logger->notice(sprintf('Missing English translation for "%s" language key', $message_key));
 		}
 	
-		// only pass through if we have arguments to allow backward compatibility
-		// with manual sprintf() calls.
-		if ($args) {
-			$string = vsprintf($string, $args);
-		}
-	
-		return $string;
+		return $message->format($args);
 	}
 	
 	/**
