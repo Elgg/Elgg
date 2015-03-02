@@ -4737,6 +4737,6 @@ function retrieve_cached_entity($guid) {
  * @deprecated 1.8 Use elgg_get_file_simple_type()
  */
 function get_general_file_type($mime_type) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_file_get_simple_type()', 1.8);
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_get_file_simple_type()', 1.8);
 	return elgg_get_file_simple_type($mime_type);
 }
