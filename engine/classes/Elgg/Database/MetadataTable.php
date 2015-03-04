@@ -120,7 +120,8 @@ class MetadataTable {
 		$owner_guid = (int)$owner_guid;
 		$allow_multiple = (boolean)$allow_multiple;
 
-		if (!isset($value)) {
+		// Prevent metadata with empty values (0 is allowed), see #4858
+		if (!isset($value) || $value === '') {
 			return false;
 		}
 
