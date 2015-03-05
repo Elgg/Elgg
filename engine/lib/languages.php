@@ -238,6 +238,19 @@ function get_missing_language_keys($language) {
 }
 
 /**
+ * Check if a give language key exists
+ *
+ * @param string $key      The translation key
+ * @param string $language The language
+ *
+ * @return bool
+ * @since 1.11
+ */
+function elgg_language_key_exists($key, $language = 'en') {
+	return _elgg_services()->translator->languageKeyExists($key, $language);
+}
+
+/**
  * Initializes simplecache views for translations
  * 
  * @return void
