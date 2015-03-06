@@ -68,6 +68,14 @@ if (sizeof($input) > 0) {
 			}
 		}
 
+		if ($value === '') {
+			// The group profile displays all profile fields that have a value.
+			// We don't want to display fields with empty string value, so we
+			// remove the metadata completely.
+			$group->deleteMetadata($shortname);
+			continue;
+		}
+
 		$group->$shortname = $value;
 	}
 }
