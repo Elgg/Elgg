@@ -33,6 +33,10 @@ elgg.ui.init = function () {
 	}
 
 	elgg.ui.initAccessInputs();
+
+	// Allow element to be highlighted using CSS if its id is found from the URL
+	var elementId = elgg.getSelectorFromUrlFragment(document.URL);
+	$(elementId).addClass('elgg-state-highlight');
 };
 
 /**
