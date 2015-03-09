@@ -21,13 +21,9 @@ matrix:
        - phpenv rehash
        - composer self-update
        - composer install
-       - wget https://scrutinizer-ci.com/ocular.phar
       script:
        - bash .scripts/travis/check_commit_msgs.sh
        - composer lint
-       - phpunit --coverage-clover=coverage.clover
-      after_script:
-       - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
        
     # Build and test javascript
     - php: 5.6
@@ -66,6 +62,11 @@ matrix:
        - sleep 3 # give Web server some time to bind to sockets, etc
       script:
        - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
+      after_script:
+       # Report unit test coverage metrics to scrutinizer
+       - wget https://scrutinizer-ci.com/ocular.phar
+       - phpunit --coverage-clover=coverage.clover
+       - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 services: 
  - mysql
