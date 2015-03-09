@@ -391,6 +391,32 @@ class Translator {
 	}
 	
 	/**
+	 * Check if a give language key exists
+	 *
+	 * @param string $key      The translation key
+	 * @param string $language The specific language to check
+	 *
+	 * @return bool
+	 * @since 1.11
+	 */
+	function languageKeyExists($key, $language = 'en') {
+		if (empty($key)) {
+			return false;
+		}
+	
+		if (($language !== 'en') && !array_key_exists($language, $this->CONFIG->translations)) {
+			// Ensure that all possible translations are loaded
+			$this->reloadAllTranslations();
+		}
+	
+		if (!array_key_exists($language, $this->CONFIG->translations)) {
+			return false;
+		}
+	
+		return array_key_exists($key, $this->CONFIG->translations[$language]);
+	}
+	
+	/**
 	 * Returns an array of language codes.
 	 *
 	 * @return array
