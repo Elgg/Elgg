@@ -755,6 +755,7 @@ These changes will only affect new users on the site.',
 	'river:friends' => 'Friends Activity',
 	'river:select' => 'Show %s',
 	'river:comments:more' => '+%u more',
+	'river:comments:all' => 'View all %u comments',
 	'river:generic_comment' => 'commented on %s %s',
 
 	'friends:widget:description' => "Displays some of your friends.",
