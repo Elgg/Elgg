@@ -87,6 +87,9 @@ System hooks
 	Triggered in the ajax forward hook that is called for ajax requests. Allows plugins to alter the
 	output returned, including the forward URL, system messages, and errors.
 
+**parameters, menu:<menu_name>**
+	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before it is generated.
+
 **register, menu:<menu_name>**
 	Triggered by ``elgg_view_menu()``. Used to add dynamic menu items.
 

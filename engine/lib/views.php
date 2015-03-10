@@ -693,7 +693,9 @@ function elgg_view_menu($menu_name, array $vars = array()) {
 	global $CONFIG;
 
 	$vars['name'] = $menu_name;
-
+	
+	$vars = elgg_trigger_plugin_hook('parameters', "menu:$menu_name", $vars, $vars);
+	
 	$sort_by = elgg_extract('sort_by', $vars, 'text');
 
 	if (isset($CONFIG->menus[$menu_name])) {
