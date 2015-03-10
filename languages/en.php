@@ -86,6 +86,9 @@ return array(
 	
 	'ElggPlugin:Dependencies:ActiveDependent' => 'There are other plugins that list %s as a dependency.  You must disable the following plugins before disabling this one: %s',
 
+	'ElggMenuBuilder:Trees:NoParents' => 'Menu items found without parents to link them to',
+	'ElggMenuBuilder:Trees:OrphanedChild' => 'Menu item [%s] found with a missing parent[%s]',
+	'ElggMenuBuilder:Trees:DuplicateChild' => 'Duplicate registration found for menu item [%s]',
 
 	'RegistrationException:EmptyPassword' => 'The password fields cannot be empty',
 	'RegistrationException:PasswordMismatch' => 'Passwords must match',
