@@ -50,6 +50,10 @@ Once you have created your edit and view pages, you need to initialize the plugi
 
     // Add a third file widget
     add_widget_type('filerepo3', elgg_echo("file:widget3"), elgg_echo("file:widget:description3"));
+    
+.. note::
+
+   It is not required to provide a name and description during registration of the widget if you have translations available in the following format: ``widgets:widget_handler:title`` and ``widgets:widget_handler:description``.
 
 Multiple widgets
 ----------------

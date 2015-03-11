@@ -135,8 +135,25 @@ class WidgetsService {
 	 * @since 1.9.0
 	 */
 	public function registerType($handler, $name, $description, array $context = array('all'), $multiple = false) {
-		if (!$handler || !$name) {
+		
+		if (!$handler) {
 			return false;
+		}
+		
+		if (!$name) {
+			if (_elgg_services()->translator->languageKeyExists("widgets:{$handler}:title")) {
+				$name = _elgg_services()->translator->translate("widgets:{$handler}:title");
+			}	
+		}
+		
+		if (!$name) {
+			return false;
+		}
+		
+		if (!$description) {
+			if (_elgg_services()->translator->languageKeyExists("widgets:{$handler}:description")) {
+				$description = _elgg_services()->translator->translate("widgets:{$handler}:description");
+			}
 		}
 
 		if (!isset($this->widgets)) {
