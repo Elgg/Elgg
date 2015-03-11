@@ -35,6 +35,10 @@ User settings
 
 Your plugin might need to store per user settings too, and you would like to have your plugin's options to appear in the user's settings page. This is also easy to do and follows the same pattern as setting up the global plugin configuration explained earlier. The only difference is that instead of using a ``settings`` file you will use ``usersettings``. So, the path to the user edit view for your plugin would be ``plugins/your_plugin/usersettings.php``.
 
+.. note::
+
+   The title of the usersettings form will default to the plugin name. If you want to change this, add a translation for ``plugin_id:usersettings:title``.
+
 Retrieving settings in your code
 --------------------------------
 
