@@ -34,14 +34,8 @@ final class Context {
 	 * @return string|null
 	 */
 	public function peek() {
-		$topPos = count($this->stack) - 1;
-		
-		if ($topPos >= 0) {
-			return $this->stack[$topPos];
-		} else {
-			return NULL;
-		}
-
+		$last = end($this->stack);
+		return ($last === false) ? null : $last;
 	}
 	
 	/**
@@ -51,7 +45,7 @@ final class Context {
 	 * @return void
 	 */
 	public function push($context) {
-		array_push($this->stack, $context);
+		$this->stack[] = "$context";
 	}
 	
 	/**
@@ -97,5 +91,24 @@ final class Context {
 	 */
 	public function contains($context) {
 		return in_array($context, $this->stack);
+	}
+
+	/**
+	 * Get the entire context stack as an array (e.g. for backing it up)
+	 *
+	 * @return string[]
+	 */
+	public function toArray() {
+		return $this->stack;
+	}
+
+	/**
+	 * Overwrite the entire context stack from an array of strings
+	 *
+	 * @param string[] $stack All contexts to be placed on the stack
+	 * @return void
+	 */
+	public function fromArray(array $stack) {
+		$this->stack = array_map('strval', $stack);
 	}
 }
