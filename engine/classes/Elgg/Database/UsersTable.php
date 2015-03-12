@@ -446,7 +446,7 @@ class UsersTable {
 	 */
 	function generateInviteCode($username) {
 		$time = time();
-		return "{$time}." . _elgg_services()->crypto->getHmac($time . $username);
+		return "$time." . _elgg_services()->crypto->getHmac([$time, $username])->getToken();
 	}
 
 	/**
@@ -466,8 +466,7 @@ class UsersTable {
 		$time = $m[1];
 		$mac = $m[2];
 
-		$crypto = _elgg_services()->crypto;
-		return $crypto->areEqual($mac, $crypto->getHmac($time . $username));
+		return _elgg_services()->crypto->getHmac([$time, $username])->matchesToken($mac);
 	}
 	
 	/**
