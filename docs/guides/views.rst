@@ -295,6 +295,34 @@ If your entity list will display the entity owners, you can improve performance 
 
 See also :doc:`check this page out first </design/database>`.
 
+Since 1.11, you can define an alternative view to render list items using ```'item_view'``` parameter.
+
+In some cases, default entity views may be unsuitable for your needs. Using ```item_view``` allows you to customize the look, while preserving pagination, list's HTML markup etc.
+
+Consider these two examples:
+
+.. code-block:: php
+
+	echo elgg_list_entities_from_relationship(array(
+	    'type' => 'group',
+	    'relationship' => 'member',
+	    'relationship_guid' => elgg_get_logged_in_user_guid(),
+	    'inverse_relationship' => false,
+	    'full_view' => false,
+	));
+
+.. code-block:: php
+
+	echo elgg_list_entities_from_relationship(array(
+	    'type' => 'group',
+	    'relationship' => 'invited',
+	    'relationship_guid' => (int) $user_guid,
+	    'inverse_relationship' => true,
+	    'item_view' => 'group/format/invitationrequest',
+	));
+
+In the first example, we are displaying a list of groups a user is a member of using the default group view. In the second example, we want to display a list of groups the user was invited to. Since invitations are not entities, they do not have their own views and can not be listed using ``elgg_list_*``. We are providing an alternative item view, that will use the group entity to display an invitation that contains a group name and buttons to access or reject the invitation.
+
 Using a different templating system
 ===================================
 

@@ -774,9 +774,6 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
  * The entity view is called with the following in $vars:
  *  - \ElggEntity 'entity' The entity being viewed
  *
- * Other common view $vars paramters:
- *  - bool 'full_view' Whether to show a full or condensed view. (Default: true)
- *
  * @tip This function can automatically appends annotations to entities if in full
  * view and a handler is registered for the entity:annotate.  See https://github.com/Elgg/Elgg/issues/964 and
  * {@link elgg_view_entity_annotations()}.
@@ -784,6 +781,8 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
  * @param \ElggEntity $entity The entity to display
  * @param array       $vars   Array of variables to pass to the entity view.
  *                            In Elgg 1.7 and earlier it was the boolean $full_view
+ *      'full_view'        Whether to show a full or condensed view. (Default: true)
+ *      'item_view'        Alternative view used to render this entity
  * @param boolean     $bypass If true, will not pass to a custom template handler.
  *                            {@link set_template_handler()}
  * @param boolean     $debug  Complain if views are missing
@@ -816,25 +815,25 @@ function elgg_view_entity(\ElggEntity $entity, $vars = array(), $bypass = false,
 
 	$vars['entity'] = $entity;
 
-
-	// if this entity has a view defined, use it
-	$view = $entity->view;
-	if (is_string($view)) {
-		return elgg_view($view, $vars, $bypass, $debug);
-	}
-
 	$entity_type = $entity->getType();
-
-	$subtype = $entity->getSubtype();
-	if (empty($subtype)) {
-		$subtype = 'default';
+	$entity_subtype = $entity->getSubtype();
+	if (empty($entity_subtype)) {
+		$entity_subtype = 'default';
 	}
+
+	$entity_views = array(
+		elgg_extract('item_view', $vars, ''),
+		$entity->view,
+		"$entity_type/$entity_subtype",
+		"$entity_type/default",
+	);
 
 	$contents = '';
-	if (elgg_view_exists("$entity_type/$subtype")) {
-		$contents = elgg_view("$entity_type/$subtype", $vars, $bypass, $debug);
-	} else {
-		$contents = elgg_view("$entity_type/default", $vars, $bypass, $debug);
+	foreach ($entity_views as $view) {
+		if (elgg_view_exists($view)) {
+			$contents = elgg_view($view, $vars, $bypass, $debug);
+			break;
+		}
 	}
 
 	// Marcus Povey 20090616 : Speculative and low impact approach for fixing #964
@@ -908,6 +907,7 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = ar
  *
  * @param \ElggAnnotation $annotation The annotation to display
  * @param array           $vars       Variable array for view.
+ *      'item_view'  Alternative view used to render an annotation
  * @param bool            $bypass     If true, will not pass to a custom
  *                                    template handler. {@link set_template_handler()}
  * @param bool            $debug      Complain if views are missing
@@ -937,11 +937,21 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
 		return false;
 	}
 
-	if (elgg_view_exists("annotation/$name")) {
-		return elgg_view("annotation/$name", $vars, $bypass, $debug);
-	} else {
-		return elgg_view("annotation/default", $vars, $bypass, $debug);
+	$annotation_views = array(
+		elgg_extract('item_view', $vars, ''),
+		"annotation/$name",
+		"annotation/default",
+	);
+
+	$contents = '';
+	foreach ($annotation_views as $view) {
+		if (elgg_view_exists($view)) {
+			$contents = elgg_view($view, $vars, $bypass, $debug);
+			break;
+		}
 	}
+
+	return $contents;
 }
 
 /**
@@ -962,6 +972,7 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  *      'full_view'        Display the full view of the entities?
  *      'list_class'       CSS class applied to the list
  *      'item_class'       CSS class applied to the list items
+ *      'item_view'        Alternative view to render list items
  *      'pagination'       Display pagination?
  *      'list_type'        List type: 'list' (default), 'gallery'
  *      'list_type_toggle' Display the list type toggle?
@@ -1043,6 +1054,7 @@ $list_type_toggle = true, $pagination = true) {
  *      'limit'      The number of annotations to display per page
  *      'full_view'  Display the full view of the annotation?
  *      'list_class' CSS Class applied to the list
+ *      'item_view'  Alternative view to render list items
  *      'offset_key' The url parameter key used for offset
  *      'no_results' Message to display if no results (string|Closure)
  *
@@ -1215,7 +1227,7 @@ function elgg_view_module($type, $title, $body, array $vars = array()) {
  *
  * @param \ElggRiverItem $item A river item object
  * @param array          $vars An array of variables for the view
- *
+ *      'item_view'  Alternative view to render the item
  * @return string returns empty string if could not be rendered
  */
 function elgg_view_river_item($item, array $vars = array()) {
@@ -1248,7 +1260,20 @@ function elgg_view_river_item($item, array $vars = array()) {
 
 	$vars['item'] = $item;
 
-	return elgg_view('river/item', $vars);
+	$river_views = array(
+		elgg_extract('item_view', $vars, ''),
+		"river/item",
+	);
+
+	$contents = '';
+	foreach ($river_views as $view) {
+		if (elgg_view_exists($view)) {
+			$contents = elgg_view($view, $vars);
+			break;
+		}
+	}
+
+	return $contents;
 }
 
 /**
@@ -1343,9 +1368,9 @@ function elgg_view_tagcloud(array $options = array()) {
 /**
  * View an item in a list
  *
- * @param mixed $item An entity, an annotation, or a river item to display
- * @param array $vars Additional parameters for the rendering
- *
+ * @param \ElggEntity|\ElggAnnotation $item
+ * @param array  $vars Additional parameters for the rendering
+ *      'item_view' Alternative view used to render list items
  * @return string
  * @since 1.8.0
  * @access private
