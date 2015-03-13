@@ -116,7 +116,10 @@ Entity events
     Triggered for user, group, object, and site entities after creation. Return false to delete entity.
 
 **update, <entity type>**
-	Triggered before an update for the user, group, object, and site entities. Return false to prevent update.
+    Triggered before an update for the user, group, object, and site entities. Return false to prevent update.
+
+**update:after, <entity type>**
+    Triggered after an update for the user, group, object, and site entities.
 
 **delete, <entity type>**
     Triggered before entity deletion. Return false to prevent deletion.

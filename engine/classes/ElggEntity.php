@@ -1686,6 +1686,7 @@ abstract class ElggEntity extends \ElggData implements
 		unset($persisted_entity);
 
 		if ($allow_edit) {
+			// give old update event a chance to stop the update
 			$allow_edit = _elgg_services()->events->trigger('update', $this->type, $this);
 		}
 
@@ -1711,6 +1712,8 @@ abstract class ElggEntity extends \ElggData implements
 			set owner_guid='$owner_guid', access_id='$access_id',
 			container_guid='$container_guid', time_created='$time_created',
 			time_updated='$time' WHERE guid=$guid");
+		
+		elgg_trigger_after_event('update', $this->type, $this);
 
 		// TODO(evan): Move this to \ElggObject?
 		if ($this instanceof \ElggObject) {
