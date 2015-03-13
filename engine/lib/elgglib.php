@@ -1426,7 +1426,31 @@ function _elgg_normalize_plural_options_array($options, $singulars) {
  */
 function _elgg_shutdown_hook() {
 	global $START_MICROTIME;
+	
+	elgg_set_config('shutdown_flag', true);
+	
+	$headers = headers_list();
+	$connection_sent = false;
+	foreach ($headers as $hdr) {
+		if (stripos($hdr, "Connection") === 0) {
+			$connection_sent = true;
+		}
+	}
 
+	if (!headers_sent() && !$connection_sent) {
+		// Ignore user aborts and allow the script to run forever
+		ignore_user_abort(true);
+		// Prevent an APC session bug: https://bugs.php.net/bug.php?id=60657
+		session_write_close();
+		set_time_limit(0);
+		// Tell the browser that we are done
+		header("Connection: close");
+		$size = ob_get_length();
+		header("Content-Length: $size");
+		ob_end_flush();
+		flush();
+	}
+		
 	try {
 		elgg_trigger_event('shutdown', 'system');
 
@@ -1440,9 +1464,6 @@ function _elgg_shutdown_hook() {
 		error_log($message);
 		error_log("Exception trace stack: {$e->getTraceAsString()}");
 	}
-
-	// Prevent an APC session bug: https://bugs.php.net/bug.php?id=60657
-	session_write_close();
 }
 
 /**
