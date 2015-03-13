@@ -404,9 +404,13 @@ class Translator {
 			return false;
 		}
 	
-		if (($language !== 'en') && !array_key_exists($language, $this->CONFIG->translations)) {
+		if (($language !== 'en') && (!isset($this->CONFIG->translations) || !array_key_exists($language, $this->CONFIG->translations))) {
 			// Ensure that all possible translations are loaded
 			$this->reloadAllTranslations();
+		}
+		
+		if (!isset($this->CONFIG->translations)) {
+			return false;
 		}
 	
 		if (!array_key_exists($language, $this->CONFIG->translations)) {
