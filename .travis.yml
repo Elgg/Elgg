@@ -87,4 +87,7 @@ script:
 notifications:
   email:
     secure: exC/ws07lLOj3Y43C89jiaKpyB8Yt7DPGSCShV4R3Wkw/hVVzjxt1BinPxzsyL5DC7APUMcTHGOhDB2oCE4ynDE6o6L9bH79fc+V8IYAiNaEIGL0AOuHdnRdGN9GMrr2jv78cZ5MctuUTkeYLaoOEyDGHmkMhqa6SufIDAY8b58=
-
+  webhooks:
+    urls:
+     - secure: "Ug81+4Fa2UFZetSCV79OWOgYi4uVgNQ6rVrVn2HElddOMDwuHxo9CYKoA3Q+joPKMtNFCN2qkMyoyUfIMM83uJi1LmaUx/c7lR1pXBFVgc4Xyt114NcY80I4OCWWKg0G1FDlSiaXil922JjeC3MekYoqjsIyUgabGihe6j7DWz0="
+    on_start: true
