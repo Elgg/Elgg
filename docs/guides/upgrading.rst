@@ -9,6 +9,29 @@ See the administator guides for :doc:`how to upgrade a live site </admin/upgradi
    :local:
    :depth: 2
 
+From 1.10 to 1.11
+=================
+
+Comment highlighting
+--------------------
+
+If your theme is using the file ``views/default/css/elements/components.php``, you must add the following style definitions in it to enable highlighting for comments and discussion replies:
+
+.. code:: css
+
+	.elgg-comments .elgg-state-highlight {
+		-webkit-animation: comment-highlight 5s;
+		animation: comment-highlight 5s;
+	}
+	@-webkit-keyframes comment-highlight {
+		from {background: #dff2ff;}
+		to {background: white;}
+	}
+	@keyframes comment-highlight {
+		from {background: #dff2ff;}
+		to {background: white;}
+	}
+
 From 1.9 to 1.10
 ================
 
