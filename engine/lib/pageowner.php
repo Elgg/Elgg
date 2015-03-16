@@ -252,6 +252,27 @@ function elgg_in_context($context) {
 }
 
 /**
+ * Get the entire context stack (e.g. for backing it up)
+ *
+ * @return string[]
+ * @since 1.11
+ */
+function elgg_get_context_stack() {
+	return _elgg_services()->context->toArray();
+}
+
+/**
+ * Set the entire context stack
+ *
+ * @param string[] $stack All contexts to be placed on the stack
+ * @return void
+ * @since 1.11
+ */
+function elgg_set_context_stack(array $stack) {
+	_elgg_services()->context->fromArray($stack);
+}
+
+/**
  * Initializes the page owner functions
  *
  * @note This is on the 'boot, system' event so that the context is set up quickly.
