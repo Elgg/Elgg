@@ -15,15 +15,17 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanRegisterHandlers() {
+		$f = function () {};
+
 		$this->assertTrue($this->mock->registerHandler('foo', 'bar', 'callback1'));
-		$this->assertTrue($this->mock->registerHandler('foo', 'bar', 'callback2'));
+		$this->assertTrue($this->mock->registerHandler('foo', 'bar', $f));
 		$this->assertTrue($this->mock->registerHandler('foo', 'baz', 'callback3', 100));
 
 		$expected = array(
 			'foo' => array(
 				'bar' => array(
 					500 => 'callback1',
-					501 => 'callback2'
+					501 => $f,
 				),
 				'baz' => array(
 					100 => 'callback3'
@@ -38,12 +40,35 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanUnregisterHandlers() {
+		$o = new HooksRegistrationServiceTest_invokable();
+
 		$this->mock->registerHandler('foo', 'bar', 'callback1');
 		$this->mock->registerHandler('foo', 'bar', 'callback2', 100);
+		$this->mock->registerHandler('foo', 'bar', 'callback2', 150);
+		$this->mock->registerHandler('foo', 'bar', [$o, '__invoke'], 300);
+		$this->mock->registerHandler('foo', 'bar', [$o, '__invoke'], 300);
+		$this->mock->registerHandler('foo', 'bar', [$o, '__invoke'], 300);
 
-		$this->assertTrue($this->mock->unregisterHandler('foo', 'bar', 'callback2'));
+		$this->assertTrue($this->mock->unregisterHandler(
+			'foo', 'bar', 'callback2'));
+		$this->assertTrue($this->mock->unregisterHandler(
+			'foo', 'bar', HooksRegistrationServiceTest_invokable::KLASS . '::__invoke'));
+		$this->assertTrue($this->mock->unregisterHandler(
+			'foo', 'bar', [HooksRegistrationServiceTest_invokable::KLASS, '__invoke']));
+		$this->assertTrue($this->mock->unregisterHandler(
+			'foo', 'bar', [$o, '__invoke']));
 
-		$this->assertSame([500 => 'callback1'], $this->mock->getAllHandlers()['foo']['bar']);
+		$expected = array(
+			'foo' => array(
+				'bar' => array(
+					// only one removed
+					150 => 'callback2',
+
+					500 => 'callback1',
+				)
+			)
+		);
+		$this->assertSame($expected, $this->mock->getAllHandlers());
 
 		// check unregistering things that aren't registered
 		$this->assertFalse($this->mock->unregisterHandler('foo', 'bar', 'not_valid'));
@@ -75,4 +100,9 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($expected_foo_bar, $this->mock->getOrderedHandlers('foo', 'bar'));
 		$this->assertSame($expected_foo_baz, $this->mock->getOrderedHandlers('foo', 'baz'));
 	}
+}
+
+class HooksRegistrationServiceTest_invokable {
+	const KLASS = __CLASS__;
+	function __invoke() {}
 }
