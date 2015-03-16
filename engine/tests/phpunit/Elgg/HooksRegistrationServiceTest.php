@@ -4,6 +4,11 @@ namespace Elgg;
 
 class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 
+	/**
+	 * @var HooksRegistrationService
+	 */
+	public $mock;
+
 	public function setUp() {
 		parent::setUp();
 
@@ -11,15 +16,17 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanRegisterHandlers() {
+		$f = function () {};
+
 		$this->assertTrue($this->mock->registerHandler('foo', 'bar', 'callback1'));
-		$this->assertTrue($this->mock->registerHandler('foo', 'bar', 'callback2'));
+		$this->assertTrue($this->mock->registerHandler('foo', 'bar', $f));
 		$this->assertTrue($this->mock->registerHandler('foo', 'baz', 'callback3', 100));
 
 		$expected = array(
 			'foo' => array(
 				'bar' => array(
 					500 => 'callback1',
-					501 => 'callback2'
+					501 => $f,
 				),
 				'baz' => array(
 					100 => 'callback3'
@@ -34,15 +41,36 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanUnregisterHandlers() {
+		$f = function () {
+
+		};
+		$f_line = __LINE__ - 1;
+
+		$o = new HooksRegistrationServiceTest_invokable();
+
 		$this->mock->registerHandler('foo', 'bar', 'callback1');
 		$this->mock->registerHandler('foo', 'bar', 'callback2', 100);
+		$this->mock->registerHandler('foo', 'bar', 'callback2', 150);
+		$this->mock->registerHandler('foo', 'bar', $f, 200);
+		$this->mock->registerHandler('foo', 'bar', $o, 250);
+		$this->mock->registerHandler('foo', 'bar', [$o, '__invoke'], 300);
 
-		$this->assertTrue($this->mock->unregisterHandler('foo', 'bar', 'callback2'));
+		$this->assertTrue($this->mock->unregisterHandler(
+			'foo', 'bar', 'callback2'));
+		$this->assertTrue($this->mock->unregisterHandler(
+			'foo', 'bar', new CallableMatcher('function ' . __FILE__ . ":$f_line")));
+		$this->assertTrue($this->mock->unregisterHandler(
+			'foo', 'bar', new CallableMatcher('instanceof ' . HooksRegistrationServiceTest_invokable::KLASS)));
+		$this->assertTrue($this->mock->unregisterHandler(
+			'foo', 'bar', new CallableMatcher(HooksRegistrationServiceTest_invokable::KLASS . '->__invoke')));
 
 		$expected = array(
 			'foo' => array(
 				'bar' => array(
-					500 => 'callback1'
+					// only one removed
+					150 => 'callback2',
+
+					500 => 'callback1',
 				)
 			)
 		);
@@ -72,3 +100,7 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 }
 
+class HooksRegistrationServiceTest_invokable {
+	const KLASS = __CLASS__;
+	function __invoke() {}
+}

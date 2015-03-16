@@ -13,7 +13,7 @@ namespace Elgg;
  * @since      1.9.0
  */
 abstract class HooksRegistrationService {
-	
+
 	private $handlers = array();
 
 	/**
@@ -69,20 +69,28 @@ abstract class HooksRegistrationService {
 	/**
 	 * Unregister a handler
 	 *
-	 * @param string   $name
-	 * @param string   $type
-	 * @param callable $callback
+	 * @param string                   $name
+	 * @param string                   $type
+	 * @param callable|CallableMatcher $callback
 	 *
 	 * @return bool
 	 * @access private
 	 */
 	public function unregisterHandler($name, $type, $callback) {
 		if (isset($this->handlers[$name]) && isset($this->handlers[$name][$type])) {
-			foreach ($this->handlers[$name][$type] as $key => $name_callback) {
-				if ($name_callback == $callback) {
-					unset($this->handlers[$name][$type][$key]);
-					return true;
+			foreach ($this->handlers[$name][$type] as $key => $handler) {
+				if ($callback instanceof CallableMatcher) {
+					if (!$callback->matches($handler)) {
+						continue;
+					}
+				} else {
+					if ($handler != $callback) {
+						continue;
+					}
 				}
+
+				unset($this->handlers[$name][$type][$key]);
+				return true;
 			}
 		}
 
@@ -122,8 +130,10 @@ abstract class HooksRegistrationService {
 	 * @param string $type The type of the hook
 	 * @return array
 	 * @see \Elgg\HooksRegistrationService::getAllHandlers()
+	 *
+	 * @access private
 	 */
-	protected function getOrderedHandlers($name, $type) {
+	public function getOrderedHandlers($name, $type) {
 		$handlers = array();
 		
 		if (isset($this->handlers[$name][$type])) {
