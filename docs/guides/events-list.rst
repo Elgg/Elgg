@@ -32,6 +32,13 @@ System events
     might not be shown until after the process is completed. This means that any long-running
     processes will still delay the page load.
 
+**regenerate_site_secret:before, system**
+    Return false to cancel regenerating the site secret. You should also provide a message
+    to the user.
+
+**regenerate_site_secret:after, system**
+    Triggered after the site secret has been regenerated.
+
 **log, systemlog**
 	Called for all triggered events. Used internally by ``system_log_default_logger()`` to populate
 	the ``system_log`` table.
