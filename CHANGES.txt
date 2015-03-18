@@ -1,3 +1,13 @@
+Version 1.7.23
+(March 18, 2015 from https://github.com/Elgg/Elgg/tree/1.7)
+
+ Contributing Developers:
+  * iionly
+
+ Bug fix:
+  * Increases column size of datalist table as prerequisite for Elgg 1.8 upgrade
+
+
 Version 1.7.22
 (March 12, 2014 from https://github.com/Elgg/Elgg/tree/1.7)
 
