@@ -24,6 +24,8 @@ function ckeditor_init() {
 		'exports' => 'jQuery.fn.ckeditor',
 	));
 
+	elgg_register_external_view('js/elgg/ckeditor.js', true);
+
 	// need to set basepath early
 	elgg_extend_view('js/elgg', 'js/elgg/ckeditor/set-basepath.js');
 
