@@ -202,6 +202,20 @@ function elgg_require_js($name) {
 	_elgg_services()->amdConfig->addDependency($name);
 }
 
+/**
+ * Register a module as a decorator for another module
+ *
+ * First create the module "$plugin_id/decorator/$name", have it depend on and return "$name". When
+ * other modules depend on "$name" they will receive what you returned in your decorator module.
+ *
+ * @param string $name      The AMD module name
+ * @param string $plugin_id The plugin ID
+ * @return void
+ * @since 1.11.0
+ */
+function elgg_decorate_js($name, $plugin_id) {
+	_elgg_services()->amdConfig->decorateModule($name, $plugin_id);
+}
 
 /**
  * Get the JavaScript URLs that are loaded

@@ -14,6 +14,17 @@ class Config {
 	private $paths = array();
 	private $shim = array();
 	private $dependencies = array();
+	private $map = array();
+
+	/**
+	 * @var callable[]
+	 */
+	private $decorationOperations = [];
+
+	/**
+	 * @var string[]
+	 */
+	private $decorators = [];
 
 	/**
 	 * Set the base URL for the site
@@ -221,6 +232,67 @@ class Config {
 	}
 
 	/**
+	 * Register module "plugin_id/decorator/foo" as a decorator for module "foo"
+	 *
+	 * Core must call applyDecorations() before writing the configuration.
+	 *
+	 * @param string $module    Module name to be decorated
+	 * @param string $plugin_id Plugin ID
+	 * @return void
+	 */
+	public function decorateModule($module, $plugin_id) {
+		// queue operations for as late as possible
+		$this->decorationOperations[] = function () use ($module, $plugin_id) {
+			$decorator_module = "$plugin_id/decorator/$module";
+
+			if (empty($this->decorators[$module])) {
+				$subject_alias = "_alias/$module";
+
+				// point alias to the original location, but use existing path if exists
+				if (!empty($this->paths[$module])) {
+					// use same path
+					$this->paths[$subject_alias][] = $this->paths[$module][0];
+				} else {
+					$this->addPath($subject_alias, $module);
+				}
+
+				// there's no previous decorator, point to the original alias
+				$previous_decorator = $subject_alias;
+
+			} else {
+				if (in_array($decorator_module, $this->decorators[$module])) {
+					throw new \RuntimeException("Plugin {$plugin_id} tried to decorate module {$module} twice");
+				}
+
+				$previous_decorator = end($this->decorators[$module]);
+			}
+
+			// inside the new decorator, subject is mapped to the previous decorator
+			$this->map[$decorator_module][$module] = $previous_decorator;
+
+			// all other modules loading subject should receive the new decorator
+			$this->map['*'][$module] = $decorator_module;
+
+			$this->decorators[$module][] = $decorator_module;
+		};
+	}
+
+	/**
+	 * Apply decorators to the paths and map configurations.
+	 *
+	 * This should be run after all shims/paths have been manually set
+	 *
+	 * @throws \RuntimeException
+	 */
+	public function applyDecorations() {
+		// run queued decorations
+		foreach ($this->decorationOperations as $op) {
+			$op();
+		}
+		$this->decorationOperations = [];
+	}
+
+	/**
 	 * Get the configuration of AMD
 	 *
 	 * @return array
@@ -231,6 +303,7 @@ class Config {
 			'paths' => $this->paths,
 			'shim' => $this->shim,
 			'deps' => $this->getDependencies(),
+			'map' => $this->map,
 		);
 	}
 }

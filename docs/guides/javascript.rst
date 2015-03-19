@@ -22,8 +22,8 @@ Defining and loading a module in Elgg 1.9 takes two steps:
 
 You can define a module by creating a view or registering a URL.
 
-Defining modules as a view
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+Defining a module as a JS view
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Modules defined by creating views are immediately available for use and require no registration.
 To register a module named ``my/module``, create the view ``views/default/js/my/module.js``.
@@ -43,8 +43,23 @@ A basic module could look like this:
 		};
 	});
 
+Defining a module as a PHP view
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Although this is discouraged in favor of JavaScript files, you may register PHP views as AMD
+modules.
+
+To register a module named ``my/module``, create the view ``views/default/js/my/module.js.php``
+(note the extension ``.js.php``). You must also manually register your view as an external
+resource:
+
+.. code-block:: php
+
+    // note the view name includes the .js extension, but not .php
+    elgg_register_external_view('js/my/module.js', true);
+
 Define your module via a URL
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can define an existing AMD module using ``elgg_define_js()``. Traditional (browser-globals)
 JavaScript files can also be defined as AMD modules if you shim them by setting ``exports`` and
@@ -74,6 +89,35 @@ optionally ``deps``.
 			'exports' => 'jQuery.fn.ajaxForm',
 		));
 	}
+
+Altering the return values of other modules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can do this by using a "decorator" module, which accepts the original module value and returns
+the modified value.
+
+Let's say you want to alter the module ``elgg/ckeditor/config``. First create your decorator module:
+
+.. code-block:: javascript
+
+    // myplugin/views/default/js/myplugin/decorator/elgg/ckeditor/config.js
+	define(function(require) {
+		var config = require("elgg/ckeditor/config");
+
+		// change some properties...
+
+		return config;
+	});
+
+Now you must register your decorator in PHP:
+
+.. code-block:: php
+
+    elgg_decorate_js('elgg/ckeditor/config', 'myplugin');
+
+This will set up the system so that the original module value will be passed through your decorator
+module automatically and transparently. Devs can continue to require the original module without
+modifying their code.
 
 Some things to note
 ^^^^^^^^^^^^^^^^^^^

@@ -3,10 +3,11 @@ CKEditor WYSIWYG plugin
 
 Configuration options
 ----------------------
-CKEditor configuration is set in the view js/ckeditor. The configuration object
-is elgg.ckeditor.config. A plugin can modify the configuration object by registering
-a function to run before the ckeditor.init function on the 'init', 'system' hook.
-This is where toolbar options and the skin are set.
+CKEditor configuration defines toolbar options and skinning. A plugin can modify the
+configuration object by decorating the AMD module elgg/ckeditor/config. See
+``elgg_decorate_js()``.
+
+See http://docs.ckeditor.com/#!/api/CKEDITOR.config for options documentation.
 
 Content CSS
 ------------

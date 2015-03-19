@@ -19,6 +19,8 @@ elgg_register_event_handler('init', 'system', 'blog_init');
  */
 function blog_init() {
 
+	elgg_decorate_js('elgg/ckeditor/config', 'blog');
+
 	elgg_register_library('elgg:blog', elgg_get_plugins_path() . 'blog/lib/blog.php');
 
 	// add a site navigation item
