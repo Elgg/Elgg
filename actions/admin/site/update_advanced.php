@@ -39,6 +39,10 @@ if (stripos(PHP_OS, 'win') === 0) {
 
 datalist_set('dataroot', $dataroot);
 
+// user data storage options
+set_config('user_data_store', get_input('user_data_store'));
+set_config('user_data_store_info', get_input('user_data_store_info'));
+
 if ('on' === get_input('simplecache_enabled')) {
 	elgg_enable_simplecache();
 } else {

@@ -54,6 +54,10 @@ function get_uploaded_file($input_name) {
 	return file_get_contents($file->getPathname());
 }
 
+function get_resized_image_from_stream() {
+	
+}
+
 /**
  * Gets the jpeg contents of the resized version of an uploaded image
  * (Returns false if the uploaded file was not an image)
@@ -463,11 +467,23 @@ function elgg_get_file_simple_type($mime_type) {
  * @access private
  */
 function _elgg_filestore_init() {
-	global $CONFIG;
-
-	// Now register a default filestore
-	if (isset($CONFIG->dataroot)) {
-		set_default_filestore(new \ElggDiskFilestore($CONFIG->dataroot));
+	$config = _elgg_services()->config;
+	// Register default filestore
+	
+	switch($config->get('user_data_store')) {
+		
+		case 's3':
+			$info = $config->get('user_data_store_info');
+			$s3 = elgg_extract('s3', $info, []);
+			$adapter = new Elgg\Filesystem\Adapter\AwsS3($s3);
+			set_default_filestore(new \ElggCloudFilestore($adapter));
+		break;
+		
+		case 'data_dir':
+		default:
+			if ($config->get('dataroot')) {
+				set_default_filestore(new \ElggDiskFilestore($CONFIG->dataroot));
+			}
 	}
 
 	// Fix MIME type detection for Microsoft zipped formats

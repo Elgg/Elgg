@@ -503,6 +503,15 @@ return array(
 	'admin:site:description' => "This admin panel allows you to control global settings for your site. Choose an option below to get started.",
 	'admin:site:opt:linktext' => "Configure site...",
 	'admin:settings:in_settings_file' => 'This setting is configured in settings.php',
+	
+	'admin:settings:user_data:data_store' => 'User data storage:',
+	'admin:settings:user_data:data_dir' => 'Local data directory',
+	'admin:settings:user_data:s3' => 'AWS S3 cloud',
+	'admin:settings:user_data:data_dir:info' => 'User data will be stored on your local server in the directory specified above',
+	'admin:settings:user_data:s3:info' => 'User data will be stored in an AWS S3 cloud bucket.',
+	'admin:settings:user_data:s3:key' => 'AWS key:',
+	'admin:settings:user_data:s3:secret' => 'AWS secret:',
+	'admin:settings:user_data:s3:bucket' => 'AWS bucket:',
 
 	'admin:legend:security' => 'Security',
 	'admin:site:secret:intro' => 'Elgg uses a key to create security tokens for various purposes.',

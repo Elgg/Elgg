@@ -430,4 +430,8 @@ class ElggDiskFilestore extends \ElggFilestore {
 		$dir = new \Elgg\EntityDirLocator($guid);
 		return $dir->getPath();
 	}
+	
+	public function moveUploadedFile($from, $to) {
+		return move_uploaded_file($from, $to);
+	}
 }

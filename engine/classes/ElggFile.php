@@ -407,9 +407,19 @@ class ElggFile extends \ElggObject {
 				throw new \ClassNotFoundException($msg);
 			}
 
-			$this->filestore = new $filestore();
-			$this->filestore->setParameters($parameters);
-			// @todo explain why $parameters will always be set here (PhpStorm complains)
+			try {
+				$this->filestore = new $filestore();
+				// @todo Why isn't this just in the constructor?
+				$this->filestore->setParameters($parameters);
+				// How is $parameters always set here? (PhpStorm complains)
+				// $parameters is set before $filestore. If $filestore is set, $parameters is too.
+			} catch (ClassNotFoundException $e) {
+				// there's a problem with the filestore
+				$msg = "Unable to load filestore  " . $filestore . " for file " . $this->guid;
+				$msg .= $e->getMessage();
+				throw new \ClassNotFoundException($msg);
+			}
+			
 		}
 
 		// this means the entity hasn't been saved so fallback to default
@@ -445,5 +455,13 @@ class ElggFile extends \ElggObject {
 		$this->setMetadata("filestore::filestore", get_class($this->filestore));
 
 		return true;
+	}
+	
+	public function moveUploadedFile($from, $to) {
+		return $this->filestore->moveUploadedFile($from, $to);
+	}
+	
+	public function readfile() {
+		$this->filestore->readfile($this);
 	}
 }

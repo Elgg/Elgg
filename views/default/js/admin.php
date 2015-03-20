@@ -55,7 +55,24 @@ elgg.admin.init = function () {
 
 	// disable simple cache compress settings if simple cache is off
 	$('[name=simplecache_enabled]').click(elgg.admin.simplecacheToggle);
-};
+
+	// show correct user data store info / settings tab
+	$('#elgg-settings-advanced-system').on('change', '#elgg-settings-user-data-store', elgg.admin.dataDirToggle);
+	$('#elgg-settings-user-data-store').trigger('change');
+}
+
+/**
+ * Handles changing the dropdown for user data storage options
+ * 
+ * @param {Object} e
+ * @returns void
+ */
+elgg.admin.dataDirToggle = function(e) {
+	var val = $(this).val();
+	var type = val.replace('_', '-');
+	$('.elgg-settings-user-data-store-info').hide();
+	$('#elgg-settings-user-data-store-' + type).show();
+}
 
 /**
  * Save the plugin order after a move event.
