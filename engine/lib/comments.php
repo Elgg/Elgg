@@ -20,6 +20,8 @@ function _elgg_comments_init() {
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
 	elgg_register_plugin_hook_handler('email', 'system', '_elgg_comments_notification_email_subject');
+	
+	elgg_register_event_handler('update:after', 'all', '_elgg_comments_access_sync');
 
 	elgg_register_page_handler('comment', '_elgg_comments_page_handler');
 
@@ -290,6 +292,64 @@ function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $
 	return $returnvalue;
 }
 
+/**
+ * Update comment access to match that of the container
+ * 
+ * @param string     $event  'update:after'
+ * @param string     $type   'all'
+ * @param ElggEntity $entity The updated entity
+ * @return bool
+ * 
+ * @access private
+ */
+function _elgg_comments_access_sync($event, $type, $entity) {
+	if (!($entity instanceof \ElggEntity)) {
+		return true;
+	}
+	
+	// need to override access in case comments ended up with ACCESS_PRIVATE
+	// and to ensure write permissions
+	$ia = elgg_set_ignore_access(true);
+	$options = array(
+		'type' => 'object',
+		'subtype' => 'comment',
+		'container_guid' => $entity->getGUID(),
+		'wheres' => array(
+			"e.access_id != {$entity->access_id}"
+		),
+		'limit' => 0,
+	);
+
+	$batch = new \ElggBatch('elgg_get_entities', $options, null, 25, false);
+	foreach ($batch as $comment) {
+		// Update comment access_id
+		$comment->access_id = $entity->access_id;
+		$comment->save();
+	}
+		
+	elgg_set_ignore_access($ia);
+	
+	return true;
+}
+
+/**
+ * Runs unit tests for \ElggComment
+ *
+ * @param string $hook   unit_test
+ * @param string $type   system
+ * @param mixed  $value  Array of tests
+ * @param mixed  $params Params
+ *
+ * @return array
+ * @access private
+ */
+function _elgg_comments_test($hook, $type, $value, $params) {
+	global $CONFIG;
+	$value[] = "{$CONFIG->path}engine/tests/ElggCommentTest.php";
+	return $value;
+}
+
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_comments_init');
+	$hooks->registerHandler('unit_test', 'system', '_elgg_comments_test');
 };

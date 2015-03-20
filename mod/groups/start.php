@@ -736,7 +736,7 @@ function discussion_init() {
 	// allow non-owners to add replies to group discussion
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'discussion_reply_container_permissions_override');
 
-	elgg_register_event_handler('update', 'object', 'discussion_update_reply_access_ids');
+	elgg_register_event_handler('update:after', 'object', 'discussion_update_reply_access_ids');
 
 	$action_base = elgg_get_plugins_path() . 'groups/actions/discussion';
 	elgg_register_action('discussion/save', "$action_base/save.php");
@@ -1187,6 +1187,7 @@ function discussion_reply_container_permissions_override($hook, $type, $return, 
  */
 function discussion_update_reply_access_ids($event, $type, $object) {
 	if (elgg_instanceof($object, 'object', 'groupforumtopic')) {
+		$ia = elgg_set_ignore_access(true);
 		$options = array(
 			'type' => 'object',
 			'subtype' => 'discussion_reply',
@@ -1204,6 +1205,8 @@ function discussion_update_reply_access_ids($event, $type, $object) {
 			$reply->access_id = $object->access_id;
 			$reply->save();
 		}
+		
+		elgg_set_ignore_access($ia);
 	}
 }
 
