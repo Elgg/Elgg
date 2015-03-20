@@ -154,6 +154,7 @@ return array(
 	'access:write' => "Write access",
 	'access:admin_only' => "Administrators only",
 	'access:missing_name' => "Missing access level name",
+	'access:comments:change' => "This discussion is currently visible to a limited audience. Be thoughtful about who you share it with.",
 
 /**
  * Dashboard and widgets
