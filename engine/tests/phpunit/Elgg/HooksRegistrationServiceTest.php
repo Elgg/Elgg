@@ -1,8 +1,12 @@
 <?php
 namespace Elgg;
 
-
 class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
+
+	/**
+	 * @var HooksRegistrationService
+	 */
+	public $mock;
 
 	public function setUp() {
 		parent::setUp();
@@ -39,18 +43,19 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertTrue($this->mock->unregisterHandler('foo', 'bar', 'callback2'));
 
-		$expected = array(
-			'foo' => array(
-				'bar' => array(
-					500 => 'callback1'
-				)
-			)
-		);
-		
-		$this->assertSame($expected, $this->mock->getAllHandlers());
+		$this->assertSame([500 => 'callback1'], $this->mock->getAllHandlers()['foo']['bar']);
 
 		// check unregistering things that aren't registered
 		$this->assertFalse($this->mock->unregisterHandler('foo', 'bar', 'not_valid'));
+	}
+
+	public function testOnlyOneHandlerUnregistered() {
+		$this->mock->registerHandler('foo', 'bar', 'callback');
+		$this->mock->registerHandler('foo', 'bar', 'callback');
+
+		$this->assertTrue($this->mock->unregisterHandler('foo', 'bar', 'callback'));
+
+		$this->assertSame([501 => 'callback'], $this->mock->getAllHandlers()['foo']['bar']);
 	}
 
 	public function testGetOrderedHandlers() {
@@ -71,4 +76,3 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($expected_foo_baz, $this->mock->getOrderedHandlers('foo', 'baz'));
 	}
 }
-
