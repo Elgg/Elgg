@@ -235,3 +235,49 @@ Parameters:
 -  **$value** The initial value of the plugin hook.
 
 .. warning:: The `$params` and `$value` arguments are reversed between the plugin hook handlers and trigger functions!
+
+
+Unregister Event/Hook Handlers
+------------------------------
+
+The functions ``elgg_unregister_event_handler`` and ``elgg_unregister_plugin_hook_handler`` can be used to remove
+handlers already registered by another plugin or Elgg core. The parameters are in the same order as the registration
+functions, except there's no priority parameter.
+
+.. code:: php
+
+    elgg_unregister_event_handler('login', 'user', 'myPlugin_handle_login');
+
+When anonymous functions, dynamic methods, or invokable objects are used as event/hook handlers, the code needing
+to unregister these handlers rarely has access to object references to build a matching callback. For these cases,
+use an ``Elgg\CallableMatcher`` object in place of the 3rd parameter. This class offers a flexible specification
+string that allows matching these values without object references.
+
+.. code:: php
+
+    $obj = new MyPlugin\Handlers();
+    elgg_register_plugin_hook_handler('foo', 'bar', [$obj, 'handleFoo']);
+
+    // ... elsewhere
+
+    $matcher = new Elgg\CallableMatcher('MyPlugin\Handlers->handleFoo');
+    elgg_unregister_plugin_hook_handler('foo', 'bar', $matcher);
+
+Since anonymous functions have no identifiable names, you must match purely based on the file and line numbers.
+Since this may change over time, it's recommended to verify that the unregister function returned ``true``.
+
+.. code:: php
+
+    elgg_register_plugin_hook_handler('foo', 'bar', function ($hook, $type, $value, $params) {
+        return 42;
+
+    }); // line 123 of mod/my_plugin/start.php
+
+    // ... elsewhere
+
+    // we match a function that ends between lines 115 and 125:
+    $matcher = new Elgg\CallableMatcher('function /mod/myplugin/start.php:120+-5');
+    $found = elgg_unregister_plugin_hook_handler('foo', 'bar', $matcher);
+    if (!$found) {
+        // uh oh, no match was found!
+    }

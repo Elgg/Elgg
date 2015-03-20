@@ -523,9 +523,9 @@ function elgg_register_event_handler($event, $object_type, $callback, $priority 
 /**
  * Unregisters a callback for an event.
  *
- * @param string $event       The event type
- * @param string $object_type The object type
- * @param string $callback    The callback
+ * @param string                         $event       The event type
+ * @param string                         $object_type The object type
+ * @param callable|\Elgg\CallableMatcher $callback    The callback or matcher
  *
  * @return bool true if a handler was found and removed
  * @since 1.7
@@ -707,9 +707,9 @@ function elgg_register_plugin_hook_handler($hook, $type, $callback, $priority = 
 /**
  * Unregister a callback as a plugin hook.
  *
- * @param string   $hook        The name of the hook
- * @param string   $entity_type The name of the type of entity (eg "user", "object" etc)
- * @param callable $callback    The PHP callback to be removed
+ * @param string                         $hook        The name of the hook
+ * @param string                         $entity_type The name of the type of entity (eg "user", "object" etc)
+ * @param callable|\Elgg\CallableMatcher $callback    The callable or matcher
  *
  * @return void
  * @since 1.8.0
