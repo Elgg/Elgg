@@ -25,11 +25,13 @@
 		}
 		
 		?>
-	<label>
-		<?php 
-			echo $label; 
-			echo $input;
-		?>
-	</label>
+	<div>
+		<label>
+			<?php 
+				echo $label; 
+				echo $input;
+			?>
+		</label>
+	</div>
 	<?php } ?>
 </fieldset>
