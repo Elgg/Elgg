@@ -3,15 +3,16 @@
  * Elgg access level input
  * Displays a dropdown input field
  *
- * @uses $vars['value']          The current value, if any
- * @uses $vars['options_values'] Array of value => label pairs (overrides default)
- * @uses $vars['name']           The name of the input field
- * @uses $vars['entity']         Optional. The entity for this access control (uses access_id)
- * @uses $vars['class']          Additional CSS class
+ * @uses $vars['value']                  The current value, if any
+ * @uses $vars['options_values']         Array of value => label pairs (overrides default)
+ * @uses $vars['name']                   The name of the input field
+ * @uses $vars['entity']                 Optional. The entity for this access control (uses access_id)
+ * @uses $vars['class']                  Additional CSS class
  *
- * @uses $vars['entity_type']    Optional. Type of the entity
- * @uses $vars['entity_subtype'] Optional. Subtype of the entity
- * @uses $vars['container_guid'] Optional. Container GUID of the entity
+ * @uses $vars['entity_type']            Optional. Type of the entity
+ * @uses $vars['entity_subtype']         Optional. Subtype of the entity
+ * @uses $vars['container_guid']         Optional. Container GUID of the entity
+ * @usee $vars['entity_allows_comments'] Optional. (bool) whether the entity uses comments - used for UI display of access change warnings
  *
  */
 
@@ -20,6 +21,10 @@ if (isset($vars['options_values'])) {
 	if (!is_array($vars['options_values']) || empty($vars['options_values'])) {
 		return;
 	}
+}
+
+if (!isset($vars['entity_allows_comments'])) {
+	$vars['entity_allows_comments'] = true;
 }
 
 $vars['class'] = trim("elgg-input-access " . elgg_extract('class', $vars, ''));
@@ -47,6 +52,11 @@ if ($entity) {
 	$params['entity_type'] = $entity->type;
 	$params['entity_subtype'] = $entity->getSubtype();
 	$params['container_guid'] = $entity->container_guid;
+	
+	if ($vars['entity_allows_comments'] && ($entity->access_id != ACCESS_PUBLIC)) {
+		$vars['data-comment-count'] = (int) $entity->countComments();
+		$vars['data-original-value'] = $entity->access_id;
+	}
 }
 
 $container = elgg_get_page_owner_entity();
