@@ -44,6 +44,9 @@ if (elgg_action_exists("$plugin_id/usersettings/save")) {
 } else {
 	foreach ($params as $k => $v) {
 		// Save
+		if (is_array($v)) {
+			$v = serialize($v);
+		}
 		$result = $plugin->setUserSetting($k, $v, $user->guid);
 
 		// Error?

@@ -30,6 +30,10 @@ An example ``settings.php`` would look like:
 
    You cannot use form components that send no value when "off." These include radio inputs and check boxes.
 
+.. note::
+
+   Array values will be stored serialized
+
 User settings
 -------------
 
@@ -59,6 +63,10 @@ where:
 - ``$name`` Is the value you want to retrieve
 - ``$user_guid`` Is the user you want to retrieve these for (defaults to the currently logged in user)
 - ``$plugin_name`` Is the name of the plugin (detected if run from within a plugin)
+
+.. note::
+
+   Settings stored as an array will be returned as the serialized value.  Developers are expected to unserialize such settings on retrieval.
 
 Setting values while in code
 ----------------------------
