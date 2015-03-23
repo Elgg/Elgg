@@ -1,3 +1,22 @@
+<a name="1.10.4"></a>
+### 1.10.4  (2015-03-22)
+
+#### Contributors
+
+* Evan Winslow (3)
+* Jerôme Bakker (2)
+* Juho Jaakkola (2)
+* Matt Beckett (1)
+* Paweł Sroka (1)
+
+#### Bug Fixes
+
+* **core:** don't trigger delete event when you can't edit the entity ([83c69c09](https://github.com/Elgg/Elgg/commit/83c69c09c1a163ae30507043a9c4eaaf9e627d89))
+* **groups:**
+  * respect previous modifications to the write access in group context ([11b55041](https://github.com/Elgg/Elgg/commit/11b55041df54f9c2d193427e7c0acf6a7175882b))
+  * Hides group profile fields that don't have a value ([2bb13db8](https://github.com/Elgg/Elgg/commit/2bb13db8d96bd5a2307c009717476a67cc2698cd))
+
+
 <a name="1.10.3"></a>
 ### 1.10.3  (2015-03-08)
 
