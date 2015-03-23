@@ -418,10 +418,22 @@ elgg.ui.initAccessInputs = function () {
 		}
 		var $select = $(this),
 			acl = $select.data('group-acl'),
-			$note = $('.elgg-input-access-membersonly', this.parentNode);
+			$note = $('.elgg-input-access-membersonly', this.parentNode),
+			commentCount = $select.data('comment-count'),
+			originalValue = $select.data('original-value');
 		if ($note) {
 			updateMembersonlyNote();
 			$select.change(updateMembersonlyNote);
+		}
+                
+		if (commentCount) {
+			$select.change(function(e) {
+				if ($(this).val() != originalValue) {
+					if (!confirm(elgg.echo('access:comments:change', [commentCount]))) {
+						$(this).val(originalValue);
+					}
+				}
+			});
 		}
 	});
 };

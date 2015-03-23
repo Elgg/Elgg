@@ -47,10 +47,14 @@ foreach ($variables as $name => $type) {
 			$view_vars['entity'] = $entity;
 			$view_vars['entity_type'] = 'object';
 			$view_vars['entity_subtype'] = $vars['parent_guid'] ? 'page': 'page_top';
+
 			if ($name === 'write_access_id') {
 				$view_vars['purpose'] = 'write';
 				if ($entity) {
 					$view_vars['value'] = $entity->write_access_id;
+					
+					// no access change warning for write access input
+					$view_vars['entity_allows_comments'] = false;
 				}
 			}
 		}
