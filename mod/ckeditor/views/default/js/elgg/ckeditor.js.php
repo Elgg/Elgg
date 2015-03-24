@@ -1,11 +1,23 @@
+// <script>
+
 define(function(require) {
 	var elgg = require('elgg');
 	var $ = require('jquery'); require('jquery.ckeditor');
 	var CKEDITOR = require('ckeditor');
 
 	CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_site_url() + 'mod/ckeditor/views/default/js/elgg/ckeditor/blockimagepaste.js', '');
-	
+
 	var elggCKEditor = {
+
+		/**
+		 * CKEditor configuration
+		 */
+		config: (function () {
+
+			<?php elgg_view('js/elgg/ckeditor/config') ?>
+
+			return config;
+		})(),
 
 		/**
 		 * Toggles the CKEditor
@@ -63,16 +75,7 @@ define(function(require) {
 					}
 				}
 			});
-		},
-
-		/**
-		 * CKEditor configuration
-		 *
-		 * You can find configuration information here:
-		 * http://docs.ckeditor.com/#!/api/CKEDITOR.config
-		 */
-		config: require('elgg/ckeditor/config')
-
+		}
 	};
 
 	CKEDITOR.on('instanceReady', elggCKEditor.fixImageAttributes);
