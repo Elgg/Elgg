@@ -68,7 +68,7 @@ if ($comment_guid) {
 				$entity->title,
 				$user->name,
 				$comment_text,
-				$entity->getURL(),
+				$comment->getURL(),
 				$user->name,
 				$user->getURL()
 			), $owner->language),
