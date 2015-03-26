@@ -1058,7 +1058,7 @@ function discussion_prepare_reply_notification($hook, $type, $notification, $par
 		$topic->title,
 		$group->name,
 		$reply->description,
-		$topic->getURL(),
+		$reply->getURL(),
 	), $language);
 	$notification->summary = elgg_echo('discussion:reply:notify:summary', array($topic->title), $language);
 
