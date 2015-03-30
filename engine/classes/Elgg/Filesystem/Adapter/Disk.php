@@ -2,22 +2,18 @@
 namespace Elgg\Filesystem\Adapter;
 use Gaufrette\Filesystem;
 use Gaufrette\File;
-use Gaufrette\Adapter\AwsS3 as GaufretteAwsS3;
-use Aws\S3\S3Client;
+use Gaufrette\Adapter\Local as GaufretteLocal;
+use Elgg\EntityDirLocator;
 
-class AwsS3 extends Filesystem implements Adapter {
+class Disk extends Filesystem implements Adapter {
 	private $config;
 	public function __construct(array $config) {
 		$this->config = $config;
-		
-		foreach (['bucket', 'key', 'secret'] as $req) {
-			if (!isset($config[$req])) {
-				throw new \InvalidArgumentException("Config passed to Filesystem\Adapter\AwsS3 must have $req");
-			}
+		if (!isset($config['path'])) {
+			throw new \InvalidArgumentException("Config passed to Filesystem\Adapter\Disk must have root_dir");
 		}
-		
-		$s3 = S3Client::factory($config);
-		$adapter = new GaufretteAwsS3($s3, $config['bucket']);
+
+		$adapter = new GaufretteLocal($config['path'], false);
 		parent::__construct($adapter);
 	}
 	
@@ -42,7 +38,14 @@ class AwsS3 extends Filesystem implements Adapter {
 		return new self($config);
 	}
 	
+	/**
+	 * @todo Inject via $config?
+	 * 
+	 * @param type $guid
+	 * @return type
+	 */
 	public static function getPathPrefix($guid) {
-		return "/$guid/";
+		$locator = new EntityDirLocator($guid);
+		return "$locator";
 	}
 }

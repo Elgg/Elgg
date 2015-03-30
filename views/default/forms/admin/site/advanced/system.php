@@ -41,7 +41,7 @@
 		'name' => 'user_data_store',
 		'options_values' => [
 			'data_dir' => elgg_echo('admin:settings:user_data:data_dir'),
-			's3' => elgg_echo('admin:settings:user_data:s3')
+			'aws_s3' => elgg_echo('admin:settings:user_data:aws_s3')
 		],
 		'value' => elgg_get_config('user_data_store'),
 		'id' => 'elgg-settings-user-data-store'
@@ -59,26 +59,26 @@
 		<p class="elgg-text-help"><?php echo elgg_echo('admin:settings:user_data:data_dir:info'); ?></p>
 	</div>
 	
-	<div class="hidden elgg-settings-user-data-store-info" id="elgg-settings-user-data-store-s3">
-		<p class="elgg-text-help"><?php echo elgg_echo('admin:settings:user_data:s3:info'); ?></p>
+	<div class="hidden elgg-settings-user-data-store-info" id="elgg-settings-user-data-store-aws-s3">
+		<p class="elgg-text-help"><?php echo elgg_echo('admin:settings:user_data:aws_s3:info'); ?></p>
 		<?php
 			$info = elgg_get_config('user_data_store_info');
-			$s3 = elgg_extract('s3', $info, []);
-			$key_label = elgg_echo('admin:settings:user_data:s3:key');
+			$s3 = elgg_extract('aws_s3', $info, []);
+			$key_label = elgg_echo('admin:settings:user_data:aws_s3:key');
 			$key_input = elgg_view('input/text', [
-				'name' => 'user_data_store_info[s3][key]',
+				'name' => 'user_data_store_info[aws_s3][key]',
 				'value' => elgg_extract('key', $s3)
 			]);
 			
-			$secret_label = elgg_echo('admin:settings:user_data:s3:secret');
+			$secret_label = elgg_echo('admin:settings:user_data:aws_s3:secret');
 			$secret_input = elgg_view('input/text', [
-				'name' => 'user_data_store_info[s3][secret]',
+				'name' => 'user_data_store_info[aws_s3][secret]',
 				'value' => elgg_extract('secret', $s3)
 			]);
 			
-			$bucket_label = elgg_echo('admin:settings:user_data:s3:bucket');
+			$bucket_label = elgg_echo('admin:settings:user_data:aws_s3:bucket');
 			$bucket_input = elgg_view('input/text', [
-				'name' => 'user_data_store_info[s3][bucket]',
+				'name' => 'user_data_store_info[aws_s3][bucket]',
 				'value' => elgg_extract('bucket', $s3)
 			]);
 			

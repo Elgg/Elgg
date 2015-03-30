@@ -54,10 +54,6 @@ function get_uploaded_file($input_name) {
 	return file_get_contents($file->getPathname());
 }
 
-function get_resized_image_from_stream() {
-	
-}
-
 /**
  * Gets the jpeg contents of the resized version of an uploaded image
  * (Returns false if the uploaded file was not an image)
@@ -422,10 +418,14 @@ $DEFAULT_FILE_STORE = null;
 
 /**
  * Return the default filestore.
+ * 
+ * @depreciated 1.11 Use Elgg\Filesystem\AdapterService::getDefault()
  *
  * @return \ElggFilestore
  */
 function get_default_filestore() {
+	_elgg_services()->deprecation
+		->sendNotice("Use Elgg\Filesystem\AdapterService::setDefault() instead of get_default_filestore()", 1.11);
 	global $DEFAULT_FILE_STORE;
 
 	return $DEFAULT_FILE_STORE;
@@ -433,19 +433,24 @@ function get_default_filestore() {
 
 /**
  * Set the default filestore for the system.
+ * 
+ * @depreciated 1.11 Use Elgg\Filesystem\AdapterService::setDefault() or set $CONFIG->user_data_store = 'adapter_name'
  *
  * @param \ElggFilestore $filestore An \ElggFilestore object.
  *
  * @return true
  */
 function set_default_filestore(\ElggFilestore $filestore) {
+	_elgg_services()->deprecation
+		->sendNotice("Use Elgg\Filesystem\AdapterService::setDefault() or set \$CONFIG->user_data_store = 'adapter_name'", 1.11);
+		
 	global $DEFAULT_FILE_STORE;
 
 	$DEFAULT_FILE_STORE = $filestore;
 
 	return true;
 }
-
+	
 /**
  * Returns the category of a file from its MIME type
  *
@@ -468,22 +473,34 @@ function elgg_get_file_simple_type($mime_type) {
  */
 function _elgg_filestore_init() {
 	$config = _elgg_services()->config;
-	// Register default filestore
 	
-	switch($config->get('user_data_store')) {
-		
-		case 's3':
-			$info = $config->get('user_data_store_info');
-			$s3 = elgg_extract('s3', $info, []);
-			$adapter = new Elgg\Filesystem\Adapter\AwsS3($s3);
-			set_default_filestore(new \ElggCloudFilestore($adapter));
-		break;
-		
-		case 'data_dir':
-		default:
-			if ($config->get('dataroot')) {
-				set_default_filestore(new \ElggDiskFilestore($CONFIG->dataroot));
-			}
+	// register core fs adapters
+	$adapters = _elgg_services()->dataStorageAdapters;
+	
+	$data_root = $config->get('dataroot');
+	if ($data_root) {
+		$disk = new \Elgg\Filesystem\Adapter\Disk(['path' => $data_root]);
+		$adapters->set('disk', $disk);
+	}
+	
+	$info = $config->get('user_data_store_info');
+	if (isset($info['aws_s3'])) {
+		$info['aws_s3']['request.options'] = [
+			'proxy' => $config->get('proxy'),
+			'verify' => !$config->get('ssl_no_verify')
+		];
+		$s3 = new \Elgg\Filesystem\Adapter\AwsS3($info['aws_s3']);
+		$adapters->set('aws_s3', $s3);
+	}
+	
+	// @todo add disk default to installation config values
+	$default = $config->get('user_data_store');
+	if ($default && $adapters->has($default)) {
+		$adapters->setDefault($default);
+	} else if (isset($disk)) {
+		$adapters->setDefault('disk');
+	} else {
+		// throw?
 	}
 
 	// Fix MIME type detection for Microsoft zipped formats

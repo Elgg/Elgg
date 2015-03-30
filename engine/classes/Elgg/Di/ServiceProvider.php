@@ -55,7 +55,8 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
- * 
+ * @property-read \Elgg\Filesystem\AdapterService          $dataStorageAdapters
+ * @property-read \Elgg\DatastorageService                 $dataStorage
  * @package Elgg.Core
  * @access private
  */
@@ -244,6 +245,14 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setClassName('widgets', '\Elgg\WidgetsService');
+		
+		$this->setFactory('dataStorageAdapters', function(ServiceProvider $c) {
+			return new \Elgg\Filesystem\AdapterService($c->logger);
+		});
+		
+		$this->setFactory('dataStorage', function(ServiceProvider $c) {
+			return new \Elgg\DataStorageService($c->logger);
+		});
 
 	}
 
