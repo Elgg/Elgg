@@ -158,19 +158,19 @@ class ElggCrypto {
 	}
 
 	/**
-	 * Generate a MAC with output in Base64URL encoding
+	 * Get an HMAC token builder/validator object
 	 *
-	 * @param string $data Data we're creating a MAC for
-	 * @param string $key  HMAC key. uses elgg site secret if none given
-	 * @param string $algo HMAC hash algorithm
-	 * @return string
+	 * @param string[]|string $data HMAC data, or array of strings to use as data
+	 * @param string          $algo Hash algorithm
+	 * @param string          $key  Optional key (default uses site secret)
+	 *
+	 * @return \Elgg\Security\Hmac
 	 */
-	function getHmac($data, $key = '', $algo = 'sha256') {
+	public function getHmac($data, $algo = 'sha256', $key = '') {
 		if (!$key) {
-			$key = _elgg_services()->siteSecret->get();
+			$key = _elgg_services()->siteSecret->get(true);
 		}
-		$bytes = hash_hmac($algo, $data, $key, true);
-		return strtr(rtrim(base64_encode($bytes), '='), '+/', '-_');
+		return new Elgg\Security\Hmac($key, [$this, 'areEqual'], $data, $algo);
 	}
 
 	/**
