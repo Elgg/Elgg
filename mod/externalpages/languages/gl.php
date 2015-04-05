@@ -6,6 +6,7 @@ return array(
 	 */
 	'expages' => "Páxinas do siti",
 	'admin:appearance:expages' => "Páxinas do sitio",
+	'expages:edit:viewpage' => "Ver a páxina no sitio",
 	'expages:about' => "Información",
 	'expages:terms' => "Condicións",
 	'expages:privacy' => "Intimidade",

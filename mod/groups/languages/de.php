@@ -173,6 +173,7 @@ Schau Dir den Diskussionsbeitrag an und antworte selbst darauf:
 	'discussion:reply:edit' => 'Antwort bearbeiten',
 	'discussion:reply:deleted' => 'Die Antwort im Diskussionsbeitrag wurde gelöscht.',
 	'discussion:reply:error:notfound' => 'Die ausgewählte Antwort im Diskussionsbeitrag ist nicht auffindbar.',
+	'discussion:reply:error:notfound_fallback' => "Entschuldigung. Diese Antwort ist in dem Diskussionsbeitrag nicht auffindbar aber Du wurdest zum entsprechenden Diskussionsbeitrag weitergeleitet.",
 	'discussion:reply:error:notdeleted' => 'Die Antwort im Diskussionsbeitrag konnte nicht gelöscht werden.',
 
 	'discussion:search:title' => 'Antwort im Diskussionsbeitrag: %s',

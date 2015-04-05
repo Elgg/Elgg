@@ -173,6 +173,7 @@ return array(
 	'discussion:reply:edit' => '返答を編集',
 	'discussion:reply:deleted' => '返答を削除しました。',
 	'discussion:reply:error:notfound' => '議論の返答は見つかりませんでした。',
+	'discussion:reply:error:notfound_fallback' => "申し訳ありません。お探しの返答は見つかりませんでした。オリジナルの会議の議論にご案内します。",
 	'discussion:reply:error:notdeleted' => '返答を削除することができませんでした。',
 
 	'discussion:search:title' => '議題「 %s 」に返答する',

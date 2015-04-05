@@ -173,8 +173,11 @@ Vexa e responda á conversa:
 	'discussion:reply:edit' => 'Editar a resposta',
 	'discussion:reply:deleted' => 'Eliminouse a resposta da conversa.',
 	'discussion:reply:error:notfound' => 'Non se atopou a resposta á conversa.',
+	'discussion:reply:error:notfound_fallback' => "Non foi posíbel atopar a resposta indicada, este é o tema orixinal da discusión.",
 	'discussion:reply:error:notdeleted' => 'Non foi posíbel eliminar a resposta da conversa.',
 
+	'discussion:search:title' => 'Resposta ao tema: %s',
+	
 	'admin:groups' => 'Grupos',
 
 	'reply:this' => 'Responder',

@@ -39,8 +39,10 @@ return array(
 	'actionnotfound' => "Non se atopou o ficheiro para a acción «%s».",
 	'actionloggedout' => "Non pode realizar a acción sen antes identificarse.",
 	'actionunauthorized' => 'Non ten permisos para realizar a acción.',
+	
+	'ajax:error' => 'Produciuse un erro inesperado durante a execución dunha chamada mediante AJAX. Pode que se perdese a conexión co servidor.',
 
-	'PluginException:MisconfiguredPlugin' => "O complemento «%s» (GUID: %s) non está ben configurado, e foi desactivado. Ao mellor descubre o problema no wiki de Elgg: http://docs.elgg.org/wiki/ (en inglés).",
+	'PluginException:MisconfiguredPlugin' => "O complemento %s (guid: %s) está mal configurado e desactivouse. Consulte o wiki de Elgg (http://learn.elgg.org/) para intentar determinar a causa do problema.",
 	'PluginException:CannotStart' => 'O complemento «%s» (GUID: %s) non pode iniciarse e foi desactivado. Motivo: %s',
 	'PluginException:InvalidID' => "«%s» non é un identificador de complemento válido.",
 	'PluginException:InvalidPath' => "«%s» non é unha ruta de complemento válida.",
@@ -84,6 +86,9 @@ return array(
 	
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Hai outros complementos que teñen «%s» entre as súas dependencias. Antes de desactivar este complemento debe desactivar estes outros: %s',
 
+	'ElggMenuBuilder:Trees:NoParents' => 'Atopáronse entradas de menú sen menús pai que liguen con eles.',
+	'ElggMenuBuilder:Trees:OrphanedChild' => 'O pai da entrada de menú «%s» non existe. O pai é «%s».',
+	'ElggMenuBuilder:Trees:DuplicateChild' => 'Atopouse un rexistro duplicado da entrada de menú «%s».',
 
 	'RegistrationException:EmptyPassword' => 'Os campos de contrasinal non poden estar baleiros.',
 	'RegistrationException:PasswordMismatch' => 'Os contrasinais deben coincidir.',
@@ -148,6 +153,8 @@ return array(
 	'access:read' => "Lectura",
 	'access:write' => "Escritura",
 	'access:admin_only' => "Só os administradores",
+	'access:missing_name' => "O nome do nivel de acceso non existe.",
+	'access:comments:change' => "Actualmente esta discusión só a poden ver certas persoas. Pense ben con quen decide compartila.",
 
 /**
  * Dashboard and widgets
@@ -158,6 +165,7 @@ return array(
 
 	'widgets:add' => 'Engadir trebellos',
 	'widgets:add:description' => "Prema o botón de calquera dos seguintes trebellos para engadilo á páxina.",
+	'widgets:panel:close' => "Pechar o panel de trebellos",
 	'widgets:position:fixed' => '(posición fixa na páxina)',
 	'widget:unavailable' => 'Xa engadiu ese trebello.',
 	'widget:numbertodisplay' => 'Número de elementos para mostrar',
@@ -448,6 +456,7 @@ return array(
 	'admin:configuration:success' => "Gardouse a configuración.",
 	'admin:configuration:fail' => "Non foi posíbel gardar a configuración.",
 	'admin:configuration:dataroot:relative_path' => 'Non é posíbel facer de «%s» a raíz de datos porque non se trata dunha ruta absoluta.',
+	'admin:configuration:default_limit' => 'O número de elementos por páxina debe ser como mínimo 1.',
 
 	'admin:unknown_section' => 'Sección de administración incorrecta.',
 
@@ -512,6 +521,8 @@ return array(
 	'admin:widget:banned_users:help' => 'Lista os usuarios expulsados.',
 	'admin:widget:content_stats' => 'Estatísticas do contido',
 	'admin:widget:content_stats:help' => 'Fai un seguimento do contido que crean os usuarios.',
+	'admin:widget:cron_status' => 'Estado das tarefas programadas',
+	'admin:widget:cron_status:help' => 'Mostra o estado das últimas tarefas programadas que se executaron.',
 	'widget:content_stats:type' => 'Tipo de contido',
 	'widget:content_stats:number' => 'Número',
 
@@ -610,7 +621,7 @@ return array(
 	'admin:plugins:warning:elgg_version_unknown' => 'O ficheiro de manifesto deste complemento está obsoleto, e non lista ningunha versión de Elgg compatíbel coa do sitio. O máis seguro é que non funcione.',
 	'admin:plugins:warning:unmet_dependencies' => 'O complemento ten dependencias que non están satisfeitas, e polo tanto non pode activarse. Prema «Máis información» para ver a lista de dependencias.',
 	'admin:plugins:warning:invalid' => 'O complemento non é válido: %s',
-	'admin:plugins:warning:invalid:check_docs' => 'Na <a href="http://docs.elgg.org/Invalid_Plugin">documentación de Elgg</a> (en inglés) atopará consellos para solucionar o problema.',
+	'admin:plugins:warning:invalid:check_docs' => 'Na <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">documentación de Elss</a> atopará consellos para evitar e solucionar problemas.',
 	'admin:plugins:cannot_activate' => 'Non pode activarse',
 
 	'admin:plugins:set_priority:yes' => "Cambiouse a posición de «%s».",
@@ -747,6 +758,7 @@ Os cambios só afectarán a novos usuarios.',
 	'river:friends' => 'Actividade dos contactos',
 	'river:select' => 'Mostrar %s',
 	'river:comments:more' => '+%u máis',
+	'river:comments:all' => 'Ver os %u comentarios',
 	'river:generic_comment' => 'deixou un comentario en %s %s',
 
 	'friends:widget:description' => "Mostra algúns dos seus contactos.",
@@ -1051,6 +1063,7 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'installation:view' => "Indique a vista que se usará como vista predeterminada do sitio, ou non indique nada para usar a vista predeterminada. En caso de dúbida, deixe o campo baleiro.",
 
 	'installation:siteemail' => "Enderezo de correo electrónico do sitio (co que enviar as mensaxes do sistema):",
+	'installation:default_limit' => "Número predeterminado de elementos por páxina.",
 
 	'admin:site:access:warning' => "Esta é a configuración de intimidade que se lles suxire aos usuarios cando crean novo contido. Cambiala non afecta ao contido xa creado.",
 	'installation:allow_user_default_access:description' => "Active isto para permitirlle aos usuarios definir a súa propia configuración de intimidade predeterminada.",
@@ -1063,12 +1076,13 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'installation:minify_js:label' => "Comprimir o código JavaScript (recomendado).",
 	'installation:minify_css:label' => "Comprimir o código CSS (recomendado).",
 
-	'installation:htaccess:needs_upgrade' => "Debe actualizar o seu ficheiro .htaccess para que a ruta se insira no parámetro GET «__elgg_uri» (pode guiarse por «htaccess_dist»).",
+	'installation:htaccess:needs_upgrade' => "Debe actualizar o seu ficheiro «.htaccess» para que a ruta se insira no parámetro GET «__elgg_uri» (pode basearse no modelo que hai en «install/config/htaccess.dist»).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg non pode conectarse a si mesmo para probar as regras de substitución correctamente. Comprobe que o programa «curl» funciona e que non existen restricións de enderezos IP que impidan as conexións locais.",
 	
 	'installation:systemcache:description' => "A caché do sistema almacena datos en ficheiros para diminuír o tempo de carga de Elgg",
 	'installation:systemcache:label' => "Usar a caché do sistema (recomendado).",
 
+	'admin:legend:system' => 'Sistema',
 	'admin:legend:caching' => 'Caché',
 	'admin:legend:content_access' => 'Acceso a contidos',
 	'admin:legend:site_access' => 'Acceso ao sitio',
@@ -1085,7 +1099,7 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'upgrade:unable_to_upgrade_info' =>
 		'Non é posíbel anovar a instalación porque se detectaron vistas obsoletas no cartafol principal («core») de vistas de Elgg. Para que Elgg funcione correctamente debe eliminar esas vistas. Se non fixo cambios no cartafol principal de vistas, pode eliminar o cartafol e substituílo polo do último paquete de Elgg, que pode descargar de <a href="http://elgg.org">elgg.org</a>.<br /><br />
 
-Atopará instrucións detalladas na <a href="http://docs.elgg.org/wiki/Upgrading_Elgg">documentación de anovación de Elgg</a> (en inglés). Se necesita axuda, publique unha mensaxe nos <a href="http://community.elgg.org/pg/groups/discussion/">foros de asistencia da comunidade</a> (en inglés).',
+Atopará instrucións detalladas na <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">documentación de anovación de Elgg</a> (en inglés). Se necesita axuda, publique unha mensaxe nos <a href="http://community.elgg.org/pg/groups/discussion/">foros de asistencia da comunidade</a> (en inglés).',
 
 	'update:twitter_api:deactivated' => 'A API de Twitter (outrora coñeciza como «Servizo de Twitter») desactivouse durante a anovación. Actívea de novo manualmente.',
 	'update:oauth_api:deactivated' => 'A API de OAuth (outrora coñecida como «OAuth Lib») desactivouse durante a anovación. Actívea de novo manualmente.',
@@ -1114,6 +1128,7 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 	// Strings specific for the comments upgrade
 	'admin:upgrades:comments' => 'Anovación dos comentarios',
 	'upgrade:comment:create_failed' => 'Non foi posíbel converter o identificador de comentario «%s» nunha entidade.',
+	'admin:upgrades:commentaccess' => 'Anovación do acceso aos comentarios',
 
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'Anovación do cartafol de datos',
@@ -1200,7 +1215,8 @@ Se foi vostede, prema a ligazón embaixo. En caso contrario, ignore esta mensaxe
 	'generic_comment:updated' => "Actualizouse o comentario.",
 	'generic_comment:deleted' => "Eliminouse o comentario.",
 	'generic_comment:blank' => "Non pode enviar un comentario baleiro",
-	'generic_comment:notfound' => "Non se atopou o elemento indicado",
+	'generic_comment:notfound' => "Non se atopou o comentario indicado.",
+	'generic_comment:notfound_fallback' => "Non se atopou o comentario indicado, esta é a páxina onde se deixou o comentario.",
 	'generic_comment:notdeleted' => "Non foi posíbel eliminar o comentario.",
 	'generic_comment:failure' => "Non foi posíbel gardar o comentario, produciuse un erro inesperado",
 	'generic_comment:none' => 'Non hai comentarios',
@@ -1243,7 +1259,7 @@ Non responda a esta mensaxe.",
 	'actiongatekeeper:missingfields' => 'Ao formulario fáltanlle os campos «__token» ou «__ts».',
 	'actiongatekeeper:tokeninvalid' => "A páxina que estaba a usar caducou. Vólvao intentar.",
 	'actiongatekeeper:timeerror' => 'A páxina que estaba a usar caducou. Actualize a páxina e vólvao intentar.',
-	'actiongatekeeper:pluginprevents' => 'Un complemento impediu que se enviase o formulario.',
+	'actiongatekeeper:pluginprevents' => 'Algunha razón descoñecida impediu enviar o seu formulario.',
 	'actiongatekeeper:uploadexceeded' => 'O tamaño dos ficheiros enviados supera o límite definido polo administrador do sitio.',
 	'actiongatekeeper:crosssitelogin' => "Non se permite acceder desde un dominio distinto. Vólvao intentar.",
 
