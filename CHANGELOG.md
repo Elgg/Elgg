@@ -1,3 +1,16 @@
+<a name="1.10.5"></a>
+### 1.10.5  (2015-04-05)
+
+#### Contributors
+
+* Per Jensen (1)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **aalborg_theme:** moves unextend/extend view into init ([3c5fb39b](https://github.com/Elgg/Elgg/commit/3c5fb39ba2c65127c5fc57f6e27eef5ac6127c92), closes [#8105](https://github.com/Elgg/Elgg/issues/8105))
+
+
 <a name="1.10.4"></a>
 ### 1.10.4  (2015-03-22)
 
