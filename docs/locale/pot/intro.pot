@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-03-22 20:46-0700\n"
+"POT-Creation-Date: 2015-04-05 16:03-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,1466 +17,1172 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../intro/development.rst:2
-# fc8fc7f79b5f41cf9f67bb2c95727090
 msgid "Developer Overview"
 msgstr ""
 
 #: ../../intro/development.rst:4
-# 1c0b6c2fc2a047d8a596df0513cb48da
 msgid "This is a quick developer introduction to Elgg. It covers the basic approach to working with Elgg as a framework, and mentions some of the terms and technologies used."
 msgstr ""
 
 #: ../../intro/development.rst:7
-# 012e57a191254b489440ab0e3b67758e
 msgid "See the :doc:`/guides/index` for tutorials or the :doc:`/design/index` for in-depth discussion on design."
 msgstr ""
 
 #: ../../intro/development.rst:10
-# 9924e46dfcff4ed69a378ed87e8334a3
 msgid "Database and Persistence"
 msgstr ""
 
 #: ../../intro/development.rst:12
-# 1cff8108bcff41a5ade106732f2d7d6a
 msgid "Elgg uses MySQL 5.5 or higher for data persistence, and maps database values into Entities (a representation of an atomic unit of information) and Extenders (additional information and descriptions about Entities). Elgg supports additional information such as relationships between Entities, activity streams, and various types of settings."
 msgstr ""
 
 #: ../../intro/development.rst:18
-# b34741aa5d9341ad810fadfa1226985d
 msgid "Plugins"
 msgstr ""
 
 #: ../../intro/development.rst:20
-# c4d45d09e5c4418eaa2d98ecf6ed2ef0
 msgid "Plugins change the behavior or appearance of Elgg by overriding views, or by handling events and plugin hooks. All changes to an Elgg site should be implemented through plugins to ensure upgrading core is easy."
 msgstr ""
 
 #: ../../intro/development.rst:24
-# 49ea5f0913674859a6d40f084ba371d7
 msgid "Actions"
 msgstr ""
 
 #: ../../intro/development.rst:26
-# 42b78cade5b34f0bae152f7ff7d6641f
 msgid "Actions are the primary way users interact with an Elgg site. Actions are registered by plugins."
 msgstr ""
 
 #: ../../intro/development.rst:29
-# 783f79f09d354468a642b18cc9ccd751
 msgid "Events and Plugin Hooks"
 msgstr ""
 
 #: ../../intro/development.rst:31
-# 5d45e89d112640229a977458fcb970d3
 msgid "Events and Plugin Hooks are used in Elgg Plugins to interact with the Elgg engine under certain circumstances. Events and hooks are triggered at strategic times throughout Elgg's boot and execution process, and allows plugins to modify or cancel the default behavior."
 msgstr ""
 
 #: ../../intro/development.rst:36
-# 49fb13db65464405bee953002aa75725
 msgid "Views"
 msgstr ""
 
 #: ../../intro/development.rst:38
-# 637380195f904e389b4e4e6c8ec556c2
 msgid "Views are the primary presentation layer for Elgg. Views can be overridden or extended by Plugins. Views are categories into a Viewtype, which hints at what sort of output should be expected by the view."
 msgstr ""
 
 #: ../../intro/development.rst:43
-# a5bc48826e8b4243a4df42bca38863de
 msgid "JavaScript"
 msgstr ""
 
 #: ../../intro/development.rst:45
-# d030d8c08fdf4c8fbe38775049c34d86
 msgid "Elgg uses an AMD-compatible JavaScript system provided by require.js. Bundled with Elgg are jQuery 1.11.0, jQuery UI 1.10.4, jQuery Form v20140304, jQuery jeditable, and jQuery UI Autocomplete."
 msgstr ""
 
 #: ../../intro/development.rst:48
-# 32bb3ac571a14a9fb52f139081c87b56
 msgid "Plugins can load their own JS libs."
 msgstr ""
 
 #: ../../intro/development.rst:51
 #: ../../intro/features.rst:13
-# c2f0ffc9a14847e2b621fe6f4ff3c7cb
-# dbcb61b982a94647be448fc1cfca6f97
 msgid "Internationalization"
 msgstr ""
 
 #: ../../intro/development.rst:53
-# fe24f33bad7b4185b25471832a687478
 msgid "Elgg's interface supports multiple languages, and uses `Transifex`_ for translation."
 msgstr ""
 
 #: ../../intro/development.rst:56
-# 16d151098dcb43db9060511fde24173c
 msgid "Caching"
 msgstr ""
 
 #: ../../intro/development.rst:58
-# 2dc1e7e5155b4dde92f2ad60ebcc64a9
 msgid "Elgg uses two caches to improve performance: a system cache and SimpleCache."
 msgstr ""
 
 #: ../../intro/features.rst:2
-# b64f784a4afe4bd8926e7985653a4a40
 msgid "Features"
 msgstr ""
 
 #: ../../intro/features.rst:4
-# 3c4981eed41c4f14a8555cb5d870f412
 msgid "Demo: http://demo.elgg.org/"
 msgstr ""
 
 #: ../../intro/features.rst:6
-# 3d31b20b417043b88d152dfb08408b0d
 msgid "Showcases: https://community.elgg.org/showcase"
 msgstr ""
 
 #: ../../intro/features.rst:9
-# 13522a1c865349f38542df0b938f4dc8
 msgid "For developers"
 msgstr ""
 
 #: ../../intro/features.rst:11
-# ec3a4815bf1f4e07964163582b39b2c2
 msgid "Permissive license"
 msgstr ""
 
 #: ../../intro/features.rst:12
-# 705b0814c12b4993b64c67e9e0e962b9
 msgid "Theme framework"
 msgstr ""
 
 #: ../../intro/features.rst:14
-# 0752bdb961eb4541a6c7d151d4587c29
 msgid "Templating engine"
 msgstr ""
 
 #: ../../intro/features.rst:15
-# d8c19eb19bfa401681cf94bee3b7589d
 msgid "Widgets framework"
 msgstr ""
 
 #: ../../intro/features.rst:16
-# 8dfd34e56a5542a8b3dca32fa165bf3f
 msgid "Plugin APIs"
 msgstr ""
 
 #: ../../intro/features.rst:17
-# 4a1a455a632a4f22813521ed512cd307
 msgid "Social graph"
 msgstr ""
 
 #: ../../intro/features.rst:18
-# 975e4a965ef440c7a4130da6952d4393
 msgid "Web services API"
 msgstr ""
 
 #: ../../intro/features.rst:19
-# f3ed7841e4fa429fa06df6dd7d4d88c5
 msgid "jQuery-based JS framework"
 msgstr ""
 
 #: ../../intro/features.rst:20
-# 73dac4f906124f62b77dbb7831c2cc28
 msgid "Session management"
 msgstr ""
 
 #: ../../intro/features.rst:21
-# bd95346f19d34a5e84a1c3be1be1059e
 msgid "Custom URL routing"
 msgstr ""
 
 #: ../../intro/features.rst:24
-# 01eeba75a16149a5bf252032ca2bb272
 msgid "For admins"
 msgstr ""
 
 #: ../../intro/features.rst:26
-# 8c7a558706dc440f904def506a22f8fa
 msgid "User profiles and avatars"
 msgstr ""
 
 #: ../../intro/features.rst:27
-# 27c1dec76b29419d9dce9edba914629f
 msgid "Fine-grained access control lists"
 msgstr ""
 
 #: ../../intro/features.rst:28
-# 8726def08bed477689e49516e914a248
 msgid "Friends and friends lists (ala G+ circles)"
 msgstr ""
 
 #: ../../intro/features.rst:29
-# f5bac817b7e24292801050f849fc9339
 msgid "Responsive, mobile-friendly design"
 msgstr ""
 
 #: ../../intro/features.rst:30
-# fd9b6613df364bfe9068eef2f8aaae2b
 msgid "RSS support"
 msgstr ""
 
 #: ../../intro/features.rst:31
-# 6d539f5986654cf68d5e9428252a6722
 msgid "Activity stream"
 msgstr ""
 
 #: ../../intro/features.rst:32
-# 6c2426062dab4e6c92e0b4830f144ecb
 msgid "Plugins for common content types like blogs, bookmarks, files, microblogging, private messages, documents, message boards, discussion"
 msgstr ""
 
 #: ../../intro/features.rst:33
-# 6f7956ecc75a43738c0a01346eb2757d
 msgid "User authentication and administration"
 msgstr ""
 
 #: ../../intro/features.rst:35
-# 3dee712504fa4028b552745dad406b0b
 msgid "If you need more functionality than what Elgg offers out-of-the-box there are a couple of options:"
 msgstr ""
 
 #: ../../intro/features.rst:37
-# 9e3ad964dc0d43e798ae909e95d69b4c
 msgid "Add more by :doc:`installing plugins </admin/plugins>` - for example, blogs, forums, social bookmarks"
 msgstr ""
 
 #: ../../intro/features.rst:38
-# c08c9c9b3c694ec293e3189d9f8d7783
 msgid "Develop your own features via plugins"
 msgstr ""
 
 #: ../../intro/features.rst:39
-# fb9da536061446ef83c22d50419ff0b4
 msgid "Hire someone to do the above for you"
 msgstr ""
 
 #: ../../intro/index.rst:2
-# e91d6c89bb2148fc864992f7de25b4ce
 msgid "Getting Started"
 msgstr ""
 
 #: ../../intro/index.rst:4
-# 673d883384b64b429da2c7853381cb07
 msgid "Discover if Elgg is right for your community."
 msgstr ""
 
 #: ../../intro/install.rst:2
-# 827a1a81494e4408a728aaed0ebe7251
 msgid "Installation"
 msgstr ""
 
 #: ../../intro/install.rst:4
-# e9aacfd3a21f4584aba85e24391f56c2
 msgid "Get your own instance of Elgg running in no time."
 msgstr ""
 
 #: ../../intro/install.rst:0
-# 7e533ca0238b40b19677ea39c2e69a17
 msgid "Contents"
 msgstr ""
 
 #: ../../intro/install.rst:11
-# 217ae64623ca447dbf76215dcf4aab10
 msgid "Requirements"
 msgstr ""
 
 #: ../../intro/install.rst:13
-# 45494fd0e8a64e07bb609123f1b4794d
 msgid "MySQL 5+"
 msgstr ""
 
 #: ../../intro/install.rst:14
-# 53db5156ad1c4c12a732c78d691840ca
 msgid "PHP 5.4+ with the following extensions:"
 msgstr ""
 
 #: ../../intro/install.rst:16
-# f6d192a22c204722b01e15a1ef125f31
 msgid "GD (for graphics processing)"
 msgstr ""
 
 #: ../../intro/install.rst:17
-# 2b22442bf203459bb7b98acae2dd28c4
 msgid "`Multibyte String support`_ (for i18n)"
 msgstr ""
 
 #: ../../intro/install.rst:18
-# fecdd3582e044f2d82c1406c4ab4d773
 msgid "Proper configuration and ability to send email through an MTA"
 msgstr ""
 
 #: ../../intro/install.rst:20
-# b653546d2cdf4678a453d81a2c6c04f3
 msgid "Web server with support for URL rewriting"
 msgstr ""
 
 #: ../../intro/install.rst:22
-# 75a5620ad5bc43b381a64df7afa5b96e
 msgid "Official support is provided for the following configurations:"
 msgstr ""
 
 #: ../../intro/install.rst:26
-# 18ae18b9cb734589b2c02a380e9f33b4
 msgid "Apache server"
 msgstr ""
 
 #: ../../intro/install.rst:25
-# 7acb6f7d9d7b4ac2a091122e9e272da9
 msgid "Apache with the `rewrite module`_ enabled"
 msgstr ""
 
 #: ../../intro/install.rst:26
-# 068ee8734e814061974d2297881d7a2c
 msgid "PHP running as an Apache module"
 msgstr ""
 
 #: ../../intro/install.rst:29
-# 9b20d70594874f1083835da6a2de677f
 msgid "Nginx server"
 msgstr ""
 
 #: ../../intro/install.rst:29
-# b29ff0f74a174ccca120a6fe5f6fa44b
 msgid "Nginx with PHP-FPM using FastCGI"
 msgstr ""
 
 #: ../../intro/install.rst:31
-# 16d37b17c08a4120ac89839e8aff508a
 msgid "By \"official support\", we mean that:"
 msgstr ""
 
 #: ../../intro/install.rst:33
-# 6ac9e6cfb29e4c48ab7cb4fd18bf9413
 msgid "Most development and testing is performed with these configurations"
 msgstr ""
 
 #: ../../intro/install.rst:34
-# a387cdbb38554fd28f19496bbbe3bfc0
 msgid "Much of the installation documentation is written assuming Apache or Nginx is used"
 msgstr ""
 
 #: ../../intro/install.rst:35
-# 705fc60613f8488c8c140353ddcbfdfc
 msgid "Priority on bug reports is given to Apache and Nginx users if the bug is web server specific (but those are rare)."
 msgstr ""
 
 #: ../../intro/install.rst:42
-# fc3303b04d6146caad6b9c759553fff6
 msgid "Browser support policy"
 msgstr ""
 
 #: ../../intro/install.rst:44
-# c8544b7af10045db94111276fe6f308f
 msgid "Feature branches support the latest 2 versions of all major browsers as were available at the time of the first stable release on that branch."
 msgstr ""
 
 #: ../../intro/install.rst:47
-# 9b1e7723dfa946ffbd541eaf59d52347
 msgid "Bugfix release will not alter browser support, even if a new version of the browser has since been released."
 msgstr ""
 
 #: ../../intro/install.rst:50
-# 20c84ac3f3ae4d22b1c848978109f1ed
 msgid "Major browsers here means all of the following, plus their mobile counterparts:"
 msgstr ""
 
 #: ../../intro/install.rst:52
-# b6a98d853b6c44708dd9e107c328aeeb
 msgid "Android Browser"
 msgstr ""
 
 #: ../../intro/install.rst:53
-# da7850f95ba641d29c2b120aa0b45ef5
 msgid "Chrome"
 msgstr ""
 
 #: ../../intro/install.rst:54
-# 1653cc01690846efb5de6fd2648b560b
 msgid "Firefox"
 msgstr ""
 
 #: ../../intro/install.rst:55
-# b6bcf096b27048468e94590fd68e1282
 msgid "IE"
 msgstr ""
 
 #: ../../intro/install.rst:56
-# f727c0ecbc8d49cdb3399ec4fff9d238
 msgid "Safari"
 msgstr ""
 
 #: ../../intro/install.rst:58
-# ce1af1756e0c4b1d84d198f8a162fb7b
 msgid "\"Support\" may mean that we take advantage of newer, unimplemented technologies but provide a JavaScript polyfill for the browsers that need it."
 msgstr ""
 
 #: ../../intro/install.rst:61
-# 0b6566e3b1d9453cab867ac7251a9073
 msgid "You may find that Elgg happens to work on unsupported browsers, but compatibility may break at any time, even during a bugfix release."
 msgstr ""
 
 #: ../../intro/install.rst:65
-# 3e9ce1313f1c4641abca2d5854348a02
 msgid "Overview"
 msgstr ""
 
 #: ../../intro/install.rst:68
-# 09471bf84ab34eca8b2369ed2cfce642
 msgid "Upload Elgg"
 msgstr ""
 
 #: ../../intro/install.rst:70
-# 42b0cc7a5a854e67b014e5dfd10c78d7
 msgid "Download the `latest version of Elgg`_"
 msgstr ""
 
 #: ../../intro/install.rst:71
-# 947e2e2120c04387b069eba18698b914
 msgid "Upload the ZIP file with an FTP client to your server"
 msgstr ""
 
 #: ../../intro/install.rst:72
-# 81f9ffa7df2141f4a519bea21274c548
 msgid "Unzip the files in your domain's document root (/home/username/www)."
 msgstr ""
 
 #: ../../intro/install.rst:77
-# cf5640a5260f40dcb0d39f7c3484f5b1
 msgid "Create a data folder"
 msgstr ""
 
 #: ../../intro/install.rst:79
-# e9591b82f4c04a52a34893d369e7fff1
 msgid "Elgg needs a special folder to store uploaded files including profile icons and photos. You will need to create this directory."
 msgstr ""
 
 #: ../../intro/install.rst:84
-# 7c3e5771b3bf492d9347bf368aa1fd9c
 msgid "For security reasons, this folder MUST be stored outside of your document root. If you created it under /www/ or /public_html/, you're doing it wrong."
 msgstr ""
 
 #: ../../intro/install.rst:88
-# dd5ef61c34324b26891c5f9a3c18e7e5
 msgid "Once this folder has been created, you'll need to make sure the web server Elgg is running on has permission to write to and create directories in it. This shouldn't be a problem on Windows-based servers, but if your server runs Linux, Mac OS X or a UNIX variant, you'll need to `set the permissions on the directory`_."
 msgstr ""
 
 #: ../../intro/install.rst:96
-# d6f219b3772e41b4b43bbed070b1e54d
 msgid "If you are using a graphical FTP client to upload files, you can usually set permissions by right clicking on the folder and selecting 'properties' or 'Get Info'."
 msgstr ""
 
 #: ../../intro/install.rst:102
-# 657a8f216e1b4ae6871d4c7fa1b226f1
 msgid "Directories must be executable to be read and written to. The suggested permissions depend upon the exact server and user configuration. If the data directory is owned by the web server user, the recommended permissions are 770."
 msgstr ""
 
 #: ../../intro/install.rst:107
-# 15d04282d4734d98881f110e1020be34
 msgid "Setting your data directory to 777 will work, but it is insecure and is not recommended. If you are unsure how to correctly set permissions, contact your host for more information."
 msgstr ""
 
 #: ../../intro/install.rst:112
-# 391acd4be5ba449d815fbf4fe3df5f5f
 msgid "Create a MySQL database"
 msgstr ""
 
 #: ../../intro/install.rst:114
-# 479de3438f5f4b158dbd7f6e29614a5b
 msgid "Using your database administration tool of choice (if you're unsure about this, ask your system administrator), create a new MySQL database for Elgg. You can create a MySQL database with any of the following tools:"
 msgstr ""
 
 #: ../../intro/install.rst:119
-# 0c0a7cc0e0a743188a5c1cdddbe00636
 msgid "Make sure you add a user to the database with all privileges and record the database name, username and password. You will need this information when installing Elgg."
 msgstr ""
 
 #: ../../intro/install.rst:124
-# 3ac8f2a47ba244008383aabbdee812bd
 msgid "Visit your Elgg site"
 msgstr ""
 
 #: ../../intro/install.rst:126
-# 466fb904d50e4211b9776682b158a0bf
 msgid "Once you've performed these steps, visit your Elgg site in your web browser. Elgg will take you through the rest of the installation process from there. The first account that you create at the end of the installation process will be an administrator account."
 msgstr ""
 
 #: ../../intro/install.rst:133
-# 87ee200ea4594bcd91239621d0b37d8a
 msgid "A note on settings.php and .htaccess"
 msgstr ""
 
 #: ../../intro/install.rst:135
-# d13539ce3f8a499d93468191b1615167
 msgid "The Elgg installer will try to create two files for you:"
 msgstr ""
 
 #: ../../intro/install.rst:137
-# b4a5238c47e74e53bd0159e319014728
 msgid "engine/settings.php, which contains the database settings for your installation"
 msgstr ""
 
 #: ../../intro/install.rst:139
-# ca180de5bf8f4b12bda9c51840cdf2a6
 msgid ".htaccess, which allows Elgg to generate dynamic URLs"
 msgstr ""
 
 #: ../../intro/install.rst:141
-# 903268670e444af9b470ba50a0481883
 msgid "If these files can't be automatically generated, for example because the web server doesn't have write permissions in the directories, Elgg will tell you how to create them. You could also temporarily change the permissions on the root directory and the engine directory. Set the permissions on those two directories so that the web server can write those two files, complete the install process, and them change the permissions back to their original settings. If, for some reason, this won't work, you will need to:"
 msgstr ""
 
 #: ../../intro/install.rst:150
-# ece2602f85cf44f88d6a31eb1aa47274
 msgid "Copy engine/settings.example.php to engine/settings.php, open it up in a text editor and fill in your database details"
 msgstr ""
 
 #: ../../intro/install.rst:152
-# 583597b3010a4c3a8752b0fa147538c9
 msgid "On Apache server, copy ``install/config/htaccess.dist`` to ``.htaccess``"
 msgstr ""
 
 #: ../../intro/install.rst:153
-# 7e162c1237904dd289713ad3b41e9bc3
 msgid "On Nginx server copy ``install/config/nginx.dist`` to ``/etc/nginx/sites-enabled`` and adjust it's contents"
 msgstr ""
 
 #: ../../intro/install.rst:156
-# fb849bc7651b4ac38ef4ab96784cb5d3
 msgid "Other Configurations"
 msgstr ""
 
 #: ../../intro/install.rst:158
-# c15bec15a2294ebfab2666273792df14
 msgid ":doc:`Cloud9 <./install/cloud9>`"
 msgstr ""
 
 #: ../../intro/install.rst:159
-# a224bdb5f80245c5bf26b992958901dd
 msgid ":doc:`EasyPHP <./install/easyphp>`"
 msgstr ""
 
 #: ../../intro/install.rst:160
-# 9f8e28f97ebc458abb03357b336204ac
 msgid ":doc:`IIS <./install/iis>`"
 msgstr ""
 
 #: ../../intro/install.rst:161
-# 4ae9841053c84db59cd17f8c8f7f3726
 msgid ":doc:`MAMP <./install/mamp>`"
 msgstr ""
 
 #: ../../intro/install.rst:162
-# 2d02d77e366840798ef055a5591bfe02
 msgid ":doc:`MariaDB <./install/mariadb>`"
 msgstr ""
 
 #: ../../intro/install.rst:163
-# dc7a1da6b69c4b21930c3a9193e9c5c0
 msgid ":doc:`Nginx <./install/nginx>`"
 msgstr ""
 
 #: ../../intro/install.rst:164
-# 4799b0e7021f48938a890f23d7d0cfa8
 msgid ":doc:`Ubuntu <./install/ubuntu>`"
 msgstr ""
 
 #: ../../intro/install.rst:165
-# c55edcf703fd454c99bec13ab4f33d1a
 msgid ":doc:`Virtual hosts <./install/virtual>`"
 msgstr ""
 
 #: ../../intro/install.rst:166
-# 0afd2b8d143a49d99317453ab5585939
 msgid ":doc:`XAMPP <./install/xampp>`"
 msgstr ""
 
 #: ../../intro/install.rst:169
-# 75a09bc6f569498ba3ce3924215661e4
 msgid "Troubleshooting"
 msgstr ""
 
 #: ../../intro/install.rst:172
-# 9d5c331b316d4b65ba83063ba5809581
 msgid "Help! I'm having trouble installing Elgg"
 msgstr ""
 
 #: ../../intro/install.rst:174
-# dfb91d76c5e24f018edf1e9db5f0fb7d
 msgid "First:"
 msgstr ""
 
 #: ../../intro/install.rst:176
-# ec6e10ca358e4988a66d37cd9f21d1be
 msgid "Recheck that your server meets the technical requirements for Elgg."
 msgstr ""
 
 #: ../../intro/install.rst:177
-# 816d000e11f04840bd4fa866058792dc
 msgid "Follow the environment-specific instructions if need be"
 msgstr ""
 
 #: ../../intro/install.rst:178
-# 30bc644989fe467f8d9b3bb69b1608fa
 msgid "Have you verified that ``mod_rewrite`` is being loaded?"
 msgstr ""
 
 #: ../../intro/install.rst:179
-# 05b356c1adcd4b668f42c8ac9ffc4fa3
 msgid "Is the mysql apache being loaded?"
 msgstr ""
 
 #: ../../intro/install.rst:181
-# 360a07d23c084f6a8ae6abe614c4e2c4
 msgid "Keep notes on steps that you take to fix the install. Sometimes changing some setting or file to try to fix a problem may cause some other problem later on. If you need to start over, just delete all the files, drop your database, and begin again."
 msgstr ""
 
 #: ../../intro/install.rst:187
-# fe6a580b95c74038b3eb3c9f32e9b3ef
 msgid "I can't save my settings on installation (I get a 404 error when saving settings)"
 msgstr ""
 
 #: ../../intro/install.rst:189
-# b1ad554a76774e7ba5c8ed4d65b3a2ee
 msgid "Elgg relies on the ``mod_rewrite`` Apache extension in order to simulate certain URLs. For example, whenever you perform an action in Elgg, or when you visit a user's profile, the URL is translated by the server into something Elgg understands internally. This is done using rules defined in an ``.htaccess`` file, which is Apache's standard way of defining extra configuration for a site."
 msgstr ""
 
 #: ../../intro/install.rst:196
-# 6790dbc0e6004d6b8fa0c1487345bb2f
 msgid "This error suggests that the ``mod_rewrite`` rules aren't being picked up correctly. This may be for several reasons. If you're not comfortable implementing the solutions provided below, we strongly recommend that you contact your system administrator or technical support and forward this page to them."
 msgstr ""
 
 #: ../../intro/install.rst:202
-# ca151d0ea09a415bbcb4555b086ac01b
 msgid "The ``.htaccess``, if not generated automatically (that happens when you have problem with ``mod_rewrite``), you can create it by renaming ``install/config/htaccess.dist`` file you find with elgg package to ``.htaccess``. Also if you find a ``.htaccess`` file inside the installation path, but you are still getting 404 error, make sure the contents of ``.htaccess`` are same as that of ``install/config/htaccess.dist``."
 msgstr ""
 
 #: ../../intro/install.rst:209
-# 35398002a9cc4d30b7450a9556494ad2
 msgid "**``mod_rewrite`` isn't installed.**"
 msgstr ""
 
 #: ../../intro/install.rst:211
-# c44cf28f6c2041159201f099fcdf4ac6
 msgid "Check your ``httpd.conf`` to make sure that this module is being loaded by Apache. You may have to restart Apache to get it to pick up any changes in configuration. You can also use `PHP info`_ to check to see if the module is being loaded."
 msgstr ""
 
 #: ../../intro/install.rst:216
-# 2c70f4cb132349c4ac51e483219a7e80
 msgid "**The rules in ``.htaccess`` aren't being obeyed.**"
 msgstr ""
 
 #: ../../intro/install.rst:220
-# 9189d19a72bf483db36444a40eb169da
 msgid "In your virtual host configuration settings (which may be contained within ``httpd.conf``), change the AllowOverride setting so that it reads:"
 msgstr ""
 
 #: ../../intro/install.rst:224
-# 822f83e400fd49fa97040ccd59521641
 msgid "``AllowOverride all``"
 msgstr ""
 
 #: ../../intro/install.rst:226
-# ff07d1d557d8486f9fe0df225d0f6f74
 msgid "This will tell Apache to pick up the ``mod_rewrite`` rules from ``.htaccess``."
 msgstr ""
 
 #: ../../intro/install.rst:229
-# a8fe8ad3bd5847d1932118dedd58a130
 msgid "**Elgg is not installed in the root of your web directory (ex: http://example.org/elgg/ instead of http://example.org/)**"
 msgstr ""
 
 #: ../../intro/install.rst:233
-# 80513e5551b943b4bd83616a73723a4d
 msgid "The install script redirects me to \"action\" when it should be \"actions\""
 msgstr ""
 
 #: ../../intro/install.rst:235
-# 2bcb40ec73194cdd814a933151fa8b92
 msgid "This is a problem with your ``mod_rewrite`` setup. DO NOT, REPEAT, DO NOT change any directory names!"
 msgstr ""
 
 #: ../../intro/install.rst:239
-# a6022999645c48f8ba3b455167423297
 msgid "I installed in a subdirectory and my install action isn't working!"
 msgstr ""
 
 #: ../../intro/install.rst:241
-# ca0bc92bdfa042c7beb37c7cdf4b1e44
 msgid "If you installed Elgg so that it is reached with an address like http://example.org/mysite/ rather than http://example.org/, there is a small chance that the rewrite rules in .htaccess will not be processed correctly. This is usually due to using an alias with Apache. You may need to give mod\\_rewrite a pointer to where your Elgg installation is."
 msgstr ""
 
 #: ../../intro/install.rst:247
-# 30f0886bac2b48d488eda678d9ce7795
 msgid "Open up .htaccess in a text editor"
 msgstr ""
 
 #: ../../intro/install.rst:249
-# f93cbf5865114fd8a39cfe2426a7bcaf
 msgid "Where prompted, add a line like ``RewriteBase /path/to/your/elgg/installation/`` (Don't forget the trailing slash)"
 msgstr ""
 
 #: ../../intro/install.rst:252
-# a1852860d8bb4625875cd7144bf97c0c
 msgid "Save the file and refresh your browser."
 msgstr ""
 
 #: ../../intro/install.rst:254
-# 957a9edbe53f4f9ea6831ad23e4e5077
 msgid "Please note that the path you are using is the **web** path, minus the host."
 msgstr ""
 
 #: ../../intro/install.rst:257
-# a68b8b50d1d247b4ad29f0801768afb6
 msgid "For example, if you reach your elgg install at http://example.org/elgg/, you would set the base like this:"
 msgstr ""
 
 #: ../../intro/install.rst:260
-# 8a41b0e637c04b1eb7ff532637b75c70
 msgid "``RewriteBase /elgg/``"
 msgstr ""
 
 #: ../../intro/install.rst:262
-# 3eb8792d5c9b4f8b9e408f691ecce575
 msgid "Please note that installing in a subdirectory does not require using RewriteBase. There are only some rare circumstances when it is needed due to the set up of the server."
 msgstr ""
 
 #: ../../intro/install.rst:267
-# ef991c19ef8d4908aa81b02f813bbac4
 msgid "I did everything! mod\\_rewrite is working fine, but still the 404 error"
 msgstr ""
 
 #: ../../intro/install.rst:269
-# ab0f2f9636114533a5ead6c2da878ee3
 msgid "Maybe there is a problem with the file .htaccess. Sometimes the elgg install routine is unable to create one and unable to tell you that. If you are on this point and tried everything that is written above:"
 msgstr ""
 
 #: ../../intro/install.rst:273
-# e9c1bd0800e84ed38b2eca728d7be4b6
 msgid "check if it is really the elgg-created .htaccess (not only a dummy provided from the server provider)"
 msgstr ""
 
 #: ../../intro/install.rst:276
-# 4e30710792d34eaeabdb44cbdca9d69f
 msgid "if it is not the elgg provided htaccess file, use the htaccess\\_dist (rename it to .htaccess)"
 msgstr ""
 
 #: ../../intro/install.rst:280
-# ce173469a6bc47879a2d1495fa867922
 msgid "I get an error message that the rewrite test failed after the requirements check page"
 msgstr ""
 
 #: ../../intro/install.rst:282
-# bf4c8d4507174c71b852908a19e40e1a
 msgid "I get the following messages after the requirements check step (step 2) of the install:"
 msgstr ""
 
 #: ../../intro/install.rst:284
-# f88bebb5ee3843938d43e7483454b1d1
 msgid "We think your server is running the Apache web server."
 msgstr ""
 
 #: ../../intro/install.rst:286
-# 09926de53544411c8b3706cdc5e122a1
 msgid "The rewrite test failed and the most likely cause is that AllowOverride is not set to All for Elgg's directory. This prevents Apache from processing the .htaccess file which contains the rewrite rules."
 msgstr ""
 
 #: ../../intro/install.rst:289
-# 6a2913ab52db435bb9bed2752a96c7e5
 msgid "A less likely cause is Apache is configured with an alias for your Elgg directory and you need to set the RewriteBase in your .htaccess. There are further instructions in the .htaccess file in your Elgg directory."
 msgstr ""
 
 #: ../../intro/install.rst:292
-# c20f800e876e4e92a18d0c5892f29efd
 msgid "After this error, everinteraction with the web interface results in a error 500 (Internal Server Error)"
 msgstr ""
 
 #: ../../intro/install.rst:294
-# afe45c970e1444fc904f4898b4ea2992
 msgid "This is likely caused by not loading the \"filter module by un-commenting the"
 msgstr ""
 
 #: ../../intro/install.rst:296
-# 6b157e6d0406484b8cd8d9770472bdb8
 msgid "#LoadModule filter_module modules/mod_filter.so"
 msgstr ""
 
 #: ../../intro/install.rst:298
-# 423e67de8eea47a0a46ac7dab1ea3297
 msgid "line in the \"httpd.conf\" file."
 msgstr ""
 
 #: ../../intro/install.rst:300
-# 0449807c7a50492cb72770040fbaff53
 msgid "the Apache \"error.log\" file will contain an entry similar to:"
 msgstr ""
 
 #: ../../intro/install.rst:302
-# 55a9aee4c85341819acd7ae8d26bb9bc
 msgid "... .htaccess: Invalid command 'AddOutputFilterByType', perhaps misspelled or defined by a module not included in the server configuration"
 msgstr ""
 
 #: ../../intro/install.rst:306
-# abe0618fc61846e5a8e849374855cbdf
 msgid "There is a white page after I submit my database settings"
 msgstr ""
 
 #: ../../intro/install.rst:308
-# f485a68c8dc64707b1e8bd8427bd5e2b
 msgid "Check that the Apache mysql module is installed and is being loaded."
 msgstr ""
 
 #: ../../intro/install.rst:311
-# 5654b83f3cd2482fbf3bcb22e8a81669
 msgid "I'm getting a 404 error with a really long url"
 msgstr ""
 
 #: ../../intro/install.rst:313
-# 2adce63c0a0546a0ac58ceb996487e46
 msgid "If you see a 404 error during the install or on the creation of the first user with a url like: ``http://example.com/homepages/26/d147515119/htdocs/elgg/action/register`` that means your site url is incorrect in your sites\\_entity table in your database. This was set by you on the second page of the install. Elgg tries to guess the correct value but has difficulty with shared hosting sites. Use phpMyAdmin to edit this value to the correct base url."
 msgstr ""
 
 #: ../../intro/install.rst:323
-# 0efc123ce9474a7c8cac6190851784d8
 msgid "I am having trouble setting my data path"
 msgstr ""
 
 #: ../../intro/install.rst:325
-# 726f9b68aada4035b01e55c78de3c073
 msgid "This is highly server specific so it is difficult to give specific advice. If you have created a directory for uploading data, make sure your http server can access it. The easiest (but least secure) way to do this is give it permissions 777. It is better to give the web server ownership of the directory and limit the permissions."
 msgstr ""
 
 #: ../../intro/install.rst:331
-# b3d4c8e3b92d4cf499f6e3babd5fb484
 msgid "The top cause of this issue is PHP configured to prevent access to most directories using `open\\_basedir`_. You may want to check with your hosting provider on this."
 msgstr ""
 
 #: ../../intro/install.rst:335
-# b37857f0dd9a4069ba86f153c4453d50
 msgid "Make sure the path is correct and ends with a /. You can check the path in your database in the datalists table."
 msgstr ""
 
 #: ../../intro/install.rst:338
-# 894e503b027c4ea29b7eaa3ec08d6673
 msgid "If you only have ftp access to your server and created a directory but do not know the path of it, you might be able to figure it out from the www file path set in your datalists database table. Asking for help from your hosting help team is recommended at this stage."
 msgstr ""
 
 #: ../../intro/install.rst:347
-# ec0e0acf8e2c42b0a33a581af64c39fa
 msgid "I can't validate my admin account because I don't have an email server!"
 msgstr ""
 
 #: ../../intro/install.rst:349
-# db3760bc71a54c979b77bb4c1d4213ea
 msgid "While it's true that normal accounts (aside from those created from the admin panel) require their email address to be authenticated before they can log in, the admin account does not."
 msgstr ""
 
 #: ../../intro/install.rst:353
-# d747494f485645cba07940a1536a9d64
 msgid "Once you have registered your first account you will be able to log in using the credentials you have provided!"
 msgstr ""
 
 #: ../../intro/install.rst:357
-# 3fd1eee5192b4116be7e14e398c3aea7
 msgid "I have tried all of these suggestions and I still cannot install Elgg"
 msgstr ""
 
 #: ../../intro/install.rst:359
-# fb31caa525c449308faaf30552346c26
 msgid "It is possible that during the process of debugging your install you have broken something else. Try doing a clean install:"
 msgstr ""
 
 #: ../../intro/install.rst:362
-# 7e4da7e8d21844b4a7613dfff31aeb0d
 msgid "drop your elgg database"
 msgstr ""
 
 #: ../../intro/install.rst:363
-# ed9a17ac24b24227b5537dff992a6d19
 msgid "delete your data directory"
 msgstr ""
 
 #: ../../intro/install.rst:364
-# 543b77b113ee43cf87459f7fd4ab9d62
 msgid "delete the Elgg source files"
 msgstr ""
 
 #: ../../intro/install.rst:365
-# 775186ebbddb40bca6feea37ca96fd4e
 msgid "start over"
 msgstr ""
 
 #: ../../intro/install.rst:367
-# 8df4a202e91f48e1bf6850938ee35b13
 msgid "If that fails, seek the help of the `Elgg community`_. Be sure to mention what version of Elgg you are installing, details of your server platform, and any error messages that you may have received including ones in the error log of your server."
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:4
-# ff2b64bcb9114027bb685b38be44f504
 msgid "Installing Elgg on Cloud9 IDE"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:7
-# 4c4cdabbb85840688bb242503a527a16
 msgid "1. Create a c9 workspace"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:9
-# 0f92e5b9f5bf46738f6bc7ba3ccf1d22
 msgid "Go to http://c9.io"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:10
-# e90d074bbd5449a189b9f6d60a08fd1f
 msgid "Login with GitHub"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:11
-# 0ae75c3080fb452e926d70bf9eb578ef
 msgid "On the Dashboard, click \"Create new workspace\" => \"Create a new workspace\""
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:13
-# 840bd4994bc04e03b6f93697a79fc943
 msgid "Choose a project name (e.g. \"elgg\")"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:14
-# ea776b4eb05c403a96614a044e22353f
 msgid "Choose \"PHP\" for project type"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:15
-# 6ea0a3b10bac4a7ab6cdf6f20a5e07ee
 msgid "Click \"Create\""
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:16
-# 685df84b47b2492a895d1a02567e209a
 msgid "Wait... (~1 min for c9 workspace to be ready)"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:17
-# 9d1090b3b52947adaad7d083d95ec079
 msgid "Click \"Start editing\" for the workspace"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:20
-# 229e8c0aa7224c708d4fa6fcf6dfe316
 msgid "2. Set up the workspace for Elgg"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:22
-# f7f39ba731c945cfa780992221752f20
 msgid "Run the following in cloud9's terminal:"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:33
-# 9104c263b3ce4ce6805413d10ceac7a6
 msgid "Configure ``engine/settings.php`` to be like so:"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:46
-# e86aad889a21485faf15a152c6efefe2
 msgid "3. Complete the install process from Elgg's UI"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:48
-# b5b4f6b451dc4b65963785142f718418
 msgid "Hit \"Run\" at the top of the page to start Apache."
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:49
-# c27655c4a4d44b138be9a91205980128
 msgid "Go to ``http://your-workspace.your-username.c9.io/install.php?step=database``"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:50
-# 4c942cce8feb4cb4bb7681ee3f77a19b
 msgid "Change Site URL to ``http://your-workspace.your-username.c9.io/``"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:51
-# 4184f6e5bdaf45f89c2aad21d6de3f08
 msgid "Put in the data directory path. Should be something like ``/var/..../app-root/data/elgg-data/``."
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:53
-# ff1c8592c576447bafe7e3a3f36bf22b
 msgid "Click \"Next\""
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:54
-# 0dd0847177d446588726728b123bc57a
 msgid "Create the admin account"
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:55
-# 17c59ccd067b4f1c8c61b3b39721a1aa
 msgid "Click \"Go to site\""
 msgstr ""
 
 #: ../../intro/install/cloud9.rst:56
-# 3480342ca7d0460bbc8b2218914d706d
 msgid "You may have to manually visit http://your-workspace.your-username.c9.io/ and login with the admin credentials you just configured."
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:4
-# a6e8508d27ce40bbac3689b5305b4b3a
 msgid "Installing Elgg on EasyPHP"
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:6
-# 69f3221738b143168a06443fc0348842
 msgid "You should first be familiar with the :doc:`standard installation instructions <../install>`."
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:8
-# 38b195d77b644ea6ad35a42054963340
 msgid "Assuming no MySQL, PHP or Apache installations exist already."
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:9
-# f3012302a3874bbc84c8b614408620dc
 msgid "Best run as a development/test server"
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:11
-# 1ac63a6d8bf44890afa44c97fd121614
 msgid "Stop IIS running if installed"
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:13
-# 30ec41e71793405182dd87f913df4102
 msgid "Download and install the latest Easy PHP from http://www.easyphp.org"
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:15
-# 625d64488cb448c2bf08d5a61c8eb5ea
 msgid "Set up the database and point the web server to your Elgg folder (all done from the EasyPHP tray icon) -  Right click EasyPHP tray icon, select \"Administration\" -  A new tab is created in your browser for managing Easy PHP -  Add your Elgg folder to Apache in \"Alias\" section -  Click \"Manage MySQL with PhpMyAdmin\", create a database and account for Elgg"
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:21
-# d3b4102f4edf4db9b3997623f6c3da01
 msgid "(Ignore this step for v5.3 or later) From the tray icon go Configuration/Apache and uncomment this line::"
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:26
-# 23e38ad785e9439d889d76fae957011e
 msgid "(Ignore this step for v5.3 or later) Change ``AllowOverride None`` to ``AllowOverride All`` in the relevant directory entry in Configuration/Apache"
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:29
-# af32ac03ddcf4241a9f072b9977dd5d3
 msgid "(Ignore this step for v5.3 or later) From the tray icon fo Configuration/PHP and uncomment this line::"
 msgstr ""
 
 #: ../../intro/install/easyphp.rst:34
-# 15c7b06a216e4c4c976dcff30b6a3a81
 msgid "A reboot is best Elgg should run via http://127.0.0.1"
 msgstr ""
 
 #: ../../intro/install/iis.rst:4
-# 3d9a7fe6cc3b4c30a6983458d5cb8457
 msgid "Installing Elgg on IIS"
 msgstr ""
 
 #: ../../intro/install/iis.rst:6
-# 0f260ec5f5e244e2960399574a7dc583
 msgid "You can follow the :doc:`standard installation instructions <../install>` with the following caveats:"
 msgstr ""
 
 #: ../../intro/install/iis.rst:9
-# 003dbad4c06c46f98eea7af19cfb3fde
 msgid "When installing on IIS, the problem is that the Apache mod\\_rewrite rules will not be recognized, and this breaks the application. You need to convert the mod\\_rewrite rules to the `IIS URL Rewrite`_ module format."
 msgstr ""
 
 #: ../../intro/install/iis.rst:14
-# 8b5113b01263430cb3b9b7bd30f6bfec
 msgid "You can do this using the IIS 7+ management console, and the \"Import Rules\" feature that will do the conversion, as described in the tutorial \"`importing Apache mod\\_rewrite rules`_\\ \"."
 msgstr ""
 
 #: ../../intro/install/mamp.rst:4
-# 86cd0e6ae43e4bec97d711da40b85065
 msgid "Installing Elgg on MAMP"
 msgstr ""
 
 #: ../../intro/install/mamp.rst:6
-# f50579c5c4b5454fabeba3f1e3060843
 msgid "Follow the :doc:`standard installation instructions <../install>`."
 msgstr ""
 
 #: ../../intro/install/mamp.rst:8
-# 1457f48887254bdcb930851f0f56b50b
 msgid "On certain versions of MAMP, Elgg will either fail to install or have intermittent problems while running."
 msgstr ""
 
 #: ../../intro/install/mamp.rst:11
-# 76e8d478d39848b6aaf735d344c248cd
 msgid "This is a known issue with MAMP and is related to the Zend Optimizer. Until Zend/MAMP have resolved this issue it is recommended that you **turn off the Zend Optimizer** in your PHP settings."
 msgstr ""
 
 #: ../../intro/install/mariadb.rst:4
-# 11c33df875454d5d8b16cebd3a482e2e
 msgid "Installing Elgg on MariaDB"
 msgstr ""
 
 #: ../../intro/install/mariadb.rst:6
-# ae3026fa9cbe49ba841f02e2732cb182
 msgid "You should be able to follow the :doc:`standard installation instructions <../install>`, since this DBMS is supposed to be a drop-in replacement for MySQL."
 msgstr ""
 
 #: ../../intro/install/mariadb.rst:9
-# 203575b45bc047c49e91cd6255a73437
 msgid "Let us know how it goes!"
 msgstr ""
 
 #: ../../intro/install/mariadb.rst:11
-# 31a0a701f4fd46ed942f08b62c2a8a9d
 msgid "Here is some historical community discussion, for reference: https://community.elgg.org/discussion/view/1455994/alternative-dbmss"
 msgstr ""
 
 #: ../../intro/install/nginx.rst:4
-# 23601f6ee8614ed7b69ab91f5fae12e3
 msgid "Installing Elgg on Nginx"
 msgstr ""
 
 #: ../../intro/install/nginx.rst:6
-# 607ec41e39e146e5a606c17a26ce0fad
 msgid "To run Elgg on Nginx, you will need to:"
 msgstr ""
 
 #: ../../intro/install/nginx.rst:8
-# 5c7174ceb5cd49ecace1f65ba8c0e6d3
 msgid "configure Nginx to talk to a PHP process in either CGI or FPM mode"
 msgstr ""
 
 #: ../../intro/install/nginx.rst:9
-# 59690240a47b4a9a99fbe268a57b7b49
 msgid "Port the following rewrite rules"
 msgstr ""
 
 #: ../../intro/install/nginx.rst:13
-# e3eb938a066c4017b8e7769cdf612769
 msgid "Other than that, you should be able to follow the :doc:`standard installation instructions <../install>`."
 msgstr ""
 
 #: ../../intro/install/ubuntu.rst:4
-# 6caf10bb89d74abe8da48de8c75a1724
 msgid "Installing Elgg on Ubuntu Linux"
 msgstr ""
 
 #: ../../intro/install/ubuntu.rst:6
-# 76136a3238a14282ae725b1f6a2e70c1
 msgid "Install the dependencies::"
 msgstr ""
 
 #: ../../intro/install/ubuntu.rst:14
-# 1371da7c097d44b3a1dbea720692e7c2
 msgid "Edit ``/etc/apache2/sites_available/default`` to enable .htaccess processing (set AllowOverride to All)"
 msgstr ""
 
 #: ../../intro/install/ubuntu.rst:15
-# 601567ad975d4a09ba78e938dbfaf454
 msgid "Restart Apache: ``sudo /etc/init.d/apache2 restart``"
 msgstr ""
 
 #: ../../intro/install/ubuntu.rst:16
-# 0a5fc5f9405f4f6cba7ce6aafe24bf33
 msgid "Follow the :doc:`standard installation instructions <../install>`"
 msgstr ""
 
 #: ../../intro/install/virtual.rst:4
-# bcbfc74d04f34072a2d9676f06f4cc9c
 msgid "Installing Elgg on a Virtual Host"
 msgstr ""
 
 #: ../../intro/install/virtual.rst:6
-# 0ef1629acb9840a28bdf881368731dc2
 msgid "Examples of \"virtual hosts\" are Rackspace, Amazon EC2, etc."
 msgstr ""
 
 #: ../../intro/install/virtual.rst:8
-# 4c62b357b3a848548348a3776b9d3af2
 msgid "For installation to proceed successfully, modify the .htaccess file in the root, and uncomment::"
 msgstr ""
 
 #: ../../intro/install/virtual.rst:13
-# b682dca00417465fbe37b3192c8263c4
 msgid "To be::"
 msgstr ""
 
 #: ../../intro/install/virtual.rst:17
-# db2f88e24728425692794adf572ea806
 msgid "Then follow the :doc:`standard installation instructions <../install>`."
 msgstr ""
 
 #: ../../intro/install/xampp.rst:4
-# 275ce91940e2486b8afba3d12f271193
 msgid "Installing Elgg on XAMPP"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:6
-# e2041379176f4f918dbf9fbe78700642
 msgid "These intructions are provided in case you want to test your Elgg installation on your local computer running Windows."
 msgstr ""
 
 #: ../../intro/install/xampp.rst:9
-# 2f840577309f425f8f1dbd5d8ec49d81
 msgid "Download and install XAMPP to your computer from http://www.apachefriends.org/en/xampp.html"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:11
-# f5e56ed48bb648d0b014a62787bf163f
 msgid "Once the installation is completed, it will prompt you to start the XAMPP controller panel. Leave it for now."
 msgstr ""
 
 #: ../../intro/install/xampp.rst:13
-# f97c0332085d4de490f98de59b3ddec6
 msgid "Open ``C:\\xampp\\apache\\conf\\httpd.conf`` file with notepad and uncomment these lines::"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:19
-# bc919704791749ba98e62414660b769e
 msgid "Edit the php.ini file and change ``arg_separator.output = &amp;amp;`` to ``arg_separator.output = &``"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:21
-# d666e373094d40978f8703cadbcbdd33
 msgid "Go to ``C:\\xampp`` and double click on the xampp_start application"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:22
-# ffac5884cfe247ffbef6a7022b728eef
 msgid "Go to http://localhost/"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:23
-# e85ef44a421d424e8a5bacabe47b5662
 msgid "Change your server's password in the security option"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:24
-# 527d045451684c4885a139b5ef9207f0
 msgid "Go to http://localhost/phpmyadmin and login with the username and the password of your server"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:26
-# 8f52f41fc2334b90bf16911e371e9b59
 msgid "Create a database called \"elgg\" in your phpmyadmin panel"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:27
-# 092261dee3a64b3cb49f9c75600ec3fc
 msgid "Now download Elgg. Unzip it and extract to ``C:\\xampp\\htdocs\\sites\\elgg``"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:28
-# a211838cb57641b191d0db297cdd8e00
 msgid "Create the Elgg data folder as ``C:\\xampp\\htdocs\\sites\\data``"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:29
-# 1e8c122809e94a57b30a0e14199df643
 msgid "Go to http://localhost/sites/elgg"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:30
-# d9f9834f6f864534a11928889b6e9af2
 msgid "You will be taken to the Elgg installation steps. Install it and enjoy."
 msgstr ""
 
 #: ../../intro/install/xampp.rst:33
-# 7941d0d9354f45d4875feb914307435a
 msgid "A note on XAMPP 1.7.4 and eAccelerator"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:35
-# f87f01015d634b0b97a2f9258cf9919d
 msgid "Elgg is compatible with opcode caches and it is highly recommended that you enable a PHP opcode caching tool for a faster experience.  XAMPP comes with support for eAccelerator out of the box, but unfortunately, the 1.7.4 build of XAMPP leaves out the DLL that's required.  To get eAccelerator working, follow these steps:"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:41
-# 4564f782405a43e09dc85c1a3648f2cc
 msgid "Download the DLL from http://eac.qme.nl/eAccelerator_v1_0_svn427_for_v5_3_5-VC6.zip"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:42
-# d8ff7c04cf41455d81137f5c2aa6a63f
 msgid "Copy eAccelerator_ts.dll to ``C:\\xampp\\php\\ext\\php_eaccelerator.dll``"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:43
-# fc79c4e8e14e4b9cba0130648d4a2d6d
 msgid "Uncomment this line in ``C:\\xampp\\php\\php.ini``::"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:47
-# 44f59b205708487a9d52396b0dfddcd2
 msgid "Restart apache"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:49
-# 0e6c333684d649ddb95b2fcfcd432821
 msgid "To verify that it is on:"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:51
-# 2ff8c4b5071e49c780c4bc7d6932027d
 msgid "Go to localhost/xampp"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:52
-# 99dcbea822284b27b7140733f7a98fa6
 msgid "Click on phpinfo() from the left sidebar"
 msgstr ""
 
 #: ../../intro/install/xampp.rst:53
-# 67b92f9122ca46c79d6fd5c281cc7c9f
 msgid "Ctrl+F for eaccelerator.  If you get no results, eAccelerator is not active"
 msgstr ""
 
 #: ../../intro/license.rst:2
-# dc400f20550e432097e70ecf474f4999
 msgid "License"
 msgstr ""
 
 #: ../../intro/license.rst:5
-# f87cc3932d0f4a2ba6990c19b8d93e18
 msgid "MIT or GPLv2"
 msgstr ""
 
 #: ../../intro/license.rst:6
-# ac1157bfaa234deba25746e324ab25d6
 msgid "A full Elgg package that includes the framework and a core set of plugins is available under version 2 of the `GNU General Public License`__ (GPLv2). We also make the framework (without the plugins) available under the MIT license."
 msgstr ""
 
 #: ../../intro/license.rst:13
-# 2f33efbe26be4d3a880a85400e6f2734
 msgid "FAQ"
 msgstr ""
 
 #: ../../intro/license.rst:14
-# 175310f6506d4e3db12c17adc095d4f6
 msgid "The following answers are provided as a convenience to you; they are not legal counsel. Consult with a lawyer to be sure about the answers to these questions. The Elgg Foundation cannot be held responsible for decisions you make based on what you read on this page."
 msgstr ""
 
 #: ../../intro/license.rst:18
-# 5303536f9abf41d7bc2ded1fb844101b
 msgid "For questions not answered here, please refer to the `official FAQ for the GPLv2`__."
 msgstr ""
 
 #: ../../intro/license.rst:24
-# 12b6c90265ee4f34a155541640e829c1
 msgid "How much does Elgg cost?"
 msgstr ""
 
 #: ../../intro/license.rst:25
-# f7bd7424f6db4fbeac31c83113ffc5a2
 msgid "Elgg is free to download, install, and use. If you’d like to donate, we do appreciate our `financial supporters`__!"
 msgstr ""
 
 #: ../../intro/license.rst:31
-# ba2681d06673445c8bc6676e2163afe7
 msgid "Can I remove the Elgg branding/links?"
 msgstr ""
 
 #: ../../intro/license.rst:32
 #: ../../intro/license.rst:43
-# 4d51c1eb36d44b82836cd0fb7579c7ee
-# 2ab5cc24741d47608ad75b62e9e0c86d
 msgid "Yes."
 msgstr ""
 
 #: ../../intro/license.rst:36
-# 6bdc3287527c468b920fe4787fa247a9
 msgid "Can I modify the source code?"
 msgstr ""
 
 #: ../../intro/license.rst:37
-# fa507a5375d044f7bbbe0b02d99c192b
 msgid "Yes, but in general we recommend you make your modifications as plugins so that when a new version of Elgg is released, the upgrade process is as painless as possible."
 msgstr ""
 
 #: ../../intro/license.rst:42
-# a442b1957fce4064b5e6b245b570e95a
 msgid "Can I charge my users membership fees?"
 msgstr ""
 
 #: ../../intro/license.rst:47
-# 158a91d5cfa0470e805f9ee87953e829
 msgid "If I modify Elgg, do I have to make the changes available?"
 msgstr ""
 
 #: ../../intro/license.rst:48
-# c17ff57ea5f1492391b7d6b99ca3bc93
 msgid "No, if you are using Elgg to provide a service, you do not have to make the source available. If you distribute a modified version of Elgg, then you must include the source code for the changes."
 msgstr ""
 
 #: ../../intro/license.rst:53
-# 584d23dc0ddb4ee98bf29749076ac2d5
 msgid "If I use Elgg to host a network, does The Elgg Foundation have any rights over my network?"
 msgstr ""
 
 #: ../../intro/license.rst:54
-# 92824fb9283945bf8b3a77fcee8a9a65
 msgid "No."
 msgstr ""
 
 #: ../../intro/license.rst:58
-# fa08a5ba65ee478e80e799002943866e
 msgid "What’s the difference between the MIT and GPL versions?"
 msgstr ""
 
 #: ../../intro/license.rst:59
-# 35415b8295134f768cd063e2d17b7fd9
 msgid "Plugins are not included with the MIT version."
 msgstr ""
 
 #: ../../intro/license.rst:61
-# 196b937933e0452e825458847d3f657f
 msgid "You can distribute a commercial product based on Elgg using the MIT version without making your modifications available."
 msgstr ""
 
 #: ../../intro/license.rst:63
-# 45365860f14b4847ab28b723fe04e992
 msgid "With the GPL licensed version, you have to include make your modifications of the framework public if you redistribute the framework."
 msgstr ""
 
 #: ../../intro/license.rst:67
-# 54c10471bd47445e9984f68f32373015
 msgid "Why are plugins missing from the MIT version?"
 msgstr ""
 
 #: ../../intro/license.rst:68
-# d0dfb29b28d14a479e85dc9eddff241d
 msgid "The plugins were developed under the GPL license, so they cannot be released under an MIT license. Also, some plugins include external dependencies that are not compatible with the MIT license."
 msgstr ""
 
 #: ../../intro/license.rst:73
-# 253358b8b1aa4431b952e24fe9e4ba29
 msgid "May I distribute a plugin for Elgg under a commercial license?"
 msgstr ""
 
 #: ../../intro/license.rst:74
-# bff4cbf282604179996d794ab6ec7464
 msgid "We believe you can, since plugins typically depend only the core framework and the framework is available under the MIT license. That said, we really recommend you consult with a lawyer on this particular issue to be absolutely sure."
 msgstr ""
 
 #: ../../intro/license.rst:77
-# 6a237f519499476faac4f7113b6542d8
 msgid "Note that plugins released via the community site repository must be licensed under a GPLv2-compatible license. They do not necessarily have to be GPLv2, just compatible (like MIT)."
 msgstr ""
 
 #: ../../intro/license.rst:82
-# 369fc62af4d246098725e23ee7cac392
 msgid "Can we build our own tool that uses Elgg and sell that tool to our clients?"
 msgstr ""
 
 #: ../../intro/license.rst:83
-# fea2428bd9fc4081a931bccdea4ff7e9
 msgid "Yes, but then your clients will be free to redistribute that tool under the terms of the GPLv2."
 msgstr ""
 

@@ -25,11 +25,11 @@ Se estás listo para continuar, preme o botón de «Seguinte».",
 	'install:require:settings' => 'Ficheiro de configuración',
 	'install:require:database' => 'Base de datos',
 
-	'install:check:root' => 'O servidor web non ten permisos para crear un ficheiro «.htaccess» no cartafol principal de Elgg. Ten dúas opcións:
+	'install:check:root' => 'O seu servidor web carece de permisos para crear un ficheiro «.htaccess» no cartafol raíz de Elgg. Quédanlle dúas alternativas:
 
-		1. Cambiar os permisos do cartafol principal.
+		• Cambiar os permisos do cartafol raíz de Elgg.
 
-		2. Copiar o ficheiro «htaccess_dist» a «.htaccess».',
+		• Copiar o ficheiro de «install/config/htaccess.dist» a «.htaccess».',
 
 	'install:check:php:version' => 'Elgg necesita PHP %s ou unha versión superior. O servidor usa PHP %s.',
 	'install:check:php:extension' => 'Elgg necesita a extensión de PHP «%s».',
@@ -145,11 +145,11 @@ Se estás listo para continuar, preme o botón de «Seguinte».",
 	'install:error:rewrite:allowoverride' => "Non se pasou a proba de reescritura. O máis probábel é que fose porque a opción «AllowOverride» non ten o valor «All» para o cartafol de Elgg. Isto impídelle a Apache procesar o ficheiro «.htaccess» que contén as regras de reescritura.\n\n
 
 Outra causa, menos probábel, é que Apache estea configurado con un alias para o cartafol de Elgg, e entón terá que definir a opción «RewriteBase» no seu ficheiro «.htaccess». Atopará instrucións máis detalladas no ficheiro «.htaccess» do cartafol de Elgg.",
-	'install:error:rewrite:htaccess:write_permission' => 'O servidor web non ten permisos para crear o ficheiro «.htaccess» no cartafol de Elgg. Ten que copiar manualmente o ficheiro «htaccess_dist» a «.htaccess» ou cambiar os permisos do cartafol.',
+	'install:error:rewrite:htaccess:write_permission' => 'O seu servidor web carece de permisos para crear un ficheiro «.htaccess» no cartafol de Elgg. Ten que copialo manualmente de «install/config/htaccess.dist» a «.htaccess» ou cambiar os permisos do cartafol.',
 	'install:error:rewrite:htaccess:read_permission' => 'Hai un ficheiro «.htaccess» no cartafol de Elgg, pero o servidor web non ten permisos para lelo.',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'Hai un ficheiro «.htaccess» no cartafol de Elgg que non creou Elgg. Elimíneo.',
 	'install:error:rewrite:htaccess:old_elgg_htaccess' => 'Atopouse o que parece un vello ficheiro «.htaccess» de Elgg no cartafol de Elgg. Fáltalle a regra de reescritura para probar o servidor web.',
-	'install:error:rewrite:htaccess:cannot_copy' => 'Non foi posíbel crear o ficheiro «.htaccess» debido a un erro descoñecido. Ten que copiar manualmente o ficheiro «htaccess_dist» en «.htaccess» no cartafol de Elgg',
+	'install:error:rewrite:htaccess:cannot_copy' => 'Produciuse un erro descoñecido durante a creación do ficheiro «.htaccess». Ten que copiar manualmente «install/config/htaccess.dist» a «.htaccess» no cartafol de Elgg.',
 	'install:error:rewrite:altserver' => 'Non se pasou a proba das regras de reescritura. Ten que configurar o servidor web coas regras de reescritura de Elgg e intentalo de novo',
 	'install:error:rewrite:unknown' => 'Uf. Non foi posíbel determinar o tipo de servidor web que está a usar, e non pasou a proba das regras de reescritura. Non podemos aconsellalo sobre como solucionar o seu problema específico. Bótelle unha ollada á ligazón sobre solución de problemas.',
 	'install:warning:rewrite:unknown' => 'O servidor non permite probar automaticamente as regras de reescritura, e o navegador non permite probalas mediante JavaScript. Pode continuar a instalación, pero pode que ao rematar o sitio lle dea problemas. Para probar manualmente as regras de reescritura, siga esta ligazón: <a href="%s" target="_blank">probar</a>. Se as regras funcionan, aparecerá a palabra «success».',

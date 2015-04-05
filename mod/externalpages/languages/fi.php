@@ -6,6 +6,7 @@ return array(
 	 */
 	'expages' => "Infosivut",
 	'admin:appearance:expages' => "Infosivut",
+	'expages:edit:viewpage' => "Näytä sivu",
 	'expages:about' => "Tietoa",
 	'expages:terms' => "Käyttöehdot",
 	'expages:privacy' => "Rekisteriseloste",

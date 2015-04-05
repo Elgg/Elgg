@@ -20,7 +20,7 @@ return array(
 	'developers:label:display_errors' => 'Toon PHP fatale fouten',
 	'developers:help:display_errors' => "Standaard verbergt de .htaccess van Elgg het weergeven van fatale fouten.",
 	'developers:label:screen_log' => "Log naar het scherm",
-	'developers:help:screen_log' => "Dit toont het resultaat van elgg_log en elgg_dump() op de webpagina.",
+	'developers:help:screen_log' => "Dit toont het resultaat van elgg_log() en elgg_dump() op de webpagina alsmede het aantal database queries.",
 	'developers:label:show_strings' => "Toon vertaalsleutels",
 	'developers:help:show_strings' => "Dit toont de vertaalsleutels die gebruikt worden door elgg_echo().",
 	'developers:label:wrap_views' => "Omcirkel views",
@@ -53,6 +53,7 @@ return array(
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
+	'developers:log_queries' => "%s database queries (zonder het shutdown event)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introductie',

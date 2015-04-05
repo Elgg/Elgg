@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => 'Lokalizacja elementu',
 	'reportedcontent:success' => 'Zgłoszenie zostało wysłane do administratora strony',
 	'reportedcontent:failing' => 'Zgłoszenie nie mogło zostać wysłane',
+	'reportedcontent:refresh' => 'Odśwież listę',
 	'reportedcontent:report' => 'Zgłoś administratorowi',
 	'reportedcontent:instructions' => 'To zgłoszenie zostanie przesłane administratorom strony do weryfikacji.',
 	'reportedcontent:numbertodisplay' => 'Ilość wyświetlanych zgłoszeń',
