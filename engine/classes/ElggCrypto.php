@@ -160,9 +160,9 @@ class ElggCrypto {
 	/**
 	 * Get an HMAC token builder/validator object
 	 *
-	 * @param string[]|string $data HMAC data, or array of strings to use as data
-	 * @param string          $algo Hash algorithm
-	 * @param string          $key  Optional key (default uses site secret)
+	 * @param mixed  $data HMAC data or serializable data
+	 * @param string $algo Hash algorithm
+	 * @param string $key  Optional key (default uses site secret)
 	 *
 	 * @return \Elgg\Security\Hmac
 	 */
