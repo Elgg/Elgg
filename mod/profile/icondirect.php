@@ -39,53 +39,50 @@ if (!empty($_GET['size'])) {
 	}
 }
 
-$conf = new \Elgg\Database\Config($CONFIG);
+$path = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR;
 
-if ($conf->isDatabaseSplit()) {
-	$read_connection = $conf->getConnectionConfig(\Elgg\Database\Config::READ);
-} else {
-	$read_connection = $conf->getConnectionConfig(\Elgg\Database\Config::READ_WRITE);
-}
+$data_root = call_user_func(function () use ($CONFIG) {
+	if (isset($CONFIG->dataroot)) {
+		return rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+	}
 
-$mysql_dblink = @mysql_connect($read_connection['host'], $read_connection['user'], $read_connection['password'], true);
-if ($mysql_dblink) {
-	if (@mysql_select_db($read_connection['database'], $mysql_dblink)) {
-		$q = "SELECT name, value FROM {$CONFIG->dbprefix}datalists WHERE name in ('dataroot', 'path')";
-		$result = mysql_query($q, $mysql_dblink);
-		if ($result) {
-			$row = mysql_fetch_object($result);
-			while ($row) {
-				if ($row->name == 'dataroot') {
-					$data_root = $row->value;
-				} elseif ($row->name == 'path') {
-					$elgg_path = $row->value;
-				}
-				
-				$row = mysql_fetch_object($result);
-			}
+	// must get from DB
+	$conf = new \Elgg\Database\Config($CONFIG);
+	$db = new \Elgg\Database($conf, new \Elgg\Logger(new \Elgg\PluginHooksService()));
+
+	try {
+		$row = $db->getDataRow("
+			SELECT `value`
+			FROM {$db->getTablePrefix()}datalists
+			WHERE `name` = 'dataroot'
+		");
+		if (!$row) {
+			return "";
 		}
+	} catch (\DatabaseException $e) {
+		// we're going to let the engine figure out what's happening...
+		return '';
+	}
 
-		@mysql_close($mysql_dblink);
+	return rtrim($row->value, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+});
 
-		if (isset($data_root) && isset($elgg_path)) {
-			
-			$locator = new \Elgg\EntityDirLocator($guid);
-			$user_path = $data_root . $locator->getPath();
+if ($data_root) {
+	$locator = new \Elgg\EntityDirLocator($guid);
+	$user_path = $data_root . $locator->getPath();
 
-			$filename = $user_path . "profile/{$guid}{$size}.jpg";
-			$filesize = @filesize($filename);
-			
-			if ($filesize) {
-				header("Content-type: image/jpeg");
-				header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
-				header("Pragma: public");
-				header("Cache-Control: public");
-				header("Content-Length: $filesize");
-				header("ETag: \"$etag\"");
-				readfile($filename);
-				exit;
-			}
-		}
+	$filename = $user_path . "profile/{$guid}{$size}.jpg";
+	$filesize = @filesize($filename);
+
+	if ($filesize) {
+		header("Content-type: image/jpeg");
+		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
+		header("Pragma: public");
+		header("Cache-Control: public");
+		header("Content-Length: $filesize");
+		header("ETag: \"$etag\"");
+		readfile($filename);
+		exit;
 	}
 }
 
