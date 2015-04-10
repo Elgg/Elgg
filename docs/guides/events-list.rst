@@ -62,7 +62,7 @@ System events
     Return false to override setting a cookie.
 
 **cache:flush, system**
-    Reset internal and external caches. For example it resets system_cache and simplecache, but also PHP opcode caches (APC, OPCache, WinCache).
+    Reset internal and external caches, by default including system_cache, simplecache, and memcache. One might use it to reset others such as APC, OPCache, or WinCache.
 
 User events
 ===========
