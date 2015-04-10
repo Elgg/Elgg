@@ -12,6 +12,14 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.11 to 2.0
 ================
 
+Callbacks in Queries
+--------------------
+
+Make sure to use only valid *callable* values for "callback" argument/options in the API.
+
+Querying functions will now will throw a ``RuntimeException`` if ``is_callable()`` returns ``false`` for the given
+callback value. This includes functions such as ``elgg_get_entities()``, ``get_data()``, and many more.
+
 Breadcrumbs
 -----------
 

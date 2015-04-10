@@ -95,6 +95,12 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals($uniques, count($prints));
 	}
 
+	public function testInvalidCallbacksThrow() {
+		$this->setExpectedException('RuntimeException', '$callback must be a callable function. Given blorg!');
+
+		$this->getDbMock()->getData("SELECT 1", 'blorg!');
+	}
+
 	private function getFixture($filename) {
 		return dirname(__FILE__) .
 			DIRECTORY_SEPARATOR . '..' .
