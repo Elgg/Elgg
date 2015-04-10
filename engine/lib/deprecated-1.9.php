@@ -1246,24 +1246,6 @@ function setup_db_connections() {
 }
 
 /**
- * Returns (if required, also creates) a database link resource.
- *
- * Database link resources are stored in the {@link $dblink} global.  These
- * resources are created by {@link setup_db_connections()}, which is called if
- * no links exist.
- *
- * @param string $dblinktype The type of link we want: "read", "write" or "readwrite".
- *
- * @return resource Database link
- * @access private
- * @deprecated 1.9
- */
-function get_db_link($dblinktype) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
-	return _elgg_services()->db->getLink($dblinktype);
-}
-
-/**
  * Optimize a table.
  *
  * Executes an OPTIMIZE TABLE query on $table.  Useful after large DB changes.
@@ -1313,38 +1295,6 @@ function get_db_tables() {
 	}
 
 	return $tables;
-}
-
-/**
- * Get the last database error for a particular database link
- *
- * @param resource $dblink The DB link
- *
- * @return string Database error message
- * @access private
- * @deprecated 1.9
- */
-function get_db_error($dblink) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is a private function and should not be used.', 1.9);
-	return mysql_error($dblink);
-}
-
-/**
- * Queue a query for execution upon shutdown.
- *
- * You can specify a handler function if you care about the result. This function will accept
- * the raw result from {@link mysql_query()}.
- *
- * @param string   $query   The query to execute
- * @param resource $dblink  The database link to use or the link type (read | write)
- * @param string   $handler A callback function to pass the results array to
- *
- * @return boolean Whether successful.
- * @deprecated 1.9 Use execute_delayed_write_query() or execute_delayed_read_query()
- */
-function execute_delayed_query($query, $dblink, $handler = "") {
-	elgg_deprecated_notice("execute_delayed_query() has been deprecated", 1.9);
-	return _elgg_services()->db->registerDelayedQuery($query, $dblink, $handler);
 }
 
 /**

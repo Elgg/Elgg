@@ -1,5 +1,6 @@
 <?php
 namespace Elgg;
+use Elgg\Database\Config;
 
 /**
  * An object representing a single Elgg database.
@@ -92,9 +93,8 @@ class Database {
 	 *
 	 * @return resource Database link
 	 * @throws \DatabaseException
-	 * @todo make protected once we get rid of get_db_link()
 	 */
-	public function getLink($type) {
+	protected function getLink($type) {
 		if (isset($this->dbLinks[$type])) {
 			return $this->dbLinks[$type];
 		} else if (isset($this->dbLinks['readwrite'])) {
@@ -642,6 +642,17 @@ class Database {
 	 */
 	public function sanitizeString($value) {
 		return mysql_real_escape_string($value);
+	}
+
+	/**
+	 * Get the server version number
+	 *
+	 * @param string $type Connection type (Config constants, e.g. Config::READ_WRITE)
+	 *
+	 * @return string
+	 */
+	public function getServerVersion($type) {
+		return mysql_get_server_info($this->getLink($type));
 	}
 }
 
