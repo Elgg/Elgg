@@ -115,11 +115,13 @@ class Translator {
 	
 		$country_code = strtolower($country_code);
 		$country_code = trim($country_code);
-		if (is_array($language_array) && sizeof($language_array) > 0 && $country_code != "") {
-			if (!isset($this->CONFIG->translations[$country_code])) {
-				$this->CONFIG->translations[$country_code] = $language_array;
-			} else {
-				$this->CONFIG->translations[$country_code] = $language_array + $this->CONFIG->translations[$country_code];
+		if (is_array($language_array) && $country_code != "") {
+			if (sizeof($language_array) > 0) { 
+				if (!isset($this->CONFIG->translations[$country_code])) {
+					$this->CONFIG->translations[$country_code] = $language_array;
+				} else {
+					$this->CONFIG->translations[$country_code] = $language_array + $this->CONFIG->translations[$country_code];
+				}
 			}
 			return true;
 		}
@@ -242,7 +244,7 @@ class Translator {
 	
 			if (in_array($language, $load_language_files) || $load_all) {
 				$result = include_once($path . $language);
-				if (!$result) {
+				if ($result === false) {
 					$return = false;
 					continue;
 				} elseif (is_array($result)) {
