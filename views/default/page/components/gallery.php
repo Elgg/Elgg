@@ -4,7 +4,7 @@
  *
  * Implemented as an unorder list
  *
- * @uses $vars['items']         Array of ElggEntity or ElggAnnotation objects
+ * @uses $vars['items']         Array of ElggEntity, ElggAnnotation or ElggRiverItem objects
  * @uses $vars['offset']        Index of the first list item in complete list
  * @uses $vars['limit']         Number of items per page
  * @uses $vars['count']         Number of items in the complete list
@@ -13,6 +13,7 @@
  * @uses $vars['full_view']     Show the full view of the items (default: false)
  * @uses $vars['gallery_class'] Additional CSS class for the <ul> element
  * @uses $vars['item_class']    Additional CSS class for the <li> elements
+ * @uses $vars['item_view']     Alternative view to render list items
  * @uses $vars['no_results']    Message to display if no results (string|Closure)
  */
 

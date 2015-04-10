@@ -82,12 +82,16 @@ if ('on' === get_input('https_login')) {
 
 $regenerate_site_secret = get_input('regenerate_site_secret', false);
 if ($regenerate_site_secret) {
-	init_site_secret();
-	elgg_reset_system_cache();
+	// if you cancel this even you should present a message to the user
+	if (elgg_trigger_before_event('regenerate_site_secret', 'system')) {
+		init_site_secret();
+		elgg_reset_system_cache();
+		elgg_trigger_after_event('regenerate_site_secret', 'system');
 
-	system_message(elgg_echo('admin:site:secret_regenerated'));
+		system_message(elgg_echo('admin:site:secret_regenerated'));
 
-	elgg_delete_admin_notice('weak_site_key');
+		elgg_delete_admin_notice('weak_site_key');
+	}
 }
 
 if ($site->save()) {

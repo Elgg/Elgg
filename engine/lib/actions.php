@@ -98,6 +98,17 @@ function elgg_unregister_action($action) {
 }
 
 /**
+ * Get an HMAC token builder/validator object
+ *
+ * @param string[]|string $data HMAC data, or array of strings to use as data
+ * @return \Elgg\Security\Hmac
+ * @since 1.11
+ */
+function elgg_build_hmac($data) {
+	return _elgg_services()->crypto->getHmac($data);
+}
+
+/**
  * Validate an action token.
  *
  * Calls to actions will automatically validate tokens. If tokens are not

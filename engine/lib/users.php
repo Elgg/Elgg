@@ -714,20 +714,6 @@ function users_pagesetup() {
 	// topbar
 	if ($viewer) {
 		elgg_register_menu_item('topbar', array(
-			'name' => 'profile',
-			'href' => $viewer->getURL(),
-			'text' => elgg_view('output/img', array(
-				'src' => $viewer->getIconURL('topbar'),
-				'alt' => $viewer->name,
-				'title' => elgg_echo('profile'),
-				'class' => 'elgg-border-plain elgg-transition',
-			)),
-			'priority' => 100,
-			'link_class' => 'elgg-topbar-avatar',
-			'item_class' => 'elgg-avatar elgg-avatar-topbar',
-		));
-
-		elgg_register_menu_item('topbar', array(
 			'name' => 'usersettings',
 			'href' => "settings/user/{$viewer->username}",
 			'text' => elgg_view_icon('settings') . elgg_echo('settings'),

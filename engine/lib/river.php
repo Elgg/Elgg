@@ -495,6 +495,7 @@ function _elgg_prefetch_river_entities(array $river_items) {
  * List river items
  *
  * @param array $options Any options from elgg_get_river() plus:
+ *   item_view  => STR         Alternative view to render list items
  *   pagination => BOOL        Display pagination links (true)
  *   no_results => STR|Closure Message to display if no items
  *

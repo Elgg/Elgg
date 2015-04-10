@@ -7,6 +7,10 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected $stub;
 
+	/**
+	 * @see ElggCrypto
+	 * @see ElggCrypto::getRandomBytes
+	 */
 	protected function setUp() {
 		$this->stub = $this->getMockBuilder('\ElggCrypto')
 			->setMethods(array('getRandomBytes'))
@@ -40,5 +44,66 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 	 */
 	function testGetRandomString($length, $chars, $expected) {
 		$this->assertSame($expected, $this->stub->getRandomString($length, $chars));
+	}
+
+	function testGeneratesMacInBase64Url() {
+		$crypto = new ElggCrypto();
+		$key = 'a very bad key';
+		$data = '1';
+		$expected = 'nL0lgXrVWgGK0Cmr9_PjqQcR2_PzuAHH114AsPZk-AM';
+		$algo = 'sha256';
+
+		$this->assertEquals($expected, $crypto->getHmac($data, $algo, $key)->getToken());
+	}
+
+	function testStringCastDoesntAffectMacs() {
+		$crypto = new ElggCrypto();
+		$key = 'a very bad key';
+
+		$t1 = $crypto->getHmac(1234, 'sha256', $key)->getToken();
+		$t2 = $crypto->getHmac('1234', 'sha256', $key)->getToken();
+
+		$this->assertEquals($t1, $t2);
+	}
+
+	function testMacAlteredByVaryingData() {
+		$crypto = new ElggCrypto();
+		$key = 'a very bad key';
+
+		$t1 = $crypto->getHmac('1234', 'sha256', $key)->getToken();
+		$t2 = $crypto->getHmac('1235', 'sha256', $key)->getToken();
+
+		$this->assertNotEquals($t1, $t2);
+	}
+
+	function testMacAlteredByVaryingKey() {
+		$crypto = new ElggCrypto();
+		$key1 = 'a very bad key';
+		$key2 = 'b very bad key';
+
+		$t1 = $crypto->getHmac('1234', 'sha256', $key1)->getToken();
+		$t2 = $crypto->getHmac('1234', 'sha256', $key2)->getToken();
+
+		$this->assertNotEquals($t1, $t2);
+	}
+
+	function testCanAcceptDataAsArray() {
+		$crypto = new ElggCrypto();
+		$key = 'a very bad key';
+
+		$token = $crypto->getHmac([12, 34], 'sha256', $key)->getToken();
+		$matches = $crypto->getHmac([12, 34], 'sha256', $key)->matchesToken($token);
+
+		$this->assertTrue($matches);
+	}
+
+	function testMacAlteredByArrayModification() {
+		$crypto = new ElggCrypto();
+		$key = 'a very bad key';
+
+		$t1 = $crypto->getHmac([12, 34], 'sha256', $key)->getToken();
+		$t2 = $crypto->getHmac([123, 4], 'sha256', $key)->getToken();
+
+		$this->assertNotEquals($t1, $t2);
 	}
 }

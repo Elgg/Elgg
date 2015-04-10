@@ -1,3 +1,64 @@
+<a name="1.10.5"></a>
+### 1.10.5  (2015-04-05)
+
+#### Contributors
+
+* Per Jensen (1)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **aalborg_theme:** moves unextend/extend view into init ([3c5fb39b](https://github.com/Elgg/Elgg/commit/3c5fb39ba2c65127c5fc57f6e27eef5ac6127c92), closes [#8105](https://github.com/Elgg/Elgg/issues/8105))
+
+
+<a name="1.10.4"></a>
+### 1.10.4  (2015-03-22)
+
+#### Contributors
+
+* Evan Winslow (3)
+* Jerôme Bakker (2)
+* Juho Jaakkola (2)
+* Matt Beckett (1)
+* Paweł Sroka (1)
+
+#### Bug Fixes
+
+* **core:** don't trigger delete event when you can't edit the entity ([83c69c09](https://github.com/Elgg/Elgg/commit/83c69c09c1a163ae30507043a9c4eaaf9e627d89))
+* **groups:**
+  * respect previous modifications to the write access in group context ([11b55041](https://github.com/Elgg/Elgg/commit/11b55041df54f9c2d193427e7c0acf6a7175882b))
+  * Hides group profile fields that don't have a value ([2bb13db8](https://github.com/Elgg/Elgg/commit/2bb13db8d96bd5a2307c009717476a67cc2698cd))
+
+
+<a name="1.10.3"></a>
+### 1.10.3  (2015-03-08)
+
+#### Contributors
+
+* Juho Jaakkola (5)
+* Jeroen Dalsem (4)
+* Ismayil Khayredinov (1)
+* Jerôme Bakker (1)
+* Matt Beckett (1)
+* Cim (1)
+* Rodrigo (1)
+* Evan Winslow (1)
+
+#### Documentation
+
+* **helpers:** Adds missing underscores to elgg_get_loggedin_user_* functions ([02ef5d7b](https://github.com/Elgg/Elgg/commit/02ef5d7bf6aa70153d5ec9fb9aac1340cad87741))
+* **views:** documented the difference between page/elements/foot and footer ([001be7e4](https://github.com/Elgg/Elgg/commit/001be7e4c19a63932abd1740071f17bdd20bc2b4))
+
+
+#### Bug Fixes
+
+* **upgrade:** reset system cache before upgrade ([468d1c40](https://github.com/Elgg/Elgg/commit/468d1c407ed1912bfdc5f059ba42c2d7af77f951), closes [#6249](https://github.com/Elgg/Elgg/issues/6249))
+* **uservalidationbyemail:** only forward to emailsent page if email sent ([7d8cd3b8](https://github.com/Elgg/Elgg/commit/7d8cd3b83bc32648df3702d25f713f8a63bd399d))
+* **views:**
+  * always add the user guid param to the usersettings/save form ([9e1661d4](https://github.com/Elgg/Elgg/commit/9e1661d4189bc089e632b8ed9a30aabd80155730))
+  * always submit element when there are no userpicker values ([61e295c9](https://github.com/Elgg/Elgg/commit/61e295c9c34e5e8a869f14610e32aa958d9a4720))
+
+
 <a name="1.10.2"></a>
 ### 1.10.2  (2015-02-21)
 

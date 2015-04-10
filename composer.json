@@ -7,7 +7,7 @@
     "prefer-stable": true,
     "type": "project",
     "require": {
-        "php": "~5.4 | ~7.0",
+        "php": "~5.4",
         "ext-mysql": "*",
         "ext-gd": "*",
         "ext-json": "*",

@@ -47,11 +47,11 @@ function get_uploaded_file($input_name) {
 	}
 
 	$file = $files->get($input_name);
-	if (elgg_extract('error', $file) !== 0) {
+	if ($file->getError() !== 0) {
 		return false;
 	}
 
-	return file_get_contents(elgg_extract('tmp_name', $file));
+	return file_get_contents($file->getPathname());
 }
 
 /**
@@ -74,13 +74,13 @@ $square = false, $upscale = false) {
 	if (!$files->has($input_name)) {
 		return false;
 	}
-
 	$file = $files->get($input_name);
-	if (elgg_extract('error', $file) !== 0) {
+
+	if ($file->getError() !== 0) {
 		return false;
 	}
 
-	return get_resized_image_from_existing_file(elgg_extract('tmp_name', $file), $maxwidth,
+	return get_resized_image_from_existing_file($file->getPathname(), $maxwidth,
 		$maxheight, $square, 0, 0, 0, 0, $upscale);
 }
 

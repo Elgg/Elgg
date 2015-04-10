@@ -119,4 +119,45 @@ class ContextTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals("  ", $context->peek());
 		$this->assertEquals("  ", $context->pop());
 	}
+
+	public function testCanGetStack() {
+		$context = new Context();
+
+		$context->push("123");
+		$context->push("hello");
+
+		$this->assertEquals(["123", "hello"], $context->toArray());
+	}
+
+	public function testCanSetStack() {
+		$context = new Context();
+
+		$context->fromArray([123, "hello", true]);
+		$this->assertEquals(["123", "hello", "1"], $context->toArray());
+	}
+
+	public function testStackAlwaysContainsStrings() {
+		$context = new Context();
+
+		$context->set(123);
+		$context->push(true);
+		$this->assertEquals(["123", "1"], $context->toArray());
+
+		$context->fromArray([123, true]);
+		$this->assertEquals(["123", "1"], $context->toArray());
+	}
+
+	public function testSetLowersCase() {
+		$context = new Context();
+
+		$context->set("HELLO");
+		$this->assertEquals("hello", $context->peek());
+	}
+
+	public function testPushDoesNotAlterCase() {
+		$context = new Context();
+
+		$context->push("HELLO");
+		$this->assertEquals("HELLO", $context->peek());
+	}
 }

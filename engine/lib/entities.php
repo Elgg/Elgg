@@ -568,6 +568,7 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
  * @internal If the initial COUNT query returns 0, the $getter will not be called again.
  *
  * @param array    $options Any options from $getter options plus:
+ *                   item_view => STR Optional. Alternative view used to render list items
  *                   full_view => BOOL Display full view of entities (default: false)
  *                   list_type => STR 'list' or 'gallery'
  *                   list_type_toggle => BOOL Display gallery / list switch

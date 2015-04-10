@@ -70,7 +70,7 @@ function _elgg_add_metastring($string) {
  *
  *  metastring_type               => STR      metadata or annotation(s)
  *
- * @return mixed
+ * @return \ElggExtender[]|int An array or count of metastring based objects
  * @access private
  */
 function _elgg_get_metastring_based_objects($options) {

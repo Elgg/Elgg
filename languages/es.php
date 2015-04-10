@@ -39,8 +39,10 @@ return array(
 	'actionnotfound' => "El log de acciones para %s no se ha encontrado",
 	'actionloggedout' => "Lo sentimos, no puede realizar esta acci&oacute;n sin identificarse",
 	'actionunauthorized' => 'Usted no posee los permisos necesarios para realizar esta acci&oacute;n',
+	
+	'ajax:error' => 'Ha habido un error inesperado en la llamada AJAX. Puede que la conexión con el servidor se haya perdido.',
 
-	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) es un plugin desconfigurado que ha sido deshabilitado. Por favor revise la Wiki de Elgg para m&aacute;s informaci&oacute;n (http://docs.elgg.org/wiki/)",
+	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) plugin mal configurado. Se ha desactivado. Por favor, consulta la wiki de Elgg para ver las posibles causas (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) no puede iniciarse. Motivo: %s',
 	'PluginException:InvalidID' => "%s no es un ID de plugin v&aacute;lido",
 	'PluginException:InvalidPath' => "%s es un path de plugin inv&aacute;lido",
@@ -84,6 +86,9 @@ return array(
 	
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Hay otros complementos que tienen a «%s» como dependencia. Debes desactivar los siguientes complementos primero para poder desactivar este: %s',
 
+	'ElggMenuBuilder:Trees:NoParents' => 'Hay elementos de menú que no están enlazados a ningún elemento padre',
+	'ElggMenuBuilder:Trees:OrphanedChild' => 'El elemento de menú [%s] no tiene elemento padre[%s]',
+	'ElggMenuBuilder:Trees:DuplicateChild' => 'El elemento de menú [%s] está registrado por duplicado',
 
 	'RegistrationException:EmptyPassword' => 'Los campos de contrase&ntilde;as son obligatorios',
 	'RegistrationException:PasswordMismatch' => 'Las contrase&ntilde;as deben coincidir',
@@ -148,6 +153,8 @@ return array(
 	'access:read' => "S&oacute;lo lectura",
 	'access:write' => "Acceso de escritura",
 	'access:admin_only' => "Solo Administradores",
+	'access:missing_name' => "Falta el nombre del nivel de acceso",
+	'access:comments:change' => "Esta discusión está solo visible para un conjunto limitado de usuarios. Piénsate bien con quién la compartes.",
 
 /**
  * Dashboard and widgets
@@ -158,6 +165,7 @@ return array(
 
 	'widgets:add' => 'Agregar widget',
 	'widgets:add:description' => "Haga click en el bot&oacute;n de alg&uacute;n widget para agregarlo a la p&aacute;gina",
+	'widgets:panel:close' => "Cerrar el panel de widgets",
 	'widgets:position:fixed' => '(Posici&oacute;n fija en la p&aacute;gina)',
 	'widget:unavailable' => 'Ya agreg&oacute; este widget',
 	'widget:numbertodisplay' => 'Cantidad de elementos para mostrar',
@@ -196,7 +204,7 @@ return array(
 	'friends' => "Amigos",
 	'friends:yours' => "Tus Amigos",
 	'friends:owned' => "Amigos de %s",
-	'friend:add' => "Nuevo amigo",
+	'friend:add' => "Añadir a amigos",
 	'friend:remove' => "Quitar amigo",
 
 	'friends:add:successful' => "Se ha a&ntilde;adido a %s como amigo",
@@ -448,6 +456,7 @@ return array(
 	'admin:configuration:success' => "Su configuraci&oacute;n ha sido guardada",
 	'admin:configuration:fail' => "No se pudo guardar su configuraci&oacute;n",
 	'admin:configuration:dataroot:relative_path' => 'No se puede configurar "%s" como el directorio de datos raiz ya que la ruta no es absoluta.',
+	'admin:configuration:default_limit' => 'El n&uacute;mero de elementos debe ser de al menos 1.',
 
 	'admin:unknown_section' => 'Secci&oacute;n de administraci&oacute;n inv&aacute;lida',
 
@@ -512,6 +521,8 @@ return array(
 	'admin:widget:banned_users:help' => 'Lista de usuarios prohibidos',
 	'admin:widget:content_stats' => 'Estad&iacute;sticas de contenido',
 	'admin:widget:content_stats:help' => 'Seguimiento del contenido creado por los usuarios de la red',
+	'admin:widget:cron_status' => 'Estado de Cron',
+	'admin:widget:cron_status:help' => 'Muestra el estado de la última ejecución de los trabajos de Cron',
 	'widget:content_stats:type' => 'Tipo de contenido',
 	'widget:content_stats:number' => 'N&uacute;mero',
 
@@ -604,7 +615,7 @@ return array(
 	'admin:plugins:warning:elgg_version_unknown' => 'Este plugin utiliza un archivo de manifiesto obsoleto y no especifica una versi&oacute;n de Elgg compatibla. Es muy probable que no funcione!',
 	'admin:plugins:warning:unmet_dependencies' => 'Este plugin tiene dependencias desconocidas y no se activar&aacute;. Consulte las dependencias debajo de mas informaci&oacute;n',
 	'admin:plugins:warning:invalid' => '%s no es un plugin Elgg v&aacute;lido. Visite <a href="http://docs.elgg.org/Invalid_Plugin">la Documentaci&oacute;n Elgg</a> para consejos de soluci&oacute;n de problemas',
-	'admin:plugins:warning:invalid:check_docs' => 'Revisa la <a href="http://docs.elgg.org/Invalid_Plugin">documentaci&oacute;n de Elgg</a> para consejos de resoluci&oacute;n de problemas.',
+	'admin:plugins:warning:invalid:check_docs' => 'Mira <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">la documentación de Elgg</a> donde encontrarás consejos de resolución de problemas.',
 	'admin:plugins:cannot_activate' => 'no se puede activar',
 
 	'admin:plugins:set_priority:yes' => "Reordenar %s",
@@ -701,7 +712,7 @@ Cuando este modo esta activado, solo los administradores pueden ingresar y ver e
 	'admin:maintenance_mode:message_label' => 'Mensaje que se mostrará a los usuarios cuando el modo de mantenimiento este activado',
 	'admin:maintenance_mode:saved' => 'Las configuraciones del modo de mantenimiento fueron guardadas',
 	'admin:maintenance_mode:indicator_menu_item' => 'El sitio esta en modo de mantenimiento',
-	'admin:login' => 'Ingreso de Administradores',
+	'admin:login' => 'Entrada de Administradores',
 
 /**
  * User settings
@@ -740,6 +751,7 @@ Cuando este modo esta activado, solo los administradores pueden ingresar y ver e
 	'river:friends' => 'Actividad de Amigos',
 	'river:select' => 'Mostrar %s',
 	'river:comments:more' => '%u m&aacute;s',
+	'river:comments:all' => 'Ver todos los comentarios de %u',
 	'river:generic_comment' => 'comentado en %s %s',
 
 	'friends:widget:description' => "Muestra algunos de tus amigos",
@@ -1044,6 +1056,7 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'installation:view' => "Ingrese la vista que se visualizar&aacute; por defecto en el sitio o deje esto en blanco para la vista por defecto (si tiene dudas, d&eacute;jelo por defecto):",
 
 	'installation:siteemail' => "Direcci&oacute;n de Email del sitio (utilizada para enviar mails desde el sistema):",
+	'installation:default_limit' => "N&uacute;mero por defecto de elementos por p&aacute;gina",
 
 	'admin:site:access:warning' => "Las modificaciones en el control de accesos s&oacute;lo tendr&aacute; impacto en los accesos futuros",
 	'installation:allow_user_default_access:description' => "Si se selecciona, se les permitir&aacute; a los usuarios establecer su propio nivel de acceso por defecto que puede sobreescribir los niveles de acceso del sistema",
@@ -1056,12 +1069,13 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'installation:minify_js:label' => "Comprimir JavaScript (recomendado)",
 	'installation:minify_css:label' => "Comprimir CSS (recomendado)",
 
-	'installation:htaccess:needs_upgrade' => "Debe actualizar el fichero «.htaccess» para que la ruta se inyecte en el parámetro GET «__elgg_uri» (puede usar «htaccess_dist» a modo de guía).",
+	'installation:htaccess:needs_upgrade' => "Debe actualizar el archivo .htaccess para que la ruta se inyecte en el parámetro GET __elgg_uri (puede usar install/config/htaccess.dist como guía)",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg no puede conectarse a sí mismo para poner a prueba las reglas de substitución. Asegúrese de que «curl» está funcionando, y de que no existen restricciones por dirección IP que impidan las conexiones locales al propio servidor (localhost).",
 	
 	'installation:systemcache:description' => "The system cache decreases the loading time of the Elgg engine by caching data to files.",
 	'installation:systemcache:label' => "Use system cache (recommended)",
 
+	'admin:legend:system' => 'Sistema',
 	'admin:legend:caching' => 'Caché',
 	'admin:legend:content_access' => 'Acceso del Contenido',
 	'admin:legend:site_access' => 'Acceso del Sitio',
@@ -1076,15 +1090,11 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'upgrade:unlock:success' => "Desbloqueo de Actualización exitoso.",
 	'upgrade:unable_to_upgrade' => 'No se puede actualizar',
 	'upgrade:unable_to_upgrade_info' =>
-		'La instalaci&oacute;n no se puede actualizar debido a que se detectaron views antiguas
-		en el directorio de views del core de Elgg. Estas views han quedado obsoletas y deben removerse
-		para que Elgg funcione correctamente. Si no ha efectuado cambios al core de Elgg, puede
-		simplemente eliminar el directorio de views y reemplazarlo con el del &uacute;ltimo paquete de instalaci&oacute;n
-		de Elgg descargado de <a href="http://elgg.org">elgg.org</a>.<br /><br />
+		'Esta versión no se puede actualizar debido a que se detectaron vistas legadas de otras versiones en el directorio de las vistas del core de Elgg. Estas vistas son obsoletas y tienen que ser eliminadas para el correcto funcionamiento de Elgg. Si no has hecho cambios en el core de Elgg, puedes simplemente eliminar el directorio de vistas y reemplazarlo con dicho directorio de uno de los paquetes más recientes de Elgg, descargándolo de <a href="http://elgg.org">elgg.org</a>.<br /><br />
 
-		Si necesita instrucciones detalladas, por favor visite la <a href="http://docs.elgg.org/wiki/Upgrading_Elgg">
-		Documentaci&oacute;n de actualizaci&oacute;n de Elgg</a>. Si necesita asistencia, por favor acuda a los
-		<a href="http://community.elgg.org/pg/groups/discussion/">Foros de Soporte de la Comunidad</a>',
+		Si necesitas instrucciones detalladas, por favor visita la  <a href="http://learn.elgg.org/en/stable/admin/upgrading.html">
+		documentación de Actualización de Elgg</a>.  Si necesitas soporte, escribe describiendo tu problema en los
+		<a href="http://community.elgg.org/pg/groups/discussion/">Foros de Soporte de la Comunidad</a>.',
 
 	'update:twitter_api:deactivated' => 'La API de Twitter (anteriormente Twitter Service) se ha desactivado durante la actualizaci&oacute;n. Por favor act&iacute;vela manualmente si se requiere',
 	'update:oauth_api:deactivated' => 'La API OAuth (anteriormente OAuth Lib) se ha desactivado durante la actualizaci&oacute;n. Por favor act&iacute;vela manualmente si se requiere',
@@ -1112,6 +1122,7 @@ Si el error se repite, busque la causa en el registro de errores del servidor. P
 	// Strings specific for the comments upgrade
 	'admin:upgrades:comments' => 'Actualización de comentarios',
 	'upgrade:comment:create_failed' => 'No fue posible convertir el comentario con identificador «%s» en una entidad.',
+	'admin:upgrades:commentaccess' => 'Actualizar el acceso a comentarios',
 
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'Actualización de la carpeta de datos',
@@ -1198,7 +1209,8 @@ Si has sido tu, utiliza el enlace inferior. Si no es así, puedes ignorar este m
 	'generic_comment:updated' => "El comentario fué cambiado éxitosamente.",
 	'generic_comment:deleted' => "Se ha quitado su comentario",
 	'generic_comment:blank' => "Lo sentimos, debe ingresar alg&uacute;n comentario antes de poder guardarlo",
-	'generic_comment:notfound' => "Lo sentimos, no se pudo encontrer el item especificado",
+	'generic_comment:notfound' => "Lo sentimos. No hemos encontrado el comentario especificado.",
+	'generic_comment:notfound_fallback' => "Lo sentimos. No hemos encontrado el comentario especificado, pero te hemos redirigido a la página donde se comentó.",
 	'generic_comment:notdeleted' => "Lo sentimos, no se pudo eliminar el comentario",
 	'generic_comment:failure' => "Un error no especificado ocurrió al guardar el comentario.",
 	'generic_comment:none' => 'Sin comentarios',
@@ -1241,7 +1253,7 @@ Por favor no responda a este correo",
 	'actiongatekeeper:missingfields' => 'En el formulario faltan __token o campos __ts',
 	'actiongatekeeper:tokeninvalid' => "The page you were using had expired. Please try again.",
 	'actiongatekeeper:timeerror' => 'La p&aacute;gina que se encontraba utilizando ha expirado. Por favor refresque la p&aacute;gina e intente nuevamente',
-	'actiongatekeeper:pluginprevents' => 'Una extensi&oacute;n de este formulario ha evitado que se env&iacute;e el formulario',
+	'actiongatekeeper:pluginprevents' => 'Lo sentimos. No se ha podido enviar el formulario por motivos desconocidos.',
 	'actiongatekeeper:uploadexceeded' => 'El tama&ntilde;o del(los) archivo(s) supera el m&iacute;mite establecido',
 	'actiongatekeeper:crosssitelogin' => "Sorry, logging in from a different domain is not permitted. Please try again.",
 

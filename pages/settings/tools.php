@@ -29,7 +29,12 @@ if (!$plugin) {
 	forward(REFERER);
 }
 
-$title = $plugin->getManifest()->getName();
+if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
+	$title = elgg_echo($plugin_id . ':usersettings:title');
+} else {
+	$title = $plugin->getManifest()->getName();
+}
+
 $content = elgg_view_form('plugins/usersettings/save', array(), array('entity' => $plugin));
 
 $params = array(

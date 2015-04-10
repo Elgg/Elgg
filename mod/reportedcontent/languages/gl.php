@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => 'Lugar onde se atopa o elemento.',
 	'reportedcontent:success' => 'Enviouse a denuncia ao administrador do sitio.',
 	'reportedcontent:failing' => 'Non foi posíbel enviar o informe.',
+	'reportedcontent:refresh' => 'Actualizar a lista',
 	'reportedcontent:report' => 'Denunciar ante un administrador',
 	'reportedcontent:instructions' => 'A denuncia enviarase aos administradores do sitio para que a revisen.',
 	'reportedcontent:numbertodisplay' => 'Número de denuncias para mostrar',

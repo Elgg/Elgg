@@ -39,6 +39,8 @@ return array(
 	'actionnotfound' => "Het actiebestand voor %s kon niet worden gevonden.",
 	'actionloggedout' => "Sorry, je kunt deze actie niet uitvoeren als je bent afgemeld.",
 	'actionunauthorized' => 'Je bent niet geautoriseerd om deze actie uit te voeren',
+	
+	'ajax:error' => 'Onverwacht probleem opgetreden tijdens de uitvoer van een AJAX call. Mogelijk is de verbinding met de server verloren.',
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is een verkeerd geconfigureerde plugin. Hij is uitgeschakeld. In de Elgg documentatie kun je mogelijke oorzaken vinden (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) kan niet starten. Reden: %s',
@@ -85,6 +87,9 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Er zijn plugins die afhankelijk zijn van %s. Je moet eerst de volgende plugins uitschakelen voordat je deze kunt uitschakelen: %s',
 
+	'ElggMenuBuilder:Trees:NoParents' => 'Menu items gevonden zonder bovenliggende menu items om ze aan te linken',
+	'ElggMenuBuilder:Trees:OrphanedChild' => 'Menu item [%s] gevonden met een ontbrekend bovenliggend menu item [%s]',
+	'ElggMenuBuilder:Trees:DuplicateChild' => 'Dubbele registratie gevonden voor menu item [%s]',
 
 	'RegistrationException:EmptyPassword' => 'De wachtwoordvelden mogen niet leeg zijn!',
 	'RegistrationException:PasswordMismatch' => 'Wachtwoorden moeten gelijk zijn',
@@ -149,6 +154,8 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 	'access:read' => "Toegang",
 	'access:write' => "Schrijftoegang",
 	'access:admin_only' => "Alleen voor beheerders",
+	'access:missing_name' => "Ontbrekend naam voor toegangsniveau",
+	'access:comments:change' => "Deze reacties zijn op dit moment zichtbaar voor een beperkte groep gebruikers. Bedenk goed met wie je dit wilt delen.",
 
 /**
  * Dashboard and widgets
@@ -521,6 +528,8 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:widget:banned_users:help' => 'Toon de gebande gebruikers',
 	'admin:widget:content_stats' => 'Inhoud statistieken',
 	'admin:widget:content_stats:help' => 'Blijf op de hoogte van de inhoud die door de gebruikers is gemaakt',
+	'admin:widget:cron_status' => 'Cron status',
+	'admin:widget:cron_status:help' => 'Toont de status van de laatste afronding van de cron jobs',
 	'widget:content_stats:type' => 'Type inhoud',
 	'widget:content_stats:number' => 'Aantal',
 
@@ -754,6 +763,7 @@ Wanneer de site in onderhoudsmodus is kunnen alleen sitebeheerders inloggen en d
 	'river:friends' => 'Activiteit van vrienden',
 	'river:select' => 'Toon %s',
 	'river:comments:more' => '+%u meer',
+	'river:comments:all' => 'Bekijk alle %u reacties',
 	'river:generic_comment' => 'reageerde op %s %s',
 
 	'friends:widget:description' => "Toont een aantal van je vrienden.",
@@ -1075,6 +1085,7 @@ Als je bent aangemeld raden we je aan om je wachtwoord direct te wijzigen.',
 	'installation:systemcache:description' => "De systeemcache verlaagt de laadtijd van de Elgg-engine door data te cachen naar bestanden.",
 	'installation:systemcache:label' => "Gebruik systeemcache (aanbevolen)",
 
+	'admin:legend:system' => 'Systeem',
 	'admin:legend:caching' => 'Caching',
 	'admin:legend:content_access' => 'Toegang tot content',
 	'admin:legend:site_access' => 'Toegang tot de site',
@@ -1118,6 +1129,7 @@ Als je meer gedetailleerde instructie wilt, ga je naar de <a href="http://learn.
 	// Strings specific for the comments upgrade
 	'admin:upgrades:comments' => 'Reacties-upgrade',
 	'upgrade:comment:create_failed' => 'Het is helaas niet gelukt om de reactie met ID %s om te zetten naar een entiteit.',
+	'admin:upgrades:commentaccess' => 'Reactie toegankelijkheid upgrade',
 
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'Upgrade van de datamap.',
