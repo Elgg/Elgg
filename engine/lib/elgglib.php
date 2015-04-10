@@ -1029,8 +1029,10 @@ function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
  * @note If only partial information is passed, a partial URL will be returned.
  *
  * @param array $parts       Associative array of URL components like parse_url() returns
+ *                           'user' and 'pass' parts are ignored because of security reasons
  * @param bool  $html_encode HTML Encode the url?
  *
+ * @see https://github.com/Elgg/Elgg/pull/8146#issuecomment-91544585
  * @return string Full URL
  * @since 1.7.0
  */
