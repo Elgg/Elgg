@@ -12,68 +12,39 @@
  * @uses $vars['link_class'] Optional CSS class for the link
  */
 
-$entity = $vars['entity'];
+$entity = elgg_extract('entity', $vars);
+if (!$entity instanceof \ElggEntity) {
+	return;
+}
 
 $icon_sizes = elgg_get_config('icon_sizes');
-// Get size
-$size = elgg_extract('size', $vars, 'medium');
-if (!array_key_exists($size, $icon_sizes)) {
-	$size = "medium";
-}
-$vars['size'] = $size;
-
-$class = elgg_extract('img_class', $vars, '');
-
-if (isset($entity->name)) {
-	$title = $entity->name;
-} else {
-	$title = $entity->title;
-}
-$title = htmlspecialchars($title, ENT_QUOTES, 'UTF-8', false);
-
-$url = $entity->getURL();
-if (isset($vars['href'])) {
-	$url = $vars['href'];
+if (!isset($vars['size']) || !array_key_exists($vars['size'], $icon_sizes)) {
+	$vars['size'] = 'medium';
 }
 
-if (!isset($vars['width'])) {
-	$vars['width'] = $size != 'master' ? $icon_sizes[$size]['w'] : null;
-}
-if (!isset($vars['height'])) {
-	$vars['height'] = $size != 'master' ? $icon_sizes[$size]['h'] : null;
-}
-
-$img_params = array(
-	'src' => $entity->getIconURL($size),
-	'alt' => $title,	
-);
-
-if (!empty($class)) {
-	$img_params['class'] = $class;
+if ($vars['size'] != 'master') {
+	$dimensions = elgg_extract($vars['size'], $icon_sizes, array());
+	$width = elgg_extract('w', $dimensions);
+	$height = elgg_extract('h', $dimensions);
 }
 
-if (!empty($vars['width'])) {
-	$img_params['width'] = $vars['width'];
-}
+$img = elgg_view('output/img', array(
+	'src' => $entity->getIconURL($vars),
+	'alt' => $entity->getDisplayName(),
+	'class' => elgg_extract('img_class', $vars),
+	'width' => elgg_extract('width', $vars, $width),
+	'height' => elgg_extract('height', $vars, $height),
+));
 
-if (!empty($vars['height'])) {
-	$img_params['height'] = $vars['height'];
-}
-
-$img = elgg_view('output/img', $img_params);
+$url = elgg_extract('href', $vars, $entity->getURL());
 
 if ($url) {
-	$params = array(
+	echo elgg_view('output/url', array(
 		'href' => $url,
 		'text' => $img,
 		'is_trusted' => true,
-	);
-	$class = elgg_extract('link_class', $vars, '');
-	if ($class) {
-		$params['class'] = $class;
-	}
-
-	echo elgg_view('output/url', $params);
+		'class' => elgg_extract('link_class', $vars),
+	));
 } else {
 	echo $img;
 }

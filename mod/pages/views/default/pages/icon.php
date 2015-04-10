@@ -10,16 +10,17 @@
  * @uses $vars['annotation']
  */
 
-$annotation = $vars['annotation'];
-$entity = get_entity($annotation->entity_guid);
-
-// Get size
-if (!in_array($vars['size'], array('small', 'medium', 'large', 'tiny', 'master', 'topbar'))) {
-	$vars['size'] = "medium";
+$annotation = elgg_extract('annotation', $vars);
+if (!$annotation instanceof \ElggAnnotation) {
+	return;
 }
 
-?>
+$entity = $annotation->getEntity();
+if (!$entity) {
+	return;
+}
 
-<a href="<?php echo $annotation->getURL(); ?>">
-	<img alt="<?php echo $entity->title; ?>" src="<?php echo $entity->getIconURL($vars['size']); ?>" />
-</a>
+$vars['entity'] = $entity;
+$vars['href'] = $annotation->getURL();
+
+echo elgg_view('icon/default', $vars);
