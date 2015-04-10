@@ -82,7 +82,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('adminNotices', '\Elgg\Database\AdminNotices');
 
 		$this->setFactory('amdConfig', function(ServiceProvider $c) {
-			$obj = new \Elgg\Amd\Config();
+			$obj = new \Elgg\Amd\Config($c->hooks);
 			$obj->setBaseUrl($c->simpleCache->getRoot() . "js/");
 			return $obj;
 		});

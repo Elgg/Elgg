@@ -5,7 +5,8 @@ namespace Elgg\Amd;
 class ConfigTest extends \PHPUnit_Framework_TestCase {
 
 	public function testCanConfigureBaseUrl() {
-		$amdConfig = new \Elgg\Amd\Config();
+		$hooks = new \Elgg\PluginHooksService();
+		$amdConfig = new \Elgg\Amd\Config($hooks);
 		$amdConfig->setBaseUrl('http://foobar.com');
 
 		$configArray = $amdConfig->getConfig();
@@ -14,7 +15,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanConfigureModulePaths() {
-		$amdConfig = new \Elgg\Amd\Config();
+		$hooks = new \Elgg\PluginHooksService();
+		$amdConfig = new \Elgg\Amd\Config($hooks);
 		$amdConfig->addPath('jquery', '/some/path.js');
 
 		$this->assertTrue($amdConfig->hasModule('jquery'));
@@ -28,7 +30,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanConfigureModuleShims() {
-		$amdConfig = new \Elgg\Amd\Config();
+		$hooks = new \Elgg\PluginHooksService();
+		$amdConfig = new \Elgg\Amd\Config($hooks);
 		$amdConfig->addShim('jquery', array(
 			'deps' => array('dep'),
 			'exports' => 'jQuery',
@@ -51,7 +54,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanRequireUnregisteredAmdModules() {
-		$amdConfig = new \Elgg\Amd\Config();
+		$hooks = new \Elgg\PluginHooksService();
+		$amdConfig = new \Elgg\Amd\Config($hooks);
 		$amdConfig->addDependency('jquery');
 		
 		$configArray = $amdConfig->getConfig();
@@ -70,7 +74,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
      * @expectedException \InvalidParameterException
      */
 	public function testThrowsOnBadShim() {
-		$amdConfig = new \Elgg\Amd\Config();
+		$hooks = new \Elgg\PluginHooksService();
+		$amdConfig = new \Elgg\Amd\Config($hooks);
 		$amdConfig->addShim('bad_shim', array('invalid' => 'config'));
 
 		$configArray = $amdConfig->getConfig();
@@ -79,7 +84,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanAddModuleAsAmd() {
-		$amdConfig = new \Elgg\Amd\Config();
+		$hooks = new \Elgg\PluginHooksService();
+		$amdConfig = new \Elgg\Amd\Config($hooks);
 		$amdConfig->addModule('jquery');
 
 		$configArray = $amdConfig->getConfig();
@@ -88,7 +94,8 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCanAddModuleAsShim() {
-		$amdConfig = new \Elgg\Amd\Config();
+		$hooks = new \Elgg\PluginHooksService();
+		$amdConfig = new \Elgg\Amd\Config($hooks);
 		$amdConfig->addModule('jquery.form', array(
 			'url' => 'http://foobar.com',
 			'exports' => 'jquery.fn.ajaxform',
@@ -112,6 +119,20 @@ class ConfigTest extends \PHPUnit_Framework_TestCase {
 		$amdConfig->removeModule('jquery.form');
 		$this->assertFalse($amdConfig->hasModule('jquery.form'));
 		$this->assertFalse($amdConfig->hasShim('jquery.form'));
+	}
+	
+	public function testGetConfigTriggersTheConfigAmdPluginHook() {
+		$hooks = new \Elgg\PluginHooksService();
+		$amdConfig = new \Elgg\Amd\Config($hooks);
+		
+		$test_input = ['test' => 'test_' . time()];
+	
+		$hooks->registerHandler('config', 'amd', function() use ($test_input) {
+			return $test_input;
+		});
+	
+		$config = $amdConfig->getConfig();
+		$this->assertEquals($test_input, $config);
 	}
 }
 
