@@ -21,7 +21,7 @@ When a user uploads photographs or other pictures, they are automatically collat
 Podcasting
 ----------
 
-An Elgg file repository RSS feed automatically doubles as an RSS feed, so you can subscribe to new audio content using programs like iTunes. Using the ``zaudio`` plugin, supplied in the default Elgg package, MP3 audio files are also directly playable in the page.
+An Elgg file repository RSS feed automatically doubles as an RSS feed, so you can subscribe to new audio content using programs like iTunes.
 
 Special content
 ---------------
