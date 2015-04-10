@@ -344,7 +344,7 @@ class Inspector {
 		if (is_object($callable)) {
 			return "(" . get_class($callable) . ")->__invoke()";
 		}
-		return "(unknown)";
+		return print_r($callable, true);
 	}
 
 	/**
