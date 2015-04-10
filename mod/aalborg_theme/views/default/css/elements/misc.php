@@ -9,7 +9,7 @@
 	right: 0;
 	z-index: 100;
 }
-#login-dropdown a {
+#login-dropdown > a {
 	padding: 14px 18px;
 }
 

@@ -6,9 +6,6 @@
 $body = elgg_view('theme_sandbox/javascript/lightbox');
 echo elgg_view_module('theme-sandbox-demo', 'Lightbox (.elgg-lightbox)', $body);
 
-$body = elgg_view('theme_sandbox/javascript/popup');
-echo elgg_view_module('theme-sandbox-demo', 'Popup (rel=popup)', $body);
-
 $body = elgg_view('theme_sandbox/javascript/toggle');
 echo elgg_view_module('theme-sandbox-demo', 'Toggle (rel=toggle)', $body);
 

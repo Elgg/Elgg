@@ -49,7 +49,6 @@
 	background-color:white;
 	border:5px solid #CCC;
 	border-radius: 5px 0 5px 5px;	
-	display:none;
 	width: 210px;
 	padding: 12px;
 	margin-right: 0px;

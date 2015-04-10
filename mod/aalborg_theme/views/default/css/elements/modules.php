@@ -51,7 +51,6 @@
 	background-color: #FFF;
 	border: 1px solid #DEDEDE;
 	border-radius: 0 0 3px 3px;
-	display:none;
 	width: 240px;
 	padding: 20px;
 	margin-right: 0;
