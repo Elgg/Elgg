@@ -222,6 +222,16 @@ function elgg_invalidate_simplecache() {
 }
 
 /**
+ * Flush all the registered caches
+ * 
+ * @return void
+ * @since 1.11
+ */
+function elgg_flush_caches() {
+	_elgg_services()->events->trigger('cache:flush', 'system');
+}
+
+/**
  * Initializes the simplecache lastcache variable and creates system cache files
  * when appropriate.
  * 
@@ -234,4 +244,8 @@ function _elgg_cache_init() {
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('ready', 'system', '_elgg_cache_init');
+	
+	// register plugin hooks for cache reset
+	$events->registerHandler('cache:flush', 'system', 'elgg_reset_system_cache');
+	$events->registerHandler('cache:flush', 'system', 'elgg_invalidate_simplecache');
 };

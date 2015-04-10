@@ -61,6 +61,9 @@ System events
 **init:cookie, <name>**
     Return false to override setting a cookie.
 
+**cache:flush, system**
+    Reset internal and external caches. For example it resets system_cache and simplecache, but also PHP opcode caches (APC, OPCache, WinCache).
+
 User events
 ===========
 
