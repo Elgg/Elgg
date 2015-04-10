@@ -47,7 +47,7 @@ return array(
 
 	// notifications
 	'blog:notify:summary' => 'Нови блог чланак %s',
-	'blog:notify:subject' => 'New блог чланак: %s',
+	'blog:notify:subject' => 'Нови блог чланак: %s',
 	'blog:notify:body' =>
 '
 %s је објавио нови блог чланак: %s

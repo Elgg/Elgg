@@ -25,11 +25,11 @@ return array(
 	'install:require:settings' => '設定ファイル',
 	'install:require:database' => 'データベース',
 
-	'install:check:root' => 'あなたのwebサーバはElggのルートディレクトリに .htaccess ファイルを作成することができません。あなたには次の２つの選択肢があります：
+	'install:check:root' => 'あなたのwebサーバはElggのルートディレクトリに .htaccess ファイルを作成する許可を持っていません。あなたには次の２つの選択肢があります：
 
 		1. ルートディレクトリのパーミッションを変更する
 
-		2. 「htaccess_distto」ファイルを 「.htaccess」にコピーする',
+		2. 「install/config/htaccess.dist」ファイルを 「.htaccess」にコピーする',
 
 	'install:check:php:version' => 'Elgg をインストールするには PHP %s かそれ以上が必要です。このサーバのPHPはバージョン %s です。',
 	'install:check:php:extension' => 'Elgg をインストールするには PHP extension %s が必要です。',
@@ -142,11 +142,11 @@ return array(
 	'install:error:rewrite:lighttpd' => 'あなたのサーバでは、Lighttpd web サーバが起動されていると思われます。',
 	'install:error:rewrite:iis' => 'あなたのサーバでは、IIS web サーバが起動されていると思われます。',
 	'install:error:rewrite:allowoverride' => "リライトテストが失敗しました。もっともありえる原因として、全てのElggディレクトリにおいて AllowOverride がセットされていないことがあげられます。セットされていないと、Apacheが .htaccess ファイルを処理できません。このファイルにはリライトルールが記述されているからです。\n\n次にあり得る原因としては、ApacheであなたのElggディレクトリがエイリアスと設定されている場合です。 この場合は .htaccess ファイルの RewriteBase をセットしなければいけません。Elggディレクトリの下の .htaccess ファイル内には、その他多くのインストラクションが書かれていますので、どうぞご参考になさってください。",
-	'install:error:rewrite:htaccess:write_permission' => 'あなたのWebサーバはElggディレクトリ下に .htaccess ファイルを作成する許可を持っていません。手動で htaccess_dist ファイルを .htaccess ファイルにコピーするか、Elggディレクトリのパーミッションを変更してください。',
+	'install:error:rewrite:htaccess:write_permission' => 'あなたのWebサーバはElggディレクトリ下に .htaccess ファイルを作成する許可を持っていません。手動で install/config/htaccess.dist ファイルを .htaccess ファイルにコピーするか、Elggディレクトリのパーミッションを変更してください。',
 	'install:error:rewrite:htaccess:read_permission' => 'Elggディレクトリ下に .htaccess ファイルがありますが、webサーバには読み込み不可になっています。',
 	'install:error:rewrite:htaccess:non_elgg_htaccess' => 'Elggディレクトリ下に .htaccess ファイルがありますが、このファイルはElggが作成したものではありません。削除してください。',
 	'install:error:rewrite:htaccess:old_elgg_htaccess' => 'Elggディレクトリ下には、 .htaccess ファイルがあるのですが、古いElggのもののようです。webサーバをテストするリライトルールが含まれていません。',
-	'install:error:rewrite:htaccess:cannot_copy' => '.htaccess ファイルの作成中によくわからないエラーが起こりました。手動にて htaccess_dist ファイルを .htaccess ファイルにコピーしてください。',
+	'install:error:rewrite:htaccess:cannot_copy' => '.htaccess ファイルの作成中によくわからないエラーが起こりました。手動にて install/config/htaccess.dist ファイルを .htaccess ファイルにコピーしてください。',
 	'install:error:rewrite:altserver' => 'リライトルールがのテストに失敗しました。Elggリライトルールでwebサーバを設定してもう一度テストをこころみてください。',
 	'install:error:rewrite:unknown' => 'あなたのサーバで起動されているwebサーバを特定することができませんでした。リライトルールにも失敗したようです。残念ですがアドバイスも出来そうにありません。問題解決リンクをチェックしてみてください。',
 	'install:warning:rewrite:unknown' => 'あなたのサーバはリライトルールの自動テストをサポートしていないようです。その上、あなたのご使用のブラウザはJavaScriptでのチェッキングをサポートしていません。インストールを続行できますが、問題が発生することがあるかもしれません。次のリンクをクリックすれば、リライトルールを手動でテストすることができます：<a href="%s" target="_blank">テスト</a>。テストがうまく行けば success（成功）の文字が表示されるはずです。',

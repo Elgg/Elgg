@@ -39,6 +39,8 @@ return array(
 	'actionnotfound' => "%s のアクションファイルが見つかりませんでした。",
 	'actionloggedout' => "ログアウトのままですと、アクションを実行できません。",
 	'actionunauthorized' => 'あなたの権限では、このアクションを実行することはできません。',
+	
+	'ajax:error' => 'AJAXコールを実行中に予期せぬエラーが起こりました。おそらく、サーバへの接続が切断されたからかもしれません。',
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) は、設定に間違いのあるプラグインですので、起動不可となっています。 原因に当たっては、Elgg wiki (http://learn.elgg.org/) を参考にしてください。 ",
 	'PluginException:CannotStart' => '%s (guid: %s) は起動できず停止状態のままです。理由: %s',
@@ -84,6 +86,9 @@ return array(
 	
 	'ElggPlugin:Dependencies:ActiveDependent' => '%s と依存関係にある他のプラグインが存在します。 このプラグインを無効にする前に、次のプラグインを先に無効にしなければなりません。: %s',
 
+	'ElggMenuBuilder:Trees:NoParents' => '親リンクの無いメニュー項目があります',
+	'ElggMenuBuilder:Trees:OrphanedChild' => 'メニュー項目[%s]には、親リンク[%s]がありません',
+	'ElggMenuBuilder:Trees:DuplicateChild' => 'メニュー項目[%s]に対して2重登録が見つかりました',
 
 	'RegistrationException:EmptyPassword' => 'パスワードの項目は空欄のままにはできません',
 	'RegistrationException:PasswordMismatch' => 'パスワードは一致させなければなりません',
@@ -148,6 +153,8 @@ return array(
 	'access:read' => "読み込みアクセス",
 	'access:write' => "書き込みアクセス",
 	'access:admin_only' => "管理者のみ",
+	'access:missing_name' => "アクセスレベルの名前がありません",
+	'access:comments:change' => "この会議は現在限られた人しか見ることができないようになっています。あなたがこれをシェアする人に対しては十分に考慮してください。",
 
 /**
  * Dashboard and widgets
@@ -514,6 +521,8 @@ return array(
 	'admin:widget:banned_users:help' => '出入り禁止のユーザのリスト',
 	'admin:widget:content_stats' => 'コンテントの統計情報',
 	'admin:widget:content_stats:help' => 'ユーザが作成したコンテントの記録を保存しています。',
+	'admin:widget:cron_status' => 'Cronの状態',
+	'admin:widget:cron_status:help' => '最後に cron jobs が完了したときの状態を表示する',
 	'widget:content_stats:type' => 'コンテントのタイプ',
 	'widget:content_stats:number' => '件数',
 
@@ -747,6 +756,7 @@ return array(
 	'river:friends' => '友達のアクティティ',
 	'river:select' => '表示:%s',
 	'river:comments:more' => '+%u more',
+	'river:comments:all' => '全ての %u さんのコメントを表示する',
 	'river:generic_comment' => 'commented on %s %s',
 
 	'friends:widget:description' => "友達を何人か表示",
@@ -1064,12 +1074,13 @@ return array(
 	'installation:minify_js:label' => "JavaScript を圧縮（推奨）",
 	'installation:minify_css:label' => "CSS を圧縮（推奨）",
 
-	'installation:htaccess:needs_upgrade' => ".htaccess をアップデートしてください。そうすることにより、path が GET のパラメタ __elgg_uri にインジェクトされます。(ファイル htaccess_dist を参考にしてください。)",
+	'installation:htaccess:needs_upgrade' => ".htaccess をアップデートしてください。そうすることにより、path が GET のパラメタ __elgg_uri にインジェクトされます。( install/config/htaccess.dist ファイルを参考にしてください。)",
 	'installation:htaccess:localhost:connectionfailed' => "Elggはrewriteルールのプロパティをテストするために自分自身に接続することはできません。curlが動作することとlocalhostへの接続を妨げるようなIPの制限設定が無いかどうかを確認してください。",
 	
 	'installation:systemcache:description' => "ステムキャッシュはデータをファイルにキャッシュすることでElggの読み込み時間を少なくします。",
 	'installation:systemcache:label' => "システムキャッシュを使う(推奨)",
 
+	'admin:legend:system' => 'システム',
 	'admin:legend:caching' => 'キャシュ',
 	'admin:legend:content_access' => 'コンテント・アクセス',
 	'admin:legend:site_access' => 'サイト・アクセス',
@@ -1115,6 +1126,7 @@ return array(
 	// Strings specific for the comments upgrade
 	'admin:upgrades:comments' => 'コメントのアップグレード',
 	'upgrade:comment:create_failed' => 'Comment id %s を entity に変換するのに失敗しました。',
+	'admin:upgrades:commentaccess' => 'コメント・アクセスのアップデート',
 
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'データディレクトリのアップグレード',
@@ -1201,7 +1213,8 @@ return array(
 	'generic_comment:updated' => "コメントを更新しました。",
 	'generic_comment:deleted' => "コメントを削除しました。",
 	'generic_comment:blank' => "申し訳ありません。コメント内容が空欄のため保存できません。",
-	'generic_comment:notfound' => "申し訳ありません。検索しましたが見つかりませんでした。",
+	'generic_comment:notfound' => "申し訳ありません。お探しのコメントは見つかりませんでした。",
+	'generic_comment:notfound_fallback' => "申し訳ありません。お探しのコメントは見つかりませんでしたが、コメントされていたページへご案内しました。",
 	'generic_comment:notdeleted' => "申し訳ありません。このコメントが削除できませんでした。",
 	'generic_comment:failure' => "コメントを保存する際に予期せぬエラーが発生しました。",
 	'generic_comment:none' => 'コメントはありません',
@@ -1244,7 +1257,7 @@ return array(
 	'actiongatekeeper:missingfields' => 'フォームに __token もしくは __ts 項目が欠けています',
 	'actiongatekeeper:tokeninvalid' => "あなたが使用しているページの期限が切れました。もう一度試してみてください。",
 	'actiongatekeeper:timeerror' => 'ご覧のページは閲覧期限が切れています。再度ページを読み込んでください。',
-	'actiongatekeeper:pluginprevents' => '拡張機能がこのフォームが送信されないようにしいます。',
+	'actiongatekeeper:pluginprevents' => '申し訳ありません。原因不明の理由であなたのフォームを送信することができませんでした。',
 	'actiongatekeeper:uploadexceeded' => 'アップロードファイルのサイズがこのサイトの管理者が設定した最大値を超えています。',
 	'actiongatekeeper:crosssitelogin' => "異なるドメインからのログインは禁止しています。もう一度試してみてください。",
 
