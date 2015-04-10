@@ -37,103 +37,118 @@ if (isset($vars['base_url']) && $vars['base_url']) {
 	$base_url = current_page_url();
 }
 
-$num_pages = elgg_extract('num_pages', $vars, 10);
-$delta = ceil($num_pages / 2);
-
 if ($count <= $limit && $offset == 0) {
 	// no need for pagination
 	return true;
 }
 
-$total_pages = ceil($count / $limit);
-$current_page = ceil($offset / $limit) + 1;
+$total_pages = (int) ceil($count / $limit);
+$current_page = (int) ceil($offset / $limit) + 1;
 
-$pages = new stdClass();
-$pages->prev = array(
+$pages = array();
+
+// determine starting page
+$start_page = max(min([$current_page - 2, $total_pages - 4]), 1);
+
+// add previous
+$prev_offset = $offset - $limit;
+if ($prev_offset < 1) {
+	// don't include offset=0
+	$prev_offset = null;
+}
+
+$pages['prev'] = [
 	'text' => elgg_echo('previous'),
-	'href' => '',
-	'is_trusted' => true,
-);
-$pages->next = array(
+	'href' => elgg_http_add_url_query_elements($base_url, array($offset_key => $prev_offset))
+];
+
+if ($current_page == 1) {
+	$pages['prev']['disabled'] = true;
+}
+
+// add first page to be listed
+if (1 < $start_page) {
+	$pages[1] = [];
+}
+
+// added dotted spacer
+if (1 < ($start_page - 2)) {
+	$pages[] = ['text' => '...', 'disabled' => true];
+} elseif ($start_page == 3) {
+	$pages[2] = [];
+}
+
+$max = 1;
+for ($page = $start_page; $page <= $total_pages; $page++) {
+	if ($max > 5) {
+		break;
+	}
+	$pages[$page] = [];
+	$max++;
+}
+
+// added dotted spacer
+if ($total_pages > ($start_page + 6)) {
+	$pages[] = ['text' => '...', 'disabled' => true];
+} elseif (($start_page + 5) == ($total_pages - 1)) {
+	$pages[$total_pages - 1] = [];
+}
+
+// add last page to be listed
+if ($total_pages >= ($start_page + 5)) {
+	$pages[$total_pages] = [];
+}
+
+// add next
+$next_offset = $offset + $limit;
+if ($next_offset >= $count) {
+	$next_offset--;
+}
+
+$pages['next'] = [
 	'text' => elgg_echo('next'),
-	'href' => '',
-	'is_trusted' => true,
-);
-$pages->items = array();
+	'href' => elgg_http_add_url_query_elements($base_url, array($offset_key => $next_offset))
+];
 
-// Add pages before the current page
-if ($current_page > 1) {
-	$prev_offset = $offset - $limit;
-	if ($prev_offset < 1) {
-		// don't include offset=0
-		$prev_offset = null;
-	}
-
-	$pages->prev['href'] = elgg_http_add_url_query_elements($base_url, array($offset_key => $prev_offset));
-
-	$first_page = $current_page - $delta;
-	if ($first_page < 1) {
-		$first_page = 1;
-	}
-
-	$pages->items = range($first_page, $current_page - 1);
+if ($current_page == $total_pages) {
+	$pages['next']['disabled'] = true;
 }
 
-
-$pages->items[] = $current_page;
-
-
-// add pages after the current one
-if ($current_page < $total_pages) {
-	$next_offset = $offset + $limit;
-	if ($next_offset >= $count) {
-		$next_offset--;
-	}
-
-	$pages->next['href'] = elgg_http_add_url_query_elements($base_url, array($offset_key => $next_offset));
-
-	$last_page = $current_page + $delta;
-	if ($last_page > $total_pages) {
-		$last_page = $total_pages;
-	}
-
-	$pages->items = array_merge($pages->items, range($current_page + 1, $last_page));
-}
-
-
-echo '<ul class="elgg-pagination">';
-
-if ($pages->prev['href']) {
-	$link = elgg_view('output/url', $pages->prev);
-	echo "<li>$link</li>";
-} else {
-	echo "<li class=\"elgg-state-disabled\"><span>{$pages->prev['text']}</span></li>";
-}
-
-foreach ($pages->items as $page) {
-	if ($page == $current_page) {
-		echo "<li class=\"elgg-state-selected\"><span>$page</span></li>";
+$list ="";
+foreach ($pages as $page_num => $page) {	
+	if ($page_num == $current_page) {
+		$list .= elgg_format_element('li', ['class' => 'elgg-state-selected'], "<span>$page_num</span>");
 	} else {
-		$page_offset = (($page - $current_page) * $limit) + $offset;
-		if ($page_offset <= 0) {
-			// don't include offset=0
-			$page_offset = null;
+		$href = elgg_extract('href', $page);
+		$text = elgg_extract('text', $page, $page_num);
+		$disabled = elgg_extract('disabled', $page, false);
+		
+		if (!$href && !$disabled) {
+			$page_offset = (($page_num - $current_page) * $limit) + $offset;
+			if ($page_offset <= 0) {
+				// don't include offset=0
+				$page_offset = null;
+			}
+			$href = elgg_http_add_url_query_elements($base_url, array($offset_key => $page_offset));
 		}
-		$url = elgg_http_add_url_query_elements($base_url, array($offset_key => $page_offset));
-		$link = elgg_view('output/url', array(
-			'href' => $url,
-			'text' => $page,
-			'is_trusted' => true,
-		));
-		echo "<li>$link</li>";
+		
+		if ($href && !$disabled) {
+			$link = elgg_view('output/url', array(
+				'href' => $href,
+				'text' => $text,
+				'is_trusted' => true,
+			));
+		} else {
+			$link = elgg_format_element('span', [], $page['text']);
+		}
+		
+		$element_options = array();
+		if ($disabled) {
+			$element_options['class'] = 'elgg-state-disabled';
+		}			
+			
+		$list .= elgg_format_element('li', $element_options, $link);
 	}
 }
 
-if ($pages->next['href']) {
-	$link = elgg_view('output/url', $pages->next);
-	echo "<li>$link</li>";
-} else {
-	echo "<li class=\"elgg-state-disabled\"><span>{$pages->next['text']}</span></li>";
-}
-
-echo '</ul>';
+echo elgg_format_element('ul', ['class' => 'elgg-pagination'], $list);
