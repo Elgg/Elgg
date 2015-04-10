@@ -25,7 +25,13 @@ if ($password != $password_repeat) {
 
 if (execute_new_password_request($user_guid, $code, $password)) {
 	system_message(elgg_echo('user:password:success'));
-	login(get_entity($user_guid));
+	
+	try {
+		login(get_entity($user_guid));
+	} catch (LoginException $e) {
+		register_error($e->getMessage());
+		forward(REFERER);
+	}
 } else {
 	register_error(elgg_echo('user:password:fail'));
 }
