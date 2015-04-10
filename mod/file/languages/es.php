@@ -5,9 +5,9 @@ return array(
 	 * Menu items and titles
 	 */
 	'file' => "Archivos",
-	'file:user' => "Archvos de %s",
+	'file:user' => "Archivos de %s",
 	'file:friends' => "Archivos de amigos",
-	'file:all' => "Archvios de todo el sitio",
+	'file:all' => "Archivos de todo el sitio",
 	'file:edit' => "Editar archivo",
 	'file:more' => "Mover archivo",
 	'file:list' => "Listar archivos",
@@ -40,7 +40,7 @@ return array(
 
 	'file:user:type:video' => "Videos de %s",
 	'file:user:type:document' => "Documentos de %s",
-	'file:user:type:audio' => "Arcvhidos de audio de %s",
+	'file:user:type:audio' => "Archivos de audio de %s",
 	'file:user:type:image' => "Im&aacute;genes de %s",
 	'file:user:type:general' => "Archivos de %s",
 
@@ -51,7 +51,7 @@ return array(
 	'file:friends:type:general' => "Archivos de tus amigos",
 
 	'file:widget' => "Widget de archivos",
-	'file:widget:description' => "Showcase your latest files",
+	'file:widget:description' => "Presenta tus últimos archivos",
 
 	'groups:enablefiles' => 'Habilitar Archivos para los Grupos',
 
@@ -83,8 +83,8 @@ Ver y comentar en el archivo:
 	 * Status messages
 	 */
 
-	'file:saved' => "Tu archivo ha sido guardado exitosamente.",
-	'file:deleted' => "Tu archivo fue borrado exitosamente.",
+	'file:saved' => "Tu archivo ha sido guardado correctamente.",
+	'file:deleted' => "Tu archivo fue borrado correctamente.",
 
 	/**
 	 * Error messages
@@ -92,7 +92,7 @@ Ver y comentar en el archivo:
 
 	'file:none' => "No hay archivos.",
 	'file:uploadfailed' => "No se pudo guardar el archivo.",
-	'file:downloadfailed' => "El archvo no est&aacute; disponible momentaneamente.",
+	'file:downloadfailed' => "El archivo no est&aacute; disponible momentáneamente.",
 	'file:deletefailed' => "El archivo no pudo ser borrado ahora.",
 	'file:noaccess' => "No tienes permisos para modficar este archivo",
 	'file:nofile' => "Debes seleccionar un archivo",

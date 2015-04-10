@@ -117,7 +117,11 @@ function uservalidationbyemail_disable_new_user($hook, $type, $value, $params) {
 function uservalidationbyemail_after_registration_url($hook, $type, $value, $params) {
 	$url = elgg_extract('current_url', $params);
 	if ($url == elgg_get_site_url() . 'action/register') {
-		return elgg_get_site_url() . 'uservalidationbyemail/emailsent';
+		$session = elgg_get_session();
+		$email = $session->get('emailsent', '');
+		if ($email) {
+			return elgg_get_site_url() . 'uservalidationbyemail/emailsent';
+		}
 	}
 }
 

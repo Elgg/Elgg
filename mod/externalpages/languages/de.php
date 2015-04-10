@@ -6,6 +6,7 @@ return array(
 	 */
 	'expages' => "Externe Seiten",
 	'admin:appearance:expages' => "Externe Seiten",
+	'expages:edit:viewpage' => "Diese externe Seite anzeigen",
 	'expages:about' => "Impressum",
 	'expages:terms' => "AGBs",
 	'expages:privacy' => "Datenschutz",

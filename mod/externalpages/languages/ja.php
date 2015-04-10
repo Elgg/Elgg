@@ -6,6 +6,7 @@ return array(
 	 */
 	'expages' => "外部向け説明ページ",
 	'admin:appearance:expages' => "サイトページ",
+	'expages:edit:viewpage' => "サイトのページを見る",
 	'expages:about' => "このサイトについて",
 	'expages:terms' => "利用条件",
 	'expages:privacy' => "個人情報について",
