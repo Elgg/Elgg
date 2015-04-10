@@ -20,14 +20,11 @@
  * @subpackage DataModel.File
  */
 class ElggFile extends \ElggObject {
-	/** Filestore */
-	private $filestore;
-	
-	/* @var Elgg\Filesystem\Adapter */
-	private $dataStorage;
-
-	/** File handle used to identify this file in a filestore. Created by open. */
-	private $handle;
+	/**
+	 *
+	 * @var stream The stream context created by open
+	 */
+	private $stream;
 
 	/**
 	 * Set subtype to 'file'.
@@ -38,18 +35,6 @@ class ElggFile extends \ElggObject {
 		parent::initializeAttributes();
 
 		$this->attributes['subtype'] = "file";
-	}
-
-	/**
-	 * Loads an \ElggFile entity.
-	 *
-	 * @param \stdClass $row Database result or null for new \ElggFile
-	 */
-	public function __construct($row = null) {
-		parent::__construct($row);
-
-		// Set default filestore
-		$this->filestore = $this->getFilestore();
 	}
 
 	/**
@@ -76,12 +61,17 @@ class ElggFile extends \ElggObject {
 	 * Return the filename of this file as it is/will be stored on the
 	 * filestore, which may be different to the filename.
 	 * 
-	 * @todo @deprecated 1.11 Use the dataStorage property to interact with the physical file.
+	 * @deprecated 1.11 Use getDataStorage() to interact with the physical file.
 	 *
 	 * @return string
 	 */
 	public function getFilenameOnFilestore() {
-		return $this->filestore->getFilenameOnFilestore($this);
+		$ds = $this->getDataStorage();
+		$filename = $this->getFilename();
+		if (!$filename) {
+			throw new \Elgg\Di\MissingValueException("Filename must be set to get the full file path");
+		}
+		return $ds->fullPath($filename);
 	}
 
 	/**
@@ -112,8 +102,6 @@ class ElggFile extends \ElggObject {
 		if ($this->mimetype) {
 			return $this->mimetype;
 		}
-
-		// @todo Guess mimetype if not here
 	}
 
 	/**
@@ -173,6 +161,8 @@ class ElggFile extends \ElggObject {
 	 * Set the optional file description.
 	 *
 	 * @param string $description The description.
+	 * 
+	 * @todo Why is this here and not on ElggEntity?
 	 *
 	 * @return bool
 	 */
@@ -181,11 +171,11 @@ class ElggFile extends \ElggObject {
 	}
 
 	/**
-	 * Open the file with the given mode
+	 * Open the file with the given mode. Creates if does not exist.
 	 *
-	 * @param string $mode Either read/write/append
+	 * @param string $mode read|write|append
 	 *
-	 * @return resource File handler
+	 * @return resource Context stream
 	 *
 	 * @throws IOException|InvalidParameterException
 	 */
@@ -200,50 +190,9 @@ class ElggFile extends \ElggObject {
 			throw new \InvalidParameterException($msg);
 		}
 		
-		return $this->getDataStorage()
+		return $this->stream = $this->getDataStorage()
 				->file($this->getFilename())
 				->createStream();
-	}
-	
-	
-	/**
-	 * // @todo BC
-	 * Open the file with the given mode
-	 *
-	 * @param string $mode Either read/write/append
-	 *
-	 * @return resource File handler
-	 *
-	 * @throws IOException|InvalidParameterException
-	 */
-	public function openOld($mode) {
-		if (!$this->getFilename()) {
-			throw new \IOException("You must specify a name before opening a file.");
-		}
-
-		// See if file has already been saved
-		// seek on datastore, parameters and name?
-
-		// Sanity check
-		if (
-			($mode != "read") &&
-			($mode != "write") &&
-			($mode != "append")
-		) {
-			$msg = "Unrecognized file mode '" . $mode . "'";
-			throw new \InvalidParameterException($msg);
-		}
-
-		// Get the filestore
-		$fs = $this->getFilestore();
-
-		// Ensure that we save the file details to object store
-		//$this->save();
-
-		// Open the file handle
-		$this->handle = $fs->open($this, $mode);
-
-		return $this->handle;
 	}
 
 	/**
@@ -260,19 +209,6 @@ class ElggFile extends \ElggObject {
 	}
 	
 	/**
-	 * Write data.
-	 *
-	 * @param string $data The data
-	 *
-	 * @return bool
-	 */
-	public function writeOld($data) {
-		$fs = $this->getFilestore();
-
-		return $fs->write($this->handle, $data);
-	}
-	
-	/**
 	 * Read data.
 	 *
 	 * @param int $length Bytes to read.
@@ -281,29 +217,10 @@ class ElggFile extends \ElggObject {
 	 * @return mixed Data or false
 	 */
 	public function read($length, $offset = 0) {
-		$stream = $this->getDataStorage()
-				->file($this->getFilename())
-				->createStream();
+		$stream = $this->getStream();
 		$stream->seek($offset);
 		return $stream->read($length);
 	}
-
-	/**
-	 * @todo BC
-	 * 
-	 * Read data.
-	 *
-	 * @param int $length Amount to read.
-	 * @param int $offset The offset to start from.
-	 *
-	 * @return mixed Data or false
-	 */
-	public function readOld($length, $offset = 0) {
-		$fs = $this->getFilestore();
-
-		return $fs->read($this->handle, $length, $offset);
-	}
-
 	
 	/**
 	 * Gets the full contents of this file.
@@ -313,45 +230,16 @@ class ElggFile extends \ElggObject {
 	public function grabFile() {
 		return $this->getDataStorage()->file($this->getFilename())->getContent();
 	}
-
 	
 	/**
-	 * @todo BC
-	 * 
-	 * Gets the full contents of this file.
+	 * Close the file
 	 *
-	 * @return mixed The file contents.
-	 */
-	public function grabFileOld() {
-		$fs = $this->getFilestore();
-		return $fs->grabFile($this);
-	}
-	
-	/**
-	 * Close the file and commit changes
-	 *
+	 * @deprecated since version 1.11 ElggFile::close is no longer needed.
 	 * @return bool
 	 */
 	public function close() {
+		elgg_deprecated_notice("ElggFile::close is no longer needed.", 1.11);
 		return true;
-	}
-
-	/**
-	 * @todo BC
-	 * Close the file and commit changes
-	 *
-	 * @return bool
-	 */
-	public function closeOld() {
-		$fs = $this->getFilestore();
-
-		if ($fs->close($this->handle)) {
-			$this->handle = null;
-
-			return true;
-		}
-
-		return false;
 	}
 
 	/**
@@ -360,12 +248,15 @@ class ElggFile extends \ElggObject {
 	 * @return bool
 	 */
 	public function delete() {
-		$fs = $this->getFilestore();
+		$filename = $this->getFilename();
+		$result = true;
 		
-		$result = $fs->delete($this);
-		
-		if ($this->getGUID() && $result) {
+		if ($this->getGUID()) {
 			$result = parent::delete();
+		}
+		
+		if ($result) {
+			$result &= $this->getDataStorage()->file($filename)->delete();
 		}
 		
 		return $result;
@@ -381,7 +272,6 @@ class ElggFile extends \ElggObject {
 	public function seek($position) {
 		$fs = $this->getFilestore();
 
-		// @todo add seek() to \ElggFilestore
 		return $fs->seek($this->handle, $position);
 	}
 
@@ -391,9 +281,7 @@ class ElggFile extends \ElggObject {
 	 * @return int The file position
 	 */
 	public function tell() {
-		$fs = $this->getFilestore();
-
-		return $fs->tell($this->handle);
+		return $this->getStream()->tell();
 	}
 
 	/**
@@ -407,25 +295,12 @@ class ElggFile extends \ElggObject {
 	}
 
 	/**
-	 * Return the size of the file in bytes.
-	 *
-	 * @return int
-	 * @deprecated 1.8 Use getSize()
-	 */
-	public function size() {
-		elgg_deprecated_notice("Use \ElggFile::getSize() instead of \ElggFile::size()", 1.9);
-		return $this->getSize();
-	}
-
-	/**
 	 * Return a boolean value whether the file handle is at the end of the file
-	 * 
-	 * @deprecated 1.11 - Use getStream().
 	 *
 	 * @return bool
 	 */
 	public function eof() {
-		return true;
+		return $this->getStream()->eof();
 	}
 
 	/**
@@ -435,15 +310,6 @@ class ElggFile extends \ElggObject {
 	 */
 	public function exists() {
 		return $this->getDataStorage()->file($this->getFilename())->exists();
-	}
-	
-	
-	public function setDataStorageAdapter($adapter_name) {
-		return $this->dataStorageAdapter = $adapter_name;
-	}
-	
-	public function getDataStorageAdapter() {
-		return $this->dataStorageAdapter;
 	}
 
 	/**
@@ -458,26 +324,17 @@ class ElggFile extends \ElggObject {
 	}
 	
 	/**
+	 * Get the data storage for this entity
 	 * 
 	 * @return \Elgg\Filesystem\Adapter\Adapter
 	 */
 	public function getDataStorage() {
-		$adapters = _elgg_services()->dataStorageAdapters;
 		$storage = _elgg_services()->dataStorage;
 		
-		// get the stored adapter from MD or use default 
-		$adapter_name = $this->data_storage_adapter;
-		if ($adapter_name) {
-			$this->dataStorage = $adapters->get($adapter_name);
-		} else {
-			$adapter = $adapters->getDefault();
-		}
-		
-		$storage->setAdapter($adapter);
 		// set directory for this object
-		if ($this->guid) {
-			$path = $storage->getPathPrefix($this->guid);
-			$storage->directory($path);
+		if ($this->owner_guid) {
+			$path = $storage->getPathPrefix($this->owner_guid);
+			$storage = $storage->directory($path);
 		}
 		
 		return $storage;
@@ -550,6 +407,20 @@ class ElggFile extends \ElggObject {
 
 		return $this->filestore;
 	}
+	
+	/**
+	 * Get the stream for the currently opened file.
+	 * 
+	 * @return resource Stream
+	 * @throws IOException
+	 */
+	private function getStream() {
+		if (!$this->stream) {
+			throw new IOException("Files must be opened before calling getStream().");
+		}
+		
+		return $this->stream;
+	}
 
 	/**
 	 * Save the file
@@ -562,27 +433,11 @@ class ElggFile extends \ElggObject {
 	 * @return bool
 	 */
 	public function save() {
-		if (!parent::save()) {
-			return false;
-		}
-
-		// Save datastore metadata
-		$params = $this->filestore->getParameters();
-		foreach ($params as $k => $v) {
-			$this->setMetadata("filestore::$k", $v);
-		}
-
-		// Now make a note of the filestore class
-		$this->setMetadata("filestore::filestore", get_class($this->filestore));
-
-		return true;
+		// @todo delete file on fail?
+		return parent::save();
 	}
 	
 	public function moveUploadedFile($from, $to) {
 		return $this->filestore->moveUploadedFile($from, $to);
-	}
-	
-	public function readfile() {
-		$this->filestore->readfile($this);
 	}
 }

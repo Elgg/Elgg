@@ -8,12 +8,6 @@ class AdapterService {
 	
 	/**
 	 *
-	 * @var string
-	 */
-	private $default;
-	
-	/**
-	 *
 	 * @var Adapter[]
 	 */
 	private $adapters;
@@ -61,36 +55,5 @@ class AdapterService {
 	
 	public function listAdapters() {
 		return array_keys($this->adapters);
-	}
-	
-	public function setDefault($name) {
-		if ($this->default) {
-			throw new \UnexpectedValueException("There is already a default filesystem adapter.");
-		}
-		// @todo allow unregistered adapters?
-		$adapter = $this->get($name);
-		$this->default = $adapter;
-		return true;
-	}
-	
-	public function getDefault() {
-		if (!$this->default instanceof Adapter) {
-			throw new \UnexpectedValueException("Default filesystem adapter is not set.");
-		}
-		return $this->default;
-	}
-	
-	public static function buildFromParams(array $params) {
-		// build and return a new adapter from a set of param
-		// expects an array with classname and adapter-specific params
-		if (!isset($params['classname'])) {
-			throw new \InvalidArgumentException("Cannot build a filesystem adapter without a class name");
-		}
-		
-		if (!class_exists($params['classname'])) {
-			throw new \InvalidArgumentException("Filesystem adapter \"{$params['classname']}\" does not exist");
-		}
-		
-		return new $params['classname']($params);
 	}
 }

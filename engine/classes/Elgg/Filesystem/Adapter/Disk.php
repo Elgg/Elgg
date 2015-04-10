@@ -5,44 +5,64 @@ use Gaufrette\File;
 use Gaufrette\Adapter\Local as GaufretteLocal;
 use Elgg\EntityDirLocator;
 
-class Disk extends Filesystem implements Adapter {
-	private $config;
-	public function __construct(array $config) {
-		$this->config = $config;
-		if (!isset($config['path'])) {
-			throw new \InvalidArgumentException("Config passed to Filesystem\Adapter\Disk must have root_dir");
-		}
+/**
+ * Data storage on a local disk
+ */
+class Disk implements Adapter {
+	/**
+	 * @var string
+	 */
+	private $path;
+	
+	/**
+	 * @var Filesystem
+	 */
+	private $fs;
+	
+	/**
+	 * @var bool
+	 */
+	private $createDir;
+	
+	/**
+	 * Create a new instance of a local filesystem
+	 * 
+	 * @todo can't pass GaufretteLocal directly because it doesn't expose path.
+	 * 
+	 * @param string $path       The current path
+	 * @param bool   $create_dir Should directories be created if they don't exist
+	 */
+	public function __construct($path, $create_dir = false) {
+		$this->path = $path;
+		$this->createDir = $create_dir;
 
-		$adapter = new GaufretteLocal($config['path'], false);
-		parent::__construct($adapter);
+		$adapter = new GaufretteLocal($path, $create_dir);
+		$this->fs = new Filesystem($adapter);
 	}
 	
 	/**
-	 * 
-	 * @param type $name
-	 * @return File
+	 * {@inheritdoc}
 	 */
 	public function file($name) {
-		return new File($name, $this);
+		return new File($this->fullPath($name), $this->fs);
 	}
 	
 	/**
-	 * 
-	 * @param type $path
-	 * @return \self
+	 * {@inheritdoc}
 	 */
 	public function directory($path) {
-		// path is normalized by gaufrette
-		$config = $this->config;
-		$config['path'] = "{$config['path']}/$path";
-		return new self($config);
+		return new self($this->fullPath($path), $this->createDir);
 	}
 	
 	/**
-	 * @todo Inject via $config?
-	 * 
-	 * @param type $guid
-	 * @return type
+	 * {@inheritdoc}
+	 */
+	public static function fullPath($path) {
+		return str_replace("//", "/", "{$this->path}/$path");
+	}
+	
+	/**
+	 * {@inheritdoc}
 	 */
 	public static function getPathPrefix($guid) {
 		$locator = new EntityDirLocator($guid);

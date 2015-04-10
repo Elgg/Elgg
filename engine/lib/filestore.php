@@ -419,13 +419,13 @@ $DEFAULT_FILE_STORE = null;
 /**
  * Return the default filestore.
  * 
- * @depreciated 1.11 Use Elgg\Filesystem\AdapterService::getDefault()
+ * @depreciated 1.11 Use _elgg_services()->dataStorage
  *
  * @return \ElggFilestore
  */
 function get_default_filestore() {
 	_elgg_services()->deprecation
-		->sendNotice("Use Elgg\Filesystem\AdapterService::setDefault() instead of get_default_filestore()", 1.11);
+		->sendNotice("Use _elgg_services()->dataStorage instead of get_default_filestore()", 1.11);
 	global $DEFAULT_FILE_STORE;
 
 	return $DEFAULT_FILE_STORE;
@@ -434,7 +434,7 @@ function get_default_filestore() {
 /**
  * Set the default filestore for the system.
  * 
- * @depreciated 1.11 Use Elgg\Filesystem\AdapterService::setDefault() or set $CONFIG->user_data_store = 'adapter_name'
+ * @depreciated 1.11 Use Elgg\Filesystem\AdapterService::setDefault()
  *
  * @param \ElggFilestore $filestore An \ElggFilestore object.
  *
@@ -442,7 +442,7 @@ function get_default_filestore() {
  */
 function set_default_filestore(\ElggFilestore $filestore) {
 	_elgg_services()->deprecation
-		->sendNotice("Use Elgg\Filesystem\AdapterService::setDefault() or set \$CONFIG->user_data_store = 'adapter_name'", 1.11);
+		->sendNotice("Replaced by the advanced settings user data storage selection, saved as \$config->user_data_store", 1.11);
 		
 	global $DEFAULT_FILE_STORE;
 
@@ -472,37 +472,6 @@ function elgg_get_file_simple_type($mime_type) {
  * @access private
  */
 function _elgg_filestore_init() {
-	$config = _elgg_services()->config;
-	
-	// register core fs adapters
-	$adapters = _elgg_services()->dataStorageAdapters;
-	
-	$data_root = $config->get('dataroot');
-	if ($data_root) {
-		$disk = new \Elgg\Filesystem\Adapter\Disk(['path' => $data_root]);
-		$adapters->set('disk', $disk);
-	}
-	
-	$info = $config->get('user_data_store_info');
-	if (isset($info['aws_s3'])) {
-		$info['aws_s3']['request.options'] = [
-			'proxy' => $config->get('proxy'),
-			'verify' => !$config->get('ssl_no_verify')
-		];
-		$s3 = new \Elgg\Filesystem\Adapter\AwsS3($info['aws_s3']);
-		$adapters->set('aws_s3', $s3);
-	}
-	
-	// @todo add disk default to installation config values
-	$default = $config->get('user_data_store');
-	if ($default && $adapters->has($default)) {
-		$adapters->setDefault($default);
-	} else if (isset($disk)) {
-		$adapters->setDefault('disk');
-	} else {
-		// throw?
-	}
-
 	// Fix MIME type detection for Microsoft zipped formats
 	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
 	

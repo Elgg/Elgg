@@ -2,6 +2,7 @@
 namespace Elgg\Filesystem;
 use Elgg\Filesystem\Adapter\Adapter;
 use Elgg\Filesystem\AdapterService;
+use Elgg\Filesystem\Adapter\Disk;
 use Gaufrette\Filesystem;
 use Gaufrette\File;
 use Gaufrette\Adapter\InMemory as GaufretteMemory;
@@ -95,30 +96,6 @@ class AdapterServiceTest extends \PHPUnit_Framework_TestCase {
 	/**
 	 * @dataProvider multipleAdapters
 	 */
-	function testSetAndGetDefault($s, $adapters) {
-		foreach ($adapters as $name => $adapter) {
-			$s->set($name, $adapter);
-		}
-		
-		$this->assertTrue($s->setDefault('in_memory_2'));
-		$this->assertEquals($adapters['in_memory_2'], $s->getDefault());
-	}
-	
-	/**
-	 * @dataProvider multipleAdapters
-	 */
-	function testGetDefaultThrowsIfNotSet($s, $adapters) {
-		foreach ($adapters as $name => $adapter) {
-			$s->set($name, $adapter);
-		}
-		
-		$this->setExpectedException('\UnexpectedValueException');
-		$s->getDefault();
-	}
-	
-	/**
-	 * @dataProvider multipleAdapters
-	 */
 	function testCanListAdapters($s, $adapters) {
 		foreach ($adapters as $name => $adapter) {
 			$s->set($name, $adapter);
@@ -126,63 +103,13 @@ class AdapterServiceTest extends \PHPUnit_Framework_TestCase {
 		$expected = array_keys($adapters);
 		$this->assertEquals($expected, $s->listAdapters());
 	}
-	
-	/**
-	 * @dataProvider singleAdapter
-	 */
-	function testBuildFromParams($s) {
-		$params = [
-			'classname' => 'Elgg\Filesystem\inMemoryAdapter',
-			'param1' => 'value1',
-			'param2' => 'value2'
-		];
-		
-		$adp = $s::buildFromParams($params);
-		$this->assertInstanceOf('Elgg\Filesystem\inMemoryAdapter', $adp);
-		$this->assertEquals($params, $adp->getConfig());
-	}
-	
-	/**
-	 * @dataProvider singleAdapter
-	 */
-	function testBuildFromParamThrowsOnNoClassname($s) {
-		$this->setExpectedException('\InvalidArgumentException');
-		$adp = $s::buildFromParams([]);
-	}
-	
-	
-	/**
-	 * @dataProvider singleAdapter
-	 */
-	function testBuildFromParamThrowsOnInvalidClassname($s) {
-		$this->setExpectedException('\InvalidArgumentException');
-		$adp = $s::buildFromParams(['classname' => 'DoesntExist']);
-	}
-	
 }
 
-class inMemoryAdapter extends Filesystem implements Adapter {
-	private $config;
-	
-	public function __construct(array $config) {
-		$this->config = $config;
-		$adapter = new GaufretteMemory();
-		parent::__construct($adapter);
-	}
-	
-	public function file($name) {
-		return new File($name, $this);
-	}
-	
-	public function directory($path) {
-		return new self($path);
-	}
-	
-	public function getConfig() {
-		return $this->config;
-	}
-	
-	public static function getPathPrefix($guid) {
-		return "$guid/";
+class inMemoryAdapter extends Disk {
+	public function __construct($path) {
+		$this->path = $path;
+
+		$adapter = new GaufretteMemory($path);
+		$this->fs = new Filesystem($adapter);
 	}
 }

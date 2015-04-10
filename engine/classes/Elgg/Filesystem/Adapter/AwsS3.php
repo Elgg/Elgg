@@ -3,45 +3,65 @@ namespace Elgg\Filesystem\Adapter;
 use Gaufrette\Filesystem;
 use Gaufrette\File;
 use Gaufrette\Adapter\AwsS3 as GaufretteAwsS3;
-use Aws\S3\S3Client;
 
-class AwsS3 extends Filesystem implements Adapter {
-	private $config;
-	public function __construct(array $config) {
-		$this->config = $config;
-		
-		foreach (['bucket', 'key', 'secret'] as $req) {
-			if (!isset($config[$req])) {
-				throw new \InvalidArgumentException("Config passed to Filesystem\Adapter\AwsS3 must have $req");
-			}
-		}
-		
-		$s3 = S3Client::factory($config);
-		$adapter = new GaufretteAwsS3($s3, $config['bucket']);
-		parent::__construct($adapter);
+/**
+ * Data storage on AWS S3
+ * 
+ */
+class AwsS3 implements Adapter {
+	/**
+	 * @var Filesystem
+	 */
+	private $fs;
+	
+	/**
+	 * @var GaufretteAwsS3
+	 */
+	private $adapter;
+	
+	/**
+	 * The current path
+	 *
+	 * @var string
+	 */
+	private $path;
+	
+	/**
+	 * Create a new instance of a filesystem on AWS S3.
+	 * 
+	 * @param GaufretteAwsS3 $adapter The AWS S3 adapter, instantiated with an S3Client.
+	 * @param string         $path    The current path
+	 */
+	public function __construct(GaufretteAwsS3 $adapter, $path = '') {
+		$this->adapter = $adapter;
+		$this->path = $path;
+		$this->fs = new Filesystem($adapter);
 	}
 	
 	/**
-	 * 
-	 * @param type $name
-	 * @return File
+	 * {@inheritdoc}
 	 */
 	public function file($name) {
-		return new File($name, $this);
+		return new File($this->fullPath($name), $this->fs);
 	}
 	
 	/**
-	 * 
-	 * @param type $path
-	 * @return \self
+	 * {@inheritdoc}
 	 */
 	public function directory($path) {
-		// path is normalized by gaufrette
-		$config = $this->config;
-		$config['path'] = "{$config['path']}/$path";
-		return new self($config);
+		return new self($this->adapter, $this->fullPath($path));
 	}
 	
+	/**
+	 * {@inheritdoc}
+	 */
+	public static function fullPath($path) {
+		return str_replace("//", "/", "{$this->path}/$path");
+	}
+	
+	/**
+	 * {@inheritdoc}
+	 */
 	public static function getPathPrefix($guid) {
 		return "/$guid/";
 	}
