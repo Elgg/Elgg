@@ -1212,30 +1212,36 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function checkDatabaseSettings($user, $password, $dbname, $host) {
-		$mysql_dblink = mysql_connect($host, $user, $password, true);
-		if ($mysql_dblink == FALSE) {
-			register_error(_elgg_services()->translator->translate('install:error:databasesettings'));
+		$config = new \Elgg\Database\Config((object)[
+			'host' => $host,
+			'user' => $user,
+			'password' => $password,
+			'database' => $dbname,
+		]);
+		$logger = new \Elgg\Logger(new \Elgg\PluginHooksService());
+		$db = new \Elgg\Database($config, $logger);
+
+		try {
+			$db->getDataRow("SELECT 1");
+		} catch (DatabaseException $e) {
+			if (0 === strpos($e->getMessage(), "Elgg couldn't connect")) {
+				register_error(_elgg_services()->translator->translate('install:error:databasesettings'));
+			} else {
+				register_error(_elgg_services()->translator->translate('install:error:nodatabase', array($dbname)));
+			}
 			return FALSE;
 		}
 
-		$result = mysql_select_db($dbname, $mysql_dblink);
-
 		// check MySQL version - must be 5.0 or >
+		$version = $db->getServerVersion(\Elgg\Database\Config::READ_WRITE);
 		$required_version = 5.0;
-		$version = mysql_get_server_info();
 		$points = explode('.', $version);
 		if ($points[0] < $required_version) {
 			register_error(_elgg_services()->translator->translate('install:error:oldmysql', array($version)));
 			return FALSE;
 		}
 
-		mysql_close($mysql_dblink);
-
-		if (!$result) {
-			register_error(_elgg_services()->translator->translate('install:error:nodatabase', array($dbname)));
-		}
-
-		return $result;
+		return TRUE;
 	}
 
 	/**

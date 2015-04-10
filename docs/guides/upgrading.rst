@@ -12,6 +12,13 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.11 to 2.0
 ================
 
+Removed Functions
+-----------------
+
+ - get_db_error()
+ - execute_delayed_query()
+ - get_db_link()
+
 Breadcrumbs
 -----------
 
