@@ -92,9 +92,8 @@ class Database {
 	 *
 	 * @return resource Database link
 	 * @throws \DatabaseException
-	 * @todo make protected once we get rid of get_db_link()
 	 */
-	public function getLink($type) {
+	protected function getLink($type) {
 		if (isset($this->dbLinks[$type])) {
 			return $this->dbLinks[$type];
 		} else if (isset($this->dbLinks['readwrite'])) {
