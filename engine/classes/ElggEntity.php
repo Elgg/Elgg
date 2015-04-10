@@ -1686,6 +1686,7 @@ abstract class ElggEntity extends \ElggData implements
 		unset($persisted_entity);
 
 		if ($allow_edit) {
+			// give old update event a chance to stop the update
 			$allow_edit = _elgg_services()->events->trigger('update', $this->type, $this);
 		}
 
@@ -1711,6 +1712,8 @@ abstract class ElggEntity extends \ElggData implements
 			set owner_guid='$owner_guid', access_id='$access_id',
 			container_guid='$container_guid', time_created='$time_created',
 			time_updated='$time' WHERE guid=$guid");
+		
+		elgg_trigger_after_event('update', $this->type, $this);
 
 		// TODO(evan): Move this to \ElggObject?
 		if ($this instanceof \ElggObject) {
@@ -1990,14 +1993,19 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 		
-		if (!_elgg_services()->events->trigger('delete', $this->type, $this)) {
-			return false;
-		}
-		
+		// first check if we have edit access to this entity
+		// NOTE: in Elgg <= 1.10.3 this was after the delete event, 
+		// which could potentially remove some content if the user didn't have access
 		if (!$this->canEdit()) {
 			return false;
 		}
 
+		// now trigger an event to let others know this entity is about to be deleted
+		// so they can prevent it or take their own actions
+		if (!_elgg_services()->events->trigger('delete', $this->type, $this)) {
+			return false;
+		}
+		
 		_elgg_invalidate_cache_for_entity($guid);
 		
 		// If memcache is available then delete this entry from the cache

@@ -12,7 +12,19 @@ class TranslatorTest extends TestCase {
 		_elgg_services()->input->set('hl', $input_lang);
 		
 		$lang = $translator->getLanguage();
-		$this->assertEquals($lang, $input_lang);		
+		$this->assertEquals($lang, $input_lang);
 	}
 	
+	public function testCheckLanguageKeyExists() {
+		$translator = new Translator();
+		
+		$translator->addTranslation('en', array('__elgg_php_unit:test_key' => 'Dummy'));
+		
+		$this->assertTrue($translator->languageKeyExists('__elgg_php_unit:test_key'));
+		$this->assertFalse($translator->languageKeyExists('__elgg_php_unit:test_key:missing'));
+	}
+	
+	public function testDoesNotPerformSprintfFormattingIfArgsNotProvided() {
+		$this->markTestIncomplete();
+	}
 }

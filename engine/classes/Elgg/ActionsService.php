@@ -144,7 +144,7 @@ class ActionsService {
 	
 		if (($token) && ($ts) && ($session_id)) {
 			// generate token, check with input and forward if invalid
-			$required_token = generate_action_token($ts);
+			$required_token = $this->generateActionToken($ts);
 	
 			// Validate token
 			$token_matches = _elgg_services()->crypto->areEqual($token, $required_token);
@@ -248,7 +248,8 @@ class ActionsService {
 			}
 
 			// let the validator send an appropriate msg
-			validate_action_token();
+			$this->validateActionToken();
+
 		} else if ($this->validateActionToken()) {
 			return true;
 		}
@@ -261,16 +262,15 @@ class ActionsService {
 	 * @access private
 	 */
 	public function generateActionToken($timestamp) {
-		$site_secret = _elgg_services()->siteSecret->get();
 		$session_id = _elgg_services()->session->getId();
-		// Session token
-		$st = _elgg_services()->session->get('__elgg_session');
-
-		if ($session_id && $site_secret) {
-			return _elgg_services()->crypto->getHmac($timestamp . $session_id . $st, $site_secret, 'md5');
+		if (!$session_id) {
+			return false;
 		}
-	
-		return false;
+
+		$session_token = _elgg_services()->session->get('__elgg_session');
+
+		return _elgg_services()->crypto->getHmac([$timestamp, $session_id, $session_token], 'md5')
+			->getToken();
 	}
 	
 	/**

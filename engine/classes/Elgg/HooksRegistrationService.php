@@ -122,8 +122,10 @@ abstract class HooksRegistrationService {
 	 * @param string $type The type of the hook
 	 * @return array
 	 * @see \Elgg\HooksRegistrationService::getAllHandlers()
+	 *
+	 * @access private
 	 */
-	protected function getOrderedHandlers($name, $type) {
+	public function getOrderedHandlers($name, $type) {
 		$handlers = array();
 		
 		if (isset($this->handlers[$name][$type])) {
@@ -148,4 +150,3 @@ abstract class HooksRegistrationService {
 		return $handlers;
 	}
 }
-

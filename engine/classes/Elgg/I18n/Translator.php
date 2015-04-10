@@ -6,9 +6,7 @@ namespace Elgg\I18n;
  *
  * @access private
  *
- * @package    Elgg.Core
- * @subpackage I18n
- * @since      1.10.0
+ * @since 1.10.0
  */
 class Translator {
 	
@@ -388,6 +386,32 @@ class Translator {
 		}
 	
 		return false;
+	}
+	
+	/**
+	 * Check if a give language key exists
+	 *
+	 * @param string $key      The translation key
+	 * @param string $language The specific language to check
+	 *
+	 * @return bool
+	 * @since 1.11
+	 */
+	function languageKeyExists($key, $language = 'en') {
+		if (empty($key)) {
+			return false;
+		}
+	
+		if (($language !== 'en') && !array_key_exists($language, $this->CONFIG->translations)) {
+			// Ensure that all possible translations are loaded
+			$this->reloadAllTranslations();
+		}
+	
+		if (!array_key_exists($language, $this->CONFIG->translations)) {
+			return false;
+		}
+	
+		return array_key_exists($key, $this->CONFIG->translations[$language]);
 	}
 	
 	/**

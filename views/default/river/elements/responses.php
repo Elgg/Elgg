@@ -43,11 +43,10 @@ if ($comment_count) {
 	echo elgg_view_entity_list($comments, array('list_class' => 'elgg-river-comments'));
 
 	if ($comment_count > count($comments)) {
-		$num_more_comments = $comment_count - count($comments);
 		$url = $object->getURL();
 		$params = array(
 			'href' => $url,
-			'text' => elgg_echo('river:comments:more', array($num_more_comments)),
+			'text' => elgg_echo('river:comments:all', array($comment_count)),
 			'is_trusted' => true,
 		);
 		$link = elgg_view('output/url', $params);

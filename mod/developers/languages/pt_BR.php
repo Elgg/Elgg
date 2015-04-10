@@ -4,6 +4,7 @@ return array(
 	'admin:develop_tools' => 'Ferramentas',
 	'admin:develop_tools:sandbox' => 'Temas',
 	'admin:develop_tools:inspect' => 'Inspecionar',
+	'admin:inspect' => 'Inspecionar',
 	'admin:develop_tools:unit_tests' => 'Unidades de Testes',
 	'admin:developers' => 'Desenvolvedores',
 	'admin:developers:settings' => 'Configurações dos desenvolvedores',
@@ -19,7 +20,7 @@ return array(
 	'developers:label:display_errors' => 'Apresente erros críticos no PHP <i>(fatal PHP errors)</i>',
 	'developers:help:display_errors' => "Por padrão, o arquivo '.htaccess' do Elgg suprime a apresentação de erros fatais.",
 	'developers:label:screen_log' => "Apresenta os registros (logs) na tela",
-	'developers:help:screen_log' => "Apresenta as saídas de elgg/log() e elgg_dump() na página web.",
+	'developers:help:screen_log' => "Apresenta as saídas elgg_log() e elgg_dump() e uma contagem de consulta DB.",
 	'developers:label:show_strings' => "Apresenta os textos ('strings') que geram as traduções.",
 	'developers:help:show_strings' => "Apresenta os textos ('strings') usados por elgg_echo().",
 	'developers:label:wrap_views' => "Envolver as visões (Wrap views)",
@@ -35,9 +36,24 @@ return array(
 	
 	// inspection
 	'developers:inspect:help' => 'Inspecionar configuração do framework Elgg.',
+	'developers:inspect:actions' => 'Ações',
+	'developers:inspect:events' => 'Eventos',
+	'developers:inspect:menus' => 'Menus',
+	'developers:inspect:pluginhooks' => 'Plugin Hooks',
+	'developers:inspect:priority' => 'Prioridade',
+	'developers:inspect:simplecache' => 'Cache simples',
+	'developers:inspect:views' => 'Visualizações',
+	'developers:inspect:views:all_filtered' => "<b>Nota!</b> Toda a visualização de saída é filtrada através deste Plugin Hooks.",
+	'developers:inspect:views:filtered' => "(filtrada pelo plugin hook: %s)",
+	'developers:inspect:widgets' => 'Dispositivos',
+	'developers:inspect:webservices' => 'Serviços web',
+	'developers:inspect:widgets:context' => 'Contexto',
+	'developers:inspect:functions' => 'Funções',
+	'developers:inspect:file_location' => 'Caminho do arquivo do root Elgg',
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' em %s",
+	'developers:log_queries' => "%s Consultas DB (não inclui o evento desligar)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Introdução',

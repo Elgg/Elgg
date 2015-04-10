@@ -3,7 +3,6 @@ php:
  - 5.4
  - 5.5
  - 5.6
- - 7.0
 
 branches:
   except:
@@ -22,13 +21,10 @@ matrix:
        - phpenv rehash
        - composer self-update
        - composer install
-       - wget https://scrutinizer-ci.com/ocular.phar
       script:
        - bash .scripts/travis/check_commit_msgs.sh
-       - composer lint
-       - phpunit --coverage-clover=coverage.clover
-      after_script:
-       - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+       - vendor/bin/phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
+       - composer validate
        
     # Build and test javascript
     - php: 5.6
@@ -67,6 +63,11 @@ matrix:
        - sleep 3 # give Web server some time to bind to sockets, etc
       script:
        - curl -o - http://localhost:8888/ | grep "<title>Elgg Travis Site</title>"
+       - phpunit --coverage-clover=coverage.clover
+      after_script:
+       # Report unit test coverage metrics to scrutinizer
+       - wget https://scrutinizer-ci.com/ocular.phar
+       - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
 
 services: 
  - mysql
@@ -86,4 +87,7 @@ script:
 notifications:
   email:
     secure: exC/ws07lLOj3Y43C89jiaKpyB8Yt7DPGSCShV4R3Wkw/hVVzjxt1BinPxzsyL5DC7APUMcTHGOhDB2oCE4ynDE6o6L9bH79fc+V8IYAiNaEIGL0AOuHdnRdGN9GMrr2jv78cZ5MctuUTkeYLaoOEyDGHmkMhqa6SufIDAY8b58=
-
+  webhooks:
+    urls:
+     - secure: "Ug81+4Fa2UFZetSCV79OWOgYi4uVgNQ6rVrVn2HElddOMDwuHxo9CYKoA3Q+joPKMtNFCN2qkMyoyUfIMM83uJi1LmaUx/c7lR1pXBFVgc4Xyt114NcY80I4OCWWKg0G1FDlSiaXil922JjeC3MekYoqjsIyUgabGihe6j7DWz0="
+    on_start: true

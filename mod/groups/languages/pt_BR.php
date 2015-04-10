@@ -173,8 +173,11 @@ Visualize e responda na discussão:
 	'discussion:reply:edit' => 'Editar resposta',
 	'discussion:reply:deleted' => 'Resposta da discussão foi apagada.',
 	'discussion:reply:error:notfound' => 'A resposta a discussão não foi encontrada',
+	'discussion:reply:error:notfound_fallback' => "Desculpe, não foi possível encontrar a reposta especificada, mas nós temos encaminhado a você ao tópico de discussão original.",
 	'discussion:reply:error:notdeleted' => 'Não foi possivel apagar a resposta da discussão',
 
+	'discussion:search:title' => 'Responda no tópico: %s',
+	
 	'admin:groups' => 'Comunidades',
 
 	'reply:this' => 'Responder',

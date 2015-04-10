@@ -17,7 +17,7 @@ function categories_init() {
 
 	elgg_register_page_handler('categories', 'categories_page_handler');
 
-	elgg_register_event_handler('update', 'all', 'categories_save');
+	elgg_register_event_handler('update:after', 'all', 'categories_save');
 	elgg_register_event_handler('create', 'all', 'categories_save');
 
 	// To keep the category plugins in the settings area and because we have to do special stuff,

@@ -493,34 +493,41 @@ function groups_create_event_listener($event, $object_type, $object) {
  * Return the write access for the current group if the user has write access to it.
  */
 function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params) {
-	$page_owner = elgg_get_page_owner_entity();
-	$user_guid = $params['user_id'];
+	
+	$user_guid = sanitise_int(elgg_extract('user_id', $params), false);
 	$user = get_user($user_guid);
-	if (!$user) {
+	if (empty($user)) {
 		return $returnvalue;
 	}
-
-	// only insert group access for current group
-	if ($page_owner instanceof ElggGroup) {
-		if ($page_owner->canWriteToContainer($user_guid)) {
-			if ($page_owner->getContentAccessMode() == ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
-				// Due to group policy allow only the owner or all group members
-				$returnvalue = array(
-					ACCESS_PRIVATE => elgg_echo('PRIVATE'),
-					$page_owner->group_acl => elgg_echo('groups:acl', array($page_owner->name)),
-				);
-			} else {
-				// Leave out other groups, friends and friend collections
-				$returnvalue = array(
-					ACCESS_PRIVATE => elgg_echo('PRIVATE'),
-					ACCESS_LOGGED_IN => elgg_echo('LOGGED_IN'),
-					ACCESS_PUBLIC => elgg_echo('PUBLIC'),
-					$page_owner->group_acl => elgg_echo('groups:acl', array($page_owner->name)),
-				);
-			}
+	
+	$page_owner = elgg_get_page_owner_entity();
+	if (!($page_owner instanceof ElggGroup)) {
+		return $returnvalue;
+	}
+	
+	if (!$page_owner->canWriteToContainer($user_guid)) {
+		return $returnvalue;
+	}
+	
+	// check group content access rules
+	$allowed_access = array(
+		ACCESS_PRIVATE
+	);
+	
+	if ($page_owner->getContentAccessMode() !== ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
+		$allowed_access[] = ACCESS_LOGGED_IN;
+		$allowed_access[] = ACCESS_PUBLIC;
+	}
+	
+	foreach ($returnvalue as $access_id => $access_string) {
+		if (!in_array($access_id, $allowed_access)) {
+			unset($returnvalue[$access_id]);
 		}
 	}
-
+	
+	// add write access to the group
+	$returnvalue[$page_owner->group_acl] = elgg_echo('groups:acl', array($page_owner->name));
+	
 	return $returnvalue;
 }
 
@@ -736,7 +743,7 @@ function discussion_init() {
 	// allow non-owners to add replies to group discussion
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'discussion_reply_container_permissions_override');
 
-	elgg_register_event_handler('update', 'object', 'discussion_update_reply_access_ids');
+	elgg_register_event_handler('update:after', 'object', 'discussion_update_reply_access_ids');
 
 	$action_base = elgg_get_plugins_path() . 'groups/actions/discussion';
 	elgg_register_action('discussion/save', "$action_base/save.php");
@@ -1058,7 +1065,7 @@ function discussion_prepare_reply_notification($hook, $type, $notification, $par
 		$topic->title,
 		$group->name,
 		$reply->description,
-		$topic->getURL(),
+		$reply->getURL(),
 	), $language);
 	$notification->summary = elgg_echo('discussion:reply:notify:summary', array($topic->title), $language);
 
@@ -1187,6 +1194,7 @@ function discussion_reply_container_permissions_override($hook, $type, $return, 
  */
 function discussion_update_reply_access_ids($event, $type, $object) {
 	if (elgg_instanceof($object, 'object', 'groupforumtopic')) {
+		$ia = elgg_set_ignore_access(true);
 		$options = array(
 			'type' => 'object',
 			'subtype' => 'discussion_reply',
@@ -1204,6 +1212,8 @@ function discussion_update_reply_access_ids($event, $type, $object) {
 			$reply->access_id = $object->access_id;
 			$reply->save();
 		}
+		
+		elgg_set_ignore_access($ia);
 	}
 }
 

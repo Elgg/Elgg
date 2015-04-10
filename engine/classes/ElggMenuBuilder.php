@@ -108,35 +108,59 @@ class ElggMenuBuilder {
 		foreach ($this->menu as $key => $section) {
 			$parents = array();
 			$children = array();
+			$all_menu_items = array();
+			
 			// divide base nodes from children
 			foreach ($section as $menu_item) {
 				/* @var \ElggMenuItem $menu_item */
 				$parent_name = $menu_item->getParentName();
+				$menu_item_name = $menu_item->getName();
+				
 				if (!$parent_name) {
-					$parents[$menu_item->getName()] = $menu_item;
+					// no parents so top level menu items
+					$parents[$menu_item_name] = $menu_item;
 				} else {
-					$children[] = $menu_item;
+					$children[$menu_item_name] = $menu_item;
 				}
+				
+				$all_menu_items[$menu_item_name] = $menu_item;
+			} 
+			
+			if (empty($all_menu_items)) {
+				// empty sections can be skipped
+				continue;
 			}
-
-			// attach children to parents
-			$iteration = 0;
-			$current_gen = $parents;
-			$next_gen = null;
-			while (count($children) && $iteration < 20) {
-				foreach ($children as $index => $menu_item) {
-					$parent_name = $menu_item->getParentName();
-					if (array_key_exists($parent_name, $current_gen)) {
-						$next_gen[$menu_item->getName()] = $menu_item;
-						if (!in_array($menu_item, $current_gen[$parent_name]->getData('children'))) {
-							$current_gen[$parent_name]->addChild($menu_item);
-							$menu_item->setParent($current_gen[$parent_name]);
-						}
-						unset($children[$index]);
-					}
+						
+			if (empty($parents)) {
+				// menu items without parents? That is sad.. report to the log
+				$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:NoParents');
+				_elgg_services()->logger->notice($message);
+				
+				// skip section as without parents menu can not be drawn
+				continue;
+			}
+						
+			foreach ($children as $menu_item_name => $menu_item) {
+				$parent_name = $menu_item->getParentName();
+								
+				if (!array_key_exists($parent_name, $all_menu_items)) {
+					// orphaned child, inform authorities and skip to next item
+					$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:OrphanedChild', array($menu_item_name, $parent_name));
+					_elgg_services()->logger->notice($message);
+					
+					continue;
 				}
-				$current_gen = $next_gen;
-				$iteration += 1;
+				
+				if (!in_array($menu_item, $all_menu_items[$parent_name]->getData('children'))) {
+					$all_menu_items[$parent_name]->addChild($menu_item);
+					$menu_item->setParent($all_menu_items[$parent_name]);
+				} else {
+					// menu item already existed in parents children, report the duplicate registration
+					$message = _elgg_services()->translator->translate('ElggMenuBuilder:Trees:DuplicateChild', array($menu_item_name));
+					_elgg_services()->logger->notice($message);
+					
+					continue;
+				}
 			}
 
 			// convert keys to indexes for first level of tree

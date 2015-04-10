@@ -47,7 +47,7 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 	 */
 	public function testPutComplainsAboutInvalidKeys($key) {
 		$pool = StashPool::createEphemeral();
-		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert(): Assertion failed');
+		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert');
 		$pool->put($key, 'foo');
 	}
 
@@ -56,7 +56,7 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 	 */
 	public function testGetComplainsAboutInvalidKeys($key) {
 		$pool = StashPool::createEphemeral();
-		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert(): Assertion failed');
+		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert');
 		$pool->get($key, function () { return 'foo'; });
 	}
 
@@ -65,7 +65,7 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 	 */
 	public function testInvalidateComplainsAboutInvalidKeys($key) {
 		$pool = StashPool::createEphemeral();
-		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert(): Assertion failed');
+		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert');
 		$pool->invalidate($key);
 	}
 

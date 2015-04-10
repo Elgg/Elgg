@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.10\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-02-21 18:48-0500\n"
+"POT-Creation-Date: 2015-04-05 16:03-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1832,11 +1832,11 @@ msgid "Entity and context retrieval"
 msgstr ""
 
 #: ../../guides/helpers.rst:21
-msgid "``elgg_get_loggedin_user_entity()`` Returns the ElggUser for the current user"
+msgid "``elgg_get_logged_in_user_entity()`` Returns the ElggUser for the current user"
 msgstr ""
 
 #: ../../guides/helpers.rst:22
-msgid "``elgg_get_loggedin_user_guid()`` Returns the GUID of the current user"
+msgid "``elgg_get_logged_in_user_guid()`` Returns the GUID of the current user"
 msgstr ""
 
 #: ../../guides/helpers.rst:23
@@ -5655,6 +5655,22 @@ msgstr ""
 
 #: ../../guides/views.rst:259
 msgid "Before going through the motions of drawing views, Elgg checks the ``$CONFIG->template_handler`` variable to see if it contains the name of a callable function. If it does, the function will be passed the view name and template vars, and the return value of this function will be returned instead of the standard output:"
+msgstr ""
+
+#: ../../guides/views/foot-vs-footer.rst:2
+msgid "Page/elements/foot vs footer"
+msgstr ""
+
+#: ../../guides/views/foot-vs-footer.rst:4
+msgid "``page/elements/footer`` is the content that goes inside this part of the page:"
+msgstr ""
+
+#: ../../guides/views/foot-vs-footer.rst:14
+msgid "It's content is visible to end users and usually where you would put a sitemap or other secondary global navigation, copyright info, powered by elgg, etc."
+msgstr ""
+
+#: ../../guides/views/foot-vs-footer.rst:16
+msgid "``page/elements/foot`` is inserted just before the ending ``</body>`` tag and is mostly meant as a place to insert scripts that don't already work with ``elgg_register_js(array('location' => 'footer'));`` or ``elgg_require_js('amd/module');``. In other words, you should never override this view and probably don't need to extend it either. Just use the ``elgg_*_js`` functions instead"
 msgstr ""
 
 #: ../../guides/views/page-structure.rst:2

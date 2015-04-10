@@ -39,6 +39,8 @@ return array(
 	'actionnotfound' => "Tiedostoa, johon toiminto %s viittaa, ei löytynyt.",
 	'actionloggedout' => "Tämän toiminnon suorittaminen edellyttää, että olet kirjautuneena sisään.",
 	'actionunauthorized' => 'Sinulla ei ole oikeuksia tämän toiminnon suorittamiseen',
+	
+	'ajax:error' => 'AJAX-kutsun yhteydessä tapahtui odottamaton virhe. Yhteys palvelimeen saattaa olla katkennut.',
 
 	'PluginException:MisconfiguredPlugin' => "Liitännäisessä %s (guid %s) on havaittu virhe, joten se on poistettu käytöstä. Voit yrittää etsiä lisätietoja Elggin dokumentaatiosta (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) ei käynnisty. Syy: %s',
@@ -84,6 +86,9 @@ return array(
 	
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Käytössä on liitännäisiä, jotka ovat riippuvaisia liitännäisestä %s. Ennen kuin voit deaktivoida sen, sinun pitää deaktivoida seuraavat liitännäiset: %s',
 
+	'ElggMenuBuilder:Trees:NoParents' => 'Valikkolinkiltä puuttuu parent',
+	'ElggMenuBuilder:Trees:OrphanedChild' => 'Valikkolinkille [%s] määritetty parent [%s] puuttuu',
+	'ElggMenuBuilder:Trees:DuplicateChild' => 'Valikkolinkki [%s] on rekisteröity kahdesti',
 
 	'RegistrationException:EmptyPassword' => 'Salasanakenttä ei voi olla tyhjä',
 	'RegistrationException:PasswordMismatch' => 'Salasanojen on täsmättävä',
@@ -148,6 +153,8 @@ return array(
 	'access:read' => "Lukuoikeus",
 	'access:write' => "Kirjoitusoikeus",
 	'access:admin_only' => "Vain ylläpitäjät",
+	'access:missing_name' => "Tuntematon lukuoikeus",
+	'access:comments:change' => "Tässä sisällössä on kommentteja. Ota huomioon, että vaihtaessasi sisällön pääsytasoa, myös kommenttien pääsytaso muuttuu.",
 
 /**
  * Dashboard and widgets
@@ -514,6 +521,8 @@ return array(
 	'admin:widget:banned_users:help' => 'Listaa bannatut käyttäjät',
 	'admin:widget:content_stats' => 'Sisältötilastot',
 	'admin:widget:content_stats:help' => 'Näyttää sivustolle luotujen sisältöjen määrän',
+	'admin:widget:cron_status' => 'Cron-seuranta',
+	'admin:widget:cron_status:help' => 'Näyttää listan Cron-ajojen viimeisimmistä ajankohdista',
 	'widget:content_stats:type' => 'Sisältötyyppi',
 	'widget:content_stats:number' => 'Lukumäärä',
 
@@ -750,6 +759,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'river:friends' => 'Ystävien toiminta',
 	'river:select' => 'Näytä %s',
 	'river:comments:more' => '+%u lisää',
+	'river:comments:all' => 'Kaikki %u kommenttia',
 	'river:generic_comment' => 'kommentoi %s %s',
 
 	'friends:widget:description' => "Näyttää listan ystävistäsi.",
@@ -1073,6 +1083,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'installation:systemcache:description' => "Välimuisti vähentää liitännäisten latausaikaa tallentamalla muistiin niiden käytössä olevien näkymien sijainnit.",
 	'installation:systemcache:label' => "Käytä välimuistia (suositus)",
 
+	'admin:legend:system' => 'Järjestelmä',
 	'admin:legend:caching' => 'Välimuisti',
 	'admin:legend:content_access' => 'Pääsy sisältöihin',
 	'admin:legend:site_access' => 'Pääsy sivustolle',
@@ -1118,6 +1129,7 @@ Tarvittaessa voit lukea lisäohjeita <a href="http://learn.elgg.org/en/stable/ad
 	// Strings specific for the comments upgrade
 	'admin:upgrades:comments' => 'Kommenttien päivitys',
 	'upgrade:comment:create_failed' => 'Kommentin %s päivittäminen epäonnistui.',
+	'admin:upgrades:commentaccess' => 'Kommenttien lukuoikeuden päivitys',
 
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'Datahakemiston päivitys',

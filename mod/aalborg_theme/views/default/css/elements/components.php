@@ -273,6 +273,22 @@
 	margin-top: 15px;
 }
 
+/* Comment highlighting that automatically fades away */
+.elgg-comments .elgg-state-highlight {
+	-webkit-animation: comment-highlight 5s; /* Chrome, Safari, Opera */
+	animation: comment-highlight 5s;
+}
+/* Chrome, Safari, Opera */
+@-webkit-keyframes comment-highlight {
+	from {background: #dff2ff;}
+	to {background: white;}
+}
+/* Standard syntax */
+@keyframes comment-highlight {
+	from {background: #dff2ff;}
+	to {background: white;}
+}
+
 /* **************************************
 	Comments triangle
 ************************************** */
