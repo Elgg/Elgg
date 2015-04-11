@@ -18,11 +18,8 @@
  * @uses $vars['class']          Additional CSS class
  */
 
-if (isset($vars['class'])) {
-	$vars['class'] = "elgg-input-dropdown {$vars['class']}";
-} else {
-	$vars['class'] = "elgg-input-dropdown";
-}
+$vars['class'] = (array) elgg_extract('class', $vars, []);
+$vars['class'][] = 'elgg-input-dropdown';
 
 $defaults = array(
 	'disabled' => false,
@@ -52,31 +49,27 @@ if ($vars['multiple'] && !empty($vars['name']) && is_string($vars['name'])) {
     }
 }
 
-?>
-<select <?php echo elgg_format_attributes($vars); ?>>
-<?php
+$options_list = '';
 
 if ($options_values) {
 	foreach ($options_values as $opt_value => $option) {
 
-		$option_attrs = elgg_format_attributes(array(
+		$option_attrs = array(
 			'value' => $opt_value,
 			'selected' => in_array((string)$opt_value, $value),
-		));
+		);
 
-		echo "<option $option_attrs>$option</option>";
+		$options_list .= elgg_format_element('option', $option_attrs, $option);
 	}
 } else {
 	if (is_array($options)) {
 		foreach ($options as $option) {
 
-			$option_attrs = elgg_format_attributes(array(
-				'selected' => in_array((string)$option, $value)
-			));
+			$option_attrs = ['selected' => in_array((string)$option, $value)];
 
-			echo "<option $option_attrs>$option</option>";
+			$options_list .= elgg_format_element('option', $option_attrs, $option);
 		}
 	}
 }
-?>
-</select>
+
+echo elgg_format_element('select', $vars, $options_list);

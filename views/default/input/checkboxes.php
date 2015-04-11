@@ -39,17 +39,18 @@ $defaults = array(
 
 $vars = array_merge($defaults, $vars);
 
-$class = "elgg-input-checkboxes elgg-{$vars['align']}";
-if (isset($vars['class'])) {
-	$class .= " {$vars['class']}";
-	unset($vars['class']);
+if (empty($vars['options'])) {
+	return;
 }
 
-$id = '';
-if (isset($vars['id'])) {
-	$id = "id=\"{$vars['id']}\"";
-	unset($vars['id']);
-}
+$list_class = (array) elgg_extract('class', $vars, []);
+unset($vars['class']);
+
+$list_class[] = 'elgg-input-checkboxes';
+$list_class[] = "elgg-{$vars['align']}";
+
+$id = elgg_extract('id', $vars, '');
+unset($vars['id']);
 
 if (is_array($vars['value'])) {
 	$values = array_map('elgg_strtolower', $vars['value']);
@@ -65,27 +66,26 @@ if ($vars['name']) {
 unset($input_vars['align']);
 unset($input_vars['options']);
 
-if (count($vars['options']) > 0) {
-	// include a default value so if nothing is checked 0 will be passed.
-	if ($vars['name'] && $vars['default'] !== false) {
-		echo "<input type=\"hidden\" name=\"{$vars['name']}\" value=\"{$vars['default']}\" />";
-	}
-
-	echo "<ul class=\"$class\" $id>";
-	foreach ($vars['options'] as $label => $value) {
-		// @deprecated 1.8 Remove in 1.9
-		if (is_integer($label)) {
-			elgg_deprecated_notice('$vars[\'options\'] must be an associative array in input/checkboxes', 1.8);
-			$label = $value;
-		}
-
-		$input_vars['checked'] = in_array(elgg_strtolower($value), $values);
-		$input_vars['value'] = $value;
-		$input_vars['label'] = $label;
-		
-		$input = elgg_view('input/checkbox', $input_vars);
-
-		echo "<li>$input</li>";
-	}
-	echo '</ul>';
+// include a default value so if nothing is checked 0 will be passed.
+if ($vars['name'] && $vars['default'] !== false) {
+	echo elgg_view('input/hidden', ['name' => $vars['name'], 'value' => $default]);
 }
+
+$checkboxes = '';
+foreach ($vars['options'] as $label => $value) {
+	// @deprecated 1.8 Remove in 1.9
+	if (is_integer($label)) {
+		elgg_deprecated_notice('$vars[\'options\'] must be an associative array in input/checkboxes', 1.8);
+		$label = $value;
+	}
+
+	$input_vars['checked'] = in_array(elgg_strtolower($value), $values);
+	$input_vars['value'] = $value;
+	$input_vars['label'] = $label;
+	
+	$input = elgg_view('input/checkbox', $input_vars);
+
+	$checkboxes .= "<li>$input</li>";
+}
+
+echo elgg_format_element('ul', ['class' => $list_class, 'id' => $id], $checkboxes);
