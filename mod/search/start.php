@@ -29,21 +29,9 @@ function search_init() {
 	// get server min and max allowed chars for ft searching
 	$CONFIG->search_info = array();
 
-	$result = false;
-	try {
-		$result = get_data_row('SELECT @@ft_min_word_len as min, @@ft_max_word_len as max');
-	} catch (DatabaseException $e) {
-		// some servers don't have these values set which leads to exception
-		// we ignore the exception
-	}
-	if ($result) {
-		$CONFIG->search_info['min_chars'] = $result->min;
-		$CONFIG->search_info['max_chars'] = $result->max;
-	} else {
-		// defaults from MySQL on Ubuntu Linux
-		$CONFIG->search_info['min_chars'] = 4;
-		$CONFIG->search_info['max_chars'] = 90;
-	}
+	$ft_min_max = search_get_ft_min_max();
+	$CONFIG->search_info['min_chars'] = $ft_min_max->min;
+	$CONFIG->search_info['max_chars'] = $ft_min_max->max;
 
 	// add in CSS for search elements
 	elgg_extend_view('css/elgg', 'search/css');
@@ -523,4 +511,38 @@ Disallow: /search/
 TEXT;
 
 	return $text;
+}
+
+/**
+ * Returns minimum and maximum lengths of words for MySQL search
+ * This function looks for stored config values, and, if none set,
+ * queries the DB and saves them
+ * @return stdClass An object with min and max properties
+ */
+function search_get_ft_min_max() {
+
+	$min = (int) elgg_get_config('search_ft_min_word_len');
+	$max = (int) elgg_get_config('search_ft_max_word_len');
+
+	if (!$min || !$max) {
+		// defaults from MySQL on Ubuntu Linux
+		$min = 4;
+		$max = 90;
+		try {
+			$result = get_data_row('SELECT @@ft_min_word_len as min, @@ft_max_word_len as max');
+			$min = $result->min;
+			$max = $result->max;
+		} catch (DatabaseException $e) {
+			// some servers don't have these values set which leads to exception
+			// we ignore the exception
+		}
+		elgg_save_config('search_ft_min_word_len', $min);
+		elgg_save_config('search_ft_max_word_len', $max);
+	}
+
+	$ft = new stdClass();
+	$ft->min = $min;
+	$ft->max = $max;
+
+	return $ft;
 }
