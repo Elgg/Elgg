@@ -8,7 +8,9 @@
  */
 
 echo '<div>';
+echo '<label for="admin-plugins-category" class="hidden">' . elgg_echo('filter') . '</label>';
 echo elgg_view('input/select', array(
+	'id' => 'admin-plugins-category',
 	'name' => 'category',
 	'options_values' => $vars['category_options'],
 	'value' => $vars['category'],
