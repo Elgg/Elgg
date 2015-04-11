@@ -5,10 +5,12 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['class'] CSS class that replaces elgg-button-submit
+ * @uses $vars['class'] Additional CSS class
  */
 
 $vars['type'] = 'submit';
-$vars['class'] = elgg_extract('class', $vars, 'elgg-button-submit');
+
+$vars['class'] = (array) elgg_extract('class', $vars, []);
+$vars['class'][] = "elgg-button-submit";
 
 echo elgg_view('input/button', $vars);
