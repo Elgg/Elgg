@@ -112,6 +112,10 @@ return array(
 
 	'error:default:title' => 'Oops...',
 	'error:default:content' => 'Oops... something went wrong.',
+	'error:400:title' => 'Bad request',
+	'error:400:content' => 'Sorry. The request is invalid or incomplete.',
+	'error:403:title' => 'Forbidden',
+	'error:403:content' => 'Sorry. You are not allowed to access the requested page.',
 	'error:404:title' => 'Page not found',
 	'error:404:content' => 'Sorry. We could not find the page that you requested.',
 
