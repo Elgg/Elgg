@@ -129,6 +129,15 @@ function get_default_access(ElggUser $user = null, array $input_params = array()
 			if ($user_access !== null) {
 				$default_access = $user_access;
 			}
+			
+			// replace the placeholder access with the users friends acl
+			if ($default_access == ACCESS_FRIENDS) {
+				$default_access = $user->friends_acl;
+			}
+			
+			if ($default_access == ACCESS_PRIVATE) {
+				$default_access = $user->private_acl;
+			}
 		}
 	}
 
@@ -487,16 +496,20 @@ function elgg_list_entities_from_access_id(array $options = array()) {
  */
 function get_readable_access_level($entity_access_id) {
 	$access = (int) $entity_access_id;
+	$user = _elgg_services()->session->getLoggedInUser();
 
 	$translator = _elgg_services()->translator;
 
 	// Check if entity access id is a defined global constant
 	$access_array = array(
-		ACCESS_PRIVATE => $translator->translate("PRIVATE"),
-		ACCESS_FRIENDS => $translator->translate("access:friends:label"),
 		ACCESS_LOGGED_IN => $translator->translate("LOGGED_IN"),
 		ACCESS_PUBLIC => $translator->translate("PUBLIC"),
 	);
+	
+	if ($user) {
+		$access_array[$user->private_acl] = $translator->translate("PRIVATE");
+		$access_array[$user->friends_acl] = $translator->translate("access:friends:label");
+	}
 
 	if (array_key_exists($access, $access_array)) {
 		return $access_array[$access];
@@ -510,11 +523,26 @@ function get_readable_access_level($entity_access_id) {
 		return $write_access_array[$access];
 	}
 	
+	// possibly another users friends acl
+	$alt_user = elgg_get_entities_from_metadata(array(
+		'type' => 'user',
+		'metadata_names' => array('friends_acl', 'private_acl'),
+		'metadata_values' => array($access),
+		'limit' => 1
+	));
+	
+	if ($alt_user && $alt_user[0]->friends_acl == $access) {
+		return $translator->translate("access:friends:label:alt_user", array($alt_user[0]->name));
+	}
+	
 	// Still here? Probably requesting a custom acl not from the logged in user.
 	// Admins should be able to see the readable version
 	if (elgg_is_admin_logged_in()) {
 		$collection = _elgg_services()->accessCollections->get($access);
 		if ($collection) {
+			if ($alt_user && $alt_user[0]->private_acl == $access) {
+				return $translator->translate("access:private:label:alt_user", array($alt_user[0]->name));
+			}
 			return $collection->name;
 		}
 	}

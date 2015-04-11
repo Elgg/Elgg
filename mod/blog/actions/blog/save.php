@@ -115,7 +115,7 @@ if ($save == false) {
 // if draft, set access to private and cache the future access
 if ($values['status'] == 'draft') {
 	$values['future_access'] = $values['access_id'];
-	$values['access_id'] = ACCESS_PRIVATE;
+	$values['access_id'] = $user->private_acl;
 }
 
 // assign values to the entity, stopping on error.

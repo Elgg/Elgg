@@ -31,6 +31,11 @@ function _elgg_friends_init() {
 	elgg_register_event_handler('pagesetup', 'system', '_elgg_setup_collections_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_friends_setup_user_hover_menu');
 	elgg_register_event_handler('create', 'friend', '_elgg_send_friend_notification');
+	
+	//@TODO - move to after event if one exists
+	//until then use late priority in case another handler stops the event
+	elgg_register_event_handler('create', 'relationship', '_elgg_friends_acl_add', 1000);
+	elgg_register_event_handler('delete', 'relationship', '_elgg_friends_acl_remove', 1000);
 }
 
 /**
@@ -221,6 +226,52 @@ function _elgg_send_friend_notification($event, $type, $object) {
 	), $user_two->language);
 
 	return notify_user($user_two->guid, $object->guid_one, $subject, $body);
+}
+
+/**
+ * Add user to the friends acl
+ * 
+ * @param string            $event  create
+ * @param string            $type   relationship
+ * @param \ElggRelationship $object Relationship
+ */
+function _elgg_friends_acl_add($event, $type, $object) {
+	
+	if ($object->relationship != 'friend') {
+		return true;
+	}
+	
+	$user_one = get_entity($object->guid_one);
+	$user_two = get_entity($object->guid_two);
+	
+	if (!$user_one || !$user_two) {
+		return true;
+	}
+	
+	add_user_to_access_collection($user_two->guid, $user_one->friends_acl);
+}
+
+/**
+ * Remove user from the former friends acl
+ * 
+ * @param string            $event  create
+ * @param string            $type   friend
+ * @param \ElggRelationship $object Relationship
+ */
+function _elgg_friends_acl_remove($event, $type, $object) {
+	
+	if ($object->relationship != 'friend') {
+		return true;
+	}
+	
+	$user_one = get_entity($object->guid_one);
+	$user_two = get_entity($object->guid_two);
+	
+	if (!$user_one || !$user_two) {
+		return null;
+	}
+	
+	remove_user_from_access_collection($user_two->guid, $user_one->friends_acl);
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

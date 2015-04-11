@@ -129,6 +129,12 @@ class MetadataTable {
 		}
 	
 		$access_id = (int)$access_id;
+		if ($access_id === ACCESS_PRIVATE) {
+			$owner = $this->session->getLoggedInUser();
+			if ($owner) {
+				$access_id = $owner->private_acl;
+			}
+		}
 	
 		$query = "SELECT * from {$this->table}"
 			. " WHERE entity_guid = $entity_guid and name_id=" . $this->metastringsTable->getId($name) . " limit 1";

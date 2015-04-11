@@ -34,7 +34,7 @@ if ($title && $description) {
 
 		// force draft and private for autosaves.
 		$blog->status = 'unsaved_draft';
-		$blog->access_id = ACCESS_PRIVATE;
+		$blog->access_id = $user->private_acl;
 		$blog->title = $title;
 		$blog->description = $description;
 		$blog->excerpt = elgg_get_excerpt($excerpt);

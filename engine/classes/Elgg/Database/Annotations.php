@@ -80,6 +80,12 @@ class Annotations {
 		}
 	
 		$access_id = (int)$access_id;
+		if ($access_id === ACCESS_PRIVATE) {
+			$owner = _elgg_services()->session->getLoggedInUser();
+			if ($owner) {
+				$access_id = $owner->private_acl;
+			}
+		}
 		$time = time();
 	
 		$value_id = elgg_get_metastring_id($value);

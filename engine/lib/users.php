@@ -435,6 +435,39 @@ function user_create_hook_add_site_relationship($event, $object_type, $object) {
 }
 
 /**
+ * Create personal access collections for friends and private access
+ *
+ * @param string $event       create
+ * @param string $object_type user
+ * @param \ElggUser $user     User object
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_user_create_hook_add_acls($event, $object_type, $user) {
+	$user->friends_acl = create_access_collection('acl:friends:' . $user->guid, elgg_get_site_entity()->guid);
+	$user->private_acl = create_access_collection('acl:private:' . $user->guid, elgg_get_site_entity()->guid);
+
+	add_user_to_access_collection($user->guid, $user->friends_acl);
+	add_user_to_access_collection($user->guid, $user->private_acl);
+}
+
+/**
+ * Remove personal access collections for friends and private access
+ *
+ * @param string $event       delete
+ * @param string $object_type user
+ * @param \ElggUser $user     User object
+ *
+ * @return void
+ * @access private
+ */
+function _elgg_user_delete_hook_remove_acls($event, $object_type, $user) {
+	delete_access_collection($user->friends_acl);
+	delete_access_collection($user->private_acl);
+}
+
+/**
  * Serves the user's avatar
  *
  * @param string $hook
@@ -511,12 +544,12 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		$item = new \ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
 		$item->setSection('admin');
 		$return[] = $item;
-		
+
 		$url = "avatar/edit/$user->username";
 		$item = new \ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
 		$item->setSection('admin');
 		$return[] = $item;
-		
+
 		$url = "settings/user/$user->username";
 		$item = new \ElggMenuItem('settings:edit', elgg_echo('settings:edit'), $url);
 		$item->setSection('admin');
@@ -767,6 +800,11 @@ function users_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'elgg_users_setup_entity_menu', 501);
 
 	elgg_register_event_handler('create', 'user', 'user_create_hook_add_site_relationship');
+	elgg_register_event_handler('create', 'user', '_elgg_user_create_hook_add_acls');
+
+	//@TODO - move this to a legit after event when one exists
+	//until then use late priority in case other handlers prevent deletion
+	elgg_register_event_handler('delete', 'user', '_elgg_user_delete_hook_remove_acls', 1000);
 }
 
 /**
