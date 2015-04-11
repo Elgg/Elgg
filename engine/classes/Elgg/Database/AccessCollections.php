@@ -258,14 +258,7 @@ class AccessCollections {
 	
 		if ($options['ignore_access']) {
 			$clauses['ors'][] = '1 = 1';
-		} else if ($options['user_guid']) {
-			// include content of user's friends
-			$clauses['ors'][] = "$table_alias{$options['access_column']} = " . ACCESS_FRIENDS . "
-				AND $table_alias{$options['owner_guid_column']} IN (
-					SELECT guid_one FROM {$prefix}entity_relationships
-					WHERE relationship = 'friend' AND guid_two = {$options['user_guid']}
-				)";
-	
+		} else if ($options['user_guid']) {	
 			// include user's content
 			$clauses['ors'][] = "$table_alias{$options['owner_guid_column']} = {$options['user_guid']}";
 		}
@@ -393,27 +386,38 @@ class AccessCollections {
 		if ($cache[$hash]) {
 			$access_array = $cache[$hash];
 		} else {
-			// @todo is there such a thing as public write access?
-			$access_array = array(
-				ACCESS_PRIVATE => _elgg_services()->translator->translate("PRIVATE"),
-				ACCESS_FRIENDS => _elgg_services()->translator->translate("access:friends:label"),
-				ACCESS_LOGGED_IN => _elgg_services()->translator->translate("LOGGED_IN"),
+			$user = get_user($user_guid);
+			$logged_in_array = array();
+			if ($user) {
+				$logged_in_array = array(
+					$user->private_acl => _elgg_services()->translator->translate("PRIVATE"),
+					$user->friends_acl => _elgg_services()->translator->translate("access:friends:label"),
+					ACCESS_LOGGED_IN => _elgg_services()->translator->translate("LOGGED_IN"),
+				);
+			}
+			
+			$public_array = array(
 				ACCESS_PUBLIC => _elgg_services()->translator->translate("PUBLIC")
 			);
-
-			$db = _elgg_services()->db;
-			$prefix = $db->getTablePrefix();
 			
-			$query = "SELECT ag.* FROM {$prefix}access_collections ag ";
-			$query .= " WHERE (ag.site_guid = $site_guid OR ag.site_guid = 0)";
-			$query .= " AND (ag.owner_guid = $user_guid)";
+			$collections_array = array();
+			if ($user) {
+				$db = _elgg_services()->db;
+				$prefix = $db->getTablePrefix();
+			
+				$query = "SELECT ag.* FROM {$prefix}access_collections ag ";
+				$query .= " WHERE (ag.site_guid = $site_guid OR ag.site_guid = 0)";
+				$query .= " AND (ag.owner_guid = $user_guid)";
 	
-			$collections = $db->getData($query);
-			if ($collections) {
-				foreach ($collections as $collection) {
-					$access_array[$collection->id] = $collection->name;
+				$collections = $db->getData($query);
+				if ($collections) {
+					foreach ($collections as $collection) {
+						$collections_array[$collection->id] = $collection->name;
+					}
 				}
 			}
+			
+			$access_array = array_merge($logged_in_array, $public_array, $collections_array);
 	
 			if ($init_finished) {
 				$cache[$hash] = $access_array;
