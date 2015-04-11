@@ -29,10 +29,10 @@ class Hmac {
 	/**
 	 * Constructor
 	 *
-	 * @param string          $key        HMAC key
-	 * @param callable        $comparator Function that returns true if given two equal strings, else false
-	 * @param string[]|string $data       HMAC data string (or array of strings)
-	 * @param string          $algo       Hash algorithm
+	 * @param string   $key        HMAC key
+	 * @param callable $comparator Function that returns true if given two equal strings, else false
+	 * @param mixed    $data       HMAC data string or serializable data
+	 * @param string   $algo       Hash algorithm
 	 */
 	public function __construct($key, callable $comparator, $data, $algo = 'sha256') {
 		$this->key = $key;
@@ -40,10 +40,8 @@ class Hmac {
 		if (!$data) {
 			throw new \InvalidArgumentException('$data cannot be empty');
 		}
-		if (is_array($data)) {
-			$data = json_encode(array_map('strval', $data));
-		} else {
-			$data = (string)$data;
+		if (!is_string($data)) {
+			$data = serialize($data);
 		}
 		$this->data = $data;
 		$this->algo = $algo;

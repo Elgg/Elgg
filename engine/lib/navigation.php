@@ -591,6 +591,8 @@ function _elgg_nav_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:widget', '_elgg_widget_menu_setup');
 	elgg_register_plugin_hook_handler('register', 'menu:login', '_elgg_login_menu_setup');
 
+	elgg_register_plugin_hook_handler('public_pages', 'walled_garden', '_elgg_nav_public_pages');
+
 	elgg_register_menu_item('footer', \ElggMenuItem::factory(array(
 		'name' => 'powered',
 		'text' => elgg_echo("elgg:powered"),
@@ -598,6 +600,28 @@ function _elgg_nav_init() {
 		'title' => 'Elgg ' . elgg_get_version(true),
 		'section' => 'meta',
 	)));
+
+	elgg_register_ajax_view('navigation/menu/user_hover/contents');
+}
+
+/**
+ * Extend public pages
+ *
+ * @param string   $hook_name    "public_pages"
+ * @param string   $entity_type  "walled_garden"
+ * @param string[] $return_value Paths accessible outside the "walled garden"
+ * @param mixed    $params       unused
+ *
+ * @return string[]
+ * @access private
+ * @since 1.11.0
+ */
+function _elgg_nav_public_pages($hook_name, $entity_type, $return_value, $params) {
+	if (is_array($return_value)) {
+		$return_value[] = 'navigation/menu/user_hover/contents';
+	}
+
+	return $return_value;
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

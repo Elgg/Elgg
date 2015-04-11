@@ -479,48 +479,12 @@ function elgg_list_entities_from_access_id(array $options = array()) {
  * or a name of the group or other access collection, e.g. 'Group: Elgg technical support';
  * or 'Limited' if the user access is restricted to read-only, e.g. a friends collection the user was added to
  * 
- * @uses get_write_access_array()
- * 
  * @param int $entity_access_id The entity's access id
  * @return string
  * @since 1.7.0
  */
 function get_readable_access_level($entity_access_id) {
-	$access = (int) $entity_access_id;
-
-	$translator = _elgg_services()->translator;
-
-	// Check if entity access id is a defined global constant
-	$access_array = array(
-		ACCESS_PRIVATE => $translator->translate("PRIVATE"),
-		ACCESS_FRIENDS => $translator->translate("access:friends:label"),
-		ACCESS_LOGGED_IN => $translator->translate("LOGGED_IN"),
-		ACCESS_PUBLIC => $translator->translate("PUBLIC"),
-	);
-
-	if (array_key_exists($access, $access_array)) {
-		return $access_array[$access];
-	}
-
-	// Entity access id is a custom access collection
-	// Check if the user has write access to it and can see it's label
-	$write_access_array = _elgg_services()->accessCollections->getWriteAccessArray();
-
-	if (array_key_exists($access, $write_access_array)) {
-		return $write_access_array[$access];
-	}
-	
-	// Still here? Probably requesting a custom acl not from the logged in user.
-	// Admins should be able to see the readable version
-	if (elgg_is_admin_logged_in()) {
-		$collection = _elgg_services()->accessCollections->get($access);
-		if ($collection) {
-			return $collection->name;
-		}
-	}
-	
-	// return 'Limited' if the user does not have access to the access collection
-	return $translator->translate('access:limited:label');
+	return _elgg_services()->accessCollections->getReadableAccessLevel($entity_access_id);
 }
 
 /**

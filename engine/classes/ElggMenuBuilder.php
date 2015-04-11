@@ -260,14 +260,15 @@ class ElggMenuBuilder {
 
 	/**
 	 * Compare two menu items by their display text
+	 * HTML tags are stripped before comparison
 	 *
 	 * @param \ElggMenuItem $a Menu item
 	 * @param \ElggMenuItem $b Menu item
 	 * @return bool
 	 */
 	public static function compareByText($a, $b) {
-		$at = $a->getText();
-		$bt = $b->getText();
+		$at = strip_tags($a->getText());
+		$bt = strip_tags($b->getText());
 
 		$result = strnatcmp($at, $bt);
 		if ($result === 0) {

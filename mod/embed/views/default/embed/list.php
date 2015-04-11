@@ -1,4 +1,5 @@
 <?php
+
 /**
  * View a list of embeddable items
  *
@@ -12,55 +13,12 @@
  * @uses $vars['list_class']  Additional CSS class for the <ul> element
  * @uses $vars['item_class']  Additional CSS class for the <li> elements
  */
-
-$items = $vars['items'];
-$offset = $vars['offset'];
-$limit = $vars['limit'];
-$count = $vars['count'];
-
-$offset_key = elgg_extract('offset_key', $vars, 'offset');
-
-$list_class = 'elgg-list';
-if (isset($vars['list_class'])) {
-	$list_class = "$list_class {$vars['list_class']}";
-}
-
-$item_class = 'elgg-item';
-if (isset($vars['item_class'])) {
-	$item_class = "$item_class {$vars['item_class']}";
-}
-
-$html = "";
-$nav = "";
-
 $page_owner = elgg_get_page_owner_entity();
 if ($page_owner instanceof ElggGroup && $page_owner->isMember()) {
-	$base_url = 'embed?container_guid=' . $page_owner->guid;
+	$vars['base_url'] = 'embed?container_guid=' . $page_owner->guid;
 } else {
-	$base_url = 'embed';
+	$vars['base_url'] = 'embed';
 }
 
-if ($count) {
-	$nav .= elgg_view('navigation/pagination', array(
-		'offset' => $offset,
-		'count' => $count,
-		'limit' => $limit,
-		'offset_key' => $offset_key,
-		'base_url' => $base_url,
-	));
-}
-
-if (is_array($items) && count($items) > 0) {
-	$html .= "<ul class=\"$list_class\">";
-	foreach ($items as $item) {
-		$id = "elgg-{$item->getType()}-{$item->getGUID()}";
-		$html .= "<li id=\"$id\" class=\"$item_class\">";
-		$html .= elgg_view('embed/item', array('entity' => $item));
-		$html .= '</li>';
-	}
-	$html .= '</ul>';
-}
-
-$html .= $nav;
-
-echo $html;
+$vars['item_view'] = 'embed/item';
+echo elgg_view('page/components/list', $vars);

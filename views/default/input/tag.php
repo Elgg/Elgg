@@ -8,19 +8,16 @@
  * @uses $vars['class'] Additional CSS class
  */
 
-if (isset($vars['class'])) {
-	$vars['class'] = "elgg-input-tag {$vars['class']}";
-} else {
-	$vars['class'] = "elgg-input-tag";
-}
+$vars['class'] = (array) elgg_extract('class', $vars, []);
+$vars['class'][] = 'elgg-input-tag';
 
 $defaults = array(
 	'value' => '',
 	'disabled' => false,
 	'autocapitalize' => 'off',
+	'type' => 'text'
 );
 
 $vars = array_merge($defaults, $vars);
-?>
 
-<input type="text" <?php echo elgg_format_attributes($vars); ?> />
+echo elgg_format_element('input', $vars);

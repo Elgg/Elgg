@@ -1029,8 +1029,10 @@ function elgg_deprecated_notice($msg, $dep_version, $backtrace_level = 1) {
  * @note If only partial information is passed, a partial URL will be returned.
  *
  * @param array $parts       Associative array of URL components like parse_url() returns
+ *                           'user' and 'pass' parts are ignored because of security reasons
  * @param bool  $html_encode HTML Encode the url?
  *
+ * @see https://github.com/Elgg/Elgg/pull/8146#issuecomment-91544585
  * @return string Full URL
  * @since 1.7.0
  */
@@ -1474,6 +1476,12 @@ function _elgg_js_page_handler($page) {
  * @access private
  */
 function _elgg_ajax_page_handler($page) {
+	// the ajax page handler should only be called from an xhr
+	if (!elgg_is_xhr()) {
+		register_error(_elgg_services()->translator->translate('ajax:not_is_xhr'));
+		forward(null, '400');
+	}
+	
 	if (is_array($page) && sizeof($page)) {
 		// throw away 'view' and form the view name
 		unset($page[0]);
@@ -1899,6 +1907,11 @@ function _elgg_init() {
 	elgg_register_js('elgg.autocomplete', 'js/lib/ui.autocomplete.js');
 	elgg_register_js('jquery.ui.autocomplete.html', 'vendors/jquery/jquery.ui.autocomplete.html.js');
 
+	elgg_define_js('jquery.ui.autocomplete.html', array(
+		'src' => '/vendors/jquery/jquery.ui.autocomplete.html.js',
+		'deps' => array('jquery.ui')
+	));
+	
 	elgg_register_external_view('js/elgg/UserPicker.js', true);
 
 	elgg_register_js('elgg.friendspicker', 'js/lib/ui.friends_picker.js');

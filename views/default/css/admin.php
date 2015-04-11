@@ -1025,6 +1025,8 @@ select {
 	z-index: 10000;
 
 	width: 165px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 	border: solid 1px #E5E5E5;
 	border-color: #E5E5E5 #999 #999 #E5E5E5;
 	background-color: #FFF;

@@ -138,28 +138,32 @@ class CacheHandler {
 			return;
 		}
 
-		$dblink = mysql_connect($this->config->dbhost, $this->config->dbuser, $this->config->dbpass, true);
-		if (!$dblink) {
-			$this->send403('Cache error: unable to connect to database server');
-		}
+		$db_config = new Database\Config($this->config);
+		$db = new Database($db_config, new Logger(new PluginHooksService()));
 
-		if (!mysql_select_db($this->config->dbname, $dblink)) {
-			$this->send403('Cache error: unable to connect to Elgg database');
-		}
-
-		$query = "SELECT `name`, `value` FROM {$this->config->dbprefix}datalists
-				WHERE `name` IN ('dataroot', 'simplecache_enabled')";
-
-		$result = mysql_query($query, $dblink);
-		if ($result) {
-			while ($row = mysql_fetch_object($result)) {
-				$this->config->{$row->name} = $row->value;
+		try {
+			$rows = $db->getData("
+				SELECT `name`, `value`
+				FROM {$db->getTablePrefix()}datalists
+				WHERE `name` IN ('dataroot', 'simplecache_enabled')
+			");
+			if (!$rows) {
+				$this->send403('Cache error: unable to get the data root');
 			}
-			mysql_free_result($result);
+		} catch (\DatabaseException $e) {
+			if (0 === strpos($e->getMessage(), "Elgg couldn't connect")) {
+				$this->send403('Cache error: unable to connect to database server');
+			} else {
+				$this->send403('Cache error: unable to connect to Elgg database');
+			}
+			exit; // unnecessary, but helps PhpStorm understand
 		}
-		mysql_close($dblink);
 
-		if (!$result || !isset($this->config->dataroot)) {
+		foreach ($rows as $row) {
+			$this->config->{$row->name} = $row->value;
+		}
+
+		if (empty($this->config->dataroot)) {
 			$this->send403('Cache error: unable to get the data root');
 		}
 	}
