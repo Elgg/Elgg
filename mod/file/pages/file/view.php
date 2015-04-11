@@ -30,6 +30,8 @@ elgg_push_breadcrumb($title);
 
 $content = elgg_view_entity($file, array('full_view' => true));
 $content .= elgg_view_comments($file);
+$sidebar = file_get_type_cloud(elgg_get_page_owner_guid());
+$sidebar .= elgg_view('file/sidebar');
 
 elgg_register_menu_item('title', array(
 	'name' => 'download',
@@ -42,6 +44,7 @@ $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
+	'sidebar' => $sidebar
 ));
 
 echo elgg_view_page($title, $body);
