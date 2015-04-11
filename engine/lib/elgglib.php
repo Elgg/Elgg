@@ -1476,6 +1476,12 @@ function _elgg_js_page_handler($page) {
  * @access private
  */
 function _elgg_ajax_page_handler($page) {
+	// the ajax page handler should only be called from an xhr
+	if (!elgg_is_xhr()) {
+		register_error(_elgg_services()->translator->translate('ajax:not_is_xhr'));
+		forward(null, '400');
+	}
+	
 	if (is_array($page) && sizeof($page)) {
 		// throw away 'view' and form the view name
 		unset($page[0]);
