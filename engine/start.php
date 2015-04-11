@@ -1,6 +1,6 @@
 <?php
 
-require_once('/vendor/autoload.php');
+$autoloader = require_once(__DIR__ . '/../autoloader.php');
 
 $app = new \Elgg\Application();
 

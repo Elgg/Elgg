@@ -1,6 +1,5 @@
 <?php
 namespace Elgg;
-use Elgg\Database\Config;
 
 /**
  * An object representing a single Elgg database.

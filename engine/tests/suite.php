@@ -8,8 +8,7 @@
 
 require_once(dirname( __FILE__ ) . '/../start.php');
 
-
-require_once(dirname( __FILE__ ) . '/../../vendor/autoload.php');
+$autoloader = require_once(__DIR__ . '/../../autoloader.php');
 $test_path = "$CONFIG->path/engine/tests";
 
 require_once("$test_path/ElggCoreUnitTest.php");

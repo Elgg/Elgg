@@ -14,11 +14,7 @@
  * @subpackage Cache
  */
 
-// we need to load a few Elgg classes, but this is much lighter than /vendor/autoload.php
-spl_autoload_register(function ($class) {
-	$file = dirname(__DIR__) . '/classes/' . strtr(ltrim($class, '\\'), '_\\', '//') . '.php';
-	is_readable($file) && (require $file);
-});
+$autoloader = require_once(__DIR__ . '/../../autoloader.php');
 
 require_once dirname(dirname(__FILE__)) . '/settings.php';
 /* @var \stdClass $CONFIG */

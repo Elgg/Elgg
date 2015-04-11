@@ -18,7 +18,7 @@
  
  $rootDir = dirname(__DIR__);
  
- require_once "$rootDir/vendor/autoload.php";
+ require_once "$rootDir/autoloader.php";
 
 $is_file = false;
 
