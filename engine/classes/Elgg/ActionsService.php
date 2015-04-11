@@ -269,7 +269,7 @@ class ActionsService {
 
 		$session_token = _elgg_services()->session->get('__elgg_session');
 
-		return _elgg_services()->crypto->getHmac([$timestamp, $session_id, $session_token], 'md5')
+		return _elgg_services()->crypto->getHmac([(int)$timestamp, $session_id, $session_token], 'md5')
 			->getToken();
 	}
 	

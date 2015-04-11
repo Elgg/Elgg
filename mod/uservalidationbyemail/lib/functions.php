@@ -16,7 +16,7 @@
 function uservalidationbyemail_generate_code($user_guid, $email_address) {
 	// Note: binding to site URL for multisite.
 	$site_url = elgg_get_site_url();
-	return elgg_build_hmac([$user_guid, $email_address, $site_url])->getToken();
+	return elgg_build_hmac([(int)$user_guid, $email_address, $site_url])->getToken();
 }
 
 /**
@@ -81,7 +81,7 @@ function uservalidationbyemail_validate_email($user_guid, $code) {
 	$user = get_entity($user_guid);
 	$site_url = elgg_get_site_url();
 
-	$matches = elgg_build_hmac([$user_guid, $user->email, $site_url])->matchesToken($code);
+	$matches = elgg_build_hmac([(int)$user_guid, $user->email, $site_url])->matchesToken($code);
 	if (!$matches) {
 		return false;
 	}
