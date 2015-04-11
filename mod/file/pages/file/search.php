@@ -17,6 +17,7 @@ if ($page_owner_guid) {
 $owner = elgg_get_page_owner_entity();
 
 elgg_group_gatekeeper();
+elgg_register_title_button();
 
 // Get input
 $md_type = 'simpletype';
