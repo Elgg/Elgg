@@ -355,6 +355,8 @@
 
 	min-width: 165px;
 	max-width: 250px;
+	padding-top: 20px;
+	padding-bottom: 20px;
 	border: solid 1px;
 	border-color: #E5E5E5 #999 #999 #E5E5E5;
 	background-color: #FFF;

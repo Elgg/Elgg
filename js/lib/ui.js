@@ -194,6 +194,34 @@ elgg.ui.toggleMenu = function(event) {
  * @return void
  */
 elgg.ui.initHoverMenu = function(parent) {
+
+	/**
+	 * For a menu clicked, load the menu into all matching placeholders
+	 *
+	 * @param {String} mac Machine authorization code for the menu clicked
+	 */
+	function loadMenu(mac) {
+		var $all_placeholders = $(".elgg-menu-hover[rel='" + mac + "']");
+
+		// find the <ul> that contains data for this menu
+		var $ul = $all_placeholders.filter('[data-elgg-menu-data]');
+
+		if (!$ul.length) {
+			return;
+		}
+
+		elgg.get('ajax/view/navigation/menu/user_hover/contents', {
+			data: $ul.data('elggMenuData'),
+			success: function(data) {
+				if (data) {
+					// replace all existing placeholders with new menu
+					$all_placeholders.removeClass('elgg-ajax-loader')
+						.html($(data).children());
+				}
+			}
+		});
+	}
+
 	if (!parent) {
 		parent = document;
 	}
@@ -209,6 +237,12 @@ elgg.ui.initHoverMenu = function(parent) {
 
 	// avatar contextual menu
 	$(".elgg-avatar > .elgg-icon-hover-menu").live('click', function(e) {
+		var $placeholder = $(this).parent().find(".elgg-menu-hover.elgg-ajax-loader");
+
+		if ($placeholder.length) {
+			loadMenu($placeholder.attr("rel"));
+		}
+
 		// check if we've attached the menu to this element already
 		var $hovermenu = $(this).data('hovermenu') || null;
 
