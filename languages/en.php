@@ -142,10 +142,12 @@ return array(
  */
 
 	'PRIVATE' => "Private",
+	'access:private:label:alt_user' => "Private to %s",
 	'LOGGED_IN' => "Logged in users",
 	'PUBLIC' => "Public",
 	'LOGGED_OUT' => "Logged out users",
 	'access:friends:label' => "Friends",
+	'access:friends:label:alt_user' => "%s's Friends",
 	'access' => "Access",
 	'access:overridenotice' => "Note: Due to group policy, this content will be accessible only by group members.",
 	'access:limited:label' => "Limited",

@@ -324,24 +324,10 @@ function pages_write_permission_check($hook, $entity_type, $returnvalue, $params
 	$user = $params['user'];
 
 	if ($write_permission && $user) {
-		switch ($write_permission) {
-			case ACCESS_PRIVATE:
-				// Elgg's default decision is what we want
-				return null;
-				break;
-			case ACCESS_FRIENDS:
-				$owner = $entity->getOwnerEntity();
-				if (($owner instanceof ElggUser) && $owner->isFriendsWith($user->guid)) {
-					return true;
-				}
-				break;
-			default:
-				$list = get_access_array($user->guid);
-				if (in_array($write_permission, $list)) {
-					// user in the access collection
-					return true;
-				}
-				break;
+		$list = get_access_array($user->guid);
+		if (in_array($write_permission, $list)) {
+			// user in the access collection
+			return true;
 		}
 	}
 }
