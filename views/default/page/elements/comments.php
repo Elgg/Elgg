@@ -19,22 +19,21 @@ if (!$limit) {
 	$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
 }
 
-$id = '';
-if (isset($vars['id'])) {
-	$id = "id=\"{$vars['id']}\"";
-}
-
-$class = 'elgg-comments';
-if (isset($vars['class'])) {
-	$class = "$class {$vars['class']}";
-}
+$attr = [
+	'id' => elgg_extract('id', $vars, 'elgg-comments'),
+	'class' => (array) elgg_extract('class', $vars, [])
+];
+$attr['class'][] = 'elgg-comments';
 
 // work around for deprecation code in elgg_view()
 unset($vars['internalid']);
 
-echo "<div $id class=\"$class\">";
+// make the pagination go to the comments section
+$parts = parse_url(current_page_url());
+$parts['fragment'] = $attr['id'];
+$base_url = elgg_http_build_url($parts, false);
 
-$html = elgg_list_entities(array(
+$content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'comment',
 	'container_guid' => $vars['entity']->getGUID(),
@@ -43,12 +42,11 @@ $html = elgg_list_entities(array(
 	'limit' => $limit,
 	'preload_owners' => true,
 	'distinct' => false,
+	'base_url' => $base_url
 ));
 
-echo $html;
-
 if ($show_add_form) {
-	echo elgg_view_form('comment/save', array(), $vars);
+	$content .= elgg_view_form('comment/save', array(), $vars);
 }
 
-echo '</div>';
+echo elgg_format_element('div', $attr, $content);
