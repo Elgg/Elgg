@@ -58,6 +58,16 @@ The metadata ``$entity->view`` no longer specifies the view used to render in ``
 
 Similarly the property ``$annotation->view`` no longer has an effect within ``elgg_view_annotation()``.
 
+Label elements
+--------------
+
+The following views received ``label`` elements around some of the input fields. If your plugin/theme overrides these views please check for the new content.
+
+- views/default/core/river/filter.php
+- views/default/forms/admin/plugins/filter.php
+- views/default/forms/admin/plugins/sort.php
+- views/default/forms/login.php
+
 From 1.10 to 1.11
 =================
 

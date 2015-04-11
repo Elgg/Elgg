@@ -8,7 +8,13 @@
  */
 
 echo '<div class="mtm">';
+$attr = [
+	'for' => 'admin-plugins-sort', 
+	'hidden' => true
+];
+echo elgg_format_element('label', $attr, elgg_echo('sort'));
 echo elgg_view('input/select', array(
+	'id' => 'admin-plugins-sort',
 	'name' => 'sort',
 	'options_values' => $vars['sort_options'],
 	'value' => $vars['sort'],

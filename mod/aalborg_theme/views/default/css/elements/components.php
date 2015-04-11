@@ -204,9 +204,13 @@
 .elgg-river-attachments .elgg-icon-arrow-right {
 	margin: 3px 8px 0;
 }
+.elgg-river-layout .elgg-river-selector {
+	float: right;
+	margin: 13px 0;
+}
 .elgg-river-layout .elgg-input-dropdown {
 	float: right;
-	margin: 10px 0;
+	margin: 10px 0 10px 5px;
 }
 
 <?php //@todo components.php ?>
