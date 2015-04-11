@@ -20,15 +20,13 @@
  * @uses $vars['label_class'] Optional class for the label
  */
 
-if (isset($vars['class'])) {
-	$vars['class'] = "elgg-input-checkbox {$vars['class']}";
-} else {
-	$vars['class'] = "elgg-input-checkbox";
-}
+$vars['class'] = (array) elgg_extract('class', $vars, []);
+$vars['class'][] = 'elgg-input-checkbox';
 
 $defaults = array(
 	'default' => 0,
 	'disabled' => false,
+	'type' => 'checkbox'
 );
 
 $vars = array_merge($defaults, $vars);
@@ -37,19 +35,18 @@ $default = $vars['default'];
 unset($vars['default']);
 
 if (isset($vars['name']) && $default !== false) {
-	echo "<input type=\"hidden\" name=\"{$vars['name']}\" value=\"$default\"/>";
+	echo elgg_view('input/hidden', ['name' => $vars['name'], 'value' => $default]);
 }
 
-if (isset($vars['label'])) {
-	if (isset($vars['label_class'])) {
-		echo "<label class=\"{$vars['label_class']}\">";
-	} else {
-		echo "<label>";
-	}
-}
-?>
-<input type="checkbox" <?php echo elgg_format_attributes($vars); ?> />
-<?php
-if (isset($vars['label'])) {
-	echo "{$vars['label']}</label>";
+$label = elgg_extract('label', $vars, false);
+$label_class = elgg_extract('label_class', $vars);
+unset($vars['label']);
+unset($vars['label_class']);
+
+$input = elgg_format_element('input', $vars);
+
+if (!empty($label)) {
+	echo elgg_format_element('label', ['class' => $label_class], $input . $label);
+} else {
+	echo $input;
 }
