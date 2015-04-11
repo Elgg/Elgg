@@ -197,6 +197,9 @@ Permission hooks
 **permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can edit the entity ``$params['entity']``.
 
+**permissions_check:delete, <entity_type>**
+	Return boolean for if the user ``$params['user']`` can delete the entity ``$params['entity']``. Defaults to ``$entity->canEdit()``.
+
 **permissions_check, widget_layout**
 	Return boolean for if ``$params['user']`` can edit the widgets in the context passed as
 	``$params['context']`` and with a page owner of ``$params['page_owner']``.
