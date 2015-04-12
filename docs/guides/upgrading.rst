@@ -51,6 +51,13 @@ Plugin Messages
 
 Messages will no longer get the metadata 'msg' for newly created messages. This means you can not rely on that metadata to exist.
 
+Specifying View via Properties
+------------------------------
+
+The metadata ``$entity->view`` no longer specifies the view used to render in ``elgg_view_entity()``.
+
+Similarly the property ``$annotation->view`` no longer has an effect within ``elgg_view_annotation()``.
+
 From 1.10 to 1.11
 =================
 
