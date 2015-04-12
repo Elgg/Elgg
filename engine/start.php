@@ -46,17 +46,35 @@ $CONFIG->boot_complete = false;
 $engine_dir = dirname(__FILE__);
 
 // No settings means a fresh install
-if (!is_file("$engine_dir/settings.php")) {
-	header("Location: install.php");
-	exit;
-}
+if (defined('ELGG_PHPUNIT')) {
+    $settings = "$engine_dir/settings.php";
 
-if (!is_readable("$engine_dir/settings.php")) {
-	echo "The Elgg settings file exists but the web server doesn't have read permission to it.";
-	exit;
-}
+    // Use sample config if Elgg is not yet configured
+    if (!is_readable($settings)) {
+        $settings = "$engine_dir/settings.example.php";
+    }
 
-require_once "$engine_dir/settings.php";
+    // Load configuration
+    if (is_readable($settings)) {
+        require_once $settings;
+    }
+
+    // Load test configuration
+    if (stream_resolve_include_path('settings.phpunit.php')) {
+        require_once 'settings.phpunit.php';
+    }
+} else {
+    if (!is_file("$engine_dir/settings.php")) {
+	    header("Location: install.php");
+	    exit;
+    }
+
+    if (!is_readable("$engine_dir/settings.php")) {
+	    echo "The Elgg settings file exists but the web server doesn't have read permission to it.";
+	    exit;
+    }
+    require_once "$engine_dir/settings.php";
+}
 
 // This will be overridden by the DB value but may be needed before the upgrade script can be run.
 $CONFIG->default_limit = 10;
