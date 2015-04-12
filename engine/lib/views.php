@@ -823,7 +823,6 @@ function elgg_view_entity(\ElggEntity $entity, $vars = array(), $bypass = false,
 
 	$entity_views = array(
 		elgg_extract('item_view', $vars, ''),
-		$entity->view,
 		"$entity_type/$entity_subtype",
 		"$entity_type/default",
 	);
@@ -924,13 +923,6 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
 
 	$vars = array_merge($defaults, $vars);
 	$vars['annotation'] = $annotation;
-
-	// @todo setting the view on an annotation is not advertised anywhere
-	// do we want to keep this?
-	$view = $annotation->view;
-	if (is_string($view)) {
-		return elgg_view($view, $vars, $bypass, $debug);
-	}
 
 	$name = $annotation->name;
 	if (empty($name)) {
