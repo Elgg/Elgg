@@ -16,6 +16,20 @@ class Config {
 	private $dependencies = array();
 
 	/**
+	 * @var \Elgg\PluginHooksService
+	 */
+	private $hooks;
+	
+	/**
+	 * Constructor
+	 *
+	 * @param \Elgg\PluginHooksService $hooks The hooks service
+	 */
+	public function __construct(\Elgg\PluginHooksService $hooks) {
+		$this->hooks = $hooks;
+	}
+	
+	/**
 	 * Set the base URL for the site
 	 *
 	 * @param string $url URL
@@ -226,11 +240,18 @@ class Config {
 	 * @return array
 	 */
 	public function getConfig() {
-		return array(
+		$defaults = array(
 			'baseUrl' => $this->baseUrl,
 			'paths' => $this->paths,
 			'shim' => $this->shim,
 			'deps' => $this->getDependencies(),
+			'waitSeconds' => 20,
 		);
+		
+		$params = array(
+			'defaults' => $defaults
+		);
+		
+		return  $this->hooks->trigger('config', 'amd', $params, $defaults);
 	}
 }

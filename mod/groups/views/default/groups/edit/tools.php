@@ -15,21 +15,13 @@ if ($tools) {
 	foreach ($tools as $group_option) {
 		$group_option_toggle_name = $group_option->name . "_enable";
 		$value = elgg_extract($group_option_toggle_name, $vars);
-		?>
-<div>
-	<label>
-		<?php echo $group_option->label; ?><br />
-	</label>
-		<?php echo elgg_view("input/radio", array(
-			"name" => $group_option_toggle_name,
-			"value" => $value,
-			"options" => array(
-				elgg_echo("option:yes") => "yes",
-				elgg_echo("option:no") => "no",
-			),
-		));
-		?>
-</div>
-<?php
+		
+		echo elgg_format_element('div', null, elgg_view('input/checkbox', array(
+			'name' => $group_option_toggle_name,
+			'value' => 'yes',
+			'default' => 'no',
+			'checked' => ($value === 'yes') ? true : false,
+			'label' => $group_option->label
+		)));
 	}
 }

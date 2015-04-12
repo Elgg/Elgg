@@ -16,17 +16,14 @@
  */
 
 $defaults = array(
-	'method' => "post",
+	'method' => 'post',
 	'disable_security' => FALSE,
 );
 
 $vars = array_merge($defaults, $vars);
 
-if (isset($vars['class'])) {
-	$vars['class'] = "elgg-form {$vars['class']}";
-} else {
-	$vars['class'] = 'elgg-form';
-}
+$vars['class'] = (array) elgg_extract('class', $vars, []);
+$vars['class'][] = 'elgg-form';
 
 $vars['action'] = elgg_normalize_url($vars['action']);
 $vars['method'] = strtolower($vars['method']);
@@ -41,6 +38,4 @@ if (!$vars['disable_security']) {
 unset($vars['disable_security']);
 unset($vars['action_name']);
 
-$attributes = elgg_format_attributes($vars);
-
-echo "<form $attributes><fieldset>$body</fieldset></form>";
+echo elgg_format_element('form', $vars, "<fieldset>$body</fieldset>");

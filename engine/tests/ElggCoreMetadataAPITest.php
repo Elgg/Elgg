@@ -267,7 +267,9 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$METASTRINGS_CACHE = array();
 
 		$string = sanitise_string($string);
-		mysql_query("DELETE FROM {$CONFIG->dbprefix}metastrings WHERE string = BINARY '$string'");
+		_elgg_services()->db->deleteData("
+			DELETE FROM {$CONFIG->dbprefix}metastrings WHERE string = BINARY '$string'
+		");
 	}
 
 	protected function create_metastring($string) {
@@ -275,7 +277,9 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$METASTRINGS_CACHE = array();
 
 		$string = sanitise_string($string);
-		mysql_query("INSERT INTO {$CONFIG->dbprefix}metastrings (string) VALUES ('$string')");
-		$this->metastrings[$string] = mysql_insert_id();
+		$id = _elgg_services()->db->insertData("
+			INSERT INTO {$CONFIG->dbprefix}metastrings (string) VALUES ('$string')
+		");
+		$this->metastrings[$string] = $id;
 	}
 }

@@ -56,14 +56,14 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($expected, $crypto->getHmac($data, $algo, $key)->getToken());
 	}
 
-	function testStringCastDoesntAffectMacs() {
+	function testStringCastAffectsMacs() {
 		$crypto = new ElggCrypto();
 		$key = 'a very bad key';
 
 		$t1 = $crypto->getHmac(1234, 'sha256', $key)->getToken();
 		$t2 = $crypto->getHmac('1234', 'sha256', $key)->getToken();
 
-		$this->assertEquals($t1, $t2);
+		$this->assertNotEquals($t1, $t2);
 	}
 
 	function testMacAlteredByVaryingData() {
@@ -103,6 +103,16 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 
 		$t1 = $crypto->getHmac([12, 34], 'sha256', $key)->getToken();
 		$t2 = $crypto->getHmac([123, 4], 'sha256', $key)->getToken();
+
+		$this->assertNotEquals($t1, $t2);
+	}
+
+	function testMacAlteredByArrayTypeModification() {
+		$crypto = new ElggCrypto();
+		$key = 'a very bad key';
+
+		$t1 = $crypto->getHmac([12, 34], 'sha256', $key)->getToken();
+		$t2 = $crypto->getHmac([12, '34'], 'sha256', $key)->getToken();
 
 		$this->assertNotEquals($t1, $t2);
 	}

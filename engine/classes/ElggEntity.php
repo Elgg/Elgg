@@ -1068,6 +1068,47 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
+	 * Can a user delete this entity?
+	 *
+	 * @tip Can be overridden by registering for the permissions_check:delete plugin hook.
+	 *
+	 * @param int $user_guid The user GUID, optionally (default: logged in user)
+	 *
+	 * @return bool Whether this entity is deletable by the given user.
+	 * @since 1.11
+	 * @see elgg_set_ignore_access()
+	 */
+	public function canDelete($user_guid = 0) {
+		$user_guid = (int) $user_guid;
+
+		if (!$user_guid) {
+			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
+		}
+
+		// need to ignore access and show hidden entities for potential hidden/disabled users
+		$ia = elgg_set_ignore_access(true);
+		$show_hidden = access_show_hidden_entities(true);
+		
+		$user = _elgg_services()->entityTable->get($user_guid, 'user');
+		
+		elgg_set_ignore_access($ia);
+		access_show_hidden_entities($show_hidden);
+		
+		if ($user_guid & !$user) {
+			// requested to check access for a specific user_guid, but there is no user entity, so return false
+			$message = _elgg_services()->translator->translate('entity:can_delete:invaliduser', array($user_guid));
+			_elgg_services()->logger->warning($message);
+			
+			return false;
+		}		
+		
+		$return = $this->canEdit($user_guid);
+
+		$params = array('entity' => $this, 'user' => $user);
+		return _elgg_services()->hooks->trigger('permissions_check:delete', $this->type, $params, $return);
+	}
+
+	/**
 	 * Can a user edit metadata on this entity?
 	 *
 	 * If no specific metadata is passed, it returns whether the user can
@@ -1993,10 +2034,10 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 		
-		// first check if we have edit access to this entity
+		// first check if we can delete this entity
 		// NOTE: in Elgg <= 1.10.3 this was after the delete event, 
 		// which could potentially remove some content if the user didn't have access
-		if (!$this->canEdit()) {
+		if (!$this->canDelete()) {
 			return false;
 		}
 

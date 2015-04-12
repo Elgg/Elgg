@@ -38,7 +38,7 @@ function ckeditor_longtext_menu($hook, $type, $items, $vars) {
 
 	$items[] = ElggMenuItem::factory(array(
 		'name' => 'ckeditor_toggler',
-		'link_class' => 'ckeditor-toggle-editor elgg-longtext-control',
+		'link_class' => 'ckeditor-toggle-editor elgg-longtext-control hidden',
 		'href' => "#{$vars['id']}",
 		'text' => elgg_echo('ckeditor:html'),
 	));

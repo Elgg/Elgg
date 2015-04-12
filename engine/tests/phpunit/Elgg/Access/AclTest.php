@@ -52,5 +52,31 @@ class Elgg_Access_AclTest extends PHPUnit_Framework_TestCase {
 		 */
 		$this->markTestIncomplete();
 	}
+	
+	/**
+	 * Getting the readable name of a default access_id should return the expected value.
+	 */
+	public function testAclReadableNameForDefaultAccessID() {
+		/**
+		 * How to test:
+		 *  1. Use getReadableAccessLevel with access_id ACCESS_PRIVATE
+		 *  2. Assert that the output is elgg_echo('PRIVATE')
+		 */
+		$this->markTestIncomplete();
+	}
 
+	/**
+	 * Getting the readable name of a custom access_id should return the expected value.
+	 */
+	public function testAclReadableNameForCustomAccessID() {
+		/**
+		 * How to test:
+		 *  1. Create a custom access list
+		 *  2. Use getReadableAccessLevel with access_id of the just create ACL
+		 *  3. Assert that the output is the same as the name of the just created ACL
+		 */
+		$this->markTestIncomplete();
+	}
+	
+	
 }
