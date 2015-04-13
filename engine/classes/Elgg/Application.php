@@ -31,20 +31,22 @@ class Application {
 	 */
 	private $config_file;
 
-	public function __construct($config_file = '') {
-		$this->config = new \Elgg\Config((object)array());
-		$this->engine_dir = dirname(dirname(__DIR__));
-		if (!$config_file) {
-			$config_file = "{$this->engine_dir}/settings.php";
-		}
-		$this->config_file = $config_file;
-		$this->install_dir = dirname($this->engine_dir);
-	}
+	/**
+	 * @var bool
+	 */
+	private $core_loaded = false;
 
 	/**
-	 * Loads all lib files, but doesn't trigger boot events.
+	 * @var bool
 	 */
-	function loadConfig() {
+	private $core_booted = false;
+
+	/**
+	 * Constructor
+	 *
+	 * @param Config|string $config Config object or settings file location or
+	 */
+	public function __construct($config = null) {
 		/**
 		 * The time with microseconds when the Elgg engine was started.
 		 *
@@ -53,6 +55,39 @@ class Application {
 		global $START_MICROTIME;
 		$START_MICROTIME = microtime(true);
 
+		$this->engine_dir = dirname(dirname(__DIR__));
+		$this->install_dir = dirname($this->engine_dir);
+
+		if ($config) {
+			if (is_string($config)) {
+				$this->config_file = $config;
+			} else {
+				if (!$config instanceof Config) {
+					throw new \InvalidArgumentException('$config must be an Elgg\Config or a settings file location');
+				}
+				$this->config = $config;
+			}
+		} else {
+			$this->config_file = "{$this->engine_dir}/settings.php";
+		}
+	}
+
+	/**
+	 * @return Config
+	 */
+	public function getConfig() {
+		if (!$this->config) {
+			$this->loadConfig();
+		}
+		return $this->config;
+	}
+
+	/**
+	 * Load all lib files without triggering boot events
+	 *
+	 * @return void
+	 */
+	protected function loadConfig() {
 		/**
 		 * Configuration values.
 		 *
@@ -72,7 +107,6 @@ class Application {
 		}
 		$CONFIG->boot_complete = false;
 
-
 		// No settings means a fresh install
 		if (!is_file($this->config_file)) {
 			header("Location: install.php");
@@ -85,22 +119,32 @@ class Application {
 		}
 
 		require_once $this->config_file;
+
+		if (isset($CONFIG->dataroot)) {
+			$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		}
+
+		$this->config = new Config($CONFIG);
 	}
 
 	/**
-	 * This method is used to make all of Elgg's code available without going through
-	 * the boot process. Useful for internal testing purposes.
+	 * Load all Elgg code without formal boot process, for internal testing purposes
 	 *
 	 * @access private
+	 * @return void
 	 */
 	public function loadCore() {
+		if ($this->core_loaded) {
+			return;
+		}
+
 		$lib_dir = $this->engine_dir . "/lib";
 
 		// we only depend on it to be defining _elgg_services function
 		require_once "$lib_dir/autoloader.php";
 
 		// set up autoloading and DIC
-		_elgg_services();
+		$services = _elgg_services($this);
 
 		// load the rest of the library files from engine/lib/
 		// All on separate lines to make diffs easy to read + make it apparent how much
@@ -160,7 +204,7 @@ class Application {
 		);
 
 		// isolate global scope
-		call_user_func(function () use ($lib_dir, $lib_files) {
+		call_user_func(function () use ($lib_dir, $lib_files, $services) {
 
 			$setups = array();
 
@@ -173,14 +217,16 @@ class Application {
 				}
 			}
 
-			$events = _elgg_services()->events;
-			$hooks = _elgg_services()->hooks;
+			$events = $services->events;
+			$hooks = $services->hooks;
 
 			// run setups
 			foreach ($setups as $func) {
 				$func($events, $hooks);
 			}
 		});
+
+		$this->core_loaded = true;
 	}
 
 	/**
@@ -196,16 +242,17 @@ class Application {
 	 * installation page.
 	 *
 	 * @see install.php
-	 * @package Elgg.Core
-	 * @subpackage Core
+	 * @return void
 	 */
 	function bootCore() {
-		global $CONFIG;
+		if ($this->core_booted) {
+			return;
+		}
 
-		$this->loadConfig();
+		$config = $this->getConfig();
 
 		// This will be overridden by the DB value but may be needed before the upgrade script can be run.
-		$CONFIG->default_limit = 10;
+		$config->set('default_limit', 10);
 
 		$this->loadCore();
 
@@ -230,11 +277,12 @@ class Application {
 		// Complete the boot process for both engine and plugins
 		elgg_trigger_event('init', 'system');
 
-		$CONFIG->boot_complete = true;
+		$config->set('boot_complete', true);
 
 		// System loaded and ready
 		elgg_trigger_event('ready', 'system');
 
+		$this->core_booted = true;
 	}
 
 	/**
@@ -244,17 +292,16 @@ class Application {
 	 * You need to explicitly point to index.php in order for router to work properly:
 	 *
 	 * <code>php -S localhost:8888 index.php</code>
+	 *
+	 * @return bool True if Elgg's router will handle the file, false if PHP should serve it directly
 	 */
-	public function runPhpWebServer() {
-		if (php_sapi_name() !== 'cli-server') {
-			return null;
-		}
-
+	protected function runPhpWebServer() {
 		$urlPath = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
 
 		if (preg_match('/^\/cache\/(.*)$/', $urlPath, $matches)) {
 			$_GET['request'] = $matches[1];
-			require "{$this->engine_dir}/handlers/cache_handler.php";
+			$handler = new CacheHandler($this);
+			$handler->handleRequest($_GET, $_SERVER);
 			exit;
 		}
 
@@ -285,15 +332,20 @@ class Application {
 		}
 
 		$_GET['__elgg_uri'] = $urlPath;
+		return true;
 	}
 
 	/**
 	 * Bootstraps core, plugins and handles the routing.
+	 *
+	 * @return bool False if Elgg wants the PHP CLI server to handle the request
 	 */
 	function run() {
-
-		if ($this->runPhpWebServer() === false) {
-			return false;
+		if (php_sapi_name() === 'cli-server') {
+			if (!$this->runPhpWebServer()) {
+				// PHP will serve this file directly
+				return false;
+			}
 		}
 
 		$this->bootCore();
@@ -304,5 +356,6 @@ class Application {
 		if (!$router->route($request)) {
 			forward('', '404');
 		}
+		return true;
 	}
 }

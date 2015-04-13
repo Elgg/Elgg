@@ -67,7 +67,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 * 
 	 * @param \Elgg\AutoloadManager $autoload_manager Class autoloader
 	 */
-	public function __construct() {
+	public function __construct(\Elgg\Application $app) {
 
 		$this->setFactory('classLoader', function(ServiceProvider $c) {
 			$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
@@ -104,11 +104,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('autoP', '\ElggAutoP');
 
-		$this->setFactory('config', function(ServiceProvider $c) {
-			// TODO perhaps should inject \Elgg\Application and extract/inject config object from it instead
-			global $CONFIG;
-			return new \Elgg\Config($CONFIG);
-		});
+		$this->setValue('config', $app->getConfig());
 
 		$this->setClassName('configTable', '\Elgg\Database\ConfigTable');
 

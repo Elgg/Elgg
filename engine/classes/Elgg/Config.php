@@ -182,4 +182,17 @@ class Config {
 	
 		return $result;
 	}
+
+	/**
+	 * Get the raw \stdClass object used for storage.
+	 *
+	 * @internal Do not use this plugins or new core code!
+	 * @todo Make this unnecessary
+	 *
+	 * @return \stdClass
+	 * @access private
+	 */
+	public function getStorageObject() {
+		return $this->config;
+	}
 }

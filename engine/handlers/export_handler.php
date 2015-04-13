@@ -6,8 +6,15 @@
  * @subpackage Export
  */
 
-require_once(dirname(dirname(__FILE__)) . "/start.php");
-
+if (isset($this)) {
+	// loaded from the PHP CLI application in Elgg\Application
+	/* @var Elgg\Application $this */
+	$this->bootCore();
+} else {
+	require_once dirname(dirname(__DIR__)) . '/autoloader.php';
+	$application = new Elgg\Application();
+	$application->bootCore();
+}
 
 // Get input values, these will be mapped via modrewrite
 $guid = get_input("guid"); // guid of the entity
