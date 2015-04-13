@@ -355,7 +355,7 @@ function _elgg_notify_user($to, $from, $subject, $message, array $params = null,
 					$handler = $notify_service->getDeprecatedHandler($method);
 					/* @var callable $handler */
 					if (!$handler || !is_callable($handler)) {
-						error_log("No handler registered for the method $method", 'WARNING');
+						elgg_log("No handler registered for the method $method", 'WARNING');
 						continue;
 					}
 
