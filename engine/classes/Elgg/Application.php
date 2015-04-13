@@ -7,7 +7,7 @@ namespace Elgg;
  *
  * @access private
  *
- * @since      2.0.0
+ * @since 2.0.0
  */
 class Application {
 
@@ -19,18 +19,26 @@ class Application {
 	/**
 	 * @var string
 	 */
-	private $engineDir;
+	private $engine_dir;
 
 	/**
 	 * @var string
 	 */
-	private $wwwRoot;
+	private $install_dir;
 
-	public function __construct() {
+	/**
+	 * @var string
+	 */
+	private $config_file;
+
+	public function __construct($config_file = '') {
 		$this->config = new \Elgg\Config((object)array());
-
-		$this->engineDir = dirname(dirname(dirname(__FILE__)));
-		$this->wwwRoot = dirname($this->engineDir);
+		$this->engine_dir = dirname(dirname(__DIR__));
+		if (!$config_file) {
+			$config_file = "{$this->engine_dir}/settings.php";
+		}
+		$this->config_file = $config_file;
+		$this->install_dir = dirname($this->engine_dir);
 	}
 
 	/**
@@ -66,17 +74,17 @@ class Application {
 
 
 		// No settings means a fresh install
-		if (!is_file("{$this->engineDir}/settings.php")) {
+		if (!is_file($this->config_file)) {
 			header("Location: install.php");
 			exit;
 		}
 
-		if (!is_readable("{$this->engineDir}/settings.php")) {
+		if (!is_readable($this->config_file)) {
 			echo "The Elgg settings file exists but the web server doesn't have read permission to it.";
 			exit;
 		}
 
-		require_once "{$this->engineDir}/settings.php";
+		require_once $this->config_file;
 	}
 
 	/**
@@ -86,7 +94,7 @@ class Application {
 	 * @access private
 	 */
 	public function loadCore() {
-		$lib_dir = $this->engineDir . "/lib";
+		$lib_dir = $this->engine_dir . "/lib";
 
 		// we only depend on it to be defining _elgg_services function
 		require_once "$lib_dir/autoloader.php";
@@ -238,36 +246,45 @@ class Application {
 	 * <code>php -S localhost:8888 index.php</code>
 	 */
 	public function runPhpWebServer() {
-
-		if (php_sapi_name() === 'cli-server') {
-			$urlPath = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-
-			if (preg_match('/^\/cache\/(.*)$/', $urlPath, $matches)) {
-				$_GET['request'] = $matches[1];
-				require("{$this->engineDir}/handlers/cache_handler.php");
-				exit;
-			} else if (preg_match('/^\/export\/([A-Za-z]+)\/([0-9]+)\/?$/', $urlPath, $matches)) {
-				$_GET['view'] = $matches[1];
-				$_GET['guid'] = $matches[2];
-				require("{$this->engineDir}/handlers/export_handler.php");
-				exit;
-			} else if (preg_match('/^\/export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$/', $urlPath, $matches)) {
-				$_GET['view'] = $matches[1];
-				$_GET['guid'] = $matches[2];
-				$_GET['type'] = $matches[3];
-				$_GET['idname'] = $matches[4];
-				require("{$this->engineDir}/handlers/export_handler.php");
-				exit;
-			} else if (preg_match("/^\/rewrite.php$/", $urlPath, $matches)) {
-				require("{$this->wwwRoot}/install.php");
-				exit;
-			} else if ($urlPath !== '/' && file_exists($this->wwwRoot . $urlPath)) {
-				// serve the requested resource as-is.
-				return false;
-			} else {
-				$_GET['__elgg_uri'] = $urlPath;
-			}
+		if (php_sapi_name() !== 'cli-server') {
+			return null;
 		}
+
+		$urlPath = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+
+		if (preg_match('/^\/cache\/(.*)$/', $urlPath, $matches)) {
+			$_GET['request'] = $matches[1];
+			require "{$this->engine_dir}/handlers/cache_handler.php";
+			exit;
+		}
+
+		if (preg_match('/^\/export\/([A-Za-z]+)\/([0-9]+)\/?$/', $urlPath, $matches)) {
+			$_GET['view'] = $matches[1];
+			$_GET['guid'] = $matches[2];
+			require "{$this->engine_dir}/handlers/export_handler.php";
+			exit;
+		}
+
+		if (preg_match('/^\/export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$/', $urlPath, $matches)) {
+			$_GET['view'] = $matches[1];
+			$_GET['guid'] = $matches[2];
+			$_GET['type'] = $matches[3];
+			$_GET['idname'] = $matches[4];
+			require "{$this->engine_dir}/handlers/export_handler.php";
+			exit;
+		}
+
+		if (preg_match("/^\/rewrite.php$/", $urlPath, $matches)) {
+			require "{$this->install_dir}/install.php";
+			exit;
+		}
+
+		if ($urlPath !== '/' && file_exists($this->install_dir . $urlPath)) {
+			// serve the requested resource as-is.
+			return false;
+		}
+
+		$_GET['__elgg_uri'] = $urlPath;
 	}
 
 	/**

@@ -1,6 +1,7 @@
 <?php
-$engine = dirname(dirname(dirname(__FILE__)));
+$engine = dirname(dirname(__DIR__));
 
+date_default_timezone_get();
 date_default_timezone_set('America/Los_Angeles');
 
 error_reporting(E_ALL | E_STRICT);
@@ -11,15 +12,15 @@ error_reporting(E_ALL | E_STRICT);
  * testable without global state.
  */
 global $CONFIG;
-$CONFIG = (object) array(
+$CONFIG = (object)[
 	'dbprefix' => 'elgg_',
 	'boot_complete' => false,
 	'wwwroot' => 'http://localhost/',
 	'dataroot' => __DIR__ . '/test_files/dataroot/',
 	'site_guid' => 1,
-);
+];
 
-$autoloader = require_once(__DIR__ . '/../../../autoloader.php');
+$autoloader = (require_once __DIR__ . '/../../../autoloader.php');
 
 $app = new \Elgg\Application();
 

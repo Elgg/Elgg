@@ -4,16 +4,31 @@
  * when not using as dependency, other is in the main project dir, parent to this one.
  */
 
-$autoload_path_local = __DIR__ . '/vendor/autoload.php';
-$autoload_path_parent = __DIR__ . '/../../../vendor/autoload.php';
+$paths = [
+	__DIR__ . '/vendor/autoload.php',
+	__DIR__ . '/../../../vendor/autoload.php',
+];
 
-if (
-	(!file_exists($autoload_path_local) || (!$autoloader = include($autoload_path_local)))
-	&& (!file_exists($autoload_path_parent) || (!$autoloader = include($autoload_path_parent)))
-) {
-	die("Couldn't include '$autoload_path_local' or '$autoload_path_parent'.\n" .
-		"You must set up the project dependencies, run the following commands:\n" .
-		"curl -s http://getcomposer.org/installer | php\n" .
-		"php composer.phar install");
+foreach ($paths as $path) {
+	if (!is_file($path)) {
+		continue;
+	}
+
+	if (!is_readable($path)) {
+		echo "'$path' exists but is not readable by your webserver.\n";
+		break;
+	}
+
+	$autoloader = (include $path);
+	if (!$autoloader) {
+		echo "'$path' was present but did not return a autoloader.\n";
+		break;
+	}
+
+	return $autoloader;
 }
-return $autoloader;
+
+echo "You must set up the project dependencies. Run the following commands:\n" .
+	"curl -s http://getcomposer.org/installer | php\n" .
+	"php composer.phar install";
+exit;

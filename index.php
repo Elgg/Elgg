@@ -6,7 +6,7 @@
  * @subpackage Core
  */
 
-$autoloader = require_once(__DIR__ . '/autoloader.php');
+$autoloader = (require_once __DIR__ . '/autoloader.php');
 
 $app = new \Elgg\Application();
 
