@@ -20,6 +20,7 @@ matrix:
       install:
        - phpenv rehash
        - composer self-update
+       - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
        - composer install
       script:
        - bash .scripts/travis/check_commit_msgs.sh
@@ -54,6 +55,7 @@ matrix:
       env: E2E=true
       install:
        - composer self-update
+       - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
        - composer install
        - mysql -e 'create database elgg;'
        - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
@@ -74,6 +76,7 @@ services:
 
 install:
  - composer self-update
+ - composer config -g github-oauth.github.com ${GITHUB_TOKEN}
  - composer install
  - mysql -e 'create database elgg;'
  - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
@@ -91,3 +94,7 @@ notifications:
     urls:
      - secure: "Ug81+4Fa2UFZetSCV79OWOgYi4uVgNQ6rVrVn2HElddOMDwuHxo9CYKoA3Q+joPKMtNFCN2qkMyoyUfIMM83uJi1LmaUx/c7lR1pXBFVgc4Xyt114NcY80I4OCWWKg0G1FDlSiaXil922JjeC3MekYoqjsIyUgabGihe6j7DWz0="
     on_start: true
+
+env:
+  global:
+    secure: "iRmeVLYflb5Wwamy6xHteEuzjHYpC9Vx0zYKGZNjhxdD492zcsXZOAjH8OYcAqOL3iTiy3hAMuiJgoqvcwKfrw+Y9ehY7I8n5rJEYoji0tr6h1y5dhOdFHctfDIjmqjFolEGdgETFO/OwnvaJZZn+QAshg2R7mMgZ4HdTt4f6Gg="
