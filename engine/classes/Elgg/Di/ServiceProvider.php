@@ -65,7 +65,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	/**
 	 * Constructor
 	 * 
-	 * @param \Elgg\AutoloadManager $autoload_manager Class autoloader
+	 * @param \Elgg\Application $app Elgg application object
 	 */
 	public function __construct(\Elgg\Application $app) {
 
