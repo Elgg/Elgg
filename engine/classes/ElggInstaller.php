@@ -737,8 +737,8 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function bootstrapEngine() {
-
-		$app = new \Elgg\Application();
+		$config = new \Elgg\Config($this->CONFIG);
+		$app = new \Elgg\Application($config);
 
 		$app->loadCore();
 	}
