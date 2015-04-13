@@ -145,6 +145,90 @@ This example uses all of the available elements:
 		</suggests>
 	</plugin_manifest>
 
+Testing
+=======
+
+Elgg core developers use PHPUnit as the primary test framework and plugin authors are encouraged to
+do the same. To keep your tests simple, keep global state at a minimum and test each component
+individually. To test a plugin, it should be sufficient to run ``phpunit`` from the plugin
+directory. All tests should be placed in a folder named **tests** under your plugin root.
+
+Use the test setup included below to get started quickly. This setup will give
+you access to the Elgg API so that you can test how your plugin interacts with
+the engine. If you are testing custom entites, make sure that your tests
+consider the entity cache.
+
+A complete example is found in the elgg-phpunit_ plugin.
+
+.. _elgg-phpunit: https://github.com/stianlik/elgg-phpunit 
+
+MYPLUGIN/phpunit.xml
+--------------------
+
+We use the test configuration to configure PHPUnit for testing Elgg.
+
+.. code:: xml
+
+	<?xml version="1.0" encoding="UTF-8"?>
+	<phpunit bootstrap="tests/bootstrap.php" colors="true" backupGlobals="false">
+		<testsuites>
+			<testsuite name="My plugin tests">
+				<directory>tests</directory>
+			</testsuite>
+		</testsuites>
+		<php>
+			<server name="SERVER_PORT">443</server>
+			<const name="ELGG_PHPUNIT">true</const>
+			<includePath>./tests</includePath>
+
+			<!-- Root directory for Elgg installation -->
+			<includePath>./../..</includePath>
+		</php>
+	</phpunit>
+
+MYPLUGIN/tests/bootstrap.php
+----------------------------
+
+Bootstrap used to start the elgg engine before testing starts. Place custom
+initialization code here if necessary.
+
+.. code:: php
+
+	<?php
+	require_once 'engine/start.php';
+
+MYPLUGIN/tests/settings.phpunit.php
+-----------------------------------
+
+Override Elgg settings here if necessary. It is recommended to use a separate
+database for testing.
+
+.. code:: php
+
+	<?php
+	global $CONFIG;
+	$CONFIG->dbhost = 'localhost';
+	$CONFIG->dbname = 'elggtest';
+	$CONFIG->dbuser = 'elggtest';
+	$CONFIG->dbpass = 'elggtest';
+	$CONFIG->dbprefix = 'elgg_';
+
+MYPLUGIN/tests/ExampleTest.php
+------------------------------
+
+Write unit tests.
+
+.. code:: php
+
+	<?php
+	class ExampleTest extends PHPUnit_Framework_TestCase
+	{
+		public function test_plugin_shouldExist()
+		{
+			$this->assertTrue(elgg_plugin_exists('elgg-phpunit'));
+		}
+	}
+
 Related
 =======
 
