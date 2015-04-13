@@ -18,7 +18,7 @@ class CacheHandler {
 	/**
 	 * Constructor
 	 *
-	 * @param Application $app    Elgg Application
+	 * @param Application $app Elgg Application
 	 */
 	public function __construct(Application $app) {
 		$this->application = $app;
