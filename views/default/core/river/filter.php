@@ -33,6 +33,13 @@ $selector = $vars['selector'];
 if ($selector) {
 	$params['value'] = $selector;
 }
+
 echo elgg_view('input/select', $params);
+
+$attr = [
+	'for' => 'elgg-river-selector',
+	'class' => 'elgg-river-selector'
+];
+echo elgg_format_element('label', $attr, elgg_echo('filter'));
 
 elgg_load_js('elgg.ui.river');
