@@ -9,7 +9,7 @@
 
 /**
  * @param \Elgg\Application $app Elgg Application object used for initializing the service provider (required on
- *                               first request, then ignored)
+ *                               first call, then ignored)
  * @return \Elgg\Di\ServiceProvider
  * @access private
  */
