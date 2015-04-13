@@ -121,8 +121,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('db', function(ServiceProvider $c) {
-			global $CONFIG;
-			$db_config = new \Elgg\Database\Config($CONFIG);
+			$db_config = new \Elgg\Database\Config($c->config->getStorageObject());
 			return new \Elgg\Database($db_config, $c->logger);
 		});
 
@@ -139,8 +138,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('externalFiles', function(ServiceProvider $c) {
-			global $CONFIG;
-			return new \Elgg\Assets\ExternalFiles($CONFIG);
+			return new \Elgg\Assets\ExternalFiles($c->config->getStorageObject());
 		});
 
 		$this->setFactory('hooks', function(ServiceProvider $c) {
@@ -178,7 +176,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {
-			$global_cookies_config = _elgg_services()->config->get('cookies');
+			$global_cookies_config = $c->config->get('cookies');
 			$cookie_config = $global_cookies_config['remember_me'];
 			$cookie_name = $cookie_config['name'];
 			$cookie_token = $c->request->cookies->get($cookie_name, '');
