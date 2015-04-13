@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Elgg 1.10\n"
+"Project-Id-Version: Elgg 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-05 16:03-0400\n"
+"POT-Creation-Date: 2015-04-13 12:46+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1572,31 +1572,31 @@ msgstr ""
 msgid "Find your plugin in the list of installed plugins and click on the 'enable' button."
 msgstr ""
 
-#: ../../admin/plugins.rst:106
+#: ../../admin/plugins.rst:108
 msgid "Plugin order"
 msgstr ""
 
-#: ../../admin/plugins.rst:108
+#: ../../admin/plugins.rst:110
 msgid "Plugins are loaded according to the order they are listed on the Plugins page. The initial ordering after an install is more or less random. As more plugins are added by an administrator, they are placed at the bottom of the list."
 msgstr ""
 
-#: ../../admin/plugins.rst:110
+#: ../../admin/plugins.rst:112
 msgid "Some general rules for ordering plugins:"
 msgstr ""
 
-#: ../../admin/plugins.rst:112
+#: ../../admin/plugins.rst:114
 msgid "A theme plugin should be last or at least near the bottom"
 msgstr ""
 
-#: ../../admin/plugins.rst:113
+#: ../../admin/plugins.rst:115
 msgid "A plugin that modifies the behavior of another plugin should be lower in the plugin list"
 msgstr ""
 
-#: ../../admin/plugins.rst:116
+#: ../../admin/plugins.rst:118
 msgid "Pre-1.8 notes"
 msgstr ""
 
-#: ../../admin/plugins.rst:118
+#: ../../admin/plugins.rst:120
 msgid "In Elgg 1.7 and below, the interface for managing installed plugins is located at Administration -> Tool Administration."
 msgstr ""
 
