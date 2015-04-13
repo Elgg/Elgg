@@ -116,7 +116,7 @@ function messageboard_add($poster, $owner, $message, $access_id = ACCESS_PUBLIC)
 		$body = elgg_echo('messageboard:email:body', array(
 			$poster->name,
 			$message,
-			elgg_get_site_url() . "messageboard/" . $owner->username,
+			elgg_get_site_url() . "messageboard/owner/" . $owner->username,
 			$poster->name,
 			$poster->getURL()
 		), $owner->language);
