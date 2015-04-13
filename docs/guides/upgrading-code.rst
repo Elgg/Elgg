@@ -1,5 +1,5 @@
-Upgrading Plugins
-#################
+Upgrading plugin code
+#####################
 
 Prepare your plugin for the next version of Elgg.
 

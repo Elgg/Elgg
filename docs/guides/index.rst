@@ -31,6 +31,7 @@ Customize Elgg's behavior with plugins.
    authentication
    walled-garden
    web-services
-   upgrading
+   upgrading-code
+   upgrading-data
    events-list
    hooks-list

@@ -27,66 +27,48 @@ require_once __DIR__ . '/autoloader.php';
 
 (new Elgg\Application())->bootCore();
 
-$site_url = elgg_get_config('url');
-$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
-
-// turn any full in-site URLs into absolute paths
-$forward_url = get_input('forward', '/admin', false);
-$forward_url = str_replace(array($site_url, $site_host), '/', $forward_url);
-
-if (strpos($forward_url, '/') !== 0) {
-	$forward_url = '/' . $forward_url;
+// test the URL rewrite rules
+if (!class_exists('ElggRewriteTester')) {
+	require dirname(__FILE__) . '/install/ElggRewriteTester.php';
 }
 
-if (get_input('upgrade') == 'upgrade') {
+$rewriteTester = new \ElggRewriteTester();
+$url = elgg_get_site_url() . "__testing_rewrite?__testing_rewrite=1";
+if (!$rewriteTester->runRewriteTest($url)) {
+	// see if there is a problem accessing the site at all
+	// due to ip restrictions for example
 
-	$upgrader = new \Elgg\UpgradeService();
-	$result = $upgrader->run();
-	if ($result['failure'] == true) {
-		register_error($result['reason']);
-		forward($forward_url);
-	}
-} else {
-	// test the URL rewrite rules
-	if (!class_exists('ElggRewriteTester')) {
-		require dirname(__FILE__) . '/install/ElggRewriteTester.php';
-	}
-	$rewriteTester = new \ElggRewriteTester();
-	$url = elgg_get_site_url() . "__testing_rewrite?__testing_rewrite=1";
-	if (!$rewriteTester->runRewriteTest($url)) {
-		// see if there is a problem accessing the site at all
-		// due to ip restrictions for example
-		if (!$rewriteTester->runLocalhostAccessTest()) {
-			// note: translation may not be available until after upgrade
-			$msg = elgg_echo("installation:htaccess:localhost:connectionfailed");
-			if ($msg === "installation:htaccess:localhost:connectionfailed") {
-				$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
-						. "that curl is working and there are no IP restrictions preventing "
-						. "localhost connections.";
-			}
-			echo $msg;
-			exit;
-		}
-		
+	if (!$rewriteTester->runLocalhostAccessTest()) {
 		// note: translation may not be available until after upgrade
-		$msg = elgg_echo("installation:htaccess:needs_upgrade");
-		if ($msg === "installation:htaccess:needs_upgrade") {
-			$msg = "You must update your .htaccess file so that the path is injected "
-				. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
+		$msg = elgg_echo("installation:htaccess:localhost:connectionfailed");
+		if ($msg === "installation:htaccess:localhost:connectionfailed") {
+			$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
+					. "that curl is working and there are no IP restrictions preventing "
+					. "localhost connections.";
 		}
 		echo $msg;
 		exit;
 	}
 
-	$vars = array(
-		'forward' => $forward_url
-	);
-
-	// reset cache to have latest translations available during upgrade
-	elgg_reset_system_cache();
-	
-	echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade', $vars);
+	// note: translation may not be available until after upgrade
+	$msg = elgg_echo("installation:htaccess:needs_upgrade");
+	if ($msg === "installation:htaccess:needs_upgrade") {
+		$msg = "You must update your .htaccess file so that the path is injected "
+			. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
+	}
+	echo $msg;
 	exit;
 }
 
-forward($forward_url);
+// reset cache to have latest translations available during upgrade
+elgg_reset_system_cache();
+
+elgg_trigger_deprecated_event('upgrade', 'system', array(
+	"The 'upgrade', 'system' event has been deprecated in favor of using \Elgg\Upgrades\Upgrade interface.",
+	"2.0",
+));
+
+$upgrader = new \Elgg\UpgradeService();
+$upgrades = $upgrader->getUnprocessedUpgrades();
+
+echo elgg_view_page('', '', 'upgrade', array('upgrades' => $upgrades));

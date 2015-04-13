@@ -1,168 +1,169 @@
 <?php
 namespace Elgg;
 
+use Elgg\i18n\Translator;
+use Elgg\Database\Datalist;
+use Elgg\Logger;
+use Elgg\Database;
+use ElggSession;
+
 /**
  * Upgrade service for Elgg
  *
- * This is a straight port of the procedural code used for upgrading before
- * Elgg 1.9.
- *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Upgrade
  */
 class UpgradeService {
 
-	/**
-	 * Global Elgg configuration
-	 *
-	 * @var \stdClass
-	 */
-	private $CONFIG;
+	private $translator;
+
+	private $datalist;
+
+	private $logger;
+
+	private $db;
+
+	private $upgrade;
+
+	private $batch_run_time_in_secs;
 
 	/**
 	 * Constructor
 	 */
 	public function __construct() {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+		$this->translator = _elgg_services()->translator;
+		$this->datalist = _elgg_services()->datalist;
+		$this->logger = _elgg_services()->logger;
+		$this->db = _elgg_services()->db;
+		$this->session = _elgg_services()->session;
+
+		// TODO Make configurable
+		$batch_run_time_in_secs = 2;
 	}
 
 	/**
-	 * Run the upgrade process
+	 * Prepare the system to run an upgrade
 	 *
-	 * @return array
+	 * @param Upgrade $upgrade The upgrade object
+	 * @param int     $offset  Current offset of the items to upgrade
+	 * @return array $result Array containing possible errors
 	 */
-	public function run() {
+	public function prepareUpgrade(\Elgg\Upgrades\Upgrade $upgrade, $offset = null) {
+		$this->upgrade = $upgrade;
+
+		if ($offset) {
+			$this->upgrade->setOffset($offset);
+		}
+
+		// Admin isn't necessarily logged in when running this,
+		// so we need to ignore access permissions
+		$this->session->setIgnoreAccess(true);
+
+		// Upgrade also disabled data, so the compatibility is
+		// preserved in case the data ever gets enabled again
+		global $ENTITY_SHOW_HIDDEN_OVERRIDE;
+		$ENTITY_SHOW_HIDDEN_OVERRIDE = true;
+
 		$result = array(
 			'failure' => false,
 			'reason' => '',
 		);
 
-		// prevent someone from running the upgrade script in parallel (see #4643)
+		// Prevent someone from running the upgrade script in parallel (see #4643)
 		if (!$this->getUpgradeMutex()) {
 			$result['failure'] = true;
-			$result['reason'] = _elgg_services()->translator->translate('upgrade:locked');
+			$result['reason'] = $this->translator->translate('upgrade:locked');
 			return $result;
 		}
 
-		// disable the system log for upgrades to avoid exceptions when the schema changes.
-		_elgg_services()->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
-		_elgg_services()->events->unregisterHandler('all', 'all', 'system_log_listener');
-
-		// turn off time limit
+		// Turn off time limit
 		set_time_limit(0);
+	}
 
-		if ($this->getUnprocessedUpgrades()) {
-			$this->processUpgrades();
+	/**
+	 * Run a single upgrade
+	 *
+	 * @return array Number of successes, errors and the next offset
+	 */
+	public function runUpgrade() {
+		if ($this->upgrade instanceof \Elgg\Upgrades\BatchUpgrade) {
+			// from engine/start.php
+			global $START_MICROTIME;
+
+			do {
+				$this->upgrade->run();
+
+				// TODO Remove after debugging
+				sleep(1);
+
+			} while ((microtime(true) - $START_MICROTIME) < $this->batch_run_time_in_secs);
+
+			$result = array(
+				'numSuccess' => $this->upgrade->getSuccessCount(),
+				'numErrors' => $this->upgrade->getErrorCount(),
+				'nextOffset' => $this->upgrade->getNextOffset(),
+			);
+		} else {
+			$result = $this->upgrade->run();
+
+			if ($result) {
+				$result = array(
+					'numSuccess' => 1,
+					'numErrors' => 0,
+				);
+			} else {
+				$result = array(
+					'numSuccess' => 0,
+					'numErrors' => 1,
+				);
+			}
 		}
 
-		_elgg_services()->events->trigger('upgrade', 'system', null);
-		elgg_invalidate_simplecache();
-		elgg_reset_system_cache();
-
-		$this->releaseUpgradeMutex();
+		$this->resetAccess();
 
 		return $result;
 	}
 
 	/**
-	 * Run any php upgrade scripts which are required
+	 * Returns system back to normal state
 	 *
-	 * @param int  $version Version upgrading from.
-	 * @param bool $quiet   Suppress errors.  Don't use this.
+	 * Releases upgrade mutex, hides hidden entities and
+	 * resets access to normal.
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	protected function upgradeCode($version, $quiet = false) {
-		$version = (int) $version;
-		$upgrade_path = _elgg_services()->config->get('path') . 'engine/lib/upgrades/';
-		$processed_upgrades = $this->getProcessedUpgrades();
+	public function resetAccess() {
+		$this->releaseUpgradeMutex();
 
-		$upgrade_files = $this->getUpgradeFiles($upgrade_path);
+		global $ENTITY_SHOW_HIDDEN_OVERRIDE;
+		$ENTITY_SHOW_HIDDEN_OVERRIDE = false;
 
-		if ($upgrade_files === false) {
-			return false;
-		}
-
-		$upgrades = $this->getUnprocessedUpgrades($upgrade_files, $processed_upgrades);
-
-		// Sort and execute
-		sort($upgrades);
-
-		foreach ($upgrades as $upgrade) {
-			$upgrade_version = $this->getUpgradeFileVersion($upgrade);
-			$success = true;
-
-			if ($upgrade_version <= $version) {
-				// skip upgrade files from before the installation version of Elgg
-				// because the upgrade files from before the installation version aren't
-				// added to the database.
-				continue;
-			}
-
-			// hide all errors.
-			if ($quiet) {
-				// hide include errors as well as any exceptions that might happen
-				try {
-					if (!@self::includeCode("$upgrade_path/$upgrade")) {
-						$success = false;
-						error_log("Could not include $upgrade_path/$upgrade");
-					}
-				} catch (\Exception $e) {
-					$success = false;
-					error_log($e->getMessage());
-				}
-			} else {
-				if (!self::includeCode("$upgrade_path/$upgrade")) {
-					$success = false;
-					error_log("Could not include $upgrade_path/$upgrade");
-				}
-			}
-
-			if ($success) {
-				// don't set the version to a lower number in instances where an upgrade
-				// has been merged from a lower version of Elgg
-				if ($upgrade_version > $version) {
-					_elgg_services()->datalist->set('version', $upgrade_version);
-				}
-
-				// incrementally set upgrade so we know where to start if something fails.
-				$this->setProcessedUpgrade($upgrade);
-			} else {
-				return false;
-			}
-		}
-
-		return true;
+		$this->session->setIgnoreAccess(false);
 	}
 
 	/**
-	 * PHP include a file with a very limited scope
+	 * Saves a processed upgrade to a dataset and updates site version
 	 *
-	 * @param string $file File path to include
-	 * @return mixed
+	 * @param Elgg\Upgrades\Upgrade $upgrade The upgrade object
+	 * @return void
 	 */
-	protected static function includeCode($file) {
-		// do not remove - some upgrade scripts depend on this
-		global $CONFIG;
+	public function setProcessedUpgrade(\Elgg\Upgrades\Upgrade $upgrade) {
+		$unique_name = $this->getUniqueName($upgrade);
 
-		return include $file;
-	}
-
-	/**
-	 * Saves a processed upgrade to a dataset.
-	 *
-	 * @param string $upgrade Filename of the processed upgrade
-	 *                        (not the path, just the file)
-	 * @return bool
-	 */
-	protected function setProcessedUpgrade($upgrade) {
 		$processed_upgrades = $this->getProcessedUpgrades();
-		$processed_upgrades[] = $upgrade;
+		$processed_upgrades[] = $unique_name;
 		$processed_upgrades = array_unique($processed_upgrades);
-		return _elgg_services()->datalist->set('processed_upgrades', serialize($processed_upgrades));
+
+		// Save the upgrade to the list of successful upgrades
+		$this->datalist->set('processed_upgrades', serialize($processed_upgrades));
+
+		// Version in format yyyymmdd00 where the last two are increments of upgrades per day
+		$version = (int) $this->datalist->get('version');
+
+		// Don't set the version to a lower number in instances where an upgrade
+		// has been merged from a lower version of Elgg
+		if ($upgrade->getVersion() > $version) {
+			$this->datalist->set('version', $upgrade->getVersion());
+		}
 	}
 
 	/**
@@ -171,111 +172,101 @@ class UpgradeService {
 	 * @return mixed Array of processed upgrade filenames or false
 	 */
 	protected function getProcessedUpgrades() {
-		$upgrades = _elgg_services()->datalist->get('processed_upgrades');
+		$upgrades = $this->datalist->get('processed_upgrades');
 		$unserialized = unserialize($upgrades);
 		return $unserialized;
 	}
 
 	/**
-	 * Returns the version of the upgrade filename.
+	 * Returns an array of upgrade objects
 	 *
-	 * @param string $filename The upgrade filename. No full path.
-	 * @return int|false
-	 * @since 1.8.0
+	 * @return array Array with (Unique id => Instance of the upgrade)
 	 */
-	protected function getUpgradeFileVersion($filename) {
-		preg_match('/^([0-9]{10})([\.a-z0-9-_]+)?\.(php)$/i', $filename, $matches);
+	protected function getUpgradeFiles() {
+		$upgrade_paths[] = _elgg_services()->config->get('path') . 'engine/classes/Elgg/Upgrades';
 
-		if (isset($matches[1])) {
-			return (int) $matches[1];
+		$plugins = _elgg_services()->plugins->find('all');
+		foreach ($plugins as $plugin) {
+			$dir = "{$plugin->getPath()}classes/Elgg/Upgrades/";
+
+			if (is_dir($dir)) {
+				$upgrade_paths[] = $dir;
+			}
 		}
 
-		return false;
+		$upgrades = array();
+		foreach ($upgrade_paths as $upgrade_path) {
+			$upgrade_path = sanitise_filepath($upgrade_path);
+
+			$dir = new \DirectoryIterator($upgrade_path);
+
+			foreach ($dir as $file) {
+				/* @var \SplFileInfo $file */
+				if (!$file->isFile() || !$file->isReadable()) {
+					// TODO Log a warning
+					continue;
+				}
+
+				$class_name = $file->getBasename('.php');
+				$full_class_name = '\Elgg\Upgrades\\' . $class_name;
+
+				if (!class_exists($full_class_name)) {
+					// TODO Log a warning
+					continue;
+				}
+
+				$instance = new $full_class_name;
+
+				if (!$instance instanceof \Elgg\Upgrades\Upgrade) {
+					// TODO Log a warning
+					continue;
+				}
+
+				$upgrades[$this->getUniqueName($instance)] = $instance;
+			}
+		}
+
+		// Sort by creation time YYYYMMDD00
+		ksort($upgrades);
+
+		return $upgrades;
 	}
 
 	/**
-	 * Returns a list of upgrade files relative to the $upgrade_path dir.
+	 * Get an unique name that can be used to identify the upgrade
 	 *
-	 * @param string $upgrade_path The up
-	 * @return array|false
+	 * @param Elgg\Upgrades\Upgrade $upgrade The upgrade object
+	 * @return string
 	 */
-	protected function getUpgradeFiles($upgrade_path = null) {
-		if (!$upgrade_path) {
-			$upgrade_path = _elgg_services()->config->get('path') . 'engine/lib/upgrades/';
-		}
-		$upgrade_path = sanitise_filepath($upgrade_path);
-		$handle = opendir($upgrade_path);
+	private function getUniqueName($upgrade) {
+		$version = $upgrade->getVersion();
+		$release = $upgrade->getRelease();
+		$class_name = get_class($upgrade);
 
-		if (!$handle) {
-			return false;
-		}
-
-		$upgrade_files = array();
-
-		while ($upgrade_file = readdir($handle)) {
-			// make sure this is a wellformed upgrade.
-			if (is_dir($upgrade_path . '$upgrade_file')) {
-				continue;
-			}
-			$upgrade_version = $this->getUpgradeFileVersion($upgrade_file);
-			if (!$upgrade_version) {
-				continue;
-			}
-			$upgrade_files[] = $upgrade_file;
-		}
-
-		sort($upgrade_files);
-
-		return $upgrade_files;
+		return "{$version}-{$release}-{$class_name}";
 	}
 
 	/**
 	 * Checks if any upgrades need to be run.
 	 *
-	 * @param null|array $upgrade_files      Optional upgrade files
-	 * @param null|array $processed_upgrades Optional processed upgrades
-	 *
-	 * @return array
+	 * @return array Associative array of upgrade objects
 	 */
-	protected function getUnprocessedUpgrades($upgrade_files = null, $processed_upgrades = null) {
-		if ($upgrade_files === null) {
-			$upgrade_files = $this->getUpgradeFiles();
+	public function getUnprocessedUpgrades() {
+		$upgrades = $this->getUpgradeFiles();
+
+		$processed_upgrades = unserialize($this->datalist->get('processed_upgrades'));
+		if (!is_array($processed_upgrades)) {
+			$processed_upgrades = array();
 		}
 
-		if ($processed_upgrades === null) {
-			$processed_upgrades = unserialize(_elgg_services()->datalist->get('processed_upgrades'));
-			if (!is_array($processed_upgrades)) {
-				$processed_upgrades = array();
+		foreach ($upgrades as $key => $upgrade) {
+			if (!$upgrade->isRequired()) {
+				$this->setProcessedUpgrade($upgrade);
+				unset($upgrades[$key]);
 			}
 		}
 
-		$unprocessed = array_diff($upgrade_files, $processed_upgrades);
-		return $unprocessed;
-	}
-
-	/**
-	 * Upgrades Elgg Database and code
-	 *
-	 * @return bool
-	 */
-	protected function processUpgrades() {
-
-		$dbversion = (int) _elgg_services()->datalist->get('version');
-
-		if ($this->upgradeCode($dbversion)) {
-			system_message(_elgg_services()->translator->translate('upgrade:core'));
-
-			// Now we trigger an event to give the option for plugins to do something
-			$upgrade_details = new \stdClass;
-			$upgrade_details->from = $dbversion;
-			$upgrade_details->to = elgg_get_version();
-
-			_elgg_services()->events->trigger('upgrade', 'upgrade', $upgrade_details);
-
-			return true;
-		}
-
-		return false;
+		return array_diff_key($upgrades, array_flip($processed_upgrades));
 	}
 
 	/**
@@ -284,28 +275,30 @@ class UpgradeService {
 	 * @return bool
 	 */
 	protected function getUpgradeMutex() {
-
-
 		if (!$this->isUpgradeLocked()) {
+			$db_prefix = $this->db->getTablePrefix();
+
 			// lock it
-			_elgg_services()->db->insertData("create table {$this->CONFIG->dbprefix}upgrade_lock (id INT)");
-			_elgg_services()->logger->notice('Locked for upgrade.');
+			$this->db->insertData("create table {$db_prefix}upgrade_lock (id INT)");
+			$this->logger->notice('Locked for upgrade.');
 			return true;
 		}
 
-		_elgg_services()->logger->warn('Cannot lock for upgrade: already locked');
+		$this->logger->warn('Cannot lock for upgrade: already locked');
 		return false;
 	}
 
 	/**
-	 * Unlocks upgrade.
+	 * Unlocks upgrade
 	 *
 	 * @return void
 	 */
 	public function releaseUpgradeMutex() {
+		$db_prefix = $this->db->getTablePrefix();
+		$this->logger->notice('Upgrade unlocked.');
 
-		_elgg_services()->db->deleteData("drop table {$this->CONFIG->dbprefix}upgrade_lock");
-		_elgg_services()->logger->notice('Upgrade unlocked.');
+		// Cannot return the result because amount of addected rows is zero
+		$this->db->deleteData("drop table {$db_prefix}upgrade_lock");
 	}
 
 	/**
@@ -314,11 +307,8 @@ class UpgradeService {
 	 * @return bool
 	 */
 	public function isUpgradeLocked() {
-
-
-		$is_locked = count(_elgg_services()->db->getData("SHOW TABLES LIKE '{$this->CONFIG->dbprefix}upgrade_lock'"));
-
-		return (bool)$is_locked;
+		$db_prefix = $this->db->getTablePrefix();
+		$is_locked = count($this->db->getData("SHOW TABLES LIKE '{$db_prefix}upgrade_lock'"));
+		return (bool) $is_locked;
 	}
 }
-
