@@ -61,11 +61,10 @@ class Application {
 		if ($config) {
 			if (is_string($config)) {
 				$this->config_file = $config;
-			} else {
-				if (!$config instanceof Config) {
-					throw new \InvalidArgumentException('$config must be an Elgg\Config or a settings file location');
-				}
+			} elseif ($config instanceof Config) {
 				$this->config = $config;
+			} else {
+				throw new \InvalidArgumentException('$config must be an Elgg\Config or a settings file location');
 			}
 		} else {
 			$this->config_file = "{$this->engine_dir}/settings.php";
