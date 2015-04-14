@@ -32,16 +32,6 @@ class Application {
 	private $config_file;
 
 	/**
-	 * @var bool
-	 */
-	private $core_loaded = false;
-
-	/**
-	 * @var bool
-	 */
-	private $core_booted = false;
-
-	/**
 	 * @var Application
 	 */
 	private static $test_instance;
@@ -140,7 +130,7 @@ class Application {
 	 * @return void
 	 */
 	public function loadCore() {
-		if ($this->core_loaded) {
+		if (function_exists('_elgg_services')) {
 			return;
 		}
 
@@ -231,8 +221,6 @@ class Application {
 				$func($events, $hooks);
 			}
 		});
-
-		$this->core_loaded = true;
 	}
 
 	/**
@@ -251,23 +239,25 @@ class Application {
 	 * @return void
 	 */
 	function bootCore() {
-		if ($this->core_booted) {
+		$CONFIG = $this->getConfig()->getStorageObject();
+
+		if (!empty($CONFIG->boot_complete)) {
 			return;
 		}
 
-		$config = $this->getConfig();
-
 		// This will be overridden by the DB value but may be needed before the upgrade script can be run.
-		$config->set('default_limit', 10);
+		$CONFIG->default_limit = 10;
 
 		$this->loadCore();
 
+		$events = _elgg_services()->events;
+
 		// Connect to database, load language files, load configuration, init session
 		// Plugins can't use this event because they haven't been loaded yet.
-		elgg_trigger_event('boot', 'system');
+		$events->trigger('boot', 'system');
 
 		// Load the plugins that are active
-		_elgg_load_plugins();
+		_elgg_services()->plugins->load();
 
 		// @todo move loading plugins into a single boot function that replaces 'boot', 'system' event
 		// and then move this code in there.
@@ -278,17 +268,15 @@ class Application {
 		}
 
 		// @todo deprecate as plugins can use 'init', 'system' event
-		elgg_trigger_event('plugins_boot', 'system');
+		$events->trigger('plugins_boot', 'system');
 
 		// Complete the boot process for both engine and plugins
-		elgg_trigger_event('init', 'system');
+		$events->trigger('init', 'system');
 
-		$config->set('boot_complete', true);
+		$CONFIG->boot_complete = true;
 
 		// System loaded and ready
-		elgg_trigger_event('ready', 'system');
-
-		$this->core_booted = true;
+		$events->trigger('ready', 'system');
 	}
 
 	/**
