@@ -367,6 +367,13 @@ Other
 	"container_guid" (int) are provided. An empty entity value generally means the form is to
 	create a new object.
 
+**entity:icon:sizes, <entity_type>**
+	Triggered by ``elgg_get_icon_sizes()`` and sets entity type/subtype specific icon sizes.
+	``entity_subtype`` will be passed with the ``$params`` array to the callback.
+
+**entity:<icon_type>:sizes, <entity_type>**
+	Allows filtering sizes for custom icon types, see ``entity:icon:sizes, <entity_type>``
+
 **entity:icon:url, <entity_type>**
 	Triggered when entity icon URL is requested, see :ref:`entity icons <guides/database#entity-icons>`. Callback should
 	return URL for the icon of size ``$params['size']`` for the entity ``$params['entity']``.
@@ -412,6 +419,54 @@ Other
 		// Produce URL used to retrieve icon
 		return "http://www.gravatar.com/avatar/$hash?s=$size";
 	}
+
+**entity:<icon_type>:url, <entity_type>**
+	Allows filtering URLs for custom icon types, see ``entity:icon:url, <entity_type>``
+
+**entity:icon:file, <entity_type>**
+	Triggered by ``ElggEntity::getIcon()`` and allows plugins to provide an alternative ``ElggIcon`` object
+	that points to a custom location of the icon on filestore. The handler must return an instance of ``ElggIcon``
+	or an exception will be thrown.
+
+**entity:<icon_type>:file, <entity_type>**
+	Allows filtering icon file object for custom icon types, see ``entity:icon:file, <entity_type>``
+
+**entity:<icon_type>:prepare, <entity_type>**
+	Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to prepare an image from uploaded/linked file.
+	This hook can be used to e.g. rotate the image before it is resized/cropped, or it can be used to extract an image frame
+	if the uploaded file is a video. The handler must return an instance of ``ElggFile`` with a `simpletype`
+	that resolves to `image`. The ``$return`` value passed to the hook is an instance of ``ElggFile`` that points
+	to a temporary copy of the uploaded/linked file.
+
+	The ``$params`` array contains:
+
+	 * ``entity`` - entity that owns the icons
+	 * ``file`` - original input file before it has been modified by other hooks
+
+**entity:<icon_type>:save, <entity_type>**
+	Triggered by ``ElggEntity::saveIcon*()`` methods and can be used to apply custom image manipulation logic to
+	resizing/cropping icons. The handler must return ``true`` to prevent the core APIs from resizing/cropping icons.
+	The ``$params`` array contains:
+
+	 * ``entity`` - entity that owns the icons
+	 * ``file`` - ``ElggFile`` object that points to the image file to be used as source for icons
+	 * ``x1``, ``y1``, ``x2``, ``y2`` - cropping coordinates
+
+**entity:<icon_type>:saved, <entity_type>**
+	Triggered by ``ElggEntity::saveIcon*()`` methods once icons have been created. This hook can be used by plugins
+	to create river items, update cropping coordinates for custom icon types etc. The handler can access the
+	created icons using ``ElggEntity::getIcon()``.
+	The ``$params`` array contains:
+
+	 * ``entity`` - entity that owns the icons
+	 * ``x1``, ``y1``, ``x2``, ``y2`` - cropping coordinates
+
+**entity:<icon_type>:delete, <entity_type>**
+	Triggered by ``ElggEntity::deleteIcon()`` method and can be used for clean up operations. This hook is triggered
+	before the icons are deleted. The handler can return ``false`` to prevent icons from being deleted.
+	The ``$params`` array contains:
+
+	 * ``entity`` - entity that owns the icons
 
 **entity:url, <entity_type>**
 	Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the

@@ -36,6 +36,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
  * @property-read \Elgg\PluginHooksService                 $hooks
+ * @property-read \Elgg\EntityIconService                  $iconService
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
  * @property-read Mailer                                   $mailer
@@ -182,6 +183,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('hooks', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('hooks');
+		});
+
+		$this->setFactory('iconService', function(ServiceProvider $c) {
+			return new \Elgg\EntityIconService($c->config, $c->hooks, $c->request, $c->logger);
 		});
 
 		$this->setClassName('input', \Elgg\Http\Input::class);

@@ -86,6 +86,9 @@ function elgg_get_config($name, $site_guid = 0) {
 	if ($name === 'siteemail') {
 		$msg = 'The config value "siteemail" is deprecated. Use elgg_get_site_entity()->email';
 		elgg_deprecated_notice($msg, '2.1');
+	} else if ($name == 'icon_sizes') {
+		$msg = 'The config value "icon_sizes" is deprecated. Use elgg_get_icon_sizes()';
+		elgg_deprecated_notice($msg, '2.2');
 	}
 
 	return _elgg_services()->config->get($name, $site_guid);
@@ -261,6 +264,18 @@ function get_config($name, $site_guid = 0) {
 function _elgg_config_test($hook, $type, $tests) {
 	$tests[] = \Elgg\Application::elggDir()->getPath("engine/tests/ElggCoreConfigTest.php");
 	return $tests;
+}
+
+/**
+ * Returns a configuration array of icon sizes
+ *
+ * @param string $entity_type    Entity type
+ * @param string $entity_subtype Entity subtype
+ * @param string $type           The name of the icon. e.g., 'icon', 'cover_photo'
+ * @return array
+ */
+function elgg_get_icon_sizes($entity_type = null, $entity_subtype = null, $type = 'icon') {
+	return _elgg_services()->iconService->getSizes($entity_type, $entity_subtype, $type);
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
