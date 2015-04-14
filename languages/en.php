@@ -1095,7 +1095,6 @@ Once you have logged in, we highly recommend that you change your password.
 	'admin:legend:debug' => 'Debugging and Logging',
 
 	'upgrading' => 'Upgrading...',
-	'upgrade:db' => 'Your database was upgraded.',
 	'upgrade:core' => 'Your Elgg installation was upgraded.',
 	'upgrade:unlock' => 'Unlock upgrade',
 	'upgrade:unlock:confirm' => "The database is locked for another upgrade. Running concurrent upgrades is dangerous. You should only continue if you know there is not another upgrade running. Unlock?",

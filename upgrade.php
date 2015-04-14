@@ -75,21 +75,6 @@ if (get_input('upgrade') == 'upgrade') {
 		exit;
 	}
 
-	// if upgrading from < 1.8.0, check for the core view 'welcome' and bail if it's found.
-	// see https://github.com/elgg/elgg/issues/3064
-	// we're not checking the view itself because it's likely themes will override this view.
-	// we're only concerned with core files.
-	$welcome = dirname(__FILE__) . '/views/default/welcome.php';
-	if (file_exists($welcome)) {
-		elgg_set_viewtype('failsafe');
-		// can't have pretty messages because we don't know the state of the views.
-		$content = elgg_echo('upgrade:unable_to_upgrade_info');
-		$title = elgg_echo('upgrade:unable_to_upgrade');
-		
-		echo elgg_view_page($title, $content);
-		exit;
-	}
-
 	$vars = array(
 		'forward' => $forward_url
 	);
