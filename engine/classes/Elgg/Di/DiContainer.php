@@ -30,12 +30,7 @@ class DiContainer {
 	/**
 	 * @var array each element is an array: ['callable' => mixed $factory, 'shared' => bool $isShared]
 	 */
-	protected $factories = array();
-
-	/**
-	 * @var array
-	 */
-	protected $cache = array();
+	private $factories_ = array();
 
 	const CLASS_NAME_PATTERN_53 = '/^(\\\\?[a-z_\x7f-\xff][a-z0-9_\x7f-\xff]*)+$/i';
 
@@ -47,18 +42,15 @@ class DiContainer {
 	 * @throws \Elgg\Di\MissingValueException
 	 */
 	public function __get($name) {
-		if (array_key_exists($name, $this->cache)) {
-			return $this->cache[$name];
-		}
-		if (!isset($this->factories[$name])) {
+		if (!isset($this->factories_[$name])) {
 			throw new \Elgg\Di\MissingValueException("Value or factory was not set for: $name");
 		}
-		$value = $this->build($this->factories[$name]['callable'], $name);
+		$value = $this->build($this->factories_[$name]['callable'], $name);
 
 		// Why check existence of factory here? A: the builder function may have set the value
 		// directly, in which case the factory will no longer exist.
-		if (!empty($this->factories[$name]) && $this->factories[$name]['shared']) {
-			$this->cache[$name] = $value;
+		if (!empty($this->factories_[$name]) && $this->factories_[$name]['shared']) {
+			$this->{$name} = $value;
 		}
 		return $value;
 	}
@@ -71,7 +63,7 @@ class DiContainer {
 	 * @return mixed
 	 * @throws \Elgg\Di\FactoryUncallableException
 	 */
-	protected function build($factory, $name) {
+	private function build($factory, $name) {
 		if (is_callable($factory)) {
 			return call_user_func($factory, $this);
 		}
@@ -97,8 +89,11 @@ class DiContainer {
 	 * @throws \InvalidArgumentException
 	 */
 	public function setValue($name, $value) {
+		if (substr($name, -1) === '_') {
+			throw new \InvalidArgumentException('$name cannot end with "_"');
+		}
 		$this->remove($name);
-		$this->cache[$name] = $value;
+		$this->{$name} = $value;
 		return $this;
 	}
 
@@ -112,13 +107,16 @@ class DiContainer {
 	 * @throws \InvalidArgumentException
 	 */
 	public function setFactory($name, $callable, $shared = true) {
+		if (substr($name, -1) === '_') {
+			throw new \InvalidArgumentException('$name cannot end with "_"');
+		}
 		if (!is_callable($callable, true)) {
 			throw new \InvalidArgumentException('$factory must appear callable');
 		}
 		$this->remove($name);
-		$this->factories[$name] = array(
+		$this->factories_[$name] = array(
 			'callable' => $callable,
-			'shared' => $shared
+			'shared' => $shared,
 		);
 		return $this;
 	}
@@ -133,6 +131,9 @@ class DiContainer {
 	 * @throws \InvalidArgumentException
 	 */
 	public function setClassName($name, $class_name, $shared = true) {
+		if (substr($name, -1) === '_') {
+			throw new \InvalidArgumentException('$name cannot end with "_"');
+		}
 		$classname_pattern = self::CLASS_NAME_PATTERN_53;
 		if (!is_string($class_name) || !preg_match($classname_pattern, $class_name)) {
 			throw new \InvalidArgumentException('Class names must be valid PHP class names');
@@ -150,8 +151,11 @@ class DiContainer {
 	 * @return \Elgg\Di\DiContainer
 	 */
 	public function remove($name) {
-		unset($this->cache[$name]);
-		unset($this->factories[$name]);
+		if (substr($name, -1) === '_') {
+			throw new \InvalidArgumentException('$name cannot end with "_"');
+		}
+		unset($this->{$name});
+		unset($this->factories_[$name]);
 		return $this;
 	}
 
@@ -162,7 +166,13 @@ class DiContainer {
 	 * @return bool
 	 */
 	public function has($name) {
-		return isset($this->factories[$name]) || array_key_exists($name, $this->cache);
+		if (isset($this->factories_[$name])) {
+			return true;
+		}
+		if (substr($name, -1) === '_') {
+			return false;
+		}
+		return (bool)property_exists($this, $name);
 	}
 }
 

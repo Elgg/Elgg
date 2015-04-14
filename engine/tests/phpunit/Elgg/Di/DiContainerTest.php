@@ -137,6 +137,32 @@ class DiContainerTest extends \PHPUnit_Framework_TestCase {
 		$this->setExpectedException('\Elgg\Di\MissingValueException');
 		$di->foo;
 	}
+
+	public function testNamesCannotEndWithUnderscore() {
+		$di = new \Elgg\Di\DiContainer();
+
+		try {
+			$di->setValue('foo_', 'foo');
+			$this->fail('setValue did not throw');
+		} catch (\InvalidArgumentException $e) {}
+
+		$this->assertFalse($di->has('foo_'));
+
+		try {
+			$di->setFactory('foo_', function () {});
+			$this->fail('setFactory did not throw');
+		} catch (\InvalidArgumentException $e) {}
+
+		try {
+			$di->remove('foo_');
+			$this->fail('remove did not throw');
+		} catch (\InvalidArgumentException $e) {}
+
+		try {
+			$di->_foo;
+			$this->fail('->_foo did not throw');
+		} catch (MissingValueException $e) {}
+	}
 }
 
 
