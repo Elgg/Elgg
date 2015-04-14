@@ -43,7 +43,8 @@ use Elgg\Database\EntityTable\UserFetchFailureException;
  */
 abstract class ElggEntity extends \ElggData implements
 	Locatable, // Geocoding interface
-	Importable // Allow import of data (deprecated 1.9)
+	Importable, // Allow import of data (deprecated 1.9)
+	\Elgg\EntityIcon // Icon interface
 {
 
 	/**
@@ -1360,6 +1361,87 @@ abstract class ElggEntity extends \ElggData implements
 	}
 
 	/**
+	 * Saves icons using an uploaded file as the source.
+	 *
+	 * @param string $input_name Form input name
+	 * @param string $type       The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @param array  $coords     An array of cropping coordinates x1, y1, x2, y2
+	 * @return bool
+	 */
+	public function saveIconFromUploadedFile($input_name, $type = 'icon', array $coords = array()) {
+		return _elgg_services()->iconService->saveIconFromUploadedFile($this, $input_name, $type, $coords);
+	}
+
+	/**
+	 * Saves icons using a local file as the source.
+	 *
+	 * @param string $filename The full path to the local file
+	 * @param string $type     The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @param array  $coords   An array of cropping coordinates x1, y1, x2, y2
+	 * @return bool
+	 */
+	public function saveIconFromLocalFile($filename, $type = 'icon', array $coords = array()) {
+		return _elgg_services()->iconService->saveIconFromLocalFile($this, $file, $type, $coords);
+	}
+
+	/**
+	 * Saves icons using a file located in the data store as the source.
+	 *
+	 * @param string $file   An ElggFile instance
+	 * @param string $type   The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @param array  $coords An array of cropping coordinates x1, y1, x2, y2
+	 * @return bool
+	 */
+	public function saveIconFromElggFile(\ElggFile $file, $type = 'icon', array $coords = array()) {
+		return _elgg_services()->iconService->saveIconFromElggFile($this, $file, $type, $coords);
+	}
+	
+	/**
+	 * Returns entity icon as an ElggIcon object
+	 * The icon file may or may not exist on filestore
+	 * 
+	 * @param string $size Size of the icon
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @return \ElggIcon
+	 */
+	public function getIcon($size, $type = 'icon') {
+		return _elgg_services()->iconService->getIcon($this, $size, $type);
+	}
+
+	/**
+	 * Removes all icon files and metadata for the passed type of icon.
+	 * 
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @return bool
+	 */
+	public function deleteIcon($type = 'icon') {
+		return _elgg_services()->iconService->deleteIcon($this, $type);
+	}
+	
+	/**
+	 * Returns the timestamp of when the icon was changed.
+	 * 
+	 * @param string $size The size of the icon
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 * 
+	 * @return int|null A unix timestamp of when the icon was last changed, or null if not set.
+	 */
+	public function getIconLastChange($size, $type = 'icon') {
+		return _elgg_services()->iconService->getIconLastChange($this, $size, $type);
+	}
+	
+	/**
+	 * Returns if the entity has an icon of the passed type.
+	 *
+	 * @param string $size The size of the icon
+	 * @param string $type The name of the icon. e.g., 'icon', 'cover_photo'
+	 * @return bool
+	 */
+	public function hasIcon($size, $type = 'icon') {
+		return _elgg_services()->iconService->hasIcon($this, $size, $type);
+	}
+
+	/**
 	 * Get the URL for this entity's icon
 	 *
 	 * Plugins can register for the 'entity:icon:url', <type> plugin hook
@@ -1371,25 +1453,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @since 1.8.0
 	 */
 	public function getIconURL($params = array()) {
-		if (is_array($params)) {
-			$size = elgg_extract('size', $params, 'medium');
-		} else {
-			$size = is_string($params) ? $params : 'medium';
-			$params = array();
-		}
-		$size = elgg_strtolower($size);
-
-		$params['entity'] = $this;
-		$params['size'] = $size;
-
-		$type = $this->getType();
-
-		$url = _elgg_services()->hooks->trigger('entity:icon:url', $type, $params, null);
-		if ($url == null) {
-			$url = elgg_get_simplecache_url("icons/default/$size.png");
-		}
-
-		return elgg_normalize_url($url);
+		return _elgg_services()->iconService->getIconURL($this, $params);
 	}
 
 	/**
