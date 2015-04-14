@@ -165,6 +165,7 @@ class ElggInstaller {
 			'dbprefix' => 'elgg_',
 			'language' => 'en',
 			'siteaccess' => ACCESS_PUBLIC,
+			'site_guid' => 1,
 		);
 		$params = array_merge($defaults, $params);
 
