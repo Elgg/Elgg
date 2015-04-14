@@ -58,7 +58,9 @@ class Application {
 		 * @global float
 		 */
 		global $START_MICROTIME;
-		$START_MICROTIME = microtime(true);
+		if (!isset($START_MICROTIME)) {
+			$START_MICROTIME = microtime(true);
+		}
 
 		$this->engine_dir = dirname(dirname(__DIR__));
 		$this->install_dir = dirname($this->engine_dir);
