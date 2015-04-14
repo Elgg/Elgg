@@ -169,13 +169,35 @@ Entity Icons
 ~~~~~~~~~~~~
 
 Every entity can be assigned an icon which is retrieved using the ``ElggEntity::getIconURL($params)`` method.
-This method accepts a ``$params`` argument that can be either a string specifying on of the configured icon sizes,
-or an array of parameters, that specify the size and provide additional context for the hook to determine the icon
-to serve.
+This method accepts a ``$params`` argument as an array that specifies the size, type, and provide 
+additional context for the hook to determine the icon to serve.
 
-Use ``elgg_get_config('icon_sizes')`` to get all possible values. The following sizes exist by default:
+Use ``elgg_get_config('icon_sizes')`` to get all possible icon sizes. The following sizes exist by default:
 ``'large'``, ``'medium'``, ``'small'``, ``'tiny'``, and ``'topbar'``. The method triggers the
 ``entity:icon:url`` :ref:`hook <guides/hooks-list#other>`.
+
+Entity icons can be saved from uploaded files, existing local files, or  existing ElggFile 
+objects. These methods save all sizes of icons defined in the system.
+
+.. code:: php
+	$object = new ElggObject();
+	$object->title = 'Example entity';
+	$object->description = 'An example object with an icon.';
+	
+	// from an uploaded file
+	$tmp_name = _elgg_services()->request()->files->get('my_uploaded_file')->getPathName();
+	$object->setIconFromUploadedFile($tmp_name);
+
+	// from a local file
+	$object->setIconFromLocalFile('/var/data/generic_icon.png');
+
+	// from a saved ElggFile object
+	$file = get_entity(123);
+	if ($file instanceof ElggFile) {
+		$object->setIconFromElggFile($file);
+	}
+	
+	$object->save();
 
 Use ``elgg_view_entity_icon($entity, $size, $vars)`` to render an icon. This will scan the following
 locations for a view and include the first match.
@@ -193,9 +215,21 @@ $type
 $subtype
 	Entity subtype, e.g. ``'blog'`` or ``'page'``.
 
-By convention entities that have an uploaded avatar or icon will have the ``icontime`` property
-assigned. This means that you can use ``$entity->icontime`` to check if an icon exists for the given
-entity.
+Icons are assigned a timestamp when they're created. You can use ``$object->getIconTs($size)`` to 
+get the timestamp if you need to track changes to the icon.
+
+To check if an icon is set, use ``$object->hasIcon($size)``.
+
+Icon methods support passing an icon type if an entity has more than one icon. For example, a user
+might have an avatar and a cover photo icon. You would pass ``'cover_photo'`` as the icon type:
+
+.. code:: php
+	$object->setIconFromUploadedFile('uploaded_photo', 'cover_photo');
+
+	$object->getIconUrl([
+		'size' => 'medium',
+		'type' => 'cover_photo'
+	]);
 
 Adding, reading and deleting annotations
 ----------------------------------------
