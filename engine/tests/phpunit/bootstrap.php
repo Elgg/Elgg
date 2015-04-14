@@ -18,10 +18,11 @@ $CONFIG = (object)[
 	'wwwroot' => 'http://localhost/',
 	'dataroot' => __DIR__ . '/test_files/dataroot/',
 	'site_guid' => 1,
+	'AutoloaderManager_skip_storage' => true,
 ];
 
 $autoloader = (require_once __DIR__ . '/../../../autoloader.php');
 
-$app = new \Elgg\Application();
-
+$app = new \Elgg\Application(new \Elgg\Config($CONFIG));
+\Elgg\Application::setTestInstance($app);
 $app->loadCore();

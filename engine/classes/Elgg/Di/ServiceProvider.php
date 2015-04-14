@@ -77,8 +77,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('autoloadManager', function(ServiceProvider $c) {
 			$manager = new \Elgg\AutoloadManager($c->classLoader);
-			$manager->setStorage($c->systemCache->getFileCache());
-			$manager->loadCache();
+			if (!$c->config->get('AutoloaderManager_skip_storage')) {
+				$manager->setStorage($c->systemCache->getFileCache());
+				$manager->loadCache();
+			}
 			return $manager;
 		});
 

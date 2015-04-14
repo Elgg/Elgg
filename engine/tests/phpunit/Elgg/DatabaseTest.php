@@ -9,7 +9,7 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 	 * Database API.
 	 */
 	public function setUp() {
-		$provider = new \Elgg\Di\ServiceProvider();
+		$provider = new \Elgg\Di\ServiceProvider(\Elgg\Application::getTestInstance());
 		$db = $provider->db;
 		$this->dbClass = get_class($db);
 		

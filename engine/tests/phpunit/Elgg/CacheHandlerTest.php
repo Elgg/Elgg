@@ -10,8 +10,7 @@ class CacheHandlerTest extends \PHPUnit_Framework_TestCase {
 	protected $handler;
 
 	public function setUp() {
-		$config = (object)array();
-		$this->handler = new \Elgg\CacheHandler($config);
+		$this->handler = new \Elgg\CacheHandler(Application::getTestInstance());
 	}
 
 	protected function _testParseFail($input) {

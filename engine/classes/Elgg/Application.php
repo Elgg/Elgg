@@ -42,6 +42,11 @@ class Application {
 	private $core_booted = false;
 
 	/**
+	 * @var Application
+	 */
+	private static $test_instance;
+
+	/**
 	 * Constructor
 	 *
 	 * @param Config|string $config Config object or settings file location or
@@ -356,5 +361,28 @@ class Application {
 			forward('', '404');
 		}
 		return true;
+	}
+
+	/**
+	 * Get a singleton instance for testing
+	 *
+	 * @return \Elgg\Application
+	 * @access private
+	 * @internal temporary solution for unit testing
+	 */
+	public static function getTestInstance() {
+		return self::$test_instance;
+	}
+
+	/**
+	 * Set a singleton instance for testing
+	 *
+	 * @param Application $app
+	 * @return void
+	 * @access private
+	 * @internal temporary solution for unit testing
+	 */
+	public static function setTestInstance(Application $app) {
+		self::$test_instance = $app;
 	}
 }
