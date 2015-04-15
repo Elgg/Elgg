@@ -114,7 +114,7 @@ class MetastringsTable {
 	 * @return int The identifier for this string
 	 */
 	function add($string) {
-		$escaped_string = $this->db->sanitizeString($string);
+		$escaped_string = $this->db->sanitizeString(trim($string));
 	
 		return $this->db->insertData("INSERT INTO {$this->getTableName()} (string) VALUES ('$escaped_string')");
 	}
