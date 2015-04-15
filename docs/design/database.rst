@@ -875,6 +875,3 @@ the metadata and annotations tables.
 
 This is to avoid duplicating strings, saving space and making database
 lookups more efficient.
-
-Core developers will place schema upgrades in
-``/engine/schema/upgrades/*``.
