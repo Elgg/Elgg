@@ -23,9 +23,8 @@ if (isset($vars['options_values'])) {
 	}
 }
 
-if (!isset($vars['entity_allows_comments'])) {
-	$vars['entity_allows_comments'] = true;
-}
+$entity_allows_comments = elgg_extract('entity_allows_comments', $vars, true);
+unset($vars['entity_allows_comments']);
 
 $vars['class'] = (array) elgg_extract('class', $vars, []);
 $vars['class'][] = 'elgg-input-access';
@@ -53,8 +52,8 @@ if ($entity) {
 	$params['entity_type'] = $entity->type;
 	$params['entity_subtype'] = $entity->getSubtype();
 	$params['container_guid'] = $entity->container_guid;
-	
-	if ($vars['entity_allows_comments'] && ($entity->access_id != ACCESS_PUBLIC)) {
+
+	if ($entity_allows_comments && ($entity->access_id != ACCESS_PUBLIC)) {
 		$vars['data-comment-count'] = (int) $entity->countComments();
 		$vars['data-original-value'] = $entity->access_id;
 	}
