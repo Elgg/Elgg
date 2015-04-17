@@ -68,8 +68,11 @@ if (!$params['container_guid'] && $container) {
 if (!isset($vars['value']) || $vars['value'] == ACCESS_DEFAULT) {
 	if ($entity) {
 		$vars['value'] = $entity->access_id;
-	} else {
+	} else if (empty($vars['options_values']) || !is_array($vars['options_values'])) {
 		$vars['value'] = get_default_access(null, $params);
+	} else {
+		$options_values_ids = array_keys($vars['options_values']);
+		$vars['value'] = $options_values_ids[0];
 	}
 }
 
