@@ -66,7 +66,7 @@ if (!$params['container_guid'] && $container) {
 }
 
 // don't call get_default_access() unless we need it
-if (!isset($vars['value']) || $vars['value'] == ACCESS_DEFAULT) {
+if (!isset($vars['value']) || is_null($vars['value']) || $vars['value'] == ACCESS_DEFAULT) {
 	if ($entity) {
 		$vars['value'] = $entity->access_id;
 	} else {
