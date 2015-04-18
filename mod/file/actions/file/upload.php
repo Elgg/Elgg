@@ -101,10 +101,7 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 	$file->setMimeType($mime_type);
 	$file->simpletype = elgg_get_file_simple_type($mime_type);
 
-	// Open the file to guarantee the directory exists
-	$file->open("write");
-	$file->moveUploadedFile($_FILES['upload']['tmp_name'], $file->getFilenameOnFilestore());
-	$file->close();
+	$file->saveUploadedFile($_FILES['upload']['tmp_name']);
 
 	$guid = $file->save();
 

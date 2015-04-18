@@ -55,8 +55,8 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
- * @property-read \Elgg\Filesystem\AdapterService          $dataStorageAdapters
- * @property-read \Elgg\Filesystem\Adapter                 $dataStorage
+ * @property-read \Elgg\Filesystem\StorageAdapterService   $dataStorageAdapters
+ * @property-read \Gaufrette\Filesystem                    $dataStorage
  * @package Elgg.Core
  * @access private
  */
@@ -248,30 +248,13 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		
 		$this->setFactory('dataStorageAdapters', function(ServiceProvider $c) {
 			$config = $c->config;
-			$adapters = new \Elgg\Filesystem\AdapterService($c->logger);
+			$adapters = new \Elgg\Filesystem\StorageAdapterService($c->logger);
 			
 			// add default disk adapter
 			$data_root = $config->get('dataroot');
 			if ($data_root) {
-				$disk = new \Elgg\Filesystem\Adapter\Disk($data_root, true);
-				$adapters->set('disk', $disk);
-			}
-			
-			// @todo Pull s3 out into plugin.
-			// need to check if plugins are instantiated early enough to add
-			// the adapter via the service, or if we need to trigger a hook somewhere
-			// 
-			// could use ArrayCollection if we can get all adapters from plugins here.
-			$info = $config->get('user_data_store_info');
-			if (isset($info['aws_s3'])) {
-				$info['aws_s3']['request.options'] = [
-					'proxy' => $config->get('proxy'),
-					'verify' => !$config->get('ssl_no_verify')
-				];
-				$service = \Aws\S3\S3Client::factory($info['aws_s3']);
-				$s3 = new \Gaufrette\Adapter\AwsS3($service, $info['aws_s3']['bucket']);
-				$adapter = new \Elgg\Filesystem\Adapter\AwsS3($s3);
-				$adapters->set('aws_s3', $adapter);
+				$adapter = new \Gaufrette\Adapter\Local($data_root, true);
+				$adapters->set('disk', $adapter);
 			}
 			
 			return $adapters;

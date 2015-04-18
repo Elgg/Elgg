@@ -480,6 +480,12 @@ function _elgg_filestore_init() {
 
 	// Unit testing
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_filestore_test');
+	
+	// register stream wrapper to access storage
+	// via elgg://dataStorage/<path>
+	$map = \Gaufrette\StreamWrapper::getFilesystemMap();
+	$map->set('dataStorage', _elgg_services()->dataStorage);
+	\Gaufrette\StreamWrapper::register('elgg');
 }
 
 /**
@@ -576,5 +582,5 @@ function _elgg_filestore_test($hook, $type, $value) {
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_filestore_init', 100);
+	$events->registerHandler('ready', 'system', '_elgg_filestore_init', 100);
 };

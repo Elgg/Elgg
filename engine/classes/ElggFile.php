@@ -49,11 +49,16 @@ class ElggFile extends \ElggObject {
 	}
 
 	/**
-	 * Return the filename.
-	 *
+	 * Return the filename, optionally throwing if not set
+	 * 
+	 * @param type $throw_on_missing Throw an exception if the filename isn't set. Default: false
 	 * @return string
+	 * @throws \Elgg\Di\MissingValueException
 	 */
-	public function getFilename() {
+	public function getFilename($throw_on_missing = false) {
+		if (!isset($this->filename) && $throw_on_missing) {
+			throw new \Elgg\Di\MissingValueException("Filename is not set");
+		}
 		return $this->filename;
 	}
 
@@ -61,17 +66,14 @@ class ElggFile extends \ElggObject {
 	 * Return the filename of this file as it is/will be stored on the
 	 * filestore, which may be different to the filename.
 	 * 
-	 * @deprecated 1.11 Use getDataStorage() to interact with the physical file.
+	 * @deprecated 1.11 Use getStream() or _elgg_services()->dataStorage to interact with physical files.
 	 *
 	 * @return string
 	 */
 	public function getFilenameOnFilestore() {
-		$ds = $this->getDataStorage();
-		$filename = $this->getFilename();
-		if (!$filename) {
-			throw new \Elgg\Di\MissingValueException("Filename must be set to get the full file path");
-		}
-		return $ds->fullPath($filename);
+		elgg_deprecated_notice("Use getStream() or _elgg_services()->dataStorage to interact with physical files.", 1.11);
+		
+		return $this->getDataStorageFilename();
 	}
 
 	/**
@@ -88,8 +90,10 @@ class ElggFile extends \ElggObject {
 		if (!$container_guid) {
 			$container_guid = $this->container_guid;
 		}
+		
+		
+		
 		$fs = $this->getFilestore();
-		// @todo add getSize() to \ElggFilestore
 		return $fs->getSize($prefix, $container_guid);
 	}
 
@@ -180,19 +184,27 @@ class ElggFile extends \ElggObject {
 	 * @throws IOException|InvalidParameterException
 	 */
 	public function open($mode) {
-		if (!$this->getFilename()) {
-			throw new \IOException("You must specify a name before opening a file.");
-		}
-
-		// Sanity check
-		if (!in_array($mode, ['read', 'write', 'append'])) {
-			$msg = "Unrecognized file mode '" . $mode . "'";
-			throw new \InvalidParameterException($msg);
+		$flags = '';
+		switch($mode) {
+			case 'read':
+				$flags = 'rb';
+				break;
+			
+			case 'write':
+				$flags = 'wb';
+				break;
+			
+			case 'append':
+				$flags = 'a';
+				break;
+			
+			default:
+				$msg = "Unrecognized file mode '" . $mode . "'";
+				throw new \InvalidParameterException($msg);
 		}
 		
-		return $this->stream = $this->getDataStorage()
-				->file($this->getFilename())
-				->createStream();
+		$path = $this->getDataStorageFilename();
+		return $this->stream = fopen("elgg://dataStorage/$path", $flags);
 	}
 
 	/**
@@ -200,12 +212,10 @@ class ElggFile extends \ElggObject {
 	 *
 	 * @param string $data The data
 	 *
-	 * @return bool
+	 * @return int The number of bytes written
 	 */
 	public function write($data) {
-		return $this->getDataStorage()
-				->file($this->getFilename())
-				->setContent($data);
+		return $this->getDataStorage()->write($this->getDataStorageFilename(), $data, true);
 	}
 	
 	/**
@@ -217,9 +227,13 @@ class ElggFile extends \ElggObject {
 	 * @return mixed Data or false
 	 */
 	public function read($length, $offset = 0) {
+		// match write() in that you don't need to open first
 		$stream = $this->getStream();
-		$stream->seek($offset);
-		return $stream->read($length);
+		if (!$stream) {
+			$stream = $this->open('read');
+		}
+		$this->seek($offset);
+		return fread($stream, $length);
 	}
 	
 	/**
@@ -228,18 +242,20 @@ class ElggFile extends \ElggObject {
 	 * @return mixed The file contents.
 	 */
 	public function grabFile() {
-		return $this->getDataStorage()->file($this->getFilename())->getContent();
+		$path = $this->getDataStorageFilename();
+		return $this->getDataStorage()->read($path);
 	}
 	
 	/**
 	 * Close the file
 	 *
-	 * @deprecated since version 1.11 ElggFile::close is no longer needed.
 	 * @return bool
 	 */
 	public function close() {
-		elgg_deprecated_notice("ElggFile::close is no longer needed.", 1.11);
-		return true;
+		if (!$this->stream) {
+			return true;
+		}
+		return fclose($this->getStream());
 	}
 
 	/**
@@ -248,7 +264,7 @@ class ElggFile extends \ElggObject {
 	 * @return bool
 	 */
 	public function delete() {
-		$filename = $this->getFilename();
+		$path = $this->getDataStorageFilename();
 		$result = true;
 		
 		if ($this->getGUID()) {
@@ -256,7 +272,11 @@ class ElggFile extends \ElggObject {
 		}
 		
 		if ($result) {
-			$result &= $this->getDataStorage()->file($filename)->delete();
+			try {
+				$this->getDataStorage()->delete($path);
+			} catch (RuntimeException $e) {
+				// no op
+			}
 		}
 		
 		return $result;
@@ -270,9 +290,7 @@ class ElggFile extends \ElggObject {
 	 * @return bool
 	 */
 	public function seek($position) {
-		$fs = $this->getFilestore();
-
-		return $fs->seek($this->handle, $position);
+		return fseek($this->getStream(), $position);
 	}
 
 	/**
@@ -281,7 +299,7 @@ class ElggFile extends \ElggObject {
 	 * @return int The file position
 	 */
 	public function tell() {
-		return $this->getStream()->tell();
+		return ftell($this->getStream());
 	}
 
 	/**
@@ -291,7 +309,7 @@ class ElggFile extends \ElggObject {
 	 * @since 1.9
 	 */
 	public function getSize() {
-		return $this->getDataStorage()->file($this->getFilename())->getSize();
+		return $this->getDataStorage()->size($this->getDataStorageFilename());
 	}
 
 	/**
@@ -300,7 +318,7 @@ class ElggFile extends \ElggObject {
 	 * @return bool
 	 */
 	public function eof() {
-		return $this->getStream()->eof();
+		return feof($this->getStream());
 	}
 
 	/**
@@ -309,7 +327,7 @@ class ElggFile extends \ElggObject {
 	 * @return bool
 	 */
 	public function exists() {
-		return $this->getDataStorage()->file($this->getFilename())->exists();
+		return $this->getDataStorage()->has($this->getDataStorageFilename());
 	}
 
 	/**
@@ -317,6 +335,7 @@ class ElggFile extends \ElggObject {
 	 *
 	 * @param \ElggFilestore $filestore The file store.
 	 *
+	 * @todo @deprecated 1.11
 	 * @return void
 	 */
 	public function setFilestore(\ElggFilestore $filestore) {
@@ -326,24 +345,41 @@ class ElggFile extends \ElggObject {
 	/**
 	 * Get the data storage for this entity
 	 * 
-	 * @return \Elgg\Filesystem\Adapter\Adapter
+	 * @return \Gaufrette\Filesystem
 	 */
-	public function getDataStorage() {
-		$storage = _elgg_services()->dataStorage;
-		
-		// set directory for this object
+	private function getDataStorage() {
+		return _elgg_services()->dataStorage;
+	}
+	
+	/**
+	 * Returns the full data storage path including filename of this file
+	 * 
+	 * @return string
+	 */
+	protected function getDataStorageFilename() {
+		return $this->getDataStoragePath() . $this->getFilename(true);
+	}
+	
+	/**
+	 * Return the data storage path for this file without the filename
+	 * 
+	 * @return string
+	 */
+	protected function getDataStoragePath() {
+		$path = '';
 		if ($this->owner_guid) {
-			$path = $storage->getPathPrefix($this->owner_guid);
-			$storage = $storage->directory($path);
+			$path = new Elgg\EntityDirLocator($this->owner_guid);
 		}
 		
-		return $storage;
+		return (string)$path;
 	}
 
 	/**
 	 * Return a filestore suitable for saving this file.
 	 * This filestore is either a pre-registered filestore,
 	 * a filestore as recorded in metadata or the system default.
+	 * 
+	 * @deprecated 1.11 Use the dataStorage service
 	 *
 	 * @return \ElggFilestore
 	 *
@@ -433,11 +469,56 @@ class ElggFile extends \ElggObject {
 	 * @return bool
 	 */
 	public function save() {
+		if ($this->stream) {
+			$this->close();
+		}
 		// @todo delete file on fail?
 		return parent::save();
 	}
 	
-	public function moveUploadedFile($from, $to) {
-		return $this->filestore->moveUploadedFile($from, $to);
+	/**
+	 * Saves the contents of an uploaded file as this file
+	 * 
+	 * @param type $from
+	 * @return boolean
+	 */
+	public function saveUploadedFile($from) {
+		if (!is_uploaded_file($from)) {
+			return false;
+		}
+		
+		$from_fp = fopen($from, 'r');
+		
+		if (!$from_fp) {
+			return false;
+		}
+		
+		$to_stream = $this->open('write');
+		if (!$to_stream) {
+			return false;
+		}
+		
+		$bytes_total = filesize($from);
+		$bytes_written = 0;
+		$len = 1024;
+		
+		while ($bytes_written < $bytes_total) {
+			$bytes_written += fwrite($to_stream, fread($from_fp, $len));
+		}
+		
+		fclose($from_fp);
+		$this->close();
+	}
+	
+	/**
+	 * Outputs the full contents of a file
+	 * 
+	 * @return string
+	 */
+	public function readFile() {
+		$stream = $this->open('read');
+		while (!feof($stream)) {
+			echo fread($stream, 1024);
+		}
 	}
 }

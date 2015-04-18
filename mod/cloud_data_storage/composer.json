@@ -1,0 +1,21 @@
+{
+    "name": "elgg/elgg-cloud-storage",
+    "version": "1.11.0-dev",
+    "description": "Adds cloud data storage to Elgg.",
+    "license": "GPL-2.0",
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "type": "elgg_plugin",
+    "require": {
+		"composer/installers": ">=1.0.8",
+		"aws/aws-sdk-php": "~2.7",
+		"microsoft/windowsazure": "*",
+		"google/apiclient": "1.0.*@beta"
+    },
+	"repositories": [
+		{
+			"type": "pear",
+			"url": "http://pear.php.net"
+		}
+	]
+}
