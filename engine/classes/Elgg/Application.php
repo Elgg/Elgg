@@ -199,14 +199,14 @@ class Application {
 
 		$this->loadCore();
 
-		$events = _elgg_services()->events;
+		$events = $this->services->events;
 
 		// Connect to database, load language files, load configuration, init session
 		// Plugins can't use this event because they haven't been loaded yet.
 		$events->trigger('boot', 'system');
 
 		// Load the plugins that are active
-		_elgg_services()->plugins->load();
+		$this->services->plugins->load();
 
 		// @todo move loading plugins into a single boot function that replaces 'boot', 'system' event
 		// and then move this code in there.
@@ -293,12 +293,10 @@ class Application {
 
 		$this->bootCore();
 
-		$router = _elgg_services()->router;
-		$request = _elgg_services()->request;
-
-		if (!$router->route($request)) {
+		if (!$this->services->router->route($this->services->request)) {
 			forward('', '404');
 		}
+
 		return true;
 	}
 }
