@@ -8,17 +8,18 @@
  */
 
 /**
- * @param \Elgg\Application $app Elgg Application object used for initializing the service provider (required on
- *                               first call, then ignored)
+ * Get the global service provider
+ *
+ * @param \Elgg\Di\ServiceProvider $services Elgg service provider. This must be set by the application.
  * @return \Elgg\Di\ServiceProvider
  * @access private
  */
-function _elgg_services(\Elgg\Application $app = null) {
-	static $provider;
-	if (null === $provider) {
-		$provider = new \Elgg\Di\ServiceProvider($app);
+function _elgg_services(\Elgg\Di\ServiceProvider $services = null) {
+	static $inst;
+	if ($services !== null) {
+		$inst = $services;
 	}
-	return $provider;
+	return $inst;
 }
 
 /**

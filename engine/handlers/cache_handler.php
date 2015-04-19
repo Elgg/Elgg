@@ -14,10 +14,7 @@
  * @subpackage Cache
  */
 
-$autoloader = require_once(__DIR__ . '/../../autoloader.php');
-
-require_once dirname(dirname(__FILE__)) . '/settings.php';
-/* @var \stdClass $CONFIG */
+require_once dirname(dirname(__DIR__)) . '/autoloader.php';
 
 $handler = new \Elgg\CacheHandler(new Elgg\Application());
 $handler->handleRequest($_GET, $_SERVER);

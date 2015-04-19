@@ -5,7 +5,7 @@ namespace Elgg\Di;
 class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 
 	public function testPropertiesReturnCorrectClassNames() {
-		$sp = new \Elgg\Di\ServiceProvider(\Elgg\Application::getTestInstance());
+		$sp = _elgg_testing_application()->getServices();
 
 		$sp->setValue('session', \ElggSession::getMock());
 		

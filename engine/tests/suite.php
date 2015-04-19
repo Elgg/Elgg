@@ -6,10 +6,9 @@
  * @subpackage Test
  */
 
-$autoloader = (require_once __DIR__ . '/../../autoloader.php');
-$application = new \Elgg\Application();
-\Elgg\Application::setTestInstance($application);
-$application->bootCore();
+require_once __DIR__ . '/../../autoloader.php';
+
+(new \Elgg\Application())->bootCore();
 
 require_once __DIR__ . '/ElggCoreUnitTest.php';
 require_once __DIR__ . '/ElggCoreGetEntitiesBaseTest.php';

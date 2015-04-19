@@ -1,9 +1,24 @@
 <?php
-$engine = dirname(dirname(__DIR__));
+
+require_once __DIR__ . '/../../../autoloader.php';
 
 date_default_timezone_set('America/Los_Angeles');
 
 error_reporting(E_ALL | E_STRICT);
+
+/**
+ * Get/set an Application for testing purposes
+ *
+ * @param \Elgg\Application $app Elgg Application
+ * @return \Elgg\Application
+ */
+function _elgg_testing_application(\Elgg\Application $app = null) {
+	static $inst;
+	if ($app) {
+		$inst = $app;
+	}
+	return $inst;
+}
 
 /**
  * This is here as a temporary solution only. Instead of adding more global
@@ -20,8 +35,9 @@ $CONFIG = (object)[
 	'AutoloaderManager_skip_storage' => true,
 ];
 
-$autoloader = (require_once __DIR__ . '/../../../autoloader.php');
-
-$app = new \Elgg\Application(new \Elgg\Config($CONFIG));
-\Elgg\Application::setTestInstance($app);
+$app = new \Elgg\Application(new \Elgg\Di\ServiceProvider(new \Elgg\Config($CONFIG)));
 $app->loadCore();
+_elgg_testing_application($app);
+
+// PHPUnit will serialize globals between tests, $app contains Closures!
+unset($app);

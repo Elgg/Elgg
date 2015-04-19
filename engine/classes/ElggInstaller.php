@@ -739,9 +739,8 @@ class ElggInstaller {
 	 */
 	protected function bootstrapEngine() {
 		$config = new \Elgg\Config($this->CONFIG);
-		$app = new \Elgg\Application($config);
-
-		$app->loadCore();
+		$services = new \Elgg\Di\ServiceProvider($config);
+		(new \Elgg\Application($services))->loadCore();
 	}
 
 	/**

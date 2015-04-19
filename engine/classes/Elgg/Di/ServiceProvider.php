@@ -64,10 +64,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 	/**
 	 * Constructor
-	 * 
-	 * @param \Elgg\Application $app Elgg application object
+	 *
+	 * @param \Elgg\Config $config Elgg Config service
 	 */
-	public function __construct(\Elgg\Application $app) {
+	public function __construct(\Elgg\Config $config) {
 
 		$this->setFactory('classLoader', function(ServiceProvider $c) {
 			$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
@@ -106,7 +106,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('autoP', '\ElggAutoP');
 
-		$this->setValue('config', $app->getConfig());
+		$this->setValue('config', $config);
 
 		$this->setClassName('configTable', '\Elgg\Database\ConfigTable');
 

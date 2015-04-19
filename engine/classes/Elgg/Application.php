@@ -1,6 +1,7 @@
 <?php
 
 namespace Elgg;
+use Elgg\Di\ServiceProvider;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -12,9 +13,9 @@ namespace Elgg;
 class Application {
 
 	/**
-	 * @var \Elgg\Config
+	 * @var ServiceProvider
 	 */
-	private $config;
+	private $services;
 
 	/**
 	 * @var string
@@ -27,21 +28,16 @@ class Application {
 	private $install_dir;
 
 	/**
-	 * @var string
-	 */
-	private $config_file;
-
-	/**
-	 * @var Application
-	 */
-	private static $test_instance;
-
-	/**
 	 * Constructor
 	 *
-	 * @param Config|string $config Config object or settings file location or
+	 * @param ServiceProvider $services Elgg services provider
 	 */
-	public function __construct($config = null) {
+	public function __construct(ServiceProvider $services = null) {
+		if (!$services) {
+			$services = new ServiceProvider(new Config());
+		}
+		$this->services = $services;
+
 		/**
 		 * The time with microseconds when the Elgg engine was started.
 		 *
@@ -54,79 +50,29 @@ class Application {
 
 		$this->engine_dir = dirname(dirname(__DIR__));
 		$this->install_dir = dirname($this->engine_dir);
-
-		if ($config) {
-			if (is_string($config)) {
-				$this->config_file = $config;
-			} elseif ($config instanceof Config) {
-				$this->config = $config;
-			} else {
-				throw new \InvalidArgumentException('$config must be an Elgg\Config or a settings file location');
-			}
-		} else {
-			$this->config_file = "{$this->engine_dir}/settings.php";
-		}
 	}
 
 	/**
-	 * @return Config
-	 */
-	public function getConfig() {
-		if (!$this->config) {
-			$this->loadConfig();
-		}
-		return $this->config;
-	}
-
-	/**
-	 * Load all lib files without triggering boot events
+	 * Get the service provider
 	 *
-	 * @return void
+	 * @return ServiceProvider
 	 */
-	protected function loadConfig() {
-		/**
-		 * Configuration values.
-		 *
-		 * The $CONFIG global contains configuration values required
-		 * for running Elgg as defined in the settings.php file.
-		 *
-		 * Plugin authors are encouraged to use elgg_get_config() instead of accessing
-		 * the global directly.
-		 *
-		 * @see elgg_get_config()
-		 * @see engine/settings.php
-		 * @global \stdClass $CONFIG
-		 */
-		global $CONFIG;
-		if (!isset($CONFIG)) {
-			$CONFIG = new \stdClass;
-		}
-		$CONFIG->boot_complete = false;
+	public function getServices() {
+		return $this->services;
+	}
 
-		// No settings means a fresh install
-		if (!is_file($this->config_file)) {
-			header("Location: install.php");
-			exit;
-		}
-
-		if (!is_readable($this->config_file)) {
-			echo "The Elgg settings file exists but the web server doesn't have read permission to it.";
-			exit;
-		}
-
-		require_once $this->config_file;
-
-		if (isset($CONFIG->dataroot)) {
-			$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-		}
-
-		$this->config = new Config($CONFIG);
+	/**
+	 * Load settings.php
+	 *
+	 * @see Config::loadSettingsFile
+	 */
+	public function loadSettings() {
+		$this->services->config->loadSettingsFile();
 	}
 
 	/**
 	 * Load all Elgg code without formal boot process, for internal testing purposes
 	 *
-	 * @access private
 	 * @return void
 	 */
 	public function loadCore() {
@@ -140,7 +86,7 @@ class Application {
 		require_once "$lib_dir/autoloader.php";
 
 		// set up autoloading and DIC
-		$services = _elgg_services($this);
+		$services = _elgg_services($this->services);
 
 		// load the rest of the library files from engine/lib/
 		// All on separate lines to make diffs easy to read + make it apparent how much
@@ -239,11 +185,14 @@ class Application {
 	 * @return void
 	 */
 	function bootCore() {
-		$CONFIG = $this->getConfig()->getStorageObject();
-
+		$CONFIG = $this->services->config->getStorageObject();
 		if (!empty($CONFIG->boot_complete)) {
 			return;
 		}
+
+		$this->loadSettings();
+
+		$CONFIG->boot_complete = false;
 
 		// This will be overridden by the DB value but may be needed before the upgrade script can be run.
 		$CONFIG->default_limit = 10;
@@ -351,28 +300,5 @@ class Application {
 			forward('', '404');
 		}
 		return true;
-	}
-
-	/**
-	 * Get a singleton instance for testing
-	 *
-	 * @return \Elgg\Application
-	 * @access private
-	 * @internal temporary solution for unit testing
-	 */
-	public static function getTestInstance() {
-		return self::$test_instance;
-	}
-
-	/**
-	 * Set a singleton instance for testing
-	 *
-	 * @param Application $app
-	 * @return void
-	 * @access private
-	 * @internal temporary solution for unit testing
-	 */
-	public static function setTestInstance(Application $app) {
-		self::$test_instance = $app;
 	}
 }
