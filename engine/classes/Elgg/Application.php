@@ -1,12 +1,11 @@
 <?php
 
 namespace Elgg;
+
 use Elgg\Di\ServiceProvider;
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- *
- * @access private
+ * Load, boot, and implement a front controller for an Elgg application
  *
  * @since 2.0.0
  */
@@ -29,6 +28,8 @@ class Application {
 
 	/**
 	 * Constructor
+	 *
+	 * Upon construction, no actions are taken to load or boot Elgg.
 	 *
 	 * @param ServiceProvider $services Elgg services provider
 	 */
@@ -68,6 +69,8 @@ class Application {
 	/**
 	 * Load settings.php
 	 *
+	 * This is done automatically during the boot process or before requesting a database object
+	 *
 	 * @see Config::loadSettingsFile
 	 */
 	public function loadSettings() {
@@ -75,9 +78,13 @@ class Application {
 	}
 
 	/**
-	 * Load all Elgg code without formal boot process, for internal testing purposes
+	 * Load all Elgg procedural code and wire up boot events, but don't boot
+	 *
+	 * This is used for internal testing purposes
 	 *
 	 * @return void
+	 * @access private
+	 * @internal
 	 */
 	public function loadCore() {
 		if (function_exists('_elgg_services')) {
@@ -174,7 +181,7 @@ class Application {
 	}
 
 	/**
-	 * Bootstraps the Elgg engine.
+	 * Bootstrap the Elgg engine, loads plugins, and calls initial system events
 	 *
 	 * This method loads the full Elgg engine, checks the installation
 	 * state, and triggers a series of events to finish booting Elgg:
@@ -182,8 +189,7 @@ class Application {
 	 * 	- {@elgg_event init system}
 	 * 	- {@elgg_event ready system}
 	 *
-	 * If Elgg is fully uninstalled, the browser will be redirected to an
-	 * installation page.
+	 * If Elgg is not fully installed, the browser will be redirected to an installation page.
 	 *
 	 * @see install.php
 	 * @return void
@@ -202,6 +208,7 @@ class Application {
 		// This will be overridden by the DB value but may be needed before the upgrade script can be run.
 		$config->set('default_limit', 10);
 
+		// in case not loaded already
 		$this->loadCore();
 
 		$events = $this->services->events;
@@ -234,7 +241,11 @@ class Application {
 	}
 
 	/**
-	 * Get the database instance (also loads settings if not yet loaded)
+	 * Get the Database instance for performing queries with minimal resources loaded
+	 *
+	 * If settings.php has not been loaded, it will be loaded to configure the DB connection.
+	 *
+	 * Note: Before boot, the Database instance will not yet be bound to a Logger.
 	 *
 	 * @return Database
 	 */
@@ -294,7 +305,7 @@ class Application {
 	}
 
 	/**
-	 * Bootstraps core, plugins and handles the routing.
+	 * Routes the request, booting core if not yet booted
 	 *
 	 * @return bool False if Elgg wants the PHP CLI server to handle the request
 	 */
