@@ -19,27 +19,19 @@ if (!$limit) {
 	$limit = elgg_trigger_plugin_hook('config', 'comments_per_page', [], 25);
 }
 
-$id = '';
-if (isset($vars['id'])) {
-	$id = "id=\"{$vars['id']}\"";
-} else {
-	$id = "id=\"comments\"";
-}
-
-$class = 'elgg-comments';
-if (isset($vars['class'])) {
-	$class = "$class {$vars['class']}";
-}
+$attr = [
+	'id' => elgg_extract('id', $vars, 'comments'),
+	'class' => (array) elgg_extract('class', $vars, []),
+];
+$attr['class'][] = 'elgg-comments';
 
 // work around for deprecation code in elgg_view()
 unset($vars['internalid']);
 
-echo "<div $id class=\"$class\">";
-
-$html = elgg_list_entities(array(
+$content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'comment',
-	'container_guid' => $vars['entity']->getGUID(),
+	'container_guid' => $vars['entity']->guid,
 	'reverse_order_by' => true,
 	'full_view' => true,
 	'limit' => $limit,
@@ -47,10 +39,8 @@ $html = elgg_list_entities(array(
 	'distinct' => false,
 ));
 
-echo $html;
-
 if ($show_add_form) {
-	echo elgg_view_form('comment/save', array(), $vars);
+	$content .= elgg_view_form('comment/save', array(), $vars);
 }
 
-echo '</div>';
+echo elgg_format_element('div', $attr, $content);
