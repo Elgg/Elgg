@@ -216,7 +216,7 @@ class Config {
 	 *
 	 * A particular location can be specified via $CONFIG->Config_file
 	 *
-	 * To skip settings loading, set $CONFIG->Config_file to null
+	 * To skip settings loading, set $CONFIG->Config_file to false
 	 *
 	 * @return void
 	 */
@@ -226,7 +226,8 @@ class Config {
 		}
 
 		if (isset($this->config->Config_file)) {
-			if ($this->config->Config_file === null) {
+			if ($this->config->Config_file === false) {
+				$this->settings_loaded = true;
 				return;
 			}
 			$path = $this->config->Config_file;
