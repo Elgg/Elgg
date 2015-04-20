@@ -22,6 +22,8 @@ if (!$limit) {
 $id = '';
 if (isset($vars['id'])) {
 	$id = "id=\"{$vars['id']}\"";
+} else {
+	$id = "id=\"comments\"";
 }
 
 $class = 'elgg-comments';
