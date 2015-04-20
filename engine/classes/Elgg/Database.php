@@ -1,6 +1,7 @@
 <?php
 namespace Elgg;
 use Elgg\Database\Config;
+use Elgg\Database\ResultIterator;
 
 /**
  * An object representing a single Elgg database.
@@ -165,14 +166,21 @@ class Database {
 	 * argument to $callback.  If no callback function is defined, the
 	 * entire result set is returned as an array.
 	 *
-	 * @param mixed  $query    The query being passed.
-	 * @param string $callback Optionally, the name of a function to call back to on each row
+	 * @param mixed  $query       The query being passed.
+	 * @param string $callback    Optionally, the name of a function to call back to on each row
+	 * @param bool   $as_iterator If true, a ResultIterator will be returned. Rows will be fetched from the MySQL
+	 *                            client one-by-one, saving memory, and query caching/logging will not occur.
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
 	 * @throws \DatabaseException
 	 */
-	public function getData($query, $callback = '') {
+	public function getData($query, $callback = '', $as_iterator = false) {
+		if ($as_iterator) {
+			$result = $this->executeQuery("$query", $this->getLink('read'));
+			return new ResultIterator($result, $callback);
+		}
+
 		return $this->getResults($query, $callback, false);
 	}
 
