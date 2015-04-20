@@ -32,8 +32,7 @@ class CacheHandler {
 	 * @return void
 	 */
 	public function handleRequest($get_vars, $server_vars) {
-		// we can't use Elgg\Config::get yet. It fails before the core is booted
-		$CONFIG = $this->application->getServices()->config->getStorageObject();
+		$config = $this->application->getServices()->config;
 
 		if (empty($get_vars['request'])) {
 			$this->send403();
@@ -51,8 +50,11 @@ class CacheHandler {
 		// this may/may not have to connect to the DB
 		$this->setupSimplecache();
 
-		if (!$CONFIG->simplecache_enabled) {
+		// we can't use $config->get yet. It fails before the core is booted
+		if (!$config->getVolatile('simplecache_enabled')) {
+
 			$this->application->bootCore();
+
 			if (!_elgg_is_view_cacheable($view)) {
 				$this->send403();
 			} else {
@@ -68,7 +70,7 @@ class CacheHandler {
 			exit;
 		}
 
-		$filename = $CONFIG->dataroot . 'views_simplecache/' . md5("$viewtype|$view");
+		$filename = $config->getVolatile('dataroot') . 'views_simplecache/' . md5("$viewtype|$view");
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag);
 			readfile($filename);
@@ -82,14 +84,14 @@ class CacheHandler {
 			$this->send403();
 		}
 
-		$cache_timestamp = (int)$CONFIG->lastcache;
+		$cache_timestamp = (int)$config->get('lastcache');
 
 		if ($cache_timestamp == $ts) {
 			$this->sendCacheHeaders($etag);
 
 			$content = $this->getProcessedView($view, $viewtype);
 
-			$dir_name = $CONFIG->dataroot . 'views_simplecache/';
+			$dir_name = $config->getDataPath() . 'views_simplecache/';
 			if (!is_dir($dir_name)) {
 				mkdir($dir_name, 0700);
 			}
@@ -143,15 +145,13 @@ class CacheHandler {
 		// we can't use Elgg\Config::get yet. It fails before the core is booted
 		$config = $this->application->getServices()->config;
 		$config->loadSettingsFile();
-		$CONFIG = $config->getStorageObject();
 
-		if (!empty($CONFIG->dataroot) && isset($CONFIG->simplecache_enabled)) {
+		if ($config->getVolatile('dataroot') && $config->getVolatile('simplecache_enabled') !== null) {
 			// we can work with these...
 			return;
 		}
 
-		$db_config = new Database\Config($CONFIG);
-		$db = new Database($db_config, new Logger(new PluginHooksService()));
+		$db = $this->application->getDb();
 
 		try {
 			$rows = $db->getData("
@@ -172,10 +172,10 @@ class CacheHandler {
 		}
 
 		foreach ($rows as $row) {
-			$CONFIG->{$row->name} = $row->value;
+			$config->set($row->name, $row->value);
 		}
 
-		if (empty($CONFIG->dataroot)) {
+		if (!$config->getVolatile('dataroot')) {
 			$this->send403('Cache error: unable to get the data root');
 		}
 	}

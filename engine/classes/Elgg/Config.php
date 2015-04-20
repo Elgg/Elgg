@@ -61,7 +61,7 @@ class Config {
 	 * @param int $site_guid The GUID of the site whose URL we want to grab
 	 * @return string
 	 */
-	function getSiteUrl($site_guid = 0) {
+	public function getSiteUrl($site_guid = 0) {
 		if ($site_guid == 0) {
 			return $this->config->wwwroot;
 		}
@@ -81,7 +81,7 @@ class Config {
 	 *
 	 * @return string
 	 */
-	function getPluginsPath() {
+	public function getPluginsPath() {
 		return $this->config->pluginspath;
 	}
 	
@@ -90,7 +90,7 @@ class Config {
 	 *
 	 * @return string
 	 */
-	function getDataPath() {
+	public function getDataPath() {
 		return $this->config->dataroot;
 	}
 	
@@ -99,19 +99,19 @@ class Config {
 	 *
 	 * @return string
 	 */
-	function getRootPath() {
+	public function getRootPath() {
 		return $this->config->path;
 	}
-	
+
 	/**
-	 * Get an Elgg configuration value
+	 * Get an Elgg configuration value, possibly loading it from the DB's config table
 	 *
 	 * @param string $name      Name of the configuration value
 	 * @param int    $site_guid null for installation setting, 0 for default site
 	 *
 	 * @return mixed Configuration value or null if it does not exist
 	 */
-	function get($name, $site_guid = 0) {
+	public function get($name, $site_guid = 0) {
 		$name = trim($name);
 	
 		// do not return $config value if asking for non-current site
@@ -147,6 +147,18 @@ class Config {
 	
 		return $value;
 	}
+
+	/**
+	 * Get a config value for the current site if it's already loaded. This should be used instead of
+	 * reading directly from global $CONFIG.
+	 *
+	 * @param string $name Name of the configuration value
+	 *
+	 * @return mixed Returns null if value isn't set
+	 */
+	public function getVolatile($name) {
+		return isset($this->config->{$name}) ? $this->config->{$name} : null;
+	}
 	
 	/**
 	 * Set an Elgg configuration value
@@ -158,7 +170,7 @@ class Config {
 	 *
 	 * @return void
 	 */
-	function set($name, $value) {
+	public function set($name, $value) {
 		$name = trim($name);
 		$this->config->$name = $value;
 	}
@@ -172,7 +184,7 @@ class Config {
 	 *
 	 * @return bool
 	 */
-	function save($name, $value, $site_guid = 0) {
+	public function save($name, $value, $site_guid = 0) {
 		$name = trim($name);
 	
 		if (strlen($name) > 255) {
@@ -209,6 +221,10 @@ class Config {
 	 * @return void
 	 */
 	public function loadSettingsFile() {
+		if ($this->settings_loaded) {
+			return;
+		}
+
 		if (isset($this->config->Config_file)) {
 			if ($this->config->Config_file === null) {
 				return;

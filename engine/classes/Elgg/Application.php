@@ -55,7 +55,11 @@ class Application {
 	/**
 	 * Get the service provider
 	 *
+	 * Developers should not use this function
+	 *
 	 * @return ServiceProvider
+	 * @internal
+	 * @access private
 	 */
 	public function getServices() {
 		return $this->services;
@@ -86,7 +90,7 @@ class Application {
 		require_once "$lib_dir/autoloader.php";
 
 		// set up autoloading and DIC
-		$services = _elgg_services($this->services);
+		_elgg_services($this->services);
 
 		// load the rest of the library files from engine/lib/
 		// All on separate lines to make diffs easy to read + make it apparent how much
@@ -146,7 +150,7 @@ class Application {
 		);
 
 		// isolate global scope
-		call_user_func(function () use ($lib_dir, $lib_files, $services) {
+		call_user_func(function () use ($lib_dir, $lib_files) {
 
 			$setups = array();
 
@@ -159,8 +163,8 @@ class Application {
 				}
 			}
 
-			$events = $services->events;
-			$hooks = $services->hooks;
+			$events = $this->services->events;
+			$hooks = $this->services->hooks;
 
 			// run setups
 			foreach ($setups as $func) {
@@ -184,18 +188,19 @@ class Application {
 	 * @see install.php
 	 * @return void
 	 */
-	function bootCore() {
-		$CONFIG = $this->services->config->getStorageObject();
-		if (!empty($CONFIG->boot_complete)) {
+	public function bootCore() {
+		$config = $this->services->config;
+
+		if ($config->getVolatile('boot_complete')) {
 			return;
 		}
 
 		$this->loadSettings();
 
-		$CONFIG->boot_complete = false;
+		$config->set('boot_complete', false);
 
 		// This will be overridden by the DB value but may be needed before the upgrade script can be run.
-		$CONFIG->default_limit = 10;
+		$config->set('default_limit', 10);
 
 		$this->loadCore();
 
@@ -222,10 +227,20 @@ class Application {
 		// Complete the boot process for both engine and plugins
 		$events->trigger('init', 'system');
 
-		$CONFIG->boot_complete = true;
+		$config->set('boot_complete', true);
 
 		// System loaded and ready
 		$events->trigger('ready', 'system');
+	}
+
+	/**
+	 * Get the database instance (also loads settings if not yet loaded)
+	 *
+	 * @return Database
+	 */
+	public function getDb() {
+		$this->loadSettings();
+		return $this->services->db;
 	}
 
 	/**
@@ -283,12 +298,20 @@ class Application {
 	 *
 	 * @return bool False if Elgg wants the PHP CLI server to handle the request
 	 */
-	function run() {
+	public function run() {
 		if (php_sapi_name() === 'cli-server') {
 			if (!$this->runPhpWebServer()) {
 				// PHP will serve this file directly
 				return false;
 			}
+		}
+
+		// allow testing from the upgrade page before the site is upgraded.
+		if (isset($_GET['__testing_rewrite'])) {
+			if (isset($_GET['__elgg_uri']) && false !== strpos($_GET['__elgg_uri'], '__testing_rewrite')) {
+				echo "success";
+			}
+			return true;
 		}
 
 		$this->bootCore();

@@ -124,7 +124,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('db', function(ServiceProvider $c) {
 			$db_config = new \Elgg\Database\Config($c->config->getStorageObject());
-			return new \Elgg\Database($db_config, $c->logger);
+
+			// we inject the logger in _elgg_engine_boot()
+			return new \Elgg\Database($db_config);
 		});
 
 		$this->setFactory('deprecation', function(ServiceProvider $c) {
