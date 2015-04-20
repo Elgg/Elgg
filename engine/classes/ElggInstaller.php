@@ -165,6 +165,7 @@ class ElggInstaller {
 			'dbprefix' => 'elgg_',
 			'language' => 'en',
 			'siteaccess' => ACCESS_PUBLIC,
+			'site_guid' => 1,
 		);
 		$params = array_merge($defaults, $params);
 
@@ -737,9 +738,9 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function bootstrapEngine() {
-		
-
-		require_once $this->CONFIG->path . 'engine/load.php';
+		$config = new \Elgg\Config($this->CONFIG);
+		$services = new \Elgg\Di\ServiceProvider($config);
+		(new \Elgg\Application($services))->loadCore();
 	}
 
 	/**
@@ -862,7 +863,7 @@ class ElggInstaller {
 	 */
 	private function isHttps() {
 		return (!empty($_SERVER["HTTPS"]) && $_SERVER["HTTPS"] == "on") ||
-			$_SERVER['SERVER_PORT'] == 443;
+			(!empty($_SERVER['SERVER_PORT']) && $_SERVER['SERVER_PORT'] == 443);
 	}
 
 	/**

@@ -246,7 +246,7 @@ class ViewsService {
 		$view_orig = $view;
 
 		// Trigger the pagesetup event
-		if (!isset($this->CONFIG->pagesetupdone) && $this->CONFIG->boot_complete) {
+		if (!isset($this->CONFIG->pagesetupdone) && !empty($this->CONFIG->boot_complete)) {
 			$this->CONFIG->pagesetupdone = true;
 			_elgg_services()->events->trigger('pagesetup', 'system');
 		}

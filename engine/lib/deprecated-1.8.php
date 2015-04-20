@@ -3072,19 +3072,6 @@ function isadminloggedin() {
 	return elgg_is_admin_logged_in();
 }
 
-
-/**
- * Loads plugins
- *
- * @deprecated 1.8 Use elgg_load_plugins()
- *
- * @return bool
- */
-function load_plugins() {
-	elgg_deprecated_notice('load_plugins() is deprecated by elgg_load_plugins()', 1.8);
-	return _elgg_load_plugins();
-}
-
 /**
  * Find the plugin settings for a user.
  *

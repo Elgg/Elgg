@@ -22,7 +22,10 @@
 ini_set('display_errors', 1);
 
 define('UPGRADING', 'upgrading');
-require_once(dirname(__FILE__) . "/engine/start.php");
+
+require_once __DIR__ . '/autoloader.php';
+
+(new Elgg\Application())->bootCore();
 
 $site_url = elgg_get_config('url');
 $site_host = parse_url($site_url, PHP_URL_HOST) . '/';

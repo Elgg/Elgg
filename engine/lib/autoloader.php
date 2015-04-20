@@ -8,59 +8,18 @@
  */
 
 /**
+ * Get the global service provider
+ *
+ * @param \Elgg\Di\ServiceProvider $services Elgg service provider. This must be set by the application.
  * @return \Elgg\Di\ServiceProvider
  * @access private
  */
-function _elgg_services() {
-	static $provider;
-	if (null === $provider) {
-		$provider = _elgg_create_service_provider();
+function _elgg_services(\Elgg\Di\ServiceProvider $services = null) {
+	static $inst;
+	if ($services !== null) {
+		$inst = $services;
 	}
-	return $provider;
-}
-
-/**
- * Sets up autoloading and creates the service provider (DIC)
- *
- * Setup global class map and loader instances and add the core classes to the map.
- * We can't load this from dataroot because we don't know it yet, and we'll need
- * several classes before we can find out!
- *
- * @throws RuntimeException
- * @access private
- */
-function _elgg_create_service_provider() {
-	$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
-	// until the cache can be loaded, just setup PSR-0 autoloading
-	// out of the classes directory. No need to build a full map.
-	$loader->register();
-	$manager = new \Elgg\AutoloadManager($loader);
-
-	return new \Elgg\Di\ServiceProvider($manager);
-}
-
-/**
- * Load cached data into the autoload system
- *
- * Note this has to wait until Elgg's data path is known.
- *
- * @access private
- */
-function _elgg_load_autoload_cache() {
-	$manager = _elgg_services()->autoloadManager;
-	$manager->setStorage(elgg_get_system_cache());
-	if (! $manager->loadCache()) {
-		$manager->addClasses(dirname(dirname(__FILE__)) . '/classes');
-	}
-}
-
-/**
- * Save the autoload system cache
- *
- * @access private
- */
-function _elgg_save_autoload_cache() {
-	_elgg_services()->autoloadManager->saveCache();
+	return $inst;
 }
 
 /**
@@ -78,7 +37,7 @@ function _elgg_delete_autoload_cache() {
  * @return \Elgg\ClassLoader
  */
 function elgg_get_class_loader() {
-	return _elgg_services()->autoloadManager->getLoader();
+	return _elgg_services()->classLoader;
 }
 
 /**
@@ -112,6 +71,5 @@ function elgg_register_class($class, $location) {
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('shutdown', 'system', '_elgg_save_autoload_cache', 1000);
 	$events->registerHandler('upgrade', 'all', '_elgg_delete_autoload_cache');
 };

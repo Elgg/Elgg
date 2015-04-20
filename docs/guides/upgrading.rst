@@ -18,6 +18,7 @@ Removed Functions
  - get_db_error()
  - execute_delayed_query()
  - get_db_link()
+ - load_plugins()
 
 Callbacks in Queries
 --------------------

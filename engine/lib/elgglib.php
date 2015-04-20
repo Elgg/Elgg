@@ -1850,13 +1850,15 @@ function _elgg_engine_boot() {
 	set_error_handler('_elgg_php_error_handler');
 	set_exception_handler('_elgg_php_exception_handler');
 
-	_elgg_services()->db->setupConnections();
+	$db = _elgg_services()->db;
 
-	_elgg_services()->db->assertInstalled();
+	// we inject the logger here to allow use of DB without loading core
+	$db->setLogger(_elgg_services()->logger);
+
+	$db->setupConnections();
+	$db->assertInstalled();
 
 	_elgg_load_application_config();
-
-	_elgg_load_autoload_cache();
 
 	_elgg_load_site_config();
 
