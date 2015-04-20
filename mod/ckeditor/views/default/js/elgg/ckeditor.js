@@ -32,10 +32,9 @@ define(function(require) {
 		 *
 		 * @return void
 		 */
-		init: function() {
+		init: function(textarea) {
 			// show the toggle-editor link which is hidden by default, so it will only show up if the editor is correctly loaded
-			var href = $(editor).attr('id');
-			$('.ckeditor-toggle-editor[href="#' + href + '"]').show();
+			$('.ckeditor-toggle-editor[href="#' + textarea.id + '"]').show();
 		},
 
 		/**

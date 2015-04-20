@@ -9,10 +9,18 @@ $full = elgg_extract('full_view', $vars, FALSE);
 $topic = elgg_extract('entity', $vars, FALSE);
 
 if (!$topic) {
-	return true;
+	return;
 }
 
 $poster = $topic->getOwnerEntity();
+if (!$poster) {
+	elgg_log("User {$topic->owner_guid} could not be loaded, and is needed to display entity {$topic->guid}", 'WARNING');
+	if ($full) {
+		forward('', '404');
+	}
+	return;
+}
+
 $excerpt = elgg_get_excerpt($topic->description);
 
 $poster_icon = elgg_view_entity_icon($poster, 'tiny');
