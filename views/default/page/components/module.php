@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg module element
  *
@@ -11,43 +12,38 @@
  * @uses $vars['id']           Optional id for module
  * @uses $vars['show_inner']   Optional flag to leave out inner div (default: false)
  */
-
 $type = elgg_extract('type', $vars, false);
 $title = elgg_extract('title', $vars, '');
-$header = elgg_extract('header', $vars, '');
 $body = elgg_extract('body', $vars, '');
 $footer = elgg_extract('footer', $vars, '');
 $show_inner = elgg_extract('show_inner', $vars, false);
 
-$class = 'elgg-module';
+$attrs = [
+	'id' => elgg_extract('id', $vars),
+	'class' => (array) elgg_extract('class', $vars, []),
+];
+
+$attrs['class'][] = 'elgg-module';
 if ($type) {
-	$class = "$class elgg-module-$type";
-}
-$additional_class = elgg_extract('class', $vars, '');
-if ($additional_class) {
-	$class = "$class $additional_class";
+	$attrs['class'][] = "elgg-module-$type";
 }
 
-$id = '';
-if (isset($vars['id'])) {
-	$id = "id=\"{$vars['id']}\"";
+$header = elgg_extract('header', $vars);
+if ($title) {
+	$header = elgg_format_element('h3', [], $title);
 }
 
-if (isset($vars['header'])) {
-	$header = "<div class=\"elgg-head\">$header</div>";
-} elseif ($title) {
-	$header = "<div class=\"elgg-head\"><h3>$title</h3></div>";
+if ($header !== null) {
+	$header = elgg_format_element('div', ['class' => 'elgg-head'], $header);
 }
-
-$body = "<div class=\"elgg-body\">$body</div>";
-
+$body = elgg_format_element('div', ['class' => 'elgg-body'], $body);
 if ($footer) {
-	$footer = "<div class=\"elgg-foot\">$footer</div>";
+	$footer = elgg_format_element('div', ['class' => 'elgg-foot'], $footer);
 }
 
 $contents = $header . $body . $footer;
 if ($show_inner) {
-	$contents = "<div class=\"elgg-inner\">$contents</div>";
+	$contents = elgg_format_element('div', ['class' => 'elgg-inner'], $contents);
 }
 
-echo "<div class=\"$class\" $id>$contents</div>";
+echo elgg_format_element('div', $attrs, $contents);
