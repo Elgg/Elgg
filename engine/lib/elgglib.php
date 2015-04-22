@@ -991,24 +991,9 @@ function elgg_get_version($human_readable = false) {
 }
 
 /**
- * Sends a notice about deprecated use of a function, view, etc.
+ * Log a notice about deprecated use of a function, view, etc.
  *
- * This function either displays or logs the deprecation message,
- * depending upon the deprecation policies in {@link CODING.txt}.
- * Logged messages are sent with the level of 'WARNING'. Only admins
- * get visual deprecation notices. When non-admins are logged in, the
- * notices are sent to PHP's log through elgg_dump().
- *
- * A user-visual message will be displayed if $dep_version is greater
- * than 1 minor releases lower than the current Elgg version, or at all
- * lower than the current Elgg major version.
- *
- * @note This will always at least log a warning.  Don't use to pre-deprecate things.
- * This assumes we are releasing in order and deprecating according to policy.
- *
- * @see CODING.txt
- *
- * @param string $msg             Message to log / display.
+ * @param string $msg             Message to log
  * @param string $dep_version     Human-readable *release* version: 1.7, 1.8, ...
  * @param int    $backtrace_level How many levels back to display the backtrace.
  *                                Useful if calling from functions that are called
