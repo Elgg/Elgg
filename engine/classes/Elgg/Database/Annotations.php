@@ -71,7 +71,6 @@ class Annotations {
 		$result = false;
 	
 		$entity_guid = (int)$entity_guid;
-		$name = trim($name);
 		$value_type = detect_extender_valuetype($value, $value_type);
 	
 		$owner_guid = (int)$owner_guid;
