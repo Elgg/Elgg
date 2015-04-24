@@ -92,6 +92,9 @@
 	text-align: right;
 	margin: 0 5px 15px;
 }
+.elgg-widget-add-control .elgg-button {
+	display: inline;
+}
 .elgg-widgets-add-panel {
 	padding: 10px;
 	margin: 0 5px 15px;
