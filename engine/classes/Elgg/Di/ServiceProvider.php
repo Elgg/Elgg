@@ -199,24 +199,22 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('session', function(ServiceProvider $c) {
-			// account for difference of session_get_cookie_params() and ini key names
 			$params = $c->config->get('cookies')['session'];
-			foreach ($params as $key => $value) {
-				if (in_array($key, array('path', 'domain', 'secure', 'httponly'))) {
-					$params["cookie_$key"] = $value;
-					unset($params[$key]);
-				}
-			}
+			$options = [
+				// session.cache_limiter is unfortunately set to "" by the NativeSessionStorage
+				// constructor, so we must capture and inject it directly.
+				'cache_limiter' => session_cache_limiter(),
+
+				'name' => $params['name'],
+				'cookie_path' => $params['path'],
+				'cookie_domain' => $params['domain'],
+				'cookie_secure' => $params['secure'],
+				'cookie_httponly' => $params['httponly'],
+				'cookie_lifetime' => $params['lifetime'],
+			];
 
 			$handler = new \Elgg\Http\DatabaseSessionHandler($c->db);
-
-			// session.cache_limiter is unfortunately set to "" by the NativeSessionStorage
-			// constructor, so we must capture and inject it directly.
-			$options = [
-				'cache_limiter' => session_cache_limiter(),
-			];
 			$storage = new NativeSessionStorage($options, $handler);
-
 			$session = new SymfonySession($storage);
 			return new \ElggSession($session);
 		});
