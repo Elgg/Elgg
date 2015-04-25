@@ -1,84 +1,72 @@
 <?php
 namespace Elgg\Structs;
 
-use Exception;
+use ArrayIterator;
 
 /**
- * Uses native PHP array to implement the Collection interface.
- * 
- * @package    Elgg.Core
- * @subpackage Structs
- * @since      1.10
+ * An immutable collection implemented using native PHP arrays.
  *
  * @access private
  */
 final class ArrayCollection implements Collection {
-	/** @var array */
+
+	/* @var array */
 	private $items;
 	
 	/**
 	 * Constructor
 	 * 
-	 * @param array $items The set of items in the collection
+	 * @param array $items The initial collection of items in the collection.
 	 */
-	public function __construct(array $items = array()) {
-		$this->items = $items;
+	public function __construct(array $items = []) {
+		$this->items = array_values($items);
 	}
 	
 	/** @inheritDoc */
 	public function contains($item) {
 		return in_array($item, $this->items, true);
 	}
-
+	
 	/** @inheritDoc */
 	public function count() {
 		return count($this->items);
 	}
 	
 	/** @inheritDoc */
-	public function current() {
-		return current($this->items);
-	}
-	
-	/** @inheritDoc */
 	public function filter(callable $filter) {
-		$results = array();
-		
-		foreach ($this->items as $item) {
-			if ($filter($item)) {
-				$results[] = $item;
-			}
-		}
-		
-		return new ArrayCollection($results);
+		return new self(array_filter($this->items, $filter));
 	}
 	
 	/** @inheritDoc */
-	public function key() {
-		return key($this->items);
+	public function getIterator() {
+		return new ArrayIterator($this->toArray());
+	}
+	
+	/** @inheritDoc */
+	public function isEmpty() {
+		return count($this) > 0;
 	}
 	
 	/** @inheritDoc */
 	public function map(callable $mapper) {
-		$results = array();
+		$items = [];
+		
 		foreach ($this->items as $item) {
-			$results[] = $mapper($item);
+			$items[] = $mapper($item);
 		}
-		return new ArrayCollection($results);
+		
+		return new self($items);
 	}
 	
 	/** @inheritDoc */
-	public function next() {
-		return next($this->items);
+	public function toArray() {
+		return $this->items;
 	}
 	
 	/** @inheritDoc */
-	public function rewind() {
-		reset($this->items);
-	}
-	
-	/** @inheritDoc */
-	public function valid() {
-		return key($this->items) !== NULL;
+	public function where(array $options) {
+		// TODO(ewinslow): Actual implementation plz...
+		return $this;
 	}
 }
+
