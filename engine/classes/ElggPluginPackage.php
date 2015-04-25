@@ -53,7 +53,7 @@ class ElggPluginPackage {
 	 * @var array
 	 */
 	private $depsSupportedTypes = array(
-		'elgg_version', 'elgg_release', 'php_version', 'php_extension', 'php_ini', 'plugin', 'priority',
+		'elgg_release', 'php_version', 'php_extension', 'php_ini', 'plugin', 'priority',
 	);
 
 	/**
@@ -403,11 +403,6 @@ class ElggPluginPackage {
 
 			foreach (${$dep_type} as $dep) {
 				switch ($dep['type']) {
-					case 'elgg_version':
-						elgg_deprecated_notice("elgg_version in manifest.xml files is deprecated. Use elgg_release", 1.9);
-						$result = $this->checkDepElgg($dep, elgg_get_version(), $inverse);
-						break;
-
 					case 'elgg_release':
 						$result = $this->checkDepElgg($dep, elgg_get_version(true), $inverse);
 						break;

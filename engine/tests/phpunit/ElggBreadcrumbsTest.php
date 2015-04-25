@@ -95,4 +95,17 @@ class ElggBreadcrumbsTest extends \PHPUnit_Framework_TestCase {
 		$html = elgg_view('navigation/breadcrumbs');
 		$this->assertNotFalse(strpos($html, '"http://localhost/link"'));
 	}
+
+	public function testTrailingNonLinkIsRemoved() {
+		$this->markTestIncomplete('Needs DB');
+
+		// TODO make this unnecessary
+		elgg_set_view_location('output/url', __DIR__ . '/../../../views/');
+		elgg_set_view_location('navigation/breadcrumbs', __DIR__ . '/../../../views/');
+
+		elgg_push_breadcrumb('Foo', 'foo');
+		elgg_push_breadcrumb('Bar');
+		$html = elgg_view('navigation/breadcrumbs');
+		$this->assertFalse(strpos($html, 'Bar'));
+	}
 }

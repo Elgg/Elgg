@@ -18,6 +18,7 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \Elgg\Database\Annotations               $annotations
  * @property-read \ElggAutoP                               $autoP
+ * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \ElggCrypto                              $crypto
  * @property-read \Elgg\Config                             $config
@@ -63,11 +64,25 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 	/**
 	 * Constructor
-	 * 
-	 * @param \Elgg\AutoloadManager $autoload_manager Class autoloader
+	 *
+	 * @param \Elgg\Config $config Elgg Config service
 	 */
-	public function __construct(\Elgg\AutoloadManager $autoload_manager) {
-		$this->setValue('autoloadManager', $autoload_manager);
+	public function __construct(\Elgg\Config $config) {
+
+		$this->setFactory('classLoader', function(ServiceProvider $c) {
+			$loader = new \Elgg\ClassLoader(new \Elgg\ClassMap());
+			$loader->register();
+			return $loader;
+		});
+
+		$this->setFactory('autoloadManager', function(ServiceProvider $c) {
+			$manager = new \Elgg\AutoloadManager($c->classLoader);
+			if (!$c->config->get('AutoloaderManager_skip_storage')) {
+				$manager->setStorage($c->systemCache->getFileCache());
+				$manager->loadCache();
+			}
+			return $manager;
+		});
 
 		$this->setFactory('accessCache', function(ServiceProvider $c) {
 			return new \ElggStaticVariableCache('access');
@@ -91,7 +106,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('autoP', '\ElggAutoP');
 
-		$this->setClassName('config', '\Elgg\Config');
+		$this->setValue('config', $config);
 
 		$this->setClassName('configTable', '\Elgg\Database\ConfigTable');
 
@@ -108,8 +123,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('db', function(ServiceProvider $c) {
-			global $CONFIG;
-			$db_config = new \Elgg\Database\Config($CONFIG);
+			$db_config = new \Elgg\Database\Config($c->config->getStorageObject());
 			return new \Elgg\Database($db_config, $c->logger);
 		});
 
@@ -126,8 +140,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('externalFiles', function(ServiceProvider $c) {
-			global $CONFIG;
-			return new \Elgg\Assets\ExternalFiles($CONFIG);
+			return new \Elgg\Assets\ExternalFiles($c->config->getStorageObject());
 		});
 
 		$this->setFactory('hooks', function(ServiceProvider $c) {
@@ -165,7 +178,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {
-			$global_cookies_config = _elgg_services()->config->get('cookies');
+			$global_cookies_config = $c->config->get('cookies');
 			$cookie_config = $global_cookies_config['remember_me'];
 			$cookie_name = $cookie_config['name'];
 			$cookie_token = $c->request->cookies->get($cookie_name, '');

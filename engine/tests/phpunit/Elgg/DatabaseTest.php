@@ -9,10 +9,7 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 	 * Database API.
 	 */
 	public function setUp() {
-		// Database class
-		// Cannot user _elgg_services() because ElggEntityTest replace
-		// the database instance with a mock.
-		$db = _elgg_create_service_provider()->db;
+		$db = _elgg_testing_application()->getServices()->db;
 		$this->dbClass = get_class($db);
 		
 		// Config class
@@ -93,6 +90,12 @@ class Elgg_DatabaseTest extends PHPUnit_Framework_TestCase {
 		$uniques++;
 
 		$this->assertEquals($uniques, count($prints));
+	}
+
+	public function testInvalidCallbacksThrow() {
+		$this->setExpectedException('RuntimeException', '$callback must be a callable function. Given blorg!');
+
+		$this->getDbMock()->getData("SELECT 1", 'blorg!');
 	}
 
 	private function getFixture($filename) {

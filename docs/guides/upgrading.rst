@@ -3,11 +3,61 @@ Upgrading Plugins
 
 Prepare your plugin for the next version of Elgg.
 
-See the administator guides for :doc:`how to upgrade a live site </admin/upgrading>`.
+See the administrator guides for :doc:`how to upgrade a live site </admin/upgrading>`.
 
 .. contents:: Contents
    :local:
    :depth: 2
+
+From 1.11 to 2.0
+================
+
+Removed Functions
+-----------------
+
+ - get_db_error()
+ - execute_delayed_query()
+ - get_db_link()
+ - load_plugins()
+
+Callbacks in Queries
+--------------------
+
+Make sure to use only valid *callable* values for "callback" argument/options in the API.
+
+Querying functions will now will throw a ``RuntimeException`` if ``is_callable()`` returns ``false`` for the given
+callback value. This includes functions such as ``elgg_get_entities()``, ``get_data()``, and many more.
+
+Breadcrumbs
+-----------
+
+Breadcrumb display now removes the last item if it does not contain a link. To restore the previous behavior,
+replace the plugin hook handler ``elgg_prepare_breadcrumbs`` with your own:
+
+.. code:: php
+
+    elgg_unregister_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
+    elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'myplugin_prepare_breadcrumbs');
+
+    function myplugin_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
+        // just apply excerpt to titles
+        foreach (array_keys($breadcrumbs) as $i) {
+            $breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
+        }
+        return $breadcrumbs;
+    }
+
+Plugin Messages
+---------------
+
+Messages will no longer get the metadata 'msg' for newly created messages. This means you can not rely on that metadata to exist.
+
+Specifying View via Properties
+------------------------------
+
+The metadata ``$entity->view`` no longer specifies the view used to render in ``elgg_view_entity()``.
+
+Similarly the property ``$annotation->view`` no longer has an effect within ``elgg_view_annotation()``.
 
 From 1.10 to 1.11
 =================

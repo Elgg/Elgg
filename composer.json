@@ -45,5 +45,8 @@
         "elgg/sniffs": "dev-master",
         "squizlabs/php_codesniffer": "~1.5",
         "simpletest/simpletest": "~1.1"
+    },
+    "config": {
+        "optimize-autoloader": true
     }
 }

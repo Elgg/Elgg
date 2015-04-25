@@ -1856,8 +1856,6 @@ function _elgg_engine_boot() {
 
 	_elgg_load_application_config();
 
-	_elgg_load_autoload_cache();
-
 	_elgg_load_site_config();
 
 	_elgg_session_boot();

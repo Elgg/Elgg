@@ -1,6 +1,5 @@
 <?php
 namespace Elgg;
-use Elgg\Database\Config;
 
 /**
  * An object representing a single Elgg database.
@@ -93,9 +92,8 @@ class Database {
 	 *
 	 * @return resource Database link
 	 * @throws \DatabaseException
-	 * @todo make protected once we get rid of get_db_link()
 	 */
-	public function getLink($type) {
+	protected function getLink($type) {
 		if (isset($this->dbLinks[$type])) {
 			return $this->dbLinks[$type];
 		} else if (isset($this->dbLinks['readwrite'])) {
@@ -323,15 +321,11 @@ class Database {
 		// https://github.com/elgg/elgg/issues/4049
 		$query_id = (int)$single . $query . '|';
 		if ($callback) {
-			$is_callable = is_callable($callback);
-			if ($is_callable) {
-				$query_id .= $this->fingerprintCallback($callback);
-			} else {
-				// TODO do something about invalid callbacks
-				$callback = null;
+			if (!is_callable($callback)) {
+				$inspector = new \Elgg\Debug\Inspector();
+				throw new \RuntimeException('$callback must be a callable function. Given ' . $inspector->describeCallable($callback));
 			}
-		} else {
-			$is_callable = false;
+			$query_id .= $this->fingerprintCallback($callback);
 		}
 		// MD5 yields smaller mem usage for cache and cleaner logs
 		$hash = md5($query_id);
@@ -349,7 +343,7 @@ class Database {
 
 		if ($result = $this->executeQuery("$query", $dblink)) {
 			while ($row = mysql_fetch_object($result)) {
-				if ($is_callable) {
+				if ($callback) {
 					$row = call_user_func($callback, $row);
 				}
 
