@@ -116,6 +116,9 @@ function forward($location = "", $reason = 'system') {
  * The JavaScript files can be local to the server or remote (such as
  * Google's CDN).
  *
+ * @note Since 2.0, scripts with location "head" will also be output in the footer, but before
+ *       those with location "footer".
+ *
  * @param string $name     An identifier for the JavaScript library
  * @param string $url      URL of the JavaScript file
  * @param string $location Page location: head or footer. (default: head)

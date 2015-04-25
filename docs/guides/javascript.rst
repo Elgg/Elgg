@@ -122,12 +122,13 @@ Load a library on the current page with ``elgg_load_js``:
 
 This will include and execute the linked code.
 
-.. tip::
+.. warning::
 
-   Using inline scripts is strongly discouraged because:
+   Using inline scripts is NOT SUPPORTED because:
     * They are not testable (maintainability)
     * They are not cacheable (performance)
-    * Doing so forces some scripts to be loaded in ``<head>`` (performance)
+    * They prevent use of Content-Security-Policy (security) 
+    * They prevent scripts from being loaded with ``defer`` or ``async`` (performance)
 
    Inline scripts in core or bundled plugins are considered legacy bugs.
 
