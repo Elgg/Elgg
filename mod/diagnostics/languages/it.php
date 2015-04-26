@@ -1,7 +1,7 @@
 <?php
 return array(
 	'admin:administer_utilities:diagnostics' => 'Diagnostica di sistema',
-	'diagnostics' => 'diagnostica di sistema',
+	'diagnostics' => 'Diagnostica di sistema',
 	'diagnostics:report' => 'Rapporto di diagnostica',
 	'diagnostics:description' => 'Il rapporto di diagnostica seguente può essere utile per diagnosticare problemi con Elgg. Gli sviluppatori di elg possono richiederlo come allegato alla segnalazione di bug.',
 	'diagnostics:header' => '========================================================================
