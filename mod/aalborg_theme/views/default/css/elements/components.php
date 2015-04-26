@@ -171,9 +171,6 @@
 /* ***************************************
 	River
 *************************************** */
-.elgg-list-river {
-	margin-top: -10px;
-}
 .elgg-river-layout .elgg-list-river {
 	border-top: 1px solid #DCDCDC;
 }
@@ -210,9 +207,6 @@
 }
 
 <?php //@todo components.php ?>
-.elgg-river-responses {
-	margin-top: 15px;
-}
 .elgg-river-comments {
 	position: relative;
 	margin: 20px 0 0 0;
