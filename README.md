@@ -1,4 +1,4 @@
-Elgg [![Build Status](https://secure.travis-ci.org/Elgg/Elgg.svg?branch=1.x)](https://travis-ci.org/Elgg/Elgg) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=1.x)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=1.x) [![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/coverage.png?b=1.x)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=1.x) [![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?version=1.x)](http://learn.elgg.org/en/1.x/)
+Elgg [![Build Status](https://secure.travis-ci.org/Elgg/Elgg.svg?branch=1.11)](https://travis-ci.org/Elgg/Elgg) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=1.11)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=1.11) [![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/coverage.png?b=1.11)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=1.11) [![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?version=1.11)](http://learn.elgg.org/en/1.11/)
 ====
 
 Copyright (c) 2008-2014, see COPYRIGHT.txt
@@ -18,7 +18,7 @@ The Elgg project was started in 2004 by
  - Dave Tosh (<https://twitter.com/davetosh>).
 
 Elgg is released under the GNU General Public License (GPL) Version 2 and the
-Massachusetts Institute of Technology (MIT-X11) License. See LICENSE.txt 
+Massachusetts Institute of Technology (MIT-X11) License. See LICENSE.txt
 in the root of the package you downloaded.
 
 For installation instructions, see INSTALL.txt.
