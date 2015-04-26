@@ -1,3 +1,34 @@
+<a name="1.11.1"></a>
+### 1.11.1  (2015-04-27)
+
+#### Contributors
+
+* Steve Clay (4)
+* Brett Profitt (2)
+* Ismayil Khayredinov (2)
+* Juho Jaakkola (2)
+* Jeroen Dalsem (1)
+* Per Jensen (1)
+
+#### Documentation
+
+* **support:** Added 1.11's dates of support. ([4bd3144d](https://github.com/Elgg/Elgg/commit/4bd3144dcd258f8b38e3ea97acff87d7c1d5ef51))
+
+
+#### Bug Fixes
+
+* **aalborg_theme:** removes unwanted margin from elgg-list-river items ([c43371b5](https://github.com/Elgg/Elgg/commit/c43371b59566612dca3230d7a33083e60b4cc319), closes [#8124](https://github.com/Elgg/Elgg/issues/8124))
+* **access:** do not use default access if access options are passed to the input view ([36a4d209](https://github.com/Elgg/Elgg/commit/36a4d2090889a3b41d8a5abf2ce0eb19d66c9cd4), closes [#8219](https://github.com/Elgg/Elgg/issues/8219))
+* **core:** check for correct minimal php version in installer ([fcff9e5e](https://github.com/Elgg/Elgg/commit/fcff9e5e4d327ebf5301eea38f0e4f9bbb550dbf), closes [#8196](https://github.com/Elgg/Elgg/issues/8196))
+* **deprecation:** visible deprecation errors aren't displayed to admin anymore ([2311d666](https://github.com/Elgg/Elgg/commit/2311d6669aae52135aa6deacd7cf5cf60f563409))
+* **navigation:** Links to “Comments” again link directly to the comments section ([caea1ab2](https://github.com/Elgg/Elgg/commit/caea1ab262f0d517c3dd0d6111dfaf8b6e8975f8), closes [#8227](https://github.com/Elgg/Elgg/issues/8227))
+* **plugins:**
+  * Unloadable owner doesn’t WSOD displaying groupforumtopic ([8a082a3c](https://github.com/Elgg/Elgg/commit/8a082a3cdda7ac3e31b06189037f25cbae8c2bc2))
+  * Fixes HTML toggle for CKEditor ([a45c4ca4](https://github.com/Elgg/Elgg/commit/a45c4ca45c824d716f103ef55b7fdd62e7d829e7), closes [#8193](https://github.com/Elgg/Elgg/issues/8193))
+* **session:** Properly assigns PHP session settings from configuration ([d1ec08f3](https://github.com/Elgg/Elgg/commit/d1ec08f34b7a6520cf577ae30bcdad1c6c8b8427), closes [#8223](https://github.com/Elgg/Elgg/issues/8223))
+* **tags:** Corrected cases of tags having leading or trailing spaces. ([67addf48](https://github.com/Elgg/Elgg/commit/67addf489c340f238002946560da958a5ddf0411), closes [#8123](https://github.com/Elgg/Elgg/issues/8123))
+
+
 <a name="1.11.0"></a>
 ## 1.11.0  (2015-04-13)
 
