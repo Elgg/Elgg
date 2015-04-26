@@ -9,7 +9,7 @@ In general, we adhere to `semantic versioning`_.
 
 Follow the blog to `stay up to date on the latest releases`__.
 
-__ http://blog.elgg.org
+__ https://community.elgg.org/blog/all
 
 Bugfix Releases (1.9.x)
 -----------------------
