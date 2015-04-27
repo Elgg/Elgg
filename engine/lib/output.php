@@ -132,6 +132,8 @@ function elgg_format_bytes($size, $precision = 2) {
  *
  * @note usually for HTML, but could be useful for XML too...
  *
+ * @note Key names containing "_" will be ignored unless they start with "data-"
+ *
  * @param array $attrs An associative array of attr => val pairs
  *
  * @return string HTML attributes to be inserted into a tag (e.g., <tag $attrs>)
@@ -154,6 +156,11 @@ function elgg_format_attributes(array $attrs = array()) {
 	}
 
 	foreach ($attrs as $attr => $val) {
+		if (0 !== strpos($attr, 'data-') && false !== strpos($attr, '_')) {
+			// this is probably a view $vars variable not meant for output
+			continue;
+		}
+
 		$attr = strtolower($attr);
 
 		if ($val === true) {
