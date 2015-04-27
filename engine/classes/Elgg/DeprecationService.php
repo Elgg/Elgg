@@ -38,7 +38,7 @@ class DeprecationService {
 	/**
 	 * Sends a notice about deprecated use of a function, view, etc.
 	 *
-	 * @param string $msg             Message to log / display.
+	 * @param string $msg             Message to log
 	 * @param string $dep_version     Human-readable *release* version: 1.7, 1.8, ...
 	 * @param int    $backtrace_level How many levels back to display the backtrace.
 	 *                                Useful if calling from functions that are called
@@ -47,11 +47,6 @@ class DeprecationService {
 	 * @return bool
 	 */
 	function sendNotice($msg, $dep_version, $backtrace_level = 1) {
-		// if it's a major release behind, visual and logged
-		// if it's a 1 minor release behind, visual and logged
-		// if it's for current minor release, logged.
-		// bugfixes don't matter because we are not deprecating between them
-
 		if (!$dep_version) {
 			return false;
 		}
@@ -65,23 +60,10 @@ class DeprecationService {
 		$dep_major_version = (int)$dep_version_arr[0];
 		$dep_minor_version = (int)$dep_version_arr[1];
 
-		$visual = false;
+		$msg = "Deprecated in $dep_major_version.$dep_minor_version: $msg Called from ";
 
-		if (($dep_major_version < $elgg_major_version) ||
-			($dep_minor_version < $elgg_minor_version)) {
-			$visual = true;
-		}
-
-		$msg = "Deprecated in $dep_major_version.$dep_minor_version: $msg";
-
-		if ($visual && $this->session->isAdminLoggedIn()) {
-			register_error($msg);
-		}
-
-		// Get a file and line number for the log. Never show this in the UI.
-		// Skip over the function that sent this notice and see who called the deprecated
-		// function itself.
-		$msg .= " Called from ";
+		// Get a file and line number for the log. Skip over the function that
+		// sent this notice and see who called the deprecated function itself.
 		$stack = array();
 		$backtrace = debug_backtrace();
 		// never show this call.

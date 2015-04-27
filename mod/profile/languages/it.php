@@ -1,6 +1,6 @@
 <?php
 return array(
 	'profile' => 'Profilo',
-	'profile:notfound' => 'Ci dispiace. Il profilo richiesto non è stato trovato.',
+	'profile:notfound' => 'Spiacenti ma è impossibile trovare il profilo richiesto.',
 
 );

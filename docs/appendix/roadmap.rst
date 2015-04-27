@@ -18,7 +18,7 @@ by utilizing the following resources:
 .. _feedback and planning group: http://community.elgg.org/groups/profile/211069/feedback-and-planning
 .. _Github milestones: https://github.com/Elgg/Elgg/issues/milestones
 .. _Github pull requests: https://github.com/elgg/elgg/pulls
-.. _developer blog: http://blog.elgg.org
+.. _developer blog: https://community.elgg.org/blog/all
 
 Values
 ======
