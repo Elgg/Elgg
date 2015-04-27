@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Elgg 1.10\n"
+"Project-Id-Version: Elgg 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-04-05 16:03-0400\n"
+"POT-Creation-Date: 2015-04-27 00:09+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1464,6 +1464,7 @@ msgid "1.10"
 msgstr ""
 
 #: ../../appendix/support.rst:21
+#: ../../appendix/support.rst:23
 msgid "April 2015"
 msgstr ""
 
@@ -1471,7 +1472,19 @@ msgstr ""
 msgid "April 2016"
 msgstr ""
 
-#: ../../appendix/support.rst:24
+#: ../../appendix/support.rst:23
+msgid "1.11"
+msgstr ""
+
+#: ../../appendix/support.rst:23
+msgid "July 2015"
+msgstr ""
+
+#: ../../appendix/support.rst:23
+msgid "July 2016"
+msgstr ""
+
+#: ../../appendix/support.rst:26
 msgid "We don't have a support policy for major releases (x.0.0) yet because we've never done one."
 msgstr ""
 

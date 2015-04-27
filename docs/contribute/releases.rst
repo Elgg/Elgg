@@ -16,7 +16,7 @@ Requirements
 
 * SSH access to elgg.org
 * Commit access to http://github.com/Elgg/Elgg
-* Author access to http://blog.elgg.org
+* Admin access to https://community.elgg.org/
 * Access to `Twitter account`_
 * Access to `G+ page`_
 * Node.js and NPM installed
@@ -119,7 +119,7 @@ Update homepage, download, and previous download pages
 
 This should be the very last thing you do.
 
-* Sign in at http://blog.elgg.org/pg/login and compose a blog on with HTML version of CHANGELOG.md.
+* Sign in at https://community.elgg.org/ and compose a blog on with HTML version of CHANGELOG.md.
 * Add tags “release” and “elgg1.x” where x is whatever branch is being released.
 * Tweet from the elgg `Twitter account`_
 * Post from the `G+ page`_

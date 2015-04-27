@@ -22,8 +22,9 @@
 .elgg-module .elgg-list-river {
 	border-top: none;
 }
-.elgg-module .elgg-list {
-	margin-top: 0;
+.elgg-module > .elgg-body > .elgg-list, /* margin for group modules */
+.elgg-module .elgg-widget-content > .elgg-list { /* margin for profile and dashboard widgets */
+    margin-top: 0;
 }
 /* ***************************************
 	TOPBAR MENU DROPDOWN
