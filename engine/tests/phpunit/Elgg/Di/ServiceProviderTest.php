@@ -51,6 +51,7 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 			'usersTable' => '\Elgg\Database\UsersTable',
 			'views' => '\Elgg\ViewsService',
 			'widgets' => '\Elgg\WidgetsService',
+			'uploads' => '\Symfony\Component\HttpFoundation\FileBag',
 		);
 
 		foreach ($svcClasses as $key => $class) {

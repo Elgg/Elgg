@@ -3,6 +3,7 @@ namespace Elgg\Di;
 
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
+use Symfony\Component\HttpFoundation\FileBag;
 
 /**
  * Provides common Elgg services.
@@ -55,6 +56,7 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
+ * @property-read FileBag                                  $uploads
  * 
  * @package Elgg.Core
  * @access private
@@ -242,6 +244,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setClassName('widgets', '\Elgg\WidgetsService');
+		
+		$this->setFactory('uploads', function(ServiceProvider $c) {
+			return $c->request->files;
+		});
 
 	}
 
