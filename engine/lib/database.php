@@ -41,14 +41,16 @@ function execute_delayed_read_query($query, $handler = "") {
  * argument to $callback.  If no callback function is defined, the
  * entire result set is returned as an array.
  *
- * @param mixed  $query    The query being passed.
- * @param string $callback Optionally, the name of a function to call back to on each row
+ * @param mixed  $query       The query being passed.
+ * @param string $callback    Optionally, the name of a function to call back to on each row
+ * @param bool   $as_iterator If true, a ResultIterator will be returned. Rows will be fetched from the MySQL
+ *                            client one-by-one, saving memory, and query caching/logging will not occur.
  *
  * @return array An array of database result objects or callback function results. If the query
  *               returned nothing, an empty array.
  */
-function get_data($query, $callback = "") {
-	return _elgg_services()->db->getData($query, $callback);
+function get_data($query, $callback = "", $as_iterator = false) {
+	return _elgg_services()->db->getData($query, $callback, $as_iterator);
 }
 
 /**
