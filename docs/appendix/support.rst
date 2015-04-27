@@ -20,5 +20,7 @@ Below is a table outlining the specifics for each release:
 +---------+----------------------+-------------------+------------------------+
 | 1.10    | January 2015         | April 2015        | April 2016             |
 +---------+----------------------+-------------------+------------------------+
+| 1.11    | April 2015           | July 2015         | July 2016              |
++---------+----------------------+-------------------+------------------------+
 
 We don't have a support policy for major releases (x.0.0) yet because we've never done one.

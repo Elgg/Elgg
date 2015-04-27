@@ -20,7 +20,7 @@ $query = stripslashes(get_input('q', get_input('tag', '')));
 $display_query = _elgg_get_display_query($query);
 
 // check that we have an actual query
-if (!$query) {
+if (empty($query) && $query != "0") {
 	$title = sprintf(elgg_echo('search:results'), "\"$display_query\"");
 	
 	$body = elgg_echo('search:no_query');

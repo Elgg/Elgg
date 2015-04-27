@@ -26,13 +26,13 @@ class Event {
 	/**
 	 * Create a notification event
 	 *
-	 * @param \ElggData $object The object of the event (\ElggEntity)
-	 * @param string    $action The name of the action (default: create)
-	 * @param \ElggUser $actor  The user that caused the event (default: logged in user)
+	 * @param \ElggData   $object The object of the event (\ElggEntity)
+	 * @param string      $action The name of the action (default: create)
+	 * @param \ElggEntity $actor  The entity that caused the event (default: logged in user)
 	 * 
 	 * @throws \InvalidArgumentException
 	 */
-	public function __construct(\ElggData $object, $action, \ElggUser $actor = null) {
+	public function __construct(\ElggData $object, $action, \ElggEntity $actor = null) {
 		if (elgg_instanceof($object)) {
 			$this->object_type = $object->getType();
 			$this->object_subtype = $object->getSubtype();
@@ -55,7 +55,7 @@ class Event {
 	/**
 	 * Get the actor of the event
 	 *
-	 * @return \ElggUser
+	 * @return \ElggEntity|false
 	 */
 	public function getActor() {
 		return get_entity($this->actor_guid);

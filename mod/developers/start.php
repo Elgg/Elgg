@@ -33,13 +33,11 @@ function developers_init() {
 }
 
 function developers_process_settings() {
-	if (elgg_get_plugin_setting('display_errors', 'developers') == 1) {
-		ini_set('display_errors', 1);
-	} else {
-		ini_set('display_errors', 0);
-	}
+	$settings = elgg_get_plugin_from_id('developers')->getAllSettings();
 
-	if (elgg_get_plugin_setting('screen_log', 'developers') == 1) {
+	ini_set('display_errors', (int)!empty($settings['display_errors']));
+
+	if (!empty($settings['screen_log'])) {
 		$cache = new ElggLogCache();
 		elgg_set_config('log_cache', $cache);
 		elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
@@ -49,17 +47,17 @@ function developers_process_settings() {
 		});
 	}
 
-	if (elgg_get_plugin_setting('show_strings', 'developers') == 1) {
+	if (!empty($settings['show_strings'])) {
 		// first and last in case a plugin registers a translation in an init method
 		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1000);
 		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1);
 	}
 
-	if (elgg_get_plugin_setting('wrap_views', 'developers') == 1) {
+	if (!empty($settings['wrap_views'])) {
 		elgg_register_plugin_hook_handler('view', 'all', 'developers_wrap_views');
 	}
 
-	if (elgg_get_plugin_setting('log_events', 'developers') == 1) {
+	if (!empty($settings['log_events'])) {
 		elgg_register_event_handler('all', 'all', 'developers_log_events', 1);
 		elgg_register_plugin_hook_handler('all', 'all', 'developers_log_events', 1);
 	}

@@ -73,6 +73,9 @@ function groups_init() {
 	// group user hover menu
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', 'groups_user_entity_menu_setup');
 
+	// invitation request actions
+	elgg_register_plugin_hook_handler('register', 'menu:invitationrequest', 'groups_invitationrequest_menu_setup');
+
 	//extend some views
 	elgg_extend_view('css/elgg', 'groups/css');
 	elgg_extend_view('js/elgg', 'groups/js');
@@ -493,41 +496,41 @@ function groups_create_event_listener($event, $object_type, $object) {
  * Return the write access for the current group if the user has write access to it.
  */
 function groups_write_acl_plugin_hook($hook, $entity_type, $returnvalue, $params) {
-	
+
 	$user_guid = sanitise_int(elgg_extract('user_id', $params), false);
 	$user = get_user($user_guid);
 	if (empty($user)) {
 		return $returnvalue;
 	}
-	
+
 	$page_owner = elgg_get_page_owner_entity();
 	if (!($page_owner instanceof ElggGroup)) {
 		return $returnvalue;
 	}
-	
+
 	if (!$page_owner->canWriteToContainer($user_guid)) {
 		return $returnvalue;
 	}
-	
+
 	// check group content access rules
 	$allowed_access = array(
 		ACCESS_PRIVATE
 	);
-	
+
 	if ($page_owner->getContentAccessMode() !== ElggGroup::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 		$allowed_access[] = ACCESS_LOGGED_IN;
 		$allowed_access[] = ACCESS_PUBLIC;
 	}
-	
+
 	foreach ($returnvalue as $access_id => $access_string) {
 		if (!in_array($access_id, $allowed_access)) {
 			unset($returnvalue[$access_id]);
 		}
 	}
-	
+
 	// add write access to the group
 	$returnvalue[$page_owner->group_acl] = elgg_echo('groups:acl', array($page_owner->name));
-	
+
 	return $returnvalue;
 }
 
@@ -1212,7 +1215,7 @@ function discussion_update_reply_access_ids($event, $type, $object) {
 			$reply->access_id = $object->access_id;
 			$reply->save();
 		}
-		
+
 		elgg_set_ignore_access($ia);
 	}
 }
@@ -1316,4 +1319,57 @@ function discussion_search_groupforumtopic($hook, $type, $value, $params) {
 
 	// trigger the 'normal' object search as it can handle the added options
 	return elgg_trigger_plugin_hook('search', 'object', $params, array());
+}
+
+/**
+ * Setup invitation request actions
+ *
+ * @param string $hook   "register"
+ * @param string $type   "menu:invitationrequest"
+ * @param array  $menu   Menu items
+ * @param array  $params Hook params
+ * @return array
+ */
+function groups_invitationrequest_menu_setup($hook, $type, $menu, $params) {
+
+	$group = elgg_extract('entity', $params);
+	$user = elgg_extract('user', $params);
+
+	if (!$group instanceof \ElggGroup) {
+		return $menu;
+	}
+
+	if (!$user instanceof \ElggUser || !$user->canEdit()) {
+		return $menu;
+	}
+
+	$accept_url = elgg_http_add_url_query_elements('action/groups/join', array(
+		'user_guid' => $user->guid,
+		'group_guid' => $group->guid,
+	));
+
+	$menu[] = \ElggMenuItem::factory(array(
+		'name' => 'accept',
+		'href' => $accept_url,
+		'is_action' => true,
+		'text' => elgg_echo('accept'),
+		'link_class' => 'elgg-button elgg-button-submit',
+		'is_trusted' => true,
+	));
+
+	$delete_url = elgg_http_add_url_query_elements('action/groups/killinvitation', array(
+		'user_guid' => $user->guid,
+		'group_guid' => $group->guid,
+	));
+
+	$menu[] = \ElggMenuItem::factory(array(
+		'name' => 'delete',
+		'href' => $delete_url,
+		'is_action' => true,
+		'confirm' => elgg_echo('groups:invite:remove:check'),
+		'text' => elgg_echo('delete'),
+		'link_class' => 'elgg-button elgg-button-delete mlm',
+	));
+
+	return $menu;
 }
