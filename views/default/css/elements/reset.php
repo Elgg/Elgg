@@ -83,3 +83,6 @@ input::-moz-focus-inner {
 	border: 0;
 	padding: 0;
 }
+[hidden] { 
+	display: none !important;
+}

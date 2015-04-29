@@ -8,16 +8,18 @@
 ?>
 
 <div>
-	<label><?php echo elgg_echo('loginusername'); ?></label>
-	<?php echo elgg_view('input/text', array(
-		'name' => 'username',
-		'autofocus' => true,
-		));
-	?>
+	<label><?php echo elgg_echo('loginusername'); ?>
+		<?php echo elgg_view('input/text', array(
+			'name' => 'username',
+			'autofocus' => true,
+			));
+		?>
+	</label>
 </div>
 <div>
-	<label><?php echo elgg_echo('password'); ?></label>
-	<?php echo elgg_view('input/password', array('name' => 'password')); ?>
+	<label><?php echo elgg_echo('password'); ?>
+		<?php echo elgg_view('input/password', array('name' => 'password')); ?>
+	</label>
 </div>
 
 <?php echo elgg_view('login/extend', $vars); ?>

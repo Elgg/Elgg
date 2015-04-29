@@ -8,7 +8,13 @@
  */
 
 echo '<div>';
+$attr = [
+	'for' => 'admin-plugins-category', 
+	'hidden' => true
+];
+echo elgg_format_element('label', $attr, elgg_echo('filter'));
 echo elgg_view('input/select', array(
+	'id' => 'admin-plugins-category',
 	'name' => 'category',
 	'options_values' => $vars['category_options'],
 	'value' => $vars['category'],
