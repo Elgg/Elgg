@@ -12,17 +12,17 @@
  */
 function messages_prepare_form_vars($recipient_guid = 0) {
 
-	$recipient_username = '';
-	$recipient = get_entity($recipient_guid);
-	if (elgg_instanceof($recipient, 'user')) {
-		$recipient_username = $recipient->username;
+	$recipients = array();
+	$recipient = get_user($recipient_guid);
+	if (!empty($recipient)) {
+		$recipients[] = $recipient->getGUID();
 	}
 
 	// input names => defaults
 	$values = array(
 		'subject' => '',
 		'body' => '',
-		'recipient_username' => $recipient_username,
+		'recipients' => $recipients,
 	);
 
 	if (elgg_is_sticky_form('messages')) {
