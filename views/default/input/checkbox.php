@@ -46,7 +46,7 @@ unset($vars['label_class']);
 $input = elgg_format_element('input', $vars);
 
 if (!empty($label)) {
-	echo elgg_format_element('label', ['class' => $label_class], $input . $label);
+	echo elgg_format_element('label', ['class' => $label_class], "$input $label");
 } else {
 	echo $input;
 }
