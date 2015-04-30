@@ -47,6 +47,10 @@ function get_uploaded_file($input_name) {
 	}
 
 	$file = $files->get($input_name);
+	if (empty($file)) {
+		// a file input was provided but no file uploaded
+		return false;
+	}
 	if ($file->getError() !== 0) {
 		return false;
 	}
@@ -74,8 +78,12 @@ $square = false, $upscale = false) {
 	if (!$files->has($input_name)) {
 		return false;
 	}
+	
 	$file = $files->get($input_name);
-
+	if (empty($file)) {
+		// a file input was provided but no file uploaded
+		return false;
+	}
 	if ($file->getError() !== 0) {
 		return false;
 	}
