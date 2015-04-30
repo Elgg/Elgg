@@ -52,7 +52,7 @@ function elgg_get_upgrade_file_version($filename) {
  */
 function elgg_get_upgrade_files($upgrade_path = null) {
 	if (!$upgrade_path) {
-		$upgrade_path = elgg_get_config('path') . 'engine/lib/upgrades/';
+		$upgrade_path = elgg_get_root_path() . 'engine/lib/upgrades/';
 	}
 	$upgrade_path = sanitise_filepath($upgrade_path);
 	$handle = opendir($upgrade_path);
