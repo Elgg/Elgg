@@ -12,6 +12,11 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.11 to 2.0
 ================
 
+All scripts moved to bottom of page
+-----------------------------------
+This was done for performance reasons but breaks any inline scripts in views.
+Convert your inline scripts to external scripts and load them with ``elgg_load_js``.
+
 Removed Functions
 -----------------
 

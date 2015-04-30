@@ -28,9 +28,7 @@ foreach ($links as $attributes) {
 	echo elgg_format_element('link', $attributes);
 }
 
-$js = elgg_get_loaded_js('head');
 $css = elgg_get_loaded_css();
-$elgg_init = elgg_view('js/initialize_elgg');
 
 $html5shiv_url = elgg_normalize_url('vendors/html5shiv.js');
 $ie_url = elgg_get_simplecache_url('css', 'ie');
@@ -52,11 +50,7 @@ foreach ($css as $url) {
 		<link rel="stylesheet" href="<?php echo $ie_url; ?>" />
 	<![endif]-->
 
-	<script><?php echo $elgg_init; ?></script>
 <?php
-foreach ($js as $url) {
-	echo elgg_format_element('script', array('src' => $url));
-}
 
 echo elgg_view_deprecated('page/elements/shortcut_icon', array(), "Use the 'head', 'page' plugin hook.", 1.9);
 
