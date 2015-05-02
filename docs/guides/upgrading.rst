@@ -12,14 +12,21 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.11 to 2.0
 ================
 
-Removed Functions and Scripts
------------------------------
+All scripts moved to bottom of page
+-----------------------------------
+
+All inline scripts must be converted to :doc:`AMD </guides/javascript>` or to external scripts loaded with
+``elgg_load_js``. For performance reasons, Elgg no longer loads its core scripts in the ``head`` element,
+and ``elgg_register_js`` no longer honors ``$location == 'head'``, instead outputting all scripts at the
+end of the ``body`` element.
+
+Removed Functions
+-----------------
 
  - get_db_error()
  - execute_delayed_query()
  - get_db_link()
  - load_plugins()
- - mod/groups/icon.php
 
 Callbacks in Queries
 --------------------
