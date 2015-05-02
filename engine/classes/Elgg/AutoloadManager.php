@@ -193,5 +193,14 @@ class AutoloadManager {
 	public function setStorage(\ElggCache $storage) {
 		$this->storage = $storage;
 	}
+
+	/**
+	 * Save the cache on object destruction
+	 *
+	 * @return void
+	 */
+	public function __destruct() {
+		$this->saveCache();
+	}
 }
 

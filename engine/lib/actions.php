@@ -64,7 +64,7 @@ function action($action, $forwarder = "") {
  *
  * @tip Put action files under the actions/<plugin_name> directory of your plugin.
  *
- * @tip You don't need to include engine/start.php in your action files.
+ * @tip You don't need to use Elgg\Application in your action files.
  *
  * @internal Actions are saved in $CONFIG->actions as an array in the form:
  * <code>

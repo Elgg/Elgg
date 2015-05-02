@@ -8,7 +8,8 @@
  */
 
 // Load Elgg engine
-require_once(dirname(dirname(dirname(__FILE__))) . "/engine/start.php");
+require_once dirname(dirname(__DIR__)) . '/autoloader.php';
+(new \Elgg\Application())->bootCore();
 
 elgg_load_library('elgg:discussion');
 

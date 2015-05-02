@@ -166,7 +166,7 @@ Note that if you extend the core css view like this:
 
 	elgg_extend_view('css', 'custom/css');
 
-You **must** do so within code that is executed by engine/start.php (normally this would mean your plugin's init code).  Because the core css view is loaded separately via a ``<link>`` tag, any extensions you add will not have the same context as the rest of your page.
+You **must** do so within your plugin's init code. Because the core css view is loaded separately via a ``<link>`` tag, any extensions you add will not have the same context as the rest of your page.
 
 .. _guides/views#altering-view-input:
 

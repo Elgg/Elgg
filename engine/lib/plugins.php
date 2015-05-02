@@ -137,21 +137,6 @@ function elgg_is_active_plugin($plugin_id, $site_guid = null) {
 }
 
 /**
- * Loads all active plugins in the order specified in the tool admin panel.
- *
- * @note This is called on every page load. If a plugin is active and problematic, it
- * will be disabled and a visible error emitted. This does not check the deps system because
- * that was too slow.
- *
- * @return bool
- * @since 1.8.0
- * @access private
- */
-function _elgg_load_plugins() {
-	return _elgg_services()->plugins->load();
-}
-
-/**
  * Returns an ordered list of plugins
  *
  * @param string $status    The status of the plugins. active, inactive, or all.

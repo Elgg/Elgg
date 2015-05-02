@@ -6,14 +6,12 @@
  * @subpackage Test
  */
 
-require_once(dirname( __FILE__ ) . '/../start.php');
+require_once __DIR__ . '/../../autoloader.php';
 
+(new \Elgg\Application())->bootCore();
 
-require_once(dirname( __FILE__ ) . '/../../vendor/autoload.php');
-$test_path = "$CONFIG->path/engine/tests";
-
-require_once("$test_path/ElggCoreUnitTest.php");
-require_once("$test_path/ElggCoreGetEntitiesBaseTest.php");
+require_once __DIR__ . '/ElggCoreUnitTest.php';
+require_once __DIR__ . '/ElggCoreGetEntitiesBaseTest.php';
 
 // don't expect admin session for CLI
 if (!TextReporter::inCli()) {
@@ -24,6 +22,7 @@ if (!TextReporter::inCli()) {
 		echo "Failed to login as administrator.";
 		exit(1);
 	}
+	global $CONFIG;
 	$CONFIG->debug = 'NOTICE';
 }
 

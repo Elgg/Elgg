@@ -6,13 +6,12 @@
  * @package ElggProfile
  */
 
-// won't be able to serve anything if no joindate or guid
-if (!isset($_GET['joindate']) || !isset($_GET['guid'])) {
+// won't be able to serve anything if no guid
+if (!isset($_GET['guid'])) {
 	header("HTTP/1.1 404 Not Found");
 	exit;
 }
 
-$join_date = (int)$_GET['joindate'];
 $last_cache = empty($_GET['lastcache']) ? 0 : (int)$_GET['lastcache']; // icontime
 $guid = (int)$_GET['guid'];
 
@@ -23,14 +22,6 @@ if (isset($_SERVER['HTTP_IF_NONE_MATCH']) && trim($_SERVER['HTTP_IF_NONE_MATCH']
 	exit;
 }
 
-$base_dir = dirname(dirname(dirname(__FILE__)));
-
-// Get DB settings
-require_once $base_dir . '/engine/settings.php';
-require_once $base_dir . '/vendor/autoload.php';
-
-global $CONFIG;
-
 $size = "medium";
 if (!empty($_GET['size'])) {
 	$size = strtolower($_GET['size']);
@@ -39,16 +30,18 @@ if (!empty($_GET['size'])) {
 	}
 }
 
-$path = dirname(dirname(__DIR__)) . DIRECTORY_SEPARATOR;
+require_once dirname(dirname(__DIR__)) . '/autoloader.php';
+$app = new \Elgg\Application();
+$app->loadSettings();
 
-$data_root = call_user_func(function () use ($CONFIG) {
-	if (isset($CONFIG->dataroot)) {
-		return rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+$data_root = call_user_func(function () use ($app) {
+	$dataroot = $app->getConfig()->getVolatile('dataroot');
+	if ($dataroot) {
+		return $dataroot;
 	}
 
 	// must get from DB
-	$conf = new \Elgg\Database\Config($CONFIG);
-	$db = new \Elgg\Database($conf, new \Elgg\Logger(new \Elgg\PluginHooksService()));
+	$db = $app->getDb();
 
 	try {
 		$row = $db->getDataRow("
@@ -87,6 +80,6 @@ if ($data_root) {
 }
 
 // something went wrong so load engine and try to forward to default icon
-require_once $base_dir . "/engine/start.php";
+$app->bootCore();
 elgg_log("Profile icon direct failed.", "WARNING");
 forward("_graphics/icons/user/default{$size}.gif");

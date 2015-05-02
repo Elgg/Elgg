@@ -1,6 +1,5 @@
 <?php
 namespace Elgg;
-use Elgg\Database\Config;
 
 /**
  * An object representing a single Elgg database.
@@ -73,7 +72,7 @@ class Database {
 	 * @param \Elgg\Database\Config $config Database configuration
 	 * @param \Elgg\Logger          $logger The logger
 	 */
-	public function __construct(\Elgg\Database\Config $config, \Elgg\Logger $logger) {
+	public function __construct(\Elgg\Database\Config $config, \Elgg\Logger $logger = null) {
 
 		$this->logger = $logger;
 		$this->config = $config;
@@ -81,6 +80,16 @@ class Database {
 		$this->tablePrefix = $config->getTablePrefix();
 
 		$this->enableQueryCache();
+	}
+
+	/**
+	 * Set the logger object
+	 *
+	 * @param \Elgg\Logger $logger The logger
+	 * @return void
+	 */
+	public function setLogger(\Elgg\Logger $logger) {
+		$this->logger = $logger;
 	}
 
 	/**
@@ -205,7 +214,9 @@ class Database {
 	 */
 	public function insertData($query) {
 
-		$this->logger->log("DB query $query", \Elgg\Logger::INFO);
+		if ($this->logger) {
+			$this->logger->info("DB query $query");
+		}
 
 		$dblink = $this->getLink('write');
 
@@ -231,7 +242,9 @@ class Database {
 	 */
 	public function updateData($query, $getNumRows = false) {
 
-		$this->logger->log("DB query $query", \Elgg\Logger::INFO);
+		if ($this->logger) {
+			$this->logger->info("DB query $query");
+		}
 
 		$dblink = $this->getLink('write');
 
@@ -260,7 +273,9 @@ class Database {
 	 */
 	public function deleteData($query) {
 
-		$this->logger->log("DB query $query", \Elgg\Logger::INFO);
+		if ($this->logger) {
+			$this->logger->info("DB query $query");
+		}
 
 		$dblink = $this->getLink('write');
 
@@ -334,7 +349,9 @@ class Database {
 		// Is cached?
 		if ($this->queryCache) {
 			if (isset($this->queryCache[$hash])) {
-				$this->logger->log("DB query $query results returned from cache (hash: $hash)", \Elgg\Logger::INFO);
+				if ($this->logger) {
+					$this->logger->info("DB query $query results returned from cache (hash: $hash)");
+				}
 				return $this->queryCache[$hash];
 			}
 		}
@@ -357,14 +374,16 @@ class Database {
 			}
 		}
 
-		if (empty($return)) {
-			$this->logger->log("DB query $query returned no results.", \Elgg\Logger::INFO);
+		if (empty($return) && $this->logger) {
+			$this->logger->info("DB query $query returned no results.");
 		}
 
 		// Cache result
 		if ($this->queryCache) {
 			$this->queryCache[$hash] = $return;
-			$this->logger->log("DB query $query results cached (hash: $hash)", \Elgg\Logger::INFO);
+			if ($this->logger) {
+				$this->logger->info("DB query $query results cached (hash: $hash)");
+			}
 		}
 
 		return $return;
@@ -383,7 +402,7 @@ class Database {
 	 * @throws \DatabaseException
 	 * @todo should this be public?
 	 */
-	public function executeQuery($query, $dblink) {
+	protected function executeQuery($query, $dblink) {
 
 		if ($query == null) {
 			throw new \DatabaseException("Query cannot be null");
@@ -513,9 +532,9 @@ class Database {
 
 				if ($link == 'read' || $link == 'write') {
 					$link = $this->getLink($link);
-				} elseif (!is_resource($link)) {
+				} elseif (!is_resource($link) && $this->logger) {
 					$msg = "Link for delayed query not valid resource or db_link type. Query: {$query_details['q']}";
-					$this->logger->log($msg, \Elgg\Logger::WARNING);
+					$this->logger->warn($msg);
 				}
 
 				$result = $this->executeQuery($query_details['q'], $link);
@@ -524,8 +543,10 @@ class Database {
 					$query_details['h']($result);
 				}
 			} catch (\DatabaseException $e) {
-				// Suppress all exceptions since page already sent to requestor
-				$this->logger->log($e, \Elgg\Logger::ERROR);
+				if ($this->logger) {
+					// Suppress all exceptions since page already sent to requestor
+					$this->logger->error($e);
+				}
 			}
 		}
 	}
@@ -564,7 +585,9 @@ class Database {
 	protected function invalidateQueryCache() {
 		if ($this->queryCache) {
 			$this->queryCache->clear();
-			$this->logger->log("Query cache invalidated", \Elgg\Logger::INFO);
+			if ($this->logger) {
+				$this->logger->info("Query cache invalidated");
+			}
 		}
 	}
 
