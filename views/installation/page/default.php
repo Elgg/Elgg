@@ -30,8 +30,8 @@ header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', TRUE);
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
 		<link rel="SHORTCUT ICON" href="<?php echo elgg_get_site_url(); ?>_graphics/favicon.ico" />
 		<link rel="stylesheet" href="<?php echo elgg_get_site_url(); ?>install/css/install.css" type="text/css" />
-		<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery-1.11.0.min.js"></script>
-		<script type="text/javascript" src="<?php echo elgg_get_site_url(); ?>install/js/install.js"></script>
+		<script src="<?php echo elgg_get_site_url(); ?>vendors/jquery/jquery-1.11.0.min.js"></script>
+		<script src="<?php echo elgg_get_site_url(); ?>install/js/install.js"></script>
 	</head>
 	<body>
 		<div class="elgg-page">

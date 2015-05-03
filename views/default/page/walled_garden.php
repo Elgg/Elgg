@@ -14,29 +14,33 @@ $wg_body_class = 'elgg-body-walledgarden';
 $inline_js = '';
 if ($is_sticky_register) {
 	$wg_body_class .= ' hidden';
-	$inline_js = <<<__JS
-<script type="text/javascript">
-elgg.register_hook_handler('init', 'system', function() {
-	$('.registration_link').trigger('click');
+	ob_start(); ?>
+<script>
+require(['elgg'], function (elgg) {
+	elgg.register_hook_handler('init', 'system', function() {
+		$('.registration_link').trigger('click');
+	});
 });
 </script>
-__JS;
+	<?php
+	$inline_js = ob_get_clean();
 }
 
 // render content before head so that JavaScript and CSS can be loaded. See #4032
 $messages = elgg_view('page/elements/messages', array('object' => $vars['sysmessages']));
 $content = $vars["body"];
 
-$body = <<<__BODY
+ob_start(); ?>
 <div class="elgg-page elgg-page-walledgarden">
 	<div class="elgg-page-messages">
-		$messages
+		<?php echo $messages ?>
 	</div>
 	<div class="$wg_body_class">
-		$content
+		<?php echo $content ?>
 	</div>
 </div>
-__BODY;
+<?php
+$body = ob_get_clean();
 
 $body .= elgg_view('page/elements/foot');
 
