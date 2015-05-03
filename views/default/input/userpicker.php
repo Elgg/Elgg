@@ -51,7 +51,9 @@ $limit = (int)elgg_extract('limit', $vars, 0);
 	</ul>
 </div>
 <script>
-require(['elgg/UserPicker'], function (UserPicker) {
-	UserPicker.setup('.elgg-user-picker[data-name="<?php echo $name ?>"]');
+elgg_defer(function () {
+	require(['elgg/UserPicker'], function (UserPicker) {
+		UserPicker.setup('.elgg-user-picker[data-name="<?php echo $name ?>"]');
+	});
 });
 </script>

@@ -51,11 +51,9 @@ if ($friends) {
 	));
 ?>
 <?php //@todo JS 1.8: no ?>
-	<script type="text/javascript">
-	$(function () {
-
-			$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load(elgg.config.wwwroot + 'pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
-
+	<script>
+	elgg_defer(function () {
+		$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load(elgg.config.wwwroot + 'pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $vars['collection']->id; ?>');
 	});
 	</script>
 	<?php

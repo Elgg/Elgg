@@ -119,29 +119,28 @@ if (!isset($vars['replacement'])) {
 	if ($formtarget) {
 ?>
 <?php //@todo JS 1.8: no ?>
-<script language="text/javascript">
-	$(function() { // onload...do
-		$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
-			var inputs = [];
-			$(':input', this).each(function() {
-				if (this.type != 'checkbox' || (this.type == 'checkbox' && this.checked != false)) {
-					inputs.push(this.name + '=' + escape(this.value));
-				}
-			});
-			jQuery.ajax({
-				type: "POST",
-				data: inputs.join('&'),
-				url: this.action,
-				success: function(){
-					$('a.collectionmembers<?php echo $friendspicker; ?>').click();
-				}
+<script>
+elgg_defer(function() { // onload...do
+	$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
+		var inputs = [];
+		$(':input', this).each(function() {
+			if (this.type != 'checkbox' || (this.type == 'checkbox' && this.checked != false)) {
+				inputs.push(this.name + '=' + escape(this.value));
+			}
+		});
+		jQuery.ajax({
+			type: "POST",
+			data: inputs.join('&'),
+			url: this.action,
+			success: function(){
+				$('a.collectionmembers<?php echo $friendspicker; ?>').click();
+			}
 
-			});
-			return false;
-		})
-	})
-
-	</script>
+		});
+		return false;
+	});
+});
+</script>
 
 <!-- Collection members form -->
 <form id="collectionMembersForm<?php echo $friendspicker; ?>" action="<?php echo $formtarget; ?>" method="post"> <!-- action="" method=""> -->
@@ -290,30 +289,27 @@ if (!$callback) {
 
 }
 
-if (!isset($vars['replacement'])) {
+if (isset($vars['replacement'])) {
+	return;
+}
+
 ?>
-<?php //@todo JS 1.8: no ?>
-<script type="text/javascript">
+<script>
+elgg_defer(function () {
 	// initialise picker
 	$("div#friends-picker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
-</script>
-<script type="text/javascript">
-$(document).ready(function () {
-// manually add class to corresponding tab for panels that have content
-<?php
-if (sizeof($activeletters) > 0)
-	//$chararray = elgg_echo('friendspicker:chararray');
-	foreach($activeletters as $letter) {
-		$tab = elgg_strpos($chararray, $letter) + 1;
-?>
-$("div#friends-picker-navigation<?php echo $friendspicker; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
-<?php
-	}
 
-?>
+	<?php
+	// manually add class to corresponding tab for panels that have content
+	if (sizeof($activeletters) > 0) {
+		//$chararray = elgg_echo('friendspicker:chararray');
+		foreach($activeletters as $letter) {
+			$tab = elgg_strpos($chararray, $letter) + 1;
+		?>
+		$("div#friends-picker-navigation<?php echo $friendspicker; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
+		<?php
+		}
+	}
+	?>
 });
 </script>
-
-<?php
-
-}

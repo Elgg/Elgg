@@ -15,10 +15,37 @@ From 1.11 to 2.0
 All scripts moved to bottom of page
 -----------------------------------
 
-All inline scripts must be converted to :doc:`AMD </guides/javascript>` or to external scripts loaded with
-``elgg_load_js``. For performance reasons, Elgg no longer loads its core scripts in the ``head`` element,
-and ``elgg_register_js`` no longer honors ``$location == 'head'``, instead outputting all scripts at the
-end of the ``body`` element.
+You should test your plugin **with the JavaScript error console visible**. For performance reasons, Elgg no longer
+supports ``script`` elements in the ``head`` element or in HTML views. ``elgg_register_js`` will now load *all*
+scripts at the end of the ``body`` element.
+
+You must convert inline scripts to :doc:`AMD </guides/javascript>` or to external scripts loaded with
+``elgg_load_js``.
+
+If you cannot convert your script immediately, Elgg provides a temporary JavaScript function ``elgg_defer``,
+which queues code until the DOM is ready and the global ``elgg`` and ``jQuery`` libraries are loaded.
+
+Inline code which will fail because the stack is not yet loaded:
+
+.. code:: html
+
+    <script>
+    $(function () {
+        // code using $ and elgg
+    });
+    </script>
+
+This should work in Elgg 2.0:
+
+.. code:: html
+
+    <script>
+    elgg_defer(function () {
+        // code using $ and elgg
+    });
+    </script>
+
+**Warning:** The future of this function is unknown. We recommend converting scripts so you do not rely on it.
 
 Removed Functions
 -----------------

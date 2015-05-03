@@ -30,7 +30,7 @@ if (is_array($vars['collections']) && sizeof($vars['collections'])) {
 ?>
 <?php //@todo JS 1.8: no ?>
 <script>
-$(function(){
+elgg_defer(function(){
 	$('#friends_collections_accordian h2').click(function () {
 		$(this.parentNode).children("[class=friends-picker-main-wrapper]").slideToggle("fast");
 		//return false;

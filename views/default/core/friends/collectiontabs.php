@@ -30,9 +30,8 @@ $ownerid = $vars['owner']->getGUID();
 </ul>
 
 <?php //@todo JS 1.8: no ?>
-<script type="text/javascript">
-$(function () {
-
+<script>
+elgg_defer(function () {
 	$('a.collectionmembers<?php echo $friendspicker; ?>').click(function () {
 		// load collection members pane
 		$('#friends-picker_placeholder<?php echo $friendspicker; ?>').load('<?php echo elgg_get_site_url(); ?>pages/friends/collections/pickercallback.php?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>&type=list&collection=<?php echo $collectionid; ?>&friendspicker=<?php echo $friendspicker; ?>');
@@ -56,7 +55,5 @@ $(function () {
 
 		return false;
 	});
-
-
 });
 </script>

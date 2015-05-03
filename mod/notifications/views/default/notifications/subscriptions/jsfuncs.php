@@ -4,9 +4,8 @@ $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecated
 
 ?> 
 <?php //@todo JS 1.8: no ?>
-<script type="text/javascript">
-
-$(document).ready(function () {
+<script>
+elgg_defer(function () {
 <?php 
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 ?>
@@ -19,15 +18,12 @@ foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 ?>
 
 });
-
-	clickflag = 0;
-
 <?php 
 foreach($NOTIFICATION_HANDLERS as $method => $foo) {
 ?>
 function adjust<?php echo $method; ?>(linkId) {
 	var obj = $(this).prev("a");
-	
+
 	if (obj.className == "<?php echo $method; ?>toggleOff") {
 		obj.className = "<?php echo $method; ?>toggleOn";
 	} else {

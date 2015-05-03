@@ -138,27 +138,26 @@ if (!isset($vars['replacement'])) {
 ?>
 <?php //@todo JS 1.8: no ?>
 	<script language="text/javascript">
-		$(function() { // onload...do
-		$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
-			var inputs = [];
-			$(':input', this).each(function() {
-				if (this.type != 'checkbox' || (this.type == 'checkbox' && this.checked != false)) {
-					inputs.push(this.name + '=' + escape(this.value));
-				}
-			});
-			jQuery.ajax({
-				type: "POST",
-				data: inputs.join('&'),
-				url: this.action,
-				success: function(){
-					$('a.collectionmembers<?php echo $friendspicker; ?>').click();
-				}
+		elgg_defer(function() { // onload...do
+			$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
+				var inputs = [];
+				$(':input', this).each(function() {
+					if (this.type != 'checkbox' || (this.type == 'checkbox' && this.checked != false)) {
+						inputs.push(this.name + '=' + escape(this.value));
+					}
+				});
+				$.ajax({
+					type: "POST",
+					data: inputs.join('&'),
+					url: this.action,
+					success: function(){
+						$('a.collectionmembers<?php echo $friendspicker; ?>').click();
+					}
 
+				});
+				return false;
 			});
-			return false;
-		})
-	})
-
+		});
 	</script>
 
 <?php
@@ -307,12 +306,12 @@ if (!$callback) {
 if (!isset($vars['replacement'])) {
 ?>
 <?php //@todo JS 1.8: no ?>
-<script type="text/javascript">
-		// initialise picker
-		$("div#friends-picker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
-</script>
-<script type="text/javascript">
-	$(function () {
+<script>
+elgg_defer(function () {
+
+	// initialise picker
+	$("div#friends-picker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
+
 	// manually add class to corresponding tab for panels that have content
 <?php
 	if (sizeof($activeletters) > 0) {
@@ -324,9 +323,8 @@ if (!isset($vars['replacement'])) {
 <?php
 		}
 	}
-
 ?>
-	});
+});
 </script>
 
 <?php
