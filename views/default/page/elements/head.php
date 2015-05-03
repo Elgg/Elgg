@@ -1,6 +1,8 @@
 <?php
 /**
  * The HTML head
+ *
+ * @internal It's dangerous to alter this view.
  * 
  * JavaScript load sequence (set in views library and this view)
  * ------------------------
@@ -34,7 +36,14 @@ $html5shiv_url = elgg_normalize_url('vendors/html5shiv.js');
 $ie_url = elgg_get_simplecache_url('css', 'ie');
 
 ?>
-
+	<script>
+<?php // Do not convert elgg_defer to a regular function declaration. We have to redefine it later. ?>
+elgg_defer = function (f) {
+	// handled in the view "js/elgg/process_deferred"
+	elgg_defer._queue.push(f);
+};
+elgg_defer._queue = [];
+	</script>
 	<!--[if lt IE 9]>
 		<script src="<?php echo $html5shiv_url; ?>"></script>
 	<![endif]-->
