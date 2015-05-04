@@ -7,7 +7,7 @@ define(function(require) {
 		removeButtons: 'Subscript,Superscript', // To have Underline back
 		allowedContent: true,
 		baseHref: elgg.config.wwwroot,
-		removePlugins: 'contextmenu,tabletools,resize',
+		removePlugins: 'liststyle,contextmenu,tabletools,resize',
 		extraPlugins: 'blockimagepaste',
 		defaultLanguage: 'en',
 		language: elgg.get_language(),

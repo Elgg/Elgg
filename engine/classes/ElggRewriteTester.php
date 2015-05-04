@@ -90,36 +90,8 @@ class ElggRewriteTester {
 	 * @return bool
 	 */
 	public function runRewriteTest($url) {
-
-		$this->serverSupportsRemoteRead = true;
-
-		if (ini_get('allow_url_fopen')) {
-			$ctx = stream_context_create(array(
-				'http' => array(
-					'follow_location' => 0,
-					'timeout' => 5,
-				),
-			));
-			$response = file_get_contents($url, null, $ctx);
-		} elseif (function_exists('curl_init')) {
-			// try curl if installed
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, $url);
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-			$response = curl_exec($ch);
-			curl_close($ch);
-		} else {
-			$response = '';
-		}
-
-		if ($response !== 'success') {
-			$this->serverSupportsRemoteRead = false;
-			return false;
-		}
-
-		return true;
+		$this->serverSupportsRemoteRead = ($this->fetchUrl($url) === 'success');
+		return $this->serverSupportsRemoteRead;
 	}
 	
 	/**
@@ -129,6 +101,19 @@ class ElggRewriteTester {
 	 */
 	public function runLocalhostAccessTest() {
 		$url = _elgg_services()->config->getSiteUrl();
+		return (bool)$this->fetchUrl($url);
+	}
+
+	/**
+	 * Fetch a URL
+	 *
+	 * @param string $url The URL
+	 *
+	 * @return string Note that empty string may imply failure in fetching or empty response
+	 */
+	private function fetchUrl($url) {
+		$response = '';
+
 		if (ini_get('allow_url_fopen')) {
 			$ctx = stream_context_create(array(
 				'http' => array(
@@ -136,18 +121,20 @@ class ElggRewriteTester {
 					'timeout' => 5,
 				),
 			));
-			$response = file_get_contents($url, null, $ctx);
-		} elseif (function_exists('curl_init')) {
-			// try curl if installed
+			$response = @file_get_contents($url, null, $ctx);
+		}
+
+		if (!$response && function_exists('curl_init')) {
 			$ch = curl_init();
 			curl_setopt($ch, CURLOPT_URL, $url);
+			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 			curl_setopt($ch, CURLOPT_TIMEOUT, 5);
 			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
 			$response = curl_exec($ch);
 			curl_close($ch);
 		}
-		
-		return $response !== false;
+
+		return (string)$response;
 	}
 
 	/**
