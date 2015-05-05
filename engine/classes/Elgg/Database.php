@@ -161,7 +161,7 @@ class Database {
 		}
 
 		// Set DB for UTF8
-		mysql_query("SET NAMES utf8");
+		mysql_query("SET NAMES utf8", $this->dbLinks[$dblinkname]);
 	}
 
 	/**
@@ -660,6 +660,12 @@ class Database {
 	 * @return string
 	 */
 	public function sanitizeString($value) {
+
+		// use resource if established, but don't open a connection to do it.
+		if (isset($this->dbLinks['read'])) {
+			return mysql_real_escape_string($value, $this->dbLinks['read']);
+		}
+
 		return mysql_real_escape_string($value);
 	}
 

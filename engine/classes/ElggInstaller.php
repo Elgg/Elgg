@@ -853,9 +853,13 @@ class ElggInstaller {
 		$this->CONFIG->pluginspath = $this->CONFIG->path . 'mod/';
 		$this->CONFIG->context = array();
 		$this->CONFIG->entity_types = array('group', 'object', 'site', 'user');
+
 		// required by elgg_view_page()
 		$this->CONFIG->sitename = '';
 		$this->CONFIG->sitedescription = '';
+
+		// required by Elgg\Config::get
+		$this->CONFIG->site_guid = 1;
 	}
 	
 	/**
@@ -1446,7 +1450,6 @@ class ElggInstaller {
 		
 
 		// ensure that file path, data path, and www root end in /
-		$submissionVars['path'] = sanitise_filepath($submissionVars['path']);
 		$submissionVars['dataroot'] = sanitise_filepath($submissionVars['dataroot']);
 		$submissionVars['wwwroot'] = sanitise_filepath($submissionVars['wwwroot']);
 
@@ -1468,7 +1471,6 @@ class ElggInstaller {
 		$this->CONFIG->site = $site;
 
 		_elgg_services()->datalist->set('installed', time());
-		_elgg_services()->datalist->set('path', $submissionVars['path']);
 		_elgg_services()->datalist->set('dataroot', $submissionVars['dataroot']);
 		_elgg_services()->datalist->set('default_site', $site->getGUID());
 		_elgg_services()->datalist->set('version', elgg_get_version());
@@ -1476,8 +1478,11 @@ class ElggInstaller {
 		_elgg_services()->datalist->set('system_cache_enabled', 1);
 		_elgg_services()->datalist->set('simplecache_lastupdate', time());
 
+		// @todo plugins might use this, but core doesn't. remove in 2.0
+		_elgg_services()->datalist->set('path', $this->CONFIG->path);
+
 		// new installations have run all the upgrades
-		$upgrades = elgg_get_upgrade_files($submissionVars['path'] . 'engine/lib/upgrades/');
+		$upgrades = elgg_get_upgrade_files("{$this->CONFIG->path}engine/lib/upgrades/");
 		_elgg_services()->datalist->set('processed_upgrades', serialize($upgrades));
 
 		_elgg_services()->configTable->set('view', 'default', $site->getGUID());

@@ -235,3 +235,30 @@ Parameters:
 -  **$value** The initial value of the plugin hook.
 
 .. warning:: The `$params` and `$value` arguments are reversed between the plugin hook handlers and trigger functions!
+
+
+Unregister Event/Hook Handlers
+------------------------------
+
+The functions ``elgg_unregister_event_handler`` and ``elgg_unregister_plugin_hook_handler`` can be used to remove
+handlers already registered by another plugin or Elgg core. The parameters are in the same order as the registration
+functions, except there's no priority parameter.
+
+.. code:: php
+
+    elgg_unregister_event_handler('login', 'user', 'myPlugin_handle_login');
+
+Anonymous functions or invokable objects cannot be unregistered, but dynamic method callbacks can be unregistered
+by giving the static version of the callback:
+
+.. code:: php
+
+    $obj = new MyPlugin\Handlers();
+    elgg_register_plugin_hook_handler('foo', 'bar', [$obj, 'handleFoo']);
+
+    // ... elsewhere
+
+    elgg_unregister_plugin_hook_handler('foo', 'bar', 'MyPlugin\Handlers::handleFoo');
+
+Even though the event handler references a dynamic method call, the code above will successfully
+remove the handler.
