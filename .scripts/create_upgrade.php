@@ -17,17 +17,15 @@ if (count($argv) < 2) {
 	elgg_create_upgrade_show_usage('No upgrade name.');
 }
 
-$name = $argv[1];
+$upgrade_name = $argv[1];
 
-if (strlen($name) > 24) {
+if (strlen($upgrade_name) > 24) {
 	elgg_create_upgrade_show_usage('Upgrade names cannot be longer than 24 characters.');
 }
 
-require_once '../../../version.php';
-$upgrade_path = dirname(__FILE__);
+require_once dirname(dirname(__FILE__)) . '/version.php';
 
-$upgrade_name = strtolower($name);
-$upgrade_name = str_replace(array(' ', '-'), '_', $upgrade_name);
+$upgrade_path = 'classes/Elgg/Upgrades';
 $upgrade_release = str_replace(array(' ', '-'), '_', $release);
 $time = time();
 $upgrade_rnd = substr(md5($time), 0, 16);
@@ -35,19 +33,24 @@ $upgrade_date = date('Ymd', $time);
 
 // determine the inc count
 $upgrade_inc = 0;
-$files = elgg_get_file_list($upgrade_path);
-sort($files);
+if (is_dir($upgrade_path)) {
+	$files = elgg_get_file_list($upgrade_path);
 
-foreach ($files as $filename) {
-	$filename = basename($filename);
-	$date = (int)substr($filename, 0, 8);
-	$inc = (int)substr($filename, 8, 2);
+	sort($files);
 
-	if ($upgrade_date == $date) {
-		if ($inc >= $upgrade_inc) {
-			$upgrade_inc = $inc + 1;
+	foreach ($files as $filename) {
+		$filename = basename($filename);
+		$date = (int)substr($filename, 0, 8);
+		$inc = (int)substr($filename, 8, 2);
+
+		if ($upgrade_date == $date) {
+			if ($inc >= $upgrade_inc) {
+				$upgrade_inc = $inc + 1;
+			}
 		}
 	}
+} else {
+	mkdir($upgrade_path, 0700, true);
 }
 
 // zero-pad
@@ -58,16 +61,9 @@ if ($upgrade_inc < 10) {
 
 $upgrade_version = $upgrade_date . $upgrade_inc;
 
-// make filename
-if (substr($release, 0, 3) == '1.7') {
-	// 1.7 upgrades are YYYYMMDDXX
-	$upgrade_name = $upgrade_version . '.php';
-} else {
-	// 1.8+ upgrades are YYYYMMDDXX-release-friendly_name-rnd
-	$upgrade_name = $upgrade_version . "-$upgrade_release-$name-$upgrade_rnd.php";
-}
+$class_name = "{$upgrade_name}{$time}";
 
-$upgrade_file = $upgrade_path . '/' . $upgrade_name;
+$upgrade_file = "{$upgrade_path}/{$class_name}.php";
 
 if (is_file($upgrade_file)) {
 	elgg_create_upgrade_show_usage("Upgrade file $upgrade_file already exists. This script has failed you.");
@@ -75,14 +71,44 @@ if (is_file($upgrade_file)) {
 
 $upgrade_code = <<<___UPGRADE
 <?php
-/**
- * Elgg $release upgrade $upgrade_version
- * $name
- *
- * Description
- */
 
-// upgrade code here.
+namespace Elgg\Upgrades;
+
+/**
+ * Elgg $release upgrade $class_name
+ *
+ * Add description here
+ */
+class $class_name implements Upgrade {
+
+	public function isRequired() {
+		// Check the database or the datadir to check if there is something
+		// that this upgrade needs to process. Return true/false depending
+		// on the result.
+	}
+
+	public function getTitle() {
+		return 'Add user facing title here';
+	}
+
+	public function getDescription() {
+		return 'Add user facing description here';
+	}
+
+	public function run() {
+		// Do the actual upgrading here
+	}
+
+	public function getVersion() {
+		// Do not modify this manually
+		return $upgrade_version;
+	}
+
+	public function getRelease() {
+		// Do not modify this manually
+		return '$upgrade_release';
+	}
+}
 
 ___UPGRADE;
 
@@ -100,7 +126,7 @@ if (!fwrite($h, $upgrade_code)) {
 
 Created upgrade file and updated version.php.
 
-Upgrade file: $upgrade_name
+Upgrade file: $class_name
 Version:      $upgrade_version
 
 ___MSG;
@@ -115,7 +141,7 @@ fclose($h);
  * @return boolean
  */
 function elgg_set_version_dot_php_version($version) {
-	$file = '../../../version.php';
+	$file = dirname(dirname(__FILE__)) . '/version.php';
 	$h = fopen($file, 'r+b');
 
 	if (!$h) {
