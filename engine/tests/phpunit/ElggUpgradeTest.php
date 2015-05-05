@@ -26,10 +26,6 @@ class ElggUpgradeTest extends \Elgg\TestCase {
 		return array(new \stdClass());
 	}
 
-	public function mock_egefps_for_full_url($options) {
-		return array(new \stdClass());
-	}
-
 	public function mock_egefps_for_path($options) {
 		if ($options['private_setting_value'] === 'test') {
 			return array(new \stdClass());
@@ -45,35 +41,13 @@ class ElggUpgradeTest extends \Elgg\TestCase {
 		$this->assertSame(0, $this->obj->is_completed);
 	}
 
-	public function testSetPath() {
-		$path = 'admin/upgrades';
-		$this->obj->setPath($path);
-		$this->assertSame(elgg_normalize_url($path), $this->obj->getURL());
-	}
-
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
-	public function testThrowsOnBadPath() {
-		$path = false;
-		$this->obj->setPath($path);
-	}
-
-	/**
-	 * @expectedException InvalidArgumentException
-	 */
-	public function testThrowsOnDuplicatePath() {
-		$this->obj->_callable_egefps = array($this, 'mock_egefps_with_entities');
-		$path = 'admin/upgrades';
-		$this->obj->setPath($path);
-	}
-
 	/**
 	 * @expectedException UnexpectedValueException
-	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the upgrade_url property.
+	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the class property.
 	 */
-	public function testThrowsOnSaveWithoutPath() {
+	public function testThrowsOnSaveWithoutClass() {
 		$this->obj->description = 'Test';
+		$this->obj->id = 'test';
 		$this->obj->title = 'Test';
 		$this->obj->save();
 	}
@@ -83,8 +57,9 @@ class ElggUpgradeTest extends \Elgg\TestCase {
 	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the title property.
 	 */
 	public function testThrowsOnSaveWithoutTitle() {
-		$this->obj->setPath('test');
+		$this->obj->setClass('test');
 		$this->obj->description = 'Test';
+		$this->obj->id = 'test';
 		$this->obj->save();
 	}
 
@@ -93,24 +68,20 @@ class ElggUpgradeTest extends \Elgg\TestCase {
 	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the description property.
 	 */
 	public function testThrowsOnSaveWithoutDesc() {
-		$this->obj->setPath('test');
+		$this->obj->setClass('test');
+		$this->obj->id = 'test';
 		$this->obj->title = 'Test';
 		$this->obj->save();
 	}
 
-	public function testCanFindUpgradesByPath() {
-		$this->obj->_callable_egefps = array($this, 'mock_egefps_for_path');
-		$upgrade = $this->obj->getUpgradeFromPath('test');
-		$this->assertTrue((bool) $upgrade);
+	/**
+	 * @expectedException UnexpectedValueException
+	 * @expectedExceptionMessage ElggUpgrade objects must have a value for the id property.
+	 */
+	public function testThrowsOnSaveWithoutId() {
+		$this->obj->setClass('test');
+		$this->obj->description = 'Test';
+		$this->obj->title = 'Test';
+		$this->obj->save();
 	}
-
-	public function testCanFindUpgradesByFullUrl() {
-		$this->obj->_callable_egefps = array($this, 'mock_egefps_for_full_url');
-		$this->obj->upgrade_url = elgg_normalize_url('test');
-		$upgrade = $this->obj->getUpgradeFromPath('test');
-		$this->assertTrue((bool) $upgrade);
-		$this->assertSame('test', $upgrade->upgrade_url);
-	}
-
-	// can't test save without db mocking
 }

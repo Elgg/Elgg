@@ -8,19 +8,16 @@
 
 /**
  * Represents an upgrade that runs outside of the upgrade.php script.
- * These are listed in admin/upgrades and allow for ajax upgrades.
- *
- * @note The "upgrade_url" private setting originally stored the full URL, but
- *       was changed to hold the relative path from the site URL for #6838
  *
  * @package Elgg.Admin
  * @access private
  */
 class ElggUpgrade extends \ElggObject {
 	private $requiredProperties = array(
+		'id',
 		'title',
 		'description',
-		'upgrade_url',
+		'class',
 	);
 
 	/**
@@ -69,33 +66,38 @@ class ElggUpgrade extends \ElggObject {
 	}
 
 	/**
-	 * Sets an upgrade URL path
+	 * Sets an unique id for the upgrade
 	 *
-	 * @param string $path Set the URL path (without site URL) for the upgrade page
+	 * @param string $id Upgrade id in format <plugin_name>:<yyymmddhh>
 	 * @return void
-	 * @throws InvalidArgumentException
 	 */
-	public function setPath($path) {
-		if (!$path) {
-			throw new InvalidArgumentException('Invalid value for URL path.');
-		}
-
-		$path = ltrim($path, '/');
-
-		if ($this->getUpgradeFromPath($path)) {
-			throw new InvalidArgumentException('Upgrade URL paths must be unique.');
-		}
-
-		$this->upgrade_url = $path;
+	public function setID($id) {
+		$this->id = $id;
 	}
 
 	/**
-	 * Returns a normalized URL for the upgrade page.
+	 * Sets a class for the upgrade
 	 *
-	 * @return string
+	 * @param string $class Fully qualified class name
+	 * @return void
 	 */
-	public function getURL() {
-		return elgg_normalize_url($this->upgrade_url);
+	public function setClass($class) {
+		$this->class = $class;
+	}
+
+	/**
+	 * Return instance of the class that processes the data
+	 *
+	 * @return \Elgg\BatchUpgrade
+	 */
+	public function getUpgrade() {
+		static $upgrade;
+
+		if (!$upgrade) {
+			$upgrade = new $this->class;
+		}
+
+		return $upgrade;
 	}
 
 	/**
@@ -167,44 +169,5 @@ class ElggUpgrade extends \ElggObject {
 		}
 
 		return $this->getPrivateSetting($name);
-	}
-
-	/**
-	 * Find an ElggUpgrade object by the unique URL path
-	 *
-	 * @param string $path The Upgrade URL path (after site URL)
-	 * @return ElggUpgrade|false
-	 */
-	public function getUpgradeFromPath($path) {
-		$path = ltrim($path, '/');
-
-		if (!$path) {
-			return false;
-		}
-
-		// test for full URL values (used at 1.9.0)
-		$options = array(
-			'type' => 'object',
-			'subtype' => 'elgg_upgrade',
-			'private_setting_name' => 'upgrade_url',
-			'private_setting_value' => elgg_normalize_url($path),
-		);
-		$upgrades = call_user_func($this->_callable_egefps, $options);
-		/* @var ElggUpgrade[] $upgrades */
-
-		if ($upgrades) {
-			// replace URL with path (we can't use setPath due to recursion)
-			$upgrades[0]->upgrade_url = $path;
-			return $upgrades[0];
-		}
-
-		$options['private_setting_value'] = $path;
-		$upgrades = call_user_func($this->_callable_egefps, $options);
-
-		if ($upgrades) {
-			return $upgrades[0];
-		}
-
-		return false;
 	}
 }
