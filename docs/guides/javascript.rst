@@ -44,7 +44,7 @@ A basic module could look like this:
 	});
 
 Define your module via a URL
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 You can define an existing AMD module using ``elgg_define_js()``. Traditional (browser-globals)
 JavaScript files can also be defined as AMD modules if you shim them by setting ``exports`` and
@@ -302,45 +302,8 @@ There are a number of configuration values set in the elgg object:
     // The Elgg release (X.Y.Z).
     elgg.config.release;
 
-Ajax helper functions
----------------------
-
-The JS engine includes many features related to AJAX. Some are specific to Elgg, and some extend jQuery's native AJAX features.
-
-``elgg.get()``
-
-Wrapper for jQuery's ``$.ajax()``, but forces GET and does URL normalization. Accepts all standard jQuery options.
-
-.. code:: js
-
-   // normalizes the url to the current <site_url>/activity
-   elgg.get('/activity', {
-      success: function(resultText, success, xhr) {
-         console.log(resultText);
-      }
-   });
-
-``elgg.post()``
-
-Wrapper for jQuery's $.ajax(), but forces POST and does URL normalization. Accepts all standard jQuery options.
-
-``elgg.action()``
-
-Calls an Elgg action with the data passed. This handles outputting of system messages and errors.
-
-.. code:: js
-
-   elgg.action('friend/add', {
-      data: {
-         friend: 1234
-      },
-      success: function(json) {
-         // do something
-      }
-   });
-
 Module ``elgg/spinner``
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 The ``elgg/spinner`` module can be used to create an Ajax loading indicator fixed to the top of the window.
 
