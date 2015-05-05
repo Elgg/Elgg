@@ -58,7 +58,6 @@ class UpgradeService {
 			$this->processUpgrades();
 		}
 
-		_elgg_services()->events->trigger('upgrade', 'system', null);
 		elgg_flush_caches();
 
 		$this->releaseUpgradeMutex();

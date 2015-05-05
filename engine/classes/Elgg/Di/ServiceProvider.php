@@ -56,6 +56,8 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
  * @property-read \Elgg\SystemMessagesService              $systemMessages
  * @property-read \Elgg\I18n\Translator                    $translator
+ * @property-read \Elgg\Upgrade\Locator                    $upgradeLocator
+ * @property-read \Elgg\Upgrader                           $batchUpgrader
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
@@ -109,6 +111,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('autoP', \ElggAutoP::class);
 
+		$this->setFactory('batchUpgrader', function(ServiceProvider $c) {
+			return new \Elgg\BatchUpgrader($config);
+		});
+
 		$this->setValue('config', $config);
 
 		$this->setClassName('configTable', \Elgg\Database\ConfigTable::class);
@@ -157,7 +163,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('logger', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('logger');
 		});
-		
+
 		// TODO(evan): Support configurable transports...
 		$this->setClassName('mailer', 'Zend\Mail\Transport\Sendmail');
 
@@ -261,6 +267,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('translator', \Elgg\I18n\Translator::class);
 
 		$this->setClassName('usersTable', \Elgg\Database\UsersTable::class);
+
+		$this->setFactory('upgradeLocator', function(ServiceProvider $c) {
+			return new \Elgg\Upgrade\Locator($c->configTable, $c->plugins,
+				$c->logger, $c->privateSettings, $this->hooks);
+		});
 
 		$this->setFactory('views', function(ServiceProvider $c) {
 			return new \Elgg\ViewsService($c->hooks, $c->logger);

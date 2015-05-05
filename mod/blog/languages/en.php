@@ -21,7 +21,7 @@ return array(
 	'blog:excerpt' => 'Excerpt',
 	'blog:body' => 'Body',
 	'blog:save_status' => 'Last saved: ',
-	
+
 	'blog:revision' => 'Revision',
 	'blog:auto_saved_revision' => 'Auto Saved Revision',
 
@@ -62,5 +62,8 @@ View and comment on the blog post:
 	'blog:widget:description' => 'Display your latest blog posts',
 	'blog:moreblogs' => 'More blog posts',
 	'blog:numbertodisplay' => 'Number of blog posts to display',
-	'blog:noblogs' => 'No blog posts'
+	'blog:noblogs' => 'No blog posts',
+
+	'blog:upgrade:201506150:title' => 'Test title',
+	'blog:upgrade:201506150:description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur tincidunt sollicitudin lectus, vel consequat arcu fringilla sit amet. Vivamus fringilla malesuada tellus. Curabitur faucibus mi ante, a varius mauris finibus tempor. Proin convallis rhoncus pharetra. In id leo a tellus ultrices posuere nec eu urna. Nam eget nisl ac justo pharetra pretium. Aliquam erat volutpat. Fusce rhoncus mauris at consectetur tincidunt. Morbi mauris orci, auctor at vehicula non, euismod ut massa.',
 );

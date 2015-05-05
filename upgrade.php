@@ -39,6 +39,13 @@ if (strpos($forward_url, '/') !== 0) {
 }
 
 if (get_input('upgrade') == 'upgrade') {
+	// Find unprocessed batch uprade classes and save them as ElggUpgrade objects
+	$has_pending_upgrades = _elgg_services()->upgradeLocator->run();
+
+	if ($has_pending_upgrades) {
+		// Forward to the list of pending upgrades
+		$forward_url = '/admin/upgrades';
+	}
 
 	$upgrader = new \Elgg\UpgradeService();
 	$result = $upgrader->run();
@@ -68,7 +75,7 @@ if (get_input('upgrade') == 'upgrade') {
 			echo $msg;
 			exit;
 		}
-		
+
 		// note: translation may not be available until after upgrade
 		$msg = elgg_echo("installation:htaccess:needs_upgrade");
 		if ($msg === "installation:htaccess:needs_upgrade") {
@@ -85,7 +92,7 @@ if (get_input('upgrade') == 'upgrade') {
 
 	// reset cache to have latest translations available during upgrade
 	elgg_reset_system_cache();
-	
+
 	echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade', $vars);
 	exit;
 }

@@ -68,6 +68,16 @@ function blog_init() {
 
 	// ecml
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'blog_ecml_views_hook');
+
+	elgg_register_plugin_hook_handler('register', 'upgrades', function($hook, $type, $return, $params) {
+		$return[] = array(
+			'plugin_id' => 'blog',
+			'version' => 201506150,
+			'class' => 'Blog\Upgrades\FancyBlogUpgrade2015061700',
+		);
+
+		return $return;
+	});
 }
 
 /**
@@ -105,35 +115,35 @@ function blog_page_handler($page) {
 	switch ($page_type) {
 		case 'owner':
 			set_input('username', $page[1]);
-			
+
 			echo elgg_view('resources/blog/owner');
 			break;
 		case 'friends':
 			set_input('username', $page[1]);
-			
+
 			echo elgg_view('resources/blog/friends');
 			break;
 		case 'archive':
 			set_input('username', $page[1]);
 			set_input('lower', $page[2]);
 			set_input('upper', $page[3]);
-			
+
 			echo elgg_view('resources/blog/archive');
 			break;
 		case 'view':
 			set_input('guid', $page[1]);
-			
+
 			echo elgg_view('resources/blog/view');
 			break;
 		case 'add':
 			set_input('guid', $page[1]);
-			
+
 			echo elgg_view('resources/blog/add');
 			break;
 		case 'edit':
 			set_input('guid', $page[1]);
 			set_input('revision', $page[2]);
-			
+
 			echo elgg_view('resources/blog/edit');
 			break;
 		case 'group':
@@ -141,7 +151,7 @@ function blog_page_handler($page) {
 			set_input('page_type', $page[2]);
 			set_input('lower', $page[3]);
 			set_input('upper', $page[4]);
-			
+
 			echo elgg_view('resources/blog/group');
 			break;
 		case 'all':
