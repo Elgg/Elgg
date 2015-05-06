@@ -7,7 +7,8 @@ use Elgg\Di\ServiceProvider;
 /**
  * Load, boot, and implement a front controller for an Elgg application
  *
- * @property-read \Elgg\Services\Config $config
+ * @property-read \Elgg\Services\Config  $config
+ * @property-read \Elgg\Services\AjaxApi $ajaxApi
  *
  * @since 2.0.0
  */
@@ -38,6 +39,7 @@ class Application {
 	 */
 	private static $public_services = [
 		'config' => true,
+		'ajaxApi' => true,
 	];
 
 	/**
