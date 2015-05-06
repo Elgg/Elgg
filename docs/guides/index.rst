@@ -26,6 +26,7 @@ Customize Elgg's behavior with plugins.
    context
    themes
    javascript
+   ajax
    settings
    permissions-check
    authentication
