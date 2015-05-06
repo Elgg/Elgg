@@ -83,10 +83,6 @@ System hooks
 **output:after, layout**
 	In ``elgg_view_layout()``, filters the return value of the layout view.
 
-**output, ajax**
-	Triggered in the ajax forward hook that is called for ajax requests. Allows plugins to alter the
-	output returned, including the forward URL, system messages, and errors.
-
 **parameters, menu:<menu_name>**
 	Triggered by ``elgg_view_menu()``. Used to change menu variables (like sort order) before it is generated.
 
@@ -185,6 +181,26 @@ Action hooks
 **forward, <reason>**
 	Filter the URL to forward a user to when ``forward($url, $reason)`` is called.
 
+**ajax_response, action:<action>**
+    Filters responses before they're sent back to the ``elgg/ajax`` module.
+
+.. _guides/hooks-list#ajax:
+
+Ajax
+====
+
+**ajax_response, path:<path>**
+**ajax_response, view:<view>**
+**ajax_response, form:<action>**
+**ajax_response, action:<action>**
+    Filters the ``\Elgg\Services\AjaxResponse`` object used to build a response. This is only called
+    for responses to the ``elgg/ajax`` module.
+
+**output, ajax**
+	Triggered in the ajax forward hook that is called for ajax requests. Allows plugins to alter the
+	output returned, including the forward URL, system messages, and errors. This is *not* triggered
+	by the ``elgg/ajax`` module.
+
 .. _guides/hooks-list#permission-hooks:
 
 Permission hooks
@@ -261,6 +277,17 @@ Permission hooks
 **get_sql, access**
     Filters the SQL clauses used in ``_elgg_get_access_where_sql()``.
 
+Routing
+=======
+
+**route, <identifier>**
+    Allows altering the parameters used to route requests. ``identifier`` is the first URL segment,
+    registered with ``elgg_register_page_handler()``.
+
+**ajax_response, path:<path>**
+    Filters ajax responses before they're sent back to the ``elgg/ajax`` module. This hook type will
+    only be used if the path did not start with "action/" or "ajax/".
+
 .. _guides/hooks-list#views:
 
 Views
@@ -280,6 +307,12 @@ Views
 
 **head, page**
     In ``elgg_view_page()``, filters ``$vars['head']``
+
+**ajax_response, view:<view>**
+    Filters ``ajax/view/`` responses before they're sent back to the ``elgg/ajax`` module.
+
+**ajax_response, form:<action>**
+    Filters ``ajax/form/`` responses before they're sent back to the ``elgg/ajax`` module.
 
 Files
 =====

@@ -75,11 +75,23 @@ class Router {
 		$segments = $result['segments'];
 
 		$handled = false;
+		ob_start();
+
 		if (isset($this->handlers[$identifier]) && is_callable($this->handlers[$identifier])) {
 			$function = $this->handlers[$identifier];
 			$handled = call_user_func($function, $segments, $identifier);
 		}
 
+		$output = ob_get_clean();
+
+		$ajax_api = _elgg_services()->ajax;
+		if ($ajax_api->isReady()) {
+			$path = implode('/', $request->getUrlSegments());
+			$ajax_api->respondFromOutput($output, "path:$path");
+			return true;
+		}
+
+		echo $output;
 		return $handled || headers_sent();
 	}
 
