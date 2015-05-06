@@ -1,5 +1,6 @@
 <?php
 namespace Elgg;
+use Elgg\Services\AjaxResponse;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -329,74 +330,81 @@ class ActionsService {
 	 * @access private
 	 */
 	public function ajaxForwardHook($hook, $reason, $return, $params) {
-		if (elgg_is_xhr()) {
-			// always pass the full structure to avoid boilerplate JS code.
-			$params = array_merge($params, array(
-				'output' => '',
-				'status' => 0,
-				'system_messages' => array(
-					'error' => array(),
-					'success' => array()
-				)
-			));
-	
-			//grab any data echo'd in the action
-			$output = ob_get_clean();
-	
-			//Avoid double-encoding in case data is json
-			$json = json_decode($output);
-			if (isset($json)) {
-				$params['output'] = $json;
+		if (!elgg_is_xhr()) {
+			return;
+		}
+
+		// grab any data echo'd in the action
+		$output = ob_get_clean();
+
+		if ($reason == 'walled_garden') {
+			$reason = '403';
+		}
+		$http_codes = array(
+			'400' => 'Bad Request',
+			'401' => 'Unauthorized',
+			'403' => 'Forbidden',
+			'404' => 'Not Found',
+			'407' => 'Proxy Authentication Required',
+			'500' => 'Internal Server Error',
+			'503' => 'Service Unavailable',
+		);
+
+		$ajax_api = _elgg_services()->ajax;
+		if ($ajax_api->isReady()) {
+			if (isset($http_codes[$reason])) {
+				$ajax_api->respondWithError($http_codes[$reason], $reason);
 			} else {
-				$params['output'] = $output;
+				$ajax_api->respondFromOutput($output, "action:{$this->currentAction}");
 			}
-	
-			//Grab any system messages so we can inject them via ajax too
-			$system_messages = _elgg_services()->systemMessages->dumpRegister();
-	
-			if (isset($system_messages['success'])) {
-				$params['system_messages']['success'] = $system_messages['success'];
-			}
-	
-			if (isset($system_messages['error'])) {
-				$params['system_messages']['error'] = $system_messages['error'];
-				$params['status'] = -1;
-			}
-
-			if ($reason == 'walled_garden') {
-				$reason = '403';
-			}
-			$httpCodes = array(
-				'400' => 'Bad Request',
-				'401' => 'Unauthorized',
-				'403' => 'Forbidden',
-				'404' => 'Not Found',
-				'407' => 'Proxy Authentication Required',
-				'500' => 'Internal Server Error',
-				'503' => 'Service Unavailable',
-			);
-
-			if (isset($httpCodes[$reason])) {
-				header("HTTP/1.1 $reason {$httpCodes[$reason]}", true);
-			}
-
-			$context = array('action' => $this->currentAction);
-			$params = _elgg_services()->hooks->trigger('output', 'ajax', $context, $params);
-	
-			// Check the requester can accept JSON responses, if not fall back to
-			// returning JSON in a plain-text response.  Some libraries request
-			// JSON in an invisible iframe which they then read from the iframe,
-			// however some browsers will not accept the JSON MIME type.
-			$http_accept = _elgg_services()->request->server->get('HTTP_ACCEPT');
-			if (stripos($http_accept, 'application/json') === false) {
-				header("Content-type: text/plain");
-			} else {
-				header("Content-type: application/json");
-			}
-	
-			echo json_encode($params);
 			exit;
 		}
+
+		// legacy XHR behavior
+		if (isset($http_codes[$reason])) {
+			header("HTTP/1.1 $reason {$http_codes[$reason]}", true);
+		}
+
+		// always pass the full structure to avoid boilerplate JS code.
+		$params = array_merge($params, array(
+			'output' => '',
+			'status' => 0,
+			'system_messages' => array(
+				'error' => array(),
+				'success' => array()
+			)
+		));
+
+		$params['output'] = $ajax_api->decodeJson($output);
+
+		//Grab any system messages so we can inject them via ajax too
+		$system_messages = _elgg_services()->systemMessages->dumpRegister();
+
+		if (isset($system_messages['success'])) {
+			$params['system_messages']['success'] = $system_messages['success'];
+		}
+
+		if (isset($system_messages['error'])) {
+			$params['system_messages']['error'] = $system_messages['error'];
+			$params['status'] = -1;
+		}
+
+		$context = array('action' => $this->currentAction);
+		$params = _elgg_services()->hooks->trigger('output', 'ajax', $context, $params);
+
+		// Check the requester can accept JSON responses, if not fall back to
+		// returning JSON in a plain-text response.  Some libraries request
+		// JSON in an invisible iframe which they then read from the iframe,
+		// however some browsers will not accept the JSON MIME type.
+		$http_accept = _elgg_services()->request->server->get('HTTP_ACCEPT');
+		if (stripos($http_accept, 'application/json') === false) {
+			header("Content-type: text/plain");
+		} else {
+			header("Content-type: application/json");
+		}
+
+		echo json_encode($params);
+		exit;
 	}
 	
 	/**
