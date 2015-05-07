@@ -1,6 +1,8 @@
 <?php
 /**
  * The HTML head
+ *
+ * @internal It's dangerous to alter this view.
  * 
  * JavaScript load sequence (set in views library and this view)
  * ------------------------
@@ -34,7 +36,14 @@ $html5shiv_url = elgg_normalize_url('vendors/html5shiv.js');
 $ie_url = elgg_get_simplecache_url('css', 'ie');
 
 ?>
-
+	<script>
+<?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
+require = function () {
+	// handled in the view "js/elgg"
+	_require_queue.push(arguments);
+};
+_require_queue = [];
+	</script>
 	<!--[if lt IE 9]>
 		<script src="<?php echo $html5shiv_url; ?>"></script>
 	<![endif]-->

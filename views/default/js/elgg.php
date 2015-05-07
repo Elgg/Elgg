@@ -63,18 +63,16 @@ elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
 elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTokenTimeout() * 333; ?>;
 elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->language); ?>';
 
-!function () {
-	define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
-		elgg.add_translation(elgg.get_language(), translations);
+define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
+	elgg.add_translation(elgg.get_language(), translations);
 
-		$(function() {
-			elgg.trigger_hook('init', 'system');
-			elgg.trigger_hook('ready', 'system');
-		});
-
-		return elgg;
+	$(function() {
+		elgg.trigger_hook('init', 'system');
+		elgg.trigger_hook('ready', 'system');
 	});
-}();
+
+	return elgg;
+});
 
 require(['elgg']); // Forces the define() function to always run
 

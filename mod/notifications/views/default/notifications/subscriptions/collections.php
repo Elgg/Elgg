@@ -7,19 +7,17 @@
 $user = $vars['user'];
 
 //@todo JS 1.8: no ?>
-<script type="text/javascript">
-	
+<script>
 	function setCollection(members, method, id) {
 		for ( var i in members ) {
 			var checked = $('#' + method + 'collections' + id).children("INPUT[type='checkbox']").attr('checked');
-			if ($("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked') != checked) {  
+			if ($("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked') != checked) {
 				$("#"+method+members[i]).children("INPUT[type='checkbox']").attr('checked', checked);
 				functioncall = 'adjust' + method + '_alt("'+method+members[i]+'");';
 				eval(functioncall);
 			}
-		} 
+		}
 	}
-	
 </script>
 <div class="elgg-module elgg-module-info">
 	<div class="elgg-head">

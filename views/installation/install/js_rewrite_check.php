@@ -11,6 +11,6 @@ $args = array(
 	json_encode(elgg_get_site_url() . 'install.php?step=database')
 );
 ?>
-<script type="text/javascript">
+<script>
 	elgg.installer.rewriteTest(<?php echo implode(', ', $args) ?>);
 </script>
