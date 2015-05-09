@@ -2,10 +2,8 @@
 namespace Elgg;
 
 /**
- * PRIVATE CLASS. API IN FLUX. DO NOT USE DIRECTLY.
- * 
- * PLUGIN DEVELOPERS SHOULD USE elgg_*_context FUNCTIONS INSTEAD.
- * 
+ * Manages a global stack of strings for sharing information about the current execution context
+ *
  * Views can modify their output based on the local context. You may want to
  * display a list of blogs on a blog page or in a small widget. The rendered
  * output could be different for those two contexts ('blog' vs 'widget').
@@ -19,10 +17,9 @@ namespace Elgg;
  *
  * @warning The context is not available until the page_handler runs (after
  * the 'init, system' event processing has completed).
- * 
- * @package Elgg.Core
- * @access  private
- * @since   1.10.0
+ *
+ * @access private
+ * @since 1.10.0
  */
 final class Context {
 	

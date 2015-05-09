@@ -32,7 +32,7 @@ class CacheHandler {
 	 * @return void
 	 */
 	public function handleRequest($get_vars, $server_vars) {
-		$config = $this->application->getConfig();
+		$config = $this->application->config;
 
 		if (empty($get_vars['request'])) {
 			$this->send403();
@@ -143,7 +143,7 @@ class CacheHandler {
 	 */
 	protected function setupSimplecache() {
 		// we can't use Elgg\Config::get yet. It fails before the core is booted
-		$config = $this->application->getConfig();
+		$config = $this->application->config;
 		$config->loadSettingsFile();
 
 		if ($config->getVolatile('dataroot') && $config->getVolatile('simplecache_enabled') !== null) {
@@ -246,7 +246,7 @@ class CacheHandler {
 		}
 
 		// disable error reporting so we don't cache problems
-		$this->application->getConfig()->set('debug', null);
+		$this->application->config->set('debug', null);
 
 		// @todo elgg_view() checks if the page set is done (isset($CONFIG->pagesetupdone)) and
 		// triggers an event if it's not. Calling elgg_view() here breaks submenus
@@ -254,7 +254,7 @@ class CacheHandler {
 		// contexts can be correctly set (since this is called before page_handler()).
 		// To avoid this, lie about $CONFIG->pagehandlerdone to force
 		// the trigger correctly when the first view is actually being output.
-		$this->application->getConfig()->set('pagesetupdone', true);
+		$this->application->config->set('pagesetupdone', true);
 
 		return elgg_view($view);
 	}

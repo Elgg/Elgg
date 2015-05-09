@@ -3,13 +3,9 @@ namespace Elgg;
 
 
 /**
- * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
+ * Access to configuration values
  *
- * @access private
- *
- * @package    Elgg.Core
- * @subpackage Config
- * @since      1.10.0
+ * @since 1.10.0
  */
 class Config {
 	/**
@@ -26,6 +22,8 @@ class Config {
 
 	/**
 	 * Constructor
+	 *
+	 * @internal Access this object via Elgg\Application::$config
 	 *
 	 * @param \stdClass $config     Elgg's $CONFIG object
 	 * @param bool      $set_global Copy the config object to global $CONFIG
@@ -105,6 +103,9 @@ class Config {
 
 	/**
 	 * Get an Elgg configuration value, possibly loading it from the DB's config table
+	 *
+	 * Before application boot, it may be unsafe to call get() for some values. You should use
+	 * getVolatile() before system boot.
 	 *
 	 * @param string $name      Name of the configuration value
 	 * @param int    $site_guid null for installation setting, 0 for default site

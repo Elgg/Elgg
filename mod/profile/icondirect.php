@@ -35,7 +35,7 @@ $app = new \Elgg\Application();
 $app->loadSettings();
 
 $data_root = call_user_func(function () use ($app) {
-	$dataroot = $app->getConfig()->getVolatile('dataroot');
+	$dataroot = $app->config->getVolatile('dataroot');
 	if ($dataroot) {
 		return $dataroot;
 	}
