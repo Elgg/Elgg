@@ -27,6 +27,27 @@ class Application {
 	private $install_dir;
 
 	/**
+	 * Property names of the service provider to be exposed via __get()
+	 *
+	 * E.g. the presence of `'foo' => true` in the list would allow _elgg_services()->foo to
+	 * be accessed via elgg()->foo.
+	 *
+	 * @var string[]
+	 */
+	private static $public_services = [
+		'config' => true,
+	];
+
+	/**
+	 * Reference to the loaded Application returned by elgg()
+	 *
+	 * @internal Do not use this. use elgg() to access the application
+	 * @access private
+	 * @var Application
+	 */
+	public static $_instance;
+
+	/**
 	 * Constructor
 	 *
 	 * Upon construction, no actions are taken to load or boot Elgg.
@@ -54,19 +75,6 @@ class Application {
 	}
 
 	/**
-	 * Get the service provider
-	 *
-	 * Developers should not use this function
-	 *
-	 * @return ServiceProvider
-	 * @internal
-	 * @access private
-	 */
-	public function getServices() {
-		return $this->services;
-	}
-
-	/**
 	 * Load settings.php
 	 *
 	 * This is done automatically during the boot process or before requesting a database object
@@ -79,18 +87,6 @@ class Application {
 	}
 
 	/**
-	 * Get the Elgg\Config object (not global $CONFIG)
-	 *
-	 * @note Before application boot, it may be unsafe to call Elgg\Config::get for some values. You should use
-	 *       Elgg\Config::getVolatile before system boot.
-	 *
-	 * @return Config
-	 */
-	public function getConfig() {
-		return $this->services->config;
-	}
-
-	/**
 	 * Load all Elgg procedural code and wire up boot events, but don't boot
 	 *
 	 * This is used for internal testing purposes
@@ -100,7 +96,7 @@ class Application {
 	 * @internal
 	 */
 	public function loadCore() {
-		if (function_exists('_elgg_services')) {
+		if (function_exists('elgg')) {
 			return;
 		}
 
@@ -183,6 +179,9 @@ class Application {
 				}
 			}
 
+			// store instance to be returned by elgg()
+			self::$_instance = $this;
+
 			$events = $this->services->events;
 			$hooks = $this->services->hooks;
 
@@ -254,7 +253,7 @@ class Application {
 	}
 
 	/**
-	 * Get the Database instance for performing queries with minimal resources loaded
+	 * Get the Database instance for performing queries without booting Elgg
 	 *
 	 * If settings.php has not been loaded, it will be loaded to configure the DB connection.
 	 *
@@ -345,5 +344,19 @@ class Application {
 		}
 
 		return true;
+	}
+
+	/**
+	 * Get an undefined property
+	 *
+	 * @param string $name The property name accessed
+	 *
+	 * @return mixed
+	 */
+	public function __get($name) {
+		if (isset(self::$public_services[$name])) {
+			return $this->services->{$name};
+		}
+		trigger_error("Undefined property: " . __CLASS__ . ":\${$name}");
 	}
 }

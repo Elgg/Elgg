@@ -5,10 +5,10 @@ namespace Elgg\Di;
 class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 
 	public function testPropertiesReturnCorrectClassNames() {
-		$sp = _elgg_testing_application()->getServices();
+		$sp = _elgg_services();
 
 		$sp->setValue('session', \ElggSession::getMock());
-		
+
 		$svcClasses = array(
 			'accessCache' => '\ElggStaticVariableCache',
 			'accessCollections' => '\Elgg\Database\AccessCollections',

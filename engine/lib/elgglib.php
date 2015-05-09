@@ -8,6 +8,16 @@
  */
 
 /**
+ * Get a reference to the global Application object
+ *
+ * @return Elgg\Application
+ * @since 2.0.0
+ */
+function elgg() {
+	return Elgg\Application::$_instance;
+}
+
+/**
  * Register a PHP file as a library.
  *
  * @see elgg_load_library
@@ -592,7 +602,7 @@ function elgg_trigger_event($event, $object_type, $object = null) {
  * @see elgg_trigger_after_event
  */
 function elgg_trigger_before_event($event, $object_type, $object = null) {
-	return _elgg_services()->events->trigger("$event:before", $object_type, $object);
+	return _elgg_services()->events->triggerBefore($event, $object_type, $object);
 }
 
 /**
@@ -611,10 +621,7 @@ function elgg_trigger_before_event($event, $object_type, $object = null) {
  * @see elgg_trigger_before_event
  */
 function elgg_trigger_after_event($event, $object_type, $object = null) {
-	$options = array(
-		\Elgg\EventsService::OPTION_STOPPABLE => false,
-	);
-	return _elgg_services()->events->trigger("$event:after", $object_type, $object, $options);
+	return _elgg_services()->events->triggerAfter($event, $object_type, $object);
 }
 
 /**
@@ -631,11 +638,7 @@ function elgg_trigger_after_event($event, $object_type, $object = null) {
  * @see elgg_trigger_event
  */
 function elgg_trigger_deprecated_event($event, $object_type, $object = null, $message, $version) {
-	$options = array(
-		\Elgg\EventsService::OPTION_DEPRECATION_MESSAGE => $message,
-		\Elgg\EventsService::OPTION_DEPRECATION_VERSION => $version,
-	);
-	return _elgg_services()->events->trigger($event, $object_type, $object, $options);
+	return _elgg_services()->events->triggerDeprecated($event, $object_type, $object, $message, $version);
 }
 
 /**
