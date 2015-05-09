@@ -116,6 +116,12 @@ Plugins should use the class ``Elgg\Application`` to boot Elgg. Typical usage:
     require_once dirname(dirname(__DIR__)) . '/autoloader.php';
     (new \Elgg\Application)->bootCore();
 
+
+Comments plugin hook
+--------------------
+
+Plugins can now return an empty string from ``'comments',$entity_type`` hook in order to override the default comments component view. To force the default comments component, your plugin must return ``false``. If you were using empty strings to force the default comments view, you need to update your hook handlers to return ``false``.
+
 From 1.10 to 1.11
 =================
 
