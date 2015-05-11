@@ -1640,13 +1640,13 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		$owner = $this->getOwnerEntity();
-		if ($owner && !$owner->canWriteToContainer(0, $type, $subtype)) {
+		if ($owner && !$owner->canEdit() && !$owner->canWriteToContainer(0, $type, $subtype)) {
 			return false;
 		}
 		
 		if ($owner_guid != $container_guid) {
 			$container = $this->getContainerEntity();
-			if ($container && !$container->canWriteToContainer(0, $type, $subtype)) {
+			if ($container && !$container->canEdit() && !$container->canWriteToContainer(0, $type, $subtype)) {
 				return false;
 			}
 		}
