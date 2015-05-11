@@ -116,7 +116,13 @@ if (!$is_new_group && $new_owner_guid && $new_owner_guid != $old_owner_guid) {
 	// verify new owner is member and old owner/admin is logged in
 	if ($group->isMember(get_user($new_owner_guid)) && ($old_owner_guid == $user->guid || $user->isAdmin())) {
 		$group->owner_guid = $new_owner_guid;
-		$group->container_guid = $new_owner_guid;
+		if ($group->container_guid == $old_owner_guid) {
+			// Even though this action defaults container_guid to the logged in user guid,
+			// the group may have initially been created with a custom script that assigned
+			// a different container entity. We want to make sure we preserve the original
+			// container if it the group is not contained by the original owner.
+			$group->container_guid = $new_owner_guid;
+		}
 
 		$metadata = elgg_get_metadata(array(
 			'guid' => $group_guid,
