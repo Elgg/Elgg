@@ -30,6 +30,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\DeprecationService                 $deprecation
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
  * @property-read \Elgg\Database\EntityTable               $entityTable
+ * @property-read \Elgg\Services\Environment               $env
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
  * @property-read \Elgg\PluginHooksService                 $hooks
@@ -64,6 +65,8 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  */
 class ServiceProvider extends \Elgg\Di\DiContainer {
 
+	const CONFIG_KEY_SKIP_AUTOLOAD_STORAGE = 'AutoloaderManager_skip_storage';
+
 	/**
 	 * Constructor
 	 *
@@ -79,7 +82,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('autoloadManager', function(ServiceProvider $c) {
 			$manager = new \Elgg\AutoloadManager($c->classLoader);
-			if (!$c->config->get('AutoloaderManager_skip_storage')) {
+			if (!$c->config->get(self::CONFIG_KEY_SKIP_AUTOLOAD_STORAGE)) {
 				$manager->setStorage($c->systemCache->getFileCache());
 				$manager->loadCache();
 			}
@@ -138,6 +141,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('entityPreloader', \Elgg\EntityPreloader::class);
 
 		$this->setClassName('entityTable', \Elgg\Database\EntityTable::class);
+
+		$this->setFactory('env', function(ServiceProvider $c) {
+			return \Elgg\Environments\BasicEnvironment::factory($c->config);
+		});
 
 		$this->setFactory('events', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('events');

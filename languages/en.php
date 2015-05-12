@@ -456,6 +456,7 @@ return array(
 
 	'admin:view_site' => 'View site',
 	'admin:loggedin' => 'Logged in as %s',
+	'admin:environment' => 'on %s',
 	'admin:menu' => 'Menu',
 
 	'admin:configuration:success' => "Your settings have been saved.",
@@ -666,6 +667,7 @@ three sections:
 
 	'admin:server:label:php' => 'PHP',
 	'admin:server:label:web_server' => 'Web Server',
+	'admin:server:label:env' => 'Application Environment',
 	'admin:server:label:server' => 'Server',
 	'admin:server:label:log_location' => 'Log Location',
 	'admin:server:label:php_version' => 'PHP version',
@@ -677,6 +679,8 @@ three sections:
 	'admin:server:label:post_max_size' => 'POST maximum size',
 	'admin:server:label:upload_max_filesize' => 'Upload maximum size',
 	'admin:server:warning:post_max_too_small' => '(Note: post_max_size must be larger than this value to support uploads of this size)',
+	'admin:env:label:name' => 'Instance name',
+	'admin:env:label:is_prod' => 'In production',
 
 	'admin:user:label:search' => "Find users:",
 	'admin:user:label:searchbutton' => "Search",

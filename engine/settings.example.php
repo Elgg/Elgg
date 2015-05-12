@@ -19,8 +19,20 @@ if (!isset($CONFIG)) {
 	$CONFIG = new \stdClass;
 }
 
+/**
+ * The application environment
+ *
+ * @warning Do not read this value from config! Use the "env" service.
+ *
+ * @link http://learn.elgg.org/en/latest/guides/services.html#service-env
+ */
+$CONFIG->elgg_env = [
+	'name' => 'default',
+	'is_prod' => true,
+];
+
 /*
- * Standard configuration
+ * Database configuration
  *
  * You will use the same database connection for reads and writes.
  * This is the easiest configuration, and will suit 99.99% of setups. However, if you're

@@ -22,6 +22,7 @@ class ApplicationTest extends \PHPUnit_Framework_TestCase {
 
 		$names = [
 			'config',
+			'env',
 		];
 
 		foreach	($names as $name) {

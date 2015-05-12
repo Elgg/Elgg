@@ -382,12 +382,32 @@ function _elgg_admin_pagesetup() {
 			'priority' => 900,
 		));
 
+		$user_link = elgg_view('output/url', [
+			'is_trusted' => true,
+			'href' => $admin->getURL(),
+			'text' => $admin->name,
+		]);
 		elgg_register_menu_item('admin_header', array(
 			'name' => 'admin_profile',
 			'href' => false,
-			'text' => elgg_echo('admin:loggedin', array($admin->name)),
+			'text' => elgg_echo('admin:loggedin', [$user_link]),
 			'priority' => 800,
 		));
+
+		$env = elgg()->env;
+		if ($env->getName() !== 'default') {
+			$env_link = elgg_view('output/url', [
+				'is_trusted' => true,
+				'href' => 'admin/statistics/server',
+				'text' => elgg()->env->getName(),
+			]);
+			elgg_register_menu_item('admin_header', array(
+				'name' => 'admin_environment',
+				'href' => false,
+				'text' => elgg_echo('admin:environment', [$env_link]),
+				'priority' => 850,
+			));
+		}
 
 		if (elgg_get_config('elgg_maintenance_mode', null)) {
 			elgg_register_menu_item('admin_header', array(

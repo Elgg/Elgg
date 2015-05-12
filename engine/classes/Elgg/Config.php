@@ -7,6 +7,9 @@ namespace Elgg;
  * @since 1.10.0
  */
 class Config implements Services\Config {
+
+	const CONFIG_KEY_SETTINGS_FILE = 'Config_file';
+
 	/**
 	 * Configuration storage. Is usually reference to global $CONFIG
 	 * 
@@ -184,12 +187,12 @@ class Config implements Services\Config {
 			return;
 		}
 
-		if (isset($this->config->Config_file)) {
-			if ($this->config->Config_file === false) {
+		if (isset($this->config->{self::CONFIG_KEY_SETTINGS_FILE})) {
+			if ($this->config->{self::CONFIG_KEY_SETTINGS_FILE} === false) {
 				$this->settings_loaded = true;
 				return;
 			}
-			$path = $this->config->Config_file;
+			$path = $this->config->{self::CONFIG_KEY_SETTINGS_FILE};
 		} else {
 			$path = dirname(dirname(__DIR__)) . '/settings.php';
 		}

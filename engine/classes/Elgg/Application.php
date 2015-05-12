@@ -3,11 +3,13 @@
 namespace Elgg;
 
 use Elgg\Di\ServiceProvider;
+use Elgg\Environments\BasicEnvironment;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
  *
- * @property-read \Elgg\Services\Config $config
+ * @property-read \Elgg\Services\Config      $config
+ * @property-read \Elgg\Services\Environment $env
  *
  * @since 2.0.0
  */
@@ -38,6 +40,7 @@ class Application {
 	 */
 	private static $public_services = [
 		'config' => true,
+		'env' => true,
 	];
 
 	/**
@@ -224,6 +227,10 @@ class Application {
 
 		// in case not loaded already
 		$this->loadCore();
+
+		// Make sure devs can't read $CONFIG->elgg_env
+		$this->services->env;
+		$config->set(BasicEnvironment::CONFIG_KEY_FACTORY, null);
 
 		$events = $this->services->events;
 
