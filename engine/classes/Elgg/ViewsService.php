@@ -6,9 +6,6 @@ namespace Elgg;
  *
  * Use the elgg_* versions instead.
  *
- * @todo 1.10 remove deprecated view injections
- * @todo inject/remove dependencies: $CONFIG, hooks, site_url
- *
  * @access private
  *
  * @package    Elgg.Core
@@ -16,11 +13,6 @@ namespace Elgg;
  * @since      1.9.0
  */
 class ViewsService {
-
-	protected $config_wrapper;
-	protected $site_url_wrapper;
-	protected $user_wrapper;
-	protected $user_wrapped;
 
 	/**
 	 * @see \Elgg\ViewsService::fileExists
@@ -61,24 +53,6 @@ class ViewsService {
 		$this->CONFIG = $CONFIG;
 		$this->hooks = $hooks;
 		$this->logger = $logger;
-	}
-
-	/**
-	 * Get the user object in a wrapper
-	 * 
-	 * @return \Elgg\DeprecationWrapper|null
-	 */
-	protected function getUserWrapper() {
-		$user = _elgg_services()->session->getLoggedInUser();
-		if ($user) {
-			if ($user !== $this->user_wrapped) {
-				$warning = 'Use elgg_get_logged_in_user_entity() rather than assuming elgg_view() '
-							. 'populates $vars["user"]';
-				$this->user_wrapper = new \Elgg\DeprecationWrapper($user, $warning, 1.8);
-			}
-			$user = $this->user_wrapper;
-		}
-		return $user;
 	}
 
 	/**
@@ -251,60 +225,6 @@ class ViewsService {
 			_elgg_services()->events->trigger('pagesetup', 'system');
 		}
 
-		// @warning - plugin authors: do not expect user, config, and url to be
-		// set by elgg_view() in the future. Instead, use elgg_get_logged_in_user_entity(),
-		// elgg_get_config(), and elgg_get_site_url() in your views.
-		if (!isset($vars['user'])) {
-			$vars['user'] = $this->getUserWrapper();
-		}
-		if (!isset($vars['config'])) {
-			if (!$this->config_wrapper) {
-				$warning = 'Do not rely on $vars["config"] or $CONFIG being available in views';
-				$this->config_wrapper = new \Elgg\DeprecationWrapper($this->CONFIG, $warning, 1.8);
-			}
-			$vars['config'] = $this->config_wrapper;
-		}
-		if (!isset($vars['url'])) {
-			if (!$this->site_url_wrapper) {
-				$warning = 'Do not rely on $vars["url"] being available in views';
-				$this->site_url_wrapper = new \Elgg\DeprecationWrapper(elgg_get_site_url(), $warning, 1.8);
-			}
-			$vars['url'] = $this->site_url_wrapper;
-		}
-
-		// full_view is the new preferred key for full view on entities @see elgg_view_entity()
-		// check if full_view is set because that means we've already rewritten it and this is
-		// coming from another view passing $vars directly.
-		if (isset($vars['full']) && !isset($vars['full_view'])) {
-			elgg_deprecated_notice("Use \$vars['full_view'] instead of \$vars['full']", 1.8, 2);
-			$vars['full_view'] = $vars['full'];
-		}
-		if (isset($vars['full_view'])) {
-			$vars['full'] = $vars['full_view'];
-		}
-
-		// internalname => name (1.8)
-		if (isset($vars['internalname']) && !isset($vars['__ignoreInternalname']) && !isset($vars['name'])) {
-			elgg_deprecated_notice('You should pass $vars[\'name\'] now instead of $vars[\'internalname\']', 1.8, 2);
-			$vars['name'] = $vars['internalname'];
-		} elseif (isset($vars['name'])) {
-			if (!isset($vars['internalname'])) {
-				$vars['__ignoreInternalname'] = '';
-			}
-			$vars['internalname'] = $vars['name'];
-		}
-
-		// internalid => id (1.8)
-		if (isset($vars['internalid']) && !isset($vars['__ignoreInternalid']) && !isset($vars['name'])) {
-			elgg_deprecated_notice('You should pass $vars[\'id\'] now instead of $vars[\'internalid\']', 1.8, 2);
-			$vars['id'] = $vars['internalid'];
-		} elseif (isset($vars['id'])) {
-			if (!isset($vars['internalid'])) {
-				$vars['__ignoreInternalid'] = '';
-			}
-			$vars['internalid'] = $vars['id'];
-		}
-
 		// If it's been requested, pass off to a template handler instead
 		if ($bypass == false && isset($this->CONFIG->template_handler) && !empty($this->CONFIG->template_handler)) {
 			$template_handler = $this->CONFIG->template_handler;
@@ -343,14 +263,6 @@ class ViewsService {
 		$params = array('view' => $view_orig, 'vars' => $vars, 'viewtype' => $viewtype);
 		$content = $this->hooks->trigger('view', $view_orig, $params, $content);
 
-		// backward compatibility with less granular hook will be gone in 2.0
-		$content_tmp = $this->hooks->trigger('display', 'view', $params, $content);
-
-		if ($content_tmp !== $content) {
-			$content = $content_tmp;
-			elgg_deprecated_notice('The display:view plugin hook is deprecated by view:view_name', 1.8);
-		}
-
 		return $content;
 	}
 
@@ -380,11 +292,6 @@ class ViewsService {
 	 */
 	private function renderViewFile($view, array $vars, $viewtype, $issue_missing_notice) {
 		$view_location = $this->getViewLocation($view, $viewtype);
-
-		// @warning - plugin authors: do not expect $CONFIG to be available in views
-		// in the future. Instead, use elgg_get_config() in your views.
-		// Note: this is intentionally a local var.
-		$CONFIG = $this->config_wrapper;
 
 		if ($this->fileExists("{$view_location}$viewtype/$view.php")) {
 			ob_start();

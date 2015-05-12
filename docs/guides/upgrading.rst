@@ -56,6 +56,27 @@ Removed Functions
  - get_db_link()
  - load_plugins()
 
+Removed Plugin Hooks
+--------------------
+
+ - ``[display, view]``: See the :ref:`new plugin hook<guides/views#altering-view-output>`.
+
+Removed View Variables
+----------------------
+
+During rendering, the view system no longer injects these into the scope:
+
+ - ``$vars['url']``: replace with ``elgg_get_site_url()``
+ - ``$vars['user']``: replace with ``elgg_get_logged_in_user_entity()``
+ - ``$vars['config']``: use ``elgg_get_config()`` and ``elgg_set_config()``
+ - ``$CONFIG``: use ``elgg_get_config()`` and ``elgg_set_config()``
+
+Also several workarounds for very old views are no longer performed. Make these changes:
+
+ - Set ``$vars['full_view']`` instead of ``$vars['full']``.
+ - Set ``$vars['name']`` instead of ``$vars['internalname']``.
+ - Set ``$vars['id']`` instead of ``$vars['internalid']``.
+
 Callbacks in Queries
 --------------------
 
