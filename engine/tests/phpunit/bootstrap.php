@@ -33,11 +33,15 @@ $CONFIG = (object)[
 	'dataroot' => __DIR__ . '/test_files/dataroot/',
 	'site_guid' => 1,
 	'AutoloaderManager_skip_storage' => true,
+	'simplecache_enabled' => false,
 ];
 
 $app = new \Elgg\Application(new \Elgg\Di\ServiceProvider(new \Elgg\Config($CONFIG)));
 $app->loadCore();
 _elgg_testing_application($app);
+
+// persistentLogin service needs this set to instantiate without calling DB
+_elgg_configure_cookies($CONFIG);
 
 // PHPUnit will serialize globals between tests, $app contains Closures!
 unset($app);

@@ -1,63 +1,74 @@
 <?php
 namespace Elgg\Di;
 
+use phpDocumentor\Reflection\DocBlock;
 
 class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 
-	public function testPropertiesReturnCorrectClassNames() {
+	public function setUp() {
+		$sp = _elgg_services();
+		$sp->setValue('session', \ElggSession::getMock());
+	}
+
+	/**
+	 * @dataProvider servicesListProvider
+	 */
+	public function testPropertyType($name, $type) {
 		$sp = _elgg_services();
 
-		$sp->setValue('session', \ElggSession::getMock());
+		$non_shared_names = [
+			'queryCounter',
+		];
 
-		$svcClasses = array(
-			'accessCache' => '\ElggStaticVariableCache',
-			'accessCollections' => '\Elgg\Database\AccessCollections',
-			'actions' => '\Elgg\ActionsService',
-			'adminNotices' => '\Elgg\Database\AdminNotices',
+		$skipped_names = [
+			//'service' => 'reason can't be loaded in phpunit',
+		];
 
-			// requires _elgg_get_simplecache_root() to be defined
-			//'amdConfig' => '\Elgg\Amd\Config',
-			
-			'annotations' => '\Elgg\Database\Annotations',
-			'autoP' => '\ElggAutoP',
-			'autoloadManager' => '\Elgg\AutoloadManager',
-			'config' => '\Elgg\Config',
-			'configTable' => '\Elgg\Database\ConfigTable',
-			'context' => '\Elgg\Context',
-			'datalist' => '\Elgg\Database\Datalist',
-			'db' => '\Elgg\Database',
-			'entityTable' => '\Elgg\Database\EntityTable',
-			'events' => '\Elgg\EventsService',
-			'externalFiles' => '\Elgg\Assets\ExternalFiles',
-			'hooks' => '\Elgg\PluginHooksService',
-			'input' => '\Elgg\Http\Input',
-			'logger' => '\Elgg\Logger',
-			'metadataCache' => '\Elgg\Cache\MetadataCache',
-			'metadataTable' => '\Elgg\Database\MetadataTable',
-			'metastringsTable' => '\Elgg\Database\MetastringsTable',
-			'passwords' => '\Elgg\PasswordService',
-			'plugins' => '\Elgg\Database\Plugins',
-			'request' => '\Elgg\Http\Request',
-			'relationshipsTable' => '\Elgg\Database\RelationshipsTable',
-			'router' => '\Elgg\Router',
-			'session' => '\ElggSession',
-			'simpleCache' => '\Elgg\Cache\SimpleCache',
-			'siteSecret' => '\Elgg\Database\SiteSecret',
-			'stickyForms' => '\Elgg\Forms\StickyForms',
-			'subtypeTable' => '\Elgg\Database\SubtypeTable',
-			'systemCache' => '\Elgg\Cache\SystemCache',
-			'translator' => '\Elgg\I18n\Translator',
-			'usersTable' => '\Elgg\Database\UsersTable',
-			'views' => '\Elgg\ViewsService',
-			'widgets' => '\Elgg\WidgetsService',
-		);
+		if (isset($skipped_names[$name])) {
+			$this->markTestSkipped($skipped_names[$name]);
+			return;
+		}
 
-		foreach ($svcClasses as $key => $class) {
-			$obj1 = $sp->{$key};
-			$obj2 = $sp->{$key};
-			$this->assertInstanceOf($class, $obj1);
+		$obj1 = $sp->{$name};
+		$obj2 = $sp->{$name};
+		$this->assertInstanceOf($type, $obj1);
+
+		if (in_array($name, $non_shared_names)) {
+			$this->assertNotSame($obj1, $obj2);
+		} else {
 			$this->assertSame($obj1, $obj2);
 		}
 	}
-}
 
+	public function testListProvider() {
+		$sp = _elgg_services();
+
+		$list = [];
+		foreach (self::servicesListProvider() as $item) {
+			$list[$item[0]] = $item[1];
+		}
+
+		foreach ($sp->getNames() as $name) {
+			if (isset($list[$name])) {
+				continue;
+			}
+			$this->fail("$name is not present in data provider");
+		}
+	}
+
+	public static function servicesListProvider() {
+		$sp = _elgg_services();
+		$class = new \ReflectionClass(get_class($sp));
+		$phpdoc = new DocBlock($class);
+		$readonly_props = $phpdoc->getTagsByName('property-read');
+
+		/* @var \phpDocumentor\Reflection\DocBlock\Tag\PropertyReadTag[] $readonly_props */
+		foreach ($readonly_props as $prop) {
+			$name = substr($prop->getVariableName(), 1);
+			$type = $prop->getType();
+			$sets[] = [$name, $type];
+		}
+
+		return $sets;
+	}
+}

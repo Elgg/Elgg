@@ -44,7 +44,8 @@
         "phpunit/phpunit": "~4.1",
         "elgg/sniffs": "dev-master",
         "squizlabs/php_codesniffer": "~1.5",
-        "simpletest/simpletest": "~1.1"
+        "simpletest/simpletest": "~1.1",
+        "phpdocumentor/reflection-docblock": "~2.0"
     },
     "config": {
         "optimize-autoloader": true

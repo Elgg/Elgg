@@ -31,8 +31,8 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 */
 	public function __construct($name, \Elgg\Database $db) {
 		$this->db = $db;
-		$this->name = $this->db->sanitizeString($name);
-		$this->workerId = $this->db->sanitizeString(md5(microtime() . getmypid()));
+		$this->name = $name;
+		$this->workerId = md5(microtime() . getmypid());
 	}
 
 	/**
@@ -40,10 +40,12 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 */
 	public function enqueue($item) {
 		$prefix = $this->db->getTablePrefix();
+		$name = $this->db->sanitizeString($this->name);
 		$blob = $this->db->sanitizeString(serialize($item));
 		$time = time();
+
 		$query = "INSERT INTO {$prefix}queue
-			SET name = '$this->name', data = '$blob', timestamp = $time";
+			SET name = '$name', data = '$blob', timestamp = $time";
 		return $this->db->insertData($query) !== false;
 	}
 
@@ -52,19 +54,22 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 */
 	public function dequeue() {
 		$prefix = $this->db->getTablePrefix();
+		$name = $this->db->sanitizeString($this->name);
+		$worker_id = $this->db->sanitizeString($this->workerId);
+
 		$update = "UPDATE {$prefix}queue 
-			SET worker = '$this->workerId'
-			WHERE name = '$this->name' AND worker IS NULL
+			SET worker = '$worker_id'
+			WHERE name = '$name' AND worker IS NULL
 			ORDER BY id ASC LIMIT 1";
 		$num = $this->db->updateData($update, true);
 		if ($num === 1) {
 			$select = "SELECT data FROM {$prefix}queue
-				WHERE worker = '$this->workerId'";
+				WHERE worker = '$worker_id'";
 			$obj = $this->db->getDataRow($select);
 			if ($obj) {
 				$data = unserialize($obj->data);
 				$delete = "DELETE FROM {$prefix}queue
-					WHERE name = '$this->name' AND worker = '$this->workerId'";
+					WHERE name = '$name' AND worker = '$worker_id'";
 				$this->db->deleteData($delete);
 				return $data;
 			}
@@ -78,7 +83,9 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 */
 	public function clear() {
 		$prefix = $this->db->getTablePrefix();
-		$this->db->deleteData("DELETE FROM {$prefix}queue WHERE name = '$this->name'");
+		$name = $this->db->sanitizeString($this->name);
+
+		$this->db->deleteData("DELETE FROM {$prefix}queue WHERE name = '$name'");
 	}
 
 	/**
@@ -86,7 +93,9 @@ class DatabaseQueue implements \Elgg\Queue\Queue {
 	 */
 	public function size() {
 		$prefix = $this->db->getTablePrefix();
-		$result = $this->db->getDataRow("SELECT COUNT(id) AS total FROM {$prefix}queue WHERE name = '$this->name'");
+		$name = $this->db->sanitizeString($this->name);
+
+		$result = $this->db->getDataRow("SELECT COUNT(id) AS total FROM {$prefix}queue WHERE name = '$name'");
 		return (int)$result->total;
 	}
 }

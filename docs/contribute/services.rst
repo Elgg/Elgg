@@ -6,9 +6,6 @@ The :doc:`services guide </guides/services>` has general information about using
 To add a new service object to Elgg:
 
 #. Annotate your class as ``@access private``.
-#. Open the PHPUnit test ``Elgg\Di\ServiceProviderTest``.
-#. In ``testPropertiesReturnCorrectClassNames()``, add your service key and class name to the array of
-   existing services.
 #. Open the class ``Elgg\Di\ServiceProvider``.
 #. Add a ``@property-read`` annotation for your service at the top. This allows IDEs and static code
    analyzers to understand the type of the property.
@@ -69,7 +66,7 @@ Now your service will be available via property access on the ``Elgg\Application
 
 .. note::
 
-    For examples, see the ``config`` service, including the interface ``Elgg\Services\ConfigInterface``
+    For examples, see the ``config`` service, including the interface ``Elgg\Services\Config``
     and the concrete implementation ``Elgg\Config``.
 
 Service Life Cycle and Factories
