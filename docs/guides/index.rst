@@ -19,6 +19,7 @@ Customize Elgg's behavior with plugins.
    river
    pagehandler
    routing
+   services
    page-owner
    gatekeeper
    widgets
