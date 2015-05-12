@@ -1223,8 +1223,7 @@ class ElggInstaller {
 			'dbpass' => $password,
 			'dbname' => $dbname,
 		]);
-		$logger = new \Elgg\Logger(new \Elgg\PluginHooksService());
-		$db = new \Elgg\Database($config, $logger);
+		$db = new \Elgg\Database($config);
 
 		try {
 			$db->getDataRow("SELECT 1");
