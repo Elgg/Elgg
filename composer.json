@@ -27,6 +27,9 @@
             "composer validate"
         ]
     },
+    "scripts": {
+        "test": "vendor/bin/phpunit"
+    },
     "suggest": {
         "ext-mbstring": "*"
     },

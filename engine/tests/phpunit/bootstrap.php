@@ -1,5 +1,10 @@
 <?php
+use Elgg\Filesystem\GaufretteDirectory;
+
 $engine = dirname(dirname(dirname(__FILE__)));
+
+global $test_files;
+$test_files = GaufretteDirectory::createLocal("$engine/tests/phpunit/test_files");
 
 date_default_timezone_set('America/Los_Angeles');
 

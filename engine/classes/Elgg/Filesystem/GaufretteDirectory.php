@@ -42,14 +42,8 @@ final class GaufretteDirectory implements Directory {
 		return new self($this->gaufrette, $this->localPath, $this->getGaufrettePath($path));
 	}
 	
-	/**
-	 * Whether this filesystem has an existing directory at the given path.
-	 * 
-	 * @param string $path The path to the directory, relative to this filesystem.
-	 * 
-	 * @return boolean
-	 */
-	private function isDirectory($path) {
+	/** @inheritDoc */
+	public function isDirectory($path) {
 		$adapter = $this->gaufrette->getAdapter();
 		return $adapter->isDirectory($this->getGaufrettePath($path));
 	}
@@ -81,22 +75,17 @@ final class GaufretteDirectory implements Directory {
 	/** @inheritDoc */
 	public function getFiles($path = '') {
 		$keys = $this->gaufrette->listKeys($this->getGaufrettePath($path));
+		$chrootLength = strlen($this->chroot);
 		
 		$files = new ArrayCollection($keys['keys']);
 		
-		return $files->map(function($path) {
-			return new File($this, $path);
+		return $files->map(function($path) use ($chrootLength) {
+			return $this->getFile(substr($path, $chrootLength));
 		});
 	}
 
-	/**
-	 * Get the absolute path to the given directory-relative path.
-	 * 
-	 * @param string $path A file/directory path within this directory.
-	 * 
-	 * @return string
-	 */
-	private function getFullPath($path = '') {
+	/** @inheritDoc */
+	public function getFullPath($path = '') {
 		$gaufrettePath = $this->normalize($this->getGaufrettePath($path));
 		return "$this->localPath/$gaufrettePath";
 	}
@@ -104,12 +93,15 @@ final class GaufretteDirectory implements Directory {
 	/**
 	 * Get a path suitable for passing to the underlying gaufrette filesystem.
 	 * 
-	 * @param string $path The path relative to this directory.
+	 * @param string $path A file/directory path within this directory.
 	 * 
 	 * @return string
 	 */
 	private function getGaufrettePath($path) {
-		return $this->normalize("$this->chroot/$path");
+		$chroot = $this->normalize($this->chroot);
+		$path = $this->normalize($path);
+		
+		return $this->normalize("$chroot/$path");
 	}
 	
 	/** @inheritDoc */
@@ -131,6 +123,10 @@ final class GaufretteDirectory implements Directory {
 	/** @inheritDoc */
 	public function putContents($path, $content) {
 		$this->gaufrette->write($this->getGaufrettePath($path), $content, true);
+	}
+	
+	public function __toString() {
+		return $this->getFullPath();
 	}
 	
 	/**

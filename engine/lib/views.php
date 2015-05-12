@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Views\Viewtype;
+
 /**
  * Elgg's view system.
  *
@@ -47,15 +50,6 @@
  */
 
 /**
- * The viewtype override.
- *
- * @global string $CURRENT_SYSTEM_VIEWTYPE
- * @see elgg_set_viewtype()
- */
-global $CURRENT_SYSTEM_VIEWTYPE;
-$CURRENT_SYSTEM_VIEWTYPE = "";
-
-/**
  * Manually set the viewtype.
  *
  * View types are detected automatically.  This function allows
@@ -68,10 +62,8 @@ $CURRENT_SYSTEM_VIEWTYPE = "";
  * @return bool
  */
 function elgg_set_viewtype($viewtype = "") {
-	global $CURRENT_SYSTEM_VIEWTYPE;
-
-	$CURRENT_SYSTEM_VIEWTYPE = $viewtype;
-
+	_elgg_services()->views->setCurrentViewtype($viewtype);
+	
 	return true;
 }
 
@@ -89,22 +81,7 @@ function elgg_set_viewtype($viewtype = "") {
  * @see elgg_set_viewtype()
  */
 function elgg_get_viewtype() {
-	global $CURRENT_SYSTEM_VIEWTYPE, $CONFIG;
-
-	if ($CURRENT_SYSTEM_VIEWTYPE != "") {
-		return $CURRENT_SYSTEM_VIEWTYPE;
-	}
-
-	$viewtype = get_input('view', '', false);
-	if (_elgg_is_valid_viewtype($viewtype)) {
-		return $viewtype;
-	}
-
-	if (isset($CONFIG->view) && _elgg_is_valid_viewtype($CONFIG->view)) {
-		return $CONFIG->view;
-	}
-
-	return 'default';
+	return _elgg_services()->views->getCurrentViewtype();
 }
 
 /**
@@ -114,17 +91,7 @@ function elgg_get_viewtype() {
  * @return bool
  */
 function elgg_register_viewtype($viewtype) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->view_types) || !is_array($CONFIG->view_types)) {
-		$CONFIG->view_types = array();
-	}
-
-	if (!in_array($viewtype, $CONFIG->view_types)) {
-		$CONFIG->view_types[] = $viewtype;
-	}
-
-	return true;
+	return _elgg_services()->views->registerViewtype($viewtype);
 }
 
 /**
@@ -136,36 +103,9 @@ function elgg_register_viewtype($viewtype) {
  * @since 1.9.0
  */
 function elgg_is_registered_viewtype($viewtype) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->view_types) || !is_array($CONFIG->view_types)) {
-		return false;
-	}
-
-	return in_array($viewtype, $CONFIG->view_types);
+	return _elgg_services()->views->isRegisteredViewtype($viewtype);
 }
 
-
-/**
- * Checks if $viewtype is a string suitable for use as a viewtype name
- *
- * @param string $viewtype Potential viewtype name. Alphanumeric chars plus _ allowed.
- *
- * @return bool
- * @access private
- * @since 1.9
- */
-function _elgg_is_valid_viewtype($viewtype) {
-	if (!is_string($viewtype) || $viewtype === '') {
-		return false;
-	}
-
-	if (preg_match('/\W/', $viewtype)) {
-		return false;
-	}
-
-	return true;
-}
 
 /**
  * Register a viewtype to fall back to a default view if a view isn't
@@ -238,20 +178,8 @@ function elgg_register_external_view($view, $cacheable = false) {
 	$CONFIG->allowed_ajax_views[$view] = true;
 
 	if ($cacheable) {
-		_elgg_services()->views->registerCacheableView($view);
+		_elgg_services()->views->getView($view)->setCacheable(true);
 	}
-}
-
-/**
- * Check whether a view is registered as cacheable.
- *
- * @param string $view The name of the view.
- * @return boolean
- * @access private
- * @since 1.9.0
- */
-function _elgg_is_view_cacheable($view) {
-	return _elgg_services()->views->isCacheableView($view);
 }
 
 /**
@@ -281,7 +209,18 @@ function elgg_unregister_external_view($view) {
  * @return string
  */
 function elgg_get_view_location($view, $viewtype = '') {
-	return _elgg_services()->views->getViewLocation($view, $viewtype);
+	$views = _elgg_services()->views; 
+	$viewtype = $views->getOrCreateViewtype($viewtype ?: 'default');
+	$location = $views->getView($view)->getLocation($viewtype);
+	
+	if (!isset($location)) {
+		return null; // TODO(ewinslow): Or should we return the core viewpath?
+	}
+	
+	$matches = [];
+	preg_match("#(.*)$view(\.php)?#", "$location", $matches);
+	
+	return $matches[1] ?: null;
 }
 
 /**
@@ -352,7 +291,7 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  * @return string The parsed view
  */
 function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $viewtype = '') {
-	return _elgg_services()->views->renderView($view, $vars, $bypass, $viewtype);
+	return _elgg_services()->views->renderView($view, $vars, $viewtype, $bypass);
 }
 
 /**
@@ -393,13 +332,22 @@ function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
  * @param string $view_extension This view is added to $view
  * @param int    $priority       The priority, from 0 to 1000,
  *                               to add at (lowest numbers displayed first)
- * @param string $viewtype       I'm not sure why this is here @todo
+ * @param string $viewtype       Ignored
  *
  * @return void
  * @since 1.7.0
  */
 function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '') {
-	_elgg_services()->views->extendView($view, $view_extension, $priority, $viewtype);
+	$views = _elgg_services()->views;
+
+	$base = $views->getView($view);
+	$extension = $views->getView($view_extension);
+	
+	if ($priority < 500) {
+		$base->prepend($extension, $priority);
+	} else {
+		$base->append($extension, $priority);
+	}
 }
 
 /**
@@ -412,7 +360,12 @@ function elgg_extend_view($view, $view_extension, $priority = 501, $viewtype = '
  * @since 1.7.2
  */
 function elgg_unextend_view($view, $view_extension) {
-	return _elgg_services()->views->unextendView($view, $view_extension);
+	$views = _elgg_services()->views;
+	
+	$base = $views->getView($view);
+	$extension = $views->getView($view_extension);
+	
+	return $base->unextend($extension);
 }
 
 /**
@@ -1478,34 +1431,7 @@ function elgg_view_access_collections($owner_guid) {
  * @see elgg_view()
  */
 function set_template_handler($function_name) {
-	global $CONFIG;
-
-	if (is_callable($function_name)) {
-		$CONFIG->template_handler = $function_name;
-		return true;
-	}
-	return false;
-}
-
-/**
- * Auto-registers views from a location.
- *
- * @note Views in plugin/views/ are automatically registered for active plugins.
- * Plugin authors would only need to call this if optionally including
- * an entire views structure.
- *
- * @param string $view_base          Optional The base of the view name without the view type.
- * @param string $folder             Required The folder to begin looking in
- * @param string $base_location_path The base views directory to use with elgg_set_view_location()
- * @param string $viewtype           The type of view we're looking at (default, rss, etc)
- *
- * @return bool returns false if folder can't be read
- * @since 1.7.0
- * @see elgg_set_view_location()
- * @access private
- */
-function autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
-	return _elgg_services()->views->autoregisterViews($view_base, $folder, $base_location_path, $viewtype);
+	return _elgg_services()->views->setTemplateHandler($function_name);
 }
 
 /**
@@ -1684,16 +1610,6 @@ function elgg_views_boot() {
 
 	elgg_register_plugin_hook_handler('output:before', 'layout', 'elgg_views_add_rss_link');
 	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_header_x_frame_options');
-
-	// discover the core viewtypes
-	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
-	$view_path = $CONFIG->viewpath;
-	$viewtype_dirs = scandir($view_path);
-	foreach ($viewtype_dirs as $viewtype) {
-		if (_elgg_is_valid_viewtype($viewtype) && is_dir($view_path . $viewtype)) {
-			elgg_register_viewtype($viewtype);
-		}
-	}
 
 	// set default icon sizes - can be overridden in settings.php or with plugin
 	if (!isset($CONFIG->icon_sizes)) {
