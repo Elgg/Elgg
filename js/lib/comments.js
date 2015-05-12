@@ -67,9 +67,23 @@ elgg.comments.Comment.prototype = {
 		elgg.action('comment/save', {
 			data: $form.serialize(),
 			success: function(json) {
+				// https://github.com/kvz/phpjs/blob/master/LICENSE.txt
+				function nl2br(content) {
+					if (/<(?:p|br)\b/.test(content)) {
+						// probably formatted already
+						return content;
+					}
+					return content.replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1<br>$2');
+				}
+
 				if (json.status === 0) {
 					// Update list item content
-					that.$item.find('[data-role="comment-text"]').html(value);
+					if (json.output) {
+						that.$item.find('[data-role="comment-text"]').replaceWith(json.output);
+					} else {
+						// action has been overridden and doesn't return comment content
+						that.$item.find('[data-role="comment-text"]').html(nl2br(value));
+					}
 				}
 				that.hideForm(function () {
 					that.getForm().remove();
