@@ -372,33 +372,11 @@ The save action checks the input, then clears the sticky form upon success:
 Ajax
 ====
 
-To call an action via JavaScript without actually submitting a form, use ``elgg.action``:
-
-.. code:: js
-
-   elgg.action(‘example’, { param: 12345 });
-
-This does a few things under the hood:
-
- 1. Automatically normalizes the request URL to http://localhost/elgg/action/example.
- 2. Adds XSRF tokens to the request body for security
- 3. If the action emits any system messages or errors, they will automatically be displayed when the response comes back.
-
-Often you’ll want to do something in response to a successful action:
-
-.. code:: js
-
-   elgg.action(‘example’, {
-     data: { param: 12345 },
-     success: function() {
-       // Do something once action completes
-     }
-   });
-
+See the :doc:`Ajax guide</guides/ajax>` for instructions on calling actions from JavaScript.
 
 Security
 ========
-For enhanced security, all actions require an XSRF token. Calls to action URLs that do not include security tokens will be ignored and a warning will be generated.
+For enhanced security, all actions require an CSRF token. Calls to action URLs that do not include security tokens will be ignored and a warning will be generated.
 
 A few views and functions automatically generate security tokens:
 

@@ -12,88 +12,162 @@ The 1.8 version is still functional and is :ref:`described below<1.8-js>`.
 AMD
 ===
 
-Defining and loading a module in Elgg 1.9 takes two steps:
+Here we'll describe making and executing AMD modules. The RequireJS documentation for
+`defining modules <http://requirejs.org/docs/api.html#define>`_ may also be of use.
 
-1. Define your module as asynchronous JavaScript.
-2. Tell Elgg to asynchronously execute your module in the current page.
+Executing a module in the current page
+======================================
 
-1. Define your module as asynchronous JavaScript
-------------------------------------------------
+Telling Elgg to load an existing module in the current page is easy:
 
-You can define a module by creating a view or registering a URL.
+.. code-block:: php
 
-Defining modules as a view
-^^^^^^^^^^^^^^^^^^^^^^^^^^
+    <?php
+    elgg_require_js("myplugin/say_hello");
 
-Modules defined by creating views are immediately available for use and require no registration.
-To register a module named ``my/module``, create the view ``views/default/js/my/module.js``.
+On the client-side, this will asynchronously load the module, load any dependencies, and
+execute the module's definition function, if it has one.
 
-.. warning: The extension must be ``.js``.
+Defining the Module
+===================
 
-A basic module could look like this:
+Here we define a basic module that alters the page, by passing a "definition function" to ``define()``:
 
 .. code-block:: javascript
 
-	define(function(require) {
-		var elgg = require("elgg");
-		var $ = require("jquery");
+    // in views/default/js/myplugin/say_hello.js
 
-		return function() {
-			// Some logic in here
-		};
-	});
+    define(function(require) {
+        var elgg = require("elgg");
+        var $ = require("jquery");
 
-Define your module via a URL
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+        $('body').append(elgg.echo('hello_world'));
+    });
 
-You can define an existing AMD module using ``elgg_define_js()``. Traditional (browser-globals)
-JavaScript files can also be defined as AMD modules if you shim them by setting ``exports`` and
-optionally ``deps``.
+The module's name is determined by the view name, which here is ``js/myplugin/say_hello.js``.
+We strip the leading ``js/`` and the ``.js`` extension, leaving ``myplugin/say_hello``.
 
-.. warning:: Calls to ``elgg_define_js()`` must be in an ``init, system`` event handler.
+.. warning::
+
+    The definition function **must** have one argument named ``require``.
+
+Making modules dependent on other modules
+-----------------------------------------
+
+Below we refactor a bit so that the module depends on a new ``myplugin/hello`` module to provide
+the greeting:
+
+.. code-block:: javascript
+
+    // in views/default/js/myplugin/hello.js
+
+    define(function(require) {
+        var elgg = require("elgg");
+
+        return elgg.echo('hello_world');
+    });
+
+.. code-block:: javascript
+
+    // in views/default/js/myplugin/say_hello.js
+
+    define(function(require) {
+        var $ = require("jquery");
+        var hello = require("myplugin/hello");
+
+        $('body').append(hello);
+    });
+
+Passing plugin/Elgg settings to modules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You can use a PHP-based module to pass values from the server. To make the module ``myplugin/settings``,
+create the view file ``views/default/js/myplugin/settings.js.php`` (note the double extension
+``.js.php``).
 
 .. code-block:: php
 
     <?php
 
-	elgg_register_event_handler('init', 'system', 'amd_init');
+    $settings = elgg_get_plugin_by_id('myplugin')->getAllSettings();
+    $settings = [
+        'foo' => elgg_extract('foo', $settings),
+        'bar' => elgg_extract('bar', $settings),
+    ];
 
-	function amd_init() {
-		// AMD module as the view js/backbone
-		elgg_define_js('backbone');
+    ?>
+    define(<?php echo json_encode($settings); ?>);
 
-		// AMD module with a different path
-		elgg_define_js('backbone', array(
-			'src' => '/vendors/backbone/backbone.js',
-		));
+You must also manually register the view as an external resource:
 
-		// Shimmed AMD module
-		elgg_define_js('jquery.form', array(
-			'src' => '/vendors/jquery/jquery.form.js',
-			'deps' => array('jquery'),
-			'exports' => 'jQuery.fn.ajaxForm',
-		));
-	}
+.. code-block:: php
+
+    <?php
+    // note the view name does not include ".php"
+    elgg_register_simplecache_view('js/myplugin/settings.js');
+
+.. note::
+
+    The PHP view is cached, so you should treat the output as static (the same for all users) and
+    avoid session-specific logic.
+
+
+Setting the URL of a module
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+You may have a script outside your views you wish to make available as a module.
+
+In your PHP ``init, system`` event handler, you can use ``elgg_define_js()`` to do this:
+
+.. code-block:: php
+
+    <?php
+    elgg_define_js('underscore', [
+        'src' => '/mod/myplugin/vendors/underscore/underscore-min.js',
+    ]);
+
+.. note::
+
+    The ``src`` option in ``elgg_define_js()`` is passed through ``elgg_normalize_url``, so you can use paths
+    relative to the site URL.
+
+Using traditional JS libraries as modules
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+JavaScript libraries that define global resources can also be defined as AMD modules if you shim them by
+setting ``exports`` and optionally ``deps``:
+
+.. code-block:: php
+
+    <?php
+    // set the path, define its dependencies, and what value it returns
+    elgg_define_js('jquery.form', [
+        'src' => '/mod/myplugin/vendors/jquery.form.js',
+        'deps' => array('jquery'),
+        'exports' => 'jQuery.fn.ajaxForm',
+    ]);
+
+When this is requested client-side:
+
+#. The jQuery module is loaded, as it's marked as a dependency.
+#. ``http://example.org/elgg/mod/myplugin/vendors/jquery/jquery.form.js`` is loaded and executed.
+#. The value of ``window.jQuery.fn.ajaxForm`` is returned by the module.
+
+.. warning:: Calls to ``elgg_define_js()`` must be in an ``init, system`` event handler.
 
 Some things to note
 ^^^^^^^^^^^^^^^^^^^
 
-1. Do not use ``elgg.provide()`` or ``elgg.require()`` anymore. They are fully replaced by ``define()`` and ``require()`` respectively.
-2. Return the value of the module instead of adding to a global variable.
-3. Static views (.css, .js) are automatically minified and cached by Elgg's simplecache system.
-
-
-2. Tell Elgg to asynchronously execute your module in the current page
-----------------------------------------------------------------------
-Once an AMD module is defined, you can use ``require(["my/module"])`` from JavaScript to
-access its "exported" value.
-
-Also, calling ``elgg_require_js("my/module")`` from PHP tells Elgg to execute the module code
-on the current page.
+#. Do not use ``elgg.provide()`` anymore nor other means to attach code to ``elgg`` or other
+   global objects. Use modules.
+#. Return the value of the module instead of adding to a global variable.
+#. JS and CSS views (names starting with ``js/`` or ``css/``) as well as static (.js/.css) files
+   are automatically minified and cached by Elgg's simplecache system.
 
 
 Migrating JS from Elgg 1.8 to AMD / 1.9
 =======================================
+
 **Current 1.8 JavaScript modules will continue to work with Elgg**.
 
 We do not anticipate any backwards compatibility issues with this new direction and will fix any
@@ -303,45 +377,8 @@ There are a number of configuration values set in the elgg object:
     // The Elgg release (X.Y.Z).
     elgg.config.release;
 
-Ajax helper functions
----------------------
-
-The JS engine includes many features related to AJAX. Some are specific to Elgg, and some extend jQuery's native AJAX features.
-
-``elgg.get()``
-
-Wrapper for jQuery's ``$.ajax()``, but forces GET and does URL normalization. Accepts all standard jQuery options.
-
-.. code:: js
-
-   // normalizes the url to the current <site_url>/activity
-   elgg.get('/activity', {
-      success: function(resultText, success, xhr) {
-         console.log(resultText);
-      }
-   });
-
-``elgg.post()``
-
-Wrapper for jQuery's $.ajax(), but forces POST and does URL normalization. Accepts all standard jQuery options.
-
-``elgg.action()``
-
-Calls an Elgg action with the data passed. This handles outputting of system messages and errors.
-
-.. code:: js
-
-   elgg.action('friend/add', {
-      data: {
-         friend: 1234
-      },
-      success: function(json) {
-         // do something
-      }
-   });
-
 Module ``elgg/spinner``
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 The ``elgg/spinner`` module can be used to create an Ajax loading indicator fixed to the top of the window.
 
