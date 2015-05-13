@@ -61,6 +61,9 @@ System events
 **init:cookie, <name>**
     Return false to override setting a cookie.
 
+**cache:flush, system**
+    Reset internal and external caches, by default including system_cache, simplecache, and memcache. One might use it to reset others such as APC, OPCache, or WinCache.
+
 User events
 ===========
 
