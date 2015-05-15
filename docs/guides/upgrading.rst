@@ -12,6 +12,13 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.11 to 2.0
 ================
 
+Introduced third-party library for sending email
+------------------------------------------------
+
+We are using the excellent ``Zend\Mail`` library to send emails in Elgg 2.0.
+There are likely edge cases that the library handles differently than Elgg 1.x.
+Take care to test your email notifications carefully when upgrading to 2.0.
+
 All scripts moved to bottom of page
 -----------------------------------
 

@@ -1,4 +1,8 @@
 <?php
+
+use Elgg\Mail\Address;
+use Zend\Mail\Message;
+
 /**
  * Adding a New Notification Event
  * ===============================
@@ -577,6 +581,7 @@ function set_user_notification_setting($user_guid, $method, $value) {
 	return false;
 }
 
+
 /**
  * Send an email to any email address
  *
@@ -602,7 +607,7 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 		$msg = "Missing a required parameter, '" . 'to' . "'";
 		throw new \NotificationException($msg);
 	}
-
+	
 	$headers = array(
 		"Content-Type" => "text/plain; charset=UTF-8; format=flowed",
 		"MIME-Version" => "1.0",
@@ -623,62 +628,33 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	// compatibility. The latter is so handlers can now alter the contents/headers of
 	// the email by returning the array
 	$result = elgg_trigger_plugin_hook('email', 'system', $mail_params, $mail_params);
-	if (is_array($result)) {
-		foreach (array('to', 'from', 'subject', 'body', 'headers') as $key) {
-			if (isset($result[$key])) {
-				${$key} = $result[$key];
-			}
-		}
-	} elseif ($result !== null) {
+	
+	if (!is_array($result) && $result !== null) {
 		return $result;
 	}
 
-	$header_eol = "\r\n";
-	if (isset($CONFIG->broken_mta) && $CONFIG->broken_mta) {
-		// Allow non-RFC 2822 mail headers to support some broken MTAs
-		$header_eol = "\n";
-	}
+	// strip name from to and from
+	
+	$to_address = Address::fromString($result['to']);
+	$from_address = Address::fromString($result['from']);
 
-	// Windows is somewhat broken, so we use just address for to and from
-	if (strtolower(substr(PHP_OS, 0, 3)) == 'win') {
-		// strip name from to and from
-		if (strpos($to, '<')) {
-			preg_match('/<(.*)>/', $to, $matches);
-			$to = $matches[1];
-		}
-		if (strpos($from, '<')) {
-			preg_match('/<(.*)>/', $from, $matches);
-			$from = $matches[1];
-		}
-	}
+	$subject = html_entity_decode($result['subject'], ENT_QUOTES, 'UTF-8');
 
-	// make sure From is set
-	if (empty($headers['From'])) {
-		$headers['From'] = $from;
-	}
-
-	// stringify headers
-	$headers_string = '';
-	foreach ($headers as $key => $value) {
-		$headers_string .= "$key: $value{$header_eol}";
-	}
-
-	// Sanitise subject by stripping line endings
-	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
-	// this is because Elgg encodes everything and matches what is done with body
-	$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8'); // Decode any html entities
-	if (is_callable('mb_encode_mimeheader')) {
-		$subject = mb_encode_mimeheader($subject, "UTF-8", "B");
-	}
-
-	// Format message
-	$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8'); // Decode any html entities
+	$body = html_entity_decode($result['body'], ENT_QUOTES, 'UTF-8');
 	$body = elgg_strip_tags($body); // Strip tags from message
-	$body = preg_replace("/(\r\n|\r)/", "\n", $body); // Convert to unix line endings in body
-	$body = preg_replace("/^From/", ">From", $body); // Change lines starting with From to >From
 	$body = wordwrap($body);
-
-	return mail($to, $subject, $body, $headers_string);
+	
+	$message = new Message();
+	$message->addFrom($from_address);
+	$message->addTo($to_address);
+	$message->setSubject($subject);
+	$message->setBody($body);
+		
+	foreach ($result['headers'] as $headerName => $headerValue) {
+		$message->getHeaders()->addHeaderLine($headerName, $headerValue);
+	}
+		
+	return _elgg_services()->mailer->send($message);
 }
 
 /**
