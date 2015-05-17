@@ -4,20 +4,16 @@
  * @package ElggZAudio
  */
 
-elgg_load_js('elgg.zaudio');
+elgg_require_js('elgg/zaudio');
 
-$swf_url = elgg_get_site_url() . 'mod/zaudio/audioplayer/player.swf';
-$mp3_url = elgg_get_site_url() . "mod/file/download.php?file_guid={$vars['file_guid']}";
+$player_options = [
+	'soundFile' => elgg_get_site_url() . "file/download/{$vars['file_guid']}",
+	// more options: http://wpaudioplayer.com/standalone/
+];
 
 ?>
-<?php //@todo JS 1.8: no ?>
-<script>
-	AudioPlayer.setup("<?php echo $swf_url; ?>", {width: 290});
-</script>
-
 <div class="zaudio">
-	<p id="zaudioplayer"></p>
-	<script>
-		AudioPlayer.embed("zaudioplayer", {soundFile: "<?php echo $mp3_url; ?>"});
-	</script>
+	<?php echo elgg_format_element('div', [
+		'data-zaudio-player' => json_encode($player_options),
+	]); ?>
 </div>
