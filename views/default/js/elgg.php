@@ -34,7 +34,6 @@ $files = array(
 	"$lib_dir/session",
 	"$lib_dir/pageowner",
 	"$lib_dir/configuration",
-	"$lib_dir/comments",
 
 	//ui
 	"$lib_dir/ui",
