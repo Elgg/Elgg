@@ -1906,7 +1906,6 @@ function _elgg_init() {
 		'deps' => array('jquery.ui')
 	));
 	
-	elgg_register_external_view('js/elgg/UserPicker.js', true);
 	elgg_register_simplecache_view('js/elgg/booted.js');
 	elgg_require_js('elgg/Comment');
 	elgg_require_js('elgg/booted');
