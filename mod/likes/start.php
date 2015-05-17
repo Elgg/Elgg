@@ -9,7 +9,6 @@ elgg_register_event_handler('init', 'system', 'likes_init');
 function likes_init() {
 
 	elgg_extend_view('css/elgg', 'likes/css');
-	elgg_extend_view('js/elgg', 'likes/js');
 
 	// used to preload likes data before rendering river
 	elgg_extend_view('page/components/list', 'likes/before_lists', 1);
