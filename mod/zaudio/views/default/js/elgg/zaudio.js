@@ -9,7 +9,7 @@ define(function (require) {
 
 	AudioPlayer.setup(elgg.get_site_url() + "mod/zaudio/audioplayer/player.swf", {width: 290});
 
-	function embed(element) {
+	return function(element) {
 		var config = $(element).data().zaudioPlayer;
 
 		if (!element.id) {
@@ -18,13 +18,5 @@ define(function (require) {
 		}
 
 		AudioPlayer.embed(element.id, config);
-	}
-
-	// apply to those in page
-	$('[data-zaudio-player]').each(function () {
-		embed(this);
-	});
-
-	// embed can be used for new elements added to the page
-	return embed;
+	};
 });
