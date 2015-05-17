@@ -12,6 +12,12 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.11 to 2.0
 ================
 
+Dropped login-over-https feature
+--------------------------------
+
+For the best security and performance, serve all pages over HTTPS by switching
+the scheme in your site's wwwroot to `https` at http://yoursite.tld/admin/settings/advanced
+
 All scripts moved to bottom of page
 -----------------------------------
 

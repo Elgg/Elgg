@@ -74,12 +74,6 @@ set_config('allow_registration', $allow_registration, $site->getGUID());
 $walled_garden = ('on' === get_input('walled_garden', false));
 set_config('walled_garden', $walled_garden, $site->getGUID());
 
-if ('on' === get_input('https_login')) {
-	set_config('https_login', 1, $site->getGUID());
-} else {
-	unset_config('https_login', $site->getGUID());
-}
-
 $regenerate_site_secret = get_input('regenerate_site_secret', false);
 if ($regenerate_site_secret) {
 	// if you cancel this even you should present a message to the user

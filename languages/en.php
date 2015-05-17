@@ -1064,8 +1064,6 @@ Once you have logged in, we highly recommend that you change your password.
 	'installation:walled_garden:description' => 'Enable this to prevent non-members from viewing the site except for web pages marked as public (such as login and registration).',
 	'installation:walled_garden:label' => 'Restrict pages to logged-in users',
 
-	'installation:httpslogin' => "Enable this to have user logins performed over HTTPS. This requires an HTTPS enabled web server!",
-	'installation:httpslogin:label' => "Enable HTTPS logins",
 	'installation:view' => "Enter the view which will be used as the default for your site or leave this blank for the default view (if in doubt, leave as default):",
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
