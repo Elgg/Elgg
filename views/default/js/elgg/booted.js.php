@@ -18,6 +18,7 @@ foreach (elgg_get_plugins() as $plugin) {
 define(function (require) {
 	var behaviors = require('elgg/behaviors');
 	var elgg = require('elgg');
+	var $ = require('jquery');
 	var modules = [];
 	var i;
 
@@ -31,6 +32,10 @@ define(function (require) {
 				behaviors.addAttacher(modules[i].addBehavior);
 			}
 		}
+	}
+
+	if ($('.elgg-item-object-comment:first').length) {
+		require(['elgg/Comment']);
 	}
 
 	elgg.trigger_hook('init', 'system');
