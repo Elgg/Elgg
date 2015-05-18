@@ -84,7 +84,21 @@ Dropped login-over-https feature
 --------------------------------
 
 For the best security and performance, serve all pages over HTTPS by switching
-the scheme in your site's wwwroot to `https` at http://yoursite.tld/admin/settings/advanced
+the scheme in your site's wwwroot to ``https`` at http://yoursite.tld/admin/settings/advanced
+
+Elgg has migrated from ext/mysql to PDO MySQL
+---------------------------------------------
+
+Elgg now uses a ``PDO_MYSQL`` connection and no longer uses any ext/mysql functions. If you use
+``mysql_*`` functions, implicitly relying on an open connection, these will fail.
+
+If your code uses one of the following functions, read below.
+
+- ``execute_delayed_write_query()``
+- ``execute_delayed_read_query()``
+
+If you provide a callable ``$handler`` to be called with the results, your handler will now receive a
+``\Doctrine\DBAL\Driver\Statement`` object. Formerly a ext/mysql ``result`` resource was passed.
 
 engine/start.php is deprecated
 ------------------------------
@@ -126,6 +140,7 @@ Removed Functions
  - execute_delayed_query()
  - get_db_link()
  - load_plugins()
+ - mysql_*()
 
 Removed Plugin Hooks
 --------------------

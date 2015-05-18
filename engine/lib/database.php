@@ -36,7 +36,7 @@ function execute_delayed_read_query($query, $handler = "") {
  * Retrieve rows from the database.
  *
  * Queries are executed with {@link execute_query()} and results
- * are retrieved with {@link mysql_fetch_object()}.  If a callback
+ * are retrieved with {@link \PDO::fetchObject()}.  If a callback
  * function $callback is defined, each row will be passed as the single
  * argument to $callback.  If no callback function is defined, the
  * entire result set is returned as an array.
@@ -132,7 +132,9 @@ function run_sql_script($scriptlocation) {
 }
 
 /**
- * Sanitize a string for database use.
+ * Alias of elgg()->getDb()->sanitizeString()
+ *
+ * @see Elgg\Database::sanitizeString
  *
  * @param string $string The string to sanitize
  * @return string
@@ -142,13 +144,15 @@ function sanitize_string($string) {
 }
 
 /**
- * Wrapper function for alternate English spelling (@see sanitize_string)
+ * Alias of elgg()->getDb()->sanitizeString()
+ *
+ * @see Elgg\Database::sanitizeString
  *
  * @param string $string The string to sanitize
  * @return string
  */
 function sanitise_string($string) {
-	return sanitize_string($string);
+	return _elgg_services()->db->sanitizeString($string);
 }
 
 /**
