@@ -6,8 +6,7 @@
  * @subpackage Core
  */
 
-// check for PHP < 5.4 before we do anything else
-if (version_compare(PHP_VERSION, '5.4.0', '<')) {
+if (version_compare(PHP_VERSION, '5.5.0', '<')) {
 	echo "Your server's version of PHP (" . PHP_VERSION . ") is too old to run Elgg.\n";
 	exit;
 }
