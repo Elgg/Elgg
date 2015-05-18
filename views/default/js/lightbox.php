@@ -88,14 +88,18 @@ elgg.ui.lightbox.bind = function (selector, opts) {
 		var $this = $(this),
 			href = $this.prop('href') || $this.prop('src'),
 			dataOpts = $this.data('colorboxOpts');
-		// Q: why not use "colorbox"? A: https://github.com/jackmoore/colorbox/issues/435
+		// Note: data-colorbox was reserved https://github.com/jackmoore/colorbox/issues/435
 
 		if (!$.isPlainObject(dataOpts)) {
 			dataOpts = {};
 		}
 
+		if (!dataOpts.href && href) {
+			dataOpts.href = href;
+		}
+
 		// merge data- options into opts
-		$.colorbox($.extend({href: href}, opts, dataOpts));
+		$.colorbox($.extend({}, opts, dataOpts));
 		e.preventDefault();
 	});
 };
