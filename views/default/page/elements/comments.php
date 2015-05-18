@@ -31,9 +31,6 @@ if (isset($vars['class'])) {
 	$class = "$class {$vars['class']}";
 }
 
-// work around for deprecation code in elgg_view()
-unset($vars['internalid']);
-
 echo "<div $id class=\"$class\">";
 
 $html = elgg_list_entities(array(
