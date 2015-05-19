@@ -269,7 +269,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 */
 	protected function resolveLoggerDependencies($service_needed) {
 		$svcs['hooks'] = new \Elgg\PluginHooksService();
-		$svcs['logger'] = new \Elgg\Logger($svcs['hooks']);
+		$svcs['logger'] = new \Elgg\Logger($svcs['hooks'], $this->config, $this->context);
 		$svcs['hooks']->setLogger($svcs['logger']);
 		$svcs['events'] = new \Elgg\EventsService();
 		$svcs['events']->setLogger($svcs['logger']);

@@ -28,28 +28,42 @@ class Logger {
 		400 => 'ERROR',
 	);
 
-	/** @var int $level The logging level */
+	/**
+	 * @var int The logging level
+	 */
 	protected $level = self::ERROR;
 
-	/** @var bool $display Display to user? */
+	/**
+	 * @var bool Display to user?
+	 */
 	protected $display = false;
 
-	/** @var \Elgg\PluginHooksService $hooks */
+	/**
+	 * @var PluginHooksService
+	 */
 	protected $hooks;
 
-	/** @var \stdClass Global Elgg configuration */
-	private $CONFIG;
+	/**
+	 * @var Config
+	 */
+	private $config;
+
+	/**
+	 * @var Context
+	 */
+	private $context;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\PluginHooksService $hooks Hooks service
+	 * @param PluginHooksService $hooks   Hooks service
+	 * @param Config             $config  Config service
+	 * @param Context            $context Context service
 	 */
-	public function __construct(\Elgg\PluginHooksService $hooks) {
-		global $CONFIG;
-		
-		$this->CONFIG = $CONFIG;
+	public function __construct(PluginHooksService $hooks, Config $config, Context $context) {
+		$this->config = $config;
 		$this->hooks = $hooks;
+		$this->context = $context;
 	}
 
 	/**
@@ -193,12 +207,12 @@ class Logger {
 		// Do not want to write to screen before page creation has started.
 		// This is not fool-proof but probably fixes 95% of the cases when logging
 		// results in data sent to the browser before the page is begun.
-		if (!isset($this->CONFIG->pagesetupdone)) {
+		if ($this->config->getVolatile('pagesetupdone') === null) {
 			$display = false;
 		}
 
 		// Do not want to write to JS or CSS pages
-		if (elgg_in_context('js') || elgg_in_context('css')) {
+		if ($this->context->contains('js') || $this->context->contains('css')) {
 			$display = false;
 		}
 
