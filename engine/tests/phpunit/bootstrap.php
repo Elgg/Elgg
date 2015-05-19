@@ -1,5 +1,7 @@
 <?php
 
+use Zend\Mail\Transport\InMemory as InMemoryTransport;
+
 require_once __DIR__ . '/../../../autoloader.php';
 
 date_default_timezone_set('America/Los_Angeles');
@@ -36,12 +38,16 @@ $CONFIG = (object)[
 	'simplecache_enabled' => false,
 ];
 
-$app = new \Elgg\Application(new \Elgg\Di\ServiceProvider(new \Elgg\Config($CONFIG)));
-$app->loadCore();
-_elgg_testing_application($app);
+// PHPUnit will serialize globals between tests, so let's not introduce any globals here.
+call_user_func(function () use ($CONFIG) {
+	$sp = new \Elgg\Di\ServiceProvider(new \Elgg\Config($CONFIG));
+	$sp->setValue('mailer', new InMemoryTransport());
 
-// persistentLogin service needs this set to instantiate without calling DB
-_elgg_configure_cookies($CONFIG);
+	$app = new \Elgg\Application($sp);
+	$app->loadCore();
 
-// PHPUnit will serialize globals between tests, $app contains Closures!
-unset($app);
+	// persistentLogin service needs this set to instantiate without calling DB
+	_elgg_configure_cookies($CONFIG);
+
+	_elgg_testing_application($app);
+});

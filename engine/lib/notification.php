@@ -596,8 +596,6 @@ function set_user_notification_setting($user_guid, $method, $value) {
  * @since 1.7.2
  */
 function elgg_send_email($from, $to, $subject, $body, array $params = null) {
-	global $CONFIG;
-
 	if (!$from) {
 		$msg = "Missing a required parameter, '" . 'from' . "'";
 		throw new \NotificationException($msg);
@@ -627,10 +625,10 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	// $mail_params is passed as both params and return value. The former is for backwards
 	// compatibility. The latter is so handlers can now alter the contents/headers of
 	// the email by returning the array
-	$result = elgg_trigger_plugin_hook('email', 'system', $mail_params, $mail_params);
-	
-	if (!is_array($result) && $result !== null) {
-		return $result;
+	$result = _elgg_services()->hooks->trigger('email', 'system', $mail_params, $mail_params);
+	if (!is_array($result)) {
+		// don't need null check: Handlers can't set a hook value to null!
+		return (bool)$result;
 	}
 
 	// strip name from to and from
@@ -638,13 +636,19 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	$to_address = Address::fromString($result['to']);
 	$from_address = Address::fromString($result['from']);
 
-	$subject = html_entity_decode($result['subject'], ENT_QUOTES, 'UTF-8');
 
-	$body = html_entity_decode($result['body'], ENT_QUOTES, 'UTF-8');
-	$body = elgg_strip_tags($body); // Strip tags from message
+	$subject = elgg_strip_tags($result['subject']);
+	$subject = html_entity_decode($subject, ENT_QUOTES, 'UTF-8');
+	// Sanitise subject by stripping line endings
+	$subject = preg_replace("/(\r\n|\r|\n)/", " ", $subject);
+	$subject = trim($subject);
+
+	$body = elgg_strip_tags($result['body']);
+	$body = html_entity_decode($body, ENT_QUOTES, 'UTF-8');
 	$body = wordwrap($body);
 	
 	$message = new Message();
+	$message->setEncoding('UTF-8');
 	$message->addFrom($from_address);
 	$message->addTo($to_address);
 	$message->setSubject($subject);

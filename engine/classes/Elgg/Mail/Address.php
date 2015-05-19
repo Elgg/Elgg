@@ -19,10 +19,10 @@ class Address {
 	public static function fromString($contact) {
 		$containsName = preg_match('/<(.*)>/', $contact, $matches) == 1;
 		if ($containsName) {
-			$name = trim(elgg_substr($contact, 0, elgg_strpos($contact, '<')));
+			$name = trim(substr($contact, 0, strpos($contact, '<')));
 			return new \Zend\Mail\Address($matches[1], $name); 
 		} else {
-			return new \Zend\Mail\Address($contact);
+			return new \Zend\Mail\Address(trim($contact));
 		}
 	}
 }
