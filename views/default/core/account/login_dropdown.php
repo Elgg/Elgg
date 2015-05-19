@@ -7,12 +7,7 @@ if (elgg_is_logged_in()) {
 	return true;
 }
 
-$login_url = elgg_get_site_url();
-if (elgg_get_config('https_login')) {
-	$login_url = str_replace("http:", "https:", elgg_get_site_url());
-}
-
-$body = elgg_view_form('login', array('action' => "{$login_url}action/login"), array('returntoreferer' => TRUE));
+$body = elgg_view_form('login', array(), array('returntoreferer' => TRUE));
 ?>
 <div id="login-dropdown">
 	<?php 

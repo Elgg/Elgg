@@ -28,13 +28,7 @@ if (elgg_is_logged_in()) {
 
 $title = elgg_echo("register");
 
-// create the registration url - including switching to https if configured
-$register_url = elgg_get_site_url() . 'action/register';
-if (elgg_get_config('https_login')) {
-	$register_url = str_replace("http:", "https:", $register_url);
-}
 $form_params = array(
-	'action' => $register_url,
 	'class' => 'elgg-form-account',
 );
 
