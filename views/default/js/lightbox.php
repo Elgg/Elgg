@@ -100,7 +100,9 @@ elgg.ui.lightbox.bind = function (selector, opts) {
 		var old_complete = settings.complete || elgg.nullFunction;
 		settings.complete = function () {
 			old_complete();
-			elgg.ajax.attachBehaviors($($.colorbox.element()));
+			require(['elgg/behaviors'], function (behaviors) {
+				behaviors.attach($.colorbox.element());
+			});
 		};
 
 		// merge data- options into opts

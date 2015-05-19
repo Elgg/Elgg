@@ -3,8 +3,8 @@
 $modules = [];
 foreach (elgg_get_plugins() as $plugin) {
 	$id = $plugin->getID();
-	if (elgg_view_exists("js/$id/boot.js")) {
-		$modules[] = "$id/boot";
+	if (elgg_view_exists("js/boot/$id.js")) {
+		$modules[] = "boot/$id";
 	}
 }
 
@@ -17,25 +17,21 @@ foreach (elgg_get_plugins() as $plugin) {
  */
 define(function (require) {
 	var behaviors = require('elgg/behaviors');
+	var Plugin = require('elgg/Plugin');
 	var elgg = require('elgg');
-	var $ = require('jquery');
 	var modules = [];
 	var i;
 
 	<?php foreach ($modules as $module) { ?>
-	modules.push(require('<?php echo $module ?>'));
+	modules.push({plugin: require('<?php echo $module ?>'), name: '<?php echo $module ?>'});
 	<?php } ?>
 
 	for (i = 0; i < modules.length; i++) {
-		if (modules[i]) {
-			if (modules[i].addBehavior) {
-				behaviors.addAttacher(modules[i].addBehavior);
-			}
+		if (modules[i].plugin instanceof Plugin) {
+			modules[i].plugin._init();
+		} else {
+			console.error("Boot module " + modules[i].name + " did not return an instance of Plugin (from elgg/Plugin)");
 		}
-	}
-
-	if ($('.elgg-item-object-comment:first').length) {
-		require(['elgg/Comment']);
 	}
 
 	elgg.trigger_hook('init', 'system');

@@ -25,11 +25,6 @@ function ckeditor_init() {
 		'exports' => 'jQuery.fn.ckeditor',
 	]);
 
-	// necessary due to https://github.com/Elgg/Elgg/issues/8317
-	elgg_define_js('ckeditor/boot', [
-		'src' => elgg_get_simplecache_url('js', 'ckeditor/boot.js'),
-	]);
-
 	elgg_extend_view('js/embed/embed', 'js/elgg/ckeditor/insert.js');
 
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'ckeditor_longtext_menu');

@@ -1,7 +1,8 @@
 define(function (require) {
 	var $ = require('jquery');
+	var Plugin = require('elgg/Plugin');
 
-	return {
+	return new Plugin({
 		addBehavior: function (context) {
 			$longtexts = $('.elgg-input-longtext:not([data-cke-init])', context);
 			if ($longtexts.length) {
@@ -12,5 +13,5 @@ define(function (require) {
 				});
 			}
 		}
-	};
+	});
 });

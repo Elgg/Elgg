@@ -46,7 +46,9 @@ define(function (require) {
 					var $body = that.$item.find('.elgg-body:first').append(html);
 
 					// attach behaviors
-					elgg.ajax.attachBehaviors($body);
+					require(['elgg/behaviors'], function (behaviors) {
+						behaviors.attach($body);
+					});
 
 					that.showForm();
 
@@ -78,7 +80,7 @@ define(function (require) {
 				success: function(json) {
 					if (json.status === 0) {
 						// Update list item content
-						// @todo 1.x returns HTML, call attachBehaviors on it
+						// @todo 1.x returns HTML, call behaviors.attach on it
 						that.$item.find('[data-role="comment-text"]').html(value);
 					}
 					that.hideForm(function () {

@@ -106,21 +106,6 @@ elgg.ajax.handleAjaxError = function(xhr, status, error) {
 };
 
 /**
- * Attach available behaviors to newly added DOM content
- *
- * @see the "elgg/behaviors" module for more.
- *
- * @param {jQuery} $context jQuery-wrapped DOM element(s) in which to attach behaviors
- */
-elgg.ajax.attachBehaviors = function($context) {
-	require(['elgg/behaviors'], function (behaviors) {
-		$context.each(function () {
-			behaviors.attach(this);
-		});
-	});
-};
-
-/**
  * Wrapper function for elgg.ajax which forces the request type to 'get.'
  *
  * @param {string} url Optionally specify the url as the first argument

@@ -16,21 +16,28 @@ define(function (require) {
 		 * @param {Function} func The function
 		 * @access private
 		 */
-		addAttacher: function (func) {
+		addBehavior: function (func) {
+			if (typeof func !== 'function') {
+				throw new Error("addBehavior: func is not a function")
+			}
 			attachers.push(func);
 		},
 
 		/**
-		 * Attach all available behaviors to elements within the DOM context
+		 * Attach all available behaviors to elements within the context(s)
 		 *
 		 * If you add DOM elements to the page, this should be called on them, or an
 		 * element surrounding them.
 		 *
-		 * @param {HTMLElement} context
+		 * @param {HTMLElement|jQuery} context DOM element or jQuery collection
 		 */
 		attach: function (context) {
-			$.each(attachers, function (key, func) {
-				func(context);
+			$(context).each(function () {
+				var that = this;
+
+				$.each(attachers, function (key, func) {
+					func(that);
+				});
 			});
 		}
 	};

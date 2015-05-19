@@ -1,5 +1,6 @@
 define(function (require) {
 	var elgg = require('elgg');
+	var Plugin = require('elgg/Plugin');
 
 	/**
 	 * Repositions the likes popup
@@ -23,5 +24,5 @@ define(function (require) {
 	elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);
 	elgg.ui.registerTogglableMenuItems('likes', 'unlike');
 
-	return {};
+	return new Plugin;
 });
