@@ -3,6 +3,7 @@ namespace Elgg\Di;
 
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
+use Zend\Mail\Transport\TransportInterface as Mailer;
 
 /**
  * Provides common Elgg services.
@@ -34,6 +35,7 @@ use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
+ * @property-read Mailer                                   $mailer
  * @property-read \Elgg\Cache\MetadataCache                $metadataCache
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
  * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
@@ -154,6 +156,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('logger', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('logger');
 		});
+		
+		// TODO(evan): Support configurable transports...
+		$this->setClassName('mailer', 'Zend\Mail\Transport\Sendmail');
 
 		$this->setFactory('metadataCache', function (ServiceProvider $c) {
 			return new \Elgg\Cache\MetadataCache($c->session);

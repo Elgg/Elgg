@@ -2,6 +2,7 @@
 namespace Elgg\Di;
 
 use phpDocumentor\Reflection\DocBlock;
+use Zend\Mail\Transport\InMemory;
 
 class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 
@@ -66,6 +67,12 @@ class ServiceProviderTest extends \PHPUnit_Framework_TestCase {
 		foreach ($readonly_props as $prop) {
 			$name = substr($prop->getVariableName(), 1);
 			$type = $prop->getType();
+
+			// stuff set in PHPUnit bootstrap
+			if ($name === 'mailer') {
+				$type = InMemory::class;
+			}
+
 			$sets[] = [$name, $type];
 		}
 

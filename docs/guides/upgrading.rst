@@ -18,6 +18,13 @@ Dropped login-over-https feature
 For the best security and performance, serve all pages over HTTPS by switching
 the scheme in your site's wwwroot to `https` at http://yoursite.tld/admin/settings/advanced
 
+Introduced third-party library for sending email
+------------------------------------------------
+
+We are using the excellent ``Zend\Mail`` library to send emails in Elgg 2.0.
+There are likely edge cases that the library handles differently than Elgg 1.x.
+Take care to test your email notifications carefully when upgrading to 2.0.
+
 All scripts moved to bottom of page
 -----------------------------------
 

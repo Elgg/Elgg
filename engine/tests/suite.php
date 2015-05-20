@@ -6,6 +6,8 @@
  * @subpackage Test
  */
 
+use Zend\Mail\Transport\InMemory as InMemoryTransport;
+
 require_once __DIR__ . '/../../autoloader.php';
 
 (new \Elgg\Application())->bootCore();
@@ -38,6 +40,9 @@ foreach ($events as $type => $subtypes) {
 		$notifications->unregisterEvent($type, $subtype);
 	}
 }
+
+// disable emails
+_elgg_services()->setValue('mailer', new InMemoryTransport());
 
 // Disable maximum execution time.
 // Tests take a while...
