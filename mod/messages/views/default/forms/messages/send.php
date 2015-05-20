@@ -8,14 +8,14 @@
  * @uses $vars['body']
  */
 
-$recipient_username = elgg_extract('recipient_username', $vars, '');
+$recipients = elgg_extract('recipients', $vars);
 $subject = elgg_extract('subject', $vars, '');
 $body = elgg_extract('body', $vars, '');
 
-$recipient_autocomplete = elgg_view('input/autocomplete', array(
-	'name' => 'recipient_username',
-	'value' => $recipient_username,
-	'match_on' => array('friends'),
+$recipient_autocomplete = elgg_view('input/userpicker', array(
+	'name' => 'recipients',
+	'values' => $recipients,
+	'limit' => 1,
 ));
 
 ?>

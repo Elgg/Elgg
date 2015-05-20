@@ -1,28 +1,29 @@
 <?php
 /**
 * Ssend a message action
-* 
+*
 * @package ElggMessages
 */
 
 $subject = strip_tags(get_input('subject'));
 $body = get_input('body');
-$recipient_username = get_input('recipient_username');
+$recipients = (array) get_input('recipients');
 $original_msg_guid = (int)get_input('original_guid');
 
 elgg_make_sticky_form('messages');
 
-if (!$recipient_username) {
+if (empty($recipients)) {
 	register_error(elgg_echo("messages:user:blank"));
 	forward("messages/compose");
 }
 
-if ($recipient_username == elgg_get_logged_in_user_entity()->username) {
+$recipient = (int) elgg_extract(0, $recipients);
+if ($recipient == elgg_get_logged_in_user_guid()) {
 	register_error(elgg_echo("messages:user:self"));
-	forward("messages/compose");	
+	forward("messages/compose");
 }
 
-$user = get_user_by_username($recipient_username);
+$user = get_user($recipient);
 if (!$user) {
 	register_error(elgg_echo("messages:user:nonexist"));
 	forward("messages/compose");
@@ -34,7 +35,7 @@ if (!$body || !$subject) {
 	forward("messages/compose");
 }
 
-// Otherwise, 'send' the message 
+// Otherwise, 'send' the message
 $result = messages_send($subject, $body, $user->guid, 0, $original_msg_guid);
 
 // Save 'send' the message
