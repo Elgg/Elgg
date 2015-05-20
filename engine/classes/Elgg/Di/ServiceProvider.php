@@ -92,9 +92,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Database\AccessCollections($c->config->get('site_guid'));
 		});
 
-		$this->setClassName('actions', '\Elgg\ActionsService');
+		$this->setClassName('actions', \Elgg\ActionsService::class);
 
-		$this->setClassName('adminNotices', '\Elgg\Database\AdminNotices');
+		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
 
 		$this->setFactory('amdConfig', function(ServiceProvider $c) {
 			$obj = new \Elgg\Amd\Config($c->hooks);
@@ -102,17 +102,17 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $obj;
 		});
 
-		$this->setClassName('annotations', '\Elgg\Database\Annotations');
+		$this->setClassName('annotations', \Elgg\Database\Annotations::class);
 
-		$this->setClassName('autoP', '\ElggAutoP');
+		$this->setClassName('autoP', \ElggAutoP::class);
 
 		$this->setValue('config', $config);
 
-		$this->setClassName('configTable', '\Elgg\Database\ConfigTable');
+		$this->setClassName('configTable', \Elgg\Database\ConfigTable::class);
 
-		$this->setClassName('context', '\Elgg\Context');
+		$this->setClassName('context', \Elgg\Context::class);
 
-		$this->setClassName('crypto', '\ElggCrypto');
+		$this->setClassName('crypto', \ElggCrypto::class);
 
 		$this->setFactory('datalist', function(ServiceProvider $c) {
 			// TODO(ewinslow): Add back memcached support
@@ -133,9 +133,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\DeprecationService($c->session, $c->logger);
 		});
 
-		$this->setClassName('entityPreloader', '\Elgg\EntityPreloader');
+		$this->setClassName('entityPreloader', \Elgg\EntityPreloader::class);
 
-		$this->setClassName('entityTable', '\Elgg\Database\EntityTable');
+		$this->setClassName('entityTable', \Elgg\Database\EntityTable::class);
 
 		$this->setFactory('events', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('events');
@@ -149,7 +149,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $this->resolveLoggerDependencies('hooks');
 		});
 
-		$this->setClassName('input', 'Elgg\Http\Input');
+		$this->setClassName('input', \Elgg\Http\Input::class);
 
 		$this->setFactory('logger', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('logger');
@@ -204,9 +204,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Database\QueryCounter($c->db);
 		}, false);
 
-		$this->setClassName('relationshipsTable', '\Elgg\Database\RelationshipsTable');
+		$this->setClassName('relationshipsTable', \Elgg\Database\RelationshipsTable::class);
 
-		$this->setFactory('request', '\Elgg\Http\Request::createFromGlobals');
+		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
 
 		$this->setFactory('router', function(ServiceProvider $c) {
 			// TODO(evan): Init routes from plugins or cache
@@ -234,29 +234,29 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \ElggSession($session);
 		});
 
-		$this->setClassName('simpleCache', '\Elgg\Cache\SimpleCache');
+		$this->setClassName('simpleCache', \Elgg\Cache\SimpleCache::class);
 
-		$this->setClassName('siteSecret', '\Elgg\Database\SiteSecret');
+		$this->setClassName('siteSecret', \Elgg\Database\SiteSecret::class);
 
-		$this->setClassName('stickyForms', 'Elgg\Forms\StickyForms');
+		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
 
-		$this->setClassName('subtypeTable', '\Elgg\Database\SubtypeTable');
+		$this->setClassName('subtypeTable', \Elgg\Database\SubtypeTable::class);
 
-		$this->setClassName('systemCache', '\Elgg\Cache\SystemCache');
+		$this->setClassName('systemCache', \Elgg\Cache\SystemCache::class);
 
 		$this->setFactory('systemMessages', function(ServiceProvider $c) {
 			return new \Elgg\SystemMessagesService($c->session);
 		});
 
-		$this->setClassName('translator', '\Elgg\I18n\Translator');
+		$this->setClassName('translator', \Elgg\I18n\Translator::class);
 
-		$this->setClassName('usersTable', '\Elgg\Database\UsersTable');
+		$this->setClassName('usersTable', \Elgg\Database\UsersTable::class);
 
 		$this->setFactory('views', function(ServiceProvider $c) {
 			return new \Elgg\ViewsService($c->hooks, $c->logger);
 		});
 
-		$this->setClassName('widgets', '\Elgg\WidgetsService');
+		$this->setClassName('widgets', \Elgg\WidgetsService::class);
 
 	}
 
