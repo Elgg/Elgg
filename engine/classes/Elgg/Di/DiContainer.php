@@ -174,5 +174,27 @@ class DiContainer {
 		}
 		return (bool)property_exists($this, $name);
 	}
+
+	/**
+	 * Get names for all values/factories
+	 *
+	 * @access private
+	 * @internal For unit testing only, do not use
+	 * @return string[]
+	 */
+	public function getNames() {
+		$names = [];
+
+		$refl = new \ReflectionObject($this);
+		foreach ($refl->getProperties(\ReflectionProperty::IS_PUBLIC) as $prop) {
+			$names[] = $prop->name;
+		}
+		foreach (array_keys($this->factories_) as $name) {
+			$names[] = $name;
+		}
+
+		sort($names);
+		return $names;
+	}
 }
 

@@ -275,6 +275,33 @@ function _elgg_load_site_config() {
 }
 
 /**
+ * Set up CONFIG->cookies. (this is for unit testing)
+ *
+ * @see phpunit/bootstrap.php
+ *
+ * @param stdClass $CONFIG Elgg's config object
+ * @access private
+ */
+function _elgg_configure_cookies($CONFIG) {
+	// set cookie values for session and remember me
+	if (!isset($CONFIG->cookies)) {
+		$CONFIG->cookies = array();
+	}
+	if (!isset($CONFIG->cookies['session'])) {
+		$CONFIG->cookies['session'] = array();
+	}
+	$session_defaults = session_get_cookie_params();
+	$session_defaults['name'] = 'Elgg';
+	$CONFIG->cookies['session'] = array_merge($session_defaults, $CONFIG->cookies['session']);
+	if (!isset($CONFIG->cookies['remember_me'])) {
+		$CONFIG->cookies['remember_me'] = array();
+	}
+	$session_defaults['name'] = 'elggperm';
+	$session_defaults['expire'] = strtotime("+30 days");
+	$CONFIG->cookies['remember_me'] = array_merge($session_defaults, $CONFIG->cookies['remember_me']);
+}
+
+/**
  * Loads configuration related to Elgg as an application
  *
  * This runs on the engine boot and loads from the datalists database table.
@@ -305,21 +332,7 @@ function _elgg_load_application_config() {
 	}
 
 	// set cookie values for session and remember me
-	if (!isset($CONFIG->cookies)) {
-		$CONFIG->cookies = array();
-	}
-	if (!isset($CONFIG->cookies['session'])) {
-		$CONFIG->cookies['session'] = array();
-	}
-	$session_defaults = session_get_cookie_params();
-	$session_defaults['name'] = 'Elgg';
-	$CONFIG->cookies['session'] = array_merge($session_defaults, $CONFIG->cookies['session']);
-	if (!isset($CONFIG->cookies['remember_me'])) {
-		$CONFIG->cookies['remember_me'] = array();
-	}
-	$session_defaults['name'] = 'elggperm';
-	$session_defaults['expire'] = strtotime("+30 days");
-	$CONFIG->cookies['remember_me'] = array_merge($session_defaults, $CONFIG->cookies['remember_me']);
+	_elgg_configure_cookies($CONFIG);
 
 	if (!is_memcache_available()) {
 		_elgg_services()->datalist->loadAll();
