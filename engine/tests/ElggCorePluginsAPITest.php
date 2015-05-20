@@ -25,14 +25,14 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 		$manifest_file = file_get_contents(get_config('path') . 'engine/tests/test_files/plugin_18/manifest.xml');
 		$manifest = new \ElggPluginManifest($manifest_file);
 
-		$this->assertIsA($manifest, '\ElggPluginManifest');
+		$this->assertIsA($manifest, \ElggPluginManifest::class);
 	}
 
 	public function testElggPluginManifestFromFile() {
 		$file = get_config('path') . 'engine/tests/test_files/plugin_18/manifest.xml';
 		$manifest = new \ElggPluginManifest($file);
 
-		$this->assertIsA($manifest, '\ElggPluginManifest');
+		$this->assertIsA($manifest, \ElggPluginManifest::class);
 	}
 
 	public function testElggPluginManifestFromXMLEntity() {
@@ -40,7 +40,7 @@ class ElggCorePluginsAPITest extends \ElggCoreUnitTest {
 		$xml = new \ElggXMLElement($manifest_file);
 		$manifest = new \ElggPluginManifest($xml);
 
-		$this->assertIsA($manifest, '\ElggPluginManifest');
+		$this->assertIsA($manifest, \ElggPluginManifest::class);
 	}
 
 	// exact manifest values

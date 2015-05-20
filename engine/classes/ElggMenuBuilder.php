@@ -212,13 +212,13 @@ class ElggMenuBuilder {
 
 		switch ($sort_by) {
 			case 'text':
-				$sort_callback = array('\ElggMenuBuilder', 'compareByText');
+				$sort_callback = [\ElggMenuBuilder::class, 'compareByText'];
 				break;
 			case 'name':
-				$sort_callback = array('\ElggMenuBuilder', 'compareByName');
+				$sort_callback = [\ElggMenuBuilder::class, 'compareByName'];
 				break;
 			case 'priority':
-				$sort_callback = array('\ElggMenuBuilder', 'compareByPriority');
+				$sort_callback = [\ElggMenuBuilder::class, 'compareByPriority'];
 				break;
 			case 'register':
 				// use registration order - usort breaks this

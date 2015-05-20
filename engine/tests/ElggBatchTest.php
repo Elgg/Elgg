@@ -13,7 +13,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			'offset' => 0,
 			'limit' => 11
 		);
-		$batch = new \ElggBatch(array('\ElggBatchTest', 'elgg_batch_callback_test'), $options,
+		$batch = new \ElggBatch([\ElggBatchTest::class, 'elgg_batch_callback_test'], $options,
 				null, 5);
 		$j = 0;
 		foreach ($batch as $e) {
@@ -31,7 +31,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			'offset' => 0,
 			'limit' => 11
 		);
-		$batch = new \ElggBatch(array('\ElggBatchTest', 'elgg_batch_callback_test'), $options,
+		$batch = new \ElggBatch([\ElggBatchTest::class, 'elgg_batch_callback_test'], $options,
 				null, 5);
 		$batch->setIncrementOffset(false);
 
@@ -50,7 +50,7 @@ class ElggBatchTest extends \ElggCoreUnitTest {
 			'offset' => 3,
 			'limit' => 11
 		);
-		$batch = new \ElggBatch(array('\ElggBatchTest', 'elgg_batch_callback_test'), $options,
+		$batch = new \ElggBatch([\ElggBatchTest::class, 'elgg_batch_callback_test'], $options,
 				null, 5);
 		$batch->setIncrementOffset(false);
 
