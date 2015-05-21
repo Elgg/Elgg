@@ -1912,6 +1912,8 @@ function _elgg_init() {
 		'src' => '/vendors/jquery/jquery.ui.autocomplete.html.js',
 		'deps' => array('jquery.ui')
 	));
+
+	elgg_extend_view('js/elgg', 'js/elgg/inlined_modules');
 	
 	elgg_register_external_view('js/elgg/UserPicker.js', true);
 

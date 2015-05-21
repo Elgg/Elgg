@@ -174,6 +174,12 @@ These speed up your site by caching the compiled byte code from your
 script meaning that your server doesn't have to compile the PHP code
 each time it is executed.
 
+Reduce HTTP Requests
+====================
+
+You may find it useful to :ref:`inline AMD modules <reduce-amd-requests>` to reduce HTTP requests
+on your landing pages.
+
 Hosting
 =======
 

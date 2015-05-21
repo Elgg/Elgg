@@ -456,8 +456,14 @@ Other
 **robots.txt, site**
 	Filter the robots.txt values for ``$params['site']``.
 
+AMD
+===
+
 **config, amd**
 	Filter the AMD config for the requirejs library.
+
+**bundle_amd, js/elgg**
+	Filter the list of modules that will :ref:`be inlined <reduce-amd-requests>` in the ``js/elgg`` view.
 
 Plugins
 =======

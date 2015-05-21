@@ -164,6 +164,38 @@ Some things to note
 #. JS and CSS views (names starting with ``js/`` or ``css/``) as well as static (.js/.css) files
    are automatically minified and cached by Elgg's simplecache system.
 
+.. _reduce-amd-requests:
+
+Reducing HTTP requests for AMD modules
+======================================
+
+For sites not served via HTTP/2 or SPDY, the overhead of many AMD requests can delay dynamic functionality
+like WYSIWYG initialization and the application of event listeners. This is particularly an issue for
+clients arriving to a site with no resources cached.
+
+You can optimize the loading of common landing pages by bundling AMD module definitions into the main
+``js/elgg`` view using the plugin hook ``bundle_amd, js/elgg``:
+
+.. code-block:: php
+
+    <?php
+    function myplugin_bundle_modules($hook, $type, $values, $params) {
+        $values[] = 'myplugin/module';
+        return $values;
+    }
+
+    elgg_register_plugin_hook_handler('bundle_amd', 'js/elgg', 'myplugin_bundle_modules');
+
+This only works with modules in standard view locations and which call ``define()``.
+
+.. warning::
+
+    Bundled modules, though not automatically executed, still must be compiled by browsers on each page load.
+
+.. note::
+
+    If the ``js/elgg`` script is slow to load, or a module could not be inlined for some reason, it will
+    be loaded the standard way.
 
 Migrating JS from Elgg 1.8 to AMD / 1.9
 =======================================
