@@ -12,19 +12,6 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.11 to 2.0
 ================
 
-Dropped login-over-https feature
---------------------------------
-
-For the best security and performance, serve all pages over HTTPS by switching
-the scheme in your site's wwwroot to `https` at http://yoursite.tld/admin/settings/advanced
-
-Introduced third-party library for sending email
-------------------------------------------------
-
-We are using the excellent ``Zend\Mail`` library to send emails in Elgg 2.0.
-There are likely edge cases that the library handles differently than Elgg 1.x.
-Take care to test your email notifications carefully when upgrading to 2.0.
-
 All scripts moved to bottom of page
 -----------------------------------
 
@@ -61,6 +48,77 @@ This should work in Elgg 2.0:
     });
     </script>
 
+Breadcrumbs
+-----------
+
+Breadcrumb display now removes the last item if it does not contain a link. To restore the previous behavior,
+replace the plugin hook handler ``elgg_prepare_breadcrumbs`` with your own:
+
+.. code:: php
+
+    elgg_unregister_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
+    elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'myplugin_prepare_breadcrumbs');
+
+    function myplugin_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
+        // just apply excerpt to titles
+        foreach (array_keys($breadcrumbs) as $i) {
+            $breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
+        }
+        return $breadcrumbs;
+    }
+
+Callbacks in Queries
+--------------------
+
+Make sure to use only valid *callable* values for "callback" argument/options in the API.
+
+Querying functions will now will throw a ``RuntimeException`` if ``is_callable()`` returns ``false`` for the given
+callback value. This includes functions such as ``elgg_get_entities()``, ``get_data()``, and many more.
+
+Comments plugin hook
+--------------------
+
+Plugins can now return an empty string from ``'comments',$entity_type`` hook in order to override the default comments component view. To force the default comments component, your plugin must return ``false``. If you were using empty strings to force the default comments view, you need to update your hook handlers to return ``false``.
+
+Dropped login-over-https feature
+--------------------------------
+
+For the best security and performance, serve all pages over HTTPS by switching
+the scheme in your site's wwwroot to `https` at http://yoursite.tld/admin/settings/advanced
+
+engine/start.php is deprecated
+------------------------------
+
+Plugins should use the class ``Elgg\Application`` to boot Elgg. Typical usage:
+
+.. code:: php
+
+    // boot Elgg in mod/myplugin/foo.php
+    require_once dirname(dirname(__DIR__)) . '/autoloader.php';
+    (new \Elgg\Application)->bootCore();
+
+Introduced third-party library for sending email
+------------------------------------------------
+
+We are using the excellent ``Zend\Mail`` library to send emails in Elgg 2.0.
+There are likely edge cases that the library handles differently than Elgg 1.x.
+Take care to test your email notifications carefully when upgrading to 2.0.
+
+Label elements
+--------------
+
+The following views received ``label`` elements around some of the input fields. If your plugin/theme overrides these views please check for the new content.
+
+- views/default/core/river/filter.php
+- views/default/forms/admin/plugins/filter.php
+- views/default/forms/admin/plugins/sort.php
+- views/default/forms/login.php
+
+Plugin Messages
+---------------
+
+Messages will no longer get the metadata 'msg' for newly created messages. This means you can not rely on that metadata to exist.
+
 Removed Functions
 -----------------
 
@@ -90,71 +148,12 @@ Also several workarounds for very old views are no longer performed. Make these 
  - Set ``$vars['name']`` instead of ``$vars['internalname']``.
  - Set ``$vars['id']`` instead of ``$vars['internalid']``.
 
-Callbacks in Queries
---------------------
-
-Make sure to use only valid *callable* values for "callback" argument/options in the API.
-
-Querying functions will now will throw a ``RuntimeException`` if ``is_callable()`` returns ``false`` for the given
-callback value. This includes functions such as ``elgg_get_entities()``, ``get_data()``, and many more.
-
-Breadcrumbs
------------
-
-Breadcrumb display now removes the last item if it does not contain a link. To restore the previous behavior,
-replace the plugin hook handler ``elgg_prepare_breadcrumbs`` with your own:
-
-.. code:: php
-
-    elgg_unregister_plugin_hook_handler('prepare', 'breadcrumbs', 'elgg_prepare_breadcrumbs');
-    elgg_register_plugin_hook_handler('prepare', 'breadcrumbs', 'myplugin_prepare_breadcrumbs');
-
-    function myplugin_prepare_breadcrumbs($hook, $type, $breadcrumbs, $params) {
-        // just apply excerpt to titles
-        foreach (array_keys($breadcrumbs) as $i) {
-            $breadcrumbs[$i]['title'] = elgg_get_excerpt($breadcrumbs[$i]['title'], 100);
-        }
-        return $breadcrumbs;
-    }
-
-Plugin Messages
----------------
-
-Messages will no longer get the metadata 'msg' for newly created messages. This means you can not rely on that metadata to exist.
-
 Specifying View via Properties
 ------------------------------
 
 The metadata ``$entity->view`` no longer specifies the view used to render in ``elgg_view_entity()``.
 
 Similarly the property ``$annotation->view`` no longer has an effect within ``elgg_view_annotation()``.
-
-Label elements
---------------
-
-The following views received ``label`` elements around some of the input fields. If your plugin/theme overrides these views please check for the new content.
-
-- views/default/core/river/filter.php
-- views/default/forms/admin/plugins/filter.php
-- views/default/forms/admin/plugins/sort.php
-- views/default/forms/login.php
-
-engine/start.php is deprecated
-------------------------------
-
-Plugins should use the class ``Elgg\Application`` to boot Elgg. Typical usage:
-
-.. code:: php
-
-    // boot Elgg in mod/myplugin/foo.php
-    require_once dirname(dirname(__DIR__)) . '/autoloader.php';
-    (new \Elgg\Application)->bootCore();
-
-
-Comments plugin hook
---------------------
-
-Plugins can now return an empty string from ``'comments',$entity_type`` hook in order to override the default comments component view. To force the default comments component, your plugin must return ``false``. If you were using empty strings to force the default comments view, you need to update your hook handlers to return ``false``.
 
 From 1.10 to 1.11
 =================
