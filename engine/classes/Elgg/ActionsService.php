@@ -16,6 +16,11 @@ class ActionsService {
 	
 	/**
 	 * Registered actions storage
+	 *
+	 * Each element has keys:
+	 *   "file" => filename
+	 *   "access" => access level
+	 *
 	 * @var array
 	 */
 	private $actions = array();
@@ -25,6 +30,11 @@ class ActionsService {
 	 * @var string 
 	 */
 	private $currentAction = null;
+
+	/**
+	 * @var string[]
+	 */
+	private static $access_levels = ['public', 'logged_in', 'admin'];
 	
 	/**
 	 * @see action
@@ -47,7 +57,7 @@ class ActionsService {
 	
 		if (!in_array($action, $exceptions)) {
 			// All actions require a token.
-			action_gatekeeper($action);
+			$this->gatekeeper($action);
 		}
 	
 		$forwarder = str_replace(_elgg_services()->config->getSiteUrl(), "", $forwarder);
@@ -56,26 +66,59 @@ class ActionsService {
 		if (substr($forwarder, 0, 1) == "/") {
 			$forwarder = substr($forwarder, 1);
 		}
-	
-		if (!isset($this->actions[$action])) {
-			register_error(_elgg_services()->translator->translate('actionundefined', array($action)));
-		} elseif (!_elgg_services()->session->isAdminLoggedIn() && ($this->actions[$action]['access'] === 'admin')) {
-			register_error(_elgg_services()->translator->translate('actionunauthorized'));
-		} elseif (!_elgg_services()->session->isLoggedIn() && ($this->actions[$action]['access'] !== 'public')) {
-			register_error(_elgg_services()->translator->translate('actionloggedout'));
-		} else {
-			// To quietly cancel the action file, return a falsey value in the "action" hook.
-			if (_elgg_services()->hooks->trigger('action', $action, null, true)) {
-				if (is_file($this->actions[$action]['file']) && is_readable($this->actions[$action]['file'])) {
-					self::includeFile($this->actions[$action]['file']);
-				} else {
-					register_error(_elgg_services()->translator->translate('actionnotfound', array($action)));
-				}
+
+		/**
+		 * Complete the execution with a forward
+		 *
+		 * @param string $error_key Error message key
+		 *
+		 * @throws \SecurityException
+		 */
+		$forward = function ($error_key = '') use ($action, $forwarder) {
+			if ($error_key) {
+				$msg = _elgg_services()->translator->translate($error_key, [$action]);
+				_elgg_services()->systemMessages->addErrorMessage($msg);
 			}
+
+			$forwarder = empty($forwarder) ? REFERER : $forwarder;
+			forward($forwarder);
+		};
+
+		if (!isset($this->actions[$action])) {
+			$forward('actionundefined');
 		}
-	
-		$forwarder = empty($forwarder) ? REFERER : $forwarder;
-		forward($forwarder);
+
+		$user = _elgg_services()->session->getLoggedInUser();
+
+		// access checks
+		switch ($this->actions[$action]['access']) {
+			case 'public':
+				break;
+			case 'logged_in':
+				if (!$user) {
+					$forward('actionloggedout');
+				}
+				break;
+			default:
+				// admin or misspelling
+				if (!$user->isAdmin()) {
+					$forward('actionunauthorized');
+				}
+		}
+
+		// To quietly cancel the file, return a falsey value in the "action" hook.
+		if (!_elgg_services()->hooks->trigger('action', $action, null, true)) {
+			$forward();
+		}
+
+		$file = $this->actions[$action]['file'];
+
+		if (!is_file($file) || !is_readable($file)) {
+			$forward('actionnotfound');
+		}
+
+		self::includeFile($file);
+		$forward();
 	}
 
 	/**
@@ -105,6 +148,11 @@ class ActionsService {
 			}
 	
 			$filename = $path . "actions/" . $action . ".php";
+		}
+
+		if (!in_array($access, self::$access_levels)) {
+			_elgg_services()->logger->error("Unrecognized value '$access' for \$access in " . __METHOD__);
+			$access = 'admin';
 		}
 	
 		$this->actions[$action] = array(
