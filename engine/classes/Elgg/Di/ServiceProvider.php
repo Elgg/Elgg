@@ -35,6 +35,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\EventsService                      $events
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
  * @property-read \ElggDiskFilestore                       $filestore
+ * @property-read \Elgg\Forwarder                          $forwarder
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\Http\Input                         $input
  * @property-read \Elgg\Logger                             $logger
@@ -166,6 +167,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('filestore', function(ServiceProvider $c) {
 			return new \ElggDiskFilestore($c->config->getDataPath());
+		});
+
+		$this->setFactory('forwarder', function(ServiceProvider $c) {
+			$referrer = $c->request->headers->get('Referer');
+			return new \Elgg\Forwarder($c->hooks, $c->config->getSiteUrl(0), $referrer);
 		});
 
 		$this->setFactory('hooks', function(ServiceProvider $c) {

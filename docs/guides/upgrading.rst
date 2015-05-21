@@ -12,6 +12,13 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 2.x to 3.0
 ===============
 
+``forward()`` uses an exception
+-------------------------------
+
+If you use try/catch, do *not* catch overly general exceptions like ``Exception``.
+
+If your code must catch the new ``Elgg\ForwardException``, re-throw it.
+
 Removed views
 -------------
 
