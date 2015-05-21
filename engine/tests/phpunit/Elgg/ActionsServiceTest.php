@@ -11,7 +11,7 @@ class ActionsServiceTest extends \PHPUnit_Framework_TestCase {
 	 * Tests register, exists and unregisrer
 	 */
 	public function testCanRegisterFilesAsActions() {
-		$actions = new \Elgg\ActionsService();
+		$actions = new ActionsService();
 		
 		$this->assertFalse($actions->exists('test/output'));
 		$this->assertFalse($actions->exists('test/not_registered'));
@@ -25,11 +25,11 @@ class ActionsServiceTest extends \PHPUnit_Framework_TestCase {
 		
 		return $actions;
 	}
-	
+
 	/**
 	 * @depends testCanRegisterFilesAsActions
 	 */
-	public function testCanUnregisterActions($actions) {
+	public function testCanUnregisterActions(ActionsService $actions) {
 
 		$this->assertTrue($actions->unregister('test/output'));
 		$this->assertTrue($actions->unregister('test/non_ex_file'));
@@ -39,12 +39,37 @@ class ActionsServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertFalse($actions->exists('test/non_ex_file'));
 		$this->assertFalse($actions->exists('test/not_registered'));
 	}
+
+	public function testCanUseClassNamesAsActions() {
+		$actions = new ActionsService();
+		InvokableMock::reset();
+		InvokableMock::$invoke_handler = function (ActionRequest $request) {
+			echo $request->getName();
+		};
+
+		$this->assertTrue($actions->register('test/good', InvokableMock::class, 'public'));
+		$this->assertTrue($actions->register('test/bad', 'NotReallyAClass', 'public'));
+
+		$this->assertTrue($actions->exists('test/good'));
+		$this->assertFalse($actions->exists('test/bad'));
+
+		$actions->_bypass_gatekeeper = true;
+		ob_start();
+		try {
+			$actions->execute('test/good');
+		} catch (ForwardException $e) {}
+
+		$output = ob_get_clean();
+		$this->assertEquals('test/good', $output);
+
+		InvokableMock::reset();
+	}
 	
 	/**
 	 * Tests overwriting existing action
 	 */
 	public function testCanOverrideRegisteredActions() {
-		$actions = new \Elgg\ActionsService();
+		$actions = new ActionsService();
 		
 		$this->assertFalse($actions->exists('test/output'));
 		
@@ -58,7 +83,7 @@ class ActionsServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testActionsAccessLevels() {
-		$actions = new \Elgg\ActionsService();
+		$actions = new ActionsService();
 		
 		$this->assertFalse($actions->exists('test/output'));
 		$this->assertFalse($actions->exists('test/not_registered'));
@@ -75,11 +100,19 @@ class ActionsServiceTest extends \PHPUnit_Framework_TestCase {
 	public function testActionReturnValuesAreIgnored() {
 		$this->markTestIncomplete();
 	}
-	
-	//TODO call non existing
 
-	
-	//TODO token generation/validation
+	public function testActionErrorsOnNonExistingAction() {
+		$this->markTestIncomplete();
+	}
+
+	public function testTokenGeneration() {
+		$this->markTestIncomplete();
+	}
+
+	public function testTokenValidation() {
+		$this->markTestIncomplete();
+	}
+
 // 	public function testGenerateValidateTokens() {
 // 		$actions = new \Elgg\ActionsService();
 		
@@ -94,7 +127,8 @@ class ActionsServiceTest extends \PHPUnit_Framework_TestCase {
 // 		}
 		
 // 	}
-	
-	//TODO gatekeeper?
-}
 
+	public function testActionGatekeeper() {
+		$this->markTestIncomplete();
+	}
+}

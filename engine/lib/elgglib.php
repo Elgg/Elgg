@@ -85,29 +85,11 @@ function elgg_load_library($name) {
  *                         'system'.
  *
  * @return void
- * @throws SecurityException
+ * @throws \Elgg\ForwardException
+ * @see _elgg_php_exception_handler Internally this (ab)uses an exception to jump out of code execution.
  */
 function forward($location = "", $reason = 'system') {
-	if (!headers_sent($file, $line)) {
-		if ($location === REFERER) {
-			$location = _elgg_services()->request->headers->get('Referer');
-		}
-
-		$location = elgg_normalize_url($location);
-
-		// return new forward location or false to stop the forward or empty string to exit
-		$current_page = current_page_url();
-		$params = array('current_url' => $current_page, 'forward_url' => $location);
-		$location = elgg_trigger_plugin_hook('forward', $reason, $params, $location);
-
-		if ($location) {
-			header("Location: {$location}");
-		}
-		exit;
-	} else {
-		throw new \SecurityException("Redirect could not be issued due to headers already being sent. Halting execution for security. "
-			. "Output started in file $file at line $line. Search http://learn.elgg.org/ for more information.");
-	}
+	throw new \Elgg\ForwardException($location, $reason);
 }
 
 /**
@@ -801,6 +783,12 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
  * @access private
  */
 function _elgg_php_exception_handler($exception) {
+	// special case for forward()
+	if ($exception instanceof \Elgg\ForwardException) {
+		_elgg_services()->forwarder->handleException($exception);
+		exit;
+	}
+
 	$timestamp = time();
 	error_log("Exception #$timestamp: $exception");
 

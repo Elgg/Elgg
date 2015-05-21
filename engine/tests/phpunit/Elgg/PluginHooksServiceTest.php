@@ -1,11 +1,12 @@
 <?php
 namespace Elgg;
 
+use Elgg\HooksRegistrationService\Hook;
 
 class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testTriggerCallsRegisteredHandlers() {
-		$hooks = new \Elgg\PluginHooksService();
+		$hooks = new PluginHooksService();
 		
 		$this->setExpectedException('InvalidArgumentException');
 		
@@ -15,7 +16,7 @@ class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	public function testCanPassParamsAndChangeReturnValue() {
-		$hooks = new \Elgg\PluginHooksService();
+		$hooks = new PluginHooksService();
 		$hooks->registerHandler('foo', 'bar', array('\Elgg\PluginHooksServiceTest', 'changeReturn'));
 		
 		$returnval = $hooks->trigger('foo', 'bar', array(
@@ -26,7 +27,7 @@ class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testUncallableHandlersAreLogged() {
-		$hooks = new \Elgg\PluginHooksService();
+		$hooks = new PluginHooksService();
 
 		$loggerMock = $this->getMock('\Elgg\Logger', array(), array(), '', false);
 		$hooks->setLogger($loggerMock);
@@ -36,6 +37,29 @@ class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 		$loggerMock->expects($this->once())->method('warn')->with($expectedMsg);
 
 		$hooks->trigger('foo', 'bar');
+	}
+
+	public function testInvokableClassNamesGetHookObject() {
+		$hooks = new PluginHooksService();
+		InvokableMock::reset();
+		InvokableMock::$invoke_handler = function (Hook $hook) {
+			return $hook->getValue() + 1;
+		};
+
+		// assume separate instances will be created
+		// @todo should we keep instances around?
+		$hooks->registerHandler('foo', 'bar', InvokableMock::class);
+		$hooks->registerHandler('foo', 'bar', InvokableMock::class);
+
+		$this->assertEquals(2, $hooks->trigger('foo', 'bar', null, 0));
+		$this->assertCount(2, InvokableMock::$invocations);
+		$this->assertCount(1, InvokableMock::$invocations[0]["args"]);
+		$this->assertInstanceOf(Hook::class, InvokableMock::$invocations[0]["args"][0]);
+		$this->assertNotSame(
+			InvokableMock::$invocations[0]["this"],
+			InvokableMock::$invocations[1]["this"]
+		);
+		InvokableMock::reset();
 	}
 	
 	public static function returnTwo() {
