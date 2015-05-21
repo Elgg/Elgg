@@ -281,7 +281,6 @@ class Logger {
 	 */
 	public function setHooks(PluginHooksService $hooks) {
 		$this->hooks = $hooks;
-		$this->hooks->setLogger($this);
 	}
 }
 
