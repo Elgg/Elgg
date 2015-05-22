@@ -133,6 +133,11 @@ Plugin Messages
 
 Messages will no longer get the metadata 'msg' for newly created messages. This means you can not rely on that metadata to exist.
 
+Removed Classes
+---------------
+
+ - ``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)
+
 Removed Functions
 -----------------
 

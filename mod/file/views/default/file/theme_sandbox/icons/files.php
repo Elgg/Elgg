@@ -1,6 +1,6 @@
 <?php
 
-$file = new FilePluginFile();
+$file = new ElggFile();
 
 $mapping = array(
 	'general' => 'general',

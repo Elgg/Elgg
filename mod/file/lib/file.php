@@ -8,7 +8,7 @@
 /**
  * Prepare the upload/edit form variables
  *
- * @param FilePluginFile $file
+ * @param ElggFile $file
  * @return array
  */
 function file_prepare_form_vars($file = null) {

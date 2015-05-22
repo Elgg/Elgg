@@ -10,10 +10,13 @@ elgg_load_library('elgg:file');
 elgg_gatekeeper();
 
 $file_guid = (int) get_input('guid');
-$file = new FilePluginFile($file_guid);
-if (!$file) {
+
+$file = get_entity($file_guid);
+if (!$file instanceof ElggFile) {
 	forward();
 }
+/* @var ElggFile $file */
+
 if (!$file->canEdit()) {
 	forward();
 }
