@@ -1,8 +1,7 @@
 {
   "name": "Elgg",
   "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
-  "dependencies": {
-  },
+  "dependencies": {},
   "repository": {
     "type": "git",
     "url": "https://github.com/Elgg/Elgg.git"
@@ -13,7 +12,7 @@
   },
   "homepage": "https://github.com/Elgg/Elgg",
   "scripts": {
-    "test": "karma start js/tests/karma.conf.js --single-run"
+    "test": "node_modules/karma/bin/karma start js/tests/karma.conf.js --single-run"
   },
   "devDependencies": {
     "elgg-conventional-changelog": "~0.1.2",
@@ -23,7 +22,10 @@
     "grunt-contrib-watch": "~0.6.1",
     "grunt-exec": "~0.4.6",
     "grunt-open": "~0.2.3",
-    "karma": "~0.8.8",
+    "karma": "^0.12.32",
+    "karma-jasmine": "~0.2.0",
+    "karma-phantomjs-launcher": "~0.1",
+    "karma-requirejs": "~0.2",
     "load-grunt-config": "~0.16.0",
     "phantomjs": "~1.9.7-14"
   }
