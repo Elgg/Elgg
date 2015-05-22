@@ -116,7 +116,7 @@ link to an object given by its GUID:
 
 .. code:: js
 
-    elgg.get('ajax/view/myplugin/get_link, {
+    elgg.get('ajax/view/myplugin/get_link', {
       data: {
         guid: 123 // querystring
       },
