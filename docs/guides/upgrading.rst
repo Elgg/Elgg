@@ -86,6 +86,8 @@ Dropped login-over-https feature
 For the best security and performance, serve all pages over HTTPS by switching
 the scheme in your site's wwwroot to ``https`` at http://yoursite.tld/admin/settings/advanced
 
+.. _migrated-to-pdo:
+
 Elgg has migrated from ext/mysql to PDO MySQL
 ---------------------------------------------
 
@@ -98,7 +100,7 @@ If your code uses one of the following functions, read below.
 - ``execute_delayed_read_query()``
 
 If you provide a callable ``$handler`` to be called with the results, your handler will now receive a
-``\Doctrine\DBAL\Driver\Statement`` object. Formerly a ext/mysql ``result`` resource was passed.
+``\Doctrine\DBAL\Driver\Statement`` object. Formerly this was an ext/mysql ``result`` resource.
 
 engine/start.php is deprecated
 ------------------------------
@@ -136,11 +138,11 @@ Messages will no longer get the metadata 'msg' for newly created messages. This 
 Removed Functions
 -----------------
 
- - get_db_error()
- - execute_delayed_query()
- - get_db_link()
- - load_plugins()
- - mysql_*()
+ - ``get_db_error()``
+ - ``execute_delayed_query()``
+ - ``get_db_link()``
+ - ``load_plugins()``
+ - ``mysql_*()``: Elgg :ref:`no longer uses ext/mysql<migrated-to-pdo>`
 
 Removed Plugin Hooks
 --------------------
