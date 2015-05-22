@@ -28,6 +28,9 @@ return array(
 									This can break non-HTML views in the default viewtype. See developers_wrap_views() for details.",
 	'developers:label:log_events' => "Log events and plugin hooks",
 	'developers:help:log_events' => "Write events and plugin hooks to the log. Warning: there are many of these per page.",
+	'developers:label:show_gear' => "Use %s outside admin area",
+	'developers:help:show_gear' => "An icon on the bottom right of the viewport that gives admins access to developer settings and links.",
+	'developers:label:submit' => "Save and flush caches",
 
 	'developers:debug:off' => 'Off',
 	'developers:debug:error' => 'Error',
@@ -78,5 +81,5 @@ return array(
 	'developers:unit_tests:run' => 'Run',
 
 	// status messages
-	'developers:settings:success' => 'Settings saved',
+	'developers:settings:success' => 'Settings saved and caches flushed',
 );
