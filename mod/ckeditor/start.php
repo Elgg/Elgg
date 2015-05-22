@@ -32,6 +32,8 @@ function ckeditor_init() {
 	elgg_extend_view('js/embed/embed', 'js/elgg/ckeditor/insert.js');
 
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'ckeditor_longtext_menu');
+
+	elgg_register_plugin_hook_handler('config', 'elgg/echo:packs', \Elgg\CkeditorPlugin\Hooks::class . '::alterLanguagePacks');
 }
 
 function ckeditor_longtext_menu($hook, $type, $items, $vars) {

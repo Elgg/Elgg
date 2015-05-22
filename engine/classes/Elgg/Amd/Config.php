@@ -246,6 +246,11 @@ class Config {
 			'shim' => $this->shim,
 			'deps' => $this->getDependencies(),
 			'waitSeconds' => 20,
+			'config' => [
+				'elgg/echo' => [
+					'lang' => get_current_language(),
+				],
+			],
 		);
 		
 		$params = array(

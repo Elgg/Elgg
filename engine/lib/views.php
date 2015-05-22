@@ -1627,6 +1627,7 @@ function elgg_views_boot() {
 	elgg_load_css('elgg');
 
 	elgg_register_ajax_view('js/languages');
+	elgg_register_simplecache_view('js/elgg/echo/config.js');
 
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_amd');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');

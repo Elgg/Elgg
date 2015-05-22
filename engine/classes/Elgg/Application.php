@@ -299,7 +299,12 @@ class Application {
 		}
 
 		if (0 === strpos($path, '/cache/')) {
-			(new Application\CacheHandler($this, $_SERVER))->handleRequest($path);
+			(new Application\CacheHandler($this))->handleRequest($path, $_SERVER);
+			return true;
+		}
+
+		if (0 === strpos($path, '/_i18n/')) {
+			(new Application\I18nHandler($this))->handleRequest($path, $_SERVER);
 			return true;
 		}
 
