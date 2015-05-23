@@ -1,6 +1,95 @@
 Authentication
 ==============
 
+Elgg provides everything needed to authenticate users via username/email and password
+out of the box, including:
+
+ * remember-me cookies for persistent login
+ * password reset logic
+ * secure storage of passwords
+ * logout
+ * UIs for accomplishing all of the above
+ 
+All that's left for you to do as a developer is to use
+the built-in authentication functions to secure your pages and actions.
+
+Working with the logged in user
+-------------------------------
+
+Check whether the current user is logged in with ``elgg_is_logged_in()``:
+
+.. code:: php
+
+    if (elgg_is_logged_in()) {
+      // do something just for logged-in users
+    }
+
+Check if the current user is an admin with ``elgg_is_admin_logged_in()``:
+
+.. code:: php
+
+    if (elgg_is_admin_logged_in()) {
+      // do something just for admins
+    }
+    
+Get the currently logged in user with ``elgg_get_logged_in_user_entity()``:
+
+.. code:: php
+
+    $user = elgg_get_logged_in_user_entity();
+
+The returned object is an ``ElggUser`` so you can use all the methods and properties
+of that class to access information about the user. If the user is not logged in,
+this will return ``null``, so be sure to check for that first.
+
+Gatekeepers
+-----------
+
+Gatekeeper functions allow you to manage how code gets executed by applying access control rules.
+
+Forward a user to the front page if they are not logged in with ``elgg_gatekeeper()``:
+
+.. code:: php
+
+    elgg_gatekeeper();
+    
+    echo "Information for logged-in users only";
+
+.. note::
+
+   In Elgg 1.8 and below this function was called ``gatekeeper()``
+
+Forward a user to the front page unless they are an admin with ``elgg_admin_gatekeeper()``:
+
+.. code:: php
+
+    elgg_admin_gatekeeper();
+    
+    echo "Information for admins only";
+
+.. note::
+
+   In Elgg 1.8 and below this function was called ``admin_gatekeeper()``
+
+
+Prevent CSRF attacks with ``action_gatekeeper()``.
+
+.. code:: php
+
+    action_gatekeeper();
+    
+    // Mutate some state in the database on behalf of the logged in user...
+
+This function should be used in :doc:`actions` prior to Elgg 1.8.
+
+.. note::
+
+   As of Elgg version 1.8 this function is called for all registered actions.
+   There is no longer a need to call this function in your own actions.
+   If you wish to protect other pages with action tokens then you can call this function.
+
+
+
 Pluggable Authentication Modules 
 --------------------------------
 

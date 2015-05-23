@@ -15,7 +15,6 @@ Customize Elgg's behavior with plugins.
    context
    database
    actions
-   gatekeeper
    helpers
    i18n
    javascript
