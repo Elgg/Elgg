@@ -10,26 +10,26 @@ Customize Elgg's behavior with plugins.
    plugins
    guidelines
    accessibility
-   helpers
-   actions
+   ajax
+   authentication
+   context
    database
+   actions
+   gatekeeper
+   helpers
    i18n
+   javascript
    menus
    notifications
-   river
    pagehandler
-   routing
    page-owner
-   gatekeeper
-   widgets
-   views
-   context
-   themes
-   javascript
-   ajax
-   settings
    permissions-check
-   authentication
+   settings
+   river
+   routing
+   themes
+   views
+   widgets
    walled-garden
    web-services
    upgrading
