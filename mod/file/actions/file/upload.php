@@ -41,7 +41,7 @@ if ($new_file) {
 		forward(REFERER);
 	}
 
-	$file = new FilePluginFile();
+	$file = new ElggFile();
 	$file->subtype = "file";
 
 	// if no title on new upload, grab filename
@@ -51,11 +51,12 @@ if ($new_file) {
 
 } else {
 	// load original file object
-	$file = new FilePluginFile($guid);
-	if (!$file) {
+	$file = get_entity($guid);
+	if (!$file instanceof ElggFile) {
 		register_error(elgg_echo('file:cannotload'));
 		forward(REFERER);
 	}
+	/* @var ElggFile $file */
 
 	// user must be able to edit file
 	if (!$file->canEdit()) {

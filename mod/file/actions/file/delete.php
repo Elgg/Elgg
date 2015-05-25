@@ -7,11 +7,12 @@
 
 $guid = (int) get_input('guid');
 
-$file = new FilePluginFile($guid);
-if (!$file->guid) {
+$file = get_entity($guid);
+if (!$file instanceof ElggFile) {
 	register_error(elgg_echo("file:deletefailed"));
 	forward('file/all');
 }
+/* @var ElggFile $file */
 
 if (!$file->canEdit()) {
 	register_error(elgg_echo("file:deletefailed"));
