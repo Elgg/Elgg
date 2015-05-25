@@ -804,7 +804,6 @@ function _elgg_php_exception_handler($exception) {
 	// make sure the error isn't cached
 	header("Cache-Control: no-cache, must-revalidate", true);
 	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
-	// @note Do not send a 500 header because it is not a server error
 
 	// we don't want the 'pagesetup', 'system' event to fire
 	global $CONFIG;
@@ -827,28 +826,28 @@ function _elgg_php_exception_handler($exception) {
 			}
 		}
 
-		elgg_set_viewtype('failsafe');
+		if (elgg_is_xhr()) {
+			elgg_set_viewtype('json');
+			$response = new \Symfony\Component\HttpFoundation\JsonResponse(null, 500);
+		} else {
+			elgg_set_viewtype('failsafe');
+			$response = new \Symfony\Component\HttpFoundation\Response('', 500);
+		}
 
 		if (elgg_is_admin_logged_in()) {
-			if (!elgg_view_exists("messages/exceptions/admin_exception")) {
-				elgg_set_viewtype('failsafe');
-			}
-
 			$body = elgg_view("messages/exceptions/admin_exception", array(
 				'object' => $exception,
 				'ts' => $timestamp
 			));
 		} else {
-			if (!elgg_view_exists("messages/exceptions/exception")) {
-				elgg_set_viewtype('failsafe');
-			}
-
 			$body = elgg_view("messages/exceptions/exception", array(
 				'object' => $exception,
 				'ts' => $timestamp
 			));
 		}
-		echo elgg_view_page(elgg_echo('exception:title'), $body);
+
+		$response->setContent(elgg_view_page(elgg_echo('exception:title'), $body));
+		$response->send();
 	} catch (Exception $e) {
 		$timestamp = time();
 		$message = $e->getMessage();
