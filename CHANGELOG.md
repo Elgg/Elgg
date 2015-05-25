@@ -1,3 +1,49 @@
+<a name="1.11.2"></a>
+### 1.11.2  (2015-05-25)
+
+#### Contributors
+
+* Steve Clay (12)
+* Ismayil Khayredinov (5)
+* Evan Winslow (2)
+* Jeroen Dalsem (2)
+* Juho Jaakkola (2)
+* Ariel Abrams-Kudan (1)
+* Jerôme Bakker (1)
+* Juho Jaakkola (1)
+
+#### Performance
+
+* **views:** No longer regenerates the $vars[‘user’] wrapper for each view ([3c40971a](https://github.com/Elgg/Elgg/commit/3c40971ada6c1123db64a2453cc617d9b6fc8635))
+
+
+#### Documentation
+
+* **ajax:** Adds more complete Ajax docs ([bfbf0ff2](https://github.com/Elgg/Elgg/commit/bfbf0ff212c1738f4884e60f3cb38ed17f11aaa0), closes [#8277](https://github.com/Elgg/Elgg/issues/8277))
+* **amd:** Overhauls the AMD docs with a lot more detailed instructions ([e01996ab](https://github.com/Elgg/Elgg/commit/e01996ab241914ffd7d36d49d813275bc6f5827b))
+* **auth:** Add basic APIs to the authentication docs ([83d5f214](https://github.com/Elgg/Elgg/commit/83d5f214b73efbf743af9bbbd6f17b772a977a5e))
+* **guides:** Alpha-sort the developer guides to make them more scannable ([88a9d130](https://github.com/Elgg/Elgg/commit/88a9d130c4d4f24473f8e7f583b7959e5d35ba63))
+
+
+#### Bug Fixes
+
+* **ckeditor:** also remove liststyle as a default loaded plugin ([eb8235cb](https://github.com/Elgg/Elgg/commit/eb8235cba756b8bd615c62fd1d0fda374b9fcdcd), closes [#8195](https://github.com/Elgg/Elgg/issues/8195))
+* **comments:** Ajax-saved comments show proper server formatting ([6f0f74cb](https://github.com/Elgg/Elgg/commit/6f0f74cb69c59c9587b2116dd011d898c88259a1), closes [#8294](https://github.com/Elgg/Elgg/issues/8294))
+* **file:** Default file type icons again available in the theme sandbox ([6892979f](https://github.com/Elgg/Elgg/commit/6892979faf8878652f0bb5652ad0201e9864b3ee))
+* **filestore:** Fixed a crash when forms had a file input but no file was provided ([2ada5d5a](https://github.com/Elgg/Elgg/commit/2ada5d5a76b72989a7b56ec9d7ae495639481d44))
+* **groups:**
+  * do not reassign container on ownership transfer if old container is not an old owner ([57cf337a](https://github.com/Elgg/Elgg/commit/57cf337a2a601d855a16d5e66fb1129eb4a4958d))
+  * terminate edit action early if group can not be saved ([3fe10452](https://github.com/Elgg/Elgg/commit/3fe10452163ee151ca3cb98323f1b4823d06f043))
+  * do not attempt to populate groups_entity table if base entity fails to save ([f2cbb237](https://github.com/Elgg/Elgg/commit/f2cbb23722aa60ab9449eadd958d98e7b585cab1))
+* **menus:** only display location menu item if value is string ([e3a39167](https://github.com/Elgg/Elgg/commit/e3a39167dcbd538e39fc5c4679402d5db01e5c37))
+* **mysql:** Use explicit ext/mysql resource in initial query/escaping ([b7abe8eb](https://github.com/Elgg/Elgg/commit/b7abe8eb033832318a61ae0554613670557c1df1), closes [#8208](https://github.com/Elgg/Elgg/issues/8208))
+* **notifications:** fixed deprecation notice elgg-require-confirmation ([79bf7d42](https://github.com/Elgg/Elgg/commit/79bf7d4230568cebb60cafac842584f7d0b9f0ec))
+* **river:** Activity page for specific user shows that user’s owner block ([5ecfe41d](https://github.com/Elgg/Elgg/commit/5ecfe41d5970af6351148fb12d4ed38d3cf23485), closes [#8257](https://github.com/Elgg/Elgg/issues/8257))
+* **session:** Remember me no longer results in occasional fatal errors ([b91620c1](https://github.com/Elgg/Elgg/commit/b91620c1f3d43bb5df4b43add506005259dc7b78), closes [#8104](https://github.com/Elgg/Elgg/issues/8104))
+* **ui:** Checkboxes and labels are again separated by a space ([1b62dd20](https://github.com/Elgg/Elgg/commit/1b62dd20df4b62ac851a57b1318d25b2f986978e), closes [#8199](https://github.com/Elgg/Elgg/issues/8199))
+* **widgets:** validate get_list,default_widgets hook output ([b1c16311](https://github.com/Elgg/Elgg/commit/b1c16311ea3a129e5b885d34765d6b892b42130e))
+
+
 <a name="1.11.1"></a>
 ### 1.11.1  (2015-04-27)
 
