@@ -37,6 +37,17 @@ Basic instructions
    Any modifications should have been written within plugins, so that they are not lost on overwriting.
    If this is not the case, take care to maintain your modifications. 
 
+From 1.x to 2.0
+===============
+
+IE-specific workarounds have been dropped
+-----------------------------------------
+
+Several views (``css/ie``, ``css/ie7``, ``css/ie8``, etc.) as well as conditional
+comments have been discarded now that IE10+ browsers are more standards-compliant.
+If you need browser support farther back than that, you will need to find or build
+a plugin that introduces its own compatibility layer or polyfills.
+
 From 1.10 to 1.11
 ========================
 
