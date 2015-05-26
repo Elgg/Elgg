@@ -168,7 +168,12 @@ elgg.embed.forward = function(event) {
 	var url = $(this).attr('href');
 	url = elgg.embed.addContainerGUID(url);
 
-	$('.embed-wrapper').parent().load(url);
+	$('.embed-wrapper').parent().load(url, function () {
+		require(['elgg/behaviors'], function (behaviors) {
+			behaviors.attach($('.embed-wrapper'));
+		});
+	});
+
 	event.preventDefault();
 };
 

@@ -94,8 +94,19 @@ elgg.ui.lightbox.bind = function (selector, opts) {
 			dataOpts = {};
 		}
 
+		var settings = $.extend({href: href}, opts, dataOpts);
+
+		// attach behaviors after completing
+		var old_complete = settings.complete || elgg.nullFunction;
+		settings.complete = function () {
+			old_complete();
+			require(['elgg/behaviors'], function (behaviors) {
+				behaviors.attach($.colorbox.element());
+			});
+		};
+
 		// merge data- options into opts
-		$.colorbox($.extend({href: href}, opts, dataOpts));
+		$.colorbox(settings);
 		e.preventDefault();
 	});
 };

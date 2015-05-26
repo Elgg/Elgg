@@ -1906,7 +1906,9 @@ function _elgg_init() {
 		'deps' => array('jquery.ui')
 	));
 	
-	elgg_register_external_view('js/elgg/UserPicker.js', true);
+	elgg_register_simplecache_view('js/elgg/booted.js');
+	elgg_require_js('elgg/booted');
+	elgg_require_js('elgg/Comment');
 
 	elgg_register_js('elgg.friendspicker', 'js/lib/ui.friends_picker.js');
 	elgg_register_js('elgg.avatar_cropper', 'js/lib/ui.avatar_cropper.js');

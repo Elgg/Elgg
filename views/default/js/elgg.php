@@ -34,7 +34,6 @@ $files = array(
 	"$lib_dir/session",
 	"$lib_dir/pageowner",
 	"$lib_dir/configuration",
-	"$lib_dir/comments",
 
 	//ui
 	"$lib_dir/ui",
@@ -65,11 +64,6 @@ elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->l
 
 define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
 	elgg.add_translation(elgg.get_language(), translations);
-
-	$(function() {
-		elgg.trigger_hook('init', 'system');
-		elgg.trigger_hook('ready', 'system');
-	});
 
 	return elgg;
 });
