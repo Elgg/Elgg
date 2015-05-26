@@ -30,21 +30,15 @@ foreach ($links as $attributes) {
 	echo elgg_format_element('link', $attributes);
 }
 
-$css = elgg_get_loaded_css();
+$stylesheets = elgg_get_loaded_css();
 
-$html5shiv_url = elgg_normalize_url('vendors/html5shiv.js');
-$ie_url = elgg_get_simplecache_url('css', 'ie');
-
-foreach ($css as $url) {
+foreach ($stylesheets as $url) {
 	echo elgg_format_element('link', array('rel' => 'stylesheet', 'href' => $url));
 }
 
 // A non-empty script *must* come below the CSS links, otherwise Firefox will exhibit FOUC
 // See https://github.com/Elgg/Elgg/issues/8328
 ?>
-	<!--[if gt IE 8]>
-		<link rel="stylesheet" href="<?php echo $ie_url; ?>" />
-	<![endif]-->
 	<script>
 		<?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
 		require = function () {
@@ -53,7 +47,6 @@ foreach ($css as $url) {
 		};
 		_require_queue = [];
 	</script>
-	<!--[if lt IE 9]><script src="<?php echo $html5shiv_url; ?>"></script><![endif]-->
 <?php
 
 echo elgg_view_deprecated('page/elements/shortcut_icon', array(), "Use the 'head', 'page' plugin hook.", 1.9);
