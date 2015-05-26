@@ -9,9 +9,46 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
    :local:
    :depth: 2
 
-From 1.11 to 2.0
-================
+From 1.x to 2.0
+===============
 
+All deprecated views and view arguments have been removed
+---------------------------------------------------------
+
+We dropped support for and/or removed the following views:
+
+ * core/settings/tools
+ * footer/analytics (Use page/elements/foot instead)
+ * groups/search/finishblurb
+ * groups/search/startblurb
+ * input/calendar (Use input/date instead)
+ * input/datepicker (Use input/date instead)
+ * input/pulldown (Use input/select instead)
+ * js/initialise_elgg (Use AMD and ``elgg_require_js`` instead of extending JS views)
+ * members/nav
+ * metatags (Use the 'head', 'page' plugin hook instead)
+ * navigation/topbar_tools
+ * navigation/viewtype
+ * output/calendar (Use output/date instead)
+ * output/confirmlink (Use output/url instead)
+ * page_elements/contentwrapper
+ * page/elements/shortcut_icon (Use the 'head', 'page' plugin hook instead)
+ * page/elements/wrapper
+ * profile/icon (Use ``elgg_get_entity_icon``)
+ * settings/{plugin}/edit (Use plugins/{plugin}/settings instead)
+ * user/search/finishblurb
+ * user/search/startblurb
+ * usersettings/{plugin}/edit (Use plugins/{plugin}/usersettings instead)
+ * widgets/{handler}/view (Use widgets/{handler}/content instead)
+ 
+We also dropped the following arguments to views:
+
+ * "value" in output/iframe (Use "src" instead)
+ * "area2" and "area3" in page/elements/sidebar (Use "sidebar" or view extension instead)
+ * "js" in icon views (e.g. icon/user/default)
+ * "options" to input/radio and input/checkboxes which aren't key-value pairs
+   will no longer be acceptable.
+ 
 All scripts moved to bottom of page
 -----------------------------------
 

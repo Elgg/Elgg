@@ -1581,40 +1581,6 @@ function _elgg_views_send_header_x_frame_options() {
 	header('X-Frame-Options: SAMEORIGIN');
 }
 
-/**
- * Checks for usage of core views that have been removed
- *
- * @access private
- */
-function _elgg_views_deprecate_removed_views() {
-	$removed_views = array(
-		"1.10" => array(
-			'core/settings/tools',
-		),
-	);
-
-	$views_svc = _elgg_services()->views;
-	foreach ($removed_views as $version => $names) {
-		foreach ($names as $name) {
-			if ($views_svc->viewExists($name)) {
-				elgg_deprecated_notice("The view $name is no longer used and should not be provided or extended.", $version);
-			}
-		}
-	}
-}
-
-/**
- * Registers deprecated views to avoid making some pages from older plugins
- * completely empty.
- *
- * @access private
- */
-function elgg_views_handle_deprecated_views() {
-	$location = elgg_get_view_location('page_elements/contentwrapper');
-	if ($location === "/var/www/views/") {
-		elgg_extend_view('page_elements/contentwrapper', 'page/elements/wrapper');
-	}
-}
 
 /**
  * Initialize viewtypes on system boot event
@@ -1703,6 +1669,4 @@ function elgg_views_boot() {
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('boot', 'system', 'elgg_views_boot');
-	$events->registerHandler('init', 'system', 'elgg_views_handle_deprecated_views');
-	$events->registerHandler('ready', 'system', '_elgg_views_deprecate_removed_views');
 };
