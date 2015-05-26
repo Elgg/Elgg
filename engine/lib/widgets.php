@@ -197,10 +197,18 @@ function _elgg_default_widgets_init() {
 		// only register the callback once per event
 		$events = array();
 		foreach ($default_widgets as $info) {
-			$events[$info['event'] . ',' . $info['entity_type']] = $info;
-		}
-		foreach ($events as $info) {
-			elgg_register_event_handler($info['event'], $info['entity_type'], '_elgg_create_default_widgets');
+			if (!is_array($info)) {
+				continue;
+			}
+			$event = elgg_extract('event', $info);
+			$entity_type = elgg_extract('entity_type', $info);
+			if (!$event || !$entity_type) {
+				continue;
+			}
+			if (!isset($events[$event][$entity_type])) {
+				elgg_register_event_handler($event, $entity_type, '_elgg_create_default_widgets');
+				$events[$event][$entity_type] = true;
+			}
 		}
 	}
 }

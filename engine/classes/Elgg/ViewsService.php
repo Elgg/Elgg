@@ -75,6 +75,7 @@ class ViewsService {
 				$warning = 'Use elgg_get_logged_in_user_entity() rather than assuming elgg_view() '
 							. 'populates $vars["user"]';
 				$this->user_wrapper = new \Elgg\DeprecationWrapper($user, $warning, 1.8);
+				$this->user_wrapped = $user;
 			}
 			$user = $this->user_wrapper;
 		}

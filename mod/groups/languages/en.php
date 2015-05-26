@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'You can not create a group. Only admins can.',
 	'groups:cantedit' => 'You can not edit this group',
 	'groups:saved' => 'Group saved',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Featured groups',
 	'groups:makeunfeatured' => 'Unfeature',
 	'groups:makefeatured' => 'Make featured',

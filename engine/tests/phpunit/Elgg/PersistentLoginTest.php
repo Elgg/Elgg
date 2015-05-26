@@ -152,9 +152,13 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 		$subject = $this->user123;
 		$modifier = $this->user123;
 
-		$this->dbMock->expects($this->once())
-			->method('deleteData')
-			->will($this->returnCallback(array($this, 'mock_deleteAll')));
+		$this->dbMock->expects($this->exactly(2))
+			->method('deleteData');
+		// Here we can't make an expectation on mock_deleteAll because one
+		// of the calls deletes all, and another deletes only a single hash.
+		// We'd have to fix mock_deleteAll to handle it.
+		// @todo replace this with a real DB test
+
 		$this->dbMock->expects($this->once())
 			->method('insertData')
 			->will($this->returnCallback(array($this, 'mock_insertData')));
@@ -186,7 +190,7 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 		$subject = $this->user123;
 		$modifier = $this->getMockElggUser(234);
 
-		$this->dbMock->expects($this->once())
+		$this->dbMock->expects($this->atLeastOnce())
 			->method('deleteData')
 			->will($this->returnCallback(array($this, 'mock_deleteAll')));
 		$this->dbMock->expects($this->never())
@@ -265,7 +269,7 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 	function testLegacyCookiesAreReplacedInDbCookieAndSession() {
 		$this->svc = $this->getSvcWithCookie(str_repeat('a', 32));
 
-		$this->dbMock->expects($this->once())
+		$this->dbMock->expects($this->atLeastOnce())
 			->method('deleteData');
 		$this->dbMock->expects($this->once())
 			->method('insertData');

@@ -32,6 +32,15 @@ if ($comment_guid) {
 	$comment->description = $comment_text;
 	if ($comment->save()) {
 		system_message(elgg_echo('generic_comment:updated'));
+
+		if (elgg_is_xhr()) {
+			// @todo move to its own view object/comment/content in 1.x
+			echo elgg_view('output/longtext', array(
+				'value' => $comment->description,
+				'class' => 'elgg-inner',
+				'data-role' => 'comment-text',
+			));
+		}
 	} else {
 		register_error(elgg_echo('generic_comment:failure'));
 	}
