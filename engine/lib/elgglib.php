@@ -1900,21 +1900,18 @@ function _elgg_init() {
 	});
 
 	elgg_register_js('elgg.autocomplete', 'js/lib/ui.autocomplete.js');
-	elgg_register_js('jquery.ui.autocomplete.html', 'vendors/jquery/jquery.ui.autocomplete.html.js');
+	elgg_register_js('jquery.ui.autocomplete.html', elgg_get_simplecache_url('js', 'jquery.ui.autocomplete.html.js'));
 
 	elgg_define_js('jquery.ui.autocomplete.html', array(
-		'src' => '/vendors/jquery/jquery.ui.autocomplete.html.js',
+		'src' => elgg_get_simplecache_url('js', 'jquery.ui.autocomplete.html.js'),
 		'deps' => array('jquery.ui')
 	));
 	
-	elgg_register_external_view('js/elgg/UserPicker.js', true);
-
 	elgg_register_js('elgg.friendspicker', 'js/lib/ui.friends_picker.js');
 	elgg_register_js('elgg.avatar_cropper', 'js/lib/ui.avatar_cropper.js');
-	elgg_register_js('jquery.imgareaselect', 'vendors/jquery/jquery.imgareaselect/scripts/jquery.imgareaselect.min.js');
 	elgg_register_js('elgg.ui.river', 'js/lib/ui.river.js');
-
-	elgg_register_css('jquery.imgareaselect', 'vendors/jquery/jquery.imgareaselect/css/imgareaselect-deprecated.css');
+	elgg_register_js('jquery.imgareaselect', elgg_get_simplecache_url('js', 'jquery.imgareaselect.js'));
+	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('js', 'jquery.imgareaselect.css'));
 	
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');

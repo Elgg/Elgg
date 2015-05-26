@@ -12,16 +12,12 @@ $messages = elgg_view('page/elements/messages', array('object' => $vars['sysmess
 $content = $vars['body'];
 
 $title = elgg_extract('title', $vars, elgg_get_site_entity()->name);
-$html5shiv = elgg_normalize_url('vendors/html5shiv.js');
 $favicon = elgg_view('page/elements/shortcut_icon', $vars);
 $css = elgg_get_simplecache_url('css', 'css/maintenance');
 $head = <<<__HEAD
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>$title</title>
 	$favicon
-	<!--[if lt IE 9]>
-		<script src="$html5shiv"></script>
-	<![endif]-->
 	<link href="$css" rel="stylesheet">
 __HEAD;
 

@@ -61,6 +61,8 @@ but provide a JavaScript polyfill for the browsers that need it.
 You may find that Elgg happens to work on unsupported browsers,
 but compatibility may break at any time, even during a bugfix release.
 
+
+
 Overview
 ========
 
@@ -72,6 +74,15 @@ Upload Elgg
 -  Unzip the files in your domain's document root (/home/username/www).
 
 .. _latest version of Elgg: http://elgg.org/download.php
+
+Elgg also supports installing from source with Composer:
+
+.. code:: shell
+
+    cd /path/to/wwwroot/
+    composer self-update
+    composer global require "fxp/composer-asset-plugin:~1.0"
+    composer create-project Elgg/Elgg:~2.0 .
 
 Create a data folder
 --------------------

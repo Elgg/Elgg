@@ -17,7 +17,7 @@ $lib_dir = 'js/lib';
 $classes_dir = 'js/classes';
 $files = array(
 	// these must come first
-	'vendors/sprintf',
+	'vendor/bower-asset/sprintf/src/sprintf',
 	"$lib_dir/elgglib",
 
 	// class definitions
