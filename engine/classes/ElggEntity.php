@@ -1870,7 +1870,7 @@ abstract class ElggEntity extends \ElggData implements
 	 *
 	 * You can ignore the disabled field by using {@link access_show_hidden_entities()}.
 	 *
-	 * @internal Disabling an entity sets the 'enabled' column to 'no'.
+	 * @note Internal: Disabling an entity sets the 'enabled' column to 'no'.
 	 *
 	 * @param string $reason    Optional reason
 	 * @param bool   $recursive Recursively disable all contained entities?

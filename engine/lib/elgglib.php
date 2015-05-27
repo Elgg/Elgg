@@ -395,7 +395,7 @@ function sanitise_filepath($path, $append_slash = true) {
  * {@link views/default/page/shells/default.php} and displays messages as
  * javascript popups.
  *
- * @internal Messages are stored as strings in the Elgg session as ['msg'][$register] array.
+ * @note Internal: Messages are stored as strings in the Elgg session as ['msg'][$register] array.
  *
  * @warning This function is used to both add to and clear the message
  * stack.  If $messages is null, $register will be returned and cleared.
@@ -501,7 +501,7 @@ function register_error($error) {
  *
  * @tip When referring to events, the preferred syntax is "event, type".
  *
- * @internal Events are stored in $CONFIG->events as:
+ * Internal note: Events are stored in $CONFIG->events as:
  * <code>
  * $CONFIG->events[$event][$type][$priority] = $callback;
  * </code>
@@ -554,10 +554,10 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  *
  * @tip When referring to events, the preferred syntax is "event, type".
  *
- * @internal Only rarely should events be changed, added, or removed in core.
+ * @note Internal: Only rarely should events be changed, added, or removed in core.
  * When making changes to events, be sure to first create a ticket on Github.
  *
- * @internal @tip Think of $object_type as the primary namespace element, and
+ * @note Internal: @tip Think of $object_type as the primary namespace element, and
  * $event as the secondary namespace.
  *
  * @param string $event       The event type
@@ -661,7 +661,7 @@ function elgg_trigger_deprecated_event($event, $object_type, $object = null, $me
  *  - mixed $params An optional array of parameters.  Used to provide additional
  *  information to plugins.
  *
- * @internal Plugin hooks are stored in $CONFIG->hooks as:
+ * @note Internal: Plugin hooks are stored in $CONFIG->hooks as:
  * <code>
  * $CONFIG->hooks[$hook][$type][$priority] = $callback;
  * </code>
@@ -747,7 +747,7 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * @tip It's not possible for a plugin hook to change a non-null $returnvalue
  * to null.
  *
- * @internal The checks for $hook and/or $type not being equal to 'all' is to
+ * @note Internal: The checks for $hook and/or $type not being equal to 'all' is to
  * prevent a plugin hook being registered with an 'all' being called more than
  * once if the trigger occurs with an 'all'. An example in core of this is in
  * actions.php:
