@@ -24,7 +24,7 @@ Run the following in cloud9's terminal:
 .. code:: sh
 
     rm -rf * # Clear out the c9 hello-world stuff
-    git clone https://github.com/Elgg/Elgg . # the hotness
+    composer create-project elgg/elgg:~1.11 . # the hotness
     cp install/config/htaccess.dist .htaccess
     cp engine/settings.example.php engine/settings.php
     mysql-ctl start # start c9's local mysql server
@@ -36,22 +36,23 @@ Configure ``engine/settings.php`` to be like so:
 
     // Must set timezone explicitly!
     date_default_timezone_set('America/Los_Angeles');
-    $CONFIG->dbuser = 'your_username'; // Your c9 username
+    
+    $CONFIG->dbuser = getenv('C9_USER');
     $CONFIG->dbpass = '';
     $CONFIG->dbname = 'c9';
-    $CONFIG->dbhost = $_SERVER['SERVER_ADDR'];
+    $CONFIG->dbhost = getenv('IP');
     $CONFIG->dbprefix = 'elgg_';
 
 3. Complete the install process from Elgg's UI
 ==============================================
 
 -  Hit "Run" at the top of the page to start Apache.
--  Go to ``http://your-workspace.your-username.c9.io/install.php?step=database``
+-  Go to ``https://{workspace}-{username}.c9.io/install.php?step=database``
 -  Change Site URL to ``http://your-workspace.your-username.c9.io/``
 -  Put in the data directory path. Should be something like
    ``/var/..../app-root/data/elgg-data/``.
 -  Click "Next"
 -  Create the admin account
 -  Click "Go to site"
--  You may have to manually visit http://your-workspace.your-username.c9.io/
+-  You may have to manually visit ``https://{workspace}-{username}.c9.io/``
    and login with the admin credentials you just configured.
