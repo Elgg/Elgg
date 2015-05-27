@@ -36,10 +36,10 @@
  * 'default' is a standard HTML view.  Types can be defined on the fly
  * and you can get the current viewtype with {@link elgg_get_viewtype()}.
  *
- * @internal Plugin views are autoregistered before their init functions
+ * @note Internal: Plugin views are autoregistered before their init functions
  * are called, so the init order doesn't affect views.
  *
- * @internal The file that determines the output of the view is the last
+ * @note Internal: The file that determines the output of the view is the last
  * registered by {@link elgg_set_view_location()}.
  *
  * @package Elgg.Core
@@ -81,7 +81,7 @@ function elgg_set_viewtype($viewtype = "") {
  * Viewtypes are automatically detected and can be set with $_REQUEST['view']
  * or {@link elgg_set_viewtype()}.
  *
- * @internal Viewtype is determined in this order:
+ * @note Internal: Viewtype is determined in this order:
  *  - $CURRENT_SYSTEM_VIEWTYPE Any overrides by {@link elgg_set_viewtype()}
  *  - $CONFIG->view  The default view as saved in the DB.
  *
@@ -290,7 +290,7 @@ function elgg_get_view_location($view, $viewtype = '') {
  * Views are expected to be in plugin_name/views/.  This function can
  * be used to change that location.
  *
- * @internal Core view locations are stored in $CONFIG->viewpath.
+ * @note Internal: Core view locations are stored in $CONFIG->viewpath.
  *
  * @tip This is useful to optionally register views in a plugin.
  *
@@ -386,7 +386,7 @@ function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
  * Priority can be specified and affects the order in which extensions
  * are appended or prepended.
  *
- * @internal View extensions are stored in
+ * @note Internal: View extensions are stored in
  * $CONFIG->views->extensions[$view][$priority] = $view_extension
  *
  * @param string $view           The view to extend.

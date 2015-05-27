@@ -173,7 +173,7 @@ function run_function_once($functionname, $timelastupdatedcheck = 0) {
 /**
  * Removes a config setting.
  *
- * @internal These settings are stored in the dbprefix_config table and read 
+ * @note Internal: These settings are stored in the dbprefix_config table and read
  * during system boot into $CONFIG.
  *
  * @param string $name      The name of the field.
