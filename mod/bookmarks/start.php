@@ -97,45 +97,40 @@ function bookmarks_page_handler($page) {
 
 	elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
 
-	$pages = dirname(__FILE__) . '/pages/bookmarks';
-
 	switch ($page[0]) {
 		case "all":
-			include "$pages/all.php";
+			echo elgg_view('resources/bookmarks/all');
 			break;
 
 		case "owner":
-			include "$pages/owner.php";
+			echo elgg_view('resources/bookmarks/owner');
 			break;
 
 		case "friends":
-			include "$pages/friends.php";
+			echo elgg_view('resources/bookmarks/friends');
 			break;
 
 		case "view":
 			set_input('guid', $page[1]);
-			include "$pages/view.php";
+			echo elgg_view('resources/bookmarks/view');
 			break;
 
 		case "add":
-			elgg_gatekeeper();
-			include "$pages/add.php";
+			echo elgg_view('resources/bookmarks/add');
 			break;
 
 		case "edit":
-			elgg_gatekeeper();
 			set_input('guid', $page[1]);
-			include "$pages/edit.php";
+			echo elgg_view('resources/bookmarks/edit');
 			break;
 
 		case 'group':
-			elgg_group_gatekeeper();
-			include "$pages/owner.php";
+			echo elgg_view('resources/bookmarks/owner');
 			break;
 
 		case "bookmarklet":
 			set_input('container_guid', $page[1]);
-			include "$pages/bookmarklet.php";
+			echo elgg_view('resources/bookmarks/bookmarklet');
 			break;
 
 		default:
