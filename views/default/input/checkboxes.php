@@ -73,12 +73,6 @@ if ($vars['name'] && $vars['default'] !== false) {
 
 $checkboxes = '';
 foreach ($vars['options'] as $label => $value) {
-	// @deprecated 1.8 Remove in 1.9
-	if (is_integer($label)) {
-		elgg_deprecated_notice('$vars[\'options\'] must be an associative array in input/checkboxes', 1.8);
-		$label = $value;
-	}
-
 	$input_vars['checked'] = in_array(elgg_strtolower($value), $values);
 	$input_vars['value'] = $value;
 	$input_vars['label'] = $label;

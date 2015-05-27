@@ -63,12 +63,6 @@ foreach ($options as $label => $option) {
 	$vars['checked'] = in_array(elgg_strtolower($option), $value);
 	$vars['value'] = $option;
 
-	// handle indexed array where label is not specified
-	// @deprecated 1.8 Remove in 1.9
-	if (is_integer($label)) {
-		elgg_deprecated_notice('$vars[\'options\'] must be an associative array in input/radio', 1.8);
-		$label = $option;
-	}
 	$radio = elgg_format_element('input', $vars);
 	$radios .= "<li><label>{$radio}{$label}</label></li>";
 }

@@ -76,8 +76,4 @@ define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, trans
 
 require(['elgg']); // Forces the define() function to always run
 
-<?php
-echo elgg_view_deprecated('js/initialise_elgg', array(), "Use the view js/elgg.", 1.8);
-?>
-
 elgg.trigger_hook('boot', 'system');

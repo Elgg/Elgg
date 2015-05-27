@@ -39,16 +39,11 @@ foreach ($stylesheets as $url) {
 // A non-empty script *must* come below the CSS links, otherwise Firefox will exhibit FOUC
 // See https://github.com/Elgg/Elgg/issues/8328
 ?>
-	<script>
-		<?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
-		require = function () {
-			// handled in the view "js/elgg"
-			_require_queue.push(arguments);
-		};
-		_require_queue = [];
-	</script>
-<?php
-
-echo elgg_view_deprecated('page/elements/shortcut_icon', array(), "Use the 'head', 'page' plugin hook.", 1.9);
-
-echo elgg_view_deprecated('metatags', array(), "Use the 'head', 'page' plugin hook.", 1.8);
+<script>
+	<?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
+	require = function () {
+		// handled in the view "js/elgg"
+		_require_queue.push(arguments);
+	};
+	_require_queue = [];
+</script>

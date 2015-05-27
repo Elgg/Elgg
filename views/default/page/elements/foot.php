@@ -1,7 +1,5 @@
 <?php
 
-echo elgg_view_deprecated('footer/analytics', array(), "Extend page/elements/foot instead", 1.8);
-
 $elgg_init = elgg_view('js/initialize_elgg');
 echo "<script>$elgg_init</script>";
 

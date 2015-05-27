@@ -40,9 +40,6 @@ if (elgg_in_context('default_widgets')) {
 } else {
 	if (elgg_view_exists("widgets/$handler/content")) {
 		$content = elgg_view("widgets/$handler/content", $vars);
-	} else {
-		elgg_deprecated_notice("widgets use content as the display view", 1.8);
-		$content = elgg_view("widgets/$handler/view", $vars);
 	}
 }
 
