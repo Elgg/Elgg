@@ -92,8 +92,7 @@ function twitter_api_pagehandler($page) {
 				register_error(elgg_echo('twitter_api:invalid_page'));
 				forward();
 			}
-			$pages = dirname(__FILE__) . '/pages/twitter_api';
-			include "$pages/interstitial.php";
+			echo elgg_view('resources/twitter_api/interstitial');
 			break;
 		default:
 			return false;
