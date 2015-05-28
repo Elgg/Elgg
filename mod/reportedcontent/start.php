@@ -71,19 +71,7 @@ function reportedcontent_page_handler($page) {
 		return true;
 	}
 
-	$title = elgg_echo('reportedcontent:this');
-	
-	$content = elgg_view_form('reportedcontent/add');
-	$sidebar = elgg_echo('reportedcontent:instructions');
-
-	$params = array(
-		'title' => $title,
-		'content' => $content,
-		'sidebar' => $sidebar,
-	);
-	$body = elgg_view_layout('one_sidebar', $params);
-
-	echo elgg_view_page($title, $body);
+	echo elgg_view('resources/reportedcontent/add');
 	return true;
 }
 
