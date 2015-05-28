@@ -84,58 +84,56 @@ function thewire_init() {
  */
 function thewire_page_handler($page) {
 
-	$base_dir = elgg_get_plugins_path() . 'thewire/pages/thewire';
-
 	if (!isset($page[0])) {
 		$page = array('all');
 	}
 
 	switch ($page[0]) {
 		case "all":
-			include "$base_dir/everyone.php";
+			echo elgg_view('resources/thewire/everyone');
 			break;
 
 		case "friends":
-			include "$base_dir/friends.php";
+			echo elgg_view('resources/thewire/friends');
 			break;
 
 		case "owner":
-			include "$base_dir/owner.php";
+			echo elgg_view('resources/thewire/owner');
 			break;
 
 		case "view":
 			if (isset($page[1])) {
 				set_input('guid', $page[1]);
 			}
-			include "$base_dir/view.php";
+			echo elgg_view('resources/thewire/view');
 			break;
 
 		case "thread":
 			if (isset($page[1])) {
 				set_input('thread_id', $page[1]);
 			}
-			include "$base_dir/thread.php";
+			echo elgg_view('resources/thewire/thread');
 			break;
 
 		case "reply":
 			if (isset($page[1])) {
 				set_input('guid', $page[1]);
 			}
-			include "$base_dir/reply.php";
+			echo elgg_view('resources/thewire/reply');
 			break;
 
 		case "tag":
 			if (isset($page[1])) {
 				set_input('tag', $page[1]);
 			}
-			include "$base_dir/tag.php";
+			echo elgg_view('resources/thewire/tag');
 			break;
 
 		case "previous":
 			if (isset($page[1])) {
 				set_input('guid', $page[1]);
 			}
-			include "$base_dir/previous.php";
+			echo elgg_view('resources/thewire/previous');
 			break;
 
 		default:
