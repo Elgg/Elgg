@@ -73,16 +73,12 @@ function profile_page_handler($page) {
 
 	if ($action == 'edit') {
 		// use the core profile edit page
-		$base_dir = elgg_get_root_path();
-		require "{$base_dir}pages/profile/edit.php";
+		echo elgg_view('resources/profile/edit');
 		return true;
 	}
 
-	$content = elgg_view('profile/layout', array('entity' => $user));
-	$body = elgg_view_layout('one_column', array(
-		'content' => $content
-	));
-	echo elgg_view_page($user->name, $body);
+	set_input('username', $page[0]);
+	echo elgg_view('resources/profile/view');
 	return true;
 }
 
