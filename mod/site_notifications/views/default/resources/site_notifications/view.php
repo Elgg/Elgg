@@ -2,6 +2,8 @@
 /**
  * View a user's site notifications
  */
+elgg_gatekeeper();
+elgg_load_js('elgg.site_notifications');
 
 $page_owner = elgg_get_page_owner_entity();
 if (!$page_owner || !$page_owner->canEdit()) {

@@ -36,8 +36,6 @@ function site_notifications_init() {
  * @return boolean
  */
 function site_notifications_page_handler($segments) {
-	$base = elgg_get_plugins_path() . 'site_notifications/pages/site_notifications';
-
 	elgg_gatekeeper();
 
 	if (!isset($segments[1])) {
@@ -50,9 +48,8 @@ function site_notifications_page_handler($segments) {
 	}
 
 	elgg_set_page_owner_guid($user->guid);
-	elgg_load_js('elgg.site_notifications');
 
-	require "$base/view.php";
+	echo elgg_view('resources/site_notifications/view');
 
 	return true;
 }
