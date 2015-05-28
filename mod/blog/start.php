@@ -104,64 +104,53 @@ function blog_page_handler($page) {
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
-			$user = get_user_by_username($page[1]);
-			if (!$user) {
-				forward('', '404');
-			}
-			$params = blog_get_page_content_list($user->guid);
+			set_input('username', $page[1]);
+			
+			echo elgg_view('resources/blog/owner');
 			break;
 		case 'friends':
-			$user = get_user_by_username($page[1]);
-			if (!$user) {
-				forward('', '404');
-			}
-			$params = blog_get_page_content_friends($user->guid);
+			set_input('username', $page[1]);
+			
+			echo elgg_view('resources/blog/friends');
 			break;
 		case 'archive':
-			$user = get_user_by_username($page[1]);
-			if (!$user) {
-				forward('', '404');
-			}
-			$params = blog_get_page_content_archive($user->guid, $page[2], $page[3]);
+			set_input('username', $page[1]);
+			set_input('lower', $page[2]);
+			set_input('upper', $page[3]);
+			
+			echo elgg_view('resources/blog/archive');
 			break;
 		case 'view':
-			$params = blog_get_page_content_read($page[1]);
+			set_input('guid', $page[1]);
+			
+			echo elgg_view('resources/blog/view');
 			break;
 		case 'add':
-			elgg_gatekeeper();
-			$params = blog_get_page_content_edit($page_type, $page[1]);
+			set_input('guid', $page[1]);
+			
+			echo elgg_view('resources/blog/add');
 			break;
 		case 'edit':
-			elgg_gatekeeper();
-			$params = blog_get_page_content_edit($page_type, $page[1], $page[2]);
+			set_input('guid', $page[1]);
+			set_input('revision', $page[2]);
+			
+			echo elgg_view('resources/blog/edit');
 			break;
 		case 'group':
-			$group = get_entity($page[1]);
-			if (!elgg_instanceof($group, 'group')) {
-				forward('', '404');
-			}
-			if (!isset($page[2]) || $page[2] == 'all') {
-				$params = blog_get_page_content_list($page[1]);
-			} else {
-				$params = blog_get_page_content_archive($page[1], $page[3], $page[4]);
-			}
+			set_input('group_guid', $page[1]);
+			set_input('page_type', $page[2]);
+			set_input('lower', $page[3]);
+			set_input('upper', $page[4]);
+			
+			echo elgg_view('resources/blog/group');
 			break;
 		case 'all':
-			$params = blog_get_page_content_list();
+			echo elgg_view('resources/blog/all');
 			break;
 		default:
 			return false;
 	}
 
-	if (isset($params['sidebar'])) {
-		$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
-	} else {
-		$params['sidebar'] = elgg_view('blog/sidebar', array('page' => $page_type));
-	}
-
-	$body = elgg_view_layout('content', $params);
-
-	echo elgg_view_page($params['title'], $body);
 	return true;
 }
 
