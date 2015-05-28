@@ -19,47 +19,25 @@ define(function(require) {
 			expect($(visible_selector).length).toBe(0);
 		});
 
-		it("start() adds the body class after 20ms", function() {
+		it("start() adds the body class after 20ms", function(done) {
 			expect($(visible_selector).length).toBe(0);
-			var flag = false;
+			spinner.start();
 
-			runs(function() {
-				spinner.start();
-
-				setTimeout(function() {
-					flag = true;
-				}, 25);
-			});
-
-			waitsFor(function() {
-				return flag;
-			});
-
-			runs(function() {
+			setTimeout(function() {
 				expect($(visible_selector).length).toBe(1);
-			});
+				done();
+			}, 25);
 		});
 
-		it("stop() removes the body class", function() {
-			var flag = false;
+		it("stop() removes the body class", function(done) {
+			spinner.start();
 
-			runs(function() {
-				spinner.start();
-
-				setTimeout(function() {
-					flag = true;
-				}, 25);
-			});
-
-			waitsFor(function() {
-				return flag;
-			});
-
-			runs(function() {
+			setTimeout(function() {
 				expect($(visible_selector).length).toBe(1);
 				spinner.stop();
 				expect($(visible_selector).length).toBe(0);
-			});
+				done();
+			}, 25);
 		});
 	});
 });
