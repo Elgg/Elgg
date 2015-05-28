@@ -51,20 +51,15 @@ function notifications_page_handler($page) {
 		forward("notifications/{$page[0]}/{$current_user->username}");
 	}
 
-	$user = get_user_by_username($page[1]);
-	if (($user->guid != $current_user->guid) && !$current_user->isAdmin()) {
-		forward();
-	}
-
-	$base = elgg_get_plugins_path() . 'notifications';
+	set_input('username', $page[1]);
 
 	// note: $user passed in
 	switch ($page[0]) {
 		case 'group':
-			require "$base/groups.php";
+			echo elgg_view('resources/notifications/groups');
 			break;
 		case 'personal':
-			require "$base/index.php";
+			echo elgg_view('resources/notifications/index');
 			break;
 		default:
 			return false;

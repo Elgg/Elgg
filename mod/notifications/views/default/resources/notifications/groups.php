@@ -6,6 +6,14 @@
  *
  * @uses $user ElggUser
  */
+$current_user = elgg_get_logged_in_user_entity();
+
+$username = get_input('username');
+$user = get_user_by_username($username);
+if (($user->guid != $current_user->guid) && !$current_user->isAdmin()) {
+	forward();
+}
+
 
 if (!isset($user) || !($user instanceof ElggUser)) {
 	$url = 'notifications/group/' . elgg_get_logged_in_user_entity()->username;
