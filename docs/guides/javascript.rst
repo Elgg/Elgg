@@ -155,14 +155,12 @@ When this is requested client-side:
 
 .. warning:: Calls to ``elgg_define_js()`` must be in an ``init, system`` event handler.
 
-Some things to note
-^^^^^^^^^^^^^^^^^^^
+.. note:: Return the value of the module instead of adding to a global variable.
 
-#. Do not use ``elgg.provide()`` anymore nor other means to attach code to ``elgg`` or other
-   global objects. Use modules.
-#. Return the value of the module instead of adding to a global variable.
-#. JS and CSS views (names starting with ``js/`` or ``css/``) as well as static (.js/.css) files
-   are automatically minified and cached by Elgg's simplecache system.
+.. note::
+
+    JS and CSS views (names starting with ``js/`` or ``css/``) as well as static (.js/.css) files
+    are automatically minified and cached by Elgg's simplecache system.
 
 
 Migrating JS from Elgg 1.8 to AMD / 1.9
