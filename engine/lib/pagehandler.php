@@ -212,26 +212,7 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
  * @return bool
  */
 function elgg_front_page_handler() {
-
-	if (elgg_is_logged_in()) {
-		forward('activity');
-	}
-
-	$title = elgg_echo('content:latest');
-	$content = elgg_list_river();
-	if (!$content) {
-		$content = elgg_echo('river:none');
-	}
-
-	$login_box = elgg_view('core/account/login_box');
-
-	$params = array(
-			'title' => $title,
-			'content' => $content,
-			'sidebar' => $login_box
-	);
-	$body = elgg_view_layout('one_sidebar', $params);
-	echo elgg_view_page(null, $body);
+	echo elgg_view('resources/index');
 	return true;
 }
 
@@ -249,38 +230,10 @@ function elgg_front_page_handler() {
  * @return void
  */
 function elgg_error_page_handler($hook, $type, $result, $params) {
-	if (elgg_view_exists("errors/$type")) {
-		$title = elgg_echo("error:$type:title");
-		if ($title == "error:$type:title") {
-			// use default if there is no title for this error type
-			$title = elgg_echo("error:default:title");
-		}
-		
-		$content = elgg_view("errors/$type", $params);
-	} else {
-		$title = elgg_echo("error:default:title");
-		$content = elgg_view("errors/default", $params);
-	}
-	
-	$httpCodes = array(
-		'400' => 'Bad Request',
-		'401' => 'Unauthorized',
-		'403' => 'Forbidden',
-		'404' => 'Not Found',
-		'407' => 'Proxy Authentication Required',
-		'500' => 'Internal Server Error',
-		'503' => 'Service Unavailable',
-	);
-	
-	if (isset($httpCodes[$type])) {
-		header("HTTP/1.1 $type {$httpCodes[$type]}");
-	}
+	set_input('type', $type);
+	set_input('params', $params);
 
-	$body = elgg_view_layout('error', array(
-		'title' => $title,
-		'content' => $content,
-	));
-	echo elgg_view_page($title, $body, 'error');
+	echo elgg_view('resources/error');
 	exit;
 }
 

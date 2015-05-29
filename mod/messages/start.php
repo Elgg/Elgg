@@ -98,24 +98,22 @@ function messages_page_handler($page) {
 		$page[1] = $current_user->username;
 	}
 
-	$base_dir = elgg_get_plugins_path() . 'messages/pages/messages';
-
 	switch ($page[0]) {
 		case 'inbox':
 			set_input('username', $page[1]);
-			include("$base_dir/inbox.php");
+			echo elgg_view('resources/messages/inbox');
 			break;
 		case 'sent':
 			set_input('username', $page[1]);
-			include("$base_dir/sent.php");
+			echo elgg_view('resources/messages/sent');
 			break;
 		case 'read':
 			set_input('guid', $page[1]);
-			include("$base_dir/read.php");
+			echo elgg_view('resources/messages/read');
 			break;
 		case 'compose':
 		case 'add':
-			include("$base_dir/send.php");
+			echo elgg_view('resources/messages/send');
 			break;
 		default:
 			return false;

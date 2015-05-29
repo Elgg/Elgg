@@ -46,8 +46,6 @@ function messageboard_init() {
  */
 function messageboard_page_handler($page) {
 
-	$pages = dirname(__FILE__) . '/pages/messageboard';
-
 	switch ($page[0]) {
 		case 'owner':
 			//@todo if they have the widget disabled, don't allow this.
@@ -61,20 +59,20 @@ function messageboard_page_handler($page) {
 				set_input('history_username', $username);
 			}
 
-			include "$pages/owner.php";
+			echo elgg_view('resources/messageboard/owner');
 			break;
 
 		case 'add':
 			$container_guid = elgg_extract(1, $page);
 			set_input('container_guid', $container_guid);
-			include "$pages/add.php";
+			echo elgg_view('resources/messageboard/add');
 			break;
 
 		case 'group':
 			elgg_group_gatekeeper();
 			$owner_guid = elgg_extract(1, $page);
 			set_input('page_owner_guid', $owner_guid);
-			include "$pages/owner.php";
+			echo elgg_view('resources/messageboard/owner');
 			break;
 
 		default:

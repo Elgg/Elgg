@@ -50,11 +50,10 @@ if ($friends) {
 		'friendspicker' => $vars['friendspicker'],
 	));
 ?>
-<?php //@todo JS 1.8: no ?>
 	<script>
 	require(['elgg', 'jquery'], function(elgg, $) {
 		$(function () {
-			var url = elgg.config.wwwroot + 'pages/friends/collections/pickercallback.php' +
+			var url = elgg.config.wwwroot + 'collections/pickercallback' +
 				'?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>' +
 				'&type=list&collection=<?php echo $vars['collection']->id; ?>';
 			$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load(url);

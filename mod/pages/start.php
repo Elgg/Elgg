@@ -120,41 +120,39 @@ function pages_page_handler($page) {
 
 	elgg_push_breadcrumb(elgg_echo('pages'), 'pages/all');
 
-	$base_dir = elgg_get_plugins_path() . 'pages/pages/pages';
-
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
-			include "$base_dir/owner.php";
+			echo elgg_view('resources/pages/owner');
 			break;
 		case 'friends':
-			include "$base_dir/friends.php";
+			echo elgg_view('resources/pages/friends');
 			break;
 		case 'view':
 			set_input('guid', $page[1]);
-			include "$base_dir/view.php";
+			echo elgg_view('resources/pages/view');
 			break;
 		case 'add':
 			set_input('guid', $page[1]);
-			include "$base_dir/new.php";
+			echo elgg_view('resources/pages/new');
 			break;
 		case 'edit':
 			set_input('guid', $page[1]);
-			include "$base_dir/edit.php";
+			echo elgg_view('resources/pages/edit');
 			break;
 		case 'group':
-			include "$base_dir/owner.php";
+			echo elgg_view('resources/pages/owner');
 			break;
 		case 'history':
 			set_input('guid', $page[1]);
-			include "$base_dir/history.php";
+			echo elgg_view('resources/pages/history');
 			break;
 		case 'revision':
 			set_input('id', $page[1]);
-			include "$base_dir/revision.php";
+			echo elgg_view('resources/pages/revision');
 			break;
 		case 'all':
-			include "$base_dir/world.php";
+			echo elgg_view('resources/pages/world');
 			break;
 		default:
 			return false;

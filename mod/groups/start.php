@@ -239,43 +239,25 @@ function groups_page_handler($page) {
 	elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 
 	switch ($page[0]) {
+		case 'add':
 		case 'all':
-			groups_handle_all_page();
-			break;
-		case 'search':
-			groups_search_page();
-			break;
 		case 'owner':
-			groups_handle_owned_page();
-			break;
-		case 'member':
-			set_input('username', $page[1]);
-			groups_handle_mine_page();
+		case 'search':
+			echo elgg_view("resources/groups/{$page[0]}");
 			break;
 		case 'invitations':
+		case 'member':
 			set_input('username', $page[1]);
-			groups_handle_invitations_page();
-			break;
-		case 'add':
-			groups_handle_edit_page('add');
-			break;
-		case 'edit':
-			groups_handle_edit_page('edit', $page[1]);
-			break;
-		case 'profile':
-			groups_handle_profile_page($page[1]);
+			echo elgg_view("resources/groups/{$page[0]}");
 			break;
 		case 'activity':
-			groups_handle_activity_page($page[1]);
-			break;
-		case 'members':
-			groups_handle_members_page($page[1]);
-			break;
+		case 'edit':
 		case 'invite':
-			groups_handle_invite_page($page[1]);
-			break;
+		case 'members':
+		case 'profile':
 		case 'requests':
-			groups_handle_requests_page($page[1]);
+			set_input('guid', $page[1]);
+			echo elgg_view("resources/groups/{$page[0]}");
 			break;
 		default:
 			return false;
@@ -806,18 +788,21 @@ function discussion_page_handler($page) {
 
 	switch ($page[0]) {
 		case 'all':
-			discussion_handle_all_page();
+			echo elgg_view('resources/discussion/all');
 			break;
 		case 'owner':
-			discussion_handle_list_page(elgg_extract(1, $page));
+			set_input('owner_guid', elgg_extract(1, $page));
+			echo elgg_view('resources/discussion/owner');
 			break;
 		case 'add':
-			discussion_handle_edit_page('add', elgg_extract(1, $page));
+			set_input('guid', elgg_extract(1, $page));
+			echo elgg_view('resources/discussions/add');
 			break;
 		case 'reply':
 			switch (elgg_extract(1, $page)) {
 				case 'edit':
-					discussion_handle_reply_edit_page('edit', elgg_extract(2, $page));
+					set_input('guid', elgg_extract(2, $page));
+					echo elgg_view('resources/discussion/reply/edit');
 					break;
 				case 'view':
 					discussion_redirect_to_reply(elgg_extract(2, $page), elgg_extract(3, $page));
@@ -827,10 +812,12 @@ function discussion_page_handler($page) {
 			}
 			break;
 		case 'edit':
-			discussion_handle_edit_page('edit', elgg_extract(1, $page));
+			set_input('guid', elgg_extract(1, $page));
+			echo elgg_view('resources/discussion/edit');
 			break;
 		case 'view':
-			discussion_handle_view_page(elgg_extract(1, $page));
+			set_input('guid', elgg_extract(1, $page));
+			echo elgg_view('resources/discussion/view');
 			break;
 		default:
 			return false;

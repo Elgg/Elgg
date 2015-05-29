@@ -113,44 +113,42 @@ function file_page_handler($page) {
 		$page[0] = 'all';
 	}
 
-	$file_dir = elgg_get_plugins_path() . 'file/pages/file';
-
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
 			file_register_toggle();
-			include "$file_dir/owner.php";
+			echo elgg_view('resources/file/owner');
 			break;
 		case 'friends':
 			file_register_toggle();
-			include "$file_dir/friends.php";
+			echo elgg_view('resources/file/friends');
 			break;
 		case 'view':
 			set_input('guid', $page[1]);
-			include "$file_dir/view.php";
+			echo elgg_view('resources/file/view');
 			break;
 		case 'add':
-			include "$file_dir/upload.php";
+			echo elgg_view('resources/file/upload');
 			break;
 		case 'edit':
 			set_input('guid', $page[1]);
-			include "$file_dir/edit.php";
+			echo elgg_view('resources/file/edit');
 			break;
 		case 'search':
 			file_register_toggle();
-			include "$file_dir/search.php";
+			echo elgg_view('resources/file/search');
 			break;
 		case 'group':
 			file_register_toggle();
-			include "$file_dir/owner.php";
+			echo elgg_view('resources/file/owner');
 			break;
 		case 'all':
 			file_register_toggle();
-			include "$file_dir/world.php";
+			echo elgg_view('resources/file/world');
 			break;
 		case 'download':
 			set_input('guid', $page[1]);
-			include "$file_dir/download.php";
+			echo elgg_view('resources/file/download');
 			break;
 		default:
 			return false;

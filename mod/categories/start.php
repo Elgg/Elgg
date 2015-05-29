@@ -31,7 +31,7 @@ function categories_init() {
  * @return bool
  */
 function categories_page_handler() {
-	include(dirname(__FILE__) . "/pages/categories/listing.php");
+	echo elgg_view('resources/categories/listing');
 	return true;
 }
 
