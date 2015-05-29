@@ -23,6 +23,8 @@ return array(
 	'developers:help:screen_log' => "This displays elgg_log() and elgg_dump() output and a DB query count.",
 	'developers:label:show_strings' => "Show raw translation strings",
 	'developers:help:show_strings' => "This displays the translation strings used by elgg_echo().",
+	'developers:label:show_modules' => "Show AMD modules loaded in console",
+	'developers:help:show_modules' => "Streams loaded modules and values to your JavaScript console.",
 	'developers:label:wrap_views' => "Wrap views",
 	'developers:help:wrap_views' => "This wraps almost every view with HTML comments. Useful for finding the view creating particular HTML.
 									This can break non-HTML views in the default viewtype. See developers_wrap_views() for details.",
@@ -82,4 +84,6 @@ return array(
 
 	// status messages
 	'developers:settings:success' => 'Settings saved and caches flushed',
+
+	'developers:amd' => 'AMD',
 );

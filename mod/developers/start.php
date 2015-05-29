@@ -53,6 +53,10 @@ function developers_process_settings() {
 		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1);
 	}
 
+	if (!empty($settings['show_modules'])) {
+		elgg_require_js('elgg/dev/amd_monitor');
+	}
+
 	if (!empty($settings['wrap_views'])) {
 		elgg_register_plugin_hook_handler('view', 'all', 'developers_wrap_views');
 	}

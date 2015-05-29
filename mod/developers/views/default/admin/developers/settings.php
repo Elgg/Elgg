@@ -52,6 +52,13 @@ $data = array(
 		'readonly' => false,
 	),
 
+	'show_modules' => array(
+		'type' => 'checkbox',
+		'value' => 1,
+		'checked' => elgg_get_plugin_setting('show_modules', 'developers') == 1,
+		'readonly' => false,
+	),
+
 	'wrap_views' => array(
 		'type' => 'checkbox',
 		'value' => 1,

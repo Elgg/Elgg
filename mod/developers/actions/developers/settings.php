@@ -31,6 +31,7 @@ $simple_settings = [
 	'wrap_views',
 	'log_events',
 	'show_gear',
+	'show_modules',
 ];
 foreach ($simple_settings as $setting) {
 	elgg_set_plugin_setting($setting, get_input($setting), 'developers');

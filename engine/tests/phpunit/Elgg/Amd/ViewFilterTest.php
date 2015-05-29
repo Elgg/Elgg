@@ -13,6 +13,15 @@ class ViewFilterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals("// Comment\ndefine(\"my/mod\", {})", $filteredContent);
 	}
 
+	public function testAllowsWhitespacePrecedingDefine() {
+		$viewFilter = new \Elgg\Amd\ViewFilter();
+
+		$originalContent = "// Comment\n\t  define({})";
+		$filteredContent = $viewFilter->filter('js/my/mod.js', $originalContent);
+
+		$this->assertEquals("// Comment\n\t  define(\"my/mod\", {})", $filteredContent);
+	}
+
 	public function testLeavesNamedModulesAlone() {
 		$viewFilter = new \Elgg\Amd\ViewFilter();
 
