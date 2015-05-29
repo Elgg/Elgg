@@ -268,31 +268,6 @@ function ajax_action_hook() {
 }
 
 /**
- * Send an updated CSRF token
- *
- * @access private
- */
-function _elgg_csrf_token_refresh() {
-
-	if (!elgg_is_xhr()) {
-		return false;
-	}
-
-	$ts = time();
-	$token = generate_action_token($ts);
-	$data = array(
-		'__elgg_ts' => $ts,
-		'__elgg_token' => $token,
-		'logged_in' => elgg_is_logged_in(),
-	);
-
-	header("Content-Type: application/json");
-	echo json_encode($data);
-
-	return true;
-}
-
-/**
  * Initialize some ajaxy actions features
  * @access private
  */

@@ -6,6 +6,7 @@
  */
 elgg_gatekeeper();
 
+
 $bookmark_guid = get_input('guid');
 $bookmark = get_entity($bookmark_guid);
 
@@ -16,6 +17,8 @@ if (!elgg_instanceof($bookmark, 'object', 'bookmarks') || !$bookmark->canEdit())
 
 $page_owner = elgg_get_page_owner_entity();
 
+elgg_load_library('elgg:bookmarks');
+elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
 $title = elgg_echo('bookmarks:edit');
 elgg_push_breadcrumb($title);
 

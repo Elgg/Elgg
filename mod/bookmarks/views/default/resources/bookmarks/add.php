@@ -6,6 +6,9 @@
  */
 elgg_gatekeeper();
 
+elgg_load_library('elgg:bookmarks');
+elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
+
 $page_owner = elgg_get_page_owner_entity();
 
 $title = elgg_echo('bookmarks:add');

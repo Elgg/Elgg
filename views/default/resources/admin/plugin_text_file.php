@@ -1,5 +1,20 @@
 <?php
-
+/**
+ * Formats and serves out markdown files from plugins.
+ *
+ * URLs in format like admin_plugin_text_file/<plugin_id>/filename.ext
+ *
+ * The only valid files are:
+ *	* README.txt
+ *	* CHANGES.txt
+ *	* INSTALL.txt
+ *	* COPYRIGHT.txt
+ *	* LICENSE.txt
+ *
+ * @param array $pages
+ * @return bool
+ * @access private
+ */
 $plugin_id = get_input('plugin_id');
 $plugin = elgg_get_plugin_from_id($plugin_id);
 

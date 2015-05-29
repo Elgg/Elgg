@@ -4,8 +4,6 @@
  *
  * @package ElggBookmarks
  */
-
-elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('bookmarks'));
 
 elgg_register_title_button();
