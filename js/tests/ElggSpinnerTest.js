@@ -13,17 +13,31 @@ define(function(require) {
 			expect($('.elgg-spinner').length).toBe(1);
 		});
 
-		it("start() adds the body class", function() {
+		it("start() doesn't add the body class immediately", function() {
 			expect($(visible_selector).length).toBe(0);
 			spinner.start();
-			expect($(visible_selector).length).toBe(1);
+			expect($(visible_selector).length).toBe(0);
 		});
 
-		it("stop() removes the body class", function() {
-			spinner.start();
-			expect($(visible_selector).length).toBe(1);
-			spinner.stop();
+		it("start() adds the body class after 20ms", function(done) {
 			expect($(visible_selector).length).toBe(0);
+			spinner.start();
+
+			setTimeout(function() {
+				expect($(visible_selector).length).toBe(1);
+				done();
+			}, 25);
+		});
+
+		it("stop() removes the body class", function(done) {
+			spinner.start();
+
+			setTimeout(function() {
+				expect($(visible_selector).length).toBe(1);
+				spinner.stop();
+				expect($(visible_selector).length).toBe(0);
+				done();
+			}, 25);
 		});
 	});
 });

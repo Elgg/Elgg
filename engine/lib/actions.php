@@ -66,7 +66,7 @@ function action($action, $forwarder = "") {
  *
  * @tip You don't need to include engine/start.php in your action files.
  *
- * @internal Actions are saved in $CONFIG->actions as an array in the form:
+ * @note Internal: Actions are saved in $CONFIG->actions as an array in the form:
  * <code>
  * array(
  * 	'file' => '/location/to/file.php',

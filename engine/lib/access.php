@@ -26,13 +26,13 @@
  * @warning This will not show disabled entities.
  * Use {@link access_show_hidden_entities()} to access disabled entities.
  * 
- * @internal The access override is checked in elgg_override_permissions(). It is
+ * @note Internal: The access override is checked in elgg_override_permissions(). It is
  * registered for the 'permissions_check' hooks to override the access system for
  * the canEdit() and canWriteToContainer() methods.
  * 
- * @internal This clears the access cache.
+ * @note Internal: This clears the access cache.
  *
- * @internal For performance reasons this is done at the database access clause level.
+ * @note Internal: For performance reasons this is done at the database access clause level.
  *
  * @param bool $ignore If true, disables all access checks.
  *
@@ -86,7 +86,7 @@ function get_access_list($user_guid = 0, $site_guid = 0, $flush = false) {
  * to plus public and logged in access levels. If the user is an admin, it includes
  * the private access level.
  *
- * @internal this is only used in core for creating the SQL where clause when
+ * @note Internal: this is only used in core for creating the SQL where clause when
  * retrieving content from the database. The friends access level is handled by
  * _elgg_get_access_where_sql().
  *
@@ -296,7 +296,7 @@ function can_edit_access_collection($collection_id, $user_guid = null) {
  *
  * Triggers plugin hook 'access:collections:addcollection', 'collection'
  *
- * @internal Access collections are stored in the access_collections table.
+ * @note Internal: Access collections are stored in the access_collections table.
  * Memberships to collections are in access_collections_membership.
  *
  * @param string $name       The name of the collection.

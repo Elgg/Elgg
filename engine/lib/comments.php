@@ -275,6 +275,10 @@ function _elgg_comments_permissions_override($hook, $type, $return, $params) {
  * @return array $returnvalue Modified mail parameters
  */
 function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $params) {
+	if (!is_array($returnvalue)) {
+		// another hook handler returned a non-array, let's not override it
+		return;
+	}
 
 	/** @var Elgg\Notifications\Notification */
 	$notification = elgg_extract('notification', $returnvalue['params']);

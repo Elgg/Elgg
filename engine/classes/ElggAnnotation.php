@@ -6,7 +6,7 @@
  * essentially the same as metadata, but with additional helper functions for
  * performing calculations.
  *
- * @internal Annotations are stored in the annotations table.
+ * @note Internal: Annotations are stored in the annotations table.
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Annotations
