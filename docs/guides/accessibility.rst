@@ -1,5 +1,5 @@
-Accessibility Guidelines
-========================
+Accessibility
+=============
 
 This page aims to list and document accessibility rules and best practices, to help core and plugins developpers to make Elgg the most accessible social engine framework that everyone dreams of.
 

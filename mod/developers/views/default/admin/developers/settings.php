@@ -52,6 +52,13 @@ $data = array(
 		'readonly' => false,
 	),
 
+	'show_modules' => array(
+		'type' => 'checkbox',
+		'value' => 1,
+		'checked' => elgg_get_plugin_setting('show_modules', 'developers') == 1,
+		'readonly' => false,
+	),
+
 	'wrap_views' => array(
 		'type' => 'checkbox',
 		'value' => 1,
@@ -63,6 +70,13 @@ $data = array(
 		'type' => 'checkbox',
 		'value' => 1,
 		'checked' => elgg_get_plugin_setting('log_events', 'developers') == 1,
+		'readonly' => false,
+	),
+
+	'show_gear' => array(
+		'type' => 'checkbox',
+		'value' => 1,
+		'checked' => elgg_get_plugin_setting('show_gear', 'developers') == 1,
 		'readonly' => false,
 	),
 );

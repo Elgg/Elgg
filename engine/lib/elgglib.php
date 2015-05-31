@@ -408,7 +408,7 @@ function sanitise_filepath($path, $append_slash = true) {
  * {@link views/default/page/shells/default.php} and displays messages as
  * javascript popups.
  *
- * @internal Messages are stored as strings in the Elgg session as ['msg'][$register] array.
+ * @note Internal: Messages are stored as strings in the Elgg session as ['msg'][$register] array.
  *
  * @warning This function is used to both add to and clear the message
  * stack.  If $messages is null, $register will be returned and cleared.
@@ -514,7 +514,7 @@ function register_error($error) {
  *
  * @tip When referring to events, the preferred syntax is "event, type".
  *
- * @internal Events are stored in $CONFIG->events as:
+ * Internal note: Events are stored in $CONFIG->events as:
  * <code>
  * $CONFIG->events[$event][$type][$priority] = $callback;
  * </code>
@@ -567,10 +567,10 @@ function elgg_unregister_event_handler($event, $object_type, $callback) {
  *
  * @tip When referring to events, the preferred syntax is "event, type".
  *
- * @internal Only rarely should events be changed, added, or removed in core.
+ * @note Internal: Only rarely should events be changed, added, or removed in core.
  * When making changes to events, be sure to first create a ticket on Github.
  *
- * @internal @tip Think of $object_type as the primary namespace element, and
+ * @note Internal: @tip Think of $object_type as the primary namespace element, and
  * $event as the secondary namespace.
  *
  * @param string $event       The event type
@@ -667,7 +667,7 @@ function elgg_trigger_deprecated_event($event, $object_type, $object = null, $me
  *  - mixed $params An optional array of parameters.  Used to provide additional
  *  information to plugins.
  *
- * @internal Plugin hooks are stored in $CONFIG->hooks as:
+ * @note Internal: Plugin hooks are stored in $CONFIG->hooks as:
  * <code>
  * $CONFIG->hooks[$hook][$type][$priority] = $callback;
  * </code>
@@ -754,7 +754,7 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
  * @tip It's not possible for a plugin hook to change a non-null $returnvalue
  * to null.
  *
- * @internal The checks for $hook and/or $type not being equal to 'all' is to
+ * @note Internal: The checks for $hook and/or $type not being equal to 'all' is to
  * prevent a plugin hook being registered with an 'all' being called more than
  * once if the trigger occurs with an 'all'. An example in core of this is in
  * actions.php:
@@ -810,7 +810,6 @@ function _elgg_php_exception_handler($exception) {
 	// make sure the error isn't cached
 	header("Cache-Control: no-cache, must-revalidate", true);
 	header('Expires: Fri, 05 Feb 1982 00:00:00 -0500', true);
-	// @note Do not send a 500 header because it is not a server error
 
 	// we don't want the 'pagesetup', 'system' event to fire
 	global $CONFIG;
@@ -833,28 +832,28 @@ function _elgg_php_exception_handler($exception) {
 			}
 		}
 
-		elgg_set_viewtype('failsafe');
+		if (elgg_is_xhr()) {
+			elgg_set_viewtype('json');
+			$response = new \Symfony\Component\HttpFoundation\JsonResponse(null, 500);
+		} else {
+			elgg_set_viewtype('failsafe');
+			$response = new \Symfony\Component\HttpFoundation\Response('', 500);
+		}
 
 		if (elgg_is_admin_logged_in()) {
-			if (!elgg_view_exists("messages/exceptions/admin_exception")) {
-				elgg_set_viewtype('failsafe');
-			}
-
 			$body = elgg_view("messages/exceptions/admin_exception", array(
 				'object' => $exception,
 				'ts' => $timestamp
 			));
 		} else {
-			if (!elgg_view_exists("messages/exceptions/exception")) {
-				elgg_set_viewtype('failsafe');
-			}
-
 			$body = elgg_view("messages/exceptions/exception", array(
 				'object' => $exception,
 				'ts' => $timestamp
 			));
 		}
-		echo elgg_view_page(elgg_echo('exception:title'), $body);
+
+		$response->setContent(elgg_view_page(elgg_echo('exception:title'), $body));
+		$response->send();
 	} catch (Exception $e) {
 		$timestamp = time();
 		$message = $e->getMessage();
@@ -1458,26 +1457,35 @@ function _elgg_js_page_handler($page) {
 /**
  * Serve individual views for Ajax.
  *
- * /ajax/view/<name of view>?<key/value params>
+ * /ajax/view/<view_name>?<key/value params>
+ * /ajax/form/<action_name>?<key/value params>
  *
- * @param array $page Array of URL segements
+ * @param string[] $segments URL segments (not including "ajax")
  * @return bool
  *
  * @see elgg_register_ajax_view()
  * @elgg_pagehandler ajax
  * @access private
  */
-function _elgg_ajax_page_handler($page) {
+function _elgg_ajax_page_handler($segments) {
 	// the ajax page handler should only be called from an xhr
 	if (!elgg_is_xhr()) {
 		register_error(_elgg_services()->translator->translate('ajax:not_is_xhr'));
 		forward(null, '400');
 	}
-	
-	if (is_array($page) && sizeof($page)) {
-		// throw away 'view' and form the view name
-		unset($page[0]);
-		$view = implode('/', $page);
+
+	if (count($segments) < 2) {
+		return false;
+	}
+
+	if ($segments[0] === 'view' || $segments[0] === 'form') {
+		if ($segments[0] === 'view') {
+			// ignore 'view/'
+			$view = implode('/', array_slice($segments, 1));
+		} else {
+			// form views start with "forms", not "form"
+			$view = 'forms/' . implode('/', array_slice($segments, 1));
+		}
 
 		$allowed_views = elgg_get_config('allowed_ajax_views');
 		if (!array_key_exists($view, $allowed_views)) {
@@ -1495,19 +1503,25 @@ function _elgg_ajax_page_handler($page) {
 			$vars['entity'] = get_entity($vars['guid']);
 		}
 
-		// Try to guess the mime-type
-		switch ($page[1]) {
-			case "js":
-				header("Content-Type: text/javascript");
-				break;
-			case "css":
-				header("Content-Type: text/css");
-				break;
-		}
+		if ($segments[0] === 'view') {
+			// Try to guess the mime-type
+			switch ($segments[1]) {
+				case "js":
+					header("Content-Type: text/javascript");
+					break;
+				case "css":
+					header("Content-Type: text/css");
+					break;
+			}
 
-		echo elgg_view($view, $vars);
+			echo elgg_view($view, $vars);
+		} else {
+			$action = implode('/', array_slice($segments, 1));
+			echo elgg_view_form($action, array(), $vars);
+		}
 		return true;
 	}
+
 	return false;
 }
 

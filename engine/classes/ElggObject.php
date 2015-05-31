@@ -10,7 +10,7 @@
  * as the related row in the entities table as represented by the parent
  * \ElggEntity object.
  *
- * @internal Title and description are stored in the objects_entity table.
+ * @note Internal: Title and description are stored in the objects_entity table.
  *
  * @package    Elgg.Core
  * @subpackage DataModel.Object

@@ -53,6 +53,10 @@ function developers_process_settings() {
 		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1);
 	}
 
+	if (!empty($settings['show_modules'])) {
+		elgg_require_js('elgg/dev/amd_monitor');
+	}
+
 	if (!empty($settings['wrap_views'])) {
 		elgg_register_plugin_hook_handler('view', 'all', 'developers_wrap_views');
 	}
@@ -60,6 +64,20 @@ function developers_process_settings() {
 	if (!empty($settings['log_events'])) {
 		elgg_register_event_handler('all', 'all', 'developers_log_events', 1);
 		elgg_register_plugin_hook_handler('all', 'all', 'developers_log_events', 1);
+	}
+
+	if (!empty($settings['show_gear']) && elgg_is_admin_logged_in() && !elgg_in_context('admin')) {
+		elgg_require_js('elgg/dev/gear');
+		elgg_load_js('lightbox');
+		elgg_load_css('lightbox');
+		elgg_register_ajax_view('developers/gear_popup');
+
+		// TODO use ::class in 2.0
+		$handler = ['Elgg\DevelopersPlugin\Hooks', 'alterMenuSectionVars'];
+		elgg_register_plugin_hook_handler('view_vars', 'navigation/menu/elements/section', $handler);
+
+		$handler = ['Elgg\DevelopersPlugin\Hooks', 'alterMenuSections'];
+		elgg_register_plugin_hook_handler('view', 'navigation/menu/elements/section', $handler);
 	}
 }
 

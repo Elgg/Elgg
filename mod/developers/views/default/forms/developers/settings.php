@@ -5,11 +5,15 @@
  * @uses $vars['values']
  */
 
-echo '<p>' . elgg_echo('elgg_dev_tools:settings:explanation') . '</p>';
+if (!elgg_is_xhr()) {
+	echo '<p>' . elgg_echo('elgg_dev_tools:settings:explanation') . '</p>';
+}
 
 foreach ($vars['data'] as $name => $info) {
 	$label = $info['readonly'] ? '<label class="elgg-state-disabled">' : '<label>';
 	$class = $info['readonly'] ? 'elgg-state-disabled' : '';
+	$echo_vars = ($name === 'show_gear') ? ['<span class="elgg-icon-settings-alt elgg-icon"></span>'] : [];
+
 	echo '<div>';
 	if ($info['type'] == 'checkbox') {
 		echo $label;
@@ -19,7 +23,7 @@ foreach ($vars['data'] as $name => $info) {
 			'checked' => $info['checked'],
 			'class' => $class,
 		));
-		echo elgg_echo("developers:label:$name") . '</label>';
+		echo ' ' . elgg_echo("developers:label:$name", $echo_vars) . '</label>';
 	} else {
 		echo $label . elgg_echo("developers:label:$name") . ' ';
 		echo elgg_view("input/{$info['type']}", array(
@@ -38,5 +42,5 @@ foreach ($vars['data'] as $name => $info) {
 }
 
 echo '<div class="elgg-foot">';
-echo elgg_view('input/submit', array('value' => elgg_echo('save')));
+echo elgg_view('input/submit', array('value' => elgg_echo('developers:label:submit')));
 echo '</div>';

@@ -24,11 +24,20 @@ if ($debug) {
 	unset_config('debug', $site->getGUID());
 }
 
-$simple_settings = array('display_errors', 'screen_log', 'show_strings',
-	'wrap_views', 'log_events',);
+$simple_settings = [
+	'display_errors',
+	'screen_log',
+	'show_strings',
+	'wrap_views',
+	'log_events',
+	'show_gear',
+	'show_modules',
+];
 foreach ($simple_settings as $setting) {
 	elgg_set_plugin_setting($setting, get_input($setting), 'developers');
 }
+
+elgg_flush_caches();
 
 system_message(elgg_echo('developers:settings:success'));
 

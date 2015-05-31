@@ -45,7 +45,7 @@ class ViewFilter {
 		$amdName = $this->getAmdName($viewName);
 		
 		if (!empty($amdName)) {
-			$content = preg_replace('/^define\(([^\'"])/m', "define(\"$amdName\", \$1", $content, 1);
+			$content = preg_replace('/^(\s*)define\(([^\'"])/m', "\${1}define(\"$amdName\", \$2", $content, 1);
 		}
 		
 		return $content;

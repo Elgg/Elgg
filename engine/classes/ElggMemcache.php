@@ -107,6 +107,9 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 		if (isset($this->CONFIG->memcache_expires)) {
 			$this->expires = $this->CONFIG->memcache_expires;
 		}
+		
+		// make sure memcache is reset
+		_elgg_services()->events->registerHandler('cache:flush', 'system', array($this, 'clear'));
 	}
 
 	/**
@@ -200,15 +203,21 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 	}
 
 	/**
-	 * Clears the entire cache?
-	 *
-	 * @todo write or remove.
+	 * Clears the entire cache
 	 *
 	 * @return true
 	 */
 	public function clear() {
-		// DISABLE clearing for now - you must use delete on a specific key.
-		return true;
+		$result = $this->memcache->flush();
+		if ($result === false) {
+			_elgg_services()->logger->info("MEMCACHE: failed to flush {$this->getNamespace()}");
+		} else {
+			sleep(1); // needed because http://php.net/manual/en/memcache.flush.php#81420
+			
+			_elgg_services()->logger->info("MEMCACHE: flushed {$this->getNamespace()}");
+		}
+		
+		return $result;
 
 		// @todo Namespaces as in #532
 	}

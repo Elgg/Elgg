@@ -563,9 +563,9 @@ function _elgg_get_entity_time_where_sql($table, $time_created_upper = null,
  *
  * @tip Pagination is handled automatically.
  *
- * @internal This also provides the views for elgg_view_annotation().
+ * @note Internal: This also provides the views for elgg_view_annotation().
  *
- * @internal If the initial COUNT query returns 0, the $getter will not be called again.
+ * @note Internal: If the initial COUNT query returns 0, the $getter will not be called again.
  *
  * @param array    $options Any options from $getter options plus:
  *                   item_view => STR Optional. Alternative view used to render list items

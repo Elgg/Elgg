@@ -59,8 +59,7 @@ class UpgradeService {
 		}
 
 		_elgg_services()->events->trigger('upgrade', 'system', null);
-		elgg_invalidate_simplecache();
-		elgg_reset_system_cache();
+		elgg_flush_caches();
 
 		$this->releaseUpgradeMutex();
 

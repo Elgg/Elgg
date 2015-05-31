@@ -68,10 +68,10 @@ class ConfigTable {
 	 * @warning Names should be selected so as not to collide with the names for the
 	 * datalist (application configuration)
 	 * 
-	 * @internal These settings are stored in the dbprefix_config table and read 
+	 * @note Internal: These settings are stored in the dbprefix_config table and read
 	 * during system boot into $CONFIG.
 	 * 
-	 * @internal The value is serialized so we maintain type information.
+	 * @note Internal: The value is serialized so we maintain type information.
 	 *
 	 * @param string $name      The name of the configuration value
 	 * @param mixed  $value     Its value
@@ -113,7 +113,7 @@ class ConfigTable {
 	 * 
 	 * Plugin authors should use elgg_get_config().
 	 *
-	 * @internal These settings are stored in the dbprefix_config table and read 
+	 * @note Internal: These settings are stored in the dbprefix_config table and read
 	 * during system boot into $CONFIG.
 	 *
 	 * @param string $name      The name of the config value

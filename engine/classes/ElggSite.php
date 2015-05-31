@@ -12,7 +12,7 @@
  *
  * Every \ElggEntity belongs to a site.
  *
- * @internal \ElggSite represents a single row from the sites_entity
+ * @note Internal: \ElggSite represents a single row from the sites_entity
  * table, as well as the corresponding \ElggEntity row from the entities table.
  *
  * @warning Multiple site support isn't fully developed.

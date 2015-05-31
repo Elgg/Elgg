@@ -80,7 +80,10 @@ ___JS;
 
 	$items[] = ElggMenuItem::factory(array(
 		'name' => 'embed',
-		'href' => $url,
+		'href' => 'javascript:void()',
+		'data-colorbox-opts' => json_encode([
+			'href' => elgg_normalize_url($url),
+		]),
 		'text' => $text,
 		'rel' => "embed-lightbox-{$vars['id']}",
 		'link_class' => "elgg-longtext-control elgg-lightbox embed-control embed-control-{$vars['id']}",
