@@ -129,7 +129,7 @@ function remove_entity_relationships($guid, $relationship = "", $inverse_relatio
  * @return \ElggRelationship[]
  */
 function get_entity_relationships($guid, $inverse_relationship = false) {
-	return _elgg_services()->relationshipsTable->getAll($guid, $inverse_relationships);
+	return _elgg_services()->relationshipsTable->getAll($guid, $inverse_relationship);
 }
 
 /**
