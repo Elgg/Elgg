@@ -26,6 +26,12 @@ Service: config
 An instance of ``Elgg\Services\ConfigInterface``, this is for getting and setting various system
 configuration values.
 
+Service: ajaxApi
+----------------
+
+An instance of ``Elgg\Services\AjaxApi``, this is for registering Ajax endpoints for use with the
+AMD module ``elgg/ajax``.
+
 .. note::
 
     If you have a useful idea, you can :doc:`add a new service </contribute/services>`!

@@ -1522,6 +1522,12 @@ function _elgg_ajax_page_handler($segments) {
 		return true;
 	}
 
+	if ($segments[0] === 'endpoint') {
+		$response = _elgg_services()->ajaxApi->handle($segments[1]);
+		$response->send();
+		return true;
+	}
+
 	return false;
 }
 
@@ -1873,6 +1879,9 @@ function _elgg_engine_boot() {
  */
 function _elgg_init() {
 	global $CONFIG;
+
+	// TODO remove me before merging feature
+	elgg()->ajaxApi->register('elgg.hello', \Elgg\AjaxApi\HelloWorld::class);
 
 	elgg_register_action('comment/save');
 	elgg_register_action('comment/delete');
