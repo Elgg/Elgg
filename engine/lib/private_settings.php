@@ -260,7 +260,7 @@ $pairs = null, $pair_operator = 'AND', $name_prefix = '') {
  * Plugin authors can set private data on entities.  By default
  * private data will not be searched or exported.
  *
- * @internal Private data is used to store settings for plugins
+ * @note Internal: Private data is used to store settings for plugins
  * and user settings.
  *
  * @param int    $entity_guid The entity GUID

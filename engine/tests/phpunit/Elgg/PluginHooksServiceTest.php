@@ -25,6 +25,15 @@ class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(2, $returnval);
 	}
 
+	public function testNullReturnDoesntChangeValue() {
+		$hooks = new \Elgg\PluginHooksService();
+		$hooks->registerHandler('foo', 'bar', array('\Elgg\PluginHooksServiceTest', 'returnNull'));
+
+		$returnval = $hooks->trigger('foo', 'bar', array(), 1);
+
+		$this->assertEquals(1, $returnval);
+	}
+
 	public function testUncallableHandlersAreLogged() {
 		$hooks = new \Elgg\PluginHooksService();
 
@@ -48,6 +57,10 @@ class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 		$testCase->assertEquals(1, $returnval);
 
 		return 2;
+	}
+
+	public static function returnNull() {
+		return;
 	}
 
 	public static function throwInvalidArg() {
