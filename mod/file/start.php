@@ -87,7 +87,7 @@ function file_init() {
 
 	elgg_register_menu_item('embed', $item);
 
-	elgg_extend_view('theme_sandbox/icons', 'file/theme_sandbox/icons');
+	elgg_extend_view('theme_sandbox/icons', 'file/theme_sandbox/icons/files');
 }
 
 /**

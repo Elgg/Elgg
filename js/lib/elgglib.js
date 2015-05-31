@@ -251,7 +251,6 @@ elgg.inherit = function(Child, Parent) {
  *
  * @param {String} url The url to normalize
  * @return {String} The extended url
- * @private
  */
 elgg.normalize_url = function(url) {
 	url = url || '';

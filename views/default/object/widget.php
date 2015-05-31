@@ -34,14 +34,7 @@ $controls = elgg_view('object/widget/elements/controls', array(
 	'show_edit' => $edit_area != '',
 ));
 
-// don't show content for default widgets
-if (elgg_in_context('default_widgets')) {
-	$content = '';
-} else {
-	if (elgg_view_exists("widgets/$handler/content")) {
-		$content = elgg_view("widgets/$handler/content", $vars);
-	}
-}
+$content = elgg_view('object/widget/elements/content', $vars);
 
 $widget_id = "elgg-widget-$widget->guid";
 $widget_instance = preg_replace('/[^a-z0-9-]/i', '-', "elgg-widget-instance-$handler");

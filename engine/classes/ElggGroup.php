@@ -523,6 +523,12 @@ class ElggGroup extends \ElggEntity
 		global $CONFIG;
 		
 		$guid = parent::create();
+		if (!$guid) {
+			// @todo this probably means permission to create entity was denied
+			// Is returning false the correct thing to do
+			return false;
+		}
+		
 		$name = sanitize_string($this->name);
 		$description = sanitize_string($this->description);
 

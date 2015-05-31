@@ -36,8 +36,7 @@ foreach ($plugin_guids as $guid) {
 
 // don't regenerate the simplecache because the plugin won't be
 // loaded until next run.  Just invalidate and let it regnerate as needed
-elgg_invalidate_simplecache();
-elgg_reset_system_cache();
+elgg_flush_caches();
 
 if (count($plugin_guids) == 1) {
 	$url = 'admin/plugins';

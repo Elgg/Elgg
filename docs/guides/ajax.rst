@@ -116,7 +116,7 @@ link to an object given by its GUID:
 
 .. code:: js
 
-    elgg.get('ajax/view/myplugin/get_link, {
+    elgg.get('ajax/view/myplugin/get_link', {
       data: {
         guid: 123 // querystring
       },
@@ -125,7 +125,7 @@ link to an object given by its GUID:
       }
     });
 
-The Ajax view system work significantly differently than the action system.
+The Ajax view system works significantly differently than the action system.
 
  * There are no access controls based on session status.
  * Non-XHR requests are automatically rejected.
@@ -135,6 +135,10 @@ The Ajax view system work significantly differently than the action system.
  * There's no "wrapper" object placed around the view output.
  * System messages/errors shouldn't be used, as they don't display until the user loads another page.
  * If the view name begins with ``js/`` or ``css/``, a corresponding Content-Type header is added.
+
+.. warning::
+
+    Unlike views rendered server-side, Ajax views must treat ``$vars`` as completely untrusted user data.
 
 Returning JSON from a view
 --------------------------
@@ -151,6 +155,34 @@ Here's an example of fetching a view that returns a JSON-encoded array of times:
         alert('The time is ' + data.friendly_time);
       }
     });
+
+Fetching Forms
+==============
+
+If you register a form view (name starting with ``forms/``), you can fetch it pre-rendered with ``elgg_view_form()``.
+Simply use ``ajax/form/<action>`` (instead of ``ajax/view/<view_name>``):
+
+.. code:: php
+
+    // in myplugin_init()
+    elgg_register_ajax_view('forms/myplugin/add');
+
+.. code:: js
+
+    elgg.get('ajax/form/myplugin/add, {
+      success: function (output) {
+        $('.myplugin-form-container').html(output);
+      }
+    });
+
+ * The GET params will be passed as ``$vars`` to *your* view, **not** the ``input/form`` view.
+ * If you need to set ``$vars`` in the ``input/form`` view, you'll need to use the ``("view_vars", "input/form")``
+   plugin hook (this can't be done client-side).
+
+.. warning::
+
+    Unlike views rendered server-side, Ajax views must treat ``$vars`` as completely untrusted user data. Review
+    the use of ``$vars`` in an existing form before registering it for Ajax fetching.
 
 Ajax helper functions
 ---------------------

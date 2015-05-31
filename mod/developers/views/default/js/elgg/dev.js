@@ -12,7 +12,7 @@ define(function(require) {
 		}).bind("loaded.jstree", function() {
 			$("#developers-inspect-results").fadeIn();				
 		});
-	}
+	};
 	
 	setupInspectTree();
 });

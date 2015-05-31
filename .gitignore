@@ -3,6 +3,7 @@
 /.htaccess
 /mod/*
 composer.lock
+composer.phar
 
 # Don't check in third party code
 node_modules
@@ -56,6 +57,7 @@ Session.vim
 tmtags
 Thumbs.db
 Desktop.ini
+npm-debug.log
 
 # Codio.com
 startup.sh

@@ -32,7 +32,7 @@ class ElggPlugin extends \ElggObject {
 	/**
 	 * Creates a new plugin from path
 	 *
-	 * @internal also supports database objects
+	 * @note Internal: also supports database objects
 	 *
 	 * @warning Unlike other \ElggEntity objects, you cannot null instantiate
 	 *          \ElggPlugin. You must provide the path to the plugin directory.
