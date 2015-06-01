@@ -207,6 +207,20 @@ function elgg_entity_gatekeeper($guid, $type = null, $subtype = null) {
 }
 
 /**
+ * Require that the current request be an XHR. If not, execution of the current function
+ * will end and a 400 response page will be sent.
+ *
+ * @return void
+ * @since 1.12.0
+ */
+function elgg_ajax_gatekeeper() {
+	if (!elgg_is_xhr()) {
+		register_error(_elgg_services()->translator->translate('ajax:not_is_xhr'));
+		forward(null, '400');
+	}
+}
+
+/**
  * Front page handler
  * 
  * @return bool
