@@ -1,6 +1,10 @@
 <?php
 
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
+use Elgg\Environments\BasicEnvironment;
+use Elgg\Application;
+use Elgg\Di\ServiceProvider;
+use Elgg\Config;
 
 require_once __DIR__ . '/../../../autoloader.php';
 
@@ -11,10 +15,10 @@ error_reporting(E_ALL | E_STRICT);
 /**
  * Get/set an Application for testing purposes
  *
- * @param \Elgg\Application $app Elgg Application
- * @return \Elgg\Application
+ * @param Application $app Elgg Application
+ * @return Application
  */
-function _elgg_testing_application(\Elgg\Application $app = null) {
+function _elgg_testing_application(Application $app = null) {
 	static $inst;
 	if ($app) {
 		$inst = $app;
@@ -34,8 +38,13 @@ $CONFIG = (object)[
 	'wwwroot' => 'http://localhost/',
 	'dataroot' => __DIR__ . '/test_files/dataroot/',
 	'site_guid' => 1,
-	'AutoloaderManager_skip_storage' => true,
 	'simplecache_enabled' => false,
+	ServiceProvider::CONFIG_KEY_SKIP_AUTOLOAD_STORAGE => true,
+	Config::CONFIG_KEY_SETTINGS_FILE => false,
+	BasicEnvironment::CONFIG_KEY_FACTORY => [
+		'name' => 'phpunit',
+		'is_prod' => false,
+	],
 ];
 
 // PHPUnit will serialize globals between tests, so let's not introduce any globals here.
