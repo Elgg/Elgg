@@ -74,12 +74,23 @@ class Router {
 
 		$segments = $result['segments'];
 
-		$handled = false;
-		if (isset($this->handlers[$identifier]) && is_callable($this->handlers[$identifier])) {
-			$function = $this->handlers[$identifier];
-			$handled = call_user_func($function, $segments, $identifier);
+		if (!isset($this->handlers[$identifier])) {
+			return false;
 		}
 
+		$handler = $this->handlers[$identifier];
+		if (is_callable($handler)) {
+			// old API
+			$handled = call_user_func($handler, $segments, $identifier);
+			return $handled || headers_sent();
+		}
+
+		$handler = _elgg_services()->handlers->resolveCallable($handler);
+		if (!$handler) {
+			return false;
+		}
+
+		$handled = call_user_func($handler, new PageRequest(elgg(), $identifier, $segments));
 		return $handled || headers_sent();
 	}
 

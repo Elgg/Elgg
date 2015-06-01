@@ -150,6 +150,11 @@ Plugins should use the class ``Elgg\Application`` to boot Elgg. Typical usage:
     require_once dirname(dirname(__DIR__)) . '/autoloader.php';
     (new \Elgg\Application)->bootCore();
 
+``forward()`` uses an exception
+-------------------------------
+
+When using try/catch, do *not* catch overly general exceptions like ``Exception``.
+
 Introduced third-party library for sending email
 ------------------------------------------------
 

@@ -37,6 +37,7 @@ return array(
 
 	'actionundefined' => "The requested action (%s) was not defined in the system.",
 	'actionnotfound' => "The action file for %s was not found.",
+	'actionclassinvalid' => "The class %s for action %s was not found or not invokable.",
 	'actionloggedout' => "Sorry, you cannot perform this action while logged out.",
 	'actionunauthorized' => 'You are unauthorized to perform this action',
 	

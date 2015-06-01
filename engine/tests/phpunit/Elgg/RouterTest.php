@@ -1,7 +1,6 @@
 <?php
 namespace Elgg;
 
-
 class RouterTest extends \PHPUnit_Framework_TestCase {
 
 	/**
@@ -37,7 +36,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 		return true;
 	}
 
-	function testCanRegisterFunctionsAsPageHandlers() {
+	function testCanUseFunctionsAsPageHandlers() {
 		$registered = $this->router->registerPageHandler('hello', array($this, 'hello_page_handler'));
 		
 		$this->assertTrue($registered);
@@ -56,6 +55,34 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array(
 			'hello' => array($this, 'hello_page_handler')
 		), $this->router->getPageHandlers());
+	}
+
+	function testCanUseInvokableClassNamesAsPageHandlers() {
+		InvokableMock::reset();
+		InvokableMock::$invoke_handler = function () {
+			return true;
+		};
+
+		$registered = $this->router->registerPageHandler('hello', InvokableMock::class);
+
+		$this->assertTrue($registered);
+
+		$qs = http_build_query(array('__elgg_uri' => 'hello/1/abc'));
+		$request = \Elgg\Http\Request::create("http://localhost/?$qs");
+
+		ob_start();
+		$handled = $this->router->route($request);
+		ob_get_clean();
+
+		$this->assertTrue($handled);
+		$this->assertCount(1, InvokableMock::$invocations);
+
+		$mock = InvokableMock::$invocations[0]['args'][0];
+		/* @var PageRequest $mock  */
+
+		$this->assertEquals('hello', $mock->getId());
+		$this->assertEquals(['1', 'abc'], $mock->getSegments());
+		InvokableMock::reset();
 	}
 
 	function testFailToRegisterInvalidCallback() {

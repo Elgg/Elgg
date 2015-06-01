@@ -343,8 +343,8 @@ class Database {
 		$query_id = (int)$single . $query . '|';
 		if ($callback) {
 			if (!is_callable($callback)) {
-				$inspector = new \Elgg\Debug\Inspector();
-				throw new \RuntimeException('$callback must be a callable function. Given ' . $inspector->describeCallable($callback));
+				throw new \RuntimeException('$callback must be a callable function. Given '
+											. _elgg_services()->handlers->describeCallable($callback));
 			}
 			$query_id .= $this->fingerprintCallback($callback);
 		}

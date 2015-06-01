@@ -22,9 +22,35 @@ Actions must be registered before use. Use ``elgg_register_action`` for this:
 
 .. code:: php
 
+   elgg_register_action("example", MyPlugin\Actions\Example::class);
+
+Your class might look like:
+
+.. code:: php
+
+    <?php
+    namespace MyPlugin\Actions;
+
+    use Elgg\Services\ActionRequest;
+
+    class Example {
+        function __invoke(ActionRequest $req) {
+
+            // do stuff
+
+            forward();
+        }
+    }
+
+When Elgg receives a request for ``http://localhost/elgg/action/example``, Elgg will instantiate your class (with no constructor arguments) and call it as a function, passing in the ``ActionRequest``.
+
+Raw PHP scripts can also be used:
+
+.. code:: php
+
    elgg_register_action("example", __DIR__ . "/actions/example.php");
 
-The ``mod/example/actions/example.php`` script will now be run whenever a form is submitted to ``http://localhost/elgg/action/example``.
+Elgg will execute the script to handle the action. Note no variables will be provided in local scope.
 
 .. warning:: A stumbling point for many new developers is the URL for actions. The URL always uses ``/action/`` (singular) and never ``/actions/`` (plural). However, action script files are usually saved under the directory ``/actions/`` (plural) and always have an extension.
 
