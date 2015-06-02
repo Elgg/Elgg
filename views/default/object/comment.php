@@ -9,6 +9,7 @@
 $full_view = elgg_extract('full_view', $vars, true);
 
 $comment = $vars['entity'];
+/* @var ElggComment $comment */
 
 $entity = get_entity($comment->container_guid);
 $commenter = get_user($comment->owner_guid);
@@ -41,12 +42,25 @@ if ($full_view) {
 			'value' => elgg_get_excerpt($comment->description),
 		));
 		$comment_text .= '</div>';
+
+		$time_link = elgg_view('output/url', [
+			'href' => $comment->getURL(),
+			'text' => $friendlytime,
+			'is_trusted' => true,
+		]);
+
 	} else {
 		$comment_text = elgg_view('output/longtext', array(
 			'value' => $comment->description,
 			'class' => 'elgg-inner',
 			'data-role' => 'comment-text',
 		));
+
+		$time_link = elgg_view('output/url', [
+			'href' => $comment->getURL(),
+			'text' => $friendlytime,
+			'is_trusted' => true,
+		]);
 	}
 	$body = <<<HTML
 $anchor
@@ -54,7 +68,7 @@ $anchor
 	$menu
 	$commenter_link
 	<span class="elgg-subtext">
-		$friendlytime
+		$time_link
 	</span>
 	$comment_text
 </div>

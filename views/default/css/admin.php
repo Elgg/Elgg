@@ -1575,6 +1575,10 @@ ul.elgg-plugin-resources, ul.elgg-plugin-resources > li {
 	margin-bottom: 5px;
 }
 
+.elgg-subtext a {
+	color: #666;
+}
+
 .elgg-text-help {
 	display: block;
 	font-size: 85%;
