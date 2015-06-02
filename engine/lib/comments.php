@@ -31,23 +31,23 @@ function _elgg_comments_init() {
 /**
  * Page handler for generic comments manipulation.
  *
- * @param array $page
+ * @param array $segments
  * @return bool
  * @access private
  */
-function _elgg_comments_page_handler($page) {
+function _elgg_comments_page_handler($segments) {
 
-	$page = elgg_extract(0, $page);
+	$page = elgg_extract(0, $segments);
 	switch ($page) {
 
 		case 'edit':
-			set_input('guid', elgg_extract(1, $page));
+			set_input('guid', elgg_extract(1, $segments));
 			echo elgg_view('resources/comments/edit');
 			return true;
 			break;
 
 		case 'view':
-			_elgg_comment_redirect(elgg_extract(1, $page), elgg_extract(2, $page));
+			_elgg_comment_redirect(elgg_extract(1, $segments), elgg_extract(2, $segments));
 			break;
 
 		default:
