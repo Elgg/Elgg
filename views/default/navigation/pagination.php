@@ -5,11 +5,12 @@
  * @package Elgg
  * @subpackage Core
  *
- * @uses int    $vars['offset']     The offset in the list
- * @uses int    $vars['limit']      Number of items per page
- * @uses int    $vars['count']      Number of items in list
- * @uses string $vars['base_url']   Base URL to use in links
- * @uses string $vars['offset_key'] The string to use for offet in the URL
+ * @uses int    $vars['offset']       The offset in the list
+ * @uses int    $vars['limit']        Number of items per page
+ * @uses int    $vars['count']        Number of items in list
+ * @uses string $vars['base_url']     Base URL to use in links
+ * @uses string $vars['url_fragment'] URL fragment to add to links if not present in base_url (optional)
+ * @uses string $vars['offset_key']   The string to use for offet in the URL
  */
 
 if (elgg_in_context('widget')) {
@@ -29,6 +30,8 @@ if (!$limit = (int) elgg_extract('limit', $vars, elgg_get_config('default_limit'
 }
 
 $offset_key = elgg_extract('offset_key', $vars, 'offset');
+$url_fragment = elgg_extract('url_fragment', $vars, '');
+
 // some views pass an empty string for base_url
 if (isset($vars['base_url']) && $vars['base_url']) {
 	$base_url = $vars['base_url'];
@@ -40,6 +43,16 @@ if (isset($vars['base_url']) && $vars['base_url']) {
 } else {
 	$base_url = current_page_url();
 }
+
+$base_url_has_fragment = preg_match('~#.~', $base_url);
+
+$get_href = function ($offset) use ($base_url, $base_url_has_fragment, $offset_key, $url_fragment) {
+	$link = elgg_http_add_url_query_elements($base_url, array($offset_key => $offset));
+	if (!$base_url_has_fragment && $offset) {
+		$link .= "#$url_fragment";
+	}
+	return $link;
+};
 
 if ($count <= $limit && $offset == 0) {
 	// no need for pagination
@@ -63,7 +76,7 @@ if ($prev_offset < 1) {
 
 $pages['prev'] = [
 	'text' => elgg_echo('previous'),
-	'href' => elgg_http_add_url_query_elements($base_url, array($offset_key => $prev_offset))
+	'href' => $get_href($prev_offset),
 ];
 
 if ($current_page == 1) {
@@ -111,7 +124,7 @@ if ($next_offset >= $count) {
 
 $pages['next'] = [
 	'text' => elgg_echo('next'),
-	'href' => elgg_http_add_url_query_elements($base_url, array($offset_key => $next_offset))
+	'href' => $get_href($next_offset),
 ];
 
 if ($current_page == $total_pages) {
@@ -133,7 +146,7 @@ foreach ($pages as $page_num => $page) {
 				// don't include offset=0
 				$page_offset = null;
 			}
-			$href = elgg_http_add_url_query_elements($base_url, array($offset_key => $page_offset));
+			$href = $get_href($page_offset);
 		}
 		
 		if ($href && !$disabled) {
