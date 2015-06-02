@@ -4,7 +4,7 @@
  * type.
  */
 
-elgg_register_plugin_hook_handler('all', 'system', 'example_plugin_hook_handler');
+elgg_register_plugin_hook_handler('all', 'system', 'example_plugin_hook_handler', 600);
 
 // This function will be called for any hook of type 'system'
 function example_plugin_hook_handler($hook, $type, $value, $params) {

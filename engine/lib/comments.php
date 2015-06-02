@@ -21,7 +21,7 @@ function _elgg_comments_init() {
 	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
 	elgg_register_plugin_hook_handler('email', 'system', '_elgg_comments_notification_email_subject');
 	
-	elgg_register_event_handler('update:after', 'all', '_elgg_comments_access_sync');
+	elgg_register_event_handler('update:after', 'all', '_elgg_comments_access_sync', 600);
 
 	elgg_register_page_handler('comment', '_elgg_comments_page_handler');
 

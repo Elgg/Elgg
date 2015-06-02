@@ -202,8 +202,8 @@ function _elgg_admin_init() {
 
 	// maintenance mode
 	if (elgg_get_config('elgg_maintenance_mode', null)) {
-		elgg_register_plugin_hook_handler('route', 'all', '_elgg_admin_maintenance_handler');
-		elgg_register_plugin_hook_handler('action', 'all', '_elgg_admin_maintenance_action_check');
+		elgg_register_plugin_hook_handler('route', 'all', '_elgg_admin_maintenance_handler', 600);
+		elgg_register_plugin_hook_handler('action', 'all', '_elgg_admin_maintenance_action_check', 600);
 		elgg_register_css('maintenance', elgg_get_simplecache_url('css', 'maintenance'));
 
 		elgg_register_menu_item('topbar', array(

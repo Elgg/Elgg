@@ -71,5 +71,5 @@ function elgg_register_class($class, $location) {
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('upgrade', 'all', '_elgg_delete_autoload_cache');
+	$events->registerHandler('upgrade', 'all', '_elgg_delete_autoload_cache', 600);
 };

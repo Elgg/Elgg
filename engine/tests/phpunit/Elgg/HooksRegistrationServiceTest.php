@@ -21,17 +21,16 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->mock->registerHandler('foo', 'bar', $f));
 		$this->assertTrue($this->mock->registerHandler('foo', 'baz', 'callback3', 100));
 
-		$expected = array(
-			'foo' => array(
-				'bar' => array(
-					500 => 'callback1',
-					501 => $f,
-				),
-				'baz' => array(
-					100 => 'callback3'
-				)
-			)
-		);
+		$expected = [
+			'foo' => [
+				'bar' => [
+					500 => ['callback1', $f],
+				],
+				'baz' => [
+					100 => ['callback3'],
+				],
+			],
+		];
 
 		$this->assertSame($expected, $this->mock->getAllHandlers());
 
@@ -58,16 +57,16 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($this->mock->unregisterHandler(
 			'foo', 'bar', [$o, '__invoke']));
 
-		$expected = array(
-			'foo' => array(
-				'bar' => array(
-					// only one removed
-					150 => 'callback2',
+		$expected = [
+			'foo' => [
+				'bar' => [
+					500 => ['callback1'],
 
-					500 => 'callback1',
-				)
-			)
-		);
+					// only one removed
+					150 => ['callback2'],
+				]
+			]
+		];
 		$this->assertSame($expected, $this->mock->getAllHandlers());
 
 		// check unregistering things that aren't registered
@@ -80,22 +79,25 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertTrue($this->mock->unregisterHandler('foo', 'bar', 'callback'));
 
-		$this->assertSame([501 => 'callback'], $this->mock->getAllHandlers()['foo']['bar']);
+		$this->assertSame([500 => ['callback']], $this->mock->getAllHandlers()['foo']['bar']);
 	}
 
 	public function testGetOrderedHandlers() {
 		$this->mock->registerHandler('foo', 'bar', 'callback1');
 		$this->mock->registerHandler('foo', 'bar', 'callback2');
+		$this->mock->registerHandler('all', 'all', 'callback4', 100);
 		$this->mock->registerHandler('foo', 'baz', 'callback3', 100);
 
-		$expected_foo_bar = array(
+		$expected_foo_bar = [
+			'callback4', // first even though it's [all, all]
 			'callback1',
-			'callback2'
-		);
+			'callback2',
+		];
 
-		$expected_foo_baz = array(
-			'callback3'
-		);
+		$expected_foo_baz = [
+			'callback4', // first even though it's [all, all]
+			'callback3',
+		];
 
 		$this->assertSame($expected_foo_bar, $this->mock->getOrderedHandlers('foo', 'bar'));
 		$this->assertSame($expected_foo_baz, $this->mock->getOrderedHandlers('foo', 'baz'));

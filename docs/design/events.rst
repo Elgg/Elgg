@@ -57,7 +57,7 @@ logged in during the [login, user] event?
 
 Before Events have names ending in ":before" and are triggered before
 something happens. Like traditional events, handlers can cancel the
-event by returning `false`.
+event by returning ``false``.
 
 After Events, with names ending in ":after", are triggered after
 something happens. Unlike traditional events, handlers *cannot* cancel
@@ -262,3 +262,13 @@ by giving the static version of the callback:
 
 Even though the event handler references a dynamic method call, the code above will successfully
 remove the handler.
+
+Handler Calling Order
+---------------------
+
+Handlers are called first in order of priority, then registration order.
+
+.. note::
+
+    Before Elgg 2.0, registering with the ``all`` keywords caused handlers to be called later, even
+    if they were registered with lower priorities.

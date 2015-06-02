@@ -7,7 +7,7 @@ $url = current_page_url();
 
 elgg_register_plugin_hook_handler('view', 'widgets/friends/content', 'css_widget_content');
 elgg_register_plugin_hook_handler('view', 'widgets/friends/edit', 'css_widget_content');
-elgg_register_plugin_hook_handler('permissions_check', 'all', 'css_permissions_override');
+elgg_register_plugin_hook_handler('permissions_check', 'all', 'css_permissions_override', 600);
 
 function css_widget_content() {
 	return $ipsum = elgg_view('developers/ipsum');
