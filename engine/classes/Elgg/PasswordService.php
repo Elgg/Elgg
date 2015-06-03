@@ -112,7 +112,7 @@ final class PasswordService {
 	 */
 	function forcePasswordReset($user, $password) {
 		if (!$user instanceof \ElggUser) {
-			$user = _elgg_services()->usersTable->get($user);
+			$user = _elgg_services()->entityTable->get($user, 'user');
 			if (!$user) {
 				return false;
 			}
