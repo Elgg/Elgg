@@ -1462,11 +1462,7 @@ function _elgg_js_page_handler($page) {
  * @access private
  */
 function _elgg_ajax_page_handler($segments) {
-	// the ajax page handler should only be called from an xhr
-	if (!elgg_is_xhr()) {
-		register_error(_elgg_services()->translator->translate('ajax:not_is_xhr'));
-		forward(null, '400');
-	}
+	elgg_ajax_gatekeeper();
 
 	if (count($segments) < 2) {
 		return false;
