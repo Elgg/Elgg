@@ -31,8 +31,6 @@ function bookmarks_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:page', 'bookmarks_page_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'bookmarks_owner_block_menu');
 
-	elgg_register_page_handler('bookmarks', 'bookmarks_page_handler');
-
 	elgg_extend_view('css/elgg', 'bookmarks/css');
 	elgg_extend_view('js/elgg', 'bookmarks/js');
 
@@ -67,78 +65,6 @@ function bookmarks_init() {
 	// Groups
 	add_group_tool_option('bookmarks', elgg_echo('bookmarks:enablebookmarks'), true);
 	elgg_extend_view('groups/tool_latest', 'bookmarks/group_module');
-}
-
-/**
- * Dispatcher for bookmarks.
- *
- * URLs take the form of
- *  All bookmarks:        bookmarks/all
- *  User's bookmarks:     bookmarks/owner/<username>
- *  Friends' bookmarks:   bookmarks/friends/<username>
- *  View bookmark:        bookmarks/view/<guid>/<title>
- *  New bookmark:         bookmarks/add/<guid> (container: user, group, parent)
- *  Edit bookmark:        bookmarks/edit/<guid>
- *  Group bookmarks:      bookmarks/group/<guid>/all
- *  Bookmarklet:          bookmarks/bookmarklet/<guid> (user)
- *
- * Title is ignored
- *
- * @param array $page
- * @return bool
- */
-function bookmarks_page_handler($page) {
-
-	elgg_load_library('elgg:bookmarks');
-
-	if (!isset($page[0])) {
-		$page[0] = 'all';
-	}
-
-	elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
-
-	switch ($page[0]) {
-		case "all":
-			echo elgg_view('resources/bookmarks/all');
-			break;
-
-		case "owner":
-			echo elgg_view('resources/bookmarks/owner');
-			break;
-
-		case "friends":
-			echo elgg_view('resources/bookmarks/friends');
-			break;
-
-		case "view":
-			set_input('guid', $page[1]);
-			echo elgg_view('resources/bookmarks/view');
-			break;
-
-		case "add":
-			echo elgg_view('resources/bookmarks/add');
-			break;
-
-		case "edit":
-			set_input('guid', $page[1]);
-			echo elgg_view('resources/bookmarks/edit');
-			break;
-
-		case 'group':
-			echo elgg_view('resources/bookmarks/owner');
-			break;
-
-		case "bookmarklet":
-			set_input('container_guid', $page[1]);
-			echo elgg_view('resources/bookmarks/bookmarklet');
-			break;
-
-		default:
-			return false;
-	}
-
-	elgg_pop_context();
-	return true;
 }
 
 /**

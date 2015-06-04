@@ -6,8 +6,6 @@
 elgg_register_event_handler('init', 'system', 'dashboard_init');
 
 function dashboard_init() {
-	elgg_register_page_handler('dashboard', 'dashboard_page_handler');
-
 	elgg_extend_view('css/elgg', 'dashboard/css');
 	elgg_extend_view('js/elgg', 'dashboard/js');
 
@@ -21,16 +19,6 @@ function dashboard_init() {
 
 	elgg_register_plugin_hook_handler('get_list', 'default_widgets', 'dashboard_default_widgets');
 }
-
-/**
- * Dashboard page handler
- * @return bool
- */
-function dashboard_page_handler() {
-	echo elgg_view('resources/dashboard');
-	return true;
-}
-
 
 /**
  * Register user dashboard with default widgets

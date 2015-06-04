@@ -15,8 +15,6 @@ function categories_init() {
 
 	elgg_extend_view('css/elgg', 'categories/css');
 
-	elgg_register_page_handler('categories', 'categories_page_handler');
-
 	elgg_register_event_handler('update:after', 'all', 'categories_save');
 	elgg_register_event_handler('create', 'all', 'categories_save');
 
@@ -25,15 +23,6 @@ function categories_init() {
 	elgg_register_plugin_hook_handler('action', 'plugins/settings/save', 'categories_save_site_categories');
 }
 
-
-/**
- * Category page handler
- * @return bool
- */
-function categories_page_handler() {
-	echo elgg_view('resources/categories/listing');
-	return true;
-}
 
 /**
  * Save categories to object upon save / edit

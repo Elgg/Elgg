@@ -6,6 +6,9 @@
 */
 
 elgg_gatekeeper();
+elgg_load_library('elgg:bookmarks');
+elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
+
 
 $container_guid = get_input('container_guid');
 $container = get_entity($container_guid);

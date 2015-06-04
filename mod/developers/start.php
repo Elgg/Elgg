@@ -14,7 +14,6 @@ function developers_init() {
 	elgg_extend_view('css/admin', 'developers/css');
 	elgg_extend_view('css/elgg', 'developers/css');
 
-	elgg_register_page_handler('theme_sandbox', 'developers_theme_sandbox_controller');
 	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
 	$sandbox_css = elgg_get_simplecache_url('css', 'theme_sandbox.css');
 	elgg_register_css('dev.theme_sandbox', $sandbox_css);
@@ -210,22 +209,6 @@ function developers_log_events($name, $type) {
 	elgg_dump($msg, false);
 
 	unset($stack);
-}
-
-/**
- * Serve the theme sandbox pages
- *
- * @param array $page
- * @return bool
- */
-function developers_theme_sandbox_controller($page) {
-	if (!isset($page[0])) {
-		forward('theme_sandbox/intro');
-	}
-	set_input('page', $page[0]);
-
-	echo elgg_view('resources/theme_sandbox');
-	return true;
 }
 
 /**

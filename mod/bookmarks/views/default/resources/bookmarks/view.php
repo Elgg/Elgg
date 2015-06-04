@@ -15,6 +15,8 @@ $page_owner = elgg_get_page_owner_entity();
 
 elgg_group_gatekeeper();
 
+elgg_push_breadcrumb(elgg_echo('bookmarks'), 'bookmarks/all');
+
 $crumbs_title = $page_owner->name;
 
 if (elgg_instanceof($page_owner, 'group')) {
