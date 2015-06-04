@@ -24,8 +24,7 @@ matrix:
       env: VARIA=true
       install:
        - phpenv rehash
-       - composer self-update
-       - composer install
+       - composer travis:install
       script:
        - bash .scripts/travis/check_commit_msgs.sh
        - vendor/bin/phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
@@ -36,7 +35,7 @@ matrix:
       env: VARIA=true
       install:
        - npm install
-       - composer install
+       - composer travis:install
       script:
        - npm test
       
@@ -59,8 +58,7 @@ matrix:
     - php: 5.6
       env: E2E=true
       install:
-       - composer self-update
-       - composer install
+       - composer travis:install
        - mysql -e 'create database elgg;'
        - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
        - mkdir "${HOME}/elgg_data/"
@@ -79,8 +77,7 @@ services:
  - mysql
 
 install:
- - composer self-update
- - composer install
+ - composer travis:install
  - mysql -e 'create database elgg;'
  - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
  - mkdir "${HOME}/elgg_data/"

@@ -19,13 +19,75 @@
         "tedivm/stash": "~0.12",
         "roave/security-advisories": "dev-master",
         "elgg/login_as": "~1.9",
-        "zendframework/zend-mail": "~2.4"
+        "zendframework/zend-mail": "~2.4",
+        "bower-asset/jquery": "~1.11",
+        "bower-asset/jquery-ui": "~1.10",
+        "bower-asset/text": "~2.0",
+        "bower-asset/requirejs": "~2.0",
+        "bower-asset/sprintf": "~0.7",
+        "bower-asset/jquery-form": "~3.0",
+        "bower-asset/jquery-colorbox": "~1.4",
+        "bower-asset/jquery-migrate": "~1.2",
+        "bower-asset/jquery-imgareaselect": "~0.9",
+        "bower-asset/jquery-ui-extensions": "dev-master",
+        "bower-asset/jquery-jeditable": "~1.7"
     },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "bower-asset/sprintf",
+                "version": "0.7.0",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/alexei/sprintf.js/archive/v0.7.zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "bower-asset/jquery-imgareaselect",
+                "version": "0.9.10",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/odyniec/imgareaselect/archive/v0.9.10.zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "bower-asset/jquery-ui-extensions",
+                "version": "dev-master",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/scottgonzalez/jquery-ui-extensions/archive/fb7fd7df3d70e0288394f07bfe78262b548c30d6.zip"
+                }
+            }
+        },
+        {
+            "type": "package",
+            "package": {
+                "name": "bower-asset/jquery-jeditable",
+                "version": "1.7.3",
+                "dist": {
+                    "type": "zip",
+                    "url": "https://github.com/tuupola/jquery_jeditable/archive/1.7.3.zip"
+                }
+            }
+        }
+    ],
     "scripts": {
-        "test": "phpunit",
         "lint": [
             "phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib",
             "composer validate"
+        ],
+        "test": "phpunit",
+        "travis:install": [
+            "composer self-update",
+            "composer global require \"fxp/composer-asset-plugin:~1.0\"",
+            "composer install"
         ]
     },
     "suggest": {
