@@ -85,6 +85,12 @@ This should work in Elgg 2.0:
     });
     </script>
 
+Attribute formatter removes keys with underscores
+-------------------------------------------------
+
+``elgg_format_attributes()`` (and all APIs that use it) now filter out attributes whose name contains an
+underscore. If the attribute begins with ``data-``, however, it will not be removed.
+
 Breadcrumbs
 -----------
 
