@@ -1,0 +1,7 @@
+{
+    "name": "elgg/twitter_api",
+    "type": "elgg-plugin",
+    "require": {
+        "composer/installers": ">=1.0.8"
+    }
+}
