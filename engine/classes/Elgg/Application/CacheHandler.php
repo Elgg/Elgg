@@ -1,5 +1,7 @@
 <?php
-namespace Elgg;
+namespace Elgg\Application;
+
+use Elgg\Application;
 
 /**
  * Simplecache handler
@@ -16,28 +18,31 @@ class CacheHandler {
 	private $application;
 
 	/**
+	 * @var array
+	 */
+	private $server_vars;
+
+	/**
 	 * Constructor
 	 *
-	 * @param Application $app Elgg Application
+	 * @param Application $app         Elgg Application
+	 * @param array       $server_vars Server vars
 	 */
-	public function __construct(Application $app) {
+	public function __construct(Application $app, $server_vars) {
 		$this->application = $app;
+		$this->server_vars = $server_vars;
 	}
 
 	/**
 	 * Handle a request for a cached view
 	 *
-	 * @param array $get_vars    $_GET variables
-	 * @param array $server_vars $_SERVER variables
+	 * @param array $path URL path
 	 * @return void
 	 */
-	public function handleRequest($get_vars, $server_vars) {
+	public function handleRequest($path) {
 		$config = $this->application->config;
 
-		if (empty($get_vars['request'])) {
-			$this->send403();
-		}
-		$request = $this->parseRequestVar($get_vars['request']);
+		$request = $this->parsePath($path);
 		if (!$request) {
 			$this->send403();
 		}
@@ -109,23 +114,23 @@ class CacheHandler {
 	/**
 	 * Parse a request
 	 *
-	 * @param string $request_var Request URL
+	 * @param string $path Request URL path
 	 * @return array Cache parameters (empty array if failure)
 	 */
-	public function parseRequestVar($request_var) {
+	public function parsePath($path) {
 		// no '..'
-		if (false !== strpos($request_var, '..')) {
+		if (false !== strpos($path, '..')) {
 			return array();
 		}
 		// only alphanumeric characters plus /, ., -, and _
-		if (preg_match('#[^a-zA-Z0-9/\.\-_]#', $request_var)) {
+		if (preg_match('#[^a-zA-Z0-9/\.\-_]#', $path)) {
 			return array();
 		}
 
 		// testing showed regex to be marginally faster than array / string functions over 100000 reps
 		// it won't make a difference in real life and regex is easier to read.
 		// <ts>/<viewtype>/<name/of/view.and.dots>.<type>
-		if (!preg_match('#^/?([0-9]+)/([^/]+)/(.+)$#', $request_var, $matches)) {
+		if (!preg_match('#^/cache/([0-9]+)/([^/]+)/(.+)$#', $path, $matches)) {
 			return array();
 		}
 

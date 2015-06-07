@@ -127,16 +127,6 @@ RewriteEngine on
 # hide all dot files/dirs (.git)
 RewriteRule (^\.|/\.) - [F]
 
-# cache handler to skip engine
-RewriteRule ^cache\/(.*)$ engine/handlers/cache_handler.php?request=$1&%{QUERY_STRING} [L]
-
-# deprecated export handler
-RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/?$ engine/handlers/export_handler.php?view=$1&guid=$2 [L]
-RewriteRule ^export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$ engine/handlers/export_handler.php?view=$1&guid=$2&type=$3&idname=$4 [L]
-
-# rule for rewrite module test during install - can be removed after installation
-RewriteRule ^rewrite.php$ install.php [L]
-
 # Everything else that isn't a file gets routed through Elgg
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d

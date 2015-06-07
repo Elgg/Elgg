@@ -1139,7 +1139,7 @@ class ElggInstaller {
 	 */
 	protected function processRewriteTest() {
 		if (strpos($_SERVER['REQUEST_URI'], 'rewrite.php') !== FALSE) {
-			echo 'success';
+			echo \Elgg\Application::REWRITE_TEST_OUTPUT;
 			exit;
 		}
 	}

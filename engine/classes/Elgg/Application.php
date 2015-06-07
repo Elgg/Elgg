@@ -7,11 +7,20 @@ use Elgg\Di\ServiceProvider;
 /**
  * Load, boot, and implement a front controller for an Elgg application
  *
+ * To run as PHP CLI server:
+ * <code>php -S localhost:8888 /full/path/to/elgg/index.php</code>
+ *
+ * The full path is necessary to work around this: https://bugs.php.net/bug.php?id=55726
+ *
  * @property-read \Elgg\Services\Config $config
  *
  * @since 2.0.0
  */
 class Application {
+
+	const GET_PATH_KEY = '__elgg_uri';
+	const REWRITE_TEST_TOKEN = '__testing_rewrite';
+	const REWRITE_TEST_OUTPUT = 'success';
 
 	/**
 	 * @var ServiceProvider
@@ -269,74 +278,42 @@ class Application {
 	}
 
 	/**
-	 * Rewrite rules for PHP cli webserver used for testing. Do not use on production sites
-	 * as normal web server replacement.
-	 *
-	 * You need to explicitly point to index.php in order for router to work properly:
-	 *
-	 * <code>php -S localhost:8888 index.php</code>
-	 *
-	 * @return bool True if Elgg's router will handle the file, false if PHP should serve it directly
-	 */
-	protected function runPhpWebServer() {
-		$urlPath = parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
-
-		if (preg_match('/^\/cache\/(.*)$/', $urlPath, $matches)) {
-			$_GET['request'] = $matches[1];
-			$handler = new CacheHandler($this);
-			$handler->handleRequest($_GET, $_SERVER);
-			exit;
-		}
-
-		if (preg_match('/^\/export\/([A-Za-z]+)\/([0-9]+)\/?$/', $urlPath, $matches)) {
-			$_GET['view'] = $matches[1];
-			$_GET['guid'] = $matches[2];
-			require "{$this->engine_dir}/handlers/export_handler.php";
-			exit;
-		}
-
-		if (preg_match('/^\/export\/([A-Za-z]+)\/([0-9]+)\/([A-Za-z]+)\/([A-Za-z0-9\_]+)\/$/', $urlPath, $matches)) {
-			$_GET['view'] = $matches[1];
-			$_GET['guid'] = $matches[2];
-			$_GET['type'] = $matches[3];
-			$_GET['idname'] = $matches[4];
-			require "{$this->engine_dir}/handlers/export_handler.php";
-			exit;
-		}
-
-		if (preg_match("/^\/rewrite.php$/", $urlPath, $matches)) {
-			require "{$this->install_dir}/install.php";
-			exit;
-		}
-
-		if ($urlPath !== '/' && file_exists($this->install_dir . $urlPath)) {
-			// serve the requested resource as-is.
-			return false;
-		}
-
-		$_GET['__elgg_uri'] = $urlPath;
-		return true;
-	}
-
-	/**
 	 * Routes the request, booting core if not yet booted
 	 *
 	 * @return bool False if Elgg wants the PHP CLI server to handle the request
 	 */
 	public function run() {
-		if (php_sapi_name() === 'cli-server') {
-			if (!$this->runPhpWebServer()) {
-				// PHP will serve this file directly
-				return false;
-			}
-		}
+		$path = $this->setupPath();
 
 		// allow testing from the upgrade page before the site is upgraded.
-		if (isset($_GET['__testing_rewrite'])) {
-			if (isset($_GET['__elgg_uri']) && false !== strpos($_GET['__elgg_uri'], '__testing_rewrite')) {
-				echo "success";
+		if (isset($_GET[self::REWRITE_TEST_TOKEN])) {
+			if (false !== strpos($path, self::REWRITE_TEST_TOKEN)) {
+				echo self::REWRITE_TEST_OUTPUT;
 			}
 			return true;
+		}
+
+		if (php_sapi_name() === 'cli-server') {
+			$www_root = "http://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}/";
+			$this->config->set('wwwroot', $www_root);
+		}
+
+		if (0 === strpos($path, '/cache/')) {
+			(new Application\CacheHandler($this, $_SERVER))->handleRequest($path);
+			return true;
+		}
+
+		if ($path === '/rewrite.php') {
+			require "{$this->install_dir}/install.php";
+			return true;
+		}
+
+		if (php_sapi_name() === 'cli-server') {
+			// The CLI server routes ALL requests here (even existing files), so we have to check for these.
+			if ($path !== '/' && file_exists($this->install_dir . $path)) {
+				// serve the requested resource as-is.
+				return false;
+			}
 		}
 
 		$this->bootCore();
@@ -360,5 +337,25 @@ class Application {
 			return $this->services->{$name};
 		}
 		trigger_error("Undefined property: " . __CLASS__ . ":\${$name}");
+	}
+
+	/**
+	 * Get the request URI and store it in $_GET['__elgg_uri']
+	 *
+	 * @return string e.g. "cache/123..."
+	 */
+	private function setupPath() {
+		if (!isset($_GET[self::GET_PATH_KEY]) || is_array($_GET[self::GET_PATH_KEY])) {
+			if (php_sapi_name() === 'cli-server') {
+				$_GET[self::GET_PATH_KEY] = (string)parse_url($_SERVER["REQUEST_URI"], PHP_URL_PATH);
+			} else {
+				$_GET[self::GET_PATH_KEY] = '/';
+			}
+		}
+
+		// normalize
+		$_GET[self::GET_PATH_KEY] = '/' . trim($_GET[self::GET_PATH_KEY], '/');
+
+		return $_GET[self::GET_PATH_KEY];
 	}
 }

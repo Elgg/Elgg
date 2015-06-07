@@ -52,7 +52,8 @@ if (get_input('upgrade') == 'upgrade') {
 		require dirname(__FILE__) . '/install/ElggRewriteTester.php';
 	}
 	$rewriteTester = new \ElggRewriteTester();
-	$url = elgg_get_site_url() . "__testing_rewrite?__testing_rewrite=1";
+	$token = \Elgg\Application::REWRITE_TEST_TOKEN;
+	$url = elgg_get_site_url() . "{$token}?{$token}=1";
 	if (!$rewriteTester->runRewriteTest($url)) {
 		// see if there is a problem accessing the site at all
 		// due to ip restrictions for example

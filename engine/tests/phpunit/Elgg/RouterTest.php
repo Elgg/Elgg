@@ -43,7 +43,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 		$this->assertTrue($registered);
 
 		$path = "hello/1/\xE2\x82\xAC"; // euro sign
-		$qs = http_build_query(array('__elgg_uri' => $path));
+		$qs = http_build_query(array(Application::GET_PATH_KEY => $path));
 		$request = \Elgg\Http\Request::create("http://localhost/?$qs");
 		
 		ob_start();
@@ -93,7 +93,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 		$this->router->registerPageHandler('foo', array($this, 'foo_page_handler'));
 		$this->hooks->registerHandler('route', 'bar', array($this, 'bar_route_handler'));
 		
-		$query = http_build_query(array('__elgg_uri' => 'bar/baz'));
+		$query = http_build_query(array(Application::GET_PATH_KEY => 'bar/baz'));
 
 		ob_start();
 		$this->router->route(\Elgg\Http\Request::create("http://localhost/?$query"));
@@ -113,7 +113,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 		$this->router->registerPageHandler('foo', array($this, 'foo_page_handler'));
 		$this->hooks->registerHandler('route', 'bar', array($this, 'bar_route_identifier'));
 
-		$query = http_build_query(array('__elgg_uri' => 'bar/baz'));
+		$query = http_build_query(array(Application::GET_PATH_KEY => 'bar/baz'));
 
 		ob_start();
 		$this->router->route(\Elgg\Http\Request::create("http://localhost/?$query"));
@@ -126,7 +126,7 @@ class RouterTest extends \PHPUnit_Framework_TestCase {
 		$this->router->registerPageHandler('foo', array($this, 'foo_page_handler'));
 		$this->hooks->registerHandler('route', 'foo', array($this, 'bar_route_override'));
 
-		$query = http_build_query(array('__elgg_uri' => 'foo'));
+		$query = http_build_query(array(Application::GET_PATH_KEY => 'foo'));
 
 		ob_start();
 		$this->router->route(\Elgg\Http\Request::create("http://localhost/?$query"));
