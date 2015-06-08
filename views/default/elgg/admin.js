@@ -48,7 +48,7 @@ define(function(require) {
 		$('a.elgg-admin-notice').click(deleteNotice);
 
 		// disable checkboxes (readonly does not work for them)
-		$('document').on('click', 'input:checkbox.elgg-state-disabled, label.elgg-state-disabled > input:checkbox', function() {
+		$(document).on('click', 'input:checkbox.elgg-state-disabled, label.elgg-state-disabled > input:checkbox', function() {
 			return false;
 		});
 

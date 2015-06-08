@@ -13,10 +13,9 @@
  * - engine/settings.php (See {@link settings.example.php})
  *
  * Upon system boot, all values in dbprefix_config are read into $CONFIG.
- *
- * @package Elgg.Core
- * @subpackage Configuration
  */
+
+use Elgg\Filesystem\Directory;
 
 /**
  * Get the URL for the current (or specified) site
@@ -51,12 +50,27 @@ function elgg_get_data_path() {
 
 /**
  * Get the root directory path for this installation
+ * 
+ * Note: This is not the same as the Elgg root! In the Elgg 1.x series, Elgg
+ * was always at the install root, but as of 2.0, Elgg can be installed as a
+ * composer dependency, so you cannot assume that it the install root anymore.
  *
  * @return string
  * @since 1.8.0
  */
 function elgg_get_root_path() {
-	return _elgg_services()->config->getRootPath();
+	return Directory\Local::root()->getPath('/');
+}
+
+/**
+ * /path/to/elgg/engine
+ * 
+ * No trailing slash
+ * 
+ * @return string
+ */
+function elgg_get_engine_path() {
+	return dirname(__DIR__);
 }
 
 /**
@@ -313,23 +327,24 @@ function _elgg_configure_cookies($CONFIG) {
 function _elgg_load_application_config() {
 	global $CONFIG;
 
-	$install_root = str_replace("\\", "/", dirname(dirname(dirname(__FILE__))));
+	$install_root = Directory\Local::root();
+	
 	$defaults = array(
-		'path' => "$install_root/",
-		'plugins_path' => "$install_root/mod/",
+		'path' => $install_root->getPath("/"),
+		'plugins_path' => $install_root->getPath("mod") . "/",
 		'language' => 'en',
 
 		// compatibility with old names for plugins not using elgg_get_config()
-		'pluginspath' => "$install_root/mod/",
+		'pluginspath' => $install_root->getPath("mod") . "/",
 	);
-
+	
 	foreach ($defaults as $name => $value) {
 		if (empty($CONFIG->$name)) {
 			$CONFIG->$name = $value;
 		}
 	}
 
-	$GLOBALS['_ELGG']->view_path = "$install_root/views/";
+	$GLOBALS['_ELGG']->view_path = \Elgg\Application::elggDir()->getPath("/views/");
 
 	// set cookie values for session and remember me
 	_elgg_configure_cookies($CONFIG);
@@ -381,8 +396,7 @@ function _elgg_load_application_config() {
  * @access private
  */
 function _elgg_config_test($hook, $type, $tests) {
-	global $CONFIG;
-	$tests[] = "{$CONFIG->path}engine/tests/ElggCoreConfigTest.php";
+	$tests[] = \Elgg\Application::elggDir()->getPath("engine/tests/ElggCoreConfigTest.php");
 	return $tests;
 }
 

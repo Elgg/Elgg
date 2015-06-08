@@ -141,13 +141,8 @@ class ActionsService {
 		$action = rtrim($action, '/');
 	
 		if (empty($filename)) {
-			
-			$path = _elgg_services()->config->get('path');
-			if ($path === null) {
-				$path = "";
-			}
-	
-			$filename = $path . "actions/" . $action . ".php";
+			$path = __DIR__ . '/../../../actions';
+			$filename = realpath("$path/$action.php");
 		}
 
 		if (!in_array($access, self::$access_levels)) {

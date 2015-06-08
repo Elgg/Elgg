@@ -29,13 +29,6 @@ interface Config {
 	public function getDataPath();
 
 	/**
-	 * Get the root directory path for this installation
-	 *
-	 * @return string
-	 */
-	public function getRootPath();
-
-	/**
 	 * Get an Elgg configuration value, possibly loading it from the DB's config table
 	 *
 	 * Before application boot, it may be unsafe to call get() for some values. You should use

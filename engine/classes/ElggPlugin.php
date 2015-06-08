@@ -840,21 +840,7 @@ class ElggPlugin extends \ElggObject {
 	 * @return true
 	 */
 	protected function registerLanguages() {
-		$languages_path = "$this->path/languages";
-
-		// don't need to have classes
-		if (!is_dir($languages_path)) {
-			return true;
-		}
-
-		// but need to have working ones.
-		if (!_elgg_services()->translator->registerTranslations($languages_path)) {
-			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterLanguages',
-							array($this->getID(), $this->guid, $languages_path));
-			throw new \PluginException($msg);
-		}
-
-		return true;
+		return _elgg_services()->translator->registerPluginTranslations($this->path);
 	}
 
 	/**

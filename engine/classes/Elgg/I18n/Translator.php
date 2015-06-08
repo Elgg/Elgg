@@ -200,7 +200,23 @@ class Translator {
 		$this->registerTranslations($this->defaultPath);
 	}
 	
-	
+	/**
+	 * Registers translations in a directory assuming the standard plugin layout.
+	 * 
+	 * @param string $path Without the trailing slash.
+	 * 
+	 * @return bool Success
+	 */
+	function registerPluginTranslations($path) {
+		$languages_path = rtrim($path, "\\/") . "/languages";
+
+		// don't need to have translations
+		if (!is_dir($languages_path)) {
+			return true;
+		}
+
+		return $this->registerTranslations($languages_path);
+	}
 	
 	/**
 	 * When given a full path, finds translation files and loads them

@@ -16,33 +16,13 @@ You should review those if you get confused along the way.
    :local:
    :depth: 1
 
-Registering your plugin
------------------------
-
-Plugins are always placed in the ``/mod`` directory.
-Create a subdirectory there called ``hello``.
-This will be the name of your plugin
-and will show up in the Plugins Administration section of Elgg by this name.
-
-In ``/mod/hello``, create an empty file called ``start.php``.
-If this file exists, Elgg will load your plugin.
-Otherwise, you will see a misconfigured plugin error.
-Go to the admin section of your Elgg install and enable your plugin.
-Click on the “more info” link under your plugin name.
-You will notice that nothing happens.
-
- * Copy the ``manifest.xml`` file from one of the plugins in your elgg install into ``/mod/hello``.
- * Update its values so you are listed as the author and change the description to describe this new plugin.
- * Reload the Tools Administration page in your browser and check “more info” again.
- * It will now display the information that you've entered.
-
 Adding the widget view code
 ---------------------------
 
 Elgg automatically scans particular directories under plugins looking for particular files.
 :doc:`/guides/views` make it easy to add your display code or do other things like override default Elgg behavior.
 For now, we will just be adding the view code for your widget.
-Create a file at ``/mod/hello/views/default/widgets/helloworld/content.php``.
+Create a file at ``/views/default/widgets/helloworld/content.php``.
 “helloworld” will be the name of your widget within the hello plugin.
 In this file add the code:
 
@@ -61,7 +41,7 @@ Registering your widget
 Elgg needs to be told explicitly that the plugin contains a widget
 so that it will scan the widget views directory.
 This is done by calling the elgg\_register\_widget\_type() function.
-Edit ``/mod/hello/start.php``. In it add these lines:
+Edit ``/start.php``. In it add these lines:
 
 .. code:: php
 
@@ -90,8 +70,7 @@ access (over who can see the widget).
 Suppose you want to allow the user to control what greeting is displayed in the widget. 
 Just as Elgg automatically loads ``content.php`` when viewing a widget,
 it loads ``edit.php`` when a user attempts to edit a widget.
-In ``/mod/hello/views/default/widgets/helloworld/``, create a file named ``edit.php``.
-In this file, add the following code:
+Put the following code into ``/views/default/widgets/helloworld/edit.php``:
 
 .. code:: php
 
@@ -123,7 +102,7 @@ view remembers what the user typed in the previous time he changed the
 value of his message text.
 
 Now to display the user's message we need to modify content.php to use this *message* variable.
-Edit content.php and change it to:
+Edit ``/views/default/widgets/helloworld/content.php`` and change it to:
 
 .. code:: php
 

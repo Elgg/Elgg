@@ -1,5 +1,7 @@
 <?php
 
+use Elgg\Filesystem\Directory;
+
 /**
  * Elgg RewriteTester.
  * Test if URL rewriting is working.
@@ -140,16 +142,16 @@ class ElggRewriteTester {
 	/**
 	 * Create Elgg's .htaccess file or confirm that it exists
 	 *
-	 * @param string $url  URL of rewrite test
-	 * @param string $path Elgg's root directory with trailing slash
+	 * @param string $url URL of rewrite test
 	 *
 	 * @return bool
 	 */
-	public function createHtaccess($url, $path) {
-		$filename = "{$path}.htaccess";
-		if (file_exists($filename)) {
+	public function createHtaccess($url) {
+		$root = Directory\Local::root();
+		$file = $root->getFile(".htaccess");
+		if ($file->exists()) {
 			// check that this is the Elgg .htaccess
-			$data = file_get_contents($filename);
+			$data = $file->getContents();
 			if ($data === FALSE) {
 				// don't have permission to read the file
 				$this->htaccessIssue = 'read_permission';
@@ -168,13 +170,13 @@ class ElggRewriteTester {
 			}
 		}
 
-		if (!is_writable($path)) {
+		if (!is_writable($root->getPath())) {
 			$this->htaccessIssue = 'write_permission';
 			return FALSE;
 		}
 
 		// create the .htaccess file
-		$result = copy("{$path}install/config/htaccess.dist", $filename);
+		$result = copy(\Elgg\Application::elggDir()->getPath("install/config/htaccess.dist"), $file->getPath());
 		if (!$result) {
 			$this->htaccessIssue = 'cannot_copy';
 			return FALSE;
@@ -184,10 +186,10 @@ class ElggRewriteTester {
 		if (!$this->runRewriteTest($url)) {
 			//try to rewrite to guessed subdirectory
 			if ($subdir = $this->guessSubdirectory($url)) {
-				$contents = file_get_contents($filename);
+				$contents = $file->getContents();
 				$contents = preg_replace("/#RewriteBase \/(\r?\n)/", "RewriteBase $subdir\$1", $contents);
 				if ($contents) {
-					file_put_contents($filename, $contents);
+					$file->putContents($contents);
 				}
 			}
 		}

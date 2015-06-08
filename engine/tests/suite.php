@@ -1,16 +1,13 @@
 <?php
 /**
  * Runs unit tests.
- *
- * @package Elgg
- * @subpackage Test
  */
 
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
 require_once __DIR__ . '/../../autoloader.php';
 
-(new \Elgg\Application())->bootCore();
+\Elgg\Application::start();
 
 require_once __DIR__ . '/ElggCoreUnitTest.php';
 require_once __DIR__ . '/ElggCoreGetEntitiesBaseTest.php';

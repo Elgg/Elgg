@@ -206,7 +206,7 @@ Bringing it all together
 
 The restored elgg installation knows **nothing** about the new database name, database username, directory structure, etc. That's what we're going to address here.
 
-Edit ``/public_html/engine/settings.php`` on the new hosting provider to reflect the database information for the database that you just created.
+Edit ``/public_html/settings.php`` on the new hosting provider to reflect the database information for the database that you just created.
 
 .. code:: php
 

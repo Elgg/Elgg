@@ -246,8 +246,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('simpleCache', function(ServiceProvider $c) {
-			global $CONFIG;
-			return new \Elgg\Cache\SimpleCache($CONFIG, $c->views);
+			return new \Elgg\Cache\SimpleCache($c->config, $c->datalist, $c->views);
 		});
 
 		$this->setClassName('siteSecret', \Elgg\Database\SiteSecret::class);

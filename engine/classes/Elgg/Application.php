@@ -3,6 +3,7 @@
 namespace Elgg;
 
 use Elgg\Di\ServiceProvider;
+use Elgg\Filesystem\Directory;
 
 /**
  * Load, boot, and implement a front controller for an Elgg application
@@ -29,11 +30,6 @@ class Application {
 	 * @var string
 	 */
 	private $engine_dir;
-
-	/**
-	 * @var string
-	 */
-	private $install_dir;
 
 	/**
 	 * Property names of the service provider to be exposed via __get()
@@ -63,10 +59,7 @@ class Application {
 	 *
 	 * @param ServiceProvider $services Elgg services provider
 	 */
-	public function __construct(ServiceProvider $services = null) {
-		if (!$services) {
-			$services = new ServiceProvider(new Config());
-		}
+	public function __construct(ServiceProvider $services) {
 		$this->services = $services;
 
 		/**
@@ -91,8 +84,7 @@ class Application {
 			$_ELGG = new \stdClass();
 		}
 
-		$this->engine_dir = dirname(dirname(__DIR__));
-		$this->install_dir = dirname($this->engine_dir);
+		$this->engine_dir = __DIR__ . '/../..';
 	}
 
 	/**
@@ -121,19 +113,14 @@ class Application {
 			return;
 		}
 
-		$lib_dir = $this->engine_dir . "/lib";
-
-		// we only depend on it to be defining _elgg_services function
-		require_once "$lib_dir/autoloader.php";
-
-		// set up autoloading and DIC
-		_elgg_services($this->services);
+		$lib_dir = self::elggDir()->chroot("engine/lib");
 
 		// load the rest of the library files from engine/lib/
 		// All on separate lines to make diffs easy to read + make it apparent how much
 		// we're actually loading on every page (Hint: it's too much).
 		$lib_files = array(
 			// Needs to be loaded first to correctly bootstrap
+			'autoloader.php',
 			'elgglib.php',
 
 			// The order of these doesn't matter, so keep them alphabetical
@@ -193,16 +180,19 @@ class Application {
 
 			// include library files, capturing setup functions
 			foreach ($lib_files as $file) {
-				$setup = (require_once "$lib_dir/$file");
+				$setup = (require_once $lib_dir->getPath($file));
 
 				if ($setup instanceof \Closure) {
 					$setups[$file] = $setup;
 				}
 			}
-
+	
 			// store instance to be returned by elgg()
 			self::$_instance = $this;
 
+			// set up autoloading and DIC
+			_elgg_services($this->services);
+	
 			$events = $this->services->events;
 			$hooks = $this->services->hooks;
 
@@ -214,6 +204,17 @@ class Application {
 	}
 
 	/**
+	 * Replacement for loading engine/start.php
+	 * 
+	 * @return self
+	 */
+	public static function start() {
+		$app = self::create();
+		$app->bootCore();
+		return $app;
+	}
+	
+	/**
 	 * Bootstrap the Elgg engine, loads plugins, and calls initial system events
 	 *
 	 * This method loads the full Elgg engine, checks the installation
@@ -224,10 +225,10 @@ class Application {
 	 *
 	 * If Elgg is not fully installed, the browser will be redirected to an installation page.
 	 *
-	 * @see install.php
 	 * @return void
 	 */
 	public function bootCore() {
+		
 		$config = $this->services->config;
 
 		if ($config->getVolatile('boot_complete')) {
@@ -252,6 +253,22 @@ class Application {
 
 		// Load the plugins that are active
 		$this->services->plugins->load();
+
+		if (Directory\Local::root()->getPath() != self::elggDir()->getPath()) {
+			// Elgg is installed as a composer dep, so try to treat the root directory
+			// as a custom plugin that is always loaded last and can't be disabled...
+			if (!elgg_get_config('system_cache_loaded')) {
+				_elgg_services()->views->registerPluginViews(Directory\Local::root()->getPath());
+			}
+			
+			if (!elgg_get_config('i18n_loaded_from_cache')) {
+				_elgg_services()->translator->registerPluginTranslations(Directory\Local::root()->getPath());
+			}
+			
+			// This is root directory start.php, not elgg/engine/start.php
+			@include_once Directory\Local::root()->getPath("start.php");
+		}
+		
 
 		// @todo move loading plugins into a single boot function that replaces 'boot', 'system' event
 		// and then move this code in there.
@@ -286,7 +303,39 @@ class Application {
 		$this->loadSettings();
 		return $this->services->db;
 	}
-
+	
+	/**
+	 * Get an undefined property
+	 *
+	 * @param string $name The property name accessed
+	 *
+	 * @return mixed
+	 */
+	public function __get($name) {
+		if (isset(self::$public_services[$name])) {
+			return $this->services->{$name};
+		}
+		trigger_error("Undefined property: " . __CLASS__ . ":\${$name}");
+	}
+	
+	/**
+	 * Creates a new, trivial instance of Elgg\Application. 
+	 * 
+	 * @return self
+	 */
+	private static function create() {
+		return new self(new Di\ServiceProvider(new Config()));
+	}
+	
+	/**
+	 * Elgg's front controller. Handles basically all incoming URL requests.
+	 * 
+	 * @return void
+	 */
+	public static function index() {
+		self::create()->run();
+	}
+	
 	/**
 	 * Routes the request, booting core if not yet booted
 	 *
@@ -314,13 +363,13 @@ class Application {
 		}
 
 		if ($path === '/rewrite.php') {
-			require "{$this->install_dir}/install.php";
+			require Directory\Local::root()->getPath("install.php");
 			return true;
 		}
 
 		if (php_sapi_name() === 'cli-server') {
 			// The CLI server routes ALL requests here (even existing files), so we have to check for these.
-			if ($path !== '/' && file_exists($this->install_dir . $path)) {
+			if ($path !== '/' && self::installDir()->isFile($path)) {
 				// serve the requested resource as-is.
 				return false;
 			}
@@ -331,22 +380,111 @@ class Application {
 		if (!$this->services->router->route($this->services->request)) {
 			forward('', '404');
 		}
-
-		return true;
 	}
-
+	
 	/**
-	 * Get an undefined property
-	 *
-	 * @param string $name The property name accessed
-	 *
-	 * @return mixed
+	 * Returns a directory that points to the root of Elgg, but not necessarily
+	 * the install root. See `self::root()` for that.
+	 * 
+	 * @return Directory
 	 */
-	public function __get($name) {
-		if (isset(self::$public_services[$name])) {
-			return $this->services->{$name};
+	public static function elggDir() /*: Directory*/ {
+		return Directory\Local::fromPath(realpath(__DIR__ . '/../../..'));
+	}
+	
+	/**
+	 * Renders a web UI for installing Elgg.
+	 * 
+	 * @return void
+	 */
+	public static function install() {
+		ini_set('display_errors', 1);
+		$installer = new \ElggInstaller();
+		$step = get_input('step', 'welcome');
+		$installer->run($step);
+	}
+	
+	/**
+	 * Elgg upgrade script.
+	 *
+	 * This script triggers any necessary upgrades. If the site has been upgraded
+	 * to the most recent version of the code, no upgrades are run but the caches
+	 * are flushed.
+	 *
+	 * Upgrades use a table {db_prefix}upgrade_lock as a mutex to prevent concurrent upgrades.
+	 *
+	 * The URL to forward to after upgrades are complete can be specified by setting $_GET['forward']
+	 * to a relative URL.
+	 * 
+	 * @return void
+	 */
+	public static function upgrade() {
+		// we want to know if an error occurs
+		ini_set('display_errors', 1);
+		
+		define('UPGRADING', 'upgrading');
+		
+		self::start();
+		
+		$site_url = elgg_get_config('url');
+		$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
+		
+		// turn any full in-site URLs into absolute paths
+		$forward_url = get_input('forward', '/admin', false);
+		$forward_url = str_replace(array($site_url, $site_host), '/', $forward_url);
+		
+		if (strpos($forward_url, '/') !== 0) {
+			$forward_url = '/' . $forward_url;
 		}
-		trigger_error("Undefined property: " . __CLASS__ . ":\${$name}");
+		
+		if (get_input('upgrade') == 'upgrade') {
+		
+			$upgrader = new \Elgg\UpgradeService();
+			$result = $upgrader->run();
+			if ($result['failure'] == true) {
+				register_error($result['reason']);
+				forward($forward_url);
+			}
+		} else {
+			$rewriteTester = new \ElggRewriteTester();
+			$url = elgg_get_site_url() . "__testing_rewrite?__testing_rewrite=1";
+			if (!$rewriteTester->runRewriteTest($url)) {
+				// see if there is a problem accessing the site at all
+				// due to ip restrictions for example
+				if (!$rewriteTester->runLocalhostAccessTest()) {
+					// note: translation may not be available until after upgrade
+					$msg = elgg_echo("installation:htaccess:localhost:connectionfailed");
+					if ($msg === "installation:htaccess:localhost:connectionfailed") {
+						$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
+								. "that curl is working and there are no IP restrictions preventing "
+								. "localhost connections.";
+					}
+					echo $msg;
+					exit;
+				}
+				
+				// note: translation may not be available until after upgrade
+				$msg = elgg_echo("installation:htaccess:needs_upgrade");
+				if ($msg === "installation:htaccess:needs_upgrade") {
+					$msg = "You must update your .htaccess file so that the path is injected "
+						. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
+				}
+				echo $msg;
+				exit;
+			}
+		
+			$vars = array(
+				'forward' => $forward_url
+			);
+		
+			// reset cache to have latest translations available during upgrade
+			elgg_reset_system_cache();
+			
+			echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade', $vars);
+			exit;
+		}
+		
+		forward($forward_url);
 	}
 
 	/**

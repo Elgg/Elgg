@@ -408,6 +408,7 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	array_shift($params['segments']);
 	$page_shell = elgg_trigger_plugin_hook('shell', 'page', $params, $page_shell);
 
+
 	$system_messages = _elgg_services()->systemMessages;
 
 	$messages = null;
@@ -575,7 +576,7 @@ function _elgg_views_prepare_head($title) {
 			'href' => elgg_format_url($url),
 		);
 	}
-
+	
 	return $params;
 }
 
