@@ -6,6 +6,7 @@ use Symfony\Component\HttpFoundation\ParameterBag;
 use Symfony\Component\HttpFoundation\FileBag;
 use Symfony\Component\HttpFoundation\ServerBag;
 use Symfony\Component\HttpFoundation\HeaderBag;
+use Elgg\Application;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -74,7 +75,7 @@ class Request extends SymfonyRequest {
 	 * @return array
 	 */
 	public function getUrlSegments() {
-		$path = trim($this->query->get('__elgg_uri'), '/');
+		$path = trim($this->query->get(Application::GET_PATH_KEY), '/');
 		if (!$path) {
 			return array();
 		}

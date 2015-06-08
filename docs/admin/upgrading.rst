@@ -48,6 +48,14 @@ comments have been discarded now that IE10+ browsers are more standards-complian
 If you need browser support farther back than that, you will need to find or build
 a plugin that introduces its own compatibility layer or polyfills.
 
+Update your webserver config
+----------------------------
+
+URL paths like ``cache/*`` and ``rewrite.php`` now use the main front controller
+script. You **must** remove these rewrite rules from your webserver config (e.g. ``.htaccess``).
+
+Also remove the rules for paths like ``export/*``; these endpoints have been removed.
+
 From 1.10 to 1.11
 ========================
 

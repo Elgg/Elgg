@@ -156,6 +156,11 @@ Plugins should use the class ``Elgg\Application`` to boot Elgg. Typical usage:
     require_once dirname(dirname(__DIR__)) . '/autoloader.php';
     (new \Elgg\Application)->bootCore();
 
+``export/`` URLs are no longer available
+----------------------------------------
+
+Elgg no longer provides this endpoint for exposing resource data.
+
 Introduced third-party library for sending email
 ------------------------------------------------
 

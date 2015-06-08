@@ -90,7 +90,7 @@ class ElggRewriteTester {
 	 * @return bool
 	 */
 	public function runRewriteTest($url) {
-		$this->serverSupportsRemoteRead = ($this->fetchUrl($url) === 'success');
+		$this->serverSupportsRemoteRead = ($this->fetchUrl($url) === \Elgg\Application::REWRITE_TEST_OUTPUT);
 		return $this->serverSupportsRemoteRead;
 	}
 	
