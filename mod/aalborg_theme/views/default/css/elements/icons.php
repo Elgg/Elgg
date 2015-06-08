@@ -14,7 +14,7 @@
 *************************************** */
 
 .elgg-icon {
-	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat left;
+	background: transparent url(<?= elgg_get_simplecache_url("elgg_sprites.png"); ?>) no-repeat left;
 	width: 16px;
 	height: 16px;
 	margin: 0 2px;
@@ -350,7 +350,7 @@
 }
 
 .elgg-ajax-loader {
-	background: #FFF url(<?php echo elgg_get_site_url(); ?>_graphics/ajax_loader_bw.gif) no-repeat center center;
+	background: #FFF url(<?= elgg_get_simplecache_url("ajax_loader_bw.gif"); ?>) no-repeat center center;
 	min-height: 31px;
 	min-width: 31px;
 }

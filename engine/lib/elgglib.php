@@ -1557,8 +1557,8 @@ function _elgg_favicon_page_handler($segments) {
 	header("Cache-Control: public", true);
 
 	// TODO in next 1.x send our default icon
-	//header('Content-Type: image/vnd.microsoft.icon');
-	//readfile(elgg_get_root_path() . '_graphics/favicon.ico');
+	//header('Content-Type: image/x-icon');
+	//echo elgg_view('favicon.ico');
 
 	return true;
 }
@@ -1794,8 +1794,8 @@ function _elgg_walled_garden_ajax_handler($page) {
 function _elgg_walled_garden_init() {
 	global $CONFIG;
 
-	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('css', 'walled_garden'));
-	elgg_register_js('elgg.walled_garden', elgg_get_simplecache_url('js', 'walled_garden'));
+	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('css/walled_garden'));
+	elgg_register_js('elgg.walled_garden', elgg_get_simplecache_url('js/walled_garden'));
 
 	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
 
@@ -1896,18 +1896,18 @@ function _elgg_init() {
 	});
 
 	elgg_register_js('elgg.autocomplete', 'js/lib/ui.autocomplete.js');
-	elgg_register_js('jquery.ui.autocomplete.html', elgg_get_simplecache_url('js', 'jquery.ui.autocomplete.html.js'));
+	elgg_register_js('jquery.ui.autocomplete.html', elgg_get_simplecache_url('js/jquery.ui.autocomplete.html.js'));
 
 	elgg_define_js('jquery.ui.autocomplete.html', array(
-		'src' => elgg_get_simplecache_url('js', 'jquery.ui.autocomplete.html.js'),
+		'src' => elgg_get_simplecache_url('js/jquery.ui.autocomplete.html.js'),
 		'deps' => array('jquery.ui')
 	));
 	
 	elgg_register_js('elgg.friendspicker', 'js/lib/ui.friends_picker.js');
 	elgg_register_js('elgg.avatar_cropper', 'js/lib/ui.avatar_cropper.js');
 	elgg_register_js('elgg.ui.river', 'js/lib/ui.river.js');
-	elgg_register_js('jquery.imgareaselect', elgg_get_simplecache_url('js', 'jquery.imgareaselect.js'));
-	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('js', 'jquery.imgareaselect.css'));
+	elgg_register_js('jquery.imgareaselect', elgg_get_simplecache_url('js/jquery.imgareaselect.js'));
+	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('js/jquery.imgareaselect.css'));
 	
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');

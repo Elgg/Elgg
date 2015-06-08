@@ -432,8 +432,6 @@ class ViewsService {
 	 * @access private
 	 */
 	public function isCacheableView($view) {
-		
-
 		if (!isset($this->CONFIG->views)) {
 			$this->CONFIG->views = new \stdClass;
 		}

@@ -9,11 +9,11 @@ $filename = get_input('filename');
 
 $plugin = elgg_get_plugin_from_id($plugin_id);
 if (!$plugin) {
-	$file = elgg_get_root_path() . '_graphics/icons/default/medium.png';
+	$file = elgg_get_root_path() . 'views/default/icons/default/medium.png';
 } else {
 	$file = $plugin->getPath() . $filename;
 	if (!file_exists($file)) {
-		$file = elgg_get_root_path() . '_graphics/icons/default/medium.png';
+		$file = elgg_get_root_path() . 'views/default/icons/default/medium.png';
 	}
 }
 

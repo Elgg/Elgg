@@ -14,9 +14,7 @@ if (!in_array($size, array('master', 'large', 'medium', 'small', 'tiny', 'topbar
 
 // If user doesn't exist, return default icon
 if (!$user) {
-	$url = "_graphics/icons/default/{$size}.png";
-	$url = elgg_normalize_url($url);
-	forward($url);
+	forward(elgg_get_simplecache_url("icons/default/$size.png"));
 }
 
 $user_guid = $user->getGUID();
@@ -41,9 +39,7 @@ try {
 
 
 if (!$success) {
-	$url = "_graphics/icons/default/{$size}.png";
-	$url = elgg_normalize_url($url);
-	forward($url);
+	forward(elgg_get_simplecache_url("icons/default/$size.png"));
 }
 
 header("Content-type: image/jpeg", true);

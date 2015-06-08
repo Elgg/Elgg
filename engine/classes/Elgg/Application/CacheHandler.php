@@ -46,11 +46,15 @@ class CacheHandler {
 		if (!$request) {
 			$this->send403();
 		}
+		
 		$ts = $request['ts'];
 		$view = $request['view'];
 		$viewtype = $request['viewtype'];
 
-		$this->sendContentType($view);
+		$contentType = $this->getContentType($view);
+		if (!empty($contentType)) {
+			header("Content-Type: $contentType", true);
+		}
 
 		// this may/may not have to connect to the DB
 		$this->setupSimplecache();
@@ -200,20 +204,68 @@ class CacheHandler {
 	}
 
 	/**
-	 * Send content type
+	 * Get the content type
 	 *
 	 * @param string $view The view name
-	 * @return void
+	 * 
+	 * @return string?
 	 */
-	protected function sendContentType($view) {
-		$segments = explode('/', $view, 2);
-		switch ($segments[0]) {
-			case 'css':
-				header("Content-Type: text/css", true);
-				break;
+	protected function getContentType($view) {
+		
+		$extension = $this->getViewFileType($view);
+		
+		switch ($extension) {
+			case 'gif':
+			case 'png':
+			case 'webp':
+			case 'bmp':
+			case 'tiff':
+			case 'jpeg':
+				return "image/$extension";
+			
+			case 'jpg':
+				return "image/jpeg";
+
+			case 'ico':
+				return 'image/x-icon';
+			
+			case 'svg':
+				return 'image/svg+xml';
+			
 			case 'js':
-				header('Content-Type: text/javascript', true);
+				return 'application/javascript';
+			
+			case 'css':
+			case 'html':
+			case 'xml':
+				return "text/$extension";
+			
+			default:
 				break;
+		}
+	}
+	
+	/**
+	 * Returns the type of output expected from the view.
+	 * 
+	 *  - view/name.extension returns "extension"
+	 *  - css/view views return "css"
+	 *  - js/view views return "js"
+	 *  - Otherwise, returns "unknown"
+	 *
+	 * @param string $view The view name
+	 * @return string
+	 */
+	private function getViewFileType($view) {
+		$extension = (new \SplFileInfo($view))->getExtension();
+		if ($extension) {
+			return $extension;
+		}
+		
+		if (preg_match('~(?:^|/)(css|js)(?:$|/)~', $view, $m)) {
+			return $m[1];
+		} else {
+			return 'unknown';
 		}
 	}
 
@@ -228,7 +280,7 @@ class CacheHandler {
 	protected function getProcessedView($view, $viewtype) {
 		$content = $this->renderView($view, $viewtype);
 
-		$hook_type = _elgg_get_view_filetype($view);
+		$hook_type = $this->getViewFileType($view);
 		$hook_params = array(
 			'view' => $view,
 			'viewtype' => $viewtype,

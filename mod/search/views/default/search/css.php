@@ -27,7 +27,7 @@ Search plugin
 	font-size: 12px;
 	font-weight: bold;
 	padding: 2px 4px 2px 26px;
-	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/elgg_sprites.png) no-repeat 2px -934px;
+	background: transparent url(<?= elgg_get_simplecache_url("elgg_sprites.png"); ?>) no-repeat 2px -934px;
 }
 .elgg-search input[type=text]:focus, .elgg-search input[type=text]:active {
 	background-color: white;

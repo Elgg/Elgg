@@ -47,5 +47,21 @@ class CacheHandlerTest extends \PHPUnit_Framework_TestCase {
 	public function testCanHandleConditionalRequests() {
 		$this->markTestIncomplete();
 	}
+	
+	public function testGetViewFileTypeHandlesJs() {
+		$this->markTestIncomplete("getViewFileType() is private/protected");
+		
+		$type = $this->handler->getViewFileType('js/some/view.js');
+		
+		$this->assertEquals('js', $type);
+	}
+	
+	public function testGetContentTypeHandlesJs() {
+		$this->markTestIncomplete("getContentType() is private/protected");
+		
+		$mediaType = $this->handler->getContentType('view.js');
+		
+		$this->assertEquals('application/javascript', $mediaType);
+	}
 }
 

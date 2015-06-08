@@ -119,7 +119,7 @@ function profile_set_icon_url($hook, $type, $url, $params) {
 	$icon_time = $user->icontime;
 
 	if (!$icon_time) {
-		return "_graphics/icons/user/default{$size}.gif";
+		return elgg_get_simplecache_url("icons/user/default{$size}.gif");
 	}
 
 	$filehandler = new ElggFile();
@@ -132,7 +132,7 @@ function profile_set_icon_url($hook, $type, $url, $params) {
 		}
 	} catch (InvalidParameterException $e) {
 		elgg_log("Unable to get profile icon for user with GUID $user_guid", 'ERROR');
-		return "_graphics/icons/default/$size.png";
+		return elgg_get_simplecache_url("icons/default/$size.png");
 	}
 }
 

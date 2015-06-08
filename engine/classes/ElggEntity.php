@@ -1453,7 +1453,7 @@ abstract class ElggEntity extends \ElggData implements
 
 		$url = _elgg_services()->hooks->trigger('entity:icon:url', $type, $params, null);
 		if ($url == null) {
-			$url = "_graphics/icons/default/$size.png";
+			$url = elgg_get_simplecache_url("icons/default/$size.png");
 		}
 
 		return elgg_normalize_url($url);
