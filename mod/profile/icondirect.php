@@ -30,7 +30,8 @@ if (!empty($_GET['size'])) {
 	}
 }
 
-require_once dirname(dirname(__DIR__)) . '/autoloader.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
+
 $app = new \Elgg\Application();
 $app->loadSettings();
 

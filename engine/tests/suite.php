@@ -8,7 +8,7 @@
 
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
-require_once __DIR__ . '/../../autoloader.php';
+require_once __DIR__ . '/../../vendor/autoload.php';
 
 (new \Elgg\Application())->bootCore();
 

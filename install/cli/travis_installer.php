@@ -19,9 +19,7 @@ if (PHP_SAPI !== 'cli') {
 	exit(2);
 }
 
-$elggRoot = dirname(dirname(__DIR__));
-
-require_once "$elggRoot/autoloader.php";
+require_once __DIR__ . "/../../autoload.php";
 
 $installer = new ElggInstaller();
 

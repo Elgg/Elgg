@@ -6,9 +6,9 @@
  */
 
 // Get engine
-require_once dirname(dirname(__DIR__)) . '/autoloader.php';
-$application = new Elgg\Application();
-$application->bootCore();
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+\Elgg\Application::start();
 
 // Get file GUID
 $file_guid = (int) get_input('file_guid', 0);

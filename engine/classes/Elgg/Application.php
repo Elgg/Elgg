@@ -65,10 +65,7 @@ class Application {
 	 *
 	 * @param ServiceProvider $services Elgg services provider
 	 */
-	public function __construct(ServiceProvider $services = null) {
-		if (!$services) {
-			$services = new ServiceProvider(new Config());
-		}
+	public function __construct(ServiceProvider $services) {
 		$this->services = $services;
 
 		/**
@@ -81,8 +78,8 @@ class Application {
 			$START_MICROTIME = microtime(true);
 		}
 
-		$this->engine_dir = dirname(dirname(__DIR__));
-		$this->install_dir = dirname($this->engine_dir);
+		$this->engine_dir = __DIR__ . '/../..';
+		$this->install_dir = $this->engine_dir . '/../../../..';
 	}
 
 	/**
@@ -113,17 +110,12 @@ class Application {
 
 		$lib_dir = $this->engine_dir . "/lib";
 
-		// we only depend on it to be defining _elgg_services function
-		require_once "$lib_dir/autoloader.php";
-
-		// set up autoloading and DIC
-		_elgg_services($this->services);
-
 		// load the rest of the library files from engine/lib/
 		// All on separate lines to make diffs easy to read + make it apparent how much
 		// we're actually loading on every page (Hint: it's too much).
 		$lib_files = array(
 			// Needs to be loaded first to correctly bootstrap
+			'autoloader.php',
 			'elgglib.php',
 
 			// The order of these doesn't matter, so keep them alphabetical
@@ -189,10 +181,13 @@ class Application {
 					$setups[$file] = $setup;
 				}
 			}
-
+	
 			// store instance to be returned by elgg()
 			self::$_instance = $this;
 
+			// set up autoloading and DIC
+			_elgg_services($this->services);
+	
 			$events = $this->services->events;
 			$hooks = $this->services->hooks;
 
@@ -203,6 +198,12 @@ class Application {
 		});
 	}
 
+	public static function start() {
+		$app = self::create();
+		$app->bootCore();
+		return $app;
+	}
+	
 	/**
 	 * Bootstrap the Elgg engine, loads plugins, and calls initial system events
 	 *
@@ -214,10 +215,10 @@ class Application {
 	 *
 	 * If Elgg is not fully installed, the browser will be redirected to an installation page.
 	 *
-	 * @see install.php
 	 * @return void
 	 */
 	public function bootCore() {
+		
 		$config = $this->services->config;
 
 		if ($config->getVolatile('boot_complete')) {
@@ -276,6 +277,28 @@ class Application {
 		$this->loadSettings();
 		return $this->services->db;
 	}
+	
+	/**
+	 * Get an undefined property
+	 *
+	 * @param string $name The property name accessed
+	 *
+	 * @return mixed
+	 */
+	public function __get($name) {
+		if (isset(self::$public_services[$name])) {
+			return $this->services->{$name};
+		}
+		trigger_error("Undefined property: " . __CLASS__ . ":\${$name}");
+	}
+	
+	private static function create() {
+		return new self(new Di\ServiceProvider(new Config()));
+	}
+	
+	public static function index() {
+		self::create()->run();
+	}
 
 	/**
 	 * Routes the request, booting core if not yet booted
@@ -321,22 +344,94 @@ class Application {
 		if (!$this->services->router->route($this->services->request)) {
 			forward('', '404');
 		}
-
-		return true;
 	}
-
+	
+	public static function install() {
+		ini_set('display_errors', 1);
+		$installer = new \ElggInstaller();
+		$step = get_input('step', 'welcome');
+		$installer->run($step);
+	}
+	
 	/**
-	 * Get an undefined property
+	 * Elgg upgrade script.
 	 *
-	 * @param string $name The property name accessed
+	 * This script triggers any necessary upgrades. If the site has been upgraded
+	 * to the most recent version of the code, no upgrades are run but the caches
+	 * are flushed.
 	 *
-	 * @return mixed
+	 * Upgrades use a table {db_prefix}upgrade_lock as a mutex to prevent concurrent upgrades.
+	 *
+	 * The URL to forward to after upgrades are complete can be specified by setting $_GET['forward']
+	 * to a relative URL.
 	 */
-	public function __get($name) {
-		if (isset(self::$public_services[$name])) {
-			return $this->services->{$name};
+	public static function upgrade() {
+		// we want to know if an error occurs
+		ini_set('display_errors', 1);
+		
+		define('UPGRADING', 'upgrading');
+		
+		self::start();
+		
+		$site_url = elgg_get_config('url');
+		$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
+		
+		// turn any full in-site URLs into absolute paths
+		$forward_url = get_input('forward', '/admin', false);
+		$forward_url = str_replace(array($site_url, $site_host), '/', $forward_url);
+		
+		if (strpos($forward_url, '/') !== 0) {
+			$forward_url = '/' . $forward_url;
 		}
-		trigger_error("Undefined property: " . __CLASS__ . ":\${$name}");
+		
+		if (get_input('upgrade') == 'upgrade') {
+		
+			$upgrader = new \Elgg\UpgradeService();
+			$result = $upgrader->run();
+			if ($result['failure'] == true) {
+				register_error($result['reason']);
+				forward($forward_url);
+			}
+		} else {
+			$rewriteTester = new \ElggRewriteTester();
+			$url = elgg_get_site_url() . "__testing_rewrite?__testing_rewrite=1";
+			if (!$rewriteTester->runRewriteTest($url)) {
+				// see if there is a problem accessing the site at all
+				// due to ip restrictions for example
+				if (!$rewriteTester->runLocalhostAccessTest()) {
+					// note: translation may not be available until after upgrade
+					$msg = elgg_echo("installation:htaccess:localhost:connectionfailed");
+					if ($msg === "installation:htaccess:localhost:connectionfailed") {
+						$msg = "Elgg cannot connect to itself to test rewrite rules properly. Check "
+								. "that curl is working and there are no IP restrictions preventing "
+								. "localhost connections.";
+					}
+					echo $msg;
+					exit;
+				}
+				
+				// note: translation may not be available until after upgrade
+				$msg = elgg_echo("installation:htaccess:needs_upgrade");
+				if ($msg === "installation:htaccess:needs_upgrade") {
+					$msg = "You must update your .htaccess file so that the path is injected "
+						. "into the GET parameter __elgg_uri (you can use install/config/htaccess.dist as a guide).";
+				}
+				echo $msg;
+				exit;
+			}
+		
+			$vars = array(
+				'forward' => $forward_url
+			);
+		
+			// reset cache to have latest translations available during upgrade
+			elgg_reset_system_cache();
+			
+			echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade', $vars);
+			exit;
+		}
+		
+		forward($forward_url);
 	}
 
 	/**

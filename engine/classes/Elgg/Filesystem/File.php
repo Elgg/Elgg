@@ -68,6 +68,10 @@ class File {
 		return $this->directory->includeFile($this->path);
 	}
 	
+	public function read() {
+		readfile($this->getFullPath());
+	}
+	
 	/** @inheritDoc */
 	public function __toString() {
 		return $this->path;

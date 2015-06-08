@@ -1606,7 +1606,7 @@ function elgg_views_boot() {
 	elgg_register_js('require', elgg_get_simplecache_url('js', 'require.js'), 'head');
 	elgg_register_js('jquery', elgg_get_simplecache_url('js', 'jquery.js'), 'head');
 	elgg_register_js('jquery-migrate', elgg_get_simplecache_url('js', 'jquery-migrate.js'), 'head');
-	elgg_register_js('jquery-ui', elgg_get_simplecache_url('js', 'jquery.ui.js'), 'head');
+	elgg_register_js('jquery-ui', elgg_get_simplecache_url('js', 'jquery-ui.js'), 'head');
 	elgg_register_js('elgg', elgg_get_simplecache_url('js', 'elgg'), 'head');
 
 	elgg_load_js('elgg.require_config');

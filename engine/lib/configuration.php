@@ -60,6 +60,26 @@ function elgg_get_root_path() {
 }
 
 /**
+ * /path/to/elgg/engine
+ * 
+ * No trailing slash
+ * 
+ * @return string
+ */
+function elgg_get_engine_path() {
+	return dirname(__DIR__);
+}
+
+/**
+ * @return \Elgg\Filesystem\File
+ */
+function elgg_get_bower_asset($path) {
+	$dir = Elgg\Filesystem\GaufretteDirectory::createLocal(elgg_get_root_path() . "/vendor/bower-asset");
+	return $dir->getFile($path);
+}
+
+
+/**
  * Get an Elgg configuration value
  *
  * @param string $name      Name of the configuration value
