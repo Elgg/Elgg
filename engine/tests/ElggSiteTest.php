@@ -75,6 +75,14 @@ class ElggCoreSiteTest extends \ElggCoreUnitTest {
 		$this->site->url = 'http://example.com/';
 		$this->assertIdentical($this->site->getURL(), 'http://example.com/');
 	}
+
+	public function testElggSiteOverrideUrl() {
+		$this->site->url = 'http://example.com/';
+		$this->site->overrideUrl('http://override.org/');
+
+		$this->assertIdentical($this->site->getURL(), 'http://override.org/');
+		$this->assertIdentical($this->site->getStoredURL(), 'http://example.com/');
+	}
 }
 
 class ElggSiteTest extends \ElggSite {

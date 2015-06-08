@@ -28,6 +28,11 @@
 class ElggSite extends \ElggEntity {
 
 	/**
+	 * @var string|null URL from settings file
+	 */
+	private $settings_url;
+
+	/**
 	 * Initialize the attributes array.
 	 * This is vital to distinguish between metadata and base attributes.
 	 *
@@ -222,14 +227,52 @@ class ElggSite extends \ElggEntity {
 
 		return parent::disable($reason, $recursive);
 	}
+
+	/**
+	 * Get a property
+	 *
+	 * @param string $name Property name
+	 *
+	 * @return mixed
+	 */
+	public function __get($name) {
+		if ($name === 'url' && $this->settings_url) {
+			return $this->settings_url;
+		}
+		return parent::__get($name);
+	}
 	
 	/**
 	 * Returns the URL for this site
 	 *
+	 * @note This value might come from the settings file. Use getStoredURL() for the URL in the DB.
+	 *
 	 * @return string The URL
+	 * @see getStoredURL
 	 */
 	public function getURL() {
 		return $this->url;
+	}
+
+	/**
+	 * Returns the URL for this entity from the DB, even if another URL has been set via settings
+	 *
+	 * @return string The URL
+	 * @since 2.0.0
+	 */
+	public function getStoredURL() {
+		return $this->attributes['url'];
+	}
+
+	/**
+	 * Force the entity to return the given URL for ->url and ->getURL()
+	 *
+	 * @param string $url Site URL from settings
+	 * @access private
+	 * @internal do no use
+	 */
+	public function overrideUrl($url) {
+		$this->settings_url = $url;
 	}
 
 	/**

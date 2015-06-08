@@ -252,16 +252,26 @@ function _elgg_load_site_config() {
 
 	$CONFIG->site_guid = (int) datalist_get('default_site');
 	$CONFIG->site_id = $CONFIG->site_guid;
-	$CONFIG->site = _elgg_services()->entityTable->get($CONFIG->site_guid, 'site');
-	if (!$CONFIG->site) {
+
+	$site = _elgg_services()->entityTable->get($CONFIG->site_guid, 'site');
+	/* @var ElggSite $site */
+	$CONFIG->site = $site;
+	if (!$site) {
 		throw new \InstallationException("Unable to handle this request. This site is not configured or the database is down.");
 	}
 
-	$CONFIG->wwwroot = $CONFIG->site->url;
-	$CONFIG->sitename = $CONFIG->site->name;
-	$CONFIG->sitedescription = $CONFIG->site->description;
-	$CONFIG->siteemail = $CONFIG->site->email;
+	// allow sites to set from config file
+	if (empty($CONFIG->wwwroot)) {
+		$CONFIG->wwwroot = $CONFIG->site->url;
+	} else {
+		$site->overrideUrl($CONFIG->wwwroot);
+		$CONFIG->wwwroot_in_settings = true;
+	}
 	$CONFIG->url = $CONFIG->wwwroot;
+
+	$CONFIG->sitename = $site->name;
+	$CONFIG->sitedescription = $site->description;
+	$CONFIG->siteemail = $site->email;
 
 	_elgg_services()->configTable->loadAll();
 

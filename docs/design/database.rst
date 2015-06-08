@@ -137,6 +137,11 @@ Beyond the standard ElggEntity properties, ElggSites also support:
 -  ``description`` A description of the site
 -  ``url`` The address of the site
 
+.. note::
+
+    The site URL can be overridden via the settings file. To reliably obtain the URL stored in
+    the DB (which may not be the active site URL!), use ``ElggSite::getStoredURL()``.
+
 ElggGroup
 =========
 
