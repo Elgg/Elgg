@@ -509,7 +509,7 @@ function _elgg_admin_page_handler($page) {
 	elgg_set_context('admin');
 
 	elgg_unregister_css('elgg');
-	elgg_load_js('elgg.admin');
+	elgg_require_js('elgg/admin');
 	elgg_load_js('jquery.jeditable');
 
 	// default to dashboard
