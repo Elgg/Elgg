@@ -115,6 +115,10 @@ h6 { font-size: 0.8em; }
 	font-style: italic;
 }
 
+.elgg-subtext a {
+	color: #666;
+}
+
 .elgg-text-help {
 	display: block;
 	font-size: 85%;

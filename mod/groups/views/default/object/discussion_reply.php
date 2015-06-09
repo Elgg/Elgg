@@ -6,6 +6,7 @@
 */
 
 $reply = elgg_extract('entity', $vars, FALSE);
+/* @var ElggDiscussionReply $reply */
 
 if (!$reply) {
 	return true;
@@ -35,21 +36,33 @@ if (elgg_in_context('widgets')) {
 	));
 }
 
-$subtitle = "$poster_text $date";
-
 if (elgg_in_context('activity')) {
 	$content = '<div class="elgg-output elgg-inner" data-role="comment-text">';
 	$content .= elgg_view('output/text', array(
 		'value' => elgg_get_excerpt($reply->description)
 	));
 	$content .= '</div>';
+
+	$date_link = elgg_view('output/url', [
+		'href' => $reply->getURL(),
+		'text' => $date,
+		'is_trusted' => true,
+	]);
 } else {
 	$content = elgg_view('output/longtext', array(
 		'value' => $reply->description,
 		'class' => 'elgg-inner',
 		'data-role' => 'discussion-reply-text',
 	));
+
+	$date_link = elgg_view('output/url', [
+		'href' => $reply->getURL(),
+		'text' => $date,
+		'is_trusted' => true,
+	]);
 }
+
+$subtitle = "$poster_text $date_link";
 
 $params = array(
 	'entity' => $reply,
