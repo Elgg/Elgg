@@ -342,6 +342,8 @@ function get_all_private_settings($entity_guid) {
 function set_private_setting($entity_guid, $name, $value) {
 	global $CONFIG;
 
+	_elgg_services()->pluginSettingsCache->clear($entity_guid);
+
 	$entity_guid = (int) $entity_guid;
 	$name = sanitise_string($name);
 	$value = sanitise_string($value);
@@ -368,6 +370,8 @@ function set_private_setting($entity_guid, $name, $value) {
  */
 function remove_private_setting($entity_guid, $name) {
 	global $CONFIG;
+
+	_elgg_services()->pluginSettingsCache->clear($entity_guid);
 
 	$entity_guid = (int) $entity_guid;
 
@@ -396,6 +400,8 @@ function remove_private_setting($entity_guid, $name) {
  */
 function remove_all_private_settings($entity_guid) {
 	global $CONFIG;
+
+	_elgg_services()->pluginSettingsCache->clear($entity_guid);
 
 	$entity_guid = (int) $entity_guid;
 
