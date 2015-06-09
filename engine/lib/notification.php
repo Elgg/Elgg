@@ -657,8 +657,15 @@ function elgg_send_email($from, $to, $subject, $body, array $params = null) {
 	foreach ($result['headers'] as $headerName => $headerValue) {
 		$message->getHeaders()->addHeaderLine($headerName, $headerValue);
 	}
-		
-	return _elgg_services()->mailer->send($message);
+
+	try {
+		_elgg_services()->mailer->send($message);
+	} catch (\Zend\Mail\Exception\RuntimeException $e) {
+		_elgg_services()->logger->error($e->getMessage());
+		return false;
+	}
+
+	return true;
 }
 
 /**
