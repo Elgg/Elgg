@@ -7,6 +7,7 @@
  * @subpackage UserValidationByEmail
  */
 
+elgg_register_event_handler('init', 'system', 'uservalidationbyemail_init');
 
 function uservalidationbyemail_init() {
 
