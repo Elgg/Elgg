@@ -43,4 +43,19 @@ class PluginHooksService extends \Elgg\HooksRegistrationService {
 	
 		return $returnvalue;
 	}
+
+	/**
+	 * Filter a value by passing it through the 'filter' plugin hook
+	 *
+	 * @param string $type   Hook type
+	 * @param mixed  $value  Value filtered
+	 * @param mixed  $params Hook params
+	 *
+	 * @return mixed
+	 * @see elgg_filter
+	 * @since 1.12
+	 */
+	public function filter($type, $value, $params = null) {
+		return $this->trigger('filter', $type, $params, $value);
+	}
 }

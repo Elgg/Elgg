@@ -236,6 +236,22 @@ Parameters:
 
 .. warning:: The `$params` and `$value` arguments are reversed between the plugin hook handlers and trigger functions!
 
+Filtering values via hook
+-------------------------
+
+Elgg provides ``elgg_filter`` as a shorthand for triggering the hook ``filter``, and this gives plugins a concise
+way to allow other plugins to modify values via a hook handler.
+
+.. code-block:: php
+
+    // allow plugins to filter this value
+    $value = elgg_filter('myPlugin:value', $value);
+
+This is equivalent to:
+
+.. code-block:: php
+
+    $value = elgg_trigger_plugin_hook('filter', 'myPlugin:value', null, $value);
 
 Unregister Event/Hook Handlers
 ------------------------------
