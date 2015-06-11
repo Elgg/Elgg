@@ -5,18 +5,19 @@
  *
  * @package Elgg
  *
- * @uses $vars['items']       Array of ElggEntity, ElggAnnotation or ElggRiverItem objects
- * @uses $vars['offset']      Index of the first list item in complete list
- * @uses $vars['limit']       Number of items per page. Only used as input to pagination.
- * @uses $vars['count']       Number of items in the complete list
- * @uses $vars['base_url']    Base URL of list (optional)
- * @uses $vars['pagination']  Show pagination? (default: true)
- * @uses $vars['position']    Position of the pagination: before, after, or both
- * @uses $vars['full_view']   Show the full view of the items (default: false)
- * @uses $vars['list_class']  Additional CSS class for the <ul> element
- * @uses $vars['item_class']  Additional CSS class for the <li> elements
- * @uses $vars['item_view']   Alternative view to render list items
- * @uses $vars['no_results']  Message to display if no results (string|Closure)
+ * @uses $vars['items']        Array of ElggEntity, ElggAnnotation or ElggRiverItem objects
+ * @uses $vars['offset']       Index of the first list item in complete list
+ * @uses $vars['limit']        Number of items per page. Only used as input to pagination.
+ * @uses $vars['count']        Number of items in the complete list
+ * @uses $vars['base_url']     Base URL of list (optional)
+ * @uses $vars['url_fragment'] URL fragment to add to links if not present in base_url (optional)
+ * @uses $vars['pagination']   Show pagination? (default: true)
+ * @uses $vars['position']     Position of the pagination: before, after, or both
+ * @uses $vars['full_view']    Show the full view of the items (default: false)
+ * @uses $vars['list_class']   Additional CSS class for the <ul> element
+ * @uses $vars['item_class']   Additional CSS class for the <li> elements
+ * @uses $vars['item_view']    Alternative view to render list items
+ * @uses $vars['no_results']   Message to display if no results (string|Closure)
  */
 $items = $vars['items'];
 $count = elgg_extract('count', $vars);
