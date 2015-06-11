@@ -13,14 +13,6 @@
  *  #e4ecf5 - elgg very light blue
  */
 
-// check if there is a theme overriding the old css view and use it, if it exists
-$old_css_view = elgg_get_view_location('css');
-if ($old_css_view != elgg_get_config('viewpath')) {
-	echo elgg_view('css', $vars);
-	return true;
-}
-
-
 /*******************************************************************************
 
 Base CSS
@@ -63,7 +55,3 @@ echo elgg_view('css/elements/misc/spinner.css', $vars);
 
 // included last to have higher priority
 echo elgg_view('css/elements/helpers', $vars);
-
-
-// in case plugins are still extending the old 'css' view, display it
-echo elgg_view('css', $vars);
