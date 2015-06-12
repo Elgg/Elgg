@@ -459,6 +459,9 @@ Other
 **config, amd**
 	Filter the AMD config for the requirejs library.
 
+**filter, <type>**
+    Filter a value. This is triggered via ``elgg_filter()``.
+
 Plugins
 =======
 

@@ -778,6 +778,20 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 }
 
 /**
+ * Filter a value by passing it through the 'filter' plugin hook.
+ *
+ * @param string $type   Hook type
+ * @param mixed  $value  Value filtered
+ * @param mixed  $params Hook params
+ *
+ * @return mixed
+ * @since 1.12
+ */
+function elgg_filter($type, $value, $params = null) {
+	return _elgg_services()->hooks->filter($type, $value, $params);
+}
+
+/**
  * Intercepts, logs, and displays uncaught exceptions.
  *
  * To use a viewtype other than failsafe, create the views:

@@ -302,7 +302,22 @@ Emit a hook event in the event system.
 .. code:: js
 
     // allow other plugins to alter value
-    value = elgg.trigger_hook('my_plugin:filter', 'value', {}, value);
+    value = elgg.trigger_hook('filter', 'my_plugin:value', {}, value);
+
+
+``elgg.filter()``
+
+Pass a value through the "filter" hook.
+
+.. code:: js
+
+    // allow other plugins to alter value
+    value = elgg.filter('my_plugin:value', value);
+
+    // define a class method that plugins can alter
+    Foo.prototype.init = elgg.filter('Foo::init', function () {
+        // do stuff with this
+    });
 
 
 ``elgg.security.refreshToken()``

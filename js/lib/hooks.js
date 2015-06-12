@@ -122,6 +122,21 @@ elgg.trigger_hook = function(name, type, params, value) {
 };
 
 /**
+ * Filter a value by passing it through the 'filter' plugin hook.
+ *
+ * @param {String} type   Hook type
+ * @param {*}      value  Value filtered
+ * @param {Object} params Hook params
+ *
+ * @return {*}
+ * @since 1.12
+ */
+elgg.filter = function(type, value, params) {
+	elgg.assertTypeOf('string', type);
+	return elgg.trigger_hook('filter', type, params, value);
+};
+
+/**
  * Registers a hook as an instant hook.
  *
  * After being trigger once, registration of a handler to an instant hook will cause the

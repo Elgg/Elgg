@@ -47,5 +47,20 @@ define(function(require) {
 				expect(function() { elgg.register_hook_handler('str', 'str', 'oops'); }).toThrow();
 			});
 		});
+
+		describe("elgg.filter()", function() {
+			it("is a simple wrapper for the 'filter' hook", function() {
+				elgg.register_hook_handler("filter", "greet", function (name, type, params, returnValue) {
+					var ret = "Hello " + returnValue + ".";
+					if (params && params.place) {
+						ret += " Welcome to " + params.place + ".";
+					}
+					return ret;
+				});
+
+				expect(elgg.filter("greet", "aliens")).toBe("Hello aliens.");
+				expect(elgg.filter("greet", "aliens", {place:"Earth"})).toBe("Hello aliens. Welcome to Earth.");
+			});
+		});
 	});
 });
