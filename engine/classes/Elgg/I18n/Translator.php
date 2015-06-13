@@ -421,7 +421,7 @@ class Translator {
 	 *
 	 * @return array
 	 */
-	function getAllLanguageCodes() {
+	public static function getAllLanguageCodes() {
 		return array(
 			"aa", // "Afar"
 			"ab", // "Abkhazian"

@@ -256,7 +256,7 @@ function elgg_language_key_exists($key, $language = 'en') {
  * @return void
  */
 function _elgg_translations_init() {
-	$translations = _elgg_services()->translator->getAllLanguageCodes();
+	$translations = \Elgg\I18n\Translator::getAllLanguageCodes();
 	foreach ($translations as $language_code) {
 		// make the js view available for each language
 		elgg_extend_view("js/languages/$language_code.js", "js/languages");

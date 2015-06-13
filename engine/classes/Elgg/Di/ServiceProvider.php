@@ -34,6 +34,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Assets\ExternalFiles               $externalFiles
  * @property-read \Elgg\PluginHooksService                 $hooks
  * @property-read \Elgg\Http\Input                         $input
+ * @property-read \Elgg\LanguagePacks\Service              $languagePacks
  * @property-read \Elgg\Logger                             $logger
  * @property-read Mailer                                   $mailer
  * @property-read \Elgg\Cache\MetadataCache                $metadataCache
@@ -152,6 +153,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setClassName('input', \Elgg\Http\Input::class);
+
+		$this->setFactory('languagePacks', function(ServiceProvider $c) {
+			return new \Elgg\LanguagePacks\Service($c->hooks);
+		});
 
 		$this->setFactory('logger', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('logger');

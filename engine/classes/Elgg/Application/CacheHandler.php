@@ -18,28 +18,32 @@ class CacheHandler {
 	private $application;
 
 	/**
-	 * @var array
+	 * @var string
 	 */
-	private $server_vars;
+	private $dataroot;
+
+	/**
+	 * @var string
+	 */
+	private $simplecache_enabled;
 
 	/**
 	 * Constructor
 	 *
-	 * @param Application $app         Elgg Application
-	 * @param array       $server_vars Server vars
+	 * @param Application $app Elgg Application
 	 */
-	public function __construct(Application $app, $server_vars) {
+	public function __construct(Application $app) {
 		$this->application = $app;
-		$this->server_vars = $server_vars;
 	}
 
 	/**
 	 * Handle a request for a cached view
 	 *
-	 * @param array $path URL path
+	 * @param array $path        URL path
+	 * @param array $server_vars Server vars
 	 * @return void
 	 */
-	public function handleRequest($path) {
+	public function handleRequest($path, $server_vars) {
 		$config = $this->application->config;
 
 		$request = $this->parsePath($path);
@@ -56,7 +60,7 @@ class CacheHandler {
 		$this->setupSimplecache();
 
 		// we can't use $config->get yet. It fails before the core is booted
-		if (!$config->getVolatile('simplecache_enabled')) {
+		if (!$this->simplecache_enabled) {
 
 			$this->application->bootCore();
 
@@ -75,7 +79,7 @@ class CacheHandler {
 			exit;
 		}
 
-		$filename = $config->getVolatile('dataroot') . 'views_simplecache/' . md5("$viewtype|$view");
+		$filename = "{$this->dataroot}views_simplecache/" . md5("$viewtype|$view");
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag);
 			readfile($filename);
@@ -96,7 +100,7 @@ class CacheHandler {
 
 			$content = $this->getProcessedView($view, $viewtype);
 
-			$dir_name = $config->getDataPath() . 'views_simplecache/';
+			$dir_name = "{$this->dataroot}views_simplecache/";
 			if (!is_dir($dir_name)) {
 				mkdir($dir_name, 0700);
 			}
@@ -146,13 +150,22 @@ class CacheHandler {
 	 *
 	 * @return void
 	 */
+	/**
+	 * Do a minimal engine load
+	 *
+	 * @return void
+	 */
 	protected function setupSimplecache() {
 		// we can't use Elgg\Config::get yet. It fails before the core is booted
 		$config = $this->application->config;
 		$config->loadSettingsFile();
 
-		if ($config->getVolatile('dataroot') && $config->getVolatile('simplecache_enabled') !== null) {
-			// we can work with these...
+		$path = $config->getVolatile('dataroot');
+		$is_enabled = $config->getVolatile('simplecache_enabled');
+
+		if ($path && $is_enabled !== null) {
+			$this->dataroot = $path;
+			$this->simplecache_enabled = $is_enabled;
 			return;
 		}
 
@@ -177,12 +190,14 @@ class CacheHandler {
 		}
 
 		foreach ($rows as $row) {
+			if ($row->name === 'dataroot') {
+				$row->value = rtrim($row->value, '/\\') . DIRECTORY_SEPARATOR;
+			}
 			$config->set($row->name, $row->value);
 		}
 
-		if (!$config->getVolatile('dataroot')) {
-			$this->send403('Cache error: unable to get the data root');
-		}
+		$this->dataroot = $config->getVolatile('dataroot');
+		$this->simplecache_enabled = $config->getVolatile('simplecache_enabled');
 	}
 
 	/**
