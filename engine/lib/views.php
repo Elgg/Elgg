@@ -1593,21 +1593,29 @@ function _elgg_views_send_header_x_frame_options() {
 function elgg_views_boot() {
 	global $CONFIG;
 
-	elgg_register_simplecache_view('js/jquery.js');
-	elgg_register_simplecache_view('js/jquery.min.map');
-	elgg_register_simplecache_view('js/jquery.form.js');
-	elgg_register_simplecache_view('js/jquery-migrate.js');
-	elgg_register_simplecache_view('js/jquery-ui.js');
-	elgg_register_simplecache_view('js/require.js');
-	elgg_register_simplecache_view('js/sprintf.js');
+	elgg_register_simplecache_view('css/ie');
+
 	elgg_register_simplecache_view('js/text.js');
 
 	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('js', 'elgg/require_config'), 'head');
-	elgg_register_js('require', elgg_get_simplecache_url('js', 'require.js'), 'head');
-	elgg_register_js('jquery', elgg_get_simplecache_url('js', 'jquery.js'), 'head');
-	elgg_register_js('jquery-migrate', elgg_get_simplecache_url('js', 'jquery-migrate.js'), 'head');
-	elgg_register_js('jquery-ui', elgg_get_simplecache_url('js', 'jquery.ui.js'), 'head');
-	elgg_register_js('elgg', elgg_get_simplecache_url('js', 'elgg'), 'head');
+	elgg_register_js('require', '/vendors/requirejs/require-2.1.10.min.js', 'head');
+	elgg_register_js('jquery', '/vendors/jquery/jquery-1.11.0.min.js', 'head');
+	elgg_register_js('jquery-migrate', '/vendors/jquery/jquery-migrate-1.2.1.min.js', 'head');
+	elgg_register_js('jquery-ui', '/vendors/jquery/jquery-ui-1.10.4.min.js', 'head');
+
+	// this is the only lib that isn't required to be loaded sync in head
+	elgg_define_js('jquery.form', array(
+		'src' => '/vendors/jquery/jquery.form.min.js',
+		'deps' => array('jquery'),
+		'exports' => 'jQuery.fn.ajaxForm',
+	));
+	elgg_define_js('jquery.ui', array(
+		'src' => '/vendors/jquery/jquery-ui-1.10.4.min.js',
+		'deps' => array('jquery'),
+	));
+
+	$elgg_js_url = elgg_get_simplecache_url('js', 'elgg');
+	elgg_register_js('elgg', $elgg_js_url, 'head');
 
 	elgg_load_js('elgg.require_config');
 	elgg_load_js('require');
@@ -1619,7 +1627,7 @@ function elgg_views_boot() {
 	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
 	elgg_register_js('lightbox', $lightbox_js_url);
 
-	elgg_register_css('lightbox', elgg_get_simplecache_url('js', 'lightbox.css'));
+	elgg_register_css('lightbox', 'vendors/jquery/colorbox/theme/colorbox.css');
 
 	$elgg_css_url = elgg_get_simplecache_url('css', 'elgg');
 	elgg_register_css('elgg', $elgg_css_url);

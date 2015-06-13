@@ -357,7 +357,7 @@ elgg.ui.initDatePicker = function() {
 	} else {
 		// load language first
 		elgg.get({
-			url: elgg.config.wwwroot + 'vendor/bower-asset/jquery-ui/ui/minified/i18n/datepicker-'+ elgg.get_language() +'.min.js',
+			url: elgg.config.wwwroot + 'vendors/jquery/i18n/jquery.ui.datepicker-'+ elgg.get_language() +'.js',
 			dataType: "script",
 			cache: true,
 			success: loadDatePicker,
