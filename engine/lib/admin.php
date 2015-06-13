@@ -248,7 +248,7 @@ function _elgg_admin_init() {
 	$url = elgg_get_simplecache_url('js', 'admin');
 	elgg_register_js('elgg.admin', $url);
 	elgg_register_js('elgg.upgrades', 'js/lib/upgrades.js');
-	elgg_register_js('jquery.jeditable', elgg_get_simplecache_url('js', 'jquery.jeditable.js'));
+	elgg_register_js('jquery.jeditable', 'vendors/jquery/jquery.jeditable.mini.js');
 
 	// administer
 	// dashboard
