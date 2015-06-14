@@ -76,4 +76,17 @@ define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, trans
 
 require(['elgg']); // Forces the define() function to always run
 
+// Process queue. We have to wait until now because many modules depend on 'elgg' and we can't load
+// it asynchronously.
+if (!window._require_queue) {
+	if (window.console) {
+		console.log('Elgg\'s require() shim is not defined. Do not override the view "page/elements/head".');
+	}
+} else {
+	while (_require_queue.length) {
+		require.apply(null, _require_queue.shift());
+	}
+	delete window._require_queue;
+}
+
 elgg.trigger_hook('boot', 'system');
