@@ -70,7 +70,8 @@ class CacheHandler {
 
 		$etag = "\"$ts\"";
 		// If is the same ETag, content didn't change.
-		if (isset($server_vars['HTTP_IF_NONE_MATCH']) && trim($server_vars['HTTP_IF_NONE_MATCH']) === $etag) {
+		if (isset($this->server_vars['HTTP_IF_NONE_MATCH'])
+				&& trim($this->server_vars['HTTP_IF_NONE_MATCH']) === $etag) {
 			header("HTTP/1.1 304 Not Modified");
 			exit;
 		}

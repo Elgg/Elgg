@@ -43,5 +43,9 @@ class CacheHandlerTest extends \PHPUnit_Framework_TestCase {
 	public function testParseRequiresLeadingSlash() {
 		$this->_testParseFail('cache/1234/default/hello/world');
 	}
+
+	public function testCanHandleConditionalRequests() {
+		$this->markTestIncomplete();
+	}
 }
 
