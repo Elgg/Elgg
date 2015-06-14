@@ -2,7 +2,7 @@
 
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
-require_once __DIR__ . '/../../../autoloader.php';
+require_once __DIR__ . '/../../../vendor/autoload.php';
 
 date_default_timezone_set('America/Los_Angeles');
 

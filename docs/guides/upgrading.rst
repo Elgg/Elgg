@@ -153,8 +153,8 @@ Plugins should use the class ``Elgg\Application`` to boot Elgg. Typical usage:
 .. code:: php
 
     // boot Elgg in mod/myplugin/foo.php
-    require_once dirname(dirname(__DIR__)) . '/autoloader.php';
-    (new \Elgg\Application)->bootCore();
+    require_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
+    \Elgg\Application::start();
 
 Event/Hook calling order may change
 -----------------------------------

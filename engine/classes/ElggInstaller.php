@@ -60,6 +60,8 @@ class ElggInstaller {
 	 * Constructor bootstraps the Elgg engine
 	 */
 	public function __construct() {
+		$this->path = __DIR__ . '/../../../../..';
+		
 		global $CONFIG;
 		if (!isset($CONFIG)) {
 			$CONFIG = new stdClass;
@@ -80,14 +82,14 @@ class ElggInstaller {
 		set_error_handler('_elgg_php_error_handler');
 		set_exception_handler('_elgg_php_exception_handler');
 
-		_elgg_services()->translator->registerTranslations("{$this->getElggRoot()}/install/languages/", TRUE);
+		_elgg_services()->translator->registerTranslations(realpath("{$this->getElggRoot()}/install/languages/"), TRUE);
 	}
 	
 	/**
 	 * @return string The absolute path to Elgg's root directory
 	 */
 	private function getElggRoot() {
-		return dirname(dirname(__DIR__));
+		return __DIR__ . '/../..';
 	}
 
 	/**
@@ -621,7 +623,7 @@ class ElggInstaller {
 	protected function setInstallStatus() {
 		
 
-		if (!is_readable("{$this->CONFIG->path}engine/settings.php")) {
+		if (!is_readable($this->getSettingsPath())) {
 			return;
 		}
 
@@ -636,11 +638,12 @@ class ElggInstaller {
 				$this->CONFIG->dbname,
 				$this->CONFIG->dbhost
 				);
+
 		if ($dbSettingsPass == FALSE) {
 			return;
 		}
 
-		if (!include_once("{$this->CONFIG->path}engine/lib/database.php")) {
+		if (!include_once("{$this->getElggRoot()}/engine/lib/database.php")) {
 			throw new InstallationException(_elgg_services()->translator->translate('InstallationException:MissingLibrary', array('database.php')));
 		}
 
@@ -773,7 +776,7 @@ class ElggInstaller {
 		if ($stepIndex > $dbIndex) {
 			// once the database has been created, load rest of engine
 			
-			$lib_dir = $this->CONFIG->path . 'engine/lib/';
+			$lib_dir = $this->getElggRoot() . '/engine/lib/';
 
 			$this->loadSettingsFile();
 
@@ -848,8 +851,8 @@ class ElggInstaller {
 
 		$this->CONFIG->wwwroot = $this->getBaseUrl();
 		$this->CONFIG->url = $this->CONFIG->wwwroot;
-		$this->CONFIG->path = "{$this->getElggRoot()}/";
-		$this->CONFIG->viewpath =	$this->CONFIG->path . 'views/';
+		$this->CONFIG->path = realpath(__DIR__ . '/../../../../../');
+		$this->CONFIG->viewpath =	$this->getElggRoot() . '/views/';
 		$this->CONFIG->pluginspath = $this->CONFIG->path . 'mod/';
 		$this->CONFIG->context = array();
 		$this->CONFIG->entity_types = array('group', 'object', 'site', 'user');
@@ -904,9 +907,7 @@ class ElggInstaller {
 	 * @throws InstallationException
 	 */
 	protected function loadSettingsFile() {
-		
-
-		if (!include_once("{$this->CONFIG->path}engine/settings.php")) {
+		if (!include_once($this->getSettingsPath())) {
 			throw new InstallationException(_elgg_services()->translator->translate('InstallationException:CannotLoadSettings'));
 		}
 	}
@@ -952,21 +953,19 @@ class ElggInstaller {
 	 */
 
 	/**
-	 * Check that the engine dir is writable
-	 *
 	 * @param array &$report The requirements report object
 	 *
 	 * @return bool
 	 */
-	protected function checkEngineDir(&$report) {
+	protected function isInstallDirWritable(&$report) {
 		
 
-		$writable = is_writable("{$this->CONFIG->path}engine");
+		$writable = is_writable($this->CONFIG->path);
 		if (!$writable) {
 			$report['settings'] = array(
 				array(
 					'severity' => 'failure',
-					'message' => _elgg_services()->translator->translate('install:check:enginedir'),
+					'message' => _elgg_services()->translator->translate('install:check:installdir'),
 				)
 			);
 			return FALSE;
@@ -985,11 +984,11 @@ class ElggInstaller {
 	protected function checkSettingsFile(&$report = array()) {
 		
 
-		if (!file_exists("{$this->CONFIG->path}engine/settings.php")) {
+		if (!file_exists($this->getSettingsPath())) {
 			return FALSE;
 		}
 
-		if (!is_readable("{$this->CONFIG->path}engine/settings.php")) {
+		if (!is_readable($this->getSettingsPath())) {
 			$report['settings'] = array(
 				array(
 					'severity' => 'failure',
@@ -999,6 +998,10 @@ class ElggInstaller {
 		}
 
 		return TRUE;
+	}
+	
+	private function getSettingsPath() {
+		return "{$this->CONFIG->path}/settings.php";
 	}
 
 	/**
@@ -1258,7 +1261,7 @@ class ElggInstaller {
 	protected function createSettingsFile($params) {
 		
 
-		$templateFile = "{$this->CONFIG->path}engine/settings.example.php";
+		$templateFile = "{$this->getElggRoot()}/engine/settings.example.php";
 		$template = file_get_contents($templateFile);
 		if (!$template) {
 			register_error(_elgg_services()->translator->translate('install:error:readsettingsphp'));
@@ -1269,8 +1272,7 @@ class ElggInstaller {
 			$template = str_replace("{{" . $k . "}}", $v, $template);
 		}
 
-		$settingsFilename = "{$this->CONFIG->path}engine/settings.php";
-		$result = file_put_contents($settingsFilename, $template);
+		$result = file_put_contents($this->getSettingsPath(), $template);
 		if (!$result) {
 			register_error(_elgg_services()->translator->translate('install:error:writesettingphp'));
 			return FALSE;
@@ -1287,12 +1289,12 @@ class ElggInstaller {
 	protected function connectToDatabase() {
 		
 
-		if (!include_once("{$this->CONFIG->path}engine/settings.php")) {
+		if (!include_once($this->getSettingsPath())) {
 			register_error('Elgg could not load the settings file. It does not exist or there is a file permissions issue.');
 			return FALSE;
 		}
 
-		if (!include_once("{$this->CONFIG->path}engine/lib/database.php")) {
+		if (!include_once("{$this->getElggRoot()}/engine/lib/database.php")) {
 			register_error('Could not load database.php');
 			return FALSE;
 		}
@@ -1316,7 +1318,7 @@ class ElggInstaller {
 		
 
 		try {
-			_elgg_services()->db->runSqlScript("{$this->CONFIG->path}engine/schema/mysql.sql");
+			_elgg_services()->db->runSqlScript("{$this->getElggRoot()}/engine/schema/mysql.sql");
 		} catch (Exception $e) {
 			$msg = $e->getMessage();
 			if (strpos($msg, 'already exists')) {
@@ -1481,7 +1483,7 @@ class ElggInstaller {
 		_elgg_services()->datalist->set('path', $this->CONFIG->path);
 
 		// new installations have run all the upgrades
-		$upgrades = elgg_get_upgrade_files("{$this->CONFIG->path}engine/lib/upgrades/");
+		$upgrades = elgg_get_upgrade_files("{$this->getElggRoot()}/engine/lib/upgrades/");
 		_elgg_services()->datalist->set('processed_upgrades', serialize($upgrades));
 
 		_elgg_services()->configTable->set('view', 'default', $site->getGUID());

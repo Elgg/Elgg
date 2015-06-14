@@ -1562,7 +1562,7 @@ function _elgg_favicon_page_handler($segments) {
 
 	// TODO in next 1.x send our default icon
 	//header('Content-Type: image/vnd.microsoft.icon');
-	//readfile(elgg_get_root_path() . '_graphics/favicon.ico');
+	//readfile(dirname(elgg_get_engine_path()) . '/_graphics/favicon.ico');
 
 	return true;
 }
@@ -1904,7 +1904,7 @@ function _elgg_init() {
 
 	elgg_define_js('jquery.ui.autocomplete.html', array(
 		'src' => elgg_get_simplecache_url('js', 'jquery.ui.autocomplete.html.js'),
-		'deps' => array('jquery.ui')
+		'deps' => array('jquery-ui')
 	));
 	
 	elgg_register_js('elgg.friendspicker', 'js/lib/ui.friends_picker.js');
