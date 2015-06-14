@@ -131,7 +131,7 @@ class ElggCoreRegressionBugsTest extends \ElggCoreUnitTest {
 			}
 		}
 
-		elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'can_write_to_container_test_hook');
+		elgg_register_plugin_hook_handler('container_permissions_check', 'all', 'can_write_to_container_test_hook', 600);
 		$this->assertTrue(can_write_to_container($user->guid, $object->guid));
 		elgg_unregister_plugin_hook_handler('container_permissions_check', 'all', 'can_write_to_container_test_hook');
 

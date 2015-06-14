@@ -58,7 +58,7 @@ function developers_process_settings() {
 	}
 
 	if (!empty($settings['wrap_views'])) {
-		elgg_register_plugin_hook_handler('view', 'all', 'developers_wrap_views');
+		elgg_register_plugin_hook_handler('view', 'all', 'developers_wrap_views', 600);
 	}
 
 	if (!empty($settings['log_events'])) {

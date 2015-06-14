@@ -115,7 +115,6 @@ class Inspector {
 		// view handlers
 		$handlers = _elgg_services()->hooks->getAllHandlers();
 
-
 		$filtered_views = array();
 		if (!empty($handlers['view'])) {
 			$filtered_views = array_keys($handlers['view']);
@@ -359,12 +358,15 @@ class Inspector {
 		$root = elgg_get_root_path();
 
 		foreach ($all_handlers as $hook => $types) {
-			foreach ($types as $type => $handlers) {
-				array_walk($handlers, function (&$callable, $priority) use ($root) {
-					$description = $this->describeCallable($callable, $root);
-					$callable = "$priority: $description";
-				});
-				$tree[$hook . ',' . $type] = $handlers;
+			foreach ($types as $type => $priorities) {
+				foreach ($priorities as $priority => $handlers) {
+
+					array_walk($handlers, function (&$callable) use ($root, $priority) {
+						$description = $this->describeCallable($callable, $root);
+						$callable = "$priority: $description";
+					});
+					$tree[$hook . ',' . $type] = $handlers;
+				}
 			}
 		}
 

@@ -606,8 +606,8 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	$events->registerHandler('ready', 'system', 'access_init');
 
 	// For overrided permissions
-	$hooks->registerHandler('permissions_check', 'all', 'elgg_override_permissions');
-	$hooks->registerHandler('container_permissions_check', 'all', 'elgg_override_permissions');
+	$hooks->registerHandler('permissions_check', 'all', 'elgg_override_permissions', 600);
+	$hooks->registerHandler('container_permissions_check', 'all', 'elgg_override_permissions', 600);
 
 	$hooks->registerHandler('unit_test', 'system', 'access_test');
 };

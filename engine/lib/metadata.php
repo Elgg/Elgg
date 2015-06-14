@@ -406,7 +406,7 @@ function _elgg_metadata_test($hook, $type, $value, $params) {
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	/** Call a function whenever an entity is updated **/
-	$events->registerHandler('update', 'all', 'metadata_update');
+	$events->registerHandler('update', 'all', 'metadata_update', 600);
 
 	$hooks->registerHandler('unit_test', 'system', '_elgg_metadata_test');
 };

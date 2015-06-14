@@ -176,7 +176,7 @@ class ElggCoreAccessCollectionsTest extends \ElggCoreUnitTest {
 			return $value;
 		}
 
-		elgg_register_plugin_hook_handler('access:collections:write', 'all', 'test_acl_access_hook');
+		elgg_register_plugin_hook_handler('access:collections:write', 'all', 'test_acl_access_hook', 600);
 
 		// enable security since we usually run as admin
 		$ia = elgg_set_ignore_access(false);

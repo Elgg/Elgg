@@ -81,7 +81,7 @@ function groups_init() {
 	elgg_extend_view('js/elgg', 'groups/js');
 
 	// Access permissions
-	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook');
+	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook', 600);
 	elgg_register_plugin_hook_handler('default', 'access', 'groups_access_default_override');
 
 	// Register profile menu hook

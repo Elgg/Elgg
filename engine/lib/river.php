@@ -837,6 +837,6 @@ function _elgg_river_init() {
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_river_init');
-	$events->registerHandler('disable:after', 'all', '_elgg_river_disable');
-	$events->registerHandler('enable:after', 'all', '_elgg_river_enable');
+	$events->registerHandler('disable:after', 'all', '_elgg_river_disable', 600);
+	$events->registerHandler('enable:after', 'all', '_elgg_river_enable', 600);
 };

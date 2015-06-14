@@ -286,7 +286,7 @@ function _elgg_notifications_smtp_thread_headers($hook, $type, $returnvalue, $pa
  */
 function _elgg_notifications_init() {
 	elgg_register_plugin_hook_handler('cron', 'minute', '_elgg_notifications_cron', 100);
-	elgg_register_event_handler('all', 'all', '_elgg_enqueue_notification_event');
+	elgg_register_event_handler('all', 'all', '_elgg_enqueue_notification_event', 700);
 
 	// add email notifications
 	elgg_register_notification_method('email');

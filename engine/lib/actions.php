@@ -302,8 +302,8 @@ function actions_init() {
 
 	elgg_register_simplecache_view('js/languages/en');
 
-	elgg_register_plugin_hook_handler('action', 'all', 'ajax_action_hook');
-	elgg_register_plugin_hook_handler('forward', 'all', 'ajax_forward_hook');
+	elgg_register_plugin_hook_handler('action', 'all', 'ajax_action_hook', 600);
+	elgg_register_plugin_hook_handler('forward', 'all', 'ajax_forward_hook', 600);
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

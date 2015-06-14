@@ -27,8 +27,10 @@ class ElggInspector {
 		$tree = array();
 		$events = _elgg_services()->events->getAllHandlers();
 		foreach ($events as $event => $types) {
-			foreach ($types as $type => $handlers) {
-				$tree[$event . ',' . $type] = array_values($handlers);
+			foreach ($types as $type => $priorities) {
+				foreach ($priorities as $priority => $handlers) {
+					$tree[$event . ',' . $type] = array_values($handlers);
+				}
 			}
 		}
 
@@ -46,8 +48,10 @@ class ElggInspector {
 		$tree = array();
 		$hooks = _elgg_services()->hooks->getAllHandlers();
 		foreach ($hooks as $hook => $types) {
-			foreach ($types as $type => $handlers) {
-				$tree[$hook . ',' . $type] = array_values($handlers);
+			foreach ($types as $type => $priorities) {
+				foreach ($priorities as $priority => $handlers) {
+					$tree[$hook . ',' . $type] = array_values($handlers);
+				}
 			}
 		}
 
