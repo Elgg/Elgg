@@ -140,7 +140,8 @@ User hooks
 	Return boolean for if the string in ``$params['email']`` is valid for an email address.
 
 **register, user**
-	Triggered after user registers. Return false to delete the user.
+	Triggered by the ``register`` action after the user registers. Return ``false`` to delete the user.
+	Note the function ``register_user`` does *not* trigger this hook.
 
 **login:forward, user**
     Filters the URL to which the user will be forwarded after login.

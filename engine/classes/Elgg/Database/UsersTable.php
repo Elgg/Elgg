@@ -460,7 +460,7 @@ class UsersTable {
 	 */
 	function validateInviteCode($username, $code) {
 		// validate the format of the token created by ->generateInviteCode()
-		if (!preg_match('~^(\d+)\.(\w+)$~', $code, $m)) {
+		if (!preg_match('~^(\d+)\.([a-zA-Z0-9\-_]+)$~', $code, $m)) {
 			return false;
 		}
 		$time = $m[1];
