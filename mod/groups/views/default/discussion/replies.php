@@ -16,6 +16,7 @@ $replies = elgg_list_entities(array(
 	'container_guid' => $vars['topic']->getGUID(),
 	'reverse_order_by' => true,
 	'distinct' => false,
+	'url_fragment' => 'group-replies',
 ));
 
 echo $replies;
