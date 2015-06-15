@@ -63,7 +63,9 @@ elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
 elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTokenTimeout() * 333; ?>;
 elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->language); ?>';
 
-define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
+// We require jquery-ui because loading the file in an AMD environment doesn't automatically
+// apply its functionality to jQuery.
+define('elgg', ['jquery', 'languages/' + elgg.get_language(), 'jquery-ui'], function($, translations) {
 	elgg.add_translation(elgg.get_language(), translations);
 
 	$(function() {
