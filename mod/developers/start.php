@@ -224,7 +224,7 @@ function developers_theme_sandbox_controller($page) {
 	}
 	set_input('page', $page[0]);
 
-	echo elgg_view('resources/theme_sandbox');
+	echo elgg_view_resource('theme_sandbox');
 	return true;
 }
 

@@ -485,6 +485,37 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 }
 
 /**
+ * Render a resource view. Use this in your page handler to hand off page rendering to
+ * a view in "resources/". If not found in the current viewtype, we try the "default" viewtype.
+ *
+ * @param string $name The view name without the leading "resources/"
+ *
+ * @return string
+ * @throws SecurityException
+ */
+function elgg_view_resource($name) {
+	$view = "resources/$name";
+
+	if (elgg_view_exists($view)) {
+		return _elgg_services()->views->renderView($view);
+	}
+
+	if (elgg_get_viewtype() !== 'default' && elgg_view_exists($view, 'default')) {
+		return _elgg_services()->views->renderView($view, [], false, 'default');
+	}
+
+	_elgg_services()->logger->error("The view $view is missing.");
+
+	if (elgg_get_viewtype() === 'default') {
+		// only works for default viewtype
+		forward('', '404');
+	} else {
+		register_error(elgg_echo('error:404:content'));
+		forward('');
+	}
+}
+
+/**
  * Prepare the variables for the html head
  *
  * @param string $title Page title for <head>

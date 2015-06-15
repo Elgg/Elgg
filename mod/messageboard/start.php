@@ -59,20 +59,20 @@ function messageboard_page_handler($page) {
 				set_input('history_username', $username);
 			}
 
-			echo elgg_view('resources/messageboard/owner');
+			echo elgg_view_resource('messageboard/owner');
 			break;
 
 		case 'add':
 			$container_guid = elgg_extract(1, $page);
 			set_input('container_guid', $container_guid);
-			echo elgg_view('resources/messageboard/add');
+			echo elgg_view_resource('messageboard/add');
 			break;
 
 		case 'group':
 			elgg_group_gatekeeper();
 			$owner_guid = elgg_extract(1, $page);
 			set_input('page_owner_guid', $owner_guid);
-			echo elgg_view('resources/messageboard/owner');
+			echo elgg_view_resource('messageboard/owner');
 			break;
 
 		default:

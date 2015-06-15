@@ -49,7 +49,7 @@ function site_notifications_page_handler($segments) {
 
 	elgg_set_page_owner_guid($user->guid);
 
-	echo elgg_view('resources/site_notifications/view');
+	echo elgg_view_resource('site_notifications/view');
 
 	return true;
 }

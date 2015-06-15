@@ -1755,7 +1755,7 @@ function _elgg_is_valid_options_for_batch_operation($options, $type) {
  * @access private
  */
 function _elgg_walled_garden_index() {
-	echo elgg_view('resources/walled_garden');
+	echo elgg_view_resource('walled_garden');
 	return true;
 }
 

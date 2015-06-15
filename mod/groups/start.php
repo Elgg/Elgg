@@ -243,12 +243,12 @@ function groups_page_handler($page) {
 		case 'all':
 		case 'owner':
 		case 'search':
-			echo elgg_view("resources/groups/{$page[0]}");
+			echo elgg_view_resource("groups/{$page[0]}");
 			break;
 		case 'invitations':
 		case 'member':
 			set_input('username', $page[1]);
-			echo elgg_view("resources/groups/{$page[0]}");
+			echo elgg_view_resource("groups/{$page[0]}");
 			break;
 		case 'activity':
 		case 'edit':
@@ -257,7 +257,7 @@ function groups_page_handler($page) {
 		case 'profile':
 		case 'requests':
 			set_input('guid', $page[1]);
-			echo elgg_view("resources/groups/{$page[0]}");
+			echo elgg_view_resource("groups/{$page[0]}");
 			break;
 		default:
 			return false;
@@ -788,21 +788,21 @@ function discussion_page_handler($page) {
 
 	switch ($page[0]) {
 		case 'all':
-			echo elgg_view('resources/discussion/all');
+			echo elgg_view_resource('discussion/all');
 			break;
 		case 'owner':
 			set_input('owner_guid', elgg_extract(1, $page));
-			echo elgg_view('resources/discussion/owner');
+			echo elgg_view_resource('discussion/owner');
 			break;
 		case 'add':
 			set_input('guid', elgg_extract(1, $page));
-			echo elgg_view('resources/discussions/add');
+			echo elgg_view_resource('discussions/add');
 			break;
 		case 'reply':
 			switch (elgg_extract(1, $page)) {
 				case 'edit':
 					set_input('guid', elgg_extract(2, $page));
-					echo elgg_view('resources/discussion/reply/edit');
+					echo elgg_view_resource('discussion/reply/edit');
 					break;
 				case 'view':
 					discussion_redirect_to_reply(elgg_extract(2, $page), elgg_extract(3, $page));
@@ -813,11 +813,11 @@ function discussion_page_handler($page) {
 			break;
 		case 'edit':
 			set_input('guid', elgg_extract(1, $page));
-			echo elgg_view('resources/discussion/edit');
+			echo elgg_view_resource('discussion/edit');
 			break;
 		case 'view':
 			set_input('guid', elgg_extract(1, $page));
-			echo elgg_view('resources/discussion/view');
+			echo elgg_view_resource('discussion/view');
 			break;
 		default:
 			return false;

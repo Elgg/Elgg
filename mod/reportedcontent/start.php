@@ -67,11 +67,11 @@ function reportedcontent_page_handler($page) {
 	elgg_gatekeeper();
 
 	if (elgg_extract(0, $page) === 'add' && elgg_is_xhr()) {
-		echo elgg_view('resources/reportedcontent/add_form');
+		echo elgg_view_resource('reportedcontent/add_form');
 		return true;
 	}
 
-	echo elgg_view('resources/reportedcontent/add');
+	echo elgg_view_resource('reportedcontent/add');
 	return true;
 }
 

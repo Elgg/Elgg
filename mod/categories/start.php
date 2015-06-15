@@ -31,7 +31,7 @@ function categories_init() {
  * @return bool
  */
 function categories_page_handler() {
-	echo elgg_view('resources/categories/listing');
+	echo elgg_view_resource('categories/listing');
 	return true;
 }
 

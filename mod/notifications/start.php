@@ -56,10 +56,10 @@ function notifications_page_handler($page) {
 	// note: $user passed in
 	switch ($page[0]) {
 		case 'group':
-			echo elgg_view('resources/notifications/groups');
+			echo elgg_view_resource('notifications/groups');
 			break;
 		case 'personal':
-			echo elgg_view('resources/notifications/index');
+			echo elgg_view_resource('notifications/index');
 			break;
 		default:
 			return false;

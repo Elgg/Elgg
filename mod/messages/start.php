@@ -101,19 +101,19 @@ function messages_page_handler($page) {
 	switch ($page[0]) {
 		case 'inbox':
 			set_input('username', $page[1]);
-			echo elgg_view('resources/messages/inbox');
+			echo elgg_view_resource('messages/inbox');
 			break;
 		case 'sent':
 			set_input('username', $page[1]);
-			echo elgg_view('resources/messages/sent');
+			echo elgg_view_resource('messages/sent');
 			break;
 		case 'read':
 			set_input('guid', $page[1]);
-			echo elgg_view('resources/messages/read');
+			echo elgg_view_resource('messages/read');
 			break;
 		case 'compose':
 		case 'add':
-			echo elgg_view('resources/messages/send');
+			echo elgg_view_resource('messages/send');
 			break;
 		default:
 			return false;

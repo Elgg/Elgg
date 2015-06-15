@@ -117,38 +117,38 @@ function file_page_handler($page) {
 	switch ($page_type) {
 		case 'owner':
 			file_register_toggle();
-			echo elgg_view('resources/file/owner');
+			echo elgg_view_resource('file/owner');
 			break;
 		case 'friends':
 			file_register_toggle();
-			echo elgg_view('resources/file/friends');
+			echo elgg_view_resource('file/friends');
 			break;
 		case 'view':
 			set_input('guid', $page[1]);
-			echo elgg_view('resources/file/view');
+			echo elgg_view_resource('file/view');
 			break;
 		case 'add':
-			echo elgg_view('resources/file/upload');
+			echo elgg_view_resource('file/upload');
 			break;
 		case 'edit':
 			set_input('guid', $page[1]);
-			echo elgg_view('resources/file/edit');
+			echo elgg_view_resource('file/edit');
 			break;
 		case 'search':
 			file_register_toggle();
-			echo elgg_view('resources/file/search');
+			echo elgg_view_resource('file/search');
 			break;
 		case 'group':
 			file_register_toggle();
-			echo elgg_view('resources/file/owner');
+			echo elgg_view_resource('file/owner');
 			break;
 		case 'all':
 			file_register_toggle();
-			echo elgg_view('resources/file/world');
+			echo elgg_view_resource('file/world');
 			break;
 		case 'download':
 			set_input('guid', $page[1]);
-			echo elgg_view('resources/file/download');
+			echo elgg_view_resource('file/download');
 			break;
 		default:
 			return false;

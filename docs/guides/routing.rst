@@ -42,7 +42,7 @@ the request to a resource view.
 
             // use a view for the page logic to allow other plugins to easily change it
             set_input('guid', (int)elgg_extract(1, $segments));
-            echo elgg_view('resources/blog/view');
+            echo elgg_view_resource('blog/view');
 
             // in page handlers, return true says, "we've handled this request"
             return true;

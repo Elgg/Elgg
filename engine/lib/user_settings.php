@@ -366,17 +366,17 @@ function _elgg_user_settings_page_handler($page) {
 
 	switch ($page[0]) {
 		case 'statistics':
-			echo elgg_view('resources/settings/statistics');
+			echo elgg_view_resource('settings/statistics');
 			return true;
 		case 'plugins':
 			if (isset($page[2])) {
 				set_input("plugin_id", $page[2]);
-				echo elgg_view('resources/settings/tools');
+				echo elgg_view_resource('settings/tools');
 				return true;
 			}
 			break;
 		case 'user':
-			echo elgg_view("resources/settings/account");
+			echo elgg_view_resource("settings/account");
 			return true;
 	}
 

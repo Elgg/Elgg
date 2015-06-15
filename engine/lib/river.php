@@ -744,7 +744,7 @@ function _elgg_river_page_handler($page) {
 	}
 	set_input('page_type', $page_type);
 
-	echo elgg_view("resources/river");
+	echo elgg_view_resource("river");
 	return true;
 }
 

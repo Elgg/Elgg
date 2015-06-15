@@ -128,10 +128,10 @@ function _elgg_friends_page_handler($segments, $handler) {
 
 	switch ($handler) {
 		case 'friends':
-			echo elgg_view("resources/friends/index");
+			echo elgg_view_resource("friends/index");
 			break;
 		case 'friendsof':
-			echo elgg_view("resources/friends/of");
+			echo elgg_view_resource("friends/of");
 			break;
 		default:
 			return false;
@@ -155,19 +155,19 @@ function _elgg_collections_page_handler($page_elements) {
 			case 'add':
 				elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 				
-				echo elgg_view("resources/friends/collections/add");
+				echo elgg_view_resource("friends/collections/add");
 				return true;
 			case 'owner':
 				$user = get_user_by_username($page_elements[1]);
 				if ($user) {
 					elgg_set_page_owner_guid($user->getGUID());
 					
-					echo elgg_view("resources/friends/collections/view");
+					echo elgg_view_resource("friends/collections/view");
 					return true;
 				}
 				break;
 			case 'pickercallback':
-				echo elgg_view('resources/friends/collections/pickercallback');
+				echo elgg_view_resource('friends/collections/pickercallback');
 				return true;
 		}
 	}

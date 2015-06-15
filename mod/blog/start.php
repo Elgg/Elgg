@@ -106,35 +106,35 @@ function blog_page_handler($page) {
 		case 'owner':
 			set_input('username', $page[1]);
 			
-			echo elgg_view('resources/blog/owner');
+			echo elgg_view_resource('blog/owner');
 			break;
 		case 'friends':
 			set_input('username', $page[1]);
 			
-			echo elgg_view('resources/blog/friends');
+			echo elgg_view_resource('blog/friends');
 			break;
 		case 'archive':
 			set_input('username', $page[1]);
 			set_input('lower', $page[2]);
 			set_input('upper', $page[3]);
 			
-			echo elgg_view('resources/blog/archive');
+			echo elgg_view_resource('blog/archive');
 			break;
 		case 'view':
 			set_input('guid', $page[1]);
 			
-			echo elgg_view('resources/blog/view');
+			echo elgg_view_resource('blog/view');
 			break;
 		case 'add':
 			set_input('guid', $page[1]);
 			
-			echo elgg_view('resources/blog/add');
+			echo elgg_view_resource('blog/add');
 			break;
 		case 'edit':
 			set_input('guid', $page[1]);
 			set_input('revision', $page[2]);
 			
-			echo elgg_view('resources/blog/edit');
+			echo elgg_view_resource('blog/edit');
 			break;
 		case 'group':
 			set_input('group_guid', $page[1]);
@@ -142,10 +142,10 @@ function blog_page_handler($page) {
 			set_input('lower', $page[3]);
 			set_input('upper', $page[4]);
 			
-			echo elgg_view('resources/blog/group');
+			echo elgg_view_resource('blog/group');
 			break;
 		case 'all':
-			echo elgg_view('resources/blog/all');
+			echo elgg_view_resource('blog/all');
 			break;
 		default:
 			return false;

@@ -23,6 +23,6 @@ function tagcloud_init() {
  * @return bool
  */
 function tagcloud_tags_page_handler($page) {
-	echo elgg_view('resources/tagcloud');
+	echo elgg_view_resource('tagcloud');
 	return true;
 }
