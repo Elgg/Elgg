@@ -1,8 +1,6 @@
 <?php
 namespace Elgg\Structs;
 
-use Exception;
-
 /**
  * Uses native PHP array to implement the Collection interface.
  * 
