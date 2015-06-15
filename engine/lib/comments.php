@@ -16,6 +16,7 @@
 function _elgg_comments_init() {
 	elgg_register_entity_type('object', 'comment');
 	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_comment_setup_entity_menu', 900);
+	elgg_register_plugin_hook_handler('register', 'menu:entity', '_elgg_comments_entity_menu');
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
@@ -180,6 +181,44 @@ function _elgg_comment_url_handler($hook, $type, $return, $params) {
 }
 
 /**
+ * Add a link to the entity's comment section
+ *
+ * @param string          $hook   'register'
+ * @param string          $type   'menu:entity'
+ * @param \ElggMenuItem[] $return Array of \ElggMenuItem objects
+ * @param array           $params Array of view vars
+ *
+ * @return array
+ * @access private
+ */
+function _elgg_comments_entity_menu($hook, $type, $return, $params) {
+	
+	if (elgg_in_context('widgets')) {
+		return $return;
+	}
+
+	$entity = elgg_extract('entity', $params);
+	if (!($entity instanceof ElggEntity)) {
+		return $return;
+	}
+
+	if (!$entity->canComment()) {
+		return $return;
+	}
+	
+	$return[] = ElggMenuItem::factory(array(
+		'name' => 'comments',
+		'text' => elgg_view_icon('speech-bubble'),
+		'title' => elgg_echo('comments'),
+		'href' => "{$entity->getURL()}#comments",
+		'is_trusted' => true,
+		'priority' => 700
+	));
+
+	return $return;
+}
+
+/**
  * Allow users to comment on entities not owned by them.
  *
  * Object being commented on is used as the container of the comment so
@@ -206,7 +245,7 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 
 /**
  * By default, only authors can edit their comments.
- * 
+ *
  * @param string  $hook   'permissions_check'
  * @param string  $type   'object'
  * @param boolean $return Can the given user edit the given entity?
@@ -264,12 +303,12 @@ function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $
 
 /**
  * Update comment access to match that of the container
- * 
+ *
  * @param string     $event  'update:after'
  * @param string     $type   'all'
  * @param ElggEntity $entity The updated entity
  * @return bool
- * 
+ *
  * @access private
  */
 function _elgg_comments_access_sync($event, $type, $entity) {
