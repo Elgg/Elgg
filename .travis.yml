@@ -10,6 +10,11 @@ php:
 sudo: false
 
 
+# This helps builds go quicker on Travis since it enables caching of dependencies
+# http://docs.travis-ci.com/user/workers/container-based-infrastructure/
+sudo: false
+
+
 branches:
   except:
     - 1.0

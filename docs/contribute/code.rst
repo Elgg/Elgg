@@ -439,7 +439,8 @@ Miscellaneous
 
 For PHP requirements, see ``composer.json``.
 
-Do not use PHP shortcut tags (``<?`` or ``<?=`` or ``<%``).
+Do not use PHP shortcut tags ``<?`` or ``<%``.
+It is OK to use ``<?=`` since it is always enabled as of PHP 5.4.
 
 When creating strings with variables:
 
