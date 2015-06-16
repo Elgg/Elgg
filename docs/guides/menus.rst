@@ -79,7 +79,7 @@ Examples
 	/**
 	 * Change the URL of the "Albums" menu item in the owner_block menu
 	 */
-	function my_owner_block_menu_handler($hook, $type, $menu, $return) {
+	function my_owner_block_menu_handler($hook, $type, $menu, $params) {
 		$owner = $params['entity'];
 
 		// Owner can be either user or a group, so we
