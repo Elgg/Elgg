@@ -38,7 +38,7 @@ a.elgg-button {
 	text-shadow: 1px 1px 0px black;
 	text-decoration: none;
 	border: 1px solid #4690d6;
-	background: #4690d6 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
+	background: #4690d6 url(<?= elgg_get_simplecache_url("button_graduation.png"); ?>) repeat-x left 10px;
 }
 
 .elgg-button-submit:hover,
@@ -46,7 +46,7 @@ a.elgg-button {
 	border-color: #0054a7;
 	text-decoration: none;
 	color: white;
-	background: #0054a7 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
+	background: #0054a7 url(<?= elgg_get_simplecache_url("button_graduation.png"); ?>) repeat-x left 10px;
 }
 
 .elgg-button-submit.elgg-state-disabled {
@@ -58,7 +58,7 @@ a.elgg-button {
 /* Cancel: This button should convey a negative but easily reversible action (e.g., turning off a plugin) */
 .elgg-button-cancel {
 	color: #333;
-	background: #ddd url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
+	background: #ddd url(<?= elgg_get_simplecache_url("button_graduation.png"); ?>) repeat-x left 10px;
 	border: 1px solid #999;
 }
 .elgg-button-cancel:hover,
@@ -71,7 +71,7 @@ a.elgg-button {
 
 /* Action: This button should convey a normal, inconsequential action, such as clicking a link */
 .elgg-button-action {
-	background: #ccc url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif) repeat-x 0 0;
+	background: #ccc url(<?= elgg_get_simplecache_url("button_background.gif"); ?>) repeat-x 0 0;
 	border:1px solid #999;
 	color: #333;
 	padding: 2px 15px;
@@ -86,7 +86,7 @@ a.elgg-button {
 
 .elgg-button-action:hover,
 .elgg-button-action:focus {
-	background: #ccc url(<?php echo elgg_get_site_url(); ?>_graphics/button_background.gif) repeat-x 0 -15px;
+	background: #ccc url(<?= elgg_get_simplecache_url("button_background.gif"); ?>) repeat-x 0 -15px;
 	color: #111;
 	text-decoration: none;
 	border: 1px solid #999;
@@ -97,7 +97,7 @@ a.elgg-button {
 	color: #bbb;
 	text-decoration: none;
 	border: 1px solid #333;
-	background: #555 url(<?php echo elgg_get_site_url(); ?>_graphics/button_graduation.png) repeat-x left 10px;
+	background: #555 url(<?= elgg_get_simplecache_url("button_graduation.png"); ?>) repeat-x left 10px;
 	text-shadow: 1px 1px 0px black;
 }
 .elgg-button-delete:hover,

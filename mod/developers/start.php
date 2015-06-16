@@ -16,7 +16,7 @@ function developers_init() {
 
 	elgg_register_page_handler('theme_sandbox', 'developers_theme_sandbox_controller');
 	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
-	$sandbox_css = elgg_get_simplecache_url('css', 'theme_sandbox.css');
+	$sandbox_css = elgg_get_simplecache_url('css/theme_sandbox.css');
 	elgg_register_css('dev.theme_sandbox', $sandbox_css);
 
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
@@ -154,6 +154,10 @@ function developers_wrap_views($hook, $type, $result, $params) {
 	}
 
 	if (in_array($view, $excluded_views)) {
+		return;
+	}
+	
+	if ((new \SplFileInfo($view))->getExtension()) {
 		return;
 	}
 

@@ -160,7 +160,7 @@ In your PHP ``init, system`` event handler, you can use ``elgg_define_js()`` to 
 
     <?php
     elgg_define_js('underscore', [
-        'src' => elgg_get_simplecache_url('js', 'underscore.js'),
+        'src' => elgg_get_simplecache_url('js/underscore.js'),
     ]);
 
 .. note::
@@ -187,7 +187,7 @@ setting ``exports`` and optionally ``deps``:
 
     // set the path, define its dependencies, and what value it returns
     elgg_define_js('jquery.form', [
-        'src' => elgg_get_simplecache_url('js', 'jquery.form.js'),
+        'src' => elgg_get_simplecache_url('js/jquery.form.js'),
         'deps' => array('jquery'),
         'exports' => 'jQuery.fn.ajaxForm',
     ]);

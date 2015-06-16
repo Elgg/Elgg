@@ -28,22 +28,22 @@ $url = elgg_get_site_url();
 	height: 17px;
 }
 .elgg-walledgarden-double > .elgg-head {
-	background: url(<?php echo $url; ?>_graphics/walled_garden/two_column_top.png) no-repeat left top;
+	background: url(<?= elgg_get_simplecache_url("walled_garden/two_column_top.png"); ?>) no-repeat left top;
 }
 .elgg-walledgarden-double > .elgg-body {
-	background: url(<?php echo $url; ?>_graphics/walled_garden/two_column_middle.png) repeat-y left top;
+	background: url(<?= elgg_get_simplecache_url("walled_garden/two_column_middle.png"); ?>) repeat-y left top;
 }
 .elgg-walledgarden-double > .elgg-foot {
-	background: url(<?php echo $url; ?>_graphics/walled_garden/two_column_bottom.png) no-repeat left top;
+	background: url(<?= elgg_get_simplecache_url("walled_garden/two_column_bottom.png"); ?>) no-repeat left top;
 }
 .elgg-walledgarden-single > .elgg-head {
-	background: url(<?php echo $url; ?>_graphics/walled_garden/one_column_top.png) no-repeat left top;
+	background: url(<?= elgg_get_simplecache_url("walled_garden/one_column_top.png"); ?>) no-repeat left top;
 }
 .elgg-walledgarden-single > .elgg-body {
-	background: url(<?php echo $url; ?>_graphics/walled_garden/one_column_middle.png) repeat-y left top;
+	background: url(<?= elgg_get_simplecache_url("walled_garden/one_column_middle.png"); ?>) repeat-y left top;
 }
 .elgg-walledgarden-single > .elgg-foot {
-	background: url(<?php echo $url; ?>_graphics/walled_garden/one_column_bottom.png) no-repeat left top;
+	background: url(<?= elgg_get_simplecache_url("walled_garden/one_column_bottom.png"); ?>) no-repeat left top;
 }
 
 .elgg-col > .elgg-inner {

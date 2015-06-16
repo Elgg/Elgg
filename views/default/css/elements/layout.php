@@ -38,7 +38,7 @@
 
 /***** TOPBAR ******/
 .elgg-page-topbar {
-	background: #333333 url(<?php echo elgg_get_site_url(); ?>_graphics/toptoolbar_background.gif) repeat-x top left;
+	background: #333333 url(<?= elgg_get_simplecache_url("toptoolbar_background.gif"); ?>) repeat-x top left;
 	border-bottom: 1px solid #000000;
 	padding: 0 10px;
 	position: relative;
@@ -65,7 +65,7 @@
 .elgg-page-header {
 	padding: 0 10px;
 	position: relative;
-	background: #4690D6 url(<?php echo elgg_get_site_url(); ?>_graphics/header_shadow.png) repeat-x bottom left;
+	background: #4690D6 url(<?= elgg_get_simplecache_url("header_shadow.png"); ?>) repeat-x bottom left;
 }
 .elgg-page-header > .elgg-inner {
 	position: relative;
@@ -80,10 +80,10 @@
 	min-height: 360px;
 }
 .elgg-layout-one-sidebar {
-	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/sidebar_background.gif) repeat-y right top;
+	background: transparent url(<?= elgg_get_simplecache_url("sidebar_background.gif"); ?>) repeat-y right top;
 }
 .elgg-layout-two-sidebar {
-	background: transparent url(<?php echo elgg_get_site_url(); ?>_graphics/two_sidebar_background.gif) repeat-y right top;
+	background: transparent url(<?= elgg_get_simplecache_url("two_sidebar_background.gif"); ?>) repeat-y right top;
 }
 .elgg-layout-widgets > .elgg-widgets {
 	float: right;

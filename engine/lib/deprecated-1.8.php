@@ -3016,7 +3016,7 @@ function get_entity_icon_url(\ElggEntity $entity, $size = 'medium') {
 			return $overrideurl;
 		}
 
-		$url = "_graphics/icons/default/$size.png";
+		$url = elgg_get_simplecache_url("icons/default/$size.png");
 	}
 
 	return elgg_normalize_url($url);

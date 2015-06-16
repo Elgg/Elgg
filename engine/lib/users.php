@@ -451,7 +451,7 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
 	if (isset($user->icontime)) {
 		return "avatar/view/$user->username/$size/$user->icontime";
 	} else {
-		return "_graphics/icons/user/default{$size}.gif";
+		return elgg_get_simplecache_url("icons/user/default{$size}.gif");
 	}
 }
 

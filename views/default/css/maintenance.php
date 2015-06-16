@@ -63,13 +63,13 @@ p:last-child {
 	height: 17px;
 }
 .elgg-module-maintenance > .elgg-head {
-	background: url(<?php echo $url; ?>_graphics/walled_garden/one_column_top.png) no-repeat left top;
+	background: url(<?= elgg_get_simplecache_url("walled_garden/one_column_top.png"); ?>) no-repeat left top;
 }
 .elgg-module-maintenance > .elgg-body {
-	background: url(<?php echo $url; ?>_graphics/walled_garden/one_column_middle.png) repeat-y left top;
+	background: url(<?= elgg_get_simplecache_url("walled_garden/one_column_middle.png"); ?>) repeat-y left top;
 }
 .elgg-module-maintenance > .elgg-foot {
-	background: url(<?php echo $url; ?>_graphics/walled_garden/one_column_bottom.png) no-repeat left top;
+	background: url(<?= elgg_get_simplecache_url("walled_garden/one_column_bottom.png"); ?>) no-repeat left top;
 }
 .elgg-system-messages {
 	position: fixed;

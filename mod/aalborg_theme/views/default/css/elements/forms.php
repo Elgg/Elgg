@@ -202,16 +202,16 @@ select {
 	z-index: 1;
 }
 .friends-picker-navigation-l {
-	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat left top;
+	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat left top;
 }
 .friends-picker-navigation-r {
-	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat -60px top;
+	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat -60px top;
 }
 .friends-picker-navigation-l:hover {
-	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat left -44px;
+	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat left -44px;
 }
 .friends-picker-navigation-r:hover {
-	background: url("<?php echo elgg_get_site_url(); ?>_graphics/friendspicker.png") no-repeat -60px -44px;
+	background: url("<?= elgg_get_simplecache_url("friendspicker.png"); ?>") no-repeat -60px -44px;
 }
 .friendspicker-savebuttons .elgg-button-submit,
 .friendspicker-savebuttons .elgg-button-cancel {

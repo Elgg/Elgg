@@ -100,57 +100,34 @@ function elgg_register_simplecache_view($view_name) {
 }
 
 /**
- * Get the URL for the cached file
+ * Get the URL for the cached view.
  * 
+ * Recommended usage is to just pass the entire view name as the first and only arg:
+ *
+ * ```
+ * $blog_js = elgg_get_simplecache_url('js/blog/save_draft.js');
+ * $favicon = elgg_get_simplecache_url('favicon.ico');
+ * ```
+ * 
+ * For backwards compatibility with older versions of Elgg, this function supports
+ * "js" or "css" as the first arg, with the rest of the view name as the second arg:
+ *
+ * ```
+ * $blog_js = elgg_get_simplecache_url('js', 'blog/save_draft.js');
+ * ```
+ * 
+ * Note that with this older approach, there is no way to access cached views
+ * outside of the js/ or css/ folders.
+ *
  * This automatically registers the view with Elgg's simplecache.
  * 
- * @example
- * 		$blog_js = elgg_get_simplecache_url('js', 'blog/save_draft');
- *		elgg_register_js('elgg.blog', $blog_js);
- *		elgg_load_js('elgg.blog');
- *
- * @param string $type The file type: css or js
- * @param string $view The view name after css/ or js/
+ * @param string $view    The full view name
+ * @param string $subview If the first arg is "css" or "js", the rest of the view name
  * @return string
  * @since 1.8.0
  */
-function elgg_get_simplecache_url($type, $view) {
-	return _elgg_services()->simpleCache->getUrl($type, $view);
-}
-
-
-/**
- * Get the base url for simple cache requests
- * 
- * @return string The simplecache root url for the current viewtype.
- * @access private
- */
-function _elgg_get_simplecache_root() {
-	return _elgg_services()->simpleCache->getRoot();
-}
-
-/**
- * Returns the type of output expected from the view.
- * 
- * css/* views always return "css"
- * js/* views always return "js"
- *
- * @todo why isn't this in the CacheHandler class? It is not used anywhere else.
- * 
- * @todo view/name.suffix returns "suffix"
- * 
- * Otherwise, returns "unknown"
- *
- * @param string $view The view name
- * @return string
- * @access private
- */
-function _elgg_get_view_filetype($view) {
-	if (preg_match('~(?:^|/)(css|js)(?:$|/)~', $view, $m)) {
-		return $m[1];
-	} else {
-		return 'unknown';
-	}
+function elgg_get_simplecache_url($view, $subview = '') {
+	return _elgg_services()->simpleCache->getUrl($view, $subview);
 }
 
 /**

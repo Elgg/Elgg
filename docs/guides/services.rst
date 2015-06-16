@@ -23,7 +23,7 @@ burden of supporting older Elgg versions, we encourage you to continue using the
 Service: config
 ---------------
 
-An instance of ``Elgg\Services\ConfigInterface``, this is for getting and setting various system
+An instance of ``Elgg\Services\Config``, this is for getting and setting various system
 configuration values.
 
 .. note::

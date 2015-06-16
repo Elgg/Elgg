@@ -82,4 +82,4 @@ if ($data_root) {
 // something went wrong so load engine and try to forward to default icon
 $app->bootCore();
 elgg_log("Profile icon direct failed.", "WARNING");
-forward("_graphics/icons/user/default{$size}.gif");
+forward(elgg_get_simplecache_url("icons/user/default{$size}.gif"));

@@ -528,43 +528,43 @@ function _elgg_views_prepare_head($title) {
 	);
 	$params['links']['apple-touch-icon'] = array(
 		'rel' => 'apple-touch-icon',
-		'href' => elgg_normalize_url('_graphics/favicon-128.png'),
+		'href' => elgg_get_simplecache_url('favicon-128.png'),
 	);
 
 	// favicons
 	$params['links']['icon-ico'] = array(
 		'rel' => 'icon',
-		'href' => elgg_normalize_url('_graphics/favicon.ico'),
+		'href' => elgg_get_simplecache_url('favicon.ico'),
 	);
 	$params['links']['icon-vector'] = array(
 		'rel' => 'icon',
 		'sizes' => '16x16 32x32 48x48 64x64 128x128',
 		'type' => 'image/svg+xml',
-		'href' => elgg_normalize_url('_graphics/favicon.svg'),
+		'href' => elgg_get_simplecache_url('favicon.svg'),
 	);
 	$params['links']['icon-16'] = array(
 		'rel' => 'icon',
 		'sizes' => '16x16',
 		'type' => 'image/png',
-		'href' => elgg_normalize_url('_graphics/favicon-16.png'),
+		'href' => elgg_get_simplecache_url('favicon-16.png'),
 	);
 	$params['links']['icon-32'] = array(
 		'rel' => 'icon',
 		'sizes' => '32x32',
 		'type' => 'image/png',
-		'href' => elgg_normalize_url('_graphics/favicon-32.png'),
+		'href' => elgg_get_simplecache_url('favicon-32.png'),
 	);
 	$params['links']['icon-64'] = array(
 		'rel' => 'icon',
 		'sizes' => '64x64',
 		'type' => 'image/png',
-		'href' => elgg_normalize_url('_graphics/favicon-64.png'),
+		'href' => elgg_get_simplecache_url('favicon-64.png'),
 	);
 	$params['links']['icon-128'] = array(
 		'rel' => 'icon',
 		'sizes' => '128x128',
 		'type' => 'image/png',
-		'href' => elgg_normalize_url('_graphics/favicon-128.png'),
+		'href' => elgg_get_simplecache_url('favicon-128.png'),
 	);
 
 	// RSS feed link
@@ -1593,21 +1593,17 @@ function _elgg_views_send_header_x_frame_options() {
 function elgg_views_boot() {
 	global $CONFIG;
 
-	elgg_register_simplecache_view('js/jquery.js');
 	elgg_register_simplecache_view('js/jquery.min.map');
 	elgg_register_simplecache_view('js/jquery.form.js');
-	elgg_register_simplecache_view('js/jquery-migrate.js');
-	elgg_register_simplecache_view('js/jquery-ui.js');
-	elgg_register_simplecache_view('js/require.js');
 	elgg_register_simplecache_view('js/sprintf.js');
 	elgg_register_simplecache_view('js/text.js');
 
-	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('js', 'elgg/require_config'), 'head');
-	elgg_register_js('require', elgg_get_simplecache_url('js', 'require.js'), 'head');
-	elgg_register_js('jquery', elgg_get_simplecache_url('js', 'jquery.js'), 'head');
-	elgg_register_js('jquery-migrate', elgg_get_simplecache_url('js', 'jquery-migrate.js'), 'head');
-	elgg_register_js('jquery-ui', elgg_get_simplecache_url('js', 'jquery.ui.js'), 'head');
-	elgg_register_js('elgg', elgg_get_simplecache_url('js', 'elgg'), 'head');
+	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('js/elgg/require_config'), 'head');
+	elgg_register_js('require', elgg_get_simplecache_url('js/require.js'), 'head');
+	elgg_register_js('jquery', elgg_get_simplecache_url('js/jquery.js'), 'head');
+	elgg_register_js('jquery-migrate', elgg_get_simplecache_url('js/jquery-migrate.js'), 'head');
+	elgg_register_js('jquery-ui', elgg_get_simplecache_url('js/jquery.ui.js'), 'head');
+	elgg_register_js('elgg', elgg_get_simplecache_url('js/elgg'), 'head');
 
 	elgg_load_js('elgg.require_config');
 	elgg_load_js('require');
@@ -1616,12 +1612,12 @@ function elgg_views_boot() {
 	elgg_load_js('jquery-ui');
 	elgg_load_js('elgg');
 
-	$lightbox_js_url = elgg_get_simplecache_url('js', 'lightbox');
+	$lightbox_js_url = elgg_get_simplecache_url('js/lightbox');
 	elgg_register_js('lightbox', $lightbox_js_url);
 
 	elgg_register_css('lightbox', 'vendors/elgg-colorbox-theme/colorbox.css');
 
-	$elgg_css_url = elgg_get_simplecache_url('css', 'elgg');
+	$elgg_css_url = elgg_get_simplecache_url('css/elgg');
 	elgg_register_css('elgg', $elgg_css_url);
 
 	elgg_load_css('elgg');
