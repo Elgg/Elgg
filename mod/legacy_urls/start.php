@@ -295,7 +295,8 @@ function legacy_urls_file_forward($hook, $type, $result) {
 /**
  * Groups forwarder
  * /groups/<guid>
- * 
+ * /groups/forum/<guid>
+ *
  * @param $hook   string "route"
  * @param $type   string "groups"
  * @param $result mixed  Old identifier and segments
@@ -314,6 +315,12 @@ function legacy_urls_groups_forward($hook, $type, $result) {
 			legacy_urls_redirect(legacy_urls_prepare_url($group->getURL()));
 			return false;
 		}
+	}
+
+	if ($page[0] == 'forum') {
+		$url = "discussion/owner/{$page[1]}";
+		legacy_urls_redirect(legacy_urls_prepare_url($url));
+		return false;
 	}
 }
 
