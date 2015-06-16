@@ -77,6 +77,10 @@ function legacy_urls_prepare_url($url, array $query_vars = array()) {
 	}
 	$params = array_merge($params, $query_vars);
 	if ($params) {
+		if (!empty($params['__elgg_uri'])) {
+			// on multiple redirects, __elgg_uri is appended to the URL causing infinite loops #8494
+			unset($params['__elgg_uri']);
+		}
 		return elgg_http_add_url_query_elements($url, $params);		
 	} else {
 		return $url;
