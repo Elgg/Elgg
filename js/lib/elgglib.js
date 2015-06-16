@@ -178,40 +178,6 @@ elgg.require = function(pkg) {
 };
 
 /**
- * Generate the skeleton for a package.
- *
- * <pre>
- * elgg.provide('elgg.package.subpackage');
- * </pre>
- *
- * is equivalent to
- *
- * <pre>
- * elgg = elgg || {};
- * elgg.package = elgg.package || {};
- * elgg.package.subpackage = elgg.package.subpackage || {};
- * </pre>
- *
- * @example elgg.provide('elgg.config.translations')
- *
- * @param {string} pkg The package name.
- */
-elgg.provide = function(pkg, opt_context) {
-	elgg.assertTypeOf('string', pkg);
-
-	var parts = pkg.split('.'),
-		context = opt_context || elgg.global,
-		part, i;
-
-
-	for (i = 0; i < parts.length; i += 1) {
-		part = parts[i];
-		context[part] = context[part] || {};
-		context = context[part];
-	}
-};
-
-/**
  * Inherit the prototype methods from one constructor into another.
  *
  * @example
