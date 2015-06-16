@@ -127,7 +127,7 @@ Examples
 
 		// We want to modify only the ElggBlog objects, so we
 		// return immediately if the entity is something else
-		if (!$entity intanceof ElggBlog) {
+		if (!$entity instanceof ElggBlog) {
 			return $menu;
 		}
 
