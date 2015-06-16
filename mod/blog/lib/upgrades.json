@@ -1,0 +1,14 @@
+[
+	{
+		"title": "Blog upgrade",
+		"description": "Lorem ipsum dolor sit amet",
+		"date": 2015052200,
+		"class": "Blog\\Upgrades\\FancyBlogUpgrade2015061700"
+	},
+	{
+		"title": "Another blog upgrade",
+		"description": "Lorem ipsum dolor sit amet",
+		"date": 2015052201,
+		"class": "Blog\\Upgrades\\Bar"
+	}
+]
