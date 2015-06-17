@@ -154,13 +154,13 @@ class View {
 		$content = '';
 		
 		foreach ($this->prepends as $extension) {
-			$content .= $extension->render($vars, $viewtype);
+			$content .= $extension->renderContent($vars, $viewtype);
 		}
 		
 		$content .= $this->renderContent($vars, $viewtype);
 		
 		foreach ($this->appends as $extension) {
-			$content .= $extension->render($vars, $viewtype);
+			$content .= $extension->renderContent($vars, $viewtype);
 		}
 		
 		return $content;
