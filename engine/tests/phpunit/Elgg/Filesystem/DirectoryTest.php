@@ -1,9 +1,7 @@
 <?php
 namespace Elgg\Filesystem;
 
-use PHPUnit_Framework_TestCase as TestCase;
-
-abstract class DirectoryTest extends TestCase {
+abstract class DirectoryTest extends \PHPUnit_Framework_TestCase {
 
     /**
      * Returns an array of one-element arrays. Those elements should
@@ -12,37 +10,40 @@ abstract class DirectoryTest extends TestCase {
      * @return array
      */
     abstract public function emptyDirectoryProvider();
-    
+
 	/**
 	 * @dataProvider emptyDirectoryProvider
 	 */
-	public function testCanRecursivelyListAllFilesInTheDirectory(Directory $directory) {
+	public function testListFilesAndDirsInTheDirectory(Directory $directory) {
 		$directory->putContents('/foo/bar/bar.php', 'bar');
 		$directory->putContents('/foo/baz/baz.php', 'baz');
 		$directory->putContents('/foo/foo.php', 'foo');
 		$directory->putContents('/qux.php', 'qux');
-		
+
 		$this->assertEquals(4, count($directory->getFiles()));
+		$this->assertEquals(1, count($directory->getFiles('', false)));
+
+		$this->assertEquals(3, count($directory->getDirectories()));
+		$this->assertEquals(1, count($directory->getDirectories('', false)));
 	}
 	
 	/**
 	 * @dataProvider emptyDirectoryProvider
 	 */
-	public function testCanRecursivelyListAllFilesAtAGivenSubdir(Directory $directory) {
+	public function testListFilesAndDirsInASubdirectory(Directory $directory) {
 		$directory->putContents('/foo/bar/bar.php', 'bar');
 		$directory->putContents('/foo/baz/baz.php', 'baz');
+		$directory->putContents('/foo/baz/bing/foo.php', 'foo');
 		$directory->putContents('/foo/foo.php', 'foo');
 		$directory->putContents('/qux.php', 'qux');
-		
-		$this->assertEquals(3, count($directory->getFiles('/foo/')));
-		$this->assertEquals(3, count($directory->getFiles('/foo')));
-		$this->assertEquals(3, count($directory->getFiles('foo/')));
-		$this->assertEquals(3, count($directory->getFiles('foo')));
 
-		$this->assertEquals(1, count($directory->getFiles('/foo/bar/')));
-		$this->assertEquals(1, count($directory->getFiles('/foo/bar')));
-		$this->assertEquals(1, count($directory->getFiles('foo/bar/')));
-		$this->assertEquals(1, count($directory->getFiles('foo/bar')));
+		foreach (['foo', '/foo', 'foo/', '/foo/'] as $path) {
+			$this->assertEquals(4, count($directory->getFiles($path)));
+			$this->assertEquals(1, count($directory->getFiles($path, false)));
+
+			$this->assertEquals(3, count($directory->getDirectories($path)));
+			$this->assertEquals(2, count($directory->getDirectories($path, false)));
+		}
 	}
 	
 	/**
@@ -75,26 +76,49 @@ abstract class DirectoryTest extends TestCase {
 	/**
 	 * @dataProvider emptyDirectoryProvider
 	 */
-	public function testCannotChrootOutsideItself(Directory $directory) {
-		$directory->putContents('/foo/bar.php', 'bar');
-		$directory->putContents('/baz.php', 'baz');
-		
-		$directory->chroot('foo')->chroot('..');
-		
-		// TODO: Expect to throw exception? Silently cap at existing root?
-		$this->markTestIncomplete();
+	public function testPathsCannotContainDots(Directory $directory) {
+		$funcs = [
+			function () use ($directory) { $directory->chroot('.'); },
+			function () use ($directory) { $directory->chroot('..'); },
+			function () use ($directory) { $directory->getFile('.'); },
+			function () use ($directory) { $directory->getFile('..'); },
+		];
+
+		foreach ($funcs as $i => $f) {
+			try {
+				$f();
+				$this->fail("A path was allowed to contain . or .. in function #$i");
+			} catch (\InvalidArgumentException $e) {
+
+			}
+		}
 	}
-	
+
 	/**
 	 * @dataProvider emptyDirectoryProvider
 	 */
-	public function testCannotGetFileOutsideItself(Directory $directory) {
+	public function testCanGetFileInsideItself(Directory $directory) {
 		$directory->putContents('/foo/bar.php', 'bar');
-		$directory->putContents('/baz.php', 'baz');
-		
-		// TODO: Throw exception?
-		$file = $directory->chroot('foo')->getFile('../baz.php');
-		
-		$this->assertNotEquals('baz', $file->getContents());
+
+		$file = $directory->chroot('foo')->getFile('bar.php');
+
+		$this->assertInstanceOf(File::class, $file);
+
+		$this->assertEquals('bar', $file->getContents());
+	}
+
+	/**
+	 * @dataProvider emptyDirectoryProvider
+	 */
+	public function testCanGetDirectoryInsideItself(Directory $directory) {
+		$directory->putContents('/foo/bar/bang.php', 'bang');
+		$directory->putContents('/foo/boom/bang.php', 'bang');
+
+		$dirs = $directory->getDirectories('foo');
+		$this->assertCount(2, $dirs);
+		foreach ($dirs as $dir) {
+			$this->assertInstanceOf(Directory::class, $dir);
+			$this->assertEquals('bang', $dir->getFile('bang.php')->getContents());
+		}
 	}
 }

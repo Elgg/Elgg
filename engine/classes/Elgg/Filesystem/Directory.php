@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\Filesystem;
 
+use Elgg\Structs\Collection;
+
 /**
  * A simple directory abstraction.
  * 
@@ -16,6 +18,8 @@ interface Directory {
 	 * @param string $path The path relative to this directory to chroot to.
 	 * 
 	 * @return Directory A new directory instance.
+	 *
+	 * @throws \InvalidArgumentException
 	 */
 	public function chroot($path);
 
@@ -25,6 +29,8 @@ interface Directory {
 	 * @param string $path The directory-relative path to the target file.
 	 * 
 	 * @return string Empty string if the file doesn't exist.
+	 *
+	 * @throws \InvalidArgumentException
 	 */
 	public function getContents($path);
 	
@@ -36,17 +42,34 @@ interface Directory {
 	 * @param string $path The path to the file, relative to this directory.
 	 * 
 	 * @return File
+	 *
+	 * @throws \InvalidArgumentException
 	 */
 	public function getFile($path);
 	
 	/**
-	 * Recursively list the files in the given directory path.
+	 * List the files in the given directory path.
 	 * 
-	 * @param string $path The subdirectory path within this directory
+	 * @param string $path      The subdirectory path within this directory
+	 * @param bool   $recursive Find files recursively
 	 * 
 	 * @return Collection<File>
+	 *
+	 * @throws \InvalidArgumentException
 	 */
-	public function getFiles($path = '');
+	public function getFiles($path = '', $recursive = true);
+
+	/**
+	 * List the directories in the given directory path.
+	 *
+	 * @param string $path      The subdirectory path within this directory
+	 * @param bool   $recursive Find directories recursively
+	 *
+	 * @return Collection<Directory>
+	 *
+	 * @throws \InvalidArgumentException
+	 */
+	public function getDirectories($path = '', $recursive = true);
 
 	/**
 	 * Do a PHP include of the file and return the result.
@@ -56,6 +79,8 @@ interface Directory {
 	 * @param string $path Filesystem-relative path for the file to include.
 	 * 
 	 * @return mixed
+	 *
+	 * @throws \InvalidArgumentException
 	 */
 	public function includeFile($path);
 	
@@ -65,6 +90,8 @@ interface Directory {
 	 * @param string $path The relative path within this directory
 	 * 
 	 * @return boolean
+	 *
+	 * @throws \InvalidArgumentException
 	 */
 	public function isFile($path);
 	
@@ -75,6 +102,8 @@ interface Directory {
 	 * @param string $content The literal text content of the file.
 	 * 
 	 * @return void
+	 *
+	 * @throws \InvalidArgumentException
 	 */
 	public function putContents($path, $content);
 }

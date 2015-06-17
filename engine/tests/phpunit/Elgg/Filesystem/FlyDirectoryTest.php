@@ -1,12 +1,11 @@
 <?php
 namespace Elgg\Filesystem;
 
-class GaufretteDirectoryTest extends DirectoryTest {
+class FlyDirectoryTest extends DirectoryTest {
 	
 	public function emptyDirectoryProvider() {
 		return [
-			[GaufretteDirectory::createInMemory()],	
+			[FlyDirectory::createInMemory()],
 		];
 	}
-	
 }
