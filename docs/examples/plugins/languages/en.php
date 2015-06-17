@@ -17,8 +17,6 @@
  * the language's ISO 639-1 code: http://en.wikipedia.org/wiki/List_of_ISO_639-1_codes
  */
 
-$mapping = array(
+return [
 	'string:here' => 'Display string here',
-);
-
-add_translation('en', $mapping);
+];
