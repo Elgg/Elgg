@@ -65,7 +65,7 @@ elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->l
 
 // We require jquery-ui because loading the file in an AMD environment doesn't automatically
 // apply its functionality to jQuery.
-define('elgg', ['jquery', 'languages/' + elgg.get_language(), 'jquery-ui'], function($, translations) {
+define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
 	elgg.add_translation(elgg.get_language(), translations);
 
 	$(function() {

@@ -68,15 +68,15 @@ class ElggInspector {
 	public function getViews() {
 		global $CONFIG;
 
-		$coreViews = $this->recurseFileTree($CONFIG->viewpath . "default/");
+		$coreViews = $this->recurseFileTree($CONFIG->view_path . "default/");
 
 		// remove base path and php extension
-		array_walk($coreViews, create_function('&$v,$k', 'global $CONFIG; $v = substr($v, strlen($CONFIG->viewpath . "default/"), -4);'));
+		array_walk($coreViews, create_function('&$v,$k', 'global $CONFIG; $v = substr($v, strlen($CONFIG->view_path . "default/"), -4);'));
 
 		// setup views array before adding extensions and plugin views
 		$views = array();
 		foreach ($coreViews as $view) {
-			$views[$view] = array($CONFIG->viewpath . "default/" . $view . ".php");
+			$views[$view] = array($CONFIG->view_path . "default/" . $view . ".php");
 		}
 
 		// add plugins and handle overrides

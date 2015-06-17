@@ -22,21 +22,21 @@
 */
 #cboxOverlay{background:#fff;}
 #colorbox{outline:0;}
-    #cboxTopLeft{width:25px; height:25px; background:url(images/border1.png) no-repeat 0 0;}
-    #cboxTopCenter{height:25px; background:url(images/border1.png) repeat-x 0 -50px;}
-    #cboxTopRight{width:25px; height:25px; background:url(images/border1.png) no-repeat -25px 0;}
-    #cboxBottomLeft{width:25px; height:25px; background:url(images/border1.png) no-repeat 0 -25px;}
-    #cboxBottomCenter{height:25px; background:url(images/border1.png) repeat-x 0 -75px;}
-    #cboxBottomRight{width:25px; height:25px; background:url(images/border1.png) no-repeat -25px -25px;}
-    #cboxMiddleLeft{width:25px; background:url(images/border2.png) repeat-y 0 0;}
-    #cboxMiddleRight{width:25px; background:url(images/border2.png) repeat-y -25px 0;}
+    #cboxTopLeft{width:25px; height:25px; background:url(colorbox-images/border1.png) no-repeat 0 0;}
+    #cboxTopCenter{height:25px; background:url(colorbox-images/border1.png) repeat-x 0 -50px;}
+    #cboxTopRight{width:25px; height:25px; background:url(colorbox-images/border1.png) no-repeat -25px 0;}
+    #cboxBottomLeft{width:25px; height:25px; background:url(colorbox-images/border1.png) no-repeat 0 -25px;}
+    #cboxBottomCenter{height:25px; background:url(colorbox-images/border1.png) repeat-x 0 -75px;}
+    #cboxBottomRight{width:25px; height:25px; background:url(colorbox-images/border1.png) no-repeat -25px -25px;}
+    #cboxMiddleLeft{width:25px; background:url(colorbox-images/border2.png) repeat-y 0 0;}
+    #cboxMiddleRight{width:25px; background:url(colorbox-images/border2.png) repeat-y -25px 0;}
     #cboxContent{background:#fff; overflow:hidden;}
         .cboxIframe{background:#fff;}
         #cboxError{padding:50px; border:1px solid #ccc;}
         #cboxLoadedContent{margin-bottom:20px; padding: 20px;}
         #cboxTitle{position:absolute; bottom:0px; left:0; text-align:center; width:100%; color:#999;}
         #cboxCurrent{position:absolute; bottom:0px; left:100px; color:#999;}
-        #cboxLoadingOverlay{background:#fff url(images/loading.gif) no-repeat center center;}
+        #cboxLoadingOverlay{background:#fff url(colorbox-images/loading.gif) no-repeat center center;}
 
         /* these elements are buttons, and may need to have additional styles reset to avoid unwanted base styles */
         #cboxPrevious, #cboxNext, #cboxSlideshow, #cboxClose {border:0; padding:0; margin:0; overflow:visible; width:auto; background:none; }

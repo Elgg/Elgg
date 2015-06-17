@@ -849,7 +849,7 @@ class ElggInstaller {
 		$this->CONFIG->wwwroot = $this->getBaseUrl();
 		$this->CONFIG->url = $this->CONFIG->wwwroot;
 		$this->CONFIG->path = "{$this->getElggRoot()}/";
-		$this->CONFIG->viewpath =	$this->CONFIG->path . 'views/';
+		$this->CONFIG->view_path =	$this->CONFIG->path . 'views/';
 		$this->CONFIG->pluginspath = $this->CONFIG->path . 'mod/';
 		$this->CONFIG->context = array();
 		$this->CONFIG->entity_types = array('group', 'object', 'site', 'user');

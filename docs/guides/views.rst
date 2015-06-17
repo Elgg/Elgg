@@ -8,14 +8,17 @@ Views
 Introduction
 ============
 
-Elgg follows a MVC pattern and Views are the V in MVC. Views are responsible for creating the output. Generally, this will be HTML sent to a web browser, but it could also be RSS, JSON or any number of other data formats. 
+Views are responsible for creating output. They handle everything from:
 
-The Views system handles everything from the layout of pages and chunks of presentation output (like a footer or a toolbar) down to individual links and form inputs. It also allows for advanced features like automatic RSS generation, a swift-to-develop mobile interface, and the alternative interfaces suggested below.
+ * the layout of pages
+ * chunks of presentation output (like a footer or a toolbar)
+ * individual links and form inputs.
+ * the images, js, and css needed by your web page
 
 Using views
 ===========
 
-At their most basic level, the default views are just PHP files with snippets of html. For example:
+At their most basic level, the default views are just PHP files with snippets of html:
 
 .. code-block:: html
 
@@ -27,28 +30,32 @@ Assuming this view is located at ``/views/default/hello.php``, we could output i
 
     echo elgg_view('hello');
 
-For your convenience, Elgg comes with quite a lot of views by default. In order to keep things manageable, they are organized into subdirectories. Elgg handles this situation quite nicely. For example, our simple view might live in ``/views/default/hello/world.php``, in which case it would be called like so:
+For your convenience, Elgg comes with quite a lot of views by default.
+In order to keep things manageable, they are organized into subdirectories.
+Elgg handles this situation quite nicely. For example, our simple view might live in
+``/views/default/hello/world.php``, in which case it would be called like so:
 
 .. code-block:: php
 
     echo elgg_view('hello/world');
 
-Well that's easy enough to remember! The name of the view simply reflects the location of the view in the views directory.
+The name of the view simply reflects the location of the view in the views directory.
 
 Views as templates
 ==================
 
-Views would be pretty useless if they could only contain static information. Fortunately, you can pass arbitrary data to a view via the ``$vars`` array. Our ``hello/world`` view might be modified to accept a variable like so:
+You can pass arbitrary data to a view via the ``$vars`` array.
+Our ``hello/world`` view might be modified to accept a variable like so:
 
-.. code-block:: php
+.. code-block:: html+php
 
-    <h1>Hello, <?php echo $vars['name']; ?>!</h1>
+    <h1>Hello, <?= $vars['name']; ?>!</h1>
 
 In this case, we can pass an arbitrary name parameter to the view like so:
 
 .. code-block:: php
-
-    echo elgg_view('hello/world', array('name' => 'World'));
+    
+    echo elgg_view('hello/world', ['name' => 'World']);
 
 which would produce the following output:
 
@@ -56,34 +63,148 @@ which would produce the following output:
 
     <h1>Hello, World!</h1>
 
+.. warning::
+
+    Views don't do any kind of automatic output sanitization by default.
+    You are responsible for doing the correct sanitization yourself
+    to prevent XSS attacks and the like.
+
+Views as cacheable assets
+=========================
+
+As mentioned before, views can contain JS, CSS, or even images.
+Cacheable views *cannot* take any ``$vars`` parameters. They also must not change
+their output based on who is logged in, the time of day, etc. The simplest way
+to make sure your view meets the requirements for cacheable views is to just avoid
+using any PHP in them.
+
+For example, suppose you wanted to load some CSS on a page.
+You could define a view ``mystyles.css``, which would look like so:
+
+.. code-block:: css
+
+    /* /views/default/mystyles.css */
+    .mystyles-foo {
+      background: red;
+    }
+
+.. note::
+
+    Leave off the trailing ".php" from the filename and Elgg will automatically
+    recognize the view as cacheable.
+
+To get a URL to this file, you would use ``elgg_get_simplecache_url``:
+
+.. code-block:: php
+
+    // Returns "https://mysite.com/.../289124335/default/mystyles.css
+    elgg_get_simplecache_url('mystyles.css'); 
+
+Elgg automatically adds the magic numbers you see there for cache-busting and
+sets long-term expires headers on the returned file.
+
+.. warning::
+
+    Elgg may decide to change the location or structure of the returned URL in a
+    future release for whatever reason, and the cache-busting numbers change
+    every time you flush Elgg's caches, so the exact URL is not stable by design.
+    
+    With that in mind, here's a couple anti-patterns to avoid:
+    
+     * Don't rely on the exact structure/location of this URL
+     * Don't try to generate the URLs yourself
+     * Don't store the returned URLs in a database
+
+In your plugin's init function, register the css file:
+
+.. code-block:: php
+
+    elgg_register_css('mystyles', elgg_get_simplecache_url('mystyles.css'));
+
+Then on the page you want to load the css, call:
+
+.. code-block:: php
+
+    elgg_load_css('mystyles');
+
 .. _guides/views#viewtypes:
+
+
+Views and third-party assets
+============================
+
+The best way to serve third-party assets is through views. However, instead of manually copy/pasting
+the assets into the right location in ``/views/*``, you can use a ``views.php`` file in your plugin's
+directory to map the assets into the views system.
+
+A views file must return a 2 dimensional array. The first level maps a viewtype to a list of view
+mappings. The secondary lists map view names to file paths, either absolute or relative to the Elgg root directory.
+
+If you check your assets into source control, point to them like this:
+
+.. code-block:: php
+
+    <?php // mod/example/views.php
+    return [
+        // viewtype
+        'default' => [
+            // view => /path/from/filesystem/root
+            'js/jquery-ui.js' => __DIR__ . '/bower_components/jquery-ui/jquery-ui.min.js',
+        ],
+    ];
+
+To point to assets installed with ``fxp/composer-asset-plugin``, use install-root-relative
+paths by leaving off the leading slash:
+
+.. code-block:: php
+
+    <?php // mod/example/views.php
+    return [
+        // viewtype
+        'default' => [
+            // view => path/from/install/root
+            'js/jquery-ui.js' => 'vendor/bower-asset/jquery-ui/jquery-ui.min.js',
+        ],
+    ];
+    
+Elgg core uses this feature extensively. See ``engine/views.php``.
+
+.. note::
+
+    You don't have to use Bower, Composer Asset Plugin, or any other script for
+    managing your plugin's assets, but we highly recommend using a package manager
+    of some kind because it makes upgrading so much easier.
 
 Viewtypes
 =========
 
-You might be wondering, "what's with the 'default' in the directory structure? Why don't we just put the ``hello/world`` view at ``/views/hello/world.php``?".
+You might be wondering: "Why ``/views/default/hello/world.php`` instead of just ``/views/hello/world.php``?".
 
-Great question.
+The subdirectory under ``/views`` determines the *viewtype* of the views below it.
+A viewtype generally corresponds to the output format of the views.
 
-This subdirectory (the one under ``/views``) determines the *viewtype* of the views below it. It's possible that you might want your Elgg site to have several sets of interface pages. For example:
+The default viewtype is assumed to be HTML and other static assets necessary to
+render a responsive web page in a desktop or mobile browser, but it could also be:
 
-* Standard HTML for desktop browsing (This is the default view)
-* HTML optimized for Mobile devices (iPhone, Android, Blackberry, etc.)
-* HTML optimized Tablet devices (iPad, etc.)
-* RSS
-* Atom
-* JSON
-* etc...
+ * RSS
+ * ATOM
+ * JSON
+ * Mobile-optimized HTML
+ * TV-optimized HTML
+ * Any number of other data formats
 
-In Elgg, one set of these interface pages is called a *viewtype*. You can force Elgg to use a particular viewtype to render the page simply by setting the ``$view`` input variable. For example, to get an RSS version of the home page, you would access ``http://localhost/elgg/?view=rss``.
+You can force Elgg to use a particular viewtype to render the page
+by setting the ``view`` input variable like so: ``https://mysite.com/?view=rss``.
 
-You could also write a plugin to set this automatically using the ``set_input()`` function. For example, your plugin might detect that the page was accessed with an iPhone's browser string, and set the viewtype to *handheld* by calling:
+You could also write a plugin to set this automatically using the ``elgg_set_viewtype()`` function.
+For example, your plugin might detect that the page was accessed with an iPhone's browser string,
+and set the viewtype to ``iphone`` by calling:
 
 .. code-block:: php
 
-	set_input('view', 'handheld');
+	elgg_set_viewtype('iphone');
 
-The plugin would presumably also supply a set of views optimized for handheld devices.
+The plugin would presumably also supply a set of views optimized for those devices.
 
 .. _guides/views#altering-views-via-plugin:
 
@@ -100,36 +221,35 @@ Without modifying Elgg's core, Elgg provides several ways to customize almost al
 Overriding views
 ----------------
 
-Via plugin you can completely replace the rendering strategy of a view provided by Elgg or another plugin. Each plugin may have its own ``/views`` directory, and within it define its own view implementations.
+Views in plugin directories always override views in the core directory;
+however, when plugins override the views of other plugins,
+:ref:`later plugins take precedent <admin/plugins#plugin-order>`.
 
-Views in plugin directories always override views in the core directory, however, when plugins override the views of other plugins, :ref:`later plugins take precedent <admin/plugins#plugin-order>`.
+For example, if we wanted to customize the ``hello/world`` view to use an ``h2``
+instead of an ``h1``, we could create a file at ``/mod/example/views/default/hello/world.php`` like this:
 
-For example, if we wanted to customize the ``hello/world`` view to use an ``h2`` instead of an ``h1``, we could create a file at ``/mod/example/views/default/hello/world.php`` like this:
+.. code-block:: html+php
 
-.. code-block:: php
-
-	<h2>Hello, <?php echo $vars['name']; ?></h2>
-
-While it is **not recommended**, one *could* alternatively force the location of a view using the ``set_view_location`` function:
-
-.. code-block:: php
-
-	set_view_location($view_name, $full_path_to_view_file);
-
-Again, the best way to override views is to place them in the appropriate place in the views hierarchy.
+	<h2>Hello, <?= $vars['name']; ?></h2>
 
 .. note::
 
-	When considering long-term maintenance, overriding views in the core and bundled plugins has a cost: Upgrades may bring changes in views, and if you have overridden them, you will not get those changes. You may instead want to :ref:`alter the input <guides/views#altering-view-input>` or the :ref:`the output <guides/views#altering-view-output>` of the view via plugin hooks.
+	When considering long-term maintenance, overriding views in the core and bundled plugins has a cost:
+	Upgrades may bring changes in views, and if you have overridden them, you will not get those changes.
+	
+	You may instead want to :ref:`alter the input <guides/views#altering-view-input>`
+	or the :ref:`the output <guides/views#altering-view-output>` of the view via plugin hooks.
 
 .. note::
 
-	Elgg caches view locations. This means that you should disable the system cache while working with views. When you install the changes to a production environment you mush flush the caches.
+	Elgg caches view locations. This means that you should disable the system cache while developing with views.
+	When you install the changes to a production environment you mush flush the caches.
 
 Extending views
 ---------------
 
-There may be other situations in which you don't want to override the whole view, you just want to prepend or append some more content to it. In Elgg this is called *extending* a view.
+There may be other situations in which you don't want to override the whole view,
+you just want to prepend or append some more content to it. In Elgg this is called *extending a view*.
 
 For example, instead of overriding the ``hello/world`` view, we could extend it like so:
 
@@ -139,7 +259,7 @@ For example, instead of overriding the ``hello/world`` view, we could extend it 
 
 If the contents of ``/views/default/hello/greeting.php`` is:
 
-.. code-block:: php
+.. code-block:: html
 
 	<h2>How are you today?</h2>
 
@@ -160,36 +280,34 @@ You can prepend views by passing a value to the 3rd parameter that is less than 
 	// prepends 'hello/greeting' to every occurrence of 'hello/world'
 	elgg_extend_view('hello/world', 'hello/greeting', 450);
 
-Note that if you extend the core css view like this:
-
-.. code-block:: php
-
-	elgg_extend_view('css', 'custom/css');
-
-You **must** do so within your plugin's init code. Because the core css view is loaded separately via a ``<link>`` tag, any extensions you add will not have the same context as the rest of your page.
+All view extensions should be registered in your plugin's ``init,system`` event handler in ``start.php``.
 
 .. _guides/views#altering-view-input:
 
 Altering view input
 -------------------
 
-It may be useful to alter a view's ``$vars`` array before it's rendered.
+It may be useful to alter a view's ``$vars`` array before the view is rendered.
 
-Since 1.11, before each view rendering the ``$vars`` array is filtered by the :ref:`plugin hook <guides/hooks-list#views>` ``[view_vars, view_name]``. Each registered handler function is passed these arguments:
+Since 1.11, before each view rendering the ``$vars`` array is filtered by the
+:ref:`plugin hook <guides/hooks-list#views>` ``["view_vars", $view_name]``.
+Each registered handler function is passed these arguments:
 
 * ``$hook`` - the string ``"view_vars"``
 * ``$type`` - the view name being rendered (the first argument passed to ``elgg_view()``)
-* ``$returnvalue`` - the ``$vars`` array
-* ``$params`` - an array containing: the unaltered ``$vars`` under the key ``vars``; :ref:`viewtype <guides/views#viewtypes>` being rendered under the key ``viewtype``; the view name under the key ``view``.
+* ``$returnvalue`` - the modified ``$vars`` array
+* ``$params`` - an array containing:
+  * ``vars`` - the original ``$vars`` array, unaltered
+  * ``view`` - the view name
+  * ``viewtype`` - The :ref:`viewtype <guides/views#viewtypes>` being rendered
 
 Altering view input example
----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Here we'll alter the default pagination limit for the comments view:
 
 .. code-block:: php
 
-	// inside myplugin_init()
 	elgg_register_plugin_hook_handler('view_vars', 'page/elements/comments', 'myplugin_alter_comments_limit');
 
 	function myplugin_alter_comments_limit($hook, $type, $vars, $params) {
@@ -205,23 +323,25 @@ Altering view output
 
 Sometimes it is preferable to alter the output of a view instead of overriding it.
 
-The output of each view is run through the :ref:`plugin hook <guides/hooks-list#views>` ``[view, view_name]`` before being returned by ``elgg_view()``. Each registered handler function is passed these arguments:
+The output of each view is run through the :ref:`plugin hook <guides/hooks-list#views>`
+``["view", $view_name]`` before being returned by ``elgg_view()``.
+Each registered handler function is passed these arguments:
 
 * ``$hook`` - the string ``"view"``
 * ``$type`` - the view name being rendered (the first argument passed to ``elgg_view()``)
-* ``$returnvalue`` - the rendered output of the view (or the return value of the last handler)
-* ``$params`` - an array containing the key ``viewtype`` with value being the :ref:`viewtype <guides/views#viewtypes>` being rendered
+* ``$result`` - the modified output of the view
+* ``$params`` - an array containing:
+  * ``viewtype`` - The :ref:`viewtype <guides/views#viewtypes>` being rendered
 
 To alter the view output, the handler just needs to alter ``$returnvalue`` and return a new string.
 
 Altering view output example
-----------------------------
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 Here we'll eliminate breadcrumbs that don't have at least one link.
 
 .. code-block:: php
 
-	// inside myplugin_init()
 	elgg_register_plugin_hook_handler('view', 'navigation/breadcrumbs', 'myplugin_alter_breadcrumb');
 
 	function myplugin_alter_breadcrumb($hook, $type, $returnvalue, $params) {
@@ -229,10 +349,13 @@ Here we'll eliminate breadcrumbs that don't have at least one link.
 	    if ($params['viewtype'] !== 'default') {
 	        return $returnvalue;
 	    }
+	    
 	    // output nothing if the content doesn't have a single link
 	    if (false === strpos($returnvalue, '<a ')) {
 	        return '';
 	    }
+	    
+	    // returning nothing means "don't alter the returnvalue"
 	}
 
 Displaying entities
@@ -246,82 +369,110 @@ The following code will automatically display the entity in ``$entity``:
 
 	echo elgg_view_entity($entity);
 
-As you'll know from the data model introduction, all entities have a *type* (object, site, user or group), and optionally a subtype (which could be anything - 'blog', 'forumpost', 'banana'). ``elgg_view_entity`` will automatically look for a view called ``type/subtype``; if there's no subtype, it will look for ``type/type``. Failing that, before it gives up completely it tries ``type/default``. (RSS feeds in Elgg generally work by outputting the ``object/default`` view in the 'rss' viewtype.)
+As you'll know from the data model introduction, all entities have a *type*
+(object, site, user or group), and optionally a subtype
+(which could be anything - 'blog', 'forumpost', 'banana').
 
-So for example, the view to display a blogpost might be ``object/blog``. The view to display a user is ``user/user``.
+``elgg_view_entity`` will automatically look for a view called ``type/subtype``;
+if there's no subtype, it will look for ``type/type``. Failing that, before it
+gives up completely it tries ``type/default``.
+
+RSS feeds in Elgg generally work by outputting the ``object/default`` view in the 'rss' viewtype.
+
+For example, the view to display a blog post might be ``object/blog``.
+The view to display a user is ``user/default``.
 
 Full and partial entity views
 =============================
 
-``elgg_view_entity`` actually has a number of parameters, although only the very first one is required. The first three are:
+``elgg_view_entity`` actually has a number of parameters,
+although only the very first one is required. The first three are:
 
 * ``$entity`` - The entity to display
-* ``$viewtype`` - The viewtype to display in (defaults to the one we're currently in, but it can be forced - eg to display a snippet of RSS within an HTML page)
+* ``$viewtype`` - The viewtype to display in (defaults to the one we're currently in,
+  but it can be forced - eg to display a snippet of RSS within an HTML page)
 * ``$full_view`` - Whether to display a *full* version of the entity. (Defaults to false.)
 
-This last parameter is passed to the view as ``$vars['full_view']``. It's up to you what you do with it; the usual behaviour is to only display comments and similar information if this is set to true.
+This last parameter is passed to the view as ``$vars['full_view']``.
+It's up to you what you do with it; the usual behaviour is to only display comments
+and similar information if this is set to true.
 
 .. _guides/views#listing-entities:
 
 Listing entities
 ================
 
-This is then used in the provided listing functions. To automatically display a list of blog posts (:doc:`see the full tutorial </tutorials/blog>`), you can call:
+This is then used in the provided listing functions.
+To automatically display a list of blog posts (:doc:`see the full tutorial </tutorials/blog>`), you can call:
 
 .. code-block:: php
 
-	echo elgg_list_entities(array(
+	echo elgg_list_entities([
 	    'type' => 'object',
 	    'subtype' => 'blog',
-	));
+	]);
 
-This function checks to see if there are any entities; if there are, it first displays the ``navigation/pagination`` view in order to display a way to move from page to page. It then repeatedly calls ``elgg_view_entity`` on each entity, before returning the result.
+This function checks to see if there are any entities; if there are, it first
+displays the ``navigation/pagination`` view in order to display a way to move
+from page to page. It then repeatedly calls ``elgg_view_entity`` on each entity
+before returning the result.
 
-Note that ``elgg_list_entities`` allows the URL to set its ``limit`` and ``offset`` options, so set those explicitly if you need particular values (e.g. if you're not using it for pagination).
+Note that ``elgg_list_entities`` allows the URL to set its ``limit`` and ``offset`` options,
+so set those explicitly if you need particular values (e.g. if you're not using it for pagination).
 
-Because it does this, Elgg knows that it can automatically supply an RSS feed - it extends the ``metatags`` view (which is called by the header) in order to provide RSS autodiscovery, which is why you can see the orange RSS icon on those pages.
+Elgg knows that it can automatically supply an RSS feed on pages that use ``elgg_list_entities``.
+It initializes the ``["head","page"]`` plugin hook (which is used by the header)
+in order to provide RSS autodiscovery, which is why you can see the orange RSS
+icon on those pages in some browsers.
 
-If your entity list will display the entity owners, you can improve performance a bit by preloading all owner entities:
+If your entity list will display the entity owners,
+you can improve performance a bit by preloading all owner entities:
 
 .. code-block:: php
 
-	echo elgg_list_entities(array(
+	echo elgg_list_entities([
 	    'type' => 'object',
 	    'subtype' => 'blog',
 
 	    // enable owner preloading
 	    'preload_owners' => true,
-	));
+	]);
 
-See also :doc:`check this page out first </design/database>`.
+See also :doc:`this background information on Elgg's database </design/database>`.
 
-Since 1.11, you can define an alternative view to render list items using ```'item_view'``` parameter.
+Since 1.11, you can define an alternative view to render list items using ``'item_view'`` parameter.
 
-In some cases, default entity views may be unsuitable for your needs. Using ```item_view``` allows you to customize the look, while preserving pagination, list's HTML markup etc.
+In some cases, default entity views may be unsuitable for your needs.
+Using ``item_view`` allows you to customize the look, while preserving pagination, list's HTML markup etc.
 
 Consider these two examples:
 
 .. code-block:: php
 
-	echo elgg_list_entities_from_relationship(array(
+	echo elgg_list_entities_from_relationship([
 	    'type' => 'group',
 	    'relationship' => 'member',
 	    'relationship_guid' => elgg_get_logged_in_user_guid(),
 	    'inverse_relationship' => false,
 	    'full_view' => false,
-	));
+	]);
 
 .. code-block:: php
 
-	echo elgg_list_entities_from_relationship(array(
+	echo elgg_list_entities_from_relationship([
 	    'type' => 'group',
 	    'relationship' => 'invited',
 	    'relationship_guid' => (int) $user_guid,
 	    'inverse_relationship' => true,
 	    'item_view' => 'group/format/invitationrequest',
-	));
+	]);
 
-In the first example, we are displaying a list of groups a user is a member of using the default group view. In the second example, we want to display a list of groups the user was invited to. Since invitations are not entities, they do not have their own views and can not be listed using ``elgg_list_*``. We are providing an alternative item view, that will use the group entity to display an invitation that contains a group name and buttons to access or reject the invitation.
+In the first example, we are displaying a list of groups a user is a member of using the default group view.
+In the second example, we want to display a list of groups the user was invited to.
+
+Since invitations are not entities, they do not have their own views and can not be listed using ``elgg_list_*``.
+We are providing an alternative item view, that will use the group entity to display
+an invitation that contains a group name and buttons to access or reject the invitation.
 
 Related
 =======

@@ -23,6 +23,9 @@ import sys, os
 # If your documentation needs a minimal Sphinx version, state it here.
 #needs_sphinx = '1.0'
 
+from sphinx.highlighting import lexers
+from pygments.lexers.web import PhpLexer
+
 # Add any Sphinx extension module names here, as strings. They can be extensions
 # coming with Sphinx (named 'sphinx.ext.*') or your custom ones.
 extensions = []
@@ -89,6 +92,16 @@ pygments_style = 'sphinx'
 # If true, keep warnings as "system message" paragraphs in the built documents.
 #keep_warnings = False
 
+
+# -- Elgg customizations -------------------------------------------------------
+
+# Support parsing PHP out of <?php ?> by default
+lexers['php'] = PhpLexer(startinline=True)
+lexers['php-annotations'] = PhpLexer(startinline=True)
+lexers['php-standalone'] = PhpLexer(startinline=True)
+
+# use PHP as the primary domain
+primary_domain = 'php'
 
 # -- Options for HTML output ---------------------------------------------------
 
