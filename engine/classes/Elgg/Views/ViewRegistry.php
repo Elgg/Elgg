@@ -2,12 +2,8 @@
 namespace Elgg\Views;
 
 use Elgg\EventsService as Events;
-use Elgg\Filesystem\File;
-use Elgg\Filesystem\Directory;
 use Elgg\Logger;
 use Elgg\PluginHooksService as Hooks;
-use Elgg\Structs\Map;
-use Elgg\Views\Exception;
 
 
 /**
@@ -46,12 +42,12 @@ class ViewRegistry {
 	/**
 	 * Constructor
 	 *
-	 * @param \stdClass    $config    The global Elgg config
-	 * @param Events       $events    The events service
-	 * @param Hooks        $hooks     The hooks service
-	 * @param Logger       $logger    Logger
-	 * @param Viewtypes    $viewtypes List of available viewtypes
-	 * @param PathRegistry $viewFiles Global registry of view locations
+	 * @param \stdClass        $config    The global Elgg config
+	 * @param Events           $events    The events service
+	 * @param Hooks            $hooks     The hooks service
+	 * @param Logger           $logger    Logger
+	 * @param ViewtypeRegistry $viewtypes List of available viewtypes
+	 * @param PathRegistry     $viewFiles Global registry of view locations
 	 */
 	public function __construct(
 			\stdClass $config,

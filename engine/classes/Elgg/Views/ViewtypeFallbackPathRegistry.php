@@ -2,6 +2,8 @@
 
 namespace Elgg\Views;
 
+use Elgg\Structs\ArrayCollection;
+use Elgg\Structs\EntryCollectionMap;
 use Elgg\Structs\GetterMap;
 
 /**
@@ -35,6 +37,10 @@ class ViewtypeFallbackPathRegistry implements PathRegistry {
 	
 	/** @inheritDoc */
 	public function forView(/*string*/ $view) {
+		if (!$view) {
+			return new EntryCollectionMap(new ArrayCollection());
+		}
+
 		$viewPaths = $this->delegate->forView($view);
 		
 		return new GetterMap($this->getViewtypes(), function(Viewtype $viewtype) use ($viewPaths) {

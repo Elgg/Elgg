@@ -2,12 +2,11 @@
 
 namespace Elgg\Views;
 
-use ElggSession as Session;
+use Elgg\Filesystem\FlyDirectory;
 use Elgg\Filesystem\Directory;
 use Elgg\PluginHooksService as Hooks;
 use Elgg\EventsService as Events;
 use Elgg\Http\Input;
-use Elgg\Filesystem\GaufretteDirectory;
 use PHPUnit_Framework_TestCase as TestCase;
 use Elgg\Structs\EntryCollectionMap;
 
@@ -53,7 +52,7 @@ class ViewTest extends TestCase {
 	}
 	
 	private function createView(Viewtype $viewtype, $path, $content) {
-		$file = GaufretteDirectory::createInMemoryFile($path, $content);
+		$file = FlyDirectory::createInMemoryFile($path, $content);
 
 		$view = new View('name', EntryCollectionMap::fromArray([
 			[$viewtype, $file],
@@ -73,9 +72,10 @@ class ViewTest extends TestCase {
 	}
 	
 	public function testViewsCanExistBasedOnViewtypeFallback() {
-		$viewsDir = GaufretteDirectory::createInMemory([
+		$viewsDir = FlyDirectory::createInMemory([
 			'/default/view.php' => '',
 		]);
+
 		$app = $this->createPlayground($viewsDir);
 		$mobile = $app->viewtypes->get('mobile');
 		$mobile->setFallback($app->viewtypes->get('default'));

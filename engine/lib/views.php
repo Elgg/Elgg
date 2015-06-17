@@ -245,7 +245,7 @@ function elgg_view($view, $vars = array(), $bypass = false, $ignored = false, $v
  * @access private
  */
 function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
-	return _elgg_services()->views->renderDeprecatedView($view, $vars, $suggestion, $version);
+	return _elgg_services()->views->renderDeprecated($view, $vars, $suggestion, $version);
 }
 
 /**
@@ -387,11 +387,11 @@ function elgg_view_resource($name) {
 	$view = "resources/$name";
 
 	if (elgg_view_exists($view)) {
-		return _elgg_services()->views->renderView($view);
+		return _elgg_services()->views->render($view);
 	}
 
 	if (elgg_get_viewtype() !== 'default' && elgg_view_exists($view, 'default')) {
-		return _elgg_services()->views->renderView($view, [], false, 'default');
+		return _elgg_services()->views->render($view, [], false, 'default');
 	}
 
 	_elgg_services()->logger->error("The view $view is missing.");
@@ -1147,7 +1147,7 @@ function elgg_view_river_item($item, array $vars = array()) {
 		return '';
 	}
 	// checking default viewtype since some viewtypes do not have unique views per item (rss)
-	$view = $item->get();
+	$view = $item->getView();
 	if (!$view || !elgg_view_exists($view, 'default')) {
 		return '';
 	}

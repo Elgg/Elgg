@@ -5,6 +5,7 @@ namespace Elgg\Views;
 use Elgg\Filesystem\Directory;
 use Elgg\Structs\ArrayCollection;
 use Elgg\Structs\Collection;
+use Elgg\Structs\EntryCollectionMap;
 use Elgg\Structs\GetterMap;
 
 /**
@@ -53,6 +54,10 @@ class FallbackPathRegistry implements PathRegistry {
 	
 	/** @inheritDoc */
 	public function forView(/*string*/ $view) {
+		if (!$view) {
+			return new EntryCollectionMap(new ArrayCollection());
+		}
+
 		return new GetterMap($this->getViewtypes(), function(Viewtype $viewtype) use ($view) {
 			foreach ($this->registries as $pathRegistry) {
 				$file = $pathRegistry->forView($view)->get($viewtype);

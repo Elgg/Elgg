@@ -2,6 +2,9 @@
 
 namespace Elgg\Views;
 
+use Elgg\Structs\Map;
+use Elgg\Structs\Collection;
+
 /**
  * Stores locations of views by view name and viewtype as a table.
  * 

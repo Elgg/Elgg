@@ -69,6 +69,8 @@ class ViewtypeRegistry implements Map/*<string,Viewtype>*/ {
 	 * @param Viewtype $viewtype The new current viewtype.
 	 * 
 	 * @return void
+	 *
+	 * @throws \Exception
 	 */
 	public function setCurrent(Viewtype $viewtype = null) {
 		if (!$this->values()->contains($viewtype)) {

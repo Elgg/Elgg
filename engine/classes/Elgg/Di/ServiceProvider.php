@@ -140,7 +140,7 @@ class ServiceProvider extends DiContainer {
 		});
 		
 		$this->setFactory('elggRootDir', function(ServiceProvider $c) {
-			return \Elgg\Filesystem\GaufretteDirectory::createLocal(realpath(__DIR__ . '/../../../..'));
+			return \Elgg\Filesystem\FlyDirectory::createLocal(realpath(__DIR__ . '/../../../..'));
 		});
 
 		$this->setClassName('entityPreloader', \Elgg\EntityPreloader::class);

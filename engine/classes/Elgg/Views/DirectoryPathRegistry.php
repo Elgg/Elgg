@@ -57,14 +57,10 @@ class DirectoryPathRegistry implements PathRegistry {
 	
 	/** @inheritDoc */
 	public function getViewtypes() {
-		return $this->dir->getFiles()
+		return $this->dir->getDirectories('', false)
 	
-		// Sometimes we have leading /, sometimes not, so normalize here
-		->map(function(File $file) { return trim($file->getPath(), "/"); })
-		// ignore top-level files. Will this work on Windows?
-		->filter(function($path) { return strpos($path, '/') !== false; })
 		// Get the viewtype name (e.g., 'default')
-		->map(function($path) { return explode("/", $path)[0]; })
+		->map(function(Directory $dir) { return basename($dir->getFullPath()); })
 		->map(function(/*string*/ $name) { return $this->viewtypes->get($name); })
 		->unique();
 	}
@@ -88,6 +84,10 @@ class DirectoryPathRegistry implements PathRegistry {
 	
 	/** @inheritDoc */
 	public function forView(/*string*/ $view) {
+		if (!$view) {
+			return new EntryCollectionMap(new ArrayCollection());
+		}
+
 		return new EntryCollectionMap($this->getViewtypes()->map(function(Viewtype $viewtype) use ($view) {
 			return new MapEntry($viewtype, $this->getPath($view, $viewtype));
 		}));

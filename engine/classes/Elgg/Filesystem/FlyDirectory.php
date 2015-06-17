@@ -49,7 +49,7 @@ final class FlyDirectory implements Directory {
 	 *
 	 * @return boolean
 	 */
-	private function isDirectory($path) {
+	public function isDirectory($path) {
 		$path = $this->getInternalPath($path);
 		return $this->fs->has($path) && $this->fs->get($path)->isDir();
 	}
@@ -123,9 +123,18 @@ final class FlyDirectory implements Directory {
 	 *
 	 * @throws \InvalidArgumentException
 	 */
-	private function getFullPath($path = '') {
+	public function getFullPath($path = '') {
 		$path = $this->normalize($this->getInternalPath($path));
 		return "{$this->local_path}/$path";
+	}
+
+	/**
+	 * Get the full directory path
+	 *
+	 * @return string
+	 */
+	public function __toString() {
+		return $this->getFullPath();
 	}
 
 	/**
@@ -167,12 +176,31 @@ final class FlyDirectory implements Directory {
 	/**
 	 * Shorthand for generating a new in-memory-only filesystem.
 	 *
+	 * @param array $path_to_content_map An array with paths as keys and contents as values.
+	 *
 	 * @return Directory
 	 */
-	public static function createInMemory() {
-		$fs = new Filesystem(new MemoryAdapter());
-		return new self($fs);
+	public static function createInMemory(array $path_to_content_map = []) {
+		$dir = new self(new Filesystem(new MemoryAdapter()));
+
+		foreach ($path_to_content_map as $path => $content) {
+			$dir->putContents($path, $content);
+		}
+
+		return $dir;
 	}
+
+	/**
+	 * Creates and returns a single in-memory-only file.
+	 *
+	 * @param string $path    The file's path
+	 * @param string $content The file's literal contents
+	 *
+	 * @return File
+	 */
+	public static function createInMemoryFile(/*string*/ $path, /*string*/ $content) {
+		return self::createInMemory([$path => $content])->getFile($path);
+ 	}
 
 	/**
 	 * Get a standardized form of the given path to work with internally.

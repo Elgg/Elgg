@@ -1,12 +1,12 @@
 <?php
 
-use Elgg\Filesystem\GaufretteDirectory;
+use Elgg\Filesystem\FlyDirectory;
 use Zend\Mail\Transport\InMemory as InMemoryTransport;
 
 require_once __DIR__ . '/../../../autoloader.php';
 
 global $test_files;
-$test_files = GaufretteDirectory::createLocal(__DIR__ . "/test_files");
+$test_files = FlyDirectory::createLocal(__DIR__ . "/test_files");
 
 date_default_timezone_set('America/Los_Angeles');
 
