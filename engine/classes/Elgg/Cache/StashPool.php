@@ -2,6 +2,8 @@
 namespace Elgg\Cache;
 
 use Stash;
+use Stash\Driver;
+use Elgg\Filesystem\Directory;
 
 /**
  * Defers to Stash for the meat of the caching logic.
@@ -24,7 +26,7 @@ final class StashPool implements Pool {
 	 *
 	 * @param Stash\Pool $stash The Stash instance to be decorated.
 	 */
-	public function __construct(Stash\Pool $stash) {
+	private function __construct(Stash\Pool $stash) {
 		$this->stash = $stash;
 	}
 
@@ -62,11 +64,33 @@ final class StashPool implements Pool {
 	}
 	
 	/**
+	 * Create a new pool using the given Stash driver.
+	 * 
+	 * @return self
+	 */
+	public static function fromDriver(Driver $driver) {
+		return new self(new Stash\Pool($driver));
+	}
+	
+	/**
 	 * Create an in-memory implementation of the pool.
 	 *
-	 * @return StashPool
+	 * @return self
 	 */
 	public static function createEphemeral() {
-		return new self(new Stash\Pool(new Stash\Driver\Ephemeral()));
+		return self::fromDriver(new Driver\Ephemeral());
+	}
+
+	/**
+	 * Create an on-filesystem implementation of the pool.
+	 * 
+	 * @param Directory $dir A local directory
+	 * 
+	 * @return self
+	 */
+	public static function createOnFileSystem(Directory $dir) {
+		$driver = new Driver\FileSystem();
+		$driver->setOptions(['path' => $dir->getFullPath()]);
+		return self::fromDriver($driver);
 	}
 }

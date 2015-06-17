@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\Di;
 
+use Elgg\Filesystem\Directory;
+use Elgg\Filesystem\FlyDirectory;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
 use Zend\Mail\Transport\TransportInterface as Mailer;
@@ -25,10 +27,11 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Config                             $config
  * @property-read \Elgg\Database\ConfigTable               $configTable
  * @property-read \Elgg\Context                            $context
+ * @property-read Directory                                $dataDir
  * @property-read \Elgg\Database\Datalist                  $datalist
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\DeprecationService                 $deprecation
- * @property-read \Elgg\Filesystem\Directory               $elggRootDir
+ * @property-read Directory                                $elggRootDir
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
  * @property-read \Elgg\Database\EntityTable               $entityTable
  * @property-read \Elgg\EventsService                      $events
@@ -119,6 +122,10 @@ class ServiceProvider extends DiContainer {
 		$this->setClassName('context', \Elgg\Context::class);
 
 		$this->setClassName('crypto', \ElggCrypto::class);
+		
+		$this->setFactory('dataDir', function() {
+			return FlyDirectory::createLocal(elgg_get_config('dataroot'));
+		});
 
 		$this->setFactory('datalist', function(ServiceProvider $c) {
 			// TODO(ewinslow): Add back memcached support
@@ -270,7 +277,36 @@ class ServiceProvider extends DiContainer {
 		$this->setClassName('usersTable', \Elgg\Database\UsersTable::class);
 
 		$this->setFactory('viewPaths', function(ServiceProvider $c) {
-			return new \Elgg\Views\DirectoryPathRegistry($c->elggRootDir->chroot('views'), $c->viewtypes);
+			// `array_reverse` because FallbackPathRegistry checks plugins for views
+			// on a first-come-first-serve basis, but plugins are ordered such that the
+			// last plugin's views are the ones that get used.
+			$plugins = new \Elgg\Structs\ArrayCollection(array_reverse(elgg_get_plugins('active')));
+			
+			$pluginViewPaths = $plugins->map(function(ElggPlugin $plugin) {
+				return \Elgg\Filesystem\FlyDirectory::createLocal($plugin->getPath());
+			})->filter(function(Directory $pluginDir) {
+				// Plugins don't have to provide a 'views' directory
+				return $pluginDir->isDirectory('views');
+			})->map(function(Directory $pluginDir) use ($c) {
+				return new \Elgg\Views\DirectoryPathRegistry($pluginDir->chroot('views'), $c->viewtypes);
+			});
+			
+			$allViewPaths = \Elgg\Views\FallbackPathRegistry::fromArray([
+				new \Elgg\Views\FallbackPathRegistry($pluginViewPaths, $c->viewtypes),
+				new \Elgg\Views\DirectoryPathRegistry($c->elggRootDir->chroot('views'), $c->viewtypes),
+			], $c->viewtypes);
+			
+			
+			// Make sure registered viewtype fallbacks work
+			$allViewPaths = new \Elgg\Views\ViewtypeFallbackPathRegistry($allViewPaths);
+			
+			// TODO(evan): Use a file-based cache when system cache is on
+			
+			$viewPathsCache = true ?
+				\Elgg\Cache\StashPool::createOnFileSystem($c->dataDir) :
+				\Elgg\Cache\StashPool::createEphemeral();
+			
+			return new \Elgg\Views\CachedPathRegistry($allViewPaths, $viewPathsCache);
 		});
 
 		$this->setFactory('views', function(ServiceProvider $c) {

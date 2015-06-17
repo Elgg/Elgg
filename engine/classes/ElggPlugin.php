@@ -1,7 +1,5 @@
 <?php
 
-use Elgg\Filesystem\GaufretteDirectory;
-
 
 /**
  * Stores site-side plugin settings as private data.
@@ -743,10 +741,10 @@ class ElggPlugin extends \ElggObject {
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			$this->includeFile('start.php');
 		}
-
-		if ($flags & ELGG_PLUGIN_REGISTER_VIEWS) {
-			$this->registerViews();
-		}
+		
+		// We don't register views here anymore because they are computed
+		// lazily in the ServiceProvider. My hope is to ultimately convert
+		// all of this logic to that approach, except perhaps for start.php
 
 		// include languages
 		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
@@ -808,10 +806,6 @@ class ElggPlugin extends \ElggObject {
 	 */
 	protected function canReadFile($filename) {
 		return is_readable($this->path . '/' . $filename);
-	}
-
-	protected function registerViews() {
-		
 	}
 
 	/**
