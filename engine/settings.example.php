@@ -102,6 +102,9 @@ $CONFIG->dbprefix = '{{dbprefix}}';
  * 	1) One or more memcache servers (http://www.danga.com/memcached/)
  *  2) PHP memcache wrapper (http://php.net/manual/en/memcache.setup.php)
  *
+ * You can set a namespace prefix if you run multiple Elgg instances
+ * on the same Memcache server.
+ *
  * Note: Multiple server support is only available on server 1.2.1
  * or higher with PECL library > 2.0.0
  */
@@ -112,6 +115,8 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 //	array('server2', 11211)
 //);
 
+// namespace prefix
+// $CONFIG->memcache_namespace_prefix = '';
 
 /**
  * Better caching performance
@@ -129,17 +134,17 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 /**
  * Cookie configuration
  *
- * Elgg uses 2 cookies: a PHP session cookie and an extended login cookie 
+ * Elgg uses 2 cookies: a PHP session cookie and an extended login cookie
  * (also called the remember me cookie). See the PHP manual for documentation on
  * each of these parameters. Possible options:
- * 
+ *
  *  - Set the session name to share the session across applications.
  *  - Set the path because Elgg is not installed in the root of the web directory.
  *  - Set the secure option to true if you only serve the site over HTTPS.
  *  - Set the expire option on the remember me cookie to change its lifetime
  *
  * To use, uncomment the appropriate sections below and update for your site.
- * 
+ *
  * @global array $CONFIG->cookies
  */
 // get the default parameters from php.ini
@@ -196,16 +201,16 @@ $CONFIG->min_password_length = 6;
 /**
  * This is an optional script used to override Elgg's default handling of
  * uncaught exceptions.
- * 
+ *
  * This should be an absolute file path to a php script that will be called
  * any time an uncaught exception is thrown.
- * 
+ *
  * The script will have access to the following variables as part of the scope
  * global $CONFIG
  * $exception - the unhandled exception
- * 
+ *
  * @warning - the database may not be available
- * 
+ *
  * @global string $CONFIG->exception_include
  */
 $CONFIG->exception_include = '';

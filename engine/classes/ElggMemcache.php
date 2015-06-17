@@ -8,7 +8,7 @@
 class ElggMemcache extends \ElggSharedMemoryCache {
 	/**
 	 * Global Elgg configuration
-	 * 
+	 *
 	 * @var \stdClass
 	 */
 	private $CONFIG;
@@ -220,5 +220,23 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 		return $result;
 
 		// @todo Namespaces as in #532
+	}
+	
+	/**
+	 * Set the namespace of this cache.
+	 *
+	 * This will also add the Memcache namespace prefix as defined in settings.php
+	 *
+	 * @param string $namespace Namespace for cache
+	 *
+	 * @return void
+	 */
+	public function setNamespace($namespace = "default") {
+		
+		if (isset($this->CONFIG->memcache_namespace_prefix)) {
+			$namespace = $this->CONFIG->memcache_namespace_prefix . $namespace;
+		}
+		
+		parent::setNamespace($namespace);
 	}
 }
