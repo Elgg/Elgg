@@ -744,6 +744,10 @@ class ElggPlugin extends \ElggObject {
 			$this->includeFile('start.php');
 		}
 
+		if ($flags & ELGG_PLUGIN_REGISTER_VIEWS) {
+			$this->registerViews();
+		}
+
 		// include languages
 		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
 			$this->registerLanguages();
@@ -804,6 +808,10 @@ class ElggPlugin extends \ElggObject {
 	 */
 	protected function canReadFile($filename) {
 		return is_readable($this->path . '/' . $filename);
+	}
+
+	protected function registerViews() {
+		
 	}
 
 	/**

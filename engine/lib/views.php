@@ -46,7 +46,8 @@ function elgg_get_viewtype() {
  * @return bool
  */
 function elgg_register_viewtype($viewtype) {
-	return _elgg_services()->views->registerViewtype($viewtype);
+	_elgg_services()->viewtypes->get($viewtype);
+	return true;
 }
 
 /**

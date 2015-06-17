@@ -108,6 +108,7 @@ class ViewRegistry {
 			$this->logger->log("View and Viewtype in views must be a strings: $view", 'NOTICE');
 			return '';
 		}
+
 		// basic checking for bad paths
 		if (strpos($view, '..') !== false) {
 			return '';

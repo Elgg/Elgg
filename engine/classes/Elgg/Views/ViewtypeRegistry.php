@@ -23,7 +23,7 @@ class ViewtypeRegistry implements Map/*<string,Viewtype>*/ {
 	/** @var Input */
 	private $input;
 	
-	/** @var ?Viewtype */
+	/** @var Viewtype|null */
 	private $current;
 	
 	/**
@@ -61,7 +61,6 @@ class ViewtypeRegistry implements Map/*<string,Viewtype>*/ {
 	public function values() {
 		return new ArrayCollection(array_values($this->items));
 	}
-	
 	
 	/**
 	 * Forces the current viewtype to a new value.

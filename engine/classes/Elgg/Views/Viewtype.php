@@ -35,7 +35,7 @@ class Viewtype {
 	/**
 	 * Configure a fallback for this viewtype.
 	 * 
-	 * @param ?Viewtype $fallback The viewtype to fall back to
+	 * @param Viewtype $fallback The viewtype to fall back to
 	 * 
 	 * @return void
 	 */
@@ -46,7 +46,7 @@ class Viewtype {
 	/**
 	 * The fallback registered to this viewtype, or null if none.
 	 * 
-	 * @return ?Viewtype
+	 * @return Viewtype|null
 	 */
 	public function getFallback() {
 		return $this->fallback;

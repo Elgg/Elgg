@@ -181,6 +181,8 @@ class View {
 			return '';
 		}
 
+		/* @var File $location */
+
 		// Can't just check isCacheable here because if it is a cacheable file
 		// with a PHP extension we still want to render it with PHP.
 		if ($location->getExtension() != 'php') {
