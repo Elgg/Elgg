@@ -123,36 +123,36 @@ function pages_page_handler($page) {
 	$page_type = $page[0];
 	switch ($page_type) {
 		case 'owner':
-			echo elgg_view('resources/pages/owner');
+			echo elgg_view_resource('pages/owner');
 			break;
 		case 'friends':
-			echo elgg_view('resources/pages/friends');
+			echo elgg_view_resource('pages/friends');
 			break;
 		case 'view':
 			set_input('guid', $page[1]);
-			echo elgg_view('resources/pages/view');
+			echo elgg_view_resource('pages/view');
 			break;
 		case 'add':
 			set_input('guid', $page[1]);
-			echo elgg_view('resources/pages/new');
+			echo elgg_view_resource('pages/new');
 			break;
 		case 'edit':
 			set_input('guid', $page[1]);
-			echo elgg_view('resources/pages/edit');
+			echo elgg_view_resource('pages/edit');
 			break;
 		case 'group':
-			echo elgg_view('resources/pages/owner');
+			echo elgg_view_resource('pages/owner');
 			break;
 		case 'history':
 			set_input('guid', $page[1]);
-			echo elgg_view('resources/pages/history');
+			echo elgg_view_resource('pages/history');
 			break;
 		case 'revision':
 			set_input('id', $page[1]);
-			echo elgg_view('resources/pages/revision');
+			echo elgg_view_resource('pages/revision');
 			break;
 		case 'all':
-			echo elgg_view('resources/pages/world');
+			echo elgg_view_resource('pages/world');
 			break;
 		default:
 			return false;

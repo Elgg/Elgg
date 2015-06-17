@@ -59,7 +59,7 @@ function search_page_handler($page) {
 		//set_input('search_type', 'tags');
 	}
 
-	echo elgg_view('resources/search/index');
+	echo elgg_view_resource('search/index');
 	return true;
 }
 

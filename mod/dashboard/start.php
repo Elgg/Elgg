@@ -27,7 +27,7 @@ function dashboard_init() {
  * @return bool
  */
 function dashboard_page_handler() {
-	echo elgg_view('resources/dashboard');
+	echo elgg_view_resource('dashboard');
 	return true;
 }
 

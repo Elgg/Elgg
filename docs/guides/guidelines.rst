@@ -37,10 +37,10 @@ Use standardized routing with page handlers
    +---------------+-----------------------------------+
    | Group list    | page_handler/group/<guid>/owner   |
    +---------------+-----------------------------------+
-- Include page handler scripts from the page handler. Almost every page handler should have a page handler script. (Example: ``bookmarks/all`` => ``mod/bookmarks/pages/bookmarks/all.php``)
+- Include page handler scripts from the page handler. Almost every page handler should have a page handler script. (Example: ``bookmarks/all`` => ``mod/bookmarks/views/default/resources/bookmarks/all.php``)
 - Call ``set_input()`` for entity guids in the page handler and use ``get_input()`` in the page handler scripts.
 - Call ``elgg_gatekeeper()`` and ``elgg_admin_gatekeeper()`` in the page handler function if required.
-- The group URL should use the ``pages/<handler>/owner.php`` script.
+- The group URL should use views like ``resources/groups/*.php`` to render pages.
 - Page handlers should not contain HTML.
 - If upgrading a 1.7 plugin, update the URLs throughout the plugin. (Don’t forget to remove ``/pg/``!)
 
@@ -48,7 +48,8 @@ Use standardized page handlers and scripts
 ------------------------------------------
 
 - Example: Bookmarks plugin
-- Store page handler scripts in ``mod/<plugin>/pages/<page_handler>/<page_name>``
+- Store page functionality in ``mod/<plugin>/views/default/resources/<page_handler>/<page_name>.php``
+- Use ``elgg_view_resource('<page_handler>/<page_name>')`` to render that.
 - Use the content page layout in page handler scripts: ``$content = elgg_view_layout('content', $options);``
 - Page handler scripts should not contain HTML
 - Call ``elgg_push_breadcrumb()`` in the page handler scripts.

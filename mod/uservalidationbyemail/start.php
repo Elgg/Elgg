@@ -200,7 +200,7 @@ function uservalidationbyemail_page_handler($page) {
 			require __DIR__ . "/pages/confirm.php";
 			break;
 		case 'emailsent':
-			echo elgg_view("resources/uservalidationbyemail/emailsent");
+			echo elgg_view_resource("uservalidationbyemail/emailsent");
 			break;
 		default:
 			forward('', '404');

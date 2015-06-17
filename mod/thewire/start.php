@@ -90,50 +90,50 @@ function thewire_page_handler($page) {
 
 	switch ($page[0]) {
 		case "all":
-			echo elgg_view('resources/thewire/everyone');
+			echo elgg_view_resource('thewire/everyone');
 			break;
 
 		case "friends":
-			echo elgg_view('resources/thewire/friends');
+			echo elgg_view_resource('thewire/friends');
 			break;
 
 		case "owner":
-			echo elgg_view('resources/thewire/owner');
+			echo elgg_view_resource('thewire/owner');
 			break;
 
 		case "view":
 			if (isset($page[1])) {
 				set_input('guid', $page[1]);
 			}
-			echo elgg_view('resources/thewire/view');
+			echo elgg_view_resource('thewire/view');
 			break;
 
 		case "thread":
 			if (isset($page[1])) {
 				set_input('thread_id', $page[1]);
 			}
-			echo elgg_view('resources/thewire/thread');
+			echo elgg_view_resource('thewire/thread');
 			break;
 
 		case "reply":
 			if (isset($page[1])) {
 				set_input('guid', $page[1]);
 			}
-			echo elgg_view('resources/thewire/reply');
+			echo elgg_view_resource('thewire/reply');
 			break;
 
 		case "tag":
 			if (isset($page[1])) {
 				set_input('tag', $page[1]);
 			}
-			echo elgg_view('resources/thewire/tag');
+			echo elgg_view_resource('thewire/tag');
 			break;
 
 		case "previous":
 			if (isset($page[1])) {
 				set_input('guid', $page[1]);
 			}
-			echo elgg_view('resources/thewire/previous');
+			echo elgg_view_resource('thewire/previous');
 			break;
 
 		default:

@@ -15,12 +15,13 @@ The plugin's page handler is passed two parameters:
 Code flow
 ---------
 
-Pages in plugins should be served only through page handlers, stored in ``pages/`` of your plugin's directory and do not need to use ``Elgg\Application``. The purpose of these files are to knit together output from different views to form the page that the user sees. The program flow is something like this:
+Pages in plugins should be rendered via page handlers (not by using ``Elgg\Application``). Generally the rendering is done by views with names starting with ``resources/``. The program flow is something like this:
 
 1. A user requests ``/plugin_name/section/entity``
 2. Elgg checks if ``plugin_name`` is registered to a page handler and calls that function, passing ``array('section', 'entity')`` as the first argument
-3. The page handler function determines which page to display, optionally sets some values, and then includes the correct page under ``plugin_name/pages/plugin_name/``
-4. The included file combines many separate views, calls formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()``, and then echos the final output
-5. The user sees a fully rendered page
+3. The page handler function determines which page to display, optionally setting some values using ``set_input()``
+4. The handler uses ``elgg_view_resource()`` to render the page.
+5. The resource view combines many separate views, calls formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()``, and then echos the final output
+6. The user sees a fully rendered page
 
 There is no syntax enforced on the URLs, but Elgg's coding standards suggests a certain format.

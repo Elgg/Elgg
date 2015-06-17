@@ -73,12 +73,12 @@ function profile_page_handler($page) {
 
 	if ($action == 'edit') {
 		// use the core profile edit page
-		echo elgg_view('resources/profile/edit');
+		echo elgg_view_resource('profile/edit');
 		return true;
 	}
 
 	set_input('username', $page[0]);
-	echo elgg_view('resources/profile/view');
+	echo elgg_view_resource('profile/view');
 	return true;
 }
 

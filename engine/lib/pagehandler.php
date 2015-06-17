@@ -226,7 +226,7 @@ function elgg_ajax_gatekeeper() {
  * @return bool
  */
 function elgg_front_page_handler() {
-	echo elgg_view('resources/index');
+	echo elgg_view_resource('index');
 	return true;
 }
 
@@ -247,7 +247,7 @@ function elgg_error_page_handler($hook, $type, $result, $params) {
 	set_input('type', $type);
 	set_input('params', $params);
 
-	echo elgg_view('resources/error');
+	echo elgg_view_resource('error');
 	exit;
 }
 

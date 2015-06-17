@@ -380,16 +380,16 @@ function elgg_user_account_page_handler($page_elements, $handler) {
 
 	switch ($handler) {
 		case 'login':
-			echo elgg_view("resources/account/login");
+			echo elgg_view_resource("account/login");
 			break;
 		case 'forgotpassword':
-			echo elgg_view("resources/account/forgotten_password");
+			echo elgg_view_resource("account/forgotten_password");
 			break;
 		case 'changepassword':
-			echo elgg_view("resources/account/change_password");
+			echo elgg_view_resource("account/change_password");
 			break;
 		case 'register':
-			echo elgg_view("resources/account/register");
+			echo elgg_view_resource("account/register");
 			break;
 		default:
 			return false;
@@ -653,11 +653,11 @@ function elgg_avatar_page_handler($page) {
 	}
 
 	if ($page[0] == 'edit') {
-		echo elgg_view("resources/avatar/edit");
+		echo elgg_view_resource("avatar/edit");
 		return true;
 	} else {
 		set_input('size', $page[2]);
-		echo elgg_view("resources/avatar/view");
+		echo elgg_view_resource("avatar/view");
 		return true;
 	}
 	return false;
@@ -677,7 +677,7 @@ function elgg_profile_page_handler($page) {
 	elgg_set_page_owner_guid($user->guid);
 
 	if ($page[1] == 'edit') {
-		echo elgg_view("resources/profile/edit");
+		echo elgg_view_resource("profile/edit");
 		return true;
 	}
 	return false;

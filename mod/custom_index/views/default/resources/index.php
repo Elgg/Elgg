@@ -63,7 +63,7 @@ $params = array(
 	'members' => $newest_members,
 );
 
-$body = elgg_view('resources/index-content', $params);
+$body = elgg_view_resource('index-content', $params);
 
 // no RSS feed with a "widget" front page
 global $autofeed;
