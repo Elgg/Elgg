@@ -701,9 +701,10 @@ to one of the pre-defined access controls or an entry in the
 Pre-defined access controls
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
--  **0** Private.
--  **1** Logged in users.
--  **2** Public data.
+-  ``ACCESS_PRIVATE`` (value: 0) Private.
+-  ``ACCESS_LOGGED_IN`` (value: 1) Logged in users.
+-  ``ACCESS_PUBLIC`` (value: 2) Public data.
+-  ``ACCESS_FRIENDS`` (value: -2) Owner and his/her friends.
 
 User defined access controls
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
