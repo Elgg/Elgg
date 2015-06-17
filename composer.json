@@ -84,6 +84,10 @@
             "phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib",
             "composer validate"
         ],
+        "pre-commit": [
+            "composer lint",
+            "composer test"
+        ],
         "test": "phpunit",
         "travis:install": [
             "composer self-update",

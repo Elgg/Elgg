@@ -28,6 +28,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\Datalist                  $datalist
  * @property-read \Elgg\Database                           $db
  * @property-read \Elgg\DeprecationService                 $deprecation
+ * @property-read \Elgg\Filesystem\Directory               $elggRootDir
  * @property-read \Elgg\EntityPreloader                    $entityPreloader
  * @property-read \Elgg\Database\EntityTable               $entityTable
  * @property-read \Elgg\EventsService                      $events
@@ -57,13 +58,15 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\SystemMessagesService              $systemMessages
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\Database\UsersTable                $usersTable
- * @property-read \Elgg\ViewsService                       $views
+ * @property-read \Elgg\Views\PathRegistry                 $viewPaths
+ * @property-read \Elgg\Views\ViewRegistry                 $views
+ * @property-read \Elgg\Views\ViewtypeRegistry             $viewtypes
  * @property-read \Elgg\WidgetsService                     $widgets
  *
  * @package Elgg.Core
  * @access private
  */
-class ServiceProvider extends \Elgg\Di\DiContainer {
+class ServiceProvider extends DiContainer {
 
 	/**
 	 * Constructor
@@ -134,6 +137,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('deprecation', function(ServiceProvider $c) {
 			return new \Elgg\DeprecationService($c->session, $c->logger);
+		});
+		
+		$this->setFactory('elggRootDir', function(ServiceProvider $c) {
+			return \Elgg\Filesystem\FlyDirectory::createLocal(realpath(__DIR__ . '/../../../..'));
 		});
 
 		$this->setClassName('entityPreloader', \Elgg\EntityPreloader::class);
@@ -262,8 +269,21 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('usersTable', \Elgg\Database\UsersTable::class);
 
+		$this->setFactory('viewPaths', function(ServiceProvider $c) {
+			return new \Elgg\Views\DirectoryPathRegistry($c->elggRootDir->chroot('views'), $c->viewtypes);
+		});
+
 		$this->setFactory('views', function(ServiceProvider $c) {
-			return new \Elgg\ViewsService($c->hooks, $c->logger);
+			global $CONFIG;
+
+			return new \Elgg\Views\ViewRegistry(
+				$CONFIG, $c->events, $c->hooks, $c->logger, $c->viewtypes, $c->viewPaths);
+		});
+		
+		$this->setFactory('viewtypes', function(ServiceProvider $c) {
+			global $CONFIG;
+			
+			return new \Elgg\Views\ViewtypeRegistry($CONFIG, $c->input);
 		});
 
 		$this->setClassName('widgets', \Elgg\WidgetsService::class);

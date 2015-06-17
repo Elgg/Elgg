@@ -2,12 +2,9 @@
 namespace Elgg\Structs;
 
 /**
- * Uses native PHP array to implement the Collection interface.
+ * Uses a native PHP array to implement the Collection interface.
  * 
- * @package    Elgg.Core
- * @subpackage Structs
- * @since      1.10
- *
+ * @since 1.10
  * @access private
  */
 final class ArrayCollection implements Collection {
@@ -76,7 +73,26 @@ final class ArrayCollection implements Collection {
 	}
 	
 	/** @inheritDoc */
+	public function touch(callable $callback) {
+		$callback($this);
+		return $this;
+	}
+	
+	/** @inheritDoc */
 	public function valid() {
 		return key($this->items) !== NULL;
+	}
+	
+	/** @inheritDoc */
+	public function unique() {
+		$uniques = [];
+		
+		foreach ($this->items as $item) {
+			if (!in_array($item, $uniques, true)) {
+				$uniques[] = $item;
+			}
+		}
+		
+		return new self($uniques);
 	}
 }
