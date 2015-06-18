@@ -38,9 +38,21 @@ $CONFIG = (object)[
 	'simplecache_enabled' => false,
 ];
 
+
+function _elgg_testing_config(\Elgg\Config $config = null) {
+	static $inst;
+	if ($config) {
+		$inst = $config;
+	}
+	return $inst;
+}
+
 // PHPUnit will serialize globals between tests, so let's not introduce any globals here.
 call_user_func(function () use ($CONFIG) {
-	$sp = new \Elgg\Di\ServiceProvider(new \Elgg\Config($CONFIG));
+	$config = new \Elgg\Config($CONFIG);
+	_elgg_testing_config($config);
+	
+	$sp = new \Elgg\Di\ServiceProvider($config);
 	$sp->setValue('mailer', new InMemoryTransport());
 
 	$app = new \Elgg\Application($sp);
