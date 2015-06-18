@@ -12,8 +12,6 @@ use Elgg\Di\ServiceProvider;
  *
  * The full path is necessary to work around this: https://bugs.php.net/bug.php?id=55726
  *
- * @property-read \Elgg\Services\Config $config
- *
  * @since 2.0.0
  */
 class Application {
@@ -46,7 +44,7 @@ class Application {
 	 * @var string[]
 	 */
 	private static $public_services = [
-		'config' => true,
+		//'config' => true,
 	];
 
 	/**
@@ -295,7 +293,7 @@ class Application {
 
 		if (php_sapi_name() === 'cli-server') {
 			$www_root = "http://{$_SERVER['SERVER_NAME']}:{$_SERVER['SERVER_PORT']}/";
-			$this->config->set('wwwroot', $www_root);
+			$this->services->config->set('wwwroot', $www_root);
 		}
 
 		if (0 === strpos($path, '/cache/')) {
