@@ -1,4 +1,6 @@
 <?php
+
+
 /**
  * Stores site-side plugin settings as private data.
  *
@@ -739,11 +741,10 @@ class ElggPlugin extends \ElggObject {
 		if ($flags & ELGG_PLUGIN_INCLUDE_START) {
 			$this->includeFile('start.php');
 		}
-
-		// include views
-		if ($flags & ELGG_PLUGIN_REGISTER_VIEWS) {
-			$this->registerViews();
-		}
+		
+		// We don't register views here anymore because they are computed
+		// lazily in the ServiceProvider. My hope is to ultimately convert
+		// all of this logic to that approach, except perhaps for start.php
 
 		// include languages
 		if ($flags & ELGG_PLUGIN_REGISTER_LANGUAGES) {
@@ -805,20 +806,6 @@ class ElggPlugin extends \ElggObject {
 	 */
 	protected function canReadFile($filename) {
 		return is_readable($this->path . '/' . $filename);
-	}
-
-	/**
-	 * Registers the plugin's views
-	 *
-	 * @throws PluginException
-	 * @return void
-	 */
-	protected function registerViews() {
-		if (!_elgg_services()->views->registerPluginViews($this->path, $failed_dir)) {
-			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterViews',
-				array($this->getID(), $this->guid, $failed_dir));
-			throw new \PluginException($msg);
-		}
 	}
 
 	/**

@@ -37,9 +37,7 @@ class Inspector {
 	 * @return string[]
 	 */
 	public function getViewtypes() {
-		global $CONFIG;
-
-		return array_keys($CONFIG->views->locations);
+		return array_keys(_elgg_services()->views->getViewtypes());
 	}
 
 	/**
@@ -47,70 +45,12 @@ class Inspector {
 	 *
 	 * @param string $viewtype The Viewtype we wish to inspect
 	 *
-	 * @return array [view] => map of priority to ViewComponent[]
+	 * @return array [view] => map of priority to View[]
 	 */
 	public function getViews($viewtype = 'default') {
 		global $CONFIG;
 
-		$overrides = null;
-		if ($CONFIG->system_cache_enabled) {
-			$data = _elgg_services()->systemCache->load('view_overrides');
-			if ($data) {
-				$overrides = unserialize($data);
-			}
-		} else {
-			$overrides = _elgg_services()->views->getOverriddenLocations();
-		}
-
-		// maps view name to array of ViewComponent[] with priority as keys
-		$views = array();
-
-		$location = "{$CONFIG->viewpath}{$viewtype}/";
-		$core_file_list = $this->recurseFileTree($location);
-
-		// setup views array before adding extensions and plugin views
-		foreach ($core_file_list as $path) {
-			$component = ViewComponent::fromPaths($path, $location);
-			$views[$component->view] = array(500 => $component);
-		}
-
-		// add plugins and handle overrides
-		foreach ($CONFIG->views->locations[$viewtype] as $view => $location) {
-			$component = new ViewComponent();
-			$component->view = $view;
-			$component->location = "{$location}{$viewtype}/";
-			$views[$view] = array(500 => $component);
-		}
-
-		// now extensions
-		foreach ($CONFIG->views->extensions as $view => $extensions) {
-			$view_list = array();
-			foreach ($extensions as $priority => $ext_view) {
-				if (isset($views[$ext_view])) {
-					$view_list[$priority] = $views[$ext_view][500];
-				}
-			}
-			if (count($view_list) > 0) {
-				$views[$view] = $view_list;
-			}
-		}
-
-		ksort($views);
-
-		// now overrides
-		foreach ($views as $view => $view_list) {
-			if (!empty($overrides[$viewtype][$view])) {
-				$overrides_list = array();
-				foreach ($overrides[$viewtype][$view] as $i => $location) {
-					$component = new ViewComponent();
-					$component->overridden = true;
-					$component->view = $view;
-					$component->location = "{$location}{$viewtype}/";
-					$overrides_list["o:$i"] = $component;
-				}
-				$views[$view] = $overrides_list + $view_list;
-			}
-		}
+		$views = _elgg_services()->views->getViews();
 
 		// view handlers
 		$handlers = _elgg_services()->hooks->getAllHandlers();
