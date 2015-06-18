@@ -10,11 +10,6 @@ php:
 sudo: false
 
 
-# This helps builds go quicker on Travis since it enables caching of dependencies
-# http://docs.travis-ci.com/user/workers/container-based-infrastructure/
-sudo: false
-
-
 branches:
   except:
     - 1.0
@@ -35,10 +30,9 @@ matrix:
       install:
        - phpenv rehash
        - composer travis:install
-      script:
+      script: 
        - bash .scripts/travis/check_commit_msgs.sh
-       - vendor/bin/phpcs --standard=vendor/elgg/sniffs/elgg.xml --warning-severity=0 --ignore=*/tests/*,*/upgrades/*,*/deprecated* engine/classes engine/lib
-       - composer validate
+       - composer lint
        
     # Build and test javascript
     - php: 5.6
@@ -69,11 +63,7 @@ matrix:
     - php: 5.6
       env: E2E=true
       install:
-       - composer travis:install
-       - mysql -e 'create database elgg;'
-       - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
-       - mkdir "${HOME}/elgg_data/"
-       - php -f ./install/cli/travis_installer.php
+       - composer travis:install-with-mysql
        - php -S localhost:8888 index.php &
        - sleep 3 # give Web server some time to bind to sockets, etc
       script:
@@ -87,12 +77,7 @@ matrix:
 services: 
  - mysql
 
-install:
- - composer travis:install
- - mysql -e 'create database elgg;'
- - echo "USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;" | mysql -u root
- - mkdir "${HOME}/elgg_data/"
- - php -f ./install/cli/travis_installer.php
+install: composer travis:install-with-mysql
 
 script:
  - phpunit

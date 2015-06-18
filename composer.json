@@ -89,6 +89,13 @@
             "composer self-update",
             "composer global require \"fxp/composer-asset-plugin:~1.0\"",
             "composer install"
+        ],
+        "travis:install-with-mysql": [
+            "composer travis:install",
+            "mysql -e 'create database elgg;'",
+            "echo \"USE mysql; UPDATE user SET password=PASSWORD('password') WHERE user='root'; FLUSH PRIVILEGES;\" | mysql -u root",
+            "mkdir \"${HOME}/elgg_data/\"",
+            "php -f ./install/cli/travis_installer.php"
         ]
     },
     "suggest": {
