@@ -3,6 +3,7 @@ namespace Elgg\Cache;
 
 use Stash;
 use Stash\Driver;
+use Stash\Interfaces\DriverInterface;
 use Elgg\Filesystem\Directory;
 
 /**
@@ -68,7 +69,7 @@ final class StashPool implements Pool {
 	 * 
 	 * @return self
 	 */
-	public static function fromDriver(Driver $driver) {
+	public static function fromDriver(DriverInterface $driver) {
 		return new self(new Stash\Pool($driver));
 	}
 	
