@@ -12,6 +12,26 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.x to 2.0
 ===============
 
+``fxp/composer-asset-plugin`` is now required to install Elgg from source
+-------------------------------------------------------------------------
+
+We use ``fxp/composer-asset-plugin`` to manage our browser assets (js, css, html)
+with Composer, but it must be installed globally *before installing Elgg* in order
+for the ``bower-asset/*`` packages to be recognized. To install it, run:
+
+.. code:: shell
+
+    composer global require fxp/composer-asset-plugin
+
+If you don't do this before running ``composer install`` or ``composer create-project``,
+you will get an error message:
+
+.. code:: shell
+
+    [InvalidArgumentException]                   
+    Package fxp/composer-asset-plugin not found 
+
+
 All deprecated views and view arguments have been removed
 ---------------------------------------------------------
 
