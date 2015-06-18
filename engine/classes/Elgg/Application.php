@@ -297,7 +297,7 @@ class Application {
 		}
 
 		if (0 === strpos($path, '/cache/')) {
-			(new Application\CacheHandler($this, $_SERVER))->handleRequest($path);
+			(new Application\CacheHandler($this, $this->services->config, $_SERVER))->handleRequest($path);
 			return true;
 		}
 
