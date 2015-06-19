@@ -259,13 +259,13 @@ instead of an ``h1``, we could create a file at ``/mod/example/views/default/hel
 	When considering long-term maintenance, overriding views in the core and bundled plugins has a cost:
 	Upgrades may bring changes in views, and if you have overridden them, you will not get those changes.
 	
-	You may instead want to :ref:`alter the input <guides/views#altering-view-input>`
-	or the :ref:`the output <guides/views#altering-view-output>` of the view via plugin hooks.
+	You may instead want to alter :ref:`the input <guides/views#altering-view-input>`
+	or :ref:`the output <guides/views#altering-view-output>` of the view via plugin hooks.
 
 .. note::
 
 	Elgg caches view locations. This means that you should disable the system cache while developing with views.
-	When you install the changes to a production environment you mush flush the caches.
+	When you install the changes to a production environment you must flush the caches.
 
 Extending views
 ---------------
@@ -316,9 +316,10 @@ Since 1.11, before each view rendering the ``$vars`` array is filtered by the
 Each registered handler function is passed these arguments:
 
 * ``$hook`` - the string ``"view_vars"``
-* ``$type`` - the view name being rendered (the first argument passed to ``elgg_view()``)
+* ``$view_name`` - the view name being rendered (the first argument passed to ``elgg_view()``)
 * ``$returnvalue`` - the modified ``$vars`` array
 * ``$params`` - an array containing:
+
   * ``vars`` - the original ``$vars`` array, unaltered
   * ``view`` - the view name
   * ``viewtype`` - The :ref:`viewtype <guides/views#viewtypes>` being rendered
@@ -350,9 +351,10 @@ The output of each view is run through the :ref:`plugin hook <guides/hooks-list#
 Each registered handler function is passed these arguments:
 
 * ``$hook`` - the string ``"view"``
-* ``$type`` - the view name being rendered (the first argument passed to ``elgg_view()``)
+* ``$view_name`` - the view name being rendered (the first argument passed to ``elgg_view()``)
 * ``$result`` - the modified output of the view
 * ``$params`` - an array containing:
+
   * ``viewtype`` - The :ref:`viewtype <guides/views#viewtypes>` being rendered
 
 To alter the view output, the handler just needs to alter ``$returnvalue`` and return a new string.

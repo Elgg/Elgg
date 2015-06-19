@@ -13,6 +13,23 @@ use Elgg\Config;
  * @package Elgg.Core
  */
 class CacheHandler {
+	
+	public static $extensions = [
+		'bmp' => "image/bmp",
+		'css' => "text/css",
+		'gif' => "image/gif",
+		'html' => "text/html",
+		'ico' => "image/x-icon",
+		'jpeg' => "image/jpeg",
+		'jpg' => "image/jpeg",
+		'js' => "application/javascript",
+		'png' => "image/png",
+		'svg' => "image/svg+xml",
+		'swf' => "application/x-shockwave-flash",
+		'tiff' => "image/tiff",
+		'webp' => "image/webp",
+		'xml' => "text/xml",
+	];
 
 	/** @var Application */
 	private $application;
@@ -211,51 +228,24 @@ class CacheHandler {
 	 *
 	 * @param string $view The view name
 	 * 
-	 * @return string?
+	 * @return string|null
 	 */
 	protected function getContentType($view) {
-		
 		$extension = $this->getViewFileType($view);
 		
-		switch ($extension) {
-			case 'gif':
-			case 'png':
-			case 'webp':
-			case 'bmp':
-			case 'tiff':
-			case 'jpeg':
-				return "image/$extension";
-			
-			case 'jpg':
-				return "image/jpeg";
-
-			case 'ico':
-				return 'image/x-icon';
-			
-			case 'svg':
-				return 'image/svg+xml';
-			
-			case 'js':
-				return 'application/javascript';
-			
-			case 'css':
-			case 'html':
-			case 'xml':
-				return "text/$extension";
-
-			case 'swf':
-				return 'application/x-shockwave-flash';
-			default:
-				break;
+		if (isset(self::$extensions[$extension])) {
+			return self::$extensions[$extension];
+		} else {
+			return null;
 		}
 	}
 	
 	/**
 	 * Returns the type of output expected from the view.
 	 * 
-	 *  - view/name.extension returns "extension"
-	 *  - css/view views return "css"
-	 *  - js/view views return "js"
+	 *  - view/name.extension returns "extension" if "extension" is valid
+	 *  - css/view return "css"
+	 *  - js/view return "js"
 	 *  - Otherwise, returns "unknown"
 	 *
 	 * @param string $view The view name
@@ -263,15 +253,17 @@ class CacheHandler {
 	 */
 	private function getViewFileType($view) {
 		$extension = (new \SplFileInfo($view))->getExtension();
-		if ($extension) {
+		$hasValidExtension = isset(self::$extensions[$extension]);
+
+		if ($hasValidExtension) {
 			return $extension;
 		}
 		
 		if (preg_match('~(?:^|/)(css|js)(?:$|/)~', $view, $m)) {
 			return $m[1];
-		} else {
-			return 'unknown';
 		}
+		
+		return 'unknown';
 	}
 
 	/**

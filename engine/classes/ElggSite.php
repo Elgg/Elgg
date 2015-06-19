@@ -562,11 +562,11 @@ class ElggSite extends \ElggEntity {
 			'forgotpassword',
 			'changepassword',
 			'refresh_token',
-			'ajax/view/js/languages',
+			'ajax/view/languages.js',
 			'upgrade\.php',
 			'css/.*',
 			'js/.*',
-			'cache/[0-9]+/\w+/js|css/.*',
+			'cache/[0-9]+/\w+/.*',
 			'cron/.*',
 			'services/.*',
 		);

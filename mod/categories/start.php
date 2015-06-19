@@ -13,7 +13,7 @@ elgg_register_event_handler('init', 'system', 'categories_init');
  */
 function categories_init() {
 
-	elgg_extend_view('css/elgg', 'categories/css');
+	elgg_extend_view('elgg.css', 'categories/css');
 
 	elgg_register_page_handler('categories', 'categories_page_handler');
 

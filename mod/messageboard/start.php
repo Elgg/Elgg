@@ -12,10 +12,10 @@
  */
 function messageboard_init() {
 	// js
-	elgg_extend_view('js/elgg', 'messageboard/js');
+	elgg_extend_view('elgg.js', 'messageboard/js');
 
 	// css
-	elgg_extend_view('css/elgg', 'messageboard/css');
+	elgg_extend_view('elgg.css', 'messageboard/css');
 
 	elgg_register_page_handler('messageboard', 'messageboard_page_handler');
 

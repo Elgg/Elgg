@@ -34,7 +34,7 @@ function search_init() {
 	$CONFIG->search_info['max_chars'] = $ft_min_max->max;
 
 	// add in CSS for search elements
-	elgg_extend_view('css/elgg', 'search/css');
+	elgg_extend_view('elgg.css', 'search/css');
 
 	// extend view for elgg topbar search box
 	elgg_extend_view('page/elements/header', 'search/header');

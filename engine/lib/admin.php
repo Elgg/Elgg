@@ -204,7 +204,7 @@ function _elgg_admin_init() {
 	if (elgg_get_config('elgg_maintenance_mode', null)) {
 		elgg_register_plugin_hook_handler('route', 'all', '_elgg_admin_maintenance_handler', 600);
 		elgg_register_plugin_hook_handler('action', 'all', '_elgg_admin_maintenance_action_check', 600);
-		elgg_register_css('maintenance', elgg_get_simplecache_url('css/maintenance'));
+		elgg_register_css('maintenance', elgg_get_simplecache_url('maintenance.css'));
 
 		elgg_register_menu_item('topbar', array(
 			'name' => 'maintenance_mode',
@@ -244,11 +244,11 @@ function _elgg_admin_init() {
 	elgg_register_action('profile/fields/delete', '', 'admin');
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
-	elgg_register_simplecache_view('css/admin');
-	$url = elgg_get_simplecache_url('js/admin');
+	elgg_register_simplecache_view('admin.css');
+	$url = elgg_get_simplecache_url('admin.js');
 	elgg_register_js('elgg.admin', $url);
 	elgg_register_js('elgg.upgrades', 'js/lib/upgrades.js');
-	elgg_register_js('jquery.jeditable', elgg_get_simplecache_url('js/jquery.jeditable.js'));
+	elgg_register_js('jquery.jeditable', elgg_get_simplecache_url('jquery.jeditable.js'));
 
 	// administer
 	// dashboard
@@ -358,7 +358,7 @@ function _elgg_admin_init() {
  */
 function _elgg_admin_pagesetup() {
 	if (elgg_in_context('admin')) {
-		$url = elgg_get_simplecache_url('css/admin');
+		$url = elgg_get_simplecache_url('admin.css');
 		elgg_register_css('elgg.admin', $url);
 		elgg_load_css('elgg.admin');
 		elgg_unregister_css('elgg');

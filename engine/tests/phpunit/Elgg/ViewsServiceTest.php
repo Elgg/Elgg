@@ -121,5 +121,49 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$this->assertEquals("// Hello", $this->views->renderView('js/interpreted.js'));
 	}
+	
+	public function testThrowsOnCircularAliases() {
+		$this->markTestIncomplete();
+	}
+	
+	public function testEmitsDeprecationWarningWhenOldViewNameIsReferenced() {
+		$this->markTestIncomplete();
+		// elgg_view
+		// elgg_extend_view
+		// elgg_unextend_view
+		// views/*
+		// views.php
+		// elgg_get_simplecache_url
+		// elgg_set_view_location
+		// elgg_get_view_location
+	}
+	
+	/**
+	 * @dataProvider getExampleNormalizedViews
+	 */
+	public function testDefaultNormalizeBehavior($canonical, $alias) {
+		$this->assertEquals($canonical, $this->views->canonicalizeViewName($alias));
+	}
+	
+	public function getExampleNormalizedViews() {
+		return [
+			// [canonical, alias]
+			
+			// js namespace should be removed and .js added to all JS views
+			['view.js', 'js/view'],
+			['view.js', 'js/view.js'],
+			['view.css', 'js/view.css'],
+			['view.png', 'js/view.png'],
+			
+			// ".form" in this case is not an extension, just a delimiter. Ignore.
+			['jquery.form.js', 'js/jquery.form'],
+			
+			// css namespace should be removed and .css added to all CSS views
+			['view.css', 'css/view'],
+			['view.css', 'css/view.css'],
+			['view.png', 'css/view.png'],
+			['view.jpg', 'css/view.jpg'],
+		];
+	}
 }
 

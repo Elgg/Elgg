@@ -40,11 +40,11 @@ You can register a view with the Simplecache with the following function at init
 
 **Accessing the cached view**
 
-If you registered a JavaScript or CSS file with Simplecache and put in in the view folder
-``js/your_view.js`` or ``css/your_view.css`` you can very easily get the url to this cached view by calling
+If you registered a JavaScript or CSS file with Simplecache and put in the view folder as
+``your_view.js`` or ``your_view.css`` you can very easily get the url to this cached view by calling
 ``elgg_get_simplecache_url($view)``. For example:
 
 .. code:: php
 
-   $js = elgg_get_simplecache_url('js/your_view.js');
-   $css = elgg_get_simplecache_url('css/your_view.css');
+   $js = elgg_get_simplecache_url('your_view.js');
+   $css = elgg_get_simplecache_url('your_view.css');

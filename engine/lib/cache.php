@@ -105,7 +105,7 @@ function elgg_register_simplecache_view($view_name) {
  * Recommended usage is to just pass the entire view name as the first and only arg:
  *
  * ```
- * $blog_js = elgg_get_simplecache_url('js/blog/save_draft.js');
+ * $blog_js = elgg_get_simplecache_url('elgg/blog/save_draft.js');
  * $favicon = elgg_get_simplecache_url('favicon.ico');
  * ```
  * 
@@ -113,12 +113,9 @@ function elgg_register_simplecache_view($view_name) {
  * "js" or "css" as the first arg, with the rest of the view name as the second arg:
  *
  * ```
- * $blog_js = elgg_get_simplecache_url('js', 'blog/save_draft.js');
+ * $blog_js = elgg_get_simplecache_url('js', 'elgg/blog/save_draft.js');
  * ```
  * 
- * Note that with this older approach, there is no way to access cached views
- * outside of the js/ or css/ folders.
- *
  * This automatically registers the view with Elgg's simplecache.
  * 
  * @param string $view    The full view name

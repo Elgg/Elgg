@@ -16,7 +16,7 @@ class ViewFilter {
 	/**
 	 * Given the view name, returns the AMD name.
 	 * 
-	 * @param string $name The name of the view (e.g., 'js/elgg/module.js')
+	 * @param string $name The name of the view (e.g., 'elgg/module.js')
 	 * 
 	 * @return string The AMD name (e.g., 'elgg/module'), or blank for no AMD name.
 	 */

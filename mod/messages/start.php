@@ -34,8 +34,8 @@ function messages_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'messages_notifier');
 
 	// Extend system CSS with our own styles, which are defined in the messages/css view
-	elgg_extend_view('css/elgg', 'messages/css');
-	elgg_extend_view('js/elgg', 'messages/js');
+	elgg_extend_view('elgg.css', 'messages/css');
+	elgg_extend_view('elgg.js', 'messages/js');
 	
 	// Register a page handler, so we can have nice URLs
 	elgg_register_page_handler('messages', 'messages_page_handler');

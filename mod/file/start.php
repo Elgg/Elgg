@@ -20,7 +20,7 @@ function file_init() {
 	elgg_register_menu_item('site', $item);
 
 	// Extend CSS
-	elgg_extend_view('css/elgg', 'file/css');
+	elgg_extend_view('elgg.css', 'file/css');
 
 	// add enclosure to rss item
 	elgg_extend_view('extensions/item', 'file/enclosure');

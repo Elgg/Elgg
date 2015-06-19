@@ -28,7 +28,7 @@ function blog_init() {
 	elgg_register_event_handler('upgrade', 'upgrade', 'blog_run_upgrades');
 
 	// add to the main css
-	elgg_extend_view('css/elgg', 'blog/css');
+	elgg_extend_view('elgg.css', 'blog/css');
 
 	// routing of urls
 	elgg_register_page_handler('blog', 'blog_page_handler');

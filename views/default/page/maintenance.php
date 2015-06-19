@@ -13,7 +13,7 @@ $content = $vars['body'];
 
 $title = elgg_extract('title', $vars, elgg_get_site_entity()->name);
 $favicon = elgg_view('page/elements/shortcut_icon', $vars);
-$css = elgg_get_simplecache_url('css/maintenance');
+$css = elgg_get_simplecache_url('maintenance.css');
 $head = <<<__HEAD
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 	<title>$title</title>

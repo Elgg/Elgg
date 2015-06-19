@@ -55,7 +55,7 @@ Here we define a basic module that alters the page, by passing a "definition fun
 
 .. code-block:: javascript
 
-    // in views/default/js/myplugin/say_hello.js
+    // in views/default/myplugin/say_hello.js
 
     define(function(require) {
         var elgg = require("elgg");
@@ -64,8 +64,8 @@ Here we define a basic module that alters the page, by passing a "definition fun
         $('body').append(elgg.echo('hello_world'));
     });
 
-The module's name is determined by the view name, which here is ``js/myplugin/say_hello.js``.
-We strip the leading ``js/`` and the ``.js`` extension, leaving ``myplugin/say_hello``.
+The module's name is determined by the view name, which here is ``myplugin/say_hello.js``.
+We strip the ``.js`` extension, leaving ``myplugin/say_hello``.
 
 .. warning::
 
@@ -79,7 +79,7 @@ the greeting:
 
 .. code-block:: javascript
 
-    // in views/default/js/myplugin/hello.js
+    // in views/default/myplugin/hello.js
 
     define(function(require) {
         var elgg = require("elgg");
@@ -89,7 +89,7 @@ the greeting:
 
 .. code-block:: javascript
 
-    // in views/default/js/myplugin/say_hello.js
+    // in views/default/myplugin/say_hello.js
 
     define(function(require) {
         var $ = require("jquery");
@@ -102,7 +102,7 @@ Passing plugin/Elgg settings to modules
 ---------------------------------------
 
 You can use a PHP-based module to pass values from the server. To make the module ``myplugin/settings``,
-create the view file ``views/default/js/myplugin/settings.js.php`` (note the double extension
+create the view file ``views/default/myplugin/settings.js.php`` (note the double extension
 ``.js.php``).
 
 .. code-block:: php
@@ -124,7 +124,7 @@ You must also manually register the view as an external resource:
 
     <?php
     // note the view name does not include ".php"
-    elgg_register_simplecache_view('js/myplugin/settings.js');
+    elgg_register_simplecache_view('myplugin/settings.js');
 
 .. note::
 
@@ -144,7 +144,7 @@ The best way to accomplish this is by configuring the path to the file using the
 
     <?php // views.php
     return [
-      'js/underscore.js' => 'vendor/bower-asset/underscore/underscore.min.js',
+      'underscore.js' => 'vendor/bower-asset/underscore/underscore.min.js',
     ];
     
 If you've copied the script directly into your plugin instead of managing it with Composer,
@@ -154,7 +154,7 @@ you can use something like this instead:
 
     <?php // views.php
     return [
-      'js/underscore.js' => __DIR__ . '/bower_components/underscore/underscore.min.js',
+      'underscore.js' => __DIR__ . '/bower_components/underscore/underscore.min.js',
     ];
 
 That's it! Elgg will now load this file whenever the "underscore" module is requested.
@@ -165,21 +165,20 @@ Using traditional JS libraries as modules
 
 It's possible to support JavaScript libraries that do not declare themselves as AMD
 modules (i.e. they declare global variables instead) if you shim them by
-setting ``exports`` and optionally ``deps`` in ``elgg_define_js``:
+setting ``exports`` and ``deps`` in ``elgg_define_js``:
 
 .. code-block:: php
 
     // set the path, define its dependencies, and what value it returns
     elgg_define_js('jquery.form', [
-        'src' => elgg_get_simplecache_url('js/jquery.form.js'),
-        'deps' => array('jquery'),
+        'deps' => ['jquery'],
         'exports' => 'jQuery.fn.ajaxForm',
     ]);
 
 When this is requested client-side:
 
 #. The jQuery module is loaded, as it's marked as a dependency.
-#. ``https://elgg.example.org/cache/125235034/views/default/js/jquery.form.js`` is loaded and executed.
+#. ``https://elgg.example.org/cache/125235034/views/default/jquery.form.js`` is loaded and executed.
 #. The value of ``window.jQuery.fn.ajaxForm`` is returned by the module.
 
 .. warning:: Calls to ``elgg_define_js()`` must be in an ``init, system`` event handler.
@@ -190,8 +189,7 @@ Some things to note
 #. Do not use ``elgg.provide()`` anymore nor other means to attach code to ``elgg`` or other
    global objects. Use modules.
 #. Return the value of the module instead of adding to a global variable.
-#. JS and CSS views (names starting with ``js/`` or ``css/``) as well as static (.js/.css) files
-   are automatically minified and cached by Elgg's simplecache system.
+#. Static (.js,.css,etc.) files are automatically minified and cached by Elgg's simplecache system.
 
 
 Migrating JS from Elgg 1.8 to AMD / 1.9

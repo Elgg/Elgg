@@ -12,5 +12,5 @@ function custom_index_init() {
 	//   1. Elgg can only load CSS from views in the css/* folder.
 	//   2. Elgg can't do relative css inclusion.
 	// Fix this.
-	elgg_extend_view('css/elgg', 'resources/index.css');
+	elgg_extend_view('elgg.css', 'resources/index.css');
 }

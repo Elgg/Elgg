@@ -134,7 +134,7 @@ The Ajax view system works significantly differently than the action system.
    ``false`` if it can't be loaded.
  * There's no "wrapper" object placed around the view output.
  * System messages/errors shouldn't be used, as they don't display until the user loads another page.
- * If the view name begins with ``js/`` or ``css/``, a corresponding Content-Type header is added.
+ * Depending on the view's suffix (.js, .html, .css, etc.), a corresponding Content-Type header is added.
 
 .. warning::
 

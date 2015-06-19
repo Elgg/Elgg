@@ -32,7 +32,7 @@ foreach ($stylesheets as $url) {
 <script>
 	<?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
 	require = function () {
-		// handled in the view "js/elgg"
+		// handled in the view "elgg.js"
 		_require_queue.push(arguments);
 	};
 	_require_queue = [];

@@ -22,7 +22,7 @@ module.exports = function(config) {
 			'js/lib/*.js',
 
 			{pattern:'js/tests/*Test.js',included: false},
-			{pattern:'views/default/js/**/*.js',included:false},
+			{pattern:'views/default/**/*.js',included:false},
 
 			'js/tests/requirejs.config.js',
 		],

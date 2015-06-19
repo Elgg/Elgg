@@ -8,11 +8,11 @@
 elgg_register_event_handler('init', 'system', 'ckeditor_init');
 
 function ckeditor_init() {
-	elgg_extend_view('css/elgg', 'css/ckeditor.css');
-	elgg_extend_view('css/admin', 'css/ckeditor.css');
+	elgg_extend_view('elgg.css', 'ckeditor.css');
+	elgg_extend_view('admin.css', 'ckeditor.css');
 
-	elgg_extend_view('css/elgg/wysiwyg.css', 'css/elements/reset', 100);
-	elgg_extend_view('css/elgg/wysiwyg.css', 'css/elements/typography', 100);
+	elgg_extend_view('elgg/wysiwyg.css', 'elements/reset.css', 100);
+	elgg_extend_view('elgg/wysiwyg.css', 'elements/typography.css', 100);
 
 	elgg_define_js('ckeditor', array(
 		'exports' => 'CKEDITOR',
@@ -23,11 +23,11 @@ function ckeditor_init() {
 	));
 
 	// need to set basepath early
-	elgg_extend_view('js/elgg', 'js/elgg/ckeditor/set-basepath.js');
+	elgg_extend_view('elgg.js', 'elgg/ckeditor/set-basepath.js');
 
 	elgg_extend_view('input/longtext', 'ckeditor/init');
 
-	elgg_extend_view('js/embed/embed', 'js/elgg/ckeditor/insert.js');
+	elgg_extend_view('embed/embed.js', 'elgg/ckeditor/insert.js');
 
 	elgg_register_plugin_hook_handler('register', 'menu:longtext', 'ckeditor_longtext_menu');
 }

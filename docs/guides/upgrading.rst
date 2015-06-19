@@ -12,6 +12,61 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.x to 2.0
 ===============
 
+JS and CSS views have been moved out of the js/ and css/ directories
+--------------------------------------------------------------------
+
+They also have been given .js and .css extensions respectively if they didn't
+already have them:
+
+================= =============
+Old view          New view
+================= =============
+``js/view``       ``view.js``
+``js/other.js``   ``other.js``
+``css/view``      ``view.css``
+``css/other.css`` ``other.css``
+``js/img.png``    ``img.png``
+================= =============
+
+The main benefit this brings is being able to co-locate related assets.
+So a template (``view.php``) can have its CSS/JS dependencies right next to it
+(``view.css``, ``view.js``).
+
+Care has been taken to make this change as backwards-compatible as possible,
+so you should not need to update any view references right away. However, you are
+certainly encouraged to move your JS and CSS views to their new, canonical
+locations.
+
+Practically speaking, this carries a few gotchas:
+
+The ``view_vars, $view_name`` and ``view, $view_name`` hooks will operate on the
+*canonical* view name:
+
+.. code:: php
+
+    elgg_register_plugin_hook_handler('view', 'css/elgg', function($hook, $view_name) {
+      assert($view_name == 'elgg.css') // not "css/elgg"
+    });
+    
+Using the ``view, all`` hook and checking for individual views may not work as intended:
+
+.. code:: php
+
+    elgg_register_plugin_hook_handler('view', 'all', function($hook, $view_name) {
+      // Won't work because "css/elgg" was aliased to "elgg.css"
+      if ($view_name == 'css/elgg') {
+        // Never executed...
+      }
+      
+      // Won't work because no canonical views start with css/* anymore
+      if (strpos($view_name, 'css/') === 0) {
+        // Never executed...
+      }
+    });
+
+Please let us know about any other BC issues this change causes.
+We'd like to fix as many as possible to make the transition smooth.
+
 ``fxp/composer-asset-plugin`` is now required to install Elgg from source
 -------------------------------------------------------------------------
 

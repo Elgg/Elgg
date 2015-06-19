@@ -12,19 +12,21 @@ namespace Elgg\Cache;
  */
 class SimpleCache {
 	
-	/**
-	 * Global Elgg configuration
-	 * 
-	 * @var \stdClass
-	 */
+	/** @var \stdClass */
 	private $CONFIG;
+	
+	/** @var \Elgg\ViewsService */
+	private $views;
 
 	/**
 	 * Constructor
+	 * 
+	 * @param \stdClass          $CONFIG Elgg's global configuration
+	 * @param \Elgg\ViewsService $views  Elgg's views registry
 	 */
-	public function __construct() {
-		global $CONFIG;
+	public function __construct(\stdClass $CONFIG, \Elgg\ViewsService $views) {
 		$this->CONFIG = $CONFIG;
+		$this->views = $views;
 	}
 
 	/**
@@ -45,6 +47,7 @@ class SimpleCache {
 	 * @see elgg_get_simplecache_url()
 	 */
 	function registerView($view_name) {
+		$view_name = $this->views->canonicalizeViewName($view_name);
 		elgg_register_external_view($view_name, true);
 	}
 	
@@ -54,7 +57,7 @@ class SimpleCache {
 	 * Recommended usage is to just pass the entire view name as the first and only arg:
 	 *
 	 * ```
-	 * $blog_js = $simpleCache->getUrl('js/blog/save_draft.js');
+	 * $blog_js = $simpleCache->getUrl('blog/save_draft.js');
 	 * $favicon = $simpleCache->getUrl('favicon.ico');
 	 * ```
 	 * 
@@ -64,9 +67,6 @@ class SimpleCache {
 	 * ```
 	 * $blog_js = $simpleCache->getUrl('js', 'blog/save_draft.js');
 	 * ```
-	 * 
-	 * Note that with this older approach, there is no way to access cached views
-	 * outside of the js/ or css/ folders.
 	 *
 	 * This automatically registers the view with Elgg's simplecache.
 	 * 
@@ -76,18 +76,20 @@ class SimpleCache {
 	 * @return string
 	 */
 	function getUrl($view, $subview = '') {
-		// handle `getUrl('js', 'js/blog/save_draft.js')`
+		// handle `getUrl('js', 'js/blog/save_draft')`
 		if (($view === 'js' || $view === 'css') && 0 === strpos($subview, $view . '/')) {
 			$view = $subview;
 			$subview = '';
 		}
 		
-		// handle `getUrl('js', 'blog/save_draft.js')`
+		// handle `getUrl('js', 'blog/save_draft')`
 		if (!empty($subview)) {
 			$view = "$view/$subview";
 		}
 	
-		// should be normalized to canonical form by now: `getUrl('js/blog/save_draft.js')`
+		$view = $this->views->canonicalizeViewName($view);
+
+		// should be normalized to canonical form by now: `getUrl('blog/save_draft.js')`
 		$this->registerView($view);
 		return $this->getRoot() . $view;
 	}
