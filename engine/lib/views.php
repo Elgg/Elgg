@@ -269,20 +269,6 @@ function elgg_unregister_external_view($view) {
 	}
 }
 
-/**
- * Returns the file location for a view.
- *
- * @warning This doesn't check if the file exists, but only
- * constructs (or extracts) the path and returns it.
- *
- * @param string $view     The view.
- * @param string $viewtype The viewtype
- *
- * @return string
- */
-function elgg_get_view_location($view, $viewtype = '') {
-	return _elgg_services()->views->getViewLocation($view, $viewtype);
-}
 
 /**
  * Set an alternative base location for a view.
