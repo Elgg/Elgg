@@ -53,6 +53,15 @@ define(function(require) {
 
 		// disable simple cache compress settings if simple cache is off
 		$('[name=simplecache_enabled]').click(simplecacheToggle);
+				
+		// plugin category filtering
+		$(document).on('click', '.elgg-admin-plugins-categories a', filterPluginCategory);
+		
+		// plugin details selection
+		$(document).on('click', '.elgg-plugin-details-container > ul a', showPluginDetails);
+		
+		// plugin screenshots
+		$(document).on('mouseenter', '.elgg-plugin-details-screenshots .elgg-plugin-screenshot', showPluginScreenshot);
 	};
 
 	/**
@@ -180,6 +189,51 @@ define(function(require) {
 				}
 			}
 		}
+	};
+	
+	/**
+	 * Filters the plugin list based on a selected category
+	 *
+	 * @return void
+	 */
+	function filterPluginCategory (e) {
+		e.preventDefault();
+		
+		// remove selected state from all buttons
+		$(".elgg-admin-plugins-categories li").removeClass("elgg-state-selected");
+	
+		// show plugins with the selected category
+		$(".elgg-plugin").hide();
+		$(".elgg-plugin-category-" + $(this).attr("rel")).show();
+		$(this).parent().addClass("elgg-state-selected");
+	};
+	
+	/**
+	 * Shows the details of the selected plugin
+	 *
+	 * @return void
+	 */
+	function showPluginDetails () {
+		// remove selected state from all buttons
+		$(".elgg-plugin-details-container > ul > li").removeClass("elgg-state-selected");
+		
+		$(".elgg-plugin-details-container > div > div").hide();
+		$(".elgg-plugin-details-container ." + $(this).attr("rel")).show();
+		
+		$(this).parent().addClass("elgg-state-selected");
+	};
+	
+	/**
+	 * Handles mouseenters to show plugin screenshots
+	 *
+	 * @return void
+	 */
+	function showPluginScreenshot () {
+		$(this).parent().find(".elgg-plugin-screenshot").removeClass("elgg-state-selected");
+		$(this).addClass("elgg-state-selected");
+		
+		$(".elgg-plugin-details-screenshots > div > img").hide();
+		$(".elgg-plugin-details-screenshots > div > img[rel='" + $(this).attr("rel") + "']").show();
 	};
 
 	init();

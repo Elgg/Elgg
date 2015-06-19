@@ -78,9 +78,9 @@ function _elgg_generate_plugin_entities() {
 
 /**
  * Cache a reference to this plugin by its ID
- * 
+ *
  * @param \ElggPlugin $plugin
- * 
+ *
  * @access private
  */
 function _elgg_cache_plugin_by_id(\ElggPlugin $plugin) {
@@ -221,7 +221,7 @@ function _elgg_get_plugins_provides($type = null, $name = null) {
 
 /**
  * Deletes all cached data on plugins being provided.
- * 
+ *
  * @return boolean
  * @since 1.9.0
  * @access private
@@ -490,6 +490,7 @@ function _elgg_plugins_init() {
 
 	if (elgg_is_admin_logged_in()) {
 		elgg_register_ajax_view('object/plugin/full');
+		elgg_register_ajax_view('object/plugin/details');
 	}
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_plugins_test');
