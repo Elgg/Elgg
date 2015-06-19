@@ -35,9 +35,10 @@ $app = new \Elgg\Application();
 $app->loadSettings();
 
 $data_root = call_user_func(function () use ($app) {
-	$dataroot = _elgg_services()->config->getVolatile('dataroot');
-	if ($dataroot) {
-		return $dataroot;
+	// TODO(evan): Remove use of global $CONFIG
+	global $CONFIG;
+	if (isset($CONFIG->dataroot)) {
+		return $CONFIG->dataroot;
 	}
 
 	// must get from DB
