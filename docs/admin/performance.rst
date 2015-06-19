@@ -83,6 +83,18 @@ It is recommended that you do this on your development platform if you are writi
 This cache is automatically flushed when a plugin is enabled, disabled or reordered,
 or when upgrade.php is executed.
 
+For best performance, you can also create a symlink from ``/cache/`` in your www
+root dir to the ``/views_simplecache/`` directory in the data directory you
+configured when you installed Elgg:
+
+.. code:: shell
+
+    cd /path/to/wwwroot/
+    ln -s /path/to/dataroot/views_simplecache/ cache
+
+If your webserver supports following symlinks, this will serve files straight off
+disk without booting up PHP each time.
+
 System cache
 ------------
 

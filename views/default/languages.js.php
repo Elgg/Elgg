@@ -33,4 +33,4 @@ if ($language != 'en' && isset($all_translations[$language])) {
 }
 
 ?>
-define(<?php echo json_encode($translations); ?>);
+define(<?php echo json_encode($translations, JSON_PRETTY_PRINT | JSON_UNESCAPED_SLASHES); ?>);

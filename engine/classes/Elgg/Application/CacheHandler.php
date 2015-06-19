@@ -72,9 +72,11 @@ class CacheHandler {
 		$viewtype = $request['viewtype'];
 
 		$contentType = $this->getContentType($view);
-		if (!empty($contentType)) {
-			header("Content-Type: $contentType", true);
+		if (empty($contentType)) {
+			$this->send403("Asset must have a valid file extension");
 		}
+
+		header("Content-Type: $contentType", true);
 
 		// this may/may not have to connect to the DB
 		$this->setupSimplecache();
@@ -85,7 +87,7 @@ class CacheHandler {
 			$this->application->bootCore();
 
 			if (!\_elgg_is_view_cacheable($view)) {
-				$this->send403();
+				$this->send403("Requested view is not an asset");
 			} else {
 				echo $this->renderView($view, $viewtype);
 			}
@@ -100,30 +102,30 @@ class CacheHandler {
 			exit;
 		}
 
-		$filename = $config->getVolatile('dataroot') . 'views_simplecache/' . md5("$viewtype|$view");
+		$this->application->bootCore();
+
+		elgg_set_viewtype($viewtype);
+		if (!\_elgg_is_view_cacheable($view)) {
+			$this->send403("Requested view is not an asset");
+		}
+
+		$lastcache = (int)$config->get('lastcache');
+
+		$filename = $config->getVolatile('dataroot') . "views_simplecache/$lastcache/$viewtype/$view";
 		if (file_exists($filename)) {
 			$this->sendCacheHeaders($etag);
 			readfile($filename);
 			exit;
 		}
 
-		$this->application->bootCore();
-
-		elgg_set_viewtype($viewtype);
-		if (!\_elgg_is_view_cacheable($view)) {
-			$this->send403();
-		}
-
-		$cache_timestamp = (int)$config->get('lastcache');
-
-		if ($cache_timestamp == $ts) {
+		if ($lastcache == $ts) {
 			$this->sendCacheHeaders($etag);
 
 			$content = $this->getProcessedView($view, $viewtype);
 
-			$dir_name = $config->getDataPath() . 'views_simplecache/';
+			$dir_name = dirname($filename);
 			if (!is_dir($dir_name)) {
-				mkdir($dir_name, 0700);
+				mkdir($dir_name, 0700, true);
 			}
 
 			file_put_contents($filename, $content);

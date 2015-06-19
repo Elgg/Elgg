@@ -146,8 +146,7 @@ class SimpleCache {
 			_elgg_services()->datalist->set('simplecache_enabled', 0);
 			_elgg_services()->config->set('simplecache_enabled', 0);
 	
-			// purge simple cache
-			_elgg_rmdir(_elgg_services()->config->getDataPath() . "views_simplecache");
+			$this->invalidate();
 		}
 	}
 	
@@ -158,7 +157,6 @@ class SimpleCache {
 	 * @return bool
 	 */
 	function invalidate() {
-		_elgg_rmdir("{$this->CONFIG->dataroot}views_simplecache");
 		mkdir("{$this->CONFIG->dataroot}views_simplecache");
 	
 		$time = time();

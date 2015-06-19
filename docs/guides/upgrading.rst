@@ -12,6 +12,23 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.x to 2.0
 ===============
 
+Cacheable views must have a file extension in their names
+---------------------------------------------------------
+
+This requirement makes it possibile for us to serve assets directly
+from disk for performance, instead of serving them through PHP.
+
+It also makes it much easier to explore the available cached resources
+by navigating to dataroot/views_simplecache and browsing around.
+
+ * Bad: ``my/cool/template``
+ * Good: ``my/cool/template.html``
+
+We now cache assets by ``"$viewtype/$view"``, not ``md5("$viewtype|$view")``,
+which can result in conflicts between cacheable views that don't have file extensions
+to disambiguate files from directories.
+
+
 
 Dropped ``jquery-migrate`` and upgraded ``jquery`` to ^2.1.4
 ------------------------------------------------------------
