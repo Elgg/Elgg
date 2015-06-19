@@ -172,6 +172,8 @@ class Application {
 			'deprecated-1.8.php',
 			'deprecated-1.9.php',
 			'deprecated-1.10.php',
+			'deprecated-1.11.php',
+			'deprecated-1.12.php',
 		);
 
 		// isolate global scope
