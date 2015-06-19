@@ -195,7 +195,7 @@ p {
 	margin: 8px 8px 0 0;
 }
 .elgg-menu-user,
-.elgg-menu-admin-header, 
+.elgg-menu-admin-header,
 .elgg-menu-user a,
 .elgg-menu-admin-header a {
 	color: #999999;
@@ -350,7 +350,7 @@ a.elgg-maintenance-mode-warning {
 }
 .elgg-module-popup {
 	background-color: white;
-	border: 1px solid #ccc;	
+	border: 1px solid #ccc;
 	z-index: 9999;
 	margin-bottom: 0;
 	padding: 5px;
@@ -507,7 +507,7 @@ input[type="radio"] {
 
 select {
 	max-width: 100%;
-	padding: 4px; 
+	padding: 4px;
 }
 
 .elgg-fieldset {
@@ -1426,14 +1426,33 @@ a.elgg-widget-collapsed:before {
 /* ***************************************
 	PLUGINS
 **************************************** */
+
+.elgg-admin-plugins-categories li {
+	padding-right: 5px;
+}
 .elgg-plugin {
-	border: 1px solid #999;
-	margin: 0 0 5px;
-	padding: 0 7px 4px 10px;
+	border: 1px solid #CCC;
+	padding: 0 5px;
 	border-radius: 5px;
+}
+.elgg-plugin:hover {
+	border-color: #999;
+}
+.elgg-plugin .elgg-head {
+	white-space: nowrap;
 }
 .elgg-plugin.elgg-state-draggable > .elgg-image-block .elgg-head {
 	cursor: move;
+}
+.elgg-plugin > .elgg-image-block > .elgg-image {
+	margin-right: 10px;
+    min-width: 120px;
+    text-align: center;
+}
+.elgg-plugin > .elgg-image-block > .elgg-image .elgg-button {
+	display: block;
+	margin: 0;
+	padding: 0;
 }
 .elgg-plugin p {
 	margin: 0;
@@ -1442,27 +1461,49 @@ a.elgg-widget-collapsed:before {
 	color: black;
 	padding-bottom: 10px;
 }
+
+.elgg-plugin-list-description {
+	display: inline-block;
+	color: #999;
+}
+
+.elgg-state-active .elgg-plugin-list-reordering {
+	background: white;
+}
+
+.elgg-state-inactive .elgg-plugin-list-reordering {
+	background: #EEE;
+}
+
+.elgg-plugin.elgg-state-active {
+	background: white;
+}
+.elgg-plugin.elgg-state-inactive {
+	background: #EEE;
+}
+
+.elgg-plugin.elgg-state-cannot-activate,
+.elgg-plugin.elgg-state-cannot-activate .elgg-plugin-list-reordering {
+	background: #FBEDB5;
+}
+
+.elgg-plugin-list-reordering {
+	float: right;
+	display: none;
+	position: relative;
+}
+.elgg-plugin:hover .elgg-plugin-list-reordering {
+	display: block;
+}
+
+.elgg-plugin-list-reordering li {
+	float:left;
+	margin-left: 5px;
+}
+
 .elgg-plugin-settings {
 	font-weight: normal;
 	font-size: 0.9em;
-}
-.elgg-plugin-screenshot {
-	display: inline;
-}
-.elgg-plugin-screenshot img {
-	border: 1px solid #999;
-}
-.elgg-plugin-screenshot-lightbox {
-	display: block;
-	position: absolute;
-	width: 99%;
-	text-align: center;
-	background-color: white;
-	border: 1px solid #999;
-	border-radius: 8px;
-}
-.elgg-plugin-screenshot-lightbox h2 {
-	color: black;
 }
 .elgg-plugin-contributors {
 	list-style-position: inside;
@@ -1488,12 +1529,6 @@ a.elgg-widget-collapsed:before {
 .elgg-plugin-contributors dd.elgg-plugin-contributor-description:after {
 	content: '';
 }
-.elgg-plugin.elgg-state-active {
-	background: white;
-}
-.elgg-plugin.elgg-state-inactive {
-	background: #dedede;
-}
 .elgg-plugin .elgg-state-error {
 	background: #fbe3e4;
 	color: #8a1f11;
@@ -1516,13 +1551,52 @@ ul.elgg-plugin-categories, ul.elgg-plugin-categories > li,
 ul.elgg-plugin-resources, ul.elgg-plugin-resources > li {
 	display: inline;
 }
-.elgg-plugin-category-bundled {
-	border-width: 2px;
-	border-color: #0054A7;
-}
+
 .elgg-plugin .elgg-menu-hz > li:after {
 	content: ",";
 	padding-right: 10px;
+}
+
+.elgg-module-plugin-details .elgg-plugin {
+	border: none;
+	margin: 0;
+	padding: 0;
+}
+
+.elgg-module-plugin-details {
+	width: 600px;
+	min-height: 500px;
+}
+
+.elgg-module-plugin-details .elgg-tabs a {
+	cursor: pointer;
+}
+
+.elgg-plugin-details-screenshots > ul {
+	text-align: center;
+}
+
+.elgg-plugin-details-screenshots > div {
+	text-align: center;
+}
+
+.elgg-plugin-details-screenshots > div > img {
+	max-height: 380px;
+	max-width: 480px;
+}
+
+.elgg-plugin-details-screenshots > div > img.elgg-state-selected {
+	display: inline-block;
+}
+.elgg-plugin-details-screenshots > ul .elgg-plugin-screenshot {
+	display: inline;
+}
+.elgg-plugin-details-screenshots > ul .elgg-plugin-screenshot img {
+	height: 50px;
+	border: 1px solid #ccc;
+}
+.elgg-plugin-details-screenshots > ul .elgg-plugin-screenshot.elgg-state-selected img {
+	border: 1px solid #999;
 }
 
 /****************************************
@@ -1732,7 +1806,7 @@ html {
 .elgg-admin-button-nav {
 	display: none;
 	float: right;
-	margin: 6px 0 0 10px;	
+	margin: 6px 0 0 10px;
 	cursor: pointer;
 }
 .elgg-admin-button-nav:hover .icon-bar {
@@ -1740,7 +1814,7 @@ html {
 }
 .elgg-admin-button-nav .icon-bar {
 	background-color: #F5F5F5;
-	border-radius: 1px 1px 1px 1px;	
+	border-radius: 1px 1px 1px 1px;
 	display: block;
 	height: 3px;
 	width: 26px;
@@ -1765,7 +1839,7 @@ html {
 	}
 }
 @media (max-width: 768px) {
-	.elgg-admin-button-nav {		
+	.elgg-admin-button-nav {
 		display: block;
 	}
 	.elgg-heading-site {
