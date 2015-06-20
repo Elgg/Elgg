@@ -135,53 +135,37 @@ You must also manually register the view as an external resource:
 Setting the URL of a module
 ---------------------------
 
-You may have a script outside your views you wish to make available as a module.
+You may have an AMD script outside your views you wish to make available as a module.
 
-The best way to accomplish this is simply to include the script contents in the appropriate view:
+The best way to accomplish this is by configuring the path to the file using the
+``views.php`` file in the root of your plugin:
 
 .. code-block:: php
 
-    <?php
-    // views/default/js/underscore.js.php
-    readfile(elgg_get_root_path() . '/vendor/bower-asset/underscore/underscore.min.js');
+    <?php // views.php
+    return [
+      'js/underscore.js' => 'vendor/bower-asset/underscore/underscore.min.js',
+    ];
     
 If you've copied the script directly into your plugin instead of managing it with Composer,
 you can use something like this instead:
 
 .. code-block:: php
 
-    <?php
-    // views/default/js/underscore.js.php
-    readfile(elgg_get_plugins_path() . /myplugin/vendors/underscore/underscore.min.js');
+    <?php // views.php
+    return [
+      'js/underscore.js' => __DIR__ . '/bower_components/underscore/underscore.min.js',
+    ];
 
-In your PHP ``init, system`` event handler, you can use ``elgg_define_js()`` to register it as a module:
-
-.. code-block:: php
-
-    <?php
-    elgg_define_js('underscore', [
-        'src' => elgg_get_simplecache_url('js/underscore.js'),
-    ]);
-
-.. note::
-
-    The ``src`` option in ``elgg_define_js()`` is passed through ``elgg_normalize_url``, so you can use paths
-    relative to the site URL.
-
-In this case, underscore actually already registers itself as an AMD module,
-so actually all you have to do is mark the view as cacheable:
-
-.. code-block:: php
-
-    // in your "init, system" event handler
-    elgg_register_simplecache_view('js/underscore.js');
+That's it! Elgg will now load this file whenever the "underscore" module is requested.
 
 
 Using traditional JS libraries as modules
 -----------------------------------------
 
-JavaScript libraries that define global resources can also be defined as AMD modules if you shim them by
-setting ``exports`` and optionally ``deps``:
+It's possible to support JavaScript libraries that do not declare themselves as AMD
+modules (i.e. they declare global variables instead) if you shim them by
+setting ``exports`` and optionally ``deps`` in ``elgg_define_js``:
 
 .. code-block:: php
 
