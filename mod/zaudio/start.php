@@ -14,11 +14,9 @@ function zaudio_init() {
 	elgg_extend_view('css/elgg', 'zaudio/css');
 
 	elgg_define_js('AudioPlayer', [
-		'src' => 'mod/zaudio/audioplayer/audio-player.20150521.min.js',
 		'exports' => 'AudioPlayer',
 	]);
 
 	// leave library registered for BC
-	$js_url = elgg_get_site_url() . 'mod/zaudio/audioplayer/audio-player.20150521.min.js';
-	elgg_register_js('elgg.zaudio', $js_url);
+	elgg_register_js('elgg.zaudio', elgg_get_simplecache_url('js/AudioPlayer.js'));
 }

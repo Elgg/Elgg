@@ -239,8 +239,8 @@ function file_owner_block_menu($hook, $type, $return, $params) {
 /**
  * Registers page menu items for file type filtering and returns a view
  *
- * @param int       $container_guid The GUID of the container of the files
- * @param bool      $friends        Whether we're looking at the container or the container's friends
+ * @param int  $container_guid The GUID of the container of the files
+ * @param bool $friends        Whether we're looking at the container or the container's friends
  * 
  * @return string The typecloud
  */
@@ -414,7 +414,7 @@ function file_set_icon_url($hook, $type, $url, $params) {
 			$ext = '';
 		}
 
-		$url = "mod/file/graphics/icons/{$type}{$ext}.gif";
+		$url = elgg_get_simplecache_url("file/icons/{$type}{$ext}.gif");
 		$url = elgg_trigger_plugin_hook('file:icon:url', 'override', $params, $url);
 		return $url;
 	}

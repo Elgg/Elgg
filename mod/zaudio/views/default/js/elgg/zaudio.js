@@ -7,7 +7,7 @@ define(function (require) {
 	// for unique IDs
 	var i = 0;
 
-	AudioPlayer.setup(elgg.get_site_url() + "mod/zaudio/audioplayer/player.20150521.swf", {width: 290});
+	AudioPlayer.setup(elgg.get_simplecache_url('AudioPlayer.swf'), {width: 290});
 
 	function embed(element) {
 		var config = $(element).data().zaudioPlayer;

@@ -3,7 +3,7 @@ define(function(require) {
 	var $ = require('jquery'); require('jquery.ckeditor');
 	var CKEDITOR = require('ckeditor');
 
-	CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_site_url() + 'mod/ckeditor/views/default/js/elgg/ckeditor/blockimagepaste.js', '');
+	CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_simplecache_url('js/elgg/ckeditor/blockimagepaste.js'), '');
 	
 	var elggCKEditor = {
 

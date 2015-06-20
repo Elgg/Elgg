@@ -242,7 +242,9 @@ class CacheHandler {
 			case 'html':
 			case 'xml':
 				return "text/$extension";
-			
+
+			case 'swf':
+				return 'application/x-shockwave-flash';
 			default:
 				break;
 		}

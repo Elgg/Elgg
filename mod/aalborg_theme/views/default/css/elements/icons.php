@@ -110,13 +110,13 @@
 .elgg-icon-hover-menu-hover,
 .elgg-icon-hover-menu:hover,
 :focus > .elgg-icon-hover-menu {
-	background: transparent url(<?php echo elgg_get_site_url();?>mod/aalborg_theme/graphics/avatar_menu_arrows.png) no-repeat;
+	background: transparent url(<?= elgg_get_simplecache_url('aalborg_theme/avatar_menu_arrows.png') ?>) no-repeat;
 	background-position: right bottom;
 	width: 100%;
 	height: 100%;
 }
 .elgg-icon-hover-menu {
-	background: transparent url(<?php echo elgg_get_site_url();?>mod/aalborg_theme/graphics/avatar_menu_arrows.png) no-repeat;
+	background: transparent url(<?= elgg_get_simplecache_url('aalborg_theme/avatar_menu_arrows.png') ?>) no-repeat;
 	background-position: right bottom;
 	width: 100%;
 	height: 100%;

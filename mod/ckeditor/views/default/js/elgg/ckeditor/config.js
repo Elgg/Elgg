@@ -13,7 +13,7 @@ define(function(require) {
 		language: elgg.get_language(),
 		skin: 'moono',
 		uiColor: '#EEEEEE',
-		contentsCss: elgg.get_simplecache_url('css', 'elgg/wysiwyg.css'),
+		contentsCss: elgg.get_simplecache_url('css/elgg/wysiwyg.css'),
 		disableNativeSpellChecker: false,
 		disableNativeTableHandles: false,
 		removeDialogTabs: 'image:advanced;image:Link;link:advanced;link:target',
