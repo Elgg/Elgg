@@ -473,6 +473,3 @@ init, system
 
 ready, system
    This hook is fired when the system has fully booted.
-
-getOptions, ui.popup
-   This hook is fired for pop up displays ("rel"="popup") and allows for customized placement options.

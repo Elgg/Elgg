@@ -231,7 +231,7 @@ html {
 		display: none;
 		width: 100%;
 	}
-	#login-dropdown a {
+	#login-dropdown > a {
 		padding: 10px 18px;
 	}
 	.elgg-menu-site {

@@ -18,8 +18,6 @@ elgg.ui.init = function () {
 
 	$('[rel=toggle]').live('click', elgg.ui.toggles);
 
-	$('[rel=popup]').live('click', elgg.ui.popupOpen);
-
 	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
 
     $('*[data-confirm], .elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
@@ -73,106 +71,6 @@ elgg.ui.toggles = function(event) {
 			$elem.toggle();
 		}
 	});
-};
-
-/**
- * Pops up an element based on clicking a separate element
- *
- * Set the rel="popup" on the popper and set the href to target the
- * item you want to toggle (<a rel="popup" href="#id-of-target">)
- *
- * This function emits the getOptions, ui.popup hook that plugins can register for to provide custom
- * positioning for elements.  The handler is passed the following params:
- *	targetSelector: The selector used to find the popup
- *	target:         The popup jQuery element as found by the selector
- *	source:         The jquery element whose click event initiated a popup.
- *
- * The return value of the function is used as the options object to .position().
- * Handles can also return false to abort the default behvior and override it with their own.
- *
- * @param {Object} event
- * @return void
- */
-elgg.ui.popupOpen = function(event) {
-	event.preventDefault();
-	event.stopPropagation();
-
-	var target = elgg.getSelectorFromUrlFragment($(this).toggleClass('elgg-state-active').attr('href'));
-	var $target = $(target);
-
-	// emit a hook to allow plugins to position and control popups
-	var params = {
-		targetSelector: target,
-		target: $target,
-		source: $(this)
-	};
-
-	var options = {
-		my: 'center top',
-		at: 'center bottom',
-		of: $(this),
-		collision: 'fit fit'
-	};
-
-	options = elgg.trigger_hook('getOptions', 'ui.popup', params, options);
-
-	// allow plugins to cancel event
-	if (!options) {
-		return;
-	}
-
-	// hide if already open
-	if ($target.is(':visible')) {
-		$target.fadeOut();
-		$('body').die('click', elgg.ui.popupClose);
-		return;
-	}
-
-	$target.appendTo('body')
-		.fadeIn()
-		.position(options);
-
-	$('body')
-		.die('click', elgg.ui.popupClose)
-		.live('click', elgg.ui.popupClose);
-};
-
-/**
- * Catches clicks that aren't in a popup and closes all popups.
- */
-elgg.ui.popupClose = function(event) {
-	$eventTarget = $(event.target);
-	var inTarget = false;
-	var $popups = $('[rel=popup]');
-
-	// if the click event target isn't in a popup target, fade all of them out.
-	$popups.each(function(i, e) {
-		var target = elgg.getSelectorFromUrlFragment($(e).attr('href')) + ':visible';
-		var $target = $(target);
-
-		if (!$target.is(':visible')) {
-			return;
-		}
-
-		// didn't click inside the target
-		if ($eventTarget.closest(target).length > 0) {
-			inTarget = true;
-			return false;
-		}
-	});
-
-	if (!inTarget) {
-		$popups.each(function(i, e) {
-			var $e = $(e);
-			var $target = $(elgg.getSelectorFromUrlFragment($e.attr('href')) + ':visible');
-			if ($target.length > 0) {
-				$target.fadeOut();
-				$e.removeClass('elgg-state-active');
-			}
-		});
-
-		$('body').die('click', elgg.ui.popClose);
-	}
 };
 
 /**
@@ -292,25 +190,6 @@ elgg.ui.requiresConfirmation = function(e) {
 	if (!confirm(confirmText)) {
 		e.preventDefault();
 	}
-};
-
-/**
- * Repositions the login popup
- *
- * @param {String} hook    'getOptions'
- * @param {String} type    'ui.popup'
- * @param {Object} params  An array of info about the target and source.
- * @param {Object} options Options to pass to
- *
- * @return {Object}
- */
-elgg.ui.loginHandler = function(hook, type, params, options) {
-	if (params.target.attr('id') == 'login-dropdown-box') {
-		options.my = 'right top';
-		options.at = 'right bottom';
-		return options;
-	}
-	return null;
 };
 
 /**
@@ -474,5 +353,4 @@ elgg.ui.initAccessInputs = function () {
 
 elgg.register_hook_handler('init', 'system', elgg.ui.init);
 elgg.register_hook_handler('init', 'system', elgg.ui.initDatePicker);
-elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.loginHandler);
 elgg.ui.registerTogglableMenuItems('add-friend', 'remove-friend');
