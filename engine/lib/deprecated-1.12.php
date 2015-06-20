@@ -34,7 +34,11 @@ function set_template_handler($function_name) {
 }
 
 /**
- * Returns the file location for a view.
+ * Get the views/ directory in which the view might (or might not) be found
+ *
+ * E.g. elgg_get_view_location('foo.css') might return "/path/to/mod/example/views/" but the view file
+ * itself may be at "default/foo.css" or "default/foo.css.php" within that. The function might return the core
+ * views/ directory if it doesn't know anything about the view.
  *
  * @warning This doesn't check if the file exists, but only
  * constructs (or extracts) the path and returns it.
@@ -46,6 +50,6 @@ function set_template_handler($function_name) {
  * @deprecated 1.12 This function is going away in 2.0.
  */
 function elgg_get_view_location($view, $viewtype = '') {
-	elgg_deprecated_notice("elgg_get_view_location() is going away in 2.0.", "1.12");
+	elgg_deprecated_notice(__FUNCTION__ . " is going away in 2.0.", "1.12");
 	return _elgg_services()->views->getViewLocation($view, $viewtype);
 }
