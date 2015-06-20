@@ -1,14 +1,15 @@
 <?php
 /**
  * Members index
- *
- * @uses $vars['page'] The URL segment after members/
  */
+
+// The URL segment after members/
+$page = get_input('page');
 
 $tabs = elgg_trigger_plugin_hook('members:config', 'tabs', null, array());
 
 foreach ($tabs as $type => $values) {
-	$tabs[$type]['selected'] = ($vars['page'] == $type);
+	$tabs[$type]['selected'] = ($page == $type);
 }
 $filter = elgg_view('navigation/tabs', array('tabs' => $tabs));
 
@@ -16,12 +17,12 @@ $params = array(
 	'options' => array('type' => 'user', 'full_view' => false),
 );
 
-$content = elgg_trigger_plugin_hook('members:list', $vars['page'], $params, null);
+$content = elgg_trigger_plugin_hook('members:list', $page, $params, null);
 if ($content === null) {
 	forward('', '404');
 }
 
-$title = elgg_echo("members:title:{$vars['page']}");
+$title = elgg_echo("members:title:{$page}");
 
 $params = array(
 	'content' => $content,
