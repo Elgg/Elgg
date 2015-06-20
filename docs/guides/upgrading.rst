@@ -229,6 +229,7 @@ Removed Functions
  - ``get_db_link()``
  - ``load_plugins()``
  - ``mysql_*()``: Elgg :ref:`no longer uses ext/mysql<migrated-to-pdo>`
+ - ``set_template_handler()``
 
 Removed Plugin Hooks
 --------------------
