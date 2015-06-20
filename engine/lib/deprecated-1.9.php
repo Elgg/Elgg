@@ -3045,7 +3045,7 @@ function elgg_view_tree($view_root, $viewtype = "") {
 	}
 
 	// Now examine core
-	$location = $CONFIG->viewpath;
+	$location = $CONFIG->view_path;
 	$viewtype = elgg_get_viewtype();
 	$root = $location . $viewtype . '/' . $view_root;
 

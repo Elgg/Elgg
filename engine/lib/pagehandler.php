@@ -244,6 +244,13 @@ function elgg_front_page_handler() {
  * @return void
  */
 function elgg_error_page_handler($hook, $type, $result, $params) {
+	static $once = 0;
+	$once++;
+	if ($once === 2) {
+		echo "Infinite loop attempting to show error page.";
+		exit;
+	}
+
 	set_input('type', $type);
 	set_input('params', $params);
 

@@ -68,9 +68,9 @@ $CONFIG->path;
 /**
  * The full path for core views.
  *
- * @global string $CONFIG->viewpath
+ * @global string $CONFIG->view_path
  */
-$CONFIG->viewpath;
+$CONFIG->view_path;
 
 /**
  * The full path where plugins are stored.
@@ -234,32 +234,6 @@ $CONFIG->menu_items_featured_urls;
  * @global string $CONFIG->menu_items_custom_items
  */
 $CONFIG->menu_items_custom_items;
-
-/**
- * Holds information about views.
- *
- * @global object $CONFIG->views
- */
-$CONFIG->views;
-
-/**
- * A list of views to cache in the simple cache.
- *
- * @global object $CONFIG->views->simplecache
- */
-$CONFIG->views->simplecache;
-
-/**
- * A list of views and the top level views directory to search for the view in.
- *
- * @note Views are stored as the key and the top level view location is stored as the value.
- * The current viewtype {@link $CONFIG->view} is used to determin which directory under the entry
- * in $CONFIG->views->location to search.  View names are automatically appened a '.php' extension.
- *
- * @global object $CONFIG->views->locations
- */
-$CONFIG->views->locations;
-
 
 /**
  * A list of valid view types as discovered.

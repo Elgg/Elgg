@@ -221,11 +221,21 @@ Removed Classes
 
  - ``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)
 
+Removed keys available via ``elgg_get_config()``
+------------------------------------------------
+
+ - ``views``
+ - ``viewtype``
+ - ``viewpath``
+
+Also note that plugins should not be accessing the global ``$CONFIG`` variable except for in ``settings.php``.
+
 Removed Functions
 -----------------
 
- - ``get_db_error()``
+ - ``elgg_get_view_location()``
  - ``execute_delayed_query()``
+ - ``get_db_error()``
  - ``get_db_link()``
  - ``load_plugins()``
  - ``mysql_*()``: Elgg :ref:`no longer uses ext/mysql<migrated-to-pdo>`

@@ -3572,7 +3572,7 @@ $asc = false, $fullview = true, $listtypetoggle = false, $pagination = true, $or
 }
 
 /**
- * Set an alternative base location for a view (as opposed to the default of $CONFIG->viewpath)
+ * Set an alternative base location for a view (as opposed to the default of $CONFIG->view_path)
  *
  * @param string $view The name of the view
  * @param string $location The base location path
@@ -3581,7 +3581,7 @@ $asc = false, $fullview = true, $listtypetoggle = false, $pagination = true, $or
  */
 function set_view_location($view, $location, $viewtype = '') {
 	elgg_deprecated_notice("set_view_location() was deprecated by elgg_set_view_location()", 1.8);
-	return elgg_set_view_location($view, $location, $viewtype);
+	elgg_set_view_location($view, $location, $viewtype);
 }
 
 /**

@@ -321,7 +321,6 @@ function _elgg_load_application_config() {
 		'language' => 'en',
 
 		// compatibility with old names for plugins not using elgg_get_config()
-		'viewpath' => "$install_root/views/",
 		'pluginspath' => "$install_root/mod/",
 	);
 

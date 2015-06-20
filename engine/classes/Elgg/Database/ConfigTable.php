@@ -132,10 +132,6 @@ class ConfigTable {
 		// @todo might be a better spot to define this?
 		$new_name = false;
 		switch($name) {
-			case 'viewpath':
-				$new_name = 'view_path';
-				break;
-	
 			case 'pluginspath':
 				$new_name = 'plugins_path';
 				break;

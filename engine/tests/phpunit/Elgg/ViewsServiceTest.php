@@ -60,11 +60,28 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 		$expected = file_get_contents("$this->viewsDir/default/js/static.js");
 		$this->assertEquals($expected, $this->views->renderView('js/static.js'));
 	}
-		
-	public function testStoresDirectoryForViewLocation() {
-		$this->assertEquals("$this->viewsDir/", $this->views->getViewLocation('js/interpreted.js', 'default'));
+
+	public function testCanSetViewPathsViaSpec() {
+		$this->views->mergeViewsSpec([
+			'default' => [
+				'hello.js' => __DIR__ . '/../test_files/views/default/js/static.js',
+				'hello/world.js' => 'engine/tests/phpunit/test_files/views/default/js/interpreted.js.php',
+			],
+		]);
+
+		$expected = file_get_contents("$this->viewsDir/default/js/static.js");
+		$this->assertEquals($expected, $this->views->renderView('hello.js'));
+
+		$this->assertEquals("// PHPin", $this->views->renderView('hello/world.js', array(
+			'in' => 'in',
+		)));
 	}
-	
+
+	public function testCanSetViewsDirs() {
+		$this->views->setViewDir('static.css', __DIR__ . '/../test_files/views2/');
+		$this->assertEquals('body{}', $this->views->renderView('static.css'));
+	}
+
 	public function testViewtypesCanFallBack() {
 		$this->views->registerViewtypeFallback('mobile');
 		$this->assertTrue($this->views->doesViewtypeFallBack('mobile'));

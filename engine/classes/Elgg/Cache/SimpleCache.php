@@ -85,11 +85,10 @@ class SimpleCache {
 		// handle `getUrl('js', 'blog/save_draft.js')`
 		if (!empty($subview)) {
 			$view = "$view/$subview";
-			$subview = '';
 		}
 	
 		// should be normalized to canonical form by now: `getUrl('js/blog/save_draft.js')`
-		elgg_register_simplecache_view($view);
+		$this->registerView($view);
 		return $this->getRoot() . $view;
 	}
 	
@@ -129,7 +128,7 @@ class SimpleCache {
 	function enable() {
 		_elgg_services()->datalist->set('simplecache_enabled', 1);
 		_elgg_services()->config->set('simplecache_enabled', 1);
-		elgg_invalidate_simplecache();
+		$this->invalidate();
 	}
 	
 	/**
@@ -157,12 +156,6 @@ class SimpleCache {
 	 * @return bool
 	 */
 	function invalidate() {
-		
-	
-		if (!isset($this->CONFIG->views->simplecache) || !is_array($this->CONFIG->views->simplecache)) {
-			return false;
-		}
-	
 		_elgg_rmdir("{$this->CONFIG->dataroot}views_simplecache");
 		mkdir("{$this->CONFIG->dataroot}views_simplecache");
 	
@@ -179,8 +172,6 @@ class SimpleCache {
 	 * @return void
 	 */
 	function init() {
-		
-
 		if (!defined('UPGRADING') && empty($this->CONFIG->lastcache)) {
 			$this->CONFIG->lastcache = (int)_elgg_services()->datalist->get('simplecache_lastupdate');
 		}

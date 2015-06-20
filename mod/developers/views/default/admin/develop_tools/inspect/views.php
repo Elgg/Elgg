@@ -74,7 +74,7 @@ foreach ($views as $view => $components) {
 	}
 
 	foreach ($components as $priority => $component) {
-		$file = $strip($component->getFile());
+		$file = $strip($component->file);
 
 		echo "<tr>";
 		if ($view !== $last_view) {

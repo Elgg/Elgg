@@ -814,7 +814,19 @@ class ElggPlugin extends \ElggObject {
 	 * @return void
 	 */
 	protected function registerViews() {
-		if (!_elgg_services()->views->registerPluginViews($this->path, $failed_dir)) {
+		$views = _elgg_services()->views;
+
+		// Declared views first
+		$file = "{$this->path}/views.php";
+		if (is_file($file)) {
+			$spec = (include $file);
+			if (is_array($spec)) {
+				$views->mergeViewsSpec($spec);
+			}
+		}
+
+		// Allow /views directory files to override
+		if (!$views->registerPluginViews($this->path, $failed_dir)) {
 			$msg = _elgg_services()->translator->translate('ElggPlugin:Exception:CannotRegisterViews',
 				array($this->getID(), $this->guid, $failed_dir));
 			throw new \PluginException($msg);
