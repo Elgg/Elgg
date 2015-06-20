@@ -225,14 +225,6 @@ class ViewsService {
 			_elgg_services()->events->trigger('pagesetup', 'system');
 		}
 
-		// If it's been requested, pass off to a template handler instead
-		if ($bypass == false && isset($this->CONFIG->template_handler) && !empty($this->CONFIG->template_handler)) {
-			$template_handler = $this->CONFIG->template_handler;
-			if (is_callable($template_handler)) {
-				return call_user_func($template_handler, $view, $vars);
-			}
-		}
-
 		// Set up any extensions to the requested view
 		if (isset($this->CONFIG->views->extensions[$view])) {
 			$viewlist = $this->CONFIG->views->extensions[$view];

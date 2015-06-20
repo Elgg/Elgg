@@ -312,25 +312,16 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
  *
  * Views are called with a special $vars variable set,
  * which includes any variables passed as the second parameter.
- * For backward compatbility, the following variables are also set but we
- * recommend that you do not use them:
- *  - $vars['config'] The $CONFIG global. (Use {@link elgg_get_config()} instead).
- *  - $vars['url'] The site URL. (use {@link elgg_get_site_url()} instead).
- *  - $vars['user'] The logged in user. (use {@link elgg_get_logged_in_user_entity()} instead).
  *
- * Custom template handlers can be set with {@link set_template_handler()}.
+ * The input of views can be intercepted by registering for the
+ * view_vars, $view_name plugin hook.
  *
  * The output of views can be intercepted by registering for the
  * view, $view_name plugin hook.
- *
- * @warning Any variables in $_SESSION will override passed vars
- * upon name collision.  See https://github.com/Elgg/Elgg/issues/2124
- *
+ * 
  * @param string  $view     The name and location of the view to use
  * @param array   $vars     Variables to pass to the view.
- * @param boolean $bypass   If set to true, elgg_view will bypass any specified
- *                          alternative template handler; by default, it will
- *                          hand off to this if requested (see set_template_handler)
+ * @param boolean $bypass   This argument is ignored and will be removed eventually
  * @param boolean $ignored  This argument is ignored and will be removed eventually
  * @param string  $viewtype If set, forces the viewtype for the elgg_view call to be
  *                          this value (default: standard detection)
@@ -800,8 +791,7 @@ function elgg_view_menu_item(\ElggMenuItem $item, array $vars = array()) {
  *                            In Elgg 1.7 and earlier it was the boolean $full_view
  *      'full_view'        Whether to show a full or condensed view. (Default: true)
  *      'item_view'        Alternative view used to render this entity
- * @param boolean     $bypass If true, will not pass to a custom template handler.
- *                            {@link set_template_handler()}
+ * @param boolean     $bypass Ignored and will be removed eventually
  * @param boolean     $debug  Complain if views are missing
  *
  * @return string HTML to display or false
@@ -924,8 +914,7 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = ar
  * @param \ElggAnnotation $annotation The annotation to display
  * @param array           $vars       Variable array for view.
  *      'item_view'  Alternative view used to render an annotation
- * @param bool            $bypass     If true, will not pass to a custom
- *                                    template handler. {@link set_template_handler()}
+ * @param bool            $bypass     Ignored and will be removed eventually
  * @param bool            $debug      Complain if views are missing
  *
  * @return string/false Rendered annotation

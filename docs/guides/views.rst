@@ -323,23 +323,6 @@ Consider these two examples:
 
 In the first example, we are displaying a list of groups a user is a member of using the default group view. In the second example, we want to display a list of groups the user was invited to. Since invitations are not entities, they do not have their own views and can not be listed using ``elgg_list_*``. We are providing an alternative item view, that will use the group entity to display an invitation that contains a group name and buttons to access or reject the invitation.
 
-Using a different templating system
-===================================
-
-.. warning::
-
-    This functionality is deprecated as of Elgg 1.12. It will be removed in 2.0.
-    It affects the behavior of templates globally, which is almost sure to cause
-    breakages and therefore we suspect no one uses it in practice.
-
-You can write your own templating system if you want to.
-
-Before going through the motions of drawing views, Elgg checks the ``$CONFIG->template_handler`` variable to see if it contains the name of a callable function. If it does, the function will be passed the view name and template vars, and the return value of this function will be returned instead of the standard output:
-
-.. code-block:: php
-
-	return $template_handler($view, $vars);
-
 Related
 =======
 
