@@ -205,10 +205,10 @@ function pages_icon_url_override($hook, $type, $returnvalue, $params) {
 			case 'topbar':
 			case 'tiny':
 			case 'small':
-				return 'mod/pages/images/pages.gif';
+				return elgg_get_simplecache_url('pages/pages.gif');
 				break;
 			default:
-				return 'mod/pages/images/pages_lrg.gif';
+				return elgg_get_simplecache_url('pages/pages_lrg.gif');
 				break;
 		}
 	}

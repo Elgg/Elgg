@@ -21,7 +21,7 @@ if (!$name && ($user = elgg_get_logged_in_user_entity())) {
 
 $url = elgg_get_site_url();
 $img = elgg_view('output/img', array(
-	'src' => 'mod/bookmarks/graphics/bookmarklet.gif',
+	'src' => elgg_get_simplecache_url('bookmarks/bookmarklet.gif'),
 	'alt' => $title,
 ));
 $bookmarklet = "<a href=\"javascript:location.href='{$url}bookmarks/add/$guid?address='"

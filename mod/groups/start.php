@@ -329,7 +329,7 @@ function groups_set_icon_url($hook, $type, $url, $params) {
 		return "groupicon/$group->guid/$size/$icontime.jpg";
 	}
 
-	return "mod/groups/graphics/default{$size}.gif";
+	return elgg_get_simplecache_url("groups/default{$size}.gif");
 }
 
 /**

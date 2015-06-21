@@ -4,7 +4,7 @@
  */
 
 $url = elgg_get_site_url() . 'twitter_api/forward';
-$img_url = elgg_get_site_url() . 'mod/twitter_api/graphics/sign-in-with-twitter-d.png';
+$img_url = elgg_get_simplecache_url('twitter_api/sign-in-with-twitter-d.png');
 
 $login = <<<__HTML
 <div class="login_with_twitter">

@@ -64,16 +64,16 @@
 	display: block;
 }
 #notificationstable td.emailtogglefield a.emailtoggleOff {
-	background: url(<?php echo elgg_get_site_url(); ?>mod/notifications/graphics/icon_notifications_email.gif) no-repeat right 2px;
+	background: url(<?= elgg_get_simplecache_url('notifications/icon_notifications_email.gif'); ?>) no-repeat right 2px;
 }
 #notificationstable td.emailtogglefield a.emailtoggleOn {
-	background: url(<?php echo elgg_get_site_url(); ?>mod/notifications/graphics/icon_notifications_email.gif) no-repeat right -36px;
+	background: url(<?= elgg_get_simplecache_url('notifications/icon_notifications_email.gif'); ?>) no-repeat right -36px;
 }
 #notificationstable td.sitetogglefield a.sitetoggleOff {
-	background: url(<?php echo elgg_get_site_url(); ?>mod/notifications/graphics/icon_notifications_site.gif) no-repeat right 2px;
+	background: url(<?= elgg_get_simplecache_url('notifications/icon_notifications_site.gif'); ?>) no-repeat right 2px;
 }
 #notificationstable td.sitetogglefield a.sitetoggleOn {
-	background: url(<?php echo elgg_get_site_url(); ?>mod/notifications/graphics/icon_notifications_site.gif) no-repeat right -37px;
+	background: url(<?= elgg_get_simplecache_url('notifications/icon_notifications_site.gif'); ?>) no-repeat right -37px;
 }
 .notification_friends,
 .notification_personal,

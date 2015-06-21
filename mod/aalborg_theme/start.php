@@ -109,7 +109,7 @@ function aalborg_theme_setup_head($hook, $type, $data) {
 
 	$data['links']['apple-touch-icon'] = array(
 		'rel' => 'apple-touch-icon',
-		'href' => elgg_normalize_url('mod/aalborg_theme/graphics/homescreen.png'),
+		'href' => elgg_get_simplecache_url('aalborg_theme/homescreen.png'),
 	);
 
 	return $data;
