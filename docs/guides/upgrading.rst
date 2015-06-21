@@ -143,6 +143,11 @@ Comments plugin hook
 
 Plugins can now return an empty string from ``'comments',$entity_type`` hook in order to override the default comments component view. To force the default comments component, your plugin must return ``false``. If you were using empty strings to force the default comments view, you need to update your hook handlers to return ``false``.
 
+Creating a relationship triggers only one event
+-----------------------------------------------
+
+Entity relationship creation no longer fires the legacy "create" event using the relationship name as the type. E.g. Listening for the ``"create", "member"`` event will no longer capture group membership additions. Use the ``"create", "relationship"`` event.
+
 Dropped login-over-https feature
 --------------------------------
 
