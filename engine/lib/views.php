@@ -463,19 +463,20 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
  * a view in "resources/". If not found in the current viewtype, we try the "default" viewtype.
  *
  * @param string $name The view name without the leading "resources/"
+ * @param array  $vars Arguments passed to the view
  *
  * @return string
  * @throws SecurityException
  */
-function elgg_view_resource($name) {
+function elgg_view_resource($name, array $vars = []) {
 	$view = "resources/$name";
 
 	if (elgg_view_exists($view)) {
-		return _elgg_services()->views->renderView($view);
+		return _elgg_services()->views->renderView($view, $vars);
 	}
 
 	if (elgg_get_viewtype() !== 'default' && elgg_view_exists($view, 'default')) {
-		return _elgg_services()->views->renderView($view, [], false, 'default');
+		return _elgg_services()->views->renderView($view, $vars, false, 'default');
 	}
 
 	_elgg_services()->logger->error("The view $view is missing.");

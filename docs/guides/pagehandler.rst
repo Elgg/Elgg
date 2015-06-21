@@ -19,8 +19,8 @@ Pages in plugins should be rendered via page handlers (not by using ``Elgg\Appli
 
 1. A user requests ``/plugin_name/section/entity``
 2. Elgg checks if ``plugin_name`` is registered to a page handler and calls that function, passing ``array('section', 'entity')`` as the first argument
-3. The page handler function determines which page to display, optionally setting some values using ``set_input()``
-4. The handler uses ``elgg_view_resource()`` to render the page.
+3. The page handler function determines which resource view will display the page.
+4. The handler uses ``elgg_view_resource()`` to render the page, also passing in any relevant info to the view via the ``$vars`` argument.
 5. The resource view combines many separate views, calls formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()``, and then echos the final output
 6. The user sees a fully rendered page
 
