@@ -38,7 +38,7 @@ Use standardized routing with page handlers
    | Group list    | page_handler/group/<guid>/owner   |
    +---------------+-----------------------------------+
 - Include page handler scripts from the page handler. Almost every page handler should have a page handler script. (Example: ``bookmarks/all`` => ``mod/bookmarks/views/default/resources/bookmarks/all.php``)
-- Call ``set_input()`` for entity guids in the page handler and use ``get_input()`` in the page handler scripts.
+- Pass arguments like entity guids to the resource view via ``$vars`` in ``elgg_view_resource()``.
 - Call ``elgg_gatekeeper()`` and ``elgg_admin_gatekeeper()`` in the page handler function if required.
 - The group URL should use views like ``resources/groups/*.php`` to render pages.
 - Page handlers should not contain HTML.
@@ -60,8 +60,8 @@ The object/<subtype> view
 -------------------------
 
 - Example: Bookmarks plugin
-- Make sure there are views for ``$vars[‘full’] == true`` and ``$vars[‘full’] == false``
-- Check for the object in ``$vars[‘entity’]`` . Use ``elgg_instance_of()`` to make sure it’s the type entity you want. Return ``true`` to short circuit the view if the entity is missing or wrong.
+- Make sure there are views for ``$vars['full_view'] == true`` and ``$vars['full_view'] == false``
+- Check for the object in ``$vars['entity']`` . Use ``elgg_instance_of()`` to make sure it’s the type entity you want. Return ``true`` to short circuit the view if the entity is missing or wrong.
 - Use the new list body and list metadata views to help format. You should use almost no markup in these views.
 - Update action structure - Example: Bookmarks plugin.
 - Namespace action files and action names (example: ``mod/blog/actions/blog/save.php`` => ``action/blog/save``)

@@ -41,8 +41,9 @@ the request to a resource view.
         if ($subpage === 'view') {
 
             // use a view for the page logic to allow other plugins to easily change it
-            set_input('guid', (int)elgg_extract(1, $segments));
-            echo elgg_view_resource('blog/view');
+            echo elgg_view_resource('blog/view', [
+                'guid' => (int)elgg_extract(1, $segments);
+            ]);
 
             // in page handlers, return true says, "we've handled this request"
             return true;
@@ -110,9 +111,9 @@ For regular pages, Elgg's program flow is something like this:
 #. Elgg triggers the plugin hook ``route, blog`` (see above).
 #. Elgg finds a registered page handler (see above) for ``blog``, and calls the function, passing in
    the segments.
-#. The page handler function determines it needs to render a single user's blog. It stores the username
-   via ``set_input()`` and calls the view ``resources/blog/owner``.
-#. The ``resources/blog/owner`` view gets the username via ``get_input()``, and uses many other views and
+#. The page handler function determines it needs to render a single user's blog. It calls
+   ``elgg_view_resource('blog/owner', $vars)`` where ``$vars`` contains the username.
+#. The ``resources/blog/owner`` view gets the username via ``$vars['username']``, and uses many other views and
    formatting functions like ``elgg_view_layout()`` and ``elgg_view_page()`` to create the entire HTML page.
 #. The page handler echos the view HTML and returns ``true`` to indicate it handled the request.
 #. PHP invokes Elgg's shutdown sequence.
