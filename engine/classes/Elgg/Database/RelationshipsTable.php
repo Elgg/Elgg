@@ -117,11 +117,8 @@ class RelationshipsTable {
 		if ($id !== false) {
 			$obj = get_relationship($id);
 	
-			// this event has been deprecated in 1.9. Use 'create', 'relationship'
-			$result_old = _elgg_services()->events->trigger('create', $relationship, $obj);
-	
 			$result = _elgg_services()->events->trigger('create', 'relationship', $obj);
-			if ($result && $result_old) {
+			if ($result) {
 				return true;
 			} else {
 				delete_relationship($result);
