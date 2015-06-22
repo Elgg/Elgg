@@ -216,6 +216,9 @@ class Config implements Services\Config {
 		if (isset($CONFIG->dataroot)) {
 			$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
 		}
+		if (isset($CONFIG->wwwroot)) {
+			$CONFIG->wwwroot = rtrim($CONFIG->wwwroot, '/') . '/';
+		}
 
 		if (!$global_is_bound) {
 			// must manually copy settings into our storage

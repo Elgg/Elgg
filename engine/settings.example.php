@@ -166,6 +166,14 @@ $CONFIG->dbprefix = '{{dbprefix}}';
 //$CONFIG->cookies['remember_me']['secure'] = false;
 //$CONFIG->cookies['remember_me']['httponly'] = false;
 
+/**
+ * Site URL (optional)
+ *
+ * If you wish to override the URL stored in the site entity, you may set this. All 1.x APIs
+ * that return site URL will return this value. The value actually in the DB is accessible via
+ * elgg_get_site_entity()->getStoredURL(). Most sites will not need to set this.
+ */
+//$CONFIG->wwwroot = "https://example.org/elgg/";
 
 /**
  * Use non-standard headers for broken MTAs.

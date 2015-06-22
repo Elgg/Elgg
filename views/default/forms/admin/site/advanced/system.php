@@ -11,17 +11,23 @@
 
 		$params = [
 			'name' => $field,
-			'value' => elgg_get_config($field)
 		];
-		if ($field == 'dataroot' && elgg_get_config('dataroot_in_settings')) {
+		if ($field === 'wwwroot') {
+			$params['value'] = elgg_get_site_entity()->getStoredURL();
+		} else {
+			$params['value'] = elgg_get_config($field);
+		}
+
+		if (in_array($field, ['dataroot', 'wwwroot']) && elgg_get_config("{$field}_in_settings")) {
 			$params['readonly'] = true;
 			$params['class'] = 'elgg-state-disabled';
 			$warning = elgg_echo('admin:settings:in_settings_file');
 		}
 
-		$input = elgg_view("input/text", $params);
 		if ($warning) {
 			$input = "<span class=\"elgg-text-help\">$warning</span>";
+		} else {
+			$input = elgg_view("input/text", $params);
 		}
 		
 		?>
