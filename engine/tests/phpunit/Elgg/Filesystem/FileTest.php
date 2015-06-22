@@ -4,8 +4,9 @@ namespace Elgg\Filesystem;
 class FileTest extends \PHPUnit_Framework_TestCase {
 	
 	public function testCanCheckForItsOwnExistence() {
-		$directory = FlyDirectory::createInMemory();
-		$directory->putContents('/foo/bar/bar.php', 'bar');
+		$directory = Directory\InMemory::fromArray([
+			'/foo/bar/bar.php' => 'bar',
+		]);
 		
 		$realfile = new File($directory, '/foo/bar/bar.php');
 		$nonfile = new File($directory, '/foo/baz.php');

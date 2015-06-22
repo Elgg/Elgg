@@ -1,16 +1,16 @@
 <?php
-namespace Elgg\Structs;
+namespace Elgg\Structs\Collection;
+
+use Elgg\Structs\Collection;
 
 /**
  * Uses native PHP array to implement the Collection interface.
  * 
- * @package    Elgg.Core
- * @subpackage Structs
- * @since      1.10
+ * @since 1.10
  *
  * @access private
  */
-final class ArrayCollection implements Collection {
+final class InMemory implements Collection {
 	/** @var array */
 	private $items;
 	
@@ -19,7 +19,7 @@ final class ArrayCollection implements Collection {
 	 * 
 	 * @param array $items The set of items in the collection
 	 */
-	public function __construct(array $items = array()) {
+	private function __construct(array $items = array()) {
 		$this->items = $items;
 	}
 	
@@ -48,7 +48,7 @@ final class ArrayCollection implements Collection {
 			}
 		}
 		
-		return new ArrayCollection($results);
+		return new self($results);
 	}
 	
 	/** @inheritDoc */
@@ -62,7 +62,7 @@ final class ArrayCollection implements Collection {
 		foreach ($this->items as $item) {
 			$results[] = $mapper($item);
 		}
-		return new ArrayCollection($results);
+		return self::fromArray($results);
 	}
 	
 	/** @inheritDoc */
@@ -78,5 +78,16 @@ final class ArrayCollection implements Collection {
 	/** @inheritDoc */
 	public function valid() {
 		return key($this->items) !== NULL;
+	}
+	
+	/**
+	 * Factory function for converting from an array to a ton of items.
+	 * 
+	 * @param array $items The list of objects to include. Generics come later.
+	 * 
+	 * @return self
+	 */
+	public static function fromArray(array $items) {
+		return new self($items);
 	}
 }

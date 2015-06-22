@@ -1,16 +1,14 @@
 <?php
-namespace Elgg\Cache;
+namespace Elgg\Cache\Pool;
 
-use PHPUnit_Framework_TestCase as TestCase;
-
-class NullPoolTest extends TestCase implements PoolTestCase {
+class NoopTest extends \PHPUnit_Framework_TestCase implements TestCase {
 	public function testGetDoesNotRegenerateValueFromCallbackOnHit() {
-		// NullPool never hits, so nothing to test here
+		// Noop never hits, so nothing to test here
 		$this->assertTrue(true);
 	}
 	
 	public function testGetRegeneratesValueFromCallbackOnMiss() {
-		$pool = new NullPool();
+		$pool = new Noop();
 		
 		$result = $pool->get('foo', function() { return 1; });
 		$this->assertEquals(1, $result);
@@ -25,7 +23,7 @@ class NullPoolTest extends TestCase implements PoolTestCase {
 	}
 
 	public function testNeverCachesResults() {
-		$pool = new NullPool();
+		$pool = new Noop();
 		$increment = function() {
 			static $counter;
 			

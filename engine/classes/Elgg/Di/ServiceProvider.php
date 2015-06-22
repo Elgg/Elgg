@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\Di;
 
+use Elgg\Cache\Pool;
 use Symfony\Component\HttpFoundation\Session\Storage\NativeSessionStorage;
 use Symfony\Component\HttpFoundation\Session\Session as SymfonySession;
 use Zend\Mail\Transport\TransportInterface as Mailer;
@@ -121,7 +122,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			// TODO(ewinslow): Add back memcached support
 			$db = $c->db;
 			$dbprefix = $db->getTablePrefix();
-			$pool = new \Elgg\Cache\MemoryPool();
+			$pool = new Pool\InMemory();
 			return new \Elgg\Database\Datalist($pool, $db, $c->logger, "{$dbprefix}datalists");
 		});
 
@@ -166,14 +167,14 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('metadataTable', function(ServiceProvider $c) {
-			// TODO(ewinslow): Use Elgg\Cache\Pool instead of MetadataCache
+			// TODO(ewinslow): Use Pool instead of MetadataCache for caching
 			return new \Elgg\Database\MetadataTable(
 				$c->metadataCache, $c->db, $c->entityTable, $c->events, $c->metastringsTable, $c->session);
 		});
 
 		$this->setFactory('metastringsTable', function(ServiceProvider $c) {
 			// TODO(ewinslow): Use memcache-based Pool if available...
-			$pool = new \Elgg\Cache\MemoryPool();
+			$pool = new Pool\InMemory();
 			return new \Elgg\Database\MetastringsTable($pool, $c->db);
 		});
 
@@ -203,7 +204,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('plugins', function(ServiceProvider $c) {
-			return new \Elgg\Database\Plugins($c->events, new \Elgg\Cache\MemoryPool());
+			return new \Elgg\Database\Plugins(new Pool\InMemory());
 		});
 
 		$this->setFactory('privateSettings', function(ServiceProvider $c) {

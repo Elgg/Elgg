@@ -1,6 +1,7 @@
 <?php
-namespace Elgg\Cache;
+namespace Elgg\Cache\Pool;
 
+use Elgg\Cache\Pool;
 use Stash;
 
 /**
@@ -10,13 +11,11 @@ use Stash;
  * 
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @package    Elgg
- * @subpackage Cache
- * @since      1.10.0
+ * @since 1.10.0
  *
  * @access private
  */
-final class MemoryPool implements Pool {
+final class InMemory implements Pool {
 	/**
 	 * @var array
 	 */

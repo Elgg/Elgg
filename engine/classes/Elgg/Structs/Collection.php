@@ -26,9 +26,7 @@ use Iterator;
  *  * Submit a PR
  *  * Use composition -- http://en.wikipedia.org/wiki/Composition_over_inheritance
  *
- * @package    Elgg.Core
- * @subpackage Structs
- * @since      1.10
+ * @since 1.10
  *
  * @access private
  */

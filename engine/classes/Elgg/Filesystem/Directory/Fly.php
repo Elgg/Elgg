@@ -1,9 +1,11 @@
 <?php
-namespace Elgg\Filesystem;
+namespace Elgg\Filesystem\Directory;
 
-use League\Flysystem\Filesystem;
-use Elgg\Structs\ArrayCollection;
+use Elgg\Filesystem\Directory;
+use Elgg\Filesystem\File;
+use Elgg\Structs\Collection;
 use League\Flysystem\Adapter\Local;
+use League\Flysystem\Filesystem;
 use Twistor\Flysystem\MemoryAdapter;
 
 /**
@@ -13,7 +15,7 @@ use Twistor\Flysystem\MemoryAdapter;
  *
  * @access private
  */
-final class FlyDirectory implements Directory {
+final class Fly implements Directory {
 
 	/** @var Filesystem */
 	private $fs;
@@ -91,7 +93,7 @@ final class FlyDirectory implements Directory {
 	 * @param bool     $recursive Find files and directories recursively
 	 * @param string[] $types     Entry types to return ('file' and/or 'dir')
 	 *
-	 * @return ArrayCollection<File|Directory>
+	 * @return Collection<File|Directory>
 	 *
 	 * @throws \InvalidArgumentException
 	 */
@@ -105,12 +107,12 @@ final class FlyDirectory implements Directory {
 			return in_array($metadata['type'], $types);
 		});
 
-		return new ArrayCollection(array_map(function ($metadata) {
+		return Collection\InMemory::fromArray(array_map(function ($metadata) {
 			if ($metadata['type'] === 'file') {
 				return new File($this, $metadata['path']);
 			}
 
-			return new FlyDirectory($this->fs, $this->local_path, $metadata['path']);
+			return new self($this->fs, $this->local_path, $metadata['path']);
 		}, $contents));
 	}
 

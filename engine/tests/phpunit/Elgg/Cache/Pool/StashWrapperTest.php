@@ -1,13 +1,12 @@
 <?php
-namespace Elgg\Cache;
+namespace Elgg\Cache\Pool;
 
-use PHPUnit_Framework_TestCase as TestCase;
 use Stash;
 
-class StashPoolTest extends TestCase implements PoolTestCase {
+class StashWrapperTest extends \PHPUnit_Framework_TestCase implements TestCase {
 
 	public function testGetDoesNotRegenerateValueFromCallbackOnHit() {
-		$pool = StashPool::createEphemeral();
+		$pool = StashWrapper::createEphemeral();
 
 		$pool->get('foo', function() { return 1; });
 		$result = $pool->get('foo', function() { return 2; });
@@ -15,14 +14,14 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 	}
 	
 	public function testGetRegeneratesValueFromCallbackOnMiss() {
-		$pool = StashPool::createEphemeral();
+		$pool = StashWrapper::createEphemeral();
 		
 		$result = $pool->get('foo', function() { return 1; });
 		$this->assertEquals(1, $result);
 	}
 	
 	public function testInvalidateForcesTheSpecifiedValueToBeRegenerated() {
-		$pool = StashPool::createEphemeral();
+		$pool = StashWrapper::createEphemeral();
 
 		$result = $pool->get('foo', function() { return 1; });
 		$this->assertEquals(1, $result);
@@ -33,7 +32,7 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 	}
 
 	public function testAcceptsStringAndIntKeys() {
-		$pool = StashPool::createEphemeral();
+		$pool = StashWrapper::createEphemeral();
 
 		foreach (array('123', 123) as $key) {
 			$pool->put($key, 'foo');
@@ -46,7 +45,7 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 	 * @dataProvider invalidKeyProvider
 	 */
 	public function testPutComplainsAboutInvalidKeys($key) {
-		$pool = StashPool::createEphemeral();
+		$pool = StashWrapper::createEphemeral();
 		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert');
 		$pool->put($key, 'foo');
 	}
@@ -55,7 +54,7 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 	 * @dataProvider invalidKeyProvider
 	 */
 	public function testGetComplainsAboutInvalidKeys($key) {
-		$pool = StashPool::createEphemeral();
+		$pool = StashWrapper::createEphemeral();
 		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert');
 		$pool->get($key, function () { return 'foo'; });
 	}
@@ -64,7 +63,7 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 	 * @dataProvider invalidKeyProvider
 	 */
 	public function testInvalidateComplainsAboutInvalidKeys($key) {
-		$pool = StashPool::createEphemeral();
+		$pool = StashWrapper::createEphemeral();
 		$this->setExpectedException('PHPUnit_Framework_Error_Warning', 'assert');
 		$pool->invalidate($key);
 	}
@@ -92,7 +91,7 @@ class StashPoolTest extends TestCase implements PoolTestCase {
 	 * 5. Check that Stash\Item::lock() was *not* called
 	 */
 	public function testEnablesStashStampedeProtection() {
-		$pool = StashPool::createEphemeral();
+		$pool = StashWrapper::createEphemeral();
 		$this->markTestIncomplete();
 	}
 }
