@@ -21,7 +21,7 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->logger = $this->getMock('\Elgg\Logger', array(), array(), '', false);
 		
 		$this->views = new \Elgg\ViewsService($this->hooks, $this->logger);
-		$this->views->autoregisterViews('', "$this->viewsDir/default", "$this->viewsDir/", 'default');
+		$this->views->autoregisterViews('', "$this->viewsDir/default", 'default');
 
 		// supports deprecation wrapper for $vars['user'] 
 		_elgg_services()->setValue('session', \ElggSession::getMock());

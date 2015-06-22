@@ -93,7 +93,10 @@ class ViewsService {
 	/**
 	 * @access private
 	 */
-	public function autoregisterViews($view_base, $folder, $base_location_path, $viewtype) {
+	public function autoregisterViews($view_base, $folder, $viewtype) {
+		$folder = rtrim($folder, '/\\');
+		$view_base = rtrim($view_base, '/\\');
+
 		$handle = opendir($folder);
 		if ($handle) {
 			while ($entry = readdir($handle)) {
@@ -110,8 +113,7 @@ class ViewsService {
 				}
 
 				if (is_dir($path)) {
-					$this->autoregisterViews($view_base_new . $entry, $path,
-						$base_location_path, $viewtype);
+					$this->autoregisterViews($view_base_new . $entry, $path, $viewtype);
 				} else {
 					$view = $view_base_new . basename($entry, '.php');
 					$this->setViewLocation($view, $viewtype, $path);
@@ -448,7 +450,7 @@ class ViewsService {
 			$view_type_dir = $view_dir . $view_type;
 
 			if ('.' !== substr($view_type, 0, 1) && is_dir($view_type_dir)) {
-				if ($this->autoregisterViews('', $view_type_dir, $view_dir, $view_type)) {
+				if ($this->autoregisterViews('', $view_type_dir, $view_type)) {
 					elgg_register_viewtype($view_type);
 				} else {
 					$failed_dir = $view_type_dir;
@@ -473,16 +475,17 @@ class ViewsService {
 	public function mergeViewsSpec(array $spec) {
 		foreach ($spec as $viewtype => $list) {
 			foreach ($list as $view => $path) {
-				if (substr($view, -1) === '/') {
-					// prefixes. not supported yet
+				if (preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
+					// absolute path
 				} else {
-					if (preg_match('~^([/\\\\]|[a-zA-Z]\:)~', $path)) {
-						// absolute path
-					} else {
-						// relative path
-						$path = elgg_get_root_path() . $path;
-					}
+					// relative path
+					$path = elgg_get_root_path() . $path;
+				}
 
+				if (substr($view, -1) === '/') {
+					// prefix
+					$this->autoregisterViews($view, $path, $viewtype);
+				} else {
 					$this->setViewLocation($view, $viewtype, $path);
 				}
 			}

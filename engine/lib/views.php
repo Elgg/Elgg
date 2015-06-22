@@ -1460,18 +1460,18 @@ function elgg_view_access_collections($owner_guid) {
  * Plugin authors would only need to call this if optionally including
  * an entire views structure.
  *
- * @param string $view_base          Optional The base of the view name without the view type.
- * @param string $folder             Required The folder to begin looking in
- * @param string $base_location_path The base views directory to use with elgg_set_view_location()
- * @param string $viewtype           The type of view we're looking at (default, rss, etc)
+ * @param string $view_base Optional The base of the view name without the view type.
+ * @param string $folder    Required The folder to begin looking in
+ * @param string $ignored   This argument is ignored
+ * @param string $viewtype  The type of view we're looking at (default, rss, etc)
  *
  * @return bool returns false if folder can't be read
  * @since 1.7.0
  * @see elgg_set_view_location()
  * @access private
  */
-function autoregister_views($view_base, $folder, $base_location_path, $viewtype) {
-	return _elgg_services()->views->autoregisterViews($view_base, $folder, $base_location_path, $viewtype);
+function autoregister_views($view_base, $folder, $ignored, $viewtype) {
+	return _elgg_services()->views->autoregisterViews($view_base, $folder, $viewtype);
 }
 
 /**

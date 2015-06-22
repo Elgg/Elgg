@@ -30,8 +30,6 @@ return [
 		"js/elgg/ui.river.js" => dirname(__DIR__) . "/js/lib/ui.river.js",
 
 		"lightbox.css" => dirname(__DIR__) . "/vendors/elgg-colorbox-theme/colorbox.css",
-		"colorbox-images/border1.png" => dirname(__DIR__) . "/vendors/elgg-colorbox-theme/colorbox-images/border1.png",
-		"colorbox-images/border2.png" => dirname(__DIR__) . "/vendors/elgg-colorbox-theme/colorbox-images/border2.png",
-		"colorbox-images/loading.gif" => dirname(__DIR__) . "/vendors/elgg-colorbox-theme/colorbox-images/loading.gif",
+		"colorbox-images/" => dirname(__DIR__) . "/vendors/elgg-colorbox-theme/colorbox-images",
 	],
 ];
