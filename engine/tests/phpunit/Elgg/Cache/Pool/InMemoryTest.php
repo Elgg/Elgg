@@ -1,11 +1,9 @@
 <?php
-namespace Elgg\Cache;
+namespace Elgg\Cache\Pool;
 
-use PHPUnit_Framework_TestCase as TestCase;
-
-class MemoryPoolTest extends TestCase implements PoolTestCase {
+class InMemoryTest extends \PHPUnit_Framework_TestCase implements TestCase {
 	public function testGetDoesNotRegenerateValueFromCallbackOnHit() {
-		$pool = new MemoryPool();
+		$pool = new InMemory();
 
 		$pool->get('foo', function() { return 1; });
 		$result = $pool->get('foo', function() { return 2; });
@@ -13,14 +11,14 @@ class MemoryPoolTest extends TestCase implements PoolTestCase {
 	}
 	
 	public function testGetRegeneratesValueFromCallbackOnMiss() {
-		$pool = new MemoryPool();
+		$pool = new InMemory();
 		
 		$result = $pool->get('foo', function() { return 1; });
 		$this->assertEquals(1, $result);
 	}
 	
 	public function testInvalidateForcesTheSpecifiedValueToBeRegenerated() {
-		$pool = new MemoryPool();
+		$pool = new InMemory();
 
 		$result = $pool->get('foo', function() { return 1; });
 		$this->assertEquals(1, $result);
@@ -31,7 +29,7 @@ class MemoryPoolTest extends TestCase implements PoolTestCase {
 	}
 
 	public function testPutOverridesGetCallback() {
-		$pool = new MemoryPool();
+		$pool = new InMemory();
 
 		$result = $pool->get('foo', function() { return 1; });
 		$this->assertEquals(1, $result);

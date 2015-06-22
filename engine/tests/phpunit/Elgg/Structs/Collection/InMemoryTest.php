@@ -1,22 +1,22 @@
 <?php
-namespace Elgg\Structs;
+namespace Elgg\Structs\Collection;
 
 use PHPUnit_Framework_TestCase as TestCase;
 
-class ArrayCollectionTest extends TestCase {
+class InMemoryTest extends TestCase {
 	public function testCountIsAccurate() {
-		$zeroItems = new ArrayCollection();
+		$zeroItems = InMemory::fromArray([]);
 		$this->assertEquals(0, count($zeroItems));
 		
-		$oneItem = new ArrayCollection(array('one'));
+		$oneItem = InMemory::fromArray(['one']);
 		$this->assertEquals(1, count($oneItem));
 		
-		$twoItems = new ArrayCollection(array('one', 'two'));
+		$twoItems = InMemory::fromArray(['one', 'two']);
 		$this->assertEquals(2, count($twoItems));
 	}
 	
 	public function testContainsDoesNotImplicitlyCastSimilarValues() {
-		$collection = new ArrayCollection(array('1', false));
+		$collection = InMemory::fromArray(['1', false]);
 		
 		$this->assertTrue($collection->contains('1'));
 		$this->assertTrue($collection->contains(false));
@@ -27,7 +27,7 @@ class ArrayCollectionTest extends TestCase {
 	}
 	
 	public function testIsTraversable() {
-		$collection = new ArrayCollection(array('one', 'two', 'three'));
+		$collection = InMemory::fromArray(['one', 'two', 'three']);
 		
 		$items = array();
 		foreach ($collection as $item) {
@@ -38,7 +38,7 @@ class ArrayCollectionTest extends TestCase {
 	}
 	
 	public function testIsFilterable() {
-		$collection = new ArrayCollection(array(0, 1, 2, 3, 4));
+		$collection = InMemory::fromArray([0, 1, 2, 3, 4]);
 		
 		$filtered = $collection->filter(function($number) {
 			return $number > 2;
@@ -54,7 +54,7 @@ class ArrayCollectionTest extends TestCase {
 	}
 	
 	public function testIsMappable() {
-		$collection = new ArrayCollection(array(0, 1, 2, 3, 4));
+		$collection = InMemory::fromArray([0, 1, 2, 3, 4]);
 		
 		$mapped = $collection->map(function($number) {
 			return $number * 2;

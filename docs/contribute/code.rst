@@ -294,6 +294,8 @@ We do not include any prefix or suffix so that we're encouraged to:
  * name implementation classes more descriptively (the "default" name is taken).
  * type-hint on interfaces, because that is the shortest, easiest thing to do.
 
+Name implementations like `Elgg\{Namespace}\{Interface}\{Implementation}`.
+
 Functions
 ^^^^^^^^^
 

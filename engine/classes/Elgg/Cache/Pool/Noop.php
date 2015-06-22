@@ -1,5 +1,7 @@
 <?php
-namespace Elgg\Cache;
+namespace Elgg\Cache\Pool;
+
+use Elgg\Cache\Pool;
 
 /**
  * Implements the caching API but doesn't actually do any caching.
@@ -8,13 +10,11 @@ namespace Elgg\Cache;
  *
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
- * @package    Elgg
- * @subpackage Cache
- * @since      1.10.0
+ * @since 1.10.0
  *
  * @access private
  */
-final class NullPool implements Pool {
+final class Noop implements Pool {
 	/** @inheritDoc */
 	public function get($key, callable $callback) {
 		return call_user_func($callback);

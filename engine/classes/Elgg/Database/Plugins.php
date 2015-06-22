@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\Database;
 
+use Elgg\Cache\Pool;
 use Exception;
 
 /**
@@ -17,9 +18,7 @@ global $ELGG_PLUGINS_PROVIDES_CACHE;
  *
  * @access private
  *
- * @package    Elgg.Core
- * @subpackage Database
- * @since      1.10.0
+ * @since 1.10.0
  */
 class Plugins {
 
@@ -34,17 +33,16 @@ class Plugins {
 	protected $active_ids_known = false;
 
 	/**
-	 * @var \Elgg\Cache\MemoryPool
+	 * @var Pool
 	 */
 	protected $plugins_by_id;
 
 	/**
 	 * Constructor
 	 *
-	 * @param \Elgg\EventsService    $events Events service
-	 * @param \Elgg\Cache\MemoryPool $pool   Cache for referencing plugins by ID
+	 * @param Pool $pool Cache for referencing plugins by ID
 	 */
-	public function __construct(\Elgg\EventsService $events, \Elgg\Cache\MemoryPool $pool) {
+	public function __construct(Pool $pool) {
 		$this->plugins_by_id = $pool;
 	}
 

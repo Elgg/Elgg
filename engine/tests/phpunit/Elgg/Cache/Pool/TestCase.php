@@ -1,7 +1,7 @@
 <?php
-namespace Elgg\Cache;
+namespace Elgg\Cache\Pool;
 
-interface PoolTestCase {
+interface TestCase {
 	public function testGetDoesNotRegenerateValueFromCallbackOnHit();
 
 	public function testGetRegeneratesValueFromCallbackOnMiss();
