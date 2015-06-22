@@ -133,6 +133,13 @@ h6 { font-size: 0.8em; }
 	color: #0054A7;
 }
 
+@media (max-width: 600px) {
+	.elgg-subtext {
+		float: left;
+		margin-right: 15px;
+	}
+}
+
 /* ***************************************
 	USER INPUT DISPLAY RESET
 *************************************** */
