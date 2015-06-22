@@ -3,4 +3,4 @@
  * Install header
  */
 ?>
-<img src="<?= elgg_get_site_url() . "views/default/elgg_logo.png"; ?>" alt="Elgg" />
+<img src="<?= elgg_get_site_url() . "_graphics/elgg_logo.png"; ?>" alt="Elgg" />

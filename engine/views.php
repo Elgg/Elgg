@@ -24,6 +24,8 @@ return [
 		/**
 		 * __DIR__ should be utilized when referring to assets that are checked in to version control.
 		 */
+		"/" => dirname(__DIR__) . "/_graphics",
+
 		"js/elgg/ui.autocomplete.js" => dirname(__DIR__) . "/js/lib/ui.autocomplete.js",
 		"js/elgg/ui.avatar_cropper.js" => dirname(__DIR__) . "/js/lib/ui.avatar_cropper.js",
 		"js/elgg/ui.friends_picker.js" => dirname(__DIR__) . "/js/lib/ui.friends_picker.js",
