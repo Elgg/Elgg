@@ -35,6 +35,27 @@
 }
 
 /* ***************************************
+	IMAGE UPLOADING & CROPPING
+*************************************** */
+
+#current-entity-avatar {
+	border-right:1px solid #ccc;
+}
+#image-croppingtool {
+	border-top: 1px solid #ccc;
+}
+#entity-image-cropper {
+	float: left;
+}
+#entity-image-preview {
+	float: left;
+	position: relative;
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+}
+
+/* ***************************************
 	FRIENDS COLLECTIONS
 *************************************** */
 

@@ -151,6 +151,7 @@ class Application {
 			'filestore.php',
 			'friends.php',
 			'group.php',
+			'images.php',
 			'input.php',
 			'languages.php',
 			'mb_wrapper.php',
