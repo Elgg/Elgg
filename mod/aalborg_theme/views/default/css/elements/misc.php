@@ -13,6 +13,12 @@
 	padding: 14px 18px;
 }
 
+@media (max-width: 766px) {
+	#login-dropdown a {
+		padding: 10px 18px;
+	}
+}
+
 /* ***************************************
 	AVATAR UPLOADING & CROPPING
 *************************************** */

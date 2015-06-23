@@ -97,59 +97,7 @@ html {
 .elgg-button-nav .icon-bar + .icon-bar {
 	margin-top: 3px;
 }
-@media (max-width: 1030px) {
-	.elgg-menu-topbar-default > li:first-child a {
-		margin-left: 0;
-	}
-	.elgg-menu-topbar-alt > li > a.elgg-topbar-dropdown {
-		margin-right: 0;
-	}
-	.elgg-page-footer {
-		padding: 0 20px;
-	}
-}
 @media (max-width: 820px) {
-	.elgg-page-default {
-		min-width: 0;
-	}
-	.elgg-page-body {
-		padding: 0;
-	}
-	.elgg-main {
-        padding: 12px 20px 10px;
-		
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		box-sizing: border-box;
-    }
-    .elgg-layout-one-sidebar .elgg-main,
-	.elgg-layout-two-sidebar .elgg-main {
-        width: 100%;
-    }
-	.elgg-sidebar {
-		border-left: none;
-		border-top: 1px solid #DCDCDC;
-		border-bottom: 1px solid #DCDCDC;
-		background-color: #FAFAFA;
-		width: 100%;
-		float: left;
-		padding: 27px 20px 20px;
-		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05) inset;
-
-		-webkit-box-sizing: border-box;
-		-moz-box-sizing: border-box;
-		box-sizing: border-box;
-	}
-	.elgg-sidebar-alt {
-		display: none;
-	}
-	.elgg-page-default .elgg-page-footer > .elgg-inner {
-		border-top: none;
-	}
-	.elgg-menu-footer {
-		float: none;
-		text-align: center;
-	}
 	.elgg-menu-page,
 	.elgg-sidebar .elgg-menu-owner-block,
 	.elgg-menu-groups-my-status {
@@ -162,7 +110,7 @@ html {
 		border-style: solid;
 		border-width: 1px 1px 0 1px;
 		margin: 0;
-		padding: 10px;		
+		padding: 10px;
 		background-color: #FFFFFF;
 	}
 	.elgg-menu-page a:hover,
@@ -231,59 +179,6 @@ html {
 		display: none;
 		width: 100%;
 	}
-	#login-dropdown a {
-		padding: 10px 18px;
-	}
-	.elgg-menu-site {
-		float: none;
-	}
-	.elgg-menu-site > li > ul {
-		position: static;
-		display: block;
-		left: 0;
-		margin-left: 0;
-		border: none;
-		box-shadow: none;
-		background: none;
-	}
-	.elgg-more,
-	.elgg-menu-site-more li,
-	.elgg-menu-site > li > ul {
-		width: auto;
-	}
-	.elgg-menu-site ul li {
-		float: none;
-		margin: 0;
-	}
-	.elgg-more > a {
-		border-bottom: 1px solid #294E6B;
-	}
-	.elgg-menu-site > li {
-		border-top: 1px solid #294E6B;
-		clear: both;
-		float: none;
-		margin: 0;
-	}
-	.elgg-menu-site > li:first-child {
-		border-top: none;
-	}
-	.elgg-menu-site > li > a {
-		padding: 10px 18px;
-	}
-	.elgg-menu-site-more > li > a {
-		color: #FFF;
-		background: none;
-		padding: 10px 18px 10px 30px;
-	}
-	.elgg-menu-site-more > li:last-child > a,
-	.elgg-menu-site-more > li:last-child > a:hover {
-		border-radius: 0;
-	}
-	.elgg-menu-site-more > li.elgg-state-selected > a,
-	.elgg-menu-site-more > li > a:hover {
-		background-color: #60B8F7;
-		color: #FFF;
-	}
 }
 @media (max-width: 600px) {
 	.groups-profile-fields {
@@ -308,16 +203,4 @@ html {
 	#groups-tools > li:last-child {
 		margin-bottom: 0;
 	}
-	.elgg-menu-entity, .elgg-menu-annotation {
-		margin-left: 0;
-	}
-	.elgg-menu-entity > li, .elgg-menu-annotation > li {
-		margin-left: 0;
-		margin-right: 15px;
-	}
-	.elgg-subtext {
-		float: left;
-		margin-right: 15px;
-	}
 }
-

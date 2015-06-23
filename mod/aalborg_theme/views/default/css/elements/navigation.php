@@ -174,6 +174,15 @@
 	padding-top: 7px;
 }
 
+@media (max-width: 1030px) {
+	.elgg-menu-topbar-default > li:first-child a {
+		margin-left: 0;
+	}
+	.elgg-menu-topbar-alt > li > a.elgg-topbar-dropdown {
+		margin-right: 0;
+	}
+}
+
 /* ***************************************
 	SITE MENU
 *************************************** */
@@ -331,6 +340,58 @@
 	content: "\25BE";
 }
 
+@media (max-width: 766px) {
+	.elgg-menu-site {
+		float: none;
+	}
+	.elgg-menu-site > li > ul {
+		position: static;
+		display: block;
+		left: 0;
+		margin-left: 0;
+		border: none;
+		box-shadow: none;
+		background: none;
+	}
+	.elgg-more,
+	.elgg-menu-site-more li,
+	.elgg-menu-site > li > ul {
+		width: auto;
+	}
+	.elgg-menu-site ul li {
+		float: none;
+		margin: 0;
+	}
+	.elgg-more > a {
+		border-bottom: 1px solid #294E6B;
+	}
+	.elgg-menu-site > li {
+		border-top: 1px solid #294E6B;
+		clear: both;
+		float: none;
+		margin: 0;
+	}
+	.elgg-menu-site > li:first-child {
+		border-top: none;
+	}
+	.elgg-menu-site > li > a {
+		padding: 10px 18px;
+	}
+	.elgg-menu-site-more > li > a {
+		color: #FFF;
+		background: none;
+		padding: 10px 18px 10px 30px;
+	}
+	.elgg-menu-site-more > li:last-child > a,
+	.elgg-menu-site-more > li:last-child > a:hover {
+		border-radius: 0;
+	}
+	.elgg-menu-site-more > li.elgg-state-selected > a,
+	.elgg-menu-site-more > li > a:hover {
+		background-color: #60B8F7;
+		color: #FFF;
+	}
+}
 /* ***************************************
 	HOVER MENU
 *************************************** */
@@ -397,6 +458,13 @@
 	float: left;
 }
 
+@media (max-width: 820px) {
+	.elgg-menu-footer {
+		float: none;
+		text-align: center;
+	}
+}
+
 /* ***************************************
 	GENERAL MENU
 *************************************** */
@@ -435,6 +503,16 @@
 }
 .elgg-menu-entity > li > span, .elgg-menu-annotation > li > span {
 	vertical-align: baseline;
+}
+
+@media (max-width: 600px) {
+	.elgg-menu-entity, .elgg-menu-annotation {
+		margin-left: 0;
+	}
+	.elgg-menu-entity > li, .elgg-menu-annotation > li {
+		margin-left: 0;
+		margin-right: 15px;
+	}
 }
 
 /* ***************************************

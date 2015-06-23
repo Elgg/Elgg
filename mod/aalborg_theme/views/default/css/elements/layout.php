@@ -41,6 +41,16 @@
 	border-top: 1px solid #DEDEDE;
 }
 
+@media (max-width: 820px) {
+	.elgg-page-default {
+		min-width: 0;
+	}
+
+	.elgg-page-default .elgg-page-footer > .elgg-inner {
+		border-top: none;
+	}
+}
+
 /***** TOPBAR ******/
 .elgg-page-topbar {
 	background: #424242;
@@ -132,6 +142,44 @@
 	width: 50.101010%;
 }
 
+@media (max-width: 820px) {
+	.elgg-page-body {
+		padding: 0;
+	}
+
+	.elgg-main {
+		padding: 12px 20px 10px;
+
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.elgg-layout-one-sidebar .elgg-main,
+	.elgg-layout-two-sidebar .elgg-main {
+		width: 100%;
+	}
+
+	.elgg-sidebar {
+		border-left: none;
+		border-top: 1px solid #DCDCDC;
+		border-bottom: 1px solid #DCDCDC;
+		background-color: #FAFAFA;
+		width: 100%;
+		float: left;
+		padding: 27px 20px 20px;
+		box-shadow: 0 3px 6px rgba(0, 0, 0, 0.05) inset;
+
+		-webkit-box-sizing: border-box;
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	.elgg-sidebar-alt {
+		display: none;
+	}
+}
+
 /***** PAGE FOOTER ******/
 .elgg-page-footer {
 	color: #999;
@@ -141,4 +189,10 @@
 
 .elgg-page-footer a:hover {
 	color: #666;
+}
+
+@media (max-width: 1030px) {
+	.elgg-page-footer {
+		padding: 0 20px;
+	}
 }
