@@ -32,6 +32,27 @@
 }
 
 /* ***************************************
+	IMAGE UPLOADING & CROPPING
+*************************************** */
+
+#current-entity-avatar {
+	border-right:1px solid #ccc;
+}
+#image-croppingtool {
+	border-top: 1px solid #ccc;
+}
+#entity-image-cropper {
+	float: left;
+}
+#entity-image-preview {
+	float: left;
+	position: relative;
+	overflow: hidden;
+	width: 100px;
+	height: 100px;
+}
+
+/* ***************************************
 	FRIENDS COLLECTIONS
 *************************************** */
 
@@ -39,7 +60,7 @@
 	color: #666;
 }
 #friends_collections_accordian li h2 {
-	border-radius: 8px;	
+	border-radius: 8px;
 	background: none repeat scroll 0 0 #4690D6;
 	color: white;
 	cursor: pointer;
