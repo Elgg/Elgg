@@ -813,7 +813,7 @@ function _elgg_php_exception_handler($exception) {
 
 	// we don't want the 'pagesetup', 'system' event to fire
 	global $CONFIG;
-	$CONFIG->pagesetupdone = true;
+	$GLOBALS['_ELGG']->pagesetupdone = true;
 
 	try {
 		// allow custom scripts to trigger on exception
@@ -1483,7 +1483,7 @@ function _elgg_ajax_page_handler($segments) {
 			$view = 'forms/' . implode('/', array_slice($segments, 1));
 		}
 
-		$allowed_views = elgg_get_config('allowed_ajax_views');
+		$allowed_views = $GLOBALS['_ELGG']->allowed_ajax_views;
 		if (!array_key_exists($view, $allowed_views)) {
 			header('HTTP/1.1 403 Forbidden');
 			exit;
@@ -1897,17 +1897,6 @@ function _elgg_init() {
 
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');
-	
-	// Sets a blacklist of words in the current language.
-	// This is a comma separated list in word:blacklist.
-	// @todo possibly deprecate
-	$CONFIG->wordblacklist = array();
-	$list = explode(',', elgg_echo('word:blacklist'));
-	if ($list) {
-		foreach ($list as $l) {
-			$CONFIG->wordblacklist[] = trim($l);
-		}
-	}
 }
 
 /**

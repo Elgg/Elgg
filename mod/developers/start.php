@@ -113,11 +113,9 @@ function developers_setup_menu() {
  * Clear all the strings so the raw descriptor strings are displayed
  */
 function developers_clear_strings() {
-	global $CONFIG;
-
 	$language = get_language();
-	$CONFIG->translations[$language] = array();
-	$CONFIG->translations['en'] = array();
+	$GLOBALS['_ELGG']->translations[$language] = array();
+	$GLOBALS['_ELGG']->translations['en'] = array();
 }
 
 /**

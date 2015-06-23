@@ -13,7 +13,7 @@
 			'name' => $field,
 			'value' => elgg_get_config($field)
 		];
-		if ($field == 'dataroot' && elgg_get_config('dataroot_in_settings')) {
+		if ($field == 'dataroot' && $GLOBALS['_ELGG']->dataroot_in_settings) {
 			$params['readonly'] = true;
 			$params['class'] = 'elgg-state-disabled';
 			$warning = elgg_echo('admin:settings:in_settings_file');

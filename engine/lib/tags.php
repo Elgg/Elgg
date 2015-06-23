@@ -208,14 +208,12 @@ function elgg_get_tags(array $options = array()) {
  * @since 1.7.0
  */
 function elgg_register_tag_metadata_name($name) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->registered_tag_metadata_names)) {
-		$CONFIG->registered_tag_metadata_names = array();
+	if (!isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) {
+		$GLOBALS['_ELGG']->registered_tag_metadata_names = array();
 	}
 
-	if (!in_array($name, $CONFIG->registered_tag_metadata_names)) {
-		$CONFIG->registered_tag_metadata_names[] = $name;
+	if (!in_array($name, $GLOBALS['_ELGG']->registered_tag_metadata_names)) {
+		$GLOBALS['_ELGG']->registered_tag_metadata_names[] = $name;
 	}
 
 	return true;
@@ -228,9 +226,7 @@ function elgg_register_tag_metadata_name($name) {
  * @since 1.7.0
  */
 function elgg_get_registered_tag_metadata_names() {
-	global $CONFIG;
-
-	$names = (isset($CONFIG->registered_tag_metadata_names)) ? $CONFIG->registered_tag_metadata_names : array();
+	$names = (isset($GLOBALS['_ELGG']->registered_tag_metadata_names)) ? $GLOBALS['_ELGG']->registered_tag_metadata_names : array();
 
 	return $names;
 }

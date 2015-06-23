@@ -224,14 +224,27 @@ Messages will no longer get the metadata 'msg' for newly created messages. This 
 Removed Classes
 ---------------
 
+ - ``ElggInspector``
  - ``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)
 
 Removed keys available via ``elgg_get_config()``
 ------------------------------------------------
 
- - ``views``
- - ``viewtype``
+ - ``allowed_ajax_views``
+ - ``dataroot_in_settings``
+ - ``externals``
+ - ``externals_map``
+ - ``i18n_loaded_from_cache``
+ - ``language_paths``
+ - ``pagesetupdone``
+ - ``registered_tag_metadata_names``
+ - ``simplecache_enabled_in_settings``
+ - ``translations``
  - ``viewpath``
+ - ``views``
+ - ``view_path``
+ - ``viewtype``
+ - ``wordblacklist``
 
 Also note that plugins should not be accessing the global ``$CONFIG`` variable except for in ``settings.php``.
 
@@ -244,6 +257,7 @@ Removed Functions
  - ``get_db_link()``
  - ``load_plugins()``
  - ``mysql_*()``: Elgg :ref:`no longer uses ext/mysql<migrated-to-pdo>`
+ - ``remove_blacklist()``
  - ``set_template_handler()``
 
 Removed Plugin Hooks

@@ -207,7 +207,7 @@ class Logger {
 		// Do not want to write to screen before page creation has started.
 		// This is not fool-proof but probably fixes 95% of the cases when logging
 		// results in data sent to the browser before the page is begun.
-		if ($this->config->getVolatile('pagesetupdone') === null) {
+		if (!isset($GLOBALS['_ELGG']->pagesetupdone)) {
 			$display = false;
 		}
 

@@ -22,10 +22,10 @@ class ExternalFilesTest extends \PHPUnit_Framework_TestCase {
 
 		$list->add($obj1, 600);
 		$list->add($obj2, 300);
-		$config->externals = array(
+		$GLOBALS['_ELGG']->externals = array(
 			'foo' => $list
 		);
-		$config->externals_map = array(
+		$GLOBALS['_ELGG']->externals_map = array(
 			'foo' => array(
 				'bar1' => $obj1,
 				'bar2' => $obj2,

@@ -311,13 +311,13 @@ class CacheHandler {
 		// disable error reporting so we don't cache problems
 		$this->config->set('debug', null);
 
-		// @todo elgg_view() checks if the page set is done (isset($CONFIG->pagesetupdone)) and
+		// @todo elgg_view() checks if the page set is done (isset($GLOBALS['_ELGG']->pagesetupdone)) and
 		// triggers an event if it's not. Calling elgg_view() here breaks submenus
 		// (at least) because the page setup hook is called before any
 		// contexts can be correctly set (since this is called before page_handler()).
 		// To avoid this, lie about $CONFIG->pagehandlerdone to force
 		// the trigger correctly when the first view is actually being output.
-		$this->config->set('pagesetupdone', true);
+		$GLOBALS['_ELGG']->pagesetupdone = true;
 
 		return elgg_view($view);
 	}

@@ -144,7 +144,7 @@ class SystemCache {
 		if (!is_string($data)) {
 			return;
 		}
-		$this->CONFIG->view_types = unserialize($data);
+		$GLOBALS['_ELGG']->view_types = unserialize($data);
 
 		// Note: We don't need view_overrides for operation. Inspector can pull this from the cache
 	
@@ -164,16 +164,16 @@ class SystemCache {
 
 		// cache system data if enabled and not loaded
 		if (!$this->CONFIG->system_cache_loaded) {
-			$this->save('view_types', serialize($this->CONFIG->view_types));
+			$this->save('view_types', serialize($GLOBALS['_ELGG']->view_types));
 
 			_elgg_services()->views->cacheConfiguration($this);
 		}
 	
-		if (!$this->CONFIG->i18n_loaded_from_cache) {
+		if (!$GLOBALS['_ELGG']->i18n_loaded_from_cache) {
 
 			_elgg_services()->translator->reloadAllTranslations();
 
-			foreach ($this->CONFIG->translations as $lang => $map) {
+			foreach ($GLOBALS['_ELGG']->translations as $lang => $map) {
 				$this->save("$lang.lang", serialize($map));
 			}
 		}

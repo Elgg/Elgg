@@ -34,12 +34,15 @@ $CONFIG = (object)[
 	'wwwroot' => 'http://localhost/',
 	'path' => __DIR__ . '/../../../',
 	'dataroot' => __DIR__ . '/test_files/dataroot/',
-	'view_path' => __DIR__ . '/../../../views/',
 	'site_guid' => 1,
 	'AutoloaderManager_skip_storage' => true,
 	'simplecache_enabled' => false,
 ];
 
+global $_ELGG;
+$_ELGG = (object)[
+	'view_path' => __DIR__ . '/../../../views/',
+];
 
 function _elgg_testing_config(\Elgg\Config $config = null) {
 	static $inst;

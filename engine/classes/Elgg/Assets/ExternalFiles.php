@@ -64,7 +64,7 @@ class ExternalFiles {
 		// no negative priorities right now.
 		$priority = max((int)$priority, 0);
 	
-		$item = elgg_extract($name, $this->CONFIG->externals_map[$type]);
+		$item = elgg_extract($name, $GLOBALS['_ELGG']->externals_map[$type]);
 	
 		if ($item) {
 			// updating a registered item
@@ -73,10 +73,10 @@ class ExternalFiles {
 			$item->location = $location;
 	
 			// if loaded before registered, that means it hasn't been added to the list yet
-			if ($this->CONFIG->externals[$type]->contains($item)) {
-				$priority = $this->CONFIG->externals[$type]->move($item, $priority);
+			if ($GLOBALS['_ELGG']->externals[$type]->contains($item)) {
+				$priority = $GLOBALS['_ELGG']->externals[$type]->move($item, $priority);
 			} else {
-				$priority = $this->CONFIG->externals[$type]->add($item, $priority);
+				$priority = $GLOBALS['_ELGG']->externals[$type]->add($item, $priority);
 			}
 		} else {
 			$item = new \stdClass();
@@ -84,10 +84,10 @@ class ExternalFiles {
 			$item->url = $url;
 			$item->location = $location;
 	
-			$priority = $this->CONFIG->externals[$type]->add($item, $priority);
+			$priority = $GLOBALS['_ELGG']->externals[$type]->add($item, $priority);
 		}
-	
-		$this->CONFIG->externals_map[$type][$name] = $item;
+
+		$GLOBALS['_ELGG']->externals_map[$type][$name] = $item;
 	
 		return $priority !== false;
 	}
@@ -105,11 +105,11 @@ class ExternalFiles {
 		$this->bootstrap($type);
 	
 		$name = trim(strtolower($name));
-		$item = elgg_extract($name, $this->CONFIG->externals_map[$type]);
+		$item = elgg_extract($name, $GLOBALS['_ELGG']->externals_map[$type]);
 	
 		if ($item) {
-			unset($this->CONFIG->externals_map[$type][$name]);
-			return $this->CONFIG->externals[$type]->remove($item);
+			unset($GLOBALS['_ELGG']->externals_map[$type][$name]);
+			return $GLOBALS['_ELGG']->externals[$type]->remove($item);
 		}
 	
 		return false;
@@ -130,7 +130,7 @@ class ExternalFiles {
 	
 		$name = trim(strtolower($name));
 	
-		$item = elgg_extract($name, $this->CONFIG->externals_map[$type]);
+		$item = elgg_extract($name, $GLOBALS['_ELGG']->externals_map[$type]);
 	
 		if ($item) {
 			// update a registered item
@@ -140,9 +140,9 @@ class ExternalFiles {
 			$item->loaded = true;
 			$item->url = '';
 			$item->location = '';
-	
-			$this->CONFIG->externals[$type]->add($item);
-			$this->CONFIG->externals_map[$type][$name] = $item;
+
+			$GLOBALS['_ELGG']->externals[$type]->add($item);
+			$GLOBALS['_ELGG']->externals_map[$type][$name] = $item;
 		}
 	}
 	
@@ -158,11 +158,11 @@ class ExternalFiles {
 		
 	
 		if (
-			isset($this->CONFIG->externals)
-			&& isset($this->CONFIG->externals[$type])
-			&& $this->CONFIG->externals[$type] instanceof \ElggPriorityList
+			isset($GLOBALS['_ELGG']->externals)
+			&& isset($GLOBALS['_ELGG']->externals[$type])
+			&& $GLOBALS['_ELGG']->externals[$type] instanceof \ElggPriorityList
 		) {
-			$items = $this->CONFIG->externals[$type]->getElements();
+			$items = $GLOBALS['_ELGG']->externals[$type]->getElements();
 	
 			$items = array_filter($items, function($v) use ($location) {
 				return $v->loaded == true && $v->location == $location;
@@ -178,27 +178,27 @@ class ExternalFiles {
 	}
 	
 	/**
-	 * Bootstraps the externals data structure in $CONFIG.
+	 * Bootstraps the externals data structure in $_ELGG.
 	 *
 	 * @param string $type The type of external, js or css.
 	 * @return null
 	 */
 	protected function bootstrap($type) {
 
-		if (!isset($this->CONFIG->externals)) {
-			$this->CONFIG->externals = array();
+		if (!isset($GLOBALS['_ELGG']->externals)) {
+			$GLOBALS['_ELGG']->externals = array();
 		}
 	
-		if (!isset($this->CONFIG->externals[$type]) || !$this->CONFIG->externals[$type] instanceof \ElggPriorityList) {
-			$this->CONFIG->externals[$type] = new \ElggPriorityList();
+		if (!isset($GLOBALS['_ELGG']->externals[$type]) || !$GLOBALS['_ELGG']->externals[$type] instanceof \ElggPriorityList) {
+			$GLOBALS['_ELGG']->externals[$type] = new \ElggPriorityList();
 		}
 	
-		if (!isset($this->CONFIG->externals_map)) {
-			$this->CONFIG->externals_map = array();
+		if (!isset($GLOBALS['_ELGG']->externals_map)) {
+			$GLOBALS['_ELGG']->externals_map = array();
 		}
 	
-		if (!isset($this->CONFIG->externals_map[$type])) {
-			$this->CONFIG->externals_map[$type] = array();
+		if (!isset($GLOBALS['_ELGG']->externals_map[$type])) {
+			$GLOBALS['_ELGG']->externals_map[$type] = array();
 		}
 	}
 }

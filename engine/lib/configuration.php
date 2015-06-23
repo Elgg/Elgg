@@ -316,7 +316,6 @@ function _elgg_load_application_config() {
 	$install_root = str_replace("\\", "/", dirname(dirname(dirname(__FILE__))));
 	$defaults = array(
 		'path' => "$install_root/",
-		'view_path' => "$install_root/views/",
 		'plugins_path' => "$install_root/mod/",
 		'language' => 'en',
 
@@ -330,6 +329,8 @@ function _elgg_load_application_config() {
 		}
 	}
 
+	$GLOBALS['_ELGG']->view_path = "$install_root/views/";
+
 	// set cookie values for session and remember me
 	_elgg_configure_cookies($CONFIG);
 
@@ -340,16 +341,16 @@ function _elgg_load_application_config() {
 	// allow sites to set dataroot and simplecache_enabled in settings.php
 	if (isset($CONFIG->dataroot)) {
 		$CONFIG->dataroot = sanitise_filepath($CONFIG->dataroot);
-		$CONFIG->dataroot_in_settings = true;
+		$GLOBALS['_ELGG']->dataroot_in_settings = true;
 	} else {
 		$dataroot = datalist_get('dataroot');
 		if (!empty($dataroot)) {
 			$CONFIG->dataroot = $dataroot;
 		}
-		$CONFIG->dataroot_in_settings = false;
+		$GLOBALS['_ELGG']->dataroot_in_settings = false;
 	}
 	if (isset($CONFIG->simplecache_enabled)) {
-		$CONFIG->simplecache_enabled_in_settings = true;
+		$GLOBALS['_ELGG']->simplecache_enabled_in_settings = true;
 	} else {
 		$simplecache_enabled = datalist_get('simplecache_enabled');
 		if ($simplecache_enabled !== false) {
@@ -357,7 +358,7 @@ function _elgg_load_application_config() {
 		} else {
 			$CONFIG->simplecache_enabled = 1;
 		}
-		$CONFIG->simplecache_enabled_in_settings = false;
+		$GLOBALS['_ELGG']->simplecache_enabled_in_settings = false;
 	}
 
 	$system_cache_enabled = datalist_get('system_cache_enabled');
@@ -370,7 +371,7 @@ function _elgg_load_application_config() {
 	// needs to be set before system, init for links in html head
 	$CONFIG->lastcache = (int)datalist_get("simplecache_lastupdate");
 
-	$CONFIG->i18n_loaded_from_cache = false;
+	$GLOBALS['_ELGG']->i18n_loaded_from_cache = false;
 
 	// this must be synced with the enum for the entities table
 	$CONFIG->entity_types = array('group', 'object', 'site', 'user');

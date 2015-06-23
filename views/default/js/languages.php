@@ -19,13 +19,13 @@ if (empty($language)) {
 	$language = 'en';
 }
 
-$all_translations = elgg_get_config('translations');
+$all_translations = $GLOBALS['_ELGG']->translations;
 $translations = $all_translations['en'];
 
 if ($language != 'en' && !isset($all_translations[$language])) {
 	// try to reload missing translations
 	reload_all_translations();
-	$all_translations = elgg_get_config('translations');
+	$all_translations = $GLOBALS['_ELGG']->translations;
 }
 
 if ($language != 'en' && isset($all_translations[$language])) {
