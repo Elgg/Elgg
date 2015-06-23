@@ -79,6 +79,18 @@ class Application {
 			$START_MICROTIME = microtime(true);
 		}
 
+		/**
+		 * This was introduced in 2.0 in order to remove all internal non-API state from $CONFIG. This will
+		 * be a breaking change, but frees us to refactor in 2.x without fear of plugins depending on
+		 * $CONFIG.
+		 *
+		 * @access private
+		 */
+		global $_ELGG;
+		if (!isset($_ELGG)) {
+			$_ELGG = new \stdClass();
+		}
+
 		$this->engine_dir = dirname(dirname(__DIR__));
 		$this->install_dir = dirname($this->engine_dir);
 	}

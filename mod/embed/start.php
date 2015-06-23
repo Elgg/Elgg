@@ -59,7 +59,7 @@ function embed_longtext_menu($hook, $type, $items, $vars) {
 	// if loaded through ajax (like on /activity), pull in JS libs manually
 	// hack for #6422 because we haven't converted everything to amd yet
 	if (elgg_in_context('ajax')) {
-		$externals = elgg_get_config('externals_map');
+		$externals = $GLOBALS['_ELGG']->externals_map;
 		$embed = elgg_extract('elgg.embed', $externals['js']);
 		$lightbox_js = elgg_extract('lightbox', $externals['js']);
 		$lightbox_css = elgg_extract('lightbox', $externals['css']);

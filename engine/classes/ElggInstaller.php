@@ -444,8 +444,8 @@ class ElggInstaller {
 		// if Apache, we give user option of having Elgg create data directory
 		//if (ElggRewriteTester::guessWebServer() == 'apache') {
 		//	$formVars['dataroot']['type'] = 'combo';
-		//	$this->CONFIG->translations['en']['install:settings:help:dataroot'] =
-		//			$this->CONFIG->translations['en']['install:settings:help:dataroot:apache'];
+		//	$GLOBALS['_ELGG']->translations['en']['install:settings:help:dataroot'] =
+		//			$GLOBALS['_ELGG']->translations['en']['install:settings:help:dataroot:apache'];
 		//}
 
 		if ($this->isAction) {
@@ -533,8 +533,8 @@ class ElggInstaller {
 		// bit of a hack to get the password help to show right number of characters
 		
 		$lang = _elgg_services()->translator->getCurrentLanguage();
-		$this->CONFIG->translations[$lang]['install:admin:help:password1'] =
-				sprintf($this->CONFIG->translations[$lang]['install:admin:help:password1'],
+		$GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'] =
+				sprintf($GLOBALS['_ELGG']->translations[$lang]['install:admin:help:password1'],
 				$this->CONFIG->min_password_length);
 
 		$formVars = $this->makeFormSticky($formVars, $submissionVars);
@@ -849,7 +849,7 @@ class ElggInstaller {
 		$this->CONFIG->wwwroot = $this->getBaseUrl();
 		$this->CONFIG->url = $this->CONFIG->wwwroot;
 		$this->CONFIG->path = "{$this->getElggRoot()}/";
-		$this->CONFIG->view_path =	$this->CONFIG->path . 'views/';
+		$GLOBALS['_ELGG']->view_path =	$this->CONFIG->path . 'views/';
 		$this->CONFIG->pluginspath = $this->CONFIG->path . 'mod/';
 		$this->CONFIG->context = array();
 		$this->CONFIG->entity_types = array('group', 'object', 'site', 'user');

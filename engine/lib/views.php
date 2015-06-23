@@ -114,14 +114,12 @@ function elgg_get_viewtype() {
  * @return bool
  */
 function elgg_register_viewtype($viewtype) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->view_types) || !is_array($CONFIG->view_types)) {
-		$CONFIG->view_types = array();
+	if (!isset($GLOBALS['_ELGG']->view_types) || !is_array($GLOBALS['_ELGG']->view_types)) {
+		$GLOBALS['_ELGG']->view_types = array();
 	}
 
-	if (!in_array($viewtype, $CONFIG->view_types)) {
-		$CONFIG->view_types[] = $viewtype;
+	if (!in_array($viewtype, $GLOBALS['_ELGG']->view_types)) {
+		$GLOBALS['_ELGG']->view_types[] = $viewtype;
 	}
 
 	return true;
@@ -136,13 +134,11 @@ function elgg_register_viewtype($viewtype) {
  * @since 1.9.0
  */
 function elgg_is_registered_viewtype($viewtype) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->view_types) || !is_array($CONFIG->view_types)) {
+	if (!isset($GLOBALS['_ELGG']->view_types) || !is_array($GLOBALS['_ELGG']->view_types)) {
 		return false;
 	}
 
-	return in_array($viewtype, $CONFIG->view_types);
+	return in_array($viewtype, $GLOBALS['_ELGG']->view_types);
 }
 
 
@@ -229,13 +225,11 @@ function elgg_unregister_ajax_view($view) {
  * @since 1.9.0
  */
 function elgg_register_external_view($view, $cacheable = false) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->allowed_ajax_views)) {
-		$CONFIG->allowed_ajax_views = array();
+	if (!isset($GLOBALS['_ELGG']->allowed_ajax_views)) {
+		$GLOBALS['_ELGG']->allowed_ajax_views = array();
 	}
 
-	$CONFIG->allowed_ajax_views[$view] = true;
+	$GLOBALS['_ELGG']->allowed_ajax_views[$view] = true;
 
 	if ($cacheable) {
 		_elgg_services()->views->registerCacheableView($view);
@@ -262,10 +256,8 @@ function _elgg_is_view_cacheable($view) {
  * @since 1.9.0
  */
 function elgg_unregister_external_view($view) {
-	global $CONFIG;
-
-	if (isset($CONFIG->allowed_ajax_views[$view])) {
-		unset($CONFIG->allowed_ajax_views[$view]);
+	if (isset($GLOBALS['_ELGG']->allowed_ajax_views[$view])) {
+		unset($GLOBALS['_ELGG']->allowed_ajax_views[$view]);
 	}
 }
 
@@ -1620,7 +1612,7 @@ function elgg_views_boot() {
 	elgg_register_plugin_hook_handler('output:before', 'page', '_elgg_views_send_header_x_frame_options');
 
 	// @todo the cache is loaded in load_plugins() but we need to know viewtypes earlier
-	$view_path = $CONFIG->view_path;
+	$view_path = $GLOBALS['_ELGG']->view_path;
 	$viewtype_dirs = scandir($view_path);
 	foreach ($viewtype_dirs as $viewtype) {
 		if (_elgg_is_valid_viewtype($viewtype) && is_dir($view_path . $viewtype)) {

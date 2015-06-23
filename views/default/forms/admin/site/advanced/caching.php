@@ -12,14 +12,14 @@ $params = array(
 	'name' => 'simplecache_enabled',
 	'checked' => $is_simple_cache_on,
 );
-if (elgg_get_config('simplecache_enabled_in_settings')) {
+if ($GLOBALS['_ELGG']->simplecache_enabled_in_settings) {
 	$params['class'] = 'elgg-state-disabled';
 	$params['label_class'] = 'elgg-state-disabled';
 }
 $simple_cache_input .= elgg_view("input/checkbox", $params);
 $simple_cache_warning = '';
 
-if (elgg_get_config('simplecache_enabled_in_settings')) {
+if ($GLOBALS['_ELGG']->simplecache_enabled_in_settings) {
 	$warning = elgg_echo('admin:settings:in_settings_file');
 	$simple_cache_warning .= "<span class=\"elgg-text-help\">$warning</span>";
 }

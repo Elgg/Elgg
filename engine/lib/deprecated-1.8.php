@@ -1463,31 +1463,6 @@ function filter_string($string) {
 }
 
 /**
- * Returns true if the word in $input is considered significant
- *
- * @deprecated 1.8 Don't use this.
- *
- * @param string $input A word
- *
- * @return true|false
- */
-function remove_blacklist($input) {
-	elgg_deprecated_notice('remove_blacklist() was deprecated!', 1.8);
-
-	global $CONFIG;
-
-	if (!is_array($CONFIG->wordblacklist)) {
-		return $input;
-	}
-
-	if (strlen($input) < 3 || in_array($input, $CONFIG->wordblacklist)) {
-		return false;
-	}
-
-	return true;
-}
-
-/**
  * Gets the guid of the entity that owns the current page.
  *
  * @deprecated 1.8  Use elgg_get_page_owner_guid()

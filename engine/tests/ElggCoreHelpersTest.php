@@ -26,10 +26,8 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-
-		global $CONFIG;
-		unset($CONFIG->externals);
-		unset($CONFIG->externals_map);
+		unset($GLOBALS['_ELGG']->externals);
+		unset($GLOBALS['_ELGG']->externals_map);
 	}
 
 	/**
@@ -221,20 +219,18 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 	 * Test elgg_register_js()
 	 */
 	public function testElggRegisterJS() {
-		global $CONFIG;
-
 		// specify name
 		$result = elgg_register_js('key', 'http://test1.com', 'footer');
 		$this->assertTrue($result);
-		$this->assertTrue(isset($CONFIG->externals_map['js']['key']));
+		$this->assertTrue(isset($GLOBALS['_ELGG']->externals_map['js']['key']));
 
-		$item = $CONFIG->externals_map['js']['key'];
-		$this->assertTrue($CONFIG->externals['js']->contains($item));
+		$item = $GLOBALS['_ELGG']->externals_map['js']['key'];
+		$this->assertTrue($GLOBALS['_ELGG']->externals['js']->contains($item));
 
-		$priority = $CONFIG->externals['js']->getPriority($item);
+		$priority = $GLOBALS['_ELGG']->externals['js']->getPriority($item);
 		$this->assertTrue($priority !== false);
 
-		$item = $CONFIG->externals['js']->getElement($priority);
+		$item = $GLOBALS['_ELGG']->externals['js']->getElement($priority);
 		$this->assertIdentical('http://test1.com', $item->url);
 
 		// send a bad url
@@ -246,20 +242,18 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 	 * Test elgg_register_css()
 	 */
 	public function testElggRegisterCSS() {
-		global $CONFIG;
-		
 		// specify name
 		$result = elgg_register_css('key', 'http://test1.com');
 		$this->assertTrue($result);
-		$this->assertTrue(isset($CONFIG->externals_map['css']['key']));
+		$this->assertTrue(isset($GLOBALS['_ELGG']->externals_map['css']['key']));
 
-		$item = $CONFIG->externals_map['css']['key'];
-		$this->assertTrue($CONFIG->externals['css']->contains($item));
+		$item = $GLOBALS['_ELGG']->externals_map['css']['key'];
+		$this->assertTrue($GLOBALS['_ELGG']->externals['css']->contains($item));
 
-		$priority = $CONFIG->externals['css']->getPriority($item);
+		$priority = $GLOBALS['_ELGG']->externals['css']->getPriority($item);
 		$this->assertTrue($priority !== false);
 
-		$item = $CONFIG->externals['css']->getElement($priority);
+		$item = $GLOBALS['_ELGG']->externals['css']->getElement($priority);
 		$this->assertIdentical('http://test1.com', $item->url);
 	}
 
@@ -267,8 +261,6 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 	 * Test elgg_unregister_js()
 	 */
 	public function testElggUnregisterJS() {
-		global $CONFIG;
-
 		$base = trim(elgg_get_site_url(), "/");
 
 		$urls = array('id1' => "$base/urla", 'id2' => "$base/urlb", 'id3' => "$base/urlc");
@@ -280,9 +272,9 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 		$result = elgg_unregister_js('id1');
 		$this->assertTrue($result);
 
-		$js = $CONFIG->externals['js'];
+		$js = $GLOBALS['_ELGG']->externals['js'];
 		$elements = $js->getElements();
-		$this->assertFalse(isset($CONFIG->externals_map['js']['id1']));
+		$this->assertFalse(isset($GLOBALS['_ELGG']->externals_map['js']['id1']));
 		
 		foreach ($elements as $element) {
 			if (isset($element->name)) {
@@ -299,19 +291,19 @@ class ElggCoreHelpersTest extends \ElggCoreUnitTest {
 		$result = elgg_unregister_js('id2');
 		$elements = $js->getElements();
 
-		$this->assertFalse(isset($CONFIG->externals_map['js']['id2']));
+		$this->assertFalse(isset($GLOBALS['_ELGG']->externals_map['js']['id2']));
 		foreach ($elements as $element) {
 			if (isset($element->name)) {
 				$this->assertFalse($element->name == 'id2');
 			}
 		}
 
-		$this->assertTrue(isset($CONFIG->externals_map['js']['id3']));
+		$this->assertTrue(isset($GLOBALS['_ELGG']->externals_map['js']['id3']));
 
-		$priority = $CONFIG->externals['js']->getPriority($CONFIG->externals_map['js']['id3']);
+		$priority = $GLOBALS['_ELGG']->externals['js']->getPriority($GLOBALS['_ELGG']->externals_map['js']['id3']);
 		$this->assertTrue($priority !== false);
 
-		$item = $CONFIG->externals['js']->getElement($priority);
+		$item = $GLOBALS['_ELGG']->externals['js']->getElement($priority);
 		$this->assertIdentical($urls['id3'], $item->url);
 	}
 
