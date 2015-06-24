@@ -175,6 +175,28 @@ Elgg core uses this feature extensively. See ``engine/views.php``.
     managing your plugin's assets, but we highly recommend using a package manager
     of some kind because it makes upgrading so much easier.
 
+Specifying additional views directories
+---------------------------------------
+
+In your ``views.php`` file you can also specify directories to be scanned for views. Just provide
+a view name prefix ending with ``/`` and a directory path (like above).
+
+.. code-block:: php
+
+    <?php // mod/file/views.php
+    return [
+        'default' => [
+            'file/icon/' => __DIR__ . '/graphics/icons',
+        ],
+    ];
+
+With the above, files found within the ``icons`` folder will be interpreted as views. E.g. the view
+``file/icon/general.gif`` will be created and mapped to ``mod/file/graphics/icons/general.gif``.
+
+.. note::
+
+    This is a fully recursive scan. All files found will be brought into the views system.
+
 Viewtypes
 =========
 

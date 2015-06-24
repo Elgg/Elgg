@@ -24,14 +24,14 @@ return [
 		/**
 		 * __DIR__ should be utilized when referring to assets that are checked in to version control.
 		 */
+		"/" => dirname(__DIR__) . "/_graphics",
+
 		"js/elgg/ui.autocomplete.js" => dirname(__DIR__) . "/js/lib/ui.autocomplete.js",
 		"js/elgg/ui.avatar_cropper.js" => dirname(__DIR__) . "/js/lib/ui.avatar_cropper.js",
 		"js/elgg/ui.friends_picker.js" => dirname(__DIR__) . "/js/lib/ui.friends_picker.js",
 		"js/elgg/ui.river.js" => dirname(__DIR__) . "/js/lib/ui.river.js",
 
 		"lightbox.css" => dirname(__DIR__) . "/vendors/elgg-colorbox-theme/colorbox.css",
-		"colorbox-images/border1.png" => dirname(__DIR__) . "/vendors/elgg-colorbox-theme/colorbox-images/border1.png",
-		"colorbox-images/border2.png" => dirname(__DIR__) . "/vendors/elgg-colorbox-theme/colorbox-images/border2.png",
-		"colorbox-images/loading.gif" => dirname(__DIR__) . "/vendors/elgg-colorbox-theme/colorbox-images/loading.gif",
+		"colorbox-images/" => dirname(__DIR__) . "/vendors/elgg-colorbox-theme/colorbox-images",
 	],
 ];

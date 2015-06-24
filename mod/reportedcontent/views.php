@@ -2,6 +2,6 @@
 
 return [
 	'default' => [
-		'reportedcontent/icon_reportthis.gif' => __DIR__ . '/graphics/icon_reportthis.gif',
+		'reportedcontent/' => __DIR__ . '/graphics',
 	],
 ];
