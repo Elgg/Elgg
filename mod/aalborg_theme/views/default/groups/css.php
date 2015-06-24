@@ -45,10 +45,6 @@
 	font-size: 85%;
 }
 
-.groups-latest-reply {
-	float: right;
-}
-
 .elgg-menu-groups-my-status li a {
 	color: #444;
 	display: block;

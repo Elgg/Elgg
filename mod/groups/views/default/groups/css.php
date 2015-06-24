@@ -1,7 +1,7 @@
 <?php
 /**
  * Elgg Groups css
- * 
+ *
  * @package groups
  */
 
@@ -19,7 +19,7 @@
 .groups-profile-fields .odd,
 .groups-profile-fields .even {
 	background: #f4f4f4;
-	border-radius: 4px;	
+	border-radius: 4px;
 	padding: 2px 4px;
 	margin-bottom: 7px;
 }
@@ -41,10 +41,6 @@
 .groups-widget-viewall {
 	float: right;
 	font-size: 85%;
-}
-
-.groups-latest-reply {
-	float: right;
 }
 
 .elgg-menu-groups-my-status li a {

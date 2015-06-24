@@ -1,0 +1,8 @@
+{
+    "name": "elgg/discussions",
+    "type": "elgg-plugin",
+    "license": "GPL-2.0",
+    "require": {
+        "composer/installers": ">=1.0.8"
+    }
+}

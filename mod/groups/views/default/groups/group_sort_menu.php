@@ -21,12 +21,15 @@ $tabs = array(
 		'href' => 'groups/all?filter=featured',
 		'priority' => 400,
 	),
-	'discussion' => array(
+);
+
+if (elgg_is_active_plugin('discussion')) {
+	$tabs['discussion'] = array(
 		'text' => elgg_echo('groups:latestdiscussion'),
 		'href' => 'groups/all?filter=discussion',
 		'priority' => 500,
-	),
-);
+	);
+}
 
 foreach ($tabs as $name => $tab) {
 	$tab['name'] = $name;
