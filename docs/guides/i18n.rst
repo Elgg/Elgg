@@ -65,6 +65,18 @@ To force which language should be used for translation, set the third parameter:
 
    echo elgg_echo(‘welcome’, array(), ‘es’);
 
+``elgg_get_echo_language($key, $language)``
+
+Find the language the translation key is available in. This can be used to test for keys before use:
+
+.. code:: php
+
+    $key = 'key_that_may_not_exist';
+    $lang = elgg_get_echo_language($key);
+    if (!$lang) {
+        $key = 'fallback_key';
+    }
+    $translation = elgg_echo($key, array(), $lang);
 
 
 Javascript API
