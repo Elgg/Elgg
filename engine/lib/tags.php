@@ -111,13 +111,6 @@ function elgg_get_tags(array $options = array()) {
 		$options['tag_names'] = $registered_tags;
 	}
 
-	$diff = array_diff($options['tag_names'], $registered_tags);
-	if (count($diff) > 0) {
-		elgg_deprecated_notice('Tag metadata names must be registered by elgg_register_tag_metadata_name()', 1.7);
-		// return false;
-	}
-
-
 	$wheres = $options['wheres'];
 
 	// catch for tags that were spaces

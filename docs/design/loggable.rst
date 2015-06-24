@@ -10,7 +10,6 @@ Loggable defines several class methods that are used in saving to the default sy
 - ``getType()`` Return the object type
 - ``getSubtype()`` Get the object subtype
 - ``getObjectFromID($id)`` For a given ID, return the object associated with it
-- ``getObjectOwnerGUID()`` Return the GUID of the owner of this object
 
 Database details
 ----------------

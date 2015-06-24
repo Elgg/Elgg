@@ -22,27 +22,6 @@ abstract class ElggData implements
 	 */
 	protected $attributes = array();
 
-	// @codingStandardsIgnoreStart
-	/**
-	 * Initialise the attributes array.
-	 *
-	 * This is vital to distinguish between metadata and base parameters.
-	 *
-	 * @param bool $pre18_api Compatibility for subclassing in 1.7 -> 1.8 change.
-	 *                        Passing true (default) emits a deprecation notice.
-	 *                        Passing false returns false.  Core constructors always pass false.
-	 *                        Does nothing either way since attributes are initialized by the time
-	 *                        this is called.
-	 * @return void
-	 * @deprecated 1.8 Use initializeAttributes()
-	 */
-	protected function initialise_attributes($pre18_api = true) {
-		if ($pre18_api) {
-			elgg_deprecated_notice('initialise_attributes() is deprecated by initializeAttributes()', 1.8);
-		}
-	}
-	// @codingStandardsIgnoreEnd
-
 	/**
 	 * Initialize the attributes array.
 	 *
@@ -152,17 +131,6 @@ abstract class ElggData implements
 	public function getClassName() {
 		elgg_deprecated_notice("getClassName() is deprecated. Use get_class().", 1.9);
 		return get_class($this);
-	}
-
-	/**
-	 * Return the GUID of the owner of this object.
-	 *
-	 * @return int
-	 * @deprecated 1.8 Use getOwnerGUID() instead
-	 */
-	public function getObjectOwnerGUID() {
-		elgg_deprecated_notice("getObjectOwnerGUID() was deprecated.  Use getOwnerGUID().", 1.8);
-		return $this->owner_guid;
 	}
 
 	/*

@@ -322,11 +322,6 @@ function file_type_cloud_get_url($type, $friends) {
 	return $url;
 }
 
-function get_filetype_cloud($owner_guid = "", $friends = false) {
-	elgg_deprecated_notice('Use file_get_type_cloud instead of get_filetype_cloud', 1.8);
-	return file_get_type_cloud($owner_guid, $friends);
-}
-
 /**
  * Populates the ->getUrl() method for file objects
  *

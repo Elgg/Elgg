@@ -142,17 +142,6 @@ abstract class ElggExtender extends \ElggData {
 	}
 
 	/**
-	 * Return the guid of the entity's owner.
-	 *
-	 * @return int The owner GUID
-	 * @deprecated 1.8 Use getOwnerGUID
-	 */
-	public function getOwner() {
-		elgg_deprecated_notice("\ElggExtender::getOwner deprecated for \ElggExtender::getOwnerGUID", 1.8);
-		return $this->getOwnerGUID();
-	}
-
-	/**
 	 * Get the entity that owns this extender
 	 *
 	 * @return \ElggEntity
