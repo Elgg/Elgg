@@ -79,8 +79,7 @@ define(function(require) {
 
 	CKEDITOR.on('instanceReady', elggCKEditor.fixImageAttributes);
 
-	// Live handlers don't need to wait for domReady and only need to be registered once.
-	$('.ckeditor-toggle-editor').live('click', elggCKEditor.toggleEditor);
+	$(document).on('click', '.ckeditor-toggle-editor', elggCKEditor.toggleEditor);
 
 	return elggCKEditor;
 });

@@ -22,7 +22,7 @@ elgg.walled_garden.init = function () {
 	$('.forgot_link').click(elgg.walled_garden.load('lost_password'));
 	$('.registration_link').click(elgg.walled_garden.load('register'));
 
-	$('input.elgg-button-cancel').live('click', function(event) {
+	$(document).on('click', 'input.elgg-button-cancel', function(event) {
 		var $wgs = $('.elgg-walledgarden-single');
 		if ($wgs.is(':visible')) {
 			$('.elgg-walledgarden-double').fadeToggle();

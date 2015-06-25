@@ -3,7 +3,7 @@ elgg.provide('elgg.messageboard');
 
 elgg.messageboard.init = function() {
 	var form = $('form[name=elgg-messageboard]');
-	form.find('input[type=submit]').live('click', elgg.messageboard.submit);
+	form.on('click', 'input[type=submit]', elgg.messageboard.submit);
 
 	// remove the default binding for confirmation since we're doing extra stuff.
 	// @todo remove if we add a hook to the requires confirmation callback

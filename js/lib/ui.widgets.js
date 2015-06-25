@@ -26,9 +26,9 @@ elgg.ui.widgets.init = function() {
 
 	$('.elgg-widgets-add-panel li.elgg-state-available').click(elgg.ui.widgets.add);
 
-	$('a.elgg-widget-delete-button').live('click', elgg.ui.widgets.remove);
-	$('.elgg-widget-edit > form ').live('submit', elgg.ui.widgets.saveSettings);
-	$('a.elgg-widget-collapse-button').live('click', elgg.ui.widgets.collapseToggle);
+	$(document).on('click', 'a.elgg-widget-delete-button', elgg.ui.widgets.remove);
+	$(document).on('submit', '.elgg-widget-edit > form ', elgg.ui.widgets.saveSettings);
+	$(document).on('click', 'a.elgg-widget-collapse-button', elgg.ui.widgets.collapseToggle);
 
 	elgg.ui.widgets.setMinHeight(".elgg-widgets");
 };

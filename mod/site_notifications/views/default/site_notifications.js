@@ -4,9 +4,9 @@
 elgg.provide('elgg.site_notifications');
 
 elgg.site_notifications.init = function() {
-	$('.site-notifications-delete').live('click', elgg.site_notifications.delete);
-	$('.site-notifications-link').live('click', elgg.site_notifications.auto_delete);
-	$('#site-notifications-toggle').live('click', elgg.site_notifications.toggle_all);
+	$(document).on('click', '.site-notifications-delete', elgg.site_notifications.delete);
+	$(document).on('click', '.site-notifications-link', elgg.site_notifications.auto_delete);
+	$(document).on('click', '#site-notifications-toggle', elgg.site_notifications.toggle_all);
 };
 
 /**

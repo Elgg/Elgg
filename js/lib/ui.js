@@ -9,20 +9,20 @@ elgg.ui.init = function () {
 	elgg.ui.initHoverMenu();
 
 	//if the user clicks a system message, make it disappear
-	$('.elgg-system-messages li').live('click', function() {
+	$(document).on('click', '.elgg-system-messages li', function() {
 		$(this).stop().fadeOut('fast');
 	});
 
 	$('.elgg-system-messages li').animate({opacity: 0.9}, 6000);
 	$('.elgg-system-messages li.elgg-state-success').fadeOut('slow');
 
-	$('[rel=toggle]').live('click', elgg.ui.toggles);
+	$(document).on('click', '[rel=toggle]', elgg.ui.toggles);
 
-	$('[rel=popup]').live('click', elgg.ui.popupOpen);
+	$(document).on('click', '[rel=popup]', elgg.ui.popupOpen);
 
-	$('.elgg-menu-page .elgg-menu-parent').live('click', elgg.ui.toggleMenu);
+	$(document).on('click', '.elgg-menu-page .elgg-menu-parent', elgg.ui.toggleMenu);
 
-    $('*[data-confirm], .elgg-requires-confirmation').live('click', elgg.ui.requiresConfirmation);
+    $(document).on('click', '*[data-confirm], .elgg-requires-confirmation', elgg.ui.requiresConfirmation);
     if ($('.elgg-requires-confirmation').length > 0) {
         elgg.deprecated_notice('Use of .elgg-requires-confirmation is deprecated by data-confirm', '1.10');
     }
@@ -132,9 +132,9 @@ elgg.ui.popupOpen = function(event) {
 		.fadeIn()
 		.position(options);
 
-	$('body')
-		.die('click', elgg.ui.popupClose)
-		.live('click', elgg.ui.popupClose);
+	$(document)
+		.off('click', 'body', elgg.ui.popupClose)
+		.on('click', 'body', elgg.ui.popupClose);
 };
 
 /**
@@ -227,16 +227,16 @@ elgg.ui.initHoverMenu = function(parent) {
 	}
 
 	// avatar image menu link
-	$(parent).find(".elgg-avatar").live('mouseover', function() {
+	$(parent).on('mouseover', ".elgg-avatar", function() {
 		$(this).children(".elgg-icon-hover-menu").show();
 	})
-	.live('mouseout', function() {
+	.on('mouseout', '.elgg-avatar', function() {
 		$(this).children(".elgg-icon-hover-menu").hide();
 	});
 
 
 	// avatar contextual menu
-	$(".elgg-avatar > .elgg-icon-hover-menu").live('click', function(e) {
+	$(document).on('click', ".elgg-avatar > .elgg-icon-hover-menu", function(e) {
 		var $placeholder = $(this).parent().find(".elgg-menu-hover.elgg-ajax-loader");
 
 		if ($placeholder.length) {
@@ -375,7 +375,7 @@ elgg.ui.initDatePicker = function() {
  */
 elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 	// Handles clicking the first button.
-	$('.elgg-menu-item-' + menuItemNameA + ' a').live('click', function() {
+	$(document).on('click', '.elgg-menu-item-' + menuItemNameA + ' a', function() {
 		var $menu = $(this).closest('.elgg-menu');
 
 		// Be optimistic about success
@@ -400,7 +400,7 @@ elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 	});
 
 	// Handles clicking the second button
-	$('.elgg-menu-item-' + menuItemNameB + ' a').live('click', function() {
+	$(document).on('click', '.elgg-menu-item-' + menuItemNameB + ' a', function() {
 		var $menu = $(this).closest('.elgg-menu');
 
 		// Be optimistic about success
