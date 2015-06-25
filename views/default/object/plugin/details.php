@@ -7,7 +7,7 @@ if (empty($guid)) {
 }
 
 $plugin = get_entity($guid);
-if (!elgg_instanceof($plugin, 'object', 'plugin')) {
+if (!$plugin instanceof ElggPlugin) {
 	return;
 }
 
@@ -54,30 +54,59 @@ if ($screenshots) {
 	$screenshots_body = "<div>" . $screenshots_body . "</div>";
 }
 
-$info_html = "<table class='elgg-table'>";
-$info_html .= "<tr><th>" . elgg_echo('admin:plugins:label:name') . "</th><td>" . elgg_view('output/text', array('value' => $plugin->getManifest()->getName())) . "</td></tr>";
-$info_html .= "<tr><th>" . elgg_echo('admin:plugins:label:id') . "</th><td>" . elgg_view('output/text', array('value' => $plugin->getID())) . "</td></tr>";
-$info_html .= "<tr><th>" . elgg_echo('admin:plugins:label:version') . "</th><td>" . htmlspecialchars($plugin->getManifest()->getVersion()) . "</td></tr>";
-$info_html .= "<tr><th>" . elgg_echo('admin:plugins:label:author') . "</th><td>" . elgg_view('output/text', array('value' => $plugin->getManifest()->getAuthor())) . "</td></tr>";
-$info_html .= "<tr><th>" . elgg_echo('admin:plugins:label:website') . "</th><td>" . elgg_view('output/url', array(
+// table contents
+$info = [];
+
+$info[elgg_echo('admin:plugins:label:version')] = htmlspecialchars($plugin->getManifest()->getVersion());
+
+$info[elgg_echo('admin:plugins:label:id')] = elgg_view('output/text', array(
+	'value' => $plugin->getID(),
+));
+
+$info[elgg_echo('admin:plugins:label:author')] = elgg_view('output/text', array(
+	'value' => $plugin->getManifest()->getAuthor(),
+));
+
+$url = $plugin->getManifest()->getWebsite();
+if ($url) {
+	$info[elgg_echo('admin:plugins:label:website')] = elgg_view('output/url', array(
 		'href' => $plugin->getManifest()->getWebsite(),
 		'text' => $plugin->getManifest()->getWebsite(),
 		'is_trusted' => true,
-)) . "</td></tr>";
-
-$info_html .= "<tr><th>" . elgg_echo('admin:plugins:label:copyright') . "</th><td>" . elgg_view('output/text', array('value' => $plugin->getManifest()->getCopyright())) . "</td></tr>";
-$info_html .= "<tr><th>" . elgg_echo('admin:plugins:label:licence') . "</th><td>" . elgg_view('output/text', array('value' => $plugin->getManifest()->getLicense())) . "</td></tr>";
-$info_html .= "<tr><th>" . elgg_echo('admin:plugins:label:location') . "</th><td>" . htmlspecialchars($plugin->getPath()) . "</td></tr>";
-
-$categories = $plugin->getManifest()->getCategories();
-if ($categories) {
-	$info_html .= "<tr><th>" . elgg_echo('admin:plugins:label:categories') . "</th><td>";
-	array_walk($categories, function(&$value) {
-        $value = htmlspecialchars(ElggPluginManifest::getFriendlyCategory($value));
-    });
-	$info_html .= implode(', ', $categories);
-	$info_html .= "</td></tr>";
+	));
 }
+
+$info[elgg_echo('admin:plugins:label:copyright')] = elgg_view('output/text', array(
+	'value' => $plugin->getManifest()->getCopyright(),
+));
+
+$info[elgg_echo('admin:plugins:label:licence')] = elgg_view('output/text', array(
+	'value' => $plugin->getManifest()->getLicense(),
+));
+
+$site_path = elgg_get_root_path();
+$path = $plugin->getPath();
+if (0 === strpos($path, $site_path)) {
+	$path = substr($path, strlen($site_path));
+}
+$info[elgg_echo('admin:plugins:label:location')] = htmlspecialchars($path);
+
+$categories = (array)$plugin->getManifest()->getCategories();
+array_walk($categories, function(&$value) {
+	$value = htmlspecialchars(ElggPluginManifest::getFriendlyCategory($value));
+});
+$categories = implode(', ', $categories);
+$info[elgg_echo('admin:plugins:label:categories')] = implode(', ', $categories);
+
+// assemble table
+$info_html = "<table class='elgg-table'>";
+foreach ($info as $name => $value) {
+	if (trim($value) === '') {
+		continue;
+	}
+	$info_html .= "<tr><th>$name</th><td>$value</td></tr>";
+}
+
 $info_html .= "</table>";
 
 $extra_info = elgg_echo("admin:plugins:info:" . $plugin->getID());
@@ -131,6 +160,7 @@ $body = "<div class='elgg-plugin'>";
 
 $body .= "<div class='elgg-plugin-details-container pvm'>";
 
+$body .= elgg_view('output/longtext', array('value' => $plugin->getManifest()->getDescription()));
 
 // tabs
 $tabs = array();
@@ -169,7 +199,8 @@ $tabs[] = array(
 );
 
 $body .= elgg_view('navigation/tabs', array(
-	'tabs' => $tabs
+	'tabs' => $tabs,
+	'class' => 'mtl',
 ));
 
 $body .= "<div>";

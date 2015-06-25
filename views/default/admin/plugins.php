@@ -68,7 +68,7 @@ $category_form = elgg_view("admin/plugins/filter", array(
 		'category' => "all",
 		'category_options' => $categories));
 
-$buttons = "<div class=\"clearfix mbm\">";
+$buttons = "<div class=\"clearfix float-alt mbm mlm\">";
 $buttons .= elgg_view_form('admin/plugins/change_state', array(
 	'action' => 'action/admin/plugins/activate_all',
 	'class' => 'float',
@@ -89,7 +89,7 @@ $buttons .= $category_form;
 
 // construct page header
 ?>
-<div id="content_header" class="mbm clearfix">
+<div id="content_header" class="mbm">
 	<div class="content-header-options"><?php echo $buttons ?></div>
 </div>
 
