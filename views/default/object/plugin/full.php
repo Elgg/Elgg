@@ -12,9 +12,9 @@
  * @subpackage Plugins
  */
 
+
 /* @var ElggPlugin $plugin */
 $plugin = $vars['entity'];
-
 $reordering = elgg_extract('display_reordering', $vars, false);
 $priority = $plugin->getPriority();
 $active = $plugin->isActive();
@@ -88,6 +88,10 @@ if ($reordering) {
 			'is_trusted' => true,
 		)) . "</li>";
 	}
+
+	if ($links) {
+		$links = '<ul class="elgg-menu elgg-plugin-list-reordering">' . $links . '</ul>';
+	}
 } else {
 	$classes[] = 'elgg-state-undraggable';
 }
@@ -103,23 +107,24 @@ $options = array(
 if ($active) {
 	$classes[] = 'elgg-state-active';
 	$action = 'deactivate';
+	$options['title'] = elgg_echo('admin:plugins:deactivate');
+	$options['class'] = 'elgg-button elgg-button-cancel';
 	$options['text'] = elgg_echo('admin:plugins:deactivate');
-	$options['class'] = "elgg-button elgg-button-cancel";
-
 	if (!$can_activate) {
-		$classes[] = 'elgg-state-active';
-		$options['class'] = 'elgg-button elgg-state-warning';
+		$classes[] = 'elgg-state-active elgg-state-cannot-activate';
 	}
 } else if ($can_activate) {
 	$classes[] = 'elgg-state-inactive';
 	$action = 'activate';
+	$options['title'] = elgg_echo('admin:plugins:activate');
+	$options['class'] = 'elgg-button elgg-button-submit';
 	$options['text'] = elgg_echo('admin:plugins:activate');
-	$options['class'] = "elgg-button elgg-button-submit";
+
 } else {
-	$classes[] = 'elgg-state-inactive';
+	$classes[] = 'elgg-state-inactive elgg-state-cannot-activate';
 	$action = '';
 	$options['text'] = elgg_echo('admin:plugins:cannot_activate');
-	$options['class'] = "elgg-button elgg-button-disabled";
+
 	$options['disabled'] = 'disabled';
 }
 
@@ -132,187 +137,67 @@ if ($action) {
 }
 $action_button = elgg_view('output/url', $options);
 
+$action_button = elgg_trigger_plugin_hook("action_button", "plugin", array("entity" => $plugin), $action_button);
+
 // Display categories and make category classes
 $categories = $plugin->getManifest()->getCategories();
+
+$categories[] = "all";
+
+if (!in_array("bundled", $categories)) {
+	$categories[] = "nonbundled";
+}
+
+if ($active) {
+	$categories[] = "active";
+} else {
+	$categories[] = "inactive";
+}
+
 $categories_html = '';
 if ($categories) {
-	$base_url = elgg_get_site_url() . "admin/plugins?category=";
-
 	foreach ($categories as $category) {
 		$css_class = preg_replace('/[^a-z0-9-]/i', '-', $category);
 		$classes[] = "elgg-plugin-category-$css_class";
-
-		$url = $base_url . urlencode($category);
-		$friendly_category = htmlspecialchars(ElggPluginManifest::getFriendlyCategory($category));
-		$categories_html .= "<li class=\"elgg-plugin-category prm\"><a href=\"$url\">$friendly_category</a></li>";
-	}
-}
-
-$screenshots_html = '';
-$screenshots = $plugin->getManifest()->getScreenshots();
-if ($screenshots) {
-	$base_url = elgg_get_plugins_path() . $plugin->getID() . '/';
-	foreach ($screenshots as $screenshot) {
-		$desc = elgg_echo($screenshot['description']);
-		$alt = htmlentities($desc, ENT_QUOTES, 'UTF-8');
-		$screenshot_img = elgg_view('output/img', array(
-			'src' => "admin_plugin_screenshot/{$plugin->getID()}/thumbnail/{$screenshot['path']}",
-			'alt' => $alt,
-		));
-		$screenshot_link = elgg_view('output/url', array(
-			'href' => "admin_plugin_screenshot/{$plugin->getID()}/full/{$screenshot['path']}",
-			'text' => $screenshot_img,
-			'class' => 'elgg-lightbox',
-		));
-
-		$screenshots_html .= "<li class=\"elgg-plugin-screenshot prm ptm\">$screenshot_link</li>";
 	}
 }
 
 // metadata
 $description = elgg_view('output/longtext', array('value' => $plugin->getManifest()->getDescription()));
-$author = '<span>' . elgg_echo('admin:plugins:label:author') . '</span>: '
-			. elgg_view('output/text', array('value' => $plugin->getManifest()->getAuthor()));
-$version = htmlspecialchars($plugin->getManifest()->getVersion());
-$website = elgg_view('output/url', array(
-	'href' => $plugin->getManifest()->getWebsite(),
-	'text' => $plugin->getManifest()->getWebsite(),
-	'is_trusted' => true,
-));
 
-$resources = array(
-	'repository' => $plugin->getManifest()->getRepositoryURL(),
-	'bugtracker' => $plugin->getManifest()->getBugTrackerURL(),
-	'donate' => $plugin->getManifest()->getDonationsPageURL(),
-);
-
-$resources_html = "<ul class=\"elgg-plugin-resources\">";
-foreach ($resources as $id => $href) {
-	if ($href) {
-		$resources_html .= "<li class=\"prm\">";
-		$resources_html .= elgg_view('output/url', array(
-			'href' => $href,
-			'text' => elgg_echo("admin:plugins:label:$id"),
-			'is_trusted' => true,
-		));
-		$resources_html .= "</li>";
-	}
-}
-$resources_html .= "</ul>";
-
-$copyright = elgg_view('output/text', array('value' => $plugin->getManifest()->getCopyright()));
-$license = elgg_view('output/text', array('value' => $plugin->getManifest()->getLicense()));
-
-// show links to text files
-$files = $plugin->getAvailableTextFiles();
-
-$docs = '';
-if ($files) {
-	$docs = '<ul class="elgg-menu elgg-menu-hz">';
-	foreach ($files as $file => $path) {
-		$url = 'admin_plugin_text_file/' . $plugin->getID() . "/$file";
-		$link = elgg_view('output/url', array(
-			'text' => $file,
-			'href' => $url,
-			'is_trusted' => true,
-		));
-		$docs .= "<li>$link</li>";
-
-	}
-	$docs .= '</ul>';
+$settings_view_old = 'settings/' . $plugin->getID() . '/edit';
+$settings_view_new = 'plugins/' . $plugin->getID() . '/settings';
+$settings_link = '';
+if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)) {
+	$link = elgg_get_site_url() . "admin/plugin_settings/" . $plugin->getID();
+	$settings_link = "<a class='elgg-plugin-settings' href='$link' title='" . elgg_echo('settings') . "'>" . elgg_view_icon("settings-alt") . "</a>";
 }
 
 ?>
-
 <div class="<?php echo implode(' ', $classes); ?>" id="<?php echo $css_id; ?>">
 	<div class="elgg-image-block">
-		<div class="elgg-image-alt">
-			<?php if ($links) : ?>
-			<ul class="elgg-menu elgg-menu-metadata">
-				<?php echo $links; ?>
-			</ul>
-			<?php endif; ?>
-			<div class="clearfloat float-alt mtm">
+		<div class="elgg-image">
+			<div>
 				<?php echo $action_button; ?>
 			</div>
 		</div>
 		<div class="elgg-body">
-<?php
-$settings_view_old = 'settings/' . $plugin->getID() . '/edit';
-$settings_view_new = 'plugins/' . $plugin->getID() . '/settings';
-if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)) {
-	$link = elgg_get_site_url() . "admin/plugin_settings/" . $plugin->getID();
-	$settings_link = "<a class='elgg-plugin-settings' href='$link'>[" . elgg_echo('settings') . "]</a>";
-} else {
-	$settings_link = '';
-}
-?>
 			<div class="elgg-head">
-				<h3><?php echo $plugin->getManifest()->getName() . " $version $settings_link"; ?></h3>
+				<?php
+					echo $links;
+					$url_options = array(
+						"href" => "ajax/view/object/plugin/details?guid=" . $plugin->getGUID(),
+						"text" => $plugin->getManifest()->getName(),
+						"class" => "elgg-lightbox",
+					);
+					echo elgg_view("output/url", $url_options);
+					
+					echo " ". $settings_link;
+				?>
+				<span class="elgg-plugin-list-description">
+					<?php echo $description;?>
+				</span>
 			</div>
-			<?php
-			if (!$can_activate) {
-				if ($active) {
-					$message = elgg_echo('admin:plugins:warning:unmet_dependencies_active');
-					echo "<p class=\"elgg-state-warning\">$message</p>";
-				} else {
-					$message = elgg_echo('admin:plugins:warning:unmet_dependencies');
-					echo "<p class=\"elgg-state-error\">$message</p>";
-				}
-			}
-			?>
-	
-			<div><?php echo $description; ?></div>
-			<p><?php echo $author . ' - ' . $website; ?></p>
-			
-			<?php
-				echo $resources_html;
-				echo $docs;
-			?>
-	
-			<div class="pts">
-			<?php 
-				echo elgg_view('output/url', array(
-					'href' => "#elgg-plugin-manifest-$css_id",
-					'text' => elgg_echo("admin:plugins:label:moreinfo"),
-					'rel' => 'toggle',
-				));
-			?>
-			</div>
-		</div>
-	</div>
-	<div class="elgg-plugin-more hidden" id="elgg-plugin-manifest-<?php echo $css_id; ?>">
-
-		<?php
-		if ($screenshots_html) {
-			?>
-			<div><ul><?php echo $screenshots_html; ?></ul></div>
-			<?php
-		}
-
-		if ($categories_html) {
-			?>
-			<div><?php echo elgg_echo('admin:plugins:label:categories') . ": <ul class=\"elgg-plugin-categories\">$categories_html</ul>"; ?></div>
-			<?php
-		}
-
-		?>
-		<div><?php echo elgg_echo('admin:plugins:label:copyright') . ": " . $copyright; ?></div>
-		<div><?php echo elgg_echo('admin:plugins:label:licence') . ": " . $license; ?></div>
-		<div><?php echo elgg_echo('admin:plugins:label:location') . ": " . htmlspecialchars($plugin->getPath()) ?></div>
-		<?php
-			$contributors = elgg_view('object/plugin/elements/contributors', array('plugin' => $plugin));
-			if (!empty($contributors)) {
-				echo '<div>' . elgg_echo('admin:plugins:label:contributors') . ':';
-				echo $contributors;
-				echo '</div>';
-			}
-		?>
-
-		<div><?php echo elgg_echo('admin:plugins:label:dependencies'); ?>:
-		<?php
-			echo elgg_view('object/plugin/elements/dependencies', array('plugin' => $plugin));
-		?>
 		</div>
 	</div>
 </div>
