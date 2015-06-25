@@ -880,14 +880,6 @@ class ElggPlugin extends \ElggObject {
 	 * @return mixed
 	 */
 	public function __get($name) {
-		// rewrite for old and inaccurate plugin:setting
-		if (strstr($name, 'plugin:setting:')) {
-			$msg = 'Direct access of user settings is deprecated. Use ElggPlugin->getUserSetting()';
-			elgg_deprecated_notice($msg, 1.8);
-			$name = str_replace('plugin:setting:', '', $name);
-			$name = _elgg_namespace_plugin_private_setting('user_setting', $name, $this->getID());
-		}
-
 		// See if its in our base attribute
 		if (array_key_exists($name, $this->attributes)) {
 			return $this->attributes[$name];

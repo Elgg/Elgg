@@ -26,24 +26,6 @@ class ElggFileCache extends \ElggCache {
 		}
 	}
 
-	// @codingStandardsIgnoreStart
-	/**
-	 * Create and return a handle to a file.
-	 *
-	 * @deprecated 1.8 Use \ElggFileCache::createFile()
-	 *
-	 * @param string $filename Filename to save as
-	 * @param string $rw       Write mode
-	 *
-	 * @return mixed
-	 */
-	protected function create_file($filename, $rw = "rb") {
-		elgg_deprecated_notice('\ElggFileCache::create_file() is deprecated by ::createFile()', 1.8);
-
-		return $this->createFile($filename, $rw);
-	}
-	// @codingStandardsIgnoreEnd
-
 	/**
 	 * Create and return a handle to a file.
 	 *

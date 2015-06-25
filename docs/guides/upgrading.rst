@@ -28,27 +28,35 @@ you will get an error message:
 
 .. code:: shell
 
-    [InvalidArgumentException]                   
-    Package fxp/composer-asset-plugin not found 
+    [InvalidArgumentException]
+    Package fxp/composer-asset-plugin not found
 
 
-All deprecated views and view arguments have been removed
----------------------------------------------------------
+List of deprecated views and view arguments that have been removed
+------------------------------------------------------------------
 
 We dropped support for and/or removed the following views:
 
+ * canvas/layouts/*
+ * categories
+ * categories/view
  * core/settings/tools
+ * embed/addcontentjs
  * footer/analytics (Use page/elements/foot instead)
+ * groups/left_column
+ * groups/right_column
  * groups/search/finishblurb
  * groups/search/startblurb
  * input/calendar (Use input/date instead)
  * input/datepicker (Use input/date instead)
  * input/pulldown (Use input/select instead)
+ * invitefriends/formitems
  * js/initialise_elgg (Use AMD and ``elgg_require_js`` instead of extending JS views)
  * members/nav
  * metatags (Use the 'head', 'page' plugin hook instead)
  * navigation/topbar_tools
  * navigation/viewtype
+ * notifications/subscriptions/groupsform
  * output/calendar (Use output/date instead)
  * output/confirmlink (Use output/url instead)
  * page_elements/contentwrapper
@@ -60,7 +68,7 @@ We dropped support for and/or removed the following views:
  * user/search/startblurb
  * usersettings/{plugin}/edit (Use plugins/{plugin}/usersettings instead)
  * widgets/{handler}/view (Use widgets/{handler}/content instead)
- 
+
 We also dropped the following arguments to views:
 
  * "value" in output/iframe (Use "src" instead)
@@ -68,7 +76,8 @@ We also dropped the following arguments to views:
  * "js" in icon views (e.g. icon/user/default)
  * "options" to input/radio and input/checkboxes which aren't key-value pairs
    will no longer be acceptable.
- 
+
+
 All scripts moved to bottom of page
 -----------------------------------
 
@@ -251,14 +260,82 @@ Also note that plugins should not be accessing the global ``$CONFIG`` variable e
 Removed Functions
 -----------------
 
+ - ``count_unread_messages()``
+ - ``delete_entities()``
+ - ``delete_object_entity()``
+ - ``delete_user_entity()``
  - ``elgg_get_view_location()``
+ - ``elgg_validate_action_url()``
  - ``execute_delayed_query()``
+ - ``extend_view()``
  - ``get_db_error()``
  - ``get_db_link()``
+ - ``get_entities()``
+ - ``get_entities_from_access_id()``
+ - ``get_entities_from_access_collection()``
+ - ``get_entities_from_annotations()``
+ - ``get_entities_from_metadata()``
+ - ``get_entities_from_metadata_multi()``
+ - ``get_entities_from_relationship()``
+ - ``get_filetype_cloud()``
+ - ``get_library_files()``
+ - ``get_views()``
+ - ``is_ip_in_array()``
+ - ``list_entities()``
+ - ``list_entities_from_annotations()``
+ - ``list_group_search()``
+ - ``list_registered_entities()``
+ - ``list_user_search()``
  - ``load_plugins()``
+ - ``menu_item()``
+ - ``make_register_object()``
  - ``mysql_*()``: Elgg :ref:`no longer uses ext/mysql<migrated-to-pdo>`
  - ``remove_blacklist()``
+ - ``search_for_group()``
+ - ``search_for_object()``
+ - ``search_for_site()``
+ - ``search_for_user()``
+ - ``search_list_objects_by_name()``
+ - ``search_list_groups_by_name()``
+ - ``search_list_users_by_name()``
  - ``set_template_handler()``
+ - ``test_ip()``
+
+Removed methods
+---------------
+
+ - ``ElggCache::set_variable()``
+ - ``ElggCache::get_variable()``
+ - ``ElggData::initialise_attributes()``
+ - ``ElggData::getObjectOwnerGUID()``
+ - ``ElggDiskFilestore::make_directory_root()``
+ - ``ElggDiskFilestore::make_file_matrix()``
+ - ``ElggDiskFilestore::user_file_matrix()``
+ - ``ElggDiskFilestore::mb_str_split()``
+ - ``ElggEntity::clearMetadata()``
+ - ``ElggEntity::clearRelationships()``
+ - ``ElggEntity::clearAnnotations()``
+ - ``ElggEntity::getOwner()``
+ - ``ElggEntity::setContainer()``
+ - ``ElggEntity::getContainer()``
+ - ``ElggEntity::getIcon()``
+ - ``ElggEntity::setIcon()``
+ - ``ElggExtender::getOwner()``
+ - ``ElggFileCache::create_file()``
+ - ``ElggSite::getCollections()``
+ - ``ElggUser::getCollections()``
+ - ``ElggUser::getOwner()``
+
+The following arguments have also been dropped:
+
+ - ``ElggSite::getMembers()``
+   - 2: ``$offset``
+ - ``elgg_view_entity_list()``
+   - 3: ``$offset``
+   - 4: ``$limit``
+   - 5: ``$full_view``
+   - 6: ``$list_type_toggle``
+   - 7: ``$pagination``
 
 Removed Plugin Hooks
 --------------------
@@ -761,7 +838,7 @@ Use standardized page handlers and scripts
 The ``object/:subtype`` view
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Make sure there are views for ``$vars['full_view'] == true`` and ``$vars['full_view'] == false``. ``$vars['full_view']`` replaced ``$vars['full]``.
-* Check for the object in ``$vars['entity']``. Use ``elgg_instance_of()`` to make sure it's the type of entity you want. 
+* Check for the object in ``$vars['entity']``. Use ``elgg_instance_of()`` to make sure it's the type of entity you want.
 * Return ``true`` to short circuit the view if the entity is missing or wrong.
 * Use ``elgg_view(‘object/elements/summary’, array(‘entity’ => $entity));`` and ``elgg_view_menu(‘entity’, array(‘entity’ => $entity));`` to help format. You should use very little markup in these views.
 
@@ -770,7 +847,7 @@ Update action structure
 ~~~~~~~~~~~~~~~~~~~~~~~
 * Namespace action files and action names (example: ``mod/blog/actions/blog/save.php`` => ``action/blog/save``)
 * Use the following action URLs:
-  
+
   * Add: ``action/:plugin/save``
   * Edit: ``action/:plugin/save``
   * Delete: ``action/:plugin/delete``
@@ -781,11 +858,8 @@ Update action structure
 Update deprecated functions
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~
 * Functions deprecated in 1.7 will produce visible errors in 1.8.
-  
-  * See ``/engine/lib/deprecated-1.7.php`` for the full list.
-
 * You can also update functions deprecated in 1.8.
-  
+
   * Many registration functions simply added an ``elgg_`` prefix for consistency, and should be easy to update.
   * See ``/engine/lib/deprecated-1.8.php`` for the full list.
   * You can set the debug level to “warning” to get visual reminders of deprecated functions.

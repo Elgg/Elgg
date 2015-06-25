@@ -71,9 +71,6 @@ class ElggSite extends \ElggEntity {
 	public function __construct($row = null) {
 		$this->initializeAttributes();
 
-		// compatibility for 1.7 api.
-		$this->initialise_attributes(false);
-
 		if (!empty($row)) {
 			// Is $row is a DB entity table row
 			if ($row instanceof \stdClass) {
@@ -81,12 +78,6 @@ class ElggSite extends \ElggEntity {
 				if (!$this->load($row)) {
 					$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
 					throw new \IOException($msg);
-				}
-			} else if ($row instanceof \ElggSite) {
-				// $row is an \ElggSite so this is a copy constructor
-				elgg_deprecated_notice('This type of usage of the \ElggSite constructor was deprecated. Please use the clone method.', 1.7);
-				foreach ($row->attributes as $key => $value) {
-					$this->attributes[$key] = $value;
 				}
 			} else if (strpos($row, "http") !== false) {
 				// url so retrieve by url
@@ -252,21 +243,12 @@ class ElggSite extends \ElggEntity {
 	 * @param array $options An associative array for key => value parameters
 	 *                       accepted by elgg_get_entities(). Common parameters
 	 *                       include 'limit', and 'offset'.
-	 *                       Note: this was $limit before version 1.8
-	 * @param int   $offset  Offset @deprecated parameter
 	 *
 	 * @return array of \ElggUsers
 	 * @deprecated 1.9 Use \ElggSite::getEntities()
 	 */
-	public function getMembers($options = array(), $offset = 0) {
+	public function getMembers($options = array()) {
 		elgg_deprecated_notice('\ElggSite::getMembers() is deprecated. Use \ElggSite::getEntities()', 1.9);
-		if (!is_array($options)) {
-			elgg_deprecated_notice("\ElggSite::getMembers uses different arguments!", 1.8);
-			$options = array(
-				'limit' => $options,
-				'offset' => $offset,
-			);
-		}
 
 		$defaults = array(
 			'site_guids' => ELGG_ENTITIES_ANY_VALUE,
@@ -428,21 +410,6 @@ class ElggSite extends \ElggEntity {
 	public function removeObject($object_guid) {
 		elgg_deprecated_notice('\ElggSite::removeObject() is deprecated. Use \ElggEntity::removeEntity()', 1.9);
 		return remove_site_object($this->getGUID(), $object_guid);
-	}
-
-	/**
-	 * Get the collections associated with a site.
-	 *
-	 * @param string $subtype Subtype
-	 * @param int    $limit   Limit
-	 * @param int    $offset  Offset
-	 *
-	 * @return mixed
-	 * @deprecated 1.8 Was never implemented
-	 */
-	public function getCollections($subtype = "", $limit = 10, $offset = 0) {
-		elgg_deprecated_notice("ElggSite::getCollections() is deprecated", 1.8);
-		get_site_collections($this->getGUID(), $subtype, $limit, $offset);
 	}
 
 	/**

@@ -72,9 +72,6 @@ class ElggUser extends \ElggEntity
 	public function __construct($row = null) {
 		$this->initializeAttributes();
 
-		// compatibility for 1.7 api.
-		$this->initialise_attributes(false);
-
 		if (!empty($row)) {
 			// Is $row is a DB entity row
 			if ($row instanceof \stdClass) {
@@ -91,12 +88,6 @@ class ElggUser extends \ElggEntity
 					foreach ($user->attributes as $key => $value) {
 						$this->attributes[$key] = $value;
 					}
-				}
-			} else if ($row instanceof \ElggUser) {
-				// $row is an \ElggUser so this is a copy constructor
-				elgg_deprecated_notice('This type of usage of the \ElggUser constructor was deprecated. Please use the clone method.', 1.7);
-				foreach ($row->attributes as $key => $value) {
-					$this->attributes[$key] = $value;
 				}
 			} else if (is_numeric($row)) {
 				// $row is a GUID so load entity
@@ -711,20 +702,6 @@ class ElggUser extends \ElggEntity
 	}
 
 	/**
-	 * Get the collections associated with a user.
-	 *
-	 * @param string $subtype Optionally, the subtype of result we want to limit to
-	 * @param int    $limit   The number of results to return
-	 * @param int    $offset  Any indexing offset
-	 *
-	 * @return array|false
-	 */
-	public function getCollections($subtype = "", $limit = 10, $offset = 0) {
-		elgg_deprecated_notice("\ElggUser::getCollections() has been deprecated", 1.8);
-		return false;
-	}
-
-	/**
 	 * Get a user's owner GUID
 	 *
 	 * Returns it's own GUID if the user is not owned.
@@ -737,17 +714,6 @@ class ElggUser extends \ElggEntity
 		}
 
 		return $this->owner_guid;
-	}
-
-	/**
-	 * If a user's owner is blank, return its own GUID as the owner
-	 *
-	 * @return int User GUID
-	 * @deprecated 1.8 Use getOwnerGUID()
-	 */
-	public function getOwner() {
-		elgg_deprecated_notice("\ElggUser::getOwner deprecated for \ElggUser::getOwnerGUID", 1.8);
-		$this->getOwnerGUID();
 	}
 
 	/**

@@ -810,8 +810,6 @@ class ElggInstaller {
 				'users.php',
 				'upgrade.php',
 				'widgets.php',
-				'deprecated-1.7.php',
-				'deprecated-1.8.php',
 				'deprecated-1.9.php',
 			);
 

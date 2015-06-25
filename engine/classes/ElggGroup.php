@@ -56,9 +56,6 @@ class ElggGroup extends \ElggEntity
 	public function __construct($row = null) {
 		$this->initializeAttributes();
 
-		// compatibility for 1.7 api.
-		$this->initialise_attributes(false);
-
 		if (!empty($row)) {
 			// Is $guid is a entity table DB row
 			if ($row instanceof \stdClass) {
@@ -66,12 +63,6 @@ class ElggGroup extends \ElggEntity
 				if (!$this->load($row)) {
 					$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
 					throw new \IOException($msg);
-				}
-			} else if ($row instanceof \ElggGroup) {
-				// $row is an \ElggGroup so this is a copy constructor
-				elgg_deprecated_notice('This type of usage of the \ElggGroup constructor was deprecated. Please use the clone method.', 1.7);
-				foreach ($row->attributes as $key => $value) {
-					$this->attributes[$key] = $value;
 				}
 			} else if (is_numeric($row)) {
 				// $row is a GUID so load entity

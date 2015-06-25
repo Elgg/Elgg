@@ -145,16 +145,6 @@ function elgg_format_attributes(array $attrs = array()) {
 
 	$attributes = array();
 
-	if (isset($attrs['js'])) {
-		elgg_deprecated_notice('Use associative array of attr => val pairs instead of $vars[\'js\']', 1.8);
-
-		if (!empty($attrs['js'])) {
-			$attributes[] = $attrs['js'];
-		}
-
-		unset($attrs['js']);
-	}
-
 	foreach ($attrs as $attr => $val) {
 		if (0 !== strpos($attr, 'data-') && false !== strpos($attr, '_')) {
 			// this is probably a view $vars variable not meant for output
