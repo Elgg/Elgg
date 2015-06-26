@@ -9,7 +9,7 @@
 <script>
 require(['elgg'], function (elgg) {
 	// This global variable must be set before the editor script loading.
-	CKEDITOR_BASEPATH = elgg.config.wwwroot + 'mod/ckeditor/vendors/ckeditor/';
+	CKEDITOR_BASEPATH = elgg.get_simplecache_url('ckeditor/');
 
 	require(['elgg/ckeditor', 'jquery', 'jquery.ckeditor'], function(elggCKEditor, $) {
 		$('.elgg-input-longtext:not([data-cke-init])')

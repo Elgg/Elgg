@@ -102,7 +102,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('amdConfig', function(ServiceProvider $c) {
 			$obj = new \Elgg\Amd\Config($c->hooks);
-			$obj->setBaseUrl($c->simpleCache->getRoot() . "js/");
+			$obj->setBaseUrl($c->simpleCache->getRoot());
 			return $obj;
 		});
 
@@ -245,7 +245,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \ElggSession($session);
 		});
 
-		$this->setClassName('simpleCache', \Elgg\Cache\SimpleCache::class);
+		$this->setFactory('simpleCache', function(ServiceProvider $c) {
+			global $CONFIG;
+			return new \Elgg\Cache\SimpleCache($CONFIG, $c->views);
+		});
 
 		$this->setClassName('siteSecret', \Elgg\Database\SiteSecret::class);
 

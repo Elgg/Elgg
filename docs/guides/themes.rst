@@ -32,20 +32,20 @@ overwhelmed.
 
 Here is a list of the existing CSS views:
 
- * css/elements/buttons: Provides a way to style all the different kinds of buttons your site will use. There are 5 kinds of buttons that plugins will expect to be available: action, cancel, delete, submit, and special.
- * css/elements/chrome: This file has some miscellaneous look-and-feel classes.
- * css/elements/components: This file contains many “css objects” that are used all over the site: media block, list, gallery, table, owner block, system messages, river, tags, photo, and comments.
- * css/elements/forms: This file determines what your forms and input elements will look like.
- * css/elements/icons: Contains styles for the sprite icons and avatars used on your site.
- * css/elements/layout: Determines what your page layout will look like: sidebars, page wrapper, main body, header, footer, etc.
- * css/elements/modules: Lots of content in Elgg is displayed in boxes with a title and a content body. We called these modules. There are a few kinds: info, aside, featured, dropdown, popup, widget. Widget styles are included in this file too, since they are a subset of modules.
- * css/elements/navigation: This file determines what all your menus will look like.
- * css/elements/typography: This file determines what the content and headings of your site will look like.
- * css/rtl: Custom rules for users viewing your site in a right-to-left language.
- * css/admin: A completely separate theme for the admin area (usually not overridden).
- * css/elgg: Compiles all the core css/elements/\* files into one file (DO NOT OVERRIDE).
- * css/elements/core: Contains base styles for the more complicated “css objects”. If you find yourself wanting to override this, you probably need to report a bug to Elgg core instead (DO NOT OVERRIDE).
- * css/elements/reset: Contains a reset stylesheet that forces elements to have the same default
+ * elements/buttons.css: Provides a way to style all the different kinds of buttons your site will use. There are 5 kinds of buttons that plugins will expect to be available: action, cancel, delete, submit, and special.
+ * elements/chrome.css: This file has some miscellaneous look-and-feel classes.
+ * elements/components.css: This file contains many “css objects” that are used all over the site: media block, list, gallery, table, owner block, system messages, river, tags, photo, and comments.
+ * elements/forms.css: This file determines what your forms and input elements will look like.
+ * elements/icons.css: Contains styles for the sprite icons and avatars used on your site.
+ * elements/layout.css: Determines what your page layout will look like: sidebars, page wrapper, main body, header, footer, etc.
+ * elements/modules.css: Lots of content in Elgg is displayed in boxes with a title and a content body. We called these modules. There are a few kinds: info, aside, featured, dropdown, popup, widget. Widget styles are included in this file too, since they are a subset of modules.
+ * elements/navigation.css: This file determines what all your menus will look like.
+ * elements/typography.css: This file determines what the content and headings of your site will look like.
+ * rtl.css: Custom rules for users viewing your site in a right-to-left language.
+ * admin.css: A completely separate theme for the admin area (usually not overridden).
+ * elgg.css: Compiles all the core elements/\* files into one file (DO NOT OVERRIDE).
+ * elements/core.css: Contains base styles for the more complicated “css objects”. If you find yourself wanting to override this, you probably need to report a bug to Elgg core instead (DO NOT OVERRIDE).
+ * elements/reset.css: Contains a reset stylesheet that forces elements to have the same default
 
 
 View extension
@@ -64,7 +64,7 @@ css file:
     <?php
 
         function mytheme_init() {
-            elgg_extend_view('css/elgg', 'mytheme/css');
+            elgg_extend_view('elgg.css', 'mytheme/css');
         }
 
         elgg_register_event_handler('init', 'system', 'mytheme_init');
@@ -77,11 +77,11 @@ Plugins can have a view hierarchy, any file that exists here will
 replace any files in the existing core view hierarchy... so for example,
 if my plugin has a file:
 
-``/mod/myplugin/views/default/css/elements/typography.php``
+``/mod/myplugin/views/default/elements/typography.css``
 
 it will replace:
 
-``/views/default/css/elements/typography.php``
+``/views/default/elements/typography.css``
 
 But only when the plugin is active.
 

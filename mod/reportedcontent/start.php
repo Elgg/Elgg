@@ -16,8 +16,8 @@ function reportedcontent_init() {
 	elgg_register_page_handler('reportedcontent', 'reportedcontent_page_handler');
 	
 	// Extend CSS
-	elgg_extend_view('css/elgg', 'reportedcontent/css');
-	elgg_extend_view('css/admin', 'reportedcontent/admin_css');
+	elgg_extend_view('elgg.css', 'reportedcontent/css');
+	elgg_extend_view('admin.css', 'reportedcontent/admin_css');
 
 
 	if (elgg_is_logged_in()) {

@@ -191,7 +191,7 @@ Jasmine Tests
 -------------
 
 Test files must be named ``*Test.js`` and should go in either ``js/tests/`` or next
-to their source files in ``views/default/js``. Karma will automatically pick up
+to their source files in ``views/default/**.js``. Karma will automatically pick up
 on new ``*Test.js`` files and run those tests.
 
 Test boilerplate

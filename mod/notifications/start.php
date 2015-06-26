@@ -9,7 +9,7 @@ elgg_register_event_handler('init', 'system', 'notifications_plugin_init');
 
 function notifications_plugin_init() {
 
-	elgg_extend_view('css/elgg','notifications/css');
+	elgg_extend_view('elgg.css','notifications/css');
 
 	elgg_register_page_handler('notifications', 'notifications_page_handler');
 

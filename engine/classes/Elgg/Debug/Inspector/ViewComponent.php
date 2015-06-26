@@ -13,7 +13,7 @@ namespace Elgg\Debug\Inspector;
 class ViewComponent {
 
 	/**
-	 * @var string View name. E.g. "css/elgg"
+	 * @var string View name. E.g. "elgg.css"
 	 */
 	public $view;
 

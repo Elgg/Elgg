@@ -34,7 +34,7 @@ function pages_init() {
 	elgg_register_action("annotations/page/delete", "$action_base/annotations/page/delete.php");
 
 	// Extend the main css view
-	elgg_extend_view('css/elgg', 'pages/css');
+	elgg_extend_view('elgg.css', 'pages/css');
 
 	elgg_define_js('jquery.treeview', array(
 		'src' => '/mod/pages/vendors/jquery-treeview/jquery.treeview.min.js',

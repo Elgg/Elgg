@@ -20,7 +20,7 @@ class SimpleCacheTest extends TestCase {
 		
 		$url = $simpleCache->getUrl('js', 'view.js');
 		
-		$this->assertTrue(preg_match("#default/js/view.js$#", $url));
+		$this->assertTrue(preg_match("#default/view.js$#", $url));
 	}
 	
 	public function testGetUrlHandlesTwoArgumentsWhereSecondArgHasRedundantPrefix() {
@@ -29,6 +29,10 @@ class SimpleCacheTest extends TestCase {
 		
 		$url = $simpleCache->getUrl('js', 'js/view.js');
 		
-		$this->assertTrue(preg_match("#default/js/view.js$#", $url));
+		$this->assertTrue(preg_match("#default/view.js$#", $url));
+	}
+	
+	public function testRespectsViewAliases() {
+		$this->markTestIncomplete();
 	}
 }

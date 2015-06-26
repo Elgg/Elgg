@@ -56,6 +56,10 @@ abstract class HooksRegistrationService {
 		if (empty($name) || empty($type) || !is_callable($callback, true)) {
 			return false;
 		}
+		
+		if (($name == 'view' || $name == 'view_vars') && $type != 'all') {
+			$type = _elgg_services()->views->canonicalizeViewName($type);
+		}
 
 		$this->registrations[$name][$type][] = [
 			self::REG_KEY_PRIORITY => $priority,
@@ -78,6 +82,10 @@ abstract class HooksRegistrationService {
 	 * @access private
 	 */
 	public function unregisterHandler($name, $type, $callback) {
+		if (($name == 'view' || $name == 'view_vars') && $type != 'all') {
+			$type = _elgg_services()->views->canonicalizeViewName($type);
+		}
+
 		if (empty($this->registrations[$name][$type])) {
 			return false;
 		}

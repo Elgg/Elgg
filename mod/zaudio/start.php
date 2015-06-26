@@ -11,12 +11,12 @@
 elgg_register_event_handler('init', 'system', 'zaudio_init');
 
 function zaudio_init() {
-	elgg_extend_view('css/elgg', 'zaudio/css');
+	elgg_extend_view('elgg.css', 'zaudio/css');
 
 	elgg_define_js('AudioPlayer', [
 		'exports' => 'AudioPlayer',
 	]);
 
 	// leave library registered for BC
-	elgg_register_js('elgg.zaudio', elgg_get_simplecache_url('js/AudioPlayer.js'));
+	elgg_register_js('elgg.zaudio', elgg_get_simplecache_url('AudioPlayer.js'));
 }

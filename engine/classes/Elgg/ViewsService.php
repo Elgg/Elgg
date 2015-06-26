@@ -2,6 +2,7 @@
 namespace Elgg;
 
 use Elgg\Cache\SystemCache;
+use Elgg\Application\CacheHandler;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -65,7 +66,7 @@ class ViewsService {
 	 * @var SystemCache|null This is set if the views are configured via cache
 	 */
 	private $cache;
-
+	
 	/**
 	 * Constructor
 	 *
@@ -89,6 +90,39 @@ class ViewsService {
 			'fallback' => [],
 		];
 	}
+	
+	/**
+	 * Takes a view name and returns the canonical name for that view.
+	 * 
+	 * @param string $alias The possibly non-canonical view name.
+	 * 
+	 * @return string The canonical view name.
+	 */
+	public function canonicalizeViewName(/*string*/ $alias) /*: string*/ {
+		if (!is_string($alias)) {
+			return false;
+		}
+		
+		
+		$canonical = $alias;
+		
+		$extension = pathinfo($canonical, PATHINFO_EXTENSION);
+		$hasValidFileExtension = isset(CacheHandler::$extensions[$extension]);
+
+		if (strpos($canonical, "js/") === 0) {
+			$canonical = substr($canonical, 3);
+			if (!$hasValidFileExtension) {
+				$canonical .= ".js";
+			}
+		} else if (strpos($canonical, "css/") === 0) {
+			$canonical = substr($canonical, 4);
+			if (!$hasValidFileExtension) {
+				$canonical .= ".css";
+			}
+		}
+		
+		return $canonical;
+	}
 
 	/**
 	 * @access private
@@ -98,30 +132,32 @@ class ViewsService {
 		$view_base = rtrim($view_base, '/\\');
 
 		$handle = opendir($folder);
-		if ($handle) {
-			while ($entry = readdir($handle)) {
-				if ($entry[0] === '.') {
-					continue;
-				}
-
-				$path = "$folder/$entry";
-
-				if (!empty($view_base)) {
-					$view_base_new = $view_base . "/";
-				} else {
-					$view_base_new = "";
-				}
-
-				if (is_dir($path)) {
-					$this->autoregisterViews($view_base_new . $entry, $path, $viewtype);
-				} else {
-					$view = $view_base_new . basename($entry, '.php');
-					$this->setViewLocation($view, $viewtype, $path);
-				}
-			}
-			return true;
+		if (!$handle) {
+			return false;
 		}
-		return false;
+		
+		while ($entry = readdir($handle)) {
+			if ($entry[0] === '.') {
+				continue;
+			}
+
+			$path = "$folder/$entry";
+
+			if (!empty($view_base)) {
+				$view_base_new = $view_base . "/";
+			} else {
+				$view_base_new = "";
+			}
+
+			if (is_dir($path)) {
+				$this->autoregisterViews($view_base_new . $entry, $path, $viewtype);
+			} else {
+				$view = $view_base_new . basename($entry, '.php');
+				$this->setViewLocation($view, $viewtype, $path);
+			}
+		}
+
+		return true;
 	}
 
 	/**
@@ -146,9 +182,15 @@ class ViewsService {
 	}
 
 	/**
+	 * @param string $view     Name of the view
+	 * @param string $location Full path to the view file
+	 * @param string $viewtype The viewtype to register this under
+	 * 
 	 * @access private
 	 */
 	public function setViewDir($view, $location, $viewtype = '') {
+		$view = $this->canonicalizeViewName($view);
+
 		if (empty($viewtype)) {
 			$viewtype = 'default';
 		}
@@ -190,6 +232,8 @@ class ViewsService {
 	 * @access private
 	 */
 	public function renderDeprecatedView($view, array $vars, $suggestion, $version) {
+		$view = $this->canonicalizeViewName($view);
+
 		$rendered = $this->renderView($view, $vars, false, '', false);
 		if ($rendered) {
 			elgg_deprecated_notice("The $view view has been deprecated. $suggestion", $version, 3);
@@ -201,6 +245,8 @@ class ViewsService {
 	 * @access private
 	 */
 	public function renderView($view, array $vars = array(), $bypass = false, $viewtype = '', $issue_missing_notice = true) {
+		$view = $this->canonicalizeViewName($view);
+
 		if (!is_string($view) || !is_string($viewtype)) {
 			$this->logger->log("View and Viewtype in views must be a strings: $view", 'NOTICE');
 			return '';
@@ -315,6 +361,8 @@ class ViewsService {
 	 * @access private
 	 */
 	public function viewExists($view, $viewtype = '', $recurse = true) {
+		$view = $this->canonicalizeViewName($view);
+		
 		if (empty($view) || !is_string($view)) {
 			return false;
 		}
@@ -324,6 +372,7 @@ class ViewsService {
 			$viewtype = elgg_get_viewtype();
 		}
 
+		
 		$file = $this->findViewFile($view, $viewtype);
 		if ($file) {
 			return true;
@@ -353,6 +402,9 @@ class ViewsService {
 	 * @access private
 	 */
 	public function extendView($view, $view_extension, $priority = 501) {
+		$view = $this->canonicalizeViewName($view);
+		$view_extension = $this->canonicalizeViewName($view_extension);
+
 		if (!isset($this->views->extensions[$view])) {
 			$this->views->extensions[$view][500] = (string) $view;
 		}
@@ -371,6 +423,9 @@ class ViewsService {
 	 * @access private
 	 */
 	public function unextendView($view, $view_extension) {
+		$view = $this->canonicalizeViewName($view);
+		$view_extension = $this->canonicalizeViewName($view_extension);
+
 		if (!isset($this->views->extensions[$view])) {
 			return false;
 		}
@@ -389,6 +444,8 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerCacheableView($view) {
+		$view = $this->canonicalizeViewName($view);
+
 		$this->views->simplecache[$view] = true;
 	}
 
@@ -396,6 +453,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function isCacheableView($view) {
+		$view = $this->canonicalizeViewName($view);
 		if (isset($this->views->simplecache[$view])) {
 			return true;
 		}
@@ -566,6 +624,8 @@ class ViewsService {
 	 * @return void
 	 */
 	private function setViewLocation($view, $viewtype, $path) {
+		$view = $this->canonicalizeViewName($view);
+		
 		if (isset($this->locations[$viewtype][$view])) {
 			$this->overrides[$viewtype][$view][] = $this->locations[$viewtype][$view];
 		}

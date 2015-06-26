@@ -272,7 +272,7 @@ function elgg_unregister_external_view($view) {
  * @tip This is useful to optionally register views in a plugin.
  *
  * @param string $view     The name of the view
- * @param string $location The base location path
+ * @param string $location The full path to the view
  * @param string $viewtype The view type
  *
  * @return void
@@ -1494,6 +1494,10 @@ function _elgg_views_send_header_x_frame_options() {
  * @elgg_event_handler boot system
  */
 function elgg_views_boot() {
+	if (!elgg_get_config('system_cache_loaded')) {
+		_elgg_services()->views->registerPluginViews(realpath(__DIR__ . '/../../'));
+	}
+	
 	global $CONFIG;
 
 	if (!elgg_get_config('system_cache_loaded')) {
@@ -1501,45 +1505,45 @@ function elgg_views_boot() {
 	}
 
 	// on every page
-	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('js/elgg/require_config'), 'head');
+	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
 	elgg_load_js('elgg.require_config');
 
-	elgg_register_js('require', elgg_get_simplecache_url('js/require.js'), 'head');
+	elgg_register_js('require', elgg_get_simplecache_url('require.js'), 'head');
 	elgg_load_js('require');
 
-	elgg_register_js('jquery', elgg_get_simplecache_url('js/jquery.js'), 'head');
+	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head');
 	elgg_load_js('jquery');
 
-	elgg_register_js('jquery-migrate', elgg_get_simplecache_url('js/jquery-migrate.js'), 'head');
+	elgg_register_js('jquery-migrate', elgg_get_simplecache_url('jquery-migrate.js'), 'head');
 	elgg_load_js('jquery-migrate');
 
-	elgg_register_js('jquery-ui', elgg_get_simplecache_url('js/jquery-ui.js'), 'head');
+	elgg_register_js('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
 	elgg_load_js('jquery-ui');
 
-	elgg_register_js('elgg', elgg_get_simplecache_url('js/elgg'), 'head');
+	elgg_register_js('elgg', elgg_get_simplecache_url('elgg.js'), 'head');
 	elgg_load_js('elgg');
 
-	elgg_register_css('elgg', elgg_get_simplecache_url('css/elgg'));
+	elgg_register_css('elgg', elgg_get_simplecache_url('elgg.css'));
 	elgg_load_css('elgg');
 
 	// optional stuff
-	elgg_register_js('lightbox', elgg_get_simplecache_url('js/lightbox'));
+	elgg_register_js('lightbox', elgg_get_simplecache_url('lightbox.js'));
 	elgg_register_css('lightbox', elgg_get_simplecache_url('lightbox.css'));
 
-	elgg_register_js('elgg.autocomplete', elgg_get_simplecache_url('js/elgg/ui.autocomplete.js'));
-	elgg_register_js('jquery.ui.autocomplete.html', elgg_get_simplecache_url('js/jquery.ui.autocomplete.html.js'));
+	elgg_register_js('elgg.autocomplete', elgg_get_simplecache_url('elgg/ui.autocomplete.js'));
+	elgg_register_js('jquery.ui.autocomplete.html', elgg_get_simplecache_url('jquery.ui.autocomplete.html.js'));
 	elgg_define_js('jquery.ui.autocomplete.html', [
 		'deps' => ['jquery-ui'],
 	]);
 
-	elgg_register_js('elgg.friendspicker', elgg_get_simplecache_url('js/elgg/ui.friends_picker.js'));
-	elgg_register_js('elgg.avatar_cropper', elgg_get_simplecache_url('js/elgg/ui.avatar_cropper.js'));
-	elgg_register_js('elgg.ui.river', elgg_get_simplecache_url('js/elgg/ui.river.js'));
+	elgg_register_js('elgg.friendspicker', elgg_get_simplecache_url('elgg/ui.friends_picker.js'));
+	elgg_register_js('elgg.avatar_cropper', elgg_get_simplecache_url('elgg/ui.avatar_cropper.js'));
+	elgg_register_js('elgg.ui.river', elgg_get_simplecache_url('elgg/ui.river.js'));
 
-	elgg_register_js('jquery.imgareaselect', elgg_get_simplecache_url('js/jquery.imgareaselect.js'));
+	elgg_register_js('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));
 	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
 
-	elgg_register_ajax_view('js/languages');
+	elgg_register_ajax_view('languages.js');
 
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_amd');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');

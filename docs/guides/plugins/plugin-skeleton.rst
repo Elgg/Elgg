@@ -25,15 +25,14 @@ The following files for plugin ``example`` would go in ``/mod/example/``
         example_3rd_party_lib/
     views/
         default/
-            example.png
-            css/
-                example.css
+            example/
+              component.css
+              component.js
+              component.png
             forms/
                 example/
                     action.php
                     other_action.php
-            js/
-                example.js
             object/
                 example.php
                 example/
@@ -45,7 +44,11 @@ The following files for plugin ``example`` would go in ``/mod/example/``
                     usersettings.php
             resources/
                 example/
+                    all.css
+                    all.js
                     all.php
+                    owner.css
+                    owner.js
                     owner.php
             widgets/
                 example_widget/

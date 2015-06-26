@@ -151,7 +151,7 @@ function elgg_register_js($name, $url, $location = 'head', $priority = null) {
  *
  * Use elgg_require_js($name) to load on the current page.
  *
- * Calling this function is not needed if your JS are in views named like `js/module/name.js`
+ * Calling this function is not needed if your JS are in views named like `module/name.js`
  * Instead, simply call elgg_require_js("module/name").
  *
  * @param string $name   The module name
@@ -1794,8 +1794,8 @@ function _elgg_walled_garden_ajax_handler($page) {
 function _elgg_walled_garden_init() {
 	global $CONFIG;
 
-	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('css/walled_garden'));
-	elgg_register_js('elgg.walled_garden', elgg_get_simplecache_url('js/walled_garden'));
+	elgg_register_css('elgg.walled_garden', elgg_get_simplecache_url('walled_garden.css'));
+	elgg_register_js('elgg.walled_garden', elgg_get_simplecache_url('walled_garden.js'));
 
 	elgg_register_page_handler('walled_garden', '_elgg_walled_garden_ajax_handler');
 

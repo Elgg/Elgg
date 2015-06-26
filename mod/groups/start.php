@@ -77,8 +77,8 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:invitationrequest', 'groups_invitationrequest_menu_setup');
 
 	//extend some views
-	elgg_extend_view('css/elgg', 'groups/css');
-	elgg_extend_view('js/elgg', 'groups/js');
+	elgg_extend_view('elgg.css', 'groups/css');
+	elgg_extend_view('elgg.js', 'groups/js');
 
 	// Access permissions
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook', 600);
@@ -750,8 +750,7 @@ function discussion_init() {
 	add_group_tool_option('forum', elgg_echo('groups:enableforum'), true);
 	elgg_extend_view('groups/tool_latest', 'discussion/group_module');
 
-	$discussion_js_path = elgg_get_site_url() . 'mod/groups/views/default/js/discussion/';
-	elgg_register_js('elgg.discussion', $discussion_js_path . 'discussion.js');
+	elgg_register_js('elgg.discussion', elgg_get_simplecache_url('discussion/discussion.js'));
 
 	elgg_register_ajax_view('ajax/discussion/reply/edit');
 

@@ -12,7 +12,7 @@ function aalborg_theme_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'aalborg_theme_pagesetup', 1000);
 
 	// theme specific CSS
-	elgg_extend_view('css/elgg', 'aalborg_theme/css');
+	elgg_extend_view('elgg.css', 'aalborg_theme/css');
 
 	elgg_unextend_view('page/elements/header', 'search/header');
 	elgg_extend_view('page/elements/sidebar', 'search/header', 0);

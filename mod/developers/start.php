@@ -11,12 +11,12 @@ elgg_register_event_handler('init', 'system', 'developers_init');
 function developers_init() {
 	elgg_register_event_handler('pagesetup', 'system', 'developers_setup_menu');
 
-	elgg_extend_view('css/admin', 'developers/css');
-	elgg_extend_view('css/elgg', 'developers/css');
+	elgg_extend_view('admin.css', 'developers/css');
+	elgg_extend_view('elgg.css', 'developers/css');
 
 	elgg_register_page_handler('theme_sandbox', 'developers_theme_sandbox_controller');
 	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
-	$sandbox_css = elgg_get_simplecache_url('css/theme_sandbox.css');
+	$sandbox_css = elgg_get_simplecache_url('theme_sandbox.css');
 	elgg_register_css('dev.theme_sandbox', $sandbox_css);
 
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
@@ -122,8 +122,7 @@ function developers_clear_strings() {
  * Post-process a view to add wrapper comments to it
  * 
  * 1. Only process views served with the 'default' viewtype.
- * 2. Does not wrap views that begin with js/ or css/ as they are not HTML.
- * 3. Does not wrap views that are images (start with icon/). Is this still true?
+ * 2. Does not wrap views that are not HTML.
  * 4. Does not wrap input and output views (why?).
  * 5. Does not wrap html head or the primary page shells
  * 
@@ -135,7 +134,7 @@ function developers_wrap_views($hook, $type, $result, $params) {
 		return;
 	}
 
-	$excluded_bases = array('css', 'js', 'input', 'output', 'embed', 'icon', 'json', 'xml');
+	$excluded_bases = array('input', 'output', 'embed', 'icon', 'json', 'xml');
 
 	$excluded_views = array(
 		'page/default',

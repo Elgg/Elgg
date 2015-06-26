@@ -20,7 +20,7 @@ elgg_register_event_handler('init', 'system', 'thewire_init');
 function thewire_init() {
 
 	// register the wire's JavaScript
-	$thewire_js = elgg_get_simplecache_url('js/thewire');
+	$thewire_js = elgg_get_simplecache_url('thewire.js');
 	elgg_register_js('elgg.thewire', $thewire_js, 'footer');
 
 	elgg_register_ajax_view('thewire/previous');
@@ -36,7 +36,7 @@ function thewire_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'thewire_setup_entity_menu_items');
 	
 	// Extend system CSS with our own styles, which are defined in the thewire/css view
-	elgg_extend_view('css/elgg', 'thewire/css');
+	elgg_extend_view('elgg.css', 'thewire/css');
 
 	// Add a user's latest wire post to profile
 	elgg_extend_view('profile/status', 'thewire/profile_status');
