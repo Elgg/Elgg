@@ -35,7 +35,7 @@ ob_start(); ?>
 	<div class="elgg-page-messages">
 		<?php echo $messages ?>
 	</div>
-	<div class="$wg_body_class">
+	<div class="<?php echo $wg_body_class; ?>">
 		<?php echo $content ?>
 	</div>
 </div>
