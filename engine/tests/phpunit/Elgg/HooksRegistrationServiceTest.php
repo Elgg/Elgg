@@ -72,6 +72,27 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		// check unregistering things that aren't registered
 		$this->assertFalse($this->mock->unregisterHandler('foo', 'bar', 'not_valid'));
 	}
+	
+	public function testCanClearMultipleHandlersAtOnce() {
+		$o = new HooksRegistrationServiceTest_invokable();
+
+		$this->mock->registerHandler('foo', 'bar', 'callback1');
+		$this->mock->registerHandler('foo', 'baz', 'callback1', 10);
+		$this->mock->registerHandler('foo', 'bar', 'callback2', 100);
+		$this->mock->registerHandler('foo', 'bar', 'callback2', 150);
+		
+		$expected = [
+			'foo' => [
+				'baz' => [
+					10 => ['callback1'],
+				]
+			]
+		];
+		// clearHandlers should remove everything registrered for 'foo', 'bar', but not 'foo', 'baz'
+		$this->mock->clearHandlers('foo', 'bar');
+		
+		$this->assertSame($expected, $this->mock->getAllHandlers());
+	}
 
 	public function testOnlyOneHandlerUnregistered() {
 		$this->mock->registerHandler('foo', 'bar', 'callback');
