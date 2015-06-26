@@ -6,7 +6,7 @@
  *
  * @package    Elgg.Core
  * @subpackage DataModel.User
- * 
+ *
  * @property      string $name          The display name that the user will be known by in the network
  * @property      string $username      The short, reference name for the user in the network
  * @property      string $email         The email address to which Elgg will send email notifications
@@ -342,56 +342,6 @@ class ElggUser extends \ElggEntity
 	}
 
 	/**
-	 * Get sites that this user is a member of
-	 *
-	 * @param array $options Options array. Used to be $subtype
-	 * @param int   $limit   The number of results to return (deprecated)
-	 * @param int   $offset  Any indexing offset (deprecated)
-	 *
-	 * @return array
-	 */
-	public function getSites($options = "", $limit = 10, $offset = 0) {
-		if (is_string($options)) {
-			elgg_deprecated_notice('\ElggUser::getSites() takes an options array', 1.9);
-			return get_user_sites($this->getGUID(), $limit, $offset);
-		}
-
-		return parent::getSites($options);
-	}
-
-	/**
-	 * Add this user to a particular site
-	 *
-	 * @param \ElggSite $site The site to add this user to. This used to be the
-	 *                       the site guid (still supported by deprecated)
-	 * @return bool
-	 */
-	public function addToSite($site) {
-		if (is_numeric($site)) {
-			elgg_deprecated_notice('\ElggUser::addToSite() takes a site entity', 1.9);
-			return add_site_user($site, $this->getGUID());
-		}
-
-		return parent::addToSite($site);
-	}
-
-	/**
-	 * Remove this user from a particular site
-	 *
-	 * @param \ElggSite $site The site to remove the user from. Used to be site GUID
-	 *
-	 * @return bool
-	 */
-	public function removeFromSite($site) {
-		if (is_numeric($site)) {
-			elgg_deprecated_notice('\ElggUser::removeFromSite() takes a site entity', 1.9);
-			return remove_site_user($site, $this->guid);
-		}
-
-		return parent::removeFromSite($site);
-	}
-
-	/**
 	 * Adds a user as a friend
 	 *
 	 * @param int  $friend_guid       The GUID of the user to add
@@ -538,36 +488,6 @@ class ElggUser extends \ElggEntity
 	}
 
 	/**
-	 * Lists the user's friends
-	 *
-	 * @param string $subtype Optionally, the user subtype (leave blank for all)
-	 * @param int    $limit   The number of users to retrieve
-	 * @param array  $vars    Display variables for the user view
-	 *
-	 * @return string Rendered list of friends
-	 * @since 1.8.0
-	 * @deprecated 1.9 Use elgg_list_entities_from_relationship()
-	 */
-	public function listFriends($subtype = "", $limit = 10, array $vars = array()) {
-		elgg_deprecated_notice('\ElggUser::listFriends() is deprecated. Use elgg_list_entities_from_relationship()', 1.9);
-		$defaults = array(
-			'type' => 'user',
-			'relationship' => 'friend',
-			'relationship_guid' => $this->guid,
-			'limit' => $limit,
-			'full_view' => false,
-		);
-
-		$options = array_merge($defaults, $vars);
-
-		if ($subtype) {
-			$options['subtype'] = $subtype;
-		}
-
-		return elgg_list_entities_from_relationship($options);
-	}
-
-	/**
 	 * Gets the user's groups
 	 *
 	 * @param array $options Options array. Used to be the subtype string.
@@ -598,34 +518,6 @@ class ElggUser extends \ElggEntity
 		}
 
 		return elgg_get_entities_from_relationship($options);
-	}
-
-	/**
-	 * Lists the user's groups
-	 *
-	 * @param string $subtype Optionally, the user subtype (leave blank for all)
-	 * @param int    $limit   The number of users to retrieve
-	 * @param int    $offset  Indexing offset, if any
-	 *
-	 * @return string
-	 * @deprecated 1.9 Use elgg_list_entities_from_relationship()
-	 */
-	public function listGroups($subtype = "", $limit = 10, $offset = 0) {
-		elgg_deprecated_notice('Elgg::listGroups is deprecated. Use elgg_list_entities_from_relationship()', 1.9);
-		$options = array(
-			'type' => 'group',
-			'relationship' => 'member',
-			'relationship_guid' => $this->guid,
-			'limit' => $limit,
-			'offset' => $offset,
-			'full_view' => false,
-		);
-
-		if ($subtype) {
-			$options['subtype'] = $subtype;
-		}
-
-		return elgg_list_entities_from_relationship($options);
 	}
 
 	/**
@@ -748,7 +640,7 @@ class ElggUser extends \ElggEntity
 	 * Can a user comment on this user?
 	 *
 	 * @see \ElggEntity::canComment()
-	 * 
+	 *
 	 * @param int $user_guid User guid (default is logged in user)
 	 * @return bool
 	 * @since 1.8.0
