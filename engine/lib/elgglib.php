@@ -720,6 +720,20 @@ function elgg_unregister_plugin_hook_handler($hook, $entity_type, $callback) {
 }
 
 /**
+ * Removes all registered plugin hook handlers and returns these handlers
+ *
+ * @param string $hook        The name of the hook
+ * @param string $entity_type The name of the type of entity (eg "user", "object" etc)
+ *
+ * @return array
+ * 
+ * @since 1.11.0
+ */
+function elgg_clear_plugin_hook_handlers($hook, $entity_type) {
+	return _elgg_services()->hooks->clearHandlers($hook, $entity_type);
+}
+
+/**
  * Trigger a Plugin Hook and run all handler callbacks registered to that hook:type.
  *
  * This function runs all handlers registered to $hook, $type or

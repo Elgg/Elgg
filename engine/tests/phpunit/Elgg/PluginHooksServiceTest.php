@@ -24,6 +24,20 @@ class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 		
 		$this->assertEquals(2, $returnval);
 	}
+	
+	public function testCanClearHandlers() {
+		$hooks = new \Elgg\PluginHooksService();
+		$hooks->registerHandler('foo', 'bar', array('\Elgg\PluginHooksServiceTest', 'changeReturn'));
+		$hooks->registerHandler('foo', 'bar', array('\Elgg\PluginHooksServiceTest', 'throwInvalidArg'));
+		
+		$registered_count = count($hooks->getOrderedHandlers('foo', 'bar'));
+		
+		$hooks->clearHandlers('foo', 'bar');
+		
+		$cleared_count = count($hooks->getOrderedHandlers('foo', 'bar'));
+		
+		$this->assertEquals(2, $registered_count - $cleared_count);
+	}
 
 	public function testNullReturnDoesntChangeValue() {
 		$hooks = new \Elgg\PluginHooksService();
