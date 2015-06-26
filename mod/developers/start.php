@@ -21,14 +21,6 @@ function developers_init() {
 
 	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
-
-	elgg_define_js('jquery.jstree', array(
-		'exports' => 'jQuery.fn.jstree',
-		'deps' => array('jquery'),
-	));
-	elgg_register_css('jquery.jstree', elgg_get_simplecache_url('jquery.jstree.css'));
-
-	elgg_require_js('elgg/dev');
 }
 
 function developers_process_settings() {
@@ -120,12 +112,12 @@ function developers_clear_strings() {
 
 /**
  * Post-process a view to add wrapper comments to it
- * 
+ *
  * 1. Only process views served with the 'default' viewtype.
  * 2. Does not wrap views that are not HTML.
  * 4. Does not wrap input and output views (why?).
  * 5. Does not wrap html head or the primary page shells
- * 
+ *
  * @warning this will break views in the default viewtype that return non-HTML data
  * that do not match the above restrictions.
  */
@@ -230,7 +222,7 @@ function developers_theme_sandbox_controller($page) {
 
 /**
  * Get the available inspect options
- * 
+ *
  * @return array
  */
 function developers_get_inspect_options() {
