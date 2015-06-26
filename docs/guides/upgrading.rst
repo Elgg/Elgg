@@ -12,6 +12,25 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.x to 2.0
 ===============
 
+
+Dropped ``jquery-migrate`` and upgraded ``jquery`` to ^2.1.4
+------------------------------------------------------------
+
+jQuery 2.x is API-compatible with 1.x, but drops support for IE8-, which Elgg
+hasn't supported for some time anyways.
+
+See http://jquery.com/upgrade-guide/1.9/ for how to move off jquery-migrate.
+
+If you'd prefer to just add it back, you can use this code in your plugin's init:
+
+.. code:: php
+
+    elgg_register_js('jquery-migrate', elgg_get_simplecache_url('jquery-migrate.js'), 'head');
+    elgg_load_js('jquery-migrate');
+
+
+Also, define a ``jquery-migrate.js`` view containing the contents of the script.
+
 JS and CSS views have been moved out of the js/ and css/ directories
 --------------------------------------------------------------------
 

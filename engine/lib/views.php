@@ -1514,9 +1514,6 @@ function elgg_views_boot() {
 	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head');
 	elgg_load_js('jquery');
 
-	elgg_register_js('jquery-migrate', elgg_get_simplecache_url('jquery-migrate.js'), 'head');
-	elgg_load_js('jquery-migrate');
-
 	elgg_register_js('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
 	elgg_load_js('jquery-ui');
 

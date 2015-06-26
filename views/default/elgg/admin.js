@@ -11,8 +11,8 @@ define(function(require) {
 	function init () {
 		// system messages do not fade in admin area, instead slide up when clicked
 		$('.elgg-system-messages li').stop(true);
-		$('.elgg-system-messages li').die('click');
-		$('.elgg-system-messages li').live('click', function() {
+		$(document).off('click', '.elgg-system-messages li');
+		$(document).on('click', '.elgg-system-messages li', function() {
 			$(this).stop().slideUp('medium');
 		});
 

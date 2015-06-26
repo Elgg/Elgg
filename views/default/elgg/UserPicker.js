@@ -55,7 +55,7 @@ define(['jquery', 'elgg', 'jquery.ui.autocomplete.html'], function ($, elgg) {
 			}
 		});
 
-		$('.elgg-user-picker-remove', this.$wrapper).live('click', function(event) {
+		this.$wrapper.on('click', '.elgg-user-picker-remove', function(event) {
 			self.removeUser(event);
 		});
 

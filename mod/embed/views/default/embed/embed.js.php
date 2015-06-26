@@ -4,22 +4,22 @@ elgg.provide('elgg.embed');
 elgg.embed.init = function() {
 
 	// inserts the embed content into the textarea
-	$(".embed-item").live('click', elgg.embed.insert);
+	$(document).on('click', ".embed-item", elgg.embed.insert);
 
 	elgg.register_hook_handler('embed', 'editor', elgg.embed._deprecated_custom_insert_js);
 
 	// caches the current textarea id
-	$(".embed-control").live('click', function() {
+	$(document).on('click', ".embed-control", function() {
 		var textAreaId = /embed-control-(\S)+/.exec($(this).attr('class'))[0];
 		elgg.embed.textAreaId = textAreaId.substr("embed-control-".length);
 	});
 
 	// special pagination helper for lightbox
-	$('.embed-wrapper .elgg-pagination a').live('click', elgg.embed.forward);
+	$(document).on('click', '.embed-wrapper .elgg-pagination a', elgg.embed.forward);
 
-	$('.embed-section').live('click', elgg.embed.forward);
+	$(document).on('click', '.embed-section', elgg.embed.forward);
 
-	$('.elgg-form-embed').live('submit', elgg.embed.submit);
+	$(document).on('submit', '.elgg-form-embed', elgg.embed.submit);
 };
 
 /**
