@@ -89,6 +89,48 @@ by default: xml, json, and serialized php. You can request the different
 formats for substituting “json” or “php” for “xml” in the above URLs.
 You can also add additional response formats by defining new viewtypes.
 
+Parameters
+~~~~~~~~~~
+
+Parameters expected by each method should be listed as an associative array, where the key represents the parameter name, and the value contains an array with ``type``, ``default`` and ``required`` fields.
+
+Values submitted with the API request for each parameter should match the declared type. API will throw on exception if validation fails.
+
+Recognized parameter types are:	
+
+ - ``integer`` (or ``int``)
+ - ``boolean`` (or ``bool``)
+ - ``string``
+ - ``float``
+ - ``array``
+
+Unrecognized types will throw an API exception.
+
+You can use additional fields to describe your parameter, e.g. ``description``.
+
+.. code:: php
+
+    elgg_ws_expose_function('test.greet',
+                    'my_greeting',
+                    array(
+                        'name' => array(
+                            'type' => 'string',
+                            'required' => true,
+                            'description' => 'Name of the person to be greeted by the API',
+                        ),
+                        'greeting' => array(
+                            'type' => 'string',
+                            'required' => false,
+                            'default' => 'Hello',
+                            'description' => 'Greeting to be used, e.g. "Good day" or "Hi"',
+                        ),
+                    ),
+                    'A testing method which greets the user with a custom greeting',
+                    'GET',
+                    false,
+                    false
+    );
+
 API authentication
 ------------------
 
