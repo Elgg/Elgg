@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg web services API library
  * Functions and objects for exposing custom web services.
@@ -68,10 +69,7 @@ function execute_method($method) {
 	if (isset($API_METHODS[$method]["function"])) {
 		$function = $API_METHODS[$method]["function"];
 		// allow array version of static callback
-		if (is_array($function)
-				&& isset($function[0], $function[1])
-				&& is_string($function[0])
-				&& is_string($function[1])) {
+		if (is_array($function) && isset($function[0], $function[1]) && is_string($function[0]) && is_string($function[1])) {
 			$function = "{$function[0]}::{$function[1]}";
 		}
 	}
@@ -83,12 +81,12 @@ function execute_method($method) {
 	// check http call method
 	if (strcmp(get_call_method(), $API_METHODS[$method]["call_method"]) != 0) {
 		$msg = elgg_echo('CallException:InvalidCallMethod', array($method,
-		$API_METHODS[$method]["call_method"]));
+			$API_METHODS[$method]["call_method"]));
 		throw new CallException($msg);
 	}
 
 	$parameters = get_parameters_for_method($method);
-	
+
 	// may throw exception, which is not caught here
 	verify_parameters($method, $parameters);
 
@@ -99,7 +97,7 @@ function execute_method($method) {
 
 	// @todo remove the need for eval()
 	$result = eval("return $function($serialised_parameters);");
-	
+
 	// Sanity check result
 	// If this function returns an api result itself, just return it
 	if ($result instanceof GenericResult) {
@@ -132,14 +130,16 @@ function get_call_method() {
 }
 
 /**
- * This function analyses all expected parameters for a given method
+ * This function analyses all expected parameters of a given method,
+ * and builds an array of key => value pairs, where the value is a sanitized
+ * representation of the input cast to the value type specified by the method
+ * specification.
  *
- * This function sanitizes the input parameters and returns them in
- * an associated array.
+ * For unknown value types, or casting errors, an exception will be throw from
+ * {@see verify_parameters()}
  *
  * @param string $method The method
- *
- * @return array containing parameters as key => value
+ * @return array
  * @access private
  */
 function get_parameters_for_method($method) {
@@ -147,12 +147,45 @@ function get_parameters_for_method($method) {
 
 	$sanitised = array();
 
-	// if there are parameters, sanitize them
-	if (isset($API_METHODS[$method]['parameters'])) {
-		foreach ($API_METHODS[$method]['parameters'] as $k => $v) {
-			// Make things go through the sanitiser
-			$sanitised[$k] = get_input($k, elgg_extract('default', $v));
+	$expected_parameters = $API_METHODS[$method]['parameters'];
+
+	if (empty($expected_parameters) || !is_array($expected_parameters)) {
+		// This method has no expected parameters
+		return $sanitised;
+	}
+
+	foreach ($expected_parameters as $key => $spec) {
+		// Make things go through the sanitiser
+		$default = elgg_extract('default', $spec);
+		$value = get_input($key, $default);
+
+		// Cast values to specifid type
+		$type = elgg_extract('type', $spec);
+		switch ($type) {
+			case 'int':
+			case 'integer' :
+				$value = (int) $value;
+				break;
+
+			case 'bool':
+			case 'boolean':
+				$value = (bool) $value;
+				break;
+
+			case 'string':
+				$value = (string) $value;
+				break;
+
+			case 'float':
+				$value = (float) $value;
+				break;
+
+			case 'array':
+				$value = (array) $value;
+				break;
 		}
+
+		$sanitised[$key] = $value;
 	}
 
 	return $sanitised;
@@ -173,36 +206,83 @@ function get_post_data() {
 }
 
 /**
- * Verify that the required parameters are present
+ * Verify that the required parameters are present, and that the provided
+ * values for each parameter match the declared type.
  *
  * @param string $method     Method name
  * @param array  $parameters List of expected parameters
- *
- * @return true on success or exception
+ * @return bool
  * @throws APIException
  * @since 1.7.0
  * @access private
  */
-function verify_parameters($method, $parameters) {
+function verify_parameters($method, array $parameters = array()) {
 	global $API_METHODS;
 
-	// are there any parameters for this method
-	if (!(isset($API_METHODS[$method]["parameters"]))) {
-		return true; // no so return
+	$expected_parameters = $API_METHODS[$method]['parameters'];
+
+	if (empty($expected_parameters) || !is_array($expected_parameters)) {
+		// This method has no expected parameters
+		return true;
 	}
 
-	// check that the parameters were registered correctly and all required ones are there
-	foreach ($API_METHODS[$method]['parameters'] as $key => $value) {
-		// this tests the expose structure: must be array to describe parameter and type must be defined
-		if (!is_array($value) || !isset($value['type'])) {
+	foreach ($expected_parameters as $key => $spec) {
 
-			$msg = elgg_echo('APIException:InvalidParameter', array($key, $method));
+		$required = elgg_extract('required', $spec);
+		$value = elgg_extract($key, $parameters);
+		$type = strtolower((string) elgg_extract('type', $spec));
+
+		if ($required && ($value == '' || $value == null)) {
+			$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
 			throw new APIException($msg);
 		}
 
-		// Check that the variable is present in the request if required
-		if ($value['required'] && !array_key_exists($key, $parameters)) {
-			$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
+		$valid_type = false;
+
+		// Validate value type
+		switch ($type) {
+
+			case 'int':
+			case 'integer' :
+				if (is_int($value)) {
+					$valid_type = true;
+				}
+				break;
+
+			case 'bool':
+			case 'boolean':
+				if (is_bool($value)) {
+					$valid_type = true;
+				}
+				break;
+
+			case 'string':
+				if (is_string($value)) {
+					$valid_type = true;
+				}
+				break;
+
+			case 'float':
+				if (is_float($value)) {
+					$valid_type = true;
+				}
+				break;
+			case 'array':
+				if (is_array($value)) {
+					$value_type = true;
+					if ($required && empty($value)) {
+						$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
+						throw new APIException($msg);
+					}
+				}
+				break;
+			default:
+				$msg = elgg_echo('APIException:UnrecognisedTypeCast', array($value['type'], $key, $method));
+				throw new APIException($msg);
+		}
+
+		if (!$valid_type) {
+			$msg = elgg_echo('InvalidParameterException:InvalidTypeCast', array($key, $method, $type));
 			throw new APIException($msg);
 		}
 	}
@@ -238,11 +318,10 @@ function serialise_parameters($method, $parameters) {
 		}
 
 		// Set variables casting to type.
-		switch (strtolower($value['type']))
-		{
+		switch (strtolower($value['type'])) {
 			case 'int':
 			case 'integer' :
-				$serialised_parameters .= "," . (int)trim($parameters[$key]);
+				$serialised_parameters .= "," . (int) trim($parameters[$key]);
 				break;
 			case 'bool':
 			case 'boolean':
@@ -260,7 +339,7 @@ function serialise_parameters($method, $parameters) {
 				$serialised_parameters .= ",'" . addcslashes(trim($parameters[$key]), "'") . "'";
 				break;
 			case 'float':
-				$serialised_parameters .= "," . (float)trim($parameters[$key]);
+				$serialised_parameters .= "," . (float) trim($parameters[$key]);
 				break;
 			case 'array':
 				// we can handle an array of strings, maybe ints, definitely not booleans or other arrays
@@ -327,7 +406,6 @@ function api_auth_key() {
 	return elgg_trigger_plugin_hook('api_key', 'use', $api_key, true);
 }
 
-
 /**
  * PAM: Confirm the HMAC signature
  *
@@ -347,8 +425,7 @@ function api_auth_hmac() {
 	$api_user = get_api_user($CONFIG->site_id, $api_header->api_key);
 
 	if (!$api_user) {
-		throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'),
-		ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
+		throw new SecurityException(elgg_echo('SecurityException:InvalidAPIKey'), ErrorResult::$RESULT_FAIL_APIKEY_INVALID);
 	}
 
 	// Get the secret key
@@ -359,13 +436,7 @@ function api_auth_hmac() {
 	$query = substr($query, strpos($query, '?') + 1);
 
 	// calculate expected HMAC
-	$hmac = calculate_hmac(	$api_header->hmac_algo,
-							$api_header->time,
-							$api_header->nonce,
-							$api_header->api_key,
-							$secret_key,
-							$query,
-							$api_header->method == 'POST' ? $api_header->posthash : "");
+	$hmac = calculate_hmac($api_header->hmac_algo, $api_header->time, $api_header->nonce, $api_header->api_key, $secret_key, $query, $api_header->method == 'POST' ? $api_header->posthash : "");
 
 
 	if ($api_header->hmac !== $hmac) {
@@ -383,8 +454,7 @@ function api_auth_hmac() {
 		$calculated_posthash = calculate_posthash($postdata, $api_header->posthash_algo);
 
 		if (strcmp($api_header->posthash, $calculated_posthash) != 0) {
-			$msg = elgg_echo('SecurityException:InvalidPostHash',
-			array($calculated_posthash, $api_header->posthash));
+			$msg = elgg_echo('SecurityException:InvalidPostHash', array($calculated_posthash, $api_header->posthash));
 
 			throw new SecurityException($msg);
 		}
@@ -480,7 +550,7 @@ function get_and_validate_api_headers() {
 function map_api_hash($algo) {
 	$algo = strtolower(sanitise_string($algo));
 	$supported_algos = array(
-		"md5" => "md5",	// @todo Consider phasing this out
+		"md5" => "md5", // @todo Consider phasing this out
 		"sha" => "sha1", // alias for sha1
 		"sha1" => "sha1",
 		"sha256" => "sha256"
@@ -510,8 +580,7 @@ function map_api_hash($algo) {
  * @return string The HMAC signature
  * @access private
  */
-function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key,
-$get_variables, $post_hash = "") {
+function calculate_hmac($algo, $time, $nonce, $api_key, $secret_key, $get_variables, $post_hash = "") {
 
 	global $CONFIG;
 
@@ -651,7 +720,7 @@ function _php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 	global $ERRORS;
 
 	$error = date("Y-m-d H:i:s (T)") . ": \"" . $errmsg . "\" in file "
-	. $filename . " (line " . $linenum . ")";
+			. $filename . " (line " . $linenum . ")";
 
 	switch ($errno) {
 		case E_USER_ERROR:
@@ -689,12 +758,11 @@ function _php_api_exception_handler($exception) {
 
 	error_log("*** FATAL EXCEPTION (API) *** : " . $exception);
 
-	$code   = $exception->getCode() == 0 ? ErrorResult::$RESULT_FAIL : $exception->getCode();
+	$code = $exception->getCode() == 0 ? ErrorResult::$RESULT_FAIL : $exception->getCode();
 	$result = new ErrorResult($exception->getMessage(), $code, NULL);
 
 	echo elgg_view_page($exception->getMessage(), elgg_view("api/output", array("result" => $result)));
 }
-
 
 /**
  * Services handler - turns request over to the registered handler

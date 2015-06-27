@@ -30,6 +30,7 @@ return array(
 	'InvalidParameterException:APIMethodOrFunctionNotSet' => "Method or function not set in call in expose_method()",
 	'InvalidParameterException:APIParametersArrayStructure' => "Parameters array structure is incorrect for call to expose method '%s'",
 	'InvalidParameterException:UnrecognisedHttpMethod' => "Unrecognised http method %s for api method '%s'",
+	'InvalidParameterException:InvalidTypeCast' => "Value type for parameter '%s' in method '%s' does not match the expected type of '%s'",
 	'SecurityException:AuthTokenExpired' => "Authentication token either missing, invalid or expired.",
 	'SecurityException:InvalidPostHash' => "POST data hash is invalid - Expected %s but got %s.",
 	'SecurityException:DupePacket' => "Packet signature already seen.",

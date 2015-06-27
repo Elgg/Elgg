@@ -169,6 +169,14 @@ function elgg_ws_expose_function($method, $function, array $parameters = NULL, $
 	if ($parameters != NULL) {
 		// ensure the required flag is set correctly in default case for each parameter
 		foreach ($parameters as $key => $value) {
+
+			// Verify that method parameters are defined with an explicit type
+			// @todo: validate that specified type is one of the types we can cast/verify on API request
+			if (empty($value['type'])) {
+				$msg = elgg_echo('APIException:InvalidParameter', array($key, $method));
+				throw new APIException($msg);
+			}
+
 			// check if 'required' was specified - if not, make it true
 			if (!array_key_exists('required', $value)) {
 				$parameters[$key]['required'] = true;
