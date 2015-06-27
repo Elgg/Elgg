@@ -90,13 +90,7 @@ function execute_method($method) {
 	// may throw exception, which is not caught here
 	verify_parameters($method, $parameters);
 
-	$serialised_parameters = serialise_parameters($method, $parameters);
-
-	// Execute function: Construct function and calling parameters
-	$serialised_parameters = trim($serialised_parameters, ", ");
-
-	// @todo remove the need for eval()
-	$result = eval("return $function($serialised_parameters);");
+	$result = call_user_func_array($function, $parameters);
 
 	// Sanity check result
 	// If this function returns an api result itself, just return it
@@ -300,9 +294,12 @@ function verify_parameters($method, array $parameters = array()) {
  * @throws APIException
  * @since 1.7.0
  * @access private
+ * @deprecated 1.12
  */
 function serialise_parameters($method, $parameters) {
 	global $API_METHODS;
+
+	elgg_deprecated_notice('serialize_parameters() has been deprecated and should not be used', '1.12');
 
 	// are there any parameters for this method
 	if (!(isset($API_METHODS[$method]["parameters"]))) {
