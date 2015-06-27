@@ -88,7 +88,7 @@ function execute_method($method) {
 	}
 
 	$parameters = get_parameters_for_method($method);
-
+	
 	// may throw exception, which is not caught here
 	verify_parameters($method, $parameters);
 
@@ -99,7 +99,7 @@ function execute_method($method) {
 
 	// @todo remove the need for eval()
 	$result = eval("return $function($serialised_parameters);");
-
+	
 	// Sanity check result
 	// If this function returns an api result itself, just return it
 	if ($result instanceof GenericResult) {
@@ -150,15 +150,8 @@ function get_parameters_for_method($method) {
 	// if there are parameters, sanitize them
 	if (isset($API_METHODS[$method]['parameters'])) {
 		foreach ($API_METHODS[$method]['parameters'] as $k => $v) {
-			$param = get_input($k); // Make things go through the sanitiser
-			if ($param !== '' && $param !== null) {
-				$sanitised[$k] = $param;
-			} else {
-				// parameter wasn't passed so check for default
-				if (isset($v['default'])) {
-					$sanitised[$k] = $v['default'];
-				}
-			}
+			// Make things go through the sanitiser
+			$sanitised[$k] = get_input($k, elgg_extract('default', $v));
 		}
 	}
 
