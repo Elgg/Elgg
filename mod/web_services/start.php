@@ -40,6 +40,8 @@ function ws_init() {
 	);
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'ws_unit_test');
+
+	elgg_register_plugin_hook_handler('rest:output', 'system.api.list', 'ws_system_api_list_hook');
 }
 
 /**
@@ -335,4 +337,24 @@ function ws_unit_test($hook, $type, $value, $params) {
 	elgg_load_library('elgg:ws:client');
 	$value[] = dirname(__FILE__) . '/tests/ElggCoreWebServicesApiTest.php';
 	return $value;
+}
+
+/**
+ * Filters system API list to remove PHP internal function names
+ * 
+ * @param string $hook   "rest:output"
+ * @param string $type   "system.api.list"
+ * @param array  $return API list
+ * @param array  $params Method params
+ * @return array
+ */
+function ws_system_api_list_hook($hook, $type, $return, $params) {
+
+	if (!empty($return) && is_array($return)) {
+		foreach($return as $method => $settings) {
+			unset($return[$method]['function']);
+		}
+	}
+
+	return $return;
 }
