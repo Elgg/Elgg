@@ -23,6 +23,21 @@ available on your site. This will also be covered.
    :local:
    :depth: 2
 
+Security
+--------
+
+It is crucial that the web services are consumed via secure protocols. Do not
+enable web services if your site is not served via HTTPs. This is especially
+important if you allow API key only authentication.
+
+If you are using third-party tools that expose API methods, make sure to carry
+out a thorough security audit. You may want to make sure that API authentication
+is required for ALL methods, even if they require user authentication. Methods that
+do not require API authentication can be easily abused to spam your site.
+
+Ensure that the validity of API keys is limited and provide mechanisms for your
+API clients to renew their keys.
+
 Exposing methods
 ----------------
 
