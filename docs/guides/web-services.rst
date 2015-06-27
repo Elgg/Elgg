@@ -66,6 +66,9 @@ and you should see xml data like this:
         <result>testing</result>
     </elgg>
 
+Plugins can filter the output of individual API methods by registering a handler
+for ``'rest:output',$method`` plugin hook.
+
 Response formats
 ~~~~~~~~~~~~~~~~
 
