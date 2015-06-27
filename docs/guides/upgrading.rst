@@ -374,6 +374,12 @@ Removed Functions
  - ``search_list_users_by_name()``
  - ``set_template_handler()``
  - ``test_ip()``
+ - ``authenticate_method()`` (web_services)
+ - ``execute_method()`` (web_services)
+ - ``get_parameters_for_method()`` (web_services)
+ - ``verify_parameters()`` (web_services)
+ - ``serialise_parameters()`` (web_services)
+ - ``get_call_method()`` (web_services)
 
 Removed methods
 ---------------
@@ -410,6 +416,12 @@ The following arguments have also been dropped:
    - 5: ``$full_view``
    - 6: ``$list_type_toggle``
    - 7: ``$pagination``
+
+Removed Globals
+---------------
+
+ - ``$API_METHODS`` - global variable that stored registered web services methods
+ - ``$ERRORS`` - global variable that stored errors during web services calls
 
 Removed Plugin Hooks
 --------------------

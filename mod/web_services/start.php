@@ -1,8 +1,8 @@
 <?php
+
 /**
  * Elgg web services API plugin
  */
-
 elgg_register_event_handler('init', 'system', 'ws_init');
 
 function ws_init() {
@@ -36,10 +36,25 @@ function ws_init() {
 		elgg_echo('auth.gettoken'),
 		'POST',
 		false,
-		false
+		false,
+		true
 	);
 
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'ws_unit_test');
+}
+
+/**
+ * Instantiates web service registry
+ * @return Elgg\WebServices\Registry
+ * @since 2.0
+ * @access private
+ */
+function _elgg_ws_registry() {
+	static $registry;
+	if (null == $registry) {
+		$registry = new \Elgg\WebServices\Registry();
+	}
+	return $registry;
 }
 
 /**
@@ -76,33 +91,6 @@ function ws_page_handler($segments) {
 }
 
 /**
- * A global array holding API methods.
- * The structure of this is
- * 	$API_METHODS = array (
- * 		$method => array (
- * 			"description" => "Some human readable description"
- * 			"function" = 'my_function_callback'
- * 			"parameters" = array (
- * 				"variable" = array ( // the order should be the same as the function callback
- * 					type => 'int' | 'bool' | 'float' | 'string'
- * 					required => true (default) | false
- *					default => value // optional
- * 				)
- * 			)
- * 			"call_method" = 'GET' | 'POST'
- * 			"require_api_auth" => true | false (default)
- * 			"require_user_auth" => true | false (default)
- * 		)
- *  )
- */
-global $API_METHODS;
-$API_METHODS = array();
-
-/** Define a global array of errors */
-global $ERRORS;
-$ERRORS = array();
-
-/**
  * Expose a function as a web service.
  *
  * Limitations: Currently cannot expose functions which expect objects.
@@ -129,51 +117,26 @@ $ERRORS = array();
  *                                  require API authorization? (example: API key)
  * @param bool   $require_user_auth (optional) (default is false) Does this method
  *                                  require user authorization?
+ * @param string $assoc             Pass input parameters to the callback function as an associative array
  *
  * @return bool
  * @throws InvalidParameterException
  */
-function elgg_ws_expose_function($method, callable $function, array $parameters = null, $description = "",
-		$call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
-	global $API_METHODS;
+function elgg_ws_expose_function($method, callable $function, array $parameters = null, $description = "", $call_method = "GET", $require_api_auth = true, $require_user_auth = false, $assoc = false) {
 
-	if (!$method || !$function) {
-		$msg = elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet');
-		throw new InvalidParameterException($msg);
-	}
-
-	$api_method = array(
+	$params = array(
+		'method' => $method,
 		'description' => $description,
 		'function' => $function,
 		'require_api_auth' => (bool) $require_api_auth,
 		'require_user_auth' => (bool) $require_user_auth,
 		'call_method' => strtoupper((string) $call_method),
 		'parameters' => (array) $parameters,
+		'assoc' => $assoc,
 	);
 
-	if (!is_array($api_method['parameters'])) {
-		$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
-		throw new InvalidParameterException($msg);
-	}
-
-	foreach ($api_method['parameters'] as $key => $value) {
-		// Verify that method parameters are defined with an explicit type
-		if (empty($value['type'])) {
-			$msg = elgg_echo('APIException:InvalidParameter', array($key, $method));
-			throw new APIException($msg);
-		}
-
-		// If required flag is missing, parameter is assumed required
-		$api_method['parameters'][$key]['required'] = (bool) elgg_extract('required', $value, true);
-	}
-
-	if (!in_array($api_method['call_method'], array('GET', 'POST'))) {
-		$msg = elgg_echo('InvalidParameterException:UnrecognisedHttpMethod', array($api_method['call_method'], $method));
-		throw new InvalidParameterException($msg);
-	}
-
-	$API_METHODS[$method] = $api_method;
-	return true;
+	$api_method = \Elgg\WebServices\Method::factory($params);
+	return _elgg_ws_registry()->register($api_method);
 }
 
 /**
@@ -183,11 +146,7 @@ function elgg_ws_expose_function($method, callable $function, array $parameters 
  * @return void
  */
 function elgg_ws_unexpose_function($method) {
-	global $API_METHODS;
-
-	if (isset($API_METHODS[$method])) {
-		unset($API_METHODS[$method]);
-	}
+	_elgg_ws_registry()->unregister($method);
 }
 
 /**
@@ -197,12 +156,13 @@ function elgg_ws_unexpose_function($method) {
  * @access private
  */
 function list_all_apis() {
-	global $API_METHODS;
 
-	// sort first
-	ksort($API_METHODS);
-
-	return $API_METHODS;
+	$methods = _elgg_ws_registry()->all();
+	array_walk($methods, function($elem) {
+		return (array) $elem;
+	});
+	ksort($methods);
+	return $methods;
 }
 
 /**
@@ -267,7 +227,6 @@ function ws_rest_handler() {
 		// for testing from a web browser, you can use the session PAM
 		// do not use for production sites!!
 		//register_pam_handler('pam_auth_session');
-
 		// user token can also be used for user authentication
 		register_pam_handler('pam_auth_usertoken');
 
@@ -279,13 +238,9 @@ function ws_rest_handler() {
 
 	// Get parameter variables
 	$method = get_input('method');
-	$result = null;
-
-	// this will throw an exception if authentication fails
-	authenticate_method($method);
-
-	$result = execute_method($method);
-
+	$version = get_input('api_version', _elgg_ws_registry()->getApiVersion());
+	
+	$result = _elgg_ws_registry()->get($method, $version)->execute();
 
 	if (!($result instanceof GenericResult)) {
 		throw new APIException(elgg_echo('APIException:ApiResultUnknown'));

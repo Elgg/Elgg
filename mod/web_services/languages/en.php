@@ -11,7 +11,7 @@ return array(
 	'APIException:FunctionNoReturn' => "%s(%s) returned no value.",
 	'APIException:APIAuthenticationFailed' => "Method call failed the API Authentication",
 	'APIException:UserAuthenticationFailed' => "Method call failed the User Authentication",
-	'APIException:MethodCallNotImplemented' => "Method call '%s' has not been implemented.",
+	'APIException:MethodCallNotImplemented' => "Method call '%s' (%s) has not been implemented.",
 	'APIException:FunctionDoesNotExist' => "Function for method '%s' is not callable",
 	'APIException:AlgorithmNotSupported' => "Algorithm '%s' is not supported or has been disabled.",
 	'APIException:NotGetOrPost' => "Request method must be GET or POST",

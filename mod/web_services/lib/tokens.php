@@ -139,14 +139,16 @@ function remove_expired_user_tokens() {
  * to authenticate a user for a period of time. It is passed in future calls as the parameter
  * auth_token.
  *
- * @param string $username Username
- * @param string $password Clear text password
- *
+ * @param array $values Values received with the API request
  * @return string Token string or exception
  * @throws SecurityException
  * @access private
  */
-function auth_gettoken($username, $password) {
+function auth_gettoken($values) {
+
+	$username = elgg_extract('username', $values);
+	$password = elgg_extract('password', $values);
+	
 	// check if username is an email address
 	if (is_email_address($username)) {
 		$users = get_user_by_email($username);
