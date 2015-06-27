@@ -46,9 +46,12 @@ function authenticate_method($method) {
 
 /**
  * Executes a method.
- * A method is a function which you have previously exposed using expose_function.
+ * A method is a function which has previously exposed using {@link elgg_ws_expose_function()}
  *
- * @param string $method Method, e.g. "foo.bar"
+ * @see elgg_ws_expose_function()
+ * @see _php_api_exception_handler()
+ * 
+ * @param string $method Method, e.g. "system.api.list"
  *
  * @return GenericResult The result of the execution.
  * @throws APIException|CallException
@@ -57,66 +60,43 @@ function authenticate_method($method) {
 function execute_method($method) {
 	global $API_METHODS;
 
-	// method must be exposed
-	if (!isset($API_METHODS[$method])) {
+	if (empty($API_METHODS[$method])) {
+		// Method has not been exposed
 		$msg = elgg_echo('APIException:MethodCallNotImplemented', array($method));
 		throw new APIException($msg);
 	}
 
-	// function must be callable
-	$function = null;
-	if (isset($API_METHODS[$method]["function"])) {
-		$function = $API_METHODS[$method]["function"];
-		// allow array version of static callback
-		if (is_array($function)
-				&& isset($function[0], $function[1])
-				&& is_string($function[0])
-				&& is_string($function[1])) {
-			$function = "{$function[0]}::{$function[1]}";
-		}
-	}
-	if (!is_string($function) || !is_callable($function)) {
+	$function = $API_METHODS[$method]['function'];
+	if (!is_callable($function)) {
+		// Method callback function does not exist or not callable
 		$msg = elgg_echo('APIException:FunctionDoesNotExist', array($method));
 		throw new APIException($msg);
 	}
 
-	// check http call method
-	if (strcmp(get_call_method(), $API_METHODS[$method]["call_method"]) != 0) {
-		$msg = elgg_echo('CallException:InvalidCallMethod', array($method,
-		$API_METHODS[$method]["call_method"]));
+	$call_method = $API_METHODS[$method]['call_method'];
+	if (strcmp(get_call_method(), $call_method) != 0) {
+		$msg = elgg_echo('CallException:InvalidCallMethod', array($method, $call_method));
 		throw new CallException($msg);
 	}
 
 	$parameters = get_parameters_for_method($method);
-
-	// may throw exception, which is not caught here
-	verify_parameters($method, $parameters);
-
-	$serialised_parameters = serialise_parameters($method, $parameters);
-
-	// Execute function: Construct function and calling parameters
-	$serialised_parameters = trim($serialised_parameters, ", ");
-
-	// @todo remove the need for eval()
-	$result = eval("return $function($serialised_parameters);");
+	
+	$result = call_user_func_array($function, $parameters);
 
 	// Sanity check result
-	// If this function returns an api result itself, just return it
 	if ($result instanceof GenericResult) {
+		// If this function returns an api result itself, just return it
 		return $result;
-	}
-
-	if ($result === false) {
-		$msg = elgg_echo('APIException:FunctionParseError', array($function, $serialised_parameters));
+	} else if ($result === false) {
+		// Function returns false or there is a call error
+		$msg = elgg_echo('APIException:FunctionCallError', array($function, $method, print_r($parameters, true)));
 		throw new APIException($msg);
-	}
-
-	if ($result === NULL) {
+	} else if ($result === NULL) {
 		// If no value
-		$msg = elgg_echo('APIException:FunctionNoReturn', array($function, $serialised_parameters));
+		$msg = elgg_echo('APIException:FunctionNoReturn', array($function, print_r($parameters, true)));
 		throw new APIException($msg);
 	}
-
+	
 	// Otherwise assume that the call was successful and return it as a success object.
 	return SuccessResult::getInstance($result);
 }
@@ -132,14 +112,17 @@ function get_call_method() {
 }
 
 /**
- * This function analyses all expected parameters for a given method
+ * This function analyses all expected parameters of a given method,
+ * and builds an array of key => value pairs, where the value is a sanitized
+ * representation of the input cast to the value type specified by the method
+ * specification.
  *
- * This function sanitizes the input parameters and returns them in
- * an associated array.
+ * For unknown value types, or casting errors, an exception will be thrown
+ * For required parameters without input values, an exception will be thrown
  *
  * @param string $method The method
- *
- * @return array containing parameters as key => value
+ * @return array
+ * @throws APIException
  * @access private
  */
 function get_parameters_for_method($method) {
@@ -147,19 +130,35 @@ function get_parameters_for_method($method) {
 
 	$sanitised = array();
 
-	// if there are parameters, sanitize them
-	if (isset($API_METHODS[$method]['parameters'])) {
-		foreach ($API_METHODS[$method]['parameters'] as $k => $v) {
-			$param = get_input($k); // Make things go through the sanitiser
-			if ($param !== '' && $param !== null) {
-				$sanitised[$k] = $param;
-			} else {
-				// parameter wasn't passed so check for default
-				if (isset($v['default'])) {
-					$sanitised[$k] = $v['default'];
-				}
+	$expected_parameters = (array) $API_METHODS[$method]['parameters'];
+
+	if (empty($expected_parameters)) {
+		// This method has no expected parameters
+		return $sanitised;
+	}
+
+	foreach ($expected_parameters as $key => $spec) {
+		// Make things go through the sanitiser
+		$default = elgg_extract('default', $spec);
+		$value = get_input($key, $default);
+
+		// Cast values to specified type
+		$type = elgg_extract('type', $spec);
+		if (!settype($value, $type)) {
+			$msg = elgg_echo('APIException:UnrecognisedTypeCast', array($type, $key, $method));
+			throw new APIException($msg);
+		}
+
+		// Validate required values
+		$required = elgg_extract('required', $spec);
+		if ($required) {
+			if (($type == 'array' && empty($value)) || $value == '' || $value == null) {
+				$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
+				throw new APIException($msg);
 			}
 		}
+
+		$sanitised[$key] = $value;
 	}
 
 	return $sanitised;
@@ -209,10 +208,10 @@ function verify_parameters($method, $parameters) {
 
 		// Check that the variable is present in the request if required
 		if ($value['required'] && !array_key_exists($key, $parameters)) {
-			$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
-			throw new APIException($msg);
-		}
-	}
+						$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
+						throw new APIException($msg);
+					}
+				}
 
 	return true;
 }
