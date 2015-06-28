@@ -36,6 +36,8 @@ function ws_init() {
 		true
 	);
 
+	elgg_register_plugin_hook_handler('cron', 'daily', 'remove_expired_user_tokens');
+	
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'ws_unit_test');
 }
 
