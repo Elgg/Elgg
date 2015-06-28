@@ -58,4 +58,35 @@ class Registry {
 	public function all() {
 		return (array) $this->methods;
 	}
+
+	/**
+	 * Creates a new API User
+	 *
+	 * @param int $site_guid GUID of the site
+	 * @return \Elgg\WebServices\ApiUser|false
+	 */
+	public function createApiUser($site_guid) {
+		return (new \Elgg\WebServices\KeyService($site_guid))->create();
+	}
+
+	/**
+	 * Retrieves API user details from public API key
+	 *
+	 * @param int    $site_guid GUID of the site entity
+	 * @param string $api_key   Public API key
+	 * @return \Elgg\WebServices\ApiUser|false
+	 */
+	public function getApiUser($site_guid, $api_key) {
+		return (new \Elgg\WebServices\KeyService($site_guid))->get($api_key);
+	}
+
+	/**
+	 * Deletes API User
+	 *
+	 * @param int $site_guid GUID of the site
+	 * @return bool
+	 */
+	public function removeApiUser($site_guid, $api_key) {
+		return (new \Elgg\WebServices\KeyService($site_guid))->revoke($api_key);
+	}
 }
