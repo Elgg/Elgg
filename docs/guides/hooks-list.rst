@@ -437,10 +437,6 @@ Other
 		'widget_context' => $widget_context
 	)
 
-**rest, init**
-	Triggered by the web services rest handler. Plugins can set up their own authentication
-	handlers, then return true to prevent the default handlers from being registered.
-
 **public_pages, walled_garden**
 	Filter the URLs that are can be seen by logged out users if Walled Garden is
 	enabled. ``$value`` is an array of regex strings that will allow access if matched.
@@ -530,3 +526,13 @@ Search
 **search_types, get_queries**
     Before a search this filters the types queried. This can be used to reorder
     the display of search results.
+
+Web Services
+------------
+
+**rest, init**
+	Triggered by the web services rest handler. Plugins can set up their own authentication
+	handlers, then return ``true`` to prevent the default handlers from being registered.
+
+**rest:output, <method_name>**
+	Filter the result (and subsequently the output) of the API method
