@@ -306,14 +306,13 @@ function cache_hmac_check_replay($hmac) {
  * @access private
  */
 function pam_auth_usertoken() {
-	global $CONFIG;
 
 	$token = get_input('auth_token');
 	if (!$token) {
 		return false;
 	}
 
-	$validated_userid = validate_user_token($token, $CONFIG->site_id);
+	$validated_userid = validate_user_token($token, elgg_get_site_entity()->guid);
 
 	if ($validated_userid) {
 		$u = get_entity($validated_userid);
