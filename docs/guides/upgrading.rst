@@ -458,8 +458,9 @@ Similarly the property ``$annotation->view`` no longer has an effect within ``el
 Web Services Revamped
 ---------------------
 
+
 API authentication for web services is required by default
-----------------------------------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 All exposed methods that do not explicitly set API auth requirement to false, will require API authentication.
 
@@ -470,7 +471,7 @@ You can verify what values are used on your site in one of the following ways:
  - by dumping the output of ``list_all_apis()`` in PHP
 
 Service handlers were removed
------------------------------
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 Services are now handled by the resource views. If you were using any of these functions:
 
@@ -480,6 +481,14 @@ Services are now handled by the resource views. If you were using any of these f
  - ``service_handler()``
 
 to handle service requests, you need to move your service handling logic to a corresponding resource view or use ``route, services`` hook to handle the output.
+
+Rest API service response format must be set
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Requests to ``/services/api/rest/<format>`` will now fail if format is not a registered viewtype. Format will no longer default to ``json``.
+You must set the format explicitly, and ensure that you have corresponding viewtype implemented.
+Note that Elgg core does not support XML by default. See https://github.com/Elgg/data_views
+
 
 From 1.10 to 1.11
 =================

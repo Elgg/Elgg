@@ -28,11 +28,11 @@ $request = explode('/', $request);
 
 // Set viewtype to provide output in the response format specified by the request
 $response_format = array_shift($request);
-if ($response_format && elgg_is_registered_viewtype($response_format)) {
-	elgg_set_viewtype($response_format);
-} else {
-	elgg_set_viewtype("json");
+if (!elgg_is_registered_viewtype($response_format)) {
+	throw new ApiException(elgg_echo('APIException:InvalidRestFormat', array($response_format)));
 }
+
+elgg_set_viewtype($response_format);
 
 // Get parameter variables
 $method = get_input('method');
