@@ -188,10 +188,13 @@ function get_post_data() {
  * @throws APIException
  * @since 1.7.0
  * @access private
+ * @deprecated 1.12 No longer in use
  */
 function verify_parameters($method, $parameters) {
 	global $API_METHODS;
 
+	elgg_deprecated_notice('verify_parameters() has been deprecated and will be removed', '1.12');
+	
 	// are there any parameters for this method
 	if (!(isset($API_METHODS[$method]["parameters"]))) {
 		return true; // no so return
@@ -226,10 +229,13 @@ function verify_parameters($method, $parameters) {
  * @throws APIException
  * @since 1.7.0
  * @access private
+ * @deprecated 1.12
  */
 function serialise_parameters($method, $parameters) {
 	global $API_METHODS;
 
+	elgg_deprecated_notice('serialise_parameters() has been deprecated and will be removed', '1.12');
+	
 	// are there any parameters for this method
 	if (!(isset($API_METHODS[$method]["parameters"]))) {
 		return ''; // if not, return
