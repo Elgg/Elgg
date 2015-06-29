@@ -15,6 +15,14 @@ $test_path = "$CONFIG->path/engine/tests";
 require_once("$test_path/ElggCoreUnitTest.php");
 require_once("$test_path/ElggCoreGetEntitiesBaseTest.php");
 
+// plugins that contain unit tests
+$plugins = array(
+	'groups',
+	'htmlawed',
+	'thewire',
+	'web_services'
+);
+
 // don't expect admin session for CLI
 if (!TextReporter::inCli()) {
 	elgg_admin_gatekeeper();
@@ -24,6 +32,17 @@ if (!TextReporter::inCli()) {
 		echo "Failed to login as administrator.";
 		exit(1);
 	}
+	
+	// activate plugins that are not activated on install
+	foreach ($plugins as $key => $id) {
+		$plugin = elgg_get_plugin_from_id($id);
+		if (!$plugin || $plugin->isActive()) {
+			unset($plugins[$key]);
+			continue;
+		}
+		$plugin->activate();
+	}
+
 	$CONFIG->debug = 'NOTICE';
 }
 
@@ -61,6 +80,13 @@ if (TextReporter::inCli()) {
 		microtime(true) - $start_time,
 		memory_get_peak_usage() / 1048576.0 // in megabytes
 	);
+
+	// deactivate plugins that were activated for test suite
+	foreach ($plugins as $key => $id) {
+		$plugin = elgg_get_plugin_from_id($id);
+		$plugin->deactivate();
+	}
+	
 	exit($result);
 }
 
