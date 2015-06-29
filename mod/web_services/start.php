@@ -113,7 +113,7 @@ function ws_page_handler($segments) {
  * @param string $description       (optional) Human readable description of the function.
  * @param string $call_method       (optional) Define what http method must be used for
  *                                  this function. Default: GET
- * @param bool   $require_api_auth  (optional) (default is false) Does this method
+ * @param bool   $require_api_auth  (optional) (default is true) Does this method
  *                                  require API authorization? (example: API key)
  * @param bool   $require_user_auth (optional) (default is false) Does this method
  *                                  require user authorization?
