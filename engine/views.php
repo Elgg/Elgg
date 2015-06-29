@@ -6,7 +6,7 @@ return [
 		
 		/**
 		 * Relative paths (no leading slash) are resolved relative to Elgg's install root.
-		 * 
+		 *
 		 * All assets managed by composer (not checked in to version control) should use this syntax.
 		 */
 		"jquery.js" => "vendor/bower-asset/jquery/dist/jquery.min.js",
@@ -20,6 +20,10 @@ return [
 		"require.js" => "vendor/bower-asset/requirejs/require.js",
 		"sprintf.js" => "vendor/bower-asset/sprintf/dist/sprintf.min.js",
 		"text.js" => "vendor/bower-asset/text/text.js",
+		
+		// need to use some folder structure, because FontAwesome includes fonts relative to css
+		"font-awesome/css/font-awesome.css" => "vendor/fortawesome/font-awesome/css/font-awesome.min.css",
+		"font-awesome/fonts/" => "vendor/fortawesome/font-awesome/fonts",
 
 		/**
 		 * __DIR__ should be utilized when referring to assets that are checked in to version control.

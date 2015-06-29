@@ -36,7 +36,7 @@ Here is a list of the existing CSS views:
  * elements/chrome.css: This file has some miscellaneous look-and-feel classes.
  * elements/components.css: This file contains many “css objects” that are used all over the site: media block, list, gallery, table, owner block, system messages, river, tags, photo, and comments.
  * elements/forms.css: This file determines what your forms and input elements will look like.
- * elements/icons.css: Contains styles for the sprite icons and avatars used on your site.
+ * elements/icons.css: Contains styles for the icons and avatars used on your site.
  * elements/layout.css: Determines what your page layout will look like: sidebars, page wrapper, main body, header, footer, etc.
  * elements/modules.css: Lots of content in Elgg is displayed in boxes with a title and a content body. We called these modules. There are a few kinds: info, aside, featured, dropdown, popup, widget. Widget styles are included in this file too, since they are a subset of modules.
  * elements/navigation.css: This file determines what all your menus will look like.
@@ -88,6 +88,19 @@ But only when the plugin is active.
 This gives you total control over the way Elgg looks and behaves. It
 gives you the option to either slightly modify or totally replace
 existing views.
+
+Icons
+-----
+
+As of Elgg 2.0 the default Elgg icons come from the FontAwesome_ library. 
+You can use any of these icons by calling:  
+
+``elgg_view_icon('icon-name');``
+
+``icon-name`` can be any of the `FontAwesome icons`_ without the ``fa-``-prefix.
+
+.. _FontAwesome: http://fontawesome.io/
+.. _FontAwesome icons: http://fontawesome.io/icons/
 
 Tools
 =====

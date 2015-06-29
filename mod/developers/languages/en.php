@@ -75,7 +75,7 @@ return array(
 	'theme_sandbox:navigation' => 'Navigation',
 	'theme_sandbox:typography' => 'Typography',
 
-	'theme_sandbox:icons:blurb' => 'Use <em>elgg_view_icon($name)</em> or the class elgg-icon-$name to display icons.',
+	'theme_sandbox:icons:blurb' => 'Use <em>elgg_view_icon($name)</em> to display icons.',
 
 	// unit tests
 	'developers:unit_tests:description' => 'Elgg has unit and integration tests for detecting bugs in its core classes and functions.',
