@@ -80,8 +80,12 @@ function execute_method($method) {
 	}
 
 	$parameters = get_parameters_for_method($method);
-	
-	$result = call_user_func_array($function, $parameters);
+
+	if (!empty($API_METHODS[$method]['assoc'])) {
+		$result = call_user_func($function, $parameters);
+	} else {
+		$result = call_user_func_array($function, $parameters);
+	}
 
 	// Sanity check result
 	if ($result instanceof GenericResult) {

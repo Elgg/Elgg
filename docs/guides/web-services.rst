@@ -74,6 +74,36 @@ by default: xml, json, and serialized php. You can request the different
 formats for substituting “json” or “php” for “xml” in the above URLs.
 You can also add additional response formats by defining new viewtypes.
 
+Callback functions
+~~~~~~~~~~~~~~~~~~
+
+If you have a large number of method parameters, you can force the execution script
+to invoke the callback function with a single argument that contains an associative
+array of parameter => input pairs (instead of each parameter being a separate argument).
+To do that, set ``$assoc`` to ``true`` in ``elgg_ws_expose_function()``.
+
+.. code:: php
+
+    function greet_me($values) {
+        $name = elgg_extract('name', $values);
+        $greeting = elgg_extract('greeting', $values, 'Hello');
+        return "$greeting, $name";
+    }
+
+    elgg_ws_expose_function("test.greet",
+                    "greet_me",
+                     array(
+                         "name" => array('type' => 'string'),
+                         "greeting" => array('type' => 'string', 'default' => 'Hello', 'required' => false)
+                     ),
+                     'A testing method which echos a greeting',
+                     'GET',
+                     false,
+                     false,
+                     true // $assoc makes the callback receive an associative array
+                    );
+
+
 API authentication
 ------------------
 

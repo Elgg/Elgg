@@ -129,12 +129,14 @@ $ERRORS = array();
  *                                  require API authorization? (example: API key)
  * @param bool   $require_user_auth (optional) (default is false) Does this method
  *                                  require user authorization?
+ * @param bool   $assoc             If set to true, the callback function will receive a single argument
+ *                                  that contains an associative array of parameter => input pairs for the method
  *
  * @return bool
  * @throws InvalidParameterException
  */
 function elgg_ws_expose_function($method, callable $function, array $parameters = null, $description = "",
-		$call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
+		$call_method = "GET", $require_api_auth = false, $require_user_auth = false, $assoc = false) {
 	global $API_METHODS;
 
 	if (!$method || !$function) {
@@ -149,6 +151,7 @@ function elgg_ws_expose_function($method, callable $function, array $parameters 
 		'require_user_auth' => (bool) $require_user_auth,
 		'call_method' => strtoupper((string) $call_method),
 		'parameters' => (array) $parameters,
+		'assoc' => $assoc,
 	);
 
 	if (!is_array($api_method['parameters'])) {
