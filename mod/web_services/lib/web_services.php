@@ -2,168 +2,7 @@
 /**
  * Elgg web services API library
  * Functions and objects for exposing custom web services.
- *
  */
-
-/**
- * Check that the method call has the proper API and user authentication
- *
- * @param string $method The api name that was exposed
- *
- * @return true or throws an exception
- * @throws APIException
- * @since 1.7.0
- * @access private
- */
-function authenticate_method($method) {
-	global $API_METHODS;
-
-	// method must be exposed
-	if (!isset($API_METHODS[$method])) {
-		throw new APIException(elgg_echo('APIException:MethodCallNotImplemented', array($method)));
-	}
-
-	// check API authentication if required
-	if ($API_METHODS[$method]["require_api_auth"] == true) {
-		$api_pam = new ElggPAM('api');
-		if ($api_pam->authenticate() !== true) {
-			throw new APIException(elgg_echo('APIException:APIAuthenticationFailed'));
-		}
-	}
-
-	$user_pam = new ElggPAM('user');
-	$user_auth_result = $user_pam->authenticate(array());
-
-	// check if user authentication is required
-	if ($API_METHODS[$method]["require_user_auth"] == true) {
-		if ($user_auth_result == false) {
-			throw new APIException($user_pam->getFailureMessage(), ErrorResult::$RESULT_FAIL_AUTHTOKEN);
-		}
-	}
-
-	return true;
-}
-
-/**
- * Executes a method.
- * A method is a function which you have previously exposed using expose_function.
- *
- * @param string $method Method, e.g. "foo.bar"
- *
- * @return GenericResult The result of the execution.
- * @throws APIException|CallException
- * @access private
- */
-function execute_method($method) {
-	global $API_METHODS;
-
-	// method must be exposed
-	if (!isset($API_METHODS[$method])) {
-		$msg = elgg_echo('APIException:MethodCallNotImplemented', array($method));
-		throw new APIException($msg);
-	}
-
-	// function must be callable
-	$function = null;
-	if (isset($API_METHODS[$method]["function"])) {
-		$function = $API_METHODS[$method]["function"];
-		// allow array version of static callback
-		if (is_array($function)
-				&& isset($function[0], $function[1])
-				&& is_string($function[0])
-				&& is_string($function[1])) {
-			$function = "{$function[0]}::{$function[1]}";
-		}
-	}
-	if (!is_string($function) || !is_callable($function)) {
-		$msg = elgg_echo('APIException:FunctionDoesNotExist', array($method));
-		throw new APIException($msg);
-	}
-
-	// check http call method
-	if (strcmp(get_call_method(), $API_METHODS[$method]["call_method"]) != 0) {
-		$msg = elgg_echo('CallException:InvalidCallMethod', array($method,
-		$API_METHODS[$method]["call_method"]));
-		throw new CallException($msg);
-	}
-
-	$parameters = get_parameters_for_method($method);
-
-	// may throw exception, which is not caught here
-	verify_parameters($method, $parameters);
-
-	$serialised_parameters = serialise_parameters($method, $parameters);
-
-	// Execute function: Construct function and calling parameters
-	$serialised_parameters = trim($serialised_parameters, ", ");
-
-	// @todo remove the need for eval()
-	$result = eval("return $function($serialised_parameters);");
-
-	// Sanity check result
-	// If this function returns an api result itself, just return it
-	if ($result instanceof GenericResult) {
-		return $result;
-	}
-
-	if ($result === false) {
-		$msg = elgg_echo('APIException:FunctionParseError', array($function, $serialised_parameters));
-		throw new APIException($msg);
-	}
-
-	if ($result === NULL) {
-		// If no value
-		$msg = elgg_echo('APIException:FunctionNoReturn', array($function, $serialised_parameters));
-		throw new APIException($msg);
-	}
-
-	// Otherwise assume that the call was successful and return it as a success object.
-	return SuccessResult::getInstance($result);
-}
-
-/**
- * Get the request method.
- *
- * @return string HTTP request method
- * @access private
- */
-function get_call_method() {
-	return _elgg_services()->request->server->get('REQUEST_METHOD');
-}
-
-/**
- * This function analyses all expected parameters for a given method
- *
- * This function sanitizes the input parameters and returns them in
- * an associated array.
- *
- * @param string $method The method
- *
- * @return array containing parameters as key => value
- * @access private
- */
-function get_parameters_for_method($method) {
-	global $API_METHODS;
-
-	$sanitised = array();
-
-	// if there are parameters, sanitize them
-	if (isset($API_METHODS[$method]['parameters'])) {
-		foreach ($API_METHODS[$method]['parameters'] as $k => $v) {
-			$param = get_input($k); // Make things go through the sanitiser
-			if ($param !== '' && $param !== null) {
-				$sanitised[$k] = $param;
-			} else {
-				// parameter wasn't passed so check for default
-				if (isset($v['default'])) {
-					$sanitised[$k] = $v['default'];
-				}
-			}
-		}
-	}
-
-	return $sanitised;
-}
 
 /**
  * Get POST data
@@ -177,128 +16,6 @@ function get_post_data() {
 	$postdata = file_get_contents('php://input');
 
 	return $postdata;
-}
-
-/**
- * Verify that the required parameters are present
- *
- * @param string $method     Method name
- * @param array  $parameters List of expected parameters
- *
- * @return true on success or exception
- * @throws APIException
- * @since 1.7.0
- * @access private
- */
-function verify_parameters($method, $parameters) {
-	global $API_METHODS;
-
-	// are there any parameters for this method
-	if (!(isset($API_METHODS[$method]["parameters"]))) {
-		return true; // no so return
-	}
-
-	// check that the parameters were registered correctly and all required ones are there
-	foreach ($API_METHODS[$method]['parameters'] as $key => $value) {
-		// this tests the expose structure: must be array to describe parameter and type must be defined
-		if (!is_array($value) || !isset($value['type'])) {
-
-			$msg = elgg_echo('APIException:InvalidParameter', array($key, $method));
-			throw new APIException($msg);
-		}
-
-		// Check that the variable is present in the request if required
-		if ($value['required'] && !array_key_exists($key, $parameters)) {
-			$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
-			throw new APIException($msg);
-		}
-	}
-
-	return true;
-}
-
-/**
- * Serialize an array of parameters for an API method call
- *
- * @param string $method     API method name
- * @param array  $parameters Array of parameters
- *
- * @return string or exception
- * @throws APIException
- * @since 1.7.0
- * @access private
- */
-function serialise_parameters($method, $parameters) {
-	global $API_METHODS;
-
-	// are there any parameters for this method
-	if (!(isset($API_METHODS[$method]["parameters"]))) {
-		return ''; // if not, return
-	}
-
-	$serialised_parameters = "";
-	foreach ($API_METHODS[$method]['parameters'] as $key => $value) {
-
-		// avoid warning on parameters that are not required and not present
-		if (!isset($parameters[$key])) {
-			continue;
-		}
-
-		// Set variables casting to type.
-		switch (strtolower($value['type']))
-		{
-			case 'int':
-			case 'integer' :
-				$serialised_parameters .= "," . (int)trim($parameters[$key]);
-				break;
-			case 'bool':
-			case 'boolean':
-				// change word false to boolean false
-				if (strcasecmp(trim($parameters[$key]), "false") == 0) {
-					$serialised_parameters .= ',false';
-				} else if ($parameters[$key] == 0) {
-					$serialised_parameters .= ',false';
-				} else {
-					$serialised_parameters .= ',true';
-				}
-
-				break;
-			case 'string':
-				$serialised_parameters .= ",'" . addcslashes(trim($parameters[$key]), "'") . "'";
-				break;
-			case 'float':
-				$serialised_parameters .= "," . (float)trim($parameters[$key]);
-				break;
-			case 'array':
-				// we can handle an array of strings, maybe ints, definitely not booleans or other arrays
-				if (!is_array($parameters[$key])) {
-					$msg = elgg_echo('APIException:ParameterNotArray', array($key));
-					throw new APIException($msg);
-				}
-
-				$array = "array(";
-
-				foreach ($parameters[$key] as $k => $v) {
-					$k = sanitise_string($k);
-					$v = sanitise_string($v);
-
-					$array .= "'$k'=>'$v',";
-				}
-
-				$array = trim($array, ",");
-
-				$array .= ")";
-				$array = ",$array";
-
-				$serialised_parameters .= $array;
-				break;
-			default:
-				$msg = elgg_echo('APIException:UnrecognisedTypeCast', array($value['type'], $key, $method));
-				throw new APIException($msg);
-		}
-	}
-
-	return $serialised_parameters;
 }
 
 // API authorization handlers /////////////////////////////////////////////////////////////////////
@@ -412,7 +129,7 @@ function api_auth_hmac() {
 function get_and_validate_api_headers() {
 	$result = new stdClass;
 
-	$result->method = get_call_method();
+	$result->method = _elgg_services()->request->server->get('REQUEST_METHOD');
 	// Only allow these methods
 	if (($result->method != "GET") && ($result->method != "POST")) {
 		throw new APIException(elgg_echo('APIException:NotGetOrPost'));
@@ -589,14 +306,13 @@ function cache_hmac_check_replay($hmac) {
  * @access private
  */
 function pam_auth_usertoken() {
-	global $CONFIG;
 
 	$token = get_input('auth_token');
 	if (!$token) {
 		return false;
 	}
 
-	$validated_userid = validate_user_token($token, $CONFIG->site_id);
+	$validated_userid = validate_user_token($token, elgg_get_site_entity()->guid);
 
 	if ($validated_userid) {
 		$u = get_entity($validated_userid);
@@ -655,29 +371,24 @@ function pam_auth_session() {
  * @throws Exception
  */
 function _php_api_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
-	global $ERRORS;
 
-	$error = date("Y-m-d H:i:s (T)") . ": \"" . $errmsg . "\" in file "
-	. $filename . " (line " . $linenum . ")";
+	$time = date("Y-m-d H:i:s (T)");
+	$error =  "$time: $errmsg in file $filename (line $linenum)";
 
 	switch ($errno) {
 		case E_USER_ERROR:
-			error_log("ERROR: " . $error);
-			$ERRORS[] = "ERROR: " . $error;
+			register_error("ERROR: " . $error);
 
 			// Since this is a fatal error, we want to stop any further execution but do so gracefully.
 			throw new Exception("ERROR: " . $error);
-			break;
 
 		case E_WARNING :
 		case E_USER_WARNING :
-			error_log("WARNING: " . $error);
-			$ERRORS[] = "WARNING: " . $error;
+			register_error("WARNING: " . $error);
 			break;
 
 		default:
-			error_log("DEBUG: " . $error);
-			$ERRORS[] = "DEBUG: " . $error;
+			register_error("DEBUG: " . $error);
 	}
 }
 
@@ -700,47 +411,4 @@ function _php_api_exception_handler($exception) {
 	$result = new ErrorResult($exception->getMessage(), $code, NULL);
 
 	echo elgg_view_page($exception->getMessage(), elgg_view("api/output", array("result" => $result)));
-}
-
-
-/**
- * Services handler - turns request over to the registered handler
- * If no handler is found, this returns a 404 error
- *
- * @param string $handler Handler name
- * @param array  $request Request string
- *
- * @return void
- * @access private
- */
-function service_handler($handler, $request) {
-	global $CONFIG;
-
-	elgg_set_context('api');
-
-	$request = explode('/', $request);
-
-	// after the handler, the first identifier is response format
-	// ex) http://example.org/services/api/rest/json/?method=test
-	$response_format = array_shift($request);
-	// Which view - xml, json, ...
-	if ($response_format && elgg_is_registered_viewtype($response_format)) {
-		elgg_set_viewtype($response_format);
-	} else {
-		// default to json
-		elgg_set_viewtype("json");
-	}
-
-	if (!isset($CONFIG->servicehandler) || empty($handler)) {
-		// no handlers set or bad url
-		header("HTTP/1.0 404 Not Found");
-		exit;
-	} else if (isset($CONFIG->servicehandler[$handler]) && is_callable($CONFIG->servicehandler[$handler])) {
-		$function = $CONFIG->servicehandler[$handler];
-		call_user_func($function, $request, $handler);
-	} else {
-		// no handler for this web service
-		header("HTTP/1.0 404 Not Found");
-		exit;
-	}
 }

@@ -4,34 +4,20 @@
  */
 
 /**
- * Obtain a token for a user.
+ * Obtain a token for a user
  *
  * @param string $username The username
  * @param int    $expire   Minutes until token expires (default is 60 minutes)
- *
- * @return bool
+ * @return string|bool
  */
 function create_user_token($username, $expire = 60) {
-	global $CONFIG;
-
-	$site_guid = $CONFIG->site_id;
 	$user = get_user_by_username($username);
-	$time = time();
-	$time += 60 * $expire;
-	$token = md5(rand() . microtime() . $username . $time . $site_guid);
-
-	if (!$user) {
+	$site = elgg_get_site_entity();
+	if (!$user || !$site) {
 		return false;
 	}
-
-	if (insert_data("INSERT into {$CONFIG->dbprefix}users_apisessions
-				(user_guid, site_guid, token, expires) values
-				({$user->guid}, $site_guid, '$token', '$time')
-				on duplicate key update token='$token', expires='$time'")) {
-		return $token;
-	}
-
-	return false;
+	$token = (new \Elgg\WebServices\TokenService())->create($user, $site, $expire);
+	return ($token) ? $token->token : false;
 }
 
 /**
@@ -45,19 +31,12 @@ function create_user_token($username, $expire = 60) {
  * @since 1.7.0
  */
 function get_user_tokens($user_guid, $site_guid) {
-	global $CONFIG;
-
-	if (!isset($site_guid)) {
-		$site_guid = $CONFIG->site_id;
+	$user = get_entity($user_guid);
+	$site = get_entity($site_guid);
+	if (!$site) {
+		$site = elgg_get_site_entity();
 	}
-
-	$site_guid = (int)$site_guid;
-	$user_guid = (int)$user_guid;
-
-	$tokens = get_data("SELECT * from {$CONFIG->dbprefix}users_apisessions
-		where user_guid=$user_guid and site_guid=$site_guid");
-
-	return $tokens;
+	return (new \Elgg\WebServices\TokenService())->all($user, $site);
 }
 
 /**
@@ -72,24 +51,15 @@ function get_user_tokens($user_guid, $site_guid) {
  * @return mixed The user id attached to the token if not expired or false.
  */
 function validate_user_token($token, $site_guid) {
-	global $CONFIG;
-
-	if (!isset($site_guid)) {
-		$site_guid = $CONFIG->site_id;
+	$token = Elgg\WebServices\UserToken::load($token);
+	if (!$token) {
+		return false;
 	}
-
-	$site_guid = (int)$site_guid;
-	$token = sanitise_string($token);
-
-	$time = time();
-
-	$user = get_data_row("SELECT * from {$CONFIG->dbprefix}users_apisessions
-		where token='$token' and site_guid=$site_guid and $time < expires");
-
-	if ($user) {
-		return $user->user_guid;
+	$site = get_entity($site_guid);
+	$result = $token->validate($site);
+	if ($result instanceof \ElggEntity) {
+		return $result->guid;
 	}
-
 	return false;
 }
 
@@ -103,17 +73,11 @@ function validate_user_token($token, $site_guid) {
  * @since 1.7.0
  */
 function remove_user_token($token, $site_guid) {
-	global $CONFIG;
-
-	if (!isset($site_guid)) {
-		$site_guid = $CONFIG->site_id;
+	$token = Elgg\WebServices\UserToken::load($token);
+	if (!$token) {
+		return false;
 	}
-
-	$site_guid = (int)$site_guid;
-	$token = sanitise_string($token);
-
-	return delete_data("DELETE from {$CONFIG->dbprefix}users_apisessions
-		where site_guid=$site_guid and token='$token'");
+	return $token->delete();
 }
 
 /**
@@ -123,14 +87,7 @@ function remove_user_token($token, $site_guid) {
  * @since 1.7.0
  */
 function remove_expired_user_tokens() {
-	global $CONFIG;
-
-	$site_guid = $CONFIG->site_id;
-
-	$time = time();
-
-	return delete_data("DELETE from {$CONFIG->dbprefix}users_apisessions
-		where site_guid=$site_guid and expires < $time");
+	return (new \Elgg\WebServices\TokenService())->removeExpiredTokens();
 }
 
 /**
@@ -139,31 +96,11 @@ function remove_expired_user_tokens() {
  * to authenticate a user for a period of time. It is passed in future calls as the parameter
  * auth_token.
  *
- * @param string $username Username
- * @param string $password Clear text password
- *
+ * @param array $values Values received with the API request
  * @return string Token string or exception
  * @throws SecurityException
  * @access private
  */
-function auth_gettoken($username, $password) {
-	// check if username is an email address
-	if (is_email_address($username)) {
-		$users = get_user_by_email($username);
-
-		// check if we have a unique user
-		if (is_array($users) && (count($users) == 1)) {
-			$username = $users[0]->username;
-		}
-	}
-
-	// validate username and password
-	if (true === elgg_authenticate($username, $password)) {
-		$token = create_user_token($username);
-		if ($token) {
-			return $token;
-		}
-	}
-
-	throw new SecurityException(elgg_echo('SecurityException:authenticationfailed'));
+function auth_gettoken($values) {
+	return (new \Elgg\WebServices\TokenService())->exchange($values);
 }

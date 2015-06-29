@@ -96,7 +96,7 @@ abstract class GenericResult {
 	 * @return stdClass Object containing the serialised result.
 	 */
 	public function export() {
-		global $ERRORS, $CONFIG, $_PAM_HANDLERS_MSG;
+		global $CONFIG, $_PAM_HANDLERS_MSG;
 
 		$result = new stdClass;
 
@@ -110,9 +110,12 @@ abstract class GenericResult {
 			$result->result = $resultdata;
 		}
 
+		// dump the error register
+		$errors = _elgg_services()->systemMessages->dumpRegister('error');
+
 		if (isset($CONFIG->debug)) {
-			if (count($ERRORS)) {
-				$result->runtime_errors = $ERRORS;
+			if (count($errors)) {
+				$result->runtime_errors = $errors;
 			}
 
 			if (count($_PAM_HANDLERS_MSG)) {

@@ -374,6 +374,16 @@ Removed Functions
  - ``search_list_users_by_name()``
  - ``set_template_handler()``
  - ``test_ip()``
+ - ``authenticate_method()`` (web_services)
+ - ``execute_method()`` (web_services)
+ - ``get_parameters_for_method()`` (web_services)
+ - ``verify_parameters()`` (web_services)
+ - ``serialise_parameters()`` (web_services)
+ - ``get_call_method()`` (web_services)
+ - ``elgg_ws_register_service_handler()`` (web_services)
+ - ``elgg_ws_unregister_service_handler()`` (web_services)
+ - ``ws_rest_handler()`` (web_services)
+ - ``service_handler()`` (web_services)
 
 Removed methods
 ---------------
@@ -411,6 +421,12 @@ The following arguments have also been dropped:
    - 6: ``$list_type_toggle``
    - 7: ``$pagination``
 
+Removed Globals
+---------------
+
+ - ``$API_METHODS`` - global variable that stored registered web services methods
+ - ``$ERRORS`` - global variable that stored errors during web services calls
+
 Removed Plugin Hooks
 --------------------
 
@@ -438,6 +454,45 @@ Specifying View via Properties
 The metadata ``$entity->view`` no longer specifies the view used to render in ``elgg_view_entity()``.
 
 Similarly the property ``$annotation->view`` no longer has an effect within ``elgg_view_annotation()``.
+
+Web Services Revamped
+---------------------
+
+API authentication for web services is required by default
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+All exposed methods that do not explicitly set API auth requirement to false, will require API authentication.
+
+You can verify what values are used on your site in one of the following ways:
+
+ - by checking every instance of ``elgg_ws_expose_function()`` (``$require_api_auth`` is the 6th argument accepted by the function)
+ - by accessing web services ``system.api.list`` method, which lists all methods with the type of authentication they require
+ - by dumping the output of ``list_all_apis()`` in PHP
+
+Service handlers were removed
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Services are now handled by the resource views. If you were using any of these functions:
+
+ - ``elgg_ws_register_service_handler()``
+ - ``elgg_ws_unregister_service_handler()``
+ - ``ws_rest_handler()``
+ - ``service_handler()``
+
+to handle service requests, you need to move your service handling logic to a corresponding resource view or use ``route, services`` hook to handle the output.
+
+Rest API service response format must be set
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+Requests to ``/services/api/rest/<format>`` will now fail if format is not a registered viewtype. Format will no longer default to ``json``.
+You must set the format explicitly, and ensure that you have corresponding viewtype implemented.
+Note that Elgg core does not support XML by default. See https://github.com/Elgg/data_views
+
+All libraries are available globally
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You no longer can or need to use ``elgg_load_library('elgg:ws')`` and ``elgg_load_library('elgg:ws:client')``. All functions from these libraries are available globally.
+
 
 From 1.10 to 1.11
 =================

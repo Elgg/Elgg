@@ -74,6 +74,7 @@ by default: xml, json, and serialized php. You can request the different
 formats for substituting “json” or “php” for “xml” in the above URLs.
 You can also add additional response formats by defining new viewtypes.
 
+
 API authentication
 ------------------
 
