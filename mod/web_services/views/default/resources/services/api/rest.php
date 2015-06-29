@@ -1,7 +1,5 @@
 <?php
 
-elgg_load_library('elgg:ws');
-
 // Register the error handler
 error_reporting(E_ALL);
 set_error_handler('_php_api_error_handler');

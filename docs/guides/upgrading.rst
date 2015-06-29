@@ -458,7 +458,6 @@ Similarly the property ``$annotation->view`` no longer has an effect within ``el
 Web Services Revamped
 ---------------------
 
-
 API authentication for web services is required by default
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -488,6 +487,11 @@ Rest API service response format must be set
 Requests to ``/services/api/rest/<format>`` will now fail if format is not a registered viewtype. Format will no longer default to ``json``.
 You must set the format explicitly, and ensure that you have corresponding viewtype implemented.
 Note that Elgg core does not support XML by default. See https://github.com/Elgg/data_views
+
+All libraries are available globally
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+You no longer can or need to use ``elgg_load_library('elgg:ws')`` and ``elgg_load_library('elgg:ws:client')``. All functions from these libraries are available globally.
 
 
 From 1.10 to 1.11

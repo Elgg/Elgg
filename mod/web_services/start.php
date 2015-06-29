@@ -3,17 +3,15 @@
 /**
  * Elgg web services API plugin
  */
+
+require_once __DIR__ . '/lib/api_user.php';
+require_once __DIR__ . '/lib/client.php';
+require_once __DIR__ . '/lib/tokens.php';
+require_once __DIR__ . '/lib/web_services.php';
+
 elgg_register_event_handler('init', 'system', 'ws_init');
 
 function ws_init() {
-	$lib_dir = elgg_get_plugins_path() . "web_services/lib";
-	elgg_register_library('elgg:ws', "$lib_dir/web_services.php");
-	elgg_register_library('elgg:ws:api_user', "$lib_dir/api_user.php");
-	elgg_register_library('elgg:ws:client', "$lib_dir/client.php");
-	elgg_register_library('elgg:ws:tokens', "$lib_dir/tokens.php");
-
-	elgg_load_library('elgg:ws:api_user');
-	elgg_load_library('elgg:ws:tokens');
 
 	elgg_register_page_handler('services', 'ws_page_handler');
 
@@ -168,8 +166,6 @@ function list_all_apis() {
  * @access private
  */
 function ws_unit_test($hook, $type, $value, $params) {
-	elgg_load_library('elgg:ws');
-	elgg_load_library('elgg:ws:client');
 	$value[] = dirname(__FILE__) . '/tests/ElggCoreWebServicesApiTest.php';
 	return $value;
 }
