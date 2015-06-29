@@ -67,6 +67,22 @@
 	margin-left: 6px;
 }
 /* ***************************************
+	ICONS
+*****************************************/
+.elgg-icon-hover-menu-hover,
+.elgg-icon-hover-menu,
+.elgg-icon-hover-menu:hover,
+:focus > .elgg-icon-hover-menu {
+	background: transparent url(<?= elgg_get_simplecache_url('aalborg_theme/avatar_menu_arrows.png') ?>) no-repeat;
+	background-position: right bottom;
+	width: 100%;
+	height: 100%;
+}
+.elgg-icon-hover-menu-hover:before,
+.elgg-icon-hover-menu:before {
+	content: none;
+}
+/* ***************************************
 	RESPONSIVE
 *****************************************/
 html {
@@ -162,7 +178,7 @@ html {
 		border-style: solid;
 		border-width: 1px 1px 0 1px;
 		margin: 0;
-		padding: 10px;		
+		padding: 10px;
 		background-color: #FFFFFF;
 	}
 	.elgg-menu-page a:hover,
