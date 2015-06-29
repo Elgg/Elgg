@@ -1440,14 +1440,16 @@ a.elgg-widget-collapsed:before {
 }
 .elgg-plugin .elgg-head {
 	white-space: nowrap;
+	overflow: hidden;
+	max-width: 100%;
 }
 .elgg-plugin.elgg-state-draggable > .elgg-image-block .elgg-head {
 	cursor: move;
 }
 .elgg-plugin > .elgg-image-block > .elgg-image {
 	margin-right: 10px;
-    min-width: 120px;
-    text-align: center;
+	min-width: 120px;
+	text-align: center;
 }
 .elgg-plugin > .elgg-image-block > .elgg-image .elgg-button {
 	display: block;
