@@ -17,10 +17,6 @@ function ws_init() {
 
 	elgg_register_page_handler('services', 'ws_page_handler');
 
-	// Register a service handler for the default web services
-	// The name rest is a misnomer as they are not RESTful
-	elgg_ws_register_service_handler('rest', 'ws_rest_handler');
-
 	// expose the list of api methods
 	elgg_ws_expose_function("system.api.list", "list_all_apis", null,
 		elgg_echo("system.api.list"), "GET", false, false);
@@ -58,35 +54,28 @@ function _elgg_ws_registry() {
 }
 
 /**
- * Handle a web service request
+ * Handles a web service request
  * 
- * Handles requests of format: http://site/services/api/handler/response_format/request
- * The first element after 'services/api/' is the service handler name as
- * registered by {@link register_service_handler()}.
+ * Handles requests to /services:
+ * /services/<service>/<handler>[/<format>[/<request>]]
  *
- * The remaining string is then passed to the {@link service_handler()}
- * which explodes by /, extracts the first element as the response format
- * (viewtype), and then passes the remaining array to the service handler
- * function registered by {@link register_service_handler()}.
+ * The plugin currently only handlers requests to /services/api/rest endpoint.
+ * In order to implement a custom service or handler, create a resource view
+ * in /resources/services/<service>/<handler>.php
  *
- * If a service handler isn't found, a 404 header is sent.
- * 
  * @param array $segments URL segments
  * @return bool
  */
 function ws_page_handler($segments) {
-	elgg_load_library('elgg:ws');
 
-	if (!isset($segments[0]) || $segments[0] != 'api') {
+	$service = array_shift($segments);
+	$handler = array_shift($segments);
+
+	if (!$service || !$handler) {
 		return false;
 	}
-	array_shift($segments);
 
-	$handler = array_shift($segments);
-	$request = implode('/', $segments);
-
-	service_handler($handler, $request);
-
+	echo elgg_view_resource("services/$service/$handler", ['request' => implode('/', $segments)]);
 	return true;
 }
 
@@ -163,91 +152,6 @@ function list_all_apis() {
 	});
 	ksort($methods);
 	return $methods;
-}
-
-/**
- * Registers a web services handler
- *
- * @param string $handler  Web services type
- * @param string $function Your function name
- *
- * @return bool Depending on success
- */
-function elgg_ws_register_service_handler($handler, $function) {
-	global $CONFIG;
-
-	if (!isset($CONFIG->servicehandler)) {
-		$CONFIG->servicehandler = array();
-	}
-	if (is_callable($function, true)) {
-		$CONFIG->servicehandler[$handler] = $function;
-		return true;
-	}
-
-	return false;
-}
-
-/**
- * Remove a web service
- * To replace a web service handler, register the desired handler over the old on
- * with register_service_handler().
- *
- * @param string $handler web services type
- * @return void
- */
-function elgg_ws_unregister_service_handler($handler) {
-	global $CONFIG;
-
-	if (isset($CONFIG->servicehandler, $CONFIG->servicehandler[$handler])) {
-		unset($CONFIG->servicehandler[$handler]);
-	}
-}
-
-/**
- * REST API handler
- *
- * @return void
- * @access private
- *
- * @throws SecurityException|APIException
- */
-function ws_rest_handler() {
-
-	elgg_load_library('elgg:ws');
-
-	// Register the error handler
-	error_reporting(E_ALL);
-	set_error_handler('_php_api_error_handler');
-
-	// Register a default exception handler
-	set_exception_handler('_php_api_exception_handler');
-
-	// plugins should return true to control what API and user authentication handlers are registered
-	if (elgg_trigger_plugin_hook('rest', 'init', null, false) == false) {
-		// for testing from a web browser, you can use the session PAM
-		// do not use for production sites!!
-		//register_pam_handler('pam_auth_session');
-		// user token can also be used for user authentication
-		register_pam_handler('pam_auth_usertoken');
-
-		// simple API key check
-		register_pam_handler('api_auth_key', "sufficient", "api");
-		// hmac
-		register_pam_handler('api_auth_hmac', "sufficient", "api");
-	}
-
-	// Get parameter variables
-	$method = get_input('method');
-	$version = get_input('api_version', _elgg_ws_registry()->getApiVersion());
-	
-	$result = _elgg_ws_registry()->get($method, $version)->execute();
-
-	if (!($result instanceof GenericResult)) {
-		throw new APIException(elgg_echo('APIException:ApiResultUnknown'));
-	}
-
-	// Output the result
-	echo elgg_view_page($method, elgg_view("api/output", array("result" => $result)));
 }
 
 /**

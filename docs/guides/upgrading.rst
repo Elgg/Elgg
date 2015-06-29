@@ -380,6 +380,10 @@ Removed Functions
  - ``verify_parameters()`` (web_services)
  - ``serialise_parameters()`` (web_services)
  - ``get_call_method()`` (web_services)
+ - ``elgg_ws_register_service_handler()`` (web_services)
+ - ``elgg_ws_unregister_service_handler()`` (web_services)
+ - ``ws_rest_handler()`` (web_services)
+ - ``service_handler()`` (web_services)
 
 Removed methods
 ---------------
@@ -465,6 +469,17 @@ You can verify what values are used on your site in one of the following ways:
  - by accessing web services ``system.api.list`` method, which lists all methods with the type of authentication they require
  - by dumping the output of ``list_all_apis()`` in PHP
 
+Service handlers were removed
+-----------------------------
+
+Services are now handled by the resource views. If you were using any of these functions:
+
+ - ``elgg_ws_register_service_handler()``
+ - ``elgg_ws_unregister_service_handler()``
+ - ``ws_rest_handler()``
+ - ``service_handler()``
+
+to handle service requests, you need to move your service handling logic to a corresponding resource view or use ``route, services`` hook to handle the output.
 
 From 1.10 to 1.11
 =================
