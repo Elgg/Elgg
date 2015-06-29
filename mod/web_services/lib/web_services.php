@@ -46,7 +46,7 @@ function authenticate_method($method) {
 
 /**
  * Executes a method.
- * A method is a function which has previously exposed using {@link elgg_ws_expose_function()}
+ * A method is a function which has previously been exposed using {@link elgg_ws_expose_function()}
  *
  * @see elgg_ws_expose_function()
  * @see _php_api_exception_handler()
@@ -146,11 +146,13 @@ function get_parameters_for_method($method) {
 		$default = elgg_extract('default', $spec);
 		$value = get_input($key, $default);
 
-		// Cast values to specified type
-		$type = elgg_extract('type', $spec);
-		if (!settype($value, $type)) {
-			$msg = elgg_echo('APIException:UnrecognisedTypeCast', array($type, $key, $method));
-			throw new APIException($msg);
+		if ($value !== null) {
+			// Cast values to specified type
+			$type = elgg_extract('type', $spec);
+			if (!settype($value, $type)) {
+				$msg = elgg_echo('APIException:UnrecognisedTypeCast', array($type, $key, $method));
+				throw new APIException($msg);
+			}
 		}
 
 		// Validate required values
@@ -215,10 +217,10 @@ function verify_parameters($method, $parameters) {
 
 		// Check that the variable is present in the request if required
 		if ($value['required'] && !array_key_exists($key, $parameters)) {
-						$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
-						throw new APIException($msg);
-					}
-				}
+			$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
+			throw new APIException($msg);
+			}
+		}
 
 	return true;
 }

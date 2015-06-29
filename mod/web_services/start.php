@@ -162,8 +162,8 @@ function elgg_ws_expose_function($method, callable $function, array $parameters 
 	foreach ($api_method['parameters'] as $key => $value) {
 		// Verify that method parameters are defined with an explicit type
 		if (empty($value['type'])) {
-			$msg = elgg_echo('APIException:InvalidParameter', array($key, $method));
-			throw new APIException($msg);
+			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
+			throw new InvalidParameterException($msg);
 		}
 
 		// If required flag is missing, parameter is assumed required
