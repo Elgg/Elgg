@@ -170,13 +170,13 @@
 .elgg-river-attachments .elgg-icon {
 	float: left;
 }
-.elgg-river-layout .elgg-river-selector,
-.elgg-river-layout .elgg-input-dropdown {
+.elgg-river-layout .elgg-river-selector {
 	float: right;
-	margin: 10px 0;
+	margin: 13px 0 18px;
 }
-.elgg-river-layout .elgg-input-dropdown {
+.elgg-river-selector select {
 	margin-left: 5px;
+	vertical-align: text-top;
 }
 
 .elgg-river-comments-tab {

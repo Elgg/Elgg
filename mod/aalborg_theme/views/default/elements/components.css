@@ -197,14 +197,13 @@
 }
 .elgg-river-layout .elgg-river-selector {
 	float: right;
-	margin: 13px 0;
+	margin: 13px 0 18px;
 }
-.elgg-river-layout .elgg-input-dropdown {
-	float: right;
-	margin: 10px 0 10px 5px;
+.elgg-river-selector select {
+	margin-left: 5px;
+	vertical-align: text-top;
 }
 
-<?php //@todo components.php ?>
 .elgg-river-comments {
 	position: relative;
 	margin: 20px 0 0 0;
@@ -230,7 +229,6 @@
 	font-size: 85%;
 }
 
-<?php //@todo location-dependent styles ?>
 .elgg-river-item form {
     border-color: #DCDCDC;
     border-style: solid;
