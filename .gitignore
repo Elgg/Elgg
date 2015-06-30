@@ -19,6 +19,7 @@ vendor
 !/mod/dashboard/
 !/mod/developers/
 !/mod/diagnostics/
+!/mod/discussions/
 !/mod/embed/
 !/mod/externalpages/
 !/mod/file/

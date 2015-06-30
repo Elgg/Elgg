@@ -53,7 +53,6 @@ return array(
 	'groups:widget:group_activity:content:noselect' => 'Edit this widget to select a group',
 
 	'groups:noaccess' => 'No access to group',
-	'groups:permissions:error' => 'You do not have the permissions for this',
 	'groups:ingroup' => 'in the group',
 	'groups:cantcreate' => 'You can not create a group. Only admins can.',
 	'groups:cantedit' => 'You can not edit this group',
@@ -82,30 +81,6 @@ return array(
 	'groups:search_in_group' => "Search in this group",
 	'groups:acl' => "Group: %s",
 
-	'discussion:topic:notify:summary' => 'New discussion topic called %s',
-	'discussion:topic:notify:subject' => 'New discussion topic: %s',
-	'discussion:topic:notify:body' =>
-'%s added a new discussion topic to the group %s:
-
-Title: %s
-
-%s
-
-View and reply to the discussion topic:
-%s
-',
-
-	'discussion:reply:notify:summary' => 'New reply in topic: %s',
-	'discussion:reply:notify:subject' => 'New reply in topic: %s',
-	'discussion:reply:notify:body' =>
-'%s replied to the discussion topic %s in the group %s:
-
-%s
-
-View and reply to the discussion:
-%s
-',
-
 	'groups:activity' => "Group activity",
 	'groups:enableactivity' => 'Enable group activity',
 	'groups:activity:none' => "There is no group activity yet",
@@ -116,11 +91,6 @@ View and reply to the discussion:
 	'groups:requests:none' => 'There are no current membership requests.',
 
 	'groups:invitations:none' => 'There are no current invitations.',
-
-	'item:object:groupforumtopic' => "Discussion topics",
-	'item:object:discussion_reply' => "Discussion replies",
-
-	'groupforumtopic:new' => "Add discussion post",
 
 	'groups:count' => "groups created",
 	'groups:open' => "open group",
@@ -147,70 +117,12 @@ View and reply to the discussion:
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Enable group discussion',
 	'groups:lastupdated' => 'Last updated %s by %s',
 	'groups:lastcomment' => 'Last comment %s by %s',
 
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Discussion',
-	'discussion:add' => 'Add discussion topic',
-	'discussion:latest' => 'Latest discussion',
-	'discussion:group' => 'Group discussion',
-	'discussion:none' => 'No discussion',
-	'discussion:reply:title' => 'Reply by %s',
-
-	'discussion:topic:created' => 'The discussion topic was created.',
-	'discussion:topic:updated' => 'The discussion topic was updated.',
-	'discussion:topic:deleted' => 'Discussion topic has been deleted.',
-
-	'discussion:topic:notfound' => 'Discussion topic not found',
-	'discussion:error:notsaved' => 'Unable to save this topic',
-	'discussion:error:missing' => 'Both title and message are required fields',
-	'discussion:error:permissions' => 'You do not have permissions to perform this action',
-	'discussion:error:notdeleted' => 'Could not delete the discussion topic',
-
-	'discussion:reply:edit' => 'Edit reply',
-	'discussion:reply:deleted' => 'Discussion reply has been deleted.',
-	'discussion:reply:error:notfound' => 'The discussion reply was not found',
-	'discussion:reply:error:notfound_fallback' => "Sorry, we could not find the specified reply, but we've forwarded you to the original discussion topic.",
-	'discussion:reply:error:notdeleted' => 'Could not delete the discussion reply',
-
-	'discussion:search:title' => 'Reply on topic: %s',
-	
 	'admin:groups' => 'Groups',
 
-	'reply:this' => 'Reply to this',
-
-	'group:replies' => 'Replies',
-	'groups:forum:created' => 'Created %s with %d comments',
-	'groups:forum:created:single' => 'Created %s with %d reply',
-	'groups:forum' => 'Discussion',
-	'groups:addtopic' => 'Add a topic',
-	'groups:forumlatest' => 'Latest discussion',
 	'groups:latestdiscussion' => 'Latest discussion',
-	'groupspost:success' => 'Your reply was succesfully posted',
-	'groupspost:failure' => 'There was problem while posting your reply',
-	'groups:alldiscussion' => 'Latest discussion',
-	'groups:edittopic' => 'Edit topic',
-	'groups:topicmessage' => 'Topic message',
-	'groups:topicstatus' => 'Topic status',
-	'groups:reply' => 'Post a comment',
-	'groups:topic' => 'Topic',
-	'groups:posts' => 'Posts',
-	'groups:lastperson' => 'Last person',
-	'groups:when' => 'When',
-	'grouptopic:notcreated' => 'No topics have been created.',
-	'groups:topicclosed' => 'Closed',
-	'grouptopic:created' => 'Your topic was created.',
-	'groups:topicsticky' => 'Sticky',
-	'groups:topicisclosed' => 'This discussion is closed.',
-	'groups:topiccloseddesc' => 'This discussion is closed and is not accepting new comments.',
-	'grouptopic:error' => 'Your group topic could not be created. Please try again or contact a system administrator.',
-	'groups:forumpost:edited' => "You have successfully edited the forum post.",
-	'groups:forumpost:error' => "There was a problem editing the forum post.",
-
 	'groups:privategroup' => 'This group is closed. Requesting membership.',
 	'groups:notitle' => 'Groups must have a title',
 	'groups:cantjoin' => 'Can not join group',
@@ -230,7 +142,6 @@ View and reply to the discussion:
 	'groups:usernotinvited' => 'User could not be invited.',
 	'groups:useralreadyinvited' => 'User has already been invited',
 	'groups:invite:subject' => "%s you have been invited to join %s!",
-	'groups:updated' => "Last reply by %s %s",
 	'groups:started' => "Started by %s",
 	'groups:joinrequest:remove:check' => 'Are you sure you want to remove this join request?',
 	'groups:invite:remove:check' => 'Are you sure you want to remove this invitation?',
@@ -264,9 +175,6 @@ or click below to view the group's join requests:
 
 	'river:create:group:default' => '%s created the group %s',
 	'river:join:group:default' => '%s joined the group %s',
-	'river:create:object:groupforumtopic' => '%s added a new discussion topic %s',
-	'river:reply:object:groupforumtopic' => '%s replied on the discussion topic %s',
-	'river:reply:view' => 'view reply',
 
 	'groups:nowidgets' => 'No widgets have been defined for this group.',
 
@@ -281,8 +189,6 @@ or click below to view the group's join requests:
 	'groups:widgets:entities:label:displaynum' => 'List the objects of a group.',
 	'groups:widgets:entities:label:pleaseedit' => 'Please configure this widget.',
 
-	'groups:forumtopic:edited' => 'Forum topic successfully edited.',
-
 	'groups:allowhiddengroups' => 'Do you want to allow private (invisible) groups?',
 	'groups:whocancreate' => 'Who can create new groups?',
 
@@ -293,13 +199,6 @@ or click below to view the group's join requests:
 	'group:notdeleted' => 'Group could not be deleted',
 
 	'group:notfound' => 'Could not find the group',
-	'grouppost:deleted' => 'Group posting successfully deleted',
-	'grouppost:notdeleted' => 'Group posting could not be deleted',
-	'groupstopic:deleted' => 'Topic deleted',
-	'groupstopic:notdeleted' => 'Topic not deleted',
-	'grouptopic:blank' => 'No topic',
-	'grouptopic:notfound' => 'Could not find the topic',
-	'grouppost:nopost' => 'Empty post',
 	'groups:deletewarning' => "Are you sure you want to delete this group? There is no undo!",
 
 	'groups:invitekilled' => 'The invite has been deleted.',
@@ -310,6 +209,5 @@ or click below to view the group's join requests:
 	/**
 	 * ecml
 	 */
-	'groups:ecml:discussion' => 'Group Discussions',
 	'groups:ecml:groupprofile' => 'Group profiles',
 );

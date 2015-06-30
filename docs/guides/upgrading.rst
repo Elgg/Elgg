@@ -131,12 +131,14 @@ We dropped support for and/or removed the following views:
  * navigation/topbar_tools
  * navigation/viewtype
  * notifications/subscriptions/groupsform
+ * object/groupforumtopic
  * output/calendar (Use output/date instead)
  * output/confirmlink (Use output/url instead)
  * page_elements/contentwrapper
  * page/elements/shortcut_icon (Use the 'head', 'page' plugin hook instead)
  * page/elements/wrapper
  * profile/icon (Use ``elgg_get_entity_icon``)
+ * river/object/groupforumtopic/create
  * settings/{plugin}/edit (Use plugins/{plugin}/settings instead)
  * user/search/finishblurb
  * user/search/startblurb
@@ -230,6 +232,18 @@ Creating a relationship triggers only one event
 -----------------------------------------------
 
 Entity relationship creation no longer fires the legacy "create" event using the relationship name as the type. E.g. Listening for the ``"create", "member"`` event will no longer capture group membership additions. Use the ``"create", "relationship"`` event.
+
+Discussion feature has been pulled from groups into its own plugin
+-------------------------------------------------------------------
+
+The ``object, groupforumtopic`` subtype has been replaced with the
+``object, discussion`` subtype. If your plugin is using or altering
+the old discussion feature, you should upgrade it to use the new
+subtype.
+
+Nothing changes from the group owners' point of view. The discussion
+feature is still available as a group tool and all old discussions
+are intact.
 
 Dropped login-over-https feature
 --------------------------------
