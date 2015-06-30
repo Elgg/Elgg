@@ -507,7 +507,11 @@ Removed Actions
 
  - ``widgets/upgrade``
 
+Removed Views
+-------------
 
+ - ``forms/admin/plugins/change_state``
+ 
 Removed View Variables
 ----------------------
 
