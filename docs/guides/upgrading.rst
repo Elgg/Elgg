@@ -437,6 +437,12 @@ Removed Plugin Hooks
 --------------------
 
  - ``[display, view]``: See the :ref:`new plugin hook<guides/views#altering-view-output>`.
+ 
+Removed Actions
+---------------
+
+ - ``widgets/upgrade``
+
 
 Removed View Variables
 ----------------------
