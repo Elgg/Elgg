@@ -2,12 +2,13 @@
 /engine/settings.php
 /.htaccess
 /mod/*
-composer.lock
-composer.phar
+/composer.lock
+/composer.phar
+/cache
 
 # Don't check in third party code
-node_modules
-vendor
+/node_modules
+/vendor
 
 # don't ignore bundled plugins
 !/mod/aalborg_theme/

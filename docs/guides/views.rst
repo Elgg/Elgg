@@ -73,10 +73,19 @@ Views as cacheable assets
 =========================
 
 As mentioned before, views can contain JS, CSS, or even images.
-Cacheable views *cannot* take any ``$vars`` parameters. They also must not change
-their output based on who is logged in, the time of day, etc. The simplest way
-to make sure your view meets the requirements for cacheable views is to just avoid
-using any PHP in them.
+
+Asset views must meet certain requirements:
+
+ * They *must not* take any ``$vars`` parameters
+ * They *must not* change their output based on global state like
+
+   * who is logged in
+   * the time of day
+
+ * They *must* contain a valid file extension
+ 
+   * Bad: ``my/cool/template``
+   * Good: ``my/cool/template.html``
 
 For example, suppose you wanted to load some CSS on a page.
 You could define a view ``mystyles.css``, which would look like so:
