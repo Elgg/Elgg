@@ -6,7 +6,7 @@
  * @subpackage UI
  */
 
-/* 
+/*
  * Colors:
  *  #4690D6 - elgg light blue
  *  #0054A7 - elgg dark blue
@@ -34,7 +34,7 @@ Skin CSS
  * forms          - forms, inputs
  * buttons        - action, cancel, delete, submit, dropdown, special
  * navigation     - menus, breadcrumbs, pagination
- * icons          - icons, sprites, graphics
+ * icons          - icons, graphics
  * modules        - modules, widgets
  * layout_objects - lists, content blocks, notifications, avatars
  * layout         - page layout

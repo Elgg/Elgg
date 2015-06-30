@@ -1301,41 +1301,39 @@ a.elgg-widget-collapsed:before {
 	ICONS
 *************************************** */
 .elgg-icon {
-	background: transparent url(<?= elgg_get_simplecache_url("admin_sprites.png"); ?>) no-repeat left;
+	color: #aaa;
+	font-size: 16px;
 	width: 16px;
 	height: 16px;
-	display: inline-block;
 	margin: 0 2px;
-	vertical-align: text-bottom;
 }
-.elgg-module .elgg-head .elgg-icon {
-	vertical-align: baseline;
+
+:focus > .elgg-icon,
+.elgg-icon:hover,
+.elgg-icon-hover {
+	color: #333;
 }
-.elgg-icon-delete:hover,
-.elgg-icon-delete-alt:hover {
-	background-position: 0 -0px;
+
+h1 > .elgg-icon,
+h2 > .elgg-icon,
+h3 > .elgg-icon,
+h4 > .elgg-icon,
+h5 > .elgg-icon,
+h6 > .elgg-icon {
+	font-size: 1em;
 }
-.elgg-icon-delete,
-.elgg-icon-delete-alt {
-	background-position: 0 -18px;
+
+.elgg-avatar > .elgg-icon-hover-menu {
+	display: none;
+	position: absolute;
+	right: 0;
+	bottom: 0;
+	margin: 0;
+	cursor: pointer;
 }
-.elgg-icon-drag-arrow:hover {
-	background-position: 0 -36px;
-}
-.elgg-icon-drag-arrow {
-	background-position: 0 -54px;
-}
-.elgg-icon-hover-menu:hover {
-	background-position: 0 -72px;
-}
-.elgg-icon-hover-menu {
-	background-position: 0 -90px;
-}
-.elgg-icon-settings-alt:hover {
-	background-position: 0 -108px;
-}
-.elgg-icon-settings-alt {
-	background-position: 0 -126px;
+.elgg-avatar > .elgg-icon-hover-menu:before {
+	position: absolute;
+	right: 2px;
 }
 
 .elgg-ajax-loader {
@@ -1370,47 +1368,6 @@ a.elgg-widget-collapsed:before {
 	
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 5px;
-	background-clip:  border;
-	background-size: 40px;
-}
-.elgg-avatar-medium > a > img {
-	width: 100px;
-	height: 100px;
-}
-.elgg-avatar-large > a > img {
-	width: 200px;
-	height: 200px;
-}
-.elgg-avatar > .elgg-icon-hover-menu {
-	display: none;
-	position: absolute;
-	right: 0;
-	bottom: 0;
-	margin: 0;
-	cursor: pointer;
-}
-.elgg-avatar {
-	position: relative;
-}
-.elgg-avatar > a > img {
-	display: block;
-}
-.elgg-avatar-tiny > a > img {
-	width: 25px;
-	height: 25px;
-
-	/* remove the border-radius if you don't want rounded avatars in supported browsers */
-	border-radius: 3px;
-	background-clip: border;
-	background-size: 25px;
-}
-.elgg-avatar-small > a > img {
-	width: 40px;
-	height: 40px;
-
-	/* remove the border-radius if you don't want rounded avatars in supported browsers */
-	border-radius: 5px;
-
 	background-clip:  border;
 	background-size: 40px;
 }

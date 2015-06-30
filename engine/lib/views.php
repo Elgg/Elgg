@@ -1313,7 +1313,7 @@ function elgg_view_list_item($item, array $vars = array()) {
 }
 
 /**
- * View one of the elgg sprite icons
+ * View one of the icons
  *
  * Shorthand for <span class="elgg-icon elgg-icon-$name"></span>
  *
@@ -1519,6 +1519,9 @@ function elgg_views_boot() {
 
 	elgg_register_js('elgg', elgg_get_simplecache_url('elgg.js'), 'head');
 	elgg_load_js('elgg');
+	
+	elgg_register_css('font-awesome', elgg_get_simplecache_url('font-awesome/css/font-awesome.css'));
+	elgg_load_css('font-awesome');
 
 	elgg_register_css('elgg', elgg_get_simplecache_url('elgg.css'));
 	elgg_load_css('elgg');
