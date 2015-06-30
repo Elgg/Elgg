@@ -43,10 +43,6 @@ foreach ($installed_plugins as $id => $plugin) {
 	}
 }
 
-$guids = array();
-foreach ($installed_plugins as $plugin) {
-	$guids[] = $plugin->getGUID();
-}
 
 asort($categories);
 
@@ -54,36 +50,35 @@ asort($categories);
 unset($categories['bundled']);
 unset($categories['nonbundled']);
 
-$common_categories = array(
+$common_categories = [
 	'all' => elgg_echo('admin:plugins:category:all'),
 	'active' => elgg_echo('admin:plugins:category:active'),
 	'inactive' => elgg_echo('admin:plugins:category:inactive'),
 	'bundled' => elgg_echo('admin:plugins:category:bundled'),
 	'nonbundled' => elgg_echo('admin:plugins:category:nonbundled'),
-);
+];
 
 $categories = array_merge($common_categories, $categories);
 
-$category_form = elgg_view("admin/plugins/filter", array(
-		'category' => "all",
-		'category_options' => $categories));
+$category_form = elgg_view("admin/plugins/filter", [
+	'category' => "all",
+	'category_options' => $categories
+]);
 
-$buttons = "<div class=\"clearfix float-alt mbm mlm\">";
-$buttons .= elgg_view_form('admin/plugins/change_state', array(
-	'action' => 'action/admin/plugins/activate_all',
-	'class' => 'float',
-), array(
-	'guids' => $guids,
-	'action' => 'activate',
-));
-$buttons .= elgg_view_form('admin/plugins/change_state', array(
-	'action' => 'action/admin/plugins/deactivate_all',
-	'class' => 'float',
-), array(
-	'guids' => $guids,
-	'action' => 'deactivate',
-));
-$buttons .= "</div>";
+$activate_all = elgg_view('output/url', [
+	'href' => 'action/admin/plugins/activate_all',
+	'text' => elgg_echo('admin:plugins:activate_all'),
+	'class' => 'elgg-button elgg-button-submit',
+	'confirm' => true
+]);
+$deactivate_all = elgg_view('output/url', [
+	'href' => 'action/admin/plugins/deactivate_all',
+	'text' => elgg_echo('admin:plugins:deactivate_all'),
+	'class' => 'elgg-button elgg-button-submit',
+	'confirm' => true
+]);
+
+$buttons = elgg_format_element('div', ['class' => 'float-alt'], $activate_all . $deactivate_all);
 
 echo elgg_format_element('div', ['class' => 'mbm'], $buttons . $category_form);
 
