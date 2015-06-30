@@ -12,7 +12,7 @@ if (!elgg_is_xhr()) {
 foreach ($vars['data'] as $name => $info) {
 	$label = $info['readonly'] ? '<label class="elgg-state-disabled">' : '<label>';
 	$class = $info['readonly'] ? 'elgg-state-disabled' : '';
-	$echo_vars = ($name === 'show_gear') ? ['<span class="elgg-icon-settings-alt elgg-icon"></span>'] : [];
+	$echo_vars = ($name === 'show_gear') ? [elgg_view_icon('settings-alt')] : [];
 
 	echo '<div>';
 	if ($info['type'] == 'checkbox') {
