@@ -11,7 +11,6 @@ _elgg_admin_add_plugin_settings_menu();
 elgg_unregister_css('elgg');
 elgg_load_js('elgg.admin');
 elgg_load_js('jquery.jeditable');
-elgg_load_library('elgg:markdown');
 
 $error = false;
 if (!$plugin) {
@@ -42,7 +41,9 @@ if ($error) {
 }
 
 $title = $plugin->getManifest()->getName() . ": $filename";
-$text = Markdown($file_contents);
+
+use \Michelf\MarkdownExtra;
+$text = MarkdownExtra::defaultTransform($file_contents);
 
 $body = elgg_view_layout('admin', array(
 	// setting classes here because there's no way to pass classes

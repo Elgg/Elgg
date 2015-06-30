@@ -31,7 +31,8 @@
         "bower-asset/jquery-imgareaselect": "^0.9.0",
         "bower-asset/jquery-ui-extensions": "dev-master",
         "bower-asset/jquery-jeditable": "^1.7.3",
-        "FortAwesome/Font-Awesome": "^4.3"
+        "FortAwesome/Font-Awesome": "^4.3",
+        "michelf/php-markdown": "^1.5.0"
     },
     "repositories": [
         {

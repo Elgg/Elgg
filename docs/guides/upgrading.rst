@@ -471,6 +471,11 @@ Also several workarounds for very old views are no longer performed. Make these 
  - Set ``$vars['name']`` instead of ``$vars['internalname']``.
  - Set ``$vars['id']`` instead of ``$vars['internalid']``.
 
+Removed libraries
+-----------------
+
+ - ``elgg:markdown``: Elgg no longer provides a markdown implementation. You must provide your own.
+
 Specifying View via Properties
 ------------------------------
 
