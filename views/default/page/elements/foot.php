@@ -1,6 +1,6 @@
 <?php
 
-$elgg_init = elgg_view('js/initialize_elgg');
+$elgg_init = elgg_view('initialize_elgg.js');
 echo "<script>$elgg_init</script>";
 
 // TODO(evan): "head" JS and "footer" JS distinction doesn't make sense anymore
