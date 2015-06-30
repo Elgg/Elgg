@@ -62,6 +62,7 @@ function developers_process_settings() {
 		elgg_load_js('lightbox');
 		elgg_load_css('lightbox');
 		elgg_register_ajax_view('developers/gear_popup');
+		elgg_register_simplecache_view('elgg/dev/gear.html');
 
 		// TODO use ::class in 2.0
 		$handler = ['Elgg\DevelopersPlugin\Hooks', 'alterMenuSectionVars'];

@@ -5,8 +5,9 @@ define(function (require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
 	var spinner = require('elgg/spinner');
+	var gear_html = require('text!elgg/dev/gear.html');
 
-	$('<div class="developers-gear"><span class="elgg-icon-settings-alt elgg-icon"></span></div>')
+	$(gear_html)
 		.appendTo('body')
 		.find('.elgg-icon')
 		.prop('title', elgg.echo('admin:developers:settings'))
