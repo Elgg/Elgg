@@ -157,8 +157,10 @@ class SimpleCache {
 	 * @return bool
 	 */
 	function invalidate() {
-		mkdir("{$this->CONFIG->dataroot}views_simplecache");
-	
+		$cache_dir = "{$this->CONFIG->dataroot}views_simplecache";
+		mkdir($cache_dir);
+		_elgg_rmdir($cache_dir, true);
+
 		$time = time();
 		_elgg_services()->datalist->set("simplecache_lastupdate", $time);
 		$this->CONFIG->lastcache = $time;

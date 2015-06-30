@@ -166,11 +166,13 @@ function elgg_disable_simplecache() {
  * 
  * TODO(ewinslow): Move to filesystem package
  *
- * @param string $dir
+ * @param string $dir   The directory
+ * @param bool   $empty If true, we just empty the directory
+ *
  * @return boolean Whether the dir was successfully deleted.
  * @access private
  */
-function _elgg_rmdir($dir) {
+function _elgg_rmdir($dir, $empty = false) {
 	$files = array_diff(scandir($dir), array('.', '..'));
 	
 	foreach ($files as $file) {
@@ -179,6 +181,10 @@ function _elgg_rmdir($dir) {
 		} else {
 			unlink("$dir/$file");
 		}
+	}
+
+	if ($empty) {
+		return true;
 	}
 	
 	return rmdir($dir);
