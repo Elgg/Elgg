@@ -29,6 +29,11 @@ class CacheHandler {
 		'tiff' => "image/tiff",
 		'webp' => "image/webp",
 		'xml' => "text/xml",
+		'eot' => "application/vnd.ms-fontobject",
+		'ttf' => "application/font-ttf",
+		'woff' => "application/font-woff",
+		'woff2' => "application/font-woff2",
+		'otf' => "application/font-otf",
 	];
 
 	/** @var Application */
@@ -229,7 +234,7 @@ class CacheHandler {
 	 * Get the content type
 	 *
 	 * @param string $view The view name
-	 * 
+	 *
 	 * @return string|null
 	 */
 	protected function getContentType($view) {
@@ -244,7 +249,7 @@ class CacheHandler {
 	
 	/**
 	 * Returns the type of output expected from the view.
-	 * 
+	 *
 	 *  - view/name.extension returns "extension" if "extension" is valid
 	 *  - css/view return "css"
 	 *  - js/view return "js"
