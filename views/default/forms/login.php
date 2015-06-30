@@ -9,16 +9,23 @@
 
 <div>
 	<label><?php echo elgg_echo('loginusername'); ?>
-		<?php echo elgg_view('input/text', array(
-			'name' => 'username',
-			'autofocus' => true,
+		<?php
+			echo elgg_view('input/text', array(
+				'name' => 'username',
+				'autofocus' => true,
+				'required' => true
 			));
 		?>
 	</label>
 </div>
 <div>
 	<label><?php echo elgg_echo('password'); ?>
-		<?php echo elgg_view('input/password', array('name' => 'password')); ?>
+		<?php
+			echo elgg_view('input/password', array(
+				'name' => 'password',
+				'required' => true
+			));
+		?>
 	</label>
 </div>
 
@@ -30,15 +37,13 @@
 		<?php echo elgg_echo('user:persistent'); ?>
 	</label>
 	
-	<?php echo elgg_view('input/submit', array('value' => elgg_echo('login'))); ?>
+	<?php
+	echo elgg_view('input/submit', array('value' => elgg_echo('login')));
 	
-	<?php 
 	if (isset($vars['returntoreferer'])) {
 		echo elgg_view('input/hidden', array('name' => 'returntoreferer', 'value' => 'true'));
 	}
-	?>
 
-	<?php
 	echo elgg_view_menu('login', array(
 		'sort_by' => 'priority',
 		'class' => 'elgg-menu-general elgg-menu-hz mtm',
