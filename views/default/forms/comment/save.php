@@ -59,6 +59,7 @@ if ($inline) {
 	$comment_input = elgg_view('input/text', array(
 		'name' => 'generic_comment',
 		'value' => $comment_text,
+		'required' => true
 	));
 
 	echo $comment_input . $entity_guid_input . $comment_guid_input . $submit_input;
@@ -67,6 +68,7 @@ if ($inline) {
 	$comment_input = elgg_view('input/longtext', array(
 		'name' => 'generic_comment',
 		'value' => $comment_text,
+		'required' => true
 	));
 
 	$is_edit_page_input = elgg_view('input/hidden', array(

@@ -26,6 +26,7 @@ $name = elgg_extract('name', $values, get_input('n'));
 		'name' => 'name',
 		'value' => $name,
 		'autofocus' => true,
+		'required' => true
 	));
 	?>
 </div>
@@ -35,6 +36,7 @@ $name = elgg_extract('name', $values, get_input('n'));
 	echo elgg_view('input/text', array(
 		'name' => 'email',
 		'value' => $email,
+		'required' => true
 	));
 	?>
 </div>
@@ -44,6 +46,7 @@ $name = elgg_extract('name', $values, get_input('n'));
 	echo elgg_view('input/text', array(
 		'name' => 'username',
 		'value' => $username,
+		'required' => true
 	));
 	?>
 </div>
@@ -53,6 +56,7 @@ $name = elgg_extract('name', $values, get_input('n'));
 	echo elgg_view('input/password', array(
 		'name' => 'password',
 		'value' => $password,
+		'required' => true
 	));
 	?>
 </div>
@@ -62,6 +66,7 @@ $name = elgg_extract('name', $values, get_input('n'));
 	echo elgg_view('input/password', array(
 		'name' => 'password2',
 		'value' => $password2,
+		'required' => true
 	));
 	?>
 </div>
