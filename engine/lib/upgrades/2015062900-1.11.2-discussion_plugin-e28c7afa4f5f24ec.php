@@ -33,6 +33,6 @@ if (elgg_is_active_plugin('groups')) {
 	// found with elgg_get_plugin_from_id().
 	_elgg_generate_plugin_entities();
 
-	$plugin = elgg_get_plugin_from_id('discussion');
+	$plugin = elgg_get_plugin_from_id('discussions');
 	$plugin->activate();
 }
