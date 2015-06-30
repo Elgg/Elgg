@@ -94,18 +94,18 @@ class CacheHandler {
 			if (!\_elgg_is_view_cacheable($view)) {
 				$this->send403("Requested view is not an asset");
 			} else {
-				echo $this->renderView($view, $viewtype);
+				$content = $this->renderView($view, $viewtype);
+				$etag = '"' . md5($content) . '"';
+				$this->sendRevalidateHeaders($etag);
+				$this->handle304($etag);
+
+				echo $content;
 			}
 			exit;
 		}
 
 		$etag = "\"$ts\"";
-		// If is the same ETag, content didn't change.
-		if (isset($this->server_vars['HTTP_IF_NONE_MATCH'])
-				&& trim($this->server_vars['HTTP_IF_NONE_MATCH']) === $etag) {
-			header("HTTP/1.1 304 Not Modified");
-			exit;
-		}
+		$this->handle304($etag);
 
 		$this->application->bootCore();
 
@@ -228,6 +228,34 @@ class CacheHandler {
 		header("Pragma: public", true);
 		header("Cache-Control: public", true);
 		header("ETag: $etag");
+	}
+
+	/**
+	 * Send revalidate cache headers
+	 *
+	 * @param string $etag ETag value
+	 * @return void
+	 */
+	protected function sendRevalidateHeaders($etag) {
+		header_remove('Expires');
+		header("Pragma: public", true);
+		header("Cache-Control: public, max-age=0, must-revalidate", true);
+		header("ETag: $etag");
+	}
+
+	/**
+	 * Send a 304 and exit() if the ETag matches the request
+	 *
+	 * @param string $etag ETag value
+	 * @return void
+	 */
+	protected function handle304($etag) {
+		// If is the same ETag, content didn't change.
+		if (isset($this->server_vars['HTTP_IF_NONE_MATCH'])
+			&& trim($this->server_vars['HTTP_IF_NONE_MATCH']) === $etag) {
+			header("HTTP/1.1 304 Not Modified");
+			exit;
+		}
 	}
 
 	/**
