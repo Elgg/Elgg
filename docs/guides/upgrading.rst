@@ -308,6 +308,7 @@ Removed Classes
 ---------------
 
  - ``ElggInspector``
+ - ``Notable``
  - ``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)
 
 Removed keys available via ``elgg_get_config()``
@@ -396,9 +397,16 @@ Removed methods
  - ``ElggEntity::setIcon()``
  - ``ElggExtender::getOwner()``
  - ``ElggFileCache::create_file()``
+ - ``ElggObject::addToSite()``: parent function in ElggEntity still available
+ - ``ElggObject::getSites()``: parent function in ElggEntity still available
  - ``ElggSite::getCollections()``
+ - ``ElggUser::addToSite()``: parent function in ElggEntity still available
  - ``ElggUser::getCollections()``
  - ``ElggUser::getOwner()``
+ - ``ElggUser::getSites()``: parent function in ElggEntity still available
+ - ``ElggUser::listFriends()``
+ - ``ElggUser::listGroups()``
+ - ``ElggUser::removeFromSite()``: parent function in ElggEntity still available
 
 The following arguments have also been dropped:
 

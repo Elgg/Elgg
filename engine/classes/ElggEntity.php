@@ -39,7 +39,6 @@
  * @property       string $location       A location of the entity
  */
 abstract class ElggEntity extends \ElggData implements
-	Notable,   // Calendar interface (deprecated 1.9)
 	Locatable, // Geocoding interface
 	Importable // Allow import of data (deprecated 1.9)
 {
@@ -75,14 +74,14 @@ abstract class ElggEntity extends \ElggData implements
 	
 	/**
 	 * Tells how many tables are going to need to be searched in order to fully populate this object
-	 * 
+	 *
 	 * @var int
 	 */
 	protected $tables_split;
 	
 	/**
 	 * Tells how many tables describing object have been loaded thus far
-	 * 
+	 *
 	 * @var int
 	 */
 	protected $tables_loaded;
@@ -178,12 +177,12 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Set an attribute or metadata value for this entity
-	 * 
+	 *
 	 * Anything that is not an attribute is saved as metadata.
-	 * 
-	 * @warning Metadata set this way will inherit the entity's owner and 
+	 *
+	 * @warning Metadata set this way will inherit the entity's owner and
 	 * access ID. If you want more control over metadata, use \ElggEntity::setMetadata()
-	 * 
+	 *
 	 * @param string $name  Name of the attribute or metadata
 	 * @param mixed  $value The value to be set
 	 * @return void
@@ -234,13 +233,13 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Get an attribute or metadata value
-	 * 
+	 *
 	 * If the name matches an attribute, the attribute is returned. If metadata
 	 * does not exist with that name, a null is returned.
 	 *
 	 * This only returns an array if there are multiple values for a particular
 	 * $name key.
-	 * 
+	 *
 	 * @param string $name Name of the attribute or metadata
 	 * @return mixed
 	 */
@@ -270,14 +269,14 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Get the entity's display name
-	 * 
+	 *
 	 * @return string The title or name of this entity.
 	 */
 	abstract public function getDisplayName();
 
 	/**
 	 * Sets the title or name of this entity.
-	 * 
+	 *
 	 * @param string $displayName The title or name of this entity.
 	 * @return void
 	 */
@@ -1053,7 +1052,7 @@ abstract class ElggEntity extends \ElggData implements
 			_elgg_services()->logger->warning($message);
 			
 			return false;
-		}		
+		}
 		
 		$return = $this->canEdit($user_guid);
 
@@ -1353,7 +1352,7 @@ abstract class ElggEntity extends \ElggData implements
 	public function getIconURL($params = array()) {
 		if (is_array($params)) {
 			$size = elgg_extract('size', $params, 'medium');
-		} else {	
+		} else {
 			$size = is_string($params) ? $params : 'medium';
 			$params = array();
 		}
@@ -1705,7 +1704,7 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Stores non-attributes from the loading of the entity as volatile data
-	 * 
+	 *
 	 * @param array $data Key value array
 	 * @return void
 	 */
@@ -1722,7 +1721,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @internal This is used when the same entity is selected twice during a
 	 * request in case different select clauses were used to load different data
 	 * into volatile data.
-	 * 
+	 *
 	 * @param \stdClass $row DB row with new entity data
 	 * @return bool
 	 * @access private
@@ -1910,7 +1909,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 		
 		// first check if we can delete this entity
-		// NOTE: in Elgg <= 1.10.3 this was after the delete event, 
+		// NOTE: in Elgg <= 1.10.3 this was after the delete event,
 		// which could potentially remove some content if the user didn't have access
 		if (!$this->canDelete()) {
 			return false;
@@ -2025,7 +2024,7 @@ abstract class ElggEntity extends \ElggData implements
 
 	/**
 	 * Prepare an object copy for toObject()
-	 * 
+	 *
 	 * @param \stdClass $object Object representation of the entity
 	 * @return \stdClass
 	 */
@@ -2099,62 +2098,6 @@ abstract class ElggEntity extends \ElggData implements
 	 */
 	public function getLongitude() {
 		return (float)$this->{"geo:long"};
-	}
-
-	/*
-	 * NOTABLE INTERFACE
-	 */
-
-	/**
-	 * Set the time and duration of an object
-	 *
-	 * @param int $hour     If ommitted, now is assumed.
-	 * @param int $minute   If ommitted, now is assumed.
-	 * @param int $second   If ommitted, now is assumed.
-	 * @param int $day      If ommitted, now is assumed.
-	 * @param int $month    If ommitted, now is assumed.
-	 * @param int $year     If ommitted, now is assumed.
-	 * @param int $duration Duration of event, remainder of the day is assumed.
-	 *
-	 * @return true
-	 * @deprecated 1.9
-	 */
-	public function setCalendarTimeAndDuration($hour = null, $minute = null, $second = null,
-	$day = null, $month = null, $year = null, $duration = null) {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
-
-		$start = mktime($hour, $minute, $second, $month, $day, $year);
-		$end = $start + abs($duration);
-		if (!$duration) {
-			$end = get_day_end($day, $month, $year);
-		}
-
-		$this->calendar_start = $start;
-		$this->calendar_end = $end;
-
-		return true;
-	}
-
-	/**
-	 * Returns the start timestamp.
-	 *
-	 * @return int
-	 * @deprecated 1.9
-	 */
-	public function getCalendarStartTime() {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
-		return (int)$this->calendar_start;
-	}
-
-	/**
-	 * Returns the end timestamp.
-	 * 
-	 * @return int
-	 * @deprecated 1.9
-	 */
-	public function getCalendarEndTime() {
-		elgg_deprecated_notice(__METHOD__ . ' has been deprecated', 1.9);
-		return (int)$this->calendar_end;
 	}
 
 	/*
@@ -2395,7 +2338,7 @@ abstract class ElggEntity extends \ElggData implements
 	
 	/**
 	 * Remove all access collections owned by this entity
-	 * 
+	 *
 	 * @return bool
 	 * @since 1.11
 	 */
