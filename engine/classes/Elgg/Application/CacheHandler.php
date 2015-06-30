@@ -107,6 +107,15 @@ class CacheHandler {
 		$etag = "\"$ts\"";
 		$this->handle304($etag);
 
+		// trust the client but check for an existing cache file
+		$filename = $config->getVolatile('dataroot') . "views_simplecache/$ts/$viewtype/$view";
+		if (file_exists($filename)) {
+			$this->sendCacheHeaders($etag);
+			readfile($filename);
+			exit;
+		}
+
+		// the hard way
 		$this->application->bootCore();
 
 		elgg_set_viewtype($viewtype);
@@ -117,11 +126,6 @@ class CacheHandler {
 		$lastcache = (int)$config->get('lastcache');
 
 		$filename = $config->getVolatile('dataroot') . "views_simplecache/$lastcache/$viewtype/$view";
-		if (file_exists($filename)) {
-			$this->sendCacheHeaders($etag);
-			readfile($filename);
-			exit;
-		}
 
 		if ($lastcache == $ts) {
 			$this->sendCacheHeaders($etag);
