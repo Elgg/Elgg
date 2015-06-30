@@ -439,6 +439,18 @@ The metadata ``$entity->view`` no longer specifies the view used to render in ``
 
 Similarly the property ``$annotation->view`` no longer has an effect within ``elgg_view_annotation()``.
 
+
+API authentication for web services is required by default
+----------------------------------------------------------
+
+All exposed methods that do not explicitly set API auth requirement to false, will require API authentication.
+
+You can verify what values are used on your site in one of the following ways:
+
+ - by checking every instance of ``elgg_ws_expose_function()`` (``$require_api_auth`` is the 6th argument accepted by the function)
+ - by accessing web services ``system.api.list`` method, which lists all methods with the type of authentication they require
+ - by dumping the output of ``list_all_apis()`` in PHP
+
 From 1.10 to 1.11
 =================
 
