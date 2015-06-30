@@ -36,7 +36,7 @@
 
 elgg.provide('elgg.ui.lightbox');
 
-<?php echo elgg_view('js/lightbox/settings'); ?>
+<?php echo elgg_view('lightbox/settings.js'); ?>
 
 /**
  * Lightbox initialization
