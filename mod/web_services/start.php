@@ -126,7 +126,7 @@ $ERRORS = array();
  * @param string $description       (optional) human readable description of the function.
  * @param string $call_method       (optional) Define what http method must be used for
  *                                  this function. Default: GET
- * @param bool   $require_api_auth  (optional) (default is false) Does this method
+ * @param bool   $require_api_auth  (optional) (default is true) Does this method
  *                                  require API authorization? (example: API key)
  * @param bool   $require_user_auth (optional) (default is false) Does this method
  *                                  require user authorization?
@@ -135,7 +135,7 @@ $ERRORS = array();
  * @throws InvalidParameterException
  */
 function elgg_ws_expose_function($method, $function, array $parameters = NULL, $description = "",
-		$call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
+		$call_method = "GET", $require_api_auth = true, $require_user_auth = false) {
 
 	global $API_METHODS;
 
