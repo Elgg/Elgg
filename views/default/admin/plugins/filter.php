@@ -10,8 +10,7 @@ if (empty($categories)) {
 	return;
 }
 
-$body = '<ul class="elgg-admin-plugins-categories elgg-admin-sidebar-menu elgg-menu-hz">';
-
+$list_items = '';
 foreach ($categories as $key => $category) {
 	if (empty($key)) {
 		continue;
@@ -24,8 +23,9 @@ foreach ($categories as $key => $category) {
 		'rel' => $key
 	));
 
-	$body .= elgg_format_element('li', array(), $link);
+	$list_items .= elgg_format_element('li', array(), $link);
 }
-$body .= '</ul>';
+
+$body = elgg_format_element('ul', ['class' => 'elgg-admin-plugins-categories elgg-admin-sidebar-menu elgg-menu-hz'], $list_items);
 
 echo elgg_view_module('', elgg_echo('filter'), $body);

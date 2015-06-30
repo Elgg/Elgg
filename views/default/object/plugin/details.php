@@ -50,8 +50,8 @@ if ($screenshots) {
 		));
 	}
 	
-	$screenshots_menu = "<ul>" . $screenshots_menu . "</ul>";
-	$screenshots_body = "<div>" . $screenshots_body . "</div>";
+	$screenshots_menu = elgg_format_element('ul', [], $screenshots_menu);
+	$screenshots_body = elgg_format_element('div', [], $screenshots_body);
 }
 
 // table contents
@@ -99,15 +99,15 @@ $categories = implode(', ', $categories);
 $info[elgg_echo('admin:plugins:label:categories')] = implode(', ', $categories);
 
 // assemble table
-$info_html = "<table class='elgg-table'>";
+$rows = '';
 foreach ($info as $name => $value) {
 	if (trim($value) === '') {
 		continue;
 	}
-	$info_html .= "<tr><th>$name</th><td>$value</td></tr>";
+	$rows .= "<tr><th>$name</th><td>$value</td></tr>";
 }
 
-$info_html .= "</table>";
+$info_html = elgg_format_element('table', ['class' => 'elgg-table'], $rows);
 
 $extra_info = elgg_echo("admin:plugins:info:" . $plugin->getID());
 if ($extra_info !== ("admin:plugins:info:" . $plugin->getID())) {
@@ -120,7 +120,7 @@ $resources = array(
 	'donate' => $plugin->getManifest()->getDonationsPageURL(),
 );
 
-$resources_html = "";
+$resources_html = '';
 foreach ($resources as $id => $href) {
 	if ($href) {
 		$resources_html .= "<li>";
@@ -134,7 +134,7 @@ foreach ($resources as $id => $href) {
 }
 
 if (!empty($resources_html)) {
-	$resources_html = "<ul>" . $resources_html . "</ul>";
+	$resources_html = elgg_format_element('ul', [], $resources_html);
 }
 
 // show links to text files

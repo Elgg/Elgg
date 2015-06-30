@@ -85,16 +85,7 @@ $buttons .= elgg_view_form('admin/plugins/change_state', array(
 ));
 $buttons .= "</div>";
 
-$buttons .= $category_form;
-
-// construct page header
-?>
-<div id="content_header" class="mbm">
-	<div class="content-header-options"><?php echo $buttons ?></div>
-</div>
-
-<div id="elgg-plugin-list">
-<?php
+echo elgg_format_element('div', ['class' => 'mbm'], $buttons . $category_form);
 
 $options = array(
 	'limit' => 0,
@@ -104,7 +95,4 @@ $options = array(
 	'display_reordering' => true
 );
 
-echo elgg_view_entity_list($installed_plugins, $options);
-
-?>
-</div>
+echo elgg_format_element('div', ['id' => 'elgg-plugin-list'] , elgg_view_entity_list($installed_plugins, $options));
