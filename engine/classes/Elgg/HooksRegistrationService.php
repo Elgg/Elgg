@@ -3,11 +3,11 @@ namespace Elgg;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Use the elgg_* versions instead.
- * 
+ *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Hooks
  * @since      1.9.0
@@ -110,6 +110,19 @@ abstract class HooksRegistrationService {
 
 		return false;
 	}
+	
+	/**
+	 * Clears all handlers for a specific hook
+	 *
+	 * @param string   $name
+	 * @param string   $type
+	 *
+	 * @return void
+	 * @access private
+	 */
+	public function clearHandlers($name, $type) {
+		unset($this->registrations[$name][$type]);
+	}
 
 	/**
 	 * Returns all registered handlers as array(
@@ -121,7 +134,7 @@ abstract class HooksRegistrationService {
 	 *         )
 	 *     )
 	 * )
-	 * 
+	 *
 	 * @access private
 	 * @return array
 	 */
@@ -142,7 +155,7 @@ abstract class HooksRegistrationService {
 
 	/**
 	 * Does the hook have a handler?
-	 * 
+	 *
 	 * @param string $name The name of the hook
 	 * @param string $type The type of the hook
 	 * @return boolean
