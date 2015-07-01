@@ -114,5 +114,4 @@ elgg.ui.lightbox.close = function() {
 
 elgg.register_hook_handler('init', 'system', elgg.ui.lightbox.init);
 
-<?php
-readfile(__DIR__ . "/../../../../../bower-asset/jquery-colorbox/jquery.colorbox-min.js");
+<?= elgg_view('jquery.colorbox.js'); ?>
