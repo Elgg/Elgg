@@ -319,12 +319,17 @@ class Application {
 	}
 	
 	/**
-	 * Creates a new, trivial instance of Elgg\Application. 
+	 * Creates a new, trivial instance of Elgg\Application and set it as the singleton instance.
+	 * If the singleton is already set, it's returned.
 	 * 
 	 * @return self
 	 */
 	private static function create() {
-		return new self(new Di\ServiceProvider(new Config()));
+		if (self::$_instance === null) {
+			self::$_instance = new self(new Di\ServiceProvider(new Config()));
+		}
+
+		return self::$_instance;
 	}
 	
 	/**
@@ -380,6 +385,31 @@ class Application {
 		if (!$this->services->router->route($this->services->request)) {
 			forward('', '404');
 		}
+	}
+
+	/**
+	 * Determine the Elgg data directory with trailing slash, save it to config, and return it
+	 *
+	 * @todo Consider a better place for this logic? We need it before boot
+	 *
+	 * @return string
+	 * @throws \InstallationException
+	 */
+	public static function getDataPath() {
+		$app = self::create();
+		$app->services->config->loadSettingsFile();
+
+		if ($GLOBALS['_ELGG']->dataroot_in_settings) {
+			return $app->services->config->getVolatile('dataroot');
+		}
+
+		$dataroot = $app->services->datalist->get('dataroot');
+		if (!$dataroot) {
+			throw new \InstallationException('The datalists table lacks a value for "dataroot".');
+		}
+		$dataroot = rtrim($dataroot, '/\\') . DIRECTORY_SEPARATOR;
+		$app->services->config->set('dataroot', $dataroot);
+		return $dataroot;
 	}
 	
 	/**

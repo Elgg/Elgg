@@ -32,56 +32,25 @@ if (!empty($_GET['size'])) {
 
 require_once __DIR__ . '/../../vendor/autoload.php';
 
-$app = new \Elgg\Application();
-$app->loadSettings();
+$data_root = \Elgg\Application::getDataPath();
+$locator = new \Elgg\EntityDirLocator($guid);
+$user_path = $data_root . $locator->getPath();
 
-$data_root = call_user_func(function () use ($app) {
-	// TODO(evan): Remove use of global $CONFIG
-	global $CONFIG;
-	if (isset($CONFIG->dataroot)) {
-		return $CONFIG->dataroot;
-	}
+$filename = $user_path . "profile/{$guid}{$size}.jpg";
+$filesize = @filesize($filename);
 
-	// must get from DB
-	$db = $app->getDb();
-
-	try {
-		$row = $db->getDataRow("
-			SELECT `value`
-			FROM {$db->getTablePrefix()}datalists
-			WHERE `name` = 'dataroot'
-		");
-		if (!$row) {
-			return "";
-		}
-	} catch (\DatabaseException $e) {
-		// we're going to let the engine figure out what's happening...
-		return '';
-	}
-
-	return rtrim($row->value, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
-});
-
-if ($data_root) {
-	$locator = new \Elgg\EntityDirLocator($guid);
-	$user_path = $data_root . $locator->getPath();
-
-	$filename = $user_path . "profile/{$guid}{$size}.jpg";
-	$filesize = @filesize($filename);
-
-	if ($filesize) {
-		header("Content-type: image/jpeg");
-		header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
-		header("Pragma: public");
-		header("Cache-Control: public");
-		header("Content-Length: $filesize");
-		header("ETag: \"$etag\"");
-		readfile($filename);
-		exit;
-	}
+if ($filesize) {
+	header("Content-type: image/jpeg");
+	header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+6 months")), true);
+	header("Pragma: public");
+	header("Cache-Control: public");
+	header("Content-Length: $filesize");
+	header("ETag: \"$etag\"");
+	readfile($filename);
+	exit;
 }
 
 // something went wrong so load engine and try to forward to default icon
-$app->bootCore();
+\Elgg\Application::start();
 elgg_log("Profile icon direct failed.", "WARNING");
 forward(elgg_get_simplecache_url("icons/user/default{$size}.gif"));
