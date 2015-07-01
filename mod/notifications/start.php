@@ -27,7 +27,7 @@ function notifications_plugin_init() {
 	elgg_register_event_handler('create', 'friend', 'notifications_update_friend_notify');
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'notifications_update_collection_notify');
 
-	$actions_base = elgg_get_plugins_path() . 'notifications/actions';
+	$actions_base = __DIR__ . '/actions';
 	elgg_register_action("notificationsettings/save", "$actions_base/save.php");
 	elgg_register_action("notificationsettings/groupsave", "$actions_base/groupsave.php");
 }

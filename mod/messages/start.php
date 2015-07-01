@@ -12,7 +12,7 @@ elgg_register_event_handler('init', 'system', 'messages_init');
 function messages_init() {
 
 	// register a library of helper functions
-	elgg_register_library('elgg:messages', elgg_get_plugins_path() . 'messages/lib/messages.php');
+	elgg_register_library('elgg:messages', __DIR__ . '/lib/messages.php');
 
 	// add page menu items
 	if (elgg_is_logged_in()) {
@@ -58,7 +58,7 @@ function messages_init() {
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'messages_can_edit_container');
 
 	// Register actions
-	$action_path = elgg_get_plugins_path() . 'messages/actions/messages';
+	$action_path = __DIR__ . '/actions/messages';
 	elgg_register_action("messages/send", "$action_path/send.php");
 	elgg_register_action("messages/delete", "$action_path/delete.php");
 	elgg_register_action("messages/process", "$action_path/process.php");

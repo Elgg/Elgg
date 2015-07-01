@@ -6,7 +6,7 @@
 elgg_register_event_handler('init', 'system', 'ws_init');
 
 function ws_init() {
-	$lib_dir = elgg_get_plugins_path() . "web_services/lib";
+	$lib_dir = __DIR__ . "/lib";
 	elgg_register_library('elgg:ws', "$lib_dir/web_services.php");
 	elgg_register_library('elgg:ws:api_user', "$lib_dir/api_user.php");
 	elgg_register_library('elgg:ws:client', "$lib_dir/client.php");

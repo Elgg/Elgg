@@ -205,7 +205,7 @@ Also see a related guide about :doc:`/guides/actions`.
 
     <?php
     
-    elgg_register_action("my_blog/save", elgg_get_plugins_path() . "my_blog/actions/my_blog/save.php");
+    elgg_register_action("my_blog/save", __DIR__ . "/actions/my_blog/save.php");
 
 The action will now be available as ``/action/my_blog/save``.
 By default, all actions are available only to logged in users.
@@ -224,7 +224,7 @@ need to register a page handler. Add the following to your start.php:
 
     function my_blog_page_handler($segments) {
         if ($segments[0] == 'add') {
-            include elgg_get_plugins_path() . 'my_blog/pages/my_blog/add.php';
+            include __DIR__ . '/pages/my_blog/add.php';
             return true;
         }
         return false;
@@ -287,12 +287,12 @@ page when the URL is set to ``/my_blog/all``. So, your new
     function my_blog_page_handler($segments) {
         switch ($segments[0]) {
             case 'add':
-               include elgg_get_plugins_path() . 'my_blog/pages/my_blog/add.php';
+               include __DIR__ . '/pages/my_blog/add.php';
                break;
 
             case 'all':
             default:
-               include elgg_get_plugins_path() . 'my_blog/pages/my_blog/all.php';
+               include __DIR__ . '/pages/my_blog/all.php';
                break;
         }
         

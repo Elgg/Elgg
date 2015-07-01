@@ -16,7 +16,7 @@ elgg_register_event_handler('init', 'system', 'htmlawed_init');
 function htmlawed_init() {
 	elgg_register_plugin_hook_handler('validate', 'input', 'htmlawed_filter_tags', 1);
 
-	$lib = elgg_get_plugins_path() . "htmlawed/vendors/htmLawed/htmLawed.php";
+	$lib = __DIR__ . "/vendors/htmLawed/htmLawed.php";
 	elgg_register_library('htmlawed', $lib);
 	
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'htmlawed_test');

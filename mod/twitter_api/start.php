@@ -11,7 +11,7 @@ elgg_register_event_handler('init', 'system', 'twitter_api_init');
 function twitter_api_init() {
 
 	// require libraries
-	$base = elgg_get_plugins_path() . 'twitter_api';
+	$base = __DIR__;
 	elgg_register_class('TwitterOAuth', "$base/vendors/twitteroauth/twitterOAuth.php");
 	elgg_register_library('twitter_api', "$base/lib/twitter_api.php");
 	elgg_load_library('twitter_api');

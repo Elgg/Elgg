@@ -58,7 +58,7 @@ function thewire_init() {
 	elgg_register_plugin_hook_handler('get', 'subscriptions', 'thewire_add_original_poster');
 
 	// Register actions
-	$action_base = elgg_get_plugins_path() . 'thewire/actions';
+	$action_base = __DIR__ . '/actions';
 	elgg_register_action("thewire/add", "$action_base/add.php");
 	elgg_register_action("thewire/delete", "$action_base/delete.php");
 

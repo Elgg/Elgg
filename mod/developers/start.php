@@ -19,7 +19,7 @@ function developers_init() {
 	$sandbox_css = elgg_get_simplecache_url('theme_sandbox.css');
 	elgg_register_css('dev.theme_sandbox', $sandbox_css);
 
-	$action_base = elgg_get_plugins_path() . 'developers/actions/developers';
+	$action_base = __DIR__ . '/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
 }
 
