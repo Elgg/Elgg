@@ -189,6 +189,10 @@ abstract class ElggEntity extends \ElggData implements
 	 * @see \ElggEntity::setMetadata()
 	 */
 	public function __set($name, $value) {
+		if ($this->$name === $value) {
+			// quick return if value is not changing
+			return;
+		}
 		if (array_key_exists($name, $this->attributes)) {
 			// Certain properties should not be manually changed!
 			switch ($name) {

@@ -15,5 +15,8 @@ foreach ($js as $url) {
 	echo elgg_format_element('script', array('src' => $url));
 }
 
-$requires = json_encode(_elgg_services()->amdConfig->getDependencies());
-echo "<script>require($requires)</script>";
+$deps = _elgg_services()->amdConfig->getDependencies();
+?>
+<script>
+require(<?= json_encode($deps, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>);
+</script>
