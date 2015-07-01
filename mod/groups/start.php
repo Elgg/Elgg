@@ -15,7 +15,7 @@ elgg_register_event_handler('init', 'system', 'groups_fields_setup', 10000);
  */
 function groups_init() {
 
-	elgg_register_library('elgg:groups', elgg_get_plugins_path() . 'groups/lib/groups.php');
+	elgg_register_library('elgg:groups', __DIR__ . '/lib/groups.php');
 
 	// register group entities for search
 	elgg_register_entity_type('group', '');
@@ -35,7 +35,7 @@ function groups_init() {
 	elgg_register_page_handler('groupicon', 'groups_icon_handler');
 
 	// Register some actions
-	$action_base = elgg_get_plugins_path() . 'groups/actions/groups';
+	$action_base = __DIR__ . '/actions/groups';
 	elgg_register_action("groups/edit", "$action_base/edit.php");
 	elgg_register_action("groups/delete", "$action_base/delete.php");
 	elgg_register_action("groups/featured", "$action_base/featured.php", 'admin');
@@ -280,8 +280,7 @@ function groups_icon_handler($page) {
 		set_input('size', $page[1]);
 	}
 	// Include the standard profile index
-	$plugin_dir = elgg_get_plugins_path();
-	include("$plugin_dir/groups/icon.php");
+	include __DIR__ . "/icon.php";
 	return true;
 }
 
@@ -692,7 +691,7 @@ function groupprofile_ecml_views_hook($hook, $entity_type, $return_value, $param
  * Process upgrades for the groups plugin
  */
 function groups_run_upgrades() {
-	$path = elgg_get_plugins_path() . 'groups/upgrades/';
+	$path = __DIR__ . '/upgrades/';
 	$files = elgg_get_upgrade_files($path);
 	foreach ($files as $file) {
 		include "$path{$file}";

@@ -22,7 +22,7 @@ function site_notifications_init() {
 
 	site_notifications_set_topbar();
 
-	$actions_base = elgg_get_plugins_path() . 'site_notifications/actions/site_notifications';
+	$actions_base = __DIR__ . '/actions/site_notifications';
 	elgg_register_action('site_notifications/delete', "$actions_base/delete.php");
 	elgg_register_action('site_notifications/process', "$actions_base/process.php");
 }
