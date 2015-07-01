@@ -391,12 +391,16 @@ class ElggGroup extends \ElggEntity
 	/**
 	 * Set the content access mode used by group_gatekeeper()
 	 *
-	 * @param string $mode One of CONTENT_ACCESS_MODE_* constants
+	 * @param string $mode One of CONTENT_ACCESS_MODE_* constants. If empty string, mode will not be changed.
 	 * @return void
 	 * @access private
 	 * @since 1.9.0
 	 */
 	public function setContentAccessMode($mode) {
+		if (!$mode && $this->content_access_mode) {
+			return;
+		}
+
 		// only support two modes for now
 		if ($mode !== self::CONTENT_ACCESS_MODE_MEMBERS_ONLY) {
 			$mode = self::CONTENT_ACCESS_MODE_UNRESTRICTED;
