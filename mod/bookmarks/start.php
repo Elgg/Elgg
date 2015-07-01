@@ -67,6 +67,9 @@ function bookmarks_init() {
 	// Groups
 	add_group_tool_option('bookmarks', elgg_echo('bookmarks:enablebookmarks'), true);
 	elgg_extend_view('groups/tool_latest', 'bookmarks/group_module');
+
+	// allow to be liked
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:bookmarks', 'Elgg\Values::getTrue');
 }
 
 /**

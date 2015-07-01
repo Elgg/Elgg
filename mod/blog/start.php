@@ -68,6 +68,9 @@ function blog_init() {
 
 	// ecml
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'blog_ecml_views_hook');
+
+	// allow to be liked
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:blog', 'Elgg\Values::getTrue');
 }
 
 /**
