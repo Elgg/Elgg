@@ -84,6 +84,9 @@ function groups_init() {
 	elgg_register_plugin_hook_handler('access:collections:write', 'all', 'groups_write_acl_plugin_hook', 600);
 	elgg_register_plugin_hook_handler('default', 'access', 'groups_access_default_override');
 
+	// Permissions
+	elgg_register_plugin_hook_handler('permissions_check:annotate:likes', 'group', 'groups_permissions_check_annotate');
+	
 	// Register profile menu hook
 	elgg_register_plugin_hook_handler('profile_menu', 'profile', 'activity_profile_menu');
 
@@ -760,4 +763,25 @@ function groups_invitationrequest_menu_setup($hook, $type, $menu, $params) {
 	));
 
 	return $menu;
+}
+
+/**
+ * Allow liking of a group
+ *
+ * @param string $hook   "permissions_check:annotate:likes"
+ * @param string $type   "group"
+ * @param array  $return Current value
+ * @param array  $params Hook parameters
+ *
+ * @return void|true
+ */
+function groups_permissions_check_annotate($hook, $type, $return, $params) {
+	if ($return !== false) {
+		// we only want to change to true if it is false
+		return;
+	}
+
+	$user = elgg_extract('user', $params);
+	
+	return elgg_instanceof($user, 'user') ? true : null;
 }

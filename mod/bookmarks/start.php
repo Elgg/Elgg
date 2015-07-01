@@ -67,6 +67,9 @@ function bookmarks_init() {
 	// Groups
 	add_group_tool_option('bookmarks', elgg_echo('bookmarks:enablebookmarks'), true);
 	elgg_extend_view('groups/tool_latest', 'bookmarks/group_module');
+	
+	// Permissions
+	elgg_register_plugin_hook_handler('permissions_check:annotate:likes', 'object', 'bookmarks_permissions_check_annotate');
 }
 
 /**
@@ -160,7 +163,7 @@ function bookmark_set_url($hook, $type, $url, $params) {
 
 /**
  * Add a menu item to an ownerblock
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param array  $return
@@ -184,7 +187,7 @@ function bookmarks_owner_block_menu($hook, $type, $return, $params) {
 
 /**
  * Prepare a notification message about a new bookmark
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg\Notifications\Notification $notification The notification to prepare
@@ -201,7 +204,7 @@ function bookmarks_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language); 
+	$notification->subject = elgg_echo('bookmarks:notify:subject', array($title), $language);
 	$notification->body = elgg_echo('bookmarks:notify:body', array(
 		$owner->name,
 		$title,
@@ -255,4 +258,29 @@ function bookmarks_page_menu($hook, $type, $return, $params) {
 function bookmarks_ecml_views_hook($hook, $type, $return, $params) {
 	$return['object/bookmarks'] = elgg_echo('item:object:bookmarks');
 	return $return;
+}
+
+/**
+ * Allow liking of a bookmark
+ *
+ * @param string $hook   "permissions_check:annotate:likes"
+ * @param string $type   "object"
+ * @param array  $return Current value
+ * @param array  $params Hook parameters
+ *
+ * @return void|false
+ */
+function bookmarks_permissions_check_annotate($hook, $type, $return, $params) {
+	if ($return !== false) {
+		// we only want to change to true if it is false
+		return;
+	}
+
+	$user = elgg_extract('user', $params);
+	$entity = elgg_extract('entity', $params);
+
+	$isUser = elgg_instanceof($user, 'user');
+	$isBookmark = elgg_instanceof($entity, 'object', 'bookmarks');
+
+	return $isUser && $isBookmark ? true : null;
 }

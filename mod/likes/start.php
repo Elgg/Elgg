@@ -18,7 +18,8 @@ function likes_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'likes_river_menu_setup', 400);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'likes_entity_menu_setup', 400);
 	elgg_register_plugin_hook_handler('permissions_check', 'annotation', 'likes_permissions_check');
-
+	elgg_register_plugin_hook_handler('permissions_check:annotate:likes', 'all', 'likes_permissions_check_annotate', 0);
+	
 	$actions_base = __DIR__ . '/actions/likes';
 	elgg_register_action('likes/add', "$actions_base/add.php");
 	elgg_register_action('likes/delete', "$actions_base/delete.php");
@@ -28,12 +29,12 @@ function likes_init() {
 
 /**
  * Only allow annotation owner (or someone who can edit the owner, like an admin) to delete like
- * 
+ *
  * @param string $hook   "permissions_check"
  * @param string $type   "annotation"
  * @param array  $return Current value
  * @param array  $params Hook parameters
- * 
+ *
  * @return bool
  */
 function likes_permissions_check($hook, $type, $return, $params) {
@@ -49,6 +50,20 @@ function likes_permissions_check($hook, $type, $return, $params) {
 	}
 	
 	return $owner->canEdit();
+}
+
+/**
+ * By default disallow liking of an entity
+ *
+ * @param string $hook   "permissions_check:annotate:likes"
+ * @param string $type   "object|user|group|site"
+ * @param array  $return Current value
+ * @param array  $params Hook parameters
+ *
+ * @return void|false
+ */
+function likes_permissions_check_annotate($hook, $type, $return, $params) {
+	return false;
 }
 
 /**
