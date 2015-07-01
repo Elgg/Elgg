@@ -23,21 +23,22 @@ if (!is_array($accesslevel)) {
 	$accesslevel = array();
 }
 
-/**
- * wrapper for recursive array walk decoding
- */
-function profile_array_decoder(&$v) {
-	$v = _elgg_html_decode($v);
-}
-
 $profile_fields = elgg_get_config('profile_fields');
 foreach ($profile_fields as $shortname => $valuetype) {
+	$value = get_input($shortname);
+	
+	if ($value === null) {
+		// only submitted profile fields should be updated
+		continue;
+	}
+	
 	// the decoding is a stop gap to prevent &amp;&amp; showing up in profile fields
 	// because it is escaped on both input (get_input()) and output (view:output/text). see #561 and #1405.
 	// must decode in utf8 or string corruption occurs. see #1567.
-	$value = get_input($shortname);
 	if (is_array($value)) {
-		array_walk_recursive($value, 'profile_array_decoder');
+		array_walk_recursive($value, function(&$v) {
+			$v = _elgg_html_decode($v);
+		});
 	} else {
 		$value = _elgg_html_decode($value);
 	}
