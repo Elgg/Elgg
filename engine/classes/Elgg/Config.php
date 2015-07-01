@@ -84,6 +84,10 @@ class Config implements Services\Config {
 	 * {@inheritdoc}
 	 */
 	public function getDataPath() {
+		if (!isset($this->config->dataroot)) {
+			\Elgg\Application::getDataPath();
+		}
+
 		return $this->config->dataroot;
 	}
 
@@ -211,7 +215,12 @@ class Config implements Services\Config {
 		// normalize commonly needed values
 		if (isset($CONFIG->dataroot)) {
 			$CONFIG->dataroot = rtrim($CONFIG->dataroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+			$GLOBALS['_ELGG']->dataroot_in_settings = true;
+		} else {
+			$GLOBALS['_ELGG']->dataroot_in_settings = false;
 		}
+
+		$GLOBALS['_ELGG']->simplecache_enabled_in_settings = isset($CONFIG->simplecache_enabled);
 
 		if (!$global_is_bound) {
 			// must manually copy settings into our storage

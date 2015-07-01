@@ -60,10 +60,7 @@ class Datalist {
 	 */
 	function get($name) {
 		$name = trim($name);
-	
-		// cannot store anything longer than 255 characters in db, so catch here
-		if (elgg_strlen($name) > 255) {
-			$this->logger->error("The name length for configuration variables cannot be greater than 255");
+		if (!$this->validateName($name)) {
 			return false;
 		}
 
@@ -92,13 +89,9 @@ class Datalist {
 	 */
 	function set($name, $value) {
 		$name = trim($name);
-	
-		// cannot store anything longer than 255 characters in db, so catch before we set
-		if (elgg_strlen($name) > 255) {
-			$this->logger->error("The name length for configuration variables cannot be greater than 255");
+		if (!$this->validateName($name)) {
 			return false;
 		}
-	
 	
 		$escaped_name = $this->db->sanitizeString($name);
 		$escaped_value = $this->db->sanitizeString($value);
@@ -178,5 +171,27 @@ class Datalist {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Verify a datalist name is valid
+	 *
+	 * @param string $name Datalist name to be checked
+	 *
+	 * @return bool
+	 */
+	protected function validateName($name) {
+		// Can't use elgg_strlen() because not available until core loaded.
+		if (is_callable('mb_strlen')) {
+			$is_valid = (mb_strlen($name) <= 255);
+		} else {
+			$is_valid = (strlen($name) <= 255);
+		}
+
+		if (!$is_valid) {
+			$this->logger->error("The name length for configuration variables cannot be greater than 255");
+		}
+
+		return $is_valid;
 	}
 }
