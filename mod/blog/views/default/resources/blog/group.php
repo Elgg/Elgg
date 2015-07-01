@@ -1,6 +1,6 @@
 <?php
 
-$page_type = get_input('page_type');
+$page_type = $vars['page_type'];
 $group_guid = get_input('group_guid');
 $group = get_entity($group_guid);
 if (!elgg_instanceof($group, 'group')) {

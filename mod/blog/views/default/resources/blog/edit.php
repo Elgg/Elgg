@@ -1,6 +1,7 @@
 <?php
 
 elgg_gatekeeper();
+$page_type = $vars['page_type'];
 $guid = get_input('guid');
 $revision = get_input('revision');
 $params = blog_get_page_content_edit('edit', $guid, $revision);

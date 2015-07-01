@@ -345,8 +345,9 @@ function blog_prepare_form_vars($post = NULL, $revision = NULL) {
 	} else {
 		$auto_save = false;
 	}
+	/* @var ElggAnnotation|false $auto_save */
 
-	if ($auto_save && $auto_save->id != $revision->id) {
+	if ($auto_save && $revision && $auto_save->id != $revision->id) {
 		$values['draft_warning'] = elgg_echo('blog:messages:warning:draft');
 	}
 
