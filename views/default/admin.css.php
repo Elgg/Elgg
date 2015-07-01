@@ -579,13 +579,6 @@ select {
 .elgg-form-settings {
 	max-width: 800px;
 }
-.content-header-options > form {
-	float: left;
-	margin-right: 10px;
-}
-.content-header-options form .mtm {
-	margin-top: 0;
-}
 
 /* **************************************
      DATE PICKER
