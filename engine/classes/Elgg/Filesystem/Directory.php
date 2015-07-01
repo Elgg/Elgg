@@ -72,6 +72,18 @@ interface Directory {
 	public function getDirectories($path = '', $recursive = true);
 
 	/**
+	 * Get the absolute path to the given directory-relative path.
+	 *
+	 * @param string $path A file/directory path within this directory.
+	 *
+	 * @return string
+	 *
+	 * @throws \InvalidArgumentException
+	 */
+	public function getPath($path = '');
+	
+	
+	/**
 	 * Do a PHP include of the file and return the result.
 	 * 
 	 * NB: This only really works with local filesystems amirite?

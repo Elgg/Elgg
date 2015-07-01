@@ -58,6 +58,13 @@ class File {
 	}
 	
 	/**
+	 * @return string The full path to this file.
+	 */
+	public function getPath() {
+		return $this->directory->getPath($this->path);
+	}
+	
+	/**
 	 * Do a PHP include of the file and return the result.
 	 * 
 	 * TODO(ewinslow): This may only work for local filesystems?

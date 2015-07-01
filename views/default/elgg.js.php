@@ -2,6 +2,9 @@
 /**
  * Core Elgg JavaScript file
  */
+
+use Elgg\Filesystem\Directory;
+ 
 global $CONFIG;
 
 // this warning is due to the change in JS boot order in Elgg 1.9
@@ -12,39 +15,36 @@ if (typeof elgg != 'object') {
 
 JS;
 
-
-$lib_dir = 'js/lib';
-$classes_dir = 'js/classes';
+$elggDir = \Elgg\Application::elggDir();
 $files = array(
 	// these must come first
-	'vendor/bower-asset/sprintf/src/sprintf',
-	"$lib_dir/elgglib",
+	Directory\Local::root()->getPath('vendor/bower-asset/sprintf/src/sprintf.js'),
+	$elggDir->getPath("js/lib/elgglib.js"),
 
 	// class definitions
-	"$classes_dir/ElggEntity",
-	"$classes_dir/ElggUser",
-	"$classes_dir/ElggPriorityList",
+	$elggDir->getPath("js/classes/ElggEntity.js"),
+	$elggDir->getPath("js/classes/ElggUser.js"),
+	$elggDir->getPath("js/classes/ElggPriorityList.js"),
 
 	//libraries
-	"$lib_dir/prototypes",
-	"$lib_dir/hooks",
-	"$lib_dir/security",
-	"$lib_dir/languages",
-	"$lib_dir/ajax",
-	"$lib_dir/session",
-	"$lib_dir/pageowner",
-	"$lib_dir/configuration",
-	"$lib_dir/comments",
+	$elggDir->getPath("js/lib/prototypes.js"),
+	$elggDir->getPath("js/lib/hooks.js"),
+	$elggDir->getPath("js/lib/security.js"),
+	$elggDir->getPath("js/lib/languages.js"),
+	$elggDir->getPath("js/lib/ajax.js"),
+	$elggDir->getPath("js/lib/session.js"),
+	$elggDir->getPath("js/lib/pageowner.js"),
+	$elggDir->getPath("js/lib/configuration.js"),
+	$elggDir->getPath("js/lib/comments.js"),
 
 	//ui
-	"$lib_dir/ui",
-	"$lib_dir/ui.widgets",
+	$elggDir->getPath("js/lib/ui.js"),
+	$elggDir->getPath("js/lib/ui.widgets.js"),
 );
 
-$root_path = elgg_get_root_path();
 
 foreach ($files as $file) {
-	readfile("{$root_path}$file.js");
+	readfile($file);
 	// putting a new line between the files to address https://github.com/elgg/elgg/issues/3081
 	echo "\n";
 }

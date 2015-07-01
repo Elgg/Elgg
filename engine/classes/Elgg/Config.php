@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
 
+use Elgg\Filesystem\Directory;
+
 /**
  * Access to configuration values
  *
@@ -32,6 +34,7 @@ class Config implements Services\Config {
 			$config = new \stdClass();
 		}
 		$this->config = $config;
+		$this->config->path = Directory\Local::root()->getPath('/');
 
 		if ($set_global) {
 			/**
@@ -82,13 +85,6 @@ class Config implements Services\Config {
 	 */
 	public function getDataPath() {
 		return $this->config->dataroot;
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getRootPath() {
-		return $this->config->path;
 	}
 
 	/**
@@ -191,7 +187,7 @@ class Config implements Services\Config {
 			}
 			$path = $this->config->Config_file;
 		} else {
-			$path = dirname(dirname(__DIR__)) . '/settings.php';
+			$path = Directory\Local::root()->getPath('settings.php');
 		}
 
 		// No settings means a fresh install

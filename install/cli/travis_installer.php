@@ -3,11 +3,9 @@
  * Travis CI CLI installer script. It's designed for core automatic tests only.
  *
  * @access private
- * @package Elgg
- * @subpackage Test
  */
 
-$enabled = getenv('TRAVIS') != '';//are we on Travis?
+$enabled = getenv('TRAVIS') != ''; //are we on Travis?
 
 if (!$enabled) {
 	echo "This script should be run only in Travis CI test environment.\n";
@@ -19,9 +17,7 @@ if (PHP_SAPI !== 'cli') {
 	exit(2);
 }
 
-$elggRoot = dirname(dirname(__DIR__));
-
-require_once "$elggRoot/autoloader.php";
+require_once __DIR__ . "/../../autoloader.php";
 
 $installer = new ElggInstaller();
 
@@ -31,6 +27,9 @@ $params = array(
 	'dbuser' => 'root',
 	'dbpassword' => 'password',
 	'dbname' => 'elgg',
+	
+	// We use a wonky dbprefix to catch any cases where folks hardcode "elgg_"
+	// instead of using config->dbprefix
 	'dbprefix' => 't_i_elgg_',
 
 	// site settings

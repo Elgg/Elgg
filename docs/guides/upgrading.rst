@@ -12,6 +12,64 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 1.x to 2.0
 ===============
 
+Elgg can be now installed as a composer dependency instead of at document root
+------------------------------------------------------------------------------
+
+That means an Elgg site can look something like this:
+
+.. code::
+
+    settings.php
+    vendor/
+      elgg/
+        elgg/
+          engine/
+            start.php
+          _graphics/
+            elgg_sprites.png
+    mod/
+      blog
+      bookmarks
+      ...
+
+``elgg_get_root_path`` and ``$CONFIG->path`` will return the path to the application
+root directory (the one containing ``settings.php``), which is not necessarily the
+same as Elgg core's root directory (which in this case is ``vendor/elgg/elgg/``).
+
+Do not attempt to access the core Elgg from your plugin directly, since you cannot
+rely on its location on the filesystem.
+
+In particular, don't try load ``engine/start.php``.
+
+.. code:: php
+
+    // Don't do this!
+    dirname(__DIR__) . "/engine/start.php";
+    
+To boot Elgg manually, you can use the class ``Elgg\Application``.
+
+.. code:: php
+
+    // boot Elgg in mod/myplugin/foo.php
+    require_once dirname(dirname(__DIR__)) . '/vendor/autoload.php';
+    \Elgg\Application::start();
+
+However, use this approach sparingly. Prefer :doc:`routing` instead whenever possible
+as that keeps your public URLs and your filesystem layout decoupled.
+
+Also, don't try to access the ``_graphics`` files directly.
+
+.. code:: php
+
+    readfile(elgg_get_root_path() . "_graphics/elgg_sprites.png");
+    
+Use :doc:`views` instead:
+
+.. code:: php
+
+    echo elgg_view('elgg_sprites.png');
+    
+
 Cacheable views must have a file extension in their names
 ---------------------------------------------------------
 
@@ -27,7 +85,6 @@ by navigating to dataroot/views_simplecache and browsing around.
 We now cache assets by ``"$viewtype/$view"``, not ``md5("$viewtype|$view")``,
 which can result in conflicts between cacheable views that don't have file extensions
 to disambiguate files from directories.
-
 
 
 Dropped ``jquery-migrate`` and upgraded ``jquery`` to ^2.1.4
@@ -284,16 +341,6 @@ If your code uses one of the following functions, read below.
 If you provide a callable ``$handler`` to be called with the results, your handler will now receive a
 ``\Doctrine\DBAL\Driver\Statement`` object. Formerly this was an ext/mysql ``result`` resource.
 
-engine/start.php is deprecated
-------------------------------
-
-Plugins should use the class ``Elgg\Application`` to boot Elgg. Typical usage:
-
-.. code:: php
-
-    // boot Elgg in mod/myplugin/foo.php
-    require_once dirname(dirname(__DIR__)) . '/autoloader.php';
-    (new \Elgg\Application)->bootCore();
 
 Event/Hook calling order may change
 -----------------------------------

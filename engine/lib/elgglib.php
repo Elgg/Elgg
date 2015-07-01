@@ -1,4 +1,8 @@
 <?php
+
+use Elgg\Filesystem\Directory;
+
+
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
  *
@@ -993,20 +997,15 @@ function elgg_dump($value, $to_screen = true) {
  * @since 1.9
  */
 function elgg_get_version($human_readable = false) {
-	global $CONFIG;
-
 	static $version, $release;
-
-	if (isset($CONFIG->path)) {
-		if (!isset($version) || !isset($release)) {
-			if (!include($CONFIG->path . "version.php")) {
-				return false;
-			}
+	
+	if (!isset($version) || !isset($release)) {
+		if (!include(\Elgg\Application::elggDir()->getPath('version.php'))) {
+			return false;
 		}
-		return $human_readable ? $release : $version;
 	}
-
-	return false;
+	
+	return $human_readable ? $release : $version;
 }
 
 /**

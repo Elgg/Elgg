@@ -2,10 +2,10 @@
 /**
  * Elgg plugins library
  * Contains functions for managing plugins
- *
- * @package Elgg.Core
- * @subpackage Plugins
  */
+
+use Elgg\Filesystem\Directory;
+
 
 /**
  * Tells \ElggPlugin::start() to include the start.php file.

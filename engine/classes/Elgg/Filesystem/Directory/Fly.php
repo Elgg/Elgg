@@ -4,7 +4,7 @@ namespace Elgg\Filesystem\Directory;
 use Elgg\Filesystem\Directory;
 use Elgg\Filesystem\File;
 use Elgg\Structs\Collection;
-use League\Flysystem\Adapter\Local;
+use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem;
 use Twistor\Flysystem\MemoryAdapter;
 
@@ -116,16 +116,8 @@ final class Fly implements Directory {
 		}, $contents));
 	}
 
-	/**
-	 * Get the absolute path to the given directory-relative path.
-	 *
-	 * @param string $path A file/directory path within this directory.
-	 *
-	 * @return string
-	 *
-	 * @throws \InvalidArgumentException
-	 */
-	private function getFullPath($path = '') {
+	/** @inheritDoc */
+	public function getPath($path = '') {
 		$path = $this->normalize($this->getInternalPath($path));
 		return "{$this->local_path}/$path";
 	}
@@ -146,7 +138,7 @@ final class Fly implements Directory {
 
 	/** @inheritDoc */
 	public function includeFile($path) {
-		return include $this->getFullPath($path);
+		return include $this->getPath($path);
 	}
 
 	/** @inheritDoc */
@@ -162,7 +154,7 @@ final class Fly implements Directory {
 	 * @return Directory
 	 */
 	public static function createLocal($path) {
-		$fs = new Filesystem(new Local($path));
+		$fs = new Filesystem(new LocalAdapter($path));
 		return new self($fs, $path);
 	}
 

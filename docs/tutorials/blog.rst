@@ -1,33 +1,23 @@
 Building a Blog Plugin
 ######################
 
-Build a simple blogging plugin using Elgg.
+Build a simple blogging site using Elgg.
 
-This duplicates features in the bundled blog plugin,
+This duplicates features in the bundled ``blog`` plugin,
 so be sure to disable that while working on your own version.
 
 .. contents:: Contents
    :local:
    :depth: 1
 
-Create the plugin skeleton
-==========================
+Prerequisites:
 
-The name of the directory under "mod" becomes the id of your plugin::
-
-    /mod/my_blog/pages/my_blog/
-    /mod/my_blog/actions/my_blog/
-    /mod/my_blog/views/default/my_blog/
-
-You'll need to add a manifest file in ``/mod/my_blog/manifest.xml``.
-This file stores basic information about the plugin. See :doc:`/guides/plugins` for the template.
-You can also just copy the manifest file from another plugin and then change the values to fit your new plugin.
-Be sure to change the author and website, and remove the “bundled” category!
+ - :doc:`Install Elgg</intro/install>`
 
 Create a page for composing the blogs
 =====================================
 
-Create the file ``add.php`` in ``/mod/my_blog/pages/my_blog/``.
+Create the file ``/views/default/resources/my_blog/add.php``.
 
 .. code:: php
 
@@ -36,7 +26,7 @@ Create the file ``add.php`` in ``/mod/my_blog/pages/my_blog/``.
     gatekeeper();
                     
     // set the title
-    // for distributed plugins, be sure to use elgg_echo() for internationalization
+    // be sure to use ``elgg_echo()`` for internationalization if you need it
     $title = "Create a new my_blog post";
 
     // start building the main column of the page
@@ -54,13 +44,13 @@ Create the file ``add.php`` in ``/mod/my_blog/pages/my_blog/``.
        'sidebar' => $sidebar
     ));
 
-    // draw the page
+    // draw the page, including the HTML wrapper and basic page layout
     echo elgg_view_page($title, $body);
 
 Create the form for creating a new my\_blog post
 ================================================
 
-Create a file at ``/mod/my_blog/views/default/forms/my_blog/save.php``
+Create a file at ``/views/default/forms/my_blog/save.php``
 that contains the form body. This corresponds to view that is called above:
 ``elgg_view_form("my_blog/save")``.
 
@@ -71,44 +61,40 @@ The view will be automatically wrapped with:
  * a ``<form>`` tag and the necessary attributes
  * anti-csrf tokens
 
-The form's action will be ``"<?php echo elgg_get_site_url() ?>action/my_blog/save"``,
+The form's action will be ``"<?= elgg_get_site_url() ?>action/my_blog/save"``,
 which we will create in a moment. Here is the content of
-``/mod/my_blog/views/default/forms/my_blog/save.php``:
+``/views/default/forms/my_blog/save.php``:
 
 .. code:: php
 
 
     <div>
-        <label><?php echo elgg_echo("title"); ?></label><br />
-        <?php echo elgg_view('input/text',array('name' => 'title')); ?>
+        <label for="title"><?= elgg_echo("title"); ?></label><br />
+        <?= elgg_view('input/text', ['name' => 'title', 'id' => 'title']); ?>
     </div>
 
     <div>
-        <label><?php echo elgg_echo("body"); ?></label><br />
-        <?php echo elgg_view('input/longtext',array('name' => 'body')); ?>
+        <label for="body"><?= elgg_echo("body"); ?></label><br />
+        <?= elgg_view('input/longtext', ['name' => 'body', 'id' => 'body']); ?>
     </div>
 
     <div>
-        <label><?php echo elgg_echo("tags"); ?></label><br />
-        <?php echo elgg_view('input/tags',array('name' => 'tags')); ?>
+        <label for="tags"><?= elgg_echo("tags"); ?></label><br />
+        <?= elgg_view('input/tags', ['name' => 'tags', 'id' => 'tags']); ?>
     </div>
 
     <div>
-        <?php echo elgg_view('input/submit', array('value' => elgg_echo('save'))); ?>
+        <?= elgg_view('input/submit', ['value' => elgg_echo('save')]); ?>
     </div>
 
 Notice how the form is calling input views like ``input/longtext``.
 These are built into Elgg and make it easy to add form components.
-You can see a complete list of input views in the ``/views/default/input/`` directory.
-
-.. warning::
-
-   The above code is not accessibility-friendly.
+You can see a complete list of input views in the ``/vendor/elgg/elgg/views/default/input/`` directory.
 
 The action file
 ===============
 
-Create the file ``/mod/my_blog/actions/my_blog/save.php``.
+Create the file ``/actions/my_blog/save.php``.
 This will save the blog post to the database.
 
 .. code:: php
@@ -170,8 +156,7 @@ Here, we have used the subtype "``my_blog``\ " to identify a my\_blog post,
 but any alphanumeric string can be a valid subtype.
 When picking subtypes, be sure to pick ones that make sense for your plugin.
 
-In ``/mod/my_blog/views/default/``, create a folder ``/object/`` and
-then create a file ``my_blog.php`` in it.
+Create the file ``/views/default/object/my_blog.php``.
 
 Each my\_blog post will be passed to this PHP file as
 ``$vars['entity']``. (``$vars`` is an array used in the views system to
@@ -194,10 +179,9 @@ automatically.
 you can create alternative views. RSS, OpenDD, FOAF, mobile and others
 are all valid view types.)
 
-Plugin start.php
+start.php
 ================
 
-Every plugin has a ``start.php`` that initializes it.
 For this example, we just need to register the action file we created earlier:
 Also see a related guide about :doc:`/guides/actions`.
 
@@ -224,7 +208,7 @@ need to register a page handler. Add the following to your start.php:
 
     function my_blog_page_handler($segments) {
         if ($segments[0] == 'add') {
-            include __DIR__ . '/pages/my_blog/add.php';
+            echo elgg_view_resource('my_blog/add');
             return true;
         }
         return false;
@@ -241,19 +225,14 @@ user will see a 404 page.
 Trying it out
 =============
 
-If you have not enabled the plugin yet, you will need to go to
-Administration => Configure => Plugins => Advanced.
-Scroll to the bottom until you see your plugin. Click the Enable button.
-
-The page to create a new my\_blog post is accessible at http://yoursite/my_blog/add.
-Try it out.
+The page to create a new my\_blog post should be accessible at ``https://elgg.example.com/my_blog/add``.
 
 Displaying list of my\_blogs
 ============================
 
 Let's also create a page that lists my\_blog entries that have been created.
 
-Create ``/mod/my_blog/pages/my_blog/all.php``.
+Create ``/views/default/resources/my_blog/all.php``.
 
 To grab the latest my\_blog posts, we'll use ``elgg_list_entities``.
 Note that this function returns only the posts that the user can see,
@@ -287,12 +266,12 @@ page when the URL is set to ``/my_blog/all``. So, your new
     function my_blog_page_handler($segments) {
         switch ($segments[0]) {
             case 'add':
-               include __DIR__ . '/pages/my_blog/add.php';
+               echo elgg_view_resource('my_blog/add');
                break;
 
             case 'all':
             default:
-               include __DIR__ . '/pages/my_blog/all.php';
+               echo elgg_view_resource('my_blog/all');
                break;
         }
         
@@ -321,5 +300,5 @@ owner\_guid argument in the list function above.
 The end
 =======
 
-There's much more that could be done for this plugin,
+There's much more that could be done,
 but hopefully this gives you a good idea of how to get started with your own.

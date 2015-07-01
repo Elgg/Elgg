@@ -11,25 +11,18 @@ However, if you have a wysiwyg that you prefer, you could use this tutorial to h
 
 All forms in Elgg should try to use the provided input views located in ``views/default/input``.
 If these views are used, then it is simple for plugin authors to replace a view,
-in this case longtext.php, with their wysiwyg.
-
-Create your plugin skeleton
----------------------------
-
-You will need to create your plugin and give it a start.php file where the plugin gets initialized,
-as well as a manifest.xml file to tell the Elgg engine about your plugin.
-
-Read more in the guide about :doc:`/guides/plugins`.
+in this case ``input/longtext``, with their wysiwyg.
 
 Add the WYSIWYG library code
 ----------------------------
 
 Now you need to upload TinyMCE into a directory in your plugin.
-We strongly encourage you to put third party libraries in a “vendors” directory,
-as that is standard practice in Elgg plugins and will make
-your plugin much more approachable by other developers::
+We strongly encourage you to use ``composer`` to manage third-party dependencies,
+since it is so much easier to upgrade and maintain that way::
 
-    mod/tinymce/vendors/tinymce/
+.. code:: shell
+
+    composer require bower-asset/tinymce
 
 Tell Elgg when and how to load TinyMCE
 --------------------------------------

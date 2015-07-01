@@ -1,31 +1,39 @@
 <?php
 namespace Elgg\Cache;
 
+use Elgg\Config;
+use Elgg\Database\Datalist;
+use Elgg\ViewsService as Views;
+
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
  *
- * @package    Elgg.Core
- * @subpackage Cache
- * @since      1.10.0
+ * @since 1.10.0
  */
 class SimpleCache {
 	
-	/** @var \stdClass */
-	private $CONFIG;
+	/** @var Config */
+	private $config;
+
+	/** @var Datalist */
+	private $datalist;
 	
-	/** @var \Elgg\ViewsService */
+	/** @var Views */
 	private $views;
 
 	/**
 	 * Constructor
 	 * 
-	 * @param \stdClass          $CONFIG Elgg's global configuration
-	 * @param \Elgg\ViewsService $views  Elgg's views registry
+	 * @param Config   $config   Elgg's global configuration
+	 * @param Datalist $datalist Elgg's database config storage
+	 * @param Views    $views    Elgg's views registry
 	 */
-	public function __construct(\stdClass $CONFIG, \Elgg\ViewsService $views) {
-		$this->CONFIG = $CONFIG;
+	public function __construct(Config $config, Datalist $datalist, Views $views) {
+		$this->config = $config;
+		$this->datalist = $datalist;
 		$this->views = $views;
 	}
 
@@ -102,9 +110,9 @@ class SimpleCache {
 	 */
 	function getRoot() {
 		$viewtype = elgg_get_viewtype();
-		if (elgg_is_simplecache_enabled()) {
+		if ($this->isEnabled()) {
 			// stored in datalist as 'simplecache_lastupdate'
-			$lastcache = (int)_elgg_services()->config->get('lastcache');
+			$lastcache = (int)$this->config->get('lastcache');
 		} else {
 			$lastcache = 0;
 		}
@@ -118,7 +126,7 @@ class SimpleCache {
 	 * @return bool
 	 */
 	function isEnabled() {
-		return (bool) _elgg_services()->config->get('simplecache_enabled');
+		return (bool) $this->config->get('simplecache_enabled');
 	}
 	
 	/**
@@ -128,8 +136,8 @@ class SimpleCache {
 	 * @return void
 	 */
 	function enable() {
-		_elgg_services()->datalist->set('simplecache_enabled', 1);
-		_elgg_services()->config->set('simplecache_enabled', 1);
+		$this->datalist->set('simplecache_enabled', 1);
+		$this->config->set('simplecache_enabled', 1);
 		$this->invalidate();
 	}
 	
@@ -142,12 +150,21 @@ class SimpleCache {
 	 * @return void
 	 */
 	function disable() {
-		if (_elgg_services()->config->get('simplecache_enabled')) {
-			_elgg_services()->datalist->set('simplecache_enabled', 0);
-			_elgg_services()->config->set('simplecache_enabled', 0);
+		if ($this->config->get('simplecache_enabled')) {
+			$this->datalist->set('simplecache_enabled', 0);
+			$this->config->set('simplecache_enabled', 0);
 	
 			$this->invalidate();
 		}
+	}
+	
+	/**
+	 * Returns the path to where views are simplecached.
+	 * 
+	 * @return string
+	 */
+	private function getPath() {
+		return realpath($this->config->getDataPath() . "/views_simplecache");
 	}
 	
 	/**
@@ -157,25 +174,25 @@ class SimpleCache {
 	 * @return bool
 	 */
 	function invalidate() {
-		$cache_dir = "{$this->CONFIG->dataroot}views_simplecache";
-		mkdir($cache_dir);
-		_elgg_rmdir($cache_dir, true);
-
+		mkdir($this->getPath());
+		_elgg_rmdir($this->getPath(), true);
+	
 		$time = time();
-		_elgg_services()->datalist->set("simplecache_lastupdate", $time);
-		$this->CONFIG->lastcache = $time;
+		$this->datalist->set("simplecache_lastupdate", $time);
+		$this->config->set('lastcache', $time);
 	
 		return true;
 	}
 
 	/**
-	 * Set up $CONFIG appropriately on engine boot.
+	 * Set up config appropriately on engine boot.
 	 *
 	 * @return void
 	 */
 	function init() {
-		if (!defined('UPGRADING') && empty($this->CONFIG->lastcache)) {
-			$this->CONFIG->lastcache = (int)_elgg_services()->datalist->get('simplecache_lastupdate');
+		$lastcache = $this->config->get('lastcache');
+		if (!defined('UPGRADING') && empty($lastcache)) {
+			$this->config->set('lastcache', (int)$this->datalist->get('simplecache_lastupdate'));
 		}
 	}	
 }

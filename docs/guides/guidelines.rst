@@ -1,7 +1,9 @@
 Plugin coding guidelines
 ========================
 
-In addition to the Elgg Coding Standards, these are guidelines for creating plugins. Core plugins are being updated to this format and all plugin authors should follow these guidelines in their own plugins.
+In addition to the Elgg Coding Standards, these are guidelines for creating plugins.
+Core plugins are being updated to this format and all plugin authors should follow
+these guidelines in their own plugins.
 
 .. seealso::
 

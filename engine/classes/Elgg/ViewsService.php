@@ -1,8 +1,9 @@
 <?php
 namespace Elgg;
 
-use Elgg\Cache\SystemCache;
 use Elgg\Application\CacheHandler;
+use Elgg\Cache\SystemCache;
+use Elgg\Filesystem\Directory;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -11,9 +12,7 @@ use Elgg\Application\CacheHandler;
  *
  * @access private
  *
- * @package    Elgg.Core
- * @subpackage Views
- * @since      1.9.0
+ * @since 1.9.0
  */
 class ViewsService {
 
@@ -490,6 +489,7 @@ class ViewsService {
 	 * @access private
 	 */
 	public function registerPluginViews($path, &$failed_dir = '') {
+		$path = rtrim($path, "\\/");
 		$view_dir = "$path/views/";
 
 		// plugins don't have to have views.
@@ -537,7 +537,7 @@ class ViewsService {
 					// absolute path
 				} else {
 					// relative path
-					$path = elgg_get_root_path() . $path;
+					$path = Directory\Local::root()->getPath($path);
 				}
 
 				if (substr($view, -1) === '/') {
