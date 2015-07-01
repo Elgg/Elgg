@@ -1,5 +1,6 @@
 <?php
 
+$page_type = $vars['page_type'];
 $guid = get_input('guid');
 $params = blog_get_page_content_read($guid);
 

@@ -1,5 +1,6 @@
 <?php
 
+$page_type = $vars['page_type'];
 $username = get_input('username');
 $lower = get_input('lower');
 $upper = get_input('upper');
