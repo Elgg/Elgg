@@ -15,16 +15,23 @@ elgg_push_breadcrumb($page_owner->name);
 
 elgg_register_title_button();
 
-$content .= elgg_list_entities(array(
+$options = [
 	'type' => 'object',
 	'subtype' => 'bookmarks',
-	'container_guid' => $page_owner->guid,
 	'full_view' => false,
 	'view_toggle_type' => false,
 	'no_results' => elgg_echo('bookmarks:none'),
 	'preload_owners' => true,
 	'distinct' => false,
-));
+];
+
+if ($page_owner instanceof ElggGroup) {
+	$options['container_guid'] = $page_owner->guid;
+} else {
+	$options['owner_guid'] = $page_owner->guid;
+}
+
+$content .= elgg_list_entities($options);
 
 $title = elgg_echo('bookmarks:owner', array($page_owner->name));
 
