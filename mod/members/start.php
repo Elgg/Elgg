@@ -18,7 +18,7 @@ function members_init() {
 	$item = new ElggMenuItem('members', elgg_echo('members'), 'members');
 	elgg_register_menu_item('site', $item);
 
-	$list_types = array('newest', 'popular', 'online');
+	$list_types = array('newest', 'alpha', 'popular', 'online');
 
 	foreach ($list_types as $type) {
 		elgg_register_plugin_hook_handler('members:list', $type, "members_list_$type");
@@ -79,6 +79,29 @@ function members_list_online($hook, $type, $returnvalue, $params) {
 }
 
 /**
+ * Returns content for the "alphabetical" page
+ *
+ * @param string      $hook        "members:list"
+ * @param string      $type        "alpha"
+ * @param string|null $returnvalue list content (null if not set)
+ * @param array       $params      array with key "options"
+ * @return string
+ */
+function members_list_alpha($hook, $type, $returnvalue, $params) {
+	if ($returnvalue !== null) {
+		return;
+	}
+	
+	$dbprefix = elgg_get_config('dbprefix');
+	$options = elgg_extract('options', $params);
+	
+	$options['joins'][] = "JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid";
+	$options['order_by'] = 'ue.name ASC';
+	
+	return elgg_list_entities($options);
+}
+
+/**
  * Appends "popular" tab to the navigation
  *
  * @param string $hook        "members:config"
@@ -125,6 +148,23 @@ function members_nav_online($hook, $type, $returnvalue, $params) {
 	$returnvalue['online'] = array(
 		'title' => elgg_echo('members:label:online'),
 		'url' => "members/online",
+	);
+	return $returnvalue;
+}
+
+/**
+ * Appends "alphabetical" tab to the navigation
+ *
+ * @param string $hook        "members:config"
+ * @param string $type        "tabs"
+ * @param array  $returnvalue array that build navigation tabs
+ * @param array  $params      unused
+ * @return array
+ */
+function members_nav_alpha($hook, $type, $returnvalue, $params) {
+	$returnvalue['alpha'] = array(
+		'title' => elgg_echo('sort:alpha'),
+		'url' => "members/alpha",
 	);
 	return $returnvalue;
 }
