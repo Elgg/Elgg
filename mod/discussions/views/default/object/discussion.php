@@ -67,9 +67,9 @@ if ($num_replies != 0) {
 }
 
 // do not show the metadata and controls in widget view
-if (elgg_in_context('widgets')) {
-	$metadata = '';
-} else {
+$metadata = '';
+if (!elgg_in_context('widgets')) {
+	// only show entity menu outside of widgets
 	$metadata = elgg_view_menu('entity', array(
 		'entity' => $vars['entity'],
 		'handler' => 'discussion',
