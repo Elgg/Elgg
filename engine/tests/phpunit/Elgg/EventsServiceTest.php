@@ -23,7 +23,7 @@ class EventsServiceTest extends \PHPUnit_Framework_TestCase {
 	public function testFalseStopsPropagationAndReturnsFalse() {
 		$events = new \Elgg\EventsService();
 
-		$events->registerHandler('foo', 'bar', array('\Elgg\EventsServiceTest', 'returnFalse'));
+		$events->registerHandler('foo', 'bar', 'Elgg\Values::getFalse');
 		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
 		$this->assertFalse($events->trigger('foo', 'bar'));
@@ -33,7 +33,7 @@ class EventsServiceTest extends \PHPUnit_Framework_TestCase {
 	public function testNullDoesNotStopPropagation() {
 		$events = new \Elgg\EventsService();
 
-		$events->registerHandler('foo', 'bar', array('\Elgg\EventsServiceTest', 'returnNull'));
+		$events->registerHandler('foo', 'bar', 'Elgg\Values::getNull');
 		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
 		$this->assertTrue($events->trigger('foo', 'bar'));
@@ -43,7 +43,7 @@ class EventsServiceTest extends \PHPUnit_Framework_TestCase {
 	public function testUnstoppableEventsCantBeStoppedAndReturnTrue() {
 		$events = new \Elgg\EventsService();
 
-		$events->registerHandler('foo', 'bar', array('\Elgg\EventsServiceTest', 'returnFalse'));
+		$events->registerHandler('foo', 'bar', 'Elgg\Values::getFalse');
 		$events->registerHandler('foo', 'bar', array($this, 'incrementCounter'));
 
 		$this->assertTrue($events->trigger('foo', 'bar', null, array(
@@ -68,18 +68,6 @@ class EventsServiceTest extends \PHPUnit_Framework_TestCase {
 	public function incrementCounter() {
 		$this->counter++;
 		return true;
-	}
-
-	public static function returnTrue() {
-		return true;
-	}
-
-	public static function returnFalse() {
-		return false;
-	}
-
-	public static function returnNull() {
-		return;
 	}
 }
 
