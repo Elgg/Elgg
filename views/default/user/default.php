@@ -29,19 +29,18 @@ if (!$title) {
 	$title = elgg_view('output/url', $link_params);
 }
 
-$metadata = elgg_view_menu('entity', array(
-	'entity' => $entity,
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-));
-
-if (elgg_in_context('owner_block') || elgg_in_context('widgets')) {
-	$metadata = '';
-}
-
 if (elgg_get_context() == 'gallery') {
 	echo $icon;
 } else {
+	$metadata = '';
+	if (!elgg_in_context('owner_block') && !elgg_in_context('widgets')) {
+		$metadata = elgg_view_menu('entity', array(
+			'entity' => $entity,
+			'sort_by' => 'priority',
+			'class' => 'elgg-menu-hz',
+		));
+	}
+	
 	if ($entity->isBanned()) {
 		$banned = elgg_echo('banned');
 		$params = array(

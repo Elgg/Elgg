@@ -1,7 +1,7 @@
 <?php
 /**
  * View a wire post
- * 
+ *
  * @uses $vars['entity']
  */
 
@@ -31,18 +31,17 @@ $owner_link = elgg_view('output/url', array(
 $author_text = elgg_echo('byline', array($owner_link));
 $date = elgg_view_friendly_time($post->time_created);
 
-$metadata = elgg_view_menu('entity', array(
-	'entity' => $post,
-	'handler' => 'thewire',
-	'sort_by' => 'priority',
-	'class' => 'elgg-menu-hz',
-));
-
 $subtitle = "$author_text $date";
 
-// do not show the metadata and controls in widget view
+$metadata = '';
 if (elgg_in_context('widgets')) {
-	$metadata = '';
+	// only show entity menu outside of widgets
+	$metadata = elgg_view_menu('entity', array(
+		'entity' => $post,
+		'handler' => 'thewire',
+		'sort_by' => 'priority',
+		'class' => 'elgg-menu-hz',
+	));
 }
 
 $params = array(
