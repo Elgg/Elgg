@@ -90,6 +90,12 @@ function pages_init() {
 
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
+
+	// allow to be liked
+	if (function_exists('likes_register_type')) {
+		likes_register_type('object', 'page');
+		likes_register_type('object', 'page_top');
+	}
 }
 
 /**

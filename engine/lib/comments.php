@@ -26,6 +26,10 @@ function _elgg_comments_init() {
 	elgg_register_page_handler('comment', '_elgg_comments_page_handler');
 
 	elgg_register_ajax_view('core/ajax/edit_comment');
+
+	if (function_exists('likes_register_type')) {
+		likes_register_type('object', 'comment');
+	}
 }
 
 /**

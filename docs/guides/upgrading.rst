@@ -105,6 +105,20 @@ If you'd prefer to just add it back, you can use this code in your plugin's init
 
 Also, define a ``jquery-migrate.js`` view containing the contents of the script.
 
+Entities are no longer likable by default
+-----------------------------------------
+
+3rd party entity subtypes must be registered with the ``likes`` plugin to accept and display likes.
+
+.. code:: php
+
+    if (function_exists('likes_register_type')) {
+        likes_register_type('object', 'my_subtype');
+    }
+
+Just as before, you may return ``false`` in the ``permissions_check:annotate`` hook to effectively
+disable likes for entities that were registered by another plugin.
+
 JS and CSS views have been moved out of the js/ and css/ directories
 --------------------------------------------------------------------
 

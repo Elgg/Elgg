@@ -62,6 +62,11 @@ function thewire_init() {
 	elgg_register_action("thewire/add", "$action_base/add.php");
 	elgg_register_action("thewire/delete", "$action_base/delete.php");
 
+	// allow to be liked
+	if (function_exists('likes_register_type')) {
+		likes_register_type('object', 'thewire');
+	}
+
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'thewire_test');
 
 	elgg_register_event_handler('upgrade', 'system', 'thewire_run_upgrades');

@@ -2,6 +2,15 @@
 /**
  * Likes plugin
  *
+ * To make your content like-able, use the likes_register_type() function:
+ *
+ * <code>
+ * if (function_exists('likes_register_type')) {
+ *     likes_register_type('object', 'my_subtype');
+ * }
+ * </code>
+ *
+ * Similarly, likes_unregister_type() can be used to unregister likes from other plugins
  */
 
 elgg_register_event_handler('init', 'system', 'likes_init');
@@ -18,7 +27,7 @@ function likes_init() {
 	elgg_register_plugin_hook_handler('register', 'menu:river', 'likes_river_menu_setup', 400);
 	elgg_register_plugin_hook_handler('register', 'menu:entity', 'likes_entity_menu_setup', 400);
 	elgg_register_plugin_hook_handler('permissions_check', 'annotation', 'likes_permissions_check');
-
+	
 	$actions_base = __DIR__ . '/actions/likes';
 	elgg_register_action('likes/add', "$actions_base/add.php");
 	elgg_register_action('likes/delete', "$actions_base/delete.php");
@@ -27,13 +36,29 @@ function likes_init() {
 }
 
 /**
+ * Register an entity type/subtype as able to receive likes
+ *
+ * @tip Once registered, you can still revoke this ability using the permissions_check:annotate hook.
+ *
+ * @param string $type    Type
+ * @param string $subtype Subtype
+ *
+ * @return void
+ */
+function likes_register_type($type, $subtype = '') {
+	$types = (array)elgg_get_config('likes_registered_types');
+	$types[$type][$subtype] = true;
+	elgg_set_config('likes_registered_types', $types);
+}
+
+/**
  * Only allow annotation owner (or someone who can edit the owner, like an admin) to delete like
- * 
+ *
  * @param string $hook   "permissions_check"
  * @param string $type   "annotation"
  * @param array  $return Current value
  * @param array  $params Hook parameters
- * 
+ *
  * @return bool
  */
 function likes_permissions_check($hook, $type, $return, $params) {
@@ -62,7 +87,7 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = $params['entity'];
 	/* @var ElggEntity $entity */
 
-	if ($entity->canAnnotate(0, 'likes')) {
+	if (_likes_can_like($entity)) {
 		$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($entity->guid);
 		
 		// Always register both. That makes it super easy to toggle with javascript
@@ -115,17 +140,12 @@ function likes_river_menu_setup($hook, $type, $return, $params) {
 		return;
 	}
 
-	// don't like users #4116
-	if ($item->type == "user") {
-		return;
-	}
-
 	if ($item->annotation_id != 0) {
 		return;
 	}
 
 	$object = $item->getObjectEntity();
-	if (!$object || !$object->canAnnotate(0, 'likes')) {
+	if (!$object || !_likes_can_like($object)) {
 		return;
 	}
 
@@ -180,4 +200,26 @@ function likes_count(ElggEntity $entity) {
 	} else {
 		return $entity->countAnnotations('likes');
 	}
+}
+
+/**
+ * Can the current user like the given entity?
+ *
+ * @param mixed $entity
+ *
+ * @return bool
+ * @access private
+ */
+function _likes_can_like(ElggEntity $entity) {
+	$user_guid = elgg_get_logged_in_user_guid();
+	if (!$user_guid) {
+		return false;
+	}
+
+	$types = (array)elgg_get_config('likes_registered_types');
+	if (!isset($types[$entity->type][$entity->getSubtype()])) {
+		return false;
+	}
+
+	return $entity->canAnnotate($user_guid, 'likes');
 }
