@@ -14,18 +14,9 @@ if (!$file) {
 
 $owner = $file->getOwnerEntity();
 $categories = elgg_view('output/categories', $vars);
-$excerpt = elgg_get_excerpt($file->description);
-$mime = $file->mimetype;
-$base_type = substr($mime, 0, strpos($mime,'/'));
 
-$owner_link = elgg_view('output/url', array(
-	'href' => "file/owner/$owner->username",
-	'text' => $owner->name,
-	'is_trusted' => true,
-));
-$author_text = elgg_echo('byline', array($owner_link));
-
-$date = elgg_view_friendly_time($file->time_created);
+$vars['owner_url'] = "file/owner/$owner->username";
+$by_line = elgg_view('page/elements/by_line', $vars);
 
 $comments_count = $file->countComments();
 //only display if there are commments
@@ -40,7 +31,7 @@ if ($comments_count != 0) {
 	$comments_link = '';
 }
 
-$subtitle = "$author_text $date $comments_link $categories";
+$subtitle = "$by_line $comments_link $categories";
 
 $metadata = '';
 if (!elgg_in_context('widgets') && !elgg_in_context('gallery')) {
@@ -54,6 +45,8 @@ if (!elgg_in_context('widgets') && !elgg_in_context('gallery')) {
 }
 
 if ($full && !elgg_in_context('gallery')) {
+	$mime = $file->mimetype;
+	$base_type = substr($mime, 0, strpos($mime,'/'));
 
 	$extra = '';
 	if (elgg_view_exists("file/specialcontent/$mime")) {
@@ -91,6 +84,7 @@ if ($full && !elgg_in_context('gallery')) {
 	echo '</div>';
 } else {
 	// brief view
+	$excerpt = elgg_get_excerpt($file->description);
 
 	$file_icon = elgg_view_entity_icon($file, 'small');
 
