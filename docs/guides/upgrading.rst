@@ -308,7 +308,7 @@ Creating a relationship triggers only one event
 Entity relationship creation no longer fires the legacy "create" event using the relationship name as the type. E.g. Listening for the ``"create", "member"`` event will no longer capture group membership additions. Use the ``"create", "relationship"`` event.
 
 Discussion feature has been pulled from groups into its own plugin
--------------------------------------------------------------------
+------------------------------------------------------------------
 
 The ``object, groupforumtopic`` subtype has been replaced with the
 ``object, discussion`` subtype. If your plugin is using or altering
@@ -359,6 +359,15 @@ priority. Some of these handlers will most likely be called in a different order
 ----------------------------------------
 
 Elgg no longer provides this endpoint for exposing resource data.
+
+Icons migrated to Font Awesome
+------------------------------
+
+Elgg's sprites and most of the CSS classes beginning with ``elgg-icon-``
+`have been removed <https://github.com/Elgg/Elgg/pull/8578/files#diff-b3912b37ca7bd6c53a2968ccb6c22a94L22>`_.
+
+Usage of ``elgg_view_icon()`` is backward compatible, but static HTML using the ``elgg-icon``
+classes will have to be updated to the new markup.
 
 Introduced third-party library for sending email
 ------------------------------------------------
