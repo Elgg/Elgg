@@ -191,7 +191,10 @@ class Config implements Services\Config {
 			}
 			$path = $this->config->Config_file;
 		} else {
-			$path = Directory\Local::root()->getPath('settings.php');
+			$path = Directory\Local::root()->getPath('engine/settings.php');
+			if (!is_file($path)) {
+				$path = Directory\Local::root()->getPath('settings.php');
+			}
 		}
 
 		// No settings means a fresh install
