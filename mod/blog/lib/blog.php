@@ -5,48 +5,6 @@
  * @package Blog
  */
 
-
-/**
- * Get page components to view a blog post.
- *
- * @param int $guid GUID of a blog entity.
- * @return array
- */
-function blog_get_page_content_read($guid = NULL) {
-
-	$return = array();
-
-	elgg_entity_gatekeeper($guid, 'object', 'blog');
-
-	$blog = get_entity($guid);
-
-	// no header or tabs for viewing an individual blog
-	$return['filter'] = '';
-
-	elgg_set_page_owner_guid($blog->container_guid);
-
-	elgg_group_gatekeeper();
-
-	$return['title'] = $blog->title;
-
-	$container = $blog->getContainerEntity();
-	$crumbs_title = $container->name;
-	if (elgg_instanceof($container, 'group')) {
-		elgg_push_breadcrumb($crumbs_title, "blog/group/$container->guid/all");
-	} else {
-		elgg_push_breadcrumb($crumbs_title, "blog/owner/$container->username");
-	}
-
-	elgg_push_breadcrumb($blog->title);
-	$return['content'] = elgg_view_entity($blog, array('full_view' => true));
-	// check to see if we should allow comments
-	if ($blog->comments_on != 'Off' && $blog->status == 'published') {
-		$return['content'] .= elgg_view_comments($blog);
-	}
-
-	return $return;
-}
-
 /**
  * Get page components to list a user's or all blogs.
  *
@@ -103,47 +61,6 @@ function blog_get_page_content_list($container_guid = NULL) {
 	elgg_register_title_button();
 
 	$return['content'] = elgg_list_entities($options);
-
-	return $return;
-}
-
-/**
- * Get page components to list of the user's friends' posts.
- *
- * @param int $user_guid
- * @return array
- */
-function blog_get_page_content_friends($user_guid) {
-
-	$user = get_user($user_guid);
-	if (!$user) {
-		forward('blog/all');
-	}
-
-	$return = array();
-
-	$return['filter_context'] = 'friends';
-	$return['title'] = elgg_echo('blog:title:friends');
-
-	$crumbs_title = $user->name;
-	elgg_push_breadcrumb($crumbs_title, "blog/owner/{$user->username}");
-	elgg_push_breadcrumb(elgg_echo('friends'));
-
-	elgg_register_title_button();
-
-	$options = array(
-		'type' => 'object',
-		'subtype' => 'blog',
-		'full_view' => false,
-		'relationship' => 'friend',
-		'relationship_guid' => $user_guid,
-		'relationship_join_on' => 'container_guid',
-		'no_results' => elgg_echo('blog:none'),
-		'preload_owners' => true,
-		'preload_containers' => true,
-	);
-
-	$return['content'] = elgg_list_entities_from_relationship($options);
 
 	return $return;
 }

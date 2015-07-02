@@ -422,6 +422,8 @@ Also note that plugins should not be accessing the global ``$CONFIG`` variable e
 Removed Functions
 -----------------
 
+ - ``blog_get_page_content_friends`` 
+ - ``blog_get_page_content_read`` 
  - ``count_unread_messages()``
  - ``delete_entities()``
  - ``delete_object_entity()``
