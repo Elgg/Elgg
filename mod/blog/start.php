@@ -68,6 +68,9 @@ function blog_init() {
 
 	// ecml
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'blog_ecml_views_hook');
+	
+	// Permissions
+	elgg_register_plugin_hook_handler('permissions_check:annotate:likes', 'object', 'blog_permissions_check_annotate');
 }
 
 /**
@@ -281,4 +284,29 @@ function blog_run_upgrades($event, $type, $details) {
 
 		elgg_set_plugin_setting('upgrade_version', 1, 'blogs');
 	}
+}
+
+/**
+ * Allow liking of a blog
+ *
+ * @param string $hook   "permissions_check:annotate:likes"
+ * @param string $type   "object"
+ * @param array  $return Current value
+ * @param array  $params Hook parameters
+ *
+ * @return void|true
+ */
+function blog_permissions_check_annotate($hook, $type, $return, $params) {
+	if ($return !== false) {
+		// we only want to change to true if it is false
+		return;
+	}
+	
+	$user = elgg_extract('user', $params);
+	$entity = elgg_extract('entity', $params);
+	
+	$isUser = elgg_instanceof($user, 'user');
+	$isBlog = elgg_instanceof($entity, 'object', 'blog');
+	
+	return $isUser && $isBlog ? true : null;
 }

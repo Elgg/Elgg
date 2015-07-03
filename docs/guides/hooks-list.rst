@@ -213,10 +213,15 @@ Permission hooks
 	Return boolean for if the user ``$params['user']`` can comment on the entity ``$params['entity']``.
 
 **permissions_check:annotate**
-	Return boolean for if the user ``$params['user']`` can create an annotation with the name
-	``$params['annotation']`` on the entity ``$params['entity']``.
+	Return boolean for if the user ``$params['user']`` can create an annotation ``$params['annotation']`` 
+	on the entity ``$params['entity']``.
 
 	.. warning:: This is functions differently than the ``permissions_check:metadata`` hook by passing the annotation name instead of the metadata object.
+
+**permissions_check:annotate:<annotation_name>**
+	Return boolean for if the user ``$params['user']`` can create an annotation ``$params['annotation']`` 
+	with the name <annotation_name> on the entity ``$params['entity']``. This hook gets triggered before the less granular
+	`permissions_check:annotate` hook.
 
 **permissions_check:annotation**
 	Return boolean for if the user in ``$params['user']`` can edit the annotation ``$params['annotation']`` on the

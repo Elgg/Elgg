@@ -90,6 +90,9 @@ function pages_init() {
 
 	// register ecml views to parse
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'pages_ecml_views_hook');
+	
+	// Permissions
+	elgg_register_plugin_hook_handler('permissions_check:annotate:likes', 'object', 'pages_permissions_check_annotate');
 }
 
 /**
@@ -162,7 +165,7 @@ function pages_page_handler($page) {
 
 /**
  * Override the page url
- * 
+ *
  * @param string $hook
  * @param string $type
  * @param string $url
@@ -249,8 +252,8 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 	}
 
 	// remove delete if not owner or admin
-	if (!elgg_is_admin_logged_in() 
-		&& elgg_get_logged_in_user_guid() != $entity->getOwnerGuid() 
+	if (!elgg_is_admin_logged_in()
+		&& elgg_get_logged_in_user_guid() != $entity->getOwnerGuid()
 		&& ! pages_can_delete_page($entity)) {
 		foreach ($return as $index => $item) {
 			if ($item->getName() == 'delete') {
@@ -272,7 +275,7 @@ function pages_entity_menu_setup($hook, $type, $return, $params) {
 
 /**
  * Prepare a notification message about a new page
- * 
+ *
  * @param string                          $hook         Hook name
  * @param string                          $type         Hook type
  * @param Elgg\Notifications\Notification $notification The notification to prepare
@@ -289,7 +292,7 @@ function pages_prepare_notification($hook, $type, $notification, $params) {
 	$descr = $entity->description;
 	$title = $entity->title;
 
-	$notification->subject = elgg_echo('pages:notify:subject', array($title), $language); 
+	$notification->subject = elgg_echo('pages:notify:subject', array($title), $language);
 	$notification->body = elgg_echo('pages:notify:body', array(
 		$owner->name,
 		$title,
@@ -424,4 +427,29 @@ function pages_write_access_options_hook($hook, $type, $return_value, $params) {
 		unset($return_value[ACCESS_PUBLIC]);
 		return $return_value;
 	}
+}
+
+/**
+ * Allow liking of a page
+ *
+ * @param string $hook   "permissions_check:annotate:likes"
+ * @param string $type   "object"
+ * @param array  $return Current value
+ * @param array  $params Hook parameters
+ *
+ * @return void|false
+ */
+function pages_permissions_check_annotate($hook, $type, $return, $params) {
+	if ($return !== false) {
+		// we only want to change to true if it is false
+		return;
+	}
+
+	$user = elgg_extract('user', $params);
+	$entity = elgg_extract('entity', $params);
+
+	$isUser = elgg_instanceof($user, 'user');
+	$isPage = pages_is_page($entity);
+
+	return $isUser && $isPage ? true : null;
 }

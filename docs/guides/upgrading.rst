@@ -386,6 +386,30 @@ The following views received ``label`` elements around some of the input fields.
 - views/default/forms/admin/plugins/sort.php
 - views/default/forms/login.php
 
+Plugin Likes
+------------
+
+Objects are no longer likeable by default. If you need your content to support liking, you will need to register a plugin hook for it. An example on how to do that is shown below.
+
+.. code:: php
+
+    elgg_register_plugin_hook_handler('permissions_check:annotate:likes', 'object', 'myplugin_permissions_check_annotate');
+
+    function myplugin_permissions_check_annotate($hook, $type, $return, $params) {
+        if ($return !== false) {
+            // we only want to change to true if it is false
+            return;
+        }
+
+        $user = elgg_extract('user', $params);
+        $entity = elgg_extract('entity', $params);
+
+        $isUser = elgg_instanceof($user, 'user');
+        $isCorrectEntity = elgg_instanceof($entity, 'object', 'mysubtype');
+
+        return $isUser && $isCorrectEntity ? true : null;
+    }
+
 Plugin Messages
 ---------------
 

@@ -88,6 +88,9 @@ function file_init() {
 	elgg_register_menu_item('embed', $item);
 
 	elgg_extend_view('theme_sandbox/icons', 'file/theme_sandbox/icons/files');
+	
+	// Permissions
+	elgg_register_plugin_hook_handler('permissions_check:annotate:likes', 'object', 'file_permissions_check_annotate');
 }
 
 /**
@@ -241,7 +244,7 @@ function file_owner_block_menu($hook, $type, $return, $params) {
  *
  * @param int  $container_guid The GUID of the container of the files
  * @param bool $friends        Whether we're looking at the container or the container's friends
- * 
+ *
  * @return string The typecloud
  */
 function file_get_type_cloud($container_guid = "", $friends = false) {
@@ -441,4 +444,29 @@ function file_handle_object_delete($event, $type, ElggObject $file) {
 			$delfile->delete();
 		}
 	}
+}
+
+/**
+ * Allow liking of a file
+ *
+ * @param string $hook   "permissions_check:annotate:likes"
+ * @param string $type   "object"
+ * @param array  $return Current value
+ * @param array  $params Hook parameters
+ *
+ * @return void|false
+ */
+function file_permissions_check_annotate($hook, $type, $return, $params) {
+	if ($return !== false) {
+		// we only want to change to true if it is false
+		return;
+	}
+
+	$user = elgg_extract('user', $params);
+	$entity = elgg_extract('entity', $params);
+
+	$isUser = elgg_instanceof($user, 'user');
+	$isFile = elgg_instanceof($entity, 'object', 'file');
+
+	return $isUser && $isFile ? true : null;
 }

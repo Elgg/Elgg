@@ -19,6 +19,7 @@ function _elgg_comments_init() {
 	elgg_register_plugin_hook_handler('entity:url', 'object', '_elgg_comment_url_handler');
 	elgg_register_plugin_hook_handler('container_permissions_check', 'object', '_elgg_comments_container_permissions_override');
 	elgg_register_plugin_hook_handler('permissions_check', 'object', '_elgg_comments_permissions_override');
+	elgg_register_plugin_hook_handler('permissions_check:annotate:likes', 'object', '_elgg_comments_permissions_check_annotate');
 	elgg_register_plugin_hook_handler('email', 'system', '_elgg_comments_notification_email_subject');
 	
 	elgg_register_event_handler('update:after', 'all', '_elgg_comments_access_sync', 600);
@@ -205,8 +206,33 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
 }
 
 /**
+ * Allow liking of a comment
+ *
+ * @param string $hook   "permissions_check:annotate:likes"
+ * @param string $type   "object"
+ * @param array  $return Current value
+ * @param array  $params Hook parameters
+ *
+ * @return void|false
+ */
+function _elgg_comments_permissions_check_annotate($hook, $type, $return, $params) {
+	if ($return !== false) {
+		// we only want to change to true if it is false
+		return;
+	}
+
+	$user = elgg_extract('user', $params);
+	$entity = elgg_extract('entity', $params);
+
+	$isUser = elgg_instanceof($user, 'user');
+	$isComment = elgg_instanceof($entity, 'object', 'comment');
+
+	return $isUser && $isComment ? true : null;
+}
+
+/**
  * By default, only authors can edit their comments.
- * 
+ *
  * @param string  $hook   'permissions_check'
  * @param string  $type   'object'
  * @param boolean $return Can the given user edit the given entity?
@@ -264,12 +290,12 @@ function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $
 
 /**
  * Update comment access to match that of the container
- * 
+ *
  * @param string     $event  'update:after'
  * @param string     $type   'all'
  * @param ElggEntity $entity The updated entity
  * @return bool
- * 
+ *
  * @access private
  */
 function _elgg_comments_access_sync($event, $type, $entity) {

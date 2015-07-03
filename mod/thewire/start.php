@@ -65,6 +65,9 @@ function thewire_init() {
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'thewire_test');
 
 	elgg_register_event_handler('upgrade', 'system', 'thewire_run_upgrades');
+	
+	// Permissions
+	elgg_register_plugin_hook_handler('permissions_check:annotate:likes', 'object', 'thewire_permissions_check_annotate');
 }
 
 /**
@@ -485,4 +488,29 @@ function thewire_run_upgrades() {
 	foreach ($files as $file) {
 		include $path . $file;
 	}
+}
+
+/**
+ * Allow liking of a wire post
+ *
+ * @param string $hook   "permissions_check:annotate:likes"
+ * @param string $type   "object"
+ * @param array  $return Current value
+ * @param array  $params Hook parameters
+ *
+ * @return void|false
+ */
+function thewire_permissions_check_annotate($hook, $type, $return, $params) {
+	if ($return !== false) {
+		// we only want to change to true if it is false
+		return;
+	}
+
+	$user = elgg_extract('user', $params);
+	$entity = elgg_extract('entity', $params);
+
+	$isUser = elgg_instanceof($user, 'user');
+	$isWire = elgg_instanceof($entity, 'object', 'thewire');
+
+	return $isUser && $isWire ? true : null;
 }
