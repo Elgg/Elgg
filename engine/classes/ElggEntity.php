@@ -1177,6 +1177,11 @@ abstract class ElggEntity extends \ElggData implements
 			'user' => $user,
 			'annotation_name' => $annotation_name,
 		);
+		
+		if (!empty($annotation_name)) {
+			$return = _elgg_services()->hooks->trigger("permissions_check:annotate:{$annotation_name}", $this->type, $params, $return);
+		}
+		
 		return _elgg_services()->hooks->trigger('permissions_check:annotate', $this->type, $params, $return);
 	}
 
