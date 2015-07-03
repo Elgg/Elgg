@@ -75,6 +75,9 @@ function groups_init() {
 
 	// invitation request actions
 	elgg_register_plugin_hook_handler('register', 'menu:invitationrequest', 'groups_invitationrequest_menu_setup');
+	
+	// group members tabs
+	elgg_register_plugin_hook_handler('register', 'menu:groups_members', 'groups_members_menu_setup');
 
 	//extend some views
 	elgg_extend_view('elgg.css', 'groups/css');
@@ -237,6 +240,7 @@ function groups_page_handler($page) {
 
 	elgg_push_breadcrumb(elgg_echo('groups'), "groups/all");
 
+	$vars = [];
 	switch ($page[0]) {
 		case 'add':
 		case 'all':
@@ -249,10 +253,18 @@ function groups_page_handler($page) {
 			set_input('username', $page[1]);
 			echo elgg_view_resource("groups/{$page[0]}");
 			break;
+		case 'members':
+			$vars['sort'] = elgg_extract('2', $page, 'alpha');
+			$vars['guid'] = elgg_extract('1', $page);
+			if (elgg_view_exists("resources/groups/members/{$vars['sort']}")) {
+				echo elgg_view_resource("groups/members/{$vars['sort']}", $vars);
+			} else {
+				echo elgg_view_resource('groups/members', $vars);
+			}
+			break;
 		case 'activity':
 		case 'edit':
 		case 'invite':
-		case 'members':
 		case 'profile':
 		case 'requests':
 			set_input('guid', $page[1]);
@@ -759,5 +771,39 @@ function groups_invitationrequest_menu_setup($hook, $type, $menu, $params) {
 		'link_class' => 'elgg-button elgg-button-delete mlm',
 	));
 
+	return $menu;
+}
+
+/**
+ * Setup group members tabs
+ *
+ * @param string         $hook   "register"
+ * @param string         $type   "menu:groups_members"
+ * @param ElggMenuItem[] $menu   Menu items
+ * @param array          $params Hook params
+ *
+ * @return void|ElggMenuItem[]
+ */
+function groups_members_menu_setup($hook, $type, $menu, $params) {
+	
+	$entity = elgg_extract('entity', $params);
+	if (empty($entity) || !($entity instanceof ElggGroup)) {
+		return;
+	}
+	
+	$menu[] = ElggMenuItem::factory([
+		'name' => 'alpha',
+		'text' => elgg_echo('sort:alpha'),
+		'href' => "groups/members/{$entity->getGUID()}",
+		'priority' => 100
+	]);
+	
+	$menu[] = ElggMenuItem::factory([
+		'name' => 'newest',
+		'text' => elgg_echo('sort:newest'),
+		'href' => "groups/members/{$entity->getGUID()}/newest",
+		'priority' => 200
+	]);
+	
 	return $menu;
 }

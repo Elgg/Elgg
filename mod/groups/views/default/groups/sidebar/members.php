@@ -22,6 +22,7 @@ $body = elgg_list_entities_from_relationship(array(
 	'inverse_relationship' => true,
 	'type' => 'user',
 	'limit' => $limit,
+	'order_by' => 'r.time_created DESC',
 	'pagination' => false,
 	'list_type' => 'gallery',
 	'gallery_class' => 'elgg-gallery-users',
