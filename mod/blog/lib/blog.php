@@ -32,10 +32,11 @@ function blog_get_page_content_list($container_guid = NULL) {
 		// access check for closed groups
 		elgg_group_gatekeeper();
 
-		$options['container_guid'] = $container_guid;
 		$container = get_entity($container_guid);
-		if (!$container) {
-
+		if ($container instanceof ElggGroup) {
+		$options['container_guid'] = $container_guid;
+		} else {
+			$options['owner_guid'] = $container_guid;
 		}
 		$return['title'] = elgg_echo('blog:title:user_blogs', array($container->name));
 
@@ -104,8 +105,10 @@ function blog_get_page_content_archive($owner_guid, $lower = 0, $upper = 0) {
 		'distinct' => false,
 	);
 
-	if ($owner_guid) {
+	if ($owner instanceof ElggGroup) {
 		$options['container_guid'] = $owner_guid;
+	} elseif ($owner instanceof ElggUser) {
+		$options['owner_guid'] = $owner_guid;
 	}
 
 	if ($lower) {

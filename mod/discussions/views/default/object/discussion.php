@@ -22,15 +22,10 @@ if (!$poster) {
 $excerpt = elgg_get_excerpt($topic->description);
 
 $poster_icon = elgg_view_entity_icon($poster, 'tiny');
-$poster_link = elgg_view('output/url', array(
-	'href' => $poster->getURL(),
-	'text' => $poster->name,
-	'is_trusted' => true,
-));
-$poster_text = elgg_echo('groups:started', array($poster->name));
+
+$by_line = elgg_view('page/elements/by_line', $vars);
 
 $tags = elgg_view('output/tags', array('tags' => $topic->tags));
-$date = elgg_view_friendly_time($topic->time_created);
 
 $replies_link = '';
 $reply_text = '';
@@ -79,7 +74,7 @@ if (!elgg_in_context('widgets')) {
 }
 
 if ($full) {
-	$subtitle = "$poster_text $date $replies_link";
+	$subtitle = "$by_line $replies_link";
 
 	$params = array(
 		'entity' => $topic,
@@ -104,7 +99,7 @@ HTML;
 
 } else {
 	// brief view
-	$subtitle = "$poster_text $date $replies_link <span class=\"float-alt\">$reply_text</span>";
+	$subtitle = "$by_line $replies_link <span class=\"float-alt\">$reply_text</span>";
 
 	$params = array(
 		'entity' => $topic,

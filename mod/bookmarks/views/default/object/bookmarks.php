@@ -19,14 +19,8 @@ $categories = elgg_view('output/categories', $vars);
 $link = elgg_view('output/url', array('href' => $bookmark->address));
 $description = elgg_view('output/longtext', array('value' => $bookmark->description, 'class' => 'pbl'));
 
-$owner_link = elgg_view('output/url', array(
-	'href' => "bookmarks/owner/$owner->username",
-	'text' => $owner->name,
-	'is_trusted' => true,
-));
-$author_text = elgg_echo('byline', array($owner_link));
-
-$date = elgg_view_friendly_time($bookmark->time_created);
+$vars['owner_url'] = "bookmarks/owner/$owner->username";
+$by_line = elgg_view('page/elements/by_line', $vars);
 
 $comments_count = $bookmark->countComments();
 //only display if there are commments
@@ -41,7 +35,7 @@ if ($comments_count != 0) {
 	$comments_link = '';
 }
 
-$subtitle = "$author_text $date $comments_link $categories";
+$subtitle = "$by_line $comments_link $categories";
 
 $metadata = '';
 if (!elgg_in_context('widgets') && !elgg_in_context('gallery')) {

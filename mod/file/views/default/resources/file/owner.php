@@ -35,15 +35,22 @@ if ($owner->guid == elgg_get_logged_in_user_guid()) {
 $title = elgg_echo("file:user", array($owner->name));
 
 // List files
-$content = elgg_list_entities(array(
+$options = [
 	'type' => 'object',
 	'subtype' => 'file',
-	'container_guid' => $owner->guid,
 	'full_view' => false,
 	'no_results' => elgg_echo("file:none"),
 	'preload_owners' => true,
 	'distinct' => false,
-));
+];
+
+if ($owner instanceof ElggGroup) {
+	$options['container_guid'] = $owner->guid;
+} else {
+	$options['owner_guid'] = $owner->guid;
+}
+
+$content = elgg_list_entities($options);
 
 $sidebar = file_get_type_cloud(elgg_get_page_owner_guid());
 $sidebar .= elgg_view('file/sidebar');

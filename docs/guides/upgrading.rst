@@ -391,6 +391,21 @@ Plugin Messages
 
 Messages will no longer get the metadata 'msg' for newly created messages. This means you can not rely on that metadata to exist.
 
+Plugin Blog
+-----------
+
+The blog pages showing 'Mine' or 'Friends' listings of blogs have been changed to list all the blogs owned by the users (including those created in groups).
+
+Plugin Bookmarks
+----------------
+
+The bookmark pages showing 'Mine' or 'Friends' listings of bookmarks have been changed to list all the bookmarks owned by the users (including those created in groups).
+
+Plugin File
+-----------
+
+The file pages showing 'Mine' or 'Friends' listings of files have been changed to list all the files owned by the users (including those created in groups).
+
 Removed Classes
 ---------------
 
