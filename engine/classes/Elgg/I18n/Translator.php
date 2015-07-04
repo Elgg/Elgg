@@ -421,8 +421,8 @@ class Translator {
 	 *
 	 * @return array
 	 */
-	function getAllLanguageCodes() {
-		return array(
+	public static function getAllLanguageCodes() {
+		return [
 			"aa", // "Afar"
 			"ab", // "Abkhazian"
 			"af", // "Afrikaans"
@@ -453,6 +453,7 @@ class Translator {
 			"es", // "Spanish"
 			"et", // "Estonian"
 			"eu", // "Basque"
+			"eu_es", // "Basque (Spain)"
 			"fa", // "Persian"
 			"fi", // "Finnish"
 			"fj", // "Fiji"
@@ -516,11 +517,12 @@ class Translator {
 			"pl", // "Polish"
 			"ps", // "Pashto / Pushto"
 			"pt", // "Portuguese"
-			"pt_br", // 'Brazilian Portuguese'
+			"pt_br", // "Portuguese (Brazil)"
 			"qu", // "Quechua"
 			"rm", // "Rhaeto-Romance"
 			"rn", // "Kirundi"
 			"ro", // "Romanian"
+			"ro_ro", // "Romanian (Romania)"
 			"ru", // "Russian"
 			"rw", // "Kinyarwanda"
 			"sa", // "Sanskrit"
@@ -535,6 +537,7 @@ class Translator {
 			"so", // "Somali"
 			"sq", // "Albanian"
 			"sr", // "Serbian"
+			"sr_latin", // "Serbian (Latin)"
 			"ss", // "Siswati"
 			"st", // "Sesotho"
 			"su", // "Sundanese"
@@ -565,8 +568,21 @@ class Translator {
 			"yo", // "Yoruba"
 			"za", // "Zuang"
 			"zh", // "Chinese"
+			"zh_hans", // "Chinese Simplified"
 			"zu", // "Zulu"
-		);
+		];
 	}
 
+	/**
+	 * Normalize a language code (e.g. from Transifex)
+	 *
+	 * @param string $code Language code
+	 *
+	 * @return string
+	 */
+	public static function normalizeLanguageCode($code) {
+		$code = strtolower($code);
+		$code = preg_replace('~[^a-z0-9]~', '_', $code);
+		return $code;
+	}
 }
