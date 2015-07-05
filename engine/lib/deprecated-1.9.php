@@ -2636,7 +2636,7 @@ function oddentity_to_elggentity(ODDEntity $element) {
 
 	if (!$tmp) {
 		// Construct new class with owner from session
-		$classname = get_subtype_class($class, $subclass);
+		$classname = _elgg_services()->subtypeTable->getClass($class, $subclass);
 		if ($classname) {
 			if (class_exists($classname)) {
 				$tmp = new $classname();

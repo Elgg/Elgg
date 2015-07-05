@@ -87,7 +87,6 @@ class Plugins {
 	 * @access private
 	 */
 	function generateEntities() {
-	
 		$mod_dir = elgg_get_plugins_path();
 		$db_prefix = elgg_get_config('dbprefix');
 	

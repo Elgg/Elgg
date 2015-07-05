@@ -227,6 +227,14 @@ We also dropped the following arguments to views:
  * "options" to input/radio and input/checkboxes which aren't key-value pairs
    will no longer be acceptable.
 
+``add_subtype()`` usage has changed
+-----------------------------------
+
+``add_subtype()`` now must be called in your plugin's init function. It's no longer
+sufficient to call it in an ``activate.php`` script.
+
+To keep your plugin BC with earlier versions, you may leave your ``activate.php`` and
+``deactivate.php`` scripts in place. ``update_subtype()`` remains, but does nothing now.
 
 All scripts moved to bottom of page
 -----------------------------------
@@ -479,6 +487,7 @@ Removed Functions
  - ``search_list_users_by_name()``
  - ``set_template_handler()``
  - ``test_ip()``
+ - ``update_subtype()``
 
 Removed methods
 ---------------

@@ -244,10 +244,9 @@ Elgg aware of the new mapping. Following is an example class extension:
 
     function committee_init() {
         
-        register_entity_type('group', 'committee');
+        elgg_register_entity_type('group', 'committee');
         
         // Tell Elgg that group subtype "committee" should be loaded using the Committee class
-        // If you ever change the name of the class, use update_subtype() to change it
         add_subtype('group', 'committee', 'Committee');
     }
 

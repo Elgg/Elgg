@@ -171,53 +171,11 @@ function get_subtype_from_id($subtype_id) {
 }
 
 /**
- * Retrieve subtype from the cache.
- *
- * @param string $type
- * @param string $subtype
- * @return \stdClass|null
- *
- * @access private
- */
-function _elgg_retrieve_cached_subtype($type, $subtype) {
-	return _elgg_services()->subtypeTable->retrieveFromCache($type, $subtype);
-}
-
-/**
- * Fetch all suptypes from DB to local cache.
- *
- * @access private
- */
-function _elgg_populate_subtype_cache() {
-	return _elgg_services()->subtypeTable->populateCache();
-}
-
-/**
- * Return the class name for a registered type and subtype.
- *
- * Entities can be registered to always be loaded as a certain class
- * with add_subtype() or update_subtype(). This function returns the class
- * name if found and null if not.
- *
- * @param string $type    The type
- * @param string $subtype The subtype
- *
- * @return string|null a class name or null
- * @see get_subtype_from_id()
- * @see get_subtype_class_from_id()
- * @access private
- */
-function get_subtype_class($type, $subtype) {
-	return _elgg_services()->subtypeTable->getClass($type, $subtype);
-}
-
-/**
  * Returns the class name for a subtype id.
  *
  * @param int $subtype_id The subtype id
  *
  * @return string|null
- * @see get_subtype_class()
  * @see get_subtype_from_id()
  * @access private
  */
@@ -227,6 +185,9 @@ function get_subtype_class_from_id($subtype_id) {
 
 /**
  * Register \ElggEntities with a certain type and subtype to be loaded as a specific class.
+ *
+ * @warning Since 2.0, this must be called on every request. It's not sufficient to place
+ * it in an activate.php script.
  *
  * By default entities are loaded as one of the 4 parent objects: site, user, object, or group.
  * If you subclass any of these you can register the classname with add_subtype() so
@@ -268,16 +229,14 @@ function remove_subtype($type, $subtype) {
 }
 
 /**
- * Update a registered \ElggEntity type, subtype, and class name
+ * Does nothing
  *
- * @param string $type    Type
- * @param string $subtype Subtype
- * @param string $class   Class name to use when loading this entity
+ * @tip This function exists only to allow plugins to be BC with 1.9 and earlier
  *
  * @return bool
  */
-function update_subtype($type, $subtype, $class = '') {
-	return _elgg_services()->subtypeTable->update($type, $subtype, $class);
+function update_subtype() {
+	return true;
 }
 
 /**

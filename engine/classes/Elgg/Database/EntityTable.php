@@ -92,9 +92,9 @@ class EntityTable {
 		if ($new_entity) {
 			return $new_entity;
 		}
-	
+
 		// load class for entity if one is registered
-		$classname = get_subtype_class_from_id($row->subtype);
+		$classname = _elgg_services()->subtypeTable->getClassFromId($row->subtype);
 		if ($classname != "") {
 			if (class_exists($classname)) {
 				$new_entity = new $classname($row);
@@ -653,7 +653,7 @@ class EntityTable {
 				continue;
 			} else {
 				try {
-					$rows[$i] = entity_row_to_elggstar($row);
+					$rows[$i] = $this->rowToElggStar($row);
 				} catch (IncompleteEntityException $e) {
 					// don't let incomplete entities throw fatal errors
 					unset($rows[$i]);
