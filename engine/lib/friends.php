@@ -180,7 +180,7 @@ function _elgg_collections_page_handler($page_elements) {
  */
 function _elgg_setup_collections_menu() {
 	
-	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
+	if (elgg_is_logged_in() && elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		$user = elgg_get_page_owner_entity();
 		
 		elgg_register_menu_item('page', array(
