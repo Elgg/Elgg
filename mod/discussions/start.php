@@ -9,6 +9,7 @@ elgg_register_event_handler('init', 'system', 'discussion_init');
  * Initialize the discussion component
  */
 function discussion_init() {
+	add_subtype('object', 'discussion_reply', 'ElggDiscussionReply');
 
 	elgg_register_library('elgg:discussion', __DIR__ . '/lib/discussion.php');
 

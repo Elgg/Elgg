@@ -1287,8 +1287,6 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function connectToDatabase() {
-		
-
 		if (!include_once($this->getSettingsPath())) {
 			register_error('Elgg could not load the settings file. It does not exist or there is a file permissions issue.');
 			return FALSE;
@@ -1315,8 +1313,6 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function installDatabase() {
-		
-
 		try {
 			_elgg_services()->db->runSqlScript(\Elgg\Application::elggDir()->getPath("/engine/schema/mysql.sql"));
 		} catch (Exception $e) {
@@ -1491,24 +1487,9 @@ class ElggInstaller {
 		_elgg_services()->configTable->set('allow_user_default_access', '', $site->getGUID());
 		_elgg_services()->configTable->set('default_limit', 10, $site->getGUID());
 
-		$this->setSubtypeClasses();
-
 		$this->enablePlugins();
 
 		return TRUE;
-	}
-
-	/**
-	 * Register classes for core objects
-	 *
-	 * @return void
-	 */
-	protected function setSubtypeClasses() {
-		add_subtype("object", "plugin", "ElggPlugin");
-		add_subtype("object", "file", "ElggFile");
-		add_subtype("object", "widget", "ElggWidget");
-		add_subtype("object", "comment", "ElggComment");
-		add_subtype("object", "elgg_upgrade", 'ElggUpgrade');
 	}
 
 	/**
@@ -1517,6 +1498,8 @@ class ElggInstaller {
 	 * @return void
 	 */
 	protected function enablePlugins() {
+		add_subtype("object", "plugin", "ElggPlugin");
+
 		_elgg_generate_plugin_entities();
 		$plugins = elgg_get_plugins('any');
 		foreach ($plugins as $plugin) {

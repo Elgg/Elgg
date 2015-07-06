@@ -18,6 +18,7 @@ elgg_register_event_handler('init', 'system', 'thewire_init');
  * The Wire initialization
  */
 function thewire_init() {
+	add_subtype('object', 'thewire', 'ElggWire');
 
 	// register the wire's JavaScript
 	$thewire_js = elgg_get_simplecache_url('thewire.js');

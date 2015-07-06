@@ -18,6 +18,7 @@ elgg_register_event_handler('init', 'system', 'blog_init');
  * Init blog plugin.
  */
 function blog_init() {
+	add_subtype('object', 'blog', 'ElggBlog');
 
 	elgg_register_library('elgg:blog', __DIR__ . '/lib/blog.php');
 

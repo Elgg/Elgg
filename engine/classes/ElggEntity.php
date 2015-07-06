@@ -1495,7 +1495,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 		
 		$subtype = $this->attributes['subtype'];
-		$subtype_id = add_subtype($type, $subtype);
+		$subtype_id = _elgg_services()->subtypeTable->add($type, $subtype);
 		$owner_guid = (int)$this->attributes['owner_guid'];
 		$access_id = (int)$this->attributes['access_id'];
 		$now = (string)time();
