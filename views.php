@@ -13,13 +13,8 @@ return [
 		"jquery.min.map" => "vendor/bower-asset/jquery/dist/jquery.min.map",
 		"jquery-migrate.js" => "vendor/bower-asset/jquery-migrate/jquery-migrate.min.js",
 		"jquery.form.js" => "vendor/bower-asset/jquery-form/jquery.form.js",
-		"jquery.imgareaselect.css" => "vendor/bower-asset/jquery-imgareaselect/distfiles/css/imgareaselect-deprecated.css",
-		"jquery.imgareaselect.js" => "vendor/bower-asset/jquery-imgareaselect/jquery.imgareaselect.dev.js",
-		"jquery.jeditable.js" => "vendor/bower-asset/jquery-jeditable/jquery.jeditable.js",
 		"jquery.colorbox.js" => "vendor/bower-asset/jquery-colorbox/jquery.colorbox-min.js",
-		"jquery.ui.autocomplete.html.js" => "vendor/bower-asset/jquery-ui-extensions/src/autocomplete/jquery.ui.autocomplete.html.js",
 		"require.js" => "vendor/bower-asset/requirejs/require.js",
-		"sprintf.js" => "vendor/bower-asset/sprintf/dist/sprintf.min.js",
 		"text.js" => "vendor/bower-asset/text/text.js",
 		
 		// need to use some folder structure, because FontAwesome includes fonts relative to css
@@ -35,5 +30,10 @@ return [
 		"elgg/ui.avatar_cropper.js" => __DIR__ . "/js/lib/ui.avatar_cropper.js",
 		"elgg/ui.friends_picker.js" => __DIR__ . "/js/lib/ui.friends_picker.js",
 		"elgg/ui.river.js" => __DIR__ . "/js/lib/ui.river.js",
+		"jquery.imgareaselect.css" => __DIR__ . "/bower_components/jquery-imgareaselect/distfiles/css/imgareaselect-deprecated.css",
+		"jquery.imgareaselect.js" => __DIR__ . "/bower_components/jquery-imgareaselect/jquery.imgareaselect.dev.js",
+		"jquery.jeditable.js" => __DIR__ . "/bower_components/jquery-jeditable/jquery.jeditable.js",
+		"jquery.ui.autocomplete.html.js" => __DIR__ . "/bower_components/jquery-ui-extensions/src/autocomplete/jquery.ui.autocomplete.html.js",
+		"sprintf.js" => __DIR__ . "/bower_components/sprintf/src/sprintf.js",
 	],
 ];
