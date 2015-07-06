@@ -18,10 +18,53 @@ class PostUpdate {
 	 * @return void
 	 */
 	public static function execute(Event $event) {
-		self::copyFromElggToRoot("install/config/htaccess.dist", ".htaccess");
-		self::copyFromElggToRoot("index.php", "index.php");
-		self::copyFromElggToRoot("install.php", "install.php");
-		self::copyFromElggToRoot("upgrade.php", "upgrade.php");
+		self::copyFileToRoot("install/config/htaccess.dist", ".htaccess");
+		self::copyFileToRoot("index.php", "index.php");
+		self::copyFileToRoot("install.php", "install.php");
+		self::copyFileToRoot("upgrade.php", "upgrade.php");
+		
+		$managed_plugins = array(
+			'aalborg_theme',
+			'blog',
+			'bookmarks',
+			'categories',
+			'ckeditor',
+			'custom_index',
+			'dashboard',
+			'developers',
+			'diagnostics',
+			'discussions',
+			'embed',
+			'externalpages',
+			'file',
+			'garbagecollector',
+			'groups',
+			'htmlawed',
+			'invitefriends',
+			'legacy_urls',
+			'likes',
+			'logbrowser',
+			'logrotate',
+			'members',
+			'messageboard',
+			'messages',
+			'notifications',
+			'pages',
+			'profile',
+			'reportedcontent',
+			'search',
+			'site_notifications',
+			'tagcloud',
+			'thewire',
+			'twitter_api',
+			'uservalidationbyemail',
+			'web_services',
+			'zaudio',
+		);
+		
+		foreach ($managed_plugins as $id) {
+			self::copyPluginToRoot($id);
+		}
 	}
 	
 	/**
@@ -32,11 +75,30 @@ class PostUpdate {
 	 * 
 	 * @return void
 	 */
-	private static function copyFromElggToRoot($elggPath, $rootPath) {
+	private static function copyFileToRoot($elggPath, $rootPath) {
 		$from = Elgg\Application::elggDir()->getPath($elggPath);
 		$to = Directory\Local::root()->getPath($rootPath);
 		
+		if ($from == $to) {
+			return;
+		}
+		
 		echo "Copying '$from' to '$to'...\n";
 		copy($from, $to);
+	}
+	
+	/**
+	 * Move a plugin from Elgg core to application root
+	 */
+	private static function copyPluginToRoot($id) {
+		$from = Elgg\Application::elggDir()->getPath("mod/$id");
+		$to = Directory\Local::root()->getPath("mod/$id");
+		
+		if ($from == $to) {
+			return;
+		}
+		
+		echo "Moving plugin '$id' from '$from' to '$to'...";
+		rename($from, $to);
 	}
 }
