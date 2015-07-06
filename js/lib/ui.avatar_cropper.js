@@ -28,17 +28,21 @@ elgg.avatarCropper.init = function() {
 	$('#user-avatar-cropper').imgAreaSelect(params);
 
 	if ($('input[name=x2]').val()) {
-		var ias = $('#user-avatar-cropper').imgAreaSelect({instance: true});
-		var selection = ias.getSelection();
-		elgg.avatarCropper.preview($('#user-avatar-cropper'), selection);
+
+		// TODO figure out why this is necessary
+		$(window).on('load', function () {
+			var ias = $('#user-avatar-cropper').imgAreaSelect({instance: true});
+			var selection = ias.getSelection();
+			elgg.avatarCropper.preview($('#user-avatar-cropper'), selection);
+		});
 	}
 };
 
 /**
  * Handler for changing select area.
  *
- * @param {Object} reference to the image
- * @param {Object} imgareaselect selection object
+ * @param {Object} img       reference to the image
+ * @param {Object} selection imgareaselect selection object
  * @return void
  */
 elgg.avatarCropper.preview = function(img, selection) {
@@ -62,8 +66,8 @@ elgg.avatarCropper.preview = function(img, selection) {
 /**
  * Handler for updating the form inputs after select ends
  *
- * @param {Object} reference to the image
- * @param {Object} imgareaselect selection object
+ * @param {Object} img       reference to the image
+ * @param {Object} selection imgareaselect selection object
  * @return void
  */
 elgg.avatarCropper.selectChange = function(img, selection) {

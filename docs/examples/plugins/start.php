@@ -16,6 +16,9 @@ function my_plugin_init() {
 	// Extend the main CSS file
 	elgg_extend_view('elgg.css', 'my_plugin.css');
 
+	// Require your JavaScript AMD module (view "my_plugin.js") on every page
+	elgg_require_js('my_plugin');
+
 	// Add a menu item to the main site menu
 	$item = new ElggMenuItem('my_plugin', elgg_echo('my_plugin:menu'), 'my_url');
 	elgg_register_menu_item('site', $item);

@@ -27,7 +27,7 @@ class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 
 	public function testNullReturnDoesntChangeValue() {
 		$hooks = new \Elgg\PluginHooksService();
-		$hooks->registerHandler('foo', 'bar', array('\Elgg\PluginHooksServiceTest', 'returnNull'));
+		$hooks->registerHandler('foo', 'bar', 'Elgg\Values::getNull');
 
 		$returnval = $hooks->trigger('foo', 'bar', array(), 1);
 
@@ -46,10 +46,6 @@ class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 
 		$hooks->trigger('foo', 'bar');
 	}
-	
-	public static function returnTwo() {
-		return 2;
-	}
 
 	public static function changeReturn($foo, $bar, $returnval, $params) {
 		$testCase = $params['testCase'];
@@ -57,10 +53,6 @@ class PluginHooksServiceTest extends \PHPUnit_Framework_TestCase {
 		$testCase->assertEquals(1, $returnval);
 
 		return 2;
-	}
-
-	public static function returnNull() {
-		return;
 	}
 
 	public static function throwInvalidArg() {
