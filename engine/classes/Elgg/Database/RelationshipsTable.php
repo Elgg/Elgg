@@ -90,14 +90,14 @@ class RelationshipsTable {
 	 * @param int    $guid_two     GUID of the target entity of the relationship
 	 *
 	 * @return bool
-	 * @throws InvalidArgumentException
+	 * @throws \InvalidArgumentException
 	 */
 	function add($guid_one, $relationship, $guid_two) {
 		
 	
 		if (strlen($relationship) > \ElggRelationship::RELATIONSHIP_LIMIT) {
 			$msg = "relationship name cannot be longer than " . \ElggRelationship::RELATIONSHIP_LIMIT;
-			throw InvalidArgumentException($msg);
+			throw new \InvalidArgumentException($msg);
 		}
 	
 		$guid_one = (int)$guid_one;

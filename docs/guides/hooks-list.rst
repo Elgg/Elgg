@@ -214,7 +214,7 @@ Permission hooks
 
 **permissions_check:annotate**
 	Return boolean for if the user ``$params['user']`` can create an annotation with the name
-	``$params['annotation']`` on the entity ``$params['entity']``.
+	``$params['annotation_name']`` on the entity ``$params['entity']``.
 
 	.. warning:: This is functions differently than the ``permissions_check:metadata`` hook by passing the annotation name instead of the metadata object.
 
