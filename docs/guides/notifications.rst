@@ -50,7 +50,7 @@ rating to the owner.
 	);
 
 	// Send the notification
-	notify_user($user->guid, $owner->guid, $subject, $body, $params);
+	notify_user($owner->guid, $user->guid, $subject, $body, $params);
 
 .. note::
 

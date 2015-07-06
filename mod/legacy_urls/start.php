@@ -6,6 +6,10 @@
 
 elgg_register_event_handler('init', 'system', 'legacy_urls_init');
 
+/**
+ * Initialize the plugin
+ * @return void
+ */
 function legacy_urls_init() {
 	elgg_register_page_handler('tag', 'legacy_urls_tag_handler');
 	elgg_register_page_handler('pg', 'legacy_urls_pg_handler');
@@ -20,8 +24,13 @@ function legacy_urls_init() {
 
 /**
  * Redirect the requestor to the new URL
+ * Checks the plugin setting to determine the course of action:
+ * a) Displays an error page with the new URL
+ * b) Forwards to the new URL and displays an error message
+ * c) Silently forwards to the new URL
  * 
  * @param string $url Relative or absolute URL
+ * @return mixed
  */
 function legacy_urls_redirect($url) {
 	$method = elgg_get_plugin_setting('redirect_method', 'legacy_urls');
@@ -68,6 +77,10 @@ function legacy_urls_prepare_url($url, array $query_vars = array()) {
 	}
 	$params = array_merge($params, $query_vars);
 	if ($params) {
+		if (!empty($params['__elgg_uri'])) {
+			// on multiple redirects, __elgg_uri is appended to the URL causing infinite loops #8494
+			unset($params['__elgg_uri']);
+		}
 		return elgg_http_add_url_query_elements($url, $params);		
 	} else {
 		return $url;
@@ -76,6 +89,9 @@ function legacy_urls_prepare_url($url, array $query_vars = array()) {
 
 /**
  * Handle requests for /tag/<tag string>
+ *
+ * @param array $segments URL segments
+ * @return mixed
  */
 function legacy_urls_tag_handler($segments) {
 	$tag = $segments[0];
@@ -85,6 +101,9 @@ function legacy_urls_tag_handler($segments) {
 
 /**
  * Handle requests for URLs that start with /pg/
+ *
+ * @param array $segments URL segments
+ * @return mixed
  */
 function legacy_urls_pg_handler($segments) {
 	$url = implode('/', $segments);
@@ -92,7 +111,7 @@ function legacy_urls_pg_handler($segments) {
 }
 
 /**
- * blog forwarder
+ * Blog forwarder
  * 
  * 1.0-1.7.5
  * Group blogs page: /blog/group:<container_guid>/
@@ -100,6 +119,11 @@ function legacy_urls_pg_handler($segments) {
  * 1.7.5-pre 1.8
  * Group blogs page: /blog/owner/group:<container_guid>/
  * Group blog view:  /blog/read/<guid>
+ *
+ * @param $hook   string "route"
+ * @param $type   string "blog"
+ * @param $result mixed  Old identifier and segments
+ * @return mixed
  */
 function legacy_urls_blog_forward($hook, $type, $result) {
 
@@ -169,8 +193,16 @@ function legacy_urls_blog_forward($hook, $type, $result) {
 }
 
 /**
- * bookmarks forwarder
+ * Bookmarks forwarder
+ * /bookmarks/group:<group_guid>/
+ * /bookmarks/gorup:<group_guid>/read/<guid>/
+ * /bookmarks/read/<guid>
+ * /bookmarks/<username>[/(items|read|inbox|friends|add|bookmarklet)/<guid>]
  *
+ * @param $hook   string "route"
+ * @param $type   string "bookmarks"
+ * @param $result mixed  Old identifier and segments
+ * @return mixed
  */
 function legacy_urls_bookmarks_forward($hook, $type, $result) {
 
@@ -238,8 +270,13 @@ function legacy_urls_bookmarks_forward($hook, $type, $result) {
 }
 
 /**
- * file forwarder
+ * File forwarder
+ * /file/read/<guid>
  *
+ * @param $hook   string "route"
+ * @param $type   string "file"
+ * @param $result mixed  Old identifier and segments
+ * @return mixed
  */
 function legacy_urls_file_forward($hook, $type, $result) {
 
@@ -256,8 +293,14 @@ function legacy_urls_file_forward($hook, $type, $result) {
 }
 
 /**
- * groups forwarder
+ * Groups forwarder
+ * /groups/<guid>
+ * /groups/forum/<guid>
  *
+ * @param $hook   string "route"
+ * @param $type   string "groups"
+ * @param $result mixed  Old identifier and segments
+ * @return mixed
  */
 function legacy_urls_groups_forward($hook, $type, $result) {
 
@@ -273,11 +316,22 @@ function legacy_urls_groups_forward($hook, $type, $result) {
 			return false;
 		}
 	}
+
+	if ($page[0] == 'forum') {
+		$url = "discussion/owner/{$page[1]}";
+		legacy_urls_redirect(legacy_urls_prepare_url($url));
+		return false;
+	}
 }
 
 /**
- * user settings forwarder
- *
+ * User settings forwarder
+ * /settings/plugins/
+ * 
+ * @param $hook   string "route"
+ * @param $type   string "settings"
+ * @param $result mixed  Old identifier and segments
+ * @return mixed
  */
 function legacy_urls_settings_forward($hook, $type, $result) {
 
@@ -299,8 +353,11 @@ function legacy_urls_settings_forward($hook, $type, $result) {
 }
 
 /**
- * group forum forwarder
- * 
+ * Group forum forwarder
+ * /forum/.*
+ *
+ * @param array $page URL segments
+ * @return mixed
  */
 function legacy_urls_forum_handler($page) {
 	switch ($page[0]) {
@@ -308,15 +365,19 @@ function legacy_urls_forum_handler($page) {
 			$url = "discussion/view/{$page[1]}/{$page[2]}";
 			legacy_urls_redirect(legacy_urls_prepare_url($url));
 			return true;
-			break;
 		default:
 			return false;
 	}
 }
 
 /**
- * messageboard forwarder
+ * Messageboard forwarder
+ * /messageboard/!(owner|add|group)
  *
+ * @param $hook   string "route"
+ * @param $type   string "messageboard"
+ * @param $result mixed  Old identifier and segments
+ * @return mixed
  */
 function legacy_urls_messageboard_forward($hook, $type, $result) {
 

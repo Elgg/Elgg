@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.x\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-05-25 10:01+0300\n"
+"POT-Creation-Date: 2015-06-14 22:15-0700\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,563 +17,563 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../appendix/faqs.rst:2
-# ac848554aa6546669a6ef5e91a42b485
+# e3cdb8e1dada4e21acd73c95027ab48c
 msgid "FAQs and Other Troubleshooting"
 msgstr ""
 
 #: ../../appendix/faqs.rst:4
-# e6a7d535daa54c30879e435ff0c1d639
+# 846275100fc14a9c8dfbf2d254a7fbbe
 msgid "Below are some commonly asked questions about Elgg."
 msgstr ""
 
 #: ../../appendix/faqs.rst:0
-# deda0648fd42423285ac3470915d461e
+# ad2eefeabe424332bcd75354ceea7ac7
 msgid "Contents"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:2
 #: ../../appendix/faqs/general.rst:2
-# c39ba48744dc47079b611e38e92628d4
-# e463460d454c498b856cf4905c3ea3b6
+# ac6283a3e5794cc4a2dd502eacb4984c
+# 09c0e5068836482b8553bc4e870fed75
 msgid "General"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:6
 #: ../../appendix/faqs/general.rst:6
-# a391152698ff45e69171426a5cecb49e
-# e6989c141145485291713a0e2a827bf1
+# 2d6926194ca14ec88e81986f54128c1d
+# cdd67107c6624f318dd01cee17e2eaf6
 msgid ":doc:`/admin/getting-help`"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:9
 #: ../../appendix/faqs/general.rst:9
-# 88fd151aab384beb84c2cc9478d56fba
-# 88843386b1194a64839abc877901a704
+# 55289d17186f4d89b742ef9087aa279d
+# c6b0a712553c4ac0a28fd5453c9b3c16
 msgid "\"Plugin cannot start and has been deactivated\" or \"This plugin is invalid\""
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:10
 #: ../../appendix/faqs/general.rst:10
-# cbbc66b103d54019b0d58b5ec509149f
-# 9337c8c74cef4f0c84ca248e6753518a
+# 17a2a373225b465f8e2174572a2a399c
+# 94552e2ca7bf47d18ae6379988617850
 msgid "This error is usually accompanied by more details explaining why the plugin is invalid. This is usually caused by an incorrectly installed plugin."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:13
 #: ../../appendix/faqs/general.rst:13
-# 519b3b2c381b4ae2a00a124bd7cd3f0a
-# 4f29353807244bf3894c91d0f2745043
+# df14cd0eeb6e439ab5ec8963da8961fd
+# 7e69a6a8d2904635a75c2efa6083348b
 msgid "If you are installing a plugin called \"test\", there will be a test directory under mod. In that test directory there needs to be a start.php file: ``/mod/test/start.php`` and a manifest.xml file ``/mod/test/manifest.xml``."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:19
 #: ../../appendix/faqs/general.rst:19
-# 6f29c84cb5604ba1a7d7682fec15c9f4
-# 2d3df8195fbd484392c3eac12a6338ab
+# 6f11ad08474d436b93c7d509269f9a07
+# 28370af59eb842c3b0bbdd976d811684
 msgid "If these files do not exist, it could be caused by:"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:16
 #: ../../appendix/faqs/general.rst:16
-# b0c354619c5d41f282f9562764c13018
-# 10139a2e721e407488c3e5f13bdf785b
+# 13d04bb6a9dc4987a1d2cb05e76b48a5
+# 82e6120729f34d24bcfe828b3a38cab7
 msgid "installing a plugin to the wrong directory"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:17
 #: ../../appendix/faqs/general.rst:17
-# 44c27edacb14478184b130419652a9eb
-# aa966f48f6024da5bffcf1697079d3c0
+# 6471afaf94a04648af358aaa5dfdbd80
+# acc1b9510cb449a0980108286eb07c55
 msgid "creating a directory under /mod that does not contain a plugin"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:18
 #: ../../appendix/faqs/general.rst:18
-# 1249230095a94d31ab67688bf789fecc
-# 2ea39384ab6247d189db5b397486a7d9
+# 717b55f5f95a46d8aab4cfff90cb43fd
+# eee3ebd45bad49369551f38b27a55b1d
 msgid "a bad ftp transfer"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:19
 #: ../../appendix/faqs/general.rst:19
-# f82b7430d498403385ee2e8e8b97c69a
-# e691ad3fd6de484dbe6f04b1f224437c
+# 34dd64f26ab1443baecd07521c411b10
+# 5e1c113af2a642dab66fb2fdda577a7c
 msgid "unzipping a plugin into an extra directory (myplugin.zip unzips to ``myplugin/myplugin``)"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:21
 #: ../../appendix/faqs/general.rst:21
-# d74551cff18c442581f92f876d333c3f
-# c45bfcb188bb4e56aeede3999655ac49
+# 66d87d8fee404e778bfbf4b39039a631
+# b55d4eda1e9a4941af25c2420fe133be
 msgid "If you are on a Unix-based host and the files exist in the correct directory, check the permissions. Elgg must have read access to the files and read + execute access on the directories."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:24
 #: ../../appendix/faqs/general.rst:24
-# fd943111d4d24896837c1d4cffb3b002
-# cfb2a56e14d14eb4bf262a3dee1abb30
+# 3efb03c01ce94692bbf106418e1485f3
+# bfcaf46a0d794d3a87226c954ae8f198
 msgid "White Page (WSOD)"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:29
 #: ../../appendix/faqs/general.rst:29
-# 4c332a8e0a314d76821626f5eb05e182
-# 7efcf547ab5d492f9062133df86450a8
+# bf73ef5b5ff64c1f9fb7c3b267e4c38b
+# 4ced4c2d085242c78850b171e3bb72db
 msgid "A blank, white page (often called a \"white screen of death\") means there is a PHP syntax error. There are a few possible causes of this:"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:27
 #: ../../appendix/faqs/general.rst:27
-# 320dd25a94344828b1b562a6b3fcc0c7
-# 675c28e9b0c446f9a48fd66be92a8c0f
+# a9c69a21f46a4e649845a5f561fe4b41
+# 1dbe284cd5524320b87ab4aa685ceece
 msgid "corrupted file - try transfering the code again to your server"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:28
 #: ../../appendix/faqs/general.rst:28
-# fc74dbd83f9d407f836940b1a82168d1
-# 3d7770c2701b4a598149970e6e6396a7
+# cf8625893e494d9ba7c4138b228490b3
+# caa982bff95c4a56821efa1429d7072f
 msgid "a call to a php module that was not loaded - this can happen after you install a plugin that requires a specific module."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:29
 #: ../../appendix/faqs/general.rst:29
-# 7f11506dfde748029cc821f6de103b05
-# 9bd531b272f7462a9ba693e944a96385
+# 5b1308394a574024b377c056706ebb3b
+# d0c6ae5f086b47a7aab1a7ee24fefc15
 msgid "bad plugin - not all plugins have been written to the same quality so you should be careful which ones you install."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:31
 #: ../../appendix/faqs/general.rst:31
-# 2fa83a874fa748c292a0cc09147830e5
-# 19f8c14a6d2d4e64a69548098b2bde9d
+# e0bb18f8b6444a1d83df7488a07f9202
+# 28dd4e4f7d7d49309ca1f0ce03482f7b
 msgid "To find where the error is occurring, change the .htaccess file to display errors to the browser. Set display_errors to 1 and load the same page again. You should see a PHP error in your browser. Change the setting back once you've resolved the problem."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:35
 #: ../../appendix/faqs/general.rst:35
-# 2741c7d6cfa54bda84b5b7a7cbdf2ce1
-# 26a9622460534e0da5f9115e5f5e3e6e
+# 3568963aa53e49e297b319131f1e3710
+# 90bb6b68c0634d019c6bacc5103adcc8
 msgid "If you are using the Developer's Tools plugin, go to its settings page and make sure you have \"Display fatal PHP errors\" enabled."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:37
 #: ../../appendix/faqs/general.rst:37
-# 4dea465cc0974ed4a33a30085053bf1a
-# 4ccf2049b9c844fcadf21acf422ab69e
+# 1cabbc6e2e404b71b1e9a7c0243d6e48
+# ca2fe67e6d6d43a4bb2bd3c221a33f7b
 msgid "If the white screen is due to a bad plugin, remove the latest plugins that you have installed by deleting their directories and then reload the page."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:41
 #: ../../appendix/faqs/general.rst:41
-# 4acc98e58ca54388aab0a2a2587d64ef
-# 7bc9c7d7de14409f8fc38c88143dde1e
+# 7f425a76b7384951b8b20d8f5bf6b92a
+# 41a76f4cc4414f51aa130f360c3f91c9
 msgid "You can temporarily disable all plugins by creating an empty file at ``mod/disabled``. You can then disable the offending module via the administrator tools panel."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:43
 #: ../../appendix/faqs/general.rst:43
-# 55b63cbf91914d488ce3d5ae7de40395
-# 6c0a6d85abfa40e7aa8cc5be48ef0b71
+# 6f87c4de4f564466aae122df450a2586
+# 11c3446f09b747e5ad332f2c203abec1
 msgid "If you are getting a WSOD when performing an action, like logging in or posting a blog, but there are no error messages, it's most likely caused by non-printable characters in plugin code. Check the plugin for white spaces/new lines characters after finishing php tag (``?>``) and remove them."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:46
 #: ../../appendix/faqs/general.rst:46
-# 6b764c5bd5d24215a6027e5511a4e5a2
-# a5636e80de3a4230aaecccfedc6a604c
+# 44953f78e8a14e1b983d922ebe863b79
+# 36d098507fe347178f4650f4476c39d2
 msgid "Page not found"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:48
 #: ../../appendix/faqs/general.rst:48
-# eb6991999bdb48f9b8522c774eb07b64
-# 590f2c07f1f3471c86f748d943916f7a
+# 9816701191c54a14b90105cdc835f65c
+# 8b16182fd7d44d5f9311e56f1fe3752c
 msgid "If you have recently installed your Elgg site, the most likely cause for a page not found error is that ``mod_rewrite`` is not setup correctly on your server. There is information in the :doc:`Install Troubleshooting </intro/install>` page on fixing this. The second most likely cause is that your site url in your database is incorrect."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:50
 #: ../../appendix/faqs/general.rst:50
-# b9e6150e36684cb7a5c4931a0cc45201
-# 0897880c712d4c97b1f53231928972ed
+# 328d87ad2083488fa5bf712878207b3a
+# 5ebaaf02a30b453c9f180b3c6ade5173
 msgid "If you've been running your site for a while and suddenly start getting page not found errors, you need to ask yourself what has changed. Have you added any plugins? Did you change your server configuration?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:52
 #: ../../appendix/faqs/general.rst:52
-# 0bc08be2ca2a46b08322431099797976
-# b94a0657c84a4bf0b7b79206ea65e517
+# 13524f103b1147a88a12b126979d091f
+# a7d979b933154d8e8866574e2853de6d
 msgid "To debug a page not found error:"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:54
 #: ../../appendix/faqs/general.rst:54
-# aa7554153b124af98bc37ed83a197cd2
-# 28732f98a0c94fc398d1c5143550f148
+# 04dca308b85a4cb39b96f7423006e34c
+# 1c833d72d056434aa722b1a2a67cc8d2
 msgid "Confirm that the link leading to the missing page is correct. If not, how is that link being generated?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:55
 #: ../../appendix/faqs/general.rst:55
-# 7ff69218bc014bd696075417d87cdc50
-# 439ae20b2aba4a2eac41bcb042a5828f
+# 452d431f9fad4bc89b49374eb7c41cde
+# 504944c21ad1434bb4e312c31d4309ad
 msgid "Confirm that the ``.htaccess`` rewrite rules are being picked up."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:58
 #: ../../appendix/faqs/general.rst:58
-# dfba07bd80e3417692750c8a9d3c404b
-# cec8030c4ac540b09a3c73c472e13bf4
+# 39f3675b300c4e26a4f5ff556e8e91a8
+# 0136e4c2f02f4072be92841230d3c3cc
 msgid "Login token mismatch"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:60
 #: ../../appendix/faqs/general.rst:60
-# 0055a9e229d64a33b796bf511e20e8a8
-# 9efa00457b5549388b7963fcd2181609
+# 12743dc11fa2469ead0b499b54c2387c
+# 662eb88a53e34919aab0d64e28d86bad
 msgid "If you have to log in twice to your site and the error message after the first attempt says there was a token mismatch error, the URL in Elgg's settings does not match the URL used to access it. The most common cause for this is adding or removing the \"www\" when accessing the site. For example, www.elgg.org vs elgg.org. This causes a problem with session handling because of the way that web browsers save cookies."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:62
 #: ../../appendix/faqs/general.rst:62
-# bb743ad290ed4446a6861fdbd0f1169f
-# e095fce4be7b4a81901ec44fa6b1ed0c
+# a965498fca124cacbea2dd0060684c2c
+# d0aea92dab6042a8a4f06bd40ce00126
 msgid "To fix this, you can add rewrite rules. To redirect from www.elgg.org to elgg.org in Apache, the rules might look like::"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:68
 #: ../../appendix/faqs/general.rst:68
-# 652cdeb56f0b47dbaf878d018d9efcce
-# 586228f10f3c40cf9fb4696bfb76ff9d
+# da26dabb915d4a80875e5486c101442b
+# 013f909378bb4bb9af9f31f5bfad83fb
 msgid "Redirecting from non-www to www could look like this::"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:73
 #: ../../appendix/faqs/general.rst:73
-# 2ff91748c54347b0b7c34b717806ef17
-# de75517218ce4076812704771427a764
+# 8f0ff0f907384d658445ead26ba804a5
+# b5b33f083f3843c6b7c741fd4d3b1f84
 msgid "If you don't know how to configure rewrite rules, ask your host for more information."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:76
 #: ../../appendix/faqs/general.rst:76
-# 5469a22f89d44d0fb35396ef0316aa86
-# f9e0b598813f4082bf01b9aabd9c103a
+# 5b940488cd4a4840b92c6e9794e2145c
+# d2429f7cf1ee4eadb77c4a7976bcc796
 msgid "Form is missing __token or __ts fields"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:78
 #: ../../appendix/faqs/general.rst:78
-# e971d494859840dca60ea52f8478cdc1
-# 0b1746c5e042447eb7bf499838c20433
+# 330328f7135d4403bb7ec9c4cf5e85e1
+# df063a1867e6490b85c42a81763c106d
 msgid "All Elgg actions require a security token, and this error occurs when that token is missing. This is either a problem with your server configuration or with a 3rd party plugin."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:80
 #: ../../appendix/faqs/general.rst:80
-# 4873235832484e6a87652941523f1e73
-# 1d9ed05c0ed749a59a99b7ae9fdd10bc
+# 9d1d46c74f124665a4ae704f57194f3d
+# 7cc02379b78145b1b171bbfdb0eb90f8
 msgid "If you experience this on a new installation, make sure that your server is properly configured and your rewrite rules are correct. If you experience this on an upgrade, make sure you have updated your rewrite rules either in .htaccess (Apache) or in the server configuration."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:82
 #: ../../appendix/faqs/general.rst:82
-# 2827043f0a2349cab75988da8cfcb4f8
-# 19a575a389154a5785937582ffc3f629
+# 8215696ad7114343a9d87759e20d0c0b
+# bdcbbc695d654a61a21756a417b397fd
 msgid "If you are experiencing this, disable all 3rd party plugins and try again. Very old plugins for Elgg don't use security tokens. If the problem goes away when plugins are disabled, it's due to a plugin that should be updated by its author."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:85
 #: ../../appendix/faqs/general.rst:85
-# e8d96ba6ca57465a9a4424459d24417a
-# ea16e46a524748bfb4f4e9258e4e5a81
+# 8baacbea6e494f3fb50fe2451d618653
+# 57a83524f1754e8fae55342c41c1897e
 msgid "Maintenance mode"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:87
 #: ../../appendix/faqs/general.rst:87
-# 5cfe3678a7184b52b47d2eedba67a660
-# 69efa09d03a24702bd5222bdb4c21efe
+# cb6c8c9e4f7441af96f2d7516e500e15
+# b30e05a934b347ad978c443e4fde6e2f
 msgid "To take your site temporarily offline, go to Administration -> Utilities -> Maintenance Mode. Complete the form and hit save to disable your site for everyone except admin users."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:90
 #: ../../appendix/faqs/general.rst:90
-# 4c85075c0df04d69a0487e84f1bfed30
-# 52239ad150a34504bd9eb0755211460d
+# a557a777debe4d748f667f0891120f1b
+# 34b6cfc32b094f92bd9216e8886758b9
 msgid "Missing email"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:92
 #: ../../appendix/faqs/general.rst:92
-# 7b32901379ba493487737a6c62d9e804
-# 40f3a6e349c44710b5327277d7bc5553
+# 15898d3774de4b7493dd2602347e8efc
+# 25222553b9894a6dbfd53ac9b26ff8cc
 msgid "If your users are reporting that validation emails are not showing up, have them check their spam folder. It is possible that the emails coming from your server are being marked as spam. This depends on many factors such as whether your hosting provider has a problem with spammers, how your PHP mail configuration is set up, what mail transport agent your server is using, or your host limiting the number of email that you can send in an hour."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:94
 #: ../../appendix/faqs/general.rst:94
-# 7d188effcdff4fc0b2a5ac860c47de58
-# 64c5c344bb4042de906bbcc2cb38b75f
+# 863814415c3e4ddcb43262d926d4a4c4
+# e60e9e49e6c54574acfd8b8e790006a9
 msgid "If no one gets email at all, it is quite likely your server is not configured properly for email. Your server needs a program to send email (called a Mail Transfer Agent - MTA) and PHP must be configured to use the MTA."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:96
 #: ../../appendix/faqs/general.rst:96
-# 67a34f6170834461af2667753ea3577e
-# a4fb152b00364243be1ccde524308694
+# d7b5590e79ad43a9b8eb91ab3f055b51
+# 5eb85594185746ab90e3e0e15fec99fb
 msgid "To quickly check if PHP and an MTA are correctly configured, create a file on your server with the following content:"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:115
 #: ../../appendix/faqs/general.rst:115
-# c2702e947afd47138908f8008a86b5f3
-# b9501bc8ed664402a6d9dca2b546f417
+# fac8d796dc4244bb804de628b8bb0da6
+# f15f426eca814c49be745dc3678bcfd8
 msgid "Be sure to replace \"your_email@your_host.com\" with your actual email address.  Take care to keep quotes around it!  When you access this page through your web browser, it will attempt to send a test email.  This test will let you know that PHP and your MTA are correctly configured.  If it fails--either you get an error or you never receive the email--you will need to do more investigating and possibly contact your service provider."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:117
 #: ../../appendix/faqs/general.rst:117
-# 7f15ebb38048489586d7c736284fb459
-# 9398740ad0704ddeaa4d93ae8931864e
+# 85a16ddc4f5c4194b1561b8f59a2c923
+# 5d83d420d94742fc809188217c6ee65f
 msgid "Fully configuring an MTA and PHP's email functionality is beyond the scope of this FAQ and you should search the Internet for more resources on this. Some basic information on php parameters can be found on `PHP's site`__"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:123
 #: ../../appendix/faqs/general.rst:123
-# 349fcc77cbdb4b008c1429558a546e54
-# cbf067d1cd8e4b59a84ef7fcfb1c1e6c
+# 9d476b3775ad48b59d6b65e9793426c7
+# a3d305686a8d47a5b38e3173353ace5c
 msgid "Server logs"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:125
 #: ../../appendix/faqs/general.rst:125
-# 259ebbff40364825bced426fd98dceb2
-# 003c9961b69d4667bc04887bc22a893d
+# 207ca25b518b47cba72841e046f0a88c
+# ab98e43f50424e19a45cd36adc1bfbec
 msgid "Most likely you are using Apache as your web server. Warnings and errors are written to a log by the web server and can be useful for debugging problems. You will commonly see two types of log files: access logs and error logs. Information from PHP and Elgg is written to the server error log."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:127
 #: ../../appendix/faqs/general.rst:127
-# 50524b9f34dc4b8cb7a901a770a3d384
-# 6116421ab13a4dbfaa6da13a01d7d313
+# 42b15a3f90514cc1bba8d0f2e6c5d5ea
+# 9d88b29d74984a7297865c212804e921
 msgid "Linux -- The error log is probably in /var/log/httpd or /var/log/apache2."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:128
 #: ../../appendix/faqs/general.rst:128
-# 5215f1fb02c643628a85c5b410969c21
-# e55bb7634b224b5ca045810b727602f1
+# 8a1b49d463a243639ce45ba3e24c31e9
+# 75b1dd5a4e594e2b897313fe1791eb4e
 msgid "Windows - It is probably inside your Apache directory."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:129
 #: ../../appendix/faqs/general.rst:129
-# 669d60579db746e390e1522a37b84307
-# 8de4c2bf131c4ac582ddf3ff43617e17
+# 7ab8a63ab32e46a28aefeb06f3742bd2
+# 7aa44bb3afbf4c889bd580cfc00b997c
 msgid "Mac OS - The error log is probably in /var/log/apache2/error_log"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:131
 #: ../../appendix/faqs/general.rst:131
-# df91c0e68e4848b0a344e668fa31a584
-# 2dc2f94058b64753b59e0760b46faa29
+# e3757dba3f7c49e48704b7dd21ee2f01
+# 388c2eea43b943ee8f2aa751bbc18bcf
 msgid "If you are using shared hosting without ssh access, your hosting provider may provide a mechanism for obtaining access to your server logs. You will need to ask them about this."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:134
 #: ../../appendix/faqs/general.rst:134
-# 45e28d88d6f94ae3aba7f325bb0c88fe
-# b7731e0eca2549a18007e0c10b3082fc
+# 2e887d91073c443f89dae1a24219bf28
+# 957539df8825451398e7a730cbf7dd40
 msgid "How does registration work?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:136
 #: ../../appendix/faqs/general.rst:136
-# 586f18afebf448ed93e1b070775e0dbc
-# 1c5977fa88164a6a91f58c87bac9bd4d
+# f5b6017d11534431850d46d5fa3dacfb
+# b851fb94eab34f62a93594bcb15855bb
 msgid "With a default setup, this is how registration works:"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:138
 #: ../../appendix/faqs/general.rst:138
-# ff581efec55d4d3fafbbb338f53046f3
-# 39aba376bc9840218f64a6c63145930e
+# 156c3ba483324ef69a660ee044b02aa5
+# 78795ba0bb7b476eb391970c7dc62f23
 msgid "User fills out registration form and submits it"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:139
 #: ../../appendix/faqs/general.rst:139
-# ba8468e6154c4edfb3130fd0639b3e5d
-# 2733b6f27a104db28e8ead7920487d7f
+# fa4c11e6afa84cf9b001bd259466648b
+# 8ba3477590ed4b5aa905a768f3fc9ea1
 msgid "User account is created and disabled until validated"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:140
 #: ../../appendix/faqs/general.rst:140
-# 2acd114f48e148ebb5e32b39889fd5b4
-# 782451416b364fc2b82eb835c0de1ffd
+# fcb1580b3a864243b5600ab43414dd21
+# 59d91b2852ef46eab1967500bdf7c1b8
 msgid "Email is sent to user with a link to validate the account"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:141
 #: ../../appendix/faqs/general.rst:141
-# 274f8e4d862c4effa4dfcd4eb6fdb28d
-# 9eded79dcfe148dbbbd706cc9b328ed4
+# 220b2634e361444cb54e830a13e35d26
+# 73364d4f0e154369838f96c5500912d9
 msgid "When a user clicks on the link, the account is validated"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:142
 #: ../../appendix/faqs/general.rst:142
-# 265940a291b04c95a0bea8460be90485
-# 86ec5ef166d9464882aaf6ca79e382c3
+# e6b2d21206174ca6acf739fdee29b7ed
+# 05f8cd7ed85a4e1ab028d98ed15d3251
 msgid "The user can now log in"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:144
 #: ../../appendix/faqs/general.rst:144
-# 5c3fb61b67b6438d974c5476dfaf927e
-# b653cfd6e0e74e3d9dae31e1090f6766
+# 53217e53b03f4fe2951b0c793a99fcf0
+# e66b5f2946a64dc5be03e5f4c17d836b
 msgid "Failures during this process include the user entering an incorrect email address, the validation email being marked as spam, or a user never bothering to validate the account."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:147
 #: ../../appendix/faqs/general.rst:147
-# db8b39f349eb42e8a9728bcd2601053c
-# e12b074479cc40aca5f25102025f03ab
+# b8855123c80b4f879b1258a60fba6dc4
+# c353aa8e7c9a47b48dd981f0d026565a
 msgid "User validation"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:149
 #: ../../appendix/faqs/general.rst:149
-# 0b8806257c6b44ff8509f7fd20db5968
-# 2814302817e74be0be8f469ef5df8db5
+# 0910e6e62df642e5a4ae61d00b4e7896
+# cfb8989bc1d44a419d7712ffa71f8954
 msgid "By default, all users who self-register must validate their accounts through email. If a user has problems validating an account, you can validate users manually by going to Administration -> Users -> Unvalidated."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:152
 #: ../../appendix/faqs/general.rst:152
-# 5d89a36097f04ad183e6ae3679bf4520
-# dd20f730ca00472c8655bbf8d53f3001
+# f2f6be6f87c8460d841c7349343bc6bf
+# daf3b0359e054d658ab96a986d879d9c
 msgid "You can remove this requirement by deactivating the User Validation by Email plugin."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:156
 #: ../../appendix/faqs/general.rst:156
-# 9f0c255d7b034c458519493be127791b
-# a80ed38e15914f78b13dd7a22cebd5ff
+# a6f86fb66dce41a5af12d3cd7dbefd97
+# 20d85897be1741f7b06476b850a4effa
 msgid "Removing validation has some consequences: There is no way to know that a user registered with a working email address, and it may leave you system open to spammers."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:159
 #: ../../appendix/faqs/general.rst:159
-# 70240e6a2149434b8ff332cec800e6f7
-# faf546952c884d78b62a7ef6e96ca81d
+# d63416c849894e448cc5c96cda3e323e
+# 2d756e4a41734c0f9a9511fabcf4e861
 msgid "Manually add user"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:161
 #: ../../appendix/faqs/general.rst:161
-# f9499de969c949168be46f1f8c126727
-# b82ae7f89680423f9057046e2b56ff9c
+# 67f70155d8d54216aaeb35fe835291cd
+# fd32061fe6ca488b8fec85ba3c223a72
 msgid "To manually add a user, under the Administer controls go to Users. There you will see a link title \"Add new User\". After you fill out the information and submit the form, the new user will receive an email with username and password and a reminder to change the password."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:165
 #: ../../appendix/faqs/general.rst:165
-# 62731ed6ce97457b85a69f002de79218
-# fc48ad378f0742fa9c77bb321d4ba7d1
+# 2db4546398e9475ba6ac17bc696526a1
+# 0d4739262ae748f49bc9ff70e815c334
 msgid "Elgg does not force the user to change the password."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:168
 #: ../../appendix/faqs/general.rst:168
-# b36b7c8216014e9ea740112d4de7da24
-# 36851a5532b44ffe91f3d8f4132dd664
+# be00a3f6d96949779e5eba99435286d3
+# 7c680fabb83c4ebaa7637450209d2acb
 msgid "I'm making or just installed a new theme, but graphics or other elements aren't working"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:170
 #: ../../appendix/faqs/general.rst:170
-# d075bfa6c9d44127bf2526be5c4b100c
-# 449a47089cde46de9b53ef41173740c0
+# 5eb6fd4a4b8f4e159c36cd7252d2780e
+# 2b988c2140694a1ab78f047a298fd1cb
 msgid "Make sure the theme is at the bottom of the plugin list."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:172
 #: ../../appendix/faqs/general.rst:172
-# 5d87b7f4a8a64cfba06d6f6db756170d
-# 713f037840734251983d177c002e5a3c
+# 88cb9759fee24b85873b0139ee8cd4fc
+# 4f4d59a3533a4368b34162de5cd44e6d
 msgid "Clear your browser cache and reload the page. To lighten the load on the server, Elgg instructs the browser to rarely load the CSS file. A new theme will completely change the CSS file and a refresh should cause the browser to request the CSS file again."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:174
 #: ../../appendix/faqs/general.rst:174
-# bf62ed5b9f0e4d67a33019dc0fba2515
-# 26931c716f8a404ea9cfa2124ecd8618
+# 89acb807638848db851e3bb49a19c69b
+# 233813056ed5408eb928c3d42065f3ae
 msgid "If you're building or modifying a theme, make sure you have disabled the simple and system caches. This can be done by enabling the Developer Tools plugin, then browsing to Administration -> Develop -> Settings. Once you're satisfied with the changes, enable the caches or performance will suffer."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:178
 #: ../../appendix/faqs/general.rst:178
-# ec540af48a4a4c14ab7e73a1f0546328
-# 75e6445d663b46b689ace31a6bd63eef
+# f62fe8f10d0d4105b2594acad127a5eb
+# 764d390cb1c8436180a7237577e95925
 msgid "Changing profile fields"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:180
 #: ../../appendix/faqs/general.rst:180
-# 4f7cff62d14748c5ab3b2095a719d83d
-# 015ea72047024ec19cf5e700a897c28b
+# 30c676cd7a9d48bf8400d5d3cff4e69a
+# 528841dbf2264b6ba6a65ee27385e7a8
 msgid "Within the Administration settings of Elgg is a page for replacing the default profile fields. Elgg by default gives the administrator two choices:"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:182
 #: ../../appendix/faqs/general.rst:182
-# 737ad32340ed4357b781af2370b2f2c3
-# ba8b53e7c2f542c88ab9eb6c8a12c95f
+# c6d7b9850f25466ca2283193be5bf353
+# 43a27fe1d76744aeb23a3fbd7106a0c3
 msgid "Use the default profile fields"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:183
 #: ../../appendix/faqs/general.rst:183
-# ea702204c9114134aa0bbcc1b5f54bc4
-# 713ff37d072d411a9a07406b4e411fb3
+# 2a3eea2bfc6047c99d5f72fdc19851e9
+# 4d6697e0947c4626bc76544ea0848b53
 msgid "Replace the default with a set of custom profile fields"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:185
 #: ../../appendix/faqs/general.rst:185
-# 276dbe0200be4122b31bd0eec5ed2e53
-# d2605e6f18b14a5da8515bfb6fe588d2
+# c5c5763247654b7e9ffc043f5e97a12b
+# 3da13e2a5b814f35b103ed250c5177ac
 msgid "You cannot add new profile fields to the default ones. Adding a new profile field through the replace profile fields option clears the default ones. Before letting in users, it is best to determine what profile fields you want, what field types they should be, and the order they should appear. You cannot change the field type or order or delete fields after they have been created without wiping the entire profile blank."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:187
 #: ../../appendix/faqs/general.rst:187
-# be70a76d106643ff89f3c1f04c4c6ecc
-# 65d506686a824d62be612a6feaef1942
+# 9cedd9c23e3b4ce1884efa9ef876842c
+# d2a2a19df4bc4e0581ed382d6c4f6027
 msgid "More flexibility can be gained through plugins. There is at least two plugins on the community site that enable you to have more control over profile fields. The `Profile Manager`_ plugin has become quite popular in the Elgg community. It lets you add new profile fields whenever you want, change the order, group profile fields, and add them to registration."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:192
 #: ../../appendix/faqs/general.rst:192
-# 8b2c0a4109f54b9aadf45fbd21ae591e
-# 95de19fc4b1445ccaad3f3f3cec52f41
+# d5eb9e471aa048978f9acd656bb10420
+# 08e1835902644da28d656462c75ba1e0
 msgid "Changing registration"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:194
 #: ../../appendix/faqs/general.rst:194
-# ed98569ccad64d5a9d2b629a79163f43
-# 4f012f1438134d1995766f4795a8c313
+# 9b11dff0dec14d9ca38260ed82f038b4
+# 192140b716a44bc2b2f4d044665a7b64
 msgid "The registration process can be changed through a plugin. Everything about registration can be changed: the look and feel, different registration fields, additional validation of the fields, additional steps and so on. These types of changes require some basic knowledge of HTML, CSS, PHP."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:196
 #: ../../appendix/faqs/general.rst:196
-# 732167cefbb046d6aca5e967b88a6681
-# 9bd52cb4edbf4f37a2d1e29e57721bd0
+# 45a47300c742495abc4da4e1a372a111
+# 0d3ceb264591441f84174ab54c4a9bb3
 msgid "Another option is to use the `Profile Manager`_ plugin that lets you add fields to both user profiles and the registration form."
 msgstr ""
 
@@ -581,10 +581,10 @@ msgstr ""
 #: ../../appendix/faqs/development.rst:36
 #: ../../appendix/faqs/development.rst:36
 #: ../../appendix/faqs/general.rst:199
-# 3091bc1cd1cb4374afc54121dc7ac875
-# 561ffcfe97644842ba509e2293fa1d12
-# f0b83b82e08a42d5abf3359936a25149
-# a1bace02f7574f578855d1dea5bf28f1
+# aba33bb1fe6d4bc3ad2b1cd0b751748e
+# b7890fae83cb41c8bb473f6e2898dec7
+# 1f51e103a19e4cffbd1eecdbdccc1415
+# b7c92192f37642329a4ba42cb51028ce
 msgid "Create the plugin skeleton"
 msgstr ""
 
@@ -592,1447 +592,1447 @@ msgstr ""
 #: ../../appendix/faqs/development.rst:38
 #: ../../appendix/faqs/development.rst:38
 #: ../../appendix/faqs/general.rst:199
-# 9b07dcf64a394ab38c5a3595c4be8123
-# b9cb819cd6e2458b9fb9e6a0b8e6901b
-# b85d079dca5a44f9b185665876c5a037
-# a67ae8a038f7439ea77502a95b947c82
+# af70d66c24f84c7eb08d1bdf784d242c
+# 704a9f80c94641eca5eac0a8176ce34c
+# 804dd2804d0f4198b7f06230c8d50f07
+# 8dbde6afdf2d432dba45f7556158e865
 msgid ":doc:`/guides/plugins/plugin-skeleton`"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:202
 #: ../../appendix/faqs/general.rst:202
-# 661e0dfe362d421cbfaf8a9f3f6858bf
-# e8b544a6d5fb45d684b3879977c9d946
+# de96fab97a3c413b841487127f2b5704
+# 75cd7d4824144997bd6a5dbadb2e8975
 msgid "Changing registration display"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:202
 #: ../../appendix/faqs/general.rst:202
-# 145c1e3b637f4656b7675af7fa299408
-# 128b6f7cc25f42168f958bb1d81eaedd
+# fd8ed97fda6b4dceab9ae91aec1e1731
+# dd98c540d8f64f90a4f463b29a88bf9b
 msgid "Override the ``account/forms/register`` view"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:205
 #: ../../appendix/faqs/general.rst:205
-# 9cfda2942a4142848d0e085f52fcfc32
-# 7eeb0656f2f34f22bd3653ecb3abd146
+# 413e77d1325a4703957001ffa448f80f
+# 8c4a37b7cfac4b6ba3ceb66a8a131274
 msgid "Changing the registration action handler"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:205
 #: ../../appendix/faqs/general.rst:205
-# 0962f266a3cc400ab0ef9447d991ec8e
-# 4168cb358c14450ea05a7ea43daf29f9
+# 52cd40e231a44e62a9405007840ab331
+# 67d076faa5e84282b6fc671e0d0c5efa
 msgid "You can write your own action to create the user's account"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:208
 #: ../../appendix/faqs/general.rst:208
-# bbabb66301724c2e92b6e07aa1eff7f4
-# c9b91a2dc77b46b9ace146b01d509003
+# de205b5fdfed445888d9a697c9fcec63
+# e071f550139644bd9bfc96e5395905a5
 msgid "How do I change PHP settings using .htaccess?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:210
 #: ../../appendix/faqs/general.rst:210
-# 33dcf112be9049f6b8eeecf3a46607a8
-# 28f567db376f4fc4b0af40fa3763fd7c
+# d9e22a2ec3484551862fff21677379ae
+# 793d1853890f437cb8929327991c66fd
 msgid "You may want to change php settings in your ``.htaccess`` file. This is especially true if your hosting provider does not give you access to the server's ``php.ini`` file. The variables could be related to file upload size limits, security, session length, or any number of other php attributes. For examples of how to do this, see the `PHP documentation`_ on this."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:215
 #: ../../appendix/faqs/general.rst:215
-# d4e3bcab14f84d8dbaf41c53658301dc
-# f42fbe3ca0714c09bd247252e9ed8a9b
+# a3e056d7fb624a70acc3ad1d38c957f2
+# 8129a693cc574ce798becf251726a4df
 msgid "HTTPS login turned on accidently"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:217
 #: ../../appendix/faqs/general.rst:217
-# 1a3024b145e940a6a1aa5b8bef3a345a
-# 2ca99a34ca8b4c1db828a2ffd2d5379b
+# 5990fcf24fe040358acb75e8a75fddad
+# 0f1d3ab259834b2a815e255135ed5c13
 msgid "If you have turned on HTTPS login but do not have SSL configured, you are now locked out of your Elgg install. To turn off this configuration parameter, you will need to edit your database. Use a tool like phpMyAdmin to view your database. Select the ``config`` table and delete the row that has the name ``https_login``."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:220
 #: ../../appendix/faqs/general.rst:220
-# 4171687ca385444da1dd8f0b5ad0de9f
-# 3ac762facaff4303a8e2b4d637ea4612
+# b38d900d2a074708b3dec94b07e069cd
+# 9437a0e41b0d4a94b53881efd38b72a5
 msgid "Using a test site"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:222
 #: ../../appendix/faqs/general.rst:222
-# 48bfcdddaf83458d8ffbbe809bb78617
-# 06ebfec8a70d444983511c5baad372a6
+# b020081570024d3bb12ce0ba2c8b30e8
+# fa278bdce2a544cda3ae3229cede94b9
 msgid "It is recommended to always try out new releases or new plugins on a test site before running them on a production site (a site with actual users). The easiest way to do this is to maintain a separate install of Elgg with dummy accounts. When testing changes it is important to use dummy accounts that are not admins to test what your users will see."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:224
 #: ../../appendix/faqs/general.rst:224
-# a956fa18e1044f2586dcf86204dee1b3
-# 9412af793a8445e0a96c3ce871d7c834
+# 68c7f36d512e4008b56fe1dbb2299574
+# d54359904b424faf9804a5d1a70a202d
 msgid "A more realistic test is to mirror the content from your production site to your test site. Following the instructions for :doc:`duplicating a site </admin/duplicate-installation>`. Then make sure you prevent emails from being sent to your users. You could write a small plugin that redirects all email to your own account (be aware of plugins that include their own custom email sending code so you'll have to modify those plugins). After this is done you can view all of the content to make sure the upgrade or new plugin is functioning as desired and is not breaking anything. If this process sounds overwhelming, please stick with running a simple test site."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:227
 #: ../../appendix/faqs/general.rst:227
-# 63dd55dbe937477ab1b9592bdae71a9f
-# 70690736d8d24c0085fdf36bf979011b
+# 1af84f40443b4424b0b1e4c724d83575
+# 30d437df110948f49cec59467f7dd247
 msgid "500 - Internal Server Error"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:230
 #: ../../appendix/faqs/general.rst:230
-# 605875cec0e54c028205c11e1212c2c3
-# 9f437b993d9848f7aa39c67cff983867
+# 778a574eb7404b5e8c3be0f3492fb6b8
+# 981854b8b7c94ed191fbff1b1987d57b
 msgid "What is it?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:232
 #: ../../appendix/faqs/general.rst:232
-# 1955257e05964c159e37d0ee538fd820
-# a830c729e5fe46f3a656c03415bd5948
+# c7f46231911c4602b73f948aabdcdcda
+# de81b6d166b34f44ac703002f5daeff5
 msgid "A **500 - Internal Server Error** means the web server experienced a problem serving a request."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:236
 #: ../../appendix/faqs/general.rst:236
-# 14591bcd31ea4653afdb087d4a330ca1
-# 8d5f853258b54ad48abcf8b37114cb8f
+# 194cbb56f0f147f0abde159882b8cad3
+# 52a55aedc00840758693c89b91a79f58
 msgid "`The Wikipedia page on HTTP status codes <https://en.wikipedia.org/wiki/List_of_HTTP_status_codes#5xx_Server_Error>`_"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:239
 #: ../../appendix/faqs/general.rst:239
-# be9308f41cd143f9b38923537a41bb4b
-# 91a87e9168484804a6fe38c08d86f5f7
+# ce3a0a3479154a7da0f74d2a3649e976
+# eca21d6779244838bd133fc27a041d66
 msgid "Possible causes"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:242
 #: ../../appendix/faqs/general.rst:242
-# 006a3cf483464d0aaf940a90b00f177e
-# 0466a57127cb4a32814151d2173a60f8
+# 308e1af3fe494ab6a07b70f52c10ce0a
+# cec99e52a9834d4aa1ae03eb2e893d70
 msgid "Web server configuration"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:242
 #: ../../appendix/faqs/general.rst:242
-# 9c8e743d4e4c4394a3e298a9cd1e51f1
-# 988e4b950a6544d58d327b28f9351b34
+# 721da1e12a8a4bc994d24c35b57b9fb7
+# 7ddd3d9dd69c4fccb8a50cedd6961ec3
 msgid "The most common cause for this is an incorrectly configured server. If you edited the ``.htaccess`` file and added something incorrect, Apache will send a 500 error."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:245
 #: ../../appendix/faqs/general.rst:245
-# 6ef1c11438444b65a39e230cd8ffd2a0
-# 5b254d24155b4100904e57c1ca1b4a7c
+# 802bcf58c8a14ba49c0370c9f1fb9f9c
+# 76bf93ce4bf2436bb1295d8ddb457a35
 msgid "Permissions on files"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:245
 #: ../../appendix/faqs/general.rst:245
-# bf1b5f9fa3b8485aaef06b4e0192701b
-# 6cc8fb668a1d4734983e62c4cf7676c4
+# beae6a696aa848598b5f66d189050c6c
+# f94fc44e1dab47ec94b23f1d6bf5dea4
 msgid "It could also be a permissions problem on a file. Apache needs to be able to read Elgg's files. Using permissions 755 on directories and 644 on files will allow Apache to read the files."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:248
 #: ../../appendix/faqs/general.rst:248
-# abe554c4a78d482a930e64ebae074d97
-# d6750316a0fd4ce4a3788894a25b7f1c
+# 549b6622cd54434287441d2270151d32
+# 638da1c3e31146b8b7454e7389287e04
 msgid "When I upload a photo or change my profile picture I get a white screen"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:250
 #: ../../appendix/faqs/general.rst:250
-# fd118247856c43b9b521ee4bb6a48992
-# 7dee4d7af9f348f78812d1094b413c7a
+# 63befd0b882240159587b28588705b0c
+# 622bac73b7cb4115bb40da06051c5116
 msgid "Most likely you don't have the PHP GD library installed or configured properly. You may need assistance from the administrator of your server."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:253
 #: ../../appendix/faqs/general.rst:253
-# e07e5fa68454482da81d7f3e1b4c63fb
-# 80073930d5614831a17e9df0653a83eb
+# d579704cc6454cefa5a86fbfaf441759
+# 9e163c2b843e4d9a92cab6a849ea7177
 msgid "CSS is missing"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:256
 #: ../../appendix/faqs/general.rst:256
-# 77f3b1e23dd541cdad6d793892f06e37
-# 34e5d14a706349f6bbbc618e5e90ceaf
+# fd9eecef93eb420ea49c6f4cc153e9ad
+# 476b127f50014f17a1fa85ace964dde3
 msgid "Wrong URL"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:258
 #: ../../appendix/faqs/general.rst:258
-# fe193ca5b91249fcaa6384e2d38913c8
-# 50a8fcddcd6a4d55a82d709969830d06
+# 9d8f14db81cf461eace0fbfdc422a472
+# 7371891e273a4cacb7e3630784a42f99
 msgid "Sometimes people install Elgg so that the base URL is ``localhost`` and then try to view the site using a hostname. In this case, the browser won't be able to load the CSS file. Try viewing the source of the web page and copying the link for the CSS file. Paste that into your browser. If you get a 404 error, it is likely this is your problem. You will need to change the base URL of your site."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:261
 #: ../../appendix/faqs/general.rst:261
-# 255269fcfde74677aa58ef696476279c
-# fb796b9d81714784912f9ceed21a183f
+# 61f1fa1980bb47de9784abfa74562bd5
+# b92b07c7825d4031983e87f105269bad
 msgid "Syntax error"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:263
 #: ../../appendix/faqs/general.rst:263
-# a78eddefdf624dbaaf25759b1649f9e4
-# 56dd8a16ebbc48baaa19e2b8e18e966c
+# bc0dd67ee9f141308c62bab54b05d1ec
+# 724e0b96ef7b4a2584bbf84c6fe1828a
 msgid "Elgg stores its CSS as PHP code to provide flexibility and power. If there is a syntax error, the CSS file served to the browser may be blank. Disabling non-bundled plugins is the recommended first step."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:266
 #: ../../appendix/faqs/general.rst:266
-# 057e1183e166493798c67f2022952287
-# 3eccedef0fa248019b45dab6238bed07
+# b320bea9beaf468f871ea531872f3726
+# d8be91efae2c45f4894cdbf54f03efed
 msgid "Rewrite rules errors"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:268
 #: ../../appendix/faqs/general.rst:268
-# b5d6ed9c0e08428f80a8a0ee6ee7f2a4
-# 0ca93d6d31284506ac3b6531fde915f7
+# 60a84ea7e2a0492fb7bbc808f2117c5e
+# a0162a016ba34d8d8da4b4e67c72a54e
 msgid "A bad ``.htaccess`` file could also result in a 404 error when requesting the CSS file. This could happen when doing an upgrade and forgetting to also upgrade ``.htaccess``."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:271
 #: ../../appendix/faqs/general.rst:271
-# fac2ed7bdea844b7ba10a1d85b0f96e7
-# 29b746bbce334c0dbf263931263f5402
+# d7d23c3abc0d4f268c4d036dee99f2ac
+# 2d169d3456804d6eb0bccdb19a0c5a0e
 msgid "Should I edit the database manually?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:275
 #: ../../appendix/faqs/general.rst:275
-# 4ea35ee537564f448fa7dd386c42501b
-# 86b7f9e5d1aa4869acd89c3f27cd9c54
+# 7bffdb929e5d450d86c00e0ab6f2b9d5
+# 97d6ca0271ee4312aa2513a347716337
 msgid "No, you should never manually edit the database!"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:278
 #: ../../appendix/faqs/general.rst:278
-# 2149cceec6a94b47a3ea3487c5e3dcc8
-# bac1fb3a16664b47979841818fd0c32e
+# 40e91da3cb6440ad84b0894d3ae8eda6
+# 8582d84161ae439aa8fae20cca809a41
 msgid "Will editing the database manually break my site?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:280
 #: ../../appendix/faqs/general.rst:280
-# 2c7b351618e7454496ce23ce1694eee4
-# b9788fbe8efa495a860b0a225d6e8e89
+# 7618f9f0fed04bae93029973264b0d77
+# 254e3e4cb17b4b12933546e1a64e50d9
 msgid "Yes."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:283
 #: ../../appendix/faqs/general.rst:283
-# 0570cc442f3b48f0bf6e050024b4e82b
-# 5cfbed837af640489492713d1d557035
+# 71ba396a2302451185c99f1a8efcf5fe
+# ca86359ce70d4e9c857db6d5c8201f55
 msgid "Can I add extra fields to tables in the database?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:285
 #: ../../appendix/faqs/general.rst:285
-# 4c170374a91b467a80512bbf6931eecf
-# fd11dd0388f34dadae1b2beede769e34
+# b21dd6b31b224709aa6135456e021fa7
+# 149e99997d8c4833a1bdfef1ea6bc272
 msgid "(AKA: I don't understand the Elgg :doc:`data model </design/database>` so I'm going to add columns. Will you help?)"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:287
 #: ../../appendix/faqs/general.rst:287
-# ffbc22f3a4a645e796a17a6f4d87ee23
-# 14e18f96187b45bc83126e55cb9a5107
+# b5e104c42a834c7a9559041243d9a06e
+# 6aad3ef2b24f484481b45f9004a5f7f1
 msgid "No, this is a bad idea. Learn the :doc:`data model </design/database>` and you will see that unless it's a very specific and highly customized installation, you can do everything you need within Elgg's current data model."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:290
 #: ../../appendix/faqs/general.rst:290
-# 0feaf6a4e96c4bb8b9a0820ecbfbbbc2
-# cb24be5b1a584079858131486269ec11
+# 82409849eab24c9fb64512e2af4ca89c
+# 31d396ab3174413cb56f68a64d94e3f8
 msgid "I want to remove users. Can't I just delete them from the elgg_users_entity table?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:292
 #: ../../appendix/faqs/general.rst:292
-# efc20702af1b4a5080ae627a25db510f
-# 4373c9150a9f4d36b41131fe059d7884
+# fc99545c47f445f995ad5c2ead835e05
+# 931062692dc04b28b356f5da56abba33
 msgid "No, it will corrupt your database. Delete them through the site."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:295
 #: ../../appendix/faqs/general.rst:295
-# 6836a2a066d04ca59677ad3e4c7ad1ee
-# f940a914438748c394d3647746258bdf
+# 309247c92d814ecf904b9ac8ba64c99e
+# cd936f65da364749872e87b8cfec4804
 msgid "I want to remove spam. Can't I just search and delete it from the elgg_objects_entity table?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:297
 #: ../../appendix/faqs/general.rst:297
-# 08721f5658ff45658227f7478afc9a3a
-# 804b4815aac74db5b3b5f6eb1fcb54a1
+# 29c74ef3e1ca434599c5800afa0d92a9
+# 018eb012c26c4d37b42eb279e07a8452
 msgid "No, it will corrupt your database. Delete it through the site."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:300
 #: ../../appendix/faqs/general.rst:300
-# df46d08053cb4835b41184f225bbdfb1
-# 4ce48467dbcd4810b1d3cccba251d910
+# acbefb04c2a645fd8e693cb081c23312
+# 47832e66861e40f78278d4507a85719e
 msgid "Someone on the community site told me to edit the database manually. Should I?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:302
 #: ../../appendix/faqs/general.rst:302
-# 9d9d15159f334df5bf41903c90c5ebef
-# 4fc9c90efcc14c0ea6050265bb95b849
+# 6e2d18c972a94a72957998f80dae86fe
+# 9d7427d0d8534365b67893fb465527b4
 msgid "Who was it? Is it someone experienced with Elgg, like one of the core developers or a well-known plugin author? Did he or she give you clear and specific instructions on what to edit? If you don't know who it is, or if you can't understand or aren't comfortable following the instructions, do not edit the database manually."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:305
 #: ../../appendix/faqs/general.rst:305
-# 3022ab453fba4473a62ab37edc2e9821
-# e721bc901d3e4503a7272a0b372348fa
+# 21819f43882c4c47b398df30676f5b88
+# de10b44029084a91b3e5bf7c822c9264
 msgid "I know PHP and MySQL and have a legitimate reason to edit the database. Is it okay to manually edit the database?"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:307
 #: ../../appendix/faqs/general.rst:307
-# d903e598db3b4fa8a47048e46d83a493
-# 1adb4072dec6420cb07cab9cc5bde149
+# 0a490a16f8564123964d5c5737f5db8c
+# 1571e0d83a00492a8aceeb9d5aaae3ef
 msgid "Make sure you understand Elgg's :doc:`data model </design/database>` and schema first. Make a backup, edit carefully, then test copiously."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:310
 #: ../../appendix/faqs/general.rst:310
-# fd9116e79bb145a896a9df1342b91330
-# be78b1694fc848e19401ae8b8c1fd94b
+# 5667ce67bfc54f56ade8292b0e7f23b8
+# 20c23d51088641e89a265fc5a5702d26
 msgid "Internet Explorer (IE) login problem"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:313
 #: ../../appendix/faqs/general.rst:313
-# 81a042978b614acf89b6a8beae17bc51
-# bccbd4d993094af6b3dd55ead83a12a0
+# f779cdfbbf4b4fb295b399c666a354cf
+# c1e10e6c46b643ad8aede5ca97b6775c
 msgid "Canonical URL"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:315
 #: ../../appendix/faqs/general.rst:315
-# 9bbf11f6b9d54dec8c18409627c717aa
-# 63084cd1f2794f9688172b2dbaab496c
+# dd0890f288874ae48414a1b868c7998d
+# e23390fb22c84de5bc78338488a0b7e5
 msgid "IE does not like working with sites that use both http://example.org and http://www.example.org. It stores multiple cookies and this causes problems. Best to only use one base URL. For details on how to do this see Login token mismatch error."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:318
 #: ../../appendix/faqs/general.rst:318
-# e8dedacee27147488465f14c616140c2
-# ba1eb33efea14d539f662cd7e4f50fe2
+# f4841cb6544047b991e2e064bded91f7
+# 469d4d517e364c5d8d66d30b32338664
 msgid "Chrome Frame"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:320
 #: ../../appendix/faqs/general.rst:320
-# f18242183a9042ceacd2941182035c89
-# e64c5ada19f54617a30bb745277bc9e8
+# f686a29c3b3840dabfa269198f84b326
+# 40498cabcc48486c9125531a70590bea
 msgid "Using the chrome frame within IE can break the login process."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:323
 #: ../../appendix/faqs/general.rst:323
-# d00b348863a64d3c914c9032d60c22fd
-# b1fb56dc50044986b80c6f37fc21bf4f
+# b28cb5b439a04236b98ac0d523e82c8e
+# 3607631d120e41d5b011ec7d1caf50c4
 msgid "Emails don't support non-Latin characters"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:325
 #: ../../appendix/faqs/general.rst:325
-# a9a40fc56b3c4e6cacd292506b7f6373
-# ca843d6ee7ba4b86a5c37d533e121c37
+# c8c51c18db904c22bd3522319de20ecd
+# 3dfd4d65206c4bad944c2324f7ed4536
 msgid "In order to support non-Latin characters, (such as Cyrillic or Chinese) Elgg requires `multibyte string support`_ to be compiled into PHP."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:327
 #: ../../appendix/faqs/general.rst:327
-# a5eeaa79d24348d7bbf3f1626fdbeefc
-# c6918e4b92d0497bb5c065b9bb27821e
+# da7f9efc7c224a60b048425402f6d619
+# 8ea5406dd36d48bb887a72c9e2a32532
 msgid "On many installs (e.g. Debian & Ubuntu) this is turned on by default. If it is not, you need to turn it on (or recompile PHP to include it). To check whether your server supports multibyte strings, check `phpinfo`_."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:333
 #: ../../appendix/faqs/general.rst:333
-# 39c74e065a3146a59373d93320c6b339
-# a8c252773b6a484b9a213e4199013d53
+# db2325d71b084abe9b7eec00e181155c
+# 6f18017ffa1b4d189a8bf39147f44b98
 msgid "Session length"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:335
 #: ../../appendix/faqs/general.rst:335
-# 04a2f1c533f6475082f3e2bbf6de8e3c
-# 5a4926d523d04cb98c6abe71a208c4eb
+# 2a0b4e8fe18c4d38baf1685fe61b2d03
+# 884b96a2caea445c8c63c3de6540563e
 msgid "Session length is controlled by your php configuration. You will first need to locate your ``php.ini`` file. In that file will be several session variables. A complete list and what they do can be found in the `php manual`_."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:340
 #: ../../appendix/faqs/general.rst:340
-# 0f15ba38139e48dcb0a788c6692ebd9c
-# dba36d7beb6541ffb8de4239109c9b36
+# 3b244c19480d4fd5b824a5db402596f0
+# 2e8fa428b8a74a3aa9971c5a9aad94ab
 msgid "File is missing an owner"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:342
 #: ../../appendix/faqs/general.rst:342
-# ad805c4ca49143718166e0ca5054a6f8
-# 5878f32276e5408ca2c3aec1c50864fc
+# bedc8f09cfca44fbbb8aed5c173b8100
+# 261f6ea3b09e47f4925edc98e6ae6a9b
 msgid "There are three causes for this error. You could have an entity in your database that has an ``owner_guid`` of ``0``. This should be extremely rare and may only occur if your database/server crashes during a write operation."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:344
 #: ../../appendix/faqs/general.rst:344
-# 58cf027a0f944149bb00b642994a5e95
-# 6d16891e95f4426e9e38c572e26459da
+# 2124275f25fa481192006e7004f8f9b3
+# 553c1a9f517746048c5f08e840f4464a
 msgid "The second cause would be an entity where the owner no longer exists. This could occur if a plugin is turned off that was involved in the creation of the entity and then the owner is deleted but the delete operation failed (because the plugin is turned off). If you can figure out entity is causing this, look in your ``entities`` table and change the ``owner_guid`` to your own and then you can delete the entity through Elgg."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:348
 #: ../../appendix/faqs/general.rst:348
-# c744e0b6ecfd4abbb93b5eca0f51cabe
-# b7a580c0449741a99e6dd9826cd52981
+# 609c8473962247bfbf8eacdacb0be098
+# 1400f8ac5700460e823747064f0595e9
 msgid "Reed the section \"Should I edit the database manually?\". Be very carefull when editing the database directly. It can break your site. **Always** make a backup before doing this."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:350
 #: ../../appendix/faqs/general.rst:350
-# 0f6715a7c5ad4b9f9b407af87ae1c3d1
-# 7cf7ab10e2e84f5ab768f461f2c3fc36
+# 76e0692f77c643439eb016706d7ebee0
+# 2eba4d32e17f43328e900b3792acd3f1
 msgid "The third cause is a user not having a username. This also indicates a database problem as this should not be possible. If it does occur, you could see this error when viewing a list of users (such as with the Members plugin). To fix, check your ``users_entity`` table for users without a username and if so, create a fake a username for that person. You should probably then delete the user through Elgg."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:353
 #: ../../appendix/faqs/general.rst:353
-# a9de00a7b27944f4bd7a6090ce03dde6
-# a32bd825829240c58368b9b8df006676
+# 23bb077af8ae45cfad0c03cef40516de
+# c621f07936c8424580ff089f15d37c16
 msgid "Fixes"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:355
 #: ../../appendix/faqs/general.rst:355
-# 2084a87a536f48799314322a9b92beba
-# d613f49e7fe549d48d7db0cb219f316e
+# dbddf406b5894f70a2fe6a31ee0b9087
+# 9aafa18f35aa4a7a89a5969df345184b
 msgid "`Database Validator`_ plugin will check your database for these causes and provide an option to fix them. Be sure to backup the database before you try the fix option."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:360
 #: ../../appendix/faqs/general.rst:360
-# 86a5e0133cac45aba7a795f31e6079e5
-# ec72dd18824a471987113153381bc9f1
+# aa9567a719bb42b0b3c142bc94ff99fb
+# bcd40b422fd44b43b62631a460eb86c6
 msgid "No images"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:362
 #: ../../appendix/faqs/general.rst:362
-# a21a1b8b809c4b72bace76d121642515
-# 8c0b0a74b1ce4261ab5d76ef66d5e6a9
+# 15aa9ad549254481888936295f173312
+# 9f28fda6164742e4a5bea321890f6213
 msgid "If profile images, group images, or other files have stopped working on your site it is likely due to a misconfiguration, especially if you have migrated to a new server."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:364
 #: ../../appendix/faqs/general.rst:364
-# d8371aaa78f44d469fe099f6ff074ba0
-# 3c7c8ecff95048ba825863a748e123bc
+# 870a5e9a712945c6b0931a17a10a0117
+# 85020f6764bd49de9b3536655c16d83d
 msgid "These are the most common misconfigurations that cause images and other files to stop working."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:367
 #: ../../appendix/faqs/general.rst:367
-# 30d63e6ef5864339a29f91f4e6065324
-# 89cfbccc64e84d689a33b140ad3874bb
+# 9f85a47ed2854657bfe5590cf198a3dd
+# 3e23e2ecfd1b4f46bd5befbd42bd1be9
 msgid "Wrong path for data directory"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:369
 #: ../../appendix/faqs/general.rst:369
-# df4a055c1d874f0290a15813ad33187f
-# 936eede010c94159abf7162befbfe53f
+# e577edf167954064acad8023e832b107
+# ab383f2d4cb3441888e5b63ecee05331
 msgid "Make sure the data directory's path is correct in the Site Administration admin area. It should have a trailing slash."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:372
 #: ../../appendix/faqs/general.rst:372
-# 563a3a1f92ce48b38c46ade944706b9b
-# aa195247de874787a41079159e2feb41
+# 790b6132b23e417abef78a5e3c759f48
+# 1cfe4886d77c4d33983a7f04bb90c97c
 msgid "Wrong permissions on the data directory"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:374
 #: ../../appendix/faqs/general.rst:374
-# f4bb78d4655949e8bdbfdf9822c5da01
-# fb52f7ae79884c998f27522c34af39f1
+# 0b9bec960dcb4087948154a4cd8e4553
+# f3ff133c52c04b919de3c5bca22f79a7
 msgid "Check the permissions for the data directory. The data directory should be readable and writeable by the web server user."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:377
 #: ../../appendix/faqs/general.rst:377
-# 430d45e6c64d4a57b2b4f4425cd02101
-# d437caaaa4e549feb37a3c336af2ed49
+# 8b814b8b3e404c1a9ea5aee353270551
+# e3b3aa096d99456099eb976a7a14aff7
 msgid "Different timezone"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:381
 #: ../../appendix/faqs/general.rst:381
-# ad3551e79c05433aba0c9eaebfa993bd
-# 92af07eb839544cbb631472906f8b50e
+# 5a4d982616764ed28bed4cabdcb92a48
+# b952ed745282479fa199c197f714c1f1
 msgid "This only applies to Elgg versions before 1.9"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:383
 #: ../../appendix/faqs/general.rst:383
-# 4f237d92a5c14dac8375c308c0741f81
-# 25600026d70c452c8038d5ab00eb3059
+# 7b3e29fde33946d6b4d221e20cdfec81
+# 46219ab84d324e32a91220337d068f1f
 msgid "If you migrated servers or upgraded PHP, check that PHP's timezone settings are the same between the old and the new. If you cannot or don't want to change the system-wide ``php.ini`` file, you can put the following at the top of ``engine/settings.php``:"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:389
 #: ../../appendix/faqs/general.rst:389
-# bc9635f1c4df462aaeb59ab98395bf09
-# 885b559d81434936ba6210a7952aaa69
+# daf6485be7164892823aab50e24b7895
+# 4783366a81004808aafef6560e71d3c3
 msgid "Where ``MY_TIME_ZONE`` is a valid `PHP timezone`_."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:394
 #: ../../appendix/faqs/general.rst:394
-# f7b568d43bc94f24876fdb66e9294018
-# c8a8e1f789d141e2a446363297363913
+# bc67d4f647ed43e89c12e0a507651c1d
+# 9a766f989c7d401cb8c251ec4917e3f5
 msgid "Migrated installation with new data directory location"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:396
 #: ../../appendix/faqs/general.rst:396
-# 89b5e861c9fc4d5f8f379931178b1cb8
-# 99cd4ca021e343f8b431b84c477c864b
+# 956a8dd830154fac8750f0e26e7b800d
+# 0935435ae4274f9ebd0c65738b91c701
 msgid "If you migrated an installation and need to change your data directory path, be sure to update the SQL for the filestore location as documented in the :doc:`/admin/duplicate-installation` instructions."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:399
 #: ../../appendix/faqs/general.rst:399
-# be8ea213784e45e5a9dd704f63c90690
-# 5fadb163f4e643b7a426feba3b63ed72
+# f289cdb8c94b44d7af02ce294a6c137e
+# 3106245da6d84206bc586803689ac24f
 msgid "Deprecation warnings"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:401
 #: ../../appendix/faqs/general.rst:401
-# 29bf8282e12d49db8a976cd61942947b
-# fe8caf81590b48c394c5de231be8e4bc
+# 36c6b175fef548369eee2de7c884dd60
+# 4c26162c274c4cd79a8539c7ac36b30c
 msgid "If you are seeing many deprecation warnings that say things like"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:407
 #: ../../appendix/faqs/general.rst:407
-# 70016c7e38864e94b5fb76c8e5838017
-# 50f8b723aaec4e539314f3120bb48d73
+# bca5d0b6d2434431812036f1a4f14dac
+# 5f97671ce841457ba19e5506605e9c8c
 msgid "then you are using a plugin that was written for an older version of Elgg. This means the plugin is using functions that are scheduled to be removed in a future version of Elgg. You can ask the plugin developer if the plugin will be updated or you can update the plugin yourself. If neither of those are likely to happen, you should not use that plugin."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:410
 #: ../../appendix/faqs/general.rst:410
-# 59cf3bb35c084db48d0ac1c236b09980
-# a81e61a7f6474796a45dc0f95cbb2c7a
+# aebcb9ed751e47f18f6e78bd21a0f244
+# 09c772b3c6b143eab53ba6784c0d995b
 msgid "Javascript not working"
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:412
 #: ../../appendix/faqs/general.rst:412
-# 144471a204394572b1d18539fb067b23
-# e0cd051bc23b4d52a482e7da3d429e40
+# 0ffb94adacf448deba32a34c33d678f7
+# 48c8983dd5a74c608feb7dde3c66553b
 msgid "If the user hover menu stops working or you cannot dismiss system messages, that means JavaScript is broken on your site. This usually due to a plugin having bad JavaScript code. You should find the plugin causing the problem and disable it. You can do this be disabling non-bundled plugins one at a time until the problem goes away. Another approach is disabling all non-bundled plugins and then enabling them one by one until the problem occurs again."
 msgstr ""
 
 #: ../../appendix/faqs/general.rst:414
 #: ../../appendix/faqs/general.rst:414
-# 599d3320e7a14833b197b34cc49795ea
-# 28093b486c294774b55ac66920b4d1b6
+# 989b4a83f9bc48bb90aba5321cf9be0a
+# 7329e42d85d14c34bd93aad517b41a5c
 msgid "Most web browsers will give you a hint as to what is breaking the JavaScript code. They often have a console for JavaScript errors or an advanced mode for displaying errors. Once you see the error message, you may have an easier time locating the problem."
 msgstr ""
 
 #: ../../appendix/faqs/security.rst:2
 #: ../../appendix/faqs/security.rst:2
-# 673b67d85990410084c36eded5e7a3d6
-# bd25b032d16f4ed0b3c0290ee0bf1448
+# a43ed626ce7143278b62b874a86b303e
+# dc72e151ff254a6cbd3f7cc2156b6514
 msgid "Security"
 msgstr ""
 
 #: ../../appendix/faqs/security.rst:5
 #: ../../appendix/faqs/security.rst:5
-# 4c5da7e3c7fc4d9589ae18cb44593a55
-# 561eab33b60846779e39a1bdf901161a
+# 9318e6ee192d4fe7860037ab16585e71
+# 398dd6b8274049a28b39a6d4e6171d88
 msgid "Is upgrade.php a security concern?"
 msgstr ""
 
 #: ../../appendix/faqs/security.rst:7
 #: ../../appendix/faqs/security.rst:7
-# 3447a6ddf8cd4c589ef7fea01879e038
-# da148446eeb84f99a88e2e320d85d68d
+# 74264a108f774833997bcb299130e1bd
+# 3273eb83b3be45b58ec506e952083db5
 msgid "Upgrade.php is a file used to run code and database upgrades. It is in the root of the directory and doesn't require a logged in account to access. On a fully upgraded site, running the file will only reset the caches and exit, so this is not a security concern."
 msgstr ""
 
 #: ../../appendix/faqs/security.rst:9
 #: ../../appendix/faqs/security.rst:9
-# 8cf8808d5402437d84968ec769c73425
-# c9151fb40bbe4ed18c57f0ee6628bfa0
+# 5d937118448b4090a6abe6c1256efaef
+# 24cfdf2de86842828f16d908e9f14562
 msgid "If you are still concerned, you can either delete, move, or change permissions on the file until you need to upgrade."
 msgstr ""
 
 #: ../../appendix/faqs/security.rst:12
 #: ../../appendix/faqs/security.rst:12
-# 03925da6a4dd444b870299ba2fd609b1
-# 9d59398ce1b841dba1b304309a5afe37
+# 88c96c69e6c545879b363fab86ea8925
+# 4f57efe74166466794e6850aa791abea
 msgid "Should I delete install.php?"
 msgstr ""
 
 #: ../../appendix/faqs/security.rst:14
 #: ../../appendix/faqs/security.rst:14
-# b307e4367c9f43ae9d951ec1dcb3bf01
-# 944e4b02b8744383836b96308651825c
+# f6a03706baae4df4adbc8aa0494d0c94
+# abb5d3bb66c749408cad3b533817d842
 msgid "This file is used to install Elgg and doesn't need to be deleted. The file checks if Elgg is already installed and forwards the user to the front page if it is."
 msgstr ""
 
 #: ../../appendix/faqs/security.rst:17
 #: ../../appendix/faqs/security.rst:17
-# 9db2c8fff1e04914a5cc7f2e4968d682
-# c28d91bb6ba540b595a716895087d7dd
+# 475661ed83e8469c893dc177b61244ba
+# 232c948d71ac44b4a4f77f5f18af30c8
 msgid "Filtering"
 msgstr ""
 
 #: ../../appendix/faqs/security.rst:19
 #: ../../appendix/faqs/security.rst:19
-# a12590c120c04e0c8ba92647a2fe12bc
-# 2fa5ff7c05524ed7b5298fb9bffd2526
+# e09b99f953a144e1b9915905cf219bbc
+# ab4d4dc5e8064cb98980d1a3fe1d696b
 msgid "Filtering is used in Elgg to make `XSS`_ attacks more difficult. The purpose of the filtering is to remove Javascript and other dangerous input from users."
 msgstr ""
 
 #: ../../appendix/faqs/security.rst:21
 #: ../../appendix/faqs/security.rst:21
-# 03dad2fab91740bf8207e80e857e9912
-# a2125dedb2cc49e388579cced4b0229a
+# 4d595f2cdfd448008f70e8b3f4c88ebd
+# 115b90a61a9244b9a6ec21dde5a047d4
 msgid "Filtering is performed through the function ``filter_tags()``. This function takes in a string and returns a filtered string. It triggers a *validate*, *input* :ref:`plugin hook <design/events#plugin-hooks>`. By default Elgg comes with the htmLawed filtering code as a plugin. Developers can drop in any additional or replacement filtering code as a plugin."
 msgstr ""
 
 #: ../../appendix/faqs/security.rst:23
 #: ../../appendix/faqs/security.rst:23
-# 0c6f837f9c934bf0b615c76388e51e0e
-# b5a844cd3e3741ca9babd040793b7b74
+# 923c7bbb17d84533907f5fea7f03fbdf
+# 8fb2b511742e42168ee1bdcc2d13856e
 msgid "The ``filter_tags()`` function is called on any user input as long as the input is obtained through a call to ``get_input()``. If for some reason a developer did not want to perform the default filtering on some user input, the ``get_input()`` function has a parameter for turning off filtering."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:2
 #: ../../appendix/faqs/development.rst:2
-# 1b342f74c69b4d44a63bdb9098963963
-# a25c6e2038ac4581891a359c6b260a96
+# 7807ce272b57488cbcde984a7e1e4fc7
+# 189e5d0f42f84354b30f53208338a0fb
 msgid "Development"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:5
 #: ../../appendix/faqs/development.rst:5
-# 161ad7a6168b4e428418602f348cd91f
-# ceb83fe153354a3782463ec510ed8614
+# ddb6d5bbb11e4742ae4200e846f5befc
+# f75d9dbebdd84760b08d9deda37f0a49
 msgid "What should I use to edit php code"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:7
 #: ../../appendix/faqs/development.rst:7
-# 1027c306631f4458b72f6b6d16f71438
-# 48a2ca7f56cc4de6a9a3836ccb266210
+# d6f7310e203a496ea33c38016b93bbce
+# 224e98a35786446893153cfaae3ff6da
 msgid "There are two main options: text editor or `integrated development environment`_ (IDE)."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:10
 #: ../../appendix/faqs/development.rst:10
-# 674cfecf3f7840558cb9c86ee6ba1a45
-# 40daa21db6f04bd4a37e094d4a3ee082
+# ff9fbdf4fa3a41ae8eeae47b85ee5775
+# c68cecc8a0de40869b6ec3121704bf82
 msgid "Text Editor"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:12
 #: ../../appendix/faqs/development.rst:12
-# aa130b8b99c84398b383da81258b567c
-# 3f332177362a4edead639480aad7f662
+# b024ee7d7f7842569a1f02b4f10944f7
+# 8294ef28c4c344f585706721b73c1e35
 msgid "If you are new to software development or do not have much experience with IDEs, using a text editor will get you up and running the quickest. At a minimum, you will want one that does syntax highlighting to make the code easier to read. If you think you might submit patches to the bug tracker, you will want to make sure that your text editor does not change line endings. If you are using Windows, `Notepad++`_ is a good choice. If you are on a Mac, TextWrangler_ is a popular choice. You could also give TextMate_ a try."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:15
 #: ../../appendix/faqs/development.rst:15
-# fe00201254ab424e8dbd68b2331916fd
-# 1059a19b2ad74fdca874b2450a60376a
+# dc6a5ff71ca84716b9e019c6c2ad1a56
+# f8c323f07c294349bacc843edeb13729
 msgid "Integrated Development Environment"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:17
 #: ../../appendix/faqs/development.rst:17
-# b5eb02b4b9f0461988da44e6da9d61eb
-# 53bb3db009fa4515891ba8e0a8b92615
+# c7d916716cf6468c901b7c0bf5c35159
+# 3965e5cf38a04aa49d913f082e351620
 msgid "An IDE does just what it's name implies: it includes a set of tools that you would normally use separately. Most IDEs will include source code control which will allow you to directly commit and update your code from your cvs repository. It may have an FTP client built into it to make the transfer of files to a remote server easier. It will have syntax checking to catch errors before you try to execute the code on a server."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:19
 #: ../../appendix/faqs/development.rst:19
-# 32991b9fbdd246828c9b5eac938ab550
-# 72e0ea23f54e4dccabbfadb462873c30
+# a4d2032971e549c5b8df2ec6c1272023
+# 38f8b10a3ee14041b682bf68f3ea4277
 msgid "The two most popular free IDEs for PHP developers are Eclipse_ and NetBeans_. Eclipse has two different plugins for working with PHP code: PDT_ and PHPEclipse_."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:31
 #: ../../appendix/faqs/development.rst:31
-# a0c73d6f3f164a21ab402b16bf10a61a
-# 7e1b02f135b34d4d8da320b834c68603
+# f37263264ed9424fa4ed7fab3ebe0bed
+# 60403fab600c41ac904e7c0e1f30482f
 msgid "I don't like the wording of something in Elgg. How do I change it?"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:33
 #: ../../appendix/faqs/development.rst:33
-# 36093c1416434ba5be0779593db446c2
-# a78c139f67c94fdcb3aa8c6ad28cb8b9
+# edcc9e9fed9447359d20e8b1574046d3
+# e437fc6f29e24974b003b6baadd10c92
 msgid "The best way to do this is with a plugin."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:41
 #: ../../appendix/faqs/development.rst:41
-# bbe68ac3de3544f28d0118cbf081cc7a
-# ef3b87bd044a47229baba4791f6a375f
+# 036a3dd775de481289537e0fb510f9ea
+# 7efaa09da96d453b8285696a21bfe727
 msgid "Locate the string that you want to change"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:43
 #: ../../appendix/faqs/development.rst:43
-# fba9b57ec7e547838bff25196d0fa7da
-# d6d78d200e164924a7dcd8685b041a4a
+# da9dd0e59ad94d57b0e2841ffff458ed
+# 2130432f552a43c8b306a039febca666
 msgid "All the strings that a user sees should be in the ``/languages`` directory or in a plugin's languages directory (``/mod/<plugin name>/languages``). This is done so that it is easy to change what language Elgg uses. For more information on this see the developer documentation on :doc:`/guides/i18n` ."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:45
 #: ../../appendix/faqs/development.rst:45
-# d55fdc89e85c44619264d798b6bfbec0
-# 188913f192844d54b059d1c350b1d257
+# d138089bc5bd42fea42cc332d20e67fc
+# dc780f33f06e485c80fa187db59c5bcb
 msgid "To find the string use ``grep`` or a text editor that provides searching through files to locate the string. (A good text editor for Windows is `Notepad++`_ ) Let's say we want to change the string \"Add friend\" to \"Make a new friend\". The ``grep`` command to find this string would be ``grep -r \"Add friend\" *``. Using `Notepad++`_ , you would use the \"Find in files\" command. You would search for the string, set the filter to ``*.php``, set the directory to the base directory of Elgg, and make sure it searches all subdirectories. You might want to set it to be case sensitive also."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:47
 #: ../../appendix/faqs/development.rst:47
-# aea0d69f87954dd8a73923a1d42ec0a2
-# 266336aa4ca448d494aa78d4822bdc7a
+# 9551cfddb9e04e7eac4a4e319a0938af
+# 07810922242c45de9f28363873a32140
 msgid "You should locate the string \"Add friend\" in ``/languages/en.php``. You should see something like this in the file:"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:53
 #: ../../appendix/faqs/development.rst:53
-# d749e1b747eb408ba2809085c3aed258
-# 03a08b6173124eb8a756240139a2cdd8
+# ee5fe7a35c9e46878e9a4f6cf17b881e
+# 1cec1b8c51b743da9648752dd02d0cc2
 msgid "This means every time Elgg sees ``friend:add`` it replaces it with \"Add friend\". We want to change the definition of ``friend:add``."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:56
 #: ../../appendix/faqs/development.rst:56
-# cdc5cbb74d344da99ba18bfa816f6ab7
-# ae60579362d54ca8a03cde302b40d872
+# 866992cb850a4a10bac11233c9d8fd25
+# 8dd35cd6225f4a2eb97b1b3a8753a0fb
 msgid "Override the string"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:58
 #: ../../appendix/faqs/development.rst:58
-# c7326d7c06f4406d98c30f90d2aa4b7a
-# 09dde538225641e4b739f8c8c218fc94
+# 5c7b37d93fb947bfa91347fa88d3acf9
+# 3d0b3e1dd9aa46528f2f9cf41ac39771
 msgid "To override this definition, we will add a languages file to the plugin that we built in the first step."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:60
 #: ../../appendix/faqs/development.rst:60
-# 5b1539c3feae48f29128cbc89238a531
-# 22530f361e5f4f23be0566204eae2fe5
+# 08f14bcc040c41e2ae658959220c70cf
+# d65117d8527440e5a906ea3e64aa2ece
 msgid "Create a new directory: ``/mod/<your plugin name>/languages``"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:61
 #: ../../appendix/faqs/development.rst:61
-# 5143a2fde6974b43957c728c4a474c1a
-# b8ecc701ebe741a1ae87bbe7e0e8e780
+# 8206cbeef9ab4654b367c88c14d30505
+# 547d19601de14cb3a454b945b75bc863
 msgid "Create a file in that directory called ``en.php``"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:62
 #: ../../appendix/faqs/development.rst:62
-# f1a8e44d4ea54e259272efa731c666ae
-# 31aaefe2d9aa45c7863d8362ed6f1db9
+# d32441a66956462296790a8b9e5695dd
+# fee9414887ab49bda9bbb38d1df1c0b8
 msgid "Add these lines to that file"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:72
 #: ../../appendix/faqs/development.rst:72
-# 6feec12d391e4f6f93b4bf1b96207362
-# 76298f40a4924247970a0eb15e377281
+# 09bfb92eae894679a266268dca5bca11
+# 1fb52d7e3cb14788b89edd707cfb8e29
 msgid "Make sure that you do not have any spaces or newlines before the ``<?php``."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:74
 #: ../../appendix/faqs/development.rst:74
-# 0e70f19b78014512867a740366632b61
-# d963d4c7a49045ca81ec86408d9981cc
+# 6b81862fc0e049e492eef96da475035d
+# f8a79dbfd5f24801904cbc8b5f8fefdd
 msgid "You're done now and should be able to enable the plugin and see the change. If you are override the language of a plugin, make sure your plugin is loaded after the one you are trying to modify. The loading order is determined in the Tools Administration page of the admin section. As you find more things that you'd like to change, you can keep adding them to this plugin."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:77
 #: ../../appendix/faqs/development.rst:77
-# dccf131f42fa4e7bb1500234ba9a5a4c
-# 6171e7e3f7a246eb88bae72cf5fc9973
+# 30c1b563b1a3416ca2752ffff82972d6
+# cc9051644b544be9b300f6bd6e918a6d
 msgid "How do I find the code that does x?"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:79
 #: ../../appendix/faqs/development.rst:79
-# 494ff8aae3064451903aae0cec17744c
-# 8836d2eec5e34fdebe8c0476749bc9ff
+# 116fa5e1baed427c993a7e92e5feddd3
+# 98475868a5d24afdb0495f29c9c3092e
 msgid "The best way to find the code that does something that you would like to change is to use ``grep`` or a similar search tool. If you do not have ``grep`` as a part of your operating system, you will want to install a grep tool or use a text-editor/IDE that has good searching in files. `Notepad++`_ is a good choice for Windows users. `Eclipse`_ with PHP and `NetBeans`_ are good choices for any platform."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:82
 #: ../../appendix/faqs/development.rst:82
-# 907fcbad19034327aadb5c97d4fa16b1
-# 81e9c82021f54b4e82c5039532030fc4
+# f135c6b1064945339390a16699fdf344
+# 75b6d2dd81e54eada6596af33b70c1fa
 msgid "String Example"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:84
 #: ../../appendix/faqs/development.rst:84
-# 2b4d3402e1174a50815116f04f0a44b8
-# 840d77b13da54dea8638c0392a6eec68
+# 95e2ab6d523c46fda687323d3ff82181
+# 3c35d4db39b24f1e97f8594736a42757
 msgid "Let's say that you want to find where the *Log In* box code is located. A string from the *Log In* box that should be fairly unique is ``Remember me``. ``Grep`` for that string. You will find that it is only used in the ``en.php`` file in the ``/languages`` directory. There it is used to define the :doc:`/guides/i18n` string ``user:persistent``. ``Grep`` for that string now. You will find it in two places: the same ``en.php`` language file and in ``/views/default/forms/login.php``. The latter defines the html code that makes up the *Log In* box."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:87
 #: ../../appendix/faqs/development.rst:87
-# afab9b7806db48078ce322be5e879487
-# 6951a325604b4c7e9274f573ea85c4fd
+# a7e7eacdf24149f9937ed18a4be94cbd
+# e9d1986c808e4edeb2b4518363f4aae9
 msgid "Action Example"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:89
 #: ../../appendix/faqs/development.rst:89
-# 18ae58c086394f4f8497cf6ba3934b24
-# 1bea7ffe2e8a4a9face643a02c5b113f
+# 1f72e02cac1e4d478026af2d64e73dd6
+# 374b731b1ac24d3cba411fa9cefbdadd
 msgid "Let's say that you want to find the code that is run when a user clicks on the *Save* button when arranging widgets on a profile page. View the Profile page for a test user. Use Firebug to drill down through the html of the page until you come to the action of the edit widgets form. You'll see the url from the base is ``action/widgets/move``."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:91
 #: ../../appendix/faqs/development.rst:91
-# 6d684c5c2cca4ee1b19d69f367d247b5
-# f9d1982363aa4875858f0c995f10ac28
+# 78c7f842576c4b45b35ae1f27e01fc77
+# 3c9423c547c54d4381e4e92601019734
 msgid "``Grep`` on ``widgets/move`` and two files are returned. One is the JavaScript code for the widgets : ``/js/lib/ui.widgets.js``. The other one, ``/engine/lib/widgets.php``, is where the action is registered using ``elgg_register_action('widgets/reorder')``. You may not be familiar with that function in which case, you should look it up at the API reference. Do a search on the function and it returns the documentation on the function. This tells you that the action is in the default location since a file location was not specified. The default location for actions is ``/actions`` so you will find the file at ``/actions/widgets/move.php``."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:94
 #: ../../appendix/faqs/development.rst:94
-# 92cf5d58749f43e8ac8eed9278aee700
-# 3513e54b9b8b4c7d95f345e5f3a90065
+# 8c6c73421f564faeb0151ad98841fb59
+# de81becfaacd42e494b95d463f4d4bb1
 msgid "Debug mode"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:96
 #: ../../appendix/faqs/development.rst:96
-# 8a07ad2d73ae4d98a743ef85109057d8
-# 56ee271589654947bc9bf941877f96e2
+# b98a02b91d6e40b595fd624fe6a85b87
+# ba3841fdce5942b88a651634b30e8f74
 msgid "During the installation process you might have noticed a checkbox that controlled whether debug mode was turned on or off. This setting can also be changed on the Site Administration page. Debug mode writes a lot of extra data to your php log. For example, when running in this mode every query to the database is written to your logs. It may be useful for debugging a problem though it can produce an overwhelming amount of data that may not be related to the problem at all. You may want to experiment with this mode to understand what it does, but make sure you run Elgg in normal mode on a production server."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:100
 #: ../../appendix/faqs/development.rst:100
-# 8aa45be4ce684a928b3194f0c6d20e5f
-# ec046f17763845b0b9d733b8630e0455
+# 3a2144d795eb4e27a602cba34cff7868
+# 56d3d1b135af4d3a8b76a1d17871cafd
 msgid "Because of the amount of data being logged, don't enable this on a production server as it can fill up the log files really quick."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:103
 #: ../../appendix/faqs/development.rst:103
-# 42acc3d8bf0246749f642bcc72601a30
-# af9ece8d51ee4b4a939c5920bf13cdc5
+# da2472dbcdd244fe8b23729bfcca08cc
+# 40b69840b8924da49fcff3038f433074
 msgid "What goes into the log in debug mode?"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:105
 #: ../../appendix/faqs/development.rst:105
-# e26a2b5509a449baa3cc876b94cb91a6
-# 6f563cbcd4974ce29499cabc03c475ff
+# 2dc7977c19db400da45769439d48dbce
+# 82660a84b7964136a51d468e4872ce24
 msgid "All database queries"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:106
 #: ../../appendix/faqs/development.rst:106
-# 08da67f7450f4e2d8278023e70670d10
-# 105d3fa099794aa49d7361ec823a6fd9
+# a5aa5fefbcce4c1abb1d50776711ddb8
+# a54286cc10d84dab810b45e6a5317617
 msgid "Database query profiling"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:107
 #: ../../appendix/faqs/development.rst:107
-# ecccae4bff4e49c9a19fce611131130e
-# f2c2ce2ce71d4a34978ad4c68f77271d
+# 4bc460a4fddd463e8e17b0abf9c68ad4
+# 6fb4cedf88084a1582fe60e8d0bc74c8
 msgid "Page generation time"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:108
 #: ../../appendix/faqs/development.rst:108
-# 2c3e76eccf994c879112506f5d72cabf
-# 94fa2869ed8f407da471c9f33c65c612
+# 10151adae9d04846ba7aed0d62e32913
+# 4328d1746dc540cb84e48f80c4ae17db
 msgid "Number of queries per page"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:109
 #: ../../appendix/faqs/development.rst:109
-# c4b8479dbdb84271934f75ed736f97ff
-# 12af125e25d9482ca0ca9f17de4aa52a
+# fbd2f174806644d8b859b6c11a4d2454
+# 3fcd16adb55b4c398089c5c539e9509d
 msgid "List of plugin language files"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:110
 #: ../../appendix/faqs/development.rst:110
-# 9e4ddb0ec624472aa869b68f30c7dd4a
-# 853193fa20c2497abd1f233813758e19
+# ab5f55934447405384a7a13f0b975496
+# 2aba29e536694c1bae444fe433407a3e
 msgid "Additional errors/warnings compared to normal mode (it's very rare for these types of errors to be related to any problem that you might be having)"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:113
 #: ../../appendix/faqs/development.rst:113
-# d40646934a3f40958c10c570c969eac4
-# 910ad3d171c34b9f86d01ed9b787c6cd
+# f795406f0a32476385ddd1ebd4ef8d15
+# 4a506e18c5d64268a8d978a3bd733a50
 msgid "What does the data look like?"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:145
 #: ../../appendix/faqs/development.rst:145
-# d0d5431da1324105827c53be569de538
-# 44e98fe366444ce0b6775adcfb07a4db
+# d43c9652c6dd4ee3b0351af38b9873da
+# 0ed21298be6542b599261e713bd6e9be
 msgid "What events are triggered on every page load?"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:147
 #: ../../appendix/faqs/development.rst:147
-# b7c0847fd14444bcbfa4cbf4584ef667
-# 9d4cc8f2063143498cae76e82bbbbd6e
+# 541dfd89b99f46cabcfeb5d776581fe7
+# e40eebf131ff4907aa98b6fc423cf45f
 msgid "There are 5 :doc:`Elgg events </design/events>` that are triggered on every page load:"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:149
 #: ../../appendix/faqs/development.rst:149
-# 5f9077addbca4e47abf7d2b0736d77a4
-# b29853b8537e4229b936e43739909365
+# 94d4b0c6d5194a53be6431181781977a
+# 8592c12c77d245e3a41d6e433532a264
 msgid "boot, system"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:150
 #: ../../appendix/faqs/development.rst:150
-# f7438ced51bc4f0392665aaaae80ddb2
-# d5abdf58da144e29a5f5b68f2b76ac3a
+# 24a57e9f1cd7471daa8623d86d64fa00
+# 91f1af70f373449297197dcc19dcedc2
 msgid "plugins_boot, system"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:151
 #: ../../appendix/faqs/development.rst:151
-# 1ca29a1535294e4a922192634e04243f
-# ca28f29fe0324572affc057ed836454e
+# 2d951fa3cb8a444aa5a12d9848e4f84f
+# 66872f6f1c1049e2bf922b3a202f40da
 msgid "init, system"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:152
 #: ../../appendix/faqs/development.rst:152
-# 8c71718fd57a45e6a7ce3a12d2ebc874
-# cc5b10bdd09b49a6afbf513ca1c7adbd
+# edd8395071f24c4f90da56040a4c81f4
+# 59bde8452ccd44158727bc91a3fe126f
 msgid "pagesetup, system"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:153
 #: ../../appendix/faqs/development.rst:153
-# 24151b21cc334e9982fc004f464b9708
-# 5a33770351b74e649decb43f365fff68
+# 8eb729f4d981415e9baa3c1c32f4bae6
+# 7e1296bedd2e4946bb76304b43edf947
 msgid "shutdown, system"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:155
 #: ../../appendix/faqs/development.rst:155
-# 74d620911183445090ef098d8836e7c6
-# a13a8ccb1dae48ee92a41fae563507f1
+# 76933d744bd4438a9c24916e45a095f4
+# d9357762bf054fd1ac810b47294a92e5
 msgid "The *boot*, *system* event is triggered before the plugins get loaded. There does not appear to be any difference between the timing of the next two events: *plugins_boot*, *system* and *init*, *system* so plugins tend to use *init*, *system*. This event is triggered just after the plugins are loaded near the end of the boot script (``/engine/start.php``). The *pagesetup*, *system* event is thrown the first time ``elgg_view()`` is called. Some pages like the default ``index.php`` do not call ``elgg_view()`` so it is not triggered for them. The *shutdown*, *system* event is triggered after the page has been sent to the requester and is handled through the PHP function ``register_shutdown_function()``."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:157
 #: ../../appendix/faqs/development.rst:157
-# 0be867200047478ab9aa38cedff62bce
-# 75e4284cbae9447aaee99cb36fb5f76a
+# b4242817c25b4424bec84695b26ee401
+# c17f8daa098b40e4abafb2b065f38fe1
 msgid "There are :doc:`other events </guides/events-list>` that are triggered by the Elgg core but they happen occasionally (such as when a user logs in)."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:160
 #: ../../appendix/faqs/development.rst:160
-# 75fe1a3a16224b259048c2a67231e1dc
-# 3940381431d748afa7383d5c2d18622b
+# 8a389d71ef014a05b3096926207fd61c
+# 8cb7b955ab9a4e969d420b08baa3fd96
 msgid "What variables are reserved by Elgg?"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:162
 #: ../../appendix/faqs/development.rst:162
-# a539ed26cb1e47499379c7223916e038
-# 2a523d7b71e1401eb33656028b498d65
+# ed0a1300b6d348de9d33f9871cb69ee0
+# 94ab8780a711400abe268caf6e85709e
 msgid "``$CONFIG``"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:163
 #: ../../appendix/faqs/development.rst:163
-# d747a444707e430cab28841f9faa84b2
-# 8a12d9cda7eb4ee7843cb8f862e30df9
+# ed638436e9124b0d81ced75e1e08f223
+# db0033c667e74b72b92e16c4ad7a2f96
 msgid "``$vars``"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:164
 #: ../../appendix/faqs/development.rst:164
-# c0e0073bd5a24b16a108ed21f37d5eaf
-# 97116f6635464f48a8aee7c0a93fe2e8
+# 8d7949914a9448afbf2bf99d1a75b90b
+# 7de4935ebbb04d34b7602e631ee85e32
 msgid "``$autofeed``"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:165
 #: ../../appendix/faqs/development.rst:165
-# 1d646b3d9ce046e8ad226a56cd5bf96b
-# e07cc4e5e6a148a6b649d7572d968c08
+# c00be0cebfb745d5906acece40f70d87
+# d619b46e4bf943e8aa074c10bdd8bfbd
 msgid "``$_GET['action']`` / ``$_POST['action']``"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:166
 #: ../../appendix/faqs/development.rst:166
-# b2809d47e9bb4f95b746aad74989d345
-# e7817c31e2f741d899fa2760d166d3d6
+# ded6d5b9a5e444d2abf5f764f18123d9
+# 73a5c7c00537400591dd748e7b902c35
 msgid "``$viewtype``"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:169
 #: ../../appendix/faqs/development.rst:169
-# b8daed9fbc7b47c2bd8dcbff57211d88
-# f8606969551b43b4815cc33d85197e7e
+# ffca27b8596a4d37aa80f848eca7b922
+# 72cad1ce7073489d9aced3b6e4ef9c25
 msgid "Copy a plugin"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:171
 #: ../../appendix/faqs/development.rst:171
-# 731f28baa54345d8baf1dc40f6f1db99
-# f515ebe8c6b44aa19f8f08fc40688659
+# a2b6514f7b0b483989aec0847c3ed981
+# ef2f7b3974944c7f846911f7aefb05b5
 msgid "There are many questions asked about how to copy a plugin. Let's say you want to copy the ``blog`` plugin in order to run one plugin called ``blog`` and another called ``poetry``. This is not difficult but it does require a lot of work. You would need to"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:173
 #: ../../appendix/faqs/development.rst:173
-# 0b870fbd64104c61b587c077306e0230
-# 6e1aeef64a284d769a5e967e789be91e
+# 062be90b525e411aac6c245b471fc8b8
+# 5b6e515d2fdf4e378a50a3d6d939526a
 msgid "change the directory name"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:174
 #: ../../appendix/faqs/development.rst:174
-# e63d070f4631470c87f0a21ba86a80b6
-# dcd31812b3984226864b919c7810587b
+# 487e7e3aee44439fb211950b93245eca
+# cb1c79ca5fec489c8ebc94702d37f76e
 msgid "change the names of every function (having two functions causes PHP to crash)"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:175
 #: ../../appendix/faqs/development.rst:175
-# 1bfaa3eb950f4215841b0fdc5ba695f3
-# 83af14c679df4259a206f46c2a06ace5
+# 31bf11648aca42838b783950a4ca927e
+# 89c71254c3784e00bc246aeab9ad35ef
 msgid "change the name of every view (so as not to override the views on the original plugin)"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:176
 #: ../../appendix/faqs/development.rst:176
-# 76407f5af45143be866676dd6a2a5cac
-# 62d49982847e45a8a966a955ba62329a
+# 87edd98ae9e64104b50cbfbd02c3a6fe
+# 434ae0d0227446e8bc346ecf6885bbd9
 msgid "change any data model subtypes"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:177
 #: ../../appendix/faqs/development.rst:177
-# 48de8e16d00e4f68b837fcf672a6185d
-# f23f991476994f4981a72d5b7e04b25a
+# 6eba75fe6fbe44b483da783b7c253c3e
+# a9011d36c9d44fa5a5cd7cea2f4378b3
 msgid "change the language file"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:178
 #: ../../appendix/faqs/development.rst:178
-# d2b48c70fa3c4035b2249ce606760190
-# 2eb1d14350e246a199777ad8fface7c3
+# 8433e1c2eb6b447ca61ca72397d8c201
+# d2cefc76870843cc9d0029a74605682a
 msgid "change anything else that was specific to the original plugin"
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:182
 #: ../../appendix/faqs/development.rst:182
-# 4e17804e20714cf3ac0996712b1b9fb5
-# cb67233fec814dd68da60815344ad340
+# 450616733ed54b32bed4838dc3374c6b
+# 2f92add0b71e41f4b6748312e47aef7b
 msgid "If you are trying to clone the ``groups`` plugin, you will have the additional difficulty that the group plugin does not set a subtype."
 msgstr ""
 
 #: ../../appendix/history.rst:2
-# b1fd3f411fa5418ba24f48d198cab247
+# 0bbc9b9fa4684af59b203633a55b6f73
 msgid "History"
 msgstr ""
 
 #: ../../appendix/history.rst:4
-# 4c7dc0a561ca45a3aeac503605858488
+# 9e2de1b48fb243a1b90c781b2f681ab8
 msgid "The name comes from `a town in Switzerland`__. It also means \"elk\" or \"moose\" in Danish."
 msgstr ""
 
 #: ../../appendix/history.rst:8
-# 9f599cfef821420b9a691626feaf2820
+# 2de2d361571449cfbf9f02384d0b30ae
 msgid "Elgg's initial funding was by a company called Curverider Ltd, which was started by David Tosh and Ben Werdmuller. In 2010, Curverider was acquired by Thematic Networks and control of the open-source project was turned over to `The Elgg Foundation`_. Today, Elgg is a community-driven open source project and has a variety of contributors and supporters."
 msgstr ""
 
 #: ../../appendix/index.rst:2
-# 7b576f405b9c4015aec49c7fad339060
+# 33e75a6eb0224d6db7d2d84c9e336628
 msgid "Appendix"
 msgstr ""
 
 #: ../../appendix/index.rst:4
-# f36e98517e824585948a17caffb122e7
+# a592e21e879842c29695db082c90b764
 msgid "Miscellaneous information about the project."
 msgstr ""
 
 #: ../../appendix/releases.rst:2
-# d4a42dcbbcb946c39f1ab5f87df28439
+# 66ca48596bfe4127be28675f92251300
 msgid "Release Policy"
 msgstr ""
 
 #: ../../appendix/releases.rst:4
-# 623165ecb2a24ecaaf5160088943579c
+# df215f96516b415dbdd014fb35aa439b
 msgid "What to expect when upgrading Elgg."
 msgstr ""
 
 #: ../../appendix/releases.rst:6
-# e4a8d5295d704ef091bc70ec02d2d30c
+# e0c2411484b14794afb7f020d752260b
 msgid "In general, we adhere to `semantic versioning`_."
 msgstr ""
 
 #: ../../appendix/releases.rst:10
-# f3f7bab1ea76487189d17265c7d76db9
+# f4f5ac1d8cf04e22be28c8cb12b2f8d6
 msgid "Follow the blog to `stay up to date on the latest releases`__."
 msgstr ""
 
 #: ../../appendix/releases.rst:15
-# b295650bba3b40fbb043d405aa68a154
+# de61a922cf60407d916a777ec5569769
 msgid "Bugfix Releases (1.9.x)"
 msgstr ""
 
 #: ../../appendix/releases.rst:16
-# 12a776cac0884bd9922032aa83f94b39
+# 0facc25085ae4fa0b7c460c19109d1ae
 msgid "Every few weeks."
 msgstr ""
 
 #: ../../appendix/releases.rst:18
-# b2b1e0c46ddf436bbc1fc674e63ec07d
+# 45876fe5810c4cd59d01648c4776dc2b
 msgid "Bugfix releases are made regularly to make sure Elgg stays stable, secure, and bug-free. The higher the third digit, the more tested and stable the release is. Since bugfix release focus on fixing bugs and not making major changes, themes and plugins should work from bugfix release to bugfix release."
 msgstr ""
 
 #: ../../appendix/releases.rst:25
-# cad6a39f15fd49e78eea0de091058ec1
+# 2afa7558bb564555a0872598a8097309
 msgid "Feature Releases (1.x.0)"
 msgstr ""
 
 #: ../../appendix/releases.rst:26
-# 4fcccf25f6e74633bda6cbbeda23f621
+# e4c1427ffdd94d8590051c5826a2bda0
 msgid "Every few months."
 msgstr ""
 
 #: ../../appendix/releases.rst:28
-# 9ff7552314104f7a8fd97cb7a3026286
+# 35d737bc78244e90964a0d5ca99c4446
 msgid "New features are introduced in Elgg every few months in minor new feature releases. These versions are identified by the second digit (1.**8**.0). These releases aren't as mature as bugfix release, but are considered stable and useable. Though these releases try to be backward compatible, features are added, unused code removed, and overall improvements are made, so plugins and themes might need to be updated to make use of the new and improved features."
 msgstr ""
 
 #: ../../appendix/releases.rst:37
-# bdc5bd5ee4324d0386f19156149b0c53
+# bc2baa95c4954e3cb2b0c978b281e57e
 msgid "Major Releases (x.0.0)"
 msgstr ""
 
 #: ../../appendix/releases.rst:38
-# 40d387a8a796424693c2dfa1a4230c9f
+# ad2824b3a1634b7ab4bb85458379c8ec
 msgid "Every few years."
 msgstr ""
 
 #: ../../appendix/releases.rst:40
-# 9a19d7202a1b47be9e87dc66cfc2fce3
+# fe402ad409c749f3b03d248ac8d988d3
 msgid "Elgg, as all software, inevitably undergoes serious changes and a major new feature release is made. These releases are opportunities for the core team to make dramatic improvements to the underlying platform. Themes and plugins from older versions are not expected to work without modification on different major releases."
 msgstr ""
 
 #: ../../appendix/releases.rst:46
-# 58af47289cdb4a49a5df83fd32a4aa43
+# 558db70443ff4f49bb4bc20e5e119ef2
 msgid "Release Candidates/Betas"
 msgstr ""
 
 #: ../../appendix/releases.rst:47
-# 38c29a5319144cd48f8dd9b142790f9d
+# 12dad877f8b948fcb17a8353f0f89643
 msgid "Before feature releases and major releases, the core team will typically offer a release candidate or beta. These are meant for testing only and should not be considered production quality. The core team makes these releases available to get some real-world testing and feedback on the release. That said, the API in release candidates is considered stable, so once a release candidate is made available, you should feel comfortable writing plugins against any new APIs."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:2
-# efbb28382a3b43baa86925fcad467888
+# 1f83e0b1b48749eea0e77bb6863a9038
 msgid "Roadmap"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:4
-# 3093f69f94d54ab39ddc10a63e744d01
+# 17794d99f021417a98e20d19fc5ae69c
 msgid "What direction is the project going? What exciting new features are coming soon?"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:6
-# 1bfcdec7750246369f29bc8bcc736ebd
+# f9a444b5722645e5b7328dd4c04594da
 msgid "We do not publish detailed roadmaps, but it’s possible to get a sense for our general direction by utilizing the following resources:"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:9
-# 1be533f678ad4319a08ffbb2ab42ef4c
+# c2f0267592284e8fbdc4dd5252354533
 msgid "Our `feedback and planning group`_ is used to host early discussion about what will be worked on next."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:10
-# d61b0cf489fe47239873777642a61651
+# facc09d2bd6c432eba83880c3685a12c
 msgid "Our `Github milestones`_ represent a general direction for the future releases of Elgg. This is the closest thing to a traditional roadmap that we have."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:12
-# 206e9047bac44f5fb9a04115fc87cd27
+# d1da0d228d904f2c8859646e7d5e3454
 msgid "`Github pull requests`_ will give you a good idea of what’s currently being developed, but nothing is sure until the PR is actually checked in."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:14
-# 81e4a40f08fe45dfb31d851dcd703ca6
+# 358f3ac8ad984bab9c3ce7dd74af3677
 msgid "We use the `developer blog`_ to post announcements of features that have recently been checked in to our development branch, which gives the surest indication of what features will be available in the next release."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:24
-# 364025a0b1a643c9acd1b5d47b2266de
+# e6e029f690ac4b07a0922d002a9f31db
 msgid "Values"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:26
-# 684fba05c0184991a6c8de8ac6e5d086
+# ab56a9b2845d401391b6d7587d2f8135
 msgid "We have several overarching goals/values that affect the direction of Elgg. Enhancements generally must promote these values in order to be accepted."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:30
-# a63e9cf9827347b99a8f91a5bafd8546
+# 72499a89560c446b8efba54d7eef82ea
 msgid "Accessibility"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:32
-# 1f00f011a6284fcdb725b84f8b46dfe7
+# 6412a0cfeb2446ccb3be1844b2dadfed
 msgid "Elgg-based sites should be usable by anyone anywhere. That means we'll always strive to make Elgg:"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:34
-# 87847149efc6440f8db12320ffaeebb4
+# 83017c168dbb4d68a95d8ae02854476c
 msgid "Device-agnostic -- mobile, tablet, desktop, etc. friendly"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:35
-# be5ba242a61d4ceeb9fb49f1766a658a
+# 251ee0a2c6dc4f9b9f879d1c8fc740fb
 msgid "Language-agnostic -- i18n, RTL, etc."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:36
-# e252ca78c8af49d684acb957ca8331fd
+# 1eaa70cdd65a43a1b8ad953e9d3200a5
 msgid "Capability-agnostic -- touch, keyboard, screen-reader friendly"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:39
-# 919be558bd3d4e559fa78b95e0f7352e
+# 5b76c865963745278184fa1c85b2eb4f
 msgid "Testability"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:41
-# 60928b9935cd4d898c8b047e455f1f82
+# 3492c57942ee46618023c4f12bd2ab78
 msgid "We want to **make manual testing unnecessary** for core developers, plugin authors, and site administrators by promoting and enabling fast, automated testing at every level of the Elgg stack."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:44
-# ee7838fe048a4417a3a48d7712a51f0d
+# 46619538f8e64ee4943455b9db33b67f
 msgid "We think APIs are broken if they require plugin authors to write untestable code. We know there are a lot of violations of this principle in core currently and are working to fix it."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:47
-# 15d94230464540c0a92aa74bf5690827
+# 9c49bfa908884c2d83b8b46c501c1781
 msgid "We look forward to a world where the core developers do not need to do any manual testing to verify the correctness of code contributed to Elgg. Similarly, we envision a world where site administrators can upgrade and install new plugins with confidence that everything works well together."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:51
-# db67d2757aa44b48988740baec762f7c
+# fbaf66c46fd9403f878a0f0da7e4235a
 msgid "TODO: other goals/values?"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:54
-# e3489467d87b4930983ed17386dc4d47
+# 8cd9bcb23a4d4eebbabd397be339669e
 msgid "FAQ"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:57
-# 191cb0ae4390484c909e569165635ceb
+# 821e2ee66e80499e9a775f22a180f2fa
 msgid "When will feature X be implemented?"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:58
-# a47926f16d614ce5a3370422c64a1790
+# 08930e60893c47d28f68996ddea5f6e2
 msgid "We cannot promise when features will get implemented because new features are checked into Elgg only when someone is motivated enough to implement the feature and submit a pull request. The best we can do is tell you to look out for what features existing developers have expressed interest in working on."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:64
-# fa1b0ebb528f4c1e9732c3cc09f26bf5
+# f5603985cbe14b8db2091f89fa8a00e7
 msgid "The best way to ensure a feature gets implemented is to discuss it with the core team and implement it yourself. See our :doc:`/contribute/index` guide if you're interested. We love new contributors!"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:67
-# ad8c68da96f340f0956ea6ee64345397
+# 393d36c620a640519f5b21d30a249341
 msgid "Do not rely on future enhancements if you're on the fence as to whether to use Elgg. Evaluate it given the current feature set. Upcoming features will almost certainly not materialize within your timeline."
 msgstr ""
 
 #: ../../appendix/roadmap.rst:72
-# 45fead7645b44d8c90923cb8164a010c
+# f2b124143f314e469dfb2a16ce49ad86
 msgid "When is version X.Y.Z going to be released?"
 msgstr ""
 
 #: ../../appendix/roadmap.rst:73
-# e2f965601dc245c3aebc5e02ae132525
+# 8731b93e9e564a0cb52ed5cf7c8d5c40
 msgid "The next version will be released when the core team feels it's ready and has time to cut the release. http://github.com/Elgg/Elgg/issues/milestones will give you some rough ideas of timeline."
 msgstr ""
 
 #: ../../appendix/support.rst:2
-# 391acfe3719e4e209d01abe57a65a8ec
+# 11e268e6985442a5bea0ce3af207be1c
 msgid "Support policy"
 msgstr ""
 
 #: ../../appendix/support.rst:6
-# 0e423c1803d94ede8bae41fb16e6937c
+# 0c7738dccbea4e729485a33b828b700c
 msgid "As of Elgg 1.9, each minor release gets:"
 msgstr ""
 
 #: ../../appendix/support.rst:5
-# 409d4d710f1147b0a7f90f92379d38d7
+# 0a983da8acb741aaa191fa4398700b4e
 msgid "Normal bugfixes every 2 weeks for 3 months, at which point the next minor release candidate is made available."
 msgstr ""
 
 #: ../../appendix/support.rst:6
-# f35ef665f7c848418af5fe2596d8b62e
+# 9fbcafc3319a4482a5cb24d0e9575597
 msgid "Security and critical (i.e. regression) bug fixes for 1 year from the date of the next stable minor release. These will be released on an as-needed basis."
 msgstr ""
 
 #: ../../appendix/support.rst:10
-# 2656c0d9459748f3a77093a4cd7e604c
+# d02cdc4674f24da690a38ebc8a58cf4f
 msgid ":doc:`releases`"
 msgstr ""
 
 #: ../../appendix/support.rst:12
-# c4bcc53fba3c42709f14456eec4ee753
+# 5dd0b3af9bca4780ae5e7100543c68e1
 msgid "Below is a table outlining the specifics for each release:"
 msgstr ""
 
 #: ../../appendix/support.rst:15
-# 1d3427bc1994478c846f24f42f11a296
+# 974b02fefffc4b0a8bc573609213384f
 msgid "Version"
 msgstr ""
 
 #: ../../appendix/support.rst:15
-# 58369cbf2f634614b1004c0edf5e6d02
+# 65b8709f7cc44d32a8396b6dcf6c1a12
 msgid "First stable release"
 msgstr ""
 
 #: ../../appendix/support.rst:15
-# 5dbfd4d2f0b24898aeeb01c10773e34c
+# a76a9e68cea3413aa82b2643a0a4a64f
 msgid "Bug fixes through"
 msgstr ""
 
 #: ../../appendix/support.rst:15
-# 342017b03bad47138fd6e692a6c56218
+# c6566266c3aa41f0aae1aa0d0ca7141a
 msgid "Security fixes through"
 msgstr ""
 
 #: ../../appendix/support.rst:17
-# 47830431212d4559875eb1459a5c6a05
+# b0d6eef7b3ea4489ac1a72401d024010
 msgid "1.8"
 msgstr ""
 
 #: ../../appendix/support.rst:17
-# b9608ac585d04ecba2f627aa2e8f08e9
+# e24e95370b614ed199f1b030161be05b
 msgid "September 2011"
 msgstr ""
 
 #: ../../appendix/support.rst:17
-# ac83f999c80c42c3afa4db47fa270bd3
+# 8f91daba2bfd4af6ad92265afc5fa0fe
 msgid "August 2014"
 msgstr ""
 
 #: ../../appendix/support.rst:17
-# eba1723990d349cf85f8100f6ba9ff47
+# 42a06a43365d4c1f9fb990b224adceaf
 msgid "September 2015"
 msgstr ""
 
 #: ../../appendix/support.rst:19
-# be2b48a199b2422ab86d0172fc8c985b
+# 5455620107c444b9b3e661efa3547809
 msgid "1.9"
 msgstr ""
 
 #: ../../appendix/support.rst:19
-# e12dc6f819e5439c8874d6665267127b
+# c6494c9126d54136b5fca9133ef68b45
 msgid "September 2014"
 msgstr ""
 
 #: ../../appendix/support.rst:19
 #: ../../appendix/support.rst:21
-# 2926cda9fa354fbf80cd394d8b52615d
-# 85b76e8335d24bb787c41408d73fd9e5
+# 13969dd5652d4622a44dbbd3aedadf7e
+# 9f92b3e8ff0f468ab57eae367e53847e
 msgid "January 2015"
 msgstr ""
 
 #: ../../appendix/support.rst:19
-# 017e1cb3afc7479ca971674d86b9c6be
+# b32349eda1674e02bc8277b57e3c993e
 msgid "January 2016"
 msgstr ""
 
 #: ../../appendix/support.rst:21
-# e88e5ec82475432780d423279b2028f5
+# 870ff33fde66486c91216ecedce768ed
 msgid "1.10"
 msgstr ""
 
 #: ../../appendix/support.rst:21
 #: ../../appendix/support.rst:23
-# ae464c22743643ba9110c838bb510e3c
-# 43dddc112e3943cd89ca6394373f998d
+# 6b09ebf123994f4f8f64fd8a8c3aa4db
+# 90569c4bb2b6451e806ccb81f7c8dc25
 msgid "April 2015"
 msgstr ""
 
 #: ../../appendix/support.rst:21
-# ca3f726011714544a6c99caa91523a2b
+# 3a982f67488c43bd89940ad3a9607e1f
 msgid "April 2016"
 msgstr ""
 
 #: ../../appendix/support.rst:23
-# d8c7dca919b947188e40379eb4d4513d
+# 91ba77c6ac2e47868ceceaa5818f08fb
 msgid "1.11"
 msgstr ""
 
 #: ../../appendix/support.rst:23
-# edcf915e242e43a6b7f8b6adab33bf63
+# 5137b6d9935e40e4bc0be18a9a0b9f5c
 msgid "July 2015"
 msgstr ""
 
 #: ../../appendix/support.rst:23
-# e4a4dc60f1cb4c62a0e24fd1aabd2ff1
+# d4c82cceb7ce4beba7035e632b4f49cc
 msgid "July 2016"
 msgstr ""
 
 #: ../../appendix/support.rst:26
-# 978424ee933e43a9be38a13fead65fcb
+# 0bdebc8680e94fc7bd6319fcdf797434
 msgid "We don't have a support policy for major releases (x.0.0) yet because we've never done one."
 msgstr ""
 
