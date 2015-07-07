@@ -88,6 +88,9 @@ function file_init() {
 	elgg_register_menu_item('embed', $item);
 
 	elgg_extend_view('theme_sandbox/icons', 'file/theme_sandbox/icons/files');
+
+	// allow to be liked
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:file', 'Elgg\Values::getTrue');
 }
 
 /**

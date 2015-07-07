@@ -61,6 +61,10 @@ function discussion_init() {
 
 	// allow ecml in discussion
 	elgg_register_plugin_hook_handler('get_views', 'ecml', 'discussion_ecml_views_hook');
+
+	// allow to be liked
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:discussion', 'Elgg\Values::getTrue');
+	elgg_register_plugin_hook_handler('likes:is_likable', 'object:discussion_reply', 'Elgg\Values::getTrue');
 }
 
 /**
