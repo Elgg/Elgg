@@ -9,11 +9,11 @@ $version = $argv[1];
 
 // Verify that $version is a valid semver string
 // Performing check according to: https://getcomposer.org/doc/04-schema.md#version
-$regexp = '/^[0-9]+\.[0-9]+\.[0-9]+(?:-(?:dev|rc\.[0-9]+))?$/';
+$regexp = '/^[0-9]+\.[0-9]+\.[0-9]+(?:-(?:alpha|beta|rc)\.[0-9]+)?$/';
 
 if (!preg_match($regexp, $version, $matches)) {
-	echo "Bad version format. You must follow the format of X.Y.Z with an optional suffix of -dev,"
-		. " or -rc.N (where N is a number).\n";
+	echo "Bad version format. You must follow the format of X.Y.Z with an optional suffix of"
+	    . " -alpha.N, -beta.N, or -rc.N (where N is a number).\n";
 	exit(1);
 }
 

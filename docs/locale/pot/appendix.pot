@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Elgg 1.11\n"
+"Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-07 06:54+0000\n"
+"POT-Creation-Date: 2015-07-07 08:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1562,7 +1562,7 @@ msgstr ""
 #: ../../appendix/faqs/development.rst:155
 # 65c69fbdf7704b8296e9501e468a4765
 # b1ede7639ff64f7d953983c30b7ef3a3
-msgid "The *boot*, *system* event is triggered before the plugins get loaded. There does not appear to be any difference between the timing of the next two events: *plugins_boot*, *system* and *init*, *system* so plugins tend to use *init*, *system*. This event is triggered just after the plugins are loaded near the end of the boot script (``/engine/start.php``). The *pagesetup*, *system* event is thrown the first time ``elgg_view()`` is called. Some pages like the default ``index.php`` do not call ``elgg_view()`` so it is not triggered for them. The *shutdown*, *system* event is triggered after the page has been sent to the requester and is handled through the PHP function ``register_shutdown_function()``."
+msgid "The *boot*, *system* event is triggered before the plugins get loaded. There does not appear to be any difference between the timing of the next two events: *plugins_boot*, *system* and *init*, *system* so plugins tend to use *init*, *system*. This event is triggered in ``Elgg\\Application::bootCore``. The *pagesetup*, *system* event is thrown the first time ``elgg_view()`` is called. Some pages like the default ``index.php`` do not call ``elgg_view()`` so it is not triggered for them. The *shutdown*, *system* event is triggered after the page has been sent to the requester and is handled through the PHP function ``register_shutdown_function()``."
 msgstr ""
 
 #: ../../appendix/faqs/development.rst:157
