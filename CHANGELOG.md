@@ -1,3 +1,103 @@
+<a name="1.12.0"></a>
+## 1.12.0  (2015-07-07)
+
+#### Contributors
+
+* Steve Clay (23)
+* Evan Winslow (11)
+* Ismayil Khayredinov (9)
+* Miloš (4)
+* Jeroen Dalsem (3)
+* Jerôme Bakker (2)
+* Jon Maul (1)
+* Juho Jaakkola (1)
+
+#### Features
+
+* **ajax:**
+  * elgg_ajax_gatekeeper for asserting resources as Ajax-only ([4e0e1a5b](https://github.com/Elgg/Elgg/commit/4e0e1a5b9aa277d9fe14f484122cd2c89ba99fa4))
+  * Allows fetching form views wrapped by elgg_view_form() ([ee7641c4](https://github.com/Elgg/Elgg/commit/ee7641c4cbff8896d4e9618c206a10a314a37281))
+* **annotations:** Adds a more granular permission hook for canAnnotate ([83da5f18](https://github.com/Elgg/Elgg/commit/83da5f1896730045fbf9de313669f8c604c44c8a))
+* **cache:** introducing a generic function to reset all caches ([f526c479](https://github.com/Elgg/Elgg/commit/f526c479fd99f50cab008f5fc0b3c18069e83064))
+* **comments:** Paging through comments/discussion replies jumps to content ([b75fd8f8](https://github.com/Elgg/Elgg/commit/b75fd8f84dff20354da4c65de2ba0b9df0ac370f))
+* **developers:**
+  * Devs can show loaded AMD modules in console ([221bdf6a](https://github.com/Elgg/Elgg/commit/221bdf6a2ff41cd6f2ef63169363c4c127b7f993))
+  * Adds a quick access icon for some admin settings ([f22567b6](https://github.com/Elgg/Elgg/commit/f22567b69283e77bc23743669acb409130ad73cf))
+* **events:**
+  * Adds static methods for returning common values ([f080fed1](https://github.com/Elgg/Elgg/commit/f080fed1dfbd1a982cc2dda3110cc74f58ad028d))
+  * allows dynamic method callbacks to be unregistered ([08c773ba](https://github.com/Elgg/Elgg/commit/08c773bac7e3566dcf40498e0f68bea042aae9f4), closes [#7750](https://github.com/Elgg/Elgg/issues/7750))
+* **lightbox:** More sensible handling of href options ([765fcd05](https://github.com/Elgg/Elgg/commit/765fcd0563239b76b1b2a0bb0c0d3d5d719edf63))
+* **views:** Users can jump directly to content via prev/next links ([f90466c8](https://github.com/Elgg/Elgg/commit/f90466c80ba2b9d2ac8ccad3d50921b43897debc))
+
+
+#### Performance
+
+* **developers:** reduces boot queries when the developers mod is enabled ([03aa096e](https://github.com/Elgg/Elgg/commit/03aa096e3281c260ac25e2147d066a61534aad31))
+* **engine:** only update attributes/metadata if value is changed ([8295e70a](https://github.com/Elgg/Elgg/commit/8295e70a2c8381f15158a919a1870d279228bdc0))
+
+
+#### Documentation
+
+* **ajax:** Correct typo in code example ([d55e4a3a](https://github.com/Elgg/Elgg/commit/d55e4a3a8d3ac1dd424b7c8bb07150cede0a85dd))
+* **code:** Clarify interface naming convention ([de03d372](https://github.com/Elgg/Elgg/commit/de03d372554b250f08ad510542dd6ac88138f055), closes [#8293](https://github.com/Elgg/Elgg/issues/8293))
+* **misc:** Miscellaneous docs fixes ([06e3557c](https://github.com/Elgg/Elgg/commit/06e3557cd0046bfb601b3345f6f636cdbbb63de9))
+* **permissions:** Fix $params key name for permissions_check:annotate ([1af6e3a2](https://github.com/Elgg/Elgg/commit/1af6e3a250ad18b9c94c2d9048b04311e0fe29a2))
+* **views:** Better document outgoing elgg_get_view_location() ([0a9059d6](https://github.com/Elgg/Elgg/commit/0a9059d60049693350379456253c3f9ec9783156))
+* **web_security:** adds security warnings ([d47fc5ed](https://github.com/Elgg/Elgg/commit/d47fc5ed4cf7b53bd8bfd33190dc06fbf2ae1772))
+* **web_services:** document the use of parameters in method declarations ([750e31b9](https://github.com/Elgg/Elgg/commit/750e31b988131c53a90be987daa33229b1573f75))
+
+
+#### Bug Fixes
+
+* **embed:** embed link no longer leaves the page before events are set up ([f50e9aa3](https://github.com/Elgg/Elgg/commit/f50e9aa3eeafa9ec2d8d21cc6de715352c5bb19d), closes [#8284](https://github.com/Elgg/Elgg/issues/8284))
+* **http:** More appropriate exception responses ([e28f37e6](https://github.com/Elgg/Elgg/commit/e28f37e6790edbad04fd6918a52f732202e8ca70), closes [#6228](https://github.com/Elgg/Elgg/issues/6228), [#8360](https://github.com/Elgg/Elgg/issues/8360))
+* **legacy_urls:**
+  * adds missing forwarder for groups/forum/$guid ([2b555f88](https://github.com/Elgg/Elgg/commit/2b555f886cc4b348d38986c86bc1fb6ad041bac6), closes [#8493](https://github.com/Elgg/Elgg/issues/8493))
+  * unset __elgg_uri to prevent infinite loops ([0c7687ac](https://github.com/Elgg/Elgg/commit/0c7687acdf1f92066af0fc9cb32673e8da0f8859), closes [#8494](https://github.com/Elgg/Elgg/issues/8494))
+* **profile:** Avatar cropper again can be moved immediately after uploading image ([d8cf51b7](https://github.com/Elgg/Elgg/commit/d8cf51b7d4e718f8a67fa8d26a11e697851820bc), closes [#8449](https://github.com/Elgg/Elgg/issues/8449))
+* **relationships:** Invalid relationship names throw properly ([ac976e23](https://github.com/Elgg/Elgg/commit/ac976e23394f0dcba2f6b473b7f63a57082cf5d5))
+* **search:** Search treats "0" as a valid query ([af58fa5d](https://github.com/Elgg/Elgg/commit/af58fa5d1adc8a7747ee3fd5d994e5852dc06f47))
+* **ui:** prevent button jumping on widget add panel toggle ([088de48d](https://github.com/Elgg/Elgg/commit/088de48dda3632cb57ba9fdc16f239c084cd0fee))
+* **web_services:** no longer uses deprecated export global ([3a818d2b](https://github.com/Elgg/Elgg/commit/3a818d2b6c70e170937854be42f43cb496449f62))
+
+
+#### Deprecations
+
+* **views:**
+  * elgg_get_view_location is going away in 2.0 ([b4347fb4](https://github.com/Elgg/Elgg/commit/b4347fb4209dd1a09d5ad0d1ef2d546169aeb5b9))
+  * Support for custom template handlers will end soon ([0dc67698](https://github.com/Elgg/Elgg/commit/0dc67698f6def5fa6cea32dd1171d1166e9c4e29))
+
+
+<a name="1.11.4"></a>
+### 1.11.4  (2015-07-07)
+
+#### Contributors
+
+* Ismayil Khayredinov (7)
+* Evan Winslow (5)
+* Miloš (4)
+* Steve Clay (4)
+* Jeroen Dalsem (1)
+
+#### Documentation
+
+* **misc:** Miscellaneous docs fixes ([06e3557c](https://github.com/Elgg/Elgg/commit/06e3557cd0046bfb601b3345f6f636cdbbb63de9))
+* **permissions:** Fix $params key name for permissions_check:annotate ([1af6e3a2](https://github.com/Elgg/Elgg/commit/1af6e3a250ad18b9c94c2d9048b04311e0fe29a2))
+* **web_security:** adds security warnings ([d47fc5ed](https://github.com/Elgg/Elgg/commit/d47fc5ed4cf7b53bd8bfd33190dc06fbf2ae1772))
+* **web_services:** document the use of parameters in method declarations ([750e31b9](https://github.com/Elgg/Elgg/commit/750e31b988131c53a90be987daa33229b1573f75))
+
+
+#### Bug Fixes
+
+* **legacy_urls:**
+  * adds missing forwarder for groups/forum/$guid ([2b555f88](https://github.com/Elgg/Elgg/commit/2b555f886cc4b348d38986c86bc1fb6ad041bac6), closes [#8493](https://github.com/Elgg/Elgg/issues/8493))
+  * unset __elgg_uri to prevent infinite loops ([0c7687ac](https://github.com/Elgg/Elgg/commit/0c7687acdf1f92066af0fc9cb32673e8da0f8859), closes [#8494](https://github.com/Elgg/Elgg/issues/8494))
+* **profile:** Avatar cropper again can be moved immediately after uploading image ([d8cf51b7](https://github.com/Elgg/Elgg/commit/d8cf51b7d4e718f8a67fa8d26a11e697851820bc), closes [#8449](https://github.com/Elgg/Elgg/issues/8449))
+* **relationships:** Invalid relationship names throw properly ([ac976e23](https://github.com/Elgg/Elgg/commit/ac976e23394f0dcba2f6b473b7f63a57082cf5d5))
+* **ui:** prevent button jumping on widget add panel toggle ([088de48d](https://github.com/Elgg/Elgg/commit/088de48dda3632cb57ba9fdc16f239c084cd0fee))
+* **web_services:** no longer uses deprecated export global ([3a818d2b](https://github.com/Elgg/Elgg/commit/3a818d2b6c70e170937854be42f43cb496449f62))
+
+
 <a name="1.11.3"></a>
 ### 1.11.3  (2015-06-14)
 

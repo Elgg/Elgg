@@ -1150,8 +1150,8 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Can a user annotate an entity?
 	 *
-	 * @tip Can be overridden by registering for the permissions_check:annotate,
-	 * <entity type> plugin hook.
+	 * @tip Can be overridden by registering for the plugin hook [permissions_check:annotate:<name>,
+	 * <entity type>] or [permissions_check:annotate, <entity type>]. The hooks are called in that order.
 	 *
 	 * @tip If you want logged out users to annotate an object, do not call
 	 * canAnnotate(). It's easier than using the plugin hook.
@@ -1172,12 +1172,19 @@ abstract class ElggEntity extends \ElggData implements
 			$return = false;
 		}
 
+		$hooks = _elgg_services()->hooks;
+
 		$params = array(
 			'entity' => $this,
 			'user' => $user,
 			'annotation_name' => $annotation_name,
 		);
-		return _elgg_services()->hooks->trigger('permissions_check:annotate', $this->type, $params, $return);
+		if ($annotation_name !== '') {
+			$return = $hooks->trigger("permissions_check:annotate:$annotation_name", $this->type, $params, $return);
+		}
+		$return = $hooks->trigger('permissions_check:annotate', $this->type, $params, $return);
+
+		return $return;
 	}
 
 	/**
