@@ -1,5 +1,10 @@
 <?php
 
+function htmlawed_filter_tags($hook, $type, $result, $params = null) {
+	$obj = new HtmlawedPlugin\ValidateInputHook();
+	return $obj($hook, $type, $result, $params);
+}
+
 class HtmLawedTest extends ElggCoreUnitTest {
 
 	protected $configHooks = array();

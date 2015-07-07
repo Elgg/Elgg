@@ -44,11 +44,29 @@ class EventsService extends \Elgg\HooksRegistrationService {
 		$args = array($event, $type, $object);
 
 		foreach ($events as $callback) {
+
+			$callback_copy = $callback;
+
+			if (is_string($callback)
+					&& false !== strpos($callback, '::')
+					&& !function_exists($callback)
+					&& class_exists($callback)) {
+
+				$class = ltrim($callback, '\\');
+
+				$cached = _elgg_services()->config->get("object:$class");
+				if (!$cached) {
+					$cached = new $class();
+					_elgg_services()->config->set("object:$class", $cached);
+				}
+				$callback = $cached;
+			}
+
 			if (!is_callable($callback)) {
 				if ($this->logger) {
 					$inspector = new Inspector();
 					$this->logger->warn("handler for event [$event, $type] is not callable: "
-										. $inspector->describeCallable($callback));
+										. $inspector->describeCallable($callback_copy));
 				}
 				continue;
 			}
