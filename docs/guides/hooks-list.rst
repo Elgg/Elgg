@@ -193,7 +193,7 @@ Permission hooks
 
 **container_permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can use the entity ``$params['container']``
-	as a container for an entity of <entity_type> and subtype ``$params['subtype']``.
+	as a container for an entity of ``<entity_type>`` and subtype ``$params['subtype']``.
 
 **permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can edit the entity ``$params['entity']``.
@@ -212,9 +212,15 @@ Permission hooks
 **permissions_check:comment, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can comment on the entity ``$params['entity']``.
 
-**permissions_check:annotate**
-	Return boolean for if the user ``$params['user']`` can create an annotation with the name
-	``$params['annotation_name']`` on the entity ``$params['entity']``.
+**permissions_check:annotate:<annotation_name>, <entity_type>**
+	Return boolean for if the user ``$params['user']`` can create an annotation ``<annotation_name>`` on the
+	entity ``$params['entity']``. If logged in, the default is true.
+
+	.. note:: This is called before the more general ``permissions_check:annotate`` hook, and its return value is that hook's initial value.
+
+**permissions_check:annotate, <entity_type>**
+	Return boolean for if the user ``$params['user']`` can create an annotation ``$params['annotation_name']``
+	on the entity ``$params['entity']``. if logged in, the default is true.
 
 	.. warning:: This is functions differently than the ``permissions_check:metadata`` hook by passing the annotation name instead of the metadata object.
 
