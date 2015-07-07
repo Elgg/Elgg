@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-07 06:12+0000\n"
+"POT-Creation-Date: 2015-07-07 06:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1558,16 +1558,16 @@ msgstr ""
 #: ../../design/events.rst:202
 #: ../../design/events.rst:230
 # 7be32d045f4c4e8fb8a2c8776c49fb9c
-# d8b11bf952bb4f34bc7787ba100cfa99
-# 4031b1d4f5834434906a1d33eae06736
-# 66cbb17c3979471fbfb5711a64f365fe
+# 7be32d045f4c4e8fb8a2c8776c49fb9c
+# 7be32d045f4c4e8fb8a2c8776c49fb9c
+# 7be32d045f4c4e8fb8a2c8776c49fb9c
 msgid "Parameters:"
 msgstr ""
 
 #: ../../design/events.rst:102
 #: ../../design/events.rst:149
 # 2c5710afbfd74a69a4db1e06a4b70089
-# 487437c6f7644e3aa95ee20bd436ce37
+# 2c5710afbfd74a69a4db1e06a4b70089
 msgid "**$event** The event name."
 msgstr ""
 
@@ -1579,14 +1579,14 @@ msgstr ""
 #: ../../design/events.rst:105
 #: ../../design/events.rst:206
 # 7da728dca3bf467ab7197a2cd9645246
-# 22fb1fe971234500b2c809e65f80284a
+# 7da728dca3bf467ab7197a2cd9645246
 msgid "**$handler** The callback of the handler function."
 msgstr ""
 
 #: ../../design/events.rst:106
 #: ../../design/events.rst:207
 # 6039acbf8ebf4aee9b6cb4cd81e9abb2
-# 24e20874ac6e4e4586391abebe4f63f0
+# 6039acbf8ebf4aee9b6cb4cd81e9abb2
 msgid "**$priority** The priority - 0 is first and the default is 500."
 msgstr ""
 
@@ -1598,7 +1598,7 @@ msgstr ""
 #: ../../design/events.rst:111
 #: ../../design/events.rst:212
 # 9cb2a140ba3b4c91873435189077205f
-# 395062022a9e458b8c825b5fdef0aa47
+# 9cb2a140ba3b4c91873435189077205f
 msgid "Example:"
 msgstr ""
 
@@ -1675,14 +1675,14 @@ msgstr ""
 #: ../../design/events.rst:204
 #: ../../design/events.rst:232
 # 8c6cfefd4f7b40958cdc2d6fdcd460b2
-# beb7ce9551524b379d141dd55c04f336
+# 8c6cfefd4f7b40958cdc2d6fdcd460b2
 msgid "**$hook** The name of the plugin hook."
 msgstr ""
 
 #: ../../design/events.rst:205
 #: ../../design/events.rst:233
 # 838484e0ecbe410caeefc93ba4f035c4
-# 77cf283493c14d2996e6ab6c326f860d
+# 838484e0ecbe410caeefc93ba4f035c4
 msgid "**$type** The type of the hook or 'all' for all types."
 msgstr ""
 
@@ -1714,6 +1714,26 @@ msgstr ""
 #: ../../design/events.rst:237
 # a88ca11b627e42ea8e9efb6ccc1ede35
 msgid "The `$params` and `$value` arguments are reversed between the plugin hook handlers and trigger functions!"
+msgstr ""
+
+#: ../../design/events.rst:241
+# 9b700578d51641d79a6e27ddd2d28415
+msgid "Unregister Event/Hook Handlers"
+msgstr ""
+
+#: ../../design/events.rst:243
+# 86be21d5ab844f01b346d6db68e4e152
+msgid "The functions ``elgg_unregister_event_handler`` and ``elgg_unregister_plugin_hook_handler`` can be used to remove handlers already registered by another plugin or Elgg core. The parameters are in the same order as the registration functions, except there's no priority parameter."
+msgstr ""
+
+#: ../../design/events.rst:251
+# 1994c3f1729149aca454894c5d6e39a4
+msgid "Anonymous functions or invokable objects cannot be unregistered, but dynamic method callbacks can be unregistered by giving the static version of the callback:"
+msgstr ""
+
+#: ../../design/events.rst:263
+# 1ee0872a2a724d119632d8872e08d80a
+msgid "Even though the event handler references a dynamic method call, the code above will successfully remove the handler."
 msgstr ""
 
 #: ../../design/i18n.rst:2

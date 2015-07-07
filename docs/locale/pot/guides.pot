@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.11\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-07 06:12+0000\n"
+"POT-Creation-Date: 2015-07-07 06:54+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -717,7 +717,7 @@ msgstr ""
 
 #: ../../guides/ajax.rst:128
 # e373a4789f0d4e158fb3f263862be521
-msgid "The Ajax view system work significantly differently than the action system."
+msgid "The Ajax view system works significantly differently than the action system."
 msgstr ""
 
 #: ../../guides/ajax.rst:130
@@ -755,37 +755,57 @@ msgstr ""
 msgid "If the view name begins with ``js/`` or ``css/``, a corresponding Content-Type header is added."
 msgstr ""
 
-#: ../../guides/ajax.rst:140
+#: ../../guides/ajax.rst:141
+# 00ed4890de154aee9aa852a611d0ec79
+msgid "Unlike views rendered server-side, Ajax views must treat ``$vars`` as completely untrusted user data."
+msgstr ""
+
+#: ../../guides/ajax.rst:144
 # f743887df13641fca74ba992abd38db6
 msgid "Returning JSON from a view"
 msgstr ""
 
-#: ../../guides/ajax.rst:142
+#: ../../guides/ajax.rst:146
 # aa7b5c384ca549caaf2c15908e406ac9
 msgid "If the view outputs encoded JSON, you must use ``elgg.getJSON`` to fetch it (or use some other method to set jQuery's ajax option ``dataType`` to ``json``). Your ``success`` function will be passed the decoded Object."
 msgstr ""
 
-#: ../../guides/ajax.rst:145
+#: ../../guides/ajax.rst:149
 # c58777e2118649f581182f7e0ad381cc
 msgid "Here's an example of fetching a view that returns a JSON-encoded array of times:"
 msgstr ""
 
-#: ../../guides/ajax.rst:156
+#: ../../guides/ajax.rst:160
+# 502161b7a672485891057f039ea91cad
+msgid "Fetching Forms"
+msgstr ""
+
+#: ../../guides/ajax.rst:162
+# 60df27cc49cd4c6b86c4bd40b5b6cc68
+msgid "If you register a form view (name starting with ``forms/``), you can fetch it pre-rendered with ``elgg_view_form()``. Simply use ``ajax/form/<action>`` (instead of ``ajax/view/<view_name>``):"
+msgstr ""
+
+#: ../../guides/ajax.rst:184
+# 8c97a6b804dd45b6921b42a6857215db
+msgid "Unlike views rendered server-side, Ajax views must treat ``$vars`` as completely untrusted user data. Review the use of ``$vars`` in an existing form before registering it for Ajax fetching."
+msgstr ""
+
+#: ../../guides/ajax.rst:188
 # aa0f23d5df604ac9bf47ced523333b63
 msgid "Ajax helper functions"
 msgstr ""
 
-#: ../../guides/ajax.rst:158
+#: ../../guides/ajax.rst:190
 # f681078ba7fa405e9f54627f911b6637
 msgid "These functions extend jQuery's native Ajax features."
 msgstr ""
 
-#: ../../guides/ajax.rst:160
+#: ../../guides/ajax.rst:192
 # 66cb6a32c64740b59c290670d054af50
 msgid "``elgg.get()`` is a wrapper for jQuery's ``$.ajax()``, but forces GET and does URL normalization."
 msgstr ""
 
-#: ../../guides/ajax.rst:171
+#: ../../guides/ajax.rst:203
 # b0552b09411240a0b15f6109012a9589
 msgid "``elgg.post()`` is a wrapper for jQuery's ``$.ajax()``, but forces POST and does URL normalization."
 msgstr ""
@@ -1748,391 +1768,401 @@ msgid "Return false to override setting a cookie."
 msgstr ""
 
 #: ../../guides/events-list.rst:65
+# 1bbba46a774d45f194cb750b6940fa58
+msgid "**cache:flush, system**"
+msgstr ""
+
+#: ../../guides/events-list.rst:65
+# dad2c5b2cd2c4af5be3dc6b84e9f984e
+msgid "Reset internal and external caches, by default including system_cache, simplecache, and memcache. One might use it to reset others such as APC, OPCache, or WinCache."
+msgstr ""
+
+#: ../../guides/events-list.rst:68
 # b1b1a7e495bc493bb324ea4db92e666d
 msgid "User events"
 msgstr ""
 
-#: ../../guides/events-list.rst:68
+#: ../../guides/events-list.rst:71
 # 55a29ca51c3349209f09b5f94140b6b7
 msgid "**login:before, user**"
 msgstr ""
 
-#: ../../guides/events-list.rst:68
+#: ../../guides/events-list.rst:71
 # 07f752ba2d07437ea2056552b60e5bba
 msgid "Triggered during login. Returning false prevents the user from logging"
 msgstr ""
 
-#: ../../guides/events-list.rst:71
+#: ../../guides/events-list.rst:74
 # 0fe08bc8cffb4c3b893feb143ed89126
 msgid "**login:after, user**"
 msgstr ""
 
-#: ../../guides/events-list.rst:71
+#: ../../guides/events-list.rst:74
 # 6cfdd374441e4697a780ffa64e140d13
 msgid "Triggered after the user logs in."
 msgstr ""
 
-#: ../../guides/events-list.rst:74
+#: ../../guides/events-list.rst:77
 # f3f75d5580dd4d6a828630ecf41cb86d
 msgid "**logout:before, user**"
 msgstr ""
 
-#: ../../guides/events-list.rst:74
+#: ../../guides/events-list.rst:77
 # 317c1e92eb99486a9014abf49e9f9a45
 msgid "Triggered during logout. Returning false should prevent the user from logging out."
 msgstr ""
 
-#: ../../guides/events-list.rst:77
+#: ../../guides/events-list.rst:80
 # 1f850b460ffb4c05aeb23f3da672083d
 msgid "**logout:after, user**"
 msgstr ""
 
-#: ../../guides/events-list.rst:77
+#: ../../guides/events-list.rst:80
 # 8b6a4fecee374348b1809044db54693f
 msgid "Triggered after the user logouts."
 msgstr ""
 
-#: ../../guides/events-list.rst:82
+#: ../../guides/events-list.rst:85
 # 7010f34cea604d1c900865ba9c92cde3
 msgid "**validate, user**"
 msgstr ""
 
-#: ../../guides/events-list.rst:80
+#: ../../guides/events-list.rst:83
 # ea21c1bfd460492eac32dd829f1a10ab
 msgid "When a user registers, the user's account is disabled. This event is triggered to allow a plugin to determine how the user should be validated (for example, through an email with a validation link)."
 msgstr ""
 
-#: ../../guides/events-list.rst:85
+#: ../../guides/events-list.rst:88
 # 12643bf35e2e4b6a9a7f29213a9fbaa2
 msgid "**profileupdate, user**"
 msgstr ""
 
-#: ../../guides/events-list.rst:85
+#: ../../guides/events-list.rst:88
 # 7e482dd1fa29424497ada8efdd6ee525
 msgid "User has changed profile"
 msgstr ""
 
-#: ../../guides/events-list.rst:88
+#: ../../guides/events-list.rst:91
 # 4e08ea34295b42b4a229a4e47de85f7c
 msgid "**profileiconupdate, user**"
 msgstr ""
 
-#: ../../guides/events-list.rst:88
+#: ../../guides/events-list.rst:91
 # c645cd096d1f4e5783058ce4f3457a19
 msgid "User has changed profile icon"
 msgstr ""
 
-#: ../../guides/events-list.rst:91
+#: ../../guides/events-list.rst:94
 # 3128d86606394853bd1737d36626f590
 msgid "**ban, user**"
 msgstr ""
 
-#: ../../guides/events-list.rst:91
+#: ../../guides/events-list.rst:94
 # 0947e2d375b54ee396767dab18734c77
 msgid "Triggered before a user is banned. Return false to prevent."
 msgstr ""
 
-#: ../../guides/events-list.rst:94
+#: ../../guides/events-list.rst:97
 # 16974c93e5a64e2d9cf1e31e835d8433
 msgid "**unban, user**"
 msgstr ""
 
-#: ../../guides/events-list.rst:94
+#: ../../guides/events-list.rst:97
 # cd7df5df68da4ba29ffb420b446bf1be
 msgid "Triggered before a user is unbanned. Return false to prevent."
 msgstr ""
 
-#: ../../guides/events-list.rst:97
+#: ../../guides/events-list.rst:100
 # 79833075b4de42768c7dd0da74c92efb
 msgid "**make_admin, user**"
 msgstr ""
 
-#: ../../guides/events-list.rst:97
+#: ../../guides/events-list.rst:100
 # 3973ee3ce8fb492fba64df676551ace9
 msgid "Triggered before a user is promoted to an admin. Return false to prevent."
 msgstr ""
 
-#: ../../guides/events-list.rst:100
+#: ../../guides/events-list.rst:103
 # 55b92287be184680886ba857c98c442a
 msgid "**remove_admin, user**"
 msgstr ""
 
-#: ../../guides/events-list.rst:100
+#: ../../guides/events-list.rst:103
 # 70faa3eda5c64d4199886ef426ef5d2d
 msgid "Triggered before a user is demoted from an admin. Return false to prevent."
 msgstr ""
 
-#: ../../guides/events-list.rst:103
+#: ../../guides/events-list.rst:106
 # b7b91baecfe84027b659951eff001586
 msgid "Relationship events"
 msgstr ""
 
-#: ../../guides/events-list.rst:107
+#: ../../guides/events-list.rst:110
 # f4165eeb42c94632ababedb807daba25
 msgid "**create, <relationship>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:106
+#: ../../guides/events-list.rst:109
 # 76a677ead1aa48bdb2a90ee432f161fe
 msgid "Triggered after a relationship has been created. Returning false deletes the relationship that was just created."
 msgstr ""
 
-#: ../../guides/events-list.rst:111
+#: ../../guides/events-list.rst:114
 # 2407f9541e4940158d5a066af3fd0432
 msgid "**delete, <relationship>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:110
+#: ../../guides/events-list.rst:113
 # 587bfe5decf64d79ac5be9f3dd584bea
 msgid "Triggered before a relationship is deleted. Return false to prevent it from being deleted."
 msgstr ""
 
-#: ../../guides/events-list.rst:114
+#: ../../guides/events-list.rst:117
 # b83b62458cc44945b55016feb1248fed
 msgid "**join, group**"
 msgstr ""
 
-#: ../../guides/events-list.rst:114
+#: ../../guides/events-list.rst:117
 # 05e316b7a8a041198aefc54aa851ed44
 msgid "Triggered after the user ``$params['user']`` has joined the group ``$params['group']``."
 msgstr ""
 
-#: ../../guides/events-list.rst:117
+#: ../../guides/events-list.rst:120
 # 804a93dcb9b7460ca07da8b4273a5e0e
 msgid "**leave, group**"
 msgstr ""
 
-#: ../../guides/events-list.rst:117
+#: ../../guides/events-list.rst:120
 # 6d7cf50f89ec491da8cd9bf508566db8
 msgid "Triggered before the user ``$params['user']`` has left the group ``$params['group']``."
 msgstr ""
 
-#: ../../guides/events-list.rst:120
+#: ../../guides/events-list.rst:123
 # 16935688775b453a9701e92508bcd06c
 msgid "Entity events"
 msgstr ""
 
-#: ../../guides/events-list.rst:123
+#: ../../guides/events-list.rst:126
 # a2f6c78daaf04488afe01b5cc46cdc8e
 msgid "**create, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:123
+#: ../../guides/events-list.rst:126
 # 940038ed49514a9ab8bd3153e7805a6c
 msgid "Triggered for user, group, object, and site entities after creation. Return false to delete entity."
 msgstr ""
 
-#: ../../guides/events-list.rst:126
+#: ../../guides/events-list.rst:129
 # 522d5243f01844afbfb2a7d5a1dd431e
 msgid "**update, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:126
+#: ../../guides/events-list.rst:129
 # 158a1154265b4da2a6abd9cafd4bd33a
 msgid "Triggered before an update for the user, group, object, and site entities. Return false to prevent update."
 msgstr ""
 
-#: ../../guides/events-list.rst:129
+#: ../../guides/events-list.rst:132
 # c8c41ddf19fa4bfcbd67a7b7b1773c4c
 msgid "**update:after, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:129
+#: ../../guides/events-list.rst:132
 # 57a9680d03fe475b874c20ccda1eecb7
 msgid "Triggered after an update for the user, group, object, and site entities."
 msgstr ""
 
-#: ../../guides/events-list.rst:132
+#: ../../guides/events-list.rst:135
 # 3184881e05854c4f88e5d2519e064937
 msgid "**delete, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:132
+#: ../../guides/events-list.rst:135
 # e2a5ef9c8df6421995b304913fb45a9e
 msgid "Triggered before entity deletion. Return false to prevent deletion."
 msgstr ""
 
-#: ../../guides/events-list.rst:135
+#: ../../guides/events-list.rst:138
 # 7e26208ab9994d77b9aa063891fe86f6
 msgid "**disable, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:135
+#: ../../guides/events-list.rst:138
 # 0dc4de59263140358deb0e9b662b5c49
 msgid "Triggered before the entity is disabled. Return false to prevent disabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:138
+#: ../../guides/events-list.rst:141
 # da4b06c3ddc44942aa791133bcad8442
 msgid "**disable:after, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:138
+#: ../../guides/events-list.rst:141
 # 4126fb79edb84d10bee73c449b6bec08
 msgid "Triggered after the entity is disabled."
 msgstr ""
 
-#: ../../guides/events-list.rst:141
+#: ../../guides/events-list.rst:144
 # f0ded6d4f9ae464f8449cbf5e16f37cc
 msgid "**enable, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:141
+#: ../../guides/events-list.rst:144
 # d5211931e7d04a189774b1e0f430b918
 msgid "Return false to prevent enabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:144
+#: ../../guides/events-list.rst:147
 # 1bbba46a774d45f194cb750b6940fa58
 msgid "**enable:after, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:144
+#: ../../guides/events-list.rst:147
 # 3bac02594c3b4dcb96ff51e2691880b1
 msgid "Triggered after the entity is enabled."
 msgstr ""
 
-#: ../../guides/events-list.rst:147
+#: ../../guides/events-list.rst:150
 # 5f5581ab6cf44a56b19443c5fb5ccf6a
 msgid "Metadata events"
 msgstr ""
 
-#: ../../guides/events-list.rst:151
+#: ../../guides/events-list.rst:154
 # b538ab6a45ca48b4944832d2dab8edcc
 msgid "**create, metadata**"
 msgstr ""
 
-#: ../../guides/events-list.rst:150
+#: ../../guides/events-list.rst:153
 # 5625946d2cd54e48a47f5d782234c91b
 msgid "Called after the metadata has been created. Return false to delete the metadata that was just created."
 msgstr ""
 
-#: ../../guides/events-list.rst:154
+#: ../../guides/events-list.rst:157
 # d78554882f4a4c0398519c9628cb2998
 msgid "**update, metadata**"
 msgstr ""
 
-#: ../../guides/events-list.rst:154
+#: ../../guides/events-list.rst:157
 # 101f611271604990b2cfeeed4702e43c
 msgid "Called after the metadata has been updated. Return false to *delete the metadata.*"
 msgstr ""
 
-#: ../../guides/events-list.rst:157
+#: ../../guides/events-list.rst:160
 # 73831bc1655649d2a00be4e797f74a50
 msgid "**delete, metadata**"
 msgstr ""
 
-#: ../../guides/events-list.rst:157
+#: ../../guides/events-list.rst:160
 # c9668aa76b364fa3a2730a5374e20714
 msgid "Called before metadata is deleted. Return false to prevent deletion."
 msgstr ""
 
-#: ../../guides/events-list.rst:160
+#: ../../guides/events-list.rst:163
 # ead21dd157014fd6bfd9ca91174c37f2
 msgid "**enable, metadata**"
 msgstr ""
 
-#: ../../guides/events-list.rst:160
+#: ../../guides/events-list.rst:163
 # b119061f180241b5bd7620ac4c727e27
 msgid "Called when enabling metadata. Return false to prevent enabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:163
+#: ../../guides/events-list.rst:166
 # 22826734426a4148b13f14b181ccfb30
 msgid "**disable, metadata**"
 msgstr ""
 
-#: ../../guides/events-list.rst:163
+#: ../../guides/events-list.rst:166
 # 8638541da88a4a7f8d9ec6431fba7d45
 msgid "Called when disabling metadata. Return false to prevent disabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:166
+#: ../../guides/events-list.rst:169
 # 5a776ae80d0745c4943895d4820e8d75
 msgid "Annotation events"
 msgstr ""
 
-#: ../../guides/events-list.rst:170
+#: ../../guides/events-list.rst:173
 # 056a305992464de988fac12a967fb5e7
 msgid "**annotate, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:169
+#: ../../guides/events-list.rst:172
 # 6fb445827e784baeae82b7ac5b233628
 msgid "Called before the annotation has been created. Return false to prevent annotation of this entity."
 msgstr ""
 
-#: ../../guides/events-list.rst:174
+#: ../../guides/events-list.rst:177
 # ba32bb9ab01048c381a48d407371b3dc
 msgid "**create, annotation**"
 msgstr ""
 
-#: ../../guides/events-list.rst:173
+#: ../../guides/events-list.rst:176
 # 59db450a10f54542a4f75ebf055deccf
 msgid "Called after the annotation has been created. Return false to delete the annotation."
 msgstr ""
 
-#: ../../guides/events-list.rst:177
+#: ../../guides/events-list.rst:180
 # c1b9a1e63c6a40c38336e0424d086c4b
 msgid "**update, annotation**"
 msgstr ""
 
-#: ../../guides/events-list.rst:177
+#: ../../guides/events-list.rst:180
 # 21a87713dd77482e878ba151313dee6c
 msgid "Called after the annotation has been updated. Return false to *delete the annotation.*"
 msgstr ""
 
-#: ../../guides/events-list.rst:180
+#: ../../guides/events-list.rst:183
 # 216b1c3726844424b518c4197cd15e6a
 msgid "**delete, annotation**"
 msgstr ""
 
-#: ../../guides/events-list.rst:180
+#: ../../guides/events-list.rst:183
 # aeea32c56be2427eb0caf0bb0cf7ec21
 msgid "Called before annotation is deleted. Return false to prevent deletion."
 msgstr ""
 
-#: ../../guides/events-list.rst:183
+#: ../../guides/events-list.rst:186
 # 404dffa589d54a789afb9ddd3ae46490
 msgid "**enable, annotation**"
 msgstr ""
 
-#: ../../guides/events-list.rst:183
+#: ../../guides/events-list.rst:186
 # 5819dbc98ec34c3e8a76d5367c5dcff0
 msgid "Called when enabling annotations. Return false to prevent enabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:186
+#: ../../guides/events-list.rst:189
 # d16e2abb10af47ca846c512102a0fc0b
 msgid "**disable, annotations**"
 msgstr ""
 
-#: ../../guides/events-list.rst:186
+#: ../../guides/events-list.rst:189
 # 0a58c2e223924c948783794e1cb7c706
 msgid "Called when disabling annotations. Return false to prevent disabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:189
+#: ../../guides/events-list.rst:192
 # 3dbbb11a041d42c5847398494fb287b3
 msgid "River events"
 msgstr ""
 
-#: ../../guides/events-list.rst:192
+#: ../../guides/events-list.rst:195
 # 528987027ae24e38a77fb3e01653d68c
 msgid "**created, river**"
 msgstr ""
 
-#: ../../guides/events-list.rst:192
+#: ../../guides/events-list.rst:195
 # 80f52c44892a4c9093e4322455177dd1
 msgid "Called after a river item is created."
 msgstr ""
 
-#: ../../guides/events-list.rst:195
+#: ../../guides/events-list.rst:198
 # 483b72d310cf480cb21d4102c763ced6
 msgid "Notes"
 msgstr ""
 
-#: ../../guides/events-list.rst:197
+#: ../../guides/events-list.rst:200
 # a9086bfbd1d84f06942fc86b70b34d70
 msgid "Because of bugs in the Elgg core, some events may be thrown more than once on the same action. For example, ``update, object`` is thrown twice."
 msgstr ""
@@ -2653,7 +2683,7 @@ msgid "``elgg_in_context($context)`` Checks if you're in a context (this checks 
 msgstr ""
 
 #: ../../guides/helpers.rst:37
-#: ../../guides/hooks-list.rst:464
+#: ../../guides/hooks-list.rst:470
 #: ../../guides/plugins.rst:2
 # 41752233756641c99af745bcfb7a40c1
 # 778f069ba8c043fc9cd6574c51e4c5ab
@@ -2789,7 +2819,7 @@ msgid "Filter the output for the diagnostics report download."
 msgstr ""
 
 #: ../../guides/hooks-list.rst:36
-#: ../../guides/hooks-list.rst:528
+#: ../../guides/hooks-list.rst:534
 # 60898094a2c2419fa3c4f0af244aab31
 # ce30cb2e48074414b50eeaf772c8b572
 msgid "**search_types, get_types**"
@@ -3051,7 +3081,7 @@ msgid "Triggered in the aggregate action to save user settings. Return false pre
 msgstr ""
 
 #: ../../guides/hooks-list.rst:131
-#: ../../guides/hooks-list.rst:245
+#: ../../guides/hooks-list.rst:251
 # aa675ccdcb724149844a685aca1f842e
 # 07b04d209ce94e0596acd67ca3a38e37
 msgid "**access:collections:write, user**"
@@ -3234,11 +3264,11 @@ msgstr ""
 
 #: ../../guides/hooks-list.rst:195
 # 61e7352764114234a6f0de4c288b1590
-msgid "Return boolean for if the user ``$params['user']`` can use the entity ``$params['container']`` as a container for an entity of <entity_type> and subtype ``$params['subtype']``."
+msgid "Return boolean for if the user ``$params['user']`` can use the entity ``$params['container']`` as a container for an entity of ``<entity_type>`` and subtype ``$params['subtype']``."
 msgstr ""
 
 #: ../../guides/hooks-list.rst:199
-# b2a25d09272c4077a8fbff96013bfcf9
+# 19bb767cb5874da287a3cf87ea5c7f69
 msgid "**permissions_check, <entity_type>**"
 msgstr ""
 
@@ -3248,7 +3278,7 @@ msgid "Return boolean for if the user ``$params['user']`` can edit the entity ``
 msgstr ""
 
 #: ../../guides/hooks-list.rst:202
-# fb64fd8b11d6460a9f160333615f8181
+# 682fa78852444df9820be1e83341475a
 msgid "**permissions_check:delete, <entity_type>**"
 msgstr ""
 
@@ -3258,7 +3288,7 @@ msgid "Return boolean for if the user ``$params['user']`` can delete the entity 
 msgstr ""
 
 #: ../../guides/hooks-list.rst:206
-# 953f9ceba4b14488a55aafc58f0d4b53
+# 900ff1b83af8411cb6678fda50f24fba
 msgid "**permissions_check, widget_layout**"
 msgstr ""
 
@@ -3268,7 +3298,7 @@ msgid "Return boolean for if ``$params['user']`` can edit the widgets in the con
 msgstr ""
 
 #: ../../guides/hooks-list.rst:210
-# 355a67da20364869b9751fb896d87fa4
+# 0a78bb2fcaf44b978dc962ff1db03d0c
 msgid "**permissions_check:metadata, <entity_type>**"
 msgstr ""
 
@@ -3278,7 +3308,7 @@ msgid "Return boolean for if the user ``$params['user']`` can edit the metadata 
 msgstr ""
 
 #: ../../guides/hooks-list.rst:213
-# 5e605f92e9b9460680553270aa58e28c
+# 6585606d4c1345c1a62fec086723275c
 msgid "**permissions_check:comment, <entity_type>**"
 msgstr ""
 
@@ -3288,123 +3318,138 @@ msgid "Return boolean for if the user ``$params['user']`` can comment on the ent
 msgstr ""
 
 #: ../../guides/hooks-list.rst:219
-# 4caa4ed6488d4d688e6dc1ca10e7fd18
-msgid "**permissions_check:annotate**"
+# 355a67da20364869b9751fb896d87fa4
+msgid "**permissions_check:annotate:<annotation_name>, <entity_type>**"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:216
-# 55ee7b591b9b40ffbe5776d05ab81484
-msgid "Return boolean for if the user ``$params['user']`` can create an annotation with the name ``$params['annotation_name']`` on the entity ``$params['entity']``."
+# 1aa65a3e26c749f6a62bc3ae4119576e
+msgid "Return boolean for if the user ``$params['user']`` can create an annotation ``<annotation_name>`` on the entity ``$params['entity']``. If logged in, the default is true."
 msgstr ""
 
 #: ../../guides/hooks-list.rst:219
 # abf2d3fc95e242b39a882a668b49a407
-msgid "This is functions differently than the ``permissions_check:metadata`` hook by passing the annotation name instead of the metadata object."
+msgid "This is called before the more general ``permissions_check:annotate`` hook, and its return value is that hook's initial value."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:223
-# 7382bbf96e8548e89281f4da99e85e7d
-msgid "**permissions_check:annotation**"
+#: ../../guides/hooks-list.rst:225
+# 355a67da20364869b9751fb896d87fa4
+msgid "**permissions_check:annotate, <entity_type>**"
 msgstr ""
 
 #: ../../guides/hooks-list.rst:222
 # 1aa65a3e26c749f6a62bc3ae4119576e
+msgid "Return boolean for if the user ``$params['user']`` can create an annotation ``$params['annotation_name']`` on the entity ``$params['entity']``. if logged in, the default is true."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:225
+# abf2d3fc95e242b39a882a668b49a407
+msgid "This is functions differently than the ``permissions_check:metadata`` hook by passing the annotation name instead of the metadata object."
+msgstr ""
+
+#: ../../guides/hooks-list.rst:229
+# 7382bbf96e8548e89281f4da99e85e7d
+msgid "**permissions_check:annotation**"
+msgstr ""
+
+#: ../../guides/hooks-list.rst:228
+# 1aa65a3e26c749f6a62bc3ae4119576e
 msgid "Return boolean for if the user in ``$params['user']`` can edit the annotation ``$params['annotation']`` on the entity ``$params['entity']``. The user can be null."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:227
+#: ../../guides/hooks-list.rst:233
 # 2d7f01dec1c642aa91d8fa9aeaf018dc
 msgid "**fail, auth**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:226
+#: ../../guides/hooks-list.rst:232
 # b63663bba8d646cc987cb6471e9204e6
 msgid "Return the failure message if authentication failed. An array of previous PAM failure methods is passed as ``$params``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:230
+#: ../../guides/hooks-list.rst:236
 # 1059f26691d64707a8fd187494a3143c
 msgid "**api_key, use**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:230
+#: ../../guides/hooks-list.rst:236
 # 13e083b5c3e044f3b0eb4f5f701e3a0d
 msgid "Triggered by ``api_auth_key()``. Returning false prevents the key from being authenticated."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:235
+#: ../../guides/hooks-list.rst:241
 # 7c73e62a52e24943ae7d7df070e5e2fa
 msgid "**access:collections:read, user**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:233
+#: ../../guides/hooks-list.rst:239
 # 2c61ac1d1d8c4245a32c844dc25f0410
 msgid "Filters an array of access IDs that the user ``$params['user_id']`` can see."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:235
-#: ../../guides/hooks-list.rst:245
+#: ../../guides/hooks-list.rst:241
+#: ../../guides/hooks-list.rst:251
 # 4f4c807184c8498b9ccfd54a8a5ccfe1
-# 9df243b900d74b8892386f3ed78e2adf
+# 4f4c807184c8498b9ccfd54a8a5ccfe1
 msgid "The handler needs to either not use parts of the API that use the access system (triggering the hook again) or to ignore the second call. Otherwise, an infinite loop will be created."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:238
+#: ../../guides/hooks-list.rst:244
 # a5f62c62125e4a2586dbe2aef912f2ef
 msgid "Filters an array of access IDs that the user ``$params['user_id']`` can write to. In get_write_access_array(), this hook filters the return value, so it can be used to alter the available options in the input/access view. For core plugins, the value \"input_params\" has the keys \"entity\" (ElggEntity|false), \"entity_type\" (string), \"entity_subtype\" (string), \"container_guid\" (int) are provided. An empty entity value generally means the form is to create a new object."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:248
+#: ../../guides/hooks-list.rst:254
 # 751612ade31d47c594ebe2640bf005ae
 msgid "**access:collections:addcollection, collection**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:248
+#: ../../guides/hooks-list.rst:254
 # 564816fb49374223b8e9650bfc864838
 msgid "Triggered after an access collection ``$params['collection_id']`` is created."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:252
+#: ../../guides/hooks-list.rst:258
 # 45cd0acd6e174720ac4835bbc85368b8
 msgid "**access:collections:deletecollection, collection**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:251
+#: ../../guides/hooks-list.rst:257
 # daf333d034b1477189670b727d462ee5
 msgid "Triggered before an access collection ``$params['collection_id']`` is deleted. Return false to prevent deletion."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:256
+#: ../../guides/hooks-list.rst:262
 # 2a8b03b153054136a10a56737a6ef7b0
 msgid "**access:collections:add_user, collection**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:255
+#: ../../guides/hooks-list.rst:261
 # aab3aae1a33c4bbcbd534e2f56fa9254
 msgid "Triggered before adding user ``$params['user_id']`` to collection ``$params['collection_id']``. Return false to prevent adding."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:260
+#: ../../guides/hooks-list.rst:266
 # 0d95f2340fd04a03ab5f7fa8dd251d71
 msgid "**access:collections:remove_user, collection**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:259
+#: ../../guides/hooks-list.rst:265
 # a5adbeead3f242dbaa2697a8db714ec4
 msgid "Triggered before removing user ``$params['user_id']`` to collection ``$params['collection_id']``. Return false to prevent removal."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:263
+#: ../../guides/hooks-list.rst:269
 # 6efb3009a4d6464ea6f28779e1b0cff0
 msgid "**get_sql, access**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:263
+#: ../../guides/hooks-list.rst:269
 # 6f87df2bda9d4f8fad4580e7f28870af
 msgid "Filters the SQL clauses used in ``_elgg_get_access_where_sql()``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:268
+#: ../../guides/hooks-list.rst:274
 #: ../../guides/plugins/plugin-skeleton.rst:152
 #: ../../guides/views.rst:2
 # c651ea01849049528ea907f72e455a93
@@ -3413,537 +3458,537 @@ msgstr ""
 msgid "Views"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:271
+#: ../../guides/hooks-list.rst:277
 # 8c952db7d3fd463bb8b9a70e420fc3bf
 msgid "**view_vars, <view_name>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:271
+#: ../../guides/hooks-list.rst:277
 # e59a3b48862c410fb7d9ae7032a127ac
 msgid "Filters the ``$vars`` array passed to the view"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:274
+#: ../../guides/hooks-list.rst:280
 # 6412d4fa3c924c73a0986110faffd1e8
 msgid "**view, <view_name>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:274
+#: ../../guides/hooks-list.rst:280
 # 9050b419a408475b952086972bee1db4
 msgid "Filters the returned content of the view"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:277
+#: ../../guides/hooks-list.rst:283
 # 25b5960e18b14b38bafe3670c4eb6065
 msgid "**layout, page**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:277
+#: ../../guides/hooks-list.rst:283
 # d8a122e5c5ae41e2b5fbc89a88173ba8
 msgid "In ``elgg_view_layout()``, filters the layout name"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:280
+#: ../../guides/hooks-list.rst:286
 # cd84ac61b52c480bb7be4f504fae6add
 msgid "**shell, page**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:280
+#: ../../guides/hooks-list.rst:286
 # ab55045be7394c7b88c60158b55b8747
 msgid "In ``elgg_view_page()``, filters the page shell name"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:283
+#: ../../guides/hooks-list.rst:289
 # 4c24434905054fd38ae2f6cd2d37a4f2
 msgid "**head, page**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:283
+#: ../../guides/hooks-list.rst:289
 # de206fa4c47e45c982c6000709e72062
 msgid "In ``elgg_view_page()``, filters ``$vars['head']``"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:286
+#: ../../guides/hooks-list.rst:292
 # 48ac678041de40e99772ed3872520479
 msgid "Files"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:290
+#: ../../guides/hooks-list.rst:296
 # 405d5413e00f4157b6f92888da94fcb7
 msgid "**mime_type, file**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:289
+#: ../../guides/hooks-list.rst:295
 # 42046156057b47f0bfba6264634fd401
 msgid "Return the mimetype for the filename ``$params['filename']`` with original filename ``$params['original_filename']`` and with the default detected mimetype of ``$params['default']``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:297
+#: ../../guides/hooks-list.rst:303
 # e1a7cf9f0b9f42be8e245a671d2fb615
 msgid "**simple_type, file**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:293
+#: ../../guides/hooks-list.rst:299
 # 8dc6dcc3ee2a4ab39746e27bf842923f
 msgid "In ``elgg_get_file_simple_type()``, filters the return value. The hook uses ``$params['mime_type']`` (e.g. ``application/pdf`` or ``image/jpeg``) and determines an overall category like ``document`` or ``image``. The bundled file plugin and other-third party plugins usually store ``simpletype`` metadata on file entities and make use of it when serving icons and constructing ``ege*`` filters and menus."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:302
+#: ../../guides/hooks-list.rst:308
 # e7716c1fe70f44a98ea8dec83184e99b
 msgid "Other"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:305
+#: ../../guides/hooks-list.rst:311
 # 0b8d6c949ea64621974bea9aad5c6c13
 msgid "**config, comments_per_page**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:305
+#: ../../guides/hooks-list.rst:311
 # a5c76b3760cd44c29ddbc3e0b785f6c2
 msgid "Filters the number of comments displayed per page. Default is 25."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:312
+#: ../../guides/hooks-list.rst:318
 # 12caf3fe6dc44cdb9db4660a2fbad14f
 msgid "**default, access**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:308
+#: ../../guides/hooks-list.rst:314
 # 9934cc5484cd478db9f75f9a3bb1c828
 msgid "In get_default_access(), this hook filters the return value, so it can be used to alter the default value in the input/access view. For core plugins, the value \"input_params\" has the keys \"entity\" (ElggEntity|false), \"entity_type\" (string), \"entity_subtype\" (string), \"container_guid\" (int) are provided. An empty entity value generally means the form is to create a new object."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:327
+#: ../../guides/hooks-list.rst:333
 # 2c2a0b7dd4664e8f81af127ee907ddf6
 msgid "**entity:icon:url, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:315
+#: ../../guides/hooks-list.rst:321
 # 08fecd1c8d2c410e8c526fa5a8c05a73
 msgid "Triggered when entity icon URL is requested, see :ref:`entity icons <guides/database#entity-icons>`. Callback should return URL for the icon of size ``$params['size']`` for the entity ``$params['entity']``. Following parameters are available through the ``$params`` array:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:319
+#: ../../guides/hooks-list.rst:325
 # ceb14d535eac4550b0f2c5038ab7d56e
 msgid "entity"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:320
+#: ../../guides/hooks-list.rst:326
 # 3c52802b2f4e4fddacaef0db75be0a18
 msgid "Entity for which icon url is requested."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:321
+#: ../../guides/hooks-list.rst:327
 # ac33b405e1ab48648ce3434c1a2ac3bb
 msgid "viewtype"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:322
+#: ../../guides/hooks-list.rst:328
 # 277a62fe93e247878988fdc7ae49ed11
 msgid "The type of :ref:`view <guides/views#listing-entities>` e.g. ``'default'`` or ``'json'``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:324
+#: ../../guides/hooks-list.rst:330
 # b79062d4df5645b8b1d0ee2cd80b4d78
 msgid "size"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:324
+#: ../../guides/hooks-list.rst:330
 # dd13229111264b4b822c37ff2122f7d4
 msgid "Size requested, see :ref:`entity icons <guides/database#entity-icons>` for possible values."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:326
+#: ../../guides/hooks-list.rst:332
 # b24962e682b94143a2c8c5903b725447
 msgid "Example on how one could default to a Gravatar icon for users that have not yet uploaded an avatar:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:363
+#: ../../guides/hooks-list.rst:369
 # 316ca7646051418d98aa7c53dcd3ce7a
 msgid "**entity:url, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:361
+#: ../../guides/hooks-list.rst:367
 # 2d08a9afd8584497adf95fd5ff218e8a
 msgid "Return the URL for the entity ``$params['entity']``. Note: Generally it is better to override the ``getUrl()`` method of ElggEntity. This hook should be used when it's not possible to subclass (like if you want to extend a bundled plugin without overriding many views)."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:367
+#: ../../guides/hooks-list.rst:373
 # e95f415da4884142b626b92c294067ac
 msgid "**to:object, <entity_type|metadata|annotation|relationship|river_item>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:366
+#: ../../guides/hooks-list.rst:372
 # ba59cc0b1545403595a2463d66cb203c
 msgid "Converts the entity ``$params['entity']`` to a StdClass object. This is used mostly for exporting entity properties for portable data formats like JSON and XML."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:370
+#: ../../guides/hooks-list.rst:376
 # 488b6cb37abb40c3a7102d9cd8ca28d5
 msgid "**extender:url, <annotation|metadata>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:370
+#: ../../guides/hooks-list.rst:376
 # 742f9e9377004bda8faabd050d24e1d4
 msgid "Return the URL for the annotation or metadatum ``$params['extender']``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:373
+#: ../../guides/hooks-list.rst:379
 # f052f818f503481e8ada287336342d90
 msgid "**file:icon:url, override**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:373
+#: ../../guides/hooks-list.rst:379
 # 69a40cd864ca499ea235fc3b12453c08
 msgid "Override a file icon URL."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:376
+#: ../../guides/hooks-list.rst:382
 # cef6048f6b4340ceb8d3ffa75028550c
 msgid "**is_member, group**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:376
+#: ../../guides/hooks-list.rst:382
 # 419b9cac2a8541b48258f5f3b4101ae4
 msgid "Return boolean for if the user ``$params['user']`` is a member of the group ``$params['group']``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:380
+#: ../../guides/hooks-list.rst:386
 # 51b14d608b114063a4e944e706405797
 msgid "**entity:annotate, <entity_type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:379
+#: ../../guides/hooks-list.rst:385
 # 88a3b7fef630441c9c0c975aba6c13b1
 msgid "Triggered in ``elgg_view_entity_annotations()``, which is called by ``elgg_view_entity()``. Can be used to add annotations to all full entity views."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:389
+#: ../../guides/hooks-list.rst:395
 # c6acff9eabae45569a176ed803d219b2
 msgid "**usersetting, plugin**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:383
+#: ../../guides/hooks-list.rst:389
 # 6001836130fe476680c9ad02354b3368
 msgid "Filter user settings for plugins. ``$params`` contains:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:385
+#: ../../guides/hooks-list.rst:391
 # 5da0d47c6da6482dbffa5d1a18d79fa9
 msgid "``user`` - An ElggUser instance"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:386
-#: ../../guides/hooks-list.rst:394
+#: ../../guides/hooks-list.rst:392
+#: ../../guides/hooks-list.rst:400
 # bf4b2caad81f4731b2fb75bca26d5ce4
-# f226e901c335452884d0bd4cab4912d3
+# bf4b2caad81f4731b2fb75bca26d5ce4
 msgid "``plugin`` - An ElggPlugin instance"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:387
-#: ../../guides/hooks-list.rst:395
+#: ../../guides/hooks-list.rst:393
+#: ../../guides/hooks-list.rst:401
 # 4474f50421284078a2fbfe67cf98564d
-# c4cbfbd7a8f8457db203f886575f26fe
+# 4474f50421284078a2fbfe67cf98564d
 msgid "``plugin_id`` - The plugin ID"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:388
-#: ../../guides/hooks-list.rst:396
+#: ../../guides/hooks-list.rst:394
+#: ../../guides/hooks-list.rst:402
 # cff35b5de804425a995e2fca9dba856d
-# f16dc6ed46fa45479157e40118aa1c84
+# cff35b5de804425a995e2fca9dba856d
 msgid "``name`` - The name of the setting"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:389
-#: ../../guides/hooks-list.rst:397
+#: ../../guides/hooks-list.rst:395
+#: ../../guides/hooks-list.rst:403
 # 879ebe78267a48b1bfe65cfd21832c97
-# 3cfa1341507d48ae9512357809fbc966
+# 879ebe78267a48b1bfe65cfd21832c97
 msgid "``value`` - The value to set"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:397
+#: ../../guides/hooks-list.rst:403
 # adf06eb28a2d4cbf9256d9b57bc2929d
 msgid "**setting, plugin**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:392
+#: ../../guides/hooks-list.rst:398
 # c422b0a3318142ca9b2737dc671697d6
 msgid "Filter plugin settings. ``$params`` contains:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:400
+#: ../../guides/hooks-list.rst:406
 # 0fea300f48d04f32924572f770120324
 msgid "**relationship:url, <relationship_name>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:400
+#: ../../guides/hooks-list.rst:406
 # 66006d4df5f349b3b96ea9f3afb94282
 msgid "Filter the URL for the relationship object ``$params['relationship']``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:404
+#: ../../guides/hooks-list.rst:410
 # c74f0da2a7a4457297f0f028d95818a8
 msgid "**profile:fields, group**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:403
-#: ../../guides/hooks-list.rst:414
+#: ../../guides/hooks-list.rst:409
+#: ../../guides/hooks-list.rst:420
 # 6c17998843964f6a8940709e57cb44d6
-# 85b5be3e85f44d1dadde0de53381148e
+# 6c17998843964f6a8940709e57cb44d6
 msgid "Filter an array of profile fields. The result should be returned as an array in the format ``name => input view name``. For example:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:415
+#: ../../guides/hooks-list.rst:421
 # c542542505a84af0939d42d45c52ea76
 msgid "**profile:fields, profile**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:425
+#: ../../guides/hooks-list.rst:431
 # 738c41cd37554d16b293796176aa8a6a
 msgid "**widget_settings, <widget_handler>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:424
+#: ../../guides/hooks-list.rst:430
 # 6d5d4df5e30d40e8b084625428d4e666
 msgid "Triggered when saving a widget settings ``$params['params']`` for widget ``$params['widget']``. If handling saving the settings, the handler should return true to prevent the default code from running."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:429
+#: ../../guides/hooks-list.rst:435
 # c9944d3a4412401185f8c16b198a6a57
 msgid "**get_list, default_widgets**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:428
+#: ../../guides/hooks-list.rst:434
 # da372131533c4c1fa34da5b098e4ec69
 msgid "Filters a list of default widgets to add for newly registered users. The list is an array of arrays in the format:"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:442
+#: ../../guides/hooks-list.rst:448
 # 3056f6275970413c9fe8ce361524e332
 msgid "**rest, init**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:441
+#: ../../guides/hooks-list.rst:447
 # 0efa3c10248745ab97dd7c8fb7827748
 msgid "Triggered by the web services rest handler. Plugins can set up their own authentication handlers, then return true to prevent the default handlers from being registered."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:446
+#: ../../guides/hooks-list.rst:452
 # c2abb02906e44186aac33320ecde1728
 msgid "**public_pages, walled_garden**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:445
+#: ../../guides/hooks-list.rst:451
 # 0eee4733380844509d0b130449ccf639
 msgid "Filter the URLs that are can be seen by logged out users if Walled Garden is enabled. ``$value`` is an array of regex strings that will allow access if matched."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:451
+#: ../../guides/hooks-list.rst:457
 # d7e50f4bfe8841f2bd52ed789be4ea2b
 msgid "**volatile, metadata**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:449
+#: ../../guides/hooks-list.rst:455
 # 5fd705db5f374ac9b07eab5a845596e8
 msgid "Triggered when exporting an entity through the export handler. This is rare. This allows handler to handle any volatile (non-persisted) metadata on the entity. It's preferred to use the ``to:object, <type>`` hook."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:455
+#: ../../guides/hooks-list.rst:461
 # a3640065a18b430180c7b1408bb54daa
 msgid "**maintenance:allow, url**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:455
+#: ../../guides/hooks-list.rst:461
 # 53582400b5c244c28e789eaab20cf2a3
 msgid "Return boolean if the URL ``$params['current_url']`` and the path ``$params['current_path']``"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:455
+#: ../../guides/hooks-list.rst:461
 # b69f9fe8e0554ae9ae030d0146e86282
 msgid "is allowed during maintenance mode."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:458
+#: ../../guides/hooks-list.rst:464
 # 543bec15d25e40088f57164384136b75
 msgid "**robots.txt, site**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:458
+#: ../../guides/hooks-list.rst:464
 # 1c479ea42ea24022a70cdd0540dfa337
 msgid "Filter the robots.txt values for ``$params['site']``."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:461
+#: ../../guides/hooks-list.rst:467
 # 3cfb31b5688140dcadb076470c35ca72
 msgid "**config, amd**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:461
+#: ../../guides/hooks-list.rst:467
 # d5828a4f9f9f4e338cd6d06b39280302
 msgid "Filter the AMD config for the requirejs library."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:467
+#: ../../guides/hooks-list.rst:473
 # 52f04c69d0d04009ac324d9c5478087d
 msgid "Embed"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:469
+#: ../../guides/hooks-list.rst:475
 # 6dfeabfaca56490bada862323198f7ba
 msgid "**embed_get_items, <active_section>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:471
+#: ../../guides/hooks-list.rst:477
 # de32ebbf328c475985783c111d882265
 msgid "**embed_get_sections, all**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:473
+#: ../../guides/hooks-list.rst:479
 # 9e6305916c7a440baea78665b76de844
 msgid "**embed_get_upload_sections, all**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:476
+#: ../../guides/hooks-list.rst:482
 # a36a62fc509a43178c101169566d6497
 msgid "HTMLawed"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:479
+#: ../../guides/hooks-list.rst:485
 # 9d8b623083a44c46afa000d60e8727d7
 msgid "**allowed_styles, htmlawed**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:479
+#: ../../guides/hooks-list.rst:485
 # 29ec82dc38384eb7af5d40667978e3c1
 msgid "Filter the HTMLawed allowed style array."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:482
+#: ../../guides/hooks-list.rst:488
 # 6972210f74bd45c794758e7c530c7f81
 msgid "**config, htmlawed**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:482
+#: ../../guides/hooks-list.rst:488
 # bcfa58f93c6d48a690958c807b141ab9
 msgid "Filter the HTMLawed config array."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:485
+#: ../../guides/hooks-list.rst:491
 # 6d109b051f464142ac35064ffb73c77e
 msgid "Members"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:488
+#: ../../guides/hooks-list.rst:494
 # b0e9e060c6384a68b1b7e402814cb7f3
 msgid "**members:list, <page_segment>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:488
+#: ../../guides/hooks-list.rst:494
 # 1a71ddf985734c078f41da21eaf1ab65
 msgid "To handle the page ``/members/$page_segment``, register for this hook and return the HTML of the list."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:492
+#: ../../guides/hooks-list.rst:498
 # 3aedd26809f14051986676d58b359340
 msgid "**members:config, tabs**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:491
+#: ../../guides/hooks-list.rst:497
 # 69de3a92004847cdacd0856cb46b948b
 msgid "This hook is used to assemble an array of tabs to be passed to the navigation/tabs view for the members pages."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:495
+#: ../../guides/hooks-list.rst:501
 # f18e94fec07540b289b00e94db590de9
 msgid "Twitter API"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:499
+#: ../../guides/hooks-list.rst:505
 # cb3e416ad6f74f82b6a583eb9ea7f9e9
 msgid "**authorize, twitter_api**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:498
+#: ../../guides/hooks-list.rst:504
 # 409e82241ad0496ca953d8d10bcf57ee
 msgid "Triggered when a user is authorizes Twitter for a login. ``$params['token']`` contains the Twitter authorization token."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:502
+#: ../../guides/hooks-list.rst:508
 # a5ca00ed2c314fdc8f6dafaa4ba03c66
 msgid "Reported Content"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:505
+#: ../../guides/hooks-list.rst:511
 # 9ceb0305604c4303bbbdacd5030c3f4d
 msgid "**reportedcontent:add, system**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:505
+#: ../../guides/hooks-list.rst:511
 # 4ca2b50acb1746a88fe44555f8e21e83
 msgid "Triggered after adding the reported content object ``$params['report']``. Return false to delete report."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:508
+#: ../../guides/hooks-list.rst:514
 # d5fcc202b2be4ebfaabf70c848d071aa
 msgid "**reportedcontent:archive, system**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:508
+#: ../../guides/hooks-list.rst:514
 # 0609c1363eab4ca492395a286a7d812d
 msgid "Triggered before archiving the reported content object ``$params['report']``. Return false to prevent archiving."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:511
+#: ../../guides/hooks-list.rst:517
 # b1d459daf9e445dba4819824f77ccddb
 msgid "**reportedcontent:delete, system**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:511
+#: ../../guides/hooks-list.rst:517
 # ebd781472b454e28947bf6f06b870c83
 msgid "Triggered before deleting the reported content object ``$params['report']``. Return false to prevent deleting."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:514
+#: ../../guides/hooks-list.rst:520
 # db30da757ac04e57b356a1a8dfa11c46
 msgid "Search"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:518
+#: ../../guides/hooks-list.rst:524
 # 4dd6d9a3215f41d2b75dee067776888b
 msgid "**search, <type>:<subtype>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:517
+#: ../../guides/hooks-list.rst:523
 # 7bc0a86812fa4c19aec9bb59077dc820
 msgid "Filter more granular search results than searching by type alone. Must return an array with ``count`` as the total count of results and  ``entities`` an array of ElggUser entities."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:520
+#: ../../guides/hooks-list.rst:526
 # 929bd888ac314790b1e95fee50410924
 msgid "**search, tags**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:524
+#: ../../guides/hooks-list.rst:530
 # 3966c4ce24cb4fa4a5dca392a0f98c65
 msgid "**search, <type>**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:523
+#: ../../guides/hooks-list.rst:529
 # 83663313871d4ec4a77b252dfa852ef4
 msgid "Filter the search for entities for type ``$type``. Must return an array with ``count`` as the total count of results and  ``entities`` an array of ElggUser entities."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:527
+#: ../../guides/hooks-list.rst:533
 # 2831442ed2d84ce0b0c6c8a50cecc741
 msgid "Filter an array of search types. This allows plugins to add custom types that don't correspond directly to entities."
 msgstr ""
 
-#: ../../guides/hooks-list.rst:531
+#: ../../guides/hooks-list.rst:537
 # 18afffaeb06a475c9a4ee48ca17aaff3
 msgid "**search_types, get_queries**"
 msgstr ""
 
-#: ../../guides/hooks-list.rst:531
+#: ../../guides/hooks-list.rst:537
 # 4baec758f3f24293820b21531eaab1e9
 msgid "Before a search this filters the types queried. This can be used to reorder the display of search results."
 msgstr ""
@@ -5217,7 +5262,7 @@ msgid "This example uses all of the available elements:"
 msgstr ""
 
 #: ../../guides/plugins.rst:149
-#: ../../guides/views.rst:338
+#: ../../guides/views.rst:344
 #: ../../guides/web-services.rst:329
 # 6fdd862d84a443d6b357e1e4949dba7d
 # ee017cab314e4f88b0c7100a58716bd8
@@ -7590,12 +7635,17 @@ msgstr ""
 msgid "Using a different templating system"
 msgstr ""
 
-#: ../../guides/views.rst:329
+#: ../../guides/views.rst:331
+# 6054c11a9c604fa783e2741d8e958ad0
+msgid "This functionality is deprecated as of Elgg 1.12. It will be removed in 2.0. It affects the behavior of templates globally, which is almost sure to cause breakages and therefore we suspect no one uses it in practice."
+msgstr ""
+
+#: ../../guides/views.rst:335
 # b3ec9737b7f44fdc8ed312906033f6b2
 msgid "You can write your own templating system if you want to."
 msgstr ""
 
-#: ../../guides/views.rst:331
+#: ../../guides/views.rst:337
 # 14aa55dd0f0941aeaad7580edc82bd48
 msgid "Before going through the motions of drawing views, Elgg checks the ``$CONFIG->template_handler`` variable to see if it contains the name of a callable function. If it does, the function will be passed the view name and template vars, and the return value of this function will be returned instead of the standard output:"
 msgstr ""
