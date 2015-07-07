@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Elgg 1.11\n"
+"Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-07 06:54+0000\n"
+"POT-Creation-Date: 2015-07-07 08:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1433,11 +1433,6 @@ msgstr ""
 msgid "This is to avoid duplicating strings, saving space and making database lookups more efficient."
 msgstr ""
 
-#: ../../design/database.rst:880
-# 04974853cad844c5931c702bf1347b24
-msgid "Core developers will place schema upgrades in ``/engine/schema/upgrades/*``."
-msgstr ""
-
 #: ../../design/events.rst:2
 # 25ff434f9705490289fde66758d6fdc5
 msgid "Events and Plugin Hooks"
@@ -1515,7 +1510,7 @@ msgstr ""
 
 #: ../../design/events.rst:58
 # 06dc4dc9b1c54a46a9fe1d17982c3b5d
-msgid "Before Events have names ending in \":before\" and are triggered before something happens. Like traditional events, handlers can cancel the event by returning `false`."
+msgid "Before Events have names ending in \":before\" and are triggered before something happens. Like traditional events, handlers can cancel the event by returning ``false``."
 msgstr ""
 
 #: ../../design/events.rst:62
@@ -1736,6 +1731,21 @@ msgstr ""
 msgid "Even though the event handler references a dynamic method call, the code above will successfully remove the handler."
 msgstr ""
 
+#: ../../design/events.rst:267
+# 82e7f9f810154cd1922b2ad142c763f1
+msgid "Handler Calling Order"
+msgstr ""
+
+#: ../../design/events.rst:269
+# 944a3e7d37a74bc19b8920d4a0e6872c
+msgid "Handlers are called first in order of priority, then registration order."
+msgstr ""
+
+#: ../../design/events.rst:273
+# 8448b079e579493e9b471342e95f3717
+msgid "Before Elgg 2.0, registering with the ``all`` keywords caused handlers to be called later, even if they were registered with lower priorities."
+msgstr ""
+
 #: ../../design/i18n.rst:2
 # 473411da6c0f49dfad3b9b4130ca54ba
 msgid "Internationalization"
@@ -1801,67 +1811,62 @@ msgstr ""
 msgid "``getObjectFromID($id)`` For a given ID, return the object associated with it"
 msgstr ""
 
-#: ../../design/loggable.rst:13
-# b59dec5bbbb34b50973e3e82e342bb63
-msgid "``getObjectOwnerGUID()`` Return the GUID of the owner of this object"
-msgstr ""
-
-#: ../../design/loggable.rst:16
+#: ../../design/loggable.rst:15
 # 5e2f8e54fb8a441ea451534d2bed1e14
 msgid "Database details"
 msgstr ""
 
-#: ../../design/loggable.rst:18
+#: ../../design/loggable.rst:17
 # 88db94dab6b142f492ef3eda8d0e499d
 msgid "The default system log is stored in the ``system_log`` :doc:`database table <database>`. It contains the following fields:"
 msgstr ""
 
-#: ../../design/loggable.rst:20
+#: ../../design/loggable.rst:19
 # 54202ee8afab45a2952b885fd86b226e
 msgid "**id** - A unique numeric row ID"
 msgstr ""
 
-#: ../../design/loggable.rst:21
+#: ../../design/loggable.rst:20
 # d99374f20ecc4bfeb9a92d2bff54d3be
 msgid "**object_id** - The GUID of the entity being acted upon"
 msgstr ""
 
-#: ../../design/loggable.rst:22
+#: ../../design/loggable.rst:21
 # 39faaaa6de86497884366000ba4920b0
 msgid "**object_class** - The class of the entity being acted upon (eg ElggObject)"
 msgstr ""
 
-#: ../../design/loggable.rst:23
+#: ../../design/loggable.rst:22
 # dac10d1a620d44c7bc7b1df0d3185fd4
 msgid "**object_type** - The type of the entity being acted upon (eg object)"
 msgstr ""
 
-#: ../../design/loggable.rst:24
+#: ../../design/loggable.rst:23
 # 8992fb295bce48a9b1d8e25c36925782
 msgid "**object_subtype** - The subtype of the entity being acted upon (eg blog)"
 msgstr ""
 
-#: ../../design/loggable.rst:25
+#: ../../design/loggable.rst:24
 # ccf419bd89924f5fa7848dc1577de1e5
 msgid "**event** - The event being logged (eg create or update)"
 msgstr ""
 
-#: ../../design/loggable.rst:26
+#: ../../design/loggable.rst:25
 # 0f9e5368a28241bc8540d6bc76ce4c00
 msgid "**performed_by_guid** - The GUID of the acting entity (the user performing the action)"
 msgstr ""
 
-#: ../../design/loggable.rst:27
+#: ../../design/loggable.rst:26
 # e549f0936ac74885bae45995a59e9778
 msgid "**owner_guid** - The GUID of the user which owns the entity being acted upon"
 msgstr ""
 
-#: ../../design/loggable.rst:28
+#: ../../design/loggable.rst:27
 # 5462de7154564860b93de7c196fa3450
 msgid "**access_id** - The access restriction associated with this log entry"
 msgstr ""
 
-#: ../../design/loggable.rst:29
+#: ../../design/loggable.rst:28
 # f32ef217cb6945a881487fbe616f0731
 msgid "**time_created** - The UNIX epoch timestamp of the time the event took place"
 msgstr ""

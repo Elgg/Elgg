@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Elgg 1.11\n"
+"Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-07 06:54+0000\n"
+"POT-Creation-Date: 2015-07-07 08:50+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -426,7 +426,7 @@ msgstr ""
 
 #: ../../contribute/code.rst:193
 # e1a32259de534f01b3473e10e8045012
-msgid "Test files must be named ``*Test.js`` and should go in either ``js/tests/`` or next to their source files in ``views/default/js``. Karma will automatically pick up on new ``*Test.js`` files and run those tests."
+msgid "Test files must be named ``*Test.js`` and should go in either ``js/tests/`` or next to their source files in ``views/default/**.js``. Karma will automatically pick up on new ``*Test.js`` files and run those tests."
 msgstr ""
 
 #: ../../contribute/code.rst:198
@@ -564,71 +564,76 @@ msgstr ""
 msgid "type-hint on interfaces, because that is the shortest, easiest thing to do."
 msgstr ""
 
-#: ../../contribute/code.rst:298
+#: ../../contribute/code.rst:297
+# 15bd3d3af95c4641b30b5e65064c6556
+msgid "Name implementations like `Elgg\\{Namespace}\\{Interface}\\{Implementation}`."
+msgstr ""
+
+#: ../../contribute/code.rst:300
 # e51be500714c4d5cb288f516547d5b40
 msgid "Functions"
 msgstr ""
 
-#: ../../contribute/code.rst:300
+#: ../../contribute/code.rst:302
 # 466c081e8ad74fe4a59658f3d6aeb3dc
 msgid "Where possible, have functions/methods return a single type. Use empty values such as array(), \"\", or 0 to indicate no results."
 msgstr ""
 
-#: ../../contribute/code.rst:303
+#: ../../contribute/code.rst:305
 # f6eabb534b114f929c8696d1008d6e86
 msgid "Be careful where valid return values (like ``\"0\"``) could be interpreted as empty."
 msgstr ""
 
-#: ../../contribute/code.rst:305
+#: ../../contribute/code.rst:307
 # 0ee87e3a0e3d4fbd9b0b9cc70ca4a9fa
 msgid "Functions not throwing an exception on error should return ``false`` upon failure."
 msgstr ""
 
-#: ../../contribute/code.rst:307
+#: ../../contribute/code.rst:309
 # ba83062466294f2ca7724e73a63a34aa
 msgid "Functions returning only boolean should be prefaced with ``is_`` or ``has_`` (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``)."
 msgstr ""
 
-#: ../../contribute/code.rst:311
+#: ../../contribute/code.rst:313
 # 582d80a993d44d53af42211e08505832
 msgid "Ternary syntax"
 msgstr ""
 
-#: ../../contribute/code.rst:313
+#: ../../contribute/code.rst:315
 # b70a0c80ecde458d99481a7531cf062b
 msgid "Acceptable only for single-line, non-embedded statements."
 msgstr ""
 
-#: ../../contribute/code.rst:316
+#: ../../contribute/code.rst:318
 # 311be3130c4e4267b8b46a4e3cb4d11e
 msgid "Minimize complexity"
 msgstr ""
 
-#: ../../contribute/code.rst:318
+#: ../../contribute/code.rst:320
 # 833be018c25e4448ac81ad8847dfaac9
 msgid "Minimize nested blocks and distinct execution paths through code. Use `Return Early`__ to reduce nesting levels and cognitive load when reading code."
 msgstr ""
 
-#: ../../contribute/code.rst:324
+#: ../../contribute/code.rst:326
 # 5cf1ec480d2e4166868db28b98e6b12b
 msgid "Use comments effectively"
 msgstr ""
 
-#: ../../contribute/code.rst:326
+#: ../../contribute/code.rst:328
 # 12f90168e3f2465a87b28f4f27d196fb
 msgid "Good comments describe the \"why.\"  Good code describes the \"how.\" E.g.:"
 msgstr ""
 
-#: ../../contribute/code.rst:328
-#: ../../contribute/code.rst:483
-#: ../../contribute/code.rst:503
-#: ../../contribute/code.rst:518
-#: ../../contribute/code.rst:536
-#: ../../contribute/code.rst:558
-#: ../../contribute/code.rst:582
+#: ../../contribute/code.rst:330
+#: ../../contribute/code.rst:485
+#: ../../contribute/code.rst:505
+#: ../../contribute/code.rst:520
+#: ../../contribute/code.rst:538
+#: ../../contribute/code.rst:560
+#: ../../contribute/code.rst:584
 # 2b71098ab044486895da43cea3aae1f5
 # 2b71098ab044486895da43cea3aae1f5
-# 77fc4e3705c94bd0946f612eba04c472
+# 2b71098ab044486895da43cea3aae1f5
 # 2b71098ab044486895da43cea3aae1f5
 # 2b71098ab044486895da43cea3aae1f5
 # 2b71098ab044486895da43cea3aae1f5
@@ -636,14 +641,14 @@ msgstr ""
 msgid "Bad:"
 msgstr ""
 
-#: ../../contribute/code.rst:339
-#: ../../contribute/code.rst:468
-#: ../../contribute/code.rst:493
-#: ../../contribute/code.rst:509
-#: ../../contribute/code.rst:524
-#: ../../contribute/code.rst:544
-#: ../../contribute/code.rst:567
-#: ../../contribute/code.rst:590
+#: ../../contribute/code.rst:341
+#: ../../contribute/code.rst:470
+#: ../../contribute/code.rst:495
+#: ../../contribute/code.rst:511
+#: ../../contribute/code.rst:526
+#: ../../contribute/code.rst:546
+#: ../../contribute/code.rst:569
+#: ../../contribute/code.rst:592
 # bf190533e9384090b73066838c3593af
 # bf190533e9384090b73066838c3593af
 # bf190533e9384090b73066838c3593af
@@ -655,317 +660,317 @@ msgstr ""
 msgid "Good:"
 msgstr ""
 
-#: ../../contribute/code.rst:350
+#: ../../contribute/code.rst:352
 # b4e2b0177e57464e87ad619463e705ba
 msgid "Always include a comment if it's not obvious that something must be done in a certain way. Other developers looking at the code should be discouraged from refactoring in a way that would break the code."
 msgstr ""
 
-#: ../../contribute/code.rst:362
+#: ../../contribute/code.rst:364
 # e444082f26c2462a8ff3ba4c20490b9c
 msgid "Commit effectively"
 msgstr ""
 
-#: ../../contribute/code.rst:364
+#: ../../contribute/code.rst:366
 # 84336a2dbfa74b5e9c76a94698eedb7d
 msgid "Err on the side of `atomic commits`__ which are highly focused on changing one aspect of the system."
 msgstr ""
 
-#: ../../contribute/code.rst:365
+#: ../../contribute/code.rst:367
 # 8f0bcc73571f4f17aa10462ae333810e
 msgid "Avoid mixing in unrelated changes or extensive whitespace changes. Commits with many changes are scary and make pull requests difficult to review."
 msgstr ""
 
-#: ../../contribute/code.rst:367
+#: ../../contribute/code.rst:369
 # cd560413ac48444987f25fcc0944e09a
 msgid "Use visual git tools to craft `highly precise and readable diffs`__."
 msgstr ""
 
-#: ../../contribute/code.rst:373
+#: ../../contribute/code.rst:375
 # a4131982744144359f0fa87085bc13bc
 msgid "Include tests"
 msgstr ""
 
-#: ../../contribute/code.rst:375
+#: ../../contribute/code.rst:377
 # 015ec2d43d714b0ab72d28537029614f
 msgid "When at all possible include unit tests for code you add or alter. We use:"
 msgstr ""
 
-#: ../../contribute/code.rst:377
+#: ../../contribute/code.rst:379
 # a23709eac5914ac2a93ebaef667826fd
 msgid "PHPUnit for PHP unit tests."
 msgstr ""
 
-#: ../../contribute/code.rst:379
+#: ../../contribute/code.rst:381
 # 266dc845273246c7ad1957ada9e948d4
 msgid "SimpleTest for legacy PHP tests that require use of the database. Our long-term goal is to move all tests to PHPUnit."
 msgstr ""
 
-#: ../../contribute/code.rst:382
+#: ../../contribute/code.rst:384
 # bc3973e513c9409aaf7a49f4d8345660
 msgid "Karma for JavaScript unit tests"
 msgstr ""
 
-#: ../../contribute/code.rst:385
+#: ../../contribute/code.rst:387
 # 0411ad78052446c0901d91a6e26fc193
 msgid "Naming tests"
 msgstr ""
 
-#: ../../contribute/code.rst:387
+#: ../../contribute/code.rst:389
 # 98d258ea45c84d4a9582808738b7e41e
 msgid "Break tests up by the behaviors you want to test and use names that describe the behavior. E.g.:"
 msgstr ""
 
-#: ../../contribute/code.rst:390
+#: ../../contribute/code.rst:392
 # 6c53797a2c4d48debfb4e454ae6303dd
 msgid "Not so good: One big method `testAdd()`."
 msgstr ""
 
-#: ../../contribute/code.rst:392
+#: ../../contribute/code.rst:394
 # 4008c390eb2743a7a0d353325ce79ced
 msgid "Better: Methods `testAddingZeroChangesNothing` and `testAddingNegativeNumberSubtracts`"
 msgstr ""
 
-#: ../../contribute/code.rst:395
+#: ../../contribute/code.rst:397
 # daeb52a0dcd14e929de01843290d1df4
 msgid "Keep bugfixes simple"
 msgstr ""
 
-#: ../../contribute/code.rst:397
+#: ../../contribute/code.rst:399
 # dc7d908eee8c4622af94bed5092147ca
 msgid "Avoid the temptation to refactor code for a bugfix release. Doing so tends to introduce regressions, breaking functionality in what should be a stable release."
 msgstr ""
 
-#: ../../contribute/code.rst:401
+#: ../../contribute/code.rst:403
 # 97f09f5d28c1494e92e5b954a88bec23
 msgid "PHP guidelines"
 msgstr ""
 
-#: ../../contribute/code.rst:403
+#: ../../contribute/code.rst:405
 # 3937939a14c744709c1b7e419cbc73c9
 msgid "These are the required coding standards for Elgg core and all bundled plugins. Plugin developers are strongly encouraged to adopt these standards."
 msgstr ""
 
-#: ../../contribute/code.rst:406
+#: ../../contribute/code.rst:408
 # f47eebf9eddd431684aca3be65576352
 msgid "Developers should first read the `PSR-2 Coding Standard Guide`__."
 msgstr ""
 
-#: ../../contribute/code.rst:410
+#: ../../contribute/code.rst:412
 # 5033d80a5dd544b583c81f23cf593e4a
 msgid "Elgg's standards extend PSR-2, but differ in the following ways:"
 msgstr ""
 
-#: ../../contribute/code.rst:412
+#: ../../contribute/code.rst:414
 # d40ad3927ff843949bd56b829579d40c
 msgid "Indent using one tab character, not spaces."
 msgstr ""
 
-#: ../../contribute/code.rst:413
+#: ../../contribute/code.rst:415
 # da8b3887d03941278df1a3816158a4ea
 msgid "Opening braces for classes, methods, and functions must go on the same line."
 msgstr ""
 
-#: ../../contribute/code.rst:414
+#: ../../contribute/code.rst:416
 # e272080cd135413385d160d28c51913b
 msgid "If a line reaches over 100 characters, consider refactoring (e.g. introduce variables)."
 msgstr ""
 
-#: ../../contribute/code.rst:415
+#: ../../contribute/code.rst:417
 # 38498ee822214889b2791b11a3e72537
 msgid "Compliance with `PSR-1`__ is encouraged, but not strictly required."
 msgstr ""
 
-#: ../../contribute/code.rst:420
+#: ../../contribute/code.rst:422
 # aac5b38c16524bb2bc55860137d4c15c
 msgid "Documentation"
 msgstr ""
 
-#: ../../contribute/code.rst:422
+#: ../../contribute/code.rst:424
 # e3945dbe6b2a451abef609f8651f05bd
 msgid "Include PHPDoc comments on functions and classes (all methods; declared properties when appropriate), including types and descriptions of all parameters."
 msgstr ""
 
-#: ../../contribute/code.rst:426
+#: ../../contribute/code.rst:428
 # e1fc12beb52845c98cc8be21fbef4c48
 msgid "In lists of ``@param`` declarations, the beginnings of variable names and descriptions must line up."
 msgstr ""
 
-#: ../../contribute/code.rst:429
+#: ../../contribute/code.rst:431
 # f0f4a9c6e75e4b9a9179014c9dcb5d62
 msgid "Annotate classes, methods, properties, and functions with ``@access private`` unless they are intended for public use, are already of limited visibility, or are within a class already marked as private."
 msgstr ""
 
-#: ../../contribute/code.rst:433
+#: ../../contribute/code.rst:435
 # b468e0f0bdfa4222803b93c812f84a1b
 msgid "Use ``//`` or ``/* */`` when commenting."
 msgstr ""
 
-#: ../../contribute/code.rst:435
+#: ../../contribute/code.rst:437
 # 6d5d613435924375a858058ef37b3c58
 msgid "Use only ``//`` comments inside function/method bodies."
 msgstr ""
 
-#: ../../contribute/code.rst:438
+#: ../../contribute/code.rst:440
 # bd85714743144899951781e9dcd497b0
 msgid "Naming"
 msgstr ""
 
-#: ../../contribute/code.rst:440
+#: ../../contribute/code.rst:442
 # bedd044a2af74438ab5547387f4a3d79
 msgid "Use underscores to separate words in the names of functions, variables, and properties. Method names are camelCase."
 msgstr ""
 
-#: ../../contribute/code.rst:443
+#: ../../contribute/code.rst:445
 # cd768a2262db4b35b5efe8814b8035d4
 msgid "Names of functions for public use must begin with ``elgg_``."
 msgstr ""
 
-#: ../../contribute/code.rst:445
+#: ../../contribute/code.rst:447
 # 90daebd0c23d4cf0bda210ca3b717485
 msgid "All other function names must begin with ``_elgg_``."
 msgstr ""
 
-#: ../../contribute/code.rst:447
+#: ../../contribute/code.rst:449
 # 598428547a594b478c659d9afa113ba0
 msgid "Name globals and constants in ``ALL_CAPS`` (``ACCESS_FRIENDS``, ``$CONFIG``)."
 msgstr ""
 
-#: ../../contribute/code.rst:450
+#: ../../contribute/code.rst:452
 # ca3a514a6e9341a696d6a0d953246262
 msgid "Miscellaneous"
 msgstr ""
 
-#: ../../contribute/code.rst:452
+#: ../../contribute/code.rst:454
 # 565055f510db469e82fe856346b2e45f
 msgid "For PHP requirements, see ``composer.json``."
 msgstr ""
 
-#: ../../contribute/code.rst:454
+#: ../../contribute/code.rst:456
 # f73bf30726b745afbb17c57a464faf63
 msgid "Do not use PHP shortcut tags ``<?`` or ``<%``. It is OK to use ``<?=`` since it is always enabled as of PHP 5.4."
 msgstr ""
 
-#: ../../contribute/code.rst:457
+#: ../../contribute/code.rst:459
 # 08e49b558b8f4b1683629af817481237
 msgid "When creating strings with variables:"
 msgstr ""
 
-#: ../../contribute/code.rst:459
+#: ../../contribute/code.rst:461
 # cf4cdb256d394664930b5101569b72ea
 msgid "use double-quoted strings"
 msgstr ""
 
-#: ../../contribute/code.rst:460
+#: ../../contribute/code.rst:462
 # d2113927bc94443d97e8d5134418656b
 msgid "wrap variables with braces only when necessary."
 msgstr ""
 
-#: ../../contribute/code.rst:462
+#: ../../contribute/code.rst:464
 # da251d4e924f49098824b0eb7dfa19cf
 msgid "Bad (hard to read, misuse of quotes and {}s):"
 msgstr ""
 
-#: ../../contribute/code.rst:474
+#: ../../contribute/code.rst:476
 # c9d31a8bcc47466d9e941a9f00ae96b7
 msgid "Remove trailing whitespace at the end of lines. An easy way to do this before you commit is to run ``php .scripts/fix_style.php`` from the installation root."
 msgstr ""
 
-#: ../../contribute/code.rst:478
+#: ../../contribute/code.rst:480
 # d780cfd1159b4c9d9d90c33f6c1c7868
 msgid "CSS guidelines"
 msgstr ""
 
-#: ../../contribute/code.rst:481
+#: ../../contribute/code.rst:483
 # 6690b44f64e749bea5b8b22783280fc9
 msgid "Use shorthand where possible"
 msgstr ""
 
-#: ../../contribute/code.rst:501
+#: ../../contribute/code.rst:503
 # 5fb73d75cdf8438d915e114bbe24f0db
 msgid "Use hyphens, not underscores"
 msgstr ""
 
-#: ../../contribute/code.rst:516
+#: ../../contribute/code.rst:518
 # 1de1c30af636422885301c8dfddfb2ab
 msgid "One property per line"
 msgstr ""
 
-#: ../../contribute/code.rst:532
+#: ../../contribute/code.rst:534
 # 798e1dff53394bf58b28a1a4b26b4b06
 msgid "Property declarations"
 msgstr ""
 
-#: ../../contribute/code.rst:534
+#: ../../contribute/code.rst:536
 # 3f2c670b379f42a79b60ed2c1a461925
 msgid "These should be spaced like so: `property: value;`"
 msgstr ""
 
-#: ../../contribute/code.rst:551
+#: ../../contribute/code.rst:553
 # 3d50fe3dac2e49768aa1f5213dd49057
 msgid "Vendor prefixes"
 msgstr ""
 
-#: ../../contribute/code.rst:553
+#: ../../contribute/code.rst:555
 # 2b855d28145b4a598ba29ac75786b29d
 msgid "Group vendor-prefixes for the same property together"
 msgstr ""
 
-#: ../../contribute/code.rst:554
+#: ../../contribute/code.rst:556
 # 5d793209f3cd48048477c1dbab12fce7
 msgid "Longest vendor-prefixed version first"
 msgstr ""
 
-#: ../../contribute/code.rst:555
+#: ../../contribute/code.rst:557
 # 0e8b34a264224cc68d92e746f187b818
 msgid "Always include non-vendor-prefixed version"
 msgstr ""
 
-#: ../../contribute/code.rst:556
+#: ../../contribute/code.rst:558
 # d0e0ff77fb8841a7bb1ebeb524afb8bf
 msgid "Put an extra newline between vendor-prefixed groups and other properties"
 msgstr ""
 
-#: ../../contribute/code.rst:580
+#: ../../contribute/code.rst:582
 # 0fc280ea9d1b4b7587e74879b99a28be
 msgid "Group subproperties"
 msgstr ""
 
-#: ../../contribute/code.rst:599
+#: ../../contribute/code.rst:601
 # 88955a5a39be4a8bb35fa94f0577bcee
 msgid "Javascript guidelines"
 msgstr ""
 
-#: ../../contribute/code.rst:601
+#: ../../contribute/code.rst:603
 # 338c807cf3454607a6278ccb5eb50d04
 msgid "Same formatting standards as PHP apply."
 msgstr ""
 
-#: ../../contribute/code.rst:603
+#: ../../contribute/code.rst:605
 # 2a79405fb70f4493b4ae086a56f73657
 msgid "All functions should be in the ``elgg`` namespace."
 msgstr ""
 
-#: ../../contribute/code.rst:605
+#: ../../contribute/code.rst:607
 # b1877c5e7a924028bac9a2034581bdff
 msgid "Function expressions should end with a semi-colon."
 msgstr ""
 
-#: ../../contribute/code.rst:616
+#: ../../contribute/code.rst:618
 # f8bb63f537f14979bbee736ddd52bfcc
 msgid "Deprecating APIs"
 msgstr ""
 
-#: ../../contribute/code.rst:618
+#: ../../contribute/code.rst:620
 # 1f15393cf6484e9580f04decf07f41a1
 msgid "Occasionally functions and classes must be deprecated in favor of newer replacements. Since 3rd party plugin authors rely on a consistent API, backward compatibility must be maintained, but will not be maintained indefinitely as plugin authors are expected to properly update their plugins. In order to maintain backward compatibility, deprecated APIs will follow these guidelines:"
 msgstr ""
 
-#: ../../contribute/code.rst:625
+#: ../../contribute/code.rst:627
 # 6bce8bc14ee942eba6c33828b25bdf1e
 msgid "Minor version (1.x) that deprecates an API must include a wrapper function/class (or otherwise appropriate means) to maintain backward compatibility, including any bugs in the original function/class. This compatibility layer uses ``elgg_deprecated_notice('...', '1.11')`` to log that the function is deprecated."
 msgstr ""
 
-#: ../../contribute/code.rst:631
+#: ../../contribute/code.rst:633
 # b7540dae933241759604a91c8be15358
 msgid "The next major revision (2.0) removes the compatibility layer. Any use of the deprecated API should be corrected before this."
 msgstr ""
@@ -1770,5 +1775,145 @@ msgstr ""
 #: ../../contribute/releases.rst:125
 # 089ed213cbd44cf2adec237a4bfd9406
 msgid "Post from the `G+ page`_"
+msgstr ""
+
+#: ../../contribute/services.rst:2
+# 45b8580cb33e45bcbb1cd2576f9ca0d1
+msgid "Adding a Service to Elgg"
+msgstr ""
+
+#: ../../contribute/services.rst:4
+# f99aa1378c074f24aa27dca1a26d52a8
+msgid "The :doc:`services guide </guides/services>` has general information about using Elgg services."
+msgstr ""
+
+#: ../../contribute/services.rst:6
+# 1122560050d24d278d443c451198fa35
+msgid "To add a new service object to Elgg:"
+msgstr ""
+
+#: ../../contribute/services.rst:8
+# 529c8b71d76144b0a974d2296007183f
+msgid "Annotate your class as ``@access private``."
+msgstr ""
+
+#: ../../contribute/services.rst:9
+# 49f2d07027524227aebdb67b0ae5bd4e
+msgid "Open the class ``Elgg\\Di\\ServiceProvider``."
+msgstr ""
+
+#: ../../contribute/services.rst:10
+# ac88e5f37b6340e6bc4a9002de699a80
+msgid "Add a ``@property-read`` annotation for your service at the top. This allows IDEs and static code analyzers to understand the type of the property."
+msgstr ""
+
+#: ../../contribute/services.rst:12
+# cdcf17b2a9654c17a486115f0707fc13
+msgid "To the constructor, add code to tell the service provider what to return. See the class ``Elgg\\Di\\DiContainer`` for more information on how Elgg's DI container works."
+msgstr ""
+
+#: ../../contribute/services.rst:15
+# e68912d5020642ce8166dbe354a614b5
+msgid "At this point your service will be available from the service provider object, but will not yet be accessible to plugins."
+msgstr ""
+
+#: ../../contribute/services.rst:18
+# 8be7a8476a3349debdbf8151ceb1f99c
+msgid "Inject your dependencies"
+msgstr ""
+
+#: ../../contribute/services.rst:20
+# 938fbd3892934f86873b3d0afa37ef0e
+msgid "Design your class constructor to *ask for* the necessary dependencies rather than creating them or using ``_elgg_services()``. The service provider's ``setFactory()`` method provides access to the service provider instance in your factory method."
+msgstr ""
+
+#: ../../contribute/services.rst:24
+# 0d973cc240034272981fcb563ebcaf91
+msgid "Here's an example of a ``foo`` service factory, injecting the ``config`` and ``db`` services into the constructor:"
+msgstr ""
+
+#: ../../contribute/services.rst:34
+# ca473a12dfdf4562a47bee1986c93c9e
+msgid "The full list of internal services can be seen in the ``@property-read`` declarations at the top of ``Elgg\\Di\\ServiceProvider``."
+msgstr ""
+
+#: ../../contribute/services.rst:39
+# 0335888d1d48486ea0644d7af226d843
+msgid "Avoid performing work in your service constructor, particularly if it requires database queries. Currently PHPUnit tests cannot perform them."
+msgstr ""
+
+#: ../../contribute/services.rst:44
+# 6b51bccacf014d54a6ad3935426775d3
+msgid "Making a service part of the public API"
+msgstr ""
+
+#: ../../contribute/services.rst:46
+# 31e8424cbe564c3bba67c063096c57c8
+msgid "If your service is meant for use by plugin developers:"
+msgstr ""
+
+#: ../../contribute/services.rst:48
+# c5f33b5a0b94464e8429308f86261d0b
+msgid "Make an interface ``Elgg\\Services\\<Name>`` that contains only those methods needed in the public API."
+msgstr ""
+
+#: ../../contribute/services.rst:49
+# aff331991dc34e62a29f4ec02a522579
+msgid "Have your service class implement that interface."
+msgstr ""
+
+#: ../../contribute/services.rst:50
+# 558f28be92d446bf95a7adac2e64cdab
+msgid "For methods that are in the interface, move the documentation to the interface. You can simply use ``{@inheritdoc}`` in the PHPDocs of the concrete class methods."
+msgstr ""
+
+#: ../../contribute/services.rst:52
+# 991840d67f854d62b192f87b9577900f
+msgid "Document your service in ``docs/guides/services.rst`` (this file)."
+msgstr ""
+
+#: ../../contribute/services.rst:53
+# 51290fdea5874ff09ebd11eae8d6270e
+msgid "Open the PHPUnit test ``Elgg\\ApplicationTest`` and add your service key to the ``$names`` array in ``testServices()``."
+msgstr ""
+
+#: ../../contribute/services.rst:55
+# 6b5db3f4e32a4d289990a25ae3bf7f95
+msgid "Open the class ``Elgg\\Application``."
+msgstr ""
+
+#: ../../contribute/services.rst:56
+# 40ca977b862b4d028d91170f3269c2ee
+msgid "Add ``@property-read`` declaration to document your service, but use your **interface** as the type, *not* your service class name."
+msgstr ""
+
+#: ../../contribute/services.rst:58
+# 3842132a8f1848869ddd10ed3f4c4c72
+msgid "Add your service key to the array in the ``$public_services`` property, e.g. ``'foo' => true,``"
+msgstr ""
+
+#: ../../contribute/services.rst:60
+# 0eedc5bee4a3407aa17ed282475f435d
+msgid "Now your service will be available via property access on the ``Elgg\\Application`` instance:"
+msgstr ""
+
+#: ../../contribute/services.rst:69
+# e920e49ba3174e75b91d8ea09e40b68c
+msgid "For examples, see the ``config`` service, including the interface ``Elgg\\Services\\Config`` and the concrete implementation ``Elgg\\Config``."
+msgstr ""
+
+#: ../../contribute/services.rst:73
+# 5fe5559867d24fdcb0a0e2700c447f97
+msgid "Service Life Cycle and Factories"
+msgstr ""
+
+#: ../../contribute/services.rst:75
+# 1a2df94cc4234335b01adadd1b38f708
+msgid "By default, services registered on the service provider are \"shared\", meaning the service provider will store the created instance for the rest of the request, and serve that same instance to all who request the property."
+msgstr ""
+
+#: ../../contribute/services.rst:79
+# 0f18a2eeac334f08ae18b52803d8e56b
+msgid "If you need developers to be able to construct objects that are pre-wired to Elgg services, you may need to add a public factory method to ``Elgg\\Application``. Here's an example that returns a new instance using internal Elgg services:"
 msgstr ""
 
