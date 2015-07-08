@@ -343,7 +343,6 @@ function _elgg_admin_init() {
 	elgg_register_event_handler('create', 'object', '_elgg_create_notice_of_pending_upgrade');
 
 	elgg_register_page_handler('admin', '_elgg_admin_page_handler');
-	elgg_register_page_handler('admin_plugin_screenshot', '_elgg_admin_plugin_screenshot_page_handler');
 	elgg_register_page_handler('admin_plugin_text_file', '_elgg_admin_markdown_page_handler');
 	elgg_register_page_handler('robots.txt', '_elgg_robots_page_handler');
 }
@@ -552,28 +551,6 @@ function _elgg_admin_page_handler($page) {
 
 	$body = elgg_view_layout('admin', array('content' => $content, 'title' => $title));
 	echo elgg_view_page($title, $body, 'admin');
-	return true;
-}
-
-/**
- * Serves up screenshots for plugins from
- * admin_plugin_screenshot/<plugin_id>/<size>/<ss_name>.<ext>
- *
- * @param array $pages The pages array
- * @return bool
- * @access private
- */
-function _elgg_admin_plugin_screenshot_page_handler($pages) {
-	set_input('plugin_id', elgg_extract(0, $pages));
-	set_input('size', elgg_extract(1, $pages, 'thumbnail'));
-
-	// the rest of the string is the filename
-	$filename_parts = array_slice($pages, 2);
-	$filename = implode('/', $filename_parts);
-	$filename = sanitise_filepath($filename, false);
-	set_input('filename', $filename);
-
-	echo elgg_view_resource('admin/plugin_screenshot.img');
 	return true;
 }
 
