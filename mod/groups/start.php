@@ -106,6 +106,9 @@ function groups_init() {
 
 	// Add tests
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'groups_test');
+	
+	// allow to be liked
+	elgg_register_plugin_hook_handler('likes:is_likable', 'group:', 'Elgg\Values::getTrue');
 }
 
 /**
