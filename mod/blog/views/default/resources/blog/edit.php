@@ -1,14 +1,17 @@
 <?php
 
 elgg_gatekeeper();
-$page_type = $vars['page_type'];
-$guid = get_input('guid');
-$revision = get_input('revision');
+
+$page_type = elgg_extract('page_type', $vars);
+$guid = elgg_extract('guid', $vars);
+$revision = elgg_extract('revision', $vars);
+
 $params = blog_get_page_content_edit('edit', $guid, $revision);
+
 if (isset($params['sidebar'])) {
-	$params['sidebar'] .= elgg_view('blog/sidebar', array('page' => $page_type));
+	$params['sidebar'] .= elgg_view('blog/sidebar', ['page' => $page_type]);
 } else {
-	$params['sidebar'] = elgg_view('blog/sidebar', array('page' => $page_type));
+	$params['sidebar'] = elgg_view('blog/sidebar', ['page' => $page_type]);
 }
 
 $body = elgg_view_layout('content', $params);
