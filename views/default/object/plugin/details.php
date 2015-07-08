@@ -31,7 +31,7 @@ if ($screenshots) {
 		$alt = htmlentities($desc, ENT_QUOTES, 'UTF-8');
 		
 		$thumbnail = elgg_view('output/img', array(
-			'src' => "admin_plugin_screenshot/{$plugin->getID()}/thumbnail/{$screenshot['path']}",
+			'src' => "mod/{$plugin->getID()}/{$screenshot['path']}",
 			'alt' => $alt
 		));
 		$attr = array(
@@ -42,7 +42,7 @@ if ($screenshots) {
 		$screenshots_menu .= elgg_format_element('li', $attr, $thumbnail);
 		
 		$screenshots_body .= elgg_view('output/img', array(
-			'src' => "admin_plugin_screenshot/{$plugin->getID()}/full/{$screenshot['path']}",
+			'src' => "mod/{$plugin->getID()}/{$screenshot['path']}",
 			'alt' => $alt,
 			'title' => $alt,
 			'class' => "hidden $state",
