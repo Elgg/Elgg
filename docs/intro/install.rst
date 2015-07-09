@@ -160,7 +160,7 @@ those two files, complete the install process, and them change the
 permissions back to their original settings. If, for some reason, this
 won't work, you will need to:
 
--  Copy engine/settings.example.php to engine/settings.php, open it up
+-  Copy engine/settings.example.php to settings.php, open it up
    in a text editor and fill in your database details
 -  On Apache server, copy ``install/config/htaccess.dist`` to ``.htaccess``
 -  On Nginx server copy ``install/config/nginx.dist`` to ``/etc/nginx/sites-enabled`` and adjust it's contents

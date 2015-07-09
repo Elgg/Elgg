@@ -380,7 +380,7 @@ Different timezone
 
    This only applies to Elgg versions before 1.9
 
-If you migrated servers or upgraded PHP, check that PHP's timezone settings are the same between the old and the new. If you cannot or don't want to change the system-wide ``php.ini`` file, you can put the following at the top of ``engine/settings.php``:
+If you migrated servers or upgraded PHP, check that PHP's timezone settings are the same between the old and the new. If you cannot or don't want to change the system-wide ``php.ini`` file, you can put the following at the top of ``settings.php``:
 
 .. code:: php
 
