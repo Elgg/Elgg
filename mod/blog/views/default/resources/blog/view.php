@@ -1,7 +1,7 @@
 <?php
 
-$page_type = $vars['page_type'];
-$guid = get_input('guid');
+$page_type = elgg_extract('page_type', $vars);
+$guid = elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid, 'object', 'blog');
 elgg_group_gatekeeper();

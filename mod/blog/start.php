@@ -98,56 +98,52 @@ function blog_page_handler($page) {
 	elgg_load_library('elgg:blog');
 
 	// push all blogs breadcrumb
-	elgg_push_breadcrumb(elgg_echo('blog:blogs'), "blog/all");
+	elgg_push_breadcrumb(elgg_echo('blog:blogs'), 'blog/all');
 
-	if (!isset($page[0])) {
-		$page[0] = 'all';
-	}
-
-	$page_type = $page[0];
+	$page_type = elgg_extract(0, $page, 'all');
 	$resource_vars = [
 		'page_type' => $page_type,
 	];
 
 	switch ($page_type) {
 		case 'owner':
-			set_input('username', elgg_extract(1, $page));
+			$resource_vars['username'] = elgg_extract(1, $page);
 			
 			echo elgg_view_resource('blog/owner', $resource_vars);
 			break;
 		case 'friends':
-			set_input('username', elgg_extract(1, $page));
+			$resource_vars['username'] = elgg_extract(1, $page);
 			
 			echo elgg_view_resource('blog/friends', $resource_vars);
 			break;
 		case 'archive':
-			set_input('username', elgg_extract(1, $page));
-			set_input('lower', elgg_extract(2, $page));
-			set_input('upper', elgg_extract(3, $page));
+			$resource_vars['username'] = elgg_extract(1, $page);
+			$resource_vars['lower'] = elgg_extract(2, $page);
+			$resource_vars['upper'] = elgg_extract(3, $page);
 			
 			echo elgg_view_resource('blog/archive', $resource_vars);
 			break;
 		case 'view':
-			set_input('guid', elgg_extract(1, $page));
+			$resource_vars['guid'] = elgg_extract(1, $page);
 			
 			echo elgg_view_resource('blog/view', $resource_vars);
 			break;
 		case 'add':
-			set_input('guid', elgg_extract(1, $page));
+			$resource_vars['guid'] = elgg_extract(1, $page);
 			
 			echo elgg_view_resource('blog/add', $resource_vars);
 			break;
 		case 'edit':
-			set_input('guid', elgg_extract(1, $page));
-			set_input('revision', elgg_extract(2, $page));
+			$resource_vars['guid'] = elgg_extract(1, $page);
+			$resource_vars['revision'] = elgg_extract(2, $page);
 			
 			echo elgg_view_resource('blog/edit', $resource_vars);
 			break;
 		case 'group':
-			set_input('group_guid', elgg_extract(1, $page));
-			set_input('page_type', elgg_extract(2, $page));
-			set_input('lower', elgg_extract(3, $page));
-			set_input('upper', elgg_extract(4, $page));
+			$resource_vars['group_guid'] = elgg_extract(1, $page);
+			$resource_vars['subpage'] = elgg_extract(2, $page);
+			$resource_vars['lower'] = elgg_extract(3, $page);
+			$resource_vars['upper'] = elgg_extract(4, $page);
 			
 			echo elgg_view_resource('blog/group', $resource_vars);
 			break;
