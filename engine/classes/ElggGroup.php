@@ -247,12 +247,19 @@ class ElggGroup extends \ElggEntity
 	 * @param int    $limit   Limit
 	 * @param int    $offset  Offset
 	 *
-	 * @return bool
+	 * @return int
 	 * @deprecated 1.9 Use \ElggGroup::getMembers()
 	 */
 	public function getFriends($subtype = "", $limit = 10, $offset = 0) {
 		elgg_deprecated_notice("\ElggGroup::getFriends() is deprecated. Use \ElggGroup::getMembers()", 1.9);
-		return get_group_members($this->getGUID(), $limit, $offset);
+		$options = [
+			'limit' => $limit,
+			'offset' => $offset,
+		];
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+		return $this->getMembers($options);
 	}
 
 	/**
@@ -282,7 +289,16 @@ class ElggGroup extends \ElggEntity
 	 */
 	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
 		elgg_deprecated_notice("\ElggGroup::getObjects() is deprecated. Use elgg_get_entities()", 1.9);
-		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
+		$options = [
+			'type' => 'object',
+			'container_guid' => $this->guid,
+			'limit' => $limit,
+			'offset' => $offset,
+		];
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+		return elgg_get_entities($options);
 	}
 
 	/**
@@ -297,7 +313,19 @@ class ElggGroup extends \ElggEntity
 	 */
 	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) {
 		elgg_deprecated_notice("\ElggGroup::getFriendsObjects() is deprecated. Use elgg_get_entities()", 1.9);
-		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", $limit, $offset, false);
+		$options = [
+			'type' => 'object',
+			'limit' => $limit,
+			'offset' => $offset,
+			'relationship' => 'member',
+			'inverse_relationship' => true,
+			'relationship_guid' => $this->guid,
+			'relationship_join_on' => 'owner_guid',
+		];
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+		return elgg_get_entities_from_relationship($options);
 	}
 
 	/**
@@ -310,7 +338,15 @@ class ElggGroup extends \ElggEntity
 	 */
 	public function countObjects($subtype = "") {
 		elgg_deprecated_notice("\ElggGroup::countObjects() is deprecated. Use elgg_get_entities()", 1.9);
-		return get_objects_in_group($this->getGUID(), $subtype, 0, 0, "", 10, 0, true);
+		$options = [
+			'count' => true,
+			'type' => 'object',
+			'container_guid' => $this->guid,
+		];
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+		return elgg_get_entities($options);
 	}
 
 	/**

@@ -590,7 +590,13 @@ class ElggUser extends \ElggEntity
 	 */
 	public function countObjects($subtype = "") {
 		elgg_deprecated_notice("\ElggUser::countObjects() is deprecated. Use elgg_get_entities()", 1.9);
-		return count_user_objects($this->getGUID(), $subtype);
+		$options = [
+			'count' => true,
+		];
+		if ($subtype) {
+			$options['subtype'] = $subtype;
+		}
+		return (int)$this->getObjects($options);
 	}
 
 	/**
