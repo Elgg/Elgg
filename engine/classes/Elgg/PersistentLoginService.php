@@ -182,10 +182,6 @@ class PersistentLoginService {
 	 * @return void
 	 */
 	protected function storeHash(\ElggUser $user, $hash) {
-		// This prevents inserting the same hash twice, which seems to be happening in some rare cases
-		// and for unknown reasons. See https://github.com/Elgg/Elgg/issues/8104
-		$this->removeHash($hash);
-
 		$time = time();
 		$hash = $this->db->sanitizeString($hash);
 
