@@ -117,18 +117,23 @@ class ElggCrypto {
 			} else {
 				// Measure the time that the operations will take on average
 				for ($i = 0; $i < 3; $i++) {
-					$c1 = microtime(true);
+					$c1 = microtime();
 					$var = sha1(mt_rand());
 					for ($j = 0; $j < 50; $j++) {
 						$var = sha1($var);
 					}
-					$c2 = microtime(true);
+					$c2 = microtime();
 					$entropy .= $c1 . $c2;
+				}
+
+				$seconds = $this->microtimeDiff($c1, $c2);
+				if ($seconds == 0) {
+					$seconds = 0.001;
 				}
 
 				// Based on the above measurement determine the total rounds
 				// in order to bound the total running time.
-				$rounds = (int) ($msec_per_round * 50 / (int) (($c2 - $c1) * 1000000));
+				$rounds = (int) ($msec_per_round * 50 / (int) ($seconds * 1000000));
 
 				// Take the additional measurements. On average we can expect
 				// at least $bits_per_round bits of entropy from each measurement.
@@ -275,10 +280,30 @@ class ElggCrypto {
 	 * @license http://www.opensource.org/licenses/mit-license.html MIT License
 	 * @copyright 2012 The Authors
 	 */
-	protected function strlen($binary_string) {
+	private function strlen($binary_string) {
 		if (function_exists('mb_strlen')) {
 			return mb_strlen($binary_string, '8bit');
 		}
 		return strlen($binary_string);
+	}
+
+	/**
+	 * Calculate a precise time difference.
+	 *
+	 * @param string $start Result of microtime()
+	 * @param string $end   Result of microtime() or empty for now
+	 *
+	 * @return float difference in seconds, calculated with minimum precision loss
+	 */
+	private function microtimeDiff($start, $end = null) {
+		if (!$end) {
+			$end = microtime();
+		}
+		list($start_usec, $start_sec) = explode(" ", $start);
+		list($end_usec, $end_sec) = explode(" ", $end);
+		$diff_sec = intval($end_sec) - intval($start_sec);
+		$diff_usec = floatval($end_usec) - floatval($start_usec);
+
+		return floatval($diff_sec) + $diff_usec;
 	}
 }
