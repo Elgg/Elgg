@@ -120,6 +120,36 @@ class PersistentLoginService {
 		$cookie_hash = $this->hashToken($this->cookie_token);
 		$user = $this->getUserFromHash($cookie_hash);
 		if ($user) {
+
+
+
+			// Temporary, for data collection: https://github.com/Elgg/Elgg/issues/8736
+			// If GUID cookie doesn't match, send debug data to some admins
+			$cookies = _elgg_services()->request->cookies;
+			$cookie_guid = $cookies->get('ElggGuid');
+			if ($cookie_guid && (int)$cookie_guid !== $user->guid) {
+				$cookie_user = get_user($cookie_guid);
+				$info = [
+					'Elgg_cookie' => $cookies->get('Elgg'),
+					'elggperm_cookie' => $cookies->get('elggperm'),
+					'ElggGuid_cookie' => $cookie_guid,
+					'ElggGuid_cookie_username' => $cookie_user ? $cookie_user->username : '',
+					'hashed_token' => $cookie_hash,
+					'token_holder_guid' => $user->guid,
+					'token_holder_username' => $user->username,
+					'referrer' => _elgg_services()->request->headers->get('Referer'),
+					'url' => current_page_url(),
+					'time' => time(),
+				];
+				foreach (['steve@elgg.org'] as $email) {
+					elgg_send_email('no-reply@elgg.org', $email, 'cross-user auth event', var_export($info, true));
+				}
+				$this->setCookie('');
+				return null;
+			}
+
+
+
 			$this->setSession($this->cookie_token);
 			// note: if the token is legacy, we don't both replacing it here because
 			// it will be replaced during the next request boot
