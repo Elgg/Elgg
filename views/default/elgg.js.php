@@ -15,10 +15,12 @@ if (typeof elgg != 'object') {
 
 JS;
 
+// For backwards compatibility...
+echo elgg_view('sprintf.js');
+
 $elggDir = \Elgg\Application::elggDir();
 $files = array(
 	// these must come first
-	Directory\Local::root()->getPath('vendor/bower-asset/sprintf/src/sprintf.js'),
 	$elggDir->getPath("js/lib/elgglib.js"),
 
 	// class definitions

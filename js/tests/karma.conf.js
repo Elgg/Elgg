@@ -14,8 +14,7 @@ module.exports = function(config) {
 		// list of files / patterns to load in the browser
 		files: [
 			'vendor/bower-asset/jquery/dist/jquery.js',
-			'vendor/bower-asset/jquery-migrate/jquery-migrate.js',
-			'vendor/bower-asset/sprintf/src/sprintf.js',
+			'bower_components/sprintf/src/sprintf.js',
 			'js/lib/elgglib.js',
 			'js/lib/hooks.js',
 			'js/classes/*.js',
