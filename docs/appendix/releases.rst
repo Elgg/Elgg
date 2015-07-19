@@ -3,7 +3,7 @@ Release Policy
 
 What to expect when upgrading Elgg.
 
-In general, we adhere to `semantic versioning`_.
+We adhere to `semantic versioning`_.
 
 .. _semantic versioning: http://semver.org
 
@@ -11,41 +11,66 @@ Follow the blog to `stay up to date on the latest releases`__.
 
 __ https://community.elgg.org/blog/all
 
-Bugfix Releases (1.9.x)
------------------------
+Patch/Bugfix Releases (1.9.x)
+-----------------------------
 Every few weeks.
 
 Bugfix releases are made regularly to make sure Elgg stays stable, secure, and bug-free.
 The higher the third digit, the more tested and stable the release is.
+
 Since bugfix release focus on fixing bugs and not making major changes,
 themes and plugins should work from bugfix release to bugfix release.
 
 
-Feature Releases (1.x.0)
-------------------------
+Minor/Feature Releases (1.x.0)
+------------------------------
 Every few months.
 
-New features are introduced in Elgg every few months in minor new feature releases.
-These versions are identified by the second digit (1.**8**.0).
+Whenever we introduce new features, we'll bump the middle version number.
 These releases aren't as mature as bugfix release, but are considered stable and useable.
-Though these releases try to be backward compatible,
-features are added, unused code removed, and overall improvements are made,
-so plugins and themes might need to be updated to make use of the new and improved features.
+
+We make every effort to be backward compatible in these releases,
+so plugins should work from minor release to minor release.
+
+However, plugins might need to be updated to make use of the new features.
 
 
-Major Releases (x.0.0)
-----------------------
+Major/Breaking Releases (x.0.0)
+-------------------------------
 Every few years.
 
-Elgg, as all software, inevitably undergoes serious changes and a major new feature release is made.
-These releases are opportunities for the core team to make dramatic improvements to the underlying platform.
+Inevitably, improving Elgg requires breaking changes and a new major release is made.
+These releases are opportunities for the core team to make strategic, breaking changes to the underlying platform.
 Themes and plugins from older versions are not expected to work without modification on different major releases.
 
+We may remove deprecated APIs, but we will not remove APIs without first deprecating them.
 
-Release Candidates/Betas
-------------------------
-Before feature releases and major releases, the core team will typically offer a release candidate or beta.
-These are meant for testing only and should not be considered production quality.
-The core team makes these releases available to get some real-world testing and feedback on the release.
-That said, the API in release candidates is considered stable, so
-once a release candidate is made available, you should feel comfortable writing plugins against any new APIs.
+Elgg's dependencies may be upgraded by their major version or removed entirely.
+We will not remove any dependences before a major release, but we do not "deprecate"
+dependencies or issue any warnings before removing them.
+
+Your package, plugin, or app should declare its own dependencies directly so that
+this does not cause a problem.
+
+Alphas, Betas, and Release Candidates
+-------------------------------------
+
+Before major releases (and sometimes before feature releases), the core team will
+offer a pre-release version of Elgg to get some real-world testing and feedback
+on the release. These are meant for testing only and should not be used on a live
+site.
+
+SemVer 2.0 does not define a particular meaning for pre-releases, but we approach
+alpha, beta, and rc releases with these general guidelines:
+
+An ``-alpha.X`` pre-release means that there are still breaking changes planned,
+but the feature set of the release is frozen. No new features or breaking changes
+can be proposed for that release.
+
+A ``-beta.X`` pre-release means that there are no known breaking changes left to
+be included, but there are known regressions or critical bugs left to fix.
+
+An ``-rc.X`` pre-release means that there are no known regressions or critical
+bugs left to be fixed. This version could become the final stable version of
+Elgg if no new blockers are reported.
+
