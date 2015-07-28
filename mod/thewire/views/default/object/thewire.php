@@ -34,7 +34,7 @@ $date = elgg_view_friendly_time($post->time_created);
 $subtitle = "$author_text $date";
 
 $metadata = '';
-if (elgg_in_context('widgets')) {
+if (!elgg_in_context('widgets')) {
 	// only show entity menu outside of widgets
 	$metadata = elgg_view_menu('entity', array(
 		'entity' => $post,
