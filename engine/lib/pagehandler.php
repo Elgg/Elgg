@@ -251,10 +251,10 @@ function elgg_error_page_handler($hook, $type, $result, $params) {
 		exit;
 	}
 
-	set_input('type', $type);
-	set_input('params', $params);
-
-	echo elgg_view_resource('error');
+	echo elgg_view_resource('error', [
+		'type' => $type,
+		'params' => $params,
+	]);
 	exit;
 }
 

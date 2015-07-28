@@ -1,9 +1,9 @@
 <?php
 
-$plugin_id = get_input('plugin_id');
+$plugin_id = elgg_extract('plugin_id', $vars);
 $plugin = elgg_get_plugin_from_id($plugin_id);
 
-$filename = get_input('filename');
+$filename = elgg_extract('filename', $vars);
 
 elgg_admin_gatekeeper();
 _elgg_admin_add_plugin_settings_menu();
