@@ -30,7 +30,13 @@ if (!empty($_GET['size'])) {
 	}
 }
 
-require_once __DIR__ . '/../../vendor/autoload.php';
+
+$initialRoot = dirname(dirname(__DIR__));
+$backupRoot = dirname(dirname(dirname($initialRoot)));
+
+if (!include_once "$initialRoot/vendor/autoload.php") {
+	require_once "$backupRoot/vendor/autoload.php";
+}
 
 $data_root = \Elgg\Application::getDataPath();
 $locator = new \Elgg\EntityDirLocator($guid);
