@@ -1,7 +1,7 @@
 <?php
 
-$type = get_input('type');
-$params = get_input('params');
+$type = elgg_extract('type', $vars);
+$params = elgg_extract('params', $vars);
 
 if (elgg_view_exists("errors/$type")) {
 	$title = elgg_echo("error:$type:title");

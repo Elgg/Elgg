@@ -362,21 +362,21 @@ function _elgg_user_settings_page_handler($page) {
 		elgg_set_page_owner_guid($user->guid);
 	}
 
-	set_input('username', $user->username);
+	$vars['username'] = $user->username;
 
 	switch ($page[0]) {
 		case 'statistics':
-			echo elgg_view_resource('settings/statistics');
+			echo elgg_view_resource('settings/statistics', $vars);
 			return true;
 		case 'plugins':
 			if (isset($page[2])) {
-				set_input("plugin_id", $page[2]);
-				echo elgg_view_resource('settings/tools');
+				$vars['plugin_id'] = $page[2];
+				echo elgg_view_resource('settings/tools', $vars);
 				return true;
 			}
 			break;
 		case 'user':
-			echo elgg_view_resource("settings/account");
+			echo elgg_view_resource("settings/account", $vars);
 			return true;
 	}
 

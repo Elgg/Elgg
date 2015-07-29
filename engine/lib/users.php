@@ -638,29 +638,27 @@ function elgg_profile_fields_setup() {
  * Avatar page handler
  *
  * /avatar/edit/<username>
- * /avatar/view/<username>/<size>/<icontime>
+ * /avatar/view/<username>/<size>
  *
  * @param array $page
  * @return bool
  * @access private
  */
 function elgg_avatar_page_handler($page) {
-	global $CONFIG;
-
-	$user = get_user_by_username($page[1]);
+	$user = get_user_by_username(elgg_extract(1, $page));
 	if ($user) {
 		elgg_set_page_owner_guid($user->getGUID());
 	}
 
 	if ($page[0] == 'edit') {
 		echo elgg_view_resource("avatar/edit");
-		return true;
 	} else {
-		set_input('size', $page[2]);
-		echo elgg_view_resource("avatar/view");
-		return true;
+		echo elgg_view_resource("avatar/view", [
+			'size' => elgg_extract(2, $page),
+		]);
 	}
-	return false;
+
+	return true;
 }
 
 /**
@@ -671,8 +669,6 @@ function elgg_avatar_page_handler($page) {
  * @access private
  */
 function elgg_profile_page_handler($page) {
-	global $CONFIG;
-
 	$user = get_user_by_username($page[0]);
 	elgg_set_page_owner_guid($user->guid);
 

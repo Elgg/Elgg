@@ -571,12 +571,12 @@ function _elgg_admin_page_handler($page) {
  * @access private
  */
 function _elgg_admin_markdown_page_handler($pages) {
-	set_input('plugin_id', elgg_extract(0, $pages));
-	set_input('filename', elgg_extract(1, $pages));
-	
 	elgg_set_context('admin');
 
-	echo elgg_view_resource('admin/plugin_text_file');
+	echo elgg_view_resource('admin/plugin_text_file', [
+		'plugin_id' => elgg_extract(0, $pages),
+		'filename' => elgg_extract(1, $pages),
+	]);
 	return true;
 }
 

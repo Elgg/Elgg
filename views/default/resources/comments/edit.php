@@ -1,6 +1,6 @@
 <?php
 
-$guid = get_input('guid');
+$guid = elgg_extract('guid', $vars);
 
 elgg_gatekeeper();
 

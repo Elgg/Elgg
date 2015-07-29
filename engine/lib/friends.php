@@ -149,7 +149,6 @@ function _elgg_friends_page_handler($segments, $handler) {
  */
 function _elgg_collections_page_handler($page_elements) {
 	elgg_set_context('friends');
-	$base = elgg_get_config('path');
 	if (isset($page_elements[0])) {
 		switch ($page_elements[0]) {
 			case 'add':

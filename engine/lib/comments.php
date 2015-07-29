@@ -43,8 +43,9 @@ function _elgg_comments_page_handler($segments) {
 	switch ($page) {
 
 		case 'edit':
-			set_input('guid', elgg_extract(1, $segments));
-			echo elgg_view_resource('comments/edit');
+			echo elgg_view_resource('comments/edit', [
+				'guid' => elgg_extract(1, $segments),
+			]);
 			return true;
 			break;
 

@@ -15,7 +15,7 @@ if ((!elgg_get_page_owner_entity()) || (!elgg_get_page_owner_entity()->canEdit()
 	forward('/');
 }
 
-$plugin_id = get_input("plugin_id");
+$plugin_id = elgg_extract("plugin_id", $vars);
 
 if (empty($plugin_id)) {
 	register_error(elgg_echo('ElggPlugin:MissingID'));
@@ -35,7 +35,7 @@ if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
 	$title = $plugin->getManifest()->getName();
 }
 
-$username = get_input('username');
+$username = elgg_extract('username', $vars);
 
 elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$username");
 elgg_push_breadcrumb(elgg_echo('usersettings:plugins:opt:linktext'));

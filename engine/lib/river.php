@@ -726,25 +726,25 @@ function update_river_access_by_object($object_guid, $access_id) {
  * @access private
  */
 function _elgg_river_page_handler($page) {
-	global $CONFIG;
-
 	elgg_set_page_owner_guid(elgg_get_logged_in_user_guid());
 
 	// make a URL segment available in page handler script
 	$page_type = elgg_extract(0, $page, 'all');
 	$page_type = preg_replace('[\W]', '', $page_type);
+
 	if ($page_type == 'owner') {
 		elgg_gatekeeper();
 		$page_username = elgg_extract(1, $page, '');
 		if ($page_username == elgg_get_logged_in_user_entity()->username) {
 			$page_type = 'mine';
 		} else {
-			set_input('subject_username', $page_username);
+			$vars['subject_username'] = $page_username;
 		}
 	}
-	set_input('page_type', $page_type);
 
-	echo elgg_view_resource("river");
+	$vars['page_type'] = $page_type;
+
+	echo elgg_view_resource("river", $vars);
 	return true;
 }
 
