@@ -3,7 +3,10 @@
 elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('discussion'));
 
-elgg_register_title_button();
+$user = elgg_get_logged_in_user_entity();
+if ($user && $user->canWriteToContainer(0, 'object', 'discussion')) {
+	elgg_register_title_button();
+}
 
 $content = elgg_list_entities(array(
 	'type' => 'object',
