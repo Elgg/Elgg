@@ -3,7 +3,7 @@
  * Serve up html for a post's parent
  */
 
-$guid = (int) get_input('guid');
+$guid = (int) elgg_extract('guid', $vars);
 $title = elgg_echo('previous');
 
 $parent = thewire_get_parent($guid);

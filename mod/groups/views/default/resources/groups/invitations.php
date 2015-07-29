@@ -2,7 +2,7 @@
 
 elgg_gatekeeper();
 
-$username = get_input('username');
+$username = elgg_extract('username', $vars);
 if ($username) {
 	$user = get_user_by_username($username);
 	elgg_set_page_owner_guid($user->guid);

@@ -181,12 +181,12 @@ function members_page_handler($page) {
 		$page[0] = 'newest';
 	}
 
-	set_input('page', $page[0]);
-
 	if ($page[0] == 'search') {
 		echo elgg_view_resource('members/search');
 	} else {
-		echo elgg_view_resource('members/index');
+		echo elgg_view_resource('members/index', [
+			'page' => $page[0],
+		]);
 	}
 	return true;
 }

@@ -5,10 +5,10 @@
  * @package MessageBoard
  */
 
-$page_owner_guid = get_input('page_owner_guid');
+$page_owner_guid = elgg_extract('page_owner_guid', $vars);
 elgg_set_page_owner_guid($page_owner_guid);
 $page_owner = elgg_get_page_owner_entity();
-$history_username = get_input('history_username');
+$history_username = elgg_extract('history_username', $vars);
 $history_user = get_user_by_username($history_username);
 
 elgg_push_breadcrumb($page_owner->name, $page_owner->getURL());

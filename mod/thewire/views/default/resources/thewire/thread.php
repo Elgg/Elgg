@@ -3,7 +3,7 @@
  * View conversation thread
  */
 
-$thread_id = get_input('thread_id');
+$thread_id = elgg_extract('thread_id', $vars);
 
 $title = elgg_echo('thewire:thread');
 

@@ -8,7 +8,7 @@
  */
 
 $current_user = elgg_get_logged_in_user_entity();
-$username = get_input('username');
+$username = elgg_extract('username', $vars);
 $user = get_user_by_username($username);
 if (($user->guid != $current_user->guid) && !$current_user->isAdmin()) {
 	forward();

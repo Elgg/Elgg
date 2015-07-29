@@ -1,6 +1,6 @@
 <?php
 
-$page = get_input('page');
+$page = elgg_extract('page', $vars);
 elgg_load_css('dev.theme_sandbox');
 
 $pages = array(

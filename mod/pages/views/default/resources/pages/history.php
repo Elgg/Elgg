@@ -5,7 +5,7 @@
  * @package ElggPages
  */
 
-$page_guid = get_input('guid');
+$page_guid = elgg_extract('guid', $vars);
 
 $page = get_entity($page_guid);
 if (!pages_is_page($page)) {

@@ -253,8 +253,9 @@ function groups_page_handler($page) {
 			break;
 		case 'invitations':
 		case 'member':
-			set_input('username', $page[1]);
-			echo elgg_view_resource("groups/{$page[0]}");
+			echo elgg_view_resource("groups/{$page[0]}", [
+				'username' => $page[1],
+			]);
 			break;
 		case 'members':
 			$vars['sort'] = elgg_extract('2', $page, 'alpha');
@@ -270,8 +271,9 @@ function groups_page_handler($page) {
 		case 'invite':
 		case 'profile':
 		case 'requests':
-			set_input('guid', $page[1]);
-			echo elgg_view_resource("groups/{$page[0]}");
+			echo elgg_view_resource("groups/{$page[0]}", [
+				'guid' => $page[1],
+			]);
 			break;
 		default:
 			return false;

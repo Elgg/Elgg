@@ -2,7 +2,7 @@
 
 elgg_gatekeeper();
 
-$guid = get_input('guid');
+$guid = elgg_extract('guid', $vars);
 elgg_set_page_owner_guid($guid);
 
 $title = elgg_echo('groups:invite:title');

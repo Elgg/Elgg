@@ -215,9 +215,10 @@ function developers_theme_sandbox_controller($page) {
 	if (!isset($page[0])) {
 		forward('theme_sandbox/intro');
 	}
-	set_input('page', $page[0]);
 
-	echo elgg_view_resource('theme_sandbox');
+	echo elgg_view_resource('theme_sandbox', [
+		'page' => $page[0],
+	]);
 	return true;
 }
 

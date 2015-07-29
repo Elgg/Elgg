@@ -46,33 +46,28 @@ function messageboard_init() {
  */
 function messageboard_page_handler($page) {
 
+	$vars = [];
 	switch ($page[0]) {
 		case 'owner':
 			//@todo if they have the widget disabled, don't allow this.
 			$owner_name = elgg_extract(1, $page);
 			$owner = get_user_by_username($owner_name);
-			set_input('page_owner_guid', $owner->guid);
+			$vars['page_owner_guid'] = $owner->guid;
 			$history = elgg_extract(2, $page);
 			$username = elgg_extract(3, $page);
 
 			if ($history && $username) {
-				set_input('history_username', $username);
+				$vars['history_username'] = $username;
 			}
 
-			echo elgg_view_resource('messageboard/owner');
-			break;
-
-		case 'add':
-			$container_guid = elgg_extract(1, $page);
-			set_input('container_guid', $container_guid);
-			echo elgg_view_resource('messageboard/add');
+			echo elgg_view_resource('messageboard/owner', $vars);
 			break;
 
 		case 'group':
 			elgg_group_gatekeeper();
 			$owner_guid = elgg_extract(1, $page);
-			set_input('page_owner_guid', $owner_guid);
-			echo elgg_view_resource('messageboard/owner');
+			$vars['page_owner_guid'] = $owner_guid;
+			echo elgg_view_resource('messageboard/owner', $vars);
 			break;
 
 		default:

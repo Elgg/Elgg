@@ -51,15 +51,15 @@ function notifications_page_handler($page) {
 		forward("notifications/{$page[0]}/{$current_user->username}");
 	}
 
-	set_input('username', $page[1]);
+	$vars['username'] = $page[1];
 
 	// note: $user passed in
 	switch ($page[0]) {
 		case 'group':
-			echo elgg_view_resource('notifications/groups');
+			echo elgg_view_resource('notifications/groups', $vars);
 			break;
 		case 'personal':
-			echo elgg_view_resource('notifications/index');
+			echo elgg_view_resource('notifications/index', $vars);
 			break;
 		default:
 			return false;

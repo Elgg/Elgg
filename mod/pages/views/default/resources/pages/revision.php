@@ -5,7 +5,7 @@
  * @package ElggPages
  */
 
-$id = get_input('id');
+$id = elgg_extract('id', $vars);
 $annotation = elgg_get_annotation_from_id($id);
 if (!$annotation) {
 	forward();

@@ -114,8 +114,9 @@ function bookmarks_page_handler($page) {
 			break;
 
 		case "view":
-			set_input('guid', $page[1]);
-			echo elgg_view_resource('bookmarks/view');
+			echo elgg_view_resource('bookmarks/view', [
+				'guid' => $page[1],
+			]);
 			break;
 
 		case "add":
@@ -123,8 +124,9 @@ function bookmarks_page_handler($page) {
 			break;
 
 		case "edit":
-			set_input('guid', $page[1]);
-			echo elgg_view_resource('bookmarks/edit');
+			echo elgg_view_resource('bookmarks/edit', [
+				'guid' => $page[1],
+			]);
 			break;
 
 		case 'group':
@@ -132,8 +134,9 @@ function bookmarks_page_handler($page) {
 			break;
 
 		case "bookmarklet":
-			set_input('container_guid', $page[1]);
-			echo elgg_view_resource('bookmarks/bookmarklet');
+			echo elgg_view_resource('bookmarks/bookmarklet', [
+				'container_guid' => $page[1],
+			]);
 			break;
 
 		default:

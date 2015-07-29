@@ -127,15 +127,17 @@ function file_page_handler($page) {
 			echo elgg_view_resource('file/friends');
 			break;
 		case 'view':
-			set_input('guid', $page[1]);
-			echo elgg_view_resource('file/view');
+			echo elgg_view_resource('file/view', [
+				'guid' => $page[1],
+			]);
 			break;
 		case 'add':
 			echo elgg_view_resource('file/upload');
 			break;
 		case 'edit':
-			set_input('guid', $page[1]);
-			echo elgg_view_resource('file/edit');
+			echo elgg_view_resource('file/edit', [
+				'guid' => $page[1],
+			]);
 			break;
 		case 'search':
 			file_register_toggle();
@@ -150,8 +152,9 @@ function file_page_handler($page) {
 			echo elgg_view_resource('file/world');
 			break;
 		case 'download':
-			set_input('guid', $page[1]);
-			echo elgg_view_resource('file/download');
+			echo elgg_view_resource('file/download', [
+				'guid' => $page[1],
+			]);
 			break;
 		default:
 			return false;
