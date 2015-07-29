@@ -13,7 +13,7 @@ if (!$container->canWriteToContainer(0, 'object', 'discussion')) {
 
 $title = elgg_echo('discussion:addtopic');
 
-elgg_push_breadcrumb($group->name, "discussion/owner/$group->guid");
+elgg_push_breadcrumb($container->getDisplayName(), "discussion/owner/{$container->guid}");
 elgg_push_breadcrumb($title);
 
 $body_vars = discussion_prepare_form_vars();
