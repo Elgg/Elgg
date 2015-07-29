@@ -116,13 +116,12 @@ function get_access_array($user_guid = 0, $site_guid = 0, $flush = false) {
  * @return int default access id (see ACCESS defines in elgglib.php)
  */
 function get_default_access(ElggUser $user = null, array $input_params = array()) {
-	global $CONFIG;
 
 	// site default access
-	$default_access = $CONFIG->default_access;
+	$default_access = elgg_get_config('default_access');
 
 	// user default access if enabled
-	if ($CONFIG->allow_user_default_access) {
+	if (elgg_get_config('allow_user_default_access') {
 		$user = $user ? $user : _elgg_services()->session->getLoggedInUser();
 		if ($user) {
 			$user_access = $user->getPrivateSetting('elgg_default_access');
@@ -594,9 +593,8 @@ function elgg_override_permissions($hook, $type, $value, $params) {
  * @access private
  */
 function access_test($hook, $type, $value, $params) {
-	global $CONFIG;
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAccessCollectionsTest.php';
-	$value[] = $CONFIG->path . 'engine/tests/ElggCoreAccessSQLTest.php';
+	$value[] = elgg_get_config('path') . 'engine/tests/ElggCoreAccessCollectionsTest.php';
+	$value[] = elgg_get_config('path') . 'engine/tests/ElggCoreAccessSQLTest.php';
 	return $value;
 }
 
