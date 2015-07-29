@@ -95,12 +95,17 @@ if ($entity) {
 if ($entity && ($owner_guid == elgg_get_logged_in_user_guid() || elgg_is_admin_logged_in())) {
 	$members = array();
 
+	$dbprefix = elgg_get_config('dbprefix');
 	$options = array(
+		"type" => "user",
 		"relationship" => "member",
 		"relationship_guid" => $entity->getGUID(),
 		"inverse_relationship" => true,
-		"type" => "user",
-		"limit" => 0,
+		"limit" => false,
+		"callback" => false,
+		"joins" => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
+		"selects" => ['ue.*'],
+		"order_by" => 'ue.name ASC',
 	);
 
 	$batch = new ElggBatch("elgg_get_entities_from_relationship", $options);
