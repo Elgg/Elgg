@@ -829,6 +829,58 @@ function elgg_get_ordered_event_handlers($event, $type) {
 }
 
 /**
+ * Call a 3rd-party API method if it's available
+ *
+ * This should be used late in the [init, system] event so other plugins have the opportunity to define
+ * the method or their overriding methods via plugin hook.
+ *
+ * If a call is made, the return value will be passed through the "elgg_call:value" hook.
+ *
+ * @param string $method Function name, static method name, or class name. The "elgg_call:method" filters
+ *                       this argument.
+ * @param array  $args   Method arguments
+ *
+ * @return Elgg\CallResult
+ * @throws \InvalidArgumentException|\RuntimeException
+ *
+ * @since 2.1.0
+ */
+function elgg_call($method, array $args = []) {
+	if (!$method || !is_string($method)) {
+		throw new \InvalidArgumentException('$method must be a non-empty string');
+	}
+	// remove leading namespace slash
+	$method = ltrim($method, '\\');
+	$type = $method;
+
+	$params = [
+		'args' => $args,
+		'method' => $method,
+	];
+
+	$method = _elgg_services()->hooks->trigger('elgg_call:method', $type, $params, $method);
+
+	if (!is_callable($method) && class_exists($method)) {
+		$class_name = $method;
+		try {
+			$method = new $class_name();
+		} catch (\Exception $e) {
+			throw new \RuntimeException("The class '$class_name' could not be instantiated.", 0, $e);
+		}
+	}
+
+	$res = new Elgg\CallResult();
+
+	if (is_callable($method)) {
+		$value = call_user_func_array($method, $args);
+		$res->value = _elgg_services()->hooks->trigger('elgg_call:value', $type, $params, $value);
+		$res->was_called = true;
+	}
+
+	return $res;
+}
+
+/**
  * Intercepts, logs, and displays uncaught exceptions.
  *
  * To use a viewtype other than failsafe, create the views:
