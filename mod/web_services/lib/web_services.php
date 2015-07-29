@@ -100,6 +100,8 @@ function execute_method($method) {
 	// @todo remove the need for eval()
 	$result = eval("return $function($serialised_parameters);");
 
+	$result = elgg_trigger_plugin_hook('rest:output', $method, $parameters, $result);
+	
 	// Sanity check result
 	// If this function returns an api result itself, just return it
 	if ($result instanceof GenericResult) {
