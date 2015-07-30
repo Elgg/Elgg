@@ -76,7 +76,7 @@ class UpgradeService {
 	 */
 	protected function upgradeCode($version, $quiet = false) {
 		$version = (int) $version;
-		$upgrade_path = _elgg_services()->config->get('path') . 'engine/lib/upgrades/';
+		$upgrade_path = elgg_get_engine_path() . '/lib/upgrades/';
 		$processed_upgrades = $this->getProcessedUpgrades();
 
 		$upgrade_files = $this->getUpgradeFiles($upgrade_path);
@@ -200,7 +200,7 @@ class UpgradeService {
 	 */
 	protected function getUpgradeFiles($upgrade_path = null) {
 		if (!$upgrade_path) {
-			$upgrade_path = _elgg_services()->config->get('path') . 'engine/lib/upgrades/';
+			$upgrade_path = elgg_get_engine_path() . '/lib/upgrades/';
 		}
 		$upgrade_path = sanitise_filepath($upgrade_path);
 		$handle = opendir($upgrade_path);
