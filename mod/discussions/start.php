@@ -82,8 +82,6 @@ function discussion_init() {
  */
 function discussion_page_handler($page) {
 
-	elgg_load_library('elgg:discussion');
-
 	if (!isset($page[0])) {
 		$page[0] = 'all';
 	}
@@ -585,4 +583,43 @@ function discussion_search_discussion($hook, $type, $value, $params) {
 
 	// trigger the 'normal' object search as it can handle the added options
 	return elgg_trigger_plugin_hook('search', 'object', $params, array());
+}
+
+/**
+ * Prepare discussion topic form variables
+ *
+ * @param ElggObject $topic Topic object if editing
+ * @return array
+ */
+function discussion_prepare_form_vars($topic = NULL) {
+	// input names => defaults
+	$values = array(
+		'title' => '',
+		'description' => '',
+		'status' => '',
+		'access_id' => ACCESS_DEFAULT,
+		'tags' => '',
+		'container_guid' => elgg_get_page_owner_guid(),
+		'guid' => null,
+		'topic' => $topic,
+	);
+
+	if ($topic) {
+		foreach (array_keys($values) as $field) {
+			if (isset($topic->$field)) {
+				$values[$field] = $topic->$field;
+			}
+		}
+	}
+
+	if (elgg_is_sticky_form('topic')) {
+		$sticky_values = elgg_get_sticky_values('topic');
+		foreach ($sticky_values as $key => $value) {
+			$values[$key] = $value;
+		}
+	}
+
+	elgg_clear_sticky_form('topic');
+
+	return $values;
 }
