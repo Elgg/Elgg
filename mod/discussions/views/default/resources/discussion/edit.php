@@ -2,7 +2,7 @@
 
 elgg_gatekeeper();
 
-$guid = get_input('guid');
+$guid = elgg_extract('guid', $vars);
 $topic = get_entity($guid);
 if (!elgg_instanceof($topic, 'object', 'discussion') || !$topic->canEdit()) {
 	register_error(elgg_echo('discussion:topic:notfound'));

@@ -2,7 +2,7 @@
 
 elgg_gatekeeper();
 
-$guid = get_input('guid');
+$guid = elgg_extract('guid', $vars);
 elgg_set_page_owner_guid($guid);
 
 $group = get_entity($guid);

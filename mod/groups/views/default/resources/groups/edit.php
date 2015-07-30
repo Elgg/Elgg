@@ -4,7 +4,7 @@ elgg_gatekeeper();
 
 elgg_require_js('elgg/groups/edit');
 
-$guid = get_input('guid');
+$guid = elgg_extract('guid', $vars);
 $title = elgg_echo("groups:edit");
 $group = get_entity($guid);
 

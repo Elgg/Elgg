@@ -77,8 +77,9 @@ function profile_page_handler($page) {
 		return true;
 	}
 
-	set_input('username', $page[0]);
-	echo elgg_view_resource('profile/view');
+	echo elgg_view_resource('profile/view', [
+		'username' => $page[0],
+	]);
 	return true;
 }
 

@@ -197,7 +197,7 @@ function uservalidationbyemail_check_auth_attempt($credentials) {
 function uservalidationbyemail_page_handler($page) {
 	switch ($page[0]) {
 		case 'confirm':
-			require __DIR__ . "/pages/confirm.php";
+			echo elgg_view_resource("uservalidationbyemail/confirm");
 			break;
 		case 'emailsent':
 			echo elgg_view_resource("uservalidationbyemail/emailsent");

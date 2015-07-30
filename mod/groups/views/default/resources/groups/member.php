@@ -1,5 +1,14 @@
 <?php
 
+$username = elgg_extract('username', $vars);
+if ($username) {
+	$user = get_user_by_username($username);
+	elgg_set_page_owner_guid($user->guid);
+} else {
+	$user = elgg_get_logged_in_user_entity();
+	elgg_set_page_owner_guid($user->guid);
+}
+
 $page_owner = elgg_get_page_owner_entity();
 
 if ($page_owner->guid == elgg_get_logged_in_user_guid()) {

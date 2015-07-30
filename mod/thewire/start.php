@@ -105,38 +105,33 @@ function thewire_page_handler($page) {
 			break;
 
 		case "view":
-			if (isset($page[1])) {
-				set_input('guid', $page[1]);
-			}
-			echo elgg_view_resource('thewire/view');
+			echo elgg_view_resource('thewire/view', [
+				'guid' => elgg_extract(1, $page),
+			]);
 			break;
 
 		case "thread":
-			if (isset($page[1])) {
-				set_input('thread_id', $page[1]);
-			}
-			echo elgg_view_resource('thewire/thread');
+			echo elgg_view_resource('thewire/thread', [
+				'thread_id' => elgg_extract(1, $page),
+			]);
 			break;
 
 		case "reply":
-			if (isset($page[1])) {
-				set_input('guid', $page[1]);
-			}
-			echo elgg_view_resource('thewire/reply');
+			echo elgg_view_resource('thewire/reply', [
+				'guid' => elgg_extract(1, $page),
+			]);
 			break;
 
 		case "tag":
-			if (isset($page[1])) {
-				set_input('tag', $page[1]);
-			}
-			echo elgg_view_resource('thewire/tag');
+			echo elgg_view_resource('thewire/tag', [
+				'tag' => elgg_extract(1, $page),
+			]);
 			break;
 
 		case "previous":
-			if (isset($page[1])) {
-				set_input('guid', $page[1]);
-			}
-			echo elgg_view_resource('thewire/previous');
+			echo elgg_view_resource('thewire/previous', [
+				'guid' => elgg_extract(1, $page),
+			]);
 			break;
 
 		default:

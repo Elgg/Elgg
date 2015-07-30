@@ -6,7 +6,7 @@
 
 elgg_gatekeeper();
 
-$post = get_entity(get_input('guid'));
+$post = get_entity(elgg_extract('guid', $vars));
 
 $title = elgg_echo('reply');
 

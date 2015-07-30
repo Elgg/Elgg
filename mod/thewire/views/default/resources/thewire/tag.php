@@ -3,7 +3,7 @@
  * Wire posts tagged with <tag>
  */
 
-$tag = get_input('tag');
+$tag = elgg_extract('tag', $vars);
 if (!$tag) {
 	forward('thewire/all');
 }

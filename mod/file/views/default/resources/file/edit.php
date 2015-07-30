@@ -9,7 +9,7 @@ elgg_load_library('elgg:file');
 
 elgg_gatekeeper();
 
-$file_guid = (int) get_input('guid');
+$file_guid = (int) elgg_extract('guid', $vars);
 
 $file = get_entity($file_guid);
 if (!$file instanceof ElggFile) {

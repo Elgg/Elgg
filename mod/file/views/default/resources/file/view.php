@@ -5,7 +5,7 @@
  * @package ElggFile
  */
 
-$guid = get_input('guid');
+$guid = elgg_extract('guid', $vars);
 
 elgg_entity_gatekeeper($guid, 'object', 'file');
 

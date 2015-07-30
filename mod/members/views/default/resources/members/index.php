@@ -4,7 +4,7 @@
  */
 
 // The URL segment after members/
-$page = get_input('page');
+$page = elgg_extract('page', $vars);
 
 $tabs = elgg_trigger_plugin_hook('members:config', 'tabs', null, array());
 

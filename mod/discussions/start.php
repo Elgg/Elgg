@@ -95,18 +95,21 @@ function discussion_page_handler($page) {
 			echo elgg_view_resource('discussion/all');
 			break;
 		case 'owner':
-			set_input('owner_guid', elgg_extract(1, $page));
-			echo elgg_view_resource('discussion/owner');
+			echo elgg_view_resource('discussion/owner', [
+				'owner_guid' => elgg_extract(1, $page),
+			]);
 			break;
 		case 'add':
-			set_input('guid', elgg_extract(1, $page));
-			echo elgg_view_resource('discussion/add');
+			echo elgg_view_resource('discussion/add', [
+				'guid' => elgg_extract(1, $page),
+			]);
 			break;
 		case 'reply':
 			switch (elgg_extract(1, $page)) {
 				case 'edit':
-					set_input('guid', elgg_extract(2, $page));
-					echo elgg_view_resource('discussion/reply/edit');
+					echo elgg_view_resource('discussion/reply/edit', [
+						'guid' => elgg_extract(2, $page),
+					]);
 					break;
 				case 'view':
 					discussion_redirect_to_reply(elgg_extract(2, $page), elgg_extract(3, $page));
@@ -116,12 +119,14 @@ function discussion_page_handler($page) {
 			}
 			break;
 		case 'edit':
-			set_input('guid', elgg_extract(1, $page));
-			echo elgg_view_resource('discussion/edit');
+			echo elgg_view_resource('discussion/edit', [
+				'guid' => elgg_extract(1, $page),
+			]);
 			break;
 		case 'view':
-			set_input('guid', elgg_extract(1, $page));
-			echo elgg_view_resource('discussion/view');
+			echo elgg_view_resource('discussion/view', [
+				'guid' => elgg_extract(1, $page),
+			]);
 			break;
 		default:
 			return false;

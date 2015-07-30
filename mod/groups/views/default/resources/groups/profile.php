@@ -1,6 +1,6 @@
 <?php
 
-$guid = get_input('guid');
+$guid = elgg_extract('guid', $vars);
 elgg_set_page_owner_guid($guid);
 
 // turn this into a core function

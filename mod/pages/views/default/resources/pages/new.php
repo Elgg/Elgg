@@ -7,7 +7,7 @@
 
 elgg_gatekeeper();
 
-$container_guid = (int) get_input('guid');
+$container_guid = (int) elgg_extract('guid', $vars);
 $container = get_entity($container_guid);
 if (!$container) {
 	forward(REFERER);

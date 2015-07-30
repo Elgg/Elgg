@@ -7,7 +7,7 @@
 
 elgg_gatekeeper();
 
-$container_guid = get_input('container_guid');
+$container_guid = elgg_extract('container_guid', $vars);
 $container = get_entity($container_guid);
 $page_owner = $container;
 

@@ -7,8 +7,7 @@
 
 elgg_gatekeeper();
 
-$page_guid = (int)get_input('guid');
-$revision = (int)get_input('annotation_id');
+$page_guid = (int)elgg_extract('guid', $vars);
 $page = get_entity($page_guid);
 if (!pages_is_page($page)) {
 	register_error(elgg_echo('noaccess'));
@@ -30,15 +29,7 @@ $title = elgg_echo("pages:edit");
 
 if ($page->canEdit()) {
 
-	if ($revision) {
-		$revision = elgg_get_annotation_from_id($revision);
-		if (!$revision || !($revision->entity_guid == $page_guid)) {
-			register_error(elgg_echo('pages:revision:not_found'));
-			forward(REFERER);
-		}
-	}
-
-	$vars = pages_prepare_form_vars($page, $page->parent_guid, $revision);
+	$vars = pages_prepare_form_vars($page, $page->parent_guid);
 	
 	$content = elgg_view_form('pages/edit', array(), $vars);
 } else {

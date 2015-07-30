@@ -54,7 +54,7 @@ $login = elgg_view("core/account/login_box");
 elgg_pop_context();
 
 // lay out the content
-$params = array(
+$vars = array(
 	'blogs' => $blogs,
 	'bookmarks' => $bookmarks,
 	'files' => $files,
@@ -63,7 +63,7 @@ $params = array(
 	'members' => $newest_members,
 );
 
-$body = elgg_view_resource('index-content', $params);
+$body = elgg_view('custom_index/content', $vars);
 
 // no RSS feed with a "widget" front page
 global $autofeed;

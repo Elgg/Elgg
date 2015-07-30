@@ -2,6 +2,7 @@
 
 elgg_gatekeeper();
 
+$guid = elgg_extract('guid', $vars);
 $reply = get_entity($guid);
 if (!elgg_instanceof($reply, 'object', 'discussion_reply', 'ElggDiscussionReply') || !$reply->canEdit()) {
 	register_error(elgg_echo('discussion:reply:error:notfound'));

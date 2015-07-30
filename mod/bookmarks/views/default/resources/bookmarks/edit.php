@@ -6,7 +6,7 @@
  */
 elgg_gatekeeper();
 
-$bookmark_guid = get_input('guid');
+$bookmark_guid = elgg_extract('guid', $vars);
 $bookmark = get_entity($bookmark_guid);
 
 if (!elgg_instanceof($bookmark, 'object', 'bookmarks') || !$bookmark->canEdit()) {

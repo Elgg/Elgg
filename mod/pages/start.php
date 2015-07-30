@@ -133,27 +133,32 @@ function pages_page_handler($page) {
 			echo elgg_view_resource('pages/friends');
 			break;
 		case 'view':
-			set_input('guid', $page[1]);
-			echo elgg_view_resource('pages/view');
+			echo elgg_view_resource('pages/view', [
+				'guid' => $page[1],
+			]);
 			break;
 		case 'add':
-			set_input('guid', $page[1]);
-			echo elgg_view_resource('pages/new');
+			echo elgg_view_resource('pages/new', [
+				'guid' => $page[1],
+			]);
 			break;
 		case 'edit':
-			set_input('guid', $page[1]);
-			echo elgg_view_resource('pages/edit');
+			echo elgg_view_resource('pages/edit', [
+				'guid' => $page[1],
+			]);
 			break;
 		case 'group':
 			echo elgg_view_resource('pages/owner');
 			break;
 		case 'history':
-			set_input('guid', $page[1]);
-			echo elgg_view_resource('pages/history');
+			echo elgg_view_resource('pages/history', [
+				'guid' => $page[1],
+			]);
 			break;
 		case 'revision':
-			set_input('id', $page[1]);
-			echo elgg_view_resource('pages/revision');
+			echo elgg_view_resource('pages/revision', [
+				'id' => $page[1],
+			]);
 			break;
 		case 'all':
 			echo elgg_view_resource('pages/world');
