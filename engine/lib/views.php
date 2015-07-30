@@ -954,7 +954,6 @@ function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array()
  *      'no_results'       Message to display if no results (string|Closure)
  *
  * @return string The rendered list of entities
- * @access private
  */
 function elgg_view_entity_list($entities, array $vars = array()) {
 	$offset = (int)get_input('offset', 0);

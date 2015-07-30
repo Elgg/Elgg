@@ -162,7 +162,6 @@ function action_gatekeeper($action) {
  * @see @elgg_view input/form
  *
  * @return string|false
- * @access private
  */
 function generate_action_token($timestamp) {
 	return _elgg_services()->actions->generateActionToken($timestamp);

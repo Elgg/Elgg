@@ -28,7 +28,6 @@ function elgg_set_processed_upgrades(array $processed_upgrades) {
  * @param string $filename The upgrade filename. No full path.
  * @return int|false
  * @since 1.8.0
- * @access private
  * @todo used by elgg_get_upgrade_files
  */
 function elgg_get_upgrade_file_version($filename) {

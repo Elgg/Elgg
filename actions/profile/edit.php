@@ -37,10 +37,10 @@ foreach ($profile_fields as $shortname => $valuetype) {
 	// must decode in utf8 or string corruption occurs. see #1567.
 	if (is_array($value)) {
 		array_walk_recursive($value, function(&$v) {
-			$v = _elgg_html_decode($v);
+			$v = elgg_html_decode($v);
 		});
 	} else {
-		$value = _elgg_html_decode($value);
+		$value = elgg_html_decode($value);
 	}
 
 	// limit to reasonable sizes

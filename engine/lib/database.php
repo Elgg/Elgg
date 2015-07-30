@@ -179,6 +179,30 @@ function sanitise_int($int, $signed = true) {
 }
 
 /**
+ * Enable the MySQL query cache
+ *
+ * @return void
+ *
+ * @since 2.0.0
+ */
+function elgg_enable_query_cache() {
+	_elgg_services()->db->enableQueryCache();
+}
+
+/**
+ * Disable the MySQL query cache
+ *
+ * @note Elgg already manages the query cache sensibly, so you probably don't need to use this.
+ *
+ * @return void
+ *
+ * @since 2.0.0
+ */
+function elgg_disable_query_cache() {
+	_elgg_services()->db->disableQueryCache();
+}
+
+/**
  * Log db profiling information at NOTICE debug level upon shutdown.
  *
  * @return void

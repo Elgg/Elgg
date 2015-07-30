@@ -152,7 +152,6 @@ function _elgg_retrieve_cached_entity($guid) {
  *
  * @return int Subtype ID
  * @see get_subtype_from_id()
- * @access private
  */
 function get_subtype_id($type, $subtype) {
 	return _elgg_services()->subtypeTable->getId($type, $subtype);
@@ -205,7 +204,6 @@ function _elgg_populate_subtype_cache() {
  * @return string|null a class name or null
  * @see get_subtype_from_id()
  * @see get_subtype_class_from_id()
- * @access private
  */
 function get_subtype_class($type, $subtype) {
 	return _elgg_services()->subtypeTable->getClass($type, $subtype);
