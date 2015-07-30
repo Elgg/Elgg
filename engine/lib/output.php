@@ -458,7 +458,9 @@ function elgg_strip_tags($string, $allowable_tags = null) {
 }
 
 /**
- * Apply html_entity_decode() to a string while re-entitising HTML
+ * Decode HTML markup into a raw text string
+ *
+ * This applies html_entity_decode() to a string while re-entitising HTML
  * special char entities to prevent them from being decoded back to their
  * unsafe original forms.
  *
@@ -469,22 +471,20 @@ function elgg_strip_tags($string, $allowable_tags = null) {
  * usually decoded, i.e. a lone &gt; is not decoded, but &lt;foo&gt; would
  * be decoded to <foo> since it creates a full tag.
  *
- * Note: This function is poorly explained in the manual - which is really
+ * Note: html_entity_decode() is poorly explained in the manual - which is really
  * bad given its potential for misuse on user input already escaped elsewhere.
  * Stackoverflow is littered with advice to use this function in the precise
  * way that would lead to user input being capable of injecting arbitrary HTML.
  *
- * @param string $string
+ * @param string $string Encoded HTML
  *
  * @return string
  *
  * @author Pádraic Brady
  * @copyright Copyright (c) 2010 Pádraic Brady (http://blog.astrumfutura.com)
  * @license Released under dual-license GPL2/MIT by explicit permission of Pádraic Brady
- *
- * @access private
  */
-function _elgg_html_decode($string) {
+function elgg_html_decode($string) {
 	$string = str_replace(
 		array('&gt;', '&lt;', '&amp;', '&quot;', '&#039;'),
 		array('&amp;gt;', '&amp;lt;', '&amp;amp;', '&amp;quot;', '&amp;#039;'),
@@ -497,6 +497,22 @@ function _elgg_html_decode($string) {
 		$string
 	);
 	return $string;
+}
+
+/**
+ * Alias of elgg_html_decode
+ *
+ * This is kept in 2.0 because it was used in public views and might have been copied into plugins.
+ *
+ * @param string $string Encoded HTML
+ *
+ * @return string
+ * @see elgg_html_decode
+ * @deprecated
+ */
+function _elgg_html_decode($string) {
+	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated. Use elgg_html_decode()', '2.0');
+	return elgg_html_decode($string);
 }
 
 /**

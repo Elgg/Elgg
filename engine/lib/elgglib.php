@@ -801,6 +801,34 @@ function elgg_trigger_plugin_hook($hook, $type, $params = null, $returnvalue = n
 }
 
 /**
+ * Returns an ordered array of hook handlers registered for $hook and $type.
+ *
+ * @param string $hook Hook name
+ * @param string $type Hook type
+ *
+ * @return array
+ *
+ * @since 2.0.0
+ */
+function elgg_get_ordered_hook_handlers($hook, $type) {
+	return _elgg_services()->hooks->getOrderedHandlers($hook, $type);
+}
+
+/**
+ * Returns an ordered array of event handlers registered for $event and $type.
+ *
+ * @param string $event Event name
+ * @param string $type  Object type
+ *
+ * @return array
+ *
+ * @since 2.0.0
+ */
+function elgg_get_ordered_event_handlers($event, $type) {
+	return _elgg_services()->events->getOrderedHandlers($event, $type);
+}
+
+/**
  * Intercepts, logs, and displays uncaught exceptions.
  *
  * To use a viewtype other than failsafe, create the views:

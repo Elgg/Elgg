@@ -25,10 +25,10 @@ foreach (elgg_get_config('group') as $shortname => $valuetype) {
 	// @todo treat profile fields as unescaped: don't filter, encode on output
 	if (is_array($input[$shortname])) {
 		array_walk_recursive($input[$shortname], function (&$v) {
-			$v = _elgg_html_decode($v);
+			$v = elgg_html_decode($v);
 		});
 	} else {
-		$input[$shortname] = _elgg_html_decode($input[$shortname]);
+		$input[$shortname] = elgg_html_decode($input[$shortname]);
 	}
 
 	if ($valuetype == 'tags') {
