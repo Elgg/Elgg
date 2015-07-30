@@ -139,6 +139,22 @@ class Config implements Services\Config {
 	}
 
 	/**
+	 * Get a reference to a config value for the current site.
+	 *
+	 * @param string $name    Name of the configuration value
+	 * @param mixed  $default Value assigned if it doesn't yet exist
+	 *
+	 * @return mixed
+	 */
+	public function &getVolatileReference($name, $default = null) {
+		if (!isset($this->config->{$name})) {
+			$this->config->{$name} = $default;
+		}
+
+		return $this->config->{$name};
+	}
+
+	/**
 	 * {@inheritdoc}
 	 */
 	public function set($name, $value) {

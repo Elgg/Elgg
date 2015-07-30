@@ -87,6 +87,21 @@ function elgg_get_config($name, $site_guid = 0) {
 }
 
 /**
+ * Get a reference to a config value for the current site.
+ *
+ * @note If you store this in a variable, you must use "&" before the function name.
+ *
+ * @param string $name    Name of the configuration value
+ * @param mixed  $default Value assigned if it doesn't yet exist
+ *
+ * @return mixed
+ * @since 2.0.0
+ */
+function &elgg_get_config_reference($name, $default = null) {
+	return _elgg_services()->config->getVolatileReference($name, $default);
+}
+
+/**
  * Set an Elgg configuration value
  *
  * @warning This does not persist the configuration setting. Use elgg_save_config()
