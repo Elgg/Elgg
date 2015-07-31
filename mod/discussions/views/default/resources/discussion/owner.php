@@ -3,22 +3,16 @@
 $guid = elgg_extract('owner_guid', $vars);
 elgg_set_page_owner_guid($guid);
 
-elgg_entity_gatekeeper($guid);
 elgg_group_gatekeeper();
 
-$container = get_entity($guid);
-$type = $container->type;
-$subtype = $container->getSubtype();
-if (!discussion_is_context_allowed($container->type, $container->getSubtype())) {
+$group = get_entity($guid);
+if (!elgg_instanceof($group, 'group')) {
 	forward('', '404');
 }
-
-elgg_push_breadcrumb($container->getDisplayName(), $container->getURL());
+elgg_push_breadcrumb($group->name, $group->getURL());
 elgg_push_breadcrumb(elgg_echo('item:object:discussion'));
 
-if ($container->canWriteToContainer(0, 'object', 'discussion')) {
-	elgg_register_title_button();
-}
+elgg_register_title_button();
 
 $title = elgg_echo('item:object:discussion');
 
