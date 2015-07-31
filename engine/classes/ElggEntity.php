@@ -1524,18 +1524,42 @@ abstract class ElggEntity extends \ElggData implements
 			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.h');
 		}
 
-		$owner = $this->getOwnerEntity();
-		if ($owner && !$owner->canWriteToContainer(0, $type, $subtype)) {
-			return false;
-		}
-		
-		if ($owner_guid != $container_guid) {
-			$container = $this->getContainerEntity();
-			if ($container && !$container->canWriteToContainer(0, $type, $subtype)) {
+		$user_guid = elgg_get_logged_in_user_guid();
+
+		// If given an owner, verify it can be loaded
+		if ($owner_guid) {
+			$owner = $this->getOwnerEntity();
+			if (!$owner) {
+				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but the given"
+					. " owner $owner_guid could not be loaded.");
+				return false;
+			}
+
+			// If different owner than logged in, verify can write to container.
+
+			if ($user_guid != $owner_guid && !$owner->canWriteToContainer(0, $type, $subtype)) {
+				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype) with owner"
+					. " $owner_guid, but the user wasn't permitted to write to the owner's container.");
 				return false;
 			}
 		}
-		
+
+		// If given a container, verify it can be loaded and that the current user can write to it
+		if ($container_guid) {
+			$container = $this->getContainerEntity();
+			if (!$container) {
+				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but the given"
+					. " container $container_guid could not be loaded.");
+				return false;
+			}
+
+			if (!$container->canWriteToContainer(0, $type, $subtype)) {
+				_elgg_services()->logger->error("User $user_guid tried to create a ($type, $subtype), but was not"
+					. " permitted to write to container $container_guid.");
+				return false;
+			}
+		}
+
 		$result = $this->getDatabase()->insertData("INSERT into {$CONFIG->dbprefix}entities
 			(type, subtype, owner_guid, site_guid, container_guid,
 				access_id, time_created, time_updated, last_action)
