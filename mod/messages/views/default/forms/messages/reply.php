@@ -11,15 +11,9 @@ if (strncmp($reply_title, "RE:", 3) != 0) {
 	$reply_title = "RE: " . $reply_title;
 }
 
-$username = '';
-$user = get_user($vars['message']->fromId);
-if ($user) {
-	$username = $user->username;
-}
-
 echo elgg_view('input/hidden', array(
-	'name' => 'recipient_username',
-	'value' => $username,
+	'name' => 'recipients[]',
+	'value' => $vars['message']->fromId,
 ));
 
 echo elgg_view('input/hidden', array(
