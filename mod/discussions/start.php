@@ -1,12 +1,6 @@
 <?php
 /**
  * Discussion plugin
- *
- * To host discussions outside groups, use the discussions:allow_context hook to register your type:subtype. E.g.
- *
- * <code>
- * elgg_register_plugin_hook_handler('discussions:allow_context', 'object:mysubtype', 'Elgg\Values::getTrue');
- * </code>
  */
 
 elgg_register_event_handler('init', 'system', 'discussion_init');
@@ -21,12 +15,6 @@ function discussion_init() {
 	elgg_register_page_handler('discussion', 'discussion_page_handler');
 
 	elgg_register_plugin_hook_handler('entity:url', 'object', 'discussion_set_topic_url');
-
-	// control context of discussions
-	elgg_register_plugin_hook_handler('container_permissions_check', 'object', 'discussion_topic_container_permissions', 700);
-
-	// allow group context
-	elgg_register_plugin_hook_handler('discussions:allow_context', 'group:', 'Elgg\Values::getTrue');
 
 	// commenting not allowed on discussion topics (use a different annotation)
 	elgg_register_plugin_hook_handler('permissions_check:comment', 'object', 'discussion_comment_override');
@@ -634,32 +622,4 @@ function discussion_prepare_form_vars($topic = NULL) {
 	elgg_clear_sticky_form('topic');
 
 	return $values;
-}
-
-/**
- * @param string $hook   "container_permissions_check"
- * @param string $type   "object"
- * @param bool   $value  Hook value
- * @param array  $params Hook params
- * @return bool
- */
-function discussion_topic_container_permissions($hook, $type, $value, $params) {
-	$subtype = elgg_extract('subtype', $params);
-	$container = elgg_extract('container', $params);
-
-	if (!$value || !$container || $subtype !== 'discussion') {
-		return;
-	}
-
-	return discussion_is_context_allowed($container->type, $container->getSubtype());
-}
-
-/**
- * @param string $type    Entity type
- * @param string $subtype Entity subtype
- *
- * @return bool
- */
-function discussion_is_context_allowed($type, $subtype = '') {
-	return (bool)elgg_trigger_plugin_hook('discussions:allow_context', "$type:$subtype", [], false);
 }
