@@ -469,15 +469,6 @@ Other
 Plugins
 =======
 
-Discussions
------------
-
-**discussions:allow_context, <type>:<subtype>**
-    This is called to set the default permissions for whether to allow discussions on an entity of type
-    ``<type>`` and subtype ``<subtype>``.
-
-    .. note:: The callback ``'Elgg\Values::getTrue'`` is a useful handler for this hook.
-
 Embed
 -----
 

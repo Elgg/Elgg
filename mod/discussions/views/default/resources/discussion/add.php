@@ -6,7 +6,7 @@ $guid = elgg_extract('guid', $vars);
 $container = get_entity($guid);
 
 // Make sure user has permissions to add a topic to container
-if (!$container || !$container->canWriteToContainer(0, 'object', 'discussion')) {
+if (!$container->canWriteToContainer(0, 'object', 'discussion')) {
 	register_error(elgg_echo('actionunauthorized'));
 	forward(REFERER);
 }
