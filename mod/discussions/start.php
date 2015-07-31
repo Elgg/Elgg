@@ -647,7 +647,8 @@ function discussion_topic_container_permissions($hook, $type, $value, $params) {
 	$subtype = elgg_extract('subtype', $params);
 	$container = elgg_extract('container', $params);
 
-	if (!$value || !$container || $subtype !== 'discussion') {
+	if (!$value || !$container || $subtype !== 'discussion' ||
+			$container == elgg_get_logged_in_user_entity()) {
 		return;
 	}
 
