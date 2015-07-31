@@ -195,6 +195,10 @@ Permission hooks
 	Return boolean for if the user ``$params['user']`` can use the entity ``$params['container']``
 	as a container for an entity of ``<entity_type>`` and subtype ``$params['subtype']``.
 
+	During entity creation, this may also be triggered for entity owner-to-be (where the owner will *not* be the
+	container). In this single case, ``$params['checking_owner']`` will be set to true. For all other cases, it
+	will be false, indicating that ``$params['container']`` will indeed be the entity's container.
+
 **permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can edit the entity ``$params['entity']``.
 
@@ -468,6 +472,15 @@ Other
 
 Plugins
 =======
+
+Discussions
+-----------
+
+**discussions:allow_context, <type>:<subtype>**
+    This is called to set the default permissions for whether to allow discussions on an entity of type
+    ``<type>`` and subtype ``<subtype>``.
+
+    .. note:: The callback ``'Elgg\Values::getTrue'`` is a useful handler for this hook.
 
 Embed
 -----

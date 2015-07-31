@@ -291,10 +291,11 @@ function update_subtype($type, $subtype, $class = '') {
  * @param int    $container_guid The container, or 0 for the current page owner.
  * @param string $type           The type of entity we want to create (default: 'all')
  * @param string $subtype        The subtype of the entity we want to create (default: 'all')
+ * @param string $checking       Do not provide this argument. This is only to be used by ElggEntity::create.
  *
  * @return bool
  */
-function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all') {
+function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all', $checking = '') {
 	$container_guid = (int)$container_guid;
 	if (!$container_guid) {
 		$container_guid = elgg_get_page_owner_guid();
@@ -328,7 +329,8 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 			array(
 				'container' => $container,
 				'user' => $user,
-				'subtype' => $subtype
+				'subtype' => $subtype,
+				'checking_owner' => ($checking === 'owner'),
 			),
 			$return);
 }
