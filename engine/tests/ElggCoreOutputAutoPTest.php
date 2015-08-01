@@ -11,6 +11,7 @@ class ElggCoreOutputAutoPTest extends \ElggCoreUnitTest {
 
 	public function setUp() {
 		$this->_autop = new \ElggAutoP();
+		$this->_autop->debug = true;
 	}
 	
 	public function testDomRoundtrip() {
