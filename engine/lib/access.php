@@ -121,7 +121,7 @@ function get_default_access(ElggUser $user = null, array $input_params = array()
 	$default_access = elgg_get_config('default_access');
 
 	// user default access if enabled
-	if (elgg_get_config('allow_user_default_access') {
+	if (elgg_get_config('allow_user_default_access')) {
 		$user = $user ? $user : _elgg_services()->session->getLoggedInUser();
 		if ($user) {
 			$user_access = $user->getPrivateSetting('elgg_default_access');
