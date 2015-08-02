@@ -374,7 +374,7 @@ class Application {
 
 		if (php_sapi_name() === 'cli-server') {
 			// The CLI server routes ALL requests here (even existing files), so we have to check for these.
-			if ($path !== '/' && self::installDir()->isFile($path)) {
+			if ($path !== '/' && Directory\Local::root()->isFile($path)) {
 				// serve the requested resource as-is.
 				return false;
 			}

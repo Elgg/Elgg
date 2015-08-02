@@ -1934,6 +1934,16 @@ function _elgg_init() {
 
 		return $result;
 	});
+	
+	// We need to register it at the root otherwise browser will complain that the
+	// requested scope is too broad and not allowed
+	elgg_register_page_handler('service-worker.js', function() {
+		header("Content-Type: application/javascript");
+		echo elgg_view('service-worker.json');
+		return true;
+	});
+	
+	elgg_require_js('service-worker-register');
 
 	// Trigger the shutdown:system event upon PHP shutdown.
 	register_shutdown_function('_elgg_shutdown_hook');

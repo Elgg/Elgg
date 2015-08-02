@@ -34,10 +34,24 @@ class WebAppManifestResource {
 	 * @return array
 	 */
 	public function get() {
+		$head = _elgg_views_prepare_head($title);
+		
+		$icons = [];
+		foreach ($head['links'] as $link) {
+			if ($link['rel'] == 'icon') {
+				$icons[] = [
+					'sizes' => $link['sizes'],
+					'src' => $link['href'],
+					'type' => $link['type'],
+				];
+			}
+		}
+		
 		return [
 			'display' => 'standalone',
 			'name' => $this->site->getDisplayName(),
 			'start_url' => $this->site->getUrl(),
+			'icons' => $icons,
 		];
 	}
 }
