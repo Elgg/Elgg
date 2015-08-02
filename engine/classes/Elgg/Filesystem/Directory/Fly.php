@@ -6,7 +6,7 @@ use Elgg\Filesystem\File;
 use Elgg\Structs\Collection;
 use League\Flysystem\Adapter\Local as LocalAdapter;
 use League\Flysystem\Filesystem;
-use Twistor\Flysystem\MemoryAdapter;
+use League\Flysystem\Memory\MemoryAdapter;
 
 /**
  * A wrapper around Flysystem that implements Elgg's filesystem API.
