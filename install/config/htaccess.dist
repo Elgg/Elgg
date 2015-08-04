@@ -127,8 +127,6 @@ RewriteEngine on
 # hide all dot files/dirs (.git)
 RewriteRule (^\.|/\.) - [F]
 
-RewriteRule ^(_graphics|js)/(.*)$ vendor/elgg/elgg/$1/$2
-
 # Everything else that isn't a file gets routed through Elgg
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
