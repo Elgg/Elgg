@@ -7,6 +7,8 @@ use Elgg\Filesystem\Directory;
 
 /**
  * A composer command handler to run after composer updates (and installs)
+ * 
+ * @access private
  */
 class PostUpdate {
 	/**
@@ -64,7 +66,26 @@ class PostUpdate {
 		foreach ($managed_plugins as $plugin) {
 			self::symlinkPluginFromRootToElgg($plugin);
 		}
+		
+		self::symlinkSimplecacheDirectory();
 	}
+	
+	
+	/**
+	 * Links from root /wwwroot/cache/ to /dataroot/views_simplecache so that webserver
+	 * can serve the files directly instead of going through PHP.
+	 * 
+	 * @return boolean Whether the symlink succeeded.
+	 */
+	private static function symlinkSimplecacheDirectory() {
+		$rootCachePath = Directory\Local::root()->getPath('cache');
+
+		Elgg\Application::start();
+		$dataCachePath = elgg_get_data_path() . "views_simplecache";
+		
+		return !file_exists($rootCachePath) && symlink($dataCachePath, $rootCachePath);
+	}
+	
 	
 	/**
 	 * Copies a file from the given location in Elgg to the given location in root.
