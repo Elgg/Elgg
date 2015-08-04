@@ -1,36 +1,60 @@
 # Elgg Nginx configuration. Customize and put into /etc/nginx/sites-enabled
 
+# Rewrite http://(www.)?example.org to https://example.org
+
+#server {
+#	listen 80;
+#	server_name example.org www.example.org;
+#	rewrite ^ https://example.org$request_uri permanent;
+#}
+
+# Rewrite https://www.example.org to https://example.org
+
+#server {
+#	include /etc/nginx/ssl.conf;
+#	server_name www.example.org;
+#	rewrite ^ https://example.org$request_uri? permanent;
+#}
+
 server {
 	listen 80;
 	server_name example.org;
 
 	# Server root, replace it with your elgg installation location
-	root /srv/example.org;
+	root /var/www/$server_name;
 	index index.php index.html index.htm;
 
 	# Server logs, replace it with your project names
-	error_log /var/log/nginx/example_error.log;
-	access_log /var/log/nginx/example_access.log;
+	error_log /var/log/nginx/$server_name.error.log error;
+	access_log /var/log/nginx/$server_name.access.log;
 
 	location ~ (^\.|/\.) {
 		return 403;
 	}
 
+	location = /rewrite.php {
+		rewrite ^(.*)$ /install.php;
+	}
+
 	location / {
-		try_files $uri $uri/ /index.php?__elgg_uri=$uri&$query_string;
+		try_files $uri $uri/ @elgg;
 	}
 
 	# pass the PHP scripts to FastCGI server listening on 127.0.0.1:9000
-	#
 	location ~ \.php$ {
-		fastcgi_split_path_info ^(.+\.php)(/.+)$;
-	#	# NOTE: You should have "cgi.fix_pathinfo = 0;" in php.ini
-	#
-	#	# With php5-cgi alone:
-	#	fastcgi_pass 127.0.0.1:9000;
-	#	# With php5-fpm:
-		fastcgi_pass unix:/var/run/php5-fpm.sock;
+		try_files $uri @elgg;
 		fastcgi_index index.php;
-		include fastcgi_params;
+		fastcgi_pass localhost:9000;
+		fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+		include /etc/nginx/fastcgi_params;
+	}
+
+	location @elgg {
+		fastcgi_pass localhost:9000;
+
+		include /etc/nginx/fastcgi_params;
+		fastcgi_param SCRIPT_FILENAME $document_root/index.php;
+		fastcgi_param SCRIPT_NAME     /index.php;
+		fastcgi_param QUERY_STRING    __elgg_uri=$uri&$args;
 	}
 }
