@@ -63,12 +63,13 @@ function htmlawed_filter_tags($hook, $type, $result, $params = null) {
 		$htmlawed_config['anti_link_spam'] = array('/./', '');
 	}
 
+	$spec = elgg_trigger_plugin_hook('spec', 'htmlawed', null, '');
 	$htmlawed_config = elgg_trigger_plugin_hook('config', 'htmlawed', null, $htmlawed_config);
 
 	if (!is_array($var)) {
-		$result = htmLawed($var, $htmlawed_config);
+		$result = htmLawed($var, $htmlawed_config, $spec);
 	} else {
-		array_walk_recursive($var, 'htmLawedArray', $htmlawed_config);
+		array_walk_recursive($var, 'htmLawedArray', $htmlawed_config, $spec);
 		$result = $var;
 	}
 
@@ -78,8 +79,8 @@ function htmlawed_filter_tags($hook, $type, $result, $params = null) {
 /**
  * wrapper function for htmlawed for handling arrays
  */
-function htmLawedArray(&$v, $k, $htmlawed_config) {
-	$v = htmLawed($v, $htmlawed_config);
+function htmLawedArray(&$v, $k, $htmlawed_config, $spec) {
+	$v = htmLawed($v, $htmlawed_config, $spec);
 }
 
 /**
