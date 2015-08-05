@@ -357,6 +357,12 @@ change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
 
+<a name="1.12.1"></a>
+### 1.12.1  (2015-08-05)
+
+#### Contributors
+
+* Evan Winslow (1)
 
 <a name="1.12.0"></a>
 ## 1.12.0  (2015-07-07)
