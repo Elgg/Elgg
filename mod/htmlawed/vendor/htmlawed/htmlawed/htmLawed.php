@@ -1,7 +1,7 @@
 <?php
 
 /*
-htmLawed 1.1.16, 29 August 2013
+htmLawed 1.1.19, 19 January 2015
 Copyright Santosh Patnaik
 Dual licensed with LGPL 3 and GPL 2+
 A PHP Labware internal utility; www.bioinformatics.org/phplabware/internal_utilities/htmLawed
@@ -379,7 +379,7 @@ return $r;
 function hl_spec($t){
 // final $spec
 $s = array();
-$t = str_replace(array("\t", "\r", "\n", ' '), '', preg_replace('/"(?>(`.|[^"])*)"/sme', 'substr(str_replace(array(";", "|", "~", " ", ",", "/", "(", ")", \'`"\'), array("\x01", "\x02", "\x03", "\x04", "\x05", "\x06", "\x07", "\x08", "\""), "$0"), 1, -1)', trim($t))); 
+$t = str_replace(array("\t", "\r", "\n", ' '), '', preg_replace_callback('/"(?>(`.|[^"])*)"/sm', create_function('$m', 'return substr(str_replace(array(";", "|", "~", " ", ",", "/", "(", ")", \'`"\'), array("\x01", "\x02", "\x03", "\x04", "\x05", "\x06", "\x07", "\x08", "\""), $m[0]), 1, -1);'), trim($t))); 
 for($i = count(($t = explode(';', $t))); --$i>=0;){
  $w = $t[$i];
  if(empty($w) or ($e = strpos($w, '=')) === false or !strlen(($a =  substr($w, $e+1)))){continue;}
@@ -475,7 +475,7 @@ while(strlen($a)){
   break; case 2: // Val
    if(preg_match('`^((?:"[^"]*")|(?:\'[^\']*\')|(?:\s*[^\s"\']+))(.*)`', $a, $m)){
     $a = ltrim($m[2]); $m = $m[1]; $w = 1; $mode = 0;
-    $aA[$nm] = trim(($m[0] == '"' or $m[0] == '\'') ? substr($m, 1, -1) : $m);
+    $aA[$nm] = trim(str_replace('<', '&lt;', ($m[0] == '"' or $m[0] == '\'') ? substr($m, 1, -1) : $m));
    }
   break;
  }
@@ -504,7 +504,7 @@ foreach($aA as $k=>$v){
    $v = preg_replace_callback('`(url(?:\()(?: )*(?:\'|"|&(?:quot|apos);)?)(.+?)((?:\'|"|&(?:quot|apos);)?(?: )*(?:\)))`iS', 'hl_prot', $v);
    $v = !$C['css_expression'] ? preg_replace('`expression`i', ' ', preg_replace('`\\\\\S|(/|(%2f))(\*|(%2a))`i', ' ', $v)) : $v;
   }elseif(isset($aNP[$k]) or strpos($k, 'src') !== false or $k[0] == 'o'){
-   $v = str_replace("\xad", ' ', (strpos($v, '&') !== false ? str_replace(array('&#xad;', '&#173;', '&shy;'), ' ', $v) : $v));
+   $v = str_replace("­", ' ', (strpos($v, '&') !== false ? str_replace(array('&#xad;', '&#173;', '&shy;'), ' ', $v) : $v)); # double-quoted char is soft-hyphen; appears here as "­" or hyphen or something else depending on viewing software
    $v = hl_prot($v, $k);
    if($k == 'href'){ // X-spam
     if($C['anti_mail_spam'] && strpos($v, 'mailto:') === 0){
@@ -698,7 +698,7 @@ return str_replace(array("\x01", "\x02", "\x03", "\x04", "\x05", "\x07"), array(
 
 function hl_version(){
 // rel
-return '1.1.16';
+return '1.1.19';
 // eof
 }
 

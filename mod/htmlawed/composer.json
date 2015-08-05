@@ -2,7 +2,8 @@
     "name": "elgg/htmlawed",
     "type": "elgg-plugin",
     "require": {
-        "composer/installers": ">=1.0.8"
+        "composer/installers": ">=1.0.8",
+        "htmlawed/htmlawed": "^1.1"
     },
     "license": "GPL-2.0"
 }
