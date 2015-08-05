@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-07 08:50+0000\n"
+"POT-Creation-Date: 2015-08-05 10:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../about/contributing.rst:4
-# 3aab5b7a6f374223bb294716137b113f
+# 588f1eb0354a4ce193a3ae57815d382c
 msgid "Contributor Guide"
 msgstr ""
 
@@ -26,56 +26,56 @@ msgstr ""
 #: ../../about/index.rst:6
 #: ../../about/releases.rst:6
 #: ../../about/roadmap.rst:6
-# 70239ec470c54b5f8f1cfebdcaa78e36
-# b5b3f176f01c424fa830f57677290b81
-# 3a0068a7aa1a456ca7d03f8b24f0c5f9
-# 12052ed5ca6b47ae8d771b18f262d24d
-# 1ab8feb2f8c54efaa987408c1c88895e
+# 4de7518375e34967bc21af86ccddf78c
+# 56cccc1be4604d8ab6f6290e56196e09
+# e40e3b00bac341f2b02f40c0df26841b
+# 0de6c34bd3b1452c89e3aac1bca9ed01
+# 549abb5718e24761ba5e34c5ecca23d0
 msgid "This page has moved."
 msgstr ""
 
 #: ../../about/contributing.rst:8
-# 171f5a1bea2e4e9a864654ba802f7a42
+# 9678f45a540e4cb3899f88aced613dfd
 msgid ":doc:`/contribute/index`"
 msgstr ""
 
 #: ../../about/history.rst:4
-# 448197a14d79465b9954f8f0eea53ad9
+# c3069b98fe1946e584a72cc67d36eb3c
 msgid "History"
 msgstr ""
 
 #: ../../about/history.rst:8
-# b8740cca5c624f7c951ea5847bb72cb0
+# 623a03c1907a477eae3ab1699772c901
 msgid ":doc:`/appendix/history`"
 msgstr ""
 
 #: ../../about/index.rst:4
-# 9a4cd49dc42a4c8ea60d641685f2c29f
+# 6cb6ad95b8a14dac80b2f4e539c6f288
 msgid "About"
 msgstr ""
 
 #: ../../about/index.rst:8
-# babe31f7e46741fa833e297dbc77b57e
+# 348478a4cd2d44c5b40de344df3bd8f0
 msgid ":doc:`/appendix/index`"
 msgstr ""
 
 #: ../../about/releases.rst:4
-# 8c24ade0ad4b461cbd4ba4afa192359c
+# e0caf11cd3604d94884ab829156988f0
 msgid "Release Policy"
 msgstr ""
 
 #: ../../about/releases.rst:8
-# 3049f0a42548421ba1091ececaa99dab
+# 1ebe6adb947e441c98ba40f8a7f0bcbb
 msgid ":doc:`/appendix/releases`"
 msgstr ""
 
 #: ../../about/roadmap.rst:4
-# 986a7e27435941288c0473d001642839
+# fc3d1a288bd34f9dbc8bc26a9a0982f5
 msgid "Roadmap"
 msgstr ""
 
 #: ../../about/roadmap.rst:8
-# c785419c0326415984d5dff3cf9ac304
+# 7efd09fa7221494ea2958e2d48ae72a0
 msgid ":doc:`/appendix/roadmap`"
 msgstr ""
 

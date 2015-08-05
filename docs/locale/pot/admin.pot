@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-07-07 08:50+0000\n"
+"POT-Creation-Date: 2015-08-05 10:48+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../admin/backup-restore.rst:2
-# 8f19c84831d54457919302fdbebcb82f
+# 2f8bea7954e441f3b1c03fdd31947185
 msgid "Backup and Restore"
 msgstr ""
 
@@ -26,2327 +26,2327 @@ msgstr ""
 #: ../../admin/getting-help.rst:0
 #: ../../admin/performance.rst:0
 #: ../../admin/plugins.rst:0
-# f33e5bea7ef24e2690c9ea699ec20a5b
-# c32d5cf06fe74fbdb94c623047ae0ea7
-# 5d6803fd48ac4b479f9dd649feb22c0e
-# 62f8ac6367d8462286045960f88fbffe
-# 6107743d578345599dce632d4d4bbd1d
+# bc48c20338bb4d1fae98fad9862d0965
+# 6eb05e118f404823a038f281d561cb3e
+# 58f4ce7b22a540ffba242d36d509cf44
+# 7e133036b7c84c0f96b2c9a32f161460
+# c320e26dd78b45eb9dd285a089bd6d40
 msgid "Contents"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:9
 #: ../../admin/duplicate-installation.rst:9
-# edf39115efcb4742a172d204884dd64f
-# 78031207fdc34ceba6093d9fb8ea6882
+# 9b7c2b9d2794481f9902bbc6a764cc06
+# 13141698e31d41679f4ec2fd971e56bb
 msgid "Introduction"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:12
-# 472224660766424ba8b28eb362422b9c
+# 5cd3e50e2864451d8f271223de205b5d
 msgid "Why"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:14
-# 748f96f4285e4f9b8c5c19793118958e
+# 6770088f5e0848af882c34d0be8cd692
 msgid "Shared hosting providers typically don't provide an automated way to backup your Elgg installation. This article will address a method of accomplishing this task."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:16
-# c708e62e299746069a7b9bd40be6f44f
+# d33cbdcfdac2491a8201b8a714deb89c
 msgid "In IT there are often many ways to accomplish the same thing. Keep that in mind. This article will explain one method to backup and restore your Elgg installation on a shared hosting provider that uses the CPanel application. However, the ideas presented here can be tailored to other applications as well. The following are typical situations that might require a procedure such as this:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:18
-# 55ecbe93feaa4418bdf59750ac11ef93
+# deb705ace2614591bd8915f5301496c8
 msgid "Disaster Recovery"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:19
-# 8ea9258ebf2544bbbd00fbab4af1ac47
+# dbaece3bf3f14d94b92b1b4c5f826092
 msgid "Moving your Elgg site to a new host"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:20
-# d0c10b90608d412b99bf535c5c3d715f
+# 8b51d53031df46e09940ebb1d15dd870
 msgid "Duplicating an installation"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:23
-# d1d1ca6ba0cd4e5ea611bf8f3c041830
+# 00643b92c1a74c56b644d167f4da8c58
 msgid "What"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:25
-# 484822172009427a97bd08dc4398bc31
+# c1b1b8720aa14f0094f2e4f79a8b503b
 msgid "Topics covered:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:27
-# 8fd80e5b1d2046da834f9b115f2590ce
+# 03c4972ae6f643ed875d3fe77e081819
 msgid "Full backups of the Elgg directories and MySQL databases are performed daily (automated)"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:28
-# 150f68b4e1c345c186f30b01fdad911f
+# 4fe0eeeca8354cb7b15844c83554233f
 msgid "The backups are sent to an off-site location via FTP (automated)"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:29
-# 28ed1fddee264504b1860a039947b0df
+# d36dbe1f5c9a4d56b0cf9324070122c2
 msgid "The local backups are deleted after successful transfer to the off-site location (automatic)"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:30
-# 34846c1d0785410ca054f629b2a839a7
+# 65b2cbc9f68e4c1f89973f8113df7e4f
 msgid "Five days of backups will be maintained (automated)"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:31
-# f4da35c6ff6c402f9b4b7e2cfc5fa3d0
+# d8c228ad5dad4b6ba0b9da24cd3dad58
 msgid "Restoration of data to the new host (manual)"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:33
-# faa56fd99dd74356ad162ead948b65fa
+# 8241bcf416f34c1fb657824f3e2206cb
 msgid "This process was composed with assistance from previous articles in the Elgg documentation wiki."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:36
-# 40707ef71abb4d6981c8fe92798b7f68
+# 27df5981bd1a41f58d90fc52964ecc01
 msgid "Assumptions"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:38
-# 4fca74a4beac45eebda006265043b26d
+# d2da3a8c3f104855b5c0881aca8713bf
 msgid "The following assumptions have been made:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:40
-# f94f2c568ab4411aa80a1f1c9a695859
+# aebe8de737de48f68835db5a19f09352
 msgid "The Elgg program directory is ``/home/userx/public_html``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:41
-# 3c97bf4ca12e453eba0fecaa63f48bef
+# 2111f7db1ab741e19cb58e5cb94d4a48
 msgid "The Elgg data directory is ``/home/userx/elggdata``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:42
-# 01da30a15eb7457f94d630e9365770d3
+# 0a9738b462e84f34993338392ff3a6e3
 msgid "You've created a local directory for your backups at ``/home/userx/sitebackups``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:43
-# fcdd7b1990a84a728f87855eddfae38b
+# c04d236f763b4d37a299932e60946358
 msgid "You have an off-site FTP server to send the backup files to"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:44
-# dc57d38d3614422d85e91bc837191436
+# 0717784531f0485da5010709d4410f15
 msgid "The directory that you will be saving the off-site backups to is ``/home/usery/sitebackups/``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:45
-# abc8ae6927264707adcbc622c70ef486
+# b7742207fdac4e409265a3efc55f0e9d
 msgid "You will be restoring the site to a second shared hosting provider in the ``/home/usery/public_html`` directory"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:49
-# 5c5fae1f86744dc49eb95a2937a3833d
+# debcdcd142da41c9b902b11dc0e5539c
 msgid "Be sure to replace ``userx``, ``usery``, ``http://mynewdomain.com`` and all passwords with values that reflect your actual installation!"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:52
-# 4e49d1ee10894efa85162999b3d1ccf2
+# e7c582e2be2f4277aab6345959455bb6
 msgid "Creating a usable backup - automatically"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:55
-# 9d95f0beca6f437686b4ca5be60f4306
+# 39f73918493b486a80e3ace9bd3d8589
 msgid "Customize the backup script"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:57
-# 37a29f86c89846908d7d3e9b4c578a97
+# 8d1cac8e9c3b4d919dd3dae3f74fee0e
 msgid "The script that you will use can be found :doc:`here <backup/ftp-backup-script>` ."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:59
-# 2b572a539a27449b9a576f694c9afeb6
+# 1934913e6823490aa5e09426000134e6
 msgid "Just copy the script to a text file and name the file with a .pl extension. You can use any text editor to update the file."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:61
-# 2168457539c04362881bdc602b0a71ef
+# 7fe808724d9645b59b6a949fc99904f3
 msgid "Change the following to reflect your directory structure:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:71
-# c6aebd3f16014672a9d0a690cb48d914
+# 38f4eddad26d41be8d39d11735cd4479
 msgid "Change the following to reflect your database parameters:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:82
-# cdf613974cf7479a9a70aadf7de25031
+# a656ad08e6414b0495912fab4c7152af
 msgid "Change the following to reflect your off-site FTP server parameters:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:92
-# 6b32147fdf0c423ead8187801cafa9b2
+# 078e580d1dc1447f896806fe27351798
 msgid "Save the file with the ``.pl`` extension (for the purposes of this article we will name the file: ``elgg-ftp-backup-script.pl``) and upload it to the following directory ``/home/userx/sitebackups``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:94
-# 390b20b0a51a4c33a7a2a336959241ea
+# 8a2af9fd540b471ca90baf1465537aea
 msgid "Be aware that you can turn off FTP and flip a bit in the script so that it does not delete the local backup file in the event that you don't want to use off-site storage for your backups."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:97
-# c968de46a73549cc8c9966fb43714ab3
+# 9677383bc2d24d0dafc04da0e99df2be
 msgid "Configure the backup Cron job"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:99
-# 1a835e921b384a0ba3ce7982ad163674
+# cf06939ce1004fe0935617723ac0ab99
 msgid "Login to your CPanel application and click on the \"Cron Jobs\" link. In the Common Settings dropdown choose \"Once a day\" and type the following in the command field ``/usr/bin/perl /home/userx/sitebackups/elgg-ftp-backup-script.pl``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:101
-# 411280d494c94a18bce749b8ab5448a0
+# 97ec4387fccb4fff8c70b75168b5e4e2
 msgid "Click on the \"Add New Cron Job\" button. Daily full backups are now scheduled and will be transferred off-site."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:104
-# 58c23825422d4115b9552f63ddaab22d
+# 25d111e658c14bc7a20cd3b313bfb8a0
 msgid "Configure the cleanup Cron job"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:106
-# 8b54ca96d44e4cb5b1d7468dfc1793c4
+# c6eb245f02894fe3bef1d012fdb1395d
 msgid "If you are sending your backups, via FTP, to another shared hosting provider that uses the CPanel application or you've turned off FTP altogether you can configure your data retention as follows."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:108
-# b292a21dbe664de5acdcfdb2ff67f0b5
+# 21a30d2aa9d645b0b74587b694e6c1b0
 msgid "Login to your CPanel application for your FTP site, or locally if you're not using FTP, and click on the \"Cron Jobs\" link. In the Common Settings dropdown choose \"Once a day\" and type the following in the command field ``find /home/usery/sitebackups/full_* -mtime +4 -exec rm {} \\;``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:110
-# 380b91150192441fa8435e3930ef42b4
+# 8b16c23ac37a422f9af7a5cbf81d0586
 msgid "The ``-mtime X`` parameter will set the number of days to retain backups. All files older than ``x`` number of days will be deleted. Click on the \"Add New Cron Job\" button. You have now configured your backup retention time."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:113
-# b304ccc6930b4f44b3875b794aa3e30d
+# 64de447631eb4f39a13cccb32274d082
 msgid "Restoring from backup"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:116
-# e8af4882546e4f14be864c85f276a669
+# eae520b0a2654e22a8b244ad2d4b373a
 msgid "Prepare your backup files"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:118
-# 0401fc3311ae4da18698669c06a3e2a7
+# 0ef3698a4bd44095bea2afe4d2b450d0
 msgid "The assumption is that you're restoring your site to another shared hosting provider with CPanel."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:120
-# 9afc819e259a4235a16e9129bb17350c
+# 5af98ba615984994852b01f5342177a0
 msgid "When the script backed the files up the original directory structure was maintained in the zip file. We need to do a little cleanup. Perform the following:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:122
-# 55d4c483b7864410b3db243f392cdff5
+# 1137930089c64a6e972b7eda9ff1a358
 msgid "Download the backup file that you wish to restore from"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:123
-# 5bf687a76c5745669a03a71c1f1d072b
+# daec6a6a5da64863aa5664aa0c8dca55
 msgid "Extract the contents of the backup file"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:127
-# d5b4b3f2f29d494199407547341080d3
+# 8aa4fcbe066e4c8ca0c8f988a85079b1
 msgid "Drill down and you will find your site backup and SQL backup. Extract both of these. You will then have:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:125
-# 7351f34be85d40909d8f17fb48fd1d57
+# c23ec47864ee4e7e93ead639fb2c1522
 msgid "a MySQL dump file with a ``.sql`` extension"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:127
-# 16f93805f1e64372b5fa8ce64c966452
+# c5e0c555ac424e63b3788f3af69f3c37
 msgid "another directory structure with the contents of:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:127
-# 3c67442a0fa949ca9e63861eb3cd2441
+# 41dc3a19dc784a77b99fbbd2c0c75424
 msgid "``/home/userx/public_html``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:128
-# 8f85889af592463898ee13595a071df7
+# 1ae0c64f606649438e47a43216dace13
 msgid "``/home/userx/elggdata``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:129
-# 330d09b059d946dda88332351c49072c
+# 6fd90689f2104bacb9aeaa146464c901
 msgid "Repackage the contents of the ``/home/userx/public_html`` directory as a zip file so that the files are in the root of the zip file"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:130
-# 4d9f1bd986494239a315ff969af87258
+# de02c9d21c1e4f11b379a9df97517042
 msgid "The reason for doing this is simple. It's much more efficient to upload one zip file than it is to ftp the contents of the ``/home/userx/public_html`` directory to your new host."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:131
-# c6789701c4e3455c9ce51f61576bd588
+# f9fc48d569d644fdb145b9b4c95b75ad
 msgid "Repackage the contents of the /home/userx/elggdata directory as a zip file so that the files are in the root of the zip file"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:133
-# d70f5a1efa2541b6aad9ed60e27a977a
+# 7877154d7a5345cbae8773306347cd98
 msgid "You should now have the following files:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:135
-# 680329e0a0e846bc8e9bac1f0803f758
+# 98f1efedd4aa45caa5efe5d9463bec6f
 msgid "the ``.sql`` file"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:136
-# b45cc4655ef445ceb79aae4a0e243cbf
+# 08f4b5802d764239a8ef362009e81435
 msgid "the zip file with the contents of ``/home/userx/public_html`` in the root"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:137
-# 191397437a934058a9c2e3ba497b74d5
+# c3e945ef3ee94dd595a1df0dd68cb991
 msgid "the zip file with the contents of ``/home/userx/elggdata`` in the root"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:140
-# 497029c6a1224ef0876dee03aafa11d7
+# 83fde3cf054640d7b448f34a80994c2b
 msgid "Restore the files"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:142
-# a142cff2d676421683a7a564920a5681
+# b22d129f3ecf457ea14ef055bbd5d049
 msgid "This is written with the assumption that you're restoring to a different host but maintaining the original directory structure. Perform the following:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:144
-# 8cf9d40465da428e986d735980e99eea
+# a6831acf23e04d53a42e6d91da29aca3
 msgid "Login to the CPanel application on the host that you wish to restore the site to and open the File Manager."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:148
-# 0966146af63647a7b48f2b92b2dd6599
+# 42e1f701b72e4d31bdcaf2709e688f8f
 msgid "Navigate to ``/home/usery/public_html``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:146
-# 16b916cda47e474eba85350877834c2c
+# 7b9b63523f994803a570a902e05642fa
 msgid "Upload the zip file that contains the ``/home/userx/public_html`` files"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:147
 #: ../../admin/backup-restore.rst:152
-# dc177121a0c243788be648f17c92ce6e
-# 5191867fb954457a89dec0d15c99f5f4
+# 943278b26f584b21b462ac775407fc9c
+# dbfe4975c7654592a6be697546e2083a
 msgid "Extract the zip file"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:148
-# f3dd10ea63d2453e930dc6f4a180ef60
+# e9a7d12f9cca4d16b2e3276b35bec74e
 msgid "You should now see all of the files in ``/home/usery/public_html``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:149
 #: ../../admin/backup-restore.rst:154
-# 4af3a7b39539421f873db15eb244c843
-# 882e68cbc56a43f2ac6e8d3698eda269
+# f5ce6cc2039942e390c47668b3b0a1c9
+# 1c33f1e868064da9bf0032501261ff6a
 msgid "Delete the zip file"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:154
-# fdb32e69e5b846b4b85e55b2a2137d8f
+# 19cc387a041e457298554b5e7c195d1f
 msgid "Navigate to ``/home/usery/elggdata``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:151
-# eeb13bc5ee6d4fdb973f926edb7cce8b
+# 58b1ba85411f4e868c7459ba960dc71c
 msgid "Upload the zip file that contains the ``/home/userx/elggdata`` files"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:153
-# bdafb5e5bd1141719a7a449c46c12a43
+# afe62fade29e44ff981e3d34c15f4265
 msgid "You should now see all of the files in /home/usery/elggdata"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:156
-# 46fb39e8522f4aea918b80ee76d8084a
+# 398512a4b90c4158afb81205040a8104
 msgid "Program and data file restoration is complete"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:159
-# 9762d1af01ef4c50b315755d59b640cf
+# 517d8c5650be45868f79f34e2221fd82
 msgid "Restore the MySQL Database"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:163
-# 7314bb547005426e925b5a62c925ca3a
+# 5899eb464a6e4e94adcafbc8465717bf
 msgid "Again, the assumption here is that you're restoring your Elgg installation to a second shared hosting provider. Each shared hosting provider prepends the account holder's name to the databases associated with that account. For example, the username for our primary host is ``userx`` so the host will prepend ``userx_`` to give us a database name of ``userx_elgg``. When we restore to our second shared hosting provider we're doing so with a username of ``usery`` so our database name will be ``usery_elgg``. The hosting providers don't allow you to modify this behavior. So the process here isn't as simple as just restoring the database from backup to the usery account. However, having said that, it's not terribly difficult either."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:166
-# aefb3f54774f4a08beaab45bc0b92793
+# 150e3b5902914445955c4d2827b9107d
 msgid "Edit the MySQL backup"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:168
-# 6113b9ce63484b59920072b7aab20d58
+# b332c23e56fa4f37bb19b449882035f0
 msgid "Open the ``.sql`` file that you extracted from your backup in your favorite text editor. Comment out the following lines with a hash mark:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:175
-# 4522fcbb66d34f54ade8c79e748fd062
+# 065460c9841f4e599d0d37cc2cb88e1c
 msgid "Save the file."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:178
-# d69de1879eb045a49560f75a06b30290
+# 953c74c7cfcc4b31ace92a3be50973e9
 msgid "Create the new database"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:180
-# e9178c940f8e4dbf80c298011bdb908e
+# ac8725d4cae344eea0fffc274da78ae8
 msgid "Perform the following:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:189
-# c563196d9a304b2fbd55db5f5987c7aa
+# 71c2e933c56c4a4580e199eedf2dcb44
 msgid "Login to the CPanel application on the new host and click on the \"MySQL Databases\" icon"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:183
-# a9714a95921348d89655869c187d0bb1
+# 82465f1c135b40d59dc64b5da83a1146
 msgid "Fill in the database name and click the \"create\" button. For our example we are going to stick with ``elgg`` which will give us a database name of ``usery_elgg``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:185
-# f3e4b40f2db1426cad1a4e287739e05b
+# 0793b415c2db46f98c422c87b9842207
 msgid "You can associate an existing user with the new database, but to create a new user you will need to:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:185
-# a678fc5ea72e422ca91a9ac0a99ad837
+# b365f13f04f4462a9241b74b8db2d738
 msgid "Go to the \"Add New User\" section of the \"MySQL Databases\" page"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:186
-# 7cfe547b3668439aad442a38c8aee739
+# cb1493b89f2c441c9356e5b5bf94e94b
 msgid "Enter the username and password. For our example we're going to keep it simple and use ``elgg`` once again. This will give us a username of ``usery_elgg``"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:189
-# f7213d09f4ca44c9a8a7f480aff32114
+# 87e4fc397f484f8790a6b803df4d12f7
 msgid "Associate the new user with the new database"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:188
-# 13e3f10af0b74013b135949978e2bf62
+# 6c8708ede587493ab6ecbf5dc3af533a
 msgid "Go to the \"Add User To Database\" section of the \"MySQL Databases\" page. Add the ``usery_elgg`` user to the ``usery_elgg`` database"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:189
-# de137b54284644bc9388759721b96d0f
+# 3878a4fae87041709695bf5e71dc278d
 msgid "Select \"All Privileges\" and click the \"Make Changes\" button"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:192
-# e61903ffa2364fc7a24b8c19a9aad2c6
+# 2eddf7d2bfae4c50a4ebe2814841d9a5
 msgid "Restore the production database"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:194
-# 7161b0d6c4d74a4781785497c74fd6e9
+# c027c4391c5d4c41b9985130a43237cd
 msgid "Now it's time to restore the MySQL backup file by importing it into our new database named \"usery_elgg\"."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:200
-# 0671517cff4d4580adf43a592b7f1b71
+# 86411a434112432ca412c3f4141f614d
 msgid "Login to the CPanel application on the new host and click on the \"phpMyAdmin icon"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:197
-# a7609230b5bf4d6b9396d75944ab6747
+# a71e960afb414609b241081e467f2dfd
 msgid "Choose the ``usery_elgg`` database in the left hand column"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:198
-# ff2ef441a9a442ec8d6a9903b5668033
+# 4cb35b71c40943d1b10b2f59623c7ccb
 msgid "Click on the \"import\" tab at the top of the page"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:199
-# 77396f76b3324661930015fb8c56eefa
+# a309e54ae7cb44319a32d43ccd4b2bb8
 msgid "Browse to the ``.sql`` backup on your local computer and select it"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:200
-# 41c5a83389e94455b538ad355c6ed56c
+# e814e941e42241a9b6430a41b72f66c2
 msgid "Click the \"Go\" button on the bottom right side of the page"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:202
-# 40112eba4f1545748c319ee92efd4f08
+# 9557f77e4d0540c1a6dc52ade1563179
 msgid "You should now see a message stating that the operation was successful"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:205
-# ea224aa9026846ccb30ad3303d7f0c05
+# 5b22edfd986c4191b58fc1590754a872
 msgid "Bringing it all together"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:207
-# d2fd5acfaefd4dac8385285e8b422b53
+# 082b56b0a98644a1a48d719436d09b03
 msgid "The restored elgg installation knows **nothing** about the new database name, database username, directory structure, etc. That's what we're going to address here."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:209
-# afc01c5b42124f0c8e98e7f25c381dcd
+# 39e451a669e340b29a4a130692c6012d
 msgid "Edit ``/public_html/settings.php`` on the new hosting provider to reflect the database information for the database that you just created."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:226
-# 3acbefda4262451aae128ee30a9c7840
+# c46bc94ad0874c3687baad61140c8eb6
 msgid "Upload the ``settings.php`` file back to the new host - overwriting the existing file."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:228
-# db05b341d8b449aa8e81153a263507cc
+# 4a6ece32da4741c0a35c55af1ebf94f7
 msgid "Open the phpMyAdmin tool on the new host from the CPanel. Select the ``usery_elgg`` database on the left and click the SQL tab on the top of the page. Run the following SQL queries against the ``usery_elgg`` database:"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:230
 #: ../../admin/duplicate-installation.rst:159
-# 7295296409094b47a7b16ce6a968e61d
-# 45c5eb6b2bec41ecbf2f7f182912ea46
+# 85bb75cc22954641b0b42fe767df2db2
+# 78d39fddf7a94630826e8aa65c3a8e71
 msgid "Change the installation path"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:236
 #: ../../admin/duplicate-installation.rst:166
-# ae956452e947426e9acd777e0269ca09
-# 945acff0dafe405387110a852bd906c1
+# 50643d29cee8498780cabcc370335f53
+# 6072a51bdb9846a1baf493e409d13236
 msgid "Change the data directory"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:242
-# 05bdfdfef8494dc2901f6fe83bc38879
+# c3c7931d7d4541bb98aa5d7ec3a1d03d
 msgid "Change the site URL (if this has changed)"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:248
 #: ../../admin/duplicate-installation.rst:180
-# 72b82d40f31b4004966ab6a19bf73ccb
-# 01cfad196ce440aa9f8a31816faf1080
+# 807eb0652ea14e8b8322420d09a659ee
+# 25655af452954c358e7facadf9bf6dfc
 msgid "Change the filestore data directory"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:255
-# 104d05afd14a42b08c57aa8ed83f5cac
+# f5779572d2154eb7b2baa266efab1646
 msgid "Finalizing the new installation"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:257
-# 298eb1bfcd9e419ea5713c1b542803fd
+# 2f813fc4508249d098b975cd40887b28
 msgid "Run the upgrade script by visiting the following URL: ``http://mynewdomain.com/upgrade.php`` . Do this step twice - back to back."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:259
-# 1d524b9ecee64901a6c201fb56562b14
+# 973ba7c6e5bc4819924292e7b7eccb18
 msgid "Update your DNS records so that your host name resolves to the new host's IP address if this is a permanent move."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:262
-# d4a23d83b5cf495ba45244dd232052dc
+# ceff29b28e2b4cb5a2240c185dd425ad
 msgid "Congratulations!"
 msgstr ""
 
 #: ../../admin/backup-restore.rst:264
-# 2866210e57644e948a6bd3551ac05a31
+# 44d1a2a2e7fb4789b8eb892967541a48
 msgid "If you followed the steps outlined here you should now have a fully functional copy of your primary Elgg installation."
 msgstr ""
 
 #: ../../admin/backup-restore.rst:267
 #: ../../admin/duplicate-installation.rst:266
-# f2a9877bd0c74562a1025c14a8cc2278
-# e884b4975e8a494a8784a26202af0d6a
+# 434ecb5acbde46e6bad26c6202bec04d
+# 85ad18e5fecb4fc5a7a7b54440dca4d1
 msgid "Related"
 msgstr ""
 
 #: ../../admin/backup/ftp-backup-script.rst:2
-# 195487dc07114d2e8bf2246fd389d4b7
+# 637891b9b192415e847e53d2d577ff10
 msgid "FTP backup script"
 msgstr ""
 
 #: ../../admin/backup/ftp-backup-script.rst:4
-# e7a1e41b1ce14d6495a5912fdfa1da0a
+# 8309ef7088bb419fb71c6469ecb23ea1
 msgid "Here is an automated script for backing up an Elgg installation."
 msgstr ""
 
 #: ../../admin/cron.rst:2
-# ee293ffa283e4220969e3de08d0e28ec
+# 366a53a061224f2d9546063829c1a713
 msgid "Cron"
 msgstr ""
 
 #: ../../admin/cron.rst:4
-# ae1f001eb77e45abb7e793747366d3ed
+# 44503c734ed94a75bebbb25e9b074cd2
 msgid "`Cron`__ is a program available on Unix-based operating systems that enables users to run commands and scripts at set intervals or at specific times."
 msgstr ""
 
 #: ../../admin/cron.rst:9
-# 107ce6787f70498380ff7aeee9c6de7d
+# 43bbbeb5bcf04b1c90cb21cb1f7056f7
 msgid "Elgg's cron handler allows administrators and plugin developers to setup jobs that need to be executed at set intervals."
 msgstr ""
 
 #: ../../admin/cron.rst:12
-# 5f1a58acfad742978de2fd6f82f648a2
+# 4437eeaeb82b4973805f174ee0e15880
 msgid "Most common examples of cron jobs in Elgg include:"
 msgstr ""
 
 #: ../../admin/cron.rst:14
-# a5f8a215e245492d827700b78b74b968
+# 47be462e34214150874ada7109e2b0e8
 msgid "sending out queued notifications"
 msgstr ""
 
 #: ../../admin/cron.rst:15
-# 42e7a39b1c52424fb30da5970252c094
+# e41241df5ff5477186070f3d94f113eb
 msgid "rotating the system log in the database"
 msgstr ""
 
 #: ../../admin/cron.rst:16
-# 9c5146ae12de4f7eb94b97e78fc1721a
+# 2dff76d71de54d8fbd346fd2decec32d
 msgid "collecting garbage in the database (compacting the database by removing entries that are no longer required)"
 msgstr ""
 
 #: ../../admin/cron.rst:19
-# 4dbca79dd7b14733a8db9cadfcf12d14
+# 0005f0ab69d14bc9a7bc42a69e856644
 msgid "Currently, Elgg supports the following hooks:"
 msgstr ""
 
 #: ../../admin/cron.rst:21
-# 1ce174af35954bbb8cad159ff4cc75cb
+# 98ea46f370084ffc818976005fbfcbed
 msgid "``minute`` - Run every minute"
 msgstr ""
 
 #: ../../admin/cron.rst:22
-# 3459a44b795e45b6bff257d071c61e14
+# 337f3b3e51164cfa9f1f752de6e92fc8
 msgid "``fiveminute`` - Run every 5 minutes"
 msgstr ""
 
 #: ../../admin/cron.rst:23
-# 130aec81060f451c8e7cfc5f6b235533
+# d84fc010cde141519312769facca5530
 msgid "``fifteenmin`` - Run every 15 minutes"
 msgstr ""
 
 #: ../../admin/cron.rst:24
-# 2c29daafe889428abd60ecf7a9edbf26
+# 22b19e83dc7e468f9e157984de3e91f8
 msgid "``halfhour`` - Run every 30 minutes"
 msgstr ""
 
 #: ../../admin/cron.rst:25
-# 27a0ac9c552c473e974ff08d5fa0b331
+# b7392684d4d14374a073c19c8137bb79
 msgid "``hourly`` - Run every hour"
 msgstr ""
 
 #: ../../admin/cron.rst:26
-# 630d192fe6bd4f908ff8b6bc9c6b1161
+# afd354fc050a4b82a51900d27e30dd3e
 msgid "``daily`` - Run every day"
 msgstr ""
 
 #: ../../admin/cron.rst:27
-# 0b18cb125824485aa95a17e3c364e957
+# 4e64ffca9d814374962be152c3f0e8ec
 msgid "``weekly`` - Run every week"
 msgstr ""
 
 #: ../../admin/cron.rst:28
-# e0ca9a36a42a4db083005699b5a9b4f0
+# cadda4bfb91948c98d6ab3412013d4d7
 msgid "``monthly`` - Run every month"
 msgstr ""
 
 #: ../../admin/cron.rst:29
-# 2038ab9db92b486d800562bd4ad4643a
+# f432e49418c0416a9f7535d333978756
 msgid "``yearly`` - Run every year"
 msgstr ""
 
 #: ../../admin/cron.rst:33
-# 1088746892814c1380b6cb2c3551a1d3
+# 0083c87ff41a4a5b8d8a708a155138ee
 msgid "``reboot`` cron hook has been deprecated and should not be used"
 msgstr ""
 
 #: ../../admin/cron.rst:37
-# f888861a3f8d420ba12730767a121279
+# 7a628788599f49bc85f573b33935a0f7
 msgid "How does it work?"
 msgstr ""
 
 #: ../../admin/cron.rst:39
-# 76557390fd69419f9f5ca1195759d323
+# 7296e3e0283c4b40aa76d2a4b8ae4cae
 msgid "Elgg activates its cron handler when particular cron pages are loaded. As an example, loading http://example.com/cron/hourly/ in a web browser activates the hourly hook. To automate this, cron jobs are setup to hit those pages at certain times. This is done by setting up a ``crontab`` which is a configuration file that determines what cron jobs do and at what interval."
 msgstr ""
 
 #: ../../admin/cron.rst:47
 #: ../../admin/plugins.rst:86
-# daa043afd62d4d3ca9a0cebb03349fb4
-# c3053af139494fb0a1202d258002e059
+# e6b72098aed84dae8ea92a610348378c
+# d80352125f104e6eb865d805531ea18e
 msgid "Installation"
 msgstr ""
 
 #: ../../admin/cron.rst:49
-# 381a5c1c979845ba884c033cecd22357
+# e71e266f28b14d559f46793331a7d529
 msgid "The ``crontab`` needs to specify a script or command that will hit the Elgg cron pages. Two commonly available programs for this are `GET` and `wget`. You will need to determine the location of one of these on your server. Your crontab also needs to specify the location of your website."
 msgstr ""
 
 #: ../../admin/cron.rst:56
-# e3ed5d81752f44328a58e4da5236566f
+# e9bf926cf6e843c183c25a97454eba55
 msgid "In the above example, change the ``ELGG`` and ``GET`` variables to match you server setup. If you have SSH access to your Linux servers, type ``crontab -e`` and add your crontab configuration. If you already have a crontab configured, you will have to merge Elgg information into it. If you don't have SSH access, you will have to use a web-based configuration tool. This will vary depending on hosting provider."
 msgstr ""
 
 #: ../../admin/cron.rst:62
-# 225eb8166b714bca94f4bf09a121cf8c
+# b98b5983a67e40d2aa6408de01d53f31
 msgid "If you choose the ``wget`` utility, you might want to consider these flags:"
 msgstr ""
 
 #: ../../admin/cron.rst:64
-# 67a7a1e782a449bbbaec765c92e39095
+# d7921d3b2c4144c7a3543e23de83aadc
 msgid "``--output-document`` or ``-O`` to specify the location of the concatenated output file. For example, under Debian: ``/usr/bin/wget --output-document=/dev/null``. If you don't do that, a new file will be created for each cron page load in the home directory of the cron user."
 msgstr ""
 
 #: ../../admin/cron.rst:67
-# 80d1dfd2cfca41c9a014af50c5b0f690
+# 9c9e3d6c6f3441bfb8d89e3503c9251f
 msgid "``--spider`` to prevent the cron page from being downloaded."
 msgstr ""
 
 #: ../../admin/cron.rst:70
-# 54dae2f663694951a8406811329988d8
+# 7927b2a52314466e85df88cd7c5579ba
 msgid "On Windows servers, there is a number of cron emulators available."
 msgstr ""
 
 #: ../../admin/cron.rst:72
-# fe14648c119747b29b5307568ee2066d
+# a2d496c2c1b448ac84efe20c22db69ca
 msgid "For information on setting up cron jobs using cPanel see `cPanel Docs`__."
 msgstr ""
 
 #: ../../admin/cron.rst:74
-# 6fb74f0ff3474f6f980e6fb10ab1c00d
+# c3befc4e38214eaba75848c7cc574a77
 msgid "In the ``command`` field, enter the appropriate link of the cron page. For example, for a weekly cron job, enter the command as http://www.example.com/cron/weekly/."
 msgstr ""
 
 #: ../../admin/cron.rst:77
-# 2d29e448d8824db49df1b4333244139b
+# 80b622c55b2249d4b7981a9c32859eeb
 msgid "To see if your cron jobs are running, visit Statistics > Cron in your Elgg admin panel."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:2
-# ed3470610ef846b99bdf1c9c8862ac66
+# 9bce1bb165d84575a9e1e03aa6b8f745
 msgid "Duplicate Installation"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:12
-# 9e24ccc8ba554e37b897d18bf13ea5b2
+# 306f28c8968143d9a889863ef5061e51
 msgid "Why Duplicate an Elgg Installation?"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:14
-# f3c1454a92384c4281bf73f99886d9ca
+# 1d3572d9fa4a457995389634dfdea444
 msgid "There are many reasons you may want to duplicate an Elgg installation: moving the site to another server, creating a test or development server, and creating functional backups are the most common. To create a successful duplicate of an Elgg site, 3 things need to be copied:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:16
-# ccff2503b4d24550a89eababf09bd4e9
+# 06c61f75ef7e4f6eb9dec6ddbe6f783f
 msgid "Database"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:17
-# 41225e462d7c4ae3b9d050a4378a1bc7
+# a2efcc8e234b4a38be02f3a67b26d872
 msgid "Data from the data directory"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:18
-# 30c3d6e5dade452481485270908fb461
+# 4d4106b72e2446f6b9dc0008ea07b9de
 msgid "Code"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:20
-# 904f84e7e70e4de8a09e506d1309d127
+# 813d21130a324ca1996643ea64265af0
 msgid "Also at least 5 pieces of information must be changed from the copied installation:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:22
-# 1db6caeccdde4b9081a76c9caa24d6c3
-msgid "``engine/settings.php`` file"
+# 830e518e56f540d1adf4f983df431825
+msgid "``settings.php`` file which could also be in the pre 2.0 location ``engine/settings.php``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:23
-# 683a8968c75e4596965b94380df9aa40
+# 95b84a4df35d4222a3a5e1d7995f23ab
 msgid "``.htaccess`` file (Apache) or Nginx configuration depending on server used"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:24
-# 93f5c8897ee246459dfb7b1d46288270
+# cce88c27d4aa4408942956d92d55abbf
 msgid "database entry for your site entity"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:25
-# 179a33c785c94897971a26aebb0a540d
+# 690c1168293143049e0d8287e6917985
 msgid "database entry for the installation path"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:26
-# 438ee76ed3bf4bdbb65a5ec6dff62219
+# 8bfa6bb0da284e80956930b6ee6f6a61
 msgid "database entry for the data path"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:29
-# 7b93c03eb3de43eeaf0c9c3f8de9cf84
+# 34f85970dc0f4355b02e24f675131619
 msgid "What Is Not Covered in This Tutorial"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:31
-# c368e50f6f4240d18d3e0ea910cd8e57
+# a68055813dbf4903893e5d87e057e633
 msgid "This tutorial expects a basic knowledge of Apache, MySQL, and Linux commands. As such, a few things will not be covered in this tutorial. These include:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:33
-# 6444b290bf8145a6aa8dd01364c3006e
+# fc98243005c4422e8cd5603272f32a86
 msgid "How to backup and restore MySQL databases"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:34
-# 89f63651dc8b48cab0482a2fe4d50325
+# 1e450122eab745adbb1f784d3c86d092
 msgid "How to configure Apache to work with Elgg"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:35
-# 28a9ed9a73ee48ad921c9aee065cdc53
+# e512ea9a681a44998f8c36c91df50c95
 msgid "How to transfer files to and from your production server"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:38
-# 466e5587e2d5466abd3d06769b4d22a0
+# 2d67f6e2035845ca8af54d1809d89d94
 msgid "Before You Start"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:40
-# d4f8a548fb3e40e1853ac23f17630e9c
+# 5396703f18864c62987d8c46cdab48ee
 msgid "Before you start, make sure the Elgg installation you want to duplicate is fully functional. You will also need the following items:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:42
-# c2a35e01c8be40c39aa98104b13efc60
+# 62cc456e4eb845b2bae0899df851a819
 msgid "A backup of the live Elgg database"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:43
-# fcb206930d6746f18f45e089563ac5d3
+# 794530d303834429928d37a4c4052e7d
 msgid "A place to copy the live database"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:45
-# a749f69a343e48ce8a4f22aaea574a0c
+# dda5721a6bf14c90b802272615473e93
 msgid "A server suitable for installing duplicate Elgg site"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:45
-# b570f1a26f36458380ae5821f4a86742
+# 64ed55c30ad14b1faf712972ecbaa78e
 msgid "(This can be the same server as your production Elgg installation.)"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:47
-# 30422b82477d4196a311009cb9b7fd2e
+# db33d8fff9e64d6cb30e24db143e7a75
 msgid "Backups of the database can be obtained various ways, including phpMyAdmin, the MySQL official GUI, and the command line. Talk to your host for information on how to backup and restore databases or use Google to find information on this."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:49
-# 79ee5eba464b438c813a10ee1e97351c
+# ad494d283f2543249d54f60c466064f4
 msgid "During this tutorial, we will make these assumptions about the production Elgg site:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:51
-# 519ea4062ab348579215b6d53048ab00
+# 333e46d317724399a9be1aabf7ed4936
 msgid "The URL is ``http://www.myelgg.org/``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:52
-# 59deb4a03a104a24af72f0b760d845ff
+# 26e8f141aa744137adc133f3edc12220
 msgid "The installation path is ``/var/www/elgg/``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:53
-# 11784e838c2b4fc3a8fc592cacf672b2
+# c14899fc845b40249b2e5898e7973160
 msgid "The data directory is ``/var/data/elgg/``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:54
 #: ../../admin/duplicate-installation.rst:65
-# bb0873bd16164b7a968f4087fc1dce7b
-# 45058d23ef944595902a3a11f92465ce
+# d86c11ec08bb4c7ea840705d6fae56b7
+# 291b84a256af4448aa1af482433ea520
 msgid "The database host is ``localhost``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:55
-# e5947ca7c43a4b92a641a89138835783
+# bfedfda3d4584d858d219fecb211f978
 msgid "The database name is ``production_elgg``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:56
 #: ../../admin/duplicate-installation.rst:67
-# eaa98dff5d3c4e658d1926c8650528a6
-# 15eabb6a674341e7a0508e96091c7339
+# af62171bf82643a9a163cd291241091b
+# ed9901851c3b405db03d3b3caf77b044
 msgid "The database user is ``db_user``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:57
 #: ../../admin/duplicate-installation.rst:68
-# 002ed2eff30d472a97e810935130dbac
-# 11c74540ff1649fbaba1d137819b6a30
+# 9e4a7f647107497fa1694cde29ba7bc0
+# 3df9b95fe73a4decb09acd94cb2e2275
 msgid "The database password is ``db_password``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:58
 #: ../../admin/duplicate-installation.rst:69
-# 5395bc0a50264c919b59ad0be65226b0
-# 1532860708a643719582cea6fc685427
+# 9dd46597b0624522812e5cac65c3dd0e
+# 1dd63848716f41909d9e7446461ab776
 msgid "The database prefix is ``elgg``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:60
-# e88558e861d246af9292db4e1917968b
+# d6bf89047d784979aeff030381e9682a
 msgid "At the end of the tutorial, our test Elgg installation details will be:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:62
-# 7a794bcf5a7d4141a0ed34898b179714
+# d68252eec25c4f909b01a07b4098baa2
 msgid "The URL is ``http://test.myelgg.org/``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:63
-# 31e210c9f9844d9abc53118795040a83
+# 464ba246c6ed4f9b8b3cbe4851426cfb
 msgid "The installation path is ``/var/www/elgg_test/``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:64
-# baf1f593bcd04d0a8620204ed78674f9
+# 351366e654804ab581b01ebfc5830b9d
 msgid "The data directory is ``/var/data/elgg_test/``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:66
-# b72e4acbacc541ad939d87b8c7ba1b46
+# ec278e0ddfd045538c5ce3124373b115
 msgid "The database name is ``test_elgg``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:72
-# 2d7c19ce4430463dbad8c3650e3f4d3f
+# d0eaf43b37fa4252a6bbf17fbc7cb3ea
 msgid "Copy Elgg Code to the Test Server"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:74
-# 76c224f57fea4bf0a5b94dc54b4be0d0
+# 8ed40afaed7d47b78d4ca2125674f0d3
 msgid "The very first step is to duplicate the production Elgg code. In our example, this is as simple as copying ``/var/www/elgg/`` to ``/var/www/elgg_test/``."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:81
-# ee81b3cc1ce048e6ab607d0f7493d333
+# 9c4097c4485e44298778f5ddf99224cd
 msgid "Copy Data to the Test Server"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:83
-# 16eaa331f15c463692a79553708aeadc
+# e4a228e106054917ac8f61c505c4ddad
 msgid "In this example, this is as simple as copying ``/var/data/elgg/`` to ``/var/data/elgg_test/``."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:89
-# 7a4df1831e054c7cb62c34d2a16d2eac
+# b740d676265a4ee793a4a7840674e016
 msgid "If you don't have shell access to your server and have to ftp the data, you may need to change ownership and permissions on the files."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:93
-# c78e2de8f74d473db3ef9816ac40b279
+# 565fed124b224b28b82a295eefffef51
 msgid "You also need to delete the views cache on the test server after the copy process. This is a directory called ``views_simplecache`` in your data directory and the directory called ``system_cache`` ."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:96
-# 27350ddbb24049428df205072094cf33
-msgid "Edit engine/settings.php"
+# 3c2f5697f6034550afba29517e529722
+msgid "Edit settings.php"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:98
-# cf239002c89a4e769257e0eb89ea3118
-msgid "The ``engine/settings.php`` file contains the database configuration details. These need to be adjusted for your new test Elgg installation. In our example, we'll look in ``/var/www/elgg_test/engine/settings.php`` and find the lines that look like this:"
+# a30a77275c194a2e9a12f50031bcc39b
+msgid "The ``settings.php`` file contains the database configuration details. These need to be adjusted for your new test Elgg installation. In our example, we'll look in ``/var/www/elgg_test/engine/settings.php`` and find the lines that look like this:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:120
-# db4eeb5ba83d485f8daefe7c3177eb8c
+# b63868a89b9c412fbd769384e8103267
 msgid "We need to change these lines to match our new installation:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:144
-# a29d1b1d42414d5fad32976c17f00b48
+# 5950e73e8d944693b765f0de8c24d2b8
 msgid "Notice the ``$CONFIG->dbname`` has changed to reflect our new database."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:147
-# 638a4118e83649669d64e3acf6775587
+# 700f784e59d74f1ab9b2828d5f00474a
 msgid "Copy Elgg Database"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:149
-# d65dca169e17431d87f0657e064a6c98
+# 16581aabaf4c4fc7800dbef14d93662b
 msgid "Now the database must be copied from ``elgg_production`` to ``elgg_test``. See your favorite MySQL manager's documentation for how to make a duplicate database. You will generally export the current database tables to a file, create the new database, and then import the tables that you previously exported."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:151
-# 4055bb40e1a143f49de46a50bda33bd4
+# 7b04a6a4755846ab8537706fce4797d3
 msgid "You have two options on updating the values in the database. You could change the values in the export file or you could import the file and change the values with database queries. One advantage of modifying the dump file is that you can also change links that people have created to content within your site. For example, if people have bookmarked pages using the bookmark plugin, the bookmarks will point to the old site unless your update their URLs."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:154
-# 53f34c9315914b6b9ed69c53b5955f3a
+# 18e40b7651cf4ab7bfebaa24580e0e1c
 msgid "Database Entries"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:156
-# 0c4e8c4344324e9db39fc4b4b5d8f74b
+# 8ffc9edb63024ab3a06c56272c59d54b
 msgid "We must now change 4 entries in the database. This is easily accomplished with 4 simple SQL commands:"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:173
-# 1465ed688331400e8e2f0fdbe0797e74
+# 895067523b8c46189b09dbbe4b51f772
 msgid "Change the site URL"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:201
-# d293d3ab6efb440ab2ad20c62f730340
+# 54fa77573358487983921213d7073c2a
 msgid "Only change the first path here!!"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:204
-# 69ec98161d324f4f97bccd9e3c19cd55
+# b2959ad0d7344da98a90e0bdcc62e3b2
 msgid "Check .htaccess"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:206
-# 34c690f00d2241429b810e1953c898cf
+# 1c3b3b9b3b3f47d3a8d1f7f3226003f5
 msgid "If you have made changes to .htaccess that modify any paths, make sure you update them in the test installation."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:209
-# c4e60585639b4bdeaa779be32703e316
+# 50115fae03034b05a9dfde252dbc57e5
 msgid "Update Webserver Config"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:211
-# 98e36d50777244e1b06b704f9218ea00
+# 9656c978c23f4a7aa08de7ca74fa867f
 msgid "For this example, you must edit the Apache config to enable a subdomain with a document root of ``/var/www/elgg_test/``. If you plan to install into a subdirectory of your document root, this step is unnecessary."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:213
-# 44592731641441b38752a977bef7856d
+# a878bfbf51344e7c97aad58f4b9e87f8
 msgid "If you're using Nginx, you need to update server config to match new paths based on ``install/config/nginx.dist``."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:216
-# 30379672a75747e79edf30598d7d1e97
+# bcffc05c0b28488eb32d47cf07aa94ec
 msgid "Run upgrade.php"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:218
-# 20abec588f124ed2b57bf0802fef4fac
+# 61b42b39205742c7aa08a972380a471e
 msgid "To regenerate cached data, make sure to run ``http://test.myelgg.org/upgrade.php``"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:221
-# fc43a8919bc14113b0ca56d90d02ee69
+# 8d07ff81264a47429de8bfa30f5b01f6
 msgid "Tips"
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:223
-# 737967af83794bd1a6b0049c39d59909
-msgid "It is a good idea to keep a test server around to experiment with installing new mods and doing development work. If you automate restorations to the ``elgg_test`` database, changing the ``$CONFIG`` values and adding the follow lines to the end of the ``elgg_test/engine/settings.php`` file will allow seamless re-writing of the MySQL database entries."
+# b28a31732a474ae88643399ac01f48c5
+msgid "It is a good idea to keep a test server around to experiment with installing new mods and doing development work. If you automate restorations to the ``elgg_test`` database, changing the ``$CONFIG`` values and adding the follow lines to the end of the ``elgg_test/settings.php`` file will allow seamless re-writing of the MySQL database entries."
 msgstr ""
 
 #: ../../admin/duplicate-installation.rst:270
-# a2dbbe80c46947b8a6347d503e49bb84
+# a14f8e74c35144d0b88ceb7819b3e7e8
 msgid ":doc:`backup-restore`"
 msgstr ""
 
 #: ../../admin/getting-help.rst:2
-# 8a19f8dd943c483483b204056fe3f07d
+# b1d6927e360e402c9f51e07f4679ccbe
 msgid "Getting Help"
 msgstr ""
 
 #: ../../admin/getting-help.rst:4
-# 864c7e58076c4979beac35d74ef48c4c
+# c71b750361d64ade9abc41929ecdc179
 msgid "Having a problem with Elgg? The best way to get help is to ask at the `Community Site`_. This site is community supported by a large group of volunteers. Here are a few tips to help you get the help you need."
 msgstr ""
 
 #: ../../admin/getting-help.rst:13
-# d1fb8c9a26de4347917d362b81798318
+# 9799bf55e9e74d5caca2884a35ae443c
 msgid "Getting help"
 msgstr ""
 
 #: ../../admin/getting-help.rst:16
-# 27db5604cdb44e7bbc8ea6f9bef579ea
+# 830d7d8aa100487eb55541be5b88e268
 msgid "Don't be a `Help Vampire`_"
 msgstr ""
 
 #: ../../admin/getting-help.rst:18
-# 4eac3d1ca01048f7be75f72d33e12ca4
+# dd3fa75d518b4a159c54c02a3cb40448
 msgid "We were all newbies at one time, but we can all learn. Not showing that you are making attempts to learn on your own or do your own research is off putting for those helping. Also, very generic questions like \"How do I build a forum?\" are almost impossible to answer."
 msgstr ""
 
 #: ../../admin/getting-help.rst:23
-# 339b881df7004e9a82a8e8427e670b39
+# 1b0320124bc043e19221f6c5f0abcc87
 msgid "Search first"
 msgstr ""
 
 #: ../../admin/getting-help.rst:25
-# 82075f9c54ae42ea8593ebf04ebd5f31
+# a7fe7a5a2a9841dd98fcf37b624b8e98
 msgid "Be sure to search the documentation (this site), the `Community Site`_, and Google before asking a question. New users to Elgg frequently have the same questions, so please search. People are less inclined to reply to a post that has been answered many other times or that can be answered easily by Googling."
 msgstr ""
 
 #: ../../admin/getting-help.rst:28
-# 71d30cb7bf514fcead5540929b29ea92
+# 82e1afc70fdf4d5eaf9f0a9c2e02098c
 msgid "Ask once"
 msgstr ""
 
 #: ../../admin/getting-help.rst:30
-# 0f9d643893c54c04b41fe312b3b40e0b
+# b38975236f3f4483873f345b99fa4a4e
 msgid "Posting the same questions in multiple places makes it hard to answer you. Ask your question in one place only. Duplicate questions may be moderated."
 msgstr ""
 
 #: ../../admin/getting-help.rst:33
-# d35e9469003f4c489e1fb9a9114afd08
+# 1b0f927032b94330ae5963f02b1968ab
 msgid "Include Elgg Version"
 msgstr ""
 
 #: ../../admin/getting-help.rst:35
-# 834d0068edcd4ef6a287e4ffcf5cab46
+# 60c21b330ccd419d95ea579b29316486
 msgid "Different versions of Elgg have different features (and different bugs). Including the version of Elgg that you are using will help those helping you."
 msgstr ""
 
 #: ../../admin/getting-help.rst:38
-# 584421e165c0472dacad54bf9e9d93b3
+# ce414611c3224e37b37a6fdd30d23b63
 msgid "Have a reasonable profile"
 msgstr ""
 
 #: ../../admin/getting-help.rst:40
-# b45cac7b083b43129553b3832655df19
+# 9ed2d1860e304e67a5be95b37f08b9a4
 msgid "Profiles that look like spam or have silly names will often be ignored. Joviality is fine, but people are more likely to help Michael than 1337elggHax0r."
 msgstr ""
 
 #: ../../admin/getting-help.rst:43
-# 9cb733f91e924f8fa207eedca96f3bb1
+# a8b50b94f14a49738239891f66825338
 msgid "Post in the appropriate forum"
 msgstr ""
 
 #: ../../admin/getting-help.rst:45
-# a12bc3d3d4e3496eb30a7cbfd1da40f6
+# 5ba955ec82e34f0182ecaf99af4cea80
 msgid "Check to make sure you're posting in the right forum. If you have a question about creating a plugin, don't post to the Elgg Feedback forum. If you need help installing Elgg, post to Technical Support instead of the Theming group."
 msgstr ""
 
 #: ../../admin/getting-help.rst:48
-# 78b3a8a00c1b40a79d04a184ca943c5f
+# 9b5572690b514846b6c25340b220de3c
 msgid "Use a descriptive topic title"
 msgstr ""
 
 #: ../../admin/getting-help.rst:50
-# 93f063171bc6404aa32b62b5265ddb9a
+# 2203f947179f44c38d16872c7416f1e3
 msgid "Good topic titles concisely describe your problem or question. Bad topic titles are vague, contain all capital letters, and excessive punctuation."
 msgstr ""
 
 #: ../../admin/getting-help.rst:52
-# 7fd4e37a9c194815ac4daec625f75b17
+# 99b4e7e4555243e5b6ff339dbdbe7f90
 msgid "Good title: \"White screen after upgrading to 1.7.4.\""
 msgstr ""
 
 #: ../../admin/getting-help.rst:54
-# e06d177f10a94c8d97b07bf8ab1dd8fd
+# ed81fb58b3ea4ab4941c7dc4e131a8ce
 msgid "Bad title: \"URGENT!!!!! site broke ;-( losing money help!!!!!!!!!!!\""
 msgstr ""
 
 #: ../../admin/getting-help.rst:57
-# 7067ba2e2a834c52b28373c3ffd8a4d2
+# 5ba98ff4140242198fa8814ff24e7762
 msgid "Be detailed"
 msgstr ""
 
 #: ../../admin/getting-help.rst:59
-# 7a42b4def273431e990142693b461ffb
+# 568f0d7954924b2a9b5cf5f478e7d452
 msgid "Include as many details about your problem as possible. If you have a live site, include a link. Be forthcoming if community members might ask for more information. We can't help you if you won't give any details!"
 msgstr ""
 
 #: ../../admin/getting-help.rst:62
-# e3074812caa84ffca0b45304fa9866c6
+# 39d58836a45e461da519732712d57527
 msgid "Keep it public"
 msgstr ""
 
 #: ../../admin/getting-help.rst:64
-# 53cb9370a73e418ea5d176d124395d36
+# 6935086b266a43639f73f54e908a54f1
 msgid "This is a public forum for the good of the Elgg project. Keep posts public. There's no reason for anyone to ask you to send a private message or email. Likewise, there's no reason to ask anyone to send a private email to you. Post in the public."
 msgstr ""
 
 #: ../../admin/getting-help.rst:67
-# e04f89b8819f4a30963d3d2672c59c06
+# 68d5a702ae2e441fa8ed85ee35048b41
 msgid "Guidelines"
 msgstr ""
 
 #: ../../admin/getting-help.rst:69
-# cde066de034a43d4af8192a94cbce187
+# 8c2714d4b36942a5a77ae7a7643b0453
 msgid "In addition to the `site-wide Terms and Policies`_, following these guidelines keeps our community site useful and safe for everyone."
 msgstr ""
 
 #: ../../admin/getting-help.rst:74
-# 485a8a87cd034352976db856a51204bd
+# 99691cb2bc674ae8aa687ee162ab0012
 msgid "Content"
 msgstr ""
 
 #: ../../admin/getting-help.rst:76
-# e733e421177e42ec852fed0ad016bc24
+# 3daac90d3c764206bd4dd0387903cdd9
 msgid "All content must be safe for work: PG in the US and UK. If your Elgg site has adult content and you have been asked to post a link, please mark it NSFW (Not Safe For Work) so people know."
 msgstr ""
 
 #: ../../admin/getting-help.rst:78
-# 061c3b877a3e46d9ad457e72bfa0e4ac
+# 5a654074c17f481eb148e791623d07e9
 msgid "Excessive swearing in any language will not be tolerated."
 msgstr ""
 
 #: ../../admin/getting-help.rst:81
-# ce119bf922bf4abfbd00901912d08bbc
+# f75e275d74e94c3a9f2da802d3f5edba
 msgid "Mood"
 msgstr ""
 
 #: ../../admin/getting-help.rst:83
-# 5101aa16af7e46539f9d9d1951c49dcb
+# 5dd751feee1c48b8b12ff873436a2be1
 msgid "Working with technical problems can be frustrating. Please keep the community site free of frustration. If you're feeling anxious, take a step away and do something else. Threatening or attacking community members, core developers, or plugin developers will not help solve your problem and will likely get you banned."
 msgstr ""
 
 #: ../../admin/getting-help.rst:86
-# 2ff64c1486534967a5bbfbc4357c5edf
+# ded7d90e65664344b2c70212ecfe4962
 msgid "Advertising"
 msgstr ""
 
 #: ../../admin/getting-help.rst:88
-# 1ec10a88e1fa4a8eaae54a7fe43e3f3c
+# 2d1ceb84a473424694b5dcf95680fd0e
 msgid "Advertising is not allowed. Posts with any sort of advertising will be moderated."
 msgstr ""
 
 #: ../../admin/getting-help.rst:91
-# 8307cf24dcea4269aae6f5939a29e348
+# fd63035f1b0f4cc9a203466df0956772
 msgid "Asking for money / Offering to pay"
 msgstr ""
 
 #: ../../admin/getting-help.rst:93
-# 40f0d776850e4f8e8c40cfb46157d337
+# 079c4a0821944786bf3a871726045406
 msgid "Don't ask for money on the community site. Likewise, don't offer to pay for answers. If you are looking for custom development, post to the Professional Services group. Posts asking for money or recommending a commercial plugin may be moderated."
 msgstr ""
 
 #: ../../admin/getting-help.rst:96
-# 0cc51af907d14209a193dcaec70ac9c0
+# ef03b4bb4d494808b6155375d898d9a1
 msgid "Links"
 msgstr ""
 
 #: ../../admin/getting-help.rst:98
-# 44d6aac6a9db42fdbbb2a8840b427157
+# b34299f2e8214ff0ab421c3615214e34
 msgid "If you're having a problem with a live site, please provide a link to it."
 msgstr ""
 
 #: ../../admin/getting-help.rst:100
-# 658995c4a00c49b6a600a7f92746b951
+# 84133450b15f40898618d2985d850418
 msgid "That said, the community site is not a back linking service or SEO tool. Excessive linking will be moderated and your account may be banned."
 msgstr ""
 
 #: ../../admin/getting-help.rst:103
-# c4c39a4d0dd64174b289452d10257346
+# a3d19118fe714ee7bea6d21c13c41271
 msgid "Signatures"
 msgstr ""
 
 #: ../../admin/getting-help.rst:105
-# effe410e9aee4ca3b7acf683c830817e
+# f9ac51e9b85b464bb29579bceaa2c8cc
 msgid "There's a reason Elgg doesn't have an option for signatures: they cause clutter and distract from the conversation. Users are discouraged from using signatures on the community site, and signatures with links or advertising will be removed."
 msgstr ""
 
 #: ../../admin/getting-help.rst:108
-# 619a4b71a96949a59e05f280591f7637
+# 181d7c18857848608a60af240ae41645
 msgid "Bumping, +1, me too"
 msgstr ""
 
 #: ../../admin/getting-help.rst:110
-# 65fbd73a407e4b2b9786eec7683612e3
+# f1a244ae808a4c909ca5260a6df8bcd0
 msgid "Don't do it. If your question hasn't been answered, see the top of this document for tips. These types of post add nothing to the conversation and may be moderated."
 msgstr ""
 
 #: ../../admin/getting-help.rst:113
-# 991b6f226d3e4b629129ae9593b1d267
+# 7da69f1fc11e41f9b2b5914ad3dea592
 msgid "Posting Code"
 msgstr ""
 
 #: ../../admin/getting-help.rst:115
-# cd5128dd79184561bca87b1be484f162
+# 9cab28e37e164dd59bd49d2e888dc967
 msgid "Long bits of code are confusing to read through in a forums context. Please use http://elgg.pastebin.com to post long bits of code and provide the Paste Bin link instead of directly posting the code."
 msgstr ""
 
 #: ../../admin/getting-help.rst:118
-# cc7a0d17baef4b90a8540515e2ae2458
+# 15002b318fbe4f27bdb8699a960034ac
 msgid "Good Ideas"
 msgstr ""
 
 #: ../../admin/getting-help.rst:120
-# 845cb3139a7047b09493812a7c2c540d
+# 2411b1c2d408471da87fce4ef3c2cb67
 msgid "Not policies, but good ideas."
 msgstr ""
 
 #: ../../admin/getting-help.rst:123
-# 0bde824348094126bafe035e3f62bc3a
+# 66f437ee43ec4a5aa57c03decf3be934
 msgid "Say thanks"
 msgstr ""
 
 #: ../../admin/getting-help.rst:125
-# 3b346fc240b2428694d62346eee356d5
+# 5f9b6519a5404044b316fbeaa710eb79
 msgid "Did someone help you? Be sure to thank them! The community site is run by volunteers. No one has to help you with your problem. Be sure to show your appreciation!"
 msgstr ""
 
 #: ../../admin/getting-help.rst:128
-# b7b4ef09b7394e3288db98ba951e1c46
+# f5b53e25b3624953ae632f3f205cb8be
 msgid "Give back"
 msgstr ""
 
 #: ../../admin/getting-help.rst:130
-# 4fe301a2e5e14899823ea23fd177497c
+# 1ec27769c85f4b87a74adef739c50c11
 msgid "Have a tip for Elgg? See someone with a similar problem you had? You've been there and can help them out, so give them a hand!"
 msgstr ""
 
 #: ../../admin/getting_started.rst:2
-# ace595d10a424fb8ae48f4430fa5b772
+# 7400351b039c4458bd46d2255d38114d
 msgid "Getting Started"
 msgstr ""
 
 #: ../../admin/getting_started.rst:4
-# cea9686f132c4e1bbf781ae01fd1b93b
+# 20ab1ad024f8462cb25bb318b0ecf3d1
 msgid "You have installed Elgg and worked through any potential initial issues. What now? Here are some suggestions on how to to familiarize yourself with Elgg."
 msgstr ""
 
 #: ../../admin/getting_started.rst:8
-# 6c43645083ca4af1b3e703078eaf867c
+# 047b2f7950ce45958f3e787fcde0b3f6
 msgid "Focus first on core functionality"
 msgstr ""
 
 #: ../../admin/getting_started.rst:10
-# 886fba124800434ba4c1370e81526335
+# 0413274109d149ed987594f8608d8cfd
 msgid "When you're new to Elgg, it's best to explore the stock features in core and its bundled plugins before installing any third party plugins. It's tempting install every interesting plugin from the community site, but exploring the core features builds a familiarity with Elgg's expected behavior, and prevents introducing any confusing bugs from third party plugin into your new Elgg network."
 msgstr ""
 
 #: ../../admin/getting_started.rst:12
-# ce01ed198b6b4cedb201bd0abcb51a57
+# d05bded8508f4a2db9944a63754e8a97
 msgid "Elgg installs with a basic set of social network plugins activated: blogs, social bookmarking, files, groups, likes, message boards, wiki-like pages, user profiles, and microblogging. To change the plugins that are activated, log in as an admin user, then use the topbar to browse to Administration, then to Plugins on the right sidebar."
 msgstr ""
 
 #: ../../admin/getting_started.rst:14
-# 7d3a378c1d6b4b3ba1977cbbf221f156
+# 512d3d79441f421da42e26b1b4d357be
 msgid "The user you create during installation is an admin user."
 msgstr ""
 
 #: ../../admin/getting_started.rst:17
-# 74bc1dd3b1504ed3b23d0a17474928e3
+# ebb17527bdd94bc6a4cdd5ebfff66aa4
 msgid "Create test users"
 msgstr ""
 
 #: ../../admin/getting_started.rst:18
-# 564b5868b4ee47f1869b511de0364f86
+# 3c9dc60f047b4bf6bb392937a4899cda
 msgid "Users can be created two ways in stock Elgg:"
 msgstr ""
 
 #: ../../admin/getting_started.rst:20
-# 815064fbd657482fa40542616bf830db
+# 9dbe901b572846a2abdb46ce92bdd2f4
 msgid "Complete the signup process using a different email address and username. (Logout first or use a different browser!)"
 msgstr ""
 
 #: ../../admin/getting_started.rst:21
-# d910638d3ab24aa0ba250730c4a670dd
+# 394015377c5c4e56b8635b4ee1a3b1d6
 msgid "Add a user through the Admin section by browsing to Administration -> Users -> Add New User."
 msgstr ""
 
 #: ../../admin/getting_started.rst:23
-# 7559abba6a7243bf8fe2ebb56136a6ea
+# 503bcf45b6fa4c16b1270f941f8f2cd7
 msgid "Users that self-register must validate their account through email before they can log in. Users that an admin creates are already validated."
 msgstr ""
 
 #: ../../admin/getting_started.rst:26
-# cb36070dc95548d6a28dce6dd6ec6972
+# 7da31719a696454fa9dbd908a13be183
 msgid "Explore user functionality"
 msgstr ""
 
 #: ../../admin/getting_started.rst:27
-# 2bc24cdfc0c64285b24debbe4113e923
+# 150713a0a53f411b8e89c683adc32d1f
 msgid "Use your test users to create blogs, add widgets to your profile or dashboard, post to the Wire (microblogging), and create pages (wiki-like page creation). Investigate the Settings on the topbar. This is where a user sets notification settings and configures tools (which will be blank because none of the default plugins add controls here)."
 msgstr ""
 
 #: ../../admin/getting_started.rst:30
-# 0ca7ff1814cd474eb8cf8a7b602be019
+# 7586d05daf534d11b887fe0f5e409ba3
 msgid "Explore admin functionality"
 msgstr ""
 
 #: ../../admin/getting_started.rst:31
-# 97db14c28cb447ab99c82194c7f06897
+# 920e0316a3114c07b58c92fd68caa0e6
 msgid "All of the admin controls are found by clicking Administration in the topbar. The has a dashboard with a widget that explains the various sections. Change options in the Configure menu to change how Elgg looks and acts."
 msgstr ""
 
 #: ../../admin/getting_started.rst:34
-# 1333684a916b47cbaa8249c5a4e75a26
+# a5463309e88f4546bd6419193dd8e33c
 msgid "Extending Elgg"
 msgstr ""
 
 #: ../../admin/getting_started.rst:35
-# 349d97bcea3f496c9837b8d610c746de
+# 598b09d107124cdc9a93e180879f7266
 msgid "After exploring what Elgg can do out of the box, install some themes and plugins. You can find many plugins and themes at the community site that have been developed by third parties. These plugins do everything from changing language strings, to adding chat, to completely redesigning Elgg's interface. Because these plugins are not official, be certain to check the comments to make sure you only install well-written plugins by high quality developers."
 msgstr ""
 
 #: ../../admin/index.rst:2
-# c46263c0ad9940c49351b8e89d0ea668
+# c3f1473cf118456c94930bb089ad1bac
 msgid "Administrator Guides"
 msgstr ""
 
 #: ../../admin/index.rst:4
-# 42e6ec17c0504cbc829446060b5e30cc
+# c27c6a4de83b48308e660bf541381746
 msgid "Best practices for effectively managing an Elgg-based site."
 msgstr ""
 
 #: ../../admin/performance.rst:2
-# c53019e9188a4edda0a4579c88464a1d
+# fe23d56ea606461a850a5fb7af62f93f
 msgid "Performance"
 msgstr ""
 
 #: ../../admin/performance.rst:4
-# 54a8853e2b684173bb3101425509974c
+# aa2f6e34884c424ba2dcbad2fed91410
 msgid "Make your site run as smoothly and responsively as possible."
 msgstr ""
 
 #: ../../admin/performance.rst:11
-# 72517d12e65a4cc781dec6539e0e4ff4
+# c6b322e674b74636b8d6a1cf3d6277e6
 msgid "Can Elgg scale to X million users?"
 msgstr ""
 
 #: ../../admin/performance.rst:13
-# a41df0940ff14895a534678d0d66fb7b
+# cdfb836655914ac19251608f6136768f
 msgid "People often ask whether Elgg can scale to large installations."
 msgstr ""
 
 #: ../../admin/performance.rst:15
-# be733a04d232430282fc3b12b01128f9
+# 117733bf24604bf6a4e57fead7886d2a
 msgid "First, we might stop and ask, \"where are you planning to get all those users?\" Seriously, though, this is a really interesting problem. Making Elgg scale is, if anything, an issue of technical engineering. It's interesting but more or less a solved problem. Computer science doesn't work differently for Elgg than for Google, for example. Getting millions of users? That's like the Holy Grail of the entire tech industry."
 msgstr ""
 
 #: ../../admin/performance.rst:22
-# 928dc049b41241698fb8602aabe04630
+# 3b0a0b7a4aaa4390aa2c37771f412ff1
 msgid "Second, as with most things in life, the answer is \"it depends\":"
 msgstr ""
 
 #: ../../admin/performance.rst:24
-# a8398577f3014de0aaa3eaa1600d506a
+# fc2c8553c2be4343bf29ab9cb05b3e9b
 msgid "How active are your users?"
 msgstr ""
 
 #: ../../admin/performance.rst:25
-# 484c754d796b4717afd68bfdcab3ba6f
+# be2b98ab47f8451d853481b0f9f2afd3
 msgid "What hardware is Elgg running on?"
 msgstr ""
 
 #: ../../admin/performance.rst:26
-# bbb38b65c51b4a9aaa6cf3378005fc72
+# be3d224a3c114737879f4eda3e285ac0
 msgid "Are your plugins behaving well?"
 msgstr ""
 
 #: ../../admin/performance.rst:28
-# 8829a64bcf7848a28a335117bc98023a
+# 81a7574f2ee44ed0950a09918ea3189d
 msgid "`Improving the efficiency of the Elgg engine`__ is an ongoing project, although there are limits to the amount that any script can do."
 msgstr ""
 
 #: ../../admin/performance.rst:33
-# d8e1847d133a46aaa49b7e285f2e96c3
+# 79ffd34399884ec0876bf2d054a80fe8
 msgid "If you are serious about scalability you will probably want to look at a number of things yourself."
 msgstr ""
 
 #: ../../admin/performance.rst:36
-# 4e93743ee0024a75b53351b95b8208aa
+# 0616e128a5c7444796089895565b31f4
 msgid "Measure first"
 msgstr ""
 
 #: ../../admin/performance.rst:38
-# 19b0acb5d255406088a2b5f3119748bc
+# b3d0d3d20cb34ce48e0571482dafdeb0
 msgid "There is no point in throwing resources at a problem if you don't know:"
 msgstr ""
 
 #: ../../admin/performance.rst:40
-# 53e1fe48ca3e48f19f73069eb44aca2d
+# 0df86a6a885d4dae9e84e82c9a19cca1
 msgid "what the problem is"
 msgstr ""
 
 #: ../../admin/performance.rst:41
-# b53ebd23146b421d9f73d11630bd1a87
+# 84e1b027668b4f15a8bb9aaa6f7652b5
 msgid "what resources the problem needs"
 msgstr ""
 
 #: ../../admin/performance.rst:42
-# e7da554d1bc3485f8c2525b41c2d66b3
+# 01f0161912464bd49bf2a114a1a98975
 msgid "where those resources are needed"
 msgstr ""
 
 #: ../../admin/performance.rst:44
-# 521d21b5c8a54cb79316dffaef189416
+# eb8be71abe5b42e8bcac97dcd9c36ff9
 msgid "Invest in some kind of profiling to tell you where your bottleneck is, especially if you're considering throwing significant money at a problem."
 msgstr ""
 
 #: ../../admin/performance.rst:48
-# 11e52c2c39c6437a9a8f5364eb422a1b
+# f51f49181f0440438d00b32de538af10
 msgid "Tune MySQL"
 msgstr ""
 
 #: ../../admin/performance.rst:50
-# 5a14e4bc263848baaaf94ca6324e390b
+# 7b29eccc30b1492381468aa7229684f7
 msgid "Elgg makes extensive use of the back end database, making many trips on each pageload. This is perfectly normal and a well configured database server will be able to cope with thousands of requests per second."
 msgstr ""
 
 #: ../../admin/performance.rst:53
-# f25cbb38e09849caab11b541b4624624
+# 54f1bbdab7cd43c99de7d7e1b89164bc
 msgid "Here are some configuration tips that might help:"
 msgstr ""
 
 #: ../../admin/performance.rst:55
-# 8e51ac3fa9bd495c85a6ef2aac5552ad
+# 6f94efb3e65a4bec9553c87f6fc5d06a
 msgid "Make sure that MySQL is configured to use an appropriate my.cnf for the size of your website."
 msgstr ""
 
 #: ../../admin/performance.rst:56
-# cc7fd6f97b6e43fcadef2e39c93279a0
+# 36256f5ce867405bac3c1615e11dd050
 msgid "Increase the amount of memory available to PHP and MySQL (you will have to increase the amount of memory available to the php process in any case)"
 msgstr ""
 
 #: ../../admin/performance.rst:60
-# 46d021068ebf4ee3ae5cf9aba4d0e3ef
+# 882716f9a46a42b09c97279710d72cd9
 msgid "Enable caching"
 msgstr ""
 
 #: ../../admin/performance.rst:62
-# bced57a3bd22436ea04f35f19117df1c
+# 3cf3d39a208240abb5e94fc9534ac68b
 msgid "Generally, if a program is slow, that is because it is repeatedly performing an expensive computation or operation. Caching allows the system to avoid doing that work over and over again by using memory to store the results so that you can skip all the work on subsequent requests. Below we discuss several generally-available caching solutions relevant to Elgg."
 msgstr ""
 
 #: ../../admin/performance.rst:69
-# 0b09dc98ed5c4d4bbbcfff3235aa1430
+# 2460854f5d454eefa6f3143a6b6843ef
 msgid "Simplecache"
 msgstr ""
 
 #: ../../admin/performance.rst:71
-# daeb9c14f93a424185df06682ac7ff25
+# 5e230ae6c95743ed8dd78a330aad6370
 msgid "By default, views are cached in the Elgg data directory for a given period of time. This removes the need for a view to be regenerated on every page load."
 msgstr ""
 
 #: ../../admin/performance.rst:74
-# 7e216bfa498a4f8e8f214bbde91db13c
+# 4b9b1b1deaa440c982ccfc041c8430b5
 msgid "This can be disabled by setting ``$CONFIG->simplecache_enabled = false;`` For best performance, make sure this value is set to ``true``."
 msgstr ""
 
 #: ../../admin/performance.rst:77
-# 5593be4079e74973840ee04e1283da7b
+# 4e9360e0611f4e73a7a1ab83860aad3b
 msgid "This does lead to artifacts during development if you are editing themes in your plugin as the cached version will be used in preference to the one provided by your plugin."
 msgstr ""
 
 #: ../../admin/performance.rst:80
-# 4fcac9b0594a4b5eac571c38889ecd1b
+# 9d42d89a5bc14161bbb8abeffee6ebd9
 msgid "The simple cache can be disabled via the administration menu. It is recommended that you do this on your development platform if you are writing Elgg plugins."
 msgstr ""
 
 #: ../../admin/performance.rst:83
-# cc54c527365d43bc8fe5d733f382ac60
+# 5c775adb4e5047acbd31178bb62a6d10
 msgid "This cache is automatically flushed when a plugin is enabled, disabled or reordered, or when upgrade.php is executed."
 msgstr ""
 
 #: ../../admin/performance.rst:86
-# d7b60950d26a466e8f8ac06e4ac55080
+# 6329f1d2a7904d84b52695a6c6c0d311
 msgid "For best performance, you can also create a symlink from ``/cache/`` in your www root dir to the ``/views_simplecache/`` directory in the data directory you configured when you installed Elgg:"
 msgstr ""
 
 #: ../../admin/performance.rst:95
-# ff676263db3d42688ab59efff5845123
+# 4e3a85b142864ffdbc203cfb470cafb6
 msgid "If your webserver supports following symlinks, this will serve files straight off disk without booting up PHP each time."
 msgstr ""
 
 #: ../../admin/performance.rst:99
-# 8f55c0bc7dea4c21835830b0f4c053c3
+# 527383b50de6402fa4c153b282836c1d
 msgid "System cache"
 msgstr ""
 
 #: ../../admin/performance.rst:101
-# 4b61a78fd1164bf8a2fbc55612cde730
+# e9536245d6834aa2b93f58afa6a30378
 msgid "The location of views are cached so that they do not have to be discovered (profiling indicated that page load took a non-linear amount of time the more plugins were enabled due to view discovery). Elgg also caches information like the language mapping and class map."
 msgstr ""
 
 #: ../../admin/performance.rst:106
-# e8b3cb4e42dc46e6b26df7f4069dc9d1
+# 2fa5bf1a2bc24238ad3696cdaf02b1d8
 msgid "This can be disabled by setting ``$CONFIG->system_cache_enabled = false;`` For best performance, make sure this value is set to ``true``."
 msgstr ""
 
 #: ../../admin/performance.rst:109
-# e60ef808980c45bebef83850d9d2c721
+# 17738d369e5641fd83ff37341f626fe0
 msgid "This is currently stored in files in your dataroot (although later versions of Elgg may use memcache). As with the simple cache it is flushed when a plugin is enabled, disabled or reordered, or when upgrade.php is executed."
 msgstr ""
 
 #: ../../admin/performance.rst:114
-# 082a6dfcc53d4c72b3cc3888c40a0a39
+# 5a116d6bbcf741c79a2c1c66e343399c
 msgid "The system cache can be disabled via the administration menu, and it is recommended that you do this on your development platform if you are writing Elgg plugins."
 msgstr ""
 
 #: ../../admin/performance.rst:119
-# 776621f4a9d746f79040458501822b5b
+# de3d69d849da4c2e881b89ab5e06aae8
 msgid "Database query cache"
 msgstr ""
 
 #: ../../admin/performance.rst:121
-# 6bb3412a251d4005bc2de6a4132da438
+# 536a22844f854fec9ca7412ca31f6d36
 msgid "For the lifetime of a given page's execution, a cache of all ``SELECT`` queries is kept. This means that for a given page load a given select query will only ever go out to the database once, even if it is executed multiple times. Any write to the database will flush this cache, so it is advised that on complicated pages you postpone database writes until the end of the page or use the ``execute_delayed_*`` functionality. This cache will be automatically cleared at the end of a page load."
 msgstr ""
 
 #: ../../admin/performance.rst:128
-# 52e364c5b5794fdf9675ca9a32efb993
+# 00db8bb7fdbe4e9d9bb147498f59923e
 msgid "You may experience memory problems if you use the Elgg framework as a library in a PHP CLI script. This can be disabled by setting ``$CONFIG->db_disable_query_cache = true;``"
 msgstr ""
 
 #: ../../admin/performance.rst:133
-# b0a48218214c43a6b1907e495c2bbb3a
+# 3fe4c1e402284c56bf169bd9599ee14d
 msgid "Etags and Expires headers"
 msgstr ""
 
 #: ../../admin/performance.rst:135
-# 6cd03c60c890433f89e091d9d1e3f668
+# a93a6b686ed84e2d83b883a7713b7b79
 msgid "These technologies tell your users' browsers to cache static assets (CSS, JS, images) locally. Having these enabled greatly reduces server load and improves user-perceived performance."
 msgstr ""
 
 #: ../../admin/performance.rst:138
-# 47415a11d67746bb80d9a91284c3f604
+# bb0b64cae6a04e679a12bef0941290da
 msgid "Use the `Firefox yslow plugin`__ or Chrome DevTools Audits to confirm which technologies are currently running on your site."
 msgstr ""
 
 #: ../../admin/performance.rst:144
-# 4e181b214f4d4374b721c74f329f76b1
+# e5f4ff31eb5048b997bcd04a8216f310
 msgid "If the static assets aren't being cached:"
 msgstr ""
 
 #: ../../admin/performance.rst:142
-# fa082b6b1d76415d9a89f687101d5b63
+# e261ec15d8674507ae6ca15cf33613a1
 msgid "Verify that you have these extensions installed and enabled on your host"
 msgstr ""
 
 #: ../../admin/performance.rst:143
-# 3389c74628cb4c69bfc2c1b3f277c3be
+# 31e1142e4f384072a60ca050f979fc55
 msgid "Update your .htaccess file, if you are upgrading from a previous version of Elgg"
 msgstr ""
 
 #: ../../admin/performance.rst:144
-# 9e8863d124fe4e1e942fe1ea4295efdb
+# 406ecc3121ac4893b2af5245fedf1a4e
 msgid "Enable Simplecache_, which turns select views into browser-cacheable assets"
 msgstr ""
 
 #: ../../admin/performance.rst:149
-# f5c3467051df460b9127566ffb5573d2
+# 7471114696e24cd4abd7b0ac27ba51d0
 msgid "Memcache"
 msgstr ""
 
 #: ../../admin/performance.rst:151
-# 857a50d567244e32ad539ab49eace45b
+# 1b08abd7862a4e9c9e11cea7c6fa958c
 msgid "Memcache is a generic caching technology developed by Brad Fitzpatrick for LiveJournal."
 msgstr ""
 
 #: ../../admin/performance.rst:153
-# ffb232fcc70845e1980f49042c1fb181
+# 29c01b18eb904bceb0cf2c4d98e67daa
 msgid "SUPPORT FOR MEMCACHE IS EXPERIMENTAL AND MAY BE CHANGED."
 msgstr ""
 
 #: ../../admin/performance.rst:155
-# d9f076d44dc1425f8ca5bca75f282c25
+# f048e04e5a144baeab39d2d46b151066
 msgid "Installation requirements:"
 msgstr ""
 
 #: ../../admin/performance.rst:157
-# 02f839bf70fd441eb3ebae032fc9758f
+# fb240cf8b7814dbdb85939e65297cbe6
 msgid "php5-memcache"
 msgstr ""
 
 #: ../../admin/performance.rst:158
-# f5c3467051df460b9127566ffb5573d2
+# 9892ca159b614225870d1f49399feb0d
 msgid "memcached"
 msgstr ""
 
 #: ../../admin/performance.rst:160
-# 6ab55ddd3eb04513a334026dff30b6f0
+# f5d26c9cfaaf406e88f5978e09e3db29
 msgid "Configuration:"
 msgstr ""
 
 #: ../../admin/performance.rst:162
-# e6debb7fc81b4d04a1d88117c0c5a8a6
+# f32677d118604a4981d5409d2ec72747
 msgid "Uncomment and populate the following sections in `settings.php`"
 msgstr ""
 
 #: ../../admin/performance.rst:173
-# 986d1f8013fc41a2b2a1303f6eb8532f
+# fceb5c63ab554d749d1a3ab97c5686d5
 msgid "Optionaly if you run multiple Elgg installations but use ony one Memcache server, you may want to add a namespace prefix. In order to do this, uncomment the following line"
 msgstr ""
 
 #: ../../admin/performance.rst:181
-# d5d82504a1d841a5b01759b4173b5f72
+# 7dd9ac11a5eb45b581a75e60de8eecc6
 msgid "Squid"
 msgstr ""
 
 #: ../../admin/performance.rst:183
-# 5cd99d1e9bcf4c33bf0a406444d9f089
+# bc170d090c314933abb7770596a9c6be
 msgid "We have had good results by using `Squid`_ to cache images for us."
 msgstr ""
 
 #: ../../admin/performance.rst:189
-# d81f7917bf464354bfbad71be5217170
+# 814bccf9dce34839bb59fb79ad98a7d4
 msgid "Bytecode caching"
 msgstr ""
 
 #: ../../admin/performance.rst:191
-# 51ebef8d480846fbbdfcda78ec91d68a
+# 34fe212b676e45969f8a15f994e53812
 msgid "There are numerous PHP code caches available on the market. These speed up your site by caching the compiled byte code from your script meaning that your server doesn't have to compile the PHP code each time it is executed."
 msgstr ""
 
 #: ../../admin/performance.rst:197
-# 11d0ec85ad7e454888b505f0249dcb2e
+# 94a7bd10fd32450899581617c417f433
 msgid "Hosting"
 msgstr ""
 
 #: ../../admin/performance.rst:199
-# 6fe8bf2d42634d45b551637d3d5cf914
+# b9902537e72b4d05a71ceca8e7e1f2f7
 msgid "Don't expect to run a site catering for millions of users on a cheap shared host. You will need to have your own host hardware and access over the configuration, as well as lots of bandwidth and memory available."
 msgstr ""
 
 #: ../../admin/performance.rst:204
-# 582105d2ebce43799ec6a0c8131ef4b8
+# 7db91f5e22c94f52aab9856b4a1e5722
 msgid "Memory, CPU and bandwidth"
 msgstr ""
 
 #: ../../admin/performance.rst:206
-# 1b114625e4f9457fba8151719a787d0b
+# f14be484afc142cb8a150c39ec253787
 msgid "Due to the nature of caching, all caching solutions will require memory. It is a fairly cheap return to throw memory and CPU at the problem."
 msgstr ""
 
 #: ../../admin/performance.rst:209
-# d5f226dd18b340ebaeba18fa34a28a7e
+# f7153b9515a744f198a3c67075f89058
 msgid "On advanced hardware it is likely that bandwidth is going to be your bottleneck before the server itself. Ensure that your host can support the load you are suggesting."
 msgstr ""
 
 #: ../../admin/performance.rst:213
-# a3139ee359cc429db29dd073ce9735a5
+# e0f9f368d20e4f40bd11eebb7584be05
 msgid "Configuration"
 msgstr ""
 
 #: ../../admin/performance.rst:215
-# 93d03988041c4ce690a91fdea7086873
+# 53cdd224448b48ce9c326718717c2ba8
 msgid "Lastly, take a look at your configuration as there are a few gotchas that can catch people."
 msgstr ""
 
 #: ../../admin/performance.rst:217
-# 06ba32e862604f36b23393b6de25075b
+# 9079eea5d1f4492598ffd58a63bf89ae
 msgid "For example, out of the box, Apache can handle quite a high load. However, most distros of Linux come with mysql configured for small sites. This can result in Apache processes getting stalled waiting to talk to one very overloaded MySQL process."
 msgstr ""
 
 #: ../../admin/performance.rst:222
-# 06c3c0549dd44fa1a5c39f4f66d9fd93
+# f93973c1399045d0884e620648edac72
 msgid "Check for poorly-behaved plugins"
 msgstr ""
 
 #: ../../admin/performance.rst:224
-# d8be0713fc9148c88e30e5198345f2c9
+# e426020ba661450eb9f7c9851e46ed34
 msgid "Plugins can be programmed in a very naive way and this can cause your whole site to feel slow."
 msgstr ""
 
 #: ../../admin/performance.rst:226
-# df1bb05c8301428e978bdf4b62ff4393
+# 9383ea5013094e00b5aa28fc70b84c54
 msgid "Try disabling some plugins to see if that noticeably improves performance. Once you've found a likely offender, go to the original plugin author and report your findings."
 msgstr ""
 
 #: ../../admin/performance.rst:230
-# 5e88165fe72f4a43badf4740f0f69e55
+# addffdae94934367babdcba5922059c2
 msgid "Use client-rendered HTML"
 msgstr ""
 
 #: ../../admin/performance.rst:232
-# 673a94643b80432f9550bde97f542d86
+# 854480963cd5447fbc1084a500f7104b
 msgid "We've found that at a certain point, much of the time spent on the server is simply building the HTML of the page with Elgg's views system."
 msgstr ""
 
 #: ../../admin/performance.rst:235
-# 0ffa0a97f91b4dc482b043f7f7513b4f
+# 25b39efdb6944c2e87aab3e205ff5505
 msgid "It's very difficult to cache the output of templates since they can generally take arbitrary inputs. Instead of trying to cache the HTML output of certain pages or views, the suggestion is to switch to an HTML-based templating system so that the user's browser can cache the templates themselves. Then have the user's computer do the work of generating the output by applying JSON data to those templates."
 msgstr ""
 
 #: ../../admin/performance.rst:240
-# 56dc2acafa6c4483ade488e5793fdab8
+# 0af163b91e6944f084775d2dce8b20e7
 msgid "This can be very effective, but has the downside of being significant extra development cost. The Elgg team is looking to integrate this strategy into Elgg directly, since it is so effective especially on pages with repeated or hidden content."
 msgstr ""
 
 #: ../../admin/plugins.rst:2
-# 405b617b89c24f4b9cd03203fa68ffab
+# a12aacc9ef0840fbb6ebd5cd8191d921
 msgid "Plugins"
 msgstr ""
 
 #: ../../admin/plugins.rst:4
-# 81225ee797544fca9e27866a8220eb88
+# b83d4af9776c49d499e2f19943fc69a1
 msgid "Plugins can modify the behavior of and add new features to Elgg."
 msgstr ""
 
 #: ../../admin/plugins.rst:11
-# 1afc843c665b44ff8724af03a42d3eab
+# ca56235991834bf782b6672d46e52c57
 msgid "Where to get plugins"
 msgstr ""
 
 #: ../../admin/plugins.rst:13
-# 0ea1aeb6df91480a8e451daeb636a8f5
+# 73076448b77c4f27861a09d79712c7bd
 msgid "Plugins can be obtained from:"
 msgstr ""
 
 #: ../../admin/plugins.rst:15
-# 3a5e0e2fb9534759b56b2550a15fe627
+# e0b18d9a58434a49a579a198052f455d
 msgid "`The Elgg Community`_"
 msgstr ""
 
 #: ../../admin/plugins.rst:16
-# ff414ab423ee45f3aef73804d4933ab6
+# f11b422d13c54347a99265751a64d58b
 msgid "`Github`_"
 msgstr ""
 
 #: ../../admin/plugins.rst:17
-# 08eccc23a252475a8b4dd6475ca2f80d
+# c57f706dad8c46f999ca5affeff3c44a
 msgid "Third-party sites (typically for a price)"
 msgstr ""
 
 #: ../../admin/plugins.rst:19
-# 826825b5c54d410f995825382adb927a
+# 1a7dcdeaf33d439db9bd14865c4aed59
 msgid "If no existing plugins meet your needs, you can `hire a developer`_ or :doc:`create your own </guides/index>`."
 msgstr ""
 
 #: ../../admin/plugins.rst:26
-# 22be650b00f34faabfb21d358417e7e0
+# 583b82b6b16542a4b37b051f48f06668
 msgid "The Elgg Community"
 msgstr ""
 
 #: ../../admin/plugins.rst:29
-# ac9be0ff1ffe41f68f93521468b401d3
+# e96446dec5304c8c9678ad783e6ff202
 msgid "Finding Plugins"
 msgstr ""
 
 #: ../../admin/plugins.rst:32
-# 1d57ddf92870496f87b33e78d53ca6e9
+# e0f0e190a7044e519121d3cdd3a58bbb
 msgid "Sort based on most popular"
 msgstr ""
 
 #: ../../admin/plugins.rst:34
-# d27ae3ef91c641509f195581cea83156
+# 6618282152b54e7f96a6d62883fdf6df
 msgid "On the community plugin page, you can sort by date uploaded (Filter: Newest) or number of downloads (Filter: Most downloads). Sorting by the number of downloads is a good idea if you are new to Elgg and want to see which plugins are frequently used by other administrators. These will often (but not always) be higher quality plugins that provide significant capabilities."
 msgstr ""
 
 #: ../../admin/plugins.rst:37
-# bd21f2936bf942a49c5106262f9bfc4f
+# ff4eaaba270a4667b4bb90040e5b28e7
 msgid "Use the plugin tag search"
 msgstr ""
 
 #: ../../admin/plugins.rst:39
-# fa51d8486a7c454d970931c0480374fc
+# 9fb853873fcd4c36912bda6e21ab8038
 msgid "Next to the filtering control on the plugin page is a search box. It enables you to search by tags. Plugins authors choose the tags."
 msgstr ""
 
 #: ../../admin/plugins.rst:42
-# 118c6589d8d74114933d2e9590423f70
+# fe7f3e2afb004019bf321640b159429f
 msgid "Look for particular plugin authors"
 msgstr ""
 
 #: ../../admin/plugins.rst:44
-# 9ba2e7e0cdce4f558a2d7b3ceb3db77b
+# 3057cf99360b4472bff8d84d6c1cc720
 msgid "The quality of plugins varies substantially. If you find a plugin that works well on your site, you can check what else that plugin author has developed by clicking on their name when viewing a plugin."
 msgstr ""
 
 #: ../../admin/plugins.rst:47
-# aa7f92593abb4da8ae0175543e6501db
+# 26db4280ab9b4692b1143e2ce33a9f1e
 msgid "Evaluating Plugins"
 msgstr ""
 
 #: ../../admin/plugins.rst:50
-# e38b211638c7427993b5c99045a66171
+# dc8f6e3021eb44ea9b76b6dd0053ea5e
 msgid "Look at the comments and ratings"
 msgstr ""
 
 #: ../../admin/plugins.rst:52
-# 2a1720986531460c854af1a508718c24
+# 5ffa2f63b46d48008557162f84188434
 msgid "Before downloading and using a plugin, it is always a good idea to read through the comments that others have left. If you see people complaining that the plugin does not work or makes their site unstable, you probably want to stay away from that plugin. The caveat to that is that sometimes users ignore installation instructions or incorrectly install a plugin and then leave negative feedback. Further, some plugin authors have chosen to not allow comments."
 msgstr ""
 
 #: ../../admin/plugins.rst:55
-# 3a417a0dda6b404588260976e13ed548
+# 014009e21e1e4b3d91dbd7aa0ba30c8f
 msgid "Install on a test site"
 msgstr ""
 
 #: ../../admin/plugins.rst:57
-# 87153caee78b4263908bcc052cb49cd1
+# ef63622d2fc24516be88ac8ec9c99732
 msgid "If you are trying out a plugin for the first time, it is a bad idea to install it on your production site. You should maintain a separate test site for evaluating plugins. It is a good idea to slowly roll out new plugins to your production site even after they pass your evaluation on your test site. This enables you to isolate problems introduced by a new plugin."
 msgstr ""
 
 #: ../../admin/plugins.rst:60
-# 1101158591894df4bf6edba58d4e8afa
+# 8eb2b0b5e5dd443cb1caa4656ccd3161
 msgid "Types of plugins"
 msgstr ""
 
 #: ../../admin/plugins.rst:63
-# b461c8792e97451cbcd64e3a781ac859
+# d33894950e274823bb20a73cc2ea0ae4
 msgid "Themes"
 msgstr ""
 
 #: ../../admin/plugins.rst:65
-# 11d44302daf542c093e0f97cfffccd7f
+# b2c9ebc19d0344278da30f4bbcad2291
 msgid "Themes are plugins that modify the look-and-feel of your site. They generally include stylesheets, client-side scripts and views that alter the default presentation and behavior of Elgg."
 msgstr ""
 
 #: ../../admin/plugins.rst:70
-# 978dc3e2bac8404b8a97aca616ea7123
+# 4d32cbe80b634e4c85c5982c576bc82d
 msgid "Language Packs"
 msgstr ""
 
 #: ../../admin/plugins.rst:72
-# 2cef477eb61040ffb23de24f58899e99
+# 9296a5a2faaa43c0a55c69ce50ae038c
 msgid "Language packs are plugins that provide support for other languages."
 msgstr ""
 
 #: ../../admin/plugins.rst:74
-# 86562108b82846a7a59b8502f0227692
+# aa8660a9541f4d5c8149160a7a81ee85
 msgid "Language packs can extend and include translations for language strings found in the core, core plugins and/or third-party plugins."
 msgstr ""
 
 #: ../../admin/plugins.rst:77
-# 856d2e30a65f4266b1277487a20a1543
+# bab1a922c5f64f8f912665296940b7b1
 msgid "Some of the language packs are already included in the core, and can be found in ``languages`` directory off Elgg's root directory. Individual plugins tend to include their translations under the ``languages`` directory within the plugin's root."
 msgstr ""
 
 #: ../../admin/plugins.rst:82
-# 0e0a1b5e046e407cbab4de7984d331de
+# 61d59a503f2b453495f739d99346052c
 msgid "This structure makes it easy to create new language packs that supercede existing language strings or add support for new languages."
 msgstr ""
 
 #: ../../admin/plugins.rst:88
-# 9e109b86a0024d0fb24ce3918110ea62
+# c730197571a740c09f695b6f8235103f
 msgid "All plugins reside in the ``mod`` directory of your Elgg installation."
 msgstr ""
 
 #: ../../admin/plugins.rst:97
-# 1d28dc5bee1b40a69486439d4df09a13
+# ddb5e0986b63423f866bdd0228e4e189
 msgid "To install a new plugin:"
 msgstr ""
 
 #: ../../admin/plugins.rst:91
-# 860a1d08195945a8a537f35a2073a582
+# ee127d4c09c34a73b508e4c4c735f42f
 msgid "extract (unzip) contents of the plugin distribution package"
 msgstr ""
 
 #: ../../admin/plugins.rst:92
-# cf35473735dd418fa7782c147eca8abc
+# f5d0cfe4754947a298e785a6ffb188c0
 msgid "copy/FTP the extracted folder into the ``mod`` directory of your Elgg installation, making sure that ``manifest.xml`` and ``start.php`` are directly under the plugin directory (e.g. if you were to install a plugin called ``my_elgg_plugin``, plugin's manifest would need to be found at ``mod/my_elgg_plugin/manifest.xml``)"
 msgstr ""
 
 #: ../../admin/plugins.rst:97
-# 1578ab05aa864e0999f35911028f9974
+# c36d5adee4044ff79e21ea6af57d0416
 msgid "activate the plugin from your admin panel"
 msgstr ""
 
 #: ../../admin/plugins.rst:103
-# 19f9afdff47845a8a93a71195dc2286f
+# 7143debd58d54719aa9387bf42ab5758
 msgid "To activate a plugin:"
 msgstr ""
 
 #: ../../admin/plugins.rst:100
-# de98bca1e70c41a4a01bc28b113b6d48
+# 5f3bed40f2374487a21420eb9fabcdf4
 msgid "Log in to your Elgg site with your administrator account"
 msgstr ""
 
 #: ../../admin/plugins.rst:101
-# 2297b8fa5e544630b5d58efe494cbcb1
+# a86c70b4c38a49ed99d1ade235855570
 msgid "Go to Administration -> Configure -> Plugins"
 msgstr ""
 
 #: ../../admin/plugins.rst:102
-# 5a4e23f8f6e944ecbe5b589991ecdeb1
+# 7e4a63030f9c404ab1189d81b823d17c
 msgid "Find your plugin in the list of installed plugins and click on the 'enable' button."
 msgstr ""
 
 #: ../../admin/plugins.rst:108
-# 4b4acb4315b24eadbc8a8ad66ec17f5a
+# b8f86ed46157464fa990b81edbb99939
 msgid "Plugin order"
 msgstr ""
 
 #: ../../admin/plugins.rst:110
-# 931cb86a24a24799ad7f48a47da47d2e
+# 8449e66128a94574b071e01457c29178
 msgid "Plugins are loaded according to the order they are listed on the Plugins page. The initial ordering after an install is more or less random. As more plugins are added by an administrator, they are placed at the bottom of the list."
 msgstr ""
 
 #: ../../admin/plugins.rst:112
-# c085f7da5ff840e5af61921c1672bc65
+# 72db5844ebb74de9b925bf3e75c11ff0
 msgid "Some general rules for ordering plugins:"
 msgstr ""
 
 #: ../../admin/plugins.rst:114
-# b17c0ebcf9d648209b34931300ccfda2
+# 79646ca3ecd142b885119d7a9c95f1c9
 msgid "A theme plugin should be last or at least near the bottom"
 msgstr ""
 
 #: ../../admin/plugins.rst:115
-# e3c3fcaeecb14ea5944f6a99a085a682
+# adc4077647a84d839e03b6e099b6c79a
 msgid "A plugin that modifies the behavior of another plugin should be lower in the plugin list"
 msgstr ""
 
 #: ../../admin/plugins.rst:118
-# f12c228b3d8c4118a22afb14aa1c2abb
+# bf702a0463c24cb09e4c35d0e539262b
 msgid "Pre-1.8 notes"
 msgstr ""
 
 #: ../../admin/plugins.rst:120
-# 6a162821c4f44f12811fe2e48b58eb9e
+# 04ee3c6e6609474f9f367928f3bc8ea8
 msgid "In Elgg 1.7 and below, the interface for managing installed plugins is located at Administration -> Tool Administration."
 msgstr ""
 
 #: ../../admin/upgrading.rst:2
-# 43417a48dfe34b0d96ed4b22f5bd98d0
+# 784bae16f994412d9651e4400cd6f3bb
 msgid "Upgrading Elgg"
 msgstr ""
 
 #: ../../admin/upgrading.rst:4
-# 08bd4849d06e480ba322b5707aacb77c
+# 878089e887b34772941f00d054b9eba9
 msgid "Switch a live site to a new version of Elgg."
 msgstr ""
 
 #: ../../admin/upgrading.rst:6
-# e6de65496e914009b15de3ef4783dab4
+# d9d0d747438f445fb3b2bc8709b0dda1
 msgid "If you've written custom plugins, you should also read the developer guides for :doc:`information on upgrading plugin code </guides/upgrading>` for the latest version of Elgg."
 msgstr ""
 
 #: ../../admin/upgrading.rst:10
-# 2576dd6865df48d2ac56699345676180
+# d0b904a36c904c3cab59f37938df4075
 msgid "Advice"
 msgstr ""
 
 #: ../../admin/upgrading.rst:12
-# e185494431d5479fb61219a6211adc90
+# 93e51732d0ad4ffaafb28095c31eb889
 msgid "**Back up your database** and code"
 msgstr ""
 
 #: ../../admin/upgrading.rst:13
-# 19dd20e9a300477e813bc4bb7d4d91ea
+# 9185a060eace49f2a71482607df77841
 msgid "Mind any version-specific comments below"
 msgstr ""
 
 #: ../../admin/upgrading.rst:14
-# fed9fa372160451c9d765135af5bc4c3
+# b9852f5d51c346e88f54567cfc3c3bf4
 msgid "Upgrade only one minor version at a time (1.6 => 1.7, then 1.7 => 1.8)"
 msgstr ""
 
 #: ../../admin/upgrading.rst:15
-# e9bae402389d4f12ba8a6d613794ed49
+# 766c6862257146d69375784938b13fb2
 msgid "Try out the new version on a test site before doing an upgrade"
 msgstr ""
 
 #: ../../admin/upgrading.rst:16
-# 9cbea41aa55640ee8712f667b1d9d4b9
+# e986847baf764c77977cc6e6fa8be814
 msgid "Report any problems in plugins to the plugin authors"
 msgstr ""
 
 #: ../../admin/upgrading.rst:17
-# 8477ae0a0faa49989c7bda4e99598345
+# 130b5d94cd49418cbb3138a34cdef104
 msgid "If you are a plugin author you can `report any backwards-compatibility issues to GitHub <issues_>`_"
 msgstr ""
 
 #: ../../admin/upgrading.rst:22
-# 128bb4fbc34945ca9c1e077c187cb403
+# 60176925acae439d81bf3bfc08f39aea
 msgid "Basic instructions"
 msgstr ""
 
 #: ../../admin/upgrading.rst:24
-# 981d24aa96d34103bd88219cbad335c0
+# a8e786f240674154873865adc87d7ecb
 msgid "**Back up your database, data directory, and code**"
 msgstr ""
 
 #: ../../admin/upgrading.rst:25
-# 81744db32a8d4eb8b41c2ef9dcd03949
+# aa70b5f5744948dcabd2d2879df3a51e
 msgid "Download the new version of Elgg from http://elgg.org"
 msgstr ""
 
 #: ../../admin/upgrading.rst:27
-# 80374ae3945b4f19bb7ffccc8a8d8f30
+# 2bccdbbc3e914ba394813771ac69a45a
 msgid "Update the files"
 msgstr ""
 
 #: ../../admin/upgrading.rst:27
-# 581badb842974c63877d9c05d709fbb4
+# 9ac0fa8cc49b49579f3826771705a65d
 msgid "If doing a patch upgrade (1.9.x), overwrite your existing files with the new version of Elgg"
 msgstr ""
 
 #: ../../admin/upgrading.rst:28
-# d2a7950c21554979a84eaea08b13c956
+# a1a54cd1babf4d4191709b0a07e430af
 msgid "If doing a minor upgrade (1.x), replace the existing core files completely"
 msgstr ""
 
 #: ../../admin/upgrading.rst:30
-# d1982b38503b484b96c91986413d476b
+# d8e405b09fc445fabea6399dae16a0ac
 msgid "Merge any new changes to the rewrite rules"
 msgstr ""
 
 #: ../../admin/upgrading.rst:30
-# 94613682627c486f8b801fad714c5e94
+# d5f091840e254bab93a8a70eef84a3ba
 msgid "For Apache from ``install/config/htaccess.dist`` into ``.htaccess``"
 msgstr ""
 
 #: ../../admin/upgrading.rst:31
-# 4e8c854b881c4fa9bef5c4e9f52baadc
+# 52ffdddd2000481fadce45f56e26279a
 msgid "For Nginx from ``install/config/nginx.dist`` into your server configuration (usually inside ``/etc/nginx/sites-enabled``)"
 msgstr ""
 
 #: ../../admin/upgrading.rst:32
-# e3b805a8352045beb67c10e920ee98a8
+# 14dae29ccfed4464af0d812add3cf90d
 msgid "Merge any new changes from ``settings.example.php`` into ``settings.php``"
 msgstr ""
 
 #: ../../admin/upgrading.rst:33
-# 78703533144645769786f30487bba7c1
+# 1da152ae4c0b46c38aaea524d9e802dd
 msgid "Visit http://your-elgg-site.com/upgrade.php"
 msgstr ""
 
 #: ../../admin/upgrading.rst:37
-# 40389695db604a0eac307c801120742c
+# 7d328c291b7f479d8ef8595652167500
 msgid "Any modifications should have been written within plugins, so that they are not lost on overwriting. If this is not the case, take care to maintain your modifications."
 msgstr ""
 
 #: ../../admin/upgrading.rst:41
-# f20c92976aca494f85879085bde24530
+# b250d9d4c8324d849be74d156f1dfde4
 msgid "From 1.x to 2.0"
 msgstr ""
 
 #: ../../admin/upgrading.rst:44
-# 5942cb70a1cf431a8811eb8d2a8e1a10
+# 934f654d6d1947cd8076f77b7b529673
 msgid "IE-specific workarounds have been dropped"
 msgstr ""
 
 #: ../../admin/upgrading.rst:46
-# d67e241a5002416da9a09362f796460e
+# 378e239cbaef46ab9283c108fb274614
 msgid "Several views (``css/ie``, ``css/ie7``, ``css/ie8``, etc.) as well as conditional comments have been discarded now that IE10+ browsers are more standards-compliant. If you need browser support farther back than that, you will need to find or build a plugin that introduces its own compatibility layer or polyfills."
 msgstr ""
 
 #: ../../admin/upgrading.rst:52
-# 5ccacf78850c4d6183f12036f32b9fc5
+# 9451712b31524f17b08fe6eca8463d9b
 msgid "Update your webserver config"
 msgstr ""
 
 #: ../../admin/upgrading.rst:54
-# d366bc32bfbe4947990ca39ce8dec48d
+# 7e7350c00b9e40789ac2e311c35f1ad2
 msgid "URL paths like ``cache/*`` and ``rewrite.php`` now use the main front controller script. You **must** remove these rewrite rules from your webserver config (e.g. ``.htaccess``)."
 msgstr ""
 
 #: ../../admin/upgrading.rst:57
-# c1e3dbb717c345129c228f06ac5c125d
+# 2aea9d54f32f40e3b4e6b2f14bcd49b1
 msgid "Also remove the rules for paths like ``export/*``; these endpoints have been removed."
 msgstr ""
 
 #: ../../admin/upgrading.rst:60
-# 5f61e59c1da84a37a56d6278d24b3395
+# 2a2a6e4df1d74b1c9b1f0933617222d0
 msgid "From 1.10 to 1.11"
 msgstr ""
 
 #: ../../admin/upgrading.rst:63
 #: ../../admin/upgrading.rst:76
-# b7b4f362de7f4683abd9f3c2b3038769
-# b7b4f362de7f4683abd9f3c2b3038769
+# 91e03d31d8734cd9b9b2b1bf2720432a
+# 5ca8809d46fc4d9197ca72075233fd7e
 msgid "Breaking changes"
 msgstr ""
 
 #: ../../admin/upgrading.rst:64
-# 6705b6fb67fb40f1a22e3e57076df329
+# 51286ffbb31343d691c5a568843757c0
 msgid "In versions 1.9 and 1.10, names and values for metadata and annotations were not correctly trimmed for whitespace. Elgg 1.11 correctly trims these strings and updates the database to correct existing strings. If your plugin uses metadata or annotations with leading or trailing whitespace, you will need to update the plugin to trim the names and values. This is especially important if you are using custom SQL clauses or have hard-coded metastring IDs, since the update might change metastring IDs."
 msgstr ""
 
 #: ../../admin/upgrading.rst:72
-# 633a6a0b8dd0445ba3257e330d121780
+# f60679ce4e3e4e338af9813d74f2dce1
 msgid "From 1.8 to 1.9"
 msgstr ""
 
 #: ../../admin/upgrading.rst:73
-# d5fe4d91488a4aa4a3e07964686f59be
+# 8151cffa448e4e3c8abb63b7294580f9
 msgid "Elgg 1.9 is a much lighter upgrade than 1.8 was."
 msgstr ""
 
 #: ../../admin/upgrading.rst:77
-# c0203e4e277145b29e24e7f75bc786f9
+# adaae0c39f35432690a1c31c405f03f8
 msgid "Plugins and themes written for 1.8 are expected to be compatible with 1.9 except as it pertains to comments, discussion replies, and notifications. Please `report any backwards compatibility issues <issues_>`_ besides those just listed."
 msgstr ""
 
 #: ../../admin/upgrading.rst:82
-# 4e752052f4d44868b9f90a07ecb8c236
+# 98f9892195f64ef88adfdd9a95ac9ffd
 msgid "Upgrade steps"
 msgstr ""
 
 #: ../../admin/upgrading.rst:83
-# 8fd09f5dddf34b979541ee85862d5f11
+# b1f3645436004989b30d140baed97448
 msgid "There are several data migrations involved, so it is especially important that you **back up your database and data directory** before performing the upgrade."
 msgstr ""
 
 #: ../../admin/upgrading.rst:86
-# dc54a849c5ec474993f3cd44af83a16f
+# 0e89460afa954f8f9983871a6956654b
 msgid "Download the new version and copy these files from the existing 1.8 site:"
 msgstr ""
 
 #: ../../admin/upgrading.rst:88
-# ab48e0b8e5394a09937548c82799abfb
+# cadb38ee230a4deb90009eccf5b1ce2c
 msgid "``.htaccess``"
 msgstr ""
 
 #: ../../admin/upgrading.rst:89
-# 1b12484bd176491ea87ff9314dbd35de
+# a37164106fe14125b6d9f4595ec9eb4f
 msgid "``engine/settings.php``"
 msgstr ""
 
 #: ../../admin/upgrading.rst:90
-# e9797a9b6ba64f6d90570b03aeb8af3f
+# 996eaeb0779546319714364ea90fb70a
 msgid "any 3rd-party plugin folders in the ``mod`` directory"
 msgstr ""
 
 #: ../../admin/upgrading.rst:92
-# efb3f2db415b4c739aa7513c84e703fa
+# e07a978a26e942058e2fb53dc64a1cbe
 msgid "Then replace the old installation directory with the new one. This way you are guaranteed to get rid of obsolete files which might cause problems if left behind."
 msgstr ""
 
 #: ../../admin/upgrading.rst:95
-# e961db5fbc1e4d08b5957d93de610cbe
+# 56b5aad6f5de4fe1b9303a56515fea61
 msgid "Follow the basic instructions listed above."
 msgstr ""
 
 #: ../../admin/upgrading.rst:97
-# c1a3cf62dbc248658f6508c8437428ec
+# 0030fa57a2824a7280f7937cf9569f80
 msgid "After you've visited ``upgrade.php``, go to the admin area of your site. You should see a notification that you have pending upgrades. Click the link in the notification bar to view and run the upgrades."
 msgstr ""
 
 #: ../../admin/upgrading.rst:101
-# 7afeaf65dc14458d9eb6ac306852e463
+# 46866f33bece4266b7e4282de133b926
 msgid "The new notifications system delivers messages via a minutely cron handler. If you haven't done so yet, you will need to :doc:`install and configure crontab </admin/cron>` on your server. If cron jobs are already configured, note that the scope of available cron periods may have changed and you may need to update your current crontab to reflect these changes."
 msgstr ""
 
 #: ../../admin/upgrading.rst:108
-# 65f15b33e2394dfe9c9720f89836e541
+# 3b8a625c280a4d4da01f87f29c670ad9
 msgid "Time commitment"
 msgstr ""
 
 #: ../../admin/upgrading.rst:109
-# fba851b35ff34f1ea3bb782b5757e563
+# 380485d8077e482e9365ad8aa94b98cd
 msgid "Running all of the listed upgrades `took about 1 hour and 15 minutes`__ on the Elgg community site which at the time had to migrate:"
 msgstr ""
 
 #: ../../admin/upgrading.rst:112
-# 2efeb001f00948a5802fe4586b56576f
+# 12dca8f6b9bf4c9a90a3d302a2440c44
 msgid "~75,000 discussion replies"
 msgstr ""
 
 #: ../../admin/upgrading.rst:113
-# 4e0aabe92bfd446089dff2520c80040c
+# ece9d96299b94bf0a49cb720c5354494
 msgid "~75,000 comments"
 msgstr ""
 
 #: ../../admin/upgrading.rst:114
-# e27a5affc37e4f188b2271590b225543
+# 11d91fb49c4043fd8cf3ea0b181b1ab5
 msgid "~75,000 data directories"
 msgstr ""
 
 #: ../../admin/upgrading.rst:118
-# e59df39fc22a49cf9e3464a5b77f7e53
+# ec61e78d46f24a1f8d2302cf97fc211f
 msgid "You should take this only as a ballpark estimate for your own upgrade. How long it takes will depend on how large your site is and how powerful your servers are."
 msgstr ""
 
 #: ../../admin/upgrading.rst:122
-# f20c92976aca494f85879085bde24530
+# 1bfda167f40d4b0f9a0d2651cf340f79
 msgid "From 1.7 to 1.8"
 msgstr ""
 
 #: ../../admin/upgrading.rst:123
-# d0e7c296cc3a40f2a3dabfe4d306b0c9
+# 8a38becfbaef4600b1341d4d375f07fc
 msgid "Elgg 1.8 is the biggest leap forward in the development of Elgg since version 1.0. As such, there is more work to update core and plugins than with previous upgrades."
 msgstr ""
 
 #: ../../admin/upgrading.rst:127
-# 7f9b35cf402946c285ec1a8f1d697668
+# 9ec6f9cdf0144f409e3861f8a2339cc8
 msgid "Updating core"
 msgstr ""
 
 #: ../../admin/upgrading.rst:128
-# b411fcd4725948cd957d4b968ff70b98
+# c5f1ab5930f24492851357f390922cf8
 msgid "Delete the following core directories (same level as _graphics and engine):"
 msgstr ""
 
 #: ../../admin/upgrading.rst:130
-# 3747ddf9bde145a880106b019d4784c3
+# 778f0fb746364bb0a707880b5cdd9f58
 msgid "_css"
 msgstr ""
 
 #: ../../admin/upgrading.rst:131
-# 867934b029be41de999309dec0865cbc
+# feeb36107a6b4db395a50079e458f19e
 msgid "account"
 msgstr ""
 
 #: ../../admin/upgrading.rst:132
-# f7bb053497c04f24ad37390fd2fee469
+# 7bafc51bd6f842a6a3171a9215f77ad8
 msgid "admin"
 msgstr ""
 
 #: ../../admin/upgrading.rst:133
-# ea117ffd957b435cafa17fe9a5031b09
+# ea7f5b88b14947c8866857ec4baa77c6
 msgid "dashboard"
 msgstr ""
 
 #: ../../admin/upgrading.rst:134
-# 305ff258f1fd4fbaad2cbfe196d6df7b
+# 476cf60d31c7440aae1c614b7ca978df
 msgid "entities"
 msgstr ""
 
 #: ../../admin/upgrading.rst:135
-# a6ec9666172a4baeadb031949a3dc5eb
+# 2eb9f9da16134f2db1071bcd70f52c30
 msgid "friends"
 msgstr ""
 
 #: ../../admin/upgrading.rst:136
-# d47dab483c5d41fcbb04397c8dc5ad56
+# b3d9b9ac6f5246e1bf1c3a970f56daad
 msgid "search"
 msgstr ""
 
 #: ../../admin/upgrading.rst:137
-# c3e17ee8c7174e5ba0befc983ef92bc9
+# e136b3b1065242e59f73d6384f7e8287
 msgid "settings"
 msgstr ""
 
 #: ../../admin/upgrading.rst:138
-# 00d32bc57ae847869eaa67d872181ccb
+# f565fd3cfb8d4435a997aa654aee8570
 msgid "simplecache"
 msgstr ""
 
 #: ../../admin/upgrading.rst:139
-# 0d3bea505bc04b5e83acd490bd007b03
+# 6a3b99aca59e47e5aea93a994a96207a
 msgid "views"
 msgstr ""
 
 #: ../../admin/upgrading.rst:143
-# 94b45103651d4e04ad4857095d425aff
+# 55a00cfbca44404a88e722a41934d41c
 msgid "If you do not delete these directories before an upgrade, you will have problems!"
 msgstr ""
 
