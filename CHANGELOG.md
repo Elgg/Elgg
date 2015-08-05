@@ -1,3 +1,42 @@
+<a name="2.0.0-alpha.2"></a>
+### 2.0.0-alpha.2  (2015-08-05)
+
+#### Contributors
+
+* Steve Clay (14)
+* Evan Winslow (13)
+* Jeroen Dalsem (4)
+* Ismayil Khayredinov (3)
+* iionly (1)
+
+#### Features
+
+* **core:** Makes several commonly-used functions public ([4b58e4f5](https://github.com/Elgg/Elgg/commit/4b58e4f5db3a1411e891ca34754e9a5c9c4d9681), closes [#7838](https://github.com/Elgg/Elgg/issues/7838))
+* **groups:** group owner transfer lists users alphabetically ([a8bc79c2](https://github.com/Elgg/Elgg/commit/a8bc79c262f1ec4c82c2d575c0d72b790c6c4635))
+* **hooks:** Adds indication in container permissions hook of checking owner ([298b5231](https://github.com/Elgg/Elgg/commit/298b5231b549739a1a6fc831d249fa708310750d), closes [#8774](https://github.com/Elgg/Elgg/issues/8774))
+* **web_services:** filter method output with a plugin hook ([5ff308c5](https://github.com/Elgg/Elgg/commit/5ff308c53f130d0319e4b168972aaaba172d82ec))
+
+
+#### Documentation
+
+* **releases:** Clarify BC policy for major releases ([a636bf86](https://github.com/Elgg/Elgg/commit/a636bf8610e26e45e8960af3600dcebe16e135b9), closes [#7080](https://github.com/Elgg/Elgg/issues/7080))
+* **web_services:** document ws hooks ([5430e032](https://github.com/Elgg/Elgg/commit/5430e032aba0d8496a81e8467b1b643ea88b9cdc))
+
+
+#### Bug Fixes
+
+* **composer:** Symlink plugins from root mod dir ([436fb4a2](https://github.com/Elgg/Elgg/commit/436fb4a2e29017fe740c2e02be2da8824f63d37d))
+* **nginx:** Update rewrite rules for 2.0 ([aa082a5c](https://github.com/Elgg/Elgg/commit/aa082a5cdec3e0158bfcd298994a269f313a28c7), closes [#8750](https://github.com/Elgg/Elgg/issues/8750))
+* **profile:** Support composer for icondirect requests ([7610552b](https://github.com/Elgg/Elgg/commit/7610552b22f203f3d2eadb1f20e28b2429e0d234))
+* **upgrade:** Point UpgradeService to correct upgrades dir ([b3a31868](https://github.com/Elgg/Elgg/commit/b3a31868a73e32dcc02b922d996b345cd287d786))
+* **web_services:** do not leak internal function names via system.api.list method ([9415c413](https://github.com/Elgg/Elgg/commit/9415c4136849028304327e097c84ac707c21d833), closes [#8574](https://github.com/Elgg/Elgg/issues/8574))
+
+
+#### Deprecations
+
+* **discussion:** Deprecates the elgg:discussion library ([bf741815](https://github.com/Elgg/Elgg/commit/bf741815e36ac72a95adf290764cddf05bc568ab), closes [#8760](https://github.com/Elgg/Elgg/issues/8760))
+
+
 <a name="2.0.0-alpha.1"></a>
 ### 2.0.0-alpha.1  (2015-07-07)
 
