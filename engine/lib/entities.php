@@ -287,20 +287,30 @@ function update_subtype($type, $subtype, $class = '') {
  * A plugin hook container_permissions_check:$entity_type is emitted to allow granular
  * access controls in plugins.
  *
- * @param int    $user_guid      The user guid, or 0 for logged in user.
- * @param int    $container_guid The container, or 0 for the current page owner.
- * @param string $type           The type of entity we want to create (default: 'all')
- * @param string $subtype        The subtype of the entity we want to create (default: 'all')
+ * @param int    $user_guid           The user guid, or 0 for logged in user.
+ * @param int    $container_guid      The container, or 0 for the current page owner.
+ * @param string $type                The type of entity we want to create (default: 'all')
+ * @param string $subtype             The subtype of the entity we want to create (default: 'all')
+ * @param int    $real_container_guid Do not provide this argument. This is only to be used by ElggEntity::create.
  *
  * @return bool
  */
-function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all') {
+function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'all', $subtype = 'all', $real_container_guid = 0) {
 	$container_guid = (int)$container_guid;
 	if (!$container_guid) {
 		$container_guid = elgg_get_page_owner_guid();
 	}
+	if (!$real_container_guid) {
+		$real_container_guid = $container_guid;
+	}
 
 	$container = get_entity($container_guid);
+
+	if ($real_container_guid == $container_guid) {
+		$real_container = $container;
+	} else {
+		$real_container = get_entity($real_container_guid);
+	}
 
 	$user_guid = (int)$user_guid;
 	if ($user_guid == 0) {
@@ -327,6 +337,7 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 			$type,
 			array(
 				'container' => $container,
+				'real_container' => $real_container,
 				'user' => $user,
 				'subtype' => $subtype
 			),

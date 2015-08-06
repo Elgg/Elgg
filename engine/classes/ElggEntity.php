@@ -1114,15 +1114,16 @@ abstract class ElggEntity extends \ElggData implements
 	/**
 	 * Can a user add an entity to this container
 	 *
-	 * @param int    $user_guid The GUID of the user creating the entity (0 for logged in user).
-	 * @param string $type      The type of entity we're looking to write
-	 * @param string $subtype   The subtype of the entity we're looking to write
+	 * @param int    $user_guid           The GUID of the user creating the entity (0 for logged in user).
+	 * @param string $type                The type of entity we're looking to write
+	 * @param string $subtype             The subtype of the entity we're looking to write
+	 * @param int    $real_container_guid Do not provide this argument. This is only to be used by ElggEntity::create.
 	 *
 	 * @return bool
 	 * @see elgg_set_ignore_access()
 	 */
-	public function canWriteToContainer($user_guid = 0, $type = 'all', $subtype = 'all') {
-		return can_write_to_container($user_guid, $this->guid, $type, $subtype);
+	public function canWriteToContainer($user_guid = 0, $type = 'all', $subtype = 'all', $real_container_guid = 0) {
+		return can_write_to_container($user_guid, $this->guid, $type, $subtype, $real_container_guid);
 	}
 
 	/**
@@ -1525,13 +1526,13 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		$owner = $this->getOwnerEntity();
-		if ($owner && !$owner->canWriteToContainer(0, $type, $subtype)) {
+		if ($owner && !$owner->canWriteToContainer(0, $type, $subtype, $container_guid)) {
 			return false;
 		}
 		
 		if ($owner_guid != $container_guid) {
 			$container = $this->getContainerEntity();
-			if ($container && !$container->canWriteToContainer(0, $type, $subtype)) {
+			if ($container && !$container->canWriteToContainer(0, $type, $subtype, $container_guid)) {
 				return false;
 			}
 		}
