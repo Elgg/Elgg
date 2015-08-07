@@ -40,6 +40,14 @@ Basic instructions
 From 1.x to 2.0
 ===============
 
+Removed plugins
+---------------
+
+The following plugins will no longer be bundled with Elgg core:
+
+ * categories (https://github.com/elgg/categories)
+
+
 IE-specific workarounds have been dropped
 -----------------------------------------
 
