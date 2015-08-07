@@ -28,6 +28,9 @@ server {
 	error_log /var/log/nginx/$server_name.error.log error;
 	access_log /var/log/nginx/$server_name.access.log;
 
+	# Max post size
+	client_max_body_size 8M;
+
 	location ~ (^\.|/\.) {
 		return 403;
 	}
