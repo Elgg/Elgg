@@ -1477,8 +1477,16 @@ function _elgg_ajax_page_handler($segments) {
 			$view = 'forms/' . implode('/', array_slice($segments, 1));
 		}
 
+		$ajax_api = _elgg_services()->ajax;
+
 		$allowed_views = elgg_get_config('allowed_ajax_views');
 		if (!array_key_exists($view, $allowed_views)) {
+			if ($ajax_api->isReady()) {
+				$ajax_api->respondWithError("Ajax view '$view' was not registered");
+				return true;
+			}
+
+			// legacy XHR behavior
 			header('HTTP/1.1 403 Forbidden');
 			exit;
 		}
@@ -1493,22 +1501,36 @@ function _elgg_ajax_page_handler($segments) {
 			$vars['entity'] = get_entity($vars['guid']);
 		}
 
+		$content_type = '';
 		if ($segments[0] === 'view') {
+			$output = elgg_view($view, $vars);
+			$ajax_hook_type = "view:$view";
+
 			// Try to guess the mime-type
 			switch ($segments[1]) {
 				case "js":
-					header("Content-Type: text/javascript");
+					$content_type = 'text/javascript';
 					break;
 				case "css":
-					header("Content-Type: text/css");
+					$content_type = 'text/css';
 					break;
 			}
-
-			echo elgg_view($view, $vars);
 		} else {
 			$action = implode('/', array_slice($segments, 1));
-			echo elgg_view_form($action, array(), $vars);
+			$output = elgg_view_form($action, array(), $vars);
+			$ajax_hook_type = "form:$action";
 		}
+
+		if ($ajax_api->isReady()) {
+			$ajax_api->respondFromOutput($output, $ajax_hook_type);
+			return true;
+		}
+
+		// legacy XHR behavior
+		if ($content_type) {
+			header("Content-Type: $content_type");
+		}
+		echo $output;
 		return true;
 	}
 
@@ -1874,6 +1896,14 @@ function _elgg_engine_boot() {
  */
 function _elgg_init() {
 	global $CONFIG;
+
+
+
+	// TODO remove me before merging feature
+	elgg_register_ajax_view('forms/login');
+	elgg_register_action('ajax_example');
+
+
 
 	elgg_register_action('comment/save');
 	elgg_register_action('comment/delete');

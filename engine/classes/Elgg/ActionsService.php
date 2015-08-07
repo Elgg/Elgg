@@ -1,5 +1,6 @@
 <?php
 namespace Elgg;
+use Elgg\Services\AjaxResponse;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -286,57 +287,61 @@ class ActionsService {
 	 * @access private
 	 */
 	public function ajaxForwardHook($hook, $reason, $return, $params) {
-		if (elgg_is_xhr()) {
-			// always pass the full structure to avoid boilerplate JS code.
-			$params = array_merge($params, array(
-				'output' => '',
-				'status' => 0,
-				'system_messages' => array(
-					'error' => array(),
-					'success' => array()
-				)
-			));
-	
-			//grab any data echo'd in the action
-			$output = ob_get_clean();
-	
-			//Avoid double-encoding in case data is json
-			$json = json_decode($output);
-			if (isset($json)) {
-				$params['output'] = $json;
-			} else {
-				$params['output'] = $output;
-			}
-	
-			//Grab any system messages so we can inject them via ajax too
-			$system_messages = _elgg_services()->systemMessages->dumpRegister();
-	
-			if (isset($system_messages['success'])) {
-				$params['system_messages']['success'] = $system_messages['success'];
-			}
-	
-			if (isset($system_messages['error'])) {
-				$params['system_messages']['error'] = $system_messages['error'];
-				$params['status'] = -1;
-			}
+		if (!elgg_is_xhr()) {
+			return;
+		}
 
-			$context = array('action' => $this->currentAction);
-			$params = _elgg_services()->hooks->trigger('output', 'ajax', $context, $params);
-	
-			// Check the requester can accept JSON responses, if not fall back to
-			// returning JSON in a plain-text response.  Some libraries request
-			// JSON in an invisible iframe which they then read from the iframe,
-			// however some browsers will not accept the JSON MIME type.
-			$http_accept = _elgg_services()->request->server->get('HTTP_ACCEPT');
-			if (stripos($http_accept, 'application/json') === false) {
-				header("Content-type: text/plain");
-			} else {
-				header("Content-type: application/json");
-			}
-	
-			echo json_encode($params);
+		// grab any data echo'd in the action
+		$output = ob_get_clean();
+
+		$ajax_api = _elgg_services()->ajax;
+		if ($ajax_api->isReady()) {
+			$ajax_api->respondFromOutput($output, "action:{$this->currentAction}");
 			exit;
 		}
+
+		// legacy XHR behavior
+
+		// always pass the full structure to avoid boilerplate JS code.
+		$params = array_merge($params, array(
+			'output' => '',
+			'status' => 0,
+			'system_messages' => array(
+				'error' => array(),
+				'success' => array()
+			)
+		));
+
+		$params['output'] = $ajax_api->decodeJson($output);
+
+		//Grab any system messages so we can inject them via ajax too
+		$system_messages = _elgg_services()->systemMessages->dumpRegister();
+
+		if (isset($system_messages['success'])) {
+			$params['system_messages']['success'] = $system_messages['success'];
+		}
+
+		if (isset($system_messages['error'])) {
+			$params['system_messages']['error'] = $system_messages['error'];
+			$params['status'] = -1;
+		}
+
+		$context = array('action' => $this->currentAction);
+		$params = _elgg_services()->hooks->trigger('output', 'ajax', $context, $params);
+
+		// Check the requester can accept JSON responses, if not fall back to
+		// returning JSON in a plain-text response.  Some libraries request
+		// JSON in an invisible iframe which they then read from the iframe,
+		// however some browsers will not accept the JSON MIME type.
+		$http_accept = _elgg_services()->request->server->get('HTTP_ACCEPT');
+		if (stripos($http_accept, 'application/json') === false) {
+			header("Content-type: text/plain");
+		} else {
+			header("Content-type: application/json");
+		}
+
+		echo json_encode($params);
+		exit;
 	}
 	
 	/**
