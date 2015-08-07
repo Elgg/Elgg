@@ -126,46 +126,73 @@
 	TOPBAR MENU
 *************************************** */
 .elgg-menu-topbar {
-	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
-	float: left;
+	display: table;
+	padding: 0 .5em;
 }
 
 .elgg-menu-topbar > li {
-	float: left;
-	height: 33px;
+	display: table-cell;
+	vertical-align: middle;
 }
 
 .elgg-menu-topbar > li > a {
-	padding-top: 5px;
 	color: #EEE;
-	margin: 0 15px;
+	padding: .5em 1em;
+	vertical-align: middle;
 }
 
-.elgg-menu-topbar > li > a:hover {
+.elgg-menu-topbar > li > a:hover,
+.elgg-menu-topbar > li > a:hover *,
+.elgg-menu-topbar > li > a:focus,
+.elgg-menu-topbar > li > a:focus * {
 	color: #60B8F7;
 	text-decoration: none;
+}
+
+.elgg-menu-topbar-default {
+	float: left;
 }
 
 .elgg-menu-topbar-alt {
 	float: right;
 }
 
-.elgg-menu-topbar .elgg-icon {
-	vertical-align: middle;
-	margin-top: -1px;
+/* ***************************************
+	TOPBAR MENU DROPDOWN
+*****************************************/
+.elgg-menu-topbar > li.elgg-menu-item-account > a:after {
+	content: " \bb";
 }
 
-.elgg-menu-topbar > li > a.elgg-topbar-logo {
-	margin-top: 0;
-	padding-left: 5px;
-	width: 38px;
-	height: 20px;
+.elgg-menu-topbar > li > .elgg-child-menu {
+	background-color: #FFF;
+	box-shadow: 1px 3px 5px rgba(0, 0, 0, 0.25);
+	display: none;
+	max-width: 10em;
+	position: absolute;
+	text-align: left;
+	top: 100%;
 }
 
-.elgg-menu-topbar > li > a.elgg-topbar-avatar {
-	width: 18px;
-	height: 18px;
-	padding-top: 7px;
+.elgg-menu-topbar-alt > li > .elgg-child-menu {
+	right: 0;
+}
+
+.elgg-menu-topbar > li:hover > .elgg-child-menu {
+	display: block;
+}
+
+.elgg-menu-topbar > li > .elgg-child-menu > li > a {
+	background-color: #FFF;
+	color: #444;
+	padding: .5em 1em;
+	text-decoration: none;
+}
+
+.elgg-menu-topbar > li > .elgg-child-menu > li > a:focus,
+.elgg-menu-topbar > li > .elgg-child-menu > li:hover > a {
+	background-color: #F0F0F0;
+	color: #444;
 }
 
 /* ***************************************
