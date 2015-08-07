@@ -26,7 +26,6 @@ class PostUpdate {
 			'aalborg_theme',
 			'blog',
 			'bookmarks',
-			'categories',
 			'ckeditor',
 			'custom_index',
 			'dashboard',

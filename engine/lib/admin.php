@@ -17,9 +17,7 @@
  * System messages (success and error messages) are used in both the main site
  * and the admin area. There is a special presistent message for the admin area
  * called an admin notice. It should be used when a plugin requires an
- * administrator to take an action. An example is the categories plugin
- * requesting that the administrator set site categories after the plugin has
- * been activated. @see elgg_add_admin_notice()
+ * administrator to take an action. @see elgg_add_admin_notice()
  *
  *
  * @package Elgg.Core
