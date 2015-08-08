@@ -57,7 +57,6 @@ class PostUpdate {
 			'twitter_api',
 			'uservalidationbyemail',
 			'web_services',
-			'zaudio',
 		];
 		
 		foreach ($managed_plugins as $plugin) {
