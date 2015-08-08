@@ -385,7 +385,6 @@ class ElggPluginManifest {
 			'aalborg_theme',
 			'blog',
 			'bookmarks',
-			'categories',
 			'ckeditor',
 			'custom_index',
 			'dashboard',
@@ -418,7 +417,6 @@ class ElggPluginManifest {
 			'twitter_api',
 			'uservalidationbyemail',
 			'web_services',
-			'zaudio',
 		);
 
 		$cats = $this->parser->getAttribute('category');

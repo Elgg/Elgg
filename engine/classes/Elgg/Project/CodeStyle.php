@@ -156,7 +156,7 @@ class CodeStyle {
 			$relative_path = substr($full, $this->substr_start);
 
 			if (is_dir($full)) {
-				if ($entry[0] === '.' || preg_match('~(?:/vendors?|/zaudio/audioplayer)$~', $full)) {
+				if ($entry[0] === '.' || preg_match('~(?:/vendors?)$~', $full)) {
 					// special case
 					if ($entry !== '.scripts') {
 						continue;

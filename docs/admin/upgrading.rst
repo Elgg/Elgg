@@ -43,10 +43,10 @@ From 1.x to 2.0
 Removed plugins
 ---------------
 
-The following plugins will no longer be bundled with Elgg core:
+The following plugins are no longer bundled with Elgg core:
 
  * categories (https://github.com/elgg/categories)
-
+ * zaudio (https://github.com/elgg/zaudio)
 
 IE-specific workarounds have been dropped
 -----------------------------------------
