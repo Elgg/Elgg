@@ -65,7 +65,21 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod'), 'BAD', 'test'));
 		}
 	}
-	
+
+	public function testExposeFunctionAllowsMultipleHttpMethods() {
+		$this->assertTrue(elgg_ws_expose_function('test', 'foo', null, '', array('GET', 'POST')));
+	}
+
+	public function testExposeFunctionBadHttpMethodInArray() {
+		try {
+			@elgg_ws_expose_function('test', 'test', null, '', array('GET', 'POST', 'BAD'));
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'InvalidParameterException');
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('InvalidParameterException:UnrecognisedHttpMethod'), 'BAD', 'test'));
+		}
+	}
+
 	public function testExposeFunctionSuccess() {
 		global $API_METHODS;
 		// this is a general test but also tests specifically for setting 'required' correctly
@@ -81,14 +95,14 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 		$method['description'] = '';
 		$method['function'] = 'foo';
 		$method['parameters'] = $parameters;
-		$method['call_method'] = 'GET'; 
+		$method['call_method'] = array('GET');
 		$method['require_api_auth'] = false;
 		$method['require_user_auth'] = false;
 
 		$this->assertIdentical($method, $API_METHODS['test']);
 	}
 
-// elgg_ws_unexpose_function
+	// elgg_ws_unexpose_function
 	public function testUnexposeFunction() {
 		global $API_METHODS;
 		

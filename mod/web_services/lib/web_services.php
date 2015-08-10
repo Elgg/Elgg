@@ -81,9 +81,8 @@ function execute_method($method) {
 	}
 
 	// check http call method
-	if (strcmp(get_call_method(), $API_METHODS[$method]["call_method"]) != 0) {
-		$msg = elgg_echo('CallException:InvalidCallMethod', array($method,
-		$API_METHODS[$method]["call_method"]));
+	if (!in_array(get_call_method(), $API_METHODS[$method]["call_method"])) {
+		$msg = elgg_echo('CallException:InvalidCallMethod', array($method, implode(', ', $API_METHODS[$method]["call_method"])));
 		throw new CallException($msg);
 	}
 
@@ -130,7 +129,8 @@ function execute_method($method) {
  * @access private
  */
 function get_call_method() {
-	return _elgg_services()->request->server->get('REQUEST_METHOD');
+	$call_method = _elgg_services()->request->server->get('REQUEST_METHOD');
+	return strtoupper($call_method);
 }
 
 /**
@@ -374,7 +374,7 @@ function api_auth_hmac() {
 							$api_header->api_key,
 							$secret_key,
 							$query,
-							$api_header->method == 'POST' ? $api_header->posthash : "");
+							isset($api_header->posthash) ? $api_header->posthash : "");
 
 
 	if ($api_header->hmac !== $hmac) {
@@ -387,7 +387,7 @@ function api_auth_hmac() {
 	}
 
 	// Validate post data
-	if ($api_header->method == "POST") {
+	if (in_array($api_header->method, array("POST", "PUT"))) {
 		$postdata = get_post_data();
 		$calculated_posthash = calculate_posthash($postdata, $api_header->posthash_algo);
 
@@ -416,8 +416,8 @@ function get_and_validate_api_headers() {
 
 	$result->method = get_call_method();
 	// Only allow these methods
-	if (($result->method != "GET") && ($result->method != "POST")) {
-		throw new APIException(elgg_echo('APIException:NotGetOrPost'));
+	if (!in_array($result->method, array('GET', 'POST', 'PUT', 'DELETE'))) {
+		throw new APIException(elgg_echo('APIException:UnrecognisedHttpMethod', array($result->method)));
 	}
 
 	$server = _elgg_services()->request->server;
@@ -456,7 +456,7 @@ function get_and_validate_api_headers() {
 		throw new APIException(elgg_echo('APIException:MissingNonce'));
 	}
 
-	if ($result->method == "POST") {
+	if (in_array($result->method, array("POST", "PUT"))) {
 		$result->posthash = $server->get('HTTP_X_ELGG_POSTHASH');
 		if ($result->posthash == "") {
 			throw new APIException(elgg_echo('APIException:MissingPOSTHash'));
