@@ -60,7 +60,6 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
 	'PluginException:NoPluginName' => "The plugin name could not be found",
 	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
