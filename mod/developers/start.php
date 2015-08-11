@@ -39,9 +39,9 @@ function developers_process_settings() {
 	}
 
 	if (!empty($settings['show_strings'])) {
-		// first and last in case a plugin registers a translation in an init method
-		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1000);
-		elgg_register_event_handler('init', 'system', 'developers_clear_strings', 1);
+		// Beginning and end to make sure both early-rendered and late-loaded translations get included
+		elgg_register_event_handler('init', 'system', 'developers_decorate_all_translations', 1);
+		elgg_register_event_handler('init', 'system', 'developers_decorate_all_translations', 1000);
 	}
 
 	if (!empty($settings['show_modules'])) {
@@ -103,7 +103,36 @@ function developers_setup_menu() {
 }
 
 /**
+ * Adds debug info to all translatable strings.
+ */
+function developers_decorate_all_translations() {
+	$language = get_language();
+	_developers_decorate_translations($language);
+	_developers_decorate_translations('en');
+}
+
+/**
+ * Appends " ($key)" to all strings for the given language.
+ * 
+ * This function checks if the suffix has already been added so it is idempotent
+ * 
+ * @param string $language Language code like "en"
+ */
+function _developers_decorate_translations($language) {
+	foreach ($GLOBALS['_ELGG']->translations[$language] as $key => &$value) {
+		$needle = " ($key)";
+		
+		// if $value doesn't already end with " ($key)", append it
+		if (substr($value, -strlen($needle)) !== $needle) {
+			$value .= $needle;
+		}
+	}
+}
+
+/**
  * Clear all the strings so the raw descriptor strings are displayed
+ * 
+ * @deprecated Superceded by developers_decorate_all_translations
  */
 function developers_clear_strings() {
 	$language = get_language();
