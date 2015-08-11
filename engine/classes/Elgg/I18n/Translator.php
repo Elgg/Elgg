@@ -38,8 +38,6 @@ class Translator {
 	 * or the original language string.
 	 */
 	function translate($message_key, $args = array(), $language = "") {
-
-
 		static $CURRENT_LANGUAGE;
 
 		// old param order is deprecated
@@ -70,7 +68,7 @@ class Translator {
 			// logged in user, so we will have to load it separately. (Most likely
 			// we're sending a notification and the recipient is using a different
 			// language than the logged in user.)
-			_elgg_load_translations_for_language($language);
+			$this->loadTranslations($language);
 		}
 
 		if (isset($GLOBALS['_ELGG']->translations[$language][$message_key])) {
@@ -171,14 +169,28 @@ class Translator {
 	}
 
 	/**
+	 * Load both core and plugin translations
+	 *
+	 * By default this loads only English and the language of the logged
+	 * in user.
+	 *
+	 * The optional $language argument can be used to load translations
+	 * on-demand in case we need to translate something to a language not
+	 * loaded by default for the current request.
+	 *
+	 * @param string $language Language code
 	 * @access private
 	 */
-	function loadTranslations() {
-
-
+	function loadTranslations($language = null) {
 		if ($this->CONFIG->system_cache_enabled) {
 			$loaded = true;
-			$languages = array_unique(array('en', $this->getCurrentLanguage()));
+
+			if ($language) {
+				$languages = array($language);
+			} else {
+				$languages = array_unique(array('en', $this->getCurrentLanguage()));
+			}
+
 			foreach ($languages as $language) {
 				$data = elgg_load_system_cache("$language.lang");
 				if ($data) {
@@ -197,7 +209,59 @@ class Translator {
 		}
 
 		// load core translations from languages directory
-		$this->registerTranslations($this->defaultPath);
+		$this->registerTranslations($this->defaultPath, false, $language);
+
+		// Plugin translation have already been loaded for the default
+		// languages by ElggApplication::bootCore(), so there's no need
+		// to continue unless loading a specific language on-demand
+		if ($language) {
+			$this->loadPluginTranslations($language);
+		}
+	}
+
+	/**
+	 * Load plugin translations for a language
+	 *
+	 * This is needed only if the current request uses a language
+	 * that is neither English of the same as the language of the
+	 * logged in user.
+	 *
+	 * @param string $language
+	 */
+	private function loadPluginTranslations($language) {
+		// Get active plugins
+		$plugins = _elgg_services()->plugins->find('active');
+
+		if (!$plugins) {
+			// Active plugins were not found, so no need to register plugin translations
+			return;
+		}
+
+		foreach ($plugins as $plugin) {
+			$languages_path = "{$plugin->getPath()}languages/";
+
+			if (!is_dir($languages_path)) {
+				// This plugin doesn't have anything to translate
+				continue;
+			}
+
+			$language_file = "{$languages_path}{$language}.php";
+
+			if (!file_exists($language_file)) {
+				// This plugin doesn't have translations for the requested language
+
+				$name = $plugin->getFriendlyName();
+				_elgg_services()->logger->notice("Plugin $name is missing translations for $language language");
+
+				continue;
+			}
+
+			// Register translations from the plugin languages directory
+			if (!$this->registerTranslations($languages_path, false, $language)) {
+				throw new PluginException(sprintf('Cannot register languages for plugin %s (guid: %s) at %s.',
+					array($plugin->getID(), $plugin->guid, $languages_path)));
+			}
+		}
 	}
 
 	/**
@@ -224,10 +288,11 @@ class Translator {
 	 * @param string $path     Full path
 	 * @param bool   $load_all If true all languages are loaded, if
 	 *                         false only the current language + en are loaded
+	 * @param string $language Language code
 	 *
 	 * @return bool success
 	 */
-	function registerTranslations($path, $load_all = false) {
+	function registerTranslations($path, $load_all = false, $language = null) {
 		$path = sanitise_filepath($path);
 
 		// Make a note of this path just incase we need to register this language later
@@ -236,17 +301,22 @@ class Translator {
 		}
 		$GLOBALS['_ELGG']->language_paths[$path] = true;
 
-		// Get the current language based on site defaults and user preference
-		$current_language = $this->getCurrentLanguage();
 		_elgg_services()->logger->info("Translations loaded from: $path");
 
-		// only load these files unless $load_all is true.
-		$load_language_files = array(
-			'en.php',
-			"$current_language.php"
-		);
+		if ($language) {
+			$load_language_files = array("$language.php");
+			$load_all = false;
+		} else {
+			// Get the current language based on site defaults and user preference
+			$current_language = $this->getCurrentLanguage();
 
-		$load_language_files = array_unique($load_language_files);
+			$load_language_files = array(
+				'en.php',
+				"$current_language.php"
+			);
+
+			$load_language_files = array_unique($load_language_files);
+		}
 
 		$handle = opendir($path);
 		if (!$handle) {
@@ -255,19 +325,19 @@ class Translator {
 		}
 
 		$return = true;
-		while (false !== ($language = readdir($handle))) {
+		while (false !== ($language_file = readdir($handle))) {
 			// ignore bad files
-			if (substr($language, 0, 1) == '.' || substr($language, -4) !== '.php') {
+			if (substr($language_file, 0, 1) == '.' || substr($language_file, -4) !== '.php') {
 				continue;
 			}
 
-			if (in_array($language, $load_language_files) || $load_all) {
-				$result = include_once($path . $language);
+			if (in_array($language_file, $load_language_files) || $load_all) {
+				$result = include_once($path . $language_file);
 				if ($result === false) {
 					$return = false;
 					continue;
 				} elseif (is_array($result)) {
-					$this->addTranslation(basename($language, '.php'), $result);
+					$this->addTranslation(basename($language_file, '.php'), $result);
 				}
 			}
 		}
