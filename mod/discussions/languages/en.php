@@ -48,9 +48,7 @@ return array(
 	'discussion:topic:notify:summary' => 'New discussion topic called %s',
 	'discussion:topic:notify:subject' => 'New discussion topic: %s',
 	'discussion:topic:notify:body' =>
-'%s added a new discussion topic to %s:
-
-Title: %s
+'%s added a new discussion topic "%s":
 
 %s
 
@@ -61,7 +59,7 @@ View and reply to the discussion topic:
 	'discussion:reply:notify:summary' => 'New reply in topic: %s',
 	'discussion:reply:notify:subject' => 'New reply in topic: %s',
 	'discussion:reply:notify:body' =>
-'%s replied to the discussion topic %s:
+'%s replied to the discussion topic "%s":
 
 %s
 
