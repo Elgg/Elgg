@@ -58,135 +58,17 @@ function get_language() {
 }
 
 /**
- * Load both core and plugin translations for a specific language
- *
- * This can be used to load translations on-demand in case we need
- * to translate something to a language not loaded by default for
- * the current user.
- *
- * @param $language Language code
- * @return bool
- *
- * @since 1.9.4
- * @throws PluginException
- * @access private
- */
-function _elgg_load_translations_for_language($language) {
-	global $CONFIG;
-
-	// Try to load translations from system cache
-	if (!empty($CONFIG->system_cache_enabled)) {
-		$data = elgg_load_system_cache("$language.lang");
-		if ($data) {
-			$added = add_translation($language, unserialize($data));
-
-			if ($added) {
-				// Translations were successfully loaded from system cache
-				return true;
-			}
-		}
-	}
-
-	// Read translations from the core languages directory
-	_elgg_register_translations_for_language(dirname(dirname(dirname(__FILE__))) . "/languages/", $language);
-
-	// Get active plugins
-	$plugins = elgg_get_plugins('active');
-
-	if (!$plugins) {
-		// Active plugins were not found, so no need to register plugin translations
-		return true;
-	}
-
-	foreach ($plugins as $plugin) {
-		$languages_path = "{$plugin->getPath()}languages/";
-
-		if (!is_dir($languages_path)) {
-			// This plugin doesn't have anything to translate
-			continue;
-		}
-
-		$language_file = "{$languages_path}{$language}.php";
-
-		if (!file_exists($language_file)) {
-			// This plugin doesn't have translations for the requested language
-
-			$name = $plugin->getFriendlyName();
-			elgg_log("Plugin $name is missing translations for $language language", 'NOTICE');
-
-			continue;
-		}
-
-		// Register translations from the plugin languages directory
-		if (!_elgg_register_translations_for_language($languages_path, $language)) {
-			$msg = elgg_echo('ElggPlugin:Exception:CannotRegisterLanguages',
-							array($plugin->getID(), $plugin->guid, $languages_path));
-			throw new PluginException($msg);
-		}
-	}
-
-	return true;
-}
-
-/**
  * When given a full path, finds translation files and loads them
  *
  * @param string $path     Full path
  * @param bool   $load_all If true all languages are loaded, if
  *                         false only the current language + en are loaded
+ * @param string $language Language code if other than current + en
  *
  * @return bool success
  */
-function register_translations($path, $load_all = false) {
-	return _elgg_services()->translator->registerTranslations($path, $load_all);
-}
-
-/**
- * When given a full path, finds translation files for a language and loads them
- *
- * This function was added in 1.9.4 to make it possible to load translations
- * for individual languages on-demand. This is needed in order to send
- * notifications in the recipient's language (see #3151 and #7241).
- *
- * @todo Replace this function in 1.10 by adding $language as the third parameter
- *       to register_translations().
- *
- * @access private
- * @since 1.9.4
- *
- * @param string $path     Full path of the directory (with trailing slash)
- * @param string $language Language code
- * @return bool success
- */
-function _elgg_register_translations_for_language($path, $language) {
-	$path = sanitise_filepath($path);
-
-	// Make a note of this path just in case we need to register this language later
-	if (!isset($GLOBALS['_ELGG']->language_paths)) {
-		$GLOBALS['_ELGG']->language_paths = array();
-	}
-	$GLOBALS['_ELGG']->language_paths[$path] = true;
-
-	$language_file = "{$path}{$language}.php";
-
-	if (!file_exists($language_file)) {
-		elgg_log("Could not find language file: $language_file", 'NOTICE');
-
-		return false;
-	}
-
-	$result = include_once($language_file);
-
-	elgg_log("Translations loaded from: $language_file", "INFO");
-
-	// The old (< 1.9) translation files call add_translation() independently.
-	// The new ones however just return the translations array. In this case
-	// we need to add the translation here.
-	if (is_array($result)) {
-		return add_translation($language, $result);
-	}
-
-	return true;
+function register_translations($path, $load_all = false, $language = null) {
+	return _elgg_services()->translator->registerTranslations($path, $load_all, $language);
 }
 
 /**
