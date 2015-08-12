@@ -220,7 +220,13 @@ function _elgg_send_friend_notification($event, $type, $object) {
 		$user_one->getURL()
 	), $user_two->language);
 
-	return notify_user($user_two->guid, $object->guid_one, $subject, $body);
+	// Notification params
+	$params = [
+		'action' => 'add_friend',
+		'object' => $user_one,
+	];
+	
+	return notify_user($user_two->guid, $object->guid_one, $subject, $body, $params);
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
