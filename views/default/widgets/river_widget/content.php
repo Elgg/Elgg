@@ -16,7 +16,7 @@ $options = array(
 
 if (elgg_in_context('dashboard')) {
 	if ($vars['entity']->content_type == 'friends') {
-		$options['relationship_guid'] = elgg_get_page_owner_guid();
+		$options['relationship_subject_guid'] = elgg_get_page_owner_guid();
 		$options['relationship'] = 'friend';
 	}
 } else {

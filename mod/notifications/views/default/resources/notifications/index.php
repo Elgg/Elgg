@@ -33,7 +33,7 @@ elgg_push_breadcrumb($title);
 $people = array();
 if ($people_ents = elgg_get_entities_from_relationship(array(
 		'relationship' => 'notify',
-		'relationship_guid' => $user->guid,
+		'relationship_subject_guid' => $user->guid,
 		'type' => 'user',
 		'limit' => false,
 	))) {

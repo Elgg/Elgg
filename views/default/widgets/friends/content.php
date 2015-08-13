@@ -20,7 +20,7 @@ if (elgg_instanceof($owner, 'user')) {
 	$html = elgg_list_entities_from_relationship(array(
 		'type' => 'user',
 		'relationship' => 'friend',
-		'relationship_guid' => $owner->guid,
+		'relationship_subject_guid' => $owner->guid,
 		'limit' => $num_display,
 		'size' => $size,
 		'list_type' => 'gallery',

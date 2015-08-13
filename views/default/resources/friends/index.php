@@ -13,8 +13,7 @@ $title = elgg_echo("friends:owned", array($owner->name));
 $dbprefix = elgg_get_config('dbprefix');
 $options = array(
 	'relationship' => 'friend',
-	'relationship_guid' => $owner->getGUID(),
-	'inverse_relationship' => false,
+	'relationship_subject_guid' => $owner->getGUID(),
 	'type' => 'user',
 	'joins' => array("JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"),
 	'order_by' => 'ue.name ASC',

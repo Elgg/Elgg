@@ -5,139 +5,162 @@
  */
 class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTest {
 
-	// Make sure metadata doesn't affect getting entities by relationship.  See #2274
-	public function testElggApiGettersEntityRelationshipWithMetadata() {
-		$guids = array();
+	/** @var ElggEntity */
+	public $obj1;
 
-		$obj1 = new \ElggObject();
-		$obj1->test_md = 'test';
-		$obj1->save();
-		$guids[] = $obj1->guid;
+	/** @var ElggEntity */
+	public $obj2;
 
-		$obj2 = new \ElggObject();
-		$obj2->test_md = 'test';
-		$obj2->save();
-		$guids[] = $obj2->guid;
+	public function setUp() {
+		$this->obj1 = new \ElggObject();
+		$this->obj1->save();
+		$this->obj2 = new \ElggObject();
+		$this->obj2->save();
 
-		add_entity_relationship($guids[0], 'test', $guids[1]);
+		// All tests in presence of entity metadata. See #2274
+		$this->obj1->test_md = 'test';
+		$this->obj2->test_md = 'test';
 
+		add_entity_relationship($this->obj1->guid, 'test', $this->obj2->guid);
+	}
+
+	public function tearDown() {
+		$this->obj1->delete();
+		$this->obj2->delete();
+	}
+
+	public function testCanFetchTargetsByRelationshipGuid() {
 		$options = array(
 			'relationship' => 'test',
-			'relationship_guid' => $guids[0]
+			'relationship_guid' => $this->obj1->guid,
 		);
 
 		$es = elgg_get_entities_from_relationship($options);
-		$this->assertTrue(is_array($es));
+		$this->assertEqual($this->obj2->guid, $es[0]->guid);
 		$this->assertIdentical(count($es), 1);
-
-		foreach ($es as $e) {
-			$this->assertEqual($guids[1], $e->guid);
-		}
-
-		foreach ($guids as $guid) {
-			$e = get_entity($guid);
-			$e->delete();
-		}
 	}
 
-	public function testElggApiGettersEntityRelationshipWithOutMetadata() {
-		$guids = array();
-
-		$obj1 = new \ElggObject();
-		$obj1->save();
-		$guids[] = $obj1->guid;
-
-		$obj2 = new \ElggObject();
-		$obj2->save();
-		$guids[] = $obj2->guid;
-
-		add_entity_relationship($guids[0], 'test', $guids[1]);
-
+	public function testCanFetchTargetsByExplicitlyGivingSubject() {
 		$options = array(
 			'relationship' => 'test',
-			'relationship_guid' => $guids[0]
+			'relationship_subject_guid' => $this->obj1->guid,
 		);
 
 		$es = elgg_get_entities_from_relationship($options);
-		$this->assertTrue(is_array($es));
+		$this->assertEqual($this->obj2->guid, $es[0]->guid);
 		$this->assertIdentical(count($es), 1);
-
-		foreach ($es as $e) {
-			$this->assertEqual($guids[1], $e->guid);
-		}
-
-		foreach ($guids as $guid) {
-			$e = get_entity($guid);
-			$e->delete();
-		}
 	}
 
-	public function testElggApiGettersEntityRelationshipWithMetadataIncludingRealMetadata() {
-		$guids = array();
+	public function testCanFetchSubjectsByRelationshipGuid() {
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $this->obj2->guid,
+			'inverse_relationship' => true,
+		);
 
-		$obj1 = new \ElggObject();
-		$obj1->test_md = 'test';
-		$obj1->save();
-		$guids[] = $obj1->guid;
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertEqual($this->obj1->guid, $es[0]->guid);
+		$this->assertIdentical(count($es), 1);
+	}
 
-		$obj2 = new \ElggObject();
-		$obj2->test_md = 'test';
-		$obj2->save();
-		$guids[] = $obj2->guid;
+	public function testCanFetchSubjectsByExplicitlyGivingTarget() {
+		$options = array(
+			'relationship' => 'test',
+			'relationship_target_guid' => $this->obj2->guid,
+		);
 
-		add_entity_relationship($guids[0], 'test', $guids[1]);
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertEqual($this->obj1->guid, $es[0]->guid);
+		$this->assertIdentical(count($es), 1);
+	}
+
+	public function testExplicitSubjectOrTargetDisablesOldApi() {
+		$options = array(
+			'relationship' => 'test',
+			'relationship_subject_guid' => $this->obj1->guid,
+
+			// these ignored
+			'relationship_guid' => $this->obj2->guid,
+			'inverse_relationship' => true,
+		);
+
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertEqual($this->obj2->guid, $es[0]->guid);
+		$this->assertIdentical(count($es), 1);
 
 		$options = array(
 			'relationship' => 'test',
-			'relationship_guid' => $guids[0],
+			'relationship_target_guid' => $this->obj2->guid,
+
+			// these ignored
+			'relationship_guid' => $this->obj1->guid,
+			'inverse_relationship' => false,
+		);
+
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertEqual($this->obj1->guid, $es[0]->guid);
+		$this->assertIdentical(count($es), 1);
+	}
+
+	public function testCanFetchTargetsWhileMatchingMetadata() {
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $this->obj1->guid,
 			'metadata_name' => 'test_md',
 			'metadata_value' => 'test',
 		);
 
 		$es = elgg_get_entities_from_relationship($options);
-		$this->assertTrue(is_array($es));
+		$this->assertEqual($this->obj2->guid, $es[0]->guid);
 		$this->assertIdentical(count($es), 1);
-
-		foreach ($es as $e) {
-			$this->assertEqual($guids[1], $e->guid);
-		}
-
-		foreach ($guids as $guid) {
-			$e = get_entity($guid);
-			$e->delete();
-		}
-	}
-
-	public function testElggApiGettersEntityRelationshipWithMetadataIncludingFakeMetadata() {
-		$guids = array();
-
-		$obj1 = new \ElggObject();
-		$obj1->test_md = 'test';
-		$obj1->save();
-		$guids[] = $obj1->guid;
-
-		$obj2 = new \ElggObject();
-		$obj2->test_md = 'test';
-		$obj2->save();
-		$guids[] = $obj2->guid;
-
-		add_entity_relationship($guids[0], 'test', $guids[1]);
 
 		$options = array(
 			'relationship' => 'test',
-			'relationship_guid' => $guids[0],
+			'relationship_subject_guid' => $this->obj1->guid,
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'test',
+		);
+
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertEqual($this->obj2->guid, $es[0]->guid);
+		$this->assertIdentical(count($es), 1);
+	}
+
+	public function testCanFetchSubjectsWhileMatchingMetadata() {
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $this->obj2->guid,
+			'inverse_relationship' => true,
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'test',
+		);
+
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertEqual($this->obj1->guid, $es[0]->guid);
+		$this->assertIdentical(count($es), 1);
+
+		$options = array(
+			'relationship' => 'test',
+			'relationship_target_guid' => $this->obj2->guid,
+			'metadata_name' => 'test_md',
+			'metadata_value' => 'test',
+		);
+
+		$es = elgg_get_entities_from_relationship($options);
+		$this->assertEqual($this->obj1->guid, $es[0]->guid);
+		$this->assertIdentical(count($es), 1);
+	}
+
+	public function testMetadataSearchCanEmptyResultSet() {
+		$options = array(
+			'relationship' => 'test',
+			'relationship_guid' => $this->obj1->guid,
 			'metadata_name' => 'test_md',
 			'metadata_value' => 'invalid',
 		);
 
 		$es = elgg_get_entities_from_relationship($options);
-
-		$this->assertTrue(empty($es));
-
-		foreach ($guids as $guid) {
-			$e = get_entity($guid);
-			$e->delete();
-		}
+		$this->assertEqual([], $es);
 	}
 
 	public function testElggGetEntitiesFromRelationshipCount() {
@@ -193,23 +216,14 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 	}
 	
 	/**
-	 * Make sure elgg_get_entities_from_relationship() returns distinct (unique) results when relationship_guid is not set
-	 * See #5775
-	 * @covers elgg_get_entities_from_relationship()
+	 * @link https://github.com/Elgg/Elgg/issues/5775
 	 */
-	public function testElggApiGettersEntityRelationshipDistinctResult() {
-
-		$obj1 = new ElggObject();
-		$obj1->save();
-
-		$obj2 = new ElggObject();
-		$obj2->save();
-
+	public function testFetchReturnsDistinctResultsWithUnsetRelationshipGuid() {
 		$obj3 = new ElggObject();
 		$obj3->save();
 
-		add_entity_relationship($obj2->guid, 'test_5775', $obj1->guid);
-		add_entity_relationship($obj3->guid, 'test_5775', $obj1->guid);
+		add_entity_relationship($this->obj2->guid, 'test_5775', $this->obj1->guid);
+		add_entity_relationship($obj3->guid, 'test_5775', $this->obj1->guid);
 
 		$options = array(
 			'relationship' => 'test_5775',
@@ -225,29 +239,18 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 		$this->assertTrue(is_array($objects));
 		$this->assertIdentical(count($objects), 1);
 		
-		$obj1->delete();
-		$obj2->delete();
 		$obj3->delete();
 	}
 	
 	/**
-	 * Make sure changes related to #5775 do not affect inverse relationship queries
-	 * @covers elgg_get_entities_from_relationship()
+	 * @link https://github.com/Elgg/Elgg/issues/5775
 	 */
-	public function testElggApiGettersEntityRelationshipDistinctResultInverse() {
-
-		
-		$obj1 = new ElggObject();
-		$obj1->save();
-
-		$obj2 = new ElggObject();
-		$obj2->save();
-
+	public function testChangesIn5575DontAffectInverseFetches() {
 		$obj3 = new ElggObject();
 		$obj3->save();
 
-		add_entity_relationship($obj2->guid, 'test_5775_inverse', $obj1->guid);
-		add_entity_relationship($obj3->guid, 'test_5775_inverse', $obj1->guid);
+		add_entity_relationship($this->obj2->guid, 'test_5775_inverse', $this->obj1->guid);
+		add_entity_relationship($obj3->guid, 'test_5775_inverse', $this->obj1->guid);
 
 		$options = array(
 			'relationship' => 'test_5775_inverse',
@@ -263,8 +266,6 @@ class ElggCoreGetEntitiesFromRelationshipTest extends \ElggCoreGetEntitiesBaseTe
 		$this->assertTrue(is_array($objects));
 		$this->assertIdentical(count($objects), 2);
 		
-		$obj1->delete();
-		$obj2->delete();
 		$obj3->delete();
 	}
 

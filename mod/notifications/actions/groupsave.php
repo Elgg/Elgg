@@ -20,7 +20,7 @@ if (($user->guid != $current_user->guid) && !$current_user->isAdmin()) {
 $groups = array();
 $options = array(
 	'relationship' => 'member',
-	'relationship_guid' => $user->guid,
+	'relationship_subject_guid' => $user->guid,
 	'type' => 'group',
 	'limit' => false,
 );

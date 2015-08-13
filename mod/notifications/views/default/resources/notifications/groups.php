@@ -33,7 +33,7 @@ elgg_push_breadcrumb($title);
 $dbprefix = elgg_get_config('dbprefix');
 $groupmemberships = elgg_get_entities_from_relationship(array(
 	'relationship' => 'member',
-	'relationship_guid' => $user->guid,
+	'relationship_subject_guid' => $user->guid,
 	'type' => 'group',
 	'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
 	'order_by' => 'ge.name ASC',
