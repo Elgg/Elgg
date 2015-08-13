@@ -18,8 +18,7 @@ $all_link = elgg_view('output/url', array(
 
 $body = elgg_list_entities_from_relationship(array(
 	'relationship' => 'member',
-	'relationship_guid' => $vars['entity']->guid,
-	'inverse_relationship' => true,
+	'relationship_target_guid' => $vars['entity']->guid,
 	'type' => 'user',
 	'limit' => $limit,
 	'order_by' => 'r.time_created DESC',

@@ -392,8 +392,7 @@ class Plugins {
 		switch ($status) {
 			case 'active':
 				$options['relationship'] = 'active_plugin';
-				$options['relationship_guid'] = $site_guid;
-				$options['inverse_relationship'] = true;
+				$options['relationship_target_guid'] = $site_guid;
 				break;
 	
 			case 'inactive':

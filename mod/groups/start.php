@@ -164,8 +164,7 @@ function groups_setup_sidebar_menus() {
 			$count = elgg_get_entities_from_relationship(array(
 				'type' => 'user',
 				'relationship' => 'membership_request',
-				'relationship_guid' => $page_owner->getGUID(),
-				'inverse_relationship' => true,
+				'relationship_target_guid' => $page_owner->getGUID(),
 				'count' => true,
 			));
 
@@ -610,8 +609,7 @@ function groups_get_invited_groups($user_guid, $return_guids = false, $options =
 
 	$defaults = array(
 		'relationship' => 'invited',
-		'relationship_guid' => (int) $user_guid,
-		'inverse_relationship' => true,
+		'relationship_target_guid' => (int) $user_guid,
 		'limit' => 0,
 	);
 

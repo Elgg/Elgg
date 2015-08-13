@@ -25,7 +25,7 @@ $content .= elgg_list_entities_from_relationship(array(
 	'subtype' => 'thewire',
 	'full_view' => false,
 	'relationship' => 'friend',
-	'relationship_guid' => $owner->guid,
+	'relationship_subject_guid' => $owner->guid,
 	'relationship_join_on' => 'container_guid',
 	'preload_owners' => true,
 ));

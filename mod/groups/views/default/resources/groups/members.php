@@ -15,8 +15,7 @@ elgg_push_breadcrumb(elgg_echo('groups:members'));
 
 $options = [
 	'relationship' => 'member',
-	'relationship_guid' => $group->guid,
-	'inverse_relationship' => true,
+	'relationship_target_guid' => $group->guid,
 	'type' => 'user',
 	'limit' => (int) get_input('limit', max(20, elgg_get_config('default_limit')), false),
 ];

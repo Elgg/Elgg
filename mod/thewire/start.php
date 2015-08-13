@@ -383,7 +383,7 @@ function thewire_latest_guid() {
 function thewire_get_parent($post_guid) {
 	$parents = elgg_get_entities_from_relationship(array(
 		'relationship' => 'parent',
-		'relationship_guid' => $post_guid,
+		'relationship_subject_guid' => $post_guid,
 	));
 	if ($parents) {
 		return $parents[0];

@@ -485,8 +485,7 @@ Consider these two examples:
 	echo elgg_list_entities_from_relationship([
 	    'type' => 'group',
 	    'relationship' => 'member',
-	    'relationship_guid' => elgg_get_logged_in_user_guid(),
-	    'inverse_relationship' => false,
+	    'relationship_subject_guid' => elgg_get_logged_in_user_guid(),
 	    'full_view' => false,
 	]);
 
@@ -495,8 +494,7 @@ Consider these two examples:
 	echo elgg_list_entities_from_relationship([
 	    'type' => 'group',
 	    'relationship' => 'invited',
-	    'relationship_guid' => (int) $user_guid,
-	    'inverse_relationship' => true,
+	    'relationship_target_guid' => (int) $user_guid,
 	    'item_view' => 'group/format/invitationrequest',
 	]);
 

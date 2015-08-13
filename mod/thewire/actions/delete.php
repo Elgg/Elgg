@@ -14,8 +14,7 @@ if (elgg_instanceof($thewire, 'object', 'thewire') && $thewire->canEdit()) {
 	// unset reply metadata on children
 	$children = elgg_get_entities_from_relationship(array(
 		'relationship' => 'parent',
-		'relationship_guid' => $guid,
-		'inverse_relationship' => true,
+		'relationship_target_guid' => $guid,
 	));
 	if ($children) {
 		foreach ($children as $child) {

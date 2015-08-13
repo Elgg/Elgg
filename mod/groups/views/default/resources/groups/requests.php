@@ -19,8 +19,7 @@ elgg_push_breadcrumb($title);
 $requests = elgg_get_entities_from_relationship(array(
 	'type' => 'user',
 	'relationship' => 'membership_request',
-	'relationship_guid' => $guid,
-	'inverse_relationship' => true,
+	'relationship_target_guid' => $guid,
 	'limit' => 0,
 ));
 $content = elgg_view('groups/membershiprequests', array(

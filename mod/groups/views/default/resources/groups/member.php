@@ -27,8 +27,7 @@ $dbprefix = elgg_get_config('dbprefix');
 $content = elgg_list_entities_from_relationship(array(
 	'type' => 'group',
 	'relationship' => 'member',
-	'relationship_guid' => elgg_get_page_owner_guid(),
-	'inverse_relationship' => false,
+	'relationship_subject_guid' => elgg_get_page_owner_guid(),
 	'full_view' => false,
 	'joins' => array("JOIN {$dbprefix}groups_entity ge ON e.guid = ge.guid"),
 	'order_by' => 'ge.name ASC',

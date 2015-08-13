@@ -371,8 +371,7 @@ class ElggGroup extends \ElggEntity
 			elgg_deprecated_notice('\ElggGroup::getMembers() takes an options array.', 1.9);
 			$options = array(
 				'relationship' => 'member',
-				'relationship_guid' => $this->getGUID(),
-				'inverse_relationship' => true,
+				'relationship_target_guid' => $this->getGUID(),
 				'type' => 'user',
 				'limit' => $options,
 				'offset' => $offset,
@@ -380,8 +379,7 @@ class ElggGroup extends \ElggEntity
 			);
 		} else {
 			$options['relationship'] = 'member';
-			$options['relationship_guid'] = $this->getGUID();
-			$options['inverse_relationship'] = true;
+			$options['relationship_target_guid'] = $this->getGUID();
 			$options['type'] = 'user';
 		}
 

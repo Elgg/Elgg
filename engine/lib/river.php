@@ -251,9 +251,9 @@ function elgg_delete_river(array $options = array()) {
  *
  * @param array $options Parameters:
  *   ids                  => INT|ARR River item id(s)
- *   subject_guids        => INT|ARR Subject guid(s)
- *   object_guids         => INT|ARR Object guid(s)
- *   target_guids         => INT|ARR Target guid(s)
+ *   subject_guids        => INT|ARR Subject GUID(s)
+ *   object_guids         => INT|ARR Object GUID(s)
+ *   target_guids         => INT|ARR Target GUID(s)
  *   annotation_ids       => INT|ARR The identifier of the annotation(s)
  *   action_types         => STR|ARR The river action type(s) identifier
  *   posted_time_lower    => INT     The lower bound on the time posted
@@ -264,9 +264,17 @@ function elgg_delete_river(array $options = array()) {
  *   type_subtype_pairs   => ARR     Array of type => subtype pairs where subtype
  *                                   can be an array of subtype strings
  *
- *   relationship         => STR     Relationship identifier
- *   relationship_guid    => INT|ARR Entity guid(s)
- *   inverse_relationship => BOOL    Subject or object of the relationship (false)
+ *   relationship         => STR     Relationship type
+ *   relationship_subject_guid => null|INT GUID of the subject of the relationship (the query will find targets).
+ *                               E.g. For a "member" relationship, you'd set this to a user GUID to find groups
+ *                               containing that member. If given, you need not specify "relationship_guid"
+ *                               or "inverse_relationship".
+ *   relationship_target_guid => null|INT GUID of the target of the relationship (the query will find subjects).
+ *                              E.g. For a "member" relationship, you'd set this to a group GUID to find users
+ *                              that were members. If given, you need not specify "relationship_guid" or
+ *                              "inverse_relationship".
+ *   relationship_guid    => INT|ARR GUID(s) of relationship subject (target if inverse_relationship is true)
+ *   inverse_relationship => BOOL    Default (false) is to find relationship targets. Set to true to find subjects
  *
  * 	 limit                => INT     Number to show per page (20)
  *   offset               => INT     Offset in list (0)
@@ -296,6 +304,8 @@ function elgg_get_river(array $options = array()) {
 		'action_types'         => ELGG_ENTITIES_ANY_VALUE,
 
 		'relationship'         => null,
+		'relationship_subject_guid' => null,
+		'relationship_target_guid' => null,
 		'relationship_guid'    => null,
 		'inverse_relationship' => false,
 
@@ -319,6 +329,22 @@ function elgg_get_river(array $options = array()) {
 	);
 
 	$options = array_merge($defaults, $options);
+
+	// don't allow setting both target and subject
+	if ($options['relationship_subject_guid'] && $options['relationship_target_guid']) {
+		throw new \InvalidArgumentException('You may not set both "relationship_subject_guid" and'
+			. ' "relationship_target_guid"');
+	}
+
+	// translate to old API
+	if ($options['relationship_subject_guid']) {
+		$options['relationship_guid'] = $options['relationship_subject_guid'];
+		$options['inverse_relationship'] = false;
+
+	} elseif ($options['relationship_target_guid']) {
+		$options['relationship_guid'] = $options['relationship_target_guid'];
+		$options['inverse_relationship'] = true;
+	}
 
 	$singulars = array('id', 'subject_guid', 'object_guid', 'target_guid', 'annotation_id', 'action_type', 'type', 'subtype');
 	$options = _elgg_normalize_plural_options_array($options, $singulars);

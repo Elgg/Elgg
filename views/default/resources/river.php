@@ -44,7 +44,7 @@ switch ($page_type) {
 	case 'friends':
 		$title = elgg_echo('river:friends');
 		$page_filter = 'friends';
-		$options['relationship_guid'] = elgg_get_logged_in_user_guid();
+		$options['relationship_subject_guid'] = elgg_get_logged_in_user_guid();
 		$options['relationship'] = 'friend';
 		break;
 	default:

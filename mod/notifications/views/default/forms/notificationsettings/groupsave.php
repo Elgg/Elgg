@@ -14,7 +14,7 @@ $NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecated
 foreach ($NOTIFICATION_HANDLERS as $method => $foo) {
 	$subsbig[$method] = elgg_get_entities_from_relationship(array(
 		'relationship' => 'notify' . $method,
-		'relationship_guid' => $user->guid,
+		'relationship_subject_guid' => $user->guid,
 		'type' => 'group',
 		'limit' => false,
 	));
