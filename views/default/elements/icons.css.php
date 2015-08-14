@@ -14,9 +14,7 @@
 *************************************** */
 .elgg-icon {
 	color: #CCC;
-	font-size: 16px;
-	width: 16px;
-	height: 16px;
+	font-size: 18px;
 	margin: 0 2px;
 }
 
@@ -67,20 +65,20 @@ h6 > .elgg-icon {
 .elgg-avatar-tiny > a > img {
 	width: 25px;
 	height: 25px;
-	
+
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 3px;
-	
+
 	background-clip:  border;
 	background-size: 25px;
 }
 .elgg-avatar-small > a > img {
 	width: 40px;
 	height: 40px;
-	
+
 	/* remove the border-radius if you don't want rounded avatars in supported browsers */
 	border-radius: 5px;
-	
+
 	background-clip:  border;
 	background-size: 40px;
 }

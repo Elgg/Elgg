@@ -1,0 +1,13 @@
+/**
+ * Hack that reduces size inconsistencies within Font awesome icons
+ */
+
+.fa-mobile-phone:before,
+.fa-mobile:before,
+.fa-remove:before,
+.fa-close:before,
+.fa-times:before,
+.fa-caret-down:before,
+.fa-caret-down:before {
+	font-size: larger !important;
+}
