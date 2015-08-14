@@ -824,6 +824,8 @@ class EntityTable {
 					if ($paired_subtype_ids_str = implode(',', $paired_subtype_ids)) {
 						$wheres[] = "({$table}.type = '$paired_type'"
 							. " AND {$table}.subtype IN ($paired_subtype_ids_str))";
+					} else {
+						$wheres[] = "({$table}.type = '$paired_type')";
 					}
 				} else {
 					$wheres[] = "({$table}.type = '$paired_type')";
