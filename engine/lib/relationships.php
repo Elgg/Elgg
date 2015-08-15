@@ -134,8 +134,47 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
 
 /**
  * Return entities matching a given query joining against a relationship.
- * Also accepts all options available to elgg_get_entities() and
- * elgg_get_entities_from_metadata().
+ *
+ * By default the function finds relationship targets. E.g.:
+ *
+ *   // find groups with a particular member:
+ *   $options = [
+ *       'relationship' => 'member',
+ *       'relationship_guid' => $member->guid,
+ *   ];
+ *
+ *   // find people the user has friended
+ *   $options = [
+ *       'relationship' => 'friend',
+ *       'relationship_guid' => $user->guid,
+ *   ];
+ *
+ *   // find stuff created by friends (not in groups)
+ *   $options = [
+ *       'relationship' => 'friend',
+ *       'relationship_guid' => $user->guid,
+ *       'relationship_join_on' => 'container_guid',
+ *   ];
+ *
+ * To find relationship subjects, set "inverse_relationship" to true. E.g.:
+ *
+ *   // find members of a particular group
+ *   $options = [
+ *       'relationship' => 'member',
+ *       'relationship_guid' => $group->guid,
+ *       'inverse_relationship' => true,
+ *   ];
+ *
+ *   // find users who have friended the current user
+ *   $options = [
+ *       'relationship' => 'friend',
+ *       'relationship_guid' => $user->guid,
+ *       'inverse_relationship' => true,
+ *   ];
+ *
+ * @note You may want to specify "type" because relationship types might be used for other entities.
+ *
+ * This also accepts all options available to elgg_get_entities() and elgg_get_entities_from_metadata().
  *
  * To ask for entities that do not have a particular relationship to an entity,
  * use a custom where clause like the following:
@@ -151,18 +190,21 @@ function get_entity_relationships($guid, $inverse_relationship = false) {
  *
  * @param array $options Array in format:
  *
- *  relationship         => null|STR Type of the relationship
+ *  relationship => null|STR Type of the relationship. E.g. "member"
  *
- *  relationship_guid    => null|INT GUID of the subject or target entity
+ *  relationship_guid => null|INT GUID of the subject of the relationship, unless "inverse_relationship" is set
+ *                                to true, in which case this will specify the target.
  *
- *  inverse_relationship => false|BOOL Is relationship_guid is the target entity of the relationship? By default,
- * 	                        relationship_guid is the subject.
+ *  inverse_relationship => false|BOOL Are we searching for relationship subjects? By default, the query finds
+ *                                     targets of relationships.
  * 
  *  relationship_join_on => null|STR How the entities relate: guid (default), container_guid, or owner_guid
- *                          Add in Elgg 1.9.0. Examples using the relationship 'friend':
- *                          1. use 'guid' if you want the user's friends
- *                          2. use 'owner_guid' if you want the entities the user's friends own (including in groups)
- *                          3. use 'container_guid' if you want the entities in the user's personal space (non-group)
+ *                                   Examples using the relationship 'friend':
+ *                                   1. use 'guid' if you want the user's friends
+ *                                   2. use 'owner_guid' if you want the entities the user's friends own
+ *                                      (including in groups)
+ *                                   3. use 'container_guid' if you want the entities in the user's personal
+ *                                      space (non-group)
  *                          
  * 	relationship_created_time_lower => null|INT Relationship created time lower boundary in epoch time
  *
