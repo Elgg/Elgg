@@ -195,6 +195,10 @@ Permission hooks
 	Return boolean for if the user ``$params['user']`` can use the entity ``$params['container']``
 	as a container for an entity of ``<entity_type>`` and subtype ``$params['subtype']``.
 
+	In the rare case where an entity is created with neither the ``container_guid`` nor the ``owner_guid``
+	matching the logged in user, this hook is called *twice*, and in the first call ``$params['container']``
+	will be the *owner*, not the entity's real container.
+
 **permissions_check, <entity_type>**
 	Return boolean for if the user ``$params['user']`` can edit the entity ``$params['entity']``.
 
