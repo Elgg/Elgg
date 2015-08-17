@@ -111,7 +111,7 @@ if ($active) {
 	$options['class'] = 'elgg-button elgg-button-cancel';
 	$options['text'] = elgg_echo('admin:plugins:deactivate');
 	if (!$can_activate) {
-		$classes[] = 'elgg-state-active elgg-state-cannot-activate';
+		$classes[] = 'elgg-state-cannot-activate';
 	}
 } else if ($can_activate) {
 	$classes[] = 'elgg-state-inactive';
