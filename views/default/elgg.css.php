@@ -39,6 +39,7 @@ Skin CSS
  * layout_objects - lists, content blocks, notifications, avatars
  * layout         - page layout
  * misc           - to be removed/redone
+ * fa             - hacks to reduce size inconsistencies in Font awesome icons
 
 *******************************************************************************/
 echo elgg_view('elements/typography.css', $vars);
@@ -51,6 +52,7 @@ echo elgg_view('elements/components.css', $vars);
 echo elgg_view('elements/layout.css', $vars);
 echo elgg_view('elements/misc.css', $vars);
 echo elgg_view('elements/misc/spinner.css', $vars);
+echo elgg_view('elements/fa.css', $vars);
 
 
 // included last to have higher priority
