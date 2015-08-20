@@ -408,6 +408,9 @@ Just as before, the ``permissions_check:annotate`` hook is still called and may 
 Plugin Messages
 ---------------
 
+If you've removed or replaced the handler function ``messages_notifier`` to hide/alter the inbox icon, you'll instead need to do the
+same for the topbar menu handler ``messages_register_topbar``. ``messages_notifier`` is no longer used to add the menu link.
+
 Messages will no longer get the metadata 'msg' for newly created messages. This means you can not rely on that metadata to exist.
 
 Plugin Blog
