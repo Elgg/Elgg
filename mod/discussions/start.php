@@ -94,7 +94,12 @@ function discussion_page_handler($page) {
 			break;
 		case 'owner':
 			echo elgg_view_resource('discussion/owner', [
-				'owner_guid' => elgg_extract(1, $page),
+				'guid' => elgg_extract(1, $page),
+			]);
+			break;
+		case 'group':
+			echo elgg_view_resource('discussion/group', [
+				'guid' => elgg_extract(1, $page),
 			]);
 			break;
 		case 'add':
@@ -250,7 +255,7 @@ function discussion_comment_override($hook, $type, $return, $params) {
 function discussion_owner_block_menu($hook, $type, $return, $params) {
 	if (elgg_instanceof($params['entity'], 'group')) {
 		if ($params['entity']->forum_enable != "no") {
-			$url = "discussion/owner/{$params['entity']->guid}";
+			$url = "discussion/group/{$params['entity']->guid}";
 			$item = new ElggMenuItem('discussion', elgg_echo('discussion:group'), $url);
 			$return[] = $item;
 		}

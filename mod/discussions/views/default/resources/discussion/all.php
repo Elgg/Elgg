@@ -3,8 +3,6 @@
 elgg_pop_breadcrumb();
 elgg_push_breadcrumb(elgg_echo('discussion'));
 
-elgg_register_title_button();
-
 $content = elgg_list_entities(array(
 	'type' => 'object',
 	'subtype' => 'discussion',

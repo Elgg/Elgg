@@ -18,7 +18,13 @@ elgg_set_page_owner_guid($container->getGUID());
 
 elgg_group_gatekeeper();
 
-elgg_push_breadcrumb($container->getDisplayName(), "discussion/owner/$container->guid");
+if ($container instanceof ElggGroup) {
+	$owner_url = "discussion/group/$container->guid";
+} else {
+	$owner_url = "discussion/owner/$container->guid";
+}
+
+elgg_push_breadcrumb($container->getDisplayName(), $owner_url);
 elgg_push_breadcrumb($topic->title);
 
 $params = array(
