@@ -20,7 +20,7 @@ return array(
 	'developers:label:display_errors' => 'Näytä kriittiset virheet',
 	'developers:help:display_errors' => "Oletuksena Elggin .htaccess-tiedosto piilottaa kriittiset virheet.",
 	'developers:label:screen_log' => "Näytä loki näytöllä",
-	'developers:help:screen_log' => "Tämä näyttää elgg_log() ja elgg_dump()-funktioiden ulosannin sivustolla.",
+	'developers:help:screen_log' => "Tämä tulostaa näkyviin elgg_log() ja elgg_dump()-funktioiden ulosannin sekä tietokantakyselyiden määrän.",
 	'developers:label:show_strings' => "Näytä käännösten alkuperäiset merkkijonot",
 	'developers:help:show_strings' => "Tämä näyttää merkkijonot, jotka syötetään elgg_echo()-käännösfunktiolle.",
 	'developers:label:wrap_views' => "Lisää html-kommentit näkymiin",
@@ -54,6 +54,7 @@ return array(
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
+	'developers:log_queries' => "%s tietokantakyselyä (ei sisällä shutdown-eventissä tapahtuneita)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Ohjeet',

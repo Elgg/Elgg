@@ -5,7 +5,8 @@ return array(
 	 * Menu items and titles
 	 */
 	'expages' => "Pagine del sito",
-	'admin:appearance:expages' => "Pagine del Sito",
+	'admin:appearance:expages' => "Pagine del sito",
+	'expages:edit:viewpage' => "Visualizza la pagina dal sito",
 	'expages:about' => "Informazioni",
 	'expages:terms' => "Termini",
 	'expages:privacy' => "Privacy",
