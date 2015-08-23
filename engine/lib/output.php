@@ -260,6 +260,11 @@ function elgg_format_element($tag_name, array $attributes = array(), $text = '',
  * @return string The absolute url
  */
 function elgg_normalize_url($url) {
+	// check if the $url variable is a string
+	if (!is_string($url)) {
+		return false;
+	}
+
 	// see https://bugs.php.net/bug.php?id=51192
 	// from the bookmarks save action.
 	$php_5_2_13_and_below = version_compare(PHP_VERSION, '5.2.14', '<');
