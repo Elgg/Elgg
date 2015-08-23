@@ -56,7 +56,7 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:InvalidId' => 'マニフェストのIDに一致させるには、このプラグインのディレクトリの名前を "%s" に変えなければいけません。',
 	'ElggPluginPackage:InvalidPlugin:InvalidDependency' => 'マニフェストに記述されている依存関係のタイプ "%s" が正しくありません。',
 	'ElggPluginPackage:InvalidPlugin:InvalidProvides' => 'マニフェストに記述されているプロバイドのタイプ "%s" が正しくありません。',
-	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'プラグイン %3$s で依存関係のタイプ %2$s の "%1$s" が正しくありません。依存関係が循環しています。',
+	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'プラグイン %3$s で依存関係のタイプ %2$s の 「%1$s」 が正しくありません。依存関係が循環しています。',
 	'ElggPlugin:Exception:CannotIncludeFile' => '%s (プラグイン %s (guid: %s))が %s に含まれていません。パーミッションを調べてください！',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'プラグイン %s (guid: %s)のViewディレクトリを %s で開くことができません。パーミッションを調べてください！',
 	'ElggPlugin:Exception:CannotRegisterLanguages' => 'プラグイン %s (guid: %s)の言語ファイルを%sに登録できません。パーミッションを調べてください！',
@@ -103,7 +103,7 @@ return array(
 
 	'pageownerunavailable' => '警告： ページオーナー %d を許可できません。',
 	'viewfailure' => 'View %s において内部エラーが発生しました。',
-	'view:missing_param' => "View %2$s で必要なパラメータ「 %1$s 」がありません。",
+	'view:missing_param' => "View %2\$s で必要なパラメータ「 %1\$s 」がありません。",
 	'changebookmark' => 'このページに対するあなたのブックマークを変更してください。',
 	'noaccess' => 'あなたが閲覧しようとしているコンテントはすでに削除されてしまっているか、あるいはあなたに閲覧する権限がないかどちらかです。',
 	'error:missing_data' => 'あなたのリクエストにおいていくつかデータの欠損がありました。',
@@ -1126,7 +1126,7 @@ return array(
 	// Strings specific for the comments upgrade
 	'admin:upgrades:comments' => 'コメントのアップグレード',
 	'upgrade:comment:create_failed' => 'Comment id %s を entity に変換するのに失敗しました。',
-	'admin:upgrades:commentaccess' => 'コメント・アクセスのアップデート',
+	'admin:upgrades:commentaccess' => 'コメント・アクセスのアップグレード',
 
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'データディレクトリのアップグレード',

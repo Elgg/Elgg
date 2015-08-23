@@ -47,9 +47,14 @@ if (count($user_guids) > 0 && elgg_instanceof($group, 'group') && $group->canEdi
 			$group->name,
 			$url,
 		), $user->language);
+		
+		$params = [
+			'action' => 'invite',
+			'object' => $group,
+		];
 
 		// Send notification
-		$result = notify_user($user->getGUID(), $group->owner_guid, $subject, $body, NULL);
+		$result = notify_user($user->getGUID(), $group->owner_guid, $subject, $body, $params);
 
 		if ($result) {
 			system_message(elgg_echo("groups:userinvited"));

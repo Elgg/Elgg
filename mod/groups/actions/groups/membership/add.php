@@ -30,9 +30,14 @@ if (sizeof($user_guid)) {
 						$group->name,
 						$group->getURL(),
 					), $user->language);
+					
+					$params = [
+						'action' => 'add_membership',
+						'object' => $group,
+					];
 
 					// Send welcome notification to user
-					notify_user($user->getGUID(), $group->owner_guid, $subject, $body);
+					notify_user($user->getGUID(), $group->owner_guid, $subject, $body, $params);
 
 					system_message(elgg_echo('groups:addedtogroup'));
 				}
