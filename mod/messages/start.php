@@ -31,8 +31,6 @@ function messages_init() {
 		));		
 	}
 
-	elgg_register_event_handler('pagesetup', 'system', 'messages_notifier');
-
 	// Extend system CSS with our own styles, which are defined in the messages/css view
 	elgg_extend_view('elgg.css', 'messages/css');
 	elgg_extend_view('elgg.js', 'messages/js');
@@ -62,6 +60,10 @@ function messages_init() {
 	elgg_register_action("messages/send", "$action_path/send.php");
 	elgg_register_action("messages/delete", "$action_path/delete.php");
 	elgg_register_action("messages/process", "$action_path/process.php");
+
+	// Topbar menu. We assume this menu will render *after* a message is rendered. If a refactor/plugin
+	// causes it to render first, the unread count notification will not update until the next page.
+	elgg_register_plugin_hook_handler('register', 'menu:topbar', 'messages_register_topbar');
 }
 
 /**
@@ -125,28 +127,44 @@ function messages_page_handler($page) {
 }
 
 /**
- * Display notification of new messages in topbar
+ * @deprecated Do not use this
  */
 function messages_notifier() {
-	if (elgg_is_logged_in()) {
-		$text = elgg_view_icon("mail");
-		$tooltip = elgg_echo("messages");
-		
-		// get unread messages
-		$num_messages = (int)messages_count_unread();
-		if ($num_messages != 0) {
-			$text .= "<span class=\"messages-new\">$num_messages</span>";
-			$tooltip .= " (" . elgg_echo("messages:unreadcount", array($num_messages)) . ")";
-		}
+	elgg_deprecated_notice( __FUNCTION__ . ' is no longer used and will be removed', '2.0');
+}
 
-		elgg_register_menu_item('topbar', array(
-			'name' => 'messages',
-			'href' => 'messages/inbox/' . elgg_get_logged_in_user_entity()->username,
-			'text' => $text,
-			'priority' => 600,
-			'title' => $tooltip,
-		));
+/**
+ * Add inbox link to topbar
+ *
+ * @param string $hook   "register"
+ * @param string $type   "menu:topbar"
+ * @param array  $items  Menu items
+ * @param array  $params Hook params
+ * @return array
+ */
+function messages_register_topbar($hook, $type, $items, $params) {
+	if (!elgg_is_logged_in()) {
+		return;
 	}
+
+	$text = elgg_view_icon("mail");
+	$tooltip = elgg_echo("messages");
+
+	// get unread messages
+	$num_messages = (int)messages_count_unread();
+	if ($num_messages != 0) {
+		$text .= "<span class=\"messages-new\">$num_messages</span>";
+		$tooltip .= " (" . elgg_echo("messages:unreadcount", array($num_messages)) . ")";
+	}
+
+	$items[] = ElggMenuItem::factory([
+		'name' => 'messages',
+		'href' => 'messages/inbox/' . elgg_get_logged_in_user_entity()->username,
+		'text' => $text,
+		'priority' => 600,
+		'title' => $tooltip,
+	]);
+	return $items;
 }
 
 /**
