@@ -1,3 +1,73 @@
+<a name="2.0.0-alpha.3"></a>
+### 2.0.0-alpha.3  (2015-08-23)
+
+#### Contributors
+
+* Evan Winslow (6)
+* Jeroen Dalsem (3)
+* Juho Jaakkola (3)
+* Steve Clay (3)
+* Jerôme Bakker (1)
+* Juho Jaakkola (1)
+* Matt Beckett (1)
+
+#### Features
+
+* **developers:** Always show human-readable translations ([43c19644](https://github.com/Elgg/Elgg/commit/43c19644aa7a30525990c2b24770056273e6c7d0), closes [#8834](https://github.com/Elgg/Elgg/issues/8834))
+* **i18n:** abbreviations for months and weekdays ([889617ed](https://github.com/Elgg/Elgg/commit/889617edf01820a4b69b98f4c8bcbf3232b6a16f))
+* **views:**
+  * added html5 audio support to the file plugin ([e5a32390](https://github.com/Elgg/Elgg/commit/e5a32390885c99d65ebf5a937f0e29abe983e4de))
+  * Allow sites to specify views.php at root ([625c1ddd](https://github.com/Elgg/Elgg/commit/625c1dddfc4bc6f65a2f6bd5555b805dcd4a2495))
+
+
+#### Performance
+
+* **nginx:** Turn on gzip by default ([49f776d3](https://github.com/Elgg/Elgg/commit/49f776d3c3764fed67c21e7121736b27aaa126d4))
+
+
+#### Bug Fixes
+
+* **cli:** Rewrite `::installDir()` to `Directory\Local::root()` in CLI server ([1e1f446b](https://github.com/Elgg/Elgg/commit/1e1f446b76ef976c35c8c0d4edb4b69a06e531f4))
+* **discussions:** Body of discussion notification mail is not empty anymore ([23ab3e51](https://github.com/Elgg/Elgg/commit/23ab3e51e5282b5c54bd8538561e8ea56f13c02e))
+* **entities:** Entity creation no longer needlessly checks owner container ([5adf98fd](https://github.com/Elgg/Elgg/commit/5adf98fd83e6c15a6f417b63e02f1fb4f0c3fcb4), closes [#4231](https://github.com/Elgg/Elgg/issues/4231))
+* **icons:** sizes of Font awesome icons are now more consistent with old icons ([11386003](https://github.com/Elgg/Elgg/commit/11386003f9793fda1ce11c1ef59de9027dac99ee), closes [#8733](https://github.com/Elgg/Elgg/issues/8733), [#8861](https://github.com/Elgg/Elgg/issues/8861))
+
+
+#### Breaking Changes
+
+* If a plugin has removed or replaced messages_notifier to hide/alter the
+inbox icon, the plugin must instead do the same for the topbar menu handler
+(messages_register_topbar).
+
+Fixes #8862 ([67cff474](https://github.com/Elgg/Elgg/commit/67cff4746d38c54905ba6ad3b8cc8f771d50feec))
+* When creating within a group, ElggEntity::create used to always separately
+check if the current user can use the owner's account as a container. This
+made sure that one group member could not post to the group using another
+member as owner. This separate check led to confusion, as handlers of the container_permissions_check hook were told that the owner was to be the
+container, when it was actually the group.
+
+Here we bypass the separate owner container check if the desired owner_guid
+is the logged in user GUID. This eliminates the check under all normal
+circumstances but leaves it in place in case a poorly coded plugin allows
+the impersonation described above.
+
+This also denies creation if the owner/container GUIDs are set but can't
+be loaded. Before, create() would simply bypass the permissions check if
+it couldn't load the owner/container.
+
+Fixes #4231 ([5adf98fd](https://github.com/Elgg/Elgg/commit/5adf98fd83e6c15a6f417b63e02f1fb4f0c3fcb4))
+* We've removed the "categories" plugin from core.
+
+You may access it at https://github.com/Elgg/categories
+
+Fixes #7584
+ ([ba0c12f2](https://github.com/Elgg/Elgg/commit/ba0c12f227e0d2df64722d364af34b6c00e3bfbb))
+* The zaudio plugin is no longer part of the bundled plugins. The plugin
+has been moved to a seperate repository. You can find it here:
+https://github.com/Elgg/zaudio
+ ([ace52256](https://github.com/Elgg/Elgg/commit/ace522564c8c09703836591243b3e5e88d15bc6a))
+
+
 <a name="2.0.0-alpha.2"></a>
 ### 2.0.0-alpha.2  (2015-08-05)
 
