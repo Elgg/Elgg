@@ -6,6 +6,7 @@ return array(
 	 */
 	'expages' => "Стране сајта",
 	'admin:appearance:expages' => "Стране Сајта",
+	'expages:edit:viewpage' => "Погледај страницу на сајту",
 	'expages:about' => "О сајту",
 	'expages:terms' => "Услови коришћења",
 	'expages:privacy' => "Приватност",

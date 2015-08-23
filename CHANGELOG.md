@@ -232,7 +232,7 @@ are intact.
 
 Fixes: #5994
  ([a4e484e6](https://github.com/Elgg/Elgg/commit/a4e484e62db117531763c0487c4b04c098bfb909))
-* 
+*
 See http://jquery.com/upgrade-guide/1.9/ for how to move off jquery-migrate.
 
 If you'd prefer to just add it back, you can use this code in your plugin's init:
@@ -244,7 +244,7 @@ elgg_load_js('jquery-migrate');
 
 Also, define a `jquery-migrate.js` view containing the contents of the script.
  ([8f58da98](https://github.com/Elgg/Elgg/commit/8f58da9868c90a2aee2e998bf552f9bea899d13e))
-* 
+*
 Great care has been taken to make this change as backwards-compatible as possible,
 so you should not need to update any view references right away. However, you are
 certainly encouraged to move your JS and CSS views to their new, canonical
@@ -395,6 +395,30 @@ Fixes #5729
 change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
+
+
+<a name="1.12.2"></a>
+### 1.12.2  (2015-08-23)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* Evan Winslow (1)
+* Juho Jaakkola (1)
+* Steve Clay (1)
+
+#### Documentation
+
+* **entities:** Better docs for fetching relationships ([e0d8f793](https://github.com/Elgg/Elgg/commit/e0d8f793daeefb32f9c14e8ff6e15defa5078708))
+
+#### Bug Fixes
+
+* **friends:** site_notifications have a clickable link to the new friend ([55a0f9b0](https://github.com/Elgg/Elgg/commit/55a0f9b0c2c29aca21fb47c8e8b0423140aac262))
+* **groups:**
+  * membership request accepted has link in site_notifications ([6e0d6f4a](https://github.com/Elgg/Elgg/commit/6e0d6f4ab8217d02f5b294904b4cfff975cc867e))
+  * group invite has link in site_notifications ([61a8484d](https://github.com/Elgg/Elgg/commit/61a8484d669835c7ab756ad96436823f78430f5c))
+  * membership request has a link in site_notifications ([ba53c509](https://github.com/Elgg/Elgg/commit/ba53c509579988cb8beb753b027cf66b97375596))
+
 
 <a name="1.12.1"></a>
 ### 1.12.1  (2015-08-05)
