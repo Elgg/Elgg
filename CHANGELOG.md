@@ -1,3 +1,27 @@
+<a name="1.12.2"></a>
+### 1.12.2  (2015-08-23)
+
+#### Contributors
+
+* Jerôme Bakker (4)
+* Evan Winslow (1)
+* Juho Jaakkola (1)
+* Steve Clay (1)
+
+#### Documentation
+
+* **entities:** Better docs for fetching relationships ([e0d8f793](https://github.com/Elgg/Elgg/commit/e0d8f793daeefb32f9c14e8ff6e15defa5078708))
+
+
+#### Bug Fixes
+
+* **friends:** site_notifications have a clickable link to the new friend ([55a0f9b0](https://github.com/Elgg/Elgg/commit/55a0f9b0c2c29aca21fb47c8e8b0423140aac262))
+* **groups:**
+  * membership request accepted has link in site_notifications ([6e0d6f4a](https://github.com/Elgg/Elgg/commit/6e0d6f4ab8217d02f5b294904b4cfff975cc867e))
+  * group invite has link in site_notifications ([61a8484d](https://github.com/Elgg/Elgg/commit/61a8484d669835c7ab756ad96436823f78430f5c))
+  * membership request has a link in site_notifications ([ba53c509](https://github.com/Elgg/Elgg/commit/ba53c509579988cb8beb753b027cf66b97375596))
+
+
 <a name="1.12.1"></a>
 ### 1.12.1  (2015-08-05)
 
