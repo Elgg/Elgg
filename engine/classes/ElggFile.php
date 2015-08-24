@@ -131,12 +131,12 @@ class ElggFile extends \ElggObject {
 	 * @todo Move this out into a utility class
 	 */
 	public function detectMimeType($file = null, $default = null) {
-		if (!$file) {
-			if (isset($this) && $this->filename) {
-				$file = $this->filename;
-			} else {
-				return false;
-			}
+		if (!$file && isset($this)) {
+			$file = $this->getFilenameOnFilestore();
+		}
+
+		if (!is_readable($file)) {
+			return false;
 		}
 
 		$mime = $default;
