@@ -247,8 +247,11 @@ class EntityTable {
 	 * 	subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
 	 *              Use ELGG_ENTITIES_NO_VALUE for no subtype.
 	 *
-	 * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
-	 *                        (type = '$type' AND subtype = '$subtype') pairs
+	 * 	type_subtype_pairs => null|ARR An array containing $type => $subtypes pairs
+	 *                                 array(
+	 *                                    'object' => array('blog', 'file'), // All objects with subtype of 'blog' or 'file'
+	 *                                    'user' => ELGG_ENTITY_ANY_VALUE, // All users irrespective of subtype
+	 *                                 );
 	 *
 	 *	guids => null|ARR Array of entity guids
 	 *
@@ -821,6 +824,8 @@ class EntityTable {
 					if ($paired_subtype_ids_str = implode(',', $paired_subtype_ids)) {
 						$wheres[] = "({$table}.type = '$paired_type'"
 							. " AND {$table}.subtype IN ($paired_subtype_ids_str))";
+					} else {
+						$wheres[] = "({$table}.type = '$paired_type')";
 					}
 				} else {
 					$wheres[] = "({$table}.type = '$paired_type')";

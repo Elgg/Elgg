@@ -348,6 +348,38 @@ class ElggCoreGetEntitiesTest extends \ElggCoreGetEntitiesBaseTest {
 	}
 
 	/**
+	 * Makes sure that ege* returns only entities of specified type,
+	 * when subtype in type_subtype_pairs set to an empty or false value,
+	 * or an array with a single false/null value.
+	 * See #8851
+	 */
+	public function testElggAPIGettersTSPReturnsOnlyEntitiesOfTypeForEmptyOrFalseSubtype() {
+		$types = $this->getRandomValidTypes(1);
+		$type = $types[0];
+
+		// Test no value subtype
+		$tests = array(
+			ELGG_ENTITIES_ANY_VALUE,
+			ELGG_ENTITIES_NO_VALUE,
+			false,
+			array(),
+			array(ELGG_ENTITIES_ANY_VALUE),
+			array(ELGG_ENTITIES_NO_VALUE),
+		);
+
+		foreach ($tests as $subtype) {
+			$pair = array($type => $subtype);
+			$options = array(
+				'type_subtype_pairs' => $pair,
+				'wheres' => array("(e.type != '{$type}')"),
+			);
+
+			$es = elgg_get_entities($options);
+			$this->assertFalse($es);
+		}
+	}
+
+	/**
 	 * Valid type, multiple valid subtypes
 	 */
 	public function testElggAPIGettersTSPValidTypeValidPluralSubtype() {
