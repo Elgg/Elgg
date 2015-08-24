@@ -154,9 +154,10 @@ class ElggFile extends \ElggObject {
 			$mime = mime_content_type($file);
 		}
 
+		$original_filename = isset($this) ? $this->originalfilename : basename($file);
 		$params = array(
 			'filename' => $file,
-			'original_filename' => $file->originalfilename, // @see file upload action
+			'original_filename' => $original_filename, // @see file upload action
 			'default' => $default,
 		);
 		return _elgg_services()->hooks->trigger('mime_type', 'file', $params, $mime);
