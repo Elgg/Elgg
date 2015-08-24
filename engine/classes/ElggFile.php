@@ -123,6 +123,8 @@ class ElggFile extends \ElggObject {
 	/**
 	 * Detects mime types based on filename or actual file.
 	 *
+	 * @note This method can be called both dynamically and statically
+	 *
 	 * @param mixed $file    The full path of the file to check. For uploaded files, use tmp_name.
 	 * @param mixed $default A default. Useful to pass what the browser thinks it is.
 	 * @since 1.7.12
