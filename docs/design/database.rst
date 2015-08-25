@@ -48,39 +48,59 @@ Datamodel
 Entities
 ========
 
-ElggEntity is the base class for the Elgg data model.
-
-Users, Objects, Groups, Sites
------------------------------
-
-``ElggEntity`` has four main specializations, which provide extra
-properties and methods to more easily handle different kinds of data.
-
-``ElggObject``: content like blog posts, uploaded files and bookmarks
-``ElggUser``: a system user
-``ElggSite``: each Elgg site within an Elgg installation
-``ElggGroup``: multi-user collaborative systems (called "Communities"
-in prior versions of Elgg)
-
-The benefit of such an approach is that, apart from modelling data with
-greater ease, a common set of functions is available to handle objects,
-regardless of their (sub)type.
-
-Each of these have their own properties that they bring to the table:
-ElggObjects have a title and description, ElggUsers have a username and
-password, and so on. However, because they all inherit ElggEntity, they
-each have a number of core properties and behaviours in common.
+``ElggEntity`` is the base class for the Elgg data model and supports a common set of properties
+and methods.
 
 -  A numeric Globally Unique IDentifier (See `GUIDs`_).
 -  Access permissions. (When a plugin requests data, it never gets to
    touch data that the current user doesn't have permission to see.)
--  An arbitrary subtype. For example, a blog post is an ElggObject with
-   a subtype of "blog". Subtypes aren't predefined; they can be any
-   unique way to describe a particular kind of entity. "blog", "forum",
-   "foo", "bar", "loafofbread" and "pyjamas" are all valid subtypes.
+-  An arbitrary subtype (more below).
 -  An owner.
 -  The site that the entity belongs to.
--  A container, usually used to associate a group's content with the group.
+-  A container, used to associate content with a group or a user.
+
+Types
+-----
+
+*Actual* entities will be instances of four different subclasses, each having a distinct **type**
+property and their own additional properties and methods.
+
+=======  ==============  ===================================================================
+Type     PHP class       Represents
+=======  ==============  ===================================================================
+object   ``ElggObject``  Most user-created content, like blog posts, uploads, and bookmarks.
+group    ``ElggGroup``   An organized group of users with its own profile page
+user     ``ElggUser``    A system user
+site     ``ElggSite``    The site served by the Elgg installation
+=======  ==============  ===================================================================
+
+Each has its own extended API. E.g. objects have a ``title`` and ``description``, users have a
+``username`` and a way to set their password, and so on.
+
+Subtypes
+--------
+
+Each entity also has a custom string **subtype**, which plugins use to further specialize the entity.
+Elgg makes it easy to query specific subtypes as well as assign them special behaviors and views.
+
+Subtypes are most commonly given to instances of ElggObject to denote the kind of content created.
+E.g. the blog plugin creates objects with subtype ``"blog"``.
+
+For historic reasons, the subtype API is a bit complex, but boils down to: write to ``->subtype``
+before saving, otherwise always read ``getSubtype()``. Below are more details.
+
+Subtype Gotchas
+---------------
+
+- Before an entity's ``save()`` method is called, the subtype can be set by writing a string to the
+  ``subtype`` property.
+- *Subtype cannot be changed after saving.*
+- After saving, you must always use ``getSubtype()`` to read it.
+- If no subtype was set, ``""`` is returned, however some parts of the Elgg API (like Views) may map
+  this value to the string ``"default"``. E.g. a group with ``getSubtype() === ""`` will be rendered
+  using the view ``"group/default"``.
+- Read carefully the documentation for ``elgg_get_entities()`` before trying to match subtypes; this
+- API is a bit of a minefield. E.g. you cannot use ``""`` to fetch entities with the default subtype.
 
 GUIDs
 -----
@@ -773,7 +793,7 @@ It contains the following fields:
 -  **guid** An auto-incrementing counter producing a GUID that uniquely
    identifies this entity in the system.
 -  **type** The type of entity - object, user, group or site
--  **subtype** A link to the `entity_subtypes` table.
+-  **subtype** A reference to the `entity_subtypes` table, or ``0`` for the default subtype.
 -  **owner\_guid** The GUID of the owner's entity.
 -  **site\_guid** The site the entity belongs to.
 -  **container\_guid** The GUID this entity is contained by - either a user or
