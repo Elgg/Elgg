@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => 'Locatie van het item',
 	'reportedcontent:success' => 'Je melding is verstuurd naar de sitebeheerder',
 	'reportedcontent:failing' => 'Je melding kon niet worden verzonden',
+	'reportedcontent:refresh' => 'Ververs deze lijst',
 	'reportedcontent:report' => 'Meld aan beheerder',
 	'reportedcontent:instructions' => 'De melding zal worden verstuurd aan de beheerders van deze site ter controle.',
 	'reportedcontent:numbertodisplay' => 'Aantal meldingen om weer te geven',

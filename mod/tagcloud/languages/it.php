@@ -1,6 +1,8 @@
 <?php
 return array(
-	'tagcloud:widget:title' => 'Tag Cloud',
-	'tagcloud:widget:description' => 'Tag cloud',
+	'tagcloud:widget:title' => 'Nuvola di tag',
+	'tagcloud:widget:description' => 'Nuvola di tag',
 	'tagcloud:widget:numtags' => 'Numero di tag da mostrare',
+	'tagcloud:site_cloud' => 'Nuvola di tag del sito',
+	'tagcloud:allsitetags' => 'Tutte le tag del sito',
 );
