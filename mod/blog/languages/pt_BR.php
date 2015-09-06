@@ -1,48 +1,48 @@
 <?php
 return array(
-	'blog' => 'Blogs',
-	'blog:blogs' => 'Blogs',
+	'blog' => 'Blogs ',
+	'blog:blogs' => 'Blogs ',
 	'blog:revisions' => 'Revisões',
 	'blog:archives' => 'Arquivos',
-	'blog:blog' => 'Blog',
-	'item:object:blog' => 'Blogs',
+	'blog:blog' => 'Blog ',
+	'item:object:blog' => 'Blogs ',
 
-	'blog:title:user_blogs' => '%s\'s blogs',
-	'blog:title:all_blogs' => 'Todos os blogs do site',
+	'blog:title:user_blogs' => 'Blog de %s',
+	'blog:title:all_blogs' => 'Todos blogs do site',
 	'blog:title:friends' => 'Blogs dos amigos',
 
-	'blog:group' => 'Blog do grupo',
-	'blog:enableblog' => 'Ativar blog para o grupo',
-	'blog:write' => 'Postar no blog',
+	'blog:group' => 'Blog da Comunidade',
+	'blog:enableblog' => 'Habilita blog da comunidade',
+	'blog:write' => 'Escrever uma mensagem no blog',
 
 	// Editing
-	'blog:add' => 'Adicionar uma postagem no blog',
-	'blog:edit' => 'Editar a postagem do blog',
-	'blog:excerpt' => 'Resumo',
-	'blog:body' => 'Texto',
-	'blog:save_status' => 'Última alteração:',
+	'blog:add' => 'Adicionar mensagem no blog',
+	'blog:edit' => 'Editar mensagem no blog',
+	'blog:excerpt' => 'Extrato',
+	'blog:body' => 'Corpo',
+	'blog:save_status' => 'Último salvo:',
 	
 	'blog:revision' => 'Revisão',
-	'blog:auto_saved_revision' => 'Revisão do salvamento automático',
+	'blog:auto_saved_revision' => 'Revisão salva automaticamente',
 
 	// messages
-	'blog:message:saved' => 'A postagem do blog foi salva.',
-	'blog:error:cannot_save' => 'Não foi possível salvar a postagem do blog.',
+	'blog:message:saved' => 'Mensagem do blog salva.',
+	'blog:error:cannot_save' => 'Não foi possível salvar mensagem do blog.',
 	'blog:error:cannot_auto_save' => 'Não foi possível salvar automaticamente a postagem do blog.',
-	'blog:error:cannot_write_to_container' => 'Acesso insuficiente para salvar um blog no grupo.',
-	'blog:messages:warning:draft' => 'Existe um rascunho dessa postagem sem  salvar. ',
-	'blog:edit_revision_notice' => '(Versão anterior)',
-	'blog:message:deleted_post' => 'A postagem do blog foi excluída.',
-	'blog:error:cannot_delete_post' => 'Não foi possível excluir a postagem do blog.',
-	'blog:none' => 'Não existem postagens nesse blog.',
-	'blog:error:missing:title' => 'Por favor, insira um título do blog!',
-	'blog:error:missing:description' => 'Por favor, insira o texto do blog!',
-	'blog:error:cannot_edit_post' => 'Essa postagem não existe ou você não tem permissão para editá-la.',
+	'blog:error:cannot_write_to_container' => 'Acesso insuficiente para salvar blog na comunidade.',
+	'blog:messages:warning:draft' => 'Existe um rascunho não salvo para esta mensagem!',
+	'blog:edit_revision_notice' => '(versão antiga)',
+	'blog:message:deleted_post' => 'Mensagem do blog apagada.',
+	'blog:error:cannot_delete_post' => 'Não foi possível apagar esta mensagem.',
+	'blog:none' => 'Sem mensagem no blog',
+	'blog:error:missing:title' => 'Por favor insira um título no blog!',
+	'blog:error:missing:description' => 'Por favor digite o corpo do seu blog!',
+	'blog:error:cannot_edit_post' => 'Esta mensagem pode não existe ou você não pode ter permissão para edição.',
 	'blog:error:post_not_found' => 'Não foi possível encontrar a postagem de blog especificada.',
-	'blog:error:revision_not_found' => 'Não foi possível encontrar esta revisão.',
+	'blog:error:revision_not_found' => 'Não foi possível localizar esta revisão.',
 
 	// river
-	'river:create:object:blog' => '%s publicou um postagem no blog %s',
+	'river:create:object:blog' => '%s publicou uma mensagem de blog %s',
 	'river:comment:object:blog' => '%s comentou no blog %s',
 
 	// notifications
@@ -59,8 +59,8 @@ Ver e comentar sobre postagem do blog:
 ',
 
 	// widget
-	'blog:widget:description' => 'Mostrar suas últimas postagens do blog',
-	'blog:moreblogs' => 'Mais postagens do blog',
-	'blog:numbertodisplay' => 'Número de postagens para exibir',
-	'blog:noblogs' => 'Não existem postagens do blog'
+	'blog:widget:description' => 'Mostra suas últimas mensagens no blog.',
+	'blog:moreblogs' => 'Mais mensagem do blog',
+	'blog:numbertodisplay' => 'Número de mensagens do blog a serem visualizadas',
+	'blog:noblogs' => 'Nenhuma mensagem no blog'
 );

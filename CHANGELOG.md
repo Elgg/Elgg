@@ -467,6 +467,21 @@ change them to external AMD modules and load them with `elgg_require_js`.
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
 
 
+<a name="1.12.3"></a>
+### 1.12.3  (2015-09-06)
+
+#### Contributors
+
+* Ismayil Khayredinov (3)
+* Juho Jaakkola (1)
+
+#### Bug Fixes
+
+* **files:**
+  * $file is not always an object with originalfilename property ([cf0929c2](https://github.com/Elgg/Elgg/commit/cf0929c243b69f4018e77640e1e175f8d93670ea))
+  * now uses filename on filestore to detect mime ([ab8086a6](https://github.com/Elgg/Elgg/commit/ab8086a61feb87eb0c8d3a89fc6649c7e603a4b4), closes [#8846](https://github.com/Elgg/Elgg/issues/8846))
+
+
 <a name="1.12.2"></a>
 ### 1.12.2  (2015-08-23)
 
