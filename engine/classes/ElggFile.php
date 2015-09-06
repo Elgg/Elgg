@@ -123,6 +123,8 @@ class ElggFile extends \ElggObject {
 	/**
 	 * Detects mime types based on filename or actual file.
 	 *
+	 * @note This method can be called both dynamically and statically
+	 *
 	 * @param mixed $file    The full path of the file to check. For uploaded files, use tmp_name.
 	 * @param mixed $default A default. Useful to pass what the browser thinks it is.
 	 * @since 1.7.12
@@ -131,12 +133,12 @@ class ElggFile extends \ElggObject {
 	 * @todo Move this out into a utility class
 	 */
 	public function detectMimeType($file = null, $default = null) {
-		if (!$file) {
-			if (isset($this) && $this->filename) {
-				$file = $this->filename;
-			} else {
-				return false;
-			}
+		if (!$file && isset($this)) {
+			$file = $this->getFilenameOnFilestore();
+		}
+
+		if (!is_readable($file)) {
+			return false;
 		}
 
 		$mime = $default;
@@ -154,9 +156,10 @@ class ElggFile extends \ElggObject {
 			$mime = mime_content_type($file);
 		}
 
+		$original_filename = isset($this) ? $this->originalfilename : basename($file);
 		$params = array(
 			'filename' => $file,
-			'original_filename' => $file->originalfilename, // @see file upload action
+			'original_filename' => $original_filename, // @see file upload action
 			'default' => $default,
 		);
 		return _elgg_services()->hooks->trigger('mime_type', 'file', $params, $mime);

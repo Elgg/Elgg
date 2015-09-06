@@ -12,7 +12,7 @@ return array(
 	'messageboard:postit' => "Bidalketa",
 	'messageboard:history:title' => "Historia",
 	'messageboard:none' => "Oraindik ez dago ezer mezu arbel honetan",
-	'messageboard:num_display' => "Erakutsiko d iren mezu kopurua",
+	'messageboard:num_display' => "Erakutsiko diren mezu kopurua",
 	'messageboard:desc' => "Hau zure profilean jarri ahal duzun mezu arbela da, beste erabiltzaileak iruzkinak utzi ahal izateko.",
 
 	'messageboard:user' => "%s -ren mezu arbela",
