@@ -1,3 +1,11 @@
+<a name="2.0.0-beta.1"></a>
+### 2.0.0-beta.1  (2015-09-06)
+
+#### Contributors
+
+* Juho Jaakkola (4)
+* Juho Jaakkola (3)
+
 <a name="2.0.0-alpha.3"></a>
 ### 2.0.0-alpha.3  (2015-08-23)
 
