@@ -42,10 +42,15 @@ function string_to_tag_array($string) {
  *
  *  types => null|STR entity type (SQL: type = '$type')
  *
- * 	subtypes => null|STR entity subtype (SQL: subtype = '$subtype')
+ * 	subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
+ *              Use ELGG_ENTITIES_NO_VALUE to match the default subtype.
+ *              Use ELGG_ENTITIES_ANY_VALUE to match any subtype.
  *
  * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
- *  (SQL: type = '$type' AND subtype = '$subtype') pairs
+ *                        array(
+ *                            'object' => array('blog', 'file'), // All objects with subtype of 'blog' or 'file'
+ *                            'user' => ELGG_ENTITY_ANY_VALUE, // All users irrespective of subtype
+ *                        );
  *
  * 	owner_guids => null|INT entity guid
  *
