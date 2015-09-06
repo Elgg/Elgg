@@ -1,8 +1,8 @@
 <?php
 return array(	
-	'custom:bookmarks' => "Marcadores mais recentes",
-	'custom:groups' => "Grupos mais recentes",
-	'custom:files' => "Arquivos mais recentes",
-	'custom:blogs' => "Postagens mais recentes",
-	'custom:members' => " Membros mais recentes",
+	'custom:bookmarks' => "Últimos favoritos",
+	'custom:groups' => "Últimas comunidades",
+	'custom:files' => "Últimos arquivos",
+	'custom:blogs' => "Últimas mensagens dos blogs",
+	'custom:members' => "Membros mais recentes",
 );

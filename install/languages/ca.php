@@ -1,15 +1,15 @@
 <?php
 return array(
-	'install:title' => 'Elgg Install',
-	'install:welcome' => 'Welcome',
+	'install:title' => 'Instal·lador de l\'Elgg',
+	'install:welcome' => 'Benvingut/da',
 	'install:requirements' => 'Requirements check',
-	'install:database' => 'Database installation',
-	'install:settings' => 'Configure site',
-	'install:admin' => 'Create admin account',
-	'install:complete' => 'Finished',
+	'install:database' => 'Instal·lació de la base de dades',
+	'install:settings' => 'Configura el lloc',
+	'install:admin' => 'Crea el compte d\'administrador',
+	'install:complete' => 'Acabat',
 
-	'install:next' => 'Next',
-	'install:refresh' => 'Refresh',
+	'install:next' => 'Següent',
+	'install:refresh' => 'Refresca',
 
 	'install:welcome:instructions' => "Installing Elgg has 6 simple steps and reading this welcome is the first one!
 
@@ -21,9 +21,9 @@ If you are ready to proceed, click the Next button.",
 	'install:requirements:instructions:warning' => "Your server passed the requirements check, but there is at least one warning. We recommend that you check the install troubleshooting page for more details.",
 
 	'install:require:php' => 'PHP',
-	'install:require:rewrite' => 'Web server',
-	'install:require:settings' => 'Settings file',
-	'install:require:database' => 'Database',
+	'install:require:rewrite' => 'Servidor Web',
+	'install:require:settings' => 'Fitxer de configuració',
+	'install:require:database' => 'Base de dades',
 
 	'install:check:root' => 'Your web server does not have permission to create an .htaccess file in the root directory of Elgg. You have two choices:
 
@@ -32,7 +32,7 @@ If you are ready to proceed, click the Next button.",
 		2. Copy the file htaccess_dist to .htaccess',
 
 	'install:check:php:version' => 'Elgg requires PHP %s or above. This server is using version %s.',
-	'install:check:php:extension' => 'Elgg requires the PHP extension %s.',
+	'install:check:php:extension' => 'Elgg necessita l\'extensió %s de PHP.',
 	'install:check:php:extension:recommend' => 'It is recommended that the PHP extension %s is installed.',
 	'install:check:php:open_basedir' => 'The open_basedir PHP directive may prevent Elgg from saving files to its data directory.',
 	'install:check:php:safe_mode' => 'Running PHP in safe mode is not recommened and may cause problems with Elgg.',
@@ -56,9 +56,9 @@ If you are ready to proceed, click the Next button.",
 
 	'install:database:label:dbuser' =>  'Database Username',
 	'install:database:label:dbpassword' => 'Database Password',
-	'install:database:label:dbname' => 'Database Name',
-	'install:database:label:dbhost' => 'Database Host',
-	'install:database:label:dbprefix' => 'Database Table Prefix',
+	'install:database:label:dbname' => 'Nom de la Base de Dades',
+	'install:database:label:dbhost' => 'Servidor de Base de Dades',
+	'install:database:label:dbprefix' => 'Prefix de les taules de la Base de dades',
 
 	'install:database:help:dbuser' => 'User that has full privileges to the MySQL database that you created for Elgg',
 	'install:database:help:dbpassword' => 'Password for the above database user account',
