@@ -14,16 +14,17 @@ function ckeditor_init() {
 	elgg_extend_view('elgg/wysiwyg.css', 'elements/reset.css', 100);
 	elgg_extend_view('elgg/wysiwyg.css', 'elements/typography.css', 100);
 
-	elgg_define_js('ckeditor', array(
+	elgg_define_js('elgg/ckeditor/set-basepath', [
+		'deps' => ['elgg'],
+	]);
+	elgg_define_js('ckeditor', [
+		'deps' => ['elgg/ckeditor/set-basepath'],
 		'exports' => 'CKEDITOR',
-	));
-	elgg_define_js('jquery.ckeditor', array(
-		'deps' => array('jquery', 'ckeditor'),
+	]);
+	elgg_define_js('jquery.ckeditor', [
+		'deps' => ['jquery', 'ckeditor'],
 		'exports' => 'jQuery.fn.ckeditor',
-	));
-
-	// need to set basepath early
-	elgg_extend_view('elgg.js', 'elgg/ckeditor/set-basepath.js');
+	]);
 
 	elgg_extend_view('input/longtext', 'ckeditor/init');
 

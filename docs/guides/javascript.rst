@@ -191,6 +191,65 @@ Some things to note
 #. Return the value of the module instead of adding to a global variable.
 #. Static (.js,.css,etc.) files are automatically minified and cached by Elgg's simplecache system.
 
+Providing a boot module
+=======================
+
+To add functionality to each page, or make sure your hook handlers are registered early enough,
+you may create a boot module for your plugin, with the name ``boot/<plugin_id>``.
+
+.. code-block:: javascript
+
+    // in views/default/boot/myplugin.js
+
+    define(function(require) {
+        var Plugin = require("elgg/Plugin");
+
+        // register for hooks, initialize stuff on every page, etc.
+
+        return new Plugin();
+    });
+
+When your plugin is active, this module will automatically be loaded on each page. Other
+modules can depend on ``elgg/booted`` to make sure all boot modules are loaded.
+
+The Plugin class
+----------------
+
+Each boot module **must** return an instance of ``elgg/Plugin``. The constructor allows configuration
+object that helps initialize code in plugin order, and/or provide an "exports" value other modules
+can use.
+
+.. code-block:: javascript
+
+    // in views/default/boot/myplugin.js
+
+    define(function(require) {
+        var Plugin = require("elgg/Plugin");
+
+        return new Plugin({
+            init: function () {
+                // stuff that must happen in plugin order
+            },
+            exports: {
+                // resources mode available to other plugins
+            }
+        });
+    });
+
+A module can get a boot module's exported value via ``module.getExports()``:
+
+.. code-block:: javascript
+
+    define(function(require) {
+        var myplugin = require("boot/myplugin");
+
+        console.log(myplugin.getExports());
+    });
+
+.. warning::
+
+    A boot plugin **cannot** depend on the ``elgg/booted`` module either directly or through its
+    hierarchy of dependents.
 
 Migrating JS from Elgg 1.8 to AMD / 1.9
 =======================================
