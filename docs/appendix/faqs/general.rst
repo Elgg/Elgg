@@ -45,10 +45,11 @@ If you are getting a WSOD when performing an action, like logging in or posting 
 WSOD on settings pages in 2.0
 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
-If you place your ``settings.php`` file in the installation root, Apache's MultiViews option will
-interfere with loading URLs beginning with ``/settings``. If you cannot disable MultiViews, there are
-a couple lines you must uncomment in your ``.htaccess`` file. These can be found in
-``/install/config/htaccess.dist``.
+If you place your ``settings.php`` file in the installation root, Apache's MultiViews option will interfere with loading URLs beginning with ``/settings``.
+
+For this reason, ``/install/config/htaccess.dist`` now disables Apache's MultiViews. Manually copy the ``Options -MultiViews`` declaration into your existing ``.htaccess`` file.
+
+In the rare case that Apache does not allow disabling this option, you'll either have to disable it via your main Apache config/vhost, or move your ``settings.php`` file into Elgg's ``engine`` directory.
 
 
 Page not found

@@ -11,6 +11,9 @@ Options -Indexes
 # Follow symbolic links
 Options +FollowSymLinks
 
+# Don't allow /settings.php file to hijack URLs like /settings/foo/bar
+Options -MultiViews
+
 # Default handler
 DirectoryIndex index.php
 
@@ -126,11 +129,6 @@ RewriteEngine on
 
 # hide all dot files/dirs (.git)
 RewriteRule (^\.|/\.) - [F]
-
-# If you have settings.php in the root and cannot disable MultiViews, you will need to
-# uncomment this to access URLs starting with /settings.
-#RewriteCond %{REQUEST_FILENAME} -f
-#RewriteRule ^(settings\.php)$ index.php?__elgg_uri=$1 [QSA,L]
 
 # Everything else that isn't a file gets routed through Elgg
 RewriteCond %{REQUEST_FILENAME} !-f

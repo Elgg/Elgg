@@ -67,13 +67,16 @@ Also remove the rules for paths like ``export/*``; these endpoints have been rem
 Apache MultiViews
 -----------------
 
-If you place your ``settings.php`` file in the installation root, Apache's MultiViews option will
-interfere with loading URLs beginning with ``/settings``. If you cannot disable MultiViews, there are
-a couple lines you must uncomment in your ``.htaccess`` file. These can be found in
-``/install/config/htaccess.dist``.
+``/install/config/htaccess.dist`` now disables Apache's MultiViews. This Apache option can interfere
+with loading settings URLs if you have a ``settings.php`` file in your installation root.
+
+Manually copy the ``Options -MultiViews`` declaration into your existing ``.htaccess`` file.
+
+In the rare case that Apache does not allow disabling this option, you'll either have to disable it
+via your main Apache config/vhost, or move your ``settings.php`` file into Elgg's ``engine`` directory.
 
 From 1.10 to 1.11
-========================
+=================
 
 Breaking changes
 ----------------
