@@ -124,7 +124,7 @@ class RelationshipsTable {
 			if ($result && $result_old) {
 				return true;
 			} else {
-				delete_relationship($result);
+				delete_relationship($obj->id);
 			}
 		}
 	

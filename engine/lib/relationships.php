@@ -279,3 +279,31 @@ function elgg_get_entities_from_relationship_count(array $options = array()) {
 function elgg_list_entities_from_relationship_count($options) {
 	return elgg_list_entities($options, 'elgg_get_entities_from_relationship_count');
 }
+
+/**
+ * Register relationship unit tests
+ *
+ * @param string $hook
+ * @param string $type
+ * @param array  $tests
+ * @return array
+ * @access private
+ */
+function _elgg_relationships_test($hook, $type, $tests) {
+	global $CONFIG;
+	$tests[] = $CONFIG->path . 'engine/tests/ElggRelationshipTest.php';
+	return $tests;
+}
+
+
+/**
+ * Initialize the relationship library
+ * @access private
+ */
+function _elgg_relationship_init() {
+	elgg_register_plugin_hook_handler('unit_test', 'system', '_elgg_relationships_test');
+}
+
+return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
+	$events->registerHandler('init', 'system', '_elgg_relationship_init');
+};

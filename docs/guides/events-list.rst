@@ -105,11 +105,14 @@ User events
 Relationship events
 ===================
 
-**create, <relationship>**
+**create, relationship**
     Triggered after a relationship has been created. Returning false deletes
     the relationship that was just created.
 
-**delete, <relationship>**
+.. note:: This event was broken in Elgg 1.9 - 1.12.3, returning false would *not*
+   delete the relationship.  This is working as of 1.12.4
+
+**delete, relationship**
     Triggered before a relationship is deleted. Return false to prevent it
     from being deleted.
 
