@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Groups',
 
-	'groups:latestdiscussion' => 'Latest discussion',
 	'groups:privategroup' => 'This group is closed. Requesting membership.',
 	'groups:notitle' => 'Groups must have a title',
 	'groups:cantjoin' => 'Can not join group',
