@@ -1,6 +1,8 @@
 The following have made notable contributions to the Elgg Project.
 (List in alphabetical order.)
 
+Matt Beckett - http://mattbeckett.me, https://twitter.com/scuba_beck
+
 Steve Clay - http://www.mrclay.org/, https://twitter.com/mrclay_org
 
 Cash Costello - cash@elgg.org, http://cashcostello.com/
