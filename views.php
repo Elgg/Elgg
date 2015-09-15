@@ -30,6 +30,10 @@ return [
 		"elgg/ui.avatar_cropper.js" => __DIR__ . "/js/lib/ui.avatar_cropper.js",
 		"elgg/ui.friends_picker.js" => __DIR__ . "/js/lib/ui.friends_picker.js",
 		"elgg/ui.river.js" => __DIR__ . "/js/lib/ui.river.js",
+
+		// For datepicker. More info in the jquery-ui.js view
+		"jquery-ui/i18n/" => __DIR__ . "/vendor/bower-asset/jquery-ui/ui/minified/i18n",
+
 		"jquery.imgareaselect.css" => __DIR__ . "/bower_components/jquery-imgareaselect/distfiles/css/imgareaselect-deprecated.css",
 		"jquery.imgareaselect.js" => __DIR__ . "/bower_components/jquery-imgareaselect/jquery.imgareaselect.dev.js",
 		"jquery.jeditable.js" => __DIR__ . "/bower_components/jquery-jeditable/jquery.jeditable.js",
