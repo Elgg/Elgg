@@ -10,3 +10,8 @@ $js = file_get_contents(elgg_get_root_path() . "/vendor/bower-asset/jquery-ui/jq
 	<?= $js ?>
 }();
 define('jquery-ui');
+
+// The datepicker language modules depend on "../datepicker", so to avoid RequireJS from
+// trying to load that, we define it manually here. The lang modules have names like
+// "jquery-ui/i18n/datepicker-LANG.min" and these views are mapped in /views.php
+define('jquery-ui/datepicker', jQuery.datepicker);
