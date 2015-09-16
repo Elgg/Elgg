@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
 
+use Elgg\Database\EntityTable\UserFetchFailureException;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -108,17 +110,16 @@ class WidgetsService {
 	 * @since 1.9.0
 	 */
 	public function canEditLayout($context, $user_guid = 0) {
-		$user = get_entity((int)$user_guid);
-		if (!$user) {
-			$user = _elgg_services()->session->getLoggedInUser();
+		try {
+			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
+			return false;
 		}
 
-		$return = false;
-		if (_elgg_services()->session->isAdminLoggedIn()) {
-			$return = true;
-		}
-		if (elgg_get_page_owner_guid() == $user->guid) {
-			$return = true;
+		if ($user) {
+			$return = ($user->isAdmin() || (elgg_get_page_owner_guid() == $user->guid));
+		} else {
+			$return = false;
 		}
 
 		$params = array(

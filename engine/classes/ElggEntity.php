@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Database\EntityTable\UserFetchFailureException;
+
 /**
  * The parent class for all Elgg Entities.
  *
@@ -991,30 +994,30 @@ abstract class ElggEntity extends \ElggData implements
 	 * @see elgg_set_ignore_access()
 	 */
 	public function canEdit($user_guid = 0) {
-		$user_guid = (int)$user_guid;
-		$user = get_entity($user_guid);
-		if (!$user) {
-			$user = _elgg_services()->session->getLoggedInUser();
+		try {
+			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
+			return false;
 		}
 
 		$return = false;
 
 		// Test user if possible - should default to false unless a plugin hook says otherwise
 		if ($user) {
-			if ($this->getOwnerGUID() == $user->getGUID()) {
+			if ($this->owner_guid == $user->guid) {
 				$return = true;
 			}
 			
-			if ($this->getContainerGUID() == $user->getGUID()) {
+			if ($this->container_guid == $user->guid) {
 				$return = true;
 			}
 			
-			if ($this->getGUID() == $user->getGUID()) {
+			if ($this->guid == $user->guid) {
 				$return = true;
 			}
 
 			$container = $this->getContainerEntity();
-			if ($container && $container->canEdit($user->getGUID())) {
+			if ($container && $container->canEdit($user->guid)) {
 				$return = true;
 			}
 		}
@@ -1035,29 +1038,12 @@ abstract class ElggEntity extends \ElggData implements
 	 * @see elgg_set_ignore_access()
 	 */
 	public function canDelete($user_guid = 0) {
-		$user_guid = (int) $user_guid;
-
-		if (!$user_guid) {
-			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
-		}
-
-		// need to ignore access and show hidden entities for potential hidden/disabled users
-		$ia = elgg_set_ignore_access(true);
-		$show_hidden = access_show_hidden_entities(true);
-		
-		$user = _elgg_services()->entityTable->get($user_guid, 'user');
-		
-		elgg_set_ignore_access($ia);
-		access_show_hidden_entities($show_hidden);
-		
-		if ($user_guid & !$user) {
-			// requested to check access for a specific user_guid, but there is no user entity, so return false
-			$message = _elgg_services()->translator->translate('entity:can_delete:invaliduser', array($user_guid));
-			_elgg_services()->logger->warning($message);
-			
+		try {
+			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
 			return false;
 		}
-		
+
 		$return = $this->canEdit($user_guid);
 
 		$params = array('entity' => $this, 'user' => $user);
@@ -1085,13 +1071,13 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
-		if ($user_guid) {
-			$user = get_user($user_guid);
-			if (!$user) {
-				return false;
-			}
-		} else {
-			$user = _elgg_services()->session->getLoggedInUser();
+		try {
+			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
+			return false;
+		}
+
+		if ($user) {
 			$user_guid = $user->guid;
 		}
 
@@ -1136,10 +1122,11 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return bool
 	 */
 	public function canComment($user_guid = 0) {
-		if ($user_guid == 0) {
-			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
+		try {
+			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
+			return false;
 		}
-		$user = get_entity($user_guid);
 
 		// By default, we don't take a position of whether commenting is allowed
 		// because it is handled by the subclasses of \ElggEntity
@@ -1162,15 +1149,13 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return bool
 	 */
 	public function canAnnotate($user_guid = 0, $annotation_name = '') {
-		if ($user_guid == 0) {
-			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
+		try {
+			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
+			return false;
 		}
-		$user = get_entity($user_guid);
 
-		$return = true;
-		if (!$user) {
-			$return = false;
-		}
+		$return = (bool)$user;
 
 		$hooks = _elgg_services()->hooks;
 
