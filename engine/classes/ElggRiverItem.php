@@ -142,6 +142,61 @@ class ElggRiverItem {
 	}
 
 	/**
+	 * Should a user be able to delete this river item?
+	 *
+	 * @tip Can be overridden by registering for the "permissions_check:delete", "river" plugin hook.
+	 *
+	 * @note This is not called by elgg_delete_river(). You should call this manually before using that function.
+	 *
+	 * @param int $user_guid The user GUID, optionally (default: logged in user)
+	 *
+	 * @return bool Whether this river item should be considered deletable by the given user.
+	 * @since 2.1
+	 */
+	public function canDelete($user_guid = 0) {
+		$user = _elgg_services()->entityTable->resolveUser($user_guid);
+
+		if ($user_guid && !$user) {
+			// requested to check access for a specific user_guid, but there is no user entity, so return false
+			$message = _elgg_services()->translator->translate('river:can_delete:invaliduser', array($user_guid));
+			_elgg_services()->logger->warn($message);
+
+			return false;
+		}
+
+		$return = ($user && $user->isAdmin());
+
+		$params = array('item' => $this, 'user' => $user);
+		return _elgg_services()->hooks->trigger('permissions_check:delete', 'river', $params, $return);
+	}
+
+	/**
+	 * Delete the river item
+	 *
+	 * @return bool False if the user lacks permission or the before event is cancelled
+	 * @since 2.1
+	 */
+	public function delete() {
+		if (!$this->canDelete()) {
+			return false;
+		}
+
+		$events = _elgg_services()->events;
+		if (!$events->triggerBefore('delete', 'river', $this)) {
+			return false;
+		}
+
+		$db = _elgg_services()->db;
+		$prefix = $db->getTablePrefix();
+		$id = (int)$this->id;
+		_elgg_services()->db->deleteData("DELETE FROM {$prefix}river WHERE id = $id");
+
+		$events->triggerAfter('delete', 'river', $this);
+
+		return true;
+	}
+
+	/**
 	 * Get a plain old object copy for public consumption
 	 * 
 	 * @return \stdClass

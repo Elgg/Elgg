@@ -1035,21 +1035,8 @@ abstract class ElggEntity extends \ElggData implements
 	 * @see elgg_set_ignore_access()
 	 */
 	public function canDelete($user_guid = 0) {
-		$user_guid = (int) $user_guid;
+		$user = _elgg_services()->entityTable->resolveUser($user_guid);
 
-		if (!$user_guid) {
-			$user_guid = _elgg_services()->session->getLoggedInUserGuid();
-		}
-
-		// need to ignore access and show hidden entities for potential hidden/disabled users
-		$ia = elgg_set_ignore_access(true);
-		$show_hidden = access_show_hidden_entities(true);
-		
-		$user = _elgg_services()->entityTable->get($user_guid, 'user');
-		
-		elgg_set_ignore_access($ia);
-		access_show_hidden_entities($show_hidden);
-		
 		if ($user_guid & !$user) {
 			// requested to check access for a specific user_guid, but there is no user entity, so return false
 			$message = _elgg_services()->translator->translate('entity:can_delete:invaliduser', array($user_guid));
