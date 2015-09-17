@@ -216,6 +216,7 @@ function _elgg_comments_container_permissions_override($hook, $type, $return, $p
  * @param array   $params Array of parameters (entity, user)
  *
  * @return boolean Whether the given user is allowed to edit the given comment.
+ * @access private
  */
 function _elgg_comments_permissions_override($hook, $type, $return, $params) {
 	$entity = $params['entity'];
@@ -242,6 +243,7 @@ function _elgg_comments_permissions_override($hook, $type, $return, $params) {
  * @param array  $returnvalue Current mail parameters
  * @param array  $params      Original mail parameters
  * @return array $returnvalue Modified mail parameters
+ * @access private
  */
 function _elgg_comments_notification_email_subject($hook, $type, $returnvalue, $params) {
 	if (!is_array($returnvalue)) {
