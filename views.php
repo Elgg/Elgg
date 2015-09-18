@@ -32,7 +32,7 @@ return [
 		"elgg/ui.river.js" => __DIR__ . "/js/lib/ui.river.js",
 
 		// For datepicker. More info in the jquery-ui.js view
-		"jquery-ui/i18n/" => __DIR__ . "/vendor/bower-asset/jquery-ui/ui/minified/i18n",
+		"jquery-ui/i18n/" => "vendor/bower-asset/jquery-ui/ui/minified/i18n",
 
 		"jquery.imgareaselect.css" => __DIR__ . "/bower_components/jquery-imgareaselect/distfiles/css/imgareaselect-deprecated.css",
 		"jquery.imgareaselect.js" => __DIR__ . "/bower_components/jquery-imgareaselect/jquery.imgareaselect.dev.js",
