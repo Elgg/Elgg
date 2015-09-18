@@ -134,7 +134,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('deprecation', function(ServiceProvider $c) {
-			return new \Elgg\DeprecationService($c->session, $c->logger);
+			return new \Elgg\DeprecationService($c->logger);
 		});
 
 		$this->setClassName('entityPreloader', \Elgg\EntityPreloader::class);
