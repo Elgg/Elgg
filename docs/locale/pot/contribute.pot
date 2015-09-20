@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-06 15:32+0300\n"
+"POT-Creation-Date: 2015-09-20 22:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1296,114 +1296,118 @@ msgid "This creates a ``release-1.9.1`` branch in your local repo."
 msgstr ""
 
 #: ../../contribute/releases.rst:59
+msgid "Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:"
+msgstr ""
+
+#: ../../contribute/releases.rst:67
 msgid "Next, submit a PR via Github:"
 msgstr ""
 
-#: ../../contribute/releases.rst:65
+#: ../../contribute/releases.rst:73
 msgid "Once approved and merged, tag the release:"
 msgstr ""
 
-#: ../../contribute/releases.rst:75
+#: ../../contribute/releases.rst:83
 msgid "Update Milestones on Github"
 msgstr ""
 
-#: ../../contribute/releases.rst:74
+#: ../../contribute/releases.rst:82
 msgid "Mark release milestones as completed"
 msgstr ""
 
-#: ../../contribute/releases.rst:75
+#: ../../contribute/releases.rst:83
 msgid "Move unresolved tickets in released milestones to later milestones"
 msgstr ""
 
-#: ../../contribute/releases.rst:78
+#: ../../contribute/releases.rst:86
 msgid "3. Update the website"
 msgstr ""
 
-#: ../../contribute/releases.rst:80
+#: ../../contribute/releases.rst:88
 msgid "The downloads need to point to the new releases."
 msgstr ""
 
-#: ../../contribute/releases.rst:83
+#: ../../contribute/releases.rst:91
 msgid "Build Package"
 msgstr ""
 
-#: ../../contribute/releases.rst:85
+#: ../../contribute/releases.rst:93
 msgid "ssh to elgg.org"
 msgstr ""
 
-#: ../../contribute/releases.rst:86
+#: ../../contribute/releases.rst:94
 msgid "Clone https://github.com/Elgg/elgg-scripts"
 msgstr ""
 
-#: ../../contribute/releases.rst:87
+#: ../../contribute/releases.rst:95
 msgid "Use elgg-scripts/build/build.sh to generate the .zip file."
 msgstr ""
 
-#: ../../contribute/releases.rst:89
+#: ../../contribute/releases.rst:97
 msgid "Run without arguments to see usage. This also generates the ChangeLog.txt file."
 msgstr ""
 
-#: ../../contribute/releases.rst:91
+#: ../../contribute/releases.rst:99
 msgid "Example::"
 msgstr ""
 
-#: ../../contribute/releases.rst:95
+#: ../../contribute/releases.rst:103
 msgid "MIT::"
 msgstr ""
 
-#: ../../contribute/releases.rst:100
+#: ../../contribute/releases.rst:108
 msgid "Update homepage, download, and previous download pages"
 msgstr ""
 
-#: ../../contribute/releases.rst:102
+#: ../../contribute/releases.rst:110
 msgid "Clone https://github.com/Elgg/old-elgg-website"
 msgstr ""
 
-#: ../../contribute/releases.rst:103
+#: ../../contribute/releases.rst:111
 msgid "Make changes, commit, push."
 msgstr ""
 
-#: ../../contribute/releases.rst:105
+#: ../../contribute/releases.rst:113
 msgid "index.php"
 msgstr ""
 
-#: ../../contribute/releases.rst:106
+#: ../../contribute/releases.rst:114
 msgid "download.php"
 msgstr ""
 
-#: ../../contribute/releases.rst:107
+#: ../../contribute/releases.rst:115
 msgid "previous.php"
 msgstr ""
 
-#: ../../contribute/releases.rst:109
+#: ../../contribute/releases.rst:117
 msgid "Pull to live site"
 msgstr ""
 
-#: ../../contribute/releases.rst:115
+#: ../../contribute/releases.rst:123
 msgid "flush apc cache (via community admin panel)"
 msgstr ""
 
-#: ../../contribute/releases.rst:118
+#: ../../contribute/releases.rst:126
 msgid "4. Make the announcement"
 msgstr ""
 
-#: ../../contribute/releases.rst:120
+#: ../../contribute/releases.rst:128
 msgid "This should be the very last thing you do."
 msgstr ""
 
-#: ../../contribute/releases.rst:122
+#: ../../contribute/releases.rst:130
 msgid "Sign in at https://community.elgg.org/ and compose a blog on with HTML version of CHANGELOG.md."
 msgstr ""
 
-#: ../../contribute/releases.rst:123
+#: ../../contribute/releases.rst:131
 msgid "Add tags “release” and “elgg1.x” where x is whatever branch is being released."
 msgstr ""
 
-#: ../../contribute/releases.rst:124
+#: ../../contribute/releases.rst:132
 msgid "Tweet from the elgg `Twitter account`_"
 msgstr ""
 
-#: ../../contribute/releases.rst:125
+#: ../../contribute/releases.rst:133
 msgid "Post from the `G+ page`_"
 msgstr ""
 

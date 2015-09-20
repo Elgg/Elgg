@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-09-06 15:32+0300\n"
+"POT-Creation-Date: 2015-09-20 22:33+0300\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1508,218 +1508,222 @@ msgid "Relationship events"
 msgstr ""
 
 #: ../../guides/events-list.rst:110
-msgid "**create, <relationship>**"
+msgid "**create, relationship**"
 msgstr ""
 
 #: ../../guides/events-list.rst:109
 msgid "Triggered after a relationship has been created. Returning false deletes the relationship that was just created."
 msgstr ""
 
-#: ../../guides/events-list.rst:114
-msgid "**delete, <relationship>**"
+#: ../../guides/events-list.rst:112
+msgid "This event was broken in Elgg 1.9 - 1.12.3, returning false would *not* delete the relationship.  This is working as of 1.12.4"
 msgstr ""
 
-#: ../../guides/events-list.rst:113
+#: ../../guides/events-list.rst:117
+msgid "**delete, relationship**"
+msgstr ""
+
+#: ../../guides/events-list.rst:116
 msgid "Triggered before a relationship is deleted. Return false to prevent it from being deleted."
 msgstr ""
 
-#: ../../guides/events-list.rst:117
+#: ../../guides/events-list.rst:120
 msgid "**join, group**"
 msgstr ""
 
-#: ../../guides/events-list.rst:117
+#: ../../guides/events-list.rst:120
 msgid "Triggered after the user ``$params['user']`` has joined the group ``$params['group']``."
 msgstr ""
 
-#: ../../guides/events-list.rst:120
+#: ../../guides/events-list.rst:123
 msgid "**leave, group**"
 msgstr ""
 
-#: ../../guides/events-list.rst:120
+#: ../../guides/events-list.rst:123
 msgid "Triggered before the user ``$params['user']`` has left the group ``$params['group']``."
 msgstr ""
 
-#: ../../guides/events-list.rst:123
+#: ../../guides/events-list.rst:126
 msgid "Entity events"
 msgstr ""
 
-#: ../../guides/events-list.rst:126
+#: ../../guides/events-list.rst:129
 msgid "**create, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:126
+#: ../../guides/events-list.rst:129
 msgid "Triggered for user, group, object, and site entities after creation. Return false to delete entity."
 msgstr ""
 
-#: ../../guides/events-list.rst:129
+#: ../../guides/events-list.rst:132
 msgid "**update, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:129
+#: ../../guides/events-list.rst:132
 msgid "Triggered before an update for the user, group, object, and site entities. Return false to prevent update."
 msgstr ""
 
-#: ../../guides/events-list.rst:132
+#: ../../guides/events-list.rst:135
 msgid "**update:after, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:132
+#: ../../guides/events-list.rst:135
 msgid "Triggered after an update for the user, group, object, and site entities."
 msgstr ""
 
-#: ../../guides/events-list.rst:135
+#: ../../guides/events-list.rst:138
 msgid "**delete, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:135
+#: ../../guides/events-list.rst:138
 msgid "Triggered before entity deletion. Return false to prevent deletion."
 msgstr ""
 
-#: ../../guides/events-list.rst:138
+#: ../../guides/events-list.rst:141
 msgid "**disable, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:138
+#: ../../guides/events-list.rst:141
 msgid "Triggered before the entity is disabled. Return false to prevent disabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:141
+#: ../../guides/events-list.rst:144
 msgid "**disable:after, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:141
+#: ../../guides/events-list.rst:144
 msgid "Triggered after the entity is disabled."
 msgstr ""
 
-#: ../../guides/events-list.rst:144
+#: ../../guides/events-list.rst:147
 msgid "**enable, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:144
+#: ../../guides/events-list.rst:147
 msgid "Return false to prevent enabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:147
+#: ../../guides/events-list.rst:150
 msgid "**enable:after, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:147
+#: ../../guides/events-list.rst:150
 msgid "Triggered after the entity is enabled."
 msgstr ""
 
-#: ../../guides/events-list.rst:150
+#: ../../guides/events-list.rst:153
 msgid "Metadata events"
 msgstr ""
 
-#: ../../guides/events-list.rst:154
+#: ../../guides/events-list.rst:157
 msgid "**create, metadata**"
 msgstr ""
 
-#: ../../guides/events-list.rst:153
+#: ../../guides/events-list.rst:156
 msgid "Called after the metadata has been created. Return false to delete the metadata that was just created."
 msgstr ""
 
-#: ../../guides/events-list.rst:157
+#: ../../guides/events-list.rst:160
 msgid "**update, metadata**"
 msgstr ""
 
-#: ../../guides/events-list.rst:157
+#: ../../guides/events-list.rst:160
 msgid "Called after the metadata has been updated. Return false to *delete the metadata.*"
 msgstr ""
 
-#: ../../guides/events-list.rst:160
+#: ../../guides/events-list.rst:163
 msgid "**delete, metadata**"
 msgstr ""
 
-#: ../../guides/events-list.rst:160
+#: ../../guides/events-list.rst:163
 msgid "Called before metadata is deleted. Return false to prevent deletion."
 msgstr ""
 
-#: ../../guides/events-list.rst:163
+#: ../../guides/events-list.rst:166
 msgid "**enable, metadata**"
 msgstr ""
 
-#: ../../guides/events-list.rst:163
+#: ../../guides/events-list.rst:166
 msgid "Called when enabling metadata. Return false to prevent enabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:166
+#: ../../guides/events-list.rst:169
 msgid "**disable, metadata**"
 msgstr ""
 
-#: ../../guides/events-list.rst:166
+#: ../../guides/events-list.rst:169
 msgid "Called when disabling metadata. Return false to prevent disabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:169
+#: ../../guides/events-list.rst:172
 msgid "Annotation events"
 msgstr ""
 
-#: ../../guides/events-list.rst:173
+#: ../../guides/events-list.rst:176
 msgid "**annotate, <entity type>**"
 msgstr ""
 
-#: ../../guides/events-list.rst:172
+#: ../../guides/events-list.rst:175
 msgid "Called before the annotation has been created. Return false to prevent annotation of this entity."
 msgstr ""
 
-#: ../../guides/events-list.rst:177
+#: ../../guides/events-list.rst:180
 msgid "**create, annotation**"
 msgstr ""
 
-#: ../../guides/events-list.rst:176
+#: ../../guides/events-list.rst:179
 msgid "Called after the annotation has been created. Return false to delete the annotation."
 msgstr ""
 
-#: ../../guides/events-list.rst:180
+#: ../../guides/events-list.rst:183
 msgid "**update, annotation**"
 msgstr ""
 
-#: ../../guides/events-list.rst:180
+#: ../../guides/events-list.rst:183
 msgid "Called after the annotation has been updated. Return false to *delete the annotation.*"
 msgstr ""
 
-#: ../../guides/events-list.rst:183
+#: ../../guides/events-list.rst:186
 msgid "**delete, annotation**"
 msgstr ""
 
-#: ../../guides/events-list.rst:183
+#: ../../guides/events-list.rst:186
 msgid "Called before annotation is deleted. Return false to prevent deletion."
 msgstr ""
 
-#: ../../guides/events-list.rst:186
+#: ../../guides/events-list.rst:189
 msgid "**enable, annotation**"
 msgstr ""
 
-#: ../../guides/events-list.rst:186
+#: ../../guides/events-list.rst:189
 msgid "Called when enabling annotations. Return false to prevent enabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:189
+#: ../../guides/events-list.rst:192
 msgid "**disable, annotations**"
 msgstr ""
 
-#: ../../guides/events-list.rst:189
+#: ../../guides/events-list.rst:192
 msgid "Called when disabling annotations. Return false to prevent disabling."
 msgstr ""
 
-#: ../../guides/events-list.rst:192
+#: ../../guides/events-list.rst:195
 msgid "River events"
 msgstr ""
 
-#: ../../guides/events-list.rst:195
+#: ../../guides/events-list.rst:198
 msgid "**created, river**"
 msgstr ""
 
-#: ../../guides/events-list.rst:195
+#: ../../guides/events-list.rst:198
 msgid "Called after a river item is created."
 msgstr ""
 
-#: ../../guides/events-list.rst:198
+#: ../../guides/events-list.rst:201
 msgid "Notes"
 msgstr ""
 
-#: ../../guides/events-list.rst:200
+#: ../../guides/events-list.rst:203
 msgid "Because of bugs in the Elgg core, some events may be thrown more than once on the same action. For example, ``update, object`` is thrown twice."
 msgstr ""
 
