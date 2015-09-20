@@ -250,18 +250,6 @@ function elgg_register_external_view($view, $cacheable = false) {
 }
 
 /**
- * Check whether a view is registered as cacheable.
- *
- * @param string $view The name of the view.
- * @return boolean
- * @access private
- * @since 1.9.0
- */
-function _elgg_is_view_cacheable($view) {
-	return _elgg_services()->views->isCacheableView($view);
-}
-
-/**
  * Unregister a view for ajax calls
  *
  * @param string $view The view name
