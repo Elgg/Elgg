@@ -310,6 +310,16 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
 }
 
 /**
+ * Get the file path for all registered views and viewtypes
+ *
+ * @return string[] [viewtype][view_name] => file_path
+ * @since 2.0
+ */
+function elgg_get_view_locations() {
+	return _elgg_services()->views->getViewLocations();
+}
+
+/**
  * Return a parsed view.
  *
  * Views are rendered by a template handler and returned as strings.

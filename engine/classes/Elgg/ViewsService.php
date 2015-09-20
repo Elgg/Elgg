@@ -551,6 +551,17 @@ class ViewsService {
 	}
 
 	/**
+	 * Get full paths for all registered views and viewtypes
+	 *
+	 * @return string[] [default][view_name] => file_path
+	 *
+	 * @since 2.0
+	 */
+	public function getViewLocations() {
+		return $this->locations;
+	}
+
+	/**
 	 * Get inspector data
 	 *
 	 * @return array
