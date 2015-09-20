@@ -34,18 +34,6 @@ function get_relationship($id) {
 }
 
 /**
- * Get a database row from the relationship table
- *
- * @param int $id The relationship ID
- *
- * @return \stdClass|false False if no row found
- * @access private
- */
-function _elgg_get_relationship_row($id) {
-	return _elgg_services()->relationshipsTable->getRow($id);
-}
-
-/**
  * Delete a relationship by its ID
  *
  * @param int $id The relationship ID

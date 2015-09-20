@@ -309,10 +309,12 @@ The behavior of the ``container_permissions_check`` hook has changed when an ent
 
 In 2.0, when an entity is created in a container like a group, if the owner is the same as the logged in user (almost always the case), this first check is bypassed. So the ``container_permissions_check`` hook will almost always be called once with ``$params['container']`` being the correct container of the entity.
 
-Creating a relationship triggers only one event
------------------------------------------------
+Creating or deleting a relationship triggers only one event
+-----------------------------------------------------------
 
-Entity relationship creation no longer fires the legacy "create" event using the relationship name as the type. E.g. Listening for the ``"create", "member"`` event will no longer capture group membership additions. Use the ``"create", "relationship"`` event.
+The "create" and "delete" relationship events are now only fired once, with ``"relationship"`` as the object type.
+
+E.g. Listening for the ``"create", "member"`` or ``"delete", "member"`` event(s) will no longer capture group membership additions/removals. Use the ``"create", "relationship"`` or ``"delete", "relationship"`` events.
 
 Discussion feature has been pulled from groups into its own plugin
 ------------------------------------------------------------------
