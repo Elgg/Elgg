@@ -3,7 +3,7 @@ return array(
 	'embed:embed' => 'Inietta',
 	'embed:media' => 'Inietta contenuto',
 	'embed:instructions' => 'Clicca su qualsiasi file per incorporarlo nel tuo contenuto',
-	'embed:upload' => 'Carica media\',
+	'embed:upload' => 'Carica media',
 	'embed:upload_type' => 'Tipo di caricamento:',
 
 	// messages
