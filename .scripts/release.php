@@ -49,7 +49,7 @@ run_commands([
 
 // Update translations
 run_commands([
-	"tx pull -a --minimum-perc=100",
+	"tx pull -a --minimum-perc=95",
 ]);
 
 // Clean translations
