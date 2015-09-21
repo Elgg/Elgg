@@ -53,11 +53,11 @@ return array(
 	'groups:widget:group_activity:content:noselect' => 'Edite este trebello para seleccionar un grupo.',
 
 	'groups:noaccess' => 'Non ten acceso ao grupo.',
-	'groups:permissions:error' => 'Non ten os permisos necesarios.',
 	'groups:ingroup' => 'No grupo',
 	'groups:cantcreate' => 'Só os administradores poden crear grupos.',
 	'groups:cantedit' => 'Non pode editar o grupo.',
 	'groups:saved' => 'Gardouse o grupo.',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Grupos destacados',
 	'groups:makeunfeatured' => 'Deixar de destacar',
 	'groups:makefeatured' => 'Descatar',
@@ -81,30 +81,6 @@ return array(
 	'groups:search_in_group' => "Buscar no grupo",
 	'groups:acl' => "Grupo: %s",
 
-	'discussion:topic:notify:summary' => 'Novo tema de conversa: «%s»',
-	'discussion:topic:notify:subject' => 'Novo tema de conversa: «%s»',
-	'discussion:topic:notify:body' =>
-'%s engadiu un novo tema de conversa ao grupo %s:
-
-Título: %s
-
-%s
-
-Vexa e responda ao tema de conversa:
-%s
-',
-
-	'discussion:reply:notify:summary' => 'Nova resposta no tema: %s',
-	'discussion:reply:notify:subject' => 'Nova resposta no tema: %s',
-	'discussion:reply:notify:body' =>
-'%s respondeu ao tema de conversa «%s» no grupo «%s»:
-
-%s
-
-Vexa e responda á conversa:
-%s
-',
-
 	'groups:activity' => "Actividade do grupo",
 	'groups:enableactivity' => 'Activar a actividade do grupo',
 	'groups:activity:none' => "Aínda non hai actividade no grupo",
@@ -115,11 +91,6 @@ Vexa e responda á conversa:
 	'groups:requests:none' => 'Non hai ningunha solicitude de admisión pendente.',
 
 	'groups:invitations:none' => 'Non hai ningunha invitación.',
-
-	'item:object:groupforumtopic' => "Temas de conversa",
-	'item:object:discussion_reply' => "Respostas á conversa",
-
-	'groupforumtopic:new' => "Iniciar un tema de conversa",
 
 	'groups:count' => "Grupos creados",
 	'groups:open' => "Grupo abert",
@@ -146,70 +117,12 @@ Vexa e responda á conversa:
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Activar as conversas n grupo',
 	'groups:lastupdated' => 'Actualizado po última vez o %s por %s.',
 	'groups:lastcomment' => 'O último comentario deixouno %s %s.',
 
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Conversa',
-	'discussion:add' => 'Engadir un tema de conversa',
-	'discussion:latest' => 'Última conversa',
-	'discussion:group' => 'Conversa de grupo',
-	'discussion:none' => 'Non hai conversas.',
-	'discussion:reply:title' => 'Resposta de %s',
-
-	'discussion:topic:created' => 'Creouse o tema de conversa.',
-	'discussion:topic:updated' => 'Actualizouse o tema de conversa.',
-	'discussion:topic:deleted' => 'Eliminouse o tema de conversa.',
-
-	'discussion:topic:notfound' => 'Non se atopou o tema de conversa.',
-	'discussion:error:notsaved' => 'Non foi posíbel gardar o tema de conversa.',
-	'discussion:error:missing' => 'Tanto o título como a mensaxe son campos obrigatorios.',
-	'discussion:error:permissions' => 'Non ten permisos para realizar esta acción.',
-	'discussion:error:notdeleted' => 'Non foi posíbel eliminar o tema de conversa.',
-
-	'discussion:reply:edit' => 'Editar a resposta',
-	'discussion:reply:deleted' => 'Eliminouse a resposta da conversa.',
-	'discussion:reply:error:notfound' => 'Non se atopou a resposta á conversa.',
-	'discussion:reply:error:notfound_fallback' => "Non foi posíbel atopar a resposta indicada, este é o tema orixinal da discusión.",
-	'discussion:reply:error:notdeleted' => 'Non foi posíbel eliminar a resposta da conversa.',
-
-	'discussion:search:title' => 'Resposta ao tema: %s',
-	
 	'admin:groups' => 'Grupos',
 
-	'reply:this' => 'Responder',
-
-	'group:replies' => 'Respostas',
-	'groups:forum:created' => 'Creou %s con %d comentarios',
-	'groups:forum:created:single' => 'Creou %s con %d resposta',
-	'groups:forum' => 'Conversa',
-	'groups:addtopic' => 'Engadir un tema',
-	'groups:forumlatest' => 'Última conversa',
 	'groups:latestdiscussion' => 'Última conversa',
-	'groupspost:success' => 'Publicouse a resposta.',
-	'groupspost:failure' => 'Non foi posíbel publicar a resposta.',
-	'groups:alldiscussion' => 'Última conversa',
-	'groups:edittopic' => 'Editar o tema',
-	'groups:topicmessage' => 'Mensaxe do tema',
-	'groups:topicstatus' => 'Estado do tema',
-	'groups:reply' => 'Deixar un comentario',
-	'groups:topic' => 'Tema',
-	'groups:posts' => 'Mensaxes',
-	'groups:lastperson' => 'Última persoa',
-	'groups:when' => 'Cando',
-	'grouptopic:notcreated' => 'Non se creou ningún tema.',
-	'groups:topicclosed' => 'Pechada',
-	'grouptopic:created' => 'Creouse o tema.',
-	'groups:topicsticky' => 'Destacado',
-	'groups:topicisclosed' => 'A conversa está pechada.',
-	'groups:topiccloseddesc' => 'A conversa está pechada e non poden deixarse comentarios novos.',
-	'grouptopic:error' => 'Non foi posíbel crear o seu tema de grupo. Inténteo de novo ou póñase en contacto co administrador do sistema.',
-	'groups:forumpost:edited' => "Editou a mensaxe do foro",
-	'groups:forumpost:error' => "Non foi posíbel editar a mensaxe.",
-
 	'groups:privategroup' => 'O grupo é un grupo pechado. Solicitarase a admisión.',
 	'groups:notitle' => 'Os grupos necesitan un título.',
 	'groups:cantjoin' => 'Non foi posíbel unirse ao grupo.',
@@ -229,7 +142,6 @@ Vexa e responda á conversa:
 	'groups:usernotinvited' => 'Non foi posíbel invitar o usuario.',
 	'groups:useralreadyinvited' => 'Xa se invitara o usuario.',
 	'groups:invite:subject' => "%s recibiu unha invitación a %s.",
-	'groups:updated' => "Última resposta de %s %s",
 	'groups:started' => "Iniciado por %s",
 	'groups:joinrequest:remove:check' => 'Está seguro de que quere eliminar a solicitude de admisión?',
 	'groups:invite:remove:check' => 'Está seguro de que quere eliminar a invitación?',
@@ -263,9 +175,6 @@ Ou prema a seguinte ligazón para ver as solicitudes de admisión do grupo:
 
 	'river:create:group:default' => '%s creou o grupo %s',
 	'river:join:group:default' => '%s uniuse ao grupo %s',
-	'river:create:object:groupforumtopic' => '%s engadiu un novo tema de conversa %s',
-	'river:reply:object:groupforumtopic' => '%s respondeu no tema de conversa «%s»',
-	'river:reply:view' => 'Ver a resposta',
 
 	'groups:nowidgets' => 'Non se definiu ningún trebello para este grupo.',
 
@@ -280,8 +189,6 @@ Ou prema a seguinte ligazón para ver as solicitudes de admisión do grupo:
 	'groups:widgets:entities:label:displaynum' => 'Listar os obxectos dun grupo.',
 	'groups:widgets:entities:label:pleaseedit' => 'Configure o trebello.',
 
-	'groups:forumtopic:edited' => 'Editouse o tema do foro',
-
 	'groups:allowhiddengroups' => 'Quere permitir grupos privados (invisíbeis)?',
 	'groups:whocancreate' => 'Quen pode crear grupos novos?',
 
@@ -292,13 +199,6 @@ Ou prema a seguinte ligazón para ver as solicitudes de admisión do grupo:
 	'group:notdeleted' => 'Non foi posíbel eliminar o grupo.',
 
 	'group:notfound' => 'Non foi posíbel atopar o grupo.',
-	'grouppost:deleted' => 'Eliminouse a mensaxe ao grupo.',
-	'grouppost:notdeleted' => 'Non foi posíbel eliminar a mensaxe ao grupo.',
-	'groupstopic:deleted' => 'Eliminouse o tema.',
-	'groupstopic:notdeleted' => 'Non foi posíbel eliminar o tema.',
-	'grouptopic:blank' => 'Non hai temas.',
-	'grouptopic:notfound' => 'Non foi posíbel atopar o tema.',
-	'grouppost:nopost' => 'A mensaxe está baleira.',
 	'groups:deletewarning' => "Está seguro de que quere eliminar o grupo? Esta operación non pode desfacerse.",
 
 	'groups:invitekilled' => 'Eliminouse a invitación',
@@ -309,6 +209,5 @@ Ou prema a seguinte ligazón para ver as solicitudes de admisión do grupo:
 	/**
 	 * ecml
 	 */
-	'groups:ecml:discussion' => 'Conversas do grupo',
 	'groups:ecml:groupprofile' => 'Perfís do grupo',
 );

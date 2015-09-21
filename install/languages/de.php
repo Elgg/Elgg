@@ -40,12 +40,12 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:check:php:register_globals' => 'Register globals muss auf dem Server ausgeschaltet sein, d.h. der Wert der PHP-Variable register_globals muss \'0\' sein.',
 	'install:check:php:session.auto_start' => "Auf dem Server muss session.auto_start ausgeschaltet sein, damit Elgg einwandfrei funktioniert. Ändere diese Einstellung entweder in der PHP-Konfiguration php.ini oder setze den Wert dieser PHP-Variable in der .htaccess-Datei von Elgg.",
 
-	'install:check:enginedir' => 'Aufgrund fehlender Schreibberechtigung ist es leider nicht möglich, auf Deinem Server im \'engine\'-Unterverzeichnis die Datei settings.php zu erzeugen. Du hast zwei Möglichkeiten:
+	'install:check:installdir' => 'Aufgrund fehlender Schreibberechtigung ist es leider nicht möglich, auf Deinem Server im Installationsverzeichnis von Elgg die Datei settings.php zu erzeugen. Du hast zwei Möglichkeiten:
 
-		1. Ändere (während der Installation) die Schreibberechtigungen für das \'engine\'-Unterverzeichnis
+		1. Ändere (temporär für die Installation) die Schreibberechtigungen für das Installationsverzeichnis von Elgg
 
-		2. Lege die Datei settings.php selbst an, indem Du die Datei namens settings.example.php zu settings.php kopierst. Folge dann den Anweisungen in der Datei, um die Verbindungsparameter für Deine Datenbank einzutragen.',
-	'install:check:readsettings' => 'Im \'engine\'-Unterverzeichnis ist eine Konfigurationsdatei settings.php vorhanden, aber es fehlt die notwendige Leseberechtigung. Du kannst entweder die Datei löschen, damit sie neu angelegt werden kann oder Du kannst die Leseberechtigungen der Datei anpassen.',
+		2. Lege die Datei settings.php selbst an, indem Du die Datei engine/settings.example.php in das Installationsverzeichnis von Elgg kopierst und zu settings.php umbenennst. Folge dann den Anweisungen in dieser Datei, um die Verbindungsparameter für Deine Datenbank einzutragen.',
+	'install:check:readsettings' => 'Im Installationsverzeichnis von Elgg ist eine Konfigurationsdatei namens settings.php vorhanden, aber es fehlt die notwendige Leseberechtigung. Du kannst entweder die Datei löschen, damit sie neu angelegt werden kann oder Du kannst die Leseberechtigungen der Datei anpassen.',
 
 	'install:check:php:success' => "Die PHP-Konfiguration auf Deinem Server erfüllt alle notwendigen Voraussetzungen für Elgg.",
 	'install:check:rewrite:success' => 'Die Überprüfung der konfigurierten rewrite-Regeln war erfolgreich.',
@@ -125,7 +125,7 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:error:cannotloadtables' => 'Der Zugriff auf die Tabellen der Datenbank ist nicht möglich.',
 	'install:error:tables_exist' => 'In der Datenbank ist bereits eine Elgg-Tabellenstruktur vorhanden. Du mußt entweder diese Tabellen aus der Datenbank löschen oder die Installation neu starten. Bei einem Neustart kann versucht werden, die bestehende Tabellenstruktur zu verwenden. Um die Installation neu zu starten, entferne \'?step=database\' aus der URL in der Adressleiste Deines Browsers und drücke \'Enter\'.',
 	'install:error:readsettingsphp' => 'Die Datei engine/settings.example.php ist nicht lesbar.',
-	'install:error:writesettingphp' => 'Die Datei engine/settings.php kann nicht geschrieben werden.',
+	'install:error:writesettingphp' => 'Es ist nicht möglich, in die Datei settings.php im Installationsverzeichnis von Elgg zu schreiben.',
 	'install:error:requiredfield' => '%s ist eine notwendige Eingabe.',
 	'install:error:relative_path' => 'Der eingegebene Pfad "%s" scheint keine absolute Pfadangabe für Dein Datenverzeichnis zu sein.',
 	'install:error:datadirectoryexists' => 'Dein Datenverzeichnis %s ist nicht vorhanden.',

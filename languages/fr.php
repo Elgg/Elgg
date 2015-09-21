@@ -39,6 +39,9 @@ return array(
 	'actionnotfound' => "Le fichier d'action pour %s n'a pas été trouvé.",
 	'actionloggedout' => "Désolé, vous ne pouvez pas effectuer cette action sans être connecté(e).",
 	'actionunauthorized' => 'Vous n êtes pas autorisé(e) à effectuer cette action.',
+	
+	'ajax:error' => 'Une erreur est survenue lors d\'un appel Ajax. Peut-être que la connection avec le serveur est perdue.',
+	'ajax:not_is_xhr' => 'Vous ne pouvez pas accéder aux vues Ajax directement',
 
 	'PluginException:MisconfiguredPlugin' => "Le plugin %s (guid: %s) est mal configuré. Il a été désactivé. Veuillez rechercher dans le wiki d'aide les causes possibles (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid : %s) ne peut pas démarrer. Raison: %s',
@@ -84,6 +87,9 @@ return array(
 	
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Il existe d\'autres plugins répertoriant %s en tant que dépendance. Vous devez désactiver les plugins suivants avant de désactiver celui-ci: %s',
 
+	'ElggMenuBuilder:Trees:NoParents' => 'Une entrée de menu a été trouvé sans lien avec un parent',
+	'ElggMenuBuilder:Trees:OrphanedChild' => 'L\'entrée de menu [%s] a été trouvée avec un parent manquant [%s]',
+	'ElggMenuBuilder:Trees:DuplicateChild' => 'L\'entrée de menu [%s] est enregistrée plusieurs fois',
 
 	'RegistrationException:EmptyPassword' => 'Les champs du mot de passe ne peut pas être vide',
 	'RegistrationException:PasswordMismatch' => 'Les mots de passe doivent correspondre',
@@ -107,6 +113,10 @@ return array(
 
 	'error:default:title' => 'Oups...',
 	'error:default:content' => 'Oups... quelque chose est allé de travers.',
+	'error:400:title' => 'Mauvaise requête',
+	'error:400:content' => 'Désolé, la requête est invalide ou incomplète.',
+	'error:403:title' => 'Interdit',
+	'error:403:content' => 'Désolé, vous n\'avez pas la permission de consulter la page demandée.',
 	'error:404:title' => 'Page non trouvée',
 	'error:404:content' => 'Désolé. Nous n\'arrivons pas à trouver la page que vous demandez.',
 
@@ -148,6 +158,8 @@ return array(
 	'access:read' => "Accès en lecture",
 	'access:write' => "Accès en écriture",
 	'access:admin_only' => "Seulement pour les administrateurs",
+	'access:missing_name' => "Le nom du niveau d'accès est manquant",
+	'access:comments:change' => "Cette discussion a actuellement des droits d'accès limités. Faites attention lorsque vous la partagez.",
 
 /**
  * Dashboard and widgets
@@ -514,6 +526,8 @@ return array(
 	'admin:widget:banned_users:help' => 'Liste des utilisateurs bannis',
 	'admin:widget:content_stats' => 'Statistiques',
 	'admin:widget:content_stats:help' => 'Gardez une trace du contenu créé par vos utilisateurs',
+	'admin:widget:cron_status' => 'Status du cron',
+	'admin:widget:cron_status:help' => 'Afficher les statuts du dernier cron finit',
 	'widget:content_stats:type' => 'Type de contenu',
 	'widget:content_stats:number' => 'Nombre',
 
@@ -591,11 +605,17 @@ return array(
 	'admin:plugins:description' => "Ce menu vous permet de contrôler et de configurer les outils installés sur votre site.",
 	'admin:plugins:opt:linktext' => "Configurer les outils...",
 	'admin:plugins:opt:description' => "Configurer les outils installés sur le site.",
+	'admin:plugins:label:id' => "ID",
+	'admin:plugins:label:name' => "Nom",
 	'admin:plugins:label:author' => "Auteur",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Catégories',
 	'admin:plugins:label:licence' => "Licence",
 	'admin:plugins:label:website' => "URL",
+	'admin:plugins:label:info' => "Information",
+	'admin:plugins:label:files' => "Fichiers",
+	'admin:plugins:label:resources' => "Ressources",
+	'admin:plugins:label:screenshots' => "Captures d'écran",
 	'admin:plugins:label:repository' => "Code",
 	'admin:plugins:label:bugtracker' => "Signaler le problème",
 	'admin:plugins:label:donate' => "Don",
@@ -610,7 +630,6 @@ return array(
 	'admin:plugins:label:contributors:description' => 'Description',
 	'admin:plugins:label:dependencies' => 'Dépendances',
 
-	'admin:plugins:warning:elgg_version_unknown' => 'Ce plugin utilise un ancien fichier manifest.xml et ne précise pas si cette version est compatible avec l\'Elgg actuel. Il ne fonctionnera probablement pas !',
 	'admin:plugins:warning:unmet_dependencies' => 'Ce plugin ne retrouve pas certaines dépendances et ne peut être activé. Vérifiez les dépendances pour plus d\'infos.',
 	'admin:plugins:warning:invalid' => '%s n\'est pas un plugin valide d\'Elgg. Vérifiez <a href="http://docs.elgg.org/Invalid_Plugin">la documentation d\'Elgg</a> les conseils de dépannage.',
 	'admin:plugins:warning:invalid:check_docs' => 'Vérifiez <a href="http://learn.elgg.org/fr/stable/appendix/faqs.html">la documentation d\'Elgg</a> - ou la version <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">anglophone</a>, souvent plus complète - pour des astuces de débogage.',
@@ -702,6 +721,7 @@ return array(
 	'admin:robots.txt:instructions' => "Editez le fichier robots.txt du site ci-dessous",
 	'admin:robots.txt:plugins' => "Les plugins ajoutent les lignes suivantes au fichier robots.txt ",
 	'admin:robots.txt:subdir' => "L'outil pour robots.txt ne fonctionnera peut-être pas car Elgg est installé dans un sous-répertoire",
+	'admin:robots.txt:physical' => "L'outil pour robots.txt ne fonctionnera pas car a fichier robots.txt est présent",
 
 	'admin:maintenance_mode:default_message' => 'Le site est fermé pour cause de maintenance',
 	'admin:maintenance_mode:instructions' => 'Le mode maintenance devrait être utilisé pour les mises à jour et les autres changements sur le site. 
@@ -749,6 +769,7 @@ return array(
 	'river:friends' => 'Activités des Amis',
 	'river:select' => 'Afficher %s',
 	'river:comments:more' => '+%u plus',
+	'river:comments:all' => 'Voir tous les %u commentaires',
 	'river:generic_comment' => 'commenté sur %s',
 
 	'friends:widget:description' => "Affiche certains de vos amis.",
@@ -1002,6 +1023,19 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'date:month:10' => 'Octobre %s',
 	'date:month:11' => 'Novembre %s',
 	'date:month:12' => 'Décembre %s',
+	
+	'date:month:short:01' => 'Jan %s',
+	'date:month:short:02' => 'Fév %s',
+	'date:month:short:03' => 'Mar %s',
+	'date:month:short:04' => 'Avr %s',
+	'date:month:short:05' => 'Mai %s',
+	'date:month:short:06' => 'Jui %s',
+	'date:month:short:07' => 'Jui %s',
+	'date:month:short:08' => 'Aou %s',
+	'date:month:short:09' => 'Sep %s',
+	'date:month:short:10' => 'Oct %s',
+	'date:month:short:11' => 'Nov %s',
+	'date:month:short:12' => 'Déc %s',
 
 	'date:weekday:0' => 'dimanche',
 	'date:weekday:1' => 'lundi',
@@ -1010,6 +1044,14 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'date:weekday:4' => 'jeudi',
 	'date:weekday:5' => 'vendredi',
 	'date:weekday:6' => 'samedi',
+	
+	'date:weekday:short:0' => 'Dim',
+	'date:weekday:short:1' => 'Lun',
+	'date:weekday:short:2' => 'Mar',
+	'date:weekday:short:3' => 'Mer',
+	'date:weekday:short:4' => 'Jeu',
+	'date:weekday:short:5' => 'Ven',
+	'date:weekday:short:6' => 'Sam',
 	
 	'interval:minute' => 'chaque minute',
 	'interval:fiveminute' => 'chaque cinq minutes',
@@ -1048,8 +1090,6 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'installation:walled_garden:description' => 'Autoriser le site à fonctionner comme un réseau privé. Cela empêchera les utilisateurs non connectés d\'afficher les pages du site autres que celles expressément spécifiées publiques.',
 	'installation:walled_garden:label' => 'Restreindre les pages aux utilisateurs enregistrés',
 
-	'installation:httpslogin' => "Activer ceci afin que les utilisateurs puissent se connecter via le protocole https. Vous devez avoir https activé sur votre serveur afin que cela fonctionne.",
-	'installation:httpslogin:label' => "Activer les connexions HTTPS",
 	'installation:view' => "Entrer le nom de la vue qui sera utilisée automatiquement pour l'affichage du site (par exemple : 'mobile'), laissez par défaut en cas de doute :",
 
 	'installation:siteemail' => "L'adresse e-mail du site (utilisée lors d'envoi d'e-mail par le système)",
@@ -1072,13 +1112,13 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'installation:systemcache:description' => "Le cache système diminue le temps de chargement du moteur Elgg en mettant en cache les données dans des fichiers.",
 	'installation:systemcache:label' => "Utiliser le cache système (recommandé)",
 
+	'admin:legend:system' => 'Système',
 	'admin:legend:caching' => 'Mise en cache',
 	'admin:legend:content_access' => 'Accès au contenu',
 	'admin:legend:site_access' => 'Accès au site',
 	'admin:legend:debug' => 'Débugger et s\'identifier',
 
 	'upgrading' => 'Mise à jour en cours',
-	'upgrade:db' => 'Votre base de données a été mise à jour.',
 	'upgrade:core' => 'Votre installation d\'Elgg a été mise à jour.',
 	'upgrade:unlock' => 'Déverrouiller la mise à jour',
 	'upgrade:unlock:confirm' => "La base de données est verrouillée par une autre mise à jour. Exécuter des mises à jours concurrentes est dangereux. Vous devriez continuer seulement si vous savez qu'il n'y a pas d'autre mise à jour en cours d'exécution. Déverrouiller ?",
@@ -1115,6 +1155,7 @@ Si vous avez besoin d\'instructions détaillées, veuillez visiter la <a href="h
 	// Strings specific for the comments upgrade
 	'admin:upgrades:comments' => 'Mise à jour des commentaires',
 	'upgrade:comment:create_failed' => 'Impossible de convertir le commentaire id %s en une entité.',
+	'admin:upgrades:commentaccess' => 'Mise à jour des commentaires',
 
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'Répertoire de données mis à jour',
@@ -1202,6 +1243,7 @@ Si vous êtes à l'origine de cette demande, cliquez sur le lien ci-dessous. Sin
 	'generic_comment:deleted' => "Votre commentaire a été correctement supprimé.",
 	'generic_comment:blank' => "Désolé ; vous devez écrire un commentaire avant de pouvoir l'enregistrer.",
 	'generic_comment:notfound' => "Désolé ; l'élément recherché n'a pas été trouvé.",
+	'generic_comment:notfound_fallback' => "Désolé, le commentaire demandé n'a pas été trouvé. Vous avez été redirigé sur la page précédente.",
 	'generic_comment:notdeleted' => "Désolé; le commentaire n'a pu être supprimé.",
 	'generic_comment:failure' => "Une erreur inattendue a eu lieu pendant la sauvegarde du commentaire.",
 	'generic_comment:none' => 'Pas de commentaire',
@@ -1231,11 +1273,14 @@ Ne répondez pas à cet e-mail.",
  */
 	
 	'byline' => 'Par %s',
+	'byline:ingroup' => 'dans le groupe %s',
 	'entity:default:strapline' => 'Créé le %s par %s',
 	'entity:default:missingsupport:popup' => 'Cette entité ne peut pas être affichée correctement. C\'est peut-être dû à un plugin qui a été supprimé.',
 
 	'entity:delete:success' => 'L\'entité %s a été effacée',
 	'entity:delete:fail' => 'L\'entité %s n\'a pas pu être effacée',
+	
+	'entity:can_delete:invaliduser' => 'Impossible de regarder si l\'utilisateur [%s] peut être supprimé car il n\'existe pas.',
 
 /**
  * Action gatekeeper

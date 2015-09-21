@@ -40,11 +40,11 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:check:php:register_globals' => 'Register globals -asetus täytyy olla pois päältä.',
 	'install:check:php:session.auto_start' => "session.auto_start -asetus täytyy olla pois päältä. Muuta se palvelimesi asetustiedostoon tai lisää se Elggin .htaccess-tiedostoon.",
 
-	'install:check:enginedir' => 'Web-palvelimellasi ei ole oikeuksia luoda settings.php-tiedostoa Elggin engine-hakemistoon. Sinulla on kaksi vaihtoehtoa:
+	'install:check:installdir' => 'Web-palvelimellasi ei ole oikeuksia luoda settings.php-tiedostoa Elggin asennushakemistoon. Sinulla on kaksi vaihtoehtoa:
 
-		1. Muuta engine-hakemiston oikeudet
+⇥⇥1. Muuta asennushakemiston tiedosto-oikeudet
 
-		2. Kopioi tiedosto settings.example.php, nimeä se settings.php ja syötä siihen tietokannan tiedot ohjeiden mukaisesti.',
+⇥⇥2. Kopioi tiedosto engine/settings.example.php asennushakemistoon, nimeä se muotoon /settings.php ja syötä tietokannan asetukset tiedostosta löytyvien ohjeiden mukaisesti.',
 	'install:check:readsettings' => 'Elggin engine-hakemistossa on asetustiedosto, mutta web-palvelin ei voi lukea sitä. Voit joko poistaa tiedoston tai antaa web-palvelimelle oikeuden lukea se.',
 
 	'install:check:php:success' => "Palvelimesi PHP vastaa kaikkia Elggin tarpeita.",

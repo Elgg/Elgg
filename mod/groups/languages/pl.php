@@ -53,11 +53,11 @@ return array(
 	'groups:widget:group_activity:content:noselect' => 'Edytuj ustawienia gadżetu aby wybrać grupę',
 
 	'groups:noaccess' => 'Brak dostępu do grupy',
-	'groups:permissions:error' => 'Nie masz do tego uprawnień',
 	'groups:ingroup' => 'w grupie',
 	'groups:cantcreate' => 'Nie możesz utworzyć grupy. Tylko administrator ma taką możliwość.',
 	'groups:cantedit' => 'Nie można edytować tej grupy',
 	'groups:saved' => 'Grupa zapisana',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Promowane grupy',
 	'groups:makeunfeatured' => 'Przestań promować',
 	'groups:makefeatured' => 'Promuj',
@@ -81,29 +81,6 @@ return array(
 	'groups:search_in_group' => "Szukaj w tej grupie",
 	'groups:acl' => "Grupa: %s",
 
-	'discussion:topic:notify:summary' => 'Nowy temat na forum o nazwie %s',
-	'discussion:topic:notify:subject' => 'Nowy temat na forum: %s',
-	'discussion:topic:notify:body' =>
-'%s dodał nowy wątek w grupie %s:
-
-Tytuł: %s
-
-%s
-
-Wyświetl i odpowiedz w wątku:
-%s
-',
-
-	'discussion:reply:notify:summary' => 'Nowa odpowiedź w wątku: %s',
-	'discussion:reply:notify:subject' => 'Nowa odpowiedź w wątku: %s',
-	'discussion:reply:notify:body' =>
-'%s dodał nową odpowiedź w wątku %s na forum w grupie %s:
-
-%s
-
-Wyświetl wpis i napisz odpowiedź:
-%s',
-
 	'groups:activity' => "Aktywność w grupie",
 	'groups:enableactivity' => 'Włącz aktywność w grupie',
 	'groups:activity:none' => "Jak na razie, brak aktywności w tej grupie",
@@ -114,11 +91,6 @@ Wyświetl wpis i napisz odpowiedź:
 	'groups:requests:none' => 'Nie ma obecnie próśb o dołączenie.',
 
 	'groups:invitations:none' => 'Nie ma obecnie zaproszeń.',
-
-	'item:object:groupforumtopic' => "Tematy forum",
-	'item:object:discussion_reply' => "Odpowiedzi",
-
-	'groupforumtopic:new' => "Dodaj wpis na forum",
 
 	'groups:count' => "utworzonych grup",
 	'groups:open' => "otwartych grup",
@@ -145,70 +117,12 @@ Wyświetl wpis i napisz odpowiedź:
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Włącz forum grupy',
 	'groups:lastupdated' => 'Ostatnia aktualizacja %s przez %s',
 	'groups:lastcomment' => 'Ostatni komentarz %s przez %s',
 
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Forum grupy',
-	'discussion:add' => 'Dodaj wątek na forum',
-	'discussion:latest' => 'Ostatnia dyskusja na forum',
-	'discussion:group' => 'Forum grupy',
-	'discussion:none' => 'Brak wpisów na forum',
-	'discussion:reply:title' => 'Odpowiedź przez %s',
-
-	'discussion:topic:created' => 'Wątek na forum utworzony pomyślnie.',
-	'discussion:topic:updated' => 'Wątek na forum zaktualizowany pomyślnie.',
-	'discussion:topic:deleted' => 'Wątek został pomyślnie usunięty z forum.',
-
-	'discussion:topic:notfound' => 'Nie znaleziono wątku na forum',
-	'discussion:error:notsaved' => 'Nie powiódł się zapis wątku na forum ',
-	'discussion:error:missing' => 'Zarówno tytuł jak i treść są polami wymaganymi',
-	'discussion:error:permissions' => 'Nie masz uprawnień do wykonania tej akcji',
-	'discussion:error:notdeleted' => 'Nie można usunąć wątku z forum',
-
-	'discussion:reply:edit' => 'Edytuj odpowiedź',
-	'discussion:reply:deleted' => 'Pomyślnie usunięto odpowiedź z forum.',
-	'discussion:reply:error:notfound' => 'Nie znaleziono wskazanej odpowiedzi na forum',
-	'discussion:reply:error:notfound_fallback' => "Przykro nam, nie znaleźliśmy wskazanej odpowiedzi, pomimo, że przesłaliśmy oryginalny wątek dyskusji.",
-	'discussion:reply:error:notdeleted' => 'Usunięcie odpowiedzi z forum nie powiodło się',
-
-	'discussion:search:title' => 'Odpowiedź na temat: %s',
-	
 	'admin:groups' => 'Grupy',
 
-	'reply:this' => 'Napisz odpowiedź',
-
-	'group:replies' => 'Odpowiedzi',
-	'groups:forum:created' => 'Utworzono %s z %d komentarzami',
-	'groups:forum:created:single' => 'Utworzono %s z %d odpowiedzią',
-	'groups:forum' => 'Forum grupy',
-	'groups:addtopic' => 'Dodaj temat',
-	'groups:forumlatest' => 'Ostatnie forum',
 	'groups:latestdiscussion' => 'Ostatnia dyskusja',
-	'groupspost:success' => 'Twój komentarz został pomyślnie dodany',
-	'groupspost:failure' => 'Wystąpił problem w trakcie zamieszczania twojej odpowiedzi',
-	'groups:alldiscussion' => 'Ostatnie dyskusje',
-	'groups:edittopic' => 'Edytuj temat',
-	'groups:topicmessage' => 'Temat wiadomości',
-	'groups:topicstatus' => 'Status tematu',
-	'groups:reply' => 'Dodaj odpowiedź',
-	'groups:topic' => 'Temat',
-	'groups:posts' => 'Posty',
-	'groups:lastperson' => 'Ostatnia osoba',
-	'groups:when' => 'Kiedy',
-	'grouptopic:notcreated' => 'Temat nie został utworzony.',
-	'groups:topicclosed' => 'Zamknięty',
-	'grouptopic:created' => 'Twój temat został utworzony.',
-	'groups:topicsticky' => 'Przyklejony',
-	'groups:topicisclosed' => 'Ten temat jest zamknięty.',
-	'groups:topiccloseddesc' => 'Ten temat został już zamknięty.',
-	'grouptopic:error' => 'Twój temat nie został utworzony. Spróbuj ponownie lub skontaktuj się z administratorem. ',
-	'groups:forumpost:edited' => "Edycja wpisu na forum przebiegła pomyślnie.",
-	'groups:forumpost:error' => "Nie powiodła się edycja wpisu na forum.",
-
 	'groups:privategroup' => 'Ta grupa jest zamknięta, wysłaliśmy prośbę o członkostwo.',
 	'groups:notitle' => 'Grupy muszą mieć tytuł',
 	'groups:cantjoin' => 'Nie możesz dołączyć do grupy',
@@ -228,7 +142,6 @@ Wyświetl wpis i napisz odpowiedź:
 	'groups:usernotinvited' => 'Użytkownik nie został zaproszony.',
 	'groups:useralreadyinvited' => 'Użytkownik już został zaproszony',
 	'groups:invite:subject' => "%s zostałeś zaproszony do %s!",
-	'groups:updated' => "Ostatnia odpowiedź przez %s %s",
 	'groups:started' => "Rozpoczął %s",
 	'groups:joinrequest:remove:check' => 'Czy na pewno chcesz usunąć tą prośbę o członkostwo?',
 	'groups:invite:remove:check' => 'Czy na pewno chcesz usunąć to zaproszenie?',
@@ -262,9 +175,6 @@ lub kliknij poniżej aby potwierdzić prośbę:
 
 	'river:create:group:default' => '%s utworzył grupę %s',
 	'river:join:group:default' => '%s dołączył do grupy %s',
-	'river:create:object:groupforumtopic' => '%s dodał nowy wątek na forum grupy %s',
-	'river:reply:object:groupforumtopic' => '%s napisał odpowiedź w wątku na forum grupy %s',
-	'river:reply:view' => 'zobacz odpowiedź',
 
 	'groups:nowidgets' => 'Żaden gadżet nie został zdefiniowany dla tej grupy.',
 
@@ -279,8 +189,6 @@ lub kliknij poniżej aby potwierdzić prośbę:
 	'groups:widgets:entities:label:displaynum' => 'Lista obiektów w grupie.',
 	'groups:widgets:entities:label:pleaseedit' => 'Proszę skonfigurować ten gadżet.',
 
-	'groups:forumtopic:edited' => 'Temat forum został oprawiony.',
-
 	'groups:allowhiddengroups' => 'Czy zezwolić na prywatne (niewidoczne) grupy?',
 	'groups:whocancreate' => 'Kto może utworzyć nową grupę?',
 
@@ -291,13 +199,6 @@ lub kliknij poniżej aby potwierdzić prośbę:
 	'group:notdeleted' => 'Nie powiodło się usunięcie grupy',
 
 	'group:notfound' => 'Nie można znaleźć grupy',
-	'grouppost:deleted' => 'Pomyślnie usunięto wpis z forum grupy',
-	'grouppost:notdeleted' => 'Nie powiodło się usunięcie wpisu z forum grupy',
-	'groupstopic:deleted' => 'Temat skasowany',
-	'groupstopic:notdeleted' => 'Nie powiodło się usunięcie wątku',
-	'grouptopic:blank' => 'Brak wątku',
-	'grouptopic:notfound' => 'Nie można znaleźć wątku',
-	'grouppost:nopost' => 'Pusty wpis',
 	'groups:deletewarning' => "Czy na pewno chcesz usunąć tą grupę? Tej operacji nie można cofnąć!",
 
 	'groups:invitekilled' => 'Usunięto zaproszenie.',
@@ -308,6 +209,5 @@ lub kliknij poniżej aby potwierdzić prośbę:
 	/**
 	 * ecml
 	 */
-	'groups:ecml:discussion' => 'Forum grupy',
 	'groups:ecml:groupprofile' => 'Profile grupy',
 );
