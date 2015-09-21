@@ -1,27 +1,28 @@
+//<script>
 
 elgg.provide('elgg.uservalidationbyemail');
 
 elgg.uservalidationbyemail.init = function() {
 	$('#uservalidationbyemail-checkall').click(function() {
-		var checked = $(this).attr('checked') == 'checked';
-		$('#uservalidationbyemail-form .elgg-body').find('input[type=checkbox]').attr('checked', checked);
+		$('#uservalidationbyemail-form .elgg-body').find('input[type=checkbox]').prop('checked', this.checked);
 	});
 
 	$('.uservalidationbyemail-submit').click(function(event) {
-		var $form = $('#uservalidationbyemail-form');
+		var form = $('#uservalidationbyemail-form')[0];
 		event.preventDefault();
 
 		// check if there are selected users
-		if ($('#uservalidationbyemail-form .elgg-body').find('input[type=checkbox]:checked').length < 1) {
+		if ($('.elgg-body', form).find('input[type=checkbox]:checked').length < 1) {
 			return false;
 		}
 
 		// confirmation
-		if (!confirm($(this).attr('title'))) {
+		if (!confirm(this.title)) {
 			return false;
 		}
 
-		$form.attr('action', $(this).attr('href')).submit();
+		form.action = this.href;
+		form.submit();
 	});
 };
 
