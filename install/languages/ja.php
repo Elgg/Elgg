@@ -40,11 +40,11 @@ return array(
 	'install:check:php:register_globals' => 'register globals は off にしてください。',
 	'install:check:php:session.auto_start' => "Elggがうまく動くには、ession.auto_start はoffにしなければいけません。あなたのサーバの設定を変更するか、Elggの「.htaccess」ファイルにこの宣言を加えてください。",
 
-	'install:check:enginedir' => 'あなたのwebサーバは、「engine」ディレクトリに「settings.php」を作成できません。解決する方法が２つあります：
+	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. 「engine」ディレクトリのパーミッションを変更する
+		1. Change the permissions on the root directory of your Elgg installation
 
-		2. 「settings.example.php」ファイルを「settings.php」にコピーします。あなたのデータベースの設定に合わせるため、そのファイルの中に書かれている方法に従ってください。',
+		2. Copy the file engine/settings.example.php to /settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => '設定ファイルはengineディレクトリにあるのですが、Webサーバがそのファイル読むことができませんでした。ファイルを削除するか、ファイルのパーミションを読み込み許可に変更してください。',
 
 	'install:check:php:success' => "あなたのサーバのPHPはElggの全ての必要女権を満たしています。",

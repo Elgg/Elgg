@@ -53,11 +53,11 @@ return array(
 	'groups:widget:group_activity:content:noselect' => 'Wijzig deze widget om een groep te selecteren',
 
 	'groups:noaccess' => 'Geen toegang tot de groep',
-	'groups:permissions:error' => 'Je hebt hier geen toegang toe',
 	'groups:ingroup' => 'in de groep',
 	'groups:cantcreate' => 'Alleen sitebeheerders mogen nieuwe groepen aanmaken.',
 	'groups:cantedit' => 'Je kunt deze groep niet bewerken',
 	'groups:saved' => 'Groep opgeslagen',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Aangeraden groepen',
 	'groups:makeunfeatured' => 'Afraden',
 	'groups:makefeatured' => 'Aanraden',
@@ -81,41 +81,6 @@ return array(
 	'groups:search_in_group' => "Zoek in deze groep",
 	'groups:acl' => "Groep: %s",
 
-	'discussion:topic:notify:summary' => 'Nieuw discussieonderwerp met de titel \'%s\'',
-	'discussion:topic:notify:subject' => 'Nieuw discussieonderwerp: %s',
-	'discussion:topic:notify:body' =>
-'Hallo!
-
-%s heeft een nieuw discussie-onderwerp in %s gepost.
-
-%s
-%s
-
-Je kunt het onderwerp hier lezen en erop reageren:
-%s
-
------
-
-Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
-',
-
-	'discussion:reply:notify:summary' => 'Nieuwe reactie in onderwerp \'%s\'',
-	'discussion:reply:notify:subject' => 'Nieuwe reactie in onderwerp \'%s\'',
-	'discussion:reply:notify:body' =>
-'Hallo!
-
-%s reageerde op het forumonderwerp %s in de groep %s: 
-
-%s
-
-Je kunt het forumonderwerp hier bekijken en erop reageren:
-%s
-
----
-
-Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
-',
-
 	'groups:activity' => "Groepsactiviteit",
 	'groups:enableactivity' => 'Schakel groepsactiviteit in',
 	'groups:activity:none' => "Er is nog geen groepsactiviteit",
@@ -126,11 +91,6 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
 	'groups:requests:none' => 'Er zijn  op dit moment <strong>geen</strong> openstaande lidmaatschapsaanvragen.',
 
 	'groups:invitations:none' => 'Er zijn op dit moment <strong>geen</strong> openstaande uitnodigingen.',
-
-	'item:object:groupforumtopic' => "Forumonderwerpen",
-	'item:object:discussion_reply' => "Reacties op discussie",
-
-	'groupforumtopic:new' => "Nieuw forumbericht",
 
 	'groups:count' => "groepen aangemaakt",
 	'groups:open' => "open groep",
@@ -157,70 +117,12 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Activeer groepsforum',
 	'groups:lastupdated' => 'Laatst bijgewerkt: %s door %s',
 	'groups:lastcomment' => 'Laatste reactie: %s door %s',
 
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Discussie',
-	'discussion:add' => 'Nieuw discussieonderwerp',
-	'discussion:latest' => 'Laatste discussie',
-	'discussion:group' => 'Groepsdiscussies',
-	'discussion:none' => 'Geen discussies',
-	'discussion:reply:title' => 'Reactie door %s',
-
-	'discussion:topic:created' => 'Het discussieonderwerp is aangemaakt.',
-	'discussion:topic:updated' => 'Het discussieonderwerp is bijgewerkt.',
-	'discussion:topic:deleted' => 'Het discussieonderwerp is verwijderd.',
-
-	'discussion:topic:notfound' => 'Het discussieonderwerp kan niet gevonden worden',
-	'discussion:error:notsaved' => 'Fout tijdens het opslaan van dit onderwerp',
-	'discussion:error:missing' => 'Zowel titel als bericht zijn verplichte velden',
-	'discussion:error:permissions' => 'Je hebt onvoldoende rechten om deze actie uit te mogen voeren',
-	'discussion:error:notdeleted' => 'Het discussieonderwerp kon niet worden verwijderd',
-
-	'discussion:reply:edit' => 'Bewerk reactie',
-	'discussion:reply:deleted' => 'Reactie op de discussie is verwijderd.',
-	'discussion:reply:error:notfound' => 'Reactie op discussie kon niet gevonden worden',
-	'discussion:reply:error:notfound_fallback' => "Helaas, we kunnen de specifieke reactie niet terug vinden, maar we hebben je doorgestuurd naar de originele discussie.",
-	'discussion:reply:error:notdeleted' => 'De reactie op de discussie kon niet worden verwijderd',
-
-	'discussion:search:title' => 'Reactie op onderwerp: %s',
-	
 	'admin:groups' => 'Groepen',
 
-	'reply:this' => 'Reageer hierop',
-
-	'group:replies' => 'Reacties',
-	'groups:forum:created' => '%s is aangemaakt. Er zijn %d reacties.',
-	'groups:forum:created:single' => '%s is aangemaakt. Er zijn %d reacties.',
-	'groups:forum' => 'Groepsforum',
-	'groups:addtopic' => 'Nieuw onderwerp',
-	'groups:forumlatest' => 'Laatste discussie',
 	'groups:latestdiscussion' => 'Laatste discussie',
-	'groupspost:success' => 'Je reactie is succesvol geplaatst',
-	'groupspost:failure' => 'Er was een probleem bij het toevoegen van je reactie',
-	'groups:alldiscussion' => 'Laatste discussie',
-	'groups:edittopic' => 'Bewerk onderwerp',
-	'groups:topicmessage' => 'Onderwerp van je bericht',
-	'groups:topicstatus' => 'Onderwerpstatus',
-	'groups:reply' => 'Plaats een reactie',
-	'groups:topic' => 'Onderwerp',
-	'groups:posts' => 'reacties',
-	'groups:lastperson' => 'Laaste persoon',
-	'groups:when' => 'Wanneer',
-	'grouptopic:notcreated' => 'Er zijn nog geen onderwerpen aangemaakt.',
-	'groups:topicclosed' => 'Gesloten',
-	'grouptopic:created' => 'Je onderwerp is aangemaakt.',
-	'groups:topicsticky' => 'Sticky (blijft altijd bovenaan staan)',
-	'groups:topicisclosed' => 'Dit onderwerp is gesloten.',
-	'groups:topiccloseddesc' => 'Dit onderwerp is nu gesloten. Er kunnen geen reacties meer geplaatst worden.',
-	'grouptopic:error' => 'Je groepsonderwerp kon niet worden aangemaakt. Probeer het nogmaals of neem contact op met de sitebeheerder.',
-	'groups:forumpost:edited' => "Je hebt het forumbericht succesvol bewerkt.",
-	'groups:forumpost:error' => "Er was een probleem tijdens het bewerken van het forumbericht.",
-
 	'groups:privategroup' => 'Deze groep is besloten. Lidmaatschap wordt aangevraagd.',
 	'groups:notitle' => 'Groepen moeten een titel hebben',
 	'groups:cantjoin' => 'Kan niet lid worden van de groep',
@@ -240,7 +142,6 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.
 	'groups:usernotinvited' => 'Gebruiker kon niet worden uitgenodigd.',
 	'groups:useralreadyinvited' => 'Gebruiker is al uitgenodigd',
 	'groups:invite:subject' => "%s je bent uitgenodigd om lid te worden van %s!",
-	'groups:updated' => "Laatste reactie door %s: '%s'",
 	'groups:started' => "Gestart door %s",
 	'groups:joinrequest:remove:check' => 'Weet je zeker dat je dit lidmaatschapsverzoek wilt verwijderen?',
 	'groups:invite:remove:check' => 'Weet je zeker dat je deze uitnodiging wilt verwijderen?',
@@ -289,9 +190,6 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.",
 
 	'river:create:group:default' => '%s heeft de groep \'%s\' gemaakt',
 	'river:join:group:default' => '%s is lid geworden van de groep \'%s\'',
-	'river:create:object:groupforumtopic' => '%s begon een nieuwe discussie:  \'%s\'',
-	'river:reply:object:groupforumtopic' => '%s reageerde op de discussie \'%s\'',
-	'river:reply:view' => 'Lees de reactie',
 
 	'groups:nowidgets' => 'Er zijn geen widgets gedefinieerd voor deze groep.',
 
@@ -306,8 +204,6 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.",
 	'groups:widgets:entities:label:displaynum' => 'Toon de objecten van een groep.',
 	'groups:widgets:entities:label:pleaseedit' => 'Stel deze widget in.',
 
-	'groups:forumtopic:edited' => 'Forumonderwerp succesvol bewerkt.',
-
 	'groups:allowhiddengroups' => 'Wil je privégroepen toestaan? Deze zijn onzichtbaar voor wie er geen toegang toe heeft.',
 	'groups:whocancreate' => 'Wie mag of mogen nieuwe groepen aanmaken?',
 
@@ -318,13 +214,6 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.",
 	'group:notdeleted' => 'Groep kon niet worden verwijderd',
 
 	'group:notfound' => 'Kon de groep  niet vinden',
-	'grouppost:deleted' => 'Groepsbericht succesvol verwijderd',
-	'grouppost:notdeleted' => 'Groepsbericht kon niet worden verwijderd',
-	'groupstopic:deleted' => 'Onderwerp verwijderd',
-	'groupstopic:notdeleted' => 'Onderwerp niet verwijderd',
-	'grouptopic:blank' => 'Geen onderwerp',
-	'grouptopic:notfound' => 'Het onderwerp kon niet gevonden worden',
-	'grouppost:nopost' => 'Lege post',
 	'groups:deletewarning' => "Weet je zeker dat je deze groep wilt verwijderen? Dit kan niet ongedaan worden gemaakt!",
 
 	'groups:invitekilled' => 'De uitnodiging is verwijderd',
@@ -335,6 +224,5 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op antwoorden.",
 	/**
 	 * ecml
 	 */
-	'groups:ecml:discussion' => 'Groepsdiscussies',
 	'groups:ecml:groupprofile' => 'Groepsprofielen',
 );

@@ -40,11 +40,11 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 	'install:check:php:register_globals' => '<b>Register globals</b> deve ser desligado.',
 	'install:check:php:session.auto_start' => "<b>session.auto_start</b> deve estar desligado para o Elgg executar. Senão <i>(Either)</i> altere a configuracao do seu servidor e adicione esta diretiva no arquivo <b>.htaccess</b> do Elgg.",
 
-	'install:check:enginedir' => 'Seu servidor web nao possui permissao para criar o arquivo <b>settings.php</b> no diretorio <b>engine</b>. Voce tem duas opcoes:
+	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. Altere as permissoes do diretorio <b>engine</b>
+		1. Change the permissions on the root directory of your Elgg installation
 
-		2. Copie o arquivo <b>settings.example.php</b> para <b>settings.php</b> e siga as instruções dele para configurar os parametros do banco de dados.',
+		2. Copy the file engine/settings.example.php to /settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'Um arquivo de configuração existe no diretorio <b>engine</b>, mas o servidor web nao pode executar a leitura. Voce pode apagar o arquivo ou alterar as permissoes de leitura dele.',
 
 	'install:check:php:success' => "Seu servidor de PHP satisfaz todas as necessidades do Elgg.",

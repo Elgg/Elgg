@@ -53,11 +53,11 @@ return array(
 	'groups:widget:group_activity:content:noselect' => 'Editar este widget para seleccionar un grupo',
 
 	'groups:noaccess' => 'No hay acceso al grupo',
-	'groups:permissions:error' => 'No tienes permisos para esto',
 	'groups:ingroup' => 'en el grupo',
 	'groups:cantcreate' => 'No se puede crear un grupo. Sólo los administradores pueden.',
 	'groups:cantedit' => 'No puedes editar este grupo',
 	'groups:saved' => 'Grupo guardado',
+	'groups:save_error' => 'El grupo no se ha podido guardar',
 	'groups:featured' => 'Grupos destacados',
 	'groups:makeunfeatured' => 'No destacar',
 	'groups:makefeatured' => 'Destacar',
@@ -81,30 +81,6 @@ return array(
 	'groups:search_in_group' => "Buscar en este grupo",
 	'groups:acl' => "Group: '%s'",
 
-	'discussion:topic:notify:summary' => 'Nuevo tema de discusión llamado %s',
-	'discussion:topic:notify:subject' => 'Nuevo tema de discusión: %s',
-	'discussion:topic:notify:body' =>
-'%s ha agregado un nuevo tema al grupo %s:
-
-Título: %s
-
-%s
-
-Ver y responder:
-%s
-',
-
-	'discussion:reply:notify:summary' => 'Nueva respuesta en tema: %s',
-	'discussion:reply:notify:subject' => 'Nueva respuesta en tema: %s',
-	'discussion:reply:notify:body' =>
-'%s ha respondido al tema %s en el grupo %s:
-
-%s
-
-Ver y comentar:
-%s
-',
-
 	'groups:activity' => "Actividad del grupo",
 	'groups:enableactivity' => 'Habilitar las actividades del grupo',
 	'groups:activity:none' => "El grupo no ha tenido actividades a&uacute;n",
@@ -115,11 +91,6 @@ Ver y comentar:
 	'groups:requests:none' => 'No hay solicitudes de membres&iacute;a.',
 
 	'groups:invitations:none' => 'Actualmente no hay invitaciones.',
-
-	'item:object:groupforumtopic' => "Temas de discusi&oacute;n",
-	'item:object:discussion_reply' => "Respuestas de la discusión",
-
-	'groupforumtopic:new' => "A&ntilde;adir un tema de discusi&oacute;n",
 
 	'groups:count' => "Grupos creados",
 	'groups:open' => "grupo abierto",
@@ -146,70 +117,12 @@ Ver y comentar:
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Habilitar discusi&oacute;n de los grupos',
 	'groups:lastupdated' => '&Uacute;ltimas actualizaciones de %s por %s',
 	'groups:lastcomment' => '&Uacute;ltimos de %s por %s',
 
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Discusi&oacute;n',
-	'discussion:add' => 'Agregar tema de discusi&oacute;n',
-	'discussion:latest' => '&Uacute;ltimas discusiones',
-	'discussion:group' => 'Discusiones de grupo',
-	'discussion:none' => 'No hay discusiones',
-	'discussion:reply:title' => 'Respuesta de %s',
-
-	'discussion:topic:created' => 'El tema de discusi&oacute;n ha sido creado.',
-	'discussion:topic:updated' => 'El tema de discusi&oacute;n ha sido actualizado.',
-	'discussion:topic:deleted' => 'El tema de discusi&oacute;n ha sido borrado.',
-
-	'discussion:topic:notfound' => 'No se ha encontrado el tema de discusi&oacute;n. solicitado',
-	'discussion:error:notsaved' => 'No se puede guardar el tema de discusi&oacute;n',
-	'discussion:error:missing' => 'El t&iacute;tulo y el cuerpo del mensaje son obligatorios',
-	'discussion:error:permissions' => 'No tienes permiso para hacer eso',
-	'discussion:error:notdeleted' => 'No se pudo borrar el tema de discusi&oacute;n',
-
-	'discussion:reply:edit' => 'Editar respuesta',
-	'discussion:reply:deleted' => 'La respuesta ha sido borrada.',
-	'discussion:reply:error:notfound' => 'La respuesta de la discusión no fue encontrada',
-	'discussion:reply:error:notfound_fallback' => "Lo sentimos. No hemos podido encontrar la respuesta que buscas, pero te hemos redirigido al tema de discusión original.",
-	'discussion:reply:error:notdeleted' => 'No se pudo borrar la respuesta',
-
-	'discussion:search:title' => 'Responder en tema: %s',
-	
 	'admin:groups' => 'Grupos',
 
-	'reply:this' => 'Responder a esto',
-
-	'group:replies' => 'Respuestas',
-	'groups:forum:created' => 'Creado %s con %d comentarios',
-	'groups:forum:created:single' => 'creado %s con %d respuestas',
-	'groups:forum' => 'Discusi&oacute;n',
-	'groups:addtopic' => 'Agregar un tema',
-	'groups:forumlatest' => '&Uacute;ltima discusi&oacute;n',
 	'groups:latestdiscussion' => '&Uacute;ltimas discusiones',
-	'groupspost:success' => 'Tu respuesta ha sido publicada',
-	'groupspost:failure' => 'Hubo un problema al publicar tu respuesta',
-	'groups:alldiscussion' => 'Discusi&oacute;n más reciente',
-	'groups:edittopic' => 'Editar tema',
-	'groups:topicmessage' => 'Mensaje del tema',
-	'groups:topicstatus' => 'Estado del tema',
-	'groups:reply' => 'Publicar un comentario',
-	'groups:topic' => 'Tema',
-	'groups:posts' => 'Publicaciones',
-	'groups:lastperson' => '&Uacute;ltimo usuario',
-	'groups:when' => 'Cuando',
-	'grouptopic:notcreated' => 'No hay temas creados.',
-	'groups:topicclosed' => 'Cerrado',
-	'grouptopic:created' => 'Tu tema ha sido creado.',
-	'groups:topicsticky' => 'Sticky',
-	'groups:topicisclosed' => 'Esta discusi&oacute;n est&aacute; cerrada.',
-	'groups:topiccloseddesc' => 'Este tema est&aacute; cerrado y no acepta nuevas respuestas.',
-	'grouptopic:error' => 'El grupo no pudo ser creado. Por favor intenta de nuevo o contacta con el administrador.',
-	'groups:forumpost:edited' => "Has editado la entrada exitosamente.",
-	'groups:forumpost:error' => "Hubo un problema al editar la entrada.",
-
 	'groups:privategroup' => 'Este es un grupo cerrado. Debes solicitar membresía.',
 	'groups:notitle' => 'El grupo debe tener un t&iacute;tulo',
 	'groups:cantjoin' => 'No se puede unir al grupo',
@@ -229,7 +142,6 @@ Ver y comentar:
 	'groups:usernotinvited' => 'El usuario no pudo ser invitado.',
 	'groups:useralreadyinvited' => 'El usuario ya ha sido invitado',
 	'groups:invite:subject' => "%s te ha invitado al grupo %s",
-	'groups:updated' => "&Uacute;ltima respuesta en %s de %s",
 	'groups:started' => "Iniciado por %s",
 	'groups:joinrequest:remove:check' => '&iquest;Seguro que deseas cancelar la solicitud de membres&iacute;a?',
 	'groups:invite:remove:check' => '&iquest;Seguro que deseas anular esta invitaci&oacute;n?',
@@ -263,9 +175,6 @@ O click a continuaci&oacute;n para ver las solicitudes de membres&iacute;a del g
 
 	'river:create:group:default' => '%s ha creado el grupo %s',
 	'river:join:group:default' => '%s se ha unido al grupo %s',
-	'river:create:object:groupforumtopic' => '%s abri&oacute; el tema %s',
-	'river:reply:object:groupforumtopic' => '%s ha respondido en el tema %s',
-	'river:reply:view' => 'Ver la respuesta',
 
 	'groups:nowidgets' => 'No se han definido widgets para el grupo.',
 
@@ -280,8 +189,6 @@ O click a continuaci&oacute;n para ver las solicitudes de membres&iacute;a del g
 	'groups:widgets:entities:label:displaynum' => 'Lista de objetos de este grupo.',
 	'groups:widgets:entities:label:pleaseedit' => 'Por favor configura este widget.',
 
-	'groups:forumtopic:edited' => 'Tema de discusi&oacute;n guaddado con &eacute;xito.',
-
 	'groups:allowhiddengroups' => '&iquest;Desea habilitar los grupos provados?',
 	'groups:whocancreate' => '¿Quién puede editar este grupo?',
 
@@ -292,13 +199,6 @@ O click a continuaci&oacute;n para ver las solicitudes de membres&iacute;a del g
 	'group:notdeleted' => 'El grupo no pudo ser borrado',
 
 	'group:notfound' => 'No se pudo encontrar el Grupo',
-	'grouppost:deleted' => 'Publicaci&oacute;n del grupo borrada con &eacute;xito',
-	'grouppost:notdeleted' => 'La publicaci&oacute;n del grupo no se pudoborrar',
-	'groupstopic:deleted' => 'Tema eliminado',
-	'groupstopic:notdeleted' => 'No se pudo borrar el tema',
-	'grouptopic:blank' => 'No hay temas',
-	'grouptopic:notfound' => 'No se ha podido encontrar el tema solicitado',
-	'grouppost:nopost' => 'Entrada vacía',
 	'groups:deletewarning' => "&iquest;Seguro que deseas borrar este grupo? No se puede deshacer",
 
 	'groups:invitekilled' => 'El invitado ha sido eliminado.',
@@ -309,6 +209,5 @@ O click a continuaci&oacute;n para ver las solicitudes de membres&iacute;a del g
 	/**
 	 * ecml
 	 */
-	'groups:ecml:discussion' => 'Discusi&oacute;n de los grupos',
 	'groups:ecml:groupprofile' => 'Perfiles de los grupos',
 );

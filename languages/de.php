@@ -41,6 +41,7 @@ return array(
 	'actionunauthorized' => 'Du bist nicht authorisiert, diese Aktion auszuführen',
 	
 	'ajax:error' => 'Bei der Durchführung des AJAX-Aufrufs ist ein Fehler aufgetreten. Vielleicht ist die Verbindung zum Server verloren gegangen.',
+	'ajax:not_is_xhr' => 'Ein direkter Aufruf von Ajax-Views ist nicht erlaubt.',
 
 	'PluginException:MisconfiguredPlugin' => "%s (GUID: %s) ist ein falsch konfiguriertes Plugin. Es wurde deaktiviert. Im Elgg-Wiki sind einige mögliche Ursachen für das Problem beschrieben (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (GUID: %s) kann nicht gestartet werden und wurde deaktiviert. Ursache: %s.',
@@ -112,6 +113,10 @@ return array(
 
 	'error:default:title' => 'Hoppla...',
 	'error:default:content' => 'Hoppla...irgendetwas ist schiefgegangen.',
+	'error:400:title' => 'Ungültige Anfrage.',
+	'error:400:content' => 'Entschuldigung. Die Anfrage ist ungültig oder unvollständig.',
+	'error:403:title' => 'Unzureichende Zugriffsberechtigung',
+	'error:403:content' => 'Entschuldigung. Du hast keine Zugriffsberechtigung für die angeforderte Seite.',
 	'error:404:title' => 'Seite nicht gefunden',
 	'error:404:content' => 'Entschuldigung. Die gewünschte Seite konnte nicht gefunden werden.',
 
@@ -600,11 +605,17 @@ return array(
 	'admin:plugins:description' => "Hier kannst Du die auf Deiner Community-Seite installierten Tools (Plugins) verwalten und hast Zugriff auf die von ihnen angebotenen Konfigurationsoptionen.",
 	'admin:plugins:opt:linktext' => "Tools konfigurieren...",
 	'admin:plugins:opt:description' => "Konfigurieren der installierten Tools der Community-Seite.",
+	'admin:plugins:label:id' => "ID",
+	'admin:plugins:label:name' => "Name",
 	'admin:plugins:label:author' => "Author",
 	'admin:plugins:label:copyright' => "Copyright",
 	'admin:plugins:label:categories' => 'Kategorien',
 	'admin:plugins:label:licence' => "Lizenz",
 	'admin:plugins:label:website' => "URL",
+	'admin:plugins:label:info' => "Info",
+	'admin:plugins:label:files' => "Dateien",
+	'admin:plugins:label:resources' => "Ressourcen",
+	'admin:plugins:label:screenshots' => " Bildschirmphotos",
 	'admin:plugins:label:repository' => "Code",
 	'admin:plugins:label:bugtracker' => "Problem melden",
 	'admin:plugins:label:donate' => "Spenden",
@@ -619,7 +630,6 @@ return array(
 	'admin:plugins:label:contributors:description' => 'Beschreibung',
 	'admin:plugins:label:dependencies' => 'Abhängigkeiten',
 
-	'admin:plugins:warning:elgg_version_unknown' => 'Dieses Plugin verwendet eine veraltete Manifest-Datei und es gibt keine Informationen bezüglich den kompatiblen Elgg-Versionen. Es wird wahrscheinlich nicht funktionieren!',
 	'admin:plugins:warning:unmet_dependencies' => 'Dieses Plugin hat unerfüllte Abhängigkeiten und kann deshalb nicht aktiviert werden. Prüfe die Abhängigkeiten für weitere Informationen.',
 	'admin:plugins:warning:invalid' => 'Dieses Plugin ist nicht standardkonform: %s.',
 	'admin:plugins:warning:invalid:check_docs' => 'Bitte schau in der <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">Elgg-Dokumentation</a> nach, um weitere Hinweise zur Problemlösung zu erhalten.',
@@ -712,6 +722,7 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'admin:robots.txt:instructions' => "Bearbeite im Folgenden die robots.txt-Datei dieser Seite:",
 	'admin:robots.txt:plugins' => "Plugins fügen das Folgende zur robots.txt-Datei hinzu:",
 	'admin:robots.txt:subdir' => "Die robots.txt-Datei für diese Community-Seite kann nicht bearbeitet werden, da Elgg in einem Unterverzeichnis installiert ist.",
+	'admin:robots.txt:physical' => "Die Konfiguration des Inhalts der robots.txt-Datei ist nicht möglich, da auf dem Server bereits eine robots.txt-Datei vorhanden ist.",
 
 	'admin:maintenance_mode:default_message' => 'Diese Community-Seite ist aufgrund von Wartungsarbeiten derzeit nicht verfügbar.',
 	'admin:maintenance_mode:instructions' => 'Der Wartungs-Modus sollte während einer Aktualisierung der Community-Seite oder anderen größeren Änderungen an der Seite aktiviert werden.
@@ -1001,18 +1012,31 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'friendlytime:future:days' => "in %s Tagen",
 	'friendlytime:future:days:singular' => "morgen",
 
-	'date:month:01' => '%s Januar',
-	'date:month:02' => '%s Februar',
-	'date:month:03' => '%s März',
-	'date:month:04' => '%s April',
-	'date:month:05' => '%s Mai',
-	'date:month:06' => '%s Juni',
-	'date:month:07' => '%s Juli',
-	'date:month:08' => '%s August',
-	'date:month:09' => '%s September',
-	'date:month:10' => '%s Oktober',
-	'date:month:11' => '%s November',
-	'date:month:12' => '%s Dezember',
+	'date:month:01' => 'Januar %s',
+	'date:month:02' => 'Februar %s',
+	'date:month:03' => 'März %s',
+	'date:month:04' => 'April %s',
+	'date:month:05' => 'Mai %s',
+	'date:month:06' => 'Juni %s',
+	'date:month:07' => 'Juli %s',
+	'date:month:08' => 'August %s',
+	'date:month:09' => 'September %s',
+	'date:month:10' => 'Oktober %s',
+	'date:month:11' => 'November %s',
+	'date:month:12' => 'Dezember %s',
+	
+	'date:month:short:01' => 'Jan %s',
+	'date:month:short:02' => 'Feb %s',
+	'date:month:short:03' => 'Mrz %s',
+	'date:month:short:04' => 'Apr %s',
+	'date:month:short:05' => 'Mai %s',
+	'date:month:short:06' => 'Jun %s',
+	'date:month:short:07' => 'Jul %s',
+	'date:month:short:08' => 'Aug %s',
+	'date:month:short:09' => 'Sep %s',
+	'date:month:short:10' => 'Okt %s',
+	'date:month:short:11' => 'Nov %s',
+	'date:month:short:12' => 'Dez %s',
 
 	'date:weekday:0' => 'Sonntag',
 	'date:weekday:1' => 'Montag',
@@ -1021,6 +1045,14 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'date:weekday:4' => 'Donnerstag',
 	'date:weekday:5' => 'Freitag',
 	'date:weekday:6' => 'Samstag',
+	
+	'date:weekday:short:0' => 'So',
+	'date:weekday:short:1' => 'Mo',
+	'date:weekday:short:2' => 'Di',
+	'date:weekday:short:3' => 'Mi',
+	'date:weekday:short:4' => 'Do',
+	'date:weekday:short:5' => 'Fr',
+	'date:weekday:short:6' => 'Sa',
 	
 	'interval:minute' => 'Jede Minute',
 	'interval:fiveminute' => 'Alle fünf Minuten',
@@ -1059,8 +1091,6 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'installation:walled_garden:description' => 'Aktiviere diese Option, um Nicht-Mitgliedern Deiner Community-Seite den Zugriff auf die Seite zu verwehren mit Ausnahme der Webseiten, die als "public" konfiguriert sind (beispielsweise die Login- und Registrierungsseiten).',
 	'installation:walled_garden:label' => 'Zugriff auf angemeldete Benutzer beschränken',
 
-	'installation:httpslogin' => "Aktivieren, um den Benutzern die Anmeldung via HTTPS zu ermöglichen. Dafür ist es notwendig, dass Dein Server das https-Protokoll unterstützt.",
-	'installation:httpslogin:label' => "HTTPS-Anmeldungen zulassen",
 	'installation:view' => "Gebe den Ansichtsmodus an, der für Deine Community-Seite verwendet werden soll. Wenn Du nicht sicher bist was Du eingeben sollst, lass das Textfeld leer oder verwende \"default\", um den Standardmodus zu verwenden:",
 
 	'installation:siteemail' => "Email-Adresse Deiner Community-Seite (wird vom System verwendet, um Benachrichtigungen zu versenden)",
@@ -1090,7 +1120,6 @@ Nachdem Du Dich angemeldet hast, solltest Du Dein Passwort ändern.
 	'admin:legend:debug' => 'Debuggen und Protokollieren',
 
 	'upgrading' => 'Aktualisieren...',
-	'upgrade:db' => 'Deine Datenbank wurde aktualisiert.',
 	'upgrade:core' => 'Deine Elgg-Installation wurde aktualisiert.',
 	'upgrade:unlock' => 'Upgrade entsperren',
 	'upgrade:unlock:confirm' => "Die Datenbank ist durch einen anderen Upgrade-Prozess gesperrt. Gleichzeitig ausgeführte Upgrade-Prozesse sind gefährlich. Du solltest nur dann weitermachen, wenn Du sicher bist, dass momentan wirklich kein anderer Upgrade-Prozess ausgeführt wird. Entsperren?",
@@ -1255,11 +1284,14 @@ Du kannst auf diese Email NICHT antworten.",
  */
 	
 	'byline' => 'Von %s',
+	'byline:ingroup' => 'in der Gruppe %s',
 	'entity:default:strapline' => '%s erzeugt von %s',
 	'entity:default:missingsupport:popup' => 'Diese Entität kann nicht richtig angezeigt werden. Dies kann daran liegen, dass dafür ein Plugin benötigt wird, das nicht mehr installiert ist.',
 
-	'entity:delete:success' => 'Die Entität %s wurde gelöscht',
-	'entity:delete:fail' => 'Die Entität %s konnte nicht gelöscht werden',
+	'entity:delete:success' => 'Die Entität %s wurde gelöscht.',
+	'entity:delete:fail' => 'Die Entität %s konnte nicht gelöscht werden.',
+	
+	'entity:can_delete:invaliduser' => 'Ein Aufruf der canDelete()-Funktion für die Benutzer-GUID [%s] ist nicht möglich, da dieser Benutzer nicht existiert.',
 
 /**
  * Action gatekeeper

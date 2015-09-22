@@ -41,6 +41,7 @@ return array(
 	'actionunauthorized' => 'Non ten permisos para realizar a acción.',
 	
 	'ajax:error' => 'Produciuse un erro inesperado durante a execución dunha chamada mediante AJAX. Pode que se perdese a conexión co servidor.',
+	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
 
 	'PluginException:MisconfiguredPlugin' => "O complemento %s (guid: %s) está mal configurado e desactivouse. Consulte o wiki de Elgg (http://learn.elgg.org/) para intentar determinar a causa do problema.",
 	'PluginException:CannotStart' => 'O complemento «%s» (GUID: %s) non pode iniciarse e foi desactivado. Motivo: %s',
@@ -112,6 +113,10 @@ return array(
 
 	'error:default:title' => 'Ups…',
 	'error:default:content' => 'Ups… algo non foi ben.',
+	'error:400:title' => 'Bad request',
+	'error:400:content' => 'Sorry. The request is invalid or incomplete.',
+	'error:403:title' => 'Forbidden',
+	'error:403:content' => 'Sorry. You are not allowed to access the requested page.',
 	'error:404:title' => 'Non se atopou a páxina',
 	'error:404:content' => 'Non foi posíbel atopar a páxina que solicitou.',
 
@@ -599,11 +604,17 @@ return array(
 	'admin:plugins:description' => "Este panel de administración permítelle controlar e configurar ferramentas instaladas no sitio.",
 	'admin:plugins:opt:linktext' => "Configurar as ferramentas…",
 	'admin:plugins:opt:description' => "Configurar as ferramentas instaladas no sitio.",
+	'admin:plugins:label:id' => "ID",
+	'admin:plugins:label:name' => "Name",
 	'admin:plugins:label:author' => "Autor",
 	'admin:plugins:label:copyright' => "Dereitos de autor",
 	'admin:plugins:label:categories' => 'Categorías',
 	'admin:plugins:label:licence' => "Licenza",
 	'admin:plugins:label:website' => "URL",
+	'admin:plugins:label:info' => "Info",
+	'admin:plugins:label:files' => "Files",
+	'admin:plugins:label:resources' => "Resources",
+	'admin:plugins:label:screenshots' => "Screenshots",
 	'admin:plugins:label:repository' => "Código",
 	'admin:plugins:label:bugtracker' => "Informar dun problema",
 	'admin:plugins:label:donate' => "Doar",
@@ -618,7 +629,6 @@ return array(
 	'admin:plugins:label:contributors:description' => 'Descrición',
 	'admin:plugins:label:dependencies' => 'Dependencias',
 
-	'admin:plugins:warning:elgg_version_unknown' => 'O ficheiro de manifesto deste complemento está obsoleto, e non lista ningunha versión de Elgg compatíbel coa do sitio. O máis seguro é que non funcione.',
 	'admin:plugins:warning:unmet_dependencies' => 'O complemento ten dependencias que non están satisfeitas, e polo tanto non pode activarse. Prema «Máis información» para ver a lista de dependencias.',
 	'admin:plugins:warning:invalid' => 'O complemento non é válido: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Na <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">documentación de Elss</a> atopará consellos para evitar e solucionar problemas.',
@@ -711,6 +721,7 @@ Os cambios só afectarán a novos usuarios.',
 	'admin:robots.txt:instructions' => "Edite a continuación o ficheiro «robots.txt» do sitio.",
 	'admin:robots.txt:plugins' => "Os complementos están a engadir o seguinte contido ao ficheiro «robots.txt».",
 	'admin:robots.txt:subdir' => "A ferramenta de «robots.txt» non vai funcionar porque Elgg está instalado nun subdirectorio.",
+	'admin:robots.txt:physical' => "The robots.txt tool will not work because a physical robots.txt is present",
 
 	'admin:maintenance_mode:default_message' => 'O sitio está pechado por mantemento',
 	'admin:maintenance_mode:instructions' => 'Use o modo de mantemento para anovar o sitio ou realizar outros cambios importantes.
@@ -1012,6 +1023,19 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'date:month:10' => '%s de outubro',
 	'date:month:11' => '%s de novembr',
 	'date:month:12' => '%s de decembr',
+	
+	'date:month:short:01' => 'Jan %s',
+	'date:month:short:02' => 'Feb %s',
+	'date:month:short:03' => 'Mar %s',
+	'date:month:short:04' => 'Apr %s',
+	'date:month:short:05' => 'May %s',
+	'date:month:short:06' => 'Jun %s',
+	'date:month:short:07' => 'Jul %s',
+	'date:month:short:08' => 'Aug %s',
+	'date:month:short:09' => 'Sep %s',
+	'date:month:short:10' => 'Oct %s',
+	'date:month:short:11' => 'Nov %s',
+	'date:month:short:12' => 'Dec %s',
 
 	'date:weekday:0' => 'Doming',
 	'date:weekday:1' => 'Luns',
@@ -1020,6 +1044,14 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'date:weekday:4' => 'Xoves',
 	'date:weekday:5' => 'Venres',
 	'date:weekday:6' => 'Sábad',
+	
+	'date:weekday:short:0' => 'Sun',
+	'date:weekday:short:1' => 'Mon',
+	'date:weekday:short:2' => 'Tue',
+	'date:weekday:short:3' => 'Wed',
+	'date:weekday:short:4' => 'Thu',
+	'date:weekday:short:5' => 'Fri',
+	'date:weekday:short:6' => 'Sat',
 	
 	'interval:minute' => 'Cada minuto',
 	'interval:fiveminute' => 'Cada cindo minutos',
@@ -1058,8 +1090,6 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'installation:walled_garden:description' => 'Active isto para evitar que usuarios anónimos poidan acceder a páxinas do sitio que non estean marcadas como públicas, como pode ser o caso das páxinas de acceso e rexistro de contas.',
 	'installation:walled_garden:label' => 'Restrinxir as páxinas a usuarios rexistrados.',
 
-	'installation:httpslogin' => "Active isto para que os usuarios accedan mediante unha conexión cifrada (HTTPS). Para activar esta opción, o seu servidor ten que estar configurado para permitir conexións cifradas.",
-	'installation:httpslogin:label' => "Activar o acceso mediante conexións cifradas.",
 	'installation:view' => "Indique a vista que se usará como vista predeterminada do sitio, ou non indique nada para usar a vista predeterminada. En caso de dúbida, deixe o campo baleiro.",
 
 	'installation:siteemail' => "Enderezo de correo electrónico do sitio (co que enviar as mensaxes do sistema):",
@@ -1089,7 +1119,6 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'admin:legend:debug' => 'Depuración e rexistr',
 
 	'upgrading' => 'Anovando…',
-	'upgrade:db' => 'Anovouse a base de datos',
 	'upgrade:core' => 'Anovouse a instalación de Elgg.',
 	'upgrade:unlock' => 'Desbloquear a anovación',
 	'upgrade:unlock:confirm' => "A base de datos está bloqueada para outra anovación. Realizar varias anovacións ao mesmo tempo é perigoso. Non continúe salvo que estea certo de que non hai ningunha outra anovación en marcha. Quere desbloquear a anovació?",
@@ -1246,11 +1275,14 @@ Non responda a esta mensaxe.",
  */
 	
 	'byline' => 'De %s',
+	'byline:ingroup' => 'in the group %s',
 	'entity:default:strapline' => 'Creou %s de %s',
 	'entity:default:missingsupport:popup' => 'Non é posíbel mostrar correctamente esta entidade. Pode que o motivo sexa que necesita dun complemento que xa non está instalado.',
 
 	'entity:delete:success' => 'Eliminouse a entidade %s',
 	'entity:delete:fail' => 'Non foi posíbel eliminar a entidade %s.',
+	
+	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',
 
 /**
  * Action gatekeeper

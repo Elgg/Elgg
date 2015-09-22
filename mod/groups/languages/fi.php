@@ -53,11 +53,11 @@ return array(
 	'groups:widget:group_activity:content:noselect' => 'Valitse ryhmä vimpaimen asetuksista',
 
 	'groups:noaccess' => 'Sinulla ei ole oikeuksia tämän ryhmän näkemiseen',
-	'groups:permissions:error' => 'Sinulla ei ole oikeuksia tähän',
 	'groups:ingroup' => 'ryhmässä',
 	'groups:cantcreate' => 'Vain sivuston ylläpitäjät voivat luoda uusia ryhmiä.',
 	'groups:cantedit' => 'Voit nyt muokata ryhmää',
 	'groups:saved' => 'Ryhmä tallennettu',
+	'groups:save_error' => 'Ryhmän tallentaminen epäonnistui',
 	'groups:featured' => 'Valikoidut ryhmät',
 	'groups:makeunfeatured' => 'Poista mainos',
 	'groups:makefeatured' => 'Mainosta ryhmää',
@@ -81,30 +81,6 @@ return array(
 	'groups:search_in_group' => "Etsi tästä ryhmästä",
 	'groups:acl' => "Ryhmä: %s",
 
-	'discussion:topic:notify:summary' => 'Uusi keskustelu: %s',
-	'discussion:topic:notify:subject' => 'Uusi keskustelu: %s',
-	'discussion:topic:notify:body' =>
-'%s lisäsi uuden keskustelun ryhmään %s:
-
-Aihe: %s
-
-%s
-
-Voit osallistua keskusteluun osoitteessa:
-%s
-',
-
-	'discussion:reply:notify:summary' => 'Uusi viesti keskustelussa: %s',
-	'discussion:reply:notify:subject' => 'Uusi viesti keskustelussa: %s',
-	'discussion:reply:notify:body' =>
-'%s vastasi keskusteluun  %s ryhmässä %s:
-
-%s
-
-Osallistu keskusteluun:
-%s
-',
-
 	'groups:activity' => "Ryhmän toiminta",
 	'groups:enableactivity' => 'Ota käyttöön ryhmän toiminta',
 	'groups:activity:none' => "Ryhmässä ei vielä ole ollut toimintaa",
@@ -115,11 +91,6 @@ Osallistu keskusteluun:
 	'groups:requests:none' => 'Ei odottavia jäsenyyspyyntöjä.',
 
 	'groups:invitations:none' => 'Ei odottavia kutsuja.',
-
-	'item:object:groupforumtopic' => "Keskusteluaiheet",
-	'item:object:discussion_reply' => "Vastaukset keskusteluihin",
-
-	'groupforumtopic:new' => "Uusi viesti keskustelussa",
 
 	'groups:count' => "ryhmää luotuna",
 	'groups:open' => "avoin ryhmä",
@@ -137,7 +108,7 @@ Osallistu keskusteluun:
 	'groups:access:public' => 'Avoin - Kuka tahansa voi liittyä',
 	'groups:access:group' => 'Vain ryhmän jäsenet',
 	'groups:closedgroup' => "Tällä ryhmällä on suljettu jäsenyys.",
-	'groups:closedgroup:request' => 'Klikkaa linkkiä "Ano ryhmän jäsenyyttä" päästäksesi jäseneksi.',
+	'groups:closedgroup:request' => 'Klikkaa linkkiä "Ano jäsenyyttä" päästäksesi jäseneksi.',
 	'groups:closedgroup:membersonly' => "Tällä ryhmällä on suljettu jäsenyys, ja vain jäsenet pääsevät käsiksi sen sisältöihin.",
 	'groups:opengroup:membersonly' => "Vain jäsenillä on pääsy tämän ryhmän sisältöihin.",
 	'groups:opengroup:membersonly:join' => 'Klikkaa "Liity ryhmään" päästäksesi ryhmän jäseneksi.',
@@ -146,70 +117,12 @@ Osallistu keskusteluun:
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Ota käyttöön ryhmän keskustelut',
 	'groups:lastupdated' => 'Viimeksi päivitetty %s käyttäjän %s toimesta',
 	'groups:lastcomment' => 'Viimeksi kommentoitu %s käyttäjän %s toimesta',
 
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Keskustelut',
-	'discussion:add' => 'Lisää uusi keskustelu',
-	'discussion:latest' => 'Viimeisimmät keskustelut',
-	'discussion:group' => 'Ryhmän keskustelut',
-	'discussion:none' => 'Keskusteluja ei ole vielä luotu',
-	'discussion:reply:title' => 'Vastaus käyttäjältä %s',
-
-	'discussion:topic:created' => 'Luotiin uusi keskusteluaihe.',
-	'discussion:topic:updated' => 'Keskusteluaihe päivitetty.',
-	'discussion:topic:deleted' => 'Keskusteluaihe poistettu.',
-
-	'discussion:topic:notfound' => 'Keskustelua ei löytynyt',
-	'discussion:error:notsaved' => 'Keskustelun tallentaminen epäonnistui',
-	'discussion:error:missing' => 'Sekä otsikko että viesti ovat pakollisia tietoja',
-	'discussion:error:permissions' => 'Sinulla ei ole oikeuksia tämän toiminnon suorittamiseen',
-	'discussion:error:notdeleted' => 'Keskustelun poistaminen epäonnistui',
-
-	'discussion:reply:edit' => 'Muokkaa',
-	'discussion:reply:deleted' => 'Vastaus poistettu.',
-	'discussion:reply:error:notfound' => 'Viestiä ei löytynt',
-	'discussion:reply:error:notfound_fallback' => "Etsimääsi viestiä ei löytynyt, mutta ohjasimme sinut viestiketjuun, jonne se oli jätetty.",
-	'discussion:reply:error:notdeleted' => 'Viestiä ei voitu poistaa',
-
-	'discussion:search:title' => 'Vastaus aiheeseen: %s',
-	
 	'admin:groups' => 'Ryhmät',
 
-	'reply:this' => 'Vastaa',
-
-	'group:replies' => 'Vastaukset',
-	'groups:forum:created' => 'Created %s with %d comments',
-	'groups:forum:created:single' => 'Created %s with %d reply',
-	'groups:forum' => 'Keskustelu',
-	'groups:addtopic' => 'Lisää keskustelu',
-	'groups:forumlatest' => 'Viimeisin keskustelu',
 	'groups:latestdiscussion' => 'Viimeisin keskustelu',
-	'groupspost:success' => 'Vastauksesi tallennettiin',
-	'groupspost:failure' => 'Vastauksen tallentaminen epäonnistui',
-	'groups:alldiscussion' => 'Viimeisimmät keskustelut',
-	'groups:edittopic' => 'Muokkaa keskustelun aihetta',
-	'groups:topicmessage' => 'Viesti',
-	'groups:topicstatus' => 'Aiheen tila',
-	'groups:reply' => 'Lisää kommentti',
-	'groups:topic' => 'Aihe',
-	'groups:posts' => 'Viestit',
-	'groups:lastperson' => 'Viimeisin henkilö',
-	'groups:when' => 'Milloin',
-	'grouptopic:notcreated' => 'Keskusteluja ei vielä ole luotu.',
-	'groups:topicclosed' => 'Suljettu',
-	'grouptopic:created' => 'Uusi keskustelu luotu.',
-	'groups:topicsticky' => 'Sticky',
-	'groups:topicisclosed' => 'Tämä aihe on suljettu.',
-	'groups:topiccloseddesc' => 'Tämä keskustelu on suljettu eikä siihen voi enää lisätä kommentteja.',
-	'grouptopic:error' => 'Keskustelua ei voitu luoda. Yritä uudelleen. Jos virhe toistuu, ota yhteyttä sivuston ylläpitäjään.',
-	'groups:forumpost:edited' => "Viesti päivitetty.",
-	'groups:forumpost:error' => "Viestin päivittämisess ilmeni ongelma.",
-
 	'groups:privategroup' => 'Tämä ryhmä on suljettu. Anotaan jäsenyyttä.',
 	'groups:notitle' => 'Ryhmällä pitää olla nimi',
 	'groups:cantjoin' => 'Ryhmään liittyminen epäonnistui',
@@ -229,7 +142,6 @@ Osallistu keskusteluun:
 	'groups:usernotinvited' => 'Käyttäjän kutsuminen epäonnistui.',
 	'groups:useralreadyinvited' => 'Käyttäjä on jo kutsuttu',
 	'groups:invite:subject' => "%s sinut on kutsuttu ryhmän %s jäseneksi!",
-	'groups:updated' => "Viimeisin viesti käyttäjältä %s %s",
 	'groups:started' => "Aloittaja %s",
 	'groups:joinrequest:remove:check' => 'Haluatko varmasti poistaa tämän liittymispyynnön?',
 	'groups:invite:remove:check' => 'Haluatko varmasti poistaa tämän kutsun?',
@@ -263,9 +175,6 @@ tai tästä nähdäksesi ryhmän jäsenanomukset:
 
 	'river:create:group:default' => '%s loi ryhmän %s',
 	'river:join:group:default' => '%s liittyi ryhmään %s',
-	'river:create:object:groupforumtopic' => '%s lisäsi uuden keskusteluaiheen %s',
-	'river:reply:object:groupforumtopic' => '%s vastasi keskusteluun %s',
-	'river:reply:view' => 'näytä vastaukset',
 
 	'groups:nowidgets' => 'Tälle ryhmälle ei ole määritetty vimpaimia.',
 
@@ -280,8 +189,6 @@ tai tästä nähdäksesi ryhmän jäsenanomukset:
 	'groups:widgets:entities:label:displaynum' => 'Listaa ryhmässä olevat kohteet.',
 	'groups:widgets:entities:label:pleaseedit' => 'Määrittele vimpaimelle asetukset.',
 
-	'groups:forumtopic:edited' => 'Muokattiin aihetta.',
-
 	'groups:allowhiddengroups' => 'Sallitaanko suljettujen (piilotettujen) ryhmien luominen?',
 	'groups:whocancreate' => 'Kuka voi luoda uusia ryhmiä?',
 
@@ -292,13 +199,6 @@ tai tästä nähdäksesi ryhmän jäsenanomukset:
 	'group:notdeleted' => 'Ryhmää ei voitu poistaa',
 
 	'group:notfound' => 'Ryhmää ei löytynyt',
-	'grouppost:deleted' => 'Viesti poistettu',
-	'grouppost:notdeleted' => 'Viestiä ei voity poistaa',
-	'groupstopic:deleted' => 'Aihe poistettu',
-	'groupstopic:notdeleted' => 'Aihetta ei voitu poistaa',
-	'grouptopic:blank' => 'Ei aihetta',
-	'grouptopic:notfound' => 'Aihetta ei löytynyt',
-	'grouppost:nopost' => 'Tyhjä viesti',
 	'groups:deletewarning' => "Haluatko varmasti poistaa tämän ryhmän? Tätä toimintoa ei voi perua!",
 
 	'groups:invitekilled' => 'Kutsu poistettu.',
@@ -309,6 +209,5 @@ tai tästä nähdäksesi ryhmän jäsenanomukset:
 	/**
 	 * ecml
 	 */
-	'groups:ecml:discussion' => 'Ryhmän keskustelut',
 	'groups:ecml:groupprofile' => 'Ryhmät',
 );

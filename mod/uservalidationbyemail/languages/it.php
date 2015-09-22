@@ -1,6 +1,6 @@
 <?php
 return array(
-	'admin:users:unvalidated' => 'Invalido',
+	'admin:users:unvalidated' => 'Non convalidato',
 	
 	'email:validate:subject' => "%s per favore conferma il tuo indirizzo email per %s!",
 	'email:validate:body' => "Ciao %s,
@@ -25,7 +25,7 @@ Controlla anche la cartella Spam, potrebbe succedere che al primo invio da parte
 
 	'uservalidationbyemail:admin:no_unvalidated_users' => 'Nessun utente non ancora validato',
 
-	'uservalidationbyemail:admin:unvalidated' => 'Non convalidato',
+	'uservalidationbyemail:admin:unvalidated' => 'Utenti non ancora validati',
 	'uservalidationbyemail:admin:user_created' => 'Registrato %s',
 	'uservalidationbyemail:admin:resend_validation' => 'Reinvia validazione',
 	'uservalidationbyemail:admin:validate' => 'Valida',

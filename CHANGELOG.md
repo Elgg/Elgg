@@ -1,3 +1,23 @@
+<a name="2.0.0-beta.2"></a>
+### 2.0.0-beta.2  (2015-09-21)
+
+#### Contributors
+
+* Steve Clay (7)
+* Juho Jaakkola (2)
+* iionly (2)
+* Matt Beckett (1)
+
+#### Documentation
+
+* **upgrading:** Warn site owners about MultiViews and /settings URLs ([0ada89d6](https://github.com/Elgg/Elgg/commit/0ada89d68c69e6185cf3c1165f759780de8967c3), closes [#8806](https://github.com/Elgg/Elgg/issues/8806))
+
+
+#### Breaking Changes
+
+* Relationship deletions only fire the "delete", "relationship" event. ([9c148994](https://github.com/Elgg/Elgg/commit/9c148994bf14edcbaebf7c097d42f26faf083a5b))
+
+
 <a name="2.0.0-beta.1"></a>
 ### 2.0.0-beta.1  (2015-09-06)
 

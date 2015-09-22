@@ -41,6 +41,7 @@ return array(
 	'actionunauthorized' => 'あなたの権限では、このアクションを実行することはできません。',
 	
 	'ajax:error' => 'AJAXコールを実行中に予期せぬエラーが起こりました。おそらく、サーバへの接続が切断されたからかもしれません。',
+	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) は、設定に間違いのあるプラグインですので、起動不可となっています。 原因に当たっては、Elgg wiki (http://learn.elgg.org/) を参考にしてください。 ",
 	'PluginException:CannotStart' => '%s (guid: %s) は起動できず停止状態のままです。理由: %s',
@@ -112,6 +113,10 @@ return array(
 
 	'error:default:title' => 'アレッ？',
 	'error:default:content' => 'アレッ？何かがおかしいです。',
+	'error:400:title' => 'Bad request',
+	'error:400:content' => 'Sorry. The request is invalid or incomplete.',
+	'error:403:title' => 'Forbidden',
+	'error:403:content' => 'Sorry. You are not allowed to access the requested page.',
 	'error:404:title' => 'ページが見つかりませんでした',
 	'error:404:content' => '申し訳あrません。ご要望のページを見つけることができませんでした',
 
@@ -598,11 +603,17 @@ return array(
 	'admin:plugins:description' => "この管理パネルでは、インストールしたツールの管理や構築設定を行います。",
 	'admin:plugins:opt:linktext' => "ツールの設定...",
 	'admin:plugins:opt:description' => "インストールされたツールを構築するための各種設定をします",
+	'admin:plugins:label:id' => "ID",
+	'admin:plugins:label:name' => "Name",
 	'admin:plugins:label:author' => "開発者",
 	'admin:plugins:label:copyright' => "コピーライト",
 	'admin:plugins:label:categories' => 'カテゴリ',
 	'admin:plugins:label:licence' => "ライセンス",
 	'admin:plugins:label:website' => "URL",
+	'admin:plugins:label:info' => "Info",
+	'admin:plugins:label:files' => "Files",
+	'admin:plugins:label:resources' => "Resources",
+	'admin:plugins:label:screenshots' => "Screenshots",
 	'admin:plugins:label:repository' => "Code",
 	'admin:plugins:label:bugtracker' => "問題を報告する",
 	'admin:plugins:label:donate' => "寄付する",
@@ -617,7 +628,6 @@ return array(
 	'admin:plugins:label:contributors:description' => '説明',
 	'admin:plugins:label:dependencies' => '依存関係',
 
-	'admin:plugins:warning:elgg_version_unknown' => 'このプラグインは、旧のマニフェストファイルを使用していますので互換性のあるElggバージョンを記載していません。おそらく、うまく作動しないでしょう。',
 	'admin:plugins:warning:unmet_dependencies' => 'このプラグインは依存関係が不適切なので起動できません。詳細情報で依存関係をチェックしてください。',
 	'admin:plugins:warning:invalid' => 'このプラグインは正しくありません: %s',
 	'admin:plugins:warning:invalid:check_docs' => '問題解決のヒントは、 <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> にあるかもしれません。',
@@ -709,6 +719,7 @@ return array(
 	'admin:robots.txt:instructions' => "このサイトの robots.txt ファイルを編集します。",
 	'admin:robots.txt:plugins' => "プラグインは編集結果を robots.txt ファイルに追加しています。",
 	'admin:robots.txt:subdir' => "Elggがサブディレクトリにインストールされているため、The robots.txt tool は機能しないでしょう。",
+	'admin:robots.txt:physical' => "The robots.txt tool will not work because a physical robots.txt is present",
 
 	'admin:maintenance_mode:default_message' => '申し訳ありません。このサイトは現在メンテナンス中で接続出来ません。',
 	'admin:maintenance_mode:instructions' => 'サイトのアップグレードやサイトに大きな変更をするときに、メンテナンス・モードをご利用ください。
@@ -1010,6 +1021,19 @@ return array(
 	'date:month:10' => '10月 %s',
 	'date:month:11' => '11月 %s',
 	'date:month:12' => '12月 %s',
+	
+	'date:month:short:01' => 'Jan %s',
+	'date:month:short:02' => 'Feb %s',
+	'date:month:short:03' => 'Mar %s',
+	'date:month:short:04' => 'Apr %s',
+	'date:month:short:05' => 'May %s',
+	'date:month:short:06' => 'Jun %s',
+	'date:month:short:07' => 'Jul %s',
+	'date:month:short:08' => 'Aug %s',
+	'date:month:short:09' => 'Sep %s',
+	'date:month:short:10' => 'Oct %s',
+	'date:month:short:11' => 'Nov %s',
+	'date:month:short:12' => 'Dec %s',
 
 	'date:weekday:0' => 'Sunday',
 	'date:weekday:1' => 'Monday',
@@ -1018,6 +1042,14 @@ return array(
 	'date:weekday:4' => 'Thursday',
 	'date:weekday:5' => 'Friday',
 	'date:weekday:6' => 'Saturday',
+	
+	'date:weekday:short:0' => 'Sun',
+	'date:weekday:short:1' => 'Mon',
+	'date:weekday:short:2' => 'Tue',
+	'date:weekday:short:3' => 'Wed',
+	'date:weekday:short:4' => 'Thu',
+	'date:weekday:short:5' => 'Fri',
+	'date:weekday:short:6' => 'Sat',
 	
 	'interval:minute' => '毎分',
 	'interval:fiveminute' => '5分毎',
@@ -1056,8 +1088,6 @@ return array(
 	'installation:walled_garden:description' => '非会員がサイトの内容を閲覧できないようにする（ただし、ログインページや登録ページのようなパブリックなWebページを除く）。',
 	'installation:walled_garden:label' => 'ページをログインユーザ限定にする',
 
-	'installation:httpslogin' => "HTTPS接続越しにユーザをログインさせることができるようにします。ただし、WebサーバがHTTPS接続に対応していないといけません。",
-	'installation:httpslogin:label' => "HTTPSログインを可能にする",
 	'installation:view' => "あなたのサイトのデフォルトで使用するviewを入力してください。デフォルトviewを使用する場合は、空欄のままにしておいてください。(よくわからない場合は、そのままにしておいてください)",
 
 	'installation:siteemail' => "サイトの電子メールアドレス（システムメールを送信するときに使用します）:",
@@ -1087,7 +1117,6 @@ return array(
 	'admin:legend:debug' => 'デバッグとログ',
 
 	'upgrading' => 'アップグレード中...',
-	'upgrade:db' => 'データベースをアップグレードしました。',
 	'upgrade:core' => 'Elggをアップグレードしました。',
 	'upgrade:unlock' => 'アプグレードのロックを解除する',
 	'upgrade:unlock:confirm' => "もうひとつアップグレードがありますのでデータベースをロックします。複数のアップグレードを同時に実行するのは危険です。他のアップグレードがないことをご確認の上作業を継続してください。ロックを解除しますか？",
@@ -1244,11 +1273,14 @@ return array(
  */
 	
 	'byline' => 'By %s',
+	'byline:ingroup' => 'in the group %s',
 	'entity:default:strapline' => '作成 %s by %s',
 	'entity:default:missingsupport:popup' => 'この情報を正確に表示できません。利用していたプラグインがうまく動作していないか、アンインストールされた可能性があります。',
 
 	'entity:delete:success' => 'エンティティ「 %s 」を削除しました。',
 	'entity:delete:fail' => 'エンティティ「 %s 」を削除できませんでした。',
+	
+	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',
 
 /**
  * Action gatekeeper

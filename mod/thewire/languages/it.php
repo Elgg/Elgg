@@ -4,8 +4,8 @@ return array(
 	/**
 	 * Menu items and titles
 	 */
-	'thewire' => "Telegramma",
-	'thewire:everyone' => "Tutti i telegrammi",
+	'thewire' => "Agg.ti di stato",
+	'thewire:everyone' => "Tutti gli Aggiornamenti di stato",
 	'thewire:user' => "Aggiornamenti di stato di %s",
 	'thewire:friends' => "Aggiornamenti di stato dei tuoi amici",
 	'thewire:replying' => "Stai rispondendo a %s (@%s) che ha scritto",
