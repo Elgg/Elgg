@@ -1,7 +1,7 @@
 <?php
 
 use Elgg\Filesystem\Directory;
-
+use Elgg\SystemMessagesService;
 
 /**
  * Bootstrapping and helper procedural code available for use in Elgg core and plugins.
@@ -427,13 +427,23 @@ function sanitise_filepath($path, $append_slash = true) {
  *                          whether the message addition was successful.
  */
 function system_messages($message = null, $register = "success", $count = false) {
+	$svc = _elgg_services()->systemMessages;
 	if ($count) {
-		return _elgg_services()->systemMessages->count($register);
+		return $svc->count($register);
 	}
 	if ($message === null) {
-		return _elgg_services()->systemMessages->dumpRegister($register);
+		return $svc->dumpRegister($register);
 	}
-	return _elgg_services()->systemMessages->addMessageToRegister($message, $register);
+	if ($register === SystemMessagesService::SUCCESS) {
+		$svc->addSuccessMessage($message);
+		return true;
+	} elseif ($register === SystemMessagesService::ERROR) {
+		$svc->addErrorMessage($message);
+		return true;
+	}
+
+	// no longer support adding to arbitrary registers
+	return false;
 }
 
 /**
@@ -457,7 +467,8 @@ function count_messages($register = "") {
  * @return bool
  */
 function system_message($message) {
-	return _elgg_services()->systemMessages->addSuccessMessage($message);
+	_elgg_services()->systemMessages->addSuccessMessage($message);
+	return true;
 }
 
 /**
@@ -470,7 +481,20 @@ function system_message($message) {
  * @return bool
  */
 function register_error($error) {
-	return _elgg_services()->systemMessages->addErrorMessage($error);
+	_elgg_services()->systemMessages->addErrorMessage($error);
+	return true;
+}
+
+/**
+ * Modify the system messages and errors, by giving a function that modifies and returns a RegisterSet.
+ *
+ * @param callable $func Function that accepts and returns an instance of Elgg\SystemMessages\RegisterSet.
+ *
+ * @return void
+ * @since 2.1
+ */
+function elgg_modify_system_messages(callable $func) {
+	_elgg_services()->systemMessages->modifyRegisters($func);
 }
 
 /**

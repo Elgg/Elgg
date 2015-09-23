@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
 
+use Elgg\SystemMessages\RegisterSet;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -13,6 +15,10 @@ namespace Elgg;
  * @since      1.11.0
  */
 class SystemMessagesService {
+
+	const SUCCESS = 'success';
+	const ERROR = 'error';
+	const SESSION_KEY = 'msg';
 
 	/**
 	 * @var \ElggSession
@@ -32,23 +38,25 @@ class SystemMessagesService {
 	 * Empty and return the given register or all registers. In each case, the return value is
 	 * a filtered version of the full registers array.
 	 *
-	 * @param string $name The register. Empty string for all.
+	 * @param string $register_name The register. Empty string for all.
 	 *
 	 * @return array The array of registers dumped
 	 */
-	function dumpRegister($name = '') {
-		$registers = $this->loadRegisters($name);
+	public function dumpRegister($register_name = '') {
+		$set = $this->loadSet();
+		$return = [];
 
-		if ($name !== "") {
-			$return = array();
-			$return[$name] = empty($registers[$name]) ? [] : $registers[$name];
-			unset($registers[$name]);
-		} else {
-			$return = $registers;
-			$registers = array();
+		foreach ([self::SUCCESS, self::ERROR] as $key) {
+			if ($register_name === '' || $register_name === $key) {
+				if ($set->{$key} || $register_name === $key) {
+					$return[$key] = $set->{$key};
+				}
+
+				$set->{$key} = [];
+			}
 		}
 
-		$this->saveRegisters($registers);
+		$this->saveSet($set);
 		return $return;
 	}
 
@@ -59,17 +67,16 @@ class SystemMessagesService {
 	 *
 	 * @return integer The number of messages
 	 */
-	function count($register_name = "") {
-		$registers = $this->loadRegisters($register_name);
-
-		if ($register_name !== '') {
-			return empty($registers[$register_name]) ? 0 : count($registers[$register_name]);
-		}
-
+	public function count($register_name = "") {
+		$set = $this->loadSet();
 		$count = 0;
-		foreach ($registers as $register) {
-			$count += count($register);
+
+		foreach ([self::SUCCESS, self::ERROR] as $key) {
+			if ($register_name === $key || $register_name === '') {
+				$count += count($set->{$key});
+			}
 		}
+
 		return $count;
 	}
 
@@ -78,12 +85,17 @@ class SystemMessagesService {
 	 *
 	 * @see system_messages()
 	 *
-	 * @param string|array $message Message or messages to add
+	 * @param string|string[] $message Message or messages to add
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	function addSuccessMessage($message) {
-		return $this->addMessageToRegister($message, "success");
+	public function addSuccessMessage($message) {
+		$this->modifyRegisters(function (RegisterSet $set) use ($message) {
+			foreach ((array)$message as $str) {
+				$set->success[] = $str;
+			}
+			return $set;
+		});
 	}
 
 	/**
@@ -91,19 +103,49 @@ class SystemMessagesService {
 	 *
 	 * @see system_messages()
 	 *
-	 * @param string|array $error Error or errors to add
+	 * @param string|string[] $error Error or errors to add
 	 *
-	 * @return bool
+	 * @return void
 	 */
-	function addErrorMessage($error) {
-		return $this->addMessageToRegister($error, "error");
+	public function addErrorMessage($error) {
+		$this->modifyRegisters(function (RegisterSet $set) use ($error) {
+			foreach ((array)$error as $str) {
+				$set->error[] = $str;
+			}
+			return $set;
+		});
 	}
 
 	/**
-	 * Add a message(s) to a named register to be displayed
+	 * Modify the system messages and errors, by giving a function that modifies and returns a RegisterSet.
 	 *
-	 * Messages will not be displayed immediately, but are stored in the queue
-	 * for later display, usually upon next page load.
+	 * @param callable $func Function that accepts and returns an instance of Elgg\SystemMessages\RegisterSet.
+	 *
+	 * @return void
+	 */
+	public function modifyRegisters(callable $func) {
+		$set = $func($this->loadSet());
+		if (!$set instanceof RegisterSet) {
+			throw new \RuntimeException('Given function $func must return a ' . RegisterSet::class);
+		}
+		$this->saveSet($set);
+	}
+
+	/**
+	 * Load the registers from the session
+	 *
+	 * @return RegisterSet
+	 */
+	protected function loadSet() {
+		$registers = $this->session->get(self::SESSION_KEY, array());
+		$set = new RegisterSet();
+		$set->success = isset($registers[self::SUCCESS]) ? $registers[self::SUCCESS] : [];
+		$set->error = isset($registers[self::ERROR]) ? $registers[self::ERROR] : [];
+		return $set;
+	}
+
+	/**
+	 * Save the registers to the session
 	 *
 	 * The method of displaying these messages differs depending upon plugins and
 	 * viewtypes.  The core default viewtype retrieves messages in
@@ -112,51 +154,22 @@ class SystemMessagesService {
 	 *
 	 * @internal Messages are stored as strings in the Elgg session as ['msg'][$register] array.
 	 *
-	 * @param string|array $message
-	 * @param string       $register_name
-	 *
-	 * @return bool
-	 * @access private
-	 */
-	function addMessageToRegister($message, $register_name = '') {
-		$registers = $this->loadRegisters($register_name);
-
-		if (is_string($message)) {
-			$message = array($message);
-		}
-		if (!isset($registers[$register_name])) {
-			$registers[$register_name] = [];
-		}
-		$registers[$register_name] = array_merge($registers[$register_name], $message);
-
-		$this->saveRegisters($registers);
-		return true;
-	}
-
-	/**
-	 * Load the registers from the session
-	 *
-	 * @param string $accessed_register The register being accessed
-	 *
-	 * @return array
-	 */
-	protected function loadRegisters($accessed_register = '') {
-		$registers = $this->session->get('msg', array());
-
-		if (!isset($registers[$accessed_register]) && $accessed_register !== '') {
-			$registers[$accessed_register] = array();
-		}
-
-		return $registers;
-	}
-
-	/**
-	 * Save the registers to the session
-	 *
-	 * @param array $registers The message registers
+	 * @param RegisterSet $set The set of registers
 	 * @return void
 	 */
-	protected function saveRegisters(array $registers) {
-		$this->session->set('msg', $registers);
+	protected function saveSet(RegisterSet $set) {
+		$filter = function ($el) {
+			return is_string($el) && $el !== "";
+		};
+
+		$data = [];
+		foreach ([self::SUCCESS, self::ERROR] as $key) {
+			$arr = array_filter($set->{$key}, $filter);
+			if ($arr) {
+				$data[$key] = array_values($arr);
+			}
+		}
+
+		$this->session->set(self::SESSION_KEY, $data);
 	}
 }
