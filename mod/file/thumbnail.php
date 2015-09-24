@@ -6,7 +6,13 @@
  */
 
 // Get engine
-require_once __DIR__ . '/../../vendor/autoload.php';
+$initial_root = dirname(dirname(__DIR__));
+if (file_exists("$initial_root/vendor/autoload.php")) {
+	require_once "$initial_root/vendor/autoload.php";
+} else {
+	$backup_root = dirname(dirname(dirname($initial_root)));
+	require_once "$backup_root/vendor/autoload.php";
+}
 
 \Elgg\Application::start();
 
