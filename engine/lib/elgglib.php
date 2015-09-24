@@ -1028,9 +1028,11 @@ function elgg_get_version($human_readable = false) {
 	static $version, $release;
 	
 	if (!isset($version) || !isset($release)) {
-		if (!include(\Elgg\Application::elggDir()->getPath('version.php'))) {
+		$path = \Elgg\Application::elggDir()->getPath('version.php');
+		if (!is_file($path)) {
 			return false;
 		}
+		include $path;
 	}
 	
 	return $human_readable ? $release : $version;
