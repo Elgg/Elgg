@@ -5,14 +5,11 @@
  * @package ElggFile
  */
 
-// Get engine
-$initial_root = dirname(dirname(__DIR__));
-if (file_exists("$initial_root/vendor/autoload.php")) {
-	require_once "$initial_root/vendor/autoload.php";
-} else {
-	$backup_root = dirname(dirname(dirname($initial_root)));
-	require_once "$backup_root/vendor/autoload.php";
+$autoload_root = dirname(dirname(__DIR__));
+if (!is_file("$autoload_root/vendor/autoload.php")) {
+	$autoload_root = dirname(dirname(dirname($autoload_root)));
 }
+require_once "$autoload_root/vendor/autoload.php";
 
 \Elgg\Application::start();
 
