@@ -298,13 +298,16 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
 }
 
 /**
- * Get the file path for all registered views and viewtypes
+ * List all views in a viewtype
  *
- * @return string[] [viewtype][view_name] => file_path
+ * @param string $viewtype Viewtype
+ *
+ * @return string[]
+ *
  * @since 2.0
  */
-function elgg_get_view_locations() {
-	return _elgg_services()->views->getViewLocations();
+function elgg_list_views($viewtype = 'default') {
+	return _elgg_services()->views->listViews($viewtype);
 }
 
 /**

@@ -147,13 +147,12 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals($canonical, $this->views->canonicalizeViewName($alias));
 	}
 
-	public function testCanGetAllViewLocations() {
-		$locs = $this->views->getViewLocations();
-		$this->assertTrue(isset($locs['default']));
-		reset($locs['default']);
-		$key = key($locs['default']);
-		$this->assertTrue(is_string($key));
-		$this->assertTrue(is_file($locs['default'][$key]));
+	public function testCanListViews() {
+		$views = $this->views->listViews('default');
+		$this->assertTrue(in_array('interpreted.js', $views));
+		$this->assertTrue(in_array('static.js', $views));
+
+		$this->assertEmpty($this->views->listViews('fake_viewtype'));
 	}
 	
 	public function getExampleNormalizedViews() {
