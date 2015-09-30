@@ -636,10 +636,11 @@ class ViewsService {
 	 */
 	private function setViewLocation($view, $viewtype, $path) {
 		$view = $this->canonicalizeViewName($view);
-		
-		if (isset($this->locations[$viewtype][$view])) {
+		$path = strtr($path, '\\', '/');
+
+		if (isset($this->locations[$viewtype][$view]) && $path !== $this->locations[$viewtype][$view]) {
 			$this->overrides[$viewtype][$view][] = $this->locations[$viewtype][$view];
 		}
-		$this->locations[$viewtype][$view] = strtr($path, '\\', '/');
+		$this->locations[$viewtype][$view] = $path;
 	}
 }
