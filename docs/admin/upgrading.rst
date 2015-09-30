@@ -64,16 +64,13 @@ script. You **must** remove these rewrite rules from your webserver config (e.g.
 
 Also remove the rules for paths like ``export/*``; these endpoints have been removed.
 
-Apache MultiViews
+Settings location
 -----------------
 
-If you place your ``settings.php`` file in the installation root, Apache's MultiViews option will
-interfere with loading URLs beginning with ``/settings``. If you cannot disable MultiViews, there are
-a couple lines you must uncomment in your ``.htaccess`` file. These can be found in
-``/install/config/htaccess.dist``.
+After upgrading, move your ``settings.php`` file from ``engine/`` to ``elgg-config/``.
 
 From 1.10 to 1.11
-========================
+=================
 
 Breaking changes
 ----------------

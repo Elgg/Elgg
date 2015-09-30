@@ -42,15 +42,6 @@ If the white screen is due to a bad plugin, remove the latest plugins that you h
 
 If you are getting a WSOD when performing an action, like logging in or posting a blog, but there are no error messages, it's most likely caused by non-printable characters in plugin code. Check the plugin for white spaces/new lines characters after finishing php tag (``?>``) and remove them.
 
-WSOD on settings pages in 2.0
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-
-If you place your ``settings.php`` file in the installation root, Apache's MultiViews option will
-interfere with loading URLs beginning with ``/settings``. If you cannot disable MultiViews, there are
-a couple lines you must uncomment in your ``.htaccess`` file. These can be found in
-``/install/config/htaccess.dist``.
-
-
 Page not found
 --------------
 
