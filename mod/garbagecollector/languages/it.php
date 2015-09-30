@@ -1,12 +1,12 @@
 <?php
 return array(
-	'garbagecollector:period' => 'Quanto di frequente Elgg deve eseguire il garbage collector?',
+	'garbagecollector:period' => 'Quanto spesso Elgg dovrebbe raccogliere ed eliminare la "spazzatura"?',
 
-	'garbagecollector:weekly' => 'Ogni settimana',
+	'garbagecollector:weekly' => 'Una volta alla settimana',
 	'garbagecollector:monthly' => 'Una volta al mese',
 	'garbagecollector:yearly' => 'Una volta all\'anno',
 
-	'garbagecollector' => "Raccogli spazzatura\n",
+	'garbagecollector' => "RACCOGLITORE SPAZZATURA\n",
 	'garbagecollector:done' => "FATTO\n",
 	'garbagecollector:optimize' => "Ottimizzando %s",
 

@@ -7,5 +7,6 @@ return array(
 	'members:title:newest' => 'Uusimmat',
 	'members:title:popular' => 'Suosituimmat',
 	'members:title:online' => 'Kirjautuneet',
+	'members:title:alpha' => 'Kaikki jäsenet',
 	'members:list:popular:none' => 'Kenelläkään jäsenellä ei ole vielä ystäviä.',
 );

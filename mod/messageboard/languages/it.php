@@ -6,9 +6,9 @@ return array(
 	 * Menu items and titles
 	 */
 
-	'messageboard:board' => "Bacheca",
-	'messageboard:messageboard' => "Bacheca",
-	'messageboard:viewall' => "Mostra tutto",
+	'messageboard:board' => "Lavagna",
+	'messageboard:messageboard' => "lavagna",
+	'messageboard:viewall' => "Vedi tutto",
 	'messageboard:postit' => "Pubblica",
 	'messageboard:history:title' => "Cronologia",
 	'messageboard:none' => "Ancora non c'è niente su questa lavagna",

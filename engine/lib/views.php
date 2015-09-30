@@ -250,18 +250,6 @@ function elgg_register_external_view($view, $cacheable = false) {
 }
 
 /**
- * Check whether a view is registered as cacheable.
- *
- * @param string $view The name of the view.
- * @return boolean
- * @access private
- * @since 1.9.0
- */
-function _elgg_is_view_cacheable($view) {
-	return _elgg_services()->views->isCacheableView($view);
-}
-
-/**
  * Unregister a view for ajax calls
  *
  * @param string $view The view name
@@ -307,6 +295,16 @@ function elgg_set_view_location($view, $location, $viewtype = '') {
  */
 function elgg_view_exists($view, $viewtype = '', $recurse = true) {
 	return _elgg_services()->views->viewExists($view, $viewtype, $recurse);
+}
+
+/**
+ * Get the file path for all registered views and viewtypes
+ *
+ * @return string[] [viewtype][view_name] => file_path
+ * @since 2.0
+ */
+function elgg_get_view_locations() {
+	return _elgg_services()->views->getViewLocations();
 }
 
 /**

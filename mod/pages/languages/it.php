@@ -17,13 +17,13 @@ return array(
 	'pages:new' => "Nuova pagina",
 	'pages:edit' => "Modifica questa pagina",
 	'pages:delete' => "Cancella questa pagina",
-	'pages:history' => "Cronologia",
-	'pages:view' => "Mostra pagina",
+	'pages:history' => "Cronologia della pagina",
+	'pages:view' => "Visualizza pagina",
 	'pages:revision' => "Revisione",
 	'pages:current_revision' => "Revisione attuale",
 	'pages:revert' => "Ritorna",
 
-	'pages:navigation' => "Navigazione",
+	'pages:navigation' => "Navigazione della pagina",
 
 	'pages:notify:summary' => 'Nuova pagina %s',
 	'pages:notify:subject' => "Nuova pagina: %s",
@@ -55,12 +55,12 @@ Visualizza e commenta questa pagina:
 	 * Form fields
 	 */
 
-	'pages:title' => 'Titolo pagina',
+	'pages:title' => 'Titolo della pagina',
 	'pages:description' => 'Testo della tua pagina',
 	'pages:tags' => 'Tag',
 	'pages:parent_guid' => 'Pagina madre',
-	'pages:access_id' => 'Accesso in lettura',
-	'pages:write_access_id' => 'Accesso in scrittura',
+	'pages:access_id' => 'Accesso',
+	'pages:write_access_id' => 'Diritto di scrittura',
 
 	/**
 	 * Status and error messages
@@ -74,7 +74,7 @@ Visualizza e commenta questa pagina:
 	'pages:delete:failure' => 'La pagina non può rimossa.',
 	'pages:revision:delete:success' => 'Revisione pagina cancellata con successo',
 	'pages:revision:delete:failure' => 'La revisione della pagina non è stata cancellata',
-	'pages:revision:not_found' => 'Impossibile trovare questa revisione.',
+	'pages:revision:not_found' => 'Impossibile trovare questa revisione',
 
 	/**
 	 * Page
@@ -96,7 +96,7 @@ Visualizza e commenta questa pagina:
 	/**
 	 * Submenu items
 	 */
-	'pages:label:view' => "Mostra pagina",
+	'pages:label:view' => "Vedi pagina",
 	'pages:label:edit' => "Modifica pagina",
 	'pages:label:history' => "Cronologia della pagina",
 

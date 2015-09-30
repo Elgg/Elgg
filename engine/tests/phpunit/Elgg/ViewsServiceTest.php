@@ -14,6 +14,8 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected $views;
 
+	protected $viewsDir;
+
 	public function setUp() {
 		$this->viewsDir = dirname(dirname(__FILE__)) . "/test_files/views";
 		
@@ -143,6 +145,15 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testDefaultNormalizeBehavior($canonical, $alias) {
 		$this->assertEquals($canonical, $this->views->canonicalizeViewName($alias));
+	}
+
+	public function testCanGetAllViewLocations() {
+		$locs = $this->views->getViewLocations();
+		$this->assertTrue(isset($locs['default']));
+		reset($locs['default']);
+		$key = key($locs['default']);
+		$this->assertTrue(is_string($key));
+		$this->assertTrue(is_file($locs['default'][$key]));
 	}
 	
 	public function getExampleNormalizedViews() {

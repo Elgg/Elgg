@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => '項目的位置',
 	'reportedcontent:success' => '您的報告已發送給站臺管理者',
 	'reportedcontent:failing' => '您的報告無法發送',
+	'reportedcontent:refresh' => 'Refresh this listing',
 	'reportedcontent:report' => '報告給管理者',
 	'reportedcontent:instructions' => '這個報告將發送給這個站臺的管理者以供檢閱。',
 	'reportedcontent:numbertodisplay' => '要顯示的報告數量',

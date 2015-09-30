@@ -3,6 +3,7 @@
  * CSS for user validation by email
  */
 ?>
+/*<style>*/
 
 .uservalidation-module > .elgg-head * {
 	color: white;

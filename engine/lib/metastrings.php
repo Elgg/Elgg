@@ -27,18 +27,6 @@ function elgg_get_metastring_id($string, $case_sensitive = true) {
 }
 
 /**
- * Add a metastring.
- *
- * @warning You should not call this directly. Use elgg_get_metastring_id().
- *
- * @param string $string The value to be normalized
- * @return int The identifier for this string
- */
-function _elgg_add_metastring($string) {
-	return _elgg_services()->metastringsTable->add($string);
-}
-
-/**
  * Returns an array of either \ElggAnnotation or \ElggMetadata objects.
  * Accepts all elgg_get_entities() options for entity restraints.
  *

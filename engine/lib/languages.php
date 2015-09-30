@@ -248,22 +248,4 @@ function elgg_language_key_exists($key, $language = 'en') {
 	return _elgg_services()->translator->languageKeyExists($key, $language);
 }
 
-/**
- * Initializes simplecache views for translations
- * 
- * @return void
- */
-function _elgg_translations_init() {
-	$translations = _elgg_services()->translator->getAllLanguageCodes();
-	foreach ($translations as $language_code) {
-		// make the js view available for each language
-		elgg_extend_view("languages/$language_code.js", "languages.js");
-	
-		// register the js view for use in simplecache
-		elgg_register_simplecache_view("languages/$language_code.js");
-	}
-}
-
-return function(\Elgg\EventsService $events) {
-	$events->registerHandler('init', 'system', '_elgg_translations_init');
-};
+return function(\Elgg\EventsService $events) {};

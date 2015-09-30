@@ -1,16 +1,16 @@
 <?php
 return array(
-	'twitter_api' => 'Sevizi Twitter',
+	'twitter_api' => 'Servizi Twitter',
 
-	'twitter_api:requires_oauth' => 'Per essere attivati i servizi Twitter richiedono la libreria per il plugin OAuth.',
+	'twitter_api:requires_oauth' => 'Twitter Services requires the OAuth Libraries plugin to be enabled.',
 
 	'twitter_api:consumer_key' => 'Consumer Key',
 	'twitter_api:consumer_secret' => 'Consumer Secret',
 
 	'twitter_api:settings:instructions' => 'You must obtain a consumer key and secret from <a rel="nofollow" href="https://dev.twitter.com/apps/new" target="_blank">Twitter</a>. Fill out the new app application. Select "Browser" as the application type and "Read & Write" for the access type. The callback url is %stwitter_api/authorize',
 
-	'twitter_api:usersettings:description' => "Colelgamento al tuo %s account su Twitter.",
-	'twitter_api:usersettings:request' => "Dovresti <a href=\"%s\">autorizzare</a> %s l'accesso al tuo account Twitter.",
+	'twitter_api:usersettings:description' => "Collega il tuo account %s con Twitter",
+	'twitter_api:usersettings:request' => "Devi prima <a href=\"%s\">autorizzare </a> %s ad accedere al tuo account Twitter.",
 	'twitter_api:usersettings:cannot_revoke' => "Non puoi disconnetter il tuo account da Twitter perché non hai fornito un indirizzo email o password. <a href=\"%s\">Forniscili ora</a>.",
 	'twitter_api:authorize:error' => 'Impossibile autorizzare Twitter.',
 	'twitter_api:authorize:success' => 'L\'accesso a Twitter è stato autorizzato.',
@@ -25,7 +25,7 @@ return array(
 
 	'twitter_api:login' => 'Vuoi permettere agli utenti esistenti che hanno connesso il loro account Twitter ad entrare tramite Twitter',
 	'twitter_api:new_users' => 'Allow new users to sign up using their Twitter account even if user registration is disabled?',
-	'twitter_api:login:success' => 'Benvenuto/a su  .',
+	'twitter_api:login:success' => 'Sei collegato.',
 	'twitter_api:login:error' => 'Impossibile fare login con Twitter.',
 	'twitter_api:login:email' => "Devi inserire un indirizzo e-mail valido per il tuo nuovo account %s .",
 
@@ -45,7 +45,7 @@ return array(
 	'twitter_api:interstitial:password' => 'Una password per entrare se Twitter non funziona o decidi di collegare i tuoi account.',
 	'twitter_api:interstitial:password2' => 'Ripeti la password.',
 
-	'twitter_api:interstitial:no_thanks' => 'No grazie',
+	'twitter_api:interstitial:no_thanks' => 'No grazie.',
 
 	'twitter_api:interstitial:no_display_name' => 'Devi avere un nome utente.',
 	'twitter_api:interstitial:invalid_email' => 'Devi inserire un indirizzo e-mail valido o niente.',

@@ -6,23 +6,23 @@ return array(
 	'likes:remove' => 'Rimuovi il tuo "mi piace"',
 	'likes:notdeleted' => 'C\'è stato un problema nel rimuovere il tuo "mi piace"',
 	'likes:likes' => 'Ti piace',
-	'likes:failure' => 'C\'è stato un problema con questo oggetto',
-	'likes:alreadyliked' => 'Hai già cliccato "mi piace" su questo oggetto',
-	'likes:notfound' => 'L\'oggetto che stai tentando di cliccare "Mi piace" non è stato trovato',
+	'likes:failure' => 'C\'è stato un problema a salvare "mi piace" per questo contenuto',
+	'likes:alreadyliked' => 'Hai già cliccato "mi piace" su questo contenuto',
+	'likes:notfound' => 'Il contenuto su cui stai tentando di cliccare "Mi piace" non è stato trovato',
 	'likes:likethis' => 'Piace questo',
 	'likes:userlikedthis' => '%s mi piace',
 	'likes:userslikedthis' => '%s mi piace',
 	'likes:river:annotate' => 'mi piace',
-	'likes:delete:confirm' => 'Sei sicuro di eliminare questo "mi piace"?',
+	'likes:delete:confirm' => 'Sei sicuro di voler eliminare questo "mi piace"?',
 
 	'river:likes' => 'piace %s %s',
 
 	// notifications. yikes.
-	'likes:notifications:subject' => '%s piace il tuo post "%s"',
+	'likes:notifications:subject' => 'a %s piace il tuo post "%s"',
 	'likes:notifications:body' =>
 'Salve %1$s,
 
-%2$s piace il tuo post "%3$s" su %4$s
+a %2$s piace il tuo post "%3$s" su %4$s
 
 Guarda il tuo post originale qui:
 
