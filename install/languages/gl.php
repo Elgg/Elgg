@@ -41,11 +41,11 @@ Se estás listo para continuar, preme o botón de «Seguinte».",
 ',
 	'install:check:php:session.auto_start' => "A opción «session.auto_start» debe estar desactivada para que Elgg funcione. Cambie a configuración do servidor ou engada a directiva ao ficheiro «.htaccess» de Elgg.",
 
-	'install:check:enginedir' => 'O servidor web non ten permisos para crear o ficheiro «settings.php» no cartafol do motor. Ten dúas opcións:
+	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. Cambiar os permisos do cartafol do motor.
+		1. Change the permissions on the root directory of your Elgg installation
 
-		2. Copiar o ficheiro «settings.example.php» a «settings.php» e seguir as instrucións que contén para configurar os parámetros da base de datos.',
+		2. Copy the file engine/settings.example.php to /settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'Existe un ficheiro de configuración no cartafol do motor, pero o servidor web non ten permisos de lectura nel. Pode eliminar o ficheiro ou darlle ao servidor permisos de lectura sobre el.',
 
 	'install:check:php:success' => "O PHP do servidor cumpre cos requisitos de Elgg.",

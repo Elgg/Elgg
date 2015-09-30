@@ -40,7 +40,7 @@ final class Locale {
 	 */
 	public static function parse($locale) {
 		// TODO(evan): Better sanitizing of locales using \Locale perhaps
-		if (strlen($locale) < 2 || strlen($locale) > 5) {
+		if (!preg_match('~^[a-z0-9_]{2,20}$~', $locale)) {
 			throw new InvalidLocaleException("Unrecognized locale: $locale");
 		}
 		

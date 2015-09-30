@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => 'Placering af emnet',
 	'reportedcontent:success' => 'Din rapport er blevet sendt til administrationen',
 	'reportedcontent:failing' => 'Din rapport kunne ikke sendes',
+	'reportedcontent:refresh' => 'Refresh this listing',
 	'reportedcontent:report' => 'Rapporter til administrationen',
 	'reportedcontent:instructions' => 'Denne rapport vil blive sendt til administratorer af dette websted til gennemsyn.',
 	'reportedcontent:numbertodisplay' => 'Antal rapporter, der skal vises',

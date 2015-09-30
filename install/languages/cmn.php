@@ -40,11 +40,11 @@ return array(
 	'install:check:php:register_globals' => '全域的註冊必須關閉。',
 	'install:check:php:session.auto_start' => "Elgg 的 session.auto_start 必須關閉才能作用。請變更伺服器的組態，或者將這個指令加入 Elgg 的 .htaccess 檔案。",
 
-	'install:check:enginedir' => '網頁伺服器沒有在引擎目錄中建立 settings.php 檔案的權限。您有兩個選擇：
+	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1.變更引擎目錄上的權限
+		1. Change the permissions on the root directory of your Elgg installation
 
-		2.將檔案 settings.example.php 拷貝為 settings.php 並依其中的指示來設定資料庫參數。',
+		2. Copy the file engine/settings.example.php to /settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => '設定值檔案存在於引擎目錄中，但是網頁伺服器無法讀取它。您可以刪除檔案或變更它的讀取權限。',
 
 	'install:check:php:success' => "伺服器上的 PHP 滿足 Elggs 的所有需求。",

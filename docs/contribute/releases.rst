@@ -56,6 +56,14 @@ Run the ``release.php`` script. For example, to release 1.9.1:
 
 This creates a ``release-1.9.1`` branch in your local repo.
 
+Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:
+
+.. code:: sh
+
+    # only necessary if you fixed a language file
+    git add .
+    git commit --amend
+
 Next, submit a PR via Github:
 
 .. code:: sh

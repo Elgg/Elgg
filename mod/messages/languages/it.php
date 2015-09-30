@@ -5,14 +5,14 @@ return array(
 	*/
 
 	'messages' => "Messaggi",
-	'messages:unreadcount' => "%s da leggere",
+	'messages:unreadcount' => "%s non letti",
 	'messages:back' => "torna ai messaggi",
 	'messages:user' => "Posta in arrivo di %s",
 	'messages:posttitle' => "Messaggio di %s: %s",
 	'messages:inbox' => "In arrivo",
 	'messages:sent' => "Posta inviata",
 	'messages:message' => "Messaggio",
-	'messages:title' => "Oggetto",
+	'messages:title' => "Titolo",
 	'messages:to:help' => "Scrivi il nome utente del destinatario qui",
 	'messages:replying' => "Messaggio di risposta a",
 	'messages:inbox' => "In arrivo",

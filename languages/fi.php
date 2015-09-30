@@ -41,6 +41,7 @@ return array(
 	'actionunauthorized' => 'Sinulla ei ole oikeuksia tämän toiminnon suorittamiseen',
 	
 	'ajax:error' => 'AJAX-kutsun yhteydessä tapahtui odottamaton virhe. Yhteys palvelimeen saattaa olla katkennut.',
+	'ajax:not_is_xhr' => 'AJAX-näkymiin ei ole mahdollista päästä käsiksi suoraan',
 
 	'PluginException:MisconfiguredPlugin' => "Liitännäisessä %s (guid %s) on havaittu virhe, joten se on poistettu käytöstä. Voit yrittää etsiä lisätietoja Elggin dokumentaatiosta (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) ei käynnisty. Syy: %s',
@@ -112,6 +113,10 @@ return array(
 
 	'error:default:title' => 'Hups...',
 	'error:default:content' => 'Hups... jotain meni pieleen.',
+	'error:400:title' => 'Virheellinen pyyntö',
+	'error:400:content' => 'Pyyntö on virheellinen tai puutteellinen',
+	'error:403:title' => 'Pääsy kielletty',
+	'error:403:content' => 'Sinulla ei ole oikeuksia nähdä pyydettyä sivua',
 	'error:404:title' => 'Sivua ei löydy',
 	'error:404:content' => 'Hakemaasi sivua ei löydy.',
 
@@ -274,7 +279,7 @@ return array(
 	'profile:mobile' => "Matkapuhelin",
 	'profile:website' => "www-sivu",
 	'profile:twitter' => "Twitter-tunnus",
-	'profile:saved' => "Profiilisi tallennettiin onnistuneesti.",
+	'profile:saved' => "Profiili tallennettu",
 
 	'profile:field:text' => 'Lyhyt tekstikenttä',
 	'profile:field:longtext' => 'Suuri tekstikenttä',
@@ -600,11 +605,17 @@ kolmeen osioon:
 	'admin:plugins:description' => "Täällä voit määrittää sivustolla käytössä olevat työkalut sekä niiden asetukset.",
 	'admin:plugins:opt:linktext' => "Konfiguroi työkalut...",
 	'admin:plugins:opt:description' => "Konfiguroi järjestelmään asennetut työkalut. ",
+	'admin:plugins:label:id' => "ID",
+	'admin:plugins:label:name' => "Nimi",
 	'admin:plugins:label:author' => "Tekijä",
 	'admin:plugins:label:copyright' => "Tekijänoikeus",
 	'admin:plugins:label:categories' => 'Kategoriat',
 	'admin:plugins:label:licence' => "Lisenssi",
 	'admin:plugins:label:website' => "URL",
+	'admin:plugins:label:info' => "Info",
+	'admin:plugins:label:files' => "Tiedostot",
+	'admin:plugins:label:resources' => "Resurssit",
+	'admin:plugins:label:screenshots' => "Kuvankaappaukset",
 	'admin:plugins:label:repository' => "Lähdekoodi",
 	'admin:plugins:label:bugtracker' => "Ilmoita virheestä",
 	'admin:plugins:label:donate' => "Lahjoitukset",
@@ -619,7 +630,6 @@ kolmeen osioon:
 	'admin:plugins:label:contributors:description' => 'Kuvaus',
 	'admin:plugins:label:dependencies' => 'Riippuvuudet',
 
-	'admin:plugins:warning:elgg_version_unknown' => 'Tämä liitännäinen käyttää vanhentunutta manifest-tiedostoa, joka ei sisällä tietoa yhteensopivuudesta eri Elgg-versioiden kanssa. Liitännäinen ei todennäköisesti toimi oikein!',
 	'admin:plugins:warning:unmet_dependencies' => 'Tällä liitännäisellä on puuttuvia riippuvuuksia, joten sitä ei voida aktivoida. Tarkista riippuvuudet lisätiedoista.',
 	'admin:plugins:warning:invalid' => 'Pluginissa on virhe: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Voit yrittää etsiä apua <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">Elggin dokumentaatiosta</a>.',
@@ -712,6 +722,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'admin:robots.txt:instructions' => "Muokkaa sivuston robots.txt-tiedostoa",
 	'admin:robots.txt:plugins' => "Liitännäisten robots.txt-tiedostoon lisäämät säännöt:",
 	'admin:robots.txt:subdir' => "Tämä robots.txt-työkalu ei toimi, koska Elgg on asennettu alihakemistoon",
+	'admin:robots.txt:physical' => "Hallintapaneelin robots.txt-toimintoa ei voi käyttää, koska asennushakemistossa on jo robots.txt -tiedosto",
 
 	'admin:maintenance_mode:default_message' => 'Sivusto on väliaikaisesti poissa käytöstä huoltokatkoksen vuoksi',
 	'admin:maintenance_mode:instructions' => 'Huoltotilaa tulisi käyttää päivitysten ja muiden laajojen muutosten aikana.
@@ -1013,6 +1024,19 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'date:month:10' => '%s lokakuu',
 	'date:month:11' => '%s marraskuu',
 	'date:month:12' => '%s joulukuu',
+	
+	'date:month:short:01' => 'Tammi %s',
+	'date:month:short:02' => 'Helmi %s',
+	'date:month:short:03' => 'Maalis %s',
+	'date:month:short:04' => 'Huhti %s',
+	'date:month:short:05' => 'Touko %s',
+	'date:month:short:06' => 'Kesä %s',
+	'date:month:short:07' => 'Heinä %s',
+	'date:month:short:08' => 'Elo %s',
+	'date:month:short:09' => 'Syys %s',
+	'date:month:short:10' => 'Loka %s',
+	'date:month:short:11' => 'Marras %s',
+	'date:month:short:12' => 'Joulu %s',
 
 	'date:weekday:0' => 'Sunnuntai',
 	'date:weekday:1' => 'Maanantai',
@@ -1021,6 +1045,14 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'date:weekday:4' => 'Torstai',
 	'date:weekday:5' => 'Perjantai',
 	'date:weekday:6' => 'Lauantai',
+	
+	'date:weekday:short:0' => 'Su',
+	'date:weekday:short:1' => 'Ma',
+	'date:weekday:short:2' => 'Ti',
+	'date:weekday:short:3' => 'Ke',
+	'date:weekday:short:4' => 'To',
+	'date:weekday:short:5' => 'Pe',
+	'date:weekday:short:6' => 'La',
 	
 	'interval:minute' => 'Minuutin välein',
 	'interval:fiveminute' => 'Viiden minuutin välein',
@@ -1059,8 +1091,6 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'installation:walled_garden:description' => 'Rajoita sivusto yksityiseksi. Rekisteröitymättömät käyttäjät voivat nähdä vain sisällöt, jotka on erikseen määritetty julkisiksi.',
 	'installation:walled_garden:label' => 'Rajoita sivusto vain kirjautuneille käyttäjille',
 
-	'installation:httpslogin' => "Pakota käyttäjät kirjautumaan käyttäen salattua yhteyttä. Tämä vaatii, että palvelimellesi on konfiguroitu HTTPS.",
-	'installation:httpslogin:label' => "Ota käyttöön HTTPS-kirjautuminen",
 	'installation:view' => "Syötä näkymä, jota käytetään sivustosi etusivuna. Jätä kenttä tyhjäksi käyttääksesi oletusnäkymää (jos et ole varma, jätä tämä oletukseksi):",
 
 	'installation:siteemail' => "Site email address (used when sending system emails):",
@@ -1090,7 +1120,6 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'admin:legend:debug' => 'Lokit ja virheidenjäljitys',
 
 	'upgrading' => 'Päivitetään...',
-	'upgrade:db' => 'Tietokanta päivitetty.',
 	'upgrade:core' => 'Elgg päivitetty.',
 	'upgrade:unlock' => 'Avaa päivityksen lukitus',
 	'upgrade:unlock:confirm' => "Aiemmin käynnistetty päivitys on lukinnut tietokannan. Useiden päivitysten ajaminen samanaikaisesti on vaarallista, joten avaa lukitus vain jos tiedät, että käynnissä ei ole päivitystä. Avataanko lukitus?",
@@ -1250,11 +1279,14 @@ Tähän viestiin ei voi vastata.",
  */
 	
 	'byline' => 'Käyttäjältä %s',
+	'byline:ingroup' => 'ryhmässä %s',
 	'entity:default:strapline' => 'Created %s by %s',
 	'entity:default:missingsupport:popup' => 'Tätä kohdetta ei voida näyttää oikein. Tämä voi johtua puuttuvasta liitännäisestä.',
 
 	'entity:delete:success' => 'Kohde %s on poistettu',
 	'entity:delete:fail' => 'Kohteen %s poistaminen epäonnistui',
+	
+	'entity:can_delete:invaliduser' => 'Käyttäjää GUID [%s] ei ole olemassa, joten tiliä ei voi poistaa',
 
 /**
  * Action gatekeeper

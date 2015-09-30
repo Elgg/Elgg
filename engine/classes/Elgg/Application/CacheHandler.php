@@ -91,7 +91,7 @@ class CacheHandler {
 
 			$this->application->bootCore();
 
-			if (!\_elgg_is_view_cacheable($view)) {
+			if (!$this->isCacheableView($view)) {
 				$this->send403("Requested view is not an asset");
 			} else {
 				$content = $this->renderView($view, $viewtype);
@@ -119,7 +119,7 @@ class CacheHandler {
 		$this->application->bootCore();
 
 		elgg_set_viewtype($viewtype);
-		if (!\_elgg_is_view_cacheable($view)) {
+		if (!$this->isCacheableView($view)) {
 			$this->send403("Requested view is not an asset");
 		}
 
@@ -175,6 +175,20 @@ class CacheHandler {
 			'viewtype' => $matches[2],
 			'view' => $matches[3],
 		);
+	}
+
+	/**
+	 * Is the view cacheable. Language views are handled specially.
+	 *
+	 * @param string $view View name
+	 *
+	 * @return bool
+	 */
+	protected function isCacheableView($view) {
+		if (preg_match('~^languages/(.*)\.js$~', $view, $m)) {
+			return in_array($m[1],  _elgg_services()->translator->getAllLanguageCodes());
+		}
+		return _elgg_services()->views->isCacheableView($view);
 	}
 
 	/**
@@ -326,7 +340,7 @@ class CacheHandler {
 	}
 
 	/**
-	 * Render a view for caching
+	 * Render a view for caching. Language views are handled specially.
 	 *
 	 * @param string $view     The view name
 	 * @param string $viewtype The viewtype
@@ -334,6 +348,13 @@ class CacheHandler {
 	 */
 	protected function renderView($view, $viewtype) {
 		elgg_set_viewtype($viewtype);
+
+		if ($viewtype === 'default' && preg_match("#^languages/(.*?)\\.js$#", $view, $matches)) {
+			$view = "languages.js";
+			$vars = ['language' => $matches[1]];
+		} else {
+			$vars = [];
+		}
 
 		if (!elgg_view_exists($view)) {
 			$this->send403();
@@ -350,7 +371,7 @@ class CacheHandler {
 		// the trigger correctly when the first view is actually being output.
 		$GLOBALS['_ELGG']->pagesetupdone = true;
 
-		return elgg_view($view);
+		return elgg_view($view, $vars);
 	}
 
 	/**
