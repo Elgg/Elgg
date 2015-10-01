@@ -48,10 +48,20 @@ elgg.site_notifications.delete = function(event) {
  * @return void
  */
 elgg.site_notifications.auto_delete = function(event) {
-	var id = $(this).attr('id');
-	id = id.replace("link", "delete");
-	elgg.action($('#' + id).attr('href'), {});
-}
+	var href = this.href;
+	var id = this.id.replace("link", "delete");
+
+	require(['elgg/spinner'], function (spinner) {
+		elgg.action($('#' + id).prop('href'), {
+			beforeSend: spinner.start,
+			complete: function() {
+				location.href = href;
+			}
+		});
+	});
+
+	return false;
+};
 
 /**
  * Toggle the checkboxes in the site notification listing
