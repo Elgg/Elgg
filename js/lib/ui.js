@@ -114,7 +114,7 @@ elgg.ui.popupOpen = function(event) {
 		collision: 'fit fit'
 	};
 
-	options = elgg.trigger_hook('getOptions', 'ui.popup', params, options);
+	options = elgg._trigger_hook('getOptions', 'ui.popup', params, options);
 
 	// allow plugins to cancel event
 	if (!options) {
@@ -466,7 +466,9 @@ elgg.ui.initAccessInputs = function () {
 	});
 };
 
-elgg.register_hook_handler('init', 'system', elgg.ui.init);
-elgg.register_hook_handler('init', 'system', elgg.ui.initDatePicker);
-elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.loginHandler);
-elgg.ui.registerTogglableMenuItems('add-friend', 'remove-friend');
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.ui.init);
+	register('init', 'system', elgg.ui.initDatePicker);
+	register('getOptions', 'ui.popup', elgg.ui.loginHandler);
+	elgg.ui.registerTogglableMenuItems('add-friend', 'remove-friend');
+});

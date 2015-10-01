@@ -35,7 +35,7 @@ elgg.site_notifications.delete = function(event) {
 	});
 
 	event.preventDefault();
-}
+};
 
 /**
  * Delete notification for this link
@@ -48,7 +48,7 @@ elgg.site_notifications.auto_delete = function(event) {
 	var id = $(this).attr('id');
 	id = id.replace("link", "delete");
 	elgg.action($('#' + id).attr('href'), {});
-}
+};
 
 /**
  * Toggle the checkboxes in the site notification listing
@@ -59,4 +59,6 @@ elgg.site_notifications.toggle_all = function() {
 	$('.site-notifications-container input[type=checkbox]').click();
 };
 
-elgg.register_hook_handler('init', 'system', elgg.site_notifications.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.site_notifications.init);
+});

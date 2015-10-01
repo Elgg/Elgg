@@ -11,4 +11,6 @@ elgg.ui.river.init = function() {
 	});
 };
 
-elgg.register_hook_handler('init', 'system', elgg.ui.river.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.ui.river.init);
+});

@@ -112,6 +112,8 @@ elgg.ui.lightbox.close = function() {
 	$.colorbox.close();
 };
 
-elgg.register_hook_handler('init', 'system', elgg.ui.lightbox.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.ui.lightbox.init);
+});
 
 <?= elgg_view('jquery.colorbox.js'); ?>

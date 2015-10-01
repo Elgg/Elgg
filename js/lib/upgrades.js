@@ -118,4 +118,6 @@ elgg.upgrades.upgradeBatch = function(offset) {
 	return elgg.post(action, options);
 };
 
-elgg.register_hook_handler('init', 'system', elgg.upgrades.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.upgrades.init);
+});

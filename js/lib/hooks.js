@@ -7,21 +7,9 @@ elgg.provide('elgg.config.instant_hooks');
 elgg.provide('elgg.config.triggered_hooks');
 
 /**
- * Registers a hook handler with the event system.
- *
- * The special keyword "all" can be used for either the name or the type or both
- * and means to call that handler for all of those hooks.
- *
- * Note that handlers registering for instant hooks will be executed immediately if the instant
- * hook has been previously triggered.
- *
- * @param {String}   name     Name of the plugin hook to register for
- * @param {String}   type     Type of the event to register for
- * @param {Function} handler  Handle to call
- * @param {Number}   priority Priority to call the event handler
- * @return {Bool}
+ * @private
  */
-elgg.register_hook_handler = function(name, type, handler, priority) {
+elgg._register_hook_handler = function(name, type, handler, priority) {
 	elgg.assertTypeOf('string', name);
 	elgg.assertTypeOf('string', type);
 	elgg.assertTypeOf('function', handler);
@@ -47,30 +35,26 @@ elgg.register_hook_handler = function(name, type, handler, priority) {
 };
 
 /**
- * Emits a hook.
+ * Registers a hook handler with the event system.
  *
- * Loops through all registered hooks and calls the handler functions in order.
- * Every handler function will always be called, regardless of the return value.
- *
- * @warning Handlers take the same 4 arguments in the same order as when calling this function.
- * This is different from the PHP version!
- *
- * @note Instant hooks do not support params or values.
- *
- * Hooks are called in this order:
- *	specifically registered (event_name and event_type match)
- *	all names, specific type
- *	specific name, all types
- *	all names, all types
- *
- * @param {String} name   Name of the hook to emit
- * @param {String} type   Type of the hook to emit
- * @param {Object} params Optional parameters to pass to the handlers
- * @param {Object} value  Initial value of the return. Can be mangled by handlers
- *
- * @return {Bool}
+ * @deprecated Use the elgg/hooks/register module in a boot module
  */
-elgg.trigger_hook = function(name, type, params, value) {
+elgg.register_hook_handler = function(name, type, handler, priority) {
+	if (name === 'boot' && type === 'system') {
+		elgg.deprecated_notice("The hook [boot, system] is deprecated. Use [init, system] in a plugin boot" +
+			" module", "2.1");
+	} else {
+		elgg.deprecated_notice("elgg.register_hook_handler is deprecated. Use the elgg/hooks/register module" +
+			" in your plugin boot module", "2.1");
+	}
+
+	return elgg._register_hook_handler(name, type, handler, priority);
+};
+
+/**
+ * @private
+ */
+elgg._trigger_hook = function(name, type, params, value) {
 	elgg.assertTypeOf('string', name);
 	elgg.assertTypeOf('string', type);
 
@@ -122,6 +106,16 @@ elgg.trigger_hook = function(name, type, params, value) {
 };
 
 /**
+ * Emits a hook.
+ *
+ * @deprecated Use the elgg/hooks/trigger module
+ */
+elgg.trigger_hook = function(name, type, params, value) {
+	elgg.deprecated_notice("elgg.trigger_hook is deprecated. Use the elgg/hooks/trigger module", "2.1");
+	return elgg._trigger_hook(name, type, params, value);
+};
+
+/**
  * Registers a hook as an instant hook.
  *
  * After being trigger once, registration of a handler to an instant hook will cause the
@@ -132,7 +126,7 @@ elgg.trigger_hook = function(name, type, params, value) {
  *
  * @param {String} name The hook name.
  * @param {String} type The hook type.
- * @return {Int}
+ * @return {Number} integer
  */
 elgg.register_instant_hook = function(name, type) {
 	elgg.assertTypeOf('string', name);

@@ -16,10 +16,8 @@ if ($is_sticky_register) {
 	$wg_body_class .= ' hidden';
 	ob_start(); ?>
 <script>
-require(['elgg'], function (elgg) {
-	elgg.register_hook_handler('init', 'system', function() {
-		$('.registration_link').trigger('click');
-	});
+require(['elgg', 'jquery'], function (elgg, $) {
+	$('.registration_link').trigger('click');
 });
 </script>
 	<?php

@@ -52,4 +52,6 @@ elgg.messageboard.deletePost = function(elem) {
 	}
 };
 
-elgg.register_hook_handler('init', 'system', elgg.messageboard.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.messageboard.init);
+});

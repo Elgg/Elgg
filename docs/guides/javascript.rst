@@ -191,6 +191,64 @@ Some things to note
 #. Return the value of the module instead of adding to a global variable.
 #. Static (.js,.css,etc.) files are automatically minified and cached by Elgg's simplecache system.
 
+Booting your plugin
+===================
+
+To add functionality to each page, or make sure your hook handlers are registered early enough, you may create a boot module for your plugin, with the name ``boot/<plugin_id>``.
+
+.. code-block:: javascript
+
+    // in views/default/boot/example.js
+
+    define(function(require) {
+        var Plugin = require("elgg/Plugin");
+        var register = require("elgg/hooks/register");
+
+        function my_init() { ... }
+
+        // using [init, system] to call this before others
+        register("init", "system", my_init, 400);
+
+        return new Plugin({
+            // optional
+            init: function () {
+                // this is executed strictly in order of plugin priority
+            },
+
+            // optional
+            exports: {
+                // resources available to other plugins
+            }
+        });
+    });
+
+When your plugin is active, this module will automatically be loaded on each page. Other modules can depend on ``elgg/booted`` to make sure all boot modules are loaded.
+
+Each boot module **must** return an instance of ``elgg/Plugin``. The constructor accepts a configuration object that helps initialize code in plugin order, and/or provide an "exports" value other modules can use.
+
+.. note:: Though not strictly necessary, you may want to use the ``init, system`` event to control when your initialization code runs with respect to other modules.
+
+.. warning:: A boot plugin **cannot** depend on the ``elgg/booted`` module either directly or through its hierarchy of dependents.
+
+
+The elgg/booted module
+----------------------
+
+``elgg/booted`` loads and initializes all plugin boot modules in priority order. Require this module to make sure all plugins are ready.
+
+It includes the function ``get_plugin(id)``, which will return a Plugin object if the plugin has one (and is activated). This allows you to conditionally detect and/or get access to boot module resources without a hard dependency:
+
+.. code-block:: javascript
+
+    define(function(require) {
+        var booted = require("elgg/booted");
+
+        var example_plugin = booted.get_plugin("example");
+        if (example_plugin) {
+            example_plugin.get_exports();
+        }
+    });
+
 
 Migrating JS from Elgg 1.8 to AMD / 1.9
 =======================================
@@ -297,8 +355,7 @@ Parse a URL into its component parts:
    //   path: "/file.php",
    //   query: "arg=val"
    // }
-   elgg.parse_url(
-     'http://community.elgg.org/file.php?arg=val#fragment');
+   elgg.parse_url('http://community.elgg.org/file.php?arg=val#fragment');
 
 
 ``elgg.get_page_owner_guid()``
@@ -306,31 +363,42 @@ Parse a URL into its component parts:
 Get the GUID of the current page's owner.
 
 
-``elgg.register_hook_handler()``
+``elgg.register_hook_handler()`` (Deprecated: Use the ``elgg/hooks/register`` module.)
 
 Register a hook handler with the event system.
 
-.. code:: js
+.. code-block:: js
 
-    // old initialization style
-    elgg.register_hook_handler('init', 'system', my_plugin.init);
+    // old
+    elgg.register_hook_handler('foo', 'bar', my_plugin.handle_foo);
 
-    // new: AMD module
+    // new: AMD boot module
     define(function (require) {
-        var elgg = require('elgg');
+        var Plugin = require('elgg/Plugin');
+        var register = require('elgg/hooks/register');
 
-        // [init, system] has fired
+        register('foo', 'bar', function () { ... });
+
+        return new Plugin();
     });
 
 
-``elgg.trigger_hook()``
+``elgg.trigger_hook()`` (Deprecated: Use the ``elgg/hooks/trigger`` module)
 
 Emit a hook event in the event system.
 
-.. code:: js
+.. code-block:: js
 
-    // allow other plugins to alter value
+    // old
     value = elgg.trigger_hook('my_plugin:filter', 'value', {}, value);
+
+    // new
+    define(function (require) {
+        // this blocks until plugins are booted
+        var trigger = require('elgg/hooks/trigger');
+
+        value = trigger('my_plugin:filter', 'value', {}, value);
+    });
 
 
 ``elgg.security.refreshToken()``
@@ -428,24 +496,32 @@ Hooks
 
 The JS engine has a hooks system similar to the PHP engine's plugin hooks: hooks are triggered and plugins can register callbacks to react or alter information. There is no concept of Elgg events in the JS engine; everything in the JS engine is implemented as a hook.
 
-Registering a callback to a hook
-^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+Registering hook handlers
+^^^^^^^^^^^^^^^^^^^^^^^^^
 
-Callbacks are registered using ``elgg.register_hook_handler()``. Multiple callbacks can be registered for the same hook.
+You may register hook handlers using the ``elgg/hooks/register`` module (ideally inside your plugin boot module). Multiple callbacks can be registered for the same hook.
 
-The following example registers the ``elgg.ui.initDatePicker`` callback for the *init*, *system* event. Note that a difference in the JS engine is that instead of passing a string you pass the function itself to ``elgg.register_hook_handler()`` as the callback.
+The following example registers the ``handleFoo`` function for the ``foo, bar`` hook.
 
-.. code:: javascript
+.. code-block:: javascript
 
-   elgg.provide('elgg.ui.initDatePicker');
-   elgg.ui.initDatePicker = function() { ... }
-   
-   elgg.register_hook_handler('init', 'system', elgg.ui.initDatePicker);
+    define(function (require) {
+        var Plugin = require('elgg/Plugin');
+        var register = require('elgg/hooks/register');
 
-The callback
-^^^^^^^^^^^^
+        function handleFoo(hook, type, params, value) {
+            // do something
+        }
 
-The callback accepts 4 arguments:
+        register('foo', 'bar', handleFoo);
+
+        return new Plugin();
+   });
+
+The handler function
+^^^^^^^^^^^^^^^^^^^^
+
+The handler will receive 4 arguments:
 
 - **hook** - The hook name
 - **type** - The hook type
@@ -457,11 +533,17 @@ The ``value`` will be passed through each hook. Depending on the hook, callbacks
 Triggering custom hooks
 ^^^^^^^^^^^^^^^^^^^^^^^
 
-Plugins can trigger their own hooks:
+Plugins can trigger their own hooks via the ``elgg/hooks/trigger`` module.:
 
 .. code:: javascript
 
-   elgg.hook.trigger_hook('name', 'type', {params}, "value");
+    define(function(require) {
+        var trigger = require("elgg/hooks/trigger");
+
+        trigger('name', 'type', {params}, "value");
+    });
+
+.. note:: You cannot trigger hooks in your boot module, or in a module that also registers hooks.
 
 Available hooks
 ^^^^^^^^^^^^^^^

@@ -71,4 +71,6 @@ elgg.walled_garden.load = function(view) {
 	};
 };
 
-elgg.register_hook_handler('init', 'system', elgg.walled_garden.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.walled_garden.init);
+});

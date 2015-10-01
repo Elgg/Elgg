@@ -1,6 +1,11 @@
 /** @module elgg/UserPicker */
 
-define(['jquery', 'elgg', 'jquery.ui.autocomplete.html'], function ($, elgg) {
+define(function(require) {
+	var $ = require('jquery');
+	var elgg = require('elgg');
+	var register = require('elgg/hooks/register');
+	require('jquery.ui.autocomplete.html');
+
 	/**
 	 * @param {HTMLElement} wrapper outer div
 	 * @constructor
@@ -135,7 +140,7 @@ define(['jquery', 'elgg', 'jquery.ui.autocomplete.html'], function ($, elgg) {
 	 * @param {String} selector
 	 */
 	UserPicker.setup = function(selector) {
-		elgg.register_hook_handler('init', 'system', function () {
+		register('init', 'system', function () {
 			$(selector).each(function () {
 				// we only want to wrap each picker once
 				if (!$(this).data('initialized')) {

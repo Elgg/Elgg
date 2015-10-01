@@ -6,7 +6,11 @@ elgg.embed.init = function() {
 	// inserts the embed content into the textarea
 	$(document).on('click', ".embed-item", elgg.embed.insert);
 
-	elgg.register_hook_handler('embed', 'editor', elgg.embed._deprecated_custom_insert_js);
+	// this will cause a warning because this runs after elgg/booted, but we
+	// can't refactor this until 3.0
+	require(['elgg/hooks/register'], function(register) {
+		register('embed', 'editor', elgg.embed._deprecated_custom_insert_js);
+	});
 
 	// caches the current textarea id
 	$(document).on('click', ".embed-control", function() {
@@ -187,4 +191,6 @@ elgg.embed.addContainerGUID = function(url) {
 	}
 };
 
-elgg.register_hook_handler('init', 'system', elgg.embed.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.embed.init);
+});
