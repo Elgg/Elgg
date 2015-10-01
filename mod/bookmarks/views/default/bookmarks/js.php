@@ -1,3 +1,4 @@
+//<script>
 
 elgg.provide('elgg.bookmarks');
 
@@ -9,4 +10,6 @@ elgg.bookmarks.init = function() {
 	e.attr('href', link);
 };
 
-elgg.register_hook_handler('init', 'system', elgg.bookmarks.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.bookmarks.init);
+});

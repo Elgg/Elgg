@@ -77,4 +77,6 @@ elgg.avatarCropper.selectChange = function(img, selection) {
 	$('input[name=y2]').val(selection.y2);
 };
 
-elgg.register_hook_handler('init', 'system', elgg.avatarCropper.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.avatarCropper.init);
+});

@@ -1,3 +1,4 @@
+//<script>
 
 elgg.provide('elgg.uservalidationbyemail');
 
@@ -25,4 +26,6 @@ elgg.uservalidationbyemail.init = function() {
 	});
 };
 
-elgg.register_hook_handler('init', 'system', elgg.uservalidationbyemail.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.uservalidationbyemail.init);
+});

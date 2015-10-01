@@ -115,4 +115,6 @@ elgg.discussion.init = function() {
 	});
 };
 
-elgg.register_hook_handler('init', 'system', elgg.discussion.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.discussion.init);
+});

@@ -3,7 +3,7 @@
  * Likes JavaScript extension for elgg.js
  */
 ?>
-
+//<script>
 /**
  * Repositions the likes popup
  *
@@ -23,5 +23,8 @@ elgg.ui.likesPopupHandler = function(hook, type, params, options) {
 	return null;
 };
 
-elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);
+require(['elgg/hooks/register'], function(register) {
+	register('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);
+});
+
 elgg.ui.registerTogglableMenuItems('likes', 'unlike');

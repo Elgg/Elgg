@@ -208,4 +208,6 @@ elgg.ui.widgets.setMinHeight = function(selector) {
 	});
 };
 
-elgg.register_hook_handler('init', 'system', elgg.ui.widgets.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.ui.widgets.init);
+});

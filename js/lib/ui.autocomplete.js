@@ -20,4 +20,6 @@ elgg.autocomplete.init = function() {
 	});
 };
 
-elgg.register_hook_handler('init', 'system', elgg.autocomplete.init);
+require(['elgg/hooks/register'], function(register) {
+	register('init', 'system', elgg.autocomplete.init);
+});
