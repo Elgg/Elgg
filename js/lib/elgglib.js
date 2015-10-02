@@ -422,9 +422,9 @@ elgg.forward = function(url) {
 /**
  * Parse a URL into its parts. Mimicks http://php.net/parse_url
  *
- * @param {String} url       The URL to parse
- * @param {Int}    component A component to return
- * @param {Bool}   expand    Expand the query into an object? Else it's a string.
+ * @param {String}  url       The URL to parse
+ * @param {Number}  component A component to return
+ * @param {Boolean} expand    Expand the query into an object? Else it's a string.
  *
  * @return {Object} The parsed URL
  */
@@ -562,7 +562,7 @@ elgg.getSelectorFromUrlFragment = function(url) {
  *
  * @param {Object} object The object to add to
  * @param {String} parent The parent array to add to.
- * @param {Mixed}  value  The value
+ * @param {*}      value  The value
  */
 elgg.push_to_object_array = function(object, parent, value) {
 	elgg.assertTypeOf('object', object);
@@ -584,7 +584,7 @@ elgg.push_to_object_array = function(object, parent, value) {
  *
  * @param {Object} object The object to add to
  * @param {String} parent The parent array to add to.
- * @param {Mixed}  value  The value
+ * @param {*}      value  The value
  */
 elgg.is_in_object_array = function(object, parent, value) {
 	elgg.assertTypeOf('object', object);

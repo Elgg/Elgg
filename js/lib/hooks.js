@@ -9,6 +9,8 @@ elgg.provide('elgg.config.triggered_hooks');
 /**
  * Registers a hook handler with the event system.
  *
+ * For best results, depend on the elgg/ready module, so plugins will have been booted.
+ *
  * The special keyword "all" can be used for either the name or the type or both
  * and means to call that handler for all of those hooks.
  *
@@ -19,7 +21,7 @@ elgg.provide('elgg.config.triggered_hooks');
  * @param {String}   type     Type of the event to register for
  * @param {Function} handler  Handle to call
  * @param {Number}   priority Priority to call the event handler
- * @return {Bool}
+ * @return {Boolean}
  */
 elgg.register_hook_handler = function(name, type, handler, priority) {
 	elgg.assertTypeOf('string', name);
@@ -68,7 +70,7 @@ elgg.register_hook_handler = function(name, type, handler, priority) {
  * @param {Object} params Optional parameters to pass to the handlers
  * @param {Object} value  Initial value of the return. Can be mangled by handlers
  *
- * @return {Bool}
+ * @return {Boolean}
  */
 elgg.trigger_hook = function(name, type, params, value) {
 	elgg.assertTypeOf('string', name);
@@ -132,7 +134,7 @@ elgg.trigger_hook = function(name, type, params, value) {
  *
  * @param {String} name The hook name.
  * @param {String} type The hook type.
- * @return {Int}
+ * @return {Number} integer
  */
 elgg.register_instant_hook = function(name, type) {
 	elgg.assertTypeOf('string', name);

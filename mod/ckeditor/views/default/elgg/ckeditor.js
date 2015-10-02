@@ -1,7 +1,9 @@
 define(function(require) {
 	var elgg = require('elgg');
-	var $ = require('jquery'); require('jquery.ckeditor');
+	var $ = require('jquery');
+	require('jquery.ckeditor');
 	var CKEDITOR = require('ckeditor');
+	var config = require('elgg/ckeditor/config');
 
 	CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_simplecache_url('elgg/ckeditor/blockimagepaste.js'), '');
 	
@@ -73,8 +75,7 @@ define(function(require) {
 		 * You can find configuration information here:
 		 * http://docs.ckeditor.com/#!/api/CKEDITOR.config
 		 */
-		config: require('elgg/ckeditor/config')
-
+		config: config
 	};
 
 	CKEDITOR.on('instanceReady', elggCKEditor.fixImageAttributes);

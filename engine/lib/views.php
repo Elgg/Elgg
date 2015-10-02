@@ -1599,6 +1599,10 @@ function elgg_views_boot() {
 	elgg_register_css('elgg', elgg_get_simplecache_url('elgg.css'));
 	elgg_load_css('elgg');
 
+	elgg_register_simplecache_view('elgg/init.js');
+	elgg_require_js('elgg/init');
+	elgg_require_js('elgg/ready');
+
 	// optional stuff
 	elgg_register_js('lightbox', elgg_get_simplecache_url('lightbox.js'));
 	elgg_register_css('lightbox', elgg_get_simplecache_url('lightbox/elgg-colorbox-theme/colorbox.css'));
