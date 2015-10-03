@@ -13,6 +13,10 @@ module.exports = function(config) {
 
 		// list of files / patterns to load in the browser
 		files: [
+			'js/tests/prepare.js',
+
+			{pattern:'views/default/**/*.js',included:false},
+
 			'vendor/bower-asset/jquery/dist/jquery.js',
 			'bower_components/sprintf/src/sprintf.js',
 			'js/lib/elgglib.js',
@@ -20,10 +24,11 @@ module.exports = function(config) {
 			'js/classes/*.js',
 			'js/lib/*.js',
 
+			// setup tests
 			{pattern:'js/tests/*Test.js',included: false},
-			{pattern:'views/default/**/*.js',included:false},
 
-			'js/tests/requirejs.config.js',
+			// setup RequireJS to run tests
+			'js/tests/requirejs.config.js'
 		],
 
 
@@ -54,7 +59,7 @@ module.exports = function(config) {
 
 		// level of logging
 		// possible values: config.LOG_DISABLE || config.LOG_ERROR || config.LOG_WARN || config.LOG_INFO || config.LOG_DEBUG
-		logLevel: config.LOG_INFO,
+		logLevel: config.LOG_DEBUG,
 
 
 		// enable / disable watching file and executing tests whenever any file changes

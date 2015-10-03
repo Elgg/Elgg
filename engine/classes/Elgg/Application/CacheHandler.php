@@ -185,8 +185,8 @@ class CacheHandler {
 	 * @return bool
 	 */
 	protected function isCacheableView($view) {
-		if (preg_match('~^languages/(.*)\.js$~', $view, $m)) {
-			return in_array($m[1],  _elgg_services()->translator->getAllLanguageCodes());
+		if (preg_match('~^languages/(early/|late/)?(.*)\.js$~', $view, $m)) {
+			return in_array($m[2],  _elgg_services()->translator->getAllLanguageCodes());
 		}
 		return _elgg_services()->views->isCacheableView($view);
 	}
@@ -349,9 +349,12 @@ class CacheHandler {
 	protected function renderView($view, $viewtype) {
 		elgg_set_viewtype($viewtype);
 
-		if ($viewtype === 'default' && preg_match("#^languages/(.*?)\\.js$#", $view, $matches)) {
+		if ($viewtype === 'default' && preg_match("#^languages/(early/|late/)?(.*?)\\.js$#", $view, $matches)) {
 			$view = "languages.js";
-			$vars = ['language' => $matches[1]];
+			$vars = ['language' => $matches[2]];
+			if (!empty($matches[1])) {
+				$vars['timing'] = substr($matches[1], 0, -1);
+			}
 		} else {
 			$vars = [];
 		}

@@ -81,26 +81,39 @@ elgg.ui.lightbox.bind = function (selector, opts) {
 		opts = {};
 	}
 
-	// merge opts into defaults
-	opts = $.extend({}, elgg.ui.lightbox.getSettings(), opts);
+	require([
+		'elgg/echo!js:lightbox:current',
+		'elgg/echo!previous',
+		'elgg/echo!next',
+		'elgg/echo!close',
+		'elgg/echo!error'
+	], function(current, previous, next, close, error) {
 
-	$(document).on('click', selector, function (e) {
-		var $this = $(this),
-			href = $this.prop('href') || $this.prop('src'),
-			dataOpts = $this.data('colorboxOpts');
-		// Note: data-colorbox was reserved https://github.com/jackmoore/colorbox/issues/435
+		// we pass these translators in for the default view, but for BC the lightbox/settings.js
+		// view can be overridden safely.
+		var settings = elgg.ui.lightbox.getSettings(current, previous, next, close, error);
 
-		if (!$.isPlainObject(dataOpts)) {
-			dataOpts = {};
-		}
+		// merge opts into defaults
+		opts = $.extend({}, settings, opts);
 
-		if (!dataOpts.href && href) {
-			dataOpts.href = href;
-		}
+		$(document).on('click', selector, function (e) {
+			var $this = $(this),
+				href = $this.prop('href') || $this.prop('src'),
+				dataOpts = $this.data('colorboxOpts');
+			// Note: data-colorbox was reserved https://github.com/jackmoore/colorbox/issues/435
 
-		// merge data- options into opts
-		$.colorbox($.extend({}, opts, dataOpts));
-		e.preventDefault();
+			if (!$.isPlainObject(dataOpts)) {
+				dataOpts = {};
+			}
+
+			if (!dataOpts.href && href) {
+				dataOpts.href = href;
+			}
+
+			// merge data- options into opts
+			$.colorbox($.extend({}, opts, dataOpts));
+			e.preventDefault();
+		});
 	});
 };
 

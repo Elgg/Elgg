@@ -4,7 +4,7 @@
 
 	define(function (require) {
 		var $ = require('jquery');
-		var elgg = require('elgg');
+		var developers_amd = require('elgg/echo!developers:amd');
 
 		var known = {};
 		var count = 0;
@@ -14,7 +14,7 @@
 				if (!known[name]) {
 					known[name] = 1;
 					count++;
-					console.log(count + ' ' + elgg.echo('developers:amd') + '(' + name + ')', val);
+					console.log(count + ' ' + developers_amd() + '(' + name + ')', val);
 				}
 			});
 		}

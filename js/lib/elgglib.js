@@ -384,27 +384,17 @@ elgg.register_error = function(errors, delay) {
 };
 
 /**
- * Logs a notice about use of a deprecated function or capability
+ * Informs admin users via a console message about use of a deprecated function or capability
+ *
  * @param {String} msg         The deprecation message to display
  * @param {Number} dep_version The version the function was deprecated for
  * @since 1.9
  */
 elgg.deprecated_notice = function(msg, dep_version) {
 	if (elgg.is_admin_logged_in()) {
-		var parts = elgg.release.split('.');
-		var elgg_major_version = parseInt(parts[0], 10);
-		var elgg_minor_version = parseInt(parts[1], 10);
-		var dep_major_version = Math.floor(dep_version);
-		var dep_minor_version = 10 * (dep_version - dep_major_version);
-
 		msg = "Deprecated in Elgg " + dep_version + ": " + msg;
-
-		if ((dep_major_version < elgg_major_version) || (dep_minor_version < elgg_minor_version)) {
-			elgg.register_error(msg);
-		} else {
-			if (typeof console !== "undefined") {
-				console.warn(msg);
-			}
+		if (typeof console !== "undefined") {
+			console.info(msg);
 		}
 	}
 };

@@ -51,6 +51,12 @@ foreach ($files as $file) {
 	echo "\n";
 }
 
+// If this config flag is true, the "elgg" module will depend on a tiny set of translations
+// and load the rest on demand in the "elgg/echo" module. As the elgg.echo() function is synchronous,
+// it will fail in some cases in this scenario, so this is setting is not officially supported, but
+// will be the standard behavior in 3.0. After changing this setting, the simplecache must be flushed.
+$early = elgg_get_config('EXPERIMENTAL_echo_async_only') ? "early/" : "";
+
 /**
  * Set some values that are cacheable
  */
@@ -64,10 +70,10 @@ elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
 // refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
 elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTokenTimeout() * 333; ?>;
 elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->language); ?>';
+elgg.config.initial_language_module = 'languages/<?= $early ?>' + elgg.get_language();
 
-// We require jquery-ui because loading the file in an AMD environment doesn't automatically
-// apply its functionality to jQuery.
-define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
+define('elgg', ['jquery', elgg.config.initial_language_module], function($, translations) {
+
 	elgg.add_translation(elgg.get_language(), translations);
 
 	$(function() {

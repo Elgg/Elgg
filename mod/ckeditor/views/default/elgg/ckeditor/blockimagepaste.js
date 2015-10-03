@@ -3,9 +3,9 @@
 CKEDITOR.plugins.add( 'blockimagepaste', {
         init : function(editor) {
  
-	        function replaceImgText(html) {
+	        function replaceImgText(html, blockimagepaste) {
 	            var ret = html.replace( /<img[^>]*src="data:image\/(bmp|dds|gif|jpg|jpeg|png|psd|pspimage|tga|thm|tif|tiff|yuv|ai|eps|ps|svg);base64,.*?"[^>]*>/gi, function( img ){
-                    alert(elgg.echo('ckeditor:blockimagepaste'));
+                    alert(blockimagepaste());
                     return '';
                  });
 	            return ret;
@@ -16,10 +16,12 @@ CKEDITOR.plugins.add( 'blockimagepaste', {
 	            if (editor.readOnly) {
 	                return;
 	            }
-	            
-	            setTimeout(function() {
-	                editor.document.$.body.innerHTML = replaceImgText(editor.document.$.body.innerHTML);
-	            }, 100);
+
+				require(['elgg/echo!ckeditor:blockimagepaste'], function (blockimagepaste) {
+					setTimeout(function() {
+						editor.document.$.body.innerHTML = replaceImgText(editor.document.$.body.innerHTML, blockimagepaste);
+					}, 100);
+				});
 	        }
 	         
 	        editor.on('contentDom', function() {

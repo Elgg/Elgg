@@ -9,7 +9,9 @@ namespace Elgg\I18n;
  * @since 1.10.0
  */
 class Translator {
-	
+
+	const HOME_LANGUAGE_KEYS = 'home_language_keys';
+
 	/**
 	 * Global Elgg configuration
 	 * 
@@ -430,6 +432,47 @@ class Translator {
 		}
 	
 		return array_key_exists($key, $GLOBALS['_ELGG']->translations[$language]);
+	}
+
+	/**
+	 * Get a list of language keys made available early on the client
+	 *
+	 * In 2.x this is only used if $CONFIG->EXPERIMENTAL_echo_async_only is set to true. This flag
+	 * splits the language keys between "early" and "late" modules, with the early module made a
+	 * dependency of the "elgg" module. The late module will only load if the "elgg/echo" plugin
+	 * can't find a translation. For maximum BC, "elgg/echo" shares its translations with the
+	 * elgg.echo() function.
+	 *
+	 * @return string[]
+	 * @access private
+	 */
+	public function getEarlyKeys() {
+		$keys = [
+			'js:lightbox:current',
+			'previous',
+			'next',
+			'close',
+			'hide',
+			'error',
+			'ajax:error',
+			'confirm',
+			'question:areyousure',
+			'access:comments:change',
+			'deleteconfirm',
+		];
+
+		foreach (elgg_get_plugins() as $plugin) {
+			$config = $plugin->getConfigData();
+			if (!empty($config[self::HOME_LANGUAGE_KEYS]) && is_array($config[self::HOME_LANGUAGE_KEYS])) {
+				foreach ($config[self::HOME_LANGUAGE_KEYS] as $key) {
+					if (is_string($key)) {
+						$keys[] = $key;
+					}
+				}
+			}
+		}
+
+		return array_unique($keys);
 	}
 	
 	/**

@@ -40,7 +40,9 @@ elgg.security.refreshToken = function() {
 			elgg.security.setToken(data);
 			if (elgg.is_logged_in() && data.logged_in === false) {
 				elgg.session.user = null;
-				elgg.register_error(elgg.echo('session_expired'));
+				require(['elgg/echo!session_expired'], function (session_expired) {
+					elgg.register_error(session_expired());
+				});
 			}
 		}
 	});

@@ -1,4 +1,7 @@
 <?php
+
+use Elgg\Filesystem\Directory\Local;
+
 /**
  * Stores site-side plugin settings as private data.
  *
@@ -753,6 +756,23 @@ class ElggPlugin extends \ElggObject {
 		return true;
 	}
 
+	/**
+	 * Get array data from the plugin's "elgg-plugin.php" file. Returns empty array
+	 * if there's no file.
+	 *
+	 * @return array
+	 * @access private
+	 * @internal
+	 */
+	public function getConfigData() {
+		$file = Local::fromPath($this->getPath())->getFile('elgg-plugin.php');
+		if (!$file->exists()) {
+			return [];
+		}
+
+		$config = $file->includeFile();
+		return is_array($config) ? $config : [];
+	}
 
 	// start helpers
 

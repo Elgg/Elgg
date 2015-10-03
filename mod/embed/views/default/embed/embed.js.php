@@ -146,9 +146,11 @@ elgg.embed.submit = function(event) {
 			}
 		},
 		error    : function(xhr, status) {
-			elgg.register_error(elgg.echo('actiongatekeeper:uploadexceeded'));
-			$('.embed-throbber').hide();
-			$('.embed-wrapper .elgg-form-file-upload').show();
+			require(['elgg/echo!actiongatekeeper:uploadexceeded'], function (uploadexceeded) {
+				elgg.register_error(uploadexceeded());
+				$('.embed-throbber').hide();
+				$('.embed-wrapper .elgg-form-file-upload').show();
+			});
 		}
 	});
 

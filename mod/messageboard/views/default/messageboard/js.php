@@ -40,16 +40,18 @@ elgg.messageboard.submit = function(e) {
 
 elgg.messageboard.deletePost = function(elem) {
 	var $link = $(elem);
-	var confirmText = $link.attr('title') || elgg.echo('question:areyousure');
+	require(['elgg/echo!question:areyousure'], function (areyousure) {
+		var confirmText = $link.attr('title') || areyousure();
 
-	if (confirm(confirmText)) {
-		elgg.action($link.attr('href'), {
-			success: function() {
-				var item = $link.closest('.elgg-item');
-				item.remove();
-			}
-		});
-	}
+		if (confirm(confirmText)) {
+			elgg.action($link.attr('href'), {
+				success: function() {
+					var item = $link.closest('.elgg-item');
+					item.remove();
+				}
+			});
+		}
+	});
 };
 
 elgg.register_hook_handler('init', 'system', elgg.messageboard.init);

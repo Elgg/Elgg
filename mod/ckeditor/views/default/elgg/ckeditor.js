@@ -2,6 +2,8 @@ define(function(require) {
 	var elgg = require('elgg');
 	var $ = require('jquery'); require('jquery.ckeditor');
 	var CKEDITOR = require('ckeditor');
+	var ckeditor_html = require('elgg/echo!ckeditor:html');
+	var ckeditor_visual = require('elgg/echo!ckeditor:visual');
 
 	CKEDITOR.plugins.addExternal('blockimagepaste', elgg.get_simplecache_url('elgg/ckeditor/blockimagepaste.js'), '');
 	
@@ -20,10 +22,10 @@ define(function(require) {
 	
 			if (!$(target).data('ckeditorInstance')) {
 				$(target).ckeditor(elggCKEditor.init, elggCKEditor.config);
-				$(this).html(elgg.echo('ckeditor:html'));
+				$(this).html(ckeditor_html());
 			} else {
 				$(target).ckeditorGet().destroy();
-				$(this).html(elgg.echo('ckeditor:visual'));
+				$(this).html(ckeditor_visual());
 			}
 		},
 

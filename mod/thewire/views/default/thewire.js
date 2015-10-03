@@ -48,34 +48,41 @@ elgg.thewire.textCounter = function(textarea, status, limit) {
  * @return void
  */
 elgg.thewire.viewPrevious = function(event) {
+	event.preventDefault();
+
 	var $link = $(this);
 	var postGuid = $link.attr("href").split("/").pop();
 	var $previousDiv = $("#thewire-previous-" + postGuid);
 
-	if ($link.html() == elgg.echo('hide')) {
-		$link.html(elgg.echo('previous'));
-		$link.attr("title", elgg.echo('thewire:previous:help'));
-		$previousDiv.slideUp(400);
-	} else {
-		$link.html(elgg.echo('hide'));
-		$link.attr("title", elgg.echo('thewire:hide:help'));
+	require([
+		'elgg/echo!hide',
+		'elgg/echo!previous',
+		'elgg/echo!thewire:previous:help',
+		'elgg/echo!thewire:hide:help'
+	], function (hide, previous, previous_help, hide_help) {
+		if ($link.html() == hide()) {
+			$link.html(previous());
+			$link.attr("title", previous_help());
+			$previousDiv.slideUp(400);
+		} else {
+			$link.html(hide());
+			$link.attr("title", hide_help());
 
-		elgg.get({
-			url: elgg.config.wwwroot + "ajax/view/thewire/previous",
-			dataType: "html",
-			cache: false,
-			data: {guid: postGuid},
-			success: function(htmlData) {
-				if (htmlData.length > 0) {
-					$previousDiv.html(htmlData);
-					$previousDiv.slideDown(600);
+			elgg.get({
+				url: elgg.config.wwwroot + "ajax/view/thewire/previous",
+				dataType: "html",
+				cache: false,
+				data: {guid: postGuid},
+				success: function(htmlData) {
+					if (htmlData.length > 0) {
+						$previousDiv.html(htmlData);
+						$previousDiv.slideDown(600);
+					}
 				}
-			}
-		});
+			});
 
-	}
-
-	event.preventDefault();
+		}
+	});
 };
 
 elgg.register_hook_handler('init', 'system', elgg.thewire.init);

@@ -6,11 +6,12 @@ define(function (require) {
 	var elgg = require('elgg');
 	var spinner = require('elgg/spinner');
 	var gear_html = require('text!elgg/dev/gear.html');
+	var developers_settings = require('elgg/echo!admin:developers:settings');
 
 	$(gear_html)
 		.appendTo('body')
 		.find('.elgg-icon')
-		.prop('title', elgg.echo('admin:developers:settings'))
+		.prop('title', developers_settings())
 		.on('click', function () {
 			$.colorbox({
 				href: elgg.get_site_url() + 'ajax/view/developers/gear_popup',
