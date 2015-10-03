@@ -3,7 +3,7 @@ Internationalization
 
 Make your UI translatable into many different languages.
 
-If you’d like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`.
+If you'd like to contribute translations to Elgg, see :doc:`the contributors' guide </about/contributing>`.
 
 The default language is ``en`` for English. Currently Elgg will always fall back to an English translation,
 even if the site's language is not English; this is a known bug.
@@ -21,10 +21,12 @@ Translations are stored in PHP files in the ``/languages`` directory of your plu
 		'example:text' => 'Some example text',
 	];
 
+The default language is "en" for English.
+
 To override an existing translation, include it in your plugin's language file, and make sure your plugin is
 ordered later on the Admin > Plugins page:
 
-.. code:: php
+.. code-block:: php
 
 	<?php // mod/better_example/languages/en.php
 
@@ -35,6 +37,24 @@ ordered later on the Admin > Plugins page:
 .. note::
 
     Unless you are overriding core's or another plugin's language strings, it is good practice for the language keys to start with your plugin name. For example: ``yourplugin:success``, ``yourplugin:title``, etc. This helps avoid conflicts with other language keys.
+
+.. warning:: Do not use spaces in your language keys. The JS API does not support them fully.
+
+Optimized client-side loading
+-----------------------------
+
+Elgg plans to optimize client-side language loading in the future. Plugins may prepare for this by providing a list of language keys that are likely to be needed (via ``elgg/echo``) on the home page or other common URLs.
+
+.. code-block:: php
+
+    <?php // in mod/example/elgg-plugin.php
+
+    return [
+        'home_language_keys' => [
+            'example:home:welcome',
+            'example:home:intro',
+        ],
+    ];
 
 Server-side API
 ===============
@@ -83,18 +103,66 @@ To first test whether ``elgg_echo()`` can find a translation:
 Javascript API
 ==============
 
-``elgg.echo(key, args)``
+This RequireJS plugin ``elgg/echo`` allows loading translations like AMD modules. To translate, register a dependency with the name ``elgg/echo!{key_name}``. The returned module will be a translator function similar to PHP's ``elgg_echo``, but with only the ``args`` argument.:
 
-This function is like ``elgg_echo`` in PHP.
+.. code-block:: javascript
 
-Client-side translations are loaded asynchronously. Ensure translations are available by requiring the "elgg" AMD module:
+	define(function(require) {
+		var intro = require("elgg/echo!example:intro");
+		var hello = require("elgg/echo!example:hello");
+
+		alert(intro());
+		alert(hello(["World"]));
+	});
+
+
+If you want a specific language, use the module name ``elgg/echo!{key_name}!{lang}``:
+
+.. code-block:: javascript
+
+	define(function(require) {
+		var hello = require("elgg/echo!example:hello!es");
+
+		alert(hello(["World"])); // ¡Hola, World!
+	});
+
+
+Like other modules, translators can be loaded on demand:
+
+.. code-block:: javascript
+
+	// in an Ajax success function...
+
+	require(["elgg/echo!example:great"], function(great) {
+		alert(great());
+	});
+
+Like ``elgg_echo``, translators for non-existent keys will return the key, but you can also directly test whether the key was found:
+
+.. code-block:: javascript
+
+	define(function(require) {
+		var lol = require("elgg/echo!nonexistentkey");
+
+		console.log(lol.found); // false
+	});
+
+.. warning:: Spaces should not be used in language keys and are not supported fully in this API.
+
+
+Legacy API
+----------
+
+``elgg.echo(key, args, language)`` is like ``elgg_echo`` in PHP, but is deprecated in favor of the ``elgg/echo`` module.
+
+Always require the "elgg" AMD module before working with ``elgg.echo``:
 
 .. code-block:: javascript
 
 	define(function(require) {
 		var elgg = require("elgg");
 
-		alert(elgg.echo('my_key'));
+		alert(elgg.echo('intro'));
 	});
 
 Translations are also available after the ``init, system`` JavaScript event.

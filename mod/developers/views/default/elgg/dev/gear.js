@@ -11,7 +11,7 @@ define(function (require) {
 	$(gear_html)
 		.appendTo('body')
 		.find('.elgg-icon')
-		.prop('title', elgg.echo('admin:developers:settings'))
+		.prop('title', require('elgg/echo!admin:developers:settings')())
 		.on('click', function () {
 			$.colorbox({
 				href: elgg.get_site_url() + 'ajax/view/developers/gear_popup',

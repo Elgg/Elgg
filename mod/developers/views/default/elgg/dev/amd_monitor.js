@@ -14,7 +14,7 @@
 				if (!known[name]) {
 					known[name] = 1;
 					count++;
-					console.log(count + ' ' + elgg.echo('developers:amd') + '(' + name + ')', val);
+					console.log(count + ' ' + require('elgg/echo!developers:amd')() + '(' + name + ')', val);
 				}
 			});
 		}

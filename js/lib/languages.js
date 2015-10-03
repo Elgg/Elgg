@@ -4,8 +4,17 @@
  */
 elgg.provide('elgg.config.translations');
 
+// If set to true, requested language keys will be stored in elgg._echoKeys and you'll
+// get a console message if the "late" translations are requested.
+elgg.config.language_debug = false;
+
 // default language - required by unit tests
 elgg.config.language = 'en';
+
+// this is set just before the elgg module is defined and lets the elgg/echo module
+// know which language module was depended on.
+elgg.config.initial_language_module = null;
+elgg.config.use_early_language = false;
 
 /**
  * Analagous to the php version.  Merges translations for a
@@ -44,12 +53,34 @@ elgg.get_language = function() {
  * @param {String} language Requested language. Not recommended (see above).
  *
  * @return {String} The translation or the given key if no translation available
+ * @deprecated Use the elgg/echo module
  */
 elgg.echo = function(key, argv, language) {
+	if (elgg.config.language_debug) {
+		elgg._echoKeys = elgg._echoKeys || {sync:{},async:{}};
+		elgg._echoKeys.sync[key] = true;
+	}
+
 	//elgg.echo('str', 'en')
 	if (elgg.isString(argv)) {
 		language = argv;
 		argv = [];
+	}
+
+	if (elgg.is_admin_logged_in()) {
+		// give example module syntax for usage
+		var code = 'require(';
+		var module = 'elgg/echo!' + key;
+		if (language) {
+			module += '!' + language;
+		}
+		code += JSON.stringify(module) + ')(';
+		if (argv && argv.length) {
+			code += JSON.stringify(argv);
+		}
+		code += ')';
+
+		elgg.deprecated_notice("elgg.echo() is deprecated. Use elgg/echo in your module. E.g. " + code, "2.3");
 	}
 
 	//elgg.echo('str', [...], 'en')

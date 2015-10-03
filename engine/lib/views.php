@@ -1776,6 +1776,7 @@ function elgg_views_boot() {
 	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
 
 	elgg_register_ajax_view('languages.js');
+	elgg_require_js('elgg/echo');
 
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_amd');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
@@ -1876,6 +1877,12 @@ function _elgg_get_js_site_data() {
 		// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
 		'elgg.security.interval' => (int)_elgg_services()->actions->getActionTokenTimeout() * 333,
 		'elgg.config.language' => $language,
+
+		// If this config flag is true, the "elgg" module will depend on a tiny set of translations
+		// and load the rest on demand in the "elgg/echo" module. As the elgg.echo() function is synchronous,
+		// it will fail in some cases in this scenario, so this is setting is not officially supported, but
+		// will be the standard behavior in 3.0. After changing this setting, the simplecache must be flushed.
+		'elgg.config.use_early_language' => (bool)elgg_get_config('EXPERIMENTAL_echo_async_only'),
 	];
 }
 

@@ -34,6 +34,19 @@ define('jquery.colorbox');
 // as these modules will be required on each page
 echo elgg_view('elgg/popup.js');
 echo elgg_view('elgg/lightbox.js');
+echo elgg_view('elgg/echo.js');
+
+// in 3.0 mode, inline the "early" language module for the site. This is harmless if
+// it's not the user's language.
+if (elgg_get_config('EXPERIMENTAL_echo_async_only')) {
+	$site_lang = elgg_get_config('language');
+	if ($site_lang) {
+		echo elgg_view('languages.js', [
+			'language' => $site_lang,
+			'timing' => 'early',
+		]);
+	}
+}
 
 $elggDir = \Elgg\Application::elggDir();
 $files = array(
@@ -78,6 +91,12 @@ foreach ($files as $file) {
 $.extend(elgg.data, elgg._data);
 delete elgg._data;
 
+if (elgg.config.use_early_language) {
+	elgg.config.initial_language_module = 'languages/early/' + elgg.get_language();
+} else {
+	elgg.config.initial_language_module = 'languages/' + elgg.get_language();
+}
+
 // jQuery and UI must be loaded sync in 2.x but modules should depend on these AMD modules
 define('jquery', function () {
 	return jQuery;
@@ -89,7 +108,7 @@ define('jquery-ui');
 // "jquery-ui/i18n/datepicker-LANG.min" and these views are mapped in /views.php
 define('jquery-ui/datepicker', jQuery.datepicker);
 
-define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
+define('elgg', ['jquery', elgg.config.initial_language_module], function($, translations) {
 	elgg.add_translation(elgg.get_language(), translations);
 
 	return elgg;

@@ -27,12 +27,12 @@ define('elgg/lightbox', function (require) {
 
 			// Note: keep these in sync with /views/default/lightbox.js.php
 			var settings = {
-				current: elgg.echo('js:lightbox:current', ['{current}', '{total}']),
-				previous: elgg.echo('previous'),
-				next: elgg.echo('next'),
-				close: elgg.echo('close'),
-				xhrError: elgg.echo('error:default'),
-				imgError: elgg.echo('error:default'),
+				current: require('elgg/echo!js:lightbox:current')(['{current}', '{total}']),
+				previous: require('elgg/echo!previous')(),
+				next: require('elgg/echo!next')(),
+				close: require('elgg/echo!close')(),
+				xhrError: require('elgg/echo!ajax:error')(),
+				imgError: require('elgg/echo!error')(),
 				opacity: 0.5,
 				maxWidth: '100%',
 				// don't move colorbox on small viewports https://github.com/Elgg/Elgg/issues/5312
