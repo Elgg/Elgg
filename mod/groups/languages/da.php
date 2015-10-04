@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Grupper',
 
-	'groups:latestdiscussion' => 'Seneste diskussion',
 	'groups:privategroup' => 'Denne gruppe er privat, kræver medlemsskab.',
 	'groups:notitle' => 'Grupper skal have en titel',
 	'groups:cantjoin' => 'Kunne ikke blive medlem af gruppen',

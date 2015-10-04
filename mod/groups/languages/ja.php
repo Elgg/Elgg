@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'グループ',
 
-	'groups:latestdiscussion' => '最新のやりとり',
 	'groups:privategroup' => 'このグループはクローズドグループです。参加希望を申請してください。',
 	'groups:notitle' => 'グループ作成にはグループ名が必要です。',
 	'groups:cantjoin' => 'グループに参加できません。',
