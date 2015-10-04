@@ -551,14 +551,19 @@ class ViewsService {
 	}
 
 	/**
-	 * Get full paths for all registered views and viewtypes
+	 * List all views in a viewtype
 	 *
-	 * @return string[] [default][view_name] => file_path
+	 * @param string $viewtype Viewtype
 	 *
-	 * @since 2.0
+	 * @return string[]
+	 *
+	 * @access private
 	 */
-	public function getViewLocations() {
-		return $this->locations;
+	public function listViews($viewtype = 'default') {
+		if (empty($this->locations[$viewtype])) {
+			return [];
+		}
+		return array_keys($this->locations[$viewtype]);
 	}
 
 	/**
