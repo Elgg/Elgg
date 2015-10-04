@@ -1,6 +1,7 @@
 define(function (require) {
-	var elgg = require('elgg'),
-		$ = require('jquery');
+	var elgg = require('elgg');
+	var	$ = require('jquery');
+	var reportedcontent_refresh = require('elgg/echo!reportedcontent:refresh');
 
 	$('.elgg-menu-item-report-this a, .elgg-menu-item-reportuser a').each(function () {
 		if (!/address=/.test(this.href)) {
@@ -62,7 +63,7 @@ define(function (require) {
 
 				if (!$('.reported-content-refresh').length) {
 					$li.parent().after('<p class="reported-content-refresh mtm ptm elgg-divide-top center">' +
-						'<a href="">' + elgg.echo('reportedcontent:refresh') + '</a></p>');
+						'<a href="">' + reportedcontent_refresh() + '</a></p>');
 				}
 			}
 		});

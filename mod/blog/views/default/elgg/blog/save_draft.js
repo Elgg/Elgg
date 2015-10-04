@@ -6,6 +6,7 @@
 define(function(require) {
 	var $ = require('jquery');
 	var elgg = require('elgg');
+	var error = require('elgg/echo!error');
 
 	var saveDraftCallback = function(data, textStatus, XHR) {
 		if (textStatus == 'success' && data.success == true) {
@@ -23,7 +24,7 @@ define(function(require) {
 			}
 			$(".blog-save-status-time").html(d.toLocaleDateString() + " @ " + d.getHours() + ":" + mins);
 		} else {
-			$(".blog-save-status-time").html(elgg.echo('error'));
+			$(".blog-save-status-time").html(error());
 		}
 	};
 

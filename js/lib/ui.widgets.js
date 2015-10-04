@@ -107,31 +107,32 @@ elgg.ui.widgets.move = function(event, ui) {
  * @return void
  */
 elgg.ui.widgets.remove = function(event) {
-	if (confirm(elgg.echo('deleteconfirm')) === false) {
-		event.preventDefault();
-		return;
-	}
-	
-	var $widget = $(this).closest('.elgg-module-widget');
-
-	// if widget type is single instance type, enable the add buton
-	var type = $(this).data('elgg-widget-type');
-	$container = $(this).parents('.elgg-layout-widgets').first();
-	$button = $('[data-elgg-widget-type="' + type + '"]', $container);
-	var multiple = $button.attr('class').indexOf('elgg-widget-multiple') != -1;
-	if (multiple === false) {
-		$button.addClass('elgg-state-available');
-		$button.removeClass('elgg-state-unavailable');
-		$button.unbind('click', elgg.ui.widgets.add); // make sure we don't bind twice
-		$button.click(elgg.ui.widgets.add);
-	}
-
-	$widget.remove();
-
-	// delete the widget through ajax
-	elgg.action($(this).attr('href'));
-
 	event.preventDefault();
+	var that = this;
+
+	require(['elgg/echo!deleteconfirm'], function (deleteconfirm) {
+		if (confirm(deleteconfirm()) === false) {
+			return;
+		}
+
+		var $widget = $(that).closest('.elgg-module-widget');
+
+		// if widget type is single instance type, enable the add buton
+		var type = $(that).data('elgg-widget-type');
+		$container = $(that).parents('.elgg-layout-widgets').first();
+		$button = $('[data-elgg-widget-type="' + type + '"]', $container);
+		if (!$button.hasClass('elgg-widget-multiple')) {
+			$button.addClass('elgg-state-available');
+			$button.removeClass('elgg-state-unavailable');
+			$button.unbind('click', elgg.ui.widgets.add); // make sure we don't bind twice
+			$button.click(elgg.ui.widgets.add);
+		}
+
+		$widget.remove();
+
+		// delete the widget through ajax
+		elgg.action($(that).attr('href'));
+	});
 };
 
 /**

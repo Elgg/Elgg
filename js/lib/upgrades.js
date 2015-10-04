@@ -32,16 +32,23 @@ elgg.upgrades.run = function(e) {
 	$('#upgrade-run').addClass('hidden');
 	$('#upgrade-spinner').removeClass('hidden');
 
-	// Start upgrade from offset 0
-	elgg.upgrades.upgradeBatch(0);
+	require([
+		'elgg/echo!upgrade:finished',
+		'elgg/echo!upgrade:finished_with_errors'
+	], function (finished, finished_errors) {
+		// Start upgrade from offset 0
+		elgg.upgrades.upgradeBatch(0, finished, finished_errors);
+	});
 };
 
 /**
  * Fires the ajax action to upgrade a batch of items.
  *
- * @param {Number} offset  The next upgrade offset
+ * @param {Number}   offset          The next upgrade offset
+ * @param {Function} finished        Translator
+ * @param {Function} finished_errors Translator
  */
-elgg.upgrades.upgradeBatch = function(offset) {
+elgg.upgrades.upgradeBatch = function(offset, finished, finished_errors) {
 	var options = {
 		data: {
 			offset: offset
@@ -101,11 +108,11 @@ elgg.upgrades.upgradeBatch = function(offset) {
 
 			if (errorCount > 0) {
 				// Upgrade finished with errors. Give instructions on how to proceed.
-				elgg.register_error(elgg.echo('upgrade:finished_with_errors'));
+				elgg.register_error(finished_errors());
 			} else {
 				// Upgrade is finished. Make one more call to mark it complete.
 				elgg.action(action, {'upgrade_completed': 1});
-				elgg.system_message(elgg.echo('upgrade:finished'));
+				elgg.system_message(finished());
 			}
 		}
 

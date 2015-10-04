@@ -58,10 +58,10 @@ Here we define a basic module that alters the page, by passing a "definition fun
     // in views/default/myplugin/say_hello.js
 
     define(function(require) {
-        var elgg = require("elgg");
+        var hello_world = require("elgg/echo!hello_world");
         var $ = require("jquery");
 
-        $('body').append(elgg.echo('hello_world'));
+        $('body').append(hello_world());
     });
 
 The module's name is determined by the view name, which here is ``myplugin/say_hello.js``.
@@ -82,9 +82,9 @@ the greeting:
     // in views/default/myplugin/hello.js
 
     define(function(require) {
-        var elgg = require("elgg");
+        var hello_world = require("elgg/echo!hello_world");
 
-        return elgg.echo('hello_world');
+        return hello_world();
     });
 
 .. code-block:: javascript
@@ -236,13 +236,25 @@ This will include and execute the linked code.
 Core functions available in JS
 ==============================
 
-``elgg.echo()``
+The ``elgg/echo`` module
 
 Translate interface text
 
 .. code:: js
 
-   elgg.echo('example:text', ['arg1']);
+    require(['elgg/echo!example:text'], function(example_text) {
+        alert(example_text());
+    });
+
+The functions below all require the ``elgg`` AMD module:
+
+.. code:: js
+
+    define(function(require) {
+        var elgg = require('elgg');
+
+        // stuff with elgg
+    });
 
 
 ``elgg.system_message()``
@@ -251,8 +263,7 @@ Display a status message to the user.
 
 .. code:: js
 
-   elgg.system_message(elgg.echo('success'));
-
+    elgg.system_message(echo_success());
 
 ``elgg.register_error()``
 
@@ -260,7 +271,7 @@ Display an error message to the user.
 
 .. code:: js
 
-   elgg.register_error(elgg.echo('error'));
+    elgg.register_error(echo_error());
 
 
 ``elgg.forward()``

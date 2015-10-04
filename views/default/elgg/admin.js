@@ -7,6 +7,7 @@ define(function(require) {
 	var $ = require('jquery');
 	var ui = require('jquery-ui');
 	var elgg = require('elgg');
+	var Priority = require('elgg/echo!ElggPlugin:Dependencies:Priority');
 
 	function init () {
 		// system messages do not fade in admin area, instead slide up when clicked
@@ -85,7 +86,7 @@ define(function(require) {
 			},
 			success: function() {
 				// update plugins with priority dependences
-				var priorityDep = new RegExp(elgg.echo('ElggPlugin:Dependencies:Priority'));
+				var priorityDep = new RegExp(Priority());
 				ui.item.siblings().andSelf().each(function() {
 					if (priorityDep.test($(this).find('.elgg-dependency-requires').text())) {
 						updatePluginView($(this));

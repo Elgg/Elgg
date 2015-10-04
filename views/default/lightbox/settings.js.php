@@ -8,14 +8,22 @@
 ?>
 //<script>
 
-elgg.ui.lightbox.getSettings = function () {
+/**
+ * @param {Function} current  Translator
+ * @param {Function} previous Translator
+ * @param {Function} next     Translator
+ * @param {Function} close    Translator
+ * @param {Function} error    Translator
+ * @returns {Object}
+ */
+elgg.ui.lightbox.getSettings = function (current, previous, next, close, error) {
 	return {
-		current: elgg.echo('js:lightbox:current', ['{current}', '{total}']),
-		previous: elgg.echo('previous'),
-		next: elgg.echo('next'),
-		close: elgg.echo('close'),
-		xhrError: elgg.echo('error:default'),
-		imgError: elgg.echo('error:default'),
+		current: current(['{current}', '{total}']),
+		previous: previous(),
+		next: next(),
+		close: close(),
+		xhrError: error(),
+		imgError: error(),
 		opacity: 0.5,
 		maxWidth: '100%',
 
