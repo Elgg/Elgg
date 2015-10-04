@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Grupy',
 
-	'groups:latestdiscussion' => 'Ostatnia dyskusja',
 	'groups:privategroup' => 'Ta grupa jest zamknięta, wysłaliśmy prośbę o członkostwo.',
 	'groups:notitle' => 'Grupy muszą mieć tytuł',
 	'groups:cantjoin' => 'Nie możesz dołączyć do grupy',

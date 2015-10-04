@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Ryhmät',
 
-	'groups:latestdiscussion' => 'Viimeisin keskustelu',
 	'groups:privategroup' => 'Tämä ryhmä on suljettu. Anotaan jäsenyyttä.',
 	'groups:notitle' => 'Ryhmällä pitää olla nimi',
 	'groups:cantjoin' => 'Ryhmään liittyminen epäonnistui',

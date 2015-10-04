@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Групе',
 
-	'groups:latestdiscussion' => 'Последње дискусије',
 	'groups:privategroup' => 'Ова група је затворена. Захтевај чланство.',
 	'groups:notitle' => 'Група мора да има име.',
 	'groups:cantjoin' => 'Није могуће придружити се групи',
