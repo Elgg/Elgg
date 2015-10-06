@@ -144,7 +144,7 @@ class EntityTable {
 	 * @param string $type The type of the entity. If given, even an existing entity with the given GUID
 	 *                     will not be returned unless its type matches.
 	 *
-	 * @return \ElggEntity The correct Elgg or custom object based upon entity type and subtype
+	 * @return \ElggEntity|false The correct Elgg or custom object based upon entity type and subtype
 	 */
 	function get($guid, $type = '') {
 		// We could also use: if (!(int) $guid) { return false },
@@ -1238,5 +1238,31 @@ class EntityTable {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Get a user by GUID even if the entity is hidden or disabled
+	 *
+	 * @param int $guid User GUID. Default is logged in user
+	 *
+	 * @return \ElggUser|false
+	 * @access private
+	 */
+	public function resolveUser($guid = 0) {
+		if (!$guid) {
+			return _elgg_services()->session->getLoggedInUser();
+		}
+
+		// need to ignore access and show hidden entities for potential hidden/disabled users
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
+		$show_hidden = access_show_hidden_entities(true);
+
+		$user = $this->get($guid, 'user');
+		/* @var \ElggUser|false $user */
+
+		_elgg_services()->session->setIgnoreAccess($ia);
+		access_show_hidden_entities($show_hidden);
+
+		return $user;
 	}
 }

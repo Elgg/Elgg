@@ -434,10 +434,10 @@ function _elgg_river_menu_setup($hook, $type, $return, $params) {
 			}
 		}
 		
-		if (elgg_is_admin_logged_in()) {
+		if ($item->canDelete()) {
 			$options = array(
 				'name' => 'delete',
-				'href' => elgg_add_action_tokens_to_url("action/river/delete?id=$item->id"),
+				'href' => elgg_add_action_tokens_to_url("action/river/delete?id={$item->id}"),
 				'text' => elgg_view_icon('delete'),
 				'title' => elgg_echo('river:delete'),
 				'confirm' => elgg_echo('deleteconfirm'),

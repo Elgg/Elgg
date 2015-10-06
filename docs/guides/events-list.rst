@@ -197,6 +197,14 @@ River events
 **created, river**
 	Called after a river item is created.
 
+	.. note:: Use the plugin hook ``creating, river`` to cancel creation (or alter options).
+
+**delete:before, river**
+	Triggered before a river item is deleted. Returning false cancels the deletion.
+
+**delete:after, river**
+	Triggered after a river item was deleted.
+
 Notes
 =====
 
