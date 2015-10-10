@@ -133,7 +133,8 @@ class ElggFile extends \ElggObject {
 	 * @todo Move this out into a utility class
 	 */
 	public function detectMimeType($file = null, $default = null) {
-		if (!$file && isset($this)) {
+		$class = __CLASS__;
+		if (!$file && isset($this) && $this instanceof $class) {
 			$file = $this->getFilenameOnFilestore();
 		}
 
@@ -156,7 +157,7 @@ class ElggFile extends \ElggObject {
 			$mime = mime_content_type($file);
 		}
 
-		$original_filename = isset($this) ? $this->originalfilename : basename($file);
+		$original_filename = isset($this) && $this instanceof $class ? $this->originalfilename : basename($file);
 		$params = array(
 			'filename' => $file,
 			'original_filename' => $original_filename, // @see file upload action
