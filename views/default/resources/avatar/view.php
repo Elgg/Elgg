@@ -37,9 +37,8 @@ try {
 	elgg_log("Unable to get avatar for user with GUID $user_guid", 'ERROR');
 }
 
-
 if (!$success) {
-	forward(elgg_get_simplecache_url("icons/default/$size.png"));
+	forward(elgg_get_simplecache_url("icons/user/default{$size}.gif"));
 }
 
 header("Content-type: image/jpeg", true);
