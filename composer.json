@@ -42,7 +42,6 @@
     },
     "require-dev": {
         "phpunit/phpunit": "~4.1",
-        "sebastian/global-state": "1.0",
         "elgg/sniffs": "dev-master",
         "squizlabs/php_codesniffer": "~1.5",
         "simpletest/simpletest": "~1.1"
