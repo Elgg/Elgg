@@ -956,14 +956,22 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function isInstallDirWritable(&$report) {
-		
+		$root = Directory\Local::root()->getPath();
+		$abs_path = \Elgg\Application::elggDir()->getPath('elgg-config');
 
-		$writable = is_writable(Directory\Local::root()->getPath());
+		if (0 === strpos($abs_path, $root)) {
+			$relative_path = substr($abs_path, strlen($root));
+		} else {
+			$relative_path = $abs_path;
+		}
+		$relative_path = rtrim($relative_path, '/\\');
+
+		$writable = is_writable(Directory\Local::root()->getPath('elgg-config'));
 		if (!$writable) {
 			$report['settings'] = array(
 				array(
 					'severity' => 'failure',
-					'message' => _elgg_services()->translator->translate('install:check:installdir'),
+					'message' => _elgg_services()->translator->translate('install:check:installdir', [$relative_path]),
 				)
 			);
 			return FALSE;
@@ -1004,7 +1012,7 @@ class ElggInstaller {
 	 * @return string
 	 */
 	private function getSettingsPath() {
-		return Directory\Local::root()->getPath("settings.php");
+		return Directory\Local::root()->getPath("elgg-config/settings.php");
 	}
 
 	/**
@@ -1262,7 +1270,7 @@ class ElggInstaller {
 	 * @return bool
 	 */
 	protected function createSettingsFile($params) {
-		$template = \Elgg\Application::elggDir()->getContents("engine/settings.example.php");
+		$template = \Elgg\Application::elggDir()->getContents("elgg-config/settings.example.php");
 		if (!$template) {
 			register_error(_elgg_services()->translator->translate('install:error:readsettingsphp'));
 			return FALSE;

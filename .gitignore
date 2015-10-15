@@ -1,6 +1,6 @@
 # ignore Elgg configuration
 /engine/settings.php
-/settings.php
+/elgg-config/settings.php
 /.htaccess
 /mod/*
 /composer.lock

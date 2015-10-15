@@ -33,8 +33,8 @@ That means an Elgg site can look something like this:
       ...
 
 ``elgg_get_root_path`` and ``$CONFIG->path`` will return the path to the application
-root directory (the one containing ``settings.php``), which is not necessarily the
-same as Elgg core's root directory (which in this case is ``vendor/elgg/elgg/``).
+root directory, which is not necessarily the same as Elgg core's root directory (which
+in this case is ``vendor/elgg/elgg/``).
 
 Do not attempt to access the core Elgg from your plugin directly, since you cannot
 rely on its location on the filesystem.

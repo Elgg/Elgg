@@ -1577,7 +1577,7 @@ function elgg_views_boot() {
 
 	// Declared views. Unlike plugins, Elgg's root views/ is never scanned, so Elgg cannot override
 	// these view traditional view files.
-	$file = dirname(dirname(__DIR__)) . '/views.php';
+	$file = dirname(__DIR__) . '/views.php';
 	if (is_file($file)) {
 		$spec = (include $file);
 		if (is_array($spec)) {
