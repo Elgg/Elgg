@@ -1519,17 +1519,19 @@ function elgg_views_boot() {
 	}
 
 	// on every page
-	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
-	elgg_load_js('elgg.require_config');
 
-	elgg_register_js('require', elgg_get_simplecache_url('require.js'), 'head');
-	elgg_load_js('require');
-
+	// jQuery and UI must come before require. See #9024
 	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head');
 	elgg_load_js('jquery');
 
 	elgg_register_js('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
 	elgg_load_js('jquery-ui');
+
+	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
+	elgg_load_js('elgg.require_config');
+
+	elgg_register_js('require', elgg_get_simplecache_url('require.js'), 'head');
+	elgg_load_js('require');
 
 	elgg_register_js('elgg', elgg_get_simplecache_url('elgg.js'), 'head');
 	elgg_load_js('elgg');

@@ -12,6 +12,8 @@ return [
 		"jquery.js" => "vendor/bower-asset/jquery/dist/jquery.min.js",
 		"jquery.min.map" => "vendor/bower-asset/jquery/dist/jquery.min.map",
 		"jquery-migrate.js" => "vendor/bower-asset/jquery-migrate/jquery-migrate.min.js",
+		"jquery-ui.js" => "vendor/bower-asset/jquery-ui/jquery-ui.min.js",
+
 		"jquery.form.js" => "vendor/bower-asset/jquery-form/jquery.form.js",
 		"jquery.colorbox.js" => "vendor/bower-asset/jquery-colorbox/jquery.colorbox-min.js",
 		"require.js" => "vendor/bower-asset/requirejs/require.js",
