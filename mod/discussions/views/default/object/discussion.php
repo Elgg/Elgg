@@ -49,10 +49,16 @@ if ($num_replies != 0) {
 	if (isset($last_reply[0])) {
 		$last_reply = $last_reply[0];
 	}
+	/* @var ElggDiscussionReply $last_reply */
 
 	$poster = $last_reply->getOwnerEntity();
 	$reply_time = elgg_view_friendly_time($last_reply->time_created);
-	$reply_text = elgg_echo('discussion:updated', array($poster->name, $reply_time));
+
+	$reply_text = elgg_view('output/url', [
+		'text' => elgg_echo('discussion:updated', [$poster->name, $reply_time]),
+		'href' => $last_reply->getURL(),
+		'is_trusted' => true,
+	]);
 
 	$replies_link = elgg_view('output/url', array(
 		'href' => $topic->getURL() . '#group-replies',
