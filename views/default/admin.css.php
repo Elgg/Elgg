@@ -1306,6 +1306,7 @@ a.elgg-widget-collapsed:before {
 .elgg-icon {
 	color: #aaa;
 	font-size: 16px;
+	line-height: 1em;
 	width: 16px;
 	height: 16px;
 	margin: 0 2px;
