@@ -164,7 +164,7 @@
 	SITE MENU
 *************************************** */
 .elgg-menu-site {
-	z-index: 1;
+	z-index: 50;
 }
 
 .elgg-menu-site > li > a {

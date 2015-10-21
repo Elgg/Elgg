@@ -378,6 +378,14 @@ Elgg's sprites and most of the CSS classes beginning with ``elgg-icon-``
 Usage of ``elgg_view_icon()`` is backward compatible, but static HTML using the ``elgg-icon``
 classes will have to be updated to the new markup.
 
+Increase of z-index value in elgg-menu-site class
+-------------------------------------------------
+
+The value of z-index in the elgg-menu-site class has been increased from 1 to 50 to allow for page elements
+in the content area to use the z-index property without the "More" site menu's dropdown being displayed
+behind these elements. If your plugin/theme overrides the elgg-menu-site class or views/default/elements/navigation.css
+please adjust the z-index value in your modified CSS file accordingly.
+
 Introduced third-party library for sending email
 ------------------------------------------------
 
