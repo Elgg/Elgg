@@ -369,15 +369,15 @@ class EntityTable {
 	
 		$wheres = $options['wheres'];
 	
-		$wheres[] = _elgg_get_entity_type_subtype_where_sql('e', $options['types'],
+		$wheres[] = $this->getEntityTypeSubtypeWhereSql('e', $options['types'],
 			$options['subtypes'], $options['type_subtype_pairs']);
 	
-		$wheres[] = _elgg_get_guid_based_where_sql('e.guid', $options['guids']);
-		$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
-		$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
-		$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.guid', $options['guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.owner_guid', $options['owner_guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.container_guid', $options['container_guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.site_guid', $options['site_guids']);
 	
-		$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
+		$wheres[] = $this->getEntityTimeWhereSql('e', $options['created_time_upper'],
 			$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 	
 		// see if any functions failed
@@ -468,7 +468,7 @@ class EntityTable {
 		}
 
 		if ($options['callback'] === 'entity_row_to_elggstar') {
-			$results = _elgg_fetch_entities_from_sql($query, $options['__ElggBatch']);
+			$results = $this->fetchFromSql($query, $options['__ElggBatch']);
 		} else {
 			$results = _elgg_services()->db->getData($query, $options['callback']);
 		}
