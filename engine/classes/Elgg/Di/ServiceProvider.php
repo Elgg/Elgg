@@ -58,6 +58,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Database\SubtypeTable              $subtypeTable
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
  * @property-read \Elgg\SystemMessagesService              $systemMessages
+ * @property-read \Elgg\Timer                              $timer
  * @property-read \Elgg\I18n\Translator                    $translator
  * @property-read \Elgg\UpgradeService                     $upgrades
  * @property-read \Elgg\Database\UsersTable                $usersTable
@@ -137,7 +138,13 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$db_config = new \Elgg\Database\Config($c->config->getStorageObject());
 
 			// we inject the logger in _elgg_engine_boot()
-			return new \Elgg\Database($db_config);
+			$db = new \Elgg\Database($db_config);
+
+			if ($c->config->getVolatile('profiling_sql')) {
+				$db->setTimer($c->timer);
+			}
+
+			return $db;
 		});
 
 		$this->setFactory('deprecation', function(ServiceProvider $c) {
@@ -218,7 +225,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('plugins', function(ServiceProvider $c) {
-			return new \Elgg\Database\Plugins(new Pool\InMemory());
+			$plugins = new \Elgg\Database\Plugins(new Pool\InMemory());
+			if ($c->config->getVolatile('enable_profiling')) {
+				$plugins->setTimer($c->timer);
+			}
+			return $plugins;
 		});
 
 		$this->setFactory('privateSettings', function(ServiceProvider $c) {
@@ -237,7 +248,11 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setFactory('router', function(ServiceProvider $c) {
 			// TODO(evan): Init routes from plugins or cache
-			return new \Elgg\Router($c->hooks);
+			$router = new \Elgg\Router($c->hooks);
+			if ($c->config->getVolatile('enable_profiling')) {
+				$router->setTimer($c->timer);
+			}
+			return $router;
 		});
 
 		$this->setFactory('session', function(ServiceProvider $c) {
@@ -271,11 +286,19 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('subtypeTable', \Elgg\Database\SubtypeTable::class);
 
-		$this->setClassName('systemCache', \Elgg\Cache\SystemCache::class);
+		$this->setFactory('systemCache', function (ServiceProvider $c) {
+			$cache = new \Elgg\Cache\SystemCache();
+			if ($c->config->getVolatile('enable_profiling')) {
+				$cache->setTimer($c->timer);
+			}
+			return $cache;
+		});
 
 		$this->setFactory('systemMessages', function(ServiceProvider $c) {
 			return new \Elgg\SystemMessagesService($c->session);
 		});
+
+		$this->setClassName('timer', \Elgg\Timer::class);
 
 		$this->setClassName('translator', \Elgg\I18n\Translator::class);
 
@@ -309,10 +332,15 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 	 */
 	protected function resolveLoggerDependencies($service_needed) {
 		$svcs['hooks'] = new \Elgg\PluginHooksService();
+
 		$svcs['logger'] = new \Elgg\Logger($svcs['hooks'], $this->config, $this->context);
 		$svcs['hooks']->setLogger($svcs['logger']);
+
 		$svcs['events'] = new \Elgg\EventsService();
 		$svcs['events']->setLogger($svcs['logger']);
+		if ($this->config->getVolatile('enable_profiling')) {
+			$svcs['events']->setTimer($this->timer);
+		}
 
 		foreach ($svcs as $key => $service) {
 			$this->setValue($key, $service);

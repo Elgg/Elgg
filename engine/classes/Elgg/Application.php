@@ -71,6 +71,8 @@ class Application {
 			$GLOBALS['START_MICROTIME'] = microtime(true);
 		}
 
+		$services->timer->begin([]);
+
 		/**
 		 * This was introduced in 2.0 in order to remove all internal non-API state from $CONFIG. This will
 		 * be a breaking change, but frees us to refactor in 2.x without fear of plugins depending on

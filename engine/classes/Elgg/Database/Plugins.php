@@ -2,6 +2,7 @@
 namespace Elgg\Database;
 
 use Elgg\Cache\Pool;
+use Elgg\Profilable;
 use Exception;
 
 /**
@@ -21,6 +22,7 @@ global $ELGG_PLUGINS_PROVIDES_CACHE;
  * @since 1.10.0
  */
 class Plugins {
+	use Profilable;
 
 	/**
 	 * @var string[] Active plugin IDs with IDs as the array keys. Missing keys imply inactive plugins.
@@ -307,6 +309,10 @@ class Plugins {
 	 * @access private
 	 */
 	function load() {
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
+		}
+
 		$plugins_path = elgg_get_plugins_path();
 		$start_flags = ELGG_PLUGIN_INCLUDE_START |
 						ELGG_PLUGIN_REGISTER_VIEWS |
@@ -354,6 +360,11 @@ class Plugins {
 		}
 
 		$this->active_ids_known = true;
+
+		if ($this->timer) {
+			$this->timer->end([__METHOD__]);
+		}
+
 		return $return;
 	}
 	

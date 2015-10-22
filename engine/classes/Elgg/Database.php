@@ -17,6 +17,7 @@ use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
  * @subpackage Database
  */
 class Database {
+	use Profilable;
 
 	const DELAYED_QUERY = 'q';
 	const DELAYED_TYPE = 't';
@@ -408,7 +409,17 @@ class Database {
 		$this->queryCount++;
 
 		try {
-			return $connection->query($query);
+			if (!$this->timer) {
+				return $connection->query($query);
+			}
+
+			$timer_key = preg_replace('~\\s+~', ' ', trim($query));
+
+			$this->timer->begin(['SQL', $timer_key]);
+			$value = $connection->query($query);
+			$this->timer->end(['SQL', $timer_key]);
+
+			return $value;
 		} catch (\Exception $e) {
 			throw new \DatabaseException($e->getMessage() . "\n\n QUERY: $query");
 		}

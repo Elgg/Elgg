@@ -415,6 +415,11 @@ function elgg_unextend_view($view, $view_extension) {
  * @since  1.8
  */
 function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
+	$timer = _elgg_services()->timer;
+	if (!$timer->hasEnded(['build page'])) {
+		$timer->end(['build page']);
+	}
+	$timer->begin([__FUNCTION__]);
 
 	$params = array();
 	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
@@ -456,7 +461,10 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['page_shell'] = $page_shell;
 
 	// Allow plugins to modify the output
-	return elgg_trigger_plugin_hook('output', 'page', $vars, $output);
+	$output = elgg_trigger_plugin_hook('output', 'page', $vars, $output);
+
+	$timer->end([__FUNCTION__]);
+	return $output;
 }
 
 /**
@@ -627,6 +635,11 @@ function _elgg_views_prepare_head($title) {
  * @return string The layout
  */
 function elgg_view_layout($layout_name, $vars = array()) {
+	$timer = _elgg_services()->timer;
+	if (!$timer->hasEnded(['build page'])) {
+		$timer->end(['build page']);
+	}
+	$timer->begin([__FUNCTION__]);
 
 	$params = array();
 	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
@@ -646,7 +659,10 @@ function elgg_view_layout($layout_name, $vars = array()) {
 		$output = elgg_view("page/layouts/default", $params);
 	}
 
-	return elgg_trigger_plugin_hook('output:after', 'layout', $params, $output);
+	$output = elgg_trigger_plugin_hook('output:after', 'layout', $params, $output);
+
+	$timer->end([__FUNCTION__]);
+	return $output;
 }
 
 /**
