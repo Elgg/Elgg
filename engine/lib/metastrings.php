@@ -167,7 +167,7 @@ function _elgg_get_metastring_based_objects($options) {
 	$wheres = $options['wheres'];
 
 	// entities
-	$wheres[] = _elgg_get_entity_type_subtype_where_sql('e', $options['types'],
+	$wheres[] = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
 
 	$wheres[] = _elgg_get_guid_based_where_sql('e.guid', $options['guids']);
