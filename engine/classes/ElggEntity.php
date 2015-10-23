@@ -270,7 +270,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return mixed The value, or null if not found.
 	 */
 	public function getMetadata($name) {
-		$guid = $this->getGUID();
+		$guid = $this->guid;
 
 		if (!$guid) {
 			if (isset($this->temp_metadata[$name])) {
@@ -350,14 +350,11 @@ abstract class ElggEntity extends \ElggData implements
 	 *                           Does not support associative arrays.
 	 * @param int    $owner_guid GUID of entity that owns the metadata.
 	 *                           Default is owner of entity.
-	 * @param int    $access_id  Who can read the metadata relative to the owner (deprecated).
-	 *                           Default is the access level of the entity. Use ACCESS_PUBLIC for
-	 *                           compatibility with Elgg 3.0
 	 *
 	 * @return bool
 	 * @throws InvalidArgumentException
 	 */
-	public function setMetadata($name, $value, $value_type = '', $multiple = false, $owner_guid = 0, $access_id = null) {
+	public function setMetadata($name, $value, $value_type = '', $multiple = false, $owner_guid = 0) {
 
 		// normalize value to an array that we will loop over
 		// remove indexes if value already an array.
@@ -390,34 +387,25 @@ abstract class ElggEntity extends \ElggData implements
 
 			$owner_guid = $owner_guid ? (int) $owner_guid : $this->owner_guid;
 
-			if ($access_id === null) {
-				$access_id = $this->access_id;
-			} elseif ($access_id != ACCESS_PUBLIC) {
-				$access_id = (int) $access_id;
-				elgg_deprecated_notice('Setting $access_id to a value other than ACCESS_PUBLIC is deprecated. '
-					. 'All metadata will be public in 3.0.', '2.3');
-			}
-
 			// add new md
-			$result = true;
 			foreach ($value as $value_tmp) {
 				// at this point $value is appended because it was cleared above if needed.
 				$md_id = _elgg_services()->metadataTable->create($this->guid, $name, $value_tmp, $value_type,
-						$owner_guid, $access_id, true);
+						$owner_guid, null, true);
 				if (!$md_id) {
 					return false;
 				}
 			}
 
-			return $result;
+			return true;
 		} else {
 			// unsaved entity. store in temp array
 
 			// returning single entries instead of an array of 1 element is decided in
 			// getMetaData(), just like pulling from the db.
 
-			if ($owner_guid != 0 || $access_id !== null) {
-				$msg = "owner guid and access id cannot be used in \ElggEntity::setMetadata() until entity is saved.";
+			if ($owner_guid != 0) {
+				$msg = "owner guid cannot be used in ElggEntity::setMetadata() until entity is saved.";
 				throw new \InvalidArgumentException($msg);
 			}
 

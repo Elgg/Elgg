@@ -206,16 +206,18 @@ function _elgg_get_metastring_based_objects($options) {
 	// metastrings
 	$metastring_clauses = _elgg_get_metastring_sql('n_table', $options['metastring_names'],
 		$options['metastring_values'], null, $options['metastring_ids'],
-		$options['metastring_case_sensitive']);
+		$options['metastring_case_sensitive'], $type);
 
 	if ($metastring_clauses) {
 		$wheres = array_merge($wheres, $metastring_clauses['wheres']);
 		$joins = array_merge($joins, $metastring_clauses['joins']);
 	} else {
-		$wheres[] = _elgg_get_access_where_sql([
-			'table_alias' => 'n_table',
-			'guid_column' => 'entity_guid',
-		]);
+		if ($type === 'annotations') {
+			$wheres[] = _elgg_get_access_where_sql([
+				'table_alias' => 'n_table',
+				'guid_column' => 'entity_guid',
+			]);
+		}
 	}
 
 	$distinct = $options['distinct'] ? "DISTINCT " : "";
@@ -310,12 +312,17 @@ function _elgg_get_metastring_based_objects($options) {
  * @param array  $pairs          Name / value pairs. Not currently used.
  * @param array  $ids            Metastring IDs
  * @param bool   $case_sensitive Should name and values be case sensitive?
+ * @param string $type           "metadata" or "annotations"
  *
  * @return array
  * @access private
  */
 function _elgg_get_metastring_sql($table, $names = null, $values = null,
-	$pairs = null, $ids = null, $case_sensitive = false) {
+	$pairs = null, $ids = null, $case_sensitive = false, $type = null) {
+
+	if ($type !== 'metadata' && $type !== 'annotations') {
+		throw new \InvalidArgumentException('$type must be "metadata" or "annotations"');
+	}
 
 	if ((!$names && $names !== 0)
 		&& (!$values && $values !== 0)
@@ -398,10 +405,12 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		$wheres[] = $values_where;
 	}
 
-	$wheres[] = _elgg_get_access_where_sql([
-		'table_alias' => $table,
-		'guid_column' => 'entity_guid',
-	]);
+	if ($type === 'annotations') {
+		$wheres[] = _elgg_get_access_where_sql([
+			'table_alias' => $table,
+			'guid_column' => 'entity_guid',
+		]);
+	}
 
 	if ($where = implode(' AND ', $wheres)) {
 		$return['wheres'][] = "($where)";

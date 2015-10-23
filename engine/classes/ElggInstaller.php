@@ -1636,8 +1636,8 @@ class ElggInstaller {
 		elgg_set_ignore_access(false);
 
 		// add validation data to satisfy user validation plugins
-		create_metadata($guid, 'validated', true, '', 0, ACCESS_PUBLIC);
-		create_metadata($guid, 'validated_method', 'admin_user', '', 0, ACCESS_PUBLIC);
+		$user->validated = 1;
+		$user->validated_method = 'admin_user';
 
 		if ($login) {
 			$handler = new Elgg\Http\DatabaseSessionHandler(_elgg_services()->db);

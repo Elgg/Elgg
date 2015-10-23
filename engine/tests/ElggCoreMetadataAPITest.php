@@ -8,6 +8,11 @@
 class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 
 	/**
+	 * @var ElggObject
+	 */
+	protected $object;
+
+	/**
 	 * Called before each test method.
 	 */
 	public function setUp() {
@@ -54,8 +59,8 @@ class ElggCoreMetadataAPITest extends \ElggCoreUnitTest {
 		$this->object->save();
 
 		$guid = $this->object->getGUID();
-		create_metadata($guid, 'tested', 'tested1', 'text', 0, ACCESS_PUBLIC, true);
-		create_metadata($guid, 'tested', 'tested2', 'text', 0, ACCESS_PUBLIC, true);
+		create_metadata($guid, 'tested', 'tested1', 'text', 0, null, true);
+		create_metadata($guid, 'tested', 'tested2', 'text', 0, null, true);
 
 		$count = (int)elgg_get_metadata(array(
 			'metadata_names' => array('tested'),
