@@ -75,7 +75,7 @@ With Composer (recommended if comfortable with CLI):
 
     cd /path/to/wwwroot/
     composer self-update
-    composer global require "fxp/composer-asset-plugin:~1.0"
+    composer global require "fxp/composer-asset-plugin:~1.0.3"
     composer create-project elgg/starter-project:dev-master .
 
 From pre-packaged zip (recommended if not comfortable with CLI):
