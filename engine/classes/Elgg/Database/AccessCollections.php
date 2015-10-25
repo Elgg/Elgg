@@ -240,7 +240,17 @@ class AccessCollections {
 		$options['table_alias'] = rtrim($options['table_alias'], '.');
 	
 		foreach (array('table_alias', 'access_column', 'owner_guid_column', 'guid_column') as $key) {
-			$options[$key] = sanitize_string($options[$key]);
+			switch ($options[$key]) {
+				case 'e':
+				case 'guid':
+				case 'owner_guid':
+				case 'access_id':
+				case 'n_table':
+					// can prevent thousands of function calls
+					break;
+				default:
+					$options[$key] = sanitize_string($options[$key]);
+			}
 		}
 		$options['user_guid'] = sanitize_int($options['user_guid'], false);
 	
