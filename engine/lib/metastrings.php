@@ -27,6 +27,21 @@ function elgg_get_metastring_id($string, $case_sensitive = true) {
 }
 
 /**
+ * Get a map of strings to their metastring identifiers (case sensitive matches)
+ *
+ * If you need several metastring IDs at once, use this to get a an array of them
+ * instead of calling elgg_get_metastring_id() several times.
+ *
+ * @param string[] $strings Strings to look up
+ *
+ * @return int[] map of [string] => [id]
+ * @since 2.1
+ */
+function elgg_get_metastring_map(array $strings) {
+	return _elgg_services()->metastringsTable->getMap($strings);
+}
+
+/**
  * Returns an array of either \ElggAnnotation or \ElggMetadata objects.
  * Accepts all elgg_get_entities() options for entity restraints.
  *
