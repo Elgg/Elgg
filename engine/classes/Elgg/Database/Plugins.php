@@ -370,8 +370,7 @@ class Plugins {
 		$priority = _elgg_namespace_plugin_private_setting('internal', 'priority');
 	
 		if (!$site_guid) {
-			$site = get_config('site');
-			$site_guid = $site->guid;
+			$site_guid = elgg_get_site_entity()->guid;
 		}
 	
 		// grab plugins
@@ -379,13 +378,14 @@ class Plugins {
 			'type' => 'object',
 			'subtype' => 'plugin',
 			'limit' => ELGG_ENTITIES_NO_VALUE,
-			'selects' => array('plugin_oe.*'),
+			'selects' => array('plugin_oe.*', 'ps.value'),
 			'joins' => array(
 				"JOIN {$db_prefix}private_settings ps on ps.entity_guid = e.guid",
 				"JOIN {$db_prefix}objects_entity plugin_oe on plugin_oe.guid = e.guid"
 				),
 			'wheres' => array("ps.name = '$priority'"),
-			'order_by' => "CAST(ps.value as unsigned), e.guid",
+			// ORDER BY CAST(ps.value) is super slow. We usort() below.
+			'order_by' => false,
 			'distinct' => false,
 		);
 	
@@ -412,6 +412,17 @@ class Plugins {
 		$old_ia = elgg_set_ignore_access(true);
 		$plugins = elgg_get_entities_from_relationship($options);
 		elgg_set_ignore_access($old_ia);
+
+		usort($plugins, function (\ElggPlugin $a, \ElggPlugin $b) {
+			$a_value = $a->getVolatileData('select:value');
+			$b_value = $b->getVolatileData('select:value');
+
+			if ($b_value !== $a_value) {
+				return $a_value - $b_value;
+			} else {
+				return $a->guid - $b->guid;
+			}
+		});
 	
 		return $plugins;
 	}
