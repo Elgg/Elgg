@@ -6,6 +6,8 @@
  * @subpackage DataModel.Entities
  */
 
+use Elgg\Database\EntityTable\UserFetchFailureException;
+
 /**
  * Cache entities in memory once loaded.
  *
@@ -302,15 +304,14 @@ function can_write_to_container($user_guid = 0, $container_guid = 0, $type = 'al
 
 	$container = get_entity($container_guid);
 
-	$user_guid = (int)$user_guid;
-	if ($user_guid == 0) {
-		$user = elgg_get_logged_in_user_entity();
-		$user_guid = elgg_get_logged_in_user_guid();
-	} else {
-		$user = get_user($user_guid);
-		if (!$user) {
-			return false;
-		}
+	try {
+		$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
+	} catch (UserFetchFailureException $e) {
+		return false;
+	}
+
+	if ($user) {
+		$user_guid = $user->guid;
 	}
 
 	$return = false;

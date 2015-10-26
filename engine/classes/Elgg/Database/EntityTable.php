@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\Database;
 
+use Elgg\Database\EntityTable\UserFetchFailureException;
 use IncompleteEntityException;
 
 /**
@@ -1238,5 +1239,40 @@ class EntityTable {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Get a user by GUID even if the entity is hidden or disabled
+	 *
+	 * @param int $guid User GUID. Default is logged in user
+	 *
+	 * @return \ElggUser|false
+	 * @throws UserFetchFailureException
+	 * @access private
+	 */
+	public function getUserForPermissionsCheck($guid = 0) {
+		if (!$guid) {
+			return _elgg_services()->session->getLoggedInUser();
+		}
+
+		// need to ignore access and show hidden entities for potential hidden/disabled users
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
+		$show_hidden = access_show_hidden_entities(true);
+
+		$user = $this->get($guid, 'user');
+
+		_elgg_services()->session->setIgnoreAccess($ia);
+		access_show_hidden_entities($show_hidden);
+
+		if (!$user) {
+			// requested to check access for a specific user_guid, but there is no user entity, so the caller
+			// should cancel the check and return false
+			$message = _elgg_services()->translator->translate('UserFetchFailureException', array($guid));
+			_elgg_services()->logger->warn($message);
+
+			throw new UserFetchFailureException();
+		}
+
+		return $user;
 	}
 }

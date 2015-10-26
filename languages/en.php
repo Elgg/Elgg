@@ -100,6 +100,8 @@ return array(
 	'LoginException:ChangePasswordFailure' => 'Failed current password check.',
 	'LoginException:Unknown' => 'We could not log you in due to an unknown error.',
 
+	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
+
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
 	'pageownerunavailable' => 'Warning: The page owner %d is not accessible!',
@@ -1287,7 +1289,7 @@ Please do not reply to this email.",
 	'entity:delete:success' => 'Entity %s has been deleted',
 	'entity:delete:fail' => 'Entity %s could not be deleted',
 	
-	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',
+	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
  * Action gatekeeper
