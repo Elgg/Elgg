@@ -393,10 +393,12 @@ Under the hood, metadata is stored as an instance of the
 practice (although if you're interested, see the ``ElggMetadata`` class
 reference). What you need to know is:
 
--  Metadata has an owner and access ID, both of which may be different
+-  Metadata has an owner and access ID (see note below), both of which may be different
    to the owner of the entity it's attached to
 -  You can potentially have multiple items of each type of metadata
    attached to a single entity
+
+.. note:: Metadata's ``access_id`` value will be ignored in Elgg 3.0 and all metadata values will be available in all contexts.
 
 The simple case
 ---------------
@@ -425,7 +427,7 @@ Or to add a couple of tags to an object:
 When adding metadata like this:
 
 -  The owner is set to the currently logged-in user
--  Access permissions are inherited from the entity
+-  Access permissions are inherited from the entity (see note below)
 -  Reassigning a piece of metadata will overwrite the old value
 
 This is suitable for most purposes. Be careful to note which attributes
@@ -435,6 +437,8 @@ metadata. You do need to save an entity if you have changed one of its
 built in attributes. As an example, if you changed the access id of an
 ElggObject, you need to save it or the change isn't pushed to the
 database.
+
+.. note:: Metadata's ``access_id`` value will be ignored in Elgg 3.0 and all metadata values will be available in all contexts.
 
 Reading metadata
 ~~~~~~~~~~~~~~~~
@@ -495,6 +499,8 @@ the example of a date of birth attached to a user):
 .. code:: php
 
     create_metadata($user_guid, 'dob', $dob_timestamp, 'integer', $_SESSION['guid'], $access_id);
+
+.. note:: ``$access_id`` will be ignored in Elgg 3.0 and all metadata values will be available in all contexts. Always set it to ``ACCESS_PUBLIC`` for compatibility with Elgg 3.0.
 
 For multiple values, you will need to iterate through and call
 ``create_metadata`` on each one. The following piece of code comes from
