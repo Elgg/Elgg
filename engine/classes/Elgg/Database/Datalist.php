@@ -44,6 +44,19 @@ class Datalist {
 		$this->logger = $logger;
 		$this->table = $table;
 	}
+
+	/**
+	 * Set cache. The BootService injects a pre-populated cache here. The constructor requires a cache as
+	 * well because the installer doesn't fully boot.
+	 *
+	 * @param Pool $pool Cache
+	 * @return void
+	 * @access private
+	 * @see \Elgg\BootService::boot
+	 */
+	function setCache(Pool $pool) {
+		$this->cache = $pool;
+	}
 	
 	/**
 	 * Get the value of a datalist element.
@@ -103,30 +116,7 @@ class Datalist {
 	
 		return $success !== false;
 	}
-	
-	/**
-	 * Load entire datalist in memory.
-	 * 
-	 * This could cause OOM problems if the datalists table is large.
-	 * 
-	 * @todo make a list of datalists that we want to get in one grab
-	 * 
-	 * @return array
-	 * @access private
-	 */
-	function loadAll() {
-		$result = $this->db->getData("SELECT * FROM {$this->table}");
-		$map = array();
-		if (is_array($result)) {
-			foreach ($result as $row) {
-				$map[$row->name] = $row->value;
-				$this->cache->put($row->name, $row->value);
-			}
-		}
 
-		return $map;
-	}
-	
 	/**
 	 * Run a function one time per installation.
 	 *

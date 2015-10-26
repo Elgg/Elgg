@@ -22,10 +22,13 @@ final class InMemory implements Pool {
 	private $values = array();
 	
 	/** @inheritDoc */
-	public function get($key, callable $callback) {
+	public function get($key, callable $callback = null, $default = null) {
 		assert(is_string($key) || is_int($key));
 
 		if (!array_key_exists($key, $this->values)) {
+			if (!$callback) {
+				return $default;
+			}
 			$this->values[$key] = call_user_func($callback);
 		}
 		return $this->values[$key];

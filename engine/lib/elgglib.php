@@ -1916,43 +1916,6 @@ function _elgg_walled_garden_remove_public_access($hook, $type, $accesses) {
 }
 
 /**
- * Boots the engine
- *
- * 1. sets error handlers
- * 2. connects to database
- * 3. verifies the installation succeeded
- * 4. loads application configuration
- * 5. loads i18n data
- * 6. loads cached autoloader state
- * 7. loads site configuration
- *
- * @access private
- */
-function _elgg_engine_boot() {
-	// Register the error handlers
-	set_error_handler('_elgg_php_error_handler');
-	set_exception_handler('_elgg_php_exception_handler');
-
-	$db = _elgg_services()->db;
-
-	// we inject the logger here to allow use of DB without loading core
-	$db->setLogger(_elgg_services()->logger);
-
-	$db->setupConnections();
-	$db->assertInstalled();
-
-	_elgg_load_application_config();
-
-	_elgg_load_site_config();
-
-	_elgg_session_boot();
-
-	_elgg_services()->systemCache->loadAll();
-
-	_elgg_services()->translator->loadTranslations();
-}
-
-/**
  * Elgg's main init.
  *
  * Handles core actions for comments, the JS pagehandler, and the shutdown function.
@@ -1962,10 +1925,7 @@ function _elgg_engine_boot() {
  * @access private
  */
 function _elgg_init() {
-	global $CONFIG;
-
 	elgg_register_action('entity/delete');
-	
 	elgg_register_action('comment/save');
 	elgg_register_action('comment/delete');
 
@@ -2073,9 +2033,15 @@ define('REFERRER', -1);
 define('REFERER', -1);
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
-	$events->registerHandler('init', 'system', '_elgg_init');
-	$events->registerHandler('boot', 'system', '_elgg_engine_boot', 1);
-	$hooks->registerHandler('unit_test', 'system', '_elgg_api_test');
+	$events->registerHandler('boot', 'system', function () {
+		_elgg_services()->boot->boot();
+	}, 1);
+	$events->registerHandler('cache:flush', 'system', function () {
+		_elgg_services()->boot->invalidateCache();
+	});
 
+	$events->registerHandler('init', 'system', '_elgg_init');
 	$events->registerHandler('init', 'system', '_elgg_walled_garden_init', 1000);
+
+	$hooks->registerHandler('unit_test', 'system', '_elgg_api_test');
 };

@@ -21,6 +21,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \Elgg\Database\Annotations               $annotations
  * @property-read \ElggAutoP                               $autoP
+ * @property-read \Elgg\BootService                        $boot
  * @property-read \Elgg\ClassLoader                        $classLoader
  * @property-read \Elgg\AutoloadManager                    $autoloadManager
  * @property-read \ElggCrypto                              $crypto
@@ -46,6 +47,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\PasswordService                    $passwords
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
  * @property-read \Elgg\Database\Plugins                   $plugins
+ * @property-read \Elgg\Cache\PluginSettingsCache          $pluginSettingsCache
  * @property-read \Elgg\Database\PrivateSettingsTable      $privateSettings
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\Http\Request                       $request
@@ -118,6 +120,14 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('annotations', \Elgg\Database\Annotations::class);
 
 		$this->setClassName('autoP', \ElggAutoP::class);
+
+		$this->setFactory('boot', function(ServiceProvider $c) {
+			$boot = new \Elgg\BootService();
+			if ($c->config->getVolatile('enable_profiling')) {
+				$boot->setTimer($c->timer);
+			}
+			return $boot;
+		});
 
 		$this->setValue('config', $config);
 
@@ -221,24 +231,21 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 				$c->db, $c->session, $c->crypto, $cookie_config, $cookie_token);
 		});
 
-		$this->setFactory('passwords', function (ServiceProvider $c) {
-			if (!function_exists('password_hash')) {
-				$root = $c->config->getRootPath();
-				require "{$root}vendor/ircmaxell/password-compat/lib/password.php";
-			}
-			return new \Elgg\PasswordService();
-		});
+		$this->setClassName('passwords', \Elgg\PasswordService::class);
 
 		$this->setFactory('plugins', function(ServiceProvider $c) {
-			$plugins = new \Elgg\Database\Plugins(new Pool\InMemory());
+			$pool = new Pool\InMemory();
+			$plugins = new \Elgg\Database\Plugins($pool, $c->pluginSettingsCache);
 			if ($c->config->getVolatile('enable_profiling')) {
 				$plugins->setTimer($c->timer);
 			}
 			return $plugins;
 		});
 
+		$this->setClassName('pluginSettingsCache', \Elgg\Cache\PluginSettingsCache::class);
+
 		$this->setFactory('privateSettings', function(ServiceProvider $c) {
-			return new \Elgg\Database\PrivateSettingsTable($c->db, $c->entityTable);
+			return new \Elgg\Database\PrivateSettingsTable($c->db, $c->entityTable, $c->pluginSettingsCache);
 		});
 
 		$this->setFactory('queryCounter', function(ServiceProvider $c) {
@@ -295,7 +302,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
 
-		$this->setClassName('subtypeTable', \Elgg\Database\SubtypeTable::class);
+		$this->setFactory('subtypeTable', function(ServiceProvider $c) {
+			return new \Elgg\Database\SubtypeTable($c->db);
+		});
 
 		$this->setFactory('systemCache', function (ServiceProvider $c) {
 			$cache = new \Elgg\Cache\SystemCache();
