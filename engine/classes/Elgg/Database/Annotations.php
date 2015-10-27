@@ -371,7 +371,7 @@ class Annotations {
 		if ($time_wheres) {
 			$options['wheres'][] = $time_wheres;
 		}
-	
+
 		return elgg_get_entities_from_metadata($options);
 	}
 	
