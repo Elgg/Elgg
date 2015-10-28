@@ -22,6 +22,10 @@ class PostInstall {
 		self::copyFromElggToRoot("install.php", "install.php");
 		self::copyFromElggToRoot("upgrade.php", "upgrade.php");
 
+		if (Directory\Local::root()->getPath() === Elgg\Application::elggDir()->getPath()) {
+			return;
+		}
+
 		$managed_plugins = [
 			'aalborg_theme',
 			'blog',
@@ -89,7 +93,12 @@ class PostInstall {
 	 */
 	private static function symlinkPluginFromRootToElgg($plugin) {
 		$from = Directory\Local::root()->getPath("mod/$plugin");
-		$to = Elgg\Application::elggDir()->getPath("mod/$plugin");
+		$to = "../vendor/elgg/elgg/mod/$plugin";
+
+		if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
+			// http://php.net/manual/en/function.symlink.php#97605
+			$to = Elgg\Application::elggDir()->getPath("mod/$plugin");
+		}
 
 		return !file_exists($from) && symlink($to, $from);
 	}
