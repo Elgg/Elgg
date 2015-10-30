@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Elgg friends collections
  * Lists a user's friends collections
@@ -9,32 +10,18 @@
  * @uses $vars['collections'] The array of friends collections
  */
 
-if (is_array($vars['collections']) && sizeof($vars['collections'])) {
-	echo "<ul id=\"friends_collections_accordian\">";
-
-	$friendspicker = 0;
-	foreach ($vars['collections'] as $collection) {
-		$friendspicker++;
-		echo elgg_view('core/friends/collection', array(
-			'collection' => $collection,
-			'friendspicker' => $friendspicker,
-		));
-	}
-
-	echo "</ul>";
-
-} else {
-	echo elgg_echo("friends:nocollections");
+$collections = (array) elgg_extract('collections', $vars, array());
+if (empty($collections)) {
+	echo elgg_format_element('p', ['class' => 'elgg-no-results'], elgg_echo("friends:nocollections"));
+	return;
 }
 
-?>
-<?php //@todo JS 1.8: no ?>
-<script>
-require(['jquery'], function($) {
-	$(function () {
-		$('#friends_collections_accordian h2').on('click', function () {
-			$(this.parentNode).children("[class=friends-picker-main-wrapper]").slideToggle("fast");
-		});
-	});
-});
-</script>
+$items = '';
+foreach ($collections as $collection) {
+	$view = elgg_view('core/friends/collection', array(
+		'collection' => $collection,
+	));
+	$items .= elgg_format_element('li', [], $view);
+}
+
+echo elgg_format_element('ul', ['class' => 'elgg-friends-collections-list'], $items);

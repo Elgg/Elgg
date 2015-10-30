@@ -279,7 +279,9 @@ return array(
 	'friends:collections:edited' => "Saved collection",
 	'friends:collection:edit_failed' => 'Could not save collection.',
 
-	'friendspicker:chararray' => 'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
+	'friendspicker:no_results' => 'You do not have any friends yet',
+	'friendspicker:toggle' => 'Toggle all',
+	'friendspicker:filter' => 'Filter by name',
 
 	'avatar' => 'Avatar',
 	'avatar:noaccess' => "You're not allowed to edit this user's avatar",

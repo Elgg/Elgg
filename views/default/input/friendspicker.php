@@ -1,319 +1,92 @@
 <?php
 /**
- * Elgg friends picker
- * Lists the friends picker
+ * Friendspicker input
  *
- * @warning Below is the ugliest code in Elgg. It needs to be rewritten or removed
- *
- * @package Elgg
- * @subpackage Core
- *
- * @uses $vars['entities'] The array of ElggUser objects
- * @uses $vars['name']
- * @uses $vars['value']
- * @uses $vars['highlight']
- * @uses $vars['callback']
+ * @uses $vars['user'] User entity
+ * @uses $vars['name'] Name of the input. Default: 'friend'
+ * @uses $vars['value'] An array of guids or entities to be checked
+ * @uses $vars['entities'] An array of ElggUser entities to populate the picker with. Defaults to current user's friends
  */
-
-elgg_load_js('elgg.friendspicker');
-elgg_load_js('jquery.easing');
-
-
-$chararray = elgg_echo('friendspicker:chararray');
-
-// Initialise name
-if (!isset($vars['name'])) {
-	$name = "friend";
-} else {
-	$name = $vars['name'];
-}
-
-// Are we highlighting default or all?
-if (empty($vars['highlight'])) {
-	$vars['highlight'] = 'default';
-}
-if ($vars['highlight'] != 'all') {
-	$vars['highlight'] = 'default';
-}
-
-// Initialise values
-if (!isset($vars['value'])) {
-	$vars['value'] = array();
-} else {
-	if (!is_array($vars['value'])) {
-		$vars['value'] = (int) $vars['value'];
-		$vars['value'] = array($vars['value']);
-	}
-}
-
-// Initialise whether we're calling back or not
-if (isset($vars['callback'])) {
-	$callback = $vars['callback'];
-} else {
-	$callback = false;
-}
-
-// We need to count the number of friends pickers on the page.
-if (!isset($vars['friendspicker'])) {
-	global $friendspicker;
-	if (!isset($friendspicker)) {
-		$friendspicker = 0;
-	}
-	$friendspicker++;
-} else {
-	$friendspicker = $vars['friendspicker'];
-}
-
-$users = array();
-$activeletters = array();
-
-// Are we displaying form tags and submit buttons?
-// (If we've been given a target, then yes! Otherwise, no.)
-if (isset($vars['formtarget'])) {
-	$formtarget = $vars['formtarget'];
-} else {
-	$formtarget = false;
-}
-
-// Sort users by letter
-if (is_array($vars['entities']) && sizeof($vars['entities'])) {
-	foreach($vars['entities'] as $user) {
-		$letter = elgg_strtoupper(elgg_substr($user->name, 0, 1));
-
-		if (!elgg_substr_count($chararray, $letter)) {
-			$letter = "*";
-		}
-		if (!isset($users[$letter])) {
-			$users[$letter] = array();
-		}
-		$users[$letter][$user->guid] = $user;
-	}
-}
-
-// sort users in letters alphabetically
-foreach ($users as $letter => $letter_users) {
-	usort($letter_users, function($a, $b) {
-		return strcasecmp($a->name, $b->name);
-	});
-	$users[$letter] = $letter_users;
-}
-
-if (!$callback) {
-	?>
-
-	<div class="friends-picker-main-wrapper">
-
-	<?php
-
-	if (isset($vars['content'])) {
-		echo $vars['content'];
-	}
-	?>
-
-	<div id="friends-picker_placeholder<?php echo $friendspicker; ?>">
-
-	<?php
-}
-
-if (!isset($vars['replacement'])) {
-	if ($formtarget) {
-?>
-<?php //@todo JS 1.8: no ?>
-<script>
-require(['elgg', 'jquery'], function(elgg, $) {
-	$(function () {
-		$('#collectionMembersForm<?php echo $friendspicker; ?>').submit(function() {
-			var inputs = [];
-			$(':input', this).each(function() {
-				if (this.type != 'checkbox' || (this.type == 'checkbox' && this.checked != false)) {
-					inputs.push(this.name + '=' + escape(this.value));
-				}
-			});
-			$.ajax({
-				type: "POST",
-				data: inputs.join('&'),
-				url: this.action,
-				success: function(){
-					$('a.collectionmembers<?php echo $friendspicker; ?>').click();
-				}
-
-			});
-			return false;
-		});
-	});
+$name = elgg_extract('name', $vars, 'friend');
+$value = (array) elgg_extract('value', $vars, []);
+array_walk($value, function(&$elm) {
+	// normalize to guids
+	$elm = $elm instanceof ElggEntity ? $elm->guid : (int) $elm;
 });
-</script>
 
-<!-- Collection members form -->
-<form id="collectionMembersForm<?php echo $friendspicker; ?>" action="<?php echo $formtarget; ?>" method="post"> <!-- action="" method=""> -->
+$list_options = [
+	'input_name' => $name,
+	'input_values' => $value,
+	'list_class' => 'elgg-friendspicker-list',
+	'item_view' => 'input/friendspicker/item',
+	'no_results' => elgg_echo('friendspicker:no_results'),
+];
 
-<?php
-		echo elgg_view('input/securitytoken');
-		echo elgg_view('input/hidden', array(
-			'name' => 'collection_id',
-			'value' => $vars['collection_id'],
-		));
-	}
-?>
+$user = elgg_extract('user', $vars, elgg_get_logged_in_user_entity(), false);
+/* @var $user ElggUser */
 
-<div class="friends-picker-wrapper">
-<div id="friends-picker<?php echo $friendspicker; ?>">
-	<div class="friends-picker-container">
-<?php
+$entities = elgg_extract('entities', $vars);
 
-// Initialise letters
-	$chararray .= "*";
-	$letter = elgg_substr($chararray, 0, 1);
-	$letpos = 0;
-	while (1 == 1) {
-		?>
-		<div class="panel" title="<?php	echo $letter; ?>">
-			<div class="wrapper">
-				<h3><?php echo $letter; ?></h3>
-		<?php
-
-		if (isset($users[$letter])) {
-			ksort($users[$letter]);
-
-			echo "<table border=\"0\" cellspacing=\"0\" cellpadding=\"0\">";
-			$col = 0;
-
-			foreach($users[$letter] as $friend) {
-				if ($col == 0) {
-					echo "<tr>";
-				}
-
-				//echo "<p>" . $user->name . "</p>";
-				$label = elgg_view_entity_icon($friend, 'tiny', array('use_hover' => false));
-				$options[$label] = $friend->getGUID();
-
-				if ($vars['highlight'] == 'all' && !in_array($letter,$activeletters)) {
-					$activeletters[] = $letter;
-				}
-
-
-				if (in_array($friend->getGUID(),$vars['value'])) {
-					$checked = "checked = \"checked\"";
-					if (!in_array($letter,$activeletters) && $vars['highlight'] == 'default') {
-						$activeletters[] = $letter;
-					}
-				} else {
-					$checked = "";
-				}
-				?>
-
-				<td>
-
-					<input type="checkbox" <?php echo $checked; ?> name="<?php echo $name; ?>[]" value="<?php echo $options[$label]; ?>" />
-
-				</td>
-
-				<td>
-
-					<div style="width: 25px; margin-bottom: 15px;">
-				<?php
-					echo $label;
-				?>
-					</div>
-				</td>
-				<td style="width: 200px; padding: 5px;">
-					<?php echo $friend->name; ?>
-				</td>
-				<?php
-				$col++;
-				if ($col == 3){
-					echo "</tr>";
-					$col = 0;
-				}
-			}
-			if ($col < 3) {
-				echo "</tr>";
-			}
-
-			echo "</table>";
-		}
-
-?>
-
-			</div>
-		</div>
-<?php
-
-			$substr = elgg_substr($chararray, elgg_strlen($chararray) - 1, 1);
-			if ($letter == $substr) {
-				break;
-			}
-			//$letter++;
-			$letpos++;
-			$letter = elgg_substr($chararray, $letpos, 1);
-		}
-
-?>
-	</div>
-
-<?php
-
-if ($formtarget) {
-
-	if (isset($vars['formcontents']))
-		echo $vars['formcontents'];
-
-?>
-	<div class="clearfix"></div>
-	<div class="friendspicker-savebuttons">
-		<input type="submit" class="elgg-button elgg-button-submit" value="<?php echo elgg_echo('save'); ?>" />
-		<input type="button" class="elgg-button elgg-button-cancel" value="<?php echo elgg_echo('cancel'); ?>" onclick="$('a.collectionmembers<?php echo $friendspicker; ?>').click();" />
-	<br /></div>
-	</form>
-
-<?php
-
-}
-
-?>
-
-</div>
-</div>
-
-<?php
-} else {
-	echo $vars['replacement'];
-}
-if (!$callback) {
-
-?>
-
-</div>
-</div>
-
-
-<?php
-
-}
-
-if (isset($vars['replacement'])) {
+if (empty($entities) && empty($user)) {
 	return;
 }
 
+if (is_array($entities)) {
+	array_filter($entities, function($e) {
+		return $e instanceof ElggEntity;
+	});
+	usort($entities, function($e1, $e2) {
+		return strcmp($e1->getDisplayName(), $e2->getDisplayName());
+	});
+	
+	$body = elgg_view_entity_list($entities, $list_options);
+	$count = count($entities);
+} else {
+	$count = $user->getFriends([
+		'count' => true,
+	]);
+	
+	$dbprefix = elgg_get_config('dbprefix');
+	$options = [
+		'types' => 'user',
+		'limit' => 0,
+		'joins' => ["JOIN {$dbprefix}users_entity ue ON e.guid = ue.guid"],
+		'order_by' => 'ue.name',
+		'relationship' => 'friend',
+		'relationship_guid' => $user->guid,
+	];
+	
+	$options = array_merge($options, $list_options);
+	$body = elgg_list_entities_from_relationship($options);
+}
+
+if (!$count) {
+	echo $body;
+	return;
+}
+
+$filter = elgg_view('input/text', [
+	'placeholder' => elgg_echo('friendspicker:filter'),
+	'class' => 'elgg-friendspicker-filter',
+]);
+
+$header = elgg_format_element('div', [
+	'class' => 'elgg-friendspicker-header',
+], $filter);
+
+$checkbox = elgg_view('input/checkbox', [
+	'class' => 'elgg-friendspicker-toggle',
+]);
+$footer = elgg_format_element('label', [
+	'class' => 'elgg-friendspicker-footer',
+], $checkbox . elgg_echo('friendspicker:toggle'));
+
+echo elgg_format_element('div', [
+	'class' => 'elgg-input-friendspicker',
+], $header . $body . $footer);
 ?>
 <script>
-require(['jquery'], function($) {
-	$(function () {
-		// initialise picker
-		$("div#friends-picker<?php echo $friendspicker; ?>").friendsPicker(<?php echo $friendspicker; ?>);
-
-		<?php
-		// manually add class to corresponding tab for panels that have content
-		if (sizeof($activeletters) > 0) {
-			//$chararray = elgg_echo('friendspicker:chararray');
-			foreach($activeletters as $letter) {
-				$tab = elgg_strpos($chararray, $letter) + 1;
-			?>
-		$("div#friends-picker-navigation<?php echo $friendspicker; ?> li.tab<?php echo $tab; ?> a").addClass("tabHasContent");
-		<?php
-			}
-		}
-		?>
-	});
-});
+	require(['input/friendspicker']);
 </script>
+
+

@@ -165,9 +165,6 @@ function _elgg_collections_page_handler($page_elements) {
 					return true;
 				}
 				break;
-			case 'pickercallback':
-				echo elgg_view_resource('friends/collections/pickercallback');
-				return true;
 		}
 	}
 	return false;

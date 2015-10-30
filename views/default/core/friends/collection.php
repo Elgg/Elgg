@@ -1,67 +1,55 @@
 <?php
+
 /**
  * View a friends collection
  *
  * @package Elgg
  * @subpackage Core
  *
- * @uses $vars['collection'] The individual friends collection
+ * @uses $vars['collection'] The access collection
  */
-
-$coll = $vars['collection'];
-
-if (is_array($vars['collection']->members)) {
-	$count = sizeof($vars['collection']->members);
-} else {
-	$count = 0;
+$collection = elgg_extract('collection', $vars);
+if (empty($collection)) {
+	return;
 }
 
-echo "<li><h2>";
+$members = get_members_of_access_collection($collection->id) ? : array();
+$count = count($members);
 
-//as collections are private, check that the logged in user is the owner
-if ($coll->owner_guid == elgg_get_logged_in_user_guid()) {
-	echo "<div class=\"friends_collections_controls\">";
-	echo elgg_view('output/url', array(
-			'href' => 'action/friends/collections/delete?collection=' . $coll->id,
-			'class' => 'delete_collection',
-			'text' => elgg_view_icon('delete'),
-			'encode_text' => false,
-			'confirm' => true,
+$counter = elgg_format_element('span', ['class' => 'elgg-friends-collection-membership-count'], $count);
+$title = "$collection->name ($counter)";
+
+if (can_edit_access_collection($collection->id)) {
+	$edit_link = elgg_view('output/url', array(
+		'href' => '#elgg-friends-collection-form-' . $collection->id,
+		'rel' => 'toggle',
+		'text' => elgg_view_icon('edit'),
+	));
+	$controls = elgg_format_element('li', [], $edit_link);
+
+	$delete_link = elgg_view('output/url', array(
+		'href' => 'action/friends/collections/delete?collection=' . $collection->id,
+		'text' => elgg_view_icon('delete'),
+		'confirm' => true,
+	));
+	$controls .= elgg_format_element('li', [], $delete_link);
+	$title .= elgg_format_element('ul', ['class' => 'elgg-menu-hz float-alt'], $controls);
+}
+
+$body .= elgg_view('core/friends/collection/membership', array(
+	'collection' => $collection,
 		));
-	echo "</div>";
-}
-echo $coll->name;
-echo " (<span id=\"friends_membership_count{$vars['friendspicker']}\">{$count}</span>) </h2>";
 
-// individual collection panels
-$friends = $vars['collection']->entities;
-if ($friends) {
-	$content = elgg_view('core/friends/collectiontabs', array(
-		'owner' => elgg_get_logged_in_user_entity(),
-		'collection' => $vars['collection'],
-		'friendspicker' => $vars['friendspicker'],
-	));
+$body .= elgg_view_form('friends/collections/edit', array(
+	'id' => 'elgg-friends-collection-form-' . $collection->id,
+	'class' => 'hidden',
+		), array(
+	'collection' => $collection,
+		));
 
-	echo elgg_view('input/friendspicker', array(
-		'entities' => $friends,
-		'value' => $vars['collection']->members,
-		'content' => $content,
-		'replacement' => '',
-		'friendspicker' => $vars['friendspicker'],
-	));
-?>
-	<script>
-	require(['elgg', 'jquery'], function(elgg, $) {
-		$(function () {
-			var url = elgg.config.wwwroot + 'collections/pickercallback' +
-				'?username=<?php echo elgg_get_logged_in_user_entity()->username; ?>' +
-				'&type=list&collection=<?php echo $vars['collection']->id; ?>';
-			$('#friends-picker_placeholder<?php echo $vars['friendspicker']; ?>').load(url);
-		});
-	});
-	</script>
-	<?php
-}
+echo elgg_view_module('aside', $title, $body, array(
+	'class' => 'elgg-friends-collection',
+	'data-collection-id' => $collection->id,
+));
 
-// close friends-picker div and the accordian list item
-echo "</li>";
+elgg_require_js('core/friends/collection');
