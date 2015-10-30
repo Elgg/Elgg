@@ -1475,4 +1475,7 @@ Please do not reply to this email.",
 	"za" => "Zuang",
 	"zh" => "Chinese",
 	"zu" => "Zulu",
+
+	"field:required" => 'Required',
+
 );

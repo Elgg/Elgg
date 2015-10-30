@@ -463,11 +463,22 @@ label {
 	font-size: 110%;
 }
 label.elgg-state-disabled,
-input.elgg-state-disabled {
+input.elgg-state-disabled,
+.elgg-field-label.elgg-state-disabled {
 	opacity: 0.6;
 }
+.elgg-field-label {
+	display: block;
+}
+.elgg-required-indicator {
+	font-size: 110%;
+	font-weight: bold;
+	color: #C24000;
+	display: inline;
+	padding: 0 5px;
+}
 
-fieldset > div {
+fieldset > div, .elgg-field {
 	margin-bottom: 15px;
 }
 fieldset > div:last-child {
