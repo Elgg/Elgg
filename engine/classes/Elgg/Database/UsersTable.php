@@ -557,15 +557,14 @@ class UsersTable {
 			// old (incorrect) attributes cached (notice the above query is delayed). So it's
 			// simplest to just resave the user after all plugin code runs.
 			register_shutdown_function(function () use ($user_guid, $time) {
-				$cache = _elgg_get_memcache('new_entity_cache');
-				$user = $cache->load($user_guid);
+				$user = elgg_get_logged_in_user_entity();
 				if (!$user) {
 					return;
 				}
 
 				/* @var \ElggUser $user */
 				$user->prev_last_action = $user->last_action;
-				$user->storeInPersistedCache($cache, $time);
+				$user->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'), $time);
 			});
 		}
 	}

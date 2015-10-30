@@ -248,14 +248,6 @@ class EntityTable {
 			return $row;
 		}
 	
-		// Create a memcache cache if we can
-		$memcache = _elgg_get_memcache('new_entity_cache');
-		$entity = $memcache->load($row->guid);
-		if ($entity instanceof ElggEntity) {
-			$entity->refresh($row);
-			return $entity;
-		}
-
 		$class_name = $this->subtype_table->getClassFromId($row->subtype);
 		if ($class_name && !class_exists($class_name)) {
 			$this->logger->error("Class '$class_name' was not found, missing plugin?");
@@ -282,8 +274,6 @@ class EntityTable {
 			throw new ClassException("$class_name must extend " . ElggEntity::class);
 		}
 
-		$entity->storeInPersistedCache($memcache);
-		
 		return $entity;
 	}
 
@@ -308,11 +298,11 @@ class EntityTable {
 
 		$guid = (int) $guid;
 
+		$memcache = _elgg_get_memcache('new_entity_cache');
+		
 		$entity = $this->entity_cache->get($guid);
 		if (!$entity) {
 			// Check caches
-			$memcache = _elgg_get_memcache('new_entity_cache');
-
 			$entity = $memcache->load($guid);
 			if ($entity instanceof ElggEntity) {
 				// until ACLs in memcache, DB query is required to determine access
@@ -327,6 +317,7 @@ class EntityTable {
 			if ($type) {
 				return elgg_instanceof($entity, $type) ? $entity : false;
 			}
+			$this->entity_cache->set($entity);
 			return $entity;
 		}
 
@@ -339,7 +330,15 @@ class EntityTable {
 			return false;
 		}
 
-		return $this->rowToElggStar($row);
+		$entity = $this->rowToElggStar($row);
+		/* @var \ElggEntity[] $entities */
+
+		if ($entity instanceof ElggEntity) {
+			$entity->storeInPersistedCache($memcache);
+			$this->entity_cache->set($entity);
+		}
+
+		return $entity;
 	}
 
 	/**
@@ -745,9 +744,7 @@ class EntityTable {
 	 * @throws LogicException
 	 */
 	public function fetchFromSql($sql, \ElggBatch $batch = null) {
-		$plugin_subtype = get_subtype_id('object', 'plugin');
-
-		$memcache = _elgg_get_memcache('new_entity_cache');
+		$plugin_subtype = $this->subtype_table->getId('object', 'plugin');
 
 		// Keys are types, values are columns that, if present, suggest that the secondary
 		// table is already JOINed. Note it's OK if guess incorrectly because entity load()
@@ -781,14 +778,11 @@ class EntityTable {
 				throw new LogicException('Entity row missing guid or type');
 			}
 
+			// We try ephemeral cache because it's blazingly fast and we ideally want to access
+			// the same PHP instance. We don't try memcache because it isn't worth the overhead.
 			$entity = $this->entity_cache->get($row->guid);
-			if (!$entity) {
-				$entity = $memcache->load($row->guid);
-			}
-
-			if ($entity instanceof ElggEntity) {
-				// from static var or memcache, both must be refreshed in case columns
-				// need storing in volatile data
+			if ($entity) {
+				// from static var, must be refreshed in case row has extra columns
 				$entity->refresh($row);
 				$rows[$i] = $entity;
 				continue;
@@ -1401,9 +1395,11 @@ class EntityTable {
 			':guid' => (int) $guid,
 		];
 
+		_elgg_invalidate_cache_for_entity($entity->guid);
+		_elgg_invalidate_memcache_for_entity($entity->guid);
+		
 		$result = $this->db->updateData($query, true, $params);
 		if ($result) {
-			$this->entity_cache->remove($guid);
 			return true;
 		}
 

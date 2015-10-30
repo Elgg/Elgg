@@ -250,10 +250,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			if (!$servers) {
 				return null;
 			}
-			$driver = new \Stash\Driver\Memcache();
-			$driver->setOptions(array(
+			$driver = new \Stash\Driver\Memcache([
 				'servers' => $servers,
-			));
+			]);
 			return new \Stash\Pool($driver);
 		});
 
