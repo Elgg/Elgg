@@ -78,14 +78,6 @@ class EntityTable {
 			return $row;
 		}
 	
-		// Create a memcache cache if we can
-		$memcache = _elgg_get_memcache('new_entity_cache');
-		$new_entity = $memcache->load($row->guid);
-		if ($new_entity instanceof \ElggEntity) {
-			$new_entity->refresh($row);
-			return $new_entity;
-		}
-	
 		// load class for entity if one is registered
 		$classname = get_subtype_class_from_id($row->subtype);
 		if ($classname != "") {
@@ -96,35 +88,27 @@ class EntityTable {
 					$msg = $classname . " is not a " . '\ElggEntity' . ".";
 					throw new \ClassException($msg);
 				}
+
+				return $new_entity;
 			} else {
 				error_log("Class '" . $classname . "' was not found, missing plugin?");
 			}
 		}
 	
-		if (!$new_entity) {
-			//@todo Make this into a function
-			switch ($row->type) {
-				case 'object' :
-					$new_entity = new \ElggObject($row);
-					break;
-				case 'user' :
-					$new_entity = new \ElggUser($row);
-					break;
-				case 'group' :
-					$new_entity = new \ElggGroup($row);
-					break;
-				case 'site' :
-					$new_entity = new \ElggSite($row);
-					break;
-				default:
-					$msg = "Entity type " . $row->type . " is not supported.";
-					throw new \InstallationException($msg);
-			}
+		//@todo Make this into a function
+		switch ($row->type) {
+			case 'object' :
+				return new \ElggObject($row);
+			case 'user' :
+				return new \ElggUser($row);
+			case 'group' :
+				return new \ElggGroup($row);
+			case 'site' :
+				return new \ElggSite($row);
+			default:
+				$msg = "Entity type " . $row->type . " is not supported.";
+				throw new \InstallationException($msg);
 		}
-	
-		$new_entity->storeInPersistedCache($memcache);
-	
-		return $new_entity;
 	}
 	
 	/**
@@ -162,6 +146,7 @@ class EntityTable {
 			if ($type) {
 				return elgg_instanceof($new_entity, $type) ? $new_entity : false;
 			}
+			_elgg_cache_entity($new_entity);
 			return $new_entity;
 		}
 
@@ -174,7 +159,13 @@ class EntityTable {
 			$options['type'] = $type;
 		}
 		$entities = $this->getEntities($options);
-		return $entities ? $entities[0] : false;
+		/* @var \ElggEntity[] $entities */
+		if ($entities) {
+			$entities[0]->storeInPersistedCache($memcache);
+			_elgg_cache_entity($entities[0]);
+			return $entities[0];
+		}
+		return false;
 	}
 	
 	/**
@@ -585,7 +576,6 @@ class EntityTable {
 	function fetchFromSql($sql, \ElggBatch $batch = null) {
 		$plugin_subtype = _elgg_services()->subtypeTable->getId('object', 'plugin');
 		$db = _elgg_services()->db;
-		$memcache = _elgg_get_memcache('new_entity_cache');
 
 		// Keys are types, values are columns that, if present, suggest that the secondary
 		// table is already JOINed. Note it's OK if guess incorrectly because entity load()
@@ -619,14 +609,11 @@ class EntityTable {
 				throw new \LogicException('Entity row missing guid or type');
 			}
 
+			// We try ephemeral cache because it's blazingly fast and we ideally want to access
+			// the same PHP instance. We don't try memcache because it isn't worth the overhead.
 			$entity = _elgg_retrieve_cached_entity($row->guid);
-			if (!$entity) {
-				$entity = $memcache->load($row->guid);
-			}
-
-			if ($entity instanceof \ElggEntity) {
-				// from static var or memcache, both must be refreshed in case columns
-				// need storing in volatile data
+			if ($entity) {
+				// from static var, must be refreshed in case row has extra columns
 				$entity->refresh($row);
 				$rows[$i] = $entity;
 				continue;

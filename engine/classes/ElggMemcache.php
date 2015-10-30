@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Memcache wrapper class.
  */
@@ -91,7 +92,10 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 		}
 
 		$item = $this->stash_pool->getItem($key);
-		$result = $item->set($data, $ttl);
+
+		$item->set($data);
+		$item->expiresAfter($ttl);
+		$result = $item->save();
 
 		if ($result) {
 			_elgg_services()->logger->info("MEMCACHE: SAVE SUCCESS $key");
@@ -116,8 +120,8 @@ class ElggMemcache extends \ElggSharedMemoryCache {
 
 		$item = $this->stash_pool->getItem($key);
 
-		// no invalidation strategy allows very short TTLs
-		$value = $item->get(\Stash\Invalidation::NONE);
+		$item->setInvalidationMethod(\Stash\Invalidation::NONE);
+		$value = $item->get();
 
 		if ($item->isMiss()) {
 			_elgg_services()->logger->info("MEMCACHE: LOAD MISS $key");

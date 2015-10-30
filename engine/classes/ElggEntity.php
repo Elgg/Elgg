@@ -1485,6 +1485,7 @@ abstract class ElggEntity extends \ElggData implements
 					elgg_set_ignore_access($ia);
 				}
 			}
+			$this->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
 		}
 		
 		return false;
@@ -1692,6 +1693,7 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		_elgg_cache_entity($this);
+		$this->storeInPersistedCache(_elgg_get_memcache('new_entity_cache'));
 
 		$this->orig_attributes = [];
 
