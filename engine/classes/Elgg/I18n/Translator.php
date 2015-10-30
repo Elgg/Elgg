@@ -226,7 +226,9 @@ class Translator {
 	 * that is neither English of the same as the language of the
 	 * logged in user.
 	 *
-	 * @param string $language
+	 * @param string $language Language code
+	 * @return void
+	 * @throws \PluginException
 	 */
 	private function loadPluginTranslations($language) {
 		// Get active plugins
@@ -258,7 +260,7 @@ class Translator {
 
 			// Register translations from the plugin languages directory
 			if (!$this->registerTranslations($languages_path, false, $language)) {
-				throw new PluginException(sprintf('Cannot register languages for plugin %s (guid: %s) at %s.',
+				throw new \PluginException(sprintf('Cannot register languages for plugin %s (guid: %s) at %s.',
 					array($plugin->getID(), $plugin->guid, $languages_path)));
 			}
 		}
