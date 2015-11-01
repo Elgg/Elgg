@@ -44,6 +44,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\PasswordService                    $passwords
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
  * @property-read \Elgg\Database\Plugins                   $plugins
+ * @property-read \Elgg\Cache\PluginSettingsCache          $pluginSettingsCache
  * @property-read \Elgg\Database\PrivateSettingsTable      $privateSettings
  * @property-read \Elgg\Database\QueryCounter              $queryCounter
  * @property-read \Elgg\Http\Request                       $request
@@ -204,11 +205,16 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('plugins', function(ServiceProvider $c) {
-			return new \Elgg\Database\Plugins(new Pool\InMemory());
+			$pool = new Pool\InMemory();
+			return new \Elgg\Database\Plugins($pool, $c->pluginSettingsCache);
+		});
+
+		$this->setFactory('pluginSettingsCache', function (ServiceProvider $c) {
+			return new \Elgg\Cache\PluginSettingsCache($c->db);
 		});
 
 		$this->setFactory('privateSettings', function(ServiceProvider $c) {
-			return new \Elgg\Database\PrivateSettingsTable($c->db, $c->entityTable);
+			return new \Elgg\Database\PrivateSettingsTable($c->db, $c->entityTable, $c->pluginSettingsCache);
 		});
 
 		$this->setFactory('queryCounter', function(ServiceProvider $c) {
