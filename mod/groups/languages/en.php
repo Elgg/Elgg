@@ -18,7 +18,7 @@ return array(
 	'groups:invitations' => 'Group invitations',
 	'groups:invitations:pending' => 'Group invitations (%s)',
 
-	'groups:icon' => 'Group icon (leave blank to leave unchanged)',
+	'groups:icon' => 'Group icon',
 	'groups:name' => 'Group name',
 	'groups:username' => 'Group short name (displayed in URLs, alphanumeric characters only)',
 	'groups:description' => 'Description',

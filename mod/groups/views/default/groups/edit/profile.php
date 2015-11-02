@@ -8,11 +8,13 @@
  * @package ElggGroups
  */
 
+$group = elgg_extract('entity', $vars);
 $name = elgg_extract('name', $vars);
 $group_profile_fields = elgg_get_config('group');
 
 echo elgg_view_input('file', [
 	'name' => 'icon',
+	'value' => ($group->icontime),
 	'label' => elgg_echo('groups:icon'),
 ]);
 echo elgg_view_input('text', [
