@@ -33,8 +33,8 @@ That means an Elgg site can look something like this:
       ...
 
 ``elgg_get_root_path`` and ``$CONFIG->path`` will return the path to the application
-root directory (the one containing ``settings.php``), which is not necessarily the
-same as Elgg core's root directory (which in this case is ``vendor/elgg/elgg/``).
+root directory, which is not necessarily the same as Elgg core's root directory (which
+in this case is ``vendor/elgg/elgg/``).
 
 Do not attempt to access the core Elgg from your plugin directly, since you cannot
 rely on its location on the filesystem.
@@ -377,6 +377,14 @@ Elgg's sprites and most of the CSS classes beginning with ``elgg-icon-``
 
 Usage of ``elgg_view_icon()`` is backward compatible, but static HTML using the ``elgg-icon``
 classes will have to be updated to the new markup.
+
+Increase of z-index value in elgg-menu-site class
+-------------------------------------------------
+
+The value of z-index in the elgg-menu-site class has been increased from 1 to 50 to allow for page elements
+in the content area to use the z-index property without the "More" site menu's dropdown being displayed
+behind these elements. If your plugin/theme overrides the elgg-menu-site class or views/default/elements/navigation.css
+please adjust the z-index value in your modified CSS file accordingly.
 
 Introduced third-party library for sending email
 ------------------------------------------------

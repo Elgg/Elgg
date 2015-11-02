@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Grupos',
 
-	'groups:latestdiscussion' => 'Última conversa',
 	'groups:privategroup' => 'O grupo é un grupo pechado. Solicitarase a admisión.',
 	'groups:notitle' => 'Os grupos necesitan un título.',
 	'groups:cantjoin' => 'Non foi posíbel unirse ao grupo.',

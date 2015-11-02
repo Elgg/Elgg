@@ -65,8 +65,17 @@ elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
 elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTokenTimeout() * 333; ?>;
 elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->language); ?>';
 
-// We require jquery-ui because loading the file in an AMD environment doesn't automatically
-// apply its functionality to jQuery.
+// jQuery and UI must be loaded sync in 2.x but modules should depend on these AMD modules
+define('jquery', function () {
+	return jQuery;
+});
+define('jquery-ui');
+
+// The datepicker language modules depend on "../datepicker", so to avoid RequireJS from
+// trying to load that, we define it manually here. The lang modules have names like
+// "jquery-ui/i18n/datepicker-LANG.min" and these views are mapped in /views.php
+define('jquery-ui/datepicker', jQuery.datepicker);
+
 define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
 	elgg.add_translation(elgg.get_language(), translations);
 

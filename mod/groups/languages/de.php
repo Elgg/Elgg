@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Gruppen',
 
-	'groups:latestdiscussion' => 'Neueste Diskussionsbeiträge',
 	'groups:privategroup' => 'Dies ist eine nicht-öffentliche Gruppe. Der Beitritt zur Gruppe ist nur auf Anfrage möglich.',
 	'groups:notitle' => 'Gruppen müssen einen Titel haben.',
 	'groups:cantjoin' => 'Du kannst dieser Gruppe nicht beitreten.',

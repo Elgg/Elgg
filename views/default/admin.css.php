@@ -692,6 +692,16 @@ select {
 	background-color: #eee;
 	display: block;
 }
+.ui-helper-hidden-accessible {
+	border: 0;
+	clip: rect(0 0 0 0);
+	height: 1px;
+	margin: -1px;
+	overflow: hidden;
+	padding: 0;
+	position: absolute;
+	width: 1px;
+}
 
 /* ***************************************
 	USER PICKER
@@ -1307,6 +1317,7 @@ a.elgg-widget-collapsed:before {
 .elgg-icon {
 	color: #aaa;
 	font-size: 16px;
+	line-height: 1em;
 	width: 16px;
 	height: 16px;
 	margin: 0 2px;

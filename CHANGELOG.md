@@ -1,3 +1,24 @@
+<a name="2.0.0-beta.3"></a>
+### 2.0.0-beta.3  (2015-10-04)
+
+#### Contributors
+
+* Steve Clay (6)
+* Juho Jaakkola (2)
+* iionly (1)
+
+#### Features
+
+* **views:** allow getting all view locations ([7a699f3c](https://github.com/Elgg/Elgg/commit/7a699f3c11dd8668b06323617730dbdfb12a566f), closes [#8947](https://github.com/Elgg/Elgg/issues/8947))
+
+
+#### Bug Fixes
+
+* **bookmarks:** bookmark pin copies title into form ([50881370](https://github.com/Elgg/Elgg/commit/50881370cac4fd10ca707aea2c83a25659eef03a), closes [#8995](https://github.com/Elgg/Elgg/issues/8995))
+* **file:** thumbnails are visible again ([7f46db8e](https://github.com/Elgg/Elgg/commit/7f46db8e4002732d3616a08c6bd82718e4bf3333))
+* **site_notifications:** no ajax error without reason on auto-deletion of site notifications ([7aa55a81](https://github.com/Elgg/Elgg/commit/7aa55a819c0824dc97a5752658260cea6b2f1a2f))
+
+
 <a name="2.0.0-beta.2"></a>
 ### 2.0.0-beta.2  (2015-09-21)
 

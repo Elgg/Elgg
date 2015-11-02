@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Comunidades',
 
-	'groups:latestdiscussion' => 'Última discussão',
 	'groups:privategroup' => 'Este Comunidade é fechada. Solicite ao moderador sua participação.',
 	'groups:notitle' => 'Comunidades devem ter um título',
 	'groups:cantjoin' => 'Não foi possível participar da Comunidade',

@@ -193,7 +193,7 @@ class Config implements Services\Config {
 		} else {
 			$path = Directory\Local::root()->getPath('engine/settings.php');
 			if (!is_file($path)) {
-				$path = Directory\Local::root()->getPath('settings.php');
+				$path = Directory\Local::root()->getPath('elgg-config/settings.php');
 			}
 		}
 

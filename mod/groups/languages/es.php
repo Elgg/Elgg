@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Grupos',
 
-	'groups:latestdiscussion' => '&Uacute;ltimas discusiones',
 	'groups:privategroup' => 'Este es un grupo cerrado. Debes solicitar membresía.',
 	'groups:notitle' => 'El grupo debe tener un t&iacute;tulo',
 	'groups:cantjoin' => 'No se puede unir al grupo',

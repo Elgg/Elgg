@@ -298,13 +298,16 @@ function elgg_view_exists($view, $viewtype = '', $recurse = true) {
 }
 
 /**
- * Get the file path for all registered views and viewtypes
+ * List all views in a viewtype
  *
- * @return string[] [viewtype][view_name] => file_path
+ * @param string $viewtype Viewtype
+ *
+ * @return string[]
+ *
  * @since 2.0
  */
-function elgg_get_view_locations() {
-	return _elgg_services()->views->getViewLocations();
+function elgg_list_views($viewtype = 'default') {
+	return _elgg_services()->views->listViews($viewtype);
 }
 
 /**
@@ -1568,17 +1571,19 @@ function elgg_views_boot() {
 	}
 
 	// on every page
-	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
-	elgg_load_js('elgg.require_config');
 
-	elgg_register_js('require', elgg_get_simplecache_url('require.js'), 'head');
-	elgg_load_js('require');
-
+	// jQuery and UI must come before require. See #9024
 	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head');
 	elgg_load_js('jquery');
 
 	elgg_register_js('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
 	elgg_load_js('jquery-ui');
+
+	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
+	elgg_load_js('elgg.require_config');
+
+	elgg_register_js('require', elgg_get_simplecache_url('require.js'), 'head');
+	elgg_load_js('require');
 
 	elgg_register_js('elgg', elgg_get_simplecache_url('elgg.js'), 'head');
 	elgg_load_js('elgg');
@@ -1626,7 +1631,7 @@ function elgg_views_boot() {
 
 	// Declared views. Unlike plugins, Elgg's root views/ is never scanned, so Elgg cannot override
 	// these view traditional view files.
-	$file = dirname(dirname(__DIR__)) . '/views.php';
+	$file = dirname(__DIR__) . '/views.php';
 	if (is_file($file)) {
 		$spec = (include $file);
 		if (is_array($spec)) {

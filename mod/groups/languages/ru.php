@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Группы',
 
-	'groups:latestdiscussion' => 'Последние дискуссии',
 	'groups:privategroup' => 'Это личная группа, для просмотра требуется членство.',
 	'groups:notitle' => 'Группы должны иметь название.',
 	'groups:cantjoin' => 'Простите, невозможно вступить в группу.',
