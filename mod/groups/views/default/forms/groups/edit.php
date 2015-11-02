@@ -2,6 +2,11 @@
 /**
  * Group edit form
  *
+ * @tip Group profile fields can be modified using 'profile:fields','group' hook.
+ * Profile fields are configured as an array of $shortname => $input_type pairs,
+ * where $shortname is a metadata name for storing the value, and $input_type is
+ * an input view to be used when rendering the field.
+ * 
  * @package ElggGroups
  */
 
