@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Ομάδες',
 
-	'groups:latestdiscussion' => 'Τελευταία συζήτηση',
 	'groups:privategroup' => 'Αυτή η ομάδα είναι κλειστή. Αίτηση εγγραφής.',
 	'groups:notitle' => 'Οι ομάδες πρέπει να έχουν τίτλο',
 	'groups:cantjoin' => 'Δεν μπορείτε να γίνετε μέλος της ομάδας',

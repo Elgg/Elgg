@@ -18,7 +18,7 @@ return array(
 	'river:likes' => 'gefällt %s %s',
 
 	// notifications. yikes.
-	'likes:notifications:subject' => '%s gefällt Dein Beiträg "%s"',
+	'likes:notifications:subject' => '%s gefällt Dein Beitrag "%s"',
 	'likes:notifications:body' =>
 'Hallo %1$s,
 

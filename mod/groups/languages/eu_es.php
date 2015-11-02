@@ -57,7 +57,7 @@ return array(
 	'groups:cantcreate' => 'Ezin duzu talderik sortu. Administratzaileak bakarrik egin dezake.',
 	'groups:cantedit' => 'Ezin duzu talde hau editatu',
 	'groups:saved' => 'Taldea gordeta',
-	'groups:save_error' => 'Group could not be saved',
+	'groups:save_error' => 'Ezinezkoa da taldea gordetzea',
 	'groups:featured' => 'Nabarmendutako taldeak',
 	'groups:makeunfeatured' => 'Ez nabarmendu',
 	'groups:makefeatured' => 'Nabarmendua egin',
@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Taldeak',
 
-	'groups:latestdiscussion' => 'Azken eztabaida',
 	'groups:privategroup' => 'Talde hau itxita dago. Eskatu kide izateko.',
 	'groups:notitle' => 'Taldeak izenburu bat izan behar du',
 	'groups:cantjoin' => 'Ezin da taldera batu',

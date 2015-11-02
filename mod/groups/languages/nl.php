@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Groepen',
 
-	'groups:latestdiscussion' => 'Laatste discussie',
 	'groups:privategroup' => 'Deze groep is besloten. Lidmaatschap wordt aangevraagd.',
 	'groups:notitle' => 'Groepen moeten een titel hebben',
 	'groups:cantjoin' => 'Kan niet lid worden van de groep',

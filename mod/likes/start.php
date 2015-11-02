@@ -96,6 +96,13 @@ function likes_entity_menu_setup($hook, $type, $return, $params) {
 	$entity = $params['entity'];
 	/* @var ElggEntity $entity */
 
+	$type = $entity->type;
+	$subtype = $entity->getSubtype();
+	$likable = (bool)elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
+	if (!$likable) {
+		return $return;
+	}
+
 	if ($entity->canAnnotate(0, 'likes')) {
 		$hasLiked = \Elgg\Likes\DataService::instance()->currentUserLikesEntity($entity->guid);
 		
