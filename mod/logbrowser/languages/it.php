@@ -1,7 +1,7 @@
 <?php
 return array(
-	'admin:administer_utilities:logbrowser' => 'Analisi dei log',
-	'logbrowser' => 'Analisi dei log',
+	'admin:administer_utilities:logbrowser' => 'Log browser',
+	'logbrowser' => 'Navigatore di Resoconti',
 	'logbrowser:browse' => 'Naviga il sistema dei resoconti',
 	'logbrowser:search' => 'Affina i risultati',
 	'logbrowser:user' => 'Username da cercare',
@@ -11,10 +11,10 @@ return array(
 	'logbrowser:explore' => 'Esplora resoconto',
 
 	'logbrowser:date' => 'Date and time',
-	'logbrowser:ip_address' => 'Indirizzo IP',
-	'logbrowser:user:name' => 'Utente',
+	'logbrowser:ip_address' => 'IP address',
+	'logbrowser:user:name' => 'User',
 	'logbrowser:user:guid' => 'User GUID',
 	'logbrowser:object' => 'Object type',
 	'logbrowser:object:guid' => 'Object GUID',
-	'logbrowser:action' => 'Azione',
+	'logbrowser:action' => 'Action',
 );

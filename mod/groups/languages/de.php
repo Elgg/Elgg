@@ -53,11 +53,11 @@ return array(
 	'groups:widget:group_activity:content:noselect' => 'Bearbeite dieses Widget, um eine Gruppe auszuwählen.',
 
 	'groups:noaccess' => 'Zugang zur Gruppe verweigert',
-	'groups:permissions:error' => 'Du hast keine Berechtigung für diese Aktion.',
 	'groups:ingroup' => 'in der Gruppe',
 	'groups:cantcreate' => 'Du kannst keine Gruppe erstellen. Dies können nur Administratoren.',
 	'groups:cantedit' => 'Du kannst die Gruppen-Einstellungen nicht bearbeiten',
 	'groups:saved' => 'Gruppe angelegt',
+	'groups:save_error' => 'Beim Anlegen der Gruppe ist ein Fehler aufgetreten.',
 	'groups:featured' => 'Besondere Gruppen',
 	'groups:makeunfeatured' => 'Aus "Besondere Gruppen" entfernen',
 	'groups:makefeatured' => 'Zu "Besondere Gruppen" hinzufügen',
@@ -81,30 +81,6 @@ return array(
 	'groups:search_in_group' => "In dieser Gruppe suchen",
 	'groups:acl' => "Gruppe: %s",
 
-	'discussion:topic:notify:summary' => 'Ein neuer Gruppen-Diskussionsbeitrag namens %s wurde erstellt',
-	'discussion:topic:notify:subject' => 'Neuer Gruppen-Diskussionsbeitrag: %s',
-	'discussion:topic:notify:body' =>
-'%s hat einen neuen Gruppen-Diskussionsbeitrag in der Gruppe %s erstellt:
-
-Titel: %s
-
-%s
-
-Schau Dir den neuen Diskussionsbeitrag an und antworte darauf:
-%s
-',
-
-	'discussion:reply:notify:summary' => 'Neue Antwort im Gruppen-Diskussionsbeitrag: %s',
-	'discussion:reply:notify:subject' => 'Neue Antwort im Gruppen-Diskussionsbeitrag: %s',
-	'discussion:reply:notify:body' =>
-'%s hat auf den Diskusstionsbeitrag %s in der Gruppe %s geantwortet:
-
-%s
-
-Schau Dir den Diskussionsbeitrag an und antworte selbst darauf:
-%s
-',
-
 	'groups:activity' => "Letzte Aktivitäten der Gruppe",
 	'groups:enableactivity' => 'Anzeige von "Letzte Aktivitäten der Gruppe" aktivieren',
 	'groups:activity:none' => "In dieser Gruppe gibt es noch keine Aktivitäten.",
@@ -115,11 +91,6 @@ Schau Dir den Diskussionsbeitrag an und antworte selbst darauf:
 	'groups:requests:none' => 'Derzeit gibt es keine ausstehenden Anfragen für einen Beitritt zu dieser Gruppe.',
 
 	'groups:invitations:none' => 'Derzeit gibt es keine unbeantworteten Einladungen zum Beitreten in diese Gruppe.',
-
-	'item:object:groupforumtopic' => "Diskussionsthemen",
-	'item:object:discussion_reply' => "Antworten in Diskussionen",
-
-	'groupforumtopic:new' => "Neuen Eintrag im Diskussionsforum hinzufügen",
 
 	'groups:count' => "Verfügbare Gruppen",
 	'groups:open' => "Öffentliche Gruppe",
@@ -146,69 +117,10 @@ Schau Dir den Diskussionsbeitrag an und antworte selbst darauf:
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Gruppen-Diskussionsforum aktivieren',
 	'groups:lastupdated' => '%s zuletzt aktualisiert durch %s',
 	'groups:lastcomment' => '%s zuletzt kommentiert durch %s',
 
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Diskussion',
-	'discussion:add' => 'Neuen Eintrag im Diskussionsforum hinzufügen',
-	'discussion:latest' => 'Neuester Diskussionsbeitrag',
-	'discussion:group' => 'Gruppen-Diskussion',
-	'discussion:none' => 'Es gibt noch keine Diskussionsbeiträge.',
-	'discussion:reply:title' => 'Antwort von %s',
-
-	'discussion:topic:created' => 'Der Diskussionsbeitrag wurde hinzugefügt.',
-	'discussion:topic:updated' => 'Der Diskussionsbeitrag wurde aktualisiert.',
-	'discussion:topic:deleted' => 'Der Diskussionsbeitrag wurde gelöscht.',
-
-	'discussion:topic:notfound' => 'Der gewünschte Diskussionsbeitrag wurde leider nicht gefunden.',
-	'discussion:error:notsaved' => 'Der Diskussionsbeitrag konnte nicht gespeichert werden.',
-	'discussion:error:missing' => 'Es müssen sowohl der Titel als auch das Textfeld ausgefüllt werden.',
-	'discussion:error:permissions' => 'Du hast keine Berechtigung für diese Aktion.',
-	'discussion:error:notdeleted' => 'Der Diskussionsbeitrag konnte nicht gelöscht werden.',
-
-	'discussion:reply:edit' => 'Antwort bearbeiten',
-	'discussion:reply:deleted' => 'Die Antwort im Diskussionsbeitrag wurde gelöscht.',
-	'discussion:reply:error:notfound' => 'Die ausgewählte Antwort im Diskussionsbeitrag ist nicht auffindbar.',
-	'discussion:reply:error:notfound_fallback' => "Entschuldigung. Diese Antwort ist in dem Diskussionsbeitrag nicht auffindbar aber Du wurdest zum entsprechenden Diskussionsbeitrag weitergeleitet.",
-	'discussion:reply:error:notdeleted' => 'Die Antwort im Diskussionsbeitrag konnte nicht gelöscht werden.',
-
-	'discussion:search:title' => 'Antwort im Diskussionsbeitrag: %s',
-	
 	'admin:groups' => 'Gruppen',
-
-	'reply:this' => 'Antwort schreiben',
-
-	'group:replies' => 'Antworten',
-	'groups:forum:created' => '%s hinzugefügt mit %d Kommentaren',
-	'groups:forum:created:single' => '%s hinzugefügt mit %d Antwort',
-	'groups:forum' => 'Diskussion',
-	'groups:addtopic' => 'Einen Diskussionsbeitrag hinzufügen',
-	'groups:forumlatest' => 'Neueste Diskussionsbeiträge',
-	'groups:latestdiscussion' => 'Neueste Diskussionsbeiträge',
-	'groupspost:success' => 'Deine Antwort wurde gespeichert.',
-	'groupspost:failure' => 'Beim Speichern Deiner Antwort ist ein Problem aufgetreten.',
-	'groups:alldiscussion' => 'Neueste Diskussionsbeiträge',
-	'groups:edittopic' => 'Diskussionsbeitrag bearbeiten',
-	'groups:topicmessage' => 'Textinhalt des Diskussionsbeitrags',
-	'groups:topicstatus' => 'Status des Beitrags',
-	'groups:reply' => 'Einen Kommentar schreiben',
-	'groups:topic' => 'Beitrag',
-	'groups:posts' => 'Einträge',
-	'groups:lastperson' => 'Letzte Person',
-	'groups:when' => 'Wann',
-	'grouptopic:notcreated' => 'Es wurden noch keine Diskussionsbeiträge erstellt.',
-	'groups:topicclosed' => 'Geschlossen',
-	'grouptopic:created' => 'Dein Diskussionsbeitrag wurde gespeichert.',
-	'groups:topicsticky' => 'Sticky',
-	'groups:topicisclosed' => 'Dieser Diskussionsbeitrag ist geschlossen.',
-	'groups:topiccloseddesc' => 'Dieser Diskussionsbeitrag ist geschlossen und es können keine weiteren Kommentare hinzugefügt werden.',
-	'grouptopic:error' => 'Dein Diskussionsbeitrag konnte nicht gespeichert werden. Bitte versuche es noche einmal oder wende Dich an einen Administrator.',
-	'groups:forumpost:edited' => "Die Änderungen an dem Diskussionsbeitrag wurden gespeichert.",
-	'groups:forumpost:error' => "Beim Speichern der Änderungen an dem Diskussionsbeitrag ist ein Fehler aufgetreten.",
 
 	'groups:privategroup' => 'Dies ist eine nicht-öffentliche Gruppe. Der Beitritt zur Gruppe ist nur auf Anfrage möglich.',
 	'groups:notitle' => 'Gruppen müssen einen Titel haben.',
@@ -229,7 +141,6 @@ Schau Dir den Diskussionsbeitrag an und antworte selbst darauf:
 	'groups:usernotinvited' => 'Die Einladung an den Benutzer konnte nicht gesendet werden.',
 	'groups:useralreadyinvited' => 'Dieser Benutzer wurde bereits eingeladen.',
 	'groups:invite:subject' => "Hallo %s, Du wurdest eingeladen, der Gruppe %s beizutreten!",
-	'groups:updated' => "Letze Antwort von %s %s",
 	'groups:started' => "Gestartet von %s",
 	'groups:joinrequest:remove:check' => 'Bist Du sicher, dass Du diese Anfrage zum Gruppenbeitritt löschen willst?',
 	'groups:invite:remove:check' => 'Bist Du sicher, dass Du diese Einladung zum Gruppenbeitritt löschen willst?',
@@ -263,9 +174,6 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 
 	'river:create:group:default' => '%s hat die Gruppe %s gegründet',
 	'river:join:group:default' => '%s ist der Gruppe %s beigetreten',
-	'river:create:object:groupforumtopic' => '%s schrieb einen neuen Diskussionsbeitrag %s',
-	'river:reply:object:groupforumtopic' => '%s schrieb einen Kommentar zum Diskussionsbeitrag %s',
-	'river:reply:view' => 'Kommentar anzeigen',
 
 	'groups:nowidgets' => 'Für diese Gruppe wurden keine Widgets aktiviert.',
 
@@ -280,8 +188,6 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 	'groups:widgets:entities:label:displaynum' => 'Zeige die Objekte einer Gruppe an.',
 	'groups:widgets:entities:label:pleaseedit' => 'Bitte konfiguriere dieses Widget.',
 
-	'groups:forumtopic:edited' => 'Diskussionsbeitrag wurde aktualisiert.',
-
 	'groups:allowhiddengroups' => 'Möchtest Du private (versteckte) Gruppen zulassen?',
 	'groups:whocancreate' => 'Wer soll neue Gruppen erstellen dürfen?',
 
@@ -292,13 +198,6 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 	'group:notdeleted' => 'Die Gruppe konnte nicht gelöscht werden.',
 
 	'group:notfound' => 'Die Gruppe wurde nicht gefunden.',
-	'grouppost:deleted' => 'Der Gruppenbeitrag wurde gelöscht.',
-	'grouppost:notdeleted' => 'Der Gruppenbeitrag konnte nicht gelöscht werden.',
-	'groupstopic:deleted' => 'Beitrag wurde gelöscht.',
-	'groupstopic:notdeleted' => 'Beitrag konnte nicht gelöscht werden.',
-	'grouptopic:blank' => 'Kein Titel eingegeben oder leerer Textinhalt.',
-	'grouptopic:notfound' => 'Dieser Beitrag konnte nicht gefunden werden.',
-	'grouppost:nopost' => 'Leerer Beitrag.',
 	'groups:deletewarning' => "Bist Du sicher, dass Du diese Gruppe löschen willst? Dies kann nicht rückgängig gemacht werden!",
 
 	'groups:invitekilled' => 'Die Einladung wurde gelöscht.',
@@ -309,6 +208,5 @@ oder folge dem nächsten Link, um die ausstehenden Anfragen zum Gruppenbeitritt 
 	/**
 	 * ecml
 	 */
-	'groups:ecml:discussion' => 'Gruppen-Diskussionen',
 	'groups:ecml:groupprofile' => 'Gruppen-Profile',
 );

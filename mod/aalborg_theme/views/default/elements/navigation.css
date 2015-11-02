@@ -177,7 +177,7 @@
 	left: 0;
 	top: 0;
 	position: relative;
-	z-index: 1;
+	z-index: 50;
 }
 .elgg-menu-site > li {
 	float: left;

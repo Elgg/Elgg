@@ -1,6 +1,7 @@
 <?php
 namespace Elgg\Database;
 
+use Elgg\Database\EntityTable\UserFetchFailureException;
 use IncompleteEntityException;
 
 /**
@@ -245,10 +246,14 @@ class EntityTable {
 	 *           Joined with subtypes by AND. See below)
 	 *
 	 * 	subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
-	 *              Use ELGG_ENTITIES_NO_VALUE for no subtype.
+	 *              Use ELGG_ENTITIES_NO_VALUE to match the default subtype.
+	 *              Use ELGG_ENTITIES_ANY_VALUE to match any subtype.
 	 *
 	 * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
-	 *                        (type = '$type' AND subtype = '$subtype') pairs
+	 *                        array(
+	 *                            'object' => array('blog', 'file'), // All objects with subtype of 'blog' or 'file'
+	 *                            'user' => ELGG_ENTITY_ANY_VALUE, // All users irrespective of subtype
+	 *                        );
 	 *
 	 *	guids => null|ARR Array of entity guids
 	 *
@@ -365,15 +370,15 @@ class EntityTable {
 	
 		$wheres = $options['wheres'];
 	
-		$wheres[] = _elgg_get_entity_type_subtype_where_sql('e', $options['types'],
+		$wheres[] = $this->getEntityTypeSubtypeWhereSql('e', $options['types'],
 			$options['subtypes'], $options['type_subtype_pairs']);
 	
-		$wheres[] = _elgg_get_guid_based_where_sql('e.guid', $options['guids']);
-		$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);
-		$wheres[] = _elgg_get_guid_based_where_sql('e.container_guid', $options['container_guids']);
-		$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.guid', $options['guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.owner_guid', $options['owner_guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.container_guid', $options['container_guids']);
+		$wheres[] = $this->getGuidBasedWhereSql('e.site_guid', $options['site_guids']);
 	
-		$wheres[] = _elgg_get_entity_time_where_sql('e', $options['created_time_upper'],
+		$wheres[] = $this->getEntityTimeWhereSql('e', $options['created_time_upper'],
 			$options['created_time_lower'], $options['modified_time_upper'], $options['modified_time_lower']);
 	
 		// see if any functions failed
@@ -464,7 +469,7 @@ class EntityTable {
 		}
 
 		if ($options['callback'] === 'entity_row_to_elggstar') {
-			$results = _elgg_fetch_entities_from_sql($query, $options['__ElggBatch']);
+			$results = $this->fetchFromSql($query, $options['__ElggBatch']);
 		} else {
 			$results = _elgg_services()->db->getData($query, $options['callback']);
 		}
@@ -1234,5 +1239,40 @@ class EntityTable {
 		} else {
 			return false;
 		}
+	}
+
+	/**
+	 * Get a user by GUID even if the entity is hidden or disabled
+	 *
+	 * @param int $guid User GUID. Default is logged in user
+	 *
+	 * @return \ElggUser|false
+	 * @throws UserFetchFailureException
+	 * @access private
+	 */
+	public function getUserForPermissionsCheck($guid = 0) {
+		if (!$guid) {
+			return _elgg_services()->session->getLoggedInUser();
+		}
+
+		// need to ignore access and show hidden entities for potential hidden/disabled users
+		$ia = _elgg_services()->session->setIgnoreAccess(true);
+		$show_hidden = access_show_hidden_entities(true);
+
+		$user = $this->get($guid, 'user');
+
+		_elgg_services()->session->setIgnoreAccess($ia);
+		access_show_hidden_entities($show_hidden);
+
+		if (!$user) {
+			// requested to check access for a specific user_guid, but there is no user entity, so the caller
+			// should cancel the check and return false
+			$message = _elgg_services()->translator->translate('UserFetchFailureException', array($guid));
+			_elgg_services()->logger->warn($message);
+
+			throw new UserFetchFailureException();
+		}
+
+		return $user;
 	}
 }

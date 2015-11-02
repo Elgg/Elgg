@@ -33,8 +33,8 @@ That means an Elgg site can look something like this:
       ...
 
 ``elgg_get_root_path`` and ``$CONFIG->path`` will return the path to the application
-root directory (the one containing ``settings.php``), which is not necessarily the
-same as Elgg core's root directory (which in this case is ``vendor/elgg/elgg/``).
+root directory, which is not necessarily the same as Elgg core's root directory (which
+in this case is ``vendor/elgg/elgg/``).
 
 Do not attempt to access the core Elgg from your plugin directly, since you cannot
 rely on its location on the filesystem.
@@ -309,10 +309,12 @@ The behavior of the ``container_permissions_check`` hook has changed when an ent
 
 In 2.0, when an entity is created in a container like a group, if the owner is the same as the logged in user (almost always the case), this first check is bypassed. So the ``container_permissions_check`` hook will almost always be called once with ``$params['container']`` being the correct container of the entity.
 
-Creating a relationship triggers only one event
------------------------------------------------
+Creating or deleting a relationship triggers only one event
+-----------------------------------------------------------
 
-Entity relationship creation no longer fires the legacy "create" event using the relationship name as the type. E.g. Listening for the ``"create", "member"`` event will no longer capture group membership additions. Use the ``"create", "relationship"`` event.
+The "create" and "delete" relationship events are now only fired once, with ``"relationship"`` as the object type.
+
+E.g. Listening for the ``"create", "member"`` or ``"delete", "member"`` event(s) will no longer capture group membership additions/removals. Use the ``"create", "relationship"`` or ``"delete", "relationship"`` events.
 
 Discussion feature has been pulled from groups into its own plugin
 ------------------------------------------------------------------
@@ -375,6 +377,14 @@ Elgg's sprites and most of the CSS classes beginning with ``elgg-icon-``
 
 Usage of ``elgg_view_icon()`` is backward compatible, but static HTML using the ``elgg-icon``
 classes will have to be updated to the new markup.
+
+Increase of z-index value in elgg-menu-site class
+-------------------------------------------------
+
+The value of z-index in the elgg-menu-site class has been increased from 1 to 50 to allow for page elements
+in the content area to use the z-index property without the "More" site menu's dropdown being displayed
+behind these elements. If your plugin/theme overrides the elgg-menu-site class or views/default/elements/navigation.css
+please adjust the z-index value in your modified CSS file accordingly.
 
 Introduced third-party library for sending email
 ------------------------------------------------

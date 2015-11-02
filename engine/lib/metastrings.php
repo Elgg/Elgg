@@ -27,18 +27,6 @@ function elgg_get_metastring_id($string, $case_sensitive = true) {
 }
 
 /**
- * Add a metastring.
- *
- * @warning You should not call this directly. Use elgg_get_metastring_id().
- *
- * @param string $string The value to be normalized
- * @return int The identifier for this string
- */
-function _elgg_add_metastring($string) {
-	return _elgg_services()->metastringsTable->add($string);
-}
-
-/**
  * Returns an array of either \ElggAnnotation or \ElggMetadata objects.
  * Accepts all elgg_get_entities() options for entity restraints.
  *
@@ -179,7 +167,7 @@ function _elgg_get_metastring_based_objects($options) {
 	$wheres = $options['wheres'];
 
 	// entities
-	$wheres[] = _elgg_get_entity_type_subtype_where_sql('e', $options['types'],
+	$wheres[] = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
 
 	$wheres[] = _elgg_get_guid_based_where_sql('e.guid', $options['guids']);

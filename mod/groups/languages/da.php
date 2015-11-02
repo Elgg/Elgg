@@ -53,17 +53,18 @@ return array(
 	'groups:widget:group_activity:content:noselect' => 'Ændre denne widget for at vælge en gruppe',
 
 	'groups:noaccess' => 'Ikke adgang til gruppen',
-	'groups:permissions:error' => 'Du har ikke tilladelser til dette',
 	'groups:ingroup' => 'i gruppen',
 	'groups:cantcreate' => 'You can not create a group. Only admins can.',
 	'groups:cantedit' => 'Du kan ikke redigere denne gruppe',
 	'groups:saved' => 'Gruppe gemt',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Foretrukne grupper',
 	'groups:makeunfeatured' => 'Vælg fra',
 	'groups:makefeatured' => 'Vælg til',
 	'groups:featuredon' => '%s er nu en foretrukket gruppe',
 	'groups:unfeatured' => '%s has been removed from the featured groups.',
 	'groups:featured_error' => 'Ugyldig gruppe.',
+	'groups:nofeatured' => 'No featured groups',
 	'groups:joinrequest' => 'Ansøg om medlemsskab',
 	'groups:join' => 'Bliv medlem af gruppen',
 	'groups:leave' => 'Forlad gruppen',
@@ -80,30 +81,6 @@ return array(
 	'groups:search_in_group' => "Search in this group",
 	'groups:acl' => "Group: %s",
 
-	'discussion:topic:notify:summary' => 'Nyt diskussionsemne kaldt %s',
-	'discussion:topic:notify:subject' => 'Nyt diskussionsemne: %s',
-	'discussion:topic:notify:body' =>
-'%s har tilføjet et nyt diskussionsemne i gruppen %s:
-
-Titel: %s
-
-%s
-
-Se og svar på diskussionsemnet:
-%s
-',
-
-	'discussion:reply:notify:summary' => 'Nyt svar i emnet: %s',
-	'discussion:reply:notify:subject' => 'Nyt svar i emnet: %s',
-	'discussion:reply:notify:body' =>
-'%s replied to the discussion topic %s in the group %s:
-
-%s
-
-View and reply to the discussion:
-%s
-',
-
 	'groups:activity' => "Gruppeaktivitet",
 	'groups:enableactivity' => 'Aktiver gruppeaktivitet',
 	'groups:activity:none' => "Der er ingen gruppeaktivitet endnu",
@@ -114,11 +91,6 @@ View and reply to the discussion:
 	'groups:requests:none' => 'Der er ingen udestående anmodninger om medlemskab.',
 
 	'groups:invitations:none' => 'Der er ingen udestående invitationer.',
-
-	'item:object:groupforumtopic' => "Diskussions emner",
-	'item:object:discussion_reply' => "Svar på diskussioner",
-
-	'groupforumtopic:new' => "Nyt diskussions emne",
 
 	'groups:count' => "grupper oprettet",
 	'groups:open' => "åben gruppe",
@@ -145,66 +117,10 @@ View and reply to the discussion:
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Aktiver gruppedebat',
 	'groups:lastupdated' => 'Sidst opdateret %s af %s',
 	'groups:lastcomment' => 'Seneste kommentar %s af %s',
 
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Discussion',
-	'discussion:add' => 'Tilføj diskussionsemne',
-	'discussion:latest' => 'Seneste diskussion',
-	'discussion:group' => 'Gruppediskussioner',
-	'discussion:none' => 'No discussion',
-	'discussion:reply:title' => 'Reply by %s',
-
-	'discussion:topic:created' => 'Diskussionsemnet blev oprettet.',
-	'discussion:topic:updated' => 'Diskussionsemnet blev opdateret.',
-	'discussion:topic:deleted' => 'Diskussionsemne er blevet slettet.',
-
-	'discussion:topic:notfound' => 'Diskussionsemne ikke fundet',
-	'discussion:error:notsaved' => 'Kan ikke gemme dette emne',
-	'discussion:error:missing' => 'Både titel og besked skal udfyldes',
-	'discussion:error:permissions' => 'Du har ikke tilladelse til at udføre denne handling',
-	'discussion:error:notdeleted' => 'Kunne ikke slette diskussionsemne',
-
-	'discussion:reply:edit' => 'Ændre svar',
-	'discussion:reply:deleted' => 'Svaret er blevet slettet.',
-	'discussion:reply:error:notfound' => 'Svaret på diskussionen blev ikke fundet',
-	'discussion:reply:error:notdeleted' => 'Kunne ikke slette diskussionssvaret',
-
 	'admin:groups' => 'Grupper',
-
-	'reply:this' => 'Reply to this',
-
-	'group:replies' => 'Svar',
-	'groups:forum:created' => 'Oprettet %s med %d kommentarer',
-	'groups:forum:created:single' => 'Oprettet %s med %d kommentar',
-	'groups:forum' => 'Discussion',
-	'groups:addtopic' => 'Tilføj et emne',
-	'groups:forumlatest' => 'Seneste diskussion',
-	'groups:latestdiscussion' => 'Seneste diskussion',
-	'groupspost:success' => 'Din kommentar er tilføjet',
-	'groupspost:failure' => 'Der opstod et problem under oprettelse af dit svar',
-	'groups:alldiscussion' => 'Seneste diskussion',
-	'groups:edittopic' => 'Rediger emne',
-	'groups:topicmessage' => 'Emne besked',
-	'groups:topicstatus' => 'Emne status',
-	'groups:reply' => 'Send en kommentar',
-	'groups:topic' => 'Emne',
-	'groups:posts' => 'Indlæg',
-	'groups:lastperson' => 'Sidste person',
-	'groups:when' => 'Når',
-	'grouptopic:notcreated' => 'Ingen enmer er blevet oprettet.',
-	'groups:topicclosed' => 'Lukket',
-	'grouptopic:created' => 'Dit emne blev oprettet.',
-	'groups:topicsticky' => 'Vigtig',
-	'groups:topicisclosed' => 'Dette ene er lukket.',
-	'groups:topiccloseddesc' => 'Dette emne er nu blevet lukket og kan ikke modtage nye kommenterer.',
-	'grouptopic:error' => 'Dit gruppeemne kunne ikke oprettes. Prøv venligst igen eller kontakt systemadministratoren.',
-	'groups:forumpost:edited' => "Du har redigeret forumindlægget korrekt.",
-	'groups:forumpost:error' => "Der opstod et problem med at redigere forumindlægget.",
 
 	'groups:privategroup' => 'Denne gruppe er privat, kræver medlemsskab.',
 	'groups:notitle' => 'Grupper skal have en titel',
@@ -225,7 +141,6 @@ View and reply to the discussion:
 	'groups:usernotinvited' => 'Brugeren kunne ikke inviteres.',
 	'groups:useralreadyinvited' => 'Brugeren er allerede blevet inviteret',
 	'groups:invite:subject' => "%s du er blevet inviteret til at blive medlem af %s!",
-	'groups:updated' => "Seneste kommentar af %s %s",
 	'groups:started' => "Startet af %s",
 	'groups:joinrequest:remove:check' => 'Er du sikker på, at du vil fjerne denne anmodning om tilmelding?',
 	'groups:invite:remove:check' => 'Er du sikker på, at du vil fjerne denne invitation?',
@@ -259,8 +174,6 @@ eller klik nedenfor for at se gruppens anmodningsliste:
 
 	'river:create:group:default' => '%s oprettede gruppen %s',
 	'river:join:group:default' => '%s blev medlem af gruppen %s',
-	'river:create:object:groupforumtopic' => '%s tilføjede et nyt diskussionsemne %s',
-	'river:reply:object:groupforumtopic' => '%s svarede på diskussionsemnet %s',
 
 	'groups:nowidgets' => 'Ingen widgets defineret for denne gruppe.',
 
@@ -275,8 +188,6 @@ eller klik nedenfor for at se gruppens anmodningsliste:
 	'groups:widgets:entities:label:displaynum' => 'Vis en gruppes objekter',
 	'groups:widgets:entities:label:pleaseedit' => 'Indstil venligst denne widget.',
 
-	'groups:forumtopic:edited' => 'Forumemne succesfuldt redigeret.',
-
 	'groups:allowhiddengroups' => 'Vil du tillade private (skjulte) grupper?',
 	'groups:whocancreate' => 'Who can create new groups?',
 
@@ -287,21 +198,15 @@ eller klik nedenfor for at se gruppens anmodningsliste:
 	'group:notdeleted' => 'Gruppen kunne ikke slettes',
 
 	'group:notfound' => 'Kunne ikke finde gruppen',
-	'grouppost:deleted' => 'Gruppeindlæg slettet korrekt',
-	'grouppost:notdeleted' => 'Gruppeindlæg kunne ikke slettes',
-	'groupstopic:deleted' => 'Emne slettet',
-	'groupstopic:notdeleted' => 'Emne kunne ikke slettes',
-	'grouptopic:blank' => 'Ingen emner',
-	'grouptopic:notfound' => 'Kunne ikke finde emnet',
-	'grouppost:nopost' => 'Tom post',
 	'groups:deletewarning' => "Er du sikker på at du vil slette denne gruppe? Du kan ikke gøre det om!",
 
 	'groups:invitekilled' => 'Invitationen er blevet slettet.',
 	'groups:joinrequestkilled' => 'Anmodningen om tilslutning er blevet slettet.',
+	'groups:error:addedtogroup' => "Could not add %s to the group",
+	'groups:add:alreadymember' => "%s is already a member of this group",
 
 	/**
 	 * ecml
 	 */
-	'groups:ecml:discussion' => 'Gruppediskussioner',
 	'groups:ecml:groupprofile' => 'Gruppeprofiler',
 );

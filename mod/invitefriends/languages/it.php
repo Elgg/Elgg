@@ -1,13 +1,13 @@
 <?php
 return array(
 
-	'friends:invite' => 'Invita amici',
+	'friends:invite' => 'Invita i tuoi amici',
 	
-	'invitefriends:registration_disabled' => 'Non puoi invitare nuovi utenti poiché le registrazioni sono state sospese.',
+	'invitefriends:registration_disabled' => 'Nuove registrazioni sul sito disabilitate: non puoi invitare nuovi utenti',
 	
 	'invitefriends:introduction' => 'Per invitare i tuoi amici ad iscriversi, inserisci il loro indirizzo email in basso (uno per riga):',
 	'invitefriends:emails' => 'Indirizzi email (uno per riga)',
-	'invitefriends:message' => 'Messaggio',
+	'invitefriends:message' => 'Inserisci il messaggio che vuoi inviare loro con il tuo invito:',
 	'invitefriends:subject' => 'Vieni anche tu su %s',
 
 	'invitefriends:success' => 'I tuoi amici sono stati invitati.',

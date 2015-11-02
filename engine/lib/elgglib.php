@@ -219,6 +219,18 @@ function elgg_require_js($name) {
 	_elgg_services()->amdConfig->addDependency($name);
 }
 
+/**
+ * Cancel a request to load an AMD module onto the page.
+ *
+ * @note The elgg, jquery, and jquery-ui modules cannot be cancelled.
+ *
+ * @param string $name The AMD module name.
+ * @return void
+ * @since 2.1.0
+ */
+function elgg_unrequire_js($name) {
+	_elgg_services()->amdConfig->removeDependency($name);
+}
 
 /**
  * Get the JavaScript URLs that are loaded
@@ -1028,9 +1040,11 @@ function elgg_get_version($human_readable = false) {
 	static $version, $release;
 	
 	if (!isset($version) || !isset($release)) {
-		if (!include(\Elgg\Application::elggDir()->getPath('version.php'))) {
+		$path = \Elgg\Application::elggDir()->getPath('version.php');
+		if (!is_file($path)) {
 			return false;
 		}
+		include $path;
 	}
 	
 	return $human_readable ? $release : $version;

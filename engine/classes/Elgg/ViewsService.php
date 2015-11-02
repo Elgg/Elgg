@@ -551,6 +551,22 @@ class ViewsService {
 	}
 
 	/**
+	 * List all views in a viewtype
+	 *
+	 * @param string $viewtype Viewtype
+	 *
+	 * @return string[]
+	 *
+	 * @access private
+	 */
+	public function listViews($viewtype = 'default') {
+		if (empty($this->locations[$viewtype])) {
+			return [];
+		}
+		return array_keys($this->locations[$viewtype]);
+	}
+
+	/**
 	 * Get inspector data
 	 *
 	 * @return array
@@ -625,10 +641,11 @@ class ViewsService {
 	 */
 	private function setViewLocation($view, $viewtype, $path) {
 		$view = $this->canonicalizeViewName($view);
-		
-		if (isset($this->locations[$viewtype][$view])) {
+		$path = strtr($path, '\\', '/');
+
+		if (isset($this->locations[$viewtype][$view]) && $path !== $this->locations[$viewtype][$view]) {
 			$this->overrides[$viewtype][$view][] = $this->locations[$viewtype][$view];
 		}
-		$this->locations[$viewtype][$view] = strtr($path, '\\', '/');
+		$this->locations[$viewtype][$view] = $path;
 	}
 }

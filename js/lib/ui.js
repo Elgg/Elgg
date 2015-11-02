@@ -352,18 +352,12 @@ elgg.ui.initDatePicker = function() {
 		return;
 	}
 
-	if (elgg.get_language() == 'en') {
-		loadDatePicker();
-	} else {
-		// load language first
-		elgg.get({
-			url: elgg.config.wwwroot + 'vendor/bower-asset/jquery-ui/ui/minified/i18n/datepicker-'+ elgg.get_language() +'.min.js',
-			dataType: "script",
-			cache: true,
-			success: loadDatePicker,
-			error: loadDatePicker // english language is already loaded.
-		});
+	// require language module if necessary
+	var deps = [];
+	if (elgg.get_language() != 'en') {
+		deps.push('jquery-ui/i18n/datepicker-'+ elgg.get_language() + '.min');
 	}
+	require(deps, loadDatePicker);
 };
 
 /**

@@ -176,7 +176,7 @@ paths by leaving off the leading slash:
         ],
     ];
     
-Elgg core uses this feature extensively. See ``/views.php``.
+Elgg core uses this feature extensively. See ``/engine/views.php``.
 
 .. note::
 

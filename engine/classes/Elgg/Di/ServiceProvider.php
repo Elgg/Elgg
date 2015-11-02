@@ -134,7 +134,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('deprecation', function(ServiceProvider $c) {
-			return new \Elgg\DeprecationService($c->session, $c->logger);
+			return new \Elgg\DeprecationService($c->logger);
 		});
 
 		$this->setClassName('entityPreloader', \Elgg\EntityPreloader::class);
@@ -215,7 +215,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Database\QueryCounter($c->db);
 		}, false);
 
-		$this->setClassName('relationshipsTable', \Elgg\Database\RelationshipsTable::class);
+		$this->setFactory('relationshipsTable', function(ServiceProvider $c) {
+			return new \Elgg\Database\RelationshipsTable($c->db);
+		});
 
 		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
 

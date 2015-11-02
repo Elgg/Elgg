@@ -15,11 +15,6 @@ namespace Elgg;
 class DeprecationService {
 
 	/**
-	 * @var \ElggSession
-	 */
-	protected $session;
-
-	/**
 	 * @var Logger
 	 */
 	protected $logger;
@@ -27,11 +22,9 @@ class DeprecationService {
 	/**
 	 * Constructor
 	 *
-	 * @param \ElggSession $session Session service
-	 * @param Logger       $logger  Logger service
+	 * @param Logger $logger Logger service
 	 */
-	public function __construct(\ElggSession $session, Logger $logger) {
-		$this->session = $session;
+	public function __construct(Logger $logger) {
 		$this->logger = $logger;
 	}
 
@@ -47,20 +40,8 @@ class DeprecationService {
 	 * @return bool
 	 */
 	function sendNotice($msg, $dep_version, $backtrace_level = 1) {
-		if (!$dep_version) {
-			return false;
-		}
 
-		$elgg_version = elgg_get_version(true);
-		$elgg_version_arr = explode('.', $elgg_version);
-		$elgg_major_version = (int)$elgg_version_arr[0];
-		$elgg_minor_version = (int)$elgg_version_arr[1];
-
-		$dep_version_arr = explode('.', (string)$dep_version);
-		$dep_major_version = (int)$dep_version_arr[0];
-		$dep_minor_version = (int)$dep_version_arr[1];
-
-		$msg = "Deprecated in $dep_major_version.$dep_minor_version: $msg Called from ";
+		$msg = "Deprecated in $dep_version: $msg Called from ";
 
 		// Get a file and line number for the log. Skip over the function that
 		// sent this notice and see who called the deprecated function itself.

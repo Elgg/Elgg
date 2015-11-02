@@ -40,11 +40,11 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 	'install:check:php:register_globals' => 'L\'option "Register globals" doit être mise à "off".',
 	'install:check:php:session.auto_start' => "Pour fonctionner l'option session.auto_start doit être mise à \"off\". Vous devez soit modifier la configuration de votre serveur ou ajouter cette directive au fichier \".htaccess\" d'Elgg.",
 
-	'install:check:enginedir' => 'Votre serveur web n\'a pas la permission de créer le fichier "settings.php" (paramètres) dans le répertoire "engine" (moteur) d\'Elgg. Vous avez deux choix : 
+	'install:check:installdir' => 'Votre serveur web n\'a pas la permission de créer le fichier "settings.php" (paramètres) dans le répertoire "engine" (moteur) d\'Elgg. Vous avez deux choix : 
 
 		1. Changer les permissions du répertoire "engine"
 
-		2. Copier le fichier "settings.example.php" en le renommant "settings.php" et suivre les instructions contenues à l\'intérieur de ce fichier afin de définir les paramètres de la base de données.',
+		2. Copier le fichier "settings.example.php" en le renommant "settings.php" et suivre les instructions qu\'il contient afin de définir les paramètres de la base de données.',
 	'install:check:readsettings' => 'Un fichier de paramètres existe dans le répertoire "engine" (moteur), mais le serveur web ne peut pas le lire. Vous pouvez supprimer le fichier ou modifier les autorisations de lecture sur lui.',
 
 	'install:check:php:success' => "Votre serveur PHP remplit tous les pré-requis techniques d'Elgg.",

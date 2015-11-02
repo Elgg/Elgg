@@ -75,7 +75,7 @@ With Composer (recommended if comfortable with CLI):
 
     cd /path/to/wwwroot/
     composer self-update
-    composer global require "fxp/composer-asset-plugin:~1.0"
+    composer global require "fxp/composer-asset-plugin:~1.0.3"
     composer create-project elgg/starter-project:dev-master .
 
 From pre-packaged zip (recommended if not comfortable with CLI):
@@ -148,8 +148,8 @@ A note on settings.php and .htaccess
 
 The Elgg installer will try to create two files for you:
 
--  settings.php, which contains local environment configuration for your installation
--  .htaccess, which allows Elgg to generate dynamic URLs
+-  ``elgg-config/settings.php``, which contains local environment configuration for your installation
+-  ``.htaccess``, which allows Elgg to generate dynamic URLs
 
 If these files can't be automatically generated, for example because the
 web server doesn't have write permissions in the directories, Elgg will
@@ -160,7 +160,7 @@ those two files, complete the install process, and them change the
 permissions back to their original settings. If, for some reason, this
 won't work, you will need to:
 
--  Copy engine/settings.example.php to settings.php, open it up
+-  In ``elgg-config/``, copy ``settings.example.php`` to ``settings.php``, open it up
    in a text editor and fill in your database details
 -  On Apache server, copy ``install/config/htaccess.dist`` to ``.htaccess``
 -  On Nginx server copy ``install/config/nginx.dist`` to ``/etc/nginx/sites-enabled`` and adjust it's contents

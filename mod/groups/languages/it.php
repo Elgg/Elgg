@@ -122,7 +122,6 @@ return array(
 
 	'admin:groups' => 'Groups',
 
-	'groups:latestdiscussion' => 'Ultime discussioni',
 	'groups:privategroup' => 'Questo gruppo è privato, richiedi una adesione.',
 	'groups:notitle' => 'Il gruppo deve avere un titolo',
 	'groups:cantjoin' => 'Non puoi partecipare al gruppo',

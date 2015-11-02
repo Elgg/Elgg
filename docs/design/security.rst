@@ -17,7 +17,7 @@ Passwords
 Password validation
 -------------------
 
-The only restriction that Elgg places on a password is that it must be at least 6 characters long by default, though this may be changed in /settings.php. Additional criteria can be added by a plugin by registering for the ``registeruser:validate:password`` plugin hook.
+The only restriction that Elgg places on a password is that it must be at least 6 characters long by default, though this may be changed in ``/elgg-config/settings.php``. Additional criteria can be added by a plugin by registering for the ``registeruser:validate:password`` plugin hook.
 
 Password salting
 ----------------

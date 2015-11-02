@@ -53,11 +53,11 @@ return array(
 	'groups:widget:group_activity:content:noselect' => 'Измените этот виджет и укажите группу',
 
 	'groups:noaccess' => 'Нет доступа к группе',
-	'groups:permissions:error' => 'Вы не можете редактировать эту группу',
 	'groups:ingroup' => 'в группе',
 	'groups:cantcreate' => 'Вы не можете создать группу. Только админы могут.',
 	'groups:cantedit' => 'Вы не можете редактировать эту группу',
 	'groups:saved' => 'Сохранено',
+	'groups:save_error' => 'Группа не может быть сохранена',
 	'groups:featured' => 'Избранные группы',
 	'groups:makeunfeatured' => 'Убрать из избранного',
 	'groups:makefeatured' => 'Добавить в избранные',
@@ -81,30 +81,6 @@ return array(
 	'groups:search_in_group' => "Поиск в этой группе",
 	'groups:acl' => "Группа: %s",
 
-	'discussion:topic:notify:summary' => 'Новое обсуждение %s',
-	'discussion:topic:notify:subject' => 'Новое обсуждение: %s',
-	'discussion:topic:notify:body' =>
-'%s добавил[а] новое обсуждение в группу %s:
-
-Тема: %s
-
-%s
-
-Посмотреть и ответить по ссылке:
-%s
-',
-
-	'discussion:reply:notify:summary' => 'Новый ответ в обсуждении: %s',
-	'discussion:reply:notify:subject' => 'Новый ответ в обсуждении: %s',
-	'discussion:reply:notify:body' =>
-'%s ответил[а] в теме %s в группе %s:
-
-%s
-
-Посмотреть и ответить по ссылке:
-%s
-',
-
 	'groups:activity' => "Активность группы",
 	'groups:enableactivity' => 'Включить активность группы',
 	'groups:activity:none' => "---",
@@ -115,11 +91,6 @@ return array(
 	'groups:requests:none' => 'Пока нет никаких запросов членства.',
 
 	'groups:invitations:none' => 'There are no oustanding invitations at this time.',
-
-	'item:object:groupforumtopic' => "Темы обсуждений",
-	'item:object:discussion_reply' => "Ответы в обсуждении",
-
-	'groupforumtopic:new' => "Новая тема",
 
 	'groups:count' => "групп создано",
 	'groups:open' => "открытая группа",
@@ -146,69 +117,10 @@ return array(
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Включить форум группы',
 	'groups:lastupdated' => 'Последнее обновление %s от пользователя %s',
 	'groups:lastcomment' => 'Последний комментарий %s от пользователя %s',
 
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Обсуждения',
-	'discussion:add' => 'Создать тему',
-	'discussion:latest' => 'Последние обсуждения',
-	'discussion:group' => 'Обсуждения группы',
-	'discussion:none' => '---',
-	'discussion:reply:title' => 'Ответ от %s',
-
-	'discussion:topic:created' => 'Создано.',
-	'discussion:topic:updated' => 'Обновлено.',
-	'discussion:topic:deleted' => 'Удалено.',
-
-	'discussion:topic:notfound' => 'Не найдено',
-	'discussion:error:notsaved' => 'Не удалось сохранить',
-	'discussion:error:missing' => 'Название и сообщение обязательно для заполнения',
-	'discussion:error:permissions' => 'Недостаточно прав',
-	'discussion:error:notdeleted' => 'Не удалось удалить',
-
-	'discussion:reply:edit' => 'Изменить ответ',
-	'discussion:reply:deleted' => 'Удалено.',
-	'discussion:reply:error:notfound' => 'Ответ не найден',
-	'discussion:reply:error:notfound_fallback' => "К сожалению, мы не можем найти указанный ответ, но мы перенаправляем вас в начало темы обсуждения.",
-	'discussion:reply:error:notdeleted' => 'Не удалось удалить',
-
-	'discussion:search:title' => 'Ответить на тему: %s',
-	
 	'admin:groups' => 'Группы',
-
-	'reply:this' => 'Ответить',
-
-	'group:replies' => 'Ответы',
-	'groups:forum:created' => 'Создал %s с %d комментариями',
-	'groups:forum:created:single' => 'Создал %s с %d ответами',
-	'groups:forum' => 'Форум группы',
-	'groups:addtopic' => 'Создать тему',
-	'groups:forumlatest' => 'Последнее на форуме',
-	'groups:latestdiscussion' => 'Последние дискуссии',
-	'groupspost:success' => 'Ваш комментарий успешно размещен.',
-	'groupspost:failure' => 'Не удалось добавить ваш ответ',
-	'groups:alldiscussion' => 'Последние дискуссии',
-	'groups:edittopic' => 'Редактировать тему',
-	'groups:topicmessage' => 'Сообщение',
-	'groups:topicstatus' => 'Статус темы',
-	'groups:reply' => 'Комментировать',
-	'groups:topic' => 'Тема',
-	'groups:posts' => 'Ответы',
-	'groups:lastperson' => 'Последний',
-	'groups:when' => 'Когда',
-	'grouptopic:notcreated' => 'Темы не созданы.',
-	'groups:topicclosed' => 'Закрыта для обсуждения',
-	'grouptopic:created' => 'Ваша тема создана.',
-	'groups:topicsticky' => 'Требует нового обсуждения',
-	'groups:topicisclosed' => 'Обсуждение закрыто.',
-	'groups:topiccloseddesc' => 'Тема закрыта.',
-	'grouptopic:error' => 'Простите, тема не может быть создана. Попробуйте снова.',
-	'groups:forumpost:edited' => "Сообщение успешно отредактировано.",
-	'groups:forumpost:error' => "Простите, произошла ошибка при редактировании.",
 
 	'groups:privategroup' => 'Это личная группа, для просмотра требуется членство.',
 	'groups:notitle' => 'Группы должны иметь название.',
@@ -229,7 +141,6 @@ return array(
 	'groups:usernotinvited' => 'Простите, пользователь не может быть приглашен.',
 	'groups:useralreadyinvited' => 'Пользователь уже был приглашен',
 	'groups:invite:subject' => "%s you have been invited to join %s!",
-	'groups:updated' => "Последнее сообщение",
 	'groups:started' => "Начато пользователем",
 	'groups:joinrequest:remove:check' => 'Удалить запрос приглашения?',
 	'groups:invite:remove:check' => 'Удалить приглашение?',
@@ -263,9 +174,6 @@ return array(
 
 	'river:create:group:default' => '%s создал(а) группу %s',
 	'river:join:group:default' => '%s вступил(а) в группу %s',
-	'river:create:object:groupforumtopic' => '%s добавил(а) новое сообщение на форум %s',
-	'river:reply:object:groupforumtopic' => '%s ответил(а) на сообщение %s',
-	'river:reply:view' => 'просмотреть ответ',
 
 	'groups:nowidgets' => 'У группы не определены элементы.',
 
@@ -280,8 +188,6 @@ return array(
 	'groups:widgets:entities:label:displaynum' => 'Список объектов группы.',
 	'groups:widgets:entities:label:pleaseedit' => 'Пожалуйста, настройте этот виджет.',
 
-	'groups:forumtopic:edited' => 'Тема форума отредактирована.',
-
 	'groups:allowhiddengroups' => 'Хотите вступить в подпольную группу?',
 	'groups:whocancreate' => 'Кто может создавать новые группы?',
 
@@ -292,13 +198,6 @@ return array(
 	'group:notdeleted' => 'Удаление невозможно',
 
 	'group:notfound' => 'Невозможно найти тему форума',
-	'grouppost:deleted' => 'Сообщения группы удалены',
-	'grouppost:notdeleted' => 'Удаление невозможно',
-	'groupstopic:deleted' => 'Тема удалена',
-	'groupstopic:notdeleted' => 'Удаление невозможно',
-	'grouptopic:blank' => 'Тем нет',
-	'grouptopic:notfound' => 'Невозможно найти тему форума',
-	'grouppost:nopost' => 'Пусто',
 	'groups:deletewarning' => "Вы уверены, что хотите удалить эту группу? Возврата не будет!",
 
 	'groups:invitekilled' => 'Приглашение удалено.',
@@ -309,6 +208,5 @@ return array(
 	/**
 	 * ecml
 	 */
-	'groups:ecml:discussion' => 'Обсуждения группы',
 	'groups:ecml:groupprofile' => 'Профили группы',
 );
