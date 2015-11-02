@@ -38,7 +38,7 @@ class ElggRelationship extends \ElggData implements
 
 			$id = (int)$row;
 			elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use get_relationship()', 1.9);
-			$row = _elgg_get_relationship_row($id);
+			$row = _elgg_services()->relationshipsTable->getRow($id);
 			if (!$row) {
 				throw new \InvalidArgumentException("Relationship not found with ID $id");
 			}

@@ -3,21 +3,7 @@
  * @uses $vars['language']
  */
 
-$language = elgg_extract('language', $vars);
-
-if (empty($language)) {
-	// try to detect it
-	preg_match("/\/js\/languages\/(.*?).js+/", current_page_url(), $matches);
-	
-	if (!empty($matches) && isset($matches[1])) {
-		$language = $matches[1];
-	}	
-}
-
-if (empty($language)) {
-	// fallback to 'en'
-	$language = 'en';
-}
+$language = elgg_extract('language', $vars, 'en');
 
 $all_translations = $GLOBALS['_ELGG']->translations;
 $translations = $all_translations['en'];

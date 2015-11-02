@@ -53,11 +53,11 @@ return array(
 	'groups:widget:group_activity:content:noselect' => 'Widget hau editatu talde bat aukeratzeko',
 
 	'groups:noaccess' => 'Atzipenik ez taldera',
-	'groups:permissions:error' => 'Ez duzu baimenik honetarako',
 	'groups:ingroup' => 'taldean',
 	'groups:cantcreate' => 'Ezin duzu talderik sortu. Administratzaileak bakarrik egin dezake.',
 	'groups:cantedit' => 'Ezin duzu talde hau editatu',
 	'groups:saved' => 'Taldea gordeta',
+	'groups:save_error' => 'Ezinezkoa da taldea gordetzea',
 	'groups:featured' => 'Nabarmendutako taldeak',
 	'groups:makeunfeatured' => 'Ez nabarmendu',
 	'groups:makefeatured' => 'Nabarmendua egin',
@@ -81,30 +81,6 @@ return array(
 	'groups:search_in_group' => "Talde honetan bilatu",
 	'groups:acl' => "Taldea: %s",
 
-	'discussion:topic:notify:summary' => 'Eztabaida gai berri bat %s deitua',
-	'discussion:topic:notify:subject' => 'Eztabaida gai berria: %s',
-	'discussion:topic:notify:body' =>
-'%s-ek eztabaida gai berri bat gehitu du %s taldean:
-
-Izenburua: %s
-
-%s
-
-Ikusi eta erantzun eztabaida gaiari:
-%s
-',
-
-	'discussion:reply:notify:summary' => 'Erantzun berria gaian: %s',
-	'discussion:reply:notify:subject' => 'Erantzun berria gaian: %s',
-	'discussion:reply:notify:body' =>
-'%s-ek %s eztabaida gaian erantzun du %s taldean:
-
-%s
-
-Ikusi eta erantzun eztabaidan:
-%s
-',
-
 	'groups:activity' => "Taldeko aktibitatea",
 	'groups:enableactivity' => 'Taldeko aktibitatea gaitu',
 	'groups:activity:none' => "Ez dago taldeko aktibitaterik oraindik",
@@ -115,11 +91,6 @@ Ikusi eta erantzun eztabaidan:
 	'groups:requests:none' => 'Ez dago talde kide izateko eskaerarik orain.',
 
 	'groups:invitations:none' => 'Ez dago gonbidapenik orain.',
-
-	'item:object:groupforumtopic' => "Eztabaida gaiak",
-	'item:object:discussion_reply' => "Eztabaida erantzunak",
-
-	'groupforumtopic:new' => "Eztabaida bidalketa berria",
 
 	'groups:count' => "taldeak sortuta",
 	'groups:open' => "talde irekia",
@@ -146,69 +117,10 @@ Ikusi eta erantzun eztabaidan:
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Talde eztabaida gaitu',
 	'groups:lastupdated' => 'Azken eguneraketa: %s Nork: %s',
 	'groups:lastcomment' => 'Azken iruzkina: %s Nork: %s',
 
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Eztabaida',
-	'discussion:add' => 'Eztabaida gaia gehitu',
-	'discussion:latest' => 'Azken eztabaida',
-	'discussion:group' => 'Talde eztabaida',
-	'discussion:none' => 'Eztabaidarik ez',
-	'discussion:reply:title' => 'Nork erantzunda %s',
-
-	'discussion:topic:created' => 'Eztabaida gaia sortua izan da.',
-	'discussion:topic:updated' => 'Eztabaida gaia eguneratua izan da.',
-	'discussion:topic:deleted' => 'Eztabaida gaia ezabatua izan da.',
-
-	'discussion:topic:notfound' => 'Ez da eztabaida gaia aurkitu',
-	'discussion:error:notsaved' => 'Ezinezkoa gaia gordetzea',
-	'discussion:error:missing' => 'Izenburu eta mezua beharrezko eremuak dira',
-	'discussion:error:permissions' => 'Ez duzu baimenik ekintza hau burutzeko',
-	'discussion:error:notdeleted' => 'Ezin izan da eztabaida gaia ezabatu',
-
-	'discussion:reply:edit' => 'Erantzuna editatu',
-	'discussion:reply:deleted' => 'Eztabaida erantzuna ezabatua izan da.',
-	'discussion:reply:error:notfound' => 'Ez da eztabaida erantzuna aurkitu',
-	'discussion:reply:error:notfound_fallback' => "Barkatu, ezin dugu zehaztutako erantzuna bilatu, baina eztabaida gai originalera berbidaliko dizugu.",
-	'discussion:reply:error:notdeleted' => 'Ezin izan da eztabaida erantzuna ezabatu',
-
-	'discussion:search:title' => 'Gaian erantzun: %s',
-	
 	'admin:groups' => 'Taldeak',
-
-	'reply:this' => 'Honi erantzun',
-
-	'group:replies' => 'Erantzunak',
-	'groups:forum:created' => '%s sortua %d iruzkinekin',
-	'groups:forum:created:single' => '%s sortua %d erantzunekin',
-	'groups:forum' => 'Eztabaida',
-	'groups:addtopic' => 'Gai bat gehitu',
-	'groups:forumlatest' => 'Azken eztabaida',
-	'groups:latestdiscussion' => 'Azken eztabaida',
-	'groupspost:success' => 'Zure erantzuna arrakastaz bidali da.',
-	'groupspost:failure' => 'Arazo bat egon da zure erantzuna bidaltzean',
-	'groups:alldiscussion' => 'Azken eztabaida',
-	'groups:edittopic' => 'Gaia editatu',
-	'groups:topicmessage' => 'Gaiaren mezua',
-	'groups:topicstatus' => 'Gaiaren egoera',
-	'groups:reply' => 'Iruzkin bat bidali',
-	'groups:topic' => 'Gaia',
-	'groups:posts' => 'Bidalketak',
-	'groups:lastperson' => 'Azken pertsona',
-	'groups:when' => 'Noiz',
-	'grouptopic:notcreated' => 'Ez dira gairik sortu.',
-	'groups:topicclosed' => 'Itxita',
-	'grouptopic:created' => 'Zure gaia sortua izan da.',
-	'groups:topicsticky' => 'Itsaskorra',
-	'groups:topicisclosed' => 'Eztabaida itxita dago.',
-	'groups:topiccloseddesc' => 'Eztabaida itxita dago eta ez du iruzkin berririk onartzen.',
-	'grouptopic:error' => 'Zure taldeko gaia ezin izan da sortu. Mesedez saiatu berriz edo sistemako administratzailearekin kontaktuan jarri.',
-	'groups:forumpost:edited' => "Foroko bidalketa arrakastaz editatu duzu.",
-	'groups:forumpost:error' => "Arazo bat egon da foroko bidalketa editatzean.",
 
 	'groups:privategroup' => 'Talde hau itxita dago. Eskatu kide izateko.',
 	'groups:notitle' => 'Taldeak izenburu bat izan behar du',
@@ -229,7 +141,6 @@ Ikusi eta erantzun eztabaidan:
 	'groups:usernotinvited' => 'Erabiltzailea ezin izan da gonbidatu.',
 	'groups:useralreadyinvited' => 'Erabiltzailea jada gonbidatua izan da',
 	'groups:invite:subject' => "%s %s taldera batzeko gonbidatua izan da!",
-	'groups:updated' => "Azken erantzuna %s %s",
 	'groups:started' => "Nork hasita: %s",
 	'groups:joinrequest:remove:check' => 'Ziur al zaude batzeko eskaera hau ezabatu nahi duzula?',
 	'groups:invite:remove:check' => 'Ziur al zaude gonbidapen hau ezabatu nahi duzula?',
@@ -263,9 +174,6 @@ edo klikatu hurrengoan taldeko eskaerak ikusteko:
 
 	'river:create:group:default' => '%s-ek %s taldea sortu du',
 	'river:join:group:default' => '%s %s taldera batu da',
-	'river:create:object:groupforumtopic' => '%s-ek %s eztabaida gai berria gehitu du',
-	'river:reply:object:groupforumtopic' => '%s-el %s eztabaida gaian erantzun du',
-	'river:reply:view' => 'erantzuna ikusi',
 
 	'groups:nowidgets' => 'Ez da widgetik zehaztu talde honetarako.',
 
@@ -280,8 +188,6 @@ edo klikatu hurrengoan taldeko eskaerak ikusteko:
 	'groups:widgets:entities:label:displaynum' => 'Talde honetan objektuak zerrendatu.',
 	'groups:widgets:entities:label:pleaseedit' => 'Mesedez, widget hau konfiguratu.',
 
-	'groups:forumtopic:edited' => 'Foroko gaia arrakastaz editatu da.',
-
 	'groups:allowhiddengroups' => 'Nahi al dituzu talde pribatuak (ikusezina) baimendu?',
 	'groups:whocancreate' => 'Nork sortu ditzake talde berriak?',
 
@@ -292,13 +198,6 @@ edo klikatu hurrengoan taldeko eskaerak ikusteko:
 	'group:notdeleted' => 'Taldea ezin izan da ezabatu',
 
 	'group:notfound' => 'Ezin izan da talde bilatu',
-	'grouppost:deleted' => 'Taldeko bidalketak arrakastaz ezabatu dira',
-	'grouppost:notdeleted' => 'Ezin izan dira taldeko bidalketak ezabatu',
-	'groupstopic:deleted' => 'Gai ezabatuta',
-	'groupstopic:notdeleted' => 'Gai ez da ezabatu',
-	'grouptopic:blank' => 'Ez dago gairik',
-	'grouptopic:notfound' => 'Ezin izan da gaia bilatu',
-	'grouppost:nopost' => 'Bidalketa hutsik dago',
 	'groups:deletewarning' => "Ziur al zaude talde hau ezabatu nahi duzula? Ez dago atzera bueltarik ondoren!",
 
 	'groups:invitekilled' => 'Gonbidapena ezabatua izan da.',
@@ -309,6 +208,5 @@ edo klikatu hurrengoan taldeko eskaerak ikusteko:
 	/**
 	 * ecml
 	 */
-	'groups:ecml:discussion' => 'Taldeko eztabaidak',
 	'groups:ecml:groupprofile' => 'Taldeko profilak',
 );

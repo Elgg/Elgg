@@ -26,7 +26,7 @@ Run the following in cloud9's terminal:
     rm -rf * # Clear out the c9 hello-world stuff
     composer create-project elgg/elgg:~1.11 . # the hotness
     cp install/config/htaccess.dist .htaccess
-    cp engine/settings.example.php settings.php
+    cp elgg-config/settings.example.php elgg-config/settings.php
     mysql-ctl start # start c9's local mysql server
     mkdir ../elgg-data # setup data dir for Elgg
 

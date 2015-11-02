@@ -67,28 +67,34 @@ which we will create in a moment. Here is the content of
 
 .. code:: php
 
+    echo elgg_view_input('text', [
+        'name' => 'title',
+        'label' => elgg_echo('title'),
+        'required' => true,
+    ]);
 
-    <div>
-        <label for="title"><?= elgg_echo("title"); ?></label><br />
-        <?= elgg_view('input/text', ['name' => 'title', 'id' => 'title']); ?>
-    </div>
+    echo elgg_view_input('longtext', [
+        'name' => 'body',
+        'label' => elgg_echo('body'),
+        'required' => true,
+    ]);
 
-    <div>
-        <label for="body"><?= elgg_echo("body"); ?></label><br />
-        <?= elgg_view('input/longtext', ['name' => 'body', 'id' => 'body']); ?>
-    </div>
+    echo elgg_view_input('tags', [
+        'name' => 'tags',
+        'label' => elgg_echo('tags'),
+        'help' => elgg_echo('tags:help'),
+    ]);
 
-    <div>
-        <label for="tags"><?= elgg_echo("tags"); ?></label><br />
-        <?= elgg_view('input/tags', ['name' => 'tags', 'id' => 'tags']); ?>
-    </div>
+    echo elgg_view_input('submit', array(
+        'value' => elgg_echo('save'),
+        'field_class' => 'elgg-foot',
+    ));
 
-    <div>
-        <?= elgg_view('input/submit', ['value' => elgg_echo('save')]); ?>
-    </div>
 
-Notice how the form is calling input views like ``input/longtext``.
-These are built into Elgg and make it easy to add form components.
+Notice how the form is calling ``elgg_view_input()`` to render inputs. This helper function maintains
+consistency in field markup, and is used as a shortcut for rendering field elements, such as label,
+help text, and input. See :doc:`/guides/actions`.
+
 You can see a complete list of input views in the ``/vendor/elgg/elgg/views/default/input/`` directory.
 
 The action file

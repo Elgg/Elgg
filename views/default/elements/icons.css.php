@@ -15,6 +15,7 @@
 .elgg-icon {
 	color: #CCC;
 	font-size: 18px;
+	line-height: 1em;
 	margin: 0 2px;
 }
 

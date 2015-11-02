@@ -42,10 +42,15 @@ function string_to_tag_array($string) {
  *
  *  types => null|STR entity type (SQL: type = '$type')
  *
- * 	subtypes => null|STR entity subtype (SQL: subtype = '$subtype')
+ * 	subtypes => null|STR entity subtype (SQL: subtype IN ('subtype1', 'subtype2))
+ *              Use ELGG_ENTITIES_NO_VALUE to match the default subtype.
+ *              Use ELGG_ENTITIES_ANY_VALUE to match any subtype.
  *
  * 	type_subtype_pairs => null|ARR (array('type' => 'subtype'))
- *  (SQL: type = '$type' AND subtype = '$subtype') pairs
+ *                        array(
+ *                            'object' => array('blog', 'file'), // All objects with subtype of 'blog' or 'file'
+ *                            'user' => ELGG_ENTITY_ANY_VALUE, // All users irrespective of subtype
+ *                        );
  *
  * 	owner_guids => null|INT entity guid
  *
@@ -123,7 +128,7 @@ function elgg_get_tags(array $options = array()) {
 	$tags_in = implode(',', $sanitised_tags);
 	$wheres[] = "(msn.string IN ($tags_in))";
 
-	$wheres[] = _elgg_get_entity_type_subtype_where_sql('e', $options['types'],
+	$wheres[] = _elgg_services()->entityTable->getEntityTypeSubtypeWhereSql('e', $options['types'],
 		$options['subtypes'], $options['type_subtype_pairs']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.site_guid', $options['site_guids']);
 	$wheres[] = _elgg_get_guid_based_where_sql('e.owner_guid', $options['owner_guids']);

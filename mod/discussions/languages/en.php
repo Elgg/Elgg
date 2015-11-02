@@ -1,11 +1,11 @@
 <?php
 
 return array(
-	'discussion' => 'Discussion',
+	'discussion' => 'Discussions',
 	'discussion:add' => 'Add discussion topic',
-	'discussion:latest' => 'Latest discussion',
-	'discussion:group' => 'Group discussion',
-	'discussion:none' => 'No discussion',
+	'discussion:latest' => 'Latest discussions',
+	'discussion:group' => 'Group discussions',
+	'discussion:none' => 'No discussions',
 	'discussion:reply:title' => 'Reply by %s',
 	'discussion:new' => "Add discussion post",
 	'discussion:updated' => "Last reply by %s %s",
@@ -70,7 +70,7 @@ View and reply to the discussion:
 	'item:object:discussion' => "Discussion topics",
 	'item:object:discussion_reply' => "Discussion replies",
 
-	'groups:enableforum' => 'Enable group discussion',
+	'groups:enableforum' => 'Enable group discussions',
 
 	'reply:this' => 'Reply to this',
 

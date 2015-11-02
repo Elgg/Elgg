@@ -113,8 +113,10 @@ class Preloader {
 					continue;
 				}
 
-				// don't like users #4116
-				if ($item->type == "user") {
+				$type = $item->type;
+				$subtype = $item->subtype;
+				$likable = (bool)elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
+				if (!$likable) {
 					continue;
 				}
 
@@ -127,11 +129,12 @@ class Preloader {
 				}
 			} elseif ($item instanceof \ElggEntity) {
 
-				if (!$item instanceof \ElggUser) {
-					continue;
+				$type = $item->type;
+				$subtype = $item->getSubtype();
+				$likable = (bool)elgg_trigger_plugin_hook('likes:is_likable', "$type:$subtype", [], false);
+				if ($likable) {
+					$guids[$item->guid] = true;
 				}
-
-				$guids[$item->guid] = true;
 			}
 		}
 		return array_keys($guids);

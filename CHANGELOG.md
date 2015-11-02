@@ -1,3 +1,44 @@
+<a name="2.0.0-beta.3"></a>
+### 2.0.0-beta.3  (2015-10-04)
+
+#### Contributors
+
+* Steve Clay (6)
+* Juho Jaakkola (2)
+* iionly (1)
+
+#### Features
+
+* **views:** allow getting all view locations ([7a699f3c](https://github.com/Elgg/Elgg/commit/7a699f3c11dd8668b06323617730dbdfb12a566f), closes [#8947](https://github.com/Elgg/Elgg/issues/8947))
+
+
+#### Bug Fixes
+
+* **bookmarks:** bookmark pin copies title into form ([50881370](https://github.com/Elgg/Elgg/commit/50881370cac4fd10ca707aea2c83a25659eef03a), closes [#8995](https://github.com/Elgg/Elgg/issues/8995))
+* **file:** thumbnails are visible again ([7f46db8e](https://github.com/Elgg/Elgg/commit/7f46db8e4002732d3616a08c6bd82718e4bf3333))
+* **site_notifications:** no ajax error without reason on auto-deletion of site notifications ([7aa55a81](https://github.com/Elgg/Elgg/commit/7aa55a819c0824dc97a5752658260cea6b2f1a2f))
+
+
+<a name="2.0.0-beta.2"></a>
+### 2.0.0-beta.2  (2015-09-21)
+
+#### Contributors
+
+* Steve Clay (7)
+* Juho Jaakkola (2)
+* iionly (2)
+* Matt Beckett (1)
+
+#### Documentation
+
+* **upgrading:** Warn site owners about MultiViews and /settings URLs ([0ada89d6](https://github.com/Elgg/Elgg/commit/0ada89d68c69e6185cf3c1165f759780de8967c3), closes [#8806](https://github.com/Elgg/Elgg/issues/8806))
+
+
+#### Breaking Changes
+
+* Relationship deletions only fire the "delete", "relationship" event. ([9c148994](https://github.com/Elgg/Elgg/commit/9c148994bf14edcbaebf7c097d42f26faf083a5b))
+
+
 <a name="2.0.0-beta.1"></a>
 ### 2.0.0-beta.1  (2015-09-06)
 
@@ -94,12 +135,10 @@ https://github.com/Elgg/zaudio
 * **hooks:** Adds indication in container permissions hook of checking owner ([298b5231](https://github.com/Elgg/Elgg/commit/298b5231b549739a1a6fc831d249fa708310750d), closes [#8774](https://github.com/Elgg/Elgg/issues/8774))
 * **web_services:** filter method output with a plugin hook ([5ff308c5](https://github.com/Elgg/Elgg/commit/5ff308c53f130d0319e4b168972aaaba172d82ec))
 
-
 #### Documentation
 
 * **releases:** Clarify BC policy for major releases ([a636bf86](https://github.com/Elgg/Elgg/commit/a636bf8610e26e45e8960af3600dcebe16e135b9), closes [#7080](https://github.com/Elgg/Elgg/issues/7080))
 * **web_services:** document ws hooks ([5430e032](https://github.com/Elgg/Elgg/commit/5430e032aba0d8496a81e8467b1b643ea88b9cdc))
-
 
 #### Bug Fixes
 
@@ -473,6 +512,26 @@ Fixes #5729
 change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
+
+
+<a name="1.12.4"></a>
+### 1.12.4  (2015-09-20)
+
+#### Contributors
+
+* Steve Clay (3)
+* Juho Jaakkola (2)
+* Matt Beckett (2)
+
+#### Documentation
+
+* **entities:** Docs for type/subtype and associated ege() options ([eb0e53fc](https://github.com/Elgg/Elgg/commit/eb0e53fcd1df1ee249d8e79cb1eaafc5249e88e8))
+* **releases:** Manually check lang files for PHP errors before release ([040079b7](https://github.com/Elgg/Elgg/commit/040079b74fc30f6d1430ce086aa35681b8188b0a), closes [#8924](https://github.com/Elgg/Elgg/issues/8924))
+
+#### Bug Fixes
+
+* **pages:** Prevent public "Missing access level" in write access field ([4174b774](https://github.com/Elgg/Elgg/commit/4174b77438068ff583c0c9fb8866f00fd26d9421), closes [#8905](https://github.com/Elgg/Elgg/issues/8905))
+* **relationships:** can now prevent relationships using event handler ([9a275d9c](https://github.com/Elgg/Elgg/commit/9a275d9c9dce532a8a837a758e5fa241f02e2246), closes [#8927](https://github.com/Elgg/Elgg/issues/8927))
 
 
 <a name="1.12.3"></a>

@@ -17,7 +17,7 @@ For example, to include jQuery, you could run the following Composer commands:
 
 .. code-block:: shell
 
-    composer global require fxp/composer-asset-plugin:~1.0
+    composer global require fxp/composer-asset-plugin:~1.0.3
     composer require bower-asset/jquery:~2.0
 
 .. note::

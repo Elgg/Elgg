@@ -4,7 +4,7 @@ return array(
 
 	'friends:all' => 'Tutti gli amici',
 
-	'notifications:subscriptions:personal:description' => 'Ricevi notifiche quando si svolgono azioni inerenti al tuo contenuto',
+	'notifications:subscriptions:personal:description' => 'Ricevi una notifica quando una azione viene compiuta sul tuo profilo',
 	'notifications:subscriptions:personal:title' => 'Notifiche personali',
 
 	'notifications:subscriptions:friends:title' => 'Amici',

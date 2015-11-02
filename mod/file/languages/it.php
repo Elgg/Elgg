@@ -10,10 +10,10 @@ return array(
 	'file:all' => "Tutti i file",
 	'file:edit' => "Modifica file",
 	'file:more' => "Vedi tutti i file",
-	'file:list' => "vedi lista",
+	'file:list' => "elenco",
 	'file:group' => "File del gruppo",
-	'file:gallery' => "vedi la galleria",
-	'file:gallery_list' => "Galleria o lista",
+	'file:gallery' => "galleria",
+	'file:gallery_list' => "Galleria o elenco",
 	'file:num_files' => "Numero di file da visualizzare",
 	'file:user:gallery'=>'Guarda la galleria di %s',
 	'file:upload' => "Carica un file",
@@ -35,8 +35,8 @@ return array(
 	'file:type:video' => "Video",
 	'file:type:document' => "Documenti",
 	'file:type:audio' => "Audio",
-	'file:type:image' => "Foto",
-	'file:type:general' => "Generale",
+	'file:type:image' => "Immagini",
+	'file:type:general' => "Tutti",
 
 	'file:user:type:video' => "Video di %s",
 	'file:user:type:document' => "Documenti di %s",
@@ -59,7 +59,7 @@ return array(
 
 	'file:upload_limit' => 'Dimensione massima consentita del file %s',
 
-	'file:tagcloud' => "Tag cloud",
+	'file:tagcloud' => "Tag",
 
 	'file:display:number' => "Numero di file da visualizzare",
 

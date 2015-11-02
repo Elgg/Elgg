@@ -137,6 +137,9 @@ This is done as follows:
 This lets a plugin extend an existing action without the need to replace the whole action. In the case of the captcha plugin it allows the plugin to provide captcha support in a very loosely coupled way.
 
 
+Forms
+=====
+
 To output a form, use the elgg_view_form function like so:
 
 .. code:: php
@@ -181,6 +184,100 @@ Now when you call ``elgg_view_form('example')``, Elgg will produce:
        <input type="submit" class="elgg-button elgg-button-submit" value="Submit">
      </fieldset>
    </form>
+
+
+Inputs
+------
+
+To render a form input, use one of the bundled input views, which cover all standard
+HTML input elements. See individual view files for a list of accepted parameters.
+
+.. code:: php
+
+   echo elgg_view('input/select', array(
+      'required' => true,
+      'name' => 'status',
+      'options_values' => array(
+         'draft' => elgg_echo('status:draft'),
+         'published' => elgg_echo('status:published'),
+      ),
+      // most input views will render additional parameters passed to the view
+      // as tag attributes
+      'data-rel' => 'blog',
+   ));
+
+The above example will render a dropdown select input:
+
+.. code:: html
+
+   <select required="required" name="status" data-rel="blog" class="elgg-input-dropdown">
+      <option value="draft">Draft</option>
+      <option value="published">Published</option>
+   </select>
+
+To ensure consistency in field markup, use ``elgg_view_input()``, which accepts
+all the parameters of the input being rendered, as well as ``label`` and ``help``
+parameters (both of which are optional and accept HTML or text).
+
+.. code:: php
+
+   echo elgg_view_input('select', array(
+      'required' => true,
+      'name' => 'status',
+      'options_values' => array(
+         'draft' => elgg_echo('status:draft'),
+         'published' => elgg_echo('status:published'),
+      ),
+      'data-rel' => 'blog',
+      'label' => elgg_echo('blog:status:label'),
+      'help' => elgg_view_icon('help') . elgg_echo('blog:status:help'),
+   ));
+
+The above will generate the following markup:
+
+.. code:: html
+
+   <div class="elgg-field elgg-field-required">
+      <label for="elgg-field-1" class="elgg-field-label">Blog status<span title="Required" class="elgg-required-indicator">*</span></label>
+      <select required="required" name="status" data-rel="blog" id="elgg-field-1" class="elgg-input-dropdown">
+         <option value="draft">Draft</option>
+         <option value="published">Published</option>
+      </select>
+      <div class="elgg-field-help elgg-text-help">
+         <span class="elgg-icon-help elgg-icon"></span>This indicates whether or not the blog is visible in the feed
+      </div>
+   </div>
+
+
+Input types
+-----------
+
+A list of bundled input types/views:
+
+* ``input/text`` - renders a text input ``<input type="text">``
+* ``input/plaintext`` - renders a textarea ``<textarea></textarea>``
+* ``input/longtext`` - renders a WYSIWYG text input
+* ``input/url`` - renders a url input ``<input type="url">``
+* ``input/email`` - renders an email input ``<input type="email">``
+* ``input/checkbox`` - renders a single checkbox ``<input type="checkbox">``
+* ``input/checkboxes`` - renders a set of checkboxes with the same name
+* ``input/radio`` - renders one or more radio buttons ``<input type="radio">``
+* ``input/submit`` - renders a submit button ``<input type="submit">``
+* ``input/button`` - renders a button ``<button></button>``
+* ``input/file`` - renders a file input ``<input type="file">``
+* ``input/select`` - renders a select input ``<select></select>``
+* ``input/hidden`` - renders a hidden input ``<input type="hidden">``
+* ``input/password`` - renders a password input ``<input type="password">``
+* ``input/date`` - renders a jQuery datepicker
+
+* ``input/access`` - renders an Elgg access level select
+* ``input/tags`` - renders an Elgg tags input
+* ``input/autocomplete`` - renders an Elgg entity autocomplete
+* ``input/captcha`` - placeholder view for plugins to extend
+* ``input/friendspicker`` - renders an Elgg friend picker
+* ``input/userpicker`` - renders an Elgg user autocomplete
+* ``input/location`` renders an Elgg location input
+
 
 Files and images
 ================

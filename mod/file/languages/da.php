@@ -57,6 +57,8 @@ return array(
 
 	'file:delete:confirm' => "Er du sikker på, at du vil slette denne fil?",
 
+	'file:upload_limit' => 'Maximum allowed file size is %s',
+
 	'file:tagcloud' => "Tag cloud",
 
 	'file:display:number' => "Antal viste filer",

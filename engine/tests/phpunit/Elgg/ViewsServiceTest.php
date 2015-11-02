@@ -14,6 +14,8 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 	 */
 	protected $views;
 
+	protected $viewsDir;
+
 	public function setUp() {
 		$this->viewsDir = dirname(dirname(__FILE__)) . "/test_files/views";
 		
@@ -132,7 +134,7 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 		// elgg_extend_view
 		// elgg_unextend_view
 		// views/*
-		// views.php
+		// engine/views.php
 		// elgg_get_simplecache_url
 		// elgg_set_view_location
 		// elgg_get_view_location
@@ -143,6 +145,14 @@ class ViewsServiceTest extends \PHPUnit_Framework_TestCase {
 	 */
 	public function testDefaultNormalizeBehavior($canonical, $alias) {
 		$this->assertEquals($canonical, $this->views->canonicalizeViewName($alias));
+	}
+
+	public function testCanListViews() {
+		$views = $this->views->listViews('default');
+		$this->assertTrue(in_array('interpreted.js', $views));
+		$this->assertTrue(in_array('static.js', $views));
+
+		$this->assertEmpty($this->views->listViews('fake_viewtype'));
 	}
 	
 	public function getExampleNormalizedViews() {

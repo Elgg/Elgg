@@ -2,6 +2,8 @@
 
 namespace Elgg\Database;
 
+use Elgg\Database\EntityTable\UserFetchFailureException;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -436,19 +438,19 @@ class AccessCollections {
 	 * @return bool
 	 */
 	function canEdit($collection_id, $user_guid = null) {
-		if ($user_guid) {
-			$user = _elgg_services()->entityTable->get((int) $user_guid);
-		} else {
-			$user = _elgg_services()->session->getLoggedInUser();
+		try {
+			$user = _elgg_services()->entityTable->getUserForPermissionsCheck($user_guid);
+		} catch (UserFetchFailureException $e) {
+			return false;
 		}
 	
 		$collection = get_access_collection($collection_id);
 	
-		if (!($user instanceof \ElggUser) || !$collection) {
+		if (!$user || !$collection) {
 			return false;
 		}
 	
-		$write_access = get_write_access_array($user->getGUID(), 0, true);
+		$write_access = get_write_access_array($user->guid, 0, true);
 	
 		// don't ignore access when checking users.
 		if ($user_guid) {

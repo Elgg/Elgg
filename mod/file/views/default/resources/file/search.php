@@ -57,19 +57,6 @@ if (!$owner) {
 
 $sidebar = file_get_type_cloud($page_owner_guid, $friends);
 
-if ($friends && elgg_instanceof($owner, 'user')) {
-	// elgg_does not support getting objects that belong to an entity's friends
-	// @todo yes it does - with elgg_get_entities_from_relationship()
-	$friend_entities = $owner->getFriends(array('limit' => 0));
-	if ($friend_entities) {
-		$friend_guids = array();
-		foreach ($friend_entities as $friend) {
-			$friend_guids[] = $friend->getGUID();
-		}
-	}
-	$page_owner_guid = $friend_guids;
-}
-
 $limit = elgg_get_config('default_limit');
 if ($listtype == "gallery") {
 	$limit = 12;
@@ -78,19 +65,29 @@ if ($listtype == "gallery") {
 $params = array(
 	'type' => 'object',
 	'subtype' => 'file',
-	'container_guid' => $page_owner_guid,
 	'limit' => $limit,
 	'full_view' => false,
 	'preload_owners' => true,
 );
 
+if ($owner instanceof ElggUser) {
+	if ($friends) {
+		$params['relationship'] = 'friend';
+		$params['relationship_guid'] = $user->guid;
+ 		$params['relationship_join_on'] = 'owner_guid';
+	} else {
+		$params['owner_guid'] = $page_owner_guid;
+	}
+} else {
+	$params['container_guid'] = $page_owner_guid;
+}
+
 if ($file_type) {
 	$params['metadata_name'] = $md_type;
 	$params['metadata_value'] = $file_type;
-	$content = elgg_list_entities_from_metadata($params);
-} else {
-	$content = elgg_list_entities($params);
 }
+
+$content = elgg_list_entities_from_relationship($params);
 
 $body = elgg_view_layout('content', array(
 	'filter' => '',

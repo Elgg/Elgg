@@ -19,7 +19,7 @@ There are many reasons you may want to duplicate an Elgg installation: moving th
 
 Also at least 5 pieces of information must be changed from the copied installation:
 
-- ``settings.php`` file which could also be in the pre 2.0 location ``engine/settings.php``
+- ``elgg-config/settings.php`` file which could also be in the pre 2.0 location ``engine/settings.php``
 - ``.htaccess`` file (Apache) or Nginx configuration depending on server used
 - database entry for your site entity
 - database entry for the installation path
@@ -95,7 +95,7 @@ If you don't have shell access to your server and have to ftp the data, you may 
 Edit settings.php
 =================
 
-The ``settings.php`` file contains the database configuration details. These need to be adjusted for your new test Elgg installation. In our example, we'll look in ``/var/www/elgg_test/engine/settings.php`` and find the lines that look like this:
+The ``elgg-config/settings.php`` file contains the database configuration details. These need to be adjusted for your new test Elgg installation. In our example, we'll look in ``/var/www/elgg_test/elgg-config/settings.php`` and find the lines that look like this:
 
 .. code:: php
    
@@ -220,7 +220,7 @@ To regenerate cached data, make sure to run ``http://test.myelgg.org/upgrade.php
 Tips
 ====
 
-It is a good idea to keep a test server around to experiment with installing new mods and doing development work. If you automate restorations to the ``elgg_test`` database, changing the ``$CONFIG`` values and adding the follow lines to the end of the ``elgg_test/settings.php`` file will allow seamless re-writing of the MySQL database entries.
+It is a good idea to keep a test server around to experiment with installing new mods and doing development work. If you automate restorations to the ``elgg_test`` database, changing the ``$CONFIG`` values and adding the follow lines to the end of the ``elgg_test/elgg-config/settings.php`` file will allow seamless re-writing of the MySQL database entries.
 
 .. code:: php
 

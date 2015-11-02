@@ -28,9 +28,9 @@ $tabs = array(
 	),
 );
 
-if (elgg_is_active_plugin('discussion')) {
+if (elgg_is_active_plugin('discussions')) {
 	$tabs['discussion'] = array(
-		'text' => elgg_echo('groups:latestdiscussion'),
+		'text' => elgg_echo('discussion:latest'),
 		'href' => 'groups/all?filter=discussion',
 		'priority' => 500,
 	);

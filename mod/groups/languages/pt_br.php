@@ -53,11 +53,11 @@ return array(
 	'groups:widget:group_activity:content:noselect' => 'Edite este dispositivo para selecionar uma comunidade',
 
 	'groups:noaccess' => 'Sem acesso para a Comunidade',
-	'groups:permissions:error' => 'Você não possui permissão para isso',
 	'groups:ingroup' => 'na comunidade',
 	'groups:cantcreate' => 'Você não pode criar uma comunidade.  Somente administradores podem fazer isso.',
 	'groups:cantedit' => 'Você não pode editar esta Comunidade',
 	'groups:saved' => 'Comunidade salva',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Comunidades em destaque',
 	'groups:makeunfeatured' => 'Sem destaques',
 	'groups:makefeatured' => 'Destacar',
@@ -81,30 +81,6 @@ return array(
 	'groups:search_in_group' => "Pesquise nesta comunidade",
 	'groups:acl' => "Comunidade: %s",
 
-	'discussion:topic:notify:summary' => 'Novo tópico de discussão chamado  %s',
-	'discussion:topic:notify:subject' => 'Novo tópico de discussão: %s',
-	'discussion:topic:notify:body' =>
-'%s adicionou um novo tópico de discussão na comunidade %s:
-
-Título: %s
-
-%s
-
-Visualize e responda ao tópico de discussão:
-%s
-',
-
-	'discussion:reply:notify:summary' => 'Nova resposta ao tópico: %s',
-	'discussion:reply:notify:subject' => 'Nova resposta ao tópico: %s',
-	'discussion:reply:notify:body' =>
-'%s respondeu ao tópico de discussão %s na comunidade %s
-
-%s
-
-Visualize e responda na discussão:
-%s
-',
-
 	'groups:activity' => "Atividade na comunidade",
 	'groups:enableactivity' => 'Habilita atividade na comunidade',
 	'groups:activity:none' => "Nenhuma atividade na comunidade ainda.",
@@ -115,11 +91,6 @@ Visualize e responda na discussão:
 	'groups:requests:none' => 'Não existem solicitações de participação neste momento.',
 
 	'groups:invitations:none' => 'Não existem convites neste momento.',
-
-	'item:object:groupforumtopic' => "Tópicos em debate",
-	'item:object:discussion_reply' => "Respostas às discussões",
-
-	'groupforumtopic:new' => "Nova mensagem de discussão",
 
 	'groups:count' => "Comunidades criadas",
 	'groups:open' => "Comunidade aberta",
@@ -146,69 +117,10 @@ Visualize e responda na discussão:
 	/**
 	 * Group tools
 	 */
-	'groups:enableforum' => 'Habilitar discussões na Comunidade',
 	'groups:lastupdated' => 'Última atualização %s por %s',
 	'groups:lastcomment' => 'Último comentário %s por %s ',
 
-	/**
-	 * Group discussion
-	 */
-	'discussion' => 'Discussão',
-	'discussion:add' => 'Adicionar tópico para discussão',
-	'discussion:latest' => 'Última discussão',
-	'discussion:group' => 'Discussão da comunidade',
-	'discussion:none' => 'Sem discussões',
-	'discussion:reply:title' => 'Responder para %s',
-
-	'discussion:topic:created' => 'O tópico de discussão foi criado.',
-	'discussion:topic:updated' => 'O tópico de discussão foi atualizado.',
-	'discussion:topic:deleted' => 'O tópico de discussão foi apagado.',
-
-	'discussion:topic:notfound' => 'Tópico de discussão não encontrado',
-	'discussion:error:notsaved' => 'Não foi possível salvar este tópico',
-	'discussion:error:missing' => 'Ambos campos, titulo e mensagem, são obrigatórios',
-	'discussion:error:permissions' => 'Você não possui permissão para executar esta ação',
-	'discussion:error:notdeleted' => 'Não foi possível apagar este tópico de discussão',
-
-	'discussion:reply:edit' => 'Editar resposta',
-	'discussion:reply:deleted' => 'Resposta da discussão foi apagada.',
-	'discussion:reply:error:notfound' => 'A resposta a discussão não foi encontrada',
-	'discussion:reply:error:notfound_fallback' => "Desculpe, não foi possível encontrar a reposta especificada, mas nós temos encaminhado a você ao tópico de discussão original.",
-	'discussion:reply:error:notdeleted' => 'Não foi possivel apagar a resposta da discussão',
-
-	'discussion:search:title' => 'Responda no tópico: %s',
-	
 	'admin:groups' => 'Comunidades',
-
-	'reply:this' => 'Responder',
-
-	'group:replies' => 'Respostas',
-	'groups:forum:created' => 'Cirado %s com %d comentários',
-	'groups:forum:created:single' => 'Criado %s com %d respostas',
-	'groups:forum' => 'Discussão',
-	'groups:addtopic' => 'Adicionar tópico',
-	'groups:forumlatest' => 'Última discussão',
-	'groups:latestdiscussion' => 'Última discussão',
-	'groupspost:success' => 'Seu resposta foi enviada com sucesso.',
-	'groupspost:failure' => 'Aconteceu um problema ao enviar sua resposta',
-	'groups:alldiscussion' => 'Última discussão',
-	'groups:edittopic' => 'Editar tópico',
-	'groups:topicmessage' => 'Mensagem do tópico',
-	'groups:topicstatus' => 'Situação do tópico',
-	'groups:reply' => 'Enviar um mensagem',
-	'groups:topic' => 'Tópico',
-	'groups:posts' => 'Mensagens',
-	'groups:lastperson' => 'Última pessoa',
-	'groups:when' => 'Quando',
-	'grouptopic:notcreated' => 'Nenhum tópico foi criado.',
-	'groups:topicclosed' => 'Fechado',
-	'grouptopic:created' => 'Seu tópico foi criado.',
-	'groups:topicsticky' => 'Adesivo',
-	'groups:topicisclosed' => 'Este tópico está fechado.',
-	'groups:topiccloseddesc' => 'Este tópico agora está fechado e não aceita novos comentários.',
-	'grouptopic:error' => 'Não foi possível criar o tópico em seu Comunidade. Por favor, tente novamente ou entre em contato com o administrador da comunidade.',
-	'groups:forumpost:edited' => "Você editou com sucesso a mensagem deste fórum.",
-	'groups:forumpost:error' => "Houve um problema ao editar a mensagem deste fórum.",
 
 	'groups:privategroup' => 'Este Comunidade é fechada. Solicite ao moderador sua participação.',
 	'groups:notitle' => 'Comunidades devem ter um título',
@@ -229,7 +141,6 @@ Visualize e responda na discussão:
 	'groups:usernotinvited' => 'O convite não pode ser enviado.',
 	'groups:useralreadyinvited' => 'Este usuário já foi convidado para participar desta Comunidade',
 	'groups:invite:subject' => "%s você foi convidado a entrar na Comunidade %s!",
-	'groups:updated' => "Último comentário por %s %s",
 	'groups:started' => "Iniciado por %s",
 	'groups:joinrequest:remove:check' => 'Você tem certeza de que deseja apagar esta solicitação de participação?',
 	'groups:invite:remove:check' => 'Você tem certeza de que deseja apagar este convite de participação?',
@@ -263,9 +174,6 @@ ou clique abaixo para aceitar o pedido:
 
 	'river:create:group:default' => '%s criou a comunidade ',
 	'river:join:group:default' => '%s se juntou a comunidade %s',
-	'river:create:object:groupforumtopic' => '%s adicionou um novo tópico de discussão %s',
-	'river:reply:object:groupforumtopic' => '%s respondeu ao tópico de discussão %s',
-	'river:reply:view' => 'Visualiza resposta',
 
 	'groups:nowidgets' => 'Nenhum dispositivo foi definido para esta Comunidade.',
 
@@ -280,8 +188,6 @@ ou clique abaixo para aceitar o pedido:
 	'groups:widgets:entities:label:displaynum' => 'Listar os objetos de uma Comunidade.',
 	'groups:widgets:entities:label:pleaseedit' => 'Por favor, configure este dispositivo.',
 
-	'groups:forumtopic:edited' => 'Tópico do fórum editado com sucesso.',
-
 	'groups:allowhiddengroups' => 'Você deseja permitir Comunidades privadas (invisíveis)?',
 	'groups:whocancreate' => 'Quem pode criar novas comunidades?',
 
@@ -292,13 +198,6 @@ ou clique abaixo para aceitar o pedido:
 	'group:notdeleted' => 'Não foi possível apagar a Comunidade',
 
 	'group:notfound' => 'Não foi possível encontrar a Comunidade',
-	'grouppost:deleted' => 'Mensagem na Comunidade apagada com sucesso.',
-	'grouppost:notdeleted' => 'Não foi possível apagar a mensagem da Comunidade.',
-	'groupstopic:deleted' => 'Tópico apagado com sucesso',
-	'groupstopic:notdeleted' => 'Não foi possível apagar o tópico',
-	'grouptopic:blank' => 'Nenhum tópico',
-	'grouptopic:notfound' => 'Não foi possível encontrar o tópico',
-	'grouppost:nopost' => 'Mensagem vazia',
 	'groups:deletewarning' => "Você tem certeza de que deseja apagar esta Comunidade? Não será possível desfazer esta ação!",
 
 	'groups:invitekilled' => 'O convite foi apagado.',
@@ -309,6 +208,5 @@ ou clique abaixo para aceitar o pedido:
 	/**
 	 * ecml
 	 */
-	'groups:ecml:discussion' => 'Discussões da Comunidade',
 	'groups:ecml:groupprofile' => 'Perfis da Comunidade',
 );
