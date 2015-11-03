@@ -1320,6 +1320,7 @@ function elgg_view_input($input_type, array $vars = array()) {
 		'id' => $id,
 		'input' => $input,
 		'class' => $field_class,
+		'input_type' => $input_type,
 	));
 }
 
