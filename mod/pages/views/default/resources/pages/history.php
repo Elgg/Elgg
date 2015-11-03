@@ -42,6 +42,7 @@ $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'sidebar' => elgg_view('pages/sidebar/navigation', array('page' => $page)),
+	'entity' => $page,
 ));
 
 echo elgg_view_page($title, $body);

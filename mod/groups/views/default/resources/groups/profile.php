@@ -50,7 +50,9 @@ $params = array(
 	'content' => $content,
 	'sidebar' => $sidebar,
 	'title' => $group->name,
+	'entity' => $group,
+	'filter' => '',
 );
-$body = elgg_view_layout('one_sidebar', $params);
+$body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($group->name, $body);

@@ -12,6 +12,7 @@
  * @uses $vars['context']        Page context (override)
  * @uses $vars['filter_context'] Filter context: everyone, friends, mine
  * @uses $vars['class']          Additional class to apply to layout
+ * @uses $vars['entity']         Entity being displayed or edited in this layout, if any
  */
 
 $context = elgg_extract('context', $vars, elgg_get_context());

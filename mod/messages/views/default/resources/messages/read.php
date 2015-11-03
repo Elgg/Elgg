@@ -56,6 +56,7 @@ $body = elgg_view_layout('content', array(
 	'content' => $content,
 	'title' => $title,
 	'filter' => '',
+	'entity' => $message,
 ));
 
 echo elgg_view_page($title, $body);

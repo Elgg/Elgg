@@ -14,6 +14,7 @@ if (isset($params['sidebar'])) {
 	$params['sidebar'] = elgg_view('blog/sidebar', ['page' => $page_type]);
 }
 
+$params['entity'] = get_entity($guid);
 $body = elgg_view_layout('content', $params);
 
 echo elgg_view_page($params['title'], $body);
