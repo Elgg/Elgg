@@ -1291,6 +1291,10 @@ function elgg_view_input($input_type, array $vars = array()) {
 		return '';
 	}
 
+	if ($input_type == 'hidden') {
+		return elgg_view("input/$input_type", $vars);
+	}
+
 	$id = elgg_extract('id', $vars);
 	if (!$id) {
 		$id_num++;
@@ -1320,6 +1324,7 @@ function elgg_view_input($input_type, array $vars = array()) {
 		'id' => $id,
 		'input' => $input,
 		'class' => $field_class,
+		'input_type' => $input_type,
 	));
 }
 
