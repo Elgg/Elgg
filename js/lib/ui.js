@@ -366,57 +366,43 @@ elgg.ui.initDatePicker = function() {
  *
  * Note the menu item names must be given in their normalized form. So if the
  * name is remove_friend, you should call this function with "remove-friend" instead.
+ *
+ * @param {String}   menuItemNameA First name
+ * @param {String}   menuItemNameB Second name
+ * @param {Function} ajaxSuccessA  Ajax success function for first item
+ * @param {Function} ajaxSuccessB  Ajax success function for first item
  */
-elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
-	// Handles clicking the first button.
-	$(document).on('click', '.elgg-menu-item-' + menuItemNameA + ' a', function() {
-		var $menu = $(this).closest('.elgg-menu');
+elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB, ajaxSuccessA, ajaxSuccessB) {
 
-		// Be optimistic about success
-		elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
+	function setupHandlers(nameA, nameB, success) {
+		$(document).on('click', '.elgg-menu-item-' + nameA + ' a', function() {
+			var $menu = $(this).closest('.elgg-menu');
 
-		// Send the ajax request
-		elgg.action($(this).attr('href'), {
-			success: function(json) {
-				if (json.system_messages.error.length) {
+			// Be optimistic about success
+			elgg.ui.toggleMenuItems($menu, nameB, nameA);
+
+			// Send the ajax request
+			elgg.action($(this).attr('href'), {
+				success: function(json) {
+					if (json.system_messages.error.length) {
+						// Something went wrong, so undo the optimistic changes
+						elgg.ui.toggleMenuItems($menu, nameA, nameB);
+					}
+					success && success(json);
+				},
+				error: function() {
 					// Something went wrong, so undo the optimistic changes
-					elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
+					elgg.ui.toggleMenuItems($menu, nameA, nameB);
 				}
-			},
-			error: function() {
-				// Something went wrong, so undo the optimistic changes
-				elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
-			}
+			});
+
+			// Don't want to actually click the link
+			return false;
 		});
+	}
 
-		// Don't want to actually click the link
-		return false;
-	});
-
-	// Handles clicking the second button
-	$(document).on('click', '.elgg-menu-item-' + menuItemNameB + ' a', function() {
-		var $menu = $(this).closest('.elgg-menu');
-
-		// Be optimistic about success
-		elgg.ui.toggleMenuItems($menu, menuItemNameA, menuItemNameB);
-
-		// Send the ajax request
-		elgg.action($(this).attr('href'), {
-			success: function(json) {
-				if (json.system_messages.error.length) {
-					// Something went wrong, so undo the optimistic changes
-					elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
-				}
-			},
-			error: function() {
-				// Something went wrong, so undo the optimistic changes
-				elgg.ui.toggleMenuItems($menu, menuItemNameB, menuItemNameA);
-			}
-		});
-
-		// Don't want to actually click the link
-		return false;
-	});
+	setupHandlers(menuItemNameA, menuItemNameB, ajaxSuccessA);
+	setupHandlers(menuItemNameB, menuItemNameA, ajaxSuccessB);
 };
 
 elgg.ui.toggleMenuItems = function($menu, nameOfItemToShow, nameOfItemToHide) {

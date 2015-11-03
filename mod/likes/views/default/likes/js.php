@@ -3,6 +3,7 @@
  * Likes JavaScript extension for elgg.js
  */
 ?>
+//<script>
 
 /**
  * Repositions the likes popup
@@ -23,5 +24,22 @@ elgg.ui.likesPopupHandler = function(hook, type, params, options) {
 	return null;
 };
 
+/**
+ * Handles Elgg ajax response object
+ *
+ * @param {Object} data Data from ajax
+ */
+elgg.ui.likesSuccess = function(data) {
+	var func_name = data.output.num_likes > 0 ? 'removeClass' : 'addClass';
+	$(data.output.selector).text(data.output.text)[func_name]('hidden');
+};
+
+elgg.register_hook_handler('init', 'system', function () {
+	// prevent focus from sitting on other icon
+	$(document).on('click', '.elgg-menu-item-likes a, .elgg-menu-item-unlike a', function () {
+		$('.elgg-menu-item-likes a, .elgg-menu-item-unlike a').blur();
+	});
+});
+
 elgg.register_hook_handler('getOptions', 'ui.popup', elgg.ui.likesPopupHandler);
-elgg.ui.registerTogglableMenuItems('likes', 'unlike');
+elgg.ui.registerTogglableMenuItems('likes', 'unlike', elgg.ui.likesSuccess, elgg.ui.likesSuccess);
