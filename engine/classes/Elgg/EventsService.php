@@ -1,6 +1,7 @@
 <?php
 namespace Elgg;
-use Elgg\Debug\Inspector;
+
+use Elgg\HooksRegistrationService\Event;
 
 /**
  * Service for Events
@@ -11,7 +12,7 @@ use Elgg\Debug\Inspector;
  * @subpackage Hooks
  * @since      1.9.0
  */
-class EventsService extends \Elgg\HooksRegistrationService {
+class EventsService extends HooksRegistrationService {
 
 	const OPTION_STOPPABLE = 'stoppable';
 	const OPTION_DEPRECATION_MESSAGE = 'deprecation_message';
@@ -24,15 +25,15 @@ class EventsService extends \Elgg\HooksRegistrationService {
 	 * @see elgg_trigger_after_event
 	 * @access private
 	 */
-	public function trigger($event, $type, $object = null, array $options = array()) {
+	public function trigger($name, $type, $object = null, array $options = array()) {
 		$options = array_merge(array(
 			self::OPTION_STOPPABLE => true,
 			self::OPTION_DEPRECATION_MESSAGE => '',
 			self::OPTION_DEPRECATION_VERSION => '',
 		), $options);
 
-		$events = $this->hasHandler($event, $type);
-		if ($events && $options[self::OPTION_DEPRECATION_MESSAGE]) {
+		$has_handler = $this->hasHandler($name, $type);
+		if ($has_handler && $options[self::OPTION_DEPRECATION_MESSAGE]) {
 			elgg_deprecated_notice(
 				$options[self::OPTION_DEPRECATION_MESSAGE],
 				$options[self::OPTION_DEPRECATION_VERSION],
@@ -40,20 +41,37 @@ class EventsService extends \Elgg\HooksRegistrationService {
 			);
 		}
 
-		$events = $this->getOrderedHandlers($event, $type);
-		$args = array($event, $type, $object);
+		$handlers = $this->getOrderedHandlers($name, $type);
+		// create Event on demand
+		$event = null;
+		$args = array($name, $type, $object);
 
-		foreach ($events as $callback) {
+		foreach ($handlers as $callback) {
 			if (!is_callable($callback)) {
-				if ($this->logger) {
-					$inspector = new Inspector();
-					$this->logger->warn("handler for event [$event, $type] is not callable: "
-										. $inspector->describeCallable($callback));
+				$orig_callback = $callback;
+
+				$callback = _elgg_services()->handlers->resolveCallable($callback);
+				if (!$callback instanceof EventHandler) {
+					if ($this->logger) {
+						$msg = "Handler for event [$name, $type] is not callable nor the name of a class"
+							. " that implements " . EventHandler::class . ": "
+							. _elgg_services()->handlers->describeCallable($orig_callback);
+						$this->logger->warn($msg);
+					}
+					continue;
 				}
-				continue;
 			}
 
-			$return = call_user_func_array($callback, $args);
+			if ($callback instanceof EventHandler) {
+				if ($event === null) {
+					$event = new Event(elgg(), $name, $type, $object);
+				}
+				$return = call_user_func($callback, $event);
+			} else {
+				// old API
+				$return = call_user_func_array($callback, $args);
+			}
+
 			if (!empty($options[self::OPTION_STOPPABLE]) && ($return === false)) {
 				return false;
 			}
