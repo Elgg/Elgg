@@ -21,7 +21,7 @@ $form_body .= "<div>" . elgg_echo('installation:language');
 $form_body .= elgg_view("input/select", array(
 	'name' => 'language',
 	'value' => elgg_get_config('language'),
-	'options_values' => $languages,
+	'options' => $languages,
 )) . "</div>";
 
 $form_body .= '<div class="elgg-foot">';

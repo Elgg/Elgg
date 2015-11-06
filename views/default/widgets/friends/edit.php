@@ -33,7 +33,7 @@ if (!isset($vars['entity']->icon_size)) {
 $params = array(
 	'name' => 'params[icon_size]',
 	'value' => $vars['entity']->icon_size,
-	'options_values' => array(
+	'options' => array(
 		'small' => elgg_echo('friends:small'),
 		'tiny' => elgg_echo('friends:tiny'),
 	),

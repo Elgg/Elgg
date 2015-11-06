@@ -4,7 +4,8 @@
  * Displays a dropdown input field
  *
  * @uses $vars['value']                  The current value, if any
- * @uses $vars['options_values']         Array of value => label pairs (overrides default)
+ * @uses $vars['options']                Array of value => label pairs (overrides default)
+ * @uses $vars['options_values']         Alias for $vars['options'] since 2.0-beta3.
  * @uses $vars['name']                   The name of the input field
  * @uses $vars['entity']                 Optional. The entity for this access control (uses access_id)
  * @uses $vars['class']                  Additional CSS class
@@ -16,9 +17,15 @@
  *
  */
 
-// bail if set to a unusable value
+// options_values is aliased to options, the options_values format is moved to the options key.
 if (isset($vars['options_values'])) {
-	if (!is_array($vars['options_values']) || empty($vars['options_values'])) {
+	$vars['options'] = $vars['options_values'];
+	unset($vars['options_values']);
+}
+
+// bail if set to a unusable value
+if (isset($vars['options'])) {
+	if (!is_array($vars['options']) || empty($vars['options'])) {
 		return;
 	}
 }
@@ -68,19 +75,19 @@ if (!$params['container_guid'] && $container) {
 if (!isset($vars['value']) || $vars['value'] == ACCESS_DEFAULT) {
 	if ($entity) {
 		$vars['value'] = $entity->access_id;
-	} else if (empty($vars['options_values']) || !is_array($vars['options_values'])) {
+	} else if (empty($vars['options']) || !is_array($vars['options'])) {
 		$vars['value'] = get_default_access(null, $params);
 	} else {
-		$options_values_ids = array_keys($vars['options_values']);
-		$vars['value'] = $options_values_ids[0];
+		$options_ids = array_keys($vars['options']);
+		$vars['value'] = $options_ids[0];
 	}
 }
 
 $params['value'] = $vars['value'];
 
 // don't call get_write_access_array() unless we need it
-if (!isset($vars['options_values'])) {
-	$vars['options_values'] = get_write_access_array(0, 0, false, $params);
+if (!isset($vars['options'])) {
+	$vars['options'] = get_write_access_array(0, 0, false, $params);
 }
 
 if (!isset($vars['disabled'])) {
@@ -88,10 +95,10 @@ if (!isset($vars['disabled'])) {
 }
 
 // if access is set to a value not present in the available options, add the option
-if (!isset($vars['options_values'][$vars['value']])) {
+if (!isset($vars['options'][$vars['value']])) {
 	$acl = get_access_collection($vars['value']);
 	$display = $acl ? $acl->name : elgg_echo('access:missing_name');
-	$vars['options_values'][$vars['value']] = $display;
+	$vars['options'][$vars['value']] = $display;
 }
 
 // should we tell users that public/logged-in access levels will be ignored?

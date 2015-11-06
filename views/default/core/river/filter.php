@@ -27,7 +27,7 @@ if (!empty($registered_entities)) {
 
 $params = array(
 	'id' => 'elgg-river-selector',
-	'options_values' => $options,
+	'options' => $options,
 );
 $selector = $vars['selector'];
 if ($selector) {
