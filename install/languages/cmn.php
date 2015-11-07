@@ -42,9 +42,9 @@ return array(
 
 	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. Change the permissions on the root directory of your Elgg installation
+		1. Change the permissions on the elgg-config directory of your Elgg installation
 
-		2. Copy the file engine/settings.example.php to /settings.php and follow the instructions in it for setting your database parameters.',
+		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => '設定值檔案存在於引擎目錄中，但是網頁伺服器無法讀取它。您可以刪除檔案或變更它的讀取權限。',
 
 	'install:check:php:success' => "伺服器上的 PHP 滿足 Elggs 的所有需求。",
@@ -124,8 +124,8 @@ return array(
 	'install:error:nodatabase' => '無法使用資料庫 %s。它可能不存在。',
 	'install:error:cannotloadtables' => '無法載入資料表格',
 	'install:error:tables_exist' => '在資料庫中已有 Elgg 表格。您需要選擇丟棄那些表格，或是重新啟動安裝程式而我們將試圖去使用它們。如果要重新啟動安裝程式，請自瀏覽器網址列中移除 \'?step=database\' 並按下輸入鍵。',
-	'install:error:readsettingsphp' => '無法讀取 engine/settings.example.php',
-	'install:error:writesettingphp' => '無法寫入 engine/settings.php',
+	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
+	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s 為必要項目',
 	'install:error:relative_path' => '我們不認為 %s 是資料目錄的絕對路徑',
 	'install:error:datadirectoryexists' => '資料目錄 %s 不存在。',

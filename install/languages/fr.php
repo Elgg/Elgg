@@ -40,11 +40,11 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 	'install:check:php:register_globals' => 'L\'option "Register globals" doit être mise à "off".',
 	'install:check:php:session.auto_start' => "Pour fonctionner l'option session.auto_start doit être mise à \"off\". Vous devez soit modifier la configuration de votre serveur ou ajouter cette directive au fichier \".htaccess\" d'Elgg.",
 
-	'install:check:installdir' => 'Votre serveur web n\'a pas la permission de créer le fichier "settings.php" (paramètres) dans le répertoire "engine" (moteur) d\'Elgg. Vous avez deux choix : 
+	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. Changer les permissions du répertoire "engine"
+		1. Change the permissions on the elgg-config directory of your Elgg installation
 
-		2. Copier le fichier "settings.example.php" en le renommant "settings.php" et suivre les instructions qu\'il contient afin de définir les paramètres de la base de données.',
+		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'Un fichier de paramètres existe dans le répertoire "engine" (moteur), mais le serveur web ne peut pas le lire. Vous pouvez supprimer le fichier ou modifier les autorisations de lecture sur lui.',
 
 	'install:check:php:success' => "Votre serveur PHP remplit tous les pré-requis techniques d'Elgg.",
@@ -124,8 +124,8 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 	'install:error:nodatabase' => 'Impossible d\'utiliser la base de données %s. Il se peut qu\'elle n\'existe pas.',
 	'install:error:cannotloadtables' => 'Impossible de charger les tables de la base de données',
 	'install:error:tables_exist' => 'Il y a déjà des tables dans la base de données d\'Elgg. Vous devez soit supprimer ces tables ou redémarrer l\'installeur et nous allons alors tenter de les utiliser. Pour redémarrer l\'installeur, enlevez "?step=database" dans la barre d\'adresse de votre navigateur et appuyez sur Entrée.',
-	'install:error:readsettingsphp' => 'Impossible de lire le fichier engine/settings.example.php',
-	'install:error:writesettingphp' => 'Impossible d\'écrire le fichier engine/settings.php',
+	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
+	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s est nécessaire',
 	'install:error:relative_path' => 'Nous ne pensons pas que "%s" soit un chemin absolu pour votre répertoire de données',
 	'install:error:datadirectoryexists' => 'Votre répertoire de données %s n\'existe pas.',
