@@ -14,7 +14,7 @@ if ($user) {
 	$content .= elgg_view("input/select", array(
 		'name' => 'language',
 		'value' => $user->language,
-		'options_values' => get_installed_translations()
+		'options' => get_installed_translations()
 	));
 	echo elgg_view_module('info', $title, $content);
 }

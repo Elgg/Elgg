@@ -13,7 +13,7 @@ $debug_options = array(
 
 $debug_label = elgg_echo('installation:debug:label');
 $debug_input = elgg_view('input/select', array(
-	'options_values' => $debug_options,
+	'options' => $debug_options,
 	'name' => 'debug',
 	'value' => elgg_get_config('debug'),
 ));

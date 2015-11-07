@@ -11,7 +11,7 @@ if (elgg_in_context('dashboard')) {
 	$params = array(
 		'name' => 'params[content_type]',
 		'value' => $vars['entity']->content_type,
-		'options_values' => array(
+		'options' => array(
 			'friends' => elgg_echo('river:widgets:friends'),
 			'all' => elgg_echo('river:widgets:all'),
 		),

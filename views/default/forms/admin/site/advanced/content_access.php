@@ -5,7 +5,7 @@
 
 $default_access_label = elgg_echo('installation:sitepermissions');
 $default_access_input = elgg_view('input/access', array(
-	'options_values' => array(
+	'options' => array(
 		ACCESS_PRIVATE => elgg_echo("PRIVATE"),
 		ACCESS_FRIENDS => elgg_echo("access:friends:label"),
 		ACCESS_LOGGED_IN => elgg_echo("LOGGED_IN"),
