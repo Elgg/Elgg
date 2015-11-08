@@ -7,5 +7,6 @@ return array(
 	'members:title:newest' => '最新的成员',
 	'members:title:popular' => '人气最旺的成员',
 	'members:title:online' => '在线的成员',
+	'members:title:alpha' => '全部成员',
 	'members:list:popular:none' => '没有成员有好友。',
 );

@@ -39,7 +39,7 @@ return array(
 	'actionnotfound' => "Tiedostoa, johon toiminto %s viittaa, ei löytynyt.",
 	'actionloggedout' => "Tämän toiminnon suorittaminen edellyttää, että olet kirjautuneena sisään.",
 	'actionunauthorized' => 'Sinulla ei ole oikeuksia tämän toiminnon suorittamiseen',
-	
+
 	'ajax:error' => 'AJAX-kutsun yhteydessä tapahtui odottamaton virhe. Yhteys palvelimeen saattaa olla katkennut.',
 	'ajax:not_is_xhr' => 'AJAX-näkymiin ei ole mahdollista päästä käsiksi suoraan',
 
@@ -60,7 +60,6 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Virheellinen %s riippuvuus "%s" pluginissa %s. Pluginit eivät voi vaatia toimintoa tai olla konfliktissa toiminnon kanssa, jonka ne itse tarjoavat!',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Ei voida lisätä toiminnallisuutta %s pluginille %s (guid: %s) sijainnissa %s. Tarkista tiedosto-oikeudet!',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Ei voida avata näkymähakemistoa pluginille %s (guid: %s) sijainnissa %s. Tarkista tiedosto-oikeudet!',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Ei voida rekisteröidä käännöksiä pluginille %s (guid: %s) sijainnissa %s. Tarkista tiedosto-oikeudet!',
 	'ElggPlugin:Exception:NoID' => 'Ei löydetty ID:tä pluginille guid %s!',
 	'PluginException:NoPluginName' => "Liitännäisen nimeä ei löytynyt",
 	'PluginException:ParserError' => 'Virhe yrittäessä käsitellä infotiedostoa API-versiolla %s pluginissa %s.',
@@ -84,7 +83,7 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => 'Ennen liitännäistä %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s ei ole asennettuna',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Puuttuu',
-	
+
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Käytössä on liitännäisiä, jotka ovat riippuvaisia liitännäisestä %s. Ennen kuin voit deaktivoida sen, sinun pitää deaktivoida seuraavat liitännäiset: %s',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Valikkolinkiltä puuttuu parent',
@@ -99,6 +98,8 @@ return array(
 	'LoginException:AccountLocked' => 'Tilisi on lukittu liian monen epäonnistuneen kirjautumisyrityksen vuoksi.',
 	'LoginException:ChangePasswordFailure' => 'Syöttämäsi salasana ei vastannut nykyistä salasanaasi.',
 	'LoginException:Unknown' => 'Kirjautuminen epäonnistui tuntemattoman virheen takia.',
+
+	'UserFetchFailureException' => 'Oikeuksien tarkistaminen käyttäjälle GUID [%s] epäonnistui, koska käyttäjää ei ole olemassa.',
 
 	'deprecatedfunction' => 'Warning: This code uses the deprecated function \'%s\' and is not compatible with this version of Elgg',
 
@@ -736,7 +737,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 /**
  * User settings
  */
-		
+
 	'usersettings:description' => "Käyttäjäasetuksista voit määritellä kaikki henkilökohtaiset asetuksesi. Valitse vaihtoehto alapuolelta aloittaaksesi.",
 
 	'usersettings:statistics' => "Tilastotietosi",
@@ -763,7 +764,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 /**
  * Activity river
  */
-		
+
 	'river:all' => 'Kaikki sivuston toiminta',
 	'river:mine' => 'Oma toimintani',
 	'river:owner' => 'Käyttäjän %s toiminta',
@@ -790,7 +791,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'icon:size:medium' => "Keskikokoinen",
 	'icon:size:large' => "Suuri",
 	'icon:size:master' => "Erittäin suuri",
-		
+
 /**
  * Generic action words
  */
@@ -875,11 +876,11 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 
 	'active' => 'Aktiivista',
 	'total' => 'Yhteensä',
-	
+
 	'ok' => 'OK',
 	'any' => 'Mikä tahansa',
 	'error' => 'Virhe',
-	
+
 	'other' => 'Muu',
 	'options' => 'Asetukset',
 	'advanced' => 'Lisäasetukset',
@@ -892,7 +893,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'content:latest:blurb' => 'Näet viimeisimmän toiminnan myös tästä.',
 
 	'link:text' => 'näytä linkki',
-	
+
 /**
  * Generic questions
  */
@@ -920,7 +921,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'sort:popular' => 'Suosituimmat',
 	'sort:alpha' => 'Aakkosjärjestys',
 	'sort:priority' => 'Tärkeysjärjestys',
-		
+
 /**
  * Generic data words
  */
@@ -945,7 +946,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'Muokkaa',
 	'delete:this' => 'Poista',
 	'comment:this' => 'Kommentoi',
@@ -988,7 +989,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "Import of data was successful",
 	'importfail' => "OpenDD import of data failed.",
 
@@ -1004,7 +1005,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'friendlytime:days' => "%s päivää sitten",
 	'friendlytime:days:singular' => "eilen",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
-	
+
 	'friendlytime:future:minutes' => "%s minuutin kuluttua",
 	'friendlytime:future:minutes:singular' => "minuutin kuluttua",
 	'friendlytime:future:hours' => "%s tunnin kuluttua",
@@ -1045,7 +1046,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'date:weekday:4' => 'Torstai',
 	'date:weekday:5' => 'Perjantai',
 	'date:weekday:6' => 'Lauantai',
-	
+
 	'date:weekday:short:0' => 'Su',
 	'date:weekday:short:1' => 'Ma',
 	'date:weekday:short:2' => 'Ti',
@@ -1053,7 +1054,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 	'date:weekday:short:4' => 'To',
 	'date:weekday:short:5' => 'Pe',
 	'date:weekday:short:6' => 'La',
-	
+
 	'interval:minute' => 'Minuutin välein',
 	'interval:fiveminute' => 'Viiden minuutin välein',
 	'interval:fifteenmin' => 'Viidentoista minuutin välein',
@@ -1109,7 +1110,7 @@ Kirjauduttuasi on suositeltavaa, että vaihdat salasanasi.
 
 	'installation:htaccess:needs_upgrade' => "Sivuston .htaccess-tiedosto pitää päivittää syöttämään polku __elgg_uri-nimiseen GET-parametriin. (Katso ohjeet tiedostosta install/config/htaccess.dist.)",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg ei saa testattua rewrite-sääntöjä. Tarkista, että curl toimii oikein ja että palvelimelle ei ole määritetty IP-rajoituksia, jotka estävät localhost-yhteydet.",
-	
+
 	'installation:systemcache:description' => "Välimuisti vähentää liitännäisten latausaikaa tallentamalla muistiin niiden käytössä olevien näkymien sijainnit.",
 	'installation:systemcache:label' => "Käytä välimuistia (suositus)",
 
@@ -1177,12 +1178,12 @@ Tarvittaessa voit lukea lisäohjeita <a href="http://learn.elgg.org/en/stable/ad
 /**
  * Emails
  */
-		
+
 	'email:from' => 'From',
 	'email:to' => 'To',
 	'email:subject' => 'Otsikko',
 	'email:body' => 'Viesti',
-	
+
 	'email:settings' => "Sähköpostiasetukset",
 	'email:address:label' => "Sähköpostiosoite",
 
@@ -1277,7 +1278,7 @@ Tähän viestiin ei voi vastata.",
 /**
  * Entities
  */
-	
+
 	'byline' => 'Käyttäjältä %s',
 	'byline:ingroup' => 'ryhmässä %s',
 	'entity:default:strapline' => 'Created %s by %s',
@@ -1285,8 +1286,8 @@ Tähän viestiin ei voi vastata.",
 
 	'entity:delete:success' => 'Kohde %s on poistettu',
 	'entity:delete:fail' => 'Kohteen %s poistaminen epäonnistui',
-	
-	'entity:can_delete:invaliduser' => 'Käyttäjää GUID [%s] ei ole olemassa, joten tiliä ei voi poistaa',
+
+	'entity:can_delete:invaliduser' => 'Käyttäjälle GUID [%s] ei voida tehdä canDelete()-tarkistusta, koska käyttäjää ei ole olemassa.',
 
 /**
  * Action gatekeeper
@@ -1473,4 +1474,7 @@ Tähän viestiin ei voi vastata.",
 	"za" => "Zuang",
 	"zh" => "Chinese",
 	"zu" => "Zulu",
+
+	"field:required" => 'Required',
+
 );

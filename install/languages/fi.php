@@ -40,11 +40,11 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:check:php:register_globals' => 'Register globals -asetus täytyy olla pois päältä.',
 	'install:check:php:session.auto_start' => "session.auto_start -asetus täytyy olla pois päältä. Muuta se palvelimesi asetustiedostoon tai lisää se Elggin .htaccess-tiedostoon.",
 
-	'install:check:installdir' => 'Web-palvelimellasi ei ole oikeuksia luoda settings.php-tiedostoa Elggin asennushakemistoon. Sinulla on kaksi vaihtoehtoa:
+	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-⇥⇥1. Muuta asennushakemiston tiedosto-oikeudet
+		1. Change the permissions on the elgg-config directory of your Elgg installation
 
-⇥⇥2. Kopioi tiedosto engine/settings.example.php asennushakemistoon, nimeä se muotoon /settings.php ja syötä tietokannan asetukset tiedostosta löytyvien ohjeiden mukaisesti.',
+		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'Elggin engine-hakemistossa on asetustiedosto, mutta web-palvelin ei voi lukea sitä. Voit joko poistaa tiedoston tai antaa web-palvelimelle oikeuden lukea se.',
 
 	'install:check:php:success' => "Palvelimesi PHP vastaa kaikkia Elggin tarpeita.",
@@ -124,8 +124,8 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:error:nodatabase' => 'Tietokantaan %s ei saada yhteyttä.',
 	'install:error:cannotloadtables' => 'Tietokantataulujen lataaminen ei onnistu',
 	'install:error:tables_exist' => 'Tietokannassa on jo olemassa Elggin tauluja. Sinun pitää joko poistaa taulut tai aloittaa asennus uudelleen, jolloin Elgg voi yrittää ottaa taulut käyttöön. Aloittaaksesi asennuksen uudelleen, poista \'?step=database\' selaimesi osoiteriviltä ja siirry kyseiseen osoitteeseen.',
-	'install:error:readsettingsphp' => ' Tiedoston engine/settings.example.php lukeminen ei onnistunut',
-	'install:error:writesettingphp' => 'Tiedostoon engine/settings.php kirjoittaminen ei onnistunut',
+	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
+	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s on pakollinen kenttä',
 	'install:error:relative_path' => 'Datahakemistolle syöttämäsi sijainti "%s" ei ole absoluuttinen polku',
 	'install:error:datadirectoryexists' => 'Datahakemistoa %s ei ole olemassa.',

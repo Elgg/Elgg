@@ -39,7 +39,7 @@ return array(
 	'actionnotfound' => "Il file comando di %s non è stato trovato",
 	'actionloggedout' => "Spiacenti, non puoi eseguire questa azione se non sei entrato/a.",
 	'actionunauthorized' => 'Non sei autorizzato/a per questa operazione',
-	
+
 	'ajax:error' => 'Errore inatteso durante una chiamata AJAX. Forse la connessione al server si è persa',
 	'ajax:not_is_xhr' => 'Non puoi accedere alla visualizzazione AJAX direttamente',
 
@@ -60,7 +60,6 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'There is an invalid %s dependency "%s" in plugin %s.  Plugins cannot conflict with or require something they provide!',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Cannot include %s for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Cannot open views dir for plugin %s (guid: %s) at %s.',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Cannot register languages for plugin %s (guid: %s) at %s.',
 	'ElggPlugin:Exception:NoID' => 'No ID for plugin guid %s!',
 	'PluginException:NoPluginName' => "Nome del plugin non trovato.",
 	'PluginException:ParserError' => 'Error parsing manifest with API version %s in plugin %s.',
@@ -84,7 +83,7 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => 'Before %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s is not installed',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Missing',
-	
+
 	'ElggPlugin:Dependencies:ActiveDependent' => 'There are other plugins that list %s as a dependency.  You must disable the following plugins before disabling this one: %s',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Trovate voci del menu senza voci superiori a cui linkare',
@@ -99,6 +98,8 @@ return array(
 	'LoginException:AccountLocked' => 'Il tuo account è stato bloccato per numero tentativi d\'ingresso troppo elevato',
 	'LoginException:ChangePasswordFailure' => 'Controllo della password attuale fallito',
 	'LoginException:Unknown' => 'Impossibile farti entrare per un errore sconosciuto, riprova per favore.',
+
+	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 
 	'deprecatedfunction' => 'Attenzione: questo codice usa la funzione non più approvata \'%s\' e non compatibile con questa versione di Elgg.',
 
@@ -738,7 +739,7 @@ When it is on, only admins can log in and browse the site.',
 /**
  * User settings
  */
-		
+
 	'usersettings:description' => "The user settings panel allows you to control all your personal settings, from user management to how plugins behave. Choose an option below to get started.",
 
 	'usersettings:statistics' => "Le tue statistiche",
@@ -765,7 +766,7 @@ When it is on, only admins can log in and browse the site.',
 /**
  * Activity river
  */
-		
+
 	'river:all' => 'Attività del network',
 	'river:mine' => 'Mie attività',
 	'river:owner' => 'Attività di %s',
@@ -792,7 +793,7 @@ When it is on, only admins can log in and browse the site.',
 	'icon:size:medium' => "Media",
 	'icon:size:large' => "Grande",
 	'icon:size:master' => "XL",
-		
+
 /**
  * Generic action words
  */
@@ -877,11 +878,11 @@ When it is on, only admins can log in and browse the site.',
 
 	'active' => 'Attivo',
 	'total' => 'Totale',
-	
+
 	'ok' => 'OK',
 	'any' => 'Nessun',
 	'error' => 'Errore',
-	
+
 	'other' => 'Altro',
 	'options' => 'Opzioni',
 	'advanced' => 'Avanzate',
@@ -894,7 +895,7 @@ When it is on, only admins can log in and browse the site.',
 	'content:latest:blurb' => 'In alternativa clicca qui per visualizzare i contenuti recenti dell\'intero sito.',
 
 	'link:text' => 'visualizza il link',
-	
+
 /**
  * Generic questions
  */
@@ -922,7 +923,7 @@ When it is on, only admins can log in and browse the site.',
 	'sort:popular' => 'Popolari',
 	'sort:alpha' => 'Alfabetico',
 	'sort:priority' => 'Priorità',
-		
+
 /**
  * Generic data words
  */
@@ -947,7 +948,7 @@ When it is on, only admins can log in and browse the site.',
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'Edita',
 	'delete:this' => 'Cancella',
 	'comment:this' => 'Commenta',
@@ -988,7 +989,7 @@ Appena entrato/a ti invitiamo caldamente a cambiare la password.',
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "Importazione dati avvenuta con successo",
 	'importfail' => "Importazione dati OpenDD fallita.",
 
@@ -1004,7 +1005,7 @@ Appena entrato/a ti invitiamo caldamente a cambiare la password.',
 	'friendlytime:days' => "%s giorni fa",
 	'friendlytime:days:singular' => "ieri",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
-	
+
 	'friendlytime:future:minutes' => "tra %s minuti",
 	'friendlytime:future:minutes:singular' => "tra un minuto",
 	'friendlytime:future:hours' => "tra %s ore",
@@ -1045,7 +1046,7 @@ Appena entrato/a ti invitiamo caldamente a cambiare la password.',
 	'date:weekday:4' => 'Giovedì',
 	'date:weekday:5' => 'Venerdì',
 	'date:weekday:6' => 'Sabato',
-	
+
 	'date:weekday:short:0' => 'Dom',
 	'date:weekday:short:1' => 'Lun',
 	'date:weekday:short:2' => 'Mar',
@@ -1053,7 +1054,7 @@ Appena entrato/a ti invitiamo caldamente a cambiare la password.',
 	'date:weekday:short:4' => 'Gio',
 	'date:weekday:short:5' => 'Ven',
 	'date:weekday:short:6' => 'Sab',
-	
+
 	'interval:minute' => 'Ogni minuto',
 	'interval:fiveminute' => 'Ogni cinque minuti',
 	'interval:fifteenmin' => 'Ogni quindici minuti',
@@ -1109,7 +1110,7 @@ Appena entrato/a ti invitiamo caldamente a cambiare la password.',
 
 	'installation:htaccess:needs_upgrade' => "You must update your .htaccess file so that the path is injected into the GET parameter __elgg_uri (you can use htaccess_dist as a guide).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg cannot connect to itself to test rewrite rules properly. Check that curl is working and there are no IP restrictions preventing localhost connections.",
-	
+
 	'installation:systemcache:description' => "The system cache decreases the loading time of the Elgg engine by caching data to files.",
 	'installation:systemcache:label' => "Use system cache (recommended)",
 
@@ -1189,12 +1190,12 @@ Appena entrato/a ti invitiamo caldamente a cambiare la password.',
 /**
  * Emails
  */
-		
+
 	'email:from' => 'Da',
 	'email:to' => 'A',
 	'email:subject' => 'Oggetto',
 	'email:body' => 'Corpo',
-	
+
 	'email:settings' => "Impostazioni email",
 	'email:address:label' => "Indirizzo email",
 
@@ -1279,7 +1280,7 @@ Per favore non rispondere a questa email.",
 /**
  * Entities
  */
-	
+
 	'byline' => 'Di %s',
 	'byline:ingroup' => 'nel gruppo %s',
 	'entity:default:strapline' => 'Creato %s da %s',
@@ -1287,8 +1288,8 @@ Per favore non rispondere a questa email.",
 
 	'entity:delete:success' => 'Elemento %s eliminato',
 	'entity:delete:fail' => 'Non è stato possibile eliminare l\'elemento %s',
-	
-	'entity:can_delete:invaliduser' => 'Non è stato possibile controllare canDelete per user_guid [%s] perché l\'utente non esiste',
+
+	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
  * Action gatekeeper
@@ -1475,4 +1476,7 @@ Per favore non rispondere a questa email.",
 	"za" => "Zuang",
 	"zh" => "Chinese",
 	"zu" => "Zulu",
+
+	"field:required" => 'Required',
+
 );

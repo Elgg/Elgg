@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-04 18:55-0400\n"
+"POT-Creation-Date: 2015-11-07 15:17-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1599,7 +1599,7 @@ msgid "Password validation"
 msgstr ""
 
 #: ../../design/security.rst:20
-msgid "The only restriction that Elgg places on a password is that it must be at least 6 characters long by default, though this may be changed in /settings.php. Additional criteria can be added by a plugin by registering for the ``registeruser:validate:password`` plugin hook."
+msgid "The only restriction that Elgg places on a password is that it must be at least 6 characters long by default, though this may be changed in ``/elgg-config/settings.php``. Additional criteria can be added by a plugin by registering for the ``registeruser:validate:password`` plugin hook."
 msgstr ""
 
 #: ../../design/security.rst:23

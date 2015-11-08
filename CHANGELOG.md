@@ -1,3 +1,24 @@
+<a name="2.0.0-rc.1"></a>
+### 2.0.0-rc.1  (2015-11-07)
+
+#### Contributors
+
+* Steve Clay (12)
+* iionly (3)
+
+#### Bug Fixes
+
+* **http:** allows sending gzipped JavaScript on nginx < 1.5.4 ([4c4b8ab7](https://github.com/Elgg/Elgg/commit/4c4b8ab7aee765d09bc59d541693e5a2643bb3ba))
+* **likes:** likes preloader and entity menus now consider likability ([de81d7da](https://github.com/Elgg/Elgg/commit/de81d7daf1f49eba179ec6acea4cf633d14ec803), closes [#9065](https://github.com/Elgg/Elgg/issues/9065))
+* **views:** input/userpicker API more BC with 1.8 plugins ([0651a5fd](https://github.com/Elgg/Elgg/commit/0651a5fdc075bde1f09f6ee27252a7ba471216f1), closes [#6079](https://github.com/Elgg/Elgg/issues/6079))
+
+
+#### Breaking Changes
+
+* To allow for usage of the z-index property for elements in the content area without the More menu dropdown being displayed behind these elements the z-index value in the elgg-menu site class has been increased to 50
+ ([34af1d71](https://github.com/Elgg/Elgg/commit/34af1d71ab57110128c6d44f2b7af53c7c29c873))
+
+
 <a name="2.0.0-beta.3"></a>
 ### 2.0.0-beta.3  (2015-10-04)
 
