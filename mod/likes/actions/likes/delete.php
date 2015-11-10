@@ -22,8 +22,24 @@ if (!$like) {
 }
 
 if ($like && $like->canEdit()) {
+	$entity = $like->getEntity();
 	$like->delete();
 	system_message(elgg_echo("likes:deleted"));
+
+	if ($entity && elgg_is_xhr()) {
+		$num_of_likes = likes_count($entity);
+		if ($num_of_likes == 1) {
+			$likes_string = elgg_echo('likes:userlikedthis', array($num_of_likes));
+		} else {
+			$likes_string = elgg_echo('likes:userslikedthis', array($num_of_likes));
+		}
+		echo json_encode([
+			'text' => $likes_string,
+			'selector' => "[data-likes-guid={$entity->guid}]",
+			'num_likes' => $num_of_likes,
+		]);
+	}
+
 	forward(REFERER);
 }
 
