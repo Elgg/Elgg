@@ -460,21 +460,27 @@ function user_avatar_hook($hook, $entity_type, $returnvalue, $params) {
  * @access private
  */
 function elgg_user_hover_menu($hook, $type, $return, $params) {
-	$user = $params['entity'];
+	$user = elgg_extract('entity', $params);
 	/* @var \ElggUser $user */
 
-	if (elgg_is_logged_in()) {
-		if (elgg_get_logged_in_user_guid() == $user->guid) {
-			$url = "profile/$user->username/edit";
-			$item = new \ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
-			$item->setSection('action');
-			$return[] = $item;
+	if (!$user instanceof \ElggUser) {
+		return;
+	}
 
-			$url = "avatar/edit/$user->username";
-			$item = new \ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
-			$item->setSection('action');
-			$return[] = $item;
-		}
+	if (!elgg_is_logged_in()) {
+		return;
+	}
+	
+	if (elgg_get_logged_in_user_guid() == $user->guid) {
+		$url = "profile/$user->username/edit";
+		$item = new \ElggMenuItem('profile:edit', elgg_echo('profile:edit'), $url);
+		$item->setSection('action');
+		$return[] = $item;
+
+		$url = "avatar/edit/$user->username";
+		$item = new \ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
+		$item->setSection('action');
+		$return[] = $item;
 	}
 
 	// prevent admins from banning or deleting themselves
