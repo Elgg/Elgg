@@ -1546,7 +1546,6 @@ function elgg_views_boot() {
 	elgg_register_js('lightbox', elgg_get_simplecache_url('lightbox.js'));
 	elgg_register_css('lightbox', elgg_get_simplecache_url('lightbox/elgg-colorbox-theme/colorbox.css'));
 
-	elgg_register_js('elgg.autocomplete', elgg_get_simplecache_url('elgg/ui.autocomplete.js'));
 	elgg_register_js('jquery.ui.autocomplete.html', elgg_get_simplecache_url('jquery.ui.autocomplete.html.js'));
 	elgg_define_js('jquery.ui.autocomplete.html', [
 		'deps' => ['jquery-ui'],

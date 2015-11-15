@@ -35,17 +35,11 @@ if (isset($vars['match_owner'])) {
 	$params['match_owner'] = $vars['match_owner'];
 	unset($vars['match_owner']);
 }
-$ac_url_params = http_build_query($params);
+$ac_url_params = urldecode(http_build_query($params));
+$query_url = elgg_get_site_url() . 'livesearch?' . $ac_url_params;
 
-elgg_load_js('elgg.autocomplete');
-elgg_load_js('jquery.ui.autocomplete.html');
+elgg_require_js('elgg/Autocomplete');
 
 ?>
 
-<script>
-require(['elgg'], function (elgg) {
-	elgg.provide('elgg.autocomplete');
-	elgg.autocomplete.url = "<?php echo elgg_get_site_url() . 'livesearch?' . $ac_url_params; ?>";
-});
-</script>
-<input type="text" <?php echo elgg_format_attributes($vars); ?> />
+<input type="text" <?php echo elgg_format_attributes($vars); ?> data-queryurl="<?php echo $query_url; ?>" />
