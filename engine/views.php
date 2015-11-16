@@ -28,7 +28,6 @@ return [
 		 */
 		"/" => dirname(__DIR__) . "/_graphics",
 
-		"elgg/ui.autocomplete.js" => dirname(__DIR__) . "/js/lib/ui.autocomplete.js",
 		"elgg/ui.avatar_cropper.js" => dirname(__DIR__) . "/js/lib/ui.avatar_cropper.js",
 		"elgg/ui.friends_picker.js" => dirname(__DIR__) . "/js/lib/ui.friends_picker.js",
 		"elgg/ui.river.js" => dirname(__DIR__) . "/js/lib/ui.river.js",
