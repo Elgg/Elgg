@@ -722,28 +722,28 @@ class AccessCollections {
 	}
 	
 	/**
-	 * Get all of members of an access collection
-	 *
-	 * @param int  $collection The collection's ID
-	 * @param bool $idonly     If set to true, will only return the members' GUIDs (default: false)
-	 *
-	 * @return \ElggUser[]|int[]|false guids or entities if successful, false if not
-	 */
-	function getMembers($collection, $idonly = false) {
-		$collection = (int)$collection;
+	* Get all of members of an access collection
+	*
+	* @param int  $collection_id The collection's ID
+	* @param bool $guids_only    If set to true, will only return the members' GUIDs (default: false)
+	*
+	* @return ElggUser[]|int[]|false guids or entities if successful, false if not
+	*/
+	function getMembers($collection_id, $guids_only = false) {
+		$collection_id = (int) $collection_id;
 
 		$db = _elgg_services()->db;
 		$prefix = $db->getTablePrefix();
 
-		if (!$idonly) {
+		if (!$guids_only) {
 			$query = "SELECT e.* FROM {$prefix}access_collection_membership m"
 				. " JOIN {$prefix}entities e ON e.guid = m.user_guid"
-				. " WHERE m.access_collection_id = {$collection}";
+				. " WHERE m.access_collection_id = {$collection_id}";
 			$collection_members = $db->getData($query, "entity_row_to_elggstar");
 		} else {
 			$query = "SELECT e.guid FROM {$prefix}access_collection_membership m"
 				. " JOIN {$prefix}entities e ON e.guid = m.user_guid"
-				. " WHERE m.access_collection_id = {$collection}";
+				. " WHERE m.access_collection_id = {$collection_id}";
 			$collection_members = $db->getData($query);
 			if (!$collection_members) {
 				return false;

@@ -24,4 +24,7 @@ echo elgg_view('river/elements/layout', array(
 		'use_hover' => false,
 		'use_link' => false,
 	)),
+
+	// truthy value to bypass responses rendering
+	'responses' => ' ',
 ));
