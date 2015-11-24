@@ -450,4 +450,30 @@ class ElggFile extends \ElggObject {
 
 		return true;
 	}
+
+	/**
+	 * Get property names to serialize.
+	 *
+	 * @return string[]
+	 */
+	public function __sleep() {
+		return array_diff(array_keys(get_object_vars($this)), array(
+			// Don't persist filestore, which contains CONFIG
+			// https://github.com/Elgg/Elgg/issues/9081#issuecomment-152859856
+			'filestore',
+
+			// a resource
+			'handle',
+		));
+	}
+
+	/**
+	 * Reestablish filestore property
+	 *
+	 * @return void
+	 * @throws ClassNotFoundException
+	 */
+	public function __wakeup() {
+		$this->getFilestore();
+	}
 }
