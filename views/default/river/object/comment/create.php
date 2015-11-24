@@ -37,4 +37,7 @@ echo elgg_view('river/elements/layout', array(
 	'item' => $vars['item'],
 	'message' => elgg_get_excerpt($comment->description),
 	'summary' => $summary,
+
+	// truthy value to bypass responses rendering
+	'responses' => ' ',
 ));
