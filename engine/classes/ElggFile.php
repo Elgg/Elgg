@@ -80,6 +80,18 @@ class ElggFile extends \ElggObject {
 	}
 
 	/**
+	 * Returns path relative to the filestore (data directory) root
+	 *
+	 * @return string
+	 */
+	public function getPathFromDataRoot() {
+		$filestore_params = $this->filestore->getParameters();
+		$filestore_root = elgg_extract('dir_root', $filestore_params);
+		$full_path = $this->getFilenameOnFilestore();
+		return substr($full_path, strlen($filestore_root));
+	}
+
+	/**
 	 * Return the size of the filestore associated with this file
 	 *
 	 * @param string $prefix         Storage prefix
@@ -276,13 +288,13 @@ class ElggFile extends \ElggObject {
 	 */
 	public function delete() {
 		$fs = $this->getFilestore();
-		
+
 		$result = $fs->delete($this);
-		
+
 		if ($this->getGUID() && $result) {
 			$result = parent::delete();
 		}
-		
+
 		return $result;
 	}
 
