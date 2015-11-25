@@ -234,8 +234,10 @@ return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hoo
 	// if mb functions are available, set internal encoding to UTF8
 	if (is_callable('mb_internal_encoding')) {
 		mb_internal_encoding("UTF-8");
-		if (ini_get("mbstring.internal_encoding")) {
-			ini_set("mbstring.internal_encoding", 'UTF-8');
+		if (version_compare('5.6.0', PHP_VERSION, '<')) {
+			if (ini_get("mbstring.internal_encoding")) {
+				ini_set("mbstring.internal_encoding", 'UTF-8');
+			}
 		}
 	}
 };
