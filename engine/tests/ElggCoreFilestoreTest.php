@@ -48,6 +48,25 @@ class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 		$this->assertFalse(file_exists($filepath));
 	}
 
+	public function testPathFromDataRoot() {
+
+		// create a user to own the file
+		$user = $this->createTestUser();
+		$dir = new \Elgg\EntityDirLocator($user->guid);
+
+		// setup a test file
+		$file = new \ElggFile();
+		$file->owner_guid = $user->guid;
+		$file->setFilename('testing/filestore.txt');
+		$file->open('write');
+		$file->write('Testing!');
+		$this->assertTrue($file->close());
+
+		$this->assertIdentical($file->getPathFromDataRoot(), $dir . 'testing/filestore.txt');
+
+		$user->delete();
+	}
+
 	function testElggFileDelete() {
 		global $CONFIG;
 		
