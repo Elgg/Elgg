@@ -39,8 +39,8 @@
         "test": "phpunit",
         "travis:install": [
             "composer self-update",
-            "composer global require \"fxp/composer-asset-plugin:~1.0.3\"",
-            "composer install"
+            "composer global require \"fxp/composer-asset-plugin:~1.1.1\"",
+            "composer install --prefer-source"
         ],
         "travis:install-with-mysql": [
             "composer travis:install",
