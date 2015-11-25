@@ -391,6 +391,11 @@ class Application {
 			return true;
 		}
 
+		if (0 === strpos($path, '/serve-file/')) {
+			(new Application\ServeFileHandler($this))->getResponse($this->services->request)->send();
+			return true;
+		}
+
 		if ($path === '/rewrite.php') {
 			require Directory\Local::root()->getPath("install.php");
 			return true;

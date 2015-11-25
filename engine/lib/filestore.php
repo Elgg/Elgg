@@ -581,6 +581,45 @@ function _elgg_filestore_test($hook, $type, $value) {
 	return $value;
 }
 
+
+/**
+ * Returns file's download URL
+ *
+ * @param \ElggFile $file       File object or entity
+ * @param bool      $use_cookie Limit URL validity to current session only
+ * @param string    $expires    URL expiration, as a string suitable for strtotime()
+ * @return string
+ */
+function elgg_get_download_url(\ElggFile $file, $use_cookie = true, $expires = '+2 hours') {
+	$file_svc = new Elgg\FileService\File();
+	$file_svc->setFile($file);
+	$file_svc->setExpires($expires);
+	$file_svc->setDisposition('attachment');
+	$file_svc->bindSession($use_cookie);
+	return $file_svc->getURL();
+}
+
+/**
+ * Returns file's URL for inline display
+ * Suitable for displaying cacheable resources, such as user avatars
+ *
+ * @param \ElggFile $file       File object or entity
+ * @param bool      $use_cookie Limit URL validity to current session only
+ * @param string    $expires    URL expiration, as a string suitable for strtotime()
+ * @return string
+ */
+function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = false) {
+	$file_svc = new Elgg\FileService\File();
+	$file_svc->setFile($file);
+	if ($expires) {
+		$file_svc->setExpires($expires);
+	}
+	$file_svc->setDisposition('inline');
+	$file_svc->bindSession($use_cookie);
+	return $file_svc->getURL();
+}
+
+
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_filestore_init', 100);
 };
