@@ -386,6 +386,11 @@ in the content area to use the z-index property without the "More" site menu's d
 behind these elements. If your plugin/theme overrides the elgg-menu-site class or views/default/elements/navigation.css
 please adjust the z-index value in your modified CSS file accordingly.
 
+input/autocomplete view
+-----------------------
+
+Plugins that override the ``input/autocomplete`` view will need to include the source URL in the ``data-source`` attribute of the input element, require the new ``elgg/autocomplete`` AMD module, and call its ``init`` method. The 1.x javascript library ``elgg.autocomplete`` is no longer used.
+
 Introduced third-party library for sending email
 ------------------------------------------------
 
