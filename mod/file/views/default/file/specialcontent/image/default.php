@@ -9,7 +9,7 @@ $file = $vars['entity'];
 
 $image_url = $file->getIconURL('large');
 $image_url = elgg_format_url($image_url);
-$download_url = elgg_get_site_url() . "file/download/{$file->getGUID()}";
+$download_url = elgg_get_download_url($file);
 
 if ($vars['full_view']) {
 	elgg_load_js('lightbox');
