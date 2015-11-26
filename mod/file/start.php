@@ -152,6 +152,7 @@ function file_page_handler($page) {
 			echo elgg_view_resource('file/world');
 			break;
 		case 'download':
+			elgg_deprecated_notice('/file/download page handler has been deprecated and will be removed. Use elgg_get_download_url() instead', '2.1');
 			echo elgg_view_resource('file/download', [
 				'guid' => $page[1],
 			]);
@@ -360,11 +361,29 @@ function file_set_icon_url($hook, $type, $url, $params) {
 	$file = $params['entity'];
 	$size = $params['size'];
 	if (elgg_instanceof($file, 'object', 'file')) {
-
+		
 		// thumbnails get first priority
 		if ($file->thumbnail) {
-			$ts = (int)$file->icontime;
-			return "mod/file/thumbnail.php?file_guid=$file->guid&size=$size&icontime=$ts";
+			switch ($size) {
+				case "small":
+					$thumbfile = $file->thumbnail;
+					break;
+				case "medium":
+					$thumbfile = $file->smallthumb;
+					break;
+				case "large":
+				default:
+					$thumbfile = $file->largethumb;
+					break;
+			}
+
+			$readfile = new ElggFile();
+			$readfile->owner_guid = $file->owner_guid;
+			$readfile->setFilename($thumbfile);
+			$thumb_url = elgg_get_inline_url($readfile, true);
+			if ($thumb_url) {
+				return $thumb_url;
+			}
 		}
 
 		$mapping = array(
@@ -383,10 +402,8 @@ function file_set_icon_url($hook, $type, $url, $params) {
 			'application/x-rar-compressed' => 'archive',
 			'application/x-stuffit' => 'archive',
 			'application/zip' => 'archive',
-
 			'text/directory' => 'vcard',
 			'text/v-card' => 'vcard',
-
 			'application' => 'application',
 			'audio' => 'music',
 			'text' => 'text',

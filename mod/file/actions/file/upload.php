@@ -68,6 +68,10 @@ if ($new_file) {
 		// user blanked title, but we need one
 		$title = $file->title;
 	}
+
+	if ($entity->access_id !== $access_id) {
+		$reset_icon_urls = true;
+	}
 }
 
 $file->title = $title;
@@ -167,6 +171,19 @@ if (isset($_FILES['upload']['name']) && !empty($_FILES['upload']['name'])) {
 } else {
 	// not saving a file but still need to save the entity to push attributes to database
 	$file->save();
+
+	if ($reset_icon_urls) {
+		$thumbnails = array($file->thumbnail, $file->smallthumb, $file->largethumb);
+		foreach ($thumbnails as $thumbnail) {
+			$thumbfile = new ElggFile();
+			$thumbfile->owner_guid = $file->owner_guid;
+			$thumbfile->setFilename($thumbnail);
+			if ($thumbfile->exists()) {
+				$thumb_filename = $thumbfile->getFilenameOnFilestore();
+				touch($thumb_filename);
+			}
+		}
+	}
 }
 
 // file saved so clear sticky form
