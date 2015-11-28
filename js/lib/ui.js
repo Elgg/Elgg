@@ -73,6 +73,11 @@ elgg.ui.toggles = function(event) {
 			$elem.toggle();
 		}
 	});
+
+	elgg.trigger_hook('ui_toggle', 'system', {
+		toggler: this,
+		target_selector: target
+	});
 };
 
 /**
