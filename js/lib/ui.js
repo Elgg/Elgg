@@ -55,17 +55,19 @@ elgg.ui.init = function () {
 elgg.ui.toggles = function(event) {
 	event.preventDefault();
 	var $this = $(this),
-		target = $this.data().toggleSelector;
+		selector = $this.data().toggleSelector;
 	
-	if (!target) {
+	if (!selector) {
 		// @todo we can switch to elgg.getSelectorFromUrlFragment() in 1.x if
 		// we also extend it to support href=".some-class"
-		target = $this.attr('href');
+		selector = $this.attr('href');
 	}
+
+	var $elements = $(selector);
 
 	$this.toggleClass('elgg-state-active');
 
-	$(target).each(function(index, elem) {
+	$elements.each(function(index, elem) {
 		var $elem = $(elem);
 		if ($elem.data().toggleSlide != false) {
 			$elem.slideToggle('medium');
@@ -73,6 +75,10 @@ elgg.ui.toggles = function(event) {
 			$elem.toggle();
 		}
 	});
+
+	$this.trigger('elgg_ui_toggle', [{
+		$toggled_elements: $elements
+	}]);
 };
 
 /**
