@@ -1,6 +1,6 @@
 {
     "name": "elgg/elgg",
-    "version": "1.12.4",
+    "version": "1.12.5",
     "description": "Elgg is an award-winning social networking engine, delivering the building blocks that enable businesses, schools, universities and associations to create their own fully-featured social networks and applications.",
     "license": "GPL-2.0",
     "minimum-stability": "dev",
