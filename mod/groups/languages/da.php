@@ -58,12 +58,14 @@ return array(
 	'groups:cantcreate' => 'You can not create a group. Only admins can.',
 	'groups:cantedit' => 'Du kan ikke redigere denne gruppe',
 	'groups:saved' => 'Gruppe gemt',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Foretrukne grupper',
 	'groups:makeunfeatured' => 'Vælg fra',
 	'groups:makefeatured' => 'Vælg til',
 	'groups:featuredon' => '%s er nu en foretrukket gruppe',
 	'groups:unfeatured' => '%s has been removed from the featured groups.',
 	'groups:featured_error' => 'Ugyldig gruppe.',
+	'groups:nofeatured' => 'No featured groups',
 	'groups:joinrequest' => 'Ansøg om medlemsskab',
 	'groups:join' => 'Bliv medlem af gruppen',
 	'groups:leave' => 'Forlad gruppen',
@@ -172,8 +174,11 @@ View and reply to the discussion:
 	'discussion:reply:edit' => 'Ændre svar',
 	'discussion:reply:deleted' => 'Svaret er blevet slettet.',
 	'discussion:reply:error:notfound' => 'Svaret på diskussionen blev ikke fundet',
+	'discussion:reply:error:notfound_fallback' => "Sorry, we could not find the specified reply, but we've forwarded you to the original discussion topic.",
 	'discussion:reply:error:notdeleted' => 'Kunne ikke slette diskussionssvaret',
 
+	'discussion:search:title' => 'Reply on topic: %s',
+	
 	'admin:groups' => 'Grupper',
 
 	'reply:this' => 'Reply to this',
@@ -261,6 +266,7 @@ eller klik nedenfor for at se gruppens anmodningsliste:
 	'river:join:group:default' => '%s blev medlem af gruppen %s',
 	'river:create:object:groupforumtopic' => '%s tilføjede et nyt diskussionsemne %s',
 	'river:reply:object:groupforumtopic' => '%s svarede på diskussionsemnet %s',
+	'river:reply:view' => 'view reply',
 
 	'groups:nowidgets' => 'Ingen widgets defineret for denne gruppe.',
 
@@ -298,6 +304,8 @@ eller klik nedenfor for at se gruppens anmodningsliste:
 
 	'groups:invitekilled' => 'Invitationen er blevet slettet.',
 	'groups:joinrequestkilled' => 'Anmodningen om tilslutning er blevet slettet.',
+	'groups:error:addedtogroup' => "Could not add %s to the group",
+	'groups:add:alreadymember' => "%s is already a member of this group",
 
 	/**
 	 * ecml

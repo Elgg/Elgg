@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'あなたは、グループを作成することができません。管理者のみ作成できます。',
 	'groups:cantedit' => 'このグループを編集できません。',
 	'groups:saved' => 'グループを保存しました',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'クローズアップ',
 	'groups:makeunfeatured' => 'クローズアップをやめる',
 	'groups:makefeatured' => 'クローズアップに登録する',

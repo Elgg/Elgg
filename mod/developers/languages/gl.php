@@ -23,11 +23,16 @@ return array(
 	'developers:help:screen_log' => "Isto mostra os datos de saída de elgg_log() e elgg_dump() e unha conta de consultas de base de datos.",
 	'developers:label:show_strings' => "Mostrar as mensaxes de tradución sen procesar.",
 	'developers:help:show_strings' => "Isto mostra as mensaxes de tradución usadas por «elgg_echo()».",
+	'developers:label:show_modules' => "Mostrar os módulos AMD cargados na consola.",
+	'developers:help:show_modules' => "Envía os módulos e calores cargados á súa consola de JavaScript.",
 	'developers:label:wrap_views' => "Encapsular as vistas.",
 	'developers:help:wrap_views' => "Isto encapsula case todas as vistas dentro de comentarios de HTML. Resulta útil para atopar a vista que está a xerar un código HTML concreto.
 									Isto pode romper as vistas que non usen HTML no tipo de vista predeterminado. Para máis información, vexa «developers_wrap_views()».",
 	'developers:label:log_events' => "Rexistrar os acontecementos e os ganchos dos complementos.",
 	'developers:help:log_events' => "Engadir ao rexistro os acontecementos e mailos ganchos dos complementos. Aviso: cada páxina contén unha morea deles.",
+	'developers:label:show_gear' => "Usar %s fóra da zona de administración.",
+	'developers:help:show_gear' => "Unha icona na parte inferior dereita da vista que fornece acceso de administrador a opcións e ligazóns de desenvolvedor.",
+	'developers:label:submit' => "Gardar e baleirar as cachés",
 
 	'developers:debug:off' => 'Desactivado',
 	'developers:debug:error' => 'Err',
@@ -78,5 +83,7 @@ return array(
 	'developers:unit_tests:run' => 'Executar',
 
 	// status messages
-	'developers:settings:success' => 'Gardouse a configuración.',
+	'developers:settings:success' => 'Gardouse a configuración e baleiráronse as cachés.',
+
+	'developers:amd' => 'AMD',
 );

@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'Alleen sitebeheerders mogen nieuwe groepen aanmaken.',
 	'groups:cantedit' => 'Je kunt deze groep niet bewerken',
 	'groups:saved' => 'Groep opgeslagen',
+	'groups:save_error' => 'Groep kon niet worden opgeslagen',
 	'groups:featured' => 'Aangeraden groepen',
 	'groups:makeunfeatured' => 'Afraden',
 	'groups:makefeatured' => 'Aanraden',

@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'Δεν μπορείτε να δημιουργήσετε ομάδα. Μόνο οι διαχειριστές μπορούν.',
 	'groups:cantedit' => 'Δεν μπορείτε να επεξεργαστείτε αυτή την ομάδα',
 	'groups:saved' => 'Η ομάδα αποθηκεύτηκε',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Προβεβλημένες ομάδες',
 	'groups:makeunfeatured' => 'Μη προτεινόμενο',
 	'groups:makefeatured' => 'Προβάλλετε το',

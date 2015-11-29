@@ -1,20 +1,20 @@
 <?php
 return array(
-	'admin:administer_utilities:logbrowser' => 'Analisi dei log',
-	'logbrowser' => 'Analisi dei log',
-	'logbrowser:browse' => 'Naviga il sistema dei resoconti',
+	'admin:administer_utilities:logbrowser' => 'Visualizzatore dei log',
+	'logbrowser' => 'Visualizzatore dei log',
+	'logbrowser:browse' => 'Visualizza i log di sistema',
 	'logbrowser:search' => 'Affina i risultati',
-	'logbrowser:user' => 'Username da cercare',
-	'logbrowser:starttime' => 'Tempo di partenza (per esempio "lunedi scorso", "1 ora fa").)',
+	'logbrowser:user' => 'Nome utente da cercare',
+	'logbrowser:starttime' => 'A partire da (per esempio "lunedì scorso", "1 ora fa")',
 	'logbrowser:endtime' => 'Fino a',
 
-	'logbrowser:explore' => 'Esplora resoconto',
+	'logbrowser:explore' => 'Esplora i log',
 
-	'logbrowser:date' => 'Date and time',
+	'logbrowser:date' => 'Data e ora',
 	'logbrowser:ip_address' => 'Indirizzo IP',
 	'logbrowser:user:name' => 'Utente',
-	'logbrowser:user:guid' => 'User GUID',
-	'logbrowser:object' => 'Object type',
-	'logbrowser:object:guid' => 'Object GUID',
+	'logbrowser:user:guid' => 'GUID dell\'utente',
+	'logbrowser:object' => 'Tipo di oggetto',
+	'logbrowser:object:guid' => 'GUID dell\'oggetto',
 	'logbrowser:action' => 'Azione',
 );

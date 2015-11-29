@@ -8,25 +8,25 @@ return array(
 	'pages' => "Pagine",
 	'pages:owner' => "Pagine di %s",
 	'pages:friends' => "Pagine degli amici",
-	'pages:all' => "Tutte le pagine",
-	'pages:add' => "Aggiungi pagina",
+	'pages:all' => "Tutte le pagine del sito",
+	'pages:add' => "Aggiungi una pagina",
 
 	'pages:group' => "Pagine del gruppo",
 	'groups:enablepages' => 'Abilita pagine del gruppo',
 
-	'pages:new' => "Nuova pagina",
+	'pages:new' => "Una nuova pagina",
 	'pages:edit' => "Modifica questa pagina",
-	'pages:delete' => "Cancella questa pagina",
+	'pages:delete' => "Elimina questa pagina",
 	'pages:history' => "Cronologia",
 	'pages:view' => "Mostra pagina",
 	'pages:revision' => "Revisione",
 	'pages:current_revision' => "Revisione attuale",
-	'pages:revert' => "Ritorna",
+	'pages:revert' => "Ripristina",
 
 	'pages:navigation' => "Navigazione",
 
-	'pages:notify:summary' => 'Nuova pagina %s',
-	'pages:notify:subject' => "Nuova pagina: %s",
+	'pages:notify:summary' => 'Nuova pagina intitolata %s',
+	'pages:notify:subject' => "Una nuova pagina: %s",
 	'pages:notify:body' =>
 '%s ha aggiunto una nuova pagina: %s
 
@@ -36,8 +36,8 @@ Visualizza e commenta questa pagina:
 %s',
 	'item:object:page_top' => 'Pagine di primo livello',
 	'item:object:page' => 'Pagine',
-	'pages:nogroup' => 'Questo gruppo non ha ancora nessuna pagina',
-	'pages:more' => 'Tutte le pagine',
+	'pages:nogroup' => 'Questo gruppo non ha ancora alcuna pagina',
+	'pages:more' => 'Più pagine',
 	'pages:none' => 'Ancora nessuna pagina creata',
 
 	/**
@@ -56,7 +56,7 @@ Visualizza e commenta questa pagina:
 	 */
 
 	'pages:title' => 'Titolo pagina',
-	'pages:description' => 'Testo della tua pagina',
+	'pages:description' => 'Contenuto della pagina',
 	'pages:tags' => 'Tag',
 	'pages:parent_guid' => 'Pagina madre',
 	'pages:access_id' => 'Accesso in lettura',
@@ -69,11 +69,11 @@ Visualizza e commenta questa pagina:
 	'pages:cantedit' => 'Non puoi modificare questa pagina',
 	'pages:saved' => 'Pagina salvata',
 	'pages:notsaved' => 'La pagina non può essare salvata',
-	'pages:error:no_title' => 'Devi specificare un titolo per questa pagina',
-	'pages:delete:success' => 'La tua pagina è stata cancellata con successo.',
-	'pages:delete:failure' => 'La pagina non può rimossa.',
-	'pages:revision:delete:success' => 'Revisione pagina cancellata con successo',
-	'pages:revision:delete:failure' => 'La revisione della pagina non è stata cancellata',
+	'pages:error:no_title' => 'Devi specificare un titolo per questa pagina.',
+	'pages:delete:success' => 'La pagina è stata eliminata con successo.',
+	'pages:delete:failure' => 'Impossibile rimuovere la pagina.',
+	'pages:revision:delete:success' => 'La revisione della pagina è stata eliminata.',
+	'pages:revision:delete:failure' => 'La revisione della pagina non può essere eliminata.',
 	'pages:revision:not_found' => 'Impossibile trovare questa revisione.',
 
 	/**
@@ -91,12 +91,12 @@ Visualizza e commenta questa pagina:
 	 **/
 
 	'pages:num' => 'Numero di pagine da visualizzare',
-	'pages:widget:description' => "Visualizza alcunde delle tue pagine.",
+	'pages:widget:description' => "Questo è un elenco delle tue pagine.",
 
 	/**
 	 * Submenu items
 	 */
-	'pages:label:view' => "Mostra pagina",
+	'pages:label:view' => "Visualizza pagina",
 	'pages:label:edit' => "Modifica pagina",
 	'pages:label:history' => "Cronologia della pagina",
 

@@ -4,27 +4,27 @@ return array(
 	'likes:deleted' => 'Il tuo "mi piace" è stato rimosso',
 	'likes:see' => 'Guarda a chi piace',
 	'likes:remove' => 'Rimuovi il tuo "mi piace"',
-	'likes:notdeleted' => 'C\'è stato un problema nel rimuovere il tuo "mi piace"',
-	'likes:likes' => 'Ti piace',
-	'likes:failure' => 'C\'è stato un problema con questo oggetto',
+	'likes:notdeleted' => 'Si è verificato un problema nel rimuovere il tuo "mi piace"',
+	'likes:likes' => 'Ora questo elemento "ti piace"',
+	'likes:failure' => 'Si è verificato un problema applicando il "mi piace" a questo elemento',
 	'likes:alreadyliked' => 'Hai già cliccato "mi piace" su questo oggetto',
-	'likes:notfound' => 'L\'oggetto che stai tentando di cliccare "Mi piace" non è stato trovato',
+	'likes:notfound' => 'L\'oggetto a cui stai tentando di applicare il "mi piace" non è stato trovato',
 	'likes:likethis' => 'Piace questo',
-	'likes:userlikedthis' => '%s mi piace',
-	'likes:userslikedthis' => '%s mi piace',
-	'likes:river:annotate' => 'mi piace',
-	'likes:delete:confirm' => 'Sei sicuro di eliminare questo "mi piace"?',
+	'likes:userlikedthis' => 'a %s piace',
+	'likes:userslikedthis' => 'a %s piace',
+	'likes:river:annotate' => 'piace',
+	'likes:delete:confirm' => 'Sei sicuro di voler eliminare questo "mi piace"?',
 
 	'river:likes' => 'piace %s %s',
 
 	// notifications. yikes.
-	'likes:notifications:subject' => '%s piace il tuo post "%s"',
+	'likes:notifications:subject' => 'a %s piace il tuo post "%s"',
 	'likes:notifications:body' =>
-'Salve %1$s,
+'Ciao %1$s,
 
-%2$s piace il tuo post "%3$s" su %4$s
+a %2$s piace il tuo commento "%3$s" su %4$s
 
-Guarda il tuo post originale qui:
+Guarda il tuo commento originale qui:
 
 %5$s
 
