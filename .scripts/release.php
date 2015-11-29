@@ -61,7 +61,7 @@ foreach ($cleaner->log as $msg) {
 
 run_commands([
 	"sphinx-build -b gettext docs docs/locale/pot",
-	"sphinx-intl --locale-dir=docs/locale/ build",
+	"sphinx-intl build --locale-dir=docs/locale/",
 	"git add .",
 	"git commit -am \"chore(i18n): update translations\"",
 ]);
