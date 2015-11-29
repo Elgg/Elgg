@@ -1475,6 +1475,6 @@ Tähän viestiin ei voi vastata.",
 	"zh" => "Chinese",
 	"zu" => "Zulu",
 
-	"field:required" => 'Required',
+	"field:required" => 'Pakollinen',
 
 );
