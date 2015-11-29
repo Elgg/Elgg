@@ -76,6 +76,8 @@ matrix:
 services: 
  - mysql
 
+before_install: composer config -g github-oauth.github.com ${GITHUB_TOKEN}
+
 install: composer travis:install-with-mysql
 
 script:
@@ -89,3 +91,7 @@ notifications:
     urls:
      - secure: "Ug81+4Fa2UFZetSCV79OWOgYi4uVgNQ6rVrVn2HElddOMDwuHxo9CYKoA3Q+joPKMtNFCN2qkMyoyUfIMM83uJi1LmaUx/c7lR1pXBFVgc4Xyt114NcY80I4OCWWKg0G1FDlSiaXil922JjeC3MekYoqjsIyUgabGihe6j7DWz0="
     on_start: true
+
+env:
+  global:
+     secure: "fdpCjdC0Qp/ZJqtrCHE4I/tHXWF1sORftm6khd6geqK7d4qWzIh6HzNN2BlF+2m4nyuyxo2wzPm/oGoqogVpBgrzpQ7SZl7h2/wzgs2C/k39sFGyDisLesTM5DhBDJWcomyqtcnQmKn340Z9KOxiHAt4FOj2FZVN5+tIO5j3Cks="
