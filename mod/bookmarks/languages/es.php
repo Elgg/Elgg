@@ -23,7 +23,7 @@ return array(
 	'bookmarks:notify:summary' => 'Nuevo marcador llamado %s',
 	'bookmarks:notify:subject' => 'Nuevo marcador: %s',
 	'bookmarks:notify:body' =>
-'%s agrego un nuevo marcador: %s
+'%s agregó un nuevo marcador: %s
 
 Dirección: %s
 
@@ -33,12 +33,12 @@ Ver y comentar en el marcador:
 %s
 ',
 
-	'bookmarks:delete:confirm' => "&ntilde;Seguro que deseas borrar este marcador?",
+	'bookmarks:delete:confirm' => "¿Seguro que deseas borrar este marcador?",
 
 	'bookmarks:numbertodisplay' => 'N&uacute;mero de marcadores a mostrar',
 
 	'bookmarks:shared' => "Marcado",
-	'bookmarks:visit' => "Visitar fuente",
+	'bookmarks:visit' => "Visitar recurso",
 	'bookmarks:recent' => "Marcadores recientes",
 
 	'river:create:object:bookmarks' => '%s ha marcado %s',
@@ -55,13 +55,13 @@ Ver y comentar en el marcador:
 	/**
 	 * Widget and bookmarklet
 	 */
-	'bookmarks:widget:description' => "Mostrar los &uacute;ltimo0s marcadores.",
+	'bookmarks:widget:description' => "Mostrar los &uacute;ltimos marcadores.",
 
 	'bookmarks:bookmarklet:description' =>
-			"El widget de marcadores permite compartir cualquier recurso de la Web con tus amigos, o sinmplemente para ti mismo. Para usarlo, simplemente arrastra el enlace a la barra de marcadores de tu navegador:",
+			"El widget de marcadores permite compartir cualquier recurso de la Web con tus amigos, o simplemente para ti mismo. Para usarlo, simplemente arrastra el enlace a la barra de marcadores de tu navegador:",
 
 	'bookmarks:bookmarklet:descriptionie' =>
-			"Si usas Internet Explorer, necesitas hacer click con el bot&oacute;n derecho del rat&oacute;n al enlace, select 'add to favorites', y entonces a la barra de marcadores.",
+			"Si usas Internet Explorer, necesitas hacer click con el bot&oacute;n derecho del rat&oacute;n al enlace, select 'Añadir a favoritos, y entonces a la barra de marcadores.",
 
 	'bookmarks:bookmarklet:description:conclusion' =>
 			"A continuación, puedes guardar cualquier página que visite haciendo clic en él en cualquier momento.",
@@ -78,7 +78,7 @@ Ver y comentar en el marcador:
 	 */
 
 	'bookmarks:save:failed' => "El marcador no pudo ser guardado. Aseg&uacute;rate de que el t&iacute;tulo y el enlace est&eacute;n correctamente escritos.",
-	'bookmarks:save:invalid' => "La direcci&oacute;n es inv&aacute;lida y no pudo ser guardada.",
-	'bookmarks:delete:failed' => "El marcador no pudo ser borrado. Intenta de nuevo.",
-	'bookmarks:unknown_bookmark' => 'No se puede encontrar el marcador requerido',
+	'bookmarks:save:invalid' => "La direcci&oacute;n no es válida y no pudo ser guardada.",
+	'bookmarks:delete:failed' => "El marcador no pudo ser borrado. Intentalo de nuevo.",
+	'bookmarks:unknown_bookmark' => 'No se puede encontrar el marcador indicado',
 );

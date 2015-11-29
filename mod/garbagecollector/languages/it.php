@@ -1,17 +1,17 @@
 <?php
 return array(
-	'garbagecollector:period' => 'Quanto di frequente Elgg deve eseguire il garbage collector?',
+	'garbagecollector:period' => 'Ogni quanto Elgg deve eseguire la pulizia del database?',
 
 	'garbagecollector:weekly' => 'Ogni settimana',
 	'garbagecollector:monthly' => 'Una volta al mese',
 	'garbagecollector:yearly' => 'Una volta all\'anno',
 
-	'garbagecollector' => "Raccogli spazzatura\n",
+	'garbagecollector' => "SPAZZINO\n",
 	'garbagecollector:done' => "FATTO\n",
-	'garbagecollector:optimize' => "Ottimizzando %s",
+	'garbagecollector:optimize' => "Ottimizzazione in corso di %s",
 
 	'garbagecollector:error' => "ERRORE",
 	'garbagecollector:ok' => "OK",
 
-	'garbagecollector:gc:metastrings' => 'Pulendo metastring non linkate:',
+	'garbagecollector:gc:metastrings' => 'Pulizia in corso delle metastringhe non collegate:',
 );

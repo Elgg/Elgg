@@ -39,6 +39,9 @@ return array(
 	'actionnotfound' => "Nie odnaleziono pliku akcji %s.",
 	'actionloggedout' => "Przepraszamy, nie możesz wykonać tej akcji będąc wylogowany.",
 	'actionunauthorized' => 'Nie masz uprawnień do wykonania tej akcji.',
+	
+	'ajax:error' => 'Wystąpił nieoczekiwany błąd podczas wykonywania zapytania AJAX. Możliwe, że utracono połączenie z serwerem.',
+	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) to źle skonfigurowany plugin i został wyłączony. Proszę sprawdzić możliwe przyczyny na wiki (http://docs.elgg.org/wiki/).",
 	'PluginException:CannotStart' => '%s (guid: %s) nie mógł wystartować i został wyłączony. Przyczyna: %s',
@@ -84,6 +87,9 @@ return array(
 	
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Inne rozszerzenia korzystają z %s jako zależności. Aby go wyłączyć, musisz najpierw wyłączyć następujące rozszerzenia: %s',
 
+	'ElggMenuBuilder:Trees:NoParents' => 'Menu items found without parents to link them to',
+	'ElggMenuBuilder:Trees:OrphanedChild' => 'Menu item [%s] found with a missing parent[%s]',
+	'ElggMenuBuilder:Trees:DuplicateChild' => 'Duplicate registration found for menu item [%s]',
 
 	'RegistrationException:EmptyPassword' => 'Hasło nie może być puste',
 	'RegistrationException:PasswordMismatch' => 'Hasła muszą być jednakowe',
@@ -107,6 +113,10 @@ return array(
 
 	'error:default:title' => 'Ojoj...',
 	'error:default:content' => 'Kurza twarz... coś poszło nie tak',
+	'error:400:title' => 'Błędne żądanie',
+	'error:400:content' => 'Przepraszamy. Żądanie jest niepoprawne lub niekompletne.',
+	'error:403:title' => 'Forbidden',
+	'error:403:content' => 'Przepraszamy. Nie posiadasz uprawnień, aby otrzymać dostęp do żądanej strony.',
 	'error:404:title' => 'Nie znaleziono strony',
 	'error:404:content' => 'Przepraszamy. Nie można znaleźć wskazanej strony.',
 
@@ -148,6 +158,8 @@ return array(
 	'access:read' => "Uprawnienia odczytu",
 	'access:write' => "Uprawnienia zapisu",
 	'access:admin_only' => "Tylko administratorzy",
+	'access:missing_name' => "Missing access level name",
+	'access:comments:change' => "This discussion is currently visible to a limited audience. Be thoughtful about who you share it with.",
 
 /**
  * Dashboard and widgets
@@ -158,6 +170,7 @@ return array(
 
 	'widgets:add' => 'Dodaj gadżety',
 	'widgets:add:description' => "Kliknij na dowolnym przycisku poniżej, aby dodać gadżet do tej strony.",
+	'widgets:panel:close' => "Zamknij panel gadżetów",
 	'widgets:position:fixed' => '(Stała pozycja na stronie)',
 	'widget:unavailable' => 'Już dodałeś ten gadżet.',
 	'widget:numbertodisplay' => 'Ilość elementów do wyświetlenia',
@@ -448,6 +461,7 @@ return array(
 	'admin:configuration:success' => "Twoje ustawienia zostały zapisane.",
 	'admin:configuration:fail' => "Twoje ustawienie nie zostały zapisane.",
 	'admin:configuration:dataroot:relative_path' => 'Nie można ustawić "%s" jako dataroot, ponieważ nie jest to ścieżka bezwzględna.',
+	'admin:configuration:default_limit' => 'Liczba pozycji na stronie musi wynosić co najmniej 1.',
 
 	'admin:unknown_section' => 'Niepoprawna sekcja panelu administracyjnego.',
 
@@ -512,6 +526,8 @@ return array(
 	'admin:widget:banned_users:help' => 'Wyświetla zbanowanych użytkowników',
 	'admin:widget:content_stats' => 'Statystyki treści',
 	'admin:widget:content_stats:help' => 'Śledź treści tworzone przez twoich użytkowników',
+	'admin:widget:cron_status' => 'Status Cron',
+	'admin:widget:cron_status:help' => 'Wyświetla informacje o ostatnim czasie ukończenia dla zadań Cron',
 	'widget:content_stats:type' => 'Rodzaj treści',
 	'widget:content_stats:number' => 'Ilość',
 
@@ -693,11 +709,13 @@ return array(
 
 	'admin:appearance:default_widgets' => 'Domyślne gadżety',
 	'admin:default_widgets:unknown_type' => 'Nieznany typ gadżetu',
-	'admin:default_widgets:instructions' => 'Dodaj, usuń, ustaw i konfiguruj domyślne gadżety dla wybranej strony gadżetów.',
+	'admin:default_widgets:instructions' => 'Dodaj, usuń, ustaw i konfiguruj domyślne gadżety dla wybranej strony gadżetów.
+	Zmiany te dotyczą tylko nowych użytkowników na stronie.',
 
 	'admin:robots.txt:instructions' => "Edytuj poniżej plik robots.txt dla tej strony",
 	'admin:robots.txt:plugins' => "Rozszerzenia dodają poniższą treść do pliku robots.txt",
 	'admin:robots.txt:subdir' => "Plik robots.txt nie zadziała, ponieważ Elgg jest zainstalowany w podkatalogu",
+	'admin:robots.txt:physical' => "The robots.txt tool will not work because a physical robots.txt is present",
 
 	'admin:maintenance_mode:default_message' => 'Ta strona jest w trakcie prac konserwacyjnych',
 	'admin:maintenance_mode:instructions' => 'Tryb konserwacyjny powinien być używany przy aktualizacjach i innych dużych zmianach na stronie.⏎
@@ -745,6 +763,7 @@ return array(
 	'river:friends' => 'Aktywność znajomych',
 	'river:select' => 'Pokaż %s',
 	'river:comments:more' => '+%u więcej',
+	'river:comments:all' => 'Wyświetl wszystkie %u komentarze',
 	'river:generic_comment' => 'skomentował %s %s',
 
 	'friends:widget:description' => "Wyświetla niektórych twoich znajomych.",
@@ -902,7 +921,6 @@ return array(
 	'title' => "Tytuł",
 	'description' => "Opis",
 	'tags' => "Tagi",
-	'spotlight' => "Wyróżnienie",
 	'all' => "Wszyscy",
 	'mine' => "Moje",
 
@@ -913,7 +931,6 @@ return array(
 	'relationships' => "Relacje",
 	'metadata' => "Metadane",
 	'tagcloud' => "Chmura tagów",
-	'tagcloud:allsitetags' => "Wszystkie tagi",
 
 	'on' => 'Włączony',
 	'off' => 'Wyłączony',
@@ -1051,6 +1068,7 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 	'installation:view' => "Wprowadź widok, który będzie domyślnie używany przez twoją stronę lub pozostaw wartość domyślną (w razie wątpliwości, pozostaw wartość domyślną):",
 
 	'installation:siteemail' => "Adres e-mail strony (używany do wysyłania systemowych e-mail)",
+	'installation:default_limit' => "Domyślna liczba elementów na stronie",
 
 	'admin:site:access:warning' => "Modyfikacja ustawienia poziomu dostępu, wpływa wyłącznie na treści tworzone w przyszłości.",
 	'installation:allow_user_default_access:description' => "Jeśli zaznaczone, indywidualni użytkownicy będą mogli ustawić własny, domyślny poziom dostępu nadpisujący systemowy domyślny poziom dostępu.",
@@ -1063,12 +1081,13 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 	'installation:minify_js:label' => "Kompresuj JavaScript (zalecane)",
 	'installation:minify_css:label' => "Kompresuj CSS (zalecane)",
 
-	'installation:htaccess:needs_upgrade' => "Musisz zaktualizować swój plik .htaccess aby ścieżka byłą przekazywana jako parametr GET o nazwie __elgg_uri (możesz użyć htaccess_dist jako prykładu).",
+	'installation:htaccess:needs_upgrade' => "Musisz zaktualizować plik .htaccess aby ścieżka została przekazana parametrem GET __elgg_uri (możesz użyć pliku install/config/htaccess.dist jako wskazówki).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg nie mógł się połączyć z serwerem w celu przetestowania reguł przepisywania. Sprawdź czy curl działa poprawnie oraz czy nie ma ograniczeń na twój adres IP, które wzbraniały by połączeń do localhost.",
 	
 	'installation:systemcache:description' => "Systemowa pamięć podręczna zmniejsza czas ładowania rdzenia Elgg, poprzez zapisywanie danych do plików.",
 	'installation:systemcache:label' => "Użyj systemowej pamięci podręcznej (zalecane)",
 
+	'admin:legend:system' => 'System',
 	'admin:legend:caching' => 'Pamieć podręczna',
 	'admin:legend:content_access' => 'Dostęp do treści',
 	'admin:legend:site_access' => 'Poziom dostępu na stronie',
@@ -1083,18 +1102,20 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 	'upgrade:unlock:success' => "Blokada aktualizacji zdjęta pomyślnie.",
 	'upgrade:unable_to_upgrade' => 'Aktualizacja nie powiodła się.',
 	'upgrade:unable_to_upgrade_info' =>
-		'Instalacja nie może być przeprowadzona ze względu na wykrycie starych widoków w głównym katalogu widoków. Te widoki są przestarzałe i muszą zostać usunięte aby Elgg pracował poprawnie. Jeśli nie wykonywałeś zmian w jądrze Elgg, możesz po prostu usunąć katalog views i zastąpić go wersją z najnowszego pakietu dostępnego na <a href="http://elgg.org">elgg.org</a>.<br /><br /> Jeśli potrzebujesz bardziej szczegółowych instrukcji, zajrzyj do <a href="http://docs.elgg.org/wiki/Upgrading_Elgg">Aktualizacja Elgg</a>. Jeśli potrzebujesz pomocy, napisz na stronie <a href="http://community.elgg.org/pg/groups/discussion/">Społecznościowego Forum Wsparcia</a>.',
+		'Instalacja nie może być przeprowadzona ze względu na wykrycie starych widoków
+		w głównym katalogu widoków. Te widoki są przestarzałe i muszą zostać
+		usunięte aby Elgg pracował poprawnie. Jeśli nie wykonywałeś zmian w jądrze Elgg, możesz
+		po prostu usunąć katalog views i zastąpić go wersją z najnowszego
+		pakietu dostępnego na <a href="http://elgg.org">elgg.org</a>.<br /><br />
+		
+		Jeśli potrzebujesz bardziej szczegółowych instrukcji, zajrzyj do <a href="		http://learn.elgg.org/en/stable/admin/upgrading.html">
+		Aktualizacja Elgg</a>. Jeśli potrzebujesz pomocy, napisz na stronie
+		<a href="http://community.elgg.org/pg/groups/discussion/">Społecznościowego Forum Wsparcia</a>.',
 
 	'update:twitter_api:deactivated' => 'Twitter API (dawniej: Usługi Twittera) został wyłączony w trakcie aktualizacji. W razie potrzeby, proszę aktywować ręcznie.',
 	'update:oauth_api:deactivated' => 'OAuth API (dawniej: OAuth Lib) został wyłączony w trakcie aktualizacji. W razie potrzeby, proszę aktywować ręcznie.',
 	'upgrade:site_secret_warning:moderate' => "Zalecamy ponowne utworzenie sekretnego klucza strony dla poprawy bezpieczeństwa strony. Zobacz Konfiguracja &gt; Ustawienia &gt; Zaawansowane",
 	'upgrade:site_secret_warning:weak' => "Zdecydowanie zalecamy ponowne utworzenie sekretnego klucza strony dla poprawy bezpieczeństwa strony. Zobacz Konfiguracja &gt; Ustawienia &gt; Zaawansowane",
-
-	'ElggUpgrade:error:url_invalid' => 'Niepoprawna wartość jako URL.',
-	'ElggUpgrade:error:url_not_unique' => 'URLe aktualizacji muszą być unikatowe.',
-	'ElggUpgrade:error:title_required' => 'Obiekty ElggUpgrade muszą posiadać tytuł.',
-	'ElggUpgrade:error:description_required' => 'Obiekty ElggUpgrade muszą posiadać opis.',
-	'ElggUpgrade:error:upgrade_url_required' => 'Obiekty ElggUpgrade muszą posiadać adres URL aktualizacji.',
 
 	'deprecated:function' => '%s() została zdeprecjonowana na rzecz %s()',
 
@@ -1116,6 +1137,7 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 	// Strings specific for the comments upgrade
 	'admin:upgrades:comments' => 'Aktualizacja komentarzy',
 	'upgrade:comment:create_failed' => 'Nie udało się skonwertować komentarza o id %s do entity.',
+	'admin:upgrades:commentaccess' => 'Comments Access Upgrade',
 
 	// Strings specific for the datadir upgrade
 	'admin:upgrades:datadirs' => 'Aktualizacja katalogu danych',
@@ -1153,7 +1175,7 @@ Aby zobaczyć jego profil, kliknij tutaj:
 
 %s
 
-Nie możesz odpowiedzieć na ten e-mail.",
+Prosimy nie odpowiadać na ten e-mail.",
 
 	'email:changepassword:subject' => "Hasło zmienione!",
 	'email:changepassword:body' => "Witaj %s,
@@ -1161,8 +1183,8 @@ Nie możesz odpowiedzieć na ten e-mail.",
 Twoje hasło zostało zmienione.",
 
 	'email:resetpassword:subject' => "Reset hasła!",
-	'email:resetpassword:body' => "Cześć %s,
-			
+	'email:resetpassword:body' => "Witaj %s,
+
 Twoje nowe hasło to: %s",
 
 	'email:changereq:subject' => "Prośba o zmianę hasła.",
@@ -1202,7 +1224,8 @@ Jeśli to byłeś Ty, kliknij odnośnik poniżej. W przeciwnym wypadku zignoruj 
 	'generic_comment:updated' => "Twój komentarz został pomyślnie zaktualizowany.",
 	'generic_comment:deleted' => "Twój komentarz został skasowany.",
 	'generic_comment:blank' => "Przepraszamy: musisz coś wpisać przed zapisaniem.",
-	'generic_comment:notfound' => "Przepraszamy: nie można znaleźć określonej pozycji.",
+	'generic_comment:notfound' => "Przepraszamy, nie mogliśmy znaleźć wskazanego komentarza.",
+	'generic_comment:notfound_fallback' => "Przepraszamy, nie mogliśmy znaleźć wskazanego komentarza, ale przekierowaliśmy cię na stronę, gdzie był oryginalnie dodany.",
 	'generic_comment:notdeleted' => "Sorry: nie można skasować tego komentarza.",
 	'generic_comment:failure' => "Wystąpił nieoczekiwany błąd podczas dodawania komentarza.",
 	'generic_comment:none' => 'Brak komentarzy',
@@ -1213,17 +1236,17 @@ Jeśli to byłeś Ty, kliknij odnośnik poniżej. W przeciwnym wypadku zignoruj 
 	'generic_comment:email:subject' => 'Masz nowy komentarz!',
 	'generic_comment:email:body' => "Masz nowy komentarz w \"%s\" od %s. Treść:
 
-			
+
 %s
 
 	
 Aby odpowiedzieć lub wyświetlić komentarz, kliknij tutaj:
 
-	%s
+%s
 
 Zobacz %s's profil, kliknij tutaj:
 
-	%s
+%s
 
 Nie możesz odpowiedzieć na ten e-mail.",
 
@@ -1237,6 +1260,8 @@ Nie możesz odpowiedzieć na ten e-mail.",
 
 	'entity:delete:success' => 'Element %s został skasowany',
 	'entity:delete:fail' => 'Element %s nie został skasowany',
+	
+	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',
 
 /**
  * Action gatekeeper
@@ -1245,7 +1270,7 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	'actiongatekeeper:missingfields' => 'W formularzu brakuje pól _token lub _ts',
 	'actiongatekeeper:tokeninvalid' => "Formularz wygasł, proszę spróbować ponownie.",
 	'actiongatekeeper:timeerror' => 'Formularz wygasł, prosimy odświeżyć i spróbować ponownie.',
-	'actiongatekeeper:pluginprevents' => 'Rozszerzenie zablokowało wysłanie formularza.',
+	'actiongatekeeper:pluginprevents' => 'Przepraszamy. Wystąpił nieznany błąd z twoim formularzem.',
 	'actiongatekeeper:uploadexceeded' => 'Rozmiar wgranego pliku (lub plików) przekroczył limit ustawiony przez administratora',
 	'actiongatekeeper:crosssitelogin' => "Przykro nam, ale logowanie z innej domeny jest niedozwolone. Spróbuj ponownie.",
 
@@ -1260,7 +1285,6 @@ Nie możesz odpowiedzieć na ten e-mail.",
  */
 
 	'tag_names:tags' => 'Tagi',
-	'tags:site_cloud' => 'Chmura tagów strony',
 
 /**
  * Javascript
@@ -1276,7 +1300,7 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	'elgg:powered' => "Dostarczone przez Elgg",
 
 /**
- * Languages according to ISO 639-1
+ * Languages according to ISO 639-1 (with a couple of exceptions)
  */
 
 	"aa" => "Afar",
@@ -1296,6 +1320,7 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	"bo" => "Tibetan",
 	"br" => "Breton",
 	"ca" => "Catalan",
+	"cmn" => "Mandarin Chinese", // ISO 639-3
 	"co" => "Corsican",
 	"cs" => "Czech",
 	"cy" => "Welsh",
@@ -1308,6 +1333,7 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	"es" => "Hiszpański",
 	"et" => "Estoński",
 	"eu" => "Basque",
+	"eu_es" => "Basque (Spain)",
 	"fa" => "Perski",
 	"fi" => "Finnish",
 	"fj" => "Fiji",
@@ -1372,10 +1398,12 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	"pl" => "Polski",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
+	"pt_br" => "Portuguese (Brazil)",
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
 	"ro" => "Romanian",
+	"ro_ro" => "Romanian (Romania)",
 	"ru" => "Rosyjski",
 	"rw" => "Kinyarwanda",
 	"sa" => "Sanskrit",
@@ -1390,6 +1418,7 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	"so" => "Somali",
 	"sq" => "Albanian",
 	"sr" => "Serbian",
+	"sr_latin" => "Serbian (Latin)",
 	"ss" => "Siswati",
 	"st" => "Sesotho",
 	"su" => "Sundanese",
@@ -1421,5 +1450,6 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	"yo" => "Yoruba",
 	"za" => "Zuang",
 	"zh" => "Chinese",
+	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
 );

@@ -9,13 +9,13 @@ return array(
 	'file:friends' => "File degli amici",
 	'file:all' => "Tutti i file",
 	'file:edit' => "Modifica file",
-	'file:more' => "Vedi tutti i file",
-	'file:list' => "vedi lista",
+	'file:more' => "Più file",
+	'file:list' => "vista a elenco",
 	'file:group' => "File del gruppo",
-	'file:gallery' => "vedi la galleria",
-	'file:gallery_list' => "Galleria o lista",
+	'file:gallery' => "vista a icone",
+	'file:gallery_list' => "Vista a icone o elenco",
 	'file:num_files' => "Numero di file da visualizzare",
-	'file:user:gallery'=>'Guarda la galleria di %s',
+	'file:user:gallery'=>'Visualizza la galleria di %s',
 	'file:upload' => "Carica un file",
 	'file:replace' => 'Sostituisci il contenuto del file (lascia vuoto per non cambiare il file)',
 	'file:list:title' => "di %s %s %s",
@@ -25,39 +25,39 @@ return array(
 
 	'file:file' => "File",
 
-	'file:list:list' => 'Cambia vista a lista',
-	'file:list:gallery' => 'Cambia a vista gallery',
+	'file:list:list' => 'Passa alla vista a elenco',
+	'file:list:gallery' => 'Passa alla vista a icone',
 
 	'file:types' => "Tipi di file caricati",
 
 	'file:type:' => 'File',
 	'file:type:all' => "Tutti i file",
-	'file:type:video' => "Video",
+	'file:type:video' => "Filmati",
 	'file:type:document' => "Documenti",
-	'file:type:audio' => "Audio",
-	'file:type:image' => "Foto",
+	'file:type:audio' => "Musica",
+	'file:type:image' => "Immagini",
 	'file:type:general' => "Generale",
 
-	'file:user:type:video' => "Video di %s",
+	'file:user:type:video' => "Filmati di %s",
 	'file:user:type:document' => "Documenti di %s",
 	'file:user:type:audio' => "Audio di %s",
 	'file:user:type:image' => "Immagini di %s",
 	'file:user:type:general' => "Tutti i file di%s",
 
-	'file:friends:type:video' => "Video dei tuoi amici",
+	'file:friends:type:video' => "Filmati dei tuoi amici",
 	'file:friends:type:document' => "Documenti dei tuoi amici",
-	'file:friends:type:audio' => "Audio dei tuoi amici",
+	'file:friends:type:audio' => "Musica dei tuoi amici",
 	'file:friends:type:image' => "Immagini dei tuoi amici",
 	'file:friends:type:general' => "Tutti i file dei tuoi amici",
 
-	'file:widget' => "File gadget",
+	'file:widget' => "File di widget",
 	'file:widget:description' => "Visualizza i tuoi file più recenti",
 
 	'groups:enablefiles' => 'Abilita file del gruppo',
 
-	'file:delete:confirm' => "Sei sicuro di voler cancellare questo file?",
+	'file:delete:confirm' => "Cancellare questo file?",
 
-	'file:upload_limit' => 'Dimensione massima consentita del file %s',
+	'file:upload_limit' => 'Dimensione massima del file consentita %s',
 
 	'file:tagcloud' => "Tag cloud",
 
@@ -68,7 +68,7 @@ return array(
 
 	'item:object:file' => 'File',
 
-	'file:notify:summary' => 'Nuovo file %s',
+	'file:notify:summary' => 'Nuovo file chiamato %s',
 	'file:notify:subject' => 'Nuovo file: %s',
 	'file:notify:body' =>
 '%s ha caricato un nuovo file: %s
@@ -82,17 +82,17 @@ Visualizza e commenta il nuovo file:
 	 * Status messages
 	 */
 
-	'file:saved' => "Il tuo file è stato salvato con successo.",
-	'file:deleted' => "Il tuo file è stato cancellato con successo.",
+	'file:saved' => "Il file è stato salvato.",
+	'file:deleted' => "Il file è stato eliminato.",
 
 	/**
 	 * Error messages
 	 */
 
 	'file:none' => "Nessun file caricato.",
-	'file:uploadfailed' => "Spiacenti; non siamo riusciti a salvare il tuo file.",
-	'file:downloadfailed' => "Spiacenti; questo file non è disponibile al momento.",
-	'file:deletefailed' => "Il tuo file non può essere rimosso in questo momento.",
-	'file:noaccess' => "Non hai il permesso di modificare questo file",
-	'file:nofile' => "Devi selezionare un file",
+	'file:uploadfailed' => "Impossibile salvare il file.",
+	'file:downloadfailed' => "File non disponibile al momento.",
+	'file:deletefailed' => "Impossibile eliminare il file ora.",
+	'file:noaccess' => "Permessi insufficienti per modificare questo file",
+	'file:nofile' => "Occorre selezionare un file",
 );

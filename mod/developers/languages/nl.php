@@ -23,10 +23,15 @@ return array(
 	'developers:help:screen_log' => "Dit toont het resultaat van elgg_log() en elgg_dump() op de webpagina alsmede het aantal database queries.",
 	'developers:label:show_strings' => "Toon vertaalsleutels",
 	'developers:help:show_strings' => "Dit toont de vertaalsleutels die gebruikt worden door elgg_echo().",
+	'developers:label:show_modules' => "Toon de geladen AMD modules in de console",
+	'developers:help:show_modules' => "Streamt geladen modules en waarden naar jouw JavaScript console.",
 	'developers:label:wrap_views' => "Omcirkel views",
 	'developers:help:wrap_views' => "Dit omcirkelt bijna alle views met HTML-commentaar. Handig om erachter te komen uit welke view een stuk HTML komt.",
 	'developers:label:log_events' => "Log-events en plugin-hooks",
 	'developers:help:log_events' => "Schrijf events- en plugin-hook naar de log. Waarschuwing: dit zijn er veel per pagina.",
+	'developers:label:show_gear' => "Gebruik %s buiten de admin sectie",
+	'developers:help:show_gear' => "Een icoon onderaan rechts van het venster dat administrators toegang geeft tot ontwikkelaars instellingen en links.",
+	'developers:label:submit' => "Opslaan en cache wissen",
 
 	'developers:debug:off' => 'Uit',
 	'developers:debug:error' => 'Fout',
@@ -77,5 +82,7 @@ return array(
 	'developers:unit_tests:run' => 'Uitvoeren',
 
 	// status messages
-	'developers:settings:success' => 'Instellingen opgeslagen',
+	'developers:settings:success' => 'Instellingen opgeslagen en cache gewist',
+
+	'developers:amd' => 'AMD',
 );

@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'Du kannst keine Gruppe erstellen. Dies können nur Administratoren.',
 	'groups:cantedit' => 'Du kannst die Gruppen-Einstellungen nicht bearbeiten',
 	'groups:saved' => 'Gruppe angelegt',
+	'groups:save_error' => 'Beim Anlegen der Gruppe ist ein Fehler aufgetreten.',
 	'groups:featured' => 'Besondere Gruppen',
 	'groups:makeunfeatured' => 'Aus "Besondere Gruppen" entfernen',
 	'groups:makefeatured' => 'Zu "Besondere Gruppen" hinzufügen',

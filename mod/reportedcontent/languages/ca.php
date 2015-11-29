@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => 'Ubicació de l&acute;element',
 	'reportedcontent:success' => 'La seva denúncia ha estat enviada als administradors',
 	'reportedcontent:failing' => 'No s&acute;ha pogut enviar la seva denúncia',
+	'reportedcontent:refresh' => 'Refresh this listing',
 	'reportedcontent:report' => 'Denunciar aix&ograve;',
 	'reportedcontent:instructions' => 'La denúncia serà enviada als administradors del lloc perquè puguin moderar.',
 	'reportedcontent:numbertodisplay' => 'Quantitat de denúncies a mostrar',

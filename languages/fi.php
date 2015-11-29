@@ -41,6 +41,7 @@ return array(
 	'actionunauthorized' => 'Sinulla ei ole oikeuksia tämän toiminnon suorittamiseen',
 	
 	'ajax:error' => 'AJAX-kutsun yhteydessä tapahtui odottamaton virhe. Yhteys palvelimeen saattaa olla katkennut.',
+	'ajax:not_is_xhr' => 'AJAX-näkymiin ei pääse käsiksi suoraan',
 
 	'PluginException:MisconfiguredPlugin' => "Liitännäisessä %s (guid %s) on havaittu virhe, joten se on poistettu käytöstä. Voit yrittää etsiä lisätietoja Elggin dokumentaatiosta (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) ei käynnisty. Syy: %s',
@@ -112,6 +113,10 @@ return array(
 
 	'error:default:title' => 'Hups...',
 	'error:default:content' => 'Hups... jotain meni pieleen.',
+	'error:400:title' => 'Virheellinen pyyntö',
+	'error:400:content' => 'Pyyntö on virheellinen tai puutteellinen.',
+	'error:403:title' => 'Pääsy kielletty',
+	'error:403:content' => 'Sinulla ei ole oikeuksia tarkastella pyydettyä sivua.',
 	'error:404:title' => 'Sivua ei löydy',
 	'error:404:content' => 'Hakemaasi sivua ei löydy.',
 
@@ -712,6 +717,7 @@ Nämä muutokset vaikuttavat vain sivuston uusiin jäseniin.',
 	'admin:robots.txt:instructions' => "Muokkaa sivuston robots.txt-tiedostoa",
 	'admin:robots.txt:plugins' => "Liitännäisten robots.txt-tiedostoon lisäämät säännöt:",
 	'admin:robots.txt:subdir' => "Tämä robots.txt-työkalu ei toimi, koska Elgg on asennettu alihakemistoon",
+	'admin:robots.txt:physical' => "robots.txt -ominaisuutta ei voida käyttää, koska asennuksen juuressa on fyysinen robots.txt-tiedosto.",
 
 	'admin:maintenance_mode:default_message' => 'Sivusto on väliaikaisesti poissa käytöstä huoltokatkoksen vuoksi',
 	'admin:maintenance_mode:instructions' => 'Huoltotilaa tulisi käyttää päivitysten ja muiden laajojen muutosten aikana.
@@ -1255,6 +1261,8 @@ Tähän viestiin ei voi vastata.",
 
 	'entity:delete:success' => 'Kohde %s on poistettu',
 	'entity:delete:fail' => 'Kohteen %s poistaminen epäonnistui',
+	
+	'entity:can_delete:invaliduser' => 'Käyttäjälle GUID: [%s] ei voida tehdä canDelete-tarkistusta, koska käyttäjää ei ole olemassa.',
 
 /**
  * Action gatekeeper
@@ -1326,6 +1334,7 @@ Tähän viestiin ei voi vastata.",
 	"es" => "Spanish",
 	"et" => "Estonian",
 	"eu" => "Basque",
+	"eu_es" => "Basque (Spain)",
 	"fa" => "Persian",
 	"fi" => "Finnish",
 	"fj" => "Fiji",
@@ -1390,11 +1399,12 @@ Tähän viestiin ei voi vastata.",
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
-	"pt_br" => 'Brazilian Portuguese',
+	"pt_br" => "Portuguese (Brazil)",
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
 	"ro" => "Romanian",
+	"ro_ro" => "Romanian (Romania)",
 	"ru" => "Russian",
 	"rw" => "Kinyarwanda",
 	"sa" => "Sanskrit",
@@ -1409,6 +1419,7 @@ Tähän viestiin ei voi vastata.",
 	"so" => "Somali",
 	"sq" => "Albanian",
 	"sr" => "Serbian",
+	"sr_latin" => "Serbian (Latin)",
 	"ss" => "Siswati",
 	"st" => "Sesotho",
 	"su" => "Sundanese",
@@ -1440,5 +1451,6 @@ Tähän viestiin ei voi vastata.",
 	"yo" => "Yoruba",
 	"za" => "Zuang",
 	"zh" => "Chinese",
+	"zh_hans" => "Chinese Simplified",
 	"zu" => "Zulu",
 );

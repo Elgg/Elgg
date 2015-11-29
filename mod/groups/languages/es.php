@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'No se puede crear un grupo. Sólo los administradores pueden.',
 	'groups:cantedit' => 'No puedes editar este grupo',
 	'groups:saved' => 'Grupo guardado',
+	'groups:save_error' => 'El grupo no se ha podido guardar',
 	'groups:featured' => 'Grupos destacados',
 	'groups:makeunfeatured' => 'No destacar',
 	'groups:makefeatured' => 'Destacar',

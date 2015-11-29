@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'Вы не можете создать группу. Только админы могут.',
 	'groups:cantedit' => 'Вы не можете редактировать эту группу',
 	'groups:saved' => 'Сохранено',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Избранные группы',
 	'groups:makeunfeatured' => 'Убрать из избранного',
 	'groups:makefeatured' => 'Добавить в избранные',

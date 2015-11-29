@@ -6,17 +6,17 @@ return array(
 	 */
 	'expages' => "Pagine del sito",
 	'admin:appearance:expages' => "Pagine del sito",
-	'expages:edit:viewpage' => "Visualizza la pagina dal sito",
+	'expages:edit:viewpage' => "Visualizza pagina nel sito",
 	'expages:about' => "Informazioni",
 	'expages:terms' => "Termini",
 	'expages:privacy' => "Privacy",
-	'expages:contact' => "Contatto",
+	'expages:contact' => "Contatti",
 
 	'expages:notset' => "Questa pagina non è stata ancora impostata.",
 
 	/**
 	 * Status messages
 	 */
-	'expages:posted' => "La tua pagina è stata aggiornata con successo.",
-	'expages:error' => "Non è possibile salvare questa pagina.",
+	'expages:posted' => "La tua pagina è stata aggiornata.",
+	'expages:error' => "Impossibile salvare questa pagina.",
 );

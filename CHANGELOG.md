@@ -1,3 +1,25 @@
+<a name="1.12.5"></a>
+### 1.12.5  (2015-11-29)
+
+#### Contributors
+
+* Steve Clay (5)
+* Juho Jaakkola (4)
+* Ismayil Khayredinov (3)
+
+#### Performance
+
+* **river:** no longer needlessly render river responses ([97df230f](https://github.com/Elgg/Elgg/commit/97df230f4c496d773e50060bf84fef5ae7052b24), closes [#9046](https://github.com/Elgg/Elgg/issues/9046))
+
+
+#### Bug Fixes
+
+* **files:** make sure method is callable on a concrete object instance ([740d3108](https://github.com/Elgg/Elgg/commit/740d3108a30733d02a98e9aed7516f92033cd8a9), closes [#9010](https://github.com/Elgg/Elgg/issues/9010))
+* **i18n:** avoids using mbstring.internal_encoding in PHP >= 5.6 ([c0ff79de](https://github.com/Elgg/Elgg/commit/c0ff79de100cc8e48fd69d01883c946669b5b275), closes [#9031](https://github.com/Elgg/Elgg/issues/9031))
+* **memcache:** don't store a copy of $CONFIG in file objects ([beb90891](https://github.com/Elgg/Elgg/commit/beb9089129a0a06b36200f3f8d214c7ed8f94f42), closes [#9081](https://github.com/Elgg/Elgg/issues/9081))
+* **pages:** removes deprecated notices regarding input/write_access ([fdcab74b](https://github.com/Elgg/Elgg/commit/fdcab74b1e9069736f88f7e9aa36aeb15067b8fe), closes [#8327](https://github.com/Elgg/Elgg/issues/8327))
+
+
 <a name="1.12.4"></a>
 ### 1.12.4  (2015-09-20)
 
