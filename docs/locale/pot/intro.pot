@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-10-04 18:55-0400\n"
+"POT-Creation-Date: 2015-11-29 21:10+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -422,11 +422,11 @@ msgid "The Elgg installer will try to create two files for you:"
 msgstr ""
 
 #: ../../intro/install.rst:151
-msgid "settings.php, which contains local environment configuration for your installation"
+msgid "``elgg-config/settings.php``, which contains local environment configuration for your installation"
 msgstr ""
 
 #: ../../intro/install.rst:152
-msgid ".htaccess, which allows Elgg to generate dynamic URLs"
+msgid "``.htaccess``, which allows Elgg to generate dynamic URLs"
 msgstr ""
 
 #: ../../intro/install.rst:154
@@ -434,7 +434,7 @@ msgid "If these files can't be automatically generated, for example because the 
 msgstr ""
 
 #: ../../intro/install.rst:163
-msgid "Copy engine/settings.example.php to settings.php, open it up in a text editor and fill in your database details"
+msgid "In ``elgg-config/``, copy ``settings.example.php`` to ``settings.php``, open it up in a text editor and fill in your database details"
 msgstr ""
 
 #: ../../intro/install.rst:165

@@ -39,7 +39,7 @@ return array(
 	'actionnotfound' => "Le fichier d'action pour %s n'a pas été trouvé.",
 	'actionloggedout' => "Désolé, vous ne pouvez pas effectuer cette action sans être connecté(e).",
 	'actionunauthorized' => 'Vous n êtes pas autorisé(e) à effectuer cette action.',
-	
+
 	'ajax:error' => 'Une erreur est survenue lors d\'un appel Ajax. Peut-être que la connection avec le serveur est perdue.',
 	'ajax:not_is_xhr' => 'Vous ne pouvez pas accéder aux vues Ajax directement',
 
@@ -60,7 +60,6 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => '%s invalide dans dépendance \'%s\' dans le plugin %s. Les plugins ne peuvent pas être en conflit avec, ou avoir besoin de quelque chose, qu\'ils fournissent!',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Impossible d\'inclure %s pour le plugin %s (guid : %s) ici %s. Vérifiez les autorisations !',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Impossible d\'ouvrir la vue dir pour le plugin %s (guid : %s) ici %s. Vérifiez les autorisations !',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Impossible d\'enregistrer les langues pour le plugin %s (guid : %s) sur %s. Vérifiez les autorisations !',
 	'ElggPlugin:Exception:NoID' => 'Aucun ID pour le plugin guid %s !',
 	'PluginException:NoPluginName' => "Le nom du plugin n'a pas pu être trouvé",
 	'PluginException:ParserError' => 'Erreur de syntaxe du fichier manifest.xml avec la version %s de l\'API du plugin %s.',
@@ -84,7 +83,7 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => 'Avant %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s n\'est pas installé',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Manquant',
-	
+
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Il existe d\'autres plugins répertoriant %s en tant que dépendance. Vous devez désactiver les plugins suivants avant de désactiver celui-ci: %s',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Une entrée de menu a été trouvé sans lien avec un parent',
@@ -99,6 +98,8 @@ return array(
 	'LoginException:AccountLocked' => 'Votre compte a été verrouillé suite à un trop grand nombre d\'échecs de connexion.',
 	'LoginException:ChangePasswordFailure' => 'Echec vérification mot de passe courant.',
 	'LoginException:Unknown' => 'Nous ne pouvons pas vous connecter à cause d\'une erreur inconnue.',
+
+	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 
 	'deprecatedfunction' => 'Attention : Ce code source utilise une fonction périmée \'%s\'. Il n\'est pas compatible avec cette version de Elgg.',
 
@@ -735,7 +736,7 @@ return array(
 /**
  * User settings
  */
-		
+
 	'usersettings:description' => "Le panneau de configuration vous permet de contrôler tous vos paramètres et vos plugins. Choisissez une option ci-dessous pour continuer.",
 
 	'usersettings:statistics' => "Vos statistiques",
@@ -762,7 +763,7 @@ return array(
 /**
  * Activity river
  */
-		
+
 	'river:all' => 'Toute l\'activité du site',
 	'river:mine' => 'Mon activité',
 	'river:owner' => 'Activité de %s',
@@ -789,7 +790,7 @@ return array(
 	'icon:size:medium' => "Moyen",
 	'icon:size:large' => "Large",
 	'icon:size:master' => "Très large",
-		
+
 /**
  * Generic action words
  */
@@ -874,11 +875,11 @@ return array(
 
 	'active' => 'Activé',
 	'total' => 'Total',
-	
+
 	'ok' => 'OK',
 	'any' => 'N\'importe',
 	'error' => 'Erreur',
-	
+
 	'other' => 'Autre',
 	'options' => 'Options',
 	'advanced' => 'Avancées',
@@ -891,7 +892,7 @@ return array(
 	'content:latest:blurb' => 'Vous pouvez également cliquer ici pour voir les dernières modifications effectuées sur le site.',
 
 	'link:text' => 'voir le lien',
-	
+
 /**
  * Generic questions
  */
@@ -919,7 +920,7 @@ return array(
 	'sort:popular' => 'Populaires',
 	'sort:alpha' => 'Alphabétique',
 	'sort:priority' => 'Priorité',
-		
+
 /**
  * Generic data words
  */
@@ -944,7 +945,7 @@ return array(
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'Modifier',
 	'delete:this' => 'Supprimer',
 	'comment:this' => 'Commenter',
@@ -987,7 +988,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "L'import des données a été réalisée avec succès",
 	'importfail' => "L'import OpenDD des données a échouée.",
 
@@ -1003,7 +1004,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'friendlytime:days' => "Il y a %s jours",
 	'friendlytime:days:singular' => "hier",
 	'friendlytime:date_format' => 'j F Y @ g:ia',
-	
+
 	'friendlytime:future:minutes' => "dans %s minutes",
 	'friendlytime:future:minutes:singular' => "dans une minute",
 	'friendlytime:future:hours' => "dans %s heures",
@@ -1044,7 +1045,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'date:weekday:4' => 'jeudi',
 	'date:weekday:5' => 'vendredi',
 	'date:weekday:6' => 'samedi',
-	
+
 	'date:weekday:short:0' => 'Dim',
 	'date:weekday:short:1' => 'Lun',
 	'date:weekday:short:2' => 'Mar',
@@ -1052,7 +1053,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 	'date:weekday:short:4' => 'Jeu',
 	'date:weekday:short:5' => 'Ven',
 	'date:weekday:short:6' => 'Sam',
-	
+
 	'interval:minute' => 'chaque minute',
 	'interval:fiveminute' => 'chaque cinq minutes',
 	'interval:fifteenmin' => 'toutes les 15 minutes',
@@ -1108,7 +1109,7 @@ Une fois que vous vous êtes connecté(e), nous vous conseillons fortement de ch
 
 	'installation:htaccess:needs_upgrade' => "Vous devez mettre à jour votre fichier .htaccess afin que le chemin soit ajouté au paramètre GET __elgg_uri (vous pouvez vous aider de htaccess_dist)",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg ne peut pas se connecter à lui-même pour tester les règles de réécriture. Veuillez vérifier si l'extension curl fonctionne, et qu'il n'y a pas de restriction au niveau des IP interdisant de se connecter depuis localhost.",
-	
+
 	'installation:systemcache:description' => "Le cache système diminue le temps de chargement du moteur Elgg en mettant en cache les données dans des fichiers.",
 	'installation:systemcache:label' => "Utiliser le cache système (recommandé)",
 
@@ -1174,12 +1175,12 @@ Si vous avez besoin d\'instructions détaillées, veuillez visiter la <a href="h
 /**
  * Emails
  */
-		
+
 	'email:from' => 'De',
 	'email:to' => 'Pour',
 	'email:subject' => 'Sujet',
 	'email:body' => 'Corps de l\'article',
-	
+
 	'email:settings' => "Paramètres e-mail",
 	'email:address:label' => "Votre adresse e-mail",
 
@@ -1271,7 +1272,7 @@ Ne répondez pas à cet e-mail.",
 /**
  * Entities
  */
-	
+
 	'byline' => 'Par %s',
 	'byline:ingroup' => 'dans le groupe %s',
 	'entity:default:strapline' => 'Créé le %s par %s',
@@ -1279,8 +1280,8 @@ Ne répondez pas à cet e-mail.",
 
 	'entity:delete:success' => 'L\'entité %s a été effacée',
 	'entity:delete:fail' => 'L\'entité %s n\'a pas pu être effacée',
-	
-	'entity:can_delete:invaliduser' => 'Impossible de regarder si l\'utilisateur [%s] peut être supprimé car il n\'existe pas.',
+
+	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
  * Action gatekeeper
@@ -1467,4 +1468,7 @@ Ne répondez pas à cet e-mail.",
 	"za" => "Zhuang",
 	"zh" => "Chinois",
 	"zu" => "Zoulou",
+
+	"field:required" => 'Required',
+
 );

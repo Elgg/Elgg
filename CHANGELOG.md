@@ -1,3 +1,59 @@
+<a name="2.0.0-rc.2"></a>
+### 2.0.0-rc.2  (2015-11-29)
+
+#### Contributors
+
+* Steve Clay (10)
+* Ismayil Khayredinov (4)
+* Juho Jaakkola (4)
+
+#### Performance
+
+* **river:** no longer needlessly render river responses ([97df230f](https://github.com/Elgg/Elgg/commit/97df230f4c496d773e50060bf84fef5ae7052b24), closes [#9046](https://github.com/Elgg/Elgg/issues/9046))
+
+
+#### Bug Fixes
+
+* **files:** make sure method is callable on a concrete object instance ([740d3108](https://github.com/Elgg/Elgg/commit/740d3108a30733d02a98e9aed7516f92033cd8a9), closes [#9010](https://github.com/Elgg/Elgg/issues/9010))
+* **i18n:** avoids using mbstring.internal_encoding in PHP >= 5.6 ([c0ff79de](https://github.com/Elgg/Elgg/commit/c0ff79de100cc8e48fd69d01883c946669b5b275), closes [#9031](https://github.com/Elgg/Elgg/issues/9031))
+* **likes:** count is updated after liking/unliking ([dae30cb7](https://github.com/Elgg/Elgg/commit/dae30cb71e8d1900bac8730e594ca8d5ea8d0154), closes [#9100](https://github.com/Elgg/Elgg/issues/9100))
+* **memcache:** don't store a copy of $CONFIG in file objects ([beb90891](https://github.com/Elgg/Elgg/commit/beb9089129a0a06b36200f3f8d214c7ed8f94f42), closes [#9081](https://github.com/Elgg/Elgg/issues/9081))
+* **pages:** removes deprecated notices regarding input/write_access ([fdcab74b](https://github.com/Elgg/Elgg/commit/fdcab74b1e9069736f88f7e9aa36aeb15067b8fe), closes [#8327](https://github.com/Elgg/Elgg/issues/8327))
+* **river:** floated river selector no longer breaks layout ([2745c914](https://github.com/Elgg/Elgg/commit/2745c91460915ae47519d79f70aa71736eda3449), closes [#9091](https://github.com/Elgg/Elgg/issues/9091))
+
+
+#### Breaking Changes
+
+* The report content icon is now a FontAwesome icon, however the GIF used in 1.x
+is still available. ([96d258fa](https://github.com/Elgg/Elgg/commit/96d258fa0083b73ce86aa2532838ece3aaa8a30d))
+* Plugins that override the ``input/autocomplete`` view will need to include the
+source URL in the ``data-source`` attribute of the input element, require the
+new ``elgg/autocomplete`` AMD module, and call its ``init`` method. The 1.x
+javascript library ``elgg.autocomplete`` is no longer used.
+ ([2a0cf9a5](https://github.com/Elgg/Elgg/commit/2a0cf9a5bf628f2be0a13c95226e2b85c57f13a9))
+
+
+<a name="2.0.0-rc.1"></a>
+### 2.0.0-rc.1  (2015-11-07)
+
+#### Contributors
+
+* Steve Clay (12)
+* iionly (3)
+
+#### Bug Fixes
+
+* **http:** allows sending gzipped JavaScript on nginx < 1.5.4 ([4c4b8ab7](https://github.com/Elgg/Elgg/commit/4c4b8ab7aee765d09bc59d541693e5a2643bb3ba))
+* **likes:** likes preloader and entity menus now consider likability ([de81d7da](https://github.com/Elgg/Elgg/commit/de81d7daf1f49eba179ec6acea4cf633d14ec803), closes [#9065](https://github.com/Elgg/Elgg/issues/9065))
+* **views:** input/userpicker API more BC with 1.8 plugins ([0651a5fd](https://github.com/Elgg/Elgg/commit/0651a5fdc075bde1f09f6ee27252a7ba471216f1), closes [#6079](https://github.com/Elgg/Elgg/issues/6079))
+
+
+#### Breaking Changes
+
+* To allow for usage of the z-index property for elements in the content area without the More menu dropdown being displayed behind these elements the z-index value in the elgg-menu site class has been increased to 50
+ ([34af1d71](https://github.com/Elgg/Elgg/commit/34af1d71ab57110128c6d44f2b7af53c7c29c873))
+
+
 <a name="2.0.0-beta.3"></a>
 ### 2.0.0-beta.3  (2015-10-04)
 

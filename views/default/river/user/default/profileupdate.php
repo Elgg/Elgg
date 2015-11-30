@@ -20,4 +20,7 @@ $string = elgg_echo('river:update:user:profile', array($subject_link));
 echo elgg_view('river/elements/layout', array(
 	'item' => $item,
 	'summary' => $string,
+
+	// truthy value to bypass responses rendering
+	'responses' => ' ',
 ));
