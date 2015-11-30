@@ -183,7 +183,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
 			$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $c->db);
 			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
-			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator);
+			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator, $c->entityTable);
 		});
 
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {
