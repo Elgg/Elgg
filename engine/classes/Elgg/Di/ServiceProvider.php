@@ -158,7 +158,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('logger', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('logger');
 		});
-		
+
 		// TODO(evan): Support configurable transports...
 		$this->setClassName('mailer', 'Zend\Mail\Transport\Sendmail');
 
@@ -183,7 +183,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
 			$queue = new \Elgg\Queue\DatabaseQueue($queue_name, $c->db);
 			$sub = new \Elgg\Notifications\SubscriptionsService($c->db);
-			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session);
+			return new \Elgg\Notifications\NotificationsService($sub, $queue, $c->hooks, $c->session, $c->translator);
 		});
 
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {

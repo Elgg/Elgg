@@ -7,7 +7,7 @@ use ElggEntity;
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Notifications
  * @since      1.9.0
@@ -27,6 +27,9 @@ class NotificationsService {
 
 	/** @var \ElggSession */
 	protected $session;
+
+	/** @var \Elgg\I18n\Translator */
+	protected $translator;
 
 	/** @var array Registered notification events */
 	protected $events = array();
@@ -48,12 +51,18 @@ class NotificationsService {
 	 * @param \Elgg\PluginHooksService                 $hooks         Plugin hook service
 	 * @param \ElggSession                             $session       Session service
 	 */
-	public function __construct(\Elgg\Notifications\SubscriptionsService $subscriptions,
-			\Elgg\Queue\Queue $queue, \Elgg\PluginHooksService $hooks, \ElggSession $session) {
+	public function __construct(
+			\Elgg\Notifications\SubscriptionsService $subscriptions,
+			\Elgg\Queue\Queue $queue,
+			\Elgg\PluginHooksService $hooks,
+			\ElggSession $session,
+			\Elgg\I18n\Translator $translator) {
+
 		$this->subscriptions = $subscriptions;
 		$this->queue = $queue;
 		$this->hooks = $hooks;
 		$this->session = $session;
+		$this->translator = $translator;
 	}
 
 	/**
@@ -128,10 +137,10 @@ class NotificationsService {
 
 	/**
 	 * Add a notification event to the queue
-	 * 
+	 *
 	 * @param string   $action Action name
 	 * @param string   $type   Type of the object of the action
-	 * @param \ElggData $object The object of the action 
+	 * @param \ElggData $object The object of the action
 	 * @return void
 	 * @access private
 	 */
@@ -175,7 +184,7 @@ class NotificationsService {
 		$count = 0;
 
 		// @todo grab mutex
-		
+
 		$ia = $this->session->setIgnoreAccess(true);
 
 		while (time() < $stopTime) {
@@ -275,8 +284,9 @@ class NotificationsService {
 			'object' => $object,
 		);
 
-		$subject = _elgg_services()->translator->translate('notification:subject', array($actor->name), $language);
-		$body = _elgg_services()->translator->translate('notification:body', array($object->getURL()), $language);
+		$subject = $this->translator->translate('notification:subject', array($actor->name), $language);
+		$body = $this->translator->translate('notification:body', array($object->getURL()), $language);
+
 		$notification = new \Elgg\Notifications\Notification($event->getActor(), $recipient, $language, $subject, $body, '', $params);
 
 		$type = 'notification:' . $event->getDescription();
@@ -307,7 +317,7 @@ class NotificationsService {
 
 	/**
 	 * Register a deprecated notification handler
-	 * 
+	 *
 	 * @param string $method  Method name
 	 * @param string $handler Handler callback
 	 * @return void
@@ -318,7 +328,7 @@ class NotificationsService {
 
 	/**
 	 * Get a deprecated notification handler callback
-	 * 
+	 *
 	 * @param string $method Method name
 	 * @return callback|null
 	 */
@@ -333,7 +343,7 @@ class NotificationsService {
 	/**
 	 * Provides a way to incrementally wean Elgg's notifications code from the
 	 * global $NOTIFICATION_HANDLERS
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getMethodsAsDeprecatedGlobal() {
@@ -346,7 +356,7 @@ class NotificationsService {
 
 	/**
 	 * Get the notification body using a pre-Elgg 1.9 plugin hook
-	 * 
+	 *
 	 * @param \Elgg\Notifications\Notification $notification Notification
 	 * @param \Elgg\Notifications\Event        $event        Event
 	 * @param string                           $method       Method
@@ -373,7 +383,7 @@ class NotificationsService {
 
 	/**
 	 * Set message subject for deprecated notification code
-	 * 
+	 *
 	 * @param string $type    Entity type
 	 * @param string $subtype Entity subtype
 	 * @param string $subject Subject line
@@ -396,7 +406,7 @@ class NotificationsService {
 
 	/**
 	 * Get the deprecated subject
-	 * 
+	 *
 	 * @param string $type    Entity type
 	 * @param string $subtype Entity subtype
 	 * @return string
@@ -422,7 +432,7 @@ class NotificationsService {
 
 	/**
 	 * Is someone using the deprecated override
-	 * 
+	 *
 	 * @param \Elgg\Notifications\Event $event Event
 	 * @return boolean
 	 */
