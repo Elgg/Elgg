@@ -125,7 +125,7 @@ class Plugins {
 			$id_map[$plugin->getID()] = $i;
 		}
 	
-		$physical_plugins = _elgg_get_plugin_dirs_in_dir($mod_dir);
+		$physical_plugins = $this->getDirsInDir($mod_dir);
 	
 		if (!$physical_plugins) {
 			return false;
@@ -162,7 +162,7 @@ class Plugins {
 				$plugin->deactivate();
 			}
 			// remove the priority.
-			$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
+			$name = $this->namespacePrivateSetting('internal', 'priority');
 			remove_private_setting($plugin->guid, $name);
 			if ($plugin->isEnabled()) {
 				$plugin->disable();
@@ -171,8 +171,9 @@ class Plugins {
 	
 		access_show_hidden_entities($old_access);
 		elgg_set_ignore_access($old_ia);
-	
-		_elgg_reindex_plugin_priorities();
+
+		$this->reindexPriorities();
+
 	
 		return true;
 	}
@@ -230,9 +231,7 @@ class Plugins {
 	 * @return bool
 	 */
 	function exists($id) {
-		$plugin = elgg_get_plugin_from_id($id);
-	
-		return ($plugin) ? true : false;
+		return (bool)$this->get($id);
 	}
 	
 	/**
@@ -243,7 +242,7 @@ class Plugins {
 	 */
 	function getMaxPriority() {
 		$db_prefix = get_config('dbprefix');
-		$priority = _elgg_namespace_plugin_private_setting('internal', 'priority');
+		$priority = $this->namespacePrivateSetting('internal', 'priority');
 		$plugin_subtype = get_subtype_id('object', 'plugin');
 	
 		$q = "SELECT MAX(CAST(ps.value AS unsigned)) as max
@@ -288,7 +287,7 @@ class Plugins {
 			return false;
 		}
 	
-		$plugin = elgg_get_plugin_from_id($plugin_id);
+		$plugin = $this->get($plugin_id);
 	
 		if (!$plugin) {
 			return false;
@@ -367,7 +366,7 @@ class Plugins {
 	 */
 	function find($status = 'active', $site_guid = null) {
 		$db_prefix = get_config('dbprefix');
-		$priority = _elgg_namespace_plugin_private_setting('internal', 'priority');
+		$priority = $this->namespacePrivateSetting('internal', 'priority');
 	
 		if (!$site_guid) {
 			$site_guid = elgg_get_site_entity()->guid;
@@ -440,7 +439,7 @@ class Plugins {
 	 * @access private
 	 */
 	function setPriorities(array $order) {
-		$name = _elgg_namespace_plugin_private_setting('internal', 'priority');
+		$name = $this->namespacePrivateSetting('internal', 'priority');
 	
 		$plugins = elgg_get_plugins('any');
 		if (!$plugins) {
@@ -497,7 +496,7 @@ class Plugins {
 	 * @access private
 	 */
 	function reindexPriorities() {
-		return _elgg_set_plugin_priorities(array());
+		return $this->setPriorities([]);
 	}
 	
 	/**
@@ -559,7 +558,7 @@ class Plugins {
 	function getProvides($type = null, $name = null) {
 		global $ELGG_PLUGINS_PROVIDES_CACHE;
 		if (!isset($ELGG_PLUGINS_PROVIDES_CACHE)) {
-			$active_plugins = elgg_get_plugins('active');
+			$active_plugins = $this->find('active');
 		
 			$provides = array();
 	
@@ -638,7 +637,7 @@ class Plugins {
 	 * @access private
 	 */
 	function checkProvides($type, $name, $version = null, $comparison = 'ge') {
-		$provided = _elgg_get_plugins_provides($type, $name);
+		$provided = $this->getProvides($type, $name);
 		if (!$provided) {
 			return array(
 				'status' => false,
@@ -1058,7 +1057,7 @@ class Plugins {
 			}
 		}
 	
-		$prefix = _elgg_namespace_plugin_private_setting('user_setting', '', $options['plugin_id']);
+		$prefix = $this->namespacePrivateSetting('user_setting', '', $options['plugin_id']);
 		$options['private_setting_name_prefix'] = $prefix;
 	
 		return elgg_get_entities_from_private_settings($options);

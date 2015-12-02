@@ -64,11 +64,11 @@ class SubtypeTable {
 		}
 	
 		if ($SUBTYPE_CACHE === null) {
-			_elgg_populate_subtype_cache();
+			$this->populateCache();
 		}
 	
 		// use the cache before hitting database
-		$result = _elgg_retrieve_cached_subtype($type, $subtype);
+		$result = $this->retrieveFromCache($type, $subtype);
 		if ($result !== null) {
 			return $result->id;
 		}
@@ -92,7 +92,7 @@ class SubtypeTable {
 		}
 	
 		if ($SUBTYPE_CACHE === null) {
-			_elgg_populate_subtype_cache();
+			$this->populateCache();
 		}
 	
 		if (isset($SUBTYPE_CACHE[$subtype_id])) {
@@ -115,7 +115,7 @@ class SubtypeTable {
 		global $SUBTYPE_CACHE;
 	
 		if ($SUBTYPE_CACHE === null) {
-			_elgg_populate_subtype_cache();
+			$this->populateCache();
 		}
 	
 		foreach ($SUBTYPE_CACHE as $obj) {
@@ -161,11 +161,11 @@ class SubtypeTable {
 		global $SUBTYPE_CACHE;
 	
 		if ($SUBTYPE_CACHE === null) {
-			_elgg_populate_subtype_cache();
+			$this->populateCache();
 		}
 		
 		// use the cache before going to the database
-		$obj = _elgg_retrieve_cached_subtype($type, $subtype);
+		$obj = $this->retrieveFromCache($type, $subtype);
 		if ($obj) {
 			return $obj->class;
 		}
@@ -191,7 +191,7 @@ class SubtypeTable {
 		}
 	
 		if ($SUBTYPE_CACHE === null) {
-			_elgg_populate_subtype_cache();
+			$this->populateCache();
 		}
 		
 		if (isset($SUBTYPE_CACHE[$subtype_id])) {
@@ -228,7 +228,7 @@ class SubtypeTable {
 			return 0;
 		}
 	
-		$id = get_subtype_id($type, $subtype);
+		$id = $this->getId($type, $subtype);
 	
 		if (!$id) {
 			// In cache we store non-SQL-escaped strings because that's what's returned by query
@@ -296,13 +296,13 @@ class SubtypeTable {
 	function update($type, $subtype, $class = '') {
 		global $SUBTYPE_CACHE;
 	
-		$id = get_subtype_id($type, $subtype);
+		$id = $this->getId($type, $subtype);
 		if (!$id) {
 			return false;
 		}
 	
 		if ($SUBTYPE_CACHE === null) {
-			_elgg_populate_subtype_cache();
+			$this->populateCache();
 		}
 	
 		$unescaped_class = $class;
