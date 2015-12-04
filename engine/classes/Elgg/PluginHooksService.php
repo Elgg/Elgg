@@ -4,11 +4,11 @@ use Elgg\Debug\Inspector;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
- * 
+ *
  * Use the elgg_* versions instead.
- * 
+ *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Hooks
  * @since      1.9.0
@@ -23,7 +23,7 @@ class PluginHooksService extends \Elgg\HooksRegistrationService {
 	 */
 	public function trigger($hook, $type, $params = null, $returnvalue = null) {
 		$hooks = $this->getOrderedHandlers($hook, $type);
-		
+
 		foreach ($hooks as $callback) {
 			if (!is_callable($callback)) {
 				if ($this->logger) {
@@ -34,13 +34,18 @@ class PluginHooksService extends \Elgg\HooksRegistrationService {
 				continue;
 			}
 
+			if (is_array($callback)) {
+				// Make an instance of the class so its methods can use $this internally
+				$callback[0] = new $callback[0];
+			}
+
 			$args = array($hook, $type, $returnvalue, $params);
 			$temp_return_value = call_user_func_array($callback, $args);
 			if (!is_null($temp_return_value)) {
 				$returnvalue = $temp_return_value;
 			}
 		}
-	
+
 		return $returnvalue;
 	}
 }
