@@ -6,7 +6,7 @@
 class ElggCoreEntityTest extends \ElggCoreUnitTest {
 
 	/**
-	 * @var \ElggEntity
+	 * @var \ElggObject
 	 */
 	protected $entity;
 
@@ -49,6 +49,84 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$subtype_prop = $this->entity->subtype;
 		$this->assertIsA($subtype_prop, 'int');
 		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
+	}
+
+	public function testUnsavedEntitiesDontRecordAttributeSets() {
+		$entity = new \ElggObject();
+		$entity->subtype = 'elgg_entity_test_subtype';
+		$entity->title = 'Foo';
+		$entity->description = 'Bar';
+		$entity->container_guid = elgg_get_logged_in_user_guid();
+
+		$this->assertEqual($entity->getOriginalAttributes(), []);
+	}
+
+	public function testAlreadyPersistedAttributeSetsAreRecorded() {
+		$this->entity->title = 'Foo';
+		$this->entity->description = 'Bar';
+		$this->entity->container_guid = elgg_get_site_entity()->guid;
+
+		$this->assertEqual($this->entity->getOriginalAttributes(), [
+			'title' => null,
+			'description' => null,
+			'container_guid' => elgg_get_logged_in_user_guid(),
+		]);
+	}
+
+	public function testModifiedAttributesAreAvailableDuringUpdateNotAfter() {
+		$this->entity->title = 'Foo';
+		$this->entity->description = 'Bar';
+		$this->entity->container_guid = elgg_get_site_entity()->guid;
+
+		$calls = 0;
+		$handler = function ($event, $type, \ElggObject $object) use (&$calls) {
+			$calls++;
+			$this->assertEqual($object->getOriginalAttributes(), [
+				'title' => null,
+				'description' => null,
+				'container_guid' => elgg_get_logged_in_user_guid(),
+			]);
+		};
+
+		elgg_register_event_handler('update', 'object', $handler);
+		elgg_register_event_handler('update:after', 'object', $handler);
+		$this->entity->save();
+
+		$this->assertEqual($calls, 2);
+
+		elgg_unregister_event_handler('update', 'object', $handler);
+		elgg_unregister_event_handler('update:after', 'object', $handler);
+
+		$this->assertEqual($this->entity->getOriginalAttributes(), []);
+	}
+
+	public function testModifedAttributesSettingEmptyString() {
+		$this->entity->title = '';
+		$this->entity->description = '';
+
+		$this->assertEqual($this->entity->getOriginalAttributes(), []);
+
+		$this->entity->title = '';
+		$this->entity->description = '';
+
+		$this->assertEqual($this->entity->getOriginalAttributes(), []);
+	}
+
+	public function testModifedAttributesSettingIntsAsStrings() {
+		$this->entity->container_guid = elgg_get_logged_in_user_guid();
+		$this->entity->save();
+
+		$this->entity->container_guid = (string)elgg_get_logged_in_user_guid();
+		$this->assertEqual($this->entity->getOriginalAttributes(), []);
+	}
+
+	public function testMultipleAttributeSetsDontOverwriteOriginals() {
+		$this->entity->title = 'Foo';
+		$this->entity->title = 'Bar';
+
+		$this->assertEqual($this->entity->getOriginalAttributes(), [
+			'title' => null,
+		]);
 	}
 
 	public function testGetSubtype() {
