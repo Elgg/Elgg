@@ -6,9 +6,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Elgg 1.11\n"
+"Project-Id-Version: Elgg 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-08-05 02:56+0000\n"
+"POT-Creation-Date: 2015-11-29 20:20+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,10 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../design/actions.rst:2
-# 5f6bf5cc13604c3b9a15b2f7ed46a75a
 msgid "Actions"
 msgstr ""
 
 #: ../../design/actions.rst:4
-# cd2a0e333a1a4b1e8b44ac753909e3f7
 msgid "Actions are the primary way users interact with an Elgg site."
 msgstr ""
 
@@ -30,1526 +28,1304 @@ msgstr ""
 #: ../../design/amd.rst:8
 #: ../../design/database.rst:11
 #: ../../design/events.rst:9
-# e5468c069890461b8a2f89a596118a61
-# daf4b4c899da42a69163f6e4482658ef
-# ac4591ee4b4e420285ef01cc8851a491
-# feadc170b0d248a9bc4bcee1f478deec
 msgid "Overview"
 msgstr ""
 
 #: ../../design/actions.rst:12
-# 66da855a31124874bd80e3fe9448e536
 msgid "An action in Elgg is the code that runs to make changes to the database when a user does something. For example, logging in, posting a comment, and making a blog post are actions. The action script processes input, makes the appropriate modifications to the database, and provides feedback to the user about the action."
 msgstr ""
 
 #: ../../design/actions.rst:15
-# 9c4efeea338948e79811fdb83482c3ae
 msgid "Action Handler"
 msgstr ""
 
 #: ../../design/actions.rst:17
-# 46bd01279afc408491b5d2360f8cb3d5
 msgid "Actions are registered during the boot process by calling ``elgg_register_action()``. All actions URLs start with ``action/`` and are served by Elgg's front end controller through the action service. This approach is different from traditional PHP applications that send information to a specific file. The action service performs :doc:`CSRF security checks </design/security>`, and calls the registered action script file, then optionally forwards the user to a new page. By using the action service instead of a single script file, Elgg automatically provides increased security and extensibility."
 msgstr ""
 
 #: ../../design/actions.rst:19
-# 603d669930834a6c884469b9fc1ddc5f
 msgid "In Elgg 1.8 and before, actions were handled by an action handler script in ```engine/handlers/action_handler.php``. This required specific rewrite rules for URLs beginning with ``/action/``."
 msgstr ""
 
 #: ../../design/actions.rst:21
-# 1d8e5a977c9e4a89bfd1140a356de499
 msgid "See :doc:`/guides/actions` for details on how to register and construct an action. To look at the core actions, check out the directory /actions."
 msgstr ""
 
 #: ../../design/amd.rst:2
-# c5a46e2adda14b43ab230704e12e71ea
 msgid "AMD"
 msgstr ""
 
 #: ../../design/amd.rst:10
-# 8aed27e2f0654d3ca7a4ab9b245f9e72
 msgid "There are two JavaScript system in Elgg: the deprecated 1.8 system, and the newer `AMD (Asynchronous Module Definition) <http://requirejs.org/docs/whyamd.html>`_ compatible system introduced in 1.9."
 msgstr ""
 
 #: ../../design/amd.rst:13
-# 0d2a3dd9196c48d28683f8d7466c5dbb
 msgid "This discusses the benefits of using AMD in Elgg."
 msgstr ""
 
 #: ../../design/amd.rst:16
-# a2e40e18df634de6b4caa45c915c322c
 msgid "Why AMD?"
 msgstr ""
 
 #: ../../design/amd.rst:18
-# 640332da31d94cc7ad31fd897f7e8bee
 msgid "We have been working hard to make Elgg's JavaScript more maintainable and useful. We made some strides in 1.8 with the introduction of the \"``elgg``\" JavaScript object and library, but have quickly realized the approach we were taking was not scalable."
 msgstr ""
 
 #: ../../design/amd.rst:22
-# 82cbb6fae5504f9cb6fa3dea538c8df1
 msgid "The size of `JS on the web is growing <http://httparchive.org/trends.php?s=All&minlabel=Feb+11+2011&maxlabel=Feb+1+2013#bytesJS&reqJS>`_ quickly, and JS in Elgg is growing too. We want Elgg to be able to offer a solution that makes JS development as productive and maintainable as possible going forward."
 msgstr ""
 
 #: ../../design/amd.rst:27
-# 11ec9985ca984b9d89516a033c2a13e0
 msgid "The `reasons to choose AMD <http://requirejs.org/docs/whyamd.html>`_ are plenteous and well-documented. Let's highlight just a few of the most relevant reasons as they relate to Elgg specifically."
 msgstr ""
 
 #: ../../design/amd.rst:32
-# d2938e64be614b5faf9c520374ebb989
 msgid "1. Simplified dependency management"
 msgstr ""
 
 #: ../../design/amd.rst:33
-# ae10af740c474a27a88c8713c7ca3792
 msgid "AMD modules load asynchronously and execute as soon as their dependencies are available, so this eliminates the need to specify \"priority\" and \"location\" when registering JS libs in Elgg. Also, you don't need to worry about explicitly loading a module's dependencies in PHP. The AMD loader (RequireJS in this case) takes care of all that hassle for you. It's also possible have `text dependencies <http://requirejs.org/docs/api.html#text>`_ with the RequireJS text plugin, so client-side templating should be a breeze."
 msgstr ""
 
 #: ../../design/amd.rst:41
-# 25b2e7d22cfa4fb6ba6dcd9b69c3e215
 msgid "2. AMD works in all browsers. Today."
 msgstr ""
 
 #: ../../design/amd.rst:42
-# 6b00eb6072be40afaa8d327f54f4ddaa
 msgid "Elgg developers are already writing lots of JavaScript. We know you want to write more. We cannot accept waiting 5-10 years for a native JS modules solution to be available in all browsers before we can organize our JavaScript in a maintainable way."
 msgstr ""
 
 #: ../../design/amd.rst:47
-# a075a0822ee24ff3916a6a6a7c0154ea
 msgid "3. You do not need a build step to develop in AMD."
 msgstr ""
 
 #: ../../design/amd.rst:48
-# e1a4986bc8624d1598cd38a622a4d5cb
 msgid "We like the edit-refresh cycle of web development. We wanted to make sure everyone developing in Elgg could continue experiencing that joy. Synchronous module formats like Closure or CommonJS just weren't an option for us. But even though AMD doesn't require a build step, *it is still very build-friendly*. Because of the ``define()`` wrapper, it's possible to concatenate multiple modules into a single file and ship them all at once in a production environment. [#]_"
 msgstr ""
 
 #: ../../design/amd.rst:54
-# b3c8d984cb374cb49cd5c64b3a5553de
 msgid "AMD is a battle-tested and well thought out module loading system for the web today. We're very thankful for the work that has gone into it, and are excited to offer it as the standard solution for JavaScript development in Elgg starting with Elgg 1.9."
 msgstr ""
 
 #: ../../design/amd.rst:58
-# 35b3943d2dea477991d32a37074d664c
 msgid "This is not currently supported by Elgg core, but we'll be looking into it since reducing round-trips is critical for a good first-view experience, especially on mobile devices."
 msgstr ""
 
 #: ../../design/database.rst:2
-# 6497525468074f2289104328712e1d8c
 msgid "Database"
 msgstr ""
 
 #: ../../design/database.rst:4
-# 1359514f5fef40b7ae837325070e1f76
 msgid "A thorough discussion of Elgg's data model design and motivation."
 msgstr ""
 
 #: ../../design/database.rst:0
 #: ../../design/events.rst:0
 #: ../../design/security.rst:0
-# b2070cf7f74f4f7fa4f2da79000ed7ee
-# 60561bfe5dcc45129b2635849322fbf1
-# 5edc247cf26e44c9b9db2189f2a68b4a
 msgid "Contents"
 msgstr ""
 
 #: ../../design/database.rst:13
-# b278a98819cc472e9fd805793b0e02bf
 msgid "In Elgg, everything runs on a unified data model based on atomic units of data called entities."
 msgstr ""
 
 #: ../../design/database.rst:16
-# d78499053ae74124920f001b37c13dea
 msgid "Plugins are discouraged from interacting directly with the database, which creates a more stable system and a better user experience becase content created by different plugins can be mixed together in consistent ways. With this approach, plugins are faster to develop, and are at the same time much more powerful."
 msgstr ""
 
 #: ../../design/database.rst:22
-# c06e317be74f4758a9b0eda9a31b6ab2
 msgid "Every entity in the system inherits the ``ElggEntity`` class. This class controls access permissions, ownership"
 msgstr ""
 
 #: ../../design/database.rst:27
-# 37f50b80c75d4028b0e6ccac9dfcb881
 msgid "You can extend entities with extra information in two ways:"
 msgstr ""
 
 #: ../../design/database.rst:31
-# 9964915dffca49a68d3628509a52bf22
 msgid "``Metadata``: This is information describing the entity, usually"
 msgstr ""
 
 #: ../../design/database.rst:30
-# 36cf6377417d46b3b9448dfd09ea1c09
 msgid "added by the author of the entity when the entity is created. For example, tags, an ISBN number, a file location, or source language is metadata."
 msgstr ""
 
 #: ../../design/database.rst:36
-# d7afbdd0abe84d76961e50d1a3458e5a
 msgid "``Annotations``: This is information about the entity, usually"
 msgstr ""
 
 #: ../../design/database.rst:34
-# e974d858c3804a4eb720d1b85dcaa135
 msgid "added by a third party after the entity is created. For example, ratings, likes, and votes are annotations. (Comments were before 1.9.)"
 msgstr ""
 
 #: ../../design/database.rst:39
-# b0cce5e0a4344243b1df8da6ed2815db
 msgid "Datamodel"
 msgstr ""
 
 #: ../../design/database.rst:46
-# b7802a31e9fe469c9adb392a6d2204ec
 msgid "The Elgg data model diagram"
 msgstr ""
 
 #: ../../design/database.rst:49
-# 7465ff1ee85a4bbf89c4be755cb7126b
 msgid "Entities"
 msgstr ""
 
 #: ../../design/database.rst:51
-# a24383326e7b4677bd611614d911c186
-msgid "ElggEntity is the base class for the Elgg data model."
+msgid "``ElggEntity`` is the base class for the Elgg data model and supports a common set of properties and methods."
 msgstr ""
 
 #: ../../design/database.rst:54
-# 9414461e0ebb401897c2157d588f2460
-msgid "Users, Objects, Groups, Sites"
-msgstr ""
-
-#: ../../design/database.rst:56
-# 800df7175d2d44cab43174a1bc056cff
-msgid "``ElggEntity`` has four main specializations, which provide extra properties and methods to more easily handle different kinds of data."
-msgstr ""
-
-#: ../../design/database.rst:59
-# ceffa50af31c41b0bdfe5a8373319fea
-msgid "``ElggObject``: content like blog posts, uploaded files and bookmarks ``ElggUser``: a system user ``ElggSite``: each Elgg site within an Elgg installation ``ElggGroup``: multi-user collaborative systems (called \"Communities\" in prior versions of Elgg)"
-msgstr ""
-
-#: ../../design/database.rst:65
-# 90bf4d1f50764af695065a05a33b1db4
-msgid "The benefit of such an approach is that, apart from modelling data with greater ease, a common set of functions is available to handle objects, regardless of their (sub)type."
-msgstr ""
-
-#: ../../design/database.rst:69
-# c43d7c057abe41abab320e57c46004f6
-msgid "Each of these have their own properties that they bring to the table: ElggObjects have a title and description, ElggUsers have a username and password, and so on. However, because they all inherit ElggEntity, they each have a number of core properties and behaviours in common."
-msgstr ""
-
-#: ../../design/database.rst:74
-# 641baef356de4bef98885b2a8797c72b
 msgid "A numeric Globally Unique IDentifier (See `GUIDs`_)."
 msgstr ""
 
-#: ../../design/database.rst:75
-# 574713e2d2fb41549f900b339f2ae2e2
+#: ../../design/database.rst:55
 msgid "Access permissions. (When a plugin requests data, it never gets to touch data that the current user doesn't have permission to see.)"
 msgstr ""
 
-#: ../../design/database.rst:77
-# 97ed2690d35141ff8a22c67a5f34b6e8
-msgid "An arbitrary subtype. For example, a blog post is an ElggObject with a subtype of \"blog\". Subtypes aren't predefined; they can be any unique way to describe a particular kind of entity. \"blog\", \"forum\", \"foo\", \"bar\", \"loafofbread\" and \"pyjamas\" are all valid subtypes."
+#: ../../design/database.rst:57
+msgid "An arbitrary subtype (more below)."
 msgstr ""
 
-#: ../../design/database.rst:81
-# 39db6c655c6b446eb8f87efe0b5979a8
+#: ../../design/database.rst:58
 msgid "An owner."
 msgstr ""
 
-#: ../../design/database.rst:82
-# e24dcd5af20648c7a488f3c383804a12
+#: ../../design/database.rst:59
 msgid "The site that the entity belongs to."
 msgstr ""
 
-#: ../../design/database.rst:83
-# 7752afaeb22e455f94331699d38f5adb
-msgid "A container, usually used to associate a group's content with the group."
+#: ../../design/database.rst:60
+msgid "A container, used to associate content with a group or a user."
 msgstr ""
 
-#: ../../design/database.rst:86
-# 72c0e7e73e9d4e838e796792990ef578
-msgid "GUIDs"
+#: ../../design/database.rst:63
+msgid "Types"
 msgstr ""
 
-#: ../../design/database.rst:88
-# e5662754a61646ce9221aec281e34f06
-msgid "A GUID is an integer that uniquely identifies every entity in an Elgg installation (a Globally Unique IDentifier). It's assigned automatically when the entity is first saved and can never be changed."
+#: ../../design/database.rst:65
+msgid "*Actual* entities will be instances of four different subclasses, each having a distinct **type** property and their own additional properties and methods."
 msgstr ""
 
-#: ../../design/database.rst:92
-# 40d01a8a85484767ad35bb851d52eff4
-msgid "Some Elgg API functions work with GUIDs instead of ``ElggEntity`` objects."
+#: ../../design/database.rst:69
+msgid "Type"
 msgstr ""
 
-#: ../../design/database.rst:95
-# 38bb07d32db54625a1c0e41dbcf9d72e
-msgid "ElggObject"
+#: ../../design/database.rst:69
+msgid "PHP class"
 msgstr ""
 
-#: ../../design/database.rst:97
-# 2a06cc4c2e9a41a7b2f3793d88dd2b62
-msgid "The ``ElggObject`` entity type represents arbitrary content within an Elgg install; things like blog posts, uploaded files, etc."
-msgstr ""
-
-#: ../../design/database.rst:100
-# 99cba1ba94a347f0a4326f91314300f6
-msgid "Beyond the standard ElggEntity properties, ElggObjects also support:"
-msgstr ""
-
-#: ../../design/database.rst:102
-# ff47b382098647b1976e5826141fcf68
-msgid "``title`` The title of the object (HTML escaped text)"
-msgstr ""
-
-#: ../../design/database.rst:103
-# e11ab61931664d3b939397e1f096d52e
-msgid "``description`` A description of the object (HTML)"
-msgstr ""
-
-#: ../../design/database.rst:105
-# 1eaf3e023a9746b9a0c2c4126625d65d
-msgid "Most other data about the object is generally stored via metadata."
-msgstr ""
-
-#: ../../design/database.rst:108
-# 2435ee23a3884a0daf6b56753e3e7f38
-msgid "ElggUser"
-msgstr ""
-
-#: ../../design/database.rst:110
-# f40bb9f5da9f42aca80874a9386b0163
-msgid "The ``ElggUser`` entity type represents users within an Elgg install. These will be set to disabled until their accounts have been activated (unless they were created from within the admin panel)."
-msgstr ""
-
-#: ../../design/database.rst:114
-# 0e090a5ab9a548e49f1edf7924278430
-msgid "Beyond the standard ElggEntity properties, ElggUsers also support:"
-msgstr ""
-
-#: ../../design/database.rst:116
-# 0d65598c1dd54b67adcc41242af9fee9
-msgid "``name`` The user's plain text name. e.g. \"Hugh Jackman\""
-msgstr ""
-
-#: ../../design/database.rst:117
-# 997f84b9935d434f946ca882a9a8816a
-msgid "``username`` Their login name. E.g. \"hjackman\""
-msgstr ""
-
-#: ../../design/database.rst:118
-# d95ebfccc2cf4ee4bf18261c64def4ec
-msgid "``password`` A hashed version of their password"
-msgstr ""
-
-#: ../../design/database.rst:119
-# 088891569986461698af87d634b9f6fa
-msgid "``salt`` The salt that their password has been hashed with"
-msgstr ""
-
-#: ../../design/database.rst:120
-# f648aa7de73843c48c2c8d8552ca76ef
-msgid "``email`` Their email address"
-msgstr ""
-
-#: ../../design/database.rst:121
-# ab776f73a6bf4cdd82250812c1dba45b
-msgid "``language`` Their default language code."
-msgstr ""
-
-#: ../../design/database.rst:122
-# 78f287c06fd147d48103d2e63da98452
-msgid "``code`` Their session code (moved to a separate table in 1.9)."
-msgstr ""
-
-#: ../../design/database.rst:123
-# ebde63a318d84dc1b2cbff54e00a8018
-msgid "``last_action`` The UNIX timestamp of the last time they loaded a page"
-msgstr ""
-
-#: ../../design/database.rst:124
-# 1c324dbe381d4cc1bfa65b248b3a2d7d
-msgid "``prev_last_action`` The previous value of ``last_action``"
-msgstr ""
-
-#: ../../design/database.rst:125
-# ebf83b667ee24adda830303589525034
-msgid "``last_login`` The UNIX timestamp of their last log in"
-msgstr ""
-
-#: ../../design/database.rst:126
-# 1b1d9f60d2ea4cbf8aa074f7fda82a99
-msgid "``prev_last_login`` the previous value of ``last_login``"
-msgstr ""
-
-#: ../../design/database.rst:129
-# 40e61e25c2904cc79256586cb3bc05ef
-msgid "ElggSite"
-msgstr ""
-
-#: ../../design/database.rst:131
-# c6db95b708e34fce9125c876078d8feb
-msgid "The ``ElggSite`` entity type represents sites within your Elgg install. Most installs will have only one."
-msgstr ""
-
-#: ../../design/database.rst:134
-# 7c3be907868c4bf1ac7d748d331459fa
-msgid "Beyond the standard ElggEntity properties, ElggSites also support:"
-msgstr ""
-
-#: ../../design/database.rst:136
-# f94c51d7ebf54e93ba7a1f012bc77a74
-msgid "``name`` The site name"
-msgstr ""
-
-#: ../../design/database.rst:137
-# 59d8934150074cdfa92abd22143fa433
-msgid "``description`` A description of the site"
-msgstr ""
-
-#: ../../design/database.rst:138
-# a80f0d4ac5654f01b2e8f3db07bd243e
-msgid "``url`` The address of the site"
-msgstr ""
-
-#: ../../design/database.rst:141
-# fe8000ad0685449a9d19c2fbbeba0b28
-msgid "ElggGroup"
-msgstr ""
-
-#: ../../design/database.rst:143
-# ebeb215667c24f08be3c96734a079a57
-msgid "The ``ElggGroup`` entity type represents an association of Elgg users. Users can join, leave, and post content to groups."
-msgstr ""
-
-#: ../../design/database.rst:146
-# b785ae369dae4234bebfded9acbc7035
-msgid "Beyond the standard ElggEntity properties, ElggGroups also support:"
-msgstr ""
-
-#: ../../design/database.rst:148
-# ba332eec2e8d47ae882e56375a925506
-msgid "``name`` The group's name (HTML escaped text)"
-msgstr ""
-
-#: ../../design/database.rst:149
-# e47eba15014d4380bcb053ec3bb18f26
-msgid "``description`` A description of the group (HTML)"
-msgstr ""
-
-#: ../../design/database.rst:151
-# 15faf40985374875859f3ac0df2460cd
-msgid "``ElggGroup`` has addition methods to manage content and membership."
-msgstr ""
-
-#: ../../design/database.rst:154
-# c527491054d242f2ba6445a14a69a42b
-msgid "The Groups plugin"
-msgstr ""
-
-#: ../../design/database.rst:156
-# 3fd6e16d927f494bb5695b42c67432ac
-msgid "Not to be confused with the entity type ``ElggGroup``, Elgg comes with a plugin called \"Groups\" that provides a default UI/UX for site users to interact with groups. Each group is given a discussion forum and a profile page linking users to content within the group."
-msgstr ""
-
-#: ../../design/database.rst:161
-# 666ea5d239d249e39a1a68813ee614de
-msgid "You can alter the user experience via the traditional means of extending plugins or completely replace the Groups plugin with your own."
-msgstr ""
-
-#: ../../design/database.rst:164
-# b9d4ac65a4aa4084894268dadf638143
-msgid "Because ``ElggGroup`` can be subtyped like all other ElggEntities, you can have multiple types of groups running on the same site."
-msgstr ""
-
-#: ../../design/database.rst:168
-# fb2a81cb816a45fd881af77823dc62fb
-msgid "Writing a group-aware plugin"
-msgstr ""
-
-#: ../../design/database.rst:170
-# fe52a5833b524a0fb7e89daa9288940e
-msgid "Plugin owners need not worry too much about writing group-aware functionality, but there are a few key points:"
-msgstr ""
-
-#: ../../design/database.rst:174
-# aed958c0811e42dfbcf33c011e2b4b41
-msgid "Adding content"
-msgstr ""
-
-#: ../../design/database.rst:176
-# 468008eaf0604a46a773a35766b08aad
-msgid "By passing along the group as ``container_guid`` via a hidden input field, you can use a single form and action to add both user and group content."
-msgstr ""
-
-#: ../../design/database.rst:179
-# faf53790d53d49338cf469be7d6af2ae
-msgid "Use `can_write_to_container <http://reference.elgg.org/entities_8php.html#16a972909c7cb75f646cb707be001a6f>`_ to determine whether or not the current user has the right to add content to a group."
-msgstr ""
-
-#: ../../design/database.rst:184
-# b4ce4b0da747468ba39e9eef4ab029b1
-msgid "Be aware that you will then need to pass the container GUID or username to the page responsible for posting and the accompanying value, so that this can then be stored in your form as a hidden input field, for easy passing to your actions. Within a \"create\" action, you'll need to take in this input field and save it as a property of your new element (defaulting to the current user's container):"
-msgstr ""
-
-#: ../../design/database.rst:212
-# 443559cbc06e4c729fac81a37458701d
-msgid "Usernames and page ownership"
-msgstr ""
-
-#: ../../design/database.rst:214
-# a2183ba45c0545c3b10ad05168848296
-msgid "Groups have a simulated username of the form *group:\\ GUID*, which you can get the value of by checking ``$group->username``. If you pass this username to a page on the URL line as part of the ``username`` variable (i.e., ``/yourpage?username=group:nnn``), Elgg will automatically register that group as being the owner of the page (unless overridden)."
-msgstr ""
-
-#: ../../design/database.rst:221
-# fa1a66255a8b49318e35edd420fd757a
-msgid "Juggling users and groups"
-msgstr ""
-
-#: ../../design/database.rst:223
-# 15777328f91b46a78a4c425f92dc0474
-msgid "In fact, ``[[Engine/DataModel/Entities/ElggGroup|ElggGroup]]`` simulates most of the methods of ``[[Engine/DataModel/Entities/ElggUser|ElggUser]]``. You can grab the icon, name etc using the same calls, and if you ask for a group's friends, you'll get its members. This has been designed specifically for you to alternate between groups and users in your code easily."
-msgstr ""
-
-#: ../../design/database.rst:231
-# 5b77da8077b34921b4871f0a478c1151
-msgid "Menu options"
-msgstr ""
-
-#: ../../design/database.rst:233
-# aa0d46417bbd44e48d40a956a96f5684
-msgid "***This section is deprecated as of Elgg 1.8***"
-msgstr ""
-
-#: ../../design/database.rst:235
-# 75bee423c47b4c5ab006e0ea136f74a6
-msgid "The final piece of the puzzle, for default groups, is to add a link to your functionality from the group's profile. Here we'll use the file plugin as an example."
-msgstr ""
-
-#: ../../design/database.rst:239
-# 843528299781465ab0c586aac2721584
-msgid "This involves creating a view within your plugin - in this case file/menu - which will extend the group's menu. File/menu consists of a link within paragraph tags that points to the file repository of the page\\_owner():"
-msgstr ""
-
-#: ../../design/database.rst:252
-# 23c3bf0218fe47fc8558b4f1e7603ec9
-msgid "You can then extend the group's menu view with this one, within your plugin's input function (in this case file\\_init):"
-msgstr ""
-
-#: ../../design/database.rst:260
-# d880d853eb254724bd63a97c38bff3c3
-msgid "Ownership"
-msgstr ""
-
-#: ../../design/database.rst:262
-# acbe15c76c604483965f03e7d0c0ed18
-msgid "Entities have a ``owner_guid`` GUID property, which defines its owner. Typically this refers to the GUID of a user, although sites and users themselves often have no owner (a value of 0)."
-msgstr ""
-
-#: ../../design/database.rst:266
-# 2fc08eaa4aa64c6d97cebc0de3528bde
-msgid "The ownership of an entity dictates, in part, whether or not you can access or edit that entity."
-msgstr ""
-
-#: ../../design/database.rst:270
-# b4994f2da576495fadf631472ba79a1f
-msgid "Containers"
-msgstr ""
-
-#: ../../design/database.rst:272
-# aafab7055a7442f59bfa427176f3d919
-msgid "In order to easily search content by group or by user, content is generally set to be \"contained\" by either the user who posted it, or the group to which the user posted. This means the new object's ``container_guid`` property will be set to the GUID of the current ElggUser or the target ElggGroup."
-msgstr ""
-
-#: ../../design/database.rst:277
-# bad779263e4b46ab98a046eb06a1ac00
-msgid "E.g., three blog posts may be owned by different authors, but all be contained by the group they were posted to."
-msgstr ""
-
-#: ../../design/database.rst:280
-# ce9e495a5b994346ad740c3812005683
-msgid "Note: This is not always true. Comment entities are contained by the object commented upon, and in some 3rd party plugins the container may be used to model a parent-child relationship between entities (e.g. a \"folder\" object containing a file object)."
-msgstr ""
-
-#: ../../design/database.rst:286
-# 83652d4dd88047f780de3f038ab3b5fa
-msgid "Annotations"
-msgstr ""
-
-#: ../../design/database.rst:288
-# 5ceb9326a5ba4d999812e69d9df55b28
-msgid "Annotations are pieces of data attached to an entity that allow users to leave ratings, or other relevant feedback. A poll plugin might register votes as annotations. Before Elgg 1.9, comments and group discussion replies were stored as annotations."
-msgstr ""
-
-#: ../../design/database.rst:293
-# 1c8d0c4e1ead4a63b560d1c38ead6168
-msgid "Annotations are stored as instances of the ``ElggAnnotation`` class."
-msgstr ""
-
-#: ../../design/database.rst:295
-# 21bb8bd6d37a4bca80b7fc23d93c162d
-msgid "Each annotation has:"
-msgstr ""
-
-#: ../../design/database.rst:297
-# deb09c0b77b34803b2d2a2005e89c1d5
-msgid "An internal annotation type (like *comment*)"
-msgstr ""
-
-#: ../../design/database.rst:298
-# b6beb5fc88374e4194ccfb358d065744
-msgid "A value (which can be a string or integer)"
-msgstr ""
-
-#: ../../design/database.rst:299
-# e311408af0d44cdd87cf8b0c0727aa7c
-msgid "An access permission distinct from the entity it's attached to"
-msgstr ""
-
-#: ../../design/database.rst:300
-# 6f2489980ced45dfb467f0ce05bfa4c3
-msgid "An owner"
-msgstr ""
-
-#: ../../design/database.rst:303
-# 1e410757ecac45058e477f25d02a067d
-msgid "Adding an annotation"
-msgstr ""
-
-#: ../../design/database.rst:305
-# c9be8f687c564ee6ac3a0943de054658
-msgid "The easiest way to annotate is to use the ``annotate`` method on an entity, which is defined as:"
-msgstr ""
-
-#: ../../design/database.rst:318
-# 0e9b2328d8154ea7bce48d6385e7e88f
-msgid "For example, to leave a rating on an entity, you might call:"
-msgstr ""
-
-#: ../../design/database.rst:325
-# 0663d237b5974e6696fd21954aa539b5
-msgid "Reading annotations"
-msgstr ""
-
-#: ../../design/database.rst:327
-# 0d511864e3174930b798cdaab42fd66c
-msgid "To retrieve annotations on an object, you can call the following method:"
-msgstr ""
-
-#: ../../design/database.rst:338
-# 94625a58748e41e4ade36b9eb399229f
-msgid "If your annotation type largely deals with integer values, a couple of useful mathematical functions are provided:"
-msgstr ""
-
-#: ../../design/database.rst:349
-# e0825c9ea5114aaa9718fe7ceb175c2f
-msgid "Useful helper functions"
-msgstr ""
-
-#: ../../design/database.rst:352
-# 3c7b698808b144cdbb8a617d234364f8
-msgid "Comments"
-msgstr ""
-
-#: ../../design/database.rst:354
-# 2626b7447af4481f90b38732c49a7314
-msgid "If you want to provide comment functionality on your plugin objects, the following function will provide the full listing, form and actions:"
-msgstr ""
-
-#: ../../design/database.rst:363
-# a4a38430382449f5bfbf9072982ed7e6
-msgid "Metadata"
-msgstr ""
-
-#: ../../design/database.rst:365
-# a7e67d5efa7441bab182b8d837519e78
-msgid "Metadata in Elgg allows you to store extra data on an ``entity`` beyond the built-in fields that entity supports. For example, ``ElggObjects`` only support the basic entity fields plus title and description, but you might want to include tags or an ISBN number. Similarly, you might want users to be able to save a date of birth."
-msgstr ""
-
-#: ../../design/database.rst:371
-# 1bd39b37905c4a40ba36aa75ee043d07
-msgid "Under the hood, metadata is stored as an instance of the ``ElggMetadata`` class, but you don't need to worry about that in practice (although if you're interested, see the ``ElggMetadata`` class reference). What you need to know is:"
-msgstr ""
-
-#: ../../design/database.rst:376
-# 124c934165554c95b1059186bf61251d
-msgid "Metadata has an owner and access ID, both of which may be different to the owner of the entity it's attached to"
-msgstr ""
-
-#: ../../design/database.rst:378
-# 1e39a0b056294e58946499fdd252c4cb
-msgid "You can potentially have multiple items of each type of metadata attached to a single entity"
-msgstr ""
-
-#: ../../design/database.rst:382
-# 44a2cf96d4a94508a43fd43b42e2267b
-msgid "The simple case"
-msgstr ""
-
-#: ../../design/database.rst:385
-#: ../../design/database.rst:454
-# 85281b7c06d84996be71cb7bb7cbc362
-# 2bdde01bd7f04726940f112a251798e7
-msgid "Adding metadata"
-msgstr ""
-
-#: ../../design/database.rst:387
-# d0774e612d524326888a871173b8c410
-msgid "To add a piece of metadata to an entity, just call:"
-msgstr ""
-
-#: ../../design/database.rst:393
-# 608c2429225742a9b1b6c28f4e639c64
-msgid "For example, to add a date of birth to a user:"
-msgstr ""
-
-#: ../../design/database.rst:399
-# 828319a95b1445f5920692a76b6e1d66
-msgid "Or to add a couple of tags to an object:"
-msgstr ""
-
-#: ../../design/database.rst:405
-# b70ea560e19d404380e120e24cc910b5
-msgid "When adding metadata like this:"
-msgstr ""
-
-#: ../../design/database.rst:407
-# f945c74b2eff453bbadd2b8a6b604e54
-msgid "The owner is set to the currently logged-in user"
-msgstr ""
-
-#: ../../design/database.rst:408
-# c9d9950340244fae800259957462e53e
-msgid "Access permissions are inherited from the entity"
-msgstr ""
-
-#: ../../design/database.rst:409
-# 7bc1ab6f494c49c48b8d252befc4e267
-msgid "Reassigning a piece of metadata will overwrite the old value"
-msgstr ""
-
-#: ../../design/database.rst:411
-# 48c6fcb60e0b4b33afe43686720e3500
-msgid "This is suitable for most purposes. Be careful to note which attributes are metadata and which are built in to the entity type that you are working with. You do not need to save an entity after adding or updating metadata. You do need to save an entity if you have changed one of its built in attributes. As an example, if you changed the access id of an ElggObject, you need to save it or the change isn't pushed to the database."
-msgstr ""
-
-#: ../../design/database.rst:420
-#: ../../design/database.rst:496
-# b50268c35b874a64a3a93ce0faeeb3c8
-# 281e013f2d7c487790c82a0c27d4dd7c
-msgid "Reading metadata"
-msgstr ""
-
-#: ../../design/database.rst:422
-# 330f42c9eb1f4d11bc3e97106dffefe6
-msgid "To retrieve metadata, treat it as a property of the entity:"
-msgstr ""
-
-#: ../../design/database.rst:428
-# fcf62aa2214f41218abfb34cdf777095
-msgid "Note that this will return the absolute value of the metadata. To get metadata as an ElggMetadata object, you will need to use the methods described in the *finer control* section below."
-msgstr ""
-
-#: ../../design/database.rst:432
-# 8e59fde5f8214e75a324aa5789d6f6f2
-msgid "If you stored multiple values in this piece of metadata (as in the \"tags\" example above), you will get an array of all those values back. If you stored only one value, you will get a string or integer back. Storing an array with only one value will return a string back to you. E.g."
-msgstr ""
-
-#: ../../design/database.rst:444
-# 73ac053ab2df468291d8025c324801f0
-msgid "To always get an array back, simply cast to an array;"
-msgstr ""
-
-#: ../../design/database.rst:451
-# 4a45e9785e4949faa22267703f861a89
-msgid "Finer control"
-msgstr ""
-
-#: ../../design/database.rst:456
-# a0a04d6fc8704f72b646e41060bd0621
-msgid "If you need more control, for example to assign an access ID other than the default, you can use the ``create_metadata`` function, which is defined as follows:"
-msgstr ""
-
-#: ../../design/database.rst:472
-# ac76ffd908c342a7b4cbbd42fcde7fdc
-msgid "For single values, you can therefore write metadata as follows (taking the example of a date of birth attached to a user):"
-msgstr ""
-
-#: ../../design/database.rst:479
-# f3e70d3346b446ae91d14afed59a29b2
-msgid "For multiple values, you will need to iterate through and call ``create_metadata`` on each one. The following piece of code comes from the profile save action:"
-msgstr ""
-
-#: ../../design/database.rst:492
-# 60408c0e72214dfd9e41f7d069dd1458
-msgid "Note that the *allow multiple* setting is set to *false* in the first iteration and *true* thereafter."
-msgstr ""
-
-#: ../../design/database.rst:498
-# 736c91690ee343d0b9b86cacdc0fb5d7
-msgid "``elgg_get_metadata`` is the best function for retrieving metadata as ElggMetadata objects:"
-msgstr ""
-
-#: ../../design/database.rst:501
-# d13c21e4b29347e4a0323d84da38666f
-msgid "E.g., to retrieve a user's DOB"
-msgstr ""
-
-#: ../../design/database.rst:510
-# 481646bcd1ea4b6f8f36b79a2d375f86
-msgid "Or to get all metadata objects:"
-msgstr ""
-
-#: ../../design/database.rst:522
-# ad385d8784504759be33d4a328a6244b
-msgid "Common mistakes"
-msgstr ""
-
-#: ../../design/database.rst:525
-# f222e407a0244b5c81fee5b387667481
-msgid "\"Appending\" metadata"
-msgstr ""
-
-#: ../../design/database.rst:527
-# ab2e95d4029a44489c285e3009ecc6eb
-msgid "Note that you cannot \"append\" values to metadata arrays as if they were normal php arrays. For example, the following will not do what it looks like it should do."
-msgstr ""
-
-#: ../../design/database.rst:536
-# 0280cb1f92ab4b05a574264409c11570
-msgid "Trying to store hashmaps"
-msgstr ""
-
-#: ../../design/database.rst:538
-# 86597055e57845c5855702f0138f93a1
-msgid "Elgg does not support storing ordered maps (name/value pairs) in metadata. For example, the following does not work as you might first expect it to:"
-msgstr ""
-
-#: ../../design/database.rst:547
-# 7ffadcaeca824afdbe729f1f9dc42d57
-msgid "You can instead store the information like so:"
-msgstr ""
-
-#: ../../design/database.rst:556
-# 1e06f63ca6d845ada323336d4df54849
-msgid "Storing GUIDs in metadata"
-msgstr ""
-
-#: ../../design/database.rst:558
-# a8292d1de27f40899f49e476411694fb
-msgid "Though there are some cases to store entity GUIDs in metadata, `Relationships`_ are a much better construct for relating entities to each other."
-msgstr ""
-
-#: ../../design/database.rst:563
-# 67ecc84dbb234421be567b93c6e9bb69
-msgid "Relationships"
-msgstr ""
-
-#: ../../design/database.rst:565
-# 7368889e0a4e41c9bf5c1813e5841807
-msgid "Relationships allow you to bind entities together. Examples: an artist has fans, a user is a member of an organization, etc."
-msgstr ""
-
-#: ../../design/database.rst:568
-# 8d2337a082b6435dacac024166d1699e
-msgid "The class ``ElggRelationship`` models a directed relationship between two entities, making the statement:"
-msgstr ""
-
-#: ../../design/database.rst:571
-# 37667b0c27484b58b2feda539b365706
-msgid "\"**{subject}** is a **{noun}** of **{target}**.\""
-msgstr ""
-
-#: ../../design/database.rst:574
-# aab10a94dee74d9b8891a807bea766bb
-msgid "API name"
-msgstr ""
-
-#: ../../design/database.rst:574
-# ee10bd1599aa4949ad6f33511c9116bb
-msgid "Models"
-msgstr ""
-
-#: ../../design/database.rst:574
-# 312420f392c24e239ae04b08b2083ad6
+#: ../../design/database.rst:69
+#: ../../design/database.rst:594
 msgid "Represents"
 msgstr ""
 
-#: ../../design/database.rst:576
-# 7c31bfb111d44d24829280353929352a
-msgid "``guid_one``"
+#: ../../design/database.rst:71
+msgid "object"
+msgstr ""
+
+#: ../../design/database.rst:71
+msgid "``ElggObject``"
+msgstr ""
+
+#: ../../design/database.rst:71
+msgid "Most user-created content, like blog posts, uploads, and bookmarks."
+msgstr ""
+
+#: ../../design/database.rst:72
+msgid "group"
+msgstr ""
+
+#: ../../design/database.rst:72
+msgid "``ElggGroup``"
+msgstr ""
+
+#: ../../design/database.rst:72
+msgid "An organized group of users with its own profile page"
+msgstr ""
+
+#: ../../design/database.rst:73
+msgid "user"
+msgstr ""
+
+#: ../../design/database.rst:73
+msgid "``ElggUser``"
+msgstr ""
+
+#: ../../design/database.rst:73
+msgid "A system user"
+msgstr ""
+
+#: ../../design/database.rst:74
+msgid "site"
+msgstr ""
+
+#: ../../design/database.rst:74
+msgid "``ElggSite``"
+msgstr ""
+
+#: ../../design/database.rst:74
+msgid "The site served by the Elgg installation"
+msgstr ""
+
+#: ../../design/database.rst:77
+msgid "Each has its own extended API. E.g. objects have a ``title`` and ``description``, users have a ``username`` and a way to set their password, and so on."
+msgstr ""
+
+#: ../../design/database.rst:81
+msgid "Subtypes"
+msgstr ""
+
+#: ../../design/database.rst:83
+msgid "Each entity also has a custom string **subtype**, which plugins use to further specialize the entity. Elgg makes it easy to query specific subtypes as well as assign them special behaviors and views."
+msgstr ""
+
+#: ../../design/database.rst:86
+msgid "Subtypes are most commonly given to instances of ElggObject to denote the kind of content created. E.g. the blog plugin creates objects with subtype ``\"blog\"``."
+msgstr ""
+
+#: ../../design/database.rst:89
+msgid "For historic reasons, the subtype API is a bit complex, but boils down to: write to ``->subtype`` before saving, otherwise always read ``getSubtype()``. Below are more details."
+msgstr ""
+
+#: ../../design/database.rst:93
+msgid "Subtype Gotchas"
+msgstr ""
+
+#: ../../design/database.rst:95
+msgid "Before an entity's ``save()`` method is called, the subtype can be set by writing a string to the ``subtype`` property."
+msgstr ""
+
+#: ../../design/database.rst:97
+msgid "*Subtype cannot be changed after saving.*"
+msgstr ""
+
+#: ../../design/database.rst:98
+msgid "After saving, you must always use ``getSubtype()`` to read it."
+msgstr ""
+
+#: ../../design/database.rst:99
+msgid "If no subtype was set, ``\"\"`` is returned, however some parts of the Elgg API (like Views) may map this value to the string ``\"default\"``. E.g. a group with ``getSubtype() === \"\"`` will be rendered using the view ``\"group/default\"``."
+msgstr ""
+
+#: ../../design/database.rst:102
+msgid "Read carefully the documentation for ``elgg_get_entities()`` before trying to match subtypes; this"
+msgstr ""
+
+#: ../../design/database.rst:103
+msgid "API is a bit of a minefield. E.g. you cannot use ``\"\"`` to fetch entities with the default subtype."
+msgstr ""
+
+#: ../../design/database.rst:106
+msgid "GUIDs"
+msgstr ""
+
+#: ../../design/database.rst:108
+msgid "A GUID is an integer that uniquely identifies every entity in an Elgg installation (a Globally Unique IDentifier). It's assigned automatically when the entity is first saved and can never be changed."
+msgstr ""
+
+#: ../../design/database.rst:112
+msgid "Some Elgg API functions work with GUIDs instead of ``ElggEntity`` objects."
+msgstr ""
+
+#: ../../design/database.rst:115
+msgid "ElggObject"
+msgstr ""
+
+#: ../../design/database.rst:117
+msgid "The ``ElggObject`` entity type represents arbitrary content within an Elgg install; things like blog posts, uploaded files, etc."
+msgstr ""
+
+#: ../../design/database.rst:120
+msgid "Beyond the standard ElggEntity properties, ElggObjects also support:"
+msgstr ""
+
+#: ../../design/database.rst:122
+msgid "``title`` The title of the object (HTML escaped text)"
+msgstr ""
+
+#: ../../design/database.rst:123
+msgid "``description`` A description of the object (HTML)"
+msgstr ""
+
+#: ../../design/database.rst:125
+msgid "Most other data about the object is generally stored via metadata."
+msgstr ""
+
+#: ../../design/database.rst:128
+msgid "ElggUser"
+msgstr ""
+
+#: ../../design/database.rst:130
+msgid "The ``ElggUser`` entity type represents users within an Elgg install. These will be set to disabled until their accounts have been activated (unless they were created from within the admin panel)."
+msgstr ""
+
+#: ../../design/database.rst:134
+msgid "Beyond the standard ElggEntity properties, ElggUsers also support:"
+msgstr ""
+
+#: ../../design/database.rst:136
+msgid "``name`` The user's plain text name. e.g. \"Hugh Jackman\""
+msgstr ""
+
+#: ../../design/database.rst:137
+msgid "``username`` Their login name. E.g. \"hjackman\""
+msgstr ""
+
+#: ../../design/database.rst:138
+msgid "``password`` A hashed version of their password"
+msgstr ""
+
+#: ../../design/database.rst:139
+msgid "``salt`` The salt that their password has been hashed with"
+msgstr ""
+
+#: ../../design/database.rst:140
+msgid "``email`` Their email address"
+msgstr ""
+
+#: ../../design/database.rst:141
+msgid "``language`` Their default language code."
+msgstr ""
+
+#: ../../design/database.rst:142
+msgid "``code`` Their session code (moved to a separate table in 1.9)."
+msgstr ""
+
+#: ../../design/database.rst:143
+msgid "``last_action`` The UNIX timestamp of the last time they loaded a page"
+msgstr ""
+
+#: ../../design/database.rst:144
+msgid "``prev_last_action`` The previous value of ``last_action``"
+msgstr ""
+
+#: ../../design/database.rst:145
+msgid "``last_login`` The UNIX timestamp of their last log in"
+msgstr ""
+
+#: ../../design/database.rst:146
+msgid "``prev_last_login`` the previous value of ``last_login``"
+msgstr ""
+
+#: ../../design/database.rst:149
+msgid "ElggSite"
+msgstr ""
+
+#: ../../design/database.rst:151
+msgid "The ``ElggSite`` entity type represents sites within your Elgg install. Most installs will have only one."
+msgstr ""
+
+#: ../../design/database.rst:154
+msgid "Beyond the standard ElggEntity properties, ElggSites also support:"
+msgstr ""
+
+#: ../../design/database.rst:156
+msgid "``name`` The site name"
+msgstr ""
+
+#: ../../design/database.rst:157
+msgid "``description`` A description of the site"
+msgstr ""
+
+#: ../../design/database.rst:158
+msgid "``url`` The address of the site"
+msgstr ""
+
+#: ../../design/database.rst:161
+msgid "ElggGroup"
+msgstr ""
+
+#: ../../design/database.rst:163
+msgid "The ``ElggGroup`` entity type represents an association of Elgg users. Users can join, leave, and post content to groups."
+msgstr ""
+
+#: ../../design/database.rst:166
+msgid "Beyond the standard ElggEntity properties, ElggGroups also support:"
+msgstr ""
+
+#: ../../design/database.rst:168
+msgid "``name`` The group's name (HTML escaped text)"
+msgstr ""
+
+#: ../../design/database.rst:169
+msgid "``description`` A description of the group (HTML)"
+msgstr ""
+
+#: ../../design/database.rst:171
+msgid "``ElggGroup`` has addition methods to manage content and membership."
+msgstr ""
+
+#: ../../design/database.rst:174
+msgid "The Groups plugin"
+msgstr ""
+
+#: ../../design/database.rst:176
+msgid "Not to be confused with the entity type ``ElggGroup``, Elgg comes with a plugin called \"Groups\" that provides a default UI/UX for site users to interact with groups. Each group is given a discussion forum and a profile page linking users to content within the group."
+msgstr ""
+
+#: ../../design/database.rst:181
+msgid "You can alter the user experience via the traditional means of extending plugins or completely replace the Groups plugin with your own."
+msgstr ""
+
+#: ../../design/database.rst:184
+msgid "Because ``ElggGroup`` can be subtyped like all other ElggEntities, you can have multiple types of groups running on the same site."
+msgstr ""
+
+#: ../../design/database.rst:188
+msgid "Writing a group-aware plugin"
+msgstr ""
+
+#: ../../design/database.rst:190
+msgid "Plugin owners need not worry too much about writing group-aware functionality, but there are a few key points:"
+msgstr ""
+
+#: ../../design/database.rst:194
+msgid "Adding content"
+msgstr ""
+
+#: ../../design/database.rst:196
+msgid "By passing along the group as ``container_guid`` via a hidden input field, you can use a single form and action to add both user and group content."
+msgstr ""
+
+#: ../../design/database.rst:199
+msgid "Use `can_write_to_container <http://reference.elgg.org/entities_8php.html#16a972909c7cb75f646cb707be001a6f>`_ to determine whether or not the current user has the right to add content to a group."
+msgstr ""
+
+#: ../../design/database.rst:204
+msgid "Be aware that you will then need to pass the container GUID or username to the page responsible for posting and the accompanying value, so that this can then be stored in your form as a hidden input field, for easy passing to your actions. Within a \"create\" action, you'll need to take in this input field and save it as a property of your new element (defaulting to the current user's container):"
+msgstr ""
+
+#: ../../design/database.rst:232
+msgid "Usernames and page ownership"
+msgstr ""
+
+#: ../../design/database.rst:234
+msgid "Groups have a simulated username of the form *group:\\ GUID*, which you can get the value of by checking ``$group->username``. If you pass this username to a page on the URL line as part of the ``username`` variable (i.e., ``/yourpage?username=group:nnn``), Elgg will automatically register that group as being the owner of the page (unless overridden)."
+msgstr ""
+
+#: ../../design/database.rst:241
+msgid "Juggling users and groups"
+msgstr ""
+
+#: ../../design/database.rst:243
+msgid "In fact, ``[[Engine/DataModel/Entities/ElggGroup|ElggGroup]]`` simulates most of the methods of ``[[Engine/DataModel/Entities/ElggUser|ElggUser]]``. You can grab the icon, name etc using the same calls, and if you ask for a group's friends, you'll get its members. This has been designed specifically for you to alternate between groups and users in your code easily."
+msgstr ""
+
+#: ../../design/database.rst:251
+msgid "Menu options"
+msgstr ""
+
+#: ../../design/database.rst:253
+msgid "***This section is deprecated as of Elgg 1.8***"
+msgstr ""
+
+#: ../../design/database.rst:255
+msgid "The final piece of the puzzle, for default groups, is to add a link to your functionality from the group's profile. Here we'll use the file plugin as an example."
+msgstr ""
+
+#: ../../design/database.rst:259
+msgid "This involves creating a view within your plugin - in this case file/menu - which will extend the group's menu. File/menu consists of a link within paragraph tags that points to the file repository of the page\\_owner():"
+msgstr ""
+
+#: ../../design/database.rst:272
+msgid "You can then extend the group's menu view with this one, within your plugin's input function (in this case file\\_init):"
+msgstr ""
+
+#: ../../design/database.rst:280
+msgid "Ownership"
+msgstr ""
+
+#: ../../design/database.rst:282
+msgid "Entities have a ``owner_guid`` GUID property, which defines its owner. Typically this refers to the GUID of a user, although sites and users themselves often have no owner (a value of 0)."
+msgstr ""
+
+#: ../../design/database.rst:286
+msgid "The ownership of an entity dictates, in part, whether or not you can access or edit that entity."
+msgstr ""
+
+#: ../../design/database.rst:290
+msgid "Containers"
+msgstr ""
+
+#: ../../design/database.rst:292
+msgid "In order to easily search content by group or by user, content is generally set to be \"contained\" by either the user who posted it, or the group to which the user posted. This means the new object's ``container_guid`` property will be set to the GUID of the current ElggUser or the target ElggGroup."
+msgstr ""
+
+#: ../../design/database.rst:297
+msgid "E.g., three blog posts may be owned by different authors, but all be contained by the group they were posted to."
+msgstr ""
+
+#: ../../design/database.rst:300
+msgid "Note: This is not always true. Comment entities are contained by the object commented upon, and in some 3rd party plugins the container may be used to model a parent-child relationship between entities (e.g. a \"folder\" object containing a file object)."
+msgstr ""
+
+#: ../../design/database.rst:306
+msgid "Annotations"
+msgstr ""
+
+#: ../../design/database.rst:308
+msgid "Annotations are pieces of data attached to an entity that allow users to leave ratings, or other relevant feedback. A poll plugin might register votes as annotations. Before Elgg 1.9, comments and group discussion replies were stored as annotations."
+msgstr ""
+
+#: ../../design/database.rst:313
+msgid "Annotations are stored as instances of the ``ElggAnnotation`` class."
+msgstr ""
+
+#: ../../design/database.rst:315
+msgid "Each annotation has:"
+msgstr ""
+
+#: ../../design/database.rst:317
+msgid "An internal annotation type (like *comment*)"
+msgstr ""
+
+#: ../../design/database.rst:318
+msgid "A value (which can be a string or integer)"
+msgstr ""
+
+#: ../../design/database.rst:319
+msgid "An access permission distinct from the entity it's attached to"
+msgstr ""
+
+#: ../../design/database.rst:320
+msgid "An owner"
+msgstr ""
+
+#: ../../design/database.rst:323
+msgid "Adding an annotation"
+msgstr ""
+
+#: ../../design/database.rst:325
+msgid "The easiest way to annotate is to use the ``annotate`` method on an entity, which is defined as:"
+msgstr ""
+
+#: ../../design/database.rst:338
+msgid "For example, to leave a rating on an entity, you might call:"
+msgstr ""
+
+#: ../../design/database.rst:345
+msgid "Reading annotations"
+msgstr ""
+
+#: ../../design/database.rst:347
+msgid "To retrieve annotations on an object, you can call the following method:"
+msgstr ""
+
+#: ../../design/database.rst:358
+msgid "If your annotation type largely deals with integer values, a couple of useful mathematical functions are provided:"
+msgstr ""
+
+#: ../../design/database.rst:369
+msgid "Useful helper functions"
+msgstr ""
+
+#: ../../design/database.rst:372
+msgid "Comments"
+msgstr ""
+
+#: ../../design/database.rst:374
+msgid "If you want to provide comment functionality on your plugin objects, the following function will provide the full listing, form and actions:"
+msgstr ""
+
+#: ../../design/database.rst:383
+msgid "Metadata"
+msgstr ""
+
+#: ../../design/database.rst:385
+msgid "Metadata in Elgg allows you to store extra data on an ``entity`` beyond the built-in fields that entity supports. For example, ``ElggObjects`` only support the basic entity fields plus title and description, but you might want to include tags or an ISBN number. Similarly, you might want users to be able to save a date of birth."
+msgstr ""
+
+#: ../../design/database.rst:391
+msgid "Under the hood, metadata is stored as an instance of the ``ElggMetadata`` class, but you don't need to worry about that in practice (although if you're interested, see the ``ElggMetadata`` class reference). What you need to know is:"
+msgstr ""
+
+#: ../../design/database.rst:396
+msgid "Metadata has an owner and access ID, both of which may be different to the owner of the entity it's attached to"
+msgstr ""
+
+#: ../../design/database.rst:398
+msgid "You can potentially have multiple items of each type of metadata attached to a single entity"
+msgstr ""
+
+#: ../../design/database.rst:402
+msgid "The simple case"
+msgstr ""
+
+#: ../../design/database.rst:405
+#: ../../design/database.rst:474
+msgid "Adding metadata"
+msgstr ""
+
+#: ../../design/database.rst:407
+msgid "To add a piece of metadata to an entity, just call:"
+msgstr ""
+
+#: ../../design/database.rst:413
+msgid "For example, to add a date of birth to a user:"
+msgstr ""
+
+#: ../../design/database.rst:419
+msgid "Or to add a couple of tags to an object:"
+msgstr ""
+
+#: ../../design/database.rst:425
+msgid "When adding metadata like this:"
+msgstr ""
+
+#: ../../design/database.rst:427
+msgid "The owner is set to the currently logged-in user"
+msgstr ""
+
+#: ../../design/database.rst:428
+msgid "Access permissions are inherited from the entity"
+msgstr ""
+
+#: ../../design/database.rst:429
+msgid "Reassigning a piece of metadata will overwrite the old value"
+msgstr ""
+
+#: ../../design/database.rst:431
+msgid "This is suitable for most purposes. Be careful to note which attributes are metadata and which are built in to the entity type that you are working with. You do not need to save an entity after adding or updating metadata. You do need to save an entity if you have changed one of its built in attributes. As an example, if you changed the access id of an ElggObject, you need to save it or the change isn't pushed to the database."
+msgstr ""
+
+#: ../../design/database.rst:440
+#: ../../design/database.rst:516
+msgid "Reading metadata"
+msgstr ""
+
+#: ../../design/database.rst:442
+msgid "To retrieve metadata, treat it as a property of the entity:"
+msgstr ""
+
+#: ../../design/database.rst:448
+msgid "Note that this will return the absolute value of the metadata. To get metadata as an ElggMetadata object, you will need to use the methods described in the *finer control* section below."
+msgstr ""
+
+#: ../../design/database.rst:452
+msgid "If you stored multiple values in this piece of metadata (as in the \"tags\" example above), you will get an array of all those values back. If you stored only one value, you will get a string or integer back. Storing an array with only one value will return a string back to you. E.g."
+msgstr ""
+
+#: ../../design/database.rst:464
+msgid "To always get an array back, simply cast to an array;"
+msgstr ""
+
+#: ../../design/database.rst:471
+msgid "Finer control"
+msgstr ""
+
+#: ../../design/database.rst:476
+msgid "If you need more control, for example to assign an access ID other than the default, you can use the ``create_metadata`` function, which is defined as follows:"
+msgstr ""
+
+#: ../../design/database.rst:492
+msgid "For single values, you can therefore write metadata as follows (taking the example of a date of birth attached to a user):"
+msgstr ""
+
+#: ../../design/database.rst:499
+msgid "For multiple values, you will need to iterate through and call ``create_metadata`` on each one. The following piece of code comes from the profile save action:"
+msgstr ""
+
+#: ../../design/database.rst:512
+msgid "Note that the *allow multiple* setting is set to *false* in the first iteration and *true* thereafter."
+msgstr ""
+
+#: ../../design/database.rst:518
+msgid "``elgg_get_metadata`` is the best function for retrieving metadata as ElggMetadata objects:"
+msgstr ""
+
+#: ../../design/database.rst:521
+msgid "E.g., to retrieve a user's DOB"
+msgstr ""
+
+#: ../../design/database.rst:530
+msgid "Or to get all metadata objects:"
+msgstr ""
+
+#: ../../design/database.rst:542
+msgid "Common mistakes"
+msgstr ""
+
+#: ../../design/database.rst:545
+msgid "\"Appending\" metadata"
+msgstr ""
+
+#: ../../design/database.rst:547
+msgid "Note that you cannot \"append\" values to metadata arrays as if they were normal php arrays. For example, the following will not do what it looks like it should do."
+msgstr ""
+
+#: ../../design/database.rst:556
+msgid "Trying to store hashmaps"
+msgstr ""
+
+#: ../../design/database.rst:558
+msgid "Elgg does not support storing ordered maps (name/value pairs) in metadata. For example, the following does not work as you might first expect it to:"
+msgstr ""
+
+#: ../../design/database.rst:567
+msgid "You can instead store the information like so:"
 msgstr ""
 
 #: ../../design/database.rst:576
-# afecad5c7f2e411f87512c42ea680ee7
-msgid "The subject"
-msgstr ""
-
-#: ../../design/database.rst:576
-# 8a249516bc374ccb89ba71f3b8673578
-msgid "Which entity is being bound"
-msgstr ""
-
-#: ../../design/database.rst:577
-# 20bf513e29ad436da5d930b93fb36190
-msgid "``relationship``"
-msgstr ""
-
-#: ../../design/database.rst:577
-# 2684f0d7c2674445a58a6c18f50d6b6b
-msgid "The noun"
-msgstr ""
-
-#: ../../design/database.rst:577
-# 9278fd193ec34a9680f7cea6bb043742
-msgid "The type of relationship"
+msgid "Storing GUIDs in metadata"
 msgstr ""
 
 #: ../../design/database.rst:578
-# b846560e7ae64e268aa4d9a6a105eaa1
-msgid "``guid_two``"
-msgstr ""
-
-#: ../../design/database.rst:578
-# 515f194a6e274eaab66570f905fb9a76
-msgid "The target"
-msgstr ""
-
-#: ../../design/database.rst:578
-# 15fc1b609473451da089aa29d338fb2f
-msgid "The entity to which the subject is bound"
-msgstr ""
-
-#: ../../design/database.rst:581
-# ccd52740c1874bb680933e4fdaa25f7c
-msgid "The type of relationship may alternately be a verb, making the statement:"
+msgid "Though there are some cases to store entity GUIDs in metadata, `Relationships`_ are a much better construct for relating entities to each other."
 msgstr ""
 
 #: ../../design/database.rst:583
-# cb348b1cdd7b4ee6bcd58e009d41aedf
-msgid "\"**{subject}** **{verb}** **{target}**.\""
+msgid "Relationships"
 msgstr ""
 
 #: ../../design/database.rst:585
-# 6940747d28d144b5804d7089937bb4eb
-msgid "E.g. User A \"likes\" blog post B"
+msgid "Relationships allow you to bind entities together. Examples: an artist has fans, a user is a member of an organization, etc."
 msgstr ""
 
-#: ../../design/database.rst:587
-# e7d8dc676a4d4b33b6b32cd1464effe4
-msgid "**Each relationship has direction.** Imagine an archer shoots an arrow at a target; The arrow moves in one direction, binding the subject (the archer) to the target."
+#: ../../design/database.rst:588
+msgid "The class ``ElggRelationship`` models a directed relationship between two entities, making the statement:"
 msgstr ""
 
 #: ../../design/database.rst:591
-# 3413e661382a4cb2ba6de131b340f5e9
-msgid "**A relationship does not imply reciprocity**. **A** follows **B** does not imply that **B** follows **A**."
+msgid "\"**{subject}** is a **{noun}** of **{target}**.\""
 msgstr ""
 
 #: ../../design/database.rst:594
-# 47b57dbcd7904392aeeeec1b5a4e0cec
-msgid "**Relationships_ do not have access control.** They're never hidden from view and can be edited with code at any privilege level, with the caveat that *the entities* in a relationship may be invisible due to access control!"
+msgid "API name"
 msgstr ""
 
-#: ../../design/database.rst:600
-# 9d24766986024d31853eb761d9ede08d
-msgid "Working with relationships"
+#: ../../design/database.rst:594
+msgid "Models"
+msgstr ""
+
+#: ../../design/database.rst:596
+msgid "``guid_one``"
+msgstr ""
+
+#: ../../design/database.rst:596
+msgid "The subject"
+msgstr ""
+
+#: ../../design/database.rst:596
+msgid "Which entity is being bound"
+msgstr ""
+
+#: ../../design/database.rst:597
+msgid "``relationship``"
+msgstr ""
+
+#: ../../design/database.rst:597
+msgid "The noun"
+msgstr ""
+
+#: ../../design/database.rst:597
+msgid "The type of relationship"
+msgstr ""
+
+#: ../../design/database.rst:598
+msgid "``guid_two``"
+msgstr ""
+
+#: ../../design/database.rst:598
+msgid "The target"
+msgstr ""
+
+#: ../../design/database.rst:598
+msgid "The entity to which the subject is bound"
+msgstr ""
+
+#: ../../design/database.rst:601
+msgid "The type of relationship may alternately be a verb, making the statement:"
 msgstr ""
 
 #: ../../design/database.rst:603
-# fdb39b371b7b4420bfa909664359f6e8
-msgid "Creating a relationship"
+msgid "\"**{subject}** **{verb}** **{target}**.\""
 msgstr ""
 
 #: ../../design/database.rst:605
-# 19bf72e249dd48baa7d1e2dab630670c
+msgid "E.g. User A \"likes\" blog post B"
+msgstr ""
+
+#: ../../design/database.rst:607
+msgid "**Each relationship has direction.** Imagine an archer shoots an arrow at a target; The arrow moves in one direction, binding the subject (the archer) to the target."
+msgstr ""
+
+#: ../../design/database.rst:611
+msgid "**A relationship does not imply reciprocity**. **A** follows **B** does not imply that **B** follows **A**."
+msgstr ""
+
+#: ../../design/database.rst:614
+msgid "**Relationships_ do not have access control.** They're never hidden from view and can be edited with code at any privilege level, with the caveat that *the entities* in a relationship may be invisible due to access control!"
+msgstr ""
+
+#: ../../design/database.rst:620
+msgid "Working with relationships"
+msgstr ""
+
+#: ../../design/database.rst:623
+msgid "Creating a relationship"
+msgstr ""
+
+#: ../../design/database.rst:625
 msgid "E.g. to establish that \"**$user** is a **fan** of **$artist**\" (user is the subject, artist is the target):"
 msgstr ""
 
-#: ../../design/database.rst:616
-# edb50eea7625431db7d0b99d47f7d8fa
+#: ../../design/database.rst:636
 msgid "This triggers the event [create, relationship], passing in the created ``ElggRelationship`` object. If a handler returns ``false``, the relationship will not be created and ``$success`` will be ``false``."
 msgstr ""
 
-#: ../../design/database.rst:622
-# 478b1cc386824c9bbf55801ddb69b896
+#: ../../design/database.rst:642
 msgid "Verifying a relationship"
 msgstr ""
 
-#: ../../design/database.rst:624
-# 2c818342d6d84f44a28ffadda729e4e6
+#: ../../design/database.rst:644
 msgid "E.g. to verify that \"**$user** is a **fan** of **$artist**\":"
 msgstr ""
 
-#: ../../design/database.rst:632
-# d9ed9fc46f9446659e667d3a4497e116
+#: ../../design/database.rst:652
 msgid "Note that, if the relationship exists, ``check_entity_relationship()`` returns an ``ElggRelationship`` object:"
 msgstr ""
 
-#: ../../design/database.rst:643
-# 9e8d20ae93d241fcbc734a762c8bee9f
+#: ../../design/database.rst:663
 msgid "Deleting a relationship"
 msgstr ""
 
-#: ../../design/database.rst:645
-# b5c63961bf5746dbb10a9909f7397f8b
+#: ../../design/database.rst:665
 msgid "E.g. to be able to assert that \"**$user** is no longer a **fan** of **$artist**\":"
 msgstr ""
 
-#: ../../design/database.rst:651
-# 030e3abef6ed4833a1805407109dd6ea
+#: ../../design/database.rst:671
 msgid "This triggers the event [delete, relationship], passing in the associated ``ElggRelationship`` object. If a handler returns ``false``, the relationship will remain, and ``$was_removed`` will be ``false``."
 msgstr ""
 
-#: ../../design/database.rst:656
-# 4d41d82d03764c49b108de07968992d7
+#: ../../design/database.rst:676
 msgid "Other useful functions:"
 msgstr ""
 
-#: ../../design/database.rst:658
-# 374cc7cc5f6a47a19a10dac7f4f1e9fe
+#: ../../design/database.rst:678
 msgid "``delete_relationship()`` : delete by ID"
 msgstr ""
 
-#: ../../design/database.rst:659
-# dad2eb6b2f924f359f4494b75bcf7551
+#: ../../design/database.rst:679
 msgid "``remove_entity_relationships()`` : delete those relating to an entity (*note:* in versions before Elgg 1.9, this did not trigger delete events)"
 msgstr ""
 
-#: ../../design/database.rst:662
-# e34dd3c698ea452b841b19c3a83ec1b8
+#: ../../design/database.rst:682
 msgid "Finding relationships and related entities"
 msgstr ""
 
-#: ../../design/database.rst:664
-# 5dd3ea2771d548a79319a6c05a50b17f
+#: ../../design/database.rst:684
 msgid "Below are a few functions to fetch relationship objects and/or related entities. A few are listed below:"
 msgstr ""
 
-#: ../../design/database.rst:667
-# 82bbc8e0378448a693145425af45969d
+#: ../../design/database.rst:687
 msgid "``get_entity_relationships()`` : fetch relationships by subject or target entity"
 msgstr ""
 
-#: ../../design/database.rst:668
-# 9d8b1674ecad48bdbfa610d1f3a35646
+#: ../../design/database.rst:688
 msgid "``get_relationship()`` : get a relationship object by ID"
 msgstr ""
 
-#: ../../design/database.rst:669
-# c1dbfd49a5a447028fa0ea6d46077913
+#: ../../design/database.rst:689
 msgid "``elgg_get_entities_from_relationship()`` : fetch entities in relationships in a variety of ways"
 msgstr ""
 
-#: ../../design/database.rst:672
-# 03f00ec4cdf846278b5b868ef81354e8
+#: ../../design/database.rst:692
 msgid "E.g. retrieving users who joined your site in January 2014."
 msgstr ""
 
-#: ../../design/database.rst:686
-# 2ea506a869bf4605b6049950c20efe7b
+#: ../../design/database.rst:706
 msgid "Access Control"
 msgstr ""
 
-#: ../../design/database.rst:688
-# bd2bba37890e4b6eb7b73577d081ecdb
+#: ../../design/database.rst:708
 msgid "Granular access controls are one of the fundamental design principles in Elgg, and a feature that has been at the centre of the system throughout its development. The idea is simple: a user should have full control over who sees an item of data he or she creates."
 msgstr ""
 
-#: ../../design/database.rst:694
-# 7982024eccb94cb3bbd57fe6f3c4dbc9
+#: ../../design/database.rst:714
 msgid "Access controls in the data model"
 msgstr ""
 
-#: ../../design/database.rst:696
-# 2aa2d41b47b6457fbf89a6ee8cb72be7
+#: ../../design/database.rst:716
 msgid "In order to achieve this, every entity, annotation and piece of metadata contains an ``access_id`` property, which in turn corresponds to one of the pre-defined access controls or an entry in the ``access_collections`` database table."
 msgstr ""
 
-#: ../../design/database.rst:702
-# 6474ff8038584567adefa92550025850
+#: ../../design/database.rst:722
 msgid "Pre-defined access controls"
 msgstr ""
 
-#: ../../design/database.rst:704
-# ffad42a802a4416482e310a037fd3715
+#: ../../design/database.rst:724
 msgid "``ACCESS_PRIVATE`` (value: 0) Private."
 msgstr ""
 
-#: ../../design/database.rst:705
-# 1ff28634bc724864bb42b01db0efc7c5
+#: ../../design/database.rst:725
 msgid "``ACCESS_LOGGED_IN`` (value: 1) Logged in users."
 msgstr ""
 
-#: ../../design/database.rst:706
-# 03202d3ac701455493a7fd0cd6861561
+#: ../../design/database.rst:726
 msgid "``ACCESS_PUBLIC`` (value: 2) Public data."
 msgstr ""
 
-#: ../../design/database.rst:707
-# 67bcfd467f2f4c8aba5a0d4c488ebf99
+#: ../../design/database.rst:727
 msgid "``ACCESS_FRIENDS`` (value: -2) Owner and his/her friends."
 msgstr ""
 
-#: ../../design/database.rst:710
-# 039a7aafd7de4bf4b56c08f5a9625ea9
+#: ../../design/database.rst:730
 msgid "User defined access controls"
 msgstr ""
 
-#: ../../design/database.rst:712
-# bf9d0af4a5e54c298006ab273421c636
+#: ../../design/database.rst:732
 msgid "You may define additional access groups and assign them to an entity, annotation or metadata. A number of functions have been defined to assist you; see the `access library reference`_ for more information."
 msgstr ""
 
-#: ../../design/database.rst:717
-# bd998fa00c3a4f7d87712cd31a78f6d5
+#: ../../design/database.rst:737
 msgid "How access affects data retrieval"
 msgstr ""
 
-#: ../../design/database.rst:719
-# 043f0d0c6ea24dca91059c0e7cb6d62a
+#: ../../design/database.rst:739
 msgid "All data retrieval functions above the database layer - for example ``get_entities`` and its cousins - will only return items that the current user has access to see. It is not possible to retrieve items that the current user does not have access to. This makes it very hard to create a security hole for retrieval."
 msgstr ""
 
-#: ../../design/database.rst:728
-# 660c9b0e1cf945d7a4c4b080745655af
+#: ../../design/database.rst:748
 msgid "Write access"
 msgstr ""
 
-#: ../../design/database.rst:730
-# fccd1abedb654c3a942a307dedf8ee40
+#: ../../design/database.rst:750
 msgid "The following rules govern write access:"
 msgstr ""
 
-#: ../../design/database.rst:732
-# a0deeac0ab9c4eedafc8b0d809ed3978
+#: ../../design/database.rst:752
 msgid "The owner of an entity can always edit it"
 msgstr ""
 
-#: ../../design/database.rst:733
-# 2e88f79c2c454947bc89af72fa6095cd
+#: ../../design/database.rst:753
 msgid "The owner of a container can edit anything therein (note that this does not mean that the owner of a group can edit anything therein)"
 msgstr ""
 
-#: ../../design/database.rst:735
-# 9c1ca59b3b194586b2ab8445d12d82eb
+#: ../../design/database.rst:755
 msgid "Admins can edit anything"
 msgstr ""
 
-#: ../../design/database.rst:737
-# bfb345b6450a4fae8311c1d459f4afb6
+#: ../../design/database.rst:757
 msgid "You can override this behaviour using a :ref:`plugin hook <design/events#plugin-hooks>` called ``permissions_check``, which passes the entity in question to any function that has announced it wants to be referenced. Returning ``true`` will allow write access; returning ``false`` will deny it. See :ref:`the plugin hook reference for permissions\\_check <guides/hooks-list#permission-hooks>` for more details."
 msgstr ""
 
-#: ../../design/database.rst:745
-# d71194f156be48fc9449799a1334ea8b
+#: ../../design/database.rst:765
 msgid "`Access library reference`_"
 msgstr ""
 
-#: ../../design/database.rst:750
-# c4f015dd032e434682c8da2337445223
+#: ../../design/database.rst:770
 msgid "Schema"
 msgstr ""
 
-#: ../../design/database.rst:752
-# 997f8185167d413d8983837d9df816a0
+#: ../../design/database.rst:772
 msgid "The database contains a number of primary tables and secondary tables. Its schema table is stored in ``/engine/schema/mysql.sql``."
 msgstr ""
 
-#: ../../design/database.rst:755
-# 4c387206325b4ceabf60749c948b35a7
+#: ../../design/database.rst:775
 msgid "Each table is prefixed by \"prefix\\_\", this is replaced by the Elgg framework during installation."
 msgstr ""
 
-#: ../../design/database.rst:759
-# f4cc2614a8fd4838bed8597f49dc76af
+#: ../../design/database.rst:779
 msgid "Main tables"
 msgstr ""
 
-#: ../../design/database.rst:761
-# c36af945d38640ec9ded7a247a43ff7a
+#: ../../design/database.rst:781
 msgid "This is a description of the main tables. Keep in mind that in a given Elgg installation, the tables will have a prefix (typically \"elgg\\_\")."
 msgstr ""
 
-#: ../../design/database.rst:765
-# 3d960a27e52a42e6a1d8ab79eb6396c1
+#: ../../design/database.rst:785
 msgid "Table: entities"
 msgstr ""
 
-#: ../../design/database.rst:767
-# e953cc5dacd04861b7e7ef1188f7c235
+#: ../../design/database.rst:787
 msgid "This is the main `Entities`_ table containing Elgg users, sites, objects and groups. When you first install Elgg this is automatically populated with your first site."
 msgstr ""
 
-#: ../../design/database.rst:771
-# 9bd358fef83543eca67dee9a4290aeaf
+#: ../../design/database.rst:791
 msgid "It contains the following fields:"
 msgstr ""
 
-#: ../../design/database.rst:773
-# 4ad87d9f10cb4a1194c7d1285b849d26
+#: ../../design/database.rst:793
 msgid "**guid** An auto-incrementing counter producing a GUID that uniquely identifies this entity in the system."
 msgstr ""
 
-#: ../../design/database.rst:775
-# 3d20691924934c5ca8ca3e4b7d87e389
+#: ../../design/database.rst:795
 msgid "**type** The type of entity - object, user, group or site"
 msgstr ""
 
-#: ../../design/database.rst:776
-# 812f00ce2c394ebfb28ae2f7a7d45394
-msgid "**subtype** A link to the `entity_subtypes` table."
+#: ../../design/database.rst:796
+msgid "**subtype** A reference to the `entity_subtypes` table, or ``0`` for the default subtype."
 msgstr ""
 
-#: ../../design/database.rst:777
-# 56342a5f2cbd4badb459a2654b518a0b
+#: ../../design/database.rst:797
 msgid "**owner\\_guid** The GUID of the owner's entity."
 msgstr ""
 
-#: ../../design/database.rst:778
-# 4320af56f4ca4799a98d0c8a2d8c5a31
+#: ../../design/database.rst:798
 msgid "**site\\_guid** The site the entity belongs to."
 msgstr ""
 
-#: ../../design/database.rst:779
-# c8dc0b8766514e7984096b5e98b97b9d
+#: ../../design/database.rst:799
 msgid "**container\\_guid** The GUID this entity is contained by - either a user or a group."
 msgstr ""
 
-#: ../../design/database.rst:781
-# e4cdee3d60ac46f1adac592438032f42
+#: ../../design/database.rst:801
 msgid "**access\\_id** Access controls on this entity."
 msgstr ""
 
-#: ../../design/database.rst:782
-# 8961ee4c0bbf4ce295d20e17a880789b
+#: ../../design/database.rst:802
 msgid "**time\\_created** Unix timestamp of when the entity is created."
 msgstr ""
 
-#: ../../design/database.rst:783
-# 7637ec9755b3406b96c5c792b26ee71c
+#: ../../design/database.rst:803
 msgid "**time\\_updated** Unix timestamp of when the entity was updated."
 msgstr ""
 
-#: ../../design/database.rst:784
-# 5fda8fb4cd034d7db7fd021995823be5
+#: ../../design/database.rst:804
 msgid "**enabled** If this is 'yes' an entity is accessible, if 'no' the entity has been disabled (Elgg treats it as if it were deleted without actually removing it from the database)."
 msgstr ""
 
-#: ../../design/database.rst:789
-# ce2b8df24fae4a62a8a47a3d223b0e06
+#: ../../design/database.rst:809
 msgid "Table: entity\\_subtypes"
 msgstr ""
 
-#: ../../design/database.rst:791
-# a2db9af72e1a4db680698ce65c694990
+#: ../../design/database.rst:811
 msgid "This table contains entity subtype information:"
 msgstr ""
 
-#: ../../design/database.rst:793
-#: ../../design/database.rst:803
-#: ../../design/database.rst:821
-# fd10e46dc223412db5d5daef6b0dd653
-# 0a7cf311370c481ea04f918092285af4
-# f795c029f016481b99663ec8a0f80ce0
+#: ../../design/database.rst:813
+#: ../../design/database.rst:823
+#: ../../design/database.rst:841
 msgid "**id** A counter."
 msgstr ""
 
-#: ../../design/database.rst:794
-# 7c0b358d0ff44383be2cf73541cca58c
+#: ../../design/database.rst:814
 msgid "**type** The type of entity - object, user, group or site."
 msgstr ""
 
-#: ../../design/database.rst:795
-# d10781b0f57b47e19a36d8df96ad2242
+#: ../../design/database.rst:815
 msgid "**subtype** The subtype name as a string."
 msgstr ""
 
-#: ../../design/database.rst:796
-# 506ab2e2e3b249f1b734f6f1374e7ead
+#: ../../design/database.rst:816
 msgid "**class** Optional class name if this subtype is linked with a class"
 msgstr ""
 
-#: ../../design/database.rst:799
-# 9163f1d840bb4bffa7855d15733cb3d6
+#: ../../design/database.rst:819
 msgid "Table: metadata"
 msgstr ""
 
-#: ../../design/database.rst:801
-# 3ebd35ba0bf04b3b82c9cca82a00a288
+#: ../../design/database.rst:821
 msgid "This table contains `Metadata`_, extra information attached to an entity."
 msgstr ""
 
-#: ../../design/database.rst:804
-#: ../../design/database.rst:822
-# c47a94cb2fd946bb82842692f6a66d44
-# ecd2ce1b59824e90998daab6d9e47c2f
+#: ../../design/database.rst:824
+#: ../../design/database.rst:842
 msgid "**entity\\_guid** The entity this is attached to."
 msgstr ""
 
-#: ../../design/database.rst:805
-# f6992ef7893e43fb9972084eac0df70f
+#: ../../design/database.rst:825
 msgid "**name\\_id** A link to the metastrings table defining the name table."
 msgstr ""
 
-#: ../../design/database.rst:807
-#: ../../design/database.rst:825
-# 29ce405efb154c67b4f681878ea76f79
-# 1a9c0c165b84431fae425bd1691018b5
+#: ../../design/database.rst:827
+#: ../../design/database.rst:845
 msgid "**value\\_id** A link to the metastrings table defining the value."
 msgstr ""
 
-#: ../../design/database.rst:808
-#: ../../design/database.rst:826
-# 52adf0a4b91943bfba8e32921978eb5c
-# 4ebb98d1fdd2429a8cd73649dc536b09
+#: ../../design/database.rst:828
+#: ../../design/database.rst:846
 msgid "**value\\_type** The value class, either text or an integer."
 msgstr ""
 
-#: ../../design/database.rst:809
-#: ../../design/database.rst:827
-# e4cda4785793406a9ecb00b017a65f95
-# 8cea0ddf71044a2bb59d5fe07f16b24d
+#: ../../design/database.rst:829
+#: ../../design/database.rst:847
 msgid "**owner\\_guid** The owner GUID of the owner who set this item of metadata."
 msgstr ""
 
-#: ../../design/database.rst:811
-#: ../../design/database.rst:829
-# e2702a7e581341bbbfb9c99920e51b9b
-# 2229177f0fd44ece8de944f54055d3c7
+#: ../../design/database.rst:831
+#: ../../design/database.rst:849
 msgid "**access\\_id** An Access controls on this item of metadata."
 msgstr ""
 
-#: ../../design/database.rst:812
-#: ../../design/database.rst:830
-# 7f3b5e7eafa549d3adcc637b1ad5be22
-# e37b933387c944c5b9a04b3d58134547
+#: ../../design/database.rst:832
+#: ../../design/database.rst:850
 msgid "**time\\_created** Unix timestamp of when the metadata is created."
 msgstr ""
 
-#: ../../design/database.rst:813
-#: ../../design/database.rst:831
-# 8f20ad74068c453b88d2da4d32714533
-# cb0cd13d02ab4c21979a94570cfc1f32
+#: ../../design/database.rst:833
+#: ../../design/database.rst:851
 msgid "**enabled** If this is 'yes' an item is accessible, if 'no' the item has been deleted."
 msgstr ""
 
-#: ../../design/database.rst:817
-# 1a8bffd6e1374b24b43232bbb3a6d80d
+#: ../../design/database.rst:837
 msgid "Table: annotations"
 msgstr ""
 
-#: ../../design/database.rst:819
-# b8b03a2de6444364aa66cac75622528b
+#: ../../design/database.rst:839
 msgid "This table contains `Annotations`_, this is distinct from `Metadata`_."
 msgstr ""
 
-#: ../../design/database.rst:823
-# e93f422cbd884285955f129eb7fb8ee3
+#: ../../design/database.rst:843
 msgid "**name\\_id** A link to the metastrings table defining the type of annotation."
 msgstr ""
 
-#: ../../design/database.rst:835
-# 4b799e90b9c54e8eacb09f237e4b4848
+#: ../../design/database.rst:855
 msgid "Table: relationships"
 msgstr ""
 
-#: ../../design/database.rst:837
-# e27154b5337b427dbd45e13ae62add9f
+#: ../../design/database.rst:857
 msgid "This table defines `Relationships`_, these link one entity with another."
 msgstr ""
 
-#: ../../design/database.rst:839
-# f9068428958b4906aaf4bb730d09bb27
+#: ../../design/database.rst:859
 msgid "**guid\\_one** The GUID of the subject entity."
 msgstr ""
 
-#: ../../design/database.rst:840
-# f5e9bf89de5f4e5d82ca5f803f07a747
+#: ../../design/database.rst:860
 msgid "**relationship** The type of the relationship."
 msgstr ""
 
-#: ../../design/database.rst:841
-# 53f00bb54355411ebbdb90e193472241
+#: ../../design/database.rst:861
 msgid "**guid\\_two** The GUID of the target entity."
 msgstr ""
 
-#: ../../design/database.rst:844
-# 02ed742c9ef940c1bf6d4d0d4a8f3f42
+#: ../../design/database.rst:864
 msgid "Table: objects\\_entity"
 msgstr ""
 
-#: ../../design/database.rst:846
-# fd4d399bb6bb4e6ab2c5cd8b04b5380a
+#: ../../design/database.rst:866
 msgid "Extra information specifically relating to objects. These are split in order to reduce load on the metadata table and make an obvious difference between attributes and metadata."
 msgstr ""
 
-#: ../../design/database.rst:851
-# b5a1b3b1075b4009869f8fc318baca91
+#: ../../design/database.rst:871
 msgid "Table: sites\\_entity"
 msgstr ""
 
-#: ../../design/database.rst:853
-# 30183a68c80c4ec38e2f4cac1baac724
+#: ../../design/database.rst:873
 msgid "Extra information specifically relating to sites. These are split in order to reduce load on the metadata table and make an obvious difference between attributes and metadata."
 msgstr ""
 
-#: ../../design/database.rst:858
-# f59c509c501e4f349c8de453ea179b5f
+#: ../../design/database.rst:878
 msgid "Table: users\\_entity"
 msgstr ""
 
-#: ../../design/database.rst:860
-# 04e4e8f65bb44422afe2aacd9d0caff3
+#: ../../design/database.rst:880
 msgid "Extra information specifically relating to users. These are split in order to reduce load on the metadata table and make an obvious difference between attributes and metadata."
 msgstr ""
 
-#: ../../design/database.rst:865
-# 4586a68acb844ef0ac5ed35380939830
+#: ../../design/database.rst:885
 msgid "Table: groups\\_entity"
 msgstr ""
 
-#: ../../design/database.rst:867
-# 616379db2aaf46488af4fe64399b19f6
+#: ../../design/database.rst:887
 msgid "Extra information specifically relating to groups. These are split in order to reduce load on the metadata table and make an obvious difference between attributes and metadata."
 msgstr ""
 
-#: ../../design/database.rst:872
-# db14ea691cd6496fbd5061519f4c4604
+#: ../../design/database.rst:892
 msgid "Table: metastrings"
 msgstr ""
 
-#: ../../design/database.rst:874
-# 4b4523e47e4341d5b66859eabf8d1f23
+#: ../../design/database.rst:894
 msgid "Metastrings contain the actual string of metadata which is linked to by the metadata and annotations tables."
 msgstr ""
 
-#: ../../design/database.rst:877
-# fd70419af1e74eecabdb66a67fc0f2cf
+#: ../../design/database.rst:897
 msgid "This is to avoid duplicating strings, saving space and making database lookups more efficient."
 msgstr ""
 
-#: ../../design/database.rst:880
-# 685360566bc24d23a6c5914b78c21c79
+#: ../../design/database.rst:900
 msgid "Core developers will place schema upgrades in ``/engine/schema/upgrades/*``."
 msgstr ""
 
 #: ../../design/events.rst:2
-# 2fe7a3205fcb4b67923ab063a8ed3d9b
 msgid "Events and Plugin Hooks"
 msgstr ""
 
 #: ../../design/events.rst:11
-# 2a4ebb7ab14f4be4beb60981f0604b41
 msgid "Elgg has an event system that can be used to replace or extend core functionality."
 msgstr ""
 
 #: ../../design/events.rst:14
-# d64d104ec27346e1ac65aac6da7ec1ff
 msgid "Plugins influence the system by creating handlers (`callables <http://php.net/manual/en/language.types.callable.php>`_ such as functions and methods) and registering them to handle two types of events: `Elgg Events`_ and `Plugin Hooks`_."
 msgstr ""
 
 #: ../../design/events.rst:18
-# c861f442ccc5488c8b32841b8bafe631
 msgid "When an event is triggered, a set of handlers is executed in order of priority. Each handler is passed arguments and has a chance to influence the process. After execution, the \"trigger\" function returns a value based on the behavior of the handlers."
 msgstr ""
 
 #: ../../design/events.rst:24
-# b291712b32854cdabf998813c6947643
 msgid "Elgg Events vs. Plugin Hooks"
 msgstr ""
 
 #: ../../design/events.rst:26
-# 897401e6426d4cc188f6e5d4a70819b4
 msgid "The main differences between `Elgg Events`_ and `Plugin Hooks`_ are:"
 msgstr ""
 
 #: ../../design/events.rst:28
-# fc3ffd709cba4722b7f1ecc5efb7f5a6
 msgid "Most Elgg events can be cancelled; unless the event is an \"after\" event, a handler that returns `false` can cancel the event, and no more handlers are called."
 msgstr ""
 
 #: ../../design/events.rst:31
-# 5638175f6fa44394b7ae6696d31dcef5
 msgid "Plugin hooks cannot be cancelled; all handlers are always called."
 msgstr ""
 
 #: ../../design/events.rst:32
-# 192c3524885c4d23aa980456d865bebf
 msgid "Plugin hooks pass an arbitrary value through the handlers, giving each a chance to alter along the way."
 msgstr ""
 
 #: ../../design/events.rst:37
-# 77ebea7bc65f41498ce65b15c896661f
 msgid "Elgg Events"
 msgstr ""
 
 #: ../../design/events.rst:39
-# c369072d2ba44e4a99182e1a4e745228
 msgid "Elgg Events are triggered when an Elgg object is created, updated, or deleted; and at important milestones while the Elgg framework is loading. Examples: a blog post being created or a user logging in."
 msgstr ""
 
 #: ../../design/events.rst:43
-# 0d4f6381fcf846b8a39a7a1ced71662e
 msgid "Unlike `Plugin Hooks`_, *most Elgg events can be cancelled*, halting the execution of the handlers, and possibly cancelling an some action in the Elgg core."
 msgstr ""
 
 #: ../../design/events.rst:47
-# dfd7fb7e8050491385e4fbb4101f4fb3
 msgid "Each Elgg event has a name and an object type (system, user, object, relationship name, annotation, group) describing the type of object passed to the handlers."
 msgstr ""
 
 #: ../../design/events.rst:52
-# 6c9a81c8e7f649f182310501dd6067bd
 msgid "Before and After Events"
 msgstr ""
 
 #: ../../design/events.rst:54
-# 4a8b0f9f886e48e2980b3b6aa48541dc
 msgid "Some events are split into \"before\" and \"after\". This avoids confusion around the state of the system while in flux. E.g. Is the user logged in during the [login, user] event?"
 msgstr ""
 
 #: ../../design/events.rst:58
-# 5c04bcfab7be43b6ac12d4f918ca1c21
 msgid "Before Events have names ending in \":before\" and are triggered before something happens. Like traditional events, handlers can cancel the event by returning `false`."
 msgstr ""
 
 #: ../../design/events.rst:62
-# c98bebf375274af39ba01bcafba97cad
 msgid "After Events, with names ending in \":after\", are triggered after something happens. Unlike traditional events, handlers *cannot* cancel these events; all handlers will always be called."
 msgstr ""
 
 #: ../../design/events.rst:66
-# ef3440afba234a6ba7ce2f98812080c5
 msgid "Where before and after events are available, developers are encouraged to transition to them, though older events will be supported for backwards compatibility."
 msgstr ""
 
 #: ../../design/events.rst:71
-# 47b3dab978934e098c1f492beccde861
 msgid "Elgg Event Handlers"
 msgstr ""
 
 #: ../../design/events.rst:73
-# 8d3c61a100eb4cbaaffd5190151fd5d2
 msgid "Elgg event handlers should have the following prototype:"
 msgstr ""
 
 #: ../../design/events.rst:88
-# 9d4e945f1523472bbfc490b8bc65a70e
 msgid "If the handler returns `false`, the event is cancelled, preventing execution of the other handlers. All other return values are ignored."
 msgstr ""
 
 #: ../../design/events.rst:92
-# 452a967b730d487f848b13f9bc3b7bae
 msgid "Register to handle an Elgg Event"
 msgstr ""
 
 #: ../../design/events.rst:94
-# ef404d9f71234f22ba8ce75f1ff933b1
 msgid "Register your handler to an event using ``elgg_register_event_handler``:"
 msgstr ""
 
@@ -1557,542 +1333,428 @@ msgstr ""
 #: ../../design/events.rst:147
 #: ../../design/events.rst:202
 #: ../../design/events.rst:230
-# 1229dfa6078748479f7d907e8c403580
-# 1229dfa6078748479f7d907e8c403580
-# 1229dfa6078748479f7d907e8c403580
-# 1229dfa6078748479f7d907e8c403580
 msgid "Parameters:"
 msgstr ""
 
 #: ../../design/events.rst:102
 #: ../../design/events.rst:149
-# 9e8b1f6d3bcb497ebbc2c114c4d975b1
-# 9e8b1f6d3bcb497ebbc2c114c4d975b1
 msgid "**$event** The event name."
 msgstr ""
 
 #: ../../design/events.rst:103
-# 24956d86c3e34322a819a8c72793dca4
 msgid "**$object_type** The object type (e.g. \"user\" or \"object\") or 'all' for all types on which the event is fired."
 msgstr ""
 
 #: ../../design/events.rst:105
 #: ../../design/events.rst:206
-# b5ee817c24ba485f8fe153ae2056f3d3
-# b5ee817c24ba485f8fe153ae2056f3d3
 msgid "**$handler** The callback of the handler function."
 msgstr ""
 
 #: ../../design/events.rst:106
 #: ../../design/events.rst:207
-# 0c59bb044f3e44f58d545a5ffa976dfd
-# 0c59bb044f3e44f58d545a5ffa976dfd
 msgid "**$priority** The priority - 0 is first and the default is 500."
 msgstr ""
 
 #: ../../design/events.rst:108
-# f6c7284073684b1da6a9e8f3e0b13a7f
 msgid "**Object** here does not refer to an ``ElggObject`` but rather a string describing any object in the framework: system, user, object, relationship, annotation, group."
 msgstr ""
 
 #: ../../design/events.rst:111
 #: ../../design/events.rst:212
-# 14f4ce20fe7042b09fcfb7e1aa1dad96
-# 14f4ce20fe7042b09fcfb7e1aa1dad96
 msgid "Example:"
 msgstr ""
 
 #: ../../design/events.rst:121
-# da6487e6fed24d59ae6334d6204e91c2
 msgid "Trigger an Elgg Event"
 msgstr ""
 
 #: ../../design/events.rst:123
-# 944720f36f9346d1a7de6688961c8fbe
 msgid "You can trigger a custom Elgg event using ``elgg_trigger_event``:"
 msgstr ""
 
 #: ../../design/events.rst:133
-# 4a9d821ea05045fea5062ac259cf5a12
 msgid "For events with ambiguous states, like logging in a user, you should use `Before and After Events`_ by calling ``elgg_trigger_before_event`` or ``elgg_trigger_after_event``. This makes it clear for the event handler what state to expect and which events can be cancelled."
 msgstr ""
 
 #: ../../design/events.rst:150
-# 599c6d13dee04afc927644802ad6f989
 msgid "**$object_type** The object type (e.g. \"user\" or \"object\")."
 msgstr ""
 
 #: ../../design/events.rst:151
-# 9087a2a99fb74479bb6a1e22ffeed7c8
 msgid "**$object** The object (e.g. an instance of ``ElggUser`` or ``ElggGroup``)"
 msgstr ""
 
 #: ../../design/events.rst:153
-# c761f2de14354693bc61d7e0d9cab014
 msgid "The function will return ``false`` if any of the selected handlers returned ``false`` and the event is stoppable, otherwise it will return ``true``."
 msgstr ""
 
 #: ../../design/events.rst:159
-# 986af297a05d406a889c565dfd52112c
 msgid "Plugin Hooks"
 msgstr ""
 
 #: ../../design/events.rst:161
-# de63b0c4b1d845b2a6fdba0192a047f8
 msgid "Plugin Hooks provide a way for plugins to collaboratively determine or alter a value. For example, to decide whether a user has permission to edit an entity or to add additional configuration options to a plugin."
 msgstr ""
 
 #: ../../design/events.rst:165
-# ffabb52f24584bc49c9f46ed8e043cbe
 msgid "A plugin hook has a value passed into the trigger function, and each handler has an opportunity to alter the value before it's passed to the next handler. After the last handler has completed, the final value is returned by the trigger."
 msgstr ""
 
 #: ../../design/events.rst:171
-# b89724a58fce45e2af015d4ac28ce12e
 msgid "Plugin Hook Handlers"
 msgstr ""
 
 #: ../../design/events.rst:173
-# 5bd1098d59854eec9043d8ccaf007c24
 msgid "Plugin hook handlers should have the following prototype:"
 msgstr ""
 
 #: ../../design/events.rst:189
-# 1863acd18faf44be8cb63d2cd9b8a8c9
 msgid "If the handler returns no value (or `null` explicitly), the plugin hook value is not altered. Otherwise the return value becomes the new value of the plugin hook. It will then be passed to the next handler as `$value`."
 msgstr ""
 
 #: ../../design/events.rst:194
-# e275561a52964777bff00f0ab5533d7d
 msgid "Register to handle a Plugin Hook"
 msgstr ""
 
 #: ../../design/events.rst:196
-# 94279d8364ca4b0c968df9edf7a03448
 msgid "Register your handler to a plugin hook using ``elgg_register_plugin_hook_handler``:"
 msgstr ""
 
 #: ../../design/events.rst:204
 #: ../../design/events.rst:232
-# 9f85faa8ac084292a8244c18c0c60b86
-# 9f85faa8ac084292a8244c18c0c60b86
 msgid "**$hook** The name of the plugin hook."
 msgstr ""
 
 #: ../../design/events.rst:205
 #: ../../design/events.rst:233
-# fc99681601954dccb7839fa8dfbefdf4
-# fc99681601954dccb7839fa8dfbefdf4
 msgid "**$type** The type of the hook or 'all' for all types."
 msgstr ""
 
 #: ../../design/events.rst:209
-# 07cfb19935b9413bb1ce085d35e308e6
 msgid "**Type** can vary in meaning. It may mean an Elgg entity type or something specific to the plugin hook name."
 msgstr ""
 
 #: ../../design/events.rst:221
-# c3feddd834e0441fbac3f1076886c8f3
 msgid "Trigger a Plugin Hook"
 msgstr ""
 
 #: ../../design/events.rst:223
-# 1755f131008c45afb5aa2dd6b4585595
 msgid "You can trigger a custom plugin hook using ``elgg_trigger_plugin_hook``:"
 msgstr ""
 
 #: ../../design/events.rst:234
-# c919b23913164ea4adc4a113fb027607
 msgid "**$params** Arbitrary data passed from the trigger to the handlers."
 msgstr ""
 
 #: ../../design/events.rst:235
-# 8165a104a2bb4bde8b2984569cb01c04
 msgid "**$value** The initial value of the plugin hook."
 msgstr ""
 
 #: ../../design/events.rst:237
-# 6607128a2bd34c7297e757effdc4ae59
 msgid "The `$params` and `$value` arguments are reversed between the plugin hook handlers and trigger functions!"
 msgstr ""
 
 #: ../../design/events.rst:241
-# 89f5ebe6b4674327973bdb63ed430fc3
 msgid "Unregister Event/Hook Handlers"
 msgstr ""
 
 #: ../../design/events.rst:243
-# 46ed792341344640a151785cfde273a3
 msgid "The functions ``elgg_unregister_event_handler`` and ``elgg_unregister_plugin_hook_handler`` can be used to remove handlers already registered by another plugin or Elgg core. The parameters are in the same order as the registration functions, except there's no priority parameter."
 msgstr ""
 
 #: ../../design/events.rst:251
-# acb05837c8a0499c85ddaac7f3bd4cf0
 msgid "Anonymous functions or invokable objects cannot be unregistered, but dynamic method callbacks can be unregistered by giving the static version of the callback:"
 msgstr ""
 
 #: ../../design/events.rst:263
-# 2e86d00f386e4e0fbff034f4ef42023c
 msgid "Even though the event handler references a dynamic method call, the code above will successfully remove the handler."
 msgstr ""
 
 #: ../../design/i18n.rst:2
-# 80a5801a648248f1a05dff5add912480
 msgid "Internationalization"
 msgstr ""
 
 #: ../../design/i18n.rst:4
-# e48373c6c6714725b7c79b4bf9c5b2ec
 msgid "Elgg 1.0+ departs from previous versions in that it uses a custom text array rather than gettext. This improves system performance and reliability of the translation system."
 msgstr ""
 
 #: ../../design/i18n.rst:7
-# a6c76eb48f694fecbc08f68fd573f408
 msgid "TODO: more plz"
 msgstr ""
 
 #: ../../design/index.rst:2
-# f413126ab306478082612739a65e2e9c
 msgid "Design Docs"
 msgstr ""
 
 #: ../../design/index.rst:4
-# 2e08d118e6394b82a130284eb11e30de
 msgid "Gain a deep understanding of how Elgg works and why it's built the way it is."
 msgstr ""
 
 #: ../../design/loggable.rst:2
-# c183238fc5d546bcafc2af8483596b4a
 msgid "Loggable"
 msgstr ""
 
 #: ../../design/loggable.rst:4
-# 3bedb0c15e004f48a71c7c8af3cde99f
 msgid "Loggable is an interface inherited by any class that wants events relating to its member objects to be saved to the system log. ``ElggEntity`` and ``ElggExtender`` both inherit ``Loggable``."
 msgstr ""
 
 #: ../../design/loggable.rst:6
-# f6e49e3cc8264df8aec47d786aae8644
 msgid "Loggable defines several class methods that are used in saving to the default system log, and can be used to define your own (as well as for other purposes):"
 msgstr ""
 
 #: ../../design/loggable.rst:8
-# f283711952bf41b68efff758d86b0451
 msgid "``getSystemLogID()`` Return a unique identifier for the object for storage in the system log. This is likely to be the object's GUID"
 msgstr ""
 
 #: ../../design/loggable.rst:9
-# 812611e71950415da3ae56234e8e6573
 msgid "``getClassName()`` Return the class name of the object"
 msgstr ""
 
 #: ../../design/loggable.rst:10
-# d6feb0e5082e4acfa18ac7612d11a926
 msgid "``getType()`` Return the object type"
 msgstr ""
 
 #: ../../design/loggable.rst:11
-# f653342f26d846da8d8eaa8ddb798960
 msgid "``getSubtype()`` Get the object subtype"
 msgstr ""
 
 #: ../../design/loggable.rst:12
-# d329437a610c41d48133a4e99b529234
 msgid "``getObjectFromID($id)`` For a given ID, return the object associated with it"
 msgstr ""
 
 #: ../../design/loggable.rst:13
-# 556f9e82dc1049b9a7109fe0c23277a2
 msgid "``getObjectOwnerGUID()`` Return the GUID of the owner of this object"
 msgstr ""
 
 #: ../../design/loggable.rst:16
-# e19d2d22f6ab4bda92a0a0aac2771481
 msgid "Database details"
 msgstr ""
 
 #: ../../design/loggable.rst:18
-# a782770d1be04d23ac66da758db16f6f
 msgid "The default system log is stored in the ``system_log`` :doc:`database table <database>`. It contains the following fields:"
 msgstr ""
 
 #: ../../design/loggable.rst:20
-# e9b8f016f8ba4f59bbc8df27bc8fb4a1
 msgid "**id** - A unique numeric row ID"
 msgstr ""
 
 #: ../../design/loggable.rst:21
-# b0a164153a2e4f1c88adc23bc336de73
 msgid "**object_id** - The GUID of the entity being acted upon"
 msgstr ""
 
 #: ../../design/loggable.rst:22
-# 47468530df4b4364a50794438945be3f
 msgid "**object_class** - The class of the entity being acted upon (eg ElggObject)"
 msgstr ""
 
 #: ../../design/loggable.rst:23
-# dcca013ca9e84f0a8a7cf3fb7b6c60d0
 msgid "**object_type** - The type of the entity being acted upon (eg object)"
 msgstr ""
 
 #: ../../design/loggable.rst:24
-# 9831f9b1e0cc4644a141bec817ddbaff
 msgid "**object_subtype** - The subtype of the entity being acted upon (eg blog)"
 msgstr ""
 
 #: ../../design/loggable.rst:25
-# c385d609e3e74706bcd115049359c6d3
 msgid "**event** - The event being logged (eg create or update)"
 msgstr ""
 
 #: ../../design/loggable.rst:26
-# 36c73df032cd41259ddd652b871babf7
 msgid "**performed_by_guid** - The GUID of the acting entity (the user performing the action)"
 msgstr ""
 
 #: ../../design/loggable.rst:27
-# 16e82b605dc246438f73d72cb2131257
 msgid "**owner_guid** - The GUID of the user which owns the entity being acted upon"
 msgstr ""
 
 #: ../../design/loggable.rst:28
-# dd18f66f50df4373ad95d5b53adc062f
 msgid "**access_id** - The access restriction associated with this log entry"
 msgstr ""
 
 #: ../../design/loggable.rst:29
-# 6dc6821eccf746df96db37924a21a005
 msgid "**time_created** - The UNIX epoch timestamp of the time the event took place"
 msgstr ""
 
 #: ../../design/security.rst:2
-# 4ba705adcda04a1a8e5b3e0627f50b61
 msgid "Security"
 msgstr ""
 
 #: ../../design/security.rst:4
-# d5dd73df1d254646849a1ca33a9375ef
 msgid "Elgg’s approach to the various security issues common to all web applications."
 msgstr ""
 
 #: ../../design/security.rst:8
-# 49d35075eaf54551931c83d09c3a96a7
 msgid "To report a potential vulnerability in Elgg, email security@elgg.org."
 msgstr ""
 
 #: ../../design/security.rst:15
-# 0b6d7cbd650b41edae888d93eb2a2765
 msgid "Passwords"
 msgstr ""
 
 #: ../../design/security.rst:18
-# ea2258a6b7d242a0a85840643cdf7380
 msgid "Password validation"
 msgstr ""
 
 #: ../../design/security.rst:20
-# dfa18c4c84ee408f8b0a49f8213fcdf1
 msgid "The only restriction that Elgg places on a password is that it must be at least 6 characters long by default, though this may be changed in /engine/settings.php. Additional criteria can be added by a plugin by registering for the ``registeruser:validate:password`` plugin hook."
 msgstr ""
 
 #: ../../design/security.rst:23
-# 7305caba1ef34ecaafd443e93378986c
 msgid "Password salting"
 msgstr ""
 
 #: ../../design/security.rst:27
-# cba5a15f5876448d9c48c5107598c2bd
 msgid "Elgg salts passwords with a unique 8 character random string. The salt is generated each time the password is set. The main security advantages of the salting are:"
 msgstr ""
 
 #: ../../design/security.rst:26
-# a8c98cb4b6434732991c3a18c889e07f
 msgid "preventing anyone with access to the database from conducting a precomputed dictionary attack"
 msgstr ""
 
 #: ../../design/security.rst:27
-# 92f700ad99a241e7ad255fe1f1fbb027
 msgid "preventing a site administration from noting users with the same password."
 msgstr ""
 
 #: ../../design/security.rst:30
-# 9743feff29954f6ebf0dec7c7bb4cae7
 msgid "Password hashing"
 msgstr ""
 
 #: ../../design/security.rst:32
-# 3ed1ac32c3064bed876a03ec368fa584
 msgid "The hashed password is computed using md5 from the user's password text and the salt."
 msgstr ""
 
 #: ../../design/security.rst:35
-# a7d164666bce4053825ca3aed74940e8
 msgid "Password storage"
 msgstr ""
 
 #: ../../design/security.rst:37
-# 97355e1591d24210a552db4297d71a87
 msgid "The hashed password and the salt are stored in the users table. Neither are stored in any cookies on a user's computer."
 msgstr ""
 
 #: ../../design/security.rst:40
-# d0223084c0c04887ab1697fda9428210
 msgid "Password throttling"
 msgstr ""
 
 #: ../../design/security.rst:42
-# 5f81a85728d3408ab9aaa2d8c1256231
 msgid "Elgg has a password throttling mechanism to make dictionary attacks from the outside very difficult. A user is only allowed 5 login attempts over a 5 minute period."
 msgstr ""
 
 #: ../../design/security.rst:45
-# c081d4818789473baf0dfd4785c26d58
 msgid "Password resetting"
 msgstr ""
 
 #: ../../design/security.rst:47
-# bfeaa22a099e4e88b7c8729a72dc6888
 msgid "If a user forgets his password, a new random password can be requested. After the request, an email is sent with a unique URL. When the user visits that URL, a new random password is sent to the user through email."
 msgstr ""
 
 #: ../../design/security.rst:50
-# 283409e0f6834c17836802d1494931bf
 msgid "Sessions"
 msgstr ""
 
 #: ../../design/security.rst:52
-# 7016d4fa094d47f8990cb649ea36626a
 msgid "Elgg uses PHP's session handling with custom handlers. Session data is stored in the database. The session cookie contains the session id that links the user to the browser. The user's metadata is stored in the session including GUID, username, email address. The session's lifetime is controlled through the server's PHP configuration."
 msgstr ""
 
 #: ../../design/security.rst:55
-# c9a9004a09c240b2bbdbf18d2667d483
 msgid "Session fixation"
 msgstr ""
 
 #: ../../design/security.rst:56
-# e39c67d857f6445e823e27f948b9e4dc
 msgid "Elgg protects against session fixation by regenerating the session id when a user logs in."
 msgstr ""
 
 #: ../../design/security.rst:59
-# 741aa80bab554e9990abcb99b64263d0
 msgid "Session hijacking"
 msgstr ""
 
 #: ../../design/security.rst:60
-# c2e797abc60b4521afd58f9bb853305e
 msgid "This section is questionable."
 msgstr ""
 
 #: ../../design/security.rst:62
-# 2fd859e44bbc4eb5be06f7c2f2e7cf25
 msgid "Besides protecting against session fixation attacks, Elgg also has a further check to try to defeat session hijacking if the session identifier is compromised. Elgg stores a hash of the browser's user agent and a site secret as a session fingerprint. The use of the site secret is rather superfluous but checking the user agent might prevent some session hijacking attempts."
 msgstr ""
 
 #: ../../design/security.rst:65
-# 6b7e25ee737f40f1bb4831a5ff32563e
 msgid "“Remember me” cookie"
 msgstr ""
 
 #: ../../design/security.rst:66
-# ef0c8e9d862c43ceb0ba5e30724a8983
 msgid "To allow users to stay logged in for a longer period of time regardless of whether the browser has been closed, Elgg uses a cookie (called elggperm) that contains what could be considered a super session identifier. This identifier is stored in a cookies table. When a session is being initiated, Elgg checks for the presence of the elggperm cookie. If it exists and the session code in the cookie matches the code in the cookies table, the corresponding user is automatically logged in."
 msgstr ""
 
 #: ../../design/security.rst:69
-# 1a6e5d7d9d16407590e76ca9835fd472
 msgid "Alternative authentication"
 msgstr ""
 
 #: ../../design/security.rst:71
-# 5792d10375d34166baa02e21ec930d9d
 msgid "This section is very hand-wavy"
 msgstr ""
 
 #: ../../design/security.rst:73
-# 3cc8c2f131da4b38bdf8f538caf474d9
 msgid "To replace Elgg's default user authentication system, a plugin would have to replace the default action with its own through ``register_action()``. It would also have to register its own pam handler using ``register_pam_handler()``."
 msgstr ""
 
 #: ../../design/security.rst:75
-# 868ea2b4e69d4842ba8b824ef3e58280
 msgid "The ``pam_authenticate()`` function used to call the different modules has a bug related to the importance variable."
 msgstr ""
 
 #: ../../design/security.rst:79
-# 9c3b00da58b54800b235a482953e1ef2
 msgid "HTTPS"
 msgstr ""
 
 #: ../../design/security.rst:81
-# 8c42a3b7039e4e31b9642fa111b4bc9b
 msgid "You must enable SSL support on your server for any of these techniques to work."
 msgstr ""
 
 #: ../../design/security.rst:83
-# a852a03ac5c740dbbb10087ab18f2a15
 msgid "To make the login form submit over https, turn on login-over-ssl from Elgg’s admin panel."
 msgstr ""
 
 #: ../../design/security.rst:85
-# a5a8f7c8a6134566bae933e83d2509be
 msgid "You can also serve your whole site over SSL by simply changing the site URL to include “https” instead of just “http.”"
 msgstr ""
 
 #: ../../design/security.rst:88
-# 2a4c3e011a9f4af48300bc9f4712e4fc
 msgid "XSS"
 msgstr ""
 
 #: ../../design/security.rst:90
-# 7b22ec6b7ba9445e83c5de3383c894ac
 msgid "Filtering is used in Elgg to make XSS attacks more difficult. The purpose of the filtering is to remove Javascript and other dangerous input from users."
 msgstr ""
 
 #: ../../design/security.rst:92
-# a7b5378ccb40439e91e2b6f994c33529
 msgid "Filtering is performed through the function ``filter_tags()``. This function takes in a string and returns a filtered string. It triggers a ``validate, input`` plugin hook."
 msgstr ""
 
 #: ../../design/security.rst:94
-# 254dddeeb9aa4fbf836f9b3f89d4f17c
 msgid "By default Elgg comes with the htmLawed filtering code as a plugin. Developers can drop in any additional or replacement filtering code as a plugin."
 msgstr ""
 
 #: ../../design/security.rst:96
-# e2dc634e7c154b0c91074c338c8a2e2f
 msgid "The ``filter_tags()`` function is called on any user input as long as the input is obtained through a call to ``get_input()``. If for some reason a developer did not want to perform the default filtering on some user input, the ``get_input()`` function has a parameter for turning off filtering."
 msgstr ""
 
 #: ../../design/security.rst:99
-# ab41b7643c7a408f8985df5d11d12082
 msgid "CSRF / XSRF"
 msgstr ""
 
 #: ../../design/security.rst:101
-# 77978f9ada244726b04d6e63cca08ecf
 msgid "Elgg generates security tokens to prevent `cross-site request forgery`_. These are embedded in all forms and state-modifying AJAX requests as long as the correct API is used. Read more in the :doc:`/guides/actions` developer guide."
 msgstr ""
 
 #: ../../design/security.rst:104
-# fe11094519c44c9fbe5e361cfab51b03
 msgid "SQL Injection"
 msgstr ""
 
 #: ../../design/security.rst:106
-# 4a499d12c88f4c0cb1b4bb91b6132e2d
 msgid "Elgg’s API sanitizes all input before issuing DB queries. Read more in the :doc:`/design/database` design doc."
 msgstr ""
 
 #: ../../design/security.rst:109
-# 030b2a11ca4e4eddac47beb5f703586a
 msgid "Privacy"
 msgstr ""
 
 #: ../../design/security.rst:111
-# 92087fd8b9044aa186d4f0c17d08c8c6
 msgid "Elgg uses an ACL system to control which users have access to various pieces of content. Read more in the :doc:`/design/database` design doc."
 msgstr ""
 

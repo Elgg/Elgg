@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'Ezin duzu talderik sortu. Administratzaileak bakarrik egin dezake.',
 	'groups:cantedit' => 'Ezin duzu talde hau editatu',
 	'groups:saved' => 'Taldea gordeta',
+	'groups:save_error' => 'Ezinezkoa da taldea gordetzea',
 	'groups:featured' => 'Nabarmendutako taldeak',
 	'groups:makeunfeatured' => 'Ez nabarmendu',
 	'groups:makefeatured' => 'Nabarmendua egin',

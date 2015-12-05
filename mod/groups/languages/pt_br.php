@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'Você não pode criar uma comunidade.  Somente administradores podem fazer isso.',
 	'groups:cantedit' => 'Você não pode editar esta Comunidade',
 	'groups:saved' => 'Comunidade salva',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Comunidades em destaque',
 	'groups:makeunfeatured' => 'Sem destaques',
 	'groups:makefeatured' => 'Destacar',

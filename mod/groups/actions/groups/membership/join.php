@@ -63,8 +63,13 @@ if ($user && ($group instanceof ElggGroup)) {
 			$url,
 		), $owner->language);
 
+		$params = [
+			'action' => 'membership_request',
+			'object' => $group,
+		];
+		
 		// Notify group owner
-		if (notify_user($owner->guid, $user->getGUID(), $subject, $body)) {
+		if (notify_user($owner->guid, $user->getGUID(), $subject, $body, $params)) {
 			system_message(elgg_echo("groups:joinrequestmade"));
 		} else {
 			register_error(elgg_echo("groups:joinrequestnotmade"));

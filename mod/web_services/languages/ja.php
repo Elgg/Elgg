@@ -1,10 +1,10 @@
 <?php
 return array(
 	'APIException:ApiResultUnknown' => "API Result は不明な型です。このようなことは起きないはずなのですが。。。",
-	'APIException:MissingParameterInMethod' => "メソッド「 %2$s 」のパラメタ「 %1$s 」が欠落しています",
+	'APIException:MissingParameterInMethod' => "メソッド「 %2\$s 」のパラメタ「 %1\$s 」が欠落しています",
 	'APIException:ParameterNotArray' => "%s は、配列ではないようです。",
-	'APIException:UnrecognisedTypeCast' => "メソッド「 %3$s 」の変数「 %2$s 」のキャスト %1$s の型がわかりません。",
-	'APIException:InvalidParameter' => "メソッド「 %2$s 」のパラメタ「 %1$s 」が不適切な値でした。",
+	'APIException:UnrecognisedTypeCast' => "メソッド「 %3\$s 」の変数「 %2\$s 」のキャスト %1\$s の型がわかりません。",
+	'APIException:InvalidParameter' => "メソッド「 %2\$s 」のパラメタ「 %1\$s 」が不適切な値でした。",
 	'APIException:FunctionParseError' => "%s(%s) にはパース・エラーが１つあります。",
 	'APIException:FunctionNoReturn' => "%s(%s) は値を返しませんでした。",
 	'APIException:APIAuthenticationFailed' => "メソッドの呼び出しは API Aithentication に失敗しました。",
@@ -29,7 +29,7 @@ return array(
 	'SecurityException:authenticationfailed' => "ユーザは認証できませんでした。",
 	'InvalidParameterException:APIMethodOrFunctionNotSet' => "expose_method() において、メソッドあるいは関数が設定されていません",
 	'InvalidParameterException:APIParametersArrayStructure' => "メソッド '%s' の呼び出しにおいてパラメタの配列が不正です",
-	'InvalidParameterException:UnrecognisedHttpMethod' => "APIメソッド「 %2$s 」を呼び出すための httpメソッド %1$s が認識されませんでした",
+	'InvalidParameterException:UnrecognisedHttpMethod' => "APIメソッド「 %2\$s 」を呼び出すための httpメソッド %1\$s が認識されませんでした",
 	'SecurityException:AuthTokenExpired' => "認証トークンが欠落してるか、正しくないか、期限が切れています。",
 	'SecurityException:InvalidPostHash' => "POST データハッシュが不正です - %s のはずですが %s になっています。",
 	'SecurityException:DupePacket' => "パケット・シグネイチャはすでに見ました。",

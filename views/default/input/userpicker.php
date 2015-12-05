@@ -24,6 +24,13 @@ $name = $vars['name'];
 $name = htmlspecialchars($name, ENT_QUOTES, 'UTF-8');
 
 $guids = (array)elgg_extract('values', $vars, array());
+if (!$guids) {
+	// BC with earlier 1.x
+	if (!empty($vars['value'])) {
+		elgg_deprecated_notice("The input/userpicker view option 'value' is deprecated. Use 'values'.", "1.12");
+		$guids = (array)elgg_extract('value', $vars, array());
+	}
+}
 
 $handler = elgg_extract('handler', $vars, 'livesearch');
 $handler = htmlspecialchars($handler, ENT_QUOTES, 'UTF-8');

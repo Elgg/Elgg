@@ -1,7 +1,7 @@
-Elgg [![Build Status](https://secure.travis-ci.org/Elgg/Elgg.svg?branch=1.11)](https://travis-ci.org/Elgg/Elgg) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=1.11)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=1.11) [![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/coverage.png?b=1.11)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=1.11) [![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?version=1.11)](http://learn.elgg.org/en/1.11/)
+Elgg [![Build Status](https://secure.travis-ci.org/Elgg/Elgg.svg?branch=1.12)](https://travis-ci.org/Elgg/Elgg) [![Scrutinizer Quality Score](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/quality-score.png?s=1.12)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=1.12) [![Scrutinizer Code Coverage](https://scrutinizer-ci.com/g/Elgg/Elgg/badges/coverage.png?b=1.12)](https://scrutinizer-ci.com/g/Elgg/Elgg/?branch=1.12) [![Read the docs build status](https://readthedocs.org/projects/elgg/badge/?version=1.12)](http://learn.elgg.org/en/1.12/)
 ====
 
-Copyright (c) 2008-2014, see COPYRIGHT.txt
+Copyright (c) 2008-2015, see COPYRIGHT.txt
 
 For development credits, see CONTRIBUTORS.txt.
 
