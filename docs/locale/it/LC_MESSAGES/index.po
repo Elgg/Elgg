@@ -1,0 +1,68 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) 2013, Various
+# This file is distributed under the same license as the Elgg package.
+# 
+# Translators:
+# Doriano <maclurad@gmail.com>, 2015
+# Giuseppe Mariniello, 2014
+# Tassoman, 2015
+msgid ""
+msgstr ""
+"Project-Id-Version: Elgg Core\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2015-09-20 22:33+0300\n"
+"PO-Revision-Date: 2015-11-25 17:02+0000\n"
+"Last-Translator: Doriano <maclurad@gmail.com>\n"
+"Language-Team: Italian (http://www.transifex.com/elgg/elgg-core/language/it/)\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: it\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+#: ../../index.rst:2
+msgid "Elgg |version| Documentation"
+msgstr "Documentazione di Elgg |version|"
+
+#: ../../index.rst:4
+msgid ""
+"Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) is a "
+"rapid development framework with built-in social features. It is a great fit"
+" for building any app where users log in and share information."
+msgstr "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) è un ambiente di sviluppo rapido con intrinseche caratteristiche social. Si adatta veramente bene a costruire app in cui gli utenti si registrano a un sito e condividono informazioni."
+
+#: ../../index.rst:7
+msgid "It has been used to build `all kinds of social apps`__:"
+msgstr "È stato utilizzato per costruire `all kinds of social apps`__:"
+
+#: ../../index.rst:11
+msgid "open networks (similar to Facebook)"
+msgstr "social aperto (simile a Facebook)"
+
+#: ../../index.rst:12
+msgid "topical (like the Elgg Community)"
+msgstr "basato sugli argomenti (come la community di Elgg)"
+
+#: ../../index.rst:13
+msgid "private intranets"
+msgstr "intranet privata"
+
+#: ../../index.rst:14
+msgid "dating"
+msgstr "incontri"
+
+#: ../../index.rst:15
+msgid "educational"
+msgstr "didattico"
+
+#: ../../index.rst:16
+msgid "company blog"
+msgstr "blog aziendale"
+
+#: ../../index.rst:18
+msgid "There is also a `demo site`_ running a standard installation of Elgg."
+msgstr "C'è anche un `demo site`_ che esegue un'installazione standard di Elgg."
+
+#: ../../index.rst:20
+msgid "This is the canonical documentation for the Elgg_ project."
+msgstr "Questa è la documentazione canonica per il progetto Elgg__"

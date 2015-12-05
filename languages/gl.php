@@ -41,6 +41,7 @@ return array(
 	'actionunauthorized' => 'Non ten permisos para realizar a acción.',
 	
 	'ajax:error' => 'Produciuse un erro inesperado durante a execución dunha chamada mediante AJAX. Pode que se perdese a conexión co servidor.',
+	'ajax:not_is_xhr' => 'Non pode acceder a vistas de AJAX directamente.',
 
 	'PluginException:MisconfiguredPlugin' => "O complemento %s (guid: %s) está mal configurado e desactivouse. Consulte o wiki de Elgg (http://learn.elgg.org/) para intentar determinar a causa do problema.",
 	'PluginException:CannotStart' => 'O complemento «%s» (GUID: %s) non pode iniciarse e foi desactivado. Motivo: %s',
@@ -112,6 +113,10 @@ return array(
 
 	'error:default:title' => 'Ups…',
 	'error:default:content' => 'Ups… algo non foi ben.',
+	'error:400:title' => 'Solicitude non válida',
+	'error:400:content' => 'A solicitude non é válida ou está incompleta.',
+	'error:403:title' => 'Prohibido',
+	'error:403:content' => 'Non ten permisos para acceder á páxina solicitada.',
 	'error:404:title' => 'Non se atopou a páxina',
 	'error:404:content' => 'Non foi posíbel atopar a páxina que solicitou.',
 
@@ -711,6 +716,7 @@ Os cambios só afectarán a novos usuarios.',
 	'admin:robots.txt:instructions' => "Edite a continuación o ficheiro «robots.txt» do sitio.",
 	'admin:robots.txt:plugins' => "Os complementos están a engadir o seguinte contido ao ficheiro «robots.txt».",
 	'admin:robots.txt:subdir' => "A ferramenta de «robots.txt» non vai funcionar porque Elgg está instalado nun subdirectorio.",
+	'admin:robots.txt:physical' => "A ferramenta robots.txt non funcionará porque existe un ficheiro robots.txt.",
 
 	'admin:maintenance_mode:default_message' => 'O sitio está pechado por mantemento',
 	'admin:maintenance_mode:instructions' => 'Use o modo de mantemento para anovar o sitio ou realizar outros cambios importantes.
@@ -1251,6 +1257,8 @@ Non responda a esta mensaxe.",
 
 	'entity:delete:success' => 'Eliminouse a entidade %s',
 	'entity:delete:fail' => 'Non foi posíbel eliminar a entidade %s.',
+	
+	'entity:can_delete:invaliduser' => 'Non é posíbel comprobar se o usuario con GUID %s pode eliminar o recurso porque o usuario non existe.',
 
 /**
  * Action gatekeeper
@@ -1322,6 +1330,7 @@ Non responda a esta mensaxe.",
 	"es" => "Castelán",
 	"et" => "Estonian",
 	"eu" => "Éuscara",
+	"eu_es" => "Éuscara (España)",
 	"fa" => "Persa",
 	"fi" => "Finlandés",
 	"fj" => "Fidxian",
@@ -1386,11 +1395,12 @@ Non responda a esta mensaxe.",
 	"pl" => "Polaco",
 	"ps" => "Pashto",
 	"pt" => "Portugués",
-	"pt_br" => 'Portugués do Brasil',
+	"pt_br" => "Portugués (Brasil)",
 	"qu" => "Quechua",
 	"rm" => "Retorromance",
 	"rn" => "Rundi",
 	"ro" => "Romanés",
+	"ro_ro" => "Romanés (Romanía)",
 	"ru" => "Rus",
 	"rw" => "Ruandés",
 	"sa" => "Sánscrito",
@@ -1405,6 +1415,7 @@ Non responda a esta mensaxe.",
 	"so" => "Somaí",
 	"sq" => "Albanés",
 	"sr" => "Serbi",
+	"sr_latin" => "Serbio (latino)",
 	"ss" => "Swati",
 	"st" => "Sotho do norte",
 	"su" => "Sudanés",
@@ -1436,5 +1447,6 @@ Non responda a esta mensaxe.",
 	"yo" => "Ioruba; yoruba",
 	"za" => "Zhuang; chuang",
 	"zh" => "Chinés",
+	"zh_hans" => "Chinés simplificado",
 	"zu" => "Zulú",
 );

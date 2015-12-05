@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'Vous ne pouvez créer un groupe. Seul les administrateurs peuvent.',
 	'groups:cantedit' => 'Vous ne pouvez pas modifier ce groupe',
 	'groups:saved' => 'Groupe enregistré',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Les groupes à la une',
 	'groups:makeunfeatured' => 'Enlever de la une',
 	'groups:makefeatured' => 'Mettre à la une',
@@ -173,8 +174,11 @@ Voir et répondre à la discussion :
 	'discussion:reply:edit' => 'Modifier la réponse',
 	'discussion:reply:deleted' => 'La réponse de la discussion a été supprimée.',
 	'discussion:reply:error:notfound' => 'La réponse à cette discussion n\'a pas été trouvée',
+	'discussion:reply:error:notfound_fallback' => "Désolé, le message spécifié n'a pu être trouvé. Vous avez été redirigé vers le sujet de discussion original.",
 	'discussion:reply:error:notdeleted' => 'Impossible de supprimer la réponse de la discussion',
 
+	'discussion:search:title' => 'Répondre au sujet: %s',
+	
 	'admin:groups' => 'Groupes',
 
 	'reply:this' => 'Répondre à çà',

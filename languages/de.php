@@ -41,6 +41,7 @@ return array(
 	'actionunauthorized' => 'Du bist nicht authorisiert, diese Aktion auszuführen',
 	
 	'ajax:error' => 'Bei der Durchführung des AJAX-Aufrufs ist ein Fehler aufgetreten. Vielleicht ist die Verbindung zum Server verloren gegangen.',
+	'ajax:not_is_xhr' => 'Ein direkter Aufruf von Ajax-Views ist nicht erlaubt.',
 
 	'PluginException:MisconfiguredPlugin' => "%s (GUID: %s) ist ein falsch konfiguriertes Plugin. Es wurde deaktiviert. Im Elgg-Wiki sind einige mögliche Ursachen für das Problem beschrieben (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (GUID: %s) kann nicht gestartet werden und wurde deaktiviert. Ursache: %s.',
@@ -112,6 +113,10 @@ return array(
 
 	'error:default:title' => 'Hoppla...',
 	'error:default:content' => 'Hoppla...irgendetwas ist schiefgegangen.',
+	'error:400:title' => 'Ungültige Anfrage.',
+	'error:400:content' => 'Entschuldigung. Die Anfrage ist ungültig oder unvollständig.',
+	'error:403:title' => 'Unzureichende Zugriffsberechtigung',
+	'error:403:content' => 'Entschuldigung. Du hast keine Zugriffsberechtigung für die angeforderte Seite.',
 	'error:404:title' => 'Seite nicht gefunden',
 	'error:404:content' => 'Entschuldigung. Die gewünschte Seite konnte nicht gefunden werden.',
 
@@ -712,6 +717,7 @@ Diese Änderungen werden nur neu erstellte Benutzeraccounts auf Deiner Community
 	'admin:robots.txt:instructions' => "Bearbeite im Folgenden die robots.txt-Datei dieser Seite:",
 	'admin:robots.txt:plugins' => "Plugins fügen das Folgende zur robots.txt-Datei hinzu:",
 	'admin:robots.txt:subdir' => "Die robots.txt-Datei für diese Community-Seite kann nicht bearbeitet werden, da Elgg in einem Unterverzeichnis installiert ist.",
+	'admin:robots.txt:physical' => "Die Konfiguration des Inhalts der robots.txt-Datei ist nicht möglich, da auf dem Server bereits eine robots.txt-Datei vorhanden ist.",
 
 	'admin:maintenance_mode:default_message' => 'Diese Community-Seite ist aufgrund von Wartungsarbeiten derzeit nicht verfügbar.',
 	'admin:maintenance_mode:instructions' => 'Der Wartungs-Modus sollte während einer Aktualisierung der Community-Seite oder anderen größeren Änderungen an der Seite aktiviert werden.
@@ -1260,6 +1266,8 @@ Du kannst auf diese Email NICHT antworten.",
 
 	'entity:delete:success' => 'Die Entität %s wurde gelöscht',
 	'entity:delete:fail' => 'Die Entität %s konnte nicht gelöscht werden',
+	
+	'entity:can_delete:invaliduser' => 'Ein Aufruf der canDelete()-Funktion für die Benutzer-GUID [%s] ist nicht möglich, da dieser Benutzer nicht existiert.',
 
 /**
  * Action gatekeeper
@@ -1331,6 +1339,7 @@ Du kannst auf diese Email NICHT antworten.",
 	"es" => "Spanisch",
 	"et" => "Estnisch",
 	"eu" => "Baskisch",
+	"eu_es" => "Baskisch (Spanien)",
 	"fa" => "Persisch",
 	"fi" => "Finnisch",
 	"fj" => "Fidschi",
@@ -1395,11 +1404,12 @@ Du kannst auf diese Email NICHT antworten.",
 	"pl" => "Polnisch",
 	"ps" => "Paschtunisch",
 	"pt" => "Portugiesisch",
-	"pt_br" => 'Portugiesisch (Brasilianisch)',
+	"pt_br" => "Portugiesisch (Brasilien)",
 	"qu" => "Quechua",
 	"rm" => "Rätoromanisch",
 	"rn" => "Kirundi",
 	"ro" => "Rumänisch",
+	"ro_ro" => "Rumänisch (Rumänien)",
 	"ru" => "Russisch",
 	"rw" => "Kinyarwanda",
 	"sa" => "Sanskrit",
@@ -1414,6 +1424,7 @@ Du kannst auf diese Email NICHT antworten.",
 	"so" => "Somali",
 	"sq" => "Albanisch",
 	"sr" => "Serbisch",
+	"sr_latin" => "Serbisch (Lateinisches Alphabet)",
 	"ss" => "Siswati",
 	"st" => "Sesotho",
 	"su" => "Sudanesisch",
@@ -1445,5 +1456,6 @@ Du kannst auf diese Email NICHT antworten.",
 	"yo" => "Yoruba",
 	"za" => "Zuang",
 	"zh" => "Chinesisch",
+	"zh_hans" => "Chinesisch (Kurzzeichen)",
 	"zu" => "Zulu",
 );

@@ -1,8 +1,8 @@
 <?php
 
 if (!isset($argv[1]) || $argv[1] == '--help') {
-    echo "Usage: php .scripts/release.php <semver>\n";
-    exit;
+	echo "Usage: php .scripts/release.php <semver>\n";
+	exit;
 }
 
 $version = $argv[1];
@@ -16,6 +16,8 @@ if (!preg_match($regexp, $version, $matches)) {
 		. " or -rc.N (where N is a number).\n";
 	exit(1);
 }
+
+require_once dirname(__DIR__) . '/vendor/autoload.php';
 
 function run_commands($commands) {
 	foreach ($commands as $command) {
@@ -34,7 +36,7 @@ $branch = "release-$version";
 
 
 // Setup. Version checks are here so we fail early if any deps are missing
-run_commands(array(
+run_commands([
 	"tx --version",
 	"git --version",
 	"npm --version",
@@ -43,20 +45,28 @@ run_commands(array(
 
 	"cd $elgg_path",
 	"git checkout -B $branch",
-));
-
+]);
 
 // Update translations
-run_commands(array(
-	"tx pull -a --minimum-perc=100",
+run_commands([
+	"tx pull -af --minimum-perc=95",
+]);
+
+// Clean translations
+$cleaner = new Elgg\I18n\ReleaseCleaner();
+$cleaner->cleanInstallation(dirname(__DIR__));
+foreach ($cleaner->log as $msg) {
+	echo "ReleaseCleaner: $msg\n";
+}
+
+run_commands([
 	"sphinx-build -b gettext docs docs/locale/pot",
-	"sphinx-intl --locale-dir=docs/locale/ build",
+	"sphinx-intl build --locale-dir=docs/locale/",
 	"git add .",
 	"git commit -am \"chore(i18n): update translations\"",
-));
+]);
 
 // Update version in composer.json
-require_once __DIR__ . '/../engine/classes/Elgg/Json/EmptyKeyEncoding.php';
 $encoding = new \Elgg\Json\EmptyKeyEncoding();
 
 $composer_path = "$elgg_path/composer.json";

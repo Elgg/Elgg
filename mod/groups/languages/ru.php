@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'Вы не можете создать группу. Только админы могут.',
 	'groups:cantedit' => 'Вы не можете редактировать эту группу',
 	'groups:saved' => 'Сохранено',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Избранные группы',
 	'groups:makeunfeatured' => 'Убрать из избранного',
 	'groups:makefeatured' => 'Добавить в избранные',
@@ -173,8 +174,11 @@ return array(
 	'discussion:reply:edit' => 'Изменить ответ',
 	'discussion:reply:deleted' => 'Удалено.',
 	'discussion:reply:error:notfound' => 'Ответ не найден',
+	'discussion:reply:error:notfound_fallback' => "К сожалению, мы не можем найти указанный ответ, но мы перенаправляем вас в начало темы обсуждения.",
 	'discussion:reply:error:notdeleted' => 'Не удалось удалить',
 
+	'discussion:search:title' => 'Ответить на тему: %s',
+	
 	'admin:groups' => 'Группы',
 
 	'reply:this' => 'Ответить',

@@ -58,6 +58,7 @@ return array(
 	'groups:cantcreate' => 'Не можете да направите групу. Само админ може.',
 	'groups:cantedit' => 'Можете да измените ову групу',
 	'groups:saved' => 'Група сачувана',
+	'groups:save_error' => 'Group could not be saved',
 	'groups:featured' => 'Издвојене групе',
 	'groups:makeunfeatured' => 'Уклони из истакнутих',
 	'groups:makefeatured' => 'Истакни',

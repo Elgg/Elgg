@@ -1,11 +1,11 @@
 <?php
 return array(
-	'logrotate:period' => 'Quanto di frequente devono essere archiviati i log di sistema?',
+	'logrotate:period' => 'Ogni quanto devono essere archiviati i log di sistema?',
 
-	'logrotate:logrotated' => "Log ruotati\n",
+	'logrotate:logrotated' => "Log ruotato\n",
 	'logrotate:lognotrotated' => "Errore durante la rotazione del log\n",
 	
-	'logrotate:delete' => 'Elimina i logs archiviati prima del',
+	'logrotate:delete' => 'Elimina i log archiviati più vecchi di un/a',
 
 	'logrotate:week' => 'settimana',
 	'logrotate:month' => 'mese',

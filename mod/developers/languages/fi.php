@@ -20,14 +20,19 @@ return array(
 	'developers:label:display_errors' => 'Näytä kriittiset virheet',
 	'developers:help:display_errors' => "Oletuksena Elggin .htaccess-tiedosto piilottaa kriittiset virheet.",
 	'developers:label:screen_log' => "Näytä loki näytöllä",
-	'developers:help:screen_log' => "Tämä näyttää elgg_log() ja elgg_dump()-funktioiden ulosannin sivustolla.",
+	'developers:help:screen_log' => "Tämä tulostaa näkyviin elgg_log() ja elgg_dump()-funktioiden ulosannin sekä tietokantakyselyiden määrän.",
 	'developers:label:show_strings' => "Näytä käännösten alkuperäiset merkkijonot",
 	'developers:help:show_strings' => "Tämä näyttää merkkijonot, jotka syötetään elgg_echo()-käännösfunktiolle.",
+	'developers:label:show_modules' => "Näytä ladatut AMD-moduulit konsolissa",
+	'developers:help:show_modules' => "Näyttää ladatut AMD-moduulit javascript-konsolissa.",
 	'developers:label:wrap_views' => "Lisää html-kommentit näkymiin",
 	'developers:help:wrap_views' => "Tämä lisää lähes kaikkien näkymien alkuun ja loppuun HTML-kommentit. Tämä on hyödyllistä etsittäessä näkymää, joka on luonut jonkin tietyn HTML-koodin.
 		Tämä voi rikkoa näkymiä, jotka eivät käytä HTML-näkymätyyppiä. Katso tarkemmat tiedot funktiosta developers_wrap_views().",
 	'developers:label:log_events' => "Merkitse event ja plugin hook -toiminnot lokiin.",
 	'developers:help:log_events' => " Merkitse event ja plugin hook -toiminnot lokiin. Varoitus: näitä voi olla hyvin useita yksittäistä sivua kohden.",
+	'developers:label:show_gear' => "Käytä %s ikonia hallintapaneelin ulkopuolella",
+	'developers:help:show_gear' => "Näyttää oikeassa alakulmassa ikonin, josta pääsee käsiksi kehittäjille tarkoitettuihin ominaisuuksiin ja asetuksiin.",
+	'developers:label:submit' => "Tallenna ja tyhjennä välimuistit",
 
 	'developers:debug:off' => 'Pois päältä',
 	'developers:debug:error' => 'Virheet',
@@ -54,6 +59,7 @@ return array(
 
 	// event logging
 	'developers:event_log_msg' => "%s: '%s, %s' in %s",
+	'developers:log_queries' => "%s tietokantakyselyä (ei sisällä shutdown-eventissä tapahtuneita)",
 
 	// theme sandbox
 	'theme_sandbox:intro' => 'Ohjeet',
@@ -77,5 +83,7 @@ return array(
 	'developers:unit_tests:run' => 'Aja testit',
 
 	// status messages
-	'developers:settings:success' => 'Asetukset tallennettu',
+	'developers:settings:success' => 'Asetukset tallennettu ja välimuistit tyhjennetty',
+
+	'developers:amd' => 'AMD',
 );

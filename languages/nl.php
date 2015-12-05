@@ -41,6 +41,7 @@ return array(
 	'actionunauthorized' => 'Je bent niet geautoriseerd om deze actie uit te voeren',
 	
 	'ajax:error' => 'Onverwacht probleem opgetreden tijdens de uitvoer van een AJAX call. Mogelijk is de verbinding met de server verloren.',
+	'ajax:not_is_xhr' => 'Je kan AJAX views niet rechtstreeks aanroepen',
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) is een verkeerd geconfigureerde plugin. Hij is uitgeschakeld. In de Elgg documentatie kun je mogelijke oorzaken vinden (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) kan niet starten. Reden: %s',
@@ -113,6 +114,10 @@ Ongeldig %s afhankelijkheid "%s" in plugin %s. Let op: plugins kunnen niet confl
 
 	'error:default:title' => 'Oeps...',
 	'error:default:content' => 'Oeps... er ging iets mis.',
+	'error:400:title' => 'Het verzoek is onjuist',
+	'error:400:content' => 'Sorry, Het verzoek is onjuist of onvolledig',
+	'error:403:title' => 'Verboden',
+	'error:403:content' => 'Sorry. Je hebt geen toestemming om de opgevraagde pagina te bezoeken.',
 	'error:404:title' => 'Pagina niet gevonden',
 	'error:404:content' => 'Sorry. We konden de pagina die je opvroeg niet vinden.',
 
@@ -716,6 +721,7 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:robots.txt:instructions' => "Je kunt hieronder de robots.txt van de site bewerken.",
 	'admin:robots.txt:plugins' => "Plugins zullen het volgende toevoegen aan de robots.txt:",
 	'admin:robots.txt:subdir' => "De robots.txt-tool zal niet werken, omdat Elgg in een submap is geïnstalleerd.",
+	'admin:robots.txt:physical' => "De robots.txt tool zal niet werken omdat er een fysiek robots.txt bestand aanwezig is.",
 
 	'admin:maintenance_mode:default_message' => 'De site is offline in verband met onderhoud.',
 	'admin:maintenance_mode:instructions' => 'Je kunt de onderhoudsmodus het beste alléén gebruiken als er sprake is van een upgrade, of als je grote veranderingen aan de site wilt aanbrengen. 
@@ -1256,6 +1262,8 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
 
 	'entity:delete:success' => 'Entity %s is verwijderd',
 	'entity:delete:fail' => 'Entity %s kon niet worden verwijderd',
+	
+	'entity:can_delete:invaliduser' => 'Kan canDelete voor user_guid [%s] niet nakijken omdat de gebruiker niet bestaat.',
 
 /**
  * Action gatekeeper
@@ -1327,6 +1335,7 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
 	"es" => "Spanish",
 	"et" => "Estonian",
 	"eu" => "Basque",
+	"eu_es" => "Baskisch (Spanje)",
 	"fa" => "Persian",
 	"fi" => "Finnish",
 	"fj" => "Fiji",
@@ -1391,11 +1400,12 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
-	"pt_br" => 'Braziliaans Portugees',
+	"pt_br" => "Portugees (Brazilië)",
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
 	"ro" => "Romanian",
+	"ro_ro" => "Romeens (Roemenië)",
 	"ru" => "Russian",
 	"rw" => "Kinyarwanda",
 	"sa" => "Sanskrit",
@@ -1410,6 +1420,7 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
 	"so" => "Somali",
 	"sq" => "Albanian",
 	"sr" => "Serbian",
+	"sr_latin" => "Servisch (Latijn)",
 	"ss" => "Siswati",
 	"st" => "Sesotho",
 	"su" => "Sundanese",
@@ -1441,5 +1452,6 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
 	"yo" => "Yoruba",
 	"za" => "Zuang",
 	"zh" => "Chinese",
+	"zh_hans" => "Vereenvoudigd Chinees",
 	"zu" => "Zulu",
 );

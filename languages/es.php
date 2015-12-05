@@ -41,6 +41,7 @@ return array(
 	'actionunauthorized' => 'Usted no posee los permisos necesarios para realizar esta acci&oacute;n',
 	
 	'ajax:error' => 'Ha habido un error inesperado en la llamada AJAX. Puede que la conexión con el servidor se haya perdido.',
+	'ajax:not_is_xhr' => 'No puede acceder directamente a vistas AJAX',
 
 	'PluginException:MisconfiguredPlugin' => "%s (guid: %s) plugin mal configurado. Se ha desactivado. Por favor, consulta la wiki de Elgg para ver las posibles causas (http://learn.elgg.org/).",
 	'PluginException:CannotStart' => '%s (guid: %s) no puede iniciarse. Motivo: %s',
@@ -112,6 +113,10 @@ return array(
 
 	'error:default:title' => 'Error...',
 	'error:default:content' => 'Oops... Algo salió mal',
+	'error:400:title' => 'Petición incorrecta',
+	'error:400:content' => 'Lo sentimos. La petición no es válida o está incompleta.',
+	'error:403:title' => 'Prohibido',
+	'error:403:content' => 'Lo sentimos. Usted no está autorizado a ver la página solicitada.',
 	'error:404:title' => 'Página no encontrada',
 	'error:404:content' => 'Lo sentimos. No pudimos encontrar la página solicitada',
 
@@ -367,7 +372,7 @@ return array(
 	'viewtype:list' => "Vista de lista",
 	'viewtype:gallery' => "Galer&iacute;a",
 
-	'tag:search:startblurb' => "Items con tags que coincidan con '%s':",
+	'tag:search:startblurb' => "Items con etiquetas que coincidan con '%s':",
 
 	'user:search:startblurb' => "Usuarios que coincidan con '%s':",
 	'user:search:finishblurb' => "Click aqu&iacute; para ver mas",
@@ -704,6 +709,7 @@ return array(
 	'admin:robots.txt:instructions' => "Editar el robots.txt de este sitio a continuación",
 	'admin:robots.txt:plugins' => "Plugins estan agregando lo siguiente al archivo robots.txt",
 	'admin:robots.txt:subdir' => "La herramienta de robots.txt no funcionara por que Elgg esta instalado en un sub-directorio",
+	'admin:robots.txt:physical' => "La herramienta robots.txt no funcionará porque existe físicamente un archivo robots.txt",
 
 	'admin:maintenance_mode:default_message' => 'El sitio no está disponible por mantenimiento',
 	'admin:maintenance_mode:instructions' => 'El Modo de Mantenimiento solo debe ser usado para actualizaciones y otros cambios de importancia en el sitio.
@@ -839,7 +845,7 @@ Cuando este modo esta activado, solo los administradores pueden ingresar y ver e
 	'bottom' => 'Ultimo',
 	'right' => 'Derecha',
 	'left' => 'Izquierda',
-	'back' => 'Back',
+	'back' => 'Atrás',
 
 	'invite' => "Invitar",
 
@@ -878,7 +884,7 @@ Cuando este modo esta activado, solo los administradores pueden ingresar y ver e
  * Generic questions
  */
 
-	'question:areyousure' => '&iquest;Est&aacute; seguro?',
+	'question:areyousure' => '¿Está seguro?',
 
 /**
  * Status
@@ -908,7 +914,7 @@ Cuando este modo esta activado, solo los administradores pueden ingresar y ver e
 
 	'title' => "T&iacute;tulo",
 	'description' => "Descripci&oacute;n",
-	'tags' => "Tags",
+	'tags' => "Etiquetas",
 	'all' => "Todo",
 	'mine' => "M&iacute;o",
 
@@ -918,7 +924,7 @@ Cuando este modo esta activado, solo los administradores pueden ingresar y ver e
 	'annotations' => "Anotaciones",
 	'relationships' => "Relaciones",
 	'metadata' => "Metadata",
-	'tagcloud' => "Nube de tags",
+	'tagcloud' => "Nube de etiquetas",
 
 	'on' => 'Habilitado',
 	'off' => 'Deshabilitado',
@@ -1085,7 +1091,7 @@ Una vez autenticado, le recomendamos que modifique su contrase&ntilde;a.
 	'upgrade:db' => 'La base de datos ha sido actualizada',
 	'upgrade:core' => 'La instalaci&oacute;n de Elgg ha sido actualizada',
 	'upgrade:unlock' => 'Unlock upgrade',
-	'upgrade:unlock:confirm' => "The database is locked for another upgrade. Running concurrent upgrades is dangerous. You should only continue if you know there is not another upgrade running. Unlock?",
+	'upgrade:unlock:confirm' => "La base de datos está bloqueada para otra actualización. Ejecutar varias actualizaciones concurrentemente es peligroso. Solo debes continuar si sabes que no hay otra actualización corriendo. Desbloquear?",
 	'upgrade:locked' => "Cannot upgrade. Another upgrade is running. To clear the upgrade lock, visit the Admin section.",
 	'upgrade:unlock:success' => "Desbloqueo de Actualización exitoso.",
 	'upgrade:unable_to_upgrade' => 'No se puede actualizar',
@@ -1245,6 +1251,8 @@ Por favor no responda a este correo",
 
 	'entity:delete:success' => 'La entidad %s ha sido eliminada',
 	'entity:delete:fail' => 'La entidad %s no pudo ser eliminada',
+	
+	'entity:can_delete:invaliduser' => 'No se puede chequear canDelete para el usuario [%s] porque el usuario no existe.',
 
 /**
  * Action gatekeeper
@@ -1255,7 +1263,7 @@ Por favor no responda a este correo",
 	'actiongatekeeper:timeerror' => 'La p&aacute;gina que se encontraba utilizando ha expirado. Por favor refresque la p&aacute;gina e intente nuevamente',
 	'actiongatekeeper:pluginprevents' => 'Lo sentimos. No se ha podido enviar el formulario por motivos desconocidos.',
 	'actiongatekeeper:uploadexceeded' => 'El tama&ntilde;o del(los) archivo(s) supera el m&iacute;mite establecido',
-	'actiongatekeeper:crosssitelogin' => "Sorry, logging in from a different domain is not permitted. Please try again.",
+	'actiongatekeeper:crosssitelogin' => "Lo sentimos, pero no se permite iniciar sesión desde otro dominio. Por favor inténtelo otra vez.",
 
 /**
  * Word blacklists
@@ -1267,7 +1275,7 @@ Por favor no responda a este correo",
  * Tag labels
  */
 
-	'tag_names:tags' => 'Tags',
+	'tag_names:tags' => 'Etiquetas',
 
 /**
  * Javascript
@@ -1316,6 +1324,7 @@ Por favor no responda a este correo",
 	"es" => "Espa&ntilde;ol",
 	"et" => "Estonian",
 	"eu" => "Basque",
+	"eu_es" => "Euskera (España)",
 	"fa" => "Persian",
 	"fi" => "Finnish",
 	"fj" => "Fiji",
@@ -1380,11 +1389,12 @@ Por favor no responda a este correo",
 	"pl" => "Polish",
 	"ps" => "Pashto / Pushto",
 	"pt" => "Portuguese",
-	"pt_br" => 'Portugués Brasileño',
+	"pt_br" => "Portugués (Brasil)",
 	"qu" => "Quechua",
 	"rm" => "Rhaeto-Romance",
 	"rn" => "Kirundi",
 	"ro" => "Romanian",
+	"ro_ro" => "Rumano (Rumanía)",
 	"ru" => "Russian",
 	"rw" => "Kinyarwanda",
 	"sa" => "Sanskrit",
@@ -1399,6 +1409,7 @@ Por favor no responda a este correo",
 	"so" => "Somali",
 	"sq" => "Albanian",
 	"sr" => "Serbian",
+	"sr_latin" => "Serbio (Latino)",
 	"ss" => "Siswati",
 	"st" => "Sesotho",
 	"su" => "Sundanese",
@@ -1430,5 +1441,6 @@ Por favor no responda a este correo",
 	"yo" => "Yoruba",
 	"za" => "Zuang",
 	"zh" => "Chinese",
+	"zh_hans" => "Chino simplificado",
 	"zu" => "Zulu",
 );

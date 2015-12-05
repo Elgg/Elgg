@@ -23,6 +23,7 @@ return array(
 	'reportedcontent:address' => '항목의 위치',
 	'reportedcontent:success' => '관리자에게 신고가 보내졌습니다.',
 	'reportedcontent:failing' => '신고를 보낼 수 없었습니다.',
+	'reportedcontent:refresh' => 'Refresh this listing',
 	'reportedcontent:report' => '관리자에게 신고',
 	'reportedcontent:instructions' => '검토를 위해 신고내용이 관리자에게 보내질 것입니다.',
 	'reportedcontent:numbertodisplay' => '표시할 신고의 개수',
