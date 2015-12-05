@@ -50,6 +50,26 @@ class ElggFile extends \ElggObject {
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function getMetadata($name) {
+		if (0 === strpos($name, 'filestore::')) {
+			elgg_deprecated_notice("Do not access the ElggFile filestore metadata directly. Use setFilestore().", '2.0');
+		}
+		return parent::getMetadata($name);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setMetadata($name, $value, $value_type = '', $multiple = false, $owner_guid = 0, $access_id = null) {
+		if (0 === strpos($name, 'filestore::')) {
+			elgg_deprecated_notice("Do not access the ElggFile filestore metadata directly. Use setFilestore().", '2.0');
+		}
+		return parent::setMetadata($name, $value, $value_type, $multiple, $owner_guid, $access_id);
+	}
+
+	/**
 	 * Set the filename of this file.
 	 *
 	 * @param string $name The filename.
@@ -442,11 +462,11 @@ class ElggFile extends \ElggObject {
 		// Save datastore metadata
 		$params = $this->filestore->getParameters();
 		foreach ($params as $k => $v) {
-			$this->setMetadata("filestore::$k", $v);
+			parent::setMetadata("filestore::$k", $v);
 		}
 
 		// Now make a note of the filestore class
-		$this->setMetadata("filestore::filestore", get_class($this->filestore));
+		parent::setMetadata("filestore::filestore", get_class($this->filestore));
 
 		return true;
 	}
