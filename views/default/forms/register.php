@@ -8,6 +8,11 @@
 
 if (elgg_is_sticky_form('register')) {
 	$values = elgg_get_sticky_values('register');
+
+	// Add the sticky values to $vars so views extending
+	// register/extend also get access to them.
+	$vars = array_merge($vars, $values);
+
 	elgg_clear_sticky_form('register');
 } else {
 	$values = array();
