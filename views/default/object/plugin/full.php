@@ -173,8 +173,14 @@ if (elgg_view_exists($settings_view_old) || elgg_view_exists($settings_view_new)
 	$settings_link = "<a class='elgg-plugin-settings' href='$link' title='" . elgg_echo('settings') . "'>" . elgg_view_icon("settings-alt") . "</a>";
 }
 
+$attrs = [
+	'class' => $classes,
+	'id' => $css_id,
+	'data-guid' => $plugin->guid,
+];
+
 ?>
-<div class="<?php echo implode(' ', $classes); ?>" id="<?php echo $css_id; ?>">
+<div <?= elgg_format_attributes($attrs) ?>>
 	<div class="elgg-image-block">
 		<div class="elgg-image">
 			<div>

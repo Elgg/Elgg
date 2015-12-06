@@ -76,6 +76,23 @@ New notification events can be registered with the `elgg_register_notification_e
 function. Notifications about registered events will be sent automatically to all
 subscribed users.
 
+This is the workflow of the notifications system:
+
+ #. Someone does an action that triggers an event within Elgg
+     - The action can be ``create``, ``update`` or ``delete``
+     - The target of the action can be any instance of the ``ElggEntity`` class (e.g. a Blog post)
+ #. The notifications system saves this event into a notifications queue in the database
+ #. When the pluging hook handler for the one-minute interval gets triggered, the event is taken from the queue and it gets processed
+ #. Subscriptions are fetched for the user who triggered the event
+     - By default this includes all the users who have enabled any notification method
+       for the user at ``www.site.com/notifications/personal/<username>``
+ #. Plugins are allowed to alter the subscriptions using the ``[get, subscriptions]`` hook
+ #. Plugins are allowed to alter the notification parameters with the ``[send:before, notifications]`` hook
+ #. Plugins are allowed to alter the notification message with the ``[prepare, notification:<action>:<type>:<subtype>]`` hook
+ #. Notifications are sent to each subscriber using the methods they have chosen
+     - Plugins can take over or prevent sending of each individual notification with the ``[send, notification:<method>]`` hook
+ #. The ``[send:after, notifications]`` hook is triggered for the event after all notifications have been sent
+
 __ http://reference.elgg.org/notification_8php.html#af7a43dcb0cf13ba55567d9d7874a3b20
 
 Example
