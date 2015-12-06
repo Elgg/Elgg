@@ -54,6 +54,11 @@ class Logger {
 	private $context;
 
 	/**
+	 * @var array
+	 */
+	private $disabled_stack;
+
+	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService $hooks   Hooks service
@@ -112,12 +117,27 @@ class Logger {
 	 * @return bool Whether the messages was logged
 	 */
 	public function log($message, $level = self::NOTICE) {
+		if ($this->disabled_stack) {
+			// capture to top of stack
+			end($this->disabled_stack);
+			$key = key($this->disabled_stack);
+			$this->disabled_stack[$key][] = [
+				'message' => $message,
+				'level' => $level,
+			];
+		}
+
 		if ($this->level == self::OFF || $level < $this->level) {
 			return false;
 		}
 
 		if (!array_key_exists($level, self::$levels)) {
 			return false;
+		}
+
+		// when capturing, still use consistent return value
+		if ($this->disabled_stack) {
+			return true;
 		}
 
 		$levelString = self::$levels[$level];
@@ -223,6 +243,35 @@ class Logger {
 		} else {
 			error_log(print_r($data, true));
 		}
+	}
+
+	/**
+	 * Temporarily disable logging and capture logs (before tests)
+	 *
+	 * Call disable() before your tests and enable() after. enable() will return a list of
+	 * calls to log() (and helper methods) that were not acted upon.
+	 *
+	 * @note This behaves like a stack. You must call enable() for each disable() call.
+	 *
+	 * @return void
+	 * @see enable
+	 * @access private
+	 * @internal
+	 */
+	public function disable() {
+		$this->disabled_stack[] = [];
+	}
+
+	/**
+	 * Restore logging and get record of log calls (after tests)
+	 *
+	 * @return array
+	 * @see disable
+	 * @access private
+	 * @internal
+	 */
+	public function enable() {
+		return array_pop($this->disabled_stack);
 	}
 }
 

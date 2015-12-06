@@ -176,16 +176,54 @@ Otherwise you may need to perform an interactive rebase:
 3. Change the commit message(s), save/exit the editor (git will present a file for each commit that needs rewording).
 4. ``git push -f your_remote your_branch`` to force push the branch (updating your PR).
 
+.. _contribute/code#testing:
+
 Testing
 =======
 
-Elgg has automated tests for both PHP and JavaScript functionality.
-All new contributions are required to come with appropriate tests.
+Elgg has automated tests for both PHP and JavaScript functionality. All new contributions are required to come with appropriate tests.
 
-PHPUnit Tests
--------------
+General guidelines
+------------------
 
-TODO
+Break tests up by the behaviors you want to test and use names that describe the behavior. E.g.:
+
+* Not so good: One big method ``testAdd()``.
+
+* Better: Methods ``testAddingZeroChangesNothing`` and ``testAddingNegativeNumberSubtracts``
+
+Strive for :ref:`componentized designs <contribute/code#solid>` that allow testing in isolation, without large dependency graphs or DB access. Injecting dependencies is key here.
+
+PHP Tests
+---------
+
+PHPUnit
+^^^^^^^
+
+Located in ``engine/tests/phpunit``, this is our preferred test suite. It uses no DB access, and has only superficial access to the entities API.
+
+* We encourage you to create components that are testable in this suite if possible.
+* Consider separating storage from your component so at least business logic can be tested here.
+* Depend on the ``Elgg\Filesystem\*`` classes rather than using PHP filesystem functions.
+
+SimpleTest
+^^^^^^^^^^
+
+The rest of the files in ``engine/tests`` form our integration suite, for anything that needs access to the DB or entity APIs.
+
+* Our long-term goals are to minimize these and convert them to PHPUnit
+
+Testing interactions between services
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Ideally your tests would construct your own isolated object graphs for direct manipulation, but this isn't always possible.
+
+If your test relies on Elgg's Service Provider (``_elgg_services()`` returns a ``Elgg\Di\ServiceProvider``), realize that it maintains a singleton instance for most services it hands out, and many services keep their own local references to these services as well.
+
+Due to these local references, replacing services on the SP within a test often will not have the desired effect. Instead, you may need to use functionality baked into the services themselves:
+
+* The ``events`` and ``hooks`` services have methods ``backup()`` and ``restore()``.
+* The ``logger`` service has methods ``disable()`` and ``enable()``.
 
 Jasmine Tests
 -------------
@@ -260,6 +298,8 @@ that takes an option.
 
 **Note:** In a bugfix release, *some duplication is preferrable to refactoring*. Fix bugs in the simplest
 way possible and refactor to reduce duplication in the next minor release branch.
+
+.. _contribute/code#solid:
 
 Embrace SOLID and GRASP
 ^^^^^^^^^^^^^^^^^^^^^^^
@@ -374,24 +414,7 @@ __ http://www.mrclay.org/2014/02/14/gitx-for-cleaner-commits/
 Include tests
 ~~~~~~~~~~~~~
 
-When at all possible include unit tests for code you add or alter. We use:
-
-* PHPUnit for PHP unit tests.
-
-* SimpleTest for legacy PHP tests that require use of the database. Our long-term goal
-  is to move all tests to PHPUnit.
-
-* Karma for JavaScript unit tests
-
-Naming tests
-~~~~~~~~~~~~
-
-Break tests up by the behaviors you want to test and use names that describe the
-behavior. E.g.:
-
-* Not so good: One big method `testAdd()`.
-
-* Better: Methods `testAddingZeroChangesNothing` and `testAddingNegativeNumberSubtracts`
+When at all possible :ref:`include unit tests <contribute/code#testing>` for code you add or alter.
 
 Keep bugfixes simple
 ~~~~~~~~~~~~~~~~~~~~
