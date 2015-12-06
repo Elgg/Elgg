@@ -158,7 +158,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setFactory('logger', function(ServiceProvider $c) {
 			return $this->resolveLoggerDependencies('logger');
 		});
-		
+
 		// TODO(evan): Support configurable transports...
 		$this->setClassName('mailer', 'Zend\Mail\Transport\Sendmail');
 
@@ -216,7 +216,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		}, false);
 
 		$this->setFactory('relationshipsTable', function(ServiceProvider $c) {
-			return new \Elgg\Database\RelationshipsTable($c->db);
+			return new \Elgg\Database\RelationshipsTable($c->db, $c->entityTable, $c->metadataTable, $c->events);
 		});
 
 		$this->setFactory('request', [\Elgg\Http\Request::class, 'createFromGlobals']);
