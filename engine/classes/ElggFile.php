@@ -464,7 +464,7 @@ class ElggFile extends \ElggObject {
 		}
 
 		// Now make a note of the filestore class
-		parent::setMetadata("filestore::filestore", get_class($this->filestore));
+		parent::setMetadata("filestore::filestore", get_class($filestore));
 
 		return true;
 	}
