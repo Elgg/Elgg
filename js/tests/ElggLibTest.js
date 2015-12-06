@@ -71,6 +71,12 @@ define(function(require) {
 				
 				window.foo = undefined; // cleanup
 			});
+
+			it("can handle array names with periods", function () {
+				elgg.provide(['foo', 'bar.baz']);
+
+				expect(window.foo['bar.baz']).not.toBe(undefined);
+			});
 		});
 		
 		describe("elgg.require()", function() {

@@ -40,6 +40,18 @@ define(function(require) {
 				elgg.register_hook_handler('all', 'all', elgg.abstractMethod);
 				expect(function() { elgg.trigger_hook('pinky', 'winky'); }).toThrow();
 			});
+
+			it("handles names/types with periods", function() {
+				expect(elgg.trigger_hook("fee.fum", "bar.bang")).toBe(null);
+
+				elgg.register_hook_handler("fee.fum", "bar.bang", function () { return 1; });
+
+				expect(elgg.trigger_hook("fee.fum", "bar.bang")).toBe(1);
+
+				elgg.register_hook_handler("fee.fum", "all", function () { return 2; });
+
+				expect(elgg.trigger_hook("fee.fum", "pow")).toBe(2);
+			});
 		});
 		
 		describe("elgg.register_hook_handler()", function() {
