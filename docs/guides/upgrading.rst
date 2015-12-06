@@ -610,6 +610,13 @@ Viewtype is static after the initial ``elgg_get_viewtype()`` call
 ``view`` input and ``$CONFIG->view`` initially, this is only done once per request.
 
 
+Deprecations
+------------
+
+It's deprecated to read or write to metadata keys starting with ``filestore::`` on ``ElggFile`` objects. In Elgg 3.0 this metadata will be deleted if it points to the current data root path, so few file objects will have it. Plugins should only use ``ElggFile::setFilestore`` if files need to be stored in a custom location.
+
+.. note:: This is not the only deprecation in Elgg 2.0. Plugin developers should watch their site error logs.
+
 From 1.10 to 1.11
 =================
 

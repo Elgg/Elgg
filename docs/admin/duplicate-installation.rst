@@ -198,7 +198,11 @@ Change the filestore data directory
 
 .. warning::
 
-   Only change the first path here!!
+   Only change the first path above!!
+
+.. warning::
+
+   If you have a plugin that uses custom filestores (contains an ``ElggFile::setFilestore`` method call or sets metadata with names like ``filestore::*``), then query above may not be safe (it overwrites *all* filesystem ``dir_root`` locations). Please seek guidance via the Elgg community.
 
 Check .htaccess
 ===============
