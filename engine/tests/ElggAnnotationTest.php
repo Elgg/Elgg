@@ -16,8 +16,7 @@ class ElggAnnotationTest extends \ElggCoreUnitTest {
 	 * Called before each test method.
 	 */
 	public function setUp() {
-		$this->original_hooks = _elgg_services()->hooks;
-		_elgg_services()->hooks = new \Elgg\PluginHooksService();
+		_elgg_services()->hooks->backup();
 
 		$this->entity = new \ElggObject();
 		$this->entity->subtype = 'elgg_annotation_test';
@@ -32,7 +31,7 @@ class ElggAnnotationTest extends \ElggCoreUnitTest {
 		$this->entity->delete();
 		remove_subtype('object', 'elgg_annotation_test');
 
-		_elgg_services()->hooks = $this->original_hooks;
+		_elgg_services()->hooks->restore();
 	}
 
 	public function testCanEdit() {
