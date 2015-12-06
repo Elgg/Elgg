@@ -43,6 +43,26 @@ class ElggFile extends \ElggObject {
 	}
 
 	/**
+	 * {@inheritdoc}
+	 */
+	public function getMetadata($name) {
+		if (0 === strpos($name, 'filestore::')) {
+			elgg_deprecated_notice("Do not access the ElggFile filestore metadata directly. Use setFilestore().", '2.0');
+		}
+		return parent::getMetadata($name);
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
+	public function setMetadata($name, $value, $value_type = '', $multiple = false, $owner_guid = 0, $access_id = null) {
+		if (0 === strpos($name, 'filestore::')) {
+			elgg_deprecated_notice("Do not access the ElggFile filestore metadata directly. Use setFilestore().", '2.0');
+		}
+		return parent::setMetadata($name, $value, $value_type, $multiple, $owner_guid, $access_id);
+	}
+
+	/**
 	 * Set the filename of this file.
 	 *
 	 * @param string $name The filename.
@@ -381,14 +401,16 @@ class ElggFile extends \ElggObject {
 			return $this->filestore;
 		}
 
-		$class = $this->{'filestore::filestore'};
+		// Note we use parent::getMetadata() below to avoid showing the warnings added in #9193
+
+		$class = parent::getMetadata('filestore::filestore');
 		if (!$class) {
 			return $this->filestore;
 		}
 
 		// common case
 		if ($class === ElggDiskFilestore::class
-				&& $this->{'filestore::dir_root'} === _elgg_services()->config->getDataPath()) {
+				&& parent::getMetadata('filestore::dir_root') === _elgg_services()->config->getDataPath()) {
 			return $this->filestore;
 		}
 
@@ -433,14 +455,16 @@ class ElggFile extends \ElggObject {
 
 		$filestore = $this->getFilestore();
 
+		// Note we use parent::getMetadata() below to avoid showing the warnings added in #9193
+
 		// Save datastore metadata
 		$params = $filestore->getParameters();
 		foreach ($params as $k => $v) {
-			$this->setMetadata("filestore::$k", $v);
+			parent::setMetadata("filestore::$k", $v);
 		}
 
 		// Now make a note of the filestore class
-		$this->setMetadata("filestore::filestore", get_class($filestore));
+		parent::setMetadata("filestore::filestore", get_class($this->filestore));
 
 		return true;
 	}
