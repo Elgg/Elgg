@@ -34,22 +34,8 @@ function logrotate_init() {
 function logrotate_archive_cron($hook, $entity_type, $returnvalue, $params) {
 	$resulttext = elgg_echo("logrotate:logrotated");
 
-	$day = 86400;
-
-	$offset = 0;
 	$period = elgg_get_plugin_setting('period', 'logrotate');
-	switch ($period) {
-		case 'weekly':
-			$offset = $day * 7;
-			break;
-		case 'yearly':
-			$offset = $day * 365;
-			break;
-		case 'monthly':
-		default:
-			// assume 28 days even if a month is longer. Won't cause data loss.
-			$offset = $day * 28;
-	}
+	$offset = logrotate_get_seconds_in_period($period);
 
 	if (!archive_log($offset)) {
 		$resulttext = elgg_echo("logrotate:lognotrotated");
@@ -64,28 +50,37 @@ function logrotate_archive_cron($hook, $entity_type, $returnvalue, $params) {
 function logrotate_delete_cron($hook, $entity_type, $returnvalue, $params) {
 	$resulttext = elgg_echo("logrotate:logdeleted");
 
-	$day = 86400;
-
-	$offset = 0;
 	$period = elgg_get_plugin_setting('delete', 'logrotate');
-	switch ($period) {
-		case 'weekly':
-			$offset = $day * 7;
-			break;
-		case 'yearly':
-			$offset = $day * 365;
-			break;
-		case 'monthly':
-		default:
-			// assume 28 days even if a month is longer. Won't cause data loss.
-			$offset = $day * 28;
-	}
+	$offset = logrotate_get_seconds_in_period($period);
 
 	if (!log_browser_delete_log($offset)) {
 		$resulttext = elgg_echo("logrotate:lognotdeleted");
 	}
 
 	return $returnvalue . $resulttext;
+}
+
+
+/**
+ * @param $period
+ * @return int
+ */
+function logrotate_get_seconds_in_period($period)
+{
+	$seconds_in_day = 86400;
+	switch ($period) {
+		case 'weekly':
+			$offset = $seconds_in_day * 7;
+			break;
+		case 'yearly':
+			$offset = $seconds_in_day * 365;
+			break;
+		case 'monthly':
+		default:
+			// assume 28 days even if a month is longer. Won't cause data loss.
+			$offset = $seconds_in_day * 28;
+	}
+	return $offset;
 }
 
 /**
