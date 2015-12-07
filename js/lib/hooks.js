@@ -19,7 +19,7 @@ elgg.provide('elgg.config.triggered_hooks');
  * @param {String}   type     Type of the event to register for
  * @param {Function} handler  Handle to call
  * @param {Number}   priority Priority to call the event handler
- * @return {Bool}
+ * @return {Boolean}
  */
 elgg.register_hook_handler = function(name, type, handler, priority) {
 	elgg.assertTypeOf('string', name);
@@ -30,12 +30,12 @@ elgg.register_hook_handler = function(name, type, handler, priority) {
 		return false;
 	}
 
-	var priorities =  elgg.config.hooks;
+	var hooks = elgg.config.hooks;
 
-	elgg.provide(name + '.' + type, priorities);
+	elgg.provide([name, type], hooks);
 
-	if (!(priorities[name][type] instanceof elgg.ElggPriorityList)) {
-		priorities[name][type] = new elgg.ElggPriorityList();
+	if (!(hooks[name][type] instanceof elgg.ElggPriorityList)) {
+		hooks[name][type] = new elgg.ElggPriorityList();
 	}
 
 	// call if instant and already triggered.
@@ -43,7 +43,7 @@ elgg.register_hook_handler = function(name, type, handler, priority) {
 		handler(name, type, null, null);
 	}
 
-	return priorities[name][type].insert(handler, priority);
+	return hooks[name][type].insert(handler, priority);
 };
 
 /**
@@ -68,7 +68,7 @@ elgg.register_hook_handler = function(name, type, handler, priority) {
  * @param {Object} params Optional parameters to pass to the handlers
  * @param {Object} value  Initial value of the return. Can be mangled by handlers
  *
- * @return {Bool}
+ * @return {Boolean}
  */
 elgg.trigger_hook = function(name, type, params, value) {
 	elgg.assertTypeOf('string', name);
@@ -90,10 +90,10 @@ elgg.trigger_hook = function(name, type, params, value) {
 			}
 		};
 
-	elgg.provide(name + '.' + type, hooks);
-	elgg.provide('all.' + type, hooks);
-	elgg.provide(name + '.all', hooks);
-	elgg.provide('all.all', hooks);
+	elgg.provide([name, type], hooks);
+	elgg.provide(['all', type], hooks);
+	elgg.provide([name, 'all'], hooks);
+	elgg.provide(['all', 'all'], hooks);
 
 	var hooksList = [];
 	
