@@ -368,8 +368,10 @@ elgg.ui.initDatePicker = function() {
  * name is remove_friend, you should call this function with "remove-friend" instead.
  */
 elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
+
 	// Handles clicking the first button.
-	$(document).on('click', '.elgg-menu-item-' + menuItemNameA + ' a', function() {
+	$(document).off('click.togglable', '.elgg-menu-item-' + menuItemNameA + ' a')
+			.on('click.togglable', '.elgg-menu-item-' + menuItemNameA + ' a', function() {
 		var $menu = $(this).closest('.elgg-menu');
 
 		// Be optimistic about success
@@ -394,7 +396,8 @@ elgg.ui.registerTogglableMenuItems = function(menuItemNameA, menuItemNameB) {
 	});
 
 	// Handles clicking the second button
-	$(document).on('click', '.elgg-menu-item-' + menuItemNameB + ' a', function() {
+	$(document).off('click.togglable', '.elgg-menu-item-' + menuItemNameB + ' a')
+			.on('click.togglable', '.elgg-menu-item-' + menuItemNameB + ' a', function() {
 		var $menu = $(this).closest('.elgg-menu');
 
 		// Be optimistic about success
