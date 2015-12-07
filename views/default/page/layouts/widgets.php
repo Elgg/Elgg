@@ -1,5 +1,4 @@
 <?php
-
 /**
  * Elgg widgets layout
  *
@@ -44,7 +43,7 @@ $widgets = elgg_get_widgets($owner->guid, $context);
 $layout_attrs = elgg_format_attributes(array(
 	'class' => 'elgg-layout-widgets',
 	'data-page-owner-guid' => $owner->guid,
-));
+		));
 
 echo "<div $layout_attrs>";
 
@@ -94,3 +93,9 @@ echo '</div>';
 if ($owner->guid != $page_owner->guid) {
 	elgg_set_page_owner_guid($page_owner->guid);
 }
+?>
+<script>
+	require(['elgg/widgets'], function (widgets) {
+		widgets.init();
+	});
+</script>
