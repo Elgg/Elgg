@@ -52,10 +52,12 @@ elgg.ui.widgets.add = function(event) {
 		$(this).unbind('click', elgg.ui.widgets.add);
 	}
 
+	var $layout = $(this).closest('.elgg-layout-widgets');
+	var page_owner_guid = $layout.data('pageOwnerGuid') || elgg.get_page_owner_guid();
 	elgg.action('widgets/add', {
 		data: {
 			handler: type,
-			page_owner_guid: elgg.get_page_owner_guid(),
+			page_owner_guid: page_owner_guid,
 			context: $("input[name='widget_context']").val(),
 			show_access: $("input[name='show_access']").val(),
 			default_widgets: $("input[name='default_widgets']").val() || 0
