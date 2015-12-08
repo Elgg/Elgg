@@ -485,7 +485,9 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'priority' => 200,
 		);
 		$return[] = \ElggMenuItem::factory($options);
+	}
 
+	if ($entity->canDelete() && $handler) {
 		// delete link
 		if (elgg_action_exists("$handler/delete")) {
 			$action = "action/$handler/delete";
