@@ -320,6 +320,23 @@ class ActionsService {
 				$params['status'] = -1;
 			}
 
+			if ($reason == 'walled_garden') {
+				$reason = '403';
+			}
+			$httpCodes = array(
+				'400' => 'Bad Request',
+				'401' => 'Unauthorized',
+				'403' => 'Forbidden',
+				'404' => 'Not Found',
+				'407' => 'Proxy Authentication Required',
+				'500' => 'Internal Server Error',
+				'503' => 'Service Unavailable',
+			);
+
+			if (isset($httpCodes[$reason])) {
+				header("HTTP/1.1 $reason {$httpCodes[$reason]}", true);
+			}
+
 			$context = array('action' => $this->currentAction);
 			$params = _elgg_services()->hooks->trigger('output', 'ajax', $context, $params);
 	
