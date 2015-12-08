@@ -57,9 +57,9 @@ if ($url) {
 	}
 
 	if (!elgg_extract('is_trusted', $vars, false)) {
-		if (!isset($vars['rel'])) {
+		$url = strip_tags($url);
+		if (!isset($vars['rel']) && parse_url($url, PHP_URL_HOST) != parse_url(elgg_get_site_url(), PHP_URL_HOST)) {
 			$vars['rel'] = 'nofollow';
-			$url = strip_tags($url);
 		}
 	}
 
