@@ -1643,6 +1643,7 @@ abstract class ElggEntity extends \ElggData implements
 		$container_guid = $this->attributes['container_guid'];
 		if ($container_guid == 0) {
 			$container_guid = $owner_guid;
+			$this->attributes['container_guid'] = $container_guid;
 		}
 		$container_guid = (int)$container_guid;
 
