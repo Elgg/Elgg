@@ -96,6 +96,7 @@ class EntityTable {
 	
 		// load class for entity if one is registered
 		$classname = get_subtype_class_from_id($row->subtype);
+		$classname = _elgg_services()->hooks->trigger('entity:class', $row->type, ['row' => $row], $classname);
 		if ($classname != "") {
 			if (class_exists($classname)) {
 				$new_entity = new $classname($row);
