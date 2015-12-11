@@ -86,6 +86,9 @@ html {
 	text-decoration: none;
 	background-color: #60B8F7;
 }
+/* .icon-bar elements had to be removed in 1.12.6 because they did not show up in Firefox/Android.
+ * The .icon-bar CSS is deprecated and will be removed in 2.0
+ */
 .elgg-button-nav .icon-bar {
 	background-color: #F5F5F5;
 	border-radius: 1px 1px 1px 1px;
@@ -96,6 +99,9 @@ html {
 }
 .elgg-button-nav .icon-bar + .icon-bar {
 	margin-top: 3px;
+}
+.elgg-button-nav > img {
+	display: block;
 }
 @media (max-width: 1030px) {
 	.elgg-menu-topbar-default > li:first-child a {
