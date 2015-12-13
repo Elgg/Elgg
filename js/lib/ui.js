@@ -338,7 +338,7 @@ elgg.ui.initDatePicker = function() {
 					timestamp = timestamp / 1000;
 
 					var id = $(this).attr('id');
-					$('input[name="' + id + '"]').val(timestamp);
+					$('input[rel="' + id + '"]').val(timestamp);
 				}
 			},
 			nextText: '&#xBB;',
