@@ -1,3 +1,35 @@
+<a name="2.0.0"></a>
+## 2.0.0  (2015-12-14)
+
+#### Contributors
+
+* Steve Clay (3)
+* Juho Jaakkola (3)
+
+#### Documentation
+
+* **notifications:** documents workflow of the asynchronous notification system ([209b6a51](https://github.com/Elgg/Elgg/commit/209b6a51bcb0a76cffefe0e732d1bae216386e31), closes [#7496](https://github.com/Elgg/Elgg/issues/7496))
+
+
+#### Bug Fixes
+
+* **a11y:** aalborg mobile site menu uses the Font Awesome fa-bars icon ([a6a512e3](https://github.com/Elgg/Elgg/commit/a6a512e30f7298736566977f8d943d7f35be489e), closes [#9110](https://github.com/Elgg/Elgg/issues/9110))
+
+
+#### Deprecations
+
+* **file:** Deprecates accessing filestore metadata ([363b461d](https://github.com/Elgg/Elgg/commit/363b461d51508ea8b9ba30a89de97c6433a34907))
+
+
+#### Breaking Changes
+
+* In aalborg_theme, the view `page/elements/navbar` now uses an icon for the
+mobile menu selector (formerly an image). The `bars.png` image and supporting
+CSS for the 1.12 rendering has been removed.
+
+Fixes #9110 ([a6a512e3](https://github.com/Elgg/Elgg/commit/a6a512e30f7298736566977f8d943d7f35be489e))
+
+
 <a name="2.0.0-rc.2"></a>
 ### 2.0.0-rc.2  (2015-11-29)
 
@@ -570,6 +602,30 @@ change them to external AMD modules and load them with `elgg_require_js`.
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
 
 
+<a name="1.12.6"></a>
+### 1.12.6  (2015-12-14)
+
+#### Contributors
+
+* Ismayil Khayredinov (4)
+* Juho Jaakkola (1)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **a11y:** display aalborg mobile site menu toggle in more browsers ([e96f0798](https://github.com/Elgg/Elgg/commit/e96f07987b943a4c72f654ef7896f2e98d7ac23e), closes [#9110](https://github.com/Elgg/Elgg/issues/9110))
+* **actions:** send error HTTP header from action forward hook ([d3344de7](https://github.com/Elgg/Elgg/commit/d3344de7ed92d5ee8ecca43e474c6555861f5dad), closes [#9027](https://github.com/Elgg/Elgg/issues/9027))
+* **entities:** update attribute when assuming container_guid value ([a21dd95e](https://github.com/Elgg/Elgg/commit/a21dd95ed76a4b6629c69fd7e000aabd2e7cce99), closes [#8981](https://github.com/Elgg/Elgg/issues/8981))
+* **menus:** make sure entity passed to user hover menu hook is a user ([f5bbcc65](https://github.com/Elgg/Elgg/commit/f5bbcc652078a317479c8e845a8f4951f37d5435))
+* **output:** fixes handling of untrusted URLs in output/url ([217e4df6](https://github.com/Elgg/Elgg/commit/217e4df6ea186660c85310a57e1218eb54ec90d1), closes [#9146](https://github.com/Elgg/Elgg/issues/9146))
+
+#### Breaking changes
+
+* Plugins that customized `.elgg-button-nav` (or the spans inside) will need
+to be altered. The `.elgg-icon` CSS is left in place but will be removed in
+Elgg 2.0. ([e96f0798](https://github.com/Elgg/Elgg/commit/e96f07987b943a4c72f654ef7896f2e98d7ac23e))
+
+
 <a name="1.12.5"></a>
 ### 1.12.5  (2015-11-29)
 
@@ -725,6 +781,20 @@ Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34fe
 * **views:**
   * elgg_get_view_location is going away in 2.0 ([b4347fb4](https://github.com/Elgg/Elgg/commit/b4347fb4209dd1a09d5ad0d1ef2d546169aeb5b9))
   * Support for custom template handlers will end soon ([0dc67698](https://github.com/Elgg/Elgg/commit/0dc67698f6def5fa6cea32dd1171d1166e9c4e29))
+
+
+<a name="1.11.5"></a>
+### 1.11.5  (2015-12-13)
+
+#### Contributors
+
+* Steve Clay (1)
+* Juho Jaakkola (1)
+
+#### Bug Fixes
+
+* **views:** Sticky values now get passed into views extending register/extend (Fixes [#8873](https://github.com/Elgg/Elgg/issues/8873))
+* **memcache:** don't store a copy of $CONFIG in file objects (Fixes [#9081](https://github.com/Elgg/Elgg/issues/9081))
 
 
 <a name="1.11.4"></a>

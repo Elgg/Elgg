@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-29 21:10+0200\n"
+"POT-Creation-Date: 2015-12-14 11:16+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,430 +17,537 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../plugins/blog.rst:2
+# 4ba4c22cd81a44978a272a5b962964f1
 msgid "Blog"
 msgstr ""
 
 #: ../../plugins/blog.rst:4
+# 2f30d5b097a44d2a8467c9b731666c14
 msgid "A weblog, or blog, is arguably one of the fundamental DNA pieces of most types of social networking site. The simplest form of personal publishing, it allows for text-based notes to be published in reverse-chronological order. Commenting is also an important part of blogging, turning an individual act of publishing into a conversation."
 msgstr ""
 
 #: ../../plugins/blog.rst:6
+# 1d1ead871c414460ab87f46380077322
 msgid "Elgg's blog expands this model by providing per-entry access controls and cross-blog tagging. You can control exactly who can see each individual entry, as well as find other entries that people have written on similar topics. You can also see entries written by your friends (that you have access to)."
 msgstr ""
 
 #: ../../plugins/blog.rst:10
+# 61bd221d5047416bbcd615f982148b2a
 msgid "`Blogging on Wikipedia <http://en.wikipedia.org/wiki/Blog>`_"
 msgstr ""
 
 #: ../../plugins/dashboard.rst:2
+# 2a270cbdb420426bbf2bb57f0d22cb94
 msgid "Dashboard"
 msgstr ""
 
 #: ../../plugins/dashboard.rst:10
+# 54ca84047d484ecd897e0c6a15b9aed3
 msgid "An typical Elgg dashboard"
 msgstr ""
 
 #: ../../plugins/dashboard.rst:12
+# 8b54eeede414424abe1b256dc60098a5
 msgid "The dashboard is bundled with both the full and core-only Elgg packages. This is a users portal to activity that is important to them both from within the site and from external sources. Using Elgg's powerful widget API, it is possible to build widgets that pull out relevant content from within an Elgg powered site as well as grab information from third party sources such as Twitter or Flickr (providing those widgets exist). A users dashboard is not the same as their profile, whereas the profile is for consumption by others, the dashboard is a space for users to use for their own needs."
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:2
+# f28b0784a4844fe4bdb856dcc9486dd7
 msgid "Diagnostics"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:4
+# 8dd7039501f44b3e8febbd449801be1c
 msgid "For the technically savvy user, system diagnostics enables you to quickly evaluate the server environment, Elgg code, and plugins of an Elgg install. System diagnostics is a core plugin that comes turned on by default with Elgg. To download the diagnostics file, follow the steps below. The file is a dump of all sorts of useful information."
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:6
+# f82f53feeb0e43afabccc489fc63484f
 msgid "To use:"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:8
+# fc07e3df86244aafbd41d0f2bc814255
 msgid "Log in as Administrator"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:9
+# e5de7fb64ed1489a855a72e87ead1f3b
 msgid "Go to Administration -> Administer -> Utilities ->System diagnostics"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:10
+# e9f1b96cd6d24e30ad509bf66d7e086e
 msgid "Click 'Download'"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:12
+# c1897e41affb442fa7164af41e413d69
 msgid "System diagnostics dump file contents:"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:14
+# b25608fd2167419fb5cade8164331b9e
 msgid "List of all Elgg files along with a hash for each file"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:15
+# 152d9aad20c845ecace7f17275c96e8d
 msgid "List of all the plugins"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:16
+# 28235ab6680b45efb84c4530bf19f4db
 msgid "PHP superglobals"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:17
+# 23ab3e47eaff4e5bb637a38a0aedec6e
 msgid "PHP settings"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:18
+# d17059637d6a4199b30e71a3c70c07d2
 msgid "Apache settings"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:26
+# fc4914264efd44d485e7021624312642
 msgid "Elgg CONFIG values"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:20
+# 525ce5acf6044394b35b9ef65b6e70f6
 msgid "language strings"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:21
+# 2b31d245641c421aa9e8387f0eb19d23
 msgid "site settings"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:22
+# 0f5740617c25437094c78cd4e7063512
 msgid "database settings"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:23
+# e04fe28caa054c3cb83300edc797af95
 msgid "plugin hooks"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:24
+# 49451447084249b392135c93f7373b0d
 msgid "actions"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:25
+# 833d893d67f84362bf4bc6f7398eedd5
 msgid "views"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:26
+# e6d8b47b4d4748af9c722c22482449da
 msgid "page handlers"
 msgstr ""
 
 #: ../../plugins/diagnostics.rst:27
+# ba855b6f9588460eaef53a2859abd026
 msgid "much more"
 msgstr ""
 
 #: ../../plugins/file.rst:2
+# 641a988974904594b2f516bebe1f444e
 msgid "File repository"
 msgstr ""
 
 #: ../../plugins/file.rst:10
+# 7e01f1a12dc9461bbc46dcf40de9c27a
 msgid "A file in an Elgg file repository"
 msgstr ""
 
 #: ../../plugins/file.rst:12
+# a42d73be01fd4332bed51d870a31f239
 msgid "The file repository allows users to upload any kind of file. As with everything in an Elgg system, you can filter uploaded files by tag and restrict access so that they're only visible by the people you want them to be. Each file may also have comments attached to it."
 msgstr ""
 
 #: ../../plugins/file.rst:14
+# b584bce521834af58de5a6404fd4fa94
 msgid "There are a number of different uses for this functionality"
 msgstr ""
 
 #: ../../plugins/file.rst:17
+# c510691824f0484a915b3c888e64f8c6
 msgid "Photo gallery"
 msgstr ""
 
 #: ../../plugins/file.rst:19
+# 5f80dad8ebec414eaa29ba91d4da832f
 msgid "When a user uploads photographs or other pictures, they are automatically collated into an Elgg photo gallery that can be browsed through. Users can also see pictures that their friends have uploaded, or see pictures attached to a group. Clicking into an individual file shows a larger version of the photo."
 msgstr ""
 
 #: ../../plugins/file.rst:22
+# 3766d46815d740d6bf24d2a755388ca5
 msgid "Podcasting"
 msgstr ""
 
 #: ../../plugins/file.rst:24
+# ca8e426bcc6d4ac792d588ea6eff9d61
 msgid "An Elgg file repository RSS feed automatically doubles as an RSS feed, so you can subscribe to new audio content using programs like iTunes."
 msgstr ""
 
 #: ../../plugins/file.rst:27
+# 82a19d92f2ae4390b230891f202fdc3c
 msgid "Special content"
 msgstr ""
 
 #: ../../plugins/file.rst:29
+# 78e678b403d14e3cbdadb1c78c7b1da5
 msgid "It is possible for other plugins to add to the players available for different content types. It's possible for a plugin author to embed a viewer for Word documents, for example."
 msgstr ""
 
 #: ../../plugins/file.rst:32
+# a7c0cc854f6747ed881c30c8d2a6cfbb
 msgid "Note for developers"
 msgstr ""
 
 #: ../../plugins/file.rst:34
+# 52cc9d589eb042fc93b56ff5c88a08bd
 msgid "To add a special content type player, create a plugin with views of the form ``file/specialcontent/mime/type``. For example, to create a special viewer for Word documents, you would create a view called ``file/specialcontent/application/msword``, because ``application/msword`` is the MIME-type for Word documents. Within this view, the ``ElggEntity`` version of the file will be referenced as ``$vars['entity']``. Therefore, the URL of the downloadable file is:"
 msgstr ""
 
 #: ../../plugins/file.rst:41
+# 39f66688008042989b1631e8752f4d13
 msgid "Using this, it should be possible to develop most types of embeddable viewers."
 msgstr ""
 
 #: ../../plugins/groups.rst:2
+# b9fbff69227b4fad9d5b31b21f131c57
 msgid "Groups"
 msgstr ""
 
 #: ../../plugins/groups.rst:10
+# 2f3d6b5e10114aaba5728fedc72bcd90
 msgid "A typical group profile"
 msgstr ""
 
 #: ../../plugins/groups.rst:12
+# 8545f2d6ee5544b68fff61d75672a5d8
 msgid "Once you have found others with similar interests - or perhaps you are part of a research groups or a course/class - you may want to have a more structured setting to share content and discuss ideas. This is where Elgg's powerful group building can be used. You can create and moderate as many groups as you like"
 msgstr ""
 
 #: ../../plugins/groups.rst:15
+# 7377e0ec5e2e4eecadfbe78fcd376cc5
 msgid "You can keep all group activity private to the group or you can use the 'make public' option to disseminate work to the wider public."
 msgstr ""
 
 #: ../../plugins/groups.rst:16
+# 96dea11e1ae24047bc45dd323d358797
 msgid "Each group produces granular RSS feeds, so it is easy to follow group developments"
 msgstr ""
 
 #: ../../plugins/groups.rst:17
+# 6f540bae6fef45ef8078b1f7f066754d
 msgid "Each group has its own URL and profile"
 msgstr ""
 
 #: ../../plugins/groups.rst:18
+# 9c3bc1eccaae4f57b37091a16e318191
 msgid "Each group comes with a :doc:`file`, forum, pages and messageboard"
 msgstr ""
 
 #: ../../plugins/index.rst:2
+# b783dd8434754f73999ed3a1e38db29c
 msgid "Bundled plugins"
 msgstr ""
 
 #: ../../plugins/index.rst:4
+# 40c1047e5a024944a0d8981ffce5378b
 msgid "Elgg comes with a set of plugins. These provide the basic functionality for your social network."
 msgstr ""
 
 #: ../../plugins/index.rst:20
+# 6a4c467487c04bc6ae50489d04126397
 msgid "The following plugins are also bundled with Elgg, but are not (yet) documented"
 msgstr ""
 
 #: ../../plugins/index.rst:22
+# 070fc447c11e4d07a9bebcc64ed79d54
 msgid "aalborg_theme"
 msgstr ""
 
 #: ../../plugins/index.rst:23
+# fc5176a32d184379ad58b47ed7f55231
 msgid "bookmarks"
 msgstr ""
 
 #: ../../plugins/index.rst:24
+# b8e5542776af465ea0301c208a5fac58
 msgid "ckeditor"
 msgstr ""
 
 #: ../../plugins/index.rst:25
+# 7bc1a241f4bf4860a3fc0f5acb9d65ad
 msgid "custom_index"
 msgstr ""
 
 #: ../../plugins/index.rst:26
+# 98e76e55b5734b789c51a770e943aa00
 msgid "developers"
 msgstr ""
 
 #: ../../plugins/index.rst:27
+# 796badab30b049ee9b49783304ba615a
 msgid "embed"
 msgstr ""
 
 #: ../../plugins/index.rst:28
+# 6bea53dd7c3a49c5a49776f382767785
 msgid "externalpages"
 msgstr ""
 
 #: ../../plugins/index.rst:29
+# 7875c391d4b44d7db335e00467f0a02e
 msgid "garbagecollector"
 msgstr ""
 
 #: ../../plugins/index.rst:30
+# 3e63223dd9ad4971b1767010327acfd7
 msgid "htmlawed"
 msgstr ""
 
 #: ../../plugins/index.rst:31
+# 027cc011caef4a2b994e7ccc0d334a3f
 msgid "invitefriends"
 msgstr ""
 
 #: ../../plugins/index.rst:32
+# e49ebbe41a644893a21f8c2fb65e787c
 msgid "legacy_urls"
 msgstr ""
 
 #: ../../plugins/index.rst:33
+# b4a34164fa554e059893dc20921458c5
 msgid "likes"
 msgstr ""
 
 #: ../../plugins/index.rst:34
+# d88e13e486464b83bbd77b766fa36022
 msgid "logbrowser"
 msgstr ""
 
 #: ../../plugins/index.rst:35
+# 2fd2164e8ce54a9cb80423d55582cc98
 msgid "logrotate"
 msgstr ""
 
 #: ../../plugins/index.rst:36
+# 1c2df68c3a9748c885b0c86bf4db4c7b
 msgid "members"
 msgstr ""
 
 #: ../../plugins/index.rst:37
+# f80915fa672f44c5bdd89582e654bb68
 msgid "notifications"
 msgstr ""
 
 #: ../../plugins/index.rst:38
+# e4b7fb711eeb4438a1aff6a80ba661d4
 msgid "reportedcontent"
 msgstr ""
 
 #: ../../plugins/index.rst:39
+# 3c5df09fd7aa4544bef8d3691f6a6444
 msgid "search"
 msgstr ""
 
 #: ../../plugins/index.rst:40
+# 5a3b9772ca45404a8d252bd153ac9ef1
 msgid "site_notifications"
 msgstr ""
 
 #: ../../plugins/index.rst:41
+# 0b174109f0a44bc7bca41e8eda64c2ea
 msgid "tagcloud"
 msgstr ""
 
 #: ../../plugins/index.rst:42
+# e6221c590e1347f9a098fb26532b33aa
 msgid "twitter_api"
 msgstr ""
 
 #: ../../plugins/index.rst:43
+# ed810626ef534a248d3fe33727441da2
 msgid "uservalidationbyemail"
 msgstr ""
 
 #: ../../plugins/index.rst:44
+# 328b156adda44cb6b428bcf5c34b1b5f
 msgid "web_services"
 msgstr ""
 
 #: ../../plugins/messageboard.rst:2
+# 603d51f2f4b34bbf8afa39707497df93
 msgid "Messageboard"
 msgstr ""
 
 #: ../../plugins/messageboard.rst:9
+# 603828aeb3484de588738fcebbcf794d
 msgid "A sample messageboard placed on the profile"
 msgstr ""
 
 #: ../../plugins/messageboard.rst:11
+# a282f525c193443a94050e2f8d4c4b16
 msgid "The messageboard - similar to 'The Wall' in Facebook or a comment wall in other networks is a plugin that lets users put a messageboard widget on their profile. Other users can then post messages that will appear on the messageboard. You can then reply directly to any message and view the history between yourself and the person posting the message."
 msgstr ""
 
 #: ../../plugins/messages.rst:2
+# f06155ce436a43149e5914ae389aaaad
 msgid "Messages"
 msgstr ""
 
 #: ../../plugins/messages.rst:9
+# 9b4ad42b535f49a6a908657cefaec555
 msgid "Message notification"
 msgstr ""
 
 #: ../../plugins/messages.rst:11
+# 4f27b8175b7540ce899ee3030787b7a2
 msgid "Private messaging can be sent to users by clicking on their avatar or profile link, providing you have permission. Then, using the built in :doc:`WYSIWYG editor </tutorials/wysiwyg>`, it is possible to format the message. Each user has their own inbox and sentbox. It is possible to be notified via email of new messages."
 msgstr ""
 
 #: ../../plugins/messages.rst:13
+# 6e0ab2c13a994e85b23713094b2da49c
 msgid "When users first login, they will be notified about any new message by the messages notification mechanism in their top toolbar."
 msgstr ""
 
 #: ../../plugins/pages.rst:2
+# 38df3364844149e1bf787930c8e61334
 msgid "Pages"
 msgstr ""
 
 #: ../../plugins/pages.rst:9
+# 2c9bf54ef02c4493bf9681bdbefb28e1
 msgid "An Elgg Page"
 msgstr ""
 
 #: ../../plugins/pages.rst:11
+# 0ed2baac154441cd8ffd561690303964
 msgid "The pages plugin allows you to save and store hierarchically-organized pages of text, and restrict both reading and writing privileges to them. This means that you can collaboratively create a set of documents with a loose collection of people, participate in a writing process with a formal group, or simply use the functionality to write a document that only you can see, and only choose to share it once it's done. The easy navigation menu allows you to see the whole document structure from any page. You can create as many of these structures as you like; each individual page has its own access controls, so you can reveal portions of the structure while keeping others hidden. In keeping with all other elements in Elgg, you can add comments on a page, or search for pages by tag."
 msgstr ""
 
 #: ../../plugins/pages.rst:15
+# c587bb117009464ebc47150747b813f2
 msgid "Usage"
 msgstr ""
 
 #: ../../plugins/pages.rst:17
+# cf5a7834057a49eab400fdb0e54d767c
 msgid "Pages really come into their own in two areas, firstly as a way for users to build up things such as a resume, reflective documentation and so on. The second thing is in the area of collaboration, especially when in the context of groups. With the powerful access controls on both read and write, this plugin is ideal for collaborative document creation."
 msgstr ""
 
 #: ../../plugins/pages.rst:21
+# 74d98dcbcfcb433284ef3c56d6bebb91
 msgid "Developers should note that there are actually 2 types of pages:"
 msgstr ""
 
 #: ../../plugins/pages.rst:23
+# 672846a4d6504ffe8ad59397c6b80f34
 msgid "Top-level pages (with subtype ``page_top``)"
 msgstr ""
 
 #: ../../plugins/pages.rst:24
+# 34b14946b4cb4a42ad4a362370f3c300
 msgid "Normal pages (with subtype ``page``)"
 msgstr ""
 
 #: ../../plugins/profile.rst:2
+# 3023262c7ff64ed68183e0794bc33fd7
 msgid "Profile"
 msgstr ""
 
 #: ../../plugins/profile.rst:9
+# 8dce9e191ed54710b7e5133e823dc4e8
 msgid "An Elgg profile"
 msgstr ""
 
 #: ../../plugins/profile.rst:11
+# 252a83e9ea9e464f83b056049f841746
 msgid "The profile plugin is bundled with both the full and core-only Elgg packages. The intention is that it can be disabled and replaced with another profile plugin if you wish. It provides a number of pieces of functionality which many consider fundamental to the concept of a social networking site, and is unique within the plugins because the profile icon it defines is referenced as standard from all over the system."
 msgstr ""
 
 #: ../../plugins/profile.rst:15
+# 9b872af8dd3e4faf8194fdb706c096ad
 msgid "User details"
 msgstr ""
 
 #: ../../plugins/profile.rst:17
+# 5d5c4aa7ecd1441c8a87d783e9b4f444
 msgid "This provides information about a user, which is configurable from within the plugin's start.php file. You can change the available profile fields form the admin panel. Each profile field has its own access restriction, so users can choose exactly who can see each individual element. Some of the fields contain tags (for example *skills*) limiting access to a field will also limit who can find you by that tag."
 msgstr ""
 
 #: ../../plugins/profile.rst:21
+# 2cd2e93396594e679c15d319ce92ea7c
 msgid "User avatar"
 msgstr ""
 
 #: ../../plugins/profile.rst:28
+# d0acbec3a321469e8cfefeaa29f8b062
 msgid "The Elgg context menu"
 msgstr ""
 
 #: ../../plugins/profile.rst:30
+# 231acdd6834c4dddb58fdc766f38e571
 msgid "The user avatar represents a user (or a group) throughout the site. By default, this includes a context-sensitive menu that allows you to perform actions on the user it belongs to wherever you see their avatar. For example, you can add them as a friend, send an internal message, and more. Each plugin can add to this context menu, so its full contents will vary depending on the functionality active in the current Elgg site."
 msgstr ""
 
 #: ../../plugins/profile.rst:33
+# 89f0170650eb47718645ba5b71c4edd9
 msgid "Notes for developers"
 msgstr ""
 
 #: ../../plugins/profile.rst:36
+# 59165124ba9a4c58a2c1909c64e9f70e
 msgid "Using a different profile icon"
 msgstr ""
 
 #: ../../plugins/profile.rst:36
+# 1aec50873f994af9afd3da94e8c9e41e
 msgid "To replace the profile icon, or provide more content, extend the ``icon/user/default`` view."
 msgstr ""
 
 #: ../../plugins/profile.rst:43
+# b6927eb136b04f8da25eb612956bd128
 msgid "Adding to the context menu"
 msgstr ""
 
 #: ../../plugins/profile.rst:39
+# 7db7046707154a9cbf8be46a941ae9ef
 msgid "The context menu can be expanded by registering a :ref:`plugin hook <design/events#plugin-hooks>` for 'register' 'menu:user_hover', the following sections have special meaning:"
 msgstr ""
 
 #: ../../plugins/profile.rst:41
+# 940387a9f3be4965af735c7a1e989d3e
 msgid "**default** for non-active links (eg to read a blog)"
 msgstr ""
 
 #: ../../plugins/profile.rst:42
+# 7ae9b8136f184064bbb07a789c744e39
 msgid "**admin** for links accessible by administrators only"
 msgstr ""
 
 #: ../../plugins/profile.rst:44
+# 342262ff873846a396fab19c50c38866
 msgid "In each case, the user in question will be passed as ``$params['entity']``."
 msgstr ""
 
 #: ../../plugins/thewire.rst:2
+# d8624f09c6194af196006ca9b1f85dd4
 msgid "The Wire"
 msgstr ""
 
 #: ../../plugins/thewire.rst:4
+# d5d1c46815e748168f2d6e379fb76515
 msgid "Elgg wire plugin \"The Wire\" is Twitter-style microblogging plugin that allows users to post notes to the wire."
 msgstr ""
 
