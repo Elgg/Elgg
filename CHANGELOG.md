@@ -570,6 +570,30 @@ change them to external AMD modules and load them with `elgg_require_js`.
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
 
 
+<a name="1.12.6"></a>
+### 1.12.6  (2015-12-14)
+
+#### Contributors
+
+* Ismayil Khayredinov (4)
+* Juho Jaakkola (1)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **a11y:** display aalborg mobile site menu toggle in more browsers ([e96f0798](https://github.com/Elgg/Elgg/commit/e96f07987b943a4c72f654ef7896f2e98d7ac23e), closes [#9110](https://github.com/Elgg/Elgg/issues/9110))
+* **actions:** send error HTTP header from action forward hook ([d3344de7](https://github.com/Elgg/Elgg/commit/d3344de7ed92d5ee8ecca43e474c6555861f5dad), closes [#9027](https://github.com/Elgg/Elgg/issues/9027))
+* **entities:** update attribute when assuming container_guid value ([a21dd95e](https://github.com/Elgg/Elgg/commit/a21dd95ed76a4b6629c69fd7e000aabd2e7cce99), closes [#8981](https://github.com/Elgg/Elgg/issues/8981))
+* **menus:** make sure entity passed to user hover menu hook is a user ([f5bbcc65](https://github.com/Elgg/Elgg/commit/f5bbcc652078a317479c8e845a8f4951f37d5435))
+* **output:** fixes handling of untrusted URLs in output/url ([217e4df6](https://github.com/Elgg/Elgg/commit/217e4df6ea186660c85310a57e1218eb54ec90d1), closes [#9146](https://github.com/Elgg/Elgg/issues/9146))
+
+#### Breaking changes
+
+* Plugins that customized `.elgg-button-nav` (or the spans inside) will need
+to be altered. The `.elgg-icon` CSS is left in place but will be removed in
+Elgg 2.0. ([e96f0798](https://github.com/Elgg/Elgg/commit/e96f07987b943a4c72f654ef7896f2e98d7ac23e))
+
+
 <a name="1.12.5"></a>
 ### 1.12.5  (2015-11-29)
 
@@ -725,6 +749,20 @@ Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34fe
 * **views:**
   * elgg_get_view_location is going away in 2.0 ([b4347fb4](https://github.com/Elgg/Elgg/commit/b4347fb4209dd1a09d5ad0d1ef2d546169aeb5b9))
   * Support for custom template handlers will end soon ([0dc67698](https://github.com/Elgg/Elgg/commit/0dc67698f6def5fa6cea32dd1171d1166e9c4e29))
+
+
+<a name="1.11.5"></a>
+### 1.11.5  (2015-12-13)
+
+#### Contributors
+
+* Steve Clay (1)
+* Juho Jaakkola (1)
+
+#### Bug Fixes
+
+* **views:** Sticky values now get passed into views extending register/extend (Fixes [#8873](https://github.com/Elgg/Elgg/issues/8873))
+* **memcache:** don't store a copy of $CONFIG in file objects (Fixes [#9081](https://github.com/Elgg/Elgg/issues/9081))
 
 
 <a name="1.11.4"></a>
