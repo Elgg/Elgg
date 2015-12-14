@@ -408,6 +408,11 @@ The following views received ``label`` elements around some of the input fields.
 - views/default/forms/admin/plugins/sort.php
 - views/default/forms/login.php
 
+Plugin Aalborg Theme
+--------------------
+
+The view ``page/elements/navbar`` now uses a Font Awesome icon for the mobile menu selector instead of an image. The ``bars.png`` image and supporting CSS for the 1.12 rendering has been removed, so update your theme accordingly.
+
 Plugin Likes
 ------------
 

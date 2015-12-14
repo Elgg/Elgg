@@ -95,29 +95,17 @@ html {
 	font-family: Arial, "Helvetica Neue", Helvetica, sans-serif;
 	color: #FFF;
 	float: left;
-	padding: 14px 18px;
+	padding: 10px 18px;
 }
 .elgg-button-nav:hover {
 	color: #FFF;
 	text-decoration: none;
 	background-color: #60B8F7;
 }
-/* .icon-bar elements had to be removed in 1.12.6 because they did not show up in Firefox/Android.
- * The .icon-bar CSS is deprecated and will be removed in 2.0
- */
-.elgg-button-nav .icon-bar {
-	background-color: #F5F5F5;
-	border-radius: 1px 1px 1px 1px;
-	box-shadow: 0 1px 0 rgba(0, 0, 0, 0.25);
-	display: block;
-	height: 2px;
-	width: 22px;
-}
-.elgg-button-nav .icon-bar + .icon-bar {
-	margin-top: 3px;
-}
-.elgg-button-nav > img {
-	display: block;
+.elgg-button-nav .elgg-icon-bars {
+	font-size: 18px;
+	color: #fff;
+	vertical-align: middle;
 }
 @media (max-width: 1030px) {
 	.elgg-menu-topbar-default > li:first-child a {
