@@ -633,6 +633,8 @@ return array(
 	'admin:plugins:warning:invalid' => 'このプラグインは正しくありません: %s',
 	'admin:plugins:warning:invalid:check_docs' => '問題解決のヒントは、 <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> にあるかもしれません。',
 	'admin:plugins:cannot_activate' => '起動できません',
+	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
+	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
 
 	'admin:plugins:set_priority:yes' => "%s を並べ直しました。",
 	'admin:plugins:set_priority:no' => "%s を並べ直せませんでした。",

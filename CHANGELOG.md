@@ -1,3 +1,35 @@
+<a name="2.0.0"></a>
+## 2.0.0  (2015-12-14)
+
+#### Contributors
+
+* Steve Clay (3)
+* Juho Jaakkola (3)
+
+#### Documentation
+
+* **notifications:** documents workflow of the asynchronous notification system ([209b6a51](https://github.com/Elgg/Elgg/commit/209b6a51bcb0a76cffefe0e732d1bae216386e31), closes [#7496](https://github.com/Elgg/Elgg/issues/7496))
+
+
+#### Bug Fixes
+
+* **a11y:** aalborg mobile site menu uses the Font Awesome fa-bars icon ([a6a512e3](https://github.com/Elgg/Elgg/commit/a6a512e30f7298736566977f8d943d7f35be489e), closes [#9110](https://github.com/Elgg/Elgg/issues/9110))
+
+
+#### Deprecations
+
+* **file:** Deprecates accessing filestore metadata ([363b461d](https://github.com/Elgg/Elgg/commit/363b461d51508ea8b9ba30a89de97c6433a34907))
+
+
+#### Breaking Changes
+
+* In aalborg_theme, the view `page/elements/navbar` now uses an icon for the
+mobile menu selector (formerly an image). The `bars.png` image and supporting
+CSS for the 1.12 rendering has been removed.
+
+Fixes #9110 ([a6a512e3](https://github.com/Elgg/Elgg/commit/a6a512e30f7298736566977f8d943d7f35be489e))
+
+
 <a name="2.0.0-rc.2"></a>
 ### 2.0.0-rc.2  (2015-11-29)
 

@@ -75,10 +75,10 @@ return array(
 	'theme_sandbox:navigation' => 'Navigazione',
 	'theme_sandbox:typography' => 'Tipografia',
 
-	'theme_sandbox:icons:blurb' => 'Use <em>elgg_view_icon($name)</em> to display icons.',
+	'theme_sandbox:icons:blurb' => 'Usare <em>elgg_view_icon($name)</em> per visualizzare le icone.',
 
 	// unit tests
-	'developers:unit_tests:description' => 'Elgg possiede un\'unità e dei test integrati per rilevare i bug nelle sue classi e funzioni del core.',
+	'developers:unit_tests:description' => 'Elgg possiede un\'unità e dei test integrati per rilevare i bug nelle classi e funzioni del suo core.',
 	'developers:unit_tests:warning' => 'Attenzione: Non eseguire questi test su un sito di produzione. Potrebbero danneggiare il database.',
 	'developers:unit_tests:run' => 'Esegui',
 

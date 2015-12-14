@@ -635,6 +635,8 @@ return array(
 	'admin:plugins:warning:invalid' => '%s n\'est pas un plugin valide d\'Elgg. Vérifiez <a href="http://docs.elgg.org/Invalid_Plugin">la documentation d\'Elgg</a> les conseils de dépannage.',
 	'admin:plugins:warning:invalid:check_docs' => 'Vérifiez <a href="http://learn.elgg.org/fr/stable/appendix/faqs.html">la documentation d\'Elgg</a> - ou la version <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">anglophone</a>, souvent plus complète - pour des astuces de débogage.',
 	'admin:plugins:cannot_activate' => 'Activation impossible',
+	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
+	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
 
 	'admin:plugins:set_priority:yes' => "%s réordonné",
 	'admin:plugins:set_priority:no' => "Impossible de réordonner %s.",
