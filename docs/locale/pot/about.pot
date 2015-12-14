@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-29 20:20+0200\n"
+"POT-Creation-Date: 2015-12-14 10:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../about/contributing.rst:4
+# 13cd427b16734e5aa396ed5a25503eac
 msgid "Contributor Guide"
 msgstr ""
 
@@ -25,42 +26,56 @@ msgstr ""
 #: ../../about/index.rst:6
 #: ../../about/releases.rst:6
 #: ../../about/roadmap.rst:6
+# 08092a0e3a1f4921b2a0788d9c9ae33d
+# f36dac2ce6294af4847d9b5a6a464b18
+# e1404cbfd7844f6992874655b5ddfb2d
+# 20217d82a6fe4ebf98ae60d7246696e5
+# eebb1d9b0e0748269f0ce9191429289d
 msgid "This page has moved."
 msgstr ""
 
 #: ../../about/contributing.rst:8
+# 6cafc82ef3924917bb8cce2bac236a10
 msgid ":doc:`/contribute/index`"
 msgstr ""
 
 #: ../../about/history.rst:4
+# c945869b57c94f19a35d37469303280a
 msgid "History"
 msgstr ""
 
 #: ../../about/history.rst:8
+# b1cb90e4fdfa4288ac7668d46e284073
 msgid ":doc:`/appendix/history`"
 msgstr ""
 
 #: ../../about/index.rst:4
+# 3163b182376f4b24a4e3a392cb1cb27d
 msgid "About"
 msgstr ""
 
 #: ../../about/index.rst:8
+# 10587744fe5e468fa8b3b499b01a21bb
 msgid ":doc:`/appendix/index`"
 msgstr ""
 
 #: ../../about/releases.rst:4
+# 0c99e7832157495abbe003221eec88b7
 msgid "Release Policy"
 msgstr ""
 
 #: ../../about/releases.rst:8
+# bb1051683c0d419090957b42351ce0ab
 msgid ":doc:`/appendix/releases`"
 msgstr ""
 
 #: ../../about/roadmap.rst:4
+# facd33c1545f4952b161f587877036a2
 msgid "Roadmap"
 msgstr ""
 
 #: ../../about/roadmap.rst:8
+# c22306a222ef43c6bb644dcbe4e211e8
 msgid ":doc:`/appendix/roadmap`"
 msgstr ""
 
