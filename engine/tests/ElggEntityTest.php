@@ -355,4 +355,23 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 
 		$object->delete();
 	}
+
+	public function testCreateWithContainerGuidEqualsZero() {
+		$user = new \ElggUser();
+		$user->save();
+
+		$object = new \ElggObject();
+		$object->owner_guid = $user->guid;
+		$object->container_guid = 0;
+
+		// If container_guid attribute is not updated with owner_guid attribute
+		// ElggEntity::getContainerEntity() would return false
+		// thus terminating save()
+		$this->assertTrue($object->save());
+
+		$this->assertEqual($user->guid, $object->getContainerGUID());
+
+		$user->delete();
+
+	}
 }

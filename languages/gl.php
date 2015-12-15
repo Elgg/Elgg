@@ -634,6 +634,8 @@ return array(
 	'admin:plugins:warning:invalid' => 'O complemento non é válido: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Na <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">documentación de Elss</a> atopará consellos para evitar e solucionar problemas.',
 	'admin:plugins:cannot_activate' => 'Non pode activarse',
+	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
+	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
 
 	'admin:plugins:set_priority:yes' => "Cambiouse a posición de «%s».",
 	'admin:plugins:set_priority:no' => "Non foi posíbel cambiar a posición de «%s».",

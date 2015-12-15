@@ -637,6 +637,8 @@ return array(
 	'admin:plugins:warning:invalid' => ' Este plugin não é válido: %s.',
 	'admin:plugins:warning:invalid:check_docs' => 'Verifiqye  <a href="http://docs.elgg.org/Invalid_Plugin">a documentacao do Elgg</a> para dicas de solu��o de problemas.',
 	'admin:plugins:cannot_activate' => 'não foi possível ativar',
+	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
+	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
 
 	'admin:plugins:set_priority:yes' => "Reordenado %s",
 	'admin:plugins:set_priority:no' => "Não foi possível reordenar %s",

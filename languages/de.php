@@ -635,6 +635,8 @@ return array(
 	'admin:plugins:warning:invalid' => 'Dieses Plugin ist nicht standardkonform: %s.',
 	'admin:plugins:warning:invalid:check_docs' => 'Bitte schau in der <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">Elgg-Dokumentation</a> nach, um weitere Hinweise zur Problemlösung zu erhalten.',
 	'admin:plugins:cannot_activate' => 'Aktivierung nicht möglich.',
+	'admin:plugins:already:active' => 'Das ausgewählte Plugin bzw. die ausgewählten Plugins sind bereits aktiviert.',
+	'admin:plugins:already:inactive' => 'Das ausgewählte Plugin bzw. die ausgewählten Plugins sind bereits deaktiviert.',
 
 	'admin:plugins:set_priority:yes' => "%s neu angeordnet.",
 	'admin:plugins:set_priority:no' => "%s kann nicht neu angeordnet werden.",

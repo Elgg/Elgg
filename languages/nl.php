@@ -640,6 +640,8 @@ De volgende karakters zijn niet toegestaan: %s',
 	'admin:plugins:warning:invalid' => '%s is geen geldige plugin voor Elgg. Controleer <a href="http://docs.elgg.org/Invalid_Plugin" target="_blank">de Elgg-documentatie</a> voor handige tips.',
 	'admin:plugins:warning:invalid:check_docs' => 'Controleer <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">de Elgg documentatie</a> voor tips met betrekking tot foutopsporing.',
 	'admin:plugins:cannot_activate' => 'kan niet activeren',
+	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
+	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
 
 	'admin:plugins:set_priority:yes' => "%s herordend.",
 	'admin:plugins:set_priority:no' => "Herordenen mislukt voor %s.",
