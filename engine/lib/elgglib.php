@@ -91,7 +91,10 @@ function elgg_load_library($name) {
  * @return void
  * @throws SecurityException
  */
-function forward($location = "", $reason = 'system') {
+function forward($location = "", $reason = null) {
+	if (!isset($reason)) {
+		$reason = 'system';
+	}
 	if (!headers_sent($file, $line)) {
 		if ($location === REFERER) {
 			$location = _elgg_services()->request->headers->get('Referer');

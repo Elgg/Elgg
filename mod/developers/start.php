@@ -21,6 +21,8 @@ function developers_init() {
 
 	$action_base = __DIR__ . '/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
+
+	elgg_register_action('developers/test_action', "$action_base/test_action.php", 'public');
 }
 
 function developers_process_settings() {

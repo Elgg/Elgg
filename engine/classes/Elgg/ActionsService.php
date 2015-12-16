@@ -1,4 +1,5 @@
 <?php
+
 namespace Elgg;
 
 /**
@@ -13,7 +14,7 @@ namespace Elgg;
  * @since      1.9.0
  */
 class ActionsService {
-	
+
 	/**
 	 * Registered actions storage
 	 *
@@ -25,9 +26,9 @@ class ActionsService {
 	 */
 	private $actions = array();
 
-	/** 
+	/**
 	 * The current action being processed
-	 * @var string 
+	 * @var string
 	 */
 	private $currentAction = null;
 
@@ -35,7 +36,7 @@ class ActionsService {
 	 * @var string[]
 	 */
 	private static $access_levels = ['public', 'logged_in', 'admin'];
-	
+
 	/**
 	 * @see action
 	 * @access private
@@ -43,7 +44,7 @@ class ActionsService {
 	public function execute($action, $forwarder = "") {
 		$action = rtrim($action, '/');
 		$this->currentAction = $action;
-	
+
 		// @todo REMOVE THESE ONCE #1509 IS IN PLACE.
 		// Allow users to disable plugins without a token in order to
 		// remove plugins that are incompatible.
@@ -54,12 +55,12 @@ class ActionsService {
 			'logout',
 			'file/download',
 		);
-	
+
 		if (!in_array($action, $exceptions)) {
 			// All actions require a token.
 			$this->gatekeeper($action);
 		}
-	
+
 		$forwarder = str_replace(_elgg_services()->config->getSiteUrl(), "", $forwarder);
 		$forwarder = str_replace("http://", "", $forwarder);
 		$forwarder = str_replace("@", "", $forwarder);
@@ -70,18 +71,21 @@ class ActionsService {
 		/**
 		 * Complete the execution with a forward
 		 *
-		 * @param string $error_key Error message key
-		 *
+		 * @param string $error_key      Error message key
+		 * @param string $forward_url    Optional URL to forward to
+		 * @param string $forward_reason Forward reason
 		 * @throws \SecurityException
 		 */
-		$forward = function ($error_key = '') use ($action, $forwarder) {
+		$forward = function ($error_key = '', $forward_url = null, $forward_reason = null) use ($action, $forwarder) {
 			if ($error_key) {
 				$msg = _elgg_services()->translator->translate($error_key, [$action]);
 				_elgg_services()->systemMessages->addErrorMessage($msg);
 			}
-
+			if (isset($forward_url)) {
+				$forwarder = $forward_url;
+			}
 			$forwarder = empty($forwarder) ? REFERER : $forwarder;
-			forward($forwarder);
+			forward($forwarder, $forward_reason);
 		};
 
 		if (!isset($this->actions[$action])) {
@@ -117,7 +121,33 @@ class ActionsService {
 			$forward('actionnotfound');
 		}
 
-		self::includeFile($file);
+		$result = self::includeFile($file);
+
+		$result = _elgg_services()->hooks->trigger('action:after', $action, null, $result);
+		if (is_array($result)) {
+			$forward_url = elgg_extract('forward_url', $result);
+			$status = elgg_extract('status', $result);
+			$forward_reason = null;
+			if ($status && !in_array($status, array(0, -1, 200))) {
+				$forward_reason = $status;
+			}
+
+			$system_messages = (array) elgg_extract('system_messages', $result, array());
+			$success = (array) elgg_extract('success', $system_messages, array());
+			foreach ($success as $s) {
+				system_message($s);
+			}
+			$error = (array) elgg_extract('error', $system_messages, array());
+			foreach ($error as $er) {
+				register_error($er);
+			}
+			$output = elgg_extract('output', $result);
+			if (elgg_is_xhr() && $output) {
+				echo json_encode($output);
+			}
+			$forward('', $forward_url, $forward_reason);
+		}
+
 		$forward();
 	}
 
@@ -128,9 +158,9 @@ class ActionsService {
 	 * @return void
 	 */
 	protected static function includeFile($file) {
-		include $file;
+		return include $file;
 	}
-	
+
 	/**
 	 * @see elgg_register_action
 	 * @access private
@@ -139,7 +169,7 @@ class ActionsService {
 		// plugins are encouraged to call actions with a trailing / to prevent 301
 		// redirects but we store the actions without it
 		$action = rtrim($action, '/');
-	
+
 		if (empty($filename)) {
 			$path = __DIR__ . '/../../../actions';
 			$filename = realpath("$path/$action.php");
@@ -149,14 +179,14 @@ class ActionsService {
 			_elgg_services()->logger->error("Unrecognized value '$access' for \$access in " . __METHOD__);
 			$access = 'admin';
 		}
-	
+
 		$this->actions[$action] = array(
 			'file' => $filename,
 			'access' => $access,
 		);
 		return true;
 	}
-	
+
 	/**
 	 * @see elgg_unregister_action
 	 * @access private
@@ -178,17 +208,17 @@ class ActionsService {
 		if (!$token) {
 			$token = get_input('__elgg_token');
 		}
-	
+
 		if (!$ts) {
 			$ts = get_input('__elgg_ts');
 		}
 
 		$session_id = _elgg_services()->session->getId();
-	
+
 		if (($token) && ($ts) && ($session_id)) {
 			// generate token, check with input and forward if invalid
 			$required_token = $this->generateActionToken($ts);
-	
+
 			// Validate token
 			$token_matches = _elgg_services()->crypto->areEqual($token, $required_token);
 			if ($token_matches) {
@@ -198,7 +228,7 @@ class ActionsService {
 					$returnval = _elgg_services()->hooks->trigger('action_gatekeeper:permissions:check', 'all', array(
 						'token' => $token,
 						'time' => $ts
-					), true);
+							), true);
 
 					if ($returnval) {
 						return true;
@@ -230,7 +260,7 @@ class ActionsService {
 				$error_msg = _elgg_services()->hooks->trigger('action_gatekeeper:upload_exceeded_msg', 'all', array(
 					'post_size' => $length,
 					'visible_errors' => $visible_errors,
-				), _elgg_services()->translator->translate('actiongatekeeper:uploadexceeded'));
+						), _elgg_services()->translator->translate('actiongatekeeper:uploadexceeded'));
 			} else {
 				$error_msg = _elgg_services()->translator->translate('actiongatekeeper:missingfields');
 			}
@@ -267,7 +297,7 @@ class ActionsService {
 			$timeout = 2;
 		}
 		$hour = 60 * 60;
-		return (int)((float)$timeout * $hour);
+		return (int) ((float) $timeout * $hour);
 	}
 
 	/**
@@ -281,7 +311,7 @@ class ActionsService {
 			}
 
 			$token = get_input('__elgg_token');
-			$ts = (int)get_input('__elgg_ts');
+			$ts = (int) get_input('__elgg_ts');
 			if ($token && $this->validateTokenTimestamp($ts)) {
 				// The tokens are present and the time looks valid: this is probably a mismatch due to the 
 				// login form being on a different domain.
@@ -292,14 +322,13 @@ class ActionsService {
 
 			// let the validator send an appropriate msg
 			$this->validateActionToken();
-
 		} else if ($this->validateActionToken()) {
 			return true;
 		}
 
 		forward(REFERER, 'csrf');
 	}
-	
+
 	/**
 	 * @see generate_action_token
 	 * @access private
@@ -312,10 +341,10 @@ class ActionsService {
 
 		$session_token = _elgg_services()->session->get('__elgg_session');
 
-		return _elgg_services()->crypto->getHmac([(int)$timestamp, $session_id, $session_token], 'md5')
-			->getToken();
+		return _elgg_services()->crypto->getHmac([(int) $timestamp, $session_id, $session_token], 'md5')
+						->getToken();
 	}
-	
+
 	/**
 	 * @see elgg_action_exists
 	 * @access private
@@ -323,7 +352,7 @@ class ActionsService {
 	public function exists($action) {
 		return (isset($this->actions[$action]) && file_exists($this->actions[$action]['file']));
 	}
-	
+
 	/**
 	 * @see ajax_forward_hook
 	 * @access private
@@ -339,10 +368,10 @@ class ActionsService {
 					'success' => array()
 				)
 			));
-	
+
 			//grab any data echo'd in the action
 			$output = ob_get_clean();
-	
+
 			//Avoid double-encoding in case data is json
 			$json = json_decode($output);
 			if (isset($json)) {
@@ -350,14 +379,14 @@ class ActionsService {
 			} else {
 				$params['output'] = $output;
 			}
-	
+
 			//Grab any system messages so we can inject them via ajax too
 			$system_messages = _elgg_services()->systemMessages->dumpRegister();
-	
+
 			if (isset($system_messages['success'])) {
 				$params['system_messages']['success'] = $system_messages['success'];
 			}
-	
+
 			if (isset($system_messages['error'])) {
 				$params['system_messages']['error'] = $system_messages['error'];
 				$params['status'] = -1;
@@ -382,7 +411,7 @@ class ActionsService {
 
 			$context = array('action' => $this->currentAction);
 			$params = _elgg_services()->hooks->trigger('output', 'ajax', $context, $params);
-	
+
 			// Check the requester can accept JSON responses, if not fall back to
 			// returning JSON in a plain-text response.  Some libraries request
 			// JSON in an invisible iframe which they then read from the iframe,
@@ -393,12 +422,12 @@ class ActionsService {
 			} else {
 				header("Content-type: application/json");
 			}
-	
+
 			echo json_encode($params);
 			exit;
 		}
 	}
-	
+
 	/**
 	 * @see ajax_action_hook
 	 * @access private
@@ -417,5 +446,5 @@ class ActionsService {
 	public function getAllActions() {
 		return $this->actions;
 	}
-}
 
+}
