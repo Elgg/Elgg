@@ -12,3 +12,15 @@ elgg.ui.river.init = function() {
 };
 
 elgg.register_hook_handler('init', 'system', elgg.ui.river.init);
+
+elgg.register_hook_handler('ui_toggle', 'system', function (h, t, params) {
+	var $toggler = $(params.toggler);
+	var $target = $(params.target_selector);
+	if ($target.is('.elgg-river-responses > .elgg-form-comment-save')) {
+		if ($toggler.hasClass('elgg-state-active')) {
+			$target.find('.elgg-input-text').focus();
+		} else {
+			$toggler.blur();
+		}
+	}
+});
