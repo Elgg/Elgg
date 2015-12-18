@@ -881,6 +881,16 @@ function _elgg_php_exception_handler($exception) {
  * @todo Replace error_log calls with elgg_log calls.
  */
 function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
+
+	// Elgg 2.0 no longer uses ext/mysql, so these warnings are just a nuisance for 1.x site
+	// owners and plugin devs.
+	if (0 === strpos($errmsg, "mysql_connect(): The mysql extension is deprecated")) {
+		// only suppress core's usage
+		if (preg_match('~/classes/Elgg/Database\.php$~', strtr($filename, '\\', '/'))) {
+			return true;
+		}
+	}
+
 	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 	switch ($errno) {
