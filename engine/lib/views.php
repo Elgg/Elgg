@@ -1574,7 +1574,7 @@ function _elgg_views_deprecate_removed_views() {
  * @access private
  */
 function elgg_views_handle_deprecated_views() {
-	$location = elgg_get_view_location('page_elements/contentwrapper');
+	$location = _elgg_services()->views->getViewLocation('page_elements/contentwrapper');
 	if ($location === "/var/www/views/") {
 		elgg_extend_view('page_elements/contentwrapper', 'page/elements/wrapper');
 	}

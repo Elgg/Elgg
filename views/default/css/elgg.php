@@ -15,10 +15,8 @@
 
 // check if there is a theme overriding the old css view and use it, if it exists
 if (elgg_view_exists('css')) {
-	ob_start();
-	$old_css_view = elgg_get_view_location('css');
-	// throw away deprecation error
-	ob_end_clean();
+	// note: _elgg_services is private API, DO NOT USE.
+	$old_css_view = _elgg_services()->views->getViewLocation('css');
 
 	if ($old_css_view != elgg_get_config('viewpath')) {
 		echo elgg_view('css', $vars);
