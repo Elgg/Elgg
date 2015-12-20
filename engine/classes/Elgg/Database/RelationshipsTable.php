@@ -112,6 +112,7 @@ class RelationshipsTable {
 			INSERT INTO {$this->db->getTablePrefix()}entity_relationships
 			       (guid_one, relationship, guid_two, time_created)
 			VALUES ($guid_one, '$relationship', $guid_two, $time)
+				ON DUPLICATE KEY UPDATE time_created = $time
 		");
 		if (!$id) {
 			return false;
