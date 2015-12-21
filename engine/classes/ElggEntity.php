@@ -74,7 +74,12 @@ abstract class ElggEntity extends \ElggData implements
 	 * in-memory that isn't sync'd back to the metadata table.
 	 */
 	protected $volatile = array();
-	
+
+	/**
+	 * Holds the original (persisted) attribute values that have been changed but not yet saved.
+	 */
+	protected $orig_attributes = array();
+
 	/**
 	 * Tells how many tables are going to need to be searched in order to fully populate this object
 	 *
@@ -197,6 +202,28 @@ abstract class ElggEntity extends \ElggData implements
 			return;
 		}
 		if (array_key_exists($name, $this->attributes)) {
+
+			// if an attribute is 1 (integer) and it's set to "1" (string), don't consider that a change.
+			if (is_int($this->attributes[$name])
+					&& is_string($value)
+					&& ((string)$this->attributes[$name] === $value)) {
+				return;
+			}
+
+			// Due to https://github.com/Elgg/Elgg/pull/5456#issuecomment-17785173, certain attributes
+			// will store empty strings as null in the DB. In the somewhat common case that we're re-setting
+			// the value to empty string, don't consider this a change.
+			if (in_array($name, ['title', 'name', 'description'])
+					&& $this->attributes[$name] === null
+					&& $value === "") {
+				return;
+			}
+
+			// keep original values
+			if ($this->guid && !array_key_exists($name, $this->orig_attributes)) {
+				$this->orig_attributes[$name] = $this->attributes[$name];
+			}
+
 			// Certain properties should not be manually changed!
 			switch ($name) {
 				case 'guid':
@@ -236,6 +263,15 @@ abstract class ElggEntity extends \ElggData implements
 		$this->__set($name, $value);
 
 		return true;
+	}
+
+	/**
+	 * Get the original values of attribute(s) that have been modified since the entity was persisted.
+	 *
+	 * @return array
+	 */
+	public function getOriginalAttributes() {
+		return $this->orig_attributes;
 	}
 
 	/**
@@ -1670,6 +1706,8 @@ abstract class ElggEntity extends \ElggData implements
 		}
 
 		_elgg_cache_entity($this);
+
+		$this->orig_attributes = [];
 
 		// Handle cases where there was no error BUT no rows were updated!
 		return $ret !== false;

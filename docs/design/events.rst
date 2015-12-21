@@ -85,7 +85,7 @@ Elgg event handlers should have the following prototype:
         ...
     }
 
-If the handler returns `false`, the event is cancelled, preventing
+If the handler returns ``false``, the event is cancelled, preventing
 execution of the other handlers. All other return values are ignored.
 
 Register to handle an Elgg Event
@@ -116,6 +116,11 @@ Example:
     // user login event with priority 400.
     elgg_register_event_handler('login', 'user', 'myPlugin_handle_login', 400);
 
+.. warning::
+
+   If you handle the "update" event on an object, avoid calling ``save()`` in your event handler. For one it's
+   probably not necessary as the object is saved after the event completes, but also because ``save()`` calls
+   another "update" event and makes ``$object->getOriginalAttributes()`` no longer available.
 
 Trigger an Elgg Event
 ---------------------
@@ -186,9 +191,9 @@ Plugin hook handlers should have the following prototype:
         ...
     }
 
-If the handler returns no value (or `null` explicitly), the plugin hook value
+If the handler returns no value (or ``null`` explicitly), the plugin hook value
 is not altered. Otherwise the return value becomes the new value of the plugin
-hook. It will then be passed to the next handler as `$value`.
+hook. It will then be passed to the next handler as ``$value``.
 
 Register to handle a Plugin Hook
 --------------------------------
