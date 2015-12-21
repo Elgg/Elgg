@@ -1,12 +1,13 @@
 define(function(require) {
+	require('elgg/init');
 	var elgg = require('elgg');
 	var $ = require('jquery');
 
-	return {
+	return elgg.trigger_hook('config', 'ckeditor', null, {
 		toolbar: [['Bold', 'Italic', 'Underline', 'RemoveFormat'], ['Strike', 'NumberedList', 'BulletedList', 'Undo', 'Redo', 'Link', 'Unlink', 'Image', 'Blockquote', 'Paste', 'PasteFromWord', 'Maximize']],
 		removeButtons: 'Subscript,Superscript', // To have Underline back
 		allowedContent: true,
-		baseHref: elgg.config.wwwroot,
+		baseHref: elgg.get_site_url(),
 		removePlugins: 'liststyle,contextmenu,tabletools,resize',
 		extraPlugins: 'blockimagepaste',
 		defaultLanguage: 'en',
@@ -18,5 +19,5 @@ define(function(require) {
 		disableNativeTableHandles: false,
 		removeDialogTabs: 'image:advanced;image:Link;link:advanced;link:target',
 		autoGrow_maxHeight: $(window).height() - 100
-	};
+	});
 });
