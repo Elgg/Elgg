@@ -1924,6 +1924,8 @@ function _elgg_engine_boot() {
 function _elgg_init() {
 	global $CONFIG;
 
+	elgg_register_action('entity/delete');
+	
 	elgg_register_action('comment/save');
 	elgg_register_action('comment/delete');
 

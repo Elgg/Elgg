@@ -485,13 +485,20 @@ function _elgg_entity_menu_setup($hook, $type, $return, $params) {
 			'priority' => 200,
 		);
 		$return[] = \ElggMenuItem::factory($options);
+	}
 
+	if ($entity->canDelete() && $handler) {
 		// delete link
+		if (elgg_action_exists("$handler/delete")) {
+			$action = "action/$handler/delete";
+		} else {
+			$action = "action/entity/delete";
+		}
 		$options = array(
 			'name' => 'delete',
 			'text' => elgg_view_icon('delete'),
 			'title' => elgg_echo('delete:this'),
-			'href' => "action/$handler/delete?guid={$entity->getGUID()}",
+			'href' => "$action?guid={$entity->getGUID()}",
 			'confirm' => elgg_echo('deleteconfirm'),
 			'priority' => 300,
 		);
