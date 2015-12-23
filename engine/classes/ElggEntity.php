@@ -1092,7 +1092,9 @@ abstract class ElggEntity extends \ElggData implements
 			}
 		} else {
 			$user = _elgg_services()->session->getLoggedInUser();
-			$user_guid = $user->guid;
+			if ($user) {
+				$user_guid = $user->guid;
+			}
 		}
 
 		$return = null;
