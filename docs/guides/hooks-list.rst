@@ -478,6 +478,12 @@ Embed
 
 **embed_get_upload_sections, all**
 
+Groups
+------
+
+**profile_buttons, group**
+	Filters buttons (``ElggMenuItem`` instances) to be registered in the title menu of the group profile page
+
 HTMLawed
 --------
 
