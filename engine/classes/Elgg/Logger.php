@@ -202,6 +202,12 @@ class Logger {
 			$display = false;
 		}
 
+		// don't display in simplecache requests
+		$path = substr(current_page_url(), strlen(elgg_get_site_url()));
+		if (preg_match('~^(cache|action)/~', $path)) {
+			$display = false;
+		}
+
 		if ($display == true) {
 			echo '<pre class="elgg-logger-data">';
 			echo htmlspecialchars(print_r($data, true), ENT_QUOTES, 'UTF-8');

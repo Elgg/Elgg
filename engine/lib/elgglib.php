@@ -1415,6 +1415,7 @@ function _elgg_shutdown_hook() {
 	global $START_MICROTIME;
 
 	try {
+		_elgg_services()->logger->setDisplay(false);
 		elgg_trigger_event('shutdown', 'system');
 
 		$time = (float)(microtime(true) - $START_MICROTIME);

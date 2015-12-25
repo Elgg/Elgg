@@ -38,13 +38,17 @@ function developers_process_settings() {
 	ini_set('display_errors', (int)!empty($settings['display_errors']));
 
 	if (!empty($settings['screen_log'])) {
-		$cache = new ElggLogCache();
-		elgg_set_config('log_cache', $cache);
-		elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
-		elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params) {
-			$vars['body'] .= elgg_view('developers/log');
-			return $vars;
-		});
+		// don't show in action/simplecache
+		$path = substr(current_page_url(), strlen(elgg_get_site_url()));
+		if (!preg_match('~^(cache|action)/~', $path)) {
+			$cache = new ElggLogCache();
+			elgg_set_config('log_cache', $cache);
+			elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
+			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params) {
+				$vars['body'] .= elgg_view('developers/log');
+				return $vars;
+			});
+		}
 	}
 
 	if (!empty($settings['show_strings'])) {
