@@ -356,6 +356,12 @@ class ElggInstaller {
 				'value' => 'elgg_',
 				'required' => TRUE,
 				),
+			'timezone' => array(
+				'type' => 'dropdown',
+				'value' => 'UTC',
+				'options' => \DateTimeZone::listIdentifiers(),
+				'required' => TRUE
+			)
 		);
 
 		if ($this->checkSettingsFile()) {
