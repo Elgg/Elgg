@@ -546,3 +546,9 @@ Available hooks
 
 **config, ckeditor**
     This filters the CKEditor config object. Register for this hook in a plugin boot module. The defaults can be seen in the module ``elgg/ckeditor/config``.
+
+**ajax_request_data, \***
+    This filters request data sent by the ``elgg/Ajax`` module. See :doc:`ajax` for details.
+
+**ajax_response_data, \***
+    This filters the response data returned to users of the ``elgg/Ajax`` module. See :doc:`ajax` for details.

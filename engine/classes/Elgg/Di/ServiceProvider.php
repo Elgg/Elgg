@@ -17,6 +17,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \ElggStaticVariableCache                 $accessCache
  * @property-read \Elgg\ActionsService                     $actions
  * @property-read \Elgg\Database\AdminNotices              $adminNotices
+ * @property-read \Elgg\Ajax\Service                       $ajax
  * @property-read \Elgg\Amd\Config                         $amdConfig
  * @property-read \Elgg\Database\Annotations               $annotations
  * @property-read \ElggAutoP                               $autoP
@@ -99,6 +100,10 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		$this->setClassName('actions', \Elgg\ActionsService::class);
 
 		$this->setClassName('adminNotices', \Elgg\Database\AdminNotices::class);
+
+		$this->setFactory('ajax', function(ServiceProvider $c) {
+			return new \Elgg\Ajax\Service($c->hooks, $c->systemMessages, $c->input);
+		});
 
 		$this->setFactory('amdConfig', function(ServiceProvider $c) {
 			$obj = new \Elgg\Amd\Config($c->hooks);
