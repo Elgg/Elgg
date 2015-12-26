@@ -199,6 +199,7 @@ We dropped support for and/or removed the following views:
  * input/datepicker (Use input/date instead)
  * input/pulldown (Use input/select instead)
  * invitefriends/formitems
+ * js/admin (Use AMD and ``elgg_require_js`` instead of extending JS views)
  * js/initialise_elgg (Use AMD and ``elgg_require_js`` instead of extending JS views)
  * members/nav
  * metatags (Use the 'head', 'page' plugin hook instead)
