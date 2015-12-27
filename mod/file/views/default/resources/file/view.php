@@ -11,6 +11,8 @@ elgg_entity_gatekeeper($guid, 'object', 'file');
 
 $file = get_entity($guid);
 
+elgg_set_page_owner_guid($file->owner_guid);
+
 $owner = elgg_get_page_owner_entity();
 
 elgg_group_gatekeeper();
