@@ -30,7 +30,7 @@ function _elgg_friends_init() {
 	elgg_register_event_handler('pagesetup', 'system', '_elgg_friends_page_setup');
 	elgg_register_event_handler('pagesetup', 'system', '_elgg_setup_collections_menu');
 	elgg_register_plugin_hook_handler('register', 'menu:user_hover', '_elgg_friends_setup_user_hover_menu');
-	elgg_register_event_handler('create', 'friend', '_elgg_send_friend_notification');
+	elgg_register_event_handler('create', 'relationship', '_elgg_send_friend_notification');
 }
 
 /**
@@ -181,7 +181,7 @@ function _elgg_collections_page_handler($page_elements) {
  */
 function _elgg_setup_collections_menu() {
 	
-	if (elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
+	if (elgg_is_logged_in() && elgg_get_logged_in_user_guid() == elgg_get_page_owner_guid()) {
 		$user = elgg_get_page_owner_entity();
 		
 		elgg_register_menu_item('page', array(
@@ -204,6 +204,10 @@ function _elgg_setup_collections_menu() {
  * @access private
  */
 function _elgg_send_friend_notification($event, $type, $object) {
+	if ($object->relationship != 'friend') {
+		return true;
+	}
+	
 	$user_one = get_entity($object->guid_one);
 	/* @var \ElggUser $user_one */
 
