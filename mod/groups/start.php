@@ -75,7 +75,7 @@ function groups_init() {
 
 	// invitation request actions
 	elgg_register_plugin_hook_handler('register', 'menu:invitationrequest', 'groups_invitationrequest_menu_setup');
-	
+
 	// group members tabs
 	elgg_register_plugin_hook_handler('register', 'menu:groups_members', 'groups_members_menu_setup');
 
@@ -106,7 +106,7 @@ function groups_init() {
 
 	// Add tests
 	elgg_register_plugin_hook_handler('unit_test', 'system', 'groups_test');
-	
+
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'group:', 'Elgg\Values::getTrue');
 }
@@ -266,10 +266,16 @@ function groups_page_handler($page) {
 				echo elgg_view_resource('groups/members', $vars);
 			}
 			break;
+		case 'profile':
+			// Page owner and context need to be set before elgg_view() is
+			// called so they'll be available in the [pagesetup, system] event
+			// that is used for registering items for the sidebar menu.
+			// @see groups_setup_sidebar_menus()
+			elgg_push_context('group_profile');
+			elgg_set_page_owner_guid($page[1]);
 		case 'activity':
 		case 'edit':
 		case 'invite':
-		case 'profile':
 		case 'requests':
 			echo elgg_view_resource("groups/{$page[0]}", [
 				'guid' => $page[1],
@@ -790,25 +796,25 @@ function groups_invitationrequest_menu_setup($hook, $type, $menu, $params) {
  * @return void|ElggMenuItem[]
  */
 function groups_members_menu_setup($hook, $type, $menu, $params) {
-	
+
 	$entity = elgg_extract('entity', $params);
 	if (empty($entity) || !($entity instanceof ElggGroup)) {
 		return;
 	}
-	
+
 	$menu[] = ElggMenuItem::factory([
 		'name' => 'alpha',
 		'text' => elgg_echo('sort:alpha'),
 		'href' => "groups/members/{$entity->getGUID()}",
 		'priority' => 100
 	]);
-	
+
 	$menu[] = ElggMenuItem::factory([
 		'name' => 'newest',
 		'text' => elgg_echo('sort:newest'),
 		'href' => "groups/members/{$entity->getGUID()}/newest",
 		'priority' => 200
 	]);
-	
+
 	return $menu;
 }
