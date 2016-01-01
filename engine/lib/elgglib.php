@@ -1455,6 +1455,8 @@ function _elgg_normalize_plural_options_array($options, $singulars) {
  *
  * @see http://www.php.net/register-shutdown-function
  *
+ * @internal This is registered in \Elgg\Application::create()
+ *
  * @return void
  * @see register_shutdown_hook()
  * @access private
@@ -1463,6 +1465,7 @@ function _elgg_shutdown_hook() {
 	global $START_MICROTIME;
 
 	try {
+		_elgg_services()->logger->setDisplay(false);
 		elgg_trigger_event('shutdown', 'system');
 
 		$time = (float)(microtime(true) - $START_MICROTIME);
@@ -1936,9 +1939,6 @@ function _elgg_init() {
 
 		return $result;
 	});
-
-	// Trigger the shutdown:system event upon PHP shutdown.
-	register_shutdown_function('_elgg_shutdown_hook');
 }
 
 /**
