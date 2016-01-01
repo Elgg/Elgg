@@ -92,21 +92,25 @@
 function elgg_register_menu_item($menu_name, $menu_item) {
 	global $CONFIG;
 
+	if (is_array($menu_item)) {
+		$options = $menu_item;
+		$menu_item = \ElggMenuItem::factory($options);
+		if (!$menu_item) {
+			$menu_item_name = elgg_extract('name', $options, 'MISSING NAME');
+			elgg_log("Unable to add menu item '{$menu_item_name}' to '$menu_name' menu", 'WARNING');
+			return false;
+		}
+	}
+
+	if (!$menu_item instanceof ElggMenuItem) {
+		elgg_log('Second argument of elgg_register_menu_item() must be an instance of ElggMenuItem or an array of menu item factory options', 'ERROR');
+		return false;
+	}
+
 	if (!isset($CONFIG->menus[$menu_name])) {
 		$CONFIG->menus[$menu_name] = array();
 	}
-
-	if (is_array($menu_item)) {
-		$item = \ElggMenuItem::factory($menu_item);
-		if (!$item) {
-			elgg_log("Unable to add menu item '{$menu_item['name']}' to '$menu_name' menu", 'WARNING');
-			return false;
-		}
-	} else {
-		$item = $menu_item;
-	}
-
-	$CONFIG->menus[$menu_name][] = $item;
+	$CONFIG->menus[$menu_name][] = $menu_item;
 	return true;
 }
 
@@ -122,13 +126,13 @@ function elgg_register_menu_item($menu_name, $menu_item) {
 function elgg_unregister_menu_item($menu_name, $item_name) {
 	global $CONFIG;
 
-	if (!isset($CONFIG->menus[$menu_name])) {
+	if (empty($CONFIG->menus[$menu_name])) {
 		return null;
 	}
 
 	foreach ($CONFIG->menus[$menu_name] as $index => $menu_object) {
 		/* @var \ElggMenuItem $menu_object */
-		if ($menu_object->getName() == $item_name) {
+		if ($menu_object instanceof ElggMenuItem && $menu_object->getName() == $item_name) {
 			$item = $CONFIG->menus[$menu_name][$index];
 			unset($CONFIG->menus[$menu_name][$index]);
 			return $item;
