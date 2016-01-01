@@ -24,6 +24,16 @@
 global $START_MICROTIME;
 $START_MICROTIME = microtime(true);
 
+// we need to register for shutdown before Symfony registers the session_write_close() function
+// https://github.com/Elgg/Elgg/issues/9243
+register_shutdown_function(function () {
+	// There are cases where we may exit before this function is defined.
+	// TODO move this to Application::create in 2.0
+	if (function_exists('_elgg_shutdown_hook')) {
+		_elgg_shutdown_hook();
+	}
+});
+
 /**
  * Configuration values.
  *

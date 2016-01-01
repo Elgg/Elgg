@@ -1407,6 +1407,8 @@ function _elgg_normalize_plural_options_array($options, $singulars) {
  *
  * @see http://www.php.net/register-shutdown-function
  *
+ * @internal This is registered in engine/start.php
+ *
  * @return void
  * @see register_shutdown_hook()
  * @access private
@@ -1917,10 +1919,7 @@ function _elgg_init() {
 	elgg_register_js('elgg.ui.river', 'js/lib/ui.river.js');
 
 	elgg_register_css('jquery.imgareaselect', 'vendors/jquery/jquery.imgareaselect/css/imgareaselect-deprecated.css');
-	
-	// Trigger the shutdown:system event upon PHP shutdown.
-	register_shutdown_function('_elgg_shutdown_hook');
-	
+
 	// Sets a blacklist of words in the current language.
 	// This is a comma separated list in word:blacklist.
 	// @todo possibly deprecate
