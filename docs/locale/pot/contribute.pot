@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-14 11:16+0200\n"
+"POT-Creation-Date: 2016-01-03 16:14+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,610 +17,486 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../contribute/code.rst:2
-# be28cdf16ab54d148a3bb214928c1d4b
 msgid "Writing Code"
 msgstr ""
 
 #: ../../contribute/code.rst:4
-# fa5ec84df47a4216b29e06ab3033ade3
 msgid "Understand Elgg's standards and processes to get your changes accepted as quickly as possible."
 msgstr ""
 
 #: ../../contribute/code.rst:0
 #: ../../contribute/docs.rst:0
 #: ../../contribute/releases.rst:0
-# 42342a73593b48ee8688cdf90c3e33aa
-# 4302a25b679d402484d81d1061199157
-# 0fe38f2f4f554054bf8ff6319fa797a8
 msgid "Contents"
 msgstr ""
 
 #: ../../contribute/code.rst:11
-# 88eb78dd62bc4bcba08dfa6412447e59
 msgid "License agreement"
 msgstr ""
 
 #: ../../contribute/code.rst:13
-# d061ff957a6343dabdf19f9085242f91
 msgid "By submitting a patch you are agreeing to license the code under a `GPLv2 license`_ and `MIT license`_."
 msgstr ""
 
 #: ../../contribute/code.rst:20
-# 288f450084b04b23b2f887c9c46d7d81
 msgid "Pull requests"
 msgstr ""
 
 #: ../../contribute/code.rst:22
-# 8da3e6b99afe49ee9678b198e7f5d879
 msgid "Pull requests (PRs) are the best way to get code contributed to Elgg core. The core development team uses them even for the most trivial changes."
 msgstr ""
 
 #: ../../contribute/code.rst:25
-# b41be11546bd410ea76aec9812d4c3cf
 msgid "For new features, `submit a feature request <https://github.com/Elgg/Elgg/issues>`__ or `talk to us`_ first and make sure the core team approves of your direction before spending lots of time on code."
 msgstr ""
 
 #: ../../contribute/code.rst:31
-# 8bd7e8ded46e4fb29abd4e5817a23595
 msgid "Checklists"
 msgstr ""
 
 #: ../../contribute/code.rst:33
-# ba6f50609a9f490a8a77550344616b1d
 msgid "Use these markdown checklists for new PRs on github to ensure high-quality contributions and help everyone understand the status of open PRs."
 msgstr ""
 
 #: ../../contribute/code.rst:36
-# a4150df7427146209a5576ab59d47783
 msgid "Bugfix PRs:"
 msgstr ""
 
 #: ../../contribute/code.rst:46
-# 59a83a78cd0d483d9304e6776fa310ec
 msgid "Feature PRs:"
 msgstr ""
 
 #: ../../contribute/code.rst:58
-# 77bcf8b0df344ee2a73461b0ca25fec3
 msgid "Choosing a branch to submit to"
 msgstr ""
 
 #: ../../contribute/code.rst:60
-# 25939f82bb874420b757e7f1b55a0361
 msgid "The following table assumes the latest stable release is 1.9."
 msgstr ""
 
 #: ../../contribute/code.rst:63
-# 66e34cd01ec54029a7db18ec03339150
 msgid "Type of change"
 msgstr ""
 
 #: ../../contribute/code.rst:63
-# 9d15b0c5b92848ceb07aa8d0fcd86071
 msgid "Branch to submit against"
 msgstr ""
 
 #: ../../contribute/code.rst:65
-# e88b1d14657044ff85b67c154c780059
 msgid "Security fix"
 msgstr ""
 
 #: ../../contribute/code.rst:65
-# feb0ae82eebf44a0b43e84305a704035
 msgid "1.8 (Email security@elgg.org first!)"
 msgstr ""
 
 #: ../../contribute/code.rst:66
-# 9cff766bcfa5432ca049060a2f5c70b6
 msgid "Bug fix"
 msgstr ""
 
 #: ../../contribute/code.rst:66
-# 2441b7a335cd4e5d88d0f83ba2b7deb9
 msgid "1.9"
 msgstr ""
 
 #: ../../contribute/code.rst:67
-# 76db4cca39ab4367a5546e28e1cbaa34
 msgid "Deprecation"
 msgstr ""
 
 #: ../../contribute/code.rst:67
 #: ../../contribute/code.rst:68
-# f77b692097a144cf923d99a38bf73c64
-# 1c0d0f6d773c49278150d249a5ac4603
 msgid "1.x"
 msgstr ""
 
 #: ../../contribute/code.rst:68
-# 601a772112994032aea27ff76cf3def5
 msgid "Minor feature"
 msgstr ""
 
 #: ../../contribute/code.rst:69
-# 9428d5fdf5a64f0583e6e5fc2e9b03f3
 msgid "Major feature"
 msgstr ""
 
 #: ../../contribute/code.rst:69
 #: ../../contribute/code.rst:70
-# 7f7cdce5682d49a4a445045d4fa88fad
-# d4b37d890cd946d497c6ab4675375239
 msgid "master"
 msgstr ""
 
 #: ../../contribute/code.rst:70
-# 3e00e8173e164a489ec593b1fea93b19
 msgid "Breaking"
 msgstr ""
 
 #: ../../contribute/code.rst:73
-# ef290b30e05744459d1774cd1e53248a
 msgid "The difference between minor and major feature is subjective and up to the core team."
 msgstr ""
 
 #: ../../contribute/code.rst:76
-# 5383101c014a4bf8ae8c79becef4e176
 msgid "Commit message format"
 msgstr ""
 
 #: ../../contribute/code.rst:78
-# 25565d5ef9fb4d4ba7ae1f238306226d
 msgid "We require a particular format to allow releasing more often, and with improved changelogs and source history. Just follow these steps:"
 msgstr ""
 
 #: ../../contribute/code.rst:81
-# 48007808a923470396c3570330d82844
 msgid "Start with the ``type`` by selecting the *last category which applies* from this list:"
 msgstr ""
 
 #: ../../contribute/code.rst:83
-# 0f8cc56d3e9349319a9aafcdff783cd5
 msgid "**docs** - *only* docs are being updated"
 msgstr ""
 
 #: ../../contribute/code.rst:84
-# 2e8c24954ea94d298521233aa047c1d3
 msgid "**chore** - this include refactoring, code style changes, adding missing tests, Travis stuff, etc."
 msgstr ""
 
 #: ../../contribute/code.rst:85
-# b75a4a1a35524f6a8935648c9b4f94af
 msgid "**perf** - the primary purpose is to improve performance"
 msgstr ""
 
 #: ../../contribute/code.rst:86
-# 90494fb2df444c9396f37aca8ded7fec
 msgid "**fix** - this fixes a bug"
 msgstr ""
 
 #: ../../contribute/code.rst:87
-# 01146d81a1284af4bfb283ef52b88aba
 msgid "**deprecate** - the change deprecates any part of the API"
 msgstr ""
 
 #: ../../contribute/code.rst:88
-# 23c13bbdba6346d79439fa7f75f27027
 msgid "**feature** - this adds a new user-facing or developer feature"
 msgstr ""
 
 #: ../../contribute/code.rst:89
-# d666f78dae0d4f0e8b782373b3f559c0
 msgid "**security** - the change affects a security issue in any way. *Please do not push this commit to any public repo.* Instead contact security@elgg.org."
 msgstr ""
 
 #: ../../contribute/code.rst:91
-# c1715e1c8a044a0484e17a209082da7f
 msgid "E.g. if your commit refactors to fix a bug, it's still a \"fix\". If that bug is security-related, however, the type must be \"security\" and you should email security@elgg.org before proceeding. When in doubt, make your best guess and a reviewer will provide guidance."
 msgstr ""
 
 #: ../../contribute/code.rst:95
-# 2713e93843f9412ba68479845b7f99b3
 msgid "In parenthesis, add the ``component``, a short string which describes the subsystem being changed."
 msgstr ""
 
 #: ../../contribute/code.rst:97
-# 27cf0521bd0243aebd6b2a42e6b503be
 msgid "Some examples: \"views\", \"i18n\", \"seo\", \"a11y\", \"cache\", \"db\", \"session\", \"router\", \"<plugin_name>\"."
 msgstr ""
 
 #: ../../contribute/code.rst:99
-# 24b20c00e1ae42da919f1476e931c437
 msgid "Add a colon, a space, and a brief ``summary`` of the changes, which will appear in the changelog."
 msgstr ""
 
 #: ../../contribute/code.rst:101
-# 612208f35db34ad2bb5bb9667243e226
 msgid "No line may exceed 100 characters in length, so keep your summary concise."
 msgstr ""
 
 #: ../../contribute/code.rst:104
-# da733b4c42e04aeba1e593497bedbe0d
 msgid "Good summary"
 msgstr ""
 
 #: ../../contribute/code.rst:104
-# fc19bd7dfa7147078bfc5358e235be01
 msgid "Bad summary (problem)"
 msgstr ""
 
 #: ../../contribute/code.rst:106
-# 6095f34c01ab4a469f55849221273f31
 msgid "page owners see their own owner blocks on pages"
 msgstr ""
 
 #: ../../contribute/code.rst:106
-# 859eb555f3594297914d125062829f90
 msgid "bug fix (vague)"
 msgstr ""
 
 #: ../../contribute/code.rst:107
-# df9a56a134f4453ab050fb913c5e9b84
 msgid "bar view no longer dies if 'foo' not set"
 msgstr ""
 
 #: ../../contribute/code.rst:107
-# ffd913382ee4449eb5eb022c2794db44
 msgid "updates views/default/bar.php so bar view no longer... (redundant info)"
 msgstr ""
 
 #: ../../contribute/code.rst:108
-# e20d3734de4845d2985a0ff9d65f4cdf
 msgid "narrows river layout to fit iPhone"
 msgstr ""
 
 #: ../../contribute/code.rst:108
-# a4746dac414747f2886eed48d68cb0cc
 msgid "alters the river layout (vague)"
 msgstr ""
 
 #: ../../contribute/code.rst:109
-# 34f059587345496a9dfcfe2c31640ff4
 msgid "elgg_foo() handles arrays for $bar"
 msgstr ""
 
 #: ../../contribute/code.rst:109
-# a898825c663c43fcb6cd5e4f1470fe90
 msgid "in elgg_foo() you can now pass an array for $bar and the function will... (move detail to description)"
 msgstr ""
 
 #: ../../contribute/code.rst:110
-# e3e05420a7134210a5f48917e6bab022
 msgid "removes link color from comments header in river"
 msgstr ""
 
 #: ../../contribute/code.rst:110
-# 917a791e2a7d4b168862c1c7d50b244b
 msgid "fixes db so that... (redundant info)"
 msgstr ""
 
 #: ../../contribute/code.rst:111
-# 8454c12ad79f49a4b75ce1099aa0542d
 msgid "requires non-empty title when saving pages"
 msgstr ""
 
 #: ../../contribute/code.rst:111
-# 25dae2708e1744c7975a11afd9e4ac40
 msgid "can save pages with no title (confusingly summarizes old behavior)"
 msgstr ""
 
 #: ../../contribute/code.rst:114
-# 2e0f7df2f8704de9b362c37f8e1bcc09
 msgid "(recommended) Skip a line and add a ``description`` of the changes. Include the motivation for making them, any info about back or forward compatibility, and any rationale of why the change had to be done a certain way. Example:"
 msgstr ""
 
 #: ../../contribute/code.rst:117
-# ad3a309568ee47afa573f7dcf37f3472
 msgid "We speed up the Remember Me table migration by using a single INSERT INTO ... SELECT query instead of row-by-row. This migration takes place during the upgrade to 1.9."
 msgstr ""
 
 #: ../../contribute/code.rst:120
-# 0beebca3fb7d44c1be13afab65358d7a
 msgid "Unless your change is trivial/obvious, a description is required."
 msgstr ""
 
 #: ../../contribute/code.rst:122
-# eb1023c145f942d59897bcc41275b816
 msgid "If the commit resolves a GitHub issue, skip a line and add ``Fixes #`` followed by the issue number. E.g. ``Fixes #1234``. You can include multiple issues by separating with commas."
 msgstr ""
 
 #: ../../contribute/code.rst:125
-# 8ba827dd038e4842bb73c32ff0e9af16
 msgid "GitHub will auto-close the issue when the commit is merged. If you just want to reference an issue, use ``Refs #`` instead."
 msgstr ""
 
 #: ../../contribute/code.rst:128
-# 724d1318fdc34386a28802e139cf7e44
 msgid "When done, your commit message will have the format:"
 msgstr ""
 
 #: ../../contribute/code.rst:141
-# 8ba38237752e41e9b67884dea9e1bc31
 msgid "Here is an example of a good commit message:"
 msgstr ""
 
 #: ../../contribute/code.rst:153
-# b308adcc4ce3485aa9cb5a1fa5d45adc
 msgid "To validate commit messages locally, make sure ``.scripts/validate_commit_msg.php`` is executable, and make a copy or symlink to it in the directory ``.git/hooks/commit-msg``."
 msgstr ""
 
 #: ../../contribute/code.rst:162
-# 89abd661301d48d7a6b0e1c39960bffb
 msgid "Rewriting commit messages"
 msgstr ""
 
 #: ../../contribute/code.rst:163
-# 6a0ee2b8cb4044828b3b1956c3508867
 msgid "If your PR does not conform to the standard commit message format, we'll ask you to rewrite it."
 msgstr ""
 
 #: ../../contribute/code.rst:165
-# dc4513bced0e4014b5b4fd42848cfafc
 msgid "To edit just the last commit:"
 msgstr ""
 
 #: ../../contribute/code.rst:167
-# 6b0e45d8eb6b4a66b0a455e1c02fe7d1
 msgid "Amend the commit: ``git commit --amend`` (git opens the message in a text editor)."
 msgstr ""
 
 #: ../../contribute/code.rst:168
-# 8fc100a577a240a1aa4f81d43ea39a16
 msgid "Change the message and save/exit the editor."
 msgstr ""
 
 #: ../../contribute/code.rst:169
-# 55c416ff306a420c98771802c7dd9d57
 msgid "Force push your branch: ``git push -f your_remote your_branch`` (your PR with be updated)."
 msgstr ""
 
 #: ../../contribute/code.rst:171
-# 34d1f97032214ee1a32e80c304961716
 msgid "Otherwise you may need to perform an interactive rebase:"
 msgstr ""
 
 #: ../../contribute/code.rst:173
-# 01ce5a8394f14b7d9e5fe33165baed7c
 msgid "Rebase the last N commits: ``git rebase -i HEAD~N`` where N is a number. (Git will open the git-rebase-todo file for editing)"
 msgstr ""
 
 #: ../../contribute/code.rst:175
-# 0ec269386d56423688a7540c44e38101
 msgid "For the commits that need to change, change ``pick`` to ``r`` (for reword) and save/exit the editor."
 msgstr ""
 
 #: ../../contribute/code.rst:176
-# 6741dc8516bd41bd8a8160c6fcd3404d
 msgid "Change the commit message(s), save/exit the editor (git will present a file for each commit that needs rewording)."
 msgstr ""
 
 #: ../../contribute/code.rst:177
-# 1238a8e5352f4393ab8b5f45d83be961
 msgid "``git push -f your_remote your_branch`` to force push the branch (updating your PR)."
 msgstr ""
 
 #: ../../contribute/code.rst:180
-# 9893e33623ab4a90b3f0b96393b41b84
 msgid "Testing"
 msgstr ""
 
 #: ../../contribute/code.rst:182
-# 537867f37e6a4239b1c24a6c69d2debe
 msgid "Elgg has automated tests for both PHP and JavaScript functionality. All new contributions are required to come with appropriate tests."
 msgstr ""
 
 #: ../../contribute/code.rst:186
-# 1e660171038c4bc783b4c0858ccc1f2e
 msgid "PHPUnit Tests"
 msgstr ""
 
 #: ../../contribute/code.rst:188
-# 75aac7c4fb104afa8a1c6a488e3c16ba
 msgid "TODO"
 msgstr ""
 
 #: ../../contribute/code.rst:191
-# 31aa0911a5ac4175b6d1c18c6b1cac52
 msgid "Jasmine Tests"
 msgstr ""
 
 #: ../../contribute/code.rst:193
-# 75eb7e3b21cf48619b4b92852c0872df
 msgid "Test files must be named ``*Test.js`` and should go in either ``js/tests/`` or next to their source files in ``views/default/**.js``. Karma will automatically pick up on new ``*Test.js`` files and run those tests."
 msgstr ""
 
 #: ../../contribute/code.rst:198
-# a95b3f3582fa437797ffc45c5355e25f
 msgid "Test boilerplate"
 msgstr ""
 
 #: ../../contribute/code.rst:213
-# 99ea7bfa30f04a33a623f4cb8af0e6a7
 msgid "Running the tests"
 msgstr ""
 
 #: ../../contribute/code.rst:214
-# 41b4e05e3d1d4fde8d31a456c7fc4c66
 msgid "Elgg uses `Karma`_ with `Jasmine`_ to run JS unit tests."
 msgstr ""
 
 #: ../../contribute/code.rst:219
-# c4fd4a2196ae4d53a4c130e3fa1dab9f
 msgid "You will need to have nodejs and npm installed."
 msgstr ""
 
 #: ../../contribute/code.rst:221
-# 224c9ce5b34840e38d005c2d1c9fd354
 msgid "First install all the development dependencies:"
 msgstr ""
 
 #: ../../contribute/code.rst:227
-# bd04902f39b6436e9d405571e4eff146
 msgid "Run through the tests just once and then quit:"
 msgstr ""
 
 #: ../../contribute/code.rst:233
-# 4be24e1c22a8444fa400b72b41c4d9d7
 msgid "You can also run tests continuously during development so they run on each save:"
 msgstr ""
 
 #: ../../contribute/code.rst:242
-# 5c3e7ffff7f94c4c8722a31bd2025016
 msgid "Coding best practices"
 msgstr ""
 
 #: ../../contribute/code.rst:244
-# 2bd705daa41b4bc79593b67d859df474
 msgid "Make your code easier to read, easier to maintain, and easier to debug. Consistent use of these guidelines means less guess work for developers, which means happier, more productive developers."
 msgstr ""
 
 #: ../../contribute/code.rst:250
-# 6ab808e09fa9402ebcf07d1190d990f1
 msgid "General coding"
 msgstr ""
 
 #: ../../contribute/code.rst:253
-# f99140e5ba3b4d2c99b92a5e65457b24
 msgid "Don't Repeat Yourself"
 msgstr ""
 
 #: ../../contribute/code.rst:255
-# 1b09c2c60fbc4f5497ab99a0e6755c6e
 msgid "If you are copy-pasting code a significant amount of code, consider whether there's an opportunity to reduce duplication by introducing a function, an additional argument, a view, or a new component class."
 msgstr ""
 
 #: ../../contribute/code.rst:258
-# e9e49255b1fa49b0a5b0368f7fbdeecd
 msgid "E.g. If you find views that are identical except for a single value, refactor into a single view that takes an option."
 msgstr ""
 
 #: ../../contribute/code.rst:261
-# 001ca35ec1514e89af70420f25de05fc
 msgid "**Note:** In a bugfix release, *some duplication is preferrable to refactoring*. Fix bugs in the simplest way possible and refactor to reduce duplication in the next minor release branch."
 msgstr ""
 
 #: ../../contribute/code.rst:265
-# dc4e46399b8047c6be243d6f434f0224
 msgid "Embrace SOLID and GRASP"
 msgstr ""
 
 #: ../../contribute/code.rst:267
-# e7ec079d5f454c4892552740c2b5e3cc
 msgid "Use these `principles for OO design`__ to solve problems using loosely coupled components, and try to make all components and integration code testable."
 msgstr ""
 
 #: ../../contribute/code.rst:273
-# db7511ecb2394dee850bad85821aff53
 msgid "Whitespace is free"
 msgstr ""
 
 #: ../../contribute/code.rst:275
-# b63504c3c1b24eeda0ce9bc3b21fb7c0
 msgid "Don't be afraid to use it to separate blocks of code. Use a single space to separate function params and string concatenation."
 msgstr ""
 
 #: ../../contribute/code.rst:279
-# 43c93dd4c2ca42cf9ae37f9d1d132d10
 msgid "Variable names"
 msgstr ""
 
 #: ../../contribute/code.rst:281
-# 6fb07ed4ce1d424188220bcbc7491441
 msgid "Use self-documenting variable names.  ``$group_guids`` is better than ``$array``."
 msgstr ""
 
 #: ../../contribute/code.rst:283
-# a22a2e06dffa439b9d4d1a0639505428
 msgid "Avoid double-negatives. Prefer ``$enable = true`` to ``$disable = false``."
 msgstr ""
 
 #: ../../contribute/code.rst:286
-# b966ceea0a634cee8538ace9dfb7244c
 msgid "Interface names"
 msgstr ""
 
 #: ../../contribute/code.rst:288
-# ba51268cbb0c46039dfb88a9c2de9493
 msgid "Use the pattern `Elgg\\{Namespace}\\{Name}`."
 msgstr ""
 
 #: ../../contribute/code.rst:290
-# 801d116ba513415c9521fa9833853b72
 msgid "Do not include an `I` prefix or an `Interface` suffix."
 msgstr ""
 
 #: ../../contribute/code.rst:292
-# 3014c73566b94e8488f51bd90e7360eb
 msgid "We do not include any prefix or suffix so that we're encouraged to:"
 msgstr ""
 
 #: ../../contribute/code.rst:294
-# 8e4a9bf6ea1f4459a6297345359e853a
 msgid "name implementation classes more descriptively (the \"default\" name is taken)."
 msgstr ""
 
 #: ../../contribute/code.rst:295
-# b53d395cf3984e67824233c580976a51
 msgid "type-hint on interfaces, because that is the shortest, easiest thing to do."
 msgstr ""
 
 #: ../../contribute/code.rst:297
-# 537fa96c0ee341b191e1f0c21ae8da58
 msgid "Name implementations like `Elgg\\{Namespace}\\{Interface}\\{Implementation}`."
 msgstr ""
 
 #: ../../contribute/code.rst:300
-# 4dade3f9f7c4427e87b1967ce8a5dc25
 msgid "Functions"
 msgstr ""
 
 #: ../../contribute/code.rst:302
-# 73cdcaa592e34621a1900ceb45f3dc35
 msgid "Where possible, have functions/methods return a single type. Use empty values such as array(), \"\", or 0 to indicate no results."
 msgstr ""
 
 #: ../../contribute/code.rst:305
-# ac0eccf97a9b49a3979a18364405f26c
 msgid "Be careful where valid return values (like ``\"0\"``) could be interpreted as empty."
 msgstr ""
 
 #: ../../contribute/code.rst:307
-# 7f481101dbb0465197e8f25f7c386c62
 msgid "Functions not throwing an exception on error should return ``false`` upon failure."
 msgstr ""
 
 #: ../../contribute/code.rst:309
-# 318045d5af054f60a06f655e9d5bc14e
 msgid "Functions returning only boolean should be prefaced with ``is_`` or ``has_`` (eg, ``elgg_is_logged_in()``, ``elgg_has_access_to_entity()``)."
 msgstr ""
 
 #: ../../contribute/code.rst:313
-# a17ae87b3c3043d690b9bd022e34d55b
 msgid "Ternary syntax"
 msgstr ""
 
 #: ../../contribute/code.rst:315
-# 45208485bc904d7a9c22aba029abe415
 msgid "Acceptable only for single-line, non-embedded statements."
 msgstr ""
 
 #: ../../contribute/code.rst:318
-# a42711aa8a27428c9fe1f0df88b9fb8e
 msgid "Minimize complexity"
 msgstr ""
 
 #: ../../contribute/code.rst:320
-# 72fd07e6f515424e9ef57aaa40b062f5
 msgid "Minimize nested blocks and distinct execution paths through code. Use `Return Early`__ to reduce nesting levels and cognitive load when reading code."
 msgstr ""
 
 #: ../../contribute/code.rst:326
-# 04fe44cbd763404991d52260aaae0f19
 msgid "Use comments effectively"
 msgstr ""
 
 #: ../../contribute/code.rst:328
-# e7af09ea78f94b6f9958585ee4a881aa
 msgid "Good comments describe the \"why.\"  Good code describes the \"how.\" E.g.:"
 msgstr ""
 
@@ -631,13 +507,6 @@ msgstr ""
 #: ../../contribute/code.rst:538
 #: ../../contribute/code.rst:560
 #: ../../contribute/code.rst:584
-# 5889c8a297e34e3bb7e709cb95d6a179
-# 5ebfb71389694dc1840f74797d17b9b2
-# 83e40b165c6a4eb6a9f35bad601b4850
-# 28d223c4e50749e5aa65564b478adcee
-# 93c9b09296d14fad96ce20afff68f5c7
-# b31dcec2d1a24f618a89e47ff5faee6d
-# 84ba9979e4e0424faba3fb80b4cec80f
 msgid "Bad:"
 msgstr ""
 
@@ -649,479 +518,378 @@ msgstr ""
 #: ../../contribute/code.rst:546
 #: ../../contribute/code.rst:569
 #: ../../contribute/code.rst:592
-# bfd0aa375fdc4c699e58c44ffa88bfb1
-# 637e088690204a0f8d1739ef1607d592
-# c67e22ad74cf4c1eaa866b47ad74b6a0
-# 293613e8dfaf4a35aaed714f950926f2
-# 4b636b62d40a4ec6ab57e1c7ad274df9
-# 0d93bf6446014c769b1fc29f5f3bbbfb
-# 9ea0407c6a214bb2a3de346a28357aca
-# 0645af4d5d614ff1a206c5d49ddc481f
 msgid "Good:"
 msgstr ""
 
 #: ../../contribute/code.rst:352
-# ef462ba339aa456f80f47543fdcad148
 msgid "Always include a comment if it's not obvious that something must be done in a certain way. Other developers looking at the code should be discouraged from refactoring in a way that would break the code."
 msgstr ""
 
 #: ../../contribute/code.rst:364
-# 37ddab74cfad41d484c7c7c001484d17
 msgid "Commit effectively"
 msgstr ""
 
 #: ../../contribute/code.rst:366
-# 8915625c350643eea4eb68c95de0632a
 msgid "Err on the side of `atomic commits`__ which are highly focused on changing one aspect of the system."
 msgstr ""
 
 #: ../../contribute/code.rst:367
-# 6227a7950bb84547949a01c0d18fabcf
 msgid "Avoid mixing in unrelated changes or extensive whitespace changes. Commits with many changes are scary and make pull requests difficult to review."
 msgstr ""
 
 #: ../../contribute/code.rst:369
-# a6c154c6709a41b3aa32a9e074cdd1a3
 msgid "Use visual git tools to craft `highly precise and readable diffs`__."
 msgstr ""
 
 #: ../../contribute/code.rst:375
-# fd8135eb65894d08a63c8cd966039b3a
 msgid "Include tests"
 msgstr ""
 
 #: ../../contribute/code.rst:377
-# 6ab59f3bfbbf4a48b258450a3ecff9ae
 msgid "When at all possible include unit tests for code you add or alter. We use:"
 msgstr ""
 
 #: ../../contribute/code.rst:379
-# 58f41d9464ae46ab8d564dc82ad5bf09
 msgid "PHPUnit for PHP unit tests."
 msgstr ""
 
 #: ../../contribute/code.rst:381
-# 4833f908a4944a2298f01138ffb526f1
 msgid "SimpleTest for legacy PHP tests that require use of the database. Our long-term goal is to move all tests to PHPUnit."
 msgstr ""
 
 #: ../../contribute/code.rst:384
-# dbef76fbd874446dae8e6a7cc5fcd7a2
 msgid "Karma for JavaScript unit tests"
 msgstr ""
 
 #: ../../contribute/code.rst:387
-# 20545f69250b4debb7b5b16dc10c8ef2
 msgid "Naming tests"
 msgstr ""
 
 #: ../../contribute/code.rst:389
-# 9683183922394389b9fd8d1ca17a8b2d
 msgid "Break tests up by the behaviors you want to test and use names that describe the behavior. E.g.:"
 msgstr ""
 
 #: ../../contribute/code.rst:392
-# 5af4f9674e8a4c1791d695c683218590
 msgid "Not so good: One big method `testAdd()`."
 msgstr ""
 
 #: ../../contribute/code.rst:394
-# e4a3c89f8e124a5ab6e2c38c9ca82bfb
 msgid "Better: Methods `testAddingZeroChangesNothing` and `testAddingNegativeNumberSubtracts`"
 msgstr ""
 
 #: ../../contribute/code.rst:397
-# 76da53c82f2947a4a9aae03a40913942
 msgid "Keep bugfixes simple"
 msgstr ""
 
 #: ../../contribute/code.rst:399
-# 03fc0b77514d4b79a58851f5b5317bca
 msgid "Avoid the temptation to refactor code for a bugfix release. Doing so tends to introduce regressions, breaking functionality in what should be a stable release."
 msgstr ""
 
 #: ../../contribute/code.rst:403
-# 1fd9fb1ffb3b44869b40c44f9d764605
 msgid "PHP guidelines"
 msgstr ""
 
 #: ../../contribute/code.rst:405
-# 8e9a684640694f44b76b5c7cad3eb560
 msgid "These are the required coding standards for Elgg core and all bundled plugins. Plugin developers are strongly encouraged to adopt these standards."
 msgstr ""
 
 #: ../../contribute/code.rst:408
-# 656fe52f861846d6841f0513f6a9a59f
 msgid "Developers should first read the `PSR-2 Coding Standard Guide`__."
 msgstr ""
 
 #: ../../contribute/code.rst:412
-# d34ebbe7203e40878e1e5d3b3295ac92
 msgid "Elgg's standards extend PSR-2, but differ in the following ways:"
 msgstr ""
 
 #: ../../contribute/code.rst:414
-# b8647de95d5a4134b8fc42574258f6d0
 msgid "Indent using one tab character, not spaces."
 msgstr ""
 
 #: ../../contribute/code.rst:415
-# fa3a62632a6f492f96f0c449300c6e65
 msgid "Opening braces for classes, methods, and functions must go on the same line."
 msgstr ""
 
 #: ../../contribute/code.rst:416
-# 05a4b712bbe740cb9ccf27b78afe0926
 msgid "If a line reaches over 100 characters, consider refactoring (e.g. introduce variables)."
 msgstr ""
 
 #: ../../contribute/code.rst:417
-# 6875fac936c5426895289f907467df79
 msgid "Compliance with `PSR-1`__ is encouraged, but not strictly required."
 msgstr ""
 
 #: ../../contribute/code.rst:422
-# d25dd93d8a3f41c18d198ba286ee2e09
 msgid "Documentation"
 msgstr ""
 
 #: ../../contribute/code.rst:424
-# bc4c84d01b4a44a5bd6bd645907f62bf
 msgid "Include PHPDoc comments on functions and classes (all methods; declared properties when appropriate), including types and descriptions of all parameters."
 msgstr ""
 
 #: ../../contribute/code.rst:428
-# d064f7896b9943e2b20b4b3eaf419474
 msgid "In lists of ``@param`` declarations, the beginnings of variable names and descriptions must line up."
 msgstr ""
 
 #: ../../contribute/code.rst:431
-# e533f3234e4c430c8c7c781e1092e3ac
 msgid "Annotate classes, methods, properties, and functions with ``@access private`` unless they are intended for public use, are already of limited visibility, or are within a class already marked as private."
 msgstr ""
 
 #: ../../contribute/code.rst:435
-# 04c355b9c0be4e928c6c8a46605b038b
 msgid "Use ``//`` or ``/* */`` when commenting."
 msgstr ""
 
 #: ../../contribute/code.rst:437
-# 4877831367fe47eca6e6ec84a1453d26
 msgid "Use only ``//`` comments inside function/method bodies."
 msgstr ""
 
 #: ../../contribute/code.rst:440
-# daa26017186c44868a5a37d49d4f75a5
 msgid "Naming"
 msgstr ""
 
 #: ../../contribute/code.rst:442
-# b3d770370f8c4e6cb4fa9ef658eaa639
 msgid "Use underscores to separate words in the names of functions, variables, and properties. Method names are camelCase."
 msgstr ""
 
 #: ../../contribute/code.rst:445
-# 2a68d8fd0a304ca68437dbd799ef9696
 msgid "Names of functions for public use must begin with ``elgg_``."
 msgstr ""
 
 #: ../../contribute/code.rst:447
-# dd09fee1a75240be8fe9d6ba898e97ef
 msgid "All other function names must begin with ``_elgg_``."
 msgstr ""
 
 #: ../../contribute/code.rst:449
-# 39d7df4aeb194dfe83141432c66be3d8
 msgid "Name globals and constants in ``ALL_CAPS`` (``ACCESS_FRIENDS``, ``$CONFIG``)."
 msgstr ""
 
 #: ../../contribute/code.rst:452
-# 3cbc127a0c0e4b16b1e3252fef7fdebe
 msgid "Miscellaneous"
 msgstr ""
 
 #: ../../contribute/code.rst:454
-# 9be832a27b254c229afa25669f971ad4
 msgid "For PHP requirements, see ``composer.json``."
 msgstr ""
 
 #: ../../contribute/code.rst:456
-# 77857ea18b834007b2f4ac2a3dc0590d
 msgid "Do not use PHP shortcut tags ``<?`` or ``<%``. It is OK to use ``<?=`` since it is always enabled as of PHP 5.4."
 msgstr ""
 
 #: ../../contribute/code.rst:459
-# af3bd9b2aa924049b3b381a63adde61d
 msgid "When creating strings with variables:"
 msgstr ""
 
 #: ../../contribute/code.rst:461
-# b74a7f6f963f47f28afcd6c20f0517b3
 msgid "use double-quoted strings"
 msgstr ""
 
 #: ../../contribute/code.rst:462
-# e9c5f139e30640c296216ff4f35b4ee8
 msgid "wrap variables with braces only when necessary."
 msgstr ""
 
 #: ../../contribute/code.rst:464
-# 3c57b304975c4e099c03a83cb5580f58
 msgid "Bad (hard to read, misuse of quotes and {}s):"
 msgstr ""
 
 #: ../../contribute/code.rst:476
-# edd80aea5cb547b0808f5ef10ccd97f2
 msgid "Remove trailing whitespace at the end of lines. An easy way to do this before you commit is to run ``php .scripts/fix_style.php`` from the installation root."
 msgstr ""
 
 #: ../../contribute/code.rst:480
-# e0ed72cd09cb446c90db1fd2f9a79e09
 msgid "CSS guidelines"
 msgstr ""
 
 #: ../../contribute/code.rst:483
-# c2e441ac960d4a7e92f0299483d848ab
 msgid "Use shorthand where possible"
 msgstr ""
 
 #: ../../contribute/code.rst:503
-# ea1d83516e97404bab59318a36a5eaf7
 msgid "Use hyphens, not underscores"
 msgstr ""
 
 #: ../../contribute/code.rst:518
-# f653ef44a20349e89c508ba7f9a9a6cf
 msgid "One property per line"
 msgstr ""
 
 #: ../../contribute/code.rst:534
-# 5b2308043b754e80adf2e6497c30623b
 msgid "Property declarations"
 msgstr ""
 
 #: ../../contribute/code.rst:536
-# ee925d6e8f5341dbb14d97947a4ce1e4
 msgid "These should be spaced like so: `property: value;`"
 msgstr ""
 
 #: ../../contribute/code.rst:553
-# 0a731bd73d1f4eeca4328574e327b20e
 msgid "Vendor prefixes"
 msgstr ""
 
 #: ../../contribute/code.rst:555
-# e4f82854ff484d479004e386baf110ab
 msgid "Group vendor-prefixes for the same property together"
 msgstr ""
 
 #: ../../contribute/code.rst:556
-# 402788bd0d234bdbb592c562328db1c2
 msgid "Longest vendor-prefixed version first"
 msgstr ""
 
 #: ../../contribute/code.rst:557
-# 74e9db05584b4d809799139bc4ded93e
 msgid "Always include non-vendor-prefixed version"
 msgstr ""
 
 #: ../../contribute/code.rst:558
-# b1d7e0a239f943209f921b732b354424
 msgid "Put an extra newline between vendor-prefixed groups and other properties"
 msgstr ""
 
 #: ../../contribute/code.rst:582
-# 0dacac14b64644d7aea0261f6faf7624
 msgid "Group subproperties"
 msgstr ""
 
 #: ../../contribute/code.rst:601
-# 7775be4217a7424bb23dd4335c1f7b20
 msgid "Javascript guidelines"
 msgstr ""
 
 #: ../../contribute/code.rst:603
-# ef8f9f4b56c14de6b9e024aa8c0b3a99
 msgid "Same formatting standards as PHP apply."
 msgstr ""
 
 #: ../../contribute/code.rst:605
-# cda029f150214c45a92f5ce0b082fbd8
 msgid "All functions should be in the ``elgg`` namespace."
 msgstr ""
 
 #: ../../contribute/code.rst:607
-# 406fcc15a4044d728b18822fdad8a0a3
 msgid "Function expressions should end with a semi-colon."
 msgstr ""
 
 #: ../../contribute/code.rst:618
-# 63b0a03c4a8340f58c89b927dbbf4b1b
 msgid "Deprecating APIs"
 msgstr ""
 
 #: ../../contribute/code.rst:620
-# 754b955523cc4451a54d118afd63455e
 msgid "Occasionally functions and classes must be deprecated in favor of newer replacements. Since 3rd party plugin authors rely on a consistent API, backward compatibility must be maintained, but will not be maintained indefinitely as plugin authors are expected to properly update their plugins. In order to maintain backward compatibility, deprecated APIs will follow these guidelines:"
 msgstr ""
 
 #: ../../contribute/code.rst:627
-# 6986fdab63f343d3a287b353a17acf36
 msgid "Minor version (1.x) that deprecates an API must include a wrapper function/class (or otherwise appropriate means) to maintain backward compatibility, including any bugs in the original function/class. This compatibility layer uses ``elgg_deprecated_notice('...', '1.11')`` to log that the function is deprecated."
 msgstr ""
 
 #: ../../contribute/code.rst:633
-# b199b778996240a5a9e2b33d7c8975be
 msgid "The next major revision (2.0) removes the compatibility layer. Any use of the deprecated API should be corrected before this."
 msgstr ""
 
 #: ../../contribute/docs.rst:2
-# 92bbf37266304630b54e6da98b0ca197
 msgid "Writing Documentation"
 msgstr ""
 
 #: ../../contribute/docs.rst:4
-# 00cf5984adc44c9cae125487aac915b4
 msgid "New documentation should fit well with the rest of Elgg's docs."
 msgstr ""
 
 #: ../../contribute/docs.rst:11
-# 6d811e248f9d465385291fdbe2a655e6
 msgid "Testing docs locally"
 msgstr ""
 
 #: ../../contribute/docs.rst:12
-# 2e9fd769a38a406db95443b74380b6e3
 msgid "Elgg has a `grunt`_ script that automatically builds the docs, opens them in a browser window, and automatically reloads as you make changes (the reload takes just a few seconds)."
 msgstr ""
 
 #: ../../contribute/docs.rst:22
-# 5464c96b0aae4abbae6a6418ab68f485
 msgid "It's that easy! Grunt will continue running, watching the docs for changes and automatically rebuilding."
 msgstr ""
 
 #: ../../contribute/docs.rst:28
-# 4626f931414f42f091a7d12c6d744ab2
 msgid "Follow the existing document organization"
 msgstr ""
 
 #: ../../contribute/docs.rst:29
-# e1ce6411f2fe496ca6a90a14168337df
 msgid "The current breakdown is not necessarily the One True Way to organize docs, but consistency is better than randomness."
 msgstr ""
 
 #: ../../contribute/docs.rst:34
-# 57bd9fc714cd4f48b60494881e0fe944
 msgid "intro/*"
 msgstr ""
 
 #: ../../contribute/docs.rst:35
-# 7fa781b533de4c768e9f1b27b1198dbe
 msgid "This is everything that brand new users need to know (installation, features, license, etc.)"
 msgstr ""
 
 #: ../../contribute/docs.rst:38
-# 87067139ee8b4a9fabe863b95bfb8f1c
 msgid "admin/*"
 msgstr ""
 
 #: ../../contribute/docs.rst:39
-# c901739cf4e34ed3865b7a45409313bf
 msgid "Guides for administrators. Task-oriented."
 msgstr ""
 
 #: ../../contribute/docs.rst:42
-# c28edc9212c04862aaba218e000b361d
 msgid "guides/*"
 msgstr ""
 
 #: ../../contribute/docs.rst:43
-# 436438e1e2984e18a92091cbe70981af
 msgid "API guides for plugin developers. Cookbook-style. Example heavy. Code snippet heavy. Broken down by services (actions, i18n, routing, db, etc.). This should only discuss the public API and its behavior, not implementation details or reasoning."
 msgstr ""
 
 #: ../../contribute/docs.rst:48
-# 1ed7e678768a4076a34aed5762811a60
 msgid "design/*"
 msgstr ""
 
 #: ../../contribute/docs.rst:49
-# f08939e72c8c4429bccd212983079d0c
 msgid "Design docs for people who want to get a better understanding of how/why core is built the way it is. This should discuss internal implementation details of the various services, what tradeoffs were made, and the reasoning behind the final decision. Should be useful for people who want to contribute and for communication b/w core devs."
 msgstr ""
 
 #: ../../contribute/docs.rst:55
-# 6e3dd2dd286049f699e3527675167289
 msgid "contribute/*"
 msgstr ""
 
 #: ../../contribute/docs.rst:56
-# e994603436524ffda38564ea386d0351
 msgid "Contributors guides for the various ways people can participate in the project."
 msgstr ""
 
 #: ../../contribute/docs.rst:59
-# 2c6890f169cb48ecab70dd7cd7d22bf4
 msgid "appendix/*"
 msgstr ""
 
 #: ../../contribute/docs.rst:60
-# 8bf48c49fcbb4765b101eb1f681dc20d
 msgid "More detailed/meta/background information about the project (history, roadmap, etc.)"
 msgstr ""
 
 #: ../../contribute/docs.rst:64
-# 56cd5ee783f842f8b5568e08faa6202b
 msgid "Use \"Elgg\" in a grammatically correct way"
 msgstr ""
 
 #: ../../contribute/docs.rst:65
-# a028ad8224594d4d94df8427b117d9c6
 msgid "Elgg is not an acronym, so writing it in all caps (ELGG or E-LGG) is incorrect. Please don’t do this."
 msgstr ""
 
 #: ../../contribute/docs.rst:69
-# 0fc5fb37acf24d9c9f640078c038d159
 msgid "In English, Elgg does not take an article when used as a noun. Here are some examples to emulate:"
 msgstr ""
 
 #: ../../contribute/docs.rst:68
-# 5a6c886039e14e19a83f004a20a409ac
 msgid "“I’m using Elgg to run my website”"
 msgstr ""
 
 #: ../../contribute/docs.rst:69
-# 1a0701c00bfd4de49dd20b454d3d4b03
 msgid "“Install Elgg to get your community online”"
 msgstr ""
 
 #: ../../contribute/docs.rst:73
-# 2977be140e694a0996b33c2dff97b556
 msgid "When used as an adjective, the article applies to the main noun, so you should use one. For example:"
 msgstr ""
 
 #: ../../contribute/docs.rst:72
-# a05afa32366746498cb7bd0f8cceea22
 msgid "\"Go to the Elgg community website to get help.\""
 msgstr ""
 
 #: ../../contribute/docs.rst:73
-# b46bc39e55af45f8be44215073ab7b8d
 msgid "\"I built an Elgg-based network yesterday\""
 msgstr ""
 
 #: ../../contribute/docs.rst:75
-# 9a03df0ca7584244abc7e323f18b1487
 msgid "This advice may not apply in languages other than English."
 msgstr ""
 
 #: ../../contribute/docs.rst:79
-# 5f578e3c57e744a49b22418db80c282b
 msgid "Avoid first person pronouns"
 msgstr ""
 
 #: ../../contribute/docs.rst:80
-# 9ee3d513065c4f4e88c227e28b5cd503
 msgid "Refer to the reader as “you.” Do not include yourself in the normal narrative."
 msgstr ""
 
@@ -1129,15 +897,10 @@ msgstr ""
 #: ../../contribute/docs.rst:93
 #: ../../contribute/docs.rst:105
 #: ../../contribute/docs.rst:119
-# a546ca05003a4334b4215abfb4f45ae0
-# 3fc07fc022e84961b4af62a435ac2c71
-# 56ddde8847684a34979de0b2b95e6f1c
-# bb052ff9e9c24e04b14e90cef5b11feb
 msgid "Before:"
 msgstr ""
 
 #: ../../contribute/docs.rst:84
-# dc565eb07bae4e87af7620bac1903e3d
 msgid "When we’re done installing Elgg, we’ll look for some plugins!"
 msgstr ""
 
@@ -1145,780 +908,622 @@ msgstr ""
 #: ../../contribute/docs.rst:97
 #: ../../contribute/docs.rst:109
 #: ../../contribute/docs.rst:123
-# 825d982924984206bb276f801777f36e
-# 70d146d5f67c4e098c4f70010cb57ffc
-# a0094d8bf1e14647b5686dafd318e72f
-# 6f917e4a31334133bd18e014cba98492
 msgid "After:"
 msgstr ""
 
 #: ../../contribute/docs.rst:88
-# ecd37d6c23984b2881d60f72043df210
 msgid "When you’re done installing Elgg, look for some plugins!"
 msgstr ""
 
 #: ../../contribute/docs.rst:90
-# dac7363a8d2e4925a2a7055570bd82d5
 msgid "To refer to yourself (avoid this if possible), use your name and write in the third person. This clarifies to future readers/editors whose opinions are being expressed."
 msgstr ""
 
 #: ../../contribute/docs.rst:95
-# 4b11bec681f6447da3d42715560a3011
 msgid "I think the best way to do X is to use Y."
 msgstr ""
 
 #: ../../contribute/docs.rst:99
-# 861fdad4233840ce8803b192a38e1573
 msgid "Evan thinks the best way to do X is to use Y."
 msgstr ""
 
 #: ../../contribute/docs.rst:103
-# 4ff35e61026949a6b3d840bacfd7d445
 msgid "Eliminate fluff"
 msgstr ""
 
 #: ../../contribute/docs.rst:107
-# 40eec71615c9469c9f32f1a12cf81533
 msgid "If you want to use a third-party javascript library within the Elgg framework, you should take care to call the ``elgg_register_js`` function to register it."
 msgstr ""
 
 #: ../../contribute/docs.rst:111
-# 50b0f4efc4934061a16ea4e66886cf3a
 msgid "To use a third-party javascript library, call ``elgg_register_js`` to register it."
 msgstr ""
 
 #: ../../contribute/docs.rst:115
-# 07a25512378548009a1dccf592abf182
 msgid "Prefer absolute dates over relative ones"
 msgstr ""
 
 #: ../../contribute/docs.rst:116
-# 5dcba162c84b4cc28fd9251dcd4acac1
 msgid "It is not easy to tell when a particular sentence or paragraph was written, so relative dates quickly become meaningless. Absolute dates also give the reader a good indication of whether a project has been abandoned, or whether some advice might be out of date."
 msgstr ""
 
 #: ../../contribute/docs.rst:121
-# 3b2cc8189d5747868c3417860fa50b3c
 msgid "Recently the foo was barred. Soon, the baz will be barred too."
 msgstr ""
 
 #: ../../contribute/docs.rst:125
-# 24058ddac1634bdbb2a5184bce5588e5
 msgid "Recently (as of September 2013), the foo was barred. The baz is expected to be barred by October 2013."
 msgstr ""
 
 #: ../../contribute/docs.rst:129
-# 8b562b75a1c84fa2963683ab30186dfd
 msgid "Do not remind the reader to contribute"
 msgstr ""
 
 #: ../../contribute/docs.rst:130
-# 2191a8e7787442e68beb7f4988b0a9dc
 msgid "Focus on addressing only the topic at hand. Constant solicitation for free work is annoying and makes the project look needy. If people want to contribute to the project, they can visit the contributor guide."
 msgstr ""
 
 #: ../../contribute/docs.rst:136
-# 386370c08dbd40d7a8156603bc0c4ac8
 msgid "Internationalizing documentation"
 msgstr ""
 
 #: ../../contribute/docs.rst:138
-# 42cae6f0ac3d4ce59d2980f0c13781f1
 msgid "When you change documentation, remember to update the documentation translation templates before you commit:"
 msgstr ""
 
 #: ../../contribute/docs.rst:146
-# 50d522481ee24c4680ed3eddbf9aefd0
 msgid "For more information, see http://sphinx-doc.org/latest/intl.html#translating-with-sphinx-intl"
 msgstr ""
 
 #: ../../contribute/i18n.rst:2
-# eba5e7d7195d4ee7b5177dd9b24b412b
 msgid "Translations"
 msgstr ""
 
 #: ../../contribute/i18n.rst:4
-# 85fae5a5e5464b21a9bb449c699cd33e
 msgid "Translations multiply the impact that Elgg can have by making it accessible to a larger percentage of the world."
 msgstr ""
 
 #: ../../contribute/i18n.rst:7
-# 5ce25f7470584ee1a5f7908a254b55df
 msgid "The community will always be indebted to those of you who work hard to provide high quality translations for Elgg's UI and docs."
 msgstr ""
 
 #: ../../contribute/i18n.rst:11
-# b38cee2b7bc64576bff671d41979152b
 msgid "Transifex"
 msgstr ""
 
 #: ../../contribute/i18n.rst:13
-# 24dbbff0aae540c4a5f333e59ac374a0
 msgid "All translation for the Elgg project is organized through Transifex."
 msgstr ""
 
 #: ../../contribute/i18n.rst:15
-# 1881c4a6bc744aae973ee5930576fce1
 msgid "https://www.transifex.com/organization/elgg"
 msgstr ""
 
 #: ../../contribute/i18n.rst:17
-# 5c9f35a957f546759c321162eb47a9ec
 msgid "Plugin authors are encouraged to coordinate translations via Transifex as well so the whole community can be unified and make it really easy for translators to contribute to any plugin in the Elgg ecosystem."
 msgstr ""
 
 #: ../../contribute/index.rst:2
-# a3132785802c4da3a3e28a84c2a8cba8
 msgid "Contributor Guides"
 msgstr ""
 
 #: ../../contribute/index.rst:4
-# c36f3074b93649afaad9947ef3e3f077
 msgid "Participate in making Elgg even better."
 msgstr ""
 
 #: ../../contribute/index.rst:6
-# 054cdc0e343e4fcc80dd01d93caab15d
 msgid "Elgg is a community-driven project. It relies on the support of volunteers to succeed. Here are some ways you can help:"
 msgstr ""
 
 #: ../../contribute/issues.rst:2
-# 6e03f73ad98a4daa9f332746b895e73c
 msgid "Reporting Issues"
 msgstr ""
 
 #: ../../contribute/issues.rst:4
-# e7b4ee0cac6241cb9a49ba00aa0c4b7c
 msgid "Report bugs and features requests to https://github.com/Elgg/Elgg/issues. See below for guidelines."
 msgstr ""
 
 #: ../../contribute/issues.rst:8
-# 2282eb506b2944998da19f29982e2352
 msgid "DISCLAIMERS"
 msgstr ""
 
 #: ../../contribute/issues.rst:10
-# 8a006e5cdcb74952aabec446ae93e48e
 msgid "**SECURITY ISSUES SHOULD BE REPORTED TO security @ elgg . org!** Please do not post any security issues on github!!"
 msgstr ""
 
 #: ../../contribute/issues.rst:12
-# c7ee3cdd11c645fb9652687f631546ee
 msgid "Support requests belong on the `community site`_. Tickets with support requests will be closed."
 msgstr ""
 
 #: ../../contribute/issues.rst:14
-# 09e892c5a03b4e5c866ceb700bfbe532
 msgid "We cannot make any guarantees as to when your ticket will be resolved."
 msgstr ""
 
 #: ../../contribute/issues.rst:17
-# 100f053621c64de99c606f1d0cb87ce2
 msgid "Bug reports"
 msgstr ""
 
 #: ../../contribute/issues.rst:19
-# 8c165f7e93834983962ddfb445a963cc
 msgid "Before submitting a bug report:"
 msgstr ""
 
 #: ../../contribute/issues.rst:21
-# b7c8df69db3644bcb3469514bfb3d764
 msgid "Search for an existing ticket on the issue you’re having. Add any extra info there."
 msgstr ""
 
 #: ../../contribute/issues.rst:23
-# bab52d02131046a6b80861d76439dc22
 msgid "Verify the problem is reproducible"
 msgstr ""
 
 #: ../../contribute/issues.rst:25
-# 478d65d8ab1545c0832220c810520b98
 msgid "On the latest version of Elgg"
 msgstr ""
 
 #: ../../contribute/issues.rst:26
-# 922e736c9e1e4009a64ce4b4fe6d9829
 msgid "With all third-party plugins disabled"
 msgstr ""
 
 #: ../../contribute/issues.rst:28
-# 533503c0b23b46e5b68ec7fdfbac3bff
 msgid "Good bug report checklist:"
 msgstr ""
 
 #: ../../contribute/issues.rst:30
-# c5c1a19b7c6b4997a9b08b162f4891c1
 msgid "Expected behavior and actual behavior"
 msgstr ""
 
 #: ../../contribute/issues.rst:31
-# f8c62da9cfad48258cf1c3cd0c7adae8
 msgid "Clear steps to reproduce the problem"
 msgstr ""
 
 #: ../../contribute/issues.rst:32
-# 63d8cb5d2cd142d39b591d061781d00c
 msgid "The version of Elgg you’re running"
 msgstr ""
 
 #: ../../contribute/issues.rst:33
-# 1f30179148cc4296b358a1d1e5bc08b1
 msgid "Browsers affected by this problem"
 msgstr ""
 
 #: ../../contribute/issues.rst:36
-# 6a7645776cf84d1295c6e3d1e36c20c9
 msgid "Feature requests"
 msgstr ""
 
 #: ../../contribute/issues.rst:38
-# b4414ddc55f74558924b4e5596757006
 msgid "Before submitting a feature request:"
 msgstr ""
 
 #: ../../contribute/issues.rst:40
-# a16cdf00ba70494a874d3761cf08fc3a
 msgid "Check the `community site`_ for a plugin that has the features you need."
 msgstr ""
 
 #: ../../contribute/issues.rst:42
-# 79165a07f84043989f784e47ab96bad2
 msgid "Consider if you can :doc:`develop a plugin </tutorials/index>` that does what you need."
 msgstr ""
 
 #: ../../contribute/issues.rst:43
-# e54f11c8a34b46d6ac74cd30f3bb6d74
 msgid "Search through the closed tickets to see if someone else suggested the same feature, but got turned down. You’ll need to be able to explain why your suggestion should be considered this time."
 msgstr ""
 
 #: ../../contribute/issues.rst:47
-# 4aff116fc3d04dcba59da4f2c377bb2b
 msgid "Good feature request checklist:"
 msgstr ""
 
 #: ../../contribute/issues.rst:49
-# 5c18eeb09b7c44fd9bea082d0db48c68
 msgid "Detailed explanation of the feature"
 msgstr ""
 
 #: ../../contribute/issues.rst:50
-# 29a343fcfabb45588882c31e590530c6
 msgid "Real-life use-cases"
 msgstr ""
 
 #: ../../contribute/issues.rst:51
-# 1804768f8fe047a293e5bd1c3e596c0f
 msgid "Proposed API"
 msgstr ""
 
 #: ../../contribute/money.rst:2
-# 2cc7b5e511d44f8295e6163abf29db94
 msgid "Becoming a Financial Supporter"
 msgstr ""
 
 #: ../../contribute/money.rst:6
-# b596777b724d475f98fd1756af9f6229
 msgid "All funds raised via the Elgg supporters network go directly into:"
 msgstr ""
 
 #: ../../contribute/money.rst:5
-# 8db0a30f286b4f06a466e2ae14c90a39
 msgid "Elgg core development"
 msgstr ""
 
 #: ../../contribute/money.rst:6
-# 47c4799048964214a496c6135c298ed5
 msgid "Infrastructure provision (elgg.org, github, etc.)"
 msgstr ""
 
 #: ../../contribute/money.rst:8
-# cc66af2db5354916b98b567248d5cd50
 msgid "It is a great way to help with Elgg development!"
 msgstr ""
 
 #: ../../contribute/money.rst:11
-# 6fbdcd4b09914ddcaee431c8d1950182
 msgid "Benefits"
 msgstr ""
 
 #: ../../contribute/money.rst:12
-# 8b862b37726d47529b57f885e8e2c920
 msgid "For only $50 per year for individuals or $150 per year for organizations, you can get listed as a supporter on `our supporters page`_. Elgg supporters are listed there unless they request not to be."
 msgstr ""
 
 #: ../../contribute/money.rst:18
-# 7e088998f4de4fc29be68f4f96e4cfac
 msgid "Supporters are able to put this official logo on their site if they wish:"
 msgstr ""
 
 #: ../../contribute/money.rst:25
-# 6dccf0a8e9e64dc0a93a58c70e2b1ed1
 msgid "Disclaimer"
 msgstr ""
 
 #: ../../contribute/money.rst:26
-# c9b7081c20c44bcc879906de3ece3518
 msgid "We operate a no refund policy on supporter subscriptions. If you would like to withdraw your support, go to PayPal and cancel your subscription. You will not be billed the following year."
 msgstr ""
 
 #: ../../contribute/money.rst:30
-# 62cb15fcb3184d64809177d0f8b6ca0f
 msgid "Being an Elgg Supporter does not give an individual or organization the right to impersonate, trade as or imply they are connected to the Elgg project. They can, however, mention that they support the Elgg project."
 msgstr ""
 
 #: ../../contribute/money.rst:34
-# d56a5c4897074552aaf31a0399563777
 msgid "If you have any questions about this disclaimer, email info@elgg.org."
 msgstr ""
 
 #: ../../contribute/money.rst:36
-# 9a992ba0c3994d23b921b55662e11796
 msgid "We reserve the right to remove or refuse a listing without any prior warning at our complete discretion. There is no refund policy."
 msgstr ""
 
 #: ../../contribute/money.rst:39
-# aa576903b4e14ce3a6e5c7497960fbf7
 msgid "If there is no obvious use of Elgg, your site will be linked to with \"nofollow\" set."
 msgstr ""
 
 #: ../../contribute/money.rst:42
-# c8a2f853b7fd4571a242d8e0059b3c9e
 msgid "Sign up"
 msgstr ""
 
 #: ../../contribute/money.rst:43
-# 73d74f35c0cc44fe98e67144fceab5bf
 msgid "If you would like to become an Elgg supporter:"
 msgstr ""
 
 #: ../../contribute/money.rst:45
-# dba935ee1bc446488f273c806ed82201
 msgid "read the disclaimer_ above"
 msgstr ""
 
 #: ../../contribute/money.rst:46
-# bd5b56d858a54ca88bcbc4afa38e09bd
 msgid "on the supporters page, `subscribe via PayPal`__"
 msgstr ""
 
 #: ../../contribute/money.rst:47
-# 4a999525a08c4a3fb89402c1e50f0f0e
 msgid "send an email to info@elgg.org with:"
 msgstr ""
 
 #: ../../contribute/money.rst:49
-# 137154c7398f45eabe4cd8b573447418
 msgid "the date you subscribed"
 msgstr ""
 
 #: ../../contribute/money.rst:50
-# 3d9f34a21b24449bba1db24c82a13a48
 msgid "your name (and organization name, if applicable)"
 msgstr ""
 
 #: ../../contribute/money.rst:51
-# fe52b71a8a0846f7ad81b0d987740f0d
 msgid "your website"
 msgstr ""
 
 #: ../../contribute/money.rst:52
-# 1541aeb62e06424c967017a8a811861a
 msgid "your Elgg community profile"
 msgstr ""
 
 #: ../../contribute/money.rst:57
-# 42c3963d91284b5a96affae01ed112d1
 msgid "Once all the details have been received, we will add you to the appropriate list. Thanks for your support!"
 msgstr ""
 
 #: ../../contribute/releases.rst:2
-# c399f554d19f4fd7b965151b3ccebc39
 msgid "Release Process Workflow"
 msgstr ""
 
 #: ../../contribute/releases.rst:4
-# ee91d1cb38fd47b2b78e047e82d300c0
 msgid "Release a new version of Elgg."
 msgstr ""
 
 #: ../../contribute/releases.rst:6
-# 26fc7e69fed646179432804e35993790
 msgid "This is the process the core team follows for making a new Elgg release. We have published this information in the spirit of openness, and to streamline onboarding of new team members."
 msgstr ""
 
 #: ../../contribute/releases.rst:15
-# ccf6343c3cfb4d86a23d17cf9bd00a6b
 msgid "Requirements"
 msgstr ""
 
 #: ../../contribute/releases.rst:17
-# 4a72532325994f7a8588f153a0968367
 msgid "SSH access to elgg.org"
 msgstr ""
 
 #: ../../contribute/releases.rst:18
-# aa484963e2c840e5863a992383d809f4
 msgid "Commit access to http://github.com/Elgg/Elgg"
 msgstr ""
 
 #: ../../contribute/releases.rst:19
-# ed59e88bb48240fb88f0775f977ff4ca
 msgid "Admin access to https://community.elgg.org/"
 msgstr ""
 
 #: ../../contribute/releases.rst:20
-# bd5cfb1fd76a48cdbe98380ae0eb1296
 msgid "Access to `Twitter account`_"
 msgstr ""
 
 #: ../../contribute/releases.rst:21
-# 778509e4c8ef4b7f8a5891c1c100e3b1
 msgid "Access to `G+ page`_"
 msgstr ""
 
 #: ../../contribute/releases.rst:22
-# 6ad07d880c8e40bb9be33527f3fc919c
 msgid "Node.js and NPM installed"
 msgstr ""
 
 #: ../../contribute/releases.rst:23
-# 2318c416a39f4a788f2a8f927e5dfd78
 msgid "Sphinx installed (``easy_install sphinx && easy_install sphinx-intl``)"
 msgstr ""
 
 #: ../../contribute/releases.rst:24
-# aab99f3f163f44069bfdbdbba3726bb4
 msgid "Transifex client installed (``easy_install transifex-client``)"
 msgstr ""
 
 #: ../../contribute/releases.rst:25
-# ff02eb5b07ad4d8b89164f8a5699244e
 msgid "Transifex account with access to Elgg project"
 msgstr ""
 
 #: ../../contribute/releases.rst:28
-# 3bdb58d4e4a048e696a415089d3f3ba3
 msgid "1. First new stable minor/major release"
 msgstr ""
 
 #: ../../contribute/releases.rst:30
-# 5b05b8a0230f451fa5f5412de4f84ebf
 msgid "Make sure to update the :doc:`/appendix/support` document to include the new minor/major release date and fill in the blanks for the previous release."
 msgstr ""
 
 #: ../../contribute/releases.rst:33
-# 8ddc087b62f046cca7afdb38f881b51b
 msgid "2. Prepare and tag the release"
 msgstr ""
 
 #: ../../contribute/releases.rst:35
-# 4076a05bb62e4f5eb7f37994fae8ef56
 msgid "Make sure your local git clone is up to date!"
 msgstr ""
 
 #: ../../contribute/releases.rst:37
-# a33b3ccbb8c2412a9902b068a0ad314d
 msgid "Merge latest commits up from lowest supported branch. Visit https://github.com/Elgg/Elgg/compare/new...old and submit the PR if there is anything that needs to be merged up."
 msgstr ""
 
 #: ../../contribute/releases.rst:41
-# ef098263286448968e1de8f4c8a24f42
 msgid "Install the prerequisites:"
 msgstr ""
 
 #: ../../contribute/releases.rst:50
-# 778989273520481180f09f0eb94933eb
 msgid "Run the ``release.php`` script. For example, to release 1.9.1:"
 msgstr ""
 
 #: ../../contribute/releases.rst:57
-# 1e708b6ac6264e08966fffe69ae122a7
 msgid "This creates a ``release-1.9.1`` branch in your local repo."
 msgstr ""
 
 #: ../../contribute/releases.rst:59
-# 8154db27401f45f19d432a50df1fddc5
 msgid "Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:"
 msgstr ""
 
 #: ../../contribute/releases.rst:67
-# 76c5c7ddf48e44878cf8b102f223caa3
 msgid "Next, submit a PR via Github:"
 msgstr ""
 
 #: ../../contribute/releases.rst:73
-# fc5104987d52468ab1a016816269cb06
 msgid "Once approved and merged, tag the release:"
 msgstr ""
 
 #: ../../contribute/releases.rst:83
-# dd690f4967604f93bbc042bd2ebb8fbc
 msgid "Update Milestones on Github"
 msgstr ""
 
 #: ../../contribute/releases.rst:82
-# b23be0fc55284c758117b39d4f5452bf
 msgid "Mark release milestones as completed"
 msgstr ""
 
 #: ../../contribute/releases.rst:83
-# 64b5e327127546a7b51172a561381b40
 msgid "Move unresolved tickets in released milestones to later milestones"
 msgstr ""
 
 #: ../../contribute/releases.rst:86
-# 2553f2922ea346c4b3221a2cb0e01c0c
 msgid "3. Update the website"
 msgstr ""
 
 #: ../../contribute/releases.rst:88
-# a40502b20a254651855b36b7def881ad
 msgid "The downloads need to point to the new releases."
 msgstr ""
 
 #: ../../contribute/releases.rst:91
-# 44fe1ec216c7400c8fe5a547b225c8f2
 msgid "Build Package"
 msgstr ""
 
 #: ../../contribute/releases.rst:93
-# 9fe4bb7882e04b4da533f0e7abcb661d
 msgid "ssh to elgg.org"
 msgstr ""
 
 #: ../../contribute/releases.rst:94
-# eac1161b48f14fb6b5de4decbc4c0a92
 msgid "Clone https://github.com/Elgg/elgg-scripts"
 msgstr ""
 
 #: ../../contribute/releases.rst:95
-# 5c04360020474a25a5eefb3868d5f799
 msgid "Use elgg-scripts/build/build.sh to generate the .zip file."
 msgstr ""
 
 #: ../../contribute/releases.rst:97
-# 43c253f3a81e48979095c17b81b11f5f
 msgid "Run without arguments to see usage. This also generates the ChangeLog.txt file."
 msgstr ""
 
 #: ../../contribute/releases.rst:99
-# 1020eb6a1fc94b5fb1f0ba7e78561c61
 msgid "Example::"
 msgstr ""
 
 #: ../../contribute/releases.rst:103
-# 6f9663e9ed7a4f9c90760363b694dd3b
 msgid "MIT::"
 msgstr ""
 
 #: ../../contribute/releases.rst:108
-# ad2f762c1b53422ea997dccf59351da6
 msgid "Update homepage, download, and previous download pages"
 msgstr ""
 
 #: ../../contribute/releases.rst:110
-# ada546210fa9427ba1cb704d3079ea17
 msgid "Clone https://github.com/Elgg/old-elgg-website"
 msgstr ""
 
 #: ../../contribute/releases.rst:111
-# 8b2082a6694148b8a7a182309cd54b36
 msgid "Make changes, commit, push."
 msgstr ""
 
 #: ../../contribute/releases.rst:113
-# fb86b9bff4dc44a1a2bf209567481911
 msgid "index.php"
 msgstr ""
 
 #: ../../contribute/releases.rst:114
-# 295bca0d73c2452481f4ff4e74f8d282
 msgid "download.php"
 msgstr ""
 
 #: ../../contribute/releases.rst:115
-# 86eb4a54112f494ea1b873ad93696f3e
 msgid "previous.php"
 msgstr ""
 
 #: ../../contribute/releases.rst:117
-# 042828b2de904108b4ae86ea95fd9ed4
 msgid "Pull to live site"
 msgstr ""
 
 #: ../../contribute/releases.rst:123
-# db4b0d010eee4e378541b3e5436ffb7e
 msgid "flush apc cache (via community admin panel)"
 msgstr ""
 
 #: ../../contribute/releases.rst:126
-# f9ac6837ec594995867ca11cd7df2382
 msgid "4. Make the announcement"
 msgstr ""
 
 #: ../../contribute/releases.rst:128
-# 20dff8d683694dc99c5f9016ca6b30d9
 msgid "This should be the very last thing you do."
 msgstr ""
 
 #: ../../contribute/releases.rst:130
-# 5aed07130ef74f63a8fd2a42be004e05
 msgid "Sign in at https://community.elgg.org/ and compose a blog on with HTML version of CHANGELOG.md."
 msgstr ""
 
 #: ../../contribute/releases.rst:131
-# f29e876c8d764de89455742297f590c3
 msgid "Add tags “release” and “elgg1.x” where x is whatever branch is being released."
 msgstr ""
 
 #: ../../contribute/releases.rst:132
-# 3ef47d727d414e069c6bb55eb86b006b
 msgid "Tweet from the elgg `Twitter account`_"
 msgstr ""
 
 #: ../../contribute/releases.rst:133
-# 556faff5e23542fb9746f00ceb2a17c1
 msgid "Post from the `G+ page`_"
 msgstr ""
 
 #: ../../contribute/services.rst:2
-# aa6638ba8cc24e84bc03cf2da291a279
 msgid "Adding a Service to Elgg"
 msgstr ""
 
 #: ../../contribute/services.rst:4
-# ba94fb693126410380fb5a62f9f27dc2
 msgid "The :doc:`services guide </guides/services>` has general information about using Elgg services."
 msgstr ""
 
 #: ../../contribute/services.rst:6
-# 4b795d3205a945f091a5fa01c36782d9
 msgid "To add a new service object to Elgg:"
 msgstr ""
 
 #: ../../contribute/services.rst:8
-# c6a2d571c2644c1fa68ca0a6728e60df
 msgid "Annotate your class as ``@access private``."
 msgstr ""
 
 #: ../../contribute/services.rst:9
-# 194e829f17844ec5848dda6c18dcd985
 msgid "Open the class ``Elgg\\Di\\ServiceProvider``."
 msgstr ""
 
 #: ../../contribute/services.rst:10
-# 693ffdafafd84f929a150fc0e1dcf845
 msgid "Add a ``@property-read`` annotation for your service at the top. This allows IDEs and static code analyzers to understand the type of the property."
 msgstr ""
 
 #: ../../contribute/services.rst:12
-# bbc6145dac9d4717bb0eb11b997d9a1a
 msgid "To the constructor, add code to tell the service provider what to return. See the class ``Elgg\\Di\\DiContainer`` for more information on how Elgg's DI container works."
 msgstr ""
 
 #: ../../contribute/services.rst:15
-# 32fb7add53ed49b09cd22cd8fbd5db6e
 msgid "At this point your service will be available from the service provider object, but will not yet be accessible to plugins."
 msgstr ""
 
 #: ../../contribute/services.rst:18
-# 64f1c63c863f4a25a9080ecfc514b8f1
 msgid "Inject your dependencies"
 msgstr ""
 
 #: ../../contribute/services.rst:20
-# efc3c5b358934cc7beb62b742fff7d7e
 msgid "Design your class constructor to *ask for* the necessary dependencies rather than creating them or using ``_elgg_services()``. The service provider's ``setFactory()`` method provides access to the service provider instance in your factory method."
 msgstr ""
 
 #: ../../contribute/services.rst:24
-# c10689cee596484496cbac1610cac1ab
 msgid "Here's an example of a ``foo`` service factory, injecting the ``config`` and ``db`` services into the constructor:"
 msgstr ""
 
 #: ../../contribute/services.rst:34
-# fc735be04e2e48e6a2e74a86cbf1b6e4
 msgid "The full list of internal services can be seen in the ``@property-read`` declarations at the top of ``Elgg\\Di\\ServiceProvider``."
 msgstr ""
 
 #: ../../contribute/services.rst:39
-# f62352952ed344c1837821427aab2866
 msgid "Avoid performing work in your service constructor, particularly if it requires database queries. Currently PHPUnit tests cannot perform them."
 msgstr ""
 
 #: ../../contribute/services.rst:44
-# db8a45dbdd4540c4bf178c1af718cf92
 msgid "Making a service part of the public API"
 msgstr ""
 
 #: ../../contribute/services.rst:46
-# f745b87b441d4d4ea6d9f0b898c9600c
 msgid "If your service is meant for use by plugin developers:"
 msgstr ""
 
 #: ../../contribute/services.rst:48
-# 5296ba628d6d40339a94b7496b076577
 msgid "Make an interface ``Elgg\\Services\\<Name>`` that contains only those methods needed in the public API."
 msgstr ""
 
 #: ../../contribute/services.rst:49
-# 6b6e39e391ae49269b5b3011e3dd2c63
 msgid "Have your service class implement that interface."
 msgstr ""
 
 #: ../../contribute/services.rst:50
-# 3346da1855ec41c192d07da03181a669
 msgid "For methods that are in the interface, move the documentation to the interface. You can simply use ``{@inheritdoc}`` in the PHPDocs of the concrete class methods."
 msgstr ""
 
 #: ../../contribute/services.rst:52
-# 52297cfa418f4269aca3454a2096d135
 msgid "Document your service in ``docs/guides/services.rst`` (this file)."
 msgstr ""
 
 #: ../../contribute/services.rst:53
-# e8b95c8e720545d1acd5183d029d7155
 msgid "Open the PHPUnit test ``Elgg\\ApplicationTest`` and add your service key to the ``$names`` array in ``testServices()``."
 msgstr ""
 
 #: ../../contribute/services.rst:55
-# 9d70b8fc74834f07bfafe8c2e3100f10
 msgid "Open the class ``Elgg\\Application``."
 msgstr ""
 
 #: ../../contribute/services.rst:56
-# a9b8c3620cbb4cc1a4a0e6a68643f354
 msgid "Add ``@property-read`` declaration to document your service, but use your **interface** as the type, *not* your service class name."
 msgstr ""
 
 #: ../../contribute/services.rst:58
-# 8121fd5aa8a0477fa4ef0c8dda68813f
 msgid "Add your service key to the array in the ``$public_services`` property, e.g. ``'foo' => true,``"
 msgstr ""
 
 #: ../../contribute/services.rst:60
-# 0ca64f08e4e7479d9ef4208c4e28b6bf
 msgid "Now your service will be available via property access on the ``Elgg\\Application`` instance:"
 msgstr ""
 
 #: ../../contribute/services.rst:69
-# 5cadd0cdf8e84b2cb0ea169b58fc9ec9
 msgid "For examples, see the ``config`` service, including the interface ``Elgg\\Services\\Config`` and the concrete implementation ``Elgg\\Config``."
 msgstr ""
 
 #: ../../contribute/services.rst:73
-# ae6eee7cdee447e582745f57bc417684
 msgid "Service Life Cycle and Factories"
 msgstr ""
 
 #: ../../contribute/services.rst:75
-# d931b001a24042a7a36887f51740957c
 msgid "By default, services registered on the service provider are \"shared\", meaning the service provider will store the created instance for the rest of the request, and serve that same instance to all who request the property."
 msgstr ""
 
 #: ../../contribute/services.rst:79
-# 49c8608ecf824e66abd07cb77095fb2c
 msgid "If you need developers to be able to construct objects that are pre-wired to Elgg services, you may need to add a public factory method to ``Elgg\\Application``. Here's an example that returns a new instance using internal Elgg services:"
 msgstr ""
 

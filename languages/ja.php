@@ -1280,8 +1280,11 @@ return array(
 	'entity:default:strapline' => '作成 %s by %s',
 	'entity:default:missingsupport:popup' => 'この情報を正確に表示できません。利用していたプラグインがうまく動作していないか、アンインストールされた可能性があります。',
 
-	'entity:delete:success' => 'エンティティ「 %s 」を削除しました。',
-	'entity:delete:fail' => 'エンティティ「 %s 」を削除できませんでした。',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
 
 	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 

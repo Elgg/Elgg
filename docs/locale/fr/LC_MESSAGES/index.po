@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg Core 2\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-11-29 21:10+0200\n"
+"POT-Creation-Date: 2015-12-14 11:16+0200\n"
 "PO-Revision-Date: 2015-08-24 06:41+0000\n"
 "Last-Translator: Juho Jaakkola <juho.jaakkola@mediamaisteri.com>\n"
 "Language-Team: French (http://www.transifex.com/elgg/elgg-core-2/language/fr/)\n"
@@ -18,10 +18,12 @@ msgstr ""
 "Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1);\n"
 
+# 754145d65f234392bf36be4faa193191
 #: ../../index.rst:2
 msgid "Elgg |version| Documentation"
 msgstr "Elgg |version| Documentation"
 
+# bb61d83ebc9d4428a64335984cb716dd
 #: ../../index.rst:4
 msgid ""
 "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) is a "
@@ -29,38 +31,47 @@ msgid ""
 " for building any app where users log in and share information."
 msgstr "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) est un environnement de développement intégrant des fonctionnalités sociales. Ce framework est idéal pour construire des applications dans lesquelles les utilisateurs s'identifient et partagent des informations."
 
+# 6cec42d511a94bc28ca66397f8374191
 #: ../../index.rst:7
 msgid "It has been used to build `all kinds of social apps`__:"
 msgstr "Elgg a été utilisé pour construire `tous types d'applications sociales`__:"
 
+# 3b70d5b3013c474d86a787dd79fd4405
 #: ../../index.rst:11
 msgid "open networks (similar to Facebook)"
 msgstr "réseau sociaux ouverts (similaires à Facebook)"
 
+# 098b1a3baca2402c80986bf3f2b4cc43
 #: ../../index.rst:12
 msgid "topical (like the Elgg Community)"
 msgstr "thématiques (comme la communauté Elgg)"
 
+# fc313240e0db4ceb9037bf3e8a2d6ba9
 #: ../../index.rst:13
 msgid "private intranets"
 msgstr "intranets privés / RSE"
 
+# b91320575750499580692a63ce3dafe2
 #: ../../index.rst:14
 msgid "dating"
 msgstr "rencontres"
 
+# 82c4794f2b794f34a4c8ecd0e2348b9a
 #: ../../index.rst:15
 msgid "educational"
 msgstr "éducatifs"
 
+# c29aa13247bb45538f1e4ca2db803bd5
 #: ../../index.rst:16
 msgid "company blog"
 msgstr "blog d'entreprise"
 
+# 42ba55a0a9d4423d81740ec154216c0c
 #: ../../index.rst:18
 msgid "There is also a `demo site`_ running a standard installation of Elgg."
 msgstr "Is existe également un `site de démonstration` qui permet de tester une installation Elgg standard"
 
+# 0976e09b787040d5a604df84d07c7d0e
 #: ../../index.rst:20
 msgid "This is the canonical documentation for the Elgg_ project."
 msgstr "Ceci constitue la documentation officielle du projet Elgg_."

@@ -635,8 +635,8 @@ kolmeen osioon:
 	'admin:plugins:warning:invalid' => 'Pluginissa on virhe: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Voit yrittää etsiä apua <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">Elggin dokumentaatiosta</a>.',
 	'admin:plugins:cannot_activate' => 'ei voi aktivoida',
-	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
-	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
+	'admin:plugins:already:active' => 'Valitut liitännäiset ovat jo aktiivisia',
+	'admin:plugins:already:inactive' => 'Valitut liitännäiset ovat jo deaktivoituja',
 
 	'admin:plugins:set_priority:yes' => "Vaihdettiin liitännäisen \"%s\" prioriteettia.",
 	'admin:plugins:set_priority:no' => "Liitännäisen \"%s\" uudelleenjärjestäminen epäonnistui.",
@@ -1286,7 +1286,10 @@ Tähän viestiin ei voi vastata.",
 	'entity:default:strapline' => 'Created %s by %s',
 	'entity:default:missingsupport:popup' => 'Tätä kohdetta ei voida näyttää oikein. Tämä voi johtua puuttuvasta liitännäisestä.',
 
-	'entity:delete:success' => 'Kohde %s on poistettu',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Kohdetta ei löytynyt.',
+	'entity:delete:permission_denied' => 'Sinulla ei ole oikeuksia tämän kohteen poistamiseen.',
+	'entity:delete:success' => 'Poistettiin %s',
 	'entity:delete:fail' => 'Kohteen %s poistaminen epäonnistui',
 
 	'entity:can_delete:invaliduser' => 'Käyttäjälle GUID [%s] ei voida tehdä canDelete()-tarkistusta, koska käyttäjää ei ole olemassa.',

@@ -1282,8 +1282,11 @@ Non responda a esta mensaxe.",
 	'entity:default:strapline' => 'Creou %s de %s',
 	'entity:default:missingsupport:popup' => 'Non é posíbel mostrar correctamente esta entidade. Pode que o motivo sexa que necesita dun complemento que xa non está instalado.',
 
-	'entity:delete:success' => 'Eliminouse a entidade %s',
-	'entity:delete:fail' => 'Non foi posíbel eliminar a entidade %s.',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
 
 	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
