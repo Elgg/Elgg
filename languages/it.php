@@ -1288,8 +1288,11 @@ Per favore non rispondere a questa email.",
 	'entity:default:strapline' => 'Creato %s da %s',
 	'entity:default:missingsupport:popup' => 'Questo elemento non può essere visualizzato correttamente. Probabilmente è associato ad una funzionalità non più disponibile nel sistema.',
 
-	'entity:delete:success' => 'Elemento %s eliminato',
-	'entity:delete:fail' => 'Non è stato possibile eliminare l\'elemento %s',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
 
 	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 

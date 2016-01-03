@@ -1291,8 +1291,11 @@ Du kannst auf diese Email NICHT antworten.",
 	'entity:default:strapline' => '%s erzeugt von %s',
 	'entity:default:missingsupport:popup' => 'Diese Entität kann nicht richtig angezeigt werden. Dies kann daran liegen, dass dafür ein Plugin benötigt wird, das nicht mehr installiert ist.',
 
-	'entity:delete:success' => 'Die Entität %s wurde gelöscht.',
-	'entity:delete:fail' => 'Die Entität %s konnte nicht gelöscht werden.',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
 
 	'entity:can_delete:invaliduser' => 'Ein Aufruf der canDelete()-Funktion für den Benutzer mit der Benutzer-GUID [%s] ist nicht möglich, da dieser Benutzer nicht existiert.',
 
