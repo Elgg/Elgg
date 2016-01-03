@@ -43,6 +43,9 @@ $params = array(
 	'email' => 'admin@travis.elgg.org',
 	'username' => 'admin',
 	'password' => 'fancypassword',
+	
+	// timezone
+	'timezone' => 'UTC'
 );
 
 // install and create the .htaccess file
