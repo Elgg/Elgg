@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg 1.12\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-14 10:28+0200\n"
+"POT-Creation-Date: 2016-01-03 09:40+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,57 +17,46 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 
 #: ../../index.rst:2
-# 2b93074accff482ca5ddb6fbbed7f41f
 msgid "Elgg |version| Documentation"
 msgstr ""
 
 #: ../../index.rst:4
-# 4827c62013d34a0e9261bf7d24500876
 msgid "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) is a rapid development framework with built-in social features. It is a great fit for building any app where users log in and share information."
 msgstr ""
 
 #: ../../index.rst:7
-# 4351abb2e52c4eb89897b90d90cbac94
 msgid "It has been used to build `all kinds of social apps`__:"
 msgstr ""
 
 #: ../../index.rst:11
-# e19bdca814b14feebd6d4126f6c361f5
 msgid "open networks (similar to Facebook)"
 msgstr ""
 
 #: ../../index.rst:12
-# df41cbab72b849169edaef655ea8c34d
 msgid "topical (like the Elgg Community)"
 msgstr ""
 
 #: ../../index.rst:13
-# ed1c67046a6743adbfa971c66084c125
 msgid "private intranets"
 msgstr ""
 
 #: ../../index.rst:14
-# 40ec6c743c20425a8ae3d935415545b1
 msgid "dating"
 msgstr ""
 
 #: ../../index.rst:15
-# 19afc4452c2548b495bb006fd35c2ae2
 msgid "educational"
 msgstr ""
 
 #: ../../index.rst:16
-# bb499dda887845ce869f803d332489c3
 msgid "company blog"
 msgstr ""
 
 #: ../../index.rst:18
-# 9ae9bd998c0c46e9b5a0a8d486d73eae
 msgid "There is also a `demo site`_ running a standard installation of Elgg."
 msgstr ""
 
 #: ../../index.rst:20
-# b2349547b52444459f9339daafce337b
 msgid "This is the canonical documentation for the Elgg_ project."
 msgstr ""
 
