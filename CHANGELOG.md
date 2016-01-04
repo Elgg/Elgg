@@ -1,3 +1,30 @@
+<a name="2.0.1"></a>
+### 2.0.1  (2016-01-03)
+
+#### Contributors
+
+* Matt Beckett (4)
+* Juho Jaakkola (3)
+* Ismayil Khayredinov (2)
+* Juho Jaakkola (2)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **admin:** Allow plugins to extend js/admin but deprecate it ([a5c2abdf](https://github.com/Elgg/Elgg/commit/a5c2abdf9669db75a4d080e274c0fe78851a7cf8), closes [#9238](https://github.com/Elgg/Elgg/issues/9238))
+* **collections:** only register collections menu items when logged in ([1b88d43a](https://github.com/Elgg/Elgg/commit/1b88d43a9b0033d7f1681eec4d70644e6396369a), closes [#9249](https://github.com/Elgg/Elgg/issues/9249))
+* **comments:** validate array structure before calling elgg_extract() ([1078b65d](https://github.com/Elgg/Elgg/commit/1078b65de759c662318f03e90b50ee3e7fdd2bad))
+* **entities:** fix php notice when editing metadata while not-logged-in ([64bb369f](https://github.com/Elgg/Elgg/commit/64bb369fd83be95fa46fc41aa4849d747ea03437), closes [#9256](https://github.com/Elgg/Elgg/issues/9256))
+* **groups:** link to membership requests page is visible again ([8e3bb84a](https://github.com/Elgg/Elgg/commit/8e3bb84a8bac739354664b08f9f3bc2324ce9978))
+* **install:** Set default timezone on installation ([7d5a2b05](https://github.com/Elgg/Elgg/commit/7d5a2b05d15956c70bd325e246fd0af89f305023), closes [#8845](https://github.com/Elgg/Elgg/issues/8845))
+* **js:** prevent multiple togglable menu item bindings ([e7f33013](https://github.com/Elgg/Elgg/commit/e7f330134e28a8fe2753c0943599eb50ea5512df), closes [#9151](https://github.com/Elgg/Elgg/issues/9151))
+* **notifications:**
+  * default settings now get enabled also for new friends ([e84fc160](https://github.com/Elgg/Elgg/commit/e84fc160b99a66816f70674e497acabfdd73a4bb))
+  * notifications about new friends work again ([a23683ee](https://github.com/Elgg/Elgg/commit/a23683ee5e3a06fbb0d1234e5a9fea0ac49947fc))
+* **relationships:** prevent sql exception on duplicate relationships race condition ([9e469da9](https://github.com/Elgg/Elgg/commit/9e469da988d288969706ef61970e2044a442d162), closes [#9179](https://github.com/Elgg/Elgg/issues/9179))
+* **simplecache:** removes warning about using mkdir() when cache directory exists ([3bae0bf5](https://github.com/Elgg/Elgg/commit/3bae0bf58d7809b430cb4708b13a0b79c2d361c4), closes [#9219](https://github.com/Elgg/Elgg/issues/9219))
+
+
 <a name="2.0.0"></a>
 ## 2.0.0  (2015-12-14)
 
@@ -600,6 +627,23 @@ Fixes #5729
 change them to external AMD modules and load them with `elgg_require_js`.
 
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
+
+
+<a name="1.12.7"></a>
+### 1.12.7  (2016-01-03)
+
+#### Contributors
+
+* Steve Clay (4)
+* Ismayil Khayredinov (1)
+* Juho Jaakkola (1)
+
+#### Bug Fixes
+
+* **logging:** Log messages no longer discarded ([5020c525](https://github.com/Elgg/Elgg/commit/5020c5251f35c8bd83b5b1472eafd34d96a77a35), closes [#9244](https://github.com/Elgg/Elgg/issues/9244))
+* **menus:** stricter type validation in menu item registration functions ([c5554a75](https://github.com/Elgg/Elgg/commit/c5554a75bb45acf9f27c13a8d58a0e099063cf26))
+* **php:** Suppress mysql_connect() deprecation warnings for core ([40fe0a8f](https://github.com/Elgg/Elgg/commit/40fe0a8f4d36e7a3f0947c9f4148b7ccb8f0a0ee), closes [#9245](https://github.com/Elgg/Elgg/issues/9245))
+* **session:** Session is again available in the shutdown event ([2409d346](https://github.com/Elgg/Elgg/commit/2409d346a95a1c5a254f32d51204054a939b7e95), closes [#9243](https://github.com/Elgg/Elgg/issues/9243))
 
 
 <a name="1.12.6"></a>

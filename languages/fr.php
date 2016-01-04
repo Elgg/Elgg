@@ -1280,8 +1280,11 @@ Ne répondez pas à cet e-mail.",
 	'entity:default:strapline' => 'Créé le %s par %s',
 	'entity:default:missingsupport:popup' => 'Cette entité ne peut pas être affichée correctement. C\'est peut-être dû à un plugin qui a été supprimé.',
 
-	'entity:delete:success' => 'L\'entité %s a été effacée',
-	'entity:delete:fail' => 'L\'entité %s n\'a pas pu être effacée',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
 
 	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 

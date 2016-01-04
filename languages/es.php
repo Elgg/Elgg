@@ -1276,8 +1276,11 @@ Por favor no responda a este correo",
 	'entity:default:strapline' => 'Creado %s por %s',
 	'entity:default:missingsupport:popup' => 'Esta entidad no puede mostrarse correctamente. Esto puede deberse a que el soporte provisto por un plugin ya no se encuentra instalado',
 
-	'entity:delete:success' => 'La entidad %s ha sido eliminada',
-	'entity:delete:fail' => 'La entidad %s no pudo ser eliminada',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
 
 	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 

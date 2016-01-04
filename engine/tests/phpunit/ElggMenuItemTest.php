@@ -195,4 +195,13 @@ class ElggMenuItemTest extends \PHPUnit_Framework_TestCase {
 		$item = new \ElggMenuItem('name:colon', 'text', 'url');
 		$this->assertEquals('elgg-menu-item-name-colon', $item->getItemClass());
 	}
+
+	public function testArgumentTypeValidationOnItemRegistration() {
+		$this->assertTrue(elgg_register_menu_item('foo', new \ElggMenuItem('foo', 'bar', 'url')));
+		$this->assertTrue(elgg_register_menu_item('foo', array('name' => 'foo', 'text' => 'bar')));
+		$this->assertFalse(elgg_register_menu_item('foo', array()));
+		$this->assertFalse(elgg_register_menu_item('foo', array('text' => 'bar')));
+		$this->assertFalse(elgg_register_menu_item('foo', 'bar'));
+		$this->assertFalse(elgg_register_menu_item('foo', new stdClass()));
+	}
 }

@@ -944,6 +944,16 @@ function _elgg_php_exception_handler($exception) {
  * @todo Replace error_log calls with elgg_log calls.
  */
 function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
+
+	// Elgg 2.0 no longer uses ext/mysql, so these warnings are just a nuisance for 1.x site
+	// owners and plugin devs.
+	if (0 === strpos($errmsg, "mysql_connect(): The mysql extension is deprecated")) {
+		// only suppress core's usage
+		if (preg_match('~/classes/Elgg/Database\.php$~', strtr($filename, '\\', '/'))) {
+			return true;
+		}
+	}
+
 	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 	switch ($errno) {
@@ -1467,6 +1477,8 @@ function _elgg_normalize_plural_options_array($options, $singulars) {
  *
  * @see http://www.php.net/register-shutdown-function
  *
+ * @internal This is registered in \Elgg\Application::create()
+ *
  * @return void
  * @see register_shutdown_hook()
  * @access private
@@ -1475,6 +1487,7 @@ function _elgg_shutdown_hook() {
 	global $START_MICROTIME;
 
 	try {
+		_elgg_services()->logger->setDisplay(false);
 		elgg_trigger_event('shutdown', 'system');
 
 		$time = (float)(microtime(true) - $START_MICROTIME);
@@ -1973,9 +1986,6 @@ function _elgg_init() {
 
 		return $result;
 	});
-
-	// Trigger the shutdown:system event upon PHP shutdown.
-	register_shutdown_function('_elgg_shutdown_hook');
 }
 
 /**

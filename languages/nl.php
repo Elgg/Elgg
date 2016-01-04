@@ -1287,8 +1287,11 @@ Dit is een automatisch aangemaakt bericht. Je kunt hier niet op reageren.",
 	'entity:default:strapline' => 'Aangemaakt op %s door %s',
 	'entity:default:missingsupport:popup' => 'Deze entity kan niet correct worden weergegeven. Dit kan komen doordat er ondersteuning nodig is van een plugin die niet meer is geïnstalleerd.',
 
-	'entity:delete:success' => 'Entity %s is verwijderd',
-	'entity:delete:fail' => 'Entity %s kon niet worden verwijderd',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
 
 	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 

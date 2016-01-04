@@ -14,6 +14,8 @@
  * @subpackage Configuration
  */
 
+date_default_timezone_set('{{timezone}}');
+
 global $CONFIG;
 if (!isset($CONFIG)) {
 	$CONFIG = new \stdClass;
