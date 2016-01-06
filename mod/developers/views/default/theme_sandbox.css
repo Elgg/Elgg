@@ -8,14 +8,19 @@
 	text-align: center;
 }
 
+.theme-sandbox-layout {
+	display: flex;
+	align-items: flex-start;
+}
+
 .theme-sandbox-main {
 	padding: 20px 20px;
 	min-height: 360px;
 	position: relative;
+	flex: 1
 }
 
 .theme-sandbox-sidebar {
-	float: left;
 	padding: 20px 20px;
 	margin-right: 10px;
 	position: relative;

@@ -51,8 +51,6 @@
 
 #cboxLoadedContent > *:not(.cboxPhoto) {
 	padding: 15px;
-	-moz-box-sizing: border-box;
-	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
 
@@ -103,8 +101,6 @@
 #colorbox,
 #cboxContent,
 #cboxLoadedContent {
-	-moz-box-sizing: content-box;
-	-webkit-box-sizing: content-box;
 	box-sizing: content-box;
 }
 
