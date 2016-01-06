@@ -4,7 +4,7 @@
 	Modules
 *************************************** */
 .elgg-module {
-	overflow: hidden;
+	display: block;
 	margin-bottom: 20px;
 }
 
@@ -131,7 +131,6 @@
 .elgg-module-widget > .elgg-head {
 	background-color: #eeeeee;
 	height: 26px;
-	overflow: hidden;
 }
 .elgg-module-widget > .elgg-head h3 {
 	float: left;
@@ -157,8 +156,6 @@ a.elgg-widget-collapsed:before {
 }
 .elgg-module-widget > .elgg-body {
 	background-color: white;
-	width: 100%;
-	overflow: hidden;
 	border-top: 2px solid #dedede;
 }
 .elgg-widget-edit {

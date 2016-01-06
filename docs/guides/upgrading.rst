@@ -242,6 +242,15 @@ required to make the old interface work.
 If your plugin is extending any of the views or relies on any actions in the notifications plugin,
 it has to be updated.
 
+Layout of ``.elgg-body`` elements
+---------------------------------
+
+In 3.0, these elements by default no longer stretch to fill available space in a block
+context. They still clear floats and allow breaking words to wrap text.
+
+Core modules and layouts that relied on space-filling have been reworked for Flexbox and
+we encourage devs to do the same, rather than use the problematic ``overflow: hidden``.
+
 From 2.2 to 2.3
 ===============
 

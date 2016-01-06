@@ -350,9 +350,6 @@
 	display: none;
 	position: absolute;
 	z-index: 10000;
-
-	overflow: hidden;
-
 	min-width: 165px;
 	max-width: 250px;
 	

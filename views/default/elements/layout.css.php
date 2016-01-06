@@ -85,6 +85,45 @@
 .elgg-layout-two-sidebar {
 	background: transparent url(<?= elgg_get_simplecache_url("two_sidebar_background.gif"); ?>) repeat-y right top;
 }
+.elgg-layout-one-sidebar,
+.elgg-layout-two-sidebar {
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: start;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start;
+}
+.elgg-layout-one-sidebar > .elgg-body,
+.elgg-layout-two-sidebar > .elgg-body {
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
+}
+.elgg-layout-one-sidebar > .elgg-sidebar {
+	float: none;
+	-webkit-box-ordinal-group: 2;
+	-webkit-order: 1;
+	-ms-flex-order: 1;
+	order: 1;
+}
+.elgg-layout-two-sidebar > .elgg-sidebar {
+	float: none;
+	-webkit-box-ordinal-group: 3;
+	-webkit-order: 2;
+	-ms-flex-order: 2;
+	order: 2;
+}
+.elgg-layout-two-sidebar > .elgg-sidebar-alt {
+	float: none;
+	-webkit-box-ordinal-group: 1;
+	-webkit-order: 0;
+	-ms-flex-order: 0;
+	order: 0;
+}
 .elgg-layout-widgets > .elgg-widgets {
 	float: right;
 }

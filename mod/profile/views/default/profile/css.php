@@ -13,18 +13,31 @@
 	float: left;
 	margin-bottom: 15px;
 }
-.profile .elgg-inner {
+.profile > .elgg-inner {
 	border: 2px solid #eee;
 	border-radius: 8px;
 	margin: 0 5px;
+
+	display: -webkit-box;
+	display: -webkit-flex;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: start;
+	-webkit-align-items: flex-start;
+	-ms-flex-align: start;
+	align-items: flex-start;
 }
 #profile-details {
 	padding: 15px;
+
+	-webkit-box-flex: 1;
+	-webkit-flex: 1;
+	-ms-flex: 1;
+	flex: 1;
 }
 /*** ownerblock ***/
 #profile-owner-block {
 	width: 200px;
-	float: left;
 	background-color: #eee;
 	padding: 15px;
 }
