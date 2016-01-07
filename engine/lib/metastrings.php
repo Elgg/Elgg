@@ -258,7 +258,10 @@ function _elgg_get_metastring_based_objects($options) {
 		$wheres = array_merge($wheres, $metastring_clauses['wheres']);
 		$joins = array_merge($joins, $metastring_clauses['joins']);
 	} else {
-		$wheres[] = _elgg_get_access_where_sql(array('table_alias' => 'n_table'));
+		$wheres[] = _elgg_get_access_where_sql(array(
+			'table_alias' => 'n_table',
+			'guid_column' => 'entity_guid',
+		));
 	}
 
 	$distinct = $options['distinct'] ? "DISTINCT " : "";
@@ -438,7 +441,10 @@ function _elgg_get_metastring_sql($table, $names = null, $values = null,
 		$wheres[] = $values_where;
 	}
 
-	$wheres[] = _elgg_get_access_where_sql(array('table_alias' => $table));
+	$wheres[] = _elgg_get_access_where_sql(array(
+		'table_alias' => $table,
+		'guid_column' => 'entity_guid',
+	));
 
 	if ($where = implode(' AND ', $wheres)) {
 		$return['wheres'][] = "($where)";
