@@ -37,7 +37,7 @@ rating to the owner.
 	$summary = elgg_echo('ratings:notification:summary', array($user->name), $owner->language);
 
 	// Body of the notification message
-	$subject = elgg_echo('ratings:notification:body', array(
+	$body = elgg_echo('ratings:notification:body', array(
 		$user->name,
 		$owner->name,
 		$rating->getValue() // A value between 1-5
