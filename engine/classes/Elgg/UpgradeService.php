@@ -4,35 +4,68 @@ namespace Elgg;
 /**
  * Upgrade service for Elgg
  *
- * This is a straight port of the procedural code used for upgrading before
- * Elgg 1.9.
- *
  * @access private
- *
- * @package    Elgg.Core
- * @subpackage Upgrade
  */
 class UpgradeService {
 
 	/**
-	 * Global Elgg configuration
-	 *
-	 * @var \stdClass
+	 * @var \Elgg\i18n\Translator
 	 */
-	private $CONFIG;
+	private $translator;
+
+	/**
+	 * @var \Elgg\EventsService
+	 */
+	private $events;
+
+	/**
+	 * @var \Elgg\PluginHooksService
+	 */
+	private $hooks;
+
+	/**
+	 * @var \Elgg\Database\Datalist
+	 */
+	private $datalist;
+
+	/**
+	 * @var \Elgg\Logger
+	 */
+	private $logger;
+
+	/**
+	 * @var \Elgg\Database\Mutex
+	 */
+	private $mutex;
 
 	/**
 	 * Constructor
+	 *
+	 * @param \Elgg\i18n\Translator    $translator Translation service
+	 * @param \Elgg\EventsService      $events     Events service
+	 * @param \Elgg\PluginHooksService $hooks      Plugin hook service
+	 * @param \Elgg\Database\Datalist  $datalist   Datalist table
+	 * @param \Elgg\Logger             $logger     Logger
+	 * @param \Elgg\Database\Mutex     $mutex      Database mutex service
 	 */
-	public function __construct() {
-		global $CONFIG;
-		$this->CONFIG = $CONFIG;
+	public function __construct(
+			\Elgg\i18n\Translator $translator,
+			\Elgg\EventsService $events,
+			\Elgg\PluginHooksService $hooks,
+			\Elgg\Database\Datalist $datalist,
+			\Elgg\Logger $logger,
+			\Elgg\Database\Mutex $mutex) {
+		$this->translator = $translator;
+		$this->events = $events;
+		$this->hooks = $hooks;
+		$this->datalist = $datalist;
+		$this->mutex = $mutex;
 	}
 
 	/**
 	 * Run the upgrade process
 	 *
-	 * @return array
+	 * @return array $result Associative array containing possible errors
 	 */
 	public function run() {
 		$result = array(
@@ -41,15 +74,15 @@ class UpgradeService {
 		);
 
 		// prevent someone from running the upgrade script in parallel (see #4643)
-		if (!$this->getUpgradeMutex()) {
+		if (!$this->mutex->lock('upgrade')) {
 			$result['failure'] = true;
-			$result['reason'] = _elgg_services()->translator->translate('upgrade:locked');
+			$result['reason'] = $this->translator->translate('upgrade:locked');
 			return $result;
 		}
 
 		// disable the system log for upgrades to avoid exceptions when the schema changes.
-		_elgg_services()->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
-		_elgg_services()->events->unregisterHandler('all', 'all', 'system_log_listener');
+		$this->events->unregisterHandler('log', 'systemlog', 'system_log_default_logger');
+		$this->events->unregisterHandler('all', 'all', 'system_log_listener');
 
 		// turn off time limit
 		set_time_limit(0);
@@ -58,10 +91,10 @@ class UpgradeService {
 			$this->processUpgrades();
 		}
 
-		_elgg_services()->events->trigger('upgrade', 'system', null);
+		$this->events->trigger('upgrade', 'system', null);
 		elgg_flush_caches();
 
-		$this->releaseUpgradeMutex();
+		$this->mutex->unlock('upgrade');
 
 		return $result;
 	}
@@ -107,16 +140,16 @@ class UpgradeService {
 				try {
 					if (!@self::includeCode("$upgrade_path/$upgrade")) {
 						$success = false;
-						error_log("Could not include $upgrade_path/$upgrade");
+						$this->logger->error("Could not include $upgrade_path/$upgrade");
 					}
 				} catch (\Exception $e) {
 					$success = false;
-					error_log($e->getMessage());
+					$this->logger->error($e->getMessage());
 				}
 			} else {
 				if (!self::includeCode("$upgrade_path/$upgrade")) {
 					$success = false;
-					error_log("Could not include $upgrade_path/$upgrade");
+					$this->logger->error("Could not include $upgrade_path/$upgrade");
 				}
 			}
 
@@ -124,7 +157,7 @@ class UpgradeService {
 				// don't set the version to a lower number in instances where an upgrade
 				// has been merged from a lower version of Elgg
 				if ($upgrade_version > $version) {
-					_elgg_services()->datalist->set('version', $upgrade_version);
+					$this->datalist->set('version', $upgrade_version);
 				}
 
 				// incrementally set upgrade so we know where to start if something fails.
@@ -144,9 +177,6 @@ class UpgradeService {
 	 * @return mixed
 	 */
 	protected static function includeCode($file) {
-		// do not remove - some upgrade scripts depend on this
-		global $CONFIG;
-
 		return include $file;
 	}
 
@@ -161,7 +191,7 @@ class UpgradeService {
 		$processed_upgrades = $this->getProcessedUpgrades();
 		$processed_upgrades[] = $upgrade;
 		$processed_upgrades = array_unique($processed_upgrades);
-		return _elgg_services()->datalist->set('processed_upgrades', serialize($processed_upgrades));
+		return $this->datalist->set('processed_upgrades', serialize($processed_upgrades));
 	}
 
 	/**
@@ -170,7 +200,7 @@ class UpgradeService {
 	 * @return mixed Array of processed upgrade filenames or false
 	 */
 	protected function getProcessedUpgrades() {
-		$upgrades = _elgg_services()->datalist->get('processed_upgrades');
+		$upgrades = $this->datalist->get('processed_upgrades');
 		$unserialized = unserialize($upgrades);
 		return $unserialized;
 	}
@@ -242,7 +272,7 @@ class UpgradeService {
 		}
 
 		if ($processed_upgrades === null) {
-			$processed_upgrades = unserialize(_elgg_services()->datalist->get('processed_upgrades'));
+			$processed_upgrades = unserialize($this->datalist->get('processed_upgrades'));
 			if (!is_array($processed_upgrades)) {
 				$processed_upgrades = array();
 			}
@@ -258,66 +288,22 @@ class UpgradeService {
 	 * @return bool
 	 */
 	protected function processUpgrades() {
-
-		$dbversion = (int) _elgg_services()->datalist->get('version');
+		$dbversion = (int) $this->datalist->get('version');
 
 		if ($this->upgradeCode($dbversion)) {
-			system_message(_elgg_services()->translator->translate('upgrade:core'));
+			system_message($this->translator->translate('upgrade:core'));
 
 			// Now we trigger an event to give the option for plugins to do something
 			$upgrade_details = new \stdClass;
 			$upgrade_details->from = $dbversion;
 			$upgrade_details->to = elgg_get_version();
 
-			_elgg_services()->events->trigger('upgrade', 'upgrade', $upgrade_details);
+			$this->events->trigger('upgrade', 'upgrade', $upgrade_details);
 
 			return true;
 		}
 
 		return false;
-	}
-
-	/**
-	 * Creates a table {prefix}upgrade_lock that is used as a mutex for upgrades.
-	 *
-	 * @return bool
-	 */
-	protected function getUpgradeMutex() {
-
-
-		if (!$this->isUpgradeLocked()) {
-			// lock it
-			_elgg_services()->db->insertData("create table {$this->CONFIG->dbprefix}upgrade_lock (id INT)");
-			_elgg_services()->logger->notice('Locked for upgrade.');
-			return true;
-		}
-
-		_elgg_services()->logger->warn('Cannot lock for upgrade: already locked');
-		return false;
-	}
-
-	/**
-	 * Unlocks upgrade.
-	 *
-	 * @return void
-	 */
-	public function releaseUpgradeMutex() {
-
-		_elgg_services()->db->deleteData("drop table {$this->CONFIG->dbprefix}upgrade_lock");
-		_elgg_services()->logger->notice('Upgrade unlocked.');
-	}
-
-	/**
-	 * Checks if upgrade is locked
-	 *
-	 * @return bool
-	 */
-	public function isUpgradeLocked() {
-
-
-		$is_locked = count(_elgg_services()->db->getData("SHOW TABLES LIKE '{$this->CONFIG->dbprefix}upgrade_lock'"));
-
-		return (bool)$is_locked;
 	}
 }
 

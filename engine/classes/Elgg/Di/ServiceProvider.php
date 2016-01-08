@@ -41,6 +41,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Cache\MetadataCache                $metadataCache
  * @property-read \Elgg\Database\MetadataTable             $metadataTable
  * @property-read \Elgg\Database\MetastringsTable          $metastringsTable
+ * @property-read \Elgg\Database\Mutex                     $mutex
  * @property-read \Elgg\Notifications\NotificationsService $notifications
  * @property-read \Elgg\PasswordService                    $passwords
  * @property-read \Elgg\PersistentLoginService             $persistentLogin
@@ -58,6 +59,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Cache\SystemCache                  $systemCache
  * @property-read \Elgg\SystemMessagesService              $systemMessages
  * @property-read \Elgg\I18n\Translator                    $translator
+ * @property-read \Elgg\UpgradeService                     $upgrades
  * @property-read \Elgg\Database\UsersTable                $usersTable
  * @property-read \Elgg\ViewsService                       $views
  * @property-read \Elgg\WidgetsService                     $widgets
@@ -183,6 +185,13 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Database\MetastringsTable($pool, $c->db);
 		});
 
+		$this->setFactory('mutex', function(ServiceProvider $c) {
+			return new \Elgg\Database\Mutex(
+				$c->db,
+				$c->logger
+			);
+		});
+
 		$this->setFactory('notifications', function(ServiceProvider $c) {
 			// @todo move queue in service provider
 			$queue_name = \Elgg\Notifications\NotificationsService::QUEUE_NAME;
@@ -269,6 +278,17 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setClassName('translator', \Elgg\I18n\Translator::class);
+
+		$this->setFactory('upgrades', function(ServiceProvider $c) {
+			return new \Elgg\UpgradeService(
+				$c->translator,
+				$c->events,
+				$c->hooks,
+				$c->datalist,
+				$c->logger,
+				$c->mutex
+			);
+		});
 
 		$this->setClassName('usersTable', \Elgg\Database\UsersTable::class);
 

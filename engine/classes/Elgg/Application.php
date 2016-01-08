@@ -185,13 +185,13 @@ class Application {
 					$setups[$file] = $setup;
 				}
 			}
-	
+
 			// store instance to be returned by elgg()
 			self::$_instance = $this;
 
 			// set up autoloading and DIC
 			_elgg_services($this->services);
-	
+
 			$events = $this->services->events;
 			$hooks = $this->services->hooks;
 
@@ -204,7 +204,7 @@ class Application {
 
 	/**
 	 * Replacement for loading engine/start.php
-	 * 
+	 *
 	 * @return self
 	 */
 	public static function start() {
@@ -212,7 +212,7 @@ class Application {
 		$app->bootCore();
 		return $app;
 	}
-	
+
 	/**
 	 * Bootstrap the Elgg engine, loads plugins, and calls initial system events
 	 *
@@ -227,7 +227,7 @@ class Application {
 	 * @return void
 	 */
 	public function bootCore() {
-		
+
 		$config = $this->services->config;
 
 		if ($config->getVolatile('boot_complete')) {
@@ -268,18 +268,18 @@ class Application {
 
 				_elgg_services()->views->registerPluginViews($root->getPath());
 			}
-			
+
 			if (!elgg_get_config('i18n_loaded_from_cache')) {
 				_elgg_services()->translator->registerPluginTranslations($root->getPath());
 			}
-			
+
 			// This is root directory start.php, not elgg/engine/start.php
 			$root_start = $root->getPath("start.php");
 			if (is_file($root_start)) {
 				require $root_start;
 			}
 		}
-		
+
 
 		// @todo move loading plugins into a single boot function that replaces 'boot', 'system' event
 		// and then move this code in there.
@@ -314,7 +314,7 @@ class Application {
 		$this->loadSettings();
 		return $this->services->db;
 	}
-	
+
 	/**
 	 * Get an undefined property
 	 *
@@ -328,11 +328,11 @@ class Application {
 		}
 		trigger_error("Undefined property: " . __CLASS__ . ":\${$name}");
 	}
-	
+
 	/**
 	 * Creates a new, trivial instance of Elgg\Application and set it as the singleton instance.
 	 * If the singleton is already set, it's returned.
-	 * 
+	 *
 	 * @return self
 	 */
 	private static function create() {
@@ -345,22 +345,22 @@ class Application {
 					_elgg_shutdown_hook();
 				}
 			});
-		
+
 			self::$_instance = new self(new Di\ServiceProvider(new Config()));
 		}
 
 		return self::$_instance;
 	}
-	
+
 	/**
 	 * Elgg's front controller. Handles basically all incoming URL requests.
-	 * 
+	 *
 	 * @return void
 	 */
 	public static function index() {
 		self::create()->run();
 	}
-	
+
 	/**
 	 * Routes the request, booting core if not yet booted
 	 *
@@ -431,20 +431,20 @@ class Application {
 		$app->services->config->set('dataroot', $dataroot);
 		return $dataroot;
 	}
-	
+
 	/**
 	 * Returns a directory that points to the root of Elgg, but not necessarily
 	 * the install root. See `self::root()` for that.
-	 * 
+	 *
 	 * @return Directory
 	 */
 	public static function elggDir() /*: Directory*/ {
 		return Directory\Local::fromPath(realpath(__DIR__ . '/../../..'));
 	}
-	
+
 	/**
 	 * Renders a web UI for installing Elgg.
-	 * 
+	 *
 	 * @return void
 	 */
 	public static function install() {
@@ -453,7 +453,7 @@ class Application {
 		$step = get_input('step', 'welcome');
 		$installer->run($step);
 	}
-	
+
 	/**
 	 * Elgg upgrade script.
 	 *
@@ -465,31 +465,31 @@ class Application {
 	 *
 	 * The URL to forward to after upgrades are complete can be specified by setting $_GET['forward']
 	 * to a relative URL.
-	 * 
+	 *
 	 * @return void
 	 */
 	public static function upgrade() {
 		// we want to know if an error occurs
 		ini_set('display_errors', 1);
-		
+
 		define('UPGRADING', 'upgrading');
-		
+
 		self::start();
-		
+
 		$site_url = elgg_get_config('url');
 		$site_host = parse_url($site_url, PHP_URL_HOST) . '/';
-		
+
 		// turn any full in-site URLs into absolute paths
 		$forward_url = get_input('forward', '/admin', false);
 		$forward_url = str_replace(array($site_url, $site_host), '/', $forward_url);
-		
+
 		if (strpos($forward_url, '/') !== 0) {
 			$forward_url = '/' . $forward_url;
 		}
-		
+
 		if (get_input('upgrade') == 'upgrade') {
-		
-			$upgrader = new \Elgg\UpgradeService();
+
+			$upgrader = _elgg_services()->upgrades;
 			$result = $upgrader->run();
 			if ($result['failure'] == true) {
 				register_error($result['reason']);
@@ -512,7 +512,7 @@ class Application {
 					echo $msg;
 					exit;
 				}
-				
+
 				// note: translation may not be available until after upgrade
 				$msg = elgg_echo("installation:htaccess:needs_upgrade");
 				if ($msg === "installation:htaccess:needs_upgrade") {
@@ -522,18 +522,18 @@ class Application {
 				echo $msg;
 				exit;
 			}
-		
+
 			$vars = array(
 				'forward' => $forward_url
 			);
-		
+
 			// reset cache to have latest translations available during upgrade
 			elgg_reset_system_cache();
-			
+
 			echo elgg_view_page(elgg_echo('upgrading'), '', 'upgrade', $vars);
 			exit;
 		}
-		
+
 		forward($forward_url);
 	}
 
