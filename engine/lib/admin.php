@@ -243,7 +243,6 @@ function _elgg_admin_init() {
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
 	elgg_register_simplecache_view('admin.css');
-	elgg_register_js('elgg.upgrades', 'js/lib/upgrades.js');
 	elgg_register_js('jquery.jeditable', elgg_get_simplecache_url('jquery.jeditable.js'));
 
 	// administer
