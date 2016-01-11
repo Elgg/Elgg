@@ -88,7 +88,7 @@ class Logger {
 
 	/**
 	 * Get the current logging level
-	 * 
+	 *
 	 * @return int
 	 */
 	public function getLevel() {
@@ -246,9 +246,9 @@ class Logger {
 			echo '<pre class="elgg-logger-data">';
 			echo htmlspecialchars(print_r($data, true), ENT_QUOTES, 'UTF-8');
 			echo '</pre>';
-		} else {
-			error_log(print_r($data, true));
 		}
+		
+		error_log(print_r($data, true));
 	}
 
 	/**
