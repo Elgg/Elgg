@@ -941,7 +941,6 @@ function _elgg_php_exception_handler($exception) {
  * @return true
  * @throws Exception
  * @access private
- * @todo Replace error_log calls with elgg_log calls.
  */
 function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 
@@ -958,7 +957,9 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 
 	switch ($errno) {
 		case E_USER_ERROR:
-			error_log("PHP ERROR: $error");
+			if (!elgg_log("PHP: $error", 'ERROR')) {
+				error_log("PHP ERROR: $error");
+			}
 			register_error("ERROR: $error");
 
 			// Since this is a fatal error, we want to stop any further execution but do so gracefully.
@@ -970,7 +971,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 		case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
 			
 			// check if the error wasn't suppressed by the error control operator (@)
-			if (error_reporting()) {
+			if (error_reporting() && !elgg_log("PHP: $error", 'WARNING')) {
 				error_log("PHP WARNING: $error");
 			}
 			break;
@@ -978,7 +979,9 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 		default:
 			global $CONFIG;
 			if (isset($CONFIG->debug) && $CONFIG->debug === 'NOTICE') {
-				error_log("PHP NOTICE: $error");
+				if (!elgg_log("PHP (errno $errno): $error", 'NOTICE')) {
+					error_log("PHP NOTICE: $error");
+				}
 			}
 	}
 
