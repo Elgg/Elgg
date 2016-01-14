@@ -89,7 +89,7 @@ create the view file ``views/default/js/myplugin/settings.js.php`` (note the dou
 
     <?php
 
-    $settings = elgg_get_plugin_by_id('myplugin')->getAllSettings();
+    $settings = elgg_get_plugin_from_id('myplugin')->getAllSettings();
     $settings = [
         'foo' => elgg_extract('foo', $settings),
         'bar' => elgg_extract('bar', $settings),
