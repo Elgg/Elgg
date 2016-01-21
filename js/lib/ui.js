@@ -45,8 +45,8 @@ elgg.ui.init = function () {
  * Use rel="toggle" on the toggler element
  * Set the href to target the item you want to toggle (<a rel="toggle" href="#id-of-target">)
  * or use data-toggle-selector="your_jquery_selector" to have an advanced selection method
- * 
- * By default elements perform a slideToggle. 
+ *
+ * By default elements perform a slideToggle.
  * If you want a normal toggle (hide/show) you can add data-toggle-slide="0" on the elements to prevent a slide.
  *
  * @param {Object} event
@@ -56,7 +56,7 @@ elgg.ui.toggles = function(event) {
 	event.preventDefault();
 	var $this = $(this),
 		target = $this.data().toggleSelector;
-	
+
 	if (!target) {
 		// @todo we can switch to elgg.getSelectorFromUrlFragment() in 1.x if
 		// we also extend it to support href=".some-class"
@@ -124,7 +124,7 @@ elgg.ui.popupOpen = function(event) {
 	// hide if already open
 	if ($target.is(':visible')) {
 		$target.fadeOut();
-		$('body').die('click', elgg.ui.popupClose);
+		$(document).off('click', elgg.ui.popupClose);
 		return;
 	}
 
@@ -171,7 +171,7 @@ elgg.ui.popupClose = function(event) {
 			}
 		});
 
-		$('body').die('click', elgg.ui.popClose);
+		$(document).off('click', elgg.ui.popupClose);
 	}
 };
 
@@ -456,7 +456,7 @@ elgg.ui.initAccessInputs = function () {
 			updateMembersonlyNote();
 			$select.change(updateMembersonlyNote);
 		}
-                
+
 		if (commentCount) {
 			$select.change(function(e) {
 				if ($(this).val() != originalValue) {
