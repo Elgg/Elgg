@@ -1063,7 +1063,7 @@ class ElggInstaller {
 	protected function checkPhpExtensions(&$phpReport) {
 		$extensions = get_loaded_extensions();
 		$requiredExtensions = array(
-			'mysql',
+			'pdo_mysql',
 			'json',
 			'xml',
 			'gd',
