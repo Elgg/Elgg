@@ -1565,14 +1565,20 @@ function _elgg_views_send_header_x_frame_options() {
  * @elgg_event_handler boot system
  */
 function elgg_views_boot() {
-	if (!elgg_get_config('system_cache_loaded')) {
-		_elgg_services()->views->registerPluginViews(realpath(__DIR__ . '/../../'));
-	}
-	
 	global $CONFIG;
 
 	if (!elgg_get_config('system_cache_loaded')) {
+		// Core view files in /views
 		_elgg_services()->views->registerPluginViews(realpath(__DIR__ . '/../../'));
+
+		// Core view definitions in /engine/views.php
+		$file = dirname(__DIR__) . '/views.php';
+		if (is_file($file)) {
+			$spec = (include $file);
+			if (is_array($spec)) {
+				_elgg_services()->views->mergeViewsSpec($spec);
+			}
+		}
 	}
 
 	// on every page
@@ -1636,16 +1642,6 @@ function elgg_views_boot() {
 	foreach ($viewtype_dirs as $viewtype) {
 		if (_elgg_is_valid_viewtype($viewtype) && is_dir($view_path . $viewtype)) {
 			elgg_register_viewtype($viewtype);
-		}
-	}
-
-	// Declared views. Unlike plugins, Elgg's root views/ is never scanned, so Elgg cannot override
-	// these view traditional view files.
-	$file = dirname(__DIR__) . '/views.php';
-	if (is_file($file)) {
-		$spec = (include $file);
-		if (is_array($spec)) {
-			_elgg_services()->views->mergeViewsSpec($spec);
 		}
 	}
 
