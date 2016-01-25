@@ -158,6 +158,9 @@ function elgg_register_js($name, $url, $location = 'head', $priority = null) {
  * Calling this function is not needed if your JS are in views named like `module/name.js`
  * Instead, simply call elgg_require_js("module/name").
  *
+ * @note The configuration is cached in simplecache, so logic should not depend on user-
+ *       specific values like get_language().
+ *
  * @param string $name   The module name
  * @param array  $config An array like the following:
  *                       array  'deps'    An array of AMD module dependencies

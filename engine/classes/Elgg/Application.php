@@ -258,6 +258,7 @@ class Application {
 			// Elgg is installed as a composer dep, so try to treat the root directory
 			// as a custom plugin that is always loaded last and can't be disabled...
 			if (!elgg_get_config('system_cache_loaded')) {
+				// configure view locations for the custom plugin (not Elgg core)
 				$viewsFile = $root->getFile('views.php');
 				if ($viewsFile->exists()) {
 					$viewsSpec = $viewsFile->includeFile();
@@ -266,6 +267,7 @@ class Application {
 					}
 				}
 
+				// find views for the custom plugin (not Elgg core)
 				_elgg_services()->views->registerPluginViews($root->getPath());
 			}
 
