@@ -481,6 +481,11 @@ function elgg_user_hover_menu($hook, $type, $return, $params) {
 		$item = new \ElggMenuItem('avatar:edit', elgg_echo('avatar:edit'), $url);
 		$item->setSection('action');
 		$return[] = $item;
+
+		$url = "settings/user/$user->username";
+		$item = new \ElggMenuItem('settings:edit', elgg_echo('settings:edit'), $url);
+		$item->setSection('action');
+		$return[] = $item;
 	}
 
 	// prevent admins from banning or deleting themselves
