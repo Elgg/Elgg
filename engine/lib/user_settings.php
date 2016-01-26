@@ -286,9 +286,14 @@ function _elgg_user_settings_menu_setup() {
 	foreach ($active_plugins as $plugin) {
 		$plugin_id = $plugin->getID();
 		if (elgg_view_exists("usersettings/$plugin_id/edit") || elgg_view_exists("plugins/$plugin_id/usersettings")) {
+			if (elgg_language_key_exists($plugin_id . ':usersettings:title')) {
+				$title = elgg_echo($plugin_id . ':usersettings:title');
+			} else {
+				$title = $plugin->getFriendlyName();
+			}
 			$params = array(
 				'name' => $plugin_id,
-				'text' => $plugin->getFriendlyName(),
+				'text' => $title,
 				'href' => "settings/plugins/{$user->username}/$plugin_id",
 				'parent_name' => '1_plugins',
 				'section' => 'configure',
