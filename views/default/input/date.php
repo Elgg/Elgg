@@ -51,5 +51,5 @@ if (is_numeric($vars['value'])) {
 echo elgg_format_element('input', $vars);
 
 if (elgg_is_xhr()) {
-	echo elgg_format_element('script', null, 'elgg.ui.initDatePicker();');
+	echo elgg_format_element('script', [], 'elgg.ui.initDatePicker();');
 }
