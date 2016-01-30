@@ -109,7 +109,9 @@ class Profiler {
 		$list = [];
 		$profiler->flattenTree($list, $tree);
 
-		$list = array_map(function ($period) {
+		$root = elgg_get_config('path');
+		$list = array_map(function ($period) use ($root) {
+			$period['name'] = str_replace("Closure $root", "Closure ", $period['name']);
 			return "{$period['percentage']}% ({$period['duration']}) {$period['name']}";
 		}, $list);
 
