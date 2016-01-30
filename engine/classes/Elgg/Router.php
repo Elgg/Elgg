@@ -14,6 +14,8 @@ namespace Elgg;
  * @access private
  */
 class Router {
+	use Profilable;
+
 	private $handlers = array();
 	private $hooks;
 
@@ -61,6 +63,11 @@ class Router {
 			'handler' => $identifier, // backward compatibility
 			'segments' => $segments,
 		);
+
+		if ($this->timer) {
+			$this->timer->begin(['build page']);
+		}
+
 		$result = $this->hooks->trigger('route', $identifier, $result, $result);
 		if ($result === false) {
 			return true;

@@ -1990,6 +1990,13 @@ function _elgg_init() {
 
 		return $result;
 	});
+
+	if (_elgg_services()->config->getVolatile('enable_profiling')) {
+		/**
+		 * @see \Elgg\Profiler::handlePageOutput
+		 */
+		elgg_register_plugin_hook_handler('output', 'page', [\Elgg\Profiler::class, 'handlePageOutput'], 999);
+	}
 }
 
 /**
