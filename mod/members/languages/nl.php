@@ -7,5 +7,6 @@ return array(
 	'members:title:newest' => 'Nieuwste leden',
 	'members:title:popular' => 'Meest populaire leden',
 	'members:title:online' => 'Leden die online zijn',
+	'members:title:alpha' => 'Alle leden',
 	'members:list:popular:none' => 'Geen leden met vrienden.',
 );

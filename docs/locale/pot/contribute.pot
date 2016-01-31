@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg master\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2016-01-03 16:14+0200\n"
+"POT-Creation-Date: 2016-01-31 13:46-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -1240,7 +1240,7 @@ msgid "Commit access to http://github.com/Elgg/Elgg"
 msgstr ""
 
 #: ../../contribute/releases.rst:19
-msgid "Admin access to https://community.elgg.org/"
+msgid "Admin access to https://elgg.org/"
 msgstr ""
 
 #: ../../contribute/releases.rst:20
@@ -1292,11 +1292,11 @@ msgid "Install the prerequisites:"
 msgstr ""
 
 #: ../../contribute/releases.rst:50
-msgid "Run the ``release.php`` script. For example, to release 1.9.1:"
+msgid "Run the ``release.php`` script. For example, to release 1.12.5:"
 msgstr ""
 
 #: ../../contribute/releases.rst:57
-msgid "This creates a ``release-1.9.1`` branch in your local repo."
+msgid "This creates a ``release-1.12.5`` branch in your local repo."
 msgstr ""
 
 #: ../../contribute/releases.rst:59
@@ -1328,90 +1328,100 @@ msgid "3. Update the website"
 msgstr ""
 
 #: ../../contribute/releases.rst:88
-msgid "The downloads need to point to the new releases."
-msgstr ""
-
-#: ../../contribute/releases.rst:91
-msgid "Build Package"
-msgstr ""
-
-#: ../../contribute/releases.rst:93
 msgid "ssh to elgg.org"
 msgstr ""
 
-#: ../../contribute/releases.rst:94
+#: ../../contribute/releases.rst:89
 msgid "Clone https://github.com/Elgg/elgg-scripts"
 msgstr ""
 
-#: ../../contribute/releases.rst:95
-msgid "Use elgg-scripts/build/build.sh to generate the .zip file."
+#: ../../contribute/releases.rst:92
+msgid "Build zip package for Elgg 1.n.n"
 msgstr ""
 
-#: ../../contribute/releases.rst:97
-msgid "Run without arguments to see usage. This also generates the ChangeLog.txt file."
+#: ../../contribute/releases.rst:94
+msgid "Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage."
 msgstr ""
 
-#: ../../contribute/releases.rst:99
+#: ../../contribute/releases.rst:96
+#: ../../contribute/releases.rst:109
 msgid "Example::"
 msgstr ""
 
-#: ../../contribute/releases.rst:103
+#: ../../contribute/releases.rst:100
+#: ../../contribute/releases.rst:113
 msgid "MIT::"
 msgstr ""
 
-#: ../../contribute/releases.rst:108
-msgid "Update homepage, download, and previous download pages"
+#: ../../contribute/releases.rst:105
+msgid "Build zip package for Elgg 2.n.n"
 msgstr ""
 
-#: ../../contribute/releases.rst:110
-msgid "Clone https://github.com/Elgg/old-elgg-website"
+#: ../../contribute/releases.rst:107
+msgid "Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Run without arguments to see usage."
 msgstr ""
 
-#: ../../contribute/releases.rst:111
-msgid "Make changes, commit, push."
+#: ../../contribute/releases.rst:119
+msgid "Update elgg.org"
 msgstr ""
 
-#: ../../contribute/releases.rst:113
-msgid "index.php"
+#: ../../contribute/releases.rst:121
+msgid "Clone https://github.com/Elgg/www.elgg.org"
 msgstr ""
 
-#: ../../contribute/releases.rst:114
-msgid "download.php"
-msgstr ""
-
-#: ../../contribute/releases.rst:115
-msgid "previous.php"
-msgstr ""
-
-#: ../../contribute/releases.rst:117
-msgid "Pull to live site"
+#: ../../contribute/releases.rst:122
+msgid "Add the new versions to ``src/Elgg/Releases.php``"
 msgstr ""
 
 #: ../../contribute/releases.rst:123
-msgid "flush apc cache (via community admin panel)"
+msgid "Update vendors"
 msgstr ""
 
-#: ../../contribute/releases.rst:126
-msgid "4. Make the announcement"
-msgstr ""
-
-#: ../../contribute/releases.rst:128
-msgid "This should be the very last thing you do."
+#: ../../contribute/releases.rst:129
+msgid "Commit and push the changes"
 msgstr ""
 
 #: ../../contribute/releases.rst:130
-msgid "Sign in at https://community.elgg.org/ and compose a blog on with HTML version of CHANGELOG.md."
+msgid "Pull to live site"
 msgstr ""
 
-#: ../../contribute/releases.rst:131
+#: ../../contribute/releases.rst:136
+msgid "Update dependencies"
+msgstr ""
+
+#: ../../contribute/releases.rst:144
+msgid "Go to community admin panel"
+msgstr ""
+
+#: ../../contribute/releases.rst:143
+msgid "Flush APC cache"
+msgstr ""
+
+#: ../../contribute/releases.rst:144
+msgid "Run upgrade"
+msgstr ""
+
+#: ../../contribute/releases.rst:147
+msgid "4. Make the announcement"
+msgstr ""
+
+#: ../../contribute/releases.rst:149
+msgid "This should be the very last thing you do."
+msgstr ""
+
+#: ../../contribute/releases.rst:151
+msgid "Sign in at https://elgg.org/blog and compose a blog on with HTML version of CHANGELOG.md."
+msgstr ""
+
+#: ../../contribute/releases.rst:152
 msgid "Add tags “release” and “elgg1.x” where x is whatever branch is being released."
 msgstr ""
 
-#: ../../contribute/releases.rst:132
+#: ../../contribute/releases.rst:153
 msgid "Tweet from the elgg `Twitter account`_"
 msgstr ""
 
-#: ../../contribute/releases.rst:133
+#: ../../contribute/releases.rst:154
 msgid "Post from the `G+ page`_"
 msgstr ""
 

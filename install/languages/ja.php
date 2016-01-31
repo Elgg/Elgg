@@ -59,12 +59,14 @@ return array(
 	'install:database:label:dbname' => 'データベースの名前',
 	'install:database:label:dbhost' => 'データベースのホスト',
 	'install:database:label:dbprefix' => 'データベースのテーブル名につける接頭辞(Prefix)',
+	'install:database:label:timezone' => "Timezone",
 
 	'install:database:help:dbuser' => 'このユーザはElgg用に作成したMySQLデータベースに対して全ての権限持っていなければいけません。',
 	'install:database:help:dbpassword' => '上のデータベースユーザのアカウントに対するパスワード',
 	'install:database:help:dbname' => 'Elgg用データベースの名前',
 	'install:database:help:dbhost' => 'MySQL serverのあるホスト名(たいていは、localhost)',
 	'install:database:help:dbprefix' => "全てのElgg用テーブル名につける接頭辞(Prefix)(たいていは、elgg_)",
+	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
 	'install:settings:instructions' => 'Elggを構築するにあたってこのサイトについてのいくつかの情報が必要です。もし、まだElgg用の<a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">データディレクトリを作成</a>されておられないなら、今作成してください。',
 

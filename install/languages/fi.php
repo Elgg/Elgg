@@ -59,12 +59,14 @@ Kun olet valmis, siirry seuraavaan vaiheeseen.",
 	'install:database:label:dbname' => 'Tietokannan nimi',
 	'install:database:label:dbhost' => 'Tietokannan sijainti',
 	'install:database:label:dbprefix' => 'Tietokantataulujen etuliite',
+	'install:database:label:timezone' => "Timezone",
 
 	'install:database:help:dbuser' => 'Käyttäjä, jolla on täydet oikeudet Elggiä varten luomaasi tietokantaan',
 	'install:database:help:dbpassword' => 'Ylle syöttämäsi käyttäjätilin salasana',
 	'install:database:help:dbname' => 'Elggiä varten luomasi tietokannan nimi',
 	'install:database:help:dbhost' => 'MySQL-palvelimen sijainti (yleensä localhost)',
 	'install:database:help:dbprefix' => "Kaikille Elggin tietokantatauluille annettava etuliite (yleensä elgg_)",
+	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
 	'install:settings:instructions' => 'Elggin konfiguroimiseen tarvitaan vielä hieman lisätietoja. Jos et ole vielä luonut Elggille <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">datahakemistoa</a>, tee se nyt.',
 
