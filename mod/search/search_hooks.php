@@ -135,13 +135,13 @@ function search_users_hook($hook, $type, $value, $params) {
 	$profile_fields = array_keys(elgg_get_config('profile_fields'));
 	
 	if (!empty($profile_fields)) {
-		$params['joins'][] = "JOIN {$db_prefix}metadata md on e.guid = md.entity_guid";
+		$params['joins'][] = "JOIN {$db_prefix}annotations an on e.guid = an.entity_guid";
 		$params['joins'][] = "JOIN {$db_prefix}metastrings msv ON n_table.value_id = msv.id";
 		
 		// get the where clauses for the md names
 		// can't use egef_metadata() because the n_table join comes too late.
-		$clauses = _elgg_entities_get_metastrings_options('metadata', array(
-			'metadata_names' => $profile_fields,
+		$clauses = _elgg_entities_get_metastrings_options('annotation', array(
+			'annotation_names' => $profile_fields,
 		));
 	
 		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
@@ -167,6 +167,7 @@ function search_users_hook($hook, $type, $value, $params) {
 	$params['count'] = FALSE;
 	$params['order_by'] = search_get_order_by_sql('e', 'ue', $params['sort'], $params['order']);
 	$entities = elgg_get_entities($params);
+	/* @var ElggUser[] $entities */
 
 	// add the volatile data for why these entities have been returned.
 	foreach ($entities as $entity) {
@@ -183,19 +184,18 @@ function search_users_hook($hook, $type, $value, $params) {
 
 		if (!empty($profile_fields)) {
 			$matched = '';
-			foreach ($profile_fields as $md_name) {
-				$metadata = $entity->$md_name;
-				if (is_array($metadata)) {
-					foreach ($metadata as $text) {
-						if (stristr($text, $query)) {
-							$matched .= elgg_echo("profile:{$md_name}") . ': '
-									. search_get_highlighted_relevant_substrings($text, $query);
-						}
-					}
-				} else {
-					if (stristr($metadata, $query)) {
-						$matched .= elgg_echo("profile:{$md_name}") . ': '
-								. search_get_highlighted_relevant_substrings($metadata, $query);
+			foreach ($profile_fields as $shortname) {
+				$annotations = $entity->getAnnotations([
+					'annotation_names' => "profile:$shortname",
+					'limit' => false,
+				]);
+				$values = array_map(function (ElggAnnotation $a) {
+					return $a->value;
+				}, $annotations);
+				foreach ($values as $text) {
+					if (stristr($text, $query)) {
+						$matched .= elgg_echo("profile:{$shortname}") . ': '
+								. search_get_highlighted_relevant_substrings($text, $query);
 					}
 				}
 			}

@@ -94,7 +94,7 @@ class UsersTable {
 			if (_elgg_services()->events->trigger('ban', 'user', $user)) {
 				// Add reason
 				if ($reason) {
-					create_metadata($user_guid, 'ban_reason', $reason, '', 0, ACCESS_PUBLIC);
+					create_metadata($user_guid, 'ban_reason', $reason);
 				}
 	
 				// invalidate memcache for this user
@@ -134,7 +134,7 @@ class UsersTable {
 	
 		if (($user) && ($user->canEdit()) && ($user instanceof \ElggUser)) {
 			if (_elgg_services()->events->trigger('unban', 'user', $user)) {
-				create_metadata($user_guid, 'ban_reason', '', '', 0, ACCESS_PUBLIC);
+				create_metadata($user_guid, 'ban_reason', '');
 	
 				// invalidate memcache for this user
 				static $newentity_cache;
@@ -478,8 +478,8 @@ class UsersTable {
 	 * @return bool
 	 */
 	function setValidationStatus($user_guid, $status, $method = '') {
-		$result1 = create_metadata($user_guid, 'validated', $status, '', 0, ACCESS_PUBLIC, false);
-		$result2 = create_metadata($user_guid, 'validated_method', $method, '', 0, ACCESS_PUBLIC, false);
+		$result1 = create_metadata($user_guid, 'validated', $status);
+		$result2 = create_metadata($user_guid, 'validated_method', $method);
 		if ($result1 && $result2) {
 			return true;
 		} else {

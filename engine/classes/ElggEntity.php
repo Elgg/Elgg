@@ -294,7 +294,7 @@ abstract class ElggEntity extends \ElggData implements
 	 * @return mixed The value, or null if not found.
 	 */
 	public function getMetadata($name) {
-		$guid = $this->getGUID();
+		$guid = $this->guid;
 
 		if (!$guid) {
 			if (isset($this->temp_metadata[$name])) {
@@ -374,13 +374,11 @@ abstract class ElggEntity extends \ElggData implements
 	 *                           Does not support associative arrays.
 	 * @param int    $owner_guid GUID of entity that owns the metadata.
 	 *                           Default is owner of entity.
-	 * @param int    $access_id  Who can read the metadata relative to the owner.
-	 *                           Default is the access level of the entity.
 	 *
 	 * @return bool
 	 * @throws InvalidArgumentException
 	 */
-	public function setMetadata($name, $value, $value_type = '', $multiple = false, $owner_guid = 0, $access_id = null) {
+	public function setMetadata($name, $value, $value_type = '', $multiple = false, $owner_guid = 0) {
 
 		// normalize value to an array that we will loop over
 		// remove indexes if value already an array.
@@ -412,7 +410,6 @@ abstract class ElggEntity extends \ElggData implements
 			}
 
 			$owner_guid = (int)$owner_guid;
-			$access_id = ($access_id === null) ? $this->getAccessId() : (int)$access_id;
 			$owner_guid = $owner_guid ? $owner_guid : $this->getOwnerGUID();
 
 			// add new md
@@ -420,7 +417,7 @@ abstract class ElggEntity extends \ElggData implements
 			foreach ($value as $value_tmp) {
 				// at this point $value is appended because it was cleared above if needed.
 				$md_id = create_metadata($this->getGUID(), $name, $value_tmp, $value_type,
-						$owner_guid, $access_id, true);
+						$owner_guid, null, true);
 				if (!$md_id) {
 					return false;
 				}
@@ -433,8 +430,8 @@ abstract class ElggEntity extends \ElggData implements
 			// returning single entries instead of an array of 1 element is decided in
 			// getMetaData(), just like pulling from the db.
 
-			if ($owner_guid != 0 || $access_id !== null) {
-				$msg = "owner guid and access id cannot be used in \ElggEntity::setMetadata() until entity is saved.";
+			if ($owner_guid != 0) {
+				$msg = "owner guid cannot be used in \ElggEntity::setMetadata() until entity is saved.";
 				throw new \InvalidArgumentException($msg);
 			}
 

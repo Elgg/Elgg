@@ -343,7 +343,7 @@ function groups_set_icon_url($hook, $type, $url, $params) {
 		$file->owner_guid = $group->owner_guid;
 		$file->setFilename("groups/" . $group->guid . "large.jpg");
 		$icontime = $file->exists() ? time() : 0;
-		create_metadata($group->guid, 'icontime', $icontime, 'integer', $group->owner_guid, ACCESS_PUBLIC);
+		create_metadata($group->guid, 'icontime', $icontime, 'integer', $group->owner_guid);
 	}
 	if ($icontime) {
 		// return thumbnail

@@ -5,6 +5,8 @@
  * @uses vars['entity']
  */
 
+$owner = $vars['entity'];
+/* @var ElggUser $owner */
 ?>
 
 <div>
@@ -18,24 +20,19 @@ $sticky_values = elgg_get_sticky_values('profile:edit');
 $profile_fields = elgg_get_config('profile_fields');
 if (is_array($profile_fields) && count($profile_fields) > 0) {
 	foreach ($profile_fields as $shortname => $valtype) {
-		$metadata = elgg_get_metadata(array(
-			'guid' => $vars['entity']->guid,
-			'metadata_name' => $shortname,
-			'limit' => false
-		));
-		if ($metadata) {
-			if (is_array($metadata)) {
-				$value = '';
-				foreach ($metadata as $md) {
-					if (!empty($value)) {
-						$value .= ', ';
-					}
-					$value .= $md->value;
-					$access_id = $md->access_id;
+
+		$annotations = $owner->getAnnotations([
+			'annotation_names' => "profile:$shortname",
+			'limit' => false,
+		]);
+		if ($annotations) {
+			$value = '';
+			foreach ($annotations as $annotation) {
+				if (!empty($value)) {
+					$value .= ', ';
 				}
-			} else {
-				$value = $metadata->value;
-				$access_id = $metadata->access_id;
+				$value .= $annotation->value;
+				$access_id = $annotation->access_id;
 			}
 		} else {
 			$value = '';

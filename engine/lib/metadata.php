@@ -57,16 +57,16 @@ function elgg_delete_metadata_by_id($id) {
  * @param string $value          Value of the metadata
  * @param string $value_type     'text', 'integer', or '' for automatic detection
  * @param int    $owner_guid     GUID of entity that owns the metadata. Default is logged in user.
- * @param int    $access_id      Default is ACCESS_PRIVATE
+ * @param int    $ignored        This argument is not used
  * @param bool   $allow_multiple Allow multiple values for one key. Default is false
  *
  * @return int|false id of metadata or false if failure
  */
 function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_guid = 0,
-		$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
+						$ignored = ACCESS_PRIVATE, $allow_multiple = false) {
 
 	return _elgg_services()->metadataTable->create($entity_guid, $name, $value,
-		$value_type, $owner_guid, $access_id, $allow_multiple);
+		$value_type, $owner_guid, null, $allow_multiple);
 }
 
 /**
@@ -77,13 +77,12 @@ function create_metadata($entity_guid, $name, $value, $value_type = '', $owner_g
  * @param string $value      Metadata value
  * @param string $value_type Value type
  * @param int    $owner_guid Owner guid
- * @param int    $access_id  Access ID
  *
  * @return bool
  */
-function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_id) {
+function update_metadata($id, $name, $value, $value_type, $owner_guid) {
 	return _elgg_services()->metadataTable->update($id, $name, $value,
-		$value_type, $owner_guid, $access_id);
+		$value_type, $owner_guid);
 }
 
 /**
@@ -97,16 +96,16 @@ function update_metadata($id, $name, $value, $value_type, $owner_guid, $access_i
  * @param array  $name_and_values Associative array - a value can be a string, number, bool
  * @param string $value_type      'text', 'integer', or '' for automatic detection
  * @param int    $owner_guid      GUID of entity that owns the metadata
- * @param int    $access_id       Default is ACCESS_PRIVATE
+ * @param int    $ignored         This argument is not used
  * @param bool   $allow_multiple  Allow multiple values for one key. Default is false
  *
  * @return bool
  */
 function create_metadata_from_array($entity_guid, array $name_and_values, $value_type, $owner_guid,
-		$access_id = ACCESS_PRIVATE, $allow_multiple = false) {
+		$ignored = ACCESS_PRIVATE, $allow_multiple = false) {
 
 	return _elgg_services()->metadataTable->createFromArray($entity_guid, $name_and_values,
-		$value_type, $owner_guid, $access_id, $allow_multiple);
+		$value_type, $owner_guid, null, $allow_multiple);
 
 }
 

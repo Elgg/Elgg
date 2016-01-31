@@ -51,6 +51,9 @@ abstract class ElggExtender extends \ElggData {
 	 * @return void
 	 */
 	public function __set($name, $value) {
+		if ($name === 'access_id' && $this instanceof ElggMetadata) {
+			$value = ACCESS_PUBLIC;
+		}
 		$this->attributes[$name] = $value;
 		if ($name == 'value') {
 			$this->attributes['value_type'] = detect_extender_valuetype($value);
@@ -112,6 +115,10 @@ abstract class ElggExtender extends \ElggData {
 						throw new \UnexpectedValueException($msg);
 						break;
 				}
+			}
+
+			if ($name === 'access_id' && $this instanceof ElggMetadata) {
+				return ACCESS_PUBLIC;
 			}
 
 			return $this->attributes[$name];
