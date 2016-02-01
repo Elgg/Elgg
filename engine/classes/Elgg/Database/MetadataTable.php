@@ -529,7 +529,10 @@ class MetadataTable {
 		// only supported on values.
 		$binary = ($case_sensitive) ? ' BINARY ' : '';
 	
-		$access = _elgg_get_access_where_sql(array('table_alias' => 'n_table'));
+		$access = _elgg_get_access_where_sql(array(
+			'table_alias' => 'n_table',
+			'guid_column' => 'entity_guid',
+		));
 	
 		$return = array (
 			'joins' => array (),
@@ -641,7 +644,10 @@ class MetadataTable {
 				// for comparing
 				$trimmed_operand = trim(strtolower($operand));
 	
-				$access = _elgg_get_access_where_sql(array('table_alias' => "n_table{$i}"));
+				$access = _elgg_get_access_where_sql(array(
+					'table_alias' => "n_table{$i}",
+					'guid_column' => 'entity_guid',
+				));
 
 				// certain operands can't work well with strings that can be interpreted as numbers
 				// for direct comparisons like IN, =, != we treat them as strings
@@ -735,7 +741,10 @@ class MetadataTable {
 					$return['joins'][] = "JOIN {$this->metastringsTable->getTableName()} msv{$i}
 						on n_table{$i}.value_id = msv{$i}.id";
 	
-					$access = _elgg_get_access_where_sql(array('table_alias' => "n_table{$i}"));
+					$access = _elgg_get_access_where_sql(array(
+						'table_alias' => "n_table{$i}",
+						'guid_column' => 'entity_guid',
+					));
 	
 					$return['wheres'][] = "(msn{$i}.string = '$name' AND $access)";
 					if (isset($order_by['as']) && $order_by['as'] == 'integer') {
