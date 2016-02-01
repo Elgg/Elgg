@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg Core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-14 10:28+0200\n"
+"POT-Creation-Date: 2016-01-03 09:40+0200\n"
 "PO-Revision-Date: 2015-08-24 06:41+0000\n"
 "Last-Translator: Jordi Brunet Castellano <jbrus77@cryptolab.net>\n"
 "Language-Team: Catalan (http://www.transifex.com/elgg/elgg-core/language/ca/)\n"
@@ -18,63 +18,48 @@ msgstr ""
 "Language: ca\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# 13cd427b16734e5aa396ed5a25503eac
 #: ../../about/contributing.rst:4
 msgid "Contributor Guide"
 msgstr "Guia del coautor"
 
-# 08092a0e3a1f4921b2a0788d9c9ae33d
-# f36dac2ce6294af4847d9b5a6a464b18
-# e1404cbfd7844f6992874655b5ddfb2d
-# 20217d82a6fe4ebf98ae60d7246696e5
-# eebb1d9b0e0748269f0ce9191429289d
 #: ../../about/contributing.rst:6 ../../about/history.rst:6
 #: ../../about/index.rst:6 ../../about/releases.rst:6
 #: ../../about/roadmap.rst:6
 msgid "This page has moved."
 msgstr "Aquesta pàgina ha canviat de lloc"
 
-# 6cafc82ef3924917bb8cce2bac236a10
 #: ../../about/contributing.rst:8
 msgid ":doc:`/contribute/index`"
 msgstr ":doc:`/contribute/index`"
 
-# c945869b57c94f19a35d37469303280a
 #: ../../about/history.rst:4
 msgid "History"
 msgstr "Històric del a pàgina"
 
-# b1cb90e4fdfa4288ac7668d46e284073
 #: ../../about/history.rst:8
 msgid ":doc:`/appendix/history`"
 msgstr ":doc:`/appendix/history`"
 
-# 3163b182376f4b24a4e3a392cb1cb27d
 #: ../../about/index.rst:4
 msgid "About"
 msgstr "Sobre"
 
-# 10587744fe5e468fa8b3b499b01a21bb
 #: ../../about/index.rst:8
 msgid ":doc:`/appendix/index`"
 msgstr ":doc:`/appendix/index`"
 
-# 0c99e7832157495abbe003221eec88b7
 #: ../../about/releases.rst:4
 msgid "Release Policy"
 msgstr "Política d'alliberament"
 
-# bb1051683c0d419090957b42351ce0ab
 #: ../../about/releases.rst:8
 msgid ":doc:`/appendix/releases`"
 msgstr ":doc:`/appendix/releases`"
 
-# facd33c1545f4952b161f587877036a2
 #: ../../about/roadmap.rst:4
 msgid "Roadmap"
 msgstr "Full de ruta"
 
-# c22306a222ef43c6bb644dcbe4e211e8
 #: ../../about/roadmap.rst:8
 msgid ":doc:`/appendix/roadmap`"
 msgstr ":doc:`/appendix/roadmap`"

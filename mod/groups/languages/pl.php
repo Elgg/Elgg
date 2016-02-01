@@ -58,7 +58,7 @@ return array(
 	'groups:cantcreate' => 'Nie możesz utworzyć grupy. Tylko administrator ma taką możliwość.',
 	'groups:cantedit' => 'Nie można edytować tej grupy',
 	'groups:saved' => 'Grupa zapisana',
-	'groups:save_error' => 'Group could not be saved',
+	'groups:save_error' => 'Nie można zapisać grupy',
 	'groups:featured' => 'Promowane grupy',
 	'groups:makeunfeatured' => 'Przestań promować',
 	'groups:makefeatured' => 'Promuj',

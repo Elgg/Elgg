@@ -427,7 +427,7 @@ return array(
 	'user:password:fail:tooshort' => "Salasana on liian lyhyt!",
 	'user:password:fail:incorrect_current_password' => 'Salasana ei vastannut nykyistä salsanaasi.',
 	'user:changepassword:unknown_user' => 'Virheellinen käyttäjä.',
-	'user:changepassword:change_password_confirm' => 'Salasanan nollaus lähettää uuden salasanan sähköpostitse aiemmin rekisteröimääsi sähköpostiosoitteeseen.',
+	'user:changepassword:change_password_confirm' => 'Syötä uusi salasana unohtuneen tilalle.',
 
 	'user:set:language' => "Kieliasetukset",
 	'user:language:label' => "Kieli",
@@ -440,7 +440,7 @@ return array(
 	'user:password:changereq:success' => 'Pyydettiin uutta salasanaa, sähköposti lähetetty',
 	'user:password:changereq:fail' => 'Uuden salasanan pyytäminen epäonnistui.',
 
-	'user:password:text' => 'Anoaksesi uuden salasanan, syötä alle käyttäjätunnuksesi. Saat sähköpostiisi linkin, jota klikkaamalla sinulle lähetetään uusi salasana.',
+	'user:password:text' => 'Syötä käyttäjätilisi tiedot, niin saat sähköpostiisi linkin, jonka avulla voit vaihtaa salasanasi.',
 
 	'user:persistent' => 'Muista minut',
 

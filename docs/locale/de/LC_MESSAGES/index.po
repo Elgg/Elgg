@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Elgg Core\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2015-12-14 10:28+0200\n"
+"POT-Creation-Date: 2016-01-03 09:40+0200\n"
 "PO-Revision-Date: 2015-08-24 06:41+0000\n"
 "Last-Translator: iionly_de <iionly@gmx.de>\n"
 "Language-Team: German (http://www.transifex.com/elgg/elgg-core/language/de/)\n"
@@ -17,12 +17,10 @@ msgstr ""
 "Language: de\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-# 2b93074accff482ca5ddb6fbbed7f41f
 #: ../../index.rst:2
 msgid "Elgg |version| Documentation"
 msgstr "Dokumentation für Elgg |version|"
 
-# 4827c62013d34a0e9261bf7d24500876
 #: ../../index.rst:4
 msgid ""
 "Elgg_ (:download:`pronunciation <_elgg_files/How_to_say_Elgg.mp3>`) is a "
@@ -30,47 +28,38 @@ msgid ""
 " for building any app where users log in and share information."
 msgstr "Elgg_ (:download:`Aussprache <_elgg_files/How_to_say_Elgg.mp3>`) ist ein Rapid Development-Framework mit integrierter Social Network-Funktionalität. Es eignet sich besonders für die Erstellung von Anwendungen, bei denen die Erzeugung und Verwaltung von Benutzeraccounts notwendig ist und bei denen es den Anwendern möglich sein soll, untereinander Daten und Informationen zu teilen."
 
-# 4351abb2e52c4eb89897b90d90cbac94
 #: ../../index.rst:7
 msgid "It has been used to build `all kinds of social apps`__:"
 msgstr "Es wurde bereits für die Erstellung der `verschiedensten Social Network-Anwendungen`__ verwendet:"
 
-# e19bdca814b14feebd6d4126f6c361f5
 #: ../../index.rst:11
 msgid "open networks (similar to Facebook)"
 msgstr "offene Social Network-Webseiten (ähnlich zu Facebook)"
 
-# df41cbab72b849169edaef655ea8c34d
 #: ../../index.rst:12
 msgid "topical (like the Elgg Community)"
 msgstr "themenbezogene Social Network-Webseiten (wie der Elgg-Community-Seite)"
 
-# ed1c67046a6743adbfa971c66084c125
 #: ../../index.rst:13
 msgid "private intranets"
 msgstr "geschlossene Intranet-Seiten"
 
-# 40ec6c743c20425a8ae3d935415545b1
 #: ../../index.rst:14
 msgid "dating"
 msgstr "Partnervermittlungs-Webseiten"
 
-# 19afc4452c2548b495bb006fd35c2ae2
 #: ../../index.rst:15
 msgid "educational"
 msgstr "Webseiten für Bildungseinrichtungen"
 
-# bb499dda887845ce869f803d332489c3
 #: ../../index.rst:16
 msgid "company blog"
 msgstr "Firmenblogs"
 
-# 9ae9bd998c0c46e9b5a0a8d486d73eae
 #: ../../index.rst:18
 msgid "There is also a `demo site`_ running a standard installation of Elgg."
 msgstr "Es steht auch eine `Demo-Webseite`_ mit einer Standard-Elgg-Installation zur Verfügung"
 
-# b2349547b52444459f9339daafce337b
 #: ../../index.rst:20
 msgid "This is the canonical documentation for the Elgg_ project."
 msgstr "Im Folgenden ist die Gliederung der Dokumentation für Elgg_ dargestellt."
