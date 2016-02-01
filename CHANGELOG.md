@@ -1,3 +1,17 @@
+<a name="1.12.8"></a>
+### 1.12.8  (2016-01-31)
+
+#### Contributors
+
+* Ismayil Khayredinov (1)
+* Juho Jaakkola (1)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **access:** fixes guid column name in metadata queries ([b3427ccc](https://github.com/Elgg/Elgg/commit/b3427ccc81b0dd40188117a42366f1259cedd1a1))
+
+
 <a name="1.12.7"></a>
 ### 1.12.7  (2016-01-03)
 
