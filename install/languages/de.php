@@ -59,12 +59,14 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:database:label:dbname' => 'Datenbank-Name',
 	'install:database:label:dbhost' => 'Datenbank-Host',
 	'install:database:label:dbprefix' => 'Tabellen-Prefix',
+	'install:database:label:timezone' => "Zeitzone",
 
 	'install:database:help:dbuser' => 'Der Benutzername des MySQL-Accounts, der alle notwendigen Zugriffsprivilegien für die von Elgg zu verwendende Datenbank hat',
 	'install:database:help:dbpassword' => 'Das Passwort für den zu verwendeten Benutzeraccount',
 	'install:database:help:dbname' => 'Der Name der von zu verwendenden Datenbank',
 	'install:database:help:dbhost' => 'Der Hostname des MySQL-Servers (normalerweise \'localhost\')',
 	'install:database:help:dbprefix' => "Das Tabellen-Prefix das bei allen Elgg-Tabellen in der Datenbank gesetzt wird (normalerweise \'elgg_\')",
+	'install:database:help:timezone' => "Die Zeitzone, die von der Elggseite standardmäßig verwendet werden soll",
 
 	'install:settings:instructions' => 'Für die weitere Konfiguration der Elgg-Seite benötigen wir einige Eingaben. Wenn Du noch kein\'t <a href=""http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">Elgg-Datenverzeichnis</a> angelegt hast, mußt Du dies jetzt tun.',
 

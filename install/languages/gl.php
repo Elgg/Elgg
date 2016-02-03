@@ -60,12 +60,14 @@ Se estás listo para continuar, preme o botón de «Seguinte».",
 	'install:database:label:dbname' => 'Base de datos',
 	'install:database:label:dbhost' => 'Servidor',
 	'install:database:label:dbprefix' => 'Prefixo das táboas',
+	'install:database:label:timezone' => "Timezone",
 
 	'install:database:help:dbuser' => 'Usuario que ten todos os permisos posíbeis sobre a base de datos MySQL que creou para Elgg.',
 	'install:database:help:dbpassword' => 'Contrasinal da conta de usuario da base de datos introducida no campo anterior.',
 	'install:database:help:dbname' => 'Nome da base de datos para Elgg.',
 	'install:database:help:dbhost' => 'Enderezo do servidor de MySQL (normalmente é «localhost»).',
 	'install:database:help:dbprefix' => "O prefixo que se lles engade a todas as táboas de Elgg (normalmente é «elgg_»).",
+	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
 	'install:settings:instructions' => 'Necesítase algunha información sobre o sitio durante a configuración de Elgg. Se aínda non <a href="http://learn.elgg.org/en/1.x/intro/install.html#create-a-data-folder" target="_blank">creou un cartafol de datos</a> para Elgg, fágao agora.',
 
