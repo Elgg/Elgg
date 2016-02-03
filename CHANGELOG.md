@@ -1,3 +1,37 @@
+<a name="2.0.2"></a>
+### 2.0.2  (2016-02-03)
+
+#### Contributors
+
+* Steve Clay (10)
+* Juho Jaakkola (3)
+* Ismayil Khayredinov (2)
+* Wouter van Os (1)
+
+#### Documentation
+
+* **events:** Clarify scope of HooksRegistrationService::hasHandler ([498abdde](https://github.com/Elgg/Elgg/commit/498abdde342cdf29a32bcd2dfef1c6f3176fc314), closes [#9325](https://github.com/Elgg/Elgg/issues/9325))
+* **js:** warn devs that that elgg_define_js() configuration is cached ([a078c030](https://github.com/Elgg/Elgg/commit/a078c030346e5d67aba216631f44a788c0b273cb), closes [#9302](https://github.com/Elgg/Elgg/issues/9302))
+* **notifications:** Updated subject variable to body ([0cde3006](https://github.com/Elgg/Elgg/commit/0cde30064f828b94ce0a72a334d2cca3b1adbb85))
+* **routing:** clarify use of default_page_owner_handler in core ([5d647d18](https://github.com/Elgg/Elgg/commit/5d647d18056bf1eef644dd30c9920df9a78d2f8d))
+
+
+#### Bug Fixes
+
+* **installer:**
+  * don't fatal trying to rewrite the .htaccess file ([5e74932b](https://github.com/Elgg/Elgg/commit/5e74932b525beb8cdc26353e9e084612cc699e06), closes [#9334](https://github.com/Elgg/Elgg/issues/9334))
+  * detect PDO MySQL extension instead of ext/mysql ([98c8e418](https://github.com/Elgg/Elgg/commit/98c8e418482b5aa517aa5198f02043e0dabb0e93), closes [#9313](https://github.com/Elgg/Elgg/issues/9313))
+  * installer no longer fails on PHP 7 ([4d796279](https://github.com/Elgg/Elgg/commit/4d796279d6e2be3c2609c408ecd3d875e4062525), closes [#9314](https://github.com/Elgg/Elgg/issues/9314))
+* **javascript:** replaces calls to obsolete $.die() method with $.off() ([82a08f56](https://github.com/Elgg/Elgg/commit/82a08f56af29fc1e7dd7822dcaa0171aa9fe8275), closes [#9309](https://github.com/Elgg/Elgg/issues/9309))
+* **menus:** menu item labels now match page titles in tool settings ([bc8f8dd3](https://github.com/Elgg/Elgg/commit/bc8f8dd3a6054e7c7c589fe45a0d49dd6bca1653))
+* **notifications:** set page context before pagesetup is fired ([d4c86cde](https://github.com/Elgg/Elgg/commit/d4c86cde521956632c73c4858c1d27ad1d0f406d))
+* **profile:** don't show removed description field ([9846c4a4](https://github.com/Elgg/Elgg/commit/9846c4a462e1b2648eec03a4285f89b9c7af53f0), closes [#8984](https://github.com/Elgg/Elgg/issues/8984))
+* **views:**
+  * resources/error view now renders sanely within /admin ([c0b1a703](https://github.com/Elgg/Elgg/commit/c0b1a70336ba501ef2ee8074c39d2bbef5aec98b), closes [#9327](https://github.com/Elgg/Elgg/issues/9327))
+  * don't pass null to array arguments (for PHP 7) ([e0d5433f](https://github.com/Elgg/Elgg/commit/e0d5433fd69875e5e9fd8ca823f74e8b7715c5f8), closes [#9318](https://github.com/Elgg/Elgg/issues/9318))
+  * locations specified in /engine/views.php are modifiable ([3cc5b5b3](https://github.com/Elgg/Elgg/commit/3cc5b5b3a7d71341b36fb5a1b42a6678f2d8060e), closes [#9308](https://github.com/Elgg/Elgg/issues/9308))
+
+
 <a name="2.0.1"></a>
 ### 2.0.1  (2016-01-03)
 
