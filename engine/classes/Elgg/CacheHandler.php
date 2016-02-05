@@ -191,11 +191,13 @@ class CacheHandler {
 		$segments = explode('/', $view, 2);
 		switch ($segments[0]) {
 			case 'css':
-				header("Content-Type: text/css", true);
+				header("Content-Type: text/css;charset=utf-8");
 				break;
 			case 'js':
-				header('Content-Type: text/javascript', true);
+				header('Content-Type: text/javascript;charset=utf-8');
 				break;
+			default:
+				header('Content-Type: text/html;charset=utf-8');
 		}
 	}
 

@@ -346,9 +346,9 @@ class ActionsService {
 			// however some browsers will not accept the JSON MIME type.
 			$http_accept = _elgg_services()->request->server->get('HTTP_ACCEPT');
 			if (stripos($http_accept, 'application/json') === false) {
-				header("Content-type: text/plain");
+				header("Content-type: text/plain;charset=utf-8");
 			} else {
-				header("Content-type: application/json");
+				header("Content-type: application/json;charset=utf-8");
 			}
 	
 			echo json_encode($params);

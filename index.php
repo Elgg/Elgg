@@ -57,6 +57,9 @@ require_once(dirname(__FILE__) . "/engine/start.php");
 $router = _elgg_services()->router;
 $request = _elgg_services()->request;
 
+// TODO use formal Response object instead
+header("Content-Type: text/html;charset=utf-8");
+
 if (!$router->route($request)) {
 	forward('', '404');
 }
