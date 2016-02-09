@@ -46,7 +46,12 @@ class DownloadFileHandler {
 			return $response->setStatusCode(400)->setContent('Malformatted request URL');
 		}
 
-		$this->application->start();
+		$this->application->bootCore();
+
+		// remove headers set by session
+		header_remove('Expires');
+		header_remove('Pragma');
+		header_remove('Cache-Control');
 
 		$guid = (int) $m[1];
 		$file = get_entity($guid);
