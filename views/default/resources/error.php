@@ -30,8 +30,10 @@ if (isset($httpCodes[$type])) {
 	header("HTTP/1.1 $type {$httpCodes[$type]}");
 }
 
-$body = elgg_view_layout('error', array(
+$layout = elgg_in_context('admin') ? 'admin' : 'error';
+
+$body = elgg_view_layout($layout, array(
 	'title' => $title,
 	'content' => $content,
 ));
-echo elgg_view_page($title, $body, 'error');
+echo elgg_view_page($title, $body, $layout);

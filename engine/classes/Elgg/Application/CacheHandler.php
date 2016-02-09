@@ -36,6 +36,14 @@ class CacheHandler {
 		'otf' => "application/font-otf",
 	];
 
+	public static $utf8_content_types = [
+		"text/css",
+		"text/html",
+		"application/javascript",
+		"image/svg+xml",
+		"text/xml",
+	];
+
 	/** @var Application */
 	private $application;
 
@@ -76,12 +84,16 @@ class CacheHandler {
 		$view = $request['view'];
 		$viewtype = $request['viewtype'];
 
-		$contentType = $this->getContentType($view);
-		if (empty($contentType)) {
+		$content_type = $this->getContentType($view);
+		if (empty($content_type)) {
 			$this->send403("Asset must have a valid file extension");
 		}
 
-		header("Content-Type: $contentType", true);
+		if (in_array($content_type, self::$utf8_content_types)) {
+			header("Content-Type: $content_type;charset=utf-8");
+		} else {
+			header("Content-Type: $content_type");
+		}
 
 		// this may/may not have to connect to the DB
 		$this->setupSimplecache();
