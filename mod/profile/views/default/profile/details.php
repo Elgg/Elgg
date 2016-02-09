@@ -75,7 +75,7 @@ if (is_array($profile_fields) && sizeof($profile_fields) > 0) {
 	}
 }
 
-if ($user->description) {
+if (isset($profile_fields['description']) && $user->description) {
 	echo "<p class='profile-aboutme-title'><b>" . elgg_echo("profile:aboutme") . "</b></p>";
 	echo "<div class='profile-aboutme-contents'>";
 	echo elgg_view('output/longtext', array('value' => $user->description, 'class' => 'mtn'));

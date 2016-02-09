@@ -1606,7 +1606,7 @@ function _elgg_ajax_page_handler($segments) {
 
 		// legacy XHR behavior
 		if ($content_type) {
-			header("Content-Type: $content_type");
+			header("Content-Type: $content_type;charset=utf-8");
 		}
 		echo $output;
 		return true;
@@ -1702,7 +1702,7 @@ function _elgg_cacheable_view_page_handler($page, $type) {
 		}
 		$return = elgg_view($view);
 
-		header("Content-type: $content_type");
+		header("Content-type: $content_type;charset=utf-8");
 
 		// @todo should js be cached when simple cache turned off
 		//header('Expires: ' . gmdate('D, d M Y H:i:s \G\M\T', strtotime("+10 days")), true);
@@ -1977,7 +1977,7 @@ function _elgg_init() {
 	elgg_register_page_handler('manifest.json', function() {
 		$site = elgg_get_site_entity();
 		$resource = new \Elgg\Http\WebAppManifestResource($site);
-		header('Content-Type: application/json');
+		header('Content-Type: application/json;charset=utf-8');
 		echo json_encode($resource->get());
 		return true;
 	});
