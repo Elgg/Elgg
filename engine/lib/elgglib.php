@@ -1561,10 +1561,10 @@ function _elgg_ajax_page_handler($segments) {
 			// Try to guess the mime-type
 			switch ($segments[1]) {
 				case "js":
-					header("Content-Type: text/javascript");
+					header("Content-Type: text/javascript;charset=utf-8");
 					break;
 				case "css":
-					header("Content-Type: text/css");
+					header("Content-Type: text/css;charset=utf-8");
 					break;
 			}
 
