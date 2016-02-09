@@ -23,6 +23,9 @@ class ElggBreadcrumbsTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testCrumbsCanBePopped() {
+		// disable the default behavior that auto-removes the final non-link in get
+		_elgg_services()->hooks->backup();
+
 		elgg_push_breadcrumb('title 1');
 
 		elgg_push_breadcrumb('title 2', 'path2');
@@ -36,6 +39,8 @@ class ElggBreadcrumbsTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(array('title' => 'title 1', 'link' => null), elgg_pop_breadcrumb());
 
 		$this->assertEquals(array(), elgg_get_breadcrumbs());
+
+		_elgg_services()->hooks->restore();
 	}
 
 	public function testCanAlterCrumbsViaHook() {
