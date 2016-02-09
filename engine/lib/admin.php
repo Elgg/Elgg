@@ -243,7 +243,6 @@ function _elgg_admin_init() {
 	elgg_register_action('profile/fields/reorder', '', 'admin');
 
 	elgg_register_simplecache_view('admin.css');
-	elgg_register_js('elgg.upgrades', 'js/lib/upgrades.js');
 	elgg_register_js('jquery.jeditable', elgg_get_simplecache_url('jquery.jeditable.js'));
 
 	// administer
@@ -343,6 +342,19 @@ function _elgg_admin_init() {
 	elgg_register_page_handler('admin', '_elgg_admin_page_handler');
 	elgg_register_page_handler('admin_plugin_text_file', '_elgg_admin_markdown_page_handler');
 	elgg_register_page_handler('robots.txt', '_elgg_robots_page_handler');
+}
+
+/**
+ * Setup after plugins are initialized
+ *
+ * @access private
+ * @return void
+ */
+function _elgg_admin_ready() {
+	// if a plugin has extended the deprecated admin.js view, register it for simplecache loading.
+	if (elgg_view_exists('admin.js')) {
+		elgg_register_simplecache_view('admin.js');
+	}
 }
 
 /**
@@ -505,6 +517,14 @@ function _elgg_admin_page_handler($page) {
 
 	elgg_unregister_css('elgg');
 	elgg_require_js('elgg/admin');
+
+	// if a plugin has extended the deprecated admin.js view, add it to the page
+	if (elgg_view_exists('admin.js')) {
+		elgg_deprecated_notice("The view admin.js (AKA js/admin) is deprecated", "2.0");
+		elgg_register_js('elgg.deprecated.admin', elgg_get_simplecache_url('admin.js'));
+		elgg_load_js('elgg.deprecated.admin');
+	}
+
 	elgg_load_js('jquery.jeditable');
 
 	// default to dashboard
@@ -717,4 +737,5 @@ function _elgg_add_admin_widgets($event, $type, $user) {
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('init', 'system', '_elgg_admin_init');
+	$events->registerHandler('ready', 'system', '_elgg_admin_ready');
 };

@@ -1,3 +1,118 @@
+<a name="2.0.1"></a>
+### 2.0.1  (2016-01-03)
+
+#### Contributors
+
+* Matt Beckett (4)
+* Juho Jaakkola (3)
+* Ismayil Khayredinov (2)
+* Juho Jaakkola (2)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **admin:** Allow plugins to extend js/admin but deprecate it ([a5c2abdf](https://github.com/Elgg/Elgg/commit/a5c2abdf9669db75a4d080e274c0fe78851a7cf8), closes [#9238](https://github.com/Elgg/Elgg/issues/9238))
+* **collections:** only register collections menu items when logged in ([1b88d43a](https://github.com/Elgg/Elgg/commit/1b88d43a9b0033d7f1681eec4d70644e6396369a), closes [#9249](https://github.com/Elgg/Elgg/issues/9249))
+* **comments:** validate array structure before calling elgg_extract() ([1078b65d](https://github.com/Elgg/Elgg/commit/1078b65de759c662318f03e90b50ee3e7fdd2bad))
+* **entities:** fix php notice when editing metadata while not-logged-in ([64bb369f](https://github.com/Elgg/Elgg/commit/64bb369fd83be95fa46fc41aa4849d747ea03437), closes [#9256](https://github.com/Elgg/Elgg/issues/9256))
+* **groups:** link to membership requests page is visible again ([8e3bb84a](https://github.com/Elgg/Elgg/commit/8e3bb84a8bac739354664b08f9f3bc2324ce9978))
+* **install:** Set default timezone on installation ([7d5a2b05](https://github.com/Elgg/Elgg/commit/7d5a2b05d15956c70bd325e246fd0af89f305023), closes [#8845](https://github.com/Elgg/Elgg/issues/8845))
+* **js:** prevent multiple togglable menu item bindings ([e7f33013](https://github.com/Elgg/Elgg/commit/e7f330134e28a8fe2753c0943599eb50ea5512df), closes [#9151](https://github.com/Elgg/Elgg/issues/9151))
+* **notifications:**
+  * default settings now get enabled also for new friends ([e84fc160](https://github.com/Elgg/Elgg/commit/e84fc160b99a66816f70674e497acabfdd73a4bb))
+  * notifications about new friends work again ([a23683ee](https://github.com/Elgg/Elgg/commit/a23683ee5e3a06fbb0d1234e5a9fea0ac49947fc))
+* **relationships:** prevent sql exception on duplicate relationships race condition ([9e469da9](https://github.com/Elgg/Elgg/commit/9e469da988d288969706ef61970e2044a442d162), closes [#9179](https://github.com/Elgg/Elgg/issues/9179))
+* **simplecache:** removes warning about using mkdir() when cache directory exists ([3bae0bf5](https://github.com/Elgg/Elgg/commit/3bae0bf58d7809b430cb4708b13a0b79c2d361c4), closes [#9219](https://github.com/Elgg/Elgg/issues/9219))
+
+
+<a name="2.0.0"></a>
+## 2.0.0  (2015-12-14)
+
+#### Contributors
+
+* Steve Clay (3)
+* Juho Jaakkola (3)
+
+#### Documentation
+
+* **notifications:** documents workflow of the asynchronous notification system ([209b6a51](https://github.com/Elgg/Elgg/commit/209b6a51bcb0a76cffefe0e732d1bae216386e31), closes [#7496](https://github.com/Elgg/Elgg/issues/7496))
+
+
+#### Bug Fixes
+
+* **a11y:** aalborg mobile site menu uses the Font Awesome fa-bars icon ([a6a512e3](https://github.com/Elgg/Elgg/commit/a6a512e30f7298736566977f8d943d7f35be489e), closes [#9110](https://github.com/Elgg/Elgg/issues/9110))
+
+
+#### Deprecations
+
+* **file:** Deprecates accessing filestore metadata ([363b461d](https://github.com/Elgg/Elgg/commit/363b461d51508ea8b9ba30a89de97c6433a34907))
+
+
+#### Breaking Changes
+
+* In aalborg_theme, the view `page/elements/navbar` now uses an icon for the
+mobile menu selector (formerly an image). The `bars.png` image and supporting
+CSS for the 1.12 rendering has been removed.
+
+Fixes #9110 ([a6a512e3](https://github.com/Elgg/Elgg/commit/a6a512e30f7298736566977f8d943d7f35be489e))
+
+
+<a name="2.0.0-rc.2"></a>
+### 2.0.0-rc.2  (2015-11-29)
+
+#### Contributors
+
+* Steve Clay (10)
+* Ismayil Khayredinov (4)
+* Juho Jaakkola (4)
+
+#### Performance
+
+* **river:** no longer needlessly render river responses ([97df230f](https://github.com/Elgg/Elgg/commit/97df230f4c496d773e50060bf84fef5ae7052b24), closes [#9046](https://github.com/Elgg/Elgg/issues/9046))
+
+
+#### Bug Fixes
+
+* **files:** make sure method is callable on a concrete object instance ([740d3108](https://github.com/Elgg/Elgg/commit/740d3108a30733d02a98e9aed7516f92033cd8a9), closes [#9010](https://github.com/Elgg/Elgg/issues/9010))
+* **i18n:** avoids using mbstring.internal_encoding in PHP >= 5.6 ([c0ff79de](https://github.com/Elgg/Elgg/commit/c0ff79de100cc8e48fd69d01883c946669b5b275), closes [#9031](https://github.com/Elgg/Elgg/issues/9031))
+* **likes:** count is updated after liking/unliking ([dae30cb7](https://github.com/Elgg/Elgg/commit/dae30cb71e8d1900bac8730e594ca8d5ea8d0154), closes [#9100](https://github.com/Elgg/Elgg/issues/9100))
+* **memcache:** don't store a copy of $CONFIG in file objects ([beb90891](https://github.com/Elgg/Elgg/commit/beb9089129a0a06b36200f3f8d214c7ed8f94f42), closes [#9081](https://github.com/Elgg/Elgg/issues/9081))
+* **pages:** removes deprecated notices regarding input/write_access ([fdcab74b](https://github.com/Elgg/Elgg/commit/fdcab74b1e9069736f88f7e9aa36aeb15067b8fe), closes [#8327](https://github.com/Elgg/Elgg/issues/8327))
+* **river:** floated river selector no longer breaks layout ([2745c914](https://github.com/Elgg/Elgg/commit/2745c91460915ae47519d79f70aa71736eda3449), closes [#9091](https://github.com/Elgg/Elgg/issues/9091))
+
+
+#### Breaking Changes
+
+* The report content icon is now a FontAwesome icon, however the GIF used in 1.x
+is still available. ([96d258fa](https://github.com/Elgg/Elgg/commit/96d258fa0083b73ce86aa2532838ece3aaa8a30d))
+* Plugins that override the ``input/autocomplete`` view will need to include the
+source URL in the ``data-source`` attribute of the input element, require the
+new ``elgg/autocomplete`` AMD module, and call its ``init`` method. The 1.x
+javascript library ``elgg.autocomplete`` is no longer used.
+ ([2a0cf9a5](https://github.com/Elgg/Elgg/commit/2a0cf9a5bf628f2be0a13c95226e2b85c57f13a9))
+
+
+<a name="2.0.0-rc.1"></a>
+### 2.0.0-rc.1  (2015-11-07)
+
+#### Contributors
+
+* Steve Clay (12)
+* iionly (3)
+
+#### Bug Fixes
+
+* **http:** allows sending gzipped JavaScript on nginx < 1.5.4 ([4c4b8ab7](https://github.com/Elgg/Elgg/commit/4c4b8ab7aee765d09bc59d541693e5a2643bb3ba))
+* **likes:** likes preloader and entity menus now consider likability ([de81d7da](https://github.com/Elgg/Elgg/commit/de81d7daf1f49eba179ec6acea4cf633d14ec803), closes [#9065](https://github.com/Elgg/Elgg/issues/9065))
+* **views:** input/userpicker API more BC with 1.8 plugins ([0651a5fd](https://github.com/Elgg/Elgg/commit/0651a5fdc075bde1f09f6ee27252a7ba471216f1), closes [#6079](https://github.com/Elgg/Elgg/issues/6079))
+
+
+#### Breaking Changes
+
+* To allow for usage of the z-index property for elements in the content area without the More menu dropdown being displayed behind these elements the z-index value in the elgg-menu site class has been increased to 50
+ ([34af1d71](https://github.com/Elgg/Elgg/commit/34af1d71ab57110128c6d44f2b7af53c7c29c873))
+
+
 <a name="2.0.0-beta.3"></a>
 ### 2.0.0-beta.3  (2015-10-04)
 
@@ -514,6 +629,69 @@ change them to external AMD modules and load them with `elgg_require_js`.
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
 
 
+<a name="1.12.7"></a>
+### 1.12.7  (2016-01-03)
+
+#### Contributors
+
+* Steve Clay (4)
+* Ismayil Khayredinov (1)
+* Juho Jaakkola (1)
+
+#### Bug Fixes
+
+* **logging:** Log messages no longer discarded ([5020c525](https://github.com/Elgg/Elgg/commit/5020c5251f35c8bd83b5b1472eafd34d96a77a35), closes [#9244](https://github.com/Elgg/Elgg/issues/9244))
+* **menus:** stricter type validation in menu item registration functions ([c5554a75](https://github.com/Elgg/Elgg/commit/c5554a75bb45acf9f27c13a8d58a0e099063cf26))
+* **php:** Suppress mysql_connect() deprecation warnings for core ([40fe0a8f](https://github.com/Elgg/Elgg/commit/40fe0a8f4d36e7a3f0947c9f4148b7ccb8f0a0ee), closes [#9245](https://github.com/Elgg/Elgg/issues/9245))
+* **session:** Session is again available in the shutdown event ([2409d346](https://github.com/Elgg/Elgg/commit/2409d346a95a1c5a254f32d51204054a939b7e95), closes [#9243](https://github.com/Elgg/Elgg/issues/9243))
+
+
+<a name="1.12.6"></a>
+### 1.12.6  (2015-12-14)
+
+#### Contributors
+
+* Ismayil Khayredinov (4)
+* Juho Jaakkola (1)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **a11y:** display aalborg mobile site menu toggle in more browsers ([e96f0798](https://github.com/Elgg/Elgg/commit/e96f07987b943a4c72f654ef7896f2e98d7ac23e), closes [#9110](https://github.com/Elgg/Elgg/issues/9110))
+* **actions:** send error HTTP header from action forward hook ([d3344de7](https://github.com/Elgg/Elgg/commit/d3344de7ed92d5ee8ecca43e474c6555861f5dad), closes [#9027](https://github.com/Elgg/Elgg/issues/9027))
+* **entities:** update attribute when assuming container_guid value ([a21dd95e](https://github.com/Elgg/Elgg/commit/a21dd95ed76a4b6629c69fd7e000aabd2e7cce99), closes [#8981](https://github.com/Elgg/Elgg/issues/8981))
+* **menus:** make sure entity passed to user hover menu hook is a user ([f5bbcc65](https://github.com/Elgg/Elgg/commit/f5bbcc652078a317479c8e845a8f4951f37d5435))
+* **output:** fixes handling of untrusted URLs in output/url ([217e4df6](https://github.com/Elgg/Elgg/commit/217e4df6ea186660c85310a57e1218eb54ec90d1), closes [#9146](https://github.com/Elgg/Elgg/issues/9146))
+
+#### Breaking changes
+
+* Plugins that customized `.elgg-button-nav` (or the spans inside) will need
+to be altered. The `.elgg-icon` CSS is left in place but will be removed in
+Elgg 2.0. ([e96f0798](https://github.com/Elgg/Elgg/commit/e96f07987b943a4c72f654ef7896f2e98d7ac23e))
+
+
+<a name="1.12.5"></a>
+### 1.12.5  (2015-11-29)
+
+#### Contributors
+
+* Steve Clay (5)
+* Juho Jaakkola (4)
+* Ismayil Khayredinov (3)
+
+#### Performance
+
+* **river:** no longer needlessly render river responses ([97df230f](https://github.com/Elgg/Elgg/commit/97df230f4c496d773e50060bf84fef5ae7052b24), closes [#9046](https://github.com/Elgg/Elgg/issues/9046))
+
+
+#### Bug Fixes
+
+* **files:** make sure method is callable on a concrete object instance ([740d3108](https://github.com/Elgg/Elgg/commit/740d3108a30733d02a98e9aed7516f92033cd8a9), closes [#9010](https://github.com/Elgg/Elgg/issues/9010))
+* **i18n:** avoids using mbstring.internal_encoding in PHP >= 5.6 ([c0ff79de](https://github.com/Elgg/Elgg/commit/c0ff79de100cc8e48fd69d01883c946669b5b275), closes [#9031](https://github.com/Elgg/Elgg/issues/9031))
+* **memcache:** don't store a copy of $CONFIG in file objects ([beb90891](https://github.com/Elgg/Elgg/commit/beb9089129a0a06b36200f3f8d214c7ed8f94f42), closes [#9081](https://github.com/Elgg/Elgg/issues/9081))
+* **pages:** removes deprecated notices regarding input/write_access ([fdcab74b](https://github.com/Elgg/Elgg/commit/fdcab74b1e9069736f88f7e9aa36aeb15067b8fe), closes [#8327](https://github.com/Elgg/Elgg/issues/8327))
+
+
 <a name="1.12.4"></a>
 ### 1.12.4  (2015-09-20)
 
@@ -647,6 +825,20 @@ Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34fe
 * **views:**
   * elgg_get_view_location is going away in 2.0 ([b4347fb4](https://github.com/Elgg/Elgg/commit/b4347fb4209dd1a09d5ad0d1ef2d546169aeb5b9))
   * Support for custom template handlers will end soon ([0dc67698](https://github.com/Elgg/Elgg/commit/0dc67698f6def5fa6cea32dd1171d1166e9c4e29))
+
+
+<a name="1.11.5"></a>
+### 1.11.5  (2015-12-13)
+
+#### Contributors
+
+* Steve Clay (1)
+* Juho Jaakkola (1)
+
+#### Bug Fixes
+
+* **views:** Sticky values now get passed into views extending register/extend (Fixes [#8873](https://github.com/Elgg/Elgg/issues/8873))
+* **memcache:** don't store a copy of $CONFIG in file objects (Fixes [#9081](https://github.com/Elgg/Elgg/issues/9081))
 
 
 <a name="1.11.4"></a>

@@ -97,6 +97,40 @@ class ElggCoreFilestoreTest extends \ElggCoreUnitTest {
 		}
 	}
 
+	function testDetectMimeType() {
+
+		$user = $this->createTestUser();
+
+		$file = new \ElggFile();
+		$file->owner_guid = $user->guid;
+		$file->setFilename('testing/filestore.txt');
+		$file->open('write');
+		$file->write('Testing!');
+		$file->close();
+
+		$mime = $file->detectMimeType(null, 'text/plain');
+
+		// mime should not be null if default is set
+		$this->assertTrue(isset($mime));
+
+		// mime of a file object should match mime of a file path that represents this file on filestore
+		$resource_mime = $file->detectMimeType($file->getFilenameOnFilestore(), 'text/plain');
+		$this->assertIdentical($mime, $resource_mime);
+
+		// calling detectMimeType statically raises strict policy warning
+		// @todo: remove this once a new static method has been implemented
+		error_reporting(E_ALL & ~E_STRICT & ~E_DEPRECATED);
+		
+		// method output should not differ between a static and a concrete call if the file path is set
+		$resource_mime_static = \ElggFile::detectMimeType($file->getFilenameOnFilestore(), 'text/plain');
+		$this->assertIdentical($resource_mime, $resource_mime_static);
+
+		error_reporting(E_ALL);
+
+		$user->delete();
+
+	}
+
 	protected function createTestUser($username = 'fileTest') {
 		$user = new \ElggUser();
 		$user->username = $username;

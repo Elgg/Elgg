@@ -39,7 +39,7 @@ return array(
 	'actionnotfound' => "%s のアクションファイルが見つかりませんでした。",
 	'actionloggedout' => "ログアウトのままですと、アクションを実行できません。",
 	'actionunauthorized' => 'あなたの権限では、このアクションを実行することはできません。',
-	
+
 	'ajax:error' => 'AJAXコールを実行中に予期せぬエラーが起こりました。おそらく、サーバへの接続が切断されたからかもしれません。',
 	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
 
@@ -60,7 +60,6 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'プラグイン %3$s で依存関係のタイプ %2$s の 「%1$s」 が正しくありません。依存関係が循環しています。',
 	'ElggPlugin:Exception:CannotIncludeFile' => '%s (プラグイン %s (guid: %s))が %s に含まれていません。パーミッションを調べてください！',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'プラグイン %s (guid: %s)のViewディレクトリを %s で開くことができません。パーミッションを調べてください！',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'プラグイン %s (guid: %s)の言語ファイルを%sに登録できません。パーミッションを調べてください！',
 	'ElggPlugin:Exception:NoID' => 'プラグイン guid %s のIDがありません！',
 	'PluginException:NoPluginName' => "プラグイン名を見つけることができませんでした。",
 	'PluginException:ParserError' => 'API(var. %s)でプラグイン %s のマニフェストを解析するときにエラーが発生しました)。',
@@ -84,7 +83,7 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => '%s の前',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s は、インストールされていません',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'ありません',
-	
+
 	'ElggPlugin:Dependencies:ActiveDependent' => '%s と依存関係にある他のプラグインが存在します。 このプラグインを無効にする前に、次のプラグインを先に無効にしなければなりません。: %s',
 
 	'ElggMenuBuilder:Trees:NoParents' => '親リンクの無いメニュー項目があります',
@@ -99,6 +98,8 @@ return array(
 	'LoginException:AccountLocked' => 'ログイン失敗が多いので、あなたのアカウントをロックしています',
 	'LoginException:ChangePasswordFailure' => '現在ご使用になられているパスワードのチェックに失敗しました。',
 	'LoginException:Unknown' => '不明なエラーがおこりましたので、ログインできませんでした。',
+
+	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 
 	'deprecatedfunction' => '警告: このコードは廃止された時代遅れの関数「 %s 」を使用しており、このバージョンのElggとは互換性がありません。',
 
@@ -632,6 +633,8 @@ return array(
 	'admin:plugins:warning:invalid' => 'このプラグインは正しくありません: %s',
 	'admin:plugins:warning:invalid:check_docs' => '問題解決のヒントは、 <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">the Elgg documentation</a> にあるかもしれません。',
 	'admin:plugins:cannot_activate' => '起動できません',
+	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
+	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
 
 	'admin:plugins:set_priority:yes' => "%s を並べ直しました。",
 	'admin:plugins:set_priority:no' => "%s を並べ直せませんでした。",
@@ -733,7 +736,7 @@ return array(
 /**
  * User settings
  */
-		
+
 	'usersettings:description' => "ユーザセッティングパネルを使うと、ユーザマネージメントからプラグインの振る舞い方まで、あなたの個人的な設定の全てを管理することができます。開始するには、以下のオプションを選択してください。",
 
 	'usersettings:statistics' => "あなたの統計情報",
@@ -760,7 +763,7 @@ return array(
 /**
  * Activity river
  */
-		
+
 	'river:all' => '全アクティビティ',
 	'river:mine' => 'My アクティビティ',
 	'river:owner' => '%s さんのアクティビティ',
@@ -787,7 +790,7 @@ return array(
 	'icon:size:medium' => "Medium",
 	'icon:size:large' => "Large",
 	'icon:size:master' => "Extra Large",
-		
+
 /**
  * Generic action words
  */
@@ -872,11 +875,11 @@ return array(
 
 	'active' => 'アクティブ',
 	'total' => '総数',
-	
+
 	'ok' => 'OK',
 	'any' => 'Any',
 	'error' => 'エラー',
-	
+
 	'other' => 'その他',
 	'options' => 'オプション',
 	'advanced' => '詳細設定',
@@ -889,7 +892,7 @@ return array(
 	'content:latest:blurb' => 'もしくは、ここをクリックしてサイト全体での新しい記事を見る',
 
 	'link:text' => 'リンク一覧',
-	
+
 /**
  * Generic questions
  */
@@ -917,7 +920,7 @@ return array(
 	'sort:popular' => '人気順',
 	'sort:alpha' => 'アルファベット順',
 	'sort:priority' => '優先度順',
-		
+
 /**
  * Generic data words
  */
@@ -942,7 +945,7 @@ return array(
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'これを編集',
 	'delete:this' => 'これを削除',
 	'comment:this' => 'コメントをつける',
@@ -985,7 +988,7 @@ return array(
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "データのインポートに成功しました。",
 	'importfail' => "OpenDDデータのインポートに失敗しました。",
 
@@ -1001,7 +1004,7 @@ return array(
 	'friendlytime:days' => "%s 日前",
 	'friendlytime:days:singular' => "昨日",
 	'friendlytime:date_format' => 'Y年m月d日@ H:i',
-	
+
 	'friendlytime:future:minutes' => "%s分で",
 	'friendlytime:future:minutes:singular' => "1分で",
 	'friendlytime:future:hours' => "%s時間で",
@@ -1042,7 +1045,7 @@ return array(
 	'date:weekday:4' => 'Thursday',
 	'date:weekday:5' => 'Friday',
 	'date:weekday:6' => 'Saturday',
-	
+
 	'date:weekday:short:0' => 'Sun',
 	'date:weekday:short:1' => 'Mon',
 	'date:weekday:short:2' => 'Tue',
@@ -1050,7 +1053,7 @@ return array(
 	'date:weekday:short:4' => 'Thu',
 	'date:weekday:short:5' => 'Fri',
 	'date:weekday:short:6' => 'Sat',
-	
+
 	'interval:minute' => '毎分',
 	'interval:fiveminute' => '5分毎',
 	'interval:fifteenmin' => '15分毎',
@@ -1106,7 +1109,7 @@ return array(
 
 	'installation:htaccess:needs_upgrade' => ".htaccess をアップデートしてください。そうすることにより、path が GET のパラメタ __elgg_uri にインジェクトされます。( install/config/htaccess.dist ファイルを参考にしてください。)",
 	'installation:htaccess:localhost:connectionfailed' => "Elggはrewriteルールのプロパティをテストするために自分自身に接続することはできません。curlが動作することとlocalhostへの接続を妨げるようなIPの制限設定が無いかどうかを確認してください。",
-	
+
 	'installation:systemcache:description' => "ステムキャッシュはデータをファイルにキャッシュすることでElggの読み込み時間を少なくします。",
 	'installation:systemcache:label' => "システムキャッシュを使う(推奨)",
 
@@ -1174,12 +1177,12 @@ return array(
 /**
  * Emails
  */
-		
+
 	'email:from' => 'From',
 	'email:to' => 'To',
 	'email:subject' => 'Subject',
 	'email:body' => 'Body',
-	
+
 	'email:settings' => "Eメール設定",
 	'email:address:label' => "Eメールアドレス",
 
@@ -1271,16 +1274,19 @@ return array(
 /**
  * Entities
  */
-	
+
 	'byline' => 'By %s',
 	'byline:ingroup' => 'in the group %s',
 	'entity:default:strapline' => '作成 %s by %s',
 	'entity:default:missingsupport:popup' => 'この情報を正確に表示できません。利用していたプラグインがうまく動作していないか、アンインストールされた可能性があります。',
 
-	'entity:delete:success' => 'エンティティ「 %s 」を削除しました。',
-	'entity:delete:fail' => 'エンティティ「 %s 」を削除できませんでした。',
-	
-	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
+
+	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
  * Action gatekeeper
@@ -1467,4 +1473,7 @@ return array(
 	"za" => "Zuang",
 	"zh" => "Chinese",
 	"zu" => "Zulu",
+
+	"field:required" => 'Required',
+
 );

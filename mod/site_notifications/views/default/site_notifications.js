@@ -35,7 +35,7 @@ elgg.site_notifications.delete = function(event) {
 	});
 
 	event.preventDefault();
-}
+};
 
 /**
  * Delete notification for this link

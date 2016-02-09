@@ -46,7 +46,7 @@ class Annotations {
 	 * @return bool
 	 */
 	function delete($id) {
-		$annotation = elgg_get_annotation_from_id($id);
+		$annotation = $this->get($id);
 		if (!$annotation) {
 			return false;
 		}
@@ -132,7 +132,7 @@ class Annotations {
 	
 		$annotation_id = (int)$annotation_id;
 	
-		$annotation = elgg_get_annotation_from_id($annotation_id);
+		$annotation = $this->get($annotation_id);
 		if (!$annotation) {
 			return false;
 		}
@@ -167,7 +167,7 @@ class Annotations {
 	
 		if ($result !== false) {
 			// @todo add plugin hook that sends old and new annotation information before db access
-			$obj = elgg_get_annotation_from_id($annotation_id);
+			$obj = $this->get($annotation_id);
 			_elgg_services()->events->trigger('update', 'annotation', $obj);
 		}
 	

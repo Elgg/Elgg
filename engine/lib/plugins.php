@@ -47,21 +47,6 @@ define('ELGG_PLUGIN_USER_SETTING_PREFIX', 'plugin:user_setting:');
  */
 define('ELGG_PLUGIN_INTERNAL_PREFIX', 'elgg:internal:');
 
-
-/**
- * Returns a list of plugin directory names from a base directory.
- *
- * @param string $dir A dir to scan for plugins. Defaults to config's plugins_path.
- *                    Must have a trailing slash.
- *
- * @return array Array of directory names (not full paths)
- * @since 1.8.0
- * @access private
- */
-function _elgg_get_plugin_dirs_in_dir($dir = null) {
-	return _elgg_services()->plugins->getDirsInDir($dir);
-}
-
 /**
  * Discovers plugins in the plugins_path setting and creates \ElggPlugin
  * entities for them if they don't exist.  If there are plugins with entities
@@ -149,35 +134,6 @@ function elgg_get_plugins($status = 'active', $site_guid = null) {
 }
 
 /**
- * Reorder plugins to an order specified by the array.
- * Plugins not included in this array will be appended to the end.
- *
- * @note This doesn't use the \ElggPlugin->setPriority() method because
- *       all plugins are being changed and we don't want it to automatically
- *       reorder plugins.
- *
- * @param array $order An array of plugin ids in the order to set them
- * @return bool
- * @since 1.8.0
- * @access private
- */
-function _elgg_set_plugin_priorities(array $order) {
-	return _elgg_services()->plugins->setPriorities($order);
-}
-
-/**
- * Reindexes all plugin priorities starting at 1.
- *
- * @todo Can this be done in a single sql command?
- * @return bool
- * @since 1.8.0
- * @access private
- */
-function _elgg_reindex_plugin_priorities() {
-	return _elgg_services()->plugins->reindexPriorities();
-}
-
-/**
  * Namespaces a string to be used as a private setting name for a plugin.
  *
  * For user_settings, two namespaces are added: a user setting namespace and the
@@ -194,29 +150,6 @@ function _elgg_reindex_plugin_priorities() {
  */
 function _elgg_namespace_plugin_private_setting($type, $name, $id = null) {
 	return _elgg_services()->plugins->namespacePrivateSetting($type, $name, $id);
-}
-
-/**
- * Returns an array of all provides from all active plugins.
- *
- * Array in the form array(
- * 	'provide_type' => array(
- * 		'provided_name' => array(
- * 			'version' => '1.8',
- * 			'provided_by' => 'provider_plugin_id'
- *  	)
- *  )
- * )
- *
- * @param string $type The type of provides to return
- * @param string $name A specific provided name to return. Requires $provide_type.
- *
- * @return array
- * @since 1.8.0
- * @access private
- */
-function _elgg_get_plugins_provides($type = null, $name = null) {
-	return _elgg_services()->plugins->getProvides($type, $name);
 }
 
 /**

@@ -1,6 +1,8 @@
 <?php
 namespace Elgg\Cache;
 
+use Elgg\Profilable;
+
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
@@ -11,6 +13,8 @@ namespace Elgg\Cache;
  * @since      1.10.0
  */
 class SystemCache {
+	use Profilable;
+
 	/**
 	 * Global Elgg configuration
 	 * 
@@ -134,6 +138,10 @@ class SystemCache {
 	 * @access private
 	 */
 	function loadAll() {
+		if ($this->timer) {
+			$this->timer->begin([__METHOD__]);
+		}
+
 		$this->CONFIG->system_cache_loaded = false;
 
 		if (!_elgg_services()->views->configureFromCache($this)) {
@@ -149,6 +157,10 @@ class SystemCache {
 		// Note: We don't need view_overrides for operation. Inspector can pull this from the cache
 	
 		$this->CONFIG->system_cache_loaded = true;
+
+		if ($this->timer) {
+			$this->timer->end([__METHOD__]);
+		}
 	}
 	
 	/**

@@ -67,7 +67,7 @@ class AccessCollections {
 			return $cache[$hash];
 		}
 		
-		$access_array = get_access_array($user_guid, $site_guid, $flush);
+		$access_array = $this->getAccessArray($user_guid, $site_guid, $flush);
 		$access = "(" . implode(",", $access_array) . ")";
 	
 		if ($init_finished) {
@@ -235,9 +235,9 @@ class AccessCollections {
 			'owner_guid_column' => 'owner_guid',
 			'guid_column' => 'guid',
 		);
-	
+
 		$options = array_merge($defaults, $options);
-	
+
 		// just in case someone passes a . at the end
 		$options['table_alias'] = rtrim($options['table_alias'], '.');
 	
@@ -274,7 +274,7 @@ class AccessCollections {
 	
 		// include standard accesses (public, logged in, access collections)
 		if (!$options['ignore_access']) {
-			$access_list = get_access_list($options['user_guid']);
+			$access_list = $this->getAccessList($options['user_guid']);
 			$clauses['ors'][] = "$table_alias{$options['access_column']} IN {$access_list}";
 		}
 	
@@ -325,9 +325,9 @@ class AccessCollections {
 		$ia = elgg_set_ignore_access(false);
 	
 		if (!isset($user)) {
-			$access_bit = _elgg_get_access_where_sql();
+			$access_bit = $this->getWhereSql();
 		} else {
-			$access_bit = _elgg_get_access_where_sql(array('user_guid' => $user->getGUID()));
+			$access_bit = $this->getWhereSql(array('user_guid' => $user->guid));
 		}
 	
 		elgg_set_ignore_access($ia);
@@ -444,14 +444,14 @@ class AccessCollections {
 			return false;
 		}
 	
-		$collection = get_access_collection($collection_id);
+		$collection = $this->get($collection_id);
 	
 		if (!$user || !$collection) {
 			return false;
 		}
 	
-		$write_access = get_write_access_array($user->guid, 0, true);
-	
+		$write_access = $this->getWriteAccessArray($user->guid, 0, true);
+
 		// don't ignore access when checking users.
 		if ($user_guid) {
 			return array_key_exists($collection_id, $write_access);
@@ -724,28 +724,28 @@ class AccessCollections {
 	}
 	
 	/**
-	 * Get all of members of an access collection
-	 *
-	 * @param int  $collection The collection's ID
-	 * @param bool $idonly     If set to true, will only return the members' GUIDs (default: false)
-	 *
-	 * @return \ElggUser[]|int[]|false guids or entities if successful, false if not
-	 */
-	function getMembers($collection, $idonly = false) {
-		$collection = (int)$collection;
+	* Get all of members of an access collection
+	*
+	* @param int  $collection_id The collection's ID
+	* @param bool $guids_only    If set to true, will only return the members' GUIDs (default: false)
+	*
+	* @return ElggUser[]|int[]|false guids or entities if successful, false if not
+	*/
+	function getMembers($collection_id, $guids_only = false) {
+		$collection_id = (int) $collection_id;
 
 		$db = _elgg_services()->db;
 		$prefix = $db->getTablePrefix();
 
-		if (!$idonly) {
+		if (!$guids_only) {
 			$query = "SELECT e.* FROM {$prefix}access_collection_membership m"
 				. " JOIN {$prefix}entities e ON e.guid = m.user_guid"
-				. " WHERE m.access_collection_id = {$collection}";
+				. " WHERE m.access_collection_id = {$collection_id}";
 			$collection_members = $db->getData($query, "entity_row_to_elggstar");
 		} else {
 			$query = "SELECT e.guid FROM {$prefix}access_collection_membership m"
 				. " JOIN {$prefix}entities e ON e.guid = m.user_guid"
-				. " WHERE m.access_collection_id = {$collection}";
+				. " WHERE m.access_collection_id = {$collection_id}";
 			$collection_members = $db->getData($query);
 			if (!$collection_members) {
 				return false;

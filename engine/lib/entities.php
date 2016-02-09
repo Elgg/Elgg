@@ -172,28 +172,6 @@ function get_subtype_from_id($subtype_id) {
 }
 
 /**
- * Retrieve subtype from the cache.
- *
- * @param string $type
- * @param string $subtype
- * @return \stdClass|null
- *
- * @access private
- */
-function _elgg_retrieve_cached_subtype($type, $subtype) {
-	return _elgg_services()->subtypeTable->retrieveFromCache($type, $subtype);
-}
-
-/**
- * Fetch all suptypes from DB to local cache.
- *
- * @access private
- */
-function _elgg_populate_subtype_cache() {
-	return _elgg_services()->subtypeTable->populateCache();
-}
-
-/**
  * Return the class name for a registered type and subtype.
  *
  * Entities can be registered to always be loaded as a certain class

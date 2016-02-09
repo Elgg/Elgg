@@ -262,6 +262,8 @@ function get_config($name, $site_guid = 0) {
  * @access private
  */
 function _elgg_load_site_config() {
+	_elgg_services()->timer->begin([__FUNCTION__]);
+
 	global $CONFIG;
 
 	$CONFIG->site_guid = (int) datalist_get('default_site');
@@ -286,6 +288,8 @@ function _elgg_load_site_config() {
 		_elgg_services()->logger->setLevel($CONFIG->debug);
 		_elgg_services()->logger->setDisplay(true);
 	}
+
+	_elgg_services()->timer->end([__FUNCTION__]);
 }
 
 /**
@@ -325,6 +329,8 @@ function _elgg_configure_cookies($CONFIG) {
  * @access private
  */
 function _elgg_load_application_config() {
+	_elgg_services()->timer->begin([__FUNCTION__]);
+
 	global $CONFIG;
 
 	$install_root = Directory\Local::root();
@@ -371,6 +377,8 @@ function _elgg_load_application_config() {
 
 	// this must be synced with the enum for the entities table
 	$CONFIG->entity_types = array('group', 'object', 'site', 'user');
+
+	_elgg_services()->timer->end([__FUNCTION__]);
 }
 
 /**

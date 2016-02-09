@@ -24,7 +24,7 @@ class StickyForms {
 	 */
 	public function makeStickyForm($form_name) {
 	
-		elgg_clear_sticky_form($form_name);
+		$this->clearStickyForm($form_name);
 	
 		$session = _elgg_services()->session;
 		$data = $session->get('sticky_forms', array());

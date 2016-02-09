@@ -1,12 +1,12 @@
 <?php
 /**
- * Unlocks the upgrade script 
+ * Unlocks the upgrade script
  */
 
-$upgrader = new Elgg\UpgradeService();
+$mutex = _elgg_services()->mutex;
 
-if ($upgrader->isUpgradeLocked()) {
-	$upgrader->releaseUpgradeMutex();
+if ($mutex->isLocked('upgrade')) {
+	$mutex->unlock('upgrade');
 }
 system_message(elgg_echo('upgrade:unlock:success'));
 forward(REFERER);

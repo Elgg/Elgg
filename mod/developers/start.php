@@ -15,12 +15,17 @@ function developers_init() {
 	elgg_extend_view('elgg.css', 'developers/css');
 
 	elgg_register_page_handler('theme_sandbox', 'developers_theme_sandbox_controller');
+	elgg_register_page_handler('developers_ajax_demo', 'developers_ajax_demo_controller');
+
 	elgg_register_external_view('developers/ajax'); // for lightbox in sandbox
 	$sandbox_css = elgg_get_simplecache_url('theme_sandbox.css');
 	elgg_register_css('dev.theme_sandbox', $sandbox_css);
 
 	$action_base = __DIR__ . '/actions/developers';
 	elgg_register_action('developers/settings', "$action_base/settings.php", 'admin');
+	elgg_register_action('developers/ajax_demo', "$action_base/ajax_demo.php", 'admin');
+
+	elgg_register_ajax_view('forms/developers/ajax_demo');
 }
 
 function developers_process_settings() {
@@ -29,13 +34,17 @@ function developers_process_settings() {
 	ini_set('display_errors', (int)!empty($settings['display_errors']));
 
 	if (!empty($settings['screen_log'])) {
-		$cache = new ElggLogCache();
-		elgg_set_config('log_cache', $cache);
-		elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
-		elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params) {
-			$vars['body'] .= elgg_view('developers/log');
-			return $vars;
-		});
+		// don't show in action/simplecache
+		$path = substr(current_page_url(), strlen(elgg_get_site_url()));
+		if (!preg_match('~^(cache|action)/~', $path)) {
+			$cache = new ElggLogCache();
+			elgg_set_config('log_cache', $cache);
+			elgg_register_plugin_hook_handler('debug', 'log', array($cache, 'insertDump'));
+			elgg_register_plugin_hook_handler('view_vars', 'page/elements/html', function($hook, $type, $vars, $params) {
+				$vars['body'] .= elgg_view('developers/log');
+				return $vars;
+			});
+		}
 	}
 
 	if (!empty($settings['show_strings'])) {
@@ -248,6 +257,11 @@ function developers_theme_sandbox_controller($page) {
 	echo elgg_view_resource('theme_sandbox', [
 		'page' => $page[0],
 	]);
+	return true;
+}
+
+function developers_ajax_demo_controller() {
+	echo elgg_view_resource('developers/ajax_demo');
 	return true;
 }
 
