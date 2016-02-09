@@ -564,7 +564,9 @@ function _elgg_filestore_test($hook, $type, $value) {
 /**
  * Returns file's download URL
  *
- * @param \ElggFile $file       File object or entity
+ * @note This does not work for files with custom filestores.
+ *
+ * @param \ElggFile $file       File object or entity (must have the default filestore)
  * @param bool      $use_cookie Limit URL validity to current session only
  * @param string    $expires    URL expiration, as a string suitable for strtotime()
  * @return string
@@ -582,12 +584,14 @@ function elgg_get_download_url(\ElggFile $file, $use_cookie = true, $expires = '
  * Returns file's URL for inline display
  * Suitable for displaying cacheable resources, such as user avatars
  *
- * @param \ElggFile $file       File object or entity
+ * @note This does not work for files with custom filestores.
+ *
+ * @param \ElggFile $file       File object or entity (must have the default filestore)
  * @param bool      $use_cookie Limit URL validity to current session only
  * @param string    $expires    URL expiration, as a string suitable for strtotime()
  * @return string
  */
-function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = false) {
+function elgg_get_inline_url(\ElggFile $file, $use_cookie = false, $expires = '') {
 	$file_svc = new Elgg\FileService\File();
 	$file_svc->setFile($file);
 	if ($expires) {
