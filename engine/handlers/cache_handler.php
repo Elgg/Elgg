@@ -1,6 +1,6 @@
 <?php
 // if 500 is returned, output will not be shown to the user.
-header('Content-Type: application/javascript');
+header('Content-Type: application/javascript;charset=utf-8');
 header('Cache-Control: no-cache, must-revalidate');
 ?>
 //<script>
