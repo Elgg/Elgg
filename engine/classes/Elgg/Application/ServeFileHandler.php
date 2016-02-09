@@ -58,7 +58,13 @@ class ServeFileHandler {
 		}
 
 		// @todo: change to minimal boot without plugins
+		// We need session (sometimes), HMAC, and dataroot
 		$this->application->bootCore();
+
+		// remove headers set by session
+		header_remove('Expires');
+		header_remove('Pragma');
+		header_remove('Cache-Control');
 
 		$hmac_data = array(
 			'expires' => (int) $expires,
