@@ -286,7 +286,7 @@ function _elgg_csrf_token_refresh() {
 		'logged_in' => elgg_is_logged_in(),
 	);
 
-	header("Content-Type: application/json");
+	header("Content-Type: application/json;charset=utf-8");
 	echo json_encode($data);
 
 	return true;
