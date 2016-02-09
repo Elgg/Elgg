@@ -9,8 +9,10 @@
 
 /**
  * Set a user's password
+ * Returns null if no change is required
+ * Returns true or false indicating success or failure if change was needed
  * 
- * @return bool
+ * @return bool|void
  * @since 1.8.0
  * @access private
  */
@@ -68,7 +70,7 @@ function _elgg_set_user_password() {
 		}
 	} else {
 		// no change
-		return null;
+		return;
 	}
 
 	return false;
@@ -76,15 +78,22 @@ function _elgg_set_user_password() {
 
 /**
  * Set a user's display name
+ * Returns null if no change is required or input is not present in the form
+ * Returns true or false indicating success or failure if change was needed
  * 
- * @return bool
+ * @return bool|void
  * @since 1.8.0
  * @access private
  */
 function _elgg_set_user_name() {
-	$name = strip_tags(get_input('name'));
+	$name = get_input('name');
 	$user_guid = get_input('guid');
 
+	if (!isset($name)) {
+		return;
+	}
+
+	$name = strip_tags($name);
 	if ($user_guid) {
 		$user = get_user($user_guid);
 	} else {
@@ -107,7 +116,7 @@ function _elgg_set_user_name() {
 			}
 		} else {
 			// no change
-			return null;
+			return;
 		}
 	} else {
 		register_error(elgg_echo('user:name:fail'));
@@ -117,8 +126,10 @@ function _elgg_set_user_name() {
 
 /**
  * Set a user's language
+ * Returns null if no change is required or input is not present in the form
+ * Returns true or false indicating success or failure if change was needed
  * 
- * @return bool
+ * @return bool|void
  * @since 1.8.0
  * @access private
  */
@@ -126,6 +137,10 @@ function _elgg_set_user_language() {
 	$language = get_input('language');
 	$user_guid = get_input('guid');
 
+	if (!isset($language)) {
+		return;
+	}
+	
 	if ($user_guid) {
 		$user = get_user($user_guid);
 	} else {
@@ -143,7 +158,7 @@ function _elgg_set_user_language() {
 			}
 		} else {
 			// no change
-			return null;
+			return;
 		}
 	} else {
 		register_error(elgg_echo('user:language:fail'));
@@ -153,8 +168,10 @@ function _elgg_set_user_language() {
 
 /**
  * Set a user's email address
- *
- * @return bool
+ * Returns null if no change is required or input is not present in the form
+ * Returns true or false indicating success or failure if change was needed
+ * 
+ * @return bool|void
  * @since 1.8.0
  * @access private
  */
@@ -162,6 +179,10 @@ function _elgg_set_user_email() {
 	$email = get_input('email');
 	$user_guid = get_input('guid');
 
+	if (!isset($email)) {
+		return;
+	}
+	
 	if ($user_guid) {
 		$user = get_user($user_guid);
 	} else {
@@ -191,7 +212,7 @@ function _elgg_set_user_email() {
 			}
 		} else {
 			// no change
-			return null;
+			return;
 		}
 	} else {
 		register_error(elgg_echo('email:save:fail'));
@@ -201,15 +222,17 @@ function _elgg_set_user_email() {
 
 /**
  * Set a user's default access level
+ * Returns null if no change is required or input is not present in the form
+ * Returns true or false indicating success or failure if change was needed
  *
- * @return bool
+ * @return bool|void
  * @since 1.8.0
  * @access private
  */
 function _elgg_set_user_default_access() {
 
 	if (!elgg_get_config('allow_user_default_access')) {
-		return false;
+		return;
 	}
 
 	$default_access = get_input('default_access');
@@ -232,7 +255,7 @@ function _elgg_set_user_default_access() {
 			}
 		} else {
 			// no change
-			return null;
+			return;
 		}
 	} else {
 		register_error(elgg_echo('user:default_access:failure'));
