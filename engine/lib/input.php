@@ -388,7 +388,7 @@ function input_livesearch_page_handler($page) {
 	}
 
 	ksort($results);
-	header("Content-Type: application/json");
+	header("Content-Type: application/json;charset=utf-8");
 	echo json_encode(array_values($results));
 	exit;
 }

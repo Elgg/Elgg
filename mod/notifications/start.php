@@ -41,6 +41,10 @@ function notifications_plugin_init() {
 function notifications_page_handler($page) {
 
 	elgg_gatekeeper();
+
+	// Set the context to settings
+	elgg_set_context('settings');
+
 	$current_user = elgg_get_logged_in_user_entity();
 
 	// default to personal notifications

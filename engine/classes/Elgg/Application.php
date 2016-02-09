@@ -416,6 +416,9 @@ class Application {
 
 		$this->bootCore();
 
+		// TODO use formal Response object instead
+		header("Content-Type: text/html;charset=utf-8");
+
 		if (!$this->services->router->route($this->services->request)) {
 			forward('', '404');
 		}
