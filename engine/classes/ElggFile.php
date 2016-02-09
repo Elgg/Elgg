@@ -374,8 +374,10 @@ class ElggFile extends \ElggObject {
 	 * @param \ElggFilestore $filestore The file store.
 	 *
 	 * @return void
+	 * @deprecated Will be removed in 3.0
 	 */
 	public function setFilestore(\ElggFilestore $filestore) {
+		elgg_deprecated_notice(__METHOD__ . ' is deprecated.', '2.1');
 		$this->filestore = $filestore;
 	}
 
@@ -395,7 +397,7 @@ class ElggFile extends \ElggObject {
 		}
 
 		// such a common case we just assume for now
-		$this->filestore = get_default_filestore();
+		$this->filestore = $GLOBALS['DEFAULT_FILE_STORE'];
 
 		if (!$this->guid) {
 			return $this->filestore;
