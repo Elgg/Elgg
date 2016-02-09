@@ -24,7 +24,7 @@ function notifications_plugin_init() {
 	elgg_register_event_handler('delete', 'friend', 'notifications_relationship_remove');
 
 	// update notifications when new friend or access collection membership
-	elgg_register_event_handler('create', 'friend', 'notifications_update_friend_notify');
+	elgg_register_event_handler('create', 'relationship', 'notifications_update_friend_notify');
 	elgg_register_plugin_hook_handler('access:collections:add_user', 'collection', 'notifications_update_collection_notify');
 
 	$actions_base = __DIR__ . '/actions';
@@ -126,6 +126,12 @@ function notifications_relationship_remove($event, $object_type, $relationship) 
  * @param object $relationship
  */
 function notifications_update_friend_notify($event, $object_type, $relationship) {
+	// The handler gets triggered regardless of which relationship was
+	// created, so proceed only if dealing with a 'friend' relationship.
+	if ($relationship->relationship != 'friend') {
+		return true;
+	}
+
 	$NOTIFICATION_HANDLERS = _elgg_services()->notifications->getMethodsAsDeprecatedGlobal();
 
 	$user_guid = $relationship->guid_one;

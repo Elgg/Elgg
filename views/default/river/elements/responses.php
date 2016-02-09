@@ -10,17 +10,16 @@
 $responses = elgg_extract('responses', $vars, false);
 if ($responses) {
 	echo $responses;
-	return true;
+	return;
 }
 
 $item = $vars['item'];
 /* @var ElggRiverItem $item */
 $object = $item->getObjectEntity();
-$target = $item->getTargetEntity();
 
 // annotations and comments do not have responses
-if ($item->annotation_id != 0 || !$object || elgg_instanceof($target, 'object', 'comment')) {
-	return true;
+if ($item->annotation_id != 0 || !$object || $object instanceof ElggComment) {
+	return;
 }
 
 $comment_count = $object->countComments();

@@ -16,7 +16,7 @@ Requirements
 
 * SSH access to elgg.org
 * Commit access to http://github.com/Elgg/Elgg
-* Admin access to https://community.elgg.org/
+* Admin access to https://elgg.org/
 * Access to `Twitter account`_
 * Access to `G+ page`_
 * Node.js and NPM installed
@@ -47,14 +47,14 @@ Install the prerequisites:
    easy_install sphinx-intl
    easy_install transifex-client
 
-Run the ``release.php`` script. For example, to release 1.9.1:
+Run the ``release.php`` script. For example, to release 1.12.5:
 
 .. code:: sh
 
-   git checkout 1.9
-   php .scripts/release.php 1.9.1
+   git checkout 1.12
+   php .scripts/release.php 1.12.5
 
-This creates a ``release-1.9.1`` branch in your local repo.
+This creates a ``release-1.12.5`` branch in your local repo.
 
 Next, manually browse to the ``/admin/settings/basic`` page and verify it loads. If it does not, a language file from Transifex may have a PHP syntax error. Fix the error and amend your commit with the new file:
 
@@ -68,7 +68,7 @@ Next, submit a PR via Github:
 
 .. code:: sh
 
-   git push your-remote-fork release-1.9.1
+   git push your-remote-fork release-1.12.5
 
 Once approved and merged, tag the release:
 
@@ -85,49 +85,70 @@ Update Milestones on Github
 3. Update the website
 =====================
 
-The downloads need to point to the new releases.
-
-Build Package
--------------
-
  * ssh to elgg.org
  * Clone https://github.com/Elgg/elgg-scripts
- * Use elgg-scripts/build/build.sh to generate the .zip file.
 
-Run without arguments to see usage. This also generates the ChangeLog.txt file.
+Build zip package for Elgg 1.n.n
+--------------------------------
+
+Use ``elgg-scripts/build/build.sh`` to generate the .zip file. Run without arguments to see usage.
 
 Example::
 
-    ./build.sh 1.8.5 1.8.5 /var/www/www.elgg.org/download/
+    ./build.sh 1.12.5 1.12.5 /var/www/www.elgg.org/download/
 
 MIT::
 
-    ./build.sh 1.8.5 1.8.5-mit /var/www/www.elgg.org/download/
-	
-Update homepage, download, and previous download pages
-------------------------------------------------------
+    ./build.sh 1.12.5 1.12.5-mit /var/www/www.elgg.org/download/
 
-* Clone https://github.com/Elgg/old-elgg-website
-* Make changes, commit, push.
-	
-  * index.php
-  * download.php
-  * previous.php
+Build zip package for Elgg 2.n.n
+--------------------------------
 
+Use ``elgg-scripts/build/elgg-starter-project.sh`` to generate the .zip file. Run without arguments to see usage.
+
+Example::
+
+    ./elgg-starter-project.sh master 2.0.4 /var/www/www.elgg.org/download/
+
+MIT::
+
+    ./elgg-starter-project.sh master 2.0.4-mit /var/www/www.elgg.org/download/
+    
+	
+Update elgg.org
+---------------
+
+* Clone https://github.com/Elgg/www.elgg.org
+* Add the new versions to ``src/Elgg/Releases.php``
+* Update vendors
+
+  .. code:: sh
+
+    composer update
+
+* Commit and push the changes
 * Pull to live site
 
   .. code:: sh
 
       cd /var/www/www.elgg.org && sudo su deploy && git pull
+      
+* Update dependencies
 
-* flush apc cache (via community admin panel)
+  .. code:: sh
+
+     composer install --no-dev --prefer-dist --optimize-autoloader
+
+* Go to community admin panel
+    * Flush APC cache
+    * Run upgrade
 
 4. Make the announcement
 ========================
 
 This should be the very last thing you do.
 
-* Sign in at https://community.elgg.org/ and compose a blog on with HTML version of CHANGELOG.md.
+* Sign in at https://elgg.org/blog and compose a blog on with HTML version of CHANGELOG.md.
 * Add tags “release” and “elgg1.x” where x is whatever branch is being released.
 * Tweet from the elgg `Twitter account`_
 * Post from the `G+ page`_

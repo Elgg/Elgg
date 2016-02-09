@@ -14,6 +14,8 @@
  * @subpackage Configuration
  */
 
+date_default_timezone_set('{{timezone}}');
+
 global $CONFIG;
 if (!isset($CONFIG)) {
 	$CONFIG = new \stdClass;
@@ -214,3 +216,20 @@ $CONFIG->min_password_length = 6;
  * @global string $CONFIG->exception_include
  */
 $CONFIG->exception_include = '';
+
+/**
+ * To enable profiling, uncomment the following lines, and replace __some_secret__ with a
+ * secret key. When enabled, profiling data will show in the JS console.
+ */
+//if (isset($_REQUEST['__some_secret__'])) {
+//
+//	// send profiling data to the JS console?
+//	$CONFIG->enable_profiling = true;
+//
+//	// profile all queries? A page with a ton of queries could eat up memory.
+//	$CONFIG->profiling_sql = false;
+//
+//	// in the list, don't include times that don't contribute at least this much to the
+//	// total time captured. .1% by default
+//	$CONFIG->profiling_minimum_percentage = .1;
+//}

@@ -9,11 +9,16 @@
  * @subpackage Core
  *
  * @uses $vars['value']          The current value or an array of current values if multiple is true
- * @uses $vars['options']        An array of strings representing the options for the dropdown field
+ * @uses $vars['options']        An array of strings or arrays representing the options
+ *                               for the dropdown field. If an array is passed,
+ *                               the "text" key is used as its text, all other
+ *                               elements in the array are used as attributes.
  * @uses $vars['options_values'] An associative array of "value" => "option"
  *                               where "value" is the name and "option" is
  *                               the value displayed on the button. Replaces
- *                               $vars['options'] when defined.
+ *                               $vars['options'] when defined. When "option"
+ *                               is passed as an array, the same behaviour is used
+ *                               as when the $vars['options'] is passed an array to.
  * @uses $vars['multiple']       If true, multiselect of values will be allowed in the select box
  * @uses $vars['class']          Additional CSS class
  */
@@ -59,7 +64,19 @@ if ($options_values) {
 			'selected' => in_array((string)$opt_value, $value),
 		);
 
-		$options_list .= elgg_format_element('option', $option_attrs, $option);
+		if (is_array($option)) {
+			$text = elgg_extract('text', $option, '');
+			unset($option['text']);
+			if (!$text) {
+				elgg_log('No text defined for input/select option with value "' . $opt_value . '"', 'ERROR');
+			}
+
+			$option_attrs = array_merge($option_attrs, $option);
+		} else {
+			$text = $option;
+		}
+
+		$options_list .= elgg_format_element('option', $option_attrs, $text);
 	}
 } else {
 	if (is_array($options)) {
@@ -67,7 +84,19 @@ if ($options_values) {
 
 			$option_attrs = ['selected' => in_array((string)$option, $value)];
 
-			$options_list .= elgg_format_element('option', $option_attrs, $option);
+			if (is_array($option)) {
+				$text = elgg_extract('text', $option, '');
+				unset($option['text']);
+				if (!$text) {
+					elgg_log('No text defined for input/select option', 'ERROR');
+				}
+
+				$option_attrs = array_merge($option_attrs, $option);
+			} else {
+				$text = $option;
+			}
+
+			$options_list .= elgg_format_element('option', $option_attrs, $text);
 		}
 	}
 }

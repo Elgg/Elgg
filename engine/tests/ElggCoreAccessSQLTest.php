@@ -32,16 +32,14 @@ class ElggCoreAccessSQLTest extends \ElggCoreUnitTest {
 	 */
 	public function setUp() {
 		// Replace current hook service with new instance for each test
-		$this->original_hooks = _elgg_services()->hooks;
-		_elgg_services()->hooks = new \Elgg\PluginHooksService();
+		_elgg_services()->hooks->backup();
 	}
 
 	/**
 	 * Called after each test method.
 	 */
 	public function tearDown() {
-		// Restore original hook service
-		_elgg_services()->hooks = $this->original_hooks;
+		_elgg_services()->hooks->restore();
 	}
 
 	/**

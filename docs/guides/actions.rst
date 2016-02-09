@@ -137,6 +137,38 @@ This is done as follows:
 This lets a plugin extend an existing action without the need to replace the whole action. In the case of the captcha plugin it allows the plugin to provide captcha support in a very loosely coupled way.
 
 
+Actions available in core
+=========================
+
+``entity/delete``
+-------------------
+
+If your plugin does not implement any custom logic when deleting an entity, you can use bundled delete action
+
+.. code-block:: php
+
+   $guid = 123;
+   // You can provide optional forward path as a URL query parameter
+   $forward_url = 'path/to/forward/to';
+   echo elgg_view('output/url', array(
+      'text' => elgg_echo('delete'),
+      'href' => "action/entity/delete?guid=$guid&forward_url=$forward_url",
+      'confirm' => true,
+   ));
+
+
+You can customize the success message keys for your entity type and subtype, using ``"entity:delete:$type:$subtype:success"`` and ``"entity:delete:$type:success"`` keys.
+
+.. code-block:: php
+
+   // to add a custom message when a blog post or file is deleted
+   // add the translations keys in your language files
+   return array(
+      'entity:delete:object:blog:success' => 'Blog post has been deleted,
+      'entity:delete:object:file:success' => 'File titled %s has been deleted',
+   );
+
+
 Forms
 =====
 

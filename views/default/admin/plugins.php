@@ -68,14 +68,14 @@ $category_form = elgg_view("admin/plugins/filter", [
 $activate_all = elgg_view('output/url', [
 	'href' => 'action/admin/plugins/activate_all',
 	'text' => elgg_echo('admin:plugins:activate_all'),
-	'class' => 'elgg-button elgg-button-submit',
-	'confirm' => true
+	'class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
+	'data-desired-state' => 'active',
 ]);
 $deactivate_all = elgg_view('output/url', [
 	'href' => 'action/admin/plugins/deactivate_all',
 	'text' => elgg_echo('admin:plugins:deactivate_all'),
-	'class' => 'elgg-button elgg-button-submit',
-	'confirm' => true
+	'class' => 'elgg-button elgg-button-submit elgg-plugins-toggle',
+	'data-desired-state' => 'inactive',
 ]);
 
 $buttons = elgg_format_element('div', ['class' => 'float-alt'], $activate_all . $deactivate_all);

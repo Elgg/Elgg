@@ -7,7 +7,7 @@ use ElggEntity;
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
  *
  * @access private
- * 
+ *
  * @package    Elgg.Core
  * @subpackage Notifications
  * @since      1.9.0
@@ -28,6 +28,12 @@ class NotificationsService {
 	/** @var \ElggSession */
 	protected $session;
 
+	/** @var \Elgg\I18n\Translator */
+	protected $translator;
+
+	/** @var \Elgg\Database\EntityTable */
+	protected $entities;
+
 	/** @var array Registered notification events */
 	protected $events = array();
 
@@ -47,13 +53,23 @@ class NotificationsService {
 	 * @param \Elgg\Queue\Queue                        $queue         Queue
 	 * @param \Elgg\PluginHooksService                 $hooks         Plugin hook service
 	 * @param \ElggSession                             $session       Session service
+	 * @param \Elgg\I18n\Translator                    $translator    Translator
+	 * @param \Elgg\Database\EntityTable               $entities      Entity table
 	 */
-	public function __construct(\Elgg\Notifications\SubscriptionsService $subscriptions,
-			\Elgg\Queue\Queue $queue, \Elgg\PluginHooksService $hooks, \ElggSession $session) {
+	public function __construct(
+			\Elgg\Notifications\SubscriptionsService $subscriptions,
+			\Elgg\Queue\Queue $queue,
+			\Elgg\PluginHooksService $hooks,
+			\ElggSession $session,
+			\Elgg\I18n\Translator $translator,
+			\Elgg\Database\EntityTable $entities) {
+
 		$this->subscriptions = $subscriptions;
 		$this->queue = $queue;
 		$this->hooks = $hooks;
 		$this->session = $session;
+		$this->translator = $translator;
+		$this->entities = $entities;
 	}
 
 	/**
@@ -128,10 +144,10 @@ class NotificationsService {
 
 	/**
 	 * Add a notification event to the queue
-	 * 
+	 *
 	 * @param string   $action Action name
 	 * @param string   $type   Type of the object of the action
-	 * @param \ElggData $object The object of the action 
+	 * @param \ElggData $object The object of the action
 	 * @return void
 	 * @access private
 	 */
@@ -175,7 +191,7 @@ class NotificationsService {
 		$count = 0;
 
 		// @todo grab mutex
-		
+
 		$ia = $this->session->setIgnoreAccess(true);
 
 		while (time() < $stopTime) {
@@ -246,7 +262,8 @@ class NotificationsService {
 	 */
 	protected function sendNotification(\Elgg\Notifications\Event $event, $guid, $method) {
 
-		$recipient = get_user($guid);
+		$recipient = $this->entities->get($guid, 'user');
+		/* @var \ElggUser $recipient */
 		if (!$recipient || $recipient->isBanned()) {
 			return false;
 		}
@@ -275,8 +292,9 @@ class NotificationsService {
 			'object' => $object,
 		);
 
-		$subject = _elgg_services()->translator->translate('notification:subject', array($actor->name), $language);
-		$body = _elgg_services()->translator->translate('notification:body', array($object->getURL()), $language);
+		$subject = $this->getNotificationSubject($event, $recipient);
+		$body = $this->getNotificationBody($event, $recipient);
+
 		$notification = new \Elgg\Notifications\Notification($event->getActor(), $recipient, $language, $subject, $body, '', $params);
 
 		$type = 'notification:' . $event->getDescription();
@@ -306,8 +324,102 @@ class NotificationsService {
 	}
 
 	/**
+	 * Get subject for the notification
+	 *
+	 * Plugins can define a subtype specific subject simply by providing a
+	 * translation for the string "notification:subject:<action>:<type>:<subtype".
+	 *
+	 * For example in mod/blog/languages/en.php:
+	 *
+	 *     'notification:subject:publish:object:blog' => '%s published a blog called %s'
+	 *
+	 * @param Event     $event     Notification event
+	 * @param \ElggUser $recipient Notification recipient
+	 * @return string Notification subject in the recipient's language
+	 */
+	private function getNotificationSubject(Event $event, \ElggUser $recipient) {
+		$actor = $event->getActor();
+		$object = $event->getObject();
+		/* @var \ElggObject $object */
+		$language = $recipient->language;
+
+		// Check custom notification subject for the action/type/subtype combination
+		$subject_key = "notification:{$event->getDescription()}:subject";
+		if ($this->translator->languageKeyExists($subject_key, $language)) {
+			return $this->translator->translate($subject_key, array(
+				$actor->name,
+				$object->getDisplayName(),
+			), $language);
+		}
+
+		// Fall back to default subject
+		return $this->translator->translate('notification:subject', array($actor->name), $language);
+	}
+
+	/**
+	 * Get body for the notification
+	 *
+	 * Plugin can define a subtype specific body simply by providing a
+	 * translation for the string "notification:body:<action>:<type>:<subtype".
+	 *
+	 * For example in mod/blog/languages/en.php:
+	 *
+	 *    'notification:body:publish:object:blog' => '
+	 *         Hi %s!
+	 *
+	 *         %s has created a new post called "%s" in the group %s.
+	 *
+	 *         It says:
+	 *
+	 *         "%s"
+	 *
+	 *         You can comment the post here:
+	 *         %s
+	 *     ',
+	 *
+	 * The arguments passed into the translation are:
+	 *     1. Recipient's name
+	 *     2. Name of the user who triggered the notification
+	 *     3. Title of the content
+	 *     4. Name of the content's container
+	 *     5. The actual content (entity's 'description' field)
+	 *     6. URL to the content
+	 *
+	 * Argument swapping can be used to change the order of the parameters.
+	 * See http://php.net/manual/en/function.sprintf.php#example-5427
+	 *
+	 * @param Event     $event     Notification event
+	 * @param \ElggUser $recipient Notification recipient
+	 * @return string Notification body in the recipient's language
+	 */
+	private function getNotificationBody(Event $event, \ElggUser $recipient) {
+		$actor = $event->getActor();
+		$object = $event->getObject();
+		/* @var \ElggObject $object */
+		$language = $recipient->language;
+
+		// Check custom notification body for the action/type/subtype combination
+		$body_key = "notification:{$event->getDescription()}:body";
+		if ($this->translator->languageKeyExists($body_key, $language)) {
+			$container = $object->getContainerEntity();
+
+			return $this->translator->translate($body_key, array(
+				$recipient->name,
+				$actor->name,
+				$object->getDisplayName(),
+				$container->getDisplayName(),
+				$object->description,
+				$object->getURL(),
+			), $language);
+		}
+
+		// Fall back to default body
+		return $this->translator->translate('notification:body', array($object->getURL()), $language);
+	}
+
+	/**
 	 * Register a deprecated notification handler
-	 * 
+	 *
 	 * @param string $method  Method name
 	 * @param string $handler Handler callback
 	 * @return void
@@ -318,7 +430,7 @@ class NotificationsService {
 
 	/**
 	 * Get a deprecated notification handler callback
-	 * 
+	 *
 	 * @param string $method Method name
 	 * @return callback|null
 	 */
@@ -333,7 +445,7 @@ class NotificationsService {
 	/**
 	 * Provides a way to incrementally wean Elgg's notifications code from the
 	 * global $NOTIFICATION_HANDLERS
-	 * 
+	 *
 	 * @return array
 	 */
 	public function getMethodsAsDeprecatedGlobal() {
@@ -346,7 +458,7 @@ class NotificationsService {
 
 	/**
 	 * Get the notification body using a pre-Elgg 1.9 plugin hook
-	 * 
+	 *
 	 * @param \Elgg\Notifications\Notification $notification Notification
 	 * @param \Elgg\Notifications\Event        $event        Event
 	 * @param string                           $method       Method
@@ -373,7 +485,7 @@ class NotificationsService {
 
 	/**
 	 * Set message subject for deprecated notification code
-	 * 
+	 *
 	 * @param string $type    Entity type
 	 * @param string $subtype Entity subtype
 	 * @param string $subject Subject line
@@ -396,7 +508,7 @@ class NotificationsService {
 
 	/**
 	 * Get the deprecated subject
-	 * 
+	 *
 	 * @param string $type    Entity type
 	 * @param string $subtype Entity subtype
 	 * @return string
@@ -422,7 +534,7 @@ class NotificationsService {
 
 	/**
 	 * Is someone using the deprecated override
-	 * 
+	 *
 	 * @param \Elgg\Notifications\Event $event Event
 	 * @return boolean
 	 */

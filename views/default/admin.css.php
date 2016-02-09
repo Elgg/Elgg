@@ -660,6 +660,10 @@ select {
 	background: #ddd;
 }
 
+.ui-datepicker-inline {
+	max-width: 225px;
+}
+
 /* ***************************************
 	AUTOCOMPLETE
 *************************************** */

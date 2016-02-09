@@ -1,12 +1,6 @@
-<?php
-/**
- * Elgg reported content admin CSS
- *
- * @package ElggReportContent
- */
-?>
-
+/* <style> */
 /* REPORTED CONTENT */
+
 .reported-content {
 	margin: 5px 0 0;
 	padding: 5px 7px 3px 9px;
