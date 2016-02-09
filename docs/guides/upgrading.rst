@@ -17,6 +17,20 @@ Removed views
 
  * ``resources/file/download``
 
+Removed functions/methods
+-------------------------
+
+ * ``ElggFile::setFilestore``: ElggFile objects can no longer use custom filestores.
+ * ``ElggFile::size``: Use ``getSize``
+ * ``get_default_filestore``
+ * ``set_default_filestore``
+ * ``ElggDiskFilestore::makeFileMatrix``: Use ``Elgg\EntityDirLocator``
+
+Removed global vars
+-------------------
+
+ * ``$DEFAULT_FILE_STORE``
+
 From 2.0 to 2.1
 ===============
 
