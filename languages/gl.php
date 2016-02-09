@@ -39,9 +39,9 @@ return array(
 	'actionnotfound' => "Non se atopou o ficheiro para a acción «%s».",
 	'actionloggedout' => "Non pode realizar a acción sen antes identificarse.",
 	'actionunauthorized' => 'Non ten permisos para realizar a acción.',
-	
+
 	'ajax:error' => 'Produciuse un erro inesperado durante a execución dunha chamada mediante AJAX. Pode que se perdese a conexión co servidor.',
-	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
+	'ajax:not_is_xhr' => 'Non pode acceder a vistas de AJAX directamente.',
 
 	'PluginException:MisconfiguredPlugin' => "O complemento %s (guid: %s) está mal configurado e desactivouse. Consulte o wiki de Elgg (http://learn.elgg.org/) para intentar determinar a causa do problema.",
 	'PluginException:CannotStart' => 'O complemento «%s» (GUID: %s) non pode iniciarse e foi desactivado. Motivo: %s',
@@ -60,7 +60,6 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Hai unha dependencia de tipo «%s», «%s», no complemento «%s», , que non é válida. Os complementos non poden nin estar en conflicto nin requerir unha dependencia que eles mesmos subministran.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Non é posíbel incluír «%s» para o complemento «%s» (GUID: %s) en «%s».',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Non é posíbel abrir o cartafol de vistas para o complemento «%s» (GUID: %s) en «%s».',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Non é posíbel rexistrar os idiomas do complemento «%s» (GUID: %s) en «%s».',
 	'ElggPlugin:Exception:NoID' => 'O complemento con GUID «%s» carece de identificador.',
 	'PluginException:NoPluginName' => "Non se atopou o nome do complemento.",
 	'PluginException:ParserError' => 'Produciuse un erro ao analizar o manifesto con versión %s da API no complemento «%s».',
@@ -84,7 +83,7 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => 'Antes de «%s»',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '«%s» non está instalada',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Falta',
-	
+
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Hai outros complementos que teñen «%s» entre as súas dependencias. Antes de desactivar este complemento debe desactivar estes outros: %s',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Atopáronse entradas de menú sen menús pai que liguen con eles.',
@@ -100,6 +99,8 @@ return array(
 	'LoginException:ChangePasswordFailure' => 'O contrasinal actual introducido non coincide co contrasinal actual real.',
 	'LoginException:Unknown' => 'Non foi posíbel autenticalo debido a un erro descoñecido.',
 
+	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
+
 	'deprecatedfunction' => 'Aviso: Este código fai uso da función «%s», que está obsoleta, e non é compatíbel con esta versión de Elgg.',
 
 	'pageownerunavailable' => 'Aviso: Non é posíbel acceder ao propietario da páxina, «%d».',
@@ -113,10 +114,10 @@ return array(
 
 	'error:default:title' => 'Ups…',
 	'error:default:content' => 'Ups… algo non foi ben.',
-	'error:400:title' => 'Bad request',
-	'error:400:content' => 'Sorry. The request is invalid or incomplete.',
-	'error:403:title' => 'Forbidden',
-	'error:403:content' => 'Sorry. You are not allowed to access the requested page.',
+	'error:400:title' => 'Solicitude non válida',
+	'error:400:content' => 'A solicitude non é válida ou está incompleta.',
+	'error:403:title' => 'Prohibido',
+	'error:403:content' => 'Non ten permisos para acceder á páxina solicitada.',
 	'error:404:title' => 'Non se atopou a páxina',
 	'error:404:content' => 'Non foi posíbel atopar a páxina que solicitou.',
 
@@ -633,6 +634,8 @@ return array(
 	'admin:plugins:warning:invalid' => 'O complemento non é válido: %s',
 	'admin:plugins:warning:invalid:check_docs' => 'Na <a href="http://learn.elgg.org/en/stable/appendix/faqs.html">documentación de Elss</a> atopará consellos para evitar e solucionar problemas.',
 	'admin:plugins:cannot_activate' => 'Non pode activarse',
+	'admin:plugins:already:active' => 'The selected plugin(s) are already active.',
+	'admin:plugins:already:inactive' => 'The selected plugin(s) are already inactive.',
 
 	'admin:plugins:set_priority:yes' => "Cambiouse a posición de «%s».",
 	'admin:plugins:set_priority:no' => "Non foi posíbel cambiar a posición de «%s».",
@@ -721,7 +724,7 @@ Os cambios só afectarán a novos usuarios.',
 	'admin:robots.txt:instructions' => "Edite a continuación o ficheiro «robots.txt» do sitio.",
 	'admin:robots.txt:plugins' => "Os complementos están a engadir o seguinte contido ao ficheiro «robots.txt».",
 	'admin:robots.txt:subdir' => "A ferramenta de «robots.txt» non vai funcionar porque Elgg está instalado nun subdirectorio.",
-	'admin:robots.txt:physical' => "The robots.txt tool will not work because a physical robots.txt is present",
+	'admin:robots.txt:physical' => "A ferramenta robots.txt non funcionará porque existe un ficheiro robots.txt.",
 
 	'admin:maintenance_mode:default_message' => 'O sitio está pechado por mantemento',
 	'admin:maintenance_mode:instructions' => 'Use o modo de mantemento para anovar o sitio ou realizar outros cambios importantes.
@@ -735,7 +738,7 @@ Os cambios só afectarán a novos usuarios.',
 /**
  * User settings
  */
-		
+
 	'usersettings:description' => "O panel de configuración de usuarios permítelle controlar a súa configuración persoal, desde a xestión de usuarios ata o comportamento dos complementos. Escolla unha das seguintes opcións para comezar.",
 
 	'usersettings:statistics' => "Estatísticas súas",
@@ -762,7 +765,7 @@ Os cambios só afectarán a novos usuarios.',
 /**
  * Activity river
  */
-		
+
 	'river:all' => 'Actividade global',
 	'river:mine' => 'Actividade persoal',
 	'river:owner' => 'Actividade de %s',
@@ -789,7 +792,7 @@ Os cambios só afectarán a novos usuarios.',
 	'icon:size:medium' => "Medianas",
 	'icon:size:large' => "Grandes",
 	'icon:size:master' => "Xigantes",
-		
+
 /**
  * Generic action words
  */
@@ -874,11 +877,11 @@ Os cambios só afectarán a novos usuarios.',
 
 	'active' => 'Activo',
 	'total' => 'Total',
-	
+
 	'ok' => 'Aceptar',
 	'any' => 'Calquera',
 	'error' => 'Erro',
-	
+
 	'other' => 'Outro',
 	'options' => 'Opcións',
 	'advanced' => 'Avanzada',
@@ -891,7 +894,7 @@ Os cambios só afectarán a novos usuarios.',
 	'content:latest:blurb' => 'Tamén pode premer aquí para ver os últimos contidos de todo o sitio.',
 
 	'link:text' => 'Ver a ligazón',
-	
+
 /**
  * Generic questions
  */
@@ -919,7 +922,7 @@ Os cambios só afectarán a novos usuarios.',
 	'sort:popular' => 'Popular',
 	'sort:alpha' => 'Alfabético',
 	'sort:priority' => 'Prioridade',
-		
+
 /**
  * Generic data words
  */
@@ -944,7 +947,7 @@ Os cambios só afectarán a novos usuarios.',
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'Editar ist',
 	'delete:this' => 'Eliminar ist',
 	'comment:this' => 'Deixar un comentario nist',
@@ -987,7 +990,7 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "Importáronse os datos",
 	'importfail' => "Non foi posíbel importar os datos mediante OpenDD.",
 
@@ -1003,7 +1006,7 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'friendlytime:days' => "hai %s días",
 	'friendlytime:days:singular' => "onte",
 	'friendlytime:date_format' => 'j de F de Y ás g:i a',
-	
+
 	'friendlytime:future:minutes' => "en %s minutos",
 	'friendlytime:future:minutes:singular' => "nun minuto",
 	'friendlytime:future:hours' => "en %s horas",
@@ -1044,7 +1047,7 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'date:weekday:4' => 'Xoves',
 	'date:weekday:5' => 'Venres',
 	'date:weekday:6' => 'Sábad',
-	
+
 	'date:weekday:short:0' => 'Sun',
 	'date:weekday:short:1' => 'Mon',
 	'date:weekday:short:2' => 'Tue',
@@ -1052,7 +1055,7 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 	'date:weekday:short:4' => 'Thu',
 	'date:weekday:short:5' => 'Fri',
 	'date:weekday:short:6' => 'Sat',
-	
+
 	'interval:minute' => 'Cada minuto',
 	'interval:fiveminute' => 'Cada cindo minutos',
 	'interval:fifteenmin' => 'Cada cuarto de hora',
@@ -1108,7 +1111,7 @@ Despois de acceder, recomendámoslle encarecidamente que cambie o seu contrasina
 
 	'installation:htaccess:needs_upgrade' => "Debe actualizar o seu ficheiro «.htaccess» para que a ruta se insira no parámetro GET «__elgg_uri» (pode basearse no modelo que hai en «install/config/htaccess.dist»).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg non pode conectarse a si mesmo para probar as regras de substitución correctamente. Comprobe que o programa «curl» funciona e que non existen restricións de enderezos IP que impidan as conexións locais.",
-	
+
 	'installation:systemcache:description' => "A caché do sistema almacena datos en ficheiros para diminuír o tempo de carga de Elgg",
 	'installation:systemcache:label' => "Usar a caché do sistema (recomendado).",
 
@@ -1176,12 +1179,12 @@ Se o erro persiste, comprobe o rexistro de erros do servidor, a ver se pode inde
 /**
  * Emails
  */
-		
+
 	'email:from' => 'De',
 	'email:to' => 'A',
 	'email:subject' => 'Asunt',
 	'email:body' => 'Corpo',
-	
+
 	'email:settings' => "Configuración do corre",
 	'email:address:label' => "Enderezo de corre",
 
@@ -1273,16 +1276,19 @@ Non responda a esta mensaxe.",
 /**
  * Entities
  */
-	
+
 	'byline' => 'De %s',
 	'byline:ingroup' => 'in the group %s',
 	'entity:default:strapline' => 'Creou %s de %s',
 	'entity:default:missingsupport:popup' => 'Non é posíbel mostrar correctamente esta entidade. Pode que o motivo sexa que necesita dun complemento que xa non está instalado.',
 
-	'entity:delete:success' => 'Eliminouse a entidade %s',
-	'entity:delete:fail' => 'Non foi posíbel eliminar a entidade %s.',
-	
-	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',
+	'entity:delete:item' => 'Item',
+	'entity:delete:item_not_found' => 'Item not found.',
+	'entity:delete:permission_denied' => 'You do not have permissions to delete this item.',
+	'entity:delete:success' => '%s has been deleted.',
+	'entity:delete:fail' => '%s could not be deleted.',
+
+	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
  * Action gatekeeper
@@ -1469,4 +1475,7 @@ Non responda a esta mensaxe.",
 	"za" => "Zhuang; chuang",
 	"zh" => "Chinés",
 	"zu" => "Zulú",
+
+	"field:required" => 'Required',
+
 );

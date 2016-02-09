@@ -12,14 +12,32 @@ class NotificationsServiceTest extends \PHPUnit_Framework_TestCase {
 			->disableOriginalConstructor()
 			->getMock();
 		$this->sub = new \Elgg\Notifications\SubscriptionsService($dbMock);
+		$this->translator = new \Elgg\I18n\Translator();
 		$this->session = \ElggSession::getMock();
+
+		// User mock that supports calling $user->isBanned()
+		$user_123 = $this->getMockBuilder('\ElggEntity')
+			->disableOriginalConstructor()
+			->getMock();
+		$user_123->expects($this->any())
+			->method('isBanned')
+			->will($this->returnValue(false));
+
+		// Database mock that returns the user_123
+		$this->entities = $this->getMockBuilder('\Elgg\Database\EntityTable')
+			->disableOriginalConstructor()
+			->getMock();
+		$this->entities->expects($this->any())
+			->method('get')
+			->with($this->equalTo('123'))
+			->will($this->returnValue($user_123));
 
 		// Event class has dependency on elgg_get_logged_in_user_guid()
 		_elgg_services()->setValue('session', $this->session);
 	}
 
 	public function testRegisterEvent() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session);
+		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
 
 		$service->registerEvent('foo', 'bar');
 		$events = array(
@@ -38,7 +56,7 @@ class NotificationsServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testUnregisterEvent() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session);
+		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
 
 		$service->registerEvent('foo', 'bar');
 		$this->assertTrue($service->unregisterEvent('foo', 'bar'));
@@ -51,7 +69,7 @@ class NotificationsServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testRegisterMethod() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session);
+		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
 
 		$service->registerMethod('foo');
 		$methods = array('foo' => 'foo');
@@ -59,7 +77,7 @@ class NotificationsServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testUnregisterMethod() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session);
+		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
 
 		$service->registerMethod('foo');
 		$this->assertTrue($service->unregisterMethod('foo'));
@@ -68,7 +86,7 @@ class NotificationsServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testEnqueueEvent() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session);
+		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
 
 		$service->registerEvent('object', 'bar');
 		$object = new \ElggObject();
@@ -96,7 +114,7 @@ class NotificationsServiceTest extends \PHPUnit_Framework_TestCase {
 		$mock->expects($this->once())
 			->method('trigger')
 			->with('enqueue', 'notification', $params, true);
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $mock, $this->session);
+		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $mock, $this->session, $this->translator, $this->entities);
 		$service->registerEvent('object', 'bar');
 		$service->enqueueEvent('create', 'object', $object);
 	}
@@ -106,7 +124,7 @@ class NotificationsServiceTest extends \PHPUnit_Framework_TestCase {
 		$mock->expects($this->once())
 			->method('trigger')
 			->will($this->returnValue(false));
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $mock, $this->session);
+		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $mock, $this->session, $this->translator, $this->entities);
 
 		$service->registerEvent('object', 'bar');
 		$object = new \ElggObject();
@@ -116,7 +134,7 @@ class NotificationsServiceTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	public function testProcessQueueNoEvents() {
-		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session);
+		$service = new \Elgg\Notifications\NotificationsService($this->sub, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
 		$this->assertEquals(0, $service->processQueue(time() + 10));
 	}
 
@@ -130,7 +148,7 @@ class NotificationsServiceTest extends \PHPUnit_Framework_TestCase {
 		$mock->expects($this->exactly(3))
 			->method('getSubscriptions')
 			->will($this->returnValue(array()));
-		$service = new \Elgg\Notifications\NotificationsService($mock, $this->queue, $this->hooks, $this->session);
+		$service = new \Elgg\Notifications\NotificationsService($mock, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
 
 		$service->registerEvent('object', 'bar');
 		$object = new \ElggObject();
@@ -151,7 +169,7 @@ class NotificationsServiceTest extends \PHPUnit_Framework_TestCase {
 				false);
 		$mock->expects($this->exactly(0))
 			->method('getSubscriptions');
-		$service = new \Elgg\Notifications\NotificationsService($mock, $this->queue, $this->hooks, $this->session);
+		$service = new \Elgg\Notifications\NotificationsService($mock, $this->queue, $this->hooks, $this->session, $this->translator, $this->entities);
 
 		$service->registerEvent('object', 'bar');
 		$object = new \ElggObject();

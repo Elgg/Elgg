@@ -158,6 +158,9 @@ function elgg_register_js($name, $url, $location = 'head', $priority = null) {
  * Calling this function is not needed if your JS are in views named like `module/name.js`
  * Instead, simply call elgg_require_js("module/name").
  *
+ * @note The configuration is cached in simplecache, so logic should not depend on user-
+ *       specific values like get_language().
+ *
  * @param string $name   The module name
  * @param array  $config An array like the following:
  *                       array  'deps'    An array of AMD module dependencies
@@ -941,14 +944,25 @@ function _elgg_php_exception_handler($exception) {
  * @return true
  * @throws Exception
  * @access private
- * @todo Replace error_log calls with elgg_log calls.
  */
 function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
+
+	// Elgg 2.0 no longer uses ext/mysql, so these warnings are just a nuisance for 1.x site
+	// owners and plugin devs.
+	if (0 === strpos($errmsg, "mysql_connect(): The mysql extension is deprecated")) {
+		// only suppress core's usage
+		if (preg_match('~/classes/Elgg/Database\.php$~', strtr($filename, '\\', '/'))) {
+			return true;
+		}
+	}
+
 	$error = date("Y-m-d H:i:s (T)") . ": \"$errmsg\" in file $filename (line $linenum)";
 
 	switch ($errno) {
 		case E_USER_ERROR:
-			error_log("PHP ERROR: $error");
+			if (!elgg_log("PHP: $error", 'ERROR')) {
+				error_log("PHP ERROR: $error");
+			}
 			register_error("ERROR: $error");
 
 			// Since this is a fatal error, we want to stop any further execution but do so gracefully.
@@ -960,7 +974,7 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 		case E_RECOVERABLE_ERROR: // (e.g. type hint violation)
 			
 			// check if the error wasn't suppressed by the error control operator (@)
-			if (error_reporting()) {
+			if (error_reporting() && !elgg_log("PHP: $error", 'WARNING')) {
 				error_log("PHP WARNING: $error");
 			}
 			break;
@@ -968,7 +982,9 @@ function _elgg_php_error_handler($errno, $errmsg, $filename, $linenum, $vars) {
 		default:
 			global $CONFIG;
 			if (isset($CONFIG->debug) && $CONFIG->debug === 'NOTICE') {
-				error_log("PHP NOTICE: $error");
+				if (!elgg_log("PHP (errno $errno): $error", 'NOTICE')) {
+					error_log("PHP NOTICE: $error");
+				}
 			}
 	}
 
@@ -1467,17 +1483,18 @@ function _elgg_normalize_plural_options_array($options, $singulars) {
  *
  * @see http://www.php.net/register-shutdown-function
  *
+ * @internal This is registered in \Elgg\Application::create()
+ *
  * @return void
  * @see register_shutdown_hook()
  * @access private
  */
 function _elgg_shutdown_hook() {
-	global $START_MICROTIME;
-
 	try {
+		_elgg_services()->logger->setDisplay(false);
 		elgg_trigger_event('shutdown', 'system');
 
-		$time = (float)(microtime(true) - $START_MICROTIME);
+		$time = (float)(microtime(true) - $GLOBALS['START_MICROTIME']);
 		$uri = _elgg_services()->request->server->get('REQUEST_URI', 'CLI');
 		// demoted to NOTICE from DEBUG so javascript is not corrupted
 		elgg_log("Page {$uri} generated in $time seconds", 'INFO');
@@ -1538,7 +1555,16 @@ function _elgg_ajax_page_handler($segments) {
 		}
 
 		$allowed_views = $GLOBALS['_ELGG']->allowed_ajax_views;
-		if (!array_key_exists($view, $allowed_views)) {
+		$ajax_api = _elgg_services()->ajax;
+
+		// cacheable views are always allowed
+		if (!array_key_exists($view, $allowed_views) && !_elgg_services()->views->isCacheableView($view)) {
+			if ($ajax_api->isReady()) {
+				$ajax_api->respondWithError("Ajax view '$view' was not registered");
+				return true;
+			}
+
+			// legacy XHR behavior
 			header('HTTP/1.1 403 Forbidden');
 			exit;
 		}
@@ -1553,22 +1579,36 @@ function _elgg_ajax_page_handler($segments) {
 			$vars['entity'] = get_entity($vars['guid']);
 		}
 
+		$content_type = '';
 		if ($segments[0] === 'view') {
+			$output = elgg_view($view, $vars);
+			$ajax_hook_type = "view:$view";
+
 			// Try to guess the mime-type
 			switch ($segments[1]) {
 				case "js":
-					header("Content-Type: text/javascript");
+					$content_type = 'text/javascript';
 					break;
 				case "css":
-					header("Content-Type: text/css");
+					$content_type = 'text/css';
 					break;
 			}
-
-			echo elgg_view($view, $vars);
 		} else {
 			$action = implode('/', array_slice($segments, 1));
-			echo elgg_view_form($action, array(), $vars);
+			$output = elgg_view_form($action, array(), $vars);
+			$ajax_hook_type = "form:$action";
 		}
+
+		if ($ajax_api->isReady()) {
+			$ajax_api->respondFromOutput($output, $ajax_hook_type);
+			return true;
+		}
+
+		// legacy XHR behavior
+		if ($content_type) {
+			header("Content-Type: $content_type");
+		}
+		echo $output;
 		return true;
 	}
 
@@ -1924,6 +1964,8 @@ function _elgg_engine_boot() {
 function _elgg_init() {
 	global $CONFIG;
 
+	elgg_register_action('entity/delete');
+	
 	elgg_register_action('comment/save');
 	elgg_register_action('comment/delete');
 
@@ -1949,8 +1991,12 @@ function _elgg_init() {
 		return $result;
 	});
 
-	// Trigger the shutdown:system event upon PHP shutdown.
-	register_shutdown_function('_elgg_shutdown_hook');
+	if (_elgg_services()->config->getVolatile('enable_profiling')) {
+		/**
+		 * @see \Elgg\Profiler::handlePageOutput
+		 */
+		elgg_register_plugin_hook_handler('output', 'page', [\Elgg\Profiler::class, 'handlePageOutput'], 999);
+	}
 }
 
 /**

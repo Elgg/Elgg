@@ -302,6 +302,7 @@ input[type="radio"] {
 }
 .ui-datepicker-inline {
 	box-shadow: none;
+	max-width: 225px;
 }
 
 .ui-datepicker-header {

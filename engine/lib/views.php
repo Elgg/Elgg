@@ -415,6 +415,11 @@ function elgg_unextend_view($view, $view_extension) {
  * @since  1.8
  */
 function elgg_view_page($title, $body, $page_shell = 'default', $vars = array()) {
+	$timer = _elgg_services()->timer;
+	if (!$timer->hasEnded(['build page'])) {
+		$timer->end(['build page']);
+	}
+	$timer->begin([__FUNCTION__]);
 
 	$params = array();
 	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
@@ -456,7 +461,10 @@ function elgg_view_page($title, $body, $page_shell = 'default', $vars = array())
 	$vars['page_shell'] = $page_shell;
 
 	// Allow plugins to modify the output
-	return elgg_trigger_plugin_hook('output', 'page', $vars, $output);
+	$output = elgg_trigger_plugin_hook('output', 'page', $vars, $output);
+
+	$timer->end([__FUNCTION__]);
+	return $output;
 }
 
 /**
@@ -627,6 +635,11 @@ function _elgg_views_prepare_head($title) {
  * @return string The layout
  */
 function elgg_view_layout($layout_name, $vars = array()) {
+	$timer = _elgg_services()->timer;
+	if (!$timer->hasEnded(['build page'])) {
+		$timer->end(['build page']);
+	}
+	$timer->begin([__FUNCTION__]);
 
 	$params = array();
 	$params['identifier'] = _elgg_services()->request->getFirstUrlSegment();
@@ -646,7 +659,10 @@ function elgg_view_layout($layout_name, $vars = array()) {
 		$output = elgg_view("page/layouts/default", $params);
 	}
 
-	return elgg_trigger_plugin_hook('output:after', 'layout', $params, $output);
+	$output = elgg_trigger_plugin_hook('output:after', 'layout', $params, $output);
+
+	$timer->end([__FUNCTION__]);
+	return $output;
 }
 
 /**
@@ -1291,6 +1307,10 @@ function elgg_view_input($input_type, array $vars = array()) {
 		return '';
 	}
 
+	if ($input_type == 'hidden') {
+		return elgg_view("input/$input_type", $vars);
+	}
+
 	$id = elgg_extract('id', $vars);
 	if (!$id) {
 		$id_num++;
@@ -1320,6 +1340,7 @@ function elgg_view_input($input_type, array $vars = array()) {
 		'id' => $id,
 		'input' => $input,
 		'class' => $field_class,
+		'input_type' => $input_type,
 	));
 }
 
@@ -1560,14 +1581,20 @@ function _elgg_views_send_header_x_frame_options() {
  * @elgg_event_handler boot system
  */
 function elgg_views_boot() {
-	if (!elgg_get_config('system_cache_loaded')) {
-		_elgg_services()->views->registerPluginViews(realpath(__DIR__ . '/../../'));
-	}
-	
 	global $CONFIG;
 
 	if (!elgg_get_config('system_cache_loaded')) {
+		// Core view files in /views
 		_elgg_services()->views->registerPluginViews(realpath(__DIR__ . '/../../'));
+
+		// Core view definitions in /engine/views.php
+		$file = dirname(__DIR__) . '/views.php';
+		if (is_file($file)) {
+			$spec = (include $file);
+			if (is_array($spec)) {
+				_elgg_services()->views->mergeViewsSpec($spec);
+			}
+		}
 	}
 
 	// on every page
@@ -1594,12 +1621,17 @@ function elgg_views_boot() {
 	elgg_register_css('elgg', elgg_get_simplecache_url('elgg.css'));
 	elgg_load_css('elgg');
 
+	elgg_register_simplecache_view('elgg/init.js');
+	elgg_require_js('elgg/init');
+	elgg_require_js('elgg/ready');
+
 	// optional stuff
 	elgg_register_js('lightbox', elgg_get_simplecache_url('lightbox.js'));
 	elgg_register_css('lightbox', elgg_get_simplecache_url('lightbox/elgg-colorbox-theme/colorbox.css'));
 
-	elgg_register_js('elgg.autocomplete', elgg_get_simplecache_url('elgg/ui.autocomplete.js'));
-	elgg_register_js('jquery.ui.autocomplete.html', elgg_get_simplecache_url('jquery.ui.autocomplete.html.js'));
+	// just provides warning to use elgg/autocomplete AMD
+	elgg_register_js('elgg.autocomplete', elgg_normalize_url('js/lib/ui.autocomplete.js'));
+
 	elgg_define_js('jquery.ui.autocomplete.html', [
 		'deps' => ['jquery-ui'],
 	]);
@@ -1626,16 +1658,6 @@ function elgg_views_boot() {
 	foreach ($viewtype_dirs as $viewtype) {
 		if (_elgg_is_valid_viewtype($viewtype) && is_dir($view_path . $viewtype)) {
 			elgg_register_viewtype($viewtype);
-		}
-	}
-
-	// Declared views. Unlike plugins, Elgg's root views/ is never scanned, so Elgg cannot override
-	// these view traditional view files.
-	$file = dirname(__DIR__) . '/views.php';
-	if (is_file($file)) {
-		$spec = (include $file);
-		if (is_array($spec)) {
-			_elgg_services()->views->mergeViewsSpec($spec);
 		}
 	}
 

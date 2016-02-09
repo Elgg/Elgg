@@ -9,6 +9,16 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
    :local:
    :depth: 2
 
+From 2.0 to 2.1
+===============
+
+Deprecated APIs
+---------------
+
+ * ``ElggFile::setFilestore``
+ * ``get_default_filestore``
+ * ``set_default_filestore``
+
 From 1.x to 2.0
 ===============
 
@@ -199,6 +209,7 @@ We dropped support for and/or removed the following views:
  * input/datepicker (Use input/date instead)
  * input/pulldown (Use input/select instead)
  * invitefriends/formitems
+ * js/admin (Use AMD and ``elgg_require_js`` instead of extending JS views)
  * js/initialise_elgg (Use AMD and ``elgg_require_js`` instead of extending JS views)
  * members/nav
  * metatags (Use the 'head', 'page' plugin hook instead)
@@ -386,6 +397,11 @@ in the content area to use the z-index property without the "More" site menu's d
 behind these elements. If your plugin/theme overrides the elgg-menu-site class or views/default/elements/navigation.css
 please adjust the z-index value in your modified CSS file accordingly.
 
+input/autocomplete view
+-----------------------
+
+Plugins that override the ``input/autocomplete`` view will need to include the source URL in the ``data-source`` attribute of the input element, require the new ``elgg/autocomplete`` AMD module, and call its ``init`` method. The 1.x javascript library ``elgg.autocomplete`` is no longer used.
+
 Introduced third-party library for sending email
 ------------------------------------------------
 
@@ -402,6 +418,11 @@ The following views received ``label`` elements around some of the input fields.
 - views/default/forms/admin/plugins/filter.php
 - views/default/forms/admin/plugins/sort.php
 - views/default/forms/login.php
+
+Plugin Aalborg Theme
+--------------------
+
+The view ``page/elements/navbar`` now uses a Font Awesome icon for the mobile menu selector instead of an image. The ``bars.png`` image and supporting CSS for the 1.12 rendering has been removed, so update your theme accordingly.
 
 Plugin Likes
 ------------
@@ -604,6 +625,13 @@ Viewtype is static after the initial ``elgg_get_viewtype()`` call
 ``elgg_set_viewtype()`` must be used to set the viewtype at runtime. Although Elgg still checks the
 ``view`` input and ``$CONFIG->view`` initially, this is only done once per request.
 
+
+Deprecations
+------------
+
+It's deprecated to read or write to metadata keys starting with ``filestore::`` on ``ElggFile`` objects. In Elgg 3.0 this metadata will be deleted if it points to the current data root path, so few file objects will have it. Plugins should only use ``ElggFile::setFilestore`` if files need to be stored in a custom location.
+
+.. note:: This is not the only deprecation in Elgg 2.0. Plugin developers should watch their site error logs.
 
 From 1.10 to 1.11
 =================

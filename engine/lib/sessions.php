@@ -406,6 +406,7 @@ function logout() {
  * @access private
  */
 function _elgg_session_boot() {
+	_elgg_services()->timer->begin([__FUNCTION__]);
 
 	elgg_register_action('login', '', 'public');
 	elgg_register_action('logout');
@@ -448,5 +449,6 @@ function _elgg_session_boot() {
 		return false;
 	}
 
+	_elgg_services()->timer->end([__FUNCTION__]);
 	return true;
 }

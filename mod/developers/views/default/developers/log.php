@@ -6,6 +6,9 @@
 $cache = elgg_get_config('log_cache');
 $items = $cache->get();
 
+// stop collecting messages
+elgg_unregister_plugin_hook_handler('debug', 'log', [$cache, 'insertDump']);
+
 $pres = array();
 if ($items) {
 	foreach ($items as $item) {

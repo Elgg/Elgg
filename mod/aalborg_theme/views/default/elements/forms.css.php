@@ -304,6 +304,7 @@ select {
 }
 .ui-datepicker-inline {
 	box-shadow: none;
+	max-width: 225px;
 }
 
 .ui-datepicker-header {

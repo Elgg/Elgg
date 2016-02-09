@@ -11,7 +11,7 @@ if (!$count) {
 	return;
 }
 
-elgg_load_js('elgg.upgrades');
+elgg_require_js('elgg/upgrades');
 
 $warning_string = '';
 if ($count > 1000) {

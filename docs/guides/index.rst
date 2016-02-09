@@ -14,6 +14,7 @@ Customize Elgg's behavior with plugins.
    authentication
    context
    database
+   file-system
    actions
    helpers
    i18n

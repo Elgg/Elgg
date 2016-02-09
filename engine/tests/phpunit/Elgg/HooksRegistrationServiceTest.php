@@ -123,6 +123,34 @@ class HooksRegistrationServiceTest extends \PHPUnit_Framework_TestCase {
 		$this->assertSame($expected_foo_bar, $this->mock->getOrderedHandlers('foo', 'bar'));
 		$this->assertSame($expected_foo_baz, $this->mock->getOrderedHandlers('foo', 'baz'));
 	}
+
+	public function testCanBackupAndRestoreRegistrations() {
+		$this->mock->registerHandler('foo', 'bar', 'callback2');
+		$this->mock->registerHandler('all', 'all', 'callback4', 100);
+		$handlers = $this->mock->getAllHandlers();
+
+		$this->mock->backup();
+		$this->assertEmpty($this->mock->getAllHandlers());
+
+		$this->mock->restore();
+		$this->assertEquals($handlers, $this->mock->getAllHandlers());
+	}
+
+	public function testBackupIsAStack() {
+		$this->mock->registerHandler('foo', 'bar', 'callback2');
+		$handlers1 = $this->mock->getAllHandlers();
+		$this->mock->backup();
+
+		$this->mock->registerHandler('all', 'all', 'callback4', 100);
+		$handlers2 = $this->mock->getAllHandlers();
+		$this->mock->backup();
+
+		$this->mock->restore();
+		$this->assertEquals($handlers2, $this->mock->getAllHandlers());
+
+		$this->mock->restore();
+		$this->assertEquals($handlers1, $this->mock->getAllHandlers());
+	}
 }
 
 class HooksRegistrationServiceTest_invokable {

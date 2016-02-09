@@ -42,9 +42,9 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 
 	'install:check:installdir' => 'Aufgrund fehlender Schreibberechtigung ist es leider nicht möglich, auf Deinem Server im Installationsverzeichnis von Elgg die Datei settings.php zu erzeugen. Du hast zwei Möglichkeiten:
 
-		1. Ändere (temporär für die Installation) die Schreibberechtigungen für das Installationsverzeichnis von Elgg
+		1. Ändere (nur während der Installation!) die Schreibberechtigung für das Verzeichnis elgg-config Deiner Elgg-Installation,
 
-		2. Lege die Datei settings.php selbst an, indem Du die Datei engine/settings.example.php in das Installationsverzeichnis von Elgg kopierst und zu settings.php umbenennst. Folge dann den Anweisungen in dieser Datei, um die Verbindungsparameter für Deine Datenbank einzutragen.',
+		2. Lege die Datei settings.php selbst an, indem Du die Datei %s/settings.example.php in das Verzeichnis elgg-config kopierst und zu settings.php umbenennst. Folge dann den Anweisungen in dieser Datei, um die Verbindungsparameter für Deine Datenbank einzutragen.',
 	'install:check:readsettings' => 'Im Installationsverzeichnis von Elgg ist eine Konfigurationsdatei namens settings.php vorhanden, aber es fehlt die notwendige Leseberechtigung. Du kannst entweder die Datei löschen, damit sie neu angelegt werden kann oder Du kannst die Leseberechtigungen der Datei anpassen.',
 
 	'install:check:php:success' => "Die PHP-Konfiguration auf Deinem Server erfüllt alle notwendigen Voraussetzungen für Elgg.",
@@ -124,8 +124,8 @@ Wenn Du bereits bist, um fortzufahren, klicke auf den 'Weiter'-Knopf.",
 	'install:error:nodatabase' => 'Der Zugriff auf die Datenbank %s ist nicht möglich. Möglicherweise ist die Datenbank nicht vorhanden.',
 	'install:error:cannotloadtables' => 'Der Zugriff auf die Tabellen der Datenbank ist nicht möglich.',
 	'install:error:tables_exist' => 'In der Datenbank ist bereits eine Elgg-Tabellenstruktur vorhanden. Du mußt entweder diese Tabellen aus der Datenbank löschen oder die Installation neu starten. Bei einem Neustart kann versucht werden, die bestehende Tabellenstruktur zu verwenden. Um die Installation neu zu starten, entferne \'?step=database\' aus der URL in der Adressleiste Deines Browsers und drücke \'Enter\'.',
-	'install:error:readsettingsphp' => 'Die Datei engine/settings.example.php ist nicht lesbar.',
-	'install:error:writesettingphp' => 'Es ist nicht möglich, in die Datei settings.php im Installationsverzeichnis von Elgg zu schreiben.',
+	'install:error:readsettingsphp' => 'Die Datei /elgg-config/settings.example.php ist nicht lesbar.',
+	'install:error:writesettingphp' => 'Es ist nicht möglich, in die Datei /elgg-config/settings.php zu schreiben bzw. diese Datei anzulegen.',
 	'install:error:requiredfield' => '%s ist eine notwendige Eingabe.',
 	'install:error:relative_path' => 'Der eingegebene Pfad "%s" scheint keine absolute Pfadangabe für Dein Datenverzeichnis zu sein.',
 	'install:error:datadirectoryexists' => 'Dein Datenverzeichnis %s ist nicht vorhanden.',

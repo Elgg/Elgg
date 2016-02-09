@@ -39,7 +39,7 @@ return array(
 	'actionnotfound' => "Nie odnaleziono pliku akcji %s.",
 	'actionloggedout' => "Przepraszamy, nie możesz wykonać tej akcji będąc wylogowany.",
 	'actionunauthorized' => 'Nie masz uprawnień do wykonania tej akcji.',
-	
+
 	'ajax:error' => 'Unexpected error while performing an AJAX call. Maybe the connection to the server is lost.',
 	'ajax:not_is_xhr' => 'You cannot access AJAX views directly',
 
@@ -60,7 +60,6 @@ return array(
 	'ElggPluginPackage:InvalidPlugin:CircularDep' => 'Wykryto niepoprawną %s zależność "%s" w rozszerzeniu %s. Rozszerzenie nie może konfliktować ze sobą lub wymagać zależności, którą sam zapewnia.',
 	'ElggPlugin:Exception:CannotIncludeFile' => 'Nie można wczytać %s dla rozszerzenia %s (guid: %s) w %s.',
 	'ElggPlugin:Exception:CannotRegisterViews' => 'Nie można otworzyć katalogu widoków rozszerzenia %s (guid: %s) w %s.',
-	'ElggPlugin:Exception:CannotRegisterLanguages' => 'Nie można zarejestrować tłumaczeń dla rozszerzenia %s (guid: %s) w %s.',
 	'ElggPlugin:Exception:NoID' => 'Brak identyfikatora rozszerzenia guid %s!',
 	'PluginException:NoPluginName' => "Nie można znaleźć nazwy rozszerzenia.",
 	'PluginException:ParserError' => 'Błąd w trakcie parsowania manifestu dla wersji API %s w rozszerzeniu %s.',
@@ -84,7 +83,7 @@ return array(
 	'ElggPlugin:Dependencies:Priority:Before' => 'Powyżej %s',
 	'ElggPlugin:Dependencies:Priority:Uninstalled' => '%s jest niezainstalowany',
 	'ElggPlugin:Dependencies:Suggests:Unsatisfied' => 'Brak',
-	
+
 	'ElggPlugin:Dependencies:ActiveDependent' => 'Inne rozszerzenia korzystają z %s jako zależności. Aby go wyłączyć, musisz najpierw wyłączyć następujące rozszerzenia: %s',
 
 	'ElggMenuBuilder:Trees:NoParents' => 'Menu items found without parents to link them to',
@@ -99,6 +98,8 @@ return array(
 	'LoginException:AccountLocked' => 'Twoje konto zostało zablokowane z powodu zbyt wielu nieudanych prób logowania.',
 	'LoginException:ChangePasswordFailure' => 'Nie powiodła się weryfikacja obecnego hasła.',
 	'LoginException:Unknown' => 'Nie można się zalogować z powodu nieznanego błędu.',
+
+	'UserFetchFailureException' => 'Cannot check permission for user_guid [%s] as the user does not exist.',
 
 	'deprecatedfunction' => 'Uwaga: Ten kod używa zdeprecjonowanej funkcji \'%s\' i nie jest kompatybilny z tą wersją Elgg.',
 
@@ -733,7 +734,7 @@ return array(
 /**
  * User settings
  */
-		
+
 	'usersettings:description' => "Panel ustawień użytkownika pozwala na kontrolę wszystkich ustawień osobistych oraz zachowania rozszerzeń. Wybierz opcję poniżej, aby rozpocząć.",
 
 	'usersettings:statistics' => "Twoje statystyki",
@@ -760,7 +761,7 @@ return array(
 /**
  * Activity river
  */
-		
+
 	'river:all' => 'Cała aktywność',
 	'river:mine' => 'Moja aktywność',
 	'river:owner' => 'Aktywność użytkownika %s',
@@ -787,7 +788,7 @@ return array(
 	'icon:size:medium' => "Średni",
 	'icon:size:large' => "Duży",
 	'icon:size:master' => "Bardzo duży",
-		
+
 /**
  * Generic action words
  */
@@ -872,11 +873,11 @@ return array(
 
 	'active' => 'Aktywny',
 	'total' => 'Razem',
-	
+
 	'ok' => 'OK',
 	'any' => 'Dowolny',
 	'error' => 'Błąd',
-	
+
 	'other' => 'Inne',
 	'options' => 'Opcje',
 	'advanced' => 'Zaawansowane',
@@ -889,7 +890,7 @@ return array(
 	'content:latest:blurb' => 'Alternatywnie, kliknij tutaj aby wyświetlić ostatnią treść z całej witryny.',
 
 	'link:text' => 'pokaż link',
-	
+
 /**
  * Generic questions
  */
@@ -917,7 +918,7 @@ return array(
 	'sort:popular' => 'Najpopularniejsze',
 	'sort:alpha' => 'Alfabetycznie',
 	'sort:priority' => 'Priorytet',
-		
+
 /**
  * Generic data words
  */
@@ -942,7 +943,7 @@ return array(
 /**
  * Entity actions
  */
-		
+
 	'edit:this' => 'Edytuj to',
 	'delete:this' => 'Usuń to',
 	'comment:this' => 'Skomentuj to',
@@ -985,7 +986,7 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 /**
  * Import / export
  */
-		
+
 	'importsuccess' => "Dane zostały pomyślnie zaimportowane",
 	'importfail' => "OpenDD import danych nieudany.",
 
@@ -1001,7 +1002,7 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 	'friendlytime:days' => "%s dni temu",
 	'friendlytime:days:singular' => "wczoraj",
 	'friendlytime:date_format' => 'Y-m-d H:i:s',
-	
+
 	'friendlytime:future:minutes' => "za %s minut",
 	'friendlytime:future:minutes:singular' => "za minutę",
 	'friendlytime:future:hours' => "za %s godzin",
@@ -1042,7 +1043,7 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 	'date:weekday:4' => 'Czwartek',
 	'date:weekday:5' => 'Piątek',
 	'date:weekday:6' => 'Sobota',
-	
+
 	'date:weekday:short:0' => 'Sun',
 	'date:weekday:short:1' => 'Mon',
 	'date:weekday:short:2' => 'Tue',
@@ -1050,7 +1051,7 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 	'date:weekday:short:4' => 'Thu',
 	'date:weekday:short:5' => 'Fri',
 	'date:weekday:short:6' => 'Sat',
-	
+
 	'interval:minute' => 'Co minutę',
 	'interval:fiveminute' => 'Co pięć minut',
 	'interval:fifteenmin' => 'Co kwadrans',
@@ -1106,7 +1107,7 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 
 	'installation:htaccess:needs_upgrade' => "Musisz zaktualizować swój plik .htaccess aby ścieżka byłą przekazywana jako parametr GET o nazwie __elgg_uri (możesz użyć htaccess_dist jako prykładu).",
 	'installation:htaccess:localhost:connectionfailed' => "Elgg nie mógł się połączyć z serwerem w celu przetestowania reguł przepisywania. Sprawdź czy curl działa poprawnie oraz czy nie ma ograniczeń na twój adres IP, które wzbraniały by połączeń do localhost.",
-	
+
 	'installation:systemcache:description' => "Systemowa pamięć podręczna zmniejsza czas ładowania rdzenia Elgg, poprzez zapisywanie danych do plików.",
 	'installation:systemcache:label' => "Użyj systemowej pamięci podręcznej (zalecane)",
 
@@ -1170,12 +1171,12 @@ Jak już się zalogujesz, gorąco polecamy zmianę hasła.
 /**
  * Emails
  */
-		
+
 	'email:from' => 'Nadawca',
 	'email:to' => 'Adresat',
 	'email:subject' => 'Tytuł',
 	'email:body' => 'Treść',
-	
+
 	'email:settings' => "Ustawienia e-mail",
 	'email:address:label' => "Twój adres e-mail",
 
@@ -1267,7 +1268,7 @@ Nie możesz odpowiedzieć na ten e-mail.",
 /**
  * Entities
  */
-	
+
 	'byline' => 'Przez %s',
 	'byline:ingroup' => 'in the group %s',
 	'entity:default:strapline' => 'Stworzone %s przez %s',
@@ -1275,8 +1276,8 @@ Nie możesz odpowiedzieć na ten e-mail.",
 
 	'entity:delete:success' => 'Element %s został skasowany',
 	'entity:delete:fail' => 'Element %s nie został skasowany',
-	
-	'entity:can_delete:invaliduser' => 'Can not check canDelete for user_guid [%s] as the user does not exist.',
+
+	'entity:can_delete:invaliduser' => 'Cannot check canDelete() for user_guid [%s] as the user does not exist.',
 
 /**
  * Action gatekeeper
@@ -1463,4 +1464,7 @@ Nie możesz odpowiedzieć na ten e-mail.",
 	"za" => "Zuang",
 	"zh" => "Chinese",
 	"zu" => "Zulu",
+
+	"field:required" => 'Required',
+
 );

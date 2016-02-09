@@ -13,6 +13,8 @@ module.exports = function(config) {
 
 		// list of files / patterns to load in the browser
 		files: [
+			'js/tests/prepare.js',
+
 			'vendor/bower-asset/jquery/dist/jquery.js',
 			'bower_components/sprintf/src/sprintf.js',
 			'js/lib/elgglib.js',
@@ -23,7 +25,7 @@ module.exports = function(config) {
 			{pattern:'js/tests/*Test.js',included: false},
 			{pattern:'views/default/**/*.js',included:false},
 
-			'js/tests/requirejs.config.js',
+			'js/tests/requirejs.config.js'
 		],
 
 

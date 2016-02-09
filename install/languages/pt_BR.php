@@ -42,9 +42,9 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 
 	'install:check:installdir' => 'Your web server does not have permission to create the settings.php file in your installation directory. You have two choices:
 
-		1. Change the permissions on the root directory of your Elgg installation
+		1. Change the permissions on the elgg-config directory of your Elgg installation
 
-		2. Copy the file engine/settings.example.php to /settings.php and follow the instructions in it for setting your database parameters.',
+		2. Copy the file %s/settings.example.php to elgg-config/settings.php and follow the instructions in it for setting your database parameters.',
 	'install:check:readsettings' => 'Um arquivo de configuração existe no diretorio <b>engine</b>, mas o servidor web nao pode executar a leitura. Voce pode apagar o arquivo ou alterar as permissoes de leitura dele.',
 
 	'install:check:php:success' => "Seu servidor de PHP satisfaz todas as necessidades do Elgg.",
@@ -124,8 +124,8 @@ Se você está pronto para prosseguir, clique no botão PROXIMO.",
 	'install:error:nodatabase' => 'Não foi possivel usar o banco de dados %s. Ele pode não existir.',
 	'install:error:cannotloadtables' => 'Não foi possivel carregar as tabelas da base de dados',
 	'install:error:tables_exist' => 'Já existem tabelas do Elgg no banco de dados. Voce precisa apagar estas tabelas ou reiniciar o instalador e nos tentaremos utiliza-las. Para reiniciar o instalar, remova o <b>\'?step=database\' </b> do URL no seu endereco na barra do navegador e pressione ENTER.',
-	'install:error:readsettingsphp' => 'Não foi possível ler o arquivo <b>engine/settings.example.php</b>',
-	'install:error:writesettingphp' => 'Não foi possivel escrever o arquivo <b>engine/settings.php</b>',
+	'install:error:readsettingsphp' => 'Unable to read /elgg-config/settings.example.php',
+	'install:error:writesettingphp' => 'Unable to write /elgg-config/settings.php',
 	'install:error:requiredfield' => '%s é necessario',
 	'install:error:relative_path' => 'Nao acreditamos que "%s" seja um caminho absoluto para seu diretorio de dados (data directory)',
 	'install:error:datadirectoryexists' => 'Seu diretório de dados <i>(data directory)</i> %s não existe.',
