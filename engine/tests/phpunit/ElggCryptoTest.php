@@ -14,11 +14,16 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 	protected function setUp() {
 		$this->stub = $this->getMockBuilder('\ElggCrypto')
 			->setMethods(array('getRandomBytes'))
+			->setConstructorArgs([_elgg_services()->siteSecret])
 			->getMock();
 
 		$this->stub->expects($this->any())
 			->method('getRandomBytes')
 			->will($this->returnCallback(array($this, 'mock_getRandomBytes')));
+	}
+
+	protected function getCrypto() {
+		return new \ElggCrypto(_elgg_services()->siteSecret);
 	}
 
 	function mock_getRandomBytes($length) {
@@ -47,7 +52,7 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	function testGeneratesMacInBase64Url() {
-		$crypto = new ElggCrypto();
+		$crypto = $this->getCrypto();
 		$key = 'a very bad key';
 		$data = '1';
 		$expected = 'nL0lgXrVWgGK0Cmr9_PjqQcR2_PzuAHH114AsPZk-AM';
@@ -57,7 +62,7 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	function testStringCastAffectsMacs() {
-		$crypto = new ElggCrypto();
+		$crypto = $this->getCrypto();
 		$key = 'a very bad key';
 
 		$t1 = $crypto->getHmac(1234, 'sha256', $key)->getToken();
@@ -67,7 +72,7 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	function testMacAlteredByVaryingData() {
-		$crypto = new ElggCrypto();
+		$crypto = $this->getCrypto();
 		$key = 'a very bad key';
 
 		$t1 = $crypto->getHmac('1234', 'sha256', $key)->getToken();
@@ -77,7 +82,7 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	function testMacAlteredByVaryingKey() {
-		$crypto = new ElggCrypto();
+		$crypto = $this->getCrypto();
 		$key1 = 'a very bad key';
 		$key2 = 'b very bad key';
 
@@ -88,7 +93,7 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	function testCanAcceptDataAsArray() {
-		$crypto = new ElggCrypto();
+		$crypto = $this->getCrypto();
 		$key = 'a very bad key';
 
 		$token = $crypto->getHmac([12, 34], 'sha256', $key)->getToken();
@@ -98,7 +103,7 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	function testMacAlteredByArrayModification() {
-		$crypto = new ElggCrypto();
+		$crypto = $this->getCrypto();
 		$key = 'a very bad key';
 
 		$t1 = $crypto->getHmac([12, 34], 'sha256', $key)->getToken();
@@ -108,7 +113,7 @@ class ElggCryptoTest extends \PHPUnit_Framework_TestCase {
 	}
 
 	function testMacAlteredByArrayTypeModification() {
-		$crypto = new ElggCrypto();
+		$crypto = $this->getCrypto();
 		$key = 'a very bad key';
 
 		$t1 = $crypto->getHmac([12, 34], 'sha256', $key)->getToken();

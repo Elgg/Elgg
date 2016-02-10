@@ -74,7 +74,9 @@ class PersistentLoginTest extends \PHPUnit_Framework_TestCase {
 			->method('sanitizeString')
 			->will($this->returnCallback(array($this, 'mock_sanitizeString')));
 
-		$this->cryptoMock = $this->getMockBuilder('\ElggCrypto')->getMock();
+		$this->cryptoMock = $this->getMockBuilder('\ElggCrypto')
+			->setConstructorArgs([_elgg_services()->siteSecret])
+			->getMock();
 		$this->cryptoMock->expects($this->any())
 			->method('getRandomString')
 			->will($this->returnValue(str_repeat('a', 31)));

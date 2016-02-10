@@ -51,6 +51,7 @@ use Zend\Mail\Transport\TransportInterface as Mailer;
  * @property-read \Elgg\Http\Request                       $request
  * @property-read \Elgg\Database\RelationshipsTable        $relationshipsTable
  * @property-read \Elgg\Router                             $router
+ * @property-read \Elgg\Application\ServeFileHandler       $serveFileHandler
  * @property-read \ElggSession                             $session
  * @property-read \Elgg\Cache\SimpleCache                  $simpleCache
  * @property-read \Elgg\Database\SiteSecret                $siteSecret
@@ -124,7 +125,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 
 		$this->setClassName('context', \Elgg\Context::class);
 
-		$this->setClassName('crypto', \ElggCrypto::class);
+		$this->setFactory('crypto', function(ServiceProvider $c) {
+			return new \ElggCrypto($c->siteSecret);
+		});
 
 		$this->setFactory('datalist', function(ServiceProvider $c) {
 			// TODO(ewinslow): Add back memcached support
@@ -135,6 +138,8 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('db', function(ServiceProvider $c) {
+			// gonna need dbprefix from settings
+			$c->config->loadSettingsFile();
 			$db_config = new \Elgg\Database\Config($c->config->getStorageObject());
 
 			// we inject the logger in _elgg_engine_boot()
@@ -208,7 +213,7 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 		});
 
 		$this->setFactory('persistentLogin', function(ServiceProvider $c) {
-			$global_cookies_config = $c->config->get('cookies');
+			$global_cookies_config = $c->config->getCookieConfig();
 			$cookie_config = $global_cookies_config['remember_me'];
 			$cookie_name = $cookie_config['name'];
 			$cookie_token = $c->request->cookies->get($cookie_name, '');
@@ -255,8 +260,12 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return $router;
 		});
 
+		$this->setFactory('serveFileHandler', function(ServiceProvider $c) {
+			return new \Elgg\Application\ServeFileHandler($c->crypto, $c->config);
+		});
+
 		$this->setFactory('session', function(ServiceProvider $c) {
-			$params = $c->config->get('cookies')['session'];
+			$params = $c->config->getCookieConfig()['session'];
 			$options = [
 				// session.cache_limiter is unfortunately set to "" by the NativeSessionStorage
 				// constructor, so we must capture and inject it directly.
@@ -280,7 +289,9 @@ class ServiceProvider extends \Elgg\Di\DiContainer {
 			return new \Elgg\Cache\SimpleCache($c->config, $c->datalist, $c->views);
 		});
 
-		$this->setClassName('siteSecret', \Elgg\Database\SiteSecret::class);
+		$this->setFactory('siteSecret', function(ServiceProvider $c) {
+			return new \Elgg\Database\SiteSecret($c->datalist);
+		});
 
 		$this->setClassName('stickyForms', \Elgg\Forms\StickyForms::class);
 

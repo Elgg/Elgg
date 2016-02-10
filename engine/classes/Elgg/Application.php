@@ -232,6 +232,10 @@ class Application {
 
 		$config = $this->services->config;
 
+		if ($config->getVolatile('Elgg\Application_phpunit')) {
+			throw new \RuntimeException('Unit tests should not call ' . __METHOD__);
+		}
+
 		if ($config->getVolatile('boot_complete')) {
 			return;
 		}
@@ -392,7 +396,7 @@ class Application {
 		}
 
 		if (0 === strpos($path, '/serve-file/')) {
-			(new Application\ServeFileHandler($this))->getResponse($this->services->request)->send();
+			$this->services->serveFileHandler->getResponse($this->services->request)->send();
 			return true;
 		}
 

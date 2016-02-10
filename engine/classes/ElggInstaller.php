@@ -836,7 +836,7 @@ class ElggInstaller {
 				$this->CONFIG->site_id = $this->CONFIG->site_guid;
 				$this->CONFIG->site = get_entity($this->CONFIG->site_guid);
 				$this->CONFIG->dataroot = _elgg_services()->datalist->get('dataroot');
-				_elgg_configure_cookies($this->CONFIG);
+				_elgg_services()->config->getCookieConfig();
 				_elgg_session_boot();
 			}
 
