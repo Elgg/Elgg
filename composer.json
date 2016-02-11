@@ -15,7 +15,7 @@
         "symfony/http-foundation": "~2.6",
         "mrclay/minify": "~2.0",
         "knplabs/gaufrette": "~0.1.0",
-        "tedivm/stash": "~0.12",
+        "tedivm/stash": "0.14.*",
         "ircmaxell/password-compat": "~1.0",
         "roave/security-advisories": "dev-master",
         "elgg/login_as": "~1.9"
