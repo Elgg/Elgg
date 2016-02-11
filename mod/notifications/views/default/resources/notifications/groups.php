@@ -22,9 +22,6 @@ if (!isset($user) || !($user instanceof ElggUser)) {
 
 elgg_set_page_owner_guid($user->guid);
 
-// Set the context to settings
-elgg_set_context('settings');
-
 $title = elgg_echo('notifications:subscriptions:changesettings:groups');
 
 elgg_push_breadcrumb(elgg_echo('settings'), "settings/user/$user->username");

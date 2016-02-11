@@ -16,7 +16,7 @@ if ($tools) {
 		$group_option_toggle_name = $group_option->name . "_enable";
 		$value = elgg_extract($group_option_toggle_name, $vars);
 		
-		echo elgg_format_element('div', null, elgg_view('input/checkbox', array(
+		echo elgg_format_element('div', [], elgg_view('input/checkbox', array(
 			'name' => $group_option_toggle_name,
 			'value' => 'yes',
 			'default' => 'no',

@@ -59,12 +59,14 @@ Si vous êtes prêt à commencer, cliquez sur le bouton Suivant.",
 	'install:database:label:dbname' => 'Nom de la base de données',
 	'install:database:label:dbhost' => 'Nom du serveur de la base de données',
 	'install:database:label:dbprefix' => 'Préfixe des tables de la base de données',
+	'install:database:label:timezone' => "Timezone",
 
 	'install:database:help:dbuser' => 'Un utilisateur qui a tous les privilèges sur la base de données MySQL que vous avez créée pour Elgg',
 	'install:database:help:dbpassword' => 'Mot de passe du compte de l\'utilisateur de la base de données ci-dessus',
 	'install:database:help:dbname' => 'Nom de la base de données d\'Elgg',
 	'install:database:help:dbhost' => 'Nom du serveur MySQL (habituellement localhost)',
 	'install:database:help:dbprefix' => "Le préfixe donné à toutes les tables d'Elgg (habituellement elgg_)",
+	'install:database:help:timezone' => "The default timezone in which the site will operate",
 
 	'install:settings:instructions' => 'Nous avons besoin d\'informations à propos du site afin de configurer correctement Elgg. Si vous n\'avez pas encore <a href="http://docs.elgg.org/wiki/Installation_fr" target="_blank">créé un répertoire de données</a> pour Elgg, vous devez le faire maintenant.',
 

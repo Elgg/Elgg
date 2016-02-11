@@ -7,5 +7,6 @@ return array(
 	'members:title:newest' => 'Najnowsi użytkownicy',
 	'members:title:popular' => 'Najpopularniejsi członkowie',
 	'members:title:online' => 'Członkowie on-line',
+	'members:title:alpha' => 'Wszyscy członkowie',
 	'members:list:popular:none' => 'Żadni członkowie nie mają jeszcze znajomych.',
 );
