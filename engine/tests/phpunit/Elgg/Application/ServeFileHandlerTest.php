@@ -72,6 +72,7 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 	 * @group FileService
 	 */
 	public function testSends403OnFileModificationTimeMismatch () {
+		$this->markTestSkipped('this test boots core');
 
 		$file = new \Elgg\FileService\File();
 		$file->setFile($this->file);
@@ -92,6 +93,7 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 	 * @group FileService
 	 */
 	public function testResponseCodesOnSessionRestartWithCookieEnabledForFileUrls() {
+		$this->markTestSkipped('this test boots core');
 
 		$file = new \Elgg\FileService\File();
 		$file->setFile($this->file);
@@ -113,6 +115,8 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 	 * @group FileService
 	 */
 	public function testResponseHeadersMatchFileAttributesForInlineUrls() {
+		$this->markTestSkipped('this test boots core');
+
 		$file = new \Elgg\FileService\File();
 		$file->setFile($this->file);
 		$file->setDisposition('inline');
@@ -135,6 +139,8 @@ class ServeFileHandlerTest extends PHPUnit_Framework_TestCase {
 	 * @group FileService
 	 */
 	public function testResponseHeadersMatchFileAttributesForAttachmentUrls() {
+		$this->markTestSkipped('this test boots core');
+
 		$file = new \Elgg\FileService\File();
 		$file->setFile($this->file);
 		$file->setDisposition('attachment');
