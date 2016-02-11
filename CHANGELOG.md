@@ -1,3 +1,37 @@
+<a name="2.0.2"></a>
+### 2.0.2  (2016-02-03)
+
+#### Contributors
+
+* Steve Clay (10)
+* Juho Jaakkola (3)
+* Ismayil Khayredinov (2)
+* Wouter van Os (1)
+
+#### Documentation
+
+* **events:** Clarify scope of HooksRegistrationService::hasHandler ([498abdde](https://github.com/Elgg/Elgg/commit/498abdde342cdf29a32bcd2dfef1c6f3176fc314), closes [#9325](https://github.com/Elgg/Elgg/issues/9325))
+* **js:** warn devs that that elgg_define_js() configuration is cached ([a078c030](https://github.com/Elgg/Elgg/commit/a078c030346e5d67aba216631f44a788c0b273cb), closes [#9302](https://github.com/Elgg/Elgg/issues/9302))
+* **notifications:** Updated subject variable to body ([0cde3006](https://github.com/Elgg/Elgg/commit/0cde30064f828b94ce0a72a334d2cca3b1adbb85))
+* **routing:** clarify use of default_page_owner_handler in core ([5d647d18](https://github.com/Elgg/Elgg/commit/5d647d18056bf1eef644dd30c9920df9a78d2f8d))
+
+
+#### Bug Fixes
+
+* **installer:**
+  * don't fatal trying to rewrite the .htaccess file ([5e74932b](https://github.com/Elgg/Elgg/commit/5e74932b525beb8cdc26353e9e084612cc699e06), closes [#9334](https://github.com/Elgg/Elgg/issues/9334))
+  * detect PDO MySQL extension instead of ext/mysql ([98c8e418](https://github.com/Elgg/Elgg/commit/98c8e418482b5aa517aa5198f02043e0dabb0e93), closes [#9313](https://github.com/Elgg/Elgg/issues/9313))
+  * installer no longer fails on PHP 7 ([4d796279](https://github.com/Elgg/Elgg/commit/4d796279d6e2be3c2609c408ecd3d875e4062525), closes [#9314](https://github.com/Elgg/Elgg/issues/9314))
+* **javascript:** replaces calls to obsolete $.die() method with $.off() ([82a08f56](https://github.com/Elgg/Elgg/commit/82a08f56af29fc1e7dd7822dcaa0171aa9fe8275), closes [#9309](https://github.com/Elgg/Elgg/issues/9309))
+* **menus:** menu item labels now match page titles in tool settings ([bc8f8dd3](https://github.com/Elgg/Elgg/commit/bc8f8dd3a6054e7c7c589fe45a0d49dd6bca1653))
+* **notifications:** set page context before pagesetup is fired ([d4c86cde](https://github.com/Elgg/Elgg/commit/d4c86cde521956632c73c4858c1d27ad1d0f406d))
+* **profile:** don't show removed description field ([9846c4a4](https://github.com/Elgg/Elgg/commit/9846c4a462e1b2648eec03a4285f89b9c7af53f0), closes [#8984](https://github.com/Elgg/Elgg/issues/8984))
+* **views:**
+  * resources/error view now renders sanely within /admin ([c0b1a703](https://github.com/Elgg/Elgg/commit/c0b1a70336ba501ef2ee8074c39d2bbef5aec98b), closes [#9327](https://github.com/Elgg/Elgg/issues/9327))
+  * don't pass null to array arguments (for PHP 7) ([e0d5433f](https://github.com/Elgg/Elgg/commit/e0d5433fd69875e5e9fd8ca823f74e8b7715c5f8), closes [#9318](https://github.com/Elgg/Elgg/issues/9318))
+  * locations specified in /engine/views.php are modifiable ([3cc5b5b3](https://github.com/Elgg/Elgg/commit/3cc5b5b3a7d71341b36fb5a1b42a6678f2d8060e), closes [#9308](https://github.com/Elgg/Elgg/issues/9308))
+
+
 <a name="2.0.1"></a>
 ### 2.0.1  (2016-01-03)
 
@@ -629,6 +663,20 @@ change them to external AMD modules and load them with `elgg_require_js`.
 Fixes #2718 ([c91f1f3e](https://github.com/Elgg/Elgg/commit/c91f1f3e5b0c825e34feae248a1a3ff5a5e2b640))
 
 
+<a name="1.12.8"></a>
+### 1.12.8  (2016-01-31)
+
+#### Contributors
+
+* Ismayil Khayredinov (1)
+* Juho Jaakkola (1)
+* Steve Clay (1)
+
+#### Bug Fixes
+
+* **access:** fixes guid column name in metadata queries ([b3427ccc](https://github.com/Elgg/Elgg/commit/b3427ccc81b0dd40188117a42366f1259cedd1a1))
+
+
 <a name="1.12.7"></a>
 ### 1.12.7  (2016-01-03)
 
@@ -1117,6 +1165,34 @@ Elgg 2.0. ([e96f0798](https://github.com/Elgg/Elgg/commit/e96f07987b943a4c72f654
   * sidebar comments block data should be consistent with page ([f9e6efb2](https://github.com/Elgg/Elgg/commit/f9e6efb2529cc12002d3b122cf60930751225af8))
   * switch tagcloud blocks to list tags based on container_guid ([7915a668](https://github.com/Elgg/Elgg/commit/7915a668ef6de1cba4ca9f74f785d7831ba68297))
 
+<a name="1.10.6"></a>
+### 1.10.6  (2015-12-13)
+
+#### Contributors
+
+* Jerôme Bakker (5)
+* Juho Jaakkola (2)
+* Evan Winslow (2)
+* Mariano Aguero (1)
+* akudan (1)
+* Steve Clay (1)
+* Jeroen Dalsem (1)
+
+#### Bug Fixes
+
+* **views:** Sticky values now get passed into views extending register/extend ([e241e82e](https://github.com/Elgg/Elgg/commit/e241e82eef3ac57e8cffdfdad164fe49372ddfd7), closes [#8873](https://github.com/Elgg/Elgg/issues/8873))
+* **memcache:** don't store a copy of $CONFIG in file objects ([beb90891](https://github.com/Elgg/Elgg/commit/beb9089129a0a06b36200f3f8d214c7ed8f94f42)), closes [#9081](https://github.com/Elgg/Elgg/issues/9081))
+* **messageboard:** provide correct link to users messageboard (Fixes [#8170](https://github.com/Elgg/Elgg/issues/8170))
+* **notifications:** correctly use elgg_log instead of error_log (Fixes [#8039](https://github.com/Elgg/Elgg/issues/8039))
+* **i18n:**
+  * ckeditor now uses user's own language instead of the site language
+  * do not let empty translation arrays disable plugins (Fixes [#8116](https://github.com/Elgg/Elgg/issues/8116))
+
+#### Chores
+
+* **notification:** no more typehint errors when sending a notificationas an ElggGroup (Fixes [#7949](https://github.com/Elgg/Elgg/issues/7949))
+* **thewire:** improved error handling when removing a wire post (Fixes [#7003](https://github.com/Elgg/Elgg/issues/7003))
+* **core:** catch login exceptions during password change (Fixes [#7948](https://github.com/Elgg/Elgg/issues/7948))
 
 <a name="1.10.5"></a>
 ### 1.10.5  (2015-04-05)

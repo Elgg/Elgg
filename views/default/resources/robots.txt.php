@@ -1,7 +1,7 @@
 <?php
 
 $site = elgg_get_site_entity();
-header("Content-type: text/plain");
+header("Content-type: text/plain;charset=utf-8");
 
 $content = $site->getPrivateSetting('robots.txt');
 $plugin_content = elgg_trigger_plugin_hook('robots.txt', 'site', array('site' => $site), '');

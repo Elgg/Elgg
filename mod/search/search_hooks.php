@@ -38,7 +38,9 @@ function search_objects_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
-	$params['order_by'] = search_get_order_by_sql('e', 'oe', $params['sort'], $params['order']);
+	if (isset($params['sort']) || !isset($params['order_by'])) {
+		$params['order_by'] = search_get_order_by_sql('e', 'oe', $params['sort'], $params['order']);
+	}
 	$params['preload_owners'] = true;
 	$entities = elgg_get_entities($params);
 
@@ -94,7 +96,9 @@ function search_groups_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
-	$params['order_by'] = search_get_order_by_sql('e', 'ge', $params['sort'], $params['order']);
+	if (isset($params['sort']) || !isset($params['order_by'])) {
+		$params['order_by'] = search_get_order_by_sql('e', 'ge', $params['sort'], $params['order']);
+	}
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
@@ -150,6 +154,14 @@ function search_users_hook($hook, $type, $value, $params) {
 		// can't use egef_metadata() because the n_table join comes too late.
 		$clauses = _elgg_entities_get_metastrings_options('metadata', array(
 			'metadata_names' => $profile_fields,
+
+			// avoid notices
+			'metadata_values' => null,
+			'metadata_name_value_pairs' => null,
+			'metadata_name_value_pairs_operator' => null,
+			'metadata_case_sensitive' => null,
+			'order_by_metadata' => null,
+			'metadata_owner_guids' => null,
 		));
 	
 		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
@@ -173,7 +185,9 @@ function search_users_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
-	$params['order_by'] = search_get_order_by_sql('e', 'ue', $params['sort'], $params['order']);
+	if (isset($params['sort']) || !isset($params['order_by'])) {
+		$params['order_by'] = search_get_order_by_sql('e', 'ue', $params['sort'], $params['order']);
+	}
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
@@ -291,7 +305,9 @@ function search_tags_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
-	$params['order_by'] = search_get_order_by_sql('e', null, $params['sort'], $params['order']);
+	if (isset($params['sort']) || !isset($params['order_by'])) {
+		$params['order_by'] = search_get_order_by_sql('e', null, $params['sort'], $params['order']);
+	}
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
