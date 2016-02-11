@@ -142,6 +142,14 @@ function search_users_hook($hook, $type, $value, $params) {
 		// can't use egef_metadata() because the n_table join comes too late.
 		$clauses = _elgg_entities_get_metastrings_options('metadata', array(
 			'metadata_names' => $profile_fields,
+
+			// avoid notices
+			'metadata_values' => null,
+			'metadata_name_value_pairs' => null,
+			'metadata_name_value_pairs_operator' => null,
+			'metadata_case_sensitive' => null,
+			'order_by_metadata' => null,
+			'metadata_owner_guids' => null,
 		));
 	
 		$params['joins'] = array_merge($clauses['joins'], $params['joins']);
