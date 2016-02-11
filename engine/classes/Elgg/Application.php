@@ -232,6 +232,10 @@ class Application {
 
 		$config = $this->services->config;
 
+		if ($config->getVolatile('Elgg\Application_phpunit')) {
+			throw new \RuntimeException('Unit tests should not call ' . __METHOD__);
+		}
+
 		if ($config->getVolatile('boot_complete')) {
 			return;
 		}

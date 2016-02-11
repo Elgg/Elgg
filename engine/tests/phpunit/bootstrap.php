@@ -37,6 +37,7 @@ $CONFIG = (object)[
 	'site_guid' => 1,
 	'AutoloaderManager_skip_storage' => true,
 	'simplecache_enabled' => false,
+	'Elgg\Application_phpunit' => true,
 ];
 
 global $_ELGG;
