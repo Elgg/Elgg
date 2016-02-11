@@ -360,11 +360,28 @@ function file_set_icon_url($hook, $type, $url, $params) {
 	$file = $params['entity'];
 	$size = $params['size'];
 	if (elgg_instanceof($file, 'object', 'file')) {
-
 		// thumbnails get first priority
 		if ($file->thumbnail) {
-			$ts = (int)$file->icontime;
-			return "mod/file/thumbnail.php?file_guid=$file->guid&size=$size&icontime=$ts";
+			switch ($size) {
+				case "small":
+					$thumbfile = $file->thumbnail;
+					break;
+				case "medium":
+					$thumbfile = $file->smallthumb;
+					break;
+				case "large":
+				default:
+					$thumbfile = $file->largethumb;
+					break;
+			}
+
+			$readfile = new ElggFile();
+			$readfile->owner_guid = $file->owner_guid;
+			$readfile->setFilename($thumbfile);
+			$thumb_url = elgg_get_inline_url($readfile, true);
+			if ($thumb_url) {
+				return $thumb_url;
+			}
 		}
 
 		$mapping = array(
@@ -383,10 +400,8 @@ function file_set_icon_url($hook, $type, $url, $params) {
 			'application/x-rar-compressed' => 'archive',
 			'application/x-stuffit' => 'archive',
 			'application/zip' => 'archive',
-
 			'text/directory' => 'vcard',
 			'text/v-card' => 'vcard',
-
 			'application' => 'application',
 			'audio' => 'music',
 			'text' => 'text',

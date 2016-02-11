@@ -9,6 +9,14 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
    :local:
    :depth: 2
 
+From 2.x to 3.0
+===============
+
+Removed views
+-------------
+
+ * ``resources/file/download``
+
 From 2.0 to 2.1
 ===============
 
