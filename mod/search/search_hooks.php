@@ -35,7 +35,9 @@ function search_objects_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
-	$params['order_by'] = search_get_order_by_sql('e', 'oe', $params['sort'], $params['order']);
+	if (isset($params['sort']) || !isset($params['order_by'])) {
+		$params['order_by'] = search_get_order_by_sql('e', 'oe', $params['sort'], $params['order']);
+	}
 	$params['preload_owners'] = true;
 	$entities = elgg_get_entities($params);
 
@@ -89,7 +91,9 @@ function search_groups_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
-	$params['order_by'] = search_get_order_by_sql('e', 'ge', $params['sort'], $params['order']);
+	if (isset($params['sort']) || !isset($params['order_by'])) {
+		$params['order_by'] = search_get_order_by_sql('e', 'ge', $params['sort'], $params['order']);
+	}
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
@@ -165,7 +169,9 @@ function search_users_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
-	$params['order_by'] = search_get_order_by_sql('e', 'ue', $params['sort'], $params['order']);
+	if (isset($params['sort']) || !isset($params['order_by'])) {
+		$params['order_by'] = search_get_order_by_sql('e', 'ue', $params['sort'], $params['order']);
+	}
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
@@ -279,7 +285,9 @@ function search_tags_hook($hook, $type, $value, $params) {
 	}
 	
 	$params['count'] = FALSE;
-	$params['order_by'] = search_get_order_by_sql('e', null, $params['sort'], $params['order']);
+	if (isset($params['sort']) || !isset($params['order_by'])) {
+		$params['order_by'] = search_get_order_by_sql('e', null, $params['sort'], $params['order']);
+	}
 	$entities = elgg_get_entities($params);
 
 	// add the volatile data for why these entities have been returned.
