@@ -41,7 +41,7 @@ final class StashPool implements Pool {
 
 			$result = call_user_func($callback);
 
-			$item->set($result);
+			$this->stash->save($item->set($result));
 		}
 
 		return $result;
