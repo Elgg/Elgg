@@ -357,7 +357,7 @@ function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
 /**
  * Extends a view with another view.
  *
- * The output of any view can be prepended or appended to any other view.
+ * The output of any* view can be prepended or appended to any other view.
  *
  * The default action is to append a view.  If the priority is less than 500,
  * the output of the extended view will be appended to the original view.
@@ -368,8 +368,7 @@ function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
  * Priority can be specified and affects the order in which extensions
  * are appended or prepended.
  *
- * @note Internal: View extensions are stored in
- * $CONFIG->views->extensions[$view][$priority] = $view_extension
+ * @note Since 3.0, one cannot extend the view "elgg.js".
  *
  * @param string $view           The view to extend.
  * @param string $view_extension This view is added to $view
@@ -379,6 +378,14 @@ function elgg_view_deprecated($view, array $vars, $suggestion, $version) {
  * @since 1.7.0
  */
 function elgg_extend_view($view, $view_extension, $priority = 501) {
+	// for legacy plugins that extend elgg.js, we instead extend a synchronous script
+	if ($view === 'elgg.js' || $view === 'js/elgg') {
+		// can't extend elgg.js
+		$view = 'elgg/sync_code.js';
+		elgg_set_config('elgg_load_sync_code', true);
+		elgg_deprecated_notice('Do not extend the elgg.js view.', '3.0');
+	}
+
 	_elgg_services()->views->extendView($view, $view_extension, $priority);
 }
 
@@ -1599,22 +1606,25 @@ function elgg_views_boot() {
 
 	// on every page
 
-	// jQuery and UI must come before require. See #9024
-	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head');
+	// jQuery and UI must come early, as some scripts extend it.
+	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head', 1);
 	elgg_load_js('jquery');
 
-	elgg_register_js('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head');
+	elgg_register_js('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head', 2);
 	elgg_load_js('jquery-ui');
 
-	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'head');
+	// We setup and load Require last so all other sync scripts will use Elgg's require() shim.
+	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'footer', 1000);
 	elgg_load_js('elgg.require_config');
-
-	elgg_register_js('require', elgg_get_simplecache_url('require.js'), 'head');
+	elgg_register_js('require', elgg_get_simplecache_url('require.js'), 'footer', 1001);
 	elgg_load_js('require');
 
-	elgg_register_js('elgg', elgg_get_simplecache_url('elgg.js'), 'head');
-	elgg_load_js('elgg');
-	
+	elgg_require_js('elgg');
+	elgg_register_simplecache_view('elgg.js');
+
+	// See elgg_extend_view()
+	elgg_register_simplecache_view('elgg/sync_code.js');
+
 	elgg_register_css('font-awesome', elgg_get_simplecache_url('font-awesome/css/font-awesome.css'));
 	elgg_load_css('font-awesome');
 
@@ -1642,8 +1652,6 @@ function elgg_views_boot() {
 
 	elgg_register_js('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.js'));
 	elgg_register_css('jquery.imgareaselect', elgg_get_simplecache_url('jquery.imgareaselect.css'));
-
-	elgg_register_ajax_view('languages.js');
 
 	elgg_register_plugin_hook_handler('simplecache:generate', 'js', '_elgg_views_amd');
 	elgg_register_plugin_hook_handler('simplecache:generate', 'css', '_elgg_views_minify');
@@ -1673,6 +1681,50 @@ function elgg_views_boot() {
 		);
 		elgg_set_config('icon_sizes', $icon_sizes);
 	}
+}
+
+/**
+ * Get the initial contents of "elgg" client side. Will be extended by elgg.js.
+ *
+ * @return array
+ * @access private
+ */
+function _elgg_get_init_client_data() {
+	$elgg = array(
+		'config' => array(
+			'lastcache' => (int)elgg_get_config('lastcache'),
+			'viewtype' => elgg_get_viewtype(),
+			'simplecache_enabled' => (int)elgg_is_simplecache_enabled(),
+		),
+		'security' => array(
+			'token' => array(
+				'__elgg_ts' => $ts = time(),
+				'__elgg_token' => generate_action_token($ts),
+			),
+		),
+		'session' => array(
+			'user' => null,
+		),
+		'_data' => (object)elgg_trigger_plugin_hook('elgg.data', 'page', null, []),
+	);
+
+	if (elgg_get_config('elgg_load_sync_code')) {
+		$elgg['config']['load_sync_code'] = true;
+	}
+
+	$page_owner = elgg_get_page_owner_entity();
+	if ($page_owner instanceof ElggEntity) {
+		$elgg['page_owner'] = $page_owner->toObject();
+	}
+
+	$user = elgg_get_logged_in_user_entity();
+	if ($user instanceof ElggUser) {
+		$user_object = $user->toObject();
+		$user_object->admin = $user->isAdmin();
+		$elgg['session']['user'] = $user_object;
+	}
+
+	return $elgg;
 }
 
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {

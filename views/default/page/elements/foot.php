@@ -1,22 +1,64 @@
 <?php
+/**
+ * Elgg's JS setup.
+ *
+ * @internal It's dangerous to alter this view.
+ */
 
-$elgg_init = elgg_view('initialize_elgg.js');
-echo "<script>$elgg_init</script>";
+// 0. a fake require() shim was defined in the page/elements/head view to delay processing.
 
-// TODO(evan): "head" JS and "footer" JS distinction doesn't make sense anymore
-// TODO(evan): Introduce new "async" location for scripts allowed in head?
-$js = elgg_get_loaded_js('head');
-foreach ($js as $url) {
-	echo elgg_format_element('script', array('src' => $url));
-}
+$init_data = _elgg_get_init_client_data();
+$modules = _elgg_services()->amdConfig->getDependencies();
 
-$js = elgg_get_loaded_js('footer');
-foreach ($js as $url) {
-	echo elgg_format_element('script', array('src' => $url));
-}
-
-$deps = _elgg_services()->amdConfig->getDependencies();
+// 1. define elgg with page/session-specific data. We do this early so the async "elgg" module
+// can be loaded with no problem.
 ?>
 <script>
-require(<?= json_encode($deps, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>);
+var elgg = <?= json_encode($init_data); ?>;
+</script>
+<?php
+
+// 2. Sync script elements. This includes jQuery, UI, any other scripts enabled with elgg_load_js()
+// and finally RequireJS. We load it last so that sync scripts use Elgg's require() shim.
+// @see elgg_views_boot
+foreach (elgg_get_loaded_js('head') as $url) {
+	echo elgg_format_element('script', array('src' => $url));
+}
+foreach (elgg_get_loaded_js('footer') as $url) {
+	echo elgg_format_element('script', array('src' => $url));
+}
+
+// 3. Allows these already synchronously loaded libs to be used as AMD modules
+?>
+<script>
+define('jquery', function () {
+	return jQuery;
+});
+define('jquery-ui');
+
+<?php
+// 4. The datepicker language modules depend on "../datepicker", so to avoid RequireJS from
+// trying to load that, we define it manually here. The lang modules have names like
+// "jquery-ui/i18n/datepicker-LANG.min" and these views are mapped in /engine/views.php
+?>
+define('jquery-ui/datepicker', jQuery.datepicker);
+
+<?php
+// 5. Apply the shimmed require() calls to the real require().
+?>
+if (!window._require_queue) {
+	if (window.console) {
+		console.log('Elgg\'s require() shim is not defined. Do not override the view "page/elements/head".');
+	}
+} else {
+	while (_require_queue.length) {
+		require.apply(null, _require_queue.shift());
+	}
+	delete window._require_queue;
+}
+
+<?php
+// 6. load modules requested with elgg_require_js()
+?>
+require(<?= json_encode($modules, JSON_UNESCAPED_SLASHES | JSON_PRETTY_PRINT); ?>);
 </script>

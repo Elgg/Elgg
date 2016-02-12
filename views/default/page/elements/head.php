@@ -30,10 +30,13 @@ foreach ($stylesheets as $url) {
 // See https://github.com/Elgg/Elgg/issues/8328
 ?>
 <script>
-	<?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
-	require = function () {
-		// handled in the view "elgg.js"
-		_require_queue.push(arguments);
-	};
-	_require_queue = [];
+<?php
+// Do not convert this to a regular function declaration. It gets redefined later.
+// This sets up a fake require() to capture usage in the BODY.
+// See the page/elements/foot view.
+?>
+require = function () {
+	_require_queue.push(arguments);
+};
+_require_queue = [];
 </script>

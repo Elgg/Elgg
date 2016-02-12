@@ -12,9 +12,24 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 2.x to 3.0
 ===============
 
+JavaScript changes
+------------------
+
+Plugins registering synchronous scripts with ``elgg_load_js()`` **must** use ``require()`` to gain access
+to ``elgg``, ``jquery``, and other dependencies.
+
+Users of ``elgg.echo()`` **must** delay calls using ``elgg.elgg_ready()``, which blocks until the user's
+translations are guaranteed to be loaded. If not used, translation may fail in some situations.
+
+Plugins should no longer extend the ``elgg.js`` view. For some backwards compatibility, such attempts
+will instead extend a view loaded in a script element *after* ``elgg`` has been fully loaded.
+
 Removed views
 -------------
 
+ * ``resources/file/download``
+ * ``initialise_elgg.js``
+ * ``initialize_elgg.js``
  * ``resources/file/download``
 
 From 2.0 to 2.1

@@ -1,22 +1,26 @@
-<?php
 /**
  * Core Elgg JavaScript file
+ *
+ * @internal Do not alter or extend this view. Attempts to extend it will be instead applied to
+ *           elgg/sync_code.js, which is loaded at the bottom.
+ *
+ * @see views/default/page/elements/head.php Defines a fake require() for sync scripts in body
+ * @see views/default/page/elements/foot.php Completes the boot process
  */
+define(function (require) {
+	var $ = require('jquery');
+	var jQuery = $;
 
-use Elgg\Filesystem\Directory;
- 
-global $CONFIG;
+	if (typeof window.elgg != 'object') {
+		throw new Error('elgg configuration object is not defined! You must not alter the page/elements/foot view!');
+	}
 
-// this warning is due to the change in JS boot order in Elgg 1.9
-echo <<<JS
-if (typeof elgg != 'object') {
-	throw new Error('elgg configuration object is not defined! You must include the js/initialize_elgg view in html head before JS library files!');
-}
+	<?= elgg_view('sprintf.js'); ?>
+	// BC with scripts who expect these to be global
+	window.sprintf = sprintf;
+	window.vsprintf = vsprintf;
 
-JS;
-
-// For backwards compatibility...
-echo elgg_view('sprintf.js');
+<?php
 
 $elggDir = \Elgg\Application::elggDir();
 $files = array(
@@ -54,47 +58,42 @@ foreach ($files as $file) {
 /**
  * Set some values that are cacheable
  */
+
+$system_language = elgg_get_config('language');
+if (!$system_language) {
+	$system_language = 'en';
+}
+
+$token_timeout = (int)_elgg_services()->actions->getActionTokenTimeout() * 333;
+$data = (object)elgg_trigger_plugin_hook('elgg.data', 'site', null, []);
+
 ?>
 //<script>
+	// page data overrides site data
+	elgg.data = $.extend(<?= json_encode($data) ?>, elgg._data);
+	delete elgg._data;
 
-elgg.version = '<?php echo elgg_get_version(); ?>';
-elgg.release = '<?php echo elgg_get_version(true); ?>';
-elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
+	elgg.version = '<?php echo elgg_get_version(); ?>';
+	elgg.release = '<?php echo elgg_get_version(true); ?>';
+	elgg.config.wwwroot = '<?php echo elgg_get_site_url(); ?>';
 
-// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
-elgg.security.interval = <?php echo (int)_elgg_services()->actions->getActionTokenTimeout() * 333; ?>;
-elgg.config.language = '<?php echo (empty($CONFIG->language) ? 'en' : $CONFIG->language); ?>';
+	// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
+	elgg.security.interval = <?= $token_timeout ?>;
+	elgg.config.language = '<?= $system_language ?>';
 
-// jQuery and UI must be loaded sync in 2.x but modules should depend on these AMD modules
-define('jquery', function () {
-	return jQuery;
-});
-define('jquery-ui');
+	// load current user's language
+	elgg.echo_ready();
 
-// The datepicker language modules depend on "../datepicker", so to avoid RequireJS from
-// trying to load that, we define it manually here. The lang modules have names like
-// "jquery-ui/i18n/datepicker-LANG.min" and these views are mapped in /views.php
-define('jquery-ui/datepicker', jQuery.datepicker);
+	elgg.trigger_hook('boot', 'system');
 
-define('elgg', ['jquery', 'languages/' + elgg.get_language()], function($, translations) {
-	elgg.add_translation(elgg.get_language(), translations);
+	// See elgg_extend_view()
+	if (elgg.config.load_sync_code) {
+		$.ajax({
+			url: elgg.get_simplecache_url('elgg/sync_code.js'),
+			dataType: 'script',
+			cache: true
+		});
+	}
 
 	return elgg;
 });
-
-require(['elgg']); // Forces the define() function to always run
-
-// Process queue. We have to wait until now because many modules depend on 'elgg' and we can't load
-// it asynchronously.
-if (!window._require_queue) {
-	if (window.console) {
-		console.log('Elgg\'s require() shim is not defined. Do not override the view "page/elements/head".');
-	}
-} else {
-	while (_require_queue.length) {
-		require.apply(null, _require_queue.shift());
-	}
-	delete window._require_queue;
-}
-
-elgg.trigger_hook('boot', 'system');
