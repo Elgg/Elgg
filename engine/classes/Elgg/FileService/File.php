@@ -87,7 +87,7 @@ class File {
 		}
 
 		$relative_path = '';
-		$root_prefix = _elgg_services()->config->get('dataroot');
+		$root_prefix = _elgg_services()->config->getDataPath();
 		$path = $this->file->getFilenameOnFilestore();
 		if (substr($path, 0, strlen($root_prefix)) == $root_prefix) {
 			$relative_path = substr($path, strlen($root_prefix));
@@ -124,7 +124,7 @@ class File {
 		}
 
 		ksort($data);
-		$mac = elgg_build_hmac($data)->getToken();
+		$mac = _elgg_services()->crypto->getHmac($data)->getToken();
 
 		$url_segments = array(
 			'serve-file',
