@@ -56,25 +56,12 @@ the request to a resource view.
 The ``route`` Plugin Hook
 =========================
 
-The ``route`` plugin hook is triggered earlier, before page handlers are called. The URL
-identifier is given as the type of the hook. This hook can be used to modify the identifier
-or segments, to take over page rendering completely, or just to add some logic before the
-request is handled elsewhere.
+The ``route`` plugin hook is triggered before page handlers are called. The URL
+identifier is given as the type of the hook. This hook can be used to add some logic before the
+request is handled elsewhere, or take over page rendering completely.
 
-Generally devs should use a page handler unless they need to affect a single page or a wider variety of URLs.
-
-The following code intercepts requests to the page handler for ``customblog`` and internally redirects them
-to the ``blog`` page handler.
-
-.. code:: php
-
-    function myplugin_customblog_route_handler($hook, $type, $returnvalue, $params) {
-        // direct Elgg to use the page handler for 'blog'
-        $returnvalue['identifier'] = 'blog';
-        return $returnvalue;
-    }
-
-    elgg_register_plugin_hook_handler('route', 'customblog', 'myplugin_customblog_route_handler');
+Generally devs should instead use a page handler unless they need to affect a single page or a wider
+variety of URLs.
 
 The following code results in ``/blog/all`` requests being completely handled by the plugin hook handler.
 For these requests the ``blog`` page handler is never called.
@@ -99,16 +86,40 @@ For these requests the ``blog`` page handler is never called.
 
     elgg_register_plugin_hook_handler('route', 'blog', 'myplugin_blog_all_handler');
 
+.. note:: As of 2.1, route modification should be done in the ``route:rewrite`` hook.
+
+The ``route:rewrite`` Plugin Hook
+=================================
+
+For URL rewriting, the ``route:rewrite`` hook (with similar arguments as ``route``) is triggered very early,
+and allows modifying the request URL path (relative to the Elgg site).
+
+Here we rewrite requests for ``news/*`` to ``blog/*``:
+
+.. code:: php
+
+    function myplugin_rewrite_handler($hook, $type, $value, $params) {
+        $value['identifier'] = 'blog';
+        return $value;
+    }
+
+    elgg_register_plugin_hook_handler('route:rewrite', 'news', 'myplugin_rewrite_handler');
+
+.. warning::
+
+	The hook must be registered directly in your plugin ``start.php`` (the ``[init, system]`` event
+	is too late).
 
 Routing overview
 ================
 
 For regular pages, Elgg's program flow is something like this:
 
-#. A user requests ``http://example.com/blog/owner/jane``.
+#. A user requests ``http://example.com/news/owner/jane``.
 #. Plugins are initialized.
-#. Elgg parses the URL to identifier ``blog`` and segments ``['owner', 'jane']``.
-#. Elgg triggers the plugin hook ``route, blog`` (see above).
+#. Elgg parses the URL to identifier ``news`` and segments ``['owner', 'jane']``.
+#. Elgg triggers the plugin hook ``route:rewrite, news`` (see above).
+#. Elgg triggers the plugin hook ``route, blog`` (was rewritten in the rewrite hook).
 #. Elgg finds a registered page handler (see above) for ``blog``, and calls the function, passing in
    the segments.
 #. The page handler function determines it needs to render a single user's blog. It calls

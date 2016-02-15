@@ -18,7 +18,6 @@ System hooks
 	* headers
 	* params
 
-
 **page_owner, system**
 	Filter the page_owner for the current page. No options are passed.
 
@@ -296,8 +295,11 @@ Routing
 =======
 
 **route, <identifier>**
-    Allows altering the parameters used to route requests. ``identifier`` is the first URL segment,
-    registered with ``elgg_register_page_handler()``.
+    Allows applying logic or returning a response before the page handler is called. See :doc:`routing`
+    for details.
+
+**route:rewrite, <identifier>**
+	Allows altering the site-relative URL path. See :doc:`routing` for details.
 
 **ajax_response, path:<path>**
     Filters ajax responses before they're sent back to the ``elgg/Ajax`` module. This hook type will

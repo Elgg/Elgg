@@ -1,6 +1,8 @@
 <?php
 namespace Elgg;
 
+use Elgg\Http\Request;
+
 /**
  * Delegates requests to controllers based on the registered configuration.
  *
@@ -58,7 +60,7 @@ class Router {
 
 		// return false to stop processing the request (because you handled it)
 		// return a new $result array if you want to route the request differently
-		$result = array(
+		$old = array(
 			'identifier' => $identifier,
 			'handler' => $identifier, // backward compatibility
 			'segments' => $segments,
@@ -68,9 +70,13 @@ class Router {
 			$this->timer->begin(['build page']);
 		}
 
-		$result = $this->hooks->trigger('route', $identifier, $result, $result);
+		$result = $this->hooks->trigger('route', $identifier, $old, $old);
 		if ($result === false) {
 			return true;
+		}
+
+		if ($result !== $old) {
+			_elgg_services()->logger->warn('Use the route:rewrite hook to modify routes.');
 		}
 
 		if ($identifier != $result['identifier']) {
@@ -138,6 +144,45 @@ class Router {
 	 */
 	public function getPageHandlers() {
 		return $this->handlers;
+	}
+
+	/**
+	 * Filter a request through the route:rewrite hook
+	 *
+	 * @param Request $request Elgg request
+	 *
+	 * @return Request
+	 * @access private
+	 */
+	public function allowRewrite(Request $request) {
+		$segments = $request->getUrlSegments();
+		if ($segments) {
+			$identifier = array_shift($segments);
+		} else {
+			$identifier = '';
+		}
+
+		$old = array(
+			'identifier' => $identifier,
+			'segments' => $segments,
+		);
+		$new = _elgg_services()->hooks->trigger('route:rewrite', $identifier, $old, $old);
+		if ($new === $old) {
+			return $request;
+		}
+
+		if (!isset($new['identifier'])
+			|| !isset($new['segments'])
+			|| !is_string($new['identifier'])
+			|| !is_array($new['segments'])
+		) {
+			throw new \RuntimeException('rewrite_path handler returned invalid route data.');
+		}
+
+		// rewrite request
+		$segments = $new['segments'];
+		array_unshift($segments, $new['identifier']);
+		return $request->setUrlSegments($segments);
 	}
 }
 
