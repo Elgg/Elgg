@@ -1801,6 +1801,82 @@ function _elgg_manage_pagesetup($hook, $view, $value, $params) {
 	_elgg_services()->events->trigger('pagesetup', 'system');
 }
 
+/**
+ * Get the site data to be merged into "elgg" in elgg.js.
+ *
+ * Unlike _elgg_get_js_page_data(), the keys returned are literal expressions.
+ *
+ * @return array
+ * @access private
+ */
+function _elgg_get_js_site_data() {
+	$language = elgg_get_config('language');
+	if (!$language) {
+		$language = 'en';
+	}
+
+	return [
+		'elgg.data' => (object)elgg_trigger_plugin_hook('elgg.data', 'site', null, []),
+		'elgg.version' => elgg_get_version(),
+		'elgg.release' => elgg_get_version(true),
+		'elgg.config.wwwroot' => elgg_get_site_url(),
+
+		// refresh token 3 times during its lifetime (in microseconds 1000 * 1/3)
+		'elgg.security.interval' => (int)_elgg_services()->actions->getActionTokenTimeout() * 333,
+		'elgg.config.language' => $language,
+	];
+}
+
+/**
+ * Get the initial contents of "elgg" client side. Will be extended by elgg.js.
+ *
+ * @return array
+ * @access private
+ */
+function _elgg_get_js_page_data() {
+	$data = elgg_trigger_plugin_hook('elgg.data', 'page', null, []);
+	if (!is_array($data)) {
+		elgg_log('"elgg.data" plugin hook handlers must return an array. Returned ' . gettype($data) . '.', 'ERROR');
+		$data = [];
+	}
+
+	$elgg = array(
+		'config' => array(
+			'lastcache' => (int)elgg_get_config('lastcache'),
+			'viewtype' => elgg_get_viewtype(),
+			'simplecache_enabled' => (int)elgg_is_simplecache_enabled(),
+		),
+		'security' => array(
+			'token' => array(
+				'__elgg_ts' => $ts = time(),
+				'__elgg_token' => generate_action_token($ts),
+			),
+		),
+		'session' => array(
+			'user' => null,
+		),
+		'_data' => (object)$data,
+	);
+
+	if (elgg_get_config('elgg_load_sync_code')) {
+		$elgg['config']['load_sync_code'] = true;
+	}
+
+	$page_owner = elgg_get_page_owner_entity();
+	if ($page_owner instanceof ElggEntity) {
+		$elgg['page_owner'] = $page_owner->toObject();
+	}
+
+	$user = elgg_get_logged_in_user_entity();
+	if ($user instanceof ElggUser) {
+		$user_object = $user->toObject();
+		$user_object->admin = $user->isAdmin();
+		$elgg['session']['user'] = $user_object;
+	}
+
+	return $elgg;
+}
+
 return function(\Elgg\EventsService $events, \Elgg\HooksRegistrationService $hooks) {
 	$events->registerHandler('boot', 'system', 'elgg_views_boot');
 	$hooks->registerHandler('view_vars', 'all', '_elgg_manage_pagesetup', 1000);
