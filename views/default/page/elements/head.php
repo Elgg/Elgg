@@ -21,9 +21,11 @@ foreach ($links as $attributes) {
 }
 
 $stylesheets = elgg_get_loaded_css();
-
 foreach ($stylesheets as $url) {
-	echo elgg_format_element('link', array('rel' => 'stylesheet', 'href' => $url));
+	echo elgg_format_element('link', [
+		'rel' => 'stylesheet',
+		'href' => $url,
+	]);
 }
 
 // A non-empty script *must* come below the CSS links, otherwise Firefox will exhibit FOUC

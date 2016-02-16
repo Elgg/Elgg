@@ -43,8 +43,6 @@ class ExternalFiles {
 	 * @return bool
 	 */
 	public function register($type, $name, $url, $location, $priority = 500) {
-		
-	
 		if (empty($name) || empty($url)) {
 			return false;
 		}
@@ -101,7 +99,6 @@ class ExternalFiles {
 	 * @return bool
 	 */
 	public function unregister($type, $name) {
-
 		$this->bootstrap($type);
 	
 		$name = trim(strtolower($name));
@@ -124,8 +121,6 @@ class ExternalFiles {
 	 * @return void
 	 */
 	public function load($type, $name) {
-		
-	
 		$this->bootstrap($type);
 	
 		$name = trim(strtolower($name));
@@ -145,6 +140,14 @@ class ExternalFiles {
 			$GLOBALS['_ELGG']->externals_map[$type][$name] = $item;
 		}
 	}
+
+	public function unloadAll() {
+		foreach (array_keys($GLOBALS['_ELGG']->externals) as $type) {
+			foreach ($GLOBALS['_ELGG']->externals[$type] as $item) {
+				$item->loaded = false;
+			}
+		}
+	}
 	
 	/**
 	 * Get external resource descriptors
@@ -155,8 +158,6 @@ class ExternalFiles {
 	 * @return array
 	 */
 	public function getLoadedFiles($type, $location) {
-		
-	
 		if (
 			isset($GLOBALS['_ELGG']->externals)
 			&& isset($GLOBALS['_ELGG']->externals[$type])
@@ -184,7 +185,6 @@ class ExternalFiles {
 	 * @return null
 	 */
 	protected function bootstrap($type) {
-
 		if (!isset($GLOBALS['_ELGG']->externals)) {
 			$GLOBALS['_ELGG']->externals = array();
 		}

@@ -11,9 +11,9 @@ namespace Elgg\Amd;
  */
 class Config {
 	private $baseUrl = '';
-	private $paths = array();
-	private $shim = array();
-	private $dependencies = array();
+	private $paths = [];
+	private $shim = [];
+	private $dependencies = [];
 
 	/**
 	 * @var \Elgg\PluginHooksService
@@ -150,6 +150,10 @@ class Config {
 	 */
 	public function removeDependency($name) {
 		unset($this->dependencies[$name]);
+	}
+
+	public function removeAllDependencies() {
+		$this->dependencies = [];
 	}
 
 	/**

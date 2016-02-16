@@ -236,6 +236,19 @@ function elgg_unrequire_js($name) {
 }
 
 /**
+ * Register a CSS view. Shortcut for registering a CSS file under its name.
+ *
+ * @note All will be given default priority, so files should depend on specificity.
+ *
+ * @param string $view CSS view name (e.g. "foo.css")
+ * @return void
+ */
+function elgg_require_css($view) {
+	elgg_register_css($view, elgg_get_simplecache_url($view));
+	elgg_load_css($view);
+}
+
+/**
  * Get the JavaScript URLs that are loaded
  *
  * @param string $location 'head' or 'footer'
@@ -1580,6 +1593,11 @@ function _elgg_ajax_page_handler($segments) {
 		}
 
 		$content_type = '';
+		if ($ajax_api->isAjax2Request()) {
+			_elgg_services()->amdConfig->removeAllDependencies();
+			_elgg_services()->externalFiles->unloadAll();
+		}
+
 		if ($segments[0] === 'view') {
 			$output = elgg_view($view, $vars);
 			$ajax_hook_type = "view:$view";

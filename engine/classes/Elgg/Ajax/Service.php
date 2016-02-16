@@ -37,6 +37,11 @@ class Service {
 	private $response_sent = false;
 
 	/**
+	 * @var array
+	 */
+	private $modules = [];
+
+	/**
 	 * Constructor
 	 *
 	 * @param PluginHooksService    $hooks Hooks service
