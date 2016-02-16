@@ -297,6 +297,8 @@ class Application {
 			elgg_set_viewtype('default');
 		}
 
+		$this->allowPathRewrite();
+
 		// @todo deprecate as plugins can use 'init', 'system' event
 		$events->trigger('plugins_boot', 'system');
 
@@ -576,5 +578,21 @@ class Application {
 		$_GET[self::GET_PATH_KEY] = '/' . trim($_GET[self::GET_PATH_KEY], '/');
 
 		return $_GET[self::GET_PATH_KEY];
+	}
+
+	/**
+	 * Allow plugins to rewrite the path.
+	 *
+	 * @return void
+	 */
+	private function allowPathRewrite() {
+		$request = $this->services->request;
+		$new = $this->services->router->allowRewrite($request);
+		if ($new === $request) {
+			return;
+		}
+
+		$this->services->setValue('request', $new);
+		_elgg_set_initial_context($new);
 	}
 }
