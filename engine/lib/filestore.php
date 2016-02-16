@@ -420,37 +420,6 @@ function _elgg_clear_entity_files($entity) {
 	}
 }
 
-
-/// Variable holding the default datastore
-$DEFAULT_FILE_STORE = null;
-
-/**
- * Return the default filestore.
- *
- * @return \ElggFilestore
- * @deprecated Will be removed in 3.0
- */
-function get_default_filestore() {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated.', '2.1');
-
-	return $GLOBALS['DEFAULT_FILE_STORE'];
-}
-
-/**
- * Set the default filestore for the system.
- *
- * @param \ElggFilestore $filestore An \ElggFilestore object.
- *
- * @return true
- * @deprecated Will be removed in 3.0
- */
-function set_default_filestore(\ElggFilestore $filestore) {
-	elgg_deprecated_notice(__FUNCTION__ . ' is deprecated.', '2.1');
-
-	$GLOBALS['DEFAULT_FILE_STORE'] = $filestore;
-	return true;
-}
-
 /**
  * Returns the category of a file from its MIME type
  *
@@ -472,13 +441,6 @@ function elgg_get_file_simple_type($mime_type) {
  * @access private
  */
 function _elgg_filestore_init() {
-	global $CONFIG;
-
-	// Now register a default filestore
-	if (isset($CONFIG->dataroot)) {
-		$GLOBALS['DEFAULT_FILE_STORE'] = new \ElggDiskFilestore($CONFIG->dataroot);
-	}
-
 	// Fix MIME type detection for Microsoft zipped formats
 	elgg_register_plugin_hook_handler('mime_type', 'file', '_elgg_filestore_detect_mimetype');
 	

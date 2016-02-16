@@ -3,8 +3,7 @@
 /**
  * This class represents a physical file.
  *
- * Create a new \ElggFile object and specify a filename, and optionally a
- * FileStore (if one isn't specified then the default is assumed.)
+ * Create a new \ElggFile object and specify a filename
  *
  * Open the file using the appropriate mode, and you will be able to
  * read and write to the file.
@@ -22,11 +21,6 @@
 class ElggFile extends \ElggObject {
 
 	/**
-	 * @var ElggFilestore|null Cache for getFilestore(). Do not use. Use getFilestore().
-	 */
-	private $filestore;
-
-	/**
 	 * @var resource|null File handle used to identify this file in a filestore. Created by open.
 	 */
 	private $handle;
@@ -40,26 +34,6 @@ class ElggFile extends \ElggObject {
 		parent::initializeAttributes();
 
 		$this->attributes['subtype'] = "file";
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function getMetadata($name) {
-		if (0 === strpos($name, 'filestore::')) {
-			elgg_deprecated_notice("Do not access the ElggFile filestore metadata directly. Use setFilestore().", '2.0');
-		}
-		return parent::getMetadata($name);
-	}
-
-	/**
-	 * {@inheritdoc}
-	 */
-	public function setMetadata($name, $value, $value_type = '', $multiple = false, $owner_guid = 0, $access_id = null) {
-		if (0 === strpos($name, 'filestore::')) {
-			elgg_deprecated_notice("Do not access the ElggFile filestore metadata directly. Use setFilestore().", '2.0');
-		}
-		return parent::setMetadata($name, $value, $value_type, $multiple, $owner_guid, $access_id);
 	}
 
 	/**
@@ -104,9 +78,8 @@ class ElggFile extends \ElggObject {
 		if (!$container_guid) {
 			$container_guid = $this->container_guid;
 		}
-		$fs = $this->getFilestore();
 		// @todo add getSize() to \ElggFilestore
-		return $fs->getSize($prefix, $container_guid);
+		return $this->getFilestore()->getSize($prefix, $container_guid);
 	}
 
 	/**
@@ -217,14 +190,8 @@ class ElggFile extends \ElggObject {
 			throw new \InvalidParameterException($msg);
 		}
 
-		// Get the filestore
-		$fs = $this->getFilestore();
-
-		// Ensure that we save the file details to object store
-		//$this->save();
-
 		// Open the file handle
-		$this->handle = $fs->open($this, $mode);
+		$this->handle = $this->getFilestore()->open($this, $mode);
 
 		return $this->handle;
 	}
@@ -237,9 +204,7 @@ class ElggFile extends \ElggObject {
 	 * @return bool
 	 */
 	public function write($data) {
-		$fs = $this->getFilestore();
-
-		return $fs->write($this->handle, $data);
+		return $this->getFilestore()->write($this->handle, $data);
 	}
 
 	/**
@@ -251,9 +216,7 @@ class ElggFile extends \ElggObject {
 	 * @return mixed Data or false
 	 */
 	public function read($length, $offset = 0) {
-		$fs = $this->getFilestore();
-
-		return $fs->read($this->handle, $length, $offset);
+		return $this->getFilestore()->read($this->handle, $length, $offset);
 	}
 
 	/**
@@ -262,8 +225,7 @@ class ElggFile extends \ElggObject {
 	 * @return mixed The file contents.
 	 */
 	public function grabFile() {
-		$fs = $this->getFilestore();
-		return $fs->grabFile($this);
+		return $this->getFilestore()->grabFile($this);
 	}
 
 	/**
@@ -272,9 +234,7 @@ class ElggFile extends \ElggObject {
 	 * @return bool
 	 */
 	public function close() {
-		$fs = $this->getFilestore();
-
-		if ($fs->close($this->handle)) {
+		if ($this->getFilestore()->close($this->handle)) {
 			$this->handle = null;
 
 			return true;
@@ -289,9 +249,7 @@ class ElggFile extends \ElggObject {
 	 * @return bool
 	 */
 	public function delete() {
-		$fs = $this->getFilestore();
-		
-		$result = $fs->delete($this);
+		$result = $this->getFilestore()->delete($this);
 		
 		if ($this->getGUID() && $result) {
 			$result = parent::delete();
@@ -305,13 +263,11 @@ class ElggFile extends \ElggObject {
 	 *
 	 * @param int $position Position in bytes
 	 *
-	 * @return bool
+	 * @return void
 	 */
 	public function seek($position) {
-		$fs = $this->getFilestore();
-
 		// @todo add seek() to \ElggFilestore
-		return $fs->seek($this->handle, $position);
+		$this->getFilestore()->seek($this->handle, $position);
 	}
 
 	/**
@@ -320,9 +276,7 @@ class ElggFile extends \ElggObject {
 	 * @return int The file position
 	 */
 	public function tell() {
-		$fs = $this->getFilestore();
-
-		return $fs->tell($this->handle);
+		return $this->getFilestore()->tell($this->handle);
 	}
 
 	/**
@@ -336,25 +290,12 @@ class ElggFile extends \ElggObject {
 	}
 
 	/**
-	 * Return the size of the file in bytes.
-	 *
-	 * @return int
-	 * @deprecated 1.8 Use getSize()
-	 */
-	public function size() {
-		elgg_deprecated_notice("Use \ElggFile::getSize() instead of \ElggFile::size()", 1.9);
-		return $this->getSize();
-	}
-
-	/**
 	 * Return a boolean value whether the file handle is at the end of the file
 	 *
 	 * @return bool
 	 */
 	public function eof() {
-		$fs = $this->getFilestore();
-
-		return $fs->eof($this->handle);
+		return $this->getFilestore()->eof($this->handle);
 	}
 
 	/**
@@ -363,112 +304,16 @@ class ElggFile extends \ElggObject {
 	 * @return bool
 	 */
 	public function exists() {
-		$fs = $this->getFilestore();
-
-		return $fs->exists($this);
+		return $this->getFilestore()->exists($this);
 	}
 
 	/**
-	 * Set a filestore.
+	 * Return the system filestore based on dataroot.
 	 *
-	 * @param \ElggFilestore $filestore The file store.
-	 *
-	 * @return void
-	 * @deprecated Will be removed in 3.0
-	 */
-	public function setFilestore(\ElggFilestore $filestore) {
-		elgg_deprecated_notice(__METHOD__ . ' is deprecated.', '2.1');
-		$this->filestore = $filestore;
-	}
-
-	/**
-	 * Return a filestore suitable for saving this file.
-	 * This filestore is either a pre-registered filestore,
-	 * a filestore as recorded in metadata or the system default.
-	 *
-	 * @return \ElggFilestore
-	 *
-	 * @throws ClassNotFoundException
+	 * @return \ElggDiskFilestore
 	 */
 	protected function getFilestore() {
-		if ($this->filestore) {
-			// already set
-			return $this->filestore;
-		}
-
-		// such a common case we just assume for now
-		$this->filestore = $GLOBALS['DEFAULT_FILE_STORE'];
-
-		if (!$this->guid) {
-			return $this->filestore;
-		}
-
-		// Note we use parent::getMetadata() below to avoid showing the warnings added in #9193
-
-		$class = parent::getMetadata('filestore::filestore');
-		if (!$class) {
-			return $this->filestore;
-		}
-
-		// common case
-		if ($class === ElggDiskFilestore::class
-				&& parent::getMetadata('filestore::dir_root') === _elgg_services()->config->getDataPath()) {
-			return $this->filestore;
-		}
-
-		if (!class_exists($class)) {
-			$this->filestore = null;
-			throw new \ClassNotFoundException("Unable to load filestore class $class for file {$this->guid}");
-		}
-
-		// need to get all filestore::* metadata because the rest are "parameters" that
-		// get passed to filestore::setParameters()
-		$mds = elgg_get_metadata([
-			'guid' => $this->guid,
-			'where' => array("n.string LIKE 'filestore::%'"),
-		]);
-		$parameters = [];
-		foreach ($mds as $md) {
-			list( , $name) = explode("::", $md->name);
-			if ($name !== 'filestore') {
-				$parameters[$name] = $md->value;
-			}
-		}
-
-		$this->filestore = new $class();
-		$this->filestore->setParameters($parameters);
-		return $this->filestore;
-	}
-
-	/**
-	 * Save the file
-	 *
-	 * Write the file's data to the filestore and save
-	 * the corresponding entity.
-	 *
-	 * @see \ElggObject::save()
-	 *
-	 * @return bool
-	 */
-	public function save() {
-		if (!parent::save()) {
-			return false;
-		}
-
-		$filestore = $this->getFilestore();
-
-		// Note we use parent::getMetadata() below to avoid showing the warnings added in #9193
-
-		// Save datastore metadata
-		$params = $filestore->getParameters();
-		foreach ($params as $k => $v) {
-			parent::setMetadata("filestore::$k", $v);
-		}
-
-		// Now make a note of the filestore class
-		parent::setMetadata("filestore::filestore", get_class($filestore));
-
-		return true;
+		return _elgg_services()->filestore;
 	}
 
 	/**
@@ -478,10 +323,6 @@ class ElggFile extends \ElggObject {
 	 */
 	public function __sleep() {
 		return array_diff(array_keys(get_object_vars($this)), array(
-			// Don't persist filestore, which contains CONFIG
-			// https://github.com/Elgg/Elgg/issues/9081#issuecomment-152859856
-			'filestore',
-
 			// a resource
 			'handle',
 		));
