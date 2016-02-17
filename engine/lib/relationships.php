@@ -30,6 +30,23 @@ function delete_relationship($id) {
 }
 
 /**
+ * Get relationships matching the given options
+ *
+ * @param array $options Array in format:
+ *
+ *  relationship => null|array Array of relationship names (relationship IN ("relationship1", ...))
+ *
+ *  guid_one => null|array Array of GUIDs for entity one (guid_one IN (GUID1, ...)
+ *
+ *  guid_two => null|array Array of GUIDs for entity two (guid_two IN (GUID1, ...)
+ *
+ * @return \ElggRelationship[]
+ */
+function elgg_get_relationships(array $options = array()) {
+	return _elgg_services()->relationshipsTable->getRelationships($options);
+}
+
+/**
  * Create a relationship between two entities. E.g. friendship, group membership, site membership.
  *
  * This function lets you make the statement "$guid_one is a $relationship of $guid_two". In the statement,

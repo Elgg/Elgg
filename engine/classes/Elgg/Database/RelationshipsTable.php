@@ -39,7 +39,7 @@ class RelationshipsTable {
 	 * Constructor
 	 *
 	 * @param Database      $db       Elgg Database
-	 * @param EntityTable   $entities Entity table 
+	 * @param EntityTable   $entities Entity table
 	 * @param MetadataTable $metadata Metadata table
 	 * @param EventsService $events   Events service
 	 */
@@ -246,6 +246,82 @@ class RelationshipsTable {
 		");
 
 		return true;
+	}
+
+	/**
+	 * Get all relationships matching the given options
+	 *
+	 * @param array $options See elgg_get_relationships()
+	 * @return ElggRelationship[]
+	 */
+	public function getRelationships($options) {
+		$defaults = array(
+			'limit' => 10,
+		);
+
+		$options = array_merge($defaults, $options);
+
+		$wheres = array();
+
+		if (isset($options['relationship'])) {
+			$relationship = $options['relationship'];
+
+			if (!is_array($relationship)) {
+				$relationship = array($relationship);
+			}
+
+			$names = array_map(function($value) {
+				$string = $this->db->sanitizeString($value);
+				return "'{$string}'";
+			}, $relationship);
+
+			$names = implode(', ', $names);
+
+			$wheres[] = "relationship IN ($names)";
+		};
+
+		if (isset($options['guid_one'])) {
+			$guid_one = $options['guid_one'];
+
+			if (!is_array($guid_one)) {
+				$guid_one = array($guid_one);
+			}
+
+			$guid_one = array_map(function($value) {
+				return $this->db->sanitizeInt($value);
+			}, $guid_one);
+
+			$guid_one = implode(', ', $guid_one);
+
+			$wheres[] = "guid_one IN ($guid_one)";
+		};
+
+		if (isset($options['guid_two'])) {
+			$guid_two = $options['guid_two'];
+
+			if (!is_array($guid_two)) {
+				$guid_two = array($guid_two);
+			}
+
+			$guid_two = array_map(function($value) {
+				return $this->db->sanitizeInt($value);
+			}, $guid_two);
+
+			$guid_two = implode(', ', $guid_two);
+
+			$wheres[] = "guid_two IN ($guid_two)";
+		};
+
+		$where = '';
+		if (!empty($wheres)) {
+			$where = 'WHERE ' . implode(' AND ', $wheres);
+		}
+
+		$limit = $this->db->sanitizeInt($options['limit']);
+
+		$query = "SELECT * FROM {$this->db->getTablePrefix()}entity_relationships {$where} LIMIT $limit";
+
+		return $this->db->getData($query, array($this, 'rowToElggRelationship'));
 	}
 
 	/**
