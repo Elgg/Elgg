@@ -95,6 +95,15 @@ function elgg_register_notification_method($name) {
 }
 
 /**
+ * Returns registered delivery methods for notifications
+ * @return array
+ * @since 2.1
+ */
+function elgg_get_notification_methods() {
+	return array_keys(_elgg_services()->notifications->getMethods());
+}
+
+/**
  * Unregister a delivery method for notifications
  *
  * @param string $name The notification method name
