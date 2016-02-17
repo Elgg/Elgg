@@ -5,6 +5,7 @@ use Doctrine\DBAL\DriverManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\Driver\Statement;
 use Doctrine\DBAL\Driver\ServerInfoAwareConnection;
+use Elgg\Database\QueryBuilder;
 
 /**
  * An object representing a single Elgg database.
@@ -126,6 +127,19 @@ class Database {
 	}
 
 	/**
+	 * Get an Elgg query builder instance (based on Doctrine DBAL)
+	 *
+	 * This can be passed to most of the public methods that perform queries.
+	 *
+	 * @return QueryBuilder
+	 */
+	public function getQueryBuilder() {
+		// note we supply the readwrite connection, but when we execute in executeQueryBuilder()
+		// we will use the actual connection needed.
+		return new QueryBuilder($this->getConnection('readwrite'), $this->tablePrefix);
+	}
+
+	/**
 	 * Establish database connections
 	 *
 	 * If the configuration has been set up for multiple read/write databases, set those
@@ -190,8 +204,8 @@ class Database {
 	 * argument to $callback.  If no callback function is defined, the
 	 * entire result set is returned as an array.
 	 *
-	 * @param mixed  $query    The query being passed.
-	 * @param string $callback Optionally, the name of a function to call back to on each row
+	 * @param string|QueryBuilder $query    The query being passed.
+	 * @param string              $callback Optionally, the name of a function to call back to on each row
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
@@ -208,8 +222,8 @@ class Database {
 	 * matched.  If a callback function $callback is specified, the row will be passed
 	 * as the only argument to $callback.
 	 *
-	 * @param mixed  $query    The query to execute.
-	 * @param string $callback A callback function
+	 * @param string|QueryBuilder $query    The query to execute.
+	 * @param string              $callback A callback function
 	 *
 	 * @return mixed A single database result object or the result of the callback function.
 	 * @throws \DatabaseException
@@ -223,7 +237,7 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
-	 * @param mixed $query The query to execute.
+	 * @param string|QueryBuilder $query The query to execute.
 	 *
 	 * @return int|false The database id of the inserted row if a AUTO_INCREMENT field is
 	 *                   defined, 0 if not, and false on failure.
@@ -232,13 +246,17 @@ class Database {
 	public function insertData($query) {
 
 		if ($this->logger) {
-			$this->logger->info("DB query $query");
+			$this->logger->info("DB query " . $this->fingerprintQuery($query));
 		}
-
-		$connection = $this->getConnection('write');
 
 		$this->invalidateQueryCache();
 
+		if ($query instanceof QueryBuilder) {
+			$this->executeQueryBuilder($query);
+			return $query->getConnection()->lastInsertId();
+		}
+
+		$connection = $this->getConnection('write');
 		$this->executeQuery($query, $connection);
 		return (int)$connection->lastInsertId();
 	}
@@ -248,8 +266,8 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in the query cache.
 	 *
-	 * @param string $query      The query to run.
-	 * @param bool   $getNumRows Return the number of rows affected (default: false)
+	 * @param string|QueryBuilder $query      The query to run.
+	 * @param bool                $getNumRows Return the number of rows affected (default: false)
 	 *
 	 * @return bool|int
 	 * @throws \DatabaseException
@@ -257,12 +275,17 @@ class Database {
 	public function updateData($query, $getNumRows = false) {
 
 		if ($this->logger) {
-			$this->logger->info("DB query $query");
+			$this->logger->info("DB query " . $this->fingerprintQuery($query));
 		}
 
 		$this->invalidateQueryCache();
 
-		$stmt = $this->executeQuery($query, $this->getConnection('write'));
+		if ($query instanceof QueryBuilder) {
+			$stmt = $this->executeQueryBuilder($query);
+		} else {
+			$stmt = $this->executeQuery($query, $this->getConnection('write'));
+		}
+
 		if ($getNumRows) {
 			return $stmt->rowCount();
 		} else {
@@ -275,7 +298,7 @@ class Database {
 	 *
 	 * @note Altering the DB invalidates all queries in query cache.
 	 *
-	 * @param string $query The SQL query to run
+	 * @param string|QueryBuilder $query The SQL query to run
 	 *
 	 * @return int The number of affected rows
 	 * @throws \DatabaseException
@@ -283,14 +306,17 @@ class Database {
 	public function deleteData($query) {
 
 		if ($this->logger) {
-			$this->logger->info("DB query $query");
+			$this->logger->info("DB query " . $this->fingerprintQuery($query));
 		}
-
-		$connection = $this->getConnection('write');
 
 		$this->invalidateQueryCache();
 
-		$stmt = $this->executeQuery("$query", $connection);
+		if ($query instanceof QueryBuilder) {
+			$stmt = $this->executeQueryBuilder($query);
+		} else {
+			$stmt = $this->executeQuery("$query", $this->getConnection('write'));
+		}
+
 		return (int)$stmt->rowCount();
 	}
 
@@ -325,12 +351,25 @@ class Database {
 	}
 
 	/**
+	 * Get a string identifying a query (for caching/logging)
+	 *
+	 * @param QueryBuilder|string $query Query or builder
+	 * @return string
+	 */
+	protected function fingerprintQuery($query) {
+		if ($query instanceof QueryBuilder) {
+			return trim($query->getSQL()) . ' {' . serialize($query->getParameters()) . '}';
+		}
+		return trim($query);
+	}
+
+	/**
 	 * Handles queries that return results, running the results through a
 	 * an optional callback function. This is for R queries (from CRUD).
 	 *
-	 * @param string $query    The select query to execute
-	 * @param string $callback An optional callback function to run on each row
-	 * @param bool   $single   Return only a single result?
+	 * @param string|QueryBuilder $query    The select query to execute
+	 * @param string              $callback An optional callback function to run on each row
+	 * @param bool                $single   Return only a single result?
 	 *
 	 * @return array An array of database result objects or callback function results. If the query
 	 *               returned nothing, an empty array.
@@ -341,7 +380,9 @@ class Database {
 		// Since we want to cache results of running the callback, we need to
 		// need to namespace the query with the callback and single result request.
 		// https://github.com/elgg/elgg/issues/4049
-		$query_id = (int)$single . $query . '|';
+		$query_fingerprint = $this->fingerprintQuery($query);
+		$query_id = (int)$single . $query_fingerprint . '|';
+
 		if ($callback) {
 			if (!is_callable($callback)) {
 				$inspector = new \Elgg\Debug\Inspector();
@@ -349,6 +390,7 @@ class Database {
 			}
 			$query_id .= $this->fingerprintCallback($callback);
 		}
+
 		// MD5 yields smaller mem usage for cache and cleaner logs
 		$hash = md5($query_id);
 
@@ -356,7 +398,7 @@ class Database {
 		if ($this->queryCache) {
 			if (isset($this->queryCache[$hash])) {
 				if ($this->logger) {
-					$this->logger->info("DB query $query results returned from cache (hash: $hash)");
+					$this->logger->info("DB query $query_fingerprint results returned from cache (hash: $hash)");
 				}
 				return $this->queryCache[$hash];
 			}
@@ -364,7 +406,12 @@ class Database {
 
 		$return = array();
 
-		$stmt = $this->executeQuery($query, $this->getConnection('read'));
+		if ($query instanceof QueryBuilder) {
+			$stmt = $this->executeQueryBuilder($query);
+		} else {
+			$stmt = $this->executeQuery($query, $this->getConnection('read'));
+		}
+
 		while ($row = $stmt->fetch()) {
 			if ($callback) {
 				$row = call_user_func($callback, $row);
@@ -382,7 +429,7 @@ class Database {
 		if ($this->queryCache) {
 			$this->queryCache[$hash] = $return;
 			if ($this->logger) {
-				$this->logger->info("DB query $query results cached (hash: $hash)");
+				$this->logger->info("DB query $query_fingerprint results cached (hash: $hash)");
 			}
 		}
 
@@ -390,13 +437,10 @@ class Database {
 	}
 
 	/**
-	 * Execute a query.
-	 *
-	 * $query is executed via {@link Connection::query}. If there is an SQL error,
-	 * a {@link DatabaseException} is thrown.
+	 * Execute a query
 	 *
 	 * @param string     $query      The query
-	 * @param Connection $connection The DB connection
+	 * @param Connection $connection The DB connection on which the query is performed
 	 *
 	 * @return Statement The result of the query
 	 * @throws \DatabaseException
@@ -409,19 +453,58 @@ class Database {
 		$this->queryCount++;
 
 		try {
-			if (!$this->timer) {
-				return $connection->query($query);
+			if ($this->timer) {
+				$timer_key = preg_replace('~\\s+~', ' ', trim($query));
+				$this->timer->begin(['SQL', $timer_key]);
 			}
 
-			$timer_key = preg_replace('~\\s+~', ' ', trim($query));
-
-			$this->timer->begin(['SQL', $timer_key]);
 			$value = $connection->query($query);
-			$this->timer->end(['SQL', $timer_key]);
+
+			if ($this->timer) {
+				$this->timer->end(['SQL', $timer_key]);
+			}
 
 			return $value;
 		} catch (\Exception $e) {
 			throw new \DatabaseException($e->getMessage() . "\n\n QUERY: $query");
+		}
+	}
+
+	/**
+	 * Execute a query builder
+	 *
+	 * @param QueryBuilder $qb The query
+	 *
+	 * @return Statement The result of the query
+	 * @throws \DatabaseException
+	 */
+	protected function executeQueryBuilder(QueryBuilder $qb) {
+		$this->queryCount++;
+
+		try {
+			if ($this->timer) {
+				$timer_key = preg_replace('~\\s+~', ' ', $this->fingerprintQuery($qb));
+				$this->timer->begin(['SQL', $timer_key]);
+			}
+
+			$sql = $qb->getSQL();
+			$params = $qb->getParameters();
+			$types = $qb->getParameterTypes();
+
+			// switch connection here, now that we know the type
+			if ($qb->getType() == QueryBuilder::SELECT) {
+				$value = $this->getConnection('read')->executeQuery($sql, $params, $types);
+			} else {
+				$value = $this->getConnection('write')->executeUpdate($sql, $params, $types);
+			}
+
+			if ($this->timer) {
+				$this->timer->end(['SQL', $timer_key]);
+			}
+
+			return $value;
+		} catch (\Exception $e) {
+			throw new \DatabaseException($e->getMessage() . "\n\n QUERY: " . $this->fingerprintQuery($qb));
 		}
 	}
 
@@ -493,9 +576,9 @@ class Database {
 	 * You can specify a handler function if you care about the result. This function will always
 	 * be passed a \Doctrine\DBAL\Driver\Statement.
 	 *
-	 * @param string $query   The query to execute
-	 * @param string $type    The query type ('read' or 'write')
-	 * @param string $handler A callback function to pass the results array to
+	 * @param string|QueryBuilder $query   The query to execute
+	 * @param string              $type    The query type ('read' or 'write')
+	 * @param string              $handler A callback function to pass the results array to
 	 *
 	 * @return boolean Whether registering was successful.
 	 */
@@ -529,7 +612,11 @@ class Database {
 			$handler = $set[self::DELAYED_HANDLER];
 
 			try {
-				$stmt = $this->executeQuery($query, $this->getConnection($type));
+				if ($query instanceof QueryBuilder) {
+					$stmt = $this->executeQueryBuilder($query);
+				} else {
+					$stmt = $this->executeQuery($query, $this->getConnection($type));
+				}
 
 				if (is_callable($handler)) {
 					call_user_func($handler, $stmt);
@@ -629,6 +716,7 @@ class Database {
 	 * @param int  $value  Value to sanitize
 	 * @param bool $signed Whether negative values are allowed (default: true)
 	 * @return int
+	 * @deprecated Use a query builder where possible
 	 */
 	public function sanitizeInt($value, $signed = true) {
 		$value = (int) $value;
@@ -648,6 +736,7 @@ class Database {
 	 * @param string $value Value to escape
 	 * @return string
 	 * @throws \DatabaseException
+	 * @deprecated Use a query builder where possible
 	 */
 	public function sanitizeString($value) {
 		$quoted = $this->getConnection('read')->quote($value);

@@ -3,6 +3,7 @@ namespace Elgg\Database;
 
 use Elgg\Database;
 use Elgg\EventsService;
+use Elgg\OrderBy;
 
 /**
  * WARNING: API IN FLUX. DO NOT USE DIRECTLY.
@@ -39,7 +40,7 @@ class RelationshipsTable {
 	 * Constructor
 	 *
 	 * @param Database      $db       Elgg Database
-	 * @param EntityTable   $entities Entity table 
+	 * @param EntityTable   $entities Entity table
 	 * @param MetadataTable $metadata Metadata table
 	 * @param EventsService $events   Events service
 	 */
@@ -249,6 +250,52 @@ class RelationshipsTable {
 	}
 
 	/**
+	 * Get all relationships matching the given options
+	 *
+	 * @param array $options See elgg_get_relationships()
+	 * @return \ElggRelationship[]|int
+	 */
+	public function getRelationships($options) {
+		$defaults = array(
+			'offset' => 0,
+			'limit' => 10,
+			'count' => false,
+			'order_by' => 'r.id DESC',
+			'callback' => [$this, 'rowToElggRelationship'],
+		);
+
+		$options = array_merge($defaults, $options);
+
+		$qb = $this->db->getQueryBuilder();
+		$qb->select($options['count'] ? 'COUNT(*) AS cnt' : 'r.*')
+			->from('{entity_relationships}', 'r');
+
+		foreach (['relationship', 'guid_one', 'guid_two'] as $column) {
+			if (empty($options[$column])) {
+				continue;
+			}
+
+			$type = ($column === 'relationship') ? \PDO::PARAM_STR : \PDO::PARAM_INT;
+			$qb->where("$column IN " . $qb->createSet($options[$column], $type));
+		}
+
+		if ($options['count']) {
+			return (int)$this->db->getDataRow($qb)->cnt;
+		}
+
+		if ($options['offset']) {
+			$qb->setFirstResult($options['offset']);
+		}
+		if ($options['limit']) {
+			$qb->setMaxResults($options['limit']);
+		}
+
+		OrderBy::addToQueryBuilder($qb, $options);
+
+		return $this->db->getData($qb, $options['callback']);
+	}
+
+	/**
 	 * Get all the relationships for a given GUID.
 	 *
 	 * @param int  $guid                 GUID of the subject or target entity (see $inverse)
@@ -258,13 +305,14 @@ class RelationshipsTable {
 	 * @return \ElggRelationship[]
 	 */
 	public function getAll($guid, $inverse_relationship = false) {
-		$guid = (int)$guid;
+		$column = $inverse_relationship ? 'guid_two' : 'guid_one';
 
-		$where = ($inverse_relationship ? "guid_two='$guid'" : "guid_one='$guid'");
+		$qb = $this->db->getQueryBuilder();
+		$qb->select('*')
+			->from('{entity_relationships}')
+			->where("$column = " . $qb->createNamedParameter($guid, \PDO::PARAM_INT));
 
-		$query = "SELECT * from {$this->db->getTablePrefix()}entity_relationships WHERE {$where}";
-
-		return $this->db->getData($query, array($this, 'rowToElggRelationship'));
+		return $this->db->getData($qb, array($this, 'rowToElggRelationship'));
 	}
 
 	/**
