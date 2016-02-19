@@ -135,6 +135,19 @@ class Config implements Services\Config {
 	/**
 	 * {@inheritdoc}
 	 */
+	public function getCachePath() {
+		$this->loadSettingsFile();
+
+		if (!isset($this->config->cacheroot)) {
+			$this->config->cacheroot = $this->getDataPath();
+		}
+
+		return $this->config->cacheroot;
+	}
+
+	/**
+	 * {@inheritdoc}
+	 */
 	public function get($name, $site_guid = 0) {
 		$name = trim($name);
 	
@@ -270,6 +283,10 @@ class Config implements Services\Config {
 		}
 
 		$GLOBALS['_ELGG']->simplecache_enabled_in_settings = isset($CONFIG->simplecache_enabled);
+
+		if (!empty($CONFIG->cacheroot)) {
+			$CONFIG->cacheroot = rtrim($CONFIG->cacheroot, DIRECTORY_SEPARATOR) . DIRECTORY_SEPARATOR;
+		}
 
 		if (!$global_is_bound) {
 			// must manually copy settings into our storage

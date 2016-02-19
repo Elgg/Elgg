@@ -29,6 +29,15 @@ interface Config {
 	public function getDataPath();
 
 	/**
+	 * Get the cache directory path for this installation
+	 *
+	 * If not set in settings.php, the data path will be returned.
+	 *
+	 * @return string
+	 */
+	public function getCachePath();
+
+	/**
 	 * Get an Elgg configuration value, possibly loading it from the DB's config table
 	 *
 	 * Before application boot, it may be unsafe to call get() for some values. You should use
