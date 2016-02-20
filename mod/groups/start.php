@@ -109,6 +109,10 @@ function groups_init() {
 
 	// allow to be liked
 	elgg_register_plugin_hook_handler('likes:is_likable', 'group:', 'Elgg\Values::getTrue');
+
+	// Help core resolve page owner guids from group routes
+	// Registered with an earlier priority to be called before default_page_owner_handler()
+	elgg_register_plugin_hook_handler('page_owner', 'system', 'groups_default_page_owner_handler', 400);
 }
 
 /**
@@ -817,4 +821,68 @@ function groups_members_menu_setup($hook, $type, $menu, $params) {
 	]);
 
 	return $menu;
+}
+
+/**
+ * Helper handler to correctly resolve page owners on group routes
+ *
+ * @see default_page_owner_handler()
+ * 
+ * @param string $hook   "page_owner"
+ * @param string $type   "system"
+ * @param int    $return Page owner guid
+ * @param array  $params Hook params
+ * @return int|void
+ */
+function groups_default_page_owner_handler($hook, $type, $return, $params) {
+
+	if ($return) {
+		return;
+	}
+
+	$segments = _elgg_services()->request->getUrlSegments();
+	$identifier = array_shift($segments);
+
+	if ($identifier !== 'groups') {
+		return;
+	}
+	
+	$page = array_shift($segments);
+
+	switch ($page) {
+
+		case 'add' :
+			$guid = array_shift($segments);
+			if (!$guid) {
+				$guid = elgg_get_logged_in_user_guid();
+			}
+			return $guid;
+			
+		case 'edit':
+		case 'profile' :
+		case 'activity' :
+		case 'invite' :
+		case 'requests' :
+		case 'members' :
+		case 'profile' :
+			$guid = array_shift($segments);
+			if (!$guid) {
+				return;
+			}
+			return $guid;
+
+		case 'member' :
+		case 'owner' :
+		case 'invitations':
+			$username = array_shift($segments);
+			if ($username) {
+				$user = get_user_by_username($username);
+			} else {
+				$user = elgg_get_logged_in_user_entity();
+			}
+			if (!$user) {
+				return;
+			}
+			return $user->guid;
+	}
 }
