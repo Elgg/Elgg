@@ -383,7 +383,6 @@ function elgg_extend_view($view, $view_extension, $priority = 501) {
 		// can't extend elgg.js
 		$view = 'elgg/sync_code.js';
 		elgg_set_config('elgg_load_sync_code', true);
-		elgg_deprecated_notice('Do not extend the elgg.js view.', '3.0');
 	}
 
 	_elgg_services()->views->extendView($view, $view_extension, $priority);
@@ -1606,18 +1605,17 @@ function elgg_views_boot() {
 
 	// on every page
 
-	// jQuery and UI must come early, as some scripts extend it.
-	elgg_register_js('jquery', elgg_get_simplecache_url('jquery.js'), 'head', 1);
-	elgg_load_js('jquery');
-
-	elgg_register_js('jquery-ui', elgg_get_simplecache_url('jquery-ui.js'), 'head', 2);
-	elgg_load_js('jquery-ui');
-
-	// We setup and load Require last so all other sync scripts will use Elgg's require() shim.
-	elgg_register_js('elgg.require_config', elgg_get_simplecache_url('elgg/require_config.js'), 'footer', 1000);
-	elgg_load_js('elgg.require_config');
-	elgg_register_js('require', elgg_get_simplecache_url('require.js'), 'footer', 1001);
-	elgg_load_js('require');
+	// Note: the locations and priorities of these are fixed in elgg_register_js()
+	$scripts = [
+		'jquery' => 'jquery.js',
+		'jquery-ui' => 'jquery-ui.js',
+		'elgg.require_config' => 'elgg/require_config.js',
+		'require' => 'require.js',
+	];
+	foreach ($scripts as $name => $view) {
+		elgg_register_js($name, elgg_get_simplecache_url($view));
+		elgg_load_js($name);
+	}
 
 	elgg_require_js('elgg');
 	elgg_register_simplecache_view('elgg.js');

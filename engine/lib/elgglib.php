@@ -117,6 +117,8 @@ function forward($location = "", $reason = 'system') {
 /**
  * Register a JavaScript file for inclusion
  *
+ * @note Devs are encouraged to instead create AMD modules and use elgg_require_js().
+ *
  * This function handles adding JavaScript to a web page. If multiple
  * calls are made to register the same JavaScript file based on the $id
  * variable, only the last file is included. This allows a plugin to add
@@ -133,15 +135,40 @@ function forward($location = "", $reason = 'system') {
  * @note Since 2.0, scripts with location "head" will also be output in the footer, but before
  *       those with location "footer".
  *
+ * @note Since 3.0, the location "amd" is available for files that expect to be executed in an
+ *       AMD environment. Also the location and priority of some critical Elgg files are fixed.
+ *
  * @param string $name     An identifier for the JavaScript library
  * @param string $url      URL of the JavaScript file
- * @param string $location Page location: head or footer. (default: head)
+ * @param string $location "head", "footer", or "amd" (default: "head")
  * @param int    $priority Priority of the JS file (lower numbers load earlier)
  *
  * @return bool
  * @since 1.8.0
  */
 function elgg_register_js($name, $url, $location = 'head', $priority = null) {
+
+	// These are fixed so that plugins don't accidentally change the location
+	// or priority, which could break the boot sequence.
+	switch ($name) {
+		case 'jquery':
+			$location = 'head';
+			$priority = 1;
+			break;
+		case 'jquery-ui':
+			$location = 'head';
+			$priority = 2;
+			break;
+		case 'elgg.require_config':
+			$location = 'require';
+			$priority = 1;
+			break;
+		case 'require':
+			$location = 'require';
+			$priority = 2;
+			break;
+	}
+
 	return elgg_register_external_file('js', $name, $url, $location, $priority);
 }
 
