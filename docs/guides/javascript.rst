@@ -5,32 +5,11 @@ JavaScript
    :local:
    :depth: 2
 
-Third-party assets
-==================
-
-We recommend managing third-party scripts and styles with Composer.
-Elgg core uses ``fxp/composer-asset-plugin`` for this purpose.
-This plugin allows you to pull dependencies from the Bower or NPM package repositories,
-but using the Composer command-line tool.
-
-For example, to include jQuery, you could run the following Composer commands:
-
-.. code-block:: shell
-
-    composer global require fxp/composer-asset-plugin:~1.1.1
-    composer require bower-asset/jquery:~2.0
-
-.. note::
-
-    ``fxp/composer-asset-plugin`` must be installed globally!
-    See https://github.com/francoispluchino/composer-asset-plugin for more info.
-
 AMD
 ===
 
-As of Elgg 1.9, we encourage all developers to adopt the `AMD (Asynchronous Module
+Developers should use the `AMD (Asynchronous Module
 Definition) <http://requirejs.org/docs/whyamd.html>`_ standard for writing JavaScript code in Elgg.
-The 1.8 version is still functional and is :ref:`described below<1.8-js>`.
 
 Here we'll describe making and executing AMD modules. The RequireJS documentation for
 `defining modules <http://requirejs.org/docs/api.html#define>`_ may also be of use.
@@ -98,8 +77,61 @@ the greeting:
         $('body').append(hello);
     });
 
-Passing plugin/Elgg settings to modules
----------------------------------------
+.. _guides/javascript#config:
+
+Passing settings to modules
+---------------------------
+
+The ``elgg.data`` plugin hooks
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+The ``elgg`` module provides an object ``elgg.data`` which is populated from two server side hooks:
+
+- **elgg.data, site**: This filters an array of site-specific data passed to the client and cached.
+- **elgg.data, page**: This filters an array of uncached, page-specific data passed to the client.
+
+Let's pass some data to a module:
+
+.. code-block:: php
+
+    <?php
+
+    function myplugin_config_site($hook, $type, $value, $params) {
+        // this will be cached client-side
+        $value['myplugin']['api'] = elgg_get_site_url() . 'myplugin-api';
+        $value['myplugin']['key'] = 'none';
+        return $value;
+    }
+
+    function myplugin_config_page($hook, $type, $value, $params) {
+        $user = elgg_get_logged_in_user_entity();
+        if ($user) {
+            $value['myplugin']['key'] = $user->myplugin_api_key;
+            return $value;
+        }
+    }
+
+    elgg_register_plugin_hook_handler('elgg.data', 'site', 'myplugin_config_site');
+    elgg_register_plugin_hook_handler('elgg.data', 'page', 'myplugin_config_page');
+
+.. code-block:: javascript
+
+    define(function(require) {
+        var elgg = require("elgg");
+
+        var api = elgg.data.myplugin.api;
+        var key = elgg.data.myplugin.key; // "none" or a user's key
+
+        // ...
+    });
+
+.. note::
+
+    In ``elgg.data``, page data overrides site data. Also note ``json_encode()`` is used to copy
+    data client-side, so all caveats apply.
+
+Making a config module
+~~~~~~~~~~~~~~~~~~~~~~
 
 You can use a PHP-based module to pass values from the server. To make the module ``myplugin/settings``,
 create the view file ``views/default/myplugin/settings.js.php`` (note the double extension
@@ -109,12 +141,11 @@ create the view file ``views/default/myplugin/settings.js.php`` (note the double
 
     <?php
 
-    $settings = elgg_get_plugin_from_id('myplugin')->getAllSettings();
+    // this will be cached client-side
     $settings = [
-        'foo' => elgg_extract('foo', $settings),
-        'bar' => elgg_extract('bar', $settings),
+        'api' => elgg_get_site_url() . 'myplugin-api',
+        'key' => null,
     ];
-
     ?>
     define(<?php echo json_encode($settings); ?>);
 
@@ -184,7 +215,7 @@ When this is requested client-side:
 .. warning:: Calls to ``elgg_define_js()`` must be in an ``init, system`` event handler.
 
 Some things to note
-^^^^^^^^^^^^^^^^^^^
+~~~~~~~~~~~~~~~~~~~
 
 #. Do not use ``elgg.provide()`` anymore nor other means to attach code to ``elgg`` or other
    global objects. Use modules.
@@ -192,6 +223,8 @@ Some things to note
 #. Static (.js,.css,etc.) files are automatically minified and cached by Elgg's simplecache system.
 #. The configuration is also cached in simplecache, and should not rely on user-specific values
    like ``get_language()``.
+
+.. _guides/javascript#boot:
 
 Booting your plugin
 ===================
@@ -225,66 +258,16 @@ Each boot module **must** return an instance of ``elgg/Plugin``. The constructor
 
 .. warning:: A boot module **cannot** depend on the modules ``elgg/init`` or ``elgg/ready``.
 
+Modules provided with Elgg
+==========================
 
-The elgg/init module
---------------------
+Modules ``jquery`` and ``jquery-ui``
+------------------------------------
 
-``elgg/init`` loads and initializes all boot modules in priority order and triggers the [init, system] hook.
+You must depend on these modules to use ``$`` or ``$.ui`` methods. In the future Elgg may stop loading these by default.
 
-Require this module to make sure all plugins are ready.
-
-
-The elgg/ready module
----------------------
-
-``elgg/ready`` loads and initializes all plugin boot modules in priority order.
-
-Require this module to make sure all plugins are ready.
-
-
-Migrating JS from Elgg 1.8 to AMD / 1.9
-=======================================
-
-**Current 1.8 JavaScript modules will continue to work with Elgg**.
-
-We do not anticipate any backwards compatibility issues with this new direction and will fix any
-issues that do come up. The old system will still be functional in Elgg 1.9, but developers are
-encouraged to begin looking to AMD as the future of JS in Elgg.
-
-.. _1.8-js:
-
-Traditional JavaScript (1.8)
-============================
-
-
-Register third-party libraries with ``elgg_register_js``:
-
-.. code:: php
-
-   elgg_register_js('jquery', $cdnjs_url);
-
-This will override any URLs previously registered under this name.
-
-Load a library on the current page with ``elgg_load_js``:
-
-.. code:: php
-
-   elgg_load_js('jquery');
-
-This will include and execute the linked code.
-
-.. warning::
-
-   Using inline scripts is NOT SUPPORTED because:
-    * They are not testable (maintainability)
-    * They are not cacheable (performance)
-    * They prevent use of Content-Security-Policy (security) 
-    * They prevent scripts from being loaded with ``defer`` or ``async`` (performance)
-
-   Inline scripts in core or bundled plugins are considered legacy bugs.
-
-Core functions available in JS
-==============================
+Module ``elgg``
+---------------
 
 ``elgg.echo()``
 
@@ -313,8 +296,6 @@ Display an error message to the user.
    elgg.register_error(elgg.echo('error'));
 
 
-``elgg.forward()``
-
 ``elgg.normalize_url()``
 
 Normalize a URL relative to the elgg root:
@@ -324,7 +305,7 @@ Normalize a URL relative to the elgg root:
     // "http://localhost/elgg/blog"
     elgg.normalize_url('/blog');
 
-
+``elgg.forward()``
 
 Redirect to a new page.
 
@@ -460,6 +441,30 @@ There are a number of configuration values set in the elgg object:
     // The Elgg release (X.Y.Z).
     elgg.config.release;
 
+Module ``elgg/Ajax``
+--------------------
+
+See the :doc:`ajax` page for details.
+
+Module ``elgg/init``
+--------------------
+
+``elgg/init`` loads and initializes all boot modules in priority order and triggers the [init, system] hook.
+
+Require this module to make sure all plugins are ready.
+
+Module ``elgg/Plugin``
+----------------------
+
+Used to create a :ref:`boot module <guides/javascript#boot>`.
+
+Module ``elgg/ready``
+---------------------
+
+``elgg/ready`` loads and initializes all plugin boot modules in priority order.
+
+Require this module to make sure all plugins are ready.
+
 Module ``elgg/spinner``
 -----------------------
 
@@ -479,13 +484,45 @@ The ``elgg/spinner`` module can be used to create an Ajax loading indicator fixe
       });
    });
 
+.. note:: The ``elgg/Ajax`` module uses the spinner by default.
+
+Traditional scripts
+===================
+
+Although we highly recommend using AMD modules, you can register scripts with ``elgg_register_js``:
+
+.. code:: php
+
+   elgg_register_js('jquery', $cdnjs_url);
+
+This will override any URLs previously registered under this name.
+
+Load a library on the current page with ``elgg_load_js``:
+
+.. code:: php
+
+   elgg_load_js('jquery');
+
+This will load the library in the page footer. You must use the ``require()`` function to depend on
+modules like ``elgg`` and ``jquery``.
+
+.. warning::
+
+   Using inline scripts is NOT SUPPORTED because:
+    * They are not testable (maintainability)
+    * They are not cacheable (performance)
+    * They prevent use of Content-Security-Policy (security)
+    * They prevent scripts from being loaded with ``defer`` or ``async`` (performance)
+
+   Inline scripts in core or bundled plugins are considered legacy bugs.
+
 Hooks
------
+=====
 
 The JS engine has a hooks system similar to the PHP engine's plugin hooks: hooks are triggered and plugins can register functions to react or alter information. There is no concept of Elgg events in the JS engine; everything in the JS engine is implemented as a hook.
 
 Registering hook handlers
-^^^^^^^^^^^^^^^^^^^^^^^^^
+-------------------------
 
 Handler functions are registered using ``elgg.register_hook_handler()``. Multiple handlers can be registered for the same hook.
 
@@ -504,10 +541,10 @@ The following example registers the ``handleFoo`` function for the ``foo, bar`` 
         elgg.register_hook_handler('foo', 'bar', handleFoo);
 
         return new Plugin();
-   });
+    });
 
 The handler function
-^^^^^^^^^^^^^^^^^^^^
+--------------------
 
 The handler will receive 4 arguments:
 
@@ -519,7 +556,7 @@ The handler will receive 4 arguments:
 The ``value`` will be passed through each hook. Depending on the hook, callbacks can simply react or alter data.
 
 Triggering custom hooks
-^^^^^^^^^^^^^^^^^^^^^^^
+-----------------------
 
 Plugins can trigger their own hooks:
 
@@ -535,7 +572,7 @@ Plugins can trigger their own hooks:
 .. note:: Be aware of timing. If you don't depend on elgg/init, other plugins may not have had a chance to register their handlers.
 
 Available hooks
-^^^^^^^^^^^^^^^
+---------------
 
 **init, system**
     Plugins should register their init functions for this hook. It is fired after Elgg's JS is loaded and all plugin boot modules have been initialized. Depend on the ``elgg/init`` module to be sure this has completed.
@@ -554,3 +591,23 @@ Available hooks
 
 **ajax_response_data, \***
     This filters the response data returned to users of the ``elgg/Ajax`` module. See :doc:`ajax` for details.
+
+Third-party assets
+==================
+
+We recommend managing third-party scripts and styles with Composer.
+Elgg core uses ``fxp/composer-asset-plugin`` for this purpose.
+This plugin allows you to pull dependencies from the Bower or NPM package repositories,
+but using the Composer command-line tool.
+
+For example, to include jQuery, you could run the following Composer commands:
+
+.. code-block:: shell
+
+    composer global require fxp/composer-asset-plugin:~1.1.1
+    composer require bower-asset/jquery:~2.0
+
+.. note::
+
+    ``fxp/composer-asset-plugin`` must be installed globally!
+    See https://github.com/francoispluchino/composer-asset-plugin for more info.

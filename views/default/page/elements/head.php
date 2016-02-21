@@ -21,19 +21,24 @@ foreach ($links as $attributes) {
 }
 
 $stylesheets = elgg_get_loaded_css();
-
 foreach ($stylesheets as $url) {
-	echo elgg_format_element('link', array('rel' => 'stylesheet', 'href' => $url));
+	echo elgg_format_element('link', [
+		'rel' => 'stylesheet',
+		'href' => $url,
+	]);
 }
 
 // A non-empty script *must* come below the CSS links, otherwise Firefox will exhibit FOUC
 // See https://github.com/Elgg/Elgg/issues/8328
 ?>
 <script>
-	<?php // Do not convert this to a regular function declaration. It gets redefined later. ?>
-	require = function () {
-		// handled in the view "elgg.js"
-		_require_queue.push(arguments);
-	};
-	_require_queue = [];
+<?php
+// Do not convert this to a regular function declaration. It gets redefined later.
+// This sets up a fake require() to capture usage in the BODY.
+// See the page/elements/foot view.
+?>
+require = function () {
+	_require_queue.push(arguments);
+};
+_require_queue = [];
 </script>

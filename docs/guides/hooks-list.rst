@@ -115,6 +115,12 @@ System hooks
 
 **add, river**
 
+**elgg.data, site**
+   Filters cached configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
+
+**elgg.data, page**
+   Filters uncached, page-specific configuration data to pass to the client. :ref:`More info <guides/javascript#config>`
+
 User hooks
 ==========
 

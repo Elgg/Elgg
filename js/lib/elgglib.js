@@ -1,7 +1,7 @@
 /**
  * @namespace Singleton object for holding the Elgg javascript library
  */
-var elgg = elgg || {};
+var elgg = window.elgg || {};
 
 /**
  * Pointer to the global context
@@ -9,7 +9,7 @@ var elgg = elgg || {};
  * @see elgg.require
  * @see elgg.provide
  */
-elgg.global = this;
+elgg.global = window;
 
 /**
  * Duplicate of the server side ACCESS_PRIVATE access level.
