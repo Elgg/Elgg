@@ -47,6 +47,11 @@ class Service {
 		$this->hooks = $hooks;
 		$this->msgs = $msgs;
 		$this->input = $input;
+
+		if ($this->input->get('elgg_fetch_messages', true)) {
+			$message_filter = [$this, 'appendMessages'];
+			$this->hooks->registerHandler(AjaxResponse::RESPONSE_HOOK, 'all', $message_filter, 999);
+		}
 	}
 
 	/**
@@ -100,7 +105,9 @@ class Service {
 		}
 
 		$api_response = new Response();
-		$api_response->setData($output);
+		$api_response->setData((object)[
+			'value' => $output,
+		]);
 		$api_response = $this->filterApiResponse($api_response, $hook_type);
 		$response = $this->buildHttpResponse($api_response);
 
@@ -146,7 +153,7 @@ class Service {
 	 * @return AjaxResponse
 	 */
 	private function filterApiResponse(AjaxResponse $api_response, $hook_type = '') {
-		$api_response->setTtl($this->input->get('response_ttl', 0, false));
+		$api_response->setTtl($this->input->get('elgg_response_ttl', 0, false));
 
 		if ($hook_type) {
 			$hook = AjaxResponse::RESPONSE_HOOK;
@@ -173,10 +180,7 @@ class Service {
 			return new JsonResponse(['error' => "The response was cancelled"], 400);
 		}
 
-		$response = new JsonResponse([
-			'msgs' => (object)$this->msgs->dumpRegister(),
-			'data' => $api_response->getData(),
-		]);
+		$response = new JsonResponse($api_response->getData());
 
 		$ttl = $api_response->getTtl();
 		if ($ttl > 0) {
@@ -196,6 +200,23 @@ class Service {
 			$response->headers->set('Expires', gmdate('D, d M Y H:i:s \G\M\T', time() + $ttl));
 		}
 
+		return $response;
+	}
+
+	/**
+	 * Send system messages back with the response
+	 *
+	 * @param string       $hook     "ajax_response"
+	 * @param string       $type     "all"
+	 * @param AjaxResponse $response Ajax response
+	 * @param array        $params   Hook params
+	 *
+	 * @return AjaxResponse
+	 * @access private
+	 * @internal
+	 */
+	public function appendMessages($hook, $type, AjaxResponse $response, $params) {
+		$response->getData()->_elgg_msgs = (object)$this->msgs->dumpRegister();
 		return $response;
 	}
 }

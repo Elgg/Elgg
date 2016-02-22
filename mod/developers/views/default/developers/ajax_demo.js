@@ -18,18 +18,31 @@ define(function(require) {
 		Ajax.REQUEST_DATA_HOOK,
 		'action:developers/ajax_demo',
 		function (name, type, params, value) {
+			// alter the data object sent to server
 			value.client_request_altered = 1;
 			return value;
 		}
 	);
 
+	var got_metadata_from_server = false,
+		num_hook_calls = 0;
+
 	// alter request data response for the action
 	elgg.register_hook_handler(
 		Ajax.RESPONSE_DATA_HOOK,
 		'action:developers/ajax_demo',
-		function (name, type, params, value) {
-			value.client_response_altered = 3;
-			return value;
+		function (name, type, params, data) {
+			// check the data wrapper for our expected metadata
+			if (data.server_response_altered) {
+				got_metadata_from_server = true;
+			}
+
+			// alter the return value
+			data.value.altered_value = true;
+
+			num_hook_calls++;
+
+			return data;
 		}
 	);
 
@@ -55,14 +68,18 @@ define(function(require) {
 				log("form() successful!");
 
 				return ajax.action('developers/ajax_demo', {
-					data: {arg1: 2, arg2: 3}
+					data: {arg1: 2, arg2: 3},
+					success: function (obj) {
+						// we should not get two sets of system messages
+					}
 				});
 			}
 		})
 		.then(function (obj) {
 			if (obj.sum === 5
-					&& obj.server_response_altered == 2
-					&& obj.client_response_altered == 3) {
+					&& got_metadata_from_server
+					&& obj.altered_value
+					&& num_hook_calls == 1) {
 				log("action() successful!");
 				alert('Success!');
 			}

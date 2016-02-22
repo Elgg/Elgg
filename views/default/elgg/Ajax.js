@@ -19,14 +19,18 @@ define(function (require) {
 		 *
 		 * Note that this function does not support the array form of "success".
 		 *
-		 * To request the response be cached, set options.method to "GET" and options.data.response_ttl
+		 * To request the response be cached, set options.method to "GET" and options.data.elgg_response_ttl
 		 * to a number of seconds.
+		 *
+		 * To bypass downloading system messages with the response, set options.data.elgg_fetch_messages = 0.
 		 *
 		 * @param {Object} options   See {@link jQuery#ajax}. The default method is "GET" (or "POST" for actions).
 		 *
 		 *     url   : {String} Path of the Ajax API endpoint (required)
 		 *     error : {Function} Error handler. Default is elgg.ajax.handleAjaxError. To cancel this altogether,
 		 *                        pass in function(){}.
+		 *     data  : {Object} Data to send to the server (optional). Unlike jQuery, you cannot set this
+		 *                      to a string.
 		 *
 		 * @param {String} hook_type Type of the plugin hooks. If missing, the hooks will not trigger.
 		 *
@@ -34,35 +38,38 @@ define(function (require) {
 		 */
 		function fetch(options, hook_type) {
 			var orig_options,
-				msgs_were_set = 0,
-				params;
+				params,
+				unwrapped = false,
+				result;
 
 			function unwrap_data(data) {
-				var params;
-
-				if (!msgs_were_set) {
-					data.msgs.error && elgg.register_error(data.msgs.error);
-					data.msgs.success && elgg.system_message(data.msgs.success);
-					msgs_were_set = 1;
+				// between the deferred and a success function, make sure this runs only once.
+				if (!unwrapped) {
+					var params = {
+						options: orig_options
+					};
+					if (hook_type) {
+						data = elgg.trigger_hook(Ajax.RESPONSE_DATA_HOOK, hook_type, params, data);
+					}
+					result = data.value;
+					unwrapped = true;
 				}
-
-				params = {
-					options: orig_options
-				};
-				if (hook_type) {
-					return elgg.trigger_hook(Ajax.RESPONSE_DATA_HOOK, hook_type, params, data.data);
-				}
-				return data.data;
+				return result;
 			}
 
 			hook_type = hook_type || '';
 
 			if (!$.isPlainObject(options) || !options.url) {
-				throw new Error('options must be a plain with key "url"');
+				throw new Error('options must be a plain object with key "url"');
 			}
 
 			// ease hook filtering by making these keys always available
-			options.data = options.data || {};
+			if (options.data === undefined || $.isPlainObject(options.data)) {
+				options.data = options.data || {};
+			} else {
+				throw new Error('if defined, options.data must be a plain object');
+			}
+
 			options.dataType = 'json';
 			if (!options.method) {
 				options.method = 'GET';
@@ -194,12 +201,21 @@ define(function (require) {
 	Ajax.REQUEST_DATA_HOOK = 'ajax_request_data';
 
 	/**
-	 * The returned data will be passed through this hook, with the endpoint name as hook type and
-	 * params.option will have a copy of the original options object.
+	 * The returned data object will be passed through this hook, with the endpoint name as hook type
+	 * and params.option will have a copy of the original options object.
 	 *
-	 * Note this hook will be triggered twice if you provide an options.success function.
+	 * data.value will be returned to the caller.
 	 */
 	Ajax.RESPONSE_DATA_HOOK = 'ajax_response_data';
+
+	// handle system messages
+	elgg.register_hook_handler(Ajax.RESPONSE_DATA_HOOK, 'all', function (name, type, params, data) {
+		var m = data._elgg_msgs;
+		m && m.error && elgg.register_error(m.error);
+		m && m.success && elgg.system_message(m.success);
+		delete data._elgg_msgs;
+		return data;
+	});
 
 	return Ajax;
 });
