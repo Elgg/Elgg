@@ -19,6 +19,11 @@ Deprecated APIs
  * ``get_default_filestore``
  * ``set_default_filestore``
 
+Added ``elgg/widgets`` module
+-----------------------------
+
+If your plugin code calls ``elgg.ui.widgets.init()``, instead use the :doc:`elgg/widgets module <javascript>`.
+
 From 1.x to 2.0
 ===============
 

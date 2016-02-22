@@ -434,6 +434,17 @@ The ``elgg/spinner`` module can be used to create an Ajax loading indicator fixe
 
 .. note:: The ``elgg/Ajax`` module uses the spinner by default.
 
+Module ``elgg/widgets``
+-----------------------
+
+Plugins that load a widget layout via Ajax should initialize via this module:
+
+.. code:: js
+
+   require(['elgg/widgets'], function (widgets) {
+       widgets.init();
+   });
+
 Traditional scripts
 ===================
 

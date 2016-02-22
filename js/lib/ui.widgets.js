@@ -8,6 +8,12 @@ elgg.provide('elgg.ui.widgets');
  */
 elgg.ui.widgets.init = function() {
 
+	// the AMD version of init sets this to avoid the deprecation warning
+	if (!elgg.ui.widgets.init._amd) {
+		elgg.deprecated_notice('Don\'t use elgg.ui.widgets directly. Use the AMD elgg/widgets module', '2.1');
+	}
+	delete elgg.ui.widgets.init._amd;
+
 	// widget layout?
 	if ($(".elgg-widgets").length === 0) {
 		return;
@@ -208,4 +214,10 @@ elgg.ui.widgets.setMinHeight = function(selector) {
 	});
 };
 
-elgg.register_hook_handler('init', 'system', elgg.ui.widgets.init);
+require(['jquery'], function ($) {
+	$(function () {
+		require(['elgg/widgets'], function (widgets) {
+			widgets.init();
+		});
+	});
+});
