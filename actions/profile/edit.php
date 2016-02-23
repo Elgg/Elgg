@@ -42,21 +42,25 @@ foreach ($profile_fields as $shortname => $valuetype) {
 		$value = _elgg_html_decode($value);
 	}
 
+	// convert tags fields to array values
+	if ($valuetype == 'tags') {
+		$value = string_to_tag_array($value);
+	}
+	
 	// limit to reasonable sizes
-	// @todo - throwing away changes due to this is dumb!
-	// ^^ This is a sticky form so changes aren't lost...?
-	if (!is_array($value) && $valuetype != 'longtext' && elgg_strlen($value) > 250) {
-		$error = elgg_echo('profile:field_too_long', array(elgg_echo("profile:{$shortname}")));
-		register_error($error);
-		forward(REFERER);
+	if ($valuetype != 'longtext') {
+		$check_values = (array) $value;
+		// also check tags/checkboxes/etc
+		foreach ($check_values as $v) {
+			if (elgg_strlen($v) > 250) {
+				register_error(elgg_echo('profile:field_too_long', array(elgg_echo("profile:{$shortname}"))));
+				forward(REFERER);
+			}
+		}
 	}
 
 	if ($value && $valuetype == 'url' && !preg_match('~^https?\://~i', $value)) {
 		$value = "http://$value";
-	}
-
-	if ($valuetype == 'tags') {
-		$value = string_to_tag_array($value);
 	}
 
 	if ($valuetype == 'email' && !empty($value) && !is_email_address($value)) {
