@@ -134,36 +134,36 @@ function get_call_method() {
 function get_parameters_for_method($method) {
 	global $API_METHODS;
 
-	$sanitised = array();
+	$sanitised = [];
 
-	$expected_parameters = (array) $API_METHODS[$method]['parameters'];
+	foreach ($API_METHODS[$method]['parameters'] as $key => $spec) {
+		$type = elgg_extract('type', $spec);
+		$required = elgg_extract('required', $spec);
 
-	if (empty($expected_parameters)) {
-		// This method has no expected parameters
-		return $sanitised;
-	}
-
-	foreach ($expected_parameters as $key => $spec) {
 		// Make things go through the sanitiser
-		$default = elgg_extract('default', $spec);
-		$value = get_input($key, $default);
+		$value = get_input($key);
 
-		if ($value !== null) {
-			// Cast values to specified type
-			$type = elgg_extract('type', $spec);
-			if (!settype($value, $type)) {
-				$msg = elgg_echo('APIException:UnrecognisedTypeCast', array($type, $key, $method));
+		// consider '' missing
+		if ($value === null || $value === '') {
+			// only use default if not null
+			if (isset($spec['default'])) {
+				$value = $spec['default'];
+
+			} elseif ($required) {
+				$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
 				throw new APIException($msg);
 			}
 		}
 
-		// Validate required values
-		$required = elgg_extract('required', $spec);
-		if ($required) {
-			if (($type == 'array' && empty($value)) || $value == '' || $value == null) {
-				$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
+		$value = _elgg_ws_cast($type, $value, $success);
+		if (!$success) {
+			if ($type === 'array') {
+				$msg = elgg_echo('APIException:ParameterNotArray', array($key));
 				throw new APIException($msg);
 			}
+			// shouldn't be possible due to validation in elgg_ws_expose_function()
+			$msg = elgg_echo('APIException:UnrecognisedTypeCast', array($type, $key, $method));
+			throw new APIException($msg);
 		}
 
 		$sanitised[$key] = $value;
@@ -221,8 +221,8 @@ function verify_parameters($method, $parameters) {
 		if ($value['required'] && !array_key_exists($key, $parameters)) {
 			$msg = elgg_echo('APIException:MissingParameterInMethod', array($key, $method));
 			throw new APIException($msg);
-			}
 		}
+	}
 
 	return true;
 }
@@ -312,6 +312,61 @@ function serialise_parameters($method, $parameters) {
 	}
 
 	return $serialised_parameters;
+}
+
+/**
+ * Cast a string input value
+ *
+ * @param string $type    Desired type
+ * @param mixed  $value   String value
+ * @param bool   $success Was the cast successful? Check this after call.
+ *
+ * @return mixed
+ * @access private
+ * @todo Stop trimming and other hacks like eval
+ */
+function _elgg_ws_cast($type, $value, &$success = null) {
+	$success = true;
+
+	switch ($type) {
+		case 'int':
+		case 'integer':
+			return (int)trim($value);
+
+		case 'bool':
+		case 'boolean':
+			// 2.0 BC: we handle "false" but not "true"!
+			if (strcasecmp(trim($value), "false") == 0 || $value == 0) {
+				return false;
+			}
+			return true;
+
+		case 'string':
+			return trim($value);
+
+		case 'float':
+			return (float)trim($value);
+
+		case 'array':
+			// we can handle an array of strings, maybe ints, definitely not booleans or other arrays
+			if (!is_array($value)) {
+				$success = false;
+				return;
+			}
+
+			// for BC duplicating hacky 2.0 behavior
+			$code = 'return [';
+			foreach ($value as $key => $item) {
+				$k = sanitize_string($key);
+				$v = sanitize_string($item);
+				$code .= "'$k' => '$v',";
+			}
+			$code .= '];';
+			return eval($code);
+
+		default:
+			$success = false;
+	}
 }
 
 // API authorization handlers /////////////////////////////////////////////////////////////////////

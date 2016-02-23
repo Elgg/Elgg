@@ -160,19 +160,32 @@ function elgg_ws_expose_function(
 		'require_api_auth' => (bool) $require_api_auth,
 		'require_user_auth' => (bool) $require_user_auth,
 		'call_method' => strtoupper((string) $call_method),
-		'parameters' => (array) $parameters,
+		'parameters' => $parameters,
 		'assoc' => $assoc,
 	);
 
-	if (!is_array($api_method['parameters'])) {
+	if ($api_method['parameters'] === null) {
+		$api_method['parameters'] = [];
+	} elseif (!is_array($api_method['parameters'])) {
 		$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
 		throw new InvalidParameterException($msg);
 	}
 
 	foreach ($api_method['parameters'] as $key => $value) {
+		// catch common mistake of not setting up param array correctly
 		// Verify that method parameters are defined with an explicit type
-		if (empty($value['type'])) {
+		if (!is_array($value) || empty($value['type']) || !is_string($value['type'])) {
 			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
+			throw new InvalidParameterException($msg);
+		}
+
+		$api_method['parameters'][$key]['type'] = strtolower($value['type']);
+		$value['type'] = strtolower($value['type']);
+
+		// in 2.0 this was checked at method call time
+		$valid_types = ['int', 'integer', 'bool', 'boolean', 'string', 'float', 'array'];
+		if (!in_array($value['type'], $valid_types)) {
+			$msg = elgg_echo('APIException:UnrecognisedTypeCast', array($value['type'], $key, $method));
 			throw new InvalidParameterException($msg);
 		}
 

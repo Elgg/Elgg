@@ -176,20 +176,18 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 		}						
 	}
 
-// Type is now verified when method is exposed
-// verify parameters
-//	public function testVerifyParametersTypeNotSet() {
-//		$params = array('param1' => array('required' => true));
-//		elgg_ws_expose_function('test', 'elgg_echo', $params);
-//
-//		try {
-//			verify_parameters('test', array());
-//			$this->assertTrue(FALSE);
-//		} catch (Exception $e) {
-//			$this->assertIsA($e, 'APIException');
-//			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('APIException:InvalidParameter'), 'param1', 'test'));
-//		}
-//	}
+	public function testVerifyParametersTypeNotSet() {
+		$params = array('param1' => array('required' => true));
+
+		try {
+			elgg_ws_expose_function('test', 'elgg_echo', $params);
+			$this->assertTrue(FALSE);
+		} catch (Exception $e) {
+			$this->assertIsA($e, 'InvalidParameterException');
+			// $msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), 'test'));
+		}
+	}
 
 	public function testVerifyParametersMissing() {
 		$params = array('param1' => array('type' => 'int', 'required' => true));
@@ -278,12 +276,6 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 		$parameters = array('param1' => array(1, 2));
 		$s = serialise_parameters('test', $parameters);
 		$this->assertIdentical($s, ",array('0'=>'1','1'=>'2')");
-
-		// test unknown type
-		$this->registerFunction(false, false, array('param1' => array('type' => 'bad')));
-		$parameters = array('param1' => 'test');
-		$this->expectException('APIException');
-		$s = serialise_parameters('test', $parameters);
 	}
 	
 // api key methods
@@ -320,34 +312,64 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 		set_input('param1', $int);
 
 		$this->registerFunction();
-		$this->assertIdentical(get_parameters_for_method('test'), array('param1' => $int, 'param2' => null));
+		$this->assertIdentical(get_parameters_for_method('test'), array('param1' => $int, 'param2' => false));
 	}
 
 	public function testGetParameterForMethodCasting() {
-		set_input('int', '1');
-		set_input('bool', 'true');
-		set_input('float', '1.65');
-		set_input('array', 'bar');
-		set_input('string', 'foo');
+		// BC with 2.0 sanitize_string/trim/eval mess
+		$types = [
+			'int' => [
+				["0", 0],
+				["1", 1],
+				[" 1", 1],
+			],
+			'bool' => [
+				["0", false],
+				[" 1", true],
 
-		$params = array(
-			'int' => array('type' => 'int'),
-			'bool' => array('type' => 'bool'),
-			'float' => array('type' => 'float'),
-			'array' => array('type' => 'array'),
-			'string' => array('type' => 'string')
-		);
+				// BC with 2.0
+				[" false", false],
+				["true", false],
+			],
+			'float' => [
+				["1.65", 1.65],
+				[" 1.65 ", 1.65],
+			],
+			'array' => [
+				[["2 ", " bar"], [2, "bar"]],
+				[["' \""], ["' \\\""]],
+			],
+			'string' => [
+				[" foo ", "foo"],
+			],
+		];
 
-		$this->registerFunction(false, false, $params);
+		foreach ($types as $type => $tests) {
+			foreach ($tests as $test) {
+				set_input('param', $test[0]);
+				$this->registerFunction(false, false, [
+					'param' => ['type' => $type],
+				]);
 
-		$values = get_parameters_for_method('test');
+				// test 2.1 casting
+				$values = get_parameters_for_method('test');
+				$this->assertEqual($values['param'], $test[1]);
 
-		$this->assertIdentical($values['int'], 1);
-		$this->assertIdentical($values['bool'], true);
-		$this->assertIdentical($values['float'], 1.65);
-		$this->assertIdentical($values['array'], array('bar'));
-		$this->assertIdentical($values['string'], 'foo');
+				// test 2.0 casting
+				$serialized = serialise_parameters('test', [
+					// get_input() necessary because it does recursive trimming
+					'param' => get_input('param'),
+				]);
 
+				// leading comma
+				$this->assertEqual($serialized[0], ",");
+				$serialized = substr($serialized, 1);
+
+				// evaled
+				$value = eval("return $serialized;");
+				$this->assertEqual($value, $test[1]);
+			}
+		}
 	}
 
 	public function testExecuteMethodAssoc() {
