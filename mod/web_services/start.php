@@ -108,97 +108,97 @@ $ERRORS = array();
  * Expose a function as a web service.
  *
  * Limitations: Currently cannot expose functions which expect objects.
- * It also cannot handle arrays of bools or arrays of arrays.
  * Also, input will be filtered to protect against XSS attacks through the web services.
  *
- * @param string $method            The api name to expose - for example "myapi.dosomething"
- * @param string $function          Your function callback.
- * @param array  $parameters        (optional) List of parameters in the same order as in
- *                                  your function. Default values may be set for parameters which
- *                                  allow REST api users flexibility in what parameters are passed.
- *                                  Generally, optional parameters should be after required
- *                                  parameters.
+ * @param string   $method            The api name to expose - for example "myapi.dosomething"
+ * @param callable $function          Function to handle API call
+ * @param array    $parameters        (optional) List of parameters in the same order as in
+ *                                    your function. Default values may be set for parameters which
+ *                                    allow REST api users flexibility in what parameters are passed.
+ *                                    Generally, optional parameters should be after required
+ *                                    parameters.
  *
- *                                  This array should be in the format
- *                                    "variable" = array (
- *                                  					type => 'int' | 'bool' | 'float' | 'string' | 'array'
- *                                  					required => true (default) | false
- *                                  					default => value (optional)
- *                                  	 )
- * @param string $description       (optional) human readable description of the function.
- * @param string $call_method       (optional) Define what http method must be used for
- *                                  this function. Default: GET
- * @param bool   $require_api_auth  (optional) (default is false) Does this method
- *                                  require API authorization? (example: API key)
- * @param bool   $require_user_auth (optional) (default is false) Does this method
- *                                  require user authorization?
+ *                                    This array should be in the format
+ *                                    'parameter_name' = array (
+ *                                  		type => 'int' | 'bool' | 'float' | 'string' | 'array'
+ *                                  		required => true (default) | false
+ *                                  		default => value (optional)
+ *                                     )
+ * @param string   $description       (optional) Human readable description of the function.
+ * @param string   $call_method       (optional) Define what http method must be used for
+ *                                    this function. Default: GET
+ * @param bool     $require_api_auth  (optional) (default is false) Does this method
+ *                                    require API authorization? (example: API key)
+ * @param bool     $require_user_auth (optional) (default is false) Does this method
+ *                                    require user authorization?
+ * @param bool     $assoc             If set to true, the callback function will receive a single argument
+ *                                    that contains an associative array of parameter => input pairs for the method
  *
  * @return bool
  * @throws InvalidParameterException
  */
-function elgg_ws_expose_function($method, $function, array $parameters = NULL, $description = "",
-		$call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
-
+function elgg_ws_expose_function(
+		$method,
+		callable $function,
+		array $parameters = null,
+		$description = "",
+		$call_method = "GET",
+		$require_api_auth = false,
+		$require_user_auth = false,
+		$assoc = false
+) {
 	global $API_METHODS;
 
-	if (($method == "") || ($function == "")) {
+	if (!$method || !$function) {
 		$msg = elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet');
 		throw new InvalidParameterException($msg);
 	}
 
-	// does not check whether this method has already been exposed - good idea?
-	$API_METHODS[$method] = array();
+	$api_method = array(
+		'description' => $description,
+		'function' => $function,
+		'require_api_auth' => (bool) $require_api_auth,
+		'require_user_auth' => (bool) $require_user_auth,
+		'call_method' => strtoupper((string) $call_method),
+		'parameters' => $parameters,
+		'assoc' => $assoc,
+	);
 
-	$API_METHODS[$method]["description"] = $description;
+	if ($api_method['parameters'] === null) {
+		$api_method['parameters'] = [];
+	} elseif (!is_array($api_method['parameters'])) {
+		$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
+		throw new InvalidParameterException($msg);
+	}
 
-	// does not check whether callable - done in execute_method()
-	$API_METHODS[$method]["function"] = $function;
-
-	if ($parameters != NULL) {
-		if (!is_array($parameters)) {
-			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
-			throw new InvalidParameterException($msg);
-		}
-
+	foreach ($api_method['parameters'] as $key => $value) {
 		// catch common mistake of not setting up param array correctly
-		$first = current($parameters);
-		if (!is_array($first)) {
+		// Verify that method parameters are defined with an explicit type
+		if (!is_array($value) || empty($value['type']) || !is_string($value['type'])) {
 			$msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
 			throw new InvalidParameterException($msg);
 		}
-	}
 
-	if ($parameters != NULL) {
-		// ensure the required flag is set correctly in default case for each parameter
-		foreach ($parameters as $key => $value) {
-			// check if 'required' was specified - if not, make it true
-			if (!array_key_exists('required', $value)) {
-				$parameters[$key]['required'] = true;
-			}
+		$api_method['parameters'][$key]['type'] = strtolower($value['type']);
+		$value['type'] = strtolower($value['type']);
+
+		// in 2.0 this was checked at method call time
+		$valid_types = ['int', 'integer', 'bool', 'boolean', 'string', 'float', 'array'];
+		if (!in_array($value['type'], $valid_types)) {
+			$msg = elgg_echo('APIException:UnrecognisedTypeCast', array($value['type'], $key, $method));
+			throw new InvalidParameterException($msg);
 		}
 
-		$API_METHODS[$method]["parameters"] = $parameters;
+		// If required flag is missing, parameter is assumed required
+		$api_method['parameters'][$key]['required'] = (bool) elgg_extract('required', $value, true);
 	}
 
-	$call_method = strtoupper($call_method);
-	switch ($call_method) {
-		case 'POST' :
-			$API_METHODS[$method]["call_method"] = 'POST';
-			break;
-		case 'GET' :
-			$API_METHODS[$method]["call_method"] = 'GET';
-			break;
-		default :
-			$msg = elgg_echo('InvalidParameterException:UnrecognisedHttpMethod',
-			array($call_method, $method));
-
-			throw new InvalidParameterException($msg);
+	if (!in_array($api_method['call_method'], array('GET', 'POST'))) {
+		$msg = elgg_echo('InvalidParameterException:UnrecognisedHttpMethod', array($api_method['call_method'], $method));
+		throw new InvalidParameterException($msg);
 	}
 
-	$API_METHODS[$method]["require_api_auth"] = $require_api_auth;
-
-	$API_METHODS[$method]["require_user_auth"] = $require_user_auth;
-
+	$API_METHODS[$method] = $api_method;
 	return true;
 }
 

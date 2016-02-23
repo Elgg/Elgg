@@ -38,7 +38,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testExposeFunctionBadParameters() {
 		try {
-			@elgg_ws_expose_function('test', 'test', 'BAD');
+			@elgg_ws_expose_function('test', 'elgg_echo', 'BAD');
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -48,7 +48,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testExposeFunctionParametersBadArray() {
 		try {
-			elgg_ws_expose_function('test', 'test', array('param1' => 'string'));
+			elgg_ws_expose_function('test', 'elgg_echo', array('param1' => 'string'));
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -58,7 +58,7 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	
 	public function testExposeFunctionBadHttpMethod() {
 		try {
-			@elgg_ws_expose_function('test', 'test', null, '', 'BAD');
+			@elgg_ws_expose_function('test', 'elgg_echo', null, '', 'BAD');
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
 			$this->assertIsA($e, 'InvalidParameterException');
@@ -69,23 +69,27 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	public function testExposeFunctionSuccess() {
 		global $API_METHODS;
 		// this is a general test but also tests specifically for setting 'required' correctly
-		$parameters = array('param1' => array('type' => 'int', 'required' => true), 
-							'param2' => array('type' => 'bool'),
-							'param3' => array('type' => 'string', 'required' => false), );
-		
-		$this->assertTrue(elgg_ws_expose_function('test', 'foo', $parameters));
-		
-		$parameters = array('param1' => array('type' => 'int', 'required' => true), 
-							'param2' => array('type' => 'bool', 'required' => true),
-							'param3' => array('type' => 'string', 'required' => false), );
+		$parameters = array(
+			'param1' => array('type' => 'int', 'required' => true),
+			'param2' => array('type' => 'bool'),
+			'param3' => array('type' => 'string', 'required' => false),
+		);
+
+		$this->assertTrue(elgg_ws_expose_function('test', array($this, 'methodCallback'), $parameters));
+
 		$method['description'] = '';
-		$method['function'] = 'foo';
-		$method['parameters'] = $parameters;
-		$method['call_method'] = 'GET'; 
+		$method['function'] = array($this, 'methodCallback');
+		$method['parameters'] = array(
+			'param1' => array('type' => 'int', 'required' => true),
+			'param2' => array('type' => 'bool', 'required' => true),
+			'param3' => array('type' => 'string', 'required' => false),
+		);
+		$method['call_method'] = 'GET';
 		$method['require_api_auth'] = false;
 		$method['require_user_auth'] = false;
-
-		$this->assertIdentical($method, $API_METHODS['test']);
+		$method['assoc'] = false;
+		
+		$this->assertEqual($method, $API_METHODS['test']);
 	}
 
 // elgg_ws_unexpose_function
@@ -148,8 +152,8 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 	}
 
 	public function testExecuteMethodNonCallable() {
-		elgg_ws_expose_function('test', 'foo');
-		
+		@elgg_ws_expose_function('test', 'foo');
+
 		try {
 			execute_method('test');
 			$this->assertTrue(FALSE);
@@ -172,20 +176,19 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 		}						
 	}
 
-// verify parameters
 	public function testVerifyParametersTypeNotSet() {
 		$params = array('param1' => array('required' => true));
-		elgg_ws_expose_function('test', 'elgg_echo', $params);
-		
+
 		try {
-			verify_parameters('test', array());
+			elgg_ws_expose_function('test', 'elgg_echo', $params);
 			$this->assertTrue(FALSE);
 		} catch (Exception $e) {
-			$this->assertIsA($e, 'APIException');
-			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('APIException:InvalidParameter'), 'param1', 'test'));
-		}						
+			$this->assertIsA($e, 'InvalidParameterException');
+			// $msg = elgg_echo('InvalidParameterException:APIParametersArrayStructure', array($method));
+			$this->assertIdentical($e->getMessage(), sprintf(elgg_echo('InvalidParameterException:APIParametersArrayStructure'), 'test'));
+		}
 	}
-	
+
 	public function testVerifyParametersMissing() {
 		$params = array('param1' => array('type' => 'int', 'required' => true));
 		elgg_ws_expose_function('test', 'elgg_echo', $params);
@@ -273,12 +276,6 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 		$parameters = array('param1' => array(1, 2));
 		$s = serialise_parameters('test', $parameters);
 		$this->assertIdentical($s, ",array('0'=>'1','1'=>'2')");
-
-		// test unknown type
-		$this->registerFunction(false, false, array('param1' => array('type' => 'bad')));
-		$parameters = array('param1' => 'test');
-		$this->expectException('APIException');
-		$s = serialise_parameters('test', $parameters);
 	}
 	
 // api key methods
@@ -308,16 +305,109 @@ class ElggCoreWebServicesApiTest extends ElggCoreUnitTest {
 			$this->assertIdentical($e->getMessage(), elgg_echo('APIException:BadAPIKey'));
 		}
 	}
-	
-	protected function registerFunction($api_auth = false, $user_auth = false, $params = null) {
-		$parameters = array('param1' => array('type' => 'int', 'required' => true),
-							'param2' => array('type' => 'bool', 'required' => false), );
-		
+
+	public function testGetParametersForMethodSuccess() {
+
+		$int = rand(0, 50);
+		set_input('param1', $int);
+
+		$this->registerFunction();
+		$this->assertIdentical(get_parameters_for_method('test'), array('param1' => $int, 'param2' => false));
+	}
+
+	public function testGetParameterForMethodCasting() {
+		// BC with 2.0 sanitize_string/trim/eval mess
+		$types = [
+			'int' => [
+				["0", 0],
+				["1", 1],
+				[" 1", 1],
+			],
+			'bool' => [
+				["0", false],
+				[" 1", true],
+
+				// BC with 2.0
+				[" false", false],
+				["true", false],
+			],
+			'float' => [
+				["1.65", 1.65],
+				[" 1.65 ", 1.65],
+			],
+			'array' => [
+				[["2 ", " bar"], [2, "bar"]],
+				[["' \""], ["' \\\""]],
+			],
+			'string' => [
+				[" foo ", "foo"],
+			],
+		];
+
+		foreach ($types as $type => $tests) {
+			foreach ($tests as $test) {
+				set_input('param', $test[0]);
+				$this->registerFunction(false, false, [
+					'param' => ['type' => $type],
+				]);
+
+				// test 2.1 casting
+				$values = get_parameters_for_method('test');
+				$this->assertEqual($values['param'], $test[1]);
+
+				// test 2.0 casting
+				$serialized = serialise_parameters('test', [
+					// get_input() necessary because it does recursive trimming
+					'param' => get_input('param'),
+				]);
+
+				// leading comma
+				$this->assertEqual($serialized[0], ",");
+				$serialized = substr($serialized, 1);
+
+				// evaled
+				$value = eval("return $serialized;");
+				$this->assertEqual($value, $test[1]);
+			}
+		}
+	}
+
+	public function testExecuteMethodAssoc() {
+
+		$params = array(
+			'param1' => array('type' => 'int', 'required' => true),
+			'param2' => array('type' => 'bool', 'required' => false),
+		);
+		elgg_ws_expose_function('test', array($this, 'methodCallbackAssoc'), $params, '', 'GET', false, false, true);
+
+		set_input('param1', 2);
+		set_input('param2', true);
+
+		$result = execute_method('test');
+		$this->assertIsA($result, 'SuccessResult');
+		$this->assertIdentical($result->export()->result, array('param1' => 2, 'param2' => true));
+	}
+
+	public function methodCallback() {
+		return func_get_args();
+	}
+
+	public function methodCallbackAssoc($values) {
+		return $values;
+	}
+
+	protected function registerFunction($api_auth = false, $user_auth = false, $params = null, $assoc = false) {
+		$parameters = array(
+			'param1' => array('type' => 'int', 'required' => true),
+			'param2' => array('type' => 'bool', 'required' => false),
+		);
+
 		if ($params == null) {
 			$params = $parameters;
 		}
 
-		elgg_ws_expose_function('test', 'elgg_echo', $params, '', 'POST', $api_auth, $user_auth);
+		$callback = ($assoc) ? array($this, 'methodCallbackAssoc') : array($this, 'methodCallback');
+		elgg_ws_expose_function('test', $callback, $params, '', 'POST', $api_auth, $user_auth, $assoc);
 	}
 	
 }
