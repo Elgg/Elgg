@@ -111,37 +111,48 @@ $ERRORS = array();
  * It also cannot handle arrays of bools or arrays of arrays.
  * Also, input will be filtered to protect against XSS attacks through the web services.
  *
- * @param string $method            The api name to expose - for example "myapi.dosomething"
- * @param string $function          Your function callback.
- * @param array  $parameters        (optional) List of parameters in the same order as in
- *                                  your function. Default values may be set for parameters which
- *                                  allow REST api users flexibility in what parameters are passed.
- *                                  Generally, optional parameters should be after required
- *                                  parameters.
+ * @param string   $method            The api name to expose - for example "myapi.dosomething"
+ * @param callable $function          Callable to handle API call
+ * @param array    $parameters        (optional) List of parameters in the same order as in
+ *                                    your function. Default values may be set for parameters which
+ *                                    allow REST api users flexibility in what parameters are passed.
+ *                                    Generally, optional parameters should be after required
+ *                                    parameters. If an optional parameter is not set and has no default,
+ *                                    the API callable will receive null.
  *
- *                                  This array should be in the format
- *                                    "variable" = array (
- *                                  					type => 'int' | 'bool' | 'float' | 'string' | 'array'
- *                                  					required => true (default) | false
- *                                  					default => value (optional)
+ *                                    This array should be in the format
+ *                                      "variable" = array (
+ *                                          type => 'int' | 'bool' | 'float' | 'string' | 'array'
+ *                                          required => true (default) | false
+ *                                  	    default => value (optional)
  *                                  	 )
- * @param string $description       (optional) human readable description of the function.
- * @param string $call_method       (optional) Define what http method must be used for
- *                                  this function. Default: GET
- * @param bool   $require_api_auth  (optional) (default is false) Does this method
- *                                  require API authorization? (example: API key)
- * @param bool   $require_user_auth (optional) (default is false) Does this method
- *                                  require user authorization?
+ * @param string   $description       (optional) human readable description of the function.
+ * @param string   $call_method       (optional) Define what http method must be used for
+ *                                    this function. Default: GET
+ * @param bool     $require_api_auth  (optional) (default is false) Does this method
+ *                                    require API authorization? (example: API key)
+ * @param bool     $require_user_auth (optional) (default is false) Does this method
+ *                                    require user authorization?
+ * @param bool     $assoc             (optional) If set to true, the callback function will receive a single argument
+ *                                    that contains an associative array of parameter => input pairs for the method.
  *
  * @return bool
  * @throws InvalidParameterException
  */
-function elgg_ws_expose_function($method, $function, array $parameters = NULL, $description = "",
-		$call_method = "GET", $require_api_auth = false, $require_user_auth = false) {
+function elgg_ws_expose_function(
+	$method,
+	$function,
+	array $parameters = null,
+	$description = "",
+	$call_method = "GET",
+	$require_api_auth = false,
+	$require_user_auth = false,
+	$assoc = false
+) {
 
 	global $API_METHODS;
 
-	if (($method == "") || ($function == "")) {
+	if (($method == "") || !$function) {
 		$msg = elgg_echo('InvalidParameterException:APIMethodOrFunctionNotSet');
 		throw new InvalidParameterException($msg);
 	}
@@ -198,6 +209,8 @@ function elgg_ws_expose_function($method, $function, array $parameters = NULL, $
 	$API_METHODS[$method]["require_api_auth"] = $require_api_auth;
 
 	$API_METHODS[$method]["require_user_auth"] = $require_user_auth;
+
+	$API_METHODS[$method]["assoc"] = (bool)$assoc;
 
 	return true;
 }
