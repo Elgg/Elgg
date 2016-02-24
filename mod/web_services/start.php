@@ -277,6 +277,18 @@ function elgg_ws_unregister_service_handler($handler) {
  */
 function ws_rest_handler() {
 
+	$viewtype = elgg_get_viewtype();
+
+	if (!elgg_view_exists('api/output', $viewtype)) {
+		header("HTTP/1.0 400 Bad Request");
+		header("Content-type: text/plain");
+		echo "Missing view 'api/output' in viewtype '$viewtype'.";
+		if (in_array($viewtype, ['xml', 'php'])) {
+			echo "\nEnable the 'data_views' plugin to add this view.";
+		}
+		exit;
+	}
+
 	elgg_load_library('elgg:ws');
 
 	// Register the error handler
