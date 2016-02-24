@@ -65,25 +65,14 @@ class ElggObject extends \ElggEntity {
 	 * @throws IOException If cannot load remaining data from db
 	 * @throws InvalidParameterException If not passed a db row result
 	 */
-	public function __construct($row = null) {
+	public function __construct(\stdClass $row = null) {
 		$this->initializeAttributes();
 
-		if (!empty($row)) {
-			// Is $row is a DB row from the entity table
-			if ($row instanceof \stdClass) {
-				// Load the rest
-				if (!$this->load($row)) {
-					$msg = "Failed to load new " . get_class() . " for GUID: " . $row->guid;
-					throw new \IOException($msg);
-				}
-			} else if (is_numeric($row)) {
-				// $row is a GUID so load
-				elgg_deprecated_notice('Passing a GUID to constructor is deprecated. Use get_entity()', 1.9);
-				if (!$this->load($row)) {
-					throw new \IOException("Failed to load new " . get_class() . " from GUID:" . $row);
-				}
-			} else {
-				throw new \InvalidParameterException("Unrecognized value passed to constuctor.");
+		if ($row) {
+			// Load the rest
+			if (!$this->load($row)) {
+				$msg = "Failed to load new " . get_class() . " for GUID: " . $row->guid;
+				throw new \IOException($msg);
 			}
 		}
 	}

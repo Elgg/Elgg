@@ -9,8 +9,7 @@
  * @property string $name        A short name that captures the purpose of the group
  * @property string $description A longer body of content that gives more details about the group
  */
-class ElggGroup extends \ElggEntity
-	implements Friendable {
+class ElggGroup extends \ElggEntity {
 
 	const CONTENT_ACCESS_MODE_UNRESTRICTED = 'unrestricted';
 	const CONTENT_ACCESS_MODE_MEMBERS_ONLY = 'members_only';
@@ -53,25 +52,14 @@ class ElggGroup extends \ElggEntity
 	 *
 	 * @throws IOException|InvalidParameterException if there was a problem creating the group.
 	 */
-	public function __construct($row = null) {
+	public function __construct(\stdClass $row = null) {
 		$this->initializeAttributes();
 
-		if (!empty($row)) {
-			// Is $guid is a entity table DB row
-			if ($row instanceof \stdClass) {
-				// Load the rest
-				if (!$this->load($row)) {
-					$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
-					throw new \IOException($msg);
-				}
-			} else if (is_numeric($row)) {
-				// $row is a GUID so load entity
-				elgg_deprecated_notice('Passing a GUID to constructor is deprecated. Use get_entity()', 1.9);
-				if (!$this->load($row)) {
-					throw new \IOException("Failed to load new " . get_class() . " from GUID:" . $row);
-				}
-			} else {
-				throw new \InvalidParameterException("Unrecognized value passed to constuctor.");
+		if ($row) {
+			// Load the rest
+			if (!$this->load($row)) {
+				$msg = "Failed to load new " . get_class() . " for GUID:" . $row->guid;
+				throw new \IOException($msg);
 			}
 		}
 	}
@@ -110,15 +98,7 @@ class ElggGroup extends \ElggEntity
 	 *
 	 * @return bool
 	 */
-	public function removeObjectFromGroup($object) {
-		if (is_numeric($object)) {
-			elgg_deprecated_notice('\ElggGroup::removeObjectFromGroup() takes an \ElggObject not a guid.', 1.9);
-			$object = get_entity($object);
-			if (!elgg_instanceof($object, 'object')) {
-				return false;
-			}
-		}
-
+	public function removeObjectFromGroup(ElggObject $object) {
 		$object->container_guid = $object->owner_guid;
 		return $object->save();
 	}
@@ -141,249 +121,20 @@ class ElggGroup extends \ElggEntity
 	}
 
 	/**
-	 * Wrapper around \ElggEntity::get()
-	 *
-	 * @param string $name Name
-	 * @return mixed
-	 * @deprecated 1.9
-	 */
-	public function get($name) {
-		elgg_deprecated_notice("Use -> instead of get()", 1.9);
-		return $this->__get($name);
-	}
-
-	/**
-	 * Start friendable compatibility block:
-	 *
-	 * 	public function addFriend($friend_guid);
-		public function removeFriend($friend_guid);
-		public function isFriend();
-		public function isFriendsWith($user_guid);
-		public function isFriendOf($user_guid);
-		public function getFriends($subtype = "", $limit = 10, $offset = 0);
-		public function getFriendsOf($subtype = "", $limit = 10, $offset = 0);
-		public function getObjects($subtype="", $limit = 10, $offset = 0);
-		public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0);
-		public function countObjects($subtype = "");
-	 */
-
-	/**
-	 * For compatibility with Friendable.
-	 *
-	 * Join a group when you friend \ElggGroup.
-	 *
-	 * @param int $friend_guid The GUID of the user joining the group.
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use \ElggGroup::join()
-	 */
-	public function addFriend($friend_guid) {
-		elgg_deprecated_notice("\ElggGroup::addFriend() is deprecated. Use \ElggGroup::join()", 1.9);
-		$user = get_user($friend_guid);
-		return $user ? $this->join($user) : false;
-	}
-
-	/**
-	 * For compatibility with Friendable
-	 *
-	 * Leave group when you unfriend \ElggGroup.
-	 *
-	 * @param int $friend_guid The GUID of the user leaving.
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use \ElggGroup::leave()
-	 */
-	public function removeFriend($friend_guid) {
-		elgg_deprecated_notice("\ElggGroup::removeFriend() is deprecated. Use \ElggGroup::leave()", 1.9);
-		$user = get_user($friend_guid);
-		return $user ? $this->leave($user) : false;
-	}
-
-	/**
-	 * For compatibility with Friendable
-	 *
-	 * Friending a group adds you as a member
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use \ElggGroup::isMember()
-	 */
-	public function isFriend() {
-		elgg_deprecated_notice("\ElggGroup::isFriend() is deprecated. Use \ElggGroup::isMember()", 1.9);
-		return $this->isMember();
-	}
-
-	/**
-	 * For compatibility with Friendable
-	 *
-	 * @param int $user_guid The GUID of a user to check.
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use \ElggGroup::isMember()
-	 */
-	public function isFriendsWith($user_guid) {
-		elgg_deprecated_notice("\ElggGroup::isFriendsWith() is deprecated. Use \ElggGroup::isMember()", 1.9);
-		$user = get_user($user_guid);
-		return $user ? $this->isMember($user) : false;
-	}
-
-	/**
-	 * For compatibility with Friendable
-	 *
-	 * @param int $user_guid The GUID of a user to check.
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use \ElggGroup::isMember()
-	 */
-	public function isFriendOf($user_guid) {
-		elgg_deprecated_notice("\ElggGroup::isFriendOf() is deprecated. Use \ElggGroup::isMember()", 1.9);
-		$user = get_user($user_guid);
-		return $user ? $this->isMember($user) : false;
-	}
-
-	/**
-	 * For compatibility with Friendable
-	 *
-	 * @param string $subtype The GUID of a user to check.
-	 * @param int    $limit   Limit
-	 * @param int    $offset  Offset
-	 *
-	 * @return int
-	 * @deprecated 1.9 Use \ElggGroup::getMembers()
-	 */
-	public function getFriends($subtype = "", $limit = 10, $offset = 0) {
-		elgg_deprecated_notice("\ElggGroup::getFriends() is deprecated. Use \ElggGroup::getMembers()", 1.9);
-		$options = [
-			'limit' => $limit,
-			'offset' => $offset,
-		];
-		if ($subtype) {
-			$options['subtype'] = $subtype;
-		}
-		return $this->getMembers($options);
-	}
-
-	/**
-	 * For compatibility with Friendable
-	 *
-	 * @param string $subtype The GUID of a user to check.
-	 * @param int    $limit   Limit
-	 * @param int    $offset  Offset
-	 *
-	 * @return bool
-	 * @deprecated 1.9 Use \ElggGroup::getMembers()
-	 */
-	public function getFriendsOf($subtype = "", $limit = 10, $offset = 0) {
-		elgg_deprecated_notice("\ElggGroup::getFriendsOf() is deprecated. Use \ElggGroup::getMembers()", 1.9);
-		return get_group_members($this->getGUID(), $limit, $offset);
-	}
-
-	/**
-	 * Get objects contained in this group.
-	 *
-	 * @param string $subtype Entity subtype
-	 * @param int    $limit   Limit
-	 * @param int    $offset  Offset
-	 *
-	 * @return array|false
-	 * @deprecated 1.9 Use elgg_get_entities()
-	 */
-	public function getObjects($subtype = "", $limit = 10, $offset = 0) {
-		elgg_deprecated_notice("\ElggGroup::getObjects() is deprecated. Use elgg_get_entities()", 1.9);
-		$options = [
-			'type' => 'object',
-			'container_guid' => $this->guid,
-			'limit' => $limit,
-			'offset' => $offset,
-		];
-		if ($subtype) {
-			$options['subtype'] = $subtype;
-		}
-		return elgg_get_entities($options);
-	}
-
-	/**
-	 * For compatibility with Friendable
-	 *
-	 * @param string $subtype Entity subtype
-	 * @param int    $limit   Limit
-	 * @param int    $offset  Offset
-	 *
-	 * @return array|false
-	 * @deprecated 1.9 Use elgg_get_entities()
-	 */
-	public function getFriendsObjects($subtype = "", $limit = 10, $offset = 0) {
-		elgg_deprecated_notice("\ElggGroup::getFriendsObjects() is deprecated. Use elgg_get_entities()", 1.9);
-		$options = [
-			'type' => 'object',
-			'limit' => $limit,
-			'offset' => $offset,
-			'relationship' => 'member',
-			'inverse_relationship' => true,
-			'relationship_guid' => $this->guid,
-			'relationship_join_on' => 'owner_guid',
-		];
-		if ($subtype) {
-			$options['subtype'] = $subtype;
-		}
-		return elgg_get_entities_from_relationship($options);
-	}
-
-	/**
-	 * For compatibility with Friendable
-	 *
-	 * @param string $subtype Subtype of entities
-	 *
-	 * @return array|false
-	 * @deprecated 1.9 Use elgg_get_entities()
-	 */
-	public function countObjects($subtype = "") {
-		elgg_deprecated_notice("\ElggGroup::countObjects() is deprecated. Use elgg_get_entities()", 1.9);
-		$options = [
-			'count' => true,
-			'type' => 'object',
-			'container_guid' => $this->guid,
-		];
-		if ($subtype) {
-			$options['subtype'] = $subtype;
-		}
-		return elgg_get_entities($options);
-	}
-
-	/**
-	 * End friendable compatibility block
-	 */
-
-	/**
 	 * Get an array of group members.
 	 *
 	 * @param array $options Options array. See elgg_get_entities_from_relationships
 	 *                       for a complete list. Common ones are 'limit', 'offset',
 	 *                       and 'count'. Options set automatically are 'relationship',
-	 *                       'relationship_guid', 'inverse_relationship', and 'type'. This argument
-	 *                       used to set the limit (deprecated usage)
-	 * @param int   $offset  Offset (deprecated)
-	 * @param bool  $count   Count (deprecated)
+	 *                       'relationship_guid', 'inverse_relationship', and 'type'.
 	 *
 	 * @return array
 	 */
-	public function getMembers($options = array(), $offset = 0, $count = false) {
-		if (!is_array($options)) {
-			elgg_deprecated_notice('\ElggGroup::getMembers() takes an options array.', 1.9);
-			$options = array(
-				'relationship' => 'member',
-				'relationship_guid' => $this->getGUID(),
-				'inverse_relationship' => true,
-				'type' => 'user',
-				'limit' => $options,
-				'offset' => $offset,
-				'count' => $count,
-			);
-		} else {
-			$options['relationship'] = 'member';
-			$options['relationship_guid'] = $this->getGUID();
-			$options['inverse_relationship'] = true;
-			$options['type'] = 'user';
-		}
+	public function getMembers(array $options = []) {
+		$options['relationship'] = 'member';
+		$options['relationship_guid'] = $this->getGUID();
+		$options['inverse_relationship'] = true;
+		$options['type'] = 'user';
 
 		return elgg_get_entities_from_relationship($options);
 	}

@@ -44,16 +44,6 @@ class Router {
 			$identifier = array_shift($segments);
 		} else {
 			$identifier = '';
-
-			// this plugin hook is deprecated. Use elgg_register_page_handler()
-			// to register for the '' (empty string) handler.
-			// allow plugins to override the front page (return true to indicate
-			// that the front page has been served)
-			$result = _elgg_services()->hooks->trigger('index', 'system', null, false);
-			if ($result === true) {
-				elgg_deprecated_notice("The 'index', 'system' plugin has been deprecated. See elgg_front_page_handler()", 1.9);
-				exit;
-			}
 		}
 
 		// return false to stop processing the request (because you handled it)

@@ -142,10 +142,6 @@ class ElggMenuItem {
 		if (isset($options['link_class'])) {
 			$item->setLinkClass($options['link_class']);
 			unset($options['link_class']);
-		} elseif (isset($options['class'])) {
-			elgg_deprecated_notice("\ElggMenuItem::factory() does not accept 'class' key anymore, use 'link_class' instead", 1.9);
-			$item->setLinkClass($options['class']);
-			unset($options['class']);
 		}
 
 		if (isset($options['item_class'])) {
@@ -457,30 +453,6 @@ class ElggMenuItem {
 	}
 	// @codingStandardsIgnoreEnd
 
-
-	/**
-	 * Set the priority of the menu item
-	 *
-	 * @param int $priority The smaller numbers mean higher priority (1 before 100)
-	 * @return void
-	 * @deprecated 1.9 Use setPriority()
-	 */
-	public function setWeight($priority) {
-		elgg_deprecated_notice("\ElggMenuItem::setWeight() deprecated by \ElggMenuItem::setPriority()", 1.9);
-		$this->data['priority'] = $priority;
-	}
-
-	/**
-	 * Get the priority of the menu item
-	 *
-	 * @return int
-	 * @deprecated 1.9 Use getPriority()
-	 */
-	public function getWeight() {
-		elgg_deprecated_notice("\ElggMenuItem::getWeight() deprecated by \ElggMenuItem::getPriority()", 1.9);
-		return $this->data['priority'];
-	}
-
 	/**
 	 * Set the priority of the menu item
 	 *
@@ -628,17 +600,5 @@ class ElggMenuItem {
 		unset($values['data']);
 
 		return $values;
-	}
-
-	/**
-	 * Get the menu item content (usually a link)
-	 *
-	 * @param array $vars Options to pass to output/url if a link
-	 * @return string
-	 * @deprecated 1.9 Use elgg_view_menu_item()
-	 */
-	public function getContent(array $vars = array()) {
-		elgg_deprecated_notice("\ElggMenuItem::getContent() deprecated by elgg_view_menu_item()", 1.9);
-		return elgg_view_menu_item($this, $vars);
 	}
 }

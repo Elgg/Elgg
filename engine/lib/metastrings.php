@@ -656,16 +656,7 @@ function _elgg_delete_metastring_based_object_by_id($id, $type) {
 		}
 
 		if ($obj->canEdit()) {
-			// bc code for when we triggered 'delete', 'annotations' #4770
-			$result = true;
-			if ($type == "annotation") {
-				$result = elgg_trigger_event('delete', 'annotations', $obj);
-				if ($result === false) {
-					elgg_deprecated_notice("Use the event 'delete', 'annotation'", 1.9);
-				}
-			}
-
-			if (elgg_trigger_event('delete', $type, $obj) && $result) {
+			if (elgg_trigger_event('delete', $type, $obj)) {
 				return (bool)delete_data("DELETE FROM $table WHERE id = $id");
 			}
 		}

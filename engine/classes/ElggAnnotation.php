@@ -37,23 +37,12 @@ class ElggAnnotation extends \ElggExtender {
 	 *
 	 * @param \stdClass $row Database row as \stdClass object
 	 */
-	public function __construct($row = null) {
+	public function __construct(\stdClass $row = null) {
 		$this->initializeAttributes();
 
-		if (!empty($row)) {
-			// Create from db row
-			if ($row instanceof \stdClass) {
-				$annotation = $row;
-
-				$objarray = (array) $annotation;
-				foreach ($objarray as $key => $value) {
-					$this->attributes[$key] = $value;
-				}
-			} else {
-				// get an \ElggAnnotation object and copy its attributes
-				elgg_deprecated_notice('Passing an ID to constructor is deprecated. Use elgg_get_annotation_from_id()', 1.9);
-				$annotation = elgg_get_annotation_from_id($row);
-				$this->attributes = $annotation->attributes;
+		if ($row) {
+			foreach ((array)$row as $key => $value) {
+				$this->attributes[$key] = $value;
 			}
 		}
 	}

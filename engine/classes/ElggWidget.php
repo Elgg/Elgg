@@ -50,18 +50,6 @@ class ElggWidget extends \ElggObject {
 	}
 
 	/**
-	 * Override entity get and sets in order to save data to private data store.
-	 *
-	 * @param string $name Name
-	 * @return mixed
-	 * @deprecated 1.9
-	 */
-	public function get($name) {
-		elgg_deprecated_notice("Use -> instead of get()", 1.9);
-		return $this->__get($name);
-	}
-
-	/**
 	 * Set an attribute or private setting value
 	 * 
 	 * @param string $name  The name of the value to set
@@ -79,21 +67,6 @@ class ElggWidget extends \ElggObject {
 		} else {
 			$this->setPrivateSetting($name, $value);
 		}
-	}
-
-	/**
-	 * Override entity get and sets in order to save data to private data store.
-	 *
-	 * @param string $name  Name
-	 * @param string $value Value
-	 * @return bool
-	 * @deprecated 1.9
-	 */
-	public function set($name, $value) {
-		elgg_deprecated_notice("Use -> instead of set()", 1.9);
-		$this->__set($name, $value);
-
-		return true;
 	}
 
 	/**
