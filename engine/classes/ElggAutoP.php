@@ -15,6 +15,8 @@ class ElggAutoP {
 
 	public $encoding = 'UTF-8';
 
+	public $debug = false;
+
 	/**
 	 * @var DOMDocument
 	 */
@@ -108,7 +110,22 @@ class ElggAutoP {
 		$this->_xpath = new DOMXPath($this->_doc);
 		// start processing recursively at the BODY element
 		$nodeList = $this->_xpath->query('//body[1]');
-		$this->addParagraphs($nodeList->item(0));
+		$body = $nodeList->item(0);
+
+		// HHVM 3.5 for some reason returns $body as a DOMText node containing the textContent
+		// of the BODY element. This bug may be fixed in a later HHVM but it can't be confirmed.
+		if (!$body instanceof DOMElement && $this->debug) {
+			$info = [
+				'nodeList length' => $nodeList->length,
+				'body class' => get_class($body),
+				'body nodeValue' => $body->nodeValue,
+			];
+			$msg = "XPath '//body[1]' did not return an element: ";
+			$msg .= var_export($info, true);
+			throw new \RuntimeException($msg);
+		}
+
+		$this->addParagraphs($body);
 
 		// serialize back to HTML
 		$html = $this->_doc->saveHTML();
