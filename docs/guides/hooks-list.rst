@@ -508,6 +508,12 @@ Other
 Plugins
 =======
 
+Discussions
+-----------
+
+**fields,forms/discussion/save**
+	Filters fields to be displayed in the discussion form
+
 Embed
 -----
 

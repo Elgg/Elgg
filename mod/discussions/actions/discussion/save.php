@@ -52,6 +52,21 @@ $topic->container_guid = $container_guid;
 
 $topic->tags = string_to_tag_array($tags);
 
+// store data from additional fields
+$fields = elgg_trigger_plugin_hook('fields', 'forms/discussion/save', null, array());
+foreach ($fields as $field) {
+	$name = elgg_extract('name', $field);
+	$value = get_input($name);
+	if (is_null($value)) {
+		continue;
+	}
+	$type = elgg_extract('type', $field, 'text');
+	if ($type == 'tags') {
+		$value = string_to_tag_array($value);
+	}
+	$entity->$name = $value;
+}
+
 $result = $topic->save();
 
 if (!$result) {
