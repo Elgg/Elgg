@@ -280,9 +280,16 @@ class CacheHandler {
 	 * @return void
 	 */
 	protected function handle304($etag) {
-		// If is the same ETag, content didn't change.
-		if (isset($this->server_vars['HTTP_IF_NONE_MATCH'])
-			&& trim($this->server_vars['HTTP_IF_NONE_MATCH']) === $etag) {
+
+		if (!isset($this->server_vars['HTTP_IF_NONE_MATCH'])) {
+			return;
+		}
+		$http_if_none_match = trim($this->server_vars['HTTP_IF_NONE_MATCH']);
+
+		// Strip out "-gzip" suffixes added by mod_deflate
+		$http_if_none_match = str_replace('-gzip', '', $http_if_none_match);
+		if ($http_if_none_match === $etag) {
+			// If is the same ETag, content didn't change.
 			header("HTTP/1.1 304 Not Modified");
 			exit;
 		}
