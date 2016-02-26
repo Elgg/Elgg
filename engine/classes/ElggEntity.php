@@ -1575,7 +1575,7 @@ abstract class ElggEntity extends \ElggData implements
 			$this->temp_private_settings = array();
 		}
 
-		_elgg_cache_entity($this);
+		_elgg_services()->entityCache->set($this);
 		
 		return $result;
 	}
@@ -1650,7 +1650,7 @@ abstract class ElggEntity extends \ElggData implements
 			$this->attributes['time_updated'] = $time;
 		}
 
-		_elgg_cache_entity($this);
+		_elgg_services()->entityCache->set($this);
 
 		$this->orig_attributes = [];
 
@@ -1692,7 +1692,7 @@ abstract class ElggEntity extends \ElggData implements
 
 			// Cache object handle
 			if ($this->attributes['guid']) {
-				_elgg_cache_entity($this);
+				_elgg_services()->entityCache->set($this);
 			}
 
 			return true;
@@ -1772,8 +1772,8 @@ abstract class ElggEntity extends \ElggData implements
 			$unban_after = false;
 		}
 
-		_elgg_invalidate_cache_for_entity($this->guid);
-		
+		_elgg_services()->entityCache->remove($this->guid);
+
 		if ($reason) {
 			$this->disable_reason = $reason;
 		}
@@ -1945,8 +1945,8 @@ abstract class ElggEntity extends \ElggData implements
 			_elgg_services()->usersTable->markBanned($this->guid, true);
 		}
 
-		_elgg_invalidate_cache_for_entity($guid);
-		
+		_elgg_services()->entityCache->remove($guid);
+
 		// If memcache is available then delete this entry from the cache
 		static $newentity_cache;
 		if ((!$newentity_cache) && (is_memcache_available())) {

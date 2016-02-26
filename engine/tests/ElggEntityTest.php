@@ -42,7 +42,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 		$this->assertIsA($subtype_prop, 'int');
 		$this->assertEqual($subtype_prop, get_subtype_id('object', 'elgg_entity_test_subtype'));
 
-		_elgg_invalidate_cache_for_entity($guid);
+		_elgg_services()->entityCache->remove($guid);
 		$this->entity = null;
 		$this->entity = get_entity($guid);
 
@@ -134,7 +134,7 @@ class ElggCoreEntityTest extends \ElggCoreUnitTest {
 
 		$this->assertEqual($this->entity->getSubtype(), 'elgg_entity_test_subtype');
 
-		_elgg_invalidate_cache_for_entity($guid);
+		_elgg_services()->entityCache->remove($guid);
 		$this->entity = null;
 		$this->entity = get_entity($guid);
 

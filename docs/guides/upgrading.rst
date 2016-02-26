@@ -50,6 +50,11 @@ New API for handling entity icons
  * ``ElggEntity::getIconLastChange()`` - return modified time of the icon file
  * ``ElggEntity::hasIcon()`` - checks if an icon with given size has been created
 
+Removed APIs
+------------
+
+Just a warning that the private entity cache functions (e.g. ``_elgg_retrieve_cached_entity``) have been removed. Some plugins may have been using them. Plugins should not use private APIs as they will more often be removed without notice.
+
 From 2.0 to 2.1
 ===============
 
