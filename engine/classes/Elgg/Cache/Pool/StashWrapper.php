@@ -29,7 +29,7 @@ final class StashWrapper implements Pool {
 	}
 
 	/** @inheritDoc */
-	public function get($key, callable $callback) {
+	public function get($key, callable $callback = null, $default = null) {
 		assert(is_string($key) || is_int($key));
 
 		$item = $this->stash->getItem((string)$key);
@@ -37,6 +37,10 @@ final class StashWrapper implements Pool {
 		$result = $item->get();
 
 		if ($item->isMiss()) {
+			if (!$callback) {
+				return $default;
+			}
+
 			$item->lock();
 
 			$result = call_user_func($callback);

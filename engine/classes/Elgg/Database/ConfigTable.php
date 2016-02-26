@@ -39,8 +39,6 @@ class ConfigTable {
 	 * @return bool Success or failure
 	 */
 	function remove($name, $site_guid = 0) {
-		
-	
 		$name = trim($name);
 	
 		$site_guid = (int) $site_guid;
@@ -54,6 +52,8 @@ class ConfigTable {
 	
 		$escaped_name = sanitize_string($name);
 		$query = "DELETE FROM {$this->CONFIG->dbprefix}config WHERE name = '$escaped_name' AND site_guid = $site_guid";
+
+		_elgg_services()->boot->invalidateCache($site_guid);
 	
 		return _elgg_services()->db->deleteData($query) !== false;
 	}
@@ -80,8 +80,6 @@ class ConfigTable {
 	 * @return bool
 	 */
 	function set($name, $value, $site_guid = 0) {
-		
-	
 		$name = trim($name);
 	
 		// cannot store anything longer than 255 characters in db, so catch before we set
@@ -104,6 +102,8 @@ class ConfigTable {
 		$result = _elgg_services()->db->insertData("INSERT INTO {$this->CONFIG->dbprefix}config
 			SET name = '$escaped_name', value = '$escaped_value', site_guid = $site_guid
 			ON DUPLICATE KEY UPDATE value = '$escaped_value'");
+
+		_elgg_services()->boot->invalidateCache($site_guid);
 	
 		return $result !== false;
 	}
@@ -122,8 +122,6 @@ class ConfigTable {
 	 * @return mixed|null
 	 */
 	function get($name, $site_guid = 0) {
-		
-	
 		$name = trim($name);
 	
 		$site_guid = (int) $site_guid;
@@ -173,33 +171,5 @@ class ConfigTable {
 		}
 	
 		return null;
-	}
-	
-	/**
-	 * Loads all configuration values from the dbprefix_config table into $CONFIG.
-	 *
-	 * @param int $site_guid Optionally, the GUID of the site (current site is assumed by default)
-	 *
-	 * @return bool
-	 */
-	function loadAll($site_guid = 0) {
-		
-	
-		$site_guid = (int) $site_guid;
-	
-		if ($site_guid == 0) {
-			$site_guid = (int) $this->CONFIG->site_guid;
-		}
-	
-		if ($result = _elgg_services()->db->getData("SELECT * FROM {$this->CONFIG->dbprefix}config WHERE site_guid = $site_guid")) {
-			foreach ($result as $r) {
-				$name = $r->name;
-				$value = $r->value;
-				$this->CONFIG->$name = unserialize($value);
-			}
-	
-			return true;
-		}
-		return false;
 	}
 }

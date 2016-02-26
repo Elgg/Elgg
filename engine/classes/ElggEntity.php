@@ -1644,6 +1644,8 @@ abstract class ElggEntity extends \ElggData implements
 	protected function update() {
 		global $CONFIG;
 
+		_elgg_services()->boot->invalidateCache($this->guid);
+
 		// See #5600. This ensures canEdit() checks the BD persisted entity so it sees the
 		// persisted owner_guid, container_guid, etc.
 		_elgg_disable_caching_for_entity($this->guid);
