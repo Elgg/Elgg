@@ -583,8 +583,7 @@ function _elgg_views_prepare_head($title) {
 	);
 
 	// RSS feed link
-	global $autofeed;
-	if (isset($autofeed) && $autofeed == true) {
+	if (_elgg_has_rss_link()) {
 		$url = current_page_url();
 		if (substr_count($url,'?')) {
 			$url .= "&view=rss";
@@ -805,8 +804,7 @@ function elgg_view_entity(\ElggEntity $entity, array $vars = array(), $bypass = 
 		return false;
 	}
 
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$defaults = array(
 		'full_view' => true,
@@ -914,8 +912,7 @@ function elgg_view_entity_icon(\ElggEntity $entity, $size = 'medium', $vars = ar
  * @return string/false Rendered annotation
  */
 function elgg_view_annotation(\ElggAnnotation $annotation, array $vars = array(), $bypass = false, $debug = false) {
-	global $autofeed;
-	$autofeed = true;
+	elgg_register_rss_link();
 
 	$defaults = array(
 		'full_view' => true,
@@ -1443,6 +1440,38 @@ function elgg_view_icon($name, $vars = array()) {
 }
 
 /**
+ * Include the RSS icon link and link element in the head
+ *
+ * @return void
+ */
+function elgg_register_rss_link() {
+	_elgg_services()->config->set('_elgg_autofeed', true);
+}
+
+/**
+ * Remove the RSS icon link and link element from the head
+ *
+ * @return void
+ */
+function elgg_unregister_rss_link() {
+	_elgg_services()->config->set('_elgg_autofeed', false);
+}
+
+/**
+ * Should the RSS view of this URL be linked to?
+ *
+ * @return bool
+ * @access private
+ */
+function _elgg_has_rss_link() {
+	if (isset($GLOBALS['autofeed']) && is_bool($GLOBALS['autofeed'])) {
+		elgg_deprecated_notice('Do not set the global $autofeed. Use elgg_register_rss_link()', '2.1');
+		return $GLOBALS['autofeed'];
+	}
+	return (bool)_elgg_services()->config->getVolatile('_elgg_autofeed');
+}
+
+/**
  * Displays a user's access collections, using the core/friends/collections view
  *
  * @param int $owner_guid The GUID of the owning user
@@ -1537,14 +1566,13 @@ function _elgg_views_amd($hook, $type, $content, $params) {
 }
 
 /**
- * Add the rss link to the extras when if needed
+ * Add the RSS link to the extras when if needed
  *
  * @return void
  * @access private
  */
 function elgg_views_add_rss_link() {
-	global $autofeed;
-	if (isset($autofeed) && $autofeed == true) {
+	if (_elgg_has_rss_link()) {
 		$url = current_page_url();
 		if (substr_count($url, '?')) {
 			$url .= "&view=rss";
