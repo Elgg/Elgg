@@ -1036,30 +1036,40 @@ abstract class ElggEntity extends \ElggData implements
 			return false;
 		}
 
-		$return = false;
-
 		// Test user if possible - should default to false unless a plugin hook says otherwise
-		if ($user) {
-			if ($this->owner_guid == $user->guid) {
-				$return = true;
-			}
-			
-			if ($this->container_guid == $user->guid) {
-				$return = true;
-			}
-			
-			if ($this->guid == $user->guid) {
-				$return = true;
+		$default = call_user_func(function () use ($user) {
+			if (!$user) {
+				return false;
 			}
 
-			$container = $this->getContainerEntity();
-			if ($container && $container->canEdit($user->guid)) {
-				$return = true;
+			// favor the persisted attributes if not saved
+			$attrs = array_merge(
+				[
+					'owner_guid' => $this->owner_guid,
+					'container_guid' => $this->container_guid,
+				],
+				$this->getOriginalAttributes()
+			);
+
+			if ($attrs['owner_guid'] == $user->guid) {
+				return true;
 			}
-		}
+
+			if ($attrs['container_guid'] == $user->guid) {
+				return true;
+			}
+
+			if ($this->guid == $user->guid) {
+				return true;
+			}
+
+			$container = get_entity($attrs['container_guid']);
+
+			return ($container && $container->canEdit($user->guid));
+		});
 
 		$params = array('entity' => $this, 'user' => $user);
-		return _elgg_services()->hooks->trigger('permissions_check', $this->type, $params, $return);
+		return _elgg_services()->hooks->trigger('permissions_check', $this->type, $params, $default);
 	}
 
 	/**
@@ -1646,27 +1656,18 @@ abstract class ElggEntity extends \ElggData implements
 
 		_elgg_services()->boot->invalidateCache($this->guid);
 
-		// See #5600. This ensures canEdit() checks the BD persisted entity so it sees the
-		// persisted owner_guid, container_guid, etc.
-		_elgg_disable_caching_for_entity($this->guid);
-		$persisted_entity = get_entity($this->guid);
-		if (!$persisted_entity) {
-			// Why worry about this case? If access control was off when the user fetched this object but
+		if (!has_access_to_entity($this)) {
+			// Why worry about this case? If access control was off when the user fetched $this, but
 			// was turned back on again. Better to just bail than to turn access control off again.
 			return false;
 		}
 
-		$allow_edit = $persisted_entity->canEdit();
-		unset($persisted_entity);
-
-		if ($allow_edit) {
-			// give old update event a chance to stop the update
-			$allow_edit = _elgg_services()->events->trigger('update', $this->type, $this);
+		if (!$this->canEdit()) {
+			return false;
 		}
 
-		_elgg_enable_caching_for_entity($this->guid);
-
-		if (!$allow_edit) {
+		// give old update event a chance to stop the update
+		if (!_elgg_services()->events->trigger('update', $this->type, $this)) {
 			return false;
 		}
 
@@ -1681,11 +1682,17 @@ abstract class ElggEntity extends \ElggData implements
 		if ($access_id == ACCESS_DEFAULT) {
 			throw new \InvalidParameterException('ACCESS_DEFAULT is not a valid access level. See its documentation in elgglib.php');
 		}
-		
-		$ret = $this->getDatabase()->updateData("UPDATE {$CONFIG->dbprefix}entities
-			set owner_guid='$owner_guid', access_id='$access_id',
-			container_guid='$container_guid', time_created='$time_created',
-			time_updated='$time' WHERE guid=$guid");
+
+		$query = "
+			UPDATE {$CONFIG->dbprefix}entities
+			SET owner_guid = '$owner_guid',
+				access_id = '$access_id',
+				container_guid = '$container_guid',
+				time_created = '$time_created',
+				time_updated = '$time'
+			WHERE guid = $guid
+		";
+		$ret = $this->getDatabase()->updateData($query);
 		
 		elgg_trigger_after_event('update', $this->type, $this);
 
