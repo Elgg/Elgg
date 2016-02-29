@@ -128,9 +128,7 @@ function _elgg_retrieve_cached_entity($guid) {
 	global $ENTITY_CACHE;
 
 	if (isset($ENTITY_CACHE[$guid])) {
-		if ($ENTITY_CACHE[$guid]->isFullyLoaded()) {
-			return $ENTITY_CACHE[$guid];
-		}
+		return $ENTITY_CACHE[$guid];
 	}
 
 	return false;
