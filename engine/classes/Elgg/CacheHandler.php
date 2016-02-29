@@ -57,9 +57,14 @@ class CacheHandler {
 
 		$etag = "\"$ts\"";
 		// If is the same ETag, content didn't change.
-		if (isset($server_vars['HTTP_IF_NONE_MATCH']) && trim($server_vars['HTTP_IF_NONE_MATCH']) === $etag) {
-			header("HTTP/1.1 304 Not Modified");
-			exit;
+		if (isset($server_vars['HTTP_IF_NONE_MATCH'])) {
+			// strip -gzip for #9427
+			$if_none_match = str_replace('-gzip', '', trim($server_vars['HTTP_IF_NONE_MATCH']));
+			if ($if_none_match === $etag) {
+				header("HTTP/1.1 304 Not Modified");
+				header("ETag: $etag");
+				exit;
+			}
 		}
 
 		$filename = $this->config->dataroot . 'views_simplecache/' . md5("$viewtype|$view");
