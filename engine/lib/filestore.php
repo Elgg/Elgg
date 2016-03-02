@@ -481,7 +481,7 @@ function _elgg_filestore_init() {
 }
 
 /**
- * Fix MIME type detection for Microsoft zipped formats
+ * Various fixes for MIME type detection
  *
  * @param string $hook      "mime_type"
  * @param string $type      "file"
@@ -516,6 +516,11 @@ function _elgg_filestore_detect_mimetype($hook, $type, $mime_type, $params) {
 	// check for bad ppt detection
 	if ($mime_type == "application/vnd.ms-office" && $info['extension'] == "ppt") {
 		$mime_type = "application/vnd.ms-powerpoint";
+	}
+	
+	// hack for browser providing better mime-type than server can detect
+	if ($mime_type == "application/octet-stream" && preg_match('~^(audio|image|video)/~', $params['default'])) {
+		$mime_type = $params['default'];
 	}
 
 	return $mime_type;
