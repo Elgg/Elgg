@@ -723,13 +723,18 @@ function service_handler($handler, $request) {
 	// after the handler, the first identifier is response format
 	// ex) http://example.org/services/api/rest/json/?method=test
 	$response_format = array_shift($request);
-	// Which view - xml, json, ...
-	if ($response_format && elgg_is_registered_viewtype($response_format)) {
-		elgg_set_viewtype($response_format);
-	} else {
-		// default to json
-		elgg_set_viewtype("json");
+	if (!$response_format) {
+		$response_format = 'json';
 	}
+
+	if (!ctype_alpha($response_format)) {
+		header("HTTP/1.0 400 Bad Request");
+		header("Content-type: text/plain");
+		echo "Invalid format.";
+		exit;
+	}
+
+	elgg_set_viewtype($response_format);
 
 	if (!isset($CONFIG->servicehandler) || empty($handler)) {
 		// no handlers set or bad url
