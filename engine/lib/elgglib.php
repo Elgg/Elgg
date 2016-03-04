@@ -1667,6 +1667,7 @@ function _elgg_favicon_page_handler($segments) {
  *
  * @return bool
  * @access private
+ * @deprecated 2.1 Use elgg_get_simplecache_url()
  */
 function _elgg_cacheable_view_page_handler($page, $type) {
 
@@ -1700,6 +1701,10 @@ function _elgg_cacheable_view_page_handler($page, $type) {
 		if (!elgg_view_exists($view)) {
 			return false;
 		}
+
+		$msg = 'URLs starting with /js/ and /css/ are deprecated. Use elgg_get_simplecache_url().';
+		elgg_deprecated_notice($msg, '2.1');
+
 		$return = elgg_view($view);
 
 		header("Content-type: $content_type;charset=utf-8");
