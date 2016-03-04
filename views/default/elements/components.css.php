@@ -248,7 +248,8 @@
 }
 
 /* Comment highlighting that automatically fades away */
-.elgg-comments .elgg-state-highlight {
+.elgg-comments .elgg-state-highlight,
+.elgg-river-comments .elgg-state-highlight {
 	-webkit-animation: comment-highlight 5s; /* Chrome, Safari, Opera */
 	animation: comment-highlight 5s;
 }
