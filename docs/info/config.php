@@ -110,6 +110,7 @@ $CONFIG->sitedescription;
  * The site email from the current site object.
  *
  * @global string $CONFIG->siteemail
+ * @deprecated 2.1 Use elgg_get_site_entity()->email
  */
 $CONFIG->siteemail;
 

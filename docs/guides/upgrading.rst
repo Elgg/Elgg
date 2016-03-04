@@ -18,6 +18,7 @@ Deprecated APIs
  * ``ElggFile::setFilestore``
  * ``get_default_filestore``
  * ``set_default_filestore``
+ * ``elgg_get_config('siteemail')``: Use ``elgg_get_site_entity()->email``
 
 From 1.x to 2.0
 ===============

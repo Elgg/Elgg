@@ -150,7 +150,7 @@ class BootService {
 		}
 		_elgg_services()->metadataCache->populateFromEntities($preload_md_guids);
 
-		// TODO get rid of this, then we can drop the metadata preload
+		// TODO get rid of in 3.0, then we can drop the metadata preload for anon visitors
 		$CONFIG->siteemail = $CONFIG->site->email;
 
 		// gives hint to get() how to approach missing values

@@ -83,6 +83,11 @@ function elgg_get_engine_path() {
  * @since 1.8.0
  */
 function elgg_get_config($name, $site_guid = 0) {
+	if ($name === 'siteemail') {
+		$msg = 'The config value "siteemail" is deprecated. Use elgg_get_site_entity()->email';
+		elgg_deprecated_notice($msg, '2.1');
+	}
+
 	return _elgg_services()->config->get($name, $site_guid);
 }
 
