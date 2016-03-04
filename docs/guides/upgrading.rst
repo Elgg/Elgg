@@ -12,6 +12,11 @@ See the administrator guides for :doc:`how to upgrade a live site </admin/upgrad
 From 2.x to 3.0
 ===============
 
+Removed classes
+---------------
+
+ * ``FilePluginFile``: replace with ``ElggFile`` (or load with ``get_entity()``)
+
 Removed views
 -------------
 
