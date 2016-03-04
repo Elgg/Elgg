@@ -41,10 +41,7 @@ class SimpleCache {
 	 * Registers a view to simple cache.
 	 *
 	 * Simple cache is a caching mechanism that saves the output of
-	 * a view and its extensions into a file.  If the view is called
-	 * by the {@link engine/handlers/cache_handler.php} file, the Elgg
-	 * engine will not be loaded and the contents of the view will returned
-	 * from file.
+	 * a view and its extensions into a file.
 	 *
 	 * @warning Simple cached views must take no parameters and return
 	 * the same content no matter who is logged in.
