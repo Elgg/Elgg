@@ -16,6 +16,7 @@ Removed views
 -------------
 
  * ``resources/file/download``
+ * ``input/write_access``: mod/pages now uses the **access:collections:write** plugin hook.
 
 Removed functions/methods
 -------------------------
