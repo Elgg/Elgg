@@ -69,9 +69,7 @@ function pages_init() {
 		'tags' => 'tags',
 		'parent_guid' => 'parent',
 		'access_id' => 'access',
-
-		// TODO change to "access" when input/write_access is removed
-		'write_access_id' => 'write_access',
+		'write_access_id' => 'access',
 	));
 
 	elgg_register_plugin_hook_handler('register', 'menu:owner_block', 'pages_owner_block_menu');
